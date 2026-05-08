@@ -440,7 +440,7 @@
 /*
 *	FLAGS
 */
-
+/*
 /datum/loadout_item/pocket_items/gay_pride_flag
 	name = "Pride Flag - Rainbow"
 	item_path = /obj/item/sign/flag/pride/gay
@@ -470,6 +470,7 @@
 	name = "Pride Flag - Transgender"
 	item_path = /obj/item/sign/flag/pride/trans
 	group = "Comfort"
+*/
 /*
 *	JOB-LOCKED
 */
