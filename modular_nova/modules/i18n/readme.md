@@ -16,7 +16,7 @@ Module ID: I18N
      静态抽取的残留英文。
 3. **TGUI（TypeScript）**：`packages/tgui` 的 JSX 静态文本与常见文本 props 自动查前端目录；
    源翻译放在 `strings/i18n/<locale>/tgui.json`，构建前同步到 TGUI 包内；动态内容由 DM 端预本地化后经 props 传来。
-4. **平台**：Tolgee 自托管（`modular_nova/tools/i18n/`）+ 机翻预填 + 人工校对。
+4. **翻译**：Codex 机翻预填（`tools/i18n/mt/`）为主；人工校对走**自选的在线本地化平台**（译文是 `strings/i18n/` 下的扁平 JSON，Crowdin / Lokalise / Weblate / Tolgee Cloud 等都能导入导出。已移除自托管 Tolgee）。
 
 locale 解析：
 - `LANG(key, args)` —— 全服 locale（`GLOB.i18n_server_locale`），用于广播类文本
@@ -26,6 +26,27 @@ locale 解析：
 
 目录文件位于 `strings/i18n/<locale>/<namespace>.json`（`strings/` 已被 git 跟踪；不可用
 `data/`，其被 .gitignore 忽略）。TGUI 使用同一目录下的 `tgui.json` 命名空间作为源。
+
+### 文件地图（i18n 文件散落多处，多为运行时/打包器按固定路径加载，不可随意挪动）:
+
+**运行时/打包器按固定路径加载——钉死，勿移动：**
+- `strings/i18n/<locale>/*.json` —— 游戏端译文目录。DM 运行时从 `STRING_DIRECTORY("strings")/i18n/` 加载（见 `code/__DEFINES/text.dm` + `~nova_defines/i18n.dm`）。
+- `tgui/packages/tgui/i18n/` —— TGUI 前端运行时：`catalog.ts`/`localize.ts`/`jsx-runtime.ts`/`jsx-dev-runtime.ts` + 打包子集 `<locale>.json`。打包器靠 `tgui/i18n` 别名 + SWC `importSource` 解析，必须在 tgui 包内。
+- `code/__DEFINES/~nova_defines/i18n.dm` —— `LANG`/`LANGU` 宏与 locale 常量（fork 规定 defines 进 `~nova_defines`）。
+- `modular_nova/master_files/code/...` —— core override（必须镜像 core 路径）：`game/atoms.dm`（name/desc 反查）、`controllers/configuration/entries/config_entries.dm`（`I18N_SERVER_LOCALE`）。core NOVA EDIT：`code/modules/tgui/tgui.dm`（注入 `config.locale`）。
+- `.github/workflows/i18n.yml`、`config/game_options.txt`（`I18N_SERVER_LOCALE`）—— CI / 配置，位置固定。
+
+**本模块（DM 运行时实现）：**
+- `modular_nova/modules/i18n/code/{runtime,fallback}.dm` —— 查表 / 占位符格式化 / name-desc 反查表 + AC 兜底。
+
+**构建 / 翻译工具——都在 `tools/i18n/`（**未移动**：移动需改 ~71 处构建/CI/脚本引用，风险高）：**
+- `tools/i18n/src/*.rs` —— Rust 抽取（`extract`）/ 改写（`rewrite`），基于 SpacemanDMM 的 dreammaker。
+- `tools/i18n/tgui-catalog.mjs` —— TGUI 静态文本抽取 + 同步前端子集（`tgui:build` 会自动 `sync`）。
+- `tools/i18n/resync.sh` —— 合并上游后一键重同步（extract + rewrite + tgui 同步）。
+- `tools/i18n/mt/` —— Codex 机翻（`translate-codex.sh` / `i18n-mt.ts`）+ 术语表 `glossary.zh-Hans.json` + 候选发现 `glossary-sync.ts suggest`。
+- `tools/i18n/README.md` —— 命令速查。
+
+**人工校对平台：** 自选**在线**本地化平台（导入导出 `strings/i18n/<locale>/*.json`；Crowdin / Lokalise / Weblate / Tolgee Cloud 等）。自托管 Tolgee 已移除。
 
 ### TG Proc/File Changes:
 
@@ -46,7 +67,7 @@ locale 解析：
 
 ### Included files that are not contained in this module:
 
-- `strings/i18n/<locale>/*.json` —— 翻译目录（由 Rust/TGUI 工具生成 / Tolgee 同步）。
+- `strings/i18n/<locale>/*.json` —— 翻译目录（由 Rust/TGUI 工具生成 / 在线平台导入导出）。
 - `tools/i18n/` —— Rust 抽取/改写工具与机翻流水线。
 - `tgui/packages/tgui/i18n/*.json` —— 前端打包目录，由 `strings/i18n/<locale>/tgui.json` 同步生成运行时子集；
   英文原文作 key，缺失时回退英文，未译静态英文不会打进 bundle。
@@ -59,9 +80,7 @@ locale 解析：
   - 游戏/TGUI 重同步：`bash tools/i18n/resync.sh`
   - 翻译游戏命名空间：`I18N_CHUNK=100 bash tools/i18n/mt/translate-codex.sh obj.json`
   - 翻译 TGUI：`I18N_CHUNK=100 bash tools/i18n/mt/translate-codex.sh tgui.json`
-  - Tolgee 启动：`docker compose -f modular_nova/tools/i18n/docker-compose.yml up -d`
-  - Tolgee 上传/拉取：`bunx @tolgee/cli push` / `bunx @tolgee/cli pull`
-  - 拉取 Tolgee 后同步前端：`node tools/i18n/tgui-catalog.mjs sync`
+  - 人工校对：把 `strings/i18n/<locale>/*.json` 导入你选的在线平台，校对后导回；TGUI 改完后 `node tools/i18n/tgui-catalog.mjs sync`
   - 构建并启动：`tools/build/build.sh && DreamDaemon tgstation.dmb 1337 -trusted`
 - **切全服中文**：配置项 `I18N_SERVER_LOCALE zh-Hans`（`config/`）。游戏文本、name/desc 反查、
   以及 `packages/tgui` 中已进入前端目录的静态文本都跟随这个全服 locale。

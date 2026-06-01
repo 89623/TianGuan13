@@ -1,12 +1,12 @@
 #!/usr/bin/env bun
-// NovaSector 全量汉化：术语表工具 —— 候选发现 + 与 Tolgee 同步。
+// NovaSector 全量汉化：术语表候选发现。
 //
 //   bun tools/i18n/mt/glossary-sync.ts suggest [n]   # 从英文目录里挑「高频、尚未入术语表」的候选词
-//   bun tools/i18n/mt/glossary-sync.ts push          # 本地术语表 -> Tolgee 词汇表
-//   bun tools/i18n/mt/glossary-sync.ts pull          # Tolgee 词汇表 -> 本地术语表
 //
-// Tolgee 同步需环境变量：TOLGEE_API_URL、TOLGEE_API_KEY、TOLGEE_ORG_ID、TOLGEE_GLOSSARY_ID。
-// 注：Tolgee 词汇表 API 端点随版本变化，下面按 v2 习惯写，首次使用请对照你的 Tolgee 版本核对。
+// 术语表本体：tools/i18n/mt/glossary.zh-Hans.json（英文->中文；保持英文则 value 同 key）。
+// 人工校对走「在线本地化平台」——译文是 strings/i18n/<locale>/*.json 扁平 JSON，可导入任意
+// 平台（Crowdin / Lokalise / Weblate / Tolgee Cloud 等），平台自带术语表/词汇表功能，故这里
+// 不再内置具体平台的同步（旧版的自托管 Tolgee push/pull 已移除）。
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,11 +17,6 @@ const GLOSSARY_PATH = path.join(import.meta.dir, `glossary.${LOCALE}.json`);
 
 function loadGlossary(): Record<string, string> {
   return fs.existsSync(GLOSSARY_PATH) ? JSON.parse(fs.readFileSync(GLOSSARY_PATH, 'utf8')) : {};
-}
-function saveGlossary(g: Record<string, string>) {
-  const sorted: Record<string, string> = {};
-  for (const k of Object.keys(g).sort()) sorted[k] = g[k];
-  fs.writeFileSync(GLOSSARY_PATH, JSON.stringify(sorted, null, 2) + '\n');
 }
 
 // 句首常见英文词（非术语），从候选里剔除。
@@ -60,64 +55,12 @@ function cmdSuggest(limit: number) {
   const ranked = [...freq.entries()].sort((a, b) => b[1] - a[1]).slice(0, limit);
   console.log(`候选术语（高频、未入表），共 ${ranked.length}：`);
   for (const [term, count] of ranked) console.log(`  ${count}\t${term}`);
-  console.log('\n挑选后加入 ' + path.relative(ROOT, GLOSSARY_PATH) + '（英文->中文；保持英文则 value 同 key），再 push。');
-}
-
-function tolgeeConfig() {
-  const url = process.env.TOLGEE_API_URL;
-  const key = process.env.TOLGEE_API_KEY;
-  const org = process.env.TOLGEE_ORG_ID;
-  const glossaryId = process.env.TOLGEE_GLOSSARY_ID;
-  if (!url || !key || !org || !glossaryId) {
-    console.error('需要 TOLGEE_API_URL / TOLGEE_API_KEY / TOLGEE_ORG_ID / TOLGEE_GLOSSARY_ID');
-    process.exit(1);
-  }
-  return { url, key, org, glossaryId };
-}
-
-async function cmdPush() {
-  const { url, key, org, glossaryId } = tolgeeConfig();
-  const glossary = loadGlossary();
-  // TODO: 端点随 Tolgee 版本核对。v2 习惯：POST .../glossaries/{id}/terms
-  const base = `${url}/v2/organizations/${org}/glossaries/${glossaryId}`;
-  let ok = 0;
-  for (const [en, zh] of Object.entries(glossary)) {
-    const res = await fetch(`${base}/terms`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', 'X-API-Key': key },
-      body: JSON.stringify({ text: en, description: '', translations: { [LOCALE]: zh } }),
-    });
-    if (res.ok) ok++;
-    else console.error(`  push 失败 ${en}: ${res.status}`);
-  }
-  console.log(`推送 ${ok}/${Object.keys(glossary).length} 个术语到 Tolgee`);
-}
-
-async function cmdPull() {
-  const { url, key, org, glossaryId } = tolgeeConfig();
-  const base = `${url}/v2/organizations/${org}/glossaries/${glossaryId}`;
-  const res = await fetch(`${base}/terms?size=10000`, { headers: { 'X-API-Key': key } });
-  if (!res.ok) {
-    console.error(`pull 失败: ${res.status}`);
-    process.exit(1);
-  }
-  const data: any = await res.json();
-  const terms: any[] = data?._embedded?.glossaryTerms ?? data?.terms ?? [];
-  const glossary = loadGlossary();
-  for (const t of terms) {
-    const en = t.text ?? t.name;
-    const zh = t.translations?.[LOCALE]?.text ?? t.translations?.[LOCALE];
-    if (en && zh) glossary[en] = zh;
-  }
-  saveGlossary(glossary);
-  console.log(`从 Tolgee 拉取 ${terms.length} 个术语，已并入 ${path.relative(ROOT, GLOSSARY_PATH)}`);
+  console.log('\n挑选后加入 ' + path.relative(ROOT, GLOSSARY_PATH) + '（英文->中文；保持英文则 value 同 key）。');
 }
 
 const [cmd, arg] = process.argv.slice(2);
 if (cmd === 'suggest') cmdSuggest(Number(arg ?? 40));
-else if (cmd === 'push') await cmdPush();
-else if (cmd === 'pull') await cmdPull();
 else {
-  console.error('用法: glossary-sync.ts suggest [n] | push | pull');
+  console.error('用法: glossary-sync.ts suggest [n]');
   process.exit(1);
 }

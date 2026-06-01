@@ -3,7 +3,7 @@
 //
 // BYOND 内嵌的 CEF 浏览器在运行时无网络，所以生产环境用「内置 JSON 目录」而非在线
 // 翻译服务。locale 取自全服 config.locale（由 code/modules/tgui/tgui.dm 的 get_payload 注入）。
-// 这些 JSON 即 Tolgee 平台同步的源/目标 —— Tolgee 仅作管理平台，运行时不需要它的 SDK。
+// 这些 JSON 即在线本地化平台导入/导出的源/目标 —— 平台仅作开发期管理，运行时不需要其 SDK。
 //
 // 占位符语义与 DM 端 LANG 一致：{0}/{1}… 按位置替换，允许按中文语序重排。
 

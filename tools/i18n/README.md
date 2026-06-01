@@ -1,7 +1,7 @@
 # nova-i18n —— NovaSector 全量汉化工具链
 
 DM 字符串抽取/改写工具（Rust，基于 SpacemanDMM 的 `dreammaker` 解析器）+ 机翻流水线。
-配套运行时见 `modular_nova/modules/i18n/`，平台见 `modular_nova/tools/i18n/`（Tolgee）。
+配套运行时见 `modular_nova/modules/i18n/`（其 readme 有**全部 i18n 文件地图**）。人工校对走自选的**在线**本地化平台（导入导出 `strings/i18n/<locale>/*.json`）。
 
 ## 端到端流程
 
@@ -9,11 +9,11 @@ DM 字符串抽取/改写工具（Rust，基于 SpacemanDMM 的 `dreammaker` 解
                           tools/i18n (Rust)
   DM 源码 ──parse(dreammaker)──▶ 抽取玩家可见字符串 ──▶ strings/i18n/en/<ns>.json (英文主目录)
                                        │                          │
-                            (后续) 改写调用点为 LANG/LANGU         │ push
+                            改写调用点为 LANG/LANGU                │ 导入(import)
                                                                    ▼
-   tools/i18n/mt/translate.ts ◀── 机翻预填(配 glossary) ◀──── Tolgee 平台 (modular_nova/tools/i18n)
+   tools/i18n/mt/i18n-mt.ts ◀──── Codex 机翻预填(配 glossary) ◀── 在线本地化平台(自选)
         │                                                          │ 人工校对
-        ▼                                                          │ pull
+        ▼                                                          │ 导出(export)
   strings/i18n/zh-Hans/<ns>.json  ◀───────────────────────────────┘
         │
         ▼
@@ -125,7 +125,7 @@ bun tools/i18n/mt/i18n-mt.ts pending tgui.json
 # 翻译 TGUI 命名空间
 I18N_CHUNK=100 bash tools/i18n/mt/translate-codex.sh tgui.json
 
-# TGUI 翻译完或 Tolgee pull 后，都要同步前端运行时目录
+# TGUI 翻译完或从在线平台导回译文后，都要同步前端运行时目录
 node tools/i18n/tgui-catalog.mjs sync
 
 # 验证前端构建
@@ -146,50 +146,37 @@ return <Button>{t('tgui.print_amount', [amount])}</Button>;
 "tgui.print_amount": "打印 {0} 个"
 ```
 
-### Tolgee：启动 / 上传 / 拉取
+### 人工校对：在线本地化平台（自选）
 
-Tolgee 只用于开发期翻译管理；游戏和 TGUI 运行时都读本地 JSON，不联网连 Tolgee。
+译文就是 `strings/i18n/<locale>/*.json`（含 `tgui.json`）—— 扁平的 `{"key": "译文"}`。这是平台无关的标准
+格式，可导入任意**在线**平台（Crowdin / Lokalise / Weblate / Tolgee Cloud 等）做团队校对，再导出回原文件。
+运行时只读本地 JSON，**不联网连平台**。（旧版自托管 Tolgee 的 docker-compose 已移除。）
+
+典型流程：
 
 ```sh
-# 启动本地 Tolgee + Postgres
-docker compose -f modular_nova/tools/i18n/docker-compose.yml up -d
+# 1) 机翻预填（Codex），先把英文目录翻一遍 / 补译
+bash tools/i18n/mt/translate-codex.sh
 
-# 查看 Tolgee 日志
-docker compose -f modular_nova/tools/i18n/docker-compose.yml logs -f tolgee
+# 2) 把 strings/i18n/<locale>/*.json 导入你选的平台 → 人工校对 → 导出回这些文件
+#    （各平台用自带 CLI / 网页上传下载，格式选「扁平 JSON / key-value JSON」）
 
-# 首次登录 http://localhost:8085 后创建项目，把 projectId 写到 tolgee.config.ts
-# 然后创建 API key，并在当前 shell 设置：
-export TOLGEE_API_KEY='你的 API key'
-
-# 上传本地 strings/i18n/<locale>/<namespace>.json 到 Tolgee
-bunx @tolgee/cli push
-
-# 从 Tolgee 拉取校对后的翻译回 strings/i18n/<locale>/<namespace>.json
-bunx @tolgee/cli pull
-
-# 可选：查看本地与远端差异
-bunx @tolgee/cli compare
-
-# pull 后必须同步 TGUI 前端运行时目录
+# 3) 导回后，若改了 tgui.json，需同步前端运行时子集
 node tools/i18n/tgui-catalog.mjs sync
 
-# 停止 Tolgee
-docker compose -f modular_nova/tools/i18n/docker-compose.yml down
+# 4) 重建生效
+tools/build/build.sh
 ```
 
 ### 术语表
 
 ```sh
-# 从英文目录挑高频候选术语
+# 从英文目录挑高频候选术语（人工择入 tools/i18n/mt/glossary.zh-Hans.json）
 bun tools/i18n/mt/glossary-sync.ts suggest
-
-# 本地术语表 -> Tolgee glossary
-export TOLGEE_API_URL='http://localhost:8085'
-export TOLGEE_API_KEY='你的 API key'
-export TOLGEE_ORG_ID='你的 organization id'
-export TOLGEE_GLOSSARY_ID='你的 glossary id'
-bun tools/i18n/mt/glossary-sync.ts push
 ```
+
+术语表本体 `tools/i18n/mt/glossary.zh-Hans.json`（英文->中文；保持英文则 value 同 key）由 Codex 机翻直接套用；
+上线在线平台后，多数平台自带术语表/词汇表功能，可把这份 JSON 导入平台维护。
 
 ### 同步上游
 
@@ -269,7 +256,7 @@ cd tgui && ./node_modules/.bin/tsc && ./node_modules/.bin/rspack build
 ## 注意
 
 - 目录文件放 `strings/i18n/`（`strings/` 已被 git 跟踪；`data/` 被 .gitignore 忽略）。TGUI 也使用
-  `strings/i18n/<locale>/tgui.json` 作为 Tolgee/Codex 源目录；`tgui/packages/tgui/i18n/*.json` 是同步出的
+  `strings/i18n/<locale>/tgui.json` 作为在线平台/Codex 源目录；`tgui/packages/tgui/i18n/*.json` 是同步出的
   前端运行时子集，未译静态英文不打进 bundle。
 - 占位符 `{0}/{1}` 在机翻时会被掩码保护；HTML 标签需保留。
 - `dreammaker` 为 GPL-3.0，作为独立构建工具链接可接受（本项目已 GPLv3）。

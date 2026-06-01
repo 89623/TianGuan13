@@ -108,12 +108,12 @@ All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no
 
 **运行（NixOS）**：`nix develop` → `tools/build/build.sh` → `DreamDaemon tgstation.dmb <port> -trusted`。`librust_g.so` 由 devShell 自动软链（缺它服务端卡死）。**32 位 rust_g iconforge OOM**：客户端进大厅时 iconforge（rayon 并行）生成精灵图集会撑爆 32 位地址空间 → abort 核心转储（表现为停在大厅、服务端不刷日志，**非 i18n bug**）；`nix/byond.nix` 的 DreamDaemon 包装器已默认 `RAYON_NUM_THREADS=2` 修复。切全服中文：配置项 `I18N_SERVER_LOCALE zh-Hans`。
 
-**翻译（Codex）**：用 `tools/i18n/mt/translate-codex.sh`（内部 `codex exec -c 'mcp_servers={}' -c 'model_reasoning_effort="low"' -s workspace-write`，禁用 MCP，输出写入 `.pending/*.codex.log`）。逐文件增量翻译，保留 `{0}` 占位符与 HTML/DM 文本宏，套用术语表 `tools/i18n/mt/glossary.zh-Hans.json`。也可用 Tolgee 平台（`modular_nova/tools/i18n/docker-compose.yml` + 根目录 `tolgee.config.ts`）做团队校对。
+**翻译（Codex）**：用 `tools/i18n/mt/translate-codex.sh`（内部 `codex exec -c 'mcp_servers={}' -c 'model_reasoning_effort="low"' -s workspace-write`，禁用 MCP，输出写入 `.pending/*.codex.log`）。逐文件增量翻译，保留 `{0}` 占位符与 HTML/DM 文本宏，套用术语表 `tools/i18n/mt/glossary.zh-Hans.json`。人工校对走**在线本地化平台**（自选——译文是 `strings/i18n/<locale>/*.json` 扁平 JSON，Crowdin / Lokalise / Weblate / Tolgee Cloud 等都能导入导出；不再用自托管 Tolgee）。
 
-**命令手册**：具体的游戏/TGUI 翻译、Tolgee push/pull、上游同步、构建启动命令集中维护在 `tools/i18n/README.md` 的「命令速查」。
+**命令手册与文件地图**：游戏/TGUI 翻译、在线平台导入导出、上游同步、构建启动等命令集中在 `tools/i18n/README.md`；**全部 i18n 文件位置（含运行时钉死的目录）一览**见 `modular_nova/modules/i18n/readme.md` 的「文件地图」。
 
 **当前覆盖（重要，勿误解为"全部已汉化"）**：
-- 已抽取到目录（可进 Tolgee/Codex 翻译）：约 73,700 条（含 TGUI 静态文本约 4,904 条）。
+- 已抽取到目录（可进在线平台/Codex 翻译）：约 73,700 条（含 TGUI 静态文本约 4,904 条）。
 - 已接入运行时 `LANG`（译了就能在游戏里显示）：约 15,700 处**消息/提示类**调用点（含新增的 alert/tgui_* 对话框约 2,093 处）。
 - **name/desc 等变量类文本已接入**：`/atom/Initialize`（master_files/code/game/atoms.dm）+ runtime.dm 的 `lang_reverse_text` 反查表（英文整串→译文，仅无占位符纯串，全服 locale≠en 时生效）。**地图(.dmm) 上放置的物件/区域 name/desc 也走这条**（都过 Initialize），故无需单独抽 .dmm。
 - **examine 的 `. += "…"` 已接入**（rewrite 处理 AddAssign，含 span 包裹）。
