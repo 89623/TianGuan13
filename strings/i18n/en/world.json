@@ -1,3 +1,11 @@
 {
-  "world.c7d007e4": "/tg/ Station 13"
+  "world.27878744": "Invalid pointer syntax: {0}",
+  "world.4ad4adb1": "Rebooting world...",
+  "world.554d10e7": "Rebooting World immediately due to host request.",
+  "world.5f205b9e": "You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was automatically reversed.",
+  "world.74b4ed87": "Invalid list index: {0}",
+  "world.83c3d906": "Invalid pointer: {0} - null or not datum",
+  "world.a9c0b1ad": "World variables are not allowed to be accessed. Use global.",
+  "world.c7d007e4": "/tg/ Station 13",
+  "world.f9ab1113": "Pointer {0} cannot be marked"
 }

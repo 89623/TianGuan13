@@ -1,25 +1,34 @@
-//! DM 调用点改写（阶段2，v1：保守子集）。
+//! DM 调用点改写（阶段2，v2：纯字符串 + 内插字符串，统一 LANG）。
 //!
-//! 把汇聚点调用里「单个纯字符串字面量」的消息参数原地替换为 `LANG("key", null)`，
-//! key 与抽取阶段一致（同一 AST 节点 → 同一 namespace+内容哈希），故目录已含该 key。
+//! 把汇聚点调用里「恰好含一个可翻译文本节点」的消息参数原地改写为：
+//!   - 无内插：`LANG("key", null)`
+//!   - 有内插：`LANG("key", list(<内插表达式源码>...))`
+//! key 与抽取阶段一致（同一文本节点 → 同一 namespace+模板内容哈希），故目录已含该 key。
+//!
+//! 定位与切片：用 AST 文本节点的 Location（指向源码里的开引号——宏展开后 token 位置仍保留）
+//! 定位字符串字面量，再用 DM 源码扫描器切出整段字面量与各 `[...]` 内插表达式源码。
+//!
+//! 统一用全服 locale 的 `LANG`（单语言服与按人 locale 等价，免去切出接收者源码）；定向
+//! 的 `LANGU(接收者, …)` 留作手工/后续。
 //!
 //! 安全约束（面向 CI 自动化，杜绝源码损坏）：
-//!   - 仅处理 Term::String（无内插 `[...]`、无 `+` 拼接、无 follow）的消息参数；
-//!   - 仅按 AST 的 Location(行,列) 定位到源码中的开引号，并断言该处确为 `"`，否则跳过；
-//!   - 含 `[` 的字符串（内插）一律跳过（留待 v2）；
-//!   - 幂等：已是 LANG(...) 调用的参数不是字符串字面量，不会被再次改写。
-//!
-//! 改写用全服 locale 的 `LANG`（广播/定向皆可，无需接收者源码）；按接收者 locale 的
-//! `LANGU` 改写留待 v2（需切出接收者参数源码）。
+//!   - 仅当消息参数里「可翻译文本节点」恰好 1 个时改写（拼接多段文本一律跳过）；
+//!   - 断言 Location 处确为 `"`，否则跳过；字符串扫描不平衡/未闭合则跳过；
+//!   - 源码切出的内插数必须与 AST 模板占位符数一致，否则跳过；
+//!   - 幂等：已是 LANG(...) 的参数不是字符串字面量，不会被再次改写。
 
 use anyhow::{Context as _, Result};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use dm::ast::{Expression, Follow, Statement, Term};
+use dm::ast::{BinaryOp, Expression, Follow, Spanned, Statement, Term};
 
-use crate::extract::build_template;
+use crate::extract::{build_template, placeholder_count};
 use crate::keys::{make_key, namespace_for};
+
+/// 核心文件（非 modular_nova）被 codemod 改写时插入的文件级 NOVA EDIT 标记。
+const CORE_MARKER: &str =
+    "// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md";
 
 /// 汇聚点 proc 名 -> 消息参数下标（与 extract.rs 保持一致）。
 fn sink_message_args(name: &str) -> Option<&'static [usize]> {
@@ -33,10 +42,6 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         _ => None,
     }
 }
-
-/// 核心文件（非 modular_nova）被 codemod 改写时插入的文件级 NOVA EDIT 标记。
-const CORE_MARKER: &str =
-    "// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md";
 
 struct Edit {
     start: usize,
@@ -94,7 +99,6 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
         for e in &edits {
             src.replace_range(e.start..e.end, &e.replacement);
         }
-        // 核心文件（非 modular_nova）需加 NOVA EDIT 标记；在 span 替换之后再插入，避免位移。
         let is_core = !path.to_string_lossy().replace('\\', "/").contains("modular_nova/");
         if is_core && !src.starts_with(CORE_MARKER) {
             src.insert_str(0, &format!("{CORE_MARKER}\n"));
@@ -125,7 +129,7 @@ impl<'a> Rewriter<'a> {
         entry.as_deref()
     }
 
-    fn visit_block(&mut self, block: &[dm::ast::Spanned<Statement>], ns: &str) {
+    fn visit_block(&mut self, block: &[Spanned<Statement>], ns: &str) {
         for stmt in block.iter() {
             self.visit_stmt(&stmt.elem, ns);
         }
@@ -199,11 +203,7 @@ impl<'a> Rewriter<'a> {
         if let Expression::Base { term, follow } = expr {
             if let Term::Call(name, args) = &term.elem {
                 if let Some(indices) = sink_message_args(name.as_str()) {
-                    for &i in indices {
-                        if let Some(arg) = args.get(i) {
-                            self.try_rewrite_message(arg, ns);
-                        }
-                    }
+                    self.try_rewrite_call(term.location, args, indices, ns);
                 }
             }
             self.recurse_term(&term.elem, ns);
@@ -228,47 +228,75 @@ impl<'a> Rewriter<'a> {
         }
     }
 
-    /// 只改写「单个纯字符串字面量」的消息参数。
-    fn try_rewrite_message(&mut self, arg: &Expression, ns: &str) {
-        let Expression::Base { term, follow } = arg else {
-            return;
-        };
-        if !follow.is_empty() {
+    /// 改写一个汇聚点调用的各消息参数。
+    ///
+    /// 关键：用「调用」的 Location（调用点，可靠）定位，再从源码切出实参、找到其中的字符串
+    /// 字面量并替换。这样对 span_*() 这类「宏展开后内层串位置指向宏定义」的情形也能正确改写
+    /// （宏展开后内层文本节点的 Location 不可用于回写）。
+    fn try_rewrite_call(
+        &mut self,
+        call_loc: dm::Location,
+        args: &[Expression],
+        indices: &[usize],
+        ns: &str,
+    ) {
+        // 1) 用 AST 判定每个消息参数是否「恰好一个可翻译文本节点」，并取其模板/占位符数/key。
+        let mut targets: Vec<(usize, String, usize)> = Vec::new();
+        for &i in indices {
+            let Some(arg) = args.get(i) else { continue };
+            // 门槛：源码里恰好一个可翻译字符串字面量（保证后面切片定位无歧义）。
+            let mut nodes: Vec<&Spanned<Term>> = Vec::new();
+            collect_text_nodes(arg, &mut nodes);
+            if nodes.len() != 1 {
+                continue;
+            }
+            // key 用与抽取**同一**函数计算，保证目录命中。
+            let Some(template) = build_template(arg) else {
+                continue;
+            };
+            targets.push((i, make_key(ns, &template), placeholder_count(&template)));
+        }
+        if targets.is_empty() {
             return;
         }
-        let Term::String(_) = &term.elem else {
-            return;
-        };
-        let Some(template) = build_template(arg) else {
-            return; // 纯标签/无字母等不可翻译
-        };
-        let key = make_key(ns, &template);
 
-        let loc = term.location;
-        let path = self.context.file_path(loc.file).to_path_buf();
+        // 2) 用调用点 Location 在源码里切出实参范围。
+        let path = self.context.file_path(call_loc.file).to_path_buf();
         if let Some(filter) = self.filter {
             if !path.to_string_lossy().contains(filter) {
                 return;
             }
         }
-        let Some(src) = self.source(&path) else {
+        let Some(src) = self.source(&path) else { return };
+        let Some(name_start) = line_col_to_byte(src, call_loc.line, call_loc.column) else {
             return;
         };
-        let Some(start) = line_col_to_byte(src, loc.line, loc.column) else {
-            return;
-        };
-        // 防御：该处必须是开引号，否则定位有误，跳过（绝不损坏源码）。
-        if src.as_bytes().get(start) != Some(&b'"') {
-            return;
+        let Some(lparen) = find_open_paren(src, name_start) else { return };
+        let Some(arg_ranges) = split_call_args(src, lparen) else { return };
+
+        // 3) 对每个目标实参，找到其中唯一的字符串字面量并替换。
+        let mut new_edits: Vec<Edit> = Vec::new();
+        for (i, key, placeholders) in targets {
+            let Some(&(astart, aend)) = arg_ranges.get(i) else { continue };
+            let Some(qpos) = find_first_quote(src, astart, aend) else { continue };
+            let Some((qend, interp_args)) = scan_dm_string(src, qpos) else { continue };
+            if qend > aend || interp_args.len() != placeholders {
+                continue; // 越界 / 内插数不符 → 跳过
+            }
+            let replacement = if interp_args.is_empty() {
+                format!("LANG(\"{key}\", null)")
+            } else {
+                format!("LANG(\"{key}\", list({}))", interp_args.join(", "))
+            };
+            new_edits.push(Edit {
+                start: qpos,
+                end: qend,
+                replacement,
+            });
         }
-        let Some(end) = plain_string_end(src, start) else {
-            return; // 含内插 `[` / 跨行 / 未闭合 → 跳过
-        };
-        let replacement = format!("LANG(\"{key}\", null)");
-        self.edits
-            .entry(path)
-            .or_default()
-            .push(Edit { start, end, replacement });
+        if !new_edits.is_empty() {
+            self.edits.entry(path).or_default().extend(new_edits);
+        }
     }
 
     fn recurse_term(&mut self, term: &Term, ns: &str) {
@@ -353,6 +381,76 @@ impl<'a> Rewriter<'a> {
     }
 }
 
+/// 收集消息参数里的「可翻译文本节点」（String / InterpString，过滤纯标签），降序穿过 `+` 拼接。
+fn collect_text_nodes<'b>(expr: &'b Expression, out: &mut Vec<&'b Spanned<Term>>) {
+    match expr {
+        Expression::Base { term, follow } if follow.is_empty() => match &term.elem {
+            Term::String(_) | Term::InterpString(_, _) => {
+                if node_template(&term.elem).is_some() {
+                    out.push(term.as_ref());
+                }
+            }
+            // 括号包裹（如 span_* 宏展开为 ("<span>" + str + "</span>")）：穿透进去。
+            Term::Expr(inner) => collect_text_nodes(inner, out),
+            _ => {}
+        },
+        Expression::BinaryOp {
+            op: BinaryOp::Add,
+            lhs,
+            rhs,
+        } => {
+            collect_text_nodes(lhs, out);
+            collect_text_nodes(rhs, out);
+        }
+        _ => {}
+    }
+}
+
+/// 单个文本节点的模板（{0}/{1}…）与占位符个数；纯标签/无字母返回 None。
+/// 与 extract.rs 的 build_template 对单节点结果一致（保证 key 匹配）。
+fn node_template(term: &Term) -> Option<(String, usize)> {
+    match term {
+        Term::String(s) => {
+            if !strip_tags(s).chars().any(|c| c.is_alphabetic()) {
+                return None;
+            }
+            Some((s.clone(), 0))
+        }
+        Term::InterpString(lead, parts) => {
+            let mut out = String::new();
+            let mut count = 0usize;
+            out.push_str(lead.as_str());
+            for (opt, lit) in parts.iter() {
+                if opt.is_some() {
+                    out.push_str(&format!("{{{}}}", count));
+                    count += 1;
+                }
+                out.push_str(lit);
+            }
+            if !strip_tags(&out).chars().any(|c| c.is_alphabetic()) {
+                return None;
+            }
+            Some((out, count))
+        }
+        _ => None,
+    }
+}
+
+/// 去掉 `<...>` 标签后的文本（判断片段是否只是标签）。
+fn strip_tags(s: &str) -> String {
+    let mut result = String::new();
+    let mut in_tag = false;
+    for c in s.chars() {
+        match c {
+            '<' => in_tag = true,
+            '>' => in_tag = false,
+            _ if !in_tag => result.push(c),
+            _ => {}
+        }
+    }
+    result
+}
+
 /// (行, 列) -> 字节偏移。行列均 1-based，列按字符计（与 dreammaker 一致；制表符算 1 列）。
 fn line_col_to_byte(src: &str, line: u32, column: u16) -> Option<usize> {
     let mut line_start = 0usize;
@@ -382,19 +480,140 @@ fn line_col_to_byte(src: &str, line: u32, column: u16) -> Option<usize> {
     None
 }
 
-/// 给定开引号位置，返回闭引号之后的字节位置；含内插 `[`/跨行/未闭合则返回 None。
-fn plain_string_end(src: &str, start: usize) -> Option<usize> {
-    let bytes = src.as_bytes();
-    if bytes.get(start) != Some(&b'"') {
+/// 从函数名起点找到其后的 `(` 位置（跳过标识符与空白）。
+fn find_open_paren(src: &str, name_start: usize) -> Option<usize> {
+    let b = src.as_bytes();
+    let mut i = name_start;
+    while i < b.len() && (b[i].is_ascii_alphanumeric() || b[i] == b'_') {
+        i += 1;
+    }
+    while i < b.len() && (b[i] == b' ' || b[i] == b'\t') {
+        i += 1;
+    }
+    if b.get(i) == Some(&b'(') {
+        Some(i)
+    } else {
+        None
+    }
+}
+
+/// 给定调用的 `(` 位置，按顶层逗号切出各实参的字节范围（不含外层括号）。
+/// 正确跳过字符串（含 `[...]` 内插）、注释、以及嵌套的 () [] {}。
+fn split_call_args(src: &str, lparen: usize) -> Option<Vec<(usize, usize)>> {
+    let b = src.as_bytes();
+    let mut ranges: Vec<(usize, usize)> = Vec::new();
+    let mut depth = 1usize;
+    let mut i = lparen + 1;
+    let mut arg_start = i;
+    while i < b.len() {
+        match b[i] {
+            b'"' => {
+                let (end, _) = scan_dm_string(src, i)?;
+                i = end;
+            }
+            b'/' if b.get(i + 1) == Some(&b'/') => {
+                while i < b.len() && b[i] != b'\n' {
+                    i += 1;
+                }
+            }
+            b'/' if b.get(i + 1) == Some(&b'*') => {
+                i += 2;
+                while i + 1 < b.len() && !(b[i] == b'*' && b[i + 1] == b'/') {
+                    i += 1;
+                }
+                i += 2;
+            }
+            b'(' | b'[' | b'{' => {
+                depth += 1;
+                i += 1;
+            }
+            b')' | b']' | b'}' => {
+                depth -= 1;
+                if depth == 0 {
+                    ranges.push((arg_start, i));
+                    return Some(ranges);
+                }
+                i += 1;
+            }
+            b',' if depth == 1 => {
+                ranges.push((arg_start, i));
+                i += 1;
+                arg_start = i;
+            }
+            _ => i += 1,
+        }
+    }
+    None
+}
+
+/// 在 [start, end) 区间里找第一个 `"` 的字节位置。
+fn find_first_quote(src: &str, start: usize, end: usize) -> Option<usize> {
+    let b = src.as_bytes();
+    let mut i = start;
+    while i < end {
+        if b[i] == b'"' {
+            return Some(i);
+        }
+        i += 1;
+    }
+    None
+}
+
+/// 从开引号位置扫描一个 DM 字符串字面量。
+/// 返回 (闭引号之后的字节位置, 各 `[...]` 内插表达式源码)。未闭合/不平衡返回 None。
+/// 仅 ASCII 定界符参与判定（`"` `[` `]` `\`），中文等多字节字符按字节跳过，切片边界恒在 ASCII 处。
+fn scan_dm_string(src: &str, start: usize) -> Option<(usize, Vec<String>)> {
+    let b = src.as_bytes();
+    if b.get(start) != Some(&b'"') {
         return None;
     }
+    let mut args: Vec<String> = Vec::new();
     let mut i = start + 1;
-    while i < bytes.len() {
-        match bytes[i] {
-            b'\\' => i += 2,
-            b'[' => return None, // 内插字符串，v1 跳过
-            b'"' => return Some(i + 1),
-            b'\n' => return None,
+    while i < b.len() {
+        match b[i] {
+            b'\\' => i += 2, // 转义（含行末续行 \<newline>）
+            b'"' => return Some((i + 1, args)),
+            b'[' => {
+                let inner_start = i + 1;
+                let mut depth = 1usize;
+                let mut j = inner_start;
+                while j < b.len() && depth > 0 {
+                    match b[j] {
+                        b'\\' => j += 2,
+                        b'[' => {
+                            depth += 1;
+                            j += 1;
+                        }
+                        b']' => {
+                            depth -= 1;
+                            if depth == 0 {
+                                break;
+                            }
+                            j += 1;
+                        }
+                        b'"' => {
+                            // 跳过内插里的嵌套字符串
+                            j += 1;
+                            while j < b.len() {
+                                match b[j] {
+                                    b'\\' => j += 2,
+                                    b'"' => {
+                                        j += 1;
+                                        break;
+                                    }
+                                    _ => j += 1,
+                                }
+                            }
+                        }
+                        _ => j += 1,
+                    }
+                }
+                if depth != 0 {
+                    return None;
+                }
+                args.push(src[inner_start..j].trim().to_string());
+                i = j + 1;
+            }
             _ => i += 1,
         }
     }

@@ -286,40 +286,63 @@ fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog) {
 // ---- 占位符模板构建 ----
 
 /// 把一个表达式（字符串/内插串/字符串拼接）转为带 {0}/{1} 占位符的模板。
-/// 非文本（纯变量/调用）返回 None。纯标签/标点（无字母）也返回 None。
+/// 非文本（纯变量/调用）返回 None。整体无字母（纯标签/标点）也返回 None。
+///
+/// 注意：本函数是「抽取 key」与「改写 key」的**唯一真相来源**（rewrite.rs 也调用它），
+/// 二者必须用同一函数算 key 才能保证目录命中。
 pub(crate) fn build_template(expr: &Expression) -> Option<String> {
     let mut out = String::new();
     let mut idx = 0usize;
-    let mut has_real = false;
-    let is_text = render(expr, &mut out, &mut idx, &mut has_real);
-    if is_text && has_real {
+    let is_text = render(expr, &mut out, &mut idx);
+    // 整体去标签后需含字母，避免把纯标签/纯占位符当作可翻译文本。
+    if is_text && strip_tags(&out).chars().any(|c| c.is_alphabetic()) {
         Some(out)
     } else {
         None
     }
 }
 
-/// 返回该表达式是否为「文本节点」（字符串/内插/字符串相加）。
-/// 文本节点把字面量写入 out；其中嵌入的动态值写成 {N} 占位符。
-/// 非文本节点（变量、调用、带 follow 的取值等）在拼接语境里写成 {N} 并返回 false。
-fn render(expr: &Expression, out: &mut String, idx: &mut usize, has_real: &mut bool) -> bool {
+/// 模板里的占位符个数（{0}/{1}… 顺序生成，这里数 `{` 紧跟数字的出现次数）。
+pub(crate) fn placeholder_count(template: &str) -> usize {
+    let b = template.as_bytes();
+    let mut n = 0usize;
+    let mut i = 0usize;
+    while i + 1 < b.len() {
+        if b[i] == b'{' && b[i + 1].is_ascii_digit() {
+            n += 1;
+        }
+        i += 1;
+    }
+    n
+}
+
+/// 返回该表达式是否为「文本节点」（字符串/内插/字符串相加，含括号包裹）。
+/// - 独立字符串字面量：纯标签/纯标点（去标签后无字母）丢弃（如 span 包裹），否则原样写入；
+/// - 内插串：lead 与各段字面量**原样**写入（保留 "!" 等标点），内插表达式写成 {N}；
+/// - 其余（变量、调用、带 follow 取值等）：在拼接语境里写成 {N} 占位符并返回 false。
+fn render(expr: &Expression, out: &mut String, idx: &mut usize) -> bool {
     match expr {
         Expression::Base { term, follow } if follow.is_empty() => match &term.elem {
             Term::String(s) => {
-                append_literal(s, out, has_real);
+                // 独立字符串：仅当去标签后含字母才保留（丢弃 span 包裹、纯标点独立串）。
+                if strip_tags(s).chars().any(|c| c.is_alphabetic()) {
+                    out.push_str(s);
+                }
                 true
             }
             Term::InterpString(lead, parts) => {
-                append_literal(lead.as_str(), out, has_real);
+                out.push_str(lead.as_str());
                 for (opt, lit) in parts.iter() {
                     if opt.is_some() {
                         out.push_str(&format!("{{{}}}", *idx));
                         *idx += 1;
                     }
-                    append_literal(lit, out, has_real);
+                    out.push_str(lit);
                 }
                 true
             }
+            // 括号包裹（如 span_* 宏展开为 ("<span>" + str + "</span>")）：穿透进去。
+            Term::Expr(inner) => render(inner, out, idx),
             _ => {
                 out.push_str(&format!("{{{}}}", *idx));
                 *idx += 1;
@@ -331,8 +354,8 @@ fn render(expr: &Expression, out: &mut String, idx: &mut usize, has_real: &mut b
             lhs,
             rhs,
         } => {
-            let l = render(lhs, out, idx, has_real);
-            let r = render(rhs, out, idx, has_real);
+            let l = render(lhs, out, idx);
+            let r = render(rhs, out, idx);
             l || r
         }
         _ => {
@@ -343,18 +366,8 @@ fn render(expr: &Expression, out: &mut String, idx: &mut usize, has_real: &mut b
     }
 }
 
-/// 写入一段字面量；纯 HTML 标签/无字母的片段丢弃（如 span 包裹）。含字母则置 has_real。
-fn append_literal(s: &str, out: &mut String, has_real: &mut bool) {
-    let stripped = strip_tags(s);
-    if !stripped.chars().any(|c| c.is_alphabetic()) {
-        return; // 纯标签/标点：丢弃
-    }
-    out.push_str(s);
-    *has_real = true;
-}
-
 /// 去掉 `<...>` 标签后的文本（用于判断片段是否只是标签）。
-fn strip_tags(s: &str) -> String {
+pub(crate) fn strip_tags(s: &str) -> String {
     let mut result = String::new();
     let mut in_tag = false;
     for c in s.chars() {
