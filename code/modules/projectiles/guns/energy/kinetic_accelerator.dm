@@ -71,7 +71,7 @@
 	. = ..()
 	if(max_mod_capacity)
 		. += LANG("obj.15082120", list(get_remaining_mod_capacity()))
-		. += span_info("You can use a <b>crowbar</b> to remove all modules or <b>right-click</b> with an empty hand to remove a specific one.")
+		. += span_info(LANG("obj.2abed7d3", null))
 		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
 			. += span_notice("There is \a [modkit_upgrade] installed, using <b>[modkit_upgrade.cost]%</b> capacity.")
 
@@ -303,7 +303,7 @@
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
 	. = ..()
-	. += span_notice("Occupies <b>[cost]%</b> of mod capacity.")
+	. += span_notice(LANG("obj.e294c885", list(cost)))
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/gun/energy/recharge/kinetic_accelerator) && !issilicon(user))

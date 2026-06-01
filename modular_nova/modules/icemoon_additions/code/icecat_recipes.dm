@@ -49,7 +49,7 @@
 /obj/item/anointing_oil/examine(mob/user)
 	. = ..()
 	if(is_species(user, /datum/species/human/felinid/primitive))
-		. += span_info("Using this on the local wildlife will allow you to give them a name.")
+		. += span_info(LANG("obj.5fc4a959", null))
 
 /datum/crafting_recipe/anointing_oil
 	name = "Anointing Bloodresin"
@@ -173,7 +173,7 @@
 /obj/item/frozen_breath/examine(mob/user)
 	. = ..()
 	if(is_species(user, /datum/species/human/felinid/primitive))
-		. += span_info("Using this on a pair of organic lungs transforms them into hardy lungs. This will remove any other special features from the old lungs, if there were any.")
+		. += span_info(LANG("obj.4fd90160", null))
 
 /datum/crafting_recipe/frozen_breath
 	name = "Frozen Breath"

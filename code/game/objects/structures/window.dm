@@ -951,7 +951,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 /obj/structure/window/paperframe/examine(mob/user)
 	. = ..()
 	if(atom_integrity < max_integrity)
-		. += span_info("It looks a bit damaged, you may be able to fix it with some <b>paper</b>.")
+		. += span_info(LANG("obj.1f86b375", null))
 
 /obj/structure/window/paperframe/spawn_debris(location)
 	. = list(new /obj/item/stack/sheet/mineral/wood(location))

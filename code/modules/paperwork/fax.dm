@@ -117,7 +117,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 /obj/machinery/fax/examine()
 	. = ..()
 	if(jammed)
-		. += span_notice("Its output port is jammed and needs cleaning.")
+		. += span_notice(LANG("obj.20cc52f7", null))
 
 
 /obj/machinery/fax/on_set_is_operational(old_value)

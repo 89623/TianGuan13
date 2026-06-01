@@ -224,9 +224,9 @@
 	. = ..()
 	if(stat == DEAD)
 		if(HAS_MIND_TRAIT(user, TRAIT_NAIVE))
-			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be asleep.")
+			. += span_deadsay(LANG("mob.e912a0a2", list(p_they(), p_s())))
 		else
-			. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be dead.")
+			. += span_deadsay(LANG("mob.113d9601", list(p_they(), p_s())))
 
 /mob/living/simple_animal/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))

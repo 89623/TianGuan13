@@ -24,7 +24,7 @@
 
 /obj/item/rag/examine(mob/user)
 	. = ..()
-	. += span_notice("Adding [/datum/reagent/water::name] or [/datum/reagent/space_cleaner::name] to it would make it a fair bit better at scrubbing.")
+	. += span_notice(LANG("obj.46126de1", list(/datum/reagent/water::name, /datum/reagent/space_cleaner::name)))
 	switch(blood_level)
 		if(1 to 4)
 			. += span_info("The [name] is a bit dirty, but it should still be good for cleaning.")

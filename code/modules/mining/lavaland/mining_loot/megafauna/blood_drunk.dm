@@ -50,9 +50,9 @@
 
 /obj/item/melee/cleaving_saw/examine(mob/user)
 	. = ..()
-	. += span_notice("It is [HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
-	. += span_notice("Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.")
-	. += span_notice("Transforming it immediately after an attack causes the next attack to come out faster.")
+	. += span_notice(LANG("obj.62eee539", list(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed")))
+	. += span_notice(LANG("obj.ed1cdbe5", null))
+	. += span_notice(LANG("obj.d1382130", null))
 
 /obj/item/melee/cleaving_saw/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is [HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))

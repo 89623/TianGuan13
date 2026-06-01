@@ -54,10 +54,10 @@
 
 /obj/item/grenade/iedcasing/examine(mob/user)
 	. = ..()
-	. += span_notice("Using it in-hand activates the assembly, which means timers start timing and so on.")
-	. += span_notice("Using it off-hand allows you to configure the assembly, if possible.")
+	. += span_notice(LANG("obj.6ac8a0ed", null))
+	. += span_notice(LANG("obj.ab7d1b5b", null))
 	if(contents.len > 1) // above 1, so more than just the activator
-		. += span_warning("It seems to have something stuffed in it.")
+		. += span_warning(LANG("obj.b9a2ca47", null))
 	if(isnull(activator))
 		return
 	. += activator.examine(user)
@@ -214,10 +214,10 @@
 /obj/item/sliced_pipe/examine(mob/user)
 	. = ..()
 	if(!wires_are_in)
-		. += span_notice("You could stuff something in, or fill it with fuel or some other volatile chemical..")
-		. += span_notice("Afterwards, add some cable.")
+		. += span_notice(LANG("obj.49ef3fb9", null))
+		. += span_notice(LANG("obj.0532e684", null))
 	else
-		. += span_notice("The wires are just dangling from it, you need some sort of <i> activating assembly</i>.")
+		. += span_notice(LANG("obj.f721afd3", null))
 
 /obj/item/sliced_pipe/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!wires_are_in)

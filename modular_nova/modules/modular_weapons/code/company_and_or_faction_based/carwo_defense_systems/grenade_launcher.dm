@@ -59,8 +59,8 @@
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/examine(mob/user)
 	. = ..()
 
-	. += span_notice("With <b>Right Click</b> you can set the range that shells will detonate at.")
-	. += span_notice("A small indicator in the sight notes the current detonation range is: <b>[target_range]</b>.")
+	. += span_notice(LANG("obj.0c8e68cc", null))
+	. += span_notice(LANG("obj.ba3f81e4", list(target_range)))
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with || !user)

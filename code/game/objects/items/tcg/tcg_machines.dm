@@ -118,12 +118,12 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 /obj/machinery/trading_card_holder/examine(mob/user)
 	. = ..()
 	if(card_template)
-		. += span_notice("There is currently a [card_template.name] card inserted.")
+		. += span_notice(LANG("obj.637d3f91", list(card_template.name)))
 	else
 		if(current_summon)
-			. += span_notice("There is currently a blank card inserted.")
+			. += span_notice(LANG("obj.4262f4d1", null))
 		else
-			. += span_notice("There is no card currently inserted.")
+			. += span_notice(LANG("obj.e358c553", null))
 
 /obj/machinery/trading_card_holder/red
 	summon_offset_y = -1
@@ -448,7 +448,7 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 
 /obj/effect/trading_card_panel/examine(mob/user)
 	. = ..()
-	. += span_notice("It is currently showing [gems] out of [gem_slots] [gem_title].")
+	. += span_notice(LANG("obj.d91c2943", list(gems, gem_slots, gem_title)))
 
 ///A variant of the display panel for life shards, this one is set up to display two columns.
 /obj/effect/trading_card_panel/health

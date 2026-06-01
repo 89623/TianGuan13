@@ -393,7 +393,7 @@
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
 	if (can_stick)
-		. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
+		. += span_notice(LANG("obj.9387c5d1", null))
 
 /obj/item/food/butter/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(item, /obj/item/stack/rods) || !can_stick)

@@ -15,7 +15,7 @@
 
 /obj/item/multitool/circuit/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [marked_atom? "a" : "no"] marked entity registered.")
+	. += span_notice(LANG("obj.e73ac622", list(marked_atom? "a" : "no")))
 
 /obj/item/multitool/circuit/attack_self(mob/user, modifiers)
 	. = ..()

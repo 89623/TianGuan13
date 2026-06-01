@@ -330,12 +330,12 @@
 	. = ..()
 	var/has_buckled_mob = has_buckled_mobs()
 	if(has_buckled_mob)
-		. += span_notice("<b>Alt-Click to unbuckle \the [buckled_mobs[1]]</b>")
+		. += span_notice(LANG("obj.1fd4c3bd", list(buckled_mobs[1])))
 	if (obj_flags & EMAGGED)
-		. += span_warning("It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...")
+		. += span_warning(LANG("obj.56eb1319", null))
 	else if (!has_buckled_mob && attached_item) //Can't removed the syndicate toolbox!
-		. += span_notice("<b>Alt-Click to remove \the [attached_item]</b>")
-	. += span_notice("<b>Click to open control interface.</b>")
+		. += span_notice(LANG("obj.27a6e29c", list(attached_item)))
+	. += span_notice(LANG("obj.62969e7f", null))
 
 /**
  * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
@@ -409,13 +409,13 @@
 /obj/item/training_toolbox/examine(mob/user)
 	. = ..()
 	if(!in_range(src, user) && !isobserver(user))
-		. += span_notice("You can see a display on the back. You'll need to get closer to read it, though.")
+		. += span_notice(LANG("obj.0474638f", null))
 		return
-	. += span_notice("A display on the back reads:")
-	. += span_notice("Total Hits: <b>[total_hits]</b>")
+	. += span_notice(LANG("obj.0ec29f44", null))
+	. += span_notice(LANG("obj.3d83b186", list(total_hits)))
 	if (lap_hits != total_hits)
-		. += span_notice("Current Lap: <b>[lap_hits]</b>")
-	. += span_notice("<b>Alt-Click to 'Lap' the hit counter.</b>")
+		. += span_notice(LANG("obj.38025150", list(lap_hits)))
+	. += span_notice(LANG("obj.d96c726c", null))
 
 #undef MIN_RANGE
 #undef MIN_SPEED

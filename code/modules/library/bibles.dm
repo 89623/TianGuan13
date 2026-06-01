@@ -110,12 +110,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/examine(mob/user)
 	. = ..()
 	if(deity_name)
-		. += span_notice("This bible has been approved by [deity_name].")
+		. += span_notice(LANG("obj.a6172045", list(deity_name)))
 	if(user.mind?.holy_role)
 		if(GLOB.chaplain_altars.len)
-			. += span_notice("[src] has an expansion pack to replace any broken Altar.")
+			. += span_notice(LANG("obj.6ee0fe0b", list(src)))
 		else
-			. += span_notice("[src] can be unpacked by hitting the floor of a holy area with it.")
+			. += span_notice(LANG("obj.16fc0dcb", list(src)))
 
 /obj/item/book/bible/get_attack_self_context(mob/living/user)
 	if(can_set_bible_skin(user))
@@ -388,7 +388,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/syndicate/examine(mob/user)
 	. = ..()
 	if(owner_name)
-		. += span_warning("The name [owner_name] is written in blood inside the cover.")
+		. += span_warning(LANG("obj.eb9c8cd4", list(owner_name)))
 
 /obj/item/book/bible/syndicate/get_attack_self_context(mob/living/user)
 	if(uses)

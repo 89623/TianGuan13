@@ -351,7 +351,7 @@
 
 /obj/item/spear/explosive/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to set your war cry.")
+	. += span_notice(LANG("obj.39082dd4", null))
 
 /obj/item/spear/explosive/click_alt(mob/user)
 	var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)

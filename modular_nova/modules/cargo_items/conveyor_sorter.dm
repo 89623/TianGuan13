@@ -21,10 +21,10 @@
 
 /obj/item/conveyor_sorter/examine(mob/user)
 	. = ..()
-	. += span_notice("Use it to place down a conveyor sorter, up to a limit of <b>[max_sorters]</b>.")
-	. += span_notice("This sorter can sort up to <b>[max_items]</b> Items.")
-	. += span_notice("Use Alt-Click to reset the sorting list.")
-	. += span_notice("Attack things to attempt to add to the sorting list.")
+	. += span_notice(LANG("obj.12799f69", list(max_sorters)))
+	. += span_notice(LANG("obj.bce6a8f7", list(max_items)))
+	. += span_notice(LANG("obj.4a4635d4", null))
+	. += span_notice(LANG("obj.2e88eeab", null))
 
 /obj/item/conveyor_sorter/attack_self(mob/user, modifiers)
 	if(length(spawned_sorters) >= max_sorters)
@@ -91,10 +91,10 @@
 
 /obj/effect/decal/conveyor_sorter/examine(mob/user)
 	. = ..()
-	. += span_notice("Attack with conveyor sorter lister to set the sorting list.")
-	. += span_notice("Slap with empty hands to change the sorting direction.")
-	. += span_notice("Alt-Click to reset the sorting list.")
-	. += span_notice("Ctrl-Click to remove.")
+	. += span_notice(LANG("obj.731f1dfd", null))
+	. += span_notice(LANG("obj.015554c2", null))
+	. += span_notice(LANG("obj.b23d38f0", null))
+	. += span_notice(LANG("obj.fbae40a6", null))
 
 /obj/effect/decal/conveyor_sorter/attack_hand(mob/living/user, list/modifiers)
 	var/user_choice = tgui_input_list(user, "Choose which direction to sort to!", "Direction choice", directions) // this would be cooler as a radial

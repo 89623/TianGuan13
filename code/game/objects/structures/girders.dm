@@ -50,9 +50,9 @@
 		if(GIRDER_TRAM)
 			. += span_notice("[src] is designed for tram usage. Deconstructed with a screwdriver!")
 	if (can_weld_apart)
-		. += span_notice("The frame looks weak enough to be <b>welded</b> apart.")
+		. += span_notice(LANG("obj.f754b687", null))
 	else
-		. += span_notice("The frame could be sliced apart with a <b>plasmacutter</b>.")
+		. += span_notice(LANG("obj.e88a9141", null))
 
 /obj/structure/girder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (user.combat_mode)

@@ -29,9 +29,9 @@
 
 /obj/item/sequence_scanner/examine(mob/user)
 	. = ..()
-	. += span_notice("Use primary attack to scan mutations, Secondary attack to scan genetic makeup")
+	. += span_notice(LANG("obj.1d555183", null))
 	if(LAZYLEN(genetic_makeup_buffer) > 0)
-		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
+		. += span_notice(LANG("obj.c2e66c2e", list(genetic_makeup_buffer["name"])))
 
 /obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/machinery/computer/dna_console))

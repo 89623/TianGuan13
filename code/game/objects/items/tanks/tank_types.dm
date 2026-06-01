@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Types of tanks!
  * Contains:
  * Oxygen
@@ -18,7 +19,7 @@
 
 /obj/item/tank/internals/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click the tank to toggle the valve.")
+	. += span_notice(LANG("obj.bf7896d5", null))
 
 /*
  * Oxygen
@@ -73,8 +74,8 @@
 
 /obj/item/tank/internals/anesthetic/examine(mob/user)
 	. = ..()
-	. += span_notice("A warning is etched into [src]...")
-	. += span_warning("There is no process in the body that uses N2O, so patients will exhale the N2O... exposing you to it. Make sure to work in a well-ventilated space to avoid sleepy mishaps.")
+	. += span_notice(LANG("obj.95a80980", list(src)))
+	. += span_warning(LANG("obj.8b22a804", null))
 
 /obj/item/tank/internals/anesthetic/pure
 	desc = "A tank with pure N2O. There is a warning sticker crudely slapped onto the tank."

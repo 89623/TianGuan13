@@ -430,7 +430,7 @@
 	if(can_adjust)
 		. += LANG("obj.617841c5", list(src, adjusted == ALT_STYLE ? "normally" : "casually"))
 	if(has_sensor == BROKEN_SENSORS)
-		. += span_warning("The medical sensors appear to be shorted out. You could repair it with some cabling.")
+		. += span_warning(LANG("obj.56fd7bc0", null))
 	else if(has_sensor > NO_SENSORS)
 		switch(sensor_mode)
 			if(SENSOR_OFF)

@@ -233,21 +233,21 @@
 
 	//Hacked
 	if(hacked)
-		. += span_warning("Its display is glowing red!")
+		. += span_warning(LANG("mob.fb95a4e0", null))
 
 	//Damaged
 	if(health != maxHealth)
 		if(health > maxHealth * 0.33) //Between maxHealth and about a third of maxHealth, between 30 and 10 for normal drones
-			. += span_warning("Its screws are slightly loose.")
+			. += span_warning(LANG("mob.aa0d27bf", null))
 		else //otherwise, below about 33%
-			. += span_boldwarning("Its screws are very loose!")
+			. += span_boldwarning(LANG("mob.34c83af0", null))
 
 	//Dead
 	if(stat == DEAD)
 		if(client)
-			. += span_deadsay("A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".")
+			. += span_deadsay(LANG("mob.deee784c", null))
 		else
-			. += span_deadsay("A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".")
+			. += span_deadsay(LANG("mob.422cef40", null))
 
 /mob/living/basic/drone/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt maintenance drones.
 	return -10

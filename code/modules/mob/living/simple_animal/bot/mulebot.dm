@@ -102,12 +102,12 @@
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		if(cell)
-			. += span_notice("[p_They()] [p_have()] \a [cell] installed.")
-			. += span_info("You can use a <b>crowbar</b> to remove it.")
+			. += span_notice(LANG("mob.d08cc23e", list(p_They(), p_have(), cell)))
+			. += span_info(LANG("mob.ada3b30b", null))
 		else
-			. += span_notice("[p_They()] [p_have()] an empty compartment where a <b>power cell</b> can be installed.")
+			. += span_notice(LANG("mob.ba25ca3c", list(p_They(), p_have())))
 	if(load) //observer check is so we don't show the name of the ghost that's sitting on it to prevent metagaming who's ded.
-		. += span_notice("\A [isobserver(load) ? "ghostly figure" : load] is on [p_their()] load platform.")
+		. += span_notice(LANG("mob.06bb8bcb", list(isobserver(load) ? "ghostly figure" : load, p_their())))
 
 
 /mob/living/simple_animal/bot/mulebot/Destroy()

@@ -52,11 +52,11 @@
 	if(open)
 		var/fruit_count = contents.len
 		if(fruit_count)
-			. += span_notice("It contains [fruit_count] fruit\s ready to be fermented.")
-			. += span_notice("[EXAMINE_HINT("Right-click")] to take them out of [src].")
-		. += span_notice("It is currently open, letting you fill it with fruits or reagents.")
+			. += span_notice(LANG("obj.4efe80a5", list(fruit_count)))
+			. += span_notice(LANG("obj.bd271499", list(EXAMINE_HINT("Right-click"), src)))
+		. += span_notice(LANG("obj.c05b560b", null))
 	else
-		. += span_notice("It is currently closed, letting it ferment fruits or draw reagents from its tap.")
+		. += span_notice(LANG("obj.15d570d6", null))
 
 /obj/structure/fermenting_barrel/attackby(obj/item/object, mob/user, list/modifiers, list/attack_modifiers)
 	if(open)

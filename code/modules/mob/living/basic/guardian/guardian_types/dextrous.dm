@@ -42,7 +42,7 @@
 	. = ..()
 	if(isnull(internal_storage) || (internal_storage.item_flags & ABSTRACT))
 		return
-	. += span_info("It is holding [internal_storage.examine_title(user)] in its internal storage.")
+	. += span_info(LANG("mob.30690125", list(internal_storage.examine_title(user))))
 
 /mob/living/basic/guardian/dextrous/manifest_effects()
 	. = ..()

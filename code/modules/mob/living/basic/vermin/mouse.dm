@@ -99,15 +99,15 @@
 	var/sameside = user.faction_check_atom(src, exact_match = TRUE)
 	if(isregalrat(user))
 		if(sameside)
-			. += span_notice("This rat serves under you.")
+			. += span_notice(LANG("mob.363d4897", null))
 		else
-			. += span_warning("This peasant serves a different king! Strike [p_them()] down!")
+			. += span_warning(LANG("mob.e4d451c1", list(p_them())))
 
 	else if(user != src && ismouse(user))
 		if(sameside)
-			. += span_notice("You both serve the same king.")
+			. += span_notice(LANG("mob.a1923a25", null))
 		else
-			. += span_warning("This fool serves a different king!")
+			. += span_warning(LANG("mob.81765dd7", null))
 
 /// Kills the rat and changes its icon state to be splatted (bloody).
 /mob/living/basic/mouse/proc/splat()
@@ -366,7 +366,7 @@
 /obj/item/food/deadmouse/examine(mob/user)
 	. = ..()
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
-		. += span_warning("[p_Theyre()] dripping with fuel and smells terrible.")
+		. += span_warning(LANG("obj.ff0cf2a8", list(p_Theyre())))
 
 ///Spawn a new mouse from this dead mouse item when hit by a lazarus injector and conditions are met.
 /obj/item/food/deadmouse/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)

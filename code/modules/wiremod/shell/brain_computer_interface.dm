@@ -279,9 +279,9 @@
 /obj/machinery/bci_implanter/examine(mob/user)
 	. = ..()
 	if (isnull(bci_to_implant))
-		. += span_notice("There is no BCI inserted.")
+		. += span_notice(LANG("obj.68b0b5e0", null))
 	else
-		. += span_notice("Right-click to remove current BCI.")
+		. += span_notice(LANG("obj.cd727f43", null))
 
 /obj/machinery/bci_implanter/proc/set_busy(status, working_icon)
 	busy = status

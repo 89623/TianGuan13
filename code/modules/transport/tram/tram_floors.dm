@@ -21,7 +21,7 @@
 
 /turf/open/floor/tram/examine(mob/user)
 	. += ..()
-	. += span_notice("The reinforcement bolts are [EXAMINE_HINT("wrenched")] firmly in place. Use a [EXAMINE_HINT("wrench")] to remove the plate.")
+	. += span_notice(LANG("turf.f86d5448", list(EXAMINE_HINT("wrenched"), EXAMINE_HINT("wrench"))))
 
 /turf/open/floor/tram/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stack/thermoplastic))
@@ -120,8 +120,8 @@
 /turf/open/floor/tram/plate/energized/examine(mob/user)
 	. = ..()
 	if(broken || burnt)
-		. += span_danger("It looks damaged and the electrical components exposed!")
-		. += span_notice("The plate can be repaired using a [EXAMINE_HINT("titanium sheet")].")
+		. += span_danger(LANG("turf.e7463f16", null))
+		. += span_notice(LANG("turf.99ed8514", list(EXAMINE_HINT("titanium sheet"))))
 
 /turf/open/floor/tram/plate/energized/broken_states()
 	return list("energized_plate_damaged")
@@ -220,10 +220,10 @@
 	. = ..()
 
 	if(secured)
-		. += span_notice("It is secured with a set of [EXAMINE_HINT("screws.")] To remove tile use a [EXAMINE_HINT("screwdriver.")]")
+		. += span_notice(LANG("obj.a578c58d", list(EXAMINE_HINT("screws."), EXAMINE_HINT("screwdriver."))))
 	else
-		. += span_notice("You can [EXAMINE_HINT("crowbar")] to remove the tile.")
-		. += span_notice("It can be re-secured using a [EXAMINE_HINT("screwdriver.")]")
+		. += span_notice(LANG("obj.ff2110d8", list(EXAMINE_HINT("crowbar"))))
+		. += span_notice(LANG("obj.6fd5b2ea", list(EXAMINE_HINT("screwdriver."))))
 
 /obj/structure/thermoplastic/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -338,4 +338,4 @@
 				damage_value = "mediocre"
 		if(!damage_value)
 			return
-		. += span_notice("Those could work as a [damage_value] throwing weapon.")
+		. += span_notice(LANG("obj.9a8a884d", list(damage_value)))

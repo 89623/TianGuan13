@@ -80,15 +80,15 @@
 /obj/machinery/satellite/meteor_shield/examine(mob/user)
 	. = ..()
 	if(active)
-		. += span_notice("It is currently active. You can interact with it to shut it down.")
+		. += span_notice(LANG("obj.ec926d96", null))
 		if(obj_flags & EMAGGED)
-			. += span_warning("Rather than the usual sounds of beeps and pings, it produces a weird and constant hiss of white noise…")
+			. += span_warning(LANG("obj.dcc51c76", null))
 		else
-			. += span_notice("It emits periodic beeps and pings as it communicates with the satellite network.")
+			. += span_notice(LANG("obj.cafef0d6", null))
 	else
-		. += span_notice("It is currently disabled. You can interact with it to set it up.")
+		. += span_notice(LANG("obj.6c010540", null))
 		if(obj_flags & EMAGGED)
-			. += span_warning("But something seems off about it...?")
+			. += span_warning(LANG("obj.cbd64c27", null))
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)
 	for(var/turf/T in get_line(src,meteor))

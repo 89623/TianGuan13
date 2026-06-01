@@ -273,7 +273,7 @@
 
 /obj/item/storage/bag/plants/portaseeder/examine(mob/user)
 	. = ..()
-	. += span_notice("Ctrl-click to activate seed extraction.")
+	. += span_notice(LANG("obj.e83b8901", null))
 
 /obj/item/storage/bag/plants/portaseeder/item_ctrl_click(mob/user)
 	for(var/obj/item/plant in contents)

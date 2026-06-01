@@ -47,12 +47,12 @@
 
 /obj/structure/destructible/cult/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] is [anchored ? "secured to":"unsecured from"] the floor.")
+	. += span_notice(LANG("obj.e8ed8cae", list(src, anchored ? "secured to":"unsecured from")))
 	if(is_cultist_check(user) || isobserver(user))
 		if(cult_examine_tip)
 			. += span_cult(cult_examine_tip)
 		if(!COOLDOWN_FINISHED(src, use_cooldown_duration))
-			. += span_cult_italic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown_duration))]</b>.")
+			. += span_cult_italic(LANG("obj.e22cbd81", list(src, DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown_duration)))))
 
 /obj/structure/destructible/cult/set_anchored(anchorvalue)
 	. = ..()

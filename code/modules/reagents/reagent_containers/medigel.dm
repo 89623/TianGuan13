@@ -123,7 +123,7 @@
 /obj/item/reagent_containers/medigel/synthflesh/examine(mob/user)
 	. = ..()
 	if(reagents.total_volume >= 60)
-		. += span_info("One full bottle can restore a corpse husked by burns.")
+		. += span_info(LANG("obj.1bd2a6d8", null))
 
 /obj/item/reagent_containers/medigel/synthflesh/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(iscarbon(interacting_with) && reagents?.total_volume)

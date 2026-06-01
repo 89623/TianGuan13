@@ -42,7 +42,7 @@
 	if(rounds)
 		. += LANG("obj.3205e5c3", list(rounds > 1?"are":"is", rounds, ammo_type, rounds > 1?"s":""))
 	else
-		. += span_notice("Use in-hand to fold it into a sheet of iron.")
+		. += span_notice(LANG("obj.d4be4f0c", null))
 
 /obj/item/mecha_ammo/incendiary
 	name = "incendiary ammo box"

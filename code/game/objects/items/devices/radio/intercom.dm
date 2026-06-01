@@ -49,27 +49,26 @@
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()
-	. += span_notice("Use [MODE_TOKEN_INTERCOM] when nearby to speak into it.")
+	. += span_notice(LANG("obj.24e4bcd8", list(MODE_TOKEN_INTERCOM)))
 	if(!unscrewed)
-		. += span_notice("It's <b>screwed</b> and secured to the wall.")
+		. += span_notice(LANG("obj.2fc65237", null))
 	else
-		. += span_notice("It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.")
+		. += span_notice(LANG("obj.43888722", null))
 
 	if(anonymize)
-		. += span_notice("Speaking through this intercom will anonymize your voice.")
+		. += span_notice(LANG("obj.b6786468", null))
 
 	if(freqlock == RADIO_FREQENCY_UNLOCKED)
 		if((obj_flags & EMAGGED) && initial(freqlock) == RADIO_FREQENCY_EMAGGABLE_LOCK)
-			. += span_warning("Its frequency lock has been shorted...")
+			. += span_warning(LANG("obj.da1b7679", null))
 	else
-		. += span_notice("It has a frequency lock set to [frequency/10].")
+		. += span_notice(LANG("obj.5027c3ce", list(frequency/10)))
 
 	if(keylock == RADIO_KEYSLOT_UNLOCKED)
 		if((obj_flags & EMAGGED) && initial(keylock) == RADIO_KEYSLOT_EMAGGABLE_LOCK)
-			. += span_warning("Its keyslot's security screws have been uplifted...")
+			. += span_warning(LANG("obj.50431995", null))
 	else
-		. += span_notice("The screws in its keyslot are [keylock == RADIO_KEYSLOT_LOCKED ? "stripped" : "fastened tight"], \
-			preventing the removal of its encryption key[keylock == RADIO_KEYSLOT_LOCKED ? "" : " without some kind of magnet"].")
+		. += span_notice(LANG("obj.d32d4532", list(keylock == RADIO_KEYSLOT_LOCKED ? "stripped" : "fastened tight", keylock == RADIO_KEYSLOT_LOCKED ? "" : " without some kind of magnet")))
 
 /obj/item/radio/intercom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

@@ -37,7 +37,7 @@
 
 /obj/item/plantbag_of_holding_inert/examine_more(mob/user)
 	. = ..()
-	. += span_smallnoticeital("<i>Surely you don't have to bother science with this, right..?</i>\n")
+	. += span_smallnoticeital(LANG("obj.2d0a3695", null))
 
 //So while we CAN use a real refined bluespace core, we can also use a goofy botany-only "bluespace core" as well
 /datum/crafting_recipe/botany_bluespace_core

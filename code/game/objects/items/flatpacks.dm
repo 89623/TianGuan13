@@ -44,13 +44,13 @@
 		return
 
 	if(loc == user)
-		. += span_warning("You can't deploy while holding it in your hand.")
+		. += span_warning(LANG("obj.eb9843bd", null))
 	else if(isturf(loc))
 		var/turf/location = loc
 		if(!isopenturf(location))
-			. += span_warning("Can't deploy in this location")
+			. += span_warning(LANG("obj.23df1d7b", null))
 		else if(location.is_blocked_turf(source_atom = src))
-			. += span_warning("No space for deployment")
+			. += span_warning(LANG("obj.5296e4f7", null))
 
 /obj/item/flatpack/multitool_act(mob/living/user, obj/item/tool)
 	. = NONE

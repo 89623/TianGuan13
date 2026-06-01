@@ -423,7 +423,7 @@
 
 /obj/item/clothing/mask/gas/nightlight/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to adjust it.")
+	. += span_notice(LANG("obj.10c89ab8", list(src)))
 
 // Donation reward for Farsighted Nightlight
 /obj/item/clothing/mask/gas/nightlight/fir22
@@ -1003,7 +1003,7 @@
 
 /obj/item/clothing/mask/gas/signalis_gaiter/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to adjust it.")
+	. += span_notice(LANG("obj.10c89ab8", list(src)))
 
 // Donation reward for Koruu
 /datum/atom_skin/bodysuit_koruu
@@ -1075,7 +1075,7 @@
 
 /obj/item/clothing/mask/gas/psycho_malice/examine(mob/user)
 	. = ..()
-	. += span_notice("You can toggle its ability to muffle your TTS voice with <b>control click</b>.")
+	. += span_notice(LANG("obj.c9e60429", null))
 
 /obj/item/clothing/mask/gas/psycho_malice/item_ctrl_click(mob/user)
 	if(!isliving(user))
@@ -1633,7 +1633,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/korpstech, 32)
 
 /obj/item/clothing/accessory/hypno_watch/examine()
 	. = ..()
-	. += span_boldwarning("Who knows what it could be used for?")
+	. += span_boldwarning(LANG("obj.01a32254", null))
 
 // Donation reward for BoisterousBeebz
 

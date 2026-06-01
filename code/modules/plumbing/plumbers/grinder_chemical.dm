@@ -22,7 +22,7 @@
 /obj/machinery/plumbing/grinder_chemical/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Use empty hand to change operation mode. Currently [grinding ? "Grinding" : "Juicing"]")
+	. += span_notice(LANG("obj.1773765d", list(grinding ? "Grinding" : "Juicing")))
 
 /**
  * Check if the user can interact with the grinder

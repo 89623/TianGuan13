@@ -79,9 +79,9 @@
 /obj/structure/railing/examine(mob/user)
 	. = ..()
 	if(anchored == TRUE)
-		. += span_notice("The railing is <b>bolted</b> to the floor.")
+		. += span_notice(LANG("obj.a9695c8f", null))
 	else
-		. += span_notice("The railing is <i>unbolted</i> from the floor and can be deconstructed with <b>wirecutters</b>.")
+		. += span_notice(LANG("obj.5b307d06", null))
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	..()

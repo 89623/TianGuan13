@@ -32,7 +32,7 @@
 /obj/item/gift/examine(mob/user)
 	. = ..()
 	if(HAS_MIND_TRAIT(user, TRAIT_PRESENT_VISION) || isobserver(user))
-		. += span_notice("It contains \a [initial(contains_type.name)].")
+		. += span_notice(LANG("obj.eaca0139", list(initial(contains_type.name))))
 
 /obj/item/gift/attack_self(mob/user)
 	if(HAS_MIND_TRAIT(user, TRAIT_CANNOT_OPEN_PRESENTS))

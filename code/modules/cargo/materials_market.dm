@@ -363,12 +363,12 @@
 
 	var/datum/material/export_mat = custom_materials[1]
 	var/quantity = custom_materials[export_mat] / SHEET_MATERIAL_AMOUNT
-	. += span_notice("\The [src] is worth [quantity * export_value] [MONEY_SYMBOL], from selling [quantity] sheets of [export_mat.name].")
+	. += span_notice(LANG("obj.2b7be03c", list(src, quantity * export_value, MONEY_SYMBOL, quantity, export_mat.name)))
 
 	if(fluid)
-		. += span_warning("\The [src] is currently liquid! Its value is based on the market price.")
+		. += span_warning(LANG("obj.5ea310a2", list(src)))
 	else
-		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before its value becomes liquid!")
+		. += span_notice(LANG("obj.679c8ca4", list(src, span_boldnotice("locked in"), span_boldnotice("Sell it"))))
 
 /obj/item/stock_block/proc/value_warning()
 	visible_message(span_warning(LANG("obj.cc98a884", list(src))))

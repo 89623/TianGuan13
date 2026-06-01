@@ -48,7 +48,7 @@
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Outputting <b>[efficiency]%</b> of meat after <b>[gibtime*0.1]</b> seconds of processing.")
+		. += span_notice(LANG("obj.4f41ff84", list(efficiency, gibtime*0.1)))
 		for(var/datum/stock_part/servo/servo in component_parts)
 			if(servo.tier >= 2)
 				. += span_notice("[src] has been upgraded to process inorganic materials.")

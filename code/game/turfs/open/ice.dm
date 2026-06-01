@@ -41,7 +41,7 @@
 /turf/open/misc/ice/examine(mob/user)
 	. = ..()
 	if(can_make_hole)
-		. += span_info("You could use a [EXAMINE_HINT("shovel")] or a [EXAMINE_HINT("pick")] to dig a fishing hole here.")
+		. += span_info(LANG("turf.9746b9b2", list(EXAMINE_HINT("shovel"), EXAMINE_HINT("pick"))))
 
 /turf/open/misc/ice/attack_animal(mob/living/animal, list/modifiers)
 	. = ..()

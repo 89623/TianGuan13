@@ -35,7 +35,7 @@
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
 	if(screen_on)
-		. += span_notice("Alt-click to close it.")
+		. += span_notice(LANG("obj.9e98fdd4", null))
 
 /obj/item/modular_computer/laptop/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()

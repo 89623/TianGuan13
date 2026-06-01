@@ -52,13 +52,13 @@
 /obj/item/melee/powerfist/examine(mob/user)
 	. = ..()
 	if(!in_range(user, src))
-		. += span_notice("You'll need to get closer to see any more.")
+		. += span_notice(LANG("obj.019d2a69", null))
 		return
 	if(tank)
-		. += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
-		. += span_notice("Can be removed with a <b>screwdriver</b>.")
+		. += span_notice(LANG("obj.42dd9fda", list(icon2html(tank, user), tank)))
+		. += span_notice(LANG("obj.db598e2e", null))
 
-	. += span_notice("Use a <b>wrench</b> to change the valve strength. Current strength is at <b>[pressure_setting_to_text(fist_pressure_setting)]</b> level.")
+	. += span_notice(LANG("obj.ffe2641a", list(pressure_setting_to_text(fist_pressure_setting))))
 
 /obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
 	fist_pressure_setting = fist_pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : fist_pressure_setting + 1

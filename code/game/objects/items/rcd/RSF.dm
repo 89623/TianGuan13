@@ -68,7 +68,7 @@ RSF
 
 /obj/item/rsf/examine(mob/user)
 	. = ..()
-	. += span_notice("It currently holds [matter]/[max_matter] [discriptor].")
+	. += span_notice(LANG("obj.25302ee3", list(matter, max_matter, discriptor)))
 
 /obj/item/rsf/cyborg
 	matter = 30

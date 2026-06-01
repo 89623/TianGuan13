@@ -100,9 +100,9 @@
 	. = ..()
 	if(health < maxHealth)
 		if(health >= maxHealth * 0.5)
-			. += span_warning("[p_They()] look slightly dented.")
+			. += span_warning(LANG("mob.000c1e88", list(p_They())))
 		else
-			. += span_boldwarning("[p_They()] look severely dented!")
+			. += span_boldwarning(LANG("mob.91ce775e", list(p_They())))
 
 	if(isnull(stored_gun) || !stored_gun.max_mod_capacity)
 		return

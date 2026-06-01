@@ -55,20 +55,20 @@
 	if(isobserver(user) || !in_range(src, user))
 		return
 
-	. += span_notice("The maximum volume display reads: <b>[reagents.maximum_volume]u capacity</b>. Contains:")
+	. += span_notice(LANG("obj.788bb106", list(reagents.maximum_volume)))
 	if(reagents.total_volume)
 		for(var/datum/reagent/reg as anything in reagents.reagent_list)
 			. += span_notice("[round(reg.volume, CHEMICAL_VOLUME_ROUNDING)]u of [reg.name]")
 	else
-		. += span_notice("Nothing.")
+		. += span_notice(LANG("obj.aa75d156", null))
 
 	if(anchored)
-		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice(LANG("obj.7641f909", list(EXAMINE_HINT("anchored"))))
 	else
-		. += span_warning("Needs to be [EXAMINE_HINT("anchored")] to start operations.")
-		. += span_notice("It can be [EXAMINE_HINT("welded")] apart.")
+		. += span_warning(LANG("obj.41f51354", list(EXAMINE_HINT("anchored"))))
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("welded"))))
 
-	. += span_notice("A [EXAMINE_HINT("plunger")] can be used to flush out reagents.")
+	. += span_notice(LANG("obj.02b50ffa", list(EXAMINE_HINT("plunger"))))
 
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)

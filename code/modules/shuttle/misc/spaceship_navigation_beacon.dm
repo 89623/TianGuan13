@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/spaceship_navigation_beacon
 	name = "radio navigation gigabeacon"
 	desc = "A device that constantly transmits its position over several different commonly used maritime navigation frequencies. Used to create shuttle navigation waypoints in unexplored or undeveloped areas."
@@ -77,11 +78,11 @@
 
 /obj/machinery/spaceship_navigation_beacon/examine()
 	.=..()
-	. += span_notice("'[FREQ_RADIO_NAV_BEACON / 10] kHz' is printed on the side.")
+	. += span_notice(LANG("obj.e5d986b7", list(FREQ_RADIO_NAV_BEACON / 10)))
 	if(locked)
-		. += span_warning("The blinking red light on the front indicates that this beacon is LOCKED.")
+		. += span_warning(LANG("obj.f2195955", null))
 	else
-		. += span_notice("The blinking green light on the front indicates that this beacon is operating normally.")
+		. += span_notice(LANG("obj.79fdbc01", null))
 
 /obj/machinery/spaceship_navigation_beacon/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, next_automatic_message_time) && radio)
@@ -105,5 +106,5 @@
 
 /obj/item/folded_navigation_gigabeacon/examine()
 	.=..()
-	. += span_notice("The backside has instructions in various galactic languages detailing how this can be deployed <b>in hand</b> without any special tools.")
-	. += span_notice("'[FREQ_RADIO_NAV_BEACON / 10] kHz' is printed on the side.")
+	. += span_notice(LANG("obj.c3fb1fb2", null))
+	. += span_notice(LANG("obj.e5d986b7", list(FREQ_RADIO_NAV_BEACON / 10)))

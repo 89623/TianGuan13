@@ -533,25 +533,25 @@
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(flat_equipment))
-		. += span_notice("It's equipped with:")
+		. += span_notice(LANG("obj.9afc6ff1", null))
 		for(var/obj/item/mecha_parts/mecha_equipment/ME as anything in flat_equipment)
 			if(istype(ME, /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay))
 				continue
 			. += span_notice("[icon2html(ME, user)] \A [ME].")
 	if(mecha_flags & PANEL_OPEN)
 		if(servo)
-			. += span_notice("Servo reduces movement power usage by [100 - round(100 / servo.rating)]%")
+			. += span_notice(LANG("obj.6d1f4840", list(100 - round(100 / servo.rating))))
 		else
-			. += span_warning("It's missing a servo.")
+			. += span_warning(LANG("obj.63e034bf", null))
 		if(capacitor)
-			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
+			. += span_notice(LANG("obj.cef432fd", list(capacitor.rating * 5)))
 		else
-			. += span_warning("It's missing a capacitor.")
+			. += span_warning(LANG("obj.b05f2d1b", null))
 		if(!scanmod)
-			. += span_warning("It's missing a scanning module.")
+			. += span_warning(LANG("obj.bcb9128d", null))
 	if(!(mecha_flags & IS_ENCLOSED))
 		if(mecha_flags & SILICON_PILOT)
-			. += span_notice("[src] appears to be piloting itself...")
+			. += span_notice(LANG("obj.333aa9af", list(src)))
 		else
 			for(var/occupante in occupants)
 				. += span_notice("You can see [occupante] inside.")
@@ -562,7 +562,7 @@
 						continue
 					. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
 					break //in case user is holding two guns
-	. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
+	. += span_notice(LANG("obj.12c144f9", list(REF(src))))
 
 /obj/vehicle/sealed/mecha/Topic(href, href_list)
 	. = ..()

@@ -35,7 +35,7 @@
 
 /obj/item/aicard/syndie/loaded/examine(mob/user)
 	. = ..()
-	. += span_notice("This one has a little S.E.L.F. insignia on the back, and a label next to it that says 'Activate for one FREE aligned AI! Please attempt uplink reintegration or ask your employers for reimbursal if AI is unavailable or belligerent.")
+	. += span_notice(LANG("obj.6e1558f1", null))
 
 /obj/item/aicard/syndie/loaded/attack_self(mob/user, modifiers)
 	if(!isnull(AI))

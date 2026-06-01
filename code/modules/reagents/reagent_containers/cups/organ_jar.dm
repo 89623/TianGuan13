@@ -21,9 +21,9 @@
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/examine(mob/user)
 	. = ..()
-	. += span_info("Any organ inside the jar will be preserved if it is entirely filled with formaldehyde.")
+	. += span_info(LANG("obj.7b02a777", null))
 	if(held_organ && held_organ.GetComponent(/datum/component/ghostrole_on_revive))
-		. += span_smallnoticeital("The brain is twitching...") // Guaranteed to be a brain if it has that component
+		. += span_smallnoticeital(LANG("obj.e1147132", null)) // Guaranteed to be a brain if it has that component
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/Destroy(force)
 	. = ..()
@@ -110,7 +110,7 @@
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/brain_in_a_jar/examine(mob/user)
 	. = ..()
-	. += span_notice("<i>You can see a note attached to the bottom..</i>")
+	. += span_notice(LANG("obj.501c2297", null))
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/brain_in_a_jar/examine_more(mob/user)
 	. = ..()

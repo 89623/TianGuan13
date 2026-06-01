@@ -64,7 +64,7 @@
 /obj/machinery/launchpad/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
+		. += span_notice(LANG("obj.1215ce83", list(range)))
 
 /obj/machinery/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE

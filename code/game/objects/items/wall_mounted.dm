@@ -33,7 +33,7 @@
 
 /obj/item/wallframe/examine(mob/user)
 	. = ..()
-	. += span_notice("It can be [EXAMINE_HINT("wrenched")] apart.")
+	. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("wrenched"))))
 
 /**
  * Returns an structure to mount on from the atom passed

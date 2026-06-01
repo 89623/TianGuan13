@@ -68,7 +68,7 @@
 		return
 
 	if(isobserver(user) || HAS_MIND_TRAIT(user, TRAIT_DISK_VERIFIER))
-		. += span_warning("The serial numbers on [src] are incorrect.")
+		. += span_warning(LANG("obj.7915f2c7", list(src)))
 
 /*
  * You can't accidentally eat the nuke disk, bro

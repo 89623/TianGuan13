@@ -132,9 +132,9 @@
 /obj/item/clothing/head/helmet/sf_sacrificial/examine(mob/user)
 	. = ..()
 	if(face_shield)
-		. += span_notice("The <b>face shield</b> can be removed with <b>Right-Click</b>.")
+		. += span_notice(LANG("obj.b1f23bfe", null))
 	else
-		. += span_notice("A <b>face shield</b> can be attached to it.")
+		. += span_notice(LANG("obj.f4850f5b", null))
 
 	return .
 

@@ -22,16 +22,16 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/examine()
 	. = ..()
-	. += span_infoplain("It has [uses_left] use\s remaining.")
+	. += span_infoplain(LANG("obj.4b3096b5", list(uses_left)))
 
 	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
 
 	if(isnull(beacon))
 		beacon_ref = null
-		. += span_infoplain("It is not linked to a beacon.")
+		. += span_infoplain(LANG("obj.1208c516", null))
 		return
 
-	. += span_infoplain("It is linked to [beacon.name].")
+	. += span_infoplain(LANG("obj.956250e4", list(beacon.name)))
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()

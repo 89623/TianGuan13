@@ -96,7 +96,7 @@
 	. = ..()
 	if(up || w_class == WEIGHT_CLASS_SMALL)
 		return
-	. += span_notice("You could fit this into a box if you adjusted it.")
+	. += span_notice(LANG("obj.aaa9b3fd", null))
 
 /obj/item/clothing/mask/gas/explorer/folded
 	w_class = WEIGHT_CLASS_SMALL

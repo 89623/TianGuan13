@@ -61,14 +61,14 @@
 	. = ..()
 	if(note)
 		if(!in_range(user, src))
-			. += span_info("There's a [EXAMINE_HINT(note.name)] attached to it. You can't read it from here.")
+			. += span_info(LANG("obj.f04df8ed", list(EXAMINE_HINT(note.name))))
 		else
-			. += span_info("There's a [EXAMINE_HINT(note.name)] attached to it...")
+			. += span_info(LANG("obj.5c28d3a3", list(EXAMINE_HINT(note.name))))
 			. += note.examine(user)
 	if(sticker)
-		. += span_notice("There's a [EXAMINE_HINT("barcode")] attached to the side. The package is marked for [EXAMINE_HINT("export.")]")
+		. += span_notice(LANG("obj.71807808", list(EXAMINE_HINT("barcode"), EXAMINE_HINT("export."))))
 	if(sort_tag)
-		. += span_notice("There's a [EXAMINE_HINT("sorting tag")] with the destination set to [EXAMINE_HINT("[GLOB.TAGGERLOCATIONS[sort_tag]].")]")
+		. += span_notice(LANG("obj.94d6c3a6", list(EXAMINE_HINT("sorting tag"), EXAMINE_HINT("[GLOB.TAGGERLOCATIONS[sort_tag]]."))))
 
 /obj/item/delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
@@ -344,10 +344,10 @@
 
 /obj/item/sales_tagger/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] has [paper_count]/[max_paper_count] available barcodes. Refill with paper.")
-	. += span_notice("Profit split on sale is currently set to [round(cut_multiplier*100)]%. <b>Alt-click</b> to change.")
+	. += span_notice(LANG("obj.f9a45b64", list(src, paper_count, max_paper_count)))
+	. += span_notice(LANG("obj.7e0bbac3", list(round(cut_multiplier*100))))
 	if(payments_acc)
-		. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
+		. += span_notice(LANG("obj.5f19d3b2", null))
 
 /obj/item/sales_tagger/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()

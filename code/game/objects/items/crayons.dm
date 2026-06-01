@@ -875,7 +875,7 @@
 			. += LANG("obj.4a138c11", list(PERCENT(charges_left/charges)))
 		else
 			. += LANG("obj.53b0d090", null)
-	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].")
+	. += span_notice(LANG("obj.ffde040d", list(src, is_capped ? "take the cap off" : "put the cap on")))
 
 
 /obj/item/toy/crayon/spraycan/can_use_on(atom/target, mob/user, list/modifiers)

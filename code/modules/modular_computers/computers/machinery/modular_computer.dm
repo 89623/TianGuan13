@@ -77,9 +77,9 @@
 
 /obj/machinery/modular_computer/examine(mob/user)
 	. = cpu?.examine(user) || ..()
-	. += span_info("You can toggle interaction between computer and its machinery frame with [EXAMINE_HINT("Right-Click")] while empty-handed.")
+	. += span_info(LANG("obj.51a141b3", list(EXAMINE_HINT("Right-Click"))))
 	var/frame_or_pc = HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)) ? "frame" : "computer"
-	. += span_info("Currently interacting with [EXAMINE_HINT(frame_or_pc)].")
+	. += span_info(LANG("obj.5137ae72", list(EXAMINE_HINT(frame_or_pc))))
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()

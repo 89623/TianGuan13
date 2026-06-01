@@ -112,11 +112,11 @@
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
 
-	. += span_notice("It's set to scan for [span_boldnotice(scangate_mode)].")
+	. += span_notice(LANG("obj.8923acff", list(span_boldnotice(scangate_mode))))
 	if(locked)
-		. += span_notice("The control panel is ID-locked. Swipe a valid ID to unlock it.")
+		. += span_notice(LANG("obj.51c43946", null))
 	else
-		. += span_notice("The control panel is unlocked. Swipe an ID to lock it.")
+		. += span_notice(LANG("obj.d3afdb2f", null))
 
 /obj/machinery/scanner_gate/proc/on_entered(datum/source, atom/movable/thing)
 	SIGNAL_HANDLER

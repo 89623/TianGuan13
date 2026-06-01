@@ -55,13 +55,13 @@
 
 /obj/item/boulder/examine(mob/user)
 	. = ..()
-	. += span_notice("This boulder would take [durability] more steps to refine or break.")
+	. += span_notice(LANG("obj.c187ef28", list(durability)))
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		. += span_notice("You can crush this boulder with your bare hands.")
+		. += span_notice(LANG("obj.c513c159", null))
 
 /obj/item/boulder/examine_more(mob/user)
 	. = ..()
-	. += span_notice("[span_bold("Boulders")] can either be cracked open by [span_bold("mining tools")], or processed into sheets with [span_bold("refineries or smelters")]. Undisturbed boulders can be collected by the [span_bold("BRM")].")
+	. += span_notice(LANG("obj.3b483921", list(span_bold("Boulders"), span_bold("mining tools"), span_bold("refineries or smelters"), span_bold("BRM"))))
 
 /obj/item/boulder/update_icon_state()
 	. = ..()

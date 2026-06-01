@@ -47,7 +47,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/examine(mob/user)
 	. = ..()
 	if(can_altclick_zip)
-		. += span_notice("<b>Alt-click</b> to [zipped ? "un" : ""]zip.")
+		. += span_notice(LANG("obj.80b71d2c", list(zipped ? "un" : "")))
 
 
 /obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)

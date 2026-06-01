@@ -196,9 +196,9 @@
 		if(pin)
 			. += LANG("obj.4243143d", list(pin))
 			if(pin.pin_removable)
-				. += span_info("[pin] looks like [pin.p_they()] could be removed with some <b>tools</b>.")
+				. += span_info(LANG("obj.371cd0a7", list(pin, pin.p_they())))
 			else
-				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] looks impossible to remove.")
+				. += span_info(LANG("obj.a681b757", list(pin, pin.p_theyre(), pin.p_they())))
 		else
 			. += LANG("obj.890cac08", null)
 

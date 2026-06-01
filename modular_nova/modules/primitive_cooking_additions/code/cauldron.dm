@@ -55,14 +55,14 @@
 /obj/machinery/cauldron/examine(mob/user)
 	. = ..()
 
-	. += span_notice("It can be taken apart with a <b>crowbar</b>.")
+	. += span_notice(LANG("obj.01fa2e71", null))
 
 	if(!in_range(user, src) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents!")
+		. += span_warning(LANG("obj.9b3e6cc5", list(src)))
 		return
 
 	if(length(ingredients))
-		. += span_notice("\The [src] contains:")
+		. += span_notice(LANG("obj.43cd9c42", list(src)))
 		var/list/items_counts = new
 		for(var/i in ingredients)
 			if(isstack(i))
@@ -77,7 +77,7 @@
 			. += span_notice("- [items_counts[item]]x [item].")
 
 	else
-		. += span_notice("\The [src] is empty.")
+		. += span_notice(LANG("obj.c8ad1ee9", list(src)))
 
 /obj/machinery/cauldron/Exited(atom/movable/gone, direction)
 	if(gone in ingredients)

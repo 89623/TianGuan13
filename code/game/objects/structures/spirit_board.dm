@@ -33,9 +33,9 @@
 /obj/structure/spirit_board/examine()
 	. = ..()
 	if(planchette)
-		. += span_notice("The planchette is currently at the letter \"[planchette]\".")
+		. += span_notice(LANG("obj.21f0ad13", list(planchette)))
 	else
-		. += span_notice("The planchette is in the middle of the board on no particular letter.")
+		. += span_notice(LANG("obj.ed5269ff", null))
 
 /obj/structure/spirit_board/attack_hand(mob/user, list/modifiers)
 	. = ..()

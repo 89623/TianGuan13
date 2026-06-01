@@ -42,7 +42,7 @@
 	. = ..()
 	if(!signs)
 		return
-	. += span_notice("It is currently maintaining <b>[signs.len]/[max_signs]</b> projections.")
+	. += span_notice(LANG("obj.515b5713", list(signs.len, max_signs)))
 
 /obj/item/holosign_creator/check_allowed_items(atom/target, not_inside, target_self)
 	if(HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION))

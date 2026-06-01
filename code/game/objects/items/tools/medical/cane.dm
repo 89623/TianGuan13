@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/cane
 	name = "cane"
 	desc = "A cane used by a true gentleman. Or a clown."
@@ -16,7 +17,7 @@
 
 /obj/item/cane/examine(mob/user, thats)
 	. = ..()
-	. += span_notice("This item can be used to support your weight, preventing limping from any broken bones on your legs you may have.")
+	. += span_notice(LANG("obj.7270b190", null))
 
 /obj/item/cane/equipped(mob/living/user, slot, initial)
 	..()
@@ -63,7 +64,7 @@
 /obj/item/cane/crutch/examine(mob/user, thats)
 	. = ..()
 	// tacked on after the cane string
-	. += span_notice("As a crutch, it can also help lessen the slowdown incurred by missing a leg.")
+	. += span_notice(LANG("obj.ef201f87", null))
 
 /obj/item/cane/crutch/movement_support_add(mob/living/user)
 	. = ..()

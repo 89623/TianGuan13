@@ -38,12 +38,12 @@
 
 /obj/structure/cargo_shelf/examine(mob/user)
 	. = ..()
-	. += span_notice("There are some <b>bolts</b> holding [src] together.")
+	. += span_notice(LANG("obj.cbaba876", list(src)))
 	if(crate_count() < capacity) // If there's an empty space in the shelf, let the examiner know.
-		. += span_notice("You could <b>drag and drop</b> a crate into [src].")
+		. += span_notice(LANG("obj.7b54145c", list(src)))
 	if(crate_count()) // If there are any crates in the shelf, let the examiner know.
-		. += span_notice("You could <b>drag and drop</b> a crate out of [src].")
-		. += span_notice("[src] contains:")
+		. += span_notice(LANG("obj.602498c3", list(src)))
+		. += span_notice(LANG("obj.1c59f63b", list(src)))
 		for(var/obj/structure/closet/crate/crate in contents)
 			. += span_notice("[icon2html(crate, user)] \A [crate]")
 

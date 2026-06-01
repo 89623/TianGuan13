@@ -353,9 +353,9 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to fold it into a paper plane.")
+	. += span_notice(LANG("obj.18682024", list(src)))
 	if(!in_range(user, src) && !isobserver(user))
-		. += span_warning("You're too far away to read it!")
+		. += span_warning(LANG("obj.93746d69", null))
 		return
 
 	if(user.is_blind())
@@ -365,7 +365,7 @@
 	if(user.can_read(src))
 		ui_interact(user)
 		return
-	. += span_warning("You cannot read it!")
+	. += span_warning(LANG("obj.19108b40", null))
 
 /obj/item/paper/ui_status(mob/user, datum/ui_state/state)
 	// Are we on fire?  Hard to read if so

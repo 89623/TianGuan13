@@ -69,9 +69,9 @@
 
 /obj/structure/antfarm/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>There are currently [has_ants ? "" : "no "]ants in the farm.")
+	. += span_notice(LANG("obj.d22d28bb", list(has_ants ? "" : "no ")))
 	if(!has_ants)
-		. += span_notice("To add ants, feed the farm some <b>food</b>.")
+		. += span_notice(LANG("obj.9a8a0c63", null))
 
 /obj/structure/antfarm/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/food))

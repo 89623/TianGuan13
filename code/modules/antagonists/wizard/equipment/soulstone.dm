@@ -154,12 +154,12 @@
 	. = ..()
 	if(role_check(user) || isobserver(user))
 		if(!grab_sleeping)
-			. += span_cult("A soulstone, used to capture a soul, either from dead humans or from freed shades.")
+			. += span_cult(LANG("obj.e1ae6ee1", null))
 		else
-			. += span_cult("A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.")
-		. += span_cult("The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.")
+			. += span_cult(LANG("obj.d99e3a93", null))
+		. += span_cult(LANG("obj.333eb133", null))
 		if(spent)
-			. += span_cult("This shard is spent; it is now just a creepy rock.")
+			. += span_cult(LANG("obj.fc474f0f", null))
 
 /obj/item/soulstone/examine_more(mob/user)
 	. = ..()

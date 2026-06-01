@@ -118,7 +118,7 @@
 
 /mob/living/basic/goose/vomit/examine(mob/user)
 	. = ..()
-	. += span_notice("Somehow, it still looks hungry.")
+	. += span_notice(LANG("mob.5fbbe0ae", null))
 
 /mob/living/basic/goose/vomit/on_gobbled(atom/source, obj/item/food, mob/feeder)
 	if (length(contents) > GOOSE_SATIATED)

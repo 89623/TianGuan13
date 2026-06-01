@@ -198,15 +198,15 @@
 	. = ..()
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents! You can still watch it spin so wonderfully though...")
+		. += span_warning(LANG("obj.cf4b272d", list(src)))
 		if (charging && istype(charging,/obj/item/melee/baton/security/))
-			. += span_info("You can see the [charging] hanging precariously off the charging port...")
+			. += span_info(LANG("obj.1c79926d", list(charging)))
 		return
 
 	if(cap)
-		. += span_info("Click it with a screwdriver to eject the [cap].")
-	. += span_info("Wrench it on a tile to anchor it and harness space wind.")
-	. += span_info("The wind turbine is currently storing [floor(available_power / 100) / 10]kJ.")
+		. += span_info(LANG("obj.e0505cec", list(cap)))
+	. += span_info(LANG("obj.bd3e2113", null))
+	. += span_info(LANG("obj.585092d5", list(floor(available_power / 100) / 10)))
 	if(charging)
 		. += {"[span_notice("\The [src] contains:")]
 		[span_notice("- \A [charging].")]"}

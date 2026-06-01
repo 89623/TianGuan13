@@ -221,7 +221,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	. = ..()
-	. += span_notice("Its channel ID is '[id]'.")
+	. += span_notice(LANG("obj.7150d501", list(id)))
 
 /obj/item/wallframe/flasher/after_attach(obj/attached_to)
 	..()

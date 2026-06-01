@@ -275,8 +275,8 @@
 /obj/structure/windoor_assembly/examine(mob/user)
 	. = ..()
 	if(!anchored)
-		. += span_notice("\The [src] can be [span_boldnotice("wrenched")] down.")
-		. += span_notice("\The [src] could also be [span_boldnotice("cut apart")] with a [span_boldnotice("welder")].")
+		. += span_notice(LANG("obj.a7438b4a", list(src, span_boldnotice("wrenched"))))
+		. += span_notice(LANG("obj.df3132c2", list(src, span_boldnotice("cut apart"), span_boldnotice("welder"))))
 		return
 	switch(state)
 		if("01")

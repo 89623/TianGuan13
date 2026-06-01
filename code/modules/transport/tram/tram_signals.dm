@@ -138,9 +138,9 @@
 
 /obj/machinery/transport/crossing_signal/examine(mob/user)
 	. = ..()
-	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
+	. += span_notice(LANG("obj.a5319df9", list(panel_open ? "open" : "closed")))
 	if(panel_open)
-		. += span_notice("It can be flipped or rotated with a [EXAMINE_HINT("wrench.")]")
+		. += span_notice(LANG("obj.03cc0996", list(EXAMINE_HINT("wrench."))))
 	switch(operating_status)
 		if(TRANSPORT_REMOTE_WARNING)
 			. += span_notice("The orange [EXAMINE_HINT("remote warning")] light is on.")
@@ -499,9 +499,9 @@
 
 /obj/machinery/transport/guideway_sensor/examine(mob/user)
 	. = ..()
-	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
+	. += span_notice(LANG("obj.a5319df9", list(panel_open ? "open" : "closed")))
 	if(panel_open)
-		. += span_notice("It can be rotated with a [EXAMINE_HINT("wrench.")]")
+		. += span_notice(LANG("obj.ac3cf8bd", list(EXAMINE_HINT("wrench."))))
 	switch(operating_status)
 		if(TRANSPORT_REMOTE_WARNING)
 			. += span_notice("The orange [EXAMINE_HINT("remote warning")] light is on.")

@@ -265,7 +265,7 @@
 	. = ..()
 
 	if(spawn_coupon)
-		. += span_notice("There's a coupon on the back of the pack! You can tear it off once it's empty.")
+		. += span_notice(LANG("obj.3dc3b3ee", null))
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
 	. = ..()

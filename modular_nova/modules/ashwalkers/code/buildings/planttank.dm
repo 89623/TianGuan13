@@ -22,11 +22,11 @@
 
 /obj/structure/plant_tank/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>Use food or worm fertilizer to allow nitrogen production and carbon dioxide processing!")
-	. += span_notice("There are [operation_number] cycles left!")
+	. += span_notice(LANG("obj.7119a775", null))
+	. += span_notice(LANG("obj.17448eb1", list(operation_number)))
 	var/datum/component/simple_farm/find_farm = GetComponent(/datum/component/simple_farm)
 	if(!find_farm)
-		. += span_notice("<br>Use five sand to allow planting!")
+		. += span_notice(LANG("obj.884eae86", null))
 
 /obj/structure/plant_tank/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/food) || istype(tool, /obj/item/stack/worm_fertilizer))

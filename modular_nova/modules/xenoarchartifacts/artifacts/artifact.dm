@@ -51,13 +51,13 @@
 	. = ..()
 	. += span_notice("[holomark ? "This boulder has been scanned. Target Depth: [approximate_excavation_level] +- 15 cm." : "This boulder has not been scanned."]")
 	if(holomark_adv)
-		. += span_notice("The item depth is [target_excavation_level] cm.")
+		. += span_notice(LANG("obj.9c404e9c", list(target_excavation_level)))
 	. += span_notice("[measured ? "This boulder has been measured. Dug Depth: [excavation_level]." : "This boulder has not been measured."]")
 	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)
 	if(our_gps)
-		. += span_notice("A holotag's been attached, projecting \"<b>[artifact_id]</b>\".")
+		. += span_notice(LANG("obj.87719a64", list(artifact_id)))
 	else
-		. += span_notice("It looks like you could probably scan and tag it with a <b>mining scanner</b> of some kind.")
+		. += span_notice(LANG("obj.d7cf889a", null))
 
 /obj/structure/boulder/Initialize(mapload)
 	. = ..()

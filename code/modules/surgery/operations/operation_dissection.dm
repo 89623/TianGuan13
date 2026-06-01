@@ -114,7 +114,7 @@
 
 /obj/item/research_notes/examine(mob/user)
 	. = ..()
-	. += span_notice("It is worth [value] research points.")
+	. += span_notice(LANG("obj.ddfaef18", list(value)))
 
 /obj/item/research_notes/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/research_notes))

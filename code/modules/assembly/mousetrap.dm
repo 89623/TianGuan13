@@ -78,7 +78,7 @@
 
 /obj/item/assembly/mousetrap/examine(mob/user)
 	. = ..()
-	. += span_notice("The pressure plate is [armed?"primed":"safe"].")
+	. += span_notice(LANG("obj.13e34a02", list(armed?"primed":"safe")))
 
 /obj/item/assembly/mousetrap/activate()
 	if(..())

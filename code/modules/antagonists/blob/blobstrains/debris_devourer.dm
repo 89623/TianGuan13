@@ -62,7 +62,7 @@
 /datum/blobstrain/debris_devourer/examine(mob/user)
 	. = ..()
 	if (isobserver(user))
-		. += span_notice("Absorbed debris is currently reducing incoming damage by [round(max(min(DEBRIS_DENSITY, 10),0))]")
+		. += span_notice(LANG("datum.3b7af377", list(round(max(min(DEBRIS_DENSITY, 10),0)))))
 	else
 		switch (round(max(min(DEBRIS_DENSITY, 10),0)))
 			if (0)

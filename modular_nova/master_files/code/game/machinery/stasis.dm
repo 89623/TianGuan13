@@ -35,7 +35,7 @@
 
 /obj/item/circuitboard/machine/stasis/examine(mob/user)
 	. = ..()
-	. += span_info("Patient announcement pin is now [announce_when_buckled ? "enabled" : "disabled"]. You can use a [EXAMINE_HINT("multitool")] to reconfigure it.")
+	. += span_info(LANG("obj.51f81213", list(announce_when_buckled ? "enabled" : "disabled", EXAMINE_HINT("multitool"))))
 
 /datum/aas_config_entry/stasis_announcement
 	name = "Medical Alert: Stasis Announcement"

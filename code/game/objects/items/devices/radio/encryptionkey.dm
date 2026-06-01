@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/encryptionkey
 	name = "standard encryption key"
 	icon = 'icons/map_icons/items/encryptionkey.dmi'
@@ -17,7 +18,7 @@
 /obj/item/encryptionkey/examine(mob/user)
 	. = ..()
 	if(!LAZYLEN(channels) && !(special_channels & RADIO_SPECIAL_BINARY) && !LAZYLEN(language_data))
-		. += span_warning("Has no special codes in it. You should probably tell a coder!")
+		. += span_warning(LANG("obj.75a20a99", null))
 		return
 
 	var/list/examine_text_list = list()
@@ -28,7 +29,7 @@
 		examine_text_list += "[GLOB.channel_tokens[MODE_BINARY]] - [MODE_BINARY]"
 
 	if(length(examine_text_list))
-		. += span_notice("It can access the following channels; [jointext(examine_text_list, ", ")].")
+		. += span_notice(LANG("obj.4fbbe774", list(jointext(examine_text_list, ", "))))
 
 	var/list/language_text_list = list()
 	for(var/lang in language_data)
@@ -43,7 +44,7 @@
 		language_text_list += langstring
 
 	if(length(language_text_list))
-		. += span_notice("It can translate the following languages; [jointext(language_text_list, ", ")].")
+		. += span_notice(LANG("obj.4c2f29f0", list(jointext(language_text_list, ", "))))
 
 /obj/item/encryptionkey/syndicate
 	name = "syndicate encryption key"

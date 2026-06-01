@@ -44,7 +44,7 @@
 /obj/item/book/examine(mob/user)
 	. = ..()
 	if(carved)
-		. += span_notice("[src] has been hollowed out.")
+		. += span_notice(LANG("obj.0ae8f20c", list(src)))
 
 /obj/item/book/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))

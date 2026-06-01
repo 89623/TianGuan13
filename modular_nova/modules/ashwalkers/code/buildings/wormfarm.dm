@@ -42,11 +42,11 @@
 
 /obj/structure/wormfarm/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>There are currently [current_worm]/[max_worm] worms in the barrel.")
+	. += span_notice(LANG("obj.7a1c5486", list(current_worm, max_worm)))
 	if(current_worm < max_worm)
-		. += span_notice("You can place more worms in the barrel.")
+		. += span_notice(LANG("obj.10eefb41", null))
 	if(current_worm > 0)
-		. += span_notice("You can get fertilizer by feeding the worms food.")
+		. += span_notice(LANG("obj.17971a87", null))
 
 /obj/structure/wormfarm/attack_hand(mob/living/user, list/modifiers)
 	if(in_use)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BASE_DISCONNECT_DAMAGE 40
 #define SCANNING_TOGGLE_COOLDOWN 5
 
@@ -76,37 +77,37 @@
 /obj/machinery/netpod/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "close" : "open")))
 	if(isnull(occupant))
 		if(panel_open)
-			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+			. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 		else
-			. += span_notice("Its hatch can be [EXAMINE_HINT("pried")] [state_open ? "closed" : "open"].")
+			. += span_notice(LANG("obj.2eaa3b1c", list(EXAMINE_HINT("pried"), state_open ? "closed" : "open")))
 
 	if(isnull(server_ref?.resolve()))
-		. += span_infoplain("It's not connected to anything.")
-		. += span_infoplain("Netpods must be built within 4 tiles of a server.")
+		. += span_infoplain(LANG("obj.b8effa34", null))
+		. += span_infoplain(LANG("obj.1e9dcde5", null))
 		return
 
 	if(!isobserver(user))
-		. += span_infoplain("Drag yourself into the pod to engage the link.")
-		. += span_infoplain("It has limited resuscitation capabilities. Remaining in the pod can heal some injuries.")
-		. += span_infoplain("It has a security system that will alert the occupant if it is tampered with.")
+		. += span_infoplain(LANG("obj.f1e4f04a", null))
+		. += span_infoplain(LANG("obj.0cf6d959", null))
+		. += span_infoplain(LANG("obj.8cfba2a1", null))
 		if(copy_body)
-			. += span_infoplain("Occupant scanning is currently enabled, which will cause bit avatars to look like the occupant when first created.")
-		. += span_infoplain("Alt-click to [copy_body ? "disable" : "enable"] occupant scanning.")
+			. += span_infoplain(LANG("obj.7f6c2041", null))
+		. += span_infoplain(LANG("obj.ae4e2e73", list(copy_body ? "disable" : "enable")))
 
 	if(isnull(occupant))
-		. += span_infoplain("It's currently unoccupied.")
+		. += span_infoplain(LANG("obj.bc6aa97b", null))
 		return
 
-	. += span_infoplain("It's currently occupied by [occupant].")
+	. += span_infoplain(LANG("obj.735641da", list(occupant)))
 
 	if(isobserver(user))
-		. += span_notice("As an observer, you can click this netpod to jump to its avatar.")
+		. += span_notice(LANG("obj.4d38f328", null))
 		return
 
-	. += span_notice("It can be pried open with a crowbar, but its safety mechanisms will alert the occupant.")
+	. += span_notice(LANG("obj.84d74ac8", null))
 
 
 /obj/machinery/netpod/update_icon_state()

@@ -151,7 +151,7 @@
 
 /obj/item/cautery/advanced/examine()
 	. = ..()
-	. += span_notice("It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode.")
+	. += span_notice(LANG("obj.4bf873d5", list(tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling")))
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -360,8 +360,8 @@
 
 /obj/item/surgical_processor/examine(mob/user)
 	. = ..()
-	. += span_notice("Equip the processor in one of your active modules to access downloaded advanced surgeries.")
-	. += span_boldnotice("Advanced surgeries available:")
+	. += span_notice(LANG("obj.cc2369d1", null))
+	. += span_boldnotice(LANG("obj.bf400813", null))
 	//list of downloaded surgeries' names
 	var/list/surgeries_names = list()
 	for(var/datum/surgery_operation/downloaded_surgery as anything in GLOB.operations.get_instances_from(loaded_surgeries))
@@ -465,7 +465,7 @@
 
 /obj/item/scalpel/advanced/examine()
 	. = ..()
-	. += span_notice("It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode.")
+	. += span_notice(LANG("obj.4bf873d5", list(tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw")))
 
 /obj/item/retractor/advanced
 	name = "mechanical pinches"
@@ -511,7 +511,7 @@
 
 /obj/item/retractor/advanced/examine()
 	. = ..()
-	. += span_notice("It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"].")
+	. += span_notice(LANG("obj.be45e7c0", list(tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat")))
 
 /obj/item/shears
 	name = "amputation shears"

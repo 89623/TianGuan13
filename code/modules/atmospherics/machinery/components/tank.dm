@@ -124,10 +124,10 @@
 	. = ..()
 	var/wrench_hint = EXAMINE_HINT("wrench")
 	if(!initialize_directions)
-		. += span_notice("A pipe port can be opened with a [wrench_hint].")
+		. += span_notice(LANG("obj.1bcdeba1", list(wrench_hint)))
 	else
-		. += span_notice("The pipe port can be moved or closed with a [wrench_hint].")
-	. += span_notice("A holographic sticker on it says that its maximum safe pressure is: [siunit_pressure(max_pressure, 0)].")
+		. += span_notice(LANG("obj.f2bdaf3f", list(wrench_hint)))
+	. += span_notice(LANG("obj.58b03ef8", list(siunit_pressure(max_pressure, 0))))
 
 /obj/machinery/atmospherics/components/tank/finalize_material_effects(list/materials)
 	. = ..()
@@ -542,9 +542,9 @@
 	var/wrenched_hint = EXAMINE_HINT("wrenched")
 
 	if(!anchored)
-		. += span_notice("[src] has not been [wrenched_hint] to the floor yet.")
+		. += span_notice(LANG("obj.bcd730d7", list(src, wrenched_hint)))
 	else
-		. += span_notice("[src] is [wrenched_hint] to the floor.")
+		. += span_notice(LANG("obj.e3af3cad", list(src, wrenched_hint)))
 
 	switch(construction_state)
 		if(TANK_FRAME)

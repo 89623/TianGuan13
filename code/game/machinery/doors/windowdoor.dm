@@ -384,10 +384,10 @@
 /obj/machinery/door/window/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += span_warning("Its access panel is smoking slightly.")
+		. += span_warning(LANG("obj.2cd3f83a", null))
 	if(!density)
 		if(panel_open)
-			. += span_notice("The [span_boldnotice("airlock electronics")] could be [span_boldnotice("levered")] out.")
+			. += span_notice(LANG("obj.62bfef5c", list(span_boldnotice("airlock electronics"), span_boldnotice("levered"))))
 
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)

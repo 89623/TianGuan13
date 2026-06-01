@@ -16,17 +16,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/eyechart, 32)
 	if(!user.can_read(src, READING_CHECK_LITERACY, silent = TRUE) || !user.has_language(/datum/language/common, UNDERSTOOD_LANGUAGE))
 		if(!user.is_blind())
 			. += LANG("obj.965934eb", null)
-			. += span_warning("...But you don't actually know what any of them mean.")
+			. += span_warning(LANG("obj.3b924ced", null))
 		return
 
 	if(user.is_blind())
 		. += LANG("obj.f1b34eb5", null)
-		. += span_notice("Yes, feels like... \"E, P, D...\" Good thing this chart has braille!")
+		. += span_notice(LANG("obj.cc8187e2", null))
 		return
 
 	if(!user.can_read(src, READING_CHECK_LIGHT, silent = TRUE))
 		. += LANG("obj.f2d4c8a3", null)
-		. += span_warning("...But it's too dark to make out anything.")
+		. += span_warning(LANG("obj.acb1aee2", null))
 		return
 
 	var/colorblind = HAS_TRAIT(user, TRAIT_COLORBLIND)
@@ -45,10 +45,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/eyechart, 32)
 
 	. += LANG("obj.de52c1c8", null)
 	if(eye_goodness <= 0)
-		. += span_notice("\"E, F, P...\" Yep, you can read down to the [colorblind ? "brown - wait, isn't it supposed to be red? -" : "red"] line.")
+		. += span_notice(LANG("obj.16193f6b", list(colorblind ? "brown - wait, isn't it supposed to be red? -" : "red")))
 	else if(eye_goodness < little_bad)
-		. += span_notice("\"E, F, P...\" You can make out most of the letters, but it gets a bit difficult past the [colorblind ? "grey - wait, isn't it supposed to be green? -" : "green"] line.")
+		. += span_notice(LANG("obj.28ffaa7b", list(colorblind ? "grey - wait, isn't it supposed to be green? -" : "green")))
 	else if(eye_goodness < very_bad)
-		. += span_warning("\"E, F, P..?\" You can make out the big letters, but the smaller ones are a bit of a blur.")
+		. += span_warning(LANG("obj.c7ec3655", null))
 	else
-		. += span_warning("\"E, P, D..?\" You can hardly make out the big letters, let alone the smaller ones.")
+		. += span_warning(LANG("obj.d45e9dad", null))

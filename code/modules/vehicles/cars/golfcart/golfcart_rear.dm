@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define GOLFCART_RIDING_SOURCE "riding_golfcart"
 #define HUMAN_LOWER_LAYER (MOB_LAYER)
 #define CARGO_HITBOX_LAYER (ABOVE_ALL_MOB_LAYER)
@@ -198,7 +199,7 @@
 /obj/golfcart_rear/examine(mob/user)
 	if (!parent)
 		. = ..()
-		. += span_warning("A lone golf cart bed must be a bad omen...")
+		. += span_warning(LANG("obj.d9869a41", null))
 		return
 	return parent.examine(user)
 

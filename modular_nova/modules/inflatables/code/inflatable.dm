@@ -219,7 +219,7 @@
 /obj/item/inflatable/examine(mob/user)
 	. = ..()
 	if(torn)
-		. += span_warning("It is badly torn, and cannot be used! The damage looks like it could be repaired with some <b>tape</b>.")
+		. += span_warning(LANG("obj.a579b615", null))
 
 /obj/item/inflatable/suicide_act(mob/living/user)
 	visible_message(user, span_danger(LANG("obj.bcaa34e6", list(user, src, user.p_their(), user.p_their()))))

@@ -51,9 +51,9 @@
 /obj/structure/signboard/holosign/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += span_warning("<br>Its locking mechanisms appear to be shorted out!")
+		. += span_warning(LANG("obj.78d0678a", null))
 	else if(registered_owner)
-		. += span_info("<br>It is locked to the ID of [span_name(registered_owner)].")
+		. += span_info(LANG("obj.97ed1460", list(span_name(registered_owner))))
 
 /obj/structure/signboard/holosign/update_overlays()
 	. = ..()

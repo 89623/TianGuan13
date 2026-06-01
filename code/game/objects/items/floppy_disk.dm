@@ -99,10 +99,10 @@
 
 /obj/item/disk/examine(mob/user)
 	. = ..()
-	. += span_notice("The write-protect tab is set to [span_bold("[read_only ? "protected" : "unprotected"]")].")
+	. += span_notice(LANG("obj.4add0e25", list(span_bold("[read_only ? "protected" : "unprotected"]"))))
 
 	if(custom_description)
-		. += span_notice("There's something scribbled on the sticker:")
+		. += span_notice(LANG("obj.89581f5c", null))
 		. += span_notice(span_italics("\"[custom_description]\""))
 
 /obj/item/disk/tool_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -227,7 +227,7 @@
 
 /obj/item/disk_stack/examine(mob/user)
 	. = ..()
-	. += span_notice("There are [span_bold("[length(stacked_disks)]")] disks in the stack.")
+	. += span_notice(LANG("obj.07904c3c", list(span_bold("[length(stacked_disks)]"))))
 
 /obj/item/disk_stack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/disk_stack))

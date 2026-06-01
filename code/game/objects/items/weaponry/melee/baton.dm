@@ -589,9 +589,9 @@
 /obj/item/melee/baton/security/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += span_notice("\The [src] is [round(cell.percent())]% charged.")
+		. += span_notice(LANG("obj.f103c613", list(src, round(cell.percent()))))
 	else
-		. += span_warning("\The [src] does not have a power source installed.")
+		. += span_warning(LANG("obj.a88e2f32", list(src)))
 
 /obj/item/melee/baton/security/screwdriver_act(mob/living/user, obj/item/tool)
 	if(tryremovecell(user))

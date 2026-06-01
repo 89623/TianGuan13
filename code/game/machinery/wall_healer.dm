@@ -119,10 +119,9 @@
 /obj/machinery/wall_healer/examine(mob/user)
 	. = ..()
 	var/total_bandages = num_bandages + LAZYLEN(stocked_bandages)
-	. += span_notice("It has [total_bandages] bandage\s stocked.\
-		[total_bandages ? " [is_free(user) ? "Purchase" : "Retrieve"] a bandage with [EXAMINE_HINT("right-click")]." : ""]")
+	. += span_notice(LANG("obj.6a8eb00c", list(total_bandages, total_bandages ? " [is_free(user) ? "Purchase" : "Retrieve"] a bandage with [EXAMINE_HINT("right-click")]." : "")))
 	if(current_user)
-		. += span_notice("[current_user] currently [current_hand ? "has [current_user.p_their()] [current_hand.plaintext_zone] in" : "is using"] it.")
+		. += span_notice(LANG("obj.01867178", list(current_user, current_hand ? "has [current_user.p_their()] [current_hand.plaintext_zone] in" : "is using")))
 
 /obj/machinery/wall_healer/update_overlays()
 	. = ..()

@@ -69,7 +69,7 @@
 
 /obj/item/gun/ballistic/automatic/sol_rifle/examine(mob/user)
 	. = ..()
-	. += span_notice("You can <b>examine closer</b> to learn a little more about this weapon.")
+	. += span_notice(LANG("obj.b663717d", null))
 
 /obj/item/gun/ballistic/automatic/sol_rifle/get_lore_blurb()
 	return lore_blurb + "<br><br>" + model_specific_lore

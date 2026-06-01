@@ -219,7 +219,7 @@
 		if(cell_cover_open)
 			. += LANG("obj.a1abb4c6", null)
 			if(!current_cell)
-				. += span_warning("The cell slot is empty, showing bare connectors.")
+				. += span_warning(LANG("obj.d7bd654c", null))
 			else
 				. += LANG("obj.5b7e5f42", list(current_cell))
 

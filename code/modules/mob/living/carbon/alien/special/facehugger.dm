@@ -82,7 +82,7 @@
 		if(CONSCIOUS)
 			. += span_bolddanger("[src] seems to be active!")
 	if (sterile)
-		. += span_bolddanger("It looks like the proboscis has been removed.")
+		. += span_bolddanger(LANG("obj.f6fdd2f1", null))
 
 /obj/item/clothing/mask/facehugger/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 300)

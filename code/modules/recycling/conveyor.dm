@@ -74,7 +74,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/examine(mob/user)
 	. = ..()
 	if(inverted)
-		. += span_notice("It is currently set to go in reverse.")
+		. += span_notice(LANG("obj.45908b93", null))
 	. += LANG("obj.abecaddd", null)
 	. += LANG("obj.66a80030", null)
 	. += LANG("obj.1d6b1b93", null)
@@ -587,9 +587,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor_switch/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] is set to [oneway ? "one way" : "default"] configuration. It can be changed with a <b>screwdriver</b>.")
-	. += span_notice("[src] is set to [invert_icon ? "inverted": "normal"] position. It can be rotated with a <b>wrench</b>.")
-	. += span_notice("[src] is set to move [conveyor_speed] seconds per belt. It can be changed with a <b>multitool</b>.")
+	. += span_notice(LANG("obj.b83b1035", list(src, oneway ? "one way" : "default")))
+	. += span_notice(LANG("obj.02fb7998", list(src, invert_icon ? "inverted": "normal")))
+	. += span_notice(LANG("obj.d76e7e17", list(src, conveyor_speed)))
 
 /obj/machinery/conveyor_switch/oneway
 	icon_state = "conveyor_switch_oneway"
@@ -676,7 +676,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/stack/conveyor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a conveyor switch assembly on this before placing to connect to a lever.")
+	. += span_notice(LANG("obj.93f96690", null))
 
 /obj/item/stack/conveyor/use(used, transfer, check)
 	. = ..()

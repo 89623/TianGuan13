@@ -798,9 +798,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
-	. += span_notice("L1:[cable_layer & CABLE_LAYER_1 ? "Connect" : "Disconnect"].")
-	. += span_notice("L2:[cable_layer & CABLE_LAYER_2 ? "Connect" : "Disconnect"].")
-	. += span_notice("L3:[cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect"].")
+	. += span_notice(LANG("obj.e1844a9d", list(cable_layer & CABLE_LAYER_1 ? "Connect" : "Disconnect")))
+	. += span_notice(LANG("obj.6b86f266", list(cable_layer & CABLE_LAYER_2 ? "Connect" : "Disconnect")))
+	. += span_notice(LANG("obj.3b40bdbc", list(cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect")))
 
 GLOBAL_LIST(hub_radial_layer_list)
 

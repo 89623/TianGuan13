@@ -111,7 +111,7 @@
 
 /obj/vehicle/ridden/lavaboat/dragon/examine(mob/user)
 	. = ..()
-	. += span_notice("You can reform [src] into its bottled shape by rubbing the dragon's nose with [EXAMINE_HINT("Alt-Click")].")
+	. += span_notice(LANG("obj.56e2c0f6", list(src, EXAMINE_HINT("Alt-Click"))))
 
 /obj/vehicle/ridden/lavaboat/dragon/click_alt(mob/user)
 	balloon_alert(user, LANG("obj.7d370441", null))

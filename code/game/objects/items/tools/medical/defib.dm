@@ -69,9 +69,9 @@
 	if(!cell_removable)
 		return
 	if(cell)
-		. += span_notice("Use a screwdriver to remove the cell.")
+		. += span_notice(LANG("obj.affb05ba", null))
 	else
-		. += span_warning("It has no power cell!")
+		. += span_warning(LANG("obj.4eaf5558", null))
 
 /obj/item/defibrillator/fire_act(exposed_temperature, exposed_volume)
 	. = ..()

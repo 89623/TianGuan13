@@ -26,7 +26,7 @@
 
 /obj/item/storage/belt/holster/examine(mob/user)
 	. = ..()
-	. += span_notice("You can <b>right click</b> on a piece of suit-slot clothing with the holster to try and adjust it to fit in its storage slot.")
+	. += span_notice(LANG("obj.fc61b404", null))
 
 /obj/item/storage/belt/holster
 	// use a pen to rename your holster to something based (or cringe if that's your jam)

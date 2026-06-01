@@ -156,17 +156,17 @@
 /obj/item/mail/examine_more(mob/user)
 	. = ..()
 	if(!postmarked)
-		. += span_info("This mail has no postmarking of any sort...")
+		. += span_info(LANG("obj.e7373605", null))
 	else
-		. += span_notice("<i>You notice the postmarking on the front of the mail...</i>")
+		. += span_notice(LANG("obj.b4359010", null))
 	var/datum/mind/recipient = recipient_ref.resolve()
 	if(recipient)
-		. += span_info("[postmarked ? "Certified NT" : "Uncertfieid"] mail for [recipient].")
+		. += span_info(LANG("obj.570e5237", list(postmarked ? "Certified NT" : "Uncertfieid", recipient)))
 	else if(postmarked)
-		. += span_info("Certified mail for [GLOB.station_name].")
+		. += span_info(LANG("obj.70f9eaa8", list(GLOB.station_name)))
 	else
-		. += span_info("This is a dead letter mail with no recipient.")
-	. += span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")
+		. += span_info(LANG("obj.56d6be06", null))
+	. += span_info(LANG("obj.76368db6", null))
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
@@ -501,7 +501,7 @@
 
 /obj/item/storage/mail_counterfeit_device/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>You notice the manufacturer information on the side of the device...</i>")
+	. += span_notice(LANG("obj.ebc5cab9", null))
 	. += LANG("obj.294efb1f", list(span_info("Guerilla Letter Assembler")))
 	. += LANG("obj.294efb1f", list(span_info("GLA Postal Service, right on schedule.")))
 	return .

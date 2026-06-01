@@ -70,16 +70,16 @@
 /obj/machinery/grill/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Add fuel via wood/coal stacks or any open container having a good fuel source")
-	. += span_notice("Monkey energy > Oil > Welding fuel > Ethanol. Others cause bad effects")
-	. += span_notice("Place any food item on top via hand to start grilling")
+	. += span_notice(LANG("obj.cd71f1f1", null))
+	. += span_notice(LANG("obj.9b7e8ce2", null))
+	. += span_notice(LANG("obj.bac45dca", null))
 
 	if(!anchored)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice(LANG("obj.04b10ee4", list(EXAMINE_HINT("anchored"))))
 	else
-		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to work.")
+		. += span_warning(LANG("obj.d61b721b", list(EXAMINE_HINT("anchored"))))
 
 /obj/machinery/grill/update_icon_state()
 	if(!QDELETED(grilled_item))

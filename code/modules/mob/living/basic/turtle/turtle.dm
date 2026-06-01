@@ -121,7 +121,7 @@
 	. = ..()
 
 	if(stat == DEAD)
-		. += span_notice("Its tree seems to be all withered...")
+		. += span_notice(LANG("mob.8a0e39ab", null))
 		return
 
 	var/destined_path = retrieve_destined_path()

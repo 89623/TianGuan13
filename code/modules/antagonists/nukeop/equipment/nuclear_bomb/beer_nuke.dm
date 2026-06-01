@@ -24,9 +24,9 @@
 /obj/machinery/nuclearbomb/beer/examine(mob/user)
 	. = ..()
 	if(keg.reagents.total_volume)
-		. += span_notice("It has [keg.reagents.total_volume] unit\s left.")
+		. += span_notice(LANG("obj.5600f9ef", list(keg.reagents.total_volume)))
 	else
-		. += span_danger("It's empty.")
+		. += span_danger(LANG("obj.552a4105", null))
 
 /obj/machinery/nuclearbomb/beer/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(weapon.is_refillable())

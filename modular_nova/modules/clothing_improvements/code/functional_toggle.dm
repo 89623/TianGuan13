@@ -19,7 +19,7 @@ Use CTRL + SHIFT + LEFT CLICK to turn them on and off.
 	. = ..()
 	
 	if(!only_functional)
-		. += span_info("Ctrl + Shift + Left Click to swap between functional (suit) and non-functional (neck) mode, to allow for things such as wearing a (nonfunctional) jacket over a piece of armor for the visual effect.")
+		. += span_info(LANG("obj.aa0df157", null))
 
 #define PREV_SLOT_FLAGS "fs_slots"
 #define PREV_COLD_PROTECTION "fs_cold"

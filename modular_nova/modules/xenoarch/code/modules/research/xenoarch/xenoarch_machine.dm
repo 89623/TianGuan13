@@ -80,8 +80,8 @@
 /obj/machinery/xenoarch/researcher/examine(mob/user)
 	. = ..()
 
-	. += span_notice("<br>[current_research]/[max_research] research available.")
-	. += span_notice("L-Click to insert items or take out all the strange rocks. R-Click to use research points.")
+	. += span_notice(LANG("obj.29b2ab93", list(current_research, max_research)))
+	. += span_notice(LANG("obj.118b084d", null))
 
 /obj/machinery/xenoarch/researcher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/storage/bag/xenoarch))
@@ -191,7 +191,7 @@
 
 /obj/machinery/xenoarch/digger/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>L-Click to remove all items inside [src].")
+	. += span_notice(LANG("obj.1ef54c60", list(src)))
 
 /obj/machinery/xenoarch/digger/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/storage/bag/xenoarch))

@@ -84,15 +84,15 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	. = ..()
-	. += span_notice("You can link it with an air sensor using a multitool.")
+	. += span_notice(LANG("obj.7c45378c", null))
 
 	if(fan_overclocked)
-		. += span_warning("It is currently overclocked causing it to take damage over time.")
+		. += span_warning(LANG("obj.23c202f4", null))
 
 	if(get_integrity() > 0)
 		. += span_notice(examine_condition)
 	else
-		. += span_warning("The fan is broken.")
+		. += span_warning(LANG("obj.ff01afc0", null))
 
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))

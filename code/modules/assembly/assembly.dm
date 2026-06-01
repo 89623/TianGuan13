@@ -160,7 +160,7 @@
 
 /obj/item/assembly/examine(mob/user)
 	. = ..()
-	. += span_notice("\The [src] [secured? "is secured and ready to be used!" : "can be attached to other things."]")
+	. += span_notice(LANG("obj.a3b2fc1f", list(src, secured? "is secured and ready to be used!" : "can be attached to other things.")))
 
 /obj/item/assembly/ui_host(mob/user)
 	// In order, return:

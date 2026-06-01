@@ -32,7 +32,7 @@
 
 /obj/item/claymore/cutlass/luna/examine(mob/living/user)
 	. = ..()
-	. += span_notice("The design looks modular - it's possible you might be able to find additional pieces to attach.")
+	. += span_notice(LANG("obj.9c0a6a7e", null))
 	for(var/found_fragment in fragments)
 		var/obj/item/luna_fragment/fragment = found_fragment
 		. += span_notice("\a [fragment] has been attached, allowing for Luna to [fragment.effect_desc]")
@@ -134,7 +134,7 @@
 
 /obj/item/luna_fragment/examine(mob/living/user)
 	. = ..()
-	. += span_notice("This device looks rather.. \"home cooked\". You'll likely need a specific sword in order to make use of it.")
+	. += span_notice(LANG("obj.d7c5404d", null))
 	if(has_spoken)
 		. += span_blue(hallucination_text) // If you're gonna take it back outta the sword, you should at least be able to revisit the text.
 

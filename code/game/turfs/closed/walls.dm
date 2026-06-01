@@ -82,7 +82,7 @@
 /turf/closed/wall/examine(mob/user)
 	. = ..()
 	if(initial(smoothing_flags) & SMOOTH_DIAGONAL_CORNERS)
-		. += span_notice("You could adjust its corners with a <b>wrench</b>.")
+		. += span_notice(LANG("turf.3fa870fd", null))
 	. += deconstruction_hints(user)
 
 /turf/closed/wall/proc/deconstruction_hints(mob/user)

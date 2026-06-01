@@ -277,7 +277,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 /obj/structure/mirror/examine(mob/user)
 	. = ..()
 	if(deconstructable)
-		. += span_notice("It's mounted to the wall with a couple of <b>bolts</b>.")
+		. += span_notice(LANG("obj.407e40ef", null))
 
 /obj/structure/mirror/examine_status(mob/living/carbon/human/user)
 	if(broken)

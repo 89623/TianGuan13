@@ -25,8 +25,8 @@
 	if(!IS_HERETIC(user))
 		return
 
-	. += span_notice("Allows you to transmute objects by invoking the rune after collecting the prerequisites overhead.")
-	. += span_notice("You can use your <i>Mansus Grasp</i> on the rune to remove it.")
+	. += span_notice(LANG("obj.5f188deb", null))
+	. += span_notice(LANG("obj.d447cf5e", null))
 
 /obj/effect/heretic_rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)

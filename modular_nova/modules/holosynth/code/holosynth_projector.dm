@@ -225,9 +225,9 @@
 	var/mob/living/carbon/human/linked_mob = linked_mob_ref?.resolve()
 
 	if(linked_mob)
-		. += span_info("This one belongs to [linked_mob].")
+		. += span_info(LANG("obj.d524a7ee", list(linked_mob)))
 		if(linked_mob.loc == src)
-			. += span_notice("<b>Ctrl+Shift click</b> to strip-search [linked_mob].")
+			. += span_notice(LANG("obj.551113a9", list(linked_mob)))
 
 /obj/item/holosynth_pen/get_writing_implement_details()
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))

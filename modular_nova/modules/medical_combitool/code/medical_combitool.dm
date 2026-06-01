@@ -175,7 +175,7 @@
 
 /obj/item/blood_filter/advanced/examine()
 	. = ..()
-	. += span_notice("It resembles a [tool_behaviour == TOOL_BLOODFILTER ? "blood filter" : "bonesetter"].")
+	. += span_notice(LANG("obj.be45e7c0", list(tool_behaviour == TOOL_BLOODFILTER ? "blood filter" : "bonesetter")))
 
 /datum/design/combitool
 	name = "Medical Combitool"

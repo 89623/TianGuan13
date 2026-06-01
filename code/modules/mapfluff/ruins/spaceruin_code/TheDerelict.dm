@@ -62,7 +62,7 @@
 
 /obj/machinery/computer/monitor/examine(mob/user)
 	. = ..()
-	. += span_notice("It appears to be powered via a cable connector.")
+	. += span_notice(LANG("obj.04deb5c0", null))
 
 //Checks for cable connection, charges if possible.
 /obj/machinery/computer/vaultcontroller/process()

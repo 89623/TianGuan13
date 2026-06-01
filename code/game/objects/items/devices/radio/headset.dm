@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	. = ..()
 
 	if(!(item_flags & IN_INVENTORY) || loc != user)
-		. += span_notice("A small screen on the headset flashes, it's too small to read without holding or wearing the headset.")
+		. += span_notice(LANG("obj.84be8147", null))
 		return
 
 	// construction of frequency description
@@ -76,11 +76,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		else
 			available_channels += "<li><b>[span_class(channel_span_class, channel_token)]</b> for <b>[span_class(channel_span_class, channel_name)]</b></li>"
 
-	. += span_notice("A small screen on the headset displays the following available frequencies:")
+	. += span_notice(LANG("obj.8aedb50d", null))
 	. += span_notice("<ul style='display:inline-block; margin: 0; list-style: square;'>[available_channels.Join()]</ul>")
 
 	if(command)
-		. += span_info("<b>Alt-click</b> to toggle the high-volume mode.")
+		. += span_info(LANG("obj.0c4ce9ab", null))
 
 /obj/item/radio/headset/Initialize(mapload)
 	. = ..()

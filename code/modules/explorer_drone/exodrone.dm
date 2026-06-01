@@ -365,7 +365,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/machinery/exodrone_launcher/examine(user)
 	. = ..()
 	if(fuel_canister)
-		. += span_notice("You can remove the [fuel_canister] with a <b>prying tool</b>.")
+		. += span_notice(LANG("obj.c8a82353", list(fuel_canister)))
 
 /obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/fuel_pellet))

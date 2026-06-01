@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/manufacturing/lathe // this is a heavily gutted autolathe
 	name = "manufacturing lathe"
 	desc = "Lathes the set recipe until it runs out of resources. Only accepts sheets or other kinds of material stacks."
@@ -57,10 +58,10 @@
 	var/datum/design/design
 	if(!isnull(design_id))
 		design = SSresearch.techweb_design_by_id(design_id)
-	. += span_notice("It is set to print [!isnull(design) ? design.name : "nothing, set with a multitool"].")
+	. += span_notice(LANG("obj.4568ae45", list(!isnull(design) ? design.name : "nothing, set with a multitool")))
 	if(isnull(design))
 		return
-	. += span_notice("It needs:")
+	. += span_notice(LANG("obj.2a2a5155", null))
 	for(var/valid_type, amount in design.materials)
 		var/atom/ingredient = valid_type
 

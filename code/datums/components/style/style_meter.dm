@@ -29,7 +29,7 @@
 
 /obj/item/style_meter/examine(mob/user)
 	. = ..()
-	. += span_notice("You feel like a <b>multitool</b> could be used on this.")
+	. += span_notice(LANG("obj.9d14e21b", null))
 
 /obj/item/style_meter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/item/clothing/glasses))

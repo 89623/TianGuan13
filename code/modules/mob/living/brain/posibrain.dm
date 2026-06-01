@@ -181,8 +181,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	else
 		. += "[dead_message]"
 		if(ask_role)
-			. += span_notice("Current consciousness seed: \"[ask_role]\"")
-		. += span_boldnotice("Alt-click to set a consciousness seed, specifying what [src] will be used for. This can help generate a personality interested in that role.")
+			. += span_notice(LANG("obj.669ecac1", list(ask_role)))
+		. += span_boldnotice(LANG("obj.a6197476", list(src)))
 
 /obj/item/mmi/posibrain/Initialize(mapload, autoping = TRUE)
 	. = ..()

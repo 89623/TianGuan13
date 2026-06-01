@@ -43,9 +43,9 @@
 /obj/item/statuebust/hippocratic/examine(mob/user)
 	. = ..()
 	if(reference)
-		. += span_notice("You could activate the bust in-hand to swear or forswear a Hippocratic Oath... but it seems like somebody decided it was more of a Hippocratic Suggestion. This thing is caked with bits of blood and gore.")
+		. += span_notice(LANG("obj.2891fae6", null))
 		return
-	. += span_notice("You can activate the bust in-hand to swear or forswear a Hippocratic Oath! This has no effects except pacifism or bragging rights. Does not remove other sources of pacifism. Do not eat.")
+	. += span_notice(LANG("obj.632131ab", null))
 
 /obj/item/statuebust/hippocratic/equipped(mob/living/carbon/human/user, slot)
 	..()

@@ -384,7 +384,7 @@
 /obj/item/kitchen/tongs/examine(mob/user)
 	. = ..()
 	if (!isnull(tonged))
-		. += span_notice("It is holding [tonged].")
+		. += span_notice(LANG("obj.3fe7caf0", list(tonged)))
 
 /obj/item/kitchen/tongs/dropped(mob/user, silent)
 	. = ..()

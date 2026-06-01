@@ -35,6 +35,6 @@
 /obj/item/fireproof_spray/examine(mob/user) //shows uses back to the user when examined
 	. = ..()
 	if(uses > 0)
-		. += span_notice("It has [(uses)] use\s left.")
+		. += span_notice(LANG("obj.5bf37df5", list((uses))))
 	else
-		. += span_warning("It is empty.")
+		. += span_warning(LANG("obj.53b0d090", null))

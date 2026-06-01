@@ -39,8 +39,8 @@
 	if(!isobserver(user))
 		return
 	. += "[span_boldnotice("Sound File:")] [sound_file ? sound_file : "None chosen"]"
-	. += span_boldnotice("Mode:</span> [motus_operandi]")
-	. += span_boldnotice("Range:</span> [emitter_range]")
+	. += span_boldnotice(LANG("obj.9d1d3fd0", list(motus_operandi)))
+	. += span_boldnotice(LANG("obj.1faf8a85", list(emitter_range)))
 	. += LANG("obj.1b13d093", list(sound_volume))
 	if(user.client.holder)
 		. += LANG("obj.8294ab94", null)

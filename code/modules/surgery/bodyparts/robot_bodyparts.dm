@@ -347,15 +347,14 @@
 /obj/item/bodypart/chest/robot/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += {"It has a [cell] inserted.\n
-		[span_info("You can use a <b>screwdriver</b> to remove [cell].")]"}
+		. += LANG("obj.06ad6541", list(cell, span_info("You can use a <b>screwdriver</b> to remove [cell].")))
 	else
-		. += span_info("It has an empty port for a <b>power cell</b>.")
+		. += span_info(LANG("obj.5c9bc61f", null))
 	if(wired)
 		. += "Its all wired up[cell ? " and ready for usage" : ""].\n"+\
 		span_info("You can use <b>wirecutters</b> to remove the wiring.")
 	else
-		. += span_info("It has a couple spots that still need to be <b>wired</b>.")
+		. += span_info(LANG("obj.4ee3fbfa", null))
 
 /obj/item/bodypart/chest/robot/drop_organs(mob/user, violent_removal)
 	var/atom/drop_loc = drop_location()
@@ -435,16 +434,15 @@
 /obj/item/bodypart/head/robot/examine(mob/user)
 	. = ..()
 	if(!flash1 && !flash2)
-		. += span_info("It has two empty eye sockets for <b>flashes</b>.")
+		. += span_info(LANG("obj.e8404373", null))
 	else
 		var/single_flash = FALSE
 		if(!flash1 || !flash2)
 			single_flash = TRUE
-			. += {"One of its eye sockets is currently occupied by a flash.\n
-			[span_info("It has an empty eye socket for another <b>flash</b>.")]"}
+			. += LANG("obj.d4dddc84", list(span_info("It has an empty eye socket for another <b>flash</b>.")))
 		else
 			. += LANG("obj.d0c0915e", null)
-		. += span_notice("You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.")
+		. += span_notice(LANG("obj.24bd0c3e", list(single_flash ? "":"es")))
 
 /obj/item/bodypart/head/robot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/assembly/flash/handheld))

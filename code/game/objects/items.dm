@@ -2228,14 +2228,7 @@
 
 /obj/item/vv_get_header()
 	. = ..()
-	. += {"
-		<br><font size='1'>
-			DAMTYPE: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=damtype' id='damtype'>[uppertext(damtype)]</a>
-			FORCE: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=force' id='force'>[force]</a>
-			WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=wound' id='wound'>[wound_bonus]</a>
-			BARE WOUND: <font size='1'><a href='byond://?_src_=vars;[HrefToken()];item_to_tweak=[REF(src)];var_tweak=bare wound' id='bare wound'>[exposed_wound_bonus]</a>
-		</font>
-	"}
+	. += LANG("obj.9734bd49", list(HrefToken(), REF(src), uppertext(damtype), HrefToken(), REF(src), force, HrefToken(), REF(src), wound_bonus, HrefToken(), REF(src), exposed_wound_bonus))
 
 /// Fetches, or lazyloads, our embedding datum
 /obj/item/proc/get_embed()

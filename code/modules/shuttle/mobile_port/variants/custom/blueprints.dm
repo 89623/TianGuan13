@@ -429,15 +429,15 @@
 /obj/item/shuttle_blueprints/proc/get_shuttle_tip()
 	. = list()
 	if(!shuttle_ref)
-		. += span_notice("It can be used to construct a custom shuttle.")
+		. += span_notice(LANG("obj.f46e2812", null))
 		return
 	var/obj/docking_port/mobile/custom/shuttle = shuttle_ref.resolve()
 	if(!shuttle)
-		. += span_notice("It has the plans for a shuttle that no longer exists. It can be reused to construct a new shuttle.")
+		. += span_notice(LANG("obj.229bd62a", null))
 	else
-		. += span_notice("It has the plans for \the [shuttle] on it, and can be used to expand [shuttle.p_them()] or modify [shuttle.p_their()] areas.")
+		. += span_notice(LANG("obj.6657253b", list(shuttle, shuttle.p_them(), shuttle.p_their())))
 		if(shuttle.master_blueprint.resolve() == src)
-			. += span_notice("This is the master blueprint for \the [shuttle]. You can copy it to a blank set of blueprints, or to an engineering cyborg with a shuttle database module installed.")
+			. += span_notice(LANG("obj.b94bb363", list(shuttle)))
 
 /obj/item/shuttle_blueprints/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
@@ -720,18 +720,18 @@
 	. = list()
 	if(!shuttle_ref)
 		if(!length(shuttles))
-			. += span_notice("It does not have any shuttle plans stored.")
+			. += span_notice(LANG("obj.5a14b598", null))
 		else
-			. += span_notice("It does not currently have a shuttle plan loaded.")
-		. += span_notice("In this mode, it can be used to construct a custom shuttle.")
+			. += span_notice(LANG("obj.38e338a4", null))
+		. += span_notice(LANG("obj.39159662", null))
 		return
 	var/obj/docking_port/mobile/custom/shuttle = shuttle_ref.resolve()
 	if(!shuttle)
-		. += span_notice("The currently loaded plans are for a shuttle that no longer exists. It will default to shuttle construction mode.")
+		. += span_notice(LANG("obj.f72d51b8", null))
 	else
-		. += span_notice("It has the plans for \the [shuttle] currently loaded, and can be used to expand [shuttle.p_them()] or modify [shuttle.p_their()] areas.")
+		. += span_notice(LANG("obj.1792c395", list(shuttle, shuttle.p_them(), shuttle.p_their())))
 		if(shuttle.master_blueprint.resolve() == src)
-			. += span_notice("This is the master blueprint for \the [shuttle]. You can copy it to a blank set of blueprints, or to another engineering cyborg with a shuttle database module installed.")
+			. += span_notice(LANG("obj.47de6555", list(shuttle)))
 
 /obj/item/shuttle_blueprints/borg/unlink(removing)
 	if(removing)

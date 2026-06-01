@@ -202,14 +202,14 @@
 /obj/structure/closet/body_bag/examine(mob/user)
 	. = ..()
 	if(tag_name)
-		. += span_info("The tag reads: [tag_name]")
+		. += span_info(LANG("obj.b4395e8e", list(tag_name)))
 	if(pinned)
 		if(get_dist(user, src) <= 2 && user.client)
 			pinned.ui_interact(user)
 		else
-			. += span_smallnoticeital("There's a paper pinned to the bag, but you can't make out what it says.")
+			. += span_smallnoticeital(LANG("obj.4c9b0413", null))
 	if(can_scan_through)
-		. += span_notice("The walls of the bag are thin enough to scan through via a <b>health analyzer</b>.")
+		. += span_notice(LANG("obj.c8850817", null))
 
 /obj/structure/closet/body_bag/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(tag_name && tool.tool_behaviour == TOOL_WIRECUTTER || tool.get_sharpness())

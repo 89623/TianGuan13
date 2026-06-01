@@ -29,14 +29,14 @@
 
 /obj/item/disk/bitrunning/examine(mob/user)
 	. = ..()
-	. += span_infoplain("This disk must be carried on your person into a netpod to be used.")
+	. += span_infoplain(LANG("obj.134d049a", null))
 
 	if(isnull(choice_made))
-		. += span_notice("To make a selection, toggle the disk in hand.")
+		. += span_notice(LANG("obj.c74ecd1a", null))
 		return
 
-	. += span_info("It has been used to select: <b>[choice_made]</b>.")
-	. += span_notice("It cannot make another selection.")
+	. += span_info(LANG("obj.1fb73f57", list(choice_made)))
+	. += span_notice(LANG("obj.8d039ed5", null))
 
 /// Handles loading our stuff onto avatars
 /obj/item/disk/bitrunning/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)

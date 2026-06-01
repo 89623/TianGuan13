@@ -295,7 +295,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/periodic_table, 
 
 /obj/structure/sign/poster/official/plasma_effects/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += span_notice(LANG("obj.651bbda5", null))
 	. += LANG("obj.294efb1f", list(span_info("Plasma (scientific name Amenthium) is classified by TerraGov as a Grade 1 Health Hazard, and has significant risks to health associated with chronic exposure.")))
 	. += LANG("obj.294efb1f", list(span_info("Plasma is known to cross the blood/brain barrier and bioaccumulate in brain tissue, where it begins to result in degradation of brain function. The mechanism for attack is not yet fully known, and as such no concrete preventative advice is available barring proper use of PPE (gloves + protective jumpsuit + respirator).")))
 	. += LANG("obj.294efb1f", list(span_info("In small doses, plasma induces confusion, short-term amnesia, and heightened aggression. These effects persist with continual exposure.")))
@@ -328,7 +328,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/corporate_perks_
 
 /obj/structure/sign/poster/official/jim_nortons/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += span_notice(LANG("obj.651bbda5", null))
 	. += LANG("obj.294efb1f", list(span_info("From our roots in Trois-Rivières, we've worked to bring you the best coffee money can buy since 1965.")))
 	. += LANG("obj.294efb1f", list(span_info("So stop by Jim's today- have a hot cup of coffee and a donut, and live like the Québécois do.")))
 	. += LANG("obj.294efb1f", list(span_info("Jim Norton's Québécois Coffee: Toujours Le Bienvenu.")))

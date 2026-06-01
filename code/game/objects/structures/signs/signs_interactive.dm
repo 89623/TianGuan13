@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/sign/clock
 	name = "wall clock"
 	desc = "It's your run-of-the-mill wall clock showing both the local Nanotrasen Standard Time and the galactic Treaty Coordinated Time. Perfect for staring at instead of working."
@@ -7,9 +8,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/clock, 32)
 
 /obj/structure/sign/clock/examine(mob/user)
 	. = ..()
-	. += span_info("The current NST (local) time is: [server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour))].")
+	. += span_info(LANG("obj.e61b3194", list(server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour)))))
 	if(user.is_literate())
-		. += span_info("That means it is currently [round_timestamp()] into the shift.")
+		. += span_info(LANG("obj.f5c79a87", list(round_timestamp())))
 
 /obj/structure/sign/calendar
 	name = "wall calendar"
@@ -20,8 +21,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/calendar, 32)
 
 /obj/structure/sign/calendar/examine(mob/user)
 	. = ..()
-	. += span_info("The current date is: [time2text(world.realtime, "DDD, MMM DD", world.timezone)], [CURRENT_STATION_YEAR].")
+	. += span_info(LANG("obj.6df51eb7", list(time2text(world.realtime, "DDD, MMM DD", world.timezone), CURRENT_STATION_YEAR)))
 	if(length(GLOB.holidays))
-		. += span_info("Events:")
+		. += span_info(LANG("obj.09bc5159", null))
 		for(var/holidayname in GLOB.holidays)
 			. += span_info("[holidayname]")

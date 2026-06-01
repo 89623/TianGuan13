@@ -202,29 +202,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	. = ..()
 
 	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += span_info("It has electromagnetic interference shielding installed.")
+		. += span_info(LANG("obj.9eefe194", null))
 	else
-		. += span_info("It can be shielded against electromagnetic interference with some <b>plasma</b>.")
+		. += span_info(LANG("obj.bd6aeaa5", null))
 
 	if(isXRay(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
-		. += span_info("It has an X-ray photodiode installed.")
+		. += span_info(LANG("obj.375dcdc1", null))
 	else
-		. += span_info("It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.")
+		. += span_info(LANG("obj.47da969f", null))
 
 	if(isMotion())
-		. += span_info("It has a proximity sensor installed.")
+		. += span_info(LANG("obj.a0586da2", null))
 	else
-		. += span_info("It can be upgraded with a <b>proximity sensor</b>.")
+		. += span_info(LANG("obj.25242bb3", null))
 
 	if(!camera_enabled)
-		. += span_info("It's currently deactivated.")
+		. += span_info(LANG("obj.65d21f68", null))
 		if(!panel_open && powered())
-			. += span_notice("You'll need to open its maintenance panel with a <b>screwdriver</b> to turn it back on.")
+			. += span_notice(LANG("obj.ccaf15ad", null))
 
 	if(panel_open)
-		. += span_info("Its maintenance panel is currently open.")
+		. += span_info(LANG("obj.bc1287f7", null))
 		if(!camera_enabled && powered())
-			. += span_info("It can reactivated with <b>wirecutters</b>.")
+			. += span_info(LANG("obj.9718ecc5", null))
 
 /obj/machinery/camera/emp_act(severity, reset_time = 90 SECONDS)
 	. = ..()

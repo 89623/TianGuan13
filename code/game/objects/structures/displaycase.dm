@@ -65,9 +65,9 @@
 /obj/structure/displaycase/examine(mob/user)
 	. = ..()
 	if(alert)
-		. += span_notice("Hooked up with an anti-theft system.")
+		. += span_notice(LANG("obj.d417b555", null))
 	if(showpiece)
-		. += span_notice("There's \a [showpiece] inside.")
+		. += span_notice(LANG("obj.0b037123", list(showpiece)))
 
 ///Removes the showpiece from the displaycase
 /obj/structure/displaycase/proc/dump()
@@ -258,8 +258,8 @@
 /obj/structure/displaycase_chassis/examine(mob/user)
 	. = ..()
 	if(!electronics)
-		. += span_notice("You can attach [EXAMINE_HINT("airlock electronics")] to give it access restrictions.")
-	. += span_notice("[src] can be finalized using [EXAMINE_HINT("10 glass sheets")], or turned into a Vend-A-Tray using a [EXAMINE_HINT("card reader")].")
+		. += span_notice(LANG("obj.ce9175a1", list(EXAMINE_HINT("airlock electronics"))))
+	. += span_notice(LANG("obj.e31269f5", list(src, EXAMINE_HINT("10 glass sheets"), EXAMINE_HINT("card reader"))))
 
 /obj/structure/displaycase_chassis/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -667,9 +667,9 @@
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()
 	if(showpiece && !open)
-		. += span_notice("[showpiece] is for sale for [sale_price] [MONEY_NAME].")
+		. += span_notice(LANG("obj.64631028", list(showpiece, sale_price, MONEY_NAME)))
 	if(broken)
-		. += span_notice("[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.")
+		. += span_notice(LANG("obj.7da37457", list(src)))
 
 /obj/structure/displaycase/forsale/atom_break(damage_flag)
 	. = ..()

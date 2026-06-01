@@ -19,7 +19,7 @@
 
 /obj/item/stack/medical/wound_recovery/robofoam/examine(mob/user)
 	. = ..()
-	. += span_notice("This <b>cheaper</b> foam can only be used to fill <b>structural</b> wounds on synthetics.")
+	. += span_notice(LANG("obj.dbff2a7d", null))
 	return .
 
 /obj/item/stack/medical/wound_recovery/robofoam/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
@@ -53,7 +53,7 @@
 
 /obj/item/stack/medical/wound_recovery/robofoam_super/examine(mob/user)
 	. = ..()
-	. += span_notice("This more <b>expensive</b> foam can be used to fill <b>any</b> type of wound on synthetics.")
+	. += span_notice(LANG("obj.52f56a5a", null))
 	return .
 
 /obj/item/stack/medical/wound_recovery/robofoam_super/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
@@ -117,9 +117,9 @@
 /obj/item/cybernetic_repair_paste/examine()
 	. = ..()
 	if(uses > 0)
-		. += span_notice("It is loaded with [uses] gels.")
+		. += span_notice(LANG("obj.53815396", list(uses)))
 	else
-		. += span_notice("It is spent.")
+		. += span_notice(LANG("obj.2ad07b37", null))
 
 // Attempts to repair a robotic organ via an active organ manipulation surgery.
 /obj/item/cybernetic_repair_paste/attack(mob/living/target_mob, mob/living/user)

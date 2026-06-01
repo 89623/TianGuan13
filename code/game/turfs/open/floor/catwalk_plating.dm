@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## catwalk flooring
  *
@@ -29,10 +30,10 @@
 	. = ..()
 
 	if(covered)
-		. += span_notice("You can <b>unscrew</b> it to reveal the contents beneath.")
+		. += span_notice(LANG("turf.5415cbef", null))
 	else
-		. += span_notice("You can <b>screw</b> it to hide the contents beneath.")
-		. += span_notice("There's a <b>small crack</b> on the edge of it.")
+		. += span_notice(LANG("turf.348d6a27", null))
+		. += span_notice(LANG("turf.ff9d66d1", null))
 
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()

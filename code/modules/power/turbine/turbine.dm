@@ -91,16 +91,16 @@
 /obj/machinery/power/turbine/examine(mob/user)
 	. = ..()
 	if(installed_part)
-		. += span_notice("Currently at tier [installed_part.current_tier].")
+		. += span_notice(LANG("obj.6df13067", list(installed_part.current_tier)))
 		if(installed_part.current_tier + 1 < TURBINE_PART_TIER_FOUR)
-			. += span_notice("Can be upgraded by using a tier [installed_part.current_tier + 1] part.")
-		. += span_notice("\The [installed_part] can be [EXAMINE_HINT("pried")] out.")
+			. += span_notice(LANG("obj.bdc46d2e", list(installed_part.current_tier + 1)))
+		. += span_notice(LANG("obj.08c3e19a", list(installed_part, EXAMINE_HINT("pried"))))
 	else
-		. += span_warning("Is missing a [initial(part_path.name)].")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+		. += span_warning(LANG("obj.94e64e27", list(initial(part_path.name))))
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("It can rotated with a [EXAMINE_HINT("wrench")]")
-		. += span_notice("The full machine can be [EXAMINE_HINT("pried")] apart")
+		. += span_notice(LANG("obj.5bb9b460", list(EXAMINE_HINT("wrench"))))
+		. += span_notice(LANG("obj.553cbc20", list(EXAMINE_HINT("pried"))))
 
 ///Is this machine currently running
 /obj/machinery/power/turbine/proc/is_active()
@@ -435,9 +435,9 @@
 /obj/machinery/power/turbine/core_rotor/examine(mob/user)
 	. = ..()
 	if(!panel_open)
-		. += span_notice("[EXAMINE_HINT("screw")] open its panel to change cable layer.")
+		. += span_notice(LANG("obj.7962f52d", list(EXAMINE_HINT("screw"))))
 	if(!all_parts_connected)
-		. += span_warning("The parts need to be linked via a [EXAMINE_HINT("multitool")]")
+		. += span_warning(LANG("obj.581f93ed", list(EXAMINE_HINT("multitool"))))
 
 ///Adds overlays to this turbines appearance
 /obj/machinery/power/turbine/core_rotor/set_overlays(list/overlays)

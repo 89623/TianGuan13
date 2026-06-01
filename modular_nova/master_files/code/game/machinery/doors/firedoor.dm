@@ -4,7 +4,7 @@
 
 /obj/machinery/door/firedoor/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click the door to use the manual override.")
+	. += span_notice(LANG("obj.927eb543", null))
 
 /obj/machinery/door/proc/try_manual_override(mob/user)
 	if(density && !welded && !operating)

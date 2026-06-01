@@ -159,7 +159,7 @@
 	if(IS_HERETIC(user) || !ishuman(user))
 		return
 
-	. += span_userdanger("Your mind burns as you stare at the tear!")
+	. += span_userdanger(LANG("obj.360a41fd", null))
 	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 190)
 	user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 

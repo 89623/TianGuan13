@@ -199,7 +199,7 @@
 
 /obj/item/mod/ai_minicard/examine(mob/user)
 	. = ..()
-	. += span_notice("You see [stored_ai.resolve() || "no AI"] stored inside.")
+	. += span_notice(LANG("obj.da8903ee", list(stored_ai.resolve() || "no AI")))
 
 /obj/item/mod/ai_minicard/transfer_ai(interaction, mob/user, mob/living/silicon/ai/intAI, obj/item/aicard/card)
 	. = ..()

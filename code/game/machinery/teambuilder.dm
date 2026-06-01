@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Simple admin tool that enables players to be assigned to a VERY SHITTY, very visually distinct team, quickly and affordably.
  */
@@ -27,7 +28,7 @@
 
 /obj/machinery/teambuilder/examine_more(mob/user)
 	. = ..()
-	. += span_notice("You see a hastily written note on the side, it says '1215-1217, PICK A SIDE'.")
+	. += span_notice(LANG("obj.61a99b8e", null))
 
 /obj/machinery/teambuilder/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

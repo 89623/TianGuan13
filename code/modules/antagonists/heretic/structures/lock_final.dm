@@ -64,7 +64,7 @@
 	. = ..()
 	if (!isobserver(user) || gathering_candidates)
 		return
-	. += span_notice("You can use this to enter the world as a foul monster.")
+	. += span_notice(LANG("obj.56a1d6d5", null))
 
 /// Turn a ghost into an 'orrible beast
 /obj/structure/lock_tear/proc/ghost_to_monster(mob/dead/observer/user, should_ask = TRUE)

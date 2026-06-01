@@ -109,7 +109,7 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
 	. = ..()
-	. += span_notice("Its pressure limits could be [overclocked ? "en" : "dis"]abled with a <b>multitool</b>.")
+	. += span_notice(LANG("obj.abd6b18a", list(overclocked ? "en" : "dis")))
 	if(overclocked)
 		. += LANG("obj.204177b8", list(on ? " and it's spewing gas!" : "."))
 

@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(allowed_forging_materials, list(
 /obj/item/forging/complete/examine(mob/user)
 	. = ..()
 	if(spawning_item)
-		. += span_notice("<br>In order to finish this item, a workbench will be necessary!")
+		. += span_notice(LANG("obj.8c51e9a0", null))
 
 /obj/item/forging/complete/chain
 	name = "chain"

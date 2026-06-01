@@ -88,7 +88,7 @@
 /obj/machinery/seed_extractor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Extracting <b>[seed_multiplier] to [seed_multiplier * 4]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]</b> seeds.")
+		. += span_notice(LANG("obj.87238f0d", list(seed_multiplier, seed_multiplier * 4, max_seeds)))
 
 /obj/machinery/seed_extractor/update_icon_state()
 	. = ..()

@@ -27,7 +27,7 @@
 /obj/item/clothing/neck/tie/disco/examine(mob/user)
 	. = ..()
 	if(!length(possessed_souls))
-		. += span_notice("It may be given sentience by [EXAMINE_HINT("using it in hand")].")
+		. += span_notice(LANG("obj.2a370694", list(EXAMINE_HINT("using it in hand"))))
 
 /obj/item/clothing/neck/tie/disco/equipped(mob/living/user, slot)
 	. = ..()

@@ -79,8 +79,8 @@
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
 	if(issilicon(user) && !(machine_stat & BROKEN))
-		. += span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")
-		. += span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")
+		. += span_notice(LANG("obj.630b4992", list(src, enabled ? "disable" : "enable")))
+		. += span_notice(LANG("obj.f2bc1037", list(src, lethal ? "stun" : "kill")))
 
 /obj/machinery/turretid/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = NONE

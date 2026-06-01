@@ -207,7 +207,7 @@
 /obj/structure/table/examine(mob/user)
 	. = ..()
 	if(is_flipped)
-		. += span_notice("It's been flipped on its side!")
+		. += span_notice(LANG("obj.66eba25e", null))
 	. += deconstruction_hints(user)
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
@@ -1217,17 +1217,17 @@
 /obj/structure/table/optable/examine(mob/user)
 	. = ..()
 	if (air_tank)
-		. += span_notice("It has \a [air_tank] secured to it with a couple of [EXAMINE_HINT("bolts")].")
+		. += span_notice(LANG("obj.95e368ee", list(air_tank, EXAMINE_HINT("bolts"))))
 		if (patient)
-			. += span_info("You can connect [patient]'s internals to \the [air_tank] by dragging \the [src] onto them.")
+			. += span_info(LANG("obj.59a866c6", list(patient, air_tank, src)))
 	else
-		. += span_notice("It has an attachment slot for an air tank underneath.")
+		. += span_notice(LANG("obj.9627ce21", null))
 	if (breath_mask)
-		. += span_notice("It has \a [breath_mask] attached to its side, the tube secured with a single [EXAMINE_HINT("screw")].")
+		. += span_notice(LANG("obj.009111fa", list(breath_mask, EXAMINE_HINT("screw"))))
 		if (breath_mask.loc == src)
-			. += span_info("You can detach the mask by right-clicking \the [src] with an empty hand.")
+			. += span_info(LANG("obj.b543ffe7", list(src)))
 	else
-		. += span_notice("There's a port for a breathing mask tube on its side.")
+		. += span_notice(LANG("obj.782db675", null))
 
 /obj/structure/table/optable/proc/detach_mask(mob/living/user)
 	if (!istype(user) || !IsReachableBy(user) || !user.can_interact_with(src))
@@ -1365,7 +1365,7 @@
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
-	. += span_notice("It's held together by a couple of <b>bolts</b>.")
+	. += span_notice(LANG("obj.c0bf1b5b", null))
 
 /obj/structure/rack/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

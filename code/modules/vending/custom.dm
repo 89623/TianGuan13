@@ -62,7 +62,7 @@
 /obj/machinery/vending/custom/examine(mob/user)
 	. = ..()
 	if(linked_account)
-		. += span_warning("Machine is ID locked. Be sure to unlink before deconstructing the machine.")
+		. += span_warning(LANG("obj.6021c05a", null))
 
 /obj/machinery/vending/custom/Exited(obj/item/gone, direction)
 	. = ..()

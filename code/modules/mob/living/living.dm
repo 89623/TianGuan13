@@ -2225,17 +2225,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/vv_get_header()
 	. = ..()
 	var/refid = REF(src)
-	. += {"
-		<br><font size='1'>[VV_HREF_TARGETREF(refid, VV_HK_GIVE_DIRECT_CONTROL, "[ckey || "no ckey"]")] / [VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[real_name || "no real name"]", NAMEOF(src, real_name))]</font>
-		<br><font size='1'>
-			BRUTE:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[get_brute_loss()]</a>
-			FIRE:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[get_fire_loss()]</a>
-			TOXIN:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[get_tox_loss()]</a>
-			OXY:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[get_oxy_loss()]</a>
-			BRAIN:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[get_organ_loss(ORGAN_SLOT_BRAIN)]</a>
-			STAMINA:<font size='1'><a href='byond://?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[get_stamina_loss()]</a>
-		</font>
-	"}
+	. += LANG("mob.82fe9cfd", list(VV_HREF_TARGETREF(refid, VV_HK_GIVE_DIRECT_CONTROL, "[ckey || "no ckey"]"), VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[real_name || "no real name"]", NAMEOF(src, real_name)), HrefToken(), refid, get_brute_loss(), HrefToken(), refid, get_fire_loss(), HrefToken(), refid, get_tox_loss(), HrefToken(), refid, get_oxy_loss(), HrefToken(), refid, get_organ_loss(ORGAN_SLOT_BRAIN), HrefToken(), refid, get_stamina_loss()))
 
 /mob/living/vv_get_dropdown()
 	. = ..()

@@ -77,6 +77,6 @@
 
 	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 160)
 	user.adjust_temp_blindness(5 SECONDS)
-	. += span_notice("It. It looked. IT WRAPS ITSELF AROUND ME.")
+	. += span_notice(LANG("obj.fc5e918a", null))
 
 

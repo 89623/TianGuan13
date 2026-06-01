@@ -37,7 +37,7 @@
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_NECK) == src)
 		return
-	. += span_tinynotice("It has a [EXAMINE_HINT("wire")] panel that could be interacted with...")
+	. += span_tinynotice(LANG("obj.5676e602", list(EXAMINE_HINT("wire"))))
 
 /obj/item/clothing/neck/collar_bomb/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_wire_tool(item))

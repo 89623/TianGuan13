@@ -186,7 +186,7 @@
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()
 	if(length(log_data) && !scanner_busy)
-		. += span_notice("Alt-click to clear scanner logs.")
+		. += span_notice(LANG("obj.52c8a003", null))
 
 
 /obj/item/detective_scanner/ui_interact(mob/user, datum/tgui/ui)

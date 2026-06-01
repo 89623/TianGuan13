@@ -51,7 +51,7 @@
 /obj/machinery/power/rtg/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Power generation at <b>[display_power(power_gen, convert = FALSE)]</b>.")
+		. += span_notice(LANG("obj.06ff8805", list(display_power(power_gen, convert = FALSE))))
 
 /obj/machinery/power/rtg/update_icon_state()
 	. = ..()

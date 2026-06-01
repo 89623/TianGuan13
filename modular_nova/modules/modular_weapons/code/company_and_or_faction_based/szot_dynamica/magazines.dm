@@ -169,7 +169,7 @@
 	if(length(stored_ammo))
 		var/obj/item/ammo_casing/pulse/top_cell = get_round()
 		if(istype(top_cell))
-			. += span_notice("The topmost loaded cell has <b>[top_cell.remaining_uses]</b> out of <b>[top_cell.max_uses]</b> shots remaining.")
+			. += span_notice(LANG("obj.e4a5de6c", list(top_cell.remaining_uses, top_cell.max_uses)))
 
 /obj/item/ammo_box/magazine/pulse/add_notes_box()
 	var/list/readout = list()

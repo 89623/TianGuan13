@@ -244,7 +244,7 @@
 /obj/structure/sign/picture_frame/portrait/examine_more(mob/user)
 	. = ..()
 	if(!framed)
-		. += span_notice("The frame and the picture are glued together, but you guess you could slip a photo between the two.")
+		. += span_notice(LANG("obj.574fe5ec", null))
 
 //persistent frames, make sure the same ID doesn't appear more than once per map
 /obj/structure/sign/picture_frame/showroom/one

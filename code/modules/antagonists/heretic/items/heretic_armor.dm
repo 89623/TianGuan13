@@ -66,7 +66,7 @@
 		return
 
 	// Our hood gains the heretic_focus element.
-	. += span_notice("Allows you to cast heretic spells while the hood is up.")
+	. += span_notice(LANG("obj.bdf5da6f", null))
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	name = "ominous hood"
@@ -1197,8 +1197,8 @@
 		return
 
 	// Let examiners know this works as a focus only if the hood is down
-	. += span_notice("Allows you to cast heretic spells while the hood is down.")
-	. += span_notice("Is space worthy as long as the hood is down.")
+	. += span_notice(LANG("obj.6ff98c84", null))
+	. += span_notice(LANG("obj.f4fee012", null))
 
 /obj/item/clothing/suit/hooded/cultrobes/void/on_hood_down(obj/item/clothing/head/hooded/hood)
 	make_visible()

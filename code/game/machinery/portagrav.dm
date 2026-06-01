@@ -73,7 +73,7 @@
 	. += LANG("obj.6860392a", list(!isnull(cell) ? "[round(cell.percent(), 1)]%" : "NO CELL"))
 	. += LANG("obj.421c7a18", list(anchored ? "" : " not"))
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
+		. += span_notice(LANG("obj.a322e9c4", list(on ? "off" : "on")))
 
 /obj/machinery/power/portagrav/RefreshParts()
 	. = ..()

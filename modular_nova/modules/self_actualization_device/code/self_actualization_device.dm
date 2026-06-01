@@ -96,14 +96,14 @@
 
 /obj/machinery/self_actualization_device/examine(mob/user)
 	. = ..()
-	. += span_info("The status panel indicates an average laser power consumption of <b>[display_power(active_power_usage)]</b> with an estimated total cycle time of <b>[DisplayTimeText(processing_time)]</b>.")
+	. += span_info(LANG("obj.6b9564d4", list(display_power(active_power_usage), DisplayTimeText(processing_time))))
 
 	if(processing)
-		. += span_notice("The status display indicates <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, sad_processing_time), 2)]</b> remaining on the current cycle.")
+		. += span_notice(LANG("obj.5510129c", list(DisplayTimeText(COOLDOWN_TIMELEFT(src, sad_processing_time), 2))))
 	else
-		. += span_notice("<b>Left-click</b> to <b>[state_open ? "close" : "open"]</b>.")
+		. += span_notice(LANG("obj.97f46bd1", list(state_open ? "close" : "open")))
 		if(!isnull(occupant) && !state_open)
-			. += span_notice("<b>Alt-click</b> to turn on.")
+			. += span_notice(LANG("obj.ff1221b3", null))
 
 /obj/machinery/self_actualization_device/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(!processing)

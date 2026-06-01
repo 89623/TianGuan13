@@ -66,9 +66,9 @@
 	. = ..()
 	var/sameside = user.faction_check_atom(src, exact_match = FALSE)
 	if(sameside)
-		. += span_notice("This drone is currently attached to a mineral vent. You should protect it from harm to secure the mineral vent.")
+		. += span_notice(LANG("mob.d0e58859", null))
 	else
-		. += span_warning("This vile Nanotrasen trash is trying to destroy the environment. Attack it to free the mineral vent from its grasp.")
+		. += span_warning(LANG("mob.0c917354", null))
 
 /mob/living/basic/node_drone/update_icon_state()
 	. = ..()

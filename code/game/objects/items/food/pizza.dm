@@ -49,7 +49,7 @@
 	. = ..()
 	if(isnull(slice_type) || !sliced)
 		return
-	. += span_notice("You can slice this to make it possible to take out slices with an empty hand!")
+	. += span_notice(LANG("obj.291c155e", null))
 
 /obj/item/food/pizza/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE

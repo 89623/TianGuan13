@@ -60,7 +60,7 @@
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
-	. += span_info("It has a flashing <b>ID card reader</b> for convenient cashing out.")
+	. += span_info(LANG("obj.c4f9b0d3", null))
 
 /**
  * Check whether any accounts in the accounts_to_rob list are still being drained.

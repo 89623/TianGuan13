@@ -712,12 +712,12 @@
 	if (suppressor)
 		. += LANG("obj.9997e48d", list(can_unsuppress ? "attached that can be removed with <b>alt+click</b>." : "that is integral or can't otherwise be removed."))
 	if(can_misfire)
-		. += span_danger("You get the feeling this might explode if you fire it...")
+		. += span_danger(LANG("obj.f236f5ca", null))
 		if(misfire_probability > 0)
-			. += span_danger("Given the state of the gun, there is a [misfire_probability]% chance it'll misfire.")
+			. += span_danger(LANG("obj.9f1d4fd4", list(misfire_probability)))
 	else if(misfire_probability > 0)
-		. += span_warning("You get a feeling this might explode if you fire it with the wrong ammunitions...")
-		. += span_warning("Given the state of the gun, there is a [EXAMINE_HINT("[misfire_probability]%")] chance it'll misfire.")
+		. += span_warning(LANG("obj.7e2d60e9", null))
+		. += span_warning(LANG("obj.8dbf4dcf", list(EXAMINE_HINT("[misfire_probability]%"))))
 
 ///Gets the number of bullets in the gun
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)

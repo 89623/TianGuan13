@@ -69,7 +69,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/health_station, 32)
 /obj/machinery/health_station/examine(mob/living/carbon/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: ბიომასის პროცენტული მაჩვენებელია [charge_amount]%.")
+		. += span_notice(LANG("obj.b8ddc16b", list(charge_amount)))
 
 /obj/machinery/health_station/attack_ghost(mob/user)
 	examine(user)

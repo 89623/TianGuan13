@@ -55,7 +55,7 @@
 
 /obj/item/poster/examine(mob/user)
 	. = ..()
-	. += span_notice("You can booby-trap the poster by using a glass shard on it before you put it up.")
+	. += span_notice(LANG("obj.33c1f3b3", null))
 
 /obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/shard))

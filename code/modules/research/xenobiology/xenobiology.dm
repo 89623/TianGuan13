@@ -744,7 +744,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 /obj/item/slimepotion/sentience/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to set potion offer reason. [potion_reason ? "Current reason: [span_warning(potion_reason)]" : null]")
+	. += span_notice(LANG("obj.40e3611d", list(potion_reason ? "Current reason: [span_warning(potion_reason)]" : null)))
 
 /obj/item/slimepotion/sentience/Initialize(mapload)
 	register_context()

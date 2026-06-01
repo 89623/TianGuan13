@@ -179,11 +179,11 @@
 		return
 	// NOVA EDIT NIFSOFT SCRYERS - END
 	if(cell)
-		. += span_notice("The battery charge reads [cell.percent()]%. <b>Right-click</b> with an empty hand to remove it.")
+		. += span_notice(LANG("obj.8e2fbf86", list(cell.percent())))
 	else
-		. += span_notice("It is missing a battery, one can be installed by clicking with a power cell on it.")
-	. += span_notice("The MODlink ID is [mod_link.id], frequency is [mod_link.frequency || "unset"]. <b>Right-click</b> with multitool to copy/imprint frequency.")
-	. += span_notice("Use in hand to set name.")
+		. += span_notice(LANG("obj.0230913a", null))
+	. += span_notice(LANG("obj.dcfa328e", list(mod_link.id, mod_link.frequency || "unset")))
+	. += span_notice(LANG("obj.659f3245", null))
 
 /obj/item/clothing/neck/link_scryer/equipped(mob/living/user, slot)
 	. = ..()

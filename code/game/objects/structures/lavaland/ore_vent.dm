@@ -171,7 +171,7 @@
 			if(BOULDER_SIZE_LARGE)
 				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
 	else
-		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
+		. += span_notice(LANG("obj.93755b0f", list(span_bold("Mining Scanner"))))
 
 /obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(is_type_in_list(held_item, scanning_equipment))
@@ -744,7 +744,7 @@
 			boss_string = "A bloody drillmark"
 		if(/mob/living/simple_animal/hostile/megafauna/wendigo/noportal)
 			boss_string = "A chilling skull"
-	. += span_notice("[boss_string] is etched onto the side of the vent.")
+	. += span_notice(LANG("obj.3984b488", list(boss_string)))
 
 /obj/structure/ore_vent/boss/start_wave_defense()
 	if(!COOLDOWN_FINISHED(src, wave_cooldown))

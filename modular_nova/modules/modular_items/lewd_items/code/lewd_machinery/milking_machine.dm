@@ -126,7 +126,7 @@
 // Additional examine text
 /obj/structure/chair/milking_machine/examine(mob/user)
 	. = ..()
-	. += span_notice("What are these metal mounts on the armrests for...?")
+	. += span_notice(LANG("obj.cfc49dbd", null))
 
 /*
 *	APPEARANCE MANAGEMENT
@@ -682,7 +682,7 @@
 
 /obj/structure/chair/milking_machine/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be disassembled by using Ctrl+Shift+Click")
+	. += span_purple(LANG("obj.c1a93939", list(src)))
 
 #undef MILKING_PUMP_MODE_OFF
 #undef MILKING_PUMP_MODE_LOW

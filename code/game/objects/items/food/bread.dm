@@ -375,7 +375,7 @@
 /obj/item/food/baguette/examine(mob/user)
 	. = ..()
 	if(HAS_MIND_TRAIT(user, TRAIT_MIMING))
-		. += span_notice("You can wield this like a sword by using it in your hand.")
+		. += span_notice(LANG("obj.79dfb300", null))
 
 /obj/item/food/baguette/attack_self(mob/user, modifiers)
 	. = ..()

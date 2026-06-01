@@ -74,11 +74,11 @@
 /obj/item/disk/neuroware/examine()
 	. = ..()
 	if(uses <= 0)
-		. += span_notice("It is spent.")
+		. += span_notice(LANG("obj.2ad07b37", null))
 		return
 	if(can_hack)
-		. += span_notice("Its overload safety could be [can_overdose ? "enabled" : "disabled"] with a screwdriver.")
-	. += span_notice("It has [uses] user license[uses > 1 ? "s" : ""] left.")
+		. += span_notice(LANG("obj.7cbe818b", list(can_overdose ? "enabled" : "disabled")))
+	. += span_notice(LANG("obj.2166be46", list(uses, uses > 1 ? "s" : "")))
 
 // Toggle reagent overdose (overload) prevention
 /obj/item/disk/neuroware/screwdriver_act(mob/living/user, obj/item/screwdriver)

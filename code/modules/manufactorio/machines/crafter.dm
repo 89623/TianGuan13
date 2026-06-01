@@ -27,10 +27,10 @@
 
 /obj/machinery/power/manufacturing/crafter/examine(mob/user)
 	. = ..()
-	. += span_notice("It is currently manufacturing <b>[isnull(recipe) ? "nothing. Use a multitool to set it" : recipe.name]</b>.")
+	. += span_notice(LANG("obj.521e4a50", list(isnull(recipe) ? "nothing. Use a multitool to set it" : recipe.name)))
 	if(isnull(recipe))
 		return
-	. += span_notice("It needs:")
+	. += span_notice(LANG("obj.2a2a5155", null))
 	for(var/valid_type in recipe.reqs)
 		// Check if they're datums, specifically reagents.
 		var/datum/reagent/reagent_ingredient = valid_type

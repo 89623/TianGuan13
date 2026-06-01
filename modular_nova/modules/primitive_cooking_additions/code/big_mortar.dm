@@ -25,9 +25,9 @@
 
 /obj/structure/large_mortar/examine(mob/user)
 	. = ..()
-	. += span_notice("It currently contains <b>[length(contents)]/[maximum_contained_items]</b> items.")
-	. += span_notice("It can be (un)secured with <b>Right Click</b>")
-	. += span_notice("You can empty all of the items out of it with <b>Alt Click</b>")
+	. += span_notice(LANG("obj.fdec676b", list(length(contents), maximum_contained_items)))
+	. += span_notice(LANG("obj.48a3e387", null))
+	. += span_notice(LANG("obj.71ecf662", null))
 
 /obj/structure/large_mortar/Destroy()
 	drop_everything_contained()

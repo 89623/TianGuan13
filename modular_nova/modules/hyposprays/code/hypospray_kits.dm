@@ -28,11 +28,11 @@
 //Code to give hypospray kits selectable paterns.
 /obj/item/storage/hypospraykit/examine(mob/living/user)
 	. = ..()
-	. += span_notice("Ctrl-Shift-Click to reskin this")
+	. += span_notice(LANG("obj.5890bc51", null))
 	if(attached_hypo)
-		. += span_notice("[attached_hypo] is mounted on the bottom. Alt-Right-Click to take it off.")
+		. += span_notice(LANG("obj.e2f95eef", list(attached_hypo)))
 	else
-		. += span_notice("Right-Click with a hypospray to mount it.")
+		. += span_notice(LANG("obj.a7670a22", null))
 
 /obj/item/storage/hypospraykit/Initialize(mapload)
 	. = ..()

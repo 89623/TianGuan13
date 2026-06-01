@@ -158,7 +158,7 @@
 
 /obj/item/grenade/barrier/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to toggle modes.")
+	. += span_notice(LANG("obj.70f0513d", null))
 
 /obj/item/grenade/barrier/click_alt(mob/living/carbon/user)
 	toggle_mode(user)

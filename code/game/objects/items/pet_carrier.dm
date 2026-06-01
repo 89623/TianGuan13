@@ -70,12 +70,12 @@
 			var/mob/living/L = V
 			. += span_notice("It has [L] inside.")
 	else
-		. += span_notice("It has nothing inside.")
+		. += span_notice(LANG("obj.77fc42cd", null))
 
 	// At some point these need to be converted to contextual screentips
-	. += span_notice("Activate it in your hand to [open ? "close" : "open"] its door. Click-drag onto floor to release its occupants.")
+	. += span_notice(LANG("obj.e0f549c4", list(open ? "close" : "open")))
 	if(!open && allows_locking)
-		. += span_notice("Alt-click to [locked ? "unlock" : "lock"] its door.")
+		. += span_notice(LANG("obj.fdd643c6", list(locked ? "unlock" : "lock")))
 
 /obj/item/pet_carrier/attack_self(mob/living/user)
 	if(open)

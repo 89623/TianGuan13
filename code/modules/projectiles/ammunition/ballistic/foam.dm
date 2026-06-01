@@ -40,8 +40,7 @@
 		for(var/type in insertable_items_hint)
 			var/obj/item/type_item = type
 			type_initial_names += "\a [initial(type_item.name)]"
-		. += span_notice("[modified ? "You can" : "If you removed the safety cap with a screwdriver, you could"] insert a small item\
-			[length(type_initial_names) ? ", such as [english_list(type_initial_names, and_text = "or ", final_comma_text = ", ")]" : ""].")
+		. += span_notice(LANG("obj.4a7ad516", list(modified ? "You can" : "If you removed the safety cap with a screwdriver, you could", length(type_initial_names) ? ", such as [english_list(type_initial_names, and_text = "or ", final_comma_text = ", ")]" : "")))
 
 
 /obj/item/ammo_casing/foam_dart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

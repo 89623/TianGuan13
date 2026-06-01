@@ -459,7 +459,7 @@
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/examine(mob/user)
 	. = ..()
-	. += span_warning("<b>It seems to have a warning label:</b> Do NOT, under any circumstances, attempt to 'quickscope' with this rifle.")
+	. += span_warning(LANG("obj.93512085", null))
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/Initialize(mapload)
 	. = ..()

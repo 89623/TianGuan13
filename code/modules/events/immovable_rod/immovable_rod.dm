@@ -63,7 +63,7 @@
 		return
 
 	if(!num_mobs_hit)
-		. += span_notice("So far, this rod has not hit any mobs.")
+		. += span_notice(LANG("obj.807c1ae8", null))
 		return
 
 	. += LANG("obj.fb149573", list(num_mobs_hit, num_sentient_mobs_hit, num_sentient_people_hit))

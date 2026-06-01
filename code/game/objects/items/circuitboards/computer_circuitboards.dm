@@ -7,7 +7,7 @@
 /obj/item/circuitboard/computer/examine()
 	. = ..()
 	if(GetComponent(/datum/component/gps))
-		. += span_info("there's a small, blinking light!")
+		. += span_info(LANG("obj.d2a2db7a", null))
 
 //Command
 
@@ -53,8 +53,8 @@
 
 /obj/item/circuitboard/computer/atmos_alert/examine(mob/user)
 	. = ..()
-	. += span_info("The board is configured to [station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
-	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+	. += span_info(LANG("obj.11eefc56", list(station_only ? "track all station and mining alarms" : "track alarms on the same z-level")))
+	. += span_notice(LANG("obj.eb1ace56", list(EXAMINE_HINT("multitool"))))
 
 /obj/item/circuitboard/computer/atmos_alert/multitool_act(mob/living/user)
 	station_only = !station_only
@@ -336,7 +336,7 @@
 		if(slot_themes[theme_name] == build_path)
 			current_theme = theme_name
 			break
-	. += span_info("[src] is set to the [current_theme] theme. You can use a screwdriver to reconfigure it.")
+	. += span_info(LANG("obj.f16e6bdb", list(src, current_theme)))
 
 /obj/item/circuitboard/computer/slot_machine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(obj_flags & EMAGGED)
@@ -409,8 +409,8 @@
 
 /obj/item/circuitboard/computer/tram_controls/examine(mob/user)
 	. = ..()
-	. += span_info("The board is configured for [split_mode ? "split window" : "normal window"].")
-	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+	. += span_info(LANG("obj.41638856", list(split_mode ? "split window" : "normal window")))
+	. += span_notice(LANG("obj.eb1ace56", list(EXAMINE_HINT("multitool"))))
 
 /obj/item/circuitboard/computer/tram_controls/multitool_act(mob/living/user)
 	split_mode = !split_mode
@@ -485,9 +485,9 @@
 
 /obj/item/circuitboard/computer/rdconsole/examine(mob/user)
 	. = ..()
-	. += span_info("The board is configured to [silence_announcements ? "silence" : "announce"] researched nodes on radio.")
-	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
-	. += span_notice("The board is [locked ? "locked" : "unlocked"], and can be [locked ? "unlocked" : "locked"] with an ID that has research access.")
+	. += span_info(LANG("obj.31c2ccd7", list(silence_announcements ? "silence" : "announce")))
+	. += span_notice(LANG("obj.eb1ace56", list(EXAMINE_HINT("multitool"))))
+	. += span_notice(LANG("obj.bdda31ff", list(locked ? "locked" : "unlocked", locked ? "unlocked" : "locked")))
 
 /obj/item/circuitboard/computer/rdconsole/multitool_act(mob/living/user)
 	. = ..()

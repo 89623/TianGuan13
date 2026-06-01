@@ -38,7 +38,7 @@
 /obj/machinery/atmospherics/miner/examine(mob/user)
 	. = ..()
 	if(broken)
-		. += {"Its debug output is printing "[broken_message]"."}
+		. += LANG("obj.6114d41b", list(broken_message))
 
 /obj/machinery/atmospherics/miner/proc/check_operation()
 	if(!active)

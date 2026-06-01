@@ -22,9 +22,9 @@
 /obj/item/suit_sensor/examine(mob/user)
 	. = ..()
 	if(broken)
-		. += span_warning("It's currently broken. You can use a piece of [EXAMINE_HINT("cable")] to fix it.")
+		. += span_warning(LANG("obj.5a08cd79", list(EXAMINE_HINT("cable"))))
 	else
-		. += span_notice("It's currently set on '[GLOB.suit_sensor_mode_to_defines.Find(sensor_mode + 1)]'.")
+		. += span_notice(LANG("obj.f2a7ea1d", list(GLOB.suit_sensor_mode_to_defines.Find(sensor_mode + 1))))
 
 /obj/item/suit_sensor/update_overlays()
 	. = ..()

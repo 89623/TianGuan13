@@ -211,21 +211,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 		return
 
 	if(isnull(connected))
-		. += span_notice("The display is currently not connected to anything. \
-			Use a [EXAMINE_HINT("multitool")] to connect it to a neighboring machine.")
+		. += span_notice(LANG("obj.310e5dfe", list(EXAMINE_HINT("multitool"))))
 		return
 
 	if(isnull(patient) || user.is_blind())
 		return
 
 	if(machine_stat & EMPED)
-		. += span_warning("The display is flickering erratically!")
+		. += span_warning(LANG("obj.c1fd6a52", null))
 		return
 
 	if(!issilicon(user) && !isobserver(user) && get_dist(src, user) > 2)
-		. += span_notice("<i>You are too far away to read the display.</i>")
+		. += span_notice(LANG("obj.4fe03d1b", null))
 	else if(HAS_TRAIT(user, TRAIT_DUMB) || !user.can_read(src, reading_check_flags = READING_CHECK_LITERACY, silent = TRUE))
-		. += span_warning("You try to comprehend the display, but it's too complex for you to understand.")
+		. += span_warning(LANG("obj.3cc80308", null))
 	else
 		. += healthscan(user, patient, mode = SCANNER_CONDENSED, advanced = src.advanced, tochat = FALSE)
 		. += chemscan(user, patient, tochat = FALSE)

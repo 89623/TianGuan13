@@ -77,7 +77,7 @@
 /obj/structure/bed/examine(mob/user)
 	. = ..()
 	if (can_deconstruct)
-		. += span_notice("It's held together by a couple of <b>bolts</b>.")
+		. += span_notice(LANG("obj.c0bf1b5b", null))
 
 /obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
@@ -159,12 +159,12 @@
 /obj/structure/bed/medical/examine(mob/user)
 	. = ..()
 	if(anchored)
-		. += span_notice("The brakes are applied. They can be released with an Alt-click.")
+		. += span_notice(LANG("obj.0929c1b4", null))
 	else
-		. += span_notice("The brakes can be applied with an Alt-click.")
+		. += span_notice(LANG("obj.d3a3e6ae", null))
 
 	if(!isnull(foldable_type))
-		. += span_notice("You can fold it up with a Right-click.")
+		. += span_notice(LANG("obj.5789a5cf", null))
 
 /obj/structure/bed/medical/click_alt(mob/user)
 	if(has_buckled_mobs() && (user in buckled_mobs))

@@ -101,7 +101,7 @@
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	. = ..()
-	. += span_notice("There's [points] point\s on the card.")
+	. += span_notice(LANG("obj.08f40b7f", list(points)))
 
 /obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isidcard(attacking_item))

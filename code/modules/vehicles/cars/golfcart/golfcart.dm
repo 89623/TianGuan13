@@ -75,7 +75,7 @@
 
 /obj/item/golfcart_kit/examine(mob/user)
 	. = ..()
-	. += span_notice("The instructions say that it needs to be [EXAMINE_HINT("screwed")] together.")
+	. += span_notice(LANG("obj.649b25a4", list(EXAMINE_HINT("screwed"))))
 
 /obj/item/golfcart_kit/proc/play_building_noises(mob/living/user, duration)
 	duration = max(duration - (1 SECONDS), 0.5 SECONDS)
@@ -329,36 +329,36 @@
 	. = ..()
 	if (!child.cargo)
 		return
-	. += span_slightly_larger("It is currently transporting the [child.cargo]")
+	. += span_slightly_larger(LANG("obj.6c607395", list(child.cargo)))
 	. += child.cargo.examine(user)
 
 /obj/vehicle/ridden/golfcart/examine(mob/user)
 	. = ..()
-	. += span_notice("Pop the hood by alt-clicking while not riding it.")
+	. += span_notice(LANG("obj.17cf29ff", null))
 	if (child.cargo)
-		. += span_info("The bed is holding \the [child.cargo].")
+		. += span_info(LANG("obj.fe06eb83", list(child.cargo)))
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src] closely.")
+		. += span_warning(LANG("obj.7cb3bc2e", list(src)))
 		return
 	if (!engine)
 		var/power = 0
 		if (cell)
 			power = floor(cell.charge / cell.maxcharge * 100)
-		. += span_info("It is currently is at [power]% charge.")
+		. += span_info(LANG("obj.223eda6d", list(power)))
 	if (hood_open)
-		. += span_warning("The hood is open!")
+		. += span_warning(LANG("obj.bdee87bb", null))
 		if (engine)
-			. += span_info("You can see \the [engine] inside.")
+			. += span_info(LANG("obj.18a86ba5", list(engine)))
 			if (engine_state == ENGINE_UNWRENCHED)
-				. += span_notice("It needs to be [EXAMINE_HINT("wrenched")] into place.")
+				. += span_notice(LANG("obj.896ad0ee", list(EXAMINE_HINT("wrenched"))))
 			else if (engine_state == ENGINE_WRENCHED)
-				. += span_notice("It needs to be [EXAMINE_HINT("welded")] down.")
+				. += span_notice(LANG("obj.fd57b260", list(EXAMINE_HINT("welded"))))
 			// last state is ENGINE_WELDED
 		else if (cell)
-			. += span_info("You can see \the [cell] inside.")
-			. += span_smallnotice("If you remove the cell you could probably install another power source...")
+			. += span_info(LANG("obj.18a86ba5", list(cell)))
+			. += span_smallnotice(LANG("obj.05c5ae7f", null))
 		else
-			. += span_info("There is no power cell installed.")
+			. += span_info(LANG("obj.b21d2f5d", null))
 
 ///Called when something tries to pass us. Returns TRUE if it is trying to crawl past us.
 /obj/vehicle/ridden/golfcart/proc/allow_crawler_through(atom/crawler)

@@ -358,7 +358,7 @@
 
 /obj/item/storage/box/gum/wake_up/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>You read some of the health and safety information...</i>")
+	. += span_notice(LANG("obj.8951e838", null))
 	. += LANG("obj.294efb1f", list(span_info("For the relief of tiredness and drowsiness while working.")))
 	. += LANG("obj.294efb1f", list(span_info("Do not chew more than one strip every 12 hours. Do not use as a complete substitute for sleep.")))
 	. += LANG("obj.294efb1f", list(span_info("Do not give to children under 16. Do not exceed the maximum dosage. Do not ingest. Do not take for more than 3 days consecutively. Do not take in conjunction with other medication. May cause adverse reactions in patients with pre-existing heart conditions.")))

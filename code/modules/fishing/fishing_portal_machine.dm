@@ -151,8 +151,7 @@
 
 /obj/machinery/fishing_portal_generator/examine(mob/user)
 	. = ..()
-	. += span_notice("You can unlock further portal settings by completing fish scanning experiments, \
-		or by connecting it to other fishing spots with a multitool.")
+	. += span_notice(LANG("obj.5e939d07", null))
 
 /obj/machinery/fishing_portal_generator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

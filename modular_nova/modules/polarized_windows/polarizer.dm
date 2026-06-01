@@ -8,7 +8,7 @@
 /obj/item/assembly/control/polarizer/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Use it <b>in your hand</b> or with a <b>multitool</b> to change its channel ID.")
+	. += span_notice(LANG("obj.9d1d6031", null))
 
 
 /obj/item/assembly/control/polarizer/multitool_act(mob/living/user)

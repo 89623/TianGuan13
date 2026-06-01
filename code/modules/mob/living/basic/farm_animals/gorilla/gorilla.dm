@@ -74,8 +74,7 @@
 	. = ..()
 	if (!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FITNESS))
 		return
-	. += span_notice("This animal appears to be in peak physical condition and yet it has probably never worked out a day in its life. \
-		The untapped potential is almost frightening.")
+	. += span_notice(LANG("mob.7df22c35", null))
 
 /mob/living/basic/gorilla/update_overlays()
 	. = ..()

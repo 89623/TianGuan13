@@ -24,10 +24,10 @@
 	. = ..()
 	if(id)
 		if(id != -1)
-			. += span_notice("Its channel ID is '[id]'.")
+			. += span_notice(LANG("obj.7150d501", list(id)))
 		else
-			. += span_notice("Interact with pod door to generate an new id")
-	. += span_notice("You can interact with another controller to copy its ID.")
+			. += span_notice(LANG("obj.41e53e62", null))
+	. += span_notice(LANG("obj.86bc9aae", null))
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
 	var/list/door_ids = list()
@@ -86,7 +86,7 @@
 /obj/item/assembly/control/curtain/examine(mob/user)
 	. = ..()
 	if(id)
-		. += span_notice("Its channel ID is '[id]'.")
+		. += span_notice(LANG("obj.7150d501", list(id)))
 
 /obj/item/assembly/control/curtain/activate()
 	var/openclose

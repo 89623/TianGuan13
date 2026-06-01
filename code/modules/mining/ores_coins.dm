@@ -331,9 +331,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/gibtonite/examine(mob/user)
 	. = ..()
 	if(rig)
-		. += span_warning("There is some kind of device <b>rigged</b> to it!")
+		. += span_warning(LANG("obj.2eba9ff5", null))
 	else
-		. += span_notice("You could <b>rig</b> something to it.")
+		. += span_notice(LANG("obj.0ffd4162", null))
 
 /obj/item/gibtonite/Destroy()
 	QDEL_NULL(rig)
@@ -539,7 +539,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
-	. += span_info("It's worth [value] [MONEY_NAME_AUTOPURAL(value)].")
+	. += span_info(LANG("obj.fdb67051", list(value, MONEY_NAME_AUTOPURAL(value))))
 
 /obj/item/coin/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil))

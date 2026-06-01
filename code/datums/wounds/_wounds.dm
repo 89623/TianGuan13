@@ -643,7 +643,7 @@
 /datum/wound/proc/get_examine_description(mob/user)
 	. = get_wound_description(user)
 	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		. += span_notice("<br>There is a holo-image next to the wound that seems to contain indications for treatment.")
+		. += span_notice(LANG("datum.2fccebab", null))
 
 	return .
 

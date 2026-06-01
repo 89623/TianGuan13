@@ -32,4 +32,4 @@
 /obj/item/stack/ore/examine(mob/user)
 	. = ..()
 	if(points == 0)
-		. += span_warning("<br> [src] is worthless and will not reward any mining points!")
+		. += span_warning(LANG("obj.c3a3a5a3", list(src)))

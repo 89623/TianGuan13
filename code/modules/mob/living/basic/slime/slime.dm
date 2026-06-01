@@ -249,7 +249,7 @@
 		if(SLIME_MAX_POWER)
 			. += span_boldwarning("It is radiating with massive levels of electrical activity!")
 	if(overcrowded)
-		. += span_warning("It seems too overcroweded to properly reproduce!")
+		. += span_warning(LANG("mob.4e40c4c1", null))
 
 ///Changes the slime's current life state
 /mob/living/basic/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY, initial = FALSE)

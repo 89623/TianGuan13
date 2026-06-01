@@ -39,8 +39,8 @@
 
 /obj/machinery/igniter/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a [EXAMINE_HINT("multitool")] to set its ID to match your ignition controller's ID.")
-	. += span_notice("It could be [EXAMINE_HINT("welded")] apart.")
+	. += span_notice(LANG("obj.3cf9245e", list(EXAMINE_HINT("multitool"))))
+	. += span_notice(LANG("obj.5f2a74d5", list(EXAMINE_HINT("welded"))))
 
 /obj/machinery/igniter/welder_act(mob/living/user, obj/item/tool)
 	if(on)
@@ -187,8 +187,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
 /obj/machinery/sparker/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a [EXAMINE_HINT("multitool")] to set its ID to match your ignition controller's ID.")
-	. += span_notice("It could be [EXAMINE_HINT("welded")] apart.")
+	. += span_notice(LANG("obj.3cf9245e", list(EXAMINE_HINT("multitool"))))
+	. += span_notice(LANG("obj.5f2a74d5", list(EXAMINE_HINT("welded"))))
 
 /obj/machinery/sparker/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 1))

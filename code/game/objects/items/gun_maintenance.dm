@@ -23,7 +23,7 @@
 
 /obj/item/gun_maintenance_supplies/examine(mob/user)
 	. = ..()
-	. += span_info("This kit has [uses] uses out of [max_uses] left.")
+	. += span_info(LANG("obj.62f679cb", list(uses, max_uses)))
 
 /obj/item/gun_maintenance_supplies/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()

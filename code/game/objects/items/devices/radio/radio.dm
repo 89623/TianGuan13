@@ -576,11 +576,11 @@
 /obj/item/radio/examine(mob/user)
 	. = ..()
 	if (frequency && in_range(src, user))
-		. += span_notice("It is set to broadcast over the [span_radio("[frequency/10]")] frequency.")
+		. += span_notice(LANG("obj.3ae86b23", list(span_radio("[frequency/10]"))))
 	if (unscrewed)
-		. += span_notice("It can be attached and modified.")
+		. += span_notice(LANG("obj.99b57f84", null))
 	else
-		. += span_notice("It cannot be modified or attached.")
+		. += span_notice(LANG("obj.afa1344e", null))
 
 /obj/item/radio/update_overlays()
 	. = ..()

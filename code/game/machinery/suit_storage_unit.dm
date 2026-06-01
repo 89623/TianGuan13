@@ -266,10 +266,10 @@
 /obj/machinery/suit_storage_unit/examine(mob/user)
 	. = ..()
 	if(card_reader_installed)
-		. += span_notice("Swipe your ID to change access levels.")
-		. += span_notice("Use a multitool to [access_locked ? "unlock" : "lock"] access panel after opening panel.")
+		. += span_notice(LANG("obj.8ef74a2f", null))
+		. += span_notice(LANG("obj.ad328a81", list(access_locked ? "unlock" : "lock")))
 	else
-		. += span_notice("A card reader can be installed for further control access after opening its panel.")
+		. += span_notice(LANG("obj.40f4c1c2", null))
 
 /// copy over access of electronics
 /obj/machinery/suit_storage_unit/proc/set_access(list/accesses)

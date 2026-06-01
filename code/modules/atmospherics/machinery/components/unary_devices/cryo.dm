@@ -189,28 +189,28 @@
 /obj/machinery/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better beaker, better results"
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Efficiency at <b>[efficiency * 100]</b>%.")
+		. += span_notice(LANG("obj.ffac399b", list(efficiency * 100)))
 		if(occupant)
 			if(on)
-				. += span_notice("Someone's inside [src]!")
+				. += span_notice(LANG("obj.d5c6cb20", list(src)))
 			else
-				. += span_notice("You can barely make out a form floating in [src].")
+				. += span_notice(LANG("obj.90d23a98", list(src)))
 		else
-			. += span_notice("[src] seems empty.")
+			. += span_notice(LANG("obj.2c36c513", list(src)))
 		if(beaker)
-			. += span_notice("A beaker of [beaker.reagents.maximum_volume]u capacity is located inside.")
+			. += span_notice(LANG("obj.0a93fdd7", list(beaker.reagents.maximum_volume)))
 		else
-			. += span_warning("Its missing a beaker.")
+			. += span_warning(LANG("obj.020fb84c", null))
 
-		. += span_notice("Use [EXAMINE_HINT("Alt-Click")] to [state_open ? "Close" : "Open"] the machine.")
-		. += span_notice("Use [EXAMINE_HINT("Ctrl-Click")] to turn [on ? "Off" : "On"] the machine.")
+		. += span_notice(LANG("obj.c149d4ae", list(EXAMINE_HINT("Alt-Click"), state_open ? "Close" : "Open")))
+		. += span_notice(LANG("obj.92a10cd2", list(EXAMINE_HINT("Ctrl-Click"), on ? "Off" : "On")))
 
-		. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] open.")
+		. += span_notice(LANG("obj.4f2c3146", list(EXAMINE_HINT("screwed"))))
 		if(panel_open)
-			. += span_notice("[src] can be [EXAMINE_HINT("pried")] apart.")
-			. += span_notice("[src] can be rotated with a [EXAMINE_HINT("wrench")].")
+			. += span_notice(LANG("obj.6fb0d925", list(src, EXAMINE_HINT("pried"))))
+			. += span_notice(LANG("obj.61678dab", list(src, EXAMINE_HINT("wrench"))))
 		else if(machine_stat & NOPOWER)
-			. += span_notice("[src] can be [EXAMINE_HINT("pried")] open.")
+			. += span_notice(LANG("obj.249a300d", list(src, EXAMINE_HINT("pried"))))
 
 /obj/machinery/cryo_cell/update_icon()
 	SET_PLANE_IMPLICIT(src, initial(plane))

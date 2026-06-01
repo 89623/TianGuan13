@@ -87,30 +87,30 @@
 /obj/machinery/quantum_server/examine(mob/user)
 	. = ..()
 
-	. += span_infoplain("Can be resource intensive to run. Ensure adequate power supply.")
+	. += span_infoplain(LANG("obj.fb160dbb", null))
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "close" : "open")))
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 
 	var/upgraded = FALSE
 	if(capacitor_coefficient < 1)
-		. += span_infoplain("- Its coolant capacity reduces cooldown time by [(1 - capacitor_coefficient) * 100]%.")
+		. += span_infoplain(LANG("obj.c88196ab", list((1 - capacitor_coefficient) * 100)))
 		upgraded = TRUE
 
 	if(servo_bonus > 0.2)
-		. += span_infoplain("- Its manipulation potential is increasing rewards by [servo_bonus]x.")
-		. += span_infoplain("- Injury from unsafe ejection reduced [servo_bonus * 100]%.")
+		. += span_infoplain(LANG("obj.f66d7d5a", list(servo_bonus)))
+		. += span_infoplain(LANG("obj.8f8831fb", list(servo_bonus * 100)))
 		upgraded = TRUE
 
 	if(!upgraded)
-		. += span_notice("Its output is suboptimal. Improved components will grant domain information, reduce cooldowns and increase rewards.")
+		. += span_notice(LANG("obj.59921e18", null))
 
 	if(!is_ready)
-		. += span_notice("It is currently cooling down. Give it a few moments.")
+		. += span_notice(LANG("obj.05e7947b", null))
 
 	if(isobserver(user) && (obj_flags & EMAGGED))
-		. += span_notice("Ominous warning lights are blinking red. This server has been tampered with.")
+		. += span_notice(LANG("obj.1682df33", null))
 
 
 /obj/machinery/quantum_server/emag_act(mob/user, obj/item/card/emag/emag_card)

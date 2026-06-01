@@ -176,13 +176,13 @@
 
 /obj/machinery/smesbank/examine(user)
 	. = ..()
-	. += span_notice("its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.bba556de", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(connected_port)
-		. += span_notice("You need to [EXAMINE_HINT("unwrench")] from the port before deconstructing.")
+		. += span_notice(LANG("obj.d50594b3", list(EXAMINE_HINT("unwrench"))))
 	else
 		if(panel_open)
-			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
-		. += span_notice("It should be [EXAMINE_HINT("wrenched")] onto a connector port to operate.")
+			. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
+		. += span_notice(LANG("obj.e4805b3e", list(EXAMINE_HINT("wrenched"))))
 
 /obj/machinery/smesbank/Destroy()
 	disconnect_port()

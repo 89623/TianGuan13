@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAINT_LOOT "maintenance_loot"
 #define DUMPSTER_LOOT "dumpster_loot"
 
@@ -21,7 +22,7 @@
 
 /obj/effect/spawner/random/maintenance/examine(mob/user)
 	. = ..()
-	. += span_info("This spawner has an effective loot count of [get_effective_lootcount()].")
+	. += span_info(LANG("obj.280148b7", list(get_effective_lootcount())))
 
 /obj/effect/spawner/random/maintenance/Initialize(mapload)
 	switch(loot_table)

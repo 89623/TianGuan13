@@ -141,7 +141,7 @@
 /obj/item/gun/magic/staff/healing/examine(mob/user)
 	. = ..()
 	if(!is_wizard_or_friend(user))
-		. += span_notice("On the handle you notice a beautiful engraving in High Spaceman, \"Thou shalt not crosseth thy beams.\"")
+		. += span_notice(LANG("obj.31468cef", null))
 
 /obj/item/gun/magic/staff/healing/Initialize(mapload)
 	. = ..()

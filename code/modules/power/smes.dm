@@ -126,16 +126,16 @@
 /obj/machinery/power/smes/examine(user)
 	. = ..()
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "opened"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "opened")))
 	if(panel_open)
 		if(!terminal)
-			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
-		. += span_notice("It can [EXAMINE_HINT("wrenched")] to rotate.")
+			. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
+		. += span_notice(LANG("obj.17d6a1b5", list(EXAMINE_HINT("wrenched"))))
 
 	if(!terminal)
-		. += span_warning("A terminal that requires [EXAMINE_HINT("10 cable pieces")] needs to be installed!.")
+		. += span_warning(LANG("obj.bac2224f", list(EXAMINE_HINT("10 cable pieces"))))
 	else if(panel_open)
-		. += span_notice("The terminal can be [EXAMINE_HINT("cut")] apart.")
+		. += span_notice(LANG("obj.05bc141a", list(EXAMINE_HINT("cut"))))
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()

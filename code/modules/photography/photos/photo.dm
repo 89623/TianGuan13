@@ -97,7 +97,7 @@
 	if(in_range(src, user) || isobserver(user))
 		show(user)
 	else
-		. += span_warning("You need to get closer to get a good look at this photo!")
+		. += span_warning(LANG("obj.47d659b3", null))
 
 /obj/item/photo/proc/show(mob/user)
 	if(!istype(picture) || !picture.picture_image)

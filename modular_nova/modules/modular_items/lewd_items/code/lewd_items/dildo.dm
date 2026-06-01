@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 
 /obj/item/clothing/sextoy/dildo/custom_dildo/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>Alt-Click \the [src.name] to customize it.")
+	. += span_notice(LANG("obj.c22047eb", list(src.name)))
 
 /obj/item/clothing/sextoy/dildo/custom_dildo/update_icon_state()
 	. = ..()

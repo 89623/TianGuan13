@@ -408,7 +408,7 @@
 
 /obj/item/toy/captainsaid/examine_more(mob/user)
 	. = ..()
-	. += span_notice("You could swear you've been hearing advertisments for the 'soon upcoming' release of a tablet version for the better part of 3 years...")
+	. += span_notice(LANG("obj.6d9c5cbd", null))
 
 /obj/item/toy/captainsaid/attack_self(mob/living/user)
 	current_mode++
@@ -631,7 +631,7 @@
 
 /obj/item/toy/sword/examine(mob/user)
 	. = ..()
-	. += span_notice("It has a lighting dial currently set to [saber_color] which looks like it can be turned with a <b>screwdriver</b>.")
+	. += span_notice(LANG("obj.3bb94fe4", list(saber_color)))
 
 /obj/item/toy/sword/screwdriver_act(mob/living/user, obj/item/tool)
 	switch(saber_color)
@@ -1140,9 +1140,9 @@
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	. = ..()
-	. += span_info("Station Time: [server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour))]")
+	. += span_info(LANG("obj.7a025a34", list(server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour)))))
 	if(user.is_literate())
-		. += span_info("That means it is currently [round_timestamp()] into the shift.")
+		. += span_info(LANG("obj.f5c79a87", list(round_timestamp())))
 
 /*
  * Toy Dagger

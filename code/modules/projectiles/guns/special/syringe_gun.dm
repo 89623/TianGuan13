@@ -71,12 +71,12 @@
 
 /obj/item/gun/syringe/examine(mob/user)
 	. = ..()
-	. += span_notice("Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining.")
+	. += span_notice(LANG("obj.9b2ea8fa", list(max_syringes, syringes.len)))
 	if (low_power)
-		. += span_notice("Its pressure regulator is set to low power mode, making sure that syringes shot will embed and slowly bleed their reagents into their target.")
+		. += span_notice(LANG("obj.abb8b5a1", null))
 	else
-		. += span_notice("Its pressure regulator is cranked to the max, instantly injecting the reagents at the cost of breaking the syringes fired.")
-	. += span_notice("Right-click [src] in-hand to switch it to [low_power ? "full" : "low"] power.")
+		. += span_notice(LANG("obj.9ff3aed5", null))
+	. += span_notice(LANG("obj.69d550e8", list(src, low_power ? "full" : "low")))
 
 /obj/item/gun/syringe/attack_self(mob/living/user, list/modifiers)
 	if (!syringes.len)

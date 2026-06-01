@@ -45,7 +45,7 @@
 /obj/structure/ore_box/examine(mob/living/user)
 	. = ..()
 	if(in_range(src, user) || isobserver(user))
-		. += span_notice("Can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.069a5701", list(EXAMINE_HINT("pried"))))
 		ui_interact(user)
 
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)

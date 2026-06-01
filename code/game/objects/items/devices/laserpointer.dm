@@ -159,14 +159,14 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		if(isnull(diode))
-			. += span_notice("The diode is missing.")
+			. += span_notice(LANG("obj.9ef6aa29", null))
 		else
-			. += span_notice("A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.")
-		. += span_notice("A small display reads out that[recharge_locked ? " it is currently recharging to full, and" : ""] there is <b>[energy * 10]%</b> total charge remaining.")
+			. += span_notice(LANG("obj.f599396e", list(diode.rating)))
+		. += span_notice(LANG("obj.eacd34d8", list(recharge_locked ? " it is currently recharging to full, and" : "", energy * 10)))
 		if(crystal_lens)
-			. += span_notice("There is a <b>[crystal_lens.name]</b> fit neatly before the focus lens. It can be <i>plucked out</i> with some <i>wirecutters</i>.")
+			. += span_notice(LANG("obj.aa422979", list(crystal_lens.name)))
 		else if(diode) //hint at the ability to modify the pointer with a crystal only if we have a diode
-			. += span_notice("<i>You could examine it more thoroughly...</i>")
+			. += span_notice(LANG("obj.e0861086", null))
 
 /obj/item/laser_pointer/examine_more(mob/user)
 	. = ..()

@@ -31,14 +31,14 @@
 	. = ..()
 
 	if(isnull(server_ref.resolve()))
-		. += span_infoplain("It's not connected to anything.")
+		. += span_infoplain(LANG("obj.b8effa34", null))
 		return
 
 	if(isobserver(user))
-		. += span_notice("Left click to view the server that this ladder is connected to.")
+		. += span_notice(LANG("obj.a577a0f8", null))
 		return
 
-	. += span_infoplain("This ladder is connected to a server. You can click on it or walk over it to disconnect.")
+	. += span_infoplain(LANG("obj.222fff72", null))
 
 
 /obj/structure/hololadder/attack_hand(mob/user, list/modifiers)

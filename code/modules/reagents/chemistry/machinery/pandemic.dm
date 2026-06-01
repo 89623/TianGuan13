@@ -57,7 +57,7 @@
 			is_close = TRUE
 		else
 			. += LANG("obj.41c3a8a2", null)
-		. += span_info("Alt-click to eject [is_close ? beaker : "the beaker"].")
+		. += span_info(LANG("obj.afc489c0", list(is_close ? beaker : "the beaker")))
 
 /obj/machinery/computer/pandemic/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

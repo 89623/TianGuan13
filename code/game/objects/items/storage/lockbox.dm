@@ -82,7 +82,7 @@
 /obj/item/storage/lockbox/examine(mob/user)
 	. = ..()
 	if(broken)
-		. += span_notice("It appears to be broken.")
+		. += span_notice(LANG("obj.11410718", null))
 
 /obj/item/storage/lockbox/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -129,7 +129,7 @@
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
 	if(!atom_storage.locked)
-		. += span_notice("Alt-click to [open ? "close":"open"] it.")
+		. += span_notice(LANG("obj.b66c3082", list(open ? "close":"open")))
 
 /obj/item/storage/lockbox/medal/click_alt(mob/user)
 	if(!atom_storage.locked)

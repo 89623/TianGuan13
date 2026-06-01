@@ -77,16 +77,16 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("The status display reads:")
-	. += span_notice("Capable of packing up to <b>Tier [max_part_tier]</b>.")
-	. += span_notice("Storing up to <b>[materials.max_amount]</b> material units.")
-	. += span_notice("Material consumption at <b>[creation_efficiency * 100]%</b>.")
+	. += span_notice(LANG("obj.e69769dd", null))
+	. += span_notice(LANG("obj.9583a516", list(max_part_tier)))
+	. += span_notice(LANG("obj.3df70193", list(materials.max_amount)))
+	. += span_notice(LANG("obj.83037b36", list(creation_efficiency * 100)))
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "close" : "open")))
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 	if(!QDELETED(inserted_board))
-		. += span_notice("The board can be ejected via [EXAMINE_HINT("Ctrl Click")].")
+		. += span_notice(LANG("obj.160d08bc", list(EXAMINE_HINT("Ctrl Click"))))
 		if(length(inserted_board.flatpack_components))
 			var/list/obj/item/to_insert
 			for(var/obj/item/component as anything in inserted_board.flatpack_components)
@@ -96,7 +96,7 @@
 					continue
 				LAZYADDASSOC(to_insert, get_flatpack_component_name(component), "[inserted]/[required]")
 			if(length(to_insert))
-				. += span_warning("The following components must be inserted by hand before packaging:")
+				. += span_warning(LANG("obj.1b0e461f", null))
 				for(var/component_name in to_insert)
 					. += span_warning("[component_name]: [to_insert[component_name]].")
 

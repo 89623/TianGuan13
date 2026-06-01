@@ -73,9 +73,9 @@
 /obj/item/reagent_containers/cup/glass/bottle/examine(mob/user)
 	. = ..()
 	if(message_in_a_bottle)
-		. += span_info("there's \a [message_in_a_bottle] inside it. Break it to take it out, or find a beach or ocean and toss it with [EXAMINE_HINT("right-click")].")
+		. += span_info(LANG("obj.ac377ac2", list(message_in_a_bottle, EXAMINE_HINT("right-click"))))
 	else if(isGlass)
-		. += span_tinynoticeital("you could place a paper, photo or space cash inside it...")
+		. += span_tinynoticeital(LANG("obj.eedde387", null))
 
 /obj/item/reagent_containers/cup/glass/bottle/update_overlays()
 	. = ..()

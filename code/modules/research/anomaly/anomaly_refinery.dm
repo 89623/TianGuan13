@@ -46,7 +46,7 @@
 /obj/machinery/research/anomaly_refinery/examine_more(mob/user)
 	. = ..()
 	if (obj_flags & EMAGGED)
-		. += span_notice("A small panel on [p_their()] side is dislaying a notice. Something about firmware?")
+		. += span_notice(LANG("obj.48c6fe98", list(p_their())))
 
 
 /obj/machinery/research/anomaly_refinery/assume_air(datum/gas_mixture/giver)

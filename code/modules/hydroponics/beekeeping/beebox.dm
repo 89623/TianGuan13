@@ -125,22 +125,22 @@
 	. = ..()
 
 	if(!queen_bee)
-		. += span_warning("There is no queen bee! There won't bee any honeycomb without a queen!")
+		. += span_warning(LANG("obj.69c43591", null))
 
 	var/half_bee = get_max_bees()*0.5
 	if(half_bee && (bees.len >= half_bee))
-		. += span_notice("This place is aBUZZ with activity... there are lots of bees!")
+		. += span_notice(LANG("obj.0d525bea", null))
 
-	. += span_notice("[bee_resources]/100 resource supply.")
-	. += span_notice("[bee_resources]% towards a new honeycomb.")
-	. += span_notice("[bee_resources*2]% towards a new bee.")
+	. += span_notice(LANG("obj.91479fcf", list(bee_resources)))
+	. += span_notice(LANG("obj.b7980fd8", list(bee_resources)))
+	. += span_notice(LANG("obj.cf0470d3", list(bee_resources*2)))
 
 	if(honeycombs.len)
 		var/plural = honeycombs.len > 1
-		. += span_notice("There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.")
+		. += span_notice(LANG("obj.fa09448f", list(plural? "are" : "is", honeycombs.len, plural ? "s":"")))
 
 	if(honeycombs.len >= get_max_honeycomb())
-		. += span_warning("There's no room for more honeycomb!")
+		. += span_warning(LANG("obj.5a6b6f26", null))
 
 /obj/structure/beebox/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

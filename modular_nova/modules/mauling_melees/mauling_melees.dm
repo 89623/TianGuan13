@@ -94,7 +94,7 @@
 /obj/item/storage/belt/machete/examine(mob/user)
 	. = ..()
 	if(length(contents))
-		. += span_notice("Alt-click it to quickly draw the blade.")
+		. += span_notice(LANG("obj.ebf3b6e0", null))
 
 /obj/item/storage/belt/machete/click_alt(mob/user)
 	for(var/obj/item/machete/machete in contents)

@@ -92,8 +92,8 @@
 
 /obj/effect/weakpoint/examine(mob/user)
 	. = ..()
-	. += span_notice("\The [src] could be repaired with a welder.")
-	. += span_warning("A strong enough explosion will cause [src] to expand.")
+	. += span_notice(LANG("obj.b5a61be0", list(src)))
+	. += span_warning(LANG("obj.6ea60a41", list(src)))
 
 /**
  * Generates a list of turfs from the start location meandering along a randomized set of turns.

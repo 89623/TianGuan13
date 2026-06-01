@@ -28,9 +28,9 @@
 	if (!IS_SPACE_NINJA(user))
 		return
 	if (isnull(detonation_area))
-		. += span_notice("This one was provided with no destination set, and cannot be used.")
+		. += span_notice(LANG("obj.05eac6fb", null))
 	else
-		. += span_notice("This device will only function in [detonation_area].")
+		. += span_notice(LANG("obj.c50bfa6e", list(detonation_area)))
 
 /**
  * set_detonation_area

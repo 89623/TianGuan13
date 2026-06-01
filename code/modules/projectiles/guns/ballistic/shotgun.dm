@@ -150,7 +150,7 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to pump it.")
+	. += span_notice(LANG("obj.ceda57fd", null))
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize(mapload)
 	. = ..()
@@ -407,7 +407,7 @@
 
 /obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
 	. = ..()
-	. += span_notice("Right-click to shoot the hook.")
+	. += span_notice(LANG("obj.dde32ef8", null))
 
 /obj/item/gun/ballistic/shotgun/hook/try_fire_gun(atom/target, mob/living/user, params)
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))

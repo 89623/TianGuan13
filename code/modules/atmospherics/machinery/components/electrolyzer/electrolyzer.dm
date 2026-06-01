@@ -73,9 +73,9 @@
 	else
 		. += LANG("obj.b21d2f5d", null)
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("<b>Alt-click</b> to toggle [on ? "off" : "on"].")
-		. += span_notice("<b>Anchor</b> to drain power from APC instead of cell")
-	. += span_notice("It will drain power from the [anchored ? "area's APC" : "internal power cell"].")
+		. += span_notice(LANG("obj.033fe9f5", list(on ? "off" : "on")))
+		. += span_notice(LANG("obj.63861cf1", null))
+	. += span_notice(LANG("obj.f5cfd6d4", list(anchored ? "area's APC" : "internal power cell")))
 
 
 /obj/machinery/electrolyzer/update_icon_state()

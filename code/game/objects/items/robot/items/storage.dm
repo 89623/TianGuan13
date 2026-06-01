@@ -132,7 +132,7 @@
 		else
 			. += LANG("obj.aa75d156", null)
 
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored beaker. ")
+	. += span_notice(LANG("obj.e9890590", null))
 
 /obj/item/borg/apparatus/beaker/update_overlays()
 	. = ..()
@@ -235,7 +235,7 @@
 		. += organ.name
 	else
 		. += LANG("obj.aa75d156", null)
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored organ. ")
+	. += span_notice(LANG("obj.847f9513", null))
 
 /obj/item/borg/apparatus/organ_storage/click_alt(mob/living/silicon/robot/user)
 	if(!stored)
@@ -281,7 +281,7 @@
 	. = ..()
 	if(stored)
 		. += LANG("obj.929ca228", list(stored))
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored sheets. ")
+	. += span_notice(LANG("obj.9b0c73e2", null))
 
 ///Apparatus allowing Engineer/Sabo borgs to manipulate circuit boards and more
 /obj/item/borg/apparatus/engineering
@@ -331,7 +331,7 @@
 	. = ..()
 	if(stored)
 		. += LANG("obj.929ca228", list(stored))
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored item. ")
+	. += span_notice(LANG("obj.a9c007ab", null))
 
 /obj/item/borg/apparatus/engineering/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
@@ -381,4 +381,4 @@
 	. = ..()
 	if(stored)
 		. += LANG("obj.929ca228", list(stored))
-	. += span_notice("<i>Alt-click</i> will drop the currently secured item.")
+	. += span_notice(LANG("obj.47397b29", null))

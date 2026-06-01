@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/mop
 	desc = "The world of janitalia wouldn't be complete without a mop."
 	name = "mop"
@@ -108,7 +109,7 @@
 
 /obj/item/mop/advanced/examine(mob/user)
 	. = ..()
-	. += span_notice("The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.")
+	. += span_notice(LANG("obj.cf2ba064", list(refill_enabled ? "ON" : "OFF")))
 
 /obj/item/mop/advanced/Destroy()
 	STOP_PROCESSING(SSobj, src)

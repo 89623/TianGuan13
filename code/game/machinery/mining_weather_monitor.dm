@@ -118,9 +118,9 @@ GLOBAL_LIST_EMPTY(weather_towers)
 /obj/machinery/power/weather_tower/examine(mob/user)
 	. = ..()
 	if(isnull(core))
-		. += span_info("It has a slot in which you could install a weather anomaly core.")
+		. += span_info(LANG("obj.1c2f363e", null))
 	else
-		. += span_info("It has \a [core] installed, unlocking weather control.")
+		. += span_info(LANG("obj.3efd6c7e", list(core)))
 
 /obj/machinery/power/weather_tower/ui_interact(mob/user, datum/tgui/ui)
 	if(isnull(core))

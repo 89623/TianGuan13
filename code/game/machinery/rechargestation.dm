@@ -84,11 +84,11 @@
 /obj/machinery/recharge_station/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Recharging: <b>[display_power(recharge_speed, convert = FALSE)]</b>.")
+		. += span_notice(LANG("obj.a1f1354a", list(display_power(recharge_speed, convert = FALSE))))
 		if(materials.silo)
-			. += span_notice("The ore silo link indicator is lit, and cyborg restocking can be toggled by <b>Right-Clicking</b> [src].")
+			. += span_notice(LANG("obj.9bb8f696", list(src)))
 		if(repairs)
-			. += span_notice("[src] has been upgraded to support automatic repairs.")
+			. += span_notice(LANG("obj.cf202c99", list(src)))
 
 /obj/machinery/recharge_station/on_set_is_operational(old_value)
 	if(old_value) //Turned off

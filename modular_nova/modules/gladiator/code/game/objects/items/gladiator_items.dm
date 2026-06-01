@@ -38,7 +38,7 @@
 
 /obj/item/clothing/neck/warrior_cape/examine()
 	. = ..()
-	. += span_warning("Struggle against the tide, no matter how strong it may be.")
+	. += span_warning(LANG("obj.8c27505d", null))
 
 /obj/item/clothing/suit/hooded/berserker/gatsu
 	name = "berserker armor"
@@ -64,7 +64,7 @@
 
 /obj/item/clothing/suit/hooded/berserker/gatsu/examine()
 	. = ..()
-	. += span_warning("Berserk mode requires the suit's helmet to be equipped, and can only be charged by taking damage.")
+	. += span_warning(LANG("obj.ec3125a7", null))
 
 /obj/item/clothing/head/hooded/berserker/gatsu
 	name = "berserker helmet"
@@ -83,7 +83,7 @@
 
 /obj/item/clothing/head/hooded/berserker/gatsu/examine()
 	. = ..()
-	. += span_warning("Berserk mode is usable at 100% charge and requires the helmet to be closed in order to remain active.") //woag!!!
+	. += span_warning(LANG("obj.5c2e5945", null)) //woag!!!
 
 /obj/item/clothing/head/hooded/berserker/gatsu/process(seconds_per_tick)
 	if(berserk_active)
@@ -141,7 +141,7 @@
 
 /obj/item/claymore/dragonslayer/examine()
 	. = ..()
-	. += span_warning("Tempered against lavaland foes and bosses through supernatural energies. Right click to dodge at the cost of stamina.")
+	. += span_warning(LANG("obj.d676d4cd", null))
 
 /obj/item/claymore/dragonslayer/attack(mob/living/target, mob/living/carbon/human/user)
 	var/is_nemesis_faction = FALSE
@@ -193,7 +193,7 @@
 
 /obj/item/claymore/dragonslayer/very_fucking_loud/examine()
 	. = ..()
-	. += span_userdanger("CLANG")
+	. += span_userdanger(LANG("obj.5df80a1a", null))
 
 /obj/structure/closet/crate/necropolis/gladiator
 	name = "gladiator chest"

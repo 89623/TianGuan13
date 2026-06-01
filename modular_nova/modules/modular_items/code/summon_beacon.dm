@@ -33,8 +33,8 @@
 
 /obj/item/summon_beacon/examine()
 	. = ..()
-	. += span_warning("Caution: Only works in [area_string].")
-	. += span_notice("Currently selected: [selected_atom ? initial(selected_atom.name) : "None"].")
+	. += span_warning(LANG("obj.006565ab", list(area_string)))
+	. += span_notice(LANG("obj.e7fa7fe1", list(selected_atom ? initial(selected_atom.name) : "None")))
 
 /obj/item/summon_beacon/attack_self(mob/user)
 	if(!can_use_beacon(user))

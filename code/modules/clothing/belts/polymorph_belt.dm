@@ -28,9 +28,9 @@
 	. = ..()
 	if (stored_mob_type)
 		var/mob/living/will_become = stored_mob_type
-		. += span_notice("It contains digitised [initial(will_become.name)] DNA.")
+		. += span_notice(LANG("obj.9f159592", list(initial(will_become.name))))
 	if (!active)
-		. += span_warning("It requires a Bioscrambler Anomaly Core in order to function.")
+		. += span_warning(LANG("obj.eaa4446e", null))
 
 /obj/item/polymorph_belt/update_icon_state()
 	icon_state = base_icon_state + (active ? "" : "_inactive")

@@ -36,7 +36,7 @@
 	if(!check_usability(user))
 		return
 
-	. += span_notice("You can shatter the blade to teleport to a random, (mostly) safe location by <b>activating it in-hand</b>.")
+	. += span_notice(LANG("obj.fe6cdb72", null))
 
 /// Checks if the passed mob can use this blade without being stunned
 /obj/item/melee/sickly_blade/proc/check_usability(mob/living/user)

@@ -191,9 +191,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
-	. += span_notice("Right click on floor to build:")
-	. += span_notice("- Unanchored wall girder")
-	. += span_notice("- Computer or Machine frame (with circuitboard)")
+	. += span_notice(LANG("obj.50a3e0b8", null))
+	. += span_notice(LANG("obj.f50f220e", null))
+	. += span_notice(LANG("obj.6dff62a1", null))
 
 /obj/item/stack/sheet/iron/fifty
 	amount = 50

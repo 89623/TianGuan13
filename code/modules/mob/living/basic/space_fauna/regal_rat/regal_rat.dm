@@ -86,14 +86,14 @@
 		return
 
 	if(isregalrat(user))
-		. += span_warning("Who is this foolish false king? This will not stand!")
+		. += span_warning(LANG("mob.470878de", null))
 		return
 
 	if(ismouse(user))
 		if(user.faction_check_atom(src, exact_match = TRUE))
-			. += span_notice("This is your king. Long live [p_their()] majesty!")
+			. += span_notice(LANG("mob.1b0e2fc1", list(p_their())))
 		else
-			. += span_warning("This is a false king! Strike [p_them()] down!")
+			. += span_warning(LANG("mob.b9c2794d", list(p_them())))
 		return
 
 	. += special_moniker

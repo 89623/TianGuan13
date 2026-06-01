@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 * A debug chem tester that will process through all recipies automatically and try to react them.
 * Highlights low purity reactions and and reactions that don't happen
@@ -104,9 +105,9 @@
 /obj/machinery/chem_recipe_debug/examine(mob/user)
 	. = ..()
 	if(!QDELETED(container))
-		. += span_notice("A container of [container.reagents.maximum_volume]u capacity is inside.")
+		. += span_notice(LANG("obj.0fcf6a97", list(container.reagents.maximum_volume)))
 	else
-		. += span_notice("No container is present. A new will be created when ejecting.")
+		. += span_notice(LANG("obj.6ae316d7", null))
 
 /obj/machinery/chem_recipe_debug/Exited(atom/movable/gone, direction)
 	. = ..()

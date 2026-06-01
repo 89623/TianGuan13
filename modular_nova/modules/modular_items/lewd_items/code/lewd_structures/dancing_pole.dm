@@ -166,4 +166,4 @@
 
 /obj/structure/stripper_pole/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be disassembled by using Ctrl+Shift+Click")
+	. += span_purple(LANG("obj.c1a93939", list(src)))

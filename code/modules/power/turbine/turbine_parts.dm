@@ -15,14 +15,14 @@
 
 /obj/item/turbine_parts/examine(mob/user)
 	. = ..()
-	. += span_notice("This is a tier [current_tier] turbine part, rated for [get_tier_value(TURBINE_MAX_RPM)] rpm and [get_tier_value(TURBINE_MAX_TEMP)] K.")
+	. += span_notice(LANG("obj.8bc7ff16", list(current_tier, get_tier_value(TURBINE_MAX_RPM), get_tier_value(TURBINE_MAX_TEMP))))
 
 	var/list/required_parts = get_tier_upgrades()
 	if(length(required_parts))
 		var/obj/item/stack/material = required_parts[TURBINE_UPGRADE_PART]
-		. += span_notice("Can be upgraded with [required_parts[TURBINE_UPGRADE_AMOUNT]] [initial(material.name)] sheets.")
+		. += span_notice(LANG("obj.03c29b5a", list(required_parts[TURBINE_UPGRADE_AMOUNT], initial(material.name))))
 	else
-		. += span_notice("Is already at max tier.")
+		. += span_notice(LANG("obj.8036b004", null))
 
 /**
  * Returns the max values of various attributes of this turbine based on its tier

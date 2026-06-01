@@ -19,7 +19,7 @@
 	. = ..()
 	if(copied)
 		return
-	. += span_notice("Right-click to tear off the carbon-copy (you must use both hands).")
+	. += span_notice(LANG("obj.95e694c0", null))
 
 /obj/item/paper/carbon/click_alt(mob/living/user)
 	if(!copied)

@@ -46,10 +46,10 @@
 		. += LANG("obj.85161655", list(rotation_angle, can_rotate ? "unlocked" : "locked"))
 		if(!admin)
 			if(can_rotate)
-				. += span_notice("Use your <b>hand</b> to adjust its direction.")
-				. += span_notice("Use a <b>screwdriver</b> to lock the rotation.")
+				. += span_notice(LANG("obj.0dfd560c", null))
+				. += span_notice(LANG("obj.791dda47", null))
 			else
-				. += span_notice("Use <b>screwdriver</b> to unlock the rotation.")
+				. += span_notice(LANG("obj.f68e082e", null))
 
 /obj/structure/reflector/proc/set_angle(new_angle)
 	if(can_rotate)

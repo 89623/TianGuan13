@@ -56,9 +56,9 @@
 /obj/item/folder/biscuit/examine()
 	. = ..()
 	if(cracked)
-		. += span_notice("It's been cracked open.")
+		. += span_notice(LANG("obj.1578ef9c", null))
 	else
-		. += span_notice("You'll need to crack it open to access its contents.")
+		. += span_notice(LANG("obj.d721f550", null))
 		if(contained_slip)
 			. += LANG("obj.4d91809e", list(contained_slip.name))
 
@@ -135,7 +135,7 @@
 /obj/item/folder/biscuit/unsealed/examine()
 	. = ..()
 	if(!has_been_sealed)
-		. += span_notice("This one could be sealed <b>in hand</b>. Once sealed, the contents are inaccessible until cracked open again - but once opened this is irreversible.")
+		. += span_notice(LANG("obj.a4573a57", null))
 
 /obj/item/folder/biscuit/unsealed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()

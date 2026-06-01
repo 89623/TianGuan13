@@ -37,6 +37,6 @@
 
 /obj/item/clothing/mask/neck_gaiter/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] can be worn above or below your suit. Alt-Right-click to toggle.")
-	. += span_notice("Alt-click [src] to adjust it.")
+	. += span_notice(LANG("obj.b4a3a1fb", list(src)))
+	. += span_notice(LANG("obj.10c89ab8", list(src)))
 

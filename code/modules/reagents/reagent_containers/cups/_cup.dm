@@ -55,12 +55,12 @@
 	. = ..()
 	if(drink_type)
 		var/list/types = bitfield_to_list(drink_type, FOOD_FLAGS)
-		. += span_notice("The label says it contains [LOWER_TEXT(english_list(types))] ingredients.")
+		. += span_notice(LANG("obj.5d48423d", list(LOWER_TEXT(english_list(types)))))
 	if(can_lid)
 		if(has_lid)
-			. += span_notice("Its sealed with a bright orange rubber lid[!isnull(lid_assembly) ? "with an assembly attached ontop of it" : ""].")
+			. += span_notice(LANG("obj.07366373", list(!isnull(lid_assembly) ? "with an assembly attached ontop of it" : "")))
 		else
-			. += span_notice("It can be sealed with a lid using [EXAMINE_HINT("Alt-Click")].")
+			. += span_notice(LANG("obj.226f6fdb", list(EXAMINE_HINT("Alt-Click"))))
 
 /**
  * Checks if the mob actually liked drinking this cup.

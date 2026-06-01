@@ -34,7 +34,7 @@
 /obj/machinery/teleport/hub/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Success chance is <b>[70 + (accuracy * 10)]%</b>.")
+		. += span_notice(LANG("obj.aaddcd7a", list(70 + (accuracy * 10))))
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
@@ -154,11 +154,11 @@
 /obj/machinery/teleport/station/examine(mob/user)
 	. = ..()
 	if(!panel_open)
-		. += span_notice("The panel is <i>screwed</i> in, obstructing the linking device and wiring panel.")
+		. += span_notice(LANG("obj.86b563c3", null))
 	else
-		. += span_notice("The <i>linking</i> device is now able to be <i>scanned</i> with a multitool.")
+		. += span_notice(LANG("obj.8906221c", null))
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: This station can be linked to <b>[efficiency]</b> other station(s).")
+		. += span_notice(LANG("obj.ae4236d9", list(efficiency)))
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
 	for(var/direction in GLOB.cardinals)

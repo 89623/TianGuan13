@@ -101,9 +101,9 @@
 /obj/item/pillow/examine(mob/user)
 	. = ..()
 	if(bricked)
-		. += span_info("[p_They()] feel[p_s()] unnaturally heavy.")
+		. += span_info(LANG("obj.84981abc", list(p_They(), p_s())))
 	if(pillow_trophy)
-		. += span_notice("Alt-click to remove the tag!")
+		. += span_notice(LANG("obj.e8241411", null))
 
 /obj/item/pillow/click_alt(mob/user)
 	if(!user.can_hold_items(src))

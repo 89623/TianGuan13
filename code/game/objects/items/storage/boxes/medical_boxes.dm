@@ -241,11 +241,11 @@
 		if(SEVERITY_MINIMAL)
 			. += span_notice("This card indicates that the patient is only slightly injured.")
 
-	. += span_smallnoticeital("There is a guide to triage on the back of the card, if you <i>look closer</i>.")
+	. += span_smallnoticeital(LANG("obj.a60bfbb2", null))
 
 /obj/item/paper/triage/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>The back of [src] has a guide to performing triage:</i>")
+	. += span_notice(LANG("obj.539e9730", list(src)))
 	. += LANG("obj.6149c195", null)
 	. += LANG("obj.56835557", null)
 	. += LANG("obj.e73c9af8", null)

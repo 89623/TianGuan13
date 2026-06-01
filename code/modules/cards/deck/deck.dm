@@ -62,7 +62,7 @@
 	. = ..()
 
 	if(HAS_TRAIT(user, TRAIT_XRAY_VISION) && count_cards() > 0)
-		. += span_notice("You scan the deck with your x-ray vision and the top card reads: [fetch_card_atoms()[1].cardname].")
+		. += span_notice(LANG("obj.0d61a841", list(fetch_card_atoms()[1].cardname)))
 
 	// This can only happen if card_atoms have been generated
 	if(LAZYLEN(card_atoms) > 0)
@@ -70,9 +70,9 @@
 
 		var/marked_color = card.getMarkedColor(user)
 		if(marked_color)
-			. += span_notice("The top card of the deck has a [marked_color] mark on the corner!")
+			. += span_notice(LANG("obj.bcdc7aa8", list(marked_color)))
 
-	. += span_notice("Click and drag the deck to yourself to pickup.") // This should be a context screentip
+	. += span_notice(LANG("obj.8dc21e50", null)) // This should be a context screentip
 
 /obj/item/toy/cards/deck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(src == held_item)

@@ -175,7 +175,7 @@
 
 /obj/structure/closet/crate/grave/examine(mob/user)
 	. = ..()
-	. += span_notice("It can be [EXAMINE_HINT((opened ? "closed" : "dug open"))] with a shovel.")
+	. += span_notice(LANG("obj.a83a8153", list(EXAMINE_HINT((opened ? "closed" : "dug open")))))
 
 /obj/structure/closet/crate/grave/filled
 	affect_mood = TRUE

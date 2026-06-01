@@ -36,8 +36,8 @@
 
 /obj/item/access_key/examine_more(mob/user)
 	. = ..()
-	. += span_notice("Access can be granted through a Keycard Authentication Device.")
-	. += span_notice("This access is limited to one department at a time.")
+	. += span_notice(LANG("obj.1c024d16", null))
+	. += span_notice(LANG("obj.4483eb29", null))
 
 /**
  * Called when attempting to open an airlock.

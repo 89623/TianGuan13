@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/implantpad
 	name = "implant pad"
 	desc = "Used to modify implants."
@@ -25,14 +26,14 @@
 /obj/item/implantpad/examine(mob/user)
 	. = ..()
 	if(!inserted_case)
-		. += span_info("It is currently empty.")
+		. += span_info(LANG("obj.1b5f6bf0", null))
 		return
 
 	if(Adjacent(user))
-		. += span_info("It contains \a [inserted_case].")
+		. += span_info(LANG("obj.eaca0139", list(inserted_case)))
 	else
-		. += span_warning("There seems to be something inside it, but you can't quite tell what from here...")
-	. += span_info("Alt-click to remove [inserted_case].")
+		. += span_warning(LANG("obj.6af3f4ff", null))
+	. += span_info(LANG("obj.cba63c8b", list(inserted_case)))
 
 /obj/item/implantpad/Exited(atom/movable/gone, direction)
 	. = ..()

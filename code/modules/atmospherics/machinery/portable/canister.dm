@@ -109,15 +109,15 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(atom_integrity < max_integrity)
-		. += span_notice("Integrity compromised, repair hull with a welding tool.")
-	. += span_notice("A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(temp_limit, "K", 0)]</b>.")
-	. += span_notice("The hull is <b>welded</b> together and can be cut apart.")
+		. += span_notice(LANG("obj.98771757", null))
+	. += span_notice(LANG("obj.a9cd71f2", list(siunit_pressure(initial(pressure_limit), 0), siunit(temp_limit, "K", 0))))
+	. += span_notice(LANG("obj.0fe8027b", null))
 	if(internal_cell)
-		. += span_notice("The internal cell has [internal_cell.percent()]% of its total charge.")
+		. += span_notice(LANG("obj.5c06ab5d", list(internal_cell.percent())))
 	else
-		. += span_notice("Warning, no cell installed, use a screwdriver to open the hatch and insert one.")
+		. += span_notice(LANG("obj.0a6205da", null))
 	if(panel_open)
-		. += span_notice("Hatch open, close it with a screwdriver.")
+		. += span_notice(LANG("obj.d0dcb893", null))
 
 // Please keep the canister types sorted
 // Basic canister per gas below here

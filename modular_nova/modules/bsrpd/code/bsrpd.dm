@@ -60,7 +60,7 @@
 	else
 		. += LANG("obj.d747a74c", null)
 
-	. += span_notice("<b>Alt-Click</b> to toggle remote piping.")
+	. += span_notice(LANG("obj.786de939", null))
 
 /obj/item/pipe_dispenser/bluespace/click_alt(mob/user)
 	remote_piping_toggle = !remote_piping_toggle

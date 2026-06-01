@@ -581,5 +581,5 @@
 	. = ..()
 	if(stored)
 		. += LANG("obj.929ca228", list(stored))
-	. += span_notice("<i>Alt-click</i> will drop the currently secured item.")
+	. += span_notice(LANG("obj.47397b29", null))
 

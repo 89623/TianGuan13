@@ -122,10 +122,10 @@
 /mob/living/simple_animal/hostile/megafauna/gladiator/examine()
 	if(stat >= DEAD)
 		. = ..()
-		. += span_boldwarning("Unearthly energies bind the body to its place of defeat. You cannot move it.")
+		. += span_boldwarning(LANG("mob.cf29e043", null))
 	else
 		. = ..()
-		. += span_boldwarning("They are currently in Phase [phase].")
+		. += span_boldwarning(LANG("mob.045dd466", list(phase)))
 
 /// Gets him mad at you if you're a species he's not racist towards, and provides the 50% to block attacks in the first and fourth phases
 /mob/living/simple_animal/hostile/megafauna/gladiator/adjustHealth(amount, updating_health, forced)

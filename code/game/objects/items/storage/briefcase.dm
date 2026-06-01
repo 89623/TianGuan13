@@ -192,7 +192,7 @@
 /obj/item/storage/briefcase/gun/examine_more(mob/user)
 	. = ..()
 	if(user.is_holding(src))
-		. += span_notice("Upon closer inspection, you notice a hole in the side of the briefcase.")
+		. += span_notice(LANG("obj.d332ae7c", null))
 
 /obj/item/storage/briefcase/gun/preloaded
 

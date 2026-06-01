@@ -92,7 +92,7 @@
 
 /obj/structure/ai_core/examine(mob/user)
 	. = ..()
-	. += span_notice("It has some <b>bolts</b> that look [anchored ? "tightened" : "loosened"].")
+	. += span_notice(LANG("obj.95981e5e", list(anchored ? "tightened" : "loosened")))
 
 	switch(state)
 		if(CORE_STATE_EMPTY)
@@ -144,7 +144,7 @@
 /obj/structure/ai_core/latejoin_inactive/examine(mob/user)
 	. = ..()
 	. += LANG("obj.28e0223c", list(active? "on" : "off"))
-	. += span_notice("You could [active? "deactivate" : "activate"] it with a multitool.")
+	. += span_notice(LANG("obj.cb915da4", list(active? "deactivate" : "activate")))
 
 /obj/structure/ai_core/latejoin_inactive/proc/is_available() //If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)

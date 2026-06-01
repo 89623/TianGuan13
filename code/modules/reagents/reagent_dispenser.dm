@@ -66,17 +66,17 @@
 /obj/structure/reagent_dispensers/examine(mob/user)
 	. = ..()
 	if(can_be_tanked)
-		. += span_notice("Use a sheet of iron to convert this into a plumbing-compatible tank.")
+		. += span_notice(LANG("obj.60ea9c3a", null))
 	if(openable)
 		if(!leaking)
-			. += span_notice("Its tap looks like it could be <b>wrenched</b> open.")
+			. += span_notice(LANG("obj.f9a1268f", null))
 		else
-			. += span_warning("Its tap is <b>wrenched</b> open!")
+			. += span_warning(LANG("obj.50416516", null))
 	if(accepts_rig && get_dist(user, src) <= 2)
 		if(rig)
-			. += span_warning("There is some kind of device <b>rigged</b> to the tank!")
+			. += span_warning(LANG("obj.3dcf0273", null))
 		else
-			. += span_notice("It looks like you could <b>rig</b> a device to the tank.")
+			. += span_notice(LANG("obj.2d270189", null))
 
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)

@@ -61,10 +61,8 @@
 
 /obj/machinery/recycler/examine(mob/user)
 	. = ..()
-	. += span_notice("Reclaiming <b>[amount_produced]%</b> of materials salvaged.")
-	. += {"The power light is [(machine_stat & NOPOWER) ? "off" : "on"].
-	The safety-mode light is [safety_mode ? "on" : "off"].
-	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
+	. += span_notice(LANG("obj.546bceb7", list(amount_produced)))
+	. += LANG("obj.ddd56e46", list((machine_stat & NOPOWER) ? "off" : "on", safety_mode ? "on" : "off", obj_flags & EMAGGED ? "off" : "on"))
 
 /obj/machinery/recycler/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)

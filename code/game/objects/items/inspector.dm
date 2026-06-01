@@ -78,15 +78,15 @@
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
-	. += span_info("Use on an item to scan if it contains, or is, contraband.")
+	. += span_info(LANG("obj.3cab1051", null))
 	if(!cell_cover_open)
-		. += span_notice("Its cell cover is closed. It looks like it could be <strong>pried</strong> out, but doing so would require an appropriate tool.")
+		. += span_notice(LANG("obj.84935762", null))
 		return
-	. += span_notice("Its cell cover is open, exposing the cell slot. It looks like it could be <strong>pried</strong> in, but doing so would require an appropriate tool.")
+	. += span_notice(LANG("obj.eea3dbb6", null))
 	if(!cell)
-		. += span_notice("The slot for a cell is empty.")
+		. += span_notice(LANG("obj.e4ac54e1", null))
 	else
-		. += span_notice("\The [cell] is firmly in place. Ctrl-click with an empty hand to remove it.")
+		. += span_notice(LANG("obj.ac8e8981", list(cell)))
 
 /obj/item/inspector/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!user.Adjacent(interacting_with))

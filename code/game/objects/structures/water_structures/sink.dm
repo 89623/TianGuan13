@@ -88,8 +88,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 /obj/structure/sink/examine(mob/user)
 	. = ..()
 	if(has_water_reclaimer)
-		. += span_notice("A water recycler is installed. It looks like you could pry it out.")
-	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
+		. += span_notice(LANG("obj.6a25c0f2", null))
+	. += span_notice(LANG("obj.31941555", list(reagents.total_volume, reagents.maximum_volume)))
 
 /obj/structure/sink/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -292,9 +292,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 /obj/item/wallframe/sinkframe/examine(mob/user)
 	. = ..()
 	if(result_path == /obj/structure/sink/greyscale/filled)
-		. += span_notice("It has a [EXAMINE_HINT("water recycler")] installed.")
+		. += span_notice(LANG("obj.14ac99b9", list(EXAMINE_HINT("water recycler"))))
 	else
-		. += span_notice("It can be fitted with a [EXAMINE_HINT("water recycler")].")
+		. += span_notice(LANG("obj.5e1899e9", list(EXAMINE_HINT("water recycler"))))
 
 /obj/item/wallframe/sinkframe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE

@@ -34,8 +34,8 @@
 
 /obj/item/goodycase_holder/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>There are [length(goodycase_list)]/[max_goodycases] cases currently stored.")
-	. += span_notice("To access contents inside, press this item.")
+	. += span_notice(LANG("obj.8247b879", list(length(goodycase_list), max_goodycases)))
+	. += span_notice(LANG("obj.e426bafc", null))
 
 /obj/item/goodycase_holder/update_appearance(updates)
 	. = ..()

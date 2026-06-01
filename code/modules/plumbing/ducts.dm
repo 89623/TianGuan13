@@ -223,8 +223,8 @@
 
 /obj/machinery/duct/examine(mob/user)
 	. = ..()
-	. += span_notice("Its current color and layer are [GLOB.pipe_color_name[duct_color]] and [GLOB.plumbing_layer_names["[duct_layer]"]]. Use in-hand to change.")
-	. += span_notice("It can be [EXAMINE_HINT("wrenched")] apart.")
+	. += span_notice(LANG("obj.b4a82b23", list(GLOB.pipe_color_name[duct_color], GLOB.plumbing_layer_names["[duct_layer]"])))
+	. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("wrenched"))))
 
 /obj/machinery/duct/update_icon_state()
 	var/temp_icon = initial(icon_state)
@@ -299,8 +299,8 @@
 
 /obj/item/stack/ducts/examine(mob/user)
 	. = ..()
-	. += span_notice("Its current color and layer are [GLOB.pipe_color_name[duct_color]] and [GLOB.plumbing_layer_names["[duct_layer]"]]. Use in-hand to change.")
-	. += span_notice("Place on ground & [EXAMINE_HINT("wrench")] to create duct.")
+	. += span_notice(LANG("obj.b4a82b23", list(GLOB.pipe_color_name[duct_color], GLOB.plumbing_layer_names["[duct_layer]"])))
+	. += span_notice(LANG("obj.8c6bde29", list(EXAMINE_HINT("wrench"))))
 
 /obj/item/stack/ducts/attack_self(mob/user)
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers, GLOB.plumbing_layer_names["[duct_layer]"])

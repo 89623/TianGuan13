@@ -28,7 +28,7 @@
 /obj/structure/holopay/examine(mob/user)
 	. = ..()
 	if(force_fee)
-		. += span_boldnotice("This holopay forces a payment of <b>[force_fee]</b> [MONEY_NAME_AUTOPURAL(force_fee)] per swipe instead of a variable amount.")
+		. += span_boldnotice(LANG("obj.8354174e", list(force_fee, MONEY_NAME_AUTOPURAL(force_fee))))
 
 /obj/structure/holopay/Initialize(mapload)
 	. = ..()

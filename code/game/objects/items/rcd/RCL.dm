@@ -101,7 +101,7 @@
 /obj/item/rcl/examine(mob/user)
 	. = ..()
 	if(loaded)
-		. += span_info("It contains [loaded.amount]/[max_amount] pipe cleaners.")
+		. += span_info(LANG("obj.085e0c5a", list(loaded.amount, max_amount)))
 
 /obj/item/rcl/Destroy()
 	QDEL_NULL(loaded)

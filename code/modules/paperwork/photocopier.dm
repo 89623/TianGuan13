@@ -200,8 +200,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/examine(mob/user)
 	. = ..()
 	if(object_copy)
-		. += span_notice("There is something inside the scanner tray.")
-	. += span_notice("You can put any type of blank paper inside to print a form onto it or to copy something onto it.")
+		. += span_notice(LANG("obj.cde32625", null))
+	. += span_notice(LANG("obj.b9b924fd", null))
 
 /obj/machinery/photocopier/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -891,7 +891,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/item/toner/examine(mob/user)
 	. = ..()
-	. += span_notice("The ink level gauge on the side reads [round(charges / max_charges * 100)]%")
+	. += span_notice(LANG("obj.bf440d8e", list(round(charges / max_charges * 100))))
 
 /obj/item/toner/large
 	name = "large toner cartridge"

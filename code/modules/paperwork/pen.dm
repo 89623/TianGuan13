@@ -578,7 +578,7 @@
 
 /obj/item/pen/red/security/examine(mob/user)
 	. = ..()
-	. += span_notice("To initiate the surrender prompt, simply click on an individual within your proximity.")
+	. += span_notice(LANG("obj.a5a31998", null))
 
 //Code from the medical penlight
 /obj/item/pen/red/security/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

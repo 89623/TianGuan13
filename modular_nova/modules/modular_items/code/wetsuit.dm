@@ -13,7 +13,7 @@
 
 /obj/item/clothing/under/akula_wetsuit/refit/examine(mob/user)
 	. = ..()
-	. += span_notice("You can <b>examine closer</b> to learn a little more about this item.")
+	. += span_notice(LANG("obj.9710c283", null))
 
 /obj/item/clothing/under/akula_wetsuit/refit/examine_more(mob/user)
 	. = ..()

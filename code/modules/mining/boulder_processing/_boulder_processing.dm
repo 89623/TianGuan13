@@ -79,37 +79,37 @@
 /obj/machinery/bouldertech/examine(mob/user)
 	. = ..()
 
-	. += span_suppradio("The machine reads that it has [EXAMINE_HINT("[points_held] mining points")] stored. Swipe an ID to claim them.")
+	. += span_suppradio(LANG("obj.72d0ba03", list(EXAMINE_HINT("[points_held] mining points"))))
 
 	var/boulder_count = 0
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulder_count += 1
 
 	if(boulder_count >= 1)
-		. += span_notice("[EXAMINE_HINT("Right Click")] to manually remove a stored boulder.<br />")
+		. += span_notice(LANG("obj.92f61f8a", list(EXAMINE_HINT("Right Click"))))
 
-	. += span_info("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_info("This machine can process up to [EXAMINE_HINT("[boulders_processing_count] boulders")] at a time.")
+	. += span_info(LANG("obj.80870b1a", list(boulder_count, boulders_held_max)))
+	. += span_info(LANG("obj.236dccea", list(EXAMINE_HINT("[boulders_processing_count] boulders"))))
 
 	if(anchored)
-		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice(LANG("obj.7641f909", list(EXAMINE_HINT("anchored"))))
 	else
-		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
+		. += span_warning(LANG("obj.cea02383", list(EXAMINE_HINT("anchored"))))
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 
 	if(panel_open)
-		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.3a115eca", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/bouldertech/examine_more(mob/user)
 	. = ..()
 
 	var/list/datum/reagents/booster_list = get_booster_reagents()
 	if(length(booster_list))
-		. += span_notice("This machine's output is boosted by <b>chemical intake:</b><br>")
+		. += span_notice(LANG("obj.eeee6107", null))
 		for(var/datum/reagent/increment as anything in booster_list)
 			. += span_info("&bull; [increment::name]: Provides [booster_list[increment] * 10]% Boost")
-		. += span_notice("<br>Upon being boosted successfully, \the [src] will produce [EXAMINE_HINT("[waste_chemical.name]")].")
+		. += span_notice(LANG("obj.bcb905eb", list(src, EXAMINE_HINT("[waste_chemical.name]"))))
 
 /obj/machinery/bouldertech/update_icon_state()
 	. = ..()

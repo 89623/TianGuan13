@@ -691,9 +691,9 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!IS_CULTIST(user) && isliving(user))
 		var/mob/living/living_user = user
 		living_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5)
-		. += span_danger("It hurts just to look at it. Better keep away.")
+		. += span_danger(LANG("obj.5ed5a794", null))
 	else
-		. += span_cult("It can be used to create a gateway to Nar'Sie's domain, which will summon weak, sentient constructs over time.")
+		. += span_cult(LANG("obj.92a3697e", null))
 
 /obj/item/proteon_orb/attack_self(mob/living/user)
 
@@ -759,9 +759,9 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/cult_shift/examine(mob/user)
 	. = ..()
 	if(uses)
-		. += span_cult("It has [uses] use\s remaining.")
+		. += span_cult(LANG("obj.4b3096b5", list(uses)))
 	else
-		. += span_cult("It seems drained.")
+		. += span_cult(LANG("obj.5fc91db8", null))
 
 ///Handles teleporting the atom we're pulling along with us when using the shifter
 /obj/item/cult_shift/proc/handle_teleport_grab(turf/target_turf, mob/user)

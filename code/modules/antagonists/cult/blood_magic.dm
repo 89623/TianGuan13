@@ -606,13 +606,7 @@
 
 /obj/item/melee/blood_magic/construction/examine(mob/user)
 	. = ..()
-	. += {"<u>A sinister spell used to convert:</u>\n
-	Plasteel into runed metal\n
-	[IRON_TO_CONSTRUCT_SHELL_CONVERSION] iron into a construct shell\n
-	Living cyborgs into constructs after a delay\n
-	Cyborg shells into construct shells\n
-	Purified soulstones (and any shades inside) into cultist soulstones\n
-	Airlocks into brittle runed airlocks after a delay (harm intent)"}
+	. += LANG("obj.f196a851", list(IRON_TO_CONSTRUCT_SHELL_CONVERSION))
 
 /obj/item/melee/blood_magic/construction/cast_spell(atom/target, mob/living/carbon/user)
 	if(channeling)

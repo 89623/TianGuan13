@@ -7,8 +7,8 @@
 
 /obj/item/reagent_containers/cup/primitive_centrifuge/examine()
 	. = ..()
-	. += span_notice("<b>Ctrl + Click</b> to select chemicals to remove.")
-	. += span_notice("<b>Ctrl + Shift + Click</b> to select a chemical to keep, the rest removed.")
+	. += span_notice(LANG("obj.90f41876", null))
+	. += span_notice(LANG("obj.3c494ff4", null))
 
 /obj/item/reagent_containers/cup/primitive_centrifuge/item_ctrl_click(mob/user)
 	if(!length(reagents.reagent_list))

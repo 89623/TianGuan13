@@ -47,7 +47,7 @@
 /obj/item/machine_remote/examine(mob/user)
 	. = ..()
 	if(controlling_machine_or_bot)
-		. += span_notice("It is currently controlling [controlling_machine_or_bot]. Use in-hand to interact with it.")
+		. += span_notice(LANG("obj.f2b0f44b", list(controlling_machine_or_bot)))
 
 /obj/item/machine_remote/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(controlling_machine_or_bot)

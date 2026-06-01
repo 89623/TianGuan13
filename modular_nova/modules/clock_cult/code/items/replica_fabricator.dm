@@ -40,10 +40,10 @@
 	. = ..()
 	if(IS_CLOCK(user))
 		. += "[span_brass("Current power: ")][span_clockyellow("[power]")] [span_brass("W / ")][span_clockyellow("[max_power]")] [span_brass("W.")]"
-		. += span_brass("Use on brass to convert it into power.")
-		. += span_brass("Use on other materials to convert them into power, but less efficiently.")
-		. += span_brass("<b>Use</b> in-hand to select what to fabricate.")
-		. += span_brass("<b>Right Click</b> in-hand to fabricate bronze sheets.")
+		. += span_brass(LANG("obj.6f7179c6", null))
+		. += span_brass(LANG("obj.f9e23f9c", null))
+		. += span_brass(LANG("obj.1a2e81ff", null))
+		. += span_brass(LANG("obj.28d8ff5d", null))
 
 
 /obj/item/clockwork/replica_fabricator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

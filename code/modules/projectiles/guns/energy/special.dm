@@ -116,7 +116,7 @@
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += span_notice("[src] is [round(cell.percent())]% charged.")
+		. += span_notice(LANG("obj.26b13b03", list(src, round(cell.percent()))))
 
 /obj/item/gun/energy/plasmacutter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/charge_multiplier = 0
@@ -217,7 +217,7 @@
 
 /obj/item/gun/energy/wormhole_projector/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Left-click</b> to fire blue wormholes and <b><font color=orange>right-click</font></b> to fire orange wormholes.")
+	. += span_notice(LANG("obj.b0f738a0", null))
 
 /obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))

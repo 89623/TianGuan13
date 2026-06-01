@@ -137,7 +137,7 @@
 	. = ..()
 	var/is_holy = user.mind?.holy_role
 	if(is_holy)
-		. += span_notice("[src] can only be moved by important followers of [GLOB.deity].")
+		. += span_notice(LANG("obj.667b74f1", list(src, GLOB.deity)))
 
 /obj/item/ritual_totem/pickup(mob/taker)
 	var/initial_loc = loc

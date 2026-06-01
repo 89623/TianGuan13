@@ -435,8 +435,8 @@ Buildable meters
 
 /obj/item/pipe/examine(mob/user)
 	. = ..()
-	. += span_notice("The pipe layer is set to [piping_layer].")
-	. += span_notice("You can change the pipe layer by Right-Clicking the device.")
+	. += span_notice(LANG("obj.1dbff2af", list(piping_layer)))
+	. += span_notice(LANG("obj.4e24506d", null))
 
 /obj/item/pipe/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -450,7 +450,7 @@ Buildable meters
 
 /obj/item/pipe/trinary/flippable/examine(mob/user)
 	. = ..()
-	. += span_notice("You can flip the device by Right-Clicking it.")
+	. += span_notice(LANG("obj.6cd9d125", null))
 
 /obj/item/pipe/trinary/flippable/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

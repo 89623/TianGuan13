@@ -60,9 +60,9 @@
 /obj/item/ectoplasm/revenant/examine(mob/user)
 	. = ..()
 	if(inert)
-		. += span_revennotice("It seems inert.")
+		. += span_revennotice(LANG("obj.2e85428a", null))
 	else
-		. += span_revenwarning("It is shifting and distorted. It would be wise to destroy this.")
+		. += span_revenwarning(LANG("obj.d2af643f", null))
 
 /obj/item/ectoplasm/revenant/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!"))

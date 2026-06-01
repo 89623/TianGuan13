@@ -129,7 +129,7 @@
 		else
 			. += LANG("obj.d5ab0ca5", list(src))
 	if (dud_flags & GRENADE_USED)
-		. += span_warning("It looks like [p_theyve()] already been used.")
+		. += span_warning(LANG("obj.116b4221", list(p_theyve())))
 
 /obj/item/grenade/attack_self(mob/user)
 	if(HAS_TRAIT(src, TRAIT_NODROP))

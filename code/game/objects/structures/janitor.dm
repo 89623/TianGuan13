@@ -123,7 +123,7 @@
 /obj/structure/mop_bucket/janitorialcart/examine(mob/user)
 	. = ..()
 	if(contents.len)
-		. += span_bold(span_info("\nIt is carrying:"))
+		. += span_bold(span_info(LANG("obj.5b771b04", null)))
 		for(var/thing in sort_names(contents))
 			if(thing in held_signs)
 				continue //we'll do this after.
@@ -134,14 +134,14 @@
 				. += LANG("obj.a6311896", list(icon2html(sign_obj, user), convert_integer_to_words(length(held_signs)), sign_obj.name))
 			else
 				. += LANG("obj.6dcfac0e", list(icon2html(sign_obj, user), sign_obj))
-		. += span_notice("\n<b>Left-click</b> to [contents.len > 1 ? "search [src]" : "remove [contents[1]]"].")
+		. += span_notice(LANG("obj.0c5f484d", list(contents.len > 1 ? "search [src]" : "remove [contents[1]]")))
 		if(mybag)
-			. += span_notice("<b>Right-click</b> with a <b>[weight_class_to_text(mybag.atom_storage.max_specific_storage)] item</b> to put it in [mybag].")
+			. += span_notice(LANG("obj.cae1c298", list(weight_class_to_text(mybag.atom_storage.max_specific_storage), mybag)))
 		if(mymop)
-			. += span_notice("<b>Right-click</b> to quickly remove [mymop].")
+			. += span_notice(LANG("obj.f316d653", list(mymop)))
 	if(CART_HAS_MINIMUM_REAGENT_VOLUME)
-		. += span_notice("<b>Right-click</b> with a <b>mop</b> to wet it.")
-		. += span_info("<b>Crowbar</b> it to dump its mop bucket onto [get_turf(src)].")
+		. += span_notice(LANG("obj.ebc4965e", null))
+		. += span_info(LANG("obj.ef1146fe", list(get_turf(src))))
 
 /obj/structure/mop_bucket/janitorialcart/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()

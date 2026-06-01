@@ -55,16 +55,16 @@
 /obj/structure/signboard/examine(mob/user)
 	. = ..()
 	if(!edit_by_hand)
-		. += span_notice("You can write on the sign with a <b>pen.</b>")
+		. += span_notice(LANG("obj.4ef44e90", null))
 	if(anchored)
-		. += span_notice("It's secured to the floor, you could use a <b>wrench</b> to unsecure and move it.")
+		. += span_notice(LANG("obj.2a200668", null))
 	else
-		. += span_notice("It's unsecured, you could use a <b>wrench</b> to secure it in place.")
+		. += span_notice(LANG("obj.56abb01a", null))
 	if(sign_text)
-		. += span_boldnotice("\nIt currently displays the following:")
+		. += span_boldnotice(LANG("obj.c14a8915", null))
 		. += span_info(html_encode(sign_text))
 	else
-		. += span_notice("\nIt's blank.")
+		. += span_notice(LANG("obj.a6e0fef8", null))
 
 /obj/structure/signboard/update_icon_state()
 	. = ..()

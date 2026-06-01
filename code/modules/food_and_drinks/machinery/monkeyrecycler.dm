@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Producing <b>[cube_production]</b> cubes for every monkey inserted.")
+		. += span_notice(LANG("obj.4064aaf6", list(cube_production)))
 
 /obj/machinery/monkey_recycler/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

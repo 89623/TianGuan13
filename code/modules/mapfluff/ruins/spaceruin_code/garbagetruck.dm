@@ -86,7 +86,7 @@
 /obj/item/eyesnatcher/examine(mob/user)
 	. = ..()
 	if(used)
-		. += span_notice("It has been used up.")
+		. += span_notice(LANG("obj.bebe4393", null))
 
 /obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/target)
 	if(!eyeballies || QDELETED(eyeballies))

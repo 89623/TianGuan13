@@ -56,10 +56,10 @@
 
 /obj/machinery/mailsorter/examine(mob/user)
 	. = ..()
-	. += span_notice("There is[length(mail_list) < 100 ? " " : " no more "]space for <b>[length(mail_list) < 100 ? "[100 - length(mail_list)] " : ""]</b>envelope\s inside.")
-	. += span_notice("There [length(mail_list) >= 2 ? "are" : "is"] <b>[length(mail_list) ? length(mail_list) : "no"]</b> envelope\s inside.")
+	. += span_notice(LANG("obj.bae2cc1d", list(length(mail_list) < 100 ? " " : " no more ", length(mail_list) < 100 ? "[100 - length(mail_list)] " : "")))
+	. += span_notice(LANG("obj.bf9945c3", list(length(mail_list) >= 2 ? "are" : "is", length(mail_list) ? length(mail_list) : "no")))
 	if(panel_open)
-		. += span_notice("Alt-click to rotate the output direction.")
+		. += span_notice(LANG("obj.5da71edf", null))
 
 /obj/machinery/mailsorter/Destroy()
 	QDEL_LIST(mail_list)

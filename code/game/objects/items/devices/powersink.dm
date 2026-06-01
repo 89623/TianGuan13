@@ -40,7 +40,7 @@
 	if(mode)
 		. += LANG("obj.7aaa4180", list(src))
 	if((in_range(user, src) || isobserver(user)) && internal_heat > max_heat * 0.5)
-		. += span_danger("[src] is warping the air above it. It must be very hot.")
+		. += span_danger(LANG("obj.e7ed8747", list(src)))
 
 /obj/item/powersink/set_anchored(anchorvalue)
 	. = ..()

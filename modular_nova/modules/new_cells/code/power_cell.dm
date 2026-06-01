@@ -14,7 +14,7 @@
 
 /obj/item/stock_parts/power_store/cell/crank/examine(mob/user)
 	. = ..()
-	. += span_notice("Click to start cranking the cell.")
+	. += span_notice(LANG("obj.e00729cd", null))
 
 /obj/item/stock_parts/power_store/cell/crank/Initialize(mapload, override_maxcharge)
 	. = ..()

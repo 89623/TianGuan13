@@ -21,7 +21,7 @@
 /obj/machinery/griddle/stone/examine(mob/user)
 	. = ..()
 
-	. += span_notice("It can be taken apart with a <b>crowbar</b>.")
+	. += span_notice(LANG("obj.01fa2e71", null))
 
 /obj/machinery/griddle/stone/crowbar_act(mob/living/user, obj/item/tool)
 	user.balloon_alert_to_viewers("disassembling...")

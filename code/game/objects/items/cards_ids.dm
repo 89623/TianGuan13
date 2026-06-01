@@ -891,20 +891,20 @@
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			. += LANG("obj.736a52f8", list(linked_dept.account_holder, linked_dept.account_balance, MONEY_SYMBOL))
 	else
-		. += span_notice("Alt-Right-Click the ID to set the linked bank account.")
+		. += span_notice(LANG("obj.ff0f1597", null))
 
 	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
 		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")
 		if(HAS_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD) && (user.is_holding(src) || (IsReachableBy(user) && user.put_in_hands(src, ignore_animation = FALSE))))
 			ADD_TRAIT(src, TRAIT_NODROP, "psycho")
-			. += span_hypnophrase("Look at that subtle coloring... The tasteful thickness of it. Oh my God, it even has a watermark...")
+			. += span_hypnophrase(LANG("obj.b2bcbd9f", null))
 			var/sound/slowbeat = sound('sound/effects/health/slowbeat.ogg', repeat = TRUE)
 			user.playsound_local(get_turf(src), slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			if(isliving(user))
 				var/mob/living/living_user = user
 				living_user.adjust_jitter(10 SECONDS)
 			addtimer(CALLBACK(src, PROC_REF(drop_card), user), 10 SECONDS)
-	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
+	. += span_notice(LANG("obj.48fad01f", null))
 
 /obj/item/card/id/proc/drop_card(mob/user)
 	user.stop_sound_channel(CHANNEL_HEARTBEAT)
@@ -922,7 +922,7 @@
 	if(!user.can_read(src))
 		return
 
-	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
+	. += span_notice(LANG("obj.c1961515", list(src)))
 
 	if(registered_age)
 		. += LANG("obj.8f92c333", list(registered_age, (registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""))
@@ -931,24 +931,24 @@
 			. += LANG("obj.9a12c1cc", list(registered_account.mining_points))
 		. += LANG("obj.64d20363", list(registered_account.account_holder, registered_account.account_balance, MONEY_SYMBOL))
 		if(registered_account.account_debt)
-			. += span_warning("The account is currently indebted for [registered_account.account_debt] [MONEY_SYMBOL]. [100*DEBT_COLLECTION_COEFF]% of all earnings will go towards extinguishing it.")
+			. += span_warning(LANG("obj.125b11d6", list(registered_account.account_debt, MONEY_SYMBOL, 100*DEBT_COLLECTION_COEFF)))
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
 				. += LANG("obj.d59824b6", list(D.account_holder, D.account_balance, MONEY_SYMBOL))
-		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
-		. += span_info("You can insert [MONEY_NAME] into the linked account by pressing holochips, cash, or coins against the ID.")
+		. += span_info(LANG("obj.268a971c", null))
+		. += span_info(LANG("obj.581073e9", list(MONEY_NAME)))
 		if(registered_account.replaceable)
-			. += span_info("Alt-Right-Click the ID to change the linked bank account.")
+			. += span_info(LANG("obj.779d8cdc", null))
 		if(registered_account.civilian_bounty)
-			. += span_info("<b>There is an active civilian bounty.</b>")
+			. += span_info(LANG("obj.0e0c8cb5", null))
 			. += span_info("<i>[registered_account.bounty_text()]</i>")
-			. += span_info("Quantity: [registered_account.bounty_num()]")
-			. += span_info("Reward: [registered_account.bounty_value()]")
+			. += span_info(LANG("obj.582b85d7", list(registered_account.bounty_num())))
+			. += span_info(LANG("obj.eb59093f", list(registered_account.bounty_value())))
 		if(registered_account.account_holder == user.real_name)
-			. += span_boldnotice("If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.")
+			. += span_boldnotice(LANG("obj.8c2f4fb1", null))
 	else
-		. += span_info("There is no registered account linked to this card. Alt-Click to add one.")
+		. += span_info(LANG("obj.f37c154f", null))
 
 	return .
 
@@ -1607,14 +1607,14 @@
 
 	if(timed)
 		if(time_to_assign > 0)
-			. += span_notice("The digital timer on the card is set to [DisplayTimeText(time_to_assign * 10)]. The timer will start once the prisoner passes through the prison gate scanners.")
+			. += span_notice(LANG("obj.3f21a2cd", list(DisplayTimeText(time_to_assign * 10))))
 		else if(time_left <= 0)
-			. += span_notice("The digital timer on the card has zero seconds remaining. You leave a changed man, but a free man nonetheless.")
+			. += span_notice(LANG("obj.be0e3b12", null))
 		else
-			. += span_notice("The digital timer on the card has [DisplayTimeText(time_left * 10)] remaining. Don't do the crime if you can't do the time.")
+			. += span_notice(LANG("obj.87e1f1ab", list(DisplayTimeText(time_left * 10))))
 
-	. += span_notice("[EXAMINE_HINT("Swipe")] a security ID on the card to [timed ? "re" : ""]set the genpop sentence time.")
-	. += span_notice("Remember to [EXAMINE_HINT("swipe")] the card on a genpop locker to link it.")
+	. += span_notice(LANG("obj.b837484d", list(EXAMINE_HINT("Swipe"), timed ? "re" : "")))
+	. += span_notice(LANG("obj.774d5864", list(EXAMINE_HINT("swipe"))))
 
 /obj/item/card/id/advanced/prisoner/process(seconds_per_tick)
 	if(!timed)
@@ -1690,9 +1690,9 @@
 /obj/item/card/id/advanced/plainclothes/examine(mob/user)
 	. = ..()
 	if(trim_assignment_override)
-		. += span_smallnotice("it's currently under plainclothes identity.")
+		. += span_smallnotice(LANG("obj.9536522b", null))
 	else
-		. += span_smallnotice("flip it to switch to the plainclothes identity.")
+		. += span_smallnotice(LANG("obj.48a660a5", null))
 
 /obj/item/card/id/advanced/plainclothes/attack_self(mob/user)
 	var/popup_input = tgui_input_list(user, "Choose Action", "Two-Sided ID", list("Show", "Flip"))
@@ -2197,7 +2197,7 @@
 
 /obj/item/card/cardboard/examine(mob/user)
 	. = ..()
-	. += span_notice("You could use a pen or crayon to forge a name, assignment or trim.")
+	. += span_notice(LANG("obj.c510155f", null))
 
 /obj/item/card/cardboard/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

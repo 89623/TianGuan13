@@ -70,7 +70,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	. = ..()
-	. += span_notice("The shoes are [on ? "enabled" : "disabled"].")
+	. += span_notice(LANG("obj.e4e6e9f9", list(on ? "enabled" : "disabled")))
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	if(bananium.get_material_amount(/datum/material/bananium) >= material_per_banana)

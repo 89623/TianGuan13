@@ -528,8 +528,8 @@
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to toggle the pump cap.")
-	. += span_notice("Use a pen on it to rename it.")
+	. += span_notice(LANG("obj.fdaf9a38", null))
+	. += span_notice(LANG("obj.bf7b7e64", null))
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()

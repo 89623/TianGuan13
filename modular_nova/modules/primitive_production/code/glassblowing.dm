@@ -136,7 +136,7 @@
  */
 /obj/item/glassblowing/proc/get_examine_message(obj/item/glassblowing/molten_glass/glass)
 	if(COOLDOWN_FINISHED(glass, remaining_heat))
-		. += span_warning("The glass has cooled down and will require reheating to modify! ")
+		. += span_warning(LANG("obj.64a25cdb", null))
 	if(!length(glass.steps_remaining))
 		return
 	if(glass.steps_remaining[STEP_BLOW])

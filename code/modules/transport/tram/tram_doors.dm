@@ -212,7 +212,7 @@
  */
 /obj/machinery/door/airlock/tram/examine(mob/user)
 	. = ..()
-	. += span_notice("It has an emergency mechanism to open using [EXAMINE_HINT("just your hands")] in the event of an emergency.")
+	. += span_notice(LANG("obj.767a416d", list(EXAMINE_HINT("just your hands"))))
 
 /**
  * Tram doors can be opened with hands when unpowered

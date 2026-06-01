@@ -36,9 +36,9 @@
 	if(!scanner_taggable)
 		return
 	if(gps_tagged)
-		. += span_notice("A holotag's been attached, projecting \"<b>[assigned_tag]</b>\".")
+		. += span_notice(LANG("obj.87719a64", list(assigned_tag)))
 	else
-		. += span_notice("It looks like you could probably scan and tag it with a <b>[scanner_descriptor]</b>.")
+		. += span_notice(LANG("obj.16d820bf", list(scanner_descriptor)))
 
 /obj/structure/spawner/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
@@ -282,9 +282,9 @@
 	if(!IS_CULTIST(user) && isliving(user))
 		var/mob/living/living_user = user
 		living_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15)
-		. += span_danger("The voices of the damned echo relentlessly in your mind, continously rebounding on the walls of your self the more you focus on [src]. Your head pounds, better keep away...")
+		. += span_danger(LANG("obj.158eacb2", list(src)))
 	else
-		. += span_cult("The gateway will create one weak proteon construct every [spawn_time * 0.1] seconds, up to a total of [max_mobs], that may be controlled by the spirits of the dead.")
+		. += span_cult(LANG("obj.caf4e47b", list(spawn_time * 0.1, max_mobs)))
 
 /obj/structure/spawner/sentient/proteon_spawner/became_player_controlled(mob/living/basic/construct/proteon/proteon)
 	proteon.mind.add_antag_datum(/datum/antagonist/cult)

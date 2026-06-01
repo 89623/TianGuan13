@@ -186,7 +186,7 @@
 	. = ..()
 
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
+		. += span_notice(LANG("obj.509249ef", list(max_n_of_items)))
 
 	. += structure_examine()
 
@@ -195,14 +195,14 @@
 	. = list()
 
 	if(welded_down)
-		. += span_info("It's moorings are firmly [EXAMINE_HINT("welded")] to the floor.")
+		. += span_info(LANG("obj.a9303926", list(EXAMINE_HINT("welded"))))
 	else if (can_be_welded_down)
-		. += span_info("It's moorings are loose and can be [EXAMINE_HINT("welded")] down.")
+		. += span_info(LANG("obj.90307f13", list(EXAMINE_HINT("welded"))))
 
 	if(anchored)
-		. += span_info("It is [EXAMINE_HINT("wrenched")] down on the floor.")
+		. += span_info(LANG("obj.e41d7731", list(EXAMINE_HINT("wrenched"))))
 	else
-		. += span_info("It could be [EXAMINE_HINT("wrenched")] down.")
+		. += span_info(LANG("obj.97538eee", list(EXAMINE_HINT("wrenched"))))
 
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
@@ -568,7 +568,7 @@
 
 /obj/machinery/smartfridge/drying/rack/structure_examine()
 	. = ..()
-	. += span_info("The whole rack can be [EXAMINE_HINT("pried")] apart.")
+	. += span_info(LANG("obj.b209bbb5", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/smartfridge/drying/rack/exchange_parts()
 	return

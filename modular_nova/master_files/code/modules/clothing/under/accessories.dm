@@ -31,7 +31,7 @@
 
 /obj/item/clothing/accessory/chaps/examine(mob/user)
 	. = ..()
-	. += span_notice("It can be [EXAMINE_HINT("ctrl+shift clicked")] to be worn as a uniform.")
+	. += span_notice(LANG("obj.94112cc6", list(EXAMINE_HINT("ctrl+shift clicked"))))
 
 /obj/item/clothing/accessory/chaps/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

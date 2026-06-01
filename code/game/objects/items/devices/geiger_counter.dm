@@ -26,7 +26,7 @@
 	. = ..()
 	if(!scanning)
 		return
-	. += span_info("Alt-click it to clear stored radiation levels.")
+	. += span_info(LANG("obj.e25285fe", null))
 	switch(last_perceived_radiation_danger)
 		if(null)
 			. += span_notice("Ambient radiation level count reports that all is well.")

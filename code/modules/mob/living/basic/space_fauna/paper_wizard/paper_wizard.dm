@@ -132,7 +132,7 @@
 /mob/living/basic/paper_wizard/copy/examine(mob/user)
 	. = ..()
 	if(isobserver(user))
-		. += span_notice("It's an illusion - what is it hiding?")
+		. += span_notice(LANG("mob.06fd4002", null))
 	else
 		new /obj/effect/temp_visual/small_smoke/halfsecond(get_turf(src))
 		qdel(src) //I see through your ruse!

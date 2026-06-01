@@ -128,20 +128,20 @@
 	if(bait)
 		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b>"
 	if(length(equipped_stuff))
-		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
+		. += span_notice(LANG("obj.dd85ec64", list(english_list(equipped_stuff))))
 	if(!bait)
-		. += span_warning("It doesn't have a bait attached to it. Fishing will be more tedious!")
+		. += span_warning(LANG("obj.32754eb0", null))
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += "" //add a new line
-		. += span_notice("Thanks to your fishing skills, you can examine it again for more in-depth information.")
+		. += span_notice(LANG("obj.d23a5cd0", null))
 		return
 	if(HAS_TRAIT(src, TRAIT_ROD_MANSUS_INFUSED))
 		if(IS_HERETIC(user))
-			. += span_purple("This rod has been <b>infused</b> by a heretic, improving its ability to catch glimpses of the Mansus. And fish.")
+			. += span_purple(LANG("obj.f252ad7a", null))
 		else
-			. += span_purple("It's glowing an eerie purple...")
+			. += span_purple(LANG("obj.5370c755", null))
 	else if(IS_HERETIC(user))
-		. += span_purple("As a Heretic, you can infuse this fishing rod with your <b>Mansus Grasp</b> by activating the spell while wielding it, to enhance its fishing power.")
+		. += span_purple(LANG("obj.3205e25e", null))
 
 /obj/item/fishing_rod/examine_more(mob/user)
 	. = ..()
@@ -163,7 +163,7 @@
 	. += boxed_message(block.Join("\n"))
 
 	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
-		. += boxed_message(span_info("Right now, fish caught by this fishing rod have a [get_material_fish_chance(user)]% of being made of its same materials."))
+		. += boxed_message(span_info(LANG("obj.7ff79bb9", list(get_material_fish_chance(user)))))
 
 	block = list()
 	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
@@ -824,7 +824,7 @@
 
 /obj/item/fishing_rod/tech/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
+	. += span_notice(LANG("obj.89b193b1", null))
 
 /obj/item/fishing_rod/tech/use_slot(slot, mob/user, obj/item/new_item)
 	if(slot == ROD_SLOT_BAIT)

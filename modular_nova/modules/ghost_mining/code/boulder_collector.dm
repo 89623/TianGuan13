@@ -31,8 +31,8 @@
 	for(var/datum/weakref/num_collector in available_boulders)
 		rock_count++
 
-	. += span_notice("There are [span_boldnotice("[rock_count] boulders")] available to teleport inside.")
-	. += span_notice("The boulder collector can be linked to a <b>linked retrieval matrix</b> using a <b>multitool</b>.")
+	. += span_notice(LANG("obj.8838bfac", list(span_boldnotice("[rock_count] boulders"))))
+	. += span_notice(LANG("obj.0754b076", null))
 
 /obj/structure/ore_box/boulder_collector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	multi_tool.set_buffer(src)

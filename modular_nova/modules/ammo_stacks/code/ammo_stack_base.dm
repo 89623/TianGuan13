@@ -122,7 +122,7 @@
 /obj/item/ammo_casing/examine(mob/user)
 	. = ..()
 	if(ammo_stack_type)
-		. += span_notice("[src] can be stacked with other casings of a similar type.")
+		. += span_notice(LANG("obj.40639269", list(src)))
 	return .
 
 /obj/item/ammo_casing/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

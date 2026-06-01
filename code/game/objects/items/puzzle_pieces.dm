@@ -190,7 +190,7 @@
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()
 	if(claimed)
-		. += span_notice("This one appears to be spent already.")
+		. += span_notice(LANG("obj.999c6d66", null))
 
 /obj/item/pressure_plate/hologrid/trigger()
 	if(!claimed)

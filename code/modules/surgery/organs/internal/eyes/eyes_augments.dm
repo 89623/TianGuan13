@@ -877,8 +877,8 @@
 
 /obj/item/organ/eyes/robotic/tacvisor/examine(mob/user)
 	. = ..()
-	. += span_notice("Its settings can be changed with a [EXAMINE_HINT("multitool")].")
-	. += span_notice("User configuration switch is currently in the [user_controls ? "on" : "off"] position, and could be flipped wtih a [EXAMINE_HINT("screwdriver")].")
+	. += span_notice(LANG("obj.2760a9aa", list(EXAMINE_HINT("multitool"))))
+	. += span_notice(LANG("obj.9a382023", list(user_controls ? "on" : "off", EXAMINE_HINT("screwdriver"))))
 
 /obj/item/organ/eyes/robotic/tacvisor/proc/on_entered(mob/living/source)
 	if (source in direct_view_tracking)

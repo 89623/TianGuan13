@@ -27,9 +27,9 @@
 /obj/machinery/power/terminal/examine(mob/user)
 	. = ..()
 	if(!QDELETED(powernet))
-		. += span_notice("It's operating on the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
+		. += span_notice(LANG("obj.cb2b8542", list(LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"]))))
 	else
-		. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
+		. += span_warning(LANG("obj.90491e4d", list(LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"]))))
 
 /obj/machinery/power/terminal/should_have_node()
 	return TRUE

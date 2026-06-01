@@ -259,15 +259,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/immune = HAS_MIND_TRAIT(user, TRAIT_MADNESS_IMMUNE)
 	if(isliving(user))
 		if (!immune && (get_dist(user, src) < SM_HALLUCINATION_RANGE(internal_energy)))
-			. += span_danger("You get headaches just from looking at it.")
+			. += span_danger(LANG("obj.a690335f", null))
 		var/mob/living/living_user = user
 		if (HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
 			to_chat(user, span_warning(LANG("obj.9827230b", null)))
 			living_user.electrocute_act(shock_damage = 15, source = src, flags = SHOCK_KNOCKDOWN | SHOCK_NOGLOVES)
-			. += span_notice("It could use a little more Sodium Chloride...")
+			. += span_notice(LANG("obj.703e1c66", null))
 
 	if(holiday_lights)
-		. += span_notice("Radiating both festive cheer and actual radiation, it has a dazzling spectacle lights wrapped lovingly around the base transforming it from a potential doomsday device into a cosmic yuletide centerpiece.")
+		. += span_notice(LANG("obj.8cb9d5ae", null))
 
 	. += delamination_strategy.examine(src)
 	return .

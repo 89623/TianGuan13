@@ -70,7 +70,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
 	. += LANG("obj.62eee539", list((machine_stat & NOPOWER) ? "unpowered" : (area.lightswitch ? "on" : "off")))
-	. += span_notice("It's <b>screwed</b> and secured to the wall.")
+	. += span_notice(LANG("obj.2fc65237", null))
 
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()

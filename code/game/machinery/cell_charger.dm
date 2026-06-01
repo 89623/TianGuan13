@@ -34,7 +34,7 @@ NOVA EDIT END */
 	if(charging)
 		. += LANG("obj.d4f7effc", list(round(charging.percent(), 1)))
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Charging power: <b>[display_power(charge_rate, convert = FALSE)]</b>.")
+		. += span_notice(LANG("obj.4cd8967d", list(display_power(charge_rate, convert = FALSE))))
 
 /obj/machinery/cell_charger/wrench_act(mob/living/user, obj/item/tool)
 	if(charging)

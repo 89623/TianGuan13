@@ -38,7 +38,7 @@
 	if(!isnull(loaded_preference))
 		var/name = loaded_preference.read_preference(/datum/preference/name/real_name)
 		. += LANG("obj.27bbe64d", list(name, (include_loadout ? "enabled" : "disabled")))
-		. += span_notice("Alt-Click to change loadout loading")
+		. += span_notice(LANG("obj.49759603", null))
 
 /obj/item/disk/bitrunning/prefs/click_alt(mob/user)
 	if(isnull(loaded_preference))

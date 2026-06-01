@@ -21,7 +21,7 @@
 
 /obj/machinery/microwave/frontier_printed/examine(mob/user)
 	. = ..()
-	. += span_notice("It cannot be repacked, but can be deconstructed normally.")
+	. += span_notice(LANG("obj.7a0899a5", null))
 
 /obj/machinery/microwave/frontier_printed/unanchored
 	anchored = FALSE

@@ -29,6 +29,6 @@
 /obj/item/reagent_containers/chem_pack/examine()
 	. = ..()
 	if(reagents.flags & SEALED_CONTAINER)
-		. += span_notice("The bag is sealed shut.")
+		. += span_notice(LANG("obj.3e382fa1", null))
 	else
-		. += span_notice("Alt-click to seal it.")
+		. += span_notice(LANG("obj.2ac1d1fb", null))

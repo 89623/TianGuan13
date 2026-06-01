@@ -95,9 +95,9 @@
 /obj/structure/tank_dispenser/examine(mob/user)
 	. = ..()
 	if(plasmatanks && oxygentanks)
-		. += span_notice("It has <b>[plasmatanks]</b> plasma tank\s and <b>[oxygentanks]</b> oxygen tank\s left.")
+		. += span_notice(LANG("obj.5df0ecb4", list(plasmatanks, oxygentanks)))
 	else if(plasmatanks || oxygentanks)
-		. += span_notice("It has <b>[plasmatanks ? "[plasmatanks]</b> plasma" : "[oxygentanks]</b> oxygen"] tank\s left.")
+		. += span_notice(LANG("obj.bae54123", list(plasmatanks ? "[plasmatanks]</b> plasma" : "[oxygentanks]</b> oxygen")))
 
 /obj/structure/tank_dispenser/proc/dispense(tank_type, mob/receiver)
 	var/existing_tank = locate(tank_type) in src

@@ -94,7 +94,7 @@
 
 /obj/item/storage/toolbox/guncase/traitor/examine(mob/user)
 	. = ..()
-	. += span_notice("Activate the Evidence Disposal Explosive using Alt-Right-Click.")
+	. += span_notice(LANG("obj.77f127d8", null))
 
 /obj/item/storage/toolbox/guncase/traitor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

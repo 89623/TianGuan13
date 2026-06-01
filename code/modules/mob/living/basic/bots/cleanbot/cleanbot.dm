@@ -191,7 +191,7 @@
 		user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
 	if(isnull(weapon))
 		return
-	. += span_warning("Is that \a [weapon] taped to it...?")
+	. += span_warning(LANG("mob.c3749c11", list(weapon)))
 
 /mob/living/basic/bot/cleanbot/update_icon_state()
 	. = ..()

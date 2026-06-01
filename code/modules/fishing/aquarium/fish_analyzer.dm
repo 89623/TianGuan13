@@ -50,7 +50,7 @@
 
 /obj/item/fish_analyzer/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
+	. += span_notice(LANG("obj.89b193b1", null))
 
 /obj/item/fish_analyzer/update_icon_state()
 	. = ..()

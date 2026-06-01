@@ -48,8 +48,8 @@
 
 /obj/machinery/colony_recycler/examine(mob/user)
 	. = ..()
-	. += span_notice("Reclaiming <b>[amount_produced]%</b> of materials salvaged.")
-	. += span_notice("Can be <b>secured</b> with a <b>wrench</b> using <b>Right-Click</b>.")
+	. += span_notice(LANG("obj.546bceb7", list(amount_produced)))
+	. += span_notice(LANG("obj.b89f5bdb", null))
 
 /obj/machinery/colony_recycler/wrench_act_secondary(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)

@@ -92,7 +92,7 @@
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()
 	if (saddled)
-		. += span_info("Someone appears to have attached a saddle to this one.")
+		. += span_info(LANG("mob.5688319e", null))
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
 /mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)

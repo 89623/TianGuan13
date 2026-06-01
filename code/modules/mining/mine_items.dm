@@ -182,9 +182,9 @@
 /obj/structure/closet/crate/miningcar/examine(mob/user)
 	. = ..()
 	if(on_rails)
-		. += span_notice("You can give this a bump to send it on its way, or drag it off the rails to drag it around.")
+		. += span_notice(LANG("obj.e04e3b00", null))
 	else
-		. += span_notice("Drag this onto a mine cart rail to set it on its way.")
+		. += span_notice(LANG("obj.646107af", null))
 
 // We don't want the locked crate overlay show up.
 /obj/structure/closet/crate/miningcar/closet_update_overlays(list/new_overlays)

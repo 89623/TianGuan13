@@ -50,12 +50,12 @@
 	. = ..()
 
 	if(uses)
-		. += span_notice("You can see <b>[uses]</b> figures sound asleep down there.")
+		. += span_notice(LANG("obj.9ae8a28d", list(uses)))
 	else
-		. += span_notice("It looks pretty empty.")
+		. += span_notice(LANG("obj.8e9d619b", null))
 
 	if(isprimitivedemihuman(user) || isobserver(user))
-		. += span_notice("<i>You could examine it more thoroughly...</i>")
+		. += span_notice(LANG("obj.e0861086", null))
 
 	return .
 

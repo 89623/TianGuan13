@@ -71,12 +71,12 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 /obj/machinery/requests_console/examine(mob/user)
 	. = ..()
 	if(!open)
-		. += span_notice("It looks like you can pry open the panel with <b>a crowbar</b>.")
+		. += span_notice(LANG("obj.e3e7cdc9", null))
 	else
-		. += span_warning("The panel was pried open, you can close it with <b>a crowbar</b>.")
+		. += span_warning(LANG("obj.aa6c0487", null))
 
 	if(hack_state)
-		. += span_warning("The console seems to have been tampered with!")
+		. += span_warning(LANG("obj.941fb5ee", null))
 
 /obj/machinery/requests_console/update_overlays()
 	. = ..()

@@ -95,7 +95,7 @@
 	. += span_notice(msg)
 
 	if (LAZYLEN(buckled_mobs))
-		. += span_notice("Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine.")
+		. += span_notice(LANG("obj.507c5d19", null))
 
 /obj/structure/guillotine/attack_hand(mob/living/user, list/modifiers)
 	add_fingerprint(user)

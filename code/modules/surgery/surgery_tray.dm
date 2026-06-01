@@ -60,7 +60,7 @@
 	. += is_portable \
 		? span_notice("You can click and drag it to yourself to pick it up, then use it in your hand to make it a cart!") \
 		: span_notice("You can click and drag it to yourself to turn it into a tray!")
-	. += span_notice("The top is <b>screwed</b> on.")
+	. += span_notice(LANG("obj.eb0dfa45", null))
 
 /obj/item/surgery_tray/update_overlays()
 	. = ..()

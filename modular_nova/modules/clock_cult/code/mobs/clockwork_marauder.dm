@@ -62,10 +62,10 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 /mob/living/basic/clockwork_marauder/examine(mob/user)
 	. = ..()
 	if(IS_CLOCK(user))
-		. += span_brass("[src]'s shield is at [shield_health] / [MARAUDER_SHIELD_MAX] charges.")
+		. += span_brass(LANG("mob.2915b900", list(src, shield_health, MARAUDER_SHIELD_MAX)))
 
 		if(shield_health < MARAUDER_SHIELD_MAX)
-			. += span_brass("It can be repaired with a <b>welding tool</b>.")
+			. += span_brass(LANG("mob.fedb48df", null))
 
 /mob/living/basic/clockwork_marauder/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(shield_health)

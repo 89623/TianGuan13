@@ -65,8 +65,8 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /obj/item/vorpalscythe/examine(mob/user)
 	. = ..()
-	. += span_notice("You can perform a death knell using [src] on a human with Right-Click. If they were sentient (whether currently or at some point), [src] is empowered on a successful death knell.")
-	. += span_notice("[src] seems to have quite a bit of reach. You might be able to hit things from further away.")
+	. += span_notice(LANG("obj.2b6ae28f", list(src, src)))
+	. += span_notice(LANG("obj.ab1bfea7", list(src)))
 
 	var/current_empowerment = empowerment
 	switch(current_empowerment)
@@ -75,7 +75,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 		if(SCYTHE_SATED)
 			. += span_notice("[src] is sated, but still demands more. Perform the death knell!")
 		else
-			. += span_notice("[src] is still. Anticipating the strike. Best not anger it by denying it the opportuntiy to taste blood.")
+			. += span_notice(LANG("obj.8a7d6391", list(src)))
 
 /obj/item/vorpalscythe/Initialize(mapload)
 	. = ..()

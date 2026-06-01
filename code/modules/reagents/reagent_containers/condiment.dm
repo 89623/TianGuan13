@@ -112,8 +112,8 @@
 	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cheesewheel]
 	var/milk_required = recipe.required_reagents[/datum/reagent/consumable/milk]
 	var/enzyme_required = recipe.required_catalysts[/datum/reagent/consumable/enzyme]
-	. += span_notice("[milk_required] milk, [enzyme_required] enzyme and you got cheese.")
-	. += span_warning("Remember, the enzyme isn't used up, so return it to the bottle, dingus!")
+	. += span_notice(LANG("obj.65ae3bd9", list(milk_required, enzyme_required)))
+	. += span_warning(LANG("obj.d027859f", null))
 
 /obj/item/reagent_containers/condiment/sugar
 	name = "sugar sack"
@@ -134,7 +134,7 @@
 	var/eggwhite_required = standard_recipe.required_reagents[/datum/reagent/consumable/eggwhite]
 	var/sugar_required = standard_recipe.required_reagents[/datum/reagent/consumable/sugar]
 	var/soymilk_required = alt_recipe.required_reagents[/datum/reagent/consumable/soymilk]
-	. += span_notice("[flour_required] flour, [sugar_required] sugar, and either [eggyolk_required] egg yolk + [eggwhite_required] egg white or [soymilk_required] soy milk yields a cake dough. You can make pie dough from it.")
+	. += span_notice(LANG("obj.a2a5bd33", list(flour_required, sugar_required, eggyolk_required, eggwhite_required, soymilk_required)))
 
 /obj/item/reagent_containers/condiment/saltshaker //Separate from above since it's a small shaker rather then
 	name = "salt shaker" // a large one.
@@ -198,8 +198,8 @@
 	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cheesewheel]
 	var/milk_required = recipe.required_reagents[/datum/reagent/consumable/milk]
 	var/enzyme_required = recipe.required_catalysts[/datum/reagent/consumable/enzyme]
-	. += span_notice("[milk_required] milk, [enzyme_required] enzyme and you got cheese.")
-	. += span_warning("Remember, the enzyme isn't used up, so return it to the bottle, dingus!")
+	. += span_notice(LANG("obj.65ae3bd9", list(milk_required, enzyme_required)))
+	. += span_warning(LANG("obj.d027859f", null))
 
 /obj/item/reagent_containers/condiment/flour
 	name = "flour sack"
@@ -221,8 +221,8 @@
 	var/cakebatter_eggyolk_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/eggyolk]
 	var/cakebatter_sugar_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/sugar]
 	. += LANG("obj.ffa2fde2", null)
-	. += span_notice("[dough_flour_required] flour, [dough_water_required] water makes normal dough. You can make flat dough from it.")
-	. += span_notice("[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk (or soy milk), [cakebatter_sugar_required] sugar makes cake dough. You can make pie dough from it.")
+	. += span_notice(LANG("obj.9c76c008", list(dough_flour_required, dough_water_required)))
+	. += span_notice(LANG("obj.7a58d541", list(cakebatter_flour_required, cakebatter_eggyolk_required, cakebatter_sugar_required)))
 
 /obj/item/reagent_containers/condiment/soymilk
 	name = "soy milk"

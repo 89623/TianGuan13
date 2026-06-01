@@ -13,29 +13,29 @@
 	. += get_status_effect_examinations()
 	if (get_brute_loss())
 		if (get_brute_loss() < maxHealth*0.5)
-			. += span_warning("[p_They()] look[p_s()] slightly dented.")
+			. += span_warning(LANG("mob.c487477b", list(p_They(), p_s())))
 		else
-			. += span_boldwarning("[p_They()] look[p_s()] severely dented!")
+			. += span_boldwarning(LANG("mob.a3853f19", list(p_They(), p_s())))
 	if (get_fire_loss() || get_tox_loss())
 		var/overall_fireloss = get_fire_loss() + get_tox_loss()
 		if (overall_fireloss < maxHealth * 0.5)
-			. += span_warning("[p_They()] look[p_s()] slightly charred.")
+			. += span_warning(LANG("mob.822ee814", list(p_They(), p_s())))
 		else
-			. += span_boldwarning("[p_They()] look[p_s()] severely burnt and heat-warped!")
+			. += span_boldwarning(LANG("mob.189102d3", list(p_They(), p_s())))
 	if (health < -maxHealth*0.5)
-		. += span_warning("[p_They()] look[p_s()] barely operational.")
+		. += span_warning(LANG("mob.a6985b41", list(p_They(), p_s())))
 	if (fire_stacks < 0)
-		. += span_warning("[p_Theyre()] covered in water.")
+		. += span_warning(LANG("mob.6d7c684c", list(p_Theyre())))
 	else if (fire_stacks > 0)
-		. += span_warning("[p_Theyre()] coated in something flammable.")
+		. += span_warning(LANG("mob.6f469a95", list(p_Theyre())))
 
 	if(opened)
-		. += span_warning("[p_Their()] cover is open and the power cell is [cell ? "installed" : "missing"].")
+		. += span_warning(LANG("mob.2d2c85ca", list(p_Their(), cell ? "installed" : "missing")))
 	else
 		. += LANG("mob.9883c04b", list(p_Their(), locked ? "" : ", and looks unlocked"))
 
 	if(cell && cell.charge <= 0)
-		. += span_warning("[p_Their()] battery indicator is blinking red!")
+		. += span_warning(LANG("mob.1269489e", list(p_Their())))
 
 	switch(stat)
 		if(CONSCIOUS)

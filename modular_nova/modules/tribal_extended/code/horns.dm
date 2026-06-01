@@ -31,7 +31,7 @@
 
 /obj/item/blowing_horn/examine(mob/user)
 	. = ..()
-	. += span_notice("Switch tune with [EXAMINE_HINT("Shift+Ctrl+Click")].")
+	. += span_notice(LANG("obj.6593b9da", list(EXAMINE_HINT("Shift+Ctrl+Click"))))
 
 /// Switch horn tune on ctrl+shift click
 /obj/item/blowing_horn/click_ctrl_shift(mob/user)
@@ -85,8 +85,8 @@
 	. = ..()
 	if (!in_range(user, src))
 		return
-	. += span_notice("Currently selected tune: <b>[current_tune]</b>")
-	. += span_notice("Switch tune with [EXAMINE_HINT("Shift+Ctrl+Click")].")
+	. += span_notice(LANG("obj.e20e7d7f", list(current_tune)))
+	. += span_notice(LANG("obj.6593b9da", list(EXAMINE_HINT("Shift+Ctrl+Click"))))
 
 /// War horn structure variant (stationary object)
 /obj/structure/war_horn
@@ -118,8 +118,8 @@
 	. = ..()
 	if (!in_range(user, src))
 		return
-	. += span_notice("Switch tune with [EXAMINE_HINT("Alt+Click")].")
-	. += span_notice("Currently selected tune: <b>[current_tune]</b>")
+	. += span_notice(LANG("obj.6593b9da", list(EXAMINE_HINT("Alt+Click"))))
+	. += span_notice(LANG("obj.e20e7d7f", list(current_tune)))
 
 /// Switch war horn tune on alt-click
 /obj/structure/war_horn/click_alt(mob/living/user)

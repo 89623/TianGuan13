@@ -148,9 +148,9 @@
 /obj/machinery/rnd/experimentor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads:<br>")
-		. += span_notice("Malfunction probability reduced by [span_bold("[malfunction_probability_coeff]")].")
-		. += span_notice("Cooldown interval between experiments at [span_bold("[cooldown]")] seconds.")
+		. += span_notice(LANG("obj.e81f9784", null))
+		. += span_notice(LANG("obj.b4891401", list(span_bold("[malfunction_probability_coeff]"))))
+		. += span_notice(LANG("obj.2f472c96", list(span_bold("[cooldown]"))))
 
 /obj/machinery/rnd/experimentor/on_deconstruction(disassembled)
 	. = ..()

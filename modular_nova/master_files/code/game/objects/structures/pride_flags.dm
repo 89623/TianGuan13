@@ -82,7 +82,7 @@
 
 /obj/item/sign/flag/pride/examine(mob/user)
 	. = ..()
-	. += span_notice("You can hang it up on a [EXAMINE_HINT("wall")].")
+	. += span_notice(LANG("obj.f35e9229", list(EXAMINE_HINT("wall"))))
 
 /obj/item/sign/flag/pride/gay
 	name = "folded gay pride flag"

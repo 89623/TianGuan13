@@ -84,12 +84,12 @@
 /obj/machinery/bluespace_miner/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += span_warning("The safeties are turned off!")
+		. += span_warning(LANG("obj.14c445f6", null))
 
 	// We don't need to run any more checks if this is functioning. Genuinely the old code is terrible
 	if(mining_stat)
 		if(mining_stat & BLUESPACE_MINER_TOO_CLOSE)
-			. += span_warning("[src] is in a suboptimal environment: TOO CLOSE TO ANOTHER BLUESPACE MINER")
+			. += span_warning(LANG("obj.8be8b3cd", list(src)))
 			return . // This needs relocation to fix so we won't bother with the rest
 
 		if(mining_stat & BLUESPACE_MINER_TOO_HOT)

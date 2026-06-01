@@ -47,7 +47,7 @@
 
 /obj/item/multitool/examine(mob/user)
 	. = ..()
-	. += span_notice("Its buffer [buffer ? "contains [buffer]." : "is empty."]")
+	. += span_notice(LANG("obj.d67508d8", list(buffer ? "contains [buffer]." : "is empty.")))
 
 /obj/item/multitool/attack_self(mob/user, list/modifiers)
 	. = ..()
@@ -179,7 +179,7 @@
 	. = ..()
 	if(!hud_on)
 		return
-	. += span_notice("You can right-click to scan for nearby unseen spots. They will be shown for exactly 8 seconds due to battery limitations.")
+	. += span_notice(LANG("obj.d2140943", null))
 	switch(detect_state)
 		if(PROXIMITY_NONE)
 			. += span_green("No AI should be currently looking at you. Keep on your clandestine activities.")

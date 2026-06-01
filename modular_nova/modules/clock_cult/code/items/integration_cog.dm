@@ -88,10 +88,10 @@
 	if(isliving(user))
 		var/mob/living/living_user = user
 		if(integration_cog || (living_user.has_status_effect(/datum/status_effect/hallucination) && prob(HALLUCINATION_COG_CHANCE)))
-			. += span_brass("A small cogwheel is inside of it.")
+			. += span_brass(LANG("obj.3a779be7", null))
 
 		if(integration_cog && IS_CLOCK(user))
-			. += span_brass("The integration cog is [integration_cog.set_up ? "fully initialized" : "still initializing"].")
+			. += span_brass(LANG("obj.5869642c", list(integration_cog.set_up ? "fully initialized" : "still initializing")))
 
 
 /obj/machinery/power/apc/crowbar_act(mob/user, obj/item/crowbar)

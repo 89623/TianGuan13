@@ -47,7 +47,7 @@
 
 /obj/machinery/doppler_array/examine(mob/user)
 	. = ..()
-	. += span_notice("It is currently facing [dir2text(dir)]")
+	. += span_notice(LANG("obj.dc4d5c51", list(dir2text(dir))))
 
 /obj/machinery/doppler_array/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/disk/computer))

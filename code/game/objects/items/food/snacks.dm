@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ////////////////////////////////////////////SNACKS FROM VENDING MACHINES////////////////////////////////////////////
 //in other words: junk food
 //don't even bother looking for recipes for these
@@ -50,7 +51,7 @@
 /obj/item/food/candy/bronx/examine(mob/user)
 	. = ..()
 	if(!revelation && !isobserver(user))
-		. += span_notice("Geeze, you need to get to get your eyes checked. You should look again...")
+		. += span_notice(LANG("obj.f7594144", null))
 
 		name = "\improper South Bronx Parasite bar"
 		desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."

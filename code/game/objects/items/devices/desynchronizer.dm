@@ -36,9 +36,9 @@
 /obj/item/desynchronizer/examine(mob/user)
 	. = ..()
 	if(world.time < next_use)
-		. += span_warning("Time left to recharge: [DisplayTimeText(next_use - world.time)]")
-	. += span_notice("Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].")
-	. += span_notice("Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.")
+		. += span_warning(LANG("obj.d52e4c2c", list(DisplayTimeText(next_use - world.time))))
+	. += span_notice(LANG("obj.7c8e2011", list(DisplayTimeText(duration))))
+	. += span_notice(LANG("obj.5397c69a", null))
 
 /obj/item/desynchronizer/click_alt(mob/living/user)
 	var/new_duration = tgui_input_number(user, "Set the duration", "Desynchronizer", duration / 10, max_duration, 5)

@@ -19,7 +19,7 @@
 
 /obj/machinery/rodstopper/examine(mob/user)
 	. = ..()
-	. += span_warning("It will create a localized reality-collapse when stopping a rod, keep your distance!")
+	. += span_warning(LANG("obj.c3cd73d1", null))
 
 /obj/machinery/rodstopper/Initialize(mapload)
 	. = ..()

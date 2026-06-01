@@ -128,9 +128,9 @@
 /obj/vehicle/ridden/wheelchair/examine(mob/user)
 	. =..()
 	if(bell_attached)
-		. += span_notice("There is \a [bell_attached] attached to the handle.")
+		. += span_notice(LANG("obj.26a67896", list(bell_attached)))
 	if(bomb_attached)
-		. += span_warning("There are a pair of gas tanks attached to the frame.")
+		. += span_warning(LANG("obj.3945bad2", null))
 
 /obj/vehicle/ridden/wheelchair/proc/remove_bell()
 	if (!bell_attached)

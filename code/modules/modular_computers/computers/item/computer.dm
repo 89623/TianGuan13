@@ -448,7 +448,7 @@
 
 	if(long_ranged)
 		. += LANG("obj.a03a234c", null)
-	. += span_notice("It has [max_capacity] GQ of storage capacity.")
+	. += span_notice(LANG("obj.83c7128e", list(max_capacity)))
 
 	if(stored_id)
 		if(Adjacent(user))
@@ -463,7 +463,7 @@
 			. += LANG("obj.58122db3", null)
 
 	if(internal_cell)
-		. += span_info("Right-click it with a screwdriver to eject the [internal_cell].")
+		. += span_info(LANG("obj.8bf738e2", list(internal_cell)))
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
@@ -474,7 +474,7 @@
 			. += app_examine.on_examine(src, user)
 
 	if(Adjacent(user))
-		. += span_notice("Paper level: [stored_paper] / [max_paper].")
+		. += span_notice(LANG("obj.ab774df7", list(stored_paper, max_paper)))
 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()

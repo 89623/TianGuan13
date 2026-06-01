@@ -348,7 +348,7 @@
 
 /obj/item/syndicate_teleporter/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] has <b>[charges]</b> out of [max_charges] charges left.")
+	. += span_notice(LANG("obj.13be2784", list(src, charges, max_charges)))
 
 /obj/item/syndicate_teleporter/attack_self(mob/user)
 	. = ..()

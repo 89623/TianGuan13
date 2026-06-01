@@ -142,15 +142,15 @@
 
 /obj/item/universal_scanner/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [paper_count]/[max_paper_count] available barcodes. Refill with paper.")
+	. += span_notice(LANG("obj.139ddceb", list(paper_count, max_paper_count)))
 
 	if(scanning_mode == SCAN_SALES_TAG)
-		. += span_notice("Profit split on sale is currently set to [round(cut_multiplier*100)]%. <b>Alt-click</b> to change.")
+		. += span_notice(LANG("obj.7e0bbac3", list(round(cut_multiplier*100))))
 		if(payments_acc)
-			. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
+			. += span_notice(LANG("obj.5f19d3b2", null))
 
 	if(scanning_mode == SCAN_PRICE_TAG)
-		. += span_notice("The current custom price is set to [new_custom_price] [MONEY_SYMBOL]. <b>Right-click</b> to change.")
+		. += span_notice(LANG("obj.bfdb21d8", list(new_custom_price, MONEY_SYMBOL)))
 
 /obj/item/universal_scanner/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	switch(scanning_mode)

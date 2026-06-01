@@ -134,9 +134,9 @@
 /obj/item/food/drug/opium/examine()
 	. = ..()
 	if(reagents.get_reagent_amount(/datum/reagent/medicine/morphine) >= 10)
-		. += span_notice("The opium is large and rich in fragrance; it needs no further refinement.")
+		. += span_notice(LANG("obj.12f0d77c", null))
 	else
-		. += span_notice("The opium is still small, and can be pressed together with more to increase its potency and richness.")
+		. += span_notice(LANG("obj.87c91503", null))
 
 /obj/item/food/drug/opium/Initialize(mapload) // For narcotics and black market purchases, pure and proper.
 	. = ..()

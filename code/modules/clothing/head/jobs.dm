@@ -216,7 +216,7 @@
 
 /obj/item/clothing/head/fedora/det_hat/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to take a candy corn.")
+	. += span_notice(LANG("obj.8b135d8e", null))
 
 
 /obj/item/clothing/head/fedora/det_hat/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -301,8 +301,8 @@
 
 /obj/item/clothing/head/fedora/inspector_hat/examine(mob/user)
 	. = ..()
-	. += span_notice("You can put items inside, and get them out by saying a phrase, or using it in-hand!")
-	. += span_notice("The prefix is <b>[prefix]</b>, and you can change it with alt-click!\n")
+	. += span_notice(LANG("obj.b9efedb2", null))
+	. += span_notice(LANG("obj.7f15ac65", list(prefix)))
 	for(var/found_regex in phrases_by_regex)
 		var/found_phrase = phrases_by_regex[found_regex]
 		var/obj/item/found_item = items_by_regex[found_regex]
@@ -675,7 +675,7 @@
 
 /obj/item/clothing/head/utility/surgerycap/examine(mob/user)
 	. = ..()
-	. += span_notice("Use in hand to [flags_inv & HIDEHAIR ? "loosen" : "tighten"] the strings.")
+	. += span_notice(LANG("obj.f19616b4", list(flags_inv & HIDEHAIR ? "loosen" : "tighten")))
 
 /obj/item/clothing/head/utility/surgerycap/purple
 	name = "burgundy surgery cap"
@@ -713,7 +713,7 @@
 
 /obj/item/clothing/head/utility/head_mirror/examine(mob/user)
 	. = ..()
-	. += span_notice("In a properly lit room, you can use this to examine people's eyes, ears, and mouth <i>closer</i>.")
+	. += span_notice(LANG("obj.247ef9a0", null))
 
 /obj/item/clothing/head/utility/head_mirror/equipped(mob/living/user, slot)
 	. = ..()

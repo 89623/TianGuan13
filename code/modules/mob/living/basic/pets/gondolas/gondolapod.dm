@@ -48,9 +48,9 @@
 /mob/living/basic/pet/gondola/gondolapod/examine(mob/user)
 	. = ..()
 	if (contents.len)
-		. += span_notice("It looks like it hasn't made its delivery yet.")
+		. += span_notice(LANG("mob.8a9b49a0", null))
 	else
-		. += span_notice("It looks like it has already made its delivery.")
+		. += span_notice(LANG("mob.4acdee06", null))
 
 /mob/living/basic/pet/gondola/gondolapod/set_opened()
 	opened = TRUE

@@ -181,12 +181,10 @@
 /obj/machinery/chem_dispenser/examine(mob/user)
 	. = ..()
 	if(panel_open)
-		. += span_notice("[src]'s maintenance hatch is open!")
+		. += span_notice(LANG("obj.83607a9b", list(src)))
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads:\n\
-		Recharge rate: <b>[display_power(recharge_amount, convert = FALSE)]</b>.\n\
-		Energy cost: <b>[siunit(power_cost, "J/u", 3)]</b>.")
-	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
+		. += span_notice(LANG("obj.e1d14930", list(display_power(recharge_amount, convert = FALSE), siunit(power_cost, "J/u", 3))))
+	. += span_notice(LANG("obj.52489082", null))
 
 /obj/machinery/chem_dispenser/on_set_is_operational(old_value)
 	if(old_value) //Turned off

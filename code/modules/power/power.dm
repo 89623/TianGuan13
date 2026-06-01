@@ -51,10 +51,10 @@
 	. = ..()
 	if(can_change_cable_layer)
 		if(!QDELETED(powernet))
-			. += span_notice("It's operating on the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
+			. += span_notice(LANG("obj.cb2b8542", list(LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"]))))
 		else
-			. += span_warning("It's disconnected from the [LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"])].")
-		. += span_notice("Its power line can be changed with a [EXAMINE_HINT("multitool")].")
+			. += span_warning(LANG("obj.90491e4d", list(LOWER_TEXT(GLOB.cable_layer_to_name["[cable_layer]"]))))
+		. += span_notice(LANG("obj.6f005fa2", list(EXAMINE_HINT("multitool"))))
 
 /obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
 	if(can_change_cable_layer)

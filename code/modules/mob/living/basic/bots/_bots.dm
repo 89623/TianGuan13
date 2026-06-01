@@ -352,18 +352,18 @@ GLOBAL_LIST_INIT(command_strings, list(
 	else
 		. += LANG("mob.20cc3650", list(src))
 
-	. += span_notice("[p_Their()] maintenance panel is [bot_access_flags & BOT_COVER_MAINTS_OPEN ? "open" : "closed"].")
-	. += span_info("You can use a <b>screwdriver</b> to [bot_access_flags & BOT_COVER_MAINTS_OPEN ? "close" : "open"] [p_them()].")
+	. += span_notice(LANG("mob.5ce1dd0b", list(p_Their(), bot_access_flags & BOT_COVER_MAINTS_OPEN ? "open" : "closed")))
+	. += span_info(LANG("mob.a8d8f74e", list(bot_access_flags & BOT_COVER_MAINTS_OPEN ? "close" : "open", p_them())))
 
 	if(bot_access_flags & BOT_COVER_MAINTS_OPEN)
-		. += span_notice("[p_Their()] control panel is [bot_access_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"].")
+		. += span_notice(LANG("mob.47b7bd2c", list(p_Their(), bot_access_flags & BOT_COVER_LOCKED ? "locked" : "unlocked")))
 		if(!(bot_access_flags & BOT_COVER_EMAGGED) && (issilicon(user) || user.Adjacent(src)))
-			. += span_info("Alt-click [issilicon(user) ? "" : "or use your ID on "][p_them()] to [bot_access_flags & BOT_COVER_LOCKED ? "un" : ""]lock [p_their()] control panel.")
+			. += span_info(LANG("mob.1cbf8c98", list(issilicon(user) ? "" : "or use your ID on ", p_them(), bot_access_flags & BOT_COVER_LOCKED ? "un" : "", p_their())))
 	if(isnull(paicard))
 		return
-	. += span_notice("[p_They()] [p_have()] a pAI device installed.")
+	. += span_notice(LANG("mob.704e3336", list(p_They(), p_have())))
 	if(!(bot_access_flags & BOT_COVER_MAINTS_OPEN))
-		. += span_info("You can use a <b>hemostat</b> to remove it.")
+		. += span_info(LANG("mob.8b088ba9", null))
 
 /mob/living/basic/bot/updatehealth()
 	. = ..()

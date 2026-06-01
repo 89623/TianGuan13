@@ -40,9 +40,9 @@
 	if(!IS_WIZARD(user))
 		return
 	if(isnull(contained_frog))
-		. += span_notice("There are currently no frogs linked to this statue!")
+		. += span_notice(LANG("obj.184af30c", null))
 	else
-		. += span_notice("Using it will [(contained_frog in src) ? "release" : "recall"] the beast!")
+		. += span_notice(LANG("obj.5263b709", list((contained_frog in src) ? "release" : "recall")))
 
 ///resummon the frog into its home
 /obj/item/frog_statue/proc/recall_frog(mob/user)

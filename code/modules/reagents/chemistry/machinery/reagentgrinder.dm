@@ -82,7 +82,7 @@
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents and display!")
+		. += span_warning(LANG("obj.7f267c32", list(src)))
 		return
 
 	var/total_weight = 0
@@ -97,30 +97,30 @@
 		to_process["[target.name]"] += amount
 		total_weight += target.w_class
 	if(to_process.len)
-		. += span_notice("Currently holding:")
+		. += span_notice(LANG("obj.97fdf783", null))
 		for(var/target_name in to_process)
 			. += span_notice("[to_process[target_name]] [target_name]")
-		. += span_notice("Filled to <b>[round((total_weight / maximum_weight) * 100)]%</b> capacity.")
+		. += span_notice(LANG("obj.d9cecb0b", list(round((total_weight / maximum_weight) * 100))))
 
 	if(!QDELETED(beaker))
-		. += span_notice("A beaker of <b>[beaker.reagents.maximum_volume]u</b> capacity is present. Contains:")
+		. += span_notice(LANG("obj.18a7d35a", list(beaker.reagents.maximum_volume)))
 		if(beaker.reagents.total_volume)
 			for(var/datum/reagent/reg as anything in beaker.reagents.reagent_list)
 				. += span_notice("[round(reg.volume, CHEMICAL_VOLUME_ROUNDING)]u of [reg.name]")
 		else
-			. += span_notice("Nothing.")
-		. += span_notice("[EXAMINE_HINT("Right click")] with empty hand to remove beaker.")
+			. += span_notice(LANG("obj.aa75d156", null))
+		. += span_notice(LANG("obj.fb87c264", list(EXAMINE_HINT("Right click"))))
 	else
-		. += span_warning("It's missing a beaker.")
+		. += span_warning(LANG("obj.bdc656a8", null))
 
-	. += span_notice("You can drag a storage item to dump its contents in the grinder.")
+	. += span_notice(LANG("obj.8e9dfe40", null))
 	if(anchored)
-		. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
+		. += span_notice(LANG("obj.ea58af41", list(EXAMINE_HINT("wrenched"))))
 	else
-		. += span_warning("Needs to be [EXAMINE_HINT("wrenched")] in place to work.")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+		. += span_warning(LANG("obj.603b2ade", list(EXAMINE_HINT("wrenched"))))
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/reagentgrinder/update_overlays()
 	. = ..()

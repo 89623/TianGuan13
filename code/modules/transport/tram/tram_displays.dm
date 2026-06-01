@@ -79,7 +79,7 @@
 	. = ..()
 
 	if(panel_open)
-		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
+		. += span_notice(LANG("obj.ce4b88dc", list(EXAMINE_HINT("bolts."))))
 
 /obj/machinery/transport/destination_sign/on_deconstruction(disassembled)
 	var/atom/drop = drop_location()

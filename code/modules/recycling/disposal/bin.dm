@@ -498,9 +498,9 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 /obj/machinery/disposal/bin/examine(mob/user)
 	. = ..()
 	if(isnull(mounted_tagger))
-		. += span_notice("The destination tagger mount is empty.")
+		. += span_notice(LANG("obj.95edaf4c", null))
 	else
-		. += span_notice("\The [mounted_tagger] is hanging on the side. Right Click to remove.")
+		. += span_notice(LANG("obj.2183f846", list(mounted_tagger)))
 
 /obj/machinery/disposal/bin/Destroy()
 	if(!isnull(mounted_tagger))

@@ -177,9 +177,9 @@
 /obj/item/newspaper/examine(mob/user)
 	. = ..()
 	if (punctured)
-		. += span_notice("It has a pair of small peek holes punctured near the top.")
+		. += span_notice(LANG("obj.36ddaf0f", null))
 	else
-		. += span_notice("You can cut out some peek holes using something [span_bolditalic("sharp")] or [span_bolditalic("pointy")]...")
+		. += span_notice(LANG("obj.2a6399e3", list(span_bolditalic("sharp"), span_bolditalic("pointy"))))
 
 /// Called when someone tries to figure out what our identity is, but they can't see it because of the newspaper
 /obj/item/newspaper/proc/holder_checked_name(mob/living/carbon/human/source, list/identity)

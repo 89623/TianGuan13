@@ -394,7 +394,7 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/examine(mob/user)
 	. = ..()
-	. += span_notice("You can remove the hair with any sharp object.")
+	. += span_notice(LANG("obj.6fdc6d9a", null))
 
 //Step two - washing..... it's actually in washing machine code.
 
@@ -410,7 +410,7 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 
 /obj/item/stack/sheet/hairlesshide/examine(mob/user)
 	. = ..()
-	. += span_notice("You can clean it up by washing in the water.")
+	. += span_notice(LANG("obj.3a0baa69", null))
 
 //Step three - drying
 /obj/item/stack/sheet/wethide
@@ -429,7 +429,7 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 
 /obj/item/stack/sheet/wethide/examine(mob/user)
 	. = ..()
-	. += span_notice("You can dry it up to make leather.")
+	. += span_notice(LANG("obj.1a2d1423", null))
 
 /obj/item/stack/sheet/wethide/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()

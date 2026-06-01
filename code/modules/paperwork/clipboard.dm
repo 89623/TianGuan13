@@ -63,9 +63,9 @@
 /obj/item/clipboard/examine()
 	. = ..()
 	if(!integrated_pen && pen)
-		. += span_notice("Right-click to remove [pen].")
+		. += span_notice(LANG("obj.cf363a97", list(pen)))
 	else if(top_paper)
-		. += span_notice("Right-click to remove [top_paper].")
+		. += span_notice(LANG("obj.cf363a97", list(top_paper)))
 
 /// Take out the topmost paper
 /obj/item/clipboard/proc/remove_paper(obj/item/paper/paper, mob/user)

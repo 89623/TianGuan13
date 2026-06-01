@@ -508,9 +508,9 @@
 	if(!(in_range(user, src)))
 		return
 	if(active)
-		. += span_notice("There's a little switch on the bottom. It's flipped up.")
+		. += span_notice(LANG("obj.2222c3c7", null))
 		return
-	. += span_notice("There's a little switch on the bottom. It's flipped down.")
+	. += span_notice(LANG("obj.d4658a89", null))
 
 /obj/item/orion_ship/attack_self(mob/user)
 	if(active)

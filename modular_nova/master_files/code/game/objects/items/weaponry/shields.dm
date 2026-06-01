@@ -12,7 +12,7 @@
 
 /obj/item/shield/energy/returning/examine(mob/user)
 	. = ..()
-	. += span_info("It has a propeller that allows it to return to its user after being thrown while it's active, as long as it's not grabbed in the air.")
+	. += span_info(LANG("obj.dfa0935c", null))
 
 /obj/item/shield/energy/returning/blueshield
 	name = "blueshield energy shield"

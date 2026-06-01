@@ -46,7 +46,7 @@
 /obj/item/folder/examine()
 	. = ..()
 	if(length(contents) && !contents_hidden)
-		. += span_notice("<b>Right-click</b> to remove [contents[1]].")
+		. += span_notice(LANG("obj.f1120689", list(contents[1])))
 
 /obj/item/folder/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(is_type_in_typecache(target, folder_insertables))

@@ -125,10 +125,10 @@
 
 /obj/machinery/ore_silo/examine(mob/user)
 	. = ..()
-	. += span_notice("It can be linked to techfabs, circuit printers and protolathes with a multitool.")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.c246f12a", null))
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.3a115eca", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/ore_silo/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE

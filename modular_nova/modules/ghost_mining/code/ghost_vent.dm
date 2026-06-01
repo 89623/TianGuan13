@@ -50,9 +50,9 @@
 			if(FALSE)
 				. += span_notice("The vent holds a nodule breakable into [boulder_bounty] ore chunks.")
 	if(manual_reset)
-		. += span_notice("The ore gouger needs [reset_timer] more cycles to get new minerals")
+		. += span_notice(LANG("obj.07f04671", list(reset_timer)))
 	if(clear_tally >= 1)
-		. += span_notice("This vent has hauled up [clear_tally] different nodule types.")
+		. += span_notice(LANG("obj.9bead09b", list(clear_tally)))
 
 /obj/structure/ore_vent/ghost_mining/produce_boulder(apply_cooldown)
 	RETURN_TYPE(/obj/item/boulder)
@@ -435,7 +435,7 @@
 			boss_string = "clear, a bonfire of bones burning beneath"
 		if(/mob/living/simple_animal/hostile/asteroid/elite/pandora) //Elite vent end
 			boss_string = "rippling calmly in odd geometric patterns"
-	. += span_notice("The surface of the mineral pool is [boss_string].")
+	. += span_notice(LANG("obj.5a66df44", list(boss_string)))
 
 /obj/structure/ore_vent/ghost_mining/boss/reset_vent()
 	. = ..()

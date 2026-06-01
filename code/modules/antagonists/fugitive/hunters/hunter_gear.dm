@@ -12,7 +12,7 @@
 
 /obj/machinery/fugitive_capture/examine(mob/user)
 	. = ..()
-	. += span_notice("Add a prisoner by dragging them into the machine.")
+	. += span_notice(LANG("obj.6e0cf53d", null))
 
 /obj/machinery/fugitive_capture/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/fugitive_hunter = user

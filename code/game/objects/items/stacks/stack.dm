@@ -237,7 +237,7 @@
 		. += LANG("obj.94de3961", list(get_amount()))
 	else
 		. += LANG("obj.0d568e89", list(get_amount()))
-	. += span_notice("<b>Right-click</b> with an empty hand to take a custom amount.")
+	. += span_notice(LANG("obj.4a18c429", null))
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)

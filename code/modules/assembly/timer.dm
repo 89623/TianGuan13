@@ -35,7 +35,7 @@
 
 /obj/item/assembly/timer/examine(mob/user)
 	. = ..()
-	. += span_notice("The timer is [timing ? "counting down from [time]":"set for [time] seconds"].")
+	. += span_notice(LANG("obj.c297a44e", list(timing ? "counting down from [time]":"set for [time] seconds")))
 
 /obj/item/assembly/timer/activate()
 	if(!..())

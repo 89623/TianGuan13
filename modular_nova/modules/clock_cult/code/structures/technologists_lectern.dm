@@ -77,7 +77,7 @@
 /obj/structure/destructible/clockwork/gear_base/technologists_lectern/examine(mob/user)
 	. = ..()
 	if(researching && IS_CLOCK(user))
-		. += span_brass("The researching of [selected_research.name] will take another [DisplayTimeText(timeleft(research_timer_id))].")
+		. += span_brass(LANG("obj.2add19a6", list(selected_research.name, DisplayTimeText(timeleft(research_timer_id)))))
 
 
 /obj/structure/destructible/clockwork/gear_base/technologists_lectern/process(seconds_per_tick)

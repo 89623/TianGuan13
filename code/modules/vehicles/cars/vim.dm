@@ -43,7 +43,7 @@
 
 /obj/vehicle/sealed/car/vim/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] can be repaired with a welder.")
+	. += span_notice(LANG("obj.ddfd3379", list(src)))
 
 /obj/vehicle/sealed/car/vim/atom_destruction(damage_flag)
 	new /obj/effect/decal/cleanable/blood/oil(get_turf(src))

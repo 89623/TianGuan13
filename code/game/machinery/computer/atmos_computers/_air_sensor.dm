@@ -110,8 +110,8 @@
 
 /obj/machinery/air_sensor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a multitool to link it to an injector, vent, or air alarm, or reset its ports.")
-	. += span_notice("Click with hand to turn it off.")
+	. += span_notice(LANG("obj.446a44e1", null))
+	. += span_notice(LANG("obj.ebcaf9f6", null))
 
 /obj/machinery/air_sensor/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -191,11 +191,11 @@
 /obj/item/air_sensor/examine(mob/user)
 	. = ..()
 	if(anchored)
-		. += span_notice("It's [EXAMINE_HINT("wrenched")] in place")
+		. += span_notice(LANG("obj.d7528bd7", list(EXAMINE_HINT("wrenched"))))
 	else
-		. += span_notice("It should be [EXAMINE_HINT("wrenched")] in place to turn it on.")
-	. +=  span_notice("It could be [EXAMINE_HINT("welded")] apart.")
-	. +=  span_notice("Click with hand to turn it on.")
+		. += span_notice(LANG("obj.cd726d33", list(EXAMINE_HINT("wrenched"))))
+	. +=  span_notice(LANG("obj.5f2a74d5", list(EXAMINE_HINT("welded"))))
+	. +=  span_notice(LANG("obj.50896f4e", null))
 
 /obj/item/air_sensor/attack_hand(mob/user, list/modifiers)
 	. = ..()

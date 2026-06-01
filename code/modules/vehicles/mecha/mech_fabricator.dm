@@ -137,8 +137,8 @@
 /obj/machinery/mecha_part_fabricator/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
-		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
+		. += span_notice(LANG("obj.bf97bd79", list(rmat.local_size, component_coeff*100, 100-time_coeff*100)))
+		. += span_notice(LANG("obj.f018ec80", list(dir2text(drop_direction))))
 
 /obj/machinery/mecha_part_fabricator/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))

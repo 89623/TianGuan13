@@ -48,7 +48,7 @@
 	. = ..()
 	. += LANG("obj.a7e31ec3", list(cover_open ? "close" : "open"))
 	if(cover_open && magazine)
-		. += span_notice("It seems like you could use an <b>empty hand</b> to remove the magazine.")
+		. += span_notice(LANG("obj.50e55fa8", null))
 
 /obj/item/gun/ballistic/automatic/smart_machine_gun/attack_hand_secondary(mob/user, list/modifiers)
 	if(!user.can_perform_action(src))

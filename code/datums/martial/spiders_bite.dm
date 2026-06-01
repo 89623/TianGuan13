@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/martial_art/spiders_bite
 	name = "Spider's Bite"
 	id = MARTIALART_SPIDERSBITE
@@ -63,9 +64,5 @@
 /datum/martial_art/spiders_bite/get_style_help()
 	. = list()
 
-	. += span_info("<b><i>You retreat inward and recall the Spider Clan's techniques...</i></b>\n\
-		&bull; Remember, <b>Many Legged Spider</b>: Unarmed attacks against staggered opponents will always be kicks - granting you greater accuracy and damage.\n\
-		&bull; Remember, <b>Jump and Climb</b>: Right clicking on throw mode will perform a tackle which is far far less likely to fail.\n\
-		&bull; Remember, <b>Flow of Gravity</b>: Kicking opponents will have a chance to knock their weapons to the floor. The chance increases for each sequential kick.\n\
-		&bull; Remember, <b>Wrap in Web</b>: Your grabs will be harder to escape from.")
+	. += span_info(LANG("datum.e213fc49", null))
 	return .

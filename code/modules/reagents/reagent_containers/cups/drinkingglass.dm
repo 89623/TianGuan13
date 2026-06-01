@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/reagent_containers/cup/glass/drinkingglass
 	name = "drinking glass"
 	desc = "Your standard drinking glass."
@@ -51,7 +52,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED))
-		. += span_notice("This glass has been given a custom name. It can be removed by washing it.")
+		. += span_notice(LANG("obj.1272de7b", null))
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_cleaned(obj/source_component, obj/source)
 	SIGNAL_HANDLER

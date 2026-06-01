@@ -26,7 +26,7 @@
 
 /obj/item/clothing/neck/collar/examine(mob/user)
 	. = ..()
-	. += span_notice("The collar can be worn above or below your suit. Alt-Right-click to toggle.")
+	. += span_notice(LANG("obj.78f09b05", null))
 
 /datum/storage/collar
 	max_slots = 1

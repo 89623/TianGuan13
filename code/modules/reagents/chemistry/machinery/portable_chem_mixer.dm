@@ -51,14 +51,14 @@
 /obj/item/storage/portable_chem_mixer/examine(mob/user)
 	. = ..()
 	if(!atom_storage.locked)
-		. += span_notice("Use [EXAMINE_HINT("Ctrl Click")] to lock in order to use its interface.")
+		. += span_notice(LANG("obj.b76164d4", list(EXAMINE_HINT("Ctrl Click"))))
 	else
-		. += span_notice("Its storage is locked, use [EXAMINE_HINT("Ctrl Click")] to unlock it.")
+		. += span_notice(LANG("obj.5946f17e", list(EXAMINE_HINT("Ctrl Click"))))
 	if(QDELETED(beaker))
-		. += span_notice("A beaker can be inserted to dispense reagents after it is locked.")
+		. += span_notice(LANG("obj.b84a92a8", null))
 	else
-		. += span_notice("A beaker of [beaker.reagents.maximum_volume]u capacity is inserted.")
-		. += span_notice("It can be ejected with [EXAMINE_HINT("Alt Click")].")
+		. += span_notice(LANG("obj.dffd9dd1", list(beaker.reagents.maximum_volume)))
+		. += span_notice(LANG("obj.5dffdaaf", list(EXAMINE_HINT("Alt Click"))))
 
 /obj/item/storage/portable_chem_mixer/update_icon_state()
 	if(!atom_storage.locked)

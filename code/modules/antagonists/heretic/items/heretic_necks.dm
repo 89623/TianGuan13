@@ -96,14 +96,14 @@
 
 	var/magic_dude
 	if(IS_CULTIST(user))
-		. += span_cult_bold("This focus will allow you to store one extra spell and halve the empowering time, alongside providing a small regenerative effect.")
+		. += span_cult_bold(LANG("obj.a8dda446", null))
 		magic_dude = TRUE
 	if(IS_HERETIC_OR_MONSTER(user))
-		. += span_notice("This focus will halve your spell cooldowns, alongside granting a small regenerative effect to any nearby heretics or monsters, including you.")
+		. += span_notice(LANG("obj.d8275faf", null))
 		magic_dude = TRUE
 
 	if(magic_dude)
-		. += span_red("You can also squeeze it to recover a large amount of health quickly, at a cost...")
+		. += span_red(LANG("obj.3146792a", null))
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "warm eldritch medallion"
@@ -167,7 +167,7 @@
 /obj/item/clothing/neck/heretic_focus/moon_amulet/examine(mob/user)
 	. = ..()
 	if(IS_HERETIC(user))
-		. += span_notice("Wearing this amulet increases your healing speed by 50%")
+		. += span_notice(LANG("obj.8b4f8eda", null))
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/equipped(mob/living/user, slot)
 	. = ..()

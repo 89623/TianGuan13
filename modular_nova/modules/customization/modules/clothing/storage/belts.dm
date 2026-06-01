@@ -98,9 +98,9 @@
 
 /obj/item/storage/belt/crusader/examine(mob/user)
 	. = ..()
-	.+= span_notice("Ctrl-click it to easily open its inventory.")
+	.+= span_notice(LANG("obj.45c264f4", null))
 	if(contents.len == 2)	//If there's no sword/rod in the sheath slot it doesnt display the alt-click instruction
-		. += span_notice("Alt-click it to quickly draw the blade.")
+		. += span_notice(LANG("obj.ebf3b6e0", null))
 		return
 
 

@@ -74,13 +74,13 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>.")
-	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>.")
+	. += span_notice(LANG("obj.561f1ac0", list(efficiency_coeff * 100)))
+	. += span_notice(LANG("obj.e7acbb7a", list(efficiency_coeff * 100)))
 	if(drop_direction)
-		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
-		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
+		. += span_notice(LANG("obj.f018ec80", list(dir2text(drop_direction))))
+		. += span_notice(LANG("obj.fc17772b", list(EXAMINE_HINT("Alt-click"))))
 	else
-		. += span_notice("[EXAMINE_HINT("Drag")] towards a direction (while next to it) to change drop direction.")
+		. += span_notice(LANG("obj.abc9aa60", list(EXAMINE_HINT("Drag"))))
 
 /obj/machinery/rnd/production/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

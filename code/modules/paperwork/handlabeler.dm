@@ -120,9 +120,9 @@
 /obj/item/hand_labeler/examine()
 	. = ..()
 	if(labels_left > 0)
-		. += span_notice("It looks like it could label [labels_left] more thing\s.")
+		. += span_notice(LANG("obj.18f42fc8", list(labels_left)))
 	else
-		. += span_notice("It's out of labels.")
+		. += span_notice(LANG("obj.365fe0cd", null))
 
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"

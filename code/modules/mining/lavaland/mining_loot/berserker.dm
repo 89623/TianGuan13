@@ -80,7 +80,7 @@
 
 /obj/item/clothing/head/hooded/berserker/examine()
 	. = ..()
-	. += span_notice("Berserk mode is [berserk_charge]% charged.")
+	. += span_notice(LANG("obj.353b48f8", list(berserk_charge)))
 
 /obj/item/clothing/head/hooded/berserker/process(seconds_per_tick)
 	if(berserk_active)

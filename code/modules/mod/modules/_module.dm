@@ -87,9 +87,9 @@
 		for(var/slot in required_slots)
 			var/list/slot_list = parse_slot_flags(slot)
 			slot_strings += (length(slot_list) == 1 ? "" : "one of ") + english_list(slot_list, and_text = " or ")
-		. += span_notice("Requires the MOD unit to have the following slots: [english_list(slot_strings)]")
+		. += span_notice(LANG("obj.e4f54581", list(english_list(slot_strings))))
 	if(HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
-		. += span_notice("Complexity level: [complexity]")
+		. += span_notice(LANG("obj.9d8f41bd", list(complexity)))
 
 /// Looks through the MODsuit's parts to see if it has the parts required to support this module
 /obj/item/mod/module/proc/has_required_parts(list/parts, need_active = FALSE)

@@ -138,8 +138,8 @@
 /obj/item/climbing_moth_wings/examine(mob/user)
 	. = ..()
 	var/list/look_binds = user.client.prefs.key_bindings["look up"]
-	. += span_notice("Firstly, look upwards by holding <b>[english_list(look_binds, nothing_text = "(nothing bound)", and_text = " or ", comma_text = ", or ")]!</b>")
-	. += span_notice("Then, click solid ground adjacent to the hole above you.")
+	. += span_notice(LANG("obj.2edd1f26", list(english_list(look_binds, nothing_text = "(nothing bound)", and_text = " or ", comma_text = ", or "))))
+	. += span_notice(LANG("obj.53acd64d", null))
 
 /obj/item/climbing_moth_wings/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/turf/open/target = interacting_with

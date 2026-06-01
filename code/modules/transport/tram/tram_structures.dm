@@ -485,12 +485,12 @@
 /obj/structure/tram/spoiler/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += span_warning("The electronics panel is sparking occasionally. It can be reset with a [EXAMINE_HINT("multitool.")]")
+		. += span_warning(LANG("obj.510cf7f3", list(EXAMINE_HINT("multitool."))))
 
 	if(locked)
-		. += span_warning("The spoiler is [EXAMINE_HINT("welded")] in place!")
+		. += span_warning(LANG("obj.4d443dd9", list(EXAMINE_HINT("welded"))))
 	else
-		. += span_notice("The spoiler can be locked in place with a [EXAMINE_HINT("welder.")]")
+		. += span_notice(LANG("obj.2e8466c7", list(EXAMINE_HINT("welder."))))
 
 /obj/structure/tram/spoiler/proc/set_spoiler(source, controller, controller_active, controller_status, travel_direction)
 	SIGNAL_HANDLER

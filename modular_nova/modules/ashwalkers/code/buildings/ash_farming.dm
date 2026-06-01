@@ -131,11 +131,11 @@
 
 /obj/structure/simple_farm/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>[src] will be ready for harvest in [DisplayTimeText(COOLDOWN_TIMELEFT(src, harvest_timer))]")
+	. += span_notice(LANG("obj.80da4e79", list(src, DisplayTimeText(COOLDOWN_TIMELEFT(src, harvest_timer)))))
 	if(max_harvest < 6)
-		. += span_notice("You can use goliath hides or worm fertilizer to increase the amount dropped per harvest!")
+		. += span_notice(LANG("obj.ecd5398b", null))
 	if(harvest_cooldown > 30 SECONDS)
-		. += span_notice("<br>You can use sinew or worm fertilizer to lower the time between each harvest!")
+		. += span_notice(LANG("obj.53b56213", null))
 
 /obj/structure/simple_farm/process(seconds_per_tick)
 	update_appearance()

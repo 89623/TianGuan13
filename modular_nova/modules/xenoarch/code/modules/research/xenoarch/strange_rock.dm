@@ -54,11 +54,11 @@
 	. = ..()
 	. += span_notice("[scanned ? "This item has been scanned. Max Depth: [max_depth] cm. Safe Depth: [safe_depth] cm." : "This item has not been scanned."]")
 	if(adv_scanned)
-		. += span_notice("The item depth is [item_depth] cm.")
+		. += span_notice(LANG("obj.9c404e9c", list(item_depth)))
 
 	. += span_notice("[measured ? "This item has been measured. Dug Depth: [dug_depth]." : "This item has not been measured."]")
 	if(measured && dug_depth > item_depth)
-		. += span_warning("The rock is crumbling, even just brushing it will destroy it!")
+		. += span_warning(LANG("obj.8037354a", null))
 
 /obj/item/xenoarch/strange_rock/proc/create_item()
 	choose_tier = rand(1,100)

@@ -301,7 +301,7 @@
 	if(!in_range(user, src))
 		return
 	if(fizziness > 30 && prob(fizziness * 2))
-		. += span_notice("<i>You examine [src] closer, and note the following...</i>")
+		. += span_notice(LANG("obj.c1961515", list(src)))
 		. += LANG("obj.294efb1f", list(span_warning("You get a menacing aura of fizziness from it...")))
 
 /obj/item/reagent_containers/cup/soda_cans/should_atmos_process(datum/gas_mixture/air, exposed_temperature)

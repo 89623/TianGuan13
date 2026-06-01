@@ -11,8 +11,8 @@
 
 /obj/item/fake_identity_kit/examine_more(mob/user)
 	. = ..()
-	. += span_info("Using this kit after exposure to Mulligan serum will create a fake identity for your new appearance.")
-	. += span_info("This will add you to various station manifests, create an Assistant-level ID card, and announce your arrival over the radio.")
+	. += span_info(LANG("obj.d1375bb6", null))
+	. += span_info(LANG("obj.cf1c63c7", null))
 
 /obj/item/fake_identity_kit/attack_self(mob/living/carbon/human/user, modifiers)
 	. = ..()

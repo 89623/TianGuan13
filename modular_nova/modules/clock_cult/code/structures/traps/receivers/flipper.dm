@@ -23,7 +23,7 @@
 	. = ..()
 
 	if(!COOLDOWN_FINISHED(src, flip_cooldown) && IS_CLOCK(user))
-		. += span_brass("It's not ready to activate again yet!")
+		. += span_brass(LANG("obj.6a82292e", null))
 
 /// Send all `atom/movable`s flying in the set direction for a decent distance
 /obj/structure/destructible/clockwork/trap/flipper/proc/flip()

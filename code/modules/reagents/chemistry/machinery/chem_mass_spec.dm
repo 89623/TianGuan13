@@ -89,23 +89,23 @@
 	. = ..()
 
 	if(!QDELETED(beaker1))
-		. += span_notice("Input beaker of [beaker1.reagents.maximum_volume]u capacity is inserted.")
-		. += span_notice("Its Input beaker Can be ejected with [EXAMINE_HINT("LMB Alt")] click.")
+		. += span_notice(LANG("obj.23d1ac8d", list(beaker1.reagents.maximum_volume)))
+		. += span_notice(LANG("obj.e931dcd2", list(EXAMINE_HINT("LMB Alt"))))
 	else
-		. += span_warning("Its missing an input beaker. insert with [EXAMINE_HINT("Left Click")].")
+		. += span_warning(LANG("obj.489241c7", list(EXAMINE_HINT("Left Click"))))
 	if(!QDELETED(beaker2))
-		. += span_notice("Output beaker of [beaker2.reagents.maximum_volume]u capacity is inserted.")
-		. += span_notice("Its Output beaker can be ejected with [EXAMINE_HINT("RMB Alt")] click.")
+		. += span_notice(LANG("obj.51f4fb4e", list(beaker2.reagents.maximum_volume)))
+		. += span_notice(LANG("obj.d9137172", list(EXAMINE_HINT("RMB Alt"))))
 	else
-		. += span_warning("Its missing an output beaker, insert with [EXAMINE_HINT("Right Click")].")
+		. += span_warning(LANG("obj.eedbf6c6", list(EXAMINE_HINT("Right Click"))))
 
 	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice(LANG("obj.04b10ee4", list(EXAMINE_HINT("anchored"))))
 	else
-		. += span_warning("Needs to be [EXAMINE_HINT("wrenched")] to use.")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+		. += span_warning(LANG("obj.7fa302fb", list(EXAMINE_HINT("wrenched"))))
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/chem_mass_spec/update_overlays()
 	. = ..()

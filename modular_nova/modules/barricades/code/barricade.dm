@@ -46,9 +46,9 @@
 /obj/structure/deployable_barricade/examine(mob/user)
 	. = ..()
 	if(!is_wired && can_wire)
-		. += span_info("Barbed wire could be added with some <b>cable</b>.")
+		. += span_info(LANG("obj.874e0dbc", null))
 	if(is_wired)
-		. += span_info("It has barbed wire along the top.")
+		. += span_info(LANG("obj.af883e84", null))
 
 /obj/structure/deployable_barricade/proc/on_try_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
@@ -493,10 +493,10 @@
 			. += span_info("The anchor points are <i>unbolted</i>, use a <b>crowbar</b> to disassemble it.")
 
 	if(barricade_upgrade_type)
-		. += span_info("It has [barricade_upgrade_type] installed.")
+		. += span_info(LANG("obj.03f6cd95", list(barricade_upgrade_type)))
 
 	if(portable_type)
-		. += span_info("Alt+click to fold it up into its portable form.")
+		. += span_info(LANG("obj.ea89d501", null))
 
 /obj/structure/deployable_barricade/metal/welder_act(mob/living/user, obj/item/I)
 	var/obj/item/weldingtool/welding_tool = I

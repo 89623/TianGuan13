@@ -37,7 +37,7 @@
 
 /obj/item/bdsm_bed_kit/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be assembled by using Ctrl+Shift+Click while [src] is on the floor.")
+	. += span_purple(LANG("obj.aa88977b", list(src, src)))
 
 /obj/structure/bed/bdsm_bed/post_buckle_mob(mob/living/affected_mob)
 	density = TRUE
@@ -68,7 +68,7 @@
 
 /obj/structure/bed/bdsm_bed/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be disassembled by using Ctrl+Shift+Click")
+	. += span_purple(LANG("obj.c1a93939", list(src)))
 
 /*
 *	X-STAND
@@ -286,7 +286,7 @@
 
 /obj/structure/chair/x_stand/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be disassembled by using Ctrl+Shift+Click")
+	. += span_purple(LANG("obj.c1a93939", list(src)))
 
 #undef X_STAND_CLOSED_STATE
 #undef X_STAND_OPEN_STATE

@@ -163,7 +163,7 @@
 
 /obj/structure/closet/crate/secure/owned/examine(mob/user)
 	. = ..()
-	. += span_notice("It's locked with a privacy lock, and can only be unlocked by the buyer's ID.")
+	. += span_notice(LANG("obj.1413ca60", null))
 
 /obj/structure/closet/crate/secure/owned/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()

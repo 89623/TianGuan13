@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Pastry is a food that is made from dough which is made from wheat or rye flour.
 //This file contains pastries that don't fit any existing categories.
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
@@ -57,9 +58,9 @@
 		return
 	var/mob/living/moffin_observer = user
 	if(moffin_observer.get_liked_foodtypes() & CLOTH)
-		. += span_nicegreen("Ooh! It's even got bits of clothes on it! Yummy!")
+		. += span_nicegreen(LANG("obj.63ed6739", null))
 	else
-		. += span_warning("You're not too sure what's on top though...")
+		. += span_warning(LANG("obj.c05117f1", null))
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 

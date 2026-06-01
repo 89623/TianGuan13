@@ -16,8 +16,8 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 
 /obj/item/cargo_teleporter/examine(mob/user)
 	. = ..()
-	. += span_notice("Attack itself to set down the markers!")
-	. += span_notice("ALT-CLICK to open options for removing markers or setting markers!")
+	. += span_notice(LANG("obj.c5a16e61", null))
+	. += span_notice(LANG("obj.673fe44f", null))
 
 /obj/item/cargo_teleporter/Destroy()
 	if(length(marker_children))

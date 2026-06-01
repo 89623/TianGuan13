@@ -30,7 +30,7 @@
 /obj/machinery/recharger/examine(mob/user)
 	. = ..()
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents and display!")
+		. += span_warning(LANG("obj.7f267c32", list(src)))
 		return
 
 	if(charging)
@@ -42,28 +42,28 @@
 	var/status_display_message_shown = FALSE
 	if(using_power)
 		status_display_message_shown = TRUE
-		. += span_notice("The status display reads:")
-		. += span_notice("- Recharging efficiency: <b>[recharge_coeff*100]%</b>.")
+		. += span_notice(LANG("obj.e69769dd", null))
+		. += span_notice(LANG("obj.01a397ba", list(recharge_coeff*100)))
 
 	if(isnull(charging))
 		return
 	if(!status_display_message_shown)
-		. += span_notice("The status display reads:")
+		. += span_notice(LANG("obj.e69769dd", null))
 
 	var/obj/item/stock_parts/power_store/charging_cell = charging.get_cell()
 	if(charging_cell)
-		. += span_notice("- \The [charging]'s cell is at <b>[charging_cell.percent()]%</b>.")
+		. += span_notice(LANG("obj.1a720510", list(charging, charging_cell.percent())))
 		return
 	if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
-		. += span_notice("- \The [charging]'s cell is at <b>[PERCENT(power_pack.stored_ammo.len/power_pack.max_ammo)]%</b>.")
+		. += span_notice(LANG("obj.1a720510", list(charging, PERCENT(power_pack.stored_ammo.len/power_pack.max_ammo))))
 		return
 	if(istype(charging, /obj/item/gun/ballistic/automatic/battle_rifle))
 		var/obj/item/gun/ballistic/automatic/battle_rifle/recalibrating_gun = charging
-		. += span_notice("- \The [charging]'s system degradation is at stage [recalibrating_gun.degradation_stage] of [recalibrating_gun.degradation_stage_max]</b>.")
-		. += span_notice("- \The [charging]'s degradation buffer is at <b>[PERCENT(recalibrating_gun.shots_before_degradation/recalibrating_gun.max_shots_before_degradation)]%</b>.")
+		. += span_notice(LANG("obj.fffd47bf", list(charging, recalibrating_gun.degradation_stage, recalibrating_gun.degradation_stage_max)))
+		. += span_notice(LANG("obj.f3700e14", list(charging, PERCENT(recalibrating_gun.shots_before_degradation/recalibrating_gun.max_shots_before_degradation))))
 		return
-	. += span_notice("- \The [charging] is not reporting a power level.")
+	. += span_notice(LANG("obj.7773e8fb", list(charging)))
 
 /obj/machinery/recharger/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(is_type_in_typecache(arrived, allowed_devices))

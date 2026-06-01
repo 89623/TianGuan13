@@ -303,8 +303,8 @@
 /obj/item/circuitboard/machine/pacman/examine(mob/user)
 	. = ..()
 	var/message = high_production_profile ? "high-power uranium mode" : "medium-power plasma mode"
-	. += span_notice("It's set to [message].")
-	. += span_notice("You can switch the mode by using a screwdriver on [src].")
+	. += span_notice(LANG("obj.4560308d", list(message)))
+	. += span_notice(LANG("obj.9425f6f2", list(src)))
 
 /obj/item/circuitboard/machine/pacman/screwdriver_act(mob/living/user, obj/item/tool)
 	high_production_profile = !high_production_profile
@@ -422,7 +422,7 @@
 
 /obj/item/circuitboard/machine/thermomachine/examine()
 	. = ..()
-	. += span_notice("It is set to layer [pipe_layer].")
+	. += span_notice(LANG("obj.286b48ae", list(pipe_layer)))
 
 /obj/item/circuitboard/machine/HFR_fuel_input
 	name = "HFR Fuel Input"
@@ -613,7 +613,7 @@
 	. = ..()
 	if(is_special_type)
 		return
-	. += span_info("[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.")
+	. += span_info(LANG("obj.610b9c31", list(src, fridges_name_paths[build_path])))
 
 /obj/item/circuitboard/machine/dehydrator
 	name = "Dehydrator"
@@ -1285,8 +1285,8 @@
 
 /obj/item/circuitboard/machine/dish_drive/examine(mob/user)
 	. = ..()
-	. += span_notice("Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.")
-	. += span_notice("Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.")
+	. += span_notice(LANG("obj.bb8d8a74", list(suction ? "enabled" : "disabled")))
+	. += span_notice(LANG("obj.be7221f3", list(transmit ? "enabled" : "disabled")))
 
 /obj/item/circuitboard/machine/dish_drive/attack_self(mob/living/user)
 	suction = !suction
@@ -1533,7 +1533,7 @@
 	. = ..()
 	if (venue_type)
 		var/datum/venue/as_venue = venue_type
-		. += span_notice("[src] is linked to \a [initial(as_venue.name)] venue.")
+		. += span_notice(LANG("obj.ab267465", list(src, initial(as_venue.name))))
 
 /obj/item/circuitboard/machine/restaurant_portal/configure_machine(obj/machinery/restaurant_portal/machine)
 	if(!istype(machine))

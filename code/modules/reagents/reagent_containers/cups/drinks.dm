@@ -135,7 +135,7 @@
 
 /obj/item/reagent_containers/cup/glass/coffee/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to toggle cup lid.")
+	. += span_notice(LANG("obj.8d6143f3", null))
 	return
 
 /obj/item/reagent_containers/cup/glass/coffee/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -266,11 +266,11 @@
 /obj/item/reagent_containers/cup/glass/waterbottle/examine(mob/user)
 	. = ..()
 	if(cap_lost)
-		. += span_notice("The cap seems to be missing.")
+		. += span_notice(LANG("obj.6099e91e", null))
 	else if(!is_open_container())
-		. += span_notice("The cap is firmly on to prevent spilling. Alt-click to remove the cap.")
+		. += span_notice(LANG("obj.71c8703a", null))
 	else
-		. += span_notice("The cap has been taken off. Alt-click to put a cap on.")
+		. += span_notice(LANG("obj.7a951459", null))
 
 /obj/item/reagent_containers/cup/glass/waterbottle/click_alt(mob/user)
 	if(cap_lost)
@@ -454,10 +454,10 @@
 
 /obj/item/reagent_containers/cup/glass/shaker/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to [using_custom_drinks ? "disable" : "enable"] custom drink naming")
+	. += span_notice(LANG("obj.682e5da5", list(using_custom_drinks ? "disable" : "enable")))
 	if(using_custom_drinks)
-		. += span_notice("Drinks poured from this shaker will have the following name: [custom_drink_name]")
-		. += span_notice("Drinks poured from this shaker will have the following description: [custom_drink_desc]")
+		. += span_notice(LANG("obj.71e7082c", list(custom_drink_name)))
+		. += span_notice(LANG("obj.5bea78a9", list(custom_drink_desc)))
 
 /obj/item/reagent_containers/cup/glass/shaker/click_alt(mob/user)
 	if(using_custom_drinks)

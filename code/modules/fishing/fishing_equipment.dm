@@ -318,7 +318,7 @@
 
 /obj/item/fishing_hook/stabilized/examine(mob/user)
 	. = ..()
-	. += span_notice("While fishing, you can hold the <b>Right</b> Mouse Button to move the bait down, rather than up.")
+	. += span_notice(LANG("obj.d53d0729", null))
 
 /obj/item/fishing_hook/jaws
 	name = "jawed hook"
@@ -393,11 +393,11 @@
 
 /obj/item/survivalcapsule/fishing/examine(mob/user)
 	. = ..()
-	. += span_info("[EXAMINE_HINT("Right-Click")] to change the selected fishing spot when held.")
+	. += span_info(LANG("obj.f6ccd0f5", list(EXAMINE_HINT("Right-Click"))))
 
 /obj/item/survivalcapsule/fishing/examine_more(mob/user)
 	. = ..()
-	. += span_tinynotice("A tiny print on the side reads: \"Use a cryptographic sequencer to disable safeties\".")
+	. += span_tinynotice(LANG("obj.38082fde", null))
 
 /obj/item/survivalcapsule/fishing/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -520,7 +520,7 @@
 	. = ..()
 
 	if(!loaded_injector)
-		. += span_info("It's currently unloaded. Insert a syringe or fish gene injector.")
+		. += span_info(LANG("obj.9ae2d6dc", null))
 		return
 	var/info =  span_info("It's currently loaded with [loaded_injector]. Use it to ")
 	if(istype(loaded_injector, /obj/item/reagent_containers/syringe))

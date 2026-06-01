@@ -431,8 +431,8 @@ effective or pretty fucking useless.
 /obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
 	. = ..()
 	if(faction_check_atom(user))
-		. += span_notice("You can repair it by <b>left-clicking</b> with a combat wrench.")
-		. += span_notice("You can fold it by <b>right-clicking</b> with a combat wrench.")
+		. += span_notice(LANG("obj.dbf4dd8e", null))
+		. += span_notice(LANG("obj.93664248", null))
 
 /obj/machinery/porta_turret/syndicate/toolbox/target(atom/movable/target)
 	if(!target)
@@ -600,4 +600,4 @@ effective or pretty fucking useless.
 /obj/item/clothing/shoes/jackboots/dagger/examine_more(mob/user)
 	. = ..()
 	if(user.is_holding(src))
-		. += span_notice("Upon closer inspection, you notice a dagger embedded into the sole.")
+		. += span_notice(LANG("obj.8fd65dc5", null))

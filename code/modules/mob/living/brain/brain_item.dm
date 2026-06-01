@@ -234,14 +234,14 @@
 /obj/item/organ/brain/examine(mob/user)
 	. = ..()
 	if(length(skillchips))
-		. += span_info("It has a skillchip embedded in it.")
+		. += span_info(LANG("obj.d2be189b", null))
 	. += brain_damage_examine()
 	if (smooth_brain)
-		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
+		. += span_notice(LANG("obj.c493d591", null))
 	if(brain_size < 1)
-		. += span_notice("It is a bit on the smaller side...")
+		. += span_notice(LANG("obj.ddc86c08", null))
 	if(brain_size > 1)
-		. += span_notice("It is bigger than average...")
+		. += span_notice(LANG("obj.d961631f", null))
 
 /// Needed so subtypes can override examine text while still calling parent
 /obj/item/organ/brain/proc/brain_damage_examine()

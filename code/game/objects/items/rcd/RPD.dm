@@ -99,8 +99,8 @@
 
 /obj/item/pipe_dispenser/examine(mob/user)
 	. = ..()
-	. += span_notice("You can scroll your <b>mouse wheel</b> to change the piping layer.")
-	. += span_notice("You can <b>right click</b> a pipe to set the RPD to its color and layer.")
+	. += span_notice(LANG("obj.68de951f", null))
+	. += span_notice(LANG("obj.19856b61", null))
 
 /obj/item/pipe_dispenser/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = NONE

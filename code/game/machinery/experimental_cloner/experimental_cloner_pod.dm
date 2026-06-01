@@ -40,7 +40,7 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 /obj/machinery/experimental_cloner/examine(mob/user)
 	. = ..()
 	if (running)
-		. += span_notice("You can see a shape forming in the murky liquid.")
+		. += span_notice(LANG("obj.bae0afeb", null))
 
 /obj/machinery/experimental_cloner/update_icon_state()
 	. = ..()

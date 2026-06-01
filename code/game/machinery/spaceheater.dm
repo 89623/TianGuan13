@@ -101,10 +101,10 @@
 	if(cell)
 		. += LANG("obj.00f8f6f7", list(cell ? round(cell.percent(), 1) : 0))
 	else
-		. += span_warning("There is no power cell installed.")
+		. += span_warning(LANG("obj.b21d2f5d", null))
 	if(in_range(user, src) || isobserver(user))
 		. += heating_examine()
-		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
+		. += span_notice(LANG("obj.a322e9c4", list(on ? "off" : "on")))
 
 ///Returns the heating power of this machine as an examine
 /obj/machinery/space_heater/proc/heating_examine()
@@ -363,7 +363,7 @@
 	// Conducted energy per joule of thermal energy difference in a tick.
 	var/conduction_energy = beaker_conduction_power * (set_mode == HEATER_MODE_AUTO ? 0.5 : 1) * our_subsystem.wait / (1 SECONDS)
 	// This accounts for the timestep inaccuracy.
-	. += span_notice("Reagent conduction power: <b>[conduction_energy < 1 ? display_power(-log(1 - conduction_energy) SECONDS / our_subsystem.wait, convert = FALSE) : "∞W"]/J</b>")
+	. += span_notice(LANG("obj.53ab7728", list(conduction_energy < 1 ? display_power(-log(1 - conduction_energy) SECONDS / our_subsystem.wait, convert = FALSE) : "∞W")))
 
 /obj/machinery/space_heater/improvised_chem_heater/toggle_power(user)
 	. = ..()

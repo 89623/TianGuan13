@@ -39,9 +39,9 @@
 		return
 
 	if(loaded_item)
-		. += span_notice("[EXAMINE_HINT("Left-Click")] to remove loaded item inside.")
+		. += span_notice(LANG("obj.474bf33b", list(EXAMINE_HINT("Left-Click"))))
 	else
-		. += span_notice("An item can be loaded inside via [EXAMINE_HINT("Left-Click")].")
+		. += span_notice(LANG("obj.47388c0e", list(EXAMINE_HINT("Left-Click"))))
 
 /obj/machinery/rnd/destructive_analyzer/base_item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))

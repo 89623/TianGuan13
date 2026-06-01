@@ -51,7 +51,7 @@
 	if (isnull(canister))
 		return
 
-	. += span_blue("It seems to have <b>[canister]</b> inserted.")
+	. += span_blue(LANG("obj.d961714a", list(canister)))
 	if (!show_puffs_left)
 		return
 

@@ -28,7 +28,7 @@
 /obj/item/food/egg/raptor_egg/examine(mob/user)
 	. = ..()
 	if (growth_progress >= RAPTOR_EGG_GROWTH_PROGRESS)
-		. += span_boldnotice("Its noticeably shaking, ready to hatch!")
+		. += span_boldnotice(LANG("obj.276edfdb", null))
 
 /obj/item/food/egg/raptor_egg/process(seconds_per_tick)
 	if (!isturf(loc) || length(GLOB.raptor_population) >= MAX_RAPTOR_POP)

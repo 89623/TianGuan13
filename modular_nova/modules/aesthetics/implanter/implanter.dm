@@ -10,8 +10,7 @@
 //Code to make the breathing tube aug_overlay toggleable
 /obj/item/organ/cyberimp/mouth/breathing_tube/examine()
 	. = ..()
-	. += span_info("It will currently be [aug_overlay ? "physicially visible" : "practically invisible"] upon installation. \
-	This could be changed by using a [EXAMINE_HINT("screwdriver")].")
+	. += span_info(LANG("obj.fc9a3c4c", list(aug_overlay ? "physicially visible" : "practically invisible", EXAMINE_HINT("screwdriver"))))
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()

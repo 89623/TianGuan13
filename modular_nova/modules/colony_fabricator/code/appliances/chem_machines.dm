@@ -130,7 +130,7 @@
 
 /obj/machinery/chem_dispenser/frontier_appliance/examine(mob/user)
 	. = ..()
-	. += span_notice("It cannot be repacked, but can be deconstructed normally.")
+	. += span_notice(LANG("obj.7a0899a5", null))
 
 // Deployable item for cargo for the sustenance machine
 

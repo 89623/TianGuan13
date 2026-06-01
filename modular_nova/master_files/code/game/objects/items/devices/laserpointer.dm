@@ -34,4 +34,4 @@
 /obj/item/laser_pointer/examine(mob/user)
 	. = ..()
 	if(!upgradable)
-		. += span_notice("The diode and the lens are both cheap, integrated components. This pointer cannot be upgraded.")
+		. += span_notice(LANG("obj.54abf789", null))

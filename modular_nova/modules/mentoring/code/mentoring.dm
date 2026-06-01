@@ -99,21 +99,21 @@
 				level_name = "master"
 
 	if(taught_skill)
-		. += span_notice("This book can teach you to become \a [level_name] [initial(taught_skill.title)].")
+		. += span_notice(LANG("obj.0a71d1b1", list(level_name, initial(taught_skill.title))))
 
 	if(taught_language)
-		. += span_notice("This book can teach you to become fluent in [initial(taught_language.name)].")
+		. += span_notice(LANG("obj.f08a24f2", list(initial(taught_language.name))))
 
 	if(teach_sign)
-		. += span_notice("This book can teach you sign language.")
+		. += span_notice(LANG("obj.6a19dc2e", null))
 
 	if(!(taught_skill || taught_language || teach_sign))
-		. += span_notice("The pages are blank.")
+		. += span_notice(LANG("obj.c58727ca", null))
 
-	. += span_notice("Using a pen will allow you to impart your knowledge about language or skills to the book!")
+	. += span_notice(LANG("obj.bfc52419", null))
 
 	if(limit_uses)
-		. += span_warning("This book can only be used [allowed_uses] more time\s!")
+		. += span_warning(LANG("obj.72d85492", list(allowed_uses)))
 
 /// will lower the use by one (if allowed) and check if it should be destroyed
 /obj/item/mentoring_book/proc/check_limit(mob/user)

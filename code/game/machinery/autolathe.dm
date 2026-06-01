@@ -62,16 +62,16 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("Material usage cost at <b>[creation_efficiency * 100]%</b>.")
+	. += span_notice(LANG("obj.561f1ac0", list(creation_efficiency * 100)))
 	if(drop_direction)
-		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
-		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
+		. += span_notice(LANG("obj.f018ec80", list(dir2text(drop_direction))))
+		. += span_notice(LANG("obj.fc17772b", list(EXAMINE_HINT("Alt-click"))))
 	else
-		. += span_notice("[EXAMINE_HINT("Drag")] towards a direction (while next to it) to change drop direction.")
+		. += span_notice(LANG("obj.abc9aa60", list(EXAMINE_HINT("Drag"))))
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.740bee8c", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/autolathe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(drop_direction)

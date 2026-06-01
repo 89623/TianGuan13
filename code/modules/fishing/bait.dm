@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/bait_can
 	name = "can o bait"
 	desc = "there's a lot of them in there, getting them out takes a while though."
@@ -22,7 +23,7 @@
 
 /obj/item/bait_can/examine(mob/user)
 	. = ..()
-	. += span_info("It[uses_left ? " has got [uses_left] [bait_type::name] left" : "'s empty"].")
+	. += span_info(LANG("obj.3c03d0a2", list(uses_left ? " has got [uses_left] [bait_type::name] left" : "'s empty")))
 
 /obj/item/bait_can/update_icon_state()
 	. = ..()
@@ -93,9 +94,9 @@
 
 /obj/item/fishing_lure/examine(mob/user)
 	. = ..()
-	. += span_info("It has to be spun with a frequency of [spin_frequency[1] * 0.1] to [spin_frequency[2] * 0.1] seconds while fishing.")
+	. += span_info(LANG("obj.9015dc5f", list(spin_frequency[1] * 0.1, spin_frequency[2] * 0.1)))
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT))
-		. += span_tinynotice("Thanks to your experience, you can examine it again to get a list of fish you can catch with it.")
+		. += span_tinynotice(LANG("obj.39ea7e75", null))
 
 /obj/item/fishing_lure/examine_more(mob/user)
 	. = ..()
@@ -110,7 +111,7 @@
 	if(!length(known_fishes))
 		return
 
-	. += span_info("You can catch the following fish with this lure: [english_list(known_fishes)].")
+	. += span_info(LANG("obj.a12b48bb", list(english_list(known_fishes))))
 
 ///Check if the fish is in the list of catchable fish for this fishing lure. Return value is a multiplier.
 /obj/item/fishing_lure/check_bait(obj/item/fish/fish)

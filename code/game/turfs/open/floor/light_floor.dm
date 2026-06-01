@@ -31,11 +31,11 @@
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()
-	. += span_notice("There's a <b>small crack</b> on the edge of it.")
-	. += span_notice("Use a multitool on it to change colors.")
-	. += span_notice("Use a screwdriver to turn it off or on.")
+	. += span_notice(LANG("turf.ff9d66d1", null))
+	. += span_notice(LANG("turf.320ce4fe", null))
+	. += span_notice(LANG("turf.b04ce71e", null))
 	if(state) ///check if broken
-		. += span_danger("The light bulb seems fried!")
+		. += span_danger(LANG("turf.cacf0934", null))
 
 ///create radial menu
 /turf/open/floor/light/proc/populate_lighttile_designs()

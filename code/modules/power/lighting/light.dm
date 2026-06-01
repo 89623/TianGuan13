@@ -413,10 +413,10 @@
 		if(LIGHT_BROKEN)
 			. += span_danger("The [fitting] has been smashed.")
 	if(cell || has_mock_cell)
-		. +=  span_notice("Its backup power charge meter reads [has_mock_cell ? 100 : round((cell.charge / cell.maxcharge) * 100, 0.1)]%.")
+		. +=  span_notice(LANG("obj.a9f55cfa", list(has_mock_cell ? 100 : round((cell.charge / cell.maxcharge) * 100, 0.1))))
 	//NOVA EDIT ADDITION
 	if(constant_flickering)
-		. += span_danger("The lighting ballast appears to be damaged, this could be fixed with a multitool.")
+		. += span_danger(LANG("obj.7837cd3b", null))
 	//NOVA EDIT END
 
 

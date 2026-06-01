@@ -82,9 +82,9 @@
 	var/obj/item/ammo_casing/pulse/casing = chambered
 	if(istype(casing))
 		var/shots_left = floor(casing.remaining_uses / shots_per_fire)
-		. += span_notice("The chambered cell has [casing.remaining_uses] out of [casing.max_uses] charges remaining (enough for [shots_left] shot[shots_left != 1 ? "s" : ""]).")
+		. += span_notice(LANG("obj.da9b1eff", list(casing.remaining_uses, casing.max_uses, shots_left, shots_left != 1 ? "s" : "")))
 		if(casing.remaining_uses < shots_per_fire)
-			. += span_warning("Not enough charge for another shot!")
+			. += span_warning(LANG("obj.7740dc2b", null))
 
 /obj/item/gun/ballistic/rifle/pulse_sniper/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	var/obj/item/ammo_casing/pulse/casing = chambered

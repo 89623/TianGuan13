@@ -120,7 +120,7 @@
 /obj/item/clothing/head/helmet/perceptomatrix/examine(mob/user)
 	. = ..()
 	if (!core_installed)
-		. += span_warning("It requires a hallucination anomaly core in order to function.")
+		. += span_warning(LANG("obj.fbbc84ec", null))
 
 /obj/item/clothing/head/helmet/perceptomatrix/update_icon_state()
 	icon_state = base_icon_state + (core_installed ? "" : "_inactive")

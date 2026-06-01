@@ -54,24 +54,24 @@
 		if (stage == GRENADE_READY || !(length(beakers)))
 			return
 		if (length(beakers) == 2 && beakers[1].name == beakers[2].name)
-			. += span_notice("You see two [beakers[1].name]s inside the grenade.")
+			. += span_notice(LANG("obj.c8ce9017", list(beakers[1].name)))
 			return
 
 		for (var/obj/item/beaker as anything in beakers)
 			. += span_notice("You see a [beaker.name] inside the grenade.")
 
 	if (!length(beakers))
-		. += span_notice("You scan the grenade, but detect nothing.")
+		. += span_notice(LANG("obj.5f87e07a", null))
 		return
 
-	. += span_notice("You scan the grenade and detect the following reagents:")
+	. += span_notice(LANG("obj.d7617a43", null))
 
 	for (var/obj/item/beaker as anything in beakers)
 		for (var/datum/reagent/reagent in beaker.reagents.reagent_list)
 			. += span_notice("[reagent.volume] units of [reagent.name] in \the [beaker].")
 
 	if (length(beakers) == 1)
-		. += span_notice("You detect no second beaker in the grenade.")
+		. += span_notice(LANG("obj.84f355fc", null))
 
 /obj/item/grenade/chem_grenade/update_name(updates)
 	switch (stage)

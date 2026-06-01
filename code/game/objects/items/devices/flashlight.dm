@@ -141,7 +141,7 @@
 
 	if(patient == user) //they're using it on themselves
 		user.visible_message(span_warning("[user] shines [src] into [patient.p_their()] eyes."), ignored_mobs = user)
-		. += span_info("You direct [src] to into your eyes:\n")
+		. += span_info(LANG("obj.2ab80fa7", list(src)))
 
 		if(patient.is_blind())
 			. += span_notice_ml("You're not entirely certain what you were expecting...\n")
@@ -150,7 +150,7 @@
 
 	else
 		user.visible_message(span_warning("[user] directs [src] to [patient]'s eyes."), ignored_mobs = user)
-		. += span_info("You direct [src] to [patient]'s eyes:\n")
+		. += span_info(LANG("obj.e7c5df86", list(src, patient)))
 
 		if(patient.stat == DEAD || patient.is_blind() || patient.get_eye_protection() >= FLASH_PROTECTION_WELDER) //this used to be just > but literally nothing accessable in the game gave greater than welder without also covering eyes
 			. += span_danger_ml("[patient.p_Their()] [eyes.pupils_name] don't react to the light!\n")//mob is dead

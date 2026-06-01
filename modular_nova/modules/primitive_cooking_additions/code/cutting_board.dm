@@ -48,11 +48,11 @@
 
 /obj/item/cutting_board/examine(mob/user)
 	. = ..()
-	. += span_notice("You can process food similar to a food processor by putting food on this and using a <b>knife</b> on it.")
-	. += span_notice("It can be (un)secured with <b>Right Click</b>")
-	. += span_notice("You can make it drop its item with <b>Alt Click</b>")
+	. += span_notice(LANG("obj.7b700ac9", null))
+	. += span_notice(LANG("obj.48a3e387", null))
+	. += span_notice(LANG("obj.b48618d7", null))
 	if(length(contents))
-		. += span_notice("It has [contents[1]] sitting on it.")
+		. += span_notice(LANG("obj.130b7d38", list(contents[1])))
 
 /obj/item/cutting_board/Destroy()
 	drop_everything_contained()

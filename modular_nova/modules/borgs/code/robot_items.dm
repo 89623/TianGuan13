@@ -133,9 +133,9 @@
 
 /obj/item/borg/hydraulic_clamp/examine(mob/user)
 	. = ..()
-	. += span_notice("Its cargo hold has a capacity of [storage_capacity] and is currently holding <b>[contents.len ? contents.len : 0]</b> items in it!")
+	. += span_notice(LANG("obj.2a2a6c5a", list(storage_capacity, contents.len ? contents.len : 0)))
 	if(storage_capacity > 1)
-		. += span_notice("Use in hand to select an item you want to prioritize taking out of the storage.")
+		. += span_notice(LANG("obj.5b3742cc", null))
 
 
 /// A simple proc to empty the contents of the hydraulic clamp, forcing them on the turf it's on. Also forces `selected_item_index` to 0, to avoid any possible issues resulting from it.
@@ -324,9 +324,9 @@
 
 /obj/item/borg/paperplane_crossbow/examine(mob/user)
 	. = ..()
-	. += span_notice("There is <b>[planes]</b> left inside of its internal magazine, out of [max_planes].")
+	. += span_notice(LANG("obj.b4ed91c5", list(planes, max_planes)))
 	var/charging_speed = 10 / charge_delay
-	. += span_notice("It recharges at a rate of <b>[charging_speed]</b> plane[charging_speed >= 2 ? "s" : ""] per second.")
+	. += span_notice(LANG("obj.ccb3f01f", list(charging_speed, charging_speed >= 2 ? "s" : "")))
 
 
 /obj/item/borg/paperplane_crossbow/equipped()

@@ -81,7 +81,7 @@
 
 /obj/item/reagent_containers/cup/vial/examine(mob/user)
 	. = ..()
-	. += span_notice("Ctrl-Click to reskin or set a custom color.")
+	. += span_notice(LANG("obj.3ffa84cf", null))
 
 /obj/item/reagent_containers/cup/vial/click_ctrl_shift(mob/user)
 	greyscale_colors = null

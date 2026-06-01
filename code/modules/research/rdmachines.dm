@@ -43,11 +43,11 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("A [EXAMINE_HINT("multitool")] with techweb designs can be uploaded here.")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.4871ccf5", list(EXAMINE_HINT("multitool"))))
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("Use a [EXAMINE_HINT("multitool")] or [EXAMINE_HINT("wirecutters")] to interact with wires.")
-		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.1db74e80", list(EXAMINE_HINT("multitool"), EXAMINE_HINT("wirecutters"))))
+		. += span_notice(LANG("obj.740bee8c", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/rnd/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE

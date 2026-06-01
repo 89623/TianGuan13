@@ -51,7 +51,7 @@
 /obj/item/clothing/suit/space/emergency/examine(mob/user)
 	. = ..()
 	if(torn)
-		. += span_danger("It looks torn and useless!")
+		. += span_danger(LANG("obj.65bc5c83", null))
 
 
 // The helmet

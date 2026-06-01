@@ -18,7 +18,7 @@
 	. = ..()
 	if(maxcells)
 		. += LANG("obj.caf41c05", list(installedcells.len, maxcells))
-		. += span_info("You can use Alt Click with an empty hand to remove the most recently inserted cell from the chamber.")
+		. += span_info(LANG("obj.27cf5b98", null))
 
 		for(var/cell in installedcells)
 			. += span_notice("There is \a [cell] loaded in the chamber.") //Shows what cells are currently inside of the gun

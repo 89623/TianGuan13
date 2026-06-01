@@ -27,10 +27,9 @@
 /obj/machinery/quantum_server/examine(mob/user)
 	. = ..()
 	if(max_anchors >= 1)
-		. += span_infoplain("- Its domain vulnerability scanners permit for up to [max_anchors] domain anchors to be used.")
-	. += span_notice("Any preloaded SNPC patterns, 'ghastly Resonance apparitions', or connected bitrunners can leave a custom-written message on the quantum server, \
-	causing a small, audible blip and sending a department message, indicating their activity to on-station bitrunners.")
-	. += span_notice("Its <b>messaging protection</b> is currently: <b>[message_protected ? "enabled" : "disabled"]</b>")
+		. += span_infoplain(LANG("obj.bd2cad97", list(max_anchors)))
+	. += span_notice(LANG("obj.9c572844", null))
+	. += span_notice(LANG("obj.0903de93", list(message_protected ? "enabled" : "disabled")))
 
 /obj/machinery/quantum_server/RefreshParts()
 	. = ..()

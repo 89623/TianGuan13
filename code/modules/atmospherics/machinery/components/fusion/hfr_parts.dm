@@ -30,7 +30,7 @@
 
 /obj/machinery/atmospherics/components/unary/hypertorus/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
+	. += span_notice(LANG("obj.f6d67ef1", list(src)))
 
 /obj/machinery/atmospherics/components/unary/hypertorus/screwdriver_act(mob/living/user, obj/item/tool)
 	return fusion_started ? NONE : default_deconstruction_screwdriver(user, tool)
@@ -111,7 +111,7 @@
 
 /obj/machinery/hypertorus/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
+	. += span_notice(LANG("obj.f6d67ef1", list(src)))
 
 /obj/machinery/hypertorus/screwdriver_act(mob/living/user, obj/item/tool)
 	return fusion_started ? NONE : default_deconstruction_screwdriver(user, tool)

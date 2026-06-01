@@ -81,7 +81,7 @@ FLOOR SAFES
 
 /obj/structure/safe/examine(mob/user)
 	. = ..()
-	. += span_notice("The locking mechanism gears are <b>wrenched</b> in place.")
+	. += span_notice(LANG("obj.6f143554", null))
 
 /obj/structure/safe/update_icon_state()
 	//uses the same icon as the captain's spare safe (therefore lockable storage) so keep it in line with that

@@ -45,7 +45,7 @@
 /obj/machinery/dish_drive/examine(mob/user)
 	. = ..()
 	if(user.Adjacent(src))
-		. += span_notice("Alt-click it to beam its contents to any nearby disposal bins.")
+		. += span_notice(LANG("obj.a55e5386", null))
 	if(!LAZYLEN(dish_drive_contents))
 		. += LANG("obj.02d482cc", list(src))
 		return
@@ -63,7 +63,7 @@
 		var/dish_name = dish_amount == 1 ? initial(dish.name) : "[initial(dish.name)][plural_s(initial(dish.name))]"
 		dish_list += list("[dish_amount] [dish_name]")
 
-	. += span_info("It contains [english_list(dish_list)].\n[peek(dish_drive_contents)] is at the top of the pile.")
+	. += span_info(LANG("obj.0274fb36", list(english_list(dish_list), peek(dish_drive_contents))))
 
 /obj/machinery/dish_drive/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

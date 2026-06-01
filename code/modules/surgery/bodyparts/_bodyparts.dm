@@ -340,9 +340,9 @@
 
 	. = ..()
 	if(brute_dam > DAMAGE_PRECISION)
-		. += span_warning("This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.")
+		. += span_warning(LANG("obj.4fb413ed", list(brute_dam > 30 ? "severe" : "minor")))
 	if(burn_dam > DAMAGE_PRECISION)
-		. += span_warning("This limb has [burn_dam > 30 ? "severe" : "minor"] burns.")
+		. += span_warning(LANG("obj.0433916e", list(burn_dam > 30 ? "severe" : "minor")))
 
 	for(var/datum/wound/wound as anything in wounds)
 		var/wound_desc = wound.get_limb_examine_description()

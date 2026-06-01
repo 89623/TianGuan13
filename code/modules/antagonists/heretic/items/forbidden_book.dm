@@ -33,9 +33,9 @@
 	if(!IS_HERETIC(user))
 		return
 
-	. += span_notice("Can be used to tap influences for additional knowledge points.")
-	. += span_notice("Can also be used to draw or remove transmutation runes with ease.")
-	. += span_notice("Additionally, it can work as a focus for your spells when held.")
+	. += span_notice(LANG("obj.1e85c620", null))
+	. += span_notice(LANG("obj.62905648", null))
+	. += span_notice(LANG("obj.b5d7d011", null))
 
 /obj/item/codex_cicatrix/attack_self(mob/user, modifiers)
 	. = ..()
@@ -88,9 +88,9 @@
 /obj/item/codex_cicatrix/morbus/examine(mob/user)
 	. = ..()
 	if(IS_HERETIC(user))
-		. += span_info("Can be used to cast a curse with blood in your offhand by right clicking a rune.")
+		. += span_info(LANG("obj.21c83dc5", null))
 		return
-	. += span_danger("The eyes stop blinking. They stare at you. Their gaze burns...")
+	. += span_danger(LANG("obj.47094429", null))
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/human_user = user

@@ -273,7 +273,7 @@
 /obj/item/necromantic_stone/examine(mob/user)
 	. = ..()
 	if(!unlimited)
-		. += span_notice("[spooky_scaries.len]/[max_thralls] active thralls.")
+		. += span_notice(LANG("obj.5b30877c", list(spooky_scaries.len, max_thralls)))
 
 /obj/item/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.

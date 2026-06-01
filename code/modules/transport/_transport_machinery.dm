@@ -104,7 +104,7 @@
 		for(var/tool_method in methods_to_fix)
 			. += span_warning("It needs someone to [EXAMINE_HINT(tool_method)].")
 	if(panel_open)
-		. += span_notice("It can be deconstructed with a [EXAMINE_HINT("crowbar.")]")
+		. += span_notice(LANG("obj.d8fd396d", list(EXAMINE_HINT("crowbar."))))
 
 /**
  * Signal proc for [COMSIG_ATOM_TOOL_ACT], from a variety of signals, registered on the machinery.

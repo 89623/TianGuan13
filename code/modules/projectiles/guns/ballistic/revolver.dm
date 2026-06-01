@@ -95,7 +95,7 @@
 	. = ..()
 	var/live_ammo = get_ammo(FALSE, FALSE)
 	. += LANG("obj.88488fc4", list(live_ammo ? live_ammo : "None"))
-	. += span_notice("It can be spun with [EXAMINE_HINT("alt-click")].")
+	. += span_notice(LANG("obj.53ced635", list(EXAMINE_HINT("alt-click"))))
 
 /obj/item/gun/ballistic/revolver/ignition_effect(atom/A, mob/user)
 	if(last_fire && last_fire + 15 SECONDS > world.time)
@@ -225,7 +225,7 @@
 
 /obj/item/gun/ballistic/revolver/russian/examine(mob/user)
 	. = ..()
-	. += span_notice("You can change length of your pause before pulling the trigger with [EXAMINE_HINT("alt-right-click")].")
+	. += span_notice(LANG("obj.9ea2df3d", list(EXAMINE_HINT("alt-right-click"))))
 
 /obj/item/gun/ballistic/revolver/russian/click_alt_secondary(mob/user)
 	if(loc != user)

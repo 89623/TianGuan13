@@ -272,7 +272,7 @@
 	. += LANG("obj.da174e71", list(shells_left, casing_phrasing))
 	// this is kind of awkward phrasing, but it's the top/ready ammo in the box
 	// intended for people who have like three mislabeled magazines
-	. += span_notice("\A <b>[top_round]</b> is ready.")
+	. += span_notice(LANG("obj.e862fbc2", list(top_round)))
 
 /obj/item/ammo_box/update_icon_state()
 	var/shells_left = LAZYLEN(stored_ammo)

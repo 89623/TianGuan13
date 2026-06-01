@@ -310,7 +310,7 @@
 /obj/machinery/limbgrower/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of reagents.<br>Reagent consumption rate at <b>[production_coefficient * 100]%</b>.")
+		. += span_notice(LANG("obj.a459eca1", list(reagents.maximum_volume, production_coefficient * 100)))
 
 /**
  * Check if the limb grower is currently busy.

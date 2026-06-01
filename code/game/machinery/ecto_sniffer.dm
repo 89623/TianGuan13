@@ -77,8 +77,7 @@
 
 /obj/machinery/ecto_sniffer/examine(mob/user)
 	. = ..()
-	. += span_notice("Any active ghost can leave a layer of ectoplasm on the ectoscopic sniffer, causing a small, audible blip, \
-	indicating they wish to enter the world as a positronic personality.")
+	. += span_notice(LANG("obj.6ad7a45f", null))
 
 ///Removes the ghost from the ectoplasmic_residues list and lets them know they are free to activate the sniffer again.
 /obj/machinery/ecto_sniffer/proc/clear_residue(ghost_ckey)

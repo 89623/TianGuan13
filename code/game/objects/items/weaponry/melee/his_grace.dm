@@ -133,7 +133,7 @@
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 				. += "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>"
 	else
-		. += span_his_grace("[src] is latched closed.")
+		. += span_his_grace(LANG("obj.bdd6ec7b", list(src)))
 
 /obj/item/his_grace/relaymove(mob/living/user, direction) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)

@@ -68,8 +68,7 @@
 
 /obj/item/reagent_containers/cup/soup_pot/examine(mob/user)
 	. = ..()
-	. += span_notice("There's room for <b>[max_ingredients - LAZYLEN(added_ingredients)]</b> more ingredients \
-		or <b>[reagents.maximum_volume - reagents.total_volume]</b> more units of reagents in there.")
+	. += span_notice(LANG("obj.e9eeaca4", list(max_ingredients - LAZYLEN(added_ingredients), reagents.maximum_volume - reagents.total_volume)))
 
 /**
  * Override standard reagent examine with something a bit more sensible for the soup pot,

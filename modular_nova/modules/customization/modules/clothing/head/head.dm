@@ -288,7 +288,7 @@
 
 /obj/item/clothing/head/skrell_chain/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Use in hand</b> to pick a new style.")
+	. += span_notice(LANG("obj.ce2b4e46", null))
 
 /obj/item/clothing/head/skrell_chain/attack_self(mob/user)
 	var/style_name = tgui_input_list(user, "How does chain look when it's up?", "Pick!", chain_styles)

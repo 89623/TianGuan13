@@ -111,7 +111,7 @@
 
 /obj/machinery/button/transport/tram/examine(mob/user)
 	. = ..()
-	. += span_notice("There's a small inscription on the button...")
-	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
+	. += span_notice(LANG("obj.55dc601c", null))
+	. += span_notice(LANG("obj.0865a712", null))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/transport/tram, 32)

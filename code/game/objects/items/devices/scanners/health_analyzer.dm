@@ -46,7 +46,7 @@
 /obj/item/healthanalyzer/examine(mob/user)
 	. = ..()
 	if(src.mode != SCANNER_NO_MODE)
-		. += span_notice("Alt-click [src] to toggle the limb damage readout. Ctrl-shift-click to print readout report.")
+		. += span_notice(LANG("obj.70d11c6e", list(src)))
 
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
@@ -855,7 +855,7 @@
 /obj/item/paper/medical_report/examine(mob/user)
 	. = ..()
 	if(last_healthy_scanned_mob)
-		. += span_notice("This medical report is applicable for medical bounties.")
+		. += span_notice(LANG("obj.138779ea", null))
 
 
 #undef SCANMODE_HEALTH

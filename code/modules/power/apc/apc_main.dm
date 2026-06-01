@@ -352,8 +352,7 @@
 		if(has_electronics && terminal)
 			. += LANG("obj.5666b50b", list(opened == APC_COVER_REMOVED?"removed":"open", cell ? "installed" : "missing"))
 		else
-			. += {"It's [ !terminal ? "not" : "" ] wired up.\n
-			The electronics are[!has_electronics?"n't":""] installed."}
+			. += LANG("obj.18a1f292", list(!terminal ? "not" : "", !has_electronics?"n't":""))
 	else
 		if(machine_stat & MAINT)
 			. += LANG("obj.20a9b831", null)

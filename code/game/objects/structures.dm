@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Inert structures, such as girders, machine frames, and crates/lockers.
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
@@ -37,9 +38,9 @@
 	. = ..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			. += span_warning("It's on fire!")
+			. += span_warning(LANG("obj.3e122e7a", null))
 		if(broken)
-			. += span_notice("It appears to be broken.")
+			. += span_notice(LANG("obj.11410718", null))
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status

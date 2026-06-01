@@ -95,7 +95,7 @@
 /obj/vehicle/ridden/secway/examine(mob/user)
 	. = ..()
 	if(eddie_murphy)
-		. += span_warning("Something appears to be stuck in its exhaust...")
+		. += span_warning(LANG("obj.ff1f7dc5", null))
 
 /obj/vehicle/ridden/secway/atom_destruction()
 	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)

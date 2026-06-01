@@ -256,7 +256,7 @@
 /obj/item/reagent_containers/borghypo/examine(mob/user)
 	. = ..()
 	. += LANG("obj.d070eebd", list(selected_reagent ? "[selected_reagent]. [selected_reagent.description]" : "nothing."))
-	. += span_notice("<i>Alt+Click</i> to change transfer amount. Currently set to [amount_per_transfer_from_this]u.")
+	. += span_notice(LANG("obj.f00ea77b", list(amount_per_transfer_from_this)))
 
 /* NOVA EDIT REMOVAL START - SEE master_files/code/modules/reagents/reagent_containers.dm
 /obj/item/reagent_containers/borghypo/click_alt(mob/living/user)

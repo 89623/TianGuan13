@@ -79,8 +79,8 @@
 
 /obj/item/clothing/neck/link_scryer/loaded/nifsoft/examine(mob/user)
 	. = ..()
-	. += span_notice("The MODlink ID is [mod_link.id], frequency is [mod_link.frequency || "unset"]. <b>Right-click</b> with a multitool to copy/imprint the frequency.")
-	. += span_notice("<b>Right-click</b> with an empty hand to change the name.")
+	. += span_notice(LANG("obj.779b5fc6", list(mod_link.id, mod_link.frequency || "unset")))
+	. += span_notice(LANG("obj.421abe83", null))
 
 /obj/item/clothing/neck/link_scryer/loaded/nifsoft/equipped(mob/living/user, slot)
 	. = ..()

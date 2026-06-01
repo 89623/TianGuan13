@@ -23,10 +23,10 @@
 /obj/item/tattoo_kit/examine(mob/tattoo_artist)
 	. = ..()
 	if(!uses)
-		. += span_warning("This kit has no uses left!")
+		. += span_warning(LANG("obj.54d80f93", null))
 	else
-		. += span_notice("This kit has enough ink for [uses] use\s.")
-	. += span_boldnotice("You can use a toner cartridge to refill this.")
+		. += span_notice(LANG("obj.8105762d", list(uses)))
+	. += span_boldnotice(LANG("obj.0b612be2", null))
 
 /obj/item/tattoo_kit/item_interaction(mob/living/user, obj/item/toner/ink_cart, list/modifiers)
 	if(!istype(ink_cart))

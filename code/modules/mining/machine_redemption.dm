@@ -78,7 +78,7 @@
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
 	if(panel_open)
-		. += span_notice("Alt-click to rotate the input and output direction.")
+		. += span_notice(LANG("obj.d531c5c9", null))
 
 
 /obj/machinery/mineral/ore_redemption/proc/silo_redeem_points(obj/machinery/mineral/ore_redemption/machine, container, obj/item/stack/ore/gathered_ore)

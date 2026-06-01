@@ -27,9 +27,9 @@
 
 /obj/machinery/plumbing/bottler/examine(mob/user)
 	. = ..()
-	. += span_notice("A small screen indicates that it will fill for [wanted_amount]u.")
+	. += span_notice(LANG("obj.c347cfa1", list(wanted_amount)))
 	if(!valid_output_configuration)
-		. += span_warning("A flashing notification on the screen reads: \"Output location error!\"")
+		. += span_warning(LANG("obj.e6c18213", null))
 
 ///changes the tile array
 /obj/machinery/plumbing/bottler/setDir(newdir)

@@ -526,30 +526,30 @@
 /obj/machinery/power/rbmk2/examine(mob/user)
 	. = ..()
 
-	. += span_notice("A digital display on the side side says <b>MAX SAFE POWER: [display_power(safeties_max_power_generation)], WARRANTY VOID IF EXCEEDED</b>.")
+	. += span_notice(LANG("obj.df8ff394", list(display_power(safeties_max_power_generation))))
 
 	. += LANG("obj.bbb00e7d", list(length(linked_sniffers)))
 
 	. += LANG("obj.e87ba4d7", list(!active?"n't":""))
 
 	if(!power || !powernet)
-		. += span_warning("It is not connected to a power cable.")
+		. += span_warning(LANG("obj.5a2cca64", null))
 
 	if(!venting)
-		. += span_warning("The vents are closed.")
+		. += span_warning(LANG("obj.7206c8ab", null))
 	else if(vent_reverse_direction)
 		. += LANG("obj.4ad27eca", null)
 	if(!stored_rod)
-		. += span_warning("It it is missing a RB-MK2 reactor rod.")
+		. += span_warning(LANG("obj.ae3829d7", null))
 	else if(jammed)
-		. += span_danger("The reactor rod is jammed! <b>Pry</b> the rod back in to unjam in!")
+		. += span_danger(LANG("obj.ca628566", null))
 	else if(meltdown)
-		. += span_danger("The reactor rod is leaping erractically!")
+		. += span_danger(LANG("obj.92cc2aff", null))
 	else
-		. += span_notice("There is an RB-MK2 reactor rod installed. <b>Wrench</b> it down to activate, or remove it with ALT+CLICK.")
+		. += span_notice(LANG("obj.9fb43c12", null))
 
 	if(active)
-		. += span_notice("It is currently consuming [last_tritium_consumption] moles of tritium per cycle, producing [display_power(last_power_generation)].")
+		. += span_notice(LANG("obj.943a8299", list(last_tritium_consumption, display_power(last_power_generation))))
 
 /obj/machinery/power/rbmk2/examine_more(mob/user)
 	. = ..()

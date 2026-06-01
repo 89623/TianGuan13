@@ -104,9 +104,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/space_heater/wall_mounted, 29)
 /obj/item/wallframe/wall_heater/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += span_notice("It contains a [ispath(cell) ? cell::name : cell.name], which could be replaced.")
+		. += span_notice(LANG("obj.299b6069", list(ispath(cell) ? cell::name : cell.name)))
 	else
-		. += span_notice("It is empty. You could insert a [span_bold("cell")].")
+		. += span_notice(LANG("obj.c3a1afba", list(span_bold("cell"))))
 
 /obj/item/wallframe/wall_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

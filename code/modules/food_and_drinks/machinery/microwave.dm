@@ -172,30 +172,30 @@
 /obj/machinery/microwave/examine(mob/user)
 	. = ..()
 	if(vampire_charging_capable)
-		. += span_info("This model features Wave™: a Nanotrasen exclusive. Our latest and greatest, Wave™ allows your PDA to be charged wirelessly through microwave frequencies! You can Wave-charge your device by placing it inside and selecting the charge mode.")
-		. += span_info("Because nothing says 'future' like charging your PDA while overcooking your leftovers. Nanotrasen Wave™ - Multitasking, redefined.")
+		. += span_info(LANG("obj.8a343ca7", null))
+		. += span_info(LANG("obj.92ea02eb", null))
 
 	if(cell_powered)
-		. += span_notice("This model is wireless, powered by portable cells. [isnull(cell) ? "The cell slot is empty." : "[EXAMINE_HINT("Ctrl-click")] to remove the power cell."]")
+		. += span_notice(LANG("obj.927af204", list(isnull(cell) ? "The cell slot is empty." : "[EXAMINE_HINT("Ctrl-click")] to remove the power cell.")))
 
 	if(!operating)
 		if(!operating && vampire_charging_capable)
-			. += span_notice("[EXAMINE_HINT("Alt-click")] to change default mode.")
+			. += span_notice(LANG("obj.113826e7", list(EXAMINE_HINT("Alt-click"))))
 
-		. += span_notice("[EXAMINE_HINT("Right-click")] to start [vampire_charging_enabled ? "charging" : "cooking"] cycle.")
+		. += span_notice(LANG("obj.efe8ded7", list(EXAMINE_HINT("Right-click"), vampire_charging_enabled ? "charging" : "cooking")))
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents and display!")
+		. += span_warning(LANG("obj.7f267c32", list(src)))
 		return
 	if(operating)
-		. += span_notice("\The [src] is operating.")
+		. += span_notice(LANG("obj.b8933a4b", list(src)))
 		return
 
 	if(length(ingredients))
 		if(issilicon(user))
-			. += span_notice("\The [src] camera shows:")
+			. += span_notice(LANG("obj.1542da46", list(src)))
 		else
-			. += span_notice("\The [src] contains:")
+			. += span_notice(LANG("obj.43cd9c42", list(src)))
 		var/list/items_counts = new
 		for(var/i in ingredients)
 			if(isstack(i))
@@ -207,7 +207,7 @@
 		for(var/item in items_counts)
 			. += span_notice("- [items_counts[item]]x [item].")
 	else
-		. += span_notice("\The [src] is empty.")
+		. += span_notice(LANG("obj.c8ad1ee9", list(src)))
 
 	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "[span_notice("The status display reads:")]\n"+\
@@ -216,7 +216,7 @@
 		span_notice("- Power: <b>[efficiency * TIER_1_CELL_CHARGE_RATE]W</b>.")
 
 		if(cell_powered)
-			. += span_notice("- Charge: <b>[isnull(cell) ? "INSERT CELL" : "[round(cell.percent())]%"]</b>.")
+			. += span_notice(LANG("obj.4e79d634", list(isnull(cell) ? "INSERT CELL" : "[round(cell.percent())]%")))
 
 #define MICROWAVE_INGREDIENT_OVERLAY_SIZE 24
 

@@ -32,7 +32,7 @@
 	else
 		. += LANG("obj.53b0d090", null)
 	if(has_cap)
-		. += span_notice("Alt-click [src] to [ cap ? "take the cap off" : "put the cap on"].")
+		. += span_notice(LANG("obj.ffde040d", list(src, cap ? "take the cap off" : "put the cap on")))
 
 /obj/item/perfume/click_alt(mob/user)
 	toggle_cap(user)

@@ -53,7 +53,7 @@
 /obj/item/food/pancakes/raw/examine(mob/user)
 	. = ..()
 	if(name == initial(name))
-		. += span_notice("You can modify the pancake by adding <b>blueberries</b> or <b>chocolate</b> before finishing the griddle.")
+		. += span_notice(LANG("obj.14bb14ef", null))
 
 /obj/item/food/pancakes/blueberry
 	name = "blueberry pancake"

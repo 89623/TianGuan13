@@ -71,7 +71,7 @@
 		. = form_reference.examine(user)
 
 	if(get_dist(user, src) <= 3) // always add this because if the form_reference somehow nulls out we still want to have something look "weird" about an item when someone is close
-		. += span_warning("It doesn't look quite right...")
+		. += span_warning(LANG("mob.8d8e4276", null))
 
 /mob/living/basic/morph/med_hud_set_health()
 	if(isliving(form_typepath))

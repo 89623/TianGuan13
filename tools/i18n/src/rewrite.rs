@@ -220,7 +220,7 @@ impl<'a> Rewriter<'a> {
                         if follow.is_empty() {
                             if let Term::Ident(id) = &term.elem {
                                 if id == "." {
-                                    self.try_rewrite_examine(rhs, ns);
+                                    self.try_rewrite_examine(term.location, rhs, ns);
                                 }
                             }
                         }
@@ -295,11 +295,11 @@ impl<'a> Rewriter<'a> {
         for (i, key, placeholders) in targets {
             let Some(&(astart, aend)) = arg_ranges.get(i) else { continue };
             let Some(qpos) = find_first_quote(src, astart, aend) else { continue };
-            let Some((qend, interp_args)) = scan_dm_string(src, qpos) else { continue };
+            let Some((lstart, qend, interp_args)) = scan_dm_string(src, qpos) else { continue };
             if qend > aend || interp_args.len() != placeholders {
                 continue; // 越界 / 内插数不符 → 跳过
             }
-            if in_preprocessor_directive(src, qpos) {
+            if in_preprocessor_directive(src, lstart) {
                 continue; // 字符串在 #define 等预处理指令里（宏体）→ 跳过，避免破坏宏
             }
             let replacement = if interp_args.is_empty() {
@@ -308,7 +308,7 @@ impl<'a> Rewriter<'a> {
                 format!("LANG(\"{key}\", list({}))", interp_args.join(", "))
             };
             new_edits.push(Edit {
-                start: qpos,
+                start: lstart,
                 end: qend,
                 replacement,
             });
@@ -318,40 +318,63 @@ impl<'a> Rewriter<'a> {
         }
     }
 
-    /// 改写 examine 的 `. += <text>`。以「文本节点自身的 Location」为锚（校验该处确为 `"`）：
-    /// 裸字符串 `. += "..."` / `. += "[interp]"` 的节点位置可靠 → 改写；span_*() 包裹的内层串
-    /// 位置指向宏定义（不是 `"`）→ 自动跳过（留待后续）。零损坏风险。
-    fn try_rewrite_examine(&mut self, rhs: &Expression, ns: &str) {
+    /// 改写 examine 的 `. += <text>`。以「裸 `.` 的 Location」为锚（调用点级、可靠），在 rhs
+    /// 源码里查找字符串字面量。覆盖裸串与 span_*() 包裹两种（span 包裹后内层串自身 Location
+    /// 指向宏定义、不可用，故必须从 `.` 锚 + 源码扫描）。
+    ///
+    /// 安全：要求 rhs 源码里**恰好一个**顶层字符串字面量（span_notice("x") 满足；
+    /// 形如 `foo("x") + "y"` 的有两个 → 跳过，避免改错那一个）。
+    fn try_rewrite_examine(&mut self, dot_loc: dm::Location, rhs: &Expression, ns: &str) {
         let mut nodes: Vec<&Spanned<Term>> = Vec::new();
         collect_text_nodes(rhs, &mut nodes);
         if nodes.len() != 1 {
             return;
         }
-        let node = nodes[0];
         let Some(template) = build_template(rhs) else {
             return;
         };
         let key = make_key(ns, &template);
         let placeholders = placeholder_count(&template);
 
-        let loc = node.location;
-        let path = self.context.file_path(loc.file).to_path_buf();
+        let path = self.context.file_path(dot_loc.file).to_path_buf();
         if let Some(filter) = self.filter {
             if !path.to_string_lossy().contains(filter) {
                 return;
             }
         }
         let Some(src) = self.source(&path) else { return };
-        let Some(start) = line_col_to_byte(src, loc.line, loc.column) else {
+        let Some(dot_start) = line_col_to_byte(src, dot_loc.line, dot_loc.column) else {
             return;
         };
-        if src.as_bytes().get(start) != Some(&b'"') {
-            return; // 节点位置非开引号（span_* 宏展开等）→ 跳过
+        if src.as_bytes().get(dot_start) != Some(&b'.') {
+            return; // 锚不是 `.` → 定位有误，跳过
         }
-        let Some((end, interp_args)) = scan_dm_string(src, start) else {
-            return;
-        };
-        if interp_args.len() != placeholders || in_preprocessor_directive(src, start) {
+        let line_end = logical_line_end(src, dot_start);
+
+        // 在 (dot_start, line_end] 里找顶层字符串字面量；要求恰好一个。
+        let bytes = src.as_bytes();
+        let mut first: Option<(usize, usize, Vec<String>)> = None;
+        let mut count = 0usize;
+        let mut i = dot_start + 1;
+        while i < line_end {
+            if bytes[i] == b'"' {
+                let Some((lstart, end, args)) = scan_dm_string(src, i) else {
+                    return; // 畸形字符串 → 跳过
+                };
+                count += 1;
+                if first.is_none() {
+                    first = Some((lstart, end, args));
+                }
+                i = end;
+            } else {
+                i += 1;
+            }
+        }
+        if count != 1 {
+            return; // 0 个或多个（有歧义）→ 跳过
+        }
+        let (qpos, qend, interp_args) = first.unwrap();
+        if interp_args.len() != placeholders || in_preprocessor_directive(src, qpos) {
             return;
         }
         let replacement = if interp_args.is_empty() {
@@ -362,7 +385,11 @@ impl<'a> Rewriter<'a> {
         self.edits
             .entry(path)
             .or_default()
-            .push(Edit { start, end, replacement });
+            .push(Edit {
+                start: qpos,
+                end: qend,
+                replacement,
+            });
     }
 
     fn recurse_term(&mut self, term: &Term, ns: &str) {
@@ -573,8 +600,13 @@ fn split_call_args(src: &str, lparen: usize) -> Option<Vec<(usize, usize)>> {
     let mut arg_start = i;
     while i < b.len() {
         match b[i] {
+            b'{' if b.get(i + 1) == Some(&b'"') => {
+                // 块串 {"..."}：整体跳过（包含闭合 "}）。
+                let (_, end, _) = scan_dm_string(src, i + 1)?;
+                i = end;
+            }
             b'"' => {
-                let (end, _) = scan_dm_string(src, i)?;
+                let (_, end, _) = scan_dm_string(src, i)?;
                 i = end;
             }
             b'/' if b.get(i + 1) == Some(&b'/') => {
@@ -649,6 +681,27 @@ fn in_preprocessor_directive(src: &str, pos: usize) -> bool {
     b.get(i) == Some(&b'#')
 }
 
+/// 从 `from` 所在位置找逻辑行结尾的字节位置（跳过 `\` 续行）。
+fn logical_line_end(src: &str, from: usize) -> usize {
+    let b = src.as_bytes();
+    let mut i = from;
+    while i < b.len() {
+        if b[i] == b'\n' {
+            let mut e = i;
+            if e > 0 && b[e - 1] == b'\r' {
+                e -= 1;
+            }
+            if e > 0 && b[e - 1] == b'\\' {
+                i += 1; // 续行，继续
+                continue;
+            }
+            return i;
+        }
+        i += 1;
+    }
+    b.len()
+}
+
 /// 在 [start, end) 区间里找第一个 `"` 的字节位置。
 fn find_first_quote(src: &str, start: usize, end: usize) -> Option<usize> {
     let b = src.as_bytes();
@@ -662,20 +715,39 @@ fn find_first_quote(src: &str, start: usize, end: usize) -> Option<usize> {
     None
 }
 
-/// 从开引号位置扫描一个 DM 字符串字面量。
-/// 返回 (闭引号之后的字节位置, 各 `[...]` 内插表达式源码)。未闭合/不平衡返回 None。
-/// 仅 ASCII 定界符参与判定（`"` `[` `]` `\`），中文等多字节字符按字节跳过，切片边界恒在 ASCII 处。
-fn scan_dm_string(src: &str, start: usize) -> Option<(usize, Vec<String>)> {
+/// 从开引号位置扫描一个 DM 字符串字面量。支持普通串 `"..."` 与块串 `{"..."}`
+/// （块串可含未转义的 `"` 与换行，闭合为 `"}`；块串的字面量起点是 `{`）。
+/// 返回 (字面量起点字节位置, 结束后字节位置, 各 `[...]` 内插表达式源码)。未闭合返回 None。
+/// 仅 ASCII 定界符参与判定，多字节字符按字节跳过，切片边界恒在 ASCII 处。
+fn scan_dm_string(src: &str, quote_pos: usize) -> Option<(usize, usize, Vec<String>)> {
     let b = src.as_bytes();
-    if b.get(start) != Some(&b'"') {
+    if b.get(quote_pos) != Some(&b'"') {
         return None;
     }
+    let block = quote_pos > 0 && b[quote_pos - 1] == b'{'; // {"..."} 块串
+    let start = if block { quote_pos - 1 } else { quote_pos };
     let mut args: Vec<String> = Vec::new();
-    let mut i = start + 1;
+    let mut i = quote_pos + 1;
     while i < b.len() {
         match b[i] {
             b'\\' => i += 2, // 转义（含行末续行 \<newline>）
-            b'"' => return Some((i + 1, args)),
+            b'"' => {
+                if block {
+                    if b.get(i + 1) == Some(&b'}') {
+                        return Some((start, i + 2, args)); // 闭合 "}
+                    }
+                    i += 1; // 块串内的字面量 "
+                } else {
+                    return Some((start, i + 1, args));
+                }
+            }
+            b'\n' => {
+                if block {
+                    i += 1; // 块串可跨行
+                } else {
+                    return None;
+                }
+            }
             b'[' => {
                 let inner_start = i + 1;
                 let mut depth = 1usize;

@@ -66,9 +66,9 @@
 
 /obj/structure/chair/examine(mob/user)
 	. = ..()
-	. += span_notice("It's held together by a couple of <b>bolts</b>.")
+	. += span_notice(LANG("obj.c0bf1b5b", null))
 	if(!has_buckled_mobs() && can_buckle)
-		. += span_notice("While standing on [src], drag and drop your sprite onto [src] to buckle to it.")
+		. += span_notice(LANG("obj.aac14093", list(src, src)))
 
 ///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
 /obj/structure/chair/proc/MakeRotate()

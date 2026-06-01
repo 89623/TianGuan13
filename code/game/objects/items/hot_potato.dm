@@ -90,9 +90,9 @@
 /obj/item/hot_potato/examine(mob/user)
 	. = ..()
 	if(active)
-		. += span_warning("[src] is flashing red-hot! You should probably get rid of it!")
+		. += span_warning(LANG("obj.cf1a3101", list(src)))
 		if(show_timer)
-			. += span_warning("[src]'s timer looks to be at [DisplayTimeText(activation_time - world.time)]!")
+			. += span_warning(LANG("obj.0639cada", list(src, DisplayTimeText(activation_time - world.time))))
 
 /obj/item/hot_potato/equipped(mob/user)
 	. = ..()

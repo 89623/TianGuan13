@@ -275,7 +275,7 @@
 	. = ..()
 	. += LANG("obj.587c1359", list(cover_open ? "close" : "open"))
 	if(cover_open && magazine)
-		. += span_notice("It seems like you could use an <b>empty hand</b> to remove the magazine.")
+		. += span_notice(LANG("obj.50e55fa8", null))
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/click_alt(mob/user)
@@ -419,10 +419,10 @@
 /obj/item/gun/ballistic/automatic/battle_rifle/examine(mob/user)
 	. = ..()
 	if(shots_before_degradation)
-		. += span_notice("[src] can fire [shots_before_degradation] more times before risking system degradation.")
+		. += span_notice(LANG("obj.b671765b", list(src, shots_before_degradation)))
 	else
-		. += span_notice("[src] is in the process of system degradation. It is currently at stage [degradation_stage] of [degradation_stage_max]. Use a multitool on [src] to recalibrate. Alternatively, insert it into a weapon recharger.")
-	. += span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src].")
+		. += span_notice(LANG("obj.413ebfb4", list(src, degradation_stage, degradation_stage_max, src)))
+	. += span_notice(LANG("obj.443782c7", list(EXAMINE_HINT("look closer"), src)))
 
 
 

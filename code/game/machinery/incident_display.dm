@@ -369,12 +369,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 /obj/machinery/incident_display/examine(mob/user)
 	. = ..()
 	if(atom_integrity < max_integrity)
-		. += span_notice("It can be repaired with a [EXAMINE_HINT("welder")].")
+		. += span_notice(LANG("obj.e221d4e0", list(EXAMINE_HINT("welder"))))
 
 	if(sign_features & DISPLAY_DELAM)
-		. += span_notice("It can be changed to display tram hits with a [EXAMINE_HINT("multitool")].")
+		. += span_notice(LANG("obj.31e2d6dc", list(EXAMINE_HINT("multitool"))))
 		if(last_delam >= 0)
-			. += span_info("It has been [last_delam] shift\s since the last delamination event at this Nanotrasen facility.")
+			. += span_info(LANG("obj.45fdedcb", list(last_delam)))
 			switch(last_delam)
 				if(0)
 					. += span_info("Let's do better today.<br/>")
@@ -385,13 +385,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 				if(69)
 					. += span_info("Nice.<br/>")
 				else
-					. += span_info("Incredible!<br/>")
+					. += span_info(LANG("obj.9d999ff8", null))
 		else
-			. += span_info("The supermatter crystal has delaminated, in case you didn't notice.")
+			. += span_info(LANG("obj.e09f758a", null))
 
 	if(sign_features & DISPLAY_TRAM)
-		. += span_notice("It can be changed to display delam-free shifts with a [EXAMINE_HINT("multitool")].")
-		. += span_info("The station has had [hit_count] tram incident\s this shift.")
+		. += span_notice(LANG("obj.dfe4ef73", list(EXAMINE_HINT("multitool"))))
+		. += span_info(LANG("obj.6712bdbe", list(hit_count)))
 		switch(hit_count)
 			if(0)
 				. += span_info("Fantastic! Champions of safety.<br/>")
@@ -404,7 +404,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 			if(69)
 				. += span_info("Nice.<br/>")
 			else
-				. += span_info("Incredible! You're probably reading this from medbay.<br/>")
+				. += span_info(LANG("obj.4813e378", null))
 
 #undef DISPLAY_DELAM
 #undef DISPLAY_TRAM

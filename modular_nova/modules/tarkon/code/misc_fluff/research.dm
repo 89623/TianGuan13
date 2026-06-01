@@ -172,7 +172,7 @@
 
 /obj/machinery/rnd/server/tarkon/examine(mob/user)
 	. = ..()
-	. += span_notice("You can use <b>research notes</b> on this to generate research points.")
+	. += span_notice(LANG("obj.28988d07", null))
 
 /obj/machinery/rnd/server/tarkon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/research_notes) && stored_research)

@@ -77,20 +77,20 @@
 		if(istype(contents[1], /obj/item/forging/complete))
 			var/obj/item/forging/complete/contained_forge_item = contents[1]
 
-			. += span_notice("[src] has a <b>[initial(contained_forge_item.name)]</b> sitting on it, awaiting completion. <br>")
+			. += span_notice(LANG("obj.a5b85afd", list(src, initial(contained_forge_item.name))))
 			var/obj/item/completion_item = contained_forge_item.spawning_item
-			. += span_notice("With <b>[WEAPON_COMPLETION_WOOD_AMOUNT]</b> sheets of <b>wood</b> nearby, and some <b>hammering</b>, it could be completed into a <b>[initial(completion_item.name)]</b>.")
+			. += span_notice(LANG("obj.55c9b51b", list(WEAPON_COMPLETION_WOOD_AMOUNT, initial(completion_item.name))))
 			return // We don't want to show any selected recipes if there's weapon head on the bench
 
 	if(!selected_recipe)
 		return
 
 	var/obj/resulting_item = selected_recipe.resulting_item
-	. += span_notice("The selected recipe's resulting item is: <b>[initial(resulting_item.name)]</b> <br>")
-	. += span_notice("Gather the required materials, listed below, <b>near the bench</b>, then start <b>hammering</b> to complete it! <br>")
+	. += span_notice(LANG("obj.0a6586ba", list(initial(resulting_item.name))))
+	. += span_notice(LANG("obj.7250c00a", null))
 
 	if(!length(selected_recipe.recipe_requirements))
-		. += span_boldwarning("Somehow, this recipe has no requirements, report this as this shouldn't happen.")
+		. += span_boldwarning(LANG("obj.af6ef1e2", null))
 		return
 
 	for(var/obj/requirement_item as anything in selected_recipe.recipe_requirements)

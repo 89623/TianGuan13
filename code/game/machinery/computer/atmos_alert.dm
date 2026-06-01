@@ -13,7 +13,7 @@
 /obj/machinery/computer/atmos_alert/examine(mob/user)
 	. = ..()
 	var/obj/item/circuitboard/computer/atmos_alert/my_circuit = circuit
-	. += span_info("The console is set to [my_circuit.station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
+	. += span_info(LANG("obj.44843f37", list(my_circuit.station_only ? "track all station and mining alarms" : "track alarms on the same z-level")))
 
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

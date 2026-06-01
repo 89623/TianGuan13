@@ -59,8 +59,8 @@
 		for(var/obj/item/stock_parts/power_store/cell/charging in charging_batteries)
 			. += "There's [charging] cell in the charger, current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Charging power: <b>[display_power(charge_rate, convert = FALSE)]</b> per cell.")
-	. += span_notice("Alt click it to remove all the cells at once!")
+		. += span_notice(LANG("obj.950628d2", list(display_power(charge_rate, convert = FALSE))))
+	. += span_notice(LANG("obj.6b876f29", null))
 
 /obj/machinery/cell_charger_multi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stock_parts/power_store/cell) || panel_open)

@@ -95,9 +95,9 @@
 /obj/item/earthcracker/examine(mob/user)
 	. = ..()
 	if(status == EARTHCRACKER_SPENT)
-		. += span_warning("This device is toast. You could disassemble the remains using a [EXAMINE_HINT("Wrench")].")
+		. += span_warning(LANG("obj.7da2b815", list(EXAMINE_HINT("Wrench"))))
 	else
-		. += span_info("This device can be unanchored using a [EXAMINE_HINT("Wrench")].")
+		. += span_info(LANG("obj.c0ea306b", list(EXAMINE_HINT("Wrench"))))
 
 /obj/item/earthcracker/proc/handle_arming(mob/user)
 	var/turf/arm_location = get_turf(user)

@@ -25,11 +25,11 @@
 
 /obj/structure/reagent_anvil/examine(mob/user)
 	. = ..()
-	. += span_notice("You can place <b>hot metal objects</b> on this using some <b>tongs</b>.")
-	. += span_notice("It can be (un)secured with <b>Right Click</b>")
+	. += span_notice(LANG("obj.a4681bf1", null))
+	. += span_notice(LANG("obj.48a3e387", null))
 
 	if(length(contents))
-		. += span_notice("It has [contents[1]] sitting on it.")
+		. += span_notice(LANG("obj.130b7d38", list(contents[1])))
 
 /obj/structure/reagent_anvil/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

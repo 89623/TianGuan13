@@ -550,22 +550,22 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/examine(mob/user)
 	. = ..()
 	if(catcher_name && catch_date)
-		. += span_boldnicegreen("Caught by [catcher_name] on [catch_date].")
+		. += span_boldnicegreen(LANG("obj.82afe7e1", list(catcher_name, catch_date)))
 
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
-		. += span_notice("[p_theyre(TRUE)] [size] cm long.")
-		. += span_notice("[p_they(TRUE)] weighs [weight] [span_tooltip("the standard unit of measurement for space age fish", "kiloclam")].")
+		. += span_notice(LANG("obj.c3aed59e", list(p_theyre(TRUE), size)))
+		. += span_notice(LANG("obj.009b4b7e", list(p_they(TRUE), weight, span_tooltip("the standard unit of measurement for space age fish", "kiloclam"))))
 
 		if(HAS_TRAIT(src, TRAIT_FISH_GENEGUNNED))
-			. += span_warning("[p_theyve(TRUE)] been edited by a fish genegun. [p_they(TRUE)]'ll die if edited again.")
+			. += span_warning(LANG("obj.326136be", list(p_theyve(TRUE), p_they(TRUE))))
 
 	. += get_health_warnings(user, always_deep = FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
-		. += span_smallnoticeital("[p_they(TRUE)] can be used as a fishing bait.")
+		. += span_smallnoticeital(LANG("obj.f2d52c46", list(p_they(TRUE))))
 
 	if(bites_amount)
-		. += span_warning("[p_theyve(TRUE)] been bitten by someone.")
+		. += span_warning(LANG("obj.b363ab08", list(p_theyve(TRUE))))
 
 /obj/item/fish/proc/get_health_warnings(mob/user, always_deep = FALSE)
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)

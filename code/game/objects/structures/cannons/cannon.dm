@@ -27,8 +27,8 @@
 
 /obj/structure/cannon/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] accepts gunpowder or welding fuel.")
-	. += span_warning("Using welding fuel will weaken the force of the projectile fired.")
+	. += span_notice(LANG("obj.e09bf8fb", list(src)))
+	. += span_warning(LANG("obj.106fec92", null))
 
 /obj/structure/cannon/proc/fire()
 	for(var/mob/shaken_mob in urange(10, src))

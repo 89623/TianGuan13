@@ -55,16 +55,16 @@
 		return
 
 	if(current_mass > 0)
-		. += span_notice("You can refill an eldritch flask with this")
+		. += span_notice(LANG("obj.6d48de1f", null))
 
 	if(current_mass < max_mass)
 		var/to_fill = max_mass - current_mass
-		. += span_notice("[src] requires <b>[to_fill]</b> more organ[to_fill == 1 ? "":"s"] or bodypart[to_fill == 1 ? "":"s"].")
+		. += span_notice(LANG("obj.e3f00bd5", list(src, to_fill, to_fill == 1 ? "":"s", to_fill == 1 ? "":"s")))
 	else
-		. += span_boldnotice("[src] is bubbling to the brim with viscous liquid, and is ready to use.")
+		. += span_boldnotice(LANG("obj.b3fb9f79", list(src)))
 
-	. += span_notice("You can <b>[anchored ? "unanchor and move":"anchor in place"]</b> [src] with a <b>Codex Cicatrix</b> or <b>Mansus Grasp</b>.")
-	. += span_info("The following potions can be brewed:")
+	. += span_notice(LANG("obj.21028f16", list(anchored ? "unanchor and move":"anchor in place", src)))
+	. += span_info(LANG("obj.918b6975", null))
 	for(var/obj/item/eldritch_potion/potion as anything in subtypesof(/obj/item/eldritch_potion))
 		var/potion_string = span_info("\tThe " + initial(potion.name) + " - " + initial(potion.crucible_tip))
 		. += potion_string

@@ -77,23 +77,23 @@
 /obj/machinery/coffeemaker/examine(mob/user)
 	. = ..()
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents and display!")
+		. += span_warning(LANG("obj.7f267c32", list(src)))
 		return
 
 	if(brewing)
-		. += span_warning("\The [src] is brewing.")
+		. += span_warning(LANG("obj.8195b09c", list(src)))
 		return
 
 	if(panel_open)
-		. += span_notice("[src]'s maintenance hatch is open!")
+		. += span_notice(LANG("obj.83607a9b", list(src)))
 		return
 
 	if(coffeepot || cartridge)
-		. += span_notice("\The [src] contains:")
+		. += span_notice(LANG("obj.43cd9c42", list(src)))
 		if(coffeepot)
-			. += span_notice("- \A [coffeepot].")
+			. += span_notice(LANG("obj.5dadbcf7", list(coffeepot)))
 		if(cartridge)
-			. += span_notice("- \A [cartridge].")
+			. += span_notice(LANG("obj.5dadbcf7", list(cartridge)))
 		return
 
 	if(!(machine_stat & (NOPOWER|BROKEN)))
@@ -104,29 +104,29 @@
 				. += span_notice("- [cawfee.volume] units of coffee in pot.")
 		if(cartridge)
 			if(cartridge.charges < 1)
-				. += span_notice("- grounds cartridge is empty.")
+				. += span_notice(LANG("obj.2dcb5650", null))
 			else
-				. += span_notice("- grounds cartridge has [cartridge.charges] charges remaining.")
+				. += span_notice(LANG("obj.cb4979e0", list(cartridge.charges)))
 
 	if (coffee_cups >= 1)
-		. += span_notice("There [coffee_cups == 1 ? "is" : "are"] [coffee_cups] coffee cup[coffee_cups != 1 && "s"] left.")
+		. += span_notice(LANG("obj.8774bc3a", list(coffee_cups == 1 ? "is" : "are", coffee_cups, coffee_cups != 1 && "s")))
 	else
-		. += span_notice("There are no cups left.")
+		. += span_notice(LANG("obj.d631c355", null))
 
 	if (sugar_packs >= 1)
-		. += span_notice("There [sugar_packs == 1 ? "is" : "are"] [sugar_packs] packet[sugar_packs != 1 && "s"] of sugar left.")
+		. += span_notice(LANG("obj.2701bf71", list(sugar_packs == 1 ? "is" : "are", sugar_packs, sugar_packs != 1 && "s")))
 	else
-		. += span_notice("There is no sugar left.")
+		. += span_notice(LANG("obj.6f4b1854", null))
 
 	if (sweetener_packs >= 1)
-		. += span_notice("There [sweetener_packs == 1 ? "is" : "are"] [sweetener_packs] packet[sweetener_packs != 1 && "s"] of sweetener left.")
+		. += span_notice(LANG("obj.bb063c30", list(sweetener_packs == 1 ? "is" : "are", sweetener_packs, sweetener_packs != 1 && "s")))
 	else
-		. += span_notice("There is no sweetener left.")
+		. += span_notice(LANG("obj.94e6b84f", null))
 
 	if (creamer_packs > 1)
-		. += span_notice("There [creamer_packs == 1 ? "is" : "are"] [creamer_packs] packet[creamer_packs != 1 && "s"] of creamer left.")
+		. += span_notice(LANG("obj.394b5ed0", list(creamer_packs == 1 ? "is" : "are", creamer_packs, creamer_packs != 1 && "s")))
 	else
-		. += span_notice("There is no creamer left.")
+		. += span_notice(LANG("obj.31cfc739", null))
 
 /obj/machinery/coffeemaker/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -451,9 +451,9 @@
 /obj/item/coffee_cartridge/examine(mob/user)
 	. = ..()
 	if(charges)
-		. += span_warning("The cartridge has [charges] portions of grounds remaining.")
+		. += span_warning(LANG("obj.dd6f6312", list(charges)))
 	else
-		. += span_warning("The cartridge has no unspent grounds remaining.")
+		. += span_warning(LANG("obj.f453d8fa", null))
 
 /obj/item/coffee_cartridge/fancy
 	name = "coffeemaker cartridge - Caffè Fantasioso"
@@ -544,7 +544,7 @@
 /obj/machinery/coffeemaker/impressa/examine(mob/user)
 	. = ..()
 	if(coffee)
-		. += span_notice("The internal grinder contains [length(coffee)] scoop\s of coffee beans")
+		. += span_notice(LANG("obj.4dcd8398", list(length(coffee))))
 
 /obj/machinery/coffeemaker/impressa/update_overlays()
 	. = ..()

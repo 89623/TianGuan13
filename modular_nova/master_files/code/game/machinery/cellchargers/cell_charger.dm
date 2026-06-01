@@ -16,4 +16,4 @@
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt click it to engage the ejection lever!")
+	. += span_notice(LANG("obj.44eddf6a", null))

@@ -234,4 +234,4 @@
 /obj/machinery/inspector_mainframe/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: System is [cargo_disruption_active ? "ACTIVE" : "INACTIVE"]. Current alert level: [current_alert_level]. SOS beacon: [sos_active ? "ACTIVE" : "INACTIVE"].")
+		. += span_notice(LANG("obj.42a02dc1", list(cargo_disruption_active ? "ACTIVE" : "INACTIVE", current_alert_level, sos_active ? "ACTIVE" : "INACTIVE")))

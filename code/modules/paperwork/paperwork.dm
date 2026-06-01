@@ -71,11 +71,11 @@
 			. += detailed_desc
 		else
 			if(stamped)
-				. += span_info("It looks like these documents have already been stamped. Now they can be returned to Central Command.")
+				. += span_info(LANG("obj.a37eefd5", null))
 			else
 				var/datum/job/stamp_title = stamp_job
 				var/title = initial(stamp_title.title)
-				. += span_info("Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for the [title].")
+				. += span_info(LANG("obj.11660acc", list(title)))
 
 /obj/item/paperwork/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins insulting the inefficiency of paperwork and bureaucracy. It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -228,11 +228,11 @@
 
 	if(stamped)
 		if(voided)
-			. += span_notice("It looks like it's been marked as 'VOID' on the front. It's unlikely that anyone will accept these now.")
+			. += span_notice(LANG("obj.5ff1d7e0", null))
 		else
-			. += span_notice("The stamp on the front appears to be smudged and faded. Central Command will probably still accept these, right?")
+			. += span_notice(LANG("obj.05d3bcc1", null))
 	else
-		. += span_notice("These appear to just be a photocopy of the original documents.")
+		. += span_notice(LANG("obj.a18c3a8c", null))
 
 /obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/stamp/void) && !stamped && !voided)

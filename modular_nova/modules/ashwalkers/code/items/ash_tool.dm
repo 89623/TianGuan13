@@ -113,7 +113,7 @@
 
 /obj/item/cursed_dagger/examine(mob/user)
 	. = ..()
-	. += span_notice("To be used on tendrils. It will visually change the tendril to indicate whether it has been cursed or not.")
+	. += span_notice(LANG("obj.c42c8b07", null))
 
 /obj/item/ash_seed
 	icon = 'modular_nova/modules/ashwalkers/icons/ashwalker_tools.dmi'
@@ -123,7 +123,7 @@
 
 /obj/item/ash_seed/examine(mob/user)
 	. = ..()
-	. += span_notice("In order to be planted, it is required to be on the mining level as well as on basalt.")
+	. += span_notice(LANG("obj.08e47705", null))
 
 /obj/item/ash_seed/proc/harm_user(mob/living/user, sent_message, damage_amount)
 	to_chat(user, span_warning(sent_message))

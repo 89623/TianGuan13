@@ -338,11 +338,11 @@
 	if(!panel_open)
 		return
 	if(device)
-		. += span_notice("There is \a [device] inside, which could be removed with an <b>empty hand</b>.")
+		. += span_notice(LANG("obj.a29c2c81", list(device)))
 	if(board)
-		. += span_notice("There is \a [board] inside, which could be removed with an <b>empty hand</b>.")
+		. += span_notice(LANG("obj.a29c2c81", list(board)))
 	if(isnull(board) && isnull(device))
-		. += span_notice("There is nothing currently installed in \the [src].")
+		. += span_notice(LANG("obj.5f497e14", list(src)))
 
 /obj/machinery/button/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(panel_open)

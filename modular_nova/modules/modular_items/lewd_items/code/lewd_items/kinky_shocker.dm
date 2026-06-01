@@ -51,9 +51,9 @@
 /obj/item/kinky_shocker/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += span_notice("\The [src] is [round(cell.percent())]% charged.")
+		. += span_notice(LANG("obj.f103c613", list(src, round(cell.percent()))))
 	else
-		. += span_warning("\The [src] does not have a power source installed.")
+		. += span_warning(LANG("obj.a88e2f32", list(src)))
 
 /obj/item/kinky_shocker/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	var/obj/item/stock_parts/power_store/cell/powercell = attacking_item

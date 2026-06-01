@@ -952,9 +952,9 @@
 
 /obj/item/mod/module/fishing_glove/examine(mob/user)
 	. = ..()
-	. += span_info("You can [EXAMINE_HINT("right-click")] the modsuit gloves to open the fishing rod interface once attached and activated.")
+	. += span_info(LANG("obj.5750e2b3", list(EXAMINE_HINT("right-click"))))
 	if(equipped)
-		. += span_info("it has a [icon2html(equipped, user)] installed. [EXAMINE_HINT("Right-Click")] to remove it.")
+		. += span_info(LANG("obj.95c330e2", list(icon2html(equipped, user), EXAMINE_HINT("Right-Click"))))
 
 /obj/item/mod/module/fishing_glove/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/fishing_rod))

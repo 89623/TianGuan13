@@ -68,10 +68,10 @@
 	. = ..()
 	if(cooldown_time)
 		if(!COOLDOWN_FINISHED(src, respawn_cooldown))
-			. += span_warning("[src] has [COOLDOWN_TIMELEFT(src, respawn_cooldown) / 10] seconds left before it can be used again.")
+			. += span_warning(LANG("obj.c704cc67", list(src, COOLDOWN_TIMELEFT(src, respawn_cooldown) / 10)))
 
 		else
-			. += span_abductor("[src] has a cooldown of [cooldown_time / 10] seconds between uses.")
+			. += span_abductor(LANG("obj.7b819db9", list(src, cooldown_time / 10)))
 
 /obj/machinery/automatic_respawner/test
 	cooldown_time = 1.5 MINUTES

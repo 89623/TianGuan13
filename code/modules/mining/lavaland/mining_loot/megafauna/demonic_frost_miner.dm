@@ -65,7 +65,7 @@
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/examine(mob/user)
 	. = ..()
-	. += span_notice("The shoes are [on ? "enabled" : "disabled"].")
+	. += span_notice(LANG("obj.e4e6e9f9", list(on ? "enabled" : "disabled")))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/proc/on_step()
 	SIGNAL_HANDLER

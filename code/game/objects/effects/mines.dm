@@ -35,13 +35,13 @@
 /obj/effect/mine/examine(mob/user)
 	. = ..()
 	if(!armed)
-		. += span_info("It appears to be inactive...")
+		. += span_info(LANG("obj.8480a677", null))
 
 	var/atom/movable/unlucky_sod = foot_on_mine?.resolve()
 	if(user == unlucky_sod)
-		. += span_bolddanger("The pressure plate is depressed. Any movement you make will set it off now.")
+		. += span_bolddanger(LANG("obj.42d4def2", null))
 	else if(!isnull(unlucky_sod))
-		. += span_danger("The pressure plate is depressed by [unlucky_sod]. Any move they make'll set it off now.")
+		. += span_danger(LANG("obj.e5ddedf8", list(unlucky_sod)))
 
 /obj/effect/mine/update_icon_state()
 	. = ..()

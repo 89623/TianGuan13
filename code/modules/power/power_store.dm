@@ -194,7 +194,7 @@
 /obj/item/stock_parts/power_store/examine(mob/user)
 	. = ..()
 	if(corrupted)
-		. += span_danger("This [name] seems to be faulty!")
+		. += span_danger(LANG("obj.c96d8fcd", list(name)))
 	else if(!isnull(charge_light_type))
 		. += LANG("obj.00f8f6f7", list(CEILING(percent(), 0.1))) //so it doesn't say 0% charge when the overlay indicates it still has charge
 

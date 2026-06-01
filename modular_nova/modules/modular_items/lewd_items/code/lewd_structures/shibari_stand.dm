@@ -50,7 +50,7 @@
 /obj/structure/chair/shibari_stand/examine(mob/user)
 	. = ..()
 	if(!has_buckled_mobs() && can_buckle)
-		. += span_notice("They need to be wearing <b>full-body shibari</b>, and you need to be <b>holding ropes</b>!")
+		. += span_notice(LANG("obj.e272ea93", null))
 
 /obj/structure/chair/shibari_stand/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	var/mob/living/buckled = buckled_mob
@@ -217,5 +217,5 @@
 
 /obj/structure/chair/shibari_stand/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be disassembled by using <b>Ctrl+Shift+Click<b>")
-	. += span_purple("[src]'s color can be customized with <b>Ctrl+Click</b>.")
+	. += span_purple(LANG("obj.2749c62e", list(src)))
+	. += span_purple(LANG("obj.f826f980", list(src)))

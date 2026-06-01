@@ -10,7 +10,7 @@
 
 /obj/item/mod/construction/helmet/examine(mob/user)
 	. = ..()
-	. += span_notice("You could insert it into a <b>MOD shell</b>...")
+	. += span_notice(LANG("obj.2167c56c", null))
 
 /obj/item/mod/construction/chestplate
 	name = "MOD chestplate"
@@ -18,7 +18,7 @@
 
 /obj/item/mod/construction/chestplate/examine(mob/user)
 	. = ..()
-	. += span_notice("You could insert it into a <b>MOD shell</b>...")
+	. += span_notice(LANG("obj.2167c56c", null))
 
 /obj/item/mod/construction/gauntlets
 	name = "MOD gauntlets"
@@ -26,7 +26,7 @@
 
 /obj/item/mod/construction/gauntlets/examine(mob/user)
 	. = ..()
-	. += span_notice("You could insert these into a <b>MOD shell</b>...")
+	. += span_notice(LANG("obj.9db100df", null))
 
 /obj/item/mod/construction/boots
 	name = "MOD boots"
@@ -34,7 +34,7 @@
 
 /obj/item/mod/construction/boots/examine(mob/user)
 	. = ..()
-	. += span_notice("You could insert these into a <b>MOD shell</b>...")
+	. += span_notice(LANG("obj.9db100df", null))
 
 /obj/item/mod/construction/broken_core
 	name = "broken MOD core"
@@ -43,7 +43,7 @@
 
 /obj/item/mod/construction/broken_core/examine(mob/user)
 	. = ..()
-	. += span_notice("You could repair it with a <b>screwdriver</b>...")
+	. += span_notice(LANG("obj.f81088c7", null))
 
 /obj/item/mod/construction/broken_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -66,7 +66,7 @@
 
 /obj/item/mod/construction/lavalandcore/examine(mob/user)
 	. = ..()
-	. += span_notice("You could probably attach some <b>wires</b> to it...")
+	. += span_notice(LANG("obj.558de421", null))
 
 /obj/item/mod/construction/lavalandcore/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(weapon, /obj/item/stack/cable_coil))

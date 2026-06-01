@@ -14,8 +14,8 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 
 /obj/item/tunneling_worm/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>Use on the planet's surface to create a tunnel.")
-	. += span_notice("[tunnels_remaining] tunnel(s) remaining.")
+	. += span_notice(LANG("obj.454ca14e", null))
+	. += span_notice(LANG("obj.8464a174", list(tunnels_remaining)))
 
 /obj/item/tunneling_worm/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /turf/open/misc/asteroid/basalt/lava_land_surface)) //eventually we could spread this to more than just lavaland?
@@ -59,8 +59,8 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 
 /obj/structure/worm_tunnel/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>Using a shovel will destroy the tunnel.")
-	. += span_notice("Using two pieces of wood will block the tunnel until removed.")
+	. += span_notice(LANG("obj.2ba40bda", null))
+	. += span_notice(LANG("obj.983541b0", null))
 
 /obj/structure/worm_tunnel/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stack/sheet/mineral/wood))

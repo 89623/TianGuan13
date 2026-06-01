@@ -92,7 +92,7 @@
 	. = ..()
 
 	if(isnull(beehome))
-		. += span_warning("This bee is homeless!")
+		. += span_warning(LANG("mob.e2161eeb", null))
 
 /mob/living/basic/bee/Destroy()
 	if(beehome)

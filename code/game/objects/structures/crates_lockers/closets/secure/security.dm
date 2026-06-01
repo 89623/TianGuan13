@@ -173,7 +173,7 @@
 
 /obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Right-click</b> with a Security-level ID to reset [src]'s registered ID.")
+	. += span_notice(LANG("obj.71f9e8f8", list(src)))
 
 /obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/user_id, mob/user, list/modifiers, list/attack_modifiers)
 	if(!secure || !istype(user_id))

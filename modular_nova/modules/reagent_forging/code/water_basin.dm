@@ -20,10 +20,10 @@
 /obj/structure/reagent_water_basin/examine(mob/user)
 	. = ..()
 	if(!fishable)
-		. += span_notice("[src] can be upgraded through a bluespace crystal or a journeyman smithy!")
+		. += span_notice(LANG("obj.1ddb0241", list(src)))
 
 	else
-		. += span_notice("[src] looks to be a bottomless basin of water... You can even see fish swimming around down there!")
+		. += span_notice(LANG("obj.80806872", list(src)))
 
 /obj/structure/reagent_water_basin/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

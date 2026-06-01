@@ -29,9 +29,9 @@
 /obj/item/gun/magic/midas_hand/examine(mob/user)
 	. = ..()
 	var/gold_time_converted = gold_time_convert()
-	. += span_notice("Your next shot will inflict [gold_time_converted] second[gold_time_converted == 1 ? "" : "s"] of Midas Blight.")
-	. += span_notice("Right-Click on enemies to drain gold from their bloodstreams to reload [src].")
-	. += span_notice("[src] can be reloaded using gold coins in a pinch.")
+	. += span_notice(LANG("obj.46750772", list(gold_time_converted, gold_time_converted == 1 ? "" : "s")))
+	. += span_notice(LANG("obj.572ff26e", list(src)))
+	. += span_notice(LANG("obj.fcee4fe3", list(src)))
 
 /obj/item/gun/magic/midas_hand/shoot_with_empty_chamber(mob/living/user)
 	. = ..()

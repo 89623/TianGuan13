@@ -281,10 +281,10 @@
 /obj/item/clothing/accessory/press_badge/examine(mob/user)
 	. = ..()
 	if(!journalist_name || !press_name)
-		. += span_notice("Use it in hand to input information")
+		. += span_notice(LANG("obj.8d3e0b49", null))
 		return
 
-	. += span_notice("It belongs to <b>[journalist_name]</b>, <b>[press_name]</b>")
+	. += span_notice(LANG("obj.a8b90f43", list(journalist_name, press_name)))
 
 /obj/item/clothing/accessory/press_badge/attack_self(mob/user, modifiers)
 	. = ..()

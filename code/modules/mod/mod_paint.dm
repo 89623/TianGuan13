@@ -21,8 +21,8 @@
 
 /obj/item/mod/paint/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Left-click</b> a MODsuit to change skin.")
-	. += span_notice("<b>Right-click</b> a MODsuit to recolor.")
+	. += span_notice(LANG("obj.6dbdfdae", null))
+	. += span_notice(LANG("obj.890c4af2", null))
 
 /obj/item/mod/paint/ui_interact(mob/user, datum/tgui/ui)
 	if(!editing_mod)

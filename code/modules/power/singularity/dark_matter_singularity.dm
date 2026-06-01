@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // bonus probability to chase the target granted by eating a supermatter
 #define DARK_MATTER_SUPERMATTER_CHANCE_BONUS 10
 
@@ -28,18 +29,11 @@
 /obj/singularity/dark_matter/examine(mob/user)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
-		. += span_warning("Protected by dark matter, [src] seems to be immune to explosions for [DisplayTimeText(COOLDOWN_TIMELEFT(src, initial_explosion_immunity))].")
+		. += span_warning(LANG("obj.52056b49", list(src, DisplayTimeText(COOLDOWN_TIMELEFT(src, initial_explosion_immunity)))))
 	if(consumed_supermatter)
-		. += span_userdanger("IT HUNGERS")
+		. += span_userdanger(LANG("obj.aad79db2", null))
 	else
-		. += span_warning("<i>\"The most disturbing aspect of the singularity is its \
-		apparent attraction to living organisms. It seems to sense \
-		their presence and move towards them at a surprisingly fast speed. \
-		We have observed it consume several specimens of flora and fauna that \
-		we have collected from this sector. The singularity does not seem \
-		to care for other inanimate objects or machines, but will consume \
-		them all the same. We have tried to communicate with it using various \
-		methods, but received no response.\"</i><br>- Research Director Huey Knorr")
+		. += span_warning(LANG("obj.f9560945", null))
 
 /obj/singularity/dark_matter/ex_act(severity, target)
 	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))

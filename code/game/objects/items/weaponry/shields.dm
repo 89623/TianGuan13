@@ -300,7 +300,7 @@
 /obj/item/shield/riot/flash/examine(mob/user)
 	. = ..()
 	if (embedded_flash?.burnt_out)
-		. += span_info("The mounted bulb has burnt out. You can try replacing it with a new <b>flash</b>.")
+		. += span_info(LANG("obj.ad41d255", null))
 
 /obj/item/shield/energy
 	name = "combat energy shield"

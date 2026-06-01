@@ -290,9 +290,9 @@
 	. = ..()
 	if(isobserver(user))
 		if(bomb)
-			. += span_deadsay("This pizza box contains [bomb_defused ? "an unarmed bomb" : "an armed bomb"].")
+			. += span_deadsay(LANG("obj.b4b7c1e9", list(bomb_defused ? "an unarmed bomb" : "an armed bomb")))
 		if(pizza && istype(pizza, /obj/item/food/pizza/margherita/robo))
-			. += span_deadsay("The pizza in this pizza box contains nanomachines.")
+			. += span_deadsay(LANG("obj.8ce54cb7", null))
 
 /obj/item/pizzabox/proc/disperse_pizzas()
 	visible_message(span_warning(LANG("obj.e174af78", null)))
@@ -390,7 +390,7 @@
 		attune_pizza(user) //pizza tag changes based on examiner
 	. = ..()
 	if(isobserver(user))
-		. += span_deadsay("This pizza box is anomalous, and will produce infinite pizza.")
+		. += span_deadsay(LANG("obj.d77f4d8d", null))
 
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	if(ishuman(user))

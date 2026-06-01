@@ -376,9 +376,9 @@
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
 	if(mecha_flags & PANEL_OPEN)
-		. += span_notice("The panel is open. You could use a <b>crowbar</b> to eject parts or lock the panel back with a <b>screwdriver</b>.")
+		. += span_notice(LANG("obj.29d4930b", null))
 	else
-		. += span_notice("You could unlock the maintenance cover with a <b>screwdriver</b>.")
+		. += span_notice(LANG("obj.5ec26a71", null))
 
 /obj/vehicle/sealed/mecha/screwdriver_act(mob/living/user, obj/item/tool)
 	..()

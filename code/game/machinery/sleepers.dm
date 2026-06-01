@@ -159,7 +159,7 @@
 
 /obj/machinery/sleeper/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to [state_open ? "close" : "open"] it.")
+	. += span_notice(LANG("obj.20128ad3", list(src, state_open ? "close" : "open")))
 
 /obj/machinery/sleeper/process()
 	use_energy(idle_power_usage)

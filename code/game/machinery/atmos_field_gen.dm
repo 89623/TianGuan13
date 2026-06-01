@@ -81,15 +81,15 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("The status display reads:")
-	. += span_notice("Currently [on ? "" : "in"]active.")
+	. += span_notice(LANG("obj.e69769dd", null))
+	. += span_notice(LANG("obj.14992dfd", list(on ? "" : "in")))
 	if(locked)
-		. += span_boldwarning("LOCKED")
+		. += span_boldwarning(LANG("obj.b6211735", null))
 		return
-	. += span_notice("Maximum field length: [max_range] tiles.")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
+	. += span_notice(LANG("obj.d9c3580b", list(max_range)))
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "close" : "open")))
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/atmos_shield_gen/RefreshParts()
 	. = ..()

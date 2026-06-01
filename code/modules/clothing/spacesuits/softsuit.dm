@@ -52,7 +52,7 @@
 
 /obj/item/clothing/head/helmet/space/eva/examine(mob/user)
 	. = ..()
-	. += span_notice("You can start constructing a critter sized mecha with a [span_bold("cyborg leg")].")
+	. += span_notice(LANG("obj.3bc01be1", list(span_bold("cyborg leg"))))
 
 /obj/item/clothing/head/helmet/space/eva/attackby(obj/item/attacked_with, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()

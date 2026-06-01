@@ -203,7 +203,7 @@
 
 /obj/item/card/emag/doorjack/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [charges] charges remaining.")
+	. += span_notice(LANG("obj.9cdb11b8", list(charges)))
 	if (length(charge_timers))
 		. += "[span_notice("<b>A small display on the back reads:")]</b>"
 	for (var/i in 1 to length(charge_timers))
@@ -241,7 +241,7 @@
 
 /obj/item/card/emag/battlecruiser/examine(mob/user)
 	. = ..()
-	. += span_notice("It can only be used on the communications console.")
+	. += span_notice(LANG("obj.3cd0a387", null))
 
 /obj/item/card/emag/battlecruiser/can_emag(atom/target, mob/user)
 	if(used)

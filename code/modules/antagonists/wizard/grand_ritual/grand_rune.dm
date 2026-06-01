@@ -95,11 +95,11 @@
 /obj/effect/grand_rune/examine(mob/user)
 	. = ..()
 	if (times_invoked >= GRAND_RUNE_INVOKES_TO_COMPLETE)
-		. += span_notice("Its power seems to have been expended.")
+		. += span_notice(LANG("obj.89c26900", null))
 		return
 	if(!IS_WIZARD(user))
 		return
-	. += span_notice("Invoke this rune [GRAND_RUNE_INVOKES_TO_COMPLETE - times_invoked] more times to complete the ritual.")
+	. += span_notice(LANG("obj.015f221c", list(GRAND_RUNE_INVOKES_TO_COMPLETE - times_invoked)))
 
 /obj/effect/grand_rune/can_interact(mob/living/user)
 	. = ..()

@@ -19,8 +19,8 @@
 
 /obj/machinery/mechpad/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a multitool with the panel open to save id to buffer.")
-	. += span_notice("Use wirecutters with the panel open to [mech_only ? "cut" : "mend"] the lifeform restriction wire.")
+	. += span_notice(LANG("obj.3a5b3c21", null))
+	. += span_notice(LANG("obj.3f7bee32", list(mech_only ? "cut" : "mend")))
 
 /obj/machinery/mechpad/update_icon_state()
 	. = ..()

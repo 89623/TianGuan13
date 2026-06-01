@@ -66,10 +66,10 @@
 /obj/item/clothing/head/helmet/space/akula_wetsuit/examine()
 	. = ..()
 	if(attached_hat)
-		. += span_notice("There's \a [attached_hat] placed in the helmet.")
-		. += span_bold("Right-click to remove it.")
+		. += span_notice(LANG("obj.d0548109", list(attached_hat)))
+		. += span_bold(LANG("obj.72f9d956", null))
 	else
-		. += span_notice("There's nothing placed in the helmet.")
+		. += span_notice(LANG("obj.a6685124", null))
 
 /obj/item/clothing/head/helmet/space/akula_wetsuit/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE

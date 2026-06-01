@@ -116,12 +116,12 @@
 	. = ..()
 
 	if(used_tray)
-		. += span_notice("It has [used_tray] in it, which can be removed with an <b>empty hand</b>.")
+		. += span_notice(LANG("obj.3563f40b", list(used_tray)))
 	else
-		. += span_notice("You can place an <b>oven tray</b> in this to <b>bake</b> any items on it.")
+		. += span_notice(LANG("obj.7928ebc4", null))
 
 	if(forge_level < FORGE_LEVEL_LEGENDARY)
-		. += span_notice("Using an <b>empty hand</b> on [src] will upgrade it, if your forging skill level is above the current upgrade's level.")
+		. += span_notice(LANG("obj.52e087ef", list(src)))
 
 	switch(forge_level)
 		if(FORGE_LEVEL_YOU_PLAY_LIKE_A_NOOB)
@@ -159,10 +159,10 @@
 		if(5)
 			. += span_notice("[src] will lose heat at a practically negligible rate.")
 
-	. += span_notice("<br>[src] is currently [forge_temperature] degrees hot, going towards [target_temperature] degrees.<br>")
+	. += span_notice(LANG("obj.b2413374", list(src, forge_temperature, target_temperature)))
 
 	if(reagent_forging && (is_species(user, /datum/species/lizard/ashwalker) || is_species(user, /datum/species/human/felinid/primitive)))
-		. += span_warning("[src] has a fine gold trim, it is ready to imbue chemicals into reagent objects.")
+		. += span_warning(LANG("obj.139ef30d", list(src)))
 
 	return .
 

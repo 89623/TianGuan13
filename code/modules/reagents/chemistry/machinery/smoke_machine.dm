@@ -67,17 +67,17 @@
 /obj/machinery/smoke_machine/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Reagent capacity <b>[reagents.total_volume]/[reagents.maximum_volume]</b>.")
-	. += span_notice("Operating at <b>[round((efficiency / 26) * 100)]%</b> efficiency.")
+	. += span_notice(LANG("obj.61f3c745", list(reagents.total_volume, reagents.maximum_volume)))
+	. += span_notice(LANG("obj.3384fac8", list(round((efficiency / 26) * 100))))
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 
 	if(anchored)
-		. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
+		. += span_notice(LANG("obj.ea58af41", list(EXAMINE_HINT("wrenched"))))
 	else
-		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] in place to work.")
+		. += span_warning(LANG("obj.7b276a07", list(EXAMINE_HINT("anchored"))))
 
 /obj/machinery/smoke_machine/update_icon_state()
 	if(!is_operational || !on || !reagents.total_volume)

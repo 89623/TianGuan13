@@ -187,9 +187,9 @@
 	if (label_examine)
 		. += label_text
 	if(length(reagents?.reagent_list))
-		. += span_notice("It is loaded.")
+		. += span_notice(LANG("obj.3998b7ed", null))
 	else
-		. += span_notice("It is spent.")
+		. += span_notice(LANG("obj.2ad07b37", null))
 
 /obj/item/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"

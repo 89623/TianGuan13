@@ -17,9 +17,9 @@
 
 /obj/machinery/stasissleeper/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to [state_open ? "close" : "open"] the machine.")
-	. += span_notice("A light blinking on the side indicates that it is [occupant ? "occupied" : "vacant"].")
-	. += span_notice("It has a screen on the side displaying the vitals of the occupant. Interact to read it.")
+	. += span_notice(LANG("obj.da3c2068", list(state_open ? "close" : "open")))
+	. += span_notice(LANG("obj.c3c010b2", list(occupant ? "occupied" : "vacant")))
+	. += span_notice(LANG("obj.33fcec18", null))
 
 /obj/machinery/stasissleeper/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)

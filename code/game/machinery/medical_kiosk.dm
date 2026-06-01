@@ -184,9 +184,9 @@
 /obj/machinery/medical_kiosk/examine(mob/user)
 	. = ..()
 	if(scanner_wand == null)
-		. += span_notice("\The [src] is missing its scanner.")
+		. += span_notice(LANG("obj.617034f4", list(src)))
 	else
-		. += span_notice("\The [src] has its scanner clipped to the side. Right Click to remove.")
+		. += span_notice(LANG("obj.9651ae35", list(src)))
 
 /obj/machinery/medical_kiosk/ui_interact(mob/user, datum/tgui/ui)
 	var/patient_distance = 0

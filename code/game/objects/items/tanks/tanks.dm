@@ -154,10 +154,10 @@
 		icon = loc
 	if(!in_range(src, user) && !isobserver(user))
 		if(icon == src)
-			. += span_notice("If you want any more information you'll need to get closer.")
+			. += span_notice(LANG("obj.b96d97a0", null))
 		return
 
-	. += span_notice("The pressure gauge reads [round(air_contents.return_pressure(),0.01)] kPa.")
+	. += span_notice(LANG("obj.9e3c085a", list(round(air_contents.return_pressure(),0.01))))
 
 	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive
@@ -175,10 +175,10 @@
 	else
 		descriptive = "furiously hot"
 
-	. += span_notice("It feels [descriptive].")
+	. += span_notice(LANG("obj.a8d1c72b", list(descriptive)))
 
 	if(tank_assembly)
-		. += span_warning("There is some kind of device [EXAMINE_HINT("rigged")] to the tank!")
+		. += span_warning(LANG("obj.01fd2dda", list(EXAMINE_HINT("rigged"))))
 
 /obj/item/tank/atom_deconstruct(disassembled = TRUE)
 	var/atom/location = loc

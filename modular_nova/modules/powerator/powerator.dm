@@ -103,29 +103,29 @@
 	. = ..()
 	. += "<br>"
 	if(panel_open)
-		. += span_warning("The maintenance panel is currently open, preventing [src] from working!")
+		. += span_warning(LANG("obj.cf05318f", list(src)))
 	else
-		. += span_notice("The maintenance panel is closed.")
+		. += span_notice(LANG("obj.841bb056", null))
 
 	if(!anchored)
-		. += span_warning("The anchors are not bolted to the floor, preventing [src] from working!")
+		. += span_warning(LANG("obj.c5bc2a98", list(src)))
 	else
-		. += span_notice("The anchors are bolted to the floor.")
+		. += span_notice(LANG("obj.775a619b", null))
 
 	if(machine_stat & (NOPOWER | BROKEN))
-		. += span_warning("There is either damage or no power being supplied, preventing [src] from working!")
+		. += span_warning(LANG("obj.f4dece2b", list(src)))
 	else
-		. += span_notice("There is no damage and power is being supplied.")
+		. += span_notice(LANG("obj.5e41a7e9", null))
 
 	if(isnull(attached_cable))
-		. += span_warning("There is no power cable underneath, preventing [src] from working!")
+		. += span_warning(LANG("obj.4ef22516", list(src)))
 	else
-		. += span_notice("There is a power cable underneath.")
+		. += span_notice(LANG("obj.060fc45e", null))
 
-	. += span_notice("Current Power: [display_power(current_power, FALSE)]/[display_power(max_power, FALSE)]")
-	. += span_notice("This machine has made [credits_made] credits from selling power so far.")
-	. += span_notice("This machine makes 1 credit every two seconds per [display_power(divide_ratio, FALSE)] sent outward.")
-	. += span_notice("This machine is taxed [tax]% credits by the SolFed Power Ministry.")
+	. += span_notice(LANG("obj.68520cce", list(display_power(current_power, FALSE), display_power(max_power, FALSE))))
+	. += span_notice(LANG("obj.e8975537", list(credits_made)))
+	. += span_notice(LANG("obj.746edd42", list(display_power(divide_ratio, FALSE))))
+	. += span_notice(LANG("obj.7fca5ad9", list(tax)))
 
 /obj/machinery/powerator/RefreshParts()
 	. = ..()

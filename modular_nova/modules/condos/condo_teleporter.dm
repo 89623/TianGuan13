@@ -8,8 +8,8 @@
 
 /obj/machinery/cafe_condo_teleporter/examine(mob/user)
 	. = ..()
-	. += span_notice("You can use this to retire to a private room.")
-	. += span_warning("Beware: once all occupants exit a room; it resets.")
+	. += span_notice(LANG("obj.764835b0", null))
+	. += span_warning(LANG("obj.0922d328", null))
 
 /obj/machinery/cafe_condo_teleporter/attack_robot(mob/user)
 	if(user.Adjacent(src))

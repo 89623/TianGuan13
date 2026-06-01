@@ -238,13 +238,13 @@
 
 /obj/item/holosign_creator/hardlight_wheelchair/examine(mob/user)
 	. = ..()
-	. += span_tinynoticeital("\n<i>There's something etched on the underside of the handle, you can look again to take a closer look...</i>")
+	. += span_tinynoticeital(LANG("obj.ce98fc58", null))
 
 
 /obj/item/holosign_creator/hardlight_wheelchair/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>Etched underneath the handle is the following message:</i>\n")
-	. += span_smallnoticeital("\"I told you I would find a way to make it all easier.\" - A.H.")
+	. += span_notice(LANG("obj.777cba0e", null))
+	. += span_smallnoticeital(LANG("obj.1c4d1f45", null))
 
 
 /datum/action/innate/nanite_leg_reinforcement

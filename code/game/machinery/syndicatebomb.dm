@@ -121,11 +121,11 @@
 	if(istype(payload))
 		. += LANG("obj.6812cc3d", list(payload.desc))
 	if(examinable_countdown)
-		. += span_notice("A digital display on it reads \"[seconds_remaining()]\".")
+		. += span_notice(LANG("obj.a66b9903", list(seconds_remaining())))
 		if(active)
 			balloon_alert(user, "[seconds_remaining()]")
 	else
-		. += span_notice({"The digital display on it is inactive."})
+		. += span_notice(LANG("obj.2704790a", null))
 
 /obj/machinery/syndicatebomb/update_icon_state()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -658,7 +658,7 @@
 
 /obj/item/bombcore/dimensional/examine(mob/user)
 	. = ..()
-	. += span_notice("Use in hand to change the linked dimension. Current dimension: [chosen_theme?.name || "None, output will be random"].")
+	. += span_notice(LANG("obj.83590c41", list(chosen_theme?.name || "None, output will be random")))
 
 /obj/item/bombcore/dimensional/attack_self(mob/user)
 	. = ..()

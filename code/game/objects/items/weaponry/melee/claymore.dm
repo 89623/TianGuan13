@@ -160,7 +160,7 @@
 	. = ..()
 	. += LANG("obj.05dbe464", list(!notches ? "nothing" : "[notches] notches"))
 	if(nuke_disk)
-		. += span_boldwarning("It's holding the nuke disk!")
+		. += span_boldwarning(LANG("obj.fc787447", null))
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()

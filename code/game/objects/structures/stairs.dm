@@ -346,9 +346,9 @@
 /obj/structure/stairs_frame/examine(mob/living/carbon/human/user)
 	. = ..()
 	if(anchored)
-		. += span_notice("The frame is anchored and can be made into proper stairs with 10 sheets of material.")
+		. += span_notice(LANG("obj.2e58066d", null))
 	else
-		. += span_notice("The frame will need to be secured with a wrench before it can be completed.")
+		. += span_notice(LANG("obj.e4b40668", null))
 
 /obj/structure/stairs_frame/wrench_act(mob/living/user, obj/item/used_tool)
 	user.balloon_alert_to_viewers("securing stairs frame", "securing frame")

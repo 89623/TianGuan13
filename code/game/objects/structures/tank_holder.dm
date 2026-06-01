@@ -37,14 +37,14 @@
 /obj/structure/tank_holder/examine(mob/user)
 	. = ..()
 	if(anchored)
-		. += span_notice("It is <b>bolted</b> to the floor.")
+		. += span_notice(LANG("obj.36b5eeeb", null))
 	else
-		. += span_notice("The <i>bolts</i> on the bottom are unsecured.")
+		. += span_notice(LANG("obj.d6821321", null))
 	if(tank)
-		. += span_notice("It is holding \a [tank].")
+		. += span_notice(LANG("obj.e85dcccb", list(tank)))
 	else
-		. += span_notice("It is empty.")
-	. += span_notice("It is held together by some <b>screws</b>.")
+		. += span_notice(LANG("obj.53b0d090", null))
+	. += span_notice(LANG("obj.0492e070", null))
 
 /obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(user.combat_mode)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// Aquarium upgrades, can be applied to a basic aquarium to upgrade it into an advanced subtype.
 /obj/item/aquarium_upgrade
@@ -55,9 +56,9 @@
 
 /obj/structure/aquarium/bioelec_gen/examine(mob/user)
 	. = ..()
-	. += span_boldwarning("WARNING! WARNING! WARNING!")
-	. += span_warning("The bioelectric potential of the fish inside is magnified to dangerous levels by the generator.")
-	. += span_notice("Tesla coils are required to collect this magnified energy... and you'll want a grounding rod to protect yourself as well.")
+	. += span_boldwarning(LANG("obj.7b8ee969", null))
+	. += span_warning(LANG("obj.0f741521", null))
+	. += span_notice(LANG("obj.33235554", null))
 
 /obj/item/aquarium_upgrade/bluespace_tank
 	name = "bluespace fish tank kit"

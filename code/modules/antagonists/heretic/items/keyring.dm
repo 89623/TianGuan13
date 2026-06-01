@@ -112,11 +112,11 @@
 	. = ..()
 	if(!IS_HERETIC_OR_MONSTER(user))
 		return
-	. += span_hypnophrase("Enchanted by the Mansus!")
-	. += span_hypnophrase("Using an ID on this or using this ID on another ID will consume it and allow you to copy its accesses.")
-	. += span_hypnophrase("<b>Using this in-hand</b> allows you to change its appearance.")
-	. += span_hypnophrase("<b>Using this on a pair of doors</b>, allows you to link them together. Entering one door will transport you to the other, while heathens are instead teleported to a random airlock.")
-	. += span_hypnophrase("<b>Ctrl-clicking the ID</b>, makes the ID make inverted portals instead, which teleport you onto a random airlock onstation, while heathens are teleported to the destination.")
+	. += span_hypnophrase(LANG("obj.b95b9688", null))
+	. += span_hypnophrase(LANG("obj.261367f7", null))
+	. += span_hypnophrase(LANG("obj.8cac100a", null))
+	. += span_hypnophrase(LANG("obj.9fbf6a9e", null))
+	. += span_hypnophrase(LANG("obj.5885444e", null))
 
 /obj/item/card/id/advanced/heretic/attack_self(mob/user)
 	. = ..()

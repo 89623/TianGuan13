@@ -19,8 +19,8 @@
 
 /obj/structure/sauna_oven/examine(mob/user)
 	. = ..()
-	. += span_notice("The rocks are [water_amount ? "moist" : "dry"].")
-	. += span_notice("There's [fuel_amount ? "some fuel" : "no fuel"] in the oven.")
+	. += span_notice(LANG("obj.19403cdd", list(water_amount ? "moist" : "dry")))
+	. += span_notice(LANG("obj.fa0c2f58", list(fuel_amount ? "some fuel" : "no fuel")))
 
 /obj/structure/sauna_oven/Destroy()
 	if(lit)

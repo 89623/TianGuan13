@@ -436,11 +436,11 @@
 /obj/item/melee/energy/sword/surplus/examine(mob/user)
 	. = ..()
 	if(charge)
-		. += span_notice("[src] has [charge] hits left before it must be recharged.")
+		. += span_notice(LANG("obj.62e156af", list(src, charge)))
 	else
-		. += span_warning("[src] needs to be recharged.")
+		. += span_warning(LANG("obj.8f7b4028", list(src)))
 
-	. += span_info("You get the sense that this weapon isn't very effective unless you hit someone while they are exposed in some way, like attacking from behind or while they're staggered.")
+	. += span_info(LANG("obj.8d5f8fc0", null))
 
 /obj/item/melee/energy/sword/surplus/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

@@ -138,9 +138,9 @@
 	. += LANG("obj.69586ccd", list(length(linked_reactors)))
 
 	if(last_meltdown)
-		. += span_danger("It is flashing red!")
+		. += span_danger(LANG("obj.a7827843", null))
 	else
-		. += span_notice("It is glowing a steady green.")
+		. += span_notice(LANG("obj.75e23bb9", null))
 
 /obj/machinery/rbmk2_sniffer/proc/alert_radio(alert_text, bypass_cooldown = FALSE, alert_emergency_channel = FALSE, criticality = TRUE)
 	if(!radio_enabled || !alert_text)

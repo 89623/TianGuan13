@@ -229,15 +229,15 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
 	if(isAI(user) || in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
+		. += span_notice(LANG("obj.9e972927", list(holo_range)))
 
 	if(!isAI(user))
 		return
 
-	. += span_info("Use :[/datum/saymode/holopad::key] to speak through the projection.")
-	. += span_info("Right-click to project or cancel a projection.")
-	. += span_info("Alt-click to hangup all active and incomming calls.")
-	. += span_info("Ctrl-click to end projection without jumping to your last location.")
+	. += span_info(LANG("obj.6c81b75a", list(/datum/saymode/holopad::key)))
+	. += span_info(LANG("obj.8b5ba1e2", null))
+	. += span_info(LANG("obj.7eb5b463", null))
+	. += span_info(LANG("obj.b81efc0e", null))
 
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

@@ -62,11 +62,11 @@
 
 /obj/item/supplypod_beacon/examine(user)
 	. = ..()
-	. += span_notice("It looks like it has a few anchoring bolts.")
+	. += span_notice(LANG("obj.b1b81fb6", null))
 	if(!express_console)
-		. += span_notice("[src] is not currently linked to an Express Supply console.")
+		. += span_notice(LANG("obj.50d943ab", list(src)))
 	else
-		. += span_notice("Alt-click to unlink it from the Express Supply console.")
+		. += span_notice(LANG("obj.26c0d529", null))
 
 /obj/item/supplypod_beacon/Destroy()
 	if(express_console)

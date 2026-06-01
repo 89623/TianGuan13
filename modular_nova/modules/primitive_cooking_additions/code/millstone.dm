@@ -21,12 +21,12 @@
 /obj/structure/millstone/examine(mob/user)
 	. = ..()
 
-	. += span_notice("It currently contains <b>[length(contents)]/[maximum_contained_items]</b> items.")
-	. += span_notice("You can process [src]'s contents with <b>Right Click</b>")
-	. += span_notice("You can empty all of the items out of it with <b>Alt Click</b>")
+	. += span_notice(LANG("obj.fdec676b", list(length(contents), maximum_contained_items)))
+	. += span_notice(LANG("obj.a0cbffb8", list(src)))
+	. += span_notice(LANG("obj.71ecf662", null))
 
 	if(length(contents))
-		. += span_notice("Inside, you can see:")
+		. += span_notice(LANG("obj.0cd99d60", null))
 		var/list/stuff_inside = list()
 		for(var/obj/thing as anything in contents)
 			stuff_inside[thing.type] += 1
@@ -34,13 +34,13 @@
 		for(var/obj/thing as anything in stuff_inside)
 			. += span_notice("&bull; [stuff_inside[thing]] [initial(thing.name)]\s")
 
-		. += span_notice("And it can fit <b>[maximum_contained_items - length(contents)]</b> more items in it.")
+		. += span_notice(LANG("obj.507ea0f0", list(maximum_contained_items - length(contents))))
 
 	else
-		. += span_notice("It can hold <b>[maximum_contained_items]</b> items, and there is nothing in it presently.")
+		. += span_notice(LANG("obj.7b62c90e", list(maximum_contained_items)))
 
-	. += span_notice("You can [anchored ? "un" : ""]secure [src] with <b>CTRL-Shift-Click</b>.")
-	. += span_notice("With a <b>prying tool</b> of some sort, you could take [src] apart.")
+	. += span_notice(LANG("obj.191eddbb", list(anchored ? "un" : "", src)))
+	. += span_notice(LANG("obj.0f938112", list(src)))
 
 /obj/structure/millstone/Destroy()
 	drop_everything_contained()

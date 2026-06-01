@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 /obj/item/clothing/mask/animal/examine(mob/user)
 	. = ..()
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
-		. += span_notice("Its voicebox is currently [clothing_flags & VOICEBOX_DISABLED ? "disabled" : "enabled"]. <b>Alt-click</b> to toggle it.")
+		. += span_notice(LANG("obj.bb68aa7e", list(clothing_flags & VOICEBOX_DISABLED ? "disabled" : "enabled")))
 
 /obj/item/clothing/mask/animal/click_alt(mob/user)
 	if(!(clothing_flags & VOICEBOX_TOGGLABLE))

@@ -27,7 +27,7 @@
 	. = ..()
 	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	if(may_change_docks && our_computer)
-		. += span_notice("You can change where the [get_area_name(SSshuttle.getShuttle(our_computer.shuttleId))] docks using [EXAMINE_HINT("alt-right-click")].")
+		. += span_notice(LANG("obj.62b34b41", list(get_area_name(SSshuttle.getShuttle(our_computer.shuttleId)), EXAMINE_HINT("alt-right-click"))))
 
 /obj/item/shuttle_remote/Initialize(mapload)
 	. = ..()

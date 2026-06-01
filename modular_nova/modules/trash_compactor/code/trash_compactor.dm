@@ -68,7 +68,7 @@
 	if(!in_range(user, src))
 		return
 	if(inserted_card)
-		. += span_notice("There's a <b>GAP card</b> inserted in the machine. It'll <b>get stamped once</b> upon <b>hitting the quota</b>.")
+		. += span_notice(LANG("obj.9b2f9d64", null))
 	if(!istype(user)) // Only living mobs have bank accounts
 		return
 	// Get user's bank account
@@ -85,9 +85,9 @@
 	if(tracker_key && (tracker_key in trash_counts))
 		var/required = is_janitor(user) ? REQUIRED_TRASH_JANITOR : REQUIRED_TRASH_CREW
 		var/remaining = required - trash_counts[tracker_key]
-		. += span_notice("The status display reads: You have deposited <b>[trash_counts[tracker_key]]</b> pieces of trash. <b>[remaining]</b> more needed for [is_janitor(user) ? "a wage bonus" : "a ration ticket"].")
+		. += span_notice(LANG("obj.dfcbd6b1", list(trash_counts[tracker_key], remaining, is_janitor(user) ? "a wage bonus" : "a ration ticket")))
 	else
-		. += span_notice("The status display reads: Deposit [is_janitor(user) ? "[REQUIRED_TRASH_JANITOR]" : "[REQUIRED_TRASH_CREW]"] pieces of trash to receive [is_janitor(user) ? "a wage bonus" : "a ration ticket"].")
+		. += span_notice(LANG("obj.a1ed7c3a", list(is_janitor(user) ? "[REQUIRED_TRASH_JANITOR]" : "[REQUIRED_TRASH_CREW]", is_janitor(user) ? "a wage bonus" : "a ration ticket")))
 
 /obj/machinery/trash_compactor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE

@@ -72,9 +72,9 @@
 /obj/item/lighter/examine(mob/user)
 	. = ..()
 	if(get_fuel() <= 0)
-		. += span_warning("It is out of lighter fluid! Refill it with welder fuel.")
+		. += span_warning(LANG("obj.6b58542f", null))
 	else
-		. += span_notice("It contains [get_fuel()] units of fuel out of [maximum_fuel].")
+		. += span_notice(LANG("obj.f88f2881", list(get_fuel(), maximum_fuel)))
 
 /obj/item/lighter/proc/light_updated(datum/source)
 	SIGNAL_HANDLER

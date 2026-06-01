@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Simple animals 2.0, This time, let's really try to keep it simple. This basetype should purely be used as a base-level for implementing simplified behaviours for things such as damage and attacks. Everything else should be in components or AI behaviours.
 /mob/living/basic
 	name = "basic mob"
@@ -229,7 +230,7 @@
 	. = ..()
 	if(stat != DEAD)
 		return
-	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
+	. += span_deadsay(LANG("mob.39d14e68", list(p_they(), p_s(), HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead")))
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	var/early_melee_result = early_melee_attack(target, modifiers, ignore_cooldown)

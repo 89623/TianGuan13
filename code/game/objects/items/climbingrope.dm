@@ -22,8 +22,8 @@
 /obj/item/climbing_hook/examine(mob/user)
 	. = ..()
 	var/list/look_binds = user.client.prefs.key_bindings["look up"]
-	. += span_notice("Firstly, look upwards by holding <b>[english_list(look_binds, nothing_text = "(nothing bound)", and_text = " or ", comma_text = ", or ")]!</b>")
-	. += span_notice("Then, click solid ground (or lattice/catwalk) adjacent to the hole above you.")
+	. += span_notice(LANG("obj.2edd1f26", list(english_list(look_binds, nothing_text = "(nothing bound)", and_text = " or ", comma_text = ", or "))))
+	. += span_notice(LANG("obj.f7fcbb9f", null))
 
 /obj/item/climbing_hook/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))

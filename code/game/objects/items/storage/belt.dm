@@ -699,7 +699,7 @@
 /obj/item/storage/belt/sheath/examine(mob/user)
 	. = ..()
 	if(length(contents))
-		. += span_notice("Alt-click it to quickly draw the blade.")
+		. += span_notice(LANG("obj.ebf3b6e0", null))
 
 /obj/item/storage/belt/sheath/click_alt(mob/user)
 	if(!length(contents))

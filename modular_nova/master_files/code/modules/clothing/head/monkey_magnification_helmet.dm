@@ -22,12 +22,12 @@
 
 /obj/item/clothing/head/helmet/monkey_sentience/examine(mob/user)
 	. = ..()
-	. += span_boldwarning("---WARNING: REMOVAL OF HELMET ON SUBJECT MAY LEAD TO:---")
-	. += span_warning("BLOOD RAGE")
-	. += span_warning("BRAIN DEATH")
-	. += span_warning("PRIMAL GENE ACTIVATION")
-	. += span_warning("GENETIC MAKEUP MASS SUSCEPTIBILITY")
-	. += span_boldnotice("Ask your CMO if mind magnification is right for you.")
+	. += span_boldwarning(LANG("obj.9d7f8d0d", null))
+	. += span_warning(LANG("obj.2fac3a01", null))
+	. += span_warning(LANG("obj.c577ae01", null))
+	. += span_warning(LANG("obj.93c7a06a", null))
+	. += span_warning(LANG("obj.9c337a10", null))
+	. += span_boldnotice(LANG("obj.1f644494", null))
 
 /obj/item/clothing/head/helmet/monkey_sentience/update_icon_state()
 	. = ..()

@@ -43,15 +43,15 @@
 						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
 							. += "&bull; [round(current_reagent.volume, CHEMICAL_VOLUME_ROUNDING)] units of [current_reagent.name]"
 						if(reagents.is_reacting)
-							. += span_warning("It is currently reacting!")
-						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
+							. += span_warning(LANG("atom.b103a790", null))
+						. += span_notice(LANG("atom.e0cf0e9e", list(round(reagents.ph, 0.01), reagents.chem_temp)))
 				else
 					. += LANG("atom.252461f2", null)
 			else if(reagents.flags & AMOUNT_VISIBLE)
 				if(reagents.total_volume)
-					. += span_notice("It has [reagents.total_volume] unit\s left.")
+					. += span_notice(LANG("atom.5600f9ef", list(reagents.total_volume)))
 				else
-					. += span_danger("It's empty.")
+					. += span_danger(LANG("atom.552a4105", null))
 
 		if(HAS_TRAIT(user, TRAIT_KEEN_NOSE))
 			var/sniff_text = get_sniff_examine(user)

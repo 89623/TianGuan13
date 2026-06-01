@@ -485,7 +485,7 @@
 /obj/item/organ/stomach/examine(mob/user)
 	. = ..()
 	if (cut_open_damage)
-		. += span_danger("It has a sizeable cut in it, exposing its insides!")
+		. += span_danger(LANG("obj.f10cabe0", null))
 
 /obj/item/organ/stomach/bone
 	name = "mass of bones"

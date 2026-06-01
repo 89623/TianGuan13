@@ -74,7 +74,7 @@
 	. = ..()
 
 	if(wet)
-		. += span_notice("\nIt appears to be wet.")
+		. += span_notice(LANG("obj.421df0d7", null))
 
 
 	if(!ishuman(user) && !iscyborg(user))
@@ -87,20 +87,20 @@
 		in_hands = user.get_active_held_item() == src || user.get_inactive_held_item() == src
 
 		if(in_hands)
-			. += span_notice("<b>Use in hand</b> to shape [src] into something different.")
+			. += span_notice(LANG("obj.070bf4e1", list(src)))
 
 	if(in_hands && shape != TOWEL_FOLDED)
-		. += span_notice("<b>Ctrl-click</b> to [wet && ishuman(user) ? "wring parts of the liquids out of [src]" : "fold [src] neatly"].")
+		. += span_notice(LANG("obj.fdbf29f4", list(wet && ishuman(user) ? "wring parts of the liquids out of [src]" : "fold [src] neatly")))
 
 	if(iscyborg(user))
 		return
 
 	if(shape == TOWEL_FULL || shape == TOWEL_WAIST)
-		. += span_notice("<b>Alt-click</b> to adjust the fit of [src].")
+		. += span_notice(LANG("obj.a0c19eba", list(src)))
 
 	if(wet)
-		. += span_notice("<b>Right-click</b> [src] on a bucket to wring the liquids out of it and transfer a portion of them to the bucket.")
-		. += span_notice("<b>Wash in a washing machine</b> in order to clean [src].")
+		. += span_notice(LANG("obj.aad7cc32", list(src)))
+		. += span_notice(LANG("obj.b01ccd76", list(src)))
 
 
 /obj/item/towel/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)

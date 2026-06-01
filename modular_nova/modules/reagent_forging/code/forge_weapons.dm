@@ -22,8 +22,8 @@
 
 /obj/item/forging/reagent_weapon/examine(mob/user)
 	. = ..()
-	. += span_notice("Using a hammer on [src] will repair its damage!")
-	. += span_notice("This weapon seems twice as effective when used on beasts and monsters.")
+	. += span_notice(LANG("obj.d81d8f4a", list(src)))
+	. += span_notice(LANG("obj.446f7f21", null))
 
 /obj/item/forging/reagent_weapon/sword
 	name = "forged sword"
@@ -242,8 +242,8 @@
 
 /obj/item/shield/buckler/reagent_weapon/examine(mob/user)
 	. = ..()
-	. += span_notice("Using a hammer on [src] will repair its damage!")
-	. += span_notice("This weapon seems twice as effective when used on beasts and monsters.")
+	. += span_notice(LANG("obj.d81d8f4a", list(src)))
+	. += span_notice(LANG("obj.446f7f21", null))
 
 /obj/item/shield/buckler/reagent_weapon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(atom_integrity >= max_integrity)

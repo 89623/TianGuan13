@@ -26,10 +26,10 @@
 
 /obj/item/storm_staff/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [thunder_charges] charges remaining.")
-	. += span_notice("Use it in hand to dispel storms.")
-	. += span_notice("Use it on targets to summon thunderbolts from the sky.")
-	. += span_notice("The thunderbolts are boosted if in an area with weather effects.")
+	. += span_notice(LANG("obj.9cdb11b8", list(thunder_charges)))
+	. += span_notice(LANG("obj.b6f677dc", null))
+	. += span_notice(LANG("obj.6ea731f4", null))
+	. += span_notice(LANG("obj.7a43f62e", null))
 
 /obj/item/storm_staff/attack_self(mob/user)
 	var/area/user_area = get_area(user)

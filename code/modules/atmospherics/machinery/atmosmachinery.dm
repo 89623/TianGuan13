@@ -121,11 +121,11 @@
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] is on layer [piping_layer].")
+	. += span_notice(LANG("obj.fd03b0f2", list(src, piping_layer)))
 	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
-			. += span_notice("Alt-click to crawl through it.")
+			. += span_notice(LANG("obj.17169813", null))
 
 /**
  * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.

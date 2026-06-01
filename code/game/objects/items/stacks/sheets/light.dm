@@ -20,7 +20,7 @@
 
 /obj/item/stack/light_w/examine(mob/user)
 	. = ..()
-	. += span_warning("\The [src] looks unfinished, add <b>iron</b> to complete it.")
+	. += span_warning(LANG("obj.6b366c3f", list(src)))
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/stack/sheet/iron))

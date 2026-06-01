@@ -25,7 +25,7 @@
 
 /obj/machinery/ai_slipper/examine(mob/user)
 	. = ..()
-	. += span_notice("It has <b>[uses]</b> uses of foam remaining.")
+	. += span_notice(LANG("obj.b4a1789b", list(uses)))
 
 /obj/machinery/ai_slipper/update_icon_state()
 	if(machine_stat & BROKEN)

@@ -254,14 +254,14 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(active_displays))
-		. += span_notice("<hr>It's currently broadcasting. You can see...")
+		. += span_notice(LANG("obj.a56bbf1b", null))
 		var/has_any = FALSE
 		for(var/obj/effect/abstract/greenscreen_display/display as anything in active_displays)
 			for(var/atom/movable/thing as anything in display.displaying)
 				. += span_notice("&bull; \A [thing.name]")
 				has_any = TRUE
 		if(!has_any)
-			. += span_notice("&bull; Nothing.")
+			. += span_notice(LANG("obj.66b0cd25", null))
 
 	var/obj/effect/overlay/status_display_text/message1_overlay = get_status_text(message_key_1)
 	var/obj/effect/overlay/status_display_text/message2_overlay = get_status_text(message_key_2)
@@ -1039,7 +1039,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 
 /obj/machinery/greenscreen_camera/examine(mob/user)
 	. = ..()
-	. += span_notice("It's currently [isnull(display) ? "not " : ""]broadcasting. <i>Click it to change that.</i>")
+	. += span_notice(LANG("obj.804d9a29", list(isnull(display) ? "not " : "")))
 
 /obj/machinery/greenscreen_camera/interact(mob/user)
 	. = ..()

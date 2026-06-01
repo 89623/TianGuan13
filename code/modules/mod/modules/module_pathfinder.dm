@@ -54,9 +54,9 @@
 /obj/item/mod/module/pathfinder/examine(mob/user)
 	. = ..()
 	if(implant_inside)
-		. += span_notice("Use it on a human to implant them.")
+		. += span_notice(LANG("obj.5a96e3c6", null))
 	else
-		. += span_warning("The implant is missing.")
+		. += span_warning(LANG("obj.057204e0", null))
 
 /obj/item/mod/module/pathfinder/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!ishuman(target) || !implant_inside) // Not human, or no implant in module

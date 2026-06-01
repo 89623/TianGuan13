@@ -28,7 +28,7 @@
 /obj/item/storage/lockbox/timeclock/examine(mob/user)
 	. = ..()
 	if(!isnull(locked_contents))
-		. += span_notice("The contents label reads: [locked_contents].")
+		. += span_notice(LANG("obj.4974a5ae", list(locked_contents)))
 
 /obj/item/storage/lockbox/timeclock/can_unlock(mob/living/user, obj/item/card/id/id_card)
 	. = ..()

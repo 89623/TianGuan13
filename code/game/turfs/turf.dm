@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Any floor or wall. What makes up the station and the rest of the map.
@@ -853,7 +854,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes(src))
 		return
-	. += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
+	. += span_tinynoticeital(LANG("turf.4d4c2b22", null))
 
 /turf/examine_more(mob/user)
 	. = ..()

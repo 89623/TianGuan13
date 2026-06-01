@@ -47,11 +47,11 @@
 	. = ..()
 	if(stat != DEAD)
 		if(isnull(client))
-			. += span_notice("It appears to be moving around listlessly.")
+			. += span_notice(LANG("mob.603ff13e", null))
 		else
-			. += span_warning("It's moving around intelligently!")
+			. += span_warning(LANG("mob.f8826250", null))
 	if (egg_lain)
-		. += span_notice("Its reproductive equipment appears to have withered.")
+		. += span_notice(LANG("mob.3db9c8f3", null))
 
 /// Signal Handler proc that runs on every attack and checks to see if this is a valid target for implantation. If so, it implants the egg and starts the countdown to death.
 /mob/living/basic/headslug/proc/check_and_implant(mob/living/basic/attacker, atom/target)

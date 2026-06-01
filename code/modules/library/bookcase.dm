@@ -97,9 +97,9 @@
 /obj/structure/bookcase/examine(mob/user)
 	. = ..()
 	if(!anchored)
-		. += span_notice("The <i>bolts</i> on the bottom are unsecured.")
+		. += span_notice(LANG("obj.d6821321", null))
 	else
-		. += span_notice("It's secured in place with <b>bolts</b>.")
+		. += span_notice(LANG("obj.33d90045", null))
 	switch(state)
 		if(BOOKCASE_UNANCHORED)
 			. += span_notice("There's a <b>small crack</b> visible on the back panel.")

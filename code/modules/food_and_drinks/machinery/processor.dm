@@ -55,7 +55,7 @@
 /obj/machinery/processor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.")
+		. += span_notice(LANG("obj.4575ee25", list(rating_amount, rating_speed*100)))
 
 /obj/machinery/processor/Exited(atom/movable/gone, direction)
 	..()

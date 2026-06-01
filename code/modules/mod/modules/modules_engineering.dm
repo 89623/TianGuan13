@@ -274,8 +274,8 @@
 
 /obj/item/tether_anchor/examine(mob/user)
 	. = ..()
-	. += span_info("It can be secured by using a wrench on it. Use right-click to tether yourself to [src].")
-	. += span_info("LMB shortens the tether while RMB lengthens it. Ctrl-click to cut the tether.")
+	. += span_info(LANG("obj.98b0d388", list(src)))
+	. += span_info(LANG("obj.ec3c22c2", null))
 
 /obj/item/tether_anchor/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

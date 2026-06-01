@@ -370,14 +370,14 @@
 	. += LANG("obj.120458d2", list(src, mode ? "injecting" : "taking blood"))
 	if(reagent_container)
 		if(reagent_container.reagents && reagent_container.reagents.reagent_list.len)
-			. += span_notice("Attached is \a [reagent_container] with [reagent_container.reagents.total_volume] units of liquid.")
+			. += span_notice(LANG("obj.6bd9d525", list(reagent_container, reagent_container.reagents.total_volume)))
 		else
-			. += span_notice("Attached is an empty [reagent_container.name].")
+			. += span_notice(LANG("obj.8f819cbd", list(reagent_container.name)))
 	else if(use_internal_storage)
-		. += span_notice("It has an internal chemical storage.")
+		. += span_notice(LANG("obj.e4d8b370", null))
 	else
-		. += span_notice("No chemicals are attached.")
-	. += span_notice("[attachment ? attachment.attached_to : "Nothing"] is connected.")
+		. += span_notice(LANG("obj.74d88d8c", null))
+	. += span_notice(LANG("obj.4e2c2826", list(attachment ? attachment.attached_to : "Nothing")))
 
 /// Information and effects about where an IV drip is attached to
 // Lifetime is managed by the iv_drip, which will delete the iv_drip_attachment after

@@ -30,11 +30,11 @@
 /obj/item/table_clock/examine(mob/user)
 	. = ..()
 	if(broken)
-		. += span_info("It appears to be currently broken. You can use it in-hand to repair it.")
+		. += span_info(LANG("obj.8887d34c", null))
 	else
-		. += span_info("The current NST (local) time is: [server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour))].")
+		. += span_info(LANG("obj.e61b3194", list(server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour)))))
 		if(user.is_literate())
-			. += span_info("That means it is currently [round_timestamp()] into the shift.")
+			. += span_info(LANG("obj.f5c79a87", list(round_timestamp())))
 
 /obj/item/table_clock/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()

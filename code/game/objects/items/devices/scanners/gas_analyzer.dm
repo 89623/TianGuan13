@@ -57,8 +57,8 @@
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
-	. += span_notice("Right-click [src] to open the gas reference.")
-	. += span_notice("Alt-click [src] to activate the barometer function.")
+	. += span_notice(LANG("obj.647b6ae7", list(src)))
+	. += span_notice(LANG("obj.51181bf6", list(src)))
 
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))

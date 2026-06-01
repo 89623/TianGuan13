@@ -119,9 +119,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 /obj/item/integrated_circuit/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
+		. += span_notice(LANG("obj.00f8f6f7", list(cell ? round(cell.percent(), 1) : 0)))
 	else
-		. += span_notice("There is no power cell installed.")
+		. += span_notice(LANG("obj.b21d2f5d", null))
 
 /obj/item/integrated_circuit/drop_location()
 	if(shell)

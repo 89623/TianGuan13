@@ -26,9 +26,8 @@
 
 /obj/item/storage/belt/holster/energy/examine(mob/user)
 	. = ..()
-	. += span_notice("The integrated recharger is \
-		[recharger_cell ? "active, with [recharger_cell] inserted at <b>[round(recharger_cell.percent(), 1)]%</b>" : "<b>empty</b>"].")
-	. += span_notice("The integrated recharger can have its cell ejected via screwdriver. You can only insert a cell while the holsters are empty.")
+	. += span_notice(LANG("obj.62638794", list(recharger_cell ? "active, with [recharger_cell] inserted at <b>[round(recharger_cell.percent(), 1)]%</b>" : "<b>empty</b>")))
+	. += span_notice(LANG("obj.a5253bdb", null))
 
 /obj/item/storage/belt/holster/energy/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// attempt to insert the cell

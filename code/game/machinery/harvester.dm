@@ -196,8 +196,8 @@
 	if(machine_stat & BROKEN)
 		return
 	if(state_open)
-		. += span_notice("[src] must be closed before harvesting.")
+		. += span_notice(LANG("obj.c1b07864", list(src)))
 	else if(!harvesting)
-		. += span_notice("Alt-click [src] to start harvesting.")
+		. += span_notice(LANG("obj.f42562cb", list(src)))
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Harvest speed at <b>[interval*0.1]</b> seconds per organ. Outputting to the <b>[dir2text(output_dir)]</b>.")
+		. += span_notice(LANG("obj.9cffdaf6", list(interval*0.1, dir2text(output_dir))))

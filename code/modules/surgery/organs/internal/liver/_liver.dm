@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_RESISTANCE 1 //lower values lower how harmful toxins are to the liver
 #define LIVER_FAILURE_STAGE_SECONDS 180 //amount of seconds before liver failure reaches a new stage // NOVA EDIT CHANGE - Original: 60
@@ -91,31 +92,31 @@
 
 	if(HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER) || isobserver(user))
 		if(HAS_TRAIT(src, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-			. += span_info("Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>.")
+			. += span_info(LANG("obj.06db4f65", null))
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
-			. += span_info("The high iron content and slight smell of garlic, implies that this is the liver of a <em>cook</em>.")
+			. += span_info(LANG("obj.8bc8858d", null))
 		if (HAS_TRAIT(src, TRAIT_BARTENDER_METABOLISM))
-			. += span_info("The decidedly well-used look from periods of prolonged exposure to a wide variety of alcohols, implies that this is the liver of a <em>bartender</em>.")
+			. += span_info(LANG("obj.dae9408d", null))
 		if(HAS_TRAIT(src, TRAIT_COMEDY_METABOLISM))
-			. += span_info("A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>.")
+			. += span_info(LANG("obj.81069f22", list(span_clown("honking"))))
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
-			. += span_info("Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>.")
+			. += span_info(LANG("obj.88928772", null))
 		if(HAS_TRAIT(src, TRAIT_ENGINEER_METABOLISM))
-			. += span_info("Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>.")
+			. += span_info(LANG("obj.fa88f1b7", null))
 		if(HAS_TRAIT(src, TRAIT_SCIENTIST_LIVER))
-			. += span_info("Strange glowing residues, sprinklings of congealed solid plasma, and what seem to be tumors indicate this is the radiated liver of a <em>scientist</em>.")
+			. += span_info(LANG("obj.a9c2eaf8", null))
 		if(HAS_TRAIT(src, TRAIT_MAINTENANCE_METABOLISM))
-			. += span_info("A half-digested rat's tail (somehow), disgusting sludge, and the faint smell of Grey Bull imply this is what remains of an <em>assistant</em>'s liver.")
+			. += span_info(LANG("obj.5cf3450c", null))
 		if(HAS_TRAIT(src, TRAIT_CORONER_METABOLISM))
-			. += span_info("An aroma of pickles and sea water, along with being remarkably well-preserved, imply this is what remains of a <em>coroner</em>'s liver.")
+			. += span_info(LANG("obj.139fa31e", null))
 		if(HAS_TRAIT(src, TRAIT_HUMAN_AI_METABOLISM))
-			. += span_info("The liver appears barely human and entirely self-sufficient, implying this is what remains of a <em>human AI</em>'s liver.")
+			. += span_info(LANG("obj.491db281", null))
 
 		// royal trumps pretender royal
 		if(HAS_TRAIT(src, TRAIT_ROYAL_METABOLISM))
-			. += span_info("A rich diet of luxury food, suppleness from soft beds, implies that this is the liver of a <em>head of staff</em>.")
+			. += span_info(LANG("obj.b99d7a5f", null))
 		else if(HAS_TRAIT(src, TRAIT_PRETENDER_ROYAL_METABOLISM))
-			. += span_info("A diet of imitation caviar, and signs of insomnia, implies that this is the liver of <em>someone who wants to be a head of staff</em>.")
+			. += span_info(LANG("obj.11c26e29", null))
 
 /obj/item/organ/liver/before_organ_replacement(obj/item/organ/replacement)
 	. = ..()

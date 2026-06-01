@@ -20,7 +20,7 @@
 /obj/machinery/computer/prisoner/examine(mob/user)
 	. = ..()
 	if(contained_id)
-		. += span_notice("<b>Alt-click</b> to eject the ID card.")
+		. += span_notice(LANG("obj.91ac6969", null))
 
 /obj/machinery/computer/prisoner/click_alt(mob/user)
 	id_eject(user)

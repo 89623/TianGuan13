@@ -7,7 +7,7 @@
 
 /obj/item/domain_anchor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use in-hand to create a new spawn point.")
+	. += span_notice(LANG("obj.a338b768", null))
 
 /obj/item/domain_anchor/attack_self(mob/user, modifiers)
 	for(var/obj/machinery/quantum_server/server in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))

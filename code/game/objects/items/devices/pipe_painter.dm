@@ -34,4 +34,4 @@
 
 /obj/item/pipe_painter/examine(mob/user)
 	. = ..()
-	. += span_notice("It is set to [paint_color].")
+	. += span_notice(LANG("obj.a434c23e", list(paint_color)))

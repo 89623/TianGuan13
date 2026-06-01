@@ -37,7 +37,7 @@
 /obj/item/clothing/accessory/kheiral_cuffs/examine(mob/user)
 	. = ..()
 	if(gps_enabled)
-		. += span_notice("The cuff's GPS signal is on.")
+		. += span_notice(LANG("obj.0f2e7a16", null))
 
 /obj/item/clothing/accessory/kheiral_cuffs/equipped(mob/user, slot, initial)
 	. = ..()

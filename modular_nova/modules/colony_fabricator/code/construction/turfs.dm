@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(plastic_wall_panel_recipes, list(
 
 /obj/item/stack/sheet/plastic_wall_panel/examine(mob/user)
 	. = ..()
-	. += span_notice("You can build a prefabricated wall by right clicking on an empty floor.")
+	. += span_notice(LANG("obj.1d01de38", null))
 
 /obj/item/stack/sheet/plastic_wall_panel/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isopenturf(interacting_with))

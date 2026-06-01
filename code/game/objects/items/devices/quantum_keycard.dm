@@ -38,11 +38,11 @@
 
 		var/area_name = get_area_name(qpad)
 		if(area_name)
-			. += span_notice("The pad is located in \the [area_name]")
+			. += span_notice(LANG("obj.d36dbc28", list(area_name)))
 
-		. += span_notice("Alt-click to unlink the keycard.")
+		. += span_notice(LANG("obj.dab672c0", null))
 	else
-		. += span_notice("Insert [src] into an active quantum pad to link it.")
+		. += span_notice(LANG("obj.1efd1379", list(src)))
 
 /obj/item/quantum_keycard/click_alt(mob/living/user)
 	to_chat(user, span_notice(LANG("obj.a24b4962", list(src))))

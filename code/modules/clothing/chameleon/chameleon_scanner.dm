@@ -41,9 +41,9 @@
 		return
 	// similar to context, we don't want a bunch of text revealing "THIS IS A DISGUISED ITEM" to everyone on examine.
 	// despite the fact that anyone can use it, we'll only show it to traitors, everyone else just has to figure it out.
-	. += span_red("There's a small button on the bottom side of it. You recognize this as a hidden <i>Chameleon Scanner 6000</i>.")
-	. += span_red("<b>Left click</b> will stealthily scan a target up to [scan_range] meters away and upload their getup as a custom outfit for you to use.")
-	. += span_red("<b>Right click</b> will do the same, but instantly equip the outfit you obtain.")
+	. += span_red(LANG("obj.4a0be3a7", null))
+	. += span_red(LANG("obj.5aad88bd", list(scan_range)))
+	. += span_red(LANG("obj.1d3dafe6", null))
 
 /obj/item/chameleon_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	return scan_target(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING

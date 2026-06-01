@@ -271,4 +271,4 @@
 
 /obj/item/clothing/mask/facescarf/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to adjust it.")
+	. += span_notice(LANG("obj.10c89ab8", list(src)))

@@ -54,7 +54,7 @@
 	. = ..()
 	if(!AI)
 		return
-	. += span_notice("The AI recovery beacon is active.")
+	. += span_notice(LANG("obj.5ea22939", null))
 
 /obj/structure/mecha_wreckage/welder_act(mob/living/user, obj/item/I)
 	..()

@@ -45,9 +45,9 @@
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()
 	if (beacon)
-		. += span_hierophant_warning("The beacon is currently detached.")
+		. += span_hierophant_warning(LANG("obj.12fb2a0b", null))
 	else
-		. += span_hierophant_warning("There is a beacon attached at the back end of the handle.")
+		. += span_hierophant_warning(LANG("obj.2ffa72ef", null))
 
 /obj/item/hierophant_club/equipped(mob/user)
 	. = ..()

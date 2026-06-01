@@ -57,7 +57,7 @@
 /obj/item/taperecorder/examine(mob/user)
 	. = ..()
 	if(in_range(src, user) || isobserver(user))
-		. += span_notice("The display reads:")
+		. += span_notice(LANG("obj.05628925", null))
 		. += "[readout()]"
 
 /obj/item/taperecorder/click_alt(mob/user)
@@ -407,7 +407,7 @@
 /obj/item/tape/examine(mob/user)
 	. = ..()
 	if(unspooled)
-		. += span_notice("It looks like the tape is unspooled. A screwdriver might fix this.")
+		. += span_notice(LANG("obj.79df9bd0", null))
 
 /obj/item/tape/fire_act(exposed_temperature, exposed_volume)
 	unspool()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // ********************************************************
 // Here's all the seeds (plants) that can be used in hydro
 // ********************************************************
@@ -114,9 +115,9 @@
 
 /obj/item/seeds/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a pen on it to rename it or change its description.")
+	. += span_notice(LANG("obj.0c5d3a1f", null))
 	if(reagents_add && user.can_see_reagents())
-		. += span_notice("- Plant Reagents -")
+		. += span_notice(LANG("obj.29a5ea7d", null))
 		for(var/datum/plant_gene/reagent/reagent_gene in genes)
 			. += span_notice("- [reagent_gene.get_name()] -")
 

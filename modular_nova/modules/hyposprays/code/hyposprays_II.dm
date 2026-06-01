@@ -175,8 +175,8 @@
 		. += LANG("obj.9a358873", list(vial, vial.reagents.total_volume))
 	else
 		. += LANG("obj.d3cd4f54", null)
-	. += span_notice("Ctrl-Shift-Click to change up the colors or reset them.")
-	. += span_notice("Left-click or right-click in-hand to increase or decrease its application amount. It is currently set to [amount_per_transfer] units.")
+	. += span_notice(LANG("obj.f361af00", null))
+	. += span_notice(LANG("obj.d40fc237", list(amount_per_transfer)))
 
 /obj/item/hypospray/mkii/click_ctrl_shift(mob/user)
 	var/choice = tgui_input_list(user, "GAGSify the hypo or reset to default?", "Fashion", list("GAGS", "Nope"))
@@ -361,7 +361,7 @@
 
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Left-Click</b> on patients to spray, <b>Right-Click</b> to inject.")
+	. += span_notice(LANG("obj.522be277", null))
 
 #undef HYPO_INJECT
 #undef HYPO_SPRAY

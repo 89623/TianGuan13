@@ -837,19 +837,19 @@
 /obj/machinery/transport/tram_controller/examine(mob/user)
 	. = ..()
 	if(has_cover)
-		. += span_notice("The door appears to be [cover_locked ? "locked. Swipe an ID card to unlock" : "unlocked. Swipe an ID card to lock"].")
+		. += span_notice(LANG("obj.2f55b8b3", list(cover_locked ? "locked. Swipe an ID card to unlock" : "unlocked. Swipe an ID card to lock")))
 		if(panel_open)
-			. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
-			. += span_notice("The maintenance panel can be closed with a [EXAMINE_HINT("screwdriver.")]")
+			. += span_notice(LANG("obj.ce4b88dc", list(EXAMINE_HINT("bolts."))))
+			. += span_notice(LANG("obj.a92204bf", list(EXAMINE_HINT("screwdriver."))))
 		else
-			. += span_notice("The maintenance panel can be opened with a [EXAMINE_HINT("screwdriver.")]")
+			. += span_notice(LANG("obj.817d6499", list(EXAMINE_HINT("screwdriver."))))
 
 	if(cover_open || !has_cover)
-		. += span_notice("The [EXAMINE_HINT("yellow reset button")] resets the tram controller if a problem occurs or needs to be restarted.")
-		. += span_notice("The [EXAMINE_HINT("red stop button")] immediately stops the tram, requiring a reset afterwards.")
-		. += span_notice("The cabinet can be closed with a [EXAMINE_HINT("Right-click.")]")
+		. += span_notice(LANG("obj.d53a9d52", list(EXAMINE_HINT("yellow reset button"))))
+		. += span_notice(LANG("obj.21c28179", list(EXAMINE_HINT("red stop button"))))
+		. += span_notice(LANG("obj.03ff4c11", list(EXAMINE_HINT("Right-click."))))
 	else
-		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Left-click.")]")
+		. += span_notice(LANG("obj.414ed638", list(EXAMINE_HINT("Left-click."))))
 
 
 /obj/machinery/transport/tram_controller/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

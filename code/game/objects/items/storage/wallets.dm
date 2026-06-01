@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage/wallet
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
@@ -88,7 +89,7 @@
 /obj/item/storage/wallet/examine()
 	. = ..()
 	if(front_id)
-		. += span_notice("Alt-click to remove the id.")
+		. += span_notice(LANG("obj.b58d4695", null))
 
 /obj/item/storage/wallet/get_id_examine_strings(mob/user)
 	. = ..()

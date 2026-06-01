@@ -192,9 +192,9 @@
 /obj/item/organ/brain/slime/examine()
 	. = ..()
 	if(gps_active)
-		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
-		. += span_red("You could probably snuff that out.")
-	. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
+		. += span_notice(LANG("obj.aa31eb1a", null))
+		. += span_red(LANG("obj.a2d21aa5", null))
+	. += span_hypnophrase(LANG("obj.4b1d2628", null))
 
 /obj/item/organ/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	if(!(gps_active))

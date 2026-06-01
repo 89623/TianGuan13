@@ -218,7 +218,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard_deck/examine(mob/user)
 	. = ..()
-	. += span_notice("\The [src] has [contents.len] cards inside.")
+	. += span_notice(LANG("obj.51de612c", list(src, contents.len)))
 
 /obj/item/tcgcard_deck/attack_hand(mob/user, list/modifiers)
 	var/list/choices = list(

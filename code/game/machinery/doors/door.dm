@@ -145,11 +145,11 @@
 	. = ..()
 	if(red_alert_access)
 		if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
-			. += span_notice("Due to a security threat, its access requirements have been lifted!")
+			. += span_notice(LANG("obj.02db312d", null))
 		else
-			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
+			. += span_notice(LANG("obj.eb61cba6", null))
 	if(has_access_panel)
-		. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
+		. += span_notice(LANG("obj.e3a48223", list(panel_open ? "open" : "<b>screwed</b> in place")))
 
 /obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

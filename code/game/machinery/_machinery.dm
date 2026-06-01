@@ -1230,7 +1230,7 @@
 /obj/machinery/examine(mob/user)
 	. = ..()
 	if(machine_stat & BROKEN)
-		. += span_notice("It looks broken and non-functional.")
+		. += span_notice(LANG("obj.4bd4ac5e", null))
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)

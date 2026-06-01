@@ -119,7 +119,7 @@
 	. = ..()
 	if(!biological_sample)
 		return
-	. += span_notice("It seems to have a sample in it!")
+	. += span_notice(LANG("obj.b199c932", null))
 	for(var/i in biological_sample.micro_organisms)
 		var/datum/micro_organism/MO = i
 		. += MO.get_details(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))

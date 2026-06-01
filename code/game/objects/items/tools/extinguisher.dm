@@ -248,7 +248,7 @@
 	. += LANG("obj.400bbae9", list(safety ? "on" : "off"))
 
 	if(reagents.total_volume)
-		. += span_notice("Alt-click to empty it.")
+		. += span_notice(LANG("obj.e810a747", null))
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(is_type_in_list(target, tanktypes) && target.Adjacent(user))

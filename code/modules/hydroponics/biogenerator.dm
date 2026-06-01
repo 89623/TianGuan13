@@ -152,14 +152,14 @@
 	. = ..()
 
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads:")
-		. += span_notice(" - Productivity at <b>[productivity * 100]%</b>.")
-		. += span_notice(" - Converting <b>[processed_items_per_cycle]</b> pieces of food per cycle.")
-		. += span_notice(" - Matter consumption at <b>[1 / efficiency * 100]</b>%.")
-		. += span_notice(" - Internal biomass converter capacity at <b>[max_items]</b> pieces of food, and currently holding <b>[get_content_count()] piece\s</b>.")
+		. += span_notice(LANG("obj.e69769dd", null))
+		. += span_notice(LANG("obj.237b12aa", list(productivity * 100)))
+		. += span_notice(LANG("obj.94074b37", list(processed_items_per_cycle)))
+		. += span_notice(LANG("obj.15a65139", list(1 / efficiency * 100)))
+		. += span_notice(LANG("obj.560b9e0d", list(max_items, get_content_count())))
 
 	if(welded_down)
-		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
+		. += span_info(LANG("obj.a29ae2b3", null))
 
 /obj/machinery/biogenerator/update_appearance()
 	. = ..()

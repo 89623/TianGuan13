@@ -209,9 +209,9 @@
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
 	. = ..()
-	. += span_notice("Use <b>Ctrl-Click</b> to activate autogrow. <b>RMB</b> to empty the tray's nutrients.")
+	. += span_notice(LANG("obj.a4a2f356", null))
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Tray efficiency at <b>[rating*100]%</b>.")
+		. += span_notice(LANG("obj.e17c6005", list(rating*100)))
 
 /obj/machinery/hydroponics/constructable/add_context(
 	atom/source,
@@ -631,25 +631,25 @@
 /obj/machinery/hydroponics/examine(user)
 	. = ..()
 	if(myseed)
-		. += span_info("It has [span_name("[myseed.plantname]")] planted.")
+		. += span_info(LANG("obj.7443c344", list(span_name("[myseed.plantname]"))))
 		if (plant_status == HYDROTRAY_PLANT_DEAD)
-			. += span_warning("It's dead!")
+			. += span_warning(LANG("obj.31da5f16", null))
 		else if (plant_status == HYDROTRAY_PLANT_HARVESTABLE)
-			. += span_info("It's ready to harvest.")
+			. += span_info(LANG("obj.aa000b6c", null))
 		else if (plant_health <= (myseed.endurance / 2))
-			. += span_warning("It looks unhealthy.")
+			. += span_warning(LANG("obj.a5b9924f", null))
 	else
-		. += span_info("It's empty.")
+		. += span_info(LANG("obj.552a4105", null))
 
-	. += span_info("Water: [waterlevel]/[maxwater].")
-	. += span_info("Nutrient: [reagents.total_volume]/[maxnutri].")
+	. += span_info(LANG("obj.d6ee4991", list(waterlevel, maxwater)))
+	. += span_info(LANG("obj.0333316c", list(reagents.total_volume, maxnutri)))
 	if(self_sustaining)
-		. += span_info("The tray's autogrow is active, protecting it from species mutations, weeds, and pests.")
+		. += span_info(LANG("obj.160a6da0", null))
 
 	if(weedlevel >= 5)
-		. += span_warning("It's filled with weeds!")
+		. += span_warning(LANG("obj.e8c294a1", null))
 	if(pestlevel >= 5)
-		. += span_warning("It's filled with tiny worms!")
+		. += span_warning(LANG("obj.a4c02c3f", null))
 
 /**
  * What happens when a tray's weeds grow too large.

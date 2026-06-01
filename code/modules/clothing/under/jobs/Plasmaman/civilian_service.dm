@@ -24,7 +24,7 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
-	. += span_notice("There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charges left in this suit.")
+	. += span_notice(LANG("obj.8d253863", list(extinguishes_left == 1 ? "is" : "are", extinguishes_left)))
 
 /obj/item/clothing/under/plasmaman/equipped(mob/living/user, slot)
 	. = ..()

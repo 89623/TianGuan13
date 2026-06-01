@@ -45,7 +45,7 @@
 	if(issilicon(user) || isobserver(user))
 		. += LANG("obj.95da987e", list(stored_cyborgs))
 		if(!is_operational)
-			. += span_warning("It has no power!")
+			. += span_warning(LANG("obj.6408baad", null))
 			return
 		if(cooldown && cooldown_timer)
 			. += LANG("obj.69106e85", list(DisplayTimeText(max(0, cooldown_timer))))

@@ -116,7 +116,7 @@
 	if(tank)
 		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it. It could be removed with a <b>screwdriver</b>.")
 	if(needs_air == TRUE)
-		. += span_notice("Use a <b>wrench</b> to change the pressure level. Current output level is <b>[pressure_setting_to_text(pressure_setting)]</b>.")
+		. += span_notice(LANG("obj.e5993bcb", list(pressure_setting_to_text(pressure_setting))))
 	. += out.Join("\n")
 
 /obj/item/pneumatic_cannon/screwdriver_act(mob/living/user, obj/item/tool)

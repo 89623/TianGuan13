@@ -18,9 +18,9 @@
 /obj/item/xenoarch/hammer/examine(mob/user)
 	. = ..()
 	if(advanced)
-		. += span_notice("This is an advanced hammer. It can change its digging depth from 1 to 30. Click to change depth.")
+		. += span_notice(LANG("obj.87ab7ab3", null))
 
-	. += span_notice("Current Digging Depth: [dig_amount]cm")
+	. += span_notice(LANG("obj.b4c9ca45", list(dig_amount)))
 
 /obj/item/xenoarch/hammer/attack_self(mob/user, modifiers)
 	. = ..()
@@ -175,9 +175,9 @@
 
 /obj/item/xenoarch/handheld_radar/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click the [src] to start the scan.")
-	. += span_notice("Use the [src] on the ground to dig the rocks.")
-	. += span_notice("Use the [src] on your hand or right click to pinpoint the digsite.")
+	. += span_notice(LANG("obj.3dadc2c5", list(src)))
+	. += span_notice(LANG("obj.5004f077", list(src)))
+	. += span_notice(LANG("obj.5b0a7dab", list(src)))
 
 /obj/item/xenoarch/handheld_radar/pre_attack(atom/target, mob/user)
 	if(isturf(target))

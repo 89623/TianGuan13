@@ -323,7 +323,7 @@
 /obj/item/clothing/examine(mob/user)
 	. = ..()
 	if(damaged_clothes == CLOTHING_SHREDDED)
-		. += span_warning("<b>[p_Theyre()] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
+		. += span_warning(LANG("obj.6505b740", list(p_Theyre(), p_s(), p_they())))
 		return
 
 	for(var/zone in damage_by_parts)

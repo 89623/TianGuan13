@@ -97,7 +97,7 @@
 
 /datum/dream/specific_portent/GenerateDream(mob/living/carbon/dreamer)
 	. = list()
-	. += span_cyan("a portent of the future")
+	. += span_cyan(LANG("datum.c934c6d7", null))
 
 	var/list/portent_types = list(
 		"[GLOB.deity] greets you warmly" = "[GLOB.deity] bids you farewell, though you feel their presence watch over you",

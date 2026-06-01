@@ -58,11 +58,11 @@
 			. += span_notice("The casing is closed.")
 	if(cell_connectors)
 		if(cell)
-			. += span_notice("You see [cell] inside the casing.")
+			. += span_notice(LANG("obj.d65bfb24", list(cell)))
 		else
-			. += span_notice("The casing has no power cell for backup power.")
+			. += span_notice(LANG("obj.3f83d4f3", null))
 	else
-		. += span_danger("This casing doesn't support power cells for backup power.")
+		. += span_danger(LANG("obj.1bdbd305", null))
 
 /obj/structure/light_construct/attack_hand(mob/user, list/modifiers)
 	if(!cell)

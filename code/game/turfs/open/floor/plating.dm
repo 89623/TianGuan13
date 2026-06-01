@@ -32,14 +32,14 @@
 /turf/open/floor/plating/examine(mob/user)
 	. = ..()
 	if(broken || burnt)
-		. += span_notice("It looks like the dents could be <i>welded</i> smooth.")
+		. += span_notice(LANG("turf.db10fb49", null))
 		return
 	if(attachment_holes)
-		. += span_notice("There are a few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.")
+		. += span_notice(LANG("turf.b0723366", null))
 	else
-		. += span_notice("You might be able to build ontop of it with some <i>tiles</i>...")
+		. += span_notice(LANG("turf.3fbc0709", null))
 	if(upgradable)
-		. += span_notice("You could probably make this plating more resilient with some plasteel.")
+		. += span_notice(LANG("turf.340b3580", null))
 
 #define PLATE_REINFORCE_COST 2
 

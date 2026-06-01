@@ -64,8 +64,8 @@
 
 /obj/item/broadcast_camera/examine(mob/user)
 	. = ..()
-	. += span_notice("Broadcast name is <b>[broadcast_name]</b>")
-	. += span_notice("The microphone is <b>[active_microphone ? "On" : "Off"]</b>")
+	. += span_notice(LANG("obj.4625f45c", list(broadcast_name)))
+	. += span_notice(LANG("obj.b64a0d65", list(active_microphone ? "On" : "Off")))
 
 /obj/item/broadcast_camera/on_enter_storage(datum/storage/master_storage)
 	. = ..()

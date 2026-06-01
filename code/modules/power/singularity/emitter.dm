@@ -118,22 +118,22 @@
 /obj/machinery/power/emitter/examine(mob/user)
 	. = ..()
 	if(welded)
-		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
+		. += span_info(LANG("obj.a29ae2b3", null))
 	else if(anchored)
-		. += span_info("It's currently anchored to the floor. You can secure its moorings with a <b>welder</b>, or remove it with a <b>wrench</b>.")
+		. += span_info(LANG("obj.53651e43", null))
 	else
-		. += span_info("It's not anchored to the floor. You can secure it in place with a <b>wrench</b>.")
+		. += span_info(LANG("obj.ab10df0a", null))
 
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
 	if(!active)
-		. += span_notice("Its status display is currently turned off.")
+		. += span_notice(LANG("obj.dc576c8d", null))
 	else if(!powered)
-		. += span_notice("Its status display is glowing faintly.")
+		. += span_notice(LANG("obj.b60a9257", null))
 	else
-		. += span_notice("Its status display reads: Emitting one beam between <b>[DisplayTimeText(minimum_fire_delay * fire_rate_mod)]</b> and <b>[DisplayTimeText(maximum_fire_delay * fire_rate_mod)]</b>.")
-		. += span_notice("Power consumption at <b>[display_power(active_power_usage, convert = FALSE)]</b>.")
+		. += span_notice(LANG("obj.5c4c340d", list(DisplayTimeText(minimum_fire_delay * fire_rate_mod), DisplayTimeText(maximum_fire_delay * fire_rate_mod))))
+		. += span_notice(LANG("obj.27638ed6", list(display_power(active_power_usage, convert = FALSE))))
 
 /obj/machinery/power/emitter/should_have_node()
 	return welded

@@ -71,20 +71,20 @@
 
 	var/link_count = length(linked_bscs)
 
-	. += span_notice("The small screen reads there are [span_boldnotice("[rock_count] boulders")] available to teleport.")
-	. += span_notice("The small screen reads there are [span_boldnotice("[link_count] collectors")] available to extract from.")
-	. += span_notice("Can collect up to <b>[boulders_processing_max] boulders</b> at a time.")
-	. += span_notice("Automatic boulder retrieval can be toggled [EXAMINE_HINT("[toggled_on ? "Off" : "On"]")] with [EXAMINE_HINT("Right Click")].")
+	. += span_notice(LANG("obj.64f54f22", list(span_boldnotice("[rock_count] boulders"))))
+	. += span_notice(LANG("obj.222e4f9d", list(span_boldnotice("[link_count] collectors"))))
+	. += span_notice(LANG("obj.42f554ba", list(boulders_processing_max)))
+	. += span_notice(LANG("obj.975cb95d", list(EXAMINE_HINT("[toggled_on ? "Off" : "On"]"), EXAMINE_HINT("Right Click"))))
 
 	if(anchored)
-		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice(LANG("obj.7641f909", list(EXAMINE_HINT("anchored"))))
 	else
-		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
+		. += span_warning(LANG("obj.cea02383", list(EXAMINE_HINT("anchored"))))
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 
 	if(panel_open)
-		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.3a115eca", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/lrm/update_icon_state()
 	icon_state = initial(icon_state)

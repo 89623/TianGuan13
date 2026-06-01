@@ -300,24 +300,24 @@
 /obj/item/mmi/examine(mob/user)
 	. = ..()
 	if(radio)
-		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
+		. += span_notice(LANG("obj.139453cd", list(radio.is_on() ? "off" : "on", brain ? " It is currently being covered by [brain]." : null)))
 
 	if(!isnull(brain))
 		// It's dead, show it as much
 		if((brain.organ_flags & ORGAN_FAILING) || brainmob?.stat == DEAD)
 			if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
-				. += span_warning("[src] indicator light is red.")
+				. += span_warning(LANG("obj.b32d0034", list(src)))
 			else
-				. += span_warning("[src] indicator light is yellow - perhaps you should check the brain for damage.")
+				. += span_warning(LANG("obj.80139015", list(src)))
 		// If we have a client, OR it's a decoy brain, show as active
 		else if(brain.decoy_override || brainmob?.client)
-			. += span_notice("[src] indicates that the brain is active.")
+			. += span_notice(LANG("obj.6ac5f1cc", list(src)))
 		// If we have a brainmob and it has a mind, it may just be DC'd
 		else if(brainmob?.mind)
-			. += span_warning("[src] indicates that the brain is currently inactive; it might change.")
+			. += span_warning(LANG("obj.38b984f0", list(src)))
 		// No brainmob, no mind, and not a decoy, it's a dead brain
 		else
-			. += span_warning("[src] indicates that the brain is completely unresponsive.")
+			. += span_warning(LANG("obj.32d34791", list(src)))
 
 /obj/item/mmi/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move

@@ -77,13 +77,13 @@
 
 /obj/item/clothing/neck/tie/examine(mob/user)
 	. = ..()
-	. += span_notice("The tie can be worn above or below your suit. Alt-Right-click to toggle.")
+	. += span_notice(LANG("obj.6bf5f02c", null))
 	if(clip_on)
-		. += span_notice("Looking closely, you can see that it's actually a cleverly disguised clip-on.")
+		. += span_notice(LANG("obj.58823e0f", null))
 	else if(!is_tied)
-		. += span_notice("The tie can be tied with Alt-Click.")
+		. += span_notice(LANG("obj.1998981f", null))
 	else
-		. += span_notice("The tie can be untied with Alt-Click.")
+		. += span_notice(LANG("obj.431366bf", null))
 
 /obj/item/clothing/neck/tie/click_alt(mob/user)
 	if(clip_on)

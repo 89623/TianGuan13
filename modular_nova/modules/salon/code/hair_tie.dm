@@ -43,9 +43,9 @@
 /obj/item/clothing/head/hair_tie/examine(mob/user)
 	. = ..()
 	if(picked_hairstyle)
-		. += span_notice("Wearing it will change your hairstyle to '[picked_hairstyle]'.")
-	. += span_notice("<b>Use in hand</b> to pick a new hairstyle.")
-	. += span_notice("<b>Alt-click</b> [src] to fling it.")
+		. += span_notice(LANG("obj.8c114296", list(picked_hairstyle)))
+	. += span_notice(LANG("obj.6a90f1b1", null))
+	. += span_notice(LANG("obj.57fa8705", list(src)))
 
 /obj/item/clothing/head/hair_tie/mob_can_equip(mob/living/carbon/human/user, slot, disable_warning, bypass_equip_delay_self, ignore_equipped, indirect_action)
 	if(user.hairstyle == "Bald") //could create a list of the bald hairstyles to check

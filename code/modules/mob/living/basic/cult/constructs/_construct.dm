@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/construct
 	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	gender = NEUTER
@@ -126,9 +127,9 @@
 	. = list()
 	if(health < maxHealth)
 		if(health >= maxHealth/2)
-			. += span_warning("[p_They()] look[p_s()] slightly dented.")
+			. += span_warning(LANG("mob.c487477b", list(p_They(), p_s())))
 		else
-			. += span_warning(span_bold("[p_They()] look[p_s()] severely dented!"))
+			. += span_warning(span_bold(LANG("mob.a3853f19", list(p_They(), p_s()))))
 
 	return .
 

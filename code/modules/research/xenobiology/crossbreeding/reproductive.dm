@@ -19,7 +19,7 @@ Reproductive extracts:
 
 /obj/item/slimecross/reproductive/examine()
 	. = ..()
-	. += span_danger("It appears to have eaten [length(contents)] Monkey Cube[p_s()]")
+	. += span_danger(LANG("obj.382ba87d", list(length(contents), p_s())))
 
 /obj/item/slimecross/reproductive/Initialize(mapload)
 	. = ..()

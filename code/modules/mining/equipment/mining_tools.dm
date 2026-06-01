@@ -192,7 +192,7 @@
 	. = ..()
 	if( !(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID)) )
 		return
-	. += span_deadsay("You feel an intense, strange craving to 'dig' straight through living flesh with this shovel. Why else would it be serrated? The thought is mesmerizing...")
+	. += span_deadsay(LANG("obj.387d26d6", null))
 
 // Coroner mail version
 /obj/item/shovel/serrated/dull
@@ -232,9 +232,9 @@
 
 /obj/item/trench_tool/examine(mob/user)
 	. = ..()
-	. += span_notice("Use in hand to switch configuration.")
-	. += span_notice("It functions as a [tool_behaviour] tool.")
-	. += span_danger("<i>This weapon has no random critical hits.</i>")
+	. += span_notice(LANG("obj.2d2749ac", null))
+	. += span_notice(LANG("obj.bb377a4c", list(tool_behaviour)))
+	. += span_danger(LANG("obj.04e00f27", null))
 
 /obj/item/trench_tool/update_icon_state()
 	. = ..()

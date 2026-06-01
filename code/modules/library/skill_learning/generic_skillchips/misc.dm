@@ -95,7 +95,7 @@
 
 /obj/item/skillchip/brainwashing/examine(mob/user)
 	. = ..()
-	. += span_warning("It seems to have been corroded over time, putting this in your head may not be the best idea...")
+	. += span_warning(LANG("obj.75c94c67", null))
 
 /obj/item/skillchip/brainwashing/on_activate(mob/living/carbon/user, silent = FALSE)
 	to_chat(user, span_danger(LANG("obj.5d01e197", null)))
