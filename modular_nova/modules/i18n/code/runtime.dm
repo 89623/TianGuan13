@@ -74,3 +74,41 @@ GLOBAL_LIST_EMPTY(i18n_missing_keys)
 	if(istype(user))
 		locale = user.client?.prefs?.read_preference(/datum/preference/choiced/ui_language)
 	return lang_resolve(key, args, locale)
+
+// ---- 反查表（name/desc 等「变量类」文本接入运行时）----
+//
+// 变量初始化（name = "..."）无法改写成 LANG()（DM 变量初值需常量），所以改为：在 Initialize
+// 期把英文整串反查成译文。反查表 = 英文原文 -> 译文，仅含「无占位符的纯字符串」（name/desc
+// 几乎都是纯字符串）。译文随 Codex/Tolgee 落地自动生效，无需再改代码。
+
+/// locale -> (英文原文 -> 译文)
+GLOBAL_LIST_EMPTY(i18n_reverse)
+
+/// 惰性构建某 locale 的反查表。
+/proc/lang_build_reverse(locale)
+	if(GLOB.i18n_reverse[locale])
+		return GLOB.i18n_reverse[locale]
+
+	var/list/english = lang_load_locale(DEFAULT_UI_LOCALE)
+	var/list/localized = lang_load_locale(locale)
+	var/list/reverse = list()
+	for(var/key in english)
+		var/en_text = english[key]
+		if(findtext(en_text, "{")) // 带占位符的走 LANG 调用，不走反查
+			continue
+		var/translated = localized[key]
+		if(translated && translated != en_text)
+			reverse[en_text] = translated
+
+	GLOB.i18n_reverse[locale] = reverse
+	return reverse
+
+/// 把一段英文整串反查为全服 locale 的译文；查不到/缺省 locale 时原样返回。
+/proc/lang_reverse_text(text)
+	if(!text)
+		return text
+	var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+	if(locale == DEFAULT_UI_LOCALE)
+		return text
+	var/list/reverse = lang_build_reverse(locale)
+	return reverse[text] || text

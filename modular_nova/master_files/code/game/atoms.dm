@@ -15,3 +15,14 @@
 /// Called after a loadout item gets a custom description
 /atom/proc/on_loadout_custom_described()
 	return
+
+// i18n: 在 Initialize 期把静态 name/desc 整串反查为全服 locale 的译文。
+// 仅当全服 locale 非缺省（en）时生效；查不到的（玩家自定义名、运行时拼接名）原样保留。
+// 这一层让「变量类」文本（物品名/描述）能显示中文——它们无法直接改写成 LANG()。
+/atom/Initialize(mapload, ...)
+	. = ..()
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(name)
+			name = lang_reverse_text(name)
+		if(desc)
+			desc = lang_reverse_text(desc)
