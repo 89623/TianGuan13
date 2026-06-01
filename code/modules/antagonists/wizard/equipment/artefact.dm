@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //Apprenticeship contract - moved to antag_spawner.dm
 
@@ -32,7 +33,7 @@
 		charges--
 		user.visible_message(span_bolddanger("[src] hums with power as [user] deals a blow to [activate_descriptor] itself!"))
 	else
-		to_chat(user, span_danger("The unearthly energies that powered the blade are now dormant."))
+		to_chat(user, span_danger(LANG("obj.993da849", null)))
 
 /obj/effect/rend
 	name = "tear in the fabric of reality"
@@ -143,7 +144,7 @@
 	var/mob/living/carbon/jedi = user
 	if(jedi.mob_mood.sanity < 15)
 		return //they've already seen it and are about to die, or are just too insane to care
-	to_chat(jedi, span_userdanger("OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!"))
+	to_chat(jedi, span_userdanger(LANG("obj.b973cd4c", null)))
 	jedi.mob_mood.sanity = 0
 	for(var/lore in typesof(/datum/brain_trauma/severe))
 		jedi.gain_trauma(lore)
@@ -188,7 +189,7 @@
 	var/mob/holder = get(loc, /mob)
 	if(current_owner && current_owner != holder)
 
-		to_chat(current_owner, span_notice("Your otherworldly vision fades..."))
+		to_chat(current_owner, span_notice(LANG("obj.d27cbfb7", null)))
 
 		current_owner.remove_traits(list(TRAIT_SIXTHSENSE, TRAIT_XRAY_VISION), SCRYING_ORB)
 		current_owner.update_sight()
@@ -198,13 +199,13 @@
 	if(!current_owner && holder)
 		current_owner = holder
 
-		to_chat(current_owner, span_notice("You can see...everything!"))
+		to_chat(current_owner, span_notice(LANG("obj.b1affb03", null)))
 
 		current_owner.add_traits(list(TRAIT_SIXTHSENSE, TRAIT_XRAY_VISION), SCRYING_ORB)
 		current_owner.update_sight()
 
 /obj/item/scrying/attack_self(mob/user)
-	visible_message(span_danger("[user] stares into [src], their eyes glazing over."))
+	visible_message(span_danger(LANG("obj.d74be6dd", list(user, src))))
 	user.ghostize(1)
 
 /////////////////////////////////////////Necromantic Stone///////////////////
@@ -239,7 +240,7 @@
 		return
 
 	if(target.stat != DEAD)
-		to_chat(user, span_warning("This artifact can only affect the dead!"))
+		to_chat(user, span_warning(LANG("obj.a1209c97", null)))
 		return
 
 	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
@@ -248,19 +249,19 @@
 			break
 
 	if(!target.mind || !target.client)
-		to_chat(user, span_warning("There is no soul connected to this body..."))
+		to_chat(user, span_warning(LANG("obj.2b2fa2ce", null)))
 		return
 
 	check_spooky()//clean out/refresh the list
 	if(spooky_scaries.len >= max_thralls && !unlimited)
-		to_chat(user, span_warning("This artifact can only affect [convert_integer_to_words(max_thralls)] thralls at a time!"))
+		to_chat(user, span_warning(LANG("obj.0d01ee09", list(convert_integer_to_words(max_thralls)))))
 		return
 	if(applied_species)
 		target.set_species(applied_species, icon_update=0)
 	target.revive(ADMIN_HEAL_ALL)
 	spooky_scaries |= target
-	to_chat(target, span_userdanger("You have been revived by <B>[user.real_name]</B>!"))
-	to_chat(target, span_userdanger("[user.p_Theyre()] your master now, assist [user.p_them()] even if it costs you your new life!"))
+	to_chat(target, span_userdanger(LANG("obj.a9d6bd67", list(user.real_name))))
+	to_chat(target, span_userdanger(LANG("obj.d04d4f96", list(user.p_Theyre(), user.p_them()))))
 	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(antag_datum)
 		if(!antag_datum.wiz_team)
@@ -330,7 +331,7 @@
 
 /obj/item/warp_whistle/attack_self(mob/user)
 	if(whistler)
-		to_chat(user, span_warning("[src] is on cooldown."))
+		to_chat(user, span_warning(LANG("obj.a6cb3e18", list(src))))
 		return
 
 	whistler = user

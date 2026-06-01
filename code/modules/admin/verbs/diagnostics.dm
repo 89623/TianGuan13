@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB_VISIBILITY(debug_air_status, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(debug_air_status, R_DEBUG, "Debug Air Status" , ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, turf/target in world)
 	atmos_scan(user.mob, target, silent = TRUE)
@@ -83,7 +84,7 @@ ADMIN_VERB(toggle_cdn, R_SERVER|R_DEBUG, "Toggle CDN", "Toggles the CDN for the 
 			message_admins("[key_name_admin(user)] re-enabled the CDN asset transport")
 			log_admin("[key_name(user)] re-enabled the CDN asset transport")
 		else
-			to_chat(user, span_adminnotice("The CDN is not enabled!"))
+			to_chat(user, span_adminnotice(LANG("datum.7abb8f81", null)))
 			if (tgui_alert(user, "The CDN asset transport is not enabled! If you having issues with assets you can also try disabling filename mutations.", "The CDN asset transport is not enabled!", list("Try disabling filename mutations", "Nevermind")) == "Try disabling filename mutations")
 				SSassets.transport.dont_mutate_filenames = !SSassets.transport.dont_mutate_filenames
 				message_admins("[key_name_admin(user)] [(SSassets.transport.dont_mutate_filenames ? "disabled" : "re-enabled")] asset filename transforms")

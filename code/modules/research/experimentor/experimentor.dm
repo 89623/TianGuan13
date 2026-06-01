@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/rnd/experimentor
 	name = "\improper E.X.P.E.R.I-MENTOR"
 	desc = "Experimental Xeon Particle Entropy Reaction Infuser or something like that. Nanotrasen's new reaction infuser, with a slight less tendency to catastrophically fail than the previous model... or so they say."
@@ -238,7 +239,7 @@
 
 	var/atom/drop_atom = get_step(src, EAST) || drop_location()
 	if(should_clone)
-		visible_message(span_notice("A duplicate of \the [loaded_item] pops out!"))
+		visible_message(span_notice(LANG("obj.9036a7d4", list(loaded_item))))
 		new loaded_item.type(drop_atom)
 		return
 
@@ -342,11 +343,11 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(weapon, src))
-		to_chat(user, span_warning("\The [weapon] is stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.2aed385c", list(weapon))))
 		return ITEM_INTERACT_BLOCKING
 
 	loaded_item = weapon
-	to_chat(user, span_notice("You put [weapon] in the chamber."))
+	to_chat(user, span_notice(LANG("obj.df230513", list(weapon))))
 	flick("h_lathe_load", src)
 	try_generate_reaction_for_item(loaded_item)
 	return ITEM_INTERACT_SUCCESS

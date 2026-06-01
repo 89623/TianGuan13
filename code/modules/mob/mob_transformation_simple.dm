@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //This proc is the most basic of the procs. All it does is make a new mob on the same tile and transfer over a few variables.
 //Returns the new mob
@@ -5,7 +6,7 @@
 /mob/proc/change_mob_type(new_type = null, turf/location = null, new_name = null as text|null, delete_old_mob = FALSE)
 
 	if(isnewplayer(src))
-		to_chat(usr, span_danger("Cannot convert players who have not entered yet."))
+		to_chat(usr, span_danger(LANG("mob.7ffc2fb0", null)))
 		return
 
 	if(!new_type)
@@ -15,11 +16,11 @@
 		new_type = text2path(new_type)
 
 	if(!ispath(new_type) )
-		to_chat(usr, "Invalid type path (new_type = [new_type]) in change_mob_type(). Contact a coder.")
+		to_chat(usr, LANG("mob.75e9434e", list(new_type)))
 		return
 
 	if(ispath(new_type, /mob/dead/new_player))
-		to_chat(usr, span_danger("Cannot convert into a new_player mob type."))
+		to_chat(usr, span_danger(LANG("mob.de3ef23b", null)))
 		return
 
 	if (SEND_SIGNAL(src, COMSIG_PRE_MOB_CHANGED_TYPE) & COMPONENT_BLOCK_MOB_CHANGE)
@@ -36,7 +37,7 @@
 		desired_mob = new new_type(src.loc)
 
 	if(!ismob(desired_mob))
-		to_chat(usr, "Type path is not a mob (new_type = [new_type]) in change_mob_type(). Contact a coder.")
+		to_chat(usr, LANG("mob.fc301dbf", list(new_type)))
 		qdel(desired_mob)
 		return
 

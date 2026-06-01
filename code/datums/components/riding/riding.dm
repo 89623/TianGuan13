@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Offsets applied for people riding something
 #define RIDING_SOURCE "riding"
 /// Offsets applied for something being ridden
@@ -355,7 +356,7 @@
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			if(source.is_blind())
-				to_chat(source, span_warning("Someone shoves you around, trying to throw off your rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"))
+				to_chat(source, span_warning(LANG("datum.3fd247a7", list(length(source.buckled_mobs) == 1 ? "" : "s"))))
 			if(!disarmer.is_blind())
 				switch(disarm_chance)
 					if(50 to INFINITY)
@@ -370,7 +371,7 @@
 		span_warning("As [disarmer] shoves you around, [throwing] is thrown from you!"),
 	)
 	if(source.is_blind())
-		to_chat(source, span_warning("As someone shoves you around, you feel [length(source.buckled_mobs) == 1 ? "your rider" : "one of your riders"] get thrown from you!"))
+		to_chat(source, span_warning(LANG("datum.d4da32db", list(length(source.buckled_mobs) == 1 ? "your rider" : "one of your riders"))))
 
 	source.unbuckle_mob(throwing, force = TRUE)
 	throwing.Knockdown(throwing.has_status_effect(/datum/status_effect/staggered) ? SHOVE_KNOCKDOWN_COLLATERAL : SHOVE_KNOCKDOWN_HUMAN)
@@ -387,7 +388,7 @@
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			if(rider.is_blind())
-				to_chat(rider, span_warning("As someone shoves you around, you [(disarm_chance >= 50 ? "barely" : (disarm_chance >= 25 ? "" : "effortlessly"))] manage to hold on to [parent]!"))
+				to_chat(rider, span_warning(LANG("datum.61930d5f", list((disarm_chance >= 50 ? "barely" : (disarm_chance >= 25 ? "" : "effortlessly")), parent))))
 			if(!disarmer.is_blind())
 				switch(disarm_chance)
 					if(50 to INFINITY)
@@ -403,7 +404,7 @@
 		span_warning("As [disarmer] shoves you around, you lose your [pick("balance", "grip", "hold")] and fall off [parent]!")
 	)
 	if(rider.is_blind())
-		to_chat(rider, span_warning("As someone shoves you around, you lose your [pick("balance", "grip", "hold")] and fall off [parent]!"))
+		to_chat(rider, span_warning(LANG("datum.a2a4ca1e", list(pick("balance", "grip", "hold"), parent))))
 
 	var/atom/movable/riding = parent
 	riding.unbuckle_mob(rider, force = TRUE)

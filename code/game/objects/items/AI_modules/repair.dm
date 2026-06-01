@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* CONTAINS:
  * /obj/item/ai_module/remove
  * /obj/item/ai_module/reset
@@ -14,12 +15,12 @@
 	lawpos = tgui_input_number(user, "Law to delete", "Law Removal", lawpos, 50)
 	if(!lawpos || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
-	to_chat(user, span_notice("Law [lawpos] selected."))
+	to_chat(user, span_notice(LANG("obj.2bf6f5a8", list(lawpos))))
 	..()
 
 /obj/item/ai_module/remove/install(datum/ai_laws/law_datum, mob/user)
 	if(lawpos > law_datum.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED)))
-		to_chat(user, span_warning("There is no law [lawpos] to delete!"))
+		to_chat(user, span_warning(LANG("obj.e1dcd1cb", list(lawpos))))
 		return
 	..()
 

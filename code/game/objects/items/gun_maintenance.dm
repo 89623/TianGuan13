@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun_maintenance_supplies
 	name = "gun maintenance kit"
 	desc = "A toolbox containing gun maintenance supplies and spare parts. Can be applied to firearms to maintain them."
@@ -30,7 +31,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(!isgun(interacting_with))
-		balloon_alert(user, "not a gun!")
+		balloon_alert(user, LANG("obj.d5d11148", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/gun/gun_to_fix = interacting_with
@@ -57,10 +58,10 @@
 		use_charge = TRUE
 
 	if(!use_charge)
-		balloon_alert(user, "no need for repair!")
+		balloon_alert(user, LANG("obj.cf566437", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "maintenance complete")
+	balloon_alert(user, LANG("obj.5456b6d0", null))
 	use_the_kit()
 	return ITEM_INTERACT_SUCCESS
 

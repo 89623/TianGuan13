@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/mapgen
 	key = "mapgen"
 
@@ -6,8 +7,7 @@
 
 /datum/buildmode_mode/mapgen/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Select corner")] -> Left Mouse Button on turf/obj/mob\n\
-		[span_bold("Select generator")] -> Right Mouse Button on buildmode button"))
+		LANG("datum.fb94bdf2", list(span_bold("Select corner"), span_bold("Select generator")))))
 	)
 
 /datum/buildmode_mode/mapgen/change_settings(client/c)
@@ -25,7 +25,7 @@
 
 /datum/buildmode_mode/mapgen/handle_click(client/c, params, obj/object)
 	if(isnull(generator_path))
-		to_chat(c, span_warning("Select generator type first."))
+		to_chat(c, span_warning(LANG("datum.5dddd369", null)))
 		deselect_region()
 		return
 	..()
@@ -37,7 +37,7 @@
 		var/datum/map_generator/G = new generator_path
 		if(istype(G, /datum/map_generator/repair/reload_station_map))
 			if(GLOB.reloading_map)
-				to_chat(c, span_boldwarning("You are already reloading an area! Please wait for it to fully finish loading before trying to load another!"))
+				to_chat(c, span_boldwarning(LANG("datum.02a33b5d", null)))
 				deselect_region()
 				return
 		G.defineRegion(cornerA, cornerB, 1)

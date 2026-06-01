@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CABLE_LENGTH 2
 
 /**
@@ -89,7 +90,7 @@
  * Handles deleting the hacking cable and notifying the user.
  */
 /mob/living/silicon/pai/proc/retract_cable()
-	balloon_alert(src, "cable retracted")
+	balloon_alert(src, LANG("mob.5ac64d45", null))
 	QDEL_NULL(hacking_cable)
 	return TRUE
 
@@ -105,17 +106,17 @@
 	if(!hacking_cable)
 		return FALSE
 	if(!hacking_cable.hacking_machine)
-		balloon_alert(src, "nothing connected")
+		balloon_alert(src, LANG("mob.86101246", null))
 		return FALSE
 	playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 50, TRUE)
-	balloon_alert(src, "overriding...")
+	balloon_alert(src, LANG("mob.e3f1440c", null))
 	// Now begin hacking
 	if(!do_after(src, 15 SECONDS, hacking_cable.hacking_machine, timed_action_flags = NONE,	progress = TRUE))
-		balloon_alert(src, "failed! retracting...")
+		balloon_alert(src, LANG("mob.e3cf22b4", null))
 		QDEL_NULL(hacking_cable)
 		return FALSE
 	var/obj/machinery/door/door = hacking_cable.hacking_machine
-	balloon_alert(src, "success")
+	balloon_alert(src, LANG("mob.75090415", null))
 	door.open()
 	QDEL_NULL(hacking_cable)
 	return TRUE

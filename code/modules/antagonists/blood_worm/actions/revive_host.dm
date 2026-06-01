@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/blood_worm/revive
 	name = "Revive Host"
 	desc = "Restart the blood circulation of your host, bringing them back to life."
@@ -43,7 +44,7 @@
 	var/mob/living/basic/blood_worm/worm = target
 	var/mob/living/carbon/human/host = worm.host
 
-	to_chat(owner, span_notice("You begin restarting \the [host]'s blood circulation..."))
+	to_chat(owner, span_notice(LANG("datum.675c3fe1", list(host))))
 
 	for (var/i in 1 to 3)
 		if (!do_after(owner, 2 SECONDS, host, timed_action_flags = IGNORE_INCAPACITATED | IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(run_checks), worm, host)))
@@ -71,7 +72,7 @@
 		ignored_mobs = owner
 	)
 
-	to_chat(owner, span_green("You successfully revive \the [host]!"))
+	to_chat(owner, span_green(LANG("datum.24fb8296", list(host))))
 
 	return ..()
 

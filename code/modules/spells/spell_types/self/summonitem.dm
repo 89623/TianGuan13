@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/summonitem
 	name = "Instant Summons"
 	desc = "This spell can be used to recall a previously marked item to your hand from anywhere in the universe."
@@ -53,7 +54,7 @@
 	SIGNAL_HANDLER
 
 	if(owner)
-		to_chat(owner, span_boldwarning("You sense your marked item has been destroyed!"))
+		to_chat(owner, span_boldwarning(LANG("datum.45c73b3d", null)))
 	unmark_item()
 
 /datum/action/cooldown/spell/summonitem/cast(mob/living/cast_on)
@@ -79,9 +80,9 @@
 	var/obj/item/potential_mark = caster.get_active_held_item()
 	if(!potential_mark)
 		if(caster.get_inactive_held_item())
-			to_chat(caster, span_warning("You must hold the desired item in your hands to mark it for recall!"))
+			to_chat(caster, span_warning(LANG("datum.9a09fa56", null)))
 		else
-			to_chat(caster, span_warning("You aren't holding anything that can be marked for recall!"))
+			to_chat(caster, span_warning(LANG("datum.43b3622a", null)))
 		return FALSE
 
 	var/link_message = ""
@@ -99,12 +100,12 @@
 
 /// If we have a marked item and it's in our hand, we will try to unlink it
 /datum/action/cooldown/spell/summonitem/proc/try_unlink_item(mob/living/caster)
-	to_chat(caster, span_notice("You begin removing the mark on [marked_item]..."))
+	to_chat(caster, span_notice(LANG("datum.167e7a53", list(marked_item))))
 	if(!do_after(caster, 5 SECONDS, marked_item))
-		to_chat(caster, span_notice("You decide to keep [marked_item] marked."))
+		to_chat(caster, span_notice(LANG("datum.a1245771", list(marked_item))))
 		return FALSE
 
-	to_chat(caster, span_notice("You remove the mark on [marked_item] to use elsewhere."))
+	to_chat(caster, span_notice(LANG("datum.b5a59aed", list(marked_item))))
 	unmark_item()
 	return TRUE
 
@@ -196,11 +197,11 @@
 		return .
 
 	if(!istype(potential_mark, /obj/item/melee/baton/abductor))
-		to_chat(caster, span_warning("[potential_mark] has no translocation crystals to link to!"))
+		to_chat(caster, span_warning(LANG("datum.6075ac11", list(potential_mark))))
 		return FALSE
 
 	return TRUE
 
 /datum/action/cooldown/spell/summonitem/abductor/try_unlink_item(mob/living/caster)
-	to_chat(caster, span_warning("You can't unlink [marked_item]'s translocation crystals."))
+	to_chat(caster, span_warning(LANG("datum.5df4a889", list(marked_item))))
 	return FALSE

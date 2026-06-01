@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ATMOS_PIPEDISPENSER 0
 #define DISPOSAL_PIPEDISPENSER 1
 #define TRANSIT_PIPEDISPENSER 2
@@ -154,7 +155,7 @@
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		to_chat(usr, span_notice("You put [W] back into [src]."))
+		to_chat(usr, span_notice(LANG("obj.99c70bb4", list(W, src))))
 		qdel(W)
 		return
 	else

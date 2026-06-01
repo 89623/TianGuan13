@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The guillotine is not being interacted with at the moment
 #define GUILLOTINE_ACTION_IDLE 0
 /// The blade is ready to be dropped
@@ -65,16 +66,16 @@
 
 /obj/structure/guillotine/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/sheet/plasteel))
-		to_chat(user, span_notice("You start repairing the guillotine with the plasteel..."))
+		to_chat(user, span_notice(LANG("obj.95b45dae", null)))
 		if(blade_sharpness<10)
 			if(do_after(user,100,target=user))
 				blade_sharpness = min(10,blade_sharpness+3)
 				I.use(1)
-				to_chat(user, span_notice("You repair the guillotine with the plasteel."))
+				to_chat(user, span_notice(LANG("obj.de124329", null)))
 			else
-				to_chat(user, span_notice("You stop repairing the guillotine with the plasteel."))
+				to_chat(user, span_notice(LANG("obj.e0cd1a12", null)))
 		else
-			to_chat(user, span_warning("The guillotine is already fully repaired!"))
+			to_chat(user, span_warning(LANG("obj.2377e11d", null)))
 
 /obj/structure/guillotine/examine(mob/user)
 	. = ..()
@@ -209,25 +210,25 @@
 					blade_status = GUILLOTINE_BLADE_RAISED
 					return
 			else
-				to_chat(user, span_warning("The blade is sharp enough!"))
+				to_chat(user, span_warning(LANG("obj.8c80f756", null)))
 				return
 		else
-			to_chat(user, span_warning("You need to raise the blade in order to sharpen it!"))
+			to_chat(user, span_warning(LANG("obj.9da86793", null)))
 			return
 	else
 		return ..()
 
 /obj/structure/guillotine/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if (!anchored)
-		to_chat(usr, span_warning("[src] needs to be wrenched to the floor!"))
+		to_chat(usr, span_warning(LANG("obj.acb3909a", list(src))))
 		return FALSE
 
 	if (!ishuman(M))
-		to_chat(usr, span_warning("It doesn't look like [M.p_they()] can fit into this properly!"))
+		to_chat(usr, span_warning(LANG("obj.5b6969ef", list(M.p_they()))))
 		return FALSE // Can't decapitate non-humans
 
 	if (blade_status != GUILLOTINE_BLADE_RAISED)
-		to_chat(usr, span_warning("You need to raise the blade before buckling someone in!"))
+		to_chat(usr, span_warning(LANG("obj.6649cb11", null)))
 		return FALSE
 
 	return ..(M, user, check_loc = FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
@@ -267,7 +268,7 @@
 /obj/structure/guillotine/can_be_unfasten_wrench(mob/user, silent)
 	if (LAZYLEN(buckled_mobs))
 		if (!silent)
-			to_chat(user, span_warning("Can't unfasten, someone's strapped in!"))
+			to_chat(user, span_warning(LANG("obj.cea3a5ec", null)))
 		return FAILED_UNFASTEN
 
 	if (current_action && current_action != GUILLOTINE_ACTION_WRENCH)

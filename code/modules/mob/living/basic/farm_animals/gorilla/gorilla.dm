@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Where do we draw gorilla held overlays?
 #define GORILLA_HANDS_LAYER 1
 
@@ -102,7 +103,7 @@
 	ooga_ooga()
 	if (prob(paralyze_chance))
 		target.Knockdown(1 SECONDS) // NOVA EDIT CHANGE - ORIGINAL:  target.Paralyze(2 SECONDS)
-		visible_message(span_danger("[src] knocks [target] down!"))
+		visible_message(span_danger(LANG("mob.b28257ff", list(src, target))))
 	else
 		target.throw_at(get_edge_target_turf(target, dir), range = rand(1, 2), speed = 7, thrower = src)
 
@@ -116,7 +117,7 @@
 	return ..()
 
 /mob/living/basic/gorilla/can_use_guns(obj/item/gun)
-	to_chat(src, span_warning("Your meaty finger is much too large for the trigger guard!"))
+	to_chat(src, span_warning(LANG("mob.f7045ed3", null)))
 	return FALSE
 
 /// Assert your dominance with audio cues

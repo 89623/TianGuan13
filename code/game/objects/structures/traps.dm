@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/trap
 	name = "IT'S A TRAP"
 	desc = "Stepping on me is a guaranteed bad day."
@@ -168,7 +169,7 @@
 	var/turf/target_turf = get_turf(src)
 	if(!user || !user.transferItemToLoc(src, target_turf))//visibly unequips
 		return
-	to_chat(user, span_notice("You set up [src]. Examine while close to disarm it."))
+	to_chat(user, span_notice(LANG("obj.83489202", list(src))))
 	stored_trap.forceMove(target_turf)//moves trap to ground
 	forceMove(stored_trap)//moves item into trap
 
@@ -186,7 +187,7 @@
 	icon_state = "trap-fire"
 
 /obj/structure/trap/fire/trap_effect(mob/living/victim)
-	to_chat(victim, span_danger("<B>Spontaneous combustion!</B>"))
+	to_chat(victim, span_danger(LANG("obj.ce2413c6", null)))
 	victim.Paralyze(2 SECONDS)
 	new /obj/effect/hotspot(get_turf(src))
 
@@ -198,7 +199,7 @@
 /obj/structure/trap/chill/trap_effect(mob/living/victim)
 	if(HAS_TRAIT(victim, TRAIT_RESISTCOLD))
 		return
-	to_chat(victim, span_bolddanger("You're frozen solid!"))
+	to_chat(victim, span_bolddanger(LANG("obj.f7277a3c", null)))
 	victim.Paralyze(2 SECONDS)
 	victim.adjust_bodytemperature(-300)
 	victim.apply_status_effect(/datum/status_effect/freon)
@@ -211,7 +212,7 @@
 
 
 /obj/structure/trap/damage/trap_effect(mob/living/victim)
-	to_chat(victim, span_bolddanger("The ground quakes beneath your feet!"))
+	to_chat(victim, span_bolddanger(LANG("obj.08314dff", null)))
 	victim.Paralyze(10 SECONDS)
 	victim.adjust_brute_loss(35)
 	var/obj/structure/flora/rock/style_random/giant_rock = new(get_turf(src))
@@ -235,7 +236,7 @@
 	icon_state = "trap-cult"
 
 /obj/structure/trap/cult/trap_effect(mob/living/victim)
-	to_chat(victim, span_bolddanger("With a crack, the hostile constructs come out of hiding, stunning you!"))
+	to_chat(victim, span_bolddanger(LANG("obj.301c3a9c", null)))
 	victim.electrocute_act(10, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
 	victim.Paralyze(2 SECONDS)
 	new /mob/living/basic/construct/proteon/hostile(loc)

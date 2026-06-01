@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Base timeout for creating mutation activators
 #define MIN_ACTIVATOR_TIMEOUT 5 SECONDS
 /// Base cooldown multiplier for activator upgrades
@@ -186,7 +187,7 @@
 	if (istype(item, /obj/item/chromosome))
 		item.forceMove(src)
 		stored_chromosomes += item
-		to_chat(user, span_notice("You insert [item]."))
+		to_chat(user, span_notice(LANG("obj.a134b5ec", list(item))))
 		return
 
 	// Insert data disk if console disk slot is empty
@@ -200,7 +201,7 @@
 			eject_disk(user)
 		// Set the new diskette.
 		diskette = item
-		to_chat(user, span_notice("You insert [item]."))
+		to_chat(user, span_notice(LANG("obj.a134b5ec", list(item))))
 		return
 
 	// Recycle non-activator used injectors
@@ -213,19 +214,19 @@
 					var/c_typepath = generate_chromosome()
 					var/obj/item/chromosome/CM = new c_typepath (src)
 					stored_chromosomes += CM
-					to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
+					to_chat(user,span_notice(LANG("obj.d60767ae", list(capitalize(CM.name)))))
 				else
-					to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
+					to_chat(user, span_notice(LANG("obj.36574246", null)))
 			if(activator.crispr_charge)
 				crispr_charges++
-				to_chat(user, span_notice("CRISPR charge added."))
+				to_chat(user, span_notice(LANG("obj.3f7aa53d", null)))
 			qdel(item)
-			to_chat(user,span_notice("Recycled [item]."))
+			to_chat(user,span_notice(LANG("obj.460a6614", list(item))))
 			return
 		else
 			//recycle unused activators
 			qdel(item)
-			to_chat(user, span_notice("Recycled unused [item]."))
+			to_chat(user, span_notice(LANG("obj.00d93286", list(item))))
 			return
 	return ..()
 
@@ -1872,7 +1873,7 @@
 		var/type = delayed_action["type"]
 		var/buffer_slot = delayed_action["buffer_slot"]
 		if(apply_genetic_makeup(type, buffer_slot))
-			to_chat(connected_scanner.occupant, span_notice("[src] activates!"))
+			to_chat(connected_scanner.occupant, span_notice(LANG("obj.f40f5858", list(src))))
 		delayed_action = null
 
 /**
@@ -2184,7 +2185,7 @@
 	if(stored_research && !(path in stored_research.discovered_mutations))
 		var/datum/mutation/HM = GET_INITIALIZED_MUTATION(path)
 		stored_research.discovered_mutations += path
-		say("Successfully discovered [HM.name].")
+		say(LANG("obj.5efd3742", list(HM.name)))
 		return TRUE
 
 	return FALSE
@@ -2329,7 +2330,7 @@
 	if(!diskette)
 		return
 
-	to_chat(user, span_notice("You eject [diskette] from [src]."))
+	to_chat(user, span_notice(LANG("obj.daa0023e", list(diskette, src))))
 
 	// Reset the state to console storage.
 	tgui_view_state["storageMode"] = "console"

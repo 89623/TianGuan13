@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/bot/secbot/ed209
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot. He looks less than thrilled."
@@ -93,8 +94,8 @@
 	. = ..()
 	icon_state = "ed209[bot_mode_flags & BOT_MODE_ON]"
 	set_weapon()
-	balloon_alert(user, "safeties disabled")
-	audible_message(span_bolddanger("[src] buzzes menacingly!"))
+	balloon_alert(user, LANG("mob.42074643", null))
+	audible_message(span_bolddanger(LANG("mob.ece108f8", list(src))))
 	return TRUE
 
 /mob/living/basic/bot/secbot/ed209/proc/set_weapon()

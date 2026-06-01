@@ -223,7 +223,7 @@
 	set desc = "Allows you to toggle which genitals should show through clothes or not."
 
 	if(stat != CONSCIOUS)
-		to_chat(usr, span_warning("You can't toggle genitals visibility right now..."))
+		to_chat(usr, span_warning(LANG("mob.9d652d0e", null)))
 		return
 
 	var/list/genital_list = list()
@@ -254,12 +254,12 @@
 
 	if(gen_vis_trans[picked_visibility] == GENITAL_LAYER_NORMAL || gen_vis_trans[picked_visibility] == GENITAL_LAYER_HIGH)
 		picked_organ.layer_mode = gen_vis_trans[picked_visibility]
-		balloon_alert(src, "set layering to [LOWER_TEXT(picked_visibility)]")
+		balloon_alert(src, LANG("mob.8e992c0f", list(LOWER_TEXT(picked_visibility))))
 		update_body()
 		return
 
 	picked_organ.visibility_preference = gen_vis_trans[picked_visibility]
-	balloon_alert(src, "set to [LOWER_TEXT(picked_visibility)]")
+	balloon_alert(src, LANG("mob.28f94138", list(LOWER_TEXT(picked_visibility))))
 	update_body()
 
 /mob/living/carbon/human/verb/toggle_arousal()
@@ -268,7 +268,7 @@
 	set desc = "Allows you to toggle how aroused your private parts are."
 
 	if(stat != CONSCIOUS)
-		to_chat(usr, span_warning("You can't toggle arousal right now..."))
+		to_chat(usr, span_warning(LANG("mob.320c55f3", null)))
 		return
 
 	var/list/genital_list = list()
@@ -297,5 +297,5 @@
 
 	picked_organ.aroused = gen_arous_trans[picked_arousal]
 	picked_organ.update_sprite_suffix()
-	balloon_alert(src, "set to [LOWER_TEXT(picked_arousal)]")
+	balloon_alert(src, LANG("mob.28f94138", list(LOWER_TEXT(picked_arousal))))
 	update_body()

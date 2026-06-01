@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/blood_worm/spit
 	name = "Spit Blood"
 	desc = "Spit corrosive blood at your target in exchange for your own health. Right-click to melt restraints while in a host."
@@ -27,11 +28,11 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/set_click_ability(mob/on_who)
 	. = ..()
 	var/right_click_message = ishuman(owner) ? ", right-click to melt restraints" : (burst_projectile_type ? ", right-click for a burst" : "")
-	to_chat(owner, span_notice("You fill your [ishuman(owner) ? "mouth" : "maw"] with blood. <b>Left-click to spit corrosive blood[right_click_message]!</b>"))
+	to_chat(owner, span_notice(LANG("datum.3549791b", list(ishuman(owner) ? "mouth" : "maw", right_click_message))))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/unset_click_ability(mob/on_who, refund_cooldown)
 	. = ..()
-	to_chat(owner, span_notice("You empty your [ishuman(owner) ? "mouth" : "maw"] of blood."))
+	to_chat(owner, span_notice(LANG("datum.32ee58ff", list(ishuman(owner) ? "mouth" : "maw"))))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/IsAvailable(feedback)
 	if (!ishuman(owner) && !istype(owner, /mob/living/basic/blood_worm))
@@ -202,7 +203,7 @@
 		ignored_mobs = host
 	)
 
-	to_chat(host, span_danger("You spit corrosive blood all over \the [closet]'s interior hinges!"))
+	to_chat(host, span_danger(LANG("datum.53ffdcec", list(closet))))
 
 	log_combat(host, closet, "melted", addition = "(Spit Blood)")
 
@@ -229,7 +230,7 @@
 		ignored_mobs = host
 	)
 
-	to_chat(host, span_danger("You spit corrosive blood all over the inside of \the [cocoon]!"))
+	to_chat(host, span_danger(LANG("datum.2275c6ce", list(cocoon))))
 
 	log_combat(host, cocoon, "melted", addition = "(Spit Blood)")
 

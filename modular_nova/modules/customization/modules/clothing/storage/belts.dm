@@ -78,13 +78,13 @@
 		add_fingerprint(user)
 		playsound(src, 'sound/items/unsheath.ogg', 50, TRUE, -5)
 		if(!user.put_in_hands(drawn_item))
-			to_chat(user, span_notice("You fumble for [drawn_item] and it falls on the floor."))
+			to_chat(user, span_notice(LANG("obj.02062406", list(drawn_item))))
 			update_appearance()
 			return CLICK_ACTION_SUCCESS
 		user.visible_message(span_notice("[user] takes [drawn_item] out of [src]."), span_notice("You take [drawn_item] out of [src]."))
 		update_appearance()
 	else
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/belt/crusader/update_icon(updates)

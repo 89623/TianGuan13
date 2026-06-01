@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/clown
 	name = "Clown"
 	desc = "A denizen of Clown Planet."
@@ -443,7 +444,7 @@
 
 	if(IS_EDIBLE(potential_food))
 		if(prank_pouch.len >= 8)
-			to_chat(src, span_warning("Your prank pouch is filled to the brim! You don't think you can swallow any more morsels right now."))
+			to_chat(src, span_warning(LANG("mob.fb48a882", null)))
 			return FALSE
 		return TRUE
 
@@ -457,7 +458,7 @@
 		/obj/item/food/ink_sac,
 	)
 
-	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
+	visible_message(span_warning(LANG("mob.bd6d6680", list(src, eaten_atom))), span_notice(LANG("mob.0a3b7200", list(eaten_atom))))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom
@@ -466,7 +467,7 @@
 		//Encourage gluttony RP by giving a litle bonus for each obj eaten.
 		foods_eaten++
 		if(!(foods_eaten % 5) && foods_eaten <= 100)
-			balloon_alert(src, "weight gained!")
+			balloon_alert(src, LANG("mob.8b8740d1", null))
 			maxHealth += 10
 			health += 10
 		if(istype(eaten_atom, /obj/item/food/grown/banana))
@@ -505,7 +506,7 @@
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B>"))
+	to_chat(on_who, span_notice(LANG("datum.e760bccd", null)))
 	on_who.icon_state = "glutton_tongue"
 	on_who.update_appearance(UPDATE_ICON)
 
@@ -515,7 +516,7 @@
 		return
 
 	if(refund_cooldown)
-		to_chat(on_who, span_notice("Your throat muscles relax."))
+		to_chat(on_who, span_notice(LANG("datum.95570189", null)))
 	on_who.icon_state = initial(on_who.icon_state)
 	on_who.update_appearance(UPDATE_ICON)
 
@@ -533,7 +534,7 @@
 	var/mob/living/basic/clown/mutant/glutton/pouch_owner = owner
 	if(!length(pouch_owner.prank_pouch))
 		pouch_owner.icon_state = initial(pouch_owner.icon_state)
-		to_chat(pouch_owner, span_notice("Your prank pouch is empty."))
+		to_chat(pouch_owner, span_notice(LANG("datum.14e71caa", null)))
 		return TRUE
 
 	var/obj/item/projected_morsel = pick(pouch_owner.prank_pouch)

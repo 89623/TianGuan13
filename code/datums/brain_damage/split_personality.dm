@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define OWNER 0
 #define STRANGER 1
 
@@ -99,8 +100,8 @@
 		return
 
 	current_backseat.log_message("assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])", LOG_GAME)
-	to_chat(owner, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
-	to_chat(current_backseat, span_userdanger("You manage to take control of your body!"))
+	to_chat(owner, span_userdanger(LANG("datum.1ca49b80", null)))
+	to_chat(current_backseat, span_userdanger(LANG("datum.76cfb0b3", null)))
 
 	//Body to backseat
 
@@ -177,12 +178,12 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, span_notice("As a split personality, you cannot do anything but observe. However, you will eventually gain control of your body, switching places with the current personality."))
-	to_chat(src, span_warning("<b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b>"))
+	to_chat(src, span_notice(LANG("mob.c2fbe583", null)))
+	to_chat(src, span_warning(LANG("mob.6286261e", null)))
 
 /mob/living/split_personality/try_speak(message, ignore_spam, forced, filterproof)
 	SHOULD_CALL_PARENT(FALSE)
-	to_chat(src, span_warning("You cannot speak, your other self is controlling your body!"))
+	to_chat(src, span_warning(LANG("mob.a9a20e21", null)))
 	return FALSE
 
 /mob/living/split_personality/emote(act, type_override = NONE, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE)
@@ -257,10 +258,10 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, span_notice("As a brainwashed personality, you cannot do anything yet but observe. However, you may gain control of your body if you hear the special codeword, switching places with the current personality."))
-	to_chat(src, span_notice("Your activation codeword is: <b>[codeword]</b>"))
+	to_chat(src, span_notice(LANG("mob.3edb904c", null)))
+	to_chat(src, span_notice(LANG("mob.c7cda14f", list(codeword))))
 	if(objective)
-		to_chat(src, span_notice("Your master left you an objective: <b>[objective]</b>. Follow it at all costs when in control."))
+		to_chat(src, span_notice(LANG("mob.ef95ff6c", list(objective))))
 
 /datum/brain_trauma/severe/split_personality/blackout
 	name = "Alcohol-Induced CNS Impairment"
@@ -319,7 +320,7 @@
 		qdel(src)
 		return
 	else if(duration_in_seconds <= 60 && !(duration_in_seconds % 20))
-		to_chat(owner, span_warning("You have [duration_in_seconds] seconds left before sobering up!"))
+		to_chat(owner, span_warning(LANG("datum.6265858f", list(duration_in_seconds))))
 	if(prob(10) && !HAS_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER))
 		ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
 		owner.balloon_alert(owner, "dexterity reduced temporarily!")
@@ -343,8 +344,8 @@
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, span_notice("You're the incredibly inebriated leftovers of your host's consciousness! Make sure to act the part and leave a trail of confusion and chaos in your wake."))
-	to_chat(src, span_boldwarning("While you're drunk, you're not suicidal. Do not commit suicide or put the body in danger. You have a minor license to grief just like a clown, but do not kill anyone or create a situation leading to the body being put in danger or at risk of being harmed."))
+	to_chat(src, span_notice(LANG("mob.e4ff41f2", null)))
+	to_chat(src, span_boldwarning(LANG("mob.a5b7a207", null)))
 
 #undef OWNER
 #undef STRANGER

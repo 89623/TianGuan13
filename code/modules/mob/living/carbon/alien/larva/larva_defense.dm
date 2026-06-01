@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 /mob/living/carbon/alien/larva/attack_hand(mob/living/carbon/human/user, list/modifiers)
@@ -7,9 +8,9 @@
 	var/damage = rand(1, 9)
 	if (prob(90))
 		playsound(loc, SFX_PUNCH, 25, TRUE, -1)
-		visible_message(span_danger("[user] kicks [src]!"), \
-						span_userdanger("[user] kicks you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You kick [src]!"))
+		visible_message(span_danger(LANG("mob.83af7d2c", list(user, src))), \
+						span_userdanger(LANG("mob.cd11ce48", list(user))), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger(LANG("mob.23132e2f", list(src))))
 		if ((stat != DEAD) && (damage > 4.9))
 			Unconscious(rand(100,200))
 
@@ -18,9 +19,9 @@
 		log_combat(user, src, "attacked")
 	else
 		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
-		visible_message(span_danger("[user]'s kick misses [src]!"), \
-						span_danger("You avoid [user]'s kick!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your kick misses [src]!"))
+		visible_message(span_danger(LANG("mob.a20fe5ff", list(user, src))), \
+						span_danger(LANG("mob.95e7861b", list(user))), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_warning(LANG("mob.1ee8eb9a", list(src))))
 		log_combat(user, src, "attacked and missed")
 
 /mob/living/carbon/alien/larva/attack_hulk(mob/living/carbon/human/user)

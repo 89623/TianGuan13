@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(ckey_to_sooc_name)
 	set category = "OOC"
 
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		to_chat(usr, span_danger(LANG("client.b79ad8a3", null)))
 		return
 
 	if(!mob)
@@ -20,16 +20,16 @@ GLOBAL_LIST_EMPTY(ckey_to_sooc_name)
 	if(!holder)
 		var/job = mob?.mind.assigned_role.title
 		if(!job || !job_lookup[job])
-			to_chat(src, span_danger("You're not a security role!"))
+			to_chat(src, span_danger(LANG("client.2d3c1ccc", null)))
 			return
 		if(!GLOB.sooc_allowed)
-			to_chat(src, span_danger("SOOC is globally muted."))
+			to_chat(src, span_danger(LANG("client.7b81d1c7", null)))
 			return
 		if(prefs.muted & MUTE_OOC)
-			to_chat(src, span_danger("You cannot use OOC (muted)."))
+			to_chat(src, span_danger(LANG("client.058db9ff", null)))
 			return
 	if(is_banned_from(ckey, "OOC"))
-		to_chat(src, span_danger("You have been banned from OOC."))
+		to_chat(src, span_danger(LANG("client.aaaae170", null)))
 		return
 	if(QDELETED(src))
 		return
@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(ckey_to_sooc_name)
 	msg = emoji_parse(msg)
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
-		to_chat(src, span_danger("You have OOC muted."))
+		to_chat(src, span_danger(LANG("client.a877c979", null)))
 		return
 
 	mob.log_talk(raw_msg, LOG_OOC, tag="SOOC")

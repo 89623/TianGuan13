@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/spirit_board
 	name = "spirit board"
 	desc = "A wooden board with letters etched into it, used in seances."
@@ -89,7 +90,7 @@
 
 	var/turf/play_turf = get_turf(src)
 	if(play_turf?.get_lumcount() > 0.2)
-		to_chat(ghost, span_warning("It's too bright here to use [src]!"))
+		to_chat(ghost, span_warning(LANG("obj.80b7b758", list(src))))
 		return FALSE
 
 	if(required_user_count > 0)
@@ -105,7 +106,7 @@
 			users_in_range++
 
 		if(users_in_range < required_user_count)
-			to_chat(ghost, span_warning("There aren't enough people around to use [src]!"))
+			to_chat(ghost, span_warning(LANG("obj.d2b6eb75", list(src))))
 			return FALSE
 
 	return TRUE

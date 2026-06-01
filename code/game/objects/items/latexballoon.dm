@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define INFLATED "inflated"
 #define POPPED "popped"
 #define DEFLATED "deflated"
@@ -58,7 +59,7 @@
 	air_contents = tank.remove_air_volume(3)
 
 	if(isnull(air_contents))
-		balloon_alert(user, "tank is empty!")
+		balloon_alert(user, LANG("obj.714a41ca", null))
 		return
 
 	if(state == INFLATED)
@@ -67,7 +68,7 @@
 
 	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg', 50, TRUE)
 
-	balloon_alert(user, "you blow up the balloon!") // because it's a balloon obviously
+	balloon_alert(user, LANG("obj.e30ad305", null)) // because it's a balloon obviously
 
 	set_state(INFLATED)
 

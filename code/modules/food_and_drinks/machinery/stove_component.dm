@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Stove Component
  *
@@ -147,13 +148,12 @@
 	if(!attacking_item.is_open_container())
 		return
 	if(!isnull(container))
-		to_chat(user, span_warning("You wouldn't dare try to cook two things on the same stove simultaneously. \
-			What if it cross contaminates?"))
+		to_chat(user, span_warning(LANG("datum.586b90e6", null)))
 		return COMPONENT_NO_AFTERATTACK
 
 	if(user.transferItemToLoc(attacking_item, parent))
 		add_container(attacking_item, user)
-		to_chat(user, span_notice("You put [attacking_item] onto [parent]."))
+		to_chat(user, span_notice(LANG("datum.a7a19a66", list(attacking_item, parent))))
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/stove/proc/on_exited(obj/machinery/source, atom/movable/gone, direction)

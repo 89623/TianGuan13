@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Baseline portable generator. Has all the default handling. Not intended to be used on its own (since it generates unlimited power).
 /obj/machinery/power/port_gen
 	name = "portable generator"
@@ -180,9 +181,9 @@
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			to_chat(user, span_notice("\The [src] is full!"))
+			to_chat(user, span_notice(LANG("obj.ab597252", list(src))))
 			return
-		to_chat(user, span_notice("You add [amount] sheets to \the [src]."))
+		to_chat(user, span_notice(LANG("obj.93e3f8c8", list(amount, src))))
 		sheets += amount
 		addstack.use(amount)
 		return
@@ -190,10 +191,10 @@
 		if(O.tool_behaviour == TOOL_WRENCH)
 			if(!anchored && !isinspace())
 				set_anchored(TRUE)
-				to_chat(user, span_notice("You secure the generator to the floor."))
+				to_chat(user, span_notice(LANG("obj.2eaf2e96", null)))
 			else if(anchored)
 				set_anchored(FALSE)
-				to_chat(user, span_notice("You unsecure the generator from the floor."))
+				to_chat(user, span_notice(LANG("obj.88a25423", null)))
 
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return
@@ -201,9 +202,9 @@
 			toggle_panel_open()
 			O.play_tool_sound(src)
 			if(panel_open)
-				to_chat(user, span_notice("You open the access panel."))
+				to_chat(user, span_notice(LANG("obj.e8a61403", null)))
 			else
-				to_chat(user, span_notice("You close the access panel."))
+				to_chat(user, span_notice(LANG("obj.48fc13a1", null)))
 			return
 		else if(default_deconstruction_crowbar(user, O))
 			return
@@ -213,7 +214,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "maximum power output unlocked")
+	balloon_alert(user, LANG("obj.c29205c1", null))
 	emp_act(EMP_HEAVY)
 	return TRUE
 

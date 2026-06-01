@@ -7,15 +7,15 @@
 		return ..()
 
 	if(harvested && tool.get_sharpness())
-		to_chat(user, span_notice("You begin to scrape away at the thick layers of ash underneath [src]..."))
+		to_chat(user, span_notice(LANG("obj.7b7f276c", list(src))))
 		var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 		if(!do_after(user, 10 SECONDS * skill_modifier, target = src))
-			to_chat(user, span_warning("You decide against scraping away at the thick layers of ash underneath [src]!"))
+			to_chat(user, span_warning(LANG("obj.ef3ab13e", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(prob(10))
 			new /obj/item/food/tree_fruit(get_turf(src))
-			to_chat(user, span_notice("You succesfully cut away a mass underneath [src], revealing an old preserved fruit from some kind of tree..."))
+			to_chat(user, span_notice(LANG("obj.3e9efd51", list(src))))
 			user.mind?.adjust_experience(/datum/skill/primitive, 5)
 
 		user.mind?.adjust_experience(/datum/skill/primitive, 5)
@@ -240,7 +240,7 @@
 	if(istype(tool, /obj/item/secateurs))
 		var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 		if(!do_after(user, 10 SECONDS * skill_modifier, target = src))
-			to_chat(user, span_warning("You decide against removing the grafts!"))
+			to_chat(user, span_warning(LANG("obj.04e7e31c", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		for(var/obj/item/graft/target_grafts in graft_list)
@@ -250,23 +250,23 @@
 
 		update_graft_reagents()
 		update_appearance(UPDATE_OVERLAYS)
-		to_chat(user, span_notice("You decide to remove the grafts from [src]."))
+		to_chat(user, span_notice(LANG("obj.b0ea563c", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/queen_bee))
 		if(tree_bee)
-			to_chat(user, span_warning("There is already a queen bee!"))
+			to_chat(user, span_warning(LANG("obj.0af9a1f1", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		tool.forceMove(src)
 		tree_bee = tool
-		to_chat(user, span_notice("You add [tool] to [src]."))
+		to_chat(user, span_notice(LANG("obj.0c27fe26", list(tool, src))))
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
 	if(is_reagent_container(tool))
 		if(!COOLDOWN_FINISHED(src, sap_cooldown))
-			to_chat(user, span_warning("[src] has recently been tapped!"))
+			to_chat(user, span_warning(LANG("obj.307033fc", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		COOLDOWN_START(src, sap_cooldown, 1 MINUTES)
@@ -277,27 +277,27 @@
 				container_tool.reagents.add_reagent(tapped_reagent, 10)
 				return ITEM_INTERACT_SUCCESS
 
-			to_chat(user, span_warning("[tool] is unable to be filled further!"))
+			to_chat(user, span_warning(LANG("obj.4720cdc3", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/graft))
 		var/obj/item/graft/tool_graft = tool
 		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
-		to_chat(user, span_notice("You begin to graft the [tool_graft.plant_dna.plantname] graft onto [src]."))
+		to_chat(user, span_notice(LANG("obj.96c8e9e8", list(tool_graft.plant_dna.plantname, src))))
 		var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 		if(!do_after(user, 10 SECONDS * skill_modifier, target = src))
-			to_chat(user, span_warning("You decide against the grafting!"))
+			to_chat(user, span_warning(LANG("obj.ef991da3", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
 
 		if(length(graft_list) >= 3)
-			to_chat(user, span_warning("[src] is already full of grafts!"))
+			to_chat(user, span_warning(LANG("obj.766f1811", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		tool_graft.forceMove(src)
 		graft_list += tool_graft
-		to_chat(user, span_notice("You successfully graft the [tool_graft.plant_dna.plantname] graft onto [src]."))
+		to_chat(user, span_notice(LANG("obj.4447dfad", list(tool_graft.plant_dna.plantname, src))))
 		update_graft_reagents()
 		user.mind?.adjust_experience(/datum/skill/primitive, 5)
 		update_appearance(UPDATE_OVERLAYS)
@@ -319,7 +319,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
 		user.mind?.adjust_experience(/datum/skill/primitive, 5)
-		to_chat(user, span_notice("You harvest some fruit from [src]."))
+		to_chat(user, span_notice(LANG("obj.051696ab", list(src))))
 		var/turf/user_turf = get_turf(user)
 		for(var/iteration in 1 to rand(1, 2))
 			var/obj/item/food/tree_fruit/spawned_fruit = new /obj/item/food/tree_fruit(user_turf)
@@ -331,7 +331,7 @@
 	// if not fruited, lets get the bee out if its there
 	if(tree_bee)
 		tree_bee.forceMove(get_turf(user))
-		to_chat(user, span_warning("You pull [tree_bee] from [src]!"))
+		to_chat(user, span_warning(LANG("obj.3c031c76", list(tree_bee, src))))
 		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
 		tree_bee = null
 		update_appearance(UPDATE_OVERLAYS)
@@ -343,7 +343,7 @@
 
 /obj/structure/simple_tree/screwdriver_act(mob/living/user, obj/item/tool)
 	if(tapped_tree)
-		to_chat(user, span_warning("[src] has already been tapped!"))
+		to_chat(user, span_warning(LANG("obj.f7625a01", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	tap_tree(user, tool)
@@ -353,13 +353,13 @@
 /obj/structure/simple_tree/proc/tap_tree(mob/user, obj/item/tool, tapping_direction = TRUE, use_time = 4 SECONDS, forced_tool = FALSE)
 	playsound(get_turf(src), SFX_TREE_CHOP, 50, vary = FALSE)
 	if(!forced_tool)
-		to_chat(user, span_notice("You begin to use [tool] on [src]..."))
+		to_chat(user, span_notice(LANG("obj.785ca65f", list(tool, src))))
 		var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 		if(!do_after(user, use_time * tool.toolspeed * skill_modifier, target = src))
-			to_chat(user, span_warning("You decide against using [tool] on [src]!"))
+			to_chat(user, span_warning(LANG("obj.2efa4d9f", list(tool, src))))
 			return
 
-		to_chat(user, span_notice("You finished using [tool] on [src]!"))
+		to_chat(user, span_notice(LANG("obj.672ee986", list(tool, src))))
 		user.mind?.adjust_experience(/datum/skill/primitive, 5)
 		tool.forceMove(src)
 
@@ -372,10 +372,10 @@
 	playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
 	if(!forced_fertilizer)
 		if(!tool.use(use_amount))
-			to_chat(user, span_warning("You decide against using [tool] on [src]!"))
+			to_chat(user, span_warning(LANG("obj.2efa4d9f", list(tool, src))))
 			return
 
-		to_chat(user, span_notice("You used [tool], which healed [src]!"))
+		to_chat(user, span_notice(LANG("obj.522c5d1d", list(tool, src))))
 		user.mind?.adjust_experience(/datum/skill/primitive, 5)
 
 	adjust_health(5)
@@ -386,14 +386,14 @@
 /obj/structure/simple_tree/proc/attempt_woodmaking(mob/user)
 	if(!COOLDOWN_FINISHED(src, wood_cooldown) || tree_stage < TREE_STAGE_THREE)
 		adjust_health(-50)
-		to_chat(user, span_warning("You damage [src] trying to harvest something!"))
+		to_chat(user, span_warning(LANG("obj.f9ddbb08", list(src))))
 		return
 
 	COOLDOWN_START(src, wood_cooldown, 1 MINUTES)
 	update_appearance(UPDATE_OVERLAYS)
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, 5 SECONDS * skill_modifier, target = src))
-		to_chat(user, span_warning("You fumble with the wood, splintering it into uselessness!"))
+		to_chat(user, span_warning(LANG("obj.1d070418", null)))
 		user.mind?.adjust_experience(/datum/skill/primitive, 5)
 		return
 
@@ -405,20 +405,20 @@
 /obj/structure/simple_tree/proc/attempt_honeycomb(mob/user)
 	if(tree_stage < TREE_STAGE_THREE)
 		adjust_health(-10)
-		to_chat(user, span_warning("You damage [src] trying to harvest something!"))
+		to_chat(user, span_warning(LANG("obj.f9ddbb08", list(src))))
 		return
 
 	playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
 	if(!tree_bee || !COOLDOWN_FINISHED(src, honeycomb_cooldown))
-		to_chat(user, span_warning("There is nothing to harvest from [src]!"))
+		to_chat(user, span_warning(LANG("obj.2747052f", list(src))))
 		return
 
 	COOLDOWN_START(src, honeycomb_cooldown, 90 SECONDS)
-	to_chat(user, span_notice("You begin harvesting honeycomb from [src]..."))
+	to_chat(user, span_notice(LANG("obj.c49636b9", list(src))))
 	update_appearance(UPDATE_OVERLAYS)
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, 10 SECONDS * skill_modifier, target = src))
-		to_chat(user, span_warning("You break the honeycomb accidentally!"))
+		to_chat(user, span_warning(LANG("obj.5c90256b", null)))
 		user.mind?.adjust_experience(/datum/skill/primitive, 5)
 		return
 
@@ -426,7 +426,7 @@
 	for(var/iteration in 1 to rand(1, 2))
 		var/obj/item/food/honeycomb/new_comb = new(get_turf(user))
 		new_comb.set_reagent(tree_bee.queen.beegent.type)
-	to_chat(user, span_notice("You successfully harvest honeycomb from [src]."))
+	to_chat(user, span_notice(LANG("obj.e7c77d61", list(src))))
 	user.mind?.adjust_experience(/datum/skill/primitive, 10)
 	return
 

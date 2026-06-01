@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/docking_port/mobile/assault_pod
 	name = "assault pod"
 	shuttle_id = "steel_rain"
@@ -59,7 +60,7 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.shuttle_id]"
 
-	to_chat(user, span_notice("Landing zone set."))
+	to_chat(user, span_notice(LANG("obj.c23839a9", null)))
 
 	qdel(src)
 

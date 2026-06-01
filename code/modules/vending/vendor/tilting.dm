@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Can this atom be curshed by the vending machine
  * Arguments
@@ -102,11 +103,11 @@
 		animate(src, transform = to_turn, 0.2 SECONDS)
 		playsound(src, 'sound/effects/bang.ogg', 40)
 
-		visible_message(span_danger("[src] tips over, slamming hard onto [target]!"))
+		visible_message(span_danger(LANG("atom.ad54badf", list(src, target))))
 		flags_to_return |= SUCCESSFULLY_FELL_OVER
 		post_tilt()
 	else
-		visible_message(span_danger("[src] rebounds comically as it fails to slam onto [target]!"))
+		visible_message(span_danger(LANG("atom.3f562ad0", list(src, target))))
 
 	Move(target, crush_dir) // we still TRY to move onto it for shit like teleporters
 	return flags_to_return
@@ -220,7 +221,7 @@
 		. = fall_and_crush(get_turf(fatty), squish_damage, local_crit_chance, forced_crit, 6 SECONDS, rotation = picked_rotation)
 
 		if (. & SUCCESSFULLY_FELL_OVER)
-			visible_message(span_danger("[src] tips over!"))
+			visible_message(span_danger(LANG("obj.869eb854", list(src))))
 			tilted = TRUE
 			tilted_rotation = picked_rotation
 			layer = ABOVE_MOB_LAYER

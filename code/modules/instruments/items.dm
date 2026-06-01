@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //copy pasta of the space piano, don't hurt me -Pete
 /obj/item/instrument
 	name = "generic instrument"
@@ -223,7 +224,7 @@
 		return
 	if(!ismob(loc))
 		CRASH("[src] was still registered to listen in on [source] but was not found to be on their mob.")
-	to_chat(loc, span_warning("You stop playing the harmonica to talk..."))
+	to_chat(loc, span_warning(LANG("obj.6b069758", null)))
 	song.playing = FALSE
 
 /datum/action/item_action/instrument

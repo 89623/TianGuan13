@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///How many enemies needs to be defeated until the 'Boss' of the stage appears.
 #define WORLD_ENEMY_BOSS 2
 ///The default amount of EXP you gain from killing an enemy, modifiers stacked on top of this.
@@ -124,8 +125,8 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "hard mode enabled")
-	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
+	balloon_alert(user, LANG("obj.a4c5f0f1", null))
+	to_chat(user, span_warning(LANG("obj.a9f0bf6d", null)))
 	setup_new_opponent(user)
 	feedback_message = "If you die in the game, you die for real!"
 	SStgui.update_uis(src)
@@ -222,7 +223,7 @@
 				var/current_world = all_worlds.Find(latest_unlocked_world)
 				latest_unlocked_world = all_worlds[current_world + 1]
 				ui_panel = UI_PANEL_WORLD_MAP
-				say("New world unlocked, [latest_unlocked_world]!")
+				say(LANG("obj.a5cdbf64", list(latest_unlocked_world)))
 		enemies_defeated++
 	if(obj_flags & EMAGGED)
 		obj_flags &= ~EMAGGED
@@ -262,7 +263,7 @@
 	if(player_current_hp <= 0)
 		ui_panel = UI_PANEL_GAMEOVER
 		feedback_message = "GAME OVER."
-		say("You have been crushed! GAME OVER.")
+		say(LANG("obj.f2b37538", null))
 		playsound(loc, 'sound/machines/arcade/lose.ogg', 40, TRUE)
 		lose_game(user)
 		return

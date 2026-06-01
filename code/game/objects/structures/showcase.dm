@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SHOWCASE_CONSTRUCTED 1
 #define SHOWCASE_SCREWDRIVERED 2
 
@@ -141,11 +142,11 @@
 	if(anchored)
 		return FALSE
 	if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
-		to_chat(user, span_notice("You screw the screws back into the showcase."))
+		to_chat(user, span_notice(LANG("obj.0e6743cc", null)))
 		tool.play_tool_sound(src, 100)
 		deconstruction_state = SHOWCASE_CONSTRUCTED
 	else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
-		to_chat(user, span_notice("You unscrew the screws."))
+		to_chat(user, span_notice(LANG("obj.58aea0e2", null)))
 		tool.play_tool_sound(src, 100)
 		deconstruction_state = SHOWCASE_SCREWDRIVERED
 	return ITEM_INTERACT_SUCCESS
@@ -153,7 +154,7 @@
 /obj/structure/showcase/crowbar_act(mob/living/user, obj/item/tool)
 	if(!tool.use_tool(src, user, 2 SECONDS, volume=100))
 		return
-	to_chat(user, span_notice("You start to crowbar the showcase apart..."))
+	to_chat(user, span_notice(LANG("obj.5f8b985b", null)))
 	new /obj/item/stack/sheet/iron(drop_location(), 4)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

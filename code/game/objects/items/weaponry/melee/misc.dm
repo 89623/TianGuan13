@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Deprecated, you do not need to use this type for melee weapons.
 /obj/item/melee
 	abstract_type = /obj/item/melee
@@ -138,7 +139,7 @@
 	SIGNAL_HANDLER
 
 	if(held_sausage)
-		to_chat(user, span_warning("You can't retract [src] while [held_sausage] is attached!"))
+		to_chat(user, span_warning(LANG("obj.b4fb66b0", list(src, held_sausage))))
 		return COMPONENT_BLOCK_TRANSFORM
 
 /*
@@ -159,15 +160,15 @@
 	..()
 	if (istype(target, /obj/item/food/sausage))
 		if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
+			to_chat(user, span_warning(LANG("obj.a9f024ac", list(src))))
 			return
 		if (held_sausage)
-			to_chat(user, span_warning("[held_sausage] is already attached to [src]!"))
+			to_chat(user, span_warning(LANG("obj.6620462c", list(held_sausage, src))))
 			return
 		if (user.transferItemToLoc(target, src))
 			held_sausage = target
 		else
-			to_chat(user, span_warning("[target] doesn't seem to want to get on [src]!"))
+			to_chat(user, span_warning(LANG("obj.1ef594be", list(target, src))))
 	update_appearance()
 
 /obj/item/melee/roastingstick/attack_hand(mob/user, list/modifiers)
@@ -192,7 +193,7 @@
 	if (!is_type_in_typecache(interacting_with, ovens))
 		return NONE
 	if (istype(interacting_with, /obj/singularity) || istype(interacting_with, /obj/energy_ball) && get_dist(user, interacting_with) < 10)
-		to_chat(user, span_notice("You send [held_sausage] towards [interacting_with]."))
+		to_chat(user, span_notice(LANG("obj.901f34bd", list(held_sausage, interacting_with))))
 		playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
 		beam = user.Beam(interacting_with, icon_state = "rped_upgrade", time = 10 SECONDS)
 		finish_roasting(user, interacting_with)
@@ -204,14 +205,14 @@
 		return NONE
 	if (!is_type_in_typecache(interacting_with, ovens))
 		return NONE
-	to_chat(user, span_notice("You extend [src] towards [interacting_with]."))
+	to_chat(user, span_notice(LANG("obj.1aa105e0", list(src, interacting_with))))
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	finish_roasting(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
 	if(do_after(user, 10 SECONDS, target = user))
-		to_chat(user, span_notice("You finish roasting [held_sausage]."))
+		to_chat(user, span_notice(LANG("obj.a9ba5062", list(held_sausage))))
 		playsound(src, 'sound/items/tools/welder2.ogg', 50, TRUE)
 		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
 		held_sausage.name = "[target.name]-roasted [held_sausage.name]"
@@ -220,7 +221,7 @@
 	else
 		QDEL_NULL(beam)
 		playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
-		to_chat(user, span_notice("You put [src] away."))
+		to_chat(user, span_notice(LANG("obj.b28096d6", list(src))))
 
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
@@ -503,7 +504,7 @@
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(target, splattable))
-		to_chat(user, span_warning("You easily splat [target]."))
+		to_chat(user, span_warning(LANG("obj.16f49258", list(target))))
 		if(QDELETED(target))
 			return
 		if(isliving(target))

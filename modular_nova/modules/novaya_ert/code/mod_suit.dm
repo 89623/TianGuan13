@@ -161,7 +161,7 @@
 
 /obj/item/mod/module/auto_doc/on_active_process(seconds_per_tick)
 	if(!reagents.has_reagent(reagent_required, reagent_required_amount))
-		balloon_alert(mod.wearer, "not enough chems!")
+		balloon_alert(mod.wearer, LANG("obj.b26601bb", null))
 		deactivate()
 		return FALSE
 
@@ -178,7 +178,7 @@
 		mod.wearer.reagents.add_reagent(/datum/reagent/medicine/coagulant, 2.5 * seconds_per_tick)
 		mod.wearer.playsound_local(mod, 'sound/items/hypospray.ogg', 25, TRUE)
 		reagents.remove_reagent(reagent_required, reagent_required_amount * 0.5 * seconds_per_tick)
-		to_chat(mod.wearer, span_warning("Blood infused."))
+		to_chat(mod.wearer, span_warning(LANG("obj.5362a781", null)))
 		drain_power(use_energy_cost * 10 * seconds_per_tick)
 		addtimer(CALLBACK(src, PROC_REF(heal_aftereffects), mod.wearer), 60 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
 		COOLDOWN_START(src, blood_timer, general_cooldown)
@@ -190,24 +190,24 @@
 			mod.wearer.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 2.5 * seconds_per_tick)
 			mod.wearer.playsound_local(mod, 'sound/items/internals/internals_on.ogg', 25, TRUE)
 			reagents.remove_reagent(reagent_required, reagent_required_amount * 0.5 * seconds_per_tick)
-			to_chat(mod.wearer, span_warning("Blood oxygen saturated."))
+			to_chat(mod.wearer, span_warning(LANG("obj.b242bf78", null)))
 		if(new_bruteloss && reagents.total_volume >= reagent_required_amount * 1 * seconds_per_tick)
 			mod.wearer.reagents.add_reagent(/datum/reagent/medicine/sal_acid, 2.5 * seconds_per_tick)
 			mod.wearer.reagents.add_reagent(/datum/reagent/medicine/mine_salve, 2.5 * seconds_per_tick)
 			mod.wearer.playsound_local(mod, 'sound/effects/spray2.ogg', 25, TRUE)
 			reagents.remove_reagent(reagent_required, reagent_required_amount * 1 * seconds_per_tick)
-			to_chat(mod.wearer, span_warning("Wound treatment administered."))
+			to_chat(mod.wearer, span_warning(LANG("obj.5e3de2e0", null)))
 		if(new_fireloss && reagents.total_volume >= reagent_required_amount * 1 * seconds_per_tick)
 			mod.wearer.reagents.add_reagent(/datum/reagent/medicine/oxandrolone, 2.5 * seconds_per_tick)
 			mod.wearer.reagents.add_reagent(/datum/reagent/medicine/mine_salve, 2.5 * seconds_per_tick)
 			mod.wearer.playsound_local(mod, 'sound/effects/spray2.ogg', 25, TRUE)
 			reagents.remove_reagent(reagent_required, reagent_required_amount * 1 * seconds_per_tick)
-			to_chat(mod.wearer, span_warning("Ointment applied."))
+			to_chat(mod.wearer, span_warning(LANG("obj.aaf453d8", null)))
 		if(new_toxloss && reagents.total_volume >= reagent_required_amount * 0.5 * seconds_per_tick)
 			mod.wearer.reagents.add_reagent(/datum/reagent/medicine/pen_acid, 2.5 * seconds_per_tick)
 			mod.wearer.playsound_local(mod, 'sound/items/hypospray.ogg', 25, TRUE)
 			reagents.remove_reagent(reagent_required, reagent_required_amount * 0.5 * seconds_per_tick)
-			to_chat(mod.wearer, span_warning("Antitoxin administered."))
+			to_chat(mod.wearer, span_warning(LANG("obj.0d964f4a", null)))
 		drain_power(use_energy_cost * 15 * seconds_per_tick)
 		addtimer(CALLBACK(src, PROC_REF(heal_aftereffects), mod.wearer), 60 SECONDS)
 		COOLDOWN_START(src, heal_timer, general_cooldown)
@@ -219,7 +219,7 @@
 		mod.wearer.reagents.add_reagent(/datum/reagent/drug/cocaine, 2.5 * seconds_per_tick)
 		mod.wearer.playsound_local(mod, 'sound/items/hypospray.ogg', 25, TRUE)
 		reagents.remove_reagent(reagent_required, reagent_required_amount * 0.25 * seconds_per_tick)
-		to_chat(mod.wearer, span_warning("Stimdose administered."))
+		to_chat(mod.wearer, span_warning(LANG("obj.6af91199", null)))
 		drain_power(use_energy_cost * 5 * seconds_per_tick)
 		addtimer(CALLBACK(src, PROC_REF(heal_aftereffects), mod.wearer), 60 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
 		COOLDOWN_START(src, stamina_timer, general_cooldown)
@@ -239,11 +239,11 @@
 	if(!attacking_item.is_open_container())
 		return FALSE
 	if(reagents.has_reagent(reagent_required, reagent_max_amount))
-		balloon_alert(mod.wearer, "already full!")
+		balloon_alert(mod.wearer, LANG("obj.e28c7f55", null))
 		return FALSE
 	if(!attacking_item.reagents.trans_to(src, reagent_required_amount, target_id = reagent_required))
 		return FALSE
-	balloon_alert(mod.wearer, "charge reloaded!")
+	balloon_alert(mod.wearer, LANG("obj.842572fd", null))
 	return TRUE
 
 /obj/item/mod/module/auto_doc/on_install()
@@ -269,7 +269,7 @@
 	var/fault_chance = (reagents.maximum_volume/(reagents.total_volume ? reagents.total_volume : 20))*5 // 5% at max protozine, 20% at low-to-none protozine
 	if(prob(fault_chance) || forced == TRUE)
 		reagents.trans_to(affected_mob, min(15,reagents.total_volume))
-		balloon_alert(affected_mob, "protozine leak!")
+		balloon_alert(affected_mob, LANG("obj.2e66376c", null))
 		affected_mob.playsound_local(mod, 'sound/effects/spray3.ogg', 25, TRUE)
 
 /obj/item/reagent_containers/cup/glass/waterbottle/large/protozine

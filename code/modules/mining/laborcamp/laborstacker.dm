@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SHEET_POINT_VALUE 33
 
 /**********************Prisoners' Console**************************/
@@ -162,7 +163,7 @@
 
 	if(initiated_launch && length(find_labor_shuttle_mobs()) > 1)
 		initiated_launch = FALSE
-		say("Takeoff aborted. Prisoners may only be released one at a time.")
+		say(LANG("obj.b5368c2e", null))
 		return BLOCK_SHUTTLE_MOVE
 
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
@@ -175,8 +176,8 @@
 		return FALSE
 
 	obj_flags |= EMAGGED
-	balloon_alert(user, "id authenticator short-circuited")
-	visible_message(span_warning("[src] lets out a few sparks!"))
+	balloon_alert(user, LANG("obj.06aa6451", null))
+	visible_message(span_warning(LANG("obj.acc77098", list(src))))
 	do_sparks(2, TRUE, src)
 	return TRUE
 
@@ -231,11 +232,11 @@
 		return ..()
 	var/obj/item/card/id/advanced/prisoner/prisoner_id = weapon
 	if(!prisoner_id.goal) //no goal to reach
-		say("No goal required for this ID.")
+		say(LANG("obj.ebe1f050", null))
 		return
-	say("ID: [prisoner_id.registered_name].")
-	say("Points Collected: [prisoner_id.points] / [prisoner_id.goal].")
-	say("Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.")
+	say(LANG("obj.2f62b694", list(prisoner_id.registered_name)))
+	say(LANG("obj.907c6c5c", list(prisoner_id.points, prisoner_id.goal)))
+	say(LANG("obj.ea9f3d09", null))
 
 /datum/aas_config_entry/security_labor_stacker
 	name = "Security Alert: Labor Camp Release"

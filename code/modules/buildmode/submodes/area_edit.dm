@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/area_edit
 	key = "areaedit"
 	use_corner_selection = TRUE
@@ -10,10 +11,7 @@
 
 /datum/buildmode_mode/area_edit/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Select corner")] -> Left Mouse Button on obj/turf/mob\n\
-		[span_bold("Paint area")] -> Left Mouse Button + Alt on turf/obj/mob\n\
-		[span_bold("Select area to paint")] -> Right Mouse Button on obj/turf/mob\n\
-		[span_bold("Create new area")] -> Right Mouse Button on buildmode button"))
+		LANG("datum.0f192544", list(span_bold("Select corner"), span_bold("Paint area"), span_bold("Select area to paint"), span_bold("Create new area")))))
 	)
 
 /datum/buildmode_mode/area_edit/enter_mode(datum/buildmode/BM)
@@ -49,7 +47,7 @@
 
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		if(!storedarea)
-			to_chat(c, span_warning("Configure or select the area you want to paint first!"))
+			to_chat(c, span_warning(LANG("datum.7b6c0cc2", null)))
 			return
 		if(LAZYACCESS(modifiers, ALT_CLICK))
 			var/turf/T = get_turf(object)

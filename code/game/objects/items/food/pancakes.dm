@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PANCAKE_MAX_STACK 10
 
 /obj/item/food/pancakes
@@ -46,7 +47,7 @@
 		return ..()
 	if(newresult)
 		qdel(garnish)
-		to_chat(user, span_notice("You add [garnish] to [src]."))
+		to_chat(user, span_notice(LANG("obj.0c27fe26", list(garnish, src))))
 		AddComponent(/datum/component/grillable, cook_result = newresult)
 
 /obj/item/food/pancakes/raw/examine(mob/user)
@@ -121,11 +122,11 @@
 	if(istype(item, /obj/item/food/pancakes))
 		var/obj/item/food/pancakes/pancake = item
 		if((contents.len >= PANCAKE_MAX_STACK) || ((pancake.contents.len + contents.len) > PANCAKE_MAX_STACK))
-			to_chat(user, span_warning("You can't add that many pancakes to [src]!"))
+			to_chat(user, span_warning(LANG("obj.64a8d357", list(src))))
 		else
 			if(!user.transferItemToLoc(pancake, src))
 				return
-			to_chat(user, span_notice("You add the [pancake] to the [src]."))
+			to_chat(user, span_notice(LANG("obj.d1633fb2", list(pancake, src))))
 			pancake.name = initial(pancake.name)
 			contents += pancake
 			update_snack_overlays(pancake)

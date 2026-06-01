@@ -77,14 +77,14 @@
 	var/datum/gas_mixture/environment = our_turf.return_air()
 
 	if(environment.return_pressure() < (HAZARD_LOW_PRESSURE))
-		to_chat(owner, span_warning("There's far too little air for your wings to work against!"))
+		to_chat(owner, span_warning(LANG("datum.a8e0a6a8", null)))
 		return
 
 	if(owner.incapacitated)
 		return
 
 	if(!COOLDOWN_FINISHED(src, dash_cooldown))
-		to_chat(owner, span_warning("Your wings are extraordinarily tired, give them some rest!"))
+		to_chat(owner, span_warning(LANG("datum.4e4b7157", null)))
 		return
 
 	var/atom/dash_target = get_edge_target_turf(owner, owner.dir) //gets the user's direction
@@ -99,7 +99,7 @@
 			dash_user.adjust_stamina_loss(37.5) //Given the risk of flying into things and crashing quite violently, you get four of these. Every one slows you down anyway.
 	else
 		REMOVE_TRAIT(owner, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
-		to_chat(owner, span_warning("Something prevents you from dashing forward!"))
+		to_chat(owner, span_warning(LANG("datum.9227c41d", null)))
 
 /datum/emote/living/mothic_dash
 	key = "mdash"
@@ -154,7 +154,7 @@
 	if(target_blocked(target, above))
 		return NONE
 	if(environment.return_pressure() < (HAZARD_LOW_PRESSURE))
-		to_chat(user, span_warning("There's far too little air for your wings to work against!"))
+		to_chat(user, span_warning(LANG("obj.a8e0a6a8", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(!isopenspaceturf(above) || !above.Adjacent(target)) //are we below a hole, is the target blocked, is the target adjacent to our hole
 		user.balloon_alert(user, "blocked!")

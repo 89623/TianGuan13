@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/projectile/magic
 	name = "bolt"
 	icon_state = "energy"
@@ -16,7 +17,7 @@
 	if(isliving(target))
 		var/mob/living/victim = target
 		if(victim.can_block_magic(antimagic_flags, antimagic_charge_cost))
-			visible_message(span_warning("[src] fizzles on contact with [victim]!"))
+			visible_message(span_warning(LANG("obj.40223ab3", list(src, victim))))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
 	if(istype(target, /obj/machinery/hydroponics)) // even plants can block antimagic
@@ -24,7 +25,7 @@
 		if(!plant_tray.myseed)
 			return
 		if(plant_tray.myseed.get_gene(/datum/plant_gene/trait/anti_magic))
-			visible_message(span_warning("[src] fizzles on contact with [plant_tray]!"))
+			visible_message(span_warning(LANG("obj.40223ab3", list(src, plant_tray))))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /// Straight up kills you, unless you're undead
@@ -40,9 +41,9 @@
 		if(victim.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 			if(victim.revive(ADMIN_HEAL_ALL & ~HEAL_REFRESH_ORGANS , force_grab_ghost = TRUE)) // This heals suicides
 				victim.grab_ghost(force = TRUE)
-				to_chat(victim, span_notice("You rise with a start, you're undead!!!"))
+				to_chat(victim, span_notice(LANG("obj.deba4578", null)))
 			else if(victim.stat != DEAD)
-				to_chat(victim, span_notice("You feel great!"))
+				to_chat(victim, span_notice(LANG("obj.db6efb87", null)))
 			return
 		victim.investigate_log("has been killed by a bolt of death.", INVESTIGATE_DEATHS)
 		victim.death()
@@ -71,9 +72,9 @@
 			return
 
 		if(victim.revive(ADMIN_HEAL_ALL & ~HEAL_REFRESH_ORGANS , force_grab_ghost = TRUE)) // This heals suicides
-			to_chat(victim, span_notice("You rise with a start, you're alive!!!"))
+			to_chat(victim, span_notice(LANG("obj.fbc12ddd", null)))
 		else if(victim.stat != DEAD)
-			to_chat(victim, span_notice("You feel great!"))
+			to_chat(victim, span_notice(LANG("obj.db6efb87", null)))
 
 	if(istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/plant_tray = target
@@ -379,7 +380,7 @@
 			if(istype(x, /datum/brain_trauma/special/imaginary_friend/trapped_owner))
 				target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 				return BULLET_ACT_BLOCK
-		to_chat(target, span_warning("Your mind has been opened to possession!"))
+		to_chat(target, span_warning(LANG("obj.b923311f", null)))
 		possession_test(target)
 		return BULLET_ACT_HIT
 
@@ -394,12 +395,12 @@
 	if(target.stat == DEAD)//boo.
 		return
 	if(chosen_one)
-		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
+		to_chat(target, span_boldnotice(LANG("obj.0b74084f", null)))
 		var/mob/dead/observer/ghosted_target = target.ghostize(FALSE)
 		target.PossessByPlayer(chosen_one.key)
 		trauma.add_friend(ghosted_target)
 	else
-		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
+		to_chat(target, span_notice(LANG("obj.cefcd9e2", null)))
 		qdel(trauma)
 
 /// Gives magic projectiles an area of effect radius that will bump into any nearby mobs

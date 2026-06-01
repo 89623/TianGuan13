@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Regenerative extracts:
 	Work like a legion regenerative core.
@@ -20,7 +21,7 @@ Regenerative extracts:
 		return
 	var/mob/living/H = interacting_with
 	if(H.stat == DEAD)
-		to_chat(user, span_warning("[src] will not work on the dead!"))
+		to_chat(user, span_warning(LANG("obj.c3bb95df", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(H != user)
 		user.visible_message(span_notice("[user] crushes [src] over [H], the milky goo quickly regenerating all of [H.p_their()] injuries!"),
@@ -93,7 +94,7 @@ Regenerative extracts:
 	if(batteries.len)
 		var/obj/item/stock_parts/power_store/ToCharge = pick(batteries)
 		ToCharge.charge = ToCharge.maxcharge
-		to_chat(target, span_notice("You feel a strange electrical pulse, and one of your electrical items was recharged."))
+		to_chat(target, span_notice(LANG("obj.2a57b276", null)))
 
 /obj/item/slimecross/regenerative/darkpurple
 	colour = SLIME_TYPE_DARK_PURPLE
@@ -142,7 +143,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/silver/core_effect(mob/living/target, mob/user)
 	target.set_nutrition(NUTRITION_LEVEL_FULL - 1)
-	to_chat(target, span_notice("You feel satiated."))
+	to_chat(target, span_notice(LANG("obj.d8359be5", null)))
 
 /obj/item/slimecross/regenerative/bluespace
 	colour = SLIME_TYPE_BLUESPACE
@@ -153,7 +154,7 @@ Regenerative extracts:
 	var/turf/old_location = get_turf(target)
 	if(do_teleport(target, T, channel = TELEPORT_CHANNEL_QUANTUM)) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
 		old_location.visible_message(span_warning("[target] disappears in a shower of sparks!"))
-		to_chat(target, span_danger("The milky goo teleports you somewhere it remembers!"))
+		to_chat(target, span_danger(LANG("obj.b0ea622a", null)))
 
 	if(HAS_TRAIT(target, TRAIT_NO_TELEPORT))
 		old_location.visible_message(span_warning("[target] sparks briefly, but is prevented from teleporting!"))
@@ -167,7 +168,7 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target. After 10 seconds, relocate the target to the initial position the core was used with their previous health status."
 
 /obj/item/slimecross/regenerative/sepia/core_effect_before(mob/living/target, mob/user)
-	to_chat(target, span_notice("You try to forget how you feel."))
+	to_chat(target, span_notice(LANG("obj.5f0f8138", null)))
 	target.AddComponent(/datum/component/dejavu)
 
 /obj/item/slimecross/regenerative/cerulean
@@ -180,7 +181,7 @@ Regenerative extracts:
 	X.name = name
 	X.desc = desc
 	user.put_in_active_hand(X)
-	to_chat(user, span_notice("Some of the milky goo congeals in your hand!"))
+	to_chat(user, span_notice(LANG("obj.a4ab9ad7", null)))
 
 /obj/item/slimecross/regenerative/pyrite
 	colour = SLIME_TYPE_PYRITE
@@ -195,7 +196,7 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and injects them with some ephedrine."
 
 /obj/item/slimecross/regenerative/red/core_effect(mob/living/target, mob/user)
-	to_chat(target, span_notice("You feel... <i>faster.</i>"))
+	to_chat(target, span_notice(LANG("obj.5d137fd8", null)))
 	target.reagents.add_reagent(/datum/reagent/medicine/ephedrine,3)
 
 /obj/item/slimecross/regenerative/green
@@ -215,7 +216,7 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and injects them with some krokodil."
 
 /obj/item/slimecross/regenerative/pink/core_effect(mob/living/target, mob/user)
-	to_chat(target, span_notice("You feel more calm."))
+	to_chat(target, span_notice(LANG("obj.562fa2d7", null)))
 	target.reagents.add_reagent(/datum/reagent/drug/krokodil,4)
 
 /obj/item/slimecross/regenerative/gold
@@ -245,9 +246,9 @@ Regenerative extracts:
 	var/dummytype = target.type
 	if(target.mob_biotypes & MOB_SPECIAL) //Prevents megafauna and voidwalker duping in a lame way
 		dummytype = /mob/living/basic/slime
-		to_chat(user, span_warning("The milky goo flows over [target], falling into a weak puddle."))
+		to_chat(user, span_warning(LANG("obj.e62336e8", list(target))))
 	var/mob/living/dummy = new dummytype(target.loc)
-	to_chat(target, span_notice("The milky goo flows from your skin, forming an imperfect copy of you."))
+	to_chat(target, span_notice(LANG("obj.015c60b5", null)))
 	if(iscarbon(target) && iscarbon(dummy))
 		var/mob/living/carbon/carbon_target = target
 		var/mob/living/carbon/carbon_dummy = dummy
@@ -270,7 +271,7 @@ Regenerative extracts:
 		return
 	var/mob/living/U = user
 	U.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
-	to_chat(U, span_notice("Some of the milky goo sprays onto you, as well!"))
+	to_chat(U, span_notice(LANG("obj.34af3312", null)))
 
 /obj/item/slimecross/regenerative/adamantine
 	colour = SLIME_TYPE_ADAMANTINE

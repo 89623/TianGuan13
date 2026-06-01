@@ -20,7 +20,7 @@
 
 	var/location = user.zone_selected
 	if(!(location in list(BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !user.combat_mode)
-		balloon_alert(user, "only works on your head!")
+		balloon_alert(user, LANG("obj.6b848742", null))
 		return
 
 	if(user.zone_selected != BODY_ZONE_HEAD)
@@ -38,9 +38,9 @@
 			return
 
 		if(hair_id == "Bald")
-			to_chat(target_human, span_danger("Nanites seems to be disintegrating all your hair off!"))
+			to_chat(target_human, span_danger(LANG("obj.1da57b82", null)))
 
-		to_chat(user, span_notice("Nanites begin to reform [target_human]'s hair!"))
+		to_chat(user, span_notice(LANG("obj.4029bdad", list(target_human))))
 
 
 		if(do_after(user, haircut_duration, target_human))
@@ -52,9 +52,9 @@
 			return
 
 		if(facial_hair_id == "Shaved")
-			to_chat(target_human, span_danger("Nanites seems to be disintegrating all your facial hair off!"))
+			to_chat(target_human, span_danger(LANG("obj.c034279e", null)))
 
-		to_chat(user, "Nanites begin to reform [target_human]'s facial hair!")
+		to_chat(user, LANG("obj.122201fb", list(target_human)))
 
 		if(do_after(user, facial_haircut_duration, target_human))
 			target_human.set_facial_hairstyle(facial_hair_id, update = TRUE)

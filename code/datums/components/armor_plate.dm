@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/armor_plate
 	/// The current number of upgrades applied to the parent via this component.
 	var/amount = 0
@@ -69,20 +70,20 @@
 		return
 
 	if(amount >= maxamount)
-		to_chat(user, span_warning("You can't improve [parent] any further!"))
+		to_chat(user, span_warning(LANG("datum.bdf00154", list(parent))))
 		return
 
 	if(ismecha(parent) && !plate_component)
 		var/obj/vehicle/sealed/mecha/as_mecha = parent
 		if (LAZYLEN(as_mecha.equip_by_category[MECHA_ARMOR]) >= as_mecha.max_equip_by_category[MECHA_ARMOR])
-			to_chat(user, span_warning("[as_mecha] doesn't have any availible armor slots!"))
+			to_chat(user, span_warning(LANG("datum.956e5045", list(as_mecha))))
 			return
 
 	if(isstack(our_upgrade_item))
 		our_upgrade_item.use(1)
 	else
 		if(length(our_upgrade_item.contents))
-			to_chat(user, span_warning("[our_upgrade_item] cannot be used for armoring while there's something inside!"))
+			to_chat(user, span_warning(LANG("datum.45af8a49", list(our_upgrade_item))))
 			return
 		qdel(our_upgrade_item)
 
@@ -95,12 +96,12 @@
 		if(upgrade_prefix && !have_upgraded)
 			target_for_upgrading.name = "[upgrade_prefix] [target_for_upgrading.name]"
 			have_upgraded = TRUE
-		to_chat(user, span_info("You strengthen [target_for_upgrading], improving its resistance against attacks."))
+		to_chat(user, span_info(LANG("datum.1e3a39b3", list(target_for_upgrading))))
 		return
 
 	var/obj/vehicle/sealed/mecha/mecha_for_upgrading = target_for_upgrading
 	mecha_for_upgrading.update_appearance()
-	to_chat(user, span_info("You strengthen [mecha_for_upgrading], improving its resistance against attacks."))
+	to_chat(user, span_info(LANG("datum.1e3a39b3", list(mecha_for_upgrading))))
 	if (plate_component)
 		return
 	plate_component = new(mecha_for_upgrading)

@@ -64,7 +64,7 @@
 // Alt-click to turn the lights on or off.
 /obj/structure/stripper_pole/click_alt(mob/user)
 	lights_enabled = !lights_enabled
-	balloon_alert(user, "lights [lights_enabled ? "on" : "off"]")
+	balloon_alert(user, LANG("obj.099ca9f3", list(lights_enabled ? "on" : "off")))
 	playsound(user, lights_enabled ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg', 40, TRUE)
 	update_icon_state()
 	update_icon()
@@ -98,7 +98,7 @@
 	if(.)
 		return
 	if(pole_in_use)
-		balloon_alert(user, "already in use!")
+		balloon_alert(user, LANG("obj.38f46f8c", null))
 		return
 	pole_in_use = TRUE
 	dancer = user
@@ -154,12 +154,12 @@
 
 /obj/structure/stripper_pole/click_ctrl_shift(mob/user)
 	add_fingerprint(user)
-	balloon_alert(user, "disassembling...")
+	balloon_alert(user, LANG("obj.b5ba9871", null))
 	if(!do_after(user, 8 SECONDS, src))
-		balloon_alert(user, "disassembly interrupted!")
+		balloon_alert(user, LANG("obj.b8d5b3bf", null))
 		return
 
-	balloon_alert(user, "disassembled")
+	balloon_alert(user, LANG("obj.6da68488", null))
 	new /obj/item/construction_kit/pole(get_turf(user))
 	qdel(src)
 	return TRUE

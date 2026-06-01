@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* First aid storage
  * Contains:
  * First Aid Kits
@@ -374,7 +375,7 @@
 		return ..()
 	//Making a medibot!
 	if(contents.len >= 1)
-		balloon_alert(user, "items inside!")
+		balloon_alert(user, LANG("obj.ca142d62", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/bot_assembly/medbot/medbot_assembly = new(drop_location())
@@ -456,13 +457,13 @@
 		var/obj/item/reagent_containers/RC = tool
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
-			balloon_alert(user, "[units]u transferred")
+			balloon_alert(user, LANG("obj.d29d3114", list(units)))
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/plunger))
-		balloon_alert(user, "plunging...")
+		balloon_alert(user, LANG("obj.137d3098", null))
 		if(do_after(user, 1 SECONDS, target = src))
-			balloon_alert(user, "plunged")
+			balloon_alert(user, LANG("obj.d21fd627", null))
 			reagents.clear_reagents()
 		return ITEM_INTERACT_SUCCESS
 	return ..()

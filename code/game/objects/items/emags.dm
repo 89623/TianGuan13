@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Emags
  * Contains:
  * EMAGS AND DOORMAGS
@@ -64,9 +65,9 @@
 	if(QDELETED(user))
 		return
 	if(QDELETED(src))
-		to_chat(user, span_notice("Oh, well."))
+		to_chat(user, span_notice(LANG("obj.3e72c041", null)))
 	else
-		to_chat(user, span_warning("Well, shit. Those are never coming apart now."))
+		to_chat(user, span_warning(LANG("obj.de6317c8", null)))
 
 /obj/item/card/emag/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -117,7 +118,7 @@
 		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE, frequency = 2)
 	else if(obj_flags & EMAGGED)
 		log_bomber(user, "triggered", src, "(rigged/emagged)")
-		visible_message(span_boldwarning("[src] begins to heat up!"))
+		visible_message(span_boldwarning(LANG("obj.42ea24ca", list(src))))
 		playsound(src, 'sound/items/bikehorn.ogg', 100, TRUE, frequency = 0.25)
 		addtimer(CALLBACK(src, PROC_REF(blow_up)), 1 SECONDS, TIMER_DELETE_ME)
 		exploding = TRUE
@@ -126,7 +127,7 @@
 	return ITEM_INTERACT_SKIP_TO_ATTACK // So it does the attack animation.
 
 /obj/item/card/emagfake/proc/blow_up()
-	visible_message(span_boldwarning("[src] explodes!"))
+	visible_message(span_boldwarning(LANG("obj.e64b7ad7", list(src))))
 	explosion(src, light_impact_range = 1, explosion_cause = src)
 	qdel(src)
 
@@ -137,7 +138,7 @@
 	desc = /obj/item/card/emag::desc
 	obj_flags |= EMAGGED
 	if(user)
-		balloon_alert(user, "rigged to blow")
+		balloon_alert(user, LANG("obj.b53adec0", null))
 		log_bomber(user, "rigged to blow", src, "(emagging)")
 	return TRUE
 
@@ -192,7 +193,7 @@
 
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
-	to_chat(user, span_notice("You use [src]. It now has [charges] charge[charges == 1 ? "" : "s"] remaining."))
+	to_chat(user, span_notice(LANG("obj.2af8dc9c", list(src, charges, charges == 1 ? "" : "s"))))
 	charge_timers.Add(addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time, TIMER_STOPPABLE))
 
 /obj/item/card/emag/doorjack/proc/recharge(mob/user)
@@ -212,12 +213,12 @@
 
 /obj/item/card/emag/doorjack/can_emag(atom/target, mob/user)
 	if (charges <= 0)
-		to_chat(user, span_warning("[src] is recharging!"))
+		to_chat(user, span_warning(LANG("obj.de8caf77", list(src))))
 		return FALSE
 	for (var/list/subtypelist in type_whitelist)
 		if (target.type in subtypelist)
 			return TRUE
-	to_chat(user, span_warning("[src] is unable to interface with this. It only seems to fit into airlock electronics."))
+	to_chat(user, span_warning(LANG("obj.fe9e1951", list(src))))
 	return FALSE
 
 /*
@@ -236,7 +237,7 @@
 
 /obj/item/card/emag/battlecruiser/proc/use_charge(mob/user)
 	used = TRUE
-	to_chat(user, span_boldwarning("You use [src], and it interfaces with the communication console. No going back..."))
+	to_chat(user, span_boldwarning(LANG("obj.ff52c4c4", list(src))))
 
 /obj/item/card/emag/battlecruiser/examine(mob/user)
 	. = ..()
@@ -244,9 +245,9 @@
 
 /obj/item/card/emag/battlecruiser/can_emag(atom/target, mob/user)
 	if(used)
-		to_chat(user, span_warning("[src] is used up."))
+		to_chat(user, span_warning(LANG("obj.262f3d02", list(src))))
 		return FALSE
 	if(!istype(target, /obj/machinery/computer/communications))
-		to_chat(user, span_warning("[src] is unable to interface with this. It only seems to interface with the communication console."))
+		to_chat(user, span_warning(LANG("obj.193994a0", list(src))))
 		return FALSE
 	return TRUE

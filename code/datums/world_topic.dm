@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // SETUP
 
 /proc/TopicHandlers()
@@ -142,7 +143,7 @@
 
 		var/timer_id = href_list["reject_cross_comms_message"]
 		if (!(timer_id in timers))
-			to_chat(usr, span_warning("It's too late!"))
+			to_chat(usr, span_warning(LANG("datum.3c2954fe", null)))
 			return
 
 		deltimer(timer_id)
@@ -281,7 +282,7 @@
 		return
 
 	if (!(timer_id in timers))
-		to_chat(usr, span_warning("It's too late!"))
+		to_chat(usr, span_warning(LANG("datum.3c2954fe", null)))
 		return
 
 	deltimer(timer_id)

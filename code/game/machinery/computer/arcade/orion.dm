@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ORION_TRAIL_WINTURN 9
 
 /obj/machinery/computer/arcade/orion_trail
@@ -107,7 +108,7 @@
 		return // enough harassing them
 
 	if(gamers[gamer] == ORION_GAMER_PAMPHLET)
-		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
+		say(LANG("obj.ad9b2814", null))
 		new /obj/item/paper/pamphlet/violent_video_games(drop_location())
 		gamers[gamer]--
 		return
@@ -347,16 +348,16 @@
 			reason = "You ran out of food and starved."
 			if(obj_flags & EMAGGED)
 				gamer.set_nutrition(0) //yeah you pretty hongry
-				to_chat(gamer, span_userdanger("Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor."))
+				to_chat(gamer, span_userdanger(LANG("obj.a282d43a", null)))
 		if(fuel <= 0)
 			reason = "You ran out of fuel, and drift, slowly, into a star."
 			if(obj_flags & EMAGGED)
 				gamer.adjust_fire_stacks(5)
 				gamer.ignite_mob() //flew into a star, so you're on fire
-				to_chat(gamer, span_userdanger("You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames."))
+				to_chat(gamer, span_userdanger(LANG("obj.1b848599", null)))
 
 	if(obj_flags & EMAGGED)
-		to_chat(gamer, span_userdanger("You're never going to make it to Orion..."))
+		to_chat(gamer, span_userdanger(LANG("obj.2bd838a4", null)))
 		gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 		gamer.death()
 		obj_flags &= ~EMAGGED //removes the emagged status after you lose
@@ -418,7 +419,7 @@
 		killed_crew += 1 //if there was no suspected lings, this is just plain murder
 	playsound(loc,'sound/items/weapons/gun/pistol/shot.ogg', 100, TRUE)
 	if(!settlers.len || !alive)
-		say("The last crewmember [sheriff], shot themselves, GAME OVER!")
+		say(LANG("obj.447e3e9e", list(sheriff)))
 		if(obj_flags & EMAGGED)
 			gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 			gamer.death()
@@ -428,7 +429,7 @@
 			report_player(gamer)
 	else if(obj_flags & EMAGGED)
 		if(findtext(gamer.name, sheriff))
-			say("The crew of the ship chose to kill [gamer]!")
+			say(LANG("obj.4e456d50", list(gamer)))
 			gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 			gamer.death()
 
@@ -464,7 +465,7 @@
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/living/user)
 	user.won_game()
 	gameStatus = ORION_STATUS_START
-	say("Congratulations, you made it to Orion!")
+	say(LANG("obj.5036d8fe", null))
 	if(obj_flags & EMAGGED)
 		new /obj/item/orion_ship(loc)
 		message_admins("[ADMIN_LOOKUPFLW(user)] made it to Orion on an emagged machine and got an explosive toy ship.")
@@ -487,8 +488,8 @@
 		return TRUE
 
 	user.log_message("emagged [src], activating Realism Mode.", LOG_GAME)
-	balloon_alert(user, "realism mode enabled")
-	to_chat(user, span_notice("You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode."))
+	balloon_alert(user, LANG("obj.aa98dce1", null))
+	to_chat(user, span_notice(LANG("obj.6978fe19", list(rand(1, 50)))))
 	newgame(user)
 	return TRUE
 
@@ -516,7 +517,7 @@
 		return
 
 	log_bomber(user, "primed an explosive", src, "for detonation")
-	to_chat(user, span_warning("You flip the switch on the underside of [src]."))
+	to_chat(user, span_warning(LANG("obj.b5003286", list(src))))
 	active = TRUE
 	addtimer(CALLBACK(src, PROC_REF(commit_explosion)), 1 SECONDS)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /atom/movable
 	abstract_type = /atom/movable
 	layer = OBJ_LAYER
@@ -357,8 +358,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!(impact_flags & ZIMPACT_NO_MESSAGE))
 		visible_message(
-			span_danger("[src] crashes into [impacted_turf]!"),
-			span_userdanger("You crash into [impacted_turf]!"),
+			span_danger(LANG("atom.fcbe80cf", list(src, impacted_turf))),
+			span_userdanger(LANG("atom.2cc513b8", list(impacted_turf))),
 		)
 	if(!(impact_flags & ZIMPACT_NO_SPIN))
 		INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
@@ -456,7 +457,7 @@
 		destination = get_step_multiz(start, direction)
 		if(!destination)
 			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(rider || src, span_warning("There's nowhere to go in that direction!"))
+				to_chat(rider || src, span_warning(LANG("atom.155ea236", null)))
 			return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CAN_Z_MOVE, start, destination) & COMPONENT_CANT_Z_MOVE)
 		return FALSE
@@ -465,13 +466,13 @@
 	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			if(rider)
-				to_chat(rider, span_warning("[src] [p_are()] incapable of flight."))
+				to_chat(rider, span_warning(LANG("atom.dfeb7b3f", list(src, p_are()))))
 			else
-				to_chat(src, span_warning("You are not Superman."))
+				to_chat(src, span_warning(LANG("atom.6a843d08", null)))
 		return FALSE
 	if((!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(direction) && destination.zPassIn(direction))) || (!(z_move_flags & ZMOVE_ALLOW_ANCHORED) && anchored))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider || src, span_warning("You can't move there!"))
+			to_chat(rider || src, span_warning(LANG("atom.64c8f4e4", null)))
 		return FALSE
 	return destination //used by some child types checks and zMove()
 
@@ -1459,12 +1460,12 @@
 /atom/movable/proc/force_push(atom/movable/pushed_atom, force = move_force, direction, silent = FALSE)
 	. = pushed_atom.force_pushed(src, force, direction)
 	if(!silent && .)
-		visible_message(span_warning("[src] forcefully pushes against [pushed_atom]!"), span_warning("You forcefully push against [pushed_atom]!"))
+		visible_message(span_warning(LANG("atom.f874b314", list(src, pushed_atom))), span_warning(LANG("atom.d5b20130", list(pushed_atom))))
 
 /atom/movable/proc/move_crush(atom/movable/crushed_atom, force = move_force, direction, silent = FALSE)
 	. = crushed_atom.move_crushed(src, force, direction)
 	if(!silent && .)
-		visible_message(span_danger("[src] crushes past [crushed_atom]!"), span_danger("You crush [crushed_atom]!"))
+		visible_message(span_danger(LANG("atom.816eb3fb", list(src, crushed_atom))), span_danger(LANG("atom.e79ecc98", list(crushed_atom))))
 
 /atom/movable/proc/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	return FALSE
@@ -1776,7 +1777,7 @@
 			return
 		if(edit_faction(usr))
 			var/list/factions_printout = faction_to_text()
-			to_chat(usr, span_notice("Factions updated for [src]:[factions_printout]"))
+			to_chat(usr, span_notice(LANG("atom.6f4c6195", list(src, factions_printout))))
 
 	if(href_list[VV_HK_GET_FACTIONS])
 		if(!check_rights(R_ADMIN))
@@ -1784,7 +1785,7 @@
 		if(QDELETED(src))
 			return
 		var/list/factions_printout = faction_to_text()
-		to_chat(usr, span_notice(span_notice("Factions for [src]:[factions_printout]")))
+		to_chat(usr, span_notice(span_notice(LANG("atom.00568a3a", list(src, factions_printout)))))
 
 	if(href_list[VV_HK_EDIT_PARTICLES])
 		var/client/C = usr.client
@@ -1800,9 +1801,9 @@
 			return
 		// This should never happen, but if it does it should not be silent.
 		if(deadchat_plays() == COMPONENT_INCOMPATIBLE)
-			to_chat(usr, span_warning("Deadchat control not compatible with [src]."))
+			to_chat(usr, span_warning(LANG("atom.e8cfd23a", list(src))))
 			CRASH("deadchat_control component incompatible with object of type: [type]")
-		to_chat(usr, span_notice("Deadchat now control [src]."))
+		to_chat(usr, span_notice(LANG("atom.d0a17c59", list(src))))
 		log_admin("[key_name(usr)] has added deadchat control to [src]")
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))
 
@@ -2028,7 +2029,7 @@
 	else if (prompt == "Remove")
 		var/list/current_factions = LAZYLISTDUPLICATE(faction)
 		if(!LAZYLEN(current_factions))
-			to_chat(user, span_warning("[src] has no factions left to remove!"))
+			to_chat(user, span_warning(LANG("atom.1cd95bfe", list(src))))
 			return FALSE
 
 		current_factions = sort_list(current_factions, GLOBAL_PROC_REF(cmp_text_asc)) // sort alphabetically

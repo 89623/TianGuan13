@@ -16,7 +16,7 @@
 	else
 		icon_state = initial(icon_state)
 	update_appearance(UPDATE_ICON_STATE)
-	to_chat(user, span_notice("You make the [name] [vertical ? "vertically" : "horizontally"] prideful"))
+	to_chat(user, span_notice(LANG("obj.9bca142d", list(name, vertical ? "vertically" : "horizontally"))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/structure/sign/flag/pride/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/regenerate
 	name = "Regenerate"
 	desc = "Allows us to regrow and restore missing external limbs and vital internal organs, as well as removing shrapnel, healing major wounds, and restoring blood volume. Costs 10 chemicals."
@@ -13,7 +14,7 @@
 		return FALSE
 
 	..()
-	to_chat(user, span_notice("You feel an itching, both inside and outside as your tissues knit and reknit."))
+	to_chat(user, span_notice(LANG("datum.3c911c57", null)))
 	var/mob/living/carbon/carbon_user = user
 	var/got_limbs_back = length(carbon_user.get_missing_limbs()) >= 1
 	carbon_user.fully_heal(HEAL_BODY)

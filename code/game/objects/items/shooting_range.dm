@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/target
 	name = "shooting target"
 	desc = "A shooting target."
@@ -12,7 +13,7 @@
 /obj/item/target/welder_act(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, 0 SECONDS, volume = 40))
 		LAZYNULL(bullethole_overlays)
-		balloon_alert(user, "target repaired")
+		balloon_alert(user, LANG("obj.25b88f46", null))
 		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 

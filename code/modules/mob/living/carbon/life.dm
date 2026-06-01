@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/carbon/Life(seconds_per_tick = SSMOBS_DT)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
@@ -127,14 +128,14 @@
 					breath = null // uh oh where'd the air go
 					check_breath(breath)
 					if(oxyloss <= OXYGEN_DAMAGE_CHOKING_THRESHOLD && stat == CONSCIOUS)
-						to_chat(src, "<span class='userdanger'>You hold in your breath!</span>")
+						to_chat(src, LANG("mob.842f5279", null))
 					else
 						//Try and drink water
 						var/datum/reagents/tempr = our_turf.liquids.take_reagents_flat(CHOKE_REAGENTS_INGEST_ON_BREATH_AMOUNT)
 						tempr.trans_to(src, tempr.total_volume, methods = INGEST)
 						qdel(tempr)
-						visible_message("<span class='warning'>[src] chokes on [our_turf.liquids.reagents_to_text()]!</span>", \
-									"<span class='userdanger'>You're choking on [our_turf.liquids.reagents_to_text()]!</span>")
+						visible_message(LANG("mob.3659fcf2", list(src, our_turf.liquids.reagents_to_text())), \
+									LANG("mob.a68798ca", list(our_turf.liquids.reagents_to_text())))
 					return FALSE
 				if(isopenturf(our_turf))
 					var/turf/open/open_turf = our_turf

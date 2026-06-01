@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # secret documents
  *
@@ -69,11 +70,11 @@
 /obj/item/documents/photocopy/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/toy/crayon/red) || istype(O, /obj/item/toy/crayon/blue))
 		if (forgedseal)
-			to_chat(user, span_warning("You have already forged a seal on [src]!"))
+			to_chat(user, span_warning(LANG("obj.3ba0a2f2", list(src))))
 		else
 			var/obj/item/toy/crayon/C = O
 			name = "[C.crayon_color] secret documents"
 			icon_state = "docs_[C.crayon_color]"
 			forgedseal = C.crayon_color
-			to_chat(user, span_notice("You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?"))
+			to_chat(user, span_notice(LANG("obj.78d261c2", list(C.crayon_color))))
 			update_appearance()

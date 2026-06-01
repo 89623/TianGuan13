@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Applied to clients when they receive an admin popup, alerting them to
 /// their ticket.
 /datum/component/admin_popup
@@ -118,7 +119,7 @@
 
 	var/datum/admin_help/current_ticket = target.current_ticket
 	if (!current_ticket)
-		to_chat(admin, span_warning("[key_name(target)] had no active ahelp, aborting."))
+		to_chat(admin, span_warning(LANG("_root.b40dd163", list(key_name(target)))))
 		return
 
 	admin.cmd_admin_pm(target, message)

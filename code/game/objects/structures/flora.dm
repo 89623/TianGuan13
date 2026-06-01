@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/flora
 	name = "flora"
 	desc = "Some sort of plant."
@@ -53,7 +54,7 @@
 	if(user.combat_mode)
 		return ..()
 	if(flags_1 & HOLOGRAM_1)
-		balloon_alert(user, "it goes right through!")
+		balloon_alert(user, LANG("obj.761468ab", null))
 		return ..()
 	if(can_uproot && used_item.tool_behaviour == TOOL_SHOVEL)
 		if(uprooted)
@@ -337,12 +338,12 @@
 	delete_on_harvest = TRUE
 
 /obj/structure/flora/tree/stump/harvest(mob/living/user, product_amount_multiplier)
-	to_chat(user, span_notice("You manage to remove [src]."))
+	to_chat(user, span_notice(LANG("obj.be7bf9bc", list(src))))
 	qdel(src)
 
 /obj/structure/flora/tree/stump/uproot(mob/living/user)
 	..()
-	to_chat(user, span_notice("You manage to remove [src]."))
+	to_chat(user, span_notice(LANG("obj.be7bf9bc", list(src))))
 	qdel(src)
 
 /obj/structure/flora/tree/dead
@@ -486,9 +487,9 @@
 		return
 
 	if(took_presents[user.ckey] && !unlimited)
-		to_chat(user, span_warning("There are no presents with your name on."))
+		to_chat(user, span_warning(LANG("obj.38dae534", null)))
 		return
-	to_chat(user, span_warning("After a bit of rummaging, you locate a gift with your name on it!"))
+	to_chat(user, span_warning(LANG("obj.572a76d3", null)))
 
 	if(!unlimited)
 		took_presents[user.ckey] = TRUE

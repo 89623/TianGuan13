@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/sign
 	icon = 'icons/obj/signs.dmi'
 	anchored = TRUE
@@ -68,7 +69,7 @@
 	if(user.combat_mode)
 		return FALSE
 	if(atom_integrity == max_integrity)
-		to_chat(user, span_warning("This sign is already in perfect condition."))
+		to_chat(user, span_warning(LANG("obj.e346a00a", null)))
 		return TRUE
 	if(!I.tool_start_check(user, amount=1))
 		return TRUE
@@ -89,7 +90,7 @@
 		if(isnull(choice))
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
-			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
+			to_chat(user, span_warning(LANG("obj.04b699fe", null)))
 			return
 		user.visible_message(span_notice("[user] begins changing [src]."), \
 			span_notice("You begin changing [src]."))
@@ -174,7 +175,7 @@
 	if(isnull(choice))
 		return ITEM_INTERACT_BLOCKING
 	if(!Adjacent(user)) //Make sure user is adjacent still.
-		to_chat(user, span_warning("You need to stand next to the sign to change it!"))
+		to_chat(user, span_warning(LANG("obj.04b699fe", null)))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("You begin changing [src]."))
 	if(!do_after(user, 4 SECONDS, target = src))
@@ -190,7 +191,7 @@
 	var/turf/user_turf = get_turf(user)
 	var/dir = get_dir(user_turf, target_turf)
 	if(!(dir in GLOB.cardinals))
-		balloon_alert(user, "stand in line with wall!")
+		balloon_alert(user, LANG("obj.66fb33f1", null))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
@@ -216,7 +217,7 @@
 	if(user.combat_mode)
 		return FALSE
 	if(atom_integrity == max_integrity)
-		to_chat(user, span_warning("This sign is already in perfect condition."))
+		to_chat(user, span_warning(LANG("obj.e346a00a", null)))
 		return TRUE
 	if(!I.tool_start_check(user, amount=1))
 		return TRUE

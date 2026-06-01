@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/wrap
 	name = "Wrap"
 	desc = "Wrap something or someone in a cocoon. \
@@ -81,7 +82,7 @@
 
 /datum/action/cooldown/mob_cooldown/wrap/proc/cocoon(atom/movable/to_wrap)
 	if(isliving(to_wrap))
-		to_chat(to_wrap, span_userdanger("[owner] begins to secrete a sticky substance around you."))
+		to_chat(to_wrap, span_userdanger(LANG("datum.8b44197b", list(owner))))
 	owner.visible_message(
 		span_notice("[owner] begins to secrete a sticky substance around [to_wrap]."),
 		span_notice("You begin wrapping [to_wrap] into a cocoon."),
@@ -111,7 +112,7 @@
 			living_wrapped.death() //you just ate them, they're dead.
 			log_combat(owner, living_wrapped, "spider cocooned")
 		else
-			to_chat(owner, span_warning("[living_wrapped] is not edible!"))
+			to_chat(owner, span_warning(LANG("datum.132d6f7c", list(living_wrapped))))
 
 	to_wrap.forceMove(casing)
 	if(isliving(to_wrap)&& (to_wrap.mob_biotypes & MOB_HUMANOID))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Base cult armor
  * Has decent defense stats, protects against temperature changes.
@@ -111,7 +112,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/hardened/proc/attempt_exorcism(mob/living/exorcist)
 	if(IS_CULTIST(exorcist))
 		return
-	balloon_alert(exorcist, "exorcising...")
+	balloon_alert(exorcist, LANG("obj.833ce5de", null))
 	playsound(src, 'sound/effects/hallucinations/veryfar_noise.ogg', 40, TRUE)
 	if(!do_after(exorcist, 4 SECONDS, target = src))
 		return
@@ -158,7 +159,7 @@
 	))
 	var/datum/wound/wound_of_choice = new wound_type()
 	wound_of_choice.apply_wound(bone_to_wound, wound_source = "cultist robes")
-	to_chat(wearer, span_alert("[src] starts glowing and you suddenly notice injuries all over yourself!"))
+	to_chat(wearer, span_alert(LANG("obj.8c36ccca", list(src))))
 
 /obj/item/clothing/head/hooded/cult_hoodie/hardened
 	name = "\improper Nar'Sien hardened helmet"
@@ -212,8 +213,8 @@
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
 	..()
 	if(!IS_CULTIST(user))
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
-		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
+		to_chat(user, span_cult_large(LANG("obj.79745a40", null)))
+		to_chat(user, span_warning(LANG("obj.9a09b431", null)))
 		user.dropItemToGround(src, TRUE)
 		user.set_dizzy_if_lower(1 MINUTES)
 		user.Paralyze(100)
@@ -267,4 +268,4 @@
 	if(!eyes.apply_organ_damage(1))
 		return
 	if(SPT_PROB(3, seconds_per_tick))
-		to_chat(wearer, span_danger("You feel [src] digging into your eyes, burning [eyes.p_them()] up!"))
+		to_chat(wearer, span_danger(LANG("obj.a15ac180", list(src, eyes.p_them()))))

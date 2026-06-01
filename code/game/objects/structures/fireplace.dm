@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define LOG_BURN_TIMER 5000 //NOVA EDIT original: #define LOG_BURN_TIMER 150
 #define PAPER_BURN_TIMER 5
 #define MAXIMUM_BURN_TIMER 100000 //NOVA EDIT original: #define MAXIMUM_BURN_TIMER 3000
@@ -47,10 +48,10 @@
 
 /obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
 	if(lit)
-		to_chat(user, span_warning("It's already lit!"))
+		to_chat(user, span_warning(LANG("obj.392aae9f", null)))
 		return FALSE
 	if(!fuel_added)
-		to_chat(user, span_warning("[src] needs some fuel to burn!"))
+		to_chat(user, span_warning(LANG("obj.015d7870", list(src))))
 		return FALSE
 	var/msg = O.ignition_effect(src, user)
 	if(msg)
@@ -64,7 +65,7 @@
 		var/space_remaining = MAXIMUM_BURN_TIMER - burn_time_remaining()
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
 		if(space_for_logs < 1)
-			to_chat(user, span_warning("You can't fit any more of [tool] in [src]!"))
+			to_chat(user, span_warning(LANG("obj.d56a17a7", list(tool, src))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/logs_used = min(space_for_logs, wood.amount)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define STATE_SORTING "sorting"
 #define STATE_IDLE "idle"
 #define STATE_YES "yes"
@@ -100,7 +101,7 @@
 	if (currentstate != STATE_IDLE)
 		return
 	if (length(mail_list) == 0)
-		to_chat(user, span_warning("There's no mail inside!"))
+		to_chat(user, span_warning(LANG("obj.751f0dcf", null)))
 		return
 	var/choice = show_radial_menu(
 		user,
@@ -159,13 +160,13 @@
 		currentstate = STATE_NO
 		update_appearance(UPDATE_OVERLAYS)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
-		say("No mail for the following department: [sorting_dept].")
+		say(LANG("obj.e75ca099", list(sorting_dept)))
 	else
 		currentstate = STATE_YES
 		update_appearance(UPDATE_OVERLAYS)
-		say("[sorted] envelope\s sorted successfully.")
+		say(LANG("obj.4259f688", list(sorted)))
 		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
-		to_chat(user, span_notice("[src] ejects [length(sorted_mail)] envelope\s."))
+		to_chat(user, span_notice(LANG("obj.d0480b16", list(src, length(sorted_mail)))))
 		var/turf/unload_turf = get_unload_turf()
 		for (var/obj/item/mail/mail_in_list in sorted_mail)
 			mail_in_list.forceMove(unload_turf)
@@ -177,10 +178,10 @@
 /obj/machinery/mailsorter/proc/check_sorted(mob/user, unable_to_sort, total_to_sort)
 	if (unable_to_sort > 0)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
-		say("Couldn't sort [unable_to_sort] envelope\s.")
+		say(LANG("obj.e8768631", list(unable_to_sort)))
 	else
 		playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
-		say("[total_to_sort] envelope\s processed.")
+		say(LANG("obj.946bdc1b", list(total_to_sort)))
 	addtimer(CALLBACK(src, PROC_REF(update_state_after_sorting)), 1 SECONDS)
 
 /obj/machinery/mailsorter/proc/update_state_after_sorting()
@@ -190,7 +191,7 @@
 /obj/machinery/mailsorter/item_interaction(mob/user, obj/item/thingy, params)
 	if (istype(thingy, /obj/item/storage/bag/mail))
 		if (length(thingy.contents) < 1)
-			to_chat(user, span_warning("The [thingy] is empty!"))
+			to_chat(user, span_warning(LANG("obj.cd703f63", list(thingy))))
 			return
 		var/loaded = 0
 		for (var/obj/item/mail in thingy.contents)
@@ -208,18 +209,18 @@
 			user.visible_message(span_notice("[user] loads \the [src] with \the [thingy]."), \
 			span_notice("You load \the [src] with \the [thingy]."))
 			if(length(thingy.contents))
-				to_chat(user, span_warning("Some items are refused."))
+				to_chat(user, span_warning(LANG("obj.94d8d593", null)))
 			return TRUE
 		else
-			to_chat(user, span_warning("There is nothing in \the [thingy] to put in the [src]!"))
+			to_chat(user, span_warning(LANG("obj.49073a2c", list(thingy, src))))
 			return FALSE
 	else if (istype(thingy, /obj/item/mail))
 		if (length(mail_list) + 1 > MAIL_CAPACITY )
-			to_chat(user, span_warning("There is no space for more mail in [src]!"))
+			to_chat(user, span_warning(LANG("obj.9f7179a1", list(src))))
 		else
 			thingy.forceMove(src)
 			mail_list += thingy
-			to_chat(user, span_notice("The [src] whizzles as it accepts the [thingy]."))
+			to_chat(user, span_notice(LANG("obj.da36cc96", list(src, thingy))))
 
 /// Prompts the user to select an anvelope from the list of all the envelopes inside.
 /obj/machinery/mailsorter/proc/pick_mail(mob/user)
@@ -235,7 +236,7 @@
 
 /// Ejects a single envelope the player has picked onto the `unload_turf`.
 /obj/machinery/mailsorter/proc/pick_envelope(mob/user, obj/item/mail/mail_throw)
-	to_chat(user, span_notice("[src] reluctantly spits out [mail_throw]."))
+	to_chat(user, span_notice(LANG("obj.149b11dd", list(src, mail_throw))))
 	var/turf/unload_turf = get_unload_turf()
 	mail_throw.forceMove(unload_turf)
 	mail_throw.throw_at(unload_turf, 2, 3)
@@ -248,7 +249,7 @@
 	if(ismob(thingy.loc))
 		var/mob/owner = thingy.loc
 		if(!owner.transferItemToLoc(thingy, src))
-			to_chat(owner, span_warning("\the [thingy] is stuck to your hand, you cannot put it in \the [src]!"))
+			to_chat(owner, span_warning(LANG("obj.e235f1cb", list(thingy, src))))
 			return FALSE
 		return TRUE
 	else
@@ -262,7 +263,7 @@
 	if(!panel_open)
 		return CLICK_ACTION_BLOCKING
 	output_dir = turn(output_dir, -90)
-	to_chat(user, span_notice("You change [src]'s I/O settings, setting the output to [dir2text(output_dir)]."))
+	to_chat(user, span_notice(LANG("obj.73016afe", list(src, dir2text(output_dir)))))
 	update_appearance(UPDATE_OVERLAYS)
 	return CLICK_ACTION_SUCCESS
 

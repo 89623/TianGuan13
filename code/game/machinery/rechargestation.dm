@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/recharge_station
 	name = "recharging station"
 	desc = "This device recharges energy-dependent lifeforms, like cyborgs, ethereals, and MODsuit users."
@@ -125,20 +126,20 @@
 /obj/machinery/recharge_station/proc/toggle_restock(mob/user)
 	if(sendmats)
 		sendmats = FALSE
-		say("Restocking from ore silo: disabled.")
+		say(LANG("obj.5adef825", null))
 		return
 	if(state_open || !occupant)
 		return
 	if(!iscyborg(occupant))
 		return
 	if(!materials.silo)
-		say("Error: ore silo connection offline.")
+		say(LANG("obj.d21318d6", null))
 		return
 	if(materials.on_hold())
-		say("Error: ore silo access denied.")
+		say(LANG("obj.cc23e175", null))
 		return FALSE
 	sendmats = TRUE
-	say("Restocking from ore silo: enabled.")
+	say(LANG("obj.3a706c9e", null))
 
 /obj/machinery/recharge_station/interact(mob/user)
 	toggle_open()

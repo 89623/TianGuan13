@@ -50,17 +50,17 @@
 
 /obj/structure/wormfarm/attack_hand(mob/living/user, list/modifiers)
 	if(in_use)
-		balloon_alert(user, "currently in use")
+		balloon_alert(user, LANG("obj.c56e2817", null))
 		return ..()
 
-	balloon_alert(user, "digging up worms")
+	balloon_alert(user, LANG("obj.fc851fd8", null))
 	if(!do_after(user, 2 SECONDS, src))
-		balloon_alert(user, "stopped digging")
+		balloon_alert(user, LANG("obj.d76e263a", null))
 		in_use = FALSE
 		return ..()
 
 	if(current_worm <= 0)
-		balloon_alert(user, "no worms available")
+		balloon_alert(user, LANG("obj.d58f72ab", null))
 		in_use = FALSE
 		return ..()
 
@@ -74,25 +74,25 @@
 	//we want to check for worms first because they are a type of food as well...
 	if(istype(tool, /obj/item/food/bait/worm))
 		if(current_worm >= max_worm)
-			balloon_alert(user, "too many worms in the barrel")
+			balloon_alert(user, LANG("obj.fcf94d59", null))
 			return ITEM_INTERACT_BLOCKING
 
 		qdel(tool)
-		balloon_alert(user, "worm released into barrel")
+		balloon_alert(user, LANG("obj.4ed12fa2", null))
 		current_worm++
 		return ITEM_INTERACT_BLOCKING
 
 	//if it aint a worm, lets check for any other food items
 	if(istype(tool, /obj/item/food))
 		if(in_use)
-			balloon_alert(user, "currently in use")
+			balloon_alert(user, LANG("obj.c56e2817", null))
 			return ITEM_INTERACT_BLOCKING
 		in_use = TRUE
 
-		balloon_alert(user, "feeding the worms")
+		balloon_alert(user, LANG("obj.1f5afd68", null))
 		var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 		if(!do_after(user, 1 SECONDS * skill_modifier, src))
-			balloon_alert(user, "stopped feeding the worms")
+			balloon_alert(user, LANG("obj.6b0f3f43", null))
 			in_use = FALSE
 			return ITEM_INTERACT_BLOCKING
 
@@ -102,7 +102,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		qdel(tool)
-		balloon_alert(user, "feeding complete, check back later")
+		balloon_alert(user, LANG("obj.3bcda56e", null))
 
 		current_food++
 		user.mind?.adjust_experience(/datum/skill/primitive, 2)
@@ -114,11 +114,11 @@
 
 	if(istype(tool, /obj/item/storage/bag/plants))
 		if(in_use)
-			balloon_alert(user, "currently in use")
+			balloon_alert(user, LANG("obj.c56e2817", null))
 			return ITEM_INTERACT_BLOCKING
 		in_use = TRUE
 
-		balloon_alert(user, "feeding the worms")
+		balloon_alert(user, LANG("obj.1f5afd68", null))
 		var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 		for(var/obj/item/food/selected_food in tool.contents)
 			if(!do_after(user, 1 SECONDS * skill_modifier, src))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/bounty/item
 	///How many items have to be shipped to complete the bounty
 	var/required_count = 1
@@ -62,7 +63,7 @@
 	var/choice = tgui_input_list(living_user, "Choose a bounty.", "New Bounty", subtypesof(/datum/bounty))
 	var/datum/bounty/new_chore = text2path("[choice]")
 	id.registered_account.set_bounty(new new_chore, id)
-	balloon_alert(user, "new bounty acquired!")
+	balloon_alert(user, LANG("obj.bd697b4b", null))
 	playsound(src, 'sound/effects/coin2.ogg', 30, TRUE)
 	qdel(src)
 
@@ -80,9 +81,9 @@
 	var/choice = tgui_input_list(living_user, "Choose a bounty.", "New Bounty", subtypesof(/datum/bounty))
 	var/datum/bounty/new_chore = text2path("[choice]")
 	if(new_chore.global_exempt)
-		to_chat(user, span_warning("Can't use that one, try another!"))
+		to_chat(user, span_warning(LANG("obj.3615f262", null)))
 		return
 	GLOB.shared_crew_bounties += new_chore
-	balloon_alert(user, "new bounty provided to the crew!")
+	balloon_alert(user, LANG("obj.5ea5fde6", null))
 	playsound(src, 'sound/effects/coin2.ogg', 30, TRUE)
 	qdel(src)

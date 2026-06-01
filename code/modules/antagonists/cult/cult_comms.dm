@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Contains cult communion, guide, and cult master abilities
 
 /datum/action/innate/cult
@@ -131,23 +132,23 @@
 	var/datum/mind/master_mind = choices[new_master]
 	var/mob/living/carbon/human/master = master_mind.current
 	if (!master || master.stat == DEAD || !master.client)
-		to_chat(owner, span_cult("[new_master] can no longer take on the role of a Master."))
+		to_chat(owner, span_cult(LANG("datum.05a9d0fa", list(new_master))))
 		return
 
 	var/datum/antagonist/cult/target_datum = master_mind.has_antag_datum(/datum/antagonist/cult)
 	if(!target_datum || owner_datum.cult_team != target_datum?.cult_team)
-		to_chat(owner, span_cult("[new_master] can no longer take on the role of a Master."))
+		to_chat(owner, span_cult(LANG("datum.05a9d0fa", list(new_master))))
 		return
 
 	SEND_SOUND(master, sound('sound/effects/magic.ogg', volume = 33))
 	confirmation = tgui_alert(master, "[owner.real_name] is offering their role as the cult's Master to you! Do you wish to accept it?", "Take the Mantle", list("Yes", "No"))
 
 	if (confirmation != "Yes")
-		to_chat(owner, span_cult("[new_master] has declined your offer."))
+		to_chat(owner, span_cult(LANG("datum.728c2578", list(new_master))))
 		return
 
 	if (!IsAvailable() || !master_mind.has_antag_datum(/datum/antagonist/cult) || !master.client)
-		to_chat(owner, span_cult("[new_master] can no longer take on the role of a Master."))
+		to_chat(owner, span_cult(LANG("datum.05a9d0fa", list(new_master))))
 		return
 
 	target_datum.cult_team.leader_passed_on = TRUE
@@ -166,7 +167,7 @@
 	var/place = get_area(owner)
 	var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
 	if(place in summon_objective.summon_spots)//cant do final reckoning in the summon area to prevent abuse, you'll need to get everyone to stand on the circle!
-		to_chat(owner, span_cult_large("The veil is too weak here! Move to an area where it is strong enough to support this magic."))
+		to_chat(owner, span_cult_large(LANG("datum.8512f461", null)))
 		return
 	for(var/i in 1 to 4)
 		chant(i)
@@ -261,7 +262,7 @@
 		CRASH("[type] was casted by a cultist without a cult team datum.")
 
 	if(cult_team.blood_target)
-		to_chat(clicker, span_cult("The cult has already designated a target!"))
+		to_chat(clicker, span_cult(LANG("datum.126deab0", null)))
 		return FALSE
 
 	if(cult_team.set_blood_target(clicked_on, clicker, cult_mark_duration))
@@ -301,14 +302,14 @@
 	if(cult_team.blood_target)
 		if(!COOLDOWN_FINISHED(src, cult_mark_cooldown))
 			cult_team.unset_blood_target_and_timer()
-			to_chat(owner, span_cult_bold("You have cleared the cult's blood target!"))
+			to_chat(owner, span_cult_bold(LANG("datum.b556b8fa", null)))
 			return TRUE
 
-		to_chat(owner, span_cult_bold("The cult has already designated a target!"))
+		to_chat(owner, span_cult_bold(LANG("datum.126deab0", null)))
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, cult_mark_cooldown))
-		to_chat(owner, span_cult_bold("You aren't ready to place another blood mark yet!"))
+		to_chat(owner, span_cult_bold(LANG("datum.4b6a3fbc", null)))
 		return FALSE
 
 	var/atom/mark_target = owner.orbiting?.parent || get_turf(owner)
@@ -316,13 +317,13 @@
 		return FALSE
 
 	if(cult_team.set_blood_target(mark_target, owner, 60 SECONDS))
-		to_chat(owner, span_cult_bold("You have marked [mark_target] for the cult! It will last for [DisplayTimeText(cult_mark_duration)]."))
+		to_chat(owner, span_cult_bold(LANG("datum.8415a914", list(mark_target, DisplayTimeText(cult_mark_duration)))))
 		COOLDOWN_START(src, cult_mark_cooldown, cult_mark_cooldown_duration)
 		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 		addtimer(CALLBACK(src, PROC_REF(reset_button)), cult_mark_cooldown_duration + 1)
 		return TRUE
 
-	to_chat(owner, span_cult("The marking failed!"))
+	to_chat(owner, span_cult(LANG("datum.cca794d6", null)))
 	return FALSE
 
 /datum/action/innate/cult/ghostmark/update_button_name(atom/movable/screen/movable/action_button/current_button, force = FALSE)
@@ -348,7 +349,7 @@
 		return
 
 	SEND_SOUND(owner, 'sound/effects/magic/enter_blood.ogg')
-	to_chat(owner, span_cult_bold("Your previous mark is gone - you are now ready to create a new blood mark."))
+	to_chat(owner, span_cult_bold(LANG("datum.1ffd5c83", null)))
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
 //////// ELDRITCH PULSE /////////
@@ -387,14 +388,14 @@
 /datum/action/innate/cult/master/pulse/do_ability(mob/living/clicker, atom/clicked_on)
 	var/atom/throwee = throwee_ref?.resolve()
 	if(throwee && QDELING(throwee))
-		to_chat(clicker, span_cult("You lost your target!"))
+		to_chat(clicker, span_cult(LANG("datum.9673bb7a", null)))
 		throwee = null
 		throwee_ref = null
 		return FALSE
 
 	if(throwee)
 		if(get_dist(throwee, clicked_on) >= 16)
-			to_chat(clicker, span_cult("You can't teleport [clicked_on.p_them()] that far!"))
+			to_chat(clicker, span_cult(LANG("datum.1bf44974", list(clicked_on.p_them()))))
 			return FALSE
 
 		var/turf/throwee_turf = get_turf(throwee)
@@ -407,7 +408,7 @@
 		)
 
 		if(!do_teleport(throwee, clicked_on, channel = TELEPORT_CHANNEL_CULT))
-			to_chat(clicker, span_cult("The teleport fails!"))
+			to_chat(clicker, span_cult(LANG("datum.8247d14a", null)))
 			throwee.visible_message(
 				span_warning("...Except they don't go very far"),
 				span_cult("...Except you don't appear to have moved very far."),
@@ -422,7 +423,7 @@
 		)
 
 		COOLDOWN_START(src, pulse_cooldown, pulse_cooldown_duration)
-		to_chat(clicker, span_cult("A pulse of blood magic surges through you as you shift [throwee] through time and space."))
+		to_chat(clicker, span_cult(LANG("datum.e1c25f23", list(throwee))))
 		clicker.click_intercept = null
 		throwee_ref = null
 		build_all_button_icons()
@@ -435,12 +436,12 @@
 		if(!IS_CULTIST(living_clicked))
 			return FALSE
 		SEND_SOUND(clicker, sound('sound/items/weapons/thudswoosh.ogg'))
-		to_chat(clicker, span_cult_bold("You reach through the veil with your mind's eye and seize [clicked_on]! <b>Click anywhere nearby to teleport [clicked_on.p_them()]!</b>"))
+		to_chat(clicker, span_cult_bold(LANG("datum.f38d0791", list(clicked_on, clicked_on.p_them()))))
 		throwee_ref = WEAKREF(clicked_on)
 		return TRUE
 
 	if(istype(clicked_on, /obj/structure/destructible/cult))
-		to_chat(clicker, span_cult_bold("You reach through the veil with your mind's eye and lift [clicked_on]! <b>Click anywhere nearby to teleport it!</b>"))
+		to_chat(clicker, span_cult_bold(LANG("datum.28b82cd2", list(clicked_on))))
 		throwee_ref = WEAKREF(clicked_on)
 		return TRUE
 	return FALSE

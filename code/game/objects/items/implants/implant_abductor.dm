@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/implant/abductor
 	name = "recall implant"
 	desc = "Returns you to the mothership."
@@ -10,7 +11,7 @@
 /obj/item/implant/abductor/activate()
 	. = ..()
 	if(on_cooldown)
-		to_chat(imp_in, span_warning("You must wait [timeleft(on_cooldown)*0.1] seconds to use [src] again!"))
+		to_chat(imp_in, span_warning(LANG("obj.6477f4c6", list(timeleft(on_cooldown)*0.1, src))))
 		return
 
 	if(isnull(home) && !link_pad())

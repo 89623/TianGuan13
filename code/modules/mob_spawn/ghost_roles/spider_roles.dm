@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
 	icon = 'icons/effects/effects.dmi'
@@ -137,7 +138,7 @@
 		return FALSE
 	if(!ready)
 		if(!silent)
-			to_chat(user, span_warning("\The [src] is not ready to hatch yet!"))
+			to_chat(user, span_warning(LANG("obj.39fd5ce5", list(src))))
 		return FALSE
 	return TRUE
 

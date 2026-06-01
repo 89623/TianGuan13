@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Resurrection crystal
 
 /obj/item/resurrection_crystal
@@ -8,17 +9,17 @@
 
 /obj/item/resurrection_crystal/attack_self(mob/living/user)
 	if(!iscarbon(user))
-		to_chat(user, span_notice("A dark presence stops you from absorbing the crystal."))
+		to_chat(user, span_notice(LANG("obj.33b2187d", null)))
 		return
 	forceMove(user)
-	to_chat(user, span_notice("You feel a bit safer... but a demonic presence lurks in the back of your head..."))
+	to_chat(user, span_notice(LANG("obj.149a89df", null)))
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(resurrect))
 
 /// Resurrects the target when they die by moving them and dusting a clone in their place, one life for another
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
 	SIGNAL_HANDLER
 	if(gibbed)
-		to_chat(user, span_notice("This power cannot be used if your entire mortal body is disintegrated..."))
+		to_chat(user, span_notice(LANG("obj.678b0d8b", null)))
 		return
 	user.visible_message(span_notice("You see [user]'s soul dragged out of their body!"), span_notice("You feel your soul dragged away to a fresh body!"))
 	var/typepath = user.type
@@ -30,7 +31,7 @@
 	user.forceMove(T)
 	user.revive(ADMIN_HEAL_ALL)
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/carbon, set_species), /datum/species/shadow)
-	to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]... feeling a bit darker."))
+	to_chat(user, span_notice(LANG("obj.954d838c", list(get_area_name(T)))))
 	clone.dust()
 	qdel(src)
 
@@ -60,7 +61,7 @@
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/ui_action_click(mob/user)
 	on = !on
-	to_chat(user, span_notice("You [on ? "activate" : "deactivate"] [src]."))
+	to_chat(user, span_notice(LANG("obj.d6171b71", list(on ? "activate" : "deactivate", src))))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/examine(mob/user)
 	. = ..()

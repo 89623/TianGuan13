@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Mech prizes + MECHA COMBAT!!
  */
@@ -127,7 +128,7 @@
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/mecha/attack_self(mob/user)
 	if(timer < world.time)
-		to_chat(user, span_notice("You play with [src]."))
+		to_chat(user, span_notice(LANG("obj.0d7de94d", list(src))))
 		timer = world.time + cooldown
 		if(!quiet)
 			playsound(user, 'sound/vehicles/mecha/mechstep.ogg', 20, TRUE)
@@ -156,11 +157,11 @@
  */
 /obj/item/toy/mecha/attack(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(target == user)
-		to_chat(user, span_notice("Target another toy mech if you want to start a battle with yourself."))
+		to_chat(user, span_notice(LANG("obj.ae28e64c", null)))
 		return
 	else if(!user.combat_mode)
 		if(wants_to_battle) //prevent spamming someone with offers
-			to_chat(user, span_notice("You already are offering battle to someone!"))
+			to_chat(user, span_notice(LANG("obj.8cc900ee", null)))
 			return
 		if(!check_battle_start(user)) //if the user's mech isn't ready, don't bother checking
 			return
@@ -178,8 +179,8 @@
 					return
 
 		//extend the offer of battle to the other mech
-		to_chat(user, span_notice("You offer battle to [target.name]!"))
-		to_chat(target, span_notice("<b>[user.name] wants to battle with [user.p_their()] [name]!</b> <i>Attack them with a toy mech to initiate combat.</i>"))
+		to_chat(user, span_notice(LANG("obj.964b79c3", list(target.name))))
+		to_chat(target, span_notice(LANG("obj.1599ab99", list(user.name, user.p_their(), name))))
 		wants_to_battle = TRUE
 		addtimer(CALLBACK(src, PROC_REF(withdraw_offer), user), 6 SECONDS)
 		return
@@ -191,7 +192,7 @@
  */
 /obj/item/toy/mecha/attack_tk(mob/user)
 	if(timer < world.time)
-		to_chat(user, span_notice("You telekinetically play with [src]."))
+		to_chat(user, span_notice(LANG("obj.a117c34f", list(src))))
 		timer = world.time + cooldown
 		if(!quiet)
 			playsound(user, 'sound/vehicles/mecha/mechstep.ogg', 20, TRUE)
@@ -208,13 +209,13 @@
 /obj/item/toy/mecha/proc/withdraw_offer(mob/living/carbon/user)
 	if(wants_to_battle)
 		wants_to_battle = FALSE
-		to_chat(user, span_notice("You get the feeling they don't want to battle."))
+		to_chat(user, span_notice(LANG("obj.a10087de", null)))
 /**
  * Starts a battle, toy mech vs player. Player... doesn't win.
  */
 /obj/item/toy/mecha/suicide_act(mob/living/carbon/user)
 	if(in_combat)
-		to_chat(user, span_notice("[src] is in battle, let it finish first."))
+		to_chat(user, span_notice(LANG("obj.d186bdcf", list(src))))
 		return
 
 	user.visible_message(span_suicide("[user] begins a fight [user.p_they()] can't win with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -246,7 +247,7 @@
 	user.adjust_brute_loss(450)
 
 	in_combat = FALSE
-	say("AN EASY WIN. MY POWER INCREASES.") // steal a soul, become swole
+	say(LANG("obj.e30e6958", null)) // steal a soul, become swole
 	add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
 	max_combat_health = round(max_combat_health*1.5 + 0.1)
 	combat_health = max_combat_health
@@ -418,7 +419,7 @@
 		attacker_controller.visible_message(span_notice("[attacker] demolishes [src] and walks away victorious!"), \
 							"[span_notice("You raise up [attacker] proudly over [src]")]!")
 	else //both win?
-		say("NEXT TIME.")
+		say(LANG("obj.8b8212bd", null))
 		//don't want to make this a one sided conversation
 		quiet? attacker.say("I WENT EASY ON YOU.") : attacker.say("OF COURSE.")
 
@@ -443,20 +444,20 @@
  */
 /obj/item/toy/mecha/proc/check_battle_start(mob/living/carbon/user, obj/item/toy/mecha/attacker, mob/living/carbon/target)
 	if(attacker?.in_combat)
-		to_chat(user, span_notice("[target?target.p_their() : "Your" ] [attacker.name] is in combat."))
-		to_chat(target, span_notice("Your [attacker.name] is in combat."))
+		to_chat(user, span_notice(LANG("obj.4df14454", list(target?target.p_their() : "Your", attacker.name))))
+		to_chat(target, span_notice(LANG("obj.e9afeed6", list(attacker.name))))
 		return FALSE
 	if(in_combat)
-		to_chat(user, span_notice("Your [name] is in combat."))
-		to_chat(target, span_notice("[user.p_their()] [name] is in combat."))
+		to_chat(user, span_notice(LANG("obj.e9afeed6", list(name))))
+		to_chat(target, span_notice(LANG("obj.4df14454", list(user.p_their(), name))))
 		return FALSE
 	if(attacker && attacker.timer > world.time)
-		to_chat(user, span_notice("[target?target.p_their() : "Your" ] [attacker.name] isn't ready for battle."))
-		to_chat(target, span_notice("Your [attacker.name] isn't ready for battle."))
+		to_chat(user, span_notice(LANG("obj.8024b036", list(target?target.p_their() : "Your", attacker.name))))
+		to_chat(target, span_notice(LANG("obj.a68768ea", list(attacker.name))))
 		return FALSE
 	if(timer > world.time)
-		to_chat(user, span_notice("Your [name] isn't ready for battle."))
-		to_chat(target, span_notice("[user.p_their()] [name] isn't ready for battle."))
+		to_chat(user, span_notice(LANG("obj.a68768ea", list(name))))
+		to_chat(target, span_notice(LANG("obj.8024b036", list(user.p_their(), name))))
 		return FALSE
 
 	return TRUE
@@ -488,7 +489,7 @@
 		if(SPECIAL_ATTACK_OTHER) //other
 			super_special_attack(victim)
 		else
-			say("I FORGOT MY SPECIAL ATTACK...")
+			say(LANG("obj.63c26c49", null))
 
 /**
  * Base proc for 'other' special attack moves.
@@ -498,7 +499,7 @@
  * * victim - the toy being hit by the super special move (doesn't necessarily need to be used)
  */
 /obj/item/toy/mecha/proc/super_special_attack(obj/item/toy/mecha/victim)
-	visible_message(span_notice("[src] does a cool flip."))
+	visible_message(span_notice(LANG("obj.80271972", list(src))))
 
 /obj/item/toy/mecha/ripley
 	name = "toy Ripley MK-I"
@@ -608,7 +609,7 @@
 /obj/item/toy/mecha/deathripley/super_special_attack(obj/item/toy/mecha/victim)
 	playsound(src, 'sound/items/weapons/sonic_jackhammer.ogg', 20, TRUE)
 	if(victim.combat_health < combat_health) //Instantly kills the other mech if its health is below ours.
-		say("EXECUTE!!")
+		say(LANG("obj.7458c683", null))
 		victim.combat_health = 0
 	else //Otherwise, just deal one damage.
 		victim.combat_health--

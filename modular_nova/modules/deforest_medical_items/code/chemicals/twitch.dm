@@ -241,7 +241,7 @@
 	our_guy.adjust_tox_loss(0.77 * seconds_per_tick * metabolization_ratio, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
 
 	if(SPT_PROB(5, seconds_per_tick) && !(our_guy.mob_biotypes & MOB_ROBOTIC))
-		to_chat(our_guy, span_danger("You cough up a splatter of blood!"))
+		to_chat(our_guy, span_danger(LANG("datum.7d3e95cd", null)))
 		our_guy.spray_blood(our_guy.dir, 1)
 		our_guy.emote("cough")
 

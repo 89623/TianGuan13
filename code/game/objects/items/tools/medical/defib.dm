@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //backpack item
 #define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
 #define DEFIB_CAN_HURT(source) (source.combat || (source.req_defib && !source.defib.safety))
@@ -124,7 +125,7 @@
 		if(user.get_slot_by_item(src) & slot_flags)
 			ui_action_click(user, modifiers)
 		else
-			balloon_alert(user, "equip the unit first!")
+			balloon_alert(user, LANG("obj.0254b9c7", null))
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
 		ui_action_click(user, modifiers) //checks for this are handled in defibrillator.mount.dm
@@ -135,7 +136,7 @@
 		return FALSE
 
 	cell.forceMove(get_turf(src))
-	balloon_alert(user, "removed [cell]")
+	balloon_alert(user, LANG("obj.c6b4aa68", list(cell)))
 	cell = null
 	tool.play_tool_sound(src, 50)
 	update_power()
@@ -150,16 +151,16 @@
 
 	var/obj/item/stock_parts/power_store/cell/new_cell = item
 	if(!isnull(cell))
-		to_chat(user, span_warning("[src] already has a cell!"))
+		to_chat(user, span_warning(LANG("obj.6ce8d100", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(new_cell.maxcharge < paddles.revivecost)
-		to_chat(user, span_notice("[src] requires a higher capacity cell."))
+		to_chat(user, span_notice(LANG("obj.82ea442c", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_cell, src))
 		return NONE
 	cell = new_cell
-	to_chat(user, span_notice("You install a cell in [src]."))
+	to_chat(user, span_notice(LANG("obj.9bc9caa9", list(src))))
 	update_power()
 	return ITEM_INTERACT_SUCCESS
 
@@ -168,7 +169,7 @@
 	safety = !safety
 
 	var/enabled_or_disabled = (safety ? "enabled" : "disabled")
-	balloon_alert(user, "safety protocols [enabled_or_disabled]")
+	balloon_alert(user, LANG("obj.aba34612", list(enabled_or_disabled)))
 
 	return TRUE
 
@@ -187,7 +188,7 @@
 		//Detach the paddles into the user's hands
 		if(!user.put_in_hands(paddles))
 			on = FALSE
-			to_chat(user, span_warning("You need a free hand to hold the paddles!"))
+			to_chat(user, span_warning(LANG("obj.ffdf2333", null)))
 			update_power()
 			return
 	else
@@ -235,10 +236,10 @@
 /obj/item/defibrillator/proc/finish_charging()
 	if(cell)
 		if(cell.charge >= paddles.revivecost)
-			visible_message(span_notice("[src] beeps: Unit ready."))
+			visible_message(span_notice(LANG("obj.69768260", list(src))))
 			playsound(src, 'sound/machines/defib/defib_ready.ogg', 50, FALSE)
 		else
-			visible_message(span_notice("[src] beeps: Charge depleted."))
+			visible_message(span_notice(LANG("obj.223578d6", list(src))))
 			playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 	paddles.cooldown = FALSE
 	paddles.update_appearance()
@@ -366,9 +367,9 @@
 	if(!in_range(src,defib))
 		if(isliving(loc))
 			var/mob/living/user = loc
-			to_chat(user, span_warning("[defib]'s paddles overextend and come out of your hands!"))
+			to_chat(user, span_warning(LANG("obj.602c75ee", list(defib))))
 		else
-			visible_message(span_notice("[src] snap back into [defib]."))
+			visible_message(span_notice(LANG("obj.fc87e483", list(src, defib))))
 		snap_back()
 
 /obj/item/shockpaddles/proc/recharge(time = 0)
@@ -416,7 +417,7 @@
 	UnregisterSignal(defib, COMSIG_MOVABLE_MOVED)
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		to_chat(user, span_notice("The paddles snap back into the main unit."))
+		to_chat(user, span_notice(LANG("obj.a6603e9f", null)))
 	snap_back()
 	return ..()
 
@@ -437,15 +438,15 @@
 		return
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		if(iscyborg(user))
-			to_chat(user, span_warning("You must activate the paddles in your active module before you can use them on someone!"))
+			to_chat(user, span_warning(LANG("obj.701d66ac", null)))
 		else
-			to_chat(user, span_warning("You need to wield the paddles in both hands before you can use them on someone!"))
+			to_chat(user, span_warning(LANG("obj.bf92826e", null)))
 		return
 	if(cooldown)
 		if(req_defib)
-			to_chat(user, span_warning("[defib] is recharging!"))
+			to_chat(user, span_warning(LANG("obj.de8caf77", list(defib))))
 		else
-			to_chat(user, span_warning("[src] are recharging!"))
+			to_chat(user, span_warning(LANG("obj.137cd7af", list(src))))
 		return
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -454,14 +455,14 @@
 
 	if(!iscarbon(M))
 		if(req_defib)
-			to_chat(user, span_warning("The instructions on [defib] don't mention how to revive that..."))
+			to_chat(user, span_warning(LANG("obj.7b1eb2e2", list(defib))))
 		else
-			to_chat(user, span_warning("You aren't sure how to revive that..."))
+			to_chat(user, span_warning(LANG("obj.8e935906", null)))
 		return
 	var/mob/living/carbon/H = M
 
 	if(user.zone_selected != BODY_ZONE_CHEST)
-		to_chat(user, span_warning("You need to target your patient's chest with [src]!"))
+		to_chat(user, span_warning(LANG("obj.fb8ae68d", list(src))))
 		return
 
 	if(user.combat_mode)
@@ -535,7 +536,7 @@
 				do_cancel()
 				return
 			if(H && H.stat == DEAD)
-				to_chat(user, span_warning("[H] is dead."))
+				to_chat(user, span_warning(LANG("obj.81d8d5c5", list(H))))
 				playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 				do_cancel()
 				return
@@ -560,9 +561,8 @@
 /obj/item/shockpaddles/proc/do_help(mob/living/carbon/H, mob/living/user)
 	var/target_synthetic = (H.mob_biotypes & MOB_ROBOTIC) // NOVA EDIT ADDITION BEGIN - SYNTH REVIVAL
 	if (target_synthetic)
-		to_chat(user, span_boldwarning("[H] is a synthetic lifeform! This defibrillator probably isn't calibrated to revive [H.p_them()] properly and could have some serious consequences! \
-		[span_warning("You might want to [span_blue("surgically revive [H.p_them()]")]...")]"))
-		balloon_alert(user, "target is synthetic!") // immediately grabs their attention even if they dont see chat
+		to_chat(user, span_boldwarning(LANG("obj.6659e60d", list(H, H.p_them(), span_warning("You might want to [span_blue("surgically revive [H.p_them()]")]...")))))
+		balloon_alert(user, LANG("obj.249ee985", null)) // immediately grabs their attention even if they dont see chat
 	// NOVA EDIT ADDITION END - SYNTH REVIVAL
 	user.visible_message(span_warning("[user] begins to place [src] on [H]'s chest."), span_warning("You begin to place [src] on [H]'s chest..."))
 	busy = TRUE
@@ -655,7 +655,7 @@
 					// NOVA EDIT ADDITION BEGIN - SYNTH REVIVAL
 					if (target_synthetic)
 						user.visible_message(span_boldwarning("[src] fire a powerful jolt of electricity into [H]'s vulnerable circuitry!"))
-						to_chat(H, span_userdanger("[user]'s defibrillator fires a powerful jolt of electricity into your vulnerable circuitry, overloading it!"))
+						to_chat(H, span_userdanger(LANG("obj.bedf9c10", list(user))))
 						// You may ask, why not just call H.emp_act()?
 						// well my dear reader, that EMPs contents. I only want to EMP bodyparts and organs specifically
 						for (var/obj/item/bodypart/iterated_part as anything in H.bodyparts)

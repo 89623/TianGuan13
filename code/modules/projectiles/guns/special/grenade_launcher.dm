@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun/grenadelauncher
 	name = "pneumatic grenade launcher"
 	desc = "A terrible, terrible thing. It's really awful!"
@@ -34,9 +35,9 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			grenades += I
-			balloon_alert(user, "[grenades.len] / [max_grenades] grenades loaded")
+			balloon_alert(user, LANG("obj.b47984d1", list(grenades.len, max_grenades)))
 		else
-			balloon_alert(user, "it's already full!")
+			balloon_alert(user, LANG("obj.53488f9b", null))
 
 /obj/item/gun/grenadelauncher/can_shoot()
 	return grenades.len

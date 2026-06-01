@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SHUTTLE_CONSOLE_ACCESSDENIED "accessdenied"
 #define SHUTTLE_CONSOLE_ENDGAME "endgame"
 #define SHUTTLE_CONSOLE_RECHARGING "recharging"
@@ -43,25 +44,25 @@
 /obj/machinery/computer/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	if(is_station_level(user.z) && user.mind && IS_HEAD_REVOLUTIONARY(user) && !(user.mind in dumb_rev_heads)) //Rev heads will get a one-time warning that they shouldn't leave
-		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
+		to_chat(user, span_warning(LANG("obj.64b04683", null)))
 		dumb_rev_heads += user.mind
 		return
 	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z)) //Free golems and other mobs with this trait will not be able to use the shuttle from outside the station Z
-		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
+		to_chat(user, span_warning(LANG("obj.5064b82b", null)))
 		return
 	if(!user.can_read(src, reading_check_flags = READING_CHECK_LITERACY)) //Illiterate mobs which aren't otherwise blocked from using computers will send the shuttle to a random valid destination
-		to_chat(user, span_warning("You start mashing buttons at random!"))
+		to_chat(user, span_warning(LANG("obj.24ce6747", null)))
 		if(do_after(user, 10 SECONDS, target = src))
 			var/list/dest_list = get_valid_destinations()
 			if(!dest_list.len) //No valid destinations
-				to_chat(user, span_warning("The console shows a flashing error message, but you can't comprehend it."))
+				to_chat(user, span_warning(LANG("obj.9b2794fb", null)))
 				return
 			var/list/destination = pick(dest_list)
 			switch (send_shuttle(destination["id"], user))
 				if (SHUTTLE_CONSOLE_SUCCESS)
 					return
 				else
-					to_chat(user, span_warning("The console shows a flashing error message, but you can't comprehend it."))
+					to_chat(user, span_warning(LANG("obj.9b2794fb", null)))
 					return
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -187,7 +188,7 @@
 	if(.)
 		return
 	if(!allowed(usr))
-		to_chat(usr, span_danger("Access denied."))
+		to_chat(usr, span_danger(LANG("obj.077f9b52", null)))
 		return
 
 	switch(action)
@@ -232,7 +233,7 @@
 		return FALSE
 	req_access = list()
 	obj_flags |= EMAGGED
-	balloon_alert(user, "id checking system fried")
+	balloon_alert(user, LANG("obj.30b6ac44", null))
 	return TRUE
 
 /obj/machinery/computer/shuttle/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)

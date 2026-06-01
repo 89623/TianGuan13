@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/camera/welder_act(mob/living/user, obj/item/tool)
 	switch(camera_construction_state)
 		if(CAMERA_STATE_WRENCHED, CAMERA_STATE_WELDED)
@@ -73,7 +74,7 @@
 /obj/machinery/camera/wrench_act(mob/user, obj/item/tool)
 	if(camera_construction_state == CAMERA_STATE_WRENCHED)
 		tool.play_tool_sound(src)
-		to_chat(user, span_notice("You detach [src] from its place."))
+		to_chat(user, span_notice(LANG("obj.9f8f2e9c", list(src))))
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
 	return ..()
@@ -96,7 +97,7 @@
 			return ITEM_INTERACT_BLOCKING
 		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You remove [choice] from [src]."))
+		to_chat(user, span_notice(LANG("obj.cbed3266", list(choice, src))))
 		if(choice == xray_module)
 			drop_upgrade(xray_module)
 			removeXRay()
@@ -115,7 +116,7 @@
 		if(!panel_open)
 			return ITEM_INTERACT_BLOCKING
 		setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
-		to_chat(user, span_notice("You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus."))
+		to_chat(user, span_notice(LANG("obj.21009c2a", list((view_range == initial(view_range)) ? "restore" : "mess up"))))
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
@@ -126,28 +127,28 @@
 				if(!user.temporarilyRemoveItemFromInventory(attacking_item, newloc = src))
 					return
 				upgradeXRay(FALSE, TRUE)
-				to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
+				to_chat(user, span_notice(LANG("obj.8801045d", list(attacking_item, name))))
 				qdel(attacking_item)
 			else
-				to_chat(user, span_warning("[src] already has that upgrade!"))
+				to_chat(user, span_warning(LANG("obj.f118c802", list(src))))
 			return
 		else if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma))
 			if(!isEmpProof(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
 				if(attacking_item.use_tool(src, user, 0, amount=1))
 					upgradeEmpProof(FALSE, TRUE)
-					to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
+					to_chat(user, span_notice(LANG("obj.8801045d", list(attacking_item, name))))
 			else
-				to_chat(user, span_warning("[src] already has that upgrade!"))
+				to_chat(user, span_warning(LANG("obj.f118c802", list(src))))
 			return
 		else if(isprox(attacking_item))
 			if(!isMotion())
 				if(!user.temporarilyRemoveItemFromInventory(attacking_item, newloc = src))
 					return
 				upgradeMotion()
-				to_chat(user, span_notice("You attach [attacking_item] into [name]'s inner circuits."))
+				to_chat(user, span_notice(LANG("obj.8801045d", list(attacking_item, name))))
 				qdel(attacking_item)
 			else
-				to_chat(user, span_warning("[src] already has that upgrade!"))
+				to_chat(user, span_warning(LANG("obj.f118c802", list(src))))
 			return
 	switch(camera_construction_state)
 		if(CAMERA_STATE_WELDED)

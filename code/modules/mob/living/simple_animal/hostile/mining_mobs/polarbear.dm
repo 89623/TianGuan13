@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/simple_animal/hostile/asteroid/polarbear
 	name = "polar bear"
 	desc = "An aggressive animal that defends its territory with incredible power. These beasts don't run from their enemies."
@@ -51,7 +52,7 @@
 		rapid_melee = initial(rapid_melee)
 		return
 	if(!aggressive_message_said && target)
-		visible_message(span_danger("\The [src] gets an enraged look at [target]!"))
+		visible_message(span_danger(LANG("mob.d0016a6e", list(src, target))))
 		aggressive_message_said = TRUE
 	rapid_melee = 2
 

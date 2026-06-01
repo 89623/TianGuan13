@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun/energy
 	icon_state = "energy"
 	name = "energy gun"
@@ -88,7 +89,7 @@
 
 /obj/item/gun/energy/get_cell(atom/movable/interface, mob/user)
 	if(istype(interface, /obj/item/inducer))
-		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		to_chat(user, span_alert(LANG("obj.9034fa56", list(interface))))
 		return null
 	return cell
 
@@ -245,7 +246,7 @@
 	if (shot.muzzle_flash_color)
 		set_light_color(shot.muzzle_flash_color)
 	if (shot.select_name && user)
-		balloon_alert(user, "set to [shot.select_name]")
+		balloon_alert(user, LANG("obj.28f94138", list(shot.select_name)))
 	chambered = null
 	recharge_newshot(TRUE)
 	update_appearance()

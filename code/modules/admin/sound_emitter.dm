@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SOUND_EMITTER_LOCAL "local" //Plays the sound like a normal heard sound
 #define SOUND_EMITTER_DIRECT "direct" //Plays the sound directly to hearers regardless of pressure/proximity/et cetera
 
@@ -56,7 +57,7 @@
 		return CLICK_ACTION_BLOCKING
 
 	activate(user)
-	to_chat(user, span_notice("Sound emitter activated."), confidential = TRUE)
+	to_chat(user, span_notice(LANG("obj.f4bf6761", null)), confidential = TRUE)
 	return CLICK_ACTION_SUCCESS
 
 /obj/effect/sound_emitter/proc/edit_emitter(mob/user)
@@ -85,19 +86,19 @@
 		if(!new_label)
 			return
 		maptext = MAPTEXT(new_label)
-		to_chat(user, span_notice("Label set to [maptext]."), confidential = TRUE)
+		to_chat(user, span_notice(LANG("obj.e122e42b", list(maptext))), confidential = TRUE)
 	if(href_list["edit_sound_file"])
 		var/new_file = input(user, "Choose a sound file.", "Sound Emitter") as null|sound
 		if(!new_file)
 			return
 		sound_file = new_file
-		to_chat(user, span_notice("New sound file set to [sound_file]."), confidential = TRUE)
+		to_chat(user, span_notice(LANG("obj.43093ae4", list(sound_file))), confidential = TRUE)
 	if(href_list["edit_volume"])
 		var/new_volume = tgui_input_number(user, "Choose a volume", "Sound Emitter", sound_volume, 100)
 		if(!new_volume)
 			return
 		sound_volume = new_volume
-		to_chat(user, span_notice("Volume set to [sound_volume]%."), confidential = TRUE)
+		to_chat(user, span_notice(LANG("obj.1d343061", list(sound_volume))), confidential = TRUE)
 	if(href_list["edit_mode"])
 		var/new_mode
 		var/mode_list = list("Local (normal sound)" = SOUND_EMITTER_LOCAL, "Direct (not affected by environment/location)" = SOUND_EMITTER_DIRECT)
@@ -105,7 +106,7 @@
 		if(!new_mode)
 			return
 		motus_operandi = mode_list[new_mode]
-		to_chat(user, span_notice("Mode set to [motus_operandi]."), confidential = TRUE)
+		to_chat(user, span_notice(LANG("obj.49ac5e07", list(motus_operandi))), confidential = TRUE)
 	if(href_list["edit_range"])
 		var/new_range
 		var/range_list = list("Radius (all mobs within a radius)" = SOUND_EMITTER_RADIUS, "Z-Level (all mobs on the same z)" = SOUND_EMITTER_ZLEVEL, "Global (all players)" = SOUND_EMITTER_GLOBAL)
@@ -113,13 +114,13 @@
 		if(!new_range)
 			return
 		emitter_range = range_list[new_range]
-		to_chat(user, span_notice("Range set to [emitter_range]."), confidential = TRUE)
+		to_chat(user, span_notice(LANG("obj.9bff0436", list(emitter_range))), confidential = TRUE)
 	if(href_list["edit_radius"])
 		var/new_radius = tgui_input_number(user, "Choose a radius", "Sound Emitter", sound_volume, 127)
 		if(!new_radius)
 			return
 		play_radius = new_radius
-		to_chat(user, span_notice("Audible radius set to [play_radius]."), confidential = TRUE)
+		to_chat(user, span_notice(LANG("obj.47b715bc", list(play_radius))), confidential = TRUE)
 	if(href_list["play"])
 		activate(user)
 	edit_emitter(user) //Refresh the UI to see our changes

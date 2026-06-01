@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
@@ -139,7 +140,7 @@
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
 		return ITEM_INTERACT_BLOCKING
 	if(contents.len >= 1)
-		balloon_alert(user, "not empty!")
+		balloon_alert(user, LANG("obj.27d657cd", null))
 		return ITEM_INTERACT_BLOCKING
 	var/static/list/toolbox_colors = list(
 		/obj/item/storage/toolbox = "#445eb3",

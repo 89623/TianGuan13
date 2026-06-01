@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// How quicker is it for someone else to rip out an item?
 #define RIPPING_OUT_HELP_TIME_MULTIPLIER 0.75
 /// How much safer is it for someone else to rip out an item?
@@ -326,7 +327,7 @@
 		damage_mult *= RIPPING_OUT_HELP_DAMAGE_MULTIPLIER
 		owner.visible_message(span_warning("[jack_the_ripper] attempts to remove [parent] from [owner]'s [owner_limb.plaintext_zone]!"),
 			span_userdanger("[jack_the_ripper] attempt to remove [parent] from your [owner_limb.plaintext_zone]!"), ignored_mobs = jack_the_ripper)
-		to_chat(jack_the_ripper, span_notice("You attempt to remove [parent] from [owner]'s [owner_limb.plaintext_zone]..."))
+		to_chat(jack_the_ripper, span_notice(LANG("datum.081bfb01", list(parent, owner, owner_limb.plaintext_zone))))
 	else
 		owner.visible_message(span_warning("[owner] attempts to remove [parent] from [owner.p_their()] [owner_limb.plaintext_zone]."),
 			span_notice("You attempt to remove [parent] from your [owner_limb.plaintext_zone]..."))
@@ -343,7 +344,7 @@
 	else
 		owner.visible_message(span_notice("[jack_the_ripper] successfully rips [parent] [is_harmless() ? "off" : "out"] of [owner]'s [owner_limb.plaintext_zone]!"),
 			span_userdanger("[jack_the_ripper] removes [parent] from your [owner_limb.plaintext_zone]!"), ignored_mobs = jack_the_ripper)
-		to_chat(jack_the_ripper, span_notice("You successfully remove [parent] from [owner]'s [owner_limb.plaintext_zone]."))
+		to_chat(jack_the_ripper, span_notice(LANG("datum.c63a49bc", list(parent, owner, owner_limb.plaintext_zone))))
 
 	if (!is_harmless())
 		damaging_removal_effect(damage_mult)
@@ -404,9 +405,9 @@
 	)
 
 	if(stealthy_embed)
-		to_chat(owner, span_danger("Something in your [owner_limb.plaintext_zone] jostles and stings!"))
+		to_chat(owner, span_danger(LANG("datum.db736d5d", list(owner_limb.plaintext_zone))))
 	else
-		to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] jostles and stings!"))
+		to_chat(owner, span_userdanger(LANG("datum.57c54a6a", list(parent, owner_limb.plaintext_zone))))
 	jostle_effects()
 
 /// Effects which should occur when the owner moves, sometimes
@@ -475,9 +476,9 @@
 		damagetype = STAMINA,
 	)
 	if(stealthy_embed)
-		to_chat(owner, span_danger("Something in your [owner_limb.plaintext_zone] [pain_stam_pct < 1 ? "hurts!" : "weighs you down."]"))
+		to_chat(owner, span_danger(LANG("datum.b7eff8bb", list(owner_limb.plaintext_zone, pain_stam_pct < 1 ? "hurts!" : "weighs you down."))))
 	else
-		to_chat(owner, span_userdanger("[parent] embedded in your [owner_limb.plaintext_zone] [pain_stam_pct < 1 ? "hurts!" : "weighs you down."]"))
+		to_chat(owner, span_userdanger(LANG("datum.07b6bce8", list(parent, owner_limb.plaintext_zone, pain_stam_pct < 1 ? "hurts!" : "weighs you down."))))
 
 /// Called every process, return TRUE in order to abort further processing - if it falls out, etc
 /datum/embedding/proc/process_effect(seconds_per_tick)
@@ -503,14 +504,14 @@
 	else
 		user.visible_message(span_danger("[user] begins plucking [parent] from [owner]'s [owner_limb.plaintext_zone] with [tool]..."),
 			span_notice("You start plucking [parent] from [owner]'s [owner_limb.plaintext_zone] with [tool]..."), ignored_mobs = owner)
-		to_chat(owner, span_userdanger("[user] begins plucking [parent] from your [owner_limb.plaintext_zone] with [tool]... "))
+		to_chat(owner, span_userdanger(LANG("datum.8bf6dee7", list(user, parent, owner_limb.plaintext_zone, tool))))
 
 	if (!do_after(user, pluck_time, owner, extra_checks = CALLBACK(src, PROC_REF(still_in))))
 		if (self_pluck)
-			to_chat(user, span_danger("You fail to pluck [parent] from your [owner_limb.plaintext_zone]."))
+			to_chat(user, span_danger(LANG("datum.879d4044", list(parent, owner_limb.plaintext_zone))))
 		else
-			to_chat(user, span_danger("You fail to pluck [parent] from [owner]'s [owner_limb.plaintext_zone]."))
-			to_chat(owner, span_danger("[user] fails to pluck [parent] from your [owner_limb.plaintext_zone]."))
+			to_chat(user, span_danger(LANG("datum.70dff646", list(parent, owner, owner_limb.plaintext_zone))))
+			to_chat(owner, span_danger(LANG("datum.6b45314b", list(user, parent, owner_limb.plaintext_zone))))
 		return
 
 	if (self_pluck)
@@ -553,7 +554,7 @@
 	SIGNAL_HANDLER
 	// If something moved it to their limb, its not really *disappearing*, is it?
 	if (owner && parent.loc != owner_limb)
-		to_chat(owner, span_userdanger("[parent] that was embedded in your [owner_limb.plaintext_zone] disappears!"))
+		to_chat(owner, span_userdanger(LANG("datum.f8aee623", list(parent, owner_limb.plaintext_zone))))
 	stop_embedding()
 
 /// So the sticky grenades chain-detonate, because mobs are very careful with which of their contents they blow up

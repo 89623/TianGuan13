@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 #define BREAK_CHAMELEON_ACTION(item) \
 do { \
@@ -199,7 +200,7 @@ do { \
 	else
 		attach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
 	on = !on
-	to_chat(user, span_notice("The voice changer is now [on ? "on" : "off"]!"))
+	to_chat(user, span_notice(LANG("obj.4efe20d1", list(on ? "on" : "off"))))
 
 /obj/item/clothing/mask/chameleon/broken
 
@@ -221,7 +222,7 @@ do { \
 	mask?.random_look()
 
 /obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
-	to_chat(user, span_notice("[src] does not have a voice changer."))
+	to_chat(user, span_notice(LANG("obj.fa63bf71", list(src))))
 
 // Cham shoes, including chameleon noslips
 /datum/armor/shoes_chameleon

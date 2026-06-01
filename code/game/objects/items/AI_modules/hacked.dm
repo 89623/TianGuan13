@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/ai_module/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
 	name = "Hacked AI Module"
 	desc = "An AI Module for hacking additional laws to an AI."
@@ -8,7 +9,7 @@
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName)) // not even the syndicate can uwu
-		to_chat(user, span_warning("Error: Law contains invalid text."))
+		to_chat(user, span_warning(LANG("obj.b74e9614", null)))
 		return
 	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
 	if(soft_filter_result)
@@ -22,7 +23,7 @@
 /obj/item/ai_module/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	// ..()    //We don't want this module reporting to the AI who dun it. --NEO
 	if(law_datum.owner)
-		to_chat(law_datum.owner, span_warning("BZZZZT"))
+		to_chat(law_datum.owner, span_warning(LANG("obj.ffcb1e8f", null)))
 		if(!overflow)
 			law_datum.owner.add_hacked_law(laws[1])
 		else
@@ -45,17 +46,17 @@
 
 /obj/item/ai_module/malf/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	if(!IS_TRAITOR(sender))
-		to_chat(sender, span_warning("You have no clue how to use this thing."))
+		to_chat(sender, span_warning(LANG("obj.0606e04b", null)))
 		return
 	if(!functional)
-		to_chat(sender, span_warning("It is broken and non-functional, what do you want from it?"))
+		to_chat(sender, span_warning(LANG("obj.881d8385", null)))
 		return
 	var/mob/living/silicon/ai/malf_candidate = law_datum.owner
 	if(!istype(malf_candidate)) //If you are using it on cyborg upload console or a cyborg
-		to_chat(sender, span_warning("You should use [src] on an AI upload console or the AI core itself."))
+		to_chat(sender, span_warning(LANG("obj.49027b23", list(src))))
 		return
 	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
-		to_chat(sender, span_warning("Unknown error occurred. Upload process aborted."))
+		to_chat(sender, span_warning(LANG("obj.20670a6e", null)))
 		return
 
 	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = sender.mind)
@@ -69,7 +70,7 @@
 		CHECK_TICK
 
 	malf_candidate.malf_picker.processing_time += 50
-	to_chat(malf_candidate, span_notice("The virus enhanced your system, overclocking your CPU 50-fold."))
+	to_chat(malf_candidate, span_notice(LANG("obj.80775649", null)))
 
 	functional = FALSE
 	name = "Broken AI Module"

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/claymore
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
@@ -141,7 +142,7 @@
 
 /obj/item/claymore/highlander/pickup(mob/living/user)
 	. = ..()
-	to_chat(user, span_notice("The power of Scotland protects you! You are shielded from all stuns and knockdowns."))
+	to_chat(user, span_notice(LANG("obj.706eae0b", null)))
 	user.ignore_slowdown(HIGHLANDER_TRAIT)
 	user.add_stun_absorption(
 		source = HIGHLANDER_TRAIT,
@@ -181,9 +182,9 @@
 			closest_victim = siliscot
 
 	if(!closest_victim)
-		to_chat(user, span_warning("[src] thrums for a moment and falls dark. Perhaps there's nobody nearby."))
+		to_chat(user, span_warning(LANG("obj.56c464cd", list(src))))
 		return
-	to_chat(user, span_danger("[src] thrums and points to the [dir2text(get_dir(user, closest_victim))]."))
+	to_chat(user, span_danger(LANG("obj.fd65079b", list(src, dir2text(get_dir(user, closest_victim))))))
 
 /obj/item/claymore/highlander/IsReflect()
 	return 1 //YOU THINK YOUR PUNY LASERS CAN STOP ME?

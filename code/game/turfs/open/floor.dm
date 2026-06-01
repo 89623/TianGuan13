@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Anything above a lattice should go here.
 /turf/open/floor
 	name = "floor"
@@ -163,10 +164,10 @@
 		broken = FALSE
 		burnt = FALSE
 		if(user && !silent)
-			to_chat(user, span_notice("You remove the broken plating."))
+			to_chat(user, span_notice(LANG("turf.658fcf6d", null)))
 	else
 		if(user && !silent)
-			to_chat(user, span_notice("You remove the floor tile."))
+			to_chat(user, span_notice(LANG("turf.c580fa1f", null)))
 		if(make_tile)
 			spawn_tile()
 	return make_plating(force_plating)

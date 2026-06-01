@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/item/camera/siliconcam
 	name = "silicon photo camera"
@@ -31,13 +32,13 @@
 	else
 		// Trying to turn on camera mode while you have another click intercept active, such as malf abilities
 		if(sound)
-			balloon_alert(user, "can't enable camera mode!")
+			balloon_alert(user, LANG("obj.82771ce2", null))
 			playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 		return
 
 	if(sound)
 		playsound(user, 'sound/items/tools/wirecutter.ogg', 50, TRUE)
-		balloon_alert(user, "camera mode [user.click_intercept == src ? "activated" : "deactivated"]")
+		balloon_alert(user, LANG("obj.1696633a", list(user.click_intercept == src ? "activated" : "deactivated")))
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
 	RETURN_TYPE(/datum/picture)
@@ -83,7 +84,7 @@
 	var/number = length(stored)
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
-	balloon_alert(user, "image recorded")
+	balloon_alert(user, LANG("obj.3fb11283", null))
 	user.playsound_local(get_turf(user), SFX_POLAROID, 50, TRUE, -3)
 
 /obj/item/camera/siliconcam/robot_camera
@@ -100,12 +101,12 @@
 		var/number = user.connected_ai.aicamera.stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		user.connected_ai.aicamera.stored[picture] = TRUE
-		balloon_alert(user, "image recorded and uploaded")
+		balloon_alert(user, LANG("obj.2aff1fef", null))
 	else
 		var/number = stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
-		balloon_alert(user, "image recorded and saved locally")
+		balloon_alert(user, LANG("obj.b86d818d", null))
 	playsound(src, SFX_POLAROID, 75, TRUE, -3)
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/living/silicon/robot/user)
@@ -116,16 +117,16 @@
 
 /obj/item/camera/siliconcam/robot_camera/proc/borgprint(mob/living/silicon/robot/user)
 	if(!istype(user) || user.toner < printcost)
-		balloon_alert(user, "not enough toner!")
+		balloon_alert(user, LANG("obj.f0060825", null))
 		return
 	var/datum/picture/selection = selectpicture(user)
 	if(!istype(selection))
-		balloon_alert(user, "invalid image!")
+		balloon_alert(user, LANG("obj.3d217d8a", null))
 		return
 	var/obj/item/photo/printed = new(user.drop_location(), selection)
 	printed.pixel_x = printed.base_pixel_x + rand(-10, 10)
 	printed.pixel_y = printed.base_pixel_y + rand(-10, 10)
 	user.toner -= printcost  //All fun allowed.
 	user.visible_message(span_notice("[user.name] spits out a photograph from a narrow slot on its chassis."), span_notice("You print a photograph."))
-	balloon_alert(user, "photograph printed")
+	balloon_alert(user, LANG("obj.11d97790", null))
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, TRUE, -3)

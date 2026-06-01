@@ -61,7 +61,7 @@
 /obj/item/synth_powercord/proc/try_power_draw(obj/target, mob/living/carbon/human/user)
 	// Only robotic species can use this
 	if(!(user.mob_biotypes & MOB_ROBOTIC))
-		to_chat(user, span_warning("You plug into [target], but nothing happens! It seems you don't have an internal cell to charge."))
+		to_chat(user, span_warning(LANG("obj.41a05d3e", list(target))))
 		return
 
 	/// The current user's nutrition level in joules.
@@ -70,7 +70,7 @@
 
 	var/obj/item/organ/stomach/synth/synth_cell = user.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(QDELETED(synth_cell) || !istype(synth_cell))
-		to_chat(user, span_warning("You plug into [target], but nothing happens! It seems you don't have an internal cell to charge."))
+		to_chat(user, span_warning(LANG("obj.41a05d3e", list(target))))
 		return
 
 	if(nutrition_level_joules > SYNTH_CHARGE_ALMOST_FULL)

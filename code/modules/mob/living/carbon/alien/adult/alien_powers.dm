@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*NOTES:
 These are general powers. Specific powers are stored under the appropriate alien creature type.
 */
@@ -84,7 +85,7 @@ Doesn't work on other aliens/AI.*/
 /datum/action/cooldown/alien/make_structure/proc/check_for_duplicate()
 	var/obj/structure/existing_thing = locate(made_structure_type) in owner.loc
 	if(existing_thing)
-		to_chat(owner, span_warning("There is already \a [existing_thing] here!"))
+		to_chat(owner, span_warning(LANG("datum.c8c1006f", list(existing_thing))))
 		return FALSE
 
 	return TRUE
@@ -124,7 +125,7 @@ Doesn't work on other aliens/AI.*/
 		possible_recipients += recipient
 
 	if(!length(possible_recipients))
-		to_chat(owner, span_noticealien("There's no one around to whisper to."))
+		to_chat(owner, span_noticealien(LANG("datum.e0e0d3c8", null)))
 		return FALSE
 
 	var/mob/living/chosen_recipient = tgui_input_list(owner, "Select whisper recipient", "Whisper", sort_names(possible_recipients))
@@ -135,12 +136,12 @@ Doesn't work on other aliens/AI.*/
 	if(QDELETED(chosen_recipient) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE) || !to_whisper)
 		return FALSE
 	if(chosen_recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-		to_chat(owner, span_warning("As you reach into [chosen_recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
+		to_chat(owner, span_warning(LANG("datum.c9f0817e", list(chosen_recipient))))
 		return FALSE
 
 	log_directed_talk(owner, chosen_recipient, to_whisper, LOG_SAY, tag = "alien whisper")
 	to_chat(chosen_recipient, "[span_noticealien("You hear a strange, alien voice in your head...")][to_whisper]")
-	to_chat(owner, span_noticealien("You said: \"[to_whisper]\" to [chosen_recipient]"))
+	to_chat(owner, span_noticealien(LANG("datum.099caf2f", list(to_whisper, chosen_recipient))))
 	for(var/mob/dead_mob as anything in GLOB.dead_mob_list)
 		if(!isobserver(dead_mob))
 			continue
@@ -165,7 +166,7 @@ Doesn't work on other aliens/AI.*/
 		aliens_around += alien
 
 	if(!length(aliens_around))
-		to_chat(owner, span_noticealien("There are no other aliens around."))
+		to_chat(owner, span_noticealien(LANG("datum.1eeb6ed1", null)))
 		return FALSE
 
 	var/mob/living/carbon/donation_target = tgui_input_list(owner, "Target to transfer to", "Plasma Donation", sort_names(aliens_around))
@@ -177,14 +178,14 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	if(get_dist(owner, donation_target) > 1)
-		to_chat(owner, span_noticealien("You need to be closer!"))
+		to_chat(owner, span_noticealien(LANG("datum.0c0f2d84", null)))
 		return FALSE
 
 	donation_target.adjustPlasma(amount)
 	carbon_owner.adjustPlasma(-amount)
 
-	to_chat(donation_target, span_noticealien("[owner] has transferred [amount] plasma to you."))
-	to_chat(owner, span_noticealien("You transfer [amount] plasma to [donation_target]."))
+	to_chat(donation_target, span_noticealien(LANG("datum.5afb09dd", list(owner, amount))))
+	to_chat(owner, span_noticealien(LANG("datum.32398bc2", list(amount, donation_target))))
 	return TRUE
 
 /datum/action/cooldown/alien/acid
@@ -206,7 +207,7 @@ Doesn't work on other aliens/AI.*/
 	if(!.)
 		return
 
-	to_chat(on_who, span_noticealien("You prepare to vomit acid. <b>Click a target to acid it!</b>"))
+	to_chat(on_who, span_noticealien(LANG("datum.5ad3b9e7", null)))
 	on_who.update_icons()
 
 /datum/action/cooldown/alien/acid/corrosion/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
@@ -215,7 +216,7 @@ Doesn't work on other aliens/AI.*/
 		return
 
 	if(refund_cooldown)
-		to_chat(on_who, span_noticealien("You empty your corrosive acid glands."))
+		to_chat(on_who, span_noticealien(LANG("datum.5d8e296e", null)))
 	on_who.update_icons()
 
 /datum/action/cooldown/alien/acid/corrosion/PreActivate(atom/target)
@@ -231,7 +232,7 @@ Doesn't work on other aliens/AI.*/
 	if(isturf(target))
 		target.AddComponent(/datum/component/acid, corrosion_acid_power, corrosion_acid_volume, GLOB.acid_overlay, /particles/acid, turf_acid_ignores_mobs = TRUE)
 	else if(!target.acid_act(corrosion_acid_power, corrosion_acid_volume))
-		to_chat(owner, span_noticealien("You cannot dissolve this object."))
+		to_chat(owner, span_noticealien(LANG("datum.d8131a63", null)))
 		return FALSE
 
 	owner.visible_message(
@@ -259,7 +260,7 @@ Doesn't work on other aliens/AI.*/
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B>"))
+	to_chat(on_who, span_notice(LANG("datum.ba1eb657", null)))
 
 	button_icon_state = "alien_neurotoxin_1"
 	build_all_button_icons()
@@ -271,7 +272,7 @@ Doesn't work on other aliens/AI.*/
 		return
 
 	if(refund_cooldown)
-		to_chat(on_who, span_notice("You empty your neurotoxin gland."))
+		to_chat(on_who, span_notice(LANG("datum.fc8e4d92", null)))
 
 	button_icon_state = "alien_neurotoxin_0"
 	build_all_button_icons()
@@ -373,7 +374,7 @@ Doesn't work on other aliens/AI.*/
 		return
 
 	if(!length(melting_pot.stomach_contents))
-		to_chat(owner, span_alien("There's nothing in your stomach, what exactly do you plan on spitting up?"))
+		to_chat(owner, span_alien(LANG("datum.8e96e2aa", null)))
 		return
 	owner.visible_message(span_danger("[owner] hurls out the contents of their stomach!"))
 	var/dir_angle = dir2angle(owner.dir)

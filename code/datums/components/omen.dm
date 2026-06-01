@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * omen.dm: For when you want someone to have a really bad day
  *
@@ -53,7 +54,7 @@
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
 	REMOVE_TRAIT(person, TRAIT_CURSED, SMITE_TRAIT)
-	to_chat(person, span_nicegreen("You feel a horrible omen lifted off your shoulders!"))
+	to_chat(person, span_nicegreen(LANG("datum.43738be8", null)))
 
 	if(vessel)
 		vessel.visible_message(span_warning("[vessel] burns up in a sinister flash, taking an evil energy with it..."))
@@ -207,7 +208,7 @@
 
 	if(prob(30)) // AAAA
 		INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
-		to_chat(our_guy, span_warning("What a horrible night... To have a curse!"))
+		to_chat(our_guy, span_warning(LANG("datum.89afa55a", null)))
 
 	if(prob(30 * luck_mod) && our_guy.get_bodypart(BODY_ZONE_HEAD)) /// Bonk!
 		playsound(our_guy, 'sound/effects/tableheadsmash.ogg', 90, TRUE)
@@ -226,7 +227,7 @@
 		return
 
 	playsound(our_guy, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
-	to_chat(our_guy, span_green("You feel fantastic!"))
+	to_chat(our_guy, span_green(LANG("datum.2338ad4e", null)))
 	qdel(src)
 
 /// Severe deaths. Normally lifts the curse.

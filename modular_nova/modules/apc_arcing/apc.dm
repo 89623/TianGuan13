@@ -70,10 +70,10 @@
 /// Handles interaction of adding arc shielding to apc with bronze
 /obj/machinery/power/apc/proc/bronze_act(mob/living/user, obj/item/stack/sheet/bronze/bronze)
 	if(arc_shielded)
-		balloon_alert(user, "already arc shielded!")
+		balloon_alert(user, LANG("obj.cc26e78c", null))
 		return ITEM_INTERACT_BLOCKING
 	bronze.use(1)
-	balloon_alert(user, "installed arc shielding")
+	balloon_alert(user, LANG("obj.b6b95150", null))
 	arc_shielded = TRUE
 	playsound(src, 'sound/items/tools/rped.ogg', 20)
 	return ITEM_INTERACT_SUCCESS
@@ -81,7 +81,7 @@
 /obj/machinery/power/apc/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(panel_open && arc_shielded)
-		balloon_alert(user, "arc shielding removed")
+		balloon_alert(user, LANG("obj.cf2b2bcb", null))
 		arc_shielded = FALSE
 		tool.play_tool_sound(src, 50)
 

@@ -10,12 +10,12 @@
 
 /obj/item/anointing_oil/attack(mob/living/target_mob, mob/living/user, params)
 	if (!is_species(user, /datum/species/human/felinid/primitive))
-		to_chat(user, span_warning("You have no idea what this disgusting concoction is used for."))
+		to_chat(user, span_warning(LANG("obj.68687b7c", null)))
 		return
 	if(being_used || !ismob(target_mob)) //originally this was going to check if the mob was friendly, but if an icecat wants to name some terror mob while it's tearing chunks out of them, why not?
 		return
 	if(target_mob.ckey)
-		to_chat(user, span_warning("You would never shame a creature so intelligent by not allowing it to choose its own name."))
+		to_chat(user, span_warning(LANG("obj.c330f375", null)))
 		return
 
 	if(try_anoint(target_mob, user))
@@ -153,7 +153,7 @@
 
 /obj/item/frozen_breath/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!is_species(user, /datum/species/human/felinid/primitive))
-		to_chat(user, span_warning("You have no idea how to use this freezing concoction."))
+		to_chat(user, span_warning(LANG("obj.21f1cf34", null)))
 		return
 
 	if(istype(interacting_with, /obj/item/organ/lungs))

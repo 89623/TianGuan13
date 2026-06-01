@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //SDQL2 datumized, /tg/station special!
 
 /*
@@ -526,10 +527,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		var/client/C = GLOB.directory[show_next_to_key]
 		if(C)
 			var/mob/showmob = C.mob
-			to_chat(showmob, "<span class='admin'>SDQL query results: [get_query_text()]<br>\
-			SDQL query completed: [islist(obj_count_all)? length(obj_count_all) : obj_count_all] objects selected by path, and \
-			[where_switched? "[islist(obj_count_eligible)? length(obj_count_eligible) : obj_count_eligible] objects executed on after WHERE keyword selection." : ""]<br>\
-			SDQL query took [DisplayTimeText(end_time - start_time)] to complete.</span>", confidential = TRUE)
+			to_chat(showmob, LANG("datum.4797d0f3", list(get_query_text(), islist(obj_count_all)? length(obj_count_all) : obj_count_all, where_switched? "[islist(obj_count_eligible)? length(obj_count_eligible) : obj_count_eligible] objects executed on after WHERE keyword selection." : "", DisplayTimeText(end_time - start_time))), confidential = TRUE)
 			if(length(select_text))
 				var/text = islist(select_text)? select_text.Join() : select_text
 				var/static/result_offset = 0
@@ -861,7 +859,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 				if("or", "||")
 					result = (result || val)
 				else
-					to_chat(usr, span_danger("SDQL2: Unknown op [op]"), confidential = TRUE)
+					to_chat(usr, span_danger(LANG("datum.cf5746e1", list(op))), confidential = TRUE)
 					result = null
 		else
 			result = val
@@ -1018,19 +1016,19 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 		D = object
 
 	if (object == world && (!long || expression[start + 1] == ".") && !(expression[start] in exclude) && copytext(expression[start], 1, 3) != "SS") //3 == length("SS") + 1
-		to_chat(usr, span_danger("World variables are not allowed to be accessed. Use global."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("world.a9c0b1ad", null)), confidential = TRUE)
 		return null
 
 	else if(expression [start] == "{" && long)
 		if(LOWER_TEXT(copytext(expression[start + 1], 1, 3)) != "0x") //3 == length("0x") + 1
-			to_chat(usr, span_danger("Invalid pointer syntax: [expression[start + 1]]"), confidential = TRUE)
+			to_chat(usr, span_danger(LANG("world.27878744", list(expression[start + 1]))), confidential = TRUE)
 			return null
 		var/datum/located = locate("\[[expression[start + 1]]]")
 		if(!istype(located))
-			to_chat(usr, span_danger("Invalid pointer: [expression[start + 1]] - null or not datum"), confidential = TRUE)
+			to_chat(usr, span_danger(LANG("world.83c3d906", list(expression[start + 1]))), confidential = TRUE)
 			return null
 		if(!located.can_vv_mark())
-			to_chat(usr, span_danger("Pointer [expression[start+1]] cannot be marked"), confidential = TRUE)
+			to_chat(usr, span_danger(LANG("world.f9ab1113", list(expression[start+1]))), confidential = TRUE)
 			return null
 		v = located
 		start++
@@ -1094,7 +1092,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 			var/list/L = v
 			var/index = query.SDQL_expression(source, expression[start + 2])
 			if(isnum(index) && (!ISINTEGER(index) || L.len < index))
-				to_chat(usr, span_danger("Invalid list index: [index]"), confidential = TRUE)
+				to_chat(usr, span_danger(LANG("world.74b4ed87", list(index))), confidential = TRUE)
 				return null
 			return L[index]
 	return v
@@ -1146,7 +1144,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 
 		else if(char == "'")
 			if(word != "")
-				to_chat(usr, "\red SDQL2: You have an error in your SDQL syntax, unexpected ' in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again.", confidential = TRUE)
+				to_chat(usr, LANG("_root.4f6e4edd", list(query_text, word)), confidential = TRUE)
 				return null
 
 			word = "'"
@@ -1166,7 +1164,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 					word += char
 
 			if(i > len)
-				to_chat(usr, "\red SDQL2: You have an error in your SDQL syntax, unmatched ' in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again.", confidential = TRUE)
+				to_chat(usr, LANG("_root.bb6b8e05", list(query_text)), confidential = TRUE)
 				return null
 
 			query_list += "[word]'"
@@ -1174,7 +1172,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 
 		else if(char == "\"")
 			if(word != "")
-				to_chat(usr, "\red SDQL2: You have an error in your SDQL syntax, unexpected \" in query: \"<font color=gray>[query_text]</font>\" following \"<font color=gray>[word]</font>\". Please check your syntax, and try again.", confidential = TRUE)
+				to_chat(usr, LANG("_root.42a4a644", list(query_text, word)), confidential = TRUE)
 				return null
 
 			word = "\""
@@ -1194,7 +1192,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 					word += char
 
 			if(i > len)
-				to_chat(usr, "\red SDQL2: You have an error in your SDQL syntax, unmatched \" in query: \"<font color=gray>[query_text]</font>\". Please check your syntax, and try again.", confidential = TRUE)
+				to_chat(usr, LANG("_root.6bc0fb16", list(query_text)), confidential = TRUE)
 				return null
 
 			query_list += "[word]\""

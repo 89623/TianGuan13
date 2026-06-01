@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Handles all special considerations for "virtual entities" such as bitrunning ghost roles or digital anomaly antagonists.
 /datum/component/virtual_entity
 	/// The cooldown for balloon alerts, so the player isn't spammed while trying to enter a restricted area.
@@ -15,10 +16,10 @@
 
 /// Self-destructs the component, allowing free-roam by all entities with this restriction.
 /datum/component/virtual_entity/proc/jailbreak_mobs()
-	to_chat(parent, span_bolddanger("You shiver for a moment with a sense of clarity you haven't felt before."))
-	to_chat(parent, span_notice("You could go <i>anywhere</i>, do <i>anything</i>! You could leave this simulation right now if you wanted!"))
-	to_chat(parent, span_danger("But be warned, quantum entanglement will interfere with any previous lives."))
-	to_chat(parent, span_notice("You'll have just one chance to go nova, and there's no turning back."))
+	to_chat(parent, span_bolddanger(LANG("datum.8f7a5a72", null)))
+	to_chat(parent, span_notice(LANG("datum.e4456812", null)))
+	to_chat(parent, span_danger(LANG("datum.5b264c41", null)))
+	to_chat(parent, span_notice(LANG("datum.334db1fa", null)))
 
 
 /// Remove any restrictions AFTER the mob has spawned

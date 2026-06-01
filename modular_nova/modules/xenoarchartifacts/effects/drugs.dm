@@ -10,7 +10,7 @@
 	if(!.)
 		return
 	do_drugs(user, 60)
-	to_chat(user, span_hypnophrase("I feel so chill."))
+	to_chat(user, span_hypnophrase(LANG("datum.8bdb8fb2", null)))
 
 /datum/artifact_effect/drugs/do_effect_aura(seconds_per_tick)
 	. = ..()

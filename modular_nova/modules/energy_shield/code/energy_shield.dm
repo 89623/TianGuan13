@@ -134,10 +134,10 @@
 	RegisterSignal(wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_check_block))
 
 	if(!enabled)
-		to_chat(wearer, span_notice("The [src] is disabled."))
+		to_chat(wearer, span_notice(LANG("obj.96c27719", list(src))))
 	else if(wearer_has_heavy_armor())
 		turn_off(quiet = TRUE)
-		to_chat(wearer, span_warning("The [src] fails to activate — your armor is too heavy for the energy field to form."))
+		to_chat(wearer, span_warning(LANG("obj.5b8de8f1", list(src))))
 		return
 	else if(shield_health > 0)
 		shield_active = TRUE
@@ -177,15 +177,15 @@
 		enabled = TRUE
 		if(wearer_has_heavy_armor())
 			turn_off(quiet = TRUE)
-			to_chat(wearer, span_warning("The [src] fails to activate — your armor is too heavy for the energy field to form."))
+			to_chat(wearer, span_warning(LANG("obj.5b8de8f1", list(src))))
 		else if(wearer)
 			COOLDOWN_START(src, recharge_cooldown, recharge_delay)
 			recharge_visual_pending = TRUE
 			START_PROCESSING(SSobj, src)
-			to_chat(wearer, span_notice("You activate the energy shield. It will begin charging shortly."))
+			to_chat(wearer, span_notice(LANG("obj.aba43d9c", null)))
 	else
 		turn_off()
-		to_chat(wearer, span_notice("You deactivate the energy shield."))
+		to_chat(wearer, span_notice(LANG("obj.20106db5", null)))
 	action.build_all_button_icons()
 
 /// Drains shield health on EMP. Amount retained is controlled by emp_retention.
@@ -526,7 +526,7 @@
 	// Disable shield while wearing heavy armor
 	if(wearer_has_heavy_armor())
 		turn_off(force_sound = TRUE)
-		to_chat(wearer, span_warning("Your heavy armor disrupts the energy shield! Disabling.."))
+		to_chat(wearer, span_warning(LANG("obj.587b6e90", null)))
 		return
 
 	if(!persistent_visuals)

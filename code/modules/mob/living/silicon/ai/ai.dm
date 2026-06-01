@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define HOLOGRAM_CHOICE_CHARACTER "Existing Character"
 #define CHARACTER_TYPE_SELF "My Character"
 #define CHARACTER_TYPE_CREWMEMBER "Station Member"
@@ -26,23 +27,23 @@
 	if((target_ai.mind && target_ai.mind.active) || SSticker.current_state == GAME_STATE_SETTING_UP)
 		target_ai.mind.transfer_to(src)
 		if(is_antag())
-			to_chat(src, span_userdanger("You have been installed as an AI! "))
-			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
+			to_chat(src, span_userdanger(LANG("mob.5439bf58", null)))
+			to_chat(src, span_danger(LANG("mob.2da93e84", null)))
 		if(!mind.has_ever_been_ai)
 			mind.has_ever_been_ai = TRUE
 	else if(target_ai.key)
 		key = target_ai.key
 
-	to_chat(src, span_bold("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
-	to_chat(src, span_bold("To look at other parts of the station, click on yourself to get a camera menu."))
-	to_chat(src, span_bold("While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc."))
-	to_chat(src, "To use something, simply click on it.")
-	to_chat(src, "For department channels, use the following say commands:")
-	to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science, :h - Holopad.")
+	to_chat(src, span_bold(LANG("mob.e2adf21e", null)))
+	to_chat(src, span_bold(LANG("mob.c2e42f27", null)))
+	to_chat(src, span_bold(LANG("mob.86f2888b", null)))
+	to_chat(src, LANG("mob.edb1d0dc", null))
+	to_chat(src, LANG("mob.93df39e1", null))
+	to_chat(src, LANG("mob.2e67ea3d", null))
 
 	INVOKE_ASYNC(src, PROC_REF(show_laws))
 
-	to_chat(src, span_bold("These laws may be changed by other players, random events, or by you becoming malfunctioning."))
+	to_chat(src, span_bold(LANG("mob.b7bdf078", null)))
 
 	job = "AI"
 
@@ -230,7 +231,7 @@
 	set desc = "Choose what appears on your AI core display"
 
 	if(incapacitated)
-		to_chat(src, span_warning("You cannot access the core display controls in your current state."))
+		to_chat(src, span_warning(LANG("mob.3f167a46", null)))
 		return
 
 	if(!core_display_picker)
@@ -247,7 +248,7 @@
 	set desc = "Choose what appears on status displays around the station"
 
 	if(incapacitated)
-		to_chat(src, span_warning("You cannot access the status display controls in your current state."))
+		to_chat(src, span_warning(LANG("mob.04e86d03", null)))
 		return
 
 	if(!status_display_picker)
@@ -284,7 +285,7 @@
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)
-		to_chat(usr, span_warning("Wireless control is disabled!"))
+		to_chat(usr, span_warning(LANG("mob.6f84b66f", null)))
 		return
 
 	var/can_evac_or_fail_reason = SSshuttle.canEvac()
@@ -364,12 +365,12 @@
 		return
 	if(incapacitated)
 		if(battery < 50)
-			to_chat(src, span_warning("Insufficient backup power!"))
+			to_chat(src, span_warning(LANG("mob.41ed4562", null)))
 			return
 		battery = battery - 50
-		to_chat(src, span_notice("You route power from your backup battery to move the bolts."))
+		to_chat(src, span_notice(LANG("mob.565bf5a2", null)))
 	flip_anchored()
-	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
+	to_chat(src, LANG("mob.ed7c4328", list(is_anchored ? "" : "un")))
 
 /mob/living/silicon/ai/proc/flip_anchored()
 	if(is_anchored)
@@ -435,7 +436,7 @@
 
 	if(href_list["emergencyAPC"]) //This check comes before incapacitated because the only time it would be useful is when we have no power.
 		if(!apc_override)
-			to_chat(src, span_notice("APC backdoor is no longer available."))
+			to_chat(src, span_notice(LANG("mob.1f065975", null)))
 			return
 		apc_override.ui_interact(src)
 		return
@@ -463,14 +464,14 @@
 			cam_prev = get_turf(eyeobj)
 			eyeobj.setLoc(Holopad)
 		else
-			to_chat(src, span_notice("Unable to locate the holopad."))
+			to_chat(src, span_notice(LANG("mob.6cafa1c4", null)))
 	if(href_list["project_to_holopad"])
 		var/obj/machinery/holopad/Holopad = locate(href_list["project_to_holopad"]) in SSmachines.get_machines_by_type(/obj/machinery/holopad)
 		if(Holopad)
 			lastloc = get_turf(eyeobj)
 			Holopad.attack_ai_secondary(src) //may as well recycle
 		else
-			to_chat(src, span_notice("Unable to project to the holopad."))
+			to_chat(src, span_notice(LANG("mob.cd43af94", null)))
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
 		if (!M)
@@ -486,13 +487,13 @@
 			return
 
 		if(controlled_equipment)
-			to_chat(src, span_warning("You are already loaded into an onboard computer!"))
+			to_chat(src, span_warning(LANG("mob.c238d614", null)))
 			return
 		if(!SScameras.is_visible_by_cameras(M))
-			to_chat(src, span_warning("Exosuit is no longer near active cameras."))
+			to_chat(src, span_warning(LANG("mob.8a7c39b6", null)))
 			return
 		if(!isturf(loc))
-			to_chat(src, span_warning("You aren't in your core!"))
+			to_chat(src, span_warning(LANG("mob.d46a8420", null)))
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK, src, usr) //Called om the mech itself.
@@ -536,7 +537,7 @@
 	else if(SScameras.is_visible_by_cameras(turf_check))
 		call_bot(turf_check)
 	else
-		to_chat(src, span_danger("Selected location is not visible."))
+		to_chat(src, span_danger(LANG("mob.704130b5", null)))
 
 /mob/living/silicon/ai/proc/call_bot(turf/waypoint)
 	var/mob/living/bot = bot_ref?.resolve()
@@ -619,7 +620,7 @@
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
-	to_chat(src, span_notice("Switched to the \"[uppertext(network)]\" camera network."))
+	to_chat(src, span_notice(LANG("mob.96d9fe62", list(uppertext(network)))))
 //End of code by Mord_Sith
 
 //I am the icon meister. Bow fefore me. //>fefore
@@ -713,12 +714,12 @@
 /datum/action/innate/core_return/Activate()
 	var/obj/machinery/power/apc/apc = owner.loc
 	if(!istype(apc))
-		to_chat(owner, span_notice("You are already in your Main Core."))
+		to_chat(owner, span_notice(LANG("datum.106899c3", null)))
 		return
 	if(astype(owner, /mob/living/silicon/ai)?.linked_core)
 		apc.malfvacate()
 	else
-		to_chat(owner, span_danger("Linked core not detected!"))
+		to_chat(owner, span_danger(LANG("datum.12933f67", null)))
 		return
 	qdel(src)
 
@@ -726,7 +727,7 @@
 	camera_light_on = !camera_light_on
 
 	if (!camera_light_on)
-		to_chat(src, "Camera lights deactivated.")
+		to_chat(src, LANG("mob.a3effdc0", null))
 
 		for (var/obj/machinery/camera/C in lit_cameras)
 			C.set_light(0)
@@ -736,7 +737,7 @@
 
 	light_cameras()
 
-	to_chat(src, "Camera lights activated.")
+	to_chat(src, LANG("mob.33cfe15d", null))
 
 // Allows AIs to turn their hologram instead on alt-move
 /mob/living/silicon/ai/keybind_face_direction(direction)
@@ -778,7 +779,7 @@
 	if(incapacitated)
 		return
 
-	to_chat(src, "Accessing Subspace Transceiver control...")
+	to_chat(src, LANG("mob.b5885bc3", null))
 	if (radio)
 		radio.interact(src)
 
@@ -801,11 +802,11 @@
 	if(interaction != AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
 		return
 	if(!can_be_carded)
-		balloon_alert(user, "transfer failed!")
+		balloon_alert(user, LANG("mob.30e73ab8", null))
 		return
 	disconnect_shell() //If the AI is controlling a borg, force the player back to core!
 	if(!mind)
-		balloon_alert(user, "no intelligence detected!") // average tg coder am i right
+		balloon_alert(user, LANG("mob.f1391d14", null)) // average tg coder am i right
 		return
 	ShutOffDoomsdayDevice()
 	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core(loc, CORE_STATE_FINISHED, make_mmi())
@@ -815,12 +816,12 @@
 	radio_enabled = FALSE //No talking on the built-in radio for you either!
 	forceMove(card)
 	card.AI = src
-	to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
-	to_chat(user, "[span_boldnotice("Transfer successful")]: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+	to_chat(src, LANG("mob.6dfe709d", null))
+	to_chat(user, LANG("mob.473c4459", list(span_boldnotice("Transfer successful"), name, rand(1000,9999))))
 
 /mob/living/silicon/ai/can_perform_action(atom/target, action_bitflags)
 	if(control_disabled)
-		to_chat(src, span_warning("You can't do that right now!"))
+		to_chat(src, span_warning(LANG("mob.93b3c965", null)))
 		return FALSE
 	return can_see(target) && ..() //stop AIs from leaving windows open and using then after they lose vision
 
@@ -897,8 +898,8 @@
 	if (malf_picker)
 		stack_trace("Attempted to give malf AI malf picker to \[[src]\], who already has a malf picker.")
 		return
-	to_chat(src, "In the top left corner of the screen you will find the Malfunction Modules button, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
-	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
+	to_chat(src, LANG("mob.6cb57c4a", null))
+	to_chat(src, LANG("mob.8363eb19", null))
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	malf_picker = new /datum/module_picker
 	if(!IS_MALF_AI(src)) //antagonists have their modules built into their antag info panel. this is for adminbus and the combat upgrade
@@ -956,11 +957,11 @@
 	clear_alert(ALERT_HACKING_APC)
 
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
-		to_chat(src, span_danger("Hack aborted. The designated APC no longer exists on the power network."))
+		to_chat(src, span_danger(LANG("mob.c8624454", null)))
 		playsound(get_turf(src), 'sound/machines/buzz/buzz-two.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 	if(apc.aidisabled)
-		to_chat(src, span_danger("Hack aborted. [apc] is no longer responding to our systems."))
+		to_chat(src, span_danger(LANG("mob.2f037bb9", list(apc))))
 		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE, ignore_walls = FALSE)
 		return
 
@@ -976,7 +977,7 @@
 		else //combat software AIs use a different UI
 			malf_picker.update_static_data_for_all_viewers()
 	if(apc.malfai) // another malf hacked this one; counter-hack!
-		to_chat(apc.malfai, span_warning("An adversarial subroutine has counter-hacked [apc]!"))
+		to_chat(apc.malfai, span_warning(LANG("mob.71ccca39", list(apc))))
 		apc.malfai.hacked_apcs -= apc
 	apc.malfai = src
 	apc.malfhack = TRUE
@@ -986,7 +987,7 @@
 	apc.set_hacked_hud()
 	hacked_apcs += apc
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
-	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
+	to_chat(src, LANG("mob.6686866e", list(apc)))
 
 /mob/living/silicon/ai/verb/deploy_to_shell()
 	set category = "AI Commands"
@@ -999,7 +1000,7 @@
 	if(incapacitated)
 		return
 	if(control_disabled)
-		to_chat(src, span_warning("Wireless networking module is offline."))
+		to_chat(src, span_warning(LANG("mob.96aacec1", null)))
 		return
 
 	var/list/possible = list()
@@ -1010,7 +1011,7 @@
 			possible += R
 
 	if(!LAZYLEN(possible))
-		to_chat(src, "No usable AI shell beacons detected.")
+		to_chat(src, LANG("mob.53c67b46", null))
 		return
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
@@ -1064,7 +1065,7 @@
 /mob/living/silicon/ai/proc/disconnect_shell()
 	SIGNAL_HANDLER
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
-		to_chat(src, span_danger("Your remote connection has been reset!"))
+		to_chat(src, span_danger(LANG("mob.183b26b1", null)))
 		deployed_shell.undeploy()
 	diag_hud_set_deployed()
 
@@ -1086,11 +1087,11 @@
 
 /mob/living/silicon/ai/up()
 	if(eyeobj.zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
-		to_chat(src, span_notice("You move upwards."))
+		to_chat(src, span_notice(LANG("mob.42490421", null)))
 
 /mob/living/silicon/ai/down()
 	if(eyeobj.zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
-		to_chat(src, span_notice("You move down."))
+		to_chat(src, span_notice(LANG("mob.323655c6", null)))
 
 /// Proc to hook behavior to the changes of the value of [aiRestorePowerRoutine].
 /mob/living/silicon/ai/proc/setAiRestorePowerRoutine(new_value)
@@ -1198,20 +1199,20 @@
 	if(user.combat_mode)
 		return NONE
 
-	to_chat(src, span_danger("CORE TAMPERING DETECTED!"))
+	to_chat(src, span_danger(LANG("mob.1580f562", null)))
 	return NONE
 
 /mob/living/silicon/ai/proc/on_core_take_damage(datum/source, damage_taken, ...)
 	SIGNAL_HANDLER
 
 	if(damage_taken > 0)
-		to_chat(src, span_danger("CORE DAMAGE DETECTED!"))
+		to_chat(src, span_danger(LANG("mob.6ab0fcd7", null)))
 	return NONE
 
 /mob/living/silicon/ai/proc/on_core_destroyed(datum/source, damage_flag)
 	SIGNAL_HANDLER
 
-	to_chat(src, span_danger("Your core has been destroyed!"))
+	to_chat(src, span_danger(LANG("mob.13e8779f", null)))
 	ShutOffDoomsdayDevice()
 	break_core_link()
 

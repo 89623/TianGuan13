@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /proc/make_link_visual_generic(datum/mod_link/mod_link, proc_path)
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
 	var/obj/effect/overlay/link_visual = new()
@@ -82,11 +83,11 @@
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
-		balloon_alert(user, "frequency set")
+		balloon_alert(user, LANG("obj.83368858", null))
 		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
-		balloon_alert(user, "frequency copied")
+		balloon_alert(user, LANG("obj.06579ce3", null))
 		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
@@ -198,10 +199,10 @@
 	if(!user.is_holding(src))
 		return
 	if(!new_label)
-		balloon_alert(user, "invalid name!")
+		balloon_alert(user, LANG("obj.b3c641ad", null))
 		return
 	label = new_label
-	balloon_alert(user, "name set")
+	balloon_alert(user, LANG("obj.37935628", null))
 	update_name()
 
 /obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
@@ -216,7 +217,7 @@
 	if(!user.transferItemToLoc(attacked_by, src))
 		return
 	cell = attacked_by
-	balloon_alert(user, "cell installed")
+	balloon_alert(user, LANG("obj.0e9b65ee", null))
 
 /obj/item/clothing/neck/link_scryer/update_name(updates)
 	. = ..()
@@ -230,7 +231,7 @@
 /obj/item/clothing/neck/link_scryer/attack_hand_secondary(mob/user, list/modifiers)
 	if(!cell)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	balloon_alert(user, "cell removed")
+	balloon_alert(user, LANG("obj.0dfdca6e", null))
 	user.put_in_hands(cell)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -241,11 +242,11 @@
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
-		balloon_alert(user, "frequency set")
+		balloon_alert(user, LANG("obj.83368858", null))
 		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
-		balloon_alert(user, "frequency copied")
+		balloon_alert(user, LANG("obj.06579ce3", null))
 		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency

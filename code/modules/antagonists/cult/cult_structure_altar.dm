@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Some defines for items the cult altar can create.
 #define ELDRITCH_WHETSTONE "Eldritch Whetstone"
 #define CONSTRUCT_SHELL "Construct Shell"
@@ -53,7 +54,7 @@
 	)
 
 /obj/structure/destructible/cult/item_dispenser/altar/succcess_message(mob/living/user, obj/item/spawned_item)
-	to_chat(user, span_cult_italic("You kneel before [src] and your faith is rewarded with [spawned_item]!"))
+	to_chat(user, span_cult_italic(LANG("obj.19b7e6eb", list(src, spawned_item))))
 
 #undef ELDRITCH_WHETSTONE
 #undef CONSTRUCT_SHELL

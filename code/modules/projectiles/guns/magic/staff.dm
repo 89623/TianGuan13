@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun/magic/staff
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = /obj/item/ammo_casing/magic/nothing
@@ -51,8 +52,8 @@
 /obj/item/gun/magic/staff/change/pickup(mob/user)
 	. = ..()
 	if(!is_wizard_or_friend(user))
-		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>You don't feel strong enough to properly wield this staff!</span>"))
-		balloon_alert(user, "you feel weak holding this staff")
+		to_chat(user, span_hypnophrase(LANG("obj.8bec49b0", null)))
+		balloon_alert(user, LANG("obj.20e2b3fd", null))
 
 /// Transforms the user
 /obj/item/gun/magic/staff/change/proc/transform_self(mob/living/user)
@@ -61,7 +62,7 @@
 	var/mob/living/new_body = user.wabbajack(wabbajack_into, preset_wabbajack_changeflag)
 	if(!new_body)
 		return
-	balloon_alert(new_body, "wabbajack, wabbajack!")
+	balloon_alert(new_body, LANG("obj.f13b14b3", null))
 	return new_body
 
 /obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
@@ -134,7 +135,7 @@
 /obj/item/gun/magic/staff/healing/pickup(mob/user)
 	. = ..()
 	if(!is_wizard_or_friend(user))
-		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
+		to_chat(user, span_hypnophrase(LANG("obj.56d08662", null)))
 		user.balloon_alert(user, "the staff feels weaker as you touch it")
 
 /obj/item/gun/magic/staff/healing/examine(mob/user)
@@ -227,12 +228,12 @@
 
 /obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
 	if(!user.can_cast_magic()) // Don't let people with antimagic use the staff of chaos.
-		balloon_alert(user, "the staff refuses to fire!")
+		balloon_alert(user, LANG("obj.dc97ffea", null))
 		return FALSE
 
 	if(prob(95)) // You have a 5% chance of hitting yourself when using the staff of chaos.
 		return TRUE
-	balloon_alert(user, "chaos!")
+	balloon_alert(user, LANG("obj.2c896a75", null))
 	user.dropItemToGround(src, TRUE)
 	process_fire(user, user, FALSE)
 	return FALSE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/microscope
 	name = "Microscope"
 	desc = "A simple microscope, allowing you to examine micro-organisms."
@@ -98,16 +99,16 @@
 	if(current_dish)
 		old_dish = current_dish
 	if(!user.transferItemToLoc(new_dish, src))
-		balloon_alert(user, "couldn't add!")
+		balloon_alert(user, LANG("obj.08fb3b1d", null))
 		return ITEM_INTERACT_FAILURE
 	current_dish = new_dish
 	update_static_data_for_all_viewers()
 	if(old_dish)
 		if(!user.put_in_hands(old_dish))
 			old_dish.forceMove(get_turf(src))
-		balloon_alert(user, "dish swapped")
+		balloon_alert(user, LANG("obj.39c6657a", null))
 	else
-		balloon_alert(user, "dish added")
+		balloon_alert(user, LANG("obj.866b4e38", null))
 	return ITEM_INTERACT_SUCCESS
 
 ///Take the inserted dish, or drop it on the floor
@@ -118,7 +119,7 @@
 		current_dish.forceMove(get_turf(src))
 	current_dish = null
 	update_static_data_for_all_viewers()
-	balloon_alert(user, "dish removed")
+	balloon_alert(user, LANG("obj.e09114ec", null))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/microscope/unanchored

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Do something nasty to everyone nearby if they're looking at us.
  */
@@ -72,7 +73,7 @@
 	if (!viewer.flash_act(intensity = 4, affect_silicon = TRUE, visual = TRUE, length = 3 SECONDS))
 		return FALSE
 	viewer.set_confusion_if_lower(12 SECONDS)
-	to_chat(viewer, span_warning("You are blinded by [owner]'s piercing gaze!"))
+	to_chat(viewer, span_warning(LANG("datum.bfe7ee0d", list(owner))))
 	return TRUE
 
 /// Animate our effect out
@@ -102,7 +103,7 @@
 	desc = "After a delay, burn and stun everyone looking at you."
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/fire/apply_effect(mob/living/viewer)
-	to_chat(viewer, span_warning("[owner]'s searing glare forces you to the ground!"))
+	to_chat(viewer, span_warning(LANG("datum.05a1ba61", list(owner))))
 	viewer.Paralyze(3 SECONDS)
 	viewer.adjust_fire_stacks(10)
 	viewer.ignite_mob()
@@ -118,7 +119,7 @@
 /datum/action/cooldown/mob_cooldown/watcher_gaze/ice/apply_effect(mob/living/viewer)
 	if(!HAS_TRAIT(viewer, TRAIT_RESISTCOLD))
 		return
-	to_chat(viewer, span_warning("You are repulsed by the force of [owner]'s cold stare!"))
+	to_chat(viewer, span_warning(LANG("datum.5e64601b", list(owner))))
 	viewer.apply_status_effect(/datum/status_effect/freon/watcher/extended)
 	viewer.safe_throw_at(
 		target = get_edge_target_turf(owner, get_dir(owner, get_step_away(viewer, owner))),

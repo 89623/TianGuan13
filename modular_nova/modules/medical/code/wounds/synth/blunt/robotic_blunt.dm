@@ -253,7 +253,7 @@
 		attack_direction = get_dir(victim, attacking_item)
 
 	if (!isnull(attack_direction) && prob(stagger_score * stagger_movement_chance_ratio))
-		to_chat(victim, span_warning("The force of the blow sends you reeling!"))
+		to_chat(victim, span_warning(LANG("datum.62fe685c", null)))
 		var/turf/target_loc = get_step(victim, attack_direction)
 		victim.Move(target_loc)
 
@@ -332,7 +332,7 @@
 
 /// Called when percussive maintenance fails at its random roll.
 /datum/wound/blunt/robotic/proc/handle_percussive_maintenance_failure(attacking_item, mob/living/user)
-	to_chat(victim, span_warning("Your [limb.plaintext_zone] rattles around, but you don't sense any sign of improvement."))
+	to_chat(victim, span_warning(LANG("datum.08f531b3", list(limb.plaintext_zone))))
 
 /// If our victim has no gravity, the effects of movement are multiplied by this.
 #define VICTIM_MOVED_NO_GRAVITY_EFFECT_MULT 0.5

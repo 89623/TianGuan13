@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// how much health healed from casting a chuuni spell
 #define CHUUNIBYOU_HEAL_AMOUNT 3
@@ -102,7 +103,7 @@
 
 	source.heal_overall_damage(heal_amount)
 	playsound(source, 'sound/effects/magic/staff_healing.ogg', 30)
-	to_chat(source, span_danger("You feel slightly healed by your chuuni powers."))
+	to_chat(source, span_danger(LANG("datum.4039960f", null)))
 
 /datum/component/chuunibyou/no_healing
 	heal_amount = 0

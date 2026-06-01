@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*Self-Respiration
  * Slight increase to stealth
  * Greatly reduces resistance
@@ -46,7 +47,7 @@
 				infected_mob.adjust_blood_volume(1, maximum = BLOOD_VOLUME_NORMAL)
 		else
 			if(prob(base_message_chance))
-				to_chat(infected_mob, span_notice("Your lungs feel great."))
+				to_chat(infected_mob, span_notice(LANG("datum.314465a6", null)))
 	return
 
 /datum/symptom/oxygen/on_stage_change(datum/disease/advance/advanced_disease)
@@ -57,11 +58,11 @@
 	if(advanced_disease.stage >= 4)
 		ADD_TRAIT(infected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)
 		if(advanced_disease.stage == 4)
-			to_chat(infected_mob, span_notice("You don't feel the need to breathe anymore."))
+			to_chat(infected_mob, span_notice(LANG("datum.16eefac6", null)))
 	else
 		REMOVE_TRAIT(infected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)
 		if(advanced_disease.stage_peaked && advanced_disease.stage == 3)
-			to_chat(infected_mob, span_notice("You feel the need to breathe again."))
+			to_chat(infected_mob, span_notice(LANG("datum.26289339", null)))
 	return TRUE
 
 /datum/symptom/oxygen/End(datum/disease/advance/advanced_disease)

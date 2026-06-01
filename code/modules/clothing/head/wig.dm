@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
@@ -71,11 +72,11 @@
 	if(target.head)
 		var/obj/item/clothing/head = target.head
 		if((head.flags_inv & HIDEHAIR) && !istype(head, /obj/item/clothing/head/wig))
-			to_chat(user, span_warning("You can't get a good look at [target.p_their()] hair!"))
+			to_chat(user, span_warning(LANG("obj.296db55e", list(target.p_their()))))
 			return ITEM_INTERACT_BLOCKING
 	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!noggin)
-		to_chat(user, span_warning("[target.p_They()] have no head!"))
+		to_chat(user, span_warning(LANG("obj.749ab9d5", list(target.p_They()))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/selected_hairstyle = null
@@ -89,7 +90,7 @@
 		selected_hairstyle_color = "[target.hair_color]"
 
 	if(selected_hairstyle)
-		to_chat(user, span_notice("You adjust the [src] to look just like [target.name]'s [selected_hairstyle]."))
+		to_chat(user, span_notice(LANG("obj.581c05e0", list(src, target.name, selected_hairstyle))))
 		add_atom_colour(selected_hairstyle_color, FIXED_COLOUR_PRIORITY)
 		hairstyle = selected_hairstyle
 		update_appearance()

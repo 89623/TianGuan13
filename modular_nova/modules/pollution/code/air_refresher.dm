@@ -20,7 +20,7 @@
 
 /obj/item/air_refresher/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(uses_remaining <= 0)
-		to_chat(user, span_warning("\The [src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.9104a6b2", list(src))))
 		return NONE
 	uses_remaining--
 	var/turf/aimed_turf = get_turf(interacting_with)
@@ -41,7 +41,7 @@
 /obj/machinery/pollution_scrubber/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	on = !on
-	balloon_alert(user, "scrubber turned [on ? "on" : "off"]")
+	balloon_alert(user, LANG("obj.fd6a54a9", list(on ? "on" : "off")))
 
 	update_appearance()
 

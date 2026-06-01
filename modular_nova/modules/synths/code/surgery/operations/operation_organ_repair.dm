@@ -324,7 +324,7 @@
 		organ.brainmob.mind?.remove_antag_datum(/datum/antagonist/brainwashed)
 	organ.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	if(organ.damage > organ.maxHealth * 0.1)
-		to_chat(surgeon, "[FORMAT_ORGAN_OWNER(organ)]'s [brain_type] still has some lasting system damage that can be cleared.")
+		to_chat(surgeon, LANG("datum.02c1471b", list(FORMAT_ORGAN_OWNER(organ), brain_type)))
 
 // flavor text - failure
 /datum/surgery_operation/organ/repair/brain/mechanic/synth/on_failure(obj/item/organ/brain/synth/organ, mob/living/surgeon, obj/item/tool, list/operation_args)

@@ -153,7 +153,7 @@
 		blacklisted_areas = typecacheof(GLOB.ghost_cafe_areas)
 	var/area/user_area = get_area(user)
 	if(is_type_in_typecache(user_area, blacklisted_areas))
-		to_chat(user, span_warning("Your empathic transmission fizzles out..."))
+		to_chat(user, span_warning(LANG("obj.2b128bac", null)))
 		return
 	if(empathy_interrupted)
 		message = full_capitalize(rot13(message))

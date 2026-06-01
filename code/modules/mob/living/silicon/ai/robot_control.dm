@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/robot_control
 	var/mob/living/silicon/ai/owner
 
@@ -10,7 +11,7 @@
 	if(user != owner || owner.incapacitated)
 		return FALSE
 	if(owner.control_disabled)
-		to_chat(user, span_warning("Wireless control is disabled."))
+		to_chat(user, span_warning(LANG("datum.8391efa0", null)))
 		return FALSE
 	return TRUE
 

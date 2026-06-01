@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Gives the target bad luck, optionally permanently
 /datum/smite/bad_luck
 	name = "Bad Luck"
@@ -23,6 +24,6 @@
 	target.AddComponent(/datum/component/omen/smite, incidents_left = incidents)
 	if(silent)
 		return
-	to_chat(target, span_warning("You get a bad feeling..."))
+	to_chat(target, span_warning(LANG("datum.b1f835cf", null)))
 	if(incidents == INFINITY)
-		to_chat(target, span_warning("A <b>very</b> bad feeling... As if malevolent forces are watching you..."))
+		to_chat(target, span_warning(LANG("datum.d475bfb9", null)))

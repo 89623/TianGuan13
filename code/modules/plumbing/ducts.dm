@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/duct
 	name = "fluid duct"
 	icon = 'icons/obj/pipes_n_cables/hydrochem/fluid_ducts.dmi'
@@ -321,7 +322,7 @@
 	// Turn into a duct stack and then merge to the in-hand stack.
 	if(istype(interacting_with, /obj/machinery/duct))
 		if(amount == max_amount)
-			balloon_alert(user, "stack full!")
+			balloon_alert(user, LANG("obj.c9dadc90", null))
 			return ITEM_INTERACT_FAILURE
 		qdel(interacting_with)
 		add(1)

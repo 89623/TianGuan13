@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //dye registry, add dye colors and their resulting output here if you want the sprite to change instead of just the color.
 GLOBAL_LIST_INIT(dye_registry, list(
 	DYE_REGISTRY_UNDER = list(
@@ -371,16 +372,16 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(user.combat_mode)
 		return NONE
 	if (!state_open)
-		to_chat(user, span_warning("Open the door first!"))
+		to_chat(user, span_warning(LANG("obj.945f9ada", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(bloody_mess)
-		to_chat(user, span_warning("[src] must be cleaned up first!"))
+		to_chat(user, span_warning(LANG("obj.70e4926e", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(total_load >= max_wash_capacity)
-		to_chat(user, span_warning("The washing machine is full!"))
+		to_chat(user, span_warning(LANG("obj.0d9ba4ad", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, src))
-		to_chat(user, span_warning("\The [item] is stuck to your hand, you cannot put it in the washing machine!"))
+		to_chat(user, span_warning(LANG("obj.ea876d08", list(item))))
 		return ITEM_INTERACT_BLOCKING
 	if(item.dye_color)
 		color_source = item
@@ -394,7 +395,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(.)
 		return
 	if(busy)
-		to_chat(user, span_warning("[src] is busy!"))
+		to_chat(user, span_warning(LANG("obj.9e275a1c", list(src))))
 		return
 
 	if(user.pulling && isliving(user.pulling))
@@ -407,7 +408,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 				update_appearance()
 			else if(ishuman(victim))
 				if(user.grab_state < GRAB_AGGRESSIVE)
-					balloon_alert(user, "grab harder!")
+					balloon_alert(user, LANG("obj.e79ca7b4", null))
 					return
 
 				victim.visible_message(span_danger("[user] is trying to force [victim] into [src]!"))
@@ -435,13 +436,13 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(busy)
-		to_chat(user, span_warning("[src] is busy!"))
+		to_chat(user, span_warning(LANG("obj.9e275a1c", list(src))))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(state_open)
-		to_chat(user, span_warning("Close the door first!"))
+		to_chat(user, span_warning(LANG("obj.05b1cae3", null)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(bloody_mess)
-		to_chat(user, span_warning("[src] must be cleaned up first!"))
+		to_chat(user, span_warning(LANG("obj.70e4926e", list(src))))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	busy = TRUE
 	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))

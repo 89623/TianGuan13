@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/eyesnatcher
 	name = "portable eyeball extractor"
 	desc = "An overly complicated device that can pierce target's skull and extract their eyeballs if enough brute force is applied."
@@ -37,8 +38,8 @@
 	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
 		return
 
-	to_chat(target, span_userdanger("You feel something forcing its way into your skull!"))
-	balloon_alert(user, "applying pressure...")
+	to_chat(target, span_userdanger(LANG("obj.81379bf5", null)))
+	balloon_alert(user, LANG("obj.b06612da", null))
 	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
 		return
 
@@ -60,13 +61,13 @@
 		return
 
 	if(!target.is_blind())
-		to_chat(target, span_userdanger("You suddenly go blind!"))
+		to_chat(target, span_userdanger(LANG("obj.5f6796c6", null)))
 	if(prob(1))
-		to_chat(target, span_notice("At least you got a new pirate-y look out of it..."))
+		to_chat(target, span_notice(LANG("obj.f340b251", null)))
 		var/obj/item/clothing/glasses/eyepatch/new_patch = new(target.loc)
 		target.equip_to_slot_if_possible(new_patch, ITEM_SLOT_EYES, disable_warning = TRUE)
 
-	to_chat(user, span_notice("You successfully extract [target]'s eyeballs."))
+	to_chat(user, span_notice(LANG("obj.8ecf70c4", list(target))))
 	playsound(target, 'sound/items/handling/surgery/retractor2.ogg', 100, TRUE)
 	playsound(target, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
 	eyeballies.Remove(target)

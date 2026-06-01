@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //entirely neutral or internal status effects go here
 
 /datum/status_effect/crusher_damage
@@ -134,7 +135,7 @@
 		rewarded = caster
 
 /datum/status_effect/bounty/on_apply()
-	to_chat(owner, span_boldnotice("You hear something behind you talking... \"You have been marked for death by [rewarded]. If you die, they will be rewarded.\""))
+	to_chat(owner, span_boldnotice(LANG("datum.dbfb7106", list(rewarded))))
 	playsound(owner, 'sound/items/weapons/gun/shotgun/rack.ogg', 75, FALSE)
 	return ..()
 
@@ -145,9 +146,9 @@
 
 /datum/status_effect/bounty/proc/rewards()
 	if(rewarded && rewarded.mind && rewarded.stat != DEAD)
-		to_chat(owner, span_boldnotice("You hear something behind you talking... \"Bounty claimed.\""))
+		to_chat(owner, span_boldnotice(LANG("datum.fe78ab2e", null)))
 		playsound(owner, 'sound/items/weapons/gun/shotgun/shot.ogg', 75, FALSE)
-		to_chat(rewarded, span_greentext("You feel a surge of mana flow into you!"))
+		to_chat(rewarded, span_greentext(LANG("datum.17daa044", null)))
 		for(var/datum/action/cooldown/spell/spell in rewarded.actions)
 			spell.reset_spell_cooldown()
 
@@ -271,7 +272,7 @@
 	if(taker.IsReachableBy(owner) || ((owner.pulling == taker) || (taker.pulling == owner)) && !IS_DEAD_OR_INCAP(taker))
 		return
 
-	to_chat(taker, span_warning("You moved out of range of [owner]!"))
+	to_chat(taker, span_warning(LANG("datum.b0c4970b", list(owner))))
 	remove_candidate(taker)
 
 /// The offerer moved, see if anyone is out of range now

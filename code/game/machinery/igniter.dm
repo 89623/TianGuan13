@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/igniter
 	name = "igniter"
 	desc = "It's useful for igniting plasma."
@@ -46,7 +47,7 @@
 		return
 
 	if(!tool.tool_start_check(user, amount = 2))
-		balloon_alert(user, "not enough fuel!")
+		balloon_alert(user, LANG("obj.161985b7", null))
 		return
 
 	loc.balloon_alert(user, "dismantling [src]")
@@ -66,8 +67,8 @@
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
-	balloon_alert(user, "id set to [id]")
-	to_chat(user, span_notice("You change the ID to [id]."))
+	balloon_alert(user, LANG("obj.9bbb21f5", list(id)))
+	to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/igniter/incinerator_ordmix
@@ -191,7 +192,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
 /obj/machinery/sparker/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 1))
-		balloon_alert(user, "not enough fuel!")
+		balloon_alert(user, LANG("obj.161985b7", null))
 		return TRUE
 
 	loc.balloon_alert(user, "dismantling [src]")
@@ -210,8 +211,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
-	balloon_alert(user, "id set to [id]")
-	to_chat(user, span_notice("You change the ID to [id]."))
+	balloon_alert(user, LANG("obj.9bbb21f5", list(id)))
+	to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sparker/update_icon_state()

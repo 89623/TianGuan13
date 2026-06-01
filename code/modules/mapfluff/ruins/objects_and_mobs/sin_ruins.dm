@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //These objects are used in the cardinal sin-themed ruins (i.e. Gluttony, Pride...)
 
 /obj/effect/gluttony //Gluttony's wall: Used in the Gluttony ruin. Only lets the overweight through.
@@ -17,7 +18,7 @@
 			H.visible_message(span_warning("[H] pushes through [src]!"), span_notice("You've seen and eaten worse than this."))
 			return TRUE
 		else
-			to_chat(H, span_warning("You're repulsed by even looking at [src]. Only a pig could force themselves to go through it."))
+			to_chat(H, span_warning(LANG("obj.e9dc8df9", list(src))))
 	if(istype(mover, /mob/living/basic/morph))
 		return TRUE
 

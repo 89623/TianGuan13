@@ -44,7 +44,7 @@
 
 /// Visual update when the cooldown's finished
 /obj/structure/destructible/clockwork/trap/flipper/proc/cooldown_done()
-	visible_message(span_brass("[src] whirrs with a loud *CLANK* as it resets."))
+	visible_message(span_brass(LANG("obj.33e89066", list(src))))
 
 /datum/component/clockwork_trap/flipper
 	takes_input = TRUE

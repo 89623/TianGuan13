@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Chilling extracts:
 	Have a unique, primarily defensive effect when
@@ -15,10 +16,10 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/attack_self(mob/user)
 	if(!reagents.has_reagent(/datum/reagent/toxin/plasma, 10))
-		to_chat(user, span_warning("This extract needs to be full of plasma to activate!"))
+		to_chat(user, span_warning(LANG("obj.883dcdd9", null)))
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
-	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
+	to_chat(user, span_notice(LANG("obj.879f3da7", null)))
 	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/glass/glassbr1.ogg', 50, TRUE)
 	do_effect(user)
@@ -55,7 +56,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/purple/do_effect(mob/user)
 	var/area/user_area = get_area(user)
 	if(user_area.outdoors)
-		to_chat(user, span_warning("[src] can't affect such a large area."))
+		to_chat(user, span_warning(LANG("obj.7c709303", list(src))))
 		return
 	user.visible_message(span_notice("[src] shatters, and a healing aura fills the room briefly."))
 	for (var/list/zlevel_turfs as anything in user_area.get_zlevel_turf_lists())
@@ -106,7 +107,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/darkpurple/do_effect(mob/user)
 	var/area/A = get_area(get_turf(user))
 	if(A.outdoors)
-		to_chat(user, span_warning("[src] can't affect such a large area."))
+		to_chat(user, span_warning(LANG("obj.7c709303", list(src))))
 		return
 	var/filtered = FALSE
 	for(var/turf/open/T in A.get_turfs_from_all_zlevels())
@@ -156,32 +157,32 @@ Chilling extracts:
 		return NONE
 	user.do_attack_animation(interacting_with)
 	if(HAS_TRAIT(interacting_with, TRAIT_NO_TELEPORT))
-		to_chat(user, span_warning("[interacting_with] resists being linked with [src]!"))
+		to_chat(user, span_warning(LANG("obj.34b4ecf6", list(interacting_with, src))))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_with in slimepals)
 		slimepals -= interacting_with
-		to_chat(user, span_notice("You unlink [src] with [interacting_with]."))
+		to_chat(user, span_notice(LANG("obj.079ad710", list(src, interacting_with))))
 	else
 		slimepals += interacting_with
-		to_chat(user, span_notice("You link [src] with [interacting_with]."))
+		to_chat(user, span_notice(LANG("obj.e06b0e5f", list(src, interacting_with))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/chilling/bluespace/do_effect(mob/user)
 	if(slimepals.len <= 0)
-		to_chat(user, span_warning("[src] is not linked to anyone!"))
+		to_chat(user, span_warning(LANG("obj.bb1cb86b", list(src))))
 		return
-	to_chat(user, span_notice("You feel [src] pulse as it begins charging bluespace energies..."))
+	to_chat(user, span_notice(LANG("obj.8158b31e", list(src))))
 	active = TRUE
 	for(var/mob/living/M in slimepals)
 		var/datum/status_effect/slimerecall/S = M.apply_status_effect(/datum/status_effect/slimerecall)
 		S.target = user
 	if(do_after(user, 10 SECONDS, target=src))
-		to_chat(user, span_notice("[src] shatters as it tears a hole in reality, snatching the linked individuals from the void!"))
+		to_chat(user, span_notice(LANG("obj.9bc2495e", list(src))))
 		for(var/mob/living/M in slimepals)
 			var/datum/status_effect/slimerecall/S = M.has_status_effect(/datum/status_effect/slimerecall)
 			M.remove_status_effect(S)
 	else
-		to_chat(user, span_warning("[src] falls dark, dissolving into nothing as the energies fade away."))
+		to_chat(user, span_warning(LANG("obj.df820291", list(src))))
 		for(var/mob/living/M in slimepals)
 			var/datum/status_effect/slimerecall/S = M.has_status_effect(/datum/status_effect/slimerecall)
 			if(istype(S))
@@ -200,10 +201,10 @@ Chilling extracts:
 	user.do_attack_animation(interacting_with)
 	if(interacting_with in slimepals)
 		slimepals -= interacting_with
-		to_chat(user, span_notice("You unlink [src] with [interacting_with]."))
+		to_chat(user, span_notice(LANG("obj.079ad710", list(src, interacting_with))))
 	else
 		slimepals += interacting_with
-		to_chat(user, span_notice("You link [src] with [interacting_with]."))
+		to_chat(user, span_notice(LANG("obj.e06b0e5f", list(src, interacting_with))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/chilling/sepia/do_effect(mob/user)
@@ -333,7 +334,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/rainbow/do_effect(mob/user)
 	var/area/area = get_area(user)
 	if(area.outdoors)
-		to_chat(user, span_warning("[src] can't affect such a large area."))
+		to_chat(user, span_warning(LANG("obj.7c709303", list(src))))
 		return
 	user.visible_message(span_warning("[src] reflects an array of dazzling colors and light, energy rushing to nearby doors!"))
 	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())

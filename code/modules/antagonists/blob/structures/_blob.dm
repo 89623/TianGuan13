@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //I will need to recode parts of this but I am way too tired atm //I don't know who left this comment but they never did come back
 /obj/structure/blob
 	name = "blob"
@@ -164,7 +165,7 @@
 		return TRUE
 	// If it's not supposed to end the round and it's at the win count, don't make more. (400 tiles is still a lot to fight through...)
 	if(!controller.end_round_on_victory && (controller.blobs_legit.len >= controller.blobwincount))
-		balloon_alert(controller, "max tiles reached!")
+		balloon_alert(controller, LANG("obj.36d11fd6", null))
 		return FALSE
 	// Otherwise, it's probably fine.
 	return TRUE
@@ -190,7 +191,7 @@
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
-		balloon_alert(controller, "failed to expand!")
+		balloon_alert(controller, LANG("obj.fe20941b", null))
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, get_dir(T, src))) //is the target turf impassable
@@ -260,13 +261,13 @@
 /obj/structure/blob/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_ANALYZER)
 		user.changeNext_move(CLICK_CD_MELEE)
-		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
+		to_chat(user, LANG("obj.f3678620", null))
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
 		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")
+			to_chat(user, LANG("obj.f1e6051c", list(span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount]."))))
 			to_chat(user, chemeffectreport(user).Join("\n"))
 		else
-			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
+			to_chat(user, LANG("obj.5df59b6b", null))
 		to_chat(user, typereport(user).Join("\n"))
 	else
 		return ..()

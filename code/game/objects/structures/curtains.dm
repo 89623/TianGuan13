@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Shower Curtains
  */
@@ -61,7 +62,7 @@
 	user.visible_message(span_warning("[user] cuts apart [src]."),
 		span_notice("You start to cut apart [src]."), span_hear("You hear cutting."))
 	if(I.use_tool(src, user, 50, volume=100) && !anchored)
-		to_chat(user, span_notice("You cut apart [src]."))
+		to_chat(user, span_notice(LANG("obj.9f42ff14", list(src))))
 		deconstruct()
 
 	return TRUE

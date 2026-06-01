@@ -116,7 +116,7 @@
 	if(!in_company())
 		//since you aren't within company, you won't be satisfied
 		satisfaction = clamp(satisfaction - 1, 0, 1000)
-		to_chat(human_owner, span_purple("You feel so alone without someone..."))
+		to_chat(human_owner, span_purple(LANG("datum.3b6c0c27", null)))
 		return
 
 	switch(satisfaction)

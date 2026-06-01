@@ -25,7 +25,7 @@
 /obj/item/xenoarch/hammer/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!advanced)
-		to_chat(user, span_warning("This is not an advanced hammer, it cannot change its digging depth."))
+		to_chat(user, span_warning(LANG("obj.dba114b6", null)))
 		return
 
 	var/user_choice = input(user, "Choose the digging depth. 1 to 30", "Digging Depth Selection") as null|num
@@ -47,7 +47,7 @@
 
 	dig_amount = round_dig
 	dig_speed = round_dig * 0.5
-	to_chat(user, span_notice("You change the hammer's digging depth to [round_dig]cm."))
+	to_chat(user, span_notice(LANG("obj.16295f5e", list(round_dig))))
 
 /obj/item/xenoarch/hammer/cm2
 	name = "hammer (2cm)"
@@ -246,13 +246,13 @@
 
 	if(!(is_mining_level(user.z)))
 		user.balloon_alert(user, "error!")
-		to_chat(user, span_warning("You aren't in a sector where the radar can be used! try moving to a mining sector."))
+		to_chat(user, span_warning(LANG("obj.58c396db", null)))
 		return FALSE
 
 	var/user_area = get_area(user)
 	if (!is_type_in_typecache(user_area, allowed_areas) || is_type_in_typecache(user_area, disallowed_areas))
 		user.balloon_alert(user, "error!")
-		to_chat(user, span_warning("You aren't standing in a natural area, try moving to one before trying again."))
+		to_chat(user, span_warning(LANG("obj.4cec1c8b", null)))
 		return FALSE
 
 	var/datum/scavenge_profile/profile = get_profile(user)
@@ -275,7 +275,7 @@
 
 	if(!candidate_turf)
 		user.balloon_alert(user, "not found!")
-		to_chat(user, span_warning("The radar couldn't find a suitable digging site."))
+		to_chat(user, span_warning(LANG("obj.fb3e8f74", null)))
 		return FALSE
 
 	profile.site = candidate_turf
@@ -283,7 +283,7 @@
 	var/chance = user.mind?.get_skill_modifier(/datum/skill/archeology, SKILL_PROBS_MODIFIER) || 0
 	if(prob(clamp(chance - 40, 0, 100)))
 		profile.site_radius++
-		to_chat(user, span_notice("Your knowledge of archeology helps you interpret the radar signals more accurately, giving you a bit of extra leeway."))
+		to_chat(user, span_notice(LANG("obj.26a88fa9", null)))
 	user.balloon_alert(user, "site located!")
 	playsound(src, 'sound/machines/compiler/compiler-stage1.ogg', 75)
 	return TRUE
@@ -320,16 +320,16 @@
 	profile.site = null
 
 	var/rocks_amount = 1
-	to_chat(user, span_notice("You sift through the sediment and recover some rock fragments."))
+	to_chat(user, span_notice(LANG("obj.b18a7cc3", null)))
 	if(prob(user.mind?.get_skill_modifier(/datum/skill/archeology, SKILL_PROBS_MODIFIER)))
 		rocks_amount++
-		to_chat(user, span_notice("With practiced skill, you spot and extract an extra rock!"))
+		to_chat(user, span_notice(LANG("obj.6c0655c9", null)))
 	if(prob(50))
 		rocks_amount++
-		to_chat(user, span_notice("You get lucky and uncover an extra rock while digging!"))
+		to_chat(user, span_notice(LANG("obj.0c848c48", null)))
 	if (SSmapping.level_trait(dig_turf.z, ZTRAIT_LAVA_RUINS)) // review when Lavaland 2.0 comes out. - logic here is that lavaland is more dangerous than snow, thus, extra rock.
 		rocks_amount++
-		to_chat(user, span_notice("The necropolis is rich with buried remnants. You uncover an extra rock while digging."))
+		to_chat(user, span_notice(LANG("obj.e92ddf53", null)))
 	for(var/i in 1 to rocks_amount)
 		new /obj/item/xenoarch/strange_rock(dig_turf)
 	user.mind?.adjust_experience(/datum/skill/archeology, rocks_amount*25)
@@ -344,13 +344,13 @@
 	var/datum/scavenge_profile/profile = get_profile(user)
 	if(!profile.site)
 		user.balloon_alert(user, "error!")
-		to_chat(user, span_warning("You don't have a site locked in! You need to do a long range scan first."))
+		to_chat(user, span_warning(LANG("obj.a63d607f", null)))
 		return
 
 	var/turf/candidate_turf = profile.site
 	if(profile.site.z != user.z)
 		user.balloon_alert(user, "error!")
-		to_chat(user, span_warning("You are not in the same sector as the scanned site."))
+		to_chat(user, span_warning(LANG("obj.cd9674d7", null)))
 		return
 
 	// We get the distance and direction from the user/tool to the turf we are heading towards.
@@ -407,7 +407,7 @@
 	if(istype(interacting_with, /obj/item/xenoarch/broken_item))
 		var/obj/item/xenoarch/broken_item/brushed_item = interacting_with
 		if (!brushed_item.loot)
-			to_chat(user, span_notice("The item has no loot, if this item wasn't produced by an admin, speak to a coder."))
+			to_chat(user, span_notice(LANG("obj.2cd78820", null)))
 			return NONE
 		var/turf/src_turf = get_turf(brushed_item)
 		var/recovered_loot = brushed_item.loot

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PUZZGRID_CONFIG "[global.config.directory]/puzzgrids.txt"
 #define PUZZGRID_GROUP_COUNT 4
 #define PUZZGRID_MAX_ATTEMPTS 10
@@ -300,7 +301,7 @@ ADMIN_VERB(validate_puzzgrids, R_DEBUG, "Validate Puzzgrid Config", "Validate th
 		if (populate_result != TRUE)
 			to_chat(user, span_warning("Line [line_number] in puzzgrids.txt is not formatted correctly: [populate_result]"))
 
-	to_chat(user, span_notice("Validated. If you did not see any errors, you're in the clear."))
+	to_chat(user, span_notice(LANG("datum.7f466809", null)))
 
 #undef PUZZGRID_CONFIG
 #undef PUZZGRID_GROUP_COUNT

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
@@ -52,7 +53,7 @@
 		if(!console.is_operational || !user.can_perform_action(console, NEED_DEXTERITY|ALLOW_SILICON_REACH))
 			return TRUE
 
-		to_chat(imp_in, span_hear("You hear a voice in your head saying: '[warning]'"))
+		to_chat(imp_in, span_hear(LANG("obj.d667566a", list(warning))))
 		log_directed_talk(user, imp_in, warning, LOG_SAY, "implant message")
 		return TRUE
 

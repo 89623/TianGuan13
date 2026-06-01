@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/melee/baseball_bat
 	name = "baseball bat"
 	desc = "There ain't a skull in the league that can withstand a swatter."
@@ -38,12 +39,12 @@
 	if(!homerun_able)
 		return ..()
 	if(homerun_ready)
-		to_chat(user, span_warning("You're already ready to do a home run!"))
+		to_chat(user, span_warning(LANG("obj.6b3ffa99", null)))
 		return ..()
-	to_chat(user, span_warning("You begin gathering strength..."))
+	to_chat(user, span_warning(LANG("obj.bf363863", null)))
 	playsound(get_turf(src), 'sound/effects/magic/lightning_chargeup.ogg', 65, TRUE)
 	if(do_after(user, 9 SECONDS, target = src))
-		to_chat(user, span_userdanger("You gather power! Time for a home run!"))
+		to_chat(user, span_userdanger(LANG("obj.a6997682", null)))
 		homerun_ready = TRUE
 	return ..()
 

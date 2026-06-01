@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CANT_INSERT_FULL -1
 /// Mimics can't be made out of these objects
 GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
@@ -102,7 +103,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(user.combat_mode)
 		return ..()
 	if(trigger())
-		to_chat(user, span_danger("As you try to open [src] it [length(contents) ? "stiffens up and " : ""]nearly clamps down on your fingers!"))
+		to_chat(user, span_danger(LANG("mob.6d649855", list(src, length(contents) ? "stiffens up and " : ""))))
 		return TRUE
 	toggle_open(user)
 	return TRUE
@@ -116,7 +117,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return FALSE
 	if(ai_controller.ai_status != AI_STATUS_OFF)
 		return FALSE
-	visible_message(span_danger("[src] starts to move!"))
+	visible_message(span_danger(LANG("mob.da7696ad", list(src))))
 	REMOVE_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
 	ai_controller.set_ai_status(AI_STATUS_ON)
 	if(length(contents))
@@ -161,7 +162,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 /mob/living/basic/mimic/crate/proc/toggle_open(mob/user)
 	if(locked)
 		if(user)
-			balloon_alert(user, "too stiff!")
+			balloon_alert(user, LANG("mob.2b9b00b6", null))
 		return
 	if(!opened)
 		ADD_TRAIT(src, TRAIT_UNDENSE, MIMIC_TRAIT)
@@ -247,9 +248,9 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	var/mob/living/basic/mimic/crate/mimic = owner
 	mimic.locked = !mimic.locked
 	if(!mimic.locked)
-		to_chat(mimic, span_warning("You loosen up, allowing yourself to be opened and closed."))
+		to_chat(mimic, span_warning(LANG("datum.eb13e6aa", null)))
 	else
-		to_chat(mimic, span_warning("You stiffen up, preventing anyone from opening or closing you."))
+		to_chat(mimic, span_warning(LANG("datum.6716f7a6", null)))
 
 // ****************************
 // COPYING (actually imitates target object) MIMIC
@@ -299,7 +300,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	return ..()
 
 /mob/living/basic/mimic/copy/wabbajack(what_to_randomize, change_flags = WABBAJACK)
-	visible_message(span_warning("[src] resists polymorphing into a new creature!"))
+	visible_message(span_warning(LANG("mob.9612b576", list(src))))
 
 /mob/living/basic/mimic/copy/animate_atom_living(mob/living/owner)
 	change_owner(owner)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //yep you guessed it back at it again with another datum singleton.
 /datum/orion_event
@@ -259,10 +260,10 @@
 
 /datum/orion_event/raiders/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(prob(50-gamer_skill))
-		to_chat(usr, span_userdanger("You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?"))
+		to_chat(usr, span_userdanger(LANG("datum.180c2a1c", null)))
 		gamer.adjust_hallucinations(60 SECONDS)
 	else
-		to_chat(usr, span_userdanger("Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there..."))
+		to_chat(usr, span_userdanger(LANG("datum.302108f0", null)))
 		gamer.take_bodypart_damage(30)
 		playsound(game, 'sound/items/weapons/genhit2.ogg', 100, TRUE)
 
@@ -283,14 +284,14 @@
 		maxSeverity = 2 //part of gitting gud is rng mitigation
 	var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 	if(severity == 1)
-		to_chat(gamer, span_userdanger("You suddenly feel slightly nauseated.") )
+		to_chat(gamer, span_userdanger(LANG("datum.b1f17951", null)) )
 		gamer.adjust_disgust(50)
 	if(severity == 2)
-		to_chat(usr, span_userdanger("You suddenly feel extremely nauseated and hunch over until it passes."))
+		to_chat(usr, span_userdanger(LANG("datum.1aff1be0", null)))
 		gamer.adjust_disgust(110)
 		gamer.Stun(60)
 	if(severity >= 3) //you didn't pray hard enough
-		to_chat(gamer, span_warning("An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit."))
+		to_chat(gamer, span_warning(LANG("datum.1822af1a", null)))
 		gamer.adjust_disgust(150) //max this bitch out so they barf a lot
 		gamer.Stun(100)
 
@@ -316,7 +317,7 @@
 
 /datum/orion_event/flux/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(prob(25 + gamer_skill))//withstand the wind with your GAMER SKILL
-		to_chat(gamer, span_userdanger("A violent gale blows past you, and you barely manage to stay standing!"))
+		to_chat(gamer, span_userdanger(LANG("datum.3db21dad", null)))
 		return
 	gamer.Paralyze(60)
 	game.say("A sudden gust of powerful wind slams [gamer] into the floor!")

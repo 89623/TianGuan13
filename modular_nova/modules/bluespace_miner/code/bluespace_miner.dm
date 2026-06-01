@@ -171,7 +171,7 @@
 	if(focused_item)
 		ore_chance[focused_item] /= 3
 		focused_item = null
-		balloon_alert(user, "removed focus mode")
+		balloon_alert(user, LANG("obj.22db95db", null))
 		return TRUE
 
 	var/choice = tgui_input_list(user, "Which would you like to triple?", "Focus Mode", ore_chance)
@@ -180,7 +180,7 @@
 
 	ore_chance[choice] *= 3
 	focused_item = choice
-	balloon_alert(user, "added focus mode")
+	balloon_alert(user, LANG("obj.b22c05c0", null))
 	return TRUE
 
 /obj/machinery/bluespace_miner/attack_hand(mob/living/user, list/modifiers)
@@ -216,7 +216,7 @@
 
 /obj/machinery/bluespace_miner/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, "already emagged!")
+		balloon_alert(user, LANG("obj.9bab397b", null))
 		return FALSE
 
 	ore_chance += list(/obj/item/stack/sheet/mineral/bananium = 1)

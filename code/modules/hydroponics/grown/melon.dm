@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Watermelon
 /obj/item/seeds/watermelon
 	name = "watermelon seed pack"
@@ -63,13 +64,13 @@
 			melon_armour = new /obj/item/clothing/suit/armor/durability/watermelon/fire_resist
 		else
 			melon_armour = new /obj/item/clothing/suit/armor/durability/watermelon
-		to_chat(user, span_notice("You hollow the melon into a helmet with [I]."))
+		to_chat(user, span_notice(LANG("obj.cee6bd5b", list(I))))
 	else
 		if(seed.resistance_flags & FIRE_PROOF)
 			melon_armour = new /obj/item/clothing/head/helmet/durability/watermelon/fire_resist
 		else
 			melon_armour = new /obj/item/clothing/head/helmet/durability/watermelon
-		to_chat(user, span_notice("You hollow the melon into a chestplate with [I]."))
+		to_chat(user, span_notice(LANG("obj.15d382b8", list(I))))
 	remove_item_from_storage(user)
 	qdel(src)
 	user.put_in_hands(melon_armour)
@@ -135,13 +136,13 @@
 			holymelon_armour = new /obj/item/clothing/suit/armor/durability/holymelon/fire_resist
 		else
 			holymelon_armour = new /obj/item/clothing/suit/armor/durability/holymelon
-		to_chat(user, span_notice("You hollow the holymelon into a helmet with [I]."))
+		to_chat(user, span_notice(LANG("obj.56ff497d", list(I))))
 	else
 		if(seed.resistance_flags & FIRE_PROOF)
 			holymelon_armour = new /obj/item/clothing/head/helmet/durability/holymelon/fire_resist
 		else
 			holymelon_armour = new /obj/item/clothing/head/helmet/durability/holymelon
-		to_chat(user, span_notice("You hollow the holymelon into a chestplate with [I]."))
+		to_chat(user, span_notice(LANG("obj.cd4804f0", list(I))))
 	remove_item_from_storage(user)
 	qdel(src)
 	user.put_in_hands(holymelon_armour)
@@ -157,7 +158,7 @@
 	var/mob/living/carbon/human/holy_person = mob_eating
 	if(!holy_person.mind?.holy_role || HAS_TRAIT(holy_person, TRAIT_AGEUSIA))
 		return
-	to_chat(holy_person, span_notice("Truly, a piece of heaven!"))
+	to_chat(holy_person, span_notice(LANG("obj.f55d2542", null)))
 	holy_person.add_mood_event("Divine_chew", /datum/mood_event/holy_consumption)
 	return FOOD_LIKED
 
@@ -208,13 +209,13 @@
 			barrelmelon_armour = new /obj/item/clothing/suit/armor/durability/barrelmelon/fire_resist
 		else
 			barrelmelon_armour = new /obj/item/clothing/suit/armor/durability/barrelmelon
-		to_chat(user, span_notice("You hollow the barrelmelon into a helmet with [I]."))
+		to_chat(user, span_notice(LANG("obj.0e094afd", list(I))))
 	else
 		if(seed.resistance_flags & FIRE_PROOF)
 			barrelmelon_armour = new /obj/item/clothing/head/helmet/durability/barrelmelon/fire_resist
 		else
 			barrelmelon_armour = new /obj/item/clothing/head/helmet/durability/barrelmelon
-		to_chat(user, span_notice("You hollow the barrelmelon into a chestplate with [I]."))
+		to_chat(user, span_notice(LANG("obj.4fcb6a81", list(I))))
 
 	remove_item_from_storage(user)
 	qdel(src)

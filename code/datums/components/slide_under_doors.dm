@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // A component for basic mobs that makes them able to slide under doors by right-clicking on them.
 // Sliding under doors has a configurable initial delay, and allows the mob to remain under the door indefinitely.
 // If the door is opened while the mob is under it, then the mob will be ejected from their hiding spot.
@@ -42,7 +43,7 @@
 	notify_user()
 
 /datum/component/slide_under_doors/proc/notify_user()
-	to_chat(parent, span_notice("You can slide under doors! <b>Right-click on a door to slide under it.</b>"))
+	to_chat(parent, span_notice(LANG("datum.de7e362d", null)))
 
 /datum/component/slide_under_doors/proc/on_user_unarmed_attack(mob/living/user, atom/target, is_adjacent, modifiers)
 	SIGNAL_HANDLER
@@ -121,7 +122,7 @@
 
 		playsound(visible_turf, 'sound/effects/footstep/gib_step.ogg', vol = 50, vary = TRUE, ignore_walls = FALSE)
 
-	to_chat(current_user, span_notice("You start sliding out from under \the [current_door]."))
+	to_chat(current_user, span_notice(LANG("datum.c76a3c62", list(current_door))))
 
 	if (!do_after(current_user, slide_out_delay, current_door, timed_action_flags = IGNORE_INCAPACITATED))
 		return

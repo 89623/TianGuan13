@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// off
 #define GENERATOR_INACTIVE 0
 /// waiting for power/retrying, will activate and do things if powered
@@ -108,22 +109,22 @@
 
 /obj/machinery/atmos_shield_gen/screwdriver_act(mob/user, obj/item/tool)
 	if(!panel_open && locked)
-		balloon_alert(user, "locked!")
+		balloon_alert(user, LANG("obj.5d71bae2", null))
 		return ITEM_INTERACT_FAILURE
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/atmos_shield_gen/crowbar_act(mob/user, obj/item/tool)
 	if(on)
-		balloon_alert(user, "turn off first!")
+		balloon_alert(user, LANG("obj.19a396d6", null))
 		return ITEM_INTERACT_FAILURE
 	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/atmos_shield_gen/wrench_act(mob/living/user, obj/item/tool)
 	if(on)
-		balloon_alert(user, "turn off first!")
+		balloon_alert(user, LANG("obj.19a396d6", null))
 		return ITEM_INTERACT_FAILURE
 	if(locked)
-		balloon_alert(user, "unlock first!")
+		balloon_alert(user, LANG("obj.08c1dea0", null))
 		return ITEM_INTERACT_FAILURE
 	if(default_unfasten_wrench(user, tool) && !anchored)
 		turn_off()
@@ -132,10 +133,10 @@
 /obj/machinery/atmos_shield_gen/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!anchored)
-		balloon_alert(user, "not anchored!")
+		balloon_alert(user, LANG("obj.e0a7c3ce", null))
 		return
 	if(locked && !issilicon(user))
-		balloon_alert(user, "locked!")
+		balloon_alert(user, LANG("obj.5d71bae2", null))
 		return
 	toggle(user)
 
@@ -145,9 +146,9 @@
 		return
 	if(allowed(user))
 		locked = !locked
-		balloon_alert(user, "[locked ? "" : "un"]locked!")
+		balloon_alert(user, LANG("obj.f5bfa677", list(locked ? "" : "un")))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	balloon_alert(user, "no access!")
+	balloon_alert(user, LANG("obj.ddafd752", null))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/atmos_shield_gen/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -158,7 +159,7 @@
 		return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/card/id) && check_access(tool))
 		locked = !locked
-		balloon_alert(user, "[locked ? "" : "un"]locked!")
+		balloon_alert(user, LANG("obj.f5bfa677", list(locked ? "" : "un")))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmos_shield_gen/process_early()
@@ -213,7 +214,7 @@
 		on = GENERATOR_WANTPOWER
 		update_appearance(UPDATE_OVERLAYS)
 	if(!isnull(user))
-		balloon_alert(user, "turned [on ? "on" : "off"]")
+		balloon_alert(user, LANG("obj.8fcfde3c", list(on ? "on" : "off")))
 
 /obj/machinery/atmos_shield_gen/proc/turn_off(power_failure = FALSE)
 	if(!on)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///The maximum number of settings on a burner knob
 #define MAX_BURNER_KNOB_SETTINGS 10
 
@@ -269,24 +270,24 @@
 
 		//add new container
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck in your hand."))
+			to_chat(user, span_warning(LANG("obj.5dda4c2f", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		distilled_container = tool
 
 		START_PROCESSING(SSobj, src)
-		balloon_alert(user, "distillation container added.")
+		balloon_alert(user, LANG("obj.58592943", null))
 
 		ui_interact(user)
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 	else if(istype(tool, /obj/item/assembly/igniter/condenser))
 		if(!user.temporarilyRemoveItemFromInventory(tool))
-			to_chat(user, span_warning("[tool] is stuck in your hand."))
+			to_chat(user, span_warning(LANG("obj.5dda4c2f", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		condenser_installed = TRUE
 		update_static_data_for_all_viewers()
 		qdel(tool)
-		balloon_alert(user, "condenser installed.")
+		balloon_alert(user, LANG("obj.7bcd6205", null))
 		return ITEM_INTERACT_SUCCESS
 
 	///Try & ignite the bunset burner with this item
@@ -308,7 +309,7 @@
 			return TRUE
 
 		if(user.put_in_hands(distilled_container))
-			to_chat(user, span_notice("you take out the output flask."))
+			to_chat(user, span_notice(LANG("obj.77798b17", null)))
 			update_appearance(UPDATE_OVERLAYS)
 		return TRUE
 
@@ -326,10 +327,10 @@
 
 		//add new container
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck in your hand."))
+			to_chat(user, span_warning(LANG("obj.5dda4c2f", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		fuel_container = tool
-		balloon_alert(user, "fuel container added.")
+		balloon_alert(user, LANG("obj.263dc0b7", null))
 
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
@@ -341,7 +342,7 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		if(user.put_in_hands(fuel_container))
-			to_chat(user, span_notice("you take out the burner fuel container"))
+			to_chat(user, span_notice(LANG("obj.7f28075d", null)))
 			toggle_burner(FALSE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

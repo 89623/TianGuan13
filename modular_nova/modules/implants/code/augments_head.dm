@@ -96,7 +96,7 @@
 		return
 	var/mob/living/carbon/human/human_owner = owner
 
-	to_chat(owner, span_warning("Sensory overload! Your body can't handle this much neural input!"))
+	to_chat(owner, span_warning(LANG("obj.c734846a", null)))
 
 	human_owner.Knockdown(6 SECONDS)
 	human_owner.Stun(4 SECONDS)
@@ -206,7 +206,7 @@
 	human_owner.adjust_bodytemperature(HACKERMAN_DECK_EMP_TEMPERATURE_INCREASE)
 	human_owner.adjust_fire_stacks(2)
 	human_owner.ignite_mob()
-	to_chat(owner, span_warning("You can feel the implant in your head malfunction and begin to severely overheat!"))
+	to_chat(owner, span_warning(LANG("obj.3aa6cef1", null)))
 
 /// Adds an item to the list of fibers for this forensics datum that tells on the fact someone used a hacking implant here
 /datum/forensics/proc/add_hacking_implant_trace()

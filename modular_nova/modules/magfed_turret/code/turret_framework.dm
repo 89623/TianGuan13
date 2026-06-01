@@ -124,11 +124,11 @@
 			return NONE
 		if(!tool.toolspeed)
 			return ITEM_INTERACT_BLOCKING
-		balloon_alert(user, "constructing...")
+		balloon_alert(user, LANG("obj.6d69dc2b", null))
 		if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
 			return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "constructed!")
+		balloon_alert(user, LANG("obj.ddc1329a", null))
 		user.visible_message(
 			span_danger("[user] bashes [src] with [tool]!"),
 			span_danger("You bash [src] with [tool]!"),
@@ -146,9 +146,9 @@
 		return
 	var/turf/chosen_spot = get_step(user, user.dir) //find spot infront of person and places it there
 	if(chosen_spot.is_blocked_turf(TRUE, src))
-		balloon_alert(user, "area is unfit for deployment.")
+		balloon_alert(user, LANG("obj.df641915", null))
 		return
-	balloon_alert(user, "deploying...")
+	balloon_alert(user, LANG("obj.617d0336", null))
 	playsound(src, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 	if(!do_after(user, easy_deploy_timer))
 		return
@@ -159,7 +159,7 @@
 	if(!chosen_spot)
 		target_area = loc
 	if(target_area.is_blocked_turf(TRUE, src))
-		balloon_alert(user, "deployment area is unfit for deploying.")
+		balloon_alert(user, LANG("obj.743bf7fb", null))
 		return
 	playsound(src, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
 	var/obj/machinery/porta_turret/syndicate/toolbox/mag_fed/turret = new turret_type(target_area)
@@ -593,9 +593,9 @@
 	if(isnull(auto_loader))
 		mag_box = null
 	if(!(magaroni.type in auto_loader.atom_storage.can_hold))
-		balloon_alert(guy_with_mag, "can't fit!")
+		balloon_alert(guy_with_mag, LANG("obj.dccfcc57", null))
 		return
-	balloon_alert(guy_with_mag, "magazine inserted!")
+	balloon_alert(guy_with_mag, LANG("obj.700a9f25", null))
 	auto_loader?.atom_storage.attempt_insert(magaroni, guy_with_mag, TRUE)
 	toggle_on(TRUE)
 	return
@@ -820,40 +820,40 @@
 	if(isnull(auto_loader))
 		mag_box = null
 	if(attacking_item.type in auto_loader.atom_storage.can_hold)
-		balloon_alert(user, "attempting to load...")
+		balloon_alert(user, LANG("obj.c55c621b", null))
 		if(!do_after(user, 1 SECONDS, src))
-			balloon_alert(user, "failed to load!")
+			balloon_alert(user, LANG("obj.57787c73", null))
 		insert_mag(attacking_item, user)
 		return
 
 	if(istype(attacking_item, /obj/item/card/id))
 		if(!in_faction(user))
-			balloon_alert(user, "access denied!")
+			balloon_alert(user, LANG("obj.1bd3ceeb", null))
 			return
 
 	if(in_faction(user))
 		if(istype(attacking_item, /obj/item/target_designator))
 			var/obj/item/target_designator/controller = attacking_item
 			if(length(controller.linked_turrets) >= controller.turret_limit)
-				balloon_alert(user, "turret limit reached!")
+				balloon_alert(user, LANG("obj.959a0132", null))
 				return
 			if(linkage) //should help both preventing dual-controlling AND double-linking causing odd issues with ally system
-				balloon_alert(user, "turret already linked!")
+				balloon_alert(user, LANG("obj.966002f4", null))
 				return
 			linkage = WEAKREF(controller)
 			controller.linked_turrets += src
 			RegisterSignal(controller, COMSIG_QDELETING, PROC_REF(on_qdeleted), TRUE) //True otherwise it causes a runtime for overwriting parent qdeling. Dont know where to go elsewise.
-			balloon_alert(user, "turret linked!")
+			balloon_alert(user, LANG("obj.18851703", null))
 			return
 
 /obj/machinery/porta_turret/syndicate/toolbox/mag_fed/wrench_act(mob/living/user, obj/item/attacking_item)
 	if(atom_integrity == max_integrity)
 		if(!claptrap_moment)
-			balloon_alert(user, "already repaired!")
+			balloon_alert(user, LANG("obj.88cc0c7c", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!claptrap_moment)
-		balloon_alert(user, "repairing...")
+		balloon_alert(user, LANG("obj.b52342a8", null))
 	while(atom_integrity != max_integrity)
 		if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
 			return ITEM_INTERACT_FAILURE
@@ -861,7 +861,7 @@
 		repair_damage(25)
 
 	if(!claptrap_moment)
-		balloon_alert(user, "repaired!")
+		balloon_alert(user, LANG("obj.ac33e326", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret/syndicate/toolbox/mag_fed/attackby_secondary(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //IM TIRED OF MISMATCHED VAR NAMES. IT'S ATTACK_ITEM ON MAIN, WHY WEAPON HERE?
@@ -872,12 +872,12 @@
 		if(istype(attacking_item, /obj/item/target_designator))
 			var/obj/item/target_designator/owner_check = linkage?.resolve()
 			if(attacking_item != owner_check) //cant unlink if not the same one
-				balloon_alert(user, "turret not linked!")
+				balloon_alert(user, LANG("obj.1bfde4cb", null))
 				return
 			var/obj/item/target_designator/controller = attacking_item
 			linkage = null
 			controller.linked_turrets -= src
-			balloon_alert(user, "turret unlinked!")
+			balloon_alert(user, LANG("obj.b69401fb", null))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(attacking_item.tool_behaviour != TOOL_WRENCH)
@@ -887,7 +887,7 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(!claptrap_moment)
-		balloon_alert(user, "deconstructing...")
+		balloon_alert(user, LANG("obj.44f0e678", null))
 	if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

@@ -102,7 +102,7 @@
 	shuttlePortId = "hc_ship_custom"
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/hc/rotateLandingSpot()
-	to_chat(current_user, span_warning("Rotation disabled to preserve structural integrity of the outpost."))
+	to_chat(current_user, span_warning(LANG("obj.21387008", null)))
 	return FALSE
 
 /obj/machinery/porta_turret/syndicate/hc_police

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Terror source handlers
 /// Simple source which passively increases terror based on a single condition and can do something when its added/removed
 /datum/terror_handler/simple_source
@@ -102,7 +103,7 @@
 		return FALSE
 
 	if (COOLDOWN_FINISHED(src, message_cd) && SPT_PROB(15, seconds_per_tick))
-		to_chat(owner, span_warning("You feel trapped! Must escape... can't breathe..."))
+		to_chat(owner, span_warning(LANG("datum.49292017", null)))
 		COOLDOWN_START(src, message_cd, TERROR_MESSAGE_CD)
 
 	return TRUE
@@ -154,7 +155,7 @@
 		return FALSE
 
 	if (COOLDOWN_FINISHED(src, message_cd) && SPT_PROB(15, seconds_per_tick))
-		to_chat(owner, span_warning("Santa Claus is here! I gotta get out of here!"))
+		to_chat(owner, span_warning(LANG("datum.2dc66b7d", null)))
 		COOLDOWN_START(src, message_cd, TERROR_MESSAGE_CD)
 
 	return TRUE
@@ -181,7 +182,7 @@
 			return FALSE
 
 	if (COOLDOWN_FINISHED(src, message_cd) && SPT_PROB(10, seconds_per_tick))
-		to_chat(owner, span_warning("You feel terribly lonely..."))
+		to_chat(owner, span_warning(LANG("datum.dcadebab", null)))
 		COOLDOWN_START(src, message_cd, TERROR_MESSAGE_CD)
 
 	return TRUE

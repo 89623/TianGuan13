@@ -19,7 +19,7 @@
 	var/datum/component/polarization_controller/window_polarization_controller = target.GetComponent(/datum/component/polarization_controller)
 
 	if(window_polarization_controller)
-		balloon_alert(user, "polarization controller already installed!")
+		balloon_alert(user, LANG("obj.543f35d8", null))
 		return
 
 	target.AddComponent(/datum/component/polarization_controller, src) // No need to do anything else, the component will handle moving the capacitor into the window.

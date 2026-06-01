@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Carrot
 /obj/item/seeds/carrot
 	name = "carrot seed pack"
@@ -38,10 +39,10 @@
 	var/carrot_sword_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(carrot_sword_chance))
 		carrot_blade = new /obj/item/claymore/carrot
-		to_chat(user, span_notice("You sharpen the carrot into a sword with [I]."))
+		to_chat(user, span_notice(LANG("obj.e9098148", list(I))))
 	else
 		carrot_blade = new /obj/item/knife/shiv/carrot
-		to_chat(user, span_notice("You sharpen the carrot into a shiv with [I]."))
+		to_chat(user, span_notice(LANG("obj.6c249f33", list(I))))
 	remove_item_from_storage(user)
 	qdel(src)
 	user.put_in_hands(carrot_blade)
@@ -79,10 +80,10 @@
 	var/parsnip_sabre_chance = (max(0, seed.potency - 50) / 50)
 	if (prob(parsnip_sabre_chance))
 		parsnip_blade = new /obj/item/melee/parsnip_sabre
-		to_chat(user, span_notice("You sharpen the parsnip into a sabre with [I]."))
+		to_chat(user, span_notice(LANG("obj.bd831138", list(I))))
 	else
 		parsnip_blade = new /obj/item/knife/shiv/parsnip
-		to_chat(user, span_notice("You sharpen the parsnip into a shiv with [I]."))
+		to_chat(user, span_notice(LANG("obj.decd7337", list(I))))
 	remove_item_from_storage(user)
 	qdel(src)
 	user.put_in_hands(parsnip_blade)
@@ -127,10 +128,10 @@
 	var/root_dagger_chance = (max(0, seed.potency - 25) / 50)
 	if (prob(root_dagger_chance))
 		root_blade = new /obj/item/knife/combat/root
-		to_chat(user, span_notice("You sharpen the cahn'root into a dagger with [I]."))
+		to_chat(user, span_notice(LANG("obj.a30940a3", list(I))))
 	else
 		root_blade = new /obj/item/knife/shiv/root
-		to_chat(user, span_notice("You sharpen the cahn'root into a shiv with [I]."))
+		to_chat(user, span_notice(LANG("obj.49e7e1c8", list(I))))
 	remove_item_from_storage(user)
 	qdel(src)
 	user.put_in_hands(root_blade)

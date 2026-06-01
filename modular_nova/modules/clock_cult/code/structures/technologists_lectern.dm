@@ -109,7 +109,7 @@
 		return
 
 	if(!anchored)
-		balloon_alert(user, "not fastened!")
+		balloon_alert(user, LANG("obj.7c2f76c2", null))
 		return
 
 	ui_interact(user)

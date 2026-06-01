@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/splattercasting
 	name = "Marrabbio's Splattercasting"
 	desc = "A spell invented by a banished wizard, who obsessed over aligning \
@@ -18,15 +19,13 @@
 /datum/action/cooldown/spell/splattercasting/cast(mob/living/cast_on)
 	. = ..()
 
-	to_chat(cast_on, span_green("You focus your arcane knowledge into your lifeforce, your blood simmering with new potential..."))
+	to_chat(cast_on, span_green(LANG("datum.321122bf", null)))
 	if(!do_after(cast_on, 5 SECONDS))
-		to_chat(cast_on, span_warning("Your focus is broken, and the simmering slowly fades."))
+		to_chat(cast_on, span_warning(LANG("datum.5ae22f28", null)))
 		return
 
 	playsound(cast_on, 'sound/effects/pope_entry.ogg', 100)
-	to_chat(cast_on, span_danger("You feel your very essense binding to your magic! A stabbing pain within \
-		brings unimaginable momentary torment as your heart stops, and your skin grows cold. You are now \
-		merely a vessel for the arcane flow. Soon, all that is left is not pain, but hunger."))
+	to_chat(cast_on, span_danger(LANG("datum.72a7dffb", null)))
 
 	cast_on.set_species(/datum/species/human/vampire)
 	cast_on.set_blood_volume(BLOOD_VOLUME_NORMAL) ///for predictable blood total amounts when the spell is first cast.

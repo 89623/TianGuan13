@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	// so that martial arts don't double dip
 	if (..())
@@ -11,15 +12,15 @@
 		if (stat != DEAD)
 			visible_message(
 				span_notice("[user] [response_help_continuous] [src]."),
-				span_notice("[user] [response_help_continuous] you."),
+				span_notice(LANG("mob.e83dca4b", list(user, response_help_continuous))),
 				ignored_mobs = user,
 			)
-			to_chat(user, span_notice("You [response_help_simple] [src]."))
+			to_chat(user, span_notice(LANG("mob.d6171b71", list(response_help_simple, src))))
 			playsound(loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		return TRUE
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to hurt [src]!"))
+		to_chat(user, span_warning(LANG("mob.450cd43a", list(src))))
 		return TRUE
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 	var/damage = (basic_mob_flags & IMMUNE_TO_FISTS) ? 0 : rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
@@ -28,11 +29,11 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	visible_message(
 		span_danger("[user] [response_harm_continuous] [src]!"),
-		span_userdanger("[user] [response_harm_continuous] you!"),
+		span_userdanger(LANG("mob.9ab70b39", list(user, response_harm_continuous))),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		ignored_mobs = user,
 	)
-	to_chat(user, span_danger("You [response_harm_simple] [src]!"))
+	to_chat(user, span_danger(LANG("mob.22d557f3", list(response_harm_simple, src))))
 	playsound(loc, attacked_sound, 25, TRUE, -1)
 	apply_damage(damage)
 	log_combat(user, src, "attacked")
@@ -50,16 +51,16 @@
 		COMBAT_MESSAGE_RANGE,
 		list(src),
 	)
-	to_chat(src, span_userdanger("You're [moved ? "pushed" : "shoved"] by [shover.name]!"))
+	to_chat(src, span_userdanger(LANG("mob.c61afe56", list(moved ? "pushed" : "shoved", shover.name))))
 
 /mob/living/basic/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(!.)
 		return
 	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
-	visible_message(span_danger("[user] punches [src]!"), \
-					span_userdanger("You're punched by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You punch [src]!"))
+	visible_message(span_danger(LANG("mob.b9f421c8", list(user, src))), \
+					span_userdanger(LANG("mob.863a5da2", list(user))), null, COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger(LANG("mob.51733a65", list(src))))
 	apply_damage(15, damagetype = BRUTE)
 
 /mob/living/basic/attack_paw(mob/living/carbon/human/user, list/modifiers)
@@ -70,8 +71,8 @@
 	if (!user.combat_mode)
 		if (health > 0)
 			visible_message(span_notice("[user.name] [response_help_continuous] [src]."), \
-							span_notice("[user.name] [response_help_continuous] you."), null, COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_notice("You [response_help_simple] [src]."))
+							span_notice(LANG("mob.e83dca4b", list(user.name, response_help_continuous))), null, COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_notice(LANG("mob.d6171b71", list(response_help_simple, src))))
 			playsound(loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
@@ -82,14 +83,14 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		playsound(loc, 'sound/items/weapons/pierce.ogg', 25, TRUE, -1)
 		visible_message(span_danger("[user] [response_disarm_continuous] [name]!"), \
-			span_userdanger("[user] [response_disarm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
+			span_userdanger(LANG("mob.9ab70b39", list(user, response_disarm_continuous))), null, COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger(LANG("mob.22d557f3", list(response_disarm_simple, name))))
 		log_combat(user, src, "disarmed")
 		return
 	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-	visible_message(span_danger("[user] slashes at [src]!"), \
-		span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You slash at [src]!"))
+	visible_message(span_danger(LANG("mob.f6263099", list(user, src))), \
+		span_userdanger(LANG("mob.c621411c", list(user))), null, COMBAT_MESSAGE_RANGE, user)
+	to_chat(user, span_danger(LANG("mob.131938c9", list(src))))
 	playsound(loc, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
 	apply_damage(damage)
 	log_combat(user, src, "attacked")

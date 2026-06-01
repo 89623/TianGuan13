@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define REQUIRED_ACCUMULATION(wound) (1 + (wound.severity - 1) * 0.3)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject
@@ -50,7 +51,7 @@
 		ignored_mobs = owner
 	)
 
-	to_chat(owner, span_notice("You inject blood into the damaged tissues of your host."))
+	to_chat(owner, span_notice(LANG("datum.d085dfee", null)))
 
 	worm.adjust_worm_health(-health_cost)
 

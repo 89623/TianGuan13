@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Headslugs
  *
@@ -72,7 +73,7 @@
 		return
 
 	egg_lain = TRUE
-	to_chat(src, span_userdanger("With our egg laid, our death approaches rapidly..."))
+	to_chat(src, span_userdanger(LANG("mob.87bd4e19", null)))
 	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
 
 /// Simply infects the target corpse with our changeling eggs. This shouldn't fail, because all checks should have been done in check_and_implant()
@@ -86,8 +87,8 @@
 		target.forceMove(egg)
 
 	visible_message(
-		span_warning("[src] plants something in [victim]'s flesh!"),
-		span_danger("We inject our egg into [victim]'s body!"),
+		span_warning(LANG("mob.ed618b29", list(src, victim))),
+		span_danger(LANG("mob.cbe47ce6", list(victim))),
 	)
 
 	return TRUE

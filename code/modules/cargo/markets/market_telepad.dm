@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DEFAULT_RESTOCK_COST CARGO_CRATE_VALUE * 3.375
 #define PLACE_ON_MARKET_COST PAYCHECK_LOWER * 1.2
 
@@ -153,16 +154,16 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(state_open)
-		balloon_alert(user, "close it first!")
+		balloon_alert(user, LANG("obj.1bd34d98", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!occupant)
-		balloon_alert(user, "nothing loaded!")
+		balloon_alert(user, LANG("obj.9d45bb65", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(machine_stat & NOPOWER)
-		balloon_alert(user, "machine unpowered!")
+		balloon_alert(user, LANG("obj.888dbfdc", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!COOLDOWN_FINISHED(src, recharge_cooldown))
-		balloon_alert(user, "on cooldown!")
+		balloon_alert(user, LANG("obj.d4ae5d4d", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	ui_interact(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -175,24 +176,24 @@
 
 	if(state_open)
 		if(locate(/mob/living) in tool.get_all_contents())
-			say("Living being detected, cannot sell!")
+			say(LANG("obj.2456c829", null))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
-			balloon_alert(user, "stuck to your hands!")
+			balloon_alert(user, LANG("obj.2410a229", null))
 			return ITEM_INTERACT_BLOCKING
-		balloon_alert(user, "item loaded")
+		balloon_alert(user, LANG("obj.242e1647", null))
 		close_machine(tool)
 		return ITEM_INTERACT_SUCCESS
 	else if(!creds_value)
-		balloon_alert(user, "open the machine!")
+		balloon_alert(user, LANG("obj.09335835", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(machine_stat & NOPOWER)
 		return
 
 	if(creds_value < restock_cost)
-		say("Insufficient [MONEY_NAME]!")
+		say(LANG("obj.23139ab6", list(MONEY_NAME)))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 		return ITEM_INTERACT_BLOCKING
 
@@ -270,7 +271,7 @@
 	if(QDELETED(occupant))
 		return
 	if(locate(/mob/living) in occupant.get_all_contents())
-		say("Living being detected, cannot sell!")
+		say(LANG("obj.2456c829", null))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 		return
 	var/datum/bank_account/account
@@ -279,17 +280,17 @@
 		if(!isliving(user))
 			return
 		if(length(our_market.available_items[/datum/market_item/local_good::category]) >= LTSRBT_MAX_MARKET_ITEMS)
-			say("Local market saturated, buy some goods first!")
+			say(LANG("obj.9a2848e7", null))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		var/mob/living/living_user = user
 		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
 		if(!(card?.registered_account))
-			say("No bank account to charge market fees detected!")
+			say(LANG("obj.b1a21273", null))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		if(!card.registered_account.adjust_money(-PLACE_ON_MARKET_COST, "Market: Placement Fee"))
-			say("Insufficient [MONEY_NAME]!")
+			say(LANG("obj.23139ab6", list(MONEY_NAME)))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		account = card.registered_account
@@ -303,7 +304,7 @@
 	item.moveToNullspace()
 	//Something happened and the item was deleted or relocated as soon as it was moved to nullspace.
 	if(QDELETED(item) || item.loc != null)
-		say("Runtime at market_placement.dm, line 153: item gone!") //metajoke
+		say(LANG("obj.bb08b2c9", null)) //metajoke
 		return
 	var/datum/market_item/local_good/new_item = new(item, account)
 	new_item.name = name_to_use
@@ -312,7 +313,7 @@
 
 	our_market.add_item(new_item)
 
-	say("Item placed on the market!")
+	say(LANG("obj.458555e7", null))
 	playsound(src, 'sound/effects/cashregister.ogg', 40, FALSE)
 	COOLDOWN_START(src, recharge_cooldown, recharge_time * 3)
 

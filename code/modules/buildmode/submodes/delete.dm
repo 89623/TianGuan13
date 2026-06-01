@@ -1,10 +1,10 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/delete
 	key = "delete"
 
 /datum/buildmode_mode/delete/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Delete an object")] -> Left Mouse Button on obj/turf/mob\n\
-		[span_bold("Delete all objects of a type")] -> Right Mouse Button on obj/turf/mob"))
+		LANG("datum.787f353b", list(span_bold("Delete an object"), span_bold("Delete all objects of a type")))))
 	)
 
 /datum/buildmode_mode/delete/handle_click(client/c, params, object)

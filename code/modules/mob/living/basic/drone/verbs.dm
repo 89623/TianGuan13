@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Echoes drone laws to the user
  *
@@ -7,7 +8,7 @@
 	set category = "Drone"
 	set name = "Check Laws"
 
-	to_chat(src, "<b>Drone Laws</b>")
+	to_chat(src, LANG("mob.24a048ba", null))
 	to_chat(src, laws)
 
 /**

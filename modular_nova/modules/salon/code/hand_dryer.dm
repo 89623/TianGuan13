@@ -15,10 +15,10 @@
 		return
 
 	if(busy)
-		to_chat(user, span_warning("Someone's already drying here."))
+		to_chat(user, span_warning(LANG("obj.b5773197", null)))
 		return
 
-	to_chat(user, span_notice("You start drying your hands."))
+	to_chat(user, span_notice(LANG("obj.86c15bf3", null)))
 	playsound(src, 'modular_nova/modules/salon/sound/drying.ogg', 50)
 	add_fingerprint(user)
 	busy = TRUE

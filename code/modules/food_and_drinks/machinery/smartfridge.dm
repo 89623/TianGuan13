@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // -------------------------
 //  SmartFridge.  Much todo
 // -------------------------
@@ -72,11 +73,11 @@
 			return ITEM_INTERACT_BLOCKING
 
 		welded_down = FALSE
-		to_chat(user, span_notice("You cut [src] free from the floor."))
+		to_chat(user, span_notice(LANG("obj.6a908a91", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!anchored)
-		balloon_alert(user, "wrench it first!")
+		balloon_alert(user, LANG("obj.6aca93b6", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount=2))
@@ -92,12 +93,12 @@
 		return ITEM_INTERACT_BLOCKING
 
 	welded_down = TRUE
-	to_chat(user, span_notice("You weld [src] to the floor."))
+	to_chat(user, span_notice(LANG("obj.46f0194b", list(src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(!(machine_stat & BROKEN))
-		balloon_alert(user, "no repair needed!")
+		balloon_alert(user, LANG("obj.aacffbd2", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount=1))
@@ -112,7 +113,7 @@
 	if(tool.use_tool(src, user, delay = 40, volume = 50))
 		if(!(machine_stat & BROKEN))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You repair [src]"))
+		to_chat(user, span_notice(LANG("obj.cc896b1f", list(src))))
 		atom_integrity = max_integrity
 		set_machine_stat(machine_stat & ~BROKEN)
 		update_icon()
@@ -123,7 +124,7 @@
 
 /obj/machinery/smartfridge/can_be_unfasten_wrench(mob/user, silent)
 	if(welded_down)
-		balloon_alert(user, "unweld first!")
+		balloon_alert(user, LANG("obj.20d90fcc", null))
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -256,7 +257,7 @@
 	if(!machine_stat)
 		var/shown_contents_length = visible_items()
 		if(shown_contents_length >= max_n_of_items)
-			balloon_alert(user, "no space!")
+			balloon_alert(user, LANG("obj.a5ca1017", null))
 			return FALSE
 
 		if(!(weapon.item_flags & ABSTRACT) && \
@@ -292,20 +293,20 @@
 					user.visible_message(span_notice("[user] loads \the [src] with \the [weapon]."), \
 						span_notice("You load \the [src] with \the [weapon]."))
 				if(weapon.contents.len)
-					to_chat(user, span_warning("Some items are refused."))
+					to_chat(user, span_warning(LANG("obj.94d8d593", null)))
 				if (visible_contents)
 					update_appearance()
 				return TRUE
 			else
-				to_chat(user, span_warning("There is nothing in [weapon] to put in [src]!"))
+				to_chat(user, span_warning(LANG("obj.fb117832", list(weapon, src))))
 				return FALSE
 
 	if(!powered())
-		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
+		to_chat(user, span_warning(LANG("obj.640c5ae2", list(src))))
 		return FALSE
 
 	if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
-		to_chat(user, span_warning("\The [src] smartly refuses [weapon]."))
+		to_chat(user, span_warning(LANG("obj.720d2303", list(src, weapon))))
 		return FALSE
 
 	else
@@ -334,7 +335,7 @@
 	if(ismob(weapon.loc))
 		var/mob/owner = weapon.loc
 		if(!owner.transferItemToLoc(weapon, src))
-			to_chat(owner, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
+			to_chat(owner, span_warning(LANG("obj.e235f1cb", list(weapon, src))))
 			return FALSE
 		return TRUE
 	else

@@ -459,7 +459,7 @@
 				return
 
 			if(falling_carbon.wear_mask && falling_carbon.wear_mask.flags_cover & MASKCOVERSMOUTH)
-				to_chat(falling_carbon, span_userdanger("You fall in the [reagents_to_text()]!"))
+				to_chat(falling_carbon, span_userdanger(LANG("obj.ccb6bfa8", list(reagents_to_text()))))
 			else
 				var/datum/reagents/tempr = take_reagents_flat(CHOKE_REAGENTS_INGEST_ON_FALL_AMOUNT)
 				tempr.trans_to(falling_carbon, tempr.total_volume, methods = INGEST)
@@ -467,9 +467,9 @@
 				falling_carbon.adjust_oxy_loss(5)
 				//C.emote("cough")
 				INVOKE_ASYNC(falling_carbon, TYPE_PROC_REF(/mob, emote), "cough")
-				to_chat(falling_carbon, span_userdanger("You fall in and swallow some [reagents_to_text()]!"))
+				to_chat(falling_carbon, span_userdanger(LANG("obj.511d7951", list(reagents_to_text()))))
 		else
-			to_chat(M, span_userdanger("You fall in the [reagents_to_text()]!"))
+			to_chat(M, span_userdanger(LANG("obj.ccb6bfa8", list(reagents_to_text()))))
 
 /obj/effect/abstract/liquid_turf/Initialize(mapload)
 	. = ..()

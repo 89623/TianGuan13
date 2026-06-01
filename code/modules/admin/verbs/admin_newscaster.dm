@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows you to view, add, and edit news feeds.", ADMIN_CATEGORY_EVENTS)
 	var/datum/newspanel/new_newspanel = new
 	new_newspanel.ui_interact(user.mob)
@@ -40,7 +41,7 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 /datum/newspanel/ui_static_data(mob/user)
 	. = ..()
 	if (!is_admin(user))
-		to_chat(usr, "Error: you are not an admin!", confidential = TRUE)
+		to_chat(usr, LANG("datum.27e7aa03", null), confidential = TRUE)
 		return
 
 /datum/newspanel/ui_data(mob/user)
@@ -277,7 +278,7 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
  * *user: The mob who is being checked for a held photo object.
  */
 /datum/newspanel/proc/attach_photo(mob/user)
-	to_chat(user, "I didn't add this!")
+	to_chat(user, LANG("datum.218a7921", null))
 	return
 
 /**

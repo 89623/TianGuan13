@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**Basic plumbing object.
 * It doesn't really hold anything special, YET.
 * Objects that are plumbing but not a subtype are as of writing liquid pumps and the reagent_dispenser tank
@@ -86,14 +87,14 @@
 		return NONE
 
 	if(anchored)
-		balloon_alert(user, "unanchor first!")
+		balloon_alert(user, LANG("obj.3e939160", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(I.tool_start_check(user, amount = 1))
-		to_chat(user, span_notice("You start slicing \the [src] apart."))
+		to_chat(user, span_notice(LANG("obj.789a7181", list(src))))
 		if(I.use_tool(src, user, 1.5 SECONDS, volume = 50))
 			deconstruct(TRUE)
-			to_chat(user, span_notice("You slice \the [src] apart."))
+			to_chat(user, span_notice(LANG("obj.54e5a2bb", list(src))))
 			return ITEM_INTERACT_SUCCESS
 
 	return ITEM_INTERACT_BLOCKING

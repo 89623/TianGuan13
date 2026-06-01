@@ -36,7 +36,7 @@
 		return
 	/// Check their ERP prefs; if they don't allow sextoys: BTFO
 	if(!to_be_leashed.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("[to_be_leashed] doesn't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.8d0a0182", list(to_be_leashed))))
 		return
 	/// Actually start the leashing part here
 	to_be_leashed.visible_message(span_warning("[user] raises the [src] to [to_be_leashed]'s neck!"),\
@@ -55,7 +55,7 @@
 	if(our_leash_component.resolve()) // The component will immediately delete itself if there's an existing one; this sanity checks for feedback on if it failed.
 		ouppy.balloon_alert(user, "leashed!")
 		return
-	else to_chat(user, span_danger("There's a leash attached to [ouppy] already."))
+	else to_chat(user, span_danger(LANG("obj.264e86d2", list(ouppy))))
 
 /// Leash removal
 /obj/item/clothing/erp_leash/proc/remove_leash(mob/free_bird)
@@ -131,6 +131,6 @@
 			span_userdanger("You start to unhook yourself from the leash..."), \
 			span_userdanger("You fumble in the dark, looking to unhook the leash..."))
 		if(do_after(our_parent, our_owner.breakouttime, target = our_parent))
-			to_chat(our_parent, span_notice("You unhook yourself from the leash."))
+			to_chat(our_parent, span_notice(LANG("datum.7f964868", null)))
 			qdel(src)
 	else qdel(src) // If they're not an item; something is very wrong - qdel anyways without the breakout time.

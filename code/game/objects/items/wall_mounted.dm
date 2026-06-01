@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/wallframe
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 2)
@@ -85,18 +86,18 @@
 */
 /obj/item/wallframe/proc/try_build(atom/support, mob/user)
 	if(get_dist(support, user) > 1)
-		balloon_alert(user, "you are too far!")
+		balloon_alert(user, LANG("obj.72b79433", null))
 		return FALSE
 	var/floor_to_support = get_dir(user, support)
 	if(!(floor_to_support in GLOB.cardinals))
-		balloon_alert(user, "stand in line with wall!")
+		balloon_alert(user, LANG("obj.66fb33f1", null))
 		return FALSE
 	var/turf/T = get_turf(user)
 	if(!isfloorturf(T))
-		balloon_alert(user, "cannot place here!")
+		balloon_alert(user, LANG("obj.76e1c3bd", null))
 		return FALSE
 	if(check_wall_item(T, floor_to_support, wall_external))
-		balloon_alert(user, "already something here!")
+		balloon_alert(user, LANG("obj.599bb150", null))
 		return FALSE
 
 	return TRUE
@@ -114,7 +115,7 @@
 	return interact_with_atom(get_step(get_turf(user), user.dir), user)
 
 /obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("You dismantle [src]."))
+	to_chat(user, span_notice(LANG("obj.fc814806", list(src))))
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 

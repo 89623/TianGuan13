@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // CHAPLAIN NULLROD AND CUSTOM WEAPONS //
 
 GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
@@ -435,7 +436,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	SIGNAL_HANDLER
 	if(!iscarbon(picker))
 		return
-	to_chat(picker, span_warning("[src] takes the place of your arm!"))
+	to_chat(picker, span_warning(LANG("obj.0145e1d7", list(src))))
 	var/obj/item/bodypart/active = picker.get_active_hand()
 	var/mob/living/carbon/new_hero = picker
 	new_hero.make_item_prosthetic(src, active.body_zone)
@@ -446,7 +447,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		return
 	if(!(slot & ITEM_SLOT_HANDS))
 		return
-	to_chat(user, span_warning("As you lay your hands on [src], it latches onto your arm!"))
+	to_chat(user, span_warning(LANG("obj.bbe82627", list(src))))
 	var/obj/item/bodypart/active = user.get_active_hand()
 	user.make_item_prosthetic(src, active.body_zone)
 

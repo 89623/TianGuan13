@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/shoes
 	name = "shoes"
 	icon = 'icons/obj/clothing/shoes.dmi'
@@ -163,12 +164,12 @@
 		return
 
 	if(!in_range(user, our_guy))
-		to_chat(user, span_warning("You aren't close enough to interact with [src]'s [fastening_type]!"))
+		to_chat(user, span_warning(LANG("obj.ff9b544e", list(src, fastening_type))))
 		return
 
 	if(user == loc && tied != SHOES_TIED) // if they're our own shoes, go tie-wards
 		if(DOING_INTERACTION_WITH_TARGET(user, our_guy))
-			to_chat(user, span_warning("You're already interacting with [src]!"))
+			to_chat(user, span_warning(LANG("obj.87048759", list(src))))
 			return
 		user.visible_message(span_notice("[user] begins [tied ? "unknotting" : "[fastening_verb()]"] the [fastening_type] of [user.p_their()] [src.name]."), span_notice("You begin [tied ? "unknotting" : "[fastening_verb()]"] the [fastening_type] of your [src.name]..."))
 		// NOVA EDIT ADDITION START
@@ -178,7 +179,7 @@
 		// NOVA EDIT ADDITION END
 
 		if(do_after(user, lace_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy)))
-			to_chat(user, span_notice("You [tied ? "unknot" : "[fasten_verb()]"] the [fastening_type] of your [src.name]."))
+			to_chat(user, span_notice(LANG("obj.d19b2ca2", list(tied ? "unknot" : "[fasten_verb()]", fastening_type, src.name))))
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_TIED, user)
 			else
@@ -186,17 +187,17 @@
 
 	else // if they're someone else's shoes, go knot-wards
 		if(user.body_position == STANDING_UP)
-			to_chat(user, span_warning("You must be on the floor to interact with [src]!"))
+			to_chat(user, span_warning(LANG("obj.5c4519eb", list(src))))
 			return
 		if(tied == SHOES_KNOTTED)
-			to_chat(user, span_warning("The [fastening_type] on [loc]'s [src.name] are already a hopelessly tangled mess!"))
+			to_chat(user, span_warning(LANG("obj.013dc17a", list(fastening_type, loc, src.name))))
 			return
 		if(DOING_INTERACTION_WITH_TARGET(user, our_guy))
-			to_chat(user, span_warning("You're already interacting with [src]!"))
+			to_chat(user, span_warning(LANG("obj.87048759", list(src))))
 			return
 
 		var/mod_time = lace_time
-		to_chat(user, span_notice("You quietly set to work [tied ? "un[fastening_verb()]" : "knotting"] [loc]'s [src.name]..."))
+		to_chat(user, span_notice(LANG("obj.90a62deb", list(tied ? "un[fastening_verb()]" : "knotting", loc, src.name))))
 		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
 			mod_time *= 0.75
 		// NOVA EDIT ADDITION START
@@ -204,14 +205,14 @@
 			mod_time *= 0.5
 		// NOVA EDIT ADDITION END
 		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), hidden = TRUE))
-			to_chat(user, span_notice("You [tied ? "un[fasten_verb()]" : "knot"] the [fastening_type] on [loc]'s [src.name]."))
+			to_chat(user, span_notice(LANG("obj.edb8a458", list(tied ? "un[fasten_verb()]" : "knot", fastening_type, loc, src.name))))
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)
 			else
 				adjust_laces(SHOES_UNTIED, user)
 		else // if one of us moved
 			user.visible_message(span_danger("[our_guy] stamps on [user]'s hand, mid-[tied ? "knotting" : "un[fastening_verb()]"]!"), span_userdanger("Ow! [our_guy] stamps on your hand!"), list(our_guy))
-			to_chat(our_guy, span_userdanger("You stamp on [user]'s hand! What the- [user.p_they()] [user.p_were()] [tied ? "knotting" : "un[fastening_verb()]"] your [fastening_type]!"))
+			to_chat(our_guy, span_userdanger(LANG("obj.e6f1cafd", list(user, user.p_they(), user.p_were(), tied ? "knotting" : "un[fastening_verb()]", fastening_type))))
 			user.emote("scream")
 			user.apply_damage(10, BRUTE, user.get_active_hand(), wound_bonus = CANT_WOUND)
 			user.apply_damage(40, STAMINA)
@@ -281,10 +282,10 @@
 		return
 
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
-		to_chat(user, span_warning("You're already interacting with [src]!"))
+		to_chat(user, span_warning(LANG("obj.87048759", list(src))))
 		return
 
-	to_chat(user, span_notice("You begin [tied ? "un" : ""][fastening_verb()] the [fastening_type] on [src]..."))
+	to_chat(user, span_notice(LANG("obj.0844a9b7", list(tied ? "un" : "", fastening_verb(), fastening_type, src))))
 	// NOVA EDIT ADDITION START
 	var/lace_time = src.lace_time
 	if(HAS_TRAIT(user, TRAIT_STICKY_FINGERS))
@@ -292,7 +293,7 @@
 	// NOVA EDIT ADDITION END
 
 	if(do_after(user, lace_time, target = src,extra_checks = CALLBACK(src, PROC_REF(still_shoed), user)))
-		to_chat(user, span_notice("You [tied ? "un" : ""][fasten_verb()] the [fastening_type] on [src]."))
+		to_chat(user, span_notice(LANG("obj.5728a7d8", list(tied ? "un" : "", fasten_verb(), fastening_type, src))))
 		adjust_laces(tied ? SHOES_UNTIED : SHOES_TIED, user)
 
 /obj/item/clothing/shoes/apply_fantasy_bonuses(bonus)

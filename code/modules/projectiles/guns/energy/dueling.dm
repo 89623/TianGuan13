@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DUEL_IDLE 1
 #define DUEL_PREPARATION 2
 #define DUEL_READY 3
@@ -171,7 +172,7 @@
 
 		if(!check_valid_duel(user, FALSE) && !other_gun.check_valid_duel(user, FALSE))
 			var/datum/duel/D = new(src, other_gun)
-			to_chat(user,span_notice("Pairing established. Pairing code: [D.pairing_code]"))
+			to_chat(user,span_notice(LANG("obj.b12ddd9a", list(D.pairing_code))))
 			return
 
 	return ..()
@@ -211,7 +212,7 @@
 			setting = DUEL_SETTING_C
 		if(DUEL_SETTING_C)
 			setting = DUEL_SETTING_A
-	to_chat(user,span_notice("You switch [src] setting to [setting] mode."))
+	to_chat(user,span_notice(LANG("obj.6fad9ea5", list(src, setting))))
 	update_appearance()
 
 /obj/item/gun/energy/dueling/update_overlays()
@@ -237,7 +238,7 @@
 		if(DUEL_READY)
 			return .
 		else
-			to_chat(user,span_warning("[src] is locked. Wait for FIRE signal before shooting."))
+			to_chat(user,span_warning(LANG("obj.3ef1937b", list(src))))
 			return FALSE
 
 /obj/item/gun/energy/dueling/proc/is_duelist(mob/living/L)
@@ -252,10 +253,10 @@
 		return
 	if(duel.state == DUEL_READY)
 		duel.confirmations[src] = TRUE
-		to_chat(user,span_notice("You confirm your readiness."))
+		to_chat(user,span_notice(LANG("obj.7f7f4e0d", null)))
 		return
 	else if(!is_duelist(target)) //I kinda want to leave this out just to see someone shoot a bystander or missing.
-		to_chat(user,span_warning("[src] safety system prevents shooting anyone but your designated opponent."))
+		to_chat(user,span_warning(LANG("obj.2810d504", list(src))))
 		return
 	else
 		duel.fired[src] = TRUE
@@ -269,7 +270,7 @@
 /obj/item/gun/energy/dueling/proc/check_valid_duel(mob/living/user, do_warn)
 	if(!duel)
 		if(do_warn)
-			to_chat(user,span_warning("[src] is currently unpaired."))
+			to_chat(user,span_warning(LANG("obj.4f6d8234", list(src))))
 		return FALSE
 	return TRUE
 

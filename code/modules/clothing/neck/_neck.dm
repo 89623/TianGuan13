@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/neck
 	name = "necklace"
 	icon = 'icons/obj/clothing/neck.dmi'
@@ -87,7 +88,7 @@
 /obj/item/clothing/neck/tie/click_alt(mob/user)
 	if(clip_on)
 		return NONE
-	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
+	to_chat(user, span_notice(LANG("obj.299e0dbf", list(is_tied ? "untying" : "tying", src))))
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
 	for(var/obj/structure/mirror/reflection in view(2, user))
@@ -97,11 +98,11 @@
 		tie_timer_actual *= 0.5
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
-		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
+		to_chat(user, span_notice(LANG("obj.a24eeb29", list(src))))
 		return CLICK_ACTION_BLOCKING
 	// Clumsy & Dumb people have trouble tying their ties.
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
-		to_chat(user, span_notice("You just can't seem to get a proper grip on [src]!"))
+		to_chat(user, span_notice(LANG("obj.541d2bca", list(src))))
 		return CLICK_ACTION_BLOCKING
 	// Success!
 	is_tied = !is_tied
@@ -116,7 +117,7 @@
 /obj/item/clothing/neck/tie/click_alt_secondary(mob/user)
 	alternate_worn_layer = (alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer))
 	user.update_clothing(ITEM_SLOT_NECK)
-	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suits")
+	balloon_alert(user, LANG("obj.d521fa2f", list(alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above")))
 
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
@@ -542,7 +543,7 @@
 /obj/item/clothing/neck/necklace/dope/merchant/attack_self(mob/user)
 	. = ..()
 	selling = !selling
-	to_chat(user, span_notice("[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode."))
+	to_chat(user, span_notice(LANG("obj.d973b9a4", list(src, selling ? "'Sell'" : "'Get Price'"))))
 
 /obj/item/clothing/neck/necklace/dope/merchant/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/datum/export_report/ex = export_item_and_contents(interacting_with, delete_unsold = selling, dry_run = !selling)
@@ -553,11 +554,11 @@
 	if(price)
 		var/true_price = round(price*profit_scaling)
 		var/fee_display = round(price-true_price)
-		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [interacting_with], value: <b>[true_price]</b> [MONEY_NAME][interacting_with.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[fee_display]</b> [MONEY_NAME_AUTOPURAL(fee_display)] taken as processing fee\s." : ""]"))
+		to_chat(user, span_notice(LANG("obj.d99227d1", list(selling ? "Sold" : "Getting the price of", interacting_with, true_price, MONEY_NAME, interacting_with.contents.len ? " (exportable contents included)" : "", profit_scaling < 1 && selling ? "<b>[fee_display]</b> [MONEY_NAME_AUTOPURAL(fee_display)] taken as processing fee\s." : ""))))
 		if(selling)
 			new /obj/item/holochip(get_turf(user), true_price)
 	else
-		to_chat(user, span_warning("There is no export value for [interacting_with] or any items within it."))
+		to_chat(user, span_warning(LANG("obj.553fba17", list(interacting_with))))
 
 	return ITEM_INTERACT_BLOCKING
 

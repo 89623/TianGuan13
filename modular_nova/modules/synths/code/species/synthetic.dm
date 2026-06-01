@@ -76,7 +76,7 @@
 		human.adjust_fire_loss(1) //Still deal some damage in case a cold environment would be preventing us from the sweet release to robot heaven
 		human.adjust_bodytemperature(13) //We're overheating!!
 		if(prob(10))
-			to_chat(human, span_warning("Alert: Critical damage taken! Cooling systems failing!"))
+			to_chat(human, span_warning(LANG("datum.c8d8f006", null)))
 			do_sparks(3, TRUE, human)
 
 /datum/species/synthetic/spec_revival(mob/living/carbon/human/transformer)
@@ -172,7 +172,7 @@
 	oversized_quirk.old_organs += list(old_stomach)
 
 	new_synth_stomach.Insert(human_holder, special = TRUE)
-	to_chat(human_holder, span_warning("You feel your massive engine rumble!"))
+	to_chat(human_holder, span_warning(LANG("datum.55519864", null)))
 	if(old_stomach)
 		old_stomach.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_stomach)
@@ -184,7 +184,7 @@
 		return
 	emag_effect = TRUE
 	playsound(source.loc, 'sound/misc/interference.ogg', 50)
-	to_chat(source, span_warning("Alert: Security breach detected in central processing unit. Error Code: 540-EXO"))
+	to_chat(source, span_warning(LANG("datum.d3bcbb5d", null)))
 
 /**
  * Makes the IPC screen switch to BSOD followed by a blank screen

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*****************Marker Beacons**************************/
 GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 "Random" = FALSE, //not a true color, will pick a random color
@@ -47,13 +48,13 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 
 /obj/item/stack/marker_beacon/attack_self(mob/user)
 	if(!isturf(user.loc))
-		to_chat(user, span_warning("You need more space to place a [singular_name] here."))
+		to_chat(user, span_warning(LANG("obj.d86190c0", list(singular_name))))
 		return
 	if(locate(/obj/structure/marker_beacon) in user.loc)
-		to_chat(user, span_warning("There is already a [singular_name] here."))
+		to_chat(user, span_warning(LANG("obj.e51e3fee", list(singular_name))))
 		return
 	if(use(1))
-		to_chat(user, span_notice("You activate and anchor [amount ? "a":"the"] [singular_name] in place."))
+		to_chat(user, span_notice(LANG("obj.14caf882", list(amount ? "a":"the", singular_name))))
 		playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
@@ -119,7 +120,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	. = ..()
 	if(.)
 		return
-	to_chat(user, span_notice("You start picking [src] up..."))
+	to_chat(user, span_notice(LANG("obj.71262792", list(src))))
 	if(do_after(user, remove_speed, target = src))
 		var/obj/item/stack/marker_beacon/M = new(loc)
 		M.picked_color = picked_color
@@ -135,7 +136,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 /obj/structure/marker_beacon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/stack/marker_beacon))
 		var/obj/item/stack/marker_beacon/M = I
-		to_chat(user, span_notice("You start picking [src] up..."))
+		to_chat(user, span_notice(LANG("obj.71262792", list(src))))
 		if(do_after(user, remove_speed, target = src) && M.amount + 1 <= M.max_amount)
 			M.add(1)
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -144,7 +145,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	if(istype(I, /obj/item/light_eater))
 		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
 		A.desc += "\nLooks like this used to be \a [src] some time ago."
-		visible_message(span_danger("[src] is disintegrated by [I]!"))
+		visible_message(span_danger(LANG("obj.c92ed8d3", list(src, I))))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		qdel(src)
 		return

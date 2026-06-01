@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # egg layer component!
  *
@@ -61,10 +62,10 @@
 	if(isliving(at_least_atom))
 		var/mob/living/potentially_dead_horse = at_least_atom
 		if(potentially_dead_horse.stat == DEAD)
-			to_chat(attacker, span_warning("[parent] is dead!"))
+			to_chat(attacker, span_warning(LANG("datum.01e50bce", list(parent))))
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(eggs_left > max_eggs_held)
-		to_chat(attacker, span_warning("[parent] doesn't seem hungry!"))
+		to_chat(attacker, span_warning(LANG("datum.42ca0324", list(parent))))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	attacker.visible_message(span_notice("[attacker] hand-feeds [food] to [parent]."), span_notice("You hand-feed [food] to [parent]."))
 	at_least_atom.visible_message(pick(feed_messages))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/absorb_dna
 	name = "Absorb DNA"
 	desc = "Absorb the DNA of our victim. Requires us to strangle them."
@@ -52,7 +53,7 @@
 
 	var/true_absorbtion = (!isnull(target.client) || !isnull(target.mind) || !isnull(target.last_mind))
 	if (!true_absorbtion)
-		to_chat(owner, span_changeling(span_bold("You absorb [target], but their weak DNA is not enough to satisfy your hunger.")))
+		to_chat(owner, span_changeling(span_bold(LANG("datum.5944122c", list(target)))))
 
 	if(!changeling.has_profile_with_dna(target.dna))
 		changeling.add_new_profile(target)
@@ -117,17 +118,17 @@
 
 	if(recent_speech.len)
 		changeling.antag_memory += "Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]: "
-		to_chat(owner, span_boldnotice("Some of [target]'s speech patterns, we should study these to better impersonate [target.p_them()]!"))
+		to_chat(owner, span_boldnotice(LANG("datum.45ecc4e3", list(target, target.p_them()))))
 		for(var/spoken_memory in recent_speech)
 			changeling.antag_memory += " \"[spoken_memory]\""
 			to_chat(owner, span_notice("\"[spoken_memory]\""))
 		changeling.antag_memory += ". We have no more knowledge of [target]'s speech patterns. "
-		to_chat(owner, span_boldnotice("We have no more knowledge of [target]'s speech patterns."))
+		to_chat(owner, span_boldnotice(LANG("datum.25c00917", list(target))))
 
 
 	var/datum/antagonist/changeling/target_ling = IS_CHANGELING(target)
 	if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
-		to_chat(owner, span_boldnotice("[target] was one of us. We have absorbed their power."))
+		to_chat(owner, span_boldnotice(LANG("datum.7152d375", list(target))))
 
 		// Gain half of their genetic points.
 		var/genetic_points_to_add = round(target_ling.total_genetic_points / 2)
@@ -285,7 +286,7 @@
 	if(QDELETED(freeloader) || QDELETED(src))
 		return FALSE
 
-	to_chat(freeloader, span_userdanger("You have been ejected from the changeling hivemind!"))
+	to_chat(freeloader, span_userdanger(LANG("datum.8605b927", null)))
 	qdel(freeloader)
 	..()
 	return TRUE

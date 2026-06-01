@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Base class for all random spawners.
  */
@@ -155,7 +156,7 @@
 	make_table()
 
 /obj/item/loot_table_maker/attack_self(mob/user)
-	to_chat(user, "Loot pool re-rolled.")
+	to_chat(user, LANG("obj.052c0320", null))
 	make_table()
 
 /obj/item/loot_table_maker/proc/make_table()

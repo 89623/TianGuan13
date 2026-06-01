@@ -115,18 +115,18 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 
 	if(!inserted_cell)
 		if(user)
-			to_chat(user, span_danger("There is no cell inside [equipment]"))
+			to_chat(user, span_danger(LANG("datum.fea3c662", list(equipment))))
 		return COMPONENT_NO_CELL
 
 	if(check_only && inserted_cell.charge < use_amount)
 		if(user)
-			to_chat(user, span_danger("The cell inside [equipment] does not have enough charge to perform this action!"))
+			to_chat(user, span_danger(LANG("datum.68253528", list(equipment))))
 		return COMPONENT_NO_CHARGE
 
 	if(!inserted_cell.use(use_amount))
 		inserted_cell.update_appearance()  //Updates the attached cell sprite - Why does this not happen in cell.use?
 		if(user)
-			to_chat(user, span_danger("The cell inside [equipment] does not have enough charge to perform this action!"))
+			to_chat(user, span_danger(LANG("datum.68253528", list(equipment))))
 		return COMPONENT_NO_CHARGE
 
 	inserted_cell.update_appearance()
@@ -160,7 +160,7 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 		return
 
 	if(inserted_cell)
-		to_chat(user, span_notice("You remove [inserted_cell] from [equipment]!"))
+		to_chat(user, span_notice(LANG("datum.c2d94c48", list(inserted_cell, equipment))))
 		playsound(equipment, 'sound/items/weapons/magout.ogg', 40, TRUE)
 		inserted_cell.forceMove(get_turf(equipment))
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living, put_in_hands), inserted_cell)
@@ -169,7 +169,7 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 			on_cell_removed.Invoke()
 		handle_cell_overlays(TRUE)
 	else
-		to_chat(user, span_danger("There is no cell inserted in [equipment]!"))
+		to_chat(user, span_danger(LANG("datum.289d8aae", list(equipment))))
 
 /// Handling of cell insertion.
 /datum/component/cell/proc/insert_cell(datum/source, obj/item/inserting_item, mob/living/user, params)
@@ -184,10 +184,10 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 		return
 
 	if(inserted_cell) //No quickswap compatibility
-		to_chat(user, span_danger("There is already a cell inserted in [equipment]!"))
+		to_chat(user, span_danger(LANG("datum.315dcd41", list(equipment))))
 		return
 
-	to_chat(user, span_notice("You insert [inserting_item] into [equipment]!"))
+	to_chat(user, span_notice(LANG("datum.dbb74bc7", list(inserting_item, equipment))))
 	playsound(equipment, 'sound/items/weapons/magin.ogg', 40, TRUE)
 	inserted_cell = inserting_item
 	inserting_item.forceMove(parent)

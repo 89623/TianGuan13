@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAX_ICON_NOTICES 8
 #define MAX_CASES 8
 #define MAX_EVIDENCE_Y 3500
@@ -43,11 +44,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 /obj/structure/detectiveboard/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
 		if(!cases.len)
-			to_chat(user, "There are no cases!")
+			to_chat(user, LANG("obj.46f0ed87", null))
 			return
 
 		if(attaching_evidence)
-			to_chat(user, "You already attaching evidence!")
+			to_chat(user, LANG("obj.05e0afaf", null))
 			return
 		attaching_evidence = TRUE
 		var/name = tgui_input_text(user, "Please enter the evidence name", "Detective's Board", max_length = MAX_NAME_LEN)
@@ -63,7 +64,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		cases[current_case].notices++
 		var/datum/evidence/evidence = new (name, desc, item)
 		cases[current_case].evidences += evidence
-		to_chat(user, span_notice("You pin the [item] to the detective board."))
+		to_chat(user, span_notice(LANG("obj.a05c7252", list(item))))
 		attaching_evidence = FALSE
 		update_appearance(UPDATE_ICON)
 		return
@@ -71,11 +72,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 /obj/structure/detectiveboard/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
-	balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	balloon_alert(user, LANG("obj.e4901a5f", list(anchored ? "un" : "")))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		balloon_alert(user, "[anchored ? "un" : ""]secured")
+		balloon_alert(user, LANG("obj.97c34052", list(anchored ? "un" : "")))
 		deconstruct()
 		return TRUE
 
@@ -244,7 +245,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	item.forceMove(drop_location())
 	if(user)
 		user.put_in_hands(item)
-		balloon_alert(user, "removed from board")
+		balloon_alert(user, LANG("obj.a9ab49eb", null))
 	cases[current_case].notices--
 	update_appearance(UPDATE_ICON)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Spirit mob that lacks legs but still roams the station as part of the unliving.
 /datum/species/spirit
 	name = "Spirit"
@@ -252,5 +253,5 @@
 /datum/action/innate/toggle_passthrough/proc/attempt_move(mob/source, new_loc, direct)
 	SIGNAL_HANDLER
 	if(locate(/obj/effect/blessing) in new_loc)
-		to_chat(source, span_warning("Holy energies block your path!"))
+		to_chat(source, span_warning(LANG("datum.1fa44391", null)))
 		return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE

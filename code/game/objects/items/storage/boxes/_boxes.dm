@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The common cardboard box.
 /obj/item/storage/box
 	name = "box"
@@ -45,12 +46,12 @@
 	if(!foldable_result || (flags_1 & HOLOGRAM_1))
 		return
 	if(contents.len)
-		balloon_alert(user, "items inside!")
+		balloon_alert(user, LANG("obj.ca142d62", null))
 		return
 	if(!ispath(foldable_result))
 		return
 
 	var/obj/item/result = new foldable_result(user.drop_location())
-	balloon_alert(user, "folded")
+	balloon_alert(user, LANG("obj.02a8ddc2", null))
 	qdel(src)
 	user.put_in_hands(result)

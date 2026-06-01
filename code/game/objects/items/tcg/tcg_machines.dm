@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define STAT_Y -23
 #define POWER_X -14
 #define RESOLVE_X 12
@@ -31,7 +32,7 @@
 		if(card_template.cardtype == "Creature")
 			if(!user.transferItemToLoc(current_card, src))
 				return
-			to_chat(user, span_notice("You put the [current_card] card in [src]."))
+			to_chat(user, span_notice(LANG("obj.82c9f7d7", list(current_card, src))))
 			icon_state = "card_holder_active"
 			update_appearance()
 			current_summon = new(locate(x + summon_offset_x, y + summon_offset_y, z))
@@ -40,7 +41,7 @@
 			current_summon.team_color = team_color
 			current_summon.load_model()
 		else
-			to_chat(user, span_notice("The [src] smartly rejects the non-creature card."))
+			to_chat(user, span_notice(LANG("obj.420a7bcf", list(src))))
 			current_card = null
 			return ..()
 	else
@@ -84,7 +85,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 			if(null)
 				return
 	else
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 	add_fingerprint(user)
 	return ..()
 
@@ -99,7 +100,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		current_summon.team_color = team_color
 		current_summon.load_model()
 	else
-		to_chat(user, span_notice("The [src] already contains a card."))
+		to_chat(user, span_notice(LANG("obj.5bfc3552", list(src))))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/trading_card_holder/proc/check_menu(mob/living/user)

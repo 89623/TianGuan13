@@ -29,7 +29,7 @@
 /obj/item/reagent_containers/hashbrick/attack_self(mob/user)
 	user.visible_message(span_notice("[user] starts breaking up the [src]."))
 	if(do_after(user,10))
-		to_chat(user, span_notice("You finish breaking up the [src]."))
+		to_chat(user, span_notice(LANG("obj.eb1bbccb", list(src))))
 		for(var/i = 1 to 4)
 			new /obj/item/reagent_containers/hash(user.loc)
 		qdel(src)

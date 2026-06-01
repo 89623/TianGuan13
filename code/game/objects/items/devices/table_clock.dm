@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Maximum amount of times a clock can be repaired until it's destroyed beyond repair.
 #define MAX_CLOCK_REPAIRS 2
 
@@ -55,7 +56,7 @@
 /obj/item/table_clock/interact(mob/user)
 	. = ..()
 	if(!broken)
-		to_chat(user, span_warning("Touch the clock? And risk breaking it? Are you crazy??"))
+		to_chat(user, span_warning(LANG("obj.d7466fc2", null)))
 		return
 	if(times_broken > MAX_CLOCK_REPAIRS)
 		user.balloon_alert(user, "clock unrepairable!")

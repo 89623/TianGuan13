@@ -17,31 +17,31 @@
 
 	var/obj/machinery/power/apc/cogger_apc = attacked_atom
 	if(cogger_apc.integration_cog)
-		balloon_alert(user, "already has a cog inside!")
+		balloon_alert(user, LANG("obj.3954bfbd", null))
 		return
 
 	if(!cogger_apc.panel_open)
 		//Cut open the panel
-		balloon_alert(user, "cutting open APC...")
+		balloon_alert(user, LANG("obj.b67c6de3", null))
 		if(!do_after(user, 5 SECONDS, target = cogger_apc))
 			return
 
-		balloon_alert(user, "apc cut open")
+		balloon_alert(user, LANG("obj.12217a7c", null))
 		cogger_apc.panel_open = TRUE
 		cogger_apc.update_appearance()
 		return
 
 	//Insert the cog
-	balloon_alert(user, "inserting [src]...")
+	balloon_alert(user, LANG("obj.3b69f686", list(src)))
 	if(!do_after(user, 4 SECONDS, target = cogger_apc))
-		balloon_alert(user, "failed to insert [src]!")
+		balloon_alert(user, LANG("obj.cc949f95", list(src)))
 		return
 
 	cogger_apc.integration_cog = src
 	forceMove(cogger_apc)
 	cogger_apc.panel_open = FALSE
 	cogger_apc.update_appearance()
-	balloon_alert(user, "[src] inserted")
+	balloon_alert(user, LANG("obj.048c1f34", list(src)))
 	playsound(get_turf(user), 'sound/machines/clockcult/integration_cog_install.ogg', 20)
 	if(!cogger_apc.clock_cog_rewarded)
 		addtimer(CALLBACK(src, PROC_REF(finish_setup), cogger_apc), SET_UP_TIME)
@@ -98,12 +98,12 @@
 	if(!opened || !integration_cog)
 		return ..()
 
-	balloon_alert(user, "prying something out of [src]...")
+	balloon_alert(user, LANG("obj.1f073831", list(src)))
 	crowbar.play_tool_sound(src)
 	if(!crowbar.use_tool(src, user, 5 SECONDS))
 		return
 
-	balloon_alert(user, "pried out something, destroying it!")
+	balloon_alert(user, LANG("obj.59df4ea8", null))
 	QDEL_NULL(integration_cog)
 
 #undef MAX_POWER_PER_COG

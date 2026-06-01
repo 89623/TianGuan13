@@ -28,7 +28,7 @@
 		alert(user, "Sorry, This spawner is not for you!", "", "Ok")
 		return
 	if(is_banned_from(user.ckey, BAN_GHOST_ROLE_SPAWNER))
-		to_chat(user, "Error, you are banned from playing ghost roles!")
+		to_chat(user, LANG("obj.6eeb0d8d", null))
 		return
 	var/species_string
 	if(species_whitelist)
@@ -164,7 +164,7 @@
 		H.ckey = user.ckey
 
 	//Greet!
-	to_chat(H, span_big("You are the [job_name]"))
+	to_chat(H, span_big(LANG("obj.95bdbfbd", list(job_name))))
 	to_chat(H, span_bold("[flavor_text]"))
 	if(disappear_after_spawn)
 		qdel(src)

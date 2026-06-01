@@ -23,13 +23,13 @@
 		return FALSE
 
 	if (!isliving(cast_on))
-		to_chat(owner, span_warning("Inanimate objects can't hear your thoughts."))
+		to_chat(owner, span_warning(LANG("datum.86d94ab7", null)))
 		owner.balloon_alert(owner, "not a thing with thoughts!")
 		return FALSE
 
 	var/mob/living/living_target = cast_on
 	if (living_target.stat == DEAD)
-		to_chat(owner, span_warning("The disruptive noise of departed resonance inhibits your ability to communicate with the dead."))
+		to_chat(owner, span_warning(LANG("datum.d4f4d012", null)))
 		owner.balloon_alert(owner, "can't transmit to the dead!")
 		return FALSE
 
@@ -94,7 +94,7 @@
 
 	last_target_ref = WEAKREF(target)
 
-	to_chat(owner, span_boldnotice("You reach out and convey to [target]: \"[span_purple(message)]\""))
+	to_chat(owner, span_boldnotice(LANG("datum.db13527c", list(target, span_purple(message)))))
 	// flub a runechat chat message, do something with the language later
 	if(owner.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 		owner.create_chat_message(owner, owner.get_selected_language(), message, list("italics"))
@@ -105,15 +105,15 @@
 			var/datum/mutation/telepathy/tele_mut = human_caster.dna.get_mutation(/datum/mutation/telepathy)
 
 			if (tele_mut)
-				to_chat(target, span_boldnotice("A psychic presence resounds in your mind: \"[span_purple(message)]\""))
+				to_chat(target, span_boldnotice(LANG("datum.4660e348", list(span_purple(message)))))
 			else
-				to_chat(target, span_boldnotice("[caster]'s voice echoes in your head: \"[span_purple(message)]\""))
+				to_chat(target, span_boldnotice(LANG("datum.2c5cb7b9", list(caster, span_purple(message)))))
 
 		if(target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 			target.create_chat_message(target, target.get_selected_language(), message, list("italics")) // it appears over them since they hear it in their head
 	else
 		owner.balloon_alert(owner, "something blocks your thoughts!")
-		to_chat(owner, span_warning("Your mind encounters impassable resistance: the thought was blocked!"))
+		to_chat(owner, span_warning(LANG("datum.37192448", null)))
 		return
 
 	// send to ghosts as well i guess

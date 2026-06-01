@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///An element that forbids mobs without a required skill level from equipping the item.
 /datum/element/skill_reward
 	element_flags = ELEMENT_BESPOKE
@@ -22,7 +23,7 @@
 /datum/element/skill_reward/proc/on_attack_hand(datum/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 	if(!LAZYACCESS(modifiers, CTRL_CLICK) && !check_equippable(user)) //Allows other players to drag it around at least.
-		to_chat(user, span_warning("You feel completely and utterly unworthy to even touch \the [source]."))
+		to_chat(user, span_warning(LANG("datum.941ba63a", list(source))))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	return NONE
 
@@ -31,7 +32,7 @@
 	SIGNAL_HANDLER
 	if(check_equippable(user) || !(source in user.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES)))
 		return NONE
-	to_chat(user, span_warning("You feel completely and utterly unworthy to even touch \the [source]."))
+	to_chat(user, span_warning(LANG("datum.941ba63a", list(source))))
 	user.dropItemToGround(source, TRUE)
 	return COMPONENT_EQUIPPED_FAILED
 

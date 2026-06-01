@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/machines/sec.dmi'
@@ -88,31 +89,31 @@
 		return NONE
 
 	if(!anchored)
-		to_chat(user, span_notice("[src] isn't connected to anything!"))
+		to_chat(user, span_notice(LANG("obj.2b64da23", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(charging || panel_open)
 		return ITEM_INTERACT_BLOCKING
 
 	var/area/our_area = get_area(src) //Check to make sure user's not in space doing it, and that the area got proper power.
 	if(!isarea(our_area) || our_area.power_equip == 0)
-		to_chat(user, span_notice("[src] blinks red as you try to insert [tool]."))
+		to_chat(user, span_notice(LANG("obj.ca42acf6", list(src, tool))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = tool
 		if(!energy_gun.can_charge)
-			to_chat(user, span_notice("Your gun has no external power connector."))
+			to_chat(user, span_notice(LANG("obj.3f23c575", null)))
 			return ITEM_INTERACT_BLOCKING
 	user.transferItemToLoc(tool, src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/recharger/wrench_act(mob/living/user, obj/item/tool)
 	if(charging)
-		to_chat(user, span_notice("Remove the charging item first!"))
+		to_chat(user, span_notice(LANG("obj.78b0ee6f", null)))
 		return ITEM_INTERACT_BLOCKING
 	set_anchored(!anchored)
 	power_change()
-	to_chat(user, span_notice("You [anchored ? "attached" : "detached"] [src]."))
+	to_chat(user, span_notice(LANG("obj.d6171b71", list(anchored ? "attached" : "detached", src))))
 	tool.play_tool_sound(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -154,7 +155,7 @@
 			charge_cell(charging_cell.chargerate * recharge_coeff * seconds_per_tick, charging_cell)
 			if(charging_cell.charge >= charging_cell.maxcharge) //Inserted thing is at max charge/ammo, notify those around us
 				playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-				say("[charging] has finished recharging!")
+				say(LANG("obj.53fdf44c", list(charging)))
 			else
 				using_power = TRUE
 		update_appearance()
@@ -187,7 +188,7 @@
 			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
 			if(recalibrating_gun.shots_before_degradation == recalibrating_gun.max_shots_before_degradation)
 				playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-				say("[charging] has finished recalibrating!")
+				say(LANG("obj.83a48aa3", list(charging)))
 			else
 				using_power = TRUE
 		update_appearance()

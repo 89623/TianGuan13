@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //******Decoration objects
 //***Bone statues and giant skeleton parts.
 /obj/structure/statue/bone
@@ -105,7 +106,7 @@
 /obj/structure/sink/oil_well/attack_hand(mob/user, list/modifiers)
 	flick("puddle-oil-splash",src)
 	reagents.expose(user, TOUCH, 20) //Covers target in 20u of oil.
-	to_chat(user, span_notice("You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water."))
+	to_chat(user, span_notice(LANG("obj.0053387d", null)))
 
 /obj/structure/sink/oil_well/wrench_act(mob/living/user, obj/item/tool)
 	//we deconstruct with a shovel
@@ -114,7 +115,7 @@
 /obj/structure/sink/oil_well/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	flick("puddle-oil-splash",src)
 	if(tool.tool_behaviour == TOOL_SHOVEL) //attempt to deconstruct the puddle with a shovel
-		to_chat(user, "You fill in the oil well with soil.")
+		to_chat(user, LANG("obj.86bbd906", null))
 		tool.play_tool_sound(src)
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
@@ -217,7 +218,7 @@
 		return FALSE
 
 	if(!force)
-		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
+		to_chat(user, span_notice(LANG("obj.dd2ad981", null)))
 		return FALSE
 
 	return TRUE
@@ -228,7 +229,7 @@
 		return FALSE
 
 	if(!dug_closed)
-		to_chat(user, span_notice("You'll need a shovel to cover it up."))
+		to_chat(user, span_notice(LANG("obj.9b22dd2a", null)))
 		return FALSE
 
 	dug_closed = FALSE
@@ -256,10 +257,10 @@
 			user.add_mood_event("graverobbing", is_chill_with_robbing ? /datum/mood_event/morbid_graverobbing : /datum/mood_event/graverobbing)
 			if(lead_tomb && first_open)
 				if(is_chill_with_robbing)
-					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
+					to_chat(user, span_notice(LANG("obj.d864b6cd", null)))
 				else
 					user.gain_trauma(/datum/brain_trauma/magic/stalker)
-					to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
+					to_chat(user, span_boldwarning(LANG("obj.e77630b1", null)))
 				first_open = FALSE
 
 		return TRUE
@@ -276,7 +277,7 @@
 		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
 			return TRUE
 
-		to_chat(user, span_notice("You remove \the [src] completely."))
+		to_chat(user, span_notice(LANG("obj.7c288ba4", list(src))))
 		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 		deconstruct(TRUE)
 		return TRUE
@@ -302,7 +303,7 @@
 		bust_open()
 	else
 		if(user.loc == src)
-			to_chat(user, span_warning("You fail to dig yourself out of [src]!"))
+			to_chat(user, span_warning(LANG("obj.9e84027d", list(src))))
 
 /obj/structure/closet/crate/grave/fresh
 	name = "makeshift grave"

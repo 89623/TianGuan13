@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // DAT FUKKEN DISK.
 /obj/item/disk/nuclear
 	name = "nuclear authentication disk"
@@ -57,7 +58,7 @@
 			loneop.weight += 1
 			if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
 				if(disk_comfort_level >= 2)
-					visible_message(span_notice("[src] sleeps soundly. Sleep tight, disky."))
+					visible_message(span_notice(LANG("obj.3a557a66", list(src))))
 				message_admins("[src] is unsecured in [ADMIN_VERBOSEJMP(new_turf)]. The weight of Lone Operative is now [loneop.weight].")
 			log_game("[src] was left unsecured in [loc_name(new_turf)]. Weight of the Lone Operative event increased to [loneop.weight].")
 
@@ -82,7 +83,7 @@
 	if(istype(weapon, /obj/item/claymore/highlander) && !fake)
 		var/obj/item/claymore/highlander/claymore = weapon
 		if(claymore.nuke_disk)
-			to_chat(user, span_notice("Wait... what?"))
+			to_chat(user, span_notice(LANG("obj.ffa4945b", null)))
 			qdel(claymore.nuke_disk)
 			claymore.nuke_disk = null
 			return

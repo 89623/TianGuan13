@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Memento Mori
 /obj/item/clothing/neck/necklace/memento_mori
 	name = "Memento Mori"
@@ -24,11 +25,11 @@
 	return ..()
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/memento(mob/living/carbon/human/user)
-	to_chat(user, span_warning("You feel your life being drained by the pendant..."))
+	to_chat(user, span_warning(LANG("obj.0e16b0d7", null)))
 	if (!do_after(user, 4 SECONDS, target = user))
 		return
 
-	to_chat(user, span_notice("Your lifeforce is now linked to the pendant! You feel like removing it would kill you, and yet you instinctively know that until then, you won't die."))
+	to_chat(user, span_notice(LANG("obj.eafd974e", null)))
 	user.add_traits(list(TRAIT_NODEATH, TRAIT_NOHARDCRIT, TRAIT_NOCRITDAMAGE), CLOTHING_TRAIT)
 	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 	icon_state = "memento_mori_active"
@@ -41,7 +42,7 @@
 	UnregisterSignal(active_owner, COMSIG_LIVING_HEALTH_UPDATE)
 	var/mob/living/carbon/human/stored_owner = active_owner //to avoid infinite looping when dust unequips the pendant
 	active_owner = null
-	to_chat(stored_owner, span_userdanger("You feel your life rapidly slipping away from you!"))
+	to_chat(stored_owner, span_userdanger(LANG("obj.4b638a33", null)))
 	stored_owner.dust(just_ash = TRUE, drop_items = TRUE)
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
@@ -65,13 +66,13 @@
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(guardian))
 	guardian.locked = TRUE
 	guardian.forceMove(src)
-	to_chat(guardian, span_userdanger("You have been locked away in your summoner's pendant!"))
+	to_chat(guardian, span_userdanger(LANG("obj.a67a0756", null)))
 	guardian.playsound_local(get_turf(guardian), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/basic/guardian/guardian)
 	guardian.locked = FALSE
 	guardian.recall(forced = TRUE)
-	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
+	to_chat(guardian, span_notice(LANG("obj.c10c0528", null)))
 	guardian.playsound_local(get_turf(guardian), 'sound/effects/magic/repulse.ogg', 50, TRUE)
 
 /datum/action/item_action/hands_free/memento_mori

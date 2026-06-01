@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Energy used to say an error message.
 #define ENERGY_TO_SPEAK (0.001 * STANDARD_CELL_CHARGE)
 
@@ -50,17 +51,17 @@
 
 /obj/item/inspector/crowbar_act(mob/living/user, obj/item/tool)
 	cell_cover_open = !cell_cover_open
-	balloon_alert(user, "[cell_cover_open ? "opened" : "closed"] cell cover")
+	balloon_alert(user, LANG("obj.b788caa2", list(cell_cover_open ? "opened" : "closed")))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inspector/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(cell_cover_open && istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
-			to_chat(user, span_warning("[src] already has a cell installed."))
+			to_chat(user, span_warning(LANG("obj.3d7d4031", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(user.transferItemToLoc(tool, src))
 			cell = tool
-			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
+			to_chat(user, span_notice(LANG("obj.b9a8027e", list(cell, src))))
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 	return NONE
@@ -91,10 +92,10 @@
 	if(!user.Adjacent(interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	if(cell_cover_open)
-		balloon_alert(user, "close cover first!")
+		balloon_alert(user, LANG("obj.b93a1c09", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!cell || !cell.use(0.001 * STANDARD_CELL_CHARGE))
-		balloon_alert(user, "check cell!")
+		balloon_alert(user, LANG("obj.480a0be7", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(iscarbon(interacting_with)) // Prevents scanning people
@@ -102,11 +103,11 @@
 
 	if(contraband_scan(interacting_with, user))
 		playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 40)
-		balloon_alert(user, "contraband detected!")
+		balloon_alert(user, LANG("obj.3cd1e965", null))
 		return ITEM_INTERACT_SUCCESS
 
 	playsound(src, 'sound/machines/ping.ogg', 20)
-	balloon_alert(user, "clear")
+	balloon_alert(user, LANG("obj.1e8e1077", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inspector/add_context(atom/source, list/context, obj/item/held_item, mob/user)

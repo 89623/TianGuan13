@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define NORMAL_TOAST_PROB 3
 #define BROKEN_TOAST_PROB 33
 
@@ -113,7 +114,7 @@
 	do_sparks(4, FALSE, source)
 	playsound(parent, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	source.audible_message(span_danger("[parent] makes a loud electric crackle!"))
-	to_chat(future_tram_victim, span_userdanger("You hear a loud electric crackle!"))
+	to_chat(future_tram_victim, span_userdanger(LANG("datum.1b7e920f", null)))
 	future_tram_victim.electrocute_act(15, parent, 1)
 	return TRUE
 

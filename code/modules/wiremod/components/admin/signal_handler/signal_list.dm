@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /proc/circuit_signal_response(name, bitflag)
 	SHOULD_BE_PURE(TRUE)
 	return list(
@@ -103,4 +104,4 @@ GLOBAL_LIST_INIT(integrated_circuit_global_signal_ids, generate_global_circuit_s
 		extra_info = " as a global signal"
 	else
 		GLOB.integrated_circuit_signal_ids[signal_id] = sanitized_data
-	balloon_alert(usr, "successfully added [signal_id][extra_info]")
+	balloon_alert(usr, LANG("obj.997bbcc7", list(signal_id, extra_info)))

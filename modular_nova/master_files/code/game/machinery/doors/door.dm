@@ -16,13 +16,13 @@
 	var/request_key = "[user.ckey]_[REF(src)]"
 	var/last_request = requesters[request_key]
 	if(last_request && world.time < last_request + DOOR_AI_REQUEST_COOLDOWN)
-		to_chat(user, span_warning("You've already asked the AI about this door recently."))
+		to_chat(user, span_warning(LANG("obj.ff184461", null)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	. = ..()
 
 	if(!hasPower())
-		to_chat(user, span_warning("This door isn't powered."))
+		to_chat(user, span_warning(LANG("obj.12e1e022", null)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	src.balloon_alert(user, "ai requested!")

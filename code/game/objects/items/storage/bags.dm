@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ORE_BAG_BALOON_COOLDOWN (2 SECONDS)
 
 /*
@@ -141,8 +142,7 @@
 
 /obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/boulder))
-		to_chat(user, span_warning("You can't fit [tool] into [src]. \
-			Perhaps you should break it down first, or find an ore box."))
+		to_chat(user, span_warning(LANG("obj.8598f5cb", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 
@@ -187,14 +187,14 @@
 	COOLDOWN_START(src, ore_bag_balloon_cooldown, ORE_BAG_BALOON_COOLDOWN)
 
 	if (box)
-		balloon_alert(user, "scoops ore into box")
+		balloon_alert(user, LANG("obj.5501bc4d", null))
 		user.visible_message(
 			span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."),
 			ignored_mobs = user
 		)
 		return
 
-	balloon_alert(user, "scoops ore into bag")
+	balloon_alert(user, LANG("obj.07acec60", null))
 	user.visible_message(
 		span_notice("[user] scoops up the ores beneath [user.p_them()]."),
 		ignored_mobs = user
@@ -221,7 +221,7 @@
 		return TRUE
 
 	if (!spam_protection)
-		balloon_alert(user, "bag full!")
+		balloon_alert(user, LANG("obj.4ca77cfc", null))
 		spam_protection = TRUE
 	return FALSE
 

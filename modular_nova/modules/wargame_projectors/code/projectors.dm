@@ -90,11 +90,11 @@
 /obj/item/wargame_projector/click_alt(mob/user)
 	var/selected_color = tgui_input_list(user, "Select a color", "Color Selection", color_options)
 	if(isnull(selected_color))
-		balloon_alert(user, "no color change")
+		balloon_alert(user, LANG("obj.4435cb6b", null))
 		return
 	var/color_to_set_to = color_options[selected_color]
 	holosign_color = color_to_set_to
-	balloon_alert(user, "color changed")
+	balloon_alert(user, LANG("obj.7210b7e8", null))
 	set_greyscale(holosign_color)
 	return CLICK_ACTION_SUCCESS
 
@@ -112,7 +112,7 @@
 	if(target_turf.is_blocked_turf(TRUE))
 		return FALSE
 	if(LAZYLEN(projections) >= max_signs)
-		balloon_alert(user, "max capacity!")
+		balloon_alert(user, LANG("obj.b672f626", null))
 		return FALSE
 	return TRUE
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/book/granter/crafting_recipe
 	/// A list of all recipe types we grant on learn
 	var/list/crafting_recipe_types = list()
@@ -15,5 +16,5 @@
 	icon_state = "book1"
 
 /obj/item/book/granter/crafting_recipe/dusting/recoil(mob/living/user)
-	to_chat(user, span_warning("The book turns to dust in your hands."))
+	to_chat(user, span_warning(LANG("obj.00d3a38e", null)))
 	qdel(src)

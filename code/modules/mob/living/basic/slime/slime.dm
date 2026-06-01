@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SLIME_EXTRA_SHOCK_COST 3
 #define SLIME_EXTRA_SHOCK_THRESHOLD 8
 #define SLIME_BASE_SHOCK_PERCENTAGE 10
@@ -336,8 +337,8 @@
 		var/mob/living/basic/slime/target_slime = target
 		if(target_slime.buckled)
 			target_slime.stop_feeding(silent = TRUE)
-			visible_message(span_danger("[our_slime] pulls [target_slime] off!"), \
-				span_danger("You pull [target_slime] off!"))
+			visible_message(span_danger(LANG("mob.0146af56", list(our_slime, target_slime))), \
+				span_danger(LANG("mob.64f4dd58", list(target_slime))))
 			return NONE // normal attack
 
 		var/is_adult_slime = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT
@@ -352,7 +353,7 @@
 ///Spawns a crossed slimecore item
 /mob/living/basic/slime/proc/spawn_corecross()
 	var/static/list/crossbreeds = subtypesof(/obj/item/slimecross)
-	visible_message(span_danger("[src] shudders, its mutated core consuming the rest of its body!"))
+	visible_message(span_danger(LANG("mob.bb3c2a53", list(src))))
 	playsound(src, 'sound/effects/magic/smoke.ogg', 50, TRUE)
 	var/selected_crossbreed_path
 	for(var/crossbreed_path in crossbreeds)
@@ -363,7 +364,7 @@
 	if(selected_crossbreed_path)
 		new selected_crossbreed_path(loc)
 	else
-		visible_message(span_warning("The mutated core shudders, and collapses into a puddle, unable to maintain its form."))
+		visible_message(span_warning(LANG("mob.43eb182e", null)))
 	qdel(src)
 
 ///Proc for slime core removal surgery, tries to remove cores from a dead slime.

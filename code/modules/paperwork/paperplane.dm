@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/paperplane
 	name = "paper plane"
 	desc = "Paper, folded in the shape of a plane."
@@ -80,7 +81,7 @@
 		. += "[base_icon_state]_[stamp]"
 
 /obj/item/paperplane/attack_self(mob/user)
-	balloon_alert(user, "unfolded")
+	balloon_alert(user, LANG("obj.ad6adfd4", null))
 
 	var/atom/location = drop_location()
 	// Need to keep a reference to the internal paper
@@ -93,7 +94,7 @@
 
 /obj/item/paperplane/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(IS_WRITING_UTENSIL(attacking_item))
-		to_chat(user, span_warning("You should unfold [src] before changing it!"))
+		to_chat(user, span_warning(LANG("obj.3071fdcf", list(src))))
 		return
 	else if(istype(attacking_item, /obj/item/stamp)) //we don't randomize stamps on a paperplane
 		internal_paper.attackby(attacking_item, user) //spoofed attack to update internal paper.
@@ -117,7 +118,7 @@
 		return
 	if(hit_human.is_eyes_covered())
 		return
-	visible_message(span_danger("\The [src] hits [hit_human] in the eye[eyes ? "" : " socket"]!"))
+	visible_message(span_danger(LANG("obj.17299be1", list(src, hit_human, eyes ? "" : " socket"))))
 	hit_human.adjust_eye_blur(12 SECONDS)
 	eyes?.apply_organ_damage(rand(6, 8))
 	hit_human.Paralyze(4 SECONDS)

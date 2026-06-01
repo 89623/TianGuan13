@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
  *
@@ -178,7 +179,7 @@
 			return
 
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
-		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
+		to_chat(src, span_admin(LANG("mob.5aff3bac", list(max_distance, distance, round(sound_to_use.volume, 0.01), sound_to_use.file))))
 
 	SEND_SOUND(src, sound_to_use)
 

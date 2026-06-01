@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 #define STEALTH_MODE_TRAIT "stealth_mode"
 
@@ -13,7 +14,7 @@ ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin
 	user.remove_admin_verbs()
 	add_verb(user, /client/proc/show_verbs)
 
-	to_chat(user, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
+	to_chat(user, span_interface(LANG("datum.d0317d5b", null)), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Hide All Adminverbs")
 
 ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_CATEGORY_GAME)
@@ -30,7 +31,7 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 		ghost.reenter_corpse()
 		BLACKBOX_LOG_ADMIN_VERB("Admin Reenter")
 	else if(isnewplayer(user.mob))
-		to_chat(user, span_warning("Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first."), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.fe41dab4", null)), confidential = TRUE)
 		return FALSE
 	else
 		//ghostize
@@ -71,7 +72,7 @@ ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", 
 			), ADMIN_TRAIT)
 		user.mob.add_to_all_human_data_huds()
 		user.mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
-		to_chat(user, span_adminnotice(span_bold("Invisimin off. Invisibility reset.")), confidential = TRUE)
+		to_chat(user, span_adminnotice(span_bold(LANG("datum.07011746", null))), confidential = TRUE)
 		if(isobserver(user.mob) && !user.holder.fakekey) // Set the alpha back if we're not still stealth mode
 			user.mob.alpha = initial(user.mob.alpha)
 		return
@@ -89,7 +90,7 @@ ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", 
 	if(isobserver(user.mob))
 		user.mob.alpha = 0
 	QDEL_NULL(user.mob.orbiters)
-	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now invisible to players and ghosts.")), confidential = TRUE)
+	to_chat(user, span_adminnotice(span_bold(LANG("datum.1e9fa6f4", null))), confidential = TRUE)
 
 ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to see ghosts and invisimins.", ADMIN_CATEGORY_GAME)
 	// Toggle OFF
@@ -102,7 +103,7 @@ ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to 
 		else
 			user.mob.set_invis_see(SEE_INVISIBLE_LIVING)
 		REMOVE_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
-		to_chat(user.mob, span_adminnotice("Admin ESP off. You will no longer see [isliving(user.mob) ? "ghosts or " : ""]invisimins."), confidential = TRUE)
+		to_chat(user.mob, span_adminnotice(LANG("datum.f0723e74", list(isliving(user.mob) ? "ghosts or " : ""))), confidential = TRUE)
 		return
 
 	// Toggle ON
@@ -112,11 +113,11 @@ ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to 
 	else if(ismob(user.mob))
 		user.mob.set_invis_see(SEE_INVISIBLE_ADMIN)
 	else
-		to_chat(user.mob, span_warning("Admin ESP only works if you are in a mob!"), confidential = TRUE)
+		to_chat(user.mob, span_warning(LANG("datum.0d86d421", null)), confidential = TRUE)
 		return
 
 	ADD_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
-	to_chat(user.mob, span_adminnotice("Admin ESP on. You will now be able to see [isliving(user.mob) ? "ghosts and " : ""]invisimins."), confidential = TRUE)
+	to_chat(user.mob, span_adminnotice(LANG("datum.e6d97b24", list(isliving(user.mob) ? "ghosts and " : ""))), confidential = TRUE)
 
 ADMIN_VERB(check_antagonists, R_ADMIN, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
 	user.holder.check_antagonists()
@@ -297,14 +298,14 @@ ADMIN_VERB(get_dynex_range, R_FUN, "Get DynEx Range", "Get the estimated range o
 	if (isnull(ex_power))
 		return
 	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
-	to_chat(user, "Estimated Explosive Range: (Devastation: [round(range*0.25)], Heavy: [round(range*0.5)], Light: [round(range)])", confidential = TRUE)
+	to_chat(user, LANG("datum.b6a72f7f", list(round(range*0.25), round(range*0.5), round(range))), confidential = TRUE)
 
 ADMIN_VERB(get_dynex_power, R_FUN, "Get DynEx Power", "Get the estimated required power of a bomb to reach the given range.", ADMIN_CATEGORY_DEBUG)
 	var/ex_range = input(user, "Light Explosion Range:") as null|num
 	if (isnull(ex_range))
 		return
 	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
-	to_chat(user, "Estimated Explosive Power: [power]", confidential = TRUE)
+	to_chat(user, LANG("datum.08f203ac", list(power)), confidential = TRUE)
 
 ADMIN_VERB(set_dynex_scale, R_FUN, "Set DynEx Scale", "Set the scale multiplier on dynex explosions. Default 0.5.", ADMIN_CATEGORY_DEBUG)
 	var/ex_scale = input(user, "New DynEx Scale:") as null|num
@@ -420,7 +421,7 @@ ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CAT
 	if(!which)
 		return
 	if(QDELETED(spell_recipient))
-		to_chat(user, span_warning("The intended spell recipient no longer exists."))
+		to_chat(user, span_warning(LANG("datum.25ac67c7", null)))
 		return
 
 	var/list/spell_list = list()
@@ -444,7 +445,7 @@ ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CAT
 	var/robeless = (tgui_alert(user, "Would you like to force this spell to be robeless?", "Robeless Casting?", list("Force Robeless", "Use Spell Setting")) == "Force Robeless")
 
 	if(QDELETED(spell_recipient))
-		to_chat(user, span_warning("The intended spell recipient no longer exists."))
+		to_chat(user, span_warning(LANG("datum.25ac67c7", null)))
 		return
 
 	BLACKBOX_LOG_ADMIN_VERB("Give Spell")
@@ -459,8 +460,7 @@ ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CAT
 	new_spell.Grant(spell_recipient)
 
 	if(!spell_recipient.mind)
-		to_chat(user, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
-			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
+		to_chat(user, span_userdanger(LANG("datum.f13c244a", null)))
 
 ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/removal_target)
 	var/list/target_spell_list = list()
@@ -533,7 +533,7 @@ ADMIN_VERB(manage_sect, R_ADMIN, "Manage Religious Sect", "Manages the chaplain'
 
 ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY_MAIN)
 	user.holder.deactivate()
-	to_chat(user, span_interface("You are now a normal player."))
+	to_chat(user, span_interface(LANG("datum.2989f127", null)))
 	log_admin("[key_name(user)] deadminned themselves.")
 	message_admins("[key_name_admin(user)] deadminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Deadmin")
@@ -563,7 +563,7 @@ ADMIN_VERB(display_sendmaps, R_DEBUG, "Send Maps Profile", "View the profile.", 
 
 ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a full crew for the station, flling datacore and assigning minds and jobs.", ADMIN_CATEGORY_DEBUG)
 	if(SSticker.current_state != GAME_STATE_PLAYING)
-		to_chat(user, "You should only be using this after a round has setup and started.")
+		to_chat(user, LANG("datum.4f8d0876", null))
 		return
 
 	// Two input checks here to make sure people are certain when they're using this.
@@ -577,7 +577,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 	var/obj/effect/landmark/observer_start/observer_point = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	var/turf/destination = get_turf(observer_point)
 	if(!destination)
-		to_chat(user, "Failed to find the observer spawn to send the dummies.")
+		to_chat(user, LANG("datum.7c2c1646", null))
 		return
 
 	// Okay, now go through all nameable occupations.
@@ -620,7 +620,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		number_made++
 		CHECK_TICK
 
-	to_chat(user, "[number_made] crewmembers have been created.")
+	to_chat(user, LANG("datum.0b8d03ad", list(number_made)))
 
 ADMIN_VERB(debug_spell_requirements, R_DEBUG, "Debug Spell Requirements", "View all spells and their requirements.", ADMIN_CATEGORY_DEBUG)
 	var/header = "<tr><th>Name</th> <th>Requirements</th>"
@@ -663,7 +663,7 @@ ADMIN_VERB(load_lazy_template, R_ADMIN, "Load/Jump Lazy Template", "Loads a lazy
 
 	choice = choices[choice]
 	if(!choice)
-		to_chat(user, span_warning("No template with that key found, report this!"))
+		to_chat(user, span_warning(LANG("datum.dc7bd1d4", null)))
 		return
 
 	var/already_loaded = LAZYACCESS(SSmapping.loaded_lazy_templates, choice)
@@ -673,14 +673,14 @@ ADMIN_VERB(load_lazy_template, R_ADMIN, "Load/Jump Lazy Template", "Loads a lazy
 
 	var/datum/turf_reservation/reservation = SSmapping.lazy_load_template(choice, force = force_load)
 	if(!reservation)
-		to_chat(user, span_boldwarning("Failed to load template!"))
+		to_chat(user, span_boldwarning(LANG("datum.b679aec2", null)))
 		return
 
 	if(teleport_to_template == "Yes")
 		if(!isobserver(user.mob))
 			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_ghost)
 		user.mob.forceMove(reservation.bottom_left_turfs[1])
-		to_chat(user, span_boldnicegreen("Template loaded, you have been moved to the bottom left of the reservation."))
+		to_chat(user, span_boldnicegreen(LANG("datum.003175d0", null)))
 
 	message_admins("[key_name_admin(user)] has loaded lazy template '[choice]'")
 
@@ -692,7 +692,7 @@ ADMIN_VERB(library_control, R_BAN, "Library Management", "List and manage the Li
 
 ADMIN_VERB(create_mob_worm, R_FUN, "Create Mob Worm", "Attach a linked list of mobs to your marked mob.", ADMIN_CATEGORY_FUN)
 	if(!isliving(user.holder.marked_datum))
-		to_chat(user, span_warning("Error: Please mark a mob to attach mobs to."))
+		to_chat(user, span_warning(LANG("datum.4df7072b", null)))
 		return
 	var/mob/living/head = user.holder.marked_datum
 
@@ -744,7 +744,7 @@ ADMIN_VERB(give_ai_controller, R_FUN, "Give AI Controller", ADMIN_VERB_NO_DESCRI
 
 ADMIN_VERB(clear_legacy_asset_cache, R_DEBUG, "Clear Legacy Asset Cache", "Clears the legacy asset cache, regenerating it immediately (may cause lag).", ADMIN_CATEGORY_DEBUG)
 	if(!CONFIG_GET(flag/cache_assets))
-		to_chat(user, span_warning("Asset caching is disabled in the config!"))
+		to_chat(user, span_warning(LANG("datum.978d642f", null)))
 		return
 	var/regenerated = 0
 	for(var/datum/asset/target_spritesheet as anything in valid_subtypesof(/datum/asset))
@@ -753,17 +753,17 @@ ADMIN_VERB(clear_legacy_asset_cache, R_DEBUG, "Clear Legacy Asset Cache", "Clear
 		var/datum/asset/asset_datum = GLOB.asset_datums[target_spritesheet]
 		asset_datum.regenerate()
 		regenerated++
-	to_chat(user, span_notice("Regenerated [regenerated] asset\s."))
+	to_chat(user, span_notice(LANG("datum.4b16d923", list(regenerated))))
 
 ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, "Clear Smart Asset Cache", "Clear the smart asset cache, causing it to regenerate next round.", ADMIN_CATEGORY_DEBUG)
 	if(!CONFIG_GET(flag/smart_cache_assets))
-		to_chat(user, span_warning("Smart asset caching is disabled in the config!"))
+		to_chat(user, span_warning(LANG("datum.b5924be2", null)))
 		return
 	var/cleared = 0
 	for(var/datum/asset/spritesheet_batched/target_spritesheet as anything in valid_subtypesof(/datum/asset/spritesheet_batched))
 		fdel("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[initial(target_spritesheet.name)].json")
 		cleared++
-	to_chat(user, span_notice("Cleared [cleared] asset\s."))
+	to_chat(user, span_notice(LANG("datum.186c25e2", list(cleared))))
 
 ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/my_guy)
 	if (isnull(my_guy.ai_controller))
@@ -774,7 +774,7 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 		if (isnull(run_with_mind))
 			return
 		if (QDELETED(my_guy))
-			to_chat(user, span_warning("Target ceased to exist."))
+			to_chat(user, span_warning(LANG("datum.7f641441", null)))
 			return
 		my_guy.ai_controller = new /datum/ai_controller/basic_controller/talk(my_guy)
 		if (run_with_mind == "Yes")
@@ -840,7 +840,7 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 			return
 
 	if (QDELETED(my_guy))
-		to_chat(user, span_warning("Target stopped existing."))
+		to_chat(user, span_warning(LANG("datum.a27bfbdd", null)))
 		return
 
 	var/datum/ai_controller/our_controller = my_guy.ai_controller
@@ -870,7 +870,7 @@ ADMIN_VERB(open_event_logger, R_DEBUG, "Open Event Logger", "Open the event logg
 
 ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS, object as text)
 	if(!object)
-		to_chat(user, span_boldwarning("Failed! Provide a full or partial typepath!"))
+		to_chat(user, span_boldwarning(LANG("datum.6793d2b8", null)))
 		return
 	//first: have admins select a typepath for the item they want to offer.
 	var/obj/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/obj)))

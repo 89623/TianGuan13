@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/innate/slime
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
@@ -79,18 +80,18 @@
 /mob/living/basic/slime/proc/reproduce()
 
 	if(stat != CONSCIOUS)
-		balloon_alert(src, "not conscious!")
+		balloon_alert(src, LANG("mob.a708139f", null))
 		return
 
 	if(!isopenturf(loc))
-		balloon_alert(src, "not here!")
+		balloon_alert(src, LANG("mob.323611bb", null))
 
 	if(life_stage != SLIME_LIFE_STAGE_ADULT)
-		balloon_alert(src, "not adult!")
+		balloon_alert(src, LANG("mob.9fbbcd48", null))
 		return
 
 	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
-		balloon_alert(src, "need growth!")
+		balloon_alert(src, LANG("mob.68fdc7fb", null))
 		return
 
 	var/list/friends_list = list()
@@ -103,7 +104,7 @@
 
 	overcrowded = length(friends_list) >= SLIME_OVERCROWD_AMOUNT
 	if(overcrowded)
-		balloon_alert(src, "overcrowded!")
+		balloon_alert(src, LANG("mob.1d87ef8f", null))
 		return
 
 	var/new_nutrition = floor(nutrition * 0.9)

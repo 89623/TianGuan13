@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 The gulag teleporter teleports a prisoner to the gulag outpost.
 It automatically strips the prisoner and equips a prisoner ID, prisoner jumpsuit and oranges sneakers.
@@ -49,7 +50,7 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
 	if(locked)
-		to_chat(user, span_warning("[src] is locked!"))
+		to_chat(user, span_warning(LANG("obj.9d5df8ce", list(src))))
 		return
 	toggle_open()
 
@@ -84,7 +85,7 @@ The console is located at computer/gulag_teleporter.dm
 	if(locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, span_warning("[src]'s door won't budge!"))
+			to_chat(user, span_warning(LANG("obj.c4e897cb", list(src))))
 		return
 	open_machine()
 
@@ -119,7 +120,7 @@ The console is located at computer/gulag_teleporter.dm
 
 /obj/machinery/gulag_teleporter/proc/toggle_open()
 	if(panel_open)
-		to_chat(usr, span_notice("Close the maintenance panel first."))
+		to_chat(usr, span_notice(LANG("obj.0358adf3", null)))
 		return
 
 	if(state_open)

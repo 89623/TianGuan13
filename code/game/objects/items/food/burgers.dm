@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/food/burger
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "hburger"
@@ -34,7 +35,7 @@
 		return
 	new/obj/effect/particle_effect/fluid/smoke(get_turf(src))
 	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE)
-	visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
+	visible_message(span_warning(LANG("obj.889bd3c1", list(src))))
 	name = "steamed ham"
 	desc = pick("Ahh, Head of Personnel, welcome. I hope you're prepared for an unforgettable luncheon!",
 		"And you call these steamed hams despite the fact that they are obviously microwaved?",

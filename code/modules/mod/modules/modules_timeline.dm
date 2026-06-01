@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// range of the chrono beam!
 #define CHRONO_BEAM_RANGE 3
 /// how many frames the chronofield needs before it eradicates someone.
@@ -31,7 +32,7 @@
 
 /obj/item/mod/module/eradication_lock/on_use(mob/activator)
 	true_owner_ckey = mod.wearer.ckey
-	balloon_alert(activator, "user remembered")
+	balloon_alert(activator, LANG("obj.fc8bfd78", null))
 	playsound(src, 'sound/items/pshoom/pshoom.ogg', 25, TRUE)
 	drain_power(use_energy_cost)
 
@@ -42,7 +43,7 @@
 	if(!true_owner_ckey || user.ckey == true_owner_ckey)
 		return NONE
 	if(user == mod.wearer)
-		to_chat(mod.wearer, span_userdanger("\"MODsuit compromised by timeline inhabitant! Eradicating...\""))
+		to_chat(mod.wearer, span_userdanger(LANG("obj.811a46e6", null)))
 		new /obj/structure/chrono_field(user.loc, user)
 	return MOD_CANCEL_ACTIVATE
 
@@ -51,7 +52,7 @@
 	SIGNAL_HANDLER
 
 	if(true_owner_ckey && user.ckey != true_owner_ckey)
-		to_chat(mod.wearer, span_userdanger("\"Timeline inhabitant tampering detected! Eradicating...\""))
+		to_chat(mod.wearer, span_userdanger(LANG("obj.833ad240", null)))
 		new /obj/structure/chrono_field(user.loc, user)
 		return MOD_CANCEL_REMOVAL
 
@@ -70,7 +71,7 @@
 	required_slots = list(ITEM_SLOT_BACK)
 
 /obj/item/mod/module/rewinder/on_use(mob/activator)
-	balloon_alert(activator, "anchor point set")
+	balloon_alert(activator, LANG("obj.b54421cd", null))
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	//stops all mods from triggering during rewinding
 	for(var/obj/item/mod/module/module as anything in mod.modules)
@@ -88,13 +89,13 @@
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/rewinder/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
-	balloon_alert(user, "not while rewinding!")
+	balloon_alert(user, LANG("obj.5887bf36", null))
 	return MOD_CANCEL_ACTIVATE
 
 ///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
 /obj/item/mod/module/rewinder/proc/on_module_triggered(datum/source, mob/user)
 	SIGNAL_HANDLER
-	balloon_alert(user, "not while rewinding!")
+	balloon_alert(user, LANG("obj.5887bf36", null))
 	return MOD_ABORT_USE
 
 ///Timestopper - Need I really explain? It's the wizard's time stop, but the user channels it by not moving instead of a duration.
@@ -138,13 +139,13 @@
 ///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
 /obj/item/mod/module/timestopper/proc/on_module_triggered(datum/source)
 	SIGNAL_HANDLER
-	balloon_alert(mod.wearer, "not while stopping time!")
+	balloon_alert(mod.wearer, LANG("obj.a77609bd", null))
 	return MOD_ABORT_USE
 
 ///Signal fired when wearer attempts to activate/deactivate suits, if attempting while time is stopped
 /obj/item/mod/module/timestopper/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
-	balloon_alert(user, "not while stopping time!")
+	balloon_alert(user, LANG("obj.a77609bd", null))
 	return MOD_CANCEL_ACTIVATE
 
 ///Timeline Jumper - Infinite phasing. needs some special effects
@@ -165,7 +166,7 @@
 /obj/item/mod/module/timeline_jumper/used(mob/activator)
 	var/area/noteleport_check = get_area(mod.wearer)
 	if(noteleport_check && !check_teleport_valid(mod.wearer, get_turf(mod.wearer)))
-		to_chat(activator, span_danger("Some dull, universal force is between you and the [phased_mob ? "current timeline" : "stream between timelines"]."))
+		to_chat(activator, span_danger(LANG("obj.80df7bd2", list(phased_mob ? "current timeline" : "stream between timelines"))))
 		return FALSE
 	return ..()
 
@@ -191,7 +192,7 @@
 /obj/item/mod/module/timeline_jumper/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
 	//has to be a to_chat because you're phased out.
-	to_chat(user, span_warning("Deactivating your suit while inbetween timelines would be a very bad idea."))
+	to_chat(user, span_warning(LANG("obj.c9a1ac31", null)))
 	return MOD_CANCEL_ACTIVATE
 
 ///special subtype for phased mobs.
@@ -250,14 +251,14 @@
 /obj/item/mod/module/tem/proc/field_connect(obj/structure/chrono_field/field)
 	if(field.tem)
 		if(field.captured)
-			balloon_alert(mod.wearer, "already has connection!")
+			balloon_alert(mod.wearer, LANG("obj.348a3ea1", null))
 		field_disconnect(field)
 		return
 	startpos = get_turf(mod.wearer)
 	src.field = field
 	field.tem = src
 	if(field.captured)
-		balloon_alert(mod.wearer, "connection estabilished")
+		balloon_alert(mod.wearer, LANG("obj.211e032b", null))
 
 /**
  * ### field_disconnect
@@ -272,7 +273,7 @@
 		if(field.tem == src)
 			field.tem = null
 		if(field.captured)
-			balloon_alert(mod.wearer, "connection lost!")
+			balloon_alert(mod.wearer, LANG("obj.4a639f2f", null))
 	field = null
 	startpos = null
 
@@ -379,7 +380,7 @@
 			freed_movable.forceMove(drop_location())
 		qdel(src)
 	else if(timetokill <= 0)
-		to_chat(captured, span_notice("As the last essence of your being is erased from time, you are taken back to your most enjoyable memory. You feel happy..."))
+		to_chat(captured, span_notice(LANG("obj.4561dc50", null)))
 		var/mob/dead/observer/ghost = captured.ghostize(can_reenter_corpse = TRUE)
 		if(captured.mind)
 			if(ghost)

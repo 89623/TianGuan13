@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Max number of unanchored items that will be moved from a tile when attempting to add a window to a grille.
 #define CLEAR_TILE_MOVE_LIMIT 20
 
@@ -148,10 +149,10 @@
 	if(!unanchored_items_on_tile)
 		return TRUE
 
-	to_chat(user, span_notice("You move [unanchored_items_on_tile == 1 ? "[last_item_moved]" : "some things"] out of the way."))
+	to_chat(user, span_notice(LANG("obj.6f96b2a3", list(unanchored_items_on_tile == 1 ? "[last_item_moved]" : "some things"))))
 
 	if(unanchored_items_on_tile - CLEAR_TILE_MOVE_LIMIT > 0)
-		to_chat(user, span_warning("There's still too much stuff in the way!"))
+		to_chat(user, span_warning(LANG("obj.5466fff0", null)))
 		return FALSE
 
 	return TRUE
@@ -248,18 +249,18 @@
 		if (!broken)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
-				to_chat(user, span_warning("You need at least two sheets of glass for that!"))
+				to_chat(user, span_warning(LANG("obj.0f46f4af", null)))
 				return
 			var/dir_to_set = SOUTHWEST
 			if(!anchored)
-				to_chat(user, span_warning("[src] needs to be fastened to the floor first!"))
+				to_chat(user, span_warning(LANG("obj.79102fe3", list(src))))
 				return
 			for(var/obj/structure/window/WINDOW in loc)
 				to_chat(user, span_warning("There is already a window there!"))
 				return
 			if(!clear_tile(user))
 				return
-			to_chat(user, span_notice("You start placing the window..."))
+			to_chat(user, span_notice(LANG("obj.1c659472", null)))
 			if(do_after(user,20, target = src))
 				if(!src.loc || !anchored) //Grille broken or unanchored while waiting
 					return
@@ -290,7 +291,7 @@
 				WD.set_anchored(FALSE)
 				WD.state = 0
 				ST.use(2)
-				to_chat(user, span_notice("You place [WD] on [src]."))
+				to_chat(user, span_notice(LANG("obj.7a67ae81", list(WD, src))))
 			return
 //window placing end
 

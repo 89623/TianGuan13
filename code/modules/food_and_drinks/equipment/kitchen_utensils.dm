@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Kitchen tools
  * Contains:
  * Fork
@@ -138,7 +139,7 @@
 	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour != TOOL_ROLLINGPIN)
 		tool_behaviour = TOOL_ROLLINGPIN
-		to_chat(user, span_notice("You attach the rolling pin bit to the [src]."))
+		to_chat(user, span_notice(LANG("obj.9ccf1ef7", list(src))))
 		icon_state = "sili_rolling_pin"
 		force = 8
 		sharpness = NONE
@@ -148,7 +149,7 @@
 
 	else
 		tool_behaviour = TOOL_KNIFE
-		to_chat(user, span_notice("You attach the knife bit to the [src]."))
+		to_chat(user, span_notice(LANG("obj.86213d8c", list(src))))
 		icon_state = "sili_knife"
 		force = 0
 		sharpness = SHARP_EDGED
@@ -270,13 +271,13 @@
 		)
 
 	else
-		to_chat(target_mob, span_userdanger("[target_mob.is_blind() ? "Someone" : "[user]"] forces a spoon into your face!"))
+		to_chat(target_mob, span_userdanger(LANG("obj.7aa66522", list(target_mob.is_blind() ? "Someone" : "[user]"))))
 		target_mob.balloon_alert(user, "feeding spoonful...")
 		if(!do_after(user, 3 SECONDS, target_mob))
 			target_mob.balloon_alert(user, "interrupted!")
 			return TRUE
 
-		to_chat(target_mob, span_userdanger("[target_mob.is_blind() ? "You are forced to" : "[user] forces you to"] swallow a spoonful of something!"))
+		to_chat(target_mob, span_userdanger(LANG("obj.423ae488", list(target_mob.is_blind() ? "You are forced to" : "[user] forces you to"))))
 		user.visible_message(
 			span_danger("[user] scoops a spoonful into [target_mob]'s mouth."),
 			span_notice("You scoop a spoonful into [target_mob]'s mouth.")
@@ -406,7 +407,7 @@
 /obj/item/kitchen/tongs/proc/drop_tonged()
 	if (isnull(tonged))
 		return
-	visible_message(span_notice("[tonged] falls to the ground!"))
+	visible_message(span_notice(LANG("obj.609b536c", list(tonged))))
 	var/turf/location = drop_location()
 	tonged.forceMove(location)
 	tonged.do_drop_animation(location)

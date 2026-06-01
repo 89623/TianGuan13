@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // if you need to access this elsewhere you already fucked up
 #define TRAIT_WARDROBE_USED "wardrobe_used"
 
@@ -37,7 +38,7 @@
 		return
 
 	if(one_use && HAS_TRAIT_FROM(human_user, TRAIT_WARDROBE_USED, wardrobe_id))
-		to_chat(human_user, span_notice("You already picked an outfit!"))
+		to_chat(human_user, span_notice(LANG("obj.2603d480", null)))
 		return
 
 	var/list/display_classes = list()
@@ -57,7 +58,7 @@
 		display_classes[dressup] = option
 
 	if(!length(display_classes))
-		to_chat(human_user, span_warning("There are no available outfits!"))
+		to_chat(human_user, span_warning(LANG("obj.7326360d", null)))
 		return
 
 	sort_list(display_classes)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BP_MAX_ROOM_SIZE 300
 #define EXTRA_ROOM_CHECK_SKIP 1
 #define EXTRA_ROOM_CHECK_FAIL 2
@@ -148,7 +149,7 @@
 
 	var/area_choice = tgui_input_list(creator, "Choose an area to expand or make a new area", "Area Expansion", areas)
 	if(isnull(area_choice))
-		to_chat(creator, span_warning("No choice selected. The area remains undefined."))
+		to_chat(creator, span_warning(LANG("_root.32935ad0", null)))
 		return
 	area_choice = areas[area_choice]
 
@@ -169,7 +170,7 @@
 
 	//we haven't done anything. let's get outta here
 	if(newA == oldA)
-		to_chat(creator, span_warning("Selected choice is same as the area your standing in. No area changes were requested."))
+		to_chat(creator, span_warning(LANG("_root.19b61e02", null)))
 		return
 
 	/**
@@ -189,7 +190,7 @@
 	for(var/area_name in affected_areas)
 		area_list += affected_areas[area_name]
 	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, area_list, creator)
-	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
+	to_chat(creator, span_notice(LANG("_root.9bf1ab04", list(newA.name))))
 	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 
 	//purge old areas that had all their turfs merged into the new one i.e. old empty areas. also recompute fire doors

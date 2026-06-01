@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BEE_TRAY_RECENT_VISIT 20 SECONDS //! How long in deciseconds until a tray can be visited by a bee again
 #define BEE_DEFAULT_COLOUR "#e5e500" //! the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
 #define BEE_POLLINATE_YIELD_CHANCE 33 //! chance to increase yield of plant
@@ -285,13 +286,13 @@
 	if(isnull(chemical))
 		return
 	if(!(chemical.chemical_flags & REAGENT_CAN_BE_SYNTHESIZED))
-		to_chat(user, span_warning("[chemical.name] cannot be inserted into a bee's genome!"))
+		to_chat(user, span_warning(LANG("obj.e97732a9", list(chemical.name))))
 		return
 	if(chemical.type == queen.beegent?.type)
-		to_chat(user, span_warning("[queen] already has this chemical!"))
+		to_chat(user, span_warning(LANG("obj.c30aa936", list(queen))))
 		return
 	if(!(needle.reagents.has_reagent(chemical.type, 5)))
-		to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
+		to_chat(user, span_warning(LANG("obj.4903aa0c", null)))
 		return
 	needle.reagents.remove_reagent(chemical.type, 5)
 	var/datum/reagent/bee_chem = GLOB.chemical_reagents_list[chemical.type]
@@ -351,7 +352,7 @@
 /obj/item/trash/bee/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
 	SIGNAL_HANDLER
 	if(injector.revive_type != SENTIENCE_ORGANIC)
-		balloon_alert(user, "invalid creature!")
+		balloon_alert(user, LANG("obj.1c85036c", null))
 		return
 	var/mob/living/basic/bee/revived_bee = new bee_type (drop_location())
 	if(beegent)

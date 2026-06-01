@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain
@@ -60,9 +61,9 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(!brainmob)
 		set_brainmob(new /mob/living/brain(src))
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
-		to_chat(user, span_warning("Central Command has temporarily outlawed posibrain sentience in this sector..."))
+		to_chat(user, span_warning(LANG("obj.64a878ae", null)))
 	if(is_occupied())
-		to_chat(user, span_warning("This [name] is already active!"))
+		to_chat(user, span_warning(LANG("obj.e873e2ec", list(name))))
 		return
 	if(next_ask > world.time)
 		to_chat(user, recharge_message)
@@ -79,7 +80,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, max_length = MAX_NAME_LEN)
 	if(isnull(input_seed) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
-	to_chat(user, span_notice("You set the personality seed to \"[input_seed]\"."))
+	to_chat(user, span_notice(LANG("obj.6af35397", list(input_seed))))
 	ask_role = input_seed
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
@@ -113,7 +114,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(QDELETED(brainmob))
 		return
 	if(user.ckey in ckeys_entered)
-		to_chat(user, span_warning("You cannot re-enter [src] a second time!"))
+		to_chat(user, span_warning(LANG("obj.95bb1e5f", list(src))))
 		return
 	if(is_occupied() || is_banned_from(user.ckey, ROLE_POSIBRAIN) || QDELETED(src) || QDELETED(user))
 		return
@@ -148,7 +149,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(QDELETED(brainmob))
 		return
 	if(is_occupied()) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		to_chat(candidate, span_warning("This [name] was taken over before you could get to it! Perhaps it might be available later?"))
+		to_chat(candidate, span_warning(LANG("obj.dfca3109", list(name))))
 		return FALSE
 	if(candidate.mind && !isobserver(candidate))
 		candidate.mind.transfer_to(brainmob)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/fakedeath
 	name = "Reviving Stasis"
 	desc = "We fall into a stasis, allowing us to regenerate and trick our enemies. Costs 15 chemicals."
@@ -29,9 +30,9 @@
 	if(!enable_fakedeath(user, duration_modifier = death_duration_mod))
 		CRASH("Changeling revive failed to enter fakedeath when it should have been in a valid state to.")
 
-	to_chat(user, span_changeling("We begin our stasis, preparing energy to arise once more."))
+	to_chat(user, span_changeling(LANG("datum.23bc9468", null)))
 	if(death_duration_mod > 1)
-		to_chat(user, span_changeling(span_bold("Our body has sustained severe damage, and will take [death_duration_mod >= 5 ? "far ":""]longer to regenerate.")))
+		to_chat(user, span_changeling(span_bold(LANG("datum.bba34719", list(death_duration_mod >= 5 ? "far ":"")))))
 	return TRUE
 
 /// Used to enable fakedeath and register relevant signals / start timers
@@ -88,7 +89,7 @@
 		return
 
 	source.cure_fakedeath(CHANGELING_TRAIT)
-	to_chat(source, span_changeling("We exit our stasis early."))
+	to_chat(source, span_changeling(LANG("datum.c80848b9", null)))
 	reset_chemical_cost()
 
 /datum/action/changeling/fakedeath/proc/revive(mob/living/carbon/user)
@@ -102,7 +103,7 @@
 	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
 	// but leave out limbs so we can do it specially
 	user.revive(flags_to_heal & ~HEAL_LIMBS)
-	to_chat(user, span_changeling("We have revived ourselves."))
+	to_chat(user, span_changeling(LANG("datum.0e4fd12d", null)))
 
 	var/static/list/dont_regenerate = list(BODY_ZONE_HEAD) // headless changelings are funny
 	if(!length(user.get_missing_limbs() - dont_regenerate))
@@ -128,7 +129,7 @@
 	if(!HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		return
 
-	to_chat(user, span_changeling("We are ready to revive."))
+	to_chat(user, span_changeling(LANG("datum.b2f35ffc", null)))
 	enable_revive(user)
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)

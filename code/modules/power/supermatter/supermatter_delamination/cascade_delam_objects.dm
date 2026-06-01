@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/crystal_mass
 	name = "crystal mass"
 	desc = "You see this massive crystal mass looming towards you, cracking and screeching at every seemingly random movement."
@@ -77,7 +78,7 @@
 	SIGNAL_HANDLER
 
 	visible_message(
-		span_warning("[hitting_projectile] flies into [src] with a loud crack, before rapidly flashing into ash."),
+		span_warning(LANG("obj.831cd4e0", list(hitting_projectile, src))),
 		null,
 		span_hear("You hear a loud crack as you are washed with a wave of heat."),
 	)
@@ -93,7 +94,7 @@
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/jedi = user
-	to_chat(jedi, span_userdanger("That was a really dense idea."))
+	to_chat(jedi, span_userdanger(LANG("obj.d2253e90", null)))
 	jedi.ghostize()
 	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.organs
 	if(rip_u)

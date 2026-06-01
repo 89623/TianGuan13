@@ -283,6 +283,9 @@ impl<'a> Rewriter<'a> {
             if qend > aend || interp_args.len() != placeholders {
                 continue; // 越界 / 内插数不符 → 跳过
             }
+            if in_preprocessor_directive(src, qpos) {
+                continue; // 字符串在 #define 等预处理指令里（宏体）→ 跳过，避免破坏宏
+            }
             let replacement = if interp_args.is_empty() {
                 format!("LANG(\"{key}\", null)")
             } else {
@@ -544,6 +547,43 @@ fn split_call_args(src: &str, lparen: usize) -> Option<Vec<(usize, usize)>> {
         }
     }
     None
+}
+
+/// 判断 byte 位置是否处于预处理指令（`#define` 等，含 `\` 续行的宏体）内。
+/// 改写宏体里的字符串会破坏宏（其展开上下文不定），故一律跳过。
+fn in_preprocessor_directive(src: &str, pos: usize) -> bool {
+    let b = src.as_bytes();
+    // 定位 pos 所在物理行的行首。
+    let mut line_start = pos;
+    while line_start > 0 && b[line_start - 1] != b'\n' {
+        line_start -= 1;
+    }
+    // 若上一行以 `\` 续行，则继续上溯到指令首行。
+    loop {
+        if line_start == 0 {
+            break;
+        }
+        let prev_nl = line_start - 1; // 上一行末尾的 '\n'
+        let mut e = prev_nl;
+        if e > 0 && b[e - 1] == b'\r' {
+            e -= 1;
+        }
+        if e > 0 && b[e - 1] == b'\\' {
+            let mut ps = prev_nl;
+            while ps > 0 && b[ps - 1] != b'\n' {
+                ps -= 1;
+            }
+            line_start = ps;
+        } else {
+            break;
+        }
+    }
+    // 首行去前导空白后是否以 `#` 开头。
+    let mut i = line_start;
+    while i < b.len() && (b[i] == b' ' || b[i] == b'\t') {
+        i += 1;
+    }
+    b.get(i) == Some(&b'#')
 }
 
 /// 在 [start, end) 区间里找第一个 `"` 的字节位置。

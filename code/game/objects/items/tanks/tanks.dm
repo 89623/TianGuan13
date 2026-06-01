@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// How much time (in seconds) is assumed to pass while assuming air. Used to scale overpressure/overtemp damage when assuming air.
 #define ASSUME_AIR_DT_FACTOR 1
 /// Multiplies the pressure of assembly bomb explosions before it's put through THE LOGARITHM
@@ -196,14 +197,14 @@
 			ADD_TRAIT(head, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		human_user.inflate_gib()
 		return MANUAL_SUICIDE
-	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
+	to_chat(user, span_warning(LANG("obj.37a51a61", list(src))))
 	return SHAME
 
 /obj/item/tank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(istype(attacking_item, /obj/item/assembly_holder))
 		if(tank_assembly)
-			balloon_alert(user, "something already attached!")
+			balloon_alert(user, LANG("obj.317d7ea4", null))
 			return ITEM_INTERACT_BLOCKING
 		bomb_assemble(attacking_item, user)
 		return ITEM_INTERACT_SUCCESS
@@ -218,11 +219,11 @@
 
 /obj/item/tank/welder_act(mob/living/user, obj/item/tool)
 	if(bomb_status)
-		balloon_alert(user, "already welded!")
+		balloon_alert(user, LANG("obj.0054c51b", null))
 		return ITEM_INTERACT_BLOCKING
 	if(tool.use_tool(src, user, 0, volume=40))
 		bomb_status = TRUE
-		balloon_alert(user, "bomb armed")
+		balloon_alert(user, LANG("obj.e3f53f60", null))
 		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [air_contents.temperature] Pressure: [air_contents.return_pressure()]")
 		add_fingerprint(user)
 		return ITEM_INTERACT_SUCCESS
@@ -380,7 +381,7 @@
 
 	if(atom_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
 		return
-	visible_message(span_warning("[src] springs a leak!"))
+	visible_message(span_warning(LANG("obj.f1aa7c29", list(src))))
 	playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
 
 /// Handles rupturing and fragmenting
@@ -446,7 +447,7 @@
 	return TRUE
 
 /obj/item/tank/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
-	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
+	audible_message(span_warning(LANG("obj.a31e2378", list(icon2html(src, hearers(src))))))
 	playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(ignite)), 1 SECONDS)
 
@@ -461,19 +462,19 @@
 		return
 
 	if(isitem(loc)) // we are in a storage item
-		balloon_alert(user, "can't reach!")
+		balloon_alert(user, LANG("obj.fba9228d", null))
 		return
 
 	if((src in user.get_equipped_items(INCLUDE_POCKETS | INCLUDE_ACCESSORIES)) && !user.canUnEquip(src))
-		balloon_alert(user, "it's stuck!")
+		balloon_alert(user, LANG("obj.ee463177", null))
 		return
 
 	if(!user.canUnEquip(assembly))
-		balloon_alert(user, "it's stuck!")
+		balloon_alert(user, LANG("obj.ee463177", null))
 		return
 
 	if(!user.transferItemToLoc(assembly, src))
-		balloon_alert(user, "it's stuck!")
+		balloon_alert(user, LANG("obj.ee463177", null))
 		return
 
 	tank_assembly = assembly //Tell the tank about its assembly part
@@ -481,13 +482,13 @@
 	assembly.on_attach()
 	update_weight_class(WEIGHT_CLASS_BULKY)
 
-	balloon_alert(user, "bomb assembled")
+	balloon_alert(user, LANG("obj.35abd169", null))
 	update_appearance(UPDATE_OVERLAYS)
 
 /// Detaches an assembly holder from the tank, disarming the bomb
 /obj/item/tank/proc/bomb_disassemble(mob/user)
 	bomb_status = FALSE
-	balloon_alert(user, "bomb disarmed")
+	balloon_alert(user, LANG("obj.ea991be0", null))
 	if(!tank_assembly)
 		CRASH("bomb_disassemble() called on a tank with no assembly!")
 	user.put_in_hands(tank_assembly)

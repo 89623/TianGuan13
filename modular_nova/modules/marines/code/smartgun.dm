@@ -54,7 +54,7 @@
 	if(!user.can_perform_action(src))
 		return
 	cover_open = !cover_open
-	to_chat(user, span_notice("You [cover_open ? "open" : "close"] [src]'s cover."))
+	to_chat(user, span_notice(LANG("obj.503615b1", list(cover_open ? "open" : "close", src))))
 	playsound(src, 'sound/items/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -67,13 +67,13 @@
 
 /obj/item/gun/ballistic/automatic/smart_machine_gun/eject_magazine(mob/user, display_message = TRUE, obj/item/ammo_box/magazine/tac_load = null)
 	if(!cover_open)
-		to_chat(user, span_warning("The cover is closed! Open it before ejecting the magazine!"))
+		to_chat(user, span_warning(LANG("obj.3c4b2231", null)))
 		return
 	return ..()
 
 /obj/item/gun/ballistic/automatic/smart_machine_gun/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!cover_open && istype(tool, accepted_magazine_type))
-		to_chat(user, span_warning("[src]'s dust cover prevents a magazine from being fit."))
+		to_chat(user, span_warning(LANG("obj.a2a6c45d", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 

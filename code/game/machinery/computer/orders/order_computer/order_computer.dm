@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///List of all items that can be found in the different types of order consoles, to purchase.
 GLOBAL_LIST_EMPTY(order_console_products)
 
@@ -210,7 +211,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/final_cost = round(get_total_cost() * (express ? express_cost_multiplier : cargo_cost_multiplier))
 	if(subtract_points(final_cost, card))
 		return TRUE
-	say("Sorry, but you do not have enough [credit_type].")
+	say(LANG("obj.eac2f740", list(credit_type)))
 	return FALSE
 
 /**

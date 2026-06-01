@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Janicart
  */
@@ -40,12 +41,12 @@
 		return
 	if(istype(tool, /obj/item/storage/bag/trash))
 		if(trash_bag)
-			to_chat(user, span_warning("[src] already has a trashbag hooked!"))
+			to_chat(user, span_warning(LANG("obj.b06b8991", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You hook the trashbag onto [src]."))
+		to_chat(user, span_notice(LANG("obj.3322367b", list(src))))
 		trash_bag = tool
 		RegisterSignal(trash_bag, COMSIG_QDELETING, PROC_REF(bag_deleted))
 		SEND_SIGNAL(src, COMSIG_VACUUM_BAG_ATTACH, tool)
@@ -54,13 +55,13 @@
 
 	if(istype(tool, /obj/item/janicart_upgrade))
 		if(installed_upgrade)
-			to_chat(user, span_warning("[src] already has an upgrade installed! Use a screwdriver to remove it."))
+			to_chat(user, span_warning(LANG("obj.78b70bc0", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/janicart_upgrade/new_upgrade = tool
 		new_upgrade.forceMove(src)
 		new_upgrade.install(src)
 		installed_upgrade = new_upgrade
-		to_chat(user, span_notice("You upgrade [src] with [new_upgrade]."))
+		to_chat(user, span_notice(LANG("obj.0c7ce576", list(src, new_upgrade))))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -76,7 +77,7 @@
 	installed_upgrade.uninstall(src)
 	installed_upgrade.forceMove(get_turf(user))
 	user.put_in_hands(installed_upgrade)
-	to_chat(user, span_notice("You remove [installed_upgrade] from [src]"))
+	to_chat(user, span_notice(LANG("obj.04ef1fd2", list(installed_upgrade, src))))
 	installed_upgrade = null
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS

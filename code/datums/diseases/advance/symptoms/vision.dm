@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*Hyphema (Eye bleeding)
  * Slightly reduces stealth
  * Tremendously reduces resistance
@@ -74,8 +75,8 @@
 					eyes.forceMove(get_turf(infected_mob))
 
 				else if(!infected_mob.is_blind_from(EYE_DAMAGE))
-					to_chat(infected_mob, span_userdanger("You go blind!"))
+					to_chat(infected_mob, span_userdanger(LANG("datum.1319893e", null)))
 					eyes.apply_organ_damage(eyes.maxHealth)
 
 			else
-				to_chat(infected_mob, span_userdanger("Your eyes burn horrifically!"))
+				to_chat(infected_mob, span_userdanger(LANG("datum.264e2a0d", null)))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Divine vocal cords
 
 /obj/item/organ/vocal_cords/colossus
@@ -52,7 +53,7 @@
 		return FALSE
 
 	if(world.time < next_command)
-		to_chat(owner, span_notice("You must wait [DisplayTimeText(next_command - world.time)] before Speaking again."))
+		to_chat(owner, span_notice(LANG("obj.b8571108", list(DisplayTimeText(next_command - world.time)))))
 		return FALSE
 
 	return owner.can_speak()

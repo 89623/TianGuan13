@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define OPERATION_OBJECTIVE "objective"
 
 /datum/surgery_operation/organ/brainwash
@@ -40,10 +41,10 @@
 
 /datum/surgery_operation/organ/brainwash/on_success(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(!organ.owner.mind)
-		to_chat(surgeon, span_warning("[organ.owner] doesn't respond to the brainwashing, as if [organ.owner.p_they()] lacked a mind..."))
+		to_chat(surgeon, span_warning(LANG("datum.91a77439", list(organ.owner, organ.owner.p_they()))))
 		return ..()
 	if(HAS_MIND_TRAIT(organ.owner, TRAIT_UNCONVERTABLE))
-		to_chat(surgeon, span_warning("[organ.owner] seems resistant to the brainwashing..."))
+		to_chat(surgeon, span_warning(LANG("datum.68738c14", list(organ.owner))))
 		return ..()
 
 	display_results(
@@ -57,7 +58,7 @@
 
 /datum/surgery_operation/organ/brainwash/proc/on_brainwash(mob/living/carbon/brainwashed, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/objective = operation_args[OPERATION_OBJECTIVE] || "Oooo no objective set somehow report this to an admin"
-	to_chat(brainwashed, span_notice("A new thought forms in your mind: '[objective]'"))
+	to_chat(brainwashed, span_notice(LANG("datum.0f876d62", list(objective))))
 	brainwash(brainwashed, objective)
 	message_admins("[ADMIN_LOOKUPFLW(surgeon)] surgically brainwashed [ADMIN_LOOKUPFLW(brainwashed)] with the objective '[objective]'.")
 	surgeon.log_message("has brainwashed [key_name(brainwashed)] with the objective '[objective]' using brainwashing surgery.", LOG_ATTACK)

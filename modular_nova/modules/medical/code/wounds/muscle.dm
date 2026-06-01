@@ -72,7 +72,7 @@
 		if(!victim || !limb)
 			qdel(src)
 			return
-		to_chat(victim, span_green("Your [parse_zone(limb.body_zone)] has regenerated its muscle!"))
+		to_chat(victim, span_green(LANG("datum.32ba9352", list(parse_zone(limb.body_zone)))))
 		remove_wound()
 
 /// If we're a human who's punching something with a broken arm, we might hurt ourselves doing so
@@ -86,7 +86,7 @@
 	if(prob(severity * 15))
 		// And you have a 70% or 50% chance to actually land the blow, respectively
 		if(prob(70 - 20 * severity))
-			to_chat(victim, span_userdanger("The damaged muscle in your [parse_zone(limb.body_zone)] shoots with pain as you strike [target]!"))
+			to_chat(victim, span_userdanger(LANG("datum.80e4fffe", list(parse_zone(limb.body_zone), target))))
 			limb.receive_damage(brute=rand(1,5))
 		else
 			victim.visible_message(span_danger("[victim] weakly strikes [target] with [victim.p_their()] swollen [parse_zone(limb.body_zone)], recoiling from pain!"), \

@@ -365,7 +365,7 @@ GLOBAL_DATUM_INIT(holo_scanline, /obj/effect/abstract/holo_scanline, new)
 	var/new_state = !species.read_scanline(src)
 	dna?.features["holo_scanline"] = new_state
 	species.refresh_scanline(src)
-	to_chat(src, span_notice("You [new_state ? "enable" : "disable"] your hologram flicker."))
+	to_chat(src, span_notice(LANG("mob.78b8ff22", list(new_state ? "enable" : "disable"))))
 
 /// Drops everything the holosynth has equipped except items in the slots they get to keep
 /// (ID + pockets).

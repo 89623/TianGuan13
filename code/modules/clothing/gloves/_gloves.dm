@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
@@ -80,11 +81,11 @@
 		return
 	if (!can_cut_with(tool))
 		return
-	balloon_alert(user, "cutting off fingertips...")
+	balloon_alert(user, LANG("obj.f36aa85d", null))
 
 	if(!do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, PROC_REF(can_cut_with), tool)))
 		return
-	balloon_alert(user, "cut fingertips off")
+	balloon_alert(user, LANG("obj.b44aa67c", null))
 	qdel(src)
 	user.put_in_hands(new cut_type)
 	return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/firing_pin
 	name = "electronic firing pin"
 	desc = "A small authentication device, to be inserted into a firearm receiver to allow operation. NT safety regulations require all new designs to incorporate one."
@@ -44,11 +45,11 @@
 			return .
 		if(gun_insert(user, targeted_gun))
 			if(old_pin)
-				balloon_alert(user, "swapped firing pin")
+				balloon_alert(user, LANG("obj.d8c6a3a3", null))
 			else
-				balloon_alert(user, "inserted firing pin")
+				balloon_alert(user, LANG("obj.89a9287b", null))
 	else
-		to_chat(user, span_notice("This firearm already has a firing pin installed."))
+		to_chat(user, span_notice(LANG("obj.a2de3eb1", null)))
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -56,7 +57,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "authentication checks overridden")
+	balloon_alert(user, LANG("obj.5aa61ea3", null))
 	return TRUE
 
 /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/new_gun, starting = FALSE)
@@ -86,7 +87,7 @@
 	if(selfdestruct)
 		if(user)
 			user.show_message("[span_danger("SELF-DESTRUCTING...")]<br>", MSG_VISUAL)
-			to_chat(user, span_userdanger("[gun] explodes!"))
+			to_chat(user, span_userdanger(LANG("obj.e64b7ad7", list(gun))))
 		explosion(src, devastation_range = -1, light_impact_range = 2, flash_range = 3)
 		if(gun)
 			qdel(gun)
@@ -202,7 +203,7 @@
 		var/mob/living/carbon/M = interacting_with
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
-			balloon_alert(user, "dna lock set")
+			balloon_alert(user, LANG("obj.05928027", null))
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 	return ..()
@@ -217,7 +218,7 @@
 	if(!unique_enzymes)
 		if(user && user.dna && user.dna.unique_enzymes)
 			unique_enzymes = user.dna.unique_enzymes
-			balloon_alert(user, "dna lock set")
+			balloon_alert(user, LANG("obj.05928027", null))
 	else
 		..()
 
@@ -245,7 +246,7 @@
 
 /obj/item/firing_pin/paywall/attack_self(mob/user)
 	multi_payment = !multi_payment
-	to_chat(user, span_notice("You set the pin to [multi_payment ? "process payment for every shot" : "one-time license payment"]."))
+	to_chat(user, span_notice(LANG("obj.a298b502", list(multi_payment ? "process payment for every shot" : "one-time license payment"))))
 
 /obj/item/firing_pin/paywall/examine(mob/user)
 	. = ..()
@@ -261,7 +262,7 @@
 	if(isnull(user))
 		forceMove(new_gun.drop_location())
 	else
-		to_chat(user, span_warning("ERROR: Please swipe valid identification card before installing firing pin!"))
+		to_chat(user, span_warning(LANG("obj.42bbfb75", null)))
 		user.put_in_hands(src)
 	return FALSE
 
@@ -274,13 +275,13 @@
 		return NONE
 	var/obj/item/card/id/id = tool
 	if(!id.registered_account)
-		to_chat(user, span_warning("ERROR: Identification card lacks registered bank account!"))
+		to_chat(user, span_warning(LANG("obj.45d61c3b", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(pin_owner && id.registered_account != pin_owner)
-		to_chat(user, span_warning("ERROR: This firing pin has already been authorized!"))
+		to_chat(user, span_warning(LANG("obj.0fc237a6", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(id.registered_account == pin_owner)
-		to_chat(user, span_notice("You unlink the card from the firing pin."))
+		to_chat(user, span_notice(LANG("obj.dfde0a0c", null)))
 		gun_owners -= user.get_bank_account()
 		pin_owner = null
 		return ITEM_INTERACT_SUCCESS
@@ -290,7 +291,7 @@
 	pin_owner = id.registered_account
 	payment_amount = transaction_amount
 	gun_owners += user.get_bank_account()
-	to_chat(user, span_notice("You link the card to the firing pin."))
+	to_chat(user, span_notice(LANG("obj.aba15cae", null)))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
@@ -305,11 +306,11 @@
 				if(pin_owner)
 					pin_owner.adjust_money(payment_amount, "Firing Pin: Payout For Gun Rent")
 				return TRUE
-			to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
+			to_chat(user, span_warning(LANG("obj.def1b651", null)))
 			return FALSE
 		return TRUE
 	if(!credit_card_details)
-		to_chat(user, span_warning("ERROR: User has no valid bank account to subtract neccesary funds from!"))
+		to_chat(user, span_warning(LANG("obj.d4be70df", null)))
 		return FALSE
 	if(active_prompt_user == user)
 		return FALSE
@@ -362,7 +363,7 @@
 
 /obj/item/firing_pin/tag/auth_fail(mob/living/user)
 	. = ..()
-	to_chat(user, span_warning("You need to be wearing [tagcolor] laser tag armor!"))
+	to_chat(user, span_warning(LANG("obj.71d07038", list(tagcolor))))
 
 /obj/item/firing_pin/tag/red
 	name = "red laser tag firing pin"

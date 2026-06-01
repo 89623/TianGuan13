@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DERELICT_VAULT_ID "derelictvault"
 
 /////////// thederelict items
@@ -169,7 +170,7 @@
 
 ///Overrides screwdriver act to prevent all deconstruction and hacking. Override for extra tuff fluff
 /obj/machinery/door/airlock/vault/derelict/screwdriver_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_danger("The robust make of [src] makes it impossible to access the panel in any way!"))
+	to_chat(user, span_danger(LANG("obj.790b0a3d", list(src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fluff/oldturret

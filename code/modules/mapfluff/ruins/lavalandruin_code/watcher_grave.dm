@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/mob_spawn/corpse/goliath/pierced
 	corpse_description = "Seems to have been pierced through the heart by a Watcher spike."
 	naive_corpse_description = "It's got a pretty big boo-boo, might need one of the large plasters."
@@ -62,7 +63,7 @@
 		return
 	if (steps_travelled < steps_to_hatch)
 		return
-	visible_message(span_boldnotice("[src] splits and unfurls into a baby Watcher!"))
+	visible_message(span_boldnotice(LANG("obj.4db5da9a", list(src))))
 	playsound(new_loc, 'sound/effects/splat.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/greenglow(new_loc)
 	new /obj/item/watcher_hatchling(new_loc)
@@ -247,13 +248,13 @@
 /// We must guard this corpse
 /obj/effect/watcher_orbiter/proc/on_parent_died(mob/living/parent)
 	SIGNAL_HANDLER
-	visible_message(span_notice("[src] emits a piteous keening in mourning of [parent]!"))
+	visible_message(span_notice(LANG("obj.2f1cfa77", list(src, parent))))
 	fire_delay /= on_death_multiplier
 
 /// Exit hyperactive mode
 /obj/effect/watcher_orbiter/proc/on_parent_revived(mob/living/parent)
 	SIGNAL_HANDLER
-	visible_message(span_notice("[src] chirps happily as [parent] suddenly gasps for breath!"))
+	visible_message(span_notice(LANG("obj.e9eb928d", list(src, parent))))
 	fire_delay *= on_death_multiplier
 
 

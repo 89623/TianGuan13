@@ -208,7 +208,7 @@
 	set src in oview(1)
 
 	if(anchored)
-		to_chat(usr, span_warning("It is secured to the floor, you can't turn it!"))
+		to_chat(usr, span_warning(LANG("obj.f9fc930f", null)))
 		return FALSE
 
 	setDir(turn(dir, 90))
@@ -219,7 +219,7 @@
 	set src in oview(1)
 
 	if(anchored)
-		to_chat(usr, span_warning("It is secured to the floor, you can't turn it!"))
+		to_chat(usr, span_warning(LANG("obj.f9fc930f", null)))
 		return FALSE
 
 	setDir(turn(dir, 270))
@@ -228,7 +228,7 @@
 /obj/structure/deployable_barricade/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(anchored)
-		to_chat(usr, span_warning("It is secured to the floor, you can't turn it!"))
+		to_chat(usr, span_warning(LANG("obj.f9fc930f", null)))
 		return FALSE
 
 	setDir(turn(dir, 270))
@@ -306,10 +306,10 @@
 			return
 
 		if(wood.get_amount() < 1)
-			to_chat(user, span_warning("You need at least one board to repair [src]!"))
+			to_chat(user, span_warning(LANG("obj.328ca11c", list(src))))
 			return
 
-		visible_message(span_notice("[user] begins to repair [src]."))
+		visible_message(span_notice(LANG("obj.0c406e10", list(user, src))))
 
 		if(!do_after(user,20, src) || get_integrity() >= max_integrity)
 			return
@@ -318,7 +318,7 @@
 			return
 
 		repair_damage(max_integrity)
-		visible_message(span_notice("[user] repairs [src]."))
+		visible_message(span_notice(LANG("obj.639f2d4f", list(user, src))))
 
 
 /*----------------------*/
@@ -367,26 +367,26 @@
 /obj/structure/deployable_barricade/metal/click_alt(mob/user)
 	if(portable_type)
 		if(anchored)
-			to_chat(user, span_warning("[src] cannot be folded up while anchored to the ground!"))
+			to_chat(user, span_warning(LANG("obj.37717295", list(src))))
 			return CLICK_ACTION_BLOCKING
 		if(barricade_upgrade_type)
-			to_chat(user, span_warning("[src] cannot be folded up with upgrades attached, remove them first!"))
+			to_chat(user, span_warning(LANG("obj.c3ea731e", list(src))))
 			return CLICK_ACTION_BLOCKING
 		if(get_integrity() < max_integrity)
-			to_chat(user, span_warning("[src] cannot be folded up while damaged!"))
+			to_chat(user, span_warning(LANG("obj.144e028b", list(src))))
 			return CLICK_ACTION_BLOCKING
 		user.visible_message(span_notice("[user] starts folding [src] up!"), span_notice("You start folding [src] up!"))
 		if(do_after(user, 5 SECONDS, src))
 			if(QDELETED(src)) //Copied encase we change states.
 				return
 			if(anchored)
-				to_chat(user, span_warning("[src] cannot be folded up while anchored to the ground!"))
+				to_chat(user, span_warning(LANG("obj.37717295", list(src))))
 				return CLICK_ACTION_BLOCKING
 			if(barricade_upgrade_type)
-				to_chat(user, span_warning("[src] cannot be folded up with upgrades attached, remove them first!"))
+				to_chat(user, span_warning(LANG("obj.c3ea731e", list(src))))
 				return CLICK_ACTION_BLOCKING
 			if(get_integrity() < max_integrity)
-				to_chat(user, span_warning("[src] cannot be folded up while damaged!"))
+				to_chat(user, span_warning(LANG("obj.144e028b", list(src))))
 				return CLICK_ACTION_BLOCKING
 			user.visible_message(span_notice("[user] folds [src] up!"), span_notice("You neatly fold [src] up!"))
 			playsound(src, 'sound/items/tools/ratchet.ogg', 25, TRUE)
@@ -428,10 +428,10 @@
 			return attempt_barricade_upgrade(attacking_item, user, modifiers)
 
 		if(metal_sheets.get_amount() < repair_amount)
-			to_chat(user, span_warning("You need at least two sheets of metal to repair [src]!"))
+			to_chat(user, span_warning(LANG("obj.19ab8299", list(src))))
 			return FALSE
 
-		visible_message(span_notice("[user] begins to repair [src]."))
+		visible_message(span_notice(LANG("obj.0c406e10", list(user, src))))
 
 		if(!do_after(user, 2 SECONDS, src) || get_integrity() >= max_integrity)
 			return FALSE
@@ -440,19 +440,19 @@
 			return FALSE
 
 		repair_damage(max_integrity * 0.3)
-		visible_message(span_notice("[user] repairs [src]."))
+		visible_message(span_notice(LANG("obj.639f2d4f", list(user, src))))
 	return ..()
 
 /obj/structure/deployable_barricade/metal/proc/attempt_barricade_upgrade(obj/item/stack/sheet/iron/metal_sheets, mob/user, modifiers)
 	if(barricade_upgrade_type)
-		to_chat(user, span_warning("[src] is already upgraded."))
+		to_chat(user, span_warning(LANG("obj.d6f59b38", list(src))))
 		return FALSE
 	if(get_integrity() < max_integrity)
-		to_chat(user, span_warning("You cannot upgrade [src] until it has been repaired!"))
+		to_chat(user, span_warning(LANG("obj.a0c57669", list(src))))
 		return FALSE
 
 	if(metal_sheets.get_amount() < BARRICADE_UPGRADE_REQUIRED_SHEETS)
-		to_chat(user, span_warning("You need at least <b>[BARRICADE_UPGRADE_REQUIRED_SHEETS]</b> to upgrade [src]!"))
+		to_chat(user, span_warning(LANG("obj.5f195636", list(BARRICADE_UPGRADE_REQUIRED_SHEETS, src))))
 		return FALSE
 
 	var/static/list/cade_types = list(BARRICADE_TYPE_BOMB = image(icon = 'modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "explosive_obj"), BARRICADE_TYPE_MELEE = image(icon = 'modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "brute_obj"), BARRICADE_TYPE_ACID = image(icon = 'modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "burn_obj"))
@@ -505,11 +505,11 @@
 		return FALSE
 
 	if(get_integrity() <= max_integrity * 0.3)
-		to_chat(user, span_warning("[src] is too damaged to be repaired with a welder!"))
+		to_chat(user, span_warning(LANG("obj.e8315800", list(src))))
 		return TRUE
 
 	if(get_integrity() >= max_integrity)
-		to_chat(user, span_warning("[src] does not need repairing."))
+		to_chat(user, span_warning(LANG("obj.805c0a92", list(src))))
 		return TRUE
 
 	user.visible_message(span_notice("[user] starts welding the damage on [src]."),
@@ -523,7 +523,7 @@
 		return TRUE
 
 	if(!welding_tool.use(2))
-		to_chat(user, span_warning("Not enough fuel!"))
+		to_chat(user, span_warning(LANG("obj.b6baa52c", null)))
 		return TRUE
 
 	user.visible_message(span_notice("[user] welds the damage on [src]."),
@@ -768,7 +768,7 @@
 	. += "This [src.name] is set up deploy [initial(thing_to_deploy.name)]." // initial() since thing_to_deploy is a typepath
 
 /obj/item/quickdeploy/attack_self(mob/user)
-	to_chat(user, span_notice("You start deploying [src] in front of you."))
+	to_chat(user, span_notice(LANG("obj.fcec36d9", list(src))))
 	playsound(src, 'sound/items/tools/ratchet.ogg', 25, 1)
 	if(!do_after(usr, delay, src))
 		return
@@ -780,7 +780,7 @@
 
 /obj/item/quickdeploy/proc/can_place(mob/user)
 	if(isnull(thing_to_deploy)) //Spaghetti or wrong type spawned
-		to_chat(user, span_warning("Nothing happens... [src] must be defective."))
+		to_chat(user, span_warning(LANG("obj.4f85533d", list(src))))
 		return FALSE
 	return TRUE
 
@@ -796,12 +796,12 @@
 
 	var/turf/mystery_turf = user.loc
 	if(!isopenturf(mystery_turf))
-		to_chat(user, span_warning("You cannot deploy [src] here!"))
+		to_chat(user, span_warning(LANG("obj.eacbf152", list(src))))
 		return FALSE
 
 	var/turf/open/placement_loc = mystery_turf
 	if(placement_loc.density) //We shouldn't be building here.
-		to_chat(user, span_warning("You cannot deploy [src] here!"))
+		to_chat(user, span_warning(LANG("obj.eacbf152", list(src))))
 		return FALSE
 
 	for(var/obj/thing in user.loc)
@@ -814,7 +814,7 @@
 			continue
 		to_chat(user, span_warning("There is no room deploy [src] here."))
 		return FALSE
-	to_chat(user, span_notice("You start deploying [src]..."))
+	to_chat(user, span_notice(LANG("obj.de73e397", list(src))))
 	return TRUE
 
 /obj/item/quickdeploy/barricade/plasteel

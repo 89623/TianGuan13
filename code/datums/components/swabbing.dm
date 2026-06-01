@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*!
 
 This component is used in vat growing to swab for microbiological samples which can then be mixed with reagents in a petridish to create a culture plate.
@@ -93,10 +94,10 @@ This component is used in vat growing to swab for microbiological samples which 
 	. = COMPONENT_CANCEL_ATTACK_CHAIN //Point of no return. No more attacking after this.
 
 	if(LAZYLEN(swabbed_items))
-		to_chat(user, span_warning("You cannot collect another sample on [parent]!"))
+		to_chat(user, span_warning(LANG("datum.10054e01", list(parent))))
 		return
 
-	to_chat(user, span_notice("You start swabbing [target] for samples!"))
+	to_chat(user, span_notice(LANG("datum.35ef7966", list(target))))
 	INVOKE_ASYNC(src, PROC_REF(async_try_to_swab), target, user)
 
 /datum/component/swabbing/proc/async_try_to_swab(atom/target, mob/user)
@@ -106,10 +107,10 @@ This component is used in vat growing to swab for microbiological samples which 
 	LAZYINITLIST(swabbed_items) //If it isn't initialized, initialize it. As we need to pass it by reference
 
 	if(SEND_SIGNAL(target, COMSIG_SWAB_FOR_SAMPLES, swabbed_items) == NONE) //If we found something to swab now we let the swabbed thing handle what it would do, we just sit back and relax now.
-		to_chat(user, span_warning("You do not manage to find anything on [target]!"))
+		to_chat(user, span_warning(LANG("datum.67e63e9c", list(target))))
 		return
 
-	to_chat(user, span_nicegreen("You manage to collect a microbiological sample from [target]!"))
+	to_chat(user, span_nicegreen(LANG("datum.2521174c", list(target))))
 
 	var/obj/item/parent_item = parent
 	parent_item.update_appearance()

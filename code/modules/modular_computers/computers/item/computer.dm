@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // This is the base type of computer
 // Other types expand it - tablets and laptops are subtypes
 // consoles use "procssor" item that is held inside it.
@@ -301,8 +302,8 @@
 	stored_id = inserting_id
 
 	if(!isnull(user))
-		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
-		balloon_alert(user, "inserted ID")
+		to_chat(user, span_notice(LANG("obj.e977b0ea", list(inserting_id))))
+		balloon_alert(user, LANG("obj.90e3e042", null))
 
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
@@ -332,8 +333,8 @@
 
 	alt_stored_id = secondary_id
 	if(!isnull(user))
-		to_chat(user, span_notice("You insert \the [secondary_id] into the secondary card slot."))
-		balloon_alert(user, "inserted secondary ID")
+		to_chat(user, span_notice(LANG("obj.11710338", list(secondary_id))))
+		balloon_alert(user, LANG("obj.496a5025", null))
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	return TRUE
@@ -358,8 +359,8 @@
 	alt_stored_id = null
 
 	if(!silent && !isnull(user))
-		to_chat(user, span_notice("You remove \the [lost_id] from the secondary card slot."))
-		balloon_alert(user, "removed secondary ID")
+		to_chat(user, span_notice(LANG("obj.4bf3b45b", list(lost_id))))
+		balloon_alert(user, LANG("obj.dfa1d70f", null))
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	return TRUE
@@ -386,8 +387,8 @@
 	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_REMOVED_ID, stored_id, user) // NOVA EDIT ADDITION - Signal on ID removal
 
 	if(!silent && !isnull(user))
-		to_chat(user, span_notice("You remove \the [lost_id] from the card slot."))
-		balloon_alert(user, "removed ID")
+		to_chat(user, span_notice(LANG("obj.599a2f4b", list(lost_id))))
+		balloon_alert(user, LANG("obj.c7436243", null))
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 	if(ishuman(loc))
@@ -415,12 +416,12 @@
 
 /obj/item/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card, forced)
 	if(!enabled && !forced)
-		balloon_alert(user, "turn it on first!")
+		balloon_alert(user, LANG("obj.5aaff2c1", null))
 		return FALSE
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, "already emagged!")
+		balloon_alert(user, LANG("obj.9bab397b", null))
 		if (emag_card)
-			to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
+			to_chat(user, span_notice(LANG("obj.099a5407", list(src, emag_card))))
 		return FALSE
 
 	. = ..()
@@ -429,9 +430,9 @@
 	obj_flags |= EMAGGED
 	device_theme = PDA_THEME_SYNDICATE
 	if(user)
-		balloon_alert(user, "syndieOS loaded")
+		balloon_alert(user, LANG("obj.6e2fa612", null))
 		if (emag_card)
-			to_chat(user, span_notice("You swipe \the [src] with [emag_card]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
+			to_chat(user, span_notice(LANG("obj.ba75e50c", list(src, emag_card))))
 	return TRUE
 
 /obj/item/modular_computer/examine(mob/user)
@@ -555,9 +556,9 @@
 	if(atom_integrity <= integrity_failure * max_integrity)
 		if(user)
 			if(issynth)
-				to_chat(user, span_warning("You send an activation signal to \the [src], but it responds with an error code. It must be damaged."))
+				to_chat(user, span_warning(LANG("obj.d5b298a5", list(src))))
 			else
-				to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
+				to_chat(user, span_warning(LANG("obj.51318b32", null)))
 		return FALSE
 
 	if(use_energy(base_active_power_usage)) // checks if the PC is powered
@@ -567,9 +568,9 @@
 		update_appearance()
 		if(user)
 			if(issynth)
-				to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
+				to_chat(user, span_notice(LANG("obj.70af508a", list(src))))
 			else
-				to_chat(user, span_notice("You press the power button and start up \the [src]."))
+				to_chat(user, span_notice(LANG("obj.bd6108c1", list(src))))
 			if(open_ui)
 				update_tablet_open_uis(user)
 		SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_TURNED_ON, user)
@@ -577,9 +578,9 @@
 	else // Unpowered
 		if(user)
 			if(issynth)
-				to_chat(user, span_warning("You send an activation signal to \the [src] but it does not respond."))
+				to_chat(user, span_warning(LANG("obj.7015afdb", list(src))))
 			else
-				to_chat(user, span_warning("You press the power button but \the [src] does not respond."))
+				to_chat(user, span_warning(LANG("obj.397c7f8b", list(src))))
 		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
@@ -699,7 +700,7 @@
 
 	if(isnull(program) || !istype(program)) // Program not found or it's not executable program.
 		if(user)
-			to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
+			to_chat(user, span_danger(LANG("obj.83b67441", list(src))))
 		return FALSE
 
 	if(active_program == program)
@@ -722,12 +723,12 @@
 
 	if(idle_threads.len > max_idle_programs)
 		if(user)
-			to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
+			to_chat(user, span_danger(LANG("obj.bdcd046b", list(src))))
 		return FALSE
 
 	if(program.program_flags & PROGRAM_REQUIRES_NTNET && !get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
 		if(user)
-			to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
+			to_chat(user, span_danger(LANG("obj.319a3f00", list(src))))
 		return FALSE
 
 	if(!program.on_start(user))
@@ -822,7 +823,7 @@
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		if(user)
-			balloon_alert(user, "disrupted!")
+			balloon_alert(user, LANG("obj.492a03fe", null))
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()
@@ -883,17 +884,17 @@
 /obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(atom_integrity == max_integrity)
-		to_chat(user, span_warning("\The [src] does not require repairs."))
+		to_chat(user, span_warning(LANG("obj.cedadcb8", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!tool.tool_start_check(user, amount=1))
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
+	to_chat(user, span_notice(LANG("obj.28fd687f", list(src))))
 	if(!tool.use_tool(src, user, 20, volume=50))
 		return ITEM_INTERACT_SUCCESS
 	atom_integrity = max_integrity
-	to_chat(user, span_notice("You repair \the [src]."))
+	to_chat(user, span_notice(LANG("obj.67ccfd18", list(src))))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -939,7 +940,7 @@
 /obj/item/modular_computer/proc/money_act(mob/user, obj/item/money)
 	var/obj/item/card/id/inserted_id = stored_id?.GetID()
 	if(!inserted_id)
-		balloon_alert(user, "no ID!")
+		balloon_alert(user, LANG("obj.d029a2bc", null))
 		return ITEM_INTERACT_BLOCKING
 	return inserted_id.insert_money(money, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
@@ -949,7 +950,7 @@
 	if(!user.transferItemToLoc(card, src))
 		return ITEM_INTERACT_BLOCKING
 	inserted_pai = card
-	balloon_alert(user, "inserted pai")
+	balloon_alert(user, LANG("obj.cb27eac3", null))
 	if(inserted_pai.pai)
 		inserted_pai.pai.give_messenger_ability()
 	update_appearance(UPDATE_ICON)
@@ -959,30 +960,30 @@
 	if(ismachinery(physical))
 		return ITEM_INTERACT_BLOCKING
 	if(internal_cell)
-		to_chat(user, span_warning("You try to connect \the [new_cell] to \the [src], but its connectors are occupied."))
+		to_chat(user, span_warning(LANG("obj.59b7f14a", list(new_cell, src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_cell, src))
 		return ITEM_INTERACT_BLOCKING
 	internal_cell = new_cell
-	to_chat(user, span_notice("You plug \the [new_cell] to \the [src]."))
+	to_chat(user, span_notice(LANG("obj.ea306c82", list(new_cell, src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/proc/photo_act(mob/user, obj/item/photo/scanned_photo)
 	var/datum/picture/source_picture = scanned_photo.picture
 	var/datum/computer_file/image/image_file = new /datum/computer_file/image(source_picture.picture_image, display_name = source_picture.picture_name, source_photo_or_painting = source_picture)
 	if(!store_file(image_file, user))
-		balloon_alert(user, "no space!")
+		balloon_alert(user, LANG("obj.a5ca1017", null))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "photo scanned")
+	balloon_alert(user, LANG("obj.b0baa30a", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/proc/paper_act(mob/user, obj/item/paper/new_paper)
 	if(stored_paper >= max_paper)
-		balloon_alert(user, "no more room!")
+		balloon_alert(user, LANG("obj.0e074d75", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.temporarilyRemoveItemFromInventory(new_paper))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "inserted paper")
+	balloon_alert(user, LANG("obj.47b6d4a0", null))
 	qdel(new_paper)
 	playsound(src, 'sound/machines/computer/paper_insert.ogg', 40, vary = TRUE)
 	stored_paper++
@@ -990,7 +991,7 @@
 
 /obj/item/modular_computer/proc/paper_bin_act(mob/user, obj/item/paper_bin/bin)
 	if(bin.total_paper <= 0)
-		balloon_alert(user, "empty bin!")
+		balloon_alert(user, LANG("obj.e4c1ebc9", null))
 		return ITEM_INTERACT_BLOCKING
 	var/papers_added //just to keep track
 	while((bin.total_paper > 0) && (stored_paper < max_paper))
@@ -999,8 +1000,8 @@
 		bin.remove_paper()
 	if(!papers_added)
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "inserted paper")
-	to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
+	balloon_alert(user, LANG("obj.47b6d4a0", null))
+	to_chat(user, span_notice(LANG("obj.4fa00f7f", list(papers_added, stored_paper, max_paper))))
 	playsound(src, 'sound/machines/computer/paper_insert.ogg', 40, vary = TRUE)
 	bin.update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -1010,9 +1011,9 @@
 		return ITEM_INTERACT_BLOCKING
 	if(inserted_disk)
 		user.put_in_hands(inserted_disk)
-		balloon_alert(user, "disks swapped")
+		balloon_alert(user, LANG("obj.b36ca7c5", null))
 	else
-		balloon_alert(user, "disk inserted")
+		balloon_alert(user, LANG("obj.0d53bd7c", null))
 	inserted_disk = disk
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 	return ITEM_INTERACT_SUCCESS
@@ -1058,7 +1059,7 @@
 		inserted_pai.pai.remove_messenger_ability()
 	if(user)
 		user.put_in_hands(inserted_pai)
-		balloon_alert(user, "removed pAI")
+		balloon_alert(user, LANG("obj.d905e1bd", null))
 	else
 		inserted_pai.forceMove(drop_location())
 	inserted_pai = null

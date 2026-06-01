@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Player controlled mobs that rip and tear, typically summoned by wizards.
 /mob/living/basic/demon
 	name = "imp"
@@ -72,4 +73,4 @@
 	mind.add_antag_datum(antag_type)
 
 	SEND_SOUND(src, 'sound/effects/magic/demon_dies.ogg')
-	to_chat(src, span_bold("You are currently not currently in the same plane of existence as the station. Use your Blood Crawl ability near a pool of blood to manifest and wreak havoc."))
+	to_chat(src, span_bold(LANG("mob.e67283a2", null)))

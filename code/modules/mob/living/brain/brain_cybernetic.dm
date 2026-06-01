@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/brain/cybernetic
 	name = "cybernetic brain"
 	desc = "A mechanical brain found inside of androids. Not to be confused with a positronic brain."
@@ -22,11 +23,11 @@
 /obj/item/organ/brain/cybernetic/check_for_repair(obj/item/item, mob/user)
 	if (item.tool_behaviour == TOOL_MULTITOOL) //attempt to repair the brain
 		if (brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
-			to_chat(user, span_warning("[src] is far too damaged, there's nothing else we can do for it!"))
+			to_chat(user, span_warning(LANG("obj.57f2d422", list(src))))
 			return TRUE
 
 		if (DOING_INTERACTION(user, src))
-			to_chat(user, span_warning("you're already repairing [src]!"))
+			to_chat(user, span_warning(LANG("obj.7ca3d4a6", list(src))))
 			return TRUE
 
 		user.visible_message(span_notice("[user] slowly starts to repair [src] with [item]."), span_notice("You slowly start to repair [src] with [item]."))
@@ -44,7 +45,7 @@
 			else
 				user.visible_message(span_notice("[user] fully repairs [src] with [item], causing its warning light to stop flashing."), span_notice("You fully repair [src] with [item], causing its warning light to stop flashing."))
 		else
-			to_chat(user, span_warning("You failed to repair [src] with [item]!"))
+			to_chat(user, span_warning(LANG("obj.8a2acaec", list(src, item))))
 
 		return TRUE
 	return FALSE

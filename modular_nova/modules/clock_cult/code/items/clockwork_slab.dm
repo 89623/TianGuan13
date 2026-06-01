@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 
 /obj/item/clockwork/clockwork_slab/attack_self(mob/living/user)
 	if(!IS_CLOCK(user))
-		to_chat(user, span_warning("You cannot figure out what the device is used for!"))
+		to_chat(user, span_warning(LANG("obj.6c9000dd", null)))
 		return
 
 	if(active_scripture)
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 
 	if(buffer)
 		buffer = null
-		to_chat(user, span_brass("You clear the [src]'s buffer."))
+		to_chat(user, span_brass(LANG("obj.b3171813", list(src))))
 		return
 
 	SEND_SIGNAL(user, COMSIG_CLOCKWORK_SLAB_USED, src)

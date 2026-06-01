@@ -206,7 +206,7 @@
 	flipped = !flipped
 	update_static_data()
 
-	balloon_alert(user, "card flipped")
+	balloon_alert(user, LANG("obj.72443357", null))
 	return CLICK_ACTION_SUCCESS
 
 /datum/quirk/feline_aspect

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/cell_charger
 	name = "cell charger"
 	desc = "It charges power cells."
@@ -56,18 +57,18 @@ NOVA EDIT END */
 		return NONE
 
 	if(machine_stat & BROKEN)
-		to_chat(user, span_warning("[src] is broken!"))
+		to_chat(user, span_warning(LANG("obj.e2c73115", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!anchored)
-		to_chat(user, span_warning("[src] isn't attached to the ground!"))
+		to_chat(user, span_warning(LANG("obj.f467682f", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(charging)
-		to_chat(user, span_warning("There is already a cell in the charger!"))
+		to_chat(user, span_warning(LANG("obj.19b677e5", null)))
 		return ITEM_INTERACT_BLOCKING
 	// NOVA EDIT ADDITION START
 	var/obj/item/stock_parts/power_store/cell/inserting_cell = tool
 	if(inserting_cell.chargerate <= 0)
-		to_chat(user, span_warning("[inserting_cell] cannot be recharged!"))
+		to_chat(user, span_warning(LANG("obj.d4b2e04f", list(inserting_cell))))
 		return
 	// NOVA EDIT ADDITION END
 
@@ -75,7 +76,7 @@ NOVA EDIT END */
 	if(!isarea(charge_area))
 		return ITEM_INTERACT_BLOCKING
 	if(!charge_area.power_equip) // There's no APC in this area, don't try to cheat power!
-		to_chat(user, span_warning("[src] blinks red as you try to insert the cell!"))
+		to_chat(user, span_warning(LANG("obj.ebb2a520", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
@@ -120,7 +121,7 @@ NOVA EDIT END */
 	if(!charging)
 		return
 
-	to_chat(user, span_notice("You telekinetically remove [charging] from [src]."))
+	to_chat(user, span_notice(LANG("obj.2e70f313", list(charging, src))))
 	removecell(drop_location())
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

@@ -61,10 +61,10 @@
 		locked = TRUE
 		log_combat(target, source, "locked onto with aiming")
 		playsound(get_turf(source), 'modular_nova/modules/gunpoint/sound/targeton.ogg', 50,1)
-		to_chat(source, span_notice("<b>You lock onto [target.name]!</b>"))
+		to_chat(source, span_notice(LANG("datum.135a273f", list(target.name))))
 		target.visible_message(span_warning("<b>[source.name] holds [target.name] at gunpoint with the [aimed_gun.name]!</b>"), span_userdanger("[source.name] holds you at gunpoint with the [aimed_gun.name]!"))
 		if(target.gunpointed.len == 1)//First case
-			to_chat(target, span_danger("You can move, but you see that [source.name] has a gun pointed at you!"))
+			to_chat(target, span_danger(LANG("datum.60f07a83", list(source.name))))
 		if(target.gp_effect.icon_state != "locked")
 			target.gp_effect.icon_state = "locked"
 

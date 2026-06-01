@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Mounted guns are basically a smaller equivalent to cannons, designed to use pre-existing ammo rather than cannonballs.
 //Due to using pre-existing ammo, they dont require to be loaded with gunpowder or an equivalent.
 
@@ -86,12 +87,12 @@
 		return NONE
 
 	if(is_firing)
-		balloon_alert(user, "gun firing!")
+		balloon_alert(user, LANG("obj.f6aac220", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/fully_loaded = shots_in_gun >= max_shots_per_fire
 	if(fully_loaded)
-		balloon_alert(user, "already loaded!")
+		balloon_alert(user, LANG("obj.e79a422e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if (load_delay > 0)
@@ -109,7 +110,7 @@
 	if (.)
 		return
 	if (is_firing)
-		balloon_alert(user, "gun firing!")
+		balloon_alert(user, LANG("obj.f6aac220", null))
 		return
 	try_firing(user)
 
@@ -121,7 +122,7 @@
 /// Loop firing until we are done
 /obj/structure/mounted_gun/proc/fire_sequence(mob/living/user)
 	if (!shots_in_gun)
-		balloon_alert(user, "not loaded!")
+		balloon_alert(user, LANG("obj.654000ba", null))
 		return
 
 	is_firing = TRUE
@@ -373,11 +374,11 @@
 		return NONE
 
 	if(is_firing)
-		balloon_alert(user, "gun firing!")
+		balloon_alert(user, LANG("obj.f6aac220", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(loaded_spear)
-		balloon_alert(user, "already loaded!")
+		balloon_alert(user, LANG("obj.e79a422e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)

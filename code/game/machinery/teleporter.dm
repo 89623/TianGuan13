@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/teleport
 	name = "teleport"
 	icon = 'icons/obj/machines/teleporter.dmi'
@@ -47,7 +48,7 @@
 
 /obj/machinery/teleport/hub/Bumped(atom/movable/AM)
 	if(is_centcom_level(z))
-		to_chat(AM, span_warning("You can't use this here!"))
+		to_chat(AM, span_warning(LANG("obj.1cd76a5d", null)))
 		return
 	if(is_ready())
 		teleport(AM)
@@ -72,7 +73,7 @@
 		target = com.target_ref.resolve()
 	if (!target)
 		com.target_ref = null
-		visible_message(span_alert("Cannot authenticate locked on coordinates. Please reinstate coordinate matrix."))
+		visible_message(span_alert(LANG("obj.4ecc5976", null)))
 		return
 	if(!ismovable(M))
 		return
@@ -96,7 +97,7 @@
 		*/ //NOVA EDIT REMOVAL END
 		// NOVA EDIT ADDITION START
 		if(!HAS_TRAIT(human, TRAIT_NODISMEMBER))
-			to_chat(human, span_danger("Your limbs lose molecular cohesion as you teleport!"))
+			to_chat(human, span_danger(LANG("obj.f3447f11", null)))
 			var/list/bodyparts_dismember = list()
 			var/rad_mod = 0
 			for(var/obj/item/bodypart/BP in human.bodyparts)
@@ -188,7 +189,7 @@
 
 	if(panel_open)
 		tool.set_buffer(src)
-		balloon_alert(user, "saved to multitool buffer")
+		balloon_alert(user, LANG("obj.84afb909", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!istype(tool.buffer, /obj/machinery/teleport/station) || tool.buffer == src)
@@ -197,7 +198,7 @@
 	if(linked_stations.len < efficiency)
 		linked_stations.Add(tool.buffer)
 		tool.set_buffer(null)
-		balloon_alert(user, "data uploaded from buffer")
+		balloon_alert(user, LANG("obj.38965918", null))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/teleport/station/screwdriver_act(mob/living/user, obj/item/tool)
@@ -214,14 +215,14 @@
 		return
 	if (teleporter_console.target_ref?.resolve())
 		if(teleporter_hub.panel_open || teleporter_hub.machine_stat & (BROKEN|NOPOWER))
-			to_chat(user, span_alert("The teleporter hub isn't responding."))
+			to_chat(user, span_alert(LANG("obj.3b4253ff", null)))
 		else
 			engaged = !engaged
 			use_energy(active_power_usage)
-			to_chat(user, span_notice("Teleporter [engaged ? "" : "dis"]engaged!"))
+			to_chat(user, span_notice(LANG("obj.8a3671d8", list(engaged ? "" : "dis"))))
 	else
 		teleporter_console.target_ref = null
-		to_chat(user, span_alert("No target detected."))
+		to_chat(user, span_alert(LANG("obj.bfb5de77", null)))
 		engaged = FALSE
 	teleporter_hub.update_appearance()
 	add_fingerprint(user)

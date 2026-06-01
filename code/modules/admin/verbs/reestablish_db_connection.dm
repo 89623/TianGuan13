@@ -1,6 +1,7 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(reestablish_db_connection, R_NONE, "Reestablish DB Connection", "Attempts to (re)establish the DB Connection", ADMIN_CATEGORY_SERVER)
 	if (!CONFIG_GET(flag/sql_enabled))
-		to_chat(user, span_adminnotice("The Database is not enabled!"), confidential = TRUE)
+		to_chat(user, span_adminnotice(LANG("datum.5bf16f98", null)), confidential = TRUE)
 		return
 
 	if (SSdbcore.IsConnected())

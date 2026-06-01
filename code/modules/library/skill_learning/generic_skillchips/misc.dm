@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Contains generic skillchips that are fairly short and simple
 
 /obj/item/skillchip/wine_taster
@@ -97,7 +98,7 @@
 	. += span_warning("It seems to have been corroded over time, putting this in your head may not be the best idea...")
 
 /obj/item/skillchip/brainwashing/on_activate(mob/living/carbon/user, silent = FALSE)
-	to_chat(user, span_danger("You get a pounding headache as the chip sends corrupt memories into your head!"))
+	to_chat(user, span_danger(LANG("obj.5d01e197", null)))
 	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 	. = ..()
 

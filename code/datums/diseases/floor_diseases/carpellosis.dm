@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define GNASHING_RANGE 7
 
 /// Caused by dirty food. Makes you growl at people and bite them spontaneously.
@@ -62,7 +63,7 @@
 	if(ability_granted)
 		rift_ability.Remove(affected_mob)
 	if(max_stage_reached && prob(ella_spawn_chance))
-		to_chat(affected_mob, span_warning("Something comes out of you!"))
+		to_chat(affected_mob, span_warning(LANG("datum.5942ad42", null)))
 		new /mob/living/basic/carp/ella(affected_mob.loc)
 	return ..()
 
@@ -83,9 +84,9 @@
 /datum/disease/carpellosis/proc/gnash_someone()
 	var/mob/living/carbon/human/target = find_nearby_human()
 	if(isnull(target) || !affected_mob.get_bodypart(BODY_ZONE_HEAD)) // Need mouth to gnash
-		to_chat(affected_mob, span_warning("You want to gnash at someone..."))
+		to_chat(affected_mob, span_warning(LANG("datum.017f9e47", null)))
 		return
-	to_chat(affected_mob, span_warning("[target.name] makes you angry for some reason..."))
+	to_chat(affected_mob, span_warning(LANG("datum.e4eb463f", list(target.name))))
 	if(ability_granted && !affected_mob.Adjacent(target))
 		rift_ability.Trigger(target = target)
 	affected_mob.face_atom(target)

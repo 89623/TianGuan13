@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SAFETY_COOLDOWN 100
 
 /obj/machinery/recycler
@@ -71,7 +72,7 @@
 
 /obj/machinery/recycler/can_be_unfasten_wrench(mob/user, silent)
 	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
-		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
+		to_chat(user, span_warning(LANG("obj.ec1e0974", list(src))))
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
@@ -89,7 +90,7 @@
 		safety_mode = FALSE
 		update_appearance()
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
-	balloon_alert(user, "safeties disabled")
+	balloon_alert(user, LANG("obj.42074643", null))
 	return FALSE
 
 /obj/machinery/recycler/update_icon_state()
@@ -157,7 +158,7 @@
 		if(thing.flags_1 & HOLOGRAM_1)
 			for(var/atom/movable/hologram_content as anything in thing.contents)
 				hologram_content.forceMove(loc) // we shouldn't qdel() the non-holographic content of the hologram.
-			visible_message(span_notice("[thing] fades away!"))
+			visible_message(span_notice(LANG("obj.1b5ff63e", list(thing))))
 			qdel(thing)
 			continue
 

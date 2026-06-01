@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Component which allows mobs to be smashed onto this surface like a wrestling move
 /datum/element/table_smash
 	element_flags = ELEMENT_BESPOKE
@@ -54,7 +55,7 @@
 			//Already buckled to the object, you probably meant to unbuckle them
 			return
 
-		to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
+		to_chat(user, span_warning(LANG("datum.9a1c1261", list(pushed_mob, pushed_mob.buckled))))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, PROC_REF(perform_table_smash), source_obj, user)
@@ -139,7 +140,7 @@
 /// Aggressively smash the mob onto the table
 /datum/element/table_smash/proc/tablepush(mob/living/user, mob/living/pushed_mob, obj/structure/table/table)
 	if (HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_danger("Throwing [pushed_mob] onto the table might hurt them!"))
+		to_chat(user, span_danger(LANG("datum.4088543b", list(pushed_mob))))
 		return
 
 	var/passtable_key = REF(user)
@@ -192,7 +193,7 @@
 	target.Knockdown(SHOVE_KNOCKDOWN_TABLE, daze_amount = 3 SECONDS)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
 		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
+	to_chat(shover, span_danger(LANG("obj.b47544d4", list(target.name, src))))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 	log_combat(shover, target, "shoved", "onto [src] (table)[weapon ? " with [weapon]" : ""]")
 	after_smash(target)

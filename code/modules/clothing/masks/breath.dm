@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply."
 	name = "breath mask"
@@ -71,7 +72,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
 		if(src == carbon_user.wear_mask)
-			to_chat(user, span_warning("You need help taking this off!"))
+			to_chat(user, span_warning(LANG("obj.8114e6da", null)))
 			return
 	return ..()
 

@@ -94,10 +94,10 @@
 	if(!isliving(user))
 		return CLICK_ACTION_BLOCKING
 	if(user.get_active_held_item() != src)
-		to_chat(user, span_warning("You must hold the [src] in your hand to do this!"))
+		to_chat(user, span_warning(LANG("obj.a549c0e7", list(src))))
 		return CLICK_ACTION_BLOCKING
 	voice_filter = voice_filter ? null : initial(voice_filter)
-	to_chat(user, span_notice("Mask voice muffling [voice_filter ? "enabled" : "disabled"]."))
+	to_chat(user, span_notice(LANG("obj.51325fc9", list(voice_filter ? "enabled" : "disabled"))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/gas/clown_hat/vox
@@ -139,7 +139,7 @@
 		icon_state = options[choice]
 		user.update_worn_mask()
 		update_item_action_buttons()
-		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
+		to_chat(user, span_notice(LANG("obj.b3ec1c05", list(choice))))
 		return TRUE
 
 /obj/item/clothing/mask/gas/mime/vox
@@ -186,7 +186,7 @@
 
 		user.update_worn_mask()
 		update_item_action_buttons()
-		to_chat(user, span_notice("Your Mime Mask has now morphed into [choice]!"))
+		to_chat(user, span_notice(LANG("obj.722fda20", list(choice))))
 		return TRUE
 
 /obj/item/clothing/mask/gas/atmos/vox

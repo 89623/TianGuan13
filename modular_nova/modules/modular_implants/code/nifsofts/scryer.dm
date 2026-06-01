@@ -95,16 +95,16 @@
 	return TRUE
 
 /obj/item/clothing/neck/link_scryer/loaded/nifsoft/screwdriver_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "cell non-removable!")
+	balloon_alert(user, LANG("obj.6a34b38f", null))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/neck/link_scryer/loaded/nifsoft/attack_hand_secondary(mob/user, list/modifiers)
 	var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, max_length = MAX_NAME_LEN))
 	if(!new_label)
-		balloon_alert(user, "invalid name!")
+		balloon_alert(user, LANG("obj.b3c641ad", null))
 		return
 	label = new_label
-	balloon_alert(user, "name set!")
+	balloon_alert(user, LANG("obj.63b7d810", null))
 	update_name()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

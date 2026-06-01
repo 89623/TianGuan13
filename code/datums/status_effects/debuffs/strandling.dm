@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A multiplier to the time it takes to remove durathread strangling when using a tool instead of your hands
 #define STRANGLING_TOOL_MULTIPLIER 0.4
 
@@ -70,7 +71,7 @@
 
 	// Now try to remove the effect with a doafter. If we have a tool, we'll even remove it 60% faster.
 	if(!do_after(user, time_to_remove * (tool ? STRANGLING_TOOL_MULTIPLIER : 1), owner, interaction_key = REF(src)))
-		to_chat(user, span_warning("You fail to [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck!"))
+		to_chat(user, span_warning(LANG("datum.07227edd", list(tool ? "cut":"remove", owner == user ? "your":"[owner]'s"))))
 		return FALSE
 
 	// Play another sound after we're done

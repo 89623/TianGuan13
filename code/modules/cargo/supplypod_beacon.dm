@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/supplypod_beacon
 	name = "Supply Pod Beacon"
 	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries."
@@ -96,11 +97,11 @@
 	update_status(SP_LINKED)
 	if (express_console.using_beacon)
 		update_status(SP_READY)
-	to_chat(user, span_notice("[src] linked to [C]."))
+	to_chat(user, span_notice(LANG("obj.4b694d3f", list(src, C))))
 
 /obj/item/supplypod_beacon/click_alt(mob/user)
 	if(!express_console)
-		to_chat(user, span_alert("There is no linked console."))
+		to_chat(user, span_alert(LANG("obj.13b210e2", null)))
 		return CLICK_ACTION_BLOCKING
 	unlink_console()
 	return CLICK_ACTION_SUCCESS

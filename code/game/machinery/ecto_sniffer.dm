@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/ecto_sniffer
 	name = "ectoscopic sniffer"
 	desc = "A highly sensitive parascientific instrument calibrated to detect the slightest whiff of ectoplasm."
@@ -34,7 +35,7 @@
 		return
 	flick("ecto_sniffer_flick", src)
 	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 75)
-	say("Reporting [pick(world.file2list("strings/spook_levels.txt"))] levels of paranormal activity!")
+	say(LANG("obj.a7d6e5b1", list(pick(world.file2list("strings/spook_levels.txt")))))
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey
 		addtimer(CALLBACK(src, PROC_REF(clear_residue), activator.ckey), 15 SECONDS)
@@ -43,7 +44,7 @@
 	. = ..()
 	add_fingerprint(user)
 	on = !on
-	balloon_alert(user, "sniffer turned [on ? "on" : "off"]")
+	balloon_alert(user, LANG("obj.6fdb3bd9", list(on ? "on" : "off")))
 	update_appearance()
 
 /obj/machinery/ecto_sniffer/update_icon_state()
@@ -61,7 +62,7 @@
 /obj/machinery/ecto_sniffer/wrench_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 15)
 	set_anchored(!anchored)
-	balloon_alert(user, "sniffer [anchored ? "anchored" : "unanchored"]")
+	balloon_alert(user, LANG("obj.cd269c0b", list(anchored ? "anchored" : "unanchored")))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ecto_sniffer/screwdriver_act(mob/living/user, obj/item/screwdrivertool)
@@ -85,4 +86,4 @@
 	var/mob/ghost = get_mob_by_ckey(ghost_ckey)
 	if(!ghost || isliving(ghost))
 		return
-	to_chat(ghost, "[FOLLOW_LINK(ghost, src)] <span class='nicegreen'>The coating of ectoplasmic residue you left on [src]'s sensors has decayed.</span>")
+	to_chat(ghost, LANG("obj.d6154c17", list(FOLLOW_LINK(ghost, src), src)))

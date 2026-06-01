@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //CONTAINS: Detective's Scanner
 
 /obj/item/detective_scanner
@@ -57,7 +58,7 @@
 	if(ismob(loc))
 		var/mob/printer = loc
 		printer.put_in_hands(report_paper)
-		balloon_alert(printer, "logs cleared")
+		balloon_alert(printer, LANG("obj.f9941788", null))
 
 	// Clear the logs
 	log_data = list()
@@ -80,10 +81,10 @@
 /obj/item/detective_scanner/proc/safe_scan(mob/user, atom/atom_to_scan)
 	set waitfor = FALSE
 	if(scanner_busy)
-		balloon_alert(user, "scanner busy!")
+		balloon_alert(user, LANG("obj.d1dc28fd", null))
 		return
 	if(!scan(user, atom_to_scan)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
-		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
+		balloon_alert(user, LANG("obj.4093d430", null)) // but in case it does, we 'error' instead of just bricking the scanner
 	scanner_busy = FALSE
 
 /**
@@ -107,7 +108,7 @@
 		span_notice("\The [user] points \the [src] at \the [scanned_atom] and performs a forensic scan."),
 		ignored_mobs = user
 	)
-	to_chat(user, span_notice("You scan \the [scanned_atom]. The scanner is now analysing the results..."))
+	to_chat(user, span_notice(LANG("obj.b3852269", list(scanned_atom))))
 
 
 	// GATHER INFORMATION
@@ -251,11 +252,11 @@
 
 /obj/item/detective_scanner/proc/clear_logs(mob/living/user)
 	if(!length(log_data))
-		balloon_alert(user, "no logs!")
+		balloon_alert(user, LANG("obj.bd1bb18b", null))
 		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)
-		balloon_alert(user, "scanner busy!")
+		balloon_alert(user, LANG("obj.d1dc28fd", null))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "logs cleared")
+	balloon_alert(user, LANG("obj.f9941788", null))
 	log_data = list()
 	return CLICK_ACTION_SUCCESS

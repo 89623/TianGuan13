@@ -29,7 +29,7 @@
 /obj/item/clothing/accessory/badge/attack_self(mob/user as mob)
 
 	if(!stored_name)
-		to_chat(user, "You polish your old badge fondly, shining up the surface.")
+		to_chat(user, LANG("obj.fb943151", null))
 		set_name(user.real_name)
 		return
 
@@ -83,18 +83,18 @@
 
 /obj/item/clothing/accessory/badge/holo/attack_self(mob/user as mob)
 	if(!stored_name)
-		to_chat(user, "Waving around a holobadge before swiping an ID would be pretty pointless.")
+		to_chat(user, LANG("obj.97f2822f", null))
 		return
 	return ..()
 
 /obj/item/clothing/accessory/badge/holo/emag_act(remaining_charges, mob/user)
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, "already cracked")
+		balloon_alert(user, LANG("obj.e609804d", null))
 		return FALSE
 
 	obj_flags |= EMAGGED
-	balloon_alert(user, "security checks cracked!")
-	to_chat(user, span_danger("You crack the holobadge security checks."))
+	balloon_alert(user, LANG("obj.8e75287a", null))
+	to_chat(user, span_danger(LANG("obj.9a38cfb5", null)))
 	return TRUE
 
 /obj/item/clothing/accessory/badge/holo/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -106,11 +106,11 @@
 			id_card = attacking_item
 
 		if((ACCESS_SECURITY in id_card.access) || (obj_flags & EMAGGED))
-			to_chat(user, "You imprint your ID details onto the badge.")
+			to_chat(user, LANG("obj.f801131d", null))
 			set_name(user.real_name)
 			badge_string = id_card.assignment
 		else
-			to_chat(user, "[src] rejects your insufficient access rights.")
+			to_chat(user, LANG("obj.9de51e4b", list(src)))
 		return
 	return ..()
 
@@ -294,16 +294,16 @@
 		return CLICK_ACTION_BLOCKING
 	var/mob/living/carbon/human/wearer = user
 	if(wearer.get_active_held_item() != src)
-		to_chat(wearer, span_warning("You must hold the [src] in your hand to do this!"))
+		to_chat(wearer, span_warning(LANG("obj.a549c0e7", list(src))))
 		return CLICK_ACTION_BLOCKING
 	if(icon_state == "[base_icon_state]")
 		icon_state = "[base_icon_state]_hidden"
 		worn_icon_state = "[base_icon_state]_hidden"
-		balloon_alert(wearer, "hidden")
+		balloon_alert(wearer, LANG("obj.c55b3838", null))
 	else
 		icon_state = "[base_icon_state]"
 		worn_icon_state = "[base_icon_state]"
-		balloon_alert(wearer, "shown")
+		balloon_alert(wearer, LANG("obj.7b0f70ca", null))
 	update_icon() // update that mf
 	return CLICK_ACTION_SUCCESS
 

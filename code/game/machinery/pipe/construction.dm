@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*CONTENTS
 Buildable pipes
 Buildable meters
@@ -443,7 +444,7 @@ Buildable meters
 		return
 	var/layer_to_set = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
 	set_piping_layer(layer_to_set)
-	balloon_alert(user, "pipe layer set to [piping_layer]")
+	balloon_alert(user, LANG("obj.6ec5da5e", list(piping_layer)))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 
@@ -456,7 +457,7 @@ Buildable meters
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	do_a_flip()
-	balloon_alert(user, "pipe was flipped")
+	balloon_alert(user, LANG("obj.8890f816", null))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe_meter
@@ -476,11 +477,11 @@ Buildable meters
 			pipe = P
 			break
 	if(!pipe)
-		to_chat(user, span_warning("You need to fasten it to a pipe!"))
+		to_chat(user, span_warning(LANG("obj.74479136", null)))
 		return TRUE
 	new /obj/machinery/meter(loc, piping_layer)
 	W.play_tool_sound(src)
-	to_chat(user, span_notice("You fasten the meter to the pipe."))
+	to_chat(user, span_notice(LANG("obj.dfb66755", null)))
 	qdel(src)
 
 /obj/item/pipe_meter/screwdriver_act(mob/living/user, obj/item/S)
@@ -489,12 +490,12 @@ Buildable meters
 		return TRUE
 
 	if(!isturf(loc))
-		to_chat(user, span_warning("You need to fasten it to the floor!"))
+		to_chat(user, span_warning(LANG("obj.063958e7", null)))
 		return TRUE
 
 	new /obj/machinery/meter/turf(loc, piping_layer)
 	S.play_tool_sound(src)
-	to_chat(user, span_notice("You fasten the meter to \the [loc]."))
+	to_chat(user, span_notice(LANG("obj.b62a38d9", list(loc))))
 	qdel(src)
 
 /obj/item/pipe_meter/dropped()

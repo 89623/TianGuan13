@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/forcefield/wizard/heretic
 	name = "labyrinth pages"
 	desc = "A field of papers flying in the air, repulsing heathens with impossible force."
@@ -15,7 +16,7 @@
 		return
 	var/throwtarget = get_edge_target_turf(loc, get_dir(loc, get_step_away(bumpee, loc)))
 	bumpee.safe_throw_at(throwtarget, 10, 10, src, force = MOVE_FORCE_EXTREMELY_STRONG)
-	visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
+	visible_message(span_danger(LANG("obj.d704522d", list(src, bumpee))))
 
 ///A heretic item that spawns a barrier at the clicked turf, 3 uses
 /obj/item/heretic_labyrinth_handbook
@@ -61,14 +62,14 @@
 	if(!IS_HERETIC(user))
 		if(ishuman(user))
 			var/mob/living/carbon/human/human_user = user
-			to_chat(human_user, span_userdanger("Your mind burns as you stare deep into the book, a headache setting in like your brain is on fire!"))
+			to_chat(human_user, span_userdanger(LANG("obj.fea76f02", null)))
 			human_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 30, 190)
 			human_user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 			human_user.dropItemToGround(src)
 		return ITEM_INTERACT_BLOCKING
 
 	if(charges <= 0)
-		balloon_alert(user, "no charges!")
+		balloon_alert(user, LANG("obj.cfa89008", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/turf_target = get_turf(interacting_with)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Maint modules for MODsuits
 
 ///Springlock Mechanism - allows your modsuit to activate faster, but reagents are very dangerous.
@@ -47,7 +48,7 @@
 	if (!found_part)
 		return
 
-	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
+	to_chat(mod.wearer, span_danger(LANG("obj.241fbfbe", list(src))))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(snap_shut)), rand(3 SECONDS, 5 SECONDS))
 	RegisterSignals(mod, list(COMSIG_MOD_ACTIVATE, COMSIG_MOD_PART_RETRACTING), PROC_REF(on_activate_spring_block))
@@ -74,7 +75,7 @@
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
-	balloon_alert(user, "springlocks aren't responding...?")
+	balloon_alert(user, LANG("obj.bf17c5de", null))
 	return MOD_CANCEL_ACTIVATE
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
@@ -256,7 +257,7 @@
 
 	var/obj/structure/table/nearby_table = locate() in range(1, mod.wearer)
 	playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-	balloon_alert(mod.wearer, "dispensed paper[nearby_table ? " onto table":""]")
+	balloon_alert(mod.wearer, LANG("obj.1b845bf5", list(nearby_table ? " onto table":"")))
 
 	mod.wearer.put_in_hands(crisp_paper)
 	if(nearby_table)
@@ -346,7 +347,7 @@
 
 /obj/item/mod/module/atrocinator/deactivate(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(you_fucked_up && !deleting)
-		to_chat(activator, span_danger("It's too late."))
+		to_chat(activator, span_danger(LANG("obj.b4850579", null)))
 		return FALSE
 	return ..()
 
@@ -402,7 +403,7 @@
 /obj/item/mod/module/atrocinator/proc/fly_away()
 	you_fucked_up = TRUE
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
-	to_chat(mod.wearer, span_userdanger("That was stupid."))
+	to_chat(mod.wearer, span_userdanger(LANG("obj.1831b0c3", null)))
 	investigate_log("has flown off into space due to the [src].", INVESTIGATE_DEATHS)
 	mod.wearer.Stun(FLY_TIME, ignore_canstun = TRUE)
 	animate(mod.wearer, FLY_TIME, pixel_z = 256, alpha = 0)
@@ -417,7 +418,7 @@
 /// Prevent someone from being buckled to the wearer while atrocinator is active
 /obj/item/mod/module/atrocinator/proc/on_someone_buckled(datum/source, mob/living/buckled_mob, mob/living/buckler)
 	SIGNAL_HANDLER
-	balloon_alert(buckler, "[buckler == mod.wearer ? "you're" : "they're"] upside down!")
+	balloon_alert(buckler, LANG("obj.8868232b", list(buckler == mod.wearer ? "you're" : "they're")))
 	return COMPONENT_BLOCK_BUCKLE
 
 

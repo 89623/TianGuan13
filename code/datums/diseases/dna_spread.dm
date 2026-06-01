@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/dnaspread
 	name = "Space Retrovirus"
 	max_stages = 4
@@ -78,5 +79,5 @@
 		affected_mob.updateappearance(mutcolor_update=1)
 		affected_mob.domutcheck()
 
-		to_chat(affected_mob, span_notice("You feel more like yourself."))
+		to_chat(affected_mob, span_notice(LANG("datum.fd69a5b8", null)))
 	return ..()

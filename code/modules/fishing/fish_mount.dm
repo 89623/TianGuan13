@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/wallframe/fish
 	name = "fish mount"
 	desc = "The frame of a mount for trophy fish, to show off your proudest catch."
@@ -60,7 +61,7 @@
 
 /obj/structure/fish_mount/screwdriver_act(mob/living/user, obj/item/item)
 	. = ..()
-	balloon_alert(user, "removing mount...")
+	balloon_alert(user, LANG("obj.452248b7", null))
 	if(!item.use_tool(src, user, 3 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -90,12 +91,12 @@
 	if(!isfish(item) || user.combat_mode)
 		return ..()
 	if(mounted_fish)
-		balloon_alert(user, "remove other fish first!")
+		balloon_alert(user, LANG("obj.1a176bd5", null))
 		return ITEM_INTERACT_BLOCKING
 	if(item.flags_1 & HOLOGRAM_1)
-		balloon_alert(user, "fish not mountable!")
+		balloon_alert(user, LANG("obj.085c4de6", null))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "mounting fish...")
+	balloon_alert(user, LANG("obj.ce514c2a", null))
 	if(!do_after(user, 3 SECONDS, src) || mounted_fish)
 		return ITEM_INTERACT_BLOCKING
 	add_fish(item, catcher = user.name)
@@ -151,13 +152,13 @@
 /obj/structure/fish_mount/attack_hand_secondary(mob/living/user, list/modifiers)
 	. = ..()
 	if(!mounted_fish)
-		balloon_alert(user, "no fish mounted!")
+		balloon_alert(user, LANG("obj.9c065d6c", null))
 	else
 		remove_fish(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fish_mount/proc/remove_fish(mob/living/user)
-	balloon_alert(user, "removing fish...")
+	balloon_alert(user, LANG("obj.35800fc3", null))
 	if(!do_after(user, (persistence_loaded_fish ? 6 : 3) SECONDS, src) || !mounted_fish)
 		return
 
@@ -170,7 +171,7 @@
 		if(fish_reference.w_class >= WEIGHT_CLASS_BULKY)
 			ash_type = /obj/effect/decal/cleanable/ash/large
 		new ash_type(loc)
-		visible_message("[fish_reference] turns into dust as [fish_reference.p_theyre()] removed from [src].")
+		visible_message(LANG("obj.48f06f70", list(fish_reference, fish_reference.p_theyre(), src)))
 	else
 		user.put_in_hands(mounted_fish)
 	balloon_alert_to_viewers("fish removed")

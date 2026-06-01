@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Indicator for inlet port
 #define INLET 1
 ///Indicator for outlet port
@@ -139,7 +140,7 @@
 ///right click with multi tool to disconnect everything
 /obj/machinery/air_sensor/multitool_act_secondary(mob/living/user, obj/item/tool)
 	reset()
-	balloon_alert(user, "ports reset")
+	balloon_alert(user, LANG("obj.b4d47ea0", null))
 	return TRUE
 
 /obj/machinery/air_sensor/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
@@ -151,7 +152,7 @@
 			var/port = "[type == INLET ? "input" : "output"] port"
 			user.balloon_alert(user, "[port] configured")
 			to_chat(user, span_notice("[src] has connected [multi_tool.buffer] to its [port]."))
-	to_chat(user, span_notice("[src] has been added to multitool buffer."))
+	to_chat(user, span_notice(LANG("obj.877a4dfa", list(src))))
 	multi_tool.set_buffer(src)
 
 	return ITEM_INTERACT_SUCCESS

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define RELIC_PROTOTYPE "prototype"
 #define RELIC_NECROTECH "necrotech"
 
@@ -97,10 +98,10 @@
 
 /obj/item/relic/attack_self(mob/user)
 	if(!activated)
-		to_chat(user, span_notice("You aren't quite sure what this is. Maybe R&D knows what to do with it?"))
+		to_chat(user, span_notice(LANG("obj.2171383e", null)))
 		return
 	if(!COOLDOWN_FINISHED(src, cooldown))
-		to_chat(user, span_warning("[src] does not react!"))
+		to_chat(user, span_warning(LANG("obj.73d3248b", list(src))))
 		return
 	if(loc != user)
 		return
@@ -141,7 +142,7 @@
 	qdel(spawned_foamer)
 	warn_admins(user, "Acid Foam", TRUE)
 	if(prob(80))
-		to_chat(user, span_warning("[src] melts apart!"))
+		to_chat(user, span_warning(LANG("obj.2a727791", list(src))))
 		acid_melt()
 
 /// Flashbangs anyone nearby
@@ -215,7 +216,7 @@
 
 /// Spawns a bunch of mimics of the relic which also can spawn relics, but despawn shortly
 /obj/item/relic/proc/rapid_self_dupe(mob/user)
-	audible_message("[src] emits a loud pop!")
+	audible_message(LANG("obj.b7da9869", list(src)))
 	var/list/dummy_artifacts = list()
 	for(var/counter in 1 to rand(5,10))
 		var/obj/item/relic/duped = new type(get_turf(src))
@@ -231,19 +232,19 @@
 
 /// Explodes after a few seconds
 /obj/item/relic/proc/heat_and_explode(mob/user)
-	to_chat(user, span_danger("[src] begins to heat up!"))
+	to_chat(user, span_danger(LANG("obj.42ea24ca", list(src))))
 	addtimer(CALLBACK(src, PROC_REF(blow_up), user), rand(3.5 SECONDS, 10 SECONDS))
 
 /obj/item/relic/proc/blow_up(mob/user)
 	if(loc == user)
-		visible_message(span_notice("\The [src]'s top opens, releasing a powerful blast!"))
+		visible_message(span_notice(LANG("obj.17017a91", list(src))))
 		explosion(src, heavy_impact_range = rand(1,5), light_impact_range = rand(1,5), flame_range = 2, flash_range = rand(1,5), adminlog = TRUE)
 		warn_admins(user, "Explosion")
 		deconstruct(FALSE) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
 /// Teleports the relic, and anyone holding it, to a random location nearby
 /obj/item/relic/proc/uncontrolled_teleport(mob/user)
-	to_chat(user, span_notice("[src] begins to vibrate!"))
+	to_chat(user, span_notice(LANG("obj.1e90a6bb", list(src))))
 
 	var/teleport_time = rand(1 SECONDS, 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(do_the_teleport), user), teleport_time)
@@ -255,7 +256,7 @@
 	if(is_centcom_level(userturf.z))
 		return
 	var/to_teleport = ismovable(loc) ? loc : src
-	visible_message(span_notice("[to_teleport] twists and bends, relocating itself!"))
+	visible_message(span_notice(LANG("obj.f879541e", list(to_teleport))))
 	throw_smoke(get_turf(to_teleport))
 	do_teleport(to_teleport, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	throw_smoke(get_turf(to_teleport))
@@ -263,14 +264,14 @@
 
 /// Version of uncontrolled_teleport with cult theming, and that affects all nearby movables rather than just the relic
 /obj/item/relic/proc/uncontrolled_aoe_teleport(mob/user)
-	to_chat(user, span_notice("[src] begins to vibrate intensely!"))
+	to_chat(user, span_notice(LANG("obj.3b1c376e", list(src))))
 
 	var/teleport_time = rand(1 SECONDS, 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(do_the_aoe_teleport), user), teleport_time)
 	Shake(2, 2, teleport_time, 0.03 SECONDS)
 
 /obj/item/relic/proc/do_the_aoe_teleport(mob/user)
-	visible_message(span_notice("[src] twists and bends, relocating anything nearby!"))
+	visible_message(span_notice(LANG("obj.36c137bb", list(src))))
 	var/turf/teleturf = get_turf(src)
 	for(var/atom/movable/nearby in view(2, teleturf))
 		if(nearby.anchored || nearby.invisibility || HAS_TRAIT(nearby, TRAIT_UNDERFLOOR))
@@ -316,7 +317,7 @@
 /// Scrambles your organs. 33% chance to delete after use.
 /obj/item/relic/proc/tummy_ache(mob/user)
 	new /obj/effect/temp_visual/circle_wave/bioscrambler/light(get_turf(src))
-	to_chat(user, span_notice("Your stomach starts growling..."))
+	to_chat(user, span_notice(LANG("obj.4dc46c91", null)))
 	addtimer(CALLBACK(src, PROC_REF(scrambliticus), user), rand(1 SECONDS, 3 SECONDS)) // throw it away!
 
 /obj/item/relic/proc/scrambliticus(mob/user)
@@ -333,7 +334,7 @@
 
 /// Charges an item or two in your inventory. Also yourself.
 /obj/item/relic/proc/charger(mob/living/user)
-	to_chat(user, span_danger("You're recharged!"))
+	to_chat(user, span_danger(LANG("obj.09a46f26", null)))
 	var/stunner = 1.25 SECONDS
 	if(iscarbon(user))
 		var/mob/living/carbon/carboner = user
@@ -347,7 +348,7 @@
 	lightning_fx(user, stunner)
 	var/recharges = rand(1, 2)
 	if(!length(chargeable_items))
-		to_chat(user, span_notice("You have a strange feeling for a moment, but then it passes."))
+		to_chat(user, span_notice(LANG("obj.ee899aba", null)))
 		return
 	while(length(chargeable_items) && recharges)
 		recharges--
@@ -355,7 +356,7 @@
 		var/obj/item/stock_parts/power_store/to_charge = chargeable_items[to_charge_base]
 		to_charge.charge = to_charge.maxcharge
 		to_charge_base.update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
-		to_chat(user, span_notice("[to_charge_base] feels energized!"))
+		to_chat(user, span_notice(LANG("obj.0c47b3a0", list(to_charge_base))))
 		lightning_fx(to_charge_base, 0.8 SECONDS)
 
 /obj/item/relic/proc/lightning_fx(atom/shocker, time)
@@ -373,7 +374,7 @@
 		victim.help_shake_act(user, force_friendly = TRUE)
 		new /obj/effect/temp_visual/heart(victim.loc)
 	if(length(huggeds))
-		to_chat(user, span_nicegreen("You feel friendly!"))
+		to_chat(user, span_nicegreen(LANG("obj.f6f0fc1b", null)))
 	else
 		to_chat(user, pick(span_notice("You hug yourself, for some reason."), span_notice("You have a strange feeling for a moment, but then it passes.")))
 
@@ -391,7 +392,7 @@
 /// TODO: make them part of the same kit (lobster hat, lobster suit)
 /obj/item/relic/proc/disguiser(mob/user)
 	if(!iscarbon(user))
-		to_chat(user, span_notice("You have a strange feeling for a moment, but then it passes."))
+		to_chat(user, span_notice(LANG("obj.ee899aba", null)))
 		return
 
 	if(prob(80)) // >:)
@@ -408,7 +409,7 @@
 	carbonius.dropItemToGround(carbonius.head)
 	carbonius.equip_to_slot_or_del(disguise_hat, ITEM_SLOT_HEAD)
 	if(!ishuman(carbonius))
-		to_chat(user, span_notice("You have a peculiar feeling for a moment, but then it passes."))
+		to_chat(user, span_notice(LANG("obj.b48f750f", null)))
 		return
 
 	var/mob/living/carbon/human/humerus = carbonius
@@ -556,9 +557,9 @@
 	add_filter("blood_outgoing", 1, outline_filter(0, COLOR_DARK))
 	transition_filter("blood_outgoing", outline_filter(2, BLOOD_COLOR_RED), yeet_time)
 	if(istype(user) && CAN_HAVE_BLOOD(user))
-		to_chat(user, span_danger("[src] starts glowing an ominous red!"))
+		to_chat(user, span_danger(LANG("obj.1fd56a06", list(src))))
 	else
-		to_chat(user, span_danger("[src] starts glowing an ominous red..."))
+		to_chat(user, span_danger(LANG("obj.6acd4e5d", list(src))))
 
 	addtimer(CALLBACK(src, PROC_REF(actually_yeet_blood)), yeet_time)
 
@@ -593,9 +594,9 @@
 	add_filter("blood_incoming", 1, outline_filter(0, COLOR_DARK))
 	transition_filter("blood_incoming", outline_filter(2, BLOOD_COLOR_RED), suck_time)
 	if(istype(user) && CAN_HAVE_BLOOD(user))
-		to_chat(user, span_danger("[src] starts glowing an ominous red!"))
+		to_chat(user, span_danger(LANG("obj.1fd56a06", list(src))))
 	else
-		to_chat(user, span_danger("[src] starts glowing an ominous red..."))
+		to_chat(user, span_danger(LANG("obj.6acd4e5d", list(src))))
 
 	addtimer(CALLBACK(src, PROC_REF(actually_suck_blood)), suck_time)
 

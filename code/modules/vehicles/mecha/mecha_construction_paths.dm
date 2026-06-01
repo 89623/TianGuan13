@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Mecha construction
 /datum/component/construction/mecha
 	var/base_icon
@@ -679,7 +680,7 @@
 		return FALSE
 
 	if(istype(I, /obj/item/assembly/signaler/anomaly) && !istype(I, required_core))
-		to_chat(user, span_warning("The anomaly core socket only accepts \a [initial(required_core.name)]!"))
+		to_chat(user, span_warning(LANG("datum.d2bcde5e", list(initial(required_core.name)))))
 		return FALSE
 
 	return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CHALLENGE_TELECRYSTALS 280
 #define CHALLENGE_TIME_LIMIT (5 MINUTES)
 #define CHALLENGE_SHUTTLE_DELAY (25 MINUTES) // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
@@ -30,7 +31,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		return
 
 	if(are_you_sure != "Yes")
-		to_chat(user, span_notice("On second thought, the element of surprise isn't so bad after all."))
+		to_chat(user, span_notice(LANG("obj.b52c50d0", null)))
 		return
 
 	var/war_declaration = "A syndicate fringe group has declared their intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."
@@ -87,8 +88,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		color_override = "red",
 	)
 	if(user)
-		to_chat(user, "You've attracted the attention of powerful forces within the syndicate. \
-			A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission.")
+		to_chat(user, LANG("obj.1d46f75b", null))
 
 	distribute_tc()
 	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
@@ -145,16 +145,16 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 /obj/item/nuclear_challenge/proc/check_allowed(mob/living/user)
 	if(declaring_war)
-		to_chat(user, span_boldwarning("You are already in the process of declaring war! Make your mind up."))
+		to_chat(user, span_boldwarning(LANG("obj.53c7d9f0", null)))
 		return FALSE
 	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
-		to_chat(user, span_boldwarning("The enemy crew is too small to be worth declaring war on."))
+		to_chat(user, span_boldwarning(LANG("obj.44bcf291", null)))
 		return FALSE
 	if(!user.onSyndieBase())
-		to_chat(user, span_boldwarning("You have to be at your base to use this."))
+		to_chat(user, span_boldwarning(LANG("obj.5e4cc217", null)))
 		return FALSE
 	if(world.time - SSticker.round_start_time > CHALLENGE_TIME_LIMIT)
-		to_chat(user, span_boldwarning("It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand."))
+		to_chat(user, span_boldwarning(LANG("obj.87733400", null)))
 		return FALSE
 	for(var/obj/item/circuitboard/computer/syndicate_shuttle/board as anything in GLOB.syndicate_shuttle_boards)
 		if(board.moved)
@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 /obj/item/nuclear_challenge/literally_just_does_the_message/check_allowed(mob/living/user)
 	if(admin_only && !check_rights_for(user.client, R_SPAWN|R_FUN|R_DEBUG))
-		to_chat(user, span_hypnophrase("You shouldn't have this!"))
+		to_chat(user, span_hypnophrase(LANG("obj.714551c3", null)))
 		return FALSE
 
 	return TRUE

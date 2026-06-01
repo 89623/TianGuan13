@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/carbon/alien/adult
 	abstract_type = /mob/living/carbon/alien/adult
 	name = "alien"
@@ -53,8 +54,8 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 /mob/living/carbon/alien/adult/resist_grab(moving_resist)
 	if(pulledby.grab_state)
-		visible_message(span_danger("[src] breaks free of [pulledby]'s grip!"), \
-						span_danger("You break free of [pulledby]'s grip!"))
+		visible_message(span_danger(LANG("mob.801741bb", list(src, pulledby))), \
+						span_danger(LANG("mob.b3003c7c", list(pulledby))))
 	pulledby.stop_pulling()
 	. = 0
 
@@ -138,8 +139,8 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 	var/obj/item/organ/stomach/alien/melting_pot = get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(melting_pot))
-		visible_message(span_clown("[src] can't seem to consume [lucky_winner]!"), \
-			span_alien("You feel a pain in your... chest? You can't get [lucky_winner] down."))
+		visible_message(span_clown(LANG("mob.0b2cabd6", list(src, lucky_winner))), \
+			span_alien(LANG("mob.1db5f87b", list(lucky_winner))))
 		return TRUE
 
 	lucky_winner.audible_message(span_danger("You hear a deep groan, and a harsh snap like a mantrap."))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/butchering
 	/// Time in deciseconds taken to butcher something
 	var/speed = 8 SECONDS
@@ -74,7 +75,7 @@
 		return
 
 	if (HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		to_chat(user, span_warning(LANG("datum.c2a13fcc", null)))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if (victim.has_status_effect(/datum/status_effect/neck_slice))
@@ -126,13 +127,13 @@
 /datum/component/butchering/proc/butcher_limb(obj/item/source, obj/item/bodypart/target, mob/living/user)
 	target.add_fingerprint(user)
 	if (LIMB_HAS_SKIN(target) && !HAS_ANY_SURGERY_STATE(target.surgery_state, SURGERY_SKIN_CUT | SURGERY_SKIN_OPEN))
-		to_chat(user, span_warning("[target]'s skin is still intact!"))
+		to_chat(user, span_warning(LANG("datum.bb927f19", list(target))))
 		return
 
 	if (LIMB_HAS_BONES(target) && !HAS_ANY_SURGERY_STATE(target.surgery_state, SURGERY_BONE_DRILLED | SURGERY_BONE_SAWED))
 		// We need to gut the limb before turning it into meat, otherwise just cut around the bone I guess
 		if (length(target.contents))
-			to_chat(user, span_warning("[target]'s bones are still intact!"))
+			to_chat(user, span_warning(LANG("datum.912c9ff8", list(target))))
 			return
 
 	var/speed_modifier = 1
@@ -153,7 +154,7 @@
 	if (length(target.contents))
 		user.visible_message(span_warning("[user] begins to gut [limb_descriptor]!"), span_notice("You begin to gut [limb_descriptor]..."), ignored_mobs = target.owner)
 		if (target.owner)
-			to_chat(target.owner, span_warning("[user] begins to gut your [target.plaintext_zone]!"))
+			to_chat(target.owner, span_warning(LANG("datum.d53ece4f", list(user, target.plaintext_zone))))
 
 		playsound(target.loc, butcher_sound, 50, TRUE, -1)
 		if (!do_after(user, speed * speed_modifier, target.owner || target))
@@ -162,7 +163,7 @@
 		return
 
 	if (!length(target.butcher_drops))
-		to_chat(user, span_warning("There is nothing left inside [limb_descriptor]!"))
+		to_chat(user, span_warning(LANG("datum.a72ceb7d", list(limb_descriptor))))
 		return
 
 	if (target.body_zone == BODY_ZONE_CHEST && target.owner)
@@ -174,7 +175,7 @@
 
 	user.visible_message(span_warning("[user] begins to cut [limb_descriptor] apart!"), span_notice("You begin to cut [limb_descriptor] apart..."), ignored_mobs = target.owner)
 	if (target.owner)
-		to_chat(target.owner, span_warning("[user] begins to cut your [target.plaintext_zone] apart!"))
+		to_chat(target.owner, span_warning(LANG("datum.57920e8c", list(user, target.plaintext_zone))))
 
 	playsound(target.loc, butcher_sound, 50, TRUE, -1)
 	if (!do_after(user, speed * speed_modifier, target.owner || target))
@@ -289,7 +290,7 @@
 			else
 				wound_type = WOUND_BLUNT
 
-	to_chat(target.owner, span_userdanger("[user] hacks the meat off your [target.plaintext_zone]!"))
+	to_chat(target.owner, span_userdanger(LANG("datum.423b47df", list(user, target.plaintext_zone))))
 	var/mob/living/carbon/victim = target.owner
 
 	if (!target.butcher_replacement)
@@ -320,14 +321,14 @@
 	return replacement
 
 /datum/component/butchering/proc/start_butcher(obj/item/source, mob/living/target, mob/living/user)
-	to_chat(user, span_notice("You begin to butcher [target]..."))
+	to_chat(user, span_notice(LANG("datum.4c365198", list(target))))
 	playsound(target.loc, butcher_sound, 50, TRUE, -1)
 	if (do_after(user, speed, target) && target.Adjacent(source))
 		on_butchering(user, target)
 
 /datum/component/butchering/proc/butcher_human(obj/item/source, mob/living/carbon/human/victim, mob/living/user)
 	if (DOING_INTERACTION_WITH_TARGET(user, victim))
-		to_chat(user, span_warning("You're already interacting with [victim]!"))
+		to_chat(user, span_warning(LANG("datum.87048759", list(victim))))
 		return
 
 	var/static/list/butcher_spots = typecacheof(list(
@@ -344,19 +345,19 @@
 			break
 
 	if (!found_spot)
-		to_chat(user, span_warning("You need a better spot to butcher [victim]!"))
+		to_chat(user, span_warning(LANG("datum.be746583", list(victim))))
 		return
 
 	var/obj/item/bodypart/limb = victim.get_bodypart(deprecise_zone(user.zone_selected))
 	if (!limb)
-		to_chat(user, span_warning("[victim] doesn't have a [parse_zone(deprecise_zone(user.zone_selected))]!"))
+		to_chat(user, span_warning(LANG("datum.e6eba014", list(victim, parse_zone(deprecise_zone(user.zone_selected))))))
 		return
 
 	butcher_limb(source, limb, user)
 
 /datum/component/butchering/proc/start_neck_slice(obj/item/source, mob/living/carbon/human/victim, mob/living/user)
 	if (DOING_INTERACTION_WITH_TARGET(user, victim))
-		to_chat(user, span_warning("You're already interacting with [victim]!"))
+		to_chat(user, span_warning(LANG("datum.87048759", list(victim))))
 		return
 
 	user.visible_message(span_danger("[user] is slitting [victim]'s throat!"), \
@@ -430,9 +431,9 @@
 
 	if (butcher)
 		if (length(failures))
-			to_chat(butcher, span_warning("You fail to harvest some of the [english_list(failures)] from [target]."))
+			to_chat(butcher, span_warning(LANG("datum.fbad7e98", list(english_list(failures), target))))
 		if (length(bonuses))
-			to_chat(butcher, span_info("You harvest some extra [english_list(bonuses)] from [target]!"))
+			to_chat(butcher, span_info(LANG("datum.ce8d9af7", list(english_list(bonuses), target))))
 
 	for (var/obj/guaranteed_remains as anything in target.guaranteed_butcher_results)
 		var/amount = target.guaranteed_butcher_results[guaranteed_remains]

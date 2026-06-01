@@ -36,7 +36,7 @@
 				//start the timer and let the player know
 				life_support_timer = addtimer(CALLBACK(src, PROC_REF(life_support_failure), human_holder), life_support_failure_threshold, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
-				to_chat(human_holder, span_danger("Your physiology begins to erratically seize and twitch, bereft of your MODsuit's vital support. <b>Turn it back on as soon as you can!</b>"))
+				to_chat(human_holder, span_danger(LANG("datum.6467634a", null)))
 				human_holder.balloon_alert(human_holder, "suit life support warning!")
 				human_holder.set_jitter_if_lower(life_support_failure_threshold) //give us some foley jitter
 				return
@@ -47,7 +47,7 @@
 				life_support_timer = null
 				life_support_failed = FALSE
 
-				to_chat(human_holder, span_notice("Relief floods your frame as your suit begins sustaining your life once more."))
+				to_chat(human_holder, span_notice(LANG("datum.27cc09d6", null)))
 				human_holder.balloon_alert(human_holder, "suit life support restored!")
 				human_holder.adjust_jitter(-(life_support_failure_threshold / 2)) // clear half of it, wow, that was unpleasant
 
@@ -133,7 +133,7 @@
 
 	// If the skin itself is role-locked and the user lacks the role, fall back the skin
 	if (should_apply_lock && locked_combinations[capitalize(modsuit_skin)])
-		to_chat(human_holder, span_warning("The [modsuit_skin] MODsuit skin is restricted to a specific role. Defaulting to the civilian skin."))
+		to_chat(human_holder, span_warning(LANG("datum.a5972d1d", list(modsuit_skin))))
 		modsuit_skin = "civilian"
 		modsuit.skin = modsuit_skin
 
@@ -149,10 +149,10 @@
 
 		if (length(allowed_hardlights))
 			modsuit_hardlight = pick(allowed_hardlights)
-			to_chat(human_holder, span_warning("The combination of [modsuit_skin] skin and [lock_color_name] color is not available for your role. Color has been changed to a random available one."))
+			to_chat(human_holder, span_warning(LANG("datum.d9c082ca", list(modsuit_skin, lock_color_name))))
 		else
 			modsuit_hardlight = "standard_blue"
-			to_chat(human_holder, span_warning("The combination of [modsuit_skin] skin and [lock_color_name] color is not available for your role. Default color has been set."))
+			to_chat(human_holder, span_warning(LANG("datum.18bd7041", list(modsuit_skin, lock_color_name))))
 
 	if (!modsuit_hardlight)
 		modsuit_hardlight = "standard_blue"

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/seeds/shrub
 	name = "shrub seed pack"
 	desc = "These seeds grow into hedge shrubs."
@@ -28,7 +29,7 @@
 	user.visible_message(span_danger("[user] begins to plant \the [src]..."))
 	if(do_after(user, 8 SECONDS, target = user.drop_location(), progress = TRUE))
 		new /obj/structure/hedge/opaque(user.drop_location())
-		to_chat(user, span_notice("You plant \the [src]."))
+		to_chat(user, span_notice(LANG("obj.ad55c574", list(src))))
 		qdel(src)
 
 ///the structure placed by the shrubs
@@ -49,7 +50,7 @@
 /obj/structure/hedge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!opacity || !HAS_TRAIT(user, TRAIT_BONSAI) || !tool.get_sharpness())
 		return NONE
-	balloon_alert(user, "trimming...")
+	balloon_alert(user, LANG("obj.75091a05", null))
 	if(!do_after(user, 3 SECONDS, target=src))
 		return ITEM_INTERACT_BLOCKING
 	opacity = FALSE

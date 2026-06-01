@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Slimecrossing Mobs
 	Mobs and effects added by the slimecrossing system.
@@ -33,7 +34,7 @@ Slimecrossing Mobs
 
 // Just in case.
 /mob/living/basic/slime/transformed_slime/reproduce()
-	to_chat(src, span_warning("I can't reproduce...")) // Mood
+	to_chat(src, span_warning(LANG("mob.41a4a6dd", null))) // Mood
 	return
 
 //Slime corgi - Chilling Pink

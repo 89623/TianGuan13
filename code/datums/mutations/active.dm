@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mutation/adrenaline_rush
 	name = "Adrenaline Rush"
 	desc = "Allows the host to trigger their body's adrenaline response at will."
@@ -35,7 +36,7 @@
 
 /datum/action/cooldown/adrenaline/Activate(mob/living/carbon/cast_on)
 	. = ..()
-	to_chat(cast_on, span_userdanger("You feel pumped up! It's time to GO!"))
+	to_chat(cast_on, span_userdanger(LANG("datum.58411831", null)))
 	cast_on.reagents.add_reagent(/datum/reagent/drug/pumpup, adrenaline_amount)
 	cast_on.reagents.add_reagent(/datum/reagent/medicine/synaptizine, adrenaline_amount)
 	cast_on.reagents.add_reagent(/datum/reagent/determination, adrenaline_amount)
@@ -43,7 +44,7 @@
 	return TRUE
 
 /datum/action/cooldown/adrenaline/proc/get_tired(mob/living/carbon/cast_on)
-	to_chat(cast_on, span_danger("Your adrenaline rush makes way for a bout of nausea and a deep feeling of exhaustion in your muscles."))
+	to_chat(cast_on, span_danger(LANG("datum.cdaa3e64", null)))
 	cast_on.reagents.add_reagent(/datum/reagent/peaceborg/tire, comedown_amount)
 	cast_on.reagents.add_reagent(/datum/reagent/peaceborg/confuse, comedown_amount)
 	cast_on.set_dizzy_if_lower(10 SECONDS)

@@ -218,4 +218,4 @@
 		charges--
 	if(charges == 0)
 		qdel(src)
-		to_chat(user, "The mirror crumbles to dust within your hands.")
+		to_chat(user, LANG("obj.b7ab6380", null))

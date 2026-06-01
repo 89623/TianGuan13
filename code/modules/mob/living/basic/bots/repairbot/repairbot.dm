@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /mob/living/basic/bot/repairbot
 	name = "\improper Repairbot"
@@ -208,7 +209,7 @@
 
 /mob/living/basic/bot/repairbot/proc/attempt_use_stack(obj/item/stack_to_use, atom/target)
 	if(!isdatum(stack_to_use))
-		to_chat(src, span_warning("You do not have anymore [stack_to_use]!"))
+		to_chat(src, span_warning(LANG("mob.7f54dec1", list(stack_to_use))))
 		return
 	stack_to_use.melee_attack_chain(src, target)
 

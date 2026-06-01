@@ -95,7 +95,7 @@
 		occupant.forceMove(drop_location())
 		set_occupant(null)
 		return FALSE
-	to_chat(occupant, span_notice("You enter [src]."))
+	to_chat(occupant, span_notice(LANG("obj.1d4849e6", list(src))))
 	addtimer(CALLBACK(src, PROC_REF(get_consent)), 4 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 	update_appearance()
 
@@ -174,11 +174,11 @@
 		return
 
 	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE)
-	say("Procedure validation in progress...")
+	say(LANG("obj.c1970230", null))
 	var/mob/living/carbon/human/human_occupant = occupant
 	if(!isnull(human_occupant.ckey) && isnull(human_occupant.client)) // player mob, currently disconnected
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-		say("ERROR: Validation failed: No elicited response from occupant genes. Subject may be suffering from Sudden Sleep Disorder.")
+		say(LANG("obj.290ba6cf", null))
 		return
 
 	player_consent = WAITING_PLAYER
@@ -187,8 +187,8 @@
 	// defaults to rejecting it unless specified otherwise
 	if(tgui_alert(occupant, "The SAD you are within is about to rejuvenate you, resetting your body to its default state (in character preferences). Do you consent?", "Rejuvenate", list("Yes", "No"), timeout = 10 SECONDS) == "Yes")
 		player_consent = CONSENT_GRANTED
-		say("Starting procedure! Baking for a cycle time of [DisplayTimeText(processing_time)] at laser power [display_power(active_power_usage)].")
-		to_chat(occupant, span_warning("This will take [DisplayTimeText(processing_time)] to complete. To cancel the procedure, hit the RESIST button or hotkey."))
+		say(LANG("obj.d44835f5", list(DisplayTimeText(processing_time), display_power(active_power_usage))))
+		to_chat(occupant, span_warning(LANG("obj.233cda98", list(DisplayTimeText(processing_time)))))
 		set_light(l_range = 1.5, l_power = 1.2, l_on = TRUE)
 		sound_loop.start()
 		COOLDOWN_START(src, sad_processing_time, processing_time)
@@ -198,7 +198,7 @@
 	else
 		player_consent = NO_CONSENT
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-		say("ERROR: Validation failed: Occupant genes have willfully rejected the procedure. You may try again if you think this was an error.")
+		say(LANG("obj.5618fe74", null))
 		update_appearance()
 
 /// Ejects the occupant after asking them if they want to accept the rejuvenation. If yes, they exit as their preferences character.
@@ -220,12 +220,12 @@
 		real_ai_player = old_ai_brain.mainframe
 		var/datum/preferences/check_prefs = patient.client?.prefs
 		if(!istype(check_prefs))
-			say("Uh-oh! We tried to contact user manufacturer, but they blocked our requests. Aborting operation.")
+			say(LANG("obj.934ec61f", null))
 			playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 			open_machine()
 			return
 		if(!is_augmented_enough(check_prefs))
-			say("Uh-oh! It seems like your manufacturer has provided blueprints with organic components to actualize your body! Aborting operation.")
+			say(LANG("obj.736dad98", null))
 			playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 			open_machine()
 			return
@@ -248,7 +248,7 @@
 		Original Name: [original_name], New Name: [patient.dna.real_name]. \
 		This may be a false positive from changing from a humanized monkey into a character, so be careful.")
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
-	say("Procedure complete! Enjoy your life being a new you!")
+	say(LANG("obj.1b818e47", null))
 
 	open_machine()
 
@@ -279,10 +279,10 @@
 		return
 
 	if(COOLDOWN_TIMELEFT(src, sad_processing_time) < BREAKOUT_TIME)
-		to_chat(user, span_warning("The emergency release is not responding! You start pushing against the door, but you feel your body changing... It's too late!"))
+		to_chat(user, span_warning(LANG("obj.493da65a", null)))
 		return
 
-	to_chat(user, span_notice("The emergency release is not responding! You start pushing against the door!"))
+	to_chat(user, span_notice(LANG("obj.58177e73", null)))
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
@@ -299,14 +299,14 @@
 
 /obj/machinery/self_actualization_device/screwdriver_act(mob/living/user, obj/item/tool)
 	if(occupant)
-		to_chat(user, span_warning("[src] is currently occupied!"))
+		to_chat(user, span_warning(LANG("obj.29741746", list(src))))
 		return NONE
 
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/self_actualization_device/crowbar_act(mob/living/user, obj/item/tool)
 	if(occupant)
-		to_chat(user, span_warning("[src] is currently occupied!"))
+		to_chat(user, span_warning(LANG("obj.29741746", list(src))))
 		return NONE
 
 	return default_deconstruction_crowbar(user, tool)

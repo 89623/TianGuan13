@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Oozes are slime-esque creatures, they are highly gluttonous creatures primarily intended for player controll.
 /mob/living/simple_animal/hostile/ooze
 	name = "Ooze"
@@ -97,7 +98,7 @@
 		return TRUE
 	if(silent || !isitem(eat_target)) //Don't bother reporting it for everything
 		return FALSE
-	to_chat(src, span_warning("[eat_target] cannot be eaten!"))
+	to_chat(src, span_warning(LANG("mob.4a1fed07", list(eat_target))))
 	return FALSE
 
 ///* Gelatinious Ooze code below *\\\\
@@ -176,7 +177,7 @@
 	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
 	var/timerid = addtimer(CALLBACK(src, PROC_REF(HeatUp)), 1 SECONDS, TIMER_STOPPABLE | TIMER_LOOP) //Heat up every second
 	addtimer(CALLBACK(src, PROC_REF(FinishSpeedup), timerid), 6 SECONDS)
-	to_chat(ooze, span_notice("You start feel a lot quicker."))
+	to_chat(ooze, span_notice(LANG("datum.c86f6bda", null)))
 	active = TRUE
 	ooze.adjust_ooze_nutrition(-10)
 
@@ -189,7 +190,7 @@
 /datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.remove_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
-	to_chat(ooze, span_notice("You start slowing down again."))
+	to_chat(ooze, span_notice(LANG("datum.aaad39b5", null)))
 	deltimer(timerid)
 	active = FALSE
 	StartCooldown()
@@ -226,7 +227,7 @@
 		stop_consuming()
 		return FALSE
 	if(!isliving(ooze.pulling))
-		to_chat(src, span_warning("You need to be pulling a creature for this to work!"))
+		to_chat(src, span_warning(LANG("datum.fbf7fbeb", null)))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
 	owner.visible_message(span_warning("[ooze] starts attempting to [devour_verb] [eat_target]!"), span_notice("You start attempting to [devour_verb] [eat_target]."))
@@ -234,7 +235,7 @@
 		return FALSE
 
 	if(!(eat_target.mob_biotypes & MOB_ORGANIC) || eat_target.stat == DEAD)
-		to_chat(src, span_warning("This creature isn't to my tastes!"))
+		to_chat(src, span_warning(LANG("datum.edcddd2e", null)))
 		return FALSE
 	start_consuming(eat_target)
 
@@ -337,7 +338,7 @@
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You prepare to launch a mending globule. <B>Left-click to fire at a target!</B>"))
+	to_chat(on_who, span_notice(LANG("datum.d02e73c8", null)))
 
 /datum/action/cooldown/globules/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
@@ -345,7 +346,7 @@
 		return
 
 	if(refund_cooldown)
-		to_chat(on_who, span_notice("You stop preparing your mending globules."))
+		to_chat(on_who, span_notice(LANG("datum.39f31c9e", null)))
 
 /datum/action/cooldown/globules/Activate(atom/target)
 	. = ..()
@@ -355,7 +356,7 @@
 	var/mob/living/simple_animal/hostile/ooze/oozy_owner = owner
 	if(istype(oozy_owner))
 		if(oozy_owner.ooze_nutrition < 5)
-			to_chat(oozy_owner, span_warning("You need at least 5 nutrition to launch a mending globule."))
+			to_chat(oozy_owner, span_warning(LANG("datum.3de6887c", null)))
 			return FALSE
 
 	return TRUE
@@ -467,7 +468,7 @@
 /datum/action/cooldown/gel_cocoon/proc/gel_cocoon()
 	var/mob/living/simple_animal/hostile/ooze/grapes/ooze = owner
 	if(!iscarbon(ooze.pulling))
-		to_chat(src, span_warning("You need to be pulling an intelligent enough creature to assist it with a cocoon!"))
+		to_chat(src, span_warning(LANG("datum.aecef809", null)))
 		return FALSE
 	owner.visible_message(span_nicegreen("[ooze] starts attempting to put [target] into a gel cocoon!"), span_notice("You start attempting to put [target] into a gel cocoon."))
 	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))

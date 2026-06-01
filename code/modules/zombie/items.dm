@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/mutant_hand/zombie
 	name = "zombie claw"
 	desc = "A zombie's claw is its primary tool, capable of infecting \
@@ -68,7 +69,7 @@
 	if(!infection)
 		infection = new()
 		infection.Insert(target)
-		to_chat(user, span_alien("You see [target] twitch for a moment as [target.p_their()] head is covered in \a [infection] - [target.p_Theyve()] been infected."))
+		to_chat(user, span_alien(LANG("_root.517e88a6", list(target, target.p_their(), infection, target.p_Theyve()))))
 
 /obj/item/mutant_hand/zombie/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is ripping [user.p_their()] brains out! It looks like [user.p_theyre()] trying to commit suicide!"))

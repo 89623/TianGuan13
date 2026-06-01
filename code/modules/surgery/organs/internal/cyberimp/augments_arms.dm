@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/cyberimp/arm
 	name = "arm-mounted implant"
 	desc = "An implant that goes in your arm to improve it."
@@ -114,7 +115,7 @@
 	if(. & EMP_PROTECT_SELF || !IS_ROBOTIC_ORGAN(src))
 		return
 	if(prob(15/severity) && owner)
-		to_chat(owner, span_warning("The electromagnetic pulse causes [src] to malfunction!"))
+		to_chat(owner, span_warning(LANG("obj.b103ab54", list(src))))
 		// give the owner an idea about why his implant is glitching
 		Retract()
 
@@ -216,7 +217,7 @@
 
 /obj/item/organ/cyberimp/arm/toolkit/ui_action_click()
 	if((organ_flags & ORGAN_FAILING) || (!active_item && !contents.len))
-		to_chat(owner, span_warning("The implant doesn't respond. It seems to be broken..."))
+		to_chat(owner, span_warning(LANG("obj.c71343d8", null)))
 		return
 
 	if(!active_item || (active_item in src))
@@ -246,7 +247,7 @@
 		Retract()
 		owner.visible_message(span_danger("A loud bang comes from [owner]\'s [parse_zone(zone)]!"))
 		playsound(get_turf(owner), 'sound/items/weapons/flashbang.ogg', 100, TRUE)
-		to_chat(owner, span_userdanger("You feel an explosion erupt inside your [parse_zone(zone)] as your implant breaks!"))
+		to_chat(owner, span_userdanger(LANG("obj.8afd771b", list(parse_zone(zone)))))
 		owner.adjust_fire_stacks(20)
 		owner.ignite_mob()
 		owner.adjust_fire_loss(25)
@@ -304,7 +305,7 @@
 		if(istype(potential_tool, /obj/item/stamp/chameleon))
 			return FALSE
 
-	balloon_alert(user, "experimental stamp unlocked")
+	balloon_alert(user, LANG("obj.cab34edf", null))
 	items_list += WEAKREF(new /obj/item/stamp/chameleon(src))
 	return TRUE
 
@@ -314,7 +315,7 @@
 		if(istype(potential_knife, /obj/item/knife/combat/cyborg))
 			return FALSE
 
-	balloon_alert(user, "integrated knife unlocked")
+	balloon_alert(user, LANG("obj.54ee1fae", null))
 	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 
@@ -532,11 +533,11 @@
 
 	if(organ_flags & ORGAN_FAILING)
 		if(source.body_position != LYING_DOWN && living_target != source && prob(50))
-			to_chat(source, span_danger("You try to [picked_hit_type] [living_target], but lose your balance and fall!"))
+			to_chat(source, span_danger(LANG("obj.a7361a8e", list(picked_hit_type, living_target))))
 			source.Knockdown(3 SECONDS)
 			source.forceMove(get_turf(living_target))
 		else
-			to_chat(source, span_danger("Your muscles spasm!"))
+			to_chat(source, span_danger(LANG("obj.c00adc53", null)))
 			source.Paralyze(1 SECONDS)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -593,7 +594,7 @@
 		source,
 	)
 
-	to_chat(source, span_danger("You [picked_hit_type] [target][ground_bounce ? " into [target_turf]" : ""]!"))
+	to_chat(source, span_danger(LANG("obj.ddf7e598", list(picked_hit_type, target, ground_bounce ? " into [target_turf]" : ""))))
 
 	log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
 

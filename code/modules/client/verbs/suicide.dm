@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Verb to simply kill yourself (in a very visual way to all players) in game! How family-friendly. Can be governed by a series of multiple checks (i.e. confirmation, is it allowed in this area, etc.) which are
 /// handled and called by the proc this verb invokes. It's okay to block this, because we typically always give mobs in-game the ability to Ghost out of their current mob irregardless of context. This, in contrast,
 /// can have as many different checks as you desire to prevent people from doing the deed to themselves.
@@ -43,23 +44,23 @@
 	if(confirm == "Yes")
 		return TRUE
 
-	balloon_alert(src, "suicide attempt aborted!")
+	balloon_alert(src, LANG("mob.b87f37d6", null))
 	return FALSE
 
 /// Checks if we are in a valid state to suicide (not already suiciding, capable of actually killing ourselves, area checks, etc.) Returns TRUE if we can suicide, FALSE if we can not.
 /mob/living/proc/can_suicide()
 	// NOVA EDIT ADDITION START
 	if(CONFIG_GET(flag/disable_suicide))
-		to_chat(src, span_warning("Suicide is disabled on this server."))
+		to_chat(src, span_warning(LANG("mob.c8482502", null)))
 		return FALSE
 	// NOVA EDIT ADDITION END
 	if(HAS_TRAIT_FROM_ONLY(src, TRAIT_SUICIDED, REF(src)))
-		to_chat(src, span_warning("You are already commiting suicide!"))
+		to_chat(src, span_warning(LANG("mob.873efd69", null)))
 		return FALSE
 
 	var/area/checkable = get_area(src)
 	if(checkable.area_flags & BLOCK_SUICIDE)
-		to_chat(src, span_warning("You can't commit suicide here! You can ghost if you'd like."))
+		to_chat(src, span_warning(LANG("mob.bb3aaa78", null)))
 		return FALSE
 
 	switch(stat)

@@ -102,11 +102,11 @@
 	var/obj/item/mod/module/storage/inventory = locate() in src.modules
 	if (!isnull(inventory))
 		src.atom_storage.remove_all()
-		to_chat(who, span_notice("You empty out all the items from the MODsuit's storage module!"))
+		to_chat(who, span_notice(LANG("obj.009139e7", null)))
 		who.balloon_alert(who, "emptied out MOD storage items!")
 		return TRUE
 
-	to_chat(who, span_warning("The suit seems permanently fused to their frame - you can't remove it!"))
+	to_chat(who, span_warning(LANG("obj.a253e0ac", null)))
 	who.balloon_alert(who, "can't strip a fused MODsuit!")
 	return ..()
 

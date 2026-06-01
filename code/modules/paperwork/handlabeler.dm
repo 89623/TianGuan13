@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A mini-tool used to apply label items onto something to modify its name.
 /obj/item/hand_labeler
 	name = "hand labeler"
@@ -59,13 +60,13 @@
 
 /obj/item/hand_labeler/proc/apply_label(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!labels_left)
-		balloon_alert(user, "no labels left!")
+		balloon_alert(user, LANG("obj.e2cf51d4", null))
 		return FALSE
 	if(!length(label))
-		balloon_alert(user, "no text set!")
+		balloon_alert(user, LANG("obj.a4f400f4", null))
 		return FALSE
 	if(length(interacting_with.name) + length(label) > MAX_LABEL_LEN)
-		balloon_alert(user, "label too long!")
+		balloon_alert(user, LANG("obj.2d9360a1", null))
 		return FALSE
 	if(ismob(interacting_with))
 		interacting_with.balloon_alert(user, "can't label!")
@@ -89,29 +90,29 @@
 	if(.)
 		return .
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to use [src]!"))
+		to_chat(user, span_warning(LANG("obj.41d5752e", list(src))))
 		return .
 
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
-		to_chat(user, span_notice("You turn on [src]."))
+		to_chat(user, span_notice(LANG("obj.11cd7563", list(src))))
 		//Now let them chose the text.
 		var/str = reject_bad_text(tgui_input_text(user, "Label text", "Set Label", label, MAX_NAME_LEN))
 		if(!str || QDELETED(src) || !user.is_holding(src))
-			to_chat(user, span_warning("Invalid text!"))
+			to_chat(user, span_warning(LANG("obj.7b1614ec", null)))
 			return
 		label = str
-		to_chat(user, span_notice("You set the text to '[str]'."))
+		to_chat(user, span_notice(LANG("obj.90f4c092", list(str))))
 	else
-		to_chat(user, span_notice("You turn off [src]."))
+		to_chat(user, span_notice(LANG("obj.833a0800", list(src))))
 	return TRUE
 
 /obj/item/hand_labeler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/hand_labeler_refill))
 		return NONE
 
-	balloon_alert(user, "refilled")
+	balloon_alert(user, LANG("obj.3a19f881", null))
 	qdel(tool)
 	labels_left = initial(labels_left) //Yes, it's capped at its initial value
 	return ITEM_INTERACT_SUCCESS

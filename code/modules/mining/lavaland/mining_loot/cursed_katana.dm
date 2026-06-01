@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ATTACK_STRIKE "Hilt Strike"
 #define ATTACK_SLICE "Wide Slice"
 #define ATTACK_DASH "Dash Attack"
@@ -17,7 +18,7 @@
 
 /obj/item/organ/cyberimp/arm/toolkit/shard/attack_self(mob/user, modifiers)
 	. = ..()
-	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
+	to_chat(user, span_userdanger(LANG("obj.86e19b28", null)))
 	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	var/index = user.get_held_index_of_item(src)
 	swap_zone(IS_LEFT_INDEX(index) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM)
@@ -37,7 +38,7 @@
 	if(!katana || katana.shattered)
 		return FALSE
 	if(!katana.drew_blood)
-		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
+		to_chat(owner, span_userdanger(LANG("obj.cd5b210e", list(katana))))
 		playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 		owner.apply_damage(25, BRUTE, hand, wound_bonus = 10, sharpness = SHARP_EDGED)
 	katana.drew_blood = FALSE
@@ -117,13 +118,13 @@
 /obj/item/cursed_katana/proc/strike(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] strikes [target] with [src]'s hilt!"),
 		span_notice("You hilt strike [target]!"))
-	to_chat(target, span_userdanger("You've been struck by [user]!"))
+	to_chat(target, span_userdanger(LANG("obj.1b3c91fb", list(user))))
 	playsound(src, 'sound/items/weapons/genhit3.ogg', 50, TRUE)
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(strike_throw_impact))
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	target.throw_at(throw_target, 5, 3, user, FALSE, gentle = TRUE)
 	target.apply_damage(damage = 17, exposed_wound_bonus = 10)
-	to_chat(target, span_userdanger("You've been struck by [user]!"))
+	to_chat(target, span_userdanger(LANG("obj.1b3c91fb", list(user))))
 	user.do_attack_animation(target, ATTACK_EFFECT_PUNCH)
 
 /obj/item/cursed_katana/proc/strike_throw_impact(mob/living/source, atom/hit_atom, datum/thrownthing/thrownthing)
@@ -183,7 +184,7 @@
 /obj/item/cursed_katana/proc/cut(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] cuts [target]'s tendons!"),
 		span_notice("You tendon cut [target]!"))
-	to_chat(target, span_userdanger("Your tendons have been cut by [user]!"))
+	to_chat(target, span_userdanger(LANG("obj.f1b054c2", list(user))))
 	user.do_item_attack_animation(target, used_item = src, animation_type = ATTACK_ANIMATION_SLASH)
 	target.apply_damage(damage = 15, sharpness = SHARP_EDGED, wound_bonus = 15)
 	user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
@@ -197,7 +198,7 @@
 /obj/item/cursed_katana/proc/dash(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] dashes through [target]!"),
 		span_notice("You dash through [target]!"))
-	to_chat(target, span_userdanger("[user] dashes through you!"))
+	to_chat(target, span_userdanger(LANG("obj.db6f2e15", list(user))))
 	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
 	target.apply_damage(damage = 17, sharpness = SHARP_POINTY, exposed_wound_bonus = 10)
 	var/turf/dash_target = get_turf(target)
@@ -215,17 +216,17 @@
 /obj/item/cursed_katana/proc/shatter(mob/living/target, mob/user)
 	user.visible_message(span_warning("[user] shatters [src] over [target]!"),
 		span_notice("You shatter [src] over [target]!"))
-	to_chat(target, span_userdanger("[user] shatters [src] over you!"))
+	to_chat(target, span_userdanger(LANG("obj.efcbc60f", list(user, src))))
 	target.apply_damage(damage = ismining(target) ? 75 : 35, wound_bonus = 20)
 	user.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(src, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 	shattered = TRUE
 	moveToNullspace()
-	balloon_alert(user, "katana shattered")
+	balloon_alert(user, LANG("obj.d248380c", null))
 	addtimer(CALLBACK(src, PROC_REF(coagulate), user), 45 SECONDS)
 
 /obj/item/cursed_katana/proc/coagulate(mob/user)
-	balloon_alert(user, "katana coagulated")
+	balloon_alert(user, LANG("obj.9ffc586d", null))
 	shattered = FALSE
 	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 

@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 		return FALSE
 
 	hivemind.active_network = new_active_hivemind
-	to_chat(user, span_abductor("You are now sending messages to [new_active_hivemind.name]."))
+	to_chat(user, span_abductor(LANG("datum.cb102324", list(new_active_hivemind.name))))
 
 	if(hivemind.active)
 		hivemind.activate()
@@ -139,8 +139,8 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 	if(!hivemind_to_leave)
 		return FALSE
 
-	to_chat(hivemind_to_leave.parent, span_abductor("[user] has been removed from your Hivemind."))
-	to_chat(user, span_abductor("You have left [hivemind_to_leave.parent]'s Hivemind."))
+	to_chat(hivemind_to_leave.parent, span_abductor(LANG("datum.db0c11d3", list(user))))
+	to_chat(user, span_abductor(LANG("datum.d897134b", list(hivemind_to_leave.parent))))
 
 	hivemind.network_list -= hivemind_to_leave
 	hivemind_to_leave.linked_mobs -= user
@@ -150,11 +150,11 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 	var/mob/living/carbon/human/user = owner
 	if(user in GLOB.hivemind_users)
 		GLOB.hivemind_users -= user
-		to_chat(user, span_abductor("You are now unable to receive invites."))
+		to_chat(user, span_abductor(LANG("datum.99a968ca", null)))
 		return
 
 	GLOB.hivemind_users += user
-	to_chat(user, span_abductor("You are now able to receive invites."))
+	to_chat(user, span_abductor(LANG("datum.e60b5c9b", null)))
 
 /datum/action/innate/hivemind_keyboard
 	name = "Hivemind Keyboard"
@@ -209,7 +209,7 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 		return
 
 	if(tgui_alert(person_to_add, "[owner] wishes to add you to their Hivemind, do you accept?", "Incoming Hivemind Invite", list("Accept", "Reject")) != "Accept")
-		to_chat(owner, span_warning("[person_to_add] denied the request to join your Hivemind."))
+		to_chat(owner, span_warning(LANG("datum.43ce1eb7", list(person_to_add))))
 		return
 
 	linked_mobs += person_to_add
@@ -220,8 +220,8 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 		return FALSE
 
 	target_hivemind.network_list += src
-	to_chat(person_to_add, span_abductor("You have now been added to [owner]'s Hivemind"))
-	to_chat(owner, span_abductor("[person_to_add] has now been added to your Hivemind"))
+	to_chat(person_to_add, span_abductor(LANG("datum.985ebf23", list(owner))))
+	to_chat(owner, span_abductor(LANG("datum.2878dd81", list(person_to_add))))
 
 ///Removes a user from the list of connected people within a hivemind
 /datum/component/mind_linker/active_linking/nif/proc/remove_user()
@@ -239,8 +239,8 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 
 	linked_mobs -= person_to_remove
 	target_hivemind.network_list -= src
-	to_chat(person_to_remove, span_abductor("You have now been removed from [owner]'s Hivemind."))
-	to_chat(owner, span_abductor("[person_to_remove] has now been removed from your Hivemind."))
+	to_chat(person_to_remove, span_abductor(LANG("datum.5d85f034", list(owner))))
+	to_chat(owner, span_abductor(LANG("datum.1d963896", list(person_to_remove))))
 
 /datum/component/mind_linker/active_linking/nif/proc/change_chat_color()
 	var/mob/living/carbon/human/owner = parent
@@ -280,7 +280,7 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 		return
 
 	if(QDELETED(connected_network))
-		to_chat(user, span_warning("The link seems to have been severed."))
+		to_chat(user, span_warning(LANG("obj.446f0cd7", null)))
 		return
 
 	var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)

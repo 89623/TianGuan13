@@ -163,7 +163,7 @@
 
 /obj/structure/simple_farm/attack_hand(mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, harvest_timer))
-		balloon_alert(user, "plant not ready for harvest!")
+		balloon_alert(user, LANG("obj.789d9fb4", null))
 		return
 
 	COOLDOWN_START(src, harvest_timer, harvest_cooldown)
@@ -216,10 +216,10 @@
 		if (cooldown_improved || yield_improved)
 			use_item.use(1)
 			user.mind?.adjust_experience(/datum/skill/primitive, 2)
-			balloon_alert(user, "fertilized")
+			balloon_alert(user, LANG("obj.0e69a659", null))
 
 		else
-			balloon_alert(user, "already fertilized!")
+			balloon_alert(user, LANG("obj.90e175c7", null))
 
 		return ITEM_INTERACT_BLOCKING
 
@@ -231,7 +231,7 @@
 /obj/structure/simple_farm/proc/increase_yield(mob/user, silent = FALSE)
 	if(max_harvest >= 6)
 		if(!silent)
-			balloon_alert(user, "plant is at maximum yield")
+			balloon_alert(user, LANG("obj.50d1b550", null))
 
 		return FALSE
 
@@ -248,7 +248,7 @@
 /obj/structure/simple_farm/proc/decrease_cooldown(mob/user, silent = FALSE)
 	if(harvest_cooldown <= 30 SECONDS)
 		if(!silent)
-			balloon_alert(user, "already at maximum growth speed!")
+			balloon_alert(user, LANG("obj.87ed7d5f", null))
 
 		return FALSE
 

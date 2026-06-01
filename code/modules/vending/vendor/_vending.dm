@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Maximum credits dump threshold
 #define CREDITS_DUMP_THRESHOLD 50
 /**
@@ -420,7 +421,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "product lock disabled")
+	balloon_alert(user, LANG("obj.c10d3ad2", null))
 	return TRUE
 
 

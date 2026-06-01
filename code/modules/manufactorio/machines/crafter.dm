@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/manufacturing/crafter
 	name = "manufacturing assembling machine"
 	desc = "Assembles (crafts) the set recipe until it runs out of resources. Only resources on it will be used."
@@ -61,7 +62,7 @@
 	if(isnull(result) || result == recipe || !user.can_perform_action(src))
 		return ITEM_INTERACT_FAILURE
 	recipe = result
-	balloon_alert(user, "set")
+	balloon_alert(user, LANG("obj.e672e5cd", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/manufacturing/crafter/Destroy()
@@ -78,7 +79,7 @@
 		else
 			deltimer(craft_timer)
 			craft_timer = null
-			say("Power failure!")
+			say(LANG("obj.2c02f723", null))
 		return
 	if(isnull(recipe) || !craftsman.check_contents(src, recipe, craftsman.get_surroundings(src)))
 		return
@@ -104,7 +105,7 @@
 	var/list/prediff = get_overfloor_objects()
 	var/result = craftsman.construct_item(src, recipe)
 	if(istext(result))
-		say("Crafting failed[result]")
+		say(LANG("obj.d98d5529", list(result)))
 		return
 	if(isstack(result)) //it doesn't have hands to pick up stacks so let's try to merge them instead
 		var/obj/item/stack/stack = result

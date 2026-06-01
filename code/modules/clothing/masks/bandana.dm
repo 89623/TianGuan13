@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/mask/bandana
 	name = "bandana"
 	desc = "A fine bandana with nanotech lining."
@@ -39,7 +40,7 @@
 
 /obj/item/clothing/mask/bandana/adjust_visor(mob/living/user)
 	if(slot_flags & ITEM_SLOT_NECK)
-		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
+		to_chat(user, span_warning(LANG("obj.1b2f4ba1", list(src))))
 		return FALSE
 	//NOVA EDIT ADDITION START: BANDANA HATS FOR MUTANTS
 	if(slot_flags & ITEM_SLOT_HEAD)
@@ -63,13 +64,13 @@
 	var/mob/living/carbon/char = user
 	var/matrix/widen = matrix()
 	if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_MASK) == src) || (char.get_item_by_slot(ITEM_SLOT_HEAD) == src))
-		to_chat(user, span_warning("You can't tie [src] while wearing it!"))
+		to_chat(user, span_warning(LANG("obj.6e0a2619", list(src))))
 		return CLICK_ACTION_BLOCKING
 	else if(slot_flags & ITEM_SLOT_HEAD)
-		to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
+		to_chat(user, span_warning(LANG("obj.2fde84cb", list(src))))
 		return CLICK_ACTION_BLOCKING
 	else if(!user.is_holding(src))
-		to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
+		to_chat(user, span_warning(LANG("obj.a6c980e9", list(src))))
 		return CLICK_ACTION_BLOCKING
 
 	if(slot_flags & ITEM_SLOT_MASK)

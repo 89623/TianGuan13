@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Clown Items
  * Contains:
  * Soap
@@ -175,14 +176,14 @@
 		noUses(user)
 
 /obj/item/soap/proc/noUses(mob/user)
-	to_chat(user, span_warning("[src] crumbles into tiny bits!"))
+	to_chat(user, span_warning(LANG("obj.eed24fca", list(src))))
 	qdel(src)
 
 /obj/item/soap/nanotrasen/cyborg
 	name = "built-in soap"
 
 /obj/item/soap/nanotrasen/cyborg/noUses(mob/user)
-	to_chat(user, span_warning("[src] has ran out of chemicals! Head to a recharger to refill it."))
+	to_chat(user, span_warning(LANG("obj.f003a867", list(src))))
 
 /obj/item/soap/nanotrasen/cyborg/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	if(uses <= 0)

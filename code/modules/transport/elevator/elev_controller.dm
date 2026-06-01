@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/button/elevator
 	name = "elevator button"
 	desc = "Go back. Go back. Go back. Can you operate the elevator."
@@ -96,7 +97,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door, close))
 
 	// We can only be multitooled directly so just throw up the balloon alert
-	balloon_alert(user, "safeties reset")
+	balloon_alert(user, LANG("obj.fc8c1c99", null))
 	obj_flags &= ~EMAGGED
 
 /obj/item/assembly/control/elevator/activate(mob/activator)

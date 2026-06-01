@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MIN_ENERGY_COST (0.01 * STANDARD_CELL_CHARGE)
 #define MAX_ENERGY_COST (0.5 * STANDARD_CELL_CHARGE)
 
@@ -33,16 +34,16 @@
 	if(QDELETED(R) || !istype(R))
 		return
 	if(!R.cell)
-		to_chat(R, span_warning("You need a power cell installed for that."))
+		to_chat(R, span_warning(LANG("obj.e7e04659", null)))
 		return
 	if(recharging)
-		to_chat(R, span_warning("[src] needs some time to recharge first."))
+		to_chat(R, span_warning(LANG("obj.fb922db9", list(src))))
 		return
 	if(!R.cell.use(circuit_cost))
-		to_chat(R, span_warning("You don't have the energy for that (you need [display_energy(circuit_cost)].)"))
+		to_chat(R, span_warning(LANG("obj.bf316d07", list(display_energy(circuit_cost)))))
 		return
 	if(!circuits)
-		to_chat(R, span_warning("You need more material. Use [src] on existing simple circuits to break them down."))
+		to_chat(R, span_warning(LANG("obj.bbe5e976", list(src))))
 		return
 	playsound(R, 'sound/items/tools/rped.ogg', 50, TRUE)
 	recharging = TRUE

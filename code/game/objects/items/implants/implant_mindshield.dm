@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/implant/mindshield
 	name = "mindshield implant"
 	desc = "Protects against brainwashing."
@@ -27,7 +28,7 @@
 	target.add_traits(list(TRAIT_MINDSHIELD, TRAIT_UNCONVERTABLE), IMPLANT_TRAIT)
 	target.sec_hud_set_implants()
 	if(!silent)
-		to_chat(target, span_notice("You feel a sense of peace and security. You are now protected from brainwashing."))
+		to_chat(target, span_notice(LANG("obj.e1a5c467", null)))
 	return TRUE
 
 /obj/item/implant/mindshield/removed(mob/target, silent = FALSE, special = FALSE)
@@ -39,7 +40,7 @@
 		target.remove_traits(list(TRAIT_MINDSHIELD, TRAIT_UNCONVERTABLE), IMPLANT_TRAIT)
 		L.sec_hud_set_implants()
 	if(target.stat != DEAD && !silent)
-		to_chat(target, span_boldnotice("Your mind suddenly feels terribly vulnerable. You are no longer safe from brainwashing."))
+		to_chat(target, span_boldnotice(LANG("obj.5efb3da7", null)))
 	return TRUE
 
 /obj/item/implanter/mindshield

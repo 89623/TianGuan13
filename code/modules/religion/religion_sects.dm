@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Religious Sects
  *
@@ -68,16 +69,16 @@
 /// Activates if religious sect is reset by admins, should clean up anything you added on conversion.
 /datum/religion_sect/proc/on_deconversion(mob/living/chap)
 	SHOULD_CALL_PARENT(TRUE)
-	to_chat(chap, span_boldnotice("You have lost the approval of \the [name]."))
+	to_chat(chap, span_boldnotice(LANG("datum.76db220e", list(name))))
 	if(chap.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		to_chat(chap, span_notice("Return to an altar to reform your sect."))
+		to_chat(chap, span_notice(LANG("datum.3d6e58de", null)))
 	chap.remove_faction(FACTION_HOLY)
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
 	. = TRUE
 	if(chap.mind.holy_role == HOLY_ROLE_DEACON)
-		to_chat(chap, span_warning("You are merely a deacon of [GLOB.deity], and therefore cannot perform rites."))
+		to_chat(chap, span_warning(LANG("datum.491ec878", list(GLOB.deity))))
 		return
 	if(!is_type_in_typecache(sacrifice, desired_items_typecache))
 		return FALSE
@@ -137,7 +138,7 @@
 			blessed.update_damage_overlays()
 
 	blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
-	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
+	to_chat(blessed, span_boldnotice(LANG("datum.087b1ddd", list(GLOB.deity))))
 	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
@@ -176,7 +177,7 @@
 			charge_amount *= 2
 		R.cell?.charge += charge_amount
 		R.visible_message(span_notice("[chap] charges [R] with the power of [GLOB.deity]!"))
-		to_chat(R, span_boldnotice("You are charged by the power of [GLOB.deity]!"))
+		to_chat(R, span_boldnotice(LANG("datum.549c0199", list(GLOB.deity))))
 		R.add_mood_event("blessing", /datum/mood_event/blessing)
 		playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 		return BLESSING_SUCCESS
@@ -197,11 +198,11 @@
 	var/obj/item/bodypart/bodypart = blessed.get_bodypart(chap.zone_selected)
 	if(IS_ORGANIC_LIMB(bodypart))
 		if(!did_we_charge)
-			to_chat(chap, span_warning("[GLOB.deity] scoffs at the idea of healing such fleshy matter!"))
+			to_chat(chap, span_warning(LANG("datum.a5876534", list(GLOB.deity))))
 			return BLESSING_IGNORED
 
 		blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
+		to_chat(blessed, span_boldnotice(LANG("datum.c11ab248", list(GLOB.deity))))
 		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 		playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
 		return BLESSING_SUCCESS
@@ -211,7 +212,7 @@
 		blessed.update_damage_overlays()
 
 	blessed.visible_message(span_notice("[chap] [did_we_charge ? "repairs and charges" : "repairs"] [blessed] with the power of [GLOB.deity]!"))
-	to_chat(blessed, span_boldnotice("The inner machinations of [GLOB.deity] [did_we_charge ? "repairs and charges" : "repairs"] you!"))
+	to_chat(blessed, span_boldnotice(LANG("datum.a7d105f3", list(GLOB.deity, did_we_charge ? "repairs and charges" : "repairs"))))
 	playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
@@ -221,11 +222,11 @@
 		return
 
 	if(power_cell.charge() < 0.3 * STANDARD_CELL_CHARGE)
-		to_chat(chap, span_notice("[GLOB.deity] does not accept pity amounts of power."))
+		to_chat(chap, span_notice(LANG("datum.dbb8fb9e", list(GLOB.deity))))
 		return
 
 	adjust_favor(round(power_cell.charge() / (0.3 * STANDARD_CELL_CHARGE)), chap)
-	to_chat(chap, span_notice("You offer [power_cell]'s power to [GLOB.deity], pleasing them."))
+	to_chat(chap, span_notice(LANG("datum.04017ccf", list(power_cell, GLOB.deity))))
 	qdel(power_cell)
 	return TRUE
 
@@ -254,9 +255,9 @@
 	if(!istype(offering))
 		return
 	if(!offering.light_on)
-		to_chat(user, span_notice("The candle needs to be lit to be offered!"))
+		to_chat(user, span_notice(LANG("datum.6893ff64", null)))
 		return
-	to_chat(user, span_notice("[GLOB.deity] is pleased with your sacrifice."))
+	to_chat(user, span_notice(LANG("datum.4673eab4", list(GLOB.deity))))
 	adjust_favor(40, user) //it's not a lot but hey there's a pacifist favor option at least
 	qdel(offering)
 	return TRUE
@@ -282,11 +283,11 @@
 
 	var/datum/bank_account/account = chap.get_bank_account()
 	if(!account)
-		to_chat(chap, span_warning("You need a way to pay for the heal!"))
+		to_chat(chap, span_warning(LANG("datum.fe52c508", null)))
 		return BLESSING_IGNORED
 
 	if(account.account_balance < GREEDY_HEAL_COST)
-		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] [MONEY_NAME] for 30 health!"))
+		to_chat(chap, span_warning(LANG("datum.e0ffc9aa", list(GLOB.deity, GREEDY_HEAL_COST, MONEY_NAME))))
 		return BLESSING_IGNORED
 
 	var/mob/living/carbon/human/blessed = blessed_living
@@ -306,7 +307,7 @@
 			blessed.update_damage_overlays()
 
 	blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
-	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
+	to_chat(blessed, span_boldnotice(LANG("datum.435f4a39", list(GLOB.deity, GLOB.deity))))
 	playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
@@ -328,7 +329,7 @@
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
 	..()
 	if(!ishuman(new_convert))
-		to_chat(new_convert, span_warning("[GLOB.deity] needs higher level creatures to fully comprehend the suffering. You are not burdened."))
+		to_chat(new_convert, span_warning(LANG("datum.247de488", list(GLOB.deity))))
 		return
 	new_convert.gain_trauma(/datum/brain_trauma/special/burdened, TRAUMA_RESILIENCE_ABSOLUTE)
 
@@ -404,11 +405,11 @@
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
 	if(!transferred)
-		to_chat(chaplain, span_warning("They hold no burden!"))
+		to_chat(chaplain, span_warning(LANG("datum.45f1cf41", null)))
 		return BLESSING_IGNORED
 
 	target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
-	to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
+	to_chat(target, span_boldnotice(LANG("datum.087b1ddd", list(GLOB.deity))))
 	playsound(chaplain, SFX_PUNCH, 25, vary = TRUE, extrarange = -1)
 	target.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
@@ -429,7 +430,7 @@
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()
 	if(!ishuman(new_convert))
-		to_chat(new_convert, span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
+		to_chat(new_convert, span_warning(LANG("datum.7da4bb45", list(GLOB.deity))))
 		return FALSE
 	new_convert.gain_trauma(/datum/brain_trauma/special/honorbound, TRAUMA_RESILIENCE_MAGIC)
 
@@ -456,12 +457,12 @@
 
 	var/mob/living/carbon/human/blessed = blessed_living
 	if(blessed.reagents.has_reagent(/datum/reagent/drug/maint/sludge))
-		to_chat(blessed, span_warning("[GLOB.deity] has already empowered them."))
+		to_chat(blessed, span_warning(LANG("datum.4c32b6f9", list(GLOB.deity))))
 		return BLESSING_IGNORED
 
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
-	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
+	to_chat(blessed, span_boldnotice(LANG("datum.20708b6b", list(GLOB.deity))))
 	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS //trust me, you'll be feeling the pain from the maint drugs all well enough
@@ -472,9 +473,9 @@
 	var/datum/reagent/yuck/wanted_yuck = offering.reagents.has_reagent(/datum/reagent/yuck, MINIMUM_YUCK_REQUIRED)
 	var/favor_earned = offering.reagents.get_reagent_amount(/datum/reagent/yuck)
 	if(!wanted_yuck)
-		to_chat(user, span_warning("[offering] does not have enough organic slurry for [GLOB.deity] to enjoy."))
+		to_chat(user, span_warning(LANG("datum.8b58fb50", list(offering, GLOB.deity))))
 		return
-	to_chat(user, span_notice("[GLOB.deity] loves organic slurry."))
+	to_chat(user, span_notice(LANG("datum.375a9f42", list(GLOB.deity))))
 	adjust_favor(favor_earned, user)
 	playsound(get_turf(offering), 'sound/items/drink.ogg', 50, TRUE)
 	offering.reagents.clear_reagents()
@@ -605,7 +606,7 @@
 		COOLDOWN_START(src, vague_portent_cooldown, 30 SECONDS)
 		dream_favor *= 1.5
 
-	to_chat(chap, span_cyan("[GLOB.deity] approves of your slumber."))
+	to_chat(chap, span_cyan(LANG("datum.1e8509d2", list(GLOB.deity))))
 	adjust_favor(dream_favor, chap)
 
 // dream blessing only works on dreaming targets.
@@ -622,7 +623,7 @@
 			result = BLESSING_SUCCESS
 
 		if(result == BLESSING_SUCCESS)
-			to_chat(chap, span_cyan("[GLOB.deity] approves of [target]'s slumber."))
+			to_chat(chap, span_cyan(LANG("datum.7ae5976b", list(GLOB.deity, target))))
 		return result
 
 	if(target.stat == UNCONSCIOUS)
@@ -630,16 +631,16 @@
 			var/mob/living/carbon/sleeper = target
 			sleeper.dream()
 
-		to_chat(chap, span_cyan("[GLOB.deity] blesses [target]'s slumber."))
+		to_chat(chap, span_cyan(LANG("datum.2d08346e", list(GLOB.deity, target))))
 		var/result = standard_bless_healing(target, chap)
 		if(dream_protection && target.mind && target.apply_status_effect(/datum/status_effect/dream_protection/temporary))
 			result = BLESSING_SUCCESS
 
 		if(result == BLESSING_SUCCESS)
-			to_chat(chap, span_cyan("[GLOB.deity] blesses [target]'s slumber."))
+			to_chat(chap, span_cyan(LANG("datum.2d08346e", list(GLOB.deity, target))))
 		return result
 
-	to_chat(chap, span_warning("[GLOB.deity] has no interest in blessing the waking."))
+	to_chat(chap, span_warning(LANG("datum.8c02f626", list(GLOB.deity))))
 	return BLESSING_IGNORED
 
 /datum/religion_sect/dreams/sect_dead_bless(mob/living/target, mob/living/chap)
@@ -647,7 +648,7 @@
 	if(LAZYFIND(recent_bless_refs, tarref))
 		return BLESSING_IGNORED
 
-	to_chat(chap, span_cyan("[GLOB.deity] watches over [target]'s eternal rest."))
+	to_chat(chap, span_cyan(LANG("datum.1b1f486e", list(GLOB.deity, target))))
 	if(dream_protection && target.mind)
 		target.apply_status_effect(/datum/status_effect/dream_protection/deceased)
 	adjust_favor(10 * (target.mind ? 1 : 0.5), chap)

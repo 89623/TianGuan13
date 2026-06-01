@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/plaque //This is a plaque you can craft with gold, then permanently engrave a title and description on, with a fountain pen.
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "blankplaque"
@@ -69,7 +70,7 @@
 	if(user.combat_mode)
 		return FALSE
 	if(atom_integrity == max_integrity)
-		to_chat(user, span_warning("This plaque is already in perfect condition."))
+		to_chat(user, span_warning(LANG("obj.c72ef289", null)))
 		return TRUE
 	if(!I.tool_start_check(user, amount=1))
 		return TRUE
@@ -85,7 +86,7 @@
 /obj/structure/plaque/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/pen/fountain))
 		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved."))
+			to_chat(user, span_warning(LANG("obj.7bf1e20f", null)))
 			return
 		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
 		if(!namechoice)
@@ -94,7 +95,7 @@
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still
-			to_chat(user, span_warning("You need to stand next to the plaque to engrave it!"))
+			to_chat(user, span_warning(LANG("obj.3101dc73", null)))
 			return
 		user.visible_message(span_notice("[user] begins engraving [src]."), \
 			span_notice("You begin engraving [src]."))
@@ -108,9 +109,9 @@
 		return
 	if(istype(I, /obj/item/pen))
 		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
+			to_chat(user, span_warning(LANG("obj.601a2c44", null)))
 			return
-		to_chat(user, span_warning("Your pen isn't fancy enough to engrave this! Find a fountain pen.")) //Go steal the Curator's.
+		to_chat(user, span_warning(LANG("obj.b7b09574", null))) //Go steal the Curator's.
 		return
 	return ..()
 
@@ -141,7 +142,7 @@
 	if(user.combat_mode)
 		return FALSE
 	if(atom_integrity == max_integrity)
-		to_chat(user, span_warning("This plaque is already in perfect condition."))
+		to_chat(user, span_warning(LANG("obj.c72ef289", null)))
 		return TRUE
 	if(!I.tool_start_check(user, amount=1))
 		return TRUE
@@ -158,7 +159,7 @@
 /obj/item/plaque/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers) //Same as part of the above, except for the item in hand instead of the structure.
 	if(istype(I, /obj/item/pen/fountain))
 		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved."))
+			to_chat(user, span_warning(LANG("obj.7bf1e20f", null)))
 			return
 		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
 		if(!namechoice)
@@ -167,7 +168,7 @@
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still
-			to_chat(user, span_warning("You need to stand next to the plaque to engrave it!"))
+			to_chat(user, span_warning(LANG("obj.3101dc73", null)))
 			return
 		user.visible_message(span_notice("[user] begins engraving [src]."), \
 			span_notice("You begin engraving [src]."))
@@ -181,9 +182,9 @@
 		return
 	if(istype(I, /obj/item/pen))
 		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
+			to_chat(user, span_warning(LANG("obj.601a2c44", null)))
 			return
-		to_chat(user, span_warning("Your pen isn't fancy enough to engrave this! Find a fountain pen.")) //Go steal the Curator's.
+		to_chat(user, span_warning(LANG("obj.b7b09574", null))) //Go steal the Curator's.
 		return
 	return ..()
 

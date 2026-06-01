@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// How long can you hold onto gibtonite before you need to let it go?
 #define GIBTONITE_GOLEM_HOLD_TIME 2 MINUTES
 /// ID for a filter we apply so we can remove it again
@@ -31,7 +32,7 @@
 
 /obj/item/gibtonite_hand/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!held_gibtonite)
-		to_chat(user, span_warning("[src] fizzles, it was a dud!"))
+		to_chat(user, span_warning(LANG("obj.0adb2fc2", list(src))))
 		qdel(src)
 		return ITEM_INTERACT_BLOCKING
 
@@ -78,10 +79,10 @@
 /obj/item/bluespace_finger/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/turf/target_turf = get_turf(interacting_with)
 	if (get_dist(target_turf, get_turf(src)) > teleport_range)
-		balloon_alert(user, "too far!")
+		balloon_alert(user, LANG("obj.f5e75781", null))
 		return ITEM_INTERACT_BLOCKING
 	if (target_turf.is_blocked_turf(exclude_mobs = TRUE))
-		balloon_alert(user, "no room!")
+		balloon_alert(user, LANG("obj.ad6c6384", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/effect/temp_visual/teleport_golem/landing_indicator = new(target_turf)

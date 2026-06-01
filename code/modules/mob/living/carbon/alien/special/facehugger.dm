@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 //TODO: Make these basic mobs
@@ -256,7 +257,7 @@
 	inhand_icon_state = "facehugger_inactive"
 	stat = DEAD
 
-	visible_message(span_danger("[src] curls up into a ball!"))
+	visible_message(span_danger(LANG("obj.af792067", list(src))))
 
 	// chest maybe because getting slammed in the chest would knock it off your face while dead
 	AddComponent(/datum/component/knockoff, knockoff_chance = 40, target_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST), slots_knockoffable = slot_flags)
@@ -265,7 +266,7 @@
 	if(!real || sterile || stat == DEAD || user.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo))
 		return ..()
 	if(user.get_item_by_slot(slot_flags) == src)
-		to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
+		to_chat(user, span_userdanger(LANG("obj.f8ef074c", list(src))))
 		return FALSE
 	return ..()
 
@@ -276,7 +277,7 @@
 	if(!real || sterile || user.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo))
 		return ..()
 	if(wearer.get_item_by_slot(slot_flags) == src && stat != DEAD)
-		to_chat(user, span_userdanger("[src] is latched on too tight! Get help or wait for it to let go!"))
+		to_chat(user, span_userdanger(LANG("obj.f8ef074c", list(src))))
 		return
 	return ..()
 
@@ -299,7 +300,7 @@
 	SIGNAL_HANDLER
 	if(stat != CONSCIOUS)
 		return NONE
-	to_chat(user, span_danger("There's something moving inside of \the [letter]!"))
+	to_chat(user, span_danger(LANG("obj.7b344986", list(letter))))
 	Leap(user)
 	return COMPONENT_TRAITOR_MAIL_HANDLED
 

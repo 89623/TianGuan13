@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Shuttle equipment
 
 /obj/machinery/shuttle_scrambler
@@ -35,8 +36,8 @@
 	SSshuttle.registerTradeBlockade(src)
 	AddComponent(/datum/component/gps, "Nautical Signal")
 	active = TRUE
-	to_chat(user,span_notice("You toggle [src] [active ? "on":"off"]."))
-	to_chat(user,span_warning("The scrambling signal can now be tracked by GPS."))
+	to_chat(user,span_notice(LANG("obj.baabf8b3", list(src, active ? "on":"off"))))
+	to_chat(user,span_warning(LANG("obj.62f32462", null)))
 	START_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/interact(mob/user)
@@ -65,10 +66,10 @@
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	if(credits_stored) // Prevents spamming empty holochips
 		new /obj/item/holochip(drop_location(), credits_stored)
-		to_chat(user,span_notice("You retrieve the siphoned [MONEY_NAME]!"))
+		to_chat(user,span_notice(LANG("obj.0283787e", list(MONEY_NAME))))
 		credits_stored = 0
 	else
-		to_chat(user,span_notice("There's nothing to withdraw."))
+		to_chat(user,span_notice(LANG("obj.3cb1c397", null)))
 
 /// Alerts the crew about the siphon
 /obj/machinery/shuttle_scrambler/proc/send_notification()
@@ -135,9 +136,9 @@
 		return
 	var/atom/movable/found_loot = find_random_loot()
 	if(!found_loot)
-		say("No valuables located. Try again later.")
+		say(LANG("obj.4047e42b", null))
 	else
-		say("Located: [found_loot.name] at [get_area_name(found_loot)]")
+		say(LANG("obj.b133e9f6", list(found_loot.name, get_area_name(found_loot))))
 
 	COOLDOWN_START(src, locate_cooldown, 10 SECONDS)
 
@@ -185,7 +186,7 @@
 	. = ..()
 	if (istype(I))
 		I.set_buffer(src)
-		balloon_alert(user, "saved to multitool buffer")
+		balloon_alert(user, LANG("obj.84afb909", null))
 		return TRUE
 
 /obj/machinery/piratepad/screwdriver_act(mob/living/user, obj/item/tool)
@@ -253,7 +254,7 @@
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
-		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
+		to_chat(user, span_notice(LANG("obj.806c484e", list(src, I.buffer, I))))
 		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
@@ -465,8 +466,7 @@
 	sold_item.adjust_confusion(10 SECONDS)
 	sold_item.adjust_dizzy(10 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(send_back_to_station), sold_item), COME_BACK_FROM_CAPTURE_TIME)
-	to_chat(sold_item, span_hypnophrase("A million voices echo in your head... <i>\"Yaarrr, thanks for the booty, landlubber. \
-		You will be ransomed back to your station, so it's only a matter of time before we ship you back...</i>"))
+	to_chat(sold_item, span_hypnophrase(LANG("datum.292d2b5c", null)))
 
 	return EXPORT_SOLD_DONT_DELETE
 

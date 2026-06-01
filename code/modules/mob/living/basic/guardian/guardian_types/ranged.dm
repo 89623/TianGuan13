@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A ranged guardian can fling shards of glass at people very very quickly. It can also enter a long-range scouting mode.
 /mob/living/basic/guardian/ranged
 	guardian_type = GUARDIAN_RANGED
@@ -29,7 +30,7 @@
 
 /mob/living/basic/guardian/ranged/toggle_modes()
 	if(is_deployed() && !isnull(summoner))
-		balloon_alert(src, "must not be manifested!")
+		balloon_alert(src, LANG("mob.61be645f", null))
 		return
 	if (has_status_effect(/datum/status_effect/guardian_scout_mode))
 		remove_status_effect(/datum/status_effect/guardian_scout_mode)
@@ -76,7 +77,7 @@
 
 	var/mob/living/basic/guardian/guardian_mob = owner
 	guardian_mob.unleash()
-	to_chat(owner, span_bolddanger("You enter scouting mode."))
+	to_chat(owner, span_bolddanger(LANG("datum.ff9f4948", null)))
 	return TRUE
 
 /datum/status_effect/guardian_scout_mode/on_remove()
@@ -87,7 +88,7 @@
 		COMSIG_GUARDIAN_RECALLED,
 		COMSIG_MOB_CLICKON,
 	))
-	to_chat(owner, span_bolddanger("You return to your normal mode."))
+	to_chat(owner, span_bolddanger(LANG("datum.8e6cee42", null)))
 	var/mob/living/basic/guardian/guardian_mob = owner
 	guardian_mob.leash_to(owner, guardian_mob.summoner)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/folder/biscuit
 	name = "biscuit card"
 	desc = "A biscuit card. On the back, <b>DO NOT DIGEST</b> is printed in large lettering."
@@ -49,7 +50,7 @@
 /obj/item/folder/biscuit/proc/crack_check(mob/user)
 	if (cracked)
 		return TRUE
-	balloon_alert(user, "open first!")
+	balloon_alert(user, LANG("obj.c3fdd085", null))
 	return FALSE
 
 /obj/item/folder/biscuit/examine()

@@ -126,7 +126,7 @@
 	if(src == user.belt)
 		toggle(user)
 	else
-		to_chat(user, span_warning("You need to put the strapon around your waist before you can use it!"))
+		to_chat(user, span_warning(LANG("obj.2c6aaa2f", null)))
 
 /obj/item/clothing/strapon/proc/toggle(mob/living/carbon/human/user)
 	playsound_if_pref(user, 'modular_nova/modules/modular_items/lewd_items/sounds/latex.ogg', 40, TRUE)
@@ -209,7 +209,7 @@
 		return
 
 	if(!target_mob.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("[target_mob] doesn't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.8d0a0182", list(target_mob))))
 		return
 
 	var/message = ""
@@ -268,7 +268,7 @@
 
 		else
 			if(!target_mob.is_bottomless())
-				to_chat(user, span_danger("[target_mob]'s anus is covered!"))
+				to_chat(user, span_danger(LANG("obj.577ff0ee", list(target_mob))))
 				return
 			message = pick(
 				"fucks [target_mob]'s ass with [src]",

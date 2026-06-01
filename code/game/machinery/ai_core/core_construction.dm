@@ -1,10 +1,11 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define AI_CORE_BRAIN(X) X.braintype == "Android" ? "brain" : "MMI"
 #define UPDATE_STATE(new_state) state = new_state; update_appearance(UPDATE_ICON_STATE)
 #define CHECK_STATE_CALLBACK(maintained_state) CALLBACK(src, PROC_REF(check_state), maintained_state)
 
 /obj/structure/ai_core/welder_act(mob/living/user, obj/item/tool)
 	if(state != CORE_STATE_EMPTY)
-		balloon_alert(user, "frame has to be empty!")
+		balloon_alert(user, LANG("obj.1bcdbedc", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, 1))
@@ -19,7 +20,7 @@
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
 	if(state >= CORE_STATE_FINISHED)
 		set_anchored(TRUE) //teehee
-		balloon_alert(user, "can't unanchor!")
+		balloon_alert(user, LANG("obj.9f0e2315", null))
 		return ITEM_INTERACT_BLOCKING
 
 	default_unfasten_wrench(user, tool)
@@ -178,10 +179,10 @@
 		return FALSE
 
 	if(cable.get_amount() < 5)
-		balloon_alert(user, "not enough [cable::name]!")
+		balloon_alert(user, LANG("obj.98d23e06", list(cable::name)))
 		return FALSE
 
-	balloon_alert(user, "adding cable...")
+	balloon_alert(user, LANG("obj.8b4be38e", null))
 	if(!cable.use_tool(src, user, 2 SECONDS, 5, 50, CHECK_STATE_CALLBACK(CORE_STATE_SCREWED)))
 		return FALSE
 
@@ -199,13 +200,13 @@
 		if(QDELETED(src) || QDELETED(user) || QDELETED(mmi) || !user.is_holding(mmi) || !Adjacent(user))
 			return FALSE
 		if(mmi.brainmob && HAS_TRAIT(mmi.brainmob, TRAIT_SUICIDED))
-			balloon_alert(user, "[AI_CORE_BRAIN(mmi)] is useless!")
+			balloon_alert(user, LANG("obj.9b12d35a", list(AI_CORE_BRAIN(mmi))))
 			return FALSE
 	else
 		var/mob/living/brain/mmi_brainmob = mmi.brainmob
 		if(!CONFIG_GET(flag/allow_ai) || (mmi_brainmob && is_banned_from(mmi_brainmob.ckey, JOB_AI)))
 			if(!QDELETED(src) && !QDELETED(user) && !QDELETED(mmi) && user.is_holding(mmi) && Adjacent(user))
-				balloon_alert(user, "[mmi] won't fit!")
+				balloon_alert(user, LANG("obj.adfcc7ca", list(mmi)))
 			return FALSE
 
 	if(state != CORE_STATE_CABLED)
@@ -219,13 +220,13 @@
 
 /obj/structure/ai_core/proc/update_laws(mob/living/user, obj/item/ai_module/module)
 	if(!core_mmi)
-		balloon_alert(user, "no brain installed!")
+		balloon_alert(user, LANG("obj.757789a5", null))
 		return FALSE
 	if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || suicide_check())
-		balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] is inactive!")
+		balloon_alert(user, LANG("obj.f88122b5", list(AI_CORE_BRAIN(core_mmi))))
 		return FALSE
 	if(core_mmi.laws.id != DEFAULT_AI_LAWID)
-		balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] already has set laws!")
+		balloon_alert(user, LANG("obj.d00033f5", list(AI_CORE_BRAIN(core_mmi))))
 		return FALSE
 
 	module.install(laws, user)
@@ -236,10 +237,10 @@
 		return FALSE
 
 	if(!core_mmi)
-		balloon_alert(user, "needs a processor!")
+		balloon_alert(user, LANG("obj.ce48e05b", null))
 		return FALSE
 	if(glass.get_amount() < 2)
-		balloon_alert(user, "not enough [glass::name]!")
+		balloon_alert(user, LANG("obj.98d23e06", list(glass::name)))
 		return FALSE
 
 	if(!glass.use_tool(src, user, 2 SECONDS, 2, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)

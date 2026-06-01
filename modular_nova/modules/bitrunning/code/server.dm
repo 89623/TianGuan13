@@ -48,7 +48,7 @@
 		return
 
 	if(message_protected)
-		balloon_alert(user, "message protected!")
+		balloon_alert(user, LANG("obj.51f2a1ea", null))
 		return
 
 	for(var/player_key in spam_queue)
@@ -63,12 +63,12 @@
 		return
 
 	message_protected = !message_protected
-	balloon_alert(user, "message protection [message_protected ? "enabled" : "disabled"]!")
+	balloon_alert(user, LANG("obj.c141f0fb", list(message_protected ? "enabled" : "disabled")))
 
 /// 'Marks' the server with the ghost's presence: their custom-written message, and the ckey added to the spam-prevention list.
 /obj/machinery/quantum_server/proc/ghost_mark(mob/activator)
 	if(message_protected)
-		balloon_alert(activator, "message protected!")
+		balloon_alert(activator, LANG("obj.51f2a1ea", null))
 		return
 	var/messenger = tgui_input_text(activator, "Set your username", "Holonet Gaming Network", max_length = MAX_NAME_LEN)
 	if(!messenger)
@@ -89,4 +89,4 @@
 	var/mob/ghost = get_mob_by_ckey(ghost_ckey)
 	if(!ghost || isliving(ghost))
 		return
-	to_chat(ghost, "[FOLLOW_LINK(ghost, src)] <span class='nicegreen'>The spam protection of [src] has deactivated.</span>")
+	to_chat(ghost, LANG("obj.b2f8d6fa", list(FOLLOW_LINK(ghost, src), src)))

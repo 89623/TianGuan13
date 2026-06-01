@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/atmospherics/components/unary/portables_connector
 	icon_state = "connector_map-3"
 
@@ -54,7 +55,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
 	. = ..()
 	if(. && connected_device)
-		to_chat(user, span_warning("You cannot unwrench [src], detach [connected_device] first!"))
+		to_chat(user, span_warning(LANG("obj.c8b2e646", list(src, connected_device))))
 		return FALSE
 
 /obj/machinery/atmospherics/components/unary/portables_connector/layer2

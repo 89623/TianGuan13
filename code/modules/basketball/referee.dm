@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/mask/whistle/minigame
 	name = "referee whistle"
 	desc = "A referee whistle used to call fouls against players."
@@ -42,6 +43,6 @@
 	COOLDOWN_START(src, whistle_cooldown_minigame, 1 MINUTES)
 	unset_ranged_ability(clicker)
 
-	to_chat(target, span_bold("[clicker] has given you a timeout for a foul!"))
-	to_chat(clicker, span_bold("You put [target] in a timeout!"))
+	to_chat(target, span_bold(LANG("datum.73e69dad", list(clicker))))
+	to_chat(clicker, span_bold(LANG("datum.1b2569ad", list(target))))
 	return TRUE

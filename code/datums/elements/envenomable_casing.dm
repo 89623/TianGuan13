@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ### envenomable caseless element!
  *
@@ -38,7 +39,7 @@
 	var/amount_applied = min(venom_applied.volume, amount_allowed)
 
 	casing.loaded_projectile.AddElement(/datum/element/venomous, venom_applied.type, amount_applied)
-	to_chat(user, span_notice("You coat [casing] in [venom_applied]."))
+	to_chat(user, span_notice(LANG("datum.4572fbcf", list(casing, venom_applied))))
 	target.reagents.remove_reagent(venom_applied.type, amount_applied)
 	///stops further poison application
 	UnregisterSignal(casing, COMSIG_ITEM_INTERACTING_WITH_ATOM)

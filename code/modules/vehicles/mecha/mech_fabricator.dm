@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/mecha_part_fabricator
 	icon = 'icons/obj/machines/robotics.dmi'
 	icon_state = "fab-idle"
@@ -143,13 +144,13 @@
 	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
 	if(being_built)
-		balloon_alert(user, "printing started!")
+		balloon_alert(user, LANG("obj.45e44459", null))
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(user, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, LANG("obj.a778c49c", list(dir2text(drop_direction))))
 
 /**
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
@@ -167,7 +168,7 @@
 	var/design_delta = cached_designs.len - previous_design_count
 
 	if(design_delta > 0)
-		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
+		say(LANG("obj.b8003438", list(design_delta, design_delta == 1 ? "" : "s")))
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
@@ -230,13 +231,13 @@
 	var/datum/material_container/materials = rmat.mat_container
 	if (!materials)
 		if(verbose)
-			say("No access to material storage, please contact the quartermaster.")
+			say(LANG("obj.61413399", null))
 		return FALSE
 	if (!rmat.can_use_resource(user_data = user_data))
 		return FALSE
 	if(!materials.has_materials(D.materials, component_coeff))
 		if(verbose)
-			say("Not enough resources. Processing stopped.")
+			say(LANG("obj.c244ac5a", null))
 		return FALSE
 
 	rmat.use_materials(D.materials, component_coeff, 1, "processed", "[D.name]", user_data)
@@ -254,7 +255,7 @@
 		if(exit.density)
 			return TRUE
 
-		say("Obstruction cleared. The fabrication of [stored_part] is now complete.")
+		say(LANG("obj.8a68c143", list(stored_part)))
 		stored_part.forceMove(exit)
 		stored_part = null
 
@@ -290,12 +291,12 @@
 
 	var/turf/exit = get_step(src, drop_direction)
 	if(exit.density)
-		say("Error! The part outlet is obstructed.")
+		say(LANG("obj.1fd98c63", null))
 		desc = "It's trying to dispense the fabricated [dispensed_design.name], but the part outlet is obstructed."
 		stored_part = built_part
 		return FALSE
 
-	say("The fabrication of [built_part] is now complete.")
+	say(LANG("obj.6f27a045", list(built_part)))
 	built_part.forceMove(exit)
 
 	top_job_id += 1
@@ -505,14 +506,14 @@
 
 /obj/machinery/mecha_part_fabricator/screwdriver_act(mob/living/user, obj/item/I)
 	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		to_chat(user, span_warning(LANG("obj.8b2b5217", list(src))))
 		return NONE
 
 	return default_deconstruction_screwdriver(user, I)
 
 /obj/machinery/mecha_part_fabricator/crowbar_act(mob/living/user, obj/item/I)
 	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		to_chat(user, span_warning(LANG("obj.8b2b5217", list(src))))
 		return NONE
 
 	return default_deconstruction_crowbar(user, I)

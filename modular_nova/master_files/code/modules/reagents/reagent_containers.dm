@@ -8,5 +8,5 @@
 	if(isnull(transfer_amount))
 		return NONE
 	amount_per_transfer_from_this = transfer_amount
-	to_chat(user, span_notice("[src]'s transfer amount is now [amount_per_transfer_from_this] unit\s."))
+	to_chat(user, span_notice(LANG("obj.4e0dc8ec", list(src, amount_per_transfer_from_this))))
 	return CLICK_ACTION_SUCCESS

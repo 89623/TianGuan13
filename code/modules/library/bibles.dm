@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(biblenames, list(
 	"Bible",
 	"Quran",
@@ -129,12 +130,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	var/datum/component/omen/existing_omen = user.GetComponent(/datum/component/omen)
 	//DOUBLE CURSED?! Just straight up gib the guy.
 	if(existing_omen)
-		to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
+		to_chat(user, span_userdanger(LANG("obj.c60b0797", list(deity_name))))
 		add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)
 		user.client?.give_award(/datum/award/achievement/misc/gods_wrath, user)
 		user.gib(DROP_ALL_REMAINS)
 	else
-		to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
+		to_chat(user, span_userdanger(LANG("obj.8af94742", list(deity_name))))
 		user.AddComponent(/datum/component/omen/bible)
 
 /obj/item/book/bible/suicide_act(mob/living/user)
@@ -201,7 +202,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/proc/make_new_altar(atom/bible_smacked, mob/user)
 	var/new_altar_area = get_turf(bible_smacked)
 
-	balloon_alert(user, "unpacking bible...")
+	balloon_alert(user, LANG("obj.2cad0c88", null))
 	if(!do_after(user, 15 SECONDS, new_altar_area))
 		return
 	new /obj/structure/altar/of_gods(new_altar_area)
@@ -230,24 +231,24 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			built_in_his_image.update_damage_overlays()
 
 	built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
-	to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
+	to_chat(built_in_his_image, span_boldnotice(LANG("obj.087b1ddd", list(deity_name))))
 	playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
 	built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
 /obj/item/book/bible/attack(mob/living/target_mob, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers, heal_mode = TRUE)
 	if(!ISADVANCEDTOOLUSER(user))
-		balloon_alert(user, "not dextrous enough!")
+		balloon_alert(user, LANG("obj.49629a3d", null))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		to_chat(user, span_danger("[src] slips out of your hand and hits your head."))
+		to_chat(user, span_danger(LANG("obj.3bdf2863", list(src))))
 		user.take_bodypart_damage(10)
 		user.Unconscious(40 SECONDS)
 		return
 
 	if(!user.mind?.holy_role)
-		to_chat(user, span_danger("The book sizzles in your hands."))
+		to_chat(user, span_danger(LANG("obj.80f10e06", null)))
 		user.take_bodypart_damage(burn = 10)
 		return
 
@@ -261,7 +262,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return
 
 	if(user == target_mob)
-		balloon_alert(user, "can't heal yourself!")
+		balloon_alert(user, LANG("obj.45f64cdb", null))
 		return
 
 	var/smack_chance = DEFAULT_SMACK_CHANCE
@@ -378,10 +379,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return
 	user.mind.set_holy_role(HOLY_ROLE_PRIEST)
 	uses -= 1
-	to_chat(user, span_userdanger("You try to open the book AND IT BITES YOU!"))
+	to_chat(user, span_userdanger(LANG("obj.03595f61", null)))
 	playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
 	user.apply_damage(5, BRUTE, user.get_active_hand(), attacking_item = src)
-	to_chat(user, span_notice("Your name appears on the inside cover, in blood."))
+	to_chat(user, span_notice(LANG("obj.3febe4f7", null)))
 	owner_name = user.real_name
 
 /obj/item/book/bible/syndicate/examine(mob/user)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage/belt
 	name = "not actually a toolbelt"
 	desc = "Can hold various things. This is the base type of /belt, are you sure you should have this?"
@@ -560,11 +561,11 @@
 	wizard.temporarilyRemoveItemFromInventory(old_wand)
 	if (!wizard.put_in_hands(fresh_wand))
 		return
-	to_chat(wizard, span_notice("You quickly draw [fresh_wand]."))
+	to_chat(wizard, span_notice(LANG("obj.ebcb21e5", list(fresh_wand))))
 	if (atom_storage.attempt_insert(old_wand, wizard))
 		return
 	old_wand.forceMove(wizard.drop_location())
-	to_chat(wizard, span_warning("...and drop [old_wand] on the ground."))
+	to_chat(wizard, span_warning(LANG("obj.8206685f", list(old_wand))))
 
 /obj/item/storage/belt/janitor
 	name = "janibelt"
@@ -702,7 +703,7 @@
 
 /obj/item/storage/belt/sheath/click_alt(mob/user)
 	if(!length(contents))
-		balloon_alert(user, "it's empty!")
+		balloon_alert(user, LANG("obj.76a90f7c", null))
 		return CLICK_ACTION_BLOCKING
 	var/obj/item/stored_item = contents[1]
 	user.visible_message(span_notice("[user] takes [stored_item] out of [src]."), span_notice("You take [stored_item] out of [src]."))
@@ -749,15 +750,15 @@
 	var/obj/item/storage/belt/sheath/owners_sheath = target
 	if(!COOLDOWN_FINISHED(owners_sheath, full_ability_cooldown))
 		if(feedback)
-			to_chat(owner, span_warning("You failed a counterattack too recently!"))
+			to_chat(owner, span_warning(LANG("datum.e00d4e92", null)))
 		return FALSE
 	if(!length(owners_sheath.contents))
 		if(feedback)
-			to_chat(owner, span_warning("Your sheath is empty!"))
+			to_chat(owner, span_warning(LANG("datum.097cd0cb", null)))
 		return FALSE
 	if(!COOLDOWN_FINISHED(owners_sheath, resheath_cooldown))
 		if(feedback)
-			to_chat(owner, span_warning("You only just resheathed your blade!"))
+			to_chat(owner, span_warning(LANG("datum.a345976c", null)))
 		return FALSE
 	return TRUE
 
@@ -765,11 +766,11 @@
 	if(!isliving(cast_on))
 		return FALSE
 	if(owner == cast_on)
-		to_chat(owner, span_warning("You can't counterattack yourself!"))
+		to_chat(owner, span_warning(LANG("datum.9adbdcf0", null)))
 		return FALSE
 	var/mob/living/target = cast_on
 	if(!target.mind)
-		to_chat(owner, span_warning("They are too unpredictable to counterattack!"))
+		to_chat(owner, span_warning(LANG("datum.5d26e15f", null)))
 		return FALSE
 	var/obj/item/storage/belt/sheath/oursheath = target
 	if(!length(oursheath.contents))

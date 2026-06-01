@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/element/spooky
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
@@ -27,11 +28,11 @@
 	if(ishuman(user) && !isskeleton(user)) //this weapon wasn't meant for mortals.
 		var/mob/living/carbon/human/human_user = user
 		if(rattle_bones(human_user, stam_dam_mult = stam_damage_mult * 2))
-			to_chat(human_user, span_userdanger("Your ears weren't meant for this spectral sound."))
+			to_chat(human_user, span_userdanger(LANG("datum.6daed1e7", null)))
 			INVOKE_ASYNC(src, PROC_REF(spectral_change), human_user, user, source)
 		return
 
-	to_chat(target, span_userdanger("<b>DOOT</b"))
+	to_chat(target, span_userdanger(LANG("datum.0698531a", null)))
 
 	if(isskeleton(target)) // skeletons are totally immune, no redundant skeletonization or bad mood event.
 		return
@@ -69,17 +70,15 @@
 		return
 
 	if(single_use)
-		to_chat(user, span_warning("You feel like [source] has lost its spookiness..."))
+		to_chat(user, span_warning(LANG("datum.5f10186d", list(source))))
 		Detach(source)
 
 	human.Paralyze(2 SECONDS)
 	human.set_species(/datum/species/skeleton)
 	human.visible_message(span_warning("[human] has given up on life as a mortal."))
-	to_chat(human, span_boldnotice("You are a spooky skeleton!"))
+	to_chat(human, span_boldnotice(LANG("datum.27b0fc44", null)))
 	to_chat(human,
-		span_boldnotice("A new life and identity has begun.\
-		[too_spooky ? "Help your fellow skeletons into bringing out the spooky-pocalypse." : ""] \
-		You haven't forgotten your past life, and are still beholden to past loyalties.")
+		span_boldnotice(LANG("datum.7252a1f4", list(too_spooky ? "Help your fellow skeletons into bringing out the spooky-pocalypse." : "")))
 	)
 	INVOKE_ASYNC(src, PROC_REF(change_name), human) //time for a new name!
 
@@ -87,7 +86,7 @@
 		return
 	var/turf/turf = get_turf(human)
 	if(!prob(90))
-		to_chat(human, span_boldwarning("The spooky gods forgot to ship your instrument. Better luck next unlife."))
+		to_chat(human, span_boldwarning(LANG("datum.a134b50e", null)))
 		return
 	var/obj/item/instrument = pick(
 		/obj/item/instrument/saxophone/spectral,

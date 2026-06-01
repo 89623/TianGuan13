@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define EARTHCRACKER_READY "ready"
 #define EARTHCRACKER_ACTIVE "active"
 #define EARTHCRACKER_SPENT "spent"
@@ -66,15 +67,15 @@
 
 /obj/item/earthcracker/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored && status == EARTHCRACKER_SPENT)
-		balloon_alert(user, "it falls apart")
+		balloon_alert(user, LANG("obj.b39d99ef", null))
 		animate(src, 0.6 SECONDS, alpha = 0, easing = CIRCULAR_EASING|EASE_IN)
 		addtimer(CALLBACK(src, PROC_REF(post_break)), 0.6 SECONDS)
 		return ITEM_INTERACT_SUCCESS
 	if(!anchored && status == EARTHCRACKER_READY)
-		balloon_alert(user, "arm in hands first!")
+		balloon_alert(user, LANG("obj.351a7565", null))
 		return ITEM_INTERACT_SUCCESS
 	if(anchored && status == EARTHCRACKER_ACTIVE)
-		balloon_alert(user, "unfastening from the floor...")
+		balloon_alert(user, LANG("obj.a718ca4c", null))
 		if(!tool.use_tool(src, user, 8 SECONDS, volume = 50))
 			return ITEM_INTERACT_FAILURE
 		anchored = FALSE
@@ -103,15 +104,15 @@
 	if(!arm_location)
 		return FALSE
 	if(isgroundlessturf(arm_location))
-		balloon_alert(user, "can't deploy here")
+		balloon_alert(user, LANG("obj.8523d735", null))
 		return FALSE
 
 	if(status == EARTHCRACKER_SPENT)
-		balloon_alert(user, "used up!")
+		balloon_alert(user, LANG("obj.804f0d80", null))
 		return FALSE
-	balloon_alert(user, "arming...")
+	balloon_alert(user, LANG("obj.defea432", null))
 	if(!do_after(user, 3 SECONDS, src))
-		balloon_alert(user, "failed to arm")
+		balloon_alert(user, LANG("obj.23b99830", null))
 		return FALSE
 
 	forceMove(arm_location)

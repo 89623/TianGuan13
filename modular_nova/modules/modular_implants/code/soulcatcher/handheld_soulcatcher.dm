@@ -44,19 +44,19 @@
 		return TRUE
 
 	if(!target_mob.mind)
-		to_chat(user, span_warning("You are unable to remove a mind from an empty body."))
+		to_chat(user, span_warning(LANG("obj.119d191c", null)))
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, rsd_scan_cooldown))
 		var/time_left = round((COOLDOWN_TIMELEFT(src, rsd_scan_cooldown)) / (1 MINUTES), 0.01)
-		to_chat(user, span_warning("You are currently unable to grab the soul of [target_mob], please wait [time_left] minutes before trying again."))
+		to_chat(user, span_warning(LANG("obj.efe1d824", list(target_mob, time_left))))
 		return FALSE
 
 	if(target_mob.stat == DEAD) //We can temporarily store souls of dead mobs.
 		target_mob.ghostize(TRUE) //Incase they are staying in the body.
 		var/mob/dead/observer/target_ghost = target_mob.get_ghost(TRUE, TRUE)
 		if(!target_ghost)
-			to_chat(user, span_warning("You are unable to get the soul of [target_mob]!"))
+			to_chat(user, span_warning(LANG("obj.fc5e7ca0", list(target_mob))))
 			return FALSE
 
 		var/datum/soulcatcher_room/target_room = tgui_input_list(user, "Choose a room to send [target_mob]'s soul to.", name, linked_soulcatcher.soulcatcher_rooms, timeout = 30 SECONDS)
@@ -67,7 +67,7 @@
 		window_flash(target_ghost.client)
 
 		if(tgui_alert(target_ghost, "[user] wants to transfer you to [target_room] inside of a soulcatcher, do you accept?", name, list("Yes", "No"), 30 SECONDS, autofocus = FALSE) != "Yes")
-			to_chat(user, span_warning("[target_mob] doesn't seem to want to enter."))
+			to_chat(user, span_warning(LANG("obj.8aba20fa", list(target_mob))))
 			COOLDOWN_START(src, rsd_scan_cooldown, RSD_ATTEMPT_COOLDOWN)
 			return FALSE
 
@@ -91,7 +91,7 @@
 
 	if((tgui_alert(target_mob, "Do you wish to enter [target_room]? This will remove you from your body until you leave.", name, list("Yes", "No"), 30 SECONDS, FALSE) != "Yes") || (tgui_alert(target_mob, "Are you sure about this?", name, list("Yes", "No"), 30 SECONDS, FALSE) != "Yes"))
 		COOLDOWN_START(src, rsd_scan_cooldown, RSD_ATTEMPT_COOLDOWN)
-		to_chat(user, span_warning("[target_mob] doesn't seem to want to enter."))
+		to_chat(user, span_warning(LANG("obj.8aba20fa", list(target_mob))))
 		return FALSE
 
 	if(!target_mob.mind)
@@ -99,7 +99,7 @@
 
 	target_room.add_soul(target_mob.mind, TRUE)
 	playsound(src, 'modular_nova/modules/modular_implants/sounds/default_good.ogg', 50, FALSE, ignore_walls = FALSE)
-	visible_message(span_notice("[src] beeps: [target_mob]'s mind transfer is now complete."))
+	visible_message(span_notice(LANG("obj.72e579dc", list(src, target_mob))))
 
 	if(!target_mob.GetComponent(/datum/component/previous_body))
 		return FALSE
@@ -117,15 +117,15 @@
 
 	var/obj/item/organ/brain/target_brain = target_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!istype(target_brain))
-		to_chat(user, span_warning("[target_mob] lacks a brain!"))
+		to_chat(user, span_warning(LANG("obj.6eb05746", list(target_mob))))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!HAS_TRAIT(target_brain, TRAIT_RSD_COMPATIBLE))
-		to_chat(user, span_warning("[target_mob]'s brain isn't compatible."))
+		to_chat(user, span_warning(LANG("obj.6f212148", list(target_mob))))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(target_mob.mind || target_mob.ckey || target_mob.GetComponent(/datum/component/previous_body))
-		to_chat(user, span_warning("[target_mob] is not able to receive a soul"))
+		to_chat(user, span_warning(LANG("obj.3c59dc45", list(target_mob))))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/list/soul_list = list()
@@ -137,7 +137,7 @@
 			soul_list += soul
 
 	if(!length(soul_list))
-		to_chat(user, span_warning("There are no souls that can be transferred to [target_mob]."))
+		to_chat(user, span_warning(LANG("obj.fde8f7a0", list(target_mob))))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/mob/living/soulcatcher_soul/chosen_soul = tgui_input_list(user, "Choose a soul to transfer into the body", name, soul_list)
@@ -153,7 +153,7 @@
 
 	chosen_soul.mind.transfer_to(target_mob, TRUE)
 	playsound(src, 'modular_nova/modules/modular_implants/sounds/default_good.ogg', 50, FALSE, ignore_walls = FALSE)
-	visible_message(span_notice("[src] beeps: Body transfer complete."))
+	visible_message(span_notice(LANG("obj.e18fd770", list(src))))
 	log_admin("[src] was used by [user] to transfer [chosen_soul]'s soulcatcher soul to [target_mob].")
 
 	qdel(chosen_soul)

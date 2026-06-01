@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/plumbing/bottler
 	name = "chemical bottler"
 	desc = "Puts reagents into containers, like bottles and beakers in the tile facing the green light spot, they will exit on the red light spot if successfully filled."
@@ -61,13 +62,13 @@
 /obj/machinery/plumbing/bottler/interact(mob/user)
 	. = ..()
 	if(!valid_output_configuration)
-		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
+		to_chat(user, span_warning(LANG("obj.e6c18213", null)))
 		return .
 	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = reagents.maximum_volume, round_value = TRUE)
 	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return .
 	wanted_amount = new_amount
-	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
+	to_chat(user, span_notice(LANG("obj.db52bb2b", list(src, wanted_amount))))
 
 /obj/machinery/plumbing/bottler/process(seconds_per_tick)
 	if(!is_operational)

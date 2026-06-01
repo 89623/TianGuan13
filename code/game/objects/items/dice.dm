@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // don't produce a comment if the dice has less than this many sides
 // so you don't have d1's and d4's constantly producing comments
 #define MIN_SIDES_ALERT 5
@@ -106,7 +107,7 @@
 			span_hear("You hear [src] rolling, it sounds like a [fake_result]."),
 		)
 	else
-		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
+		visible_message(span_notice(LANG("obj.61df0bbf", list(src, result, comment))))
 
 	return .
 
@@ -305,7 +306,7 @@
 
 /obj/item/dice/d20/fate/diceroll(mob/user, in_hand=FALSE)
 	if(!COOLDOWN_FINISHED(src, roll_cd))
-		to_chat(user, span_warning("Hold on, [src] isn't caught up with your last roll!"))
+		to_chat(user, span_warning(LANG("obj.382a27bb", list(src))))
 		return
 
 	. = ..()
@@ -313,7 +314,7 @@
 		return
 
 	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
-		to_chat(user, span_warning("You feel the magic of the dice is restricted to ordinary humans!"))
+		to_chat(user, span_warning(LANG("obj.b3f54b2b", null)))
 		return
 
 	if(!reusable)
@@ -328,7 +329,7 @@
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
 	. = ..()
 	if(!ishuman(user) || !user.mind || IS_WIZARD(user))
-		to_chat(user, span_warning("You feel the magic of the dice is restricted to ordinary humans! You should leave it alone."))
+		to_chat(user, span_warning(LANG("obj.b32a31b5", null)))
 		user.dropItemToGround(src)
 
 

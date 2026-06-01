@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/assembly/control/transport/remote
 	icon_state = "tramremote_nis"
 	inhand_icon_state = "electronic"
@@ -41,8 +42,8 @@
 			destination = potential_platform.platform_code
 			break
 
-	balloon_alert(user, "set [selected_platform]")
-	to_chat(user, span_notice("You change the platform ID on [src] to [selected_platform]."))
+	balloon_alert(user, LANG("obj.0b8200d7", list(selected_platform)))
+	to_chat(user, span_notice(LANG("obj.35a0efdd", list(src, selected_platform))))
 
 ///set safety bypass
 /obj/item/assembly/control/transport/remote/item_ctrl_click(mob/user)
@@ -52,7 +53,7 @@
 		if(RAPID_MODE)
 			options &= ~RAPID_MODE
 	update_appearance()
-	balloon_alert(user, "mode: [options ? "fast" : "safe"]")
+	balloon_alert(user, LANG("obj.a72852bf", list(options ? "fast" : "safe")))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/assembly/control/transport/remote/examine(mob/user)
@@ -91,7 +92,7 @@
 		return
 
 	if(cooldown)
-		balloon_alert(user, "cooldown: [DisplayTimeText(cooldown, 1)]")
+		balloon_alert(user, LANG("obj.c74548dc", list(DisplayTimeText(cooldown, 1))))
 		return
 
 	activate(user)
@@ -100,10 +101,10 @@
 ///send our selected commands to the tram
 /obj/item/assembly/control/transport/remote/activate(mob/user)
 	if(!specific_transport_id)
-		balloon_alert(user, "no tram linked!")
+		balloon_alert(user, LANG("obj.a4141a48", null))
 		return
 	if(!destination)
-		balloon_alert(user, "no destination!")
+		balloon_alert(user, LANG("obj.4bf240e2", null))
 		return
 
 	SEND_SIGNAL(src, COMSIG_TRANSPORT_REQUEST, specific_transport_id, destination, options)
@@ -121,8 +122,8 @@
 	specific_transport_id = tgui_input_list(user, "Available transports", "Select a transport", transports_available)
 
 	if(specific_transport_id)
-		balloon_alert(user, "tram linked")
+		balloon_alert(user, LANG("obj.b69231f3", null))
 	else
-		balloon_alert(user, "link failed!")
+		balloon_alert(user, LANG("obj.b6682898", null))
 
 	update_appearance()

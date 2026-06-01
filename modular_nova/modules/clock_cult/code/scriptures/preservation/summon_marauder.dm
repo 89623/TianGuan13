@@ -35,7 +35,7 @@
 		selected = pick(candidates)
 
 	if(!selected)
-		to_chat(invoker, span_brass("<i>There are no ghosts willing to be a Clockwork Marauder!</i>"))
+		to_chat(invoker, span_brass(LANG("datum.55e31e60", null)))
 		invoke_fail()
 
 		if(invocation_chant_timer)
@@ -51,7 +51,7 @@
 	var/mob/living/basic/clockwork_marauder/new_mob = new (get_turf(invoker))
 	new_mob.visible_message(span_notice("[new_mob] flashes into existance!"))
 	new_mob.PossessByPlayer(selected.key)
-	to_chat(new_mob, span_brass("You are a Clockwork Marauder! You have a [new_mob.shield_health]-hit shield that will protect you against any damage taken. Have a servant repair you with a welder, should you or your shield become too damaged."))
+	to_chat(new_mob, span_brass(LANG("datum.8504fe27", list(new_mob.shield_health))))
 	selected = null
 
 
@@ -61,7 +61,7 @@
 		return FALSE
 
 	if(length(GLOB.clockwork_marauders) >= MAXIMUM_MARAUDERS)
-		to_chat(user, span_brass("Your limited power prevents you from creating more than [MAXIMUM_MARAUDERS] Clockwork Marauders."))
+		to_chat(user, span_brass(LANG("datum.abea725a", list(MAXIMUM_MARAUDERS))))
 		return FALSE
 
 	return TRUE

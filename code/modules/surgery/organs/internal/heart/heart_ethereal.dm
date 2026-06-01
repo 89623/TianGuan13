@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/heart/ethereal
 	name = "crystal core"
 	icon_state = "ethereal_heart-on"
@@ -79,7 +80,7 @@
 	if(HAS_TRAIT(victim, TRAIT_CANNOT_CRYSTALIZE))
 		return // no reviving during mafia, or other inconvenient times.
 
-	to_chat(victim, span_nicegreen("Crystals start forming around your dead body."))
+	to_chat(victim, span_nicegreen(LANG("obj.e8b35c00", null)))
 	victim.visible_message(span_notice("Crystals start forming around [victim]."), ignored_mobs = victim)
 
 	ADD_TRAIT(victim, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
@@ -109,7 +110,7 @@
 		return //Should probably not happen, but lets be safe.
 
 	if(ismob(location) || isitem(location) || iseffect(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
-		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
+		to_chat(ethereal, span_warning(LANG("obj.b97ebdf9", null)))
 		stop_crystalization_process(ethereal, FALSE)
 		return
 	COOLDOWN_START(src, crystalize_cooldown, INFINITY) //Prevent cheeky double-healing until we get out, this is against stupid admemery
@@ -185,7 +186,7 @@
 		return INITIALIZE_HINT_QDEL
 	src.ethereal_heart = ethereal_heart
 	ethereal_heart.owner.visible_message(span_notice("The crystals fully encase [ethereal_heart.owner]!"))
-	to_chat(ethereal_heart.owner, span_notice("You are encased in a huge crystal!"))
+	to_chat(ethereal_heart.owner, span_notice(LANG("obj.c3d9ec8e", null)))
 	playsound(get_turf(src), 'sound/mobs/humanoids/ethereal/ethereal_crystalization.ogg', 50)
 	var/atom/movable/possible_chair = ethereal_heart.owner.buckled
 	possible_chair?.unbuckle_mob(ethereal_heart.owner, force = TRUE)
@@ -232,7 +233,7 @@
 	var/mob/living/carbon/regenerating = ethereal_heart.owner
 
 	playsound(get_turf(regenerating), 'sound/mobs/humanoids/ethereal/ethereal_revive.ogg', 100)
-	to_chat(regenerating, span_purple("You burst out of the crystal with vigour... but you feel as if you should keep safe for a little while.")) //NOVA EDIT CHANGE - Ethereal Rework 2024 - ORIGINAL: to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
+	to_chat(regenerating, span_purple(LANG("obj.732e2689", null))) //NOVA EDIT CHANGE - Ethereal Rework 2024 - ORIGINAL: to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
 	regenerating.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 	regenerating.apply_status_effect(/datum/status_effect/vulnerable_to_damage) // NOVA EDIT ADDITION - This lasts for five minutes, the full duration of the cooldown.
 

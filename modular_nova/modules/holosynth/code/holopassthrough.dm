@@ -153,7 +153,7 @@
 	if(!passer)
 		return
 	passer.auto_phase = !passer.auto_phase
-	to_chat(owner, span_notice("Automatic glass phasing [passer.auto_phase ? "enabled" : "disabled"]."))
+	to_chat(owner, span_notice(LANG("datum.96031ceb", list(passer.auto_phase ? "enabled" : "disabled"))))
 	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 #undef HOLOSYNTH_GLASS_PASS_TIME

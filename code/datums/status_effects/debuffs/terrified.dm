@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// How much terror is applied upon first cast of Terrify
 #define TERROR_INITIAL_AMOUNT 100
 /// Amount of terror caused by subsequent casting of the Terrify spell.
@@ -10,7 +11,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/terrified
 
 /datum/status_effect/terrified/on_apply()
-	to_chat(owner, span_alert("The darkness closes in around you, shadows dance around the corners of your vision... It feels like something is watching you!"))
+	to_chat(owner, span_alert(LANG("datum.92ad7f74", null)))
 	owner.emote("scream")
 	owner.AddComponentFrom("terrified", /datum/component/fearful, list(/datum/terror_handler/simple_source/nyctophobia/terrified), TERROR_INITIAL_AMOUNT)
 	return TRUE

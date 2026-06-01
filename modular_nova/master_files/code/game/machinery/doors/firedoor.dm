@@ -8,7 +8,7 @@
 
 /obj/machinery/door/proc/try_manual_override(mob/user)
 	if(density && !welded && !operating)
-		balloon_alert(user, "opening...")
+		balloon_alert(user, LANG("obj.1194bd8a", null))
 		if(do_after(user, 5 SECONDS, target = src))
 			try_to_crowbar(null, user)
 			return TRUE

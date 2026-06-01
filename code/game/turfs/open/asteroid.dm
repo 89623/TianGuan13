@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**********************Asteroid**************************/
 
 #define DIG_SHEET_AMOUNT 5
@@ -74,7 +75,7 @@
 		if(!isturf(user.loc))
 			return
 
-		balloon_alert(user, "digging...")
+		balloon_alert(user, LANG("turf.a8f0e832", null))
 
 		if(attack_item.use_tool(src, user, 4 SECONDS, volume = 50))
 			if(!can_dig(user))
@@ -100,7 +101,7 @@
 	if(!dug && !broken)
 		return TRUE
 	if(user)
-		balloon_alert(user, "already excavated!")
+		balloon_alert(user, LANG("turf.b5a73f00", null))
 	return FALSE
 
 ///Refills the previously dug tile
@@ -317,7 +318,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/snow/burn_tile()
 	if(!burnt)
-		visible_message(span_danger("[src] melts away!."))
+		visible_message(span_danger(LANG("turf.2ffc95b8", list(src))))
 		slowdown = 0
 		burnt = TRUE
 		update_appearance()
@@ -371,7 +372,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 			refill_dug()
 			return ITEM_INTERACT_SUCCESS
 
-		to_chat(user, "You don't have enough [tool.name] to fill the hole.")
+		to_chat(user, LANG("turf.5c447ac1", list(tool.name)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(footprint_entrance_dirs || footprint_exit_dirs)

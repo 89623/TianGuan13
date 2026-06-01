@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DISPENSE_LOLLIPOP_MODE 1
 #define THROW_LOLLIPOP_MODE 2
 #define THROW_GUMBALL_MODE 3
@@ -45,7 +46,7 @@
 ///Dispenses a lollipop
 /obj/item/borg/lollipop/proc/dispense(atom/atom_dispensed_to, mob/user)
 	if(candy <= 0)
-		to_chat(user, span_warning("No treats left in storage!"))
+		to_chat(user, span_warning(LANG("obj.f6d2cd88", null)))
 		return FALSE
 	var/turf/turf_to_dispense_to = get_turf(atom_dispensed_to)
 	if(!turf_to_dispense_to || !isopenturf(turf_to_dispense_to))
@@ -82,7 +83,7 @@
 /// Shoot a lollipop
 /obj/item/borg/lollipop/proc/shootL(atom/target, mob/living/user, params)
 	if(candy <= 0)
-		to_chat(user, span_warning("Not enough lollipops left!"))
+		to_chat(user, span_warning(LANG("obj.e5fcee4e", null)))
 		return FALSE
 	candy--
 
@@ -101,7 +102,7 @@
 /// Shoot a gumball
 /obj/item/borg/lollipop/proc/shootG(atom/target, mob/living/user, params)
 	if(candy <= 0)
-		to_chat(user, span_warning("Not enough gumballs left!"))
+		to_chat(user, span_warning(LANG("obj.f612d912", null)))
 		return FALSE
 	candy--
 	var/obj/item/ammo_casing/gumball/gumball
@@ -122,7 +123,7 @@
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
 		if(!robot_user.cell?.use(0.012 * STANDARD_CELL_CHARGE))
-			to_chat(user, span_warning("Not enough power."))
+			to_chat(user, span_warning(LANG("obj.cde31c60", null)))
 			return ITEM_INTERACT_BLOCKING
 
 	switch(mode)
@@ -141,7 +142,7 @@
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/robot_user = user
 		if(!robot_user.cell?.use(0.012 * STANDARD_CELL_CHARGE))
-			to_chat(user, span_warning("Not enough power."))
+			to_chat(user, span_warning(LANG("obj.cde31c60", null)))
 			return ITEM_INTERACT_BLOCKING
 
 	switch(mode)

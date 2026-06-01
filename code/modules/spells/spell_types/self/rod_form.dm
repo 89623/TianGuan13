@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The base distance a wizard rod will go without upgrades.
 #define BASE_WIZ_ROD_RANGE 13
 
@@ -115,7 +116,7 @@
 		span_boldwarning("[src] transforms into [wizard] as [strongman] suplexes them!"),
 		span_warning("As you grab [src], it suddenly turns into [wizard] as you suplex them!")
 		)
-	to_chat(wizard, span_boldwarning("You're suddenly jolted out of rod-form as [strongman] somehow manages to grab you, slamming you into the ground!"))
+	to_chat(wizard, span_boldwarning(LANG("obj.3a279d69", list(strongman))))
 	stop_travel()
 	wizard.Stun(6 SECONDS)
 	wizard.apply_damage(25, BRUTE)

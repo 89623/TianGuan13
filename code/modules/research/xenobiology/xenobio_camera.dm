@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Xenobio control console
 /mob/eye/camera/remote/xenobio
 	visible_to_user = TRUE
@@ -138,14 +139,14 @@
 /// Handles inserting a slime potion into the console, potentially swapping out an existing one.
 /obj/machinery/computer/camera_advanced/xenobio/proc/slimepotion_act(mob/living/user, obj/item/slimepotion/slime/used_potion)
 	if(!user.transferItemToLoc(used_potion, src))
-		balloon_alert(user, "can't insert!")
+		balloon_alert(user, LANG("obj.372d420f", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!QDELETED(current_potion))
 		try_put_in_hand(current_potion, user)
-		balloon_alert(user, "swapped")
+		balloon_alert(user, LANG("obj.c58bb764", null))
 	else
-		balloon_alert(user, "inserted")
+		balloon_alert(user, LANG("obj.c638b4d2", null))
 
 	current_potion = used_potion
 	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
@@ -156,7 +157,7 @@
 /// Handles inserting a monkey cube into the console.
 /obj/machinery/computer/camera_advanced/xenobio/proc/monkeycube_act(mob/living/user, obj/item/food/monkeycube/used_cube)
 	stored_monkeys += 1
-	balloon_alert(user, "[stored_monkeys] cube\s stored")
+	balloon_alert(user, LANG("obj.ff85f369", list(stored_monkeys)))
 	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
 	if(xeno_hud)
 		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
@@ -172,10 +173,10 @@
 			stored_monkeys += 1
 			qdel(storage_item)
 	if(!loaded_any)
-		balloon_alert(user, "no monkey cubes!")
+		balloon_alert(user, LANG("obj.3b5e8e26", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "[stored_monkeys] cube\s stored")
+	balloon_alert(user, LANG("obj.ff85f369", list(stored_monkeys)))
 	var/atom/movable/screen/xenobio_console/xeno_hud = user.hud_used?.screen_objects[HUD_XENOBIO_CONSOLE]
 	if(xeno_hud)
 		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
@@ -185,13 +186,13 @@
 	if(!istype(tool)) // Needed as long as this uses a var on the multitool.
 		return NONE
 	if(QDELETED(tool.buffer))
-		balloon_alert(user, "buffer empty!")
+		balloon_alert(user, LANG("obj.6c22c8e1", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!istype(tool.buffer, /obj/machinery/monkey_recycler))
-		balloon_alert(user, "can only link recyclers!")
+		balloon_alert(user, LANG("obj.c1b52f6b", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "linked recycler")
+	balloon_alert(user, LANG("obj.a794c3c3", null))
 	connected_recycler_ref = WEAKREF(tool.buffer)
 	return ITEM_INTERACT_SUCCESS
 
@@ -238,12 +239,12 @@
 		return FALSE
 
 	if(stored_slimes.len >= max_slimes)
-		to_chat(user, span_warning("Slime storage is full."))
+		to_chat(user, span_warning(LANG("obj.0b2410a0", null)))
 		target_slime.balloon_alert(user, "storage full")
 		return TRUE
 
 	if(target_slime.ckey)
-		to_chat(user, span_warning("The slime wiggled free!"))
+		to_chat(user, span_warning(LANG("obj.4d732469", null)))
 		return FALSE
 
 	if(target_slime.buckled)
@@ -262,7 +263,7 @@
 ///Places one monkey, if possible
 /obj/machinery/computer/camera_advanced/xenobio/proc/feed_slime(mob/living/user, turf/open/target_turf)
 	if(stored_monkeys < 1)
-		to_chat(user, span_warning("[src] needs to have at least 1 monkey stored. Currently has [stored_monkeys] monkeys stored."))
+		to_chat(user, span_warning(LANG("obj.9c064048", list(src, stored_monkeys))))
 		target_turf.balloon_alert(user, "not enough monkeys")
 		return
 
@@ -285,7 +286,7 @@
 	PRIVATE_PROC(TRUE)
 	var/obj/machinery/monkey_recycler/connected_recycler = connected_recycler_ref?.resolve()
 	if(isnull(connected_recycler))
-		to_chat(user, span_warning("There is no connected monkey recycler. Use a multitool to link one."))
+		to_chat(user, span_warning(LANG("obj.9b3b2796", null)))
 		if(target_atom)
 			target_atom.balloon_alert(user, "no recycler linked!")
 		return FALSE
@@ -450,7 +451,7 @@
 		return
 
 	if(QDELETED(xeno_console.current_potion))
-		to_chat(owner, span_warning("No potion loaded."))
+		to_chat(owner, span_warning(LANG("datum.5575e647", null)))
 		return
 
 	for(var/mob/living/basic/slime/potioned_slime in eye_turf)
@@ -495,7 +496,7 @@
 		return
 
 	if(QDELETED(current_potion))
-		to_chat(user, span_warning("No potion loaded."))
+		to_chat(user, span_warning(LANG("obj.5575e647", null)))
 		return
 
 	spit_atom(current_potion, slime_turf)

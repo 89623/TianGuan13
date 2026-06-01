@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Bone liver
  * Gives the owner liverless metabolism, makes them vulnerable to bone hurting juice and
@@ -39,14 +40,14 @@
 					INVOKE_ASYNC(organ_owner, TYPE_PROC_REF(/atom/movable, say), "OOF!!", forced = chem.type)
 					organ_owner.apply_damage(200, BRUTE, bodypart)
 				else
-					to_chat(organ_owner, span_warning("Your missing [parse_zone(selected_part)] aches from wherever you left it."))
+					to_chat(organ_owner, span_warning(LANG("obj.35e758b5", list(parse_zone(selected_part)))))
 					INVOKE_ASYNC(organ_owner, TYPE_PROC_REF(/mob, emote), "sigh")
 		organ_owner.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK // Stop metabolism
 	if(chem.type == /datum/reagent/consumable/milk)
 		if(chem.volume > 50)
 			organ_owner.reagents.remove_reagent(chem.type, (chem.volume - 50))
-			to_chat(organ_owner, span_warning("The excess milk is dripping off your bones!"))
+			to_chat(organ_owner, span_warning(LANG("obj.004aeecb", null)))
 		organ_owner.heal_bodypart_damage(0.5 * milk_brute_healing * seconds_per_tick, 0.5 * milk_burn_healing * seconds_per_tick)
 		for(var/datum/wound/iter_wound as anything in organ_owner.all_wounds)
 			iter_wound.on_xadone(0.5 * seconds_per_tick)

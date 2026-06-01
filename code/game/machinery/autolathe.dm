@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/autolathe
 	name = "autolathe"
 	desc = "It produces items using iron, glass, plastic and maybe some more."
@@ -229,11 +230,11 @@
 		return
 
 	if(disabled)
-		say("Unable to print, voltage mismatch in internal wiring.")
+		say(LANG("obj.99d5e3ff", null))
 		return
 
 	if(busy)
-		say("Currently printing.")
+		say(LANG("obj.fb5f20ac", null))
 		return
 
 	//validate design
@@ -250,7 +251,7 @@
 		stack_trace("got passed an invalid design id: [design_id] and somehow made it past all checks")
 		return
 	if(!(design.build_type & AUTOLATHE))
-		say("This fabricator does not have the necessary keys to decrypt this design.")
+		say(LANG("obj.ea5ed026", null))
 		return
 
 	//validate print quantity
@@ -308,7 +309,7 @@
 	//checks for available materials
 	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
 	if(!materials.has_materials(materials_needed, material_cost_coefficient, build_count))
-		say("Not enough materials to begin production.")
+		say(LANG("obj.f818a085", null))
 		return
 
 	//compute power & time to print 1 item
@@ -363,7 +364,7 @@
 		return
 
 	if(!is_operational)
-		say("Unable to continue production, power failure.")
+		say(LANG("obj.37d5b119", null))
 		finalize_build()
 		return
 
@@ -373,17 +374,17 @@
 		if(!QDELETED(my_apc))
 			var/charging_wait = my_apc.time_to_charge(charge_per_item)
 			if(!isnull(charging_wait))
-				say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+				say(LANG("obj.4923eed0", list(DisplayTimeText(charging_wait, round_seconds_to = 1))))
 			else
-				say("Unable to continue production, power grid overload.")
+				say(LANG("obj.61365fba", null))
 		else
-			say("Unable to continue production, no APC in area.")
+			say(LANG("obj.7aa6d96a", null))
 		finalize_build()
 		return
 
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
 	if(!materials.has_materials(materials_needed, material_cost_coefficient, is_stack ? items_remaining : 1))
-		say("Unable to continue production, missing materials.")
+		say(LANG("obj.15347eaf", null))
 		finalize_build()
 		return
 	materials.use_materials(materials_needed, material_cost_coefficient, is_stack ? items_remaining : 1)
@@ -436,21 +437,21 @@
 	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
 	if(busy)
-		balloon_alert(user, "printing started!")
+		balloon_alert(user, LANG("obj.45e44459", null))
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(user, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, LANG("obj.a778c49c", list(dir2text(drop_direction))))
 
 /obj/machinery/autolathe/click_alt(mob/user)
 	if(!drop_direction)
 		return CLICK_ACTION_BLOCKING
 	if(busy)
-		balloon_alert(user, "busy printing!")
+		balloon_alert(user, LANG("obj.11d29340", null))
 		return CLICK_ACTION_SUCCESS
-	balloon_alert(user, "drop direction reset")
+	balloon_alert(user, LANG("obj.ec68d9e0", null))
 	drop_direction = 0
 	return CLICK_ACTION_SUCCESS
 
@@ -459,7 +460,7 @@
 		return ..()
 
 	if(busy)
-		balloon_alert(user, "it's busy!")
+		balloon_alert(user, LANG("obj.9b0aaa74", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(panel_open && is_wire_tool(tool))
@@ -473,18 +474,18 @@
 		return ..()
 
 	if(panel_open)
-		balloon_alert(user, "close the panel first!")
+		balloon_alert(user, LANG("obj.feaafe36", null))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
-		balloon_alert(user, "uploading design..."),
+		balloon_alert(user, LANG("obj.11758983", null)),
 		span_hear("You hear the chatter of a floppy drive."))
 	busy = TRUE
 
 	if(!do_after(user, 1.5 SECONDS, target = src))
 		busy = FALSE
 		update_static_data_for_all_viewers()
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/disk/design_disk/disky = tool
@@ -498,7 +499,7 @@
 			LAZYADD(not_imported, blueprint.name)
 
 	if(not_imported)
-		to_chat(user, span_warning("The following design[length(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
+		to_chat(user, span_warning(LANG("obj.bb8dde5e", list(length(not_imported) > 1 ? "s" : "", english_list(not_imported)))))
 
 	busy = FALSE
 	update_static_data_for_all_viewers()

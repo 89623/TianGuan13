@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**********************Jaunter**********************/
 /obj/item/wormhole_jaunter
 	name = "wormhole jaunter"
@@ -23,7 +24,7 @@
 	var/turf/device_turf = get_turf(src)
 	if(!device_turf || is_centcom_level(device_turf.z) || is_reserved_level(device_turf.z))
 		if(user)
-			to_chat(user, span_notice("You're having difficulties getting \the [src] to work."))
+			to_chat(user, span_notice(LANG("obj.742b1de3", list(src))))
 		return FALSE
 	return TRUE
 
@@ -47,9 +48,9 @@
 
 	if(!can_jaunter_teleport())
 		if(user)
-			to_chat(user, span_notice("\The [src] found no beacons in the world to anchor a wormhole to."))
+			to_chat(user, span_notice(LANG("obj.98a5ae9f", list(src))))
 		else
-			visible_message(span_notice("\The [src] found no beacons in the world to anchor a wormhole to!"))
+			visible_message(span_notice(LANG("obj.50b508b3", list(src))))
 		return FALSE
 
 	var/list/destinations = get_destinations()
@@ -81,7 +82,7 @@
 		SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
 		activate(M, FALSE, TRUE)
 	else if(triggered)
-		visible_message(span_warning("\The [src] overloads and activates!"))
+		visible_message(span_warning(LANG("obj.bee20232", list(src))))
 		activate()
 
 /obj/item/wormhole_jaunter/equipped(mob/user, slot, initial)
@@ -99,7 +100,7 @@
 	if(!activate(user, FALSE, TRUE))
 		return
 
-	to_chat(user, span_userdanger("Your [src] activates, saving you from \the [chasm]!"))
+	to_chat(user, span_userdanger(LANG("obj.f72a240e", list(src, chasm))))
 	chasm.visible_message(span_boldwarning("[user] falls into \the [chasm]!")) // To freak out any bystanders
 	SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // Chasm automatic activation
 	return COMPONENT_NO_CHASM_DROP

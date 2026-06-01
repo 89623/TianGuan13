@@ -27,7 +27,7 @@
 		return
 
 	//log/message
-	to_chat(usr, "Put [src] in cryopod.")
+	to_chat(usr, LANG("mob.475662c7", list(src)))
 	log_admin("[key_name(usr)] has put [key_name(src)] into a cryopod.")
 	var/msg = span_notice("[key_name_admin(usr)] has put [key_name(src)] into a cryopod from [ADMIN_VERBOSEJMP(src)].")
 	message_admins(msg)
@@ -44,11 +44,11 @@
 		return
 
 	if(!client)
-		to_chat(usr, span_warning("No client found!"))
+		to_chat(usr, span_warning(LANG("mob.769f0d87", null)))
 		return
 
 	if(!ishuman(src))
-		to_chat(usr, span_warning("Mob is not human!"))
+		to_chat(usr, span_warning(LANG("mob.b2b10715", null)))
 		return
 
 	var/notice = tgui_alert(usr, "Are you sure you want to load the clients current prefs onto their mob?", "Load Preferences", list("Yes", "No"))

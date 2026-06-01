@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Gifts
  * Contains:
  * Gifts
@@ -35,7 +36,7 @@
 
 /obj/item/gift/attack_self(mob/user)
 	if(HAS_MIND_TRAIT(user, TRAIT_CANNOT_OPEN_PRESENTS))
-		to_chat(user, span_warning("You're supposed to be spreading gifts, not opening them yourself!"))
+		to_chat(user, span_warning(LANG("obj.1e92b2d1", null)))
 		return
 
 	moveToNullspace()
@@ -125,7 +126,7 @@
 
 	var/datum/mind/recipient = recipient_ref.resolve()
 	if(recipient && recipient != user?.mind)
-		to_chat(user, span_notice("This gift isn't for you, and you don't want to get on Santa's bad side!"))
+		to_chat(user, span_notice(LANG("obj.b0988fa8", null)))
 		return FALSE
 	return ..()
 

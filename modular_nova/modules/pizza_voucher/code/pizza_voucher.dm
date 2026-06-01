@@ -26,7 +26,7 @@
 /obj/item/pizzavoucher/attack_self(mob/user)
 	. = ..()
 	if(spent)
-		to_chat(user, span_warning("[src] is spent!"))
+		to_chat(user, span_warning(LANG("obj.72825869", list(src))))
 		return FALSE
 	user.visible_message(span_notice("[user] presses a button on [src]!"))
 	desc = desc + " This one seems to be used-up."
@@ -59,12 +59,12 @@
 
 /obj/item/pizzavoucher/emag_act(mob/user)
 	if(spent)
-		to_chat(user, span_warning("[src] is spent!"))
+		to_chat(user, span_warning(LANG("obj.72825869", list(src))))
 		return FALSE
 	if(special_delivery)
-		to_chat(user, span_warning("[src] is already in special delivery mode!"))
+		to_chat(user, span_warning(LANG("obj.6c947ec7", list(src))))
 		return FALSE
-	to_chat(user, span_warning("You activate the special delivery protocol on [src]!"))
+	to_chat(user, span_warning(LANG("obj.5311738b", list(src))))
 	special_delivery = TRUE
 	return TRUE
 

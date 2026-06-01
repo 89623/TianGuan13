@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CAN_HEAR_MASTERS (1<<0)
 #define CAN_HEAR_ACTIVE_HOLOCALLS (1<<1)
 #define CAN_HEAR_RECORD_MODE (1<<2)
@@ -268,11 +269,11 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/disk/holodisk))
 		if(disk)
-			to_chat(user,span_warning("There's already a disk inside [src]!"))
+			to_chat(user,span_warning(LANG("obj.fcccecb3", list(src))))
 			return
 		if (!user.transferItemToLoc(tool, src))
 			return
-		to_chat(user,span_notice("You insert [tool] into [src]."))
+		to_chat(user,span_notice(LANG("obj.8ce99939", list(tool, src))))
 		disk = tool
 		return ITEM_INTERACT_SUCCESS
 	return NONE
@@ -544,7 +545,7 @@ Possible to do for anyone motivated enough:
 
 	if(is_operational)//If the projector has power
 		if(AI && istype(AI.current, /obj/machinery/holopad))
-			to_chat(user, "[span_danger("ERROR:")] \black Image feed in progress.")
+			to_chat(user, LANG("obj.9ea8b9d4", list(span_danger("ERROR:"))))
 			return
 
 		// What to pull our appearance out of
@@ -569,11 +570,11 @@ Possible to do for anyone motivated enough:
 		set_holo(user, hologram)
 
 		set_holo(user, hologram)
-		visible_message(span_notice("A holographic image of [user] flickers to life before your eyes!"))
+		visible_message(span_notice(LANG("obj.5f8007fc", list(user))))
 
 		return hologram
 	else
-		to_chat(user, "[span_danger("ERROR:")] Unable to project hologram.")
+		to_chat(user, LANG("obj.27e6d398", list(span_danger("ERROR:"))))
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.
 For the other part of the code, check silicon say.dm. Particularly robot talk.*/
@@ -758,16 +759,16 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	set_holo(record, hologram)
 
-	visible_message(span_notice("A holographic image of [record.caller_name] flickers to life before your eyes!"))
+	visible_message(span_notice(LANG("obj.5f8007fc", list(record.caller_name))))
 	return hologram
 
 /obj/machinery/holopad/proc/replay_start()
 	if(!disk)
-		say("Please insert the disc to play the recording.")
+		say(LANG("obj.b06ab7ae", null))
 		return
 
 	if(!disk.record)
-		say("There is no record on the disc. Please check the disk.")
+		say(LANG("obj.23d0a1d3", null))
 		return
 
 	if(!replay_mode)

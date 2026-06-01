@@ -10,7 +10,7 @@
 /obj/machinery/cell_charger/click_alt(mob/user, list/modifiers)
 	if(. || !charging)
 		return CLICK_ACTION_BLOCKING
-	to_chat(user, span_notice("You activate the quick release as the cell pops out!"))
+	to_chat(user, span_notice(LANG("obj.aba7bd73", null)))
 	removecell(charging.forceMove(drop_location()))
 	return CLICK_ACTION_SUCCESS
 

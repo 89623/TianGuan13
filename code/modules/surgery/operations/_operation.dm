@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Attempts to perform a surgery with whatever tool is passed
  *
@@ -140,8 +141,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	visible_message(
-		span_notice("[src] attempts to close [p_their()] own [limb.plaintext_zone] with [tool]..."),
-		span_notice("You attempt to close your own [limb.plaintext_zone] with [tool]..."),
+		span_notice(LANG("mob.7fd065ca", list(src, p_their(), limb.plaintext_zone, tool))),
+		span_notice(LANG("mob.68ad7539", list(limb.plaintext_zone, tool))),
 		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
@@ -156,8 +157,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	visible_message(
-		span_notice("[src] closes [p_their()] own [limb.plaintext_zone] with [tool]."),
-		span_notice("You close your own [limb.plaintext_zone] with [tool]."),
+		span_notice(LANG("mob.da168bca", list(src, p_their(), limb.plaintext_zone, tool))),
+		span_notice(LANG("mob.6c63ce71", list(limb.plaintext_zone, tool))),
 		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
@@ -213,7 +214,7 @@
 
 	var/list/operations = surgeon.get_available_operations(src, surgeon.get_active_held_item())
 	if(!length(operations))
-		to_chat(surgeon, boxed_message(span_info("No available surgeries.")))
+		to_chat(surgeon, boxed_message(span_info(LANG("mob.bb8c3a94", null))))
 		return
 
 	var/list/operations_info = list()
@@ -222,7 +223,7 @@
 		var/atom/movable/operating_on = operations[radial_slice][2]
 		operations_info += "[radial_slice]: [operation.name] on [operating_on]"
 
-	to_chat(surgeon, boxed_message(span_info("Available surgeries:<br><hr>[jointext(operations_info, "<br>")]")))
+	to_chat(surgeon, boxed_message(span_info(LANG("mob.b49be1e8", list(jointext(operations_info, "<br>"))))))
 
 /// Takes a target zone and returns a list of readable surgery states for that zone.
 /// Example output may be list("Skin is cut", "Blood vessels are unclamped", "Bone is sawed")
@@ -761,7 +762,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		basemod *= 0.8
 	if(HAS_TRAIT(patient, TRAIT_ANALGESIA))
 		basemod *= 0.8
-		to_chat(surgeon, span_notice("You are able to work faster due to the patient's calm attitude!")) // NOVA EDIT ADDITION - Better feedback for the use of analgesia
+		to_chat(surgeon, span_notice(LANG("datum.e1b80536", null))) // NOVA EDIT ADDITION - Better feedback for the use of analgesia
 	return basemod
 
 /// Returns a time modifier based on the surgeon's status
@@ -787,7 +788,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			break
 	if(quiet_environment)
 		basemod *= 0.8
-		to_chat(surgeon, span_notice("You are able to work faster due to the quiet environment!"))
+		to_chat(surgeon, span_notice(LANG("datum.258917b6", null)))
 	// NOVA EDIT ADDITION END
 
 	return basemod
@@ -852,7 +853,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(patient.buckled)
 		var/obj/machinery/stasis/stasis_bed = patient.buckled
 		if(istype(stasis_bed) && stasis_bed.stasis_enabled)
-			to_chat(surgeon, span_warning("[patient] cannot be operated in the [patient.buckled] while it is turned on!"))
+			to_chat(surgeon, span_warning(LANG("datum.ced54c12", list(patient, patient.buckled))))
 			return ITEM_INTERACT_BLOCKING
 	// NOVA EDIT ADDITION END
 	if(isitem(tool))
@@ -1039,7 +1040,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(target.stat >= UNCONSCIOUS || HAS_TRAIT(target, TRAIT_KNOCKEDOUT))
 		return
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && prob(drunken_ignorance_probability))
-		to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
+		to_chat(target, span_notice(LANG("datum.a557a7fa", null)))
 		return
 	to_chat(target, span_userdanger(pain_message))
 	if(prob(30) && !mechanical_surgery)

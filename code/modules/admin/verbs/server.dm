@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Server Tab - Server Verbs
 
 ADMIN_VERB(toggle_random_events, R_SERVER, "Toggle Random Events", "Toggles random events on or off.", ADMIN_CATEGORY_SERVER)
@@ -106,13 +107,13 @@ ADMIN_VERB(toggle_vote_dead, R_ADMIN, "Toggle Dead Vote", "Toggle the vote for d
 ADMIN_VERB(start_now, R_SERVER, "Start Now", "Start the round RIGHT NOW.", ADMIN_CATEGORY_SERVER)
 	var/static/list/waiting_states = list(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
 	if(!(SSticker.current_state in waiting_states))
-		to_chat(user, span_warning(span_red("The game has already started!")))
+		to_chat(user, span_warning(span_red(LANG("datum.5aae0bb8", null))))
 		return
 
 	if(SSticker.start_immediately)
 		SSticker.start_immediately = FALSE
 		SSticker.SetTimeLeft(3 MINUTES)
-		to_chat(world, span_big(span_notice("The game will start in 3 minutes.")))
+		to_chat(world, span_big(span_notice(LANG("datum.b6af2aca", null))))
 		SEND_SOUND(world, sound('sound/announcer/default/attention.ogg'))
 		message_admins(span_adminnotice("[key_name_admin(user)] has cancelled immediate game start. Game will start in 3 minutes."))
 		log_admin("[key_name(user)] has cancelled immediate game start.")
@@ -165,9 +166,9 @@ ADMIN_VERB(toggle_ai, R_SERVER, "Toggle AI", "Toggle the ability to choose AI jo
 	var/alai = CONFIG_GET(flag/allow_ai)
 	CONFIG_SET(flag/allow_ai, !alai)
 	if (alai)
-		to_chat(world, span_bold("The AI job is no longer chooseable."), confidential = TRUE)
+		to_chat(world, span_bold(LANG("datum.07e8e149", null)), confidential = TRUE)
 	else
-		to_chat(world, "<B>The AI job is chooseable now.</B>", confidential = TRUE)
+		to_chat(world, LANG("datum.889c06c6", null), confidential = TRUE)
 	log_admin("[key_name(user)] toggled AI allowed.")
 	world.update_status()
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle AI", "[!alai ? "Disabled" : "Enabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
@@ -196,8 +197,7 @@ ADMIN_VERB(toggle_respawn, R_SERVER, "Toggle Respawn", "Toggle the ability to re
 			WARNING("Invalid respawn state in config: [respawn_state]")
 
 	if(new_state == -1)
-		to_chat(user, span_warning("The config for respawn is set incorrectly, please complain to your nearest server host (or fix it yourself). \
-			In the meanwhile respawn has been set to \"Off\"."))
+		to_chat(user, span_warning(LANG("datum.9418c297", null)))
 		new_state = RESPAWN_FLAG_DISABLED
 		new_state_text = "Disabled"
 
@@ -219,10 +219,10 @@ ADMIN_VERB(delay, R_SERVER, "Delay Pre-Game", "Delay the game start.", ADMIN_CAT
 	SSticker.SetTimeLeft(newtime)
 	SSticker.start_immediately = FALSE
 	if(newtime < 0)
-		to_chat(world, span_infoplain("<b>The game start has been delayed.</b>"), confidential = TRUE)
+		to_chat(world, span_infoplain(LANG("datum.0f805894", null)), confidential = TRUE)
 		log_admin("[key_name(user)] delayed the round start.")
 	else
-		to_chat(world, span_infoplain(span_bold("The game will start in [DisplayTimeText(newtime)].")), confidential = TRUE)
+		to_chat(world, span_infoplain(span_bold(LANG("datum.c3cc2de3", list(DisplayTimeText(newtime))))), confidential = TRUE)
 		SEND_SOUND(world, sound('sound/announcer/default/attention.ogg'))
 		log_admin("[key_name(user)] set the pre-game delay to [DisplayTimeText(newtime)].")
 	BLACKBOX_LOG_ADMIN_VERB("Delay Game Start")
@@ -244,7 +244,7 @@ ADMIN_VERB(set_admin_notice, R_SERVER, "Set Admin Notice", "Set an announcement 
 	else
 		message_admins("[key_name(user)] set the admin notice.")
 		log_admin("[key_name(user)] set the admin notice:\n[new_admin_notice]")
-		to_chat(world, span_adminnotice("<b>Admin Notice:</b>\n \t [new_admin_notice]"), confidential = TRUE)
+		to_chat(world, span_adminnotice(LANG("datum.1a3c22d3", list(new_admin_notice))), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Set Admin Notice")
 	GLOB.admin_notice = new_admin_notice
 
@@ -252,9 +252,9 @@ ADMIN_VERB(toggle_guests, R_SERVER, "Toggle Guests", "Toggle the ability for gue
 	var/new_guest_ban = !CONFIG_GET(flag/guest_ban)
 	CONFIG_SET(flag/guest_ban, new_guest_ban)
 	if (new_guest_ban)
-		to_chat(world, span_bold("Guests may no longer enter the game."), confidential = TRUE)
+		to_chat(world, span_bold(LANG("datum.caea4e05", null)), confidential = TRUE)
 	else
-		to_chat(world, "<B>Guests may now enter the game.</B>", confidential = TRUE)
+		to_chat(world, LANG("datum.f9b477be", null), confidential = TRUE)
 	log_admin("[key_name(user)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed.")
 	message_admins(span_adminnotice("[key_name_admin(user)] toggled guests game entering [!new_guest_ban ? "" : "dis"]allowed."))
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Guests", "[!new_guest_ban ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!

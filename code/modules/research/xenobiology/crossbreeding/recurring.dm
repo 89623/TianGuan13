@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Recurring extracts:
 	Generates a new charge every few seconds.
@@ -17,7 +18,7 @@ Recurring extracts:
 /obj/item/slimecross/recurring/Initialize(mapload)
 	. = ..()
 	extract = new extract_type(src.loc)
-	visible_message(span_notice("[src] wraps a layer of goo around itself!"))
+	visible_message(span_notice(LANG("obj.5be3ca25", list(src))))
 	extract.name = name
 	extract.desc = desc
 	extract.icon = icon

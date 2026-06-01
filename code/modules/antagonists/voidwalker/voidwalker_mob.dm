@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Minimum strength to convert a wall into a void window.
 #define WALL_CONVERT_STRENGTH 40
 
@@ -300,11 +301,11 @@
 /// Attempt to convert a wall into passable voidwalker windows
 /mob/living/basic/voidwalker/proc/try_convert_wall(turf/closed/wall/our_wall)
 	if(!conversions_remaining)
-		balloon_alert(src, "need more kidnaps!")
+		balloon_alert(src, LANG("mob.bf80228d", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!COOLDOWN_FINISHED(src, wall_conversion))
-		balloon_alert(src, "must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, wall_conversion))]!")
+		balloon_alert(src, LANG("mob.27448c90", list(DisplayTimeText(COOLDOWN_TIMELEFT(src, wall_conversion)))))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!check_wall_validity(our_wall, src, silent = FALSE))
@@ -314,7 +315,7 @@
 
 	var/obj/particles = new /obj/effect/abstract/particle_holder (our_wall, /particles/void_wall)
 
-	balloon_alert(src, "opening window...")
+	balloon_alert(src, LANG("mob.d763db5f", null))
 	if(!do_after(src, 8 SECONDS, our_wall, hidden = TRUE))
 		qdel(particles)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -344,7 +345,7 @@
 /mob/living/basic/voidwalker/proc/check_wall_validity(turf/closed/wall/wall_to_check, silent = TRUE)
 	if(wall_to_check.hardness < WALL_CONVERT_STRENGTH)
 		if(!silent)
-			balloon_alert(src, "too strong!")
+			balloon_alert(src, LANG("mob.efd191e8", null))
 		return FALSE
 	return TRUE
 

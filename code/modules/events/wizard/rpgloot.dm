@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/wizard/rpgloot //its time to minmax your shit
 	name = "RPG Loot"
 	weight = 3
@@ -41,7 +42,7 @@
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
 	uses -= 1
 	if(!uses)
-		visible_message(span_warning("[src] vanishes, its magic completely consumed from the fortification."))
+		visible_message(span_warning(LANG("obj.81de07e3", list(src))))
 		qdel(src)
 	return TRUE
 

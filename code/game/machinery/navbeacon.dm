@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Navigation beacon for AI robots
 // No longer exists on the radio controller, it is managed by a global list.
 
@@ -111,7 +112,7 @@
 
 /obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!panel_open && cover_locked)
-		balloon_alert(user, "hatch locked!")
+		balloon_alert(user, LANG("obj.1aeb791b", null))
 		return ITEM_INTERACT_BLOCKING
 	return default_deconstruction_screwdriver(user, tool)
 
@@ -128,12 +129,12 @@
 		if(!panel_open)
 			if (allowed(user))
 				controls_locked = !controls_locked
-				balloon_alert(user, "controls [controls_locked ? "locked" : "unlocked"]")
+				balloon_alert(user, LANG("obj.dc384c45", list(controls_locked ? "locked" : "unlocked")))
 				SStgui.update_uis(src)
 			else
-				balloon_alert(user, "access denied")
+				balloon_alert(user, LANG("obj.1d2a5ed1", null))
 		else
-			balloon_alert(user, "panel open!")
+			balloon_alert(user, LANG("obj.2a428bad", null))
 		return
 
 	return ..()

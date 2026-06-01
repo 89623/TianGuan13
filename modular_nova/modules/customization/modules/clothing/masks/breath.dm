@@ -67,7 +67,7 @@
 			else
 				flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDEHAIR
 				icon_state = initial(icon_state)
-				to_chat(user, span_notice("You pull the balaclava up to cover your whole head."))
+				to_chat(user, span_notice(LANG("obj.bc348054", null)))
 				open = 0
 		user.update_clothing(slot_flags)
 

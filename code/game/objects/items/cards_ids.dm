@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
 #define INTERN_THRESHOLD_FALLBACK_HOURS 15
 
@@ -609,11 +610,11 @@
 
 /obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
-		balloon_alert(user, "still recharging")
+		balloon_alert(user, LANG("obj.29fe70af", null))
 		return
 	if(!can_be_used_in_payment(user))
-		balloon_alert(user, "no account!")
-		to_chat(user, span_warning("You need a valid bank account to do this."))
+		balloon_alert(user, LANG("obj.71aa69ba", null))
+		to_chat(user, span_warning(LANG("obj.3cee2709", null)))
 		return
 	/// Determines where the holopay will be placed based on tile contents
 	var/turf/projection
@@ -626,8 +627,8 @@
 	else if(can_proj_holopay(user_loc))
 		projection = user_loc
 	if(!projection)
-		balloon_alert(user, "no space")
-		to_chat(user, span_warning("You need to be standing on or near an open tile to do this."))
+		balloon_alert(user, LANG("obj.4f1f894b", null))
+		to_chat(user, span_warning(LANG("obj.19bb503d", null)))
 		return
 	/// Success: Valid tile for holopay placement
 	if(my_store)
@@ -694,7 +695,7 @@
  */
 /obj/item/card/id/proc/set_holopay_name(name)
 	if(length(name) < 3 || length(name) > MAX_NAME_LEN)
-		to_chat(usr, span_warning("Must be between 3 - 42 characters."))
+		to_chat(usr, span_warning(LANG("obj.0a9ccf5d", null)))
 	else
 		holopay_name = html_encode(trim(name, MAX_NAME_LEN))
 
@@ -712,7 +713,7 @@
 
 /obj/item/card/id/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/rupee))
-		to_chat(user, span_warning("Your ID smartly rejects the strange shard of glass. Who knew, apparently it's not ACTUALLY valuable!"))
+		to_chat(user, span_warning(LANG("obj.a13ccb63", null)))
 		return ITEM_INTERACT_BLOCKING
 	else if(iscash(tool))
 		return insert_money(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
@@ -722,7 +723,7 @@
 		var/money_added = mass_insert_money(money_contained, user)
 		if(!money_added)
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You stuff the contents into the card! They disappear in a puff of bluespace smoke, adding [money_added] worth of [MONEY_NAME] to the linked account."))
+		to_chat(user, span_notice(LANG("obj.baa0f519", list(money_added, MONEY_NAME))))
 		return ITEM_INTERACT_SUCCESS
 	/// NOVA EDIT ADDITION START - Trim Tokens - Proc defined in modular_nova/modules/trim_tokens/code/cards_id.dm
 	else if(istype(tool, /obj/item/trim_token))
@@ -746,21 +747,21 @@
 		physical_currency = TRUE
 
 	if(!registered_account)
-		to_chat(user, span_warning("[src] doesn't have a linked account to deposit [money] into!"))
+		to_chat(user, span_warning(LANG("obj.036839d2", list(src, money))))
 		return FALSE
 	var/cash_money = money.get_item_credit_value()
 	if(!cash_money)
-		to_chat(user, span_warning("[money] doesn't seem to be worth anything!"))
+		to_chat(user, span_warning(LANG("obj.e8aecaae", list(money))))
 		return FALSE
 	registered_account.adjust_money(cash_money, "System: Deposit")
 	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
 	log_econ("[cash_money] [MONEY_NAME] were inserted into [src] owned by [src.registered_name]")
 	if(physical_currency)
-		to_chat(user, span_notice("You stuff [money] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] [MONEY_NAME] to the linked account."))
+		to_chat(user, span_notice(LANG("obj.9749c69b", list(money, src, cash_money, MONEY_NAME))))
 	else
-		to_chat(user, span_notice("You insert [money] into [src], adding [cash_money] [MONEY_NAME] to the linked account."))
+		to_chat(user, span_notice(LANG("obj.648e8d5c", list(money, src, cash_money, MONEY_NAME))))
 
-	to_chat(user, span_notice("The linked account now reports a balance of [registered_account.account_balance] [MONEY_SYMBOL]."))
+	to_chat(user, span_notice(LANG("obj.2f1b7d6d", list(registered_account.account_balance, MONEY_SYMBOL))))
 	qdel(money)
 	return TRUE
 
@@ -773,7 +774,7 @@
  */
 /obj/item/card/id/proc/mass_insert_money(list/money, mob/user)
 	if(!registered_account)
-		to_chat(user, span_warning("[src] doesn't have a linked account to deposit into!"))
+		to_chat(user, span_warning(LANG("obj.45e87ee3", list(src))))
 		return FALSE
 
 	if (!money || !length(money))
@@ -802,7 +803,7 @@
 /obj/item/card/id/proc/set_new_account(mob/living/user)
 	. = FALSE
 	if(loc != user)
-		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		to_chat(user, span_warning(LANG("obj.784bf3f1", null)))
 		return FALSE
 	var/list/user_memories = user.mind.memories
 	var/datum/memory/key/account/user_key = user_memories[/datum/memory/key/account]
@@ -811,14 +812,14 @@
 	if(!new_bank_id || QDELETED(user) || QDELETED(src) || issilicon(user) || !alt_click_can_use_id(user) || loc != user)
 		return FALSE
 	if(registered_account?.account_id == new_bank_id)
-		to_chat(user, span_warning("The account ID was already assigned to this card."))
+		to_chat(user, span_warning(LANG("obj.f06b127d", null)))
 		return FALSE
 	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
 	if(isnull(account))
-		to_chat(user, span_warning("The account ID number provided is invalid."))
+		to_chat(user, span_warning(LANG("obj.e6775559", null)))
 		return FALSE
 	set_account(account, transfer_funds = TRUE)
-	to_chat(user, span_notice("The provided account has been linked to this ID card. It contains [account.account_balance] [MONEY_NAME]."))
+	to_chat(user, span_notice(LANG("obj.8944d2e3", list(account.account_balance, MONEY_NAME))))
 	return TRUE
 
 /obj/item/card/id/click_alt(mob/living/user)
@@ -835,7 +836,7 @@
 			pay_debt(user)
 			return CLICK_ACTION_SUCCESS
 	if(loc != user)
-		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		to_chat(user, span_warning(LANG("obj.784bf3f1", null)))
 		return CLICK_ACTION_BLOCKING
 	if(registered_account.replaceable && !registered_account.account_balance)
 		var/choice = tgui_alert(user, "This card's account is unassigned. Would you like to link a bank account?", "Bank Account", list("Link Account", "Leave Unassigned"))
@@ -855,7 +856,7 @@
 		return CLICK_ACTION_BLOCKING
 	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 	user.put_in_hands(holochip)
-	to_chat(user, span_notice("You withdraw [amount_to_remove] [MONEY_NAME] into a holochip."))
+	to_chat(user, span_notice(LANG("obj.026d4b72", list(amount_to_remove, MONEY_NAME))))
 	SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
 	log_econ("[amount_to_remove] [MONEY_NAME] were removed from [src] owned by [registered_name]")
 	return CLICK_ACTION_SUCCESS
@@ -1035,11 +1036,11 @@
 		return
 
 	if(!trim)
-		balloon_alert(user, "card has no trim!")
+		balloon_alert(user, LANG("obj.3064988c", null))
 		return
 
 	if(!length(trim.honorifics))
-		balloon_alert(user, "card has no honorific to use!")
+		balloon_alert(user, LANG("obj.61b9848b", null))
 		return
 
 	var/list/choices = list()
@@ -1057,7 +1058,7 @@
 	honorific_title = null //We reset this regardless so that we don't stack titles on accident.
 
 	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
-		balloon_alert(user, "honorific disabled")
+		balloon_alert(user, LANG("obj.713acf40", null))
 	else
 		var/new_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
 		if(!new_honorific || user.incapacitated || !in_contents_of(user))
@@ -1226,7 +1227,7 @@
 
 /obj/item/card/id/advanced/proc/recolor_id(mob/living/user, obj/item/toy/crayon/our_crayon)
 	if(our_crayon.is_capped)
-		balloon_alert(user, "take the cap off first!")
+		balloon_alert(user, LANG("obj.0c73c2ec", null))
 		return ITEM_INTERACT_BLOCKING
 	var/choice = tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment"))
 	if(isnull(choice) \
@@ -1573,10 +1574,10 @@
 /obj/item/card/id/advanced/prisoner/proc/set_sentence_time(mob/living/user, obj/item/card/id/our_card)
 	var/list/id_access = our_card.GetAccess()
 	if(!(ACCESS_BRIG in id_access))
-		balloon_alert(user, "access denied!")
+		balloon_alert(user, LANG("obj.1bd3ceeb", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.is_holding(src))
-		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		to_chat(user, span_warning(LANG("obj.784bf3f1", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(timed) // If we already have a time set, reset the card
@@ -1584,19 +1585,19 @@
 		time_to_assign = initial(time_to_assign)
 		registered_name = initial(registered_name)
 		STOP_PROCESSING(SSobj, src)
-		to_chat(user, "Resetting prisoner ID to default parameters.")
+		to_chat(user, LANG("obj.ca977e40", null))
 		return ITEM_INTERACT_SUCCESS
 
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
 	if(isnull(choice) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || !user.is_holding(src))
 		return ITEM_INTERACT_BLOCKING
 	time_to_assign = choice
-	to_chat(user, "You set the sentence time to [DisplayTimeText(time_to_assign * 10)].")
+	to_chat(user, LANG("obj.094273ac", list(DisplayTimeText(time_to_assign * 10))))
 	timed = TRUE
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
-	say("Sentence started, welcome to the corporate rehabilitation center!")
+	say(LANG("obj.d38e1b90", null))
 	START_PROCESSING(SSobj, src)
 
 /obj/item/card/id/advanced/prisoner/examine(mob/user)
@@ -1620,11 +1621,11 @@
 		return
 	time_left -= seconds_per_tick
 	if(time_left <= 0)
-		say("Sentence time has been served. Thank you for your cooperation in our corporate rehabilitation program!")
+		say(LANG("obj.2e1b11d1", null))
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/card/id/advanced/prisoner/attack_self(mob/user)
-	to_chat(usr, span_notice("You have accumulated [points] out of the [goal] points you need for freedom."))
+	to_chat(usr, span_notice(LANG("obj.a2f450bd", list(points, goal))))
 
 /obj/item/card/id/advanced/prisoner/one
 	name = "Prisoner #13-001"
@@ -1699,7 +1700,7 @@
 		return TRUE
 	if(popup_input == "Show")
 		return ..()
-	balloon_alert(user, "flipped")
+	balloon_alert(user, LANG("obj.d5c37f29", null))
 	if(trim_assignment_override)
 		SSid_access.remove_trim_override(src)
 	else
@@ -1872,7 +1873,7 @@
 
 	var/obj/item/card/id/target_card = theft_target?.resolve()
 	if(QDELETED(target_card))
-		to_chat(usr, span_notice("The ID card you were attempting to scan is no longer in range."))
+		to_chat(usr, span_notice(LANG("obj.eb5f2795", null)))
 		target_card = null
 		return TRUE
 
@@ -1880,7 +1881,7 @@
 	var/turf/our_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target_card)
 	if(!our_turf.Adjacent(target_turf))
-		to_chat(usr, span_notice("The ID card you were attempting to scan is no longer in range."))
+		to_chat(usr, span_notice(LANG("obj.eb5f2795", null)))
 		target_card = null
 		return TRUE
 
@@ -1936,7 +1937,7 @@
 		update_label()
 		update_appearance()
 		forged = FALSE
-		to_chat(user, span_notice("You successfully reset the ID card."))
+		to_chat(user, span_notice(LANG("obj.dcbb7879", null)))
 		return
 
 	///forge the ID if not forged.s
@@ -1981,7 +1982,7 @@
 	update_label()
 	update_appearance()
 	forged = TRUE
-	to_chat(user, span_notice("You successfully forge the ID card."))
+	to_chat(user, span_notice(LANG("obj.39c783f0", null)))
 	user.log_message("forged \the [initial(name)] with name \"[registered_name]\", occupation \"[assignment]\" and trim \"[trim?.assignment]\".", LOG_GAME)
 
 	if(!ishuman(user) || registered_account)
@@ -1991,7 +1992,7 @@
 	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[owner.account_id]"]
 	if(account)
 		set_account(account)
-		to_chat(user, span_notice("Your account number has been automatically assigned."))
+		to_chat(user, span_notice(LANG("obj.0464de9d", null)))
 
 /obj/item/card/id/advanced/chameleon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
 	. = ..()

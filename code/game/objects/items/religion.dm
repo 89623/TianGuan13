@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/banner
 	name = "banner"
 	desc = "A banner with Nanotrasen's logo on it."
@@ -29,7 +30,7 @@
 	if(!inspiration_available || flags_1 & HOLOGRAM_1)
 		return
 	if(morale_time > world.time)
-		to_chat(user, span_warning("You aren't feeling inspired enough to flourish [src] again yet."))
+		to_chat(user, span_warning(LANG("obj.e63257db", list(src))))
 		return
 	user.visible_message("<span class='big notice'>[user] flourishes [src]!</span>", \
 	span_notice("You raise [src] skywards, inspiring your allies!"))

@@ -97,7 +97,7 @@
 	if(!ishuman(attacked))
 		return
 	if(!attacked.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("Looks like [attacked] doesn't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.f3f1a07e", list(attacked))))
 		return
 
 	switch(user.zone_selected)
@@ -126,7 +126,7 @@
 		handle_fullbody_tying(them, user)
 		return
 	if(them.w_uniform)
-		to_chat(user, span_warning("They're already wearing something on this slot!"))
+		to_chat(user, span_warning(LANG("obj.04028a8f", null)))
 		return
 
 	them.visible_message(
@@ -146,7 +146,7 @@
 		split_rope = split_stack(1)
 
 	if(!split_rope)
-		to_chat(user, span_warning("You don't have enough ropes!"))
+		to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 		return
 
 	var/obj/item/clothing/under/shibari/groin/shibari_groin = new(get_turf(src))
@@ -172,7 +172,7 @@
 		handle_fullbody_tying(them, user)
 		return
 	if(them.w_uniform)
-		to_chat(user, span_warning("They're already wearing something on this slot!"))
+		to_chat(user, span_warning(LANG("obj.04028a8f", null)))
 		return
 
 	them.visible_message(
@@ -185,7 +185,7 @@
 
 	var/obj/item/stack/shibari_rope/split_rope = split_stack(1)
 	if(!split_rope)
-		to_chat(user, span_warning("You don't have enough ropes!"))
+		to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 		return
 
 	var/obj/item/clothing/under/shibari/torso/shibari_body = new(get_turf(src))
@@ -207,7 +207,7 @@
 /// Try to tie the arms
 /obj/item/stack/shibari_rope/proc/handle_arm_tying(mob/living/carbon/human/them, mob/living/user)
 	if(them.gloves)
-		to_chat(user, span_warning("They're already wearing something on this slot!"))
+		to_chat(user, span_warning(LANG("obj.04028a8f", null)))
 		return
 
 	them.visible_message(
@@ -220,7 +220,7 @@
 
 	var/obj/item/stack/shibari_rope/split_rope = split_stack(1)
 	if(!split_rope)
-		to_chat(user, span_warning("You don't have enough ropes!"))
+		to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 		return
 
 	var/obj/item/clothing/gloves/shibari_hands/shibari_hands = new(get_turf(src))
@@ -241,10 +241,10 @@
 /// Try to tie the legs
 /obj/item/stack/shibari_rope/proc/handle_leg_tying(mob/living/carbon/human/them, mob/living/user)
 	if(them.shoes)
-		to_chat(user, span_warning("They're already wearing something on this slot!"))
+		to_chat(user, span_warning(LANG("obj.04028a8f", null)))
 		return
 	if(them.bodyshape & BODYSHAPE_TAUR)
-		to_chat(user, span_warning("You can't tie their feet, they're a taur!"))
+		to_chat(user, span_warning(LANG("obj.c27a125b", null)))
 		return
 
 	them.visible_message(
@@ -257,7 +257,7 @@
 
 	var/obj/item/stack/shibari_rope/split_rope = split_stack(1)
 	if(!split_rope)
-		to_chat(user, span_warning("You don't have enough ropes!"))
+		to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 		return
 
 	var/obj/item/clothing/shoes/shibari_legs/shibari_legs = new(get_turf(src))

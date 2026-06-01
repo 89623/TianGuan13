@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/closet/crate/large
 	name = "large crate"
 	desc = "A hefty wooden crate. You'll need a crowbar to get it open."
@@ -29,7 +30,7 @@
 	if(manifest)
 		tear_manifest(user)
 	else
-		to_chat(user, span_warning("You need a crowbar to pry this open!"))
+		to_chat(user, span_warning(LANG("obj.310b3e22", null)))
 
 /obj/structure/closet/crate/large/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour == TOOL_CROWBAR)
@@ -54,7 +55,7 @@
 			return ..() //Stops it from opening and turning invisible when items are used on it.
 
 		else
-			to_chat(user, span_warning("You need a crowbar to pry this open!"))
+			to_chat(user, span_warning(LANG("obj.310b3e22", null)))
 			return FALSE //Just stop. Do nothing. Don't turn into an invisible sprite. Don't open like a locker.
 					//The large crate has no non-attack interactions other than the crowbar, anyway.
 

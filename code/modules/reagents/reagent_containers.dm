@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/reagent_containers
 	name = "Container"
 	desc = "..."
@@ -128,7 +129,7 @@
 		else
 			CRASH("change_transfer_amount() called with invalid direction value")
 	amount_per_transfer_from_this = possible_transfer_amounts[index]
-	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
+	balloon_alert(user, LANG("obj.c9e1c7c3", list(amount_per_transfer_from_this)))
 	mode_change_message(user)
 
 /obj/item/reagent_containers/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
@@ -181,7 +182,7 @@
 	if(!iscarbon(eater))
 		return FALSE
 	if(!reagents || !reagents.total_volume)
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 		return FALSE
 	var/mob/living/carbon/as_carbon = eater
 	var/covered = ""
@@ -191,7 +192,7 @@
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "[eater.p_their()]"
-		to_chat(user, span_warning("You have to remove [who] [covered] first!"))
+		to_chat(user, span_warning(LANG("obj.87a22757", list(who, covered))))
 		return FALSE
 	return TRUE
 
@@ -255,7 +256,7 @@
 			target_turf.add_liquid_from_reagents(reagents, reagent_multiplier = (1 - turf_splash_multiplier)) // NOVA EDIT ADDITION - liquid spills (molotov buff) (huge)
 
 	else if(bartender_check(target, splasher) && was_thrown)
-		visible_message(span_notice("[src] lands onto \the [target] without spilling a single drop."))
+		visible_message(span_notice(LANG("obj.de966dc5", list(src, target))))
 		return
 
 	else
@@ -265,7 +266,7 @@
 				target.add_liquid_from_reagents(reagents, thrown_from = src, thrown_to = target)
 			log_combat(splasher, target, "splashed [english_list(reagents.reagent_list)]", src, "in [AREACOORD(target)] [was_thrown ? "(thrown)" : ""]")
 			message_admins("[ADMIN_LOOKUPFLW(splasher)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
-		visible_message(span_notice("[src] spills its contents all over [target]."))
+		visible_message(span_notice(LANG("obj.a8b32e15", list(src, target))))
 		reagents.expose(target, TOUCH)
 		if(QDELETED(src))
 			return
@@ -397,33 +398,33 @@
 
 /obj/item/reagent_containers/proc/try_refill(atom/target, mob/living/user)
 	if(!reagents.total_volume)
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(target.reagents.holder_full())
-		to_chat(user, span_warning("[target] is full."))
+		to_chat(user, span_warning(LANG("obj.8e2d390c", list(target))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 	playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
 	if(trans)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+		to_chat(user, span_notice(LANG("obj.a73d822c", list(trans, target))))
 	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/proc/try_drain(atom/target, mob/living/user)
 	if(!target.reagents.total_volume)
-		to_chat(user, span_warning("[target] is empty and can't be refilled!"))
+		to_chat(user, span_warning(LANG("obj.85e36271", list(target))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(reagents.holder_full())
-		to_chat(user, span_warning("[src] is full."))
+		to_chat(user, span_warning(LANG("obj.8e2d390c", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 	playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
-	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
+	to_chat(user, span_notice(LANG("obj.c64f6590", list(src, trans, target))))
 	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS

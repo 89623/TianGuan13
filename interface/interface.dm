@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
 /client/verb/wiki()
 	set name = "wiki"
@@ -6,7 +7,7 @@
 
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(!wikiurl)
-		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
+		to_chat(src, span_danger(LANG("client.b6e02a75", null)))
 		return
 
 	var/query = tgui_input_text(src,
@@ -28,7 +29,7 @@
 
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(!forumurl)
-		to_chat(src, span_danger("The forum URL is not set in the server configuration."))
+		to_chat(src, span_danger(LANG("client.85a92160", null)))
 		return
 	DIRECT_OUTPUT(src, link(forumurl))
 
@@ -39,7 +40,7 @@
 
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(!rulesurl)
-		to_chat(src, span_danger("The rules URL is not set in the server configuration."))
+		to_chat(src, span_danger(LANG("client.39520bd5", null)))
 		return
 	DIRECT_OUTPUT(src, link(rulesurl))
 
@@ -50,7 +51,7 @@
 
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
-		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
+		to_chat(src, span_danger(LANG("client.7c00baab", null)))
 		return
 	DIRECT_OUTPUT(src, link(githuburl))
 
@@ -61,7 +62,7 @@
 
 	var/configurl = CONFIG_GET(string/configurl)
 	if(!configurl)
-		to_chat(src, span_danger("The Config URL is not set in the server configuration."))
+		to_chat(src, span_danger(LANG("client.7b2fa997", null)))
 		return
 	DIRECT_OUTPUT(src, link(configurl))
 
@@ -71,7 +72,7 @@
 
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
-		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
+		to_chat(src, span_danger(LANG("client.7c00baab", null)))
 		return
 
 	var/testmerge_data = GLOB.revdata.testmerge
@@ -144,7 +145,7 @@
 	set hidden = TRUE
 
 	if(!isliving(mob))
-		to_chat(mob, span_notice("You can only use this while you're alive!"))
+		to_chat(mob, span_notice(LANG("client.143dea2d", null)))
 		return
 
 	if(!GLOB.emote_panel)

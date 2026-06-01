@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/frame
 	name = "frame"
 	desc = "A generic looking construction frame. One day this will be something greater."
@@ -65,12 +66,12 @@
 	if(state != FRAME_STATE_EMPTY)
 		return NONE
 	if(anchored && state == FRAME_STATE_EMPTY) //when using a screwdriver on an incomplete frame(missing components) no point checking for this
-		balloon_alert(user, "must be unanchored first!")
+		balloon_alert(user, LANG("obj.fc67148b", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = (tool.tool_behaviour == TOOL_WELDER ? 1 : 0)))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "disassembling...")
+	balloon_alert(user, LANG("obj.b5ba9871", null))
 	user.visible_message(
 		span_warning("[user] begins disassembling [src]."),
 		span_notice("You start to disassemble [src]..."),
@@ -141,7 +142,7 @@
  */
 /obj/structure/frame/proc/install_board(mob/living/user, obj/item/circuitboard/board, by_hand = FALSE)
 	if(!istype(board, board_type) || !board.build_path)
-		balloon_alert(user, "invalid board!")
+		balloon_alert(user, LANG("obj.208efb8e", null))
 		return FALSE
 	if(by_hand && !user.transferItemToLoc(board, src))
 		return FALSE
@@ -149,7 +150,7 @@
 		return FALSE
 
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	balloon_alert(user, "circuit installed")
+	balloon_alert(user, LANG("obj.3bf49b8d", null))
 	circuit = board
 	if(by_hand)
 		circuit.add_fingerprint(user)

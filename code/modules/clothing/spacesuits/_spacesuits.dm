@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Charge per tick consumed by the thermal regulator
 #define THERMAL_REGULATOR_COST (0.018 * STANDARD_CELL_CHARGE)
 
@@ -175,7 +176,7 @@
 	if(!cell.use(THERMAL_REGULATOR_COST))
 		toggle_spacesuit(user, FALSE)
 		update_hud_icon(user)
-		to_chat(user, span_warning("The thermal regulator cuts off as [cell] runs out of charge."))
+		to_chat(user, span_warning(LANG("obj.26f668d5", list(cell))))
 		return
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
@@ -205,7 +206,7 @@
 // support for items that interact with the cell
 /obj/item/clothing/suit/space/get_cell(atom/movable/interface, mob/user)
 	if(istype(interface, /obj/item/inducer))
-		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		to_chat(user, span_alert(LANG("obj.9034fa56", list(interface))))
 		return null
 	return cell
 
@@ -238,7 +239,7 @@
 		([range_low]-[range_high] degrees celcius)") as null|num
 	if(deg_c && deg_c >= range_low && deg_c <= range_high)
 		temperature_setting = round(T0C + deg_c, 0.1)
-		to_chat(user, span_notice("You see the readout change to [deg_c] c."))
+		to_chat(user, span_notice(LANG("obj.0bfcae78", list(deg_c))))
 	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
@@ -246,11 +247,11 @@
 	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	if(cell)
-		to_chat(user, span_warning("[src] already has a cell installed."))
+		to_chat(user, span_warning(LANG("obj.3d7d4031", list(src))))
 		return
 	if(user.transferItemToLoc(I, src))
 		cell = I
-		to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
+		to_chat(user, span_notice(LANG("obj.b9a8027e", list(cell, src))))
 		update_hud_icon(user)
 		return
 
@@ -284,7 +285,7 @@
 /// Toggle the space suit's cell cover
 /obj/item/clothing/suit/space/proc/toggle_spacesuit_cell(mob/user)
 	cell_cover_open = !cell_cover_open
-	to_chat(user, span_notice("You [cell_cover_open ? "open" : "close"] the cell cover on \the [src]."))
+	to_chat(user, span_notice(LANG("obj.c78fe1c1", list(cell_cover_open ? "open" : "close", src))))
 
 /**
  * Toggle the space suit's thermal regulator status
@@ -301,7 +302,7 @@
 	// thermal protection value and should just return out early.
 	if(!thermal_on && (!cell || cell.charge < THERMAL_REGULATOR_COST))
 		if(toggler)
-			to_chat(toggler, span_warning("The thermal regulator on [src] has no charge."))
+			to_chat(toggler, span_warning(LANG("obj.cca32537", list(src))))
 		return
 
 	thermal_on = !thermal_on
@@ -314,9 +315,9 @@
 	if(!toggler)
 		return
 	if(manual_toggle)
-		to_chat(toggler, span_notice("You turn [thermal_on ? "on" : "off"] [src]'s thermal regulator."))
+		to_chat(toggler, span_notice(LANG("obj.9f3a8cd1", list(thermal_on ? "on" : "off", src))))
 	else
-		to_chat(toggler, span_danger("You feel [src]'s thermal regulator switch [thermal_on ? "on" : "off"] by itself!"))
+		to_chat(toggler, span_danger(LANG("obj.be261234", list(src, thermal_on ? "on" : "off"))))
 
 /obj/item/clothing/suit/space/ui_action_click(mob/user, actiontype)
 	toggle_spacesuit(user)
@@ -327,7 +328,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	if (user)
-		balloon_alert(user, "thermal regulator restrictions overridden")
+		balloon_alert(user, LANG("obj.57904fc8", null))
 		user.log_message("emagged [src], overwriting thermal regulator restrictions.", LOG_GAME)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE

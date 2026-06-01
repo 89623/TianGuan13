@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Generic restraints
  *
@@ -106,14 +107,14 @@
 	)
 
 	if(victim.is_blind())
-		to_chat(victim, span_userdanger("As you feel someone grab your wrists, [src] start digging into your skin!"))
+		to_chat(victim, span_userdanger(LANG("obj.13a6176f", list(src))))
 
 	playsound(loc, cuffsound, 30, TRUE, -2)
 	log_combat(user, victim, "attempted to handcuff")
 
 	if(!do_after(user, get_handcuff_time(user), victim, timed_action_flags = IGNORE_SLOWDOWNS) || !victim.canBeHandcuffed())
 		victim.balloon_alert(user, "failed to handcuff!")
-		to_chat(user, span_warning("You fail to handcuff [victim]!"))
+		to_chat(user, span_warning(LANG("obj.4edfbb12", list(victim))))
 		log_combat(user, victim, "failed to handcuff")
 		return
 
@@ -135,7 +136,7 @@
 /obj/item/restraints/handcuffs/proc/handcuffs_clumsiness_check(mob/user)
 	if(!iscarbon(user) || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50)) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
 		return FALSE
-	to_chat(user, span_warning("Uh... how do those things work?!"))
+	to_chat(user, span_warning(LANG("obj.5aba72c1", null)))
 	apply_cuffs(user, user)
 	return TRUE
 /**
@@ -469,12 +470,12 @@
 	update_appearance()
 
 	if(armed && (HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
-		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
+		to_chat(user, span_warning(LANG("obj.b686046c", null)))
 		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 		spring_trap(user, def_zone = hand_zone)
 		return
 
-	to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
+	to_chat(user, span_notice(LANG("obj.8e5dbd27", list(src, armed ? "armed" : "disarmed"))))
 
 
 /obj/item/restraints/legcuffs/beartrap/attempt_pickup(mob/user)
@@ -482,7 +483,7 @@
 		return ..()
 
 	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
-		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
+		to_chat(user, span_warning(LANG("obj.b686046c", null)))
 		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 		spring_trap(user, def_zone = hand_zone)
 		return TRUE
@@ -634,7 +635,7 @@
 /obj/item/restraints/legcuffs/bola/proc/ensnare(mob/living/carbon/snared_mob)
 	if(snared_mob.legcuffed || snared_mob.num_legs < 2)
 		return
-	visible_message(span_danger("\The [src] ensnares [snared_mob]!"), span_userdanger("\The [src] ensnares you!"))
+	visible_message(span_danger(LANG("obj.1d6a5dbd", list(src, snared_mob))), span_userdanger(LANG("obj.3f77175e", list(src))))
 	snared_mob.equip_to_slot(src, ITEM_SLOT_LEGCUFFED)
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 	snared_mob.Knockdown(knockdown)

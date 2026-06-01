@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
@@ -186,11 +187,11 @@
 			), forced = "hulk")
 		// NOVA EDIT ADDITION START - addition of ability to remove taser electrode
 		if(HAS_TRAIT(owner, TRAIT_BATON_RESISTANCE)) // If you have baton resistance while being tased, significantly decreases the stamina damage.
-			to_chat(owner, span_notice("You feel a slight shock, and attempt to shrug it off."))
+			to_chat(owner, span_notice(LANG("datum.9b57c3e0", null)))
 			stamina_per_second /= 4																 
 			owner.remove_movespeed_modifier(/datum/movespeed_modifier/being_tased)										 
 		if(HAS_TRAIT(owner, TRAIT_SHOCKIMMUNE)) // genetics mutation insulated protects from taser shock, as well as voltaic heart				 
-			to_chat(owner, span_notice("The electrode hits you, but it only tickles."))									 
+			to_chat(owner, span_notice(LANG("datum.80b89ba0", null)))									 
 			stamina_per_second = 0																 
 			owner.remove_movespeed_modifier(/datum/movespeed_modifier/being_tased)
 		// NOVA EDIT ADDITION END

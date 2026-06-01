@@ -23,7 +23,7 @@
 /obj/item/food/grown/banana/banana_spider_spawnable/attack_self(mob/user)
 	if(awakening || isspaceturf(user.loc))
 		return
-	to_chat(user, span_notice("You decide to wake up the banana spider..."))
+	to_chat(user, span_notice(LANG("obj.8634f5c0", null)))
 	awakening = TRUE
 	addtimer(CALLBACK(src, PROC_REF(spawnspider)), 8 SECONDS)
 

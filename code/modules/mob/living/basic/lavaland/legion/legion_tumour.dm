@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Left behind when a legion infects you, for medical enrichment
 /obj/item/organ/legion_tumour
 	name = "legion tumour"
@@ -74,7 +75,7 @@
 		if (target != user)
 			target.visible_message(span_notice("[user] splatters [target] with [src]... Disgusting tendrils pull [target.p_their()] wounds shut!"))
 		else
-			to_chat(user, span_notice("You smear [src] on yourself. Disgusting tendrils pull your wounds closed."))
+			to_chat(user, span_notice(LANG("obj.4ad3be5c", list(src))))
 		return TRUE
 
 	if (!ishuman(target))
@@ -93,7 +94,7 @@
 
 	if (stage >= 2)
 		if(SPT_PROB(stage / 5, seconds_per_tick))
-			to_chat(owner, span_notice("You feel a bit better."))
+			to_chat(owner, span_notice(LANG("obj.8b1f1c2f", null)))
 			owner.apply_status_effect(applied_status) // It's not all bad!
 		if(SPT_PROB(1, seconds_per_tick))
 			owner.emote("twitch")
@@ -139,7 +140,7 @@
 	stage++
 	elapsed_time = 0
 	if (stage == 5)
-		to_chat(owner, span_bolddanger("Something is moving under your skin!"))
+		to_chat(owner, span_bolddanger(LANG("obj.242493a5", null)))
 
 /// Consume our host
 /obj/item/organ/legion_tumour/proc/infest()
@@ -153,11 +154,11 @@
 
 /obj/item/organ/legion_tumour/on_find(mob/living/finder)
 	. = ..()
-	to_chat(finder, span_warning("There's an enormous tumour in [owner]'s [zone]!"))
+	to_chat(finder, span_warning(LANG("obj.2d0b690d", list(owner, zone))))
 	if(stage < 4)
-		to_chat(finder, span_notice("Its tendrils seem to twitch towards the light."))
+		to_chat(finder, span_notice(LANG("obj.191588e5", null)))
 		return
-	to_chat(finder, span_notice("Its pulsing tendrils reach all throughout the body."))
+	to_chat(finder, span_notice(LANG("obj.2a232f36", null)))
 	if(prob(stage * 2))
 		infest()
 

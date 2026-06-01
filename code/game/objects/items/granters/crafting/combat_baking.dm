@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/book/granter/crafting_recipe/combat_baking
 	name = "the anarchist's cookbook"
 	desc = "A widely illegal recipe book, which will teach you how to bake croissants to die for."
@@ -14,6 +15,6 @@
 	)
 
 /obj/item/book/granter/crafting_recipe/combat_baking/recoil(mob/living/user)
-	to_chat(user, span_warning("The book dissolves into burnt flour!"))
+	to_chat(user, span_warning(LANG("obj.1d180ec2", null)))
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/spacevine_mutation
 	/// Displayed name of mutation
 	var/name = ""
@@ -92,7 +93,7 @@
 	var/datum/spacevine_mutation/thorns/thorns = locate() in holder.mutations
 
 	if(thorns)
-		to_chat(crosser, span_alert("You are pricked by thorns and feel a strange sensation."))
+		to_chat(crosser, span_alert(LANG("datum.cfc50009", null)))
 		crosser.apply_damage(20, TOX)
 		return
 
@@ -105,7 +106,7 @@
 		if((body_parts_covered & required_coverage) == required_coverage)
 			return
 
-	to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
+	to_chat(crosser, span_alert(LANG("datum.88b12057", null)))
 	crosser.apply_damage(20, TOX)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
@@ -336,7 +337,7 @@
 	if(prob(THORN_MUTATION_CUT_PROB))
 		var/mob/living/victim = crosser
 		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), spread_damage = TRUE))
-			to_chat(victim, span_danger("You cut yourself on the thorny vines."))
+			to_chat(victim, span_danger(LANG("datum.4feffe03", null)))
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/item, expected_damage)
 	if(isvineimmune(hitter) || HAS_TRAIT(hitter, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(hitter, TRAIT_PLANT_SAFE))
@@ -351,7 +352,7 @@
 	if(prob(THORN_MUTATION_CUT_PROB))
 		var/mob/living/victim = hitter
 		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), spread_damage = TRUE))
-			to_chat(victim, span_danger("You cut yourself on the thorny vines."))
+			to_chat(victim, span_danger(LANG("datum.4feffe03", null)))
 
 	return expected_damage
 

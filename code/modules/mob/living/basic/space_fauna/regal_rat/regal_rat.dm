@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define REGALRAT_INTERACTION "regalrat"
 
 /// The cheesiest, most crowned rat of them all. Regent superior of all rats in maintenance... at least until someone else tries to encroach on their claim.
@@ -198,11 +199,11 @@
 
 	var/mob/living/living_target = the_target
 	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_FAKEDEATH, SPECIES_TRAIT) || living_target.stat == DEAD)
-		balloon_alert(src, "already dead!")
+		balloon_alert(src, LANG("mob.c037f6bd", null))
 		return FALSE
 
 	if(living_target.faction_check_atom(src, exact_match = TRUE))
-		balloon_alert(src, "one of your soldiers!")
+		balloon_alert(src, LANG("mob.d5b2481b", null))
 		return FALSE
 
 	return TRUE
@@ -220,8 +221,8 @@
 		return FALSE
 
 	visible_message(
-		span_warning("[src] starts licking [target] passionately!"),
-		span_notice("You start licking [target]..."),
+		span_warning(LANG("mob.30826eb5", list(src, target))),
+		span_notice(LANG("mob.7c5ebf31", list(target))),
 		span_warning("You hear a disgusting slurping sound..."),
 	)
 
@@ -229,7 +230,7 @@
 		return TRUE // don't return false here because they tried to lick and the do_after was interrupted, otherwise cancelling the do_after will make them hit the target.
 
 	target.reagents.add_reagent(/datum/reagent/rat_spit, rand(1,3), no_react = TRUE)
-	balloon_alert(src, "licked")
+	balloon_alert(src, LANG("mob.ada4fdab", null))
 	return TRUE
 
 /**
@@ -242,7 +243,7 @@
  */
 /mob/living/basic/regal_rat/proc/cheese_heal(obj/item/target, amount, message)
 	if(health >= maxHealth)
-		balloon_alert(src, "you feel full!")
+		balloon_alert(src, LANG("mob.b6be25c4", null))
 		return
 
 	to_chat(src, message)

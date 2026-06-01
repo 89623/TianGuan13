@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///how much time between charge_level going up by 1
 #define SKYFALL_SINGLE_CHARGE_TIME (2 SECONDS)
 ///enough charge level to take off, basically done charging
@@ -87,11 +88,11 @@
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	if(chassis.phasing)
-		to_chat(owner, span_warning("You're already airborne!"))
+		to_chat(owner, span_warning(LANG("datum.aebb04b6", null)))
 		return
 	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_SKYFALL))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_SKYFALL)
-		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall."))
+		to_chat(owner, span_warning(LANG("datum.98e78e0c", list(DisplayTimeText(timeleft, 1)))))
 		return
 	if(skyfall_charge_level)
 		abort_skyfall()
@@ -261,7 +262,7 @@
 		return
 	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_MISSILE_STRIKE))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_MISSILE_STRIKE)
-		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before firing another Ivanov Strike."))
+		to_chat(owner, span_warning(LANG("datum.ebb4d38b", list(DisplayTimeText(timeleft, 1)))))
 		return
 	if(aiming_missile)
 		end_missile_targeting()

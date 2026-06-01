@@ -56,7 +56,7 @@
 
 	clicker.balloon_alert_to_viewers("starts coiling tail")
 	clicker.visible_message(span_warning("[clicker] starts coiling [clicker.p_their()] tail around [living_target]..."), span_notice("You start coiling your tail around [living_target]..."), ignored_mobs = list(living_target))
-	to_chat(living_target, span_userdanger("[clicker] starts coiling [clicker.p_their()] tail around you!"))
+	to_chat(living_target, span_userdanger(LANG("datum.025dfc45", list(clicker, clicker.p_their()))))
 
 	owner.changeNext_move(base_coil_delay) // prevent interaction during this
 	unset_ranged_ability(owner) // because we sleep
@@ -71,7 +71,7 @@
 /// Actually constricts the mob, by setting constricted to this mob and spawning a tail if needed.
 /datum/action/innate/constrict/proc/do_constriction(mob/living/living_target)
 	owner.visible_message(span_boldwarning("[owner] coils [owner.p_their()] tail around [living_target]!"), span_notice("You coil your tail around [living_target]!"), ignored_mobs = list(living_target))
-	to_chat(living_target, span_userdanger("[owner] coils [owner.p_their()] tail around you!"))
+	to_chat(living_target, span_userdanger(LANG("datum.7fd78d9d", list(owner, owner.p_their()))))
 	create_tail()
 	tail.set_constricted(living_target)
 	return TRUE
@@ -330,7 +330,7 @@
 		def_zone = pick(carbon_target.bodyparts)
 	constricted.apply_damage(stored_damage, BRUTE, def_zone = def_zone, blocked = armor, wound_bonus = wound_bonus)
 	owner.visible_message(span_warning("[owner] squeezes [constricted] with [owner.p_their()] tail!"), span_danger("You squeeze [constricted] with your tail!"), ignored_mobs = list(constricted))
-	to_chat(constricted, span_warning("[owner] squeezes you with [owner.p_their()] tail!"))
+	to_chat(constricted, span_warning(LANG("obj.394e3acd", list(owner, owner.p_their()))))
 	return TRUE
 
 #undef CONSTRICTED_FORCE_WOUND_BONUS_MIN
@@ -366,7 +366,7 @@
 	if (!def_zone)
 		def_zone = owner.get_bodypart(BODY_ZONE_CHEST)
 
-	to_chat(owner, span_userdanger("You recall your tail as a sharp pain shoots through it!"))
+	to_chat(owner, span_userdanger(LANG("obj.03f8c807", null)))
 	owner.apply_damage(SERPENTINE_TAIL_DESTRUCTION_OWNER_BRUTE_DAMAGE, damage_type, def_zone)
 
 	return ..()
@@ -486,7 +486,7 @@
 
 	owner.balloon_alert_to_viewers("starts crushing")
 	owner.visible_message(span_boldwarning("[owner] starts crushing [constricted] with [owner.p_their()] tail!"), span_warning("You start crushing [constricted] with your tail!"), ignored_mobs = list(constricted))
-	to_chat(constricted, span_userdanger("[owner] starts crushing you with [owner.p_their()] tail!"))
+	to_chat(constricted, span_userdanger(LANG("obj.10fae112", list(owner, owner.p_their()))))
 	return TRUE
 
 /// Setter proc for currently_crushing that handles processing and warnings.
@@ -496,7 +496,7 @@
 
 	owner.balloon_alert_to_viewers("stops crushing")
 	owner.visible_message(span_warning("[owner] stops crushing [constricted] with [owner.p_their()] tail."), span_notice("You stop crushing [constricted] with your tail."), ignored_mobs = list(constricted))
-	to_chat(constricted, span_boldwarning("[owner] stops crushing you with [owner.p_their()] tail."))
+	to_chat(constricted, span_boldwarning(LANG("obj.35b211a1", list(owner, owner.p_their()))))
 
 	currently_crushing = FALSE
 	STOP_PROCESSING(SSobj, src)
@@ -539,7 +539,7 @@
 		return ..()
 
 	if (!COOLDOWN_FINISHED(src, escape_cooldown))
-		to_chat(user, span_warning("You're still recovering from your last escape attempt!")) // prevent escape spam
+		to_chat(user, span_warning(LANG("obj.8dca9f4e", null))) // prevent escape spam
 		return FALSE
 
 	var/escape_chance = CONSTRICT_ESCAPE_CHANCE
@@ -548,12 +548,12 @@
 
 	if (!prob(escape_chance))
 		user.visible_message(span_warning("[user] squirms as they fail to escape from [owner]'s tail!"), span_warning("You squirm as you fail to escape from [owner]'s tail!"), ignored_mobs = owner)
-		to_chat(owner, span_warning("[user] squirms as they fail to escape from the grip of your tail!"))
+		to_chat(owner, span_warning(LANG("obj.d77114da", list(user))))
 		COOLDOWN_START(src, escape_cooldown, SERPENTINE_TAIL_UNBUCKLE_TIME)
 		return FALSE
 
 	user.visible_message(span_warning("[user] breaks free from [owner]'s tail!"), span_warning("You break free from [owner]'s tail!"), ignored_mobs = owner)
-	to_chat(owner, span_boldwarning("[user] breaks free from the grip of your tail!"))
+	to_chat(owner, span_boldwarning(LANG("obj.b48f69f6", list(user))))
 	return ..()
 
 #undef SERPENTINE_TAIL_UNBUCKLE_TIME

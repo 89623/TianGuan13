@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Command
 
 /obj/item/circuitboard/machine/bsa/back
@@ -308,7 +309,7 @@
 /obj/item/circuitboard/machine/pacman/screwdriver_act(mob/living/user, obj/item/tool)
 	high_production_profile = !high_production_profile
 	var/message = high_production_profile ? "high-power uranium mode" : "medium-power plasma mode"
-	to_chat(user, span_notice("You set the board for [message]"))
+	to_chat(user, span_notice(LANG("obj.ff7ca6d1", list(message))))
 
 /obj/item/circuitboard/machine/turbine_compressor
 	name = "Turbine - Inlet Compressor"
@@ -417,7 +418,7 @@
 /obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = ..()
 	pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
-	to_chat(user, span_notice("You change the circuitboard to layer [pipe_layer]."))
+	to_chat(user, span_notice(LANG("obj.e9689634", list(pipe_layer))))
 
 /obj/item/circuitboard/machine/thermomachine/examine()
 	. = ..()
@@ -530,7 +531,7 @@
 	else
 		build_path = /obj/machinery/holopad/secure
 		secure = TRUE
-	to_chat(user, span_notice("You [secure? "en" : "dis"]able the security on [src]"))
+	to_chat(user, span_notice(LANG("obj.febe530e", list(secure? "en" : "dis", src))))
 	return TRUE
 
 /obj/item/circuitboard/machine/holopad/examine(mob/user)
@@ -605,7 +606,7 @@
 	var/position = fridges_name_paths.Find(build_path, fridges_name_paths)
 	position = (position == length(fridges_name_paths)) ? 1 : (position + 1)
 	build_path = fridges_name_paths[position]
-	to_chat(user, span_notice("You set the board to [fridges_name_paths[build_path]]."))
+	to_chat(user, span_notice(LANG("obj.6eda33a7", list(fridges_name_paths[build_path]))))
 	return TRUE
 
 /obj/item/circuitboard/machine/smartfridge/examine(mob/user)
@@ -837,7 +838,7 @@
 
 	build_path = new_path
 	name = "[new_name] 3000"
-	to_chat(user, span_notice("You change the circuit board setting to \"[new_name]\"."))
+	to_chat(user, span_notice(LANG("obj.10fac27d", list(new_name))))
 	return TRUE
 
 /obj/item/circuitboard/machine/cryo_tube
@@ -877,10 +878,10 @@
 	if(!new_cost || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(loc != user)
-		to_chat(user, span_warning("You must hold the circuitboard to change its cost!"))
+		to_chat(user, span_warning(LANG("obj.e60dcc61", null)))
 		return
 	custom_cost = new_cost
-	to_chat(user, span_notice("The cost is now set to [custom_cost]."))
+	to_chat(user, span_notice(LANG("obj.fdb4bef1", list(custom_cost))))
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
 	. = ..()
@@ -1289,11 +1290,11 @@
 
 /obj/item/circuitboard/machine/dish_drive/attack_self(mob/living/user)
 	suction = !suction
-	to_chat(user, span_notice("You [suction ? "enable" : "disable"] the board's suction function."))
+	to_chat(user, span_notice(LANG("obj.fe3f9e72", list(suction ? "enable" : "disable"))))
 
 /obj/item/circuitboard/machine/dish_drive/click_alt(mob/living/user)
 	transmit = !transmit
-	to_chat(user, span_notice("You [transmit ? "enable" : "disable"] the board's automatic disposal transmission."))
+	to_chat(user, span_notice(LANG("obj.6abd1c78", list(transmit ? "enable" : "disable"))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/circuitboard/machine/gibber
@@ -1360,11 +1361,11 @@
 	if(build_path == /obj/machinery/processor)
 		name = "Slime Processor"
 		build_path = /obj/machinery/processor/slime
-		to_chat(user, span_notice("Name protocols successfully updated."))
+		to_chat(user, span_notice(LANG("obj.e27bb0c2", null)))
 	else
 		name = "Food Processor"
 		build_path = /obj/machinery/processor
-		to_chat(user, span_notice("Defaulting name protocols."))
+		to_chat(user, span_notice(LANG("obj.ae6bfadd", null)))
 	return TRUE
 
 /obj/item/circuitboard/machine/protolathe/department/service
@@ -1525,7 +1526,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	venue_type = radial_results[choice]
-	to_chat(user, span_notice("You change [src]'s linked venue."))
+	to_chat(user, span_notice(LANG("obj.8f84e0c4", list(src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/circuitboard/machine/restaurant_portal/examine(mob/user)

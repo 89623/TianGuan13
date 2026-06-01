@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/sparring_match
 	///the chaplain. it isn't actually a chaplain all the time, but in the cases where the chaplain is needed this will always be them.
 	var/mob/living/carbon/human/chaplain
@@ -191,7 +192,7 @@
 /datum/sparring_match/proc/violation(mob/living/carbon/human/offender, reason)
 	SIGNAL_HANDLER
 
-	to_chat(offender, span_userdanger("Violation! No [reason]!"))
+	to_chat(offender, span_userdanger(LANG("datum.acf1d5be", list(reason))))
 	if(offender == chaplain)
 		chaplain_violations_allowed--
 		if(!chaplain_violations_allowed)
@@ -229,9 +230,9 @@
 	cleanup_sparring_match()
 
 	if(chaplain) //flubing means we don't know who is still standing
-		to_chat(chaplain, span_bolddanger("The match was flub'd! No winners, no losers. You may restart the match with another contract."))
+		to_chat(chaplain, span_bolddanger(LANG("datum.3da716e4", null)))
 	if(opponent)
-		to_chat(opponent, span_bolddanger("The match was flub'd! No winners, no losers."))
+		to_chat(opponent, span_bolddanger(LANG("datum.dc9d97e2", null)))
 	qdel(src)
 
 ///helper to remove all the effects after a match ends
@@ -245,8 +246,8 @@
 
 /datum/sparring_match/proc/end_match(mob/living/carbon/human/winner, mob/living/carbon/human/loser, violation_victory = FALSE)
 	cleanup_sparring_match()
-	to_chat(chaplain, span_bolddanger("[violation_victory ? "[loser] DISQUALIFIED!" : ""]  [winner] HAS WON!"))
-	to_chat(opponent, span_bolddanger("[violation_victory ? "[loser] DISQUALIFIED!" : ""]  [winner] HAS WON!"))
+	to_chat(chaplain, span_bolddanger(LANG("datum.904fe4dc", list(violation_victory ? "[loser] DISQUALIFIED!" : "", winner))))
+	to_chat(opponent, span_bolddanger(LANG("datum.904fe4dc", list(violation_victory ? "[loser] DISQUALIFIED!" : "", winner))))
 	win(winner, loser, violation_victory)
 	lose(loser, winner)
 	if(stakes_condition != STAKES_YOUR_SOUL)

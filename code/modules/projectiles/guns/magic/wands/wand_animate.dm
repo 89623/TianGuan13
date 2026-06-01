@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// Wand of making objects alive
 /obj/item/gun/magic/wand/animate
@@ -12,11 +13,11 @@
 
 /obj/item/gun/magic/wand/animate/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()
-	to_chat(user, span_warning("You animate one of your own possessions!"))
+	to_chat(user, span_warning(LANG("obj.03e4cae0", null)))
 	charges--
 	var/list/possessions = user.get_equipped_items()
 	if (!length(possessions))
-		to_chat(user, span_notice("...but you don't have any."))
+		to_chat(user, span_notice(LANG("obj.9a18dfd4", null)))
 		return
 
 	var/obj/some_item = pick(possessions)

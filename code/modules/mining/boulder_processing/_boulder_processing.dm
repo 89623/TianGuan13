@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/bouldertech
 	name = "bouldertech brand refining machine"
 	desc = "You shouldn't be seeing this! And bouldertech isn't even a real company!"
@@ -214,7 +215,7 @@
 		return
 
 	if(!use_energy(active_power_usage * 1.5, force = FALSE))
-		say("Not enough energy!")
+		say(LANG("obj.baec13b6", null))
 		return
 
 	maim_golem(rockman)
@@ -297,7 +298,7 @@
 			amount = points_held
 		id_card.registered_account.mining_points += amount
 		points_held = round(points_held - amount)
-		to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
+		to_chat(user, span_notice(LANG("obj.b53d5cdf", list(amount, src, id_card))))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
@@ -323,10 +324,10 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor it first!")
+		balloon_alert(user, LANG("obj.c16d48e2", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(panel_open)
-		balloon_alert(user, "close panel!")
+		balloon_alert(user, LANG("obj.4337ae3e", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/obj/item/boulder/boulder = locate(/obj/item/boulder) in src
@@ -355,7 +356,7 @@
 	if(chosen_boulder.loc != src)
 		return
 	if(!use_energy(active_power_usage, force = FALSE))
-		say("Not enough energy!")
+		say(LANG("obj.baec13b6", null))
 		return
 
 	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that

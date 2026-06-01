@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 #define BEEBOX_MAX_FRAMES 3 //Max frames per box
 #define BEES_RATIO 0.5 //Multiplied by the max number of honeycombs to find the max number of bees
@@ -150,17 +151,17 @@
 	if(istype(item, /obj/item/honey_frame))
 		var/obj/item/honey_frame/frame = item
 		if(honey_frames.len < BEEBOX_MAX_FRAMES)
-			visible_message(span_notice("[user] adds a frame to the apiary."))
+			visible_message(span_notice(LANG("obj.c68c197f", list(user))))
 			if(!user.transferItemToLoc(frame, src))
 				return
 			honey_frames += frame
 		else
-			to_chat(user, span_warning("There's no room for any more frames in the apiary!"))
+			to_chat(user, span_warning(LANG("obj.d4ac7949", null)))
 		return
 
 	if(istype(item, /obj/item/queen_bee))
 		if(queen_bee)
-			to_chat(user, span_warning("This hive already has a queen!"))
+			to_chat(user, span_warning(LANG("obj.769d7d0e", null)))
 			return
 
 		var/obj/item/queen_bee/new_queen = item
@@ -172,7 +173,7 @@
 		new_queen.queen.forceMove(src)
 
 		if(queen_bee)
-			visible_message(span_notice("[user] sets [queen_bee] down inside the apiary, making it their new home."))
+			visible_message(span_notice(LANG("obj.abcedef0", list(user, queen_bee))))
 			var/relocated = 0
 			for(var/mob/living/basic/bee/relocating_bee as anything in bees)
 				if(relocating_bee.reagent_incompatible(queen_bee))
@@ -182,10 +183,10 @@
 						relocating_bee.forceMove(drop_location())
 					relocated++
 			if(relocated)
-				to_chat(user, span_warning("This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!"))
+				to_chat(user, span_warning(LANG("obj.b6d682fc", null)))
 
 		else
-			to_chat(user, span_warning("The queen bee disappeared! Disappearing bees have been in the news lately..."))
+			to_chat(user, span_warning(LANG("obj.86fde01f", null)))
 
 		return
 
@@ -203,9 +204,9 @@
 				worker.forceMove(drop_location())
 			bees_attack = TRUE
 		if(bees_attack)
-			visible_message(span_danger("[user] disturbs the bees!"))
+			visible_message(span_danger(LANG("obj.ad42e0a1", list(user))))
 		else
-			visible_message(span_danger("[user] disturbs \the [src] to no effect!"))
+			visible_message(span_danger(LANG("obj.da54237f", list(user, src))))
 	else
 		var/option = tgui_alert(user, "Which piece do you wish to remove?", "Apiary Adjustment", list("Honey Frame", "Queen Bee"))
 		if(!option || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, NEED_DEXTERITY))

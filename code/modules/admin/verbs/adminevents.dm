@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Admin Tab - Event Verbs
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
@@ -11,7 +12,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message",
 	msg = user.reformat_narration(msg)
 
 	target.balloon_alert(target, "you hear a voice")
-	to_chat(target, "<i>You hear a voice in your head... <b>[msg]</i></b>", confidential = TRUE)
+	to_chat(target, LANG("datum.5ea2cf68", list(msg)), confidential = TRUE)
 
 	log_admin("SubtlePM: [key_name(user)] -> [key_name(target)] : [msg]")
 	msg = span_adminnotice("<b> SubtleMessage: [key_name_admin(user)] -> [key_name_admin(target)] :</b> [msg]")
@@ -33,15 +34,15 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 	if(ishuman(target))
 		human_recipient = target
 		if(!istype(human_recipient.ears, /obj/item/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset.", confidential = TRUE)
+			to_chat(usr, LANG("client.eab59e40", null), confidential = TRUE)
 			return
 	else if(issilicon(target))
 		silicon_recipient = target
 		if(!istype(silicon_recipient.radio, /obj/item/radio))
-			to_chat(usr, "The silicon you are trying to contact does not have a radio installed.", confidential = TRUE)
+			to_chat(usr, LANG("client.eda1e55f", null), confidential = TRUE)
 			return
 	else
-		to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human or /mob/living/silicon", confidential = TRUE)
+		to_chat(usr, LANG("client.fde4ec38", null), confidential = TRUE)
 		return
 
 	if (!sender)
@@ -60,7 +61,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 	log_directed_talk(mob, target, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(target)]'s [sender] message with: \"[input]\"")
 	target.balloon_alert(target, "you hear a voice")
-	to_chat(target, span_hear("You hear something crackle in your [human_recipient ? "ears" : "radio receiver"] for a moment before a voice speaks. \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"]. Message as follows[sender == "Syndicate" ? ", agent." : ":"] <b>[input].</b> Message ends.\""), confidential = TRUE)
+	to_chat(target, span_hear(LANG("client.06743bb0", list(human_recipient ? "ears" : "radio receiver", sender == "Syndicate" ? "your benefactor" : "Central Command", sender == "Syndicate" ? ", agent." : ":", input))), confidential = TRUE)
 
 	BLACKBOX_LOG_ADMIN_VERB("Headset Message")
 

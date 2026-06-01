@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAX_TRANSIT_REQUEST_RETRIES 10
 /// How many turfs to allow before we stop blocking transit requests
 #define MAX_TRANSIT_TILE_COUNT (150 ** 2)
@@ -382,7 +383,7 @@ SUBSYSTEM_DEF(shuttle)
 		return
 
 	if(length(trim(call_reason)) < CALL_SHUTTLE_REASON_LENGTH && SSsecurity_level.get_current_level_as_number() > SEC_LEVEL_GREEN)
-		to_chat(user, span_alert("You must provide a reason."))
+		to_chat(user, span_alert(LANG("datum.a757e034", null)))
 		return
 
 	var/area/signal_origin = get_area(user)

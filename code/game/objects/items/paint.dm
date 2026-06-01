@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //NEVER USE THIS IT SUX -PETETHEGOAT
 //IT SUCKS A BIT LESS -GIACOM
 
@@ -65,7 +66,7 @@
 
 /obj/item/paint/anycolor/attack_self(mob/user)
 	if(paintleft <= 0)
-		balloon_alert(user, "no paint left!")
+		balloon_alert(user, LANG("obj.2917cb63", null))
 		return	// Don't do any of the following because there's no paint left to be able to change the color of
 	var/list/possible_colors = list(
 		"black" = image(icon = src.icon, icon_state = "paint_black"),

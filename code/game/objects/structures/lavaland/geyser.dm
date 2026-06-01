@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //If you look at the "geyser_soup" overlay icon_state, you'll see that the first frame has 25 ticks.
 //That's because the first 18~ ticks are completely skipped for some ungodly weird fucking byond reason
 
@@ -68,10 +69,10 @@
 		return ..() //this runs the plunger code
 
 	if(discovered)
-		to_chat(user, span_warning("This geyser has already been discovered!"))
+		to_chat(user, span_warning(LANG("obj.e4633b3a", null)))
 		return
 
-	to_chat(user, span_notice("You discovered the geyser and mark it on the GPS system!"))
+	to_chat(user, span_notice(LANG("obj.6aa4e4c3", null)))
 	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 30)
 	SEND_SIGNAL(user, COMSIG_LIVING_DISCOVERED_GEYSER, src)
 	if(discovery_message)
@@ -88,7 +89,7 @@
 
 		var/obj/item/card/id/card = living.get_idcard()
 		if(card)
-			to_chat(user, span_notice("[point_value] mining points have been paid out!"))
+			to_chat(user, span_notice(LANG("obj.eeda2ee4", list(point_value))))
 			card.registered_account.mining_points += point_value
 
 /obj/structure/geyser/wittel
@@ -175,10 +176,10 @@
 
 	if(!layer_mode)
 		icon_state = initial(icon_state)
-		to_chat(user, span_notice("You set the plunger to 'Plunger Mode'."))
+		to_chat(user, span_notice(LANG("obj.ffb49636", null)))
 	else
 		icon_state = layer_mode_sprite
-		to_chat(user, span_notice("You set the plunger to 'Layer Mode'."))
+		to_chat(user, span_notice(LANG("obj.09c3484a", null)))
 
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 

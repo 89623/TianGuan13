@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Paperwork
  *
@@ -49,14 +50,14 @@
 
 	if(istype(attacking_item, stamp_requested))
 		add_stamp()
-		to_chat(user, span_notice("You skim through the papers until you find a field reading 'STAMP HERE', and complete the paperwork."))
+		to_chat(user, span_notice(LANG("obj.04fbca1b", null)))
 		return TRUE
 	var/datum/action/item_action/chameleon/change/stamp/stamp_action = locate() in attacking_item.actions
 	if(isnull(stamp_action))
-		to_chat(user, span_warning("You hunt through the papers for somewhere to use [attacking_item], but can't find anything."))
+		to_chat(user, span_warning(LANG("obj.5d527bc8", list(attacking_item))))
 		return TRUE
 
-	to_chat(user, span_notice("[attacking_item] morphs into the appropriate stamp, which you use to complete the paperwork."))
+	to_chat(user, span_notice(LANG("obj.dc1bfd09", list(attacking_item))))
 	stamp_action.update_look(stamp_requested)
 	add_stamp()
 	return TRUE
@@ -235,7 +236,7 @@
 
 /obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/stamp/void) && !stamped && !voided)
-		to_chat(user, span_notice("You plant the [attacking_item] firmly onto the front of the documents."))
+		to_chat(user, span_notice(LANG("obj.e66f533b", list(attacking_item))))
 		stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_stamp-void")
 		add_overlay(stamp_overlay)
 		voided = TRUE

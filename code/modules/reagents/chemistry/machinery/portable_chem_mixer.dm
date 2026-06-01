@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage/portable_chem_mixer
 	name = "portable chemical mixer"
 	desc = "A portable device that dispenses and mixes chemicals using the beakers inserted inside."
@@ -139,7 +140,7 @@
 
 /obj/item/storage/portable_chem_mixer/ui_interact(mob/user, datum/tgui/ui)
 	if(!atom_storage.locked)
-		balloon_alert(user, "lock it first!")
+		balloon_alert(user, LANG("obj.9b426eb5", null))
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -241,7 +242,7 @@
 
 /obj/item/storage/portable_chem_mixer/click_alt(mob/living/user)
 	if(!atom_storage.locked)
-		balloon_alert(user, "lock first to use alt eject!")
+		balloon_alert(user, LANG("obj.7092c664", null))
 		return CLICK_ACTION_BLOCKING
 
 	replace_beaker(user)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SPEAR_CUSTOM_TIP_PREFIX "spearblank"
 
 /obj/item/spear
@@ -295,7 +296,7 @@
 	spear.set_material_slot(/datum/material_slot/handle/spear, get_master_material())
 	spear.set_material_slot(/datum/material_slot/weapon_head/speartip, shard_mat)
 	spear.set_custom_materials(list((rod_material) = custom_materials[rod_material], (shard_mat) = tool.custom_materials[shard_mat]))
-	to_chat(user, span_notice("You attach [tool] to [src]'s tip."))
+	to_chat(user, span_notice(LANG("obj.51b3456e", list(tool, src))))
 
 	if (istype(tool, /obj/item/stack))
 		var/obj/item/stack/stack = tool

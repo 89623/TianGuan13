@@ -21,8 +21,8 @@
 		return
 
 	id = "[change_id]"
-	balloon_alert(user, "id changed")
-	to_chat(user, span_notice("You change the ID to [id]."))
+	balloon_alert(user, LANG("obj.3852daee", null))
+	to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 
 
 /obj/item/assembly/control/polarizer/activate()

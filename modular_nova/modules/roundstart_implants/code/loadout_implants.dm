@@ -44,7 +44,7 @@
 			do_nothing_chance = 10
 	if(prob(do_nothing_chance))
 		return
-	to_chat(owner, span_warning("Your vision magnification glitches erratically!"))
+	to_chat(owner, span_warning(LANG("obj.4e8e3731", null)))
 	// Apply static vision overlay
 	owner.overlay_fullscreen("emp_static", /atom/movable/screen/fullscreen/flash/static)
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, clear_fullscreen), "emp_static"), severity == EMP_LIGHT ? 0.75 SECONDS : 1.5 SECONDS)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A mob that slaps people around and can be tamed as a mount
 /mob/living/basic/vatbeast
 	name = "vatbeast"
@@ -120,14 +121,14 @@
 	. = ..()
 	if (!.)
 		return
-	to_chat(on_who, span_notice("You prepare your [on_who == owner ? "":"steed's "]pimp-tentacle. <b>Left-click to slap a target!</b>"))
+	to_chat(on_who, span_notice(LANG("datum.d5050293", list(on_who == owner ? "":"steed's "))))
 
 /datum/action/cooldown/tentacle_slap/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if (!.)
 		return
 	if(refund_cooldown)
-		to_chat(on_who, span_notice("You stop preparing your [on_who == owner ? "":"steed's "]pimp-tentacle."))
+		to_chat(on_who, span_notice(LANG("datum.9fe6ae80", list(on_who == owner ? "":"steed's "))))
 
 /datum/action/cooldown/tentacle_slap/InterceptClickOn(mob/living/clicker, params, atom/target)
 	// Check if we can slap
@@ -146,7 +147,7 @@
 	// Give feedback from the slap.
 	// Additional feedback for if a rider did it
 	if (clicker != owner)
-		to_chat(clicker, span_notice("You command [owner] to slap [target] with its tentacles."))
+		to_chat(clicker, span_notice(LANG("datum.2e9a99d7", list(owner, target))))
 
 	return TRUE
 

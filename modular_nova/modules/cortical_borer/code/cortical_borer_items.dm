@@ -43,7 +43,7 @@
 	if(istype(attacking_item, /obj/item/radio))
 		internal_radio = attacking_item
 		internal_radio.forceMove(src)
-		visible_message("[internal_radio] attaches to [src] with a click.", "You attach [internal_radio] to the [src].", "You hear a clicking sound.")
+		visible_message(LANG("obj.0799ae70", list(internal_radio, src)), LANG("obj.eeaf6739", list(internal_radio, src)), "You hear a clicking sound.")
 		update_appearance()
 		return
 	return ..()
@@ -91,12 +91,12 @@
 /obj/item/cortical_cage/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, span_notice("You begin squeezing through the bars in an attempt to escape! (This will take time.)"))
-	to_chat(loc, span_warning("You see [user] begin trying to squeeze through the bars!"))
+	to_chat(user, span_notice(LANG("obj.a8805b26", null)))
+	to_chat(loc, span_warning(LANG("obj.c2863497", list(user))))
 	if(!do_after(user, rand(30 SECONDS, 40 SECONDS), target = user) || opened || !(user in contents))
 		return
 	loc.visible_message(span_warning("[user] squeezes through [src]'s handles!"), null, null, null, user)
-	to_chat(user, span_boldannounce("Bingo, you squeeze through!"))
+	to_chat(user, span_boldannounce(LANG("obj.54f55369", null)))
 	opened = FALSE
 	trapped_borer.forceMove(get_turf(src))
 	trapped_borer = null

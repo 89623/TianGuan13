@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/antagonist/pirate
 	name = "\improper Space Pirate"
 	pref_flag = ROLE_TRAITOR
@@ -13,7 +14,7 @@
 
 /datum/antagonist/pirate/greet()
 	. = ..()
-	to_chat(owner, "<B>The station refused to pay for your protection. Protect the ship, siphon the [MONEY_NAME] from the station, and raid it for even more loot.</B>")
+	to_chat(owner, LANG("datum.56a844c9", list(MONEY_NAME)))
 	owner.announce_objectives()
 
 /datum/antagonist/pirate/get_team()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Paper
  * also scraps of paper
@@ -334,7 +335,7 @@
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(HAS_TRAIT(H, TRAIT_CLUMSY) && prob(25))
-			to_chat(H, span_warning("You cut yourself on the paper! Ahhhh! Ahhhhh!"))
+			to_chat(H, span_warning(LANG("obj.87140f7e", null)))
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
 			return
@@ -358,7 +359,7 @@
 		return
 
 	if(user.is_blind())
-		to_chat(user, span_warning("You are blind and can't read anything!"))
+		to_chat(user, span_warning(LANG("obj.2977ae45", null)))
 		return
 
 	if(user.can_read(src))
@@ -379,7 +380,7 @@
 	// Even harder to read if your blind...braile? humm
 	// .. or if you cannot read
 	if(user.is_blind())
-		to_chat(user, span_warning("You are blind and can't read anything!"))
+		to_chat(user, span_warning(LANG("obj.2977ae45", null)))
 		return UI_CLOSE
 	if(!user.can_read(src))
 		return UI_CLOSE
@@ -434,7 +435,7 @@
 		if(!user.can_write(attacking_item))
 			return
 		if(get_total_length() >= MAX_PAPER_LENGTH)
-			to_chat(user, span_warning("This sheet of paper is full!"))
+			to_chat(user, span_warning(LANG("obj.4c9828bd", null)))
 			return
 
 		ui_interact(user)
@@ -446,10 +447,10 @@
 			//The paper's stampable window area is assumed approx 300x400
 			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), rand(0, 360), writing_stats["stamp_icon_state"], stamp_icon = writing_stats["stamp_icon"])
 			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
-			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
+			to_chat(user, span_notice(LANG("obj.be3d2c55", list(src, attacking_item))))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 		else
-			to_chat(user, span_notice("You ready your stamp over the paper! "))
+			to_chat(user, span_notice(LANG("obj.507009a1", null)))
 			ui_interact(user)
 		return
 

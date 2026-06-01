@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/assembly/shock_kit
 	name = "electrohelmet assembly"
 	desc = "This appears to be made from both an electropack and a helmet."
@@ -24,7 +25,7 @@
 
 /obj/item/assembly/shock_kit/wrench_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, span_notice("You disassemble [src]."))
+	to_chat(user, span_notice(LANG("obj.fd5c1c1d", list(src))))
 	if(helmet_part)
 		helmet_part.forceMove(drop_location())
 		helmet_part.master = null

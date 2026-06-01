@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
@@ -226,7 +227,7 @@
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
-	balloon_alert(user, "safety [safety ? "on" : "off"]")
+	balloon_alert(user, LANG("obj.10fa174c", list(safety ? "on" : "off")))
 	return
 
 /obj/item/extinguisher/attack(mob/M, mob/living/user)
@@ -252,21 +253,21 @@
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(is_type_in_list(target, tanktypes) && target.Adjacent(user))
 		if(reagents.total_volume == reagents.maximum_volume)
-			balloon_alert(user, "already full!")
+			balloon_alert(user, LANG("obj.e28c7f55", null))
 			return TRUE
 		// Make sure we're refilling with the proper chem.
 		if(!(target.reagents.has_reagent(chem, check_subtypes = TRUE)))
-			balloon_alert(user, "can't refill with this liquid!")
+			balloon_alert(user, LANG("obj.448ee9c6", null))
 			return TRUE
 		var/obj/structure/reagent_dispensers/W = target //will it work?
 		var/transferred = W.reagents.trans_to(src, max_water, transferred_by = user)
 		if(transferred > 0)
-			to_chat(user, span_notice("\The [src] has been refilled by [transferred] units."))
+			to_chat(user, span_notice(LANG("obj.04d0ec52", list(src, transferred))))
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, TRUE, -6)
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
-			to_chat(user, span_warning("\The [W] is empty!"))
+			to_chat(user, span_warning(LANG("obj.9104a6b2", list(W))))
 
 		return TRUE
 	else
@@ -288,7 +289,7 @@
 		return NONE
 
 	if (src.reagents.total_volume < 1)
-		balloon_alert(user, "it's empty!")
+		balloon_alert(user, LANG("obj.76a90f7c", null))
 		return .
 
 	if (world.time < src.last_use + 12)
@@ -358,7 +359,7 @@
 
 /obj/item/extinguisher/click_alt(mob/user)
 	if(!user.is_holding(src))
-		to_chat(user, span_notice("You must be holding [src] in your hands to do this!"))
+		to_chat(user, span_notice(LANG("obj.ef710334", list(src))))
 		return CLICK_ACTION_BLOCKING
 	EmptyExtinguisher(user)
 	return CLICK_ACTION_SUCCESS
@@ -374,7 +375,7 @@
 	if (!istype(tool, /obj/item/bodypart/arm/left/robot) && !istype(tool, /obj/item/bodypart/arm/right/robot))
 		return NONE
 
-	to_chat(user, span_notice("You add [tool] to [src]."))
+	to_chat(user, span_notice(LANG("obj.0c27fe26", list(tool, src))))
 	qdel(tool)
 	var/obj/item/bot_assembly/firebot/assembly = new(drop_location())
 	var/held_index = user.is_holding(src)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Water source, use the type water_source for unlimited water sources like classic sinks.
 /obj/structure/water_source
 	name = "Water Source"
@@ -25,7 +26,7 @@
 		return
 
 	if(busy)
-		to_chat(user, span_warning("Someone's already washing here!"))
+		to_chat(user, span_warning(LANG("obj.d5ba1f8c", null)))
 		return
 	var/selected_area = user.parse_zone_with_bodypart(user.zone_selected)
 	var/washing_face = FALSE
@@ -47,7 +48,7 @@
 	else if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(!human_user.wash_hands(CLEAN_WASH))
-			to_chat(user, span_warning("Your hands are covered by something!"))
+			to_chat(user, span_warning(LANG("obj.7d1649c9", null)))
 			return
 	else
 		user.wash(CLEAN_WASH)
@@ -59,7 +60,7 @@
 
 /obj/structure/water_source/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(busy)
-		to_chat(user, span_warning("Someone's already washing here!"))
+		to_chat(user, span_warning(LANG("obj.d5ba1f8c", null)))
 		return
 
 	if(attacking_item.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
@@ -70,9 +71,9 @@
 		if(container.is_refillable())
 			if(!container.reagents.holder_full())
 				container.reagents.add_reagent(dispensedreagent, min(container.volume - container.reagents.total_volume, container.amount_per_transfer_from_this))
-				to_chat(user, span_notice("You fill [container] from [src]."))
+				to_chat(user, span_notice(LANG("obj.3adf2506", list(container, src))))
 				return TRUE
-			to_chat(user, span_notice("\The [container] is full."))
+			to_chat(user, span_notice(LANG("obj.03adc6e9", list(container))))
 			return FALSE
 
 	if(istype(attacking_item, /obj/item/melee/baton/security))
@@ -90,12 +91,12 @@
 
 	if(istype(attacking_item, /obj/item/mop))
 		attacking_item.reagents.add_reagent(dispensedreagent, 5)
-		to_chat(user, span_notice("You wet [attacking_item] in [src]."))
+		to_chat(user, span_notice(LANG("obj.c4984f89", list(attacking_item, src))))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
 	if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
-		to_chat(user, span_notice("You start washing [attacking_item]..."))
+		to_chat(user, span_notice(LANG("obj.baf588ee", list(attacking_item))))
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE
@@ -144,10 +145,10 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	icon_state = "[base_icon_state]-splash"
-	balloon_alert(user, "scooping tadpoles...")
+	balloon_alert(user, LANG("obj.ed409466", null))
 	if(do_after(user, 5 SECONDS, src))
 		playsound(loc, 'sound/effects/slosh.ogg', 15, TRUE)
-		balloon_alert(user, "got a tadpole")
+		balloon_alert(user, LANG("obj.c6ad5342", null))
 		var/obj/item/fish/tadpole/tadpole = new(loc)
 		tadpole.randomize_size_and_weight()
 		user.put_in_hands(tadpole)

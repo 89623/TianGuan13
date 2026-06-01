@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #ifndef DISABLE_DREAMLUAU
 /datum/lua_editor
 	var/datum/lua_state/current_state
@@ -110,11 +111,11 @@
 				if("value")
 					path_list = list_element["value"]
 				else
-					to_chat(usr, span_warning("invalid path element type \[[path_element["type"]]] for list traversal (expected \"key\" or \"value\""))
+					to_chat(usr, span_warning(LANG("datum.d2e9cb42", list(path_element["type"]))))
 					return
 			// The element we are entering SHOULD be a list, unless we're at the end of the path
 			if(!islist(path_list) && LAZYLEN(path))
-				to_chat(usr, span_warning("invalid path element \[[path_list]] for list traversal (expected a list)"))
+				to_chat(usr, span_warning(LANG("datum.e910b902", list(path_list))))
 				return
 			current_list = path_list
 		return current_list

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ENGINES_STARTED (SSshuttle.emergency.mode == SHUTTLE_IGNITING)
 #define IS_DOCKED (SSshuttle.emergency.mode == SHUTTLE_DOCKED || (ENGINES_STARTED))
 #define SHUTTLE_CONSOLE_ACTION_DELAY (5 SECONDS)
@@ -44,7 +45,7 @@
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,list/modifiers)
 	if(isidcard(I))
-		say("Please equip your ID card into your ID slot to authenticate.")
+		say(LANG("obj.c773488f", null))
 	. = ..()
 
 /obj/machinery/computer/emergency_shuttle/ui_state(mob/user)
@@ -94,7 +95,7 @@
 
 	var/area/my_area = get_area(src)
 	if(!istype(my_area, /area/shuttle/escape))
-		say("Error - Network connectivity: Console has lost connection to the shuttle.")
+		say(LANG("obj.a01d90ad", null))
 		return
 
 	var/mob/living/user = usr
@@ -103,11 +104,11 @@
 	var/obj/item/card/id/ID = user.get_idcard(TRUE)
 
 	if(!ID)
-		to_chat(user, span_warning("You don't have an ID."))
+		to_chat(user, span_warning(LANG("obj.45670a0e", null)))
 		return .
 
 	if(!(ACCESS_COMMAND in ID.access))
-		to_chat(user, span_warning("The access level of your card is not high enough."))
+		to_chat(user, span_warning(LANG("obj.e4eb1bb0", null)))
 		return .
 
 	if(user in acted_recently)
@@ -210,7 +211,7 @@
 	if(hijack_announce)
 		announce_hijack_stage()
 	hijack_last_stage_increase = world.time
-	say("Navigational protocol error! Rebooting systems.")
+	say(LANG("obj.5edd4149", null))
 	if(shuttle.mode == SHUTTLE_ESCAPE)
 		if(shuttle.hijack_status == HIJACK_COMPLETED)
 			shuttle.setTimer(hijack_completion_flight_time_set)
@@ -228,29 +229,29 @@
 	if(!IsReachableBy(user))
 		return
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		to_chat(user, span_warning("You need your hands free before you can manipulate [src]."))
+		to_chat(user, span_warning(LANG("obj.8a3b318a", list(src))))
 		return
 	var/area/my_area = get_area(src)
 	if(!istype(my_area, /area/shuttle/escape))
-		say("Error - Network connectivity: Console has lost connection to the shuttle.")
+		say(LANG("obj.a01d90ad", null))
 		return
 	if(!user?.mind?.get_hijack_speed())
-		to_chat(user, span_warning("You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone."))
+		to_chat(user, span_warning(LANG("obj.d0741f46", list(src))))
 		return
 	if(!EMERGENCY_AT_LEAST_DOCKED) // prevent advancing hijack stages on BYOS shuttles until the shuttle has "docked"
-		to_chat(user, span_warning("The flight plans for the shuttle haven't been loaded yet, you can't hack this right now."))
+		to_chat(user, span_warning(LANG("obj.566bd8c4", null)))
 		return
 	if(hijack_hacking == TRUE)
 		return
 	if(SSshuttle.emergency.hijack_status >= HIJACK_COMPLETED)
-		to_chat(user, span_warning("The emergency shuttle is already loaded with a corrupt navigational payload. What more do you want from it?"))
+		to_chat(user, span_warning(LANG("obj.49ca9c23", null)))
 		return
 	if(hijack_last_stage_increase >= world.time - hijack_stage_cooldown)
-		say("Error - Catastrophic software error detected. Input is currently on timeout.")
+		say(LANG("obj.8b3ff67d", null))
 		return
 	hijack_hacking = TRUE
-	to_chat(user, span_boldwarning("You [SSshuttle.emergency.hijack_status == HIJACK_NOT_BEGUN? "begin" : "continue"] to override [src]'s navigational protocols."))
-	say("Software override initiated.")
+	to_chat(user, span_boldwarning(LANG("obj.559e17cc", list(SSshuttle.emergency.hijack_status == HIJACK_NOT_BEGUN? "begin" : "continue", src))))
+	say(LANG("obj.08d2a3d9", null))
 	var/turf/console_hijack_turf = get_turf(src)
 	message_admins("[src] is being overriden for hijack by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(console_hijack_turf)]")
 	user.log_message("is hijacking [src].", LOG_GAME)
@@ -261,9 +262,9 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] has hijacked [src] in [ADMIN_VERBOSEJMP(console_hijack_turf)].  Hijack stage increased to stage [SSshuttle.emergency.hijack_status] out of [HIJACK_COMPLETED].")
 		user.log_message("has hijacked [src]. Hijack stage increased to stage [SSshuttle.emergency.hijack_status] out of [HIJACK_COMPLETED].", LOG_GAME)
 		. = TRUE
-		to_chat(user, span_notice("You reprogram some of [src]'s programming, putting it on timeout for [hijack_stage_cooldown/10] seconds."))
+		to_chat(user, span_notice(LANG("obj.0ac91401", list(src, hijack_stage_cooldown/10))))
 		visible_message(
-			span_warning("[user.name] appears to be tampering with [src]."),
+			span_warning(LANG("obj.0e254c11", list(user.name, src))),
 			blind_message = span_hear("You hear someone tapping computer keys."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
@@ -297,7 +298,7 @@
 		return FALSE
 
 	if((obj_flags & EMAGGED) || ENGINES_STARTED) //SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
-		balloon_alert(user, "shuttle already about to launch!")
+		balloon_alert(user, LANG("obj.deb1b28a", null))
 		return FALSE
 
 	var/time = TIME_LEFT

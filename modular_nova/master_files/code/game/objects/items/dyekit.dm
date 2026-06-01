@@ -18,7 +18,7 @@
 		return
 
 	if(!uses) // Can be set to -1 for infinite uses, basically.
-		balloon_alert(user, "it's empty!")
+		balloon_alert(user, LANG("obj.76a90f7c", null))
 		return
 
 	var/mob/living/carbon/human/human_target = target
@@ -36,7 +36,7 @@
 
 		human_target.visible_message(span_notice("[user] starts applying hair dye to [dyeing_themselves ? "their own" : "[human_target]'s"] hair..."), span_notice("[dyeing_themselves ? "You start" : "[user] starts"] applying hair dye to [dyeing_themselves ? "your own" : "your"] hair..."), ignored_mobs = user)
 		if(!dyeing_themselves)
-			balloon_alert(user, "dyeing...")
+			balloon_alert(user, LANG("obj.87b436e1", null))
 		if(!do_after(user, 3 SECONDS, target))
 			return
 
@@ -59,7 +59,7 @@
 
 		human_target.visible_message(span_notice("[user] starts applying hair dye to [dyeing_themselves ? "their own" : "[human_target]'s"] hair..."), span_notice("[dyeing_themselves ? "You start" : "[user] starts"] applying hair dye to [dyeing_themselves ? "your own" : "your"] hair..."), ignored_mobs = user)
 		if(!dyeing_themselves)
-			balloon_alert(user, "dyeing...")
+			balloon_alert(user, LANG("obj.87b436e1", null))
 		if(!do_after(user, 3 SECONDS, target))
 			return
 
@@ -76,7 +76,7 @@
 		span_notice("[user] finishes applying hair dye to [dyeing_themselves ? "their own" : "[human_target]'s"] hair, changing its color!"),
 		span_notice("[dyeing_themselves ? "You finish" : "[user] finishes"] applying hair dye to [dyeing_themselves ? "your own" : "your"] hair, changing its color!"), ignored_mobs = user)
 	if(!dyeing_themselves)
-		balloon_alert(user, "dyeing complete!")
+		balloon_alert(user, LANG("obj.7fd26f0a", null))
 
 	uses--
 

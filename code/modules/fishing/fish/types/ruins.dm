@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///From oil puddles from the elephant graveyard. Also an evolution of the "unmarine bonemass"
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
@@ -110,7 +111,7 @@
 	addtimer(CALLBACK(soulman, TYPE_PROC_REF(/mob/living, death)), 5 SECONDS, TIMER_DELETE_ME)
 	if(prob(80)) // the percentage is important.
 		soulman.PossessByPlayer(user.ckey)
-		to_chat(soulman, span_notice("You finally feel at peace."))
+		to_chat(soulman, span_notice(LANG("obj.50db0457", null)))
 	user.gib()
 	qdel(src)
 
@@ -178,7 +179,7 @@
 
 	// skin crab grows powerful
 	color = skin_tone //skintone2hex(skin_tone) //wait til smartkar's recolorwork
-	visible_message(span_danger("[user] starts glowing eerily..."))
+	visible_message(span_danger(LANG("obj.5439bc3c", list(user))))
 	AddElement(/datum/element/haunted, haunt_color = skin_tone)
 
 	return BRUTELOSS

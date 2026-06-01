@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// For all of the items that are really just the user's hand used in different ways, mostly (all, really) from emotes
 /obj/item/hand_item
 	icon = 'icons/obj/weapons/hand.dmi'
@@ -53,10 +54,10 @@
 		return
 
 	if(owner == sucker) // big mood
-		to_chat(owner, span_danger("Wait a second... you just looked at your own [src.name]!"))
+		to_chat(owner, span_danger(LANG("obj.700b9d50", list(src.name))))
 		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 1 SECONDS)
 	else
-		to_chat(sucker, span_danger("Wait a second... was that a-"))
+		to_chat(sucker, span_danger(LANG("obj.cf679774", null)))
 		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 0.6 SECONDS)
 
 /// Stage 3A: We face our own failures
@@ -79,15 +80,15 @@
 		return
 
 	if(QDELETED(src) || QDELETED(owner))
-		to_chat(sucker, span_warning("Nevermind... must've been your imagination..."))
+		to_chat(sucker, span_warning(LANG("obj.1c0de5a1", null)))
 		return
 
 	if(!in_range(owner, sucker) || !(owner.mobility_flags & MOBILITY_USE))
-		to_chat(sucker, span_notice("Phew... you moved away before [owner] noticed you saw [owner.p_their()] [src.name]..."))
+		to_chat(sucker, span_notice(LANG("obj.912ec6b7", list(owner, owner.p_their(), src.name))))
 		return
 
-	to_chat(owner, span_warning("[sucker] looks down at your [src.name] before trying to avert [sucker.p_their()] eyes, but it's too late!"))
-	to_chat(sucker, span_danger("<b>[owner] sees the fear in your eyes as you try to look away from [owner.p_their()] [src.name]!</b>"))
+	to_chat(owner, span_warning(LANG("obj.ffac7415", list(sucker, src.name, sucker.p_their()))))
+	to_chat(sucker, span_danger(LANG("obj.762eab1e", list(owner, owner.p_their(), src.name))))
 
 	owner.face_atom(sucker)
 	if(owner.client)
@@ -99,7 +100,7 @@
 	if(HAS_TRAIT(owner, TRAIT_HULK))
 		owner.visible_message(span_danger("[owner] bops [sucker] with [owner.p_their()] [src.name] much harder than intended, sending [sucker.p_them()] flying!"), \
 			span_danger("You bop [sucker] with your [src.name] much harder than intended, sending [sucker.p_them()] flying!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=list(sucker))
-		to_chat(sucker, span_userdanger("[owner] bops you incredibly hard with [owner.p_their()] [src.name], sending you flying!"))
+		to_chat(sucker, span_userdanger(LANG("obj.8e63994e", list(owner, owner.p_their(), src.name))))
 		sucker.apply_damage(50, STAMINA)
 		sucker.Knockdown(50)
 		log_combat(owner, sucker, "bopped", src.name, "(setup- Hulk)")
@@ -110,7 +111,7 @@
 			span_hear("You hear a dull thud!"), ignored_mobs=list(sucker))
 		sucker.apply_damage(15, STAMINA)
 		log_combat(owner, sucker, "bopped", src.name, "(setup)")
-		to_chat(sucker, span_userdanger("[owner] bops you with [owner.p_their()] [src.name]!"))
+		to_chat(sucker, span_userdanger(LANG("obj.80fad205", list(owner, owner.p_their(), src.name))))
 	qdel(src)
 
 
@@ -121,11 +122,11 @@
 
 /obj/item/hand_item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
 	if(!istype(target))
-		to_chat(user, span_warning("You don't think you can give this a noogie!"))
+		to_chat(user, span_warning(LANG("obj.87e572c4", null)))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You can't bring yourself to noogie [target]! You don't want to risk harming anyone..."))
+		to_chat(user, span_warning(LANG("obj.22dc9bcc", list(target))))
 		return
 
 	if(!(target?.get_bodypart(BODY_ZONE_HEAD)) || user.pulling != target || user.grab_state < GRAB_AGGRESSIVE || user.get_stamina_loss() > 80)
@@ -133,7 +134,7 @@
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!(the_head.biological_state & (BIO_FLESH|BIO_CHITIN)))
-		to_chat(user, span_warning("You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!"))
+		to_chat(user, span_warning(LANG("obj.fc74ff1e", list(target, target.p_they(), target.p_have(), target.p_their()))))
 		return
 
 	// [user] gives [target] a [prefix_desc] noogie[affix_desc]!
@@ -155,11 +156,11 @@
 	var/message_target = "[prefix_desc] noogie[affix_desc_target]"
 
 	user.visible_message(span_danger("[user] begins giving [target] a [message_others]!"), span_warning("You start giving [target] a [message_others]!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
-	to_chat(target, span_userdanger("[user] starts giving you a [message_target]!"))
+	to_chat(target, span_userdanger(LANG("obj.569aac67", list(user, message_target))))
 
 	if(!do_after(user, 1.5 SECONDS, target))
-		to_chat(user, span_warning("You fail to give [target] a noogie!"))
-		to_chat(target, span_danger("[user] fails to give you a noogie!"))
+		to_chat(user, span_warning(LANG("obj.614fbd62", list(target))))
+		to_chat(target, span_danger(LANG("obj.201d2f48", list(user))))
 		return
 
 	if(brutal_noogie)
@@ -175,8 +176,8 @@
 		return FALSE
 
 	if(user.get_stamina_loss() > 80)
-		to_chat(user, span_warning("You're too tired to continue giving [target] a noogie!"))
-		to_chat(target, span_danger("[user] is too tired to continue giving you a noogie!"))
+		to_chat(user, span_warning(LANG("obj.d5ddf06f", list(target))))
+		to_chat(target, span_danger(LANG("obj.53576aa5", list(user))))
 		return
 
 	var/damage = rand(1, 5)
@@ -195,11 +196,11 @@
 
 	if(prob(33))
 		user.visible_message(span_danger("[user] continues noogie'ing [target]!"), span_warning("You continue giving [target] a noogie!"), vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=target)
-		to_chat(target, span_userdanger("[user] continues giving you a noogie!"))
+		to_chat(target, span_userdanger(LANG("obj.c82a7175", list(user))))
 
 	if(!do_after(user, 1 SECONDS + (iteration * 2), target))
-		to_chat(user, span_warning("You fail to give [target] a noogie!"))
-		to_chat(target, span_danger("[user] fails to give you a noogie!"))
+		to_chat(user, span_warning(LANG("obj.614fbd62", list(target))))
+		to_chat(target, span_danger(LANG("obj.201d2f48", list(user))))
 		return
 
 	iteration++
@@ -239,7 +240,7 @@
 			span_hear("You hear someone get the everloving shit smacked out of them!"),
 			ignored_mobs = slapped,
 		)
-		to_chat(slapped, span_userdanger("You see [user] scoff and pull back [user.p_their()] arm, then suddenly you're on the ground with an ungodly ringing in your ears!"))
+		to_chat(slapped, span_userdanger(LANG("obj.d8a237eb", list(user, user.p_their()))))
 		slap_volume = 120
 		SEND_SOUND(slapped, sound('sound/items/weapons/flash_ring.ogg'))
 		shake_camera(slapped, 2, 2)
@@ -348,7 +349,7 @@
 		return ..()
 
 	if(helper.resting)
-		to_chat(helper, span_warning("You can't act gentlemanly when you're lying down!"))
+		to_chat(helper, span_warning(LANG("obj.4187eb0d", null)))
 		return TRUE
 
 
@@ -357,7 +358,7 @@
 		return ..()
 
 	if(helper.resting)
-		to_chat(helper, span_warning("You can't act gentlemanly when you're lying down!"))
+		to_chat(helper, span_warning(LANG("obj.4187eb0d", null)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return SECONDARY_ATTACK_CALL_NORMAL
@@ -378,7 +379,7 @@
 		return
 
 	if(offerer.body_position == LYING_DOWN)
-		to_chat(offerer, span_warning("You can't act gentlemanly when you're lying down!"))
+		to_chat(offerer, span_warning(LANG("obj.4187eb0d", null)))
 		return
 
 	if(!offered)
@@ -412,7 +413,7 @@
 			return // That didn't help them. Awkwaaaaard.
 
 		offerer.visible_message(span_notice("[offerer] helps [taker] up!"), span_nicegreen("You help [taker] up!"), span_hear("You hear someone helping someone else up!"), ignored_mobs = taker)
-		to_chat(taker, span_nicegreen("You take [offerer]'s hand, letting [offerer.p_them()] help your up! How nice of them!"))
+		to_chat(taker, span_nicegreen(LANG("obj.a047b088", list(offerer, offerer.p_them()))))
 
 		offerer.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
 		taker.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
@@ -436,8 +437,8 @@
 	if(did_we_pull == FALSE)
 		return // That didn't work for one reason or the other. No need to display anything.
 
-	to_chat(offerer, span_notice("[taker] takes your hand, allowing you to pull [taker.p_them()] along."))
-	to_chat(taker, span_notice("You take [offerer]'s hand, which allows [offerer.p_them()] to pull you along. How polite!"))
+	to_chat(offerer, span_notice(LANG("obj.f7cbdcf3", list(taker, taker.p_them()))))
+	to_chat(taker, span_notice(LANG("obj.ea03292e", list(offerer, offerer.p_them()))))
 
 	qdel(src)
 
@@ -455,7 +456,7 @@
 		return
 	var/mob/living/carbon/human/target_human = target_mob
 	if(target_human == user)
-		to_chat(user, span_notice("Why would you try stealing your own shoes?"))
+		to_chat(user, span_notice(LANG("obj.e5e6ea1c", null)))
 		return
 	if (!target_human.shoes)
 		return
@@ -464,7 +465,7 @@
 	var/obj/item/clothing/shoes/item_to_strip = target_human.shoes
 	user.visible_message(span_warning("[user] starts stealing [target_human]'s [item_to_strip.name]!"), \
 		span_danger("You start stealing [target_human]'s [item_to_strip.name]..."))
-	to_chat(target_human, span_userdanger("[user] starts stealing your [item_to_strip.name]!"))
+	to_chat(target_human, span_userdanger(LANG("obj.b2acf044", list(user, item_to_strip.name))))
 	if (!do_after(user, item_to_strip.strip_delay, target_human))
 		return
 	if(!target_human.dropItemToGround(item_to_strip))
@@ -472,7 +473,7 @@
 	user.put_in_hands(item_to_strip)
 	user.visible_message(span_warning("[user] stole [target_human]'s [item_to_strip.name]!"), \
 		span_notice("You stole [target_human]'s [item_to_strip.name]!"))
-	to_chat(target_human, span_userdanger("[user] stole your [item_to_strip.name]!"))
+	to_chat(target_human, span_userdanger(LANG("obj.545019be", list(user, item_to_strip.name))))
 
 /obj/item/hand_item/kisser
 	name = "kiss"
@@ -519,7 +520,7 @@
 
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(offerer))
 	offerer.visible_message("<b>[offerer]</b> gives [taker] \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!!", span_notice("You give [taker] \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!"), ignored_mobs = taker)
-	to_chat(taker, span_nicegreen("[offerer] gives you \a [blown_kiss][cheek_kiss ? " on the cheek" : ""]!"))
+	to_chat(taker, span_nicegreen(LANG("obj.b5af887e", list(offerer, blown_kiss, cheek_kiss ? " on the cheek" : ""))))
 	offerer.face_atom(taker)
 	taker.face_atom(offerer)
 	offerer.do_item_attack_animation(taker, used_item = src, animation_type = ATTACK_ANIMATION_BLUNT)
@@ -725,17 +726,17 @@
 	// From here on, no message
 	suppressed = SUPPRESSED_VERY
 	if(!(kisser.mind && HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(kisser.mind))))
-		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
+		to_chat(firer, span_warning(LANG("obj.19e3040c", list(target.name))))
 		return
 	if(target.reagents.has_reagent(/datum/reagent/love))
-		to_chat(firer, span_warning("You've already blessed [target.name] with your heart and soul."))
+		to_chat(firer, span_warning(LANG("obj.6b8880a6", list(target.name))))
 		return
 
 	var/amount_nutriment = target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_PARENT_TYPE)
 	if(amount_nutriment <= 0)
-		to_chat(firer, span_warning("There's not enough nutrition in [target.name] for it to be a proper meal."))
+		to_chat(firer, span_warning(LANG("obj.03bdad3b", list(target.name))))
 		return
 
-	to_chat(firer, span_green("You deliver a chef's kiss over [target], declaring it perfect."))
+	to_chat(firer, span_green(LANG("obj.7921ae51", list(target))))
 	target.visible_message(span_notice("[firer] delivers a chef's kiss over [target]."), ignored_mobs = firer)
 	target.reagents.add_reagent(/datum/reagent/love, clamp(amount_nutriment / 4, 1, 10)) // clamped to about half of the most dense food I think we have (super bite burger)

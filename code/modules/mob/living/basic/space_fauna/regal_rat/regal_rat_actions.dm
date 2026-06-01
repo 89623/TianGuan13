@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  *Increase the rat king's domain
  */
@@ -170,13 +171,13 @@
 	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_AGEUSIA))
 		return
-	to_chat(affected_mob, span_notice("This food has a funny taste!"))
+	to_chat(affected_mob, span_notice(LANG("datum.fb74a9b2", null)))
 
 /datum/reagent/rat_spit/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	. = ..()
 	var/mob/living/carbon/victim = affected_mob
 	if (istype(victim) && !victim.has_faction(FACTION_RAT))
-		to_chat(victim, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
+		to_chat(victim, span_userdanger(LANG("datum.df0b9993", null)))
 		victim.add_faction(FACTION_RAT)
 		victim.vomit(VOMIT_CATEGORY_DEFAULT)
 	metabolization_rate = 10 * REAGENTS_METABOLISM
@@ -184,10 +185,10 @@
 /datum/reagent/rat_spit/on_mob_life(mob/living/carbon/affected_mob, metabolization_ratio)
 	. = ..()
 	if(prob(15))
-		to_chat(affected_mob, span_notice("You feel queasy!"))
+		to_chat(affected_mob, span_notice(LANG("datum.8dcc4527", null)))
 		affected_mob.adjust_disgust(3)
 	else if(prob(10))
-		to_chat(affected_mob, span_warning("That food does not sit up well!"))
+		to_chat(affected_mob, span_warning(LANG("datum.d9848bf9", null)))
 		affected_mob.adjust_disgust(5)
 	else if(prob(5))
 		affected_mob.vomit(VOMIT_CATEGORY_DEFAULT)

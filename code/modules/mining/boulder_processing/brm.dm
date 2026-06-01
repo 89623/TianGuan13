@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Sound played when boulders are teleported manually by hand
 #define MANUAL_TELEPORT_SOUND 'sound/machines/mining/manual_teleport.ogg'
 ///Sound played when boulders are teleported automatically in process()
@@ -130,9 +131,9 @@
 
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
-		balloon_alert(user, "no space!")
+		balloon_alert(user, LANG("obj.a5ca1017", null))
 	else if(result)
-		balloon_alert(user, "teleporting...")
+		balloon_alert(user, LANG("obj.bda2b65d", null))
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
@@ -150,16 +151,16 @@
 	// NOVA EDIT ADDITION START
 	var/area/teleport_area = get_area(src)
 	if (!is_type_in_typecache(teleport_area, allowed_areas_to_work))
-		balloon_alert(user, "can't use this here!")
+		balloon_alert(user, LANG("obj.cfac9378", null))
 		return FALSE
 	// NOVA EDIT ADDITION END
 	if(!COOLDOWN_FINISHED(src, manual_teleport_cooldown))
 		return FALSE
 	if(panel_open)
-		balloon_alert(user, "close panel first!")
+		balloon_alert(user, LANG("obj.5ddfc4f0", null))
 		return FALSE
 	if(batch_processing)
-		balloon_alert(user, "batch still processing!")
+		balloon_alert(user, LANG("obj.ebb5e2ee", null))
 		return FALSE
 	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
@@ -173,9 +174,9 @@
 
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
-		balloon_alert(user, "no space!")
+		balloon_alert(user, LANG("obj.a5ca1017", null))
 	else if(result)
-		balloon_alert(user, "teleporting...")
+		balloon_alert(user, LANG("obj.bda2b65d", null))
 
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
@@ -190,9 +191,9 @@
 
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
-		balloon_alert(user, "no space!")
+		balloon_alert(user, LANG("obj.a5ca1017", null))
 	else if(result)
-		balloon_alert(user, "teleporting...")
+		balloon_alert(user, LANG("obj.bda2b65d", null))
 
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
@@ -203,7 +204,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor it first!")
+		balloon_alert(user, LANG("obj.c16d48e2", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	toggle_auto_on(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -221,14 +222,14 @@
 	// NOVA EDIT ADDITION START
 	var/area/teleport_area = get_area(src)
 	if (!is_type_in_typecache(teleport_area, allowed_areas_to_work))
-		balloon_alert(user, "can't use this here!")
+		balloon_alert(user, LANG("obj.cfac9378", null))
 		return FALSE
 	// NOVA EDIT ADDITION END
 	if(panel_open)
-		balloon_alert(user, "close panel first!")
+		balloon_alert(user, LANG("obj.5ddfc4f0", null))
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor it first!")
+		balloon_alert(user, LANG("obj.c16d48e2", null))
 		return
 	if(!is_operational || machine_stat & (BROKEN | NOPOWER))
 		return
@@ -245,7 +246,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "unanchored!")
+		balloon_alert(user, LANG("obj.d10c084a", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	toggle_auto_on(user)
@@ -258,7 +259,7 @@
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!anchored)
-		balloon_alert(user, "unanchored!")
+		balloon_alert(user, LANG("obj.d10c084a", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	toggle_auto_on(user)

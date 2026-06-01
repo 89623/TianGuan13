@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Tracking reasons
 /datum/antagonist/heretic_monster
 	name = "\improper Eldritch Horror"
@@ -15,9 +16,9 @@
 /datum/antagonist/heretic_monster/on_removal()
 	if(!silent)
 		if(master?.current)
-			to_chat(master.current, span_warning("The essence of [owner], your servant, fades from your mind."))
+			to_chat(master.current, span_warning(LANG("datum.fb8db412", list(owner))))
 		if(owner.current)
-			to_chat(owner.current, span_deconversion_message("Your mind begins to fill with haze - your master is no longer[master ? " [master]":""], you are free!"))
+			to_chat(owner.current, span_deconversion_message(LANG("datum.70c4b6ae", list(master ? " [master]":""))))
 			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] been freed from the chains of the Mansus!"), ignored_mobs = owner.current)
 
 	master = null
@@ -47,5 +48,5 @@
 
 	objectives += master_obj
 	owner.announce_objectives()
-	to_chat(owner, span_boldnotice("You are a [ishuman(owner.current) ? "shambling corpse returned":"horrible creation brought"] to this plane through the Gates of the Mansus."))
-	to_chat(owner, span_notice("Your master is [master]. Assist them to all ends."))
+	to_chat(owner, span_boldnotice(LANG("datum.8e1132bd", list(ishuman(owner.current) ? "shambling corpse returned":"horrible creation brought"))))
+	to_chat(owner, span_notice(LANG("datum.9d65ff87", list(master))))

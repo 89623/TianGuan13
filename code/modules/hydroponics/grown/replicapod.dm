@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // A very special plant, deserving its own file.
 
 // Yes, i'm talking about cabbage, baby! No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
@@ -74,7 +75,7 @@
 		return
 
 	if(!blood.data["mind"] || !blood.data["cloneable"])
-		visible_message(span_warning("The [src] rejects the sample!"))
+		visible_message(span_warning(LANG("obj.aa8dc8b6", list(src))))
 		return
 
 	mind = blood.data["mind"]
@@ -87,7 +88,7 @@
 	quirks = blood.data["quirks"]
 	sampleDNA = blood.data["blood_DNA"]
 	contains_sample = TRUE
-	visible_message(span_notice("The [src] is injected with a fresh blood sample."))
+	visible_message(span_notice(LANG("obj.c0515c64", list(src))))
 	investigate_log("[key_name(mind)]'s cloning record was added to [src]", INVESTIGATE_BOTANY)
 
 /// Handles reagents being deleted from these seeds.

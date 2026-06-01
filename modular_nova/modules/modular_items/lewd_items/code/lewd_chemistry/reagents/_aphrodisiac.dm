@@ -181,7 +181,7 @@
 	if((mob_penis?.genital_size >= (TAKE_DAMAGE_THRESHOLD_PENIS)) && (exposed_mob.w_uniform || exposed_mob.wear_suit))
 		var/target_bodypart = exposed_mob.get_bodypart(BODY_ZONE_PRECISE_GROIN)
 		if(prob(damage_chance))
-			to_chat(exposed_mob, span_danger("You feel a tightness in your pants!"))
+			to_chat(exposed_mob, span_danger(LANG("datum.acf6f204", null)))
 			exposed_mob.apply_damage(1, BRUTE, target_bodypart)
 
 /**
@@ -243,7 +243,7 @@
 	// Damage from being too big for your clothes
 	if((mob_breasts?.genital_size >= (TAKE_DAMAGE_THRESHOLD_BREASTS)) && (exposed_mob.w_uniform || exposed_mob.wear_suit))
 		if(prob(damage_chance))
-			to_chat(exposed_mob, span_danger("Your breasts begin to strain against your clothes!"))
+			to_chat(exposed_mob, span_danger(LANG("datum.3ac18bda", null)))
 			exposed_mob.adjust_oxy_loss(5)
 			exposed_mob.apply_damage(1, BRUTE, exposed_mob.get_bodypart(BODY_ZONE_CHEST))
 
@@ -485,7 +485,7 @@
 	update_appearance(exposed_mob, new_penis)
 
 	if(!suppress_chat)
-		to_chat(exposed_mob, span_purple("Your crotch feels warm as something suddenly sprouts between your legs."))
+		to_chat(exposed_mob, span_purple(LANG("datum.dca10801", null)))
 
 /**
 * Handle creation of testicles
@@ -550,11 +550,11 @@
 	if(new_breasts.visibility_preference == GENITAL_ALWAYS_SHOW || exposed_mob.is_topless())
 		if(!suppress_chat) // So we don't spam chat
 			exposed_mob.visible_message(span_notice("[exposed_mob]'s bust suddenly expands!"))
-			to_chat(exposed_mob, span_purple("Your chest feels warm, tingling with sensitivity as it expands outward."))
+			to_chat(exposed_mob, span_purple(LANG("datum.252d5a55", null)))
 	else
 		if(!suppress_chat)
 			exposed_mob.visible_message(span_notice("The area around [exposed_mob]'s chest suddenly bounces a bit."))
-			to_chat(exposed_mob, span_purple("Your chest feels warm, tingling with sensitivity as it strains against your clothes."))
+			to_chat(exposed_mob, span_purple(LANG("datum.3ccb4532", null)))
 
 	return new_breasts
 
@@ -590,7 +590,7 @@
 	new_vagina.Insert(exposed_mob, 0, FALSE)
 	update_appearance(exposed_mob)
 	if(!suppress_chat)
-		to_chat(exposed_mob, span_purple("You feel a warmth in your groin as something blossoms down there."))
+		to_chat(exposed_mob, span_purple(LANG("datum.ceb8f4a7", null)))
 
 /**
 * Handle creation of womb

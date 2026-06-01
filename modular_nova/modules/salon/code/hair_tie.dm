@@ -55,7 +55,7 @@
 /obj/item/clothing/head/hair_tie/attack_self(mob/user)
 	var/hair_id = tgui_input_list(user, "How does your hair look when it's up?", "Pick!", SSaccessories.hairstyles_list)
 	if(!hair_id || hair_id == "Bald")
-		balloon_alert(user, "error!")
+		balloon_alert(user, LANG("obj.bf18be82", null))
 		return
 	balloon_alert(user, "[hair_id]")
 	picked_hairstyle = hair_id
@@ -88,7 +88,7 @@
 
 /obj/item/clothing/head/hair_tie/click_alt(mob/living/user)
 	if(!(user.get_slot_by_item(src) == ITEM_SLOT_HANDS))
-		balloon_alert(user, "hold in-hand!")
+		balloon_alert(user, LANG("obj.194a79c0", null))
 		return CLICK_ACTION_BLOCKING
 	user.visible_message(
 		span_danger("[user.name] puts [src] around [user.p_their()] fingers, beginning to flick it!"),

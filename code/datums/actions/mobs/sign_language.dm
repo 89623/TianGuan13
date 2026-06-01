@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Allows a Carbon to toggle sign language on/off. The button is invisible for mute Carbons.
  * Theory of Operation:
@@ -48,13 +49,13 @@
 /datum/action/innate/sign_language/Activate()
 	active = TRUE
 	ADD_TRAIT(owner, TRAIT_SIGN_LANG, ACTION_TRAIT)
-	to_chat(owner, span_green("You are now communicating with sign language."))
+	to_chat(owner, span_green(LANG("datum.115e48ba", null)))
 	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 /datum/action/innate/sign_language/Deactivate()
 	active = FALSE
 	REMOVE_TRAIT(owner, TRAIT_SIGN_LANG, ACTION_TRAIT)
-	to_chat(owner, span_green("You have stopped using sign language."))
+	to_chat(owner, span_green(LANG("datum.436127be", null)))
 	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 /// Shows the linked action to the owner Carbon.

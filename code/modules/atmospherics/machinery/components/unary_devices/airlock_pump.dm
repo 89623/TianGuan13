@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * The pump looks up for the airlocks automatically based on airlock_pump_distance_limit and airlock_group_distance_limit values.
  * When placed, the dir value (direction where the pipes are coming from) is considered as a direction towards the station (internal). The opposite direction is external.
@@ -166,10 +167,10 @@
 /obj/machinery/atmospherics/components/unary/airlock_pump/can_unwrench(mob/user)
 	. = ..()
 	if(!.)
-		to_chat(user, span_warning("You cannot unwrench [src], it is secured firmly in place!"))
+		to_chat(user, span_warning(LANG("obj.67f41406", list(src))))
 		return FALSE
 	if(. && on)
-		to_chat(user, span_warning("You cannot unwrench [src], wait for the cycle completion!"))
+		to_chat(user, span_warning(LANG("obj.e5a055e3", list(src))))
 		return FALSE
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/set_on(active)
@@ -376,10 +377,10 @@
 
 	// We just finishing previous cycle
 	if (airlocks_animating)
-		say("Docking request queued.")
+		say(LANG("obj.ee386a6b", null))
 		stoplag(1.1 SECONDS) // Wait for opening animation
 		if (airlocks_animating)	// Should (almost) never happened
-			say("ERROR: D11. Please re-initiate docking sequence.")
+			say(LANG("obj.219d7148", null))
 			return
 
 	if (on)
@@ -446,7 +447,7 @@
 	stoplag(1 SECONDS) // Wait for closing animation
 	airlocks_animating = FALSE
 	update_appearance(UPDATE_ICON)
-	say("Docking complete.")
+	say(LANG("obj.56d2ee31", null))
 	return TRUE
 
 
@@ -460,7 +461,7 @@
 	for(var/obj/machinery/door/airlock/airlock as anything in external_airlocks)
 		INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_close), TRUE)
 
-	say("Docking connection terminated.")
+	say(LANG("obj.f8241966", null))
 	airlocks_animating = TRUE
 	stoplag(1 SECONDS) // Wait for closing animation
 	airlocks_animating = FALSE
@@ -497,7 +498,7 @@
 			CRASH("[type] couldn't find airlocks to cycle with!")
 		internal_airlocks.Cut()
 		external_airlocks.Cut()
-		say("Cycling setup failed. No opposite airlocks found.")
+		say(LANG("obj.a6598764", null))
 		return
 
 	for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
@@ -511,7 +512,7 @@
 	cycle_timeout *= round((internal_airlocks.len + external_airlocks.len) / 2)
 	cycling_set_up = TRUE
 	if(can_unwrench)
-		say("Cycling setup complete.")
+		say(LANG("obj.24461a39", null))
 
 
 ///Get the turf of the first found airlock or an airtight structure (walls) within the allowed range
@@ -597,14 +598,14 @@
 		user.ventcrawl_layer = clamp(user.ventcrawl_layer + 2, PIPING_LAYER_DEFAULT - 1, PIPING_LAYER_DEFAULT + 1)
 	if((SOUTH|WEST) & direction)
 		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 2, PIPING_LAYER_DEFAULT - 1, PIPING_LAYER_DEFAULT + 1)
-	to_chat(user, "You align yourself with the [user.ventcrawl_layer == 2 ? 1 : 2]\th output.")
+	to_chat(user, LANG("obj.3bcf8a8b", list(user.ventcrawl_layer == 2 ? 1 : 2)))
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/on_set_is_operational(was_operational)
 	if(was_operational && !is_operational)
 		// unbolt all the doors but don't open them
 		for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
 			airlock.unbolt()
-		audible_message(span_notice("[src] whirrs as [p_they()] loses power, disengaging airlock bolts."))
+		audible_message(span_notice(LANG("obj.c4f90690", list(src, p_they()))))
 	else if(!was_operational && is_operational)
 		// upon regaining power, re-bolt relevant airlocks
 		for(var/obj/machinery/door/airlock/airlock as anything in external_airlocks)
@@ -612,7 +613,7 @@
 		for(var/obj/machinery/door/airlock/airlock as anything in internal_airlocks)
 			if(open_airlock_on_cycle)
 				INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open))
-		audible_message(span_notice("[src] whirrs as [p_they()] regains power, re-engaging airlock bolts."))
+		audible_message(span_notice(LANG("obj.a05b81ab", list(src, p_they()))))
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only
 	open_airlock_on_cycle = FALSE

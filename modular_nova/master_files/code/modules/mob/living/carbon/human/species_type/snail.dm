@@ -94,7 +94,7 @@
 
 	qdel(tool)
 	upgrade_to_bluespace(user)
-	to_chat(user, span_notice("You insert [tool] into your shell, and it starts to glow blue with expanded storage potential!"))
+	to_chat(user, span_notice(LANG("obj.cc80616a", list(tool))))
 	return ITEM_INTERACT_SUCCESS
 
 /// Upgrades the storage capacity of the snail shell and gives it a glowy blue outline

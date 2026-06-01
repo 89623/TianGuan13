@@ -44,7 +44,7 @@
 	else
 		limb.receive_damage(brute=20, wound_bonus=CANT_WOUND)
 		user.visible_message(span_danger("[user] finishes realigning [victim]'s [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), span_nicegreen("You finish realigning [victim]'s [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] resets your [limb.plaintext_zone] with a disturbing <b>crunch</b>!"))
+		to_chat(victim, span_userdanger(LANG("datum.1374a635", list(user, limb.plaintext_zone))))
 
 	victim.emote("scream")
 	playsound(user, 'sound/effects/wounds/crack1.ogg', 70, TRUE)
@@ -76,7 +76,7 @@
 	else
 		limb.receive_damage(brute=40, wound_bonus=CANT_WOUND)
 		user.visible_message(span_danger("[user] finishes realigning [victim]'s [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), span_nicegreen("You finish realigning [victim]'s [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] resets your [limb.plaintext_zone] with a disturbing <b>crunch</b>!"))
+		to_chat(victim, span_userdanger(LANG("datum.1374a635", list(user, limb.plaintext_zone))))
 
 	victim.emote("scream")
 	playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
@@ -169,7 +169,7 @@
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_BONESET : TOOL_BLOODFILTER)
-	balloon_alert(user, "tools set to [active ? "set bones" : "filter blood"]")
+	balloon_alert(user, LANG("obj.cc5a7618", list(active ? "set bones" : "filter blood")))
 	playsound(user ? user : src, 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 

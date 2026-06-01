@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PICKUP_RESTRICTION_TIME 3 SECONDS // so other players can pickup the ball after someone scores
 
 /datum/crafting_recipe/basketball_hoop
@@ -105,7 +106,7 @@
 	animate(baller, pixel_w = dunk_pixel_w, pixel_z = dunk_pixel_z, time = 0.5 SECONDS, easing = BOUNCE_EASING|EASE_IN|EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
 	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 
-	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
+	visible_message(span_warning(LANG("obj.e214d62a", list(baller, ball, src))))
 	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)
 	score(ball, baller, 2)
 
@@ -122,11 +123,11 @@
 
 	var/mob/living/loser = baller.pulling
 	if(baller.grab_state < GRAB_AGGRESSIVE)
-		to_chat(baller, span_warning("You need a better grip to do that!"))
+		to_chat(baller, span_warning(LANG("obj.d5471d98", null)))
 		return
 	loser.forceMove(loc)
 	loser.Paralyze(100)
-	visible_message(span_danger("[baller] dunks [loser] into \the [src]!"))
+	visible_message(span_danger(LANG("obj.e214d62a", list(baller, loser, src))))
 	playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100, FALSE)
 	baller.adjust_stamina_loss(STAMINA_COST_DUNKING_MOB)
 	baller.stop_pulling()
@@ -167,9 +168,9 @@
 		var/points = (distance > 2) ? 3 : 2
 		thrower.add_mood_event("basketball", /datum/mood_event/basketball_score)
 		score(AM, thrower, points)
-		visible_message(span_warning("[click_on_hoop ? "Swish!" : ""] [AM] lands in [src]."))
+		visible_message(span_warning(LANG("obj.bacf49d2", list(click_on_hoop ? "Swish!" : "", AM, src))))
 	else
-		visible_message(span_danger("[AM] bounces off of [src]'s [click_on_hoop ? "rim" : "backboard"]!"))
+		visible_message(span_danger(LANG("obj.6c393baa", list(AM, src, click_on_hoop ? "rim" : "backboard"))))
 
 // Special hoops for the minigame
 /obj/structure/hoop/minigame

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/statuebust
 	name = "bust"
 	desc = "A priceless ancient marble bust, the kind that belongs in a museum." //or you can hit people with it
@@ -60,31 +61,31 @@
 
 /obj/item/statuebust/hippocratic/attack_self(mob/user)
 	if(!iscarbon(user))
-		to_chat(user, span_warning("You remember how the Hippocratic Oath specifies 'my fellow human beings' and realize that it's completely meaningless to you."))
+		to_chat(user, span_warning(LANG("obj.dc0f9bd4", null)))
 		return
 
 	if(reference)
-		to_chat(user, span_warning("As you prepare yourself to swear the Oath, you realize that doing so on a blood-caked bust is probably not a good idea."))
+		to_chat(user, span_warning(LANG("obj.643bef43", null)))
 		return
 
 	if(!COOLDOWN_FINISHED(src, oath_cd))
-		to_chat(user, span_warning("You've sworn or forsworn an oath too recently to undo your decisions. The bust looks at you with disgust."))
+		to_chat(user, span_warning(LANG("obj.7c50ca88", null)))
 		return
 
 	COOLDOWN_START(src, oath_cd, 5 MINUTES)
 
 	if(HAS_TRAIT_FROM(user, TRAIT_PACIFISM, type))
-		to_chat(user, span_warning("You've already sworn a vow. You start preparing to rescind it..."))
+		to_chat(user, span_warning(LANG("obj.bf1c91c7", null)))
 		if(do_after(user, 5 SECONDS, target = user))
 			user.say("Yeah this Hippopotamus thing isn't working out. I quit!", forced = "hippocratic hippocrisy")
 			REMOVE_TRAIT(user, TRAIT_PACIFISM, type)
 
 	// they can still do it for rp purposes
 	if(HAS_TRAIT_NOT_FROM(user, TRAIT_PACIFISM, type))
-		to_chat(user, span_warning("You already don't want to harm people, this isn't going to do anything!"))
+		to_chat(user, span_warning(LANG("obj.42e9c25a", null)))
 
 
-	to_chat(user, span_notice("You remind yourself of the Hippocratic Oath's contents and prepare to swear yourself to it..."))
+	to_chat(user, span_notice(LANG("obj.cb52973c", null)))
 	if(do_after(user, 4 SECONDS, target = user))
 		user.say("I swear to fulfill, to the best of my ability and judgment, this covenant:", forced = "hippocratic oath")
 	else
@@ -103,12 +104,12 @@
 	else
 		return fuck_it_up(user)
 
-	to_chat(user, span_notice("Contentment, understanding, and purpose washes over you as you finish the oath. You consider for a second the concept of harm and shudder."))
+	to_chat(user, span_notice(LANG("obj.fd7b9019", null)))
 	ADD_TRAIT(user, TRAIT_PACIFISM, type)
 
 // Bully the guy for fucking up.
 /obj/item/statuebust/hippocratic/proc/fuck_it_up(mob/living/carbon/user)
-	to_chat(user, span_warning("You forget what comes next like a dumbass. The Hippocrates bust looks down on you, disappointed."))
+	to_chat(user, span_warning(LANG("obj.3265bf5a", null)))
 	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2)
 	COOLDOWN_RESET(src, oath_cd)
 

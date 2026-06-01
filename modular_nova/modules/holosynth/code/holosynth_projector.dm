@@ -87,7 +87,7 @@
 	SIGNAL_HANDLER
 
 	if(user)
-		balloon_alert(user, "clicked")
+		balloon_alert(user, LANG("obj.23429591", null))
 	playsound(src, 'sound/items/pen_click.ogg', 30, TRUE, -3)
 	icon_state = initial(icon_state) + (active ? "_writing" : "")
 	worn_icon_state = initial(worn_icon_state) + (active ? "_writing" : "")
@@ -112,7 +112,7 @@
 			linked_mob.heal_and_revive()
 			new /obj/effect/temp_visual/guardian/phase(get_turf(linked_mob))
 		else
-			balloon_alert(user, "too far!")
+			balloon_alert(user, LANG("obj.f5e75781", null))
 			saved_loc_ref = WEAKREF(get_turf(linked_mob))
 
 	return COMPONENT_NO_DEFAULT_MESSAGE
@@ -210,13 +210,13 @@
 	if(isnull(linked_mob) || user == linked_mob)
 		return ITEM_INTERACT_FAILURE
 	if(linked_mob.loc != src)
-		balloon_alert(user, "holosynth is active!")
+		balloon_alert(user, LANG("obj.dbe7c00a", null))
 		return ITEM_INTERACT_FAILURE
 	if(target.density)
-		balloon_alert(user, "solid object!")
+		balloon_alert(user, LANG("obj.7abf37d0", null))
 		return ITEM_INTERACT_FAILURE
 	saved_loc_ref = WEAKREF(get_turf(target))
-	balloon_alert(user, "location targeted")
+	balloon_alert(user, LANG("obj.bc5143f7", null))
 	playsound(src, 'sound/items/pen_click.ogg', 30, TRUE, -3)
 	return ITEM_INTERACT_SUCCESS
 
@@ -245,7 +245,7 @@
 	var/mob/living/carbon/human/linked_mob = linked_mob_ref?.resolve()
 
 	if(user == linked_mob)
-		balloon_alert(user, "can't modify yourself!")
+		balloon_alert(user, LANG("obj.dfbec797", null))
 		return COMPONENT_BLOCK_TRANSFORM
 
 // The death effect

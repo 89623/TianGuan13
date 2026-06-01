@@ -27,7 +27,7 @@
 	SIGNAL_HANDLER
 
 	if(owner)
-		to_chat(owner, span_boldwarning("You sense your Clockwork Slab has been destroyed!"))
+		to_chat(owner, span_boldwarning(LANG("datum.fe985c68", null)))
 
 	unmark_item()
 
@@ -41,7 +41,7 @@
 	var/obj/item_to_retrieve = marked_slab
 
 	if(!item_to_retrieve)
-		to_chat(usr, span_brass("You don't have a slab attuned!"))
+		to_chat(usr, span_brass(LANG("datum.670da546", null)))
 
 	if(!item_to_retrieve.loc)
 		return

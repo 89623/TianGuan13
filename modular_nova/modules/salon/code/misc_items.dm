@@ -17,7 +17,7 @@
 		return
 
 	if(!ishuman(attacked_mob))
-		to_chat(user, span_warning("Where are the lips on that?"))
+		to_chat(user, span_warning(LANG("obj.25ec14bf", null)))
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(async_set_color), attacked_mob, user)
@@ -32,10 +32,10 @@
 
 	var/mob/living/carbon/human/target = attacked_mob
 	if(target.is_mouth_covered())
-		to_chat(user, span_warning("Remove [ target == user ? "your" : "[target.p_their()]" ] mask!"))
+		to_chat(user, span_warning(LANG("obj.b40dd1bb", list(target == user ? "your" : "[target.p_their()]"))))
 		return
 	if(target.lip_style) //if they already have lipstick on
-		to_chat(user, span_warning("You need to wipe off the old lipstick first!"))
+		to_chat(user, span_warning(LANG("obj.6f35b2db", null)))
 		return
 
 	if(target == user)
@@ -106,29 +106,29 @@
 	var/static/list/head_zones = list(BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)
 
 	if(!noggin && (location in head_zones))
-		to_chat(user, span_warning("[target_human] doesn't have a head!"))
+		to_chat(user, span_warning(LANG("obj.618bead4", list(target_human))))
 		return
 
 	if(!(location in head_zones) && !user.combat_mode)
-		to_chat(user, span_warning("You stop, look down at what you're currently holding and ponder to yourself, \"This is probably to be used on their hair or their facial hair.\""))
+		to_chat(user, span_warning(LANG("obj.d6bb1707", null)))
 		return
 
 	if(location == BODY_ZONE_PRECISE_MOUTH)
 		if(!(noggin.head_flags & HEAD_FACIAL_HAIR))
-			to_chat(user, span_warning("There is no facial hair to shave!"))
+			to_chat(user, span_warning(LANG("obj.f4b1d286", null)))
 			return
 
 		var/covering = target_human.is_mouth_covered()
 		if(covering)
-			to_chat(user, span_warning("[covering] is in the way!"))
+			to_chat(user, span_warning(LANG("obj.f4935eb9", list(covering))))
 			return
 
 		if(HAS_TRAIT(target_human, TRAIT_SHAVED))
-			to_chat(user, span_warning("[target_human] is just way too shaved. Like, really really shaved."))
+			to_chat(user, span_warning(LANG("obj.41f7910e", list(target_human))))
 			return
 
 		if(target_human.facial_hairstyle == "Shaved")
-			to_chat(user, span_warning("Already clean-shaven!"))
+			to_chat(user, span_warning(LANG("obj.ca2845a9", null)))
 			return
 
 		var/self_shaving = target_human == user // Shaving yourself?
@@ -143,19 +143,19 @@
 
 	else if(location == BODY_ZONE_HEAD)
 		if(!(noggin.head_flags & HEAD_HAIR))
-			to_chat(user, span_warning("There is no hair to shave!"))
+			to_chat(user, span_warning(LANG("obj.90a39cac", null)))
 			return
 
 		if(!target_human.is_location_accessible(location))
-			to_chat(user, span_warning("The headgear is in the way!"))
+			to_chat(user, span_warning(LANG("obj.080119ba", null)))
 			return
 
 		if(target_human.hairstyle == "Bald" || target_human.hairstyle == "Balding Hair" || target_human.hairstyle == "Skinhead")
-			to_chat(user, span_warning("There is not enough hair left to shave!"))
+			to_chat(user, span_warning(LANG("obj.a6abc8b8", null)))
 			return
 
 		if(HAS_TRAIT(target_human, TRAIT_SHAVED))
-			to_chat(user, span_warning("[target_human] is just way too shaved. Like, really really shaved."))
+			to_chat(user, span_warning(LANG("obj.41f7910e", list(target_human))))
 			return
 
 		var/self_shaving = target_human == user // Shaving yourself?

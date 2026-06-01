@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Mostly useless funny rite for forgiving someone, making them innocent once again.
 /datum/religion_rites/forgive
 	name = "Forgive"
@@ -12,7 +13,7 @@
 	if(!honor)
 		return FALSE
 	if(!length(honor.guilty))
-		to_chat(user, span_warning("[GLOB.deity] is holding no grudges to forgive."))
+		to_chat(user, span_warning(LANG("datum.0ce77776", list(GLOB.deity))))
 		return FALSE
 	var/forgiven_choice = tgui_input_list(user, "Choose one of [GLOB.deity]'s guilty to forgive", "Forgive", honor.guilty)
 	if(isnull(forgiven_choice))
@@ -47,7 +48,7 @@
 			continue
 		writ_target = could_writ //PLEASE SIGN MY AUTOGRAPH
 		return ..()
-	to_chat(user, span_warning("You need to place blank paper on [religious_tool] to do this!"))
+	to_chat(user, span_warning(LANG("datum.24468dd5", list(religious_tool))))
 	return FALSE
 
 /datum/religion_rites/summon_rules/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -56,7 +57,7 @@
 	var/turf/tool_turf = get_turf(religious_tool)
 	writ_target = null
 	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the paper is still there
-		to_chat(user, span_warning("Your target left the altar!"))
+		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
 	autograph.visible_message(span_notice("Words magically form on [autograph]!"))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
@@ -136,7 +137,7 @@
 
 /datum/religion_rites/deaconize/crusader/is_valid_for_deacon(mob/living/carbon/human/possible_deacon, mob/living/user)
 	if(TRAIT_GENELESS in possible_deacon.dna.species.inherent_traits)
-		to_chat(user, span_warning("This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!"))
+		to_chat(user, span_warning(LANG("datum.a0c94671", list(GLOB.deity))))
 		return FALSE
 	return ..()
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/barnyardcurse
 	name = "Curse of the Barnyard"
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
@@ -35,7 +36,7 @@
 			span_danger("[cast_on]'s face bursts into flames, which instantly burst outward, leaving [cast_on.p_them()] unharmed!"),
 			span_danger("Your face starts burning up, but the flames are repulsed by your anti-magic protection!"),
 		)
-		to_chat(owner, span_warning("The spell had no effect!"))
+		to_chat(owner, span_warning(LANG("datum.2ce7047e", null)))
 		return FALSE
 
 	var/chosen_type = pick(GLOB.cursed_animal_masks)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*Vorpal Scythe, or the implant null rod that isn't as strong as other null rods up until you use it to behead someone with the special death knell attack.
 If the scythe isn't empowered when you sheath it, you take a heap of damage and probably a wound!*/
 
@@ -23,7 +24,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	if(scythe.empowerment >= SCYTHE_SATED)
 		return ..()
 
-	to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
+	to_chat(owner, span_userdanger(LANG("obj.0b0a5a72", list(scythe))))
 	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 	owner.apply_damage(25, BRUTE, hand, wound_bonus = 10, sharpness = SHARP_EDGED)
 	return ..()
@@ -108,7 +109,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/mob/living/carbon/potential_reaping = victim
 
 	if(HAS_TRAIT(potential_reaping, TRAIT_NODISMEMBER))
-		to_chat(user, span_warning("You do not think you can behead this creature..."))
+		to_chat(user, span_warning(LANG("obj.081e6e4f", null)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/head_name
@@ -116,7 +117,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 	reaped_head = potential_reaping.get_bodypart(check_zone(user.zone_selected))
 	if(!reaped_head)
-		to_chat(user, span_warning("There is no head to reap."))
+		to_chat(user, span_warning(LANG("obj.e81af7bf", null)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	head_name = reaped_head.name
 
@@ -125,10 +126,10 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 	if(!potential_reaping.mind) //We put this here juuuust in case there is something funky with ling checks
 		if(ismonkey(potential_reaping))
-			to_chat(user, span_warning("A pointless existence. You'll get no benefit from this death knell beyond the satisfaction of beheading this foul thing."))
+			to_chat(user, span_warning(LANG("obj.3a6a363a", null)))
 			potential_empowerment = SCYTHE_WEAK
 		else
-			to_chat(user, span_warning("This soul is almost nonexistent. But [src] can still gain something from this sacrifice. A puppet."))
+			to_chat(user, span_warning(LANG("obj.a2c5f7d4", list(src))))
 			potential_empowerment = SCYTHE_SATED
 
 	var/death_knell_speed_mod = 1

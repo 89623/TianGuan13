@@ -24,7 +24,7 @@
 		return
 	if(issynthetic(user))
 		return
-	to_chat(user, span_notice("Your body feels full, somehow."))
+	to_chat(user, span_notice(LANG("datum.54f1e017", null)))
 	regen_target(user, 15)
 
 /datum/artifact_effect/blood_regen/do_effect_aura(seconds_per_tick)
@@ -81,7 +81,7 @@
 		return
 	if(issynthetic(user))
 		return
-	to_chat(user, span_warning("Blood starts pouring out of your pores!"))
+	to_chat(user, span_warning(LANG("datum.4724256d", null)))
 	suck(user, 50)
 	return TRUE
 

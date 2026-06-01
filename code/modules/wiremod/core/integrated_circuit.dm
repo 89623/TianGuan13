@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A list of all integrated circuits
 GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
@@ -153,7 +154,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
-			balloon_alert(user, "there already is a cell inside!")
+			balloon_alert(user, LANG("obj.b6ec48c1", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src))
@@ -165,7 +166,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		return ITEM_INTERACT_SUCCESS
 
 	if(isidcard(tool))
-		balloon_alert(user, "owner id set for [tool]")
+		balloon_alert(user, LANG("obj.40c92cc8", list(tool)))
 		owner_id = WEAKREF(tool)
 		return ITEM_INTERACT_SUCCESS
 		
@@ -173,7 +174,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell)
-		balloon_alert(user, "power cell missing!")
+		balloon_alert(user, LANG("obj.c7f56509", null))
 		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
@@ -266,7 +267,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	if(to_add.circuit_flags & CIRCUIT_NO_DUPLICATES)
 		if(is_duplicate(to_add))
-			to_chat(user, span_danger("You can't insert multiple instances of this component into the same circuit!"))
+			to_chat(user, span_danger(LANG("obj.627d7962", null)))
 			return FALSE
 
 	var/success = FALSE

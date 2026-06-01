@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Used to generate an asset key for a temporary image unique to this user.
 #define TEMP_IMAGE_PATH(ref) ("ntos_messenger[ref]_temp_image.png")
 /// Purpose is evident by the name, hopefully.
@@ -396,7 +397,7 @@
 		return
 	var/datum/computer_file/program/messenger/target = chat.recipient?.resolve()
 	if(!istype(target) || !istype(target.computer))
-		to_chat(user, span_notice("ERROR: Recipient no longer exists."))
+		to_chat(user, span_notice(LANG("datum.63815360", null)))
 		chat.recipient = null
 		chat.can_reply = FALSE
 		return
@@ -595,7 +596,7 @@
 	if(is_within_radio_jammer_range(computer) && !rigged)
 		// different message so people know it's a radio jammer
 		if(sender)
-			to_chat(sender, span_notice("ERROR: Network unavailable, please try again later."))
+			to_chat(sender, span_notice(LANG("datum.992b8e7d", null)))
 		if(alert_able && !alert_silenced)
 			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 15, TRUE)
 		return FALSE
@@ -634,7 +635,7 @@
 	// If it didn't reach, note that fact
 	if (!signal.data["done"])
 		if(sender)
-			to_chat(sender, span_notice("ERROR: Server is not responding."))
+			to_chat(sender, span_notice(LANG("datum.f991b4d4", null)))
 		if(alert_able && !alert_silenced)
 			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 15, TRUE)
 		return FALSE
@@ -670,7 +671,7 @@
 	// NOVA EDIT CHANGE END
 
 	if(sender)
-		to_chat(sender, span_info("PDA message sent to [signal.format_target()]: \"[message]\""))
+		to_chat(sender, span_info(LANG("datum.e257b582", list(signal.format_target(), message))))
 
 	if (alert_able && !alert_silenced)
 		computer.send_sound()

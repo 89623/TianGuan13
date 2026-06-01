@@ -115,10 +115,10 @@
 	var/message = ""
 	var/targetedsomewhere = FALSE
 	if(!toy_on)
-		to_chat(user, span_notice("[src] must be on to use it!"))
+		to_chat(user, span_notice(LANG("obj.b31fb9df", list(src))))
 		return
 	if(!target.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("Looks like [target] don't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.bc6595c0", list(target))))
 		return
 
 	switch(user.zone_selected) //to let code know what part of body we gonna vibe

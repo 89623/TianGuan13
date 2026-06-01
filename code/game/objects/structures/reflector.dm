@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/reflector
 	name = "reflector base"
 	icon = 'icons/obj/structures.dmi'
@@ -85,18 +86,18 @@
 
 /obj/structure/reflector/screwdriver_act(mob/living/user, obj/item/tool)
 	can_rotate = !can_rotate
-	to_chat(user, span_notice("You [can_rotate ? "unlock" : "lock"] [src]'s rotation."))
+	to_chat(user, span_notice(LANG("obj.13ce15bb", list(can_rotate ? "unlock" : "lock", src))))
 	tool.play_tool_sound(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reflector/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored)
-		to_chat(user, span_warning("Unweld [src] from the floor first!"))
+		to_chat(user, span_warning(LANG("obj.2893b16b", list(src))))
 		return ITEM_INTERACT_SUCCESS
 	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
 	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You dismantle [src]."))
+	to_chat(user, span_notice(LANG("obj.fc814806", list(src))))
 	new framebuildstacktype(drop_location(), framebuildstackamount)
 	if(buildstackamount)
 		new buildstacktype(drop_location(), buildstackamount)
@@ -120,14 +121,14 @@
 							span_hear("You hear welding."))
 		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
 			set_anchored(TRUE)
-			to_chat(user, span_notice("You weld [src] to the floor."))
+			to_chat(user, span_notice(LANG("obj.46f0194b", list(src))))
 	else
 		user.visible_message(span_notice("[user] starts to cut [src] free from the floor."),
 							span_notice("You start to cut [src] free from the floor..."),
 							span_hear("You hear welding."))
 		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
 			set_anchored(FALSE)
-			to_chat(user, span_notice("You cut [src] free from the floor."))
+			to_chat(user, span_notice(LANG("obj.6a908a91", list(src))))
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -144,14 +145,14 @@
 				new /obj/structure/reflector/single(drop_location())
 				qdel(src)
 			else
-				to_chat(user, span_warning("You need five sheets of glass to create a reflector!"))
+				to_chat(user, span_warning(LANG("obj.436be82e", null)))
 				return
 		if(istype(S, /obj/item/stack/sheet/rglass))
 			if(S.use(10))
 				new /obj/structure/reflector/double(drop_location())
 				qdel(src)
 			else
-				to_chat(user, span_warning("You need ten sheets of reinforced glass to create a double reflector!"))
+				to_chat(user, span_warning(LANG("obj.f81de041", null)))
 				return
 		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
 			if(S.use(1))
@@ -162,7 +163,7 @@
 
 /obj/structure/reflector/proc/rotate(mob/user)
 	if (!can_rotate || admin)
-		to_chat(user, span_warning("The rotation is locked!"))
+		to_chat(user, span_warning(LANG("obj.1fabeebe", null)))
 		return FALSE
 	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
 	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))

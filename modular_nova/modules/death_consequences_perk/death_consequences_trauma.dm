@@ -448,7 +448,7 @@
 		if (world.time <= time_til_scan_expires[usr])
 			to_chat(usr, boxed_message(get_specific_data()), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 		else
-			to_chat(usr, span_warning("Your scan has expired! Try scanning again!"))
+			to_chat(usr, span_warning(LANG("datum.4f10cea5", null)))
 
 /// Returns a large string intended to show specifics of how this degradation work.
 /datum/brain_trauma/severe/death_consequences/proc/get_specific_data()

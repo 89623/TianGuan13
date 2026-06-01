@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/light_construct
 	name = "light fixture frame"
 	desc = "A light fixture under construction."
@@ -74,7 +75,7 @@
 /obj/structure/light_construct/attack_tk(mob/user)
 	if(!cell)
 		return
-	to_chat(user, span_notice("You telekinetically remove [cell]."))
+	to_chat(user, span_notice(LANG("obj.326e9224", list(cell))))
 	var/obj/item/stock_parts/power_store/cell_reference = cell
 	cell = null
 	cell_reference.forceMove(drop_location())
@@ -84,13 +85,13 @@
 	add_fingerprint(user)
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(!cell_connectors)
-			to_chat(user, span_warning("This [name] can't support a power cell!"))
+			to_chat(user, span_warning(LANG("obj.3e6b5586", list(name))))
 			return
 		if(HAS_TRAIT(tool, TRAIT_NODROP))
-			to_chat(user, span_warning("[tool] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.1dbf8014", list(tool))))
 			return
 		if(cell)
-			to_chat(user, span_warning("There is a power cell already installed!"))
+			to_chat(user, span_warning(LANG("obj.18df6061", null)))
 			return
 		if(user.temporarilyRemoveItemFromInventory(tool))
 			user.visible_message(span_notice("[user] hooks up [tool] to [src]."), \
@@ -101,7 +102,7 @@
 			add_fingerprint(user)
 			return
 	if(istype(tool, /obj/item/light))
-		to_chat(user, span_warning("This [name] isn't finished being setup!"))
+		to_chat(user, span_warning(LANG("obj.8f9c8ea6", list(name))))
 		return
 
 	switch(stage)

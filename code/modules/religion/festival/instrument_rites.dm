@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/religion_rites/holy_violin
 	name = "Cogitandi Fidis"
 	desc = "Creates a holy violin that can analyze songs played from it."
@@ -27,7 +28,7 @@
 	for(var/obj/item/instrument/could_empower in get_turf(religious_tool))
 		instrument_target = could_empower
 		return ..()
-	to_chat(user, span_warning("You need to place an instrument on [religious_tool] to do this!"))
+	to_chat(user, span_warning(LANG("datum.7fe66e30", list(religious_tool))))
 	return FALSE
 
 /datum/religion_rites/portable_song_tuning/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -36,7 +37,7 @@
 	var/turf/tool_turf = get_turf(religious_tool)
 	instrument_target = null
 	if(QDELETED(empower_target) || !(tool_turf == empower_target.loc)) //check if the instrument is still there
-		to_chat(user, span_warning("Your target left the altar!"))
+		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
 	empower_target.visible_message(span_notice("[empower_target] glows for a moment."))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
@@ -211,5 +212,5 @@
 	listener.set_eye_blur_if_lower(4 SECONDS)
 
 /datum/religion_rites/song_tuner/lullaby/finish_effect(mob/living/carbon/human/listener, atom/song_source)
-	to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))
+	to_chat(listener, span_danger(LANG("datum.cb528330", null)))
 	listener.AdjustSleeping(5 SECONDS)

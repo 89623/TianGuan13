@@ -98,20 +98,20 @@
 	scream()
 	spawn_gibs()
 	if(stored_changeling && mind)
-		visible_message(span_warning("[src] lets out a furious scream as it reaches equilibrium, as it starts exploding into a shower of gore!"), \
-						span_userdanger("We lack the power to maintain our mass, we have reached critic-..."))
+		visible_message(span_warning(LANG("mob.d2229f9f", list(src))), \
+						span_userdanger(LANG("mob.75f07a03", null)))
 		anchored = TRUE
 		turn_to_human.Remove()
 		AddComponent(/datum/component/pellet_cloud, projectile_type=/obj/projectile/bullet/pellet/bone_fragment, magnitude=8)
 		addtimer(CALLBACK(src, PROC_REF(real_death)), rand(3 SECONDS, 6 SECONDS))
 	else
-		visible_message(span_warning("[src] lets out a waning scream as it falls, twitching, to the floor."))
+		visible_message(span_warning(LANG("mob.9f5be2c1", list(src))))
 		addtimer(CALLBACK(src, PROC_REF(revive_from_death)), 45 SECONDS)
 
 /mob/living/simple_animal/hostile/true_changeling/proc/revive_from_death()
 	if(!src)
 		return
-	visible_message(span_warning("[src] stumbles upright and begins to move!"))
+	visible_message(span_warning(LANG("mob.629ee1de", list(src))))
 	revive() //Changelings can self-revive, and true changelings are no exception
 	scream()
 
@@ -120,8 +120,8 @@
 		spawn_gibs()
 	scream()
 	icon_state = "horror_dead"
-	visible_message(span_warning("[src] has surpassed equilibrium and can no longer support itself, exploding in a shower of bone and gore!"), \
-						span_userdanger("ARRRRRRGHHHH!!!"))
+	visible_message(span_warning(LANG("mob.61733113", list(src))), \
+						span_userdanger(LANG("mob.dea38607", null)))
 	stored_changeling.loc = get_turf(src)
 	mind.transfer_to(stored_changeling)
 	stored_changeling.Paralyze(10 SECONDS) //Make them helpless for 10 seconds
@@ -252,7 +252,7 @@
 	lunch.adjust_brute_loss(60)
 	horrorform.visible_message(span_warning("[horrorform] tears a chunk from [lunch]'s flesh!"), \
 					span_danger("We tear a chunk of flesh from [lunch] and devour it!"))
-	to_chat(lunch, span_userdanger("[horrorform] takes a huge bite out of you!"))
+	to_chat(lunch, span_userdanger(LANG("datum.24ee6241", list(horrorform))))
 	lunch.spawn_gibs()
 	var/dismembered = FALSE
 	for(var/obj/item/bodypart/guts in lunch.bodyparts)

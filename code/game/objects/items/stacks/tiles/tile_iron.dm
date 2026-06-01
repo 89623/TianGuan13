@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/stack/tile/iron
 	name = "floor tile"
 	singular_name = "floor tile"
@@ -109,7 +110,7 @@
 
 /obj/item/stack/tile/iron/welder_act(mob/living/user, obj/item/tool)
 	if(get_amount() < 4)
-		balloon_alert(user, "not enough tiles!")
+		balloon_alert(user, LANG("obj.16694563", null))
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/sheet/iron/new_item = new(user.loc)
@@ -125,7 +126,7 @@
 
 /obj/item/stack/tile/iron/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(get_amount() < 2)
-		balloon_alert(user, "not enough tiles!")
+		balloon_alert(user, LANG("obj.16694563", null))
 		return
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/rods/new_item = new(user.loc)

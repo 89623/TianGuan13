@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/reagent_containers/dropper
 	name = "dropper"
 	desc = "A dropper. Holds up to 5 units."
@@ -18,11 +19,11 @@
 
 	if(reagents.total_volume > 0)
 		if(target.reagents.holder_full())
-			to_chat(user, span_notice("[target] is full."))
+			to_chat(user, span_notice(LANG("obj.8e2d390c", list(target))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!target.is_injectable(user))
-			to_chat(user, span_warning("You cannot transfer reagents to [target]!"))
+			to_chat(user, span_warning(LANG("obj.fce1b5b9", list(target))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = 0
@@ -43,12 +44,12 @@
 					target.visible_message(span_danger("[user] tries to squirt something into [target]'s eyes, but fails!"), \
 											span_userdanger("[user] tries to squirt something into your eyes, but fails!"))
 					if(trans)
-						to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+						to_chat(user, span_notice(LANG("obj.20fce5c7", list(trans))))
 					update_appearance()
 					return ITEM_INTERACT_BLOCKING
 
 			else if(isalien(target)) //hiss-hiss has no eyes!
-				to_chat(target, span_danger("[target] does not seem to have any eyes!"))
+				to_chat(target, span_danger(LANG("obj.da40cb59", list(target))))
 				return ITEM_INTERACT_BLOCKING
 
 			target.visible_message(
@@ -62,22 +63,22 @@
 
 		trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		if(trans)
-			to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+			to_chat(user, span_notice(LANG("obj.20fce5c7", list(trans))))
 		update_appearance()
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if(!target.is_drawable(user, FALSE)) //No drawing from mobs here
-		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
+		to_chat(user, span_warning(LANG("obj.09f81901", list(target))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!target.reagents.total_volume)
-		to_chat(user, span_warning("[target] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(target))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 	if(trans)
-		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
+		to_chat(user, span_notice(LANG("obj.3bc5939a", list(src, trans))))
 
 	update_appearance()
 	target.update_appearance()

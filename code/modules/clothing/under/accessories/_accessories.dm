@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Clothing accessories.
  *
@@ -211,7 +212,7 @@
 		return
 	if(user.can_perform_action(src, NEED_DEXTERITY))
 		above_suit = !above_suit
-		balloon_alert(user, "wearing [above_suit ? "above" : "below"] suits")
+		balloon_alert(user, LANG("obj.d521fa2f", list(above_suit ? "above" : "below")))
 		return TRUE
 
 /obj/item/clothing/accessory/examine(mob/user)

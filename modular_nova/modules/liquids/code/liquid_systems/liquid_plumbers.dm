@@ -63,7 +63,7 @@
 	if(!anchored)
 		set_regulator(user)
 		return
-	balloon_alert(user, "turned [turned_on ? "off" : "on"]")
+	balloon_alert(user, LANG("obj.8fcfde3c", list(turned_on ? "off" : "on")))
 	turned_on = !turned_on
 	update_icon_state()
 

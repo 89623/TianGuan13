@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Alien shit!
  * Contains:
  * structure/alien
@@ -404,7 +405,7 @@
 				Burst(kill=FALSE)
 				return
 	else
-		to_chat(user, span_notice("It feels slimy."))
+		to_chat(user, span_notice(LANG("obj.f58b3ac9", null)))
 		user.changeNext_move(CLICK_CD_MELEE)
 
 

@@ -4,7 +4,7 @@
 	set category = "IC"
 
 	if(IsSleeping())
-		to_chat(src, span_warning("You are already sleeping!"))
+		to_chat(src, span_warning(LANG("mob.bd5702d4", null)))
 		return
 	var/duration = tgui_input_number(
 		src,

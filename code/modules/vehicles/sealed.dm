@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/sealed
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
@@ -113,10 +114,10 @@
 		return NONE
 
 	if(!user.transferItemToLoc(tool, src))
-		to_chat(user, span_warning("[tool] seems to be stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.dc050dd7", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You insert [tool] into [src]."))
+	to_chat(user, span_notice(LANG("obj.8ce99939", list(tool, src))))
 	if(inserted_key) // Just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
 	inserted_key = tool
@@ -125,12 +126,12 @@
 
 /obj/vehicle/sealed/proc/remove_key(mob/user)
 	if(!inserted_key)
-		to_chat(user, span_warning("There is no key in [src]!"))
+		to_chat(user, span_warning(LANG("obj.84c88407", list(src))))
 		return
 	if(!is_occupant(user) || !(occupants[user] & VEHICLE_CONTROL_DRIVE))
-		to_chat(user, span_warning("You must be driving [src] to remove [src]'s key!"))
+		to_chat(user, span_warning(LANG("obj.f6a0eeca", list(src, src))))
 		return
-	to_chat(user, span_notice("You remove [inserted_key] from [src]."))
+	to_chat(user, span_notice(LANG("obj.cbed3266", list(inserted_key, src))))
 	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		user.put_in_hands(inserted_key)
 	else

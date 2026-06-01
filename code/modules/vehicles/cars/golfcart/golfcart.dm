@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ENGINE_UNWRENCHED 0
 #define ENGINE_WRENCHED 1
 #define ENGINE_WELDED 2
@@ -214,20 +215,20 @@
 		return ..()
 	if (istype(attacking_item, /obj/item/v8_engine))
 		if (engine || cell)
-			balloon_alert(user, "already has an engine!")
+			balloon_alert(user, LANG("obj.f8f50f2f", null))
 			return ITEM_INTERACT_BLOCKING
 		user.transferItemToLoc(attacking_item, src)
 		engine = attacking_item
 		engine_state = ENGINE_UNWRENCHED
-		balloon_alert(user, "installed \the [engine]")
+		balloon_alert(user, LANG("obj.ddc17aca", list(engine)))
 		return ITEM_INTERACT_SUCCESS
 	if (istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if (cell || engine)
-			balloon_alert(user, "already has an engine!")
+			balloon_alert(user, LANG("obj.f8f50f2f", null))
 			return ITEM_INTERACT_BLOCKING
 		user.transferItemToLoc(attacking_item, src)
 		cell = attacking_item
-		balloon_alert(user, "installed \the [cell]")
+		balloon_alert(user, LANG("obj.ddc17aca", list(cell)))
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
@@ -294,18 +295,18 @@
 			set_engine_state(ENGINE_WRENCHED)
 	else
 		if(DOING_INTERACTION(user, src))
-			balloon_alert(user, "already repairing it!")
+			balloon_alert(user, LANG("obj.35cf07e3", null))
 			return
 		if(atom_integrity >= max_integrity)
-			balloon_alert(user, "it's not damaged!")
+			balloon_alert(user, LANG("obj.9e4cb9c4", null))
 			return
 		// takes 10 seconds to repair from full
-		balloon_alert(user, "started repairing")
+		balloon_alert(user, LANG("obj.14e41daa", null))
 		if (!tool.use_tool(src, user, ((max_integrity - atom_integrity) / max_integrity * 10) SECONDS, volume = 50))
-			balloon_alert(user, "repair interrupted!")
+			balloon_alert(user, LANG("obj.afa6ab5d", null))
 			return
 		repair_damage(max_integrity - atom_integrity)
-		balloon_alert(user, "repaired")
+		balloon_alert(user, LANG("obj.65ced1e8", null))
 	return
 
 /obj/vehicle/ridden/golfcart/proc/toggle_hood()
@@ -316,13 +317,13 @@
 	if (user in buckled_mobs)
 		return ..()
 	else
-		to_chat(user, span_warning("You must be sitting down to remove the key!"))
+		to_chat(user, span_warning(LANG("obj.18543ba8", null)))
 	. = CLICK_ACTION_SUCCESS
 	toggle_hood()
 	if (hood_open)
-		to_chat(user, span_notice("You pop \the [src]'s hood."))
+		to_chat(user, span_notice(LANG("obj.e5ddda5b", list(src))))
 	else
-		to_chat(user, span_notice("You shut \the [src]'s hood."))
+		to_chat(user, span_notice(LANG("obj.75666cf1", list(src))))
 
 /obj/vehicle/ridden/golfcart/examine_more(mob/user)
 	. = ..()

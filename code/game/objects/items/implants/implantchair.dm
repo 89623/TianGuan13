@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/implantchair
 	name = "mindshield implanter"
 	desc = "Used to implant occupants with mindshield implants."
@@ -92,12 +93,12 @@
 	if(istype(I, /obj/item/implant))
 		var/obj/item/implant/P = I
 		if(P.implant(M))
-			visible_message(span_warning("[M] is implanted by [src]."))
+			visible_message(span_warning(LANG("obj.e63d0916", list(M, src))))
 			return TRUE
 	else if(isorgan(I))
 		var/obj/item/organ/P = I
 		P.Insert(M, FALSE, FALSE)
-		visible_message(span_warning("[M] is implanted by [src]."))
+		visible_message(span_warning(LANG("obj.e63d0916", list(M, src))))
 		return TRUE
 
 /obj/machinery/implantchair/update_icon_state()
@@ -141,7 +142,7 @@
 /obj/machinery/implantchair/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
-		to_chat(user, span_warning("[src]'s door won't budge!"))
+		to_chat(user, span_warning(LANG("obj.c4e897cb", list(src))))
 
 /obj/machinery/implantchair/mouse_drop_receive(mob/target, mob/user, params)
 	if(!isliving(target))

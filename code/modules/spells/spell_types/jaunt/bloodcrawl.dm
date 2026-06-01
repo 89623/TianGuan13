@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ### Blood Crawl
  *
@@ -40,7 +41,7 @@
 	if(find_nearby_blood(get_turf(owner)))
 		return TRUE
 	if(feedback)
-		to_chat(owner, span_warning("There must be a nearby source of blood!"))
+		to_chat(owner, span_warning(LANG("datum.f34a5401", null)))
 	return FALSE
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/cast(mob/living/cast_on)
@@ -68,7 +69,7 @@
 
 	if(!.)
 		reset_spell_cooldown()
-		to_chat(jaunter, span_warning("You are unable to blood crawl!"))
+		to_chat(jaunter, span_warning(LANG("datum.fcf9b413", null)))
 
 /**
  * Attempts to enter the passed blood pool.
@@ -116,7 +117,7 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/try_exit_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter, forced = FALSE)
 	if(!forced)
 		if(HAS_TRAIT(jaunter, TRAIT_NO_TRANSFORM))
-			to_chat(jaunter, span_warning("You cannot exit yet!!"))
+			to_chat(jaunter, span_warning(LANG("datum.bfb25b8b", null)))
 			return FALSE
 
 		if(exit_blood_time > 0 SECONDS)
@@ -230,7 +231,7 @@
 		return
 	lazy_demon.apply_damage(lazy_demon.maxHealth * 0.05, BRUTE)
 	jaunt_damage_timer = addtimer(CALLBACK(src, PROC_REF(damage_for_lazy_demon), lazy_demon), 20 SECONDS, TIMER_STOPPABLE)
-	to_chat(lazy_demon, span_warning("You feel your flesh dissolving into the sea of blood. You shouldn't stay in Blood Crawl for too long!"))
+	to_chat(lazy_demon, span_warning(LANG("datum.03e3e64a", null)))
 
 /**
  * Consumes the [victim] from the [jaunter], fully healing them
@@ -270,7 +271,7 @@
 	if(!iscarbon(jaunter))
 		resist_jaunt_damage = TRUE
 		deltimer(jaunt_damage_timer)
-	to_chat(jaunter, span_danger("You begin to feast on [victim]... You can not move while you are doing this."))
+	to_chat(jaunter, span_danger(LANG("datum.880b2942", list(victim))))
 
 /**
  * Called when a victim is successfully consumed.
@@ -279,7 +280,7 @@
 	if(!iscarbon(jaunter))
 		resist_jaunt_damage = FALSE
 		jaunt_damage_timer = addtimer(CALLBACK(src, PROC_REF(damage_for_lazy_demon), jaunter), 20 SECONDS, TIMER_STOPPABLE)
-	to_chat(jaunter, span_danger("You devour [victim]. Your health is fully restored."))
+	to_chat(jaunter, span_danger(LANG("datum.893ce393", list(victim))))
 	qdel(victim)
 
 /**
@@ -309,10 +310,10 @@
 	return ..()
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/on_victim_start_consume(mob/living/victim, mob/living/jaunter)
-	to_chat(jaunter, span_clown("You invite [victim] to your party! You can not move while you are doing this."))
+	to_chat(jaunter, span_clown(LANG("datum.a700b66d", list(victim))))
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/on_victim_consumed(mob/living/victim, mob/living/jaunter)
-	to_chat(jaunter, span_clown("[victim] joins your party! Your health is fully restored."))
+	to_chat(jaunter, span_clown(LANG("datum.ce1c7f49", list(victim))))
 	consumed_mobs += victim
 	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, PROC_REF(on_victim_statchange))
 	RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(on_victim_deleted))

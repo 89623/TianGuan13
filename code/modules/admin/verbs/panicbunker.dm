@@ -1,6 +1,7 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(panic_bunker, R_SERVER, "Toggle Panic Bunker", "Toggles the panic bunker for the server.", ADMIN_CATEGORY_SERVER)
 	if (!CONFIG_GET(flag/sql_enabled))
-		to_chat(user, span_adminnotice("The Database is not enabled!"), confidential = TRUE)
+		to_chat(user, span_adminnotice(LANG("datum.5bf16f98", null)), confidential = TRUE)
 		return
 
 	var/new_pb = !CONFIG_GET(flag/panic_bunker)
@@ -26,7 +27,7 @@ ADMIN_VERB(panic_bunker, R_SERVER, "Toggle Panic Bunker", "Toggles the panic bun
 
 ADMIN_VERB(toggle_interviews, R_SERVER, "Toggle PB Interviews", "Toggle whether new players will be interviewed or blocked from connecting.", ADMIN_CATEGORY_SERVER)
 	if (!CONFIG_GET(flag/panic_bunker))
-		to_chat(user, span_adminnotice("NOTE: The panic bunker is not enabled, so this change will not effect anything until it is enabled."), confidential = TRUE)
+		to_chat(user, span_adminnotice(LANG("datum.f6ae7038", null)), confidential = TRUE)
 	var/new_interview = !CONFIG_GET(flag/panic_bunker_interview)
 	CONFIG_SET(flag/panic_bunker_interview, new_interview)
 	log_admin("[key_name(user)] has toggled the Panic Bunker's interview system, it is now [new_interview ? "enabled" : "disabled"].")

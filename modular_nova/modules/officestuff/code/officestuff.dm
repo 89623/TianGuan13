@@ -33,17 +33,17 @@
 
 /obj/structure/grandfatherclock/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!soundloop)
-		balloon_alert(user, "unscrewing the hands...")
+		balloon_alert(user, LANG("obj.8610e373", null))
 		if(do_after(user, 2 SECONDS, src))
 			soundloop = new(src, TRUE)
-			balloon_alert(user, "hands unscrewed!")
+			balloon_alert(user, LANG("obj.294160c5", null))
 			return ITEM_INTERACT_SUCCESS
 		return ..()
 
-	balloon_alert(user, "screwing the hands...")
+	balloon_alert(user, LANG("obj.cdf1f0ca", null))
 	if(do_after(user, 2 SECONDS, src))
 		QDEL_NULL(soundloop)
-		balloon_alert(user, "hands screwed tight!")
+		balloon_alert(user, LANG("obj.4b5727f9", null))
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 /obj/structure/sign/painting/meat

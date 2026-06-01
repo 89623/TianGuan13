@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/security/telescreen
 	name = "\improper Telescreen"
 	desc = "Used for watching an empty arena."
@@ -554,7 +555,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/deep_sto
 
 /obj/item/assembly/control/showtime/activate()
 	is_show_active = !is_show_active
-	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
+	say(LANG("obj.69bb2b73", list(tv_show_name, is_show_active ? "begun" : "ended")))
 	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
 	set_network_broadcast_status(tv_network_id, is_show_active, announcement)
 

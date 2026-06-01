@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/grenade/iedcasing
 	name = "improvised explosive"
 	desc = "An improvised explosive device."
@@ -222,7 +223,7 @@
 	if(!wires_are_in)
 		// here we can stuff in additional objects for a cooler effect
 		if(is_type_in_typecache(item, allowed) && contents.len < MAX_STUFFINGS)
-			balloon_alert(user, "stuffed in")
+			balloon_alert(user, LANG("obj.0d2c11af", null))
 			var/atom/movable/to_put = item
 			if(isstack(item))
 				var/obj/item/stack/as_stack = item
@@ -236,14 +237,14 @@
 		if(item.reagents)
 			return ..()
 		if(reagents.total_volume < 5)
-			balloon_alert(user, "add more fuel!")
+			balloon_alert(user, LANG("obj.54c02df4", null))
 			return
 
 		var/obj/item/stack/cable_coil/coil = item
 		if(!istype(coil))
 			return
 		if (coil.get_amount() < 15)
-			balloon_alert(user, "need 15 length!")
+			balloon_alert(user, LANG("obj.1643231e", null))
 			return
 		coil.use(15)
 
@@ -256,7 +257,7 @@
 		power *= cur_power
 		power -= contents.len / 2
 
-		balloon_alert(user, "wires attached")
+		balloon_alert(user, LANG("obj.a641ab5a", null))
 		icon_state = "[icon_state]-cable"
 		reagents.flags = SEALED_CONTAINER
 		wires_are_in = TRUE
@@ -265,7 +266,7 @@
 		if(!istype(assembly) || !(assembly.type in allowed_activators))
 			return
 		if(assembly.secured)
-			balloon_alert(user, "unsecure assembly first!")
+			balloon_alert(user, LANG("obj.80dcbc8c", null))
 			return
 		if(!user.transferItemToLoc(assembly, src))
 			return

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Creates a tether between two objects that limits movement range. Tether requires LOS and can be adjusted by left/right clicking its
 /datum/component/tether
 	dupe_mode = COMPONENT_DUPE_ALLOWED
@@ -92,7 +93,7 @@
 		return
 
 	if (!isturf(new_loc))
-		to_chat(source, span_warning("[tether_name] prevents you from entering [new_loc]!"))
+		to_chat(source, span_warning(LANG("datum.7cfdb73c", list(tether_name, new_loc))))
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 	// If this was called, we know its a movable
@@ -102,13 +103,13 @@
 	// Ignore distance limitations if we're attempting to move the other part of the tether
 	if (get_dist(anchor, new_loc) > cur_dist && !force_moving_target)
 		if (!istype(anchor) || anchor.anchored || anchor.move_resist > movable_source.move_force)
-			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
+			to_chat(source, span_warning(LANG("datum.0e03c6ca", list(tether_name))))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 		force_moving_target = TRUE
 		if (!try_adjust_position(anchor, new_loc, source))
 			force_moving_target = FALSE
-			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
+			to_chat(source, span_warning(LANG("datum.0e03c6ca", list(tether_name))))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 		force_moving_target = FALSE
@@ -116,12 +117,12 @@
 	var/atom/blocker = check_line(anchor, new_loc, list(source))
 	if (blocker)
 		if (!istype(anchor) || anchor.anchored || anchor.move_resist > movable_source.move_force)
-			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
+			to_chat(source, span_warning(LANG("datum.0e03c6ca", list(tether_name))))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 		// If the tether would snag on something when we move, see if we could move to the side to get LOS back
 		if (!try_adjust_position(anchor, new_loc, source))
-			to_chat(source, span_warning("[tether_name] catches on [blocker] and prevents you from moving!"))
+			to_chat(source, span_warning(LANG("datum.2d140753", list(tether_name, blocker))))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /// Try adjust the anchor's position to move closer to the target or regain LOS
@@ -298,7 +299,7 @@
 
 		qdel(src)
 		location.balloon_alert(user, "tether cut!")
-		to_chat(parent, span_danger("Your [tether_name] has been cut!"))
+		to_chat(parent, span_danger(LANG("datum.b8aa6e9b", list(tether_name))))
 		return
 
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /proc/brainwash(mob/living/brainwash_victim, directives)
 	if(!brainwash_victim.mind)
 		return
@@ -47,7 +48,7 @@
 	return data
 
 /datum/antagonist/brainwashed/farewell()
-	to_chat(owner, span_warning("Your mind suddenly clears..."))
+	to_chat(owner, span_warning(LANG("datum.2637ccf2", null)))
 	to_chat(owner, "<big>[span_warning("<b>You feel the weight of the Directives disappear! You no longer have to obey them.</b>")]</big>")
 	if(owner.current)
 		var/mob/living/owner_mob = owner.current
@@ -73,7 +74,7 @@
 		return
 
 	if(QDELETED(C))
-		to_chat(admin, "Mob doesn't exist anymore")
+		to_chat(admin, LANG("datum.4068a4c3", null))
 		return
 
 	brainwash(C, objectives)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// How many more items does `max_items` get increased by per rating point.
 #define MAX_ITEMS_PER_RATING 10
 /// How many items are converted per cycle, per rating point of the manipulator used.
@@ -58,7 +59,7 @@
 
 /obj/machinery/biogenerator/can_be_unfasten_wrench(mob/user, silent)
 	if(welded_down)
-		to_chat(user, span_warning("[src] is welded to the floor!"))
+		to_chat(user, span_warning(LANG("obj.9092e2c6", list(src))))
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -80,10 +81,10 @@
 		if(!tool.use_tool(src, user, 10 SECONDS, volume=100))
 			return FALSE
 		welded_down = FALSE
-		to_chat(user, span_notice("You cut [src] free from the floor."))
+		to_chat(user, span_notice(LANG("obj.6a908a91", list(src))))
 		return TRUE
 	if(!anchored)
-		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+		to_chat(user, span_warning(LANG("obj.acb3909a", list(src))))
 		return TRUE
 	if(!tool.tool_start_check(user, amount=2))
 		return TRUE
@@ -93,10 +94,10 @@
 		span_hear("You hear welding."),
 	)
 	if(!tool.use_tool(src, user, 10 SECONDS, volume=100))
-		balloon_alert(user, "cancelled!")
+		balloon_alert(user, LANG("obj.bcb4be71", null))
 		return FALSE
 	welded_down = TRUE
-	to_chat(user, span_notice("You weld [src] to the floor."))
+	to_chat(user, span_notice(LANG("obj.46f0194b", list(src))))
 	return TRUE
 
 /obj/machinery/biogenerator/Destroy()
@@ -229,7 +230,7 @@
 
 	if(istype(tool, /obj/item/reagent_containers/cup))
 		if(panel_open)
-			to_chat(user, span_warning("Close the maintenance panel first!"))
+			to_chat(user, span_warning(LANG("obj.b13bf2a8", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		insert_beaker(user, tool)
@@ -238,7 +239,7 @@
 	var/content_count = get_content_count()
 	if(istype(tool, /obj/item/storage/bag))
 		if(content_count >= max_items)
-			to_chat(user, span_warning("\The [src] is already full! Activate it to free up some space."))
+			to_chat(user, span_warning(LANG("obj.60ad134d", list(src))))
 			return ITEM_INTERACT_FAILURE
 
 		var/obj/item/storage/bag/bag = tool
@@ -249,24 +250,24 @@
 
 		content_count = get_content_count() // Refresh the cache for UI
 		if(bag.contents.len == 0)
-			to_chat(user, span_info("You empty \the [bag] into \the [src]."))
+			to_chat(user, span_info(LANG("obj.04f0231a", list(bag, src))))
 		else if (content_count >= max_items)
-			to_chat(user, span_info("You fill \the [src] from \the [bag] to its capacity."))
+			to_chat(user, span_info(LANG("obj.49ef40ea", list(src, bag))))
 		else
-			to_chat(user, span_info("You fill \the [src] from \the [bag]."))
+			to_chat(user, span_info(LANG("obj.b8142e41", list(src, bag))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/food))
 		if(content_count >= max_items)
-			to_chat(user, span_warning("\The [src] is already full! Activate it to free up some space."))
+			to_chat(user, span_warning(LANG("obj.60ad134d", list(src))))
 			return ITEM_INTERACT_FAILURE
 
 		if(user.transferItemToLoc(tool, src))
-			to_chat(user, span_info("You insert \the [tool] in \the [src]"))
+			to_chat(user, span_info(LANG("obj.3e717802", list(tool, src))))
 			get_content_count() // Refresh the cache for UI
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_warning("You cannot put \the [tool] in \the [src]!"))
+	to_chat(user, span_warning(LANG("obj.33b055bb", list(tool, src))))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/biogenerator/click_alt(mob/living/user)
@@ -279,11 +280,11 @@
 		return
 
 	if(processing)
-		say("Already working!")
+		say(LANG("obj.e8db372d", null))
 		return
 
 	if(!(locate(/obj/item/food) in contents))
-		say("No food items found!")
+		say(LANG("obj.62148145", null))
 		return
 
 	begin_processing()
@@ -377,7 +378,7 @@
 			return FALSE
 
 		if(beaker.reagents.maximum_volume - beaker.reagents.total_volume < amount)
-			say("Warning: Attached container does not have enough free capacity!")
+			say(LANG("obj.b460e63f", null))
 			return FALSE
 
 		if(!use_biomass(design.materials, amount))
@@ -413,11 +414,11 @@
 		return
 
 	if(beaker)
-		to_chat(user, span_notice("You swap out [beaker] in [src] for [inserted_beaker]."))
+		to_chat(user, span_notice(LANG("obj.f693579b", list(beaker, src, inserted_beaker))))
 		eject_beaker(user, silent = TRUE)
 
 	else
-		to_chat(user, span_notice("You add [inserted_beaker] to [src]."))
+		to_chat(user, span_notice(LANG("obj.0c27fe26", list(inserted_beaker, src))))
 
 	beaker = inserted_beaker
 	update_appearance(UPDATE_ICON)
@@ -440,11 +441,11 @@
 
 	if(user.put_in_hands(beaker))
 		if(!silent)
-			to_chat(user, span_notice("You eject [ejected_beaker] from [src]."))
+			to_chat(user, span_notice(LANG("obj.daa0023e", list(ejected_beaker, src))))
 
 	else
 		if(!silent)
-			to_chat(user, span_notice("You eject [ejected_beaker] from [src] onto the ground."))
+			to_chat(user, span_notice(LANG("obj.cb3a2d71", list(ejected_beaker, src))))
 
 		ejected_beaker.forceMove(drop_location())
 

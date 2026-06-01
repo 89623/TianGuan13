@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/sealed/mecha/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
@@ -15,7 +16,7 @@
 		break
 
 	if(!data_tracker && !user.can_dominate_mechs)
-		to_chat(user, span_warning("You cannot interface this exosuit without tracking beacons installed."))
+		to_chat(user, span_warning(LANG("obj.2212c588", null)))
 		return
 
 	if(data_tracker || user.can_dominate_mechs)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * For FTP requests. (i.e. downloading runtime logs.)
  *
@@ -47,7 +48,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		extensions += "[i]"
 	var/regex/valid_ext = new("\\.([extensions])$", "i")
 	if( !fexists(path) || !(valid_ext.Find(path)) )
-		to_chat(src, "<font color='red'>Error: browse_files(): File not found/Invalid file([path]).</font>")
+		to_chat(src, LANG("client.0e89490a", list(path)))
 		return
 
 	return path
@@ -62,7 +63,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 /client/proc/file_spam_check()
 	var/time_to_wait = GLOB.fileaccess_timer - world.time
 	if(time_to_wait > 0)
-		to_chat(src, "<font color='red'>Error: file_spam_check(): Spam. Please wait [DisplayTimeText(time_to_wait)].</font>")
+		to_chat(src, LANG("client.47213cd4", list(DisplayTimeText(time_to_wait))))
 		return TRUE
 	var/delay = FTPDELAY
 	if(holder)

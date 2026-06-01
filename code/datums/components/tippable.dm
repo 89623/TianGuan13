@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Tippable component. For making mobs able to be tipped, like cows and medibots.
  */
@@ -107,7 +108,7 @@
 		return
 
 	if(tip_time > 0)
-		to_chat(tipper, span_warning("You begin tipping over [tipped_mob]..."))
+		to_chat(tipper, span_warning(LANG("datum.6b2cdc4a", list(tipped_mob))))
 		tipped_mob.visible_message(
 			span_warning("[tipper] begins tipping over [tipped_mob]."),
 			span_userdanger("[tipper] begins tipping you over!"),
@@ -118,7 +119,7 @@
 			if(!isnull(tipped_mob.client))
 				tipped_mob.log_message("was attempted to tip over by [key_name(tipper)]", LOG_VICTIM, log_globally = FALSE)
 				tipper.log_message("failed to tip over [key_name(tipped_mob)]", LOG_ATTACK)
-			to_chat(tipper, span_danger("You fail to tip over [tipped_mob]."))
+			to_chat(tipper, span_danger(LANG("datum.d88454b1", list(tipped_mob))))
 			return
 	do_tip(tipped_mob, tipper)
 
@@ -136,7 +137,7 @@
 	if (is_tipped) // sanity check in case multiple people try to tip at the same time
 		return
 
-	to_chat(tipper, span_warning("You tip over [tipped_mob]."))
+	to_chat(tipper, span_warning(LANG("datum.02cd1013", list(tipped_mob))))
 	if (!isnull(tipped_mob.client))
 		tipped_mob.log_message("has been tipped over by [key_name(tipper)].", LOG_ATTACK)
 		tipper.log_message("has tipped over [key_name(tipped_mob)].", LOG_ATTACK)
@@ -164,7 +165,7 @@
  */
 /datum/component/tippable/proc/try_untip(mob/living/tipped_mob, mob/untipper)
 	if(untip_time > 0)
-		to_chat(untipper, span_notice("You begin righting [tipped_mob]..."))
+		to_chat(untipper, span_notice(LANG("datum.0c010732", list(tipped_mob))))
 		tipped_mob.visible_message(
 			span_notice("[untipper] begins righting [tipped_mob]."),
 			span_notice("[untipper] begins righting you."),
@@ -172,7 +173,7 @@
 		)
 
 		if(!do_after(untipper, untip_time, target = tipped_mob))
-			to_chat(untipper, span_warning("You fail to right [tipped_mob]."))
+			to_chat(untipper, span_warning(LANG("datum.dbcf115e", list(tipped_mob))))
 			return
 
 	do_untip(tipped_mob, untipper)
@@ -190,7 +191,7 @@
 	if (!is_tipped) // sanity check in case multiple people try to untip at the same time
 		return
 
-	to_chat(untipper, span_notice("You right [tipped_mob]."))
+	to_chat(untipper, span_notice(LANG("datum.692d18ff", list(tipped_mob))))
 	tipped_mob.visible_message(
 		span_notice("[untipper] rights [tipped_mob]."),
 		span_notice("You are righted by [untipper]!"),

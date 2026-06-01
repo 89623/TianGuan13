@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 
@@ -89,12 +90,12 @@ no power level overlay is currently in the overlays list.
 
 /obj/machinery/field/generator/interact(mob/user)
 	if(state != FG_WELDED)
-		to_chat(user, span_warning("[src] needs to be firmly secured to the floor first!"))
+		to_chat(user, span_warning(LANG("obj.31b33047", list(src))))
 		return
 	if(get_dist(src, user) > 1)//Need to actually touch the thing to turn it on
 		return
 	if(active >= FG_CHARGING)
-		to_chat(user, span_warning("You are unable to turn off [src] once it is online!"))
+		to_chat(user, span_warning(LANG("obj.ff845e3a", list(src))))
 		return TRUE
 
 	user.visible_message(
@@ -117,12 +118,12 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
 		if(!silent)
-			to_chat(user, span_warning("Turn \the [src] off first!"))
+			to_chat(user, span_warning(LANG("obj.d2d51d9a", list(src))))
 		return FAILED_UNFASTEN
 
 	else if(state == FG_WELDED)
 		if(!silent)
-			to_chat(user, span_warning("[src] is welded to the floor!"))
+			to_chat(user, span_warning(LANG("obj.9092e2c6", list(src))))
 		return FAILED_UNFASTEN
 
 	return ..()
@@ -135,7 +136,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/welder)
 	. = ..()
 	if(active)
-		to_chat(user, span_warning("[src] needs to be off!"))
+		to_chat(user, span_warning(LANG("obj.7626ddd3", list(src))))
 		return TRUE
 
 	switch(state)
@@ -252,7 +253,7 @@ no power level overlay is currently in the overlays list.
 		check_power_level()
 		return TRUE
 	else
-		visible_message(span_danger("\The [src] shuts down!"), span_hear("You hear something shutting down."))
+		visible_message(span_danger(LANG("obj.6759b49a", list(src))), span_hear(LANG("obj.bc969be1", null)))
 		turn_off()
 		investigate_log("ran out of power and DEACTIVATED.", INVESTIGATE_ENGINE)
 		power = 0

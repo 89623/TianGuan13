@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/strippable_item/parrot_headset
 	key = STRIPPABLE_ITEM_PARROT_HEADSET
 
@@ -11,7 +12,7 @@
 		return FALSE
 
 	if (!istype(equipping, /obj/item/radio/headset))
-		to_chat(user, span_warning("[equipping] won't fit!"))
+		to_chat(user, span_warning(LANG("datum.adfcc7ca", list(equipping))))
 		return FALSE
 
 	return TRUE
@@ -34,7 +35,7 @@
 
 	parrot_source.ears = radio
 
-	to_chat(user, span_notice("You fit [radio] onto [source]."))
+	to_chat(user, span_notice(LANG("datum.32776466", list(radio, source))))
 
 /datum/strippable_item/parrot_headset/start_unequip(atom/source, mob/user)
 	. = ..()

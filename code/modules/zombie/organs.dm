@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/zombie_infection
 	name = "festering ooze"
 	desc = "A black web of pus and viscera."
@@ -52,9 +53,7 @@
 		qdel(src) // Congrats you somehow died so hard you stopped being a zombie
 
 /obj/item/organ/zombie_infection/on_find(mob/living/finder)
-	to_chat(finder, span_warning("Inside the head is a disgusting black \
-		web of pus and viscera, bound tightly around the brain like some \
-		biological harness."))
+	to_chat(finder, span_warning(LANG("obj.2a51c145", null)))
 
 /obj/item/organ/zombie_infection/process(seconds_per_tick)
 	if(!owner)
@@ -66,15 +65,13 @@
 	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
 		owner.adjust_tox_loss(0.5 * seconds_per_tick)
 		if (SPT_PROB(5, seconds_per_tick))
-			to_chat(owner, span_danger("You feel sick..."))
+			to_chat(owner, span_danger(LANG("obj.7220d46a", null)))
 	if(timer_id || HAS_TRAIT(owner, TRAIT_SUICIDED) || !owner.get_organ_by_type(/obj/item/organ/brain))
 		return
 	if(owner.stat != DEAD && !converts_living)
 		return
 	if(!iszombie(owner))
-		to_chat(owner, span_cult_large("You can feel your heart stopping, but something isn't right... \
-		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
-		not even death can stop, you will rise again!"))
+		to_chat(owner, span_cult_large(LANG("obj.35245f8e", null)))
 	var/revive_time = rand(revive_time_min, revive_time_max)
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, PROC_REF(zombify), owner), revive_time, flags)
@@ -127,8 +124,8 @@
 
 /obj/item/organ/zombie_infection/proc/zombie_welcome(mob/living/carbon/new_zombie)
 	if(new_zombie.client)
-		to_chat(new_zombie, span_alien("You HUNGER!"))
-		to_chat(new_zombie, span_alertalien("You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence."))
+		to_chat(new_zombie, span_alien(LANG("obj.18944b9a", null)))
+		to_chat(new_zombie, span_alertalien(LANG("obj.284d8817", null)))
 		playsound(new_zombie, 'sound/effects/hallucinations/far_noise.ogg', 50, 1)
 
 	new_zombie.do_jitter_animation(living_transformation_time)

@@ -83,7 +83,7 @@
 		return
 
 	burst_soda(hit_atom, hide_message = TRUE)
-	visible_message(span_danger("[src]'s impact with [hit_atom] causes it to rupture, spilling everywhere!"))
+	visible_message(span_danger(LANG("obj.957f4876", list(src, hit_atom))))
 	var/obj/item/trash/can/nova/crushed_can = new /obj/item/trash/can/nova(src.loc)
 	crushed_can.icon_state = icon_state
 	moveToNullspace()

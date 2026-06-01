@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DEBRIS_DENSITY (length(overmind.blob_core.contents) / (length(overmind.blobs_legit) * 0.25)) // items per blob
 #define SPORE_TRASH_COUNT 3
 #define FREE_MINION_DEBRIS_CHANCE 80
@@ -79,7 +80,7 @@
 		return
 
 	if(minion.contents.len >= minion.mob_size * 5)
-		to_chat(minion, span_warning("You feel too full to eat more trash."))
+		to_chat(minion, span_warning(LANG("datum.6e6ef8c5", null)))
 		return
 
 	playsound(minion, 'sound/items/eatfood.ogg', 60, TRUE)

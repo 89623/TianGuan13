@@ -4,7 +4,7 @@
 	set instant = TRUE
 
 	if(GLOB.say_disabled)
-		to_chat(usr, span_danger("Speech is currently admin-disabled."))
+		to_chat(usr, span_danger(LANG("mob.b79ad8a3", null)))
 		return
 
 	if(message)

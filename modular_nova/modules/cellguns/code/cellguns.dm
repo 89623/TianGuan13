@@ -27,7 +27,7 @@
 /obj/item/gun/energy/cell_loaded/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_list(attacking_item, allowed_cells)) // Checks allowed_cells to see if the gun is able to load the cells.
 		if(installedcells.len >= maxcells) //Prevents the user from loading any cells past the maximum cell allowance
-			to_chat(user, span_warning("[src] is full. Take a cell out to make room!"))
+			to_chat(user, span_warning(LANG("obj.aa9f4384", list(src))))
 			return
 
 		var/obj/item/weaponcell/cell = attacking_item
@@ -35,7 +35,7 @@
 			return
 
 		playsound(loc, 'sound/machines/click.ogg', 50, 1)
-		to_chat(user, span_notice("You install [cell]."))
+		to_chat(user, span_notice(LANG("obj.b23d1821", list(cell))))
 		ammo_type += new cell.ammo_type(src)
 		installedcells += cell
 	else
@@ -74,10 +74,10 @@
 
 /obj/item/gun/energy/cell_loaded/click_alt(mob/user, modifiers)
 	if(!installedcells.len) //Checks to see if there is a cell inside of the gun, before removal.
-		to_chat(user, span_warning("The [src] has no cells inside!"))
+		to_chat(user, span_warning(LANG("obj.b177a4f7", list(src))))
 		return CLICK_ACTION_BLOCKING
 
-	to_chat(user, span_notice("You remove a cell."))
+	to_chat(user, span_notice(LANG("obj.19b8c0f5", null)))
 	var/obj/item/last_cell = installedcells[installedcells.len]
 
 	if(last_cell)

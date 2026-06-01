@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/ridden/wheelchair //ported from Hippiestation (by Jujumatic)
 	name = "wheelchair"
 	desc = "A chair with big wheels. It looks like you can move in this on your own."
@@ -70,10 +71,10 @@
 
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/tool) //Attackby should stop it attacking the wheelchair after moving away during decon
 	..()
-	balloon_alert(user, "disassembling")
+	balloon_alert(user, LANG("obj.3f23092d", null))
 	if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
 		return ITEM_INTERACT_SUCCESS
-	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
+	to_chat(user, span_notice(LANG("obj.205b1c2c", null)))
 	deconstruct(disassembled = TRUE)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -135,7 +136,7 @@
 	if (!bell_attached)
 		return
 	bell_attached.forceMove(get_turf(src))
-	visible_message(span_notice("[bell_attached] falls off!"))
+	visible_message(span_notice(LANG("obj.66302be8", list(bell_attached))))
 	bell_attached = null
 	update_appearance()
 
@@ -143,7 +144,7 @@
 	if (!bomb_attached)
 		return
 	bomb_attached.forceMove(get_turf(src))
-	visible_message(span_notice("[bomb_attached] falls off!"))
+	visible_message(span_notice(LANG("obj.66302be8", list(bomb_attached))))
 	bomb_attached = null
 	update_appearance()
 

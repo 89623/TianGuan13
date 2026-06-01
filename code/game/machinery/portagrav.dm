@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/portagrav
 	anchored = FALSE
 	density = TRUE
@@ -100,10 +101,10 @@
 	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
 		return NONE
 	if(!panel_open)
-		balloon_alert(user, "must open panel!")
+		balloon_alert(user, LANG("obj.6901e151", null))
 		return ITEM_INTERACT_BLOCKING
 	if(cell)
-		balloon_alert(user, "already has a cell!")
+		balloon_alert(user, LANG("obj.62f73cd5", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_FAILURE
@@ -121,7 +122,7 @@
 /obj/machinery/power/portagrav/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(on)
-		balloon_alert(user, "turn off first!")
+		balloon_alert(user, LANG("obj.19a396d6", null))
 		return
 	default_unfasten_wrench(user, tool)
 	if(anchored && wire_mode)
@@ -151,9 +152,9 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	visible_message(span_warning("Sparks fly out of [src]!"))
+	visible_message(span_warning(LANG("obj.b7523a48", list(src))))
 	if(user)
-		balloon_alert(user, "unsafe gravity unlocked")
+		balloon_alert(user, LANG("obj.6ece93b7", null))
 		user.log_message("emagged [src].", LOG_ATTACK)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
@@ -167,14 +168,14 @@
 /obj/machinery/power/portagrav/proc/turn_on(mob/user)
 	if(!anchored)
 		if(!isnull(user))
-			balloon_alert(user, "not anchored!")
+			balloon_alert(user, LANG("obj.e0a7c3ce", null))
 		return FALSE
 	if((!wire_mode && cell?.charge < draw_per_range * range) || (wire_mode && surplus() < draw_per_range * range))
 		if(!isnull(user))
-			balloon_alert(user, "not enough power!")
+			balloon_alert(user, LANG("obj.7005f2d2", null))
 		return FALSE
 	if(!isnull(user))
-		balloon_alert(user, "turned on")
+		balloon_alert(user, LANG("obj.9fae209b", null))
 	on = TRUE
 	START_PROCESSING(SSmachines, src)
 	gravity_field = new(src, range = src.range, gravity = grav_strength)
@@ -183,7 +184,7 @@
 /obj/machinery/power/portagrav/proc/turn_off(mob/user)
 	on = FALSE
 	if(!isnull(user))
-		balloon_alert(user, "turned off")
+		balloon_alert(user, LANG("obj.49613fe4", null))
 	STOP_PROCESSING(SSmachines, src)
 	QDEL_NULL(gravity_field)
 	update_appearance()

@@ -203,7 +203,7 @@
 	var/datum/nifsoft/installed_nifsoft = new loaded_nifsoft(installed_nif, TRUE)
 
 	if(!installed_nifsoft.parent_nif)
-		balloon_alert(target, "installation failed")
+		balloon_alert(target, LANG("obj.e2706996", null))
 		return FALSE
 
 	if(!reusable)
@@ -214,7 +214,7 @@
 
 /obj/item/disk/nifsoft_uploader/attack(mob/living/mob, mob/living/user, params)
 	if(mob != user && !do_after(user, 5 SECONDS, mob))
-		balloon_alert(user, "installation failed")
+		balloon_alert(user, LANG("obj.e2706996", null))
 		return FALSE
 
 	attempt_software_install(mob)

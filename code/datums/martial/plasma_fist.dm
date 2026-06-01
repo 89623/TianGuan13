@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TORNADO_COMBO "HHD"
 #define THROWBACK_COMBO "DHD"
 #define PLASMA_COMBO "HDDDH"
@@ -54,7 +55,7 @@
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You hit [defender] with Plasma Punch!"))
+	to_chat(attacker, span_danger(LANG("datum.db4e604e", list(defender))))
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(defender, get_dir(defender, get_step_away(defender, attacker)))
 	defender.throw_at(throw_target, 200, 4,attacker)
@@ -75,7 +76,7 @@
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You hit [defender] with THE PLASMA FIST TECHNIQUE!"))
+	to_chat(attacker, span_danger(LANG("datum.98ecabe3", list(defender))))
 	log_combat(attacker, defender, "gibbed (Plasma Fist)")
 	var/turf/Dturf = get_turf(defender)
 	defender.investigate_log("has been gibbed by plasma fist.", INVESTIGATE_DEATHS)
@@ -84,16 +85,16 @@
 		return
 
 	if(!hasclient)
-		to_chat(attacker, span_warning("Taking this plasma energy for your </span>[span_notice("Apotheosis")]<span class='warning'> would bring dishonor to the clan!"))
+		to_chat(attacker, span_warning(LANG("datum.da4c55f6", list(span_notice("Apotheosis")))))
 		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and poofs.
 
 	else if(plasma_power >= plasma_cap)
-		to_chat(attacker, span_warning("You cannot power up your </span>[span_notice("Apotheosis")]<span class='warning'> any more!"))
+		to_chat(attacker, span_warning(LANG("datum.fb539793", list(span_notice("Apotheosis")))))
 		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and poofs.
 
 	else
 		plasma_power += plasma_increment
-		to_chat(attacker, span_nicegreen("Power increasing! Your </span>[span_notice("Apotheosis")]<span class='nicegreen'> is now at power level [plasma_power]!"))
+		to_chat(attacker, span_nicegreen(LANG("datum.c722f4f4", list(span_notice("Apotheosis"), plasma_power))))
 		new /obj/effect/temp_visual/plasma_soul(Dturf, attacker)
 		var/oldcolor = attacker.color
 		attacker.color = "#9C00FF"
@@ -120,7 +121,7 @@
 	log_combat(user, user, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
 	message_admins("[key_name_admin(user)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
 
-	to_chat(user, span_userdanger("The explosion knocks your soul out of your body!"))
+	to_chat(user, span_userdanger(LANG("datum.a5381ed2", null)))
 	user.ghostize(FALSE) //prevents... horrible memes just believe me
 
 	user.apply_damage(rand(50, 70), BRUTE, wound_bonus = CANT_WOUND)
@@ -152,7 +153,7 @@
 	if(check_streak(attacker, defender))
 		return MARTIAL_ATTACK_SUCCESS
 	if(attacker == defender)//there is no disarming yourself, so we need to let plasma fist user know
-		to_chat(attacker, span_notice("You have added a disarm to your streak."))
+		to_chat(attacker, span_notice(LANG("datum.12457fbf", null)))
 		return MARTIAL_ATTACK_FAIL
 	return MARTIAL_ATTACK_INVALID
 
@@ -194,7 +195,7 @@
 
 /obj/effect/temp_visual/plasma_soul/Destroy()
 	if(!beam_target)
-		visible_message(span_notice("[src] fades away..."))
+		visible_message(span_notice(LANG("obj.32e65462", list(src))))
 	. = ..()
 
 /obj/effect/ebeam/plasma_fist

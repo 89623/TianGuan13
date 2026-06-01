@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * PLATINGS
  *
@@ -48,22 +49,22 @@
 	if(istype(C, /obj/item/stack/rods) && attachment_holes)
 		if(broken || burnt)
 			if(!iscyborg(user))
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
+				to_chat(user, span_warning(LANG("turf.a536c411", null)))
 			else
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage.")) //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
+				to_chat(user, span_warning(LANG("turf.8197e5bf", null))) //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
-			to_chat(user, span_warning("You need two rods to make a reinforced floor!"))
+			to_chat(user, span_warning(LANG("turf.f6a65fbc", null)))
 			return
 		else
-			to_chat(user, span_notice("You begin reinforcing the floor..."))
+			to_chat(user, span_notice(LANG("turf.9be3abb7", null)))
 			if(do_after(user, 3 SECONDS, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					place_on_top(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 					R.use(2)
-					to_chat(user, span_notice("You reinforce the floor."))
+					to_chat(user, span_notice(LANG("turf.c70f4c00", null)))
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
@@ -75,12 +76,12 @@
 			tile.place_tile(src, user)
 		else
 			if(!iscyborg(user))
-				balloon_alert(user, "too damaged, use a welding tool!")
+				balloon_alert(user, LANG("turf.b4b46010", null))
 			else
-				balloon_alert(user, "too damaged, use a welding or plating repair tool!")
+				balloon_alert(user, LANG("turf.a9e3c8c0", null))
 	else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
 		if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
-			to_chat(user, span_danger("You fix some dents on the broken plating."))
+			to_chat(user, span_danger(LANG("turf.16c487d0", null)))
 			icon_state = base_icon_state
 			burnt = FALSE
 			broken = FALSE
@@ -90,7 +91,7 @@
 			var/obj/item/stack/sheet/sheets = C
 			if(sheets.get_amount() < PLATE_REINFORCE_COST)
 				return
-			balloon_alert(user, "reinforcing plating...")
+			balloon_alert(user, LANG("turf.b78e3218", null))
 			if(do_after(user, 12 SECONDS, target = src))
 				if(sheets.get_amount() < PLATE_REINFORCE_COST)
 					return
@@ -99,22 +100,22 @@
 				place_on_top(/turf/open/floor/plating/reinforced, CHANGETURF_INHERIT_AIR)
 		else
 			if(!iscyborg(user))
-				balloon_alert(user, "too damaged, use a welding tool!")
+				balloon_alert(user, LANG("turf.b4b46010", null))
 			else
-				balloon_alert(user, "too damaged, use a welding or plating repair tool!")
+				balloon_alert(user, LANG("turf.a9e3c8c0", null))
 	else if(istype(C, /obj/item/stack/sheet/mineral/plastitanium) && attachment_holes)
 		if(broken || burnt)
 			if(!iscyborg(user))
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
+				to_chat(user, span_warning(LANG("turf.a536c411", null)))
 			else
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage."))
+				to_chat(user, span_warning(LANG("turf.8197e5bf", null)))
 			return
 		var/obj/item/stack/sheet/mineral/plastitanium/sheet = C
 		if (sheet.get_amount() < 1)
-			to_chat(user, span_warning("You are literally holding nothing."))
+			to_chat(user, span_warning(LANG("turf.82bf82a4", null)))
 			return
 		else
-			balloon_alert(user, "insulating flooring...")
+			balloon_alert(user, LANG("turf.1ad560a9", null))
 			if(!do_after(user, 1.5 SECONDS, target = src))
 				return
 			if(sheet.get_amount() < 1 || istype(src, /turf/open/floor/engine/insulation))
@@ -122,13 +123,13 @@
 			place_on_top(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
 			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 			sheet.use(1)
-			to_chat(user, span_notice("You insulate the floor."))
-			balloon_alert(user, "insulated!")
+			to_chat(user, span_notice(LANG("turf.9ccab036", null)))
+			balloon_alert(user, LANG("turf.a365642c", null))
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
 	..()
 	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
-		to_chat(user, span_danger("You fix some dents on the broken plating."))
+		to_chat(user, span_danger(LANG("turf.16c487d0", null)))
 		icon_state = base_icon_state
 		burnt = FALSE
 		broken = FALSE
@@ -170,7 +171,7 @@
 	var/obj/lattice = locate(/obj/structure/lattice) in src
 	if(lattice)
 		qdel(lattice)
-	to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
+	to_chat(user, span_notice(LANG("turf.e0a1d63a", null)))
 	playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
 	ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	return ITEM_INTERACT_SUCCESS
@@ -184,7 +185,7 @@
 						span_danger("You smash through [src] with [attacking_item]!"))
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else
-		to_chat(user, span_danger("You hit [src], to no effect!"))
+		to_chat(user, span_danger(LANG("turf.d31ae83e", list(src))))
 
 /turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
@@ -242,7 +243,7 @@
 /turf/open/floor/plating/reinforced/attackby(obj/item/tool_used, mob/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, span_warning(LANG("turf.e8ba50af", null)))
 		return
 
 	//get the user's location

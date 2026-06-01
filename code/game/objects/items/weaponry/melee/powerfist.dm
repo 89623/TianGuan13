@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Defines for the pressure strength of the fist
 #define LOW_PRESSURE 1
 #define MID_PRESSURE 2
@@ -62,12 +63,12 @@
 /obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
 	fist_pressure_setting = fist_pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : fist_pressure_setting + 1
 	tool.play_tool_sound(src)
-	balloon_alert(user, "piston strength set to [pressure_setting_to_text(fist_pressure_setting)]")
+	balloon_alert(user, LANG("obj.d1a5a78c", list(pressure_setting_to_text(fist_pressure_setting))))
 	return TRUE
 
 /obj/item/melee/powerfist/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!tank)
-		balloon_alert(user, "no tank present")
+		balloon_alert(user, LANG("obj.c78df2ef", null))
 		return
 	update_tank(tank, TANK_REMOVING, user)
 	return TRUE
@@ -76,39 +77,39 @@
 	if(!istype(item_to_insert, /obj/item/tank/internals))
 		return ..()
 	if(tank)
-		to_chat(user, span_notice("A tank is already present, remove it with a screwdriver first."))
+		to_chat(user, span_notice(LANG("obj.a5df63a8", null)))
 		return
 	var/obj/item/tank/internals/tank_to_insert = item_to_insert
 	if(tank_to_insert.volume <= 3)
-		to_chat(user, span_warning("\The [tank_to_insert] is too small for \the [src]."))
+		to_chat(user, span_warning(LANG("obj.a09c5951", list(tank_to_insert, src))))
 		return
 	update_tank(item_to_insert, TANK_INSERTING, user)
 
 /obj/item/melee/powerfist/proc/update_tank(obj/item/tank/internals/the_tank, removing = TANK_INSERTING, mob/living/carbon/human/user)
 	if(removing)
 		if(!tank)
-			to_chat(user, span_notice("\The [src] currently has no tank attached to it."))
+			to_chat(user, span_notice(LANG("obj.96a0bfe8", list(src))))
 			return
-		to_chat(user, span_notice("You detach \the [the_tank] from \the [src]."))
+		to_chat(user, span_notice(LANG("obj.870413e7", list(the_tank, src))))
 		tank.forceMove(get_turf(user))
 		user.put_in_hands(tank)
 		tank = null
 		return
 
 	if(tank)
-		to_chat(user, span_warning("\The [src] already has a tank."))
+		to_chat(user, span_warning(LANG("obj.a5a5404f", list(src))))
 		return
 	if(!user.transferItemToLoc(the_tank, src))
 		return
-	to_chat(user, span_notice("You hook \the [the_tank] up to \the [src]."))
+	to_chat(user, span_notice(LANG("obj.08206c7e", list(the_tank, src))))
 	tank = the_tank
 
 /obj/item/melee/powerfist/attack(mob/living/target, mob/living/user)
 	if(!tank)
-		to_chat(user, span_warning("\The [src] can't operate without a source of gas!"))
+		to_chat(user, span_warning(LANG("obj.239e4ee8", list(src))))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		to_chat(user, span_warning(LANG("obj.c2a13fcc", null)))
 		return
 	var/turf/our_turf = get_turf(src)
 	if(!our_turf)
@@ -116,7 +117,7 @@
 
 	var/datum/gas_mixture/gas_used = tank.remove_air(gas_per_fist * fist_pressure_setting)
 	if(!gas_used)
-		to_chat(user, span_warning("\The [src]'s tank is empty!"))
+		to_chat(user, span_warning(LANG("obj.47096764", list(src))))
 		target.apply_damage((force / 5), BRUTE)
 		playsound(loc, 'sound/items/weapons/punch1.ogg', 50, TRUE)
 		target.visible_message(span_danger("[user]'s powerfist lets out a dull thunk as [user.p_they()] punch[user.p_es()] [target.name]!"), \
@@ -125,7 +126,7 @@
 
 	if(!molar_cmp_equals(gas_used.total_moles(), gas_per_fist * fist_pressure_setting))
 		our_turf.assume_air(gas_used)
-		to_chat(user, span_warning("\The [src]'s piston-ram lets out a weak hiss, it needs more gas!"))
+		to_chat(user, span_warning(LANG("obj.bef15588", list(src))))
 		playsound(loc, 'sound/items/weapons/punch4.ogg', 50, TRUE)
 		target.apply_damage((force / 2), BRUTE)
 		target.visible_message(span_danger("[user]'s powerfist lets out a weak hiss as [user.p_they()] punch[user.p_es()] [target.name]!"), \

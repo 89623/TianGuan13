@@ -30,7 +30,7 @@
 
 /obj/item/book/carving_act(mob/living/user, obj/item/tool)
 	if(cannot_carve)
-		balloon_alert(user, "can't carve!")
+		balloon_alert(user, LANG("obj.ba288d9e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	return ..()

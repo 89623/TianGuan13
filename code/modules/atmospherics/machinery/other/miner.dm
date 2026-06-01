@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 #define GASMINER_POWER_NONE 0
 #define GASMINER_POWER_STATIC 1
@@ -142,7 +143,7 @@
 
 /obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
 	if(broken)
-		to_chat(user, "[src] seems to be broken. Its debug interface outputs: [broken_message]")
+		to_chat(user, LANG("obj.a7d07d95", list(src, broken_message)))
 	..()
 
 /obj/machinery/atmospherics/miner/n2o

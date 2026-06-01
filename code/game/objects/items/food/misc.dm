@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 /obj/item/food/watermelonslice
@@ -399,9 +400,9 @@
 		return ..()
 	var/obj/item/stack/rods/rods = item
 	if(!rods.use(1))//borgs can still fail this if they have no metal
-		to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
+		to_chat(user, span_warning(LANG("obj.02ef851f", list(src))))
 		return ..()
-	to_chat(user, span_notice("You stick the rod into the stick of butter."))
+	to_chat(user, span_notice(LANG("obj.f9dc8b09", null)))
 	user.temporarilyRemoveItemFromInventory(src)
 	var/obj/item/food/butter/on_a_stick/new_item = new(drop_location())
 	if (new_item.IsReachableBy(user))

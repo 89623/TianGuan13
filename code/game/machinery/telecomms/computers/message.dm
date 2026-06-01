@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 	The monitoring computer for the messaging server.
 	Lets you read PDA and request console messages.
@@ -59,7 +60,7 @@
 /obj/machinery/computer/message_monitor/screwdriver_act(mob/living/user, obj/item/I)
 	if(obj_flags & EMAGGED)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
-		to_chat(user, span_warning("It is too hot to mess with!"))
+		to_chat(user, span_warning(LANG("obj.b0e05ae9", null)))
 		return TRUE
 	return ..()
 
@@ -67,7 +68,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	if(isnull(linked_server))
-		to_chat(user, span_notice("A no server error appears on the screen."))
+		to_chat(user, span_notice(LANG("obj.d4bbcb1f", null)))
 		return FALSE
 
 	obj_flags |= EMAGGED

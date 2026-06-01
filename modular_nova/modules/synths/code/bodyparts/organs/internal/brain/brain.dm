@@ -57,11 +57,11 @@
 		last_message_time = world.time
 
 		if(damage > BRAIN_DAMAGE_SEVERE)
-			to_chat(owner, span_warning("Alre: re oumtnin ilir tocorr:pa ni ne:cnrrpiioruloomatt cessingode: P1_1-H"))
+			to_chat(owner, span_warning(LANG("obj.e81066eb", null)))
 			return
 
 		if(damage > BRAIN_DAMAGE_MILD)
-			to_chat(owner, span_warning("Alert: Minor corruption in central processing unit. Error Code: 001-HP"))
+			to_chat(owner, span_warning(LANG("obj.30eb8b4b", null)))
 
 /obj/item/organ/brain/synth/Destroy()
 	QDEL_NULL(internal_computer)

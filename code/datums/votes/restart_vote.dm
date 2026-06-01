@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CHOICE_RESTART "Restart Round"
 #define CHOICE_CONTINUE "Continue Playing"
 
@@ -52,7 +53,7 @@
 
 	if(winning_option == CHOICE_RESTART)
 		if(admins_present())
-			to_chat(world, span_boldannounce("Notice: A restart vote will not restart the server automatically because there are active admins on."))
+			to_chat(world, span_boldannounce(LANG("datum.5b3baac1", null)))
 			message_admins("A restart vote has passed, but there are active admins on with +SERVER, so it has been canceled. If you wish, you may restart the server.")
 			return
 

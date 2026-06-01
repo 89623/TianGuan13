@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/beacon
 	name = "\improper tracking beacon"
 	desc = "A beacon used by a teleporter."
@@ -41,7 +42,7 @@
 		GLOB.teleportbeacons += src
 	else
 		turn_off()
-	to_chat(user, span_notice("You [enabled ? "enable" : "disable"] the beacon."))
+	to_chat(user, span_notice(LANG("obj.48b47fdd", list(enabled ? "enable" : "disable"))))
 	return
 
 /obj/item/beacon/attack_hand_secondary(mob/user, list/modifiers)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 GLOBAL_LIST_INIT(cursed_animal_masks, list(
 		/obj/item/clothing/mask/animal/pig/cursed,
@@ -70,7 +71,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	if(!(clothing_flags & VOICEBOX_TOGGLABLE))
 		return NONE
 	clothing_flags ^= VOICEBOX_DISABLED
-	to_chat(user, span_notice("You [clothing_flags & VOICEBOX_DISABLED ? "disabled" : "enabled"] [src]'s voicebox."))
+	to_chat(user, span_notice(LANG("obj.3f4184fc", list(clothing_flags & VOICEBOX_DISABLED ? "disabled" : "enabled", src))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/animal/proc/make_cursed() //apply cursed effects.
@@ -90,7 +91,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
 			if(update_speech_mod)
 				RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
-			to_chat(M, span_userdanger("[src] was cursed!"))
+			to_chat(M, span_userdanger(LANG("obj.12e13291", list(src))))
 			M.update_worn_mask()
 			M.refresh_obscured()
 
@@ -106,7 +107,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	if(ismob(loc))
 		var/mob/M = loc
 		if(M.get_item_by_slot(ITEM_SLOT_MASK) == src)
-			to_chat(M, span_notice("[src]'s curse has been lifted!"))
+			to_chat(M, span_notice(LANG("obj.24fadc80", list(src))))
 			if(update_speech_mod)
 				UnregisterSignal(M, COMSIG_MOB_SAY)
 			M.update_worn_mask()
@@ -124,7 +125,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	if(!iscarbon(user))
 		return ..()
 	if((slot & ITEM_SLOT_MASK) && HAS_TRAIT_FROM(src, TRAIT_NODROP, CURSED_MASK_TRAIT))
-		to_chat(user, span_userdanger("[src] was cursed!"))
+		to_chat(user, span_userdanger(LANG("obj.12e13291", list(src))))
 	return ..()
 
 

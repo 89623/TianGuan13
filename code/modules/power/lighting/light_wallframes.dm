@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
 	desc = "Used for building lights."
@@ -12,7 +13,7 @@
 /obj/item/wallframe/light_fixture/try_build(atom/support, mob/user)
 	var/area/A = get_area(user)
 	if(A.always_unpowered)
-		balloon_alert(user, "cannot place in this area!")
+		balloon_alert(user, LANG("obj.503cb4c5", null))
 		return FALSE
 	return ..()
 
@@ -27,7 +28,7 @@
 		return
 	var/area/local_area = get_area(user)
 	if(!local_area.static_lighting)
-		to_chat(user, span_warning("You cannot place [src] in this area!"))
+		to_chat(user, span_warning(LANG("obj.020656f6", list(src))))
 		return
 	return TRUE
 
@@ -35,23 +36,23 @@
 	var/turf/local_turf = get_turf(user)
 	var/area/local_area = get_area(user)
 	if(!isturf(user.loc) || !isfloorturf(local_turf))
-		balloon_alert(user, "cannot place here!")
+		balloon_alert(user, LANG("obj.76e1c3bd", null))
 		return
 	if(local_area.always_unpowered || !local_area.static_lighting)
-		balloon_alert(user, "cannot place in this area!")
+		balloon_alert(user, LANG("obj.503cb4c5", null))
 		return
 	for(var/obj/object in local_turf)
 		if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
 			balloon_alert(user, "something is in the way!")
 			return
 	if(local_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		balloon_alert(user, "remove the floor plating!")
+		balloon_alert(user, LANG("obj.0d1f39e9", null))
 		return
 	if(locate(/obj/structure/light_construct/floor) in local_turf)
-		balloon_alert(user, "already has a light!")
+		balloon_alert(user, LANG("obj.f08e630f", null))
 		return
 	if(locate(/obj/machinery/light/floor) in local_turf)
-		balloon_alert(user, "already has a light!")
+		balloon_alert(user, LANG("obj.f08e630f", null))
 		return
 
 	playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Component for allowing items to be inserted into foam darts.
  * The parent can register signal handlers for `COMSIG_DART_INSERT_ADDED`,
@@ -52,10 +53,10 @@
 	if(!istype(dart))
 		return
 	if(!dart.modified)
-		to_chat(user, span_warning("The safety cap prevents you from inserting [parent] into [dart]."))
+		to_chat(user, span_warning(LANG("datum.38ef8576", list(parent, dart))))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(HAS_TRAIT(dart, TRAIT_DART_HAS_INSERT))
-		to_chat(user, span_warning("There's already something in [dart]."))
+		to_chat(user, span_warning(LANG("datum.b97c4533", list(dart))))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	add_to_dart(dart, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -70,7 +71,7 @@
 	if(user)
 		if(!user.transferItemToLoc(parent_item, dart_projectile))
 			return
-		to_chat(user, span_notice("You insert [parent_item] into [dart]."))
+		to_chat(user, span_notice(LANG("datum.8ce99939", list(parent_item, dart))))
 	else
 		parent_item.forceMove(dart_projectile)
 	ADD_TRAIT(dart, TRAIT_DART_HAS_INSERT, REF(src))
@@ -105,7 +106,7 @@
 	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	if(user)
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), parent)
-		to_chat(user, span_notice("You remove [parent] from [dart]."))
+		to_chat(user, span_notice(LANG("datum.cbed3266", list(parent, dart))))
 
 /datum/component/dart_insert/proc/on_dart_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER

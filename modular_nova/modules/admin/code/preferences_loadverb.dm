@@ -37,20 +37,20 @@ ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a characte
 
 	// Prevent simple mistakes
 	if(!findtext("[uploaded_file]", ".json", -5))
-		to_chat(user, span_warning("Filename must end in '.json': [uploaded_file]"), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.93cb4c73", list(uploaded_file))), confidential = TRUE)
 		return
 
 	// Enforce filesize limit
 	var/filesize = length(uploaded_file)
 	var/filesize_limit = CONFIG_GET(number/savefile_upload_limit) * 1024
 	if(filesize > filesize_limit)
-		to_chat(user, span_warning("File is too large ([filesize] bytes). Maximum allowed is [filesize_limit] bytes."), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.e63a4689", list(filesize, filesize_limit))), confidential = TRUE)
 		return
 
 	// Pre-parse the uploaded file to ensure valid JSON syntax
 	var/new_save = file2text(uploaded_file)
 	if(length(new_save) == 0)
-		to_chat(user, span_warning("File was empty or unreadable: [uploaded_file]"), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.1e25c7f2", list(uploaded_file))), confidential = TRUE)
 		return
 	var/list/json_tree
 	try
@@ -63,20 +63,20 @@ ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a characte
 
 	if(isnull(json_tree) || !islist(json_tree) || !length(json_tree))
 		log_admin("Failed to parse json savefile: File empty")
-		to_chat(user, span_warning("Failed to parse json savefile: File empty"))
+		to_chat(user, span_warning(LANG("datum.94ce119a", null)))
 		return
 
 	// Duck typecheck to ensure the JSON is a tgstation save file
 	if(!json_tree.Find("version"))
 		log_admin("Failed to parse json savefile: Version property is missing")
-		to_chat(user, span_warning("Failed to parse json savefile: Version property is missing"))
+		to_chat(user, span_warning(LANG("datum.92ef83a0", null)))
 		return
 
 	// Enforce minimum savefile version
 	if(user.prefs.check_savedata_version(json_tree) == SAVE_DATA_OBSOLETE)
 		var/savefile_version = json_tree["version"]
 		log_admin("Failed to parse json savefile: Version ([savefile_version]) is below minimum")
-		to_chat(user, span_warning("Failed to parse json savefile: Version ([savefile_version]) is below minimum"))
+		to_chat(user, span_warning(LANG("datum.d6c0a876", list(savefile_version))))
 		return
 
 	// Backup and delete the existing savefile if it exists
@@ -87,7 +87,7 @@ ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a characte
 			var/list/backup_files = flist(importbac_path)
 			var/total_backups = length(backup_files)
 			if(total_backups >= backup_limit)
-				to_chat(user, span_warning("Too many backups already exist for [player_key]! Please notify a keyholder to clean up old .importbac files before importing."), confidential = TRUE)
+				to_chat(user, span_warning(LANG("datum.a912c0a9", list(player_key))), confidential = TRUE)
 				return
 			if(total_backups > 0)
 				importbac_path = "[importbac_path]-[total_backups + 1]"
@@ -105,7 +105,7 @@ ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a characte
 	if(!isnull(GLOB.preferences_datums[player_key]))
 		GLOB.preferences_datums[player_key] = null
 
-	to_chat(user, span_danger("Successfully imported new preferences for player [player_key]"), confidential = TRUE)
+	to_chat(user, span_danger(LANG("datum.238837da", list(player_key))), confidential = TRUE)
 	log_admin("[key_name_admin(user)] has successfully imported new preferences for player [player_key].")
 	message_admins("[key_name_admin(user)] has successfully imported new preferences for player [player_key].")
 
@@ -115,7 +115,7 @@ ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a characte
 		return
 
 	// Disconnect the affected client to reset any prefs data cached in TGUI
-	to_chat(target_client, span_danger("Kicked to finish preference file importing. Please re-connect to the server."), confidential = TRUE)
+	to_chat(target_client, span_danger(LANG("datum.76803e75", null)), confidential = TRUE)
 	log_admin("Kicked [player_key] to complete preference file importing.")
 	message_admins("Kicked [player_key] to complete preference file importing.")
 	// Delayed kick to give chat messages time to be delivered

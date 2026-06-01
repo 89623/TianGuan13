@@ -293,7 +293,7 @@
 /obj/item/clothing/head/skrell_chain/attack_self(mob/user)
 	var/style_name = tgui_input_list(user, "How does chain look when it's up?", "Pick!", chain_styles)
 	worn_icon_state = chain_styles[style_name]
-	balloon_alert(user, "style choiced!")
+	balloon_alert(user, LANG("obj.f5069694", null))
 
 /obj/item/clothing/head/skrell_chain/silver
 	name = "silver skrellian head chain"

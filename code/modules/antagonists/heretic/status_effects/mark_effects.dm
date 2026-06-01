@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/status_effect/eldritch
 	id = "heretic_mark"
 	duration = 15 SECONDS
@@ -166,9 +167,9 @@
 
 	var/mob/thrower = throw_args[4]
 	if(istype(thrower))
-		to_chat(thrower, span_hypnophrase("An otherworldly force prevents you from throwing [source] out of [get_area_name(locked_to)]!"))
+		to_chat(thrower, span_hypnophrase(LANG("datum.811ae687", list(source, get_area_name(locked_to)))))
 
-	to_chat(source, span_hypnophrase("An otherworldly force prevents you from being thrown out of [get_area_name(locked_to)]!"))
+	to_chat(source, span_hypnophrase(LANG("datum.f54da73e", list(get_area_name(locked_to)))))
 
 	return COMPONENT_CANCEL_THROW
 
@@ -179,7 +180,7 @@
 	if(!is_escaping_locked_area(source, destination))
 		return
 
-	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
+	to_chat(source, span_hypnophrase(LANG("datum.4514f0d4", list(get_area_name(locked_to)))))
 
 	source.Stun(1 SECONDS)
 	return TRUE
@@ -196,7 +197,7 @@
 	if(forced || !is_escaping_locked_area(old_loc, source))
 		return
 
-	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
+	to_chat(source, span_hypnophrase(LANG("datum.4514f0d4", list(get_area_name(locked_to)))))
 
 	var/turf/further_behind_old_loc = get_edge_target_turf(old_loc, REVERSE_DIR(movement_dir))
 

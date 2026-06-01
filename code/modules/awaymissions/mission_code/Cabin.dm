@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /*Cabin areas*/
 /area/awaymission/cabin
@@ -122,7 +123,7 @@
 	user.balloon_alert_to_viewers("activating...")
 
 /obj/structure/ladder/unbreakable/rune/show_final_fluff_message(mob/user, going_up)
-	visible_message(span_notice("[user] activates [src] and teleports away."))
+	visible_message(span_notice(LANG("obj.7b8abe5c", list(user, src))))
 	user.balloon_alert_to_viewers("warped in")
 
 /obj/structure/ladder/unbreakable/rune/use(mob/user, going_up = TRUE)

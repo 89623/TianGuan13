@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/ridden
 	name = "ridden vehicle"
 	can_buckle = TRUE
@@ -39,9 +40,9 @@
 	if(!key_type || is_key(inserted_key) || !is_key(tool))
 		return NONE
 	if(!user.transferItemToLoc(tool, src))
-		to_chat(user, span_warning("[tool] seems to be stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.dc050dd7", list(tool))))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You insert \the [tool] into \the [src]."))
+	to_chat(user, span_notice(LANG("obj.a9ab5056", list(tool, src))))
 	if(inserted_key) //just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
 	inserted_key = tool
@@ -51,9 +52,9 @@
 	if(!inserted_key)
 		return CLICK_ACTION_BLOCKING
 	if(!is_occupant(user))
-		to_chat(user, span_warning("You must be riding the [src] to remove [src]'s [inserted_key]!"))
+		to_chat(user, span_warning(LANG("obj.cb483ffc", list(src, src, inserted_key))))
 		return CLICK_ACTION_BLOCKING
-	to_chat(user, span_notice("You remove \the [inserted_key] from \the [src]."))
+	to_chat(user, span_notice(LANG("obj.c92284f5", list(inserted_key, src))))
 	user.put_in_hands(inserted_key)
 	inserted_key = null
 	return CLICK_ACTION_SUCCESS

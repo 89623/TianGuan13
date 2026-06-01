@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Holds information about a ticket
 /datum/ticket_history
 	var/player_ckey
@@ -57,7 +58,7 @@ ADMIN_VERB(player_ticket_history, R_ADMIN, "Player Ticket History", "Allows you 
 	)
 	if(!ticket_lookup.Execute())
 		qdel(ticket_lookup)
-		to_chat(usr, "Failed to query ticket history for [ckey]!")
+		to_chat(usr, LANG("datum.9848148a", list(ckey)))
 		return
 
 	var/list/lookup_targets = list()
@@ -108,11 +109,11 @@ ADMIN_VERB(player_ticket_history, R_ADMIN, "Player Ticket History", "Allows you 
 	UNTIL(lookup_targets.len == 0)
 
 	if(!length(history_cache))
-		to_chat(usr, span_adminnotice("No ticket history found for [ckey]!"))
+		to_chat(usr, span_adminnotice(LANG("datum.61bcd411", list(ckey))))
 		ticket_histories -= ckey
 		return
 
-	to_chat(usr, span_adminnotice("Finished caching ticket history for [ckey]!"))
+	to_chat(usr, span_adminnotice(LANG("datum.0a424180", list(ckey))))
 
 /datum/ticket_history_holder/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)

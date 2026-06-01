@@ -30,7 +30,7 @@
 	if(!.)
 		return
 	if(!iscorticalborer(owner))
-		to_chat(owner, span_warning("You must be a cortical borer to use this action!"))
+		to_chat(owner, span_warning(LANG("datum.be2d754b", null)))
 		return FALSE
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
 	if(owner.stat == DEAD)
@@ -307,7 +307,7 @@
 		GLOB.successful_blood_chem += 1
 	owner.balloon_alert(owner, "[initial(reagent_choice.name)] learned")
 	if(!HAS_TRAIT(cortical_owner.human_host, TRAIT_AGEUSIA))
-		to_chat(cortical_owner.human_host, span_notice("You get a strange aftertaste of [initial(reagent_choice.taste_description)]!"))
+		to_chat(cortical_owner.human_host, span_notice(LANG("datum.b2abea8c", list(initial(reagent_choice.taste_description)))))
 	StartCooldown()
 
 //become stronger by learning new chemicals
@@ -342,7 +342,7 @@
 		cortical_owner.human_host.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5 * cortical_owner.host_harm_multiplier)
 	owner.balloon_alert(owner, "[initial(reagent_choice.name)] learned")
 	if(!HAS_TRAIT(cortical_owner.human_host, TRAIT_AGEUSIA))
-		to_chat(cortical_owner.human_host, span_notice("You get a strange aftertaste of [initial(reagent_choice.taste_description)]!"))
+		to_chat(cortical_owner.human_host, span_notice(LANG("datum.b2abea8c", list(initial(reagent_choice.taste_description)))))
 	StartCooldown()
 
 //become stronger by affecting the stats
@@ -372,8 +372,8 @@
 	if(victim_brain)
 		cortical_owner.human_host.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10 * cortical_owner.host_harm_multiplier)
 	cortical_owner.human_host.adjust_eye_blur(6 SECONDS * cortical_owner.host_harm_multiplier) //about 12 seconds' worth by default
-	to_chat(cortical_owner, span_notice("You have grown!"))
-	to_chat(cortical_owner.human_host, span_warning("You feel a sharp pressure in your head!"))
+	to_chat(cortical_owner, span_notice(LANG("datum.bdfca1a3", null)))
+	to_chat(cortical_owner.human_host, span_warning(LANG("datum.8cc645e5", null)))
 	StartCooldown()
 
 //go between either hiding behind tables or behind mobs
@@ -439,7 +439,7 @@
 
 /datum/action/cooldown/borer/fear_human/proc/incite_fear(mob/living/carbon/human/singular_fear)
 	var/mob/living/basic/cortical_borer/cortical_owner = owner
-	to_chat(singular_fear, span_warning("Something glares menacingly at you!"))
+	to_chat(singular_fear, span_warning(LANG("datum.c02e8521", null)))
 	singular_fear.Paralyze(7 SECONDS)
 	singular_fear.adjust_stamina_loss(50)
 	singular_fear.set_confusion_if_lower(9 SECONDS)
@@ -454,7 +454,7 @@
 	cortical_owner.human_host.Paralyze(10 SECONDS)
 	cortical_owner.human_host.adjust_stamina_loss(100)
 	cortical_owner.human_host.set_confusion_if_lower(15 SECONDS)
-	to_chat(cortical_owner.human_host, span_warning("Something moves inside of you violently!"))
+	to_chat(cortical_owner.human_host, span_warning(LANG("datum.820d62cd", null)))
 	var/turf/human_turf = get_turf(cortical_owner.human_host)
 	var/logging_text = "[key_name(cortical_owner)] feared/paralyzed [key_name(cortical_owner.human_host)] (internal) at [loc_name(human_turf)]"
 	cortical_owner.log_message(logging_text, LOG_GAME)
@@ -500,7 +500,7 @@
 			return
 		owner.balloon_alert(owner, "detached from host")
 		if(!(cortical_owner.upgrade_flags & BORER_STEALTH_MODE))
-			to_chat(cortical_owner.human_host, span_notice("Something carefully tickles your inner ear..."))
+			to_chat(cortical_owner.human_host, span_notice(LANG("datum.44a6f0c3", null)))
 		var/obj/item/organ/borer_body/borer_organ = locate() in cortical_owner.human_host.organs
 		//log the interaction
 		var/turf/human_turfone = get_turf(cortical_owner.human_host)
@@ -567,7 +567,7 @@
 	cortical_owner.human_host = singular_host
 	cortical_owner.forceMove(cortical_owner.human_host)
 	if(!(cortical_owner.upgrade_flags & BORER_STEALTH_MODE))
-		to_chat(cortical_owner.human_host, span_notice("A chilling sensation goes down your spine..."))
+		to_chat(cortical_owner.human_host, span_notice(LANG("datum.5a299e3c", null)))
 	cortical_owner.copy_languages(cortical_owner.human_host)
 	var/obj/item/organ/borer_body/borer_organ = new(cortical_owner.human_host)
 	borer_organ.borer = owner
@@ -616,7 +616,7 @@
 		return
 	borer_message = sanitize(borer_message)
 	var/mob/living/carbon/human/cortical_host = cortical_owner.human_host
-	to_chat(cortical_host, span_boldwarning("Your voice moves without your permission!"))
+	to_chat(cortical_host, span_boldwarning(LANG("datum.b6773c5c", null)))
 	var/obj/item/organ/brain/victim_brain = cortical_owner.human_host.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(victim_brain)
 		cortical_owner.human_host.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2 * cortical_owner.host_harm_multiplier)
@@ -662,7 +662,7 @@
 					cortical_owner.human_host.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_SURGERY)
 				if(72 to 75)
 					cortical_owner.human_host.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
-	to_chat(cortical_owner.human_host, span_warning("Your brain begins to hurt..."))
+	to_chat(cortical_owner.human_host, span_warning(LANG("datum.0b6fe2fd", null)))
 	var/turf/borer_turf = get_turf(cortical_owner)
 	new /obj/effect/decal/cleanable/vomit(borer_turf)
 	playsound(borer_turf, 'sound/effects/splat.ogg', 50, TRUE)
@@ -725,7 +725,7 @@
 		if(!(internal_target.organ_flags & ORGAN_EXTERNAL))
 			internal_target.apply_organ_damage(-internal_target.damage * 0.5)
 	cortical_owner.human_host.revive()
-	to_chat(cortical_owner.human_host, span_boldwarning("Your heart jumpstarts!"))
+	to_chat(cortical_owner.human_host, span_boldwarning(LANG("datum.e21c9ab8", null)))
 	owner.balloon_alert(owner, "host revived")
 	var/turf/human_turf = get_turf(cortical_owner.human_host)
 	var/logging_text = "[key_name(cortical_owner)] revived [key_name(cortical_owner.human_host)] at [loc_name(human_turf)]"
@@ -763,7 +763,7 @@
 		StartCooldown()
 		return
 	owner.balloon_alert(owner, "host willing!")
-	to_chat(cortical_owner.human_host, span_notice("You have accepted being a willing host!"))
+	to_chat(cortical_owner.human_host, span_notice(LANG("datum.21ff038d", null)))
 	GLOB.willing_hosts += cortical_owner.human_host.ckey
 	StartCooldown()
 

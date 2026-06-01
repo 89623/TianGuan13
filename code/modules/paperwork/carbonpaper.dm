@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/paper/carbon
 	name = "sheet of carbon"
 	icon_state = "paper_stack"
@@ -22,18 +23,18 @@
 
 /obj/item/paper/carbon/click_alt(mob/living/user)
 	if(!copied)
-		to_chat(user, span_notice("Take off the carbon copy first."))
+		to_chat(user, span_notice(LANG("obj.8a2f510d", null)))
 		return CLICK_ACTION_BLOCKING
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/paper/carbon/proc/removecopy(mob/living/user)
 	if(copied)
-		to_chat(user, span_notice("There are no more carbon copies attached to this paper!"))
+		to_chat(user, span_notice(LANG("obj.14449151", null)))
 		return
 
 	var/obj/item/paper/carbon/copy = copy(/obj/item/paper/carbon_copy, loc.drop_location(), FALSE)
 	copy.name = "\improper Copy - [name]"
-	to_chat(user, span_notice("You tear off the carbon-copy!"))
+	to_chat(user, span_notice(LANG("obj.6bdf2704", null)))
 	copied = TRUE
 	update_icon_state()
 	user.put_in_hands(copy)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A fake nuke that actually contains beer.
 /obj/machinery/nuclearbomb/beer
 	name = "\improper Nanotrasen-brand nuclear fission explosive"
@@ -46,7 +47,7 @@
 	if(is_station_level(bomb_location.z))
 		addtimer(CALLBACK(src, PROC_REF(really_actually_explode)), 11 SECONDS)
 	else
-		visible_message(span_notice("[src] fizzes ominously."))
+		visible_message(span_notice(LANG("obj.740520ea", list(src))))
 		addtimer(CALLBACK(src, PROC_REF(local_foam)), 11 SECONDS)
 
 /obj/machinery/nuclearbomb/beer/disarm_nuke(mob/disarmer)

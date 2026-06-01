@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/heart/gland/trauma
 	abductor_hint = "white matter randomiser. The abductee occasionally gains a random brain trauma, up to five times. The traumas can range from basic to deep-rooted."
 	cooldown_low = 800
@@ -8,7 +9,7 @@
 	mind_control_duration = 1800
 
 /obj/item/organ/heart/gland/trauma/activate()
-	to_chat(owner, span_warning("You feel a spike of pain in your head."))
+	to_chat(owner, span_warning(LANG("obj.9e157ef4", null)))
 	if(prob(33))
 		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 	else

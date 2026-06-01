@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //banana flavored chaos and horror ahead
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes
@@ -58,14 +59,14 @@
 		return
 
 	toggle_clowning_action()
-	to_chat(wearer, span_warning("You ran out of bananium!"))
+	to_chat(wearer, span_warning(LANG("obj.dfd2013e", null)))
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
 	var/sheet_amount = bananium.retrieve_all()
 	if(sheet_amount)
-		to_chat(user, span_notice("You retrieve [sheet_amount] sheets of bananium from the prototype shoes."))
+		to_chat(user, span_notice(LANG("obj.dea29e26", list(sheet_amount))))
 	else
-		to_chat(user, span_warning("You cannot retrieve any bananium from the prototype shoes!"))
+		to_chat(user, span_warning(LANG("obj.8708f933", null)))
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	. = ..()
@@ -74,9 +75,9 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	if(bananium.get_material_amount(/datum/material/bananium) >= material_per_banana)
 		toggle_clowning_action()
-		to_chat(user, span_notice("You [on ? "activate" : "deactivate"] the prototype shoes."))
+		to_chat(user, span_notice(LANG("obj.39cc9bf0", list(on ? "activate" : "deactivate"))))
 	else
-		to_chat(user, span_warning("You need bananium to turn the prototype shoes on!"))
+		to_chat(user, span_warning(LANG("obj.8c2d96c9", null)))
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon_state()
 	icon_state = "clown_prototype_[on ? "on" : "off"]"

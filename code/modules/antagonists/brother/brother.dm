@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/antagonist/brother
 	name = "\improper Brother"
 	antagpanel_category = "Brother"
@@ -40,7 +41,7 @@
 
 	var/is_first_brother = team.members.len == 1
 	if (!is_first_brother)
-		to_chat(carbon_owner, span_boldwarning("The Syndicate have higher expectations from you than others. They have granted you an extra flash to convert one other person."))
+		to_chat(carbon_owner, span_boldwarning(LANG("datum.f59bc4b2", null)))
 
 	return ..()
 
@@ -179,7 +180,7 @@
 	return brother_text
 
 /datum/antagonist/brother/greet()
-	to_chat(owner.current, span_alertsyndie("You are a Blood Brother."))
+	to_chat(owner.current, span_alertsyndie(LANG("datum.aef74aab", null)))
 	owner.announce_objectives()
 
 /datum/antagonist/brother/proc/finalize_brother()

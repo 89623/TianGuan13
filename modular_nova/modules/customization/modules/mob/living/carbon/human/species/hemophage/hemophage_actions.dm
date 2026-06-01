@@ -153,7 +153,7 @@
 		))
 		RegisterSignal(carbon_owner, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(on_limb_damaged), override = TRUE)
 		chosen_wound.adjust_blood_flow(-WOUND_MAX_BLOODFLOW)
-		to_chat(carbon_owner, span_good("You use hemokinesis to clot the [chosen_wound]."))
+		to_chat(carbon_owner, span_good(LANG("datum.6df294cc", list(chosen_wound))))
 		carbon_owner.adjust_blood_volume(-50)
 		return ..()
 
@@ -212,15 +212,15 @@
 		return
 
 	if(living_owner.has_status_effect(/datum/status_effect/slave_to_the_tumor))
-		to_chat(living_owner, "You are still recovering...")
+		to_chat(living_owner, LANG("datum.1a830dc9", null))
 		return
 
 	if(living_owner.has_status_effect(/datum/status_effect/master_of_the_house))
 		living_owner.remove_status_effect(/datum/status_effect/master_of_the_house)
-		to_chat(living_owner, "You release control of your lungs back to the tumor...")
+		to_chat(living_owner, LANG("datum.fdc987be", null))
 	else
 		living_owner.apply_status_effect(/datum/status_effect/master_of_the_house)
-		to_chat(living_owner, "You begin to wrest control of your lungs from the tumor. You can't keep this up forever, can you?")
+		to_chat(living_owner, LANG("datum.592c9765", null))
 
 	return ..()
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MOTH_WING_FORCE 1 NEWTONS
 
 ///Moth wings! They can flutter in low-grav and burn off in heat
@@ -62,7 +63,7 @@
 	SIGNAL_HANDLER
 
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
-		to_chat(human, span_danger("Your precious wings burn to a crisp!"))
+		to_chat(human, span_danger(LANG("obj.fcaa29ef", null)))
 		human.add_mood_event("burnt_wings", /datum/mood_event/burnt_wings)
 
 		burn_wings()

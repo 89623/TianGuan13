@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/stack/medical/wrap/sticky_tape
 	name = "sticky tape"
 	singular_name = "sticky tape"
@@ -45,7 +46,7 @@
 		var/new_tape_gag = new tape_gag(src)
 		user.put_in_hands(new_tape_gag)
 		use(1)
-		to_chat(user, span_notice("You rip off a piece of tape."))
+		to_chat(user, span_notice(LANG("obj.575861a5", null)))
 		playsound(user, 'sound/items/duct_tape/duct_tape_snap.ogg', 50, TRUE)
 		return TRUE
 	return ..()
@@ -59,7 +60,7 @@
 		return NONE
 
 	if(target.get_embed()?.type == conferred_embed)
-		to_chat(user, span_warning("[target] is already coated in [src]!"))
+		to_chat(user, span_warning(LANG("obj.63bbf11d", list(target, src))))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_notice("[user] begins wrapping [target] with [src]."), span_notice("You begin wrapping [target] with [src]."))
@@ -72,17 +73,17 @@
 	use(1)
 	if(istype(target, /obj/item/clothing/gloves/fingerless))
 		var/obj/item/clothing/gloves/tackler/offbrand/O = new /obj/item/clothing/gloves/tackler/offbrand
-		to_chat(user, span_notice("You turn [target] into [O] with [src]."))
+		to_chat(user, span_notice(LANG("obj.d1ab6cd7", list(target, O, src))))
 		QDEL_NULL(target)
 		user.put_in_hands(O)
 		return ITEM_INTERACT_SUCCESS
 
 	if(target.get_embed()?.type == conferred_embed)
-		to_chat(user, span_warning("[target] is already coated in [src]!"))
+		to_chat(user, span_warning(LANG("obj.63bbf11d", list(target, src))))
 		return ITEM_INTERACT_BLOCKING
 
 	target.set_embed(conferred_embed)
-	to_chat(user, span_notice("You finish wrapping [target] with [src]."))
+	to_chat(user, span_notice(LANG("obj.47afed3b", list(target, src))))
 	target.name = "[prefix] [target.name]"
 
 	if(isgrenade(target))
@@ -188,7 +189,7 @@
 
 		robotic_pal.adjust_brute_loss(-object_repair_value)
 		use(1)
-		to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
+		to_chat(user, span_notice(LANG("obj.b27c63e2", list(interacting_with, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!isobj(interacting_with) || iseffect(interacting_with))
@@ -218,5 +219,5 @@
 		object_to_repair.repair_damage(object_repair_value)
 
 	use(1)
-	to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
+	to_chat(user, span_notice(LANG("obj.b27c63e2", list(interacting_with, src))))
 	return ITEM_INTERACT_SUCCESS

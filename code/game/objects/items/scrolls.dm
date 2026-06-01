@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/teleportation_scroll
 	name = "scroll of teleportation"
 	desc = "A scroll for moving around."
@@ -31,7 +32,7 @@
 	uses--
 	if(uses > 0)
 		return
-	to_chat(cast_on, span_warning("[src] runs out of uses and crumbles to dust!"))
+	to_chat(cast_on, span_warning(LANG("obj.8d5fb08c", list(src))))
 	qdel(src)
 
 /obj/item/teleportation_scroll/apprentice
@@ -57,7 +58,7 @@
 		return
 	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
 	if(!teleport)
-		to_chat(user, span_warning("[src] seems to be a faulty teleportation scroll, and has no magic associated."))
+		to_chat(user, span_warning(LANG("obj.06e0c8d7", list(src))))
 		return
 	if(!teleport.Activate(user))
 		return

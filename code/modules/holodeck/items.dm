@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 	Items, Structures, Machines
 */
@@ -66,7 +67,7 @@
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Paralyze(60)
-			visible_message(span_danger("[M] is knocked right off [M.p_their()] feet!"))
+			visible_message(span_danger(LANG("obj.4673b48c", list(M, M.p_their()))))
 
 //
 // Machines
@@ -86,22 +87,22 @@
 	power_channel = AREA_USAGE_ENVIRON
 
 /obj/machinery/readybutton/attack_ai(mob/user)
-	to_chat(user, span_warning("The station AI is not to interact with these devices!"))
+	to_chat(user, span_warning(LANG("obj.31c1413b", null)))
 	return
 
 /obj/machinery/readybutton/attack_paw(mob/user, list/modifiers)
-	to_chat(user, span_warning("You are too primitive to use this device!"))
+	to_chat(user, span_warning(LANG("obj.7748efda", null)))
 	return
 
 /obj/machinery/readybutton/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	to_chat(user, span_warning("The device is a solid button, there's nothing you can do with it!"))
+	to_chat(user, span_warning(LANG("obj.1dbdcc98", null)))
 
 /obj/machinery/readybutton/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(machine_stat & (NOPOWER|BROKEN))
-		to_chat(user, span_warning("This device is not powered!"))
+		to_chat(user, span_warning(LANG("obj.fe6ea03f", null)))
 		return
 
 	currentarea = get_area(src)
@@ -110,7 +111,7 @@
 		return
 
 	if(eventstarted)
-		to_chat(usr, span_warning("The event has already begun!"))
+		to_chat(usr, span_warning(LANG("obj.e4350606", null)))
 		return
 
 	ready = !ready

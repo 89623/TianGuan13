@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // float bobbing
 #define WAIT_PHASE 1
 // Click now to start tgui part
@@ -239,7 +240,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
 	RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
 	start_baiting_phase()
-	to_chat(user, span_notice("You start fishing..."))
+	to_chat(user, span_notice(LANG("datum.63a4dd90", null)))
 	playsound(location, 'sound/effects/splash.ogg', 100)
 
 ///Set the timers for lure that need to be spun at intervals.

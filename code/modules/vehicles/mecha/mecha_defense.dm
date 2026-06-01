@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*!
  * # Mecha defence explanation
  * Mechs focus is on a more heavy-but-slower damage approach
@@ -198,7 +199,7 @@
 			qdel(tracker)
 
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
-		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
+		to_chat(occupants, span_warning(LANG("obj.cd3bc6ee", null)))
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/mecha, restore_equipment)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = TRUE
 	set_mouse_pointer()
@@ -239,10 +240,10 @@
 /obj/vehicle/sealed/mecha/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/mmi))
 		if(!mmi_move_inside(tool,user))
-			balloon_alert(user, "initialization of MMI failed!")
+			balloon_alert(user, LANG("obj.63adb8d0", null))
 			return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "initialized MMI")
+		balloon_alert(user, LANG("obj.9edf6bfc", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/mecha_ammo))
@@ -255,12 +256,12 @@
 	if(tool.GetID())
 		if(!allowed(user))
 			if(mecha_flags & ID_LOCK_ON)
-				balloon_alert(user, "access denied!")
+				balloon_alert(user, LANG("obj.1bd3ceeb", null))
 			else
-				balloon_alert(user, "unable to set id lock!")
+				balloon_alert(user, LANG("obj.c574c583", null))
 			return ITEM_INTERACT_BLOCKING
 		mecha_flags ^= ID_LOCK_ON
-		balloon_alert(user, "[mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"] id lock!")
+		balloon_alert(user, LANG("obj.f25019f2", list(mecha_flags & ID_LOCK_ON ? "enabled" : "disabled")))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/mecha_parts))
@@ -281,19 +282,19 @@
 /// Try to insert a stock part into the mech
 /obj/vehicle/sealed/mecha/proc/try_insert_part(obj/item/stock_parts/tool, mob/living/user)
 	if(!(mecha_flags & PANEL_OPEN))
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, LANG("obj.2152c7cd", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
-			balloon_alert(user, "already installed!")
+			balloon_alert(user, LANG("obj.1519de2c", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src, silent = FALSE))
 			return  ITEM_INTERACT_BLOCKING
 
 		cell = tool
-		balloon_alert(user, "installed power cell")
+		balloon_alert(user, LANG("obj.967787f4", null))
 		diag_hud_set_mechcell()
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
 		log_message("Power cell installed", LOG_MECHA)
@@ -301,14 +302,14 @@
 
 	if(istype(tool, /obj/item/stock_parts/scanning_module))
 		if(scanmod)
-			balloon_alert(user, "already installed!")
+			balloon_alert(user, LANG("obj.1519de2c", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src, silent = FALSE))
 			return ITEM_INTERACT_BLOCKING
 
 		scanmod = tool
-		balloon_alert(user, "installed scanning module")
+		balloon_alert(user, LANG("obj.427a3aac", null))
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
 		log_message("[tool] installed", LOG_MECHA)
 		update_part_values()
@@ -316,14 +317,14 @@
 
 	if(istype(tool, /obj/item/stock_parts/capacitor))
 		if(capacitor)
-			balloon_alert(user, "already installed!")
+			balloon_alert(user, LANG("obj.1519de2c", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src, silent = FALSE))
 			return ITEM_INTERACT_BLOCKING
 
 		capacitor = tool
-		balloon_alert(user, "installed capacitor")
+		balloon_alert(user, LANG("obj.975aa255", null))
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
 		log_message("[tool] installed", LOG_MECHA)
 		update_part_values()
@@ -331,14 +332,14 @@
 
 	if(istype(tool, /obj/item/stock_parts/servo))
 		if(servo)
-			balloon_alert(user, "already installed!")
+			balloon_alert(user, LANG("obj.1519de2c", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src, silent = FALSE))
 			return ITEM_INTERACT_BLOCKING
 
 		servo = tool
-		balloon_alert(user, "installed servo")
+		balloon_alert(user, LANG("obj.fe8c0a9e", null))
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
 		log_message("[tool] installed", LOG_MECHA)
 		update_part_values()
@@ -384,7 +385,7 @@
 	. = TRUE
 
 	if(LAZYLEN(occupants))
-		balloon_alert(user, "panel blocked")
+		balloon_alert(user, LANG("obj.6d1acdde", null))
 		return
 
 	mecha_flags ^= PANEL_OPEN
@@ -399,15 +400,15 @@
 		remover.empty_mech(src, user)
 		return
 	if(!(mecha_flags & PANEL_OPEN))
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, LANG("obj.2152c7cd", null))
 		return
 	if(dna_lock && user.has_dna())
 		var/mob/living/carbon/user_carbon = user
 		if(user_carbon.dna.unique_enzymes != dna_lock)
-			balloon_alert(user, "access with this DNA denied!")
+			balloon_alert(user, LANG("obj.4b05cc93", null))
 			return
 	if((mecha_flags & ID_LOCK_ON) && !allowed(user))
-		balloon_alert(user, "access denied!")
+		balloon_alert(user, LANG("obj.1bd3ceeb", null))
 		return
 
 	var/list/stock_parts = list()
@@ -429,28 +430,28 @@
 		diag_hud_set_mechcell()
 		tool.play_tool_sound(src)
 		return
-	balloon_alert(user, "no parts!")
+	balloon_alert(user, LANG("obj.a8f02129", null))
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)
 	if(user.combat_mode)
 		return
 	. = TRUE
 	if(DOING_INTERACTION(user, src))
-		balloon_alert(user, "you're already repairing this!")
+		balloon_alert(user, LANG("obj.a29012d4", null))
 		return
 	if(atom_integrity >= max_integrity)
-		balloon_alert(user, "it's not damaged!")
+		balloon_alert(user, LANG("obj.9e4cb9c4", null))
 		return
 	if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
-	audible_message(span_hear("You hear welding."))
+	audible_message(span_hear(LANG("obj.1aa82fa3", null)))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
 		if(W.use_tool(src, user, 2.5 SECONDS, volume=50))
 			did_the_thing = TRUE
 			repair_damage(10)
-			audible_message(span_hear("You hear welding."))
+			audible_message(span_hear(LANG("obj.1aa82fa3", null)))
 		else
 			break
 	if(did_the_thing)
@@ -495,7 +496,7 @@
 /obj/vehicle/sealed/mecha/proc/ammo_resupply(obj/item/mecha_ammo/A, mob/user,fail_chat_override = FALSE)
 	if(!A.rounds)
 		if(!fail_chat_override)
-			balloon_alert(user, "the box is empty!")
+			balloon_alert(user, LANG("obj.a077b107", null))
 		return FALSE
 	var/ammo_needed
 	var/found_gun
@@ -547,9 +548,9 @@
 		return TRUE
 	if(!fail_chat_override)
 		if(found_gun)
-			balloon_alert(user, "ammo storage is full!")
+			balloon_alert(user, LANG("obj.872c4e35", null))
 		else
-			balloon_alert(user, "can't use this ammo!")
+			balloon_alert(user, LANG("obj.2de7b100", null))
 	return FALSE
 
 ///Upgrades any attached RCD equipment.

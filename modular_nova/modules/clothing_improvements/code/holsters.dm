@@ -7,12 +7,12 @@
 	// Right clicking your holster on a suit-slot piece of clothing will try to fit it for that individual item.
 	// This will let you wear it in its suit slot. Foley workaround for mass Initialize() issues. Also, it's kinda cool.
 	if (!istype(target, /obj/item/clothing/suit))
-		balloon_alert(user, "can't be adjusted to fit this!")
+		balloon_alert(user, LANG("obj.2385b903", null))
 		return
 
 	var/obj/item/clothing/suit/clothing_to_mod = target
 	if (/obj/item/storage/belt/holster in clothing_to_mod.allowed)
-		balloon_alert(user, "already adjusted to fit!")
+		balloon_alert(user, LANG("obj.0d79cc4a", null))
 		return
 
 	user.visible_message(span_notice("[user] begins adjusting [src] to fit properly upon [clothing_to_mod]..."), span_notice("You begin adjusting [src] to fit properly upon [clothing_to_mod]..."))
@@ -20,9 +20,9 @@
 	if (do_after(user, 1.5 SECONDS))
 		clothing_to_mod.allowed += list(/obj/item/storage/belt/holster)
 		playsound(user.loc, 'sound/items/equip/toolbelt_equip.ogg', 50)
-		balloon_alert(user, "adjusted to fit!")
+		balloon_alert(user, LANG("obj.d2eac843", null))
 	else
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 
 /obj/item/storage/belt/holster/examine(mob/user)
 	. = ..()

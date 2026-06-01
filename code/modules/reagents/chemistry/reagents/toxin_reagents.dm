@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //////////////////////////Poison stuff (Toxins & Acids)///////////////////////
 
@@ -281,7 +282,7 @@
 		multiplier *= 3
 	affected_mob.adjust_blood_volume(-2 * multiplier * seconds_per_tick)
 	if(SPT_PROB(10, seconds_per_tick))
-		to_chat(affected_mob, span_danger("Your blood is writhing in your veins!"))
+		to_chat(affected_mob, span_danger(LANG("datum.9f682e09", null)))
 		if(SPT_PROB(25, seconds_per_tick))
 			affected_mob.emote("scream")
 	return UPDATE_MOB_HEALTH
@@ -313,7 +314,7 @@
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(5, seconds_per_tick))
-		to_chat(affected_mob, span_danger("Your insides are burning!"))
+		to_chat(affected_mob, span_danger(LANG("datum.e0ed8990", null)))
 		if(affected_mob.adjust_tox_loss(rand(20, 60) * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 	else if(SPT_PROB(23, seconds_per_tick))
@@ -915,7 +916,7 @@
 		affected_mob.losebreath += 1
 		need_mob_update = TRUE
 	if(SPT_PROB(4, seconds_per_tick))
-		to_chat(affected_mob, span_danger("You feel horrendously weak!"))
+		to_chat(affected_mob, span_danger(LANG("datum.fd5d0842", null)))
 		affected_mob.Stun(40)
 		need_mob_update += affected_mob.adjust_tox_loss(8 * normalise_creation_purity() * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
@@ -1143,7 +1144,7 @@
 	if(current_cycle > 33 && SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.spew_organ()
 		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 0, distance = 4)
-		to_chat(affected_mob, span_userdanger("You feel something lumpy come up as you vomit."))
+		to_chat(affected_mob, span_userdanger(LANG("datum.dab23ebc", null)))
 
 /datum/reagent/toxin/curare
 	name = "Curare"
@@ -1402,7 +1403,7 @@
 			affected_mob.apply_damage(20, BRUTE, BP, wound_bonus = rand(30, 130))
 
 		else //SUCH A LUST FOR REVENGE!!!
-			to_chat(affected_mob, span_warning("A phantom limb hurts!"))
+			to_chat(affected_mob, span_warning(LANG("datum.3b9a9467", null)))
 			affected_mob.say("Why are we still here, just to suffer?", forced = type)
 
 /datum/reagent/toxin/bonehurtingjuice/used_on_fish(obj/item/fish/fish)
@@ -1454,7 +1455,7 @@
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(0.5, seconds_per_tick))
-		to_chat(affected_mob, span_notice("Ah, what was that? You thought you heard something..."))
+		to_chat(affected_mob, span_notice(LANG("datum.6cd5efe5", null)))
 		affected_mob.adjust_confusion(5 SECONDS)
 
 /datum/reagent/toxin/hunterspider
@@ -1571,7 +1572,7 @@
 
 	if(current_cycle > 38 && !length(traits_not_applied) && SPT_PROB(5, seconds_per_tick) && !affected_mob.undergoing_cardiac_arrest())
 		affected_mob.set_heartattack(TRUE)
-		to_chat(affected_mob, span_bolddanger("You feel a burning pain spread throughout your chest!"))
+		to_chat(affected_mob, span_bolddanger(LANG("datum.522a6669", null)))
 
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -1757,7 +1758,7 @@
 	if(prob(10))
 		new /mob/living/basic/spider/growing/spiderling (get_turf(affected_mob))
 		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
-		to_chat(affected_mob, span_warning("You feel tiny legs climbing up your throat."))
+		to_chat(affected_mob, span_warning(LANG("datum.9a962110", null)))
 
 	if(current_cycle >= transformation_cycle)
 		affected_mob.mind?.add_antag_datum(/datum/antagonist/spider)

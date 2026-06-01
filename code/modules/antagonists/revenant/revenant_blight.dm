@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/revblight
 	name = "Unnatural Wasting"
 	desc = "A strange condition which causes the victim to feel as if they were wasting away, despite being otherwise (almost) perfectly healthy."
@@ -22,7 +23,7 @@
 		affected_mob.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#1d2953")
 		if(affected_mob.dna && affected_mob.dna.species)
 			affected_mob.set_haircolor(null, override = TRUE)
-		to_chat(affected_mob, span_notice("You feel better."))
+		to_chat(affected_mob, span_notice(LANG("datum.9b8f156c", null)))
 	..()
 
 
@@ -37,7 +38,7 @@
 			cure()
 			return FALSE
 		if(SPT_PROB(1.5 * stage, seconds_per_tick))
-			to_chat(affected_mob, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
+			to_chat(affected_mob, span_revennotice(LANG("datum.f6266806", list(pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")))))
 			affected_mob.adjust_confusion(8 SECONDS)
 			need_mob_update += affected_mob.adjust_stamina_loss(20, updating_stamina = FALSE)
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //how fast disposal machinery is ejecting things and how far it goes
 /// The slowest setting for disposal eject speed
 #define EJECT_SPEED_SLOW 1
@@ -87,9 +88,9 @@
 		return TRUE
 
 	playsound(src, 'sound/items/tools/welder2.ogg', 100, TRUE)
-	to_chat(user, span_notice("You start slicing the floorweld off [src]..."))
+	to_chat(user, span_notice(LANG("obj.794a4dc4", list(src))))
 	if(I.use_tool(src, user, 20))
-		to_chat(user, span_notice("You slice the floorweld off [src]."))
+		to_chat(user, span_notice(LANG("obj.37b2027f", list(src))))
 		stored.forceMove(loc)
 		transfer_fingerprints_to(stored)
 		stored = null
@@ -112,9 +113,9 @@
 	. = ..()
 //if emagged it cant change the speed setting off max
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_notice("The LED display flashes an error!"))
+		to_chat(user, span_notice(LANG("obj.269c2dc8", null)))
 	else
-		to_chat(user, span_notice("You adjust the ejection force on \the [src]."))
+		to_chat(user, span_notice(LANG("obj.be72a995", list(src))))
 		switch(eject_speed)
 			if(EJECT_SPEED_SLOW)
 				eject_speed = EJECT_SPEED_MED
@@ -131,7 +132,7 @@
 	. = ..()
 	if(obj_flags & EMAGGED)
 		return
-	balloon_alert(user, "ejection force maximized")
+	balloon_alert(user, LANG("obj.285b9c23", null))
 	obj_flags |= EMAGGED
 	eject_speed = EJECT_SPEED_YEET
 	eject_range = EJECT_RANGE_YEET
@@ -143,7 +144,7 @@
 		stored.forceMove(loc)
 		transfer_fingerprints_to(stored)
 		stored = null
-		visible_message(span_warning("[src] is ripped free from the floor!"))
+		visible_message(span_warning(LANG("obj.11b84a7c", list(src))))
 		qdel(src)
 
 /obj/structure/disposaloutlet/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
@@ -152,7 +153,7 @@
 		stored.forceMove(loc)
 		transfer_fingerprints_to(stored)
 		stored = null
-		visible_message(span_warning("[src] is ripped free from the floor!"))
+		visible_message(span_warning(LANG("obj.11b84a7c", list(src))))
 		qdel(src)
 
 #undef EJECT_SPEED_SLOW

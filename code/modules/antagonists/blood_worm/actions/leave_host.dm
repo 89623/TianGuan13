@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/blood_worm/eject
 	name = "Leave Host"
 	desc = "Leave your host, taking their blood with you."
@@ -25,7 +26,7 @@
 		ignored_mobs = owner
 	)
 
-	to_chat(owner, span_danger("You begin leaving your host..."))
+	to_chat(owner, span_danger(LANG("datum.5185a565", null)))
 
 	host.add_traits(list(TRAIT_FLOORED, TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED), REF(src))
 

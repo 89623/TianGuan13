@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 // Mulebot - carries crates around for Quartermaster
@@ -163,7 +164,7 @@
 	if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN) || user.combat_mode)
 		return
 	if(!cell)
-		to_chat(user, span_warning("[src] doesn't have a power cell!"))
+		to_chat(user, span_warning(LANG("mob.86608f0a", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	cell.add_fingerprint(user)
 	user.visible_message(
@@ -179,7 +180,7 @@
 /mob/living/simple_animal/bot/mulebot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stock_parts/power_store/cell) && (bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 		if(cell)
-			to_chat(user, span_warning("[src] already has a power cell!"))
+			to_chat(user, span_warning(LANG("mob.11c18d2c", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
@@ -210,7 +211,7 @@
 		bot_cover_flags |= BOT_COVER_EMAGGED
 	if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 		bot_cover_flags ^= BOT_COVER_LOCKED
-	balloon_alert(user, "controls [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]")
+	balloon_alert(user, LANG("mob.dc384c45", list(bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked")))
 	flick("[base_icon]-emagged", src)
 	playsound(src, SFX_SPARKS, 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
@@ -249,7 +250,7 @@
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))
-			visible_message(span_danger("Something shorts out inside [src]!"))
+			visible_message(span_danger(LANG("mob.d5ef4283", list(src))))
 			wires.cut_random(source = proj.firer)
 
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
@@ -629,7 +630,7 @@
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
-				to_chat(calling_ai, span_notice("[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!"))
+				to_chat(calling_ai, span_notice(LANG("mob.de88988b", list(icon2html(src, calling_ai), src))))
 				calling_ai.playsound_local(calling_ai, 'sound/machines/chime.ogg', 40, FALSE)
 				calling_ai = null
 				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
@@ -669,10 +670,10 @@
 	var/mob/living/L = M
 	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
 		if(iscyborg(L))
-			visible_message(span_danger("[src] bumps into [L]!"))
+			visible_message(span_danger(LANG("mob.483fdb41", list(src, L))))
 		else if(L.Knockdown(8 SECONDS))
 			log_combat(src, L, "knocked down")
-			visible_message(span_danger("[src] knocks over [L]!"))
+			visible_message(span_danger(LANG("mob.7a852f12", list(src, L))))
 	return ..()
 
 // when mulebot is in the same loc
@@ -795,7 +796,7 @@
 
 /mob/living/simple_animal/bot/mulebot/post_possession()
 	. = ..()
-	visible_message(span_notice("[src]'s safeties are locked on."))
+	visible_message(span_notice(LANG("mob.a5dde5b1", list(src))))
 
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
 	name = "\improper GHOULbot"
@@ -822,7 +823,7 @@
 		return
 
 	if(isobserver(movable_atom))
-		visible_message(span_warning("A ghostly figure appears on [src]!"))
+		visible_message(span_warning(LANG("mob.f091d1d0", list(src))))
 		movable_atom.forceMove(src)
 		RegisterSignal(movable_atom, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
 
@@ -863,7 +864,7 @@
 
 /mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
 	SIGNAL_HANDLER
-	visible_message(span_notice("The ghostly figure vanishes..."))
+	visible_message(span_notice(LANG("mob.312774c5", null)))
 	UnregisterSignal(load, COMSIG_MOVABLE_MOVED)
 	unload(0)
 

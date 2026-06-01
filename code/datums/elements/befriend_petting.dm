@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BEFRIEND_REPLACE_KEY_SOURCE "%SOURCE%"
 #define BEFRIEND_REPLACE_KEY_TARGET "%TARGET%"
 
@@ -37,7 +38,7 @@
 		return // We'll deal with this later
 	if (owner.stat == DEAD)
 		var/additional_text = HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "It looks like [owner.p_theyre()] sleeping." : "[owner.p_They()] seem[owner.p_s()] to be dead."
-		to_chat(user, span_warning("[owner] feels cold to the touch. [additional_text]"))
+		to_chat(user, span_warning(LANG("datum.7257eeec", list(owner, additional_text))))
 		return
 	if (owner.stat != CONSCIOUS)
 		return

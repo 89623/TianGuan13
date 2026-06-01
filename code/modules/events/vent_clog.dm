@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MOB_SPAWN_MINIMUM 3
 
 /datum/round_event_control/vent_clog
@@ -178,7 +179,7 @@
 ///Handles the actual unclogging action and ends the event on completion.
 /datum/round_event/vent_clog/proc/attempt_unclog(mob/user)
 	if(vent.welded)
-		to_chat(user, span_notice("You cannot pump [vent] if it's welded shut!"))
+		to_chat(user, span_notice(LANG("datum.70661c4a", list(vent))))
 		return
 
 	user.balloon_alert_to_viewers("plunging vent...", "plunging clogged vent...")

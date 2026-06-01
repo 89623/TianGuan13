@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Phylactery component
  *
@@ -133,8 +134,7 @@
 	// Start revival
 	var/time_to_revive = base_respawn_time + (num_resurrections * time_per_resurrection)
 	revive_timer = addtimer(CALLBACK(src, PROC_REF(revive_lich), died), time_to_revive, TIMER_UNIQUE|TIMER_STOPPABLE)
-	to_chat(died, span_green("You feel your soul being dragged back to this world... \
-		<b>you will revive at your phylactery in [time_to_revive / 10 / 60] minute\s.</b>"))
+	to_chat(died, span_green(LANG("datum.a230dd6d", list(time_to_revive / 10 / 60))))
 
 /**
  * Signal proc for [COMSIG_LIVING_REVIVE].
@@ -190,7 +190,7 @@
 	lich.set_species(/datum/species/skeleton)
 	lich.dna.generate_unique_enzymes()
 
-	to_chat(lich, span_green("Your bones clatter and shudder as you are pulled back into this world!"))
+	to_chat(lich, span_green(LANG("datum.f7e38132", null)))
 	num_resurrections++
 	lich.Paralyze(stun_per_resurrection * num_resurrections)
 

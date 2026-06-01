@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Turns the user into a puzzgrid
 /datum/smite/puzzgrid
 	name = "Puzzgrid"
@@ -22,7 +23,7 @@
 
 	var/datum/puzzgrid/puzzgrid = create_random_puzzgrid()
 	if (isnull(puzzgrid))
-		to_chat(user, span_warning("Couldn't create a puzzgrid! Maybe the config isn't setup?"))
+		to_chat(user, span_warning(LANG("datum.7882fed5", null)))
 		return
 
 	var/obj/structure/puzzgrid_effect/puzzgrid_effect = new(target.loc, target, puzzgrid, timer, gib_on_loss)
@@ -107,7 +108,7 @@
 		victim = null
 		return
 
-	visible_message(span_danger("The fiendishly hard puzzle shapeshifts into a different, equally as challenging puzzle!"))
+	visible_message(span_danger(LANG("obj.ffa62dc6", null)))
 
 	// Defer until after the fail proc finishes, since that will qdel the component.
 	addtimer(CALLBACK(src, PROC_REF(add_puzzgrid_component), puzzgrid), 0)

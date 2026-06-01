@@ -1,11 +1,11 @@
 /obj/structure/sink/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(busy)
-		to_chat(user, span_warning("Someone's already washing here!"))
+		to_chat(user, span_warning(LANG("obj.d5ba1f8c", null)))
 		return
 
 	if(istype(attacking_item, /obj/item/towel))
 		if(reagents.total_volume <= 0)
-			to_chat(user, span_notice("\The [src] is dry."))
+			to_chat(user, span_notice(LANG("obj.9043fdab", list(src))))
 			return FALSE
 
 		busy = TRUE
@@ -13,7 +13,7 @@
 
 		if(!do_after(user, 2 SECONDS, src))
 			busy = FALSE
-			to_chat(user, span_warning("You take [attacking_item] away from [src] before you're done washing it."))
+			to_chat(user, span_warning(LANG("obj.1153ba60", list(attacking_item, src))))
 			return FALSE
 
 		var/obj/item/towel/washed_towel = attacking_item

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Beds... get your mind out of the gutter, they're for sleeping!
  * Contains:
  * Beds
@@ -170,7 +171,7 @@
 		return CLICK_ACTION_BLOCKING
 
 	anchored = !anchored
-	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
+	balloon_alert(user, LANG("obj.38c602d1", list(anchored ? "applied" : "released")))
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -213,7 +214,7 @@
 	if(istype(item, /obj/item/emergency_bed/silicon))
 		var/obj/item/emergency_bed/silicon/silicon_bed = item
 		if(silicon_bed.loaded)
-			to_chat(user, span_warning("You already have a medical bed docked!"))
+			to_chat(user, span_warning(LANG("obj.41b58f66", null)))
 			return
 
 		if(has_buckled_mobs())
@@ -259,7 +260,7 @@
 	if(istype(item, /obj/item/emergency_bed/silicon))
 		var/obj/item/emergency_bed/silicon/silicon_bed = item
 		if(silicon_bed.loaded)
-			to_chat(user, span_warning("[silicon_bed] already has a roller bed loaded!"))
+			to_chat(user, span_warning(LANG("obj.88c827c9", list(silicon_bed))))
 			return
 
 		user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [silicon_bed]."))
@@ -304,7 +305,7 @@
 		user.visible_message(span_notice("[user] deploys [loaded]."), span_notice("You deploy [loaded]."))
 		loaded = null
 	else
-		to_chat(user, span_warning("The dock is empty!"))
+		to_chat(user, span_warning(LANG("obj.fd931656", null)))
 
 /// Dog bed
 /obj/structure/bed/dogbed

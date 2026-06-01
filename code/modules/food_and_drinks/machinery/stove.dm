@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/stove
 	name = "stove"
 	desc = "You'd think this thing would be more useful in here."
@@ -142,7 +143,7 @@
 			loaded++
 			LAZYADD(added_ingredients, tray_item)
 	if(loaded)
-		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		to_chat(user, span_notice(LANG("obj.1de8bb22", list(loaded, src))))
 		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
@@ -159,10 +160,10 @@
 
 	// Too many ingredients
 	if(LAZYLEN(added_ingredients) >= max_ingredients)
-		balloon_alert(user, "too many ingredients!")
+		balloon_alert(user, LANG("obj.a9945a6c", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, src))
-		balloon_alert(user, "can't add that!")
+		balloon_alert(user, LANG("obj.bb344f8f", null))
 		return ITEM_INTERACT_BLOCKING
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)

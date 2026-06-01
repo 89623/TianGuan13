@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/prisoner
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 	/// ID card currently inserted into the computer.
@@ -29,7 +30,7 @@
 	if(!istype(new_id))
 		return
 	if(!isnull(contained_id))
-		balloon_alert(user, "no empty slot!")
+		balloon_alert(user, LANG("obj.012de839", null))
 		return
 	if(!user.transferItemToLoc(new_id, src))
 		return
@@ -39,7 +40,7 @@
 
 /obj/machinery/computer/prisoner/proc/id_eject(mob/user)
 	if(isnull(contained_id))
-		balloon_alert(user, "no id!")
+		balloon_alert(user, LANG("obj.94788ab7", null))
 		return
 
 	if(!issilicon(user) && Adjacent(user))

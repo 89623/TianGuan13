@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define FISH_SAD 0
 #define FISH_VERY_HAPPY 4
 
@@ -323,7 +324,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	user.visible_message(span_notice("[user] checks the pulse of [src] with [tool]."), span_notice("You check the pulse of [src] with [tool]."))
 	var/warns = get_health_warnings(user, always_deep = TRUE)
 	if(!warns)
-		to_chat(user, span_notice("[src] appears to be perfectly healthy!"))
+		to_chat(user, span_notice(LANG("obj.4dc26c63", list(src))))
 		return ITEM_INTERACT_SUCCESS
 	to_chat(user, warns)
 	return ITEM_INTERACT_SUCCESS
@@ -332,12 +333,12 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(!HAS_TRAIT(interacting_with, TRAIT_CATCH_AND_RELEASE))
 		return NONE
 	if(HAS_TRAIT(src, TRAIT_NODROP))
-		balloon_alert(user, "[p_theyre()] stuck to your hand!")
+		balloon_alert(user, LANG("obj.c8e52234", list(p_theyre())))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "releasing fish...")
+	balloon_alert(user, LANG("obj.34666498", null))
 	if(!do_after(user, 3 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "fish released")
+	balloon_alert(user, LANG("obj.261a79e4", null))
 	var/goodbye_text = "Bye bye [name]."
 	if(status == FISH_DEAD && !HAS_MIND_TRAIT(user, TRAIT_NAIVE))
 		goodbye_text = "May [p_they()] rest in peace..."
@@ -456,7 +457,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 /obj/item/fish/proc/flinch_on_eat(mob/living/eater, mob/living/feeder)
 	if(status == FISH_ALIVE && prob(50) && feeder.is_holding(src) && feeder.dropItemToGround(src))
-		to_chat(feeder, span_warning("[src] slips out of your hands in pain!"))
+		to_chat(feeder, span_warning(LANG("obj.2309a045", list(src))))
 		var/turf/target_turf = get_ranged_target_turf(get_turf(src), pick(GLOB.alldirs), 2)
 		throw_at(target_turf)
 
@@ -537,13 +538,13 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(!istype(item, /obj/item/reagent_containers/cup/fish_feed))
 		return ..()
 	if(!item.reagents.total_volume)
-		balloon_alert(user, "[item.name] is empty!")
+		balloon_alert(user, LANG("obj.02d482cc", list(item.name)))
 		return TRUE
 	if(status == FISH_DEAD)
 		balloon_alert(user, "[name] [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "isn't hungry" : "is dead!"]")
 		return TRUE
 	feed(item.reagents)
-	balloon_alert(user, "fed [name]")
+	balloon_alert(user, LANG("obj.158da1cb", list(name)))
 	return TRUE
 
 /obj/item/fish/examine(mob/user)
@@ -1008,7 +1009,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return
 	time_passed_on_safe_turf += seconds_per_tick SECONDS
 	if(time_passed_on_safe_turf >= (get_starvation_mult() ? STARVING_FISH_SUBMERGING_THRESHOLD : FISH_SUBMERGING_THRESHOLD))
-		visible_message(span_notice("[src] disperses into \the [loc]"), span_notice("You hear a splash."))
+		visible_message(span_notice(LANG("obj.f66e194f", list(src, loc))), span_notice(LANG("obj.0b1a6e8f", null)))
 		released(loc)
 
 /obj/item/fish/proc/do_fish_process(seconds_per_tick)
@@ -1111,10 +1112,10 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/proc/use_lazarus(datum/source, obj/item/lazarus_injector/injector, mob/user)
 	SIGNAL_HANDLER
 	if(injector.revive_type != SENTIENCE_ORGANIC)
-		balloon_alert(user, "invalid creature!")
+		balloon_alert(user, LANG("obj.1c85036c", null))
 		return
 	if(status != FISH_DEAD)
-		balloon_alert(user, "[p_theyre(TRUE)] not dead!")
+		balloon_alert(user, LANG("obj.93b69f17", list(p_theyre(TRUE))))
 		return
 	set_status(FISH_ALIVE)
 	injector.expend(src, user)
@@ -1567,10 +1568,10 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/proc/try_pet_fish(mob/living/user)
 	var/in_aquarium = loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM)
 	if(status == FISH_DEAD)
-		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] motionless!"))
+		to_chat(user, span_warning(LANG("obj.f802af95", list(src, p_theyre()))))
 		return FALSE
 	if(!proper_environment())
-		to_chat(user, span_warning("You try to pet [src], but [p_theyre()] not feeling well!"))
+		to_chat(user, span_warning(LANG("obj.bdfe870b", list(src, p_theyre()))))
 		return FALSE
 
 	return pet_fish(user, in_aquarium)
@@ -1578,9 +1579,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/proc/pet_fish(mob/living/user, in_aquarium)
 	if(fish_flags & FISH_FLAG_PETTED)
 		if(in_aquarium)
-			to_chat(user, span_warning("[src] runs away from your finger as you dip it into the water!"))
+			to_chat(user, span_warning(LANG("obj.d202f24c", list(src))))
 		else
-			to_chat(user, span_warning("You try to pet [src] but [p_they()] squirms away!"))
+			to_chat(user, span_warning(LANG("obj.47601e65", list(src, p_they()))))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && GET_FISH_ELECTROGENESIS(src) > 15 MEGA JOULES)
 		user.electrocute_act(5, src) //was it all worth it?
@@ -1604,9 +1605,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		playsound(src,'sound/items/weapons/bite.ogg', 45, TRUE, -1)
 	else
 		if(in_aquarium)
-			to_chat(user, span_notice("[src] dances around!"))
+			to_chat(user, span_notice(LANG("obj.434c9700", list(src))))
 		else
-			to_chat(user, span_notice("You pet [src] as you hold [p_they()]."))
+			to_chat(user, span_notice(LANG("obj.6ee1622c", list(src, p_they()))))
 		user.add_mood_event("petted_fish", /datum/mood_event/fish_petting, src, HAS_MIND_TRAIT(user, TRAIT_MORBID))
 		playsound(src, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 	addtimer(CALLBACK(src, PROC_REF(undo_petted)), 30 SECONDS)

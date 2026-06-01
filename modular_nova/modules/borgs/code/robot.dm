@@ -52,7 +52,7 @@
 	set category = "AI Commands"
 	set desc = "Select your resting pose."
 	if(!can_rest())
-		to_chat(src, span_warning("You can't do that!"))
+		to_chat(src, span_warning(LANG("mob.56e41a3d", null)))
 		return
 	var/list/choices = list("Resting", "Sitting", "Belly up")
 	if(model && model.model_features && (TRAIT_RESTING_ALTS in model.model_features))
@@ -80,17 +80,17 @@
 	set name = "Lay down"
 	set category = "AI Commands"
 	if(!can_rest())
-		to_chat(src, span_warning("You can't do that!"))
+		to_chat(src, span_warning(LANG("mob.56e41a3d", null)))
 		return
 	if(stat != CONSCIOUS) //Make sure we don't enable movement when not concious
 		return
 	if(robot_resting)
-		to_chat(src, span_notice("You are now getting up."))
+		to_chat(src, span_notice(LANG("mob.63c0a69c", null)))
 		robot_resting = FALSE
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
 		on_standing_up()
 	else
-		to_chat(src, span_notice("You are now laying down."))
+		to_chat(src, span_notice(LANG("mob.3f3898b9", null)))
 		robot_resting = robot_rest_style
 		on_lying_down()
 	update_icons()

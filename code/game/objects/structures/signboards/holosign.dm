@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/signboard/holosign
 	name = "holographic sign"
 	desc = "A holographic signboard, projecting text above it."
@@ -74,19 +75,19 @@
 
 	var/trimmed_id_name = trimtext(id.registered_name)
 	if(!trimmed_id_name)
-		balloon_alert(user, "no name on id!")
+		balloon_alert(user, LANG("obj.8e228ee3", null))
 		return ITEM_INTERACT_BLOCKING
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, "lock shorted out!")
+		balloon_alert(user, LANG("obj.5507b2af", null))
 		return ITEM_INTERACT_BLOCKING
 	if(registered_owner)
 		if(!check_locked(user))
 			registered_owner = null
-			balloon_alert(user, "id lock removed")
+			balloon_alert(user, LANG("obj.f5905563", null))
 			investigate_log("([key_name(user)]) removed id lock", INVESTIGATE_SIGNBOARD)
 	else
 		registered_owner = trimmed_id_name
-		balloon_alert(user, "locked to id")
+		balloon_alert(user, LANG("obj.21abc832", null))
 		investigate_log("([key_name(user)]) added id lock for \"[registered_owner]\"", INVESTIGATE_SIGNBOARD)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -120,16 +121,16 @@
 		return
 	var/new_color = sanitize_color(tgui_color_picker(user, "Set Sign Color", full_capitalize(name), current_color))
 	if(new_color && is_color_dark_with_saturation(new_color, 25))
-		balloon_alert(user, "color too dark!")
+		balloon_alert(user, LANG("obj.0fd0d32e", null))
 		return
 	if(check_locked(user))
 		return
 	INVOKE_ASYNC(src, PROC_REF(set_color), new_color)
 	if(new_color)
-		balloon_alert(user, "set color to [new_color]")
+		balloon_alert(user, LANG("obj.b5237a14", list(new_color)))
 		investigate_log("([key_name(user)]) set the color to [new_color || "(none)"]", INVESTIGATE_SIGNBOARD)
 	else
-		balloon_alert(user, "unset color")
+		balloon_alert(user, LANG("obj.e3fcb1a0", null))
 		investigate_log("([key_name(user)]) cleared the color", INVESTIGATE_SIGNBOARD)
 
 /obj/structure/signboard/holosign/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -137,7 +138,7 @@
 		return FALSE
 	playsound(src, SFX_SPARKS, vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
-	balloon_alert(user, "lock broken")
+	balloon_alert(user, LANG("obj.8d2c7e01", null))
 	investigate_log("was emagged by [key_name(user)] (previous owner: [registered_owner || "(none)"])", INVESTIGATE_SIGNBOARD)
 	registered_owner = null
 	obj_flags |= EMAGGED

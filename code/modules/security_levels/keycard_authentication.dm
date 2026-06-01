@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 
 #define KEYCARD_RED_ALERT "Red Alert"
@@ -62,7 +63,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	if(!isanimal_or_basicmob(user))
 		return ..()
 	if(!HAS_TRAIT(user, TRAIT_CAN_HOLD_ITEMS))
-		balloon_alert(user, "no hands!")
+		balloon_alert(user, LANG("obj.621b2167", null))
 		return UI_CLOSE
 	return ..()
 

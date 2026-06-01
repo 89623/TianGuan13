@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BOOKCASE_UNANCHORED 0
 #define BOOKCASE_ANCHORED 1
 #define BOOKCASE_FINISHED 2
@@ -124,13 +125,13 @@
 	if(state == BOOKCASE_UNANCHORED)
 		if(attacking_item.tool_behaviour == TOOL_WRENCH)
 			if(attacking_item.use_tool(src, user, 20, volume=50))
-				balloon_alert(user, "wrenched in place")
+				balloon_alert(user, LANG("obj.1972f190", null))
 				set_anchored(TRUE)
 			return
 
 		if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 			if(attacking_item.use_tool(src, user, 20, volume=50))
-				balloon_alert(user, "pried apart")
+				balloon_alert(user, LANG("obj.44620667", null))
 				deconstruct(TRUE)
 			return
 		return ..()
@@ -139,17 +140,17 @@
 		if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood))
 			var/obj/item/stack/sheet/mineral/wood/W = attacking_item
 			if(W.get_amount() < 2)
-				balloon_alert(user, "not enough wood")
+				balloon_alert(user, LANG("obj.6c0cc018", null))
 				return
 			W.use(2)
-			balloon_alert(user, "shelf added")
+			balloon_alert(user, LANG("obj.a91480e5", null))
 			state = BOOKCASE_FINISHED
 			update_appearance()
 			return
 
 		if(attacking_item.tool_behaviour == TOOL_WRENCH)
 			attacking_item.play_tool_sound(src, 100)
-			balloon_alert(user, "unwrenched the frame")
+			balloon_alert(user, LANG("obj.7ffc1b99", null))
 			set_anchored(FALSE)
 			return
 		return ..()
@@ -168,16 +169,16 @@
 				found_anything = TRUE
 
 		if (found_anything)
-			balloon_alert(user, "emptied into [src]")
+			balloon_alert(user, LANG("obj.0247b950", list(src)))
 			update_appearance()
 			return
 
 	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		if(length(contents))
-			balloon_alert(user, "remove the books first")
+			balloon_alert(user, LANG("obj.711ba1ac", null))
 			return
 		attacking_item.play_tool_sound(src, 100)
-		balloon_alert(user, "pried the shelf out")
+		balloon_alert(user, LANG("obj.a47b69b4", null))
 		new /obj/item/stack/sheet/mineral/wood(drop_location(), 2)
 		state = BOOKCASE_ANCHORED
 		update_appearance()

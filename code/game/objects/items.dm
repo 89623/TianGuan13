@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Anything you can pick up and hold.
 /obj/item
 	name = "item"
@@ -550,9 +551,9 @@
 		var/announce = FALSE
 		//Apply fantasy with affix. failing this should never happen, but if it does it should not be silent.
 		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
-			to_chat(usr, span_warning("Fantasy component not compatible with [src]."))
+			to_chat(usr, span_warning(LANG("obj.aba4f286", list(src))))
 			CRASH("fantasy component incompatible with object of type: [type]")
-		to_chat(usr, span_notice("[before_name] now has [picked_affix_name]!"))
+		to_chat(usr, span_notice(LANG("obj.aeaf22ac", list(before_name, picked_affix_name))))
 		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]")
 		message_admins(span_notice("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]"))
 
@@ -576,7 +577,7 @@
 		var/grav = user.has_gravity()
 		if(grav > STANDARD_GRAVITY)
 			var/grav_power = min(3,grav - STANDARD_GRAVITY)
-			to_chat(user,span_notice("You start picking up [src]..."))
+			to_chat(user,span_notice(LANG("obj.4acae372", list(src))))
 			if(!do_after(user, 30 * grav_power, src))
 				return
 
@@ -625,7 +626,7 @@
 	if(!ayy.can_hold_items(src))
 		if(src in ayy.contents) // To stop Aliens having items stuck in their pockets
 			ayy.dropItemToGround(src)
-		to_chat(user, span_warning("Your claws aren't capable of such fine manipulation!"))
+		to_chat(user, span_warning(LANG("obj.ef0f29a1", null)))
 		return
 	attack_paw(ayy, modifiers)
 
@@ -1382,7 +1383,7 @@
 		return
 	user.dropItemToGround(src, silent = TRUE)
 	if(throwforce && (HAS_TRAIT(user, TRAIT_PACIFISM)) || HAS_TRAIT(user, TRAIT_NO_THROWING))
-		to_chat(user, span_notice("You set [src] down gently on the ground."))
+		to_chat(user, span_notice(LANG("obj.3b0b0198", list(src))))
 		return
 	return src
 
@@ -1465,7 +1466,7 @@
 	var/obj/item/organ/stomach/stomach = victim.get_organ_by_type(/obj/item/organ/stomach)
 	if (stomach?.consume_thing(src))
 		victim.losebreath += 2
-		to_chat(victim, span_warning("You swallow hard. [source_item? "Something small was in \the [source_item]..." : ""]"))
+		to_chat(victim, span_warning(LANG("obj.a699c032", list(source_item? "Something small was in \the [source_item]..." : ""))))
 		return FALSE
 
 	// victim's chest (for cavity implanting the item)
@@ -1473,12 +1474,12 @@
 	if(victim_cavity.cavity_item)
 		victim.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), lost_nutrition = 5, distance = 0)
 		forceMove(drop_location())
-		to_chat(victim, span_warning("You vomit up a [name]! [source_item? "Was that in \the [source_item]?" : ""]"))
+		to_chat(victim, span_warning(LANG("obj.c9d386f7", list(name, source_item? "Was that in \the [source_item]?" : ""))))
 		return FALSE
 
 	victim.transferItemToLoc(src, victim, TRUE)
 	victim.losebreath += 2
-	to_chat(victim, span_warning("You swallow hard. [source_item? "Something small was in \the [source_item]..." : ""]"))
+	to_chat(victim, span_warning(LANG("obj.a699c032", list(source_item? "Something small was in \the [source_item]..." : ""))))
 	return FALSE
 
 #undef MAX_MATS_PER_BITE
@@ -1875,10 +1876,10 @@
 					LAZYADD(victim_human.afk_thefts, new_entry)
 
 			else if(victim_human.is_blind())
-				to_chat(target, span_userdanger("You feel someone trying to put something on you."))
+				to_chat(target, span_userdanger(LANG("obj.72339f07", null)))
 	user.do_item_attack_animation(target, used_item = equipping, animation_type = ATTACK_ANIMATION_BLUNT)
 
-	to_chat(user, span_notice("You try to put [equipping] on [target]..."))
+	to_chat(user, span_notice(LANG("obj.9cff2ef4", list(equipping, target))))
 
 	user.log_message("is putting [equipping] on [key_name(target)]", LOG_ATTACK, color="red")
 	target.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)

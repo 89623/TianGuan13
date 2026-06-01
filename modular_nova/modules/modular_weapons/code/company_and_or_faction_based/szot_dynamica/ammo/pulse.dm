@@ -48,7 +48,7 @@
 /obj/item/ammo_casing/pulse/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
 	if(remaining_uses <= 0)
 		if(!quiet)
-			to_chat(user, span_warning("[src] is depleted!"))
+			to_chat(user, span_warning(LANG("obj.30cd0685", list(src))))
 		return FALSE
 	// Reset suppress_use_consumption flag when used in a different weapon
 	if(fired_from && istype(fired_from, /obj/item/gun))

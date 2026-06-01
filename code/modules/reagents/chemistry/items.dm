@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///if the ph_meter gives a detailed output
 #define DETAILED_CHEM_OUTPUT 1
 ///if the pH meter gives a shorter output
@@ -26,13 +27,13 @@
 		if(number_of_pages == 50)
 			icon_state = "pHbooklet_open"
 		if(!number_of_pages)
-			to_chat(user, span_warning("[src] is empty!"))
+			to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 			add_fingerprint(user)
 			return
 		var/obj/item/ph_paper/page = new(get_turf(user))
 		page.add_fingerprint(user)
 		user.put_in_active_hand(page)
-		to_chat(user, span_notice("You take [page] out of \the [src]."))
+		to_chat(user, span_notice(LANG("obj.e7d1e9fd", list(page, src))))
 		number_of_pages--
 		playsound(user.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 		add_fingerprint(user)
@@ -48,7 +49,7 @@
 	if(!isliving(user))
 		return
 	if(!number_of_pages)
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 		add_fingerprint(user)
 		return
 	if(number_of_pages == 50)
@@ -56,7 +57,7 @@
 	var/obj/item/ph_paper/P = new(get_turf(user))
 	P.add_fingerprint(user)
 	user.put_in_active_hand(P)
-	to_chat(user, span_notice("You take [P] out of \the [src]."))
+	to_chat(user, span_notice(LANG("obj.e7d1e9fd", list(P, src))))
 	number_of_pages--
 	playsound(user.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE)
 	add_fingerprint(user)
@@ -85,7 +86,7 @@
 	if(!LAZYLEN(cont.reagents.reagent_list))
 		return NONE
 	if(used)
-		to_chat(user, span_warning("[src] has already been used!"))
+		to_chat(user, span_warning(LANG("obj.ceabba26", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	CONVERT_PH_TO_COLOR(round(cont.reagents.ph, 1), color)
 	desc += " The paper looks to be around a pH of [round(cont.reagents.ph, 1)]"
@@ -107,10 +108,10 @@
 
 /obj/item/ph_meter/attack_self(mob/user)
 	if(scanmode == SHORTENED_CHEM_OUTPUT)
-		to_chat(user, span_notice("You switch the chemical analyzer to provide a detailed description of each reagent."))
+		to_chat(user, span_notice(LANG("obj.2f2b369a", null)))
 		scanmode = DETAILED_CHEM_OUTPUT
 	else
-		to_chat(user, span_notice("You switch the chemical analyzer to not include reagent descriptions in its report."))
+		to_chat(user, span_notice(LANG("obj.12085d34", null)))
 		scanmode = SHORTENED_CHEM_OUTPUT
 
 /obj/item/ph_meter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -121,7 +122,7 @@
 		return NONE
 	SEND_SIGNAL(interacting_with, COMSIG_ON_REAGENT_SCAN, user)
 	var/list/out_message = list()
-	to_chat(user, "<i>The chemistry meter beeps and displays:</i>")
+	to_chat(user, LANG("obj.34b7a2e5", null))
 	out_message += "<b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
 	out_message += "Chemicals found in [interacting_with.name]:</b>\n"
 	if(cont.reagents.is_reacting)
@@ -179,21 +180,21 @@
 		if(lit)
 			var/obj/item/reagent_containers/container = I
 			container.reagents.expose_temperature(get_temperature())
-			to_chat(user, span_notice("You heat up the [I] with the [src]."))
+			to_chat(user, span_notice(LANG("obj.f593896b", list(I, src))))
 			playsound(user.loc, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 			return
 		else if(I.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
 			var/obj/item/reagent_containers/container = I
 			if(!container.reagents.total_volume)
-				to_chat(user, span_warning("[container] is empty and can't be poured!"))
+				to_chat(user, span_warning(LANG("obj.bdd6f7b0", list(container))))
 				return
 
 			if(reagents.holder_full())
-				to_chat(user, span_warning("[src] is full."))
+				to_chat(user, span_warning(LANG("obj.8e2d390c", list(src))))
 				return
 
 			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transferred_by = user)
-			to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [container]."))
+			to_chat(user, span_notice(LANG("obj.c64f6590", list(src, trans, container))))
 	if(I.heat < 1000)
 		return
 	set_lit(TRUE)
@@ -320,7 +321,7 @@
 	if(!user.transferItemToLoc(src, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	attached_to_reagents = interacting_with.reagents
-	to_chat(user, span_notice("You add the [src] to [interacting_with]."))
+	to_chat(user, span_notice(LANG("obj.66e01a47", list(src, interacting_with))))
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -356,7 +357,7 @@
 	attached_to_reagents = null
 
 /obj/item/thermometer/proc/try_put_in_hand(obj/object, mob/living/user)
-	to_chat(user, span_notice("You remove the [src] from [attached_to_reagents.my_atom]."))
+	to_chat(user, span_notice(LANG("obj.01339089", list(src, attached_to_reagents.my_atom))))
 	if(!issilicon(user) && in_range(loc, user))
 		user.put_in_hands(object)
 	else

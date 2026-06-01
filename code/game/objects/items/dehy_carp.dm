@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * Dehydrated Carp
  * Instant carp, just add water
@@ -16,7 +17,7 @@
 	if(owner)
 		return ..()
 	add_fingerprint(user)
-	to_chat(user, span_notice("You pet [src]. You swear it looks up at you."))
+	to_chat(user, span_notice(LANG("obj.e40ec5ea", list(src))))
 	owner = user
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(owner_deleted))
 
@@ -25,7 +26,7 @@
 		return
 	swelling = TRUE
 	desc = "It's growing!"
-	visible_message(span_notice("[src] swells up!"))
+	visible_message(span_notice(LANG("obj.74d46365", list(src))))
 
 	//Animation
 	icon = 'icons/mob/simple/carp.dmi'

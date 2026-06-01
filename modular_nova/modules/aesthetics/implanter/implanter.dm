@@ -25,7 +25,7 @@
 		aug_overlay = null
 		QDEL_NULL(bodypart_aug)
 	tool.play_tool_sound(src)
-	balloon_alert(user, "visibility toggled")
+	balloon_alert(user, LANG("obj.19b46eaf", null))
 
 //And a preset for the loadout
 /obj/item/organ/cyberimp/mouth/breathing_tube/hidden

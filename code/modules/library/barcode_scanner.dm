@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BARCODE_SCANNER_CHECKIN "check_in"
 #define BARCODE_SCANNER_CHECKOUT "check_out"
 #define BARCODE_SCANNER_INVENTORY "inventory"
@@ -99,7 +100,7 @@
 	if(.)
 		return
 	if(!computer_ref?.resolve())
-		balloon_alert(user, "connect to computer!")
+		balloon_alert(user, LANG("obj.77b37f2f", null))
 		return
 	switch(scan_mode)
 		if(BARCODE_SCANNER_CHECKIN)

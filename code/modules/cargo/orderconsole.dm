@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/cargo
 	name = "supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
@@ -57,7 +58,7 @@
 	if(user)
 		if (emag_card)
 			user.visible_message(span_warning("[user] swipes [emag_card] through [src]!"))
-		to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
+		to_chat(user, span_notice(LANG("obj.7f25b3b6", list(src))))
 
 	obj_flags |= EMAGGED
 	contraband = TRUE
@@ -260,17 +261,17 @@
 		account = id_card?.registered_account // We can still assign an account for request department purposes.
 		if(self_paid)
 			if(!istype(id_card))
-				say("No ID card detected.")
+				say(LANG("obj.9caa768c", null))
 				return
 			if(IS_DEPARTMENTAL_CARD(id_card))
-				say("The [src] rejects [id_card].")
+				say(LANG("obj.eb8fcdad", list(src, id_card)))
 				return
 			if(!istype(account))
-				say("Invalid bank account.")
+				say(LANG("obj.3ad4c193", null))
 				return
 			var/list/access = id_card.GetAccess()
 			if((pack.access_view && !(pack.access_view in access)) && !bypass)
-				say("[id_card] lacks the requisite access for this purchase.")
+				say(LANG("obj.4e11fbde", list(id_card)))
 				return
 
 	// The list we are operating on right now
@@ -311,18 +312,18 @@
 				// We want to block cargo requests when a player is requesting a restricted pack that they don't have access to.
 				// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
 				// HOWEVER, this shouldn't prevent someone from buying something using their own personal funds.
-				say("ERROR: User lacks the requisite access for this purchase request.")
+				say(LANG("obj.13fe6ebe", null))
 				return
 
 	if(((pack.order_flags & ORDER_GOODY) && (!(pack.order_flags & ORDER_DEPARTMENTAL_GOODY) || uses_cargo_budget)) && (!self_paid || !requestonly))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-		say("ERROR: Small crates may only be purchased by private accounts.")
+		say(LANG("obj.90374cfb", null))
 		return
 
 	var/similar_count = SSshuttle.supply.get_order_count(pack)
 	if(similar_count == OVER_ORDER_LIMIT)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
+		say(LANG("obj.6627f598", list(CARGO_MAX_ORDER)))
 		return
 
 	if(!self_paid)
@@ -330,7 +331,7 @@
 		// NOVA EDIT ADDITION START
 		if ((uses_cargo_budget || !requestonly) && ((pack.order_flags & ORDER_COMPANY) == ORDER_COMPANY))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-			say("ERROR: Small crates may only be purchased by private accounts.")
+			say(LANG("obj.90374cfb", null))
 			return
 		// NOVA EDIT ADDITION END
 
@@ -356,7 +357,7 @@
 		working_list += order
 
 	if(self_paid)
-		say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
+		say(LANG("obj.cf813d0c", list(account.account_holder)))
 	if(requestonly && message_cooldown < world.time)
 		aas_config_announce(/datum/aas_config_entry/cargo_orders_announcement, list("AMOUNT" = amount), src, list(RADIO_CHANNEL_SUPPLY), amount == 1 ? "Single Order" : "Multiple Orders")
 		message_cooldown = world.time + 30 SECONDS

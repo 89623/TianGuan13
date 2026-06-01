@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(upload_jukebox_music, R_SERVER, "Jukebox Upload Music", "Upload a valid .ogg file to be accessed via the jukebox.", ADMIN_CATEGORY_SERVER)
 	var/file = input(user, "Select a .ogg file to upload to the jukebox.") as sound|null
 	if(!file)
@@ -24,7 +25,7 @@ ADMIN_VERB(upload_jukebox_music, R_SERVER, "Jukebox Upload Music", "Upload a val
 	fcopy(file, save_path)
 
 	message_admins("[key_name_admin(user)] uploaded [clean_name] to the jukebox!")
-	to_chat(user, span_notice("Successfully uploaded [clean_name]!"))
+	to_chat(user, span_notice(LANG("datum.323743c2", list(clean_name))))
 
 ADMIN_VERB(browse_jukebox_music, R_SERVER, "Jukebox Browse Music", "Browse music files for moderation.", ADMIN_CATEGORY_SERVER)
 	var/list/files = flist(CONFIG_JUKEBOX_SOUNDS)
@@ -33,7 +34,7 @@ ADMIN_VERB(browse_jukebox_music, R_SERVER, "Jukebox Browse Music", "Browse music
 		if(!IS_SOUND_FILE(thing))
 			files -= thing
 	if(!files.len)
-		to_chat(user, span_warning("No uploaded tracks found."))
+		to_chat(user, span_warning(LANG("datum.a2ece989", null)))
 		return
 
 	var/choice = tgui_input_list(user, "Select a track:", "Select Jukebox Music", files)

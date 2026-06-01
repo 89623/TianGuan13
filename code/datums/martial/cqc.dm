@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SLAM_COMBO "GH"
 #define KICK_COMBO "HH"
 #define RESTRAIN_COMBO "GG"
@@ -113,7 +114,7 @@
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You slam [defender] into the ground!"))
+	to_chat(attacker, span_danger(LANG("datum.d04aff9c", list(defender))))
 	playsound(attacker, 'sound/items/weapons/slam.ogg', 50, TRUE, -1)
 	defender.apply_damage(10, BRUTE)
 	defender.Paralyze(12 SECONDS)
@@ -134,7 +135,7 @@
 			null,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You kick [defender]'s head, knocking [defender.p_them()] out!"))
+		to_chat(attacker, span_danger(LANG("datum.8e839a68", list(defender, defender.p_them()))))
 		playsound(attacker, 'sound/items/weapons/genhit1.ogg', 50, TRUE, -1)
 
 		var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
@@ -150,7 +151,7 @@
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You kick [defender] back!"))
+		to_chat(attacker, span_danger(LANG("datum.efbba362", list(defender))))
 		playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
@@ -171,7 +172,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You punch [defender]'s neck!"))
+	to_chat(attacker, span_danger(LANG("datum.2d75ec00", list(defender))))
 	defender.adjust_stamina_loss(60)
 	playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
@@ -190,7 +191,7 @@
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You lock [defender] into a restraining position!"))
+	to_chat(attacker, span_danger(LANG("datum.b7002ec5", list(defender))))
 	defender.adjust_stamina_loss(20)
 	defender.Stun(10 SECONDS)
 	restraining_mob = WEAKREF(defender)
@@ -210,7 +211,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You strike [defender]'s abdomen, neck and back consecutively!"))
+	to_chat(attacker, span_danger(LANG("datum.1fe9c4d6", list(defender))))
 	playsound(defender, 'sound/items/weapons/cqchit2.ogg', 50, TRUE, -1)
 	var/obj/item/held_item = defender.get_active_held_item()
 	if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
@@ -244,7 +245,7 @@
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You violently grab [defender]!"))
+		to_chat(attacker, span_danger(LANG("datum.a2ee96d0", list(defender))))
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/cqc/harm_act(mob/living/attacker, mob/living/defender)
@@ -262,7 +263,7 @@
 				span_hear("You hear a sickening snap!"),
 				ignored_mobs = attacker
 			)
-			to_chat(attacker, span_danger("In a swift motion, you snap the neck of [defender]!"))
+			to_chat(attacker, span_danger(LANG("datum.bb7d46bd", list(defender))))
 			log_combat(attacker, defender, "snapped neck")
 			defender.apply_damage(100, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND)
 			if(!HAS_TRAIT(defender, TRAIT_NODEATH))
@@ -281,7 +282,7 @@
 			null,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You leg sweep [defender]!"))
+		to_chat(attacker, span_danger(LANG("datum.d15d9893", list(defender))))
 		playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 		attacker.do_attack_animation(defender)
 		defender.apply_damage(10, BRUTE)
@@ -310,7 +311,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You [picked_hit_type] [defender]!"))
+	to_chat(attacker, span_danger(LANG("datum.22d557f3", list(picked_hit_type, defender))))
 	log_combat(attacker, defender, "attacked ([picked_hit_type]'d)(CQC)")
 	return MARTIAL_ATTACK_SUCCESS
 
@@ -331,7 +332,7 @@
 			null,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You put [defender] into a chokehold!"))
+		to_chat(attacker, span_danger(LANG("datum.d8130ed6", list(defender))))
 		defender.SetSleeping(40 SECONDS)
 		restraining_mob = null
 		if(attacker.grab_state < GRAB_NECK && !HAS_TRAIT(attacker, TRAIT_PACIFISM))
@@ -357,7 +358,7 @@
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You strike [defender]'s jaw,[disarmed_item ? " disarming [defender.p_them()] of [disarmed_item] and" : ""] leaving [defender.p_them()] disoriented!"))
+		to_chat(attacker, span_danger(LANG("datum.7398bc20", list(defender, disarmed_item ? " disarming [defender.p_them()] of [disarmed_item] and" : "", defender.p_them()))))
 		playsound(defender, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		defender.set_jitter_if_lower(4 SECONDS)
 		defender.apply_damage(5, attacker.get_attack_type())
@@ -371,7 +372,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_warning("You fail to disarm [defender]!"))
+	to_chat(attacker, span_warning(LANG("datum.4c97e2d6", list(defender))))
 	playsound(defender, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "failed to disarm (CQC)")
 	return MARTIAL_ATTACK_FAIL

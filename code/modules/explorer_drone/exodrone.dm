@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// How many lines of log we keep
 #define EXODRONE_LOG_SIZE 15
 /// Size of drone storage shared between loot and tools.
@@ -369,7 +370,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/fuel_pellet))
 		if(fuel_canister)
-			to_chat(user, span_warning("There's already fuel loaded inside [src]!"))
+			to_chat(user, span_warning(LANG("obj.34b52583", list(src))))
 			return TRUE
 		if(!user.transferItemToLoc(weapon, src))
 			return
@@ -386,7 +387,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	if(!fuel_canister)
 		return
 
-	to_chat(user, span_notice("You remove [fuel_canister] from [src]."))
+	to_chat(user, span_notice(LANG("obj.cbed3266", list(fuel_canister, src))))
 	fuel_canister.forceMove(drop_location())
 	fuel_canister = null
 	update_icon()

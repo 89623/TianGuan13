@@ -53,7 +53,7 @@
 	. = ..()
 
 	toggle_panel_open()
-	to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of [src]."))
+	to_chat(user, span_notice(LANG("obj.79c0c90b", list(panel_open ? "open":"close", src))))
 	tool.play_tool_sound(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -88,12 +88,12 @@
 		for(var/obj/strange_rocks in attacking_item.contents)
 			strange_rocks.forceMove(storage_unit)
 
-		balloon_alert(user, "rocks inserted!")
+		balloon_alert(user, LANG("obj.a8aaa85e", null))
 		return
 
 	if(is_type_in_list(attacking_item, accepted_types))
 		attacking_item.forceMove(storage_unit)
-		balloon_alert(user, "item inserted!")
+		balloon_alert(user, LANG("obj.cfd83b9e", null))
 		return
 
 	return ..()
@@ -107,7 +107,7 @@
 	for(var/obj/item/removed_item in storage_unit.contents)
 		removed_item.forceMove(src_turf)
 
-	balloon_alert(user, "items removed!")
+	balloon_alert(user, LANG("obj.be8e9850", null))
 
 /obj/machinery/xenoarch/researcher/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -169,16 +169,16 @@
 		for(var/obj/item/xenoarch/strange_rock/chosen_rocks in attacking_item.contents)
 			chosen_rocks.get_scanned(TRUE)
 
-		balloon_alert(user, "scan complete!")
+		balloon_alert(user, LANG("obj.d4915572", null))
 		return
 
 	if(istype(attacking_item, /obj/item/xenoarch/strange_rock))
 		var/obj/item/xenoarch/strange_rock/chosen_rock = attacking_item
 		if(chosen_rock.get_scanned(TRUE))
-			balloon_alert(user, "scan complete!")
+			balloon_alert(user, LANG("obj.d4915572", null))
 			return
 
-		to_chat(user, span_warning("[chosen_rock] was unable to be scanned, perhaps it was already scanned?"))
+		to_chat(user, span_warning(LANG("obj.d83c8e94", list(chosen_rock))))
 		return
 
 	return ..()
@@ -197,12 +197,12 @@
 	if(istype(attacking_item, /obj/item/storage/bag/xenoarch))
 		for(var/obj/strange_rocks in attacking_item.contents)
 			strange_rocks.forceMove(storage_unit)
-		balloon_alert(user, "rocks inserted!")
+		balloon_alert(user, LANG("obj.a8aaa85e", null))
 		return
 
 	if(istype(attacking_item, /obj/item/xenoarch/strange_rock))
 		attacking_item.forceMove(storage_unit)
-		balloon_alert(user, "rock inserted!")
+		balloon_alert(user, LANG("obj.f107278f", null))
 		return
 
 /obj/machinery/xenoarch/digger/attack_hand(mob/living/user, list/modifiers)
@@ -214,7 +214,7 @@
 	for(var/obj/item/removed_item in storage_unit.contents)
 		removed_item.forceMove(src_turf)
 
-	balloon_alert(user, "items removed!")
+	balloon_alert(user, LANG("obj.be8e9850", null))
 
 /obj/machinery/xenoarch/digger/xenoarch_process()
 	var/turf/src_turf = get_turf(src)

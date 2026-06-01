@@ -124,7 +124,7 @@
 /obj/item/gun/ballistic/automatic/pulse_rifle/postfire_empty_checks(last_shot_succeeded)
 	var/obj/item/ammo_casing/pulse/casing = chambered
 	if(istype(casing) && casing.remaining_uses <= 0)
-		visible_message(span_warning("[src] emits a low power warning!"))
+		visible_message(span_warning(LANG("obj.15299bf7", list(src))))
 		playsound(src, 'sound/items/weapons/gun/general/empty_alarm.ogg', 40, TRUE)
 		return
 	..()

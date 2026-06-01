@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/mine_bot_upgrade
 	name = "minebot melee upgrade"
 	desc = "A minebot upgrade."
@@ -17,7 +18,7 @@
 		return
 	minebot.melee_damage_lower += 7
 	minebot.melee_damage_upper += 7
-	to_chat(user, span_notice("You increase the close-quarter combat abilities of [minebot]."))
+	to_chat(user, span_notice(LANG("obj.5fe21fc6", list(minebot))))
 	qdel(src)
 
 //Health
@@ -27,11 +28,11 @@
 
 /obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/basic/mining_drone/minebot, mob/user)
 	if(minebot.maxHealth != initial(minebot.maxHealth))
-		to_chat(user, span_warning("[minebot] already has reinforced armor!"))
+		to_chat(user, span_warning(LANG("obj.4ad84a23", list(minebot))))
 		return
 	minebot.maxHealth += 45
 	minebot.updatehealth()
-	to_chat(user, span_notice("You reinforce the armor of [minebot]."))
+	to_chat(user, span_notice(LANG("obj.ae9b87b3", list(minebot))))
 	qdel(src)
 
 //AI

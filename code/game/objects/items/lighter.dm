@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/lighter
 	name = "\improper Zippo lighter"
 	desc = "The zippo."
@@ -223,7 +224,7 @@
 		return ..()
 
 	if(cig.lit)
-		to_chat(user, span_warning("\The [cig] is already lit!"))
+		to_chat(user, span_warning(LANG("obj.79fd2c4b", list(cig))))
 	if(target_mob == user)
 		cig.attackby(src, user)
 		return
@@ -236,10 +237,10 @@
 ///Checks if the lighter is able to perform a welding task.
 /obj/item/lighter/tool_use_check(mob/living/user, amount, heat_required)
 	if(!lit)
-		to_chat(user, span_warning("[src] has to be on to complete this task!"))
+		to_chat(user, span_warning(LANG("obj.5f9e6829", list(src))))
 		return FALSE
 	if(get_fuel() < amount)
-		to_chat(user, span_warning("You need more welding fuel to complete this task!"))
+		to_chat(user, span_warning(LANG("obj.ff6b84ef", null)))
 		return FALSE
 	if(heat < heat_required)
 		return FALSE

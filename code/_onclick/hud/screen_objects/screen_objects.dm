@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /*
 	Screen objects
@@ -160,7 +161,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		return TRUE
 	var/area/A = get_area(usr)
 	if(!A.outdoors)
-		to_chat(usr, span_warning("There is already a defined structure here."))
+		to_chat(usr, span_warning(LANG("atom.3c2f6fc6", null)))
 		return TRUE
 	create_area(usr)
 

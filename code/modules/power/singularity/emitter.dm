@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/emitter
 	name = "emitter"
 	desc = "A heavy-duty industrial laser, often used in containment fields and power generation."
@@ -88,7 +89,7 @@
 	if(panel_open)
 		return NONE
 	if(welded)
-		balloon_alert(user, "unweld first!")
+		balloon_alert(user, LANG("obj.20d90fcc", null))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
@@ -170,13 +171,13 @@
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
 	if(!welded)
-		to_chat(user, span_warning("[src] needs to be firmly secured to the floor first!"))
+		to_chat(user, span_warning(LANG("obj.31b33047", list(src))))
 		return FALSE
 	if(!powernet)
-		to_chat(user, span_warning("\The [src] isn't connected to a wire!"))
+		to_chat(user, span_warning(LANG("obj.5cb3e049", list(src))))
 		return FALSE
 	if(locked || !allow_switch_interact)
-		to_chat(user, span_warning("The controls are locked!"))
+		to_chat(user, span_warning(LANG("obj.4bc8f4e9", null)))
 		return FALSE
 
 	if(active)
@@ -186,7 +187,7 @@
 		shot_number = 0
 		fire_delay = maximum_fire_delay
 
-	to_chat(user, span_notice("You turn [active ? "on" : "off"] [src]."))
+	to_chat(user, span_notice(LANG("obj.c2fd54ba", list(active ? "on" : "off", src))))
 	message_admins("[src] turned [active ? "ON" : "OFF"] by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
 	log_game("[src] turned [active ? "ON" : "OFF"] by [key_name(user)] in [AREACOORD(src)]")
 	investigate_log("turned [active ? "ON" : "OFF"] by [key_name(user)] at [AREACOORD(src)]", INVESTIGATE_ENGINE)
@@ -276,12 +277,12 @@
 /obj/machinery/power/emitter/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
 		if(!silent)
-			to_chat(user, span_warning("Turn \the [src] off first!"))
+			to_chat(user, span_warning(LANG("obj.d2d51d9a", list(src))))
 		return FAILED_UNFASTEN
 
 	else if(welded)
 		if(!silent)
-			to_chat(user, span_warning("[src] is welded to the floor!"))
+			to_chat(user, span_warning(LANG("obj.9092e2c6", list(src))))
 		return FAILED_UNFASTEN
 
 	return ..()
@@ -294,7 +295,7 @@
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/item)
 	..()
 	if(active)
-		to_chat(user, span_warning("Turn [src] off first!"))
+		to_chat(user, span_warning(LANG("obj.c274c56a", list(src))))
 		return TRUE
 
 	if(welded)
@@ -306,13 +307,13 @@
 		if(!item.use_tool(src, user, 20, 1, 50))
 			return FALSE
 		welded = FALSE
-		to_chat(user, span_notice("You cut [src] free from the floor."))
+		to_chat(user, span_notice(LANG("obj.6a908a91", list(src))))
 		disconnect_from_network()
 		update_cable_icons_on_turf(get_turf(src))
 		return TRUE
 
 	if(!anchored)
-		to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+		to_chat(user, span_warning(LANG("obj.acb3909a", list(src))))
 		return TRUE
 	if(!item.tool_start_check(user, amount=1))
 		return TRUE
@@ -322,7 +323,7 @@
 	if(!item.use_tool(src, user, 20, 1, 50))
 		return FALSE
 	welded = TRUE
-	to_chat(user, span_notice("You weld [src] to the floor."))
+	to_chat(user, span_notice(LANG("obj.46f0194b", list(src))))
 	connect_to_network()
 	update_cable_icons_on_turf(get_turf(src))
 	return TRUE
@@ -340,16 +341,16 @@
 /// Attempt to toggle the controls lock of the emitter
 /obj/machinery/power/emitter/proc/togglelock(mob/user)
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_warning("The lock seems to be broken!"))
+		to_chat(user, span_warning(LANG("obj.d556f112", null)))
 		return
 	if(!allowed(user))
-		to_chat(user, span_danger("Access denied."))
+		to_chat(user, span_danger(LANG("obj.077f9b52", null)))
 		return
 	if(!active)
-		to_chat(user, span_warning("The controls can only be locked when \the [src] is online!"))
+		to_chat(user, span_warning(LANG("obj.64e7c1bf", list(src))))
 		return
 	locked = !locked
-	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
+	to_chat(user, span_notice(LANG("obj.d47371c2", list(src.locked ? "lock" : "unlock"))))
 
 /obj/machinery/power/emitter/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(item.GetID())
@@ -361,27 +362,27 @@
 		return
 	if(panel_open && !gun && istype(item,/obj/item/gun/energy))
 		if(diskie)
-			to_chat(user, span_warning("Remove the Diode Disk before inserting a gun."))
+			to_chat(user, span_warning(LANG("obj.907c970e", null)))
 			return
 		if(integrate(item,user))
 			return
 	if(panel_open && !gun && istype(item,/obj/item/emitter_disk))
 		var/obj/item/emitter_disk/config_disk = item
 		if(!user.transferItemToLoc(config_disk, src))
-			balloon_alert(user, "stuck in hand!")
+			balloon_alert(user, LANG("obj.c7cbf2eb", null))
 			return
 		if(diskie)
 			user.put_in_hands(diskie)
-			balloon_alert(user, "disks swapped!")
+			balloon_alert(user, LANG("obj.6fefc5af", null))
 		else
-			balloon_alert(user, "disk inserted")
+			balloon_alert(user, LANG("obj.0d53bd7c", null))
 		diskie = config_disk
 		projectile_type = diskie.stored_proj
 		projectile_sound = diskie.stored_sound
 		fire_rate_mod = diskie.fire_rate_mod
 		no_shot_counter = diskie.no_shot_counter
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
-		to_chat(user, span_notice("You update the [src]'s diode configuration with the [config_disk]."))
+		to_chat(user, span_notice(LANG("obj.89753f7c", list(src, config_disk))))
 		update_appearance()
 		if(diskie.consumable)
 			qdel(diskie)
@@ -446,7 +447,7 @@
 		return FALSE
 	locked = FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "id lock shorted out")
+	balloon_alert(user, LANG("obj.04001b57", null))
 	return TRUE
 
 

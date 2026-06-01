@@ -47,14 +47,14 @@
 
 /obj/item/claymore/cutlass/luna/crowbar_act(mob/living/user, obj/item/tool)
 	if(LAZYLEN(fragments))
-		to_chat(user, span_notice("You remove [src]'s array of addons."))
+		to_chat(user, span_notice(LANG("obj.84e041d9", list(src))))
 		tool.play_tool_sound(src)
 		for(var/found_fragment in fragments)
 			var/obj/item/luna_fragment/Fragment = found_fragment
 			Fragment.remove_upgrade(src, user)
 			Fragment.forceMove(get_turf(src))
 		return ITEM_INTERACT_SUCCESS
-	to_chat(user, span_warning("[src] is bare of any additional baubles."))
+	to_chat(user, span_warning(LANG("obj.76706398", list(src))))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/claymore/cutlass/luna/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -71,7 +71,7 @@
 	if(!can_bloodbeam)
 		return
 	if(interacting_with == user)
-		balloon_alert(user, "can't aim at yourself!")
+		balloon_alert(user, LANG("obj.224c61eb", null))
 		return ITEM_INTERACT_BLOCKING
 	send_sword_laser(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -119,8 +119,8 @@
 	if(!user.transferItemToLoc(src, upgrade_appliable))
 		return
 	upgrade_appliable.fragments += src
-	balloon_alert(user, "upgrade applied")
-	to_chat(user, span_notice("You attach [src] to [upgrade_appliable]."))
+	balloon_alert(user, LANG("obj.90a1e821", null))
+	to_chat(user, span_notice(LANG("obj.c1fbc99d", list(src, upgrade_appliable))))
 	if(!has_spoken)
 		var/mob/taylor = user
 		taylor.playsound_local(src.loc, hallucination_sound, 30, FALSE, 3)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // An unholy water flask, but for heretics.
 // Heals heretics, harms non-heretics. Pretty much identical.
 /obj/item/reagent_containers/cup/beaker/eldritch
@@ -32,21 +33,21 @@
 	if(living_target == user)
 		return ITEM_INTERACT_BLOCKING
 	if(reagents.total_volume >= reagents.maximum_volume)
-		to_chat(user, span_notice("[src] is full."))
+		to_chat(user, span_notice(LANG("obj.8e2d390c", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(living_target.can_block_magic(MAGIC_RESISTANCE_HOLY))
-		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))
+		to_chat(user, span_warning(LANG("obj.15aca96f", list(living_target))))
 		COOLDOWN_START(src, drain_cooldown, 5 SECONDS)
-		to_chat(living_target, span_warning("You feel a force attempt to steal your blood, but it is repelled!"))
+		to_chat(living_target, span_warning(LANG("obj.a4dd493c", null)))
 		return ITEM_INTERACT_BLOCKING
 	var/drawn_amount = min(reagents.maximum_volume - reagents.total_volume, 5)
 	if(living_target.transfer_blood_to(src, drawn_amount))
-		to_chat(user, span_notice("You take a blood sample from [living_target]."))
-		to_chat(living_target, span_warning("You feel a tiny prick!"))
+		to_chat(user, span_notice(LANG("obj.69856d49", list(living_target))))
+		to_chat(living_target, span_warning(LANG("obj.d366f84f", null)))
 		COOLDOWN_START(src, drain_cooldown, 5 SECONDS)
 		playsound(src, 'sound/effects/chemistry/catalyst.ogg', 20, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
 	else
-		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))
+		to_chat(user, span_warning(LANG("obj.15aca96f", list(living_target))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/phylactery/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)

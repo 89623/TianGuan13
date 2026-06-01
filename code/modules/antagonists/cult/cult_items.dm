@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/tome
 	name = "arcane tome"
 	desc = "An old, dusty tome with frayed edges and a sinister-looking cover."
@@ -282,7 +283,7 @@ Striking a noncultist, however, will tear their flesh."}
 	user.visible_message(span_cult_bold("You begin chanting the holy hymns of [GLOB.deity]..."),\
 		span_cult_bold("[user] begins chanting while holding [src] aloft..."))
 	if(!do_after(user, 6 SECONDS, src))
-		to_chat(user, span_notice("You were interrupted!"))
+		to_chat(user, span_notice(LANG("obj.0360a261", null)))
 		return
 	playsound(user, 'sound/effects/pray_chaplain.ogg',60,TRUE)
 	return TRUE
@@ -290,13 +291,13 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/haunted/proc/on_cultist_handle(mob/living/user, actiontype)
 	var/binding_implements = list(/obj/item/melee/cultblade/dagger, /obj/item/melee/sickly_blade/cursed)
 	if(!user.is_holding_item_of_types(binding_implements))
-		to_chat(user, span_notice("You need to hold a ritual dagger to bind [src]!"))
+		to_chat(user, span_notice(LANG("obj.f0553a58", list(src))))
 		return
 
 	user.visible_message(span_cult_bold("You begin slicing open your palm on top of [src]..."),\
 		span_cult_bold("[user] begins slicing open [user.p_their()] palm on top of [src]..."))
 	if(!do_after(user, 6 SECONDS, src))
-		to_chat(user, span_notice("You were interrupted!"))
+		to_chat(user, span_notice(LANG("obj.0360a261", null)))
 		return
 	playsound(user, 'sound/items/weapons/slice.ogg', 30, TRUE)
 	return TRUE
@@ -305,19 +306,19 @@ Striking a noncultist, however, will tear their flesh."}
 	// todo make the former a subtype of latter
 	var/binding_implements = list(/obj/item/clothing/neck/eldritch_amulet, /obj/item/clothing/neck/heretic_focus)
 	if(!user.is_holding_item_of_types(binding_implements))
-		to_chat(user, span_notice("You need to hold a focus to bind [src]!"))
+		to_chat(user, span_notice(LANG("obj.f638d808", list(src))))
 		return
 
 	user.visible_message(span_cult_bold("You channel the Mansus through your focus, empowering the sealing runes..."), span_cult_bold("[user] holds up their eldritch focus on top of [src] and begins concentrating..."))
 	if(!do_after(user, 6 SECONDS, src))
-		to_chat(user, span_notice("You were interrupted!"))
+		to_chat(user, span_notice(LANG("obj.0360a261", null)))
 		return
 	return TRUE
 
 /obj/item/melee/cultblade/haunted/proc/on_wizard_handle(mob/living/user, actiontype)
 	user.visible_message(span_cult_bold("You begin quickly and nimbly casting the sealing runes."), span_cult_bold("[user] begins tracing anti-light runes on [src]..."))
 	if(!do_after(user, 3 SECONDS, src))
-		to_chat(user, span_notice("You were interrupted!"))
+		to_chat(user, span_notice(LANG("obj.0360a261", null)))
 		return
 	return TRUE
 
@@ -325,13 +326,13 @@ Striking a noncultist, however, will tear their flesh."}
 	// todo make the former a subtype of latter
 	var/binding_implements = list(/obj/item/book/bible)
 	if(!user.is_holding_item_of_types(binding_implements))
-		to_chat(user, span_notice("You need to wield a bible to bind [src]!"))
+		to_chat(user, span_notice(LANG("obj.155ff72a", list(src))))
 		return
 
 	var/passage = "[pick(GLOB.first_names_male)] [rand(1,9)]:[rand(1,25)]" // Space Bibles will have Alejandro 9:21 passages, as part of the Very New Testament.
 	user.visible_message(span_cult_bold("You start reading aloud the passage in [passage]..."), span_cult_bold("[user] starts reading aloud the passage in [passage]..."))
 	if(!do_after(user, 12 SECONDS, src))
-		to_chat(user, span_notice("You were interrupted!"))
+		to_chat(user, span_notice(LANG("obj.0360a261", null)))
 		return
 
 	rebind_blade(user)
@@ -340,11 +341,11 @@ Striking a noncultist, however, will tear their flesh."}
 	var/holup = tgui_alert(user, "Are you sure you wish to unseal the spirit within?", "Sealed Evil In A Jar", list("I need the power!", "Maybe not..."))
 	if(holup != "I need the power!")
 		return
-	to_chat(user, span_cult_bold("You start focusing on the power of the blade, letting it guide your fingers along the inscribed runes..."))
+	to_chat(user, span_cult_bold(LANG("obj.ce92b0c6", null)))
 	if(!do_after(user, 5 SECONDS, src))
-		to_chat(user, span_notice("You were interrupted!"))
+		to_chat(user, span_notice(LANG("obj.0360a261", null)))
 		return
-	visible_message(span_danger("[user] has unbound [src]!"))
+	visible_message(span_danger(LANG("obj.16517fdd", list(user, src))))
 	bound = FALSE
 	for(var/datum/action/cooldown/spell/sword_spell as anything in path_sword_actions)
 		sword_spell.Grant(trapped_entity)
@@ -360,7 +361,7 @@ Striking a noncultist, however, will tear their flesh."}
 	binding_filters_update()
 
 /obj/item/melee/cultblade/haunted/proc/rebind_blade(mob/user)
-	visible_message(span_danger("[user] has bound [src]!"))
+	visible_message(span_danger(LANG("obj.3f1c96c7", list(user, src))))
 	bound = TRUE
 	force -= 5
 	armour_penetration -= 10
@@ -519,7 +520,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!IS_CULTIST(user) && !free_use)
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large(LANG("obj.79745a40", null)))
 
 /datum/action/innate/dash/cult
 	name = "Rend the Veil"
@@ -554,11 +555,11 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 	var/mob/living/carbon/carbon_user = user
 	if(user.num_legs < 2 || carbon_user.legcuffed) //if they can't be ensnared, stun for the same time as it takes to breakout of bola
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
+		to_chat(user, span_cult_large(LANG("obj.79745a40", null)))
 		user.dropItemToGround(src, TRUE)
 		user.Paralyze(CULT_BOLA_PICKUP_STUN)
 	else
-		to_chat(user, span_warning("The bola seems to take on a life of its own!"))
+		to_chat(user, span_warning(LANG("obj.ef57046c", null)))
 		ensnare(user)
 		user.update_held_items()
 #undef CULT_BOLA_PICKUP_STUN
@@ -618,14 +619,14 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!IS_CULTIST(user))
 		user.dropItemToGround(src, TRUE)
 		user.Paralyze(100)
-		to_chat(user, span_warning("A powerful force shoves you away from [src]!"))
+		to_chat(user, span_warning(LANG("obj.529ba6b5", list(src))))
 		return
 	if(totalcurses >= MAX_SHUTTLE_CURSES)
-		to_chat(user, span_warning("You try to shatter the orb, but it remains as solid as a rock!"))
-		to_chat(user, span_danger(span_big("It seems that the blood cult has exhausted its ability to curse the emergency escape shuttle. It would be unwise to create more cursed orbs or to continue to try to shatter this one.")))
+		to_chat(user, span_warning(LANG("obj.77c9e5ca", null)))
+		to_chat(user, span_danger(span_big(LANG("obj.3f5c3d9e", null))))
 		return
 	if(locate(/obj/narsie) in SSpoints_of_interest.narsies)
-		to_chat(user, span_warning("Nar'Sie is already on this plane, there is no delaying the end of all things."))
+		to_chat(user, span_warning(LANG("obj.21c3b93c", null)))
 		return
 
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
@@ -649,7 +650,7 @@ Striking a noncultist, however, will tear their flesh."}
 		if(surplus > 0)
 			SSshuttle.block_recall(surplus)
 		totalcurses++
-		to_chat(user, span_danger("You shatter the orb! A dark essence spirals into the air, then disappears."))
+		to_chat(user, span_danger(LANG("obj.e7ff4620", null)))
 		playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 50, TRUE)
 
 		if(!remaining_curses)
@@ -660,11 +661,11 @@ Striking a noncultist, however, will tear their flesh."}
 		curse_message += " The shuttle will be delayed by three minutes."
 		priority_announce("[curse_message]", "System Failure", 'sound/announcer/notice/notice1.ogg')
 		if(MAX_SHUTTLE_CURSES-totalcurses <= 0)
-			to_chat(user, span_danger(span_big("You sense that the emergency escape shuttle can no longer be cursed. It would be unwise to create more cursed orbs.")))
+			to_chat(user, span_danger(span_big(LANG("obj.1695e3ae", null))))
 		else if(MAX_SHUTTLE_CURSES-totalcurses == 1)
-			to_chat(user, span_danger(span_big("You sense that the emergency escape shuttle can only be cursed one more time.")))
+			to_chat(user, span_danger(span_big(LANG("obj.a9dd5cd0", null))))
 		else
-			to_chat(user, span_danger(span_big("You sense that the emergency escape shuttle can only be cursed [MAX_SHUTTLE_CURSES-totalcurses] more times.")))
+			to_chat(user, span_danger(span_big(LANG("obj.9faad43b", list(MAX_SHUTTLE_CURSES-totalcurses)))))
 
 		if(totalcurses >= MAX_SHUTTLE_CURSES && (world.time < first_curse_time + SHUTTLE_CURSE_OMFG_TIMESPAN))
 			var/omfg_message = pick_list(CULT_SHUTTLE_CURSE, "omfg_announce") || "LEAVE US ALONE!"
@@ -699,18 +700,18 @@ Striking a noncultist, however, will tear their flesh."}
 	var/list/turfs_to_scan = detect_room(get_turf(user), max_size = GATEWAY_TURF_SCAN_RANGE)
 
 	if(!IS_CULTIST(user))
-		to_chat(user, span_cult_large("\"You want to enter my domain? Go ahead.\""))
+		to_chat(user, span_cult_large(LANG("obj.e527f531", null)))
 		turfs_to_scan = null // narsie wants to have some fun and the veil wont stop her
 
 	for(var/turf/hole_candidate as anything in turfs_to_scan)
 		if(locate(/obj/structure/spawner/sentient/proteon_spawner) in hole_candidate)
 			to_chat(user, span_cult_bold("There's a gateway too close nearby. The veil is not yet weak enough to allow such close rips in its fabric."))
 			return
-	to_chat(user, span_cult_bold_italic("You focus on [src] and direct it into the ground. It rumbles..."))
+	to_chat(user, span_cult_bold_italic(LANG("obj.ea89891a", list(src))))
 
 	var/turf/open/hole_spot = get_turf(user)
 	if(!istype(hole_spot) || isgroundlessturf(hole_spot))
-		to_chat(user, span_notice("This is not a suitable spot."))
+		to_chat(user, span_notice(LANG("obj.cd58b6af", null)))
 		return
 
 	INVOKE_ASYNC(hole_spot, TYPE_PROC_REF(/turf/open, quake_gateway), user)
@@ -731,7 +732,7 @@ Striking a noncultist, however, will tear their flesh."}
 		user.visible_message(span_cult_bold("Dark tendrils appear from the ground and root [user] in place!"))
 	sleep(5 SECONDS) // can we still use these or. i mean its async
 	new /obj/structure/spawner/sentient/proteon_spawner(src)
-	visible_message(span_cult_bold("A mysterious hole appears out of nowhere!"))
+	visible_message(span_cult_bold(LANG("turf.bd1ef6d9", null)))
 	if(!fucked || QDELETED(user))
 		return
 	if(get_turf(user) != src) // they get away. for now
@@ -772,12 +773,12 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/cult_shift/attack_self(mob/user)
 	if(!uses || !iscarbon(user))
-		to_chat(user, span_warning("\The [src] is dull and unmoving in your hands."))
+		to_chat(user, span_warning(LANG("obj.ad3a4b13", list(src))))
 		return
 	if(!IS_CULTIST(user))
 		user.dropItemToGround(src, TRUE)
 		step(src, pick(GLOB.alldirs))
-		to_chat(user, span_warning("\The [src] flickers out of your hands, your connection to this dimension is too strong!"))
+		to_chat(user, span_warning(LANG("obj.cdaf5c59", list(src))))
 		return
 
 	//The user of the shifter
@@ -791,7 +792,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 	if(!destination || !do_teleport(user_cultist, destination, channel = TELEPORT_CHANNEL_CULT))
 		playsound(src, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
-		balloon_alert(user, "teleport failed!")
+		balloon_alert(user, LANG("obj.62054e04", null))
 		return
 
 	uses--
@@ -913,7 +914,7 @@ Striking a noncultist, however, will tear their flesh."}
 	var/halberd_location = get_turf(halberd)
 	var/owner_location = get_turf(owner)
 	if(get_dist(owner_location, halberd_location) > 10)
-		to_chat(owner,span_cult("The halberd is too far away!"))
+		to_chat(owner,span_cult(LANG("datum.227db79c", null)))
 	else
 		cooldown = world.time + 20
 		if(isliving(halberd.loc))
@@ -1005,7 +1006,7 @@ Striking a noncultist, however, will tear their flesh."}
 		var/obj/structure/emergency_shield/cult/weak/N = new(user.loc)
 		if(do_after(user, 9 SECONDS, target = user))
 			user.Paralyze(40)
-			to_chat(user, span_cult_italic("You have exhausted the power of this spell!"))
+			to_chat(user, span_cult_italic(LANG("obj.8ad941af", null)))
 		REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, CULT_TRAIT)
 		firing = FALSE
 		if(N)
@@ -1106,7 +1107,7 @@ Striking a noncultist, however, will tear their flesh."}
 			var/mob/living/basic/illusion/bizarro = new(owner.loc)
 			bizarro.full_setup(owner, target_mob = owner, faction_override = list(FACTION_CULT), life = 10 SECONDS, damage = 20, replicate = 5)
 
-			to_chat(owner, span_bolddanger("You're betrayed by \"yourself\"!"))
+			to_chat(owner, span_bolddanger(LANG("obj.a83f4daa", null)))
 		return FALSE
 
 	if(attack_type == PROJECTILE_ATTACK)
@@ -1144,7 +1145,7 @@ Striking a noncultist, however, will tear their flesh."}
 	illusions++
 	if(illusions == initial(illusions) && isliving(loc))
 		var/mob/living/holder = loc
-		to_chat(holder, span_cult_italic("The shield's illusions are back at full strength!"))
+		to_chat(holder, span_cult_italic(LANG("obj.1cb5f65c", null)))
 
 /obj/item/shield/mirror/IsReflect()
 	if(prob(block_chance))

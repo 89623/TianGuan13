@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/forensics_spoofer
 	name = /obj/item/detective_scanner::name
 	desc = "Used to adjacently scan objects and biomass for fibers and fingerprints. Can replicate the findings."
@@ -40,7 +41,7 @@
 	if(.)
 		return
 	scan_mode = !scan_mode
-	balloon_alert(user, "now [scan_mode ? "scanning" : "applying"]")
+	balloon_alert(user, LANG("obj.f35c4f6c", list(scan_mode ? "scanning" : "applying")))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 // ok due to shenanigans basically every item interact adds your fingerprints to it which isnt ideal so we have this
@@ -72,7 +73,7 @@
 	var/list/new_fibers = LAZYCOPY(target.forensics.fibers) - fibers
 	var/list/new_prints = LAZYCOPY(target.forensics.fingerprints) - fingerprints
 	var/new_len = length(new_fibers) + length(new_prints)
-	balloon_alert(user, "[new_len ? new_len : "no"] new prints/fibers")
+	balloon_alert(user, LANG("obj.3e80d8d9", list(new_len ? new_len : "no")))
 	if(new_len)
 		var/list/message = list(span_bold("Scan results (Unstored Only):"))
 		for(var/text in new_fibers)
@@ -107,13 +108,13 @@
 /obj/item/forensics_spoofer/proc/tamper(atom/target, mob/living/user, do_fibers = FALSE)
 	do_fake_scan(target, user)
 	if((!do_fibers && isnull(chosen_fingerprint)) || (do_fibers && isnull(chosen_fiber)))
-		balloon_alert(user, "no [do_fibers ? "fiber" : "fingerprint"] selected!") // we CAN automatically select it but if they dont have it selected then they likely didnt know of it in the first place so they learn it now
+		balloon_alert(user, LANG("obj.ab17b86f", list(do_fibers ? "fiber" : "fingerprint"))) // we CAN automatically select it but if they dont have it selected then they likely didnt know of it in the first place so they learn it now
 		return ITEM_INTERACT_FAILURE
 	if(!COOLDOWN_FINISHED(src, tamper_cooldown))
-		balloon_alert(user, "please wait!")
+		balloon_alert(user, LANG("obj.0071c578", null))
 		return ITEM_INTERACT_FAILURE
 	if(!isnull(target.forensics) && LAZYFIND(do_fibers ? target.forensics.fibers : target.forensics.fingerprints, do_fibers ? chosen_fiber : chosen_fingerprint))
-		balloon_alert(user, "already present!")
+		balloon_alert(user, LANG("obj.7c13ff07", null))
 		return ITEM_INTERACT_FAILURE
 
 	if(do_fibers)

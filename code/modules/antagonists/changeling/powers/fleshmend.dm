@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/fleshmend
 	name = "Fleshmend"
 	desc = "Our flesh rapidly regenerates, healing our burns, bruises, and shortness of breath, as well as hiding all of our scars. Costs 20 chemicals."
@@ -15,7 +16,7 @@
 		user.balloon_alert(user, "already fleshmending!")
 		return
 	..()
-	to_chat(user, span_notice("We begin to heal rapidly."))
+	to_chat(user, span_notice(LANG("datum.e108028e", null)))
 	user.apply_status_effect(/datum/status_effect/fleshmend)
 	return TRUE
 

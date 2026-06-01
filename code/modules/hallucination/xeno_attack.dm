@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Xeno crawls from nearby vent, jumps at you, and goes back in.
 /datum/hallucination/xeno_attack
 	random_hallucination_weight = 2
@@ -55,7 +56,7 @@
 		qdel(src)
 		return
 
-	to_chat(hallucinator, span_notice("[fake_xeno.name] begins climbing into the ventilation system..."))
+	to_chat(hallucinator, span_notice(LANG("datum.e94e3d01", list(fake_xeno.name))))
 	addtimer(CALLBACK(src, PROC_REF(disappear), fake_xeno), 3 SECONDS)
 
 /// Disappears into the vent, ending the hallucination.
@@ -63,7 +64,7 @@
 	if(QDELETED(src))
 		return
 	if(!QDELETED(fake_xeno))
-		to_chat(hallucinator, span_notice("[fake_xeno.name] scrambles into the ventilation ducts!"))
+		to_chat(hallucinator, span_notice(LANG("datum.77cf54fb", list(fake_xeno.name))))
 
 	qdel(src)
 

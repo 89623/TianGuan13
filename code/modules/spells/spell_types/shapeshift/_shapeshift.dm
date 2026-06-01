@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Helper for checking of someone's shapeshifted currently.
 #define is_shifted(mob) mob.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
 
@@ -49,7 +50,7 @@
 		// However, we don't really want people casting shapeshift A to un-shapeshift from shapeshift B,
 		// as it could cause bugs or unintended behavior. So we'll just stop them here.
 		if(is_shifted(cast_on) && !is_type_in_list(cast_on, possible_shapes))
-			to_chat(cast_on, span_warning("This spell won't un-shapeshift you from this form!"))
+			to_chat(cast_on, span_warning(LANG("datum.bcf87b03", null)))
 			return . | SPELL_CANCEL_CAST
 
 		return
@@ -123,7 +124,7 @@
 	else
 		our_pipeline = pipenets
 
-	to_chat(cast_on, span_userdanger("Casting [src] inside of [pipe_you_die_in] quickly turns you into a bloody mush!"))
+	to_chat(cast_on, span_userdanger(LANG("datum.f6ddb450", list(src, pipe_you_die_in))))
 	var/obj/effect/gib_type = cast_on.get_gibs_type()
 
 	for(var/obj/machinery/atmospherics/components/unary/possible_vent in range(10, get_turf(cast_on)))
@@ -153,7 +154,7 @@
 	if(!shapechange)
 		// We failed to shift, maybe because we were already shapeshifted?
 		// Whatver the case, this shouldn't happen, so throw a stack trace.
-		to_chat(caster, span_warning("You can't shapeshift in this form!"))
+		to_chat(caster, span_warning(LANG("datum.3800b292", null)))
 		stack_trace("[type] do_shapeshift was called when the mob was already shapeshifted (from a spell).")
 		return
 
@@ -177,7 +178,7 @@
 	var/datum/status_effect/shapechange_mob/shapechange = caster.has_status_effect(shapechange_type)
 	if(!shapechange)
 		// We made it to do_unshapeshift without having a shapeshift status effect, this shouldn't happen.
-		to_chat(caster, span_warning("You can't un-shapeshift from this form!"))
+		to_chat(caster, span_warning(LANG("datum.3c5b3b25", null)))
 		stack_trace("[type] do_unshapeshift was called when the mob wasn't even shapeshifted (from a spell).")
 		return
 

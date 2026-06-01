@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/dresser
 	name = "dresser"
 	desc = "A nicely-crafted wooden dresser. It's filled with lots of undies."
@@ -10,9 +11,9 @@
 
 /obj/structure/dresser/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
+		to_chat(user, span_notice(LANG("obj.8b820c98", list(anchored ? "unwrench" : "wrench", src))))
 		if(I.use_tool(src, user, 20, volume=50))
-			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
+			to_chat(user, span_notice(LANG("obj.5e680a27", list(anchored ? "unwrench" : "wrench", src))))
 			set_anchored(!anchored)
 	else
 		return ..()
@@ -30,7 +31,7 @@
 		return
 	var/mob/living/carbon/human/dressing_human = user
 	if(HAS_TRAIT(dressing_human, TRAIT_NO_UNDERWEAR))
-		to_chat(dressing_human, span_warning("You are not capable of wearing underwear."))
+		to_chat(dressing_human, span_warning(LANG("obj.46fd52b3", null)))
 		return
 
 	var/choice = tgui_input_list(user, "Underwear, Bra, Undershirt, or Socks?", "Changing", list("Underwear", "Underwear Color", "Bra", "Bra Color", "Undershirt", "Undershirt Color", "Socks", "Socks Color")) //NOVA EDIT ADDITION - Colorable Undershirt/Socks/Bra

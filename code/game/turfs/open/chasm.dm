@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Base chasm, defaults to oblivion but can be overridden
 /turf/open/chasm
 	name = "chasm"
@@ -69,9 +70,9 @@
 	if(L)
 		return
 	if(!R.use(1))
-		to_chat(user, span_warning("You need one rod to build a lattice."))
+		to_chat(user, span_warning(LANG("turf.ff0f6921", null)))
 		return
-	to_chat(user, span_notice("You construct a lattice."))
+	to_chat(user, span_notice(LANG("turf.b8bd3ae8", null)))
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	// Create a lattice, without reverting to our baseturf
 	new /obj/structure/lattice(src)

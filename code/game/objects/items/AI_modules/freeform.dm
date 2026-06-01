@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* CONTAINS:
  * /obj/item/ai_module/core/freeformcore
  * /obj/item/ai_module/supplied/freeform
@@ -12,7 +13,7 @@
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName))
-		to_chat(user, span_warning("Error: Law contains invalid text."))
+		to_chat(user, span_warning(LANG("obj.b74e9614", null)))
 		return
 	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
 	if(soft_filter_result)
@@ -41,7 +42,7 @@
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName))
-		to_chat(user, span_warning("Error: Law contains invalid text.")) // AI LAW 2 SAY U W U WITHOUT THE SPACES
+		to_chat(user, span_warning(LANG("obj.b74e9614", null))) // AI LAW 2 SAY U W U WITHOUT THE SPACES
 		return
 	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
 	if(soft_filter_result)
@@ -63,6 +64,6 @@
 
 /obj/item/ai_module/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
 	if(laws[1] == "")
-		to_chat(user, span_alert("No law detected on module, please create one."))
+		to_chat(user, span_alert(LANG("obj.7bb84693", null)))
 		return 0
 	..()

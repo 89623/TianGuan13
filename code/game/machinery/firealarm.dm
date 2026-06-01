@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
 	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
@@ -13,7 +14,7 @@
 /obj/item/wallframe/firealarm/try_build(atom/support, mob/user)
 	var/area/A = get_area(user)
 	if(A.always_unpowered)
-		balloon_alert(user, "cannot place in this area!")
+		balloon_alert(user, LANG("obj.503cb4c5", null))
 		return FALSE
 	return ..()
 
@@ -219,9 +220,9 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	update_appearance()
-	visible_message(span_warning("Sparks fly out of [src]!"))
+	visible_message(span_warning(LANG("obj.b7523a48", list(src))))
 	if(user)
-		balloon_alert(user, "circuitry fried")
+		balloon_alert(user, LANG("obj.ae8d6631", null))
 		user.log_message("emagged [src].", LOG_ATTACK)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	set_status()
@@ -255,7 +256,7 @@
 		firelock.activate(FIRELOCK_ALARM_TYPE_GENERIC)
 	if(user)
 		if(!silent)
-			balloon_alert(user, "triggered alarm!")
+			balloon_alert(user, LANG("obj.3b397ade", null))
 		user.log_message("triggered a fire alarm.", LOG_GAME)
 	my_area.fault_status = AREA_FAULT_MANUAL
 	my_area.fault_location = name
@@ -279,7 +280,7 @@
 		firelock.crack_open()
 	if(user)
 		if(!silent)
-			balloon_alert(user, "reset alarm")
+			balloon_alert(user, LANG("obj.6ab5a6c0", null))
 		user.log_message("reset a fire alarm.", LOG_GAME)
 	soundloop.stop()
 	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
@@ -375,7 +376,7 @@
 	if(!panel_open)
 		return NONE
 	if(atom_integrity >= max_integrity)
-		balloon_alert(user, "already in good condition!")
+		balloon_alert(user, LANG("obj.43379d5f", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = 1))
 		return ITEM_INTERACT_BLOCKING
@@ -390,7 +391,7 @@
 	if(!panel_open)
 		return NONE
 	if(buildstage != FIRE_ALARM_BUILD_SECURED)
-		balloon_alert(user, "no wires to cut!")
+		balloon_alert(user, LANG("obj.7b3a589a", null))
 		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
@@ -426,7 +427,7 @@
 	if(!panel_open)
 		return NONE
 	if(buildstage != FIRE_ALARM_BUILD_NO_CIRCUIT)
-		balloon_alert(user, "remove [buildstage == FIRE_ALARM_BUILD_SECURED ? "wires" : "circuit"] first!")
+		balloon_alert(user, LANG("obj.34f3b9b2", list(buildstage == FIRE_ALARM_BUILD_SECURED ? "wires" : "circuit")))
 		return ITEM_INTERACT_BLOCKING
 
 	loc.balloon_alert_to_viewers("[/obj/item/wallframe/firealarm::name] removed")
@@ -445,7 +446,7 @@
 	if(!is_wire_tool(tool))
 		return NONE
 	if(!panel_open)
-		balloon_alert(user, "expose wires first!")
+		balloon_alert(user, LANG("obj.21a6eee5", null))
 		return ITEM_INTERACT_BLOCKING
 	wires.interact(user)
 	return ITEM_INTERACT_SUCCESS
@@ -454,7 +455,7 @@
 	if(buildstage != FIRE_ALARM_BUILD_NO_WIRES)
 		return NONE
 	if(!coil.use(5))
-		balloon_alert(user, "need 5 cables!")
+		balloon_alert(user, LANG("obj.bb6f7f63", null))
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert_to_viewers("wires installed")
@@ -466,7 +467,7 @@
 	if(buildstage != FIRE_ALARM_BUILD_NO_CIRCUIT)
 		return NONE
 	if(!user.transferItemToLoc(circuit, src))
-		balloon_alert(user, "can't install!")
+		balloon_alert(user, LANG("obj.ea00f01a", null))
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert_to_viewers("circuit installed")
@@ -580,7 +581,7 @@
 
 /obj/machinery/firealarm/AICtrlClick(mob/living/silicon/robot/user)
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, "control circuitry malfunctioning!")
+		balloon_alert(user, LANG("obj.42f4edf6", null))
 		return
 	toggle_fire_detect(user)
 
@@ -588,14 +589,14 @@
 /obj/machinery/firealarm/proc/toggle_fire_detect(mob/user, silent = FALSE)
 	if(!can_toggle_detection)
 		if(user && !silent)
-			balloon_alert(user, "thermal sensors unresponsive!")
+			balloon_alert(user, LANG("obj.5d62aaa0", null))
 		return
 	if(my_area.fire_detect)
 		disable_fire_detect(user)
 	else
 		enable_fire_detect(user)
 	if (user && !silent)
-		balloon_alert(user, "thermal sensors [my_area.fire_detect ? "enabled" : "disabled"]")
+		balloon_alert(user, LANG("obj.4680a2cd", list(my_area.fire_detect ? "enabled" : "disabled")))
 
 /// Stops the area from automatically activating firelocks
 /obj/machinery/firealarm/proc/disable_fire_detect(mob/user)

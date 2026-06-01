@@ -37,20 +37,20 @@
 		var/atom/hidden_atom = contents[contents.len] // Get the most recent hidden thing
 		if(istype(hidden_atom, /mob/living))
 			var/mob/living/hidden_mob = hidden_atom
-			balloon_alert(user, "someone is inside!")
+			balloon_alert(user, LANG("obj.35409d7b", null))
 			eject_mob(hidden_mob)
 		else if (istype(hidden_atom, /obj/item))
 			var/obj/item/hidden_item = hidden_atom
-			balloon_alert(user, "found something!")
+			balloon_alert(user, LANG("obj.7e565830", null))
 			hidden_item.forceMove(src.loc)
 	else
 		// You already searched this one bruh
 		if(user.ckey in searchedby)
-			balloon_alert(user, "already searched!")
+			balloon_alert(user, LANG("obj.7dc6742f", null))
 		// You found an item!
 		else
 			produce_alpha_item()
-			balloon_alert(user, "found something!")
+			balloon_alert(user, LANG("obj.7e565830", null))
 			searchedby += user.ckey
 
 /obj/structure/trash_pile/attack_hand(mob/user)
@@ -113,15 +113,15 @@
 /obj/structure/trash_pile/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!user.combat_mode)
 		if(can_hide_item(attacking_item))
-			balloon_alert(user, "hiding item...")
+			balloon_alert(user, LANG("obj.cece4dc6", null))
 			if(do_after(user, hide_item_time, user))
 				if(src.loc)
 					if(user.transferItemToLoc(attacking_item, src))
-						balloon_alert(user, "item hidden")
+						balloon_alert(user, LANG("obj.b32906e0", null))
 					else
-						balloon_alert(user, "it's stuck to your hand!")
+						balloon_alert(user, LANG("obj.f84f0f5d", null))
 		else
-			balloon_alert(user, "it's full!")
+			balloon_alert(user, LANG("obj.2cb7d354", null))
 		return
 
 	. = ..()

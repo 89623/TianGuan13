@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Caused by dirty food. Makes you burp out Tritium, sometimes burning hot!
 /datum/disease/gastritium
 	name = "Gastritium"
@@ -49,6 +50,6 @@
 	if(hot_chance && prob(tritium_burp_hot_chance))
 		burp.set_temperature(TRITIUM_MINIMUM_BURN_TEMPERATURE)
 		if(affected_mob.stat == CONSCIOUS)
-			to_chat(affected_mob, span_warning("Your throat feels hot!"))
+			to_chat(affected_mob, span_warning(LANG("datum.cad00aab", null)))
 	affected_mob.visible_message("burps out green gas.", visible_message_flags = EMOTE_MESSAGE)
 	affected_mob.loc.assume_air(burp)

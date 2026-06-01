@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Shoots a random, fake projectile to the hallucinator
 /datum/hallucination/stray_bullet
 	random_hallucination_weight = 7
@@ -105,11 +106,11 @@
 /// Called when a mob is hit by the fake projectile
 /obj/projectile/hallucination/proc/on_mob_hit(mob/living/hit_mob)
 	if(hit_mob == parent.hallucinator)
-		to_chat(parent.hallucinator, span_userdanger("[hit_mob] is hit by \a [src] in the chest!"))
+		to_chat(parent.hallucinator, span_userdanger(LANG("obj.af0d7b93", list(hit_mob, src))))
 		apply_effect_to_hallucinator(parent.hallucinator)
 
 	else if(hit_mob in view(parent.hallucinator))
-		to_chat(parent.hallucinator, span_danger("[hit_mob] is hit by \a [src] in the chest!"))
+		to_chat(parent.hallucinator, span_danger(LANG("obj.af0d7b93", list(hit_mob, src))))
 
 	if(damage_type == BRUTE)
 		var/splatter_dir = dir

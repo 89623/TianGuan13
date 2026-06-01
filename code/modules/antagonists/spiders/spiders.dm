@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/antagonist/spider
 	name = "\improper Spider"
 	antagpanel_category = ANTAG_GROUP_ARACHNIDS
@@ -52,6 +53,4 @@
 
 /datum/antagonist/spider/flesh/greet()
 	. = ..()
-	to_chat(owner, span_boldwarning("An abomination of flesh set upon the station by changelings, \
-		you are aggressive to all living beings outside of your species and know no loyalties... even to your creator. \
-		<br>Your malleable flesh quickly regenerates if you can avoid taking damage for a few seconds."))
+	to_chat(owner, span_boldwarning(LANG("datum.928cecbd", null)))

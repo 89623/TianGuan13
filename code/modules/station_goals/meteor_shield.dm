@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// number of emagged meteor shields to get the first warning, a simple say message
 #define EMAGGED_METEOR_SHIELD_THRESHOLD_ONE 3
 /// number of emagged meteor shields to get the second warning, telling the user an announcement is coming
@@ -112,7 +113,7 @@
 
 /obj/machinery/satellite/meteor_shield/toggle(user)
 	if(user)
-		balloon_alert(user, "looking for [active ? "off" : "on"] button")
+		balloon_alert(user, LANG("obj.371b2e5f", list(active ? "off" : "on")))
 	if(user && !do_after(user, 2 SECONDS, src, IGNORE_HELD_ITEM))
 		return FALSE
 	if(!..(user))
@@ -138,18 +139,18 @@
 
 /obj/machinery/satellite/meteor_shield/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, "already emagged!")
+		balloon_alert(user, LANG("obj.9bab397b", null))
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, shared_emag_cooldown))
-		balloon_alert(user, "on cooldown!")
-		to_chat(user, span_warning("The last satellite emagged needs [DisplayTimeText(COOLDOWN_TIMELEFT(src, shared_emag_cooldown))] to recalibrate first. Emagging another so soon could damage the satellite network."))
+		balloon_alert(user, LANG("obj.d4ae5d4d", null))
+		to_chat(user, span_warning(LANG("obj.81d725ea", list(DisplayTimeText(COOLDOWN_TIMELEFT(src, shared_emag_cooldown))))))
 		return FALSE
 	var/cooldown_applied = METEOR_SHIELD_EMAG_COOLDOWN
 	COOLDOWN_START(src, shared_emag_cooldown, cooldown_applied)
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice("You access the satellite's debug mode and it begins emitting a strange signal, increasing the chance of meteor strikes."))
+	to_chat(user, span_notice(LANG("obj.342bb80d", null)))
 	AddComponent(/datum/component/gps, "Corrupted Meteor Shield Attraction Signal")
-	say("Recalibrating... ETA:[DisplayTimeText(cooldown_applied)].")
+	say(LANG("obj.5609c3a2", list(DisplayTimeText(cooldown_applied))))
 	if(active) //if we allowed inactive updates a sat could be worth -1 active meteor shields on first emag
 		update_emagged_meteor_sat(user)
 	return TRUE
@@ -159,12 +160,12 @@
 		change_meteor_chance(0.5)
 		emagged_active_meteor_shields--
 		if(user)
-			balloon_alert(user, "meteor probability halved")
+			balloon_alert(user, LANG("obj.f59256a6", null))
 		return
 	change_meteor_chance(2)
 	emagged_active_meteor_shields++
 	if(user)
-		balloon_alert(user, "meteor probability doubled")
+		balloon_alert(user, LANG("obj.68dc5b63", null))
 	if(emagged_active_meteor_shields > highest_emagged_threshold_reached)
 		highest_emagged_threshold_reached = emagged_active_meteor_shields
 		handle_new_emagged_shield_threshold()

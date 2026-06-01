@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Basically the assistant suit
 /obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
@@ -63,11 +64,11 @@
 		return ..()
 
 	if (extinguishes_left == 5)
-		to_chat(user, span_notice("The inbuilt extinguisher is full."))
+		to_chat(user, span_notice(LANG("obj.ef12437e", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	extinguishes_left = 5
-	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
+	to_chat(user, span_notice(LANG("obj.161539ff", null)))
 	check_fire_state()
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS

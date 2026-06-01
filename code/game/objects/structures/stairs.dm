@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define STAIR_TERMINATOR_AUTOMATIC 0
 #define STAIR_TERMINATOR_NO 1
 #define STAIR_TERMINATOR_YES 2
@@ -363,7 +364,7 @@
 	return TRUE
 
 /obj/structure/stairs_frame/wrench_act_secondary(mob/living/user, obj/item/used_tool)
-	to_chat(user, span_notice("You start disassembling [src]..."))
+	to_chat(user, span_notice(LANG("obj.f0ab830f", list(src))))
 	used_tool.play_tool_sound(src)
 	if(!used_tool.use_tool(src, user, 3 SECONDS))
 		return TRUE
@@ -383,23 +384,23 @@
 	var/obj/item/stack/material = attacked_by
 	if(material.stairs_type)
 		if(material.get_amount() < 10)
-			to_chat(user, span_warning("You need ten [material.name] sheets to do this!"))
+			to_chat(user, span_warning(LANG("obj.a9e914c9", list(material.name))))
 			return
 		if(locate(/obj/structure/stairs) in loc)
-			to_chat(user, span_warning("There's already stairs built here!"))
+			to_chat(user, span_warning(LANG("obj.779d9133", null)))
 			return
-		to_chat(user, span_notice("You start adding [material] to [src]..."))
+		to_chat(user, span_notice(LANG("obj.899b25bb", list(material, src))))
 		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
 			return
 		make_new_stairs(material.stairs_type)
 	else if(istype(material, /obj/item/stack/sheet))
 		if(material.get_amount() < 10)
-			to_chat(user, span_warning("You need ten sheets to do this!"))
+			to_chat(user, span_warning(LANG("obj.0cc1b5c2", null)))
 			return
 		if(locate(/obj/structure/stairs) in loc)
-			to_chat(user, span_warning("There's already stairs built here!"))
+			to_chat(user, span_warning(LANG("obj.779d9133", null)))
 			return
-		to_chat(user, span_notice("You start adding [material] to [src]..."))
+		to_chat(user, span_notice(LANG("obj.899b25bb", list(material, src))))
 		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
 			return
 		var/list/material_list = list()

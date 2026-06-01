@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/frame/computer
 	name = "computer frame"
 	desc = "A frame for constructing your own computer. Or console. Whichever name you prefer."
@@ -104,7 +105,7 @@
 
 /obj/structure/frame/computer/install_board(mob/living/user, obj/item/circuitboard/computer/board, by_hand)
 	if(state != FRAME_COMPUTER_STATE_EMPTY)
-		balloon_alert(user, "circuit already installed!")
+		balloon_alert(user, LANG("obj.67103b9e", null))
 		return FALSE
 	. = ..()
 	if(. && !by_hand) // Installing via RPED auto-secures it
@@ -231,7 +232,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
-	balloon_alert(user, "cables removed")
+	balloon_alert(user, LANG("obj.cc1d6a36", null))
 	state = FRAME_COMPUTER_STATE_BOARD_SECURED
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -256,7 +257,7 @@
 	if(!cable.tool_start_check(user, amount = 5))
 		return FALSE
 	if(time > 0)
-		balloon_alert(user, "adding cables...")
+		balloon_alert(user, LANG("obj.a59792f9", null))
 	if(!cable.use_tool(src, user, time, volume = 50, amount = 5) || state != FRAME_COMPUTER_STATE_BOARD_SECURED)
 		return FALSE
 
@@ -281,7 +282,7 @@
 		return FALSE
 	if(time > 0)
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-		balloon_alert(user, "adding glass...")
+		balloon_alert(user, LANG("obj.87806593", null))
 	if(!glass.use_tool(src, user, time, amount = 2) || state != FRAME_COMPUTER_STATE_WIRED)
 		return FALSE
 
@@ -291,7 +292,7 @@
 
 /obj/structure/frame/computer/finalize_construction(mob/living/user, obj/item/tool)
 	if(!anchored)
-		balloon_alert(user, "frame must be anchored!")
+		balloon_alert(user, LANG("obj.6b9690c5", null))
 		return FALSE
 
 	tool.play_tool_sound(src)

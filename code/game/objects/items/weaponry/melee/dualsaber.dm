@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * Double-Bladed Energy Swords - Cheridan
  */
@@ -58,10 +59,10 @@
 /// Specific hulk checks due to reflection chance for balance issues and switches hitsounds.
 /obj/item/dualsaber/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	if(user && HAS_TRAIT(user, TRAIT_HULK))
-		to_chat(user, span_warning("You lack the grace to wield this!"))
+		to_chat(user, span_warning(LANG("obj.37452f0a", null)))
 		return COMPONENT_TWOHANDED_BLOCK_WIELD
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT))
-		to_chat(user, span_warning("You can't seem to hold [src] properly!"))
+		to_chat(user, span_warning(LANG("obj.8c2b7b0b", list(src))))
 		return COMPONENT_TWOHANDED_BLOCK_WIELD
 	update_weight_class(w_class_on)
 	hitsound = 'sound/items/weapons/blade1.ogg'
@@ -129,7 +130,7 @@
 
 /obj/item/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_HULK))
-		to_chat(user, span_warning("You grip the blade too hard and accidentally drop it!"))
+		to_chat(user, span_warning(LANG("obj.36a67adb", null)))
 		if(HAS_TRAIT(src, TRAIT_WIELDED))
 			user.dropItemToGround(src, force=TRUE)
 			return
@@ -147,7 +148,7 @@
 	dance_rotate(user, CALLBACK(user, TYPE_PROC_REF(/mob, dance_flip)))
 
 /obj/item/dualsaber/proc/impale(mob/living/user)
-	to_chat(user, span_warning("You twirl around a bit before losing your balance and impaling yourself on [src]."))
+	to_chat(user, span_warning(LANG("obj.c47c8878", list(src))))
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.take_bodypart_damage(20,25,check_armor = TRUE)
 	else
@@ -216,10 +217,10 @@
 	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
-			to_chat(user, span_warning("2XRNBW_ENGAGE"))
+			to_chat(user, span_warning(LANG("obj.3b79ba92", null)))
 			saber_color = "rainbow"
 			update_appearance()
 		else
-			to_chat(user, span_warning("It's starting to look like a triple rainbow - no, nevermind."))
+			to_chat(user, span_warning(LANG("obj.e7dd2e59", null)))
 	else
 		return ..()

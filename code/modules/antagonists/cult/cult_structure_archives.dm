@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Some defines for items the cult archives can create.
 #define CULT_BLINDFOLD "Zealot's Blindfold"
 #define CURSE_ORB "Shuttle Curse"
@@ -56,7 +57,7 @@
 	)
 
 /obj/structure/destructible/cult/item_dispenser/archives/succcess_message(mob/living/user, obj/item/spawned_item)
-	to_chat(user, span_cult_italic("You summon [spawned_item] from [src]!"))
+	to_chat(user, span_cult_italic(LANG("obj.cb537480", list(spawned_item, src))))
 
 // Preset for the library that doesn't spawn runed metal on destruction, or glow.
 /obj/structure/destructible/cult/item_dispenser/archives/library

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Slapcrafting component!
 /datum/element/slapcrafting
 	element_flags = ELEMENT_BESPOKE
@@ -105,12 +106,12 @@
 
 	var/atom/final_result = initial(actual_recipe.result)
 
-	to_chat(user, span_notice("You start crafting \a [initial(final_result.name)]..."))
+	to_chat(user, span_notice(LANG("datum.280ecc22", list(initial(final_result.name)))))
 
 	var/error_string = craft_sheet.construct_item(user, actual_recipe)
 
 	if(istext(error_string))
-		to_chat(user, span_warning("Crafting failed[error_string]"))
+		to_chat(user, span_warning(LANG("datum.d98d5529", list(error_string))))
 
 /// Alerts any examiners to the recipe, if they wish to know more.
 /datum/element/slapcrafting/proc/get_examine_info(atom/source, mob/user, list/examine_list)
@@ -150,7 +151,7 @@
 
 	var/atom/result = initial(cur_recipe.result)
 
-	to_chat(user, span_notice("You could craft \a [initial(result.name)] by applying one of these items to it!"))
+	to_chat(user, span_notice(LANG("datum.0fcb22e7", list(initial(result.name)))))
 
 	// Gotta instance it to copy the lists over.
 	cur_recipe = new cur_recipe()
@@ -180,7 +181,7 @@
 
 	// If we did find ingredients then add them onto the list.
 	if(length(string_ingredient_list))
-		to_chat(user, span_boldnotice("Extra Ingredients:"))
+		to_chat(user, span_boldnotice(LANG("datum.8b84eda2", null)))
 		to_chat(user, boxed_message(span_notice(string_ingredient_list)))
 
 	var/list/tool_list = ""
@@ -194,7 +195,7 @@
 		tool_list += "\a [string]\n"
 
 	if(length(tool_list))
-		to_chat(user, span_boldnotice("Required Tools:"))
+		to_chat(user, span_boldnotice(LANG("datum.bab5bfe7", null)))
 		to_chat(user, boxed_message(span_notice(tool_list)))
 
 	qdel(cur_recipe)

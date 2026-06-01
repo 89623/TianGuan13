@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Armsy starts to look a bit funky if he's shorter than this
 #define MINIMUM_ARMSY_LENGTH 2
 
@@ -97,7 +98,7 @@
 /mob/living/basic/heretic_summon/armsy/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	if(!istype(target, /obj/item/bodypart/arm))
 		return ..()
-	visible_message(span_warning("[src] devours [target]!"))
+	visible_message(span_warning(LANG("mob.3db76372", list(src, target))))
 	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	qdel(target)
 	on_arm_eaten()
@@ -121,7 +122,7 @@
 	if(current_stacks < stacks_to_grow)
 		return
 
-	visible_message(span_boldwarning("[src] flexes and expands!"))
+	visible_message(span_boldwarning(LANG("mob.c798ae44", list(src))))
 	current_stacks = 0
 	new_segment(behind = src)
 

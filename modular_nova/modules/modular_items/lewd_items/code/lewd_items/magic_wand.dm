@@ -96,11 +96,11 @@
 
 	var/message = ""
 	if(vibration_mode == "off")
-		to_chat(user, span_warning("You must turn on the toy, to use it!"))
+		to_chat(user, span_warning(LANG("obj.6b646a95", null)))
 		return FALSE
 
 	if(!target.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("Looks like [target] don't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.bc6595c0", list(target))))
 		return FALSE
 
 	var/first_adjective = ""

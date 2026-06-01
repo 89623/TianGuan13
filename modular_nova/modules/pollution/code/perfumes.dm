@@ -45,7 +45,7 @@
 /obj/item/perfume/proc/toggle_cap(mob/user)
 	if(has_cap && user.can_perform_action(src, NEED_DEXTERITY))
 		cap = !cap
-		to_chat(user, span_notice("The cap on [src] is now [cap ? "on" : "off"]."))
+		to_chat(user, span_notice(LANG("obj.d9778473", list(src, cap ? "on" : "off"))))
 		update_appearance()
 
 /obj/item/perfume/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -54,10 +54,10 @@
 	if(!ismovable(interacting_with))
 		return
 	if(has_cap && cap)
-		to_chat(user, span_warning("Take the cap off first!"))
+		to_chat(user, span_warning(LANG("obj.71461396", null)))
 		return TRUE
 	if(uses_remaining <= 0)
-		to_chat(user, span_warning("\The [src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.9104a6b2", list(src))))
 		return TRUE
 	uses_remaining--
 	var/turf/my_turf = get_turf(user)

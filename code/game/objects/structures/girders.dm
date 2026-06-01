@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/girder
 	icon = 'icons/obj/smooth_structures/girder.dmi'
 	name = "girder"
@@ -92,7 +93,7 @@
 /obj/structure/girder/wrench_act(mob/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if (!can_displace)
-		balloon_alert(user, "no bolts!")
+		balloon_alert(user, LANG("obj.aa9ba64f", null))
 		return
 	switch (state)
 		if (GIRDER_NORMAL)
@@ -108,7 +109,7 @@
 	. = ITEM_INTERACT_BLOCKING
 	// Plasmacutters can always slice apart girders.
 	if (!can_weld_apart && !istype(tool, /obj/item/gun/energy/plasmacutter))
-		balloon_alert(user, "can't weld apart!")
+		balloon_alert(user, LANG("obj.c921c965", null))
 		return
 	if (try_construction_step(user, tool, 4 SECONDS, start_alert = "slicing apart..."))
 		deconstruct(disassembled = TRUE)
@@ -130,7 +131,7 @@
 	if (!isnull(req_state) && req_state != state)
 		return FALSE
 	if (req_floor && !isfloorturf(loc))
-		balloon_alert(user, "needs a floor!")
+		balloon_alert(user, LANG("obj.51b4e54f", null))
 		return FALSE
 	return TRUE
 

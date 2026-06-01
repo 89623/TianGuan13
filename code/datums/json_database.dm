@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Represents a json file being used as a database in the data/ folder.
 /// Changes made here will save back to the associated file, with recovery.
 /// Will defer writes until later if multiple happen in the same tick.
@@ -14,7 +15,7 @@
 
 /datum/json_database/New(filepath)
 	if (IsAdminAdvancedProcCall())
-		to_chat(usr, span_adminprefix("json_database creation, linking to [html_encode(filepath)], was blocked."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.ca75f1ae", list(html_encode(filepath)))), confidential = TRUE)
 		return
 
 	ASSERT(isnull(existing_json_database[filepath]), "[filepath] already has an associated json_database. You must expose it somehow and use that instead of making a new one.")

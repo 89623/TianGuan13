@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // A receptionist's bell
 
 /obj/structure/desk_bell
@@ -49,7 +50,7 @@
 	if(!COOLDOWN_FINISHED(src, ring_cooldown) && ring_cooldown_length)
 		return TRUE
 	if(!ring_bell(user))
-		to_chat(user, span_notice("[src] is silent. Some idiot broke it."))
+		to_chat(user, span_notice(LANG("obj.4553a83f", list(src))))
 	if(ring_cooldown_length)
 		COOLDOWN_START(src, ring_cooldown, ring_cooldown_length)
 	return TRUE
@@ -69,7 +70,7 @@
 // Fix the clapper
 /obj/structure/desk_bell/screwdriver_act(mob/living/user, obj/item/tool)
 	if(broken_ringer)
-		balloon_alert(user, "repairing...")
+		balloon_alert(user, LANG("obj.b52342a8", null))
 		tool.play_tool_sound(src)
 		if(tool.use_tool(src, user, 5 SECONDS))
 			balloon_alert_to_viewers("repaired")
@@ -82,10 +83,10 @@
 
 // Deconstruct
 /obj/structure/desk_bell/wrench_act_secondary(mob/living/user, obj/item/tool)
-	balloon_alert(user, "taking apart...")
+	balloon_alert(user, LANG("obj.f73dd9ac", null))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 5 SECONDS))
-		balloon_alert(user, "disassembled")
+		balloon_alert(user, LANG("obj.6da68488", null))
 		playsound(user, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 		if(!broken_ringer) // Drop 2 if it's not broken.
 			new/obj/item/stack/sheet/iron(drop_location())
@@ -98,9 +99,9 @@
 /obj/structure/desk_bell/proc/check_clapper(mob/living/user)
 	if(((times_rang >= 10000) || prob(times_rang/100)) && ring_cooldown_length)
 		if (user)
-			to_chat(user, span_notice("You hear [src]'s clapper fall off of its hinge. Nice job, you broke it."))
+			to_chat(user, span_notice(LANG("obj.0d3181f4", list(src))))
 		else
-			audible_message(span_notice("You hear [src]'s clapper fall off of its hinge. Nice job, you broke it."))
+			audible_message(span_notice(LANG("obj.0d3181f4", list(src))))
 		broken_ringer = TRUE
 
 /// Ring the bell

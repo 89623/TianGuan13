@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// how long it takes to infuse
 #define INFUSING_TIME 4 SECONDS
 /// we throw in a scream along the way.
@@ -63,13 +64,13 @@
 		toggle_open(user)
 		return
 	if(infusing)
-		balloon_alert(user, "not while it's on!")
+		balloon_alert(user, LANG("obj.90237552", null))
 		return
 	if(occupant && infusing_from)
 		if(!occupant.can_infuse(user))
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 35, vary = TRUE)
 			return
-		balloon_alert(user, "starting DNA infusion...")
+		balloon_alert(user, LANG("obj.3652f95f", null))
 		start_infuse()
 		return
 	toggle_open(user)
@@ -77,7 +78,7 @@
 /obj/machinery/dna_infuser/proc/start_infuse()
 	var/mob/living/carbon/human/human_occupant = occupant
 	infusing = TRUE
-	visible_message(span_notice("[src] hums to life, beginning the infusion process!"))
+	visible_message(span_notice(LANG("obj.f68ccdc8", list(src))))
 
 	infusing_into = infusing_from.get_infusion_entry()
 	var/fail_title = ""
@@ -90,7 +91,7 @@
 		fail_title = "Overcomplexity"
 		fail_explanation = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
 	playsound(src, 'sound/machines/blender.ogg', 50, vary = TRUE)
-	to_chat(human_occupant, span_danger("Little needles repeatedly prick you!"))
+	to_chat(human_occupant, span_danger(LANG("obj.a635165c", null)))
 	human_occupant.take_overall_damage(10)
 	human_occupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = human_occupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
 	Shake(duration = INFUSING_TIME)
@@ -102,14 +103,14 @@
 	var/mob/living/carbon/human/human_occupant = occupant
 	if(human_occupant.infuse_organ(infusing_into, infusing_from))
 		check_tier_progression(human_occupant)
-		to_chat(occupant, span_danger("You feel yourself becoming more... [infusing_into.infusion_desc]?"))
+		to_chat(occupant, span_danger(LANG("obj.e81fd20f", list(infusing_into.infusion_desc))))
 	infusing = FALSE
 	infusing_into = null
 	QDEL_NULL(infusing_from)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, vary = FALSE)
 	if(fail_explanation)
 		playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
-		visible_message(span_notice("[src] prints an error report."))
+		visible_message(span_notice(LANG("obj.0fbc5c29", list(src))))
 		var/obj/item/paper/printed_paper = new /obj/item/paper(loc)
 		printed_paper.name = "error report - '[fail_title]'"
 		printed_paper.add_raw_text(fail_explanation)
@@ -126,7 +127,7 @@
 	)
 		max_tier_allowed++
 		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
-		visible_message(span_notice("[src] dings as it records the results of the full infusion."))
+		visible_message(span_notice(LANG("obj.a88a9e24", list(src))))
 
 /obj/machinery/dna_infuser/update_icon_state()
 	//out of order
@@ -148,14 +149,14 @@
 /obj/machinery/dna_infuser/proc/toggle_open(mob/user)
 	if(panel_open)
 		if(user)
-			balloon_alert(user, "close panel first!")
+			balloon_alert(user, LANG("obj.5ddfc4f0", null))
 		return
 	if(state_open)
 		close_machine()
 		return
 	else if(infusing)
 		if(user)
-			balloon_alert(user, "not while it's on!")
+			balloon_alert(user, LANG("obj.90237552", null))
 		return
 	open_machine(drop = FALSE)
 	//we set drop to false to manually call it with an allowlist
@@ -174,7 +175,7 @@
 	if(!is_valid_infusion(tool, user))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
-		to_chat(user, span_warning("[tool] is stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.1dbf8014", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 	infusing_from = tool
 	return ITEM_INTERACT_SUCCESS
@@ -183,12 +184,12 @@
 	if(user.stat)
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, 4 SECONDS)
-			to_chat(user, span_warning("[src]'s door won't budge!"))
+			to_chat(user, span_warning(LANG("obj.c4e897cb", list(src))))
 		return
 	if(infusing)
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, 4 SECONDS)
-			to_chat(user, span_danger("[src]'s door won't budge while all the needles are infusing you!"))
+			to_chat(user, span_danger(LANG("obj.3ec20427", list(src))))
 		return
 	open_machine(drop = FALSE)
 	//we set drop to false to manually call it with an allowlist
@@ -205,26 +206,26 @@
 /// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
 	if(infusing_from)
-		balloon_alert(user, "empty the machine first!")
+		balloon_alert(user, LANG("obj.1484b00d", null))
 		return FALSE
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.stat != DEAD)
-			balloon_alert(user, "only dead creatures!")
+			balloon_alert(user, LANG("obj.eb55d522", null))
 			return FALSE
 	else if(!HAS_TRAIT(target, TRAIT_VALID_DNA_INFUSION))
-		balloon_alert(user, "only creatures!")
+		balloon_alert(user, LANG("obj.6c151f0e", null))
 		return FALSE
 	return TRUE
 
 /obj/machinery/dna_infuser/click_alt(mob/user)
 	if(infusing)
-		balloon_alert(user, "not while it's on!")
+		balloon_alert(user, LANG("obj.90237552", null))
 		return CLICK_ACTION_BLOCKING
 	if(!infusing_from)
-		balloon_alert(user, "no sample to eject!")
+		balloon_alert(user, LANG("obj.e48ae140", null))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "ejected sample")
+	balloon_alert(user, LANG("obj.42bdd311", null))
 	infusing_from.forceMove(get_turf(src))
 	infusing_from = null
 	return CLICK_ACTION_SUCCESS

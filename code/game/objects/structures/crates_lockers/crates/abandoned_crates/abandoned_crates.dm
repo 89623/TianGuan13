@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Originally coded by ISaidNo, later modified by Kelenius. Ported from Baystation12.
 
 /obj/structure/closet/crate/secure/loot
@@ -133,10 +134,10 @@
 		return
 
 	if(!validate_input(input))
-		to_chat(user, span_notice("You leave the crate alone."))
+		to_chat(user, span_notice(LANG("obj.3f95a505", null)))
 		return
 
-	to_chat(user, span_warning("A red light flashes."))
+	to_chat(user, span_warning(LANG("obj.503e48f9", null)))
 	previous_attempts += list(bulls_and_cows(input))
 	attempts--
 

@@ -31,8 +31,8 @@
 
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA))
 		visible_message(
-			span_info("[attacker] [is_kick ? "kicks" : "punches"] [src] right in the nuts... but they don't react at all! What the hell?"),
-			span_danger("You [is_kick ? "kick" : "punch"] [src] in the nuts with all your might... but your efforts are for naught as they remain impassive! Inhuman!")
+			span_info(LANG("mob.011ee54a", list(attacker, is_kick ? "kicks" : "punches", src))),
+			span_danger(LANG("mob.e19cacc6", list(is_kick ? "kick" : "punch", src)))
 			)
 		return FALSE
 
@@ -43,13 +43,9 @@
 		vomit(VOMIT_CATEGORY_DEFAULT)
 
 	visible_message(
-		span_danger("[attacker] [is_kick ? "kicks" : "punches"] [src] right in the nuts, causing them to \
-			[nauseating ? "throw up" : "double over"] in pain! \
-			[balls_of_steel ? "Who the fuck programmed them to do that?!" : "Fuck!"]"\
+		span_danger(LANG("mob.3cc98a81", list(attacker, is_kick ? "kicks" : "punches", src, nauseating ? "throw up" : "double over", balls_of_steel ? "Who the fuck programmed them to do that?!" : "Fuck!"))\
 			),
-		span_danger("You [is_kick ? "kick" : "punch"] [src] right in the nuts, causing them to \
-			[nauseating ? "throw up" : "double over"] in pain\
-			[balls_of_steel ? "... But holy shit it hurts your [is_kick ? "leg" : "hand"]" : "! Fuck"]!"\
+		span_danger(LANG("mob.c342d71c", list(is_kick ? "kick" : "punch", src, nauseating ? "throw up" : "double over", balls_of_steel ? "... But holy shit it hurts your [is_kick ? "leg" : "hand"]" : "! Fuck"))\
 			),
 		)
 

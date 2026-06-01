@@ -51,7 +51,7 @@
 	. = ..()
 	if(datum_flags & DF_ISPROCESSING)
 		log_game("[key_name(user)] is no longer hypnogoggled.")
-		to_chat(user, span_userdanger("You suddenly snap out of your hypnosis. The phrase '[codephrase]' no longer feels important to you."))
+		to_chat(user, span_userdanger(LANG("obj.5defe236", list(codephrase))))
 		STOP_PROCESSING(SSobj, src)
 
 

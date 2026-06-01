@@ -39,18 +39,18 @@
 		return ..()
 
 	if(!anchored)
-		balloon_alert(user, "not fastened!")
+		balloon_alert(user, LANG("obj.7c2f76c2", null))
 		return
 
 	if(!has_power_toggle)
 		return
 
 	if(!update_power() && !enabled)
-		balloon_alert(user, "not enough power!")
+		balloon_alert(user, LANG("obj.7005f2d2", null))
 		return
 
 	enabled = !enabled
-	balloon_alert(user, "turned [enabled ? "on" : "off"]")
+	balloon_alert(user, LANG("obj.8fcfde3c", list(enabled ? "on" : "off")))
 
 	if(enabled)
 		turn_on()
@@ -105,7 +105,7 @@
 	if(!anchored)
 		turn_off()
 		update_icon_state()
-		visible_message("[src] powers down as it becomes unanchored from the ground.")
+		visible_message(LANG("obj.4c7adb12", list(src)))
 		return FALSE
 
 	return TRUE

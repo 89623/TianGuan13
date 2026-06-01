@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// The number of influences spawned per heretic
 #define NUM_INFLUENCES_PER_HERETIC 5
@@ -108,7 +109,7 @@
 		return
 
 	if(IS_HERETIC(user))
-		to_chat(user, span_boldwarning("You know better than to tempt forces out of your control!"))
+		to_chat(user, span_boldwarning(LANG("obj.8639e33b", null)))
 		return TRUE
 
 	var/mob/living/carbon/human/human_user = user
@@ -117,11 +118,11 @@
 		return TRUE
 
 	if(prob(25))
-		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
+		to_chat(human_user, span_userdanger(LANG("obj.6b66c9b1", list(their_poor_arm.name))))
 		if (their_poor_arm.dismember())
 			their_poor_arm.forceMove(src) // stored for later fishage
 	else
-		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
+		to_chat(human_user,span_danger(LANG("obj.58c500ee", null)))
 	return TRUE
 
 /obj/effect/visible_heretic_influence/attack_tk(mob/user)
@@ -131,7 +132,7 @@
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(IS_HERETIC(user))
-		to_chat(user, span_boldwarning("You know better than to tempt forces out of your control!"))
+		to_chat(user, span_boldwarning(LANG("obj.8639e33b", null)))
 		return
 
 	var/mob/living/carbon/human/human_user = user
@@ -139,11 +140,11 @@
 	// You see, these tendrils are psychic. That's why you can't see them. Definitely not laziness. Just psychic. The character can feel but not see them.
 	// Because they're psychic. Yeah.
 	if(human_user.can_block_magic(MAGIC_RESISTANCE_MIND))
-		visible_message(span_danger("Psychic endrils lash out from [src], batting ineffectively at [user]'s head."))
+		visible_message(span_danger(LANG("obj.fad92a53", list(src, user))))
 		return
 
 	// A very elaborate way to suicide
-	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
+	visible_message(span_userdanger(LANG("obj.52a80229", list(src, user, user.p_their()))))
 	var/obj/item/bodypart/head/head = human_user.get_bodypart(BODY_ZONE_HEAD)
 	if(head?.dismember())
 		head.forceMove(src) // stored for later fishage
@@ -264,7 +265,7 @@
 /obj/effect/heretic_influence/proc/after_drain(mob/living/user)
 	if(user)
 		to_chat(user, span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message")))
-		to_chat(user, span_warning("[src] begins to fade into reality!"))
+		to_chat(user, span_warning(LANG("obj.ea0fca6a", list(src))))
 
 	var/obj/effect/visible_heretic_influence/illusion = new /obj/effect/visible_heretic_influence(drop_location())
 	illusion.name = "\improper" + pick_list(HERETIC_INFLUENCE_FILE, "drained") + " " + format_text(name)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///datum used by the Coupon Master PDA app to generate coupon items redeemed by a bank account.
 /datum/coupon_code
 	///The pack that'll receive the discount
@@ -81,13 +82,13 @@
 	if(!ismob(cursed))
 		return FALSE
 
-	to_chat(cursed, span_warning("The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?"))
+	to_chat(cursed, span_warning(LANG("obj.bc0d736d", null)))
 
 	if(!cursed.GetComponent(/datum/component/omen))
 		cursed.AddComponent(/datum/component/omen, src, 1)
 		return TRUE
 	if(HAS_TRAIT(cursed, TRAIT_CURSED))
-		to_chat(cursed, span_warning("What a horrible night... To have a curse!"))
+		to_chat(cursed, span_warning(LANG("obj.89afa55a", null)))
 	addtimer(CALLBACK(src, PROC_REF(curse_heart), cursed), 5 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /obj/item/coupon/update_name()
@@ -103,20 +104,20 @@
 
 	var/mob/living/carbon/player = cursed
 	INVOKE_ASYNC(player, TYPE_PROC_REF(/mob, emote), "scream")
-	to_chat(player, span_mind_control("What could that coupon mean?"))
-	to_chat(player, span_userdanger("...The suspense is killing you!"))
+	to_chat(player, span_mind_control(LANG("obj.025b90fa", null)))
+	to_chat(player, span_userdanger(LANG("obj.d1473e7f", null)))
 	player.set_heartattack(status = TRUE)
 	burn_evilly()
 
 /obj/item/coupon/proc/burn_evilly()
-	visible_message(span_warning("[src] burns up in a sinister flash, taking an evil energy with it..."))
+	visible_message(span_warning(LANG("obj.0b1457c3", list(src))))
 	burn()
 
 /obj/item/coupon/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacked_obj, /obj/machinery/computer/cargo))
 		return ..()
 	if(discount_pct_off == COUPON_OMEN)
-		to_chat(user, span_warning("\The [attacked_obj] validates the coupon as authentic, but refuses to accept it..."))
+		to_chat(user, span_warning(LANG("obj.8fe8cd2d", list(attacked_obj))))
 		attacked_obj.say("Coupon fulfillment already in progress...")
 		return
 

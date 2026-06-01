@@ -29,26 +29,26 @@
 
 /obj/item/permanent_portal_creator/attack_self(mob/user, modifiers)
 	if(!linked_anchor)
-		balloon_alert(user, "not linked!")
+		balloon_alert(user, LANG("obj.59204d3b", null))
 		return
 
 	if(!isweakref(linked_anchor))
-		balloon_alert(user, "invalid destination!")
+		balloon_alert(user, LANG("obj.68287953", null))
 		return
 
 	var/obj/item/permanent_portal_anchor/portal_anchor = linked_anchor.resolve()
 
 	if(!istype(portal_anchor) || !get_turf(portal_anchor))
-		balloon_alert(user, "invalid destination!")
+		balloon_alert(user, LANG("obj.68287953", null))
 		return
 
 	if(tgui_alert(user, "Are you sure that this is the place you want to have the portal located at? This action is permanent and cannot be undone.", "Are you sure?", list("Yes", "No")) != "Yes")
 		return
 
-	balloon_alert(user, "begining entanglement process...")
+	balloon_alert(user, LANG("obj.8b733ed3", null))
 
 	if(!do_after(user, 5 SECONDS))
-		balloon_alert(user, "entanglement cancelled!")
+		balloon_alert(user, LANG("obj.c7faa60a", null))
 		return
 
 	var/list/obj/effect/portal/created_portals = create_portal_pair(get_turf(src), get_turf(portal_anchor), _lifespan = NONE)
@@ -96,17 +96,17 @@
 	if(!ishuman(user))
 		return
 
-	balloon_alert(user, "deploying...")
+	balloon_alert(user, LANG("obj.617d0336", null))
 
 	if(!do_after(user, 5 SECONDS))
-		balloon_alert(user, "deployment failed!")
+		balloon_alert(user, LANG("obj.38267bbe", null))
 		return
 
 	deploy(user)
 
 	playsound(src, 'modular_nova/modules/aesthetics/airlock/sound/bolts_down.ogg', 50, FALSE)
 
-	balloon_alert(user, "deployment successful!")
+	balloon_alert(user, LANG("obj.867efa5c", null))
 
 
 /// Simple helper proc to deploy the anchor, with mob/user as an optional argument to make them drop it if they're holding it.
@@ -126,13 +126,13 @@
 		return ..()
 
 	if(!anchored)
-		balloon_alert(user, "needs to be deployed!")
+		balloon_alert(user, LANG("obj.84ecf325", null))
 		return
 
 	var/obj/item/permanent_portal_creator/portal_maker = attacking_item
 	portal_maker.linked_anchor = WEAKREF(src)
 
-	balloon_alert(user, "linking successful!")
+	balloon_alert(user, LANG("obj.0fdcdc61", null))
 
 
 /obj/item/permanent_portal_anchor/space_hotel

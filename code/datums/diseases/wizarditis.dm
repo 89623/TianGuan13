@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/wizarditis
 	name = "Wizarditis"
 	max_stages = 4
@@ -59,7 +60,7 @@
 	if(stage >= 3 && SPT_PROB(0.15 * stage, seconds_per_tick))
 		var/datum/action/cooldown/spell/picked = pick(random_spells)
 		if(!picked.try_invoke(affected_mob, feedback = FALSE))
-			to_chat(affected_mob, span_danger("You feel something building up inside... but the feeling passes."))
+			to_chat(affected_mob, span_danger(LANG("datum.c73f51f6", null)))
 			return
 
 		picked.spell_feedback(affected_mob)

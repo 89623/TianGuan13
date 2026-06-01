@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/choice_beacon
 	name = "choice beacon"
 	desc = "Hey, why are you viewing this?!! Please let CentCom know about this odd occurrence."
@@ -48,8 +49,7 @@
 
 /// Consumes a use of the beacon, sending the user a message and creating their item in the process
 /obj/item/choice_beacon/proc/consume_use(obj/choice_path, mob/living/user)
-	to_chat(user, span_hear("You hear something crackle from the beacon for a moment before a voice speaks. \
-		\"Please stand by for a message from [company_source]. Message as follows: [company_message] Message ends.\""))
+	to_chat(user, span_hear(LANG("obj.3e8dd1ea", list(company_source, company_message))))
 
 	spawn_option(choice_path, user)
 	uses--
@@ -58,7 +58,7 @@
 		qdel(src)
 		return
 
-	to_chat(user, span_notice("[uses] use[uses > 1 ? "s" : ""] remain[uses > 1 ? "" : "s"] on [src]."))
+	to_chat(user, span_notice(LANG("obj.4bbbaf9b", list(uses, uses > 1 ? "s" : "", uses > 1 ? "" : "s", src))))
 
 /// Actually spawns the item selected by the user
 /obj/item/choice_beacon/proc/spawn_option(obj/choice_path, mob/living/user)

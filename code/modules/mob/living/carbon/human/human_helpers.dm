@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /mob/living/carbon/human/canBeHandcuffed()
 	if(num_hands < 2)
@@ -125,10 +126,10 @@
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
 		if(check_chunky_fingers())
-			balloon_alert(src, "fingers are too big!")
+			balloon_alert(src, LANG("mob.97cabc49", null))
 			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
-		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
+		to_chat(src, span_warning(LANG("mob.8caaa8ce", null)))
 		return FALSE
 
 /mob/living/carbon/human/proc/check_chunky_fingers()
@@ -359,7 +360,7 @@
 /mob/living/carbon/human/proc/item_heal(mob/user, brute_heal, burn_heal, heal_message_brute, heal_message_burn, required_bodytype)
 	var/obj/item/bodypart/affecting = src.get_bodypart(check_zone(user.zone_selected))
 	if (!affecting || !(affecting.bodytype & required_bodytype))
-		to_chat(user, span_warning("[affecting] is already in good condition!"))
+		to_chat(user, span_warning(LANG("mob.7f6370b2", list(affecting))))
 		return FALSE
 
 	var/brute_damaged = affecting.brute_dam > 0
@@ -367,7 +368,7 @@
 
 	var/nothing_to_heal = ((brute_heal <= 0 || !brute_damaged) && (burn_heal <= 0 || !burn_damaged))
 	if (nothing_to_heal)
-		to_chat(user, span_notice("[affecting] is already in good condition!"))
+		to_chat(user, span_notice(LANG("mob.7f6370b2", list(affecting))))
 		return FALSE
 
 	src.update_damage_overlays()

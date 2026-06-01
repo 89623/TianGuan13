@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/reagent_containers/cup
 	name = "open container"
 	abstract_type = /obj/item/reagent_containers/cup
@@ -113,7 +114,7 @@
 			span_userdanger("[user] feeds you something from [src]."),
 		)
 		if(target_mob.is_blind())
-			to_chat(target_mob, span_notice("You feel someone feed you something."))
+			to_chat(target_mob, span_notice(LANG("obj.29599226", null)))
 		log_combat(user, target_mob, "fed", reagents.get_reagent_log_string())
 
 	else
@@ -124,7 +125,7 @@
 				span_notice("[user] attempts to drink from [src]."),
 				ignored_mobs = list(user),
 			)
-			to_chat(user, span_notice("You attempt to drink from [src]."))
+			to_chat(user, span_notice(LANG("obj.d3904c62", list(src))))
 			if(!do_after(user, 1.25 SECONDS, user))
 				return ITEM_INTERACT_BLOCKING
 			if(!reagents || !reagents.total_volume)
@@ -133,7 +134,7 @@
 				span_notice("[user] drinks from [src]."),
 				ignored_mobs = list(user),
 			)
-		to_chat(user, span_notice("You swallow a gulp of [src]."))
+		to_chat(user, span_notice(LANG("obj.d0158148", list(src))))
 
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
 	SEND_SIGNAL(target_mob, COMSIG_GLASS_DRANK, src, user) // NOVA EDIT ADDITION - Hemophages can't casually drink what's not going to regenerate their blood
@@ -188,7 +189,7 @@
 /obj/item/reagent_containers/cup/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(has_lid && istype(tool, /obj/item/assembly_holder))
 		if (lid_assembly)
-			to_chat(user, span_warning("[src]'s lid already has an assembly attached to it!"))
+			to_chat(user, span_warning(LANG("obj.b72494af", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if (attach_assembly(tool, user))
@@ -198,18 +199,18 @@
 
 	if (lid_assembly && istype(tool, /obj/item/stock_parts/power_store/cell))
 		if (attached_cell)
-			to_chat(user, span_warning("[src] already has \a [attached_cell] attached to it!"))
+			to_chat(user, span_warning(LANG("obj.9a686952", list(src, attached_cell))))
 			return ITEM_INTERACT_BLOCKING
 
 		if (isnull(locate(/obj/item/assembly/igniter) in lid_assembly))
-			to_chat(user, span_warning("[lid_assembly] doesn't have an igniter to connect [src] to!"))
+			to_chat(user, span_warning(LANG("obj.0d6efae8", list(lid_assembly, src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if (!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.1dbf8014", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You attach [tool] underneath [src]'s lid."))
+		to_chat(user, span_notice(LANG("obj.47073f56", list(tool, src))))
 		add_fingerprint(user)
 		log_bomber(user, "attached [tool.name] to", src)
 		attached_cell = tool
@@ -221,15 +222,15 @@
 
 	if (attached_cell && istype(tool, /obj/item/stack/cable_coil))
 		if (cell_wired)
-			to_chat(user, span_warning("[attached_cell] is already wired to [lid_assembly]!"))
+			to_chat(user, span_warning(LANG("obj.0d76cb80", list(attached_cell, lid_assembly))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/stack/cable_coil/cable = tool
 		if (!cable.use(5))
-			to_chat(user, span_warning("You need at least 5 cable pieces to wire [attached_cell]!"))
+			to_chat(user, span_warning(LANG("obj.9a34e0cc", list(attached_cell))))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You wire [attached_cell] to [lid_assembly]."))
+		to_chat(user, span_notice(LANG("obj.0dfac850", list(attached_cell, lid_assembly))))
 		add_fingerprint(user)
 		cell_wired = TRUE
 		update_appearance()
@@ -240,9 +241,9 @@
 
 	if(istype(tool, /obj/item/food/egg)) //breaking eggs
 		if(reagents.holder_full())
-			to_chat(user, span_notice("[src] is full."))
+			to_chat(user, span_notice(LANG("obj.8e2d390c", list(src))))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You break [tool] in [src]."))
+		to_chat(user, span_notice(LANG("obj.0980f1cd", list(tool, src))))
 		tool.reagents.trans_to(src, tool.reagents.total_volume, transferred_by = user)
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
@@ -299,7 +300,7 @@
 		return NONE
 
 	if (cell_wired)
-		balloon_alert(user, "cut the wiring first!")
+		balloon_alert(user, LANG("obj.867b8104", null))
 		return CLICK_ACTION_BLOCKING
 
 	if (attached_cell)
@@ -307,7 +308,7 @@
 		// Exited() automatically clears it
 		our_cell.forceMove(drop_location())
 		user.put_in_hands(our_cell)
-		balloon_alert(user, "cell detached")
+		balloon_alert(user, LANG("obj.ef781eae", null))
 		update_appearance()
 		return CLICK_ACTION_SUCCESS
 
@@ -315,13 +316,13 @@
 		var/obj/item/our_assembly = lid_assembly
 		our_assembly.forceMove(drop_location())
 		user.put_in_hands(our_assembly)
-		balloon_alert(user, "assembly detached")
+		balloon_alert(user, LANG("obj.fef65fff", null))
 		update_appearance()
 		return CLICK_ACTION_SUCCESS
 
 	has_lid = !has_lid
 	update_appearance()
-	balloon_alert(user, "lid [has_lid ? "sealed" : "unsealed"]")
+	balloon_alert(user, LANG("obj.9f36c533", list(has_lid ? "sealed" : "unsealed")))
 	if (has_lid)
 		add_container_flags(SEALED_CONTAINER)
 	else
@@ -335,16 +336,16 @@
 	new /obj/item/stack/cable_coil(drop_location(), 5)
 	cell_wired = FALSE
 	update_appearance()
-	balloon_alert(user, "wiring cut")
+	balloon_alert(user, LANG("obj.235c600d", null))
 	tool.play_tool_sound(src, 50)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/proc/attach_assembly(obj/item/assembly_holder/assembly, mob/living/user)
 	if (!user.transferItemToLoc(assembly, src))
-		to_chat(user, span_warning("[assembly] is stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.1dbf8014", list(assembly))))
 		return FALSE
 
-	to_chat(user, span_notice("You attach [assembly] to [src]'s lid."))
+	to_chat(user, span_notice(LANG("obj.59892fe6", list(assembly, src))))
 	add_fingerprint(user)
 	lid_assembly = assembly
 	lid_assembly.master = src
@@ -605,7 +606,7 @@
 		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
 		return ITEM_INTERACT_SUCCESS
 	if(isprox(tool)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
-		to_chat(user, span_notice("You add [tool] to [src]."))
+		to_chat(user, span_notice(LANG("obj.0c27fe26", list(tool, src))))
 		qdel(tool)
 		var/obj/item/bot_assembly/cleanbot/new_cleanbot_ass = new(null, src)
 		user.put_in_hands(new_cleanbot_ass)
@@ -617,7 +618,7 @@
 	. = ..()
 	if (slot & ITEM_SLOT_HEAD)
 		if(reagents.total_volume)
-			to_chat(user, span_userdanger("[src]'s contents spill all over you!"))
+			to_chat(user, span_userdanger(LANG("obj.e3839231", list(src))))
 			reagents.expose(user, TOUCH)
 			reagents.clear_reagents()
 		update_container_flags(NONE)
@@ -662,7 +663,7 @@
 		return CLICK_ACTION_BLOCKING
 	grinded.forceMove(drop_location())
 	grinded = null
-	balloon_alert(user, "ejected")
+	balloon_alert(user, LANG("obj.0ea67d8b", null))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/mortar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -671,10 +672,10 @@
 		return .
 	if(istype(tool, /obj/item/pestle))
 		if(!grinded)
-			to_chat(user, span_warning("There is nothing to grind!"))
+			to_chat(user, span_warning(LANG("obj.aa682157", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(user.get_stamina_loss() > 50)
-			to_chat(user, span_warning("You are too tired to work!"))
+			to_chat(user, span_warning(LANG("obj.d351611a", null)))
 			return ITEM_INTERACT_BLOCKING
 		var/list/choose_options = list(
 			"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
@@ -683,7 +684,7 @@
 		var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
 		if(!grinded || !in_range(src, user) || !user.is_holding(tool) || !picked_option)
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You start grinding..."))
+		to_chat(user, span_notice(LANG("obj.cd5418c3", null)))
 		if(!do_after(user, 2.5 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
 		user.adjust_stamina_loss(40)
@@ -692,10 +693,10 @@
 				return juice_item(grinded, user) ? ITEM_INTERACT_BLOCKING : ITEM_INTERACT_SUCCESS
 			if("Grind")
 				return grind_item(grinded, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
+		to_chat(user, span_notice(LANG("obj.d845b15c", list(grinded))))
 		return ITEM_INTERACT_BLOCKING
 	if(grinded)
-		to_chat(user, span_warning("There is something inside already!"))
+		to_chat(user, span_warning(LANG("obj.d12fa4f8", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.blend_requirements(src, user))
 		return ITEM_INTERACT_BLOCKING
@@ -711,30 +712,30 @@
 
 /obj/item/reagent_containers/cup/mortar/proc/grind_item(obj/item/item, mob/living/carbon/human/user)
 	if(item.flags_1 & HOLOGRAM_1)
-		to_chat(user, span_notice("You try to grind [item], but it fades away!"))
+		to_chat(user, span_notice(LANG("obj.2708cfa5", list(item))))
 		qdel(item)
 		return
 
 	if(!item.grind(reagents, user))
 		if(isstack(item))
-			to_chat(user, span_notice("[src] attempts to grind as many pieces of [item] as possible."))
+			to_chat(user, span_notice(LANG("obj.10d463a7", list(src, item))))
 		else
-			to_chat(user, span_danger("You fail to grind [item]."))
+			to_chat(user, span_danger(LANG("obj.b0102c67", list(item))))
 		return
 
-	to_chat(user, span_notice("You grind [item] into a nice powder."))
+	to_chat(user, span_notice(LANG("obj.f1f901f2", list(item))))
 
 /obj/item/reagent_containers/cup/mortar/proc/juice_item(obj/item/item, mob/living/carbon/human/user)
 	if(item.flags_1 & HOLOGRAM_1)
-		to_chat(user, span_notice("You try to juice [item], but it fades away!"))
+		to_chat(user, span_notice(LANG("obj.89badf16", list(item))))
 		qdel(item)
 		return
 
 	if(!item.juice(reagents, user))
-		to_chat(user, span_notice("You fail to juice [item]."))
+		to_chat(user, span_notice(LANG("obj.9d6b7d5a", list(item))))
 		return
 
-	to_chat(user, span_notice("You juice [item] into a fine liquid."))
+	to_chat(user, span_notice(LANG("obj.2e31c9bc", list(item))))
 
 //Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer
 /obj/item/reagent_containers/cup/coffeepot
@@ -766,5 +767,5 @@
 	can_lid = TRUE
 
 /obj/item/reagent_containers/cup/tube/attach_assembly(obj/item/assembly_holder/assembly, mob/living/user)
-	to_chat(user, span_warning("[src]'s lid is too small to fit [assembly]!"))
+	to_chat(user, span_warning(LANG("obj.a60c7979", list(src, assembly))))
 	return FALSE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/revelation
 	filename = "revelation"
 	filedesc = "Revelation"
@@ -19,7 +20,7 @@
 	if(computer)
 		if(istype(computer, /obj/item/modular_computer/pda/silicon)) //If this is a borg's integrated tablet
 			var/obj/item/modular_computer/pda/silicon/modularInterface = computer
-			to_chat(modularInterface.silicon_owner,span_userdanger("SYSTEM PURGE DETECTED/"))
+			to_chat(modularInterface.silicon_owner,span_userdanger(LANG("datum.446e5d45", null)))
 			addtimer(CALLBACK(modularInterface.silicon_owner, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
 			return
 

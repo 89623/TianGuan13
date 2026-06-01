@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/food/sandwich
 	name = "sandwich"
 	desc = "A grand creation of meat, cheese, bread, and several leaves of lettuce! Arthur Dent would be proud."
@@ -285,7 +286,7 @@
 		return
 	if(check_liked(user) == FOOD_LIKED)
 		return
-	to_chat(user, span_warning("You imagine yourself eating [src]. You feel a sudden sour taste in your mouth, and a horrible feeling that you've done something wrong."))
+	to_chat(user, span_warning(LANG("obj.48eed786", list(src))))
 	user.adjust_disgust(33)
 
 // Override for after_eat and check_liked callbacks.
@@ -314,7 +315,7 @@
 	if(check_liked(consumer) == FOOD_LIKED)
 		return
 	// I thought it didn't make sense for it to instantly kill you, so instead enjoy shitloads of toxin damage per bite.
-	balloon_alert(consumer, "ate it wrong!")
+	balloon_alert(consumer, LANG("obj.3c38f370", null))
 	consumer.ForceContractDisease(new /datum/disease/death_sandwich_poisoning())
 
 /obj/item/food/sandwich/death/suicide_act(mob/living/user)

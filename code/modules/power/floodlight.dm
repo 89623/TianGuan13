@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 #define FLOODLIGHT_OFF 1
 #define FLOODLIGHT_LOW 2
@@ -80,7 +81,7 @@
 	if(state != FLOODLIGHT_NEEDS_WIRES)
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "deconstructing...")
+	balloon_alert(user, LANG("obj.44f0e678", null))
 	if(!tool.use_tool(src, user, 30, volume=50))
 		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/iron(loc, 5)
@@ -106,12 +107,12 @@
 			state = FLOODLIGHT_NEEDS_SECURING
 			return
 		else
-			balloon_alert(user, "need 5 cable pieces!")
+			balloon_alert(user, LANG("obj.f3b6711a", null))
 			return
 
 	if(istype(O, /obj/item/light/tube))
 		if(state != FLOODLIGHT_NEEDS_LIGHTS)
-			balloon_alert(user, "construction not completed!")
+			balloon_alert(user, LANG("obj.1cfa8d9a", null))
 			return
 		var/obj/item/light/tube/L = O
 		if(L.status != LIGHT_BROKEN) // light tube not broken.
@@ -120,7 +121,7 @@
 			qdel(O)
 			return
 		else //A minute of silence for all the accidentally broken light tubes.
-			balloon_alert(user, "light tube is broken!")
+			balloon_alert(user, LANG("obj.4f7f78d9", null))
 			return
 	..()
 
@@ -253,11 +254,11 @@
 		if(FLOODLIGHT_HIGH)
 			setting_text = "high power"
 	if(user)
-		to_chat(user, span_notice("You set [src] to [setting_text]."))
+		to_chat(user, span_notice(LANG("obj.97730fcf", list(src, setting_text))))
 
 /obj/machinery/power/floodlight/cable_layer_act(mob/living/user, obj/item/tool)
 	if(anchored)
-		balloon_alert(user, "unanchor first!")
+		balloon_alert(user, LANG("obj.3e939160", null))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
@@ -275,7 +276,7 @@
 	. = ..()
 	change_setting(FLOODLIGHT_OFF)
 	panel_open = TRUE
-	balloon_alert(user, "opened panel")
+	balloon_alert(user, LANG("obj.a5d09eaa", null))
 	return TRUE
 
 /obj/machinery/power/floodlight/attack_hand(mob/user, list/modifiers)

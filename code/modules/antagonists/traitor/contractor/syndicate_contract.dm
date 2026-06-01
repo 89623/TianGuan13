@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // NOVA EDIT ADDITION START
 #define RANSOM_LOWER 75 // TG: 18
 #define RANSOM_UPPER 150 // TG: 45
@@ -145,7 +146,7 @@
 		return
 	var/obj/item/card/id/contractor_id = contract.owner.current?.get_idcard(TRUE)
 	if(!contractor_id?.registered_account.account_id) // NOVA EDIT CHANGE - ORIGINAL: if(!contractor_id || !contractor_id.registered_account)
-		to_chat(contract.owner.current, span_notice("A briefcase appears at your feet!")) // NOVA EDIT ADDITION
+		to_chat(contract.owner.current, span_notice(LANG("datum.61f3df39", null))) // NOVA EDIT ADDITION
 		var/obj/item/storage/briefcase/secure/case = new(get_turf(contract.owner.current)) // NOVA EDIT ADDITION
 		for(var/i in 1 to (round((ransom * CONTRACTOR_RANSOM_CUT) / 1000))) // NOVA EDIT ADDITION - Gets slightly less/more but whatever
 			new /obj/item/stack/spacecash/c1000(case) // NOVA EDIT ADDITION

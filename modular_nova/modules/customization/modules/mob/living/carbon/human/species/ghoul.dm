@@ -136,12 +136,12 @@
 		if ((target_zone in allowedList) && affecting)
 
 			if (user.handcuffed)
-				to_chat(user, span_alert("You can't get a good enough grip with your hands bound."))
+				to_chat(user, span_alert(LANG("datum.ac619cad", null)))
 				return FALSE
 
 			// Robot Arms Fail
 			if (!IS_ORGANIC_LIMB(affecting))
-				to_chat(user, "That thing is on there good. It's not coming off with a gentle tug.")
+				to_chat(user, LANG("datum.f64eacb9", null))
 				return FALSE
 
 			// Pry it off...

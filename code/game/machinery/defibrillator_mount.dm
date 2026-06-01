@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Holds defibs does NOT recharge them
 //You can activate the mount with an empty hand to grab the paddles
 //Not being adjacent will cause the paddles to snap back
@@ -75,27 +76,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 /obj/machinery/defibrillator_mount/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!defib)
-		to_chat(user, span_warning("There's no defibrillator unit loaded!"))
+		to_chat(user, span_warning(LANG("obj.df6749e8", null)))
 		return
 	if(defib.paddles.loc != defib)
-		to_chat(user, span_warning("[defib.paddles.loc == user ? "You are already" : "Someone else is"] holding [defib]'s paddles!"))
+		to_chat(user, span_warning(LANG("obj.1ca97c26", list(defib.paddles.loc == user ? "You are already" : "Someone else is", defib))))
 		return
 	if(!in_range(src, user))
-		to_chat(user, span_warning("[defib]'s paddles overextend and come out of your hands!"))
+		to_chat(user, span_warning(LANG("obj.602c75ee", list(defib))))
 		return
 	user.put_in_hands(defib.paddles)
 
 /obj/machinery/defibrillator_mount/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/defibrillator))
 		if(defib)
-			to_chat(user, span_warning("There's already a defibrillator in [src]!"))
+			to_chat(user, span_warning(LANG("obj.f3f623c6", list(src))))
 			return
 		var/obj/item/defibrillator/new_defib = item
 		if(!new_defib.get_cell())
-			to_chat(user, span_warning("Only defibrilators containing a cell can be hooked up to [src]!"))
+			to_chat(user, span_warning(LANG("obj.829a8eb0", list(src))))
 			return
 		if(HAS_TRAIT(new_defib, TRAIT_NODROP) || !user.transferItemToLoc(new_defib, src))
-			to_chat(user, span_warning("[new_defib] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.1dbf8014", list(new_defib))))
 			return
 		user.visible_message(span_notice("[user] hooks up [new_defib] to [src]!"), \
 		span_notice("You press [new_defib] into the mount, and it clicks into place."))
@@ -110,22 +111,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		return
 
 	if(!item.GetID() || (!allowed(user) && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)) //anyone can toggle the clamps in red alert!
-		to_chat(user, span_warning("Insufficient access."))
+		to_chat(user, span_warning(LANG("obj.21748dc0", null)))
 		return
 	if(!defib)
-		to_chat(user, span_warning("You can't engage the clamps on a defibrillator that isn't there."))
+		to_chat(user, span_warning(LANG("obj.e5a512fe", null)))
 		return
 	clamps_locked = !clamps_locked
-	to_chat(user, span_notice("Clamps [clamps_locked ? "" : "dis"]engaged."))
+	to_chat(user, span_notice(LANG("obj.775e623f", list(clamps_locked ? "" : "dis"))))
 	update_appearance()
 
 /obj/machinery/defibrillator_mount/multitool_act(mob/living/user, obj/item/multitool)
 	..()
 	if(!defib)
-		to_chat(user, span_warning("There isn't any defibrillator to clamp in!"))
+		to_chat(user, span_warning(LANG("obj.6ca3beee", null)))
 		return TRUE
 	if(!clamps_locked)
-		to_chat(user, span_warning("[src]'s clamps are disengaged!"))
+		to_chat(user, span_warning(LANG("obj.6b897277", list(src))))
 		return TRUE
 	user.visible_message(span_notice("[user] presses [multitool] into [src]'s ID slot..."), \
 	span_notice("You begin overriding the clamps on [src]..."))
@@ -145,24 +146,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	if(user.combat_mode)
 		return ..()
 	if(defib)
-		to_chat(user, span_warning("The mount can't be deconstructed while a defibrillator unit is loaded!"))
+		to_chat(user, span_warning(LANG("obj.42450a4a", null)))
 		..()
 		return TRUE
 	new wallframe_type(get_turf(src))
 	qdel(src)
 	tool.play_tool_sound(user)
-	to_chat(user, span_notice("You remove [src] from the wall."))
+	to_chat(user, span_notice(LANG("obj.33a499d5", list(src))))
 	return TRUE
 
 /obj/machinery/defibrillator_mount/click_alt(mob/living/carbon/user)
 	if(!defib)
-		to_chat(user, span_warning("It'd be hard to remove a defib unit from a mount that has none."))
+		to_chat(user, span_warning(LANG("obj.1039c3da", null)))
 		return CLICK_ACTION_BLOCKING
 	if(clamps_locked)
-		to_chat(user, span_warning("You try to tug out [defib], but the mount's clamps are locked tight!"))
+		to_chat(user, span_warning(LANG("obj.1457a0e4", list(defib))))
 		return CLICK_ACTION_BLOCKING
 	if(!user.put_in_hands(defib))
-		to_chat(user, span_warning("You need a free hand!"))
+		to_chat(user, span_warning(LANG("obj.1dde8a16", null)))
 		user.visible_message(span_notice("[user] unhooks [defib] from [src], dropping it on the floor."), \
 		span_notice("You slide out [defib] from [src] and unhook the charging cables, dropping it on the floor."))
 	else
@@ -241,10 +242,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	if(user.combat_mode)
 		return ..()
 	if(defib)
-		to_chat(user, span_warning("The mount can't be deconstructed while a defibrillator unit is loaded!"))
+		to_chat(user, span_warning(LANG("obj.42450a4a", null)))
 		..()
 		return TRUE
-	balloon_alert(user, "deconstructing...")
+	balloon_alert(user, LANG("obj.44f0e678", null))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 5 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)

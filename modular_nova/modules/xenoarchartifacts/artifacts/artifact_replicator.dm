@@ -91,7 +91,7 @@
 		spawn_progress_time += world.time - last_process_time
 		if(spawn_progress_time > max_spawn_time)
 			visible_message(
-				span_warning("[src] pings!"),
+				span_warning(LANG("obj.8978c8c2", list(src))),
 				blind_message = span_hear("You hear a ping!"),
 			)
 
@@ -142,12 +142,12 @@
 		)
 		return
 	if(!user.transferItemToLoc(attacking_item, src))
-		to_chat(user, span_warning("\The [attacking_item] is stuck to your hand, you cannot put it in the machine!"))
+		to_chat(user, span_warning(LANG("obj.0d10df9a", list(attacking_item))))
 		return TRUE
 	stored_materials.Add(attacking_item)
 	visible_message(
-		span_notice("[user] inserts [attacking_item] into [src]."),
-		span_notice("You insert [attacking_item] into [src]."),
+		span_notice(LANG("obj.05c6f8ca", list(user, attacking_item, src))),
+		span_notice(LANG("obj.8ce99939", list(attacking_item, src))),
 	)
 
 /obj/machinery/replicator/Topic(href, href_list)
@@ -169,11 +169,11 @@
 				// Feedback messaging
 				if(LAZYLEN(spawning_types))
 					visible_message(
-						span_notice("A [pick("light", "dial", "display", "meter", "pad")] on [src]'s front [pick("blinks", "flashes")] [pick("red", "yellow", "blue", "orange", "purple", "green", "white")].")
+						span_notice(LANG("obj.a3c6148f", list(pick("light", "dial", "display", "meter", "pad"), src, pick("blinks", "flashes"), pick("red", "yellow", "blue", "orange", "purple", "green", "white"))))
 					)
 				else
 					visible_message(
-						span_notice("[src]'s front compartment slides shut."),
+						span_notice(LANG("obj.c5677de7", list(src))),
 						blind_message = span_hear("You hear metal shuffling."),
 					)
 

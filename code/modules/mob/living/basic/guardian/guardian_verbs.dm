@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Pop out into the realm of the living.
 /mob/living/basic/guardian/proc/manifest(forced)
 	if (is_deployed() || isnull(summoner) || isnull(summoner.loc) || istype(summoner.loc, /obj/effect) || (!COOLDOWN_FINISHED(src, manifest_cooldown) && !forced) || locked)
@@ -31,16 +32,16 @@
 
 /// Swap to a different mode... if we have one
 /mob/living/basic/guardian/proc/toggle_modes()
-	to_chat(src, span_bolddanger("You don't have another mode!"))
+	to_chat(src, span_bolddanger(LANG("mob.20622adb", null)))
 
 
 /// Turn an internal light on or off.
 /mob/living/basic/guardian/proc/toggle_light()
 	if (!light_on)
-		to_chat(src, span_notice("You activate your light."))
+		to_chat(src, span_notice(LANG("mob.672ec556", null)))
 		set_light_on(TRUE)
 	else
-		to_chat(src, span_notice("You deactivate your light."))
+		to_chat(src, span_notice(LANG("mob.d4f6241c", null)))
 		set_light_on(FALSE)
 
 /// Speak with our boss at a distance
@@ -149,26 +150,24 @@
 			guardians -= resetting_guardian //clear out guardians that are already reset
 
 	if (!length(guardians))
-		to_chat(owner, span_holoparasite("You cannot reset [length(guardians) > 1 ? "any of your guardians":"your guardian"] yet."))
+		to_chat(owner, span_holoparasite(LANG("datum.1e8ad16c", list(length(guardians) > 1 ? "any of your guardians":"your guardian"))))
 		StartCooldown()
 		return FALSE
 
 	var/mob/living/basic/guardian/chosen_guardian = tgui_input_list(owner, "Pick the guardian you wish to reset", "Guardian Reset", sort_names(guardians))
 	if (isnull(chosen_guardian))
-		to_chat(owner, span_holoparasite("You decide not to reset [length(guardians) > 1 ? "any of your guardians":"your guardian"]."))
+		to_chat(owner, span_holoparasite(LANG("datum.22bcccb9", list(length(guardians) > 1 ? "any of your guardians":"your guardian"))))
 		StartCooldown()
 		return FALSE
 
-	to_chat(owner, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font>'s personality..."))
+	to_chat(owner, span_holoparasite(LANG("datum.19408c74", list(chosen_guardian.guardian_colour, span_bold(chosen_guardian.real_name)))))
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(chosen_guardian.theme.name)]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, alert_pic = chosen_guardian, jump_target = owner, role_name_text = chosen_guardian.theme.name, amount_to_pick = 1)
 	if(isnull(chosen_one))
-		to_chat(owner, span_holoparasite("Your attempt to reset the personality of \
-			<font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font> appears to have failed... \
-			Looks like you're stuck with it for now."))
+		to_chat(owner, span_holoparasite(LANG("datum.c88d7465", list(chosen_guardian.guardian_colour, span_bold(chosen_guardian.real_name)))))
 		StartCooldown()
 		return FALSE
-	to_chat(chosen_guardian, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
-	to_chat(owner, span_boldholoparasite("The personality of <font color=\"[chosen_guardian.guardian_colour]\">[chosen_guardian.theme.name]</font> has been successfully reset."))
+	to_chat(chosen_guardian, span_holoparasite(LANG("datum.9c7dc15f", null)))
+	to_chat(owner, span_boldholoparasite(LANG("datum.bd94c2c4", list(chosen_guardian.guardian_colour, chosen_guardian.theme.name))))
 	message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
 	chosen_guardian.ghostize(FALSE)
 	chosen_guardian.PossessByPlayer(chosen_one.key)

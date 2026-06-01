@@ -182,7 +182,7 @@
 	if(.)
 		return
 	if(!Adjacent(user))
-		to_chat(user, span_warning("You can't reach [src] from here!"))
+		to_chat(user, span_warning(LANG("obj.67a04864", list(src))))
 		return TRUE
 	if(iscarbon(user))
 		var/mob/living/carbon/human_to_test = user
@@ -193,7 +193,7 @@
 			try_toggle_effects(TRIGGER_TOUCH)
 	else
 		try_toggle_effects(TRIGGER_TOUCH)
-	to_chat(user, span_bold("You touch [src]."))
+	to_chat(user, span_bold(LANG("obj.97eda384", list(src))))
 
 	if(first_effect.release_method == ARTIFACT_EFFECT_TOUCH)
 		first_effect.do_effect_touch(user)
@@ -288,7 +288,7 @@
 		if(secondary_effect && secondary_effect.release_method == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated && prob(50))
 			secondary_effect.do_effect_touch(what_bumped)
 		if(ismob(what_bumped))
-			to_chat(what_bumped, span_bold("You accidentally touch [src]."))
+			to_chat(what_bumped, span_bold(LANG("obj.cb8926a3", list(src))))
 
 /**
  * Checks if container has reagent, which is in volatile_reagents global list
@@ -342,6 +342,6 @@
 		blind_message = span_hear("You hear some kind of machine silently winding up."),
 	)
 	if(!do_after(user, scanner.scanning_speed * 5, target = src))
-		to_chat(user, span_warning("You interrupt your scanning."))
+		to_chat(user, span_warning(LANG("obj.611dd1f5", null)))
 		return
-	to_chat(user, span_notice("[src] is too big to scan with [scanner]. Use static artifact analyzer."))
+	to_chat(user, span_notice(LANG("obj.faf7b6ec", list(src, scanner))))

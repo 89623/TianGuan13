@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Slimecrossing Items
 	General items added by the slimecrossing system.
@@ -48,11 +49,11 @@ Slimecrossing Items
 /obj/item/camera/rewind/on_flash(atom/target, mob/user)
 	. = ..()
 	if(user == target)
-		to_chat(user, span_notice("You take a selfie!"))
+		to_chat(user, span_notice(LANG("obj.afae693b", null)))
 	else
-		to_chat(user, span_notice("You take a photo with [target]!"))
-		to_chat(target, span_notice("[user] takes a photo with you!"))
-	to_chat(target, span_boldnotice("You'll remember this moment forever!"))
+		to_chat(user, span_notice(LANG("obj.dffc9f6f", list(target))))
+		to_chat(target, span_notice(LANG("obj.c02e391b", list(user))))
+	to_chat(target, span_boldnotice(LANG("obj.be4b557f", null)))
 
 	target.AddComponent(/datum/component/dejavu, 2)
 
@@ -90,9 +91,9 @@ Slimecrossing Items
 
 /obj/item/barriercube/attack_self(mob/user)
 	if(locate(/obj/structure/barricade/slime) in get_turf(loc))
-		to_chat(user, span_warning("You can't fit more than one barrier in the same space!"))
+		to_chat(user, span_warning(LANG("obj.67ffba57", null)))
 		return
-	to_chat(user, span_notice("You squeeze [src]."))
+	to_chat(user, span_notice(LANG("obj.c6edd408", list(src))))
 	var/obj/B = new /obj/structure/barricade/slime(get_turf(loc))
 	B.visible_message(span_warning("[src] suddenly grows into a large, gelatinous barrier!"))
 	qdel(src)
@@ -166,36 +167,36 @@ Slimecrossing Items
 
 /obj/item/capturedevice/attack(mob/living/pokemon, mob/user)
 	if(length(contents))
-		to_chat(user, span_warning("The device already has something inside."))
+		to_chat(user, span_warning(LANG("obj.13d7cfe6", null)))
 		return
 	if(!isanimal_or_basicmob(pokemon))
-		to_chat(user, span_warning("The capture device only works on simple creatures."))
+		to_chat(user, span_warning(LANG("obj.b6eb583c", null)))
 		return
 	if(pokemon.mind)
-		to_chat(user, span_notice("You offer the device to [pokemon]."))
+		to_chat(user, span_notice(LANG("obj.2a23d692", list(pokemon))))
 		if(tgui_alert(pokemon, "Would you like to enter [user]'s capture device?", "Gold Capture Device", list("Yes", "No")) == "Yes")
 			if(user.can_perform_action(src) && user.can_perform_action(pokemon))
-				to_chat(user, span_notice("You store [pokemon] in the capture device."))
-				to_chat(pokemon, span_notice("The world warps around you, and you're suddenly in an endless void, with a window to the outside floating in front of you."))
+				to_chat(user, span_notice(LANG("obj.e1789f82", list(pokemon))))
+				to_chat(pokemon, span_notice(LANG("obj.ebbaa692", null)))
 				store(pokemon, user)
 			else
-				to_chat(user, span_warning("You were too far away from [pokemon]."))
-				to_chat(pokemon, span_warning("You were too far away from [user]."))
+				to_chat(user, span_warning(LANG("obj.d57ab25d", list(pokemon))))
+				to_chat(pokemon, span_warning(LANG("obj.d57ab25d", list(user))))
 		else
-			to_chat(user, span_warning("[pokemon] refused to enter the device."))
+			to_chat(user, span_warning(LANG("obj.7cb5edae", list(pokemon))))
 			return
 	else if(!pokemon.has_faction(FACTION_NEUTRAL))
-		to_chat(user, span_warning("This creature is too aggressive to capture."))
+		to_chat(user, span_warning(LANG("obj.e34d6a42", null)))
 		return
-	to_chat(user, span_notice("You store [pokemon] in the capture device."))
+	to_chat(user, span_notice(LANG("obj.e1789f82", list(pokemon))))
 	store(pokemon)
 
 /obj/item/capturedevice/attack_self(mob/user)
 	if(contents.len)
-		to_chat(user, span_notice("You open the capture device!"))
+		to_chat(user, span_notice(LANG("obj.a7eb70b0", null)))
 		release()
 	else
-		to_chat(user, span_warning("The device is empty..."))
+		to_chat(user, span_warning(LANG("obj.adbd88b7", null)))
 
 /obj/item/capturedevice/proc/store(mob/living/pokemon)
 	pokemon.forceMove(src)

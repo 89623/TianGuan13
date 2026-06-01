@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/tuberculosis
 	form = "Fungus"
 	name = "Fungal Tuberculosis"
@@ -22,7 +23,7 @@
 
 	if(SPT_PROB(stage * 2, seconds_per_tick))
 		affected_mob.emote("cough")
-		to_chat(affected_mob, span_danger("Your chest hurts."))
+		to_chat(affected_mob, span_danger(LANG("datum.500c1472", null)))
 
 	switch(stage)
 		if(2)

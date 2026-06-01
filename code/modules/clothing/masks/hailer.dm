@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 // **** Security gas mask ****
 
@@ -111,16 +112,16 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(aggressiveness == AGGR_BROKEN)
-		to_chat(user, span_danger("You adjust the restrictor but nothing happens, probably because it's broken."))
+		to_chat(user, span_danger(LANG("obj.56e8aa61", null)))
 		return
 	var/position = aggressiveness == AGGR_GOOD_COP ? "middle" : aggressiveness == AGGR_BAD_COP ? "last" : "first"
-	to_chat(user, span_notice("You set the restrictor to the [position] position."))
+	to_chat(user, span_notice(LANG("obj.6cdfbb32", list(position))))
 	aggressiveness = aggressiveness % 3 + 1 // loop AGGR_GOOD_COP -> AGGR_SHIT_COP
 
 /obj/item/clothing/mask/gas/sechailer/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(aggressiveness != AGGR_BROKEN)
-		to_chat(user, span_danger("You broke the restrictor!"))
+		to_chat(user, span_danger(LANG("obj.ad9e5983", null)))
 		aggressiveness = AGGR_BROKEN
 		return
 
@@ -130,7 +131,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(safety)
 		safety = FALSE
-		balloon_alert(user, "vocal circuit fried")
+		balloon_alert(user, LANG("obj.17ec6d67", null))
 		return TRUE
 	return FALSE
 
@@ -140,7 +141,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(!isliving(usr) || !can_use(usr) || !COOLDOWN_FINISHED(src, hailer_cooldown))
 		return
 	if(broken_hailer)
-		to_chat(usr, span_warning("\The [src]'s hailing system is broken."))
+		to_chat(usr, span_warning(LANG("obj.83677c1f", list(src))))
 		return
 
 	// handle recent uses for overuse

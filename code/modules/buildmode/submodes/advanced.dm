@@ -1,15 +1,11 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/advanced
 	key = "advanced"
 	var/atom/objholder = null
 
 /datum/buildmode_mode/advanced/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Set object type")] -> Right Mouse Button on buildmode button\n\
-		[span_bold("Copy object type")] -> Left Mouse Button + Alt on turf/obj\n\
-		[span_bold("Place objects")] -> Left Mouse Button on turf/obj\n\
-		[span_bold("Delete objects")] -> Right Mouse Button\n\
-		\n\
-		Use the button in the upper left corner to change the direction of built objects."))
+		LANG("datum.8e765a3f", list(span_bold("Set object type"), span_bold("Copy object type"), span_bold("Place objects"), span_bold("Delete objects")))))
 	)
 
 /datum/buildmode_mode/advanced/change_settings(client/c)
@@ -35,10 +31,10 @@
 	if(left_click && alt_click)
 		if (istype(object, /turf) || isobj(object) || istype(object, /mob))
 			objholder = object.type
-			to_chat(c, span_notice("[initial(object.name)] ([object.type]) selected."))
+			to_chat(c, span_notice(LANG("datum.c79babd9", list(initial(object.name), object.type))))
 			BM.preview_selected_item(objholder)
 		else
-			to_chat(c, span_notice("[initial(object.name)] is not a turf, object, or mob! Please select again."))
+			to_chat(c, span_notice(LANG("datum.74987fdf", list(initial(object.name)))))
 	else if(left_click)
 		if(ispath(objholder,/turf))
 			var/turf/T = get_turf(object)
@@ -54,7 +50,7 @@
 			A.setDir(BM.build_dir)
 			log_admin("Build Mode: [key_name(c)] modified [A]'s [COORD(A)] dir to [BM.build_dir]")
 		else
-			to_chat(c, span_warning("Select object type first."))
+			to_chat(c, span_warning(LANG("datum.9779f12d", null)))
 	else if(right_click)
 		if(isobj(object))
 			log_admin("Build Mode: [key_name(c)] deleted [object] at [AREACOORD(object)]")

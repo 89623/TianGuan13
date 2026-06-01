@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/antagonist/survivalist
 	name = "\improper Survivalist"
 	show_in_antagpanel = FALSE
@@ -40,7 +41,7 @@
 
 /datum/antagonist/survivalist/magic/greet()
 	. = ..()
-	to_chat(owner, span_notice("As a wonderful magician, you should remember that spellbooks don't mean anything if they are used up."))
+	to_chat(owner, span_notice(LANG("datum.535b15ca", null)))
 
 /datum/antagonist/survivalist/magic/forge_objectives()
 	var/datum/objective/steal_n_of_type/summon_magic/magic = new
@@ -71,12 +72,7 @@
 	RegisterSignals(owner.current, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_died))
 
 /datum/antagonist/survivalist/battle_royale/greet()
-	to_chat(owner, span_warning("[span_bold("You hear a tinny voice in your ear: ")] \
-		Welcome contestant to Rumble Royale, the galaxy's greatest show! \n\
-		You may have already heard our announcement, but we're glad to tell you that you are on live TV! \n\
-		Your objective in this contest is simple: Within ten minutes be the last contestant left alive, to win a fabulous prize! \n\
-		Your fellow contestants will be hearing this too, so you should grab a GPS quick and get hunting! \n\
-		Noncompliance and removal of this implant is not recommended, and remember to smile for the cameras!"))
+	to_chat(owner, span_warning(LANG("datum.a27efe14", list(span_bold("You hear a tinny voice in your ear: ")))))
 
 	return ..()
 
@@ -86,7 +82,7 @@
 	UnregisterSignal(owner.current, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 	if (owner.current.stat == DEAD)
 		return ..()
-	to_chat(owner, span_notice("Your body is flooded with relief. Against all the odds, you've made it out alive."))
+	to_chat(owner, span_notice(LANG("datum.42d51ecc", null)))
 	owner.current?.add_mood_event("battle_royale", /datum/mood_event/royale_survivor)
 	return ..()
 

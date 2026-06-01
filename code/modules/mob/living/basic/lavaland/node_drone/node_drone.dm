@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define FLY_IN_STATE 1
 #define FLY_OUT_STATE 2
 #define NEUTRAL_STATE 3
@@ -120,17 +121,17 @@
 	flying_state = FLY_OUT_STATE
 	update_appearance(UPDATE_ICON_STATE)
 	if(prob(1))
-		say("I have to go now, my planet needs me.")
+		say(LANG("mob.970525e3", null))
 		funny_ending = TRUE
 	if(success)
-		visible_message(span_notice("The drone flies away to safety as the vent is secured."))
+		visible_message(span_notice(LANG("mob.ad98c2ad", null)))
 	else
-		visible_message(span_danger("The drone flies away after failing to open the vent!"))
+		visible_message(span_danger(LANG("mob.67b771ef", null)))
 	animate(src, pixel_z = 400, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(2 SECONDS)
 	if(funny_ending)
 		playsound(src, 'sound/effects/explosion/explosion3.ogg', 50, FALSE) //node drone died on the way back to his home planet.
-		visible_message(span_notice("...or maybe not."))
+		visible_message(span_notice(LANG("mob.f8d853f7", null)))
 	qdel(src)
 
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Wall mounted mining weather tracker
 /obj/machinery/mining_weather_monitor
 	name = "barometric monitor"
@@ -189,20 +190,20 @@ GLOBAL_LIST_EMPTY(weather_towers)
 /obj/machinery/power/weather_tower/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/assembly/signaler/anomaly))
 		if(!isnull(core))
-			to_chat(user, span_warning("The weather core slot is already occupied."))
+			to_chat(user, span_warning(LANG("obj.c81d4c10", null)))
 			return ITEM_INTERACT_FAILURE
 
 		if(!istype(tool, /obj/item/assembly/signaler/anomaly/weather))
-			to_chat(user, span_warning("[tool] probably won't do anything useful within [src]."))
+			to_chat(user, span_warning(LANG("obj.edfd4277", list(tool, src))))
 			return ITEM_INTERACT_FAILURE
 
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("You can't seem to part ways with [tool]."))
+			to_chat(user, span_warning(LANG("obj.e8682fa1", list(tool))))
 			return ITEM_INTERACT_FAILURE
 
 		core = tool
 		update_appearance()
-		to_chat(user, span_notice("You install [tool] into [src]."))
+		to_chat(user, span_notice(LANG("obj.a0a1d9da", list(tool, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
@@ -297,7 +298,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 
 	var/success = !!weather
 	if(success)
-		visible_message(span_notice("The [src] hums as it summons a [weather]."))
+		visible_message(span_notice(LANG("obj.d4f76981", list(src, weather))))
 		use_core_charge(charge_amount)
 		COOLDOWN_START(src, summon_weather_cd, 8 MINUTES)
 		COOLDOWN_START(src, clear_weather_cd, 4 MINUTES)
@@ -308,7 +309,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 		else
 			log_game("[user ? key_name(user) : "Unknown"] summoned [weather.name] weather using [src] [AREACOORD(src)].")
 	else
-		audible_message(span_warning("The [src] emits a frustrated buzz as nothing happens."))
+		audible_message(span_warning(LANG("obj.3df9d219", list(src))))
 		COOLDOWN_START(src, summon_weather_cd, 1 MINUTES)
 
 	return success
@@ -320,7 +321,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 
 	core.charges -= amount
 	if(core.charges <= 0)
-		visible_message(span_boldwarning("[core] expends all of its energy and disintegrates!"))
+		visible_message(span_boldwarning(LANG("obj.5bbdcfec", list(core))))
 		new /obj/effect/decal/cleanable/ash/large(loc)
 		QDEL_NULL(core)
 

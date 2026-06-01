@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define IMPORTANT_ACTION_COOLDOWN (60 SECONDS)
 #define EMERGENCY_ACCESS_COOLDOWN (30 SECONDS)
 
@@ -128,11 +129,11 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 		var/obj/item/card/emag/battlecruiser/caller_card = emag_card
 		if (user)
 			if(!IS_TRAITOR(user))
-				to_chat(user, span_danger("You get the feeling this is a bad idea."))
+				to_chat(user, span_danger(LANG("obj.a7f7d0a9", null)))
 				return FALSE
 		if(battlecruiser_called)
 			if (user)
-				to_chat(user, span_danger("The card reports a long-range message already sent to the Syndicate fleet...?"))
+				to_chat(user, span_danger(LANG("obj.dc9c4f71", null)))
 			return FALSE
 		battlecruiser_called = TRUE
 		caller_card.use_charge(user)
@@ -146,7 +147,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 	obj_flags |= EMAGGED
 	if (authenticated)
 		authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
-	balloon_alert(user, "routing circuits scrambled")
+	balloon_alert(user, LANG("obj.c1aff91c", null))
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	return TRUE
 
@@ -512,14 +513,14 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 		// NOVA EDIT ADDITION END
 /obj/machinery/computer/communications/proc/emergency_access_cooldown(mob/user)
 	if(toggle_uses == toggle_max_uses) //you have used up free uses already, do it one more time and start a cooldown
-		to_chat(user, span_warning("This was your last free use without cooldown, you will not be able to use this again for [DisplayTimeText(EMERGENCY_ACCESS_COOLDOWN)]."))
+		to_chat(user, span_warning(LANG("obj.cd642620", list(DisplayTimeText(EMERGENCY_ACCESS_COOLDOWN)))))
 		COOLDOWN_START(src, emergency_access_cooldown, EMERGENCY_ACCESS_COOLDOWN)
 		++toggle_uses //add a use so that this if() is false the next time you try this button
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, emergency_access_cooldown))
 		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(src, emergency_access_cooldown), 1)
-		to_chat(user, span_warning("Emergency Access is still in cooldown for [time_left]!"))
+		to_chat(user, span_warning(LANG("obj.93daf892", list(time_left))))
 		return TRUE //dont use the button, we are in cooldown
 	else if((last_toggled + EMERGENCY_ACCESS_COOLDOWN) < world.time)
 		toggle_uses = 0 //either cooldown is done, or we just havent touched it in 30 seconds, either way reset uses
@@ -710,7 +711,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			return
 
 		if (isnull(send_cross_comms_message_timer))
-			to_chat(usr, span_warning("It's too late!"))
+			to_chat(usr, span_warning(LANG("obj.3c2954fe", null)))
 			return
 
 		deltimer(send_cross_comms_message_timer)
@@ -788,7 +789,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = HAS_SILICON_ACCESS(user)
 	if(!GLOB.communications_controller.can_announce(user, is_ai))
-		to_chat(user, span_alert("Intercomms recharging. Please stand by."))
+		to_chat(user, span_alert(LANG("obj.201fe056", null)))
 		return
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement", max_length = MAX_MESSAGE_LEN)
 	if(!input || !user.can_perform_action(src, ALLOW_SILICON_REACH))
@@ -876,12 +877,12 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 /obj/machinery/computer/communications/proc/can_hack(mob/living/hacker, feedback = FALSE)
 	if(machine_stat & (NOPOWER|BROKEN))
 		if(feedback && hacker)
-			balloon_alert(hacker, "can't hack!")
+			balloon_alert(hacker, LANG("obj.426ce8db", null))
 		return FALSE
 	var/area/console_area = get_area(src)
 	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
 		if(feedback && hacker)
-			balloon_alert(hacker, "signal too weak!")
+			balloon_alert(hacker, LANG("obj.dbddc2b1", null))
 		return FALSE
 	return TRUE
 

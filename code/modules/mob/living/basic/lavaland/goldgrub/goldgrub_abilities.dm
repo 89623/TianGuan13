@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/spit_ore
 	name = "Spit Ore"
 	desc = "Vomit out all of your consumed ores."
@@ -50,7 +51,7 @@
 		return
 
 	if(get_turf(owner) != current_loc)
-		to_chat(owner, span_warning("Action cancelled, as you moved while reappearing."))
+		to_chat(owner, span_warning(LANG("datum.cb91c92e", null)))
 		return
 
 	if(!is_jaunting(owner))
@@ -85,5 +86,5 @@
 		return
 
 	if(!ismineralturf(.) && !isasteroidturf(.))
-		to_chat(user, span_warning("You cannot dig through this floor!"))
+		to_chat(user, span_warning(LANG("obj.a1b4bb83", null)))
 		return null

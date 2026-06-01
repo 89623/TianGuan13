@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //reforming
 /obj/item/ectoplasm/revenant
 	name = "glimmering residue"
@@ -44,7 +45,7 @@
 		return
 	var/obj/structure/mirror/nearby_mirror = check_for_mirrors(get_turf(hit_atom), 3)
 	if(!nearby_mirror)
-		visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
+		visible_message(span_notice(LANG("obj.7b8abbca", list(src))))
 	else
 		transfer_to_mirror(nearby_mirror)
 	qdel(src)
@@ -76,5 +77,5 @@
 		return
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
 	SEND_SIGNAL(src, COMSIG_REVENANT_RELEASE, cause = "ectoplasm reforming")
-	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
+	visible_message(span_revenboldnotice(LANG("obj.b6ecdf19", list(src))))
 	qdel(src)

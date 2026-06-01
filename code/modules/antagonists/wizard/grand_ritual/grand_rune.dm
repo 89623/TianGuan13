@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Number of times you need to cast on the rune to complete it
 #define GRAND_RUNE_INVOKES_TO_COMPLETE 3
 /// Base time to take to invoke one stage of the rune. This is done three times to complete the rune.
@@ -211,12 +212,12 @@
 		possible_events += possible_event
 
 	if (!length(possible_events))
-		visible_message(span_notice("[src] makes a sad whizzing noise."))
+		visible_message(span_notice(LANG("obj.c6decb79", list(src))))
 		return
 
 	var/datum/round_event_control/final_event = pick (possible_events)
 	final_event.run_event(event_cause = "a Grand Ritual Rune")
-	to_chat(user, span_notice("Your released magic afflicts the crew: [final_event.name]!"))
+	to_chat(user, span_notice(LANG("obj.6ce8d5ce", list(final_event.name))))
 
 /// Applies some local side effects to the area
 /obj/effect/grand_rune/proc/trigger_side_effects(mob/living/user)
@@ -311,7 +312,7 @@
 		return
 	var/round_time_passed = world.time - SSticker.round_start_time
 	if (chosen_effect && finale_effect.minimum_time >= round_time_passed)
-		to_chat(user, span_warning("The chosen grand finale will only be available in <b>[DisplayTimeText(finale_effect.minimum_time - round_time_passed)]</b>!"))
+		to_chat(user, span_warning(LANG("obj.9461eef6", list(DisplayTimeText(finale_effect.minimum_time - round_time_passed)))))
 		return
 	return ..()
 
@@ -344,8 +345,8 @@
 	if (istype(picked_finale))
 		var/round_time_passed = world.time - SSticker.round_start_time
 		if(picked_finale.minimum_time >= round_time_passed)
-			to_chat(user, span_warning("The chosen grand finale will only be available in <b>[DisplayTimeText(picked_finale.minimum_time - round_time_passed)]</b>!"))
-			to_chat(user, span_warning("Be patient, or select another option."))
+			to_chat(user, span_warning(LANG("obj.9461eef6", list(DisplayTimeText(picked_finale.minimum_time - round_time_passed)))))
+			to_chat(user, span_warning(LANG("obj.ec13efbc", null)))
 			return
 	chosen_effect = TRUE
 	if (pick == PICK_NOTHING)

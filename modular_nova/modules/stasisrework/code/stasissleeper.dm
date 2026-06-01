@@ -69,8 +69,8 @@
 	. = ..()
 
 /obj/machinery/stasissleeper/container_resist_act(mob/living/user)
-	visible_message(span_notice("[occupant] emerges from [src]!"),
-		span_notice("You climb out of [src]!"))
+	visible_message(span_notice(LANG("obj.8616ec7e", list(occupant, src))),
+		span_notice(LANG("obj.adaf0a2d", list(src))))
 	open_machine()
 	if(HAS_TRAIT(user, TRAIT_STASIS))
 		thaw_them(user)
@@ -116,10 +116,10 @@
 
 /obj/machinery/stasissleeper/screwdriver_act(mob/living/user, obj/item/tool)
 	if(occupant)
-		to_chat(user, span_warning("[src] is currently occupied!"))
+		to_chat(user, span_warning(LANG("obj.29741746", list(src))))
 		return
 	if(state_open)
-		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
+		to_chat(user, span_warning(LANG("obj.2bc99427", list(src, panel_open ? "close" : "open"))))
 		return
 	return default_deconstruction_screwdriver(user, tool)
 
@@ -141,7 +141,7 @@
 	. = !(state_open || panel_open) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		crowbar.play_tool_sound(src, 50)
-		visible_message(span_notice("[usr] pries open [src]."), span_notice("You pry open [src]."))
+		visible_message(span_notice(LANG("obj.13d2a45b", list(usr, src))), span_notice(LANG("obj.f68d6a77", list(src))))
 		open_machine()
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
@@ -149,22 +149,22 @@
 /obj/machinery/stasissleeper/attack_hand(mob/user)
 	if(occupant)
 		if(occupant == user)
-			to_chat(user, span_notice("You read the vitals readout on the inside of the stasis unit."))
+			to_chat(user, span_notice(LANG("obj.0b81e68a", null)))
 		else
-			to_chat(user, span_notice("You read the vitals readout on the side of the stasis unit."))
+			to_chat(user, span_notice(LANG("obj.f51db475", null)))
 		healthscan(user, occupant, SCANNER_VERBOSE, TRUE)
 	else
-		to_chat(user, span_warning("The vitals readout is blank, the stasis unit is unoccupied!"))
+		to_chat(user, span_warning(LANG("obj.1b7cb29c", null)))
 
 /obj/machinery/stasissleeper/attack_hand_secondary(mob/user)
 	if(occupant)
 		if(occupant == user)
-			to_chat(user, span_notice("You read the bloodstream readout on the inside of the stasis unit."))
+			to_chat(user, span_notice(LANG("obj.c9bf90dc", null)))
 		else
-			to_chat(user, span_notice("You read the bloodstream readout on the side of the stasis unit."))
+			to_chat(user, span_notice(LANG("obj.5b711ed3", null)))
 		chemscan(user, occupant)
 	else
-		to_chat(user, span_warning("The bloodstream readout is blank, the stasis unit is unoccupied!"))
+		to_chat(user, span_warning(LANG("obj.7e49fc15", null)))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/stasissleeper/attack_ai(mob/user)

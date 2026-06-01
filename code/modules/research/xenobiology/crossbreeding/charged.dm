@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Charged extracts:
 	Have a unique, effect when filled with
@@ -16,10 +17,10 @@ Charged extracts:
 
 /obj/item/slimecross/charged/attack_self(mob/user)
 	if(!reagents.has_reagent(/datum/reagent/toxin/plasma, 10))
-		to_chat(user, span_warning("This extract needs to be full of plasma to activate!"))
+		to_chat(user, span_warning(LANG("obj.883dcdd9", null)))
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
-	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
+	to_chat(user, span_notice(LANG("obj.879f3da7", null)))
 	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/light_flicker.ogg', 50, TRUE)
 	do_effect(user)
@@ -167,14 +168,14 @@ Charged extracts:
 /obj/item/slimecross/charged/green/do_effect(mob/user)
 	var/mob/living/carbon/human/human_user = user
 	if(!istype(human_user))
-		to_chat(user, span_warning("You must be a humanoid to use this!"))
+		to_chat(user, span_warning(LANG("obj.870ecf30", null)))
 		return
 	var/list/choice_list = list()
 	for(var/datum/species/species_type as anything in subtypesof(/datum/species/jelly))
 		choice_list[initial(species_type.name)] = species_type
 	var/racechoice = tgui_input_list(human_user, "Choose your slime subspecies", "Slime Selection", sort_list(choice_list))
 	if(isnull(racechoice))
-		to_chat(user, span_notice("You decide not to become a slime for now."))
+		to_chat(user, span_notice(LANG("obj.1d977070", null)))
 		return
 	if(!user.can_perform_action(src))
 		return
@@ -205,13 +206,13 @@ Charged extracts:
 	START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/charged/gold/process()
-	visible_message(span_warning("[src] lets off a spark, and produces a living creature!"))
+	visible_message(span_warning(LANG("obj.cd27c502", list(src))))
 	new /obj/effect/particle_effect/sparks(get_turf(src))
 	playsound(get_turf(src), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	create_random_mob(get_turf(src), HOSTILE_SPAWN)
 	spawned++
 	if(spawned >= max_spawn)
-		visible_message(span_warning("[src] collapses into a puddle of goo."))
+		visible_message(span_warning(LANG("obj.1803b052", list(src))))
 		qdel(src)
 
 /obj/item/slimecross/charged/gold/Destroy()
@@ -237,7 +238,7 @@ Charged extracts:
 /obj/item/slimecross/charged/black/do_effect(mob/user)
 	var/mob/living/carbon/human/experiment_subject = user
 	if(!istype(experiment_subject))
-		balloon_alert(experiment_subject, "incompatible biology!")
+		balloon_alert(experiment_subject, LANG("obj.0590b0bd", null))
 		return
 	var/list/allowed_species = list()
 	for(var/stype in subtypesof(/datum/species))
@@ -247,10 +248,10 @@ Charged extracts:
 
 	var/datum/species/changed = pick(allowed_species)
 	if(isnull(changed))
-		visible_message(span_notice("[src] fizzes uselessly."))
+		visible_message(span_notice(LANG("obj.804be420", list(src))))
 		return
 	experiment_subject.set_species(changed, icon_update = TRUE)
-	to_chat(experiment_subject, span_danger("You feel very different!"))
+	to_chat(experiment_subject, span_danger(LANG("obj.9cb4ffb5", null)))
 	return ..()
 
 /obj/item/slimecross/charged/lightpink

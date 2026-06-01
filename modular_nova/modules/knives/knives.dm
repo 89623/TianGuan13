@@ -43,7 +43,7 @@
 		update_appearance()
 		return CLICK_ACTION_SUCCESS
 	else
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 		return CLICK_ACTION_BLOCKING
 
 /obj/item/storage/belt/bowie_sheath/update_icon_state()

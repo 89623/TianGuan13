@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Mineral Sheets
 	Contains:
@@ -88,7 +89,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 /obj/item/emptysandbag/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/G = W
-		to_chat(user, span_notice("You fill the sandbag."))
+		to_chat(user, span_notice(LANG("obj.04fac2de", null)))
 		var/obj/item/stack/sheet/mineral/sandbags/I = new (drop_location())
 		qdel(src)
 		if (Adjacent(user) && !issilicon(user))
@@ -321,7 +322,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/old_rods = W
 		if(old_rods.merge_type != /obj/item/stack/rods)
-			to_chat(user, span_warning("You can't craft shuttle frame rods with this type of rod!"))
+			to_chat(user, span_warning(LANG("obj.e306233a", null)))
 		if (old_rods.get_amount() >= 5 && get_amount() >= 1)
 			var/obj/item/stack/rods/shuttle/five/new_rods = new (get_turf(user))
 			if(!QDELETED(new_rods))
@@ -332,7 +333,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 			if(QDELETED(src) && replace && !QDELETED(new_rods))
 				user.put_in_hands(new_rods)
 		else
-			to_chat(user, span_warning("You need five rods and one sheet of titanium to make shuttle frame rods!"))
+			to_chat(user, span_warning(LANG("obj.66ed56e6", null)))
 		return
 	return ..()
 

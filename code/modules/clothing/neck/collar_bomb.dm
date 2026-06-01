@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Special neckwear that kills its wearer if triggered, by either its specific remote or assemblies.
 /obj/item/clothing/neck/collar_bomb
 	name = "collar bomb"
@@ -72,7 +73,7 @@
 		balloon_alert_to_viewers("dud...")
 		active = FALSE
 		return
-	visible_message(span_warning("[src] goes off, outright decapitating [brian]!"), span_hear("You hear a fleshy boom!"))
+	visible_message(span_warning(LANG("obj.f00f5dfb", list(src, brian))), span_hear(LANG("obj.adfdeca9", null)))
 	playsound(src, SFX_EXPLOSION, 30, TRUE)
 	brian.apply_damage(200, BRUTE, BODY_ZONE_HEAD)
 	var/obj/item/bodypart/head/myhead = brian.get_bodypart(BODY_ZONE_HEAD)

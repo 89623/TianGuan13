@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/ai_module/power_apc
 	name = "Remote Power"
 	description = "remotely powers an APC from a distance"
@@ -29,7 +30,7 @@
 		return FALSE
 
 	if(ai_clicker.battery - 50 <= 0)
-		to_chat(ai_clicker, span_warning("You do not have the battery to charge an APC!"))
+		to_chat(ai_clicker, span_warning(LANG("datum.8b96acf7", null)))
 		return FALSE
 
 	var/obj/machinery/power/apc/apc = clicked_on

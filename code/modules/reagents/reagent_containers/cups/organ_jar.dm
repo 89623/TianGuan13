@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // The organ jar - a 120u beaker that can hold a single organ
 /obj/item/reagent_containers/cup/beaker/organ_jar
 	name = "organ jar"
@@ -31,7 +32,7 @@
 // Alt click lets you take the organ out, if it's present
 /obj/item/reagent_containers/cup/beaker/organ_jar/click_alt(mob/user)
 	if(held_organ)
-		balloon_alert(user, "removed [held_organ]")
+		balloon_alert(user, LANG("obj.c6b4aa68", list(held_organ)))
 		user.put_in_hands(held_organ)
 		held_organ.organ_flags &= ~ORGAN_FROZEN
 		held_organ = null
@@ -47,12 +48,12 @@
 	if(!istype(tool, /obj/item/organ))
 		return ..()
 	if(held_organ)
-		balloon_alert(user, "the jar already contains [held_organ]")
+		balloon_alert(user, LANG("obj.df3afad5", list(held_organ)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "inserted [tool]")
+	balloon_alert(user, LANG("obj.94d2a5ff", list(tool)))
 	held_organ = tool
 	name = "[tool.name] in a jar"
 	desc = "A jar with \the [tool] inside it."

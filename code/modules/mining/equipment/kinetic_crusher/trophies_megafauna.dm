@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*!
  * Contains crusher trophies you can obtain from megafauna
  */
@@ -191,13 +192,13 @@
 		return
 	var/mob/living/living_user = user
 	if(use_time > world.time)
-		to_chat(living_user, "<b>The tongue looks dried out. You'll need to wait longer to use it again.</b>")
+		to_chat(living_user, LANG("obj.98a9d78e", null))
 		return
 	else if(HAS_TRAIT(living_user, TRAIT_LAVA_IMMUNE))
-		to_chat(living_user, "<b>You stare at the tongue. You don't think this is any use to you.</b>")
+		to_chat(living_user, LANG("obj.42fe2449", null))
 		return
 	ADD_TRAIT(living_user, TRAIT_LAVA_IMMUNE, type)
-	to_chat(living_user, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
+	to_chat(living_user, LANG("obj.7912a050", null))
 	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_LAVA_IMMUNE, type), 10 SECONDS)
 	use_time = world.time + 60 SECONDS
 
@@ -230,7 +231,7 @@
 	var/mob/living/LivingUser = user
 	if(next_use_time > world.time)
 		LivingUser.visible_message(span_warning("[LivingUser] shakes the [src], but nothing happens..."))
-		to_chat(LivingUser, "<b>You need to wait longer to use this again.</b>")
+		to_chat(LivingUser, LANG("obj.df0fd23d", null))
 		return
 	LivingUser.visible_message(span_boldwarning("[LivingUser] shakes the [src] and summons a legion skull!"))
 

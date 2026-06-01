@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/sink
 	name = "sink"
 	icon = 'icons/obj/watercloset.dmi'
@@ -101,10 +102,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	if(!Adjacent(user))
 		return
 	if(reagents.total_volume < 5)
-		to_chat(user, span_warning("The sink is dry!"))
+		to_chat(user, span_warning(LANG("obj.6e9b3a68", null)))
 		return
 	if(busy)
-		to_chat(user, span_warning("Someone's already washing here!"))
+		to_chat(user, span_warning(LANG("obj.d5ba1f8c", null)))
 		return
 
 	var/selected_area = user.parse_zone_with_bodypart(user.zone_selected)
@@ -130,7 +131,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	else if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(!human_user.wash_hands(CLEAN_WASH))
-			to_chat(user, span_warning("Your hands are covered by something!"))
+			to_chat(user, span_warning(LANG("obj.7d1649c9", null)))
 			return
 	else
 		user.wash(CLEAN_WASH)
@@ -141,36 +142,36 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 /obj/structure/sink/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
 	if(busy)
-		to_chat(user, span_warning("Someone's already washing here!"))
+		to_chat(user, span_warning(LANG("obj.d5ba1f8c", null)))
 		return ITEM_INTERACT_FAILURE
 
 	if(is_reagent_container(tool))
 		var/obj/item/reagent_containers/RG = tool
 		if(!reagents.total_volume)
-			to_chat(user, span_notice("\The [src] is dry."))
+			to_chat(user, span_notice(LANG("obj.9043fdab", list(src))))
 			return ITEM_INTERACT_FAILURE
 		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())
 				reagents.trans_to(RG, RG.amount_per_transfer_from_this, transferred_by = user)
 				START_PROCESSING(SSobj, src)
-				to_chat(user, span_notice("You fill [RG] from [src]."))
+				to_chat(user, span_notice(LANG("obj.3adf2506", list(RG, src))))
 				return ITEM_INTERACT_SUCCESS
-			to_chat(user, span_notice("\The [RG] is full."))
+			to_chat(user, span_notice(LANG("obj.03adc6e9", list(RG))))
 		return ITEM_INTERACT_FAILURE
 
 	if(istype(tool, /obj/item/mop) || astype(tool, /obj/item/rag)?.blood_level == 0)
 		if(!reagents.total_volume)
-			to_chat(user, span_notice("\The [src] is dry."))
+			to_chat(user, span_notice(LANG("obj.9043fdab", list(src))))
 			return ITEM_INTERACT_FAILURE
 		reagents.trans_to(tool, 5, transferred_by = user)
 		START_PROCESSING(SSobj, src)
-		to_chat(user, span_notice("You wet [tool] in [src]."))
+		to_chat(user, span_notice(LANG("obj.c4984f89", list(tool, src))))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		if(has_water_reclaimer)
-			to_chat(user, span_warning("There is already has a water recycler installed."))
+			to_chat(user, span_warning(LANG("obj.54d98562", null)))
 			return ITEM_INTERACT_FAILURE
 
 		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
@@ -181,19 +182,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 	if(istype(tool, /obj/item/storage/fancy/pickles_jar))
 		if(tool.contents.len)
-			to_chat(user, span_notice("Looks like there's something left in the jar"))
+			to_chat(user, span_notice(LANG("obj.e7bcc65c", null)))
 			return ITEM_INTERACT_FAILURE
 		qdel(tool)
-		to_chat(user, span_notice("You washed the jar, ridding it of the brine."))
+		to_chat(user, span_notice(LANG("obj.e45bfaf1", null)))
 		user.put_in_active_hand(new /obj/item/reagent_containers/cup/beaker/large(loc))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
 		if(reagents.total_volume < 5)
-			to_chat(user, span_warning("The sink is dry!"))
+			to_chat(user, span_warning(LANG("obj.6e9b3a68", null)))
 			return ITEM_INTERACT_FAILURE
 
-		to_chat(user, span_notice("You start washing [tool]..."))
+		to_chat(user, span_notice(LANG("obj.baf588ee", list(tool))))
 		playsound(src, 'sound/machines/sink-faucet.ogg', 50)
 
 		var/obj/item/melee/baton/security/baton = tool
@@ -228,13 +229,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	. = ..()
 
 	if(!has_water_reclaimer)
-		to_chat(user, span_warning("There isn't a water recycler to remove."))
+		to_chat(user, span_warning(LANG("obj.fe8e1f6a", null)))
 		return ITEM_INTERACT_FAILURE
 
 	tool.play_tool_sound(src)
 	has_water_reclaimer = FALSE
 	new/obj/item/stock_parts/water_recycler(get_turf(loc))
-	to_chat(user, span_notice("You remove the water reclaimer from [src]."))
+	to_chat(user, span_notice(LANG("obj.fb4e9798", list(src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sink/process(seconds_per_tick)
@@ -301,7 +302,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 		qdel(tool)
 		result_path = /obj/structure/sink/greyscale/filled
 		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-		balloon_alert(user, "water recycler installed!")
+		balloon_alert(user, LANG("obj.b932e7d0", null))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/wallframe/sinkframe/after_attach(obj/structure/sink/greyscale/attached_to)

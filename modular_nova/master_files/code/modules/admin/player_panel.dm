@@ -116,7 +116,7 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 
 	if(. || !check_rights_for(adminClient, R_ADMIN))
 		message_admins(span_adminhelp("WARNING: NON-ADMIN [ADMIN_LOOKUPFLW(adminMob)] ATTEMPTED TO ACCESS ADMIN PANEL. NOTIFY Casper3044."))
-		to_chat(adminClient, "Error: you are not an admin!")
+		to_chat(adminClient, LANG("datum.27e7aa03", null))
 		return
 
 	switch(action)

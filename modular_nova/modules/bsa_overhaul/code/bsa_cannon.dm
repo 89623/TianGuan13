@@ -37,7 +37,7 @@
 
 /obj/machinery/bsa/back/multitool_act(mob/living/user, obj/item/multitool/tool)
 	tool.buffer = src
-	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
+	to_chat(user, span_notice(LANG("obj.cd58d744", list(tool))))
 	return TRUE
 
 /obj/machinery/bsa/front
@@ -47,7 +47,7 @@
 
 /obj/machinery/bsa/front/multitool_act(mob/living/user, obj/item/multitool/tool)
 	tool.buffer = src
-	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
+	to_chat(user, span_notice(LANG("obj.cd58d744", list(tool))))
 	return TRUE
 
 /obj/machinery/bsa/middle
@@ -63,14 +63,14 @@
 	if(tool.buffer)
 		if(istype(tool.buffer, /obj/machinery/bsa/back))
 			back_piece = WEAKREF(tool.buffer)
-			to_chat(user, span_notice("You link [src] with [tool.buffer]."))
+			to_chat(user, span_notice(LANG("obj.e06b0e5f", list(src, tool.buffer))))
 			tool.buffer = null
 		else if(istype(tool.buffer, /obj/machinery/bsa/front))
 			front_piece = WEAKREF(tool.buffer)
-			to_chat(user, span_notice("You link [src] with [tool.buffer]."))
+			to_chat(user, span_notice(LANG("obj.e06b0e5f", list(src, tool.buffer))))
 			tool.buffer = null
 	else
-		to_chat(user, span_warning("[tool]'s data buffer is empty!"))
+		to_chat(user, span_warning(LANG("obj.12436894", list(tool))))
 	return TRUE
 
 /obj/machinery/bsa/middle/proc/check_completion()

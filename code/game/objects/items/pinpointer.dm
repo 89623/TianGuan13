@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Pinpointers are used to track atoms from a distance as long as they're on the same z-level. The captain and nuke ops have ones that track the nuclear authentication disk.
 /obj/item/pinpointer
 	name = "pinpointer"
@@ -124,7 +125,7 @@
 		pinpointer_owner = user
 
 	if (pinpointer_owner && pinpointer_owner != user)
-		to_chat(user, span_notice("The pinpointer doesn't respond. It seems to only recognise its owner."))
+		to_chat(user, span_notice(LANG("obj.f535b0b8", null)))
 		return
 
 	var/list/name_counts = list()
@@ -245,5 +246,5 @@ GLOBAL_LIST_EMPTY(sniffable_sheets)
 	if(!new_sheet_target)
 		target = null
 		return
-	say("Located [new_sheet_target.amount] [new_sheet_target.singular_name]s!")
+	say(LANG("obj.0c4f8dab", list(new_sheet_target.amount, new_sheet_target.singular_name)))
 	target = new_sheet_target

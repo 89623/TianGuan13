@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Antag modules for MODsuits
 
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
@@ -251,7 +252,7 @@
 	mod.wearer.visible_message(span_warning("[mod.wearer] starts charging a kick!"), \
 		blind_message = span_hear("You hear a charging sound."))
 	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
-	balloon_alert(mod.wearer, "you start charging...")
+	balloon_alert(mod.wearer, LANG("obj.9dc8c02a", null))
 	animate(mod.wearer, 0.3 SECONDS, pixel_z = 16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_OUT)
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/atom, SpinAnimation), 3, 2), 0.3 SECONDS)
 	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
@@ -320,7 +321,7 @@
 
 /obj/item/mod/module/chameleon/used(mob/activator)
 	if(mod.active || mod.activating)
-		balloon_alert(activator, "unit active!")
+		balloon_alert(activator, LANG("obj.7913b0b7", null))
 		return FALSE
 	return ..()
 
@@ -495,10 +496,10 @@
 	if(!. || target == mod.wearer)
 		return
 	if(get_dist(mod.wearer, target) > 6)
-		balloon_alert(mod.wearer, "can't reach that!")
+		balloon_alert(mod.wearer, LANG("obj.b40a17eb", null))
 		return
 	if(istype(target, /obj/machinery/power/apc)) //Bit too strong for a module so this is blacklisted
-		balloon_alert(mod.wearer, "can't disable apc!")
+		balloon_alert(mod.wearer, LANG("obj.0d9212bd", null))
 		return
 
 	var/list/things_to_disrupt = list(target)

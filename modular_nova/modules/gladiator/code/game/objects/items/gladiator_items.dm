@@ -104,7 +104,7 @@
 		berserk_value *= PROJECTILE_HIT_MULTIPLIER
 	berserk_charge = clamp(round(berserk_charge + berserk_value), 0, BERSERK_MAX_CHARGE)
 	if(berserk_charge >= BERSERK_MAX_CHARGE)
-		balloon_alert(owner, "berserk charged")
+		balloon_alert(owner, LANG("obj.b9d33b7a", null))
 
 /obj/item/clothing/head/hooded/berserker/gatsu/IsReflect()
 	if(berserk_active)

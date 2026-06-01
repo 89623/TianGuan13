@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 /client/proc/is_character_directory_on_cooldown()
 	// This is primarily to stop malicious users from trying to lag the server by spamming this verb
 	if(!COOLDOWN_FINISHED(src, char_directory_cooldown))
-		to_chat(src, span_alert("Hold your horses! It's still refreshing!"))
+		to_chat(src, span_alert(LANG("client.8c437e3b", null)))
 		return TRUE
 	COOLDOWN_START(src, char_directory_cooldown, 10)
 	return FALSE

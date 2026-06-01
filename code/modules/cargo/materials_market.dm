@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The maximum number of stacks you can place in 1 order
 #define MAX_STACK_LIMIT 10
 /// The order rank for all galactic material market orders
@@ -46,27 +47,27 @@
 		return NONE
 
 	if(!is_operational)
-		balloon_alert(user, "no power!")
+		balloon_alert(user, LANG("obj.b3e1b703", null))
 		return ITEM_INTERACT_FAILURE
 
 	var/list/datum/material/materials = exportable.custom_materials
 	if(materials.len != 1)
-		balloon_alert(user, "alloy stacks not allowed")
+		balloon_alert(user, LANG("obj.a7bcce6f", null))
 		return ITEM_INTERACT_FAILURE
 
 	var/price = SSstock_market.materials_prices[materials[1].type]
 	if(!price)
-		balloon_alert(user, "materials in stack are worthless")
+		balloon_alert(user, LANG("obj.3e7a630c", null))
 		return ITEM_INTERACT_FAILURE
 
 	if(!user.transferItemToLoc(exportable, src))
-		to_chat(user, span_warning("[exportable] is stuck in hand!"))
+		to_chat(user, span_warning(LANG("obj.dccaca76", list(exportable))))
 		return ITEM_INTERACT_FAILURE
 
 	var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
 	new_block.export_value = price
 	new_block.set_custom_materials(materials)
-	to_chat(user, span_notice("You have created a stock block worth [new_block.export_value * exportable.amount] [MONEY_SYMBOL]! Sell it before it becomes liquid!"))
+	to_chat(user, span_notice(LANG("obj.837e54b8", list(new_block.export_value * exportable.amount, MONEY_SYMBOL))))
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 	qdel(exportable)
 	use_energy(active_power_usage)
@@ -226,7 +227,7 @@
 	var/mob/living/living_user = ui.user
 	var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 	if(isnull(used_id_card))
-		say("No ID Found")
+		say(LANG("obj.d1210d63", null))
 		return
 	var/can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
 
@@ -370,7 +371,7 @@
 		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before its value becomes liquid!")
 
 /obj/item/stock_block/proc/value_warning()
-	visible_message(span_warning("\The [src] is starting to become liquid!"))
+	visible_message(span_warning(LANG("obj.cc98a884", list(src))))
 	icon_state = "stock_block_fluid"
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -378,7 +379,7 @@
 	export_value = SSstock_market.materials_prices[custom_materials[1]]
 	icon_state = "stock_block_liquid"
 	update_appearance(UPDATE_ICON_STATE)
-	visible_message(span_warning("\The [src] becomes liquid!"))
+	visible_message(span_warning(LANG("obj.57783096", list(src))))
 	fluid = TRUE
 
 #undef MAX_STACK_LIMIT

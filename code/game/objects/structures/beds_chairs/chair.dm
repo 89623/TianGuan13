@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/chair
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
@@ -121,10 +122,10 @@
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
-		to_chat(user, span_notice("You connect the shock kit to \the [src], electrifying it "))
+		to_chat(user, span_notice(LANG("obj.7c0e1607", list(src))))
 	else
 		user.put_in_active_hand(input_shock_kit)
-		to_chat(user, span_notice("You cannot fit the shock kit onto \the [src]!"))
+		to_chat(user, span_notice(LANG("obj.20d7ee7a", list(src))))
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
@@ -158,7 +159,7 @@
 	handle_layer()
 	//NOVA EDIT ADDITION
 	if(HAS_TRAIT(M, TRAIT_OVERSIZED))
-		visible_message(span_warning("[src] buckles under the weight of [M] causing it to break!"))
+		visible_message(span_warning(LANG("obj.5ea20cbf", list(src, M))))
 		playsound(src, 'modular_nova/modules/oversized/sound/chair_break.ogg', 70, TRUE)
 		deconstruct()
 	//NOVA EDIT END
@@ -356,7 +357,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	if(!item_chair || has_buckled_mobs())
 		return
 	if(flags_1 & HOLOGRAM_1)
-		to_chat(user, span_notice("You try to pick up \the [src], but it fades away!"))
+		to_chat(user, span_notice(LANG("obj.a1bd76a2", list(src))))
 		qdel(src)
 		return
 
@@ -440,13 +441,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair/proc/plant(mob/user)
 	var/turf/turf = user.loc
 	if(!istype(turf) || isgroundlessturf(turf))
-		to_chat(user, span_warning("You need ground to plant this on!"))
+		to_chat(user, span_warning(LANG("obj.7f9ba459", null)))
 		return
 	if(!user.dropItemToGround(src))
-		to_chat(user, span_warning("[src] is stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.1dbf8014", list(src))))
 		return
 	if(flags_1 & HOLOGRAM_1)
-		to_chat(user, span_notice("You try to place down \the [src], but it fades away!"))
+		to_chat(user, span_notice(LANG("obj.549809dc", list(src))))
 		qdel(src)
 		return
 
@@ -662,7 +663,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
-		to_chat(Mob, span_warning("The chair begins to pop and crack, you're too heavy!"))
+		to_chat(Mob, span_warning(LANG("obj.c3601e04", null)))
 		if(do_after(Mob, 6 SECONDS, progress = FALSE))
 			Mob.visible_message(span_notice("The plastic chair snaps under [Mob]'s weight!"))
 			new /obj/effect/decal/cleanable/plastic(loc)

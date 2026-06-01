@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Diffrent misc types of sheets
  * Contains:
  * Iron
@@ -756,13 +757,13 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		var/atom/droploc = drop_location()
 		if(use(1))
 			playsound(I, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
-			to_chat(user, span_notice("You stamp the cardboard! It's a clown box! Honk!"))
+			to_chat(user, span_notice(LANG("obj.b2a87ef9", null)))
 			if (amount >= 0)
 				new/obj/item/storage/box/clown(droploc) //bugfix
 	if(istype(I, /obj/item/stamp/chameleon) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
 		if(use(1))
-			to_chat(user, span_notice("You stamp the cardboard in a sinister way."))
+			to_chat(user, span_notice(LANG("obj.f590cbb3", null)))
 			if (amount >= 0)
 				new/obj/item/storage/box/syndie_kit(droploc)
 	else

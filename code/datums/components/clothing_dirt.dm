@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// This component applies tint to clothing when its exposed to pepperspray or spraycans
 
 /datum/component/clothing_dirt
@@ -56,7 +57,7 @@
 	var/mob/living/carbon/wearer = clothing.loc
 	if(wearer.is_blind() && !wearer.is_blind_from(EYES_COVERED))
 		return
-	to_chat(wearer, span_warning("It's hard to see with all the stuff covering your [clothing.name]..."))
+	to_chat(wearer, span_warning(LANG("datum.f65ecc4d", list(clothing.name))))
 
 /datum/component/clothing_dirt/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
@@ -177,7 +178,7 @@
 	dirtiness = min(3, dirtiness + rand(2, 3))
 	apply_tint(TRUE)
 	user.visible_message(span_danger("[user] sprays [spraycan] into the face of [wearer]!"))
-	to_chat(wearer, span_userdanger("[user] sprays [spraycan] into your face!"))
+	to_chat(wearer, span_userdanger(LANG("datum.8794109e", list(user, spraycan))))
 	return COMPONENT_CANCEL_SPRAYPAINT
 
 /datum/component/clothing_dirt/proc/on_clean(obj/item/clothing/source, clean_types)

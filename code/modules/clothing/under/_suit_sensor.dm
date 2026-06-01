@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///The item representing suit sensors when removed from a suit or dress (obj/item/clothing/under)
 /obj/item/suit_sensor
 	name = "suit sensor"
@@ -49,7 +50,7 @@
 	if(!(user.mobility_flags & MOBILITY_USE) || !IsReachableBy(user))
 		return FALSE
 	if(broken)
-		balloon_alert(user, "fix it first!")
+		balloon_alert(user, LANG("obj.7cef697c", null))
 		return
 	var/current_mode_text = GLOB.suit_sensor_mode_to_defines[sensor_mode + 1]
 	var/new_mode = tgui_input_list(user, "Select a sensor mode", "Suit Sensors", GLOB.suit_sensor_mode_to_defines, current_mode_text)
@@ -57,7 +58,7 @@
 		user.balloon_alert(user, "can't do that now!")
 		return
 	set_mode(GLOB.suit_sensor_mode_to_defines[new_mode])
-	balloon_alert(user, "sensor set to '[LOWER_TEXT(new_mode)]'")
+	balloon_alert(user, LANG("obj.ec931dec", list(LOWER_TEXT(new_mode))))
 
 /obj/item/suit_sensor/emp_act(severity)
 	. = ..()
@@ -74,11 +75,11 @@
 	if(!istype(tool, /obj/item/stack/cable_coil))
 		return ..()
 	if(!broken)
-		balloon_alert(user, "not broken!")
+		balloon_alert(user, LANG("obj.a34e1117", null))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/stack/cable_coil/cabling = tool
 	cabling.use(1)
-	balloon_alert(user, "suit sensor repaired")
+	balloon_alert(user, LANG("obj.239fa63d", null))
 	broken = FALSE
 	update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS

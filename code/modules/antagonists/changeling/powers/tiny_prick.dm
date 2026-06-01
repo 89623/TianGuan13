@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/sting//parent path, not meant for users afaik
 	name = "Tiny Prick" //cellularemporium uses `nameToIconState` to button icon state must match this, on top of matching the hud below.
 	desc = "Stabby stabby"
@@ -19,7 +20,7 @@
 	return
 
 /datum/action/changeling/sting/proc/set_sting(mob/user)
-	to_chat(user, span_notice("We prepare our sting. Alt+click or click the middle mouse button on a target to sting them."))
+	to_chat(user, span_notice(LANG("datum.ae858c00", null)))
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	changeling.chosen_sting = src
 
@@ -29,7 +30,7 @@
 		sting.SetInvisibility(0, id=type)
 
 /datum/action/changeling/sting/proc/unset_sting(mob/user)
-	to_chat(user, span_warning("We retract our sting, we can't sting anyone for now."))
+	to_chat(user, span_warning(LANG("datum.d5390fe5", null)))
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	changeling.chosen_sting = null
 
@@ -49,14 +50,14 @@
 		return
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(!changeling.chosen_sting)
-		to_chat(user, "We haven't prepared our sting yet!")
+		to_chat(user, LANG("datum.6ec24bd7", null))
 	if(!iscarbon(target))
 		return
 	if(!isturf(user.loc))
 		return
 	var/mob/living/carbon/human/to_check = target // NOVA EDIT START - STINGS DO NOT AFFECT ROBOTIC ENTITIES
 	if(to_check.mob_biotypes & MOB_ROBOTIC)
-		to_chat(user, "<span class='warning'>Our sting would have no effect on robotic entities</span>")
+		to_chat(user, LANG("datum.3f12a13e", null))
 		return // NOVA EDIT END
 	if(!length(get_path_to(user, target, max_distance = changeling.sting_range, simulated_only = FALSE)))
 		return // no path within the sting's range is found. what a weird place to use the pathfinding system
@@ -68,9 +69,9 @@
 /datum/action/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
 		return
-	to_chat(user, span_notice("We stealthily sting [target.name]."))
+	to_chat(user, span_notice(LANG("datum.e8f44b1e", list(target.name))))
 	if(IS_CHANGELING(target))
-		to_chat(target, span_warning("You feel a tiny prick."))
+		to_chat(target, span_warning(LANG("datum.8ab80b34", null)))
 	return 1
 
 /datum/action/changeling/sting/transformation
@@ -176,13 +177,13 @@
 
 	var/obj/item/held = target.get_active_held_item()
 	if(held && !target.dropItemToGround(held))
-		to_chat(user, span_warning("[held] is stuck to [target.p_their()] hand, we cannot grow a false armblade over it!"))
+		to_chat(user, span_warning(LANG("datum.200f9200", list(held, target.p_their()))))
 		return
 
 	..()
 	log_combat(user, target, "stung", object = "false armblade sting")
 	if(ismonkey(target))
-		to_chat(user, span_notice("Our genes cry out as we sting [target.name]!"))
+		to_chat(user, span_notice(LANG("datum.162dd1d9", list(target.name))))
 
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
@@ -255,7 +256,7 @@
 
 	..()
 	log_combat(user, target, "stung", "blind sting")
-	to_chat(target, span_danger("Your eyes burn horrifically!"))
+	to_chat(target, span_danger(LANG("datum.264e2a0d", null)))
 	eyes.apply_organ_damage(eyes.maxHealth * 0.8)
 	target.adjust_temp_blindness(40 SECONDS)
 	target.set_eye_blur_if_lower(80 SECONDS)

@@ -63,7 +63,7 @@
 	return ..()
 
 /obj/item/borer_egg/attack_self(mob/user, modifiers)
-	to_chat(user, span_notice("You crush [src] within your grasp."))
+	to_chat(user, span_notice(LANG("obj.bf7fe563", list(src))))
 	new /obj/effect/decal/cleanable/food/egg_smudge(get_turf(user))
 	if(host_spawner)
 		QDEL_NULL(host_spawner)

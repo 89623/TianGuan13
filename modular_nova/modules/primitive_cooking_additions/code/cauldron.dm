@@ -190,7 +190,7 @@
 
 	if(!anchored)
 		if(IS_EDIBLE(tool))
-			balloon_alert(user, "not secured!")
+			balloon_alert(user, LANG("obj.801f0be9", null))
 			return TRUE
 		return ITEM_INTERACT_SUCCESS
 
@@ -200,7 +200,7 @@
 
 		if(!istype(tool, /obj/item/storage/bag/tray))
 			// Non-tray dumping requires a do_after
-			to_chat(user, span_notice("You start dumping out the contents of [tool] into [src]..."))
+			to_chat(user, span_notice(LANG("obj.66f69281", list(tool, src))))
 			var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 			if(!do_after(user, 2 SECONDS * skill_modifier, target = tray))
 				return ITEM_INTERACT_BLOCKING
@@ -219,7 +219,7 @@
 
 		if(loaded)
 			open()
-			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+			to_chat(user, span_notice(LANG("obj.1de8bb22", list(loaded, src))))
 			user.mind?.adjust_experience(/datum/skill/primitive, 2)
 			update_appearance()
 
@@ -227,11 +227,11 @@
 
 	if(tool.w_class <= WEIGHT_CLASS_NORMAL && !istype(tool, /obj/item/storage) && !user.combat_mode)
 		if(ingredients.len >= max_n_of_items)
-			balloon_alert(user, "it's full!")
+			balloon_alert(user, LANG("obj.2cb7d354", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src))
-			balloon_alert(user, "it's stuck to your hand!")
+			balloon_alert(user, LANG("obj.f84f0f5d", null))
 			return ITEM_INTERACT_BLOCKING
 
 		ingredients += tool
@@ -246,7 +246,7 @@
 /obj/machinery/cauldron/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.can_perform_action(src))
 		if(!length(ingredients))
-			balloon_alert(user, "it's empty!")
+			balloon_alert(user, LANG("obj.76a90f7c", null))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		cook(user)
@@ -257,7 +257,7 @@
 	. = ..()
 
 	if(!anchored)
-		balloon_alert(user, "not secured!")
+		balloon_alert(user, LANG("obj.801f0be9", null))
 		return
 
 	if(operating || !user.can_perform_action(src))
@@ -268,7 +268,7 @@
 			examine(user)
 
 		else
-			balloon_alert(user, "it's empty!")
+			balloon_alert(user, LANG("obj.76a90f7c", null))
 
 		return
 
@@ -276,7 +276,7 @@
 
 	// post choice verification
 	if(!anchored)
-		balloon_alert(user, "not secured!")
+		balloon_alert(user, LANG("obj.801f0be9", null))
 		return
 
 	if(operating || !user.can_perform_action(src))
@@ -320,7 +320,7 @@
  * * cooker - The mob that initiated the cook cycle
  */
 /obj/machinery/cauldron/proc/start(mob/cooker)
-	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear bubbling as the cauldron ignites."))
+	visible_message(span_notice(LANG("obj.2769877b", list(src))), null, span_hear("You hear bubbling as the cauldron ignites."))
 	operating = TRUE
 	update_appearance()
 	cook_loop(cycles = 10, cooker = cooker)

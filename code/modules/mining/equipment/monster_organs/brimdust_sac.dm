@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Interval between passively gaining stacks on lavaland if organ is implanted
 #define BRIMDUST_LIFE_APPLY_COOLDOWN (30 SECONDS)
 /// Number of stacks to add over time
@@ -232,12 +233,12 @@
 /datum/status_effect/brimdust_concussion/on_apply()
 	. = ..()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/brimdust_concussion)
-	to_chat(owner, span_warning("You are knocked off balance by the explosion!"))
+	to_chat(owner, span_warning(LANG("datum.cb4eff7b", null)))
 
 /datum/status_effect/brimdust_concussion/on_remove()
 	. = ..()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/brimdust_concussion)
-	to_chat(owner, span_notice("You find your balance."))
+	to_chat(owner, span_notice(LANG("datum.e200d179", null)))
 
 /// Action used by the brimdust sac
 /datum/action/cooldown/monster_core_action/exhale_brimdust

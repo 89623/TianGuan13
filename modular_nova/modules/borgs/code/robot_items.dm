@@ -39,12 +39,12 @@
 
 /obj/item/clipboard/cyborg/click_alt(mob/user)
 	if(!iscyborg(user))
-		to_chat(user, span_warning("You do not seem to understand how to use [src]."))
+		to_chat(user, span_warning(LANG("obj.44c8ef07", list(src))))
 		return CLICK_ACTION_BLOCKING
 	var/mob/living/silicon/robot/cyborg_user = user
 	// Not enough charge? Tough luck.
 	if(cyborg_user?.cell.charge < paper_charge_cost)
-		to_chat(user, span_warning("Your internal cell doesn't have enough charge left to use [src]'s integrated printer."))
+		to_chat(user, span_warning(LANG("obj.7d62620d", list(src))))
 		return CLICK_ACTION_BLOCKING
 	// Check for cooldown to avoid paper spamming
 	if(COOLDOWN_FINISHED(src, printer_cooldown))
@@ -59,12 +59,12 @@
 			RegisterSignal(new_paper, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_top_paper_change))
 			top_paper = new_paper
 			update_appearance()
-			to_chat(user, span_notice("[src]'s integrated printer whirs to life, spitting out a fresh piece of paper and clipping it into place."))
+			to_chat(user, span_notice(LANG("obj.0ea0e44f", list(src))))
 			return CLICK_ACTION_SUCCESS
 		else
-			to_chat(user, span_warning("[src]'s integrated printer refuses to print more paper, as [src] already contains enough paper."))
+			to_chat(user, span_warning(LANG("obj.85ae6f8d", list(src, src))))
 	else
-		to_chat(user, span_warning("[src]'s integrated printer refuses to print more paper, its bluespace paper synthesizer not having finished recovering from its last synthesis."))
+		to_chat(user, span_warning(LANG("obj.ca089705", list(src))))
 	return CLICK_ACTION_BLOCKING
 
 
@@ -152,7 +152,7 @@
 	if(spilled_amount)
 		var/holder = cyborg_holding_me?.resolve()
 		if(holder)
-			visible_message(span_warning("[cyborg_holding_me?.resolve()] spills the content of [src]'s cargo hold all over the floor!"))
+			visible_message(span_warning(LANG("obj.8f19cc81", list(cyborg_holding_me?.resolve(), src))))
 
 
 /obj/item/borg/hydraulic_clamp/attack_self(mob/user, modifiers)
@@ -162,7 +162,7 @@
 	selected_item_index = 0
 
 	if(contents.len <= 1)
-		to_chat(user, span_warning("There's currently [contents.len ? "only one item" : "nothing"] to take out of [src]'s cargo hold, no need to pick!"))
+		to_chat(user, span_warning(LANG("obj.7fa9cc53", list(contents.len ? "only one item" : "nothing", src))))
 		return
 
 	. = ..()
@@ -182,7 +182,7 @@
 		return
 
 	selected_item_index = new_index
-	to_chat(user, span_notice("[src] will now prioritize unloading [selection]."))
+	to_chat(user, span_notice(LANG("obj.d298ac81", list(src, selection))))
 
 
 /obj/item/borg/hydraulic_clamp/emp_act(severity)
@@ -196,7 +196,7 @@
 
 	// Not enough charge? Tough luck.
 	if(user?.cell.charge < charge_cost)
-		to_chat(user, span_warning("Your internal cell doesn't have enough charge left to use [src]."))
+		to_chat(user, span_warning(LANG("obj.81834c55", list(src))))
 		return
 
 	user.cell.use(charge_cost)
@@ -214,7 +214,7 @@
 		selected_item_index = 0
 
 		if(unloading_time > 0.5 SECONDS) // We don't want too much chat spam if the clamp works fast.
-			to_chat(user, span_notice("You start unloading something from [src]..."))
+			to_chat(user, span_notice(LANG("obj.400204c9", list(src))))
 		playsound(src, clamp_sound, clamp_sound_volume, FALSE, -5)
 		COOLDOWN_START(src, clamp_cooldown, cooldown_duration)
 
@@ -224,7 +224,7 @@
 
 		var/turf/extraction_turf = get_turf(attacked_atom)
 		extracted_item.forceMove(extraction_turf)
-		visible_message(span_notice("[src.loc] unloads [extracted_item] from [src]."))
+		visible_message(span_notice(LANG("obj.0bf89355", list(src.loc, extracted_item, src))))
 		log_silicon("[user] unloaded [extracted_item] onto [extraction_turf] ([AREACOORD(extraction_turf)]).")
 		in_use = FALSE
 		return
@@ -232,26 +232,26 @@
 	// We're trying to load something in the clamp
 	else
 		if(whitelisted_contents && !is_type_in_list(attacked_atom, whitelisted_item_types))
-			to_chat(user, span_warning("[src] can only pick up [whitelisted_item_description]!"))
+			to_chat(user, span_warning(LANG("obj.39260cae", list(src, whitelisted_item_description))))
 			in_use = FALSE
 			return
 
 		if(contents.len >= storage_capacity)
-			to_chat(user, span_warning("[src] is already at full capacity!"))
+			to_chat(user, span_warning(LANG("obj.2de9f1a2", list(src))))
 			in_use = FALSE
 			return
 
 		if(item_weight_limit)
 			var/obj/item/to_lift = attacked_atom
 			if(!to_lift || to_lift.w_class > item_weight_limit)
-				to_chat(user, span_warning("[to_lift] is too big for [src]!"))
+				to_chat(user, span_warning(LANG("obj.5764e1da", list(to_lift, src))))
 				in_use = FALSE
 				return
 
 		var/atom/movable/lifting_up = attacked_atom
 
 		if(lifting_up.anchored)
-			to_chat(user, span_warning("[lifting_up] is firmly secured, it's not currently possible to move it into [src]!"))
+			to_chat(user, span_warning(LANG("obj.241a9e00", list(lifting_up, src))))
 			in_use = FALSE
 			return
 
@@ -261,7 +261,7 @@
 			var/obj/item/delivery/big/parcel = lifting_up
 			if(parcel.contains_mobs)
 				if(!can_hold_mobs)
-					to_chat(user, span_warning("[src]'s warning light blinks red: There's something with the potential to be alive inside of [parcel]!"))
+					to_chat(user, span_warning(LANG("obj.1f3b34f3", list(src, parcel))))
 					in_use = FALSE
 					return
 				contains_mobs = TRUE
@@ -270,7 +270,7 @@
 		lifting_up.add_fingerprint(user)
 
 		if(loading_time > 0.5 SECONDS) // We don't want too much chat spam if the clamp works fast.
-			to_chat(user, span_notice("You start loading [lifting_up] into [src]'s cargo hold..."))
+			to_chat(user, span_notice(LANG("obj.6ca6d253", list(lifting_up, src))))
 		playsound(src, clamp_sound, clamp_sound_volume, FALSE, -5)
 
 		if(!do_after(user, loading_time, lifting_up)) // It takes two seconds to put stuff into the clamp's cargo hold
@@ -282,7 +282,7 @@
 		lifting_up.forceMove(src)
 		var/turf/lifting_up_from = get_turf(lifting_up.loc)
 		log_silicon("[user] loaded [lifting_up] (Contains mobs: [contains_mobs]) into [src] at ([AREACOORD(lifting_up_from)]).")
-		visible_message(span_notice("[src.loc] loads [lifting_up] into [src]'s cargo hold."))
+		visible_message(span_notice(LANG("obj.2fda84a8", list(src.loc, lifting_up, src))))
 		in_use = FALSE
 
 /// The fabled paper plane crossbow and its hardlight paper planes.
@@ -358,7 +358,7 @@
 	if(!COOLDOWN_FINISHED(src, shooting_cooldown))
 		return ITEM_INTERACT_BLOCKING
 	if(planes <= 0)
-		to_chat(user, span_warning("Not enough paper planes left!"))
+		to_chat(user, span_warning(LANG("obj.af1c2fe5", null)))
 		return ITEM_INTERACT_BLOCKING
 	planes--
 
@@ -379,7 +379,7 @@
 
 	var/mob/living/silicon/robot/robot_user = user
 	if(!robot_user.cell.use(STANDARD_CELL_CHARGE * 0.1))
-		to_chat(user, span_warning("Not enough power."))
+		to_chat(user, span_warning(LANG("obj.cde31c60", null)))
 		return ITEM_INTERACT_BLOCKING
 	return shoot(interacting_with, user)
 
@@ -474,12 +474,12 @@
 	playsound(get_turf(user), 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_CROWBAR)
 		tool_behaviour = TOOL_WIRECUTTER
-		to_chat(user, span_notice("You attach the cutting jaws to [src]."))
+		to_chat(user, span_notice(LANG("obj.2ae7a1e6", list(src))))
 		icon_state = "jaws_cutter_cyborg"
 		usesound = 'sound/items/tools/jaws_cut.ogg'
 	else
 		tool_behaviour = TOOL_CROWBAR
-		to_chat(user, span_notice("You attach the prying jaws to [src]."))
+		to_chat(user, span_notice(LANG("obj.c4cd02fd", list(src))))
 		icon_state = "jaws_pry_cyborg"
 		usesound = 'sound/items/tools/jaws_pry.ogg'
 
@@ -501,11 +501,11 @@
 	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
 		tool_behaviour = TOOL_WRENCH
-		to_chat(user, span_notice("You attach the bolt bit to [src]."))
+		to_chat(user, span_notice(LANG("obj.2ecc6ab2", list(src))))
 		icon_state = "drill_bolt_cyborg"
 	else
 		tool_behaviour = TOOL_SCREWDRIVER
-		to_chat(user, span_notice("You attach the screw bit to [src]."))
+		to_chat(user, span_notice(LANG("obj.c1181f73", list(src))))
 		icon_state = "drill_screw_cyborg"
 
 /// Shapeshifter
@@ -583,18 +583,18 @@
 		if (isturf(user.loc))
 			toggle(user)
 		else
-			to_chat(user, span_warning("You can't use [src] while inside something!"))
+			to_chat(user, span_warning(LANG("obj.8f40d671", list(src))))
 	else
-		to_chat(user, span_warning("You need at least [activationCost] charge in your cell to use [src]!"))
+		to_chat(user, span_warning(LANG("obj.1f15aea9", list(activationCost, src))))
 
 /obj/item/borg_shapeshifter/proc/toggle(mob/living/silicon/robot/user)
 	if(active)
 		playsound(src, 'sound/effects/pop.ogg', 100, TRUE, -6)
-		to_chat(user, span_notice("You deactivate \the [src]."))
+		to_chat(user, span_notice(LANG("obj.03d7907e", list(src))))
 		deactivate(user)
 	else
 		if(animation_playing)
-			to_chat(user, span_notice("\the [src] is recharging."))
+			to_chat(user, span_notice(LANG("obj.65e76f37", list(src))))
 			return
 		var/static/list/model_icons = sort_list(list(
 			"Medical" = image(icon = 'icons/mob/silicon/robots.dmi', icon_state = "medical"),
@@ -644,7 +644,7 @@
 			return FALSE
 		qdel(model)
 		animation_playing = TRUE
-		to_chat(user, span_notice("You activate \the [src]."))
+		to_chat(user, span_notice(LANG("obj.41ddd503", list(src))))
 		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, TRUE, -6)
 		var/start = user.filters.len
 		var/X,Y,rsq,i,f
@@ -661,10 +661,10 @@
 			animate(offset=f:offset-1, time=rand()*20+10)
 		if (do_after(user, 5 SECONDS, target=user) && (!activationCost || user.cell.use(activationCost)))
 			playsound(src, 'sound/effects/bamf.ogg', 100, TRUE, -6)
-			to_chat(user, span_notice("You are now disguised."))
+			to_chat(user, span_notice(LANG("obj.3979f259", null)))
 			activate(user)
 		else
-			to_chat(user, span_warning("The chameleon field fizzles."))
+			to_chat(user, span_warning(LANG("obj.d586c13c", null)))
 			do_sparks(3, FALSE, user)
 			for(i=1, i<=min(7, user.filters.len), ++i) // removing filters that are animating does nothing, we gotta stop the animations first
 				f = user.filters[start+i]
@@ -750,7 +750,7 @@
 /obj/item/borg_shapeshifter/proc/disrupt(mob/living/silicon/robot/user)
 	SIGNAL_HANDLER
 	if(active)
-		to_chat(user, span_danger("Your chameleon field deactivates."))
+		to_chat(user, span_danger(LANG("obj.7ac1e601", null)))
 		deactivate(user)
 
 /obj/item/borg/apparatus/sheet_manipulator/chemistry
@@ -782,9 +782,9 @@
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			balloon_alert(user, "no cell found!")
+			balloon_alert(user, LANG("obj.ba8f2f7d", null))
 		return 0
 	. = borgy.cell.use(amount * energy_factor)
 	if(!. && user)
-		balloon_alert(user, "insufficient charge!")
+		balloon_alert(user, LANG("obj.206fba9f", null))
 	return .

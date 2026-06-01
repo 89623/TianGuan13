@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define LEGIONNAIRE_CHARGE 1
 #define HEAD_DETACH 2
 #define BONFIRE_TELEPORT 3
@@ -123,7 +124,7 @@
 		new /obj/effect/temp_visual/dragon_swoop/legionnaire(T)
 		T = get_step(T, dir_to_target)
 	playsound(src,'sound/effects/magic/demon_attack1.ogg', 200, 1)
-	visible_message(span_boldwarning("[src] prepares to charge!"))
+	visible_message(span_boldwarning(LANG("mob.f2725eaf", list(src))))
 	addtimer(CALLBACK(src, PROC_REF(legionnaire_charge_2), dir_to_target, 0), 0.4 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge_2(move_dir, times_ran)
@@ -169,7 +170,7 @@
 		icon_state = "legionnaire_headless"
 		icon_living = "legionnaire_headless"
 		icon_aggro = "legionnaire_headless"
-		visible_message(span_boldwarning("[src]'s head flies off!"))
+		visible_message(span_boldwarning(LANG("mob.52a3c5de", list(src))))
 		var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/newhead = new /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead(loc)
 		newhead.GiveTarget(target)
 		SET_FACTION_AND_ALLIES_FROM(newhead, src)
@@ -193,7 +194,7 @@
 	icon_state = "legionnaire"
 	icon_living = "legionnaire"
 	icon_aggro = "legionnaire"
-	visible_message(span_boldwarning("The top of [src]'s spine leaks a black liquid, forming into a skull!"))
+	visible_message(span_boldwarning(LANG("mob.c1818228", list(src))))
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/bonfire_teleport()
 	ranged_cooldown = world.time + 5
@@ -202,7 +203,7 @@
 		mypile = newpile
 		mypile.myowner = src
 		playsound(get_turf(src),'sound/items/fulton/fultext_deploy.ogg', 200, 1)
-		visible_message(span_boldwarning("[src] summons a bonfire on [get_turf(src)]!"))
+		visible_message(span_boldwarning(LANG("mob.e3d3823e", list(src, get_turf(src)))))
 		return
 	else
 		var/turf/legionturf = get_turf(src)
@@ -213,9 +214,9 @@
 			return
 		playsound(pileturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
 		playsound(legionturf,'sound/items/fulton/fultext_deploy.ogg', 200, 1)
-		visible_message(span_boldwarning("[src] melts down into a burning pile of bones!"))
+		visible_message(span_boldwarning(LANG("mob.36a02541", list(src))))
 		forceMove(pileturf)
-		visible_message(span_boldwarning("[src] forms from the bonfire!"))
+		visible_message(span_boldwarning(LANG("mob.55dbff32", list(src))))
 		mypile.forceMove(legionturf)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/spew_smoke()
@@ -228,9 +229,9 @@
 	if(myhead != null)
 		myhead.visible_message(span_boldwarning("[myhead] spews smoke from its maw!"))
 	else if(!has_head)
-		visible_message(span_boldwarning("[src] spews smoke from the tip of their spine!"))
+		visible_message(span_boldwarning(LANG("mob.7cbf7bc9", list(src))))
 	else
-		visible_message(span_boldwarning("[src] spews smoke from its maw!"))
+		visible_message(span_boldwarning(LANG("mob.227eb0f0", list(src))))
 	do_smoke(2, src, smoke_location)
 
 //The legionnaire's head.  Basically the same as any legion head, but we have to tell our creator when we die so they can generate another head.

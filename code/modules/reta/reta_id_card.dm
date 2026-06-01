@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Request Emergency Temporary Access - ID Card Extensions
  * code\modules\reta\reta_system.dm
@@ -70,7 +71,7 @@
 	var/mob/living/carbon/human/holder = get_id_holder()
 	if(holder)
 		holder.balloon_alert(holder, "[dept] access expired")
-		to_chat(holder, span_warning("Emergency access to [dept] has expired."))
+		to_chat(holder, span_warning(LANG("obj.e7e8fd42", list(dept))))
 
 	// Remove department's temporary access from the main access list
 	var/list/dept_access = reta_temp_access[dept]
@@ -111,7 +112,7 @@
 	var/mob/living/carbon/human/holder = get_id_holder()
 	if(holder)
 		holder.balloon_alert(holder, "emergency access expired")
-		to_chat(holder, span_warning("Emergency access has expired."))
+		to_chat(holder, span_warning(LANG("obj.9328cc61", null)))
 
 	// Collect all temporary access flags for logging
 	var/list/all_temp_access = list()

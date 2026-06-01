@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Requests from prayers
 #define REQUEST_PRAYER "request_prayer"
 /// Requests for Centcom
@@ -151,7 +152,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 	// Only admins should be sending actions
 	if (!check_rights(R_ADMIN))
-		to_chat(usr, "You do not have permission to do this, you require +ADMIN", confidential = TRUE)
+		to_chat(usr, LANG("datum.8fda4fd5", null), confidential = TRUE)
 		return
 
 	if (action == "toggleprint")
@@ -161,7 +162,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	// Get the request this relates to
 	var/id = params["id"] != null ? text2num(params["id"]) : null
 	if (!id)
-		to_chat(usr, "Failed to find a request ID in your action, please report this", confidential = TRUE)
+		to_chat(usr, LANG("datum.9ece0b61", null), confidential = TRUE)
 		CRASH("Received an action without a request ID, this shouldn't happen!")
 	var/datum/request/request = !id ? null : requests_by_id[id]
 

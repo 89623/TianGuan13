@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Dispenser
  *
@@ -28,7 +29,7 @@
 
 
 /obj/structure/dispenser_bot/proc/add_item(mob/user, obj/item/to_add)
-	balloon_alert(user, "inserted item")
+	balloon_alert(user, LANG("obj.c93a6a61", null))
 	stored_items += to_add
 	to_add.forceMove(src)
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, PROC_REF(handle_stored_item_moved))
@@ -65,11 +66,11 @@
 		return NONE
 
 	if (tool.w_class > max_weight && !istype(tool, /obj/item/storage/bag))
-		balloon_alert(user, "item too big!")
+		balloon_alert(user, LANG("obj.6ca0f584", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(length(stored_items) >= capacity)
-		balloon_alert(user, "at maximum capacity!")
+		balloon_alert(user, LANG("obj.dba6c06e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(tool, /obj/item/storage/bag))

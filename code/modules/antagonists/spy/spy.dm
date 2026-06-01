@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/antagonist/spy
 	name = "\improper Spy"
 	roundend_category = "spies"
@@ -99,7 +100,7 @@
 		if(give_backup)
 			var/datum/action/backup_uplink/backup = new(src)
 			backup.Grant(spy)
-			to_chat(spy, span_boldnotice("You were unable to be supplied with an uplink, so you have been given the ability to create one yourself."))
+			to_chat(spy, span_boldnotice(LANG("datum.d77e3283", null)))
 		return FALSE
 
 	return TRUE

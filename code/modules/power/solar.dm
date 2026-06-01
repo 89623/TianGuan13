@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SOLAR_GEN_RATE 2500
 #define PANEL_Z_OFFSET 13
 #define PANEL_EDGE_Z_OFFSET (PANEL_Z_OFFSET - 2)
@@ -294,7 +295,7 @@
 
 	if(item_used.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(!solarturf.can_have_cabling()) //allows catwalks
-			balloon_alert(user, "can't secure in space!")
+			balloon_alert(user, LANG("obj.03dee60e", null))
 			return
 		for(var/obj/stuff_in_the_way in solarturf) //prevent anchoring on other machinery or solar assemblies
 			if(stuff_in_the_way == src)
@@ -323,14 +324,14 @@
 
 		//prevent construction if something dense's on our tile
 		if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-			balloon_alert(user, "something in the way!")
+			balloon_alert(user, LANG("obj.7dd60dd8", null))
 			return
 		if(!istype(item_used, /obj/item/stack/sheet/glass))
-			to_chat(user, span_warning("The tracker only accepts standard, un-reinforced glass."))
+			to_chat(user, span_warning(LANG("obj.0075492d", null)))
 			return
 		var/obj/item/stack/sheet/my_sheet = item_used
 		if(!my_sheet.use(2))
-			to_chat(user, span_warning("You don't have enough glass to complete the tracker."))
+			to_chat(user, span_warning(LANG("obj.b74f8f2c", null)))
 			return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		user.visible_message(span_notice("[user] places the glass on the solar assembly."),span_notice("You place the glass on the solar assembly."))
@@ -359,18 +360,18 @@
 		//items that arent used above, or arent usable glass will make it here.
 		//so we check if its reinfocred glass, or some other item
 		if(istype(item_used, /obj/item/stack/sheet/rglass) || istype(item_used, /obj/item/stack/sheet/plasmarglass))
-			to_chat(user, span_warning("The solar array will only accept glass or glass alloys that have not been reinforced."))
+			to_chat(user, span_warning(LANG("obj.632ae05a", null)))
 		//an else statement can be put here if you want something to happen to all the misc items that make it this far
 		return
 
 	//prevent construction if something dense's on our tile
 	if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-		balloon_alert(user, "something in the way!")
+		balloon_alert(user, LANG("obj.7dd60dd8", null))
 		return
 
 	if(is_glass_sheet(item_used))
 		if(!anchored)
-			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
+			to_chat(user, span_warning(LANG("obj.dddc80b6", null)))
 			return
 
 		var/list/glass_material_to_tier = list(
@@ -382,7 +383,7 @@
 
 		var/obj/item/stack/sheet/my_sheet = item_used
 		if(!my_sheet.use(2))
-			to_chat(user, span_warning("You need at least two sheets of glass to complete a solar panel!"))
+			to_chat(user, span_warning(LANG("obj.d3d37de3", null)))
 			return
 
 		var/datum/material/glass_material = my_sheet.material_type
@@ -562,7 +563,7 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(I.use_tool(src, user, 20, volume=50))
 			if (src.machine_stat & BROKEN)
-				to_chat(user, span_notice("The broken glass falls out."))
+				to_chat(user, span_notice(LANG("obj.f8d51e40", null)))
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				new /obj/item/shard( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
@@ -574,7 +575,7 @@
 				A.set_anchored(TRUE)
 				qdel(src)
 			else
-				to_chat(user, span_notice("You disconnect the monitor."))
+				to_chat(user, span_notice(LANG("obj.a211ab7d", null)))
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)

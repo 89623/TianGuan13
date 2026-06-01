@@ -66,7 +66,7 @@
 	SIGNAL_HANDLER
 	// if the world time hasn't yet passed the time required for evolution
 	if(human_target.has_status_effect(/datum/status_effect/ash_age))
-		to_chat(human_target, span_warning("More time is necessary to evolve-- fifteen minutes between each evolution..."))
+		to_chat(human_target, span_warning(LANG("datum.839b1280", null)))
 		return
 
 	// since it was time, go up a stage and now we check what to add
@@ -273,11 +273,11 @@
 /obj/item/melee/ashen_blade/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/crusher_trophy))
 		if(prob(25)) //by chance, you should get at least every 3 out of 4 trophies.
-			to_chat(user, span_warning("Your [src] consumes [tool] without benefit!"))
+			to_chat(user, span_warning(LANG("obj.c1f0e91f", list(src, tool))))
 			qdel(tool)
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_warning("Your [src] consumes [tool]!"))
+		to_chat(user, span_warning(LANG("obj.252ccaeb", list(src, tool))))
 		playsound(get_turf(src), 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 		qdel(tool)
 		consumed_trophies += 1
@@ -296,7 +296,7 @@
 			exposed_wound_bonus += 2
 
 		else if(consumed_trophies == (max_trophies + 1)) //just so you aren't spammed...
-			to_chat(user, span_warning("[src] can no longer grow stronger!"))
+			to_chat(user, span_warning(LANG("obj.54cd2a85", list(src))))
 
 		return ITEM_INTERACT_BLOCKING
 

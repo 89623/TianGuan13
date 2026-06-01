@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Terror effect handlers
 
 #define FEAR_SCALING(base, min, max) clamp(base * (terror_buildup - min) / (max - min), 0, base)
@@ -26,7 +27,7 @@
 		return
 
 	if (COOLDOWN_FINISHED(src, message_cd) && !owner.has_status_effect(/datum/status_effect/jitter)) // Don't display the message if we're already shaking
-		to_chat(owner, span_warning("You can't stop shaking..."))
+		to_chat(owner, span_warning(LANG("datum.49a14aaa", null)))
 		COOLDOWN_START(src, message_cd, TERROR_MESSAGE_CD)
 
 	owner.set_jitter_if_lower(20 SECONDS)
@@ -71,9 +72,9 @@
 			return
 		COOLDOWN_START(src, message_cd, TERROR_MESSAGE_CD)
 		if (terror_buildup < TERROR_BUILDUP_FEAR)
-			to_chat(owner, span_warning("Your heart skips a beat."))
+			to_chat(owner, span_warning(LANG("datum.9cfe197b", null)))
 		else
-			to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
+			to_chat(owner, span_userdanger(LANG("datum.00620900", null)))
 		return
 
 	owner.visible_message(
@@ -97,7 +98,7 @@
 		return
 
 	if (SPT_PROB((terror_buildup >= TERROR_BUILDUP_PANIC) ? 3 : 1, seconds_per_tick))
-		to_chat(owner, span_warning("You feel sick..."))
+		to_chat(owner, span_warning(LANG("datum.7220d46a", null)))
 		// Vomit blood if we're *really* freaking out
 		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), terror_buildup >= TERROR_BUILDUP_PASSIVE_MAXIMUM), 5 SECONDS)
 
@@ -141,7 +142,7 @@
 
 	if (!active)
 		active = TRUE
-		to_chat(owner, span_userdanger("You feel your heart racing!"))
+		to_chat(owner, span_userdanger(LANG("datum.90ff785f", null)))
 		owner.add_fov_trait(type, FOV_270_DEGREES) // Terror induced tunnel vision
 
 	owner.playsound_local(owner, 'sound/effects/health/slowbeat.ogg', 40, FALSE, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(reset_tram, R_DEBUG|R_ADMIN, "Reset Tram", "Reset a tram controller or its contents.", ADMIN_CATEGORY_DEBUG)
 	var/static/list/debug_tram_list = list(
 		TRAMSTATION_LINE_1,
@@ -21,7 +22,7 @@ ADMIN_VERB(reset_tram, R_DEBUG|R_ADMIN, "Reset Tram", "Reset a tram controller o
 			break
 
 	if(isnull(broken_controller))
-		to_chat(user, span_warning("Couldn't find a transport controller datum with ID [selected_transport_id]!"))
+		to_chat(user, span_warning(LANG("datum.b35cdde5", list(selected_transport_id))))
 		return
 
 	switch(reset_type)

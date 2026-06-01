@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/style_meter
 	name = "style meter attachment"
 	desc = "Attach this to a pair of glasses to install a style meter system in them. \
@@ -43,7 +44,7 @@
 	RegisterSignal(interacting_with, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(interacting_with, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 	RegisterSignal(interacting_with, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(redirect_multitool))
-	balloon_alert(user, "style meter attached")
+	balloon_alert(user, LANG("obj.c066d0c8", null))
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	if(!iscarbon(interacting_with.loc))
 		return .
@@ -106,7 +107,7 @@
 
 /obj/item/style_meter/multitool_act(mob/living/user, obj/item/tool)
 	multitooled = !multitooled
-	balloon_alert(user, "meter [multitooled ? "" : "un"]hacked")
+	balloon_alert(user, LANG("obj.64d51d7f", list(multitooled ? "" : "un")))
 	style_meter?.multitooled = multitooled
 	return ITEM_INTERACT_SUCCESS
 

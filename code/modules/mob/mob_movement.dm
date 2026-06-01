@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * If your mob is conscious, drop the item in the active hand
  *
@@ -159,7 +160,7 @@
 		return TRUE
 	else if(HAS_TRAIT(mob, TRAIT_RESTRAINED))
 		COOLDOWN_START(src, move_delay, 1 SECONDS)
-		to_chat(src, span_warning("You're restrained! You can't move!"))
+		to_chat(src, span_warning(LANG("client.ef7e6e93", null)))
 		return TRUE
 	return mob.resist_grab(TRUE)
 
@@ -291,7 +292,7 @@
 	if(backup.newtonian_move(dir2angle(REVERSE_DIR(movement_dir)), instant = TRUE)) //You're pushing off something movable, so it moves
 		// We set it down here so future calls to Process_Spacemove by the same pair in the same tick don't lead to fucky
 		backup.last_pushoff = world.time
-		to_chat(src, span_info("You push off of [backup] to propel yourself."))
+		to_chat(src, span_info(LANG("mob.f1cba3d1", list(backup))))
 	return TRUE
 
 /// We handle lattices via backups
@@ -541,7 +542,7 @@
 	else
 		//NOVA EDIT ADDITION BEGIN - GUNPOINT
 		if (HAS_TRAIT(src,TRAIT_NORUNNING))
-			to_chat(src, "You find yourself unable to run.")
+			to_chat(src, LANG("mob.ccc751ef", null))
 			return FALSE
 		//NOVA EDIT ADDITION END
 		move_intent = MOVE_INTENT_RUN
@@ -568,11 +569,11 @@
 
 	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
-	balloon_alert(src, "moving up...")
+	balloon_alert(src, LANG("mob.614fbd1f", null))
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
 	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
-		to_chat(src, span_notice("You move upwards."))
+		to_chat(src, span_notice(LANG("mob.42490421", null)))
 
 ///Moves a mob down a z level
 /mob/proc/down()
@@ -592,11 +593,11 @@
 
 	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
 		return
-	balloon_alert(src, "moving down...")
+	balloon_alert(src, LANG("mob.8e342f14", null))
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
-		to_chat(src, span_notice("You move down."))
+		to_chat(src, span_notice(LANG("mob.323655c6", null)))
 	return FALSE
 
 /mob/abstract_move(atom/destination)

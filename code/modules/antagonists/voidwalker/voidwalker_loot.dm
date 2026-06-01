@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Gives someone the stable voided trauma and then self destructs
 /obj/item/clothing/head/helmet/skull/cosmic
 	name = "cosmic skull"
@@ -17,13 +18,13 @@
 	. = ..()
 
 	if(istype(user, /mob/living/basic/voidwalker))
-		to_chat(user, span_bolddanger("OH GOD NOO!!!! WHYYYYYYYYY??!!! WHO WOULD DO THIS?!!"))
+		to_chat(user, span_bolddanger(LANG("obj.37090acf", null)))
 		return
 
 	if(!uses || !ishuman(user))
 		return
 
-	to_chat(user, span_purple("You begin staring into \the [src]..."))
+	to_chat(user, span_purple(LANG("obj.648b692f", list(src))))
 
 	if(!do_after(user, 10 SECONDS, src))
 		return
@@ -42,7 +43,7 @@
 		starer.cure_trauma_type(/datum/brain_trauma/voided) //this wouldn't make much sense to have anymore
 		starer.gain_trauma(/datum/brain_trauma/voided/stable)
 
-	to_chat(user, span_purple("And a whole world opens up to you."))
+	to_chat(user, span_purple(LANG("obj.d43e5bcf", null)))
 	playsound(get_turf(user), 'sound/effects/curse/curse5.ogg', 60)
 
 /**

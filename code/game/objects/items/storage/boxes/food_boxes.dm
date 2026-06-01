@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // This contains all boxes with edible stuffs or stuff related to edible stuffs.
 
 /obj/item/storage/box/donkpockets
@@ -105,7 +106,7 @@
 		if(!choice || choice == design_choice)
 			return ITEM_INTERACT_BLOCKING
 		design_choice = choice
-		balloon_alert(user, "modified")
+		balloon_alert(user, LANG("obj.c173e63f", null))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	if(tool.get_sharpness() && !contents.len)
@@ -134,10 +135,10 @@
 	if(user.incapacitated)
 		return FALSE
 	if(contents.len)
-		balloon_alert(user, "items inside!")
+		balloon_alert(user, LANG("obj.ca142d62", null))
 		return FALSE
 	if(!P || !user.is_holding(P))
-		balloon_alert(user, "needs pen!")
+		balloon_alert(user, LANG("obj.93d76554", null))
 		return FALSE
 	return TRUE
 

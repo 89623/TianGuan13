@@ -136,7 +136,7 @@
 		if(cooldown <= 0)
 			cooldown = 0
 			visible_message(
-				span_notice("[src] chimes."),
+				span_notice(LANG("obj.340c6f12", list(src))),
 				blind_message = span_notice("You hear something chime."),
 			)
 	else if(activated && inserted_battery.battery_effect)
@@ -168,7 +168,7 @@
 	if(activated)
 		activated = FALSE
 		timing = FALSE
-		visible_message(span_notice("[src] buzzes."), blind_message = span_notice("You hear something buzz."))
+		visible_message(span_notice(LANG("obj.9f1f2989", list(src))), blind_message = span_notice("You hear something buzz."))
 		cooldown = COOLDOWN_TIME
 
 	if(inserted_battery?.battery_effect)

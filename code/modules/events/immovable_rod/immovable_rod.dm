@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// "What the fuck was that?!"
 /obj/effect/immovablerod
 	name = "immovable rod"
@@ -100,14 +101,14 @@
 			var/direction = z_diff > 0 ? UP : DOWN
 			var/turf/target_z_turf = get_step_multiz(src, direction)
 
-			visible_message(span_danger("[src] phases out of reality."))
+			visible_message(span_danger(LANG("obj.0e999bd8", list(src))))
 
 			if(!do_teleport(src, target_z_turf))
 				// We failed to teleport. Might as well admit defeat.
 				qdel(src)
 				return
 
-			visible_message(span_danger("[src] phases into reality."))
+			visible_message(span_danger(LANG("obj.bcf092e2", list(src))))
 			GLOB.move_manager.home_onto(src, special_target)
 
 		if(loc == target_turf)
@@ -155,7 +156,7 @@
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-		audible_message(span_danger("You hear a CLANG!"))
+		audible_message(span_danger(LANG("obj.425d6ace", null)))
 
 	if(special_target && clong == special_target)
 		complete_trajectory()
@@ -163,7 +164,7 @@
 	// If rod meets rod, they collapse into a singularity. Yes, this means that if two wizard rods collide,
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
-		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
+		visible_message(span_danger(LANG("obj.3f3255ef", list(src, clong))))
 		do_smoke(2, src, get_turf(src))
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800

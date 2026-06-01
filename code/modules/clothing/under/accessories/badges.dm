@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Badges, pins, and other very small items that slot onto a shirt.
 /obj/item/clothing/accessory/lawyers_badge
 	name = "attorney's badge"
@@ -301,10 +302,10 @@
 	if(user.combat_mode)
 		playsound(interacting_living, 'sound/items/weapons/throw.ogg', 30)
 		interacting_living.examinate(src)
-		to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
+		to_chat(interacting_living, span_userdanger(LANG("obj.20dbfa2b", list(user, src))))
 		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
 	else
 		playsound(interacting_living, 'sound/items/weapons/throwsoft.ogg', 20)
 		interacting_living.examinate(src)
-		to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
+		to_chat(interacting_living, span_boldwarning(LANG("obj.0b00b773", list(user, src))))
 		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))

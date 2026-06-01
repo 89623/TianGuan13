@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ENGINE_UNWRENCHED 0
 #define ENGINE_WRENCHED 1
 #define ENGINE_WELDED 2
@@ -102,7 +103,7 @@
 /obj/machinery/power/shuttle_engine/can_be_unfasten_wrench(mob/user, silent)
 	if(engine_state == ENGINE_WELDED)
 		if(!silent)
-			to_chat(user, span_warning("[src] is welded to the floor!"))
+			to_chat(user, span_warning(LANG("obj.9092e2c6", list(src))))
 		return FAILED_UNFASTEN
 	return ..()
 

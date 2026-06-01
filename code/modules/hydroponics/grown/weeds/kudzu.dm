@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // A very special plant, deserving its own file.
 
 /obj/item/seeds/kudzu
@@ -33,12 +34,12 @@
 	if(isspaceturf(user.loc))
 		return
 	if(!isturf(user.loc))
-		to_chat(user, span_warning("You need more space to plant [src]."))
+		to_chat(user, span_warning(LANG("obj.e94dd832", list(src))))
 		return FALSE
 	if(locate(/obj/structure/spacevine) in user.loc)
-		to_chat(user, span_warning("There is too much kudzu here to plant [src]."))
+		to_chat(user, span_warning(LANG("obj.a60a6271", list(src))))
 		return FALSE
-	to_chat(user, span_notice("You plant [src]."))
+	to_chat(user, span_notice(LANG("obj.19efdae6", list(src))))
 	message_admins("Kudzu planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)]")
 	investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 	new /datum/spacevine_controller(get_turf(user), mutations, potency, production)
@@ -48,7 +49,7 @@
 	user.visible_message(span_danger("[user] begins throwing seeds on the ground..."))
 	if(do_after(user, 5 SECONDS, target = user.drop_location(), progress = TRUE))
 		plant(user)
-		to_chat(user, span_notice("You plant the kudzu. You monster."))
+		to_chat(user, span_notice(LANG("obj.baa4d562", null)))
 
 /obj/item/seeds/kudzu/get_unique_analyzer_data()
 	var/list/all_mutations = list()

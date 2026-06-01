@@ -30,13 +30,13 @@
 
 	var/mob/user = usr
 	if(!user.get_item_by_slot(ITEM_SLOT_BACK) == src)
-		to_chat(usr, span_warning("The [src] must be worn properly to use!"))
+		to_chat(usr, span_warning(LANG("obj.e0837cee", list(src))))
 		return
 
 	if(processor.loc == src)
 		// Detach the searcher into the user's hands
 		if(!user.put_in_hands(processor))
-			to_chat(user, span_warning("You need a free hand to hold the [processor]!"))
+			to_chat(user, span_warning(LANG("obj.6d0262b9", list(processor))))
 			return
 		playsound(src, 'modular_nova/modules/aesthetics/lightswitch/sound/lightswitch.ogg', 50, FALSE)
 	else
@@ -58,7 +58,7 @@
 	if(ismob(processor.loc))
 		var/mob/mob_loc = processor.loc
 		if(mob_loc.dropItemToGround(processor))
-			to_chat(mob_loc, span_notice("The [processor] snaps back into the [src]."))
+			to_chat(mob_loc, span_notice(LANG("obj.9f1e60cb", list(processor, src))))
 			playsound(src, 'modular_nova/modules/aesthetics/lightswitch/sound/lightswitch.ogg', 50, FALSE)
 	else
 		processor.forceMove(src)
@@ -167,6 +167,6 @@
 			if(nearest_artifact_distance < 0 || cur_dist < nearest_artifact_distance)
 				nearest_artifact_distance = cur_dist + rand() * 2 - 1
 	visible_message(
-		span_info("[src] clicks."),
+		span_info(LANG("obj.b6d4f399", list(src))),
 		blind_message = span_notice("You hear click nearby."),
 	)

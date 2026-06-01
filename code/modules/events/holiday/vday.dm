@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Valentine's Day events //
 // why are you playing spessmens on valentine's day you wizard //
 
@@ -96,7 +97,7 @@
 	if(length(candidates_pruned) == 0)
 		return
 	if(length(candidates_pruned) == 1)
-		to_chat(candidates_pruned[1], span_warning("You are the only one who wanted a Valentine..."))
+		to_chat(candidates_pruned[1], span_warning(LANG("datum.eeaca880", null)))
 		return
 
 	while(length(candidates_pruned) >= 2)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/pet/gondola/gondolapod
 	name = "gondola"
 	real_name = "gondola"
@@ -98,7 +99,7 @@
 	var/mob/living/basic/pet/gondola/gondolapod/gondola_owner = owner
 	var/total = gondola_owner.contents.len
 	if (total)
-		to_chat(gondola_owner, span_notice("You detect [total] object\s within your incredibly vast belly."))
+		to_chat(gondola_owner, span_notice(LANG("datum.21f6789c", list(total))))
 	else
-		to_chat(gondola_owner, span_notice("A closer look inside yourself reveals... nothing."))
+		to_chat(gondola_owner, span_notice(LANG("datum.d99b4df1", null)))
 	return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// how many things can we knock off a table at once by diving into it?
 #define MAX_TABLE_MESSES 18
 
@@ -50,7 +51,7 @@
 
 /datum/component/tackler/Destroy()
 	var/mob/P = parent
-	to_chat(P, span_notice("You can no longer tackle."))
+	to_chat(P, span_notice(LANG("datum.7db37096", null)))
 	return ..()
 
 /datum/component/tackler/RegisterWithParent()
@@ -82,23 +83,23 @@
 		return
 
 	if(HAS_TRAIT(user, TRAIT_HULK))
-		to_chat(user, span_warning("You're too angry to remember how to tackle!"))
+		to_chat(user, span_warning(LANG("datum.69d04b0f", null)))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		to_chat(user, span_warning("You need free use of your hands to tackle!"))
+		to_chat(user, span_warning(LANG("datum.c621993b", null)))
 		return
 
 	if(user.body_position == LYING_DOWN)
-		to_chat(user, span_warning("You must be standing to tackle!"))
+		to_chat(user, span_warning(LANG("datum.08ca4d20", null)))
 		return
 
 	if(tackling)
-		to_chat(user, span_warning("You're not ready to tackle!"))
+		to_chat(user, span_warning(LANG("datum.95f00adc", null)))
 		return
 
 	if(user.get_timed_status_effect_duration(/datum/status_effect/staggered)) // can't tackle if you're staggered
-		to_chat(user, span_warning("You're too off balance to tackle!"))
+		to_chat(user, span_warning(LANG("datum.83430fd9", null)))
 		return
 
 	user.face_atom(clicked_atom)
@@ -161,7 +162,7 @@
 
 	if(target.check_block(user, 0, user.name, attack_type = LEAP_ATTACK))
 		user.visible_message(span_danger("[user]'s tackle is blocked by [target], softening the effect!"), span_userdanger("Your tackle is blocked by [target], softening the effect!"), ignored_mobs = target)
-		to_chat(target, span_userdanger("[target] blocks [user]'s tackle attempt, softening the effect!"))
+		to_chat(target, span_userdanger(LANG("datum.b5a98e30", list(target, user))))
 		neutral_outcome(user, target, tackle_word) //Forces a neutral outcome so you're not screwed too much from being blocked while tackling
 		return COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH
 
@@ -274,7 +275,7 @@
 
 
 	user.visible_message(span_warning("[user] lands a [tackle_word] on [target], briefly staggering them both!"), span_userdanger("You land a [tackle_word] on [target], briefly staggering [target.p_them()] and yourself!"), ignored_mobs = target)
-	to_chat(target, span_userdanger("[user] lands a [tackle_word] on you, briefly staggering you both!"))
+	to_chat(target, span_userdanger(LANG("datum.b5c60062", list(user, tackle_word))))
 
 	user.SetKnockdown(0, ignore_canstun = TRUE)
 	user.get_up(TRUE)
@@ -534,7 +535,7 @@
 
 	var/oopsie = rand(danger_zone, 100)
 	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
-		to_chat(user, span_notice("You're really glad you're wearing protection!"))
+		to_chat(user, span_notice(LANG("datum.338a8077", null)))
 	oopsie += oopsie_mod
 
 	switch(oopsie)

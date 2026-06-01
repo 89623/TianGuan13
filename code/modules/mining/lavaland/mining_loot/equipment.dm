@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Rod of Asclepius
 /obj/item/rod_of_asclepius
 	name = "\improper Rod of Asclepius"
@@ -37,15 +38,15 @@
 	if(activated)
 		return
 	if(!iscarbon(user))
-		to_chat(user, span_warning("The snake carving seems to come alive, if only for a moment, before returning to its dormant state, almost as if it finds you incapable of holding its oath."))
+		to_chat(user, span_warning(LANG("obj.319b1185", null)))
 		return
 	var/mob/living/carbon/itemUser = user
 	if(itemUser.has_status_effect(/datum/status_effect/hippocratic_oath))
-		to_chat(user, span_warning("You can't possibly handle the responsibility of more than one rod!"))
+		to_chat(user, span_warning(LANG("obj.27895a45", null)))
 		return
 
 	var/static/failText = span_warning("The snake seems unsatisfied with your incomplete oath and returns to its previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!")
-	to_chat(itemUser, span_notice("The wooden snake that was carved into the rod seems to suddenly come alive and begins to slither down your arm! The compulsion to help others grows abnormally strong..."))
+	to_chat(itemUser, span_notice(LANG("obj.c8536cb6", null)))
 	for(var/oath_line in oath_lines)
 		if(do_after(itemUser, 3 SECONDS, target = itemUser))
 			itemUser.say(oath_line, forced = "hippocratic oath")
@@ -58,7 +59,7 @@
 	apply_oath(itemUser)
 
 /obj/item/rod_of_asclepius/proc/apply_oath(mob/living/carbon/user)
-	to_chat(user, span_notice("The snake, satisfied with your oath, attaches itself and the rod to your forearm with an inseparable grip. Your thoughts seem to only revolve around the core idea of helping others, and harm is nothing more than a distant, wicked memory..."))
+	to_chat(user, span_notice(LANG("obj.ee64765a", null)))
 	var/datum/status_effect/hippocratic_oath/effect = user.apply_status_effect(/datum/status_effect/hippocratic_oath)
 	effect.hand = user.get_held_index_of_item(src)
 	activated()
@@ -89,7 +90,7 @@
 /obj/item/warp_cube/attack_self(mob/user)
 	var/turf/current_location = get_turf(user)
 	if(!linked || isnull(get_turf(linked)) || !check_teleport_valid(src, current_location))
-		to_chat(user, span_warning("[src] fizzles uselessly."))
+		to_chat(user, span_warning(LANG("obj.c2b886e1", list(src))))
 		return
 	if(teleporting)
 		return
@@ -161,7 +162,7 @@
 		cooldown = world.time + 600
 		new /obj/effect/immortality_talisman(get_turf(user), user)
 	else
-		to_chat(user, span_warning("[src] is not ready yet!"))
+		to_chat(user, span_warning(LANG("obj.efed0cc7", list(src))))
 
 /obj/effect/immortality_talisman
 	name = "hole in reality"

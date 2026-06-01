@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**********************Ore box**************************/
 
@@ -62,7 +63,7 @@
 		return TRUE
 	else if(weapon.atom_storage)
 		weapon.atom_storage.remove_type(/obj/item/stack/ore, src, INFINITY, TRUE, FALSE, user, null)
-		to_chat(user, span_notice("You empty the ore in [weapon] into \the [src]."))
+		to_chat(user, span_notice(LANG("obj.e933838f", list(weapon, src))))
 		return TRUE
 	else
 		return ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /***************** MECHA ACTIONS *****************/
 
 /obj/vehicle/sealed/mecha/generate_action_type()
@@ -109,7 +110,7 @@
 
 /obj/vehicle/sealed/mecha/proc/toggle_strafe()
 	if(!(mecha_flags & CAN_STRAFE))
-		to_chat(occupants, "this mecha doesn't support strafing!")
+		to_chat(occupants, LANG("obj.dff68635", null))
 		return
 
 	strafe = !strafe

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/mining_drone
 	name = "\improper Nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
@@ -93,7 +94,7 @@
 /mob/living/basic/mining_drone/set_combat_mode(new_mode, silent = TRUE)
 	. = ..()
 	icon_state = combat_mode ? "mining_drone_offense" : "mining_drone"
-	balloon_alert(src, "now [combat_mode ? "attacking" : "collecting"]")
+	balloon_alert(src, LANG("mob.f35c4f6c", list(combat_mode ? "attacking" : "collecting")))
 
 /mob/living/basic/mining_drone/examine(mob/user)
 	. = ..()
@@ -215,7 +216,7 @@
 	if(user.combat_mode)
 		return CLICK_ACTION_BLOCKING
 	set_combat_mode(!combat_mode)
-	balloon_alert(user, "now [combat_mode ? "attacking wildlife" : "collecting loose ore"]")
+	balloon_alert(user, LANG("mob.f35c4f6c", list(combat_mode ? "attacking wildlife" : "collecting loose ore")))
 	return CLICK_ACTION_SUCCESS
 
 /mob/living/basic/mining_drone/RangedAttack(atom/target, list/modifiers)
@@ -234,7 +235,7 @@
 		target_ore.forceMove(src)
 
 /mob/living/basic/mining_drone/proc/drop_ore()
-	to_chat(src, span_notice("You dump your stored ore."))
+	to_chat(src, span_notice(LANG("mob.6a207d0a", null)))
 	for(var/obj/item/stack/ore/dropped_item in contents)
 		dropped_item.forceMove(get_turf(src))
 

@@ -17,7 +17,7 @@
 	var/datum/user_input = tgui_input_list(user, "Select which chemical to remove.", "Removal Selection", reagents.reagent_list)
 
 	if(isnull(user_input))
-		balloon_alert(user, "no selection!")
+		balloon_alert(user, LANG("obj.72281623", null))
 		return CLICK_ACTION_BLOCKING
 
 	user.balloon_alert_to_viewers("spinning [src]...")
@@ -27,7 +27,7 @@
 		return CLICK_ACTION_BLOCKING
 
 	reagents.del_reagent(user_input.type)
-	balloon_alert(user, "removed reagent from [src]")
+	balloon_alert(user, LANG("obj.f454cbd1", list(src)))
 	user.mind?.adjust_experience(/datum/skill/primitive, 2)
 	return CLICK_ACTION_SUCCESS
 
@@ -38,7 +38,7 @@
 	var/datum/user_input = tgui_input_list(user, "Select which chemical to keep, the rest removed.", "Keep Selection", reagents.reagent_list)
 
 	if(isnull(user_input))
-		balloon_alert(user, "no selection!")
+		balloon_alert(user, LANG("obj.72281623", null))
 		return
 
 	user.balloon_alert_to_viewers("spinning [src]...")
@@ -51,5 +51,5 @@
 		if(!istype(remove_reagent, user_input.type))
 			reagents.del_reagent(remove_reagent.type)
 
-	balloon_alert(user, "removed reagents from [src]")
+	balloon_alert(user, LANG("obj.54df0461", list(src)))
 	user.mind?.adjust_experience(/datum/skill/primitive, 2)

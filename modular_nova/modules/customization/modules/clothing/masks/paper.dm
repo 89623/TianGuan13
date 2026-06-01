@@ -180,10 +180,10 @@
 		wear_hair_over = !wear_hair_over
 		if(wear_hair_over)
 			alternate_worn_layer = BACK_LAYER
-			to_chat(user, "You [is_worn ? "" : "will "]sweep your hair over the mask.")
+			to_chat(user, LANG("obj.4bb16fa0", list(is_worn ? "" : "will ")))
 		else
 			alternate_worn_layer = initial(alternate_worn_layer)
-			to_chat(user, "You [is_worn ? "" : "will "]sweep your hair under the mask.")
+			to_chat(user, LANG("obj.94bde333", list(is_worn ? "" : "will ")))
 
 		user.update_worn_mask()
 
@@ -193,7 +193,7 @@
 	if(!user.incapacitated)
 		var/is_worn = user.wear_mask == src
 		strap_hidden = !strap_hidden
-		to_chat(user, "You [is_worn ? "" : "will "][strap_hidden ? "hide" : "show"] the mask strap.")
+		to_chat(user, LANG("obj.41026db5", list(is_worn ? "" : "will ", strap_hidden ? "hide" : "show")))
 
 		user.update_worn_mask()
 

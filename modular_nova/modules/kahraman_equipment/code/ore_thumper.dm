@@ -130,7 +130,7 @@
 	if(.)
 		return
 
-	to_chat(user, span_notice("You toggle [src]'s power button."))
+	to_chat(user, span_notice(LANG("obj.97ae6225", list(src))))
 
 	if(thumping)
 		cut_that_out(user)
@@ -151,10 +151,10 @@
 	var/turf/our_turf = get_turf(src)
 	var/obj/structure/cable/cable_under_us = locate() in our_turf
 	if(!cable_under_us && powernet)
-		balloon_alert(user, "not connected to wire")
+		balloon_alert(user, LANG("obj.228f64db", null))
 		return
 	if(!avail(active_power_usage))
-		balloon_alert(user, "not enough power")
+		balloon_alert(user, LANG("obj.43ec9f95", null))
 		return
 
 	thumping = TRUE
@@ -163,7 +163,7 @@
 	if(callback_tracker)
 		deltimer(callback_tracker)
 
-	balloon_alert(user, "thumper started")
+	balloon_alert(user, LANG("obj.53aad503", null))
 
 	callback_tracker = addtimer(CALLBACK(src, PROC_REF(slam_it_down)), SLAM_JAM_DELAY, TIMER_DELETE_ME | TIMER_STOPPABLE)
 
@@ -173,7 +173,7 @@
 	thumping = FALSE
 	soundloop.stop()
 	if(user)
-		balloon_alert(user, "thumper stopped")
+		balloon_alert(user, LANG("obj.8517f091", null))
 
 
 /// Makes the machine slam down, producing a box of ore if it has been slamming long enough

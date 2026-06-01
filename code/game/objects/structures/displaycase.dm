@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/structures.dmi'
@@ -128,34 +129,34 @@
 /obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.GetID() && !broken)
 		if(allowed(user))
-			to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
+			to_chat(user, span_notice(LANG("obj.d6171b71", list(open ? "close":"open", src))))
 			toggle_lock(user)
 		else
-			to_chat(user, span_alert("Access denied."))
+			to_chat(user, span_alert(LANG("obj.077f9b52", null)))
 	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
 			if(!attacking_item.tool_start_check(user, amount=1))
 				return
 
-			to_chat(user, span_notice("You begin repairing [src]..."))
+			to_chat(user, span_notice(LANG("obj.93449ef4", list(src))))
 			if(attacking_item.use_tool(src, user, 40, volume=50))
 				atom_integrity = max_integrity
 				update_appearance()
-				to_chat(user, span_notice("You repair [src]."))
+				to_chat(user, span_notice(LANG("obj.e94d13eb", list(src))))
 		else
-			to_chat(user, span_warning("[src] is already in good condition!"))
+			to_chat(user, span_warning(LANG("obj.7f6370b2", list(src))))
 		return
 	else if(!alert && attacking_item.tool_behaviour == TOOL_CROWBAR) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
-				to_chat(user, span_warning("Remove the displayed object first!"))
+				to_chat(user, span_warning(LANG("obj.ea7ab49f", null)))
 			else
-				to_chat(user, span_notice("You remove the destroyed case."))
+				to_chat(user, span_notice(LANG("obj.9392e509", null)))
 				qdel(src)
 		else
-			to_chat(user, span_notice("You start to [open ? "close":"open"] [src]..."))
+			to_chat(user, span_notice(LANG("obj.9712cf58", list(open ? "close":"open", src))))
 			if(attacking_item.use_tool(src, user, 20))
-				to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
+				to_chat(user, span_notice(LANG("obj.d6171b71", list(open ? "close":"open", src))))
 				toggle_lock(user)
 	else if(open && !showpiece)
 		insert_showpiece(attacking_item, user)
@@ -163,9 +164,9 @@
 	else if(glass_fix && broken && istype(attacking_item, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass_sheet = attacking_item
 		if(glass_sheet.get_amount() < 2)
-			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
+			to_chat(user, span_warning(LANG("obj.1dafa749", null)))
 			return
-		to_chat(user, span_notice("You start fixing [src]..."))
+		to_chat(user, span_notice(LANG("obj.84eb98c3", list(src))))
 		if(do_after(user, 2 SECONDS, target = src))
 			glass_sheet.use(2)
 			broken = FALSE
@@ -177,11 +178,11 @@
 ///Handles placing an item into the display case. Returns TRUE if the item failed to be placed inside the container, useful for descendants
 /obj/structure/displaycase/proc/insert_showpiece(obj/item/new_showpiece, mob/user)
 	if(showpiece_type && !istype(new_showpiece, showpiece_type))
-		to_chat(user, span_notice("This doesn't belong in this kind of display."))
+		to_chat(user, span_notice(LANG("obj.69abcb9c", null)))
 		return TRUE
 	if(user.transferItemToLoc(new_showpiece, src))
 		showpiece = new_showpiece
-		to_chat(user, span_notice("You put [new_showpiece] on display."))
+		to_chat(user, span_notice(LANG("obj.aedaabdd", list(new_showpiece))))
 		update_appearance()
 
 ///Opens and closes the display case
@@ -199,7 +200,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (broken || open))
-		to_chat(user, span_notice("You deactivate the hover field built into the case."))
+		to_chat(user, span_notice(LANG("obj.fd267b65", null)))
 		log_combat(user, src, "deactivates the hover field of")
 		dump()
 		add_fingerprint(user)
@@ -262,7 +263,7 @@
 
 /obj/structure/displaycase_chassis/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	balloon_alert(user, "disassembling...")
+	balloon_alert(user, LANG("obj.b5ba9871", null))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 3 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -275,15 +276,15 @@
 
 /obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/electronics/airlock))
-		balloon_alert(user, "installing electronics...")
+		balloon_alert(user, LANG("obj.3ddbe0ad", null))
 		if(do_after(user, 3 SECONDS, target = src) && user.transferItemToLoc(attacking_item, src))
 			electronics = attacking_item
-			balloon_alert(user, "electronics installed")
+			balloon_alert(user, LANG("obj.4513d6bd", null))
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/card_reader))
 		var/obj/item/stock_parts/card_reader/card_reader = attacking_item
-		balloon_alert(user, "adding [card_reader]...")
+		balloon_alert(user, LANG("obj.863a5bba", list(card_reader)))
 		if(do_after(user, 2 SECONDS, target = src))
 			qdel(card_reader)
 			make_final_result(display_type = /obj/structure/displaycase/forsale)
@@ -292,9 +293,9 @@
 	if(istype(attacking_item, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass_sheets = attacking_item
 		if(glass_sheets.get_amount() < 10)
-			balloon_alert(user, "need 10 sheets!")
+			balloon_alert(user, LANG("obj.c2fe6896", null))
 			return
-		balloon_alert(user, "adding glass...")
+		balloon_alert(user, LANG("obj.87806593", null))
 		if(do_after(user, 2 SECONDS, target = src))
 			glass_sheets.use(10)
 			make_final_result(display_type = /obj/structure/displaycase/noalert)
@@ -369,7 +370,7 @@
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
 		if(holographic_showpiece)
-			visible_message(span_danger("[showpiece] fizzles and vanishes!"))
+			visible_message(span_danger(LANG("obj.55caec2b", list(showpiece))))
 			do_sparks(number = 1, cardinal_only = FALSE, source = src)
 			QDEL_NULL(showpiece)
 			holographic_showpiece = FALSE
@@ -387,7 +388,7 @@
 ///Toggles the mode that shows the historian panel on the UI, enabling saving the looks and the trophy message of the current trophy
 /obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
 	historian_mode = !historian_mode
-	balloon_alert(user, "[historian_mode ? "enabled" : "disabled"] historian mode.")
+	balloon_alert(user, LANG("obj.40e20999", list(historian_mode ? "enabled" : "disabled")))
 	playsound(src, 'sound/machines/beep/twobeep.ogg', 10, vary = 50)
 	SStgui.update_uis(src)
 
@@ -615,7 +616,7 @@
 		//Card Registration
 		var/obj/item/card/id/potential_acc = attacking_item
 		if(!potential_acc.registered_account)
-			to_chat(user, span_warning("This ID card has no account registered!"))
+			to_chat(user, span_warning(LANG("obj.51d0d893", null)))
 			return
 		if(payments_acc == potential_acc.registered_account)
 			toggle_lock()
@@ -628,7 +629,7 @@
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(atom_integrity <= (integrity_failure * max_integrity))
-		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
+		to_chat(user, span_notice(LANG("obj.af8a4fb4", list(src))))
 		if(do_after(user, 2 SECONDS, target = src))
 			broken = FALSE
 			atom_integrity = max_integrity
@@ -639,28 +640,28 @@
 	. = ..()
 	if(open && !user.combat_mode)
 		if(anchored)
-			to_chat(user, span_notice("You start unsecuring [src]..."))
+			to_chat(user, span_notice(LANG("obj.08ee3372", list(src))))
 		else
-			to_chat(user, span_notice("You start securing [src]..."))
+			to_chat(user, span_notice(LANG("obj.5332d34f", list(src))))
 		if(I.use_tool(src, user, 16, volume=50))
 			if(QDELETED(I))
 				return
 			if(anchored)
-				to_chat(user, span_notice("You unsecure [src]."))
+				to_chat(user, span_notice(LANG("obj.eea293d1", list(src))))
 			else
-				to_chat(user, span_notice("You secure [src]."))
+				to_chat(user, span_notice(LANG("obj.5f077768", list(src))))
 			set_anchored(!anchored)
 			return TRUE
 	else if(!open && !user.combat_mode)
-		to_chat(user, span_notice("[src] must be open to move it."))
+		to_chat(user, span_notice(LANG("obj.05e93503", list(src))))
 		return
 
 /obj/structure/displaycase/forsale/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	payments_acc = null
 	req_access = list()
-	balloon_alert(user, "account owner reset")
-	to_chat(user, span_warning("[src]'s card reader fizzles and smokes."))
+	balloon_alert(user, LANG("obj.aa406d19", null))
+	to_chat(user, span_warning(LANG("obj.69410c91", list(src))))
 	return TRUE
 
 /obj/structure/displaycase/forsale/examine(mob/user)

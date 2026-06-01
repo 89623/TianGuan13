@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
 	desc = "A large duffel bag for holding extra things."
@@ -52,13 +53,13 @@
 	if(!zipped_up)
 		return ..()
 
-	balloon_alert(user, "unzipping...")
+	balloon_alert(user, LANG("obj.b9725963", null))
 	playsound(src, unzip_sfx, 100, FALSE)
 	var/datum/callback/can_unzip = CALLBACK(src, PROC_REF(zipper_matches), TRUE)
 	if(!do_after(user, unzip_duration, src, extra_checks = can_unzip))
 		user.balloon_alert(user, "unzip failed!")
 		return
-	balloon_alert(user, "unzipped")
+	balloon_alert(user, LANG("obj.5bf34e2e", null))
 	set_zipper(FALSE)
 	return TRUE
 
@@ -69,13 +70,13 @@
 	if(zipped_up)
 		return SECONDARY_ATTACK_CALL_NORMAL
 
-	balloon_alert(user, "zipping...")
+	balloon_alert(user, LANG("obj.a0ee2872", null))
 	playsound(src, zip_up_sfx, 100, FALSE)
 	var/datum/callback/can_zip = CALLBACK(src, PROC_REF(zipper_matches), FALSE)
 	if(!do_after(user, zip_up_duration, src, extra_checks = can_zip))
 		user.balloon_alert(user, "zip failed!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	balloon_alert(user, "zipped")
+	balloon_alert(user, LANG("obj.e27e52d3", null))
 	set_zipper(TRUE)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 

@@ -58,7 +58,7 @@
 		affected_mob.emote("shiver")
 
 /datum/reagent/drug/cocaine/overdose_start(mob/living/affected_mob, metabolization_ratio)
-	to_chat(affected_mob, span_userdanger("Your heart beats is beating so fast, it hurts..."))
+	to_chat(affected_mob, span_userdanger(LANG("datum.5fbbe175", null)))
 
 /datum/reagent/drug/cocaine/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

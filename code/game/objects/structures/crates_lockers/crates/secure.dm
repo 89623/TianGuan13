@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
 	name = "secure crate"
@@ -32,7 +33,7 @@
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)
-		to_chat(user, span_danger("The crate's anti-tamper system activates!"))
+		to_chat(user, span_danger(LANG("obj.11eb8ecf", null)))
 		log_bomber(user, "has detonated a", src)
 	dump_contents()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
@@ -186,13 +187,13 @@
 						privacy_lock = FALSE
 						update_appearance()
 					else if(!silent)
-						to_chat(user, span_warning("Bank account does not match with buyer!"))
+						to_chat(user, span_warning(LANG("obj.1a0bc426", null)))
 				else if(!silent)
-					to_chat(user, span_warning("No linked bank account detected!"))
+					to_chat(user, span_warning(LANG("obj.4a3a3d6d", null)))
 			else if(!silent)
-				to_chat(user, span_warning("No ID detected!"))
+				to_chat(user, span_warning(LANG("obj.f1378ade", null)))
 		else if(!silent)
-			to_chat(user, span_warning("[src] is broken!"))
+			to_chat(user, span_warning(LANG("obj.e2c73115", list(src))))
 	else ..()
 
 /obj/structure/closet/crate/secure/freezer/interdyne

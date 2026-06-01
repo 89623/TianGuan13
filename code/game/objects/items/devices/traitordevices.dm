@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 
 Miscellaneous traitor devices
@@ -37,7 +38,7 @@ effective or pretty fucking useless.
 	if(!user) return
 
 	if(times_used >= max_uses)
-		to_chat(user, span_danger("The mind batterer has been burnt out!"))
+		to_chat(user, span_danger(LANG("obj.2020c87a", null)))
 		return
 
 	log_combat(user, null, "knocked down people in the area", src)
@@ -52,7 +53,7 @@ effective or pretty fucking useless.
 			to_chat(M, span_userdanger("You feel a sudden, electric jolt travel through your head."))
 
 	playsound(src.loc, 'sound/misc/interference.ogg', 50, TRUE)
-	to_chat(user, span_notice("You trigger [src]."))
+	to_chat(user, span_notice(LANG("obj.df02bfee", list(src))))
 	times_used += 1
 	if(times_used >= max_uses)
 		icon_state = "battererburnt"
@@ -85,7 +86,7 @@ effective or pretty fucking useless.
 
 	var/mob/living/carbon/human/human_target = interacting_with
 	if(istype(human_target) && !used && SSradiation.wearing_rad_protected_clothing(human_target)) //intentionally not checking for TRAIT_RADIMMUNE here so that tatortot can still fuck up and waste their cooldown.
-		to_chat(user, span_warning("[interacting_with]'s clothing is fully protecting [interacting_with.p_them()] from irradiation!"))
+		to_chat(user, span_warning(LANG("obj.b74f82a3", list(interacting_with, interacting_with.p_them()))))
 		return . | ITEM_INTERACT_BLOCKING
 
 	if(!used)
@@ -95,11 +96,11 @@ effective or pretty fucking useless.
 		icon_state = "health1"
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
-		to_chat(user, span_warning("Successfully irradiated [interacting_with]."))
+		to_chat(user, span_warning(LANG("obj.0fd7d3dd", list(interacting_with))))
 		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), interacting_with, intensity), (intensity+(wavelength*4))*5)
 		return . | ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
+	to_chat(user, span_warning(LANG("obj.687320ea", null)))
 	return . | ITEM_INTERACT_BLOCKING
 
 /obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
@@ -354,7 +355,7 @@ effective or pretty fucking useless.
 		return
 
 	user.balloon_alert(user, "disruptor wave released!")
-	to_chat(user, span_notice("You release a disruptor wave, disabling all nearby radio devices."))
+	to_chat(user, span_notice(LANG("obj.ec480649", null)))
 	for (var/atom/potential_owner in view(disruptor_range, user))
 		disable_radios_on(potential_owner, ignore_syndie = TRUE)
 	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
@@ -363,7 +364,7 @@ effective or pretty fucking useless.
 	. = ..()
 	if(.)
 		return
-	to_chat(user, span_notice("You [active ? "deactivate" : "activate"] [src]."))
+	to_chat(user, span_notice(LANG("obj.d6171b71", list(active ? "deactivate" : "activate", src))))
 	user.balloon_alert(user, "[active ? "deactivated" : "activated"] the jammer")
 	active = !active
 	if(active)
@@ -384,7 +385,7 @@ effective or pretty fucking useless.
 		return
 
 	interacting_with.balloon_alert(user, "radio disrupted!")
-	to_chat(user, span_notice("You release a directed disruptor wave, disabling all radio devices on [interacting_with]."))
+	to_chat(user, span_notice(LANG("obj.a47f3edb", list(interacting_with))))
 	disable_radios_on(interacting_with)
 
 	return ITEM_INTERACT_SUCCESS
@@ -450,27 +451,27 @@ effective or pretty fucking useless.
 		return
 
 	if(user.combat_mode)
-		balloon_alert(user, "deconstructing...")
+		balloon_alert(user, LANG("obj.44f0e678", null))
 		if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
 			return
 
 		deconstruct(TRUE)
 		attacking_item.play_tool_sound(src, 50)
-		balloon_alert(user, "deconstructed!")
+		balloon_alert(user, LANG("obj.4e90d37e", null))
 
 	else
 		if(atom_integrity == max_integrity)
-			balloon_alert(user, "already repaired!")
+			balloon_alert(user, LANG("obj.88cc0c7c", null))
 			return
 
-		balloon_alert(user, "repairing...")
+		balloon_alert(user, LANG("obj.b52342a8", null))
 		while(atom_integrity != max_integrity)
 			if(!attacking_item.use_tool(src, user, 2 SECONDS, volume = 20))
 				return
 
 			repair_damage(10)
 
-		balloon_alert(user, "repaired!")
+		balloon_alert(user, LANG("obj.ac33e326", null))
 
 /obj/machinery/porta_turret/syndicate/toolbox/on_deconstruction(disassembled)
 	if(disassembled)
@@ -511,7 +512,7 @@ effective or pretty fucking useless.
 	. = ..()
 	var/det_time = 1 SECONDS + (4 SECONDS * (degrees / 90))
 	if(user)
-		to_chat(user, span_warning("You prime the penbang! [capitalize(DisplayTimeText(det_time))]!"))
+		to_chat(user, span_warning(LANG("obj.64527e09", list(capitalize(DisplayTimeText(det_time))))))
 		log_bomber(user, "has primed a", src, "(penbang) for detonation")
 	addtimer(CALLBACK(src, PROC_REF(detonate), user), det_time)
 

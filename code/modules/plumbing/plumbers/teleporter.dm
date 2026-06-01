@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///A bluespace input pipe for plumbing
 /obj/machinery/plumbing/sender
 	name = "chemical beacon"
@@ -14,7 +15,7 @@
 
 /obj/machinery/plumbing/sender/multitool_act(mob/living/user, obj/item/multitool/M)
 	if(!istype(M.buffer, /obj/machinery/plumbing/receiver))
-		to_chat(user, span_warning("Invalid buffer."))
+		to_chat(user, span_warning(LANG("obj.a79082e5", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(target)
@@ -22,7 +23,7 @@
 
 	set_teleport_target(M.buffer)
 
-	to_chat(user, span_green("You successfully link [src] to the [M.buffer]."))
+	to_chat(user, span_green(LANG("obj.3e693269", list(src, M.buffer))))
 	return ITEM_INTERACT_SUCCESS
 
 ///Lose our previous target and make our previous target lose us. Seperate proc because I feel like I'll need this again
@@ -65,7 +66,7 @@
 
 /obj/machinery/plumbing/receiver/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
-	balloon_alert(user, "saved to multitool buffer")
+	balloon_alert(user, LANG("obj.84afb909", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/plumbing/receiver/process(seconds_per_tick)

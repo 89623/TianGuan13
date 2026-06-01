@@ -91,7 +91,7 @@
 			previous_power_state = 1
 			icon_state = "autocloner_on"
 			visible_message(
-				span_notice("[src] suddenly comes to life!"),
+				span_notice(LANG("obj.23d8959e", list(src))),
 				blind_message = span_hear("You can hear fluid sloshing nearby."),
 			)
 
@@ -107,7 +107,7 @@
 			time_spent_spawning = 0
 			update_use_power(IDLE_POWER_USE)
 			visible_message(
-				span_notice("[src] pings!"),
+				span_notice(LANG("obj.8978c8c2", list(src))),
 				blind_message = span_hear("You hear ping."),
 			)
 			icon_state = "autocloner_on"
@@ -131,7 +131,7 @@
 			previous_power_state = 0
 			icon_state = "autocloner_off"
 			visible_message(
-				span_notice("[src] suddenly shuts down."),
+				span_notice(LANG("obj.3c51a444", list(src))),
 				blind_message = span_hear("Something nearby shuts down and stops making noise."),
 			)
 

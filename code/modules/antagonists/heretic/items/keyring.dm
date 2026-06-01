@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/lock_portal
 	name = "crack in reality"
 	desc = "A crack in space, impossibly deep and painful to the eyes. Definitely not safe."
@@ -68,7 +69,7 @@
 
 	if(!IS_HERETIC_OR_MONSTER(teleportee))
 		teleportee.apply_damage(20, BRUTE) //so they dont roll it like a jackpot machine to see if they can land in the armory
-		to_chat(teleportee, span_userdanger("You stumble through [src], battered by forces beyond your comprehension, landing anywhere but where you thought you were going."))
+		to_chat(teleportee, span_userdanger(LANG("obj.855995ca", list(src))))
 
 	INVOKE_ASYNC(src, PROC_REF(async_opendoor), doorstination)
 
@@ -123,7 +124,7 @@
 		return
 	var/cardname = tgui_input_list(user, "Shapeshift into?", "Shapeshift", fused_ids)
 	if(!cardname)
-		balloon_alert(user, "no options!")
+		balloon_alert(user, LANG("obj.9368ca26", null))
 		return ..()
 	var/obj/item/card/id/card = fused_ids[cardname]
 	shapeshift(card)
@@ -132,7 +133,7 @@
 	if(!IS_HERETIC(user))
 		return CLICK_ACTION_BLOCKING
 	inverted = !inverted
-	balloon_alert(user, "[inverted ? "now" : "no longer"] creating inverted rifts")
+	balloon_alert(user, LANG("obj.94c58cf3", list(inverted ? "now" : "no longer")))
 	return CLICK_ACTION_SUCCESS
 
 ///Changes our appearance to the passed ID card
@@ -189,7 +190,7 @@
 	access |= card.access
 	if(!isnull(user))
 		playsound(drop_location(), 'sound/items/eatfood.ogg', rand(10,30), TRUE)
-		balloon_alert(user, "consumed card")
+		balloon_alert(user, LANG("obj.90ba2be7", null))
 
 /obj/item/card/id/advanced/heretic/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!IS_HERETIC(user))
@@ -210,12 +211,12 @@
 
 	if(reference_resolved)
 		make_portal(user, reference_resolved, target)
-		to_chat(user, span_notice("You use [src], to link [reference_resolved] and [target] together."))
+		to_chat(user, span_notice(LANG("obj.055c0aed", list(src, reference_resolved, target))))
 		link = null
-		balloon_alert(user, "link 2/2")
+		balloon_alert(user, LANG("obj.886e472f", null))
 	else
 		link = WEAKREF(target)
-		balloon_alert(user, "link 1/2")
+		balloon_alert(user, LANG("obj.8a35f402", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/card/id/advanced/heretic/Destroy()

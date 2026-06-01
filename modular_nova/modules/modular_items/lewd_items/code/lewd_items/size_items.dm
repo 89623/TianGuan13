@@ -39,11 +39,11 @@
 
 	var/chosen_size = tgui_input_number(user, "What size percentage do you wish to set the collar to?", name, 100, CONFIG_GET(number/size_collar_maximum), CONFIG_GET(number/size_collar_minimum))
 	if(!chosen_size)
-		balloon_alert(user, "invalid size!")
+		balloon_alert(user, LANG("obj.a3ea0c2c", null))
 		return FALSE
 
 	log_message("[src] had its target size changed to [chosen_size]% by [usr]", LOG_ATTACK)
-	balloon_alert(user, "set to [chosen_size]%")
+	balloon_alert(user, LANG("obj.ddb88eda", list(chosen_size)))
 	target_size = (chosen_size * 0.01)
 	return TRUE
 

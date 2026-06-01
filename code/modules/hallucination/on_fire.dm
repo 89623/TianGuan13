@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define RAISE_FIRE_COUNT 3
 #define RAISE_FIRE_TIME 3
 
@@ -48,7 +49,7 @@
 		return FALSE
 
 	hallucinator.client?.images |= fire_overlay
-	to_chat(hallucinator, span_userdanger("You're set on fire!"))
+	to_chat(hallucinator, span_userdanger(LANG("datum.14b3c7da", null)))
 	var/atom/movable/screen/alert/fire/fake/alert = hallucinator.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire/fake, override = TRUE)
 	alert.hallucination_weakref = WEAKREF(src)
 	times_to_lower_stamina = rand(5, 10)

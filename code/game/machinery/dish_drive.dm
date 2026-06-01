@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/dish_drive
 	name = "dish drive"
 	desc = "A culinary marvel that uses matter-to-energy conversion to store dishes and shards. Convenient! \
@@ -67,12 +68,12 @@
 /obj/machinery/dish_drive/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!LAZYLEN(dish_drive_contents))
-		balloon_alert(user, "drive empty")
+		balloon_alert(user, LANG("obj.a54f0205", null))
 		return
 	var/obj/item/dish = LAZYACCESS(dish_drive_contents, LAZYLEN(dish_drive_contents)) //the most recently-added item
 	LAZYREMOVE(dish_drive_contents, dish)
 	user.put_in_hands(dish)
-	balloon_alert(user, "[dish] taken")
+	balloon_alert(user, LANG("obj.44b75b8d", list(dish)))
 	playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 	flick("synthesizer_beam", src)
 
@@ -92,7 +93,7 @@
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		LAZYADD(dish_drive_contents, tool)
-		balloon_alert(user, "[tool] placed in drive")
+		balloon_alert(user, LANG("obj.0342b4ef", list(tool)))
 		playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 		flick("synthesizer_beam", src)
 		return ITEM_INTERACT_SUCCESS
@@ -143,7 +144,7 @@
 /obj/machinery/dish_drive/attack_ai(mob/living/user)
 	if(machine_stat)
 		return
-	balloon_alert(user, "disposal signal sent")
+	balloon_alert(user, LANG("obj.2ae02dfa", null))
 	do_the_dishes(TRUE)
 
 /obj/machinery/dish_drive/click_alt(mob/living/user)
@@ -153,12 +154,12 @@
 /obj/machinery/dish_drive/proc/do_the_dishes(manual)
 	if(!LAZYLEN(dish_drive_contents))
 		if(manual)
-			visible_message(span_notice("[src] is empty!"))
+			visible_message(span_notice(LANG("obj.02d482cc", list(src))))
 		return
 	var/obj/machinery/disposal/bin/bin = locate() in view(binrange, src) //NOVA EDIT CHANGE
 	if(!bin)
 		if(manual)
-			visible_message(span_warning("[src] buzzes. There are no disposal bins in range!"))
+			visible_message(span_warning(LANG("obj.40c14145", list(src))))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		return
 	var/disposed = 0
@@ -171,7 +172,7 @@
 			dish.forceMove(bin)
 			disposed++
 	if (disposed)
-		visible_message(span_notice("[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and beams [disposed] stored item\s into the nearby [bin.name]."))
+		visible_message(span_notice(LANG("obj.dafe613b", list(src, pick("whooshes", "bwooms", "fwooms", "pshooms"), disposed, bin.name))))
 		playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 		playsound(bin, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 		Beam(bin, icon_state = "rped_upgrade", time = 5)
@@ -179,6 +180,6 @@
 		flick("synthesizer_beam", src)
 	else
 		if(manual)
-			visible_message(span_notice("There are no disposable items in [src]!"))
+			visible_message(span_notice(LANG("obj.359381c8", list(src))))
 		return
 	COOLDOWN_START(src, time_since_dishes, 1 MINUTES)

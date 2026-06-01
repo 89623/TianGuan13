@@ -46,14 +46,14 @@
 				update_crystal()
 				return
 		else
-			to_chat(user, span_red("There is currently no wiring on the [src]."))
+			to_chat(user, span_red(LANG("obj.c5749323", list(src))))
 			return
 
 	if(istype(attacking_item, /obj/item/stack/cable_coil)) // If we want to put the wiring
 		if(!wired)
 			var/obj/item/stack/cable_coil/our_cable_coil = attacking_item
 			if(!our_cable_coil.use(2))
-				to_chat(user, span_red("There's not enough wire to finish the task."))
+				to_chat(user, span_red(LANG("obj.508c5cd0", null)))
 				return
 			user.visible_message(
 				span_notice("[user] starts putting the wiring all over the [src]."),
@@ -68,7 +68,7 @@
 				update_crystal()
 			return
 		else
-			balloon_alert(user, "already wired!")
+			balloon_alert(user, LANG("obj.9a6e26bd", null))
 			return
 	return ..()
 
@@ -77,18 +77,18 @@
 	if(.)
 		return
 	if(!Adjacent(user))
-		to_chat(user, span_warning("You can't reach [src] from here."))
+		to_chat(user, span_warning(LANG("obj.874aa184", list(src))))
 		return TRUE
 	if(wired && anchored)
 		first_effect.ToggleActivate()
 		update_crystal()
-	to_chat(user, span_bold("You touch [src]."))
+	to_chat(user, span_bold(LANG("obj.97eda384", list(src))))
 
 /obj/machinery/power/crystal/Destroy()
 	if(first_effect)
 		QDEL_NULL(first_effect)
 	visible_message(
-		span_warning("[src] shatters!"),
+		span_warning(LANG("obj.d0641e15", list(src))),
 		blind_message = span_hear("You hear glass breaking nearby."),
 	)
 	var/turf/mainloc = get_turf(src)
@@ -117,7 +117,7 @@
 /obj/machinery/power/crystal/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	if(istype(hitting_projectile, /obj/projectile/energy) || istype(hitting_projectile, /obj/projectile/beam))
 		visible_message(
-			span_danger("The [hitting_projectile] gets reflected by [src]!")
+			span_danger(LANG("obj.a71a5ecb", list(hitting_projectile, src)))
 		)
 		// Find a turf near or on the original location to bounce to
 		if(hitting_projectile.starting)

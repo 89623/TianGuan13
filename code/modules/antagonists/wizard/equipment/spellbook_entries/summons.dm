@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Ritual spells which affect the station at large
 /// How much threat we need to let these rituals happen on dynamic
 #define MINIMUM_THREAT_FOR_RITUALS 98
@@ -113,7 +114,7 @@
 	GLOB.mass_teaching.equip_all_affected()
 
 	var/item_entry = istype(chosen_entry, /datum/spellbook_entry/item)
-	to_chat(user, span_hypnophrase("You have [item_entry ? "granted everyone the power" : "taught everyone the ways"] of [chosen_spell_name]!"))
+	to_chat(user, span_hypnophrase(LANG("datum.3ff8651d", list(item_entry ? "granted everyone the power" : "taught everyone the ways", chosen_spell_name))))
 	message_admins("[ADMIN_LOOKUPFLW(user)] gave everyone the [item_entry ? "item" : "spell"] \"[chosen_spell_name]\"!")
 	user.log_message("has gave everyone the [item_entry ? "item" : "spell"] \"[chosen_spell_name]\"!", LOG_GAME)
 

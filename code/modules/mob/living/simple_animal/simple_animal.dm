@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Simple, mostly AI-controlled critters, such as pets, bots, and drones.
 /mob/living/simple_animal
 	name = "animal"
@@ -555,18 +556,18 @@
 	if(isliving(hunted)) // Are we hunting a living mob?
 		var/mob/living/prey = hunted
 		if(inept_hunter) // Make your hunter inept to have them unable to catch their prey.
-			visible_message(span_warning("[src] chases [prey] around, to no avail!"))
+			visible_message(span_warning(LANG("mob.5d040569", list(src, prey))))
 			step(prey, pick(GLOB.cardinals))
 			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 			return
 		if(!(prey.stat))
-			manual_emote("chomps [prey]!")
+			manual_emote(LANG("mob.abe45ebf", list(prey)))
 			prey.death()
 			prey = null
 			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 			return
 	else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
-		manual_emote("chomps [hunted]!")
+		manual_emote(LANG("mob.abe45ebf", list(hunted)))
 		qdel(hunted)
 		hunted = null
 		COOLDOWN_START(src, emote_cooldown, 1 MINUTES)

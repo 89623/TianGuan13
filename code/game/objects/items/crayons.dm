@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define RANDOM_GRAFFITI "Random Graffiti"
 #define RANDOM_LETTER "Random Letter"
 #define RANDOM_PUNCTUATION "Random Punctuation"
@@ -306,10 +307,10 @@
 		if(self_contained)
 			qdel(src)
 		else
-			balloon_alert(user, "empty!")
+			balloon_alert(user, LANG("obj.6ef93b07", null))
 		return TRUE
 	if(charges_left < amount && requires_full)
-		balloon_alert(user, "not enough left!")
+		balloon_alert(user, LANG("obj.4a21c5c5", null))
 		return TRUE
 
 	return FALSE
@@ -522,10 +523,10 @@
 		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 
 	if(!instant)
-		to_chat(user, span_notice("You start drawing a [temp] on \the [target]..."))
+		to_chat(user, span_notice(LANG("obj.e319a257", list(temp, target))))
 
 	if(pre_noise)
-		audible_message(span_notice("You hear spraying."))
+		audible_message(span_notice(LANG("obj.715ca92d", null)))
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
 	var/wait_time = DRAW_TIME
@@ -570,16 +571,16 @@
 			created_art.AddElement(/datum/element/art, BAD_ART)
 
 	if(!instant)
-		to_chat(user, span_notice("You finish drawing \the [temp]."))
+		to_chat(user, span_notice(LANG("obj.e05b51bc", list(temp))))
 	else
-		to_chat(user, span_notice("You spray a [temp] on \the [target.name]"))
+		to_chat(user, span_notice(LANG("obj.bc3b9c10", list(temp, target.name))))
 
 	if(length(text_buffer) > 1)
 		text_buffer = copytext(text_buffer, length(text_buffer[1]) + 1)
 		SStgui.update_uis(src)
 
 	if(post_noise)
-		audible_message(span_hear("You hear spraying."))
+		audible_message(span_hear(LANG("obj.715ca92d", null)))
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
 	var/fraction = min(1, . / reagents.maximum_volume)
@@ -618,7 +619,7 @@
 	if(!use_charges(user, 1))
 		return ITEM_INTERACT_FAILURE
 
-	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
+	to_chat(user, span_notice(LANG("obj.0d7f1cca", list(pwned_human))))
 	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", null, null, "A vaguely [pwned_human] shaped body outline.", outline_strength)
 	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z)
 	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w)
@@ -754,13 +755,13 @@
 /obj/item/storage/crayons/attack_self(mob/user)
 	. = ..()
 	if(contents.len > 0)
-		balloon_alert(user, "too full to fold!")
+		balloon_alert(user, LANG("obj.eb494343", null))
 		return
 	if(flags_1 & HOLOGRAM_1)
 		return
 
 	var/obj/item/stack/sheet/cardboard/cardboard = new (user.drop_location())
-	to_chat(user, span_notice("You fold the [src] into cardboard."))
+	to_chat(user, span_notice(LANG("obj.e1d3ffa3", list(src))))
 	user.put_in_active_hand(cardboard)
 	qdel(src)
 
@@ -891,7 +892,7 @@
 
 /obj/item/toy/crayon/spraycan/use_on(atom/target, mob/user, list/modifiers)
 	if(is_capped)
-		balloon_alert(user, "take the cap off first!")
+		balloon_alert(user, LANG("obj.0c73c2ec", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(check_empty(user))
@@ -910,7 +911,7 @@
 
 		var/mob/living/carbon/carbon_target = target
 		user.visible_message(span_danger("[user] sprays [src] into the face of [target]!"))
-		to_chat(target, span_userdanger("[user] sprays [src] into your face!"))
+		to_chat(target, span_userdanger(LANG("obj.8794109e", list(user, src))))
 
 		if(carbon_target.client)
 			carbon_target.set_eye_blur_if_lower(6 SECONDS)
@@ -927,7 +928,7 @@
 		reagents.expose(carbon_target, VAPOR, fraction * volume_multiplier)
 
 	else if(actually_paints && target.is_atom_colour(paint_color, min_priority_index = WASHABLE_COLOUR_PRIORITY))
-		balloon_alert(user, "[target.p_theyre()] already that color!")
+		balloon_alert(user, LANG("obj.e3750ae8", list(target.p_theyre())))
 		return ITEM_INTERACT_BLOCKING
 
 	var/saturation_mode = SATURATION_MULTIPLY
@@ -961,24 +962,24 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if (color_is_dark && saturation_mode == SATURATION_OVERRIDE && !(target.flags_1 & ALLOW_DARK_PAINTS_1))
-		to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
+		to_chat(user, span_warning(LANG("obj.8c180d20", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(target, /obj/item/pipe))
 		if(!GLOB.pipe_color_name.Find(paint_color))
-			balloon_alert(user, "invalid pipe color!")
+			balloon_alert(user, LANG("obj.422b88b8", null))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/pipe/target_pipe = target
 		target_pipe.pipe_color = paint_color
 		target.add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
-		balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
+		balloon_alert(user, LANG("obj.4da583d6", list(GLOB.pipe_color_name[paint_color])))
 	else if(istype(target, /obj/machinery/atmospherics))
 		if(!GLOB.pipe_color_name.Find(paint_color))
-			balloon_alert(user, "invalid pipe color!")
+			balloon_alert(user, LANG("obj.422b88b8", null))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/machinery/atmospherics/target_pipe = target
 		target_pipe.paint(paint_color)
-		balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
+		balloon_alert(user, LANG("obj.4da583d6", list(GLOB.pipe_color_name[paint_color])))
 	else if (is_type_in_typecache(target, direct_color_types))
 		target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 	else
@@ -1052,7 +1053,7 @@
 
 /obj/item/toy/crayon/spraycan/borg/use_charges(mob/user, amount = 1, requires_full = TRUE, override_infinity = FALSE)
 	if(!iscyborg(user))
-		to_chat(user, span_notice("How did you get this?"))
+		to_chat(user, span_notice(LANG("obj.4ed300a0", null)))
 		qdel(src)
 		return FALSE
 

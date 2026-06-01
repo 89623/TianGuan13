@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_CATEGORY_SERVER)
 	var/list/maprotatechoices = list()
 	for (var/map in config.maplist)
@@ -34,7 +35,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 			return
 
 		if(copytext("[map_file]", -4) != ".dmm")//4 == length(".dmm")
-			to_chat(user, span_warning("Filename must end in '.dmm': [map_file]"))
+			to_chat(user, span_warning(LANG("datum.9585169d", list(map_file))))
 			return
 
 		if(fexists("_maps/custom/[map_file]"))
@@ -44,11 +45,11 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 		// This is to make sure the map works so the server does not start without a map.
 		var/datum/parsed_map/M = new (map_file)
 		if(!M)
-			to_chat(user, span_warning("Map '[map_file]' failed to parse properly."))
+			to_chat(user, span_warning(LANG("datum.f51f7c67", list(map_file))))
 			return
 
 		if(!M.bounds)
-			to_chat(user, span_warning("Map '[map_file]' has non-existant bounds."))
+			to_chat(user, span_warning(LANG("datum.6c5d390d", list(map_file))))
 			qdel(M)
 			return
 
@@ -61,7 +62,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 			if(isnull(config_file))
 				return
 			if(copytext("[config_file]", -5) != ".json")
-				to_chat(src, span_warning("Filename must end in '.json': [config_file]"))
+				to_chat(src, span_warning(LANG("datum.93cb4c73", list(config_file))))
 				return
 			if(fexists("data/custom_map_json/[config_file]"))
 				fdel("data/custom_map_json/[config_file]")
@@ -71,7 +72,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 			json_value = virtual_map.LoadConfig("data/custom_map_json/[config_file]", TRUE)
 
 			if(!json_value)
-				to_chat(src, span_warning("Failed to load config: [config_file]. Check that the fields are filled out correctly. \"map_path\": \"custom\" and \"map_file\": \"your_map_name.dmm\""))
+				to_chat(src, span_warning(LANG("datum.a3ef6ae3", list(config_file))))
 				return
 		else
 			virtual_map = load_map_config()

@@ -35,15 +35,15 @@
 	. = ..()
 	if(active)
 		if(!issynthetic(linked_mob))
-			to_chat(linked_mob, span_warning("Organic tissue detected! Augmentation might result in:"))
-			to_chat(linked_mob, span_warning("Tissue necrosis, post-application open fractures and avulsions, acute hemolytic transfusion reaction, spontaneous outbursts of pain, and severe psychosis."))
-			to_chat(linked_mob, span_warning("Advised program uninstallation. Have a secure day."))
+			to_chat(linked_mob, span_warning(LANG("datum.35c1d1b5", null)))
+			to_chat(linked_mob, span_warning(LANG("datum.1bb20653", null)))
+			to_chat(linked_mob, span_warning(LANG("datum.d322fd07", null)))
 		martial_to_learn.teach(linked_mob)
 		linked_mob.log_message("learned the martial art [martial_to_learn]", LOG_ATTACK, color = "orange")
-		to_chat(linked_mob, span_danger("SEVMTE8gV09STEQ="))
-		to_chat(linked_mob, span_danger("QkxPT0QgSVMgRlVFTA=="))
-		to_chat(linked_mob, span_danger("TWFkZSBieTo="))
-		to_chat(linked_mob, span_danger("SEMgU3ludGhldGljIEVuaGFuY2VtZW50IEJ1cmVhdQ=="))
+		to_chat(linked_mob, span_danger(LANG("datum.7dcae8f7", null)))
+		to_chat(linked_mob, span_danger(LANG("datum.fc3d2fb8", null)))
+		to_chat(linked_mob, span_danger(LANG("datum.385de8e2", null)))
+		to_chat(linked_mob, span_danger(LANG("datum.1e774a96", null)))
 		return
 	martial_to_learn.unlearn(linked_mob)
 
@@ -110,7 +110,7 @@
 		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
 		defender.visible_message(span_warning("[attacker]'s crush misses [defender]!"), \
 			span_danger("You avoid [attacker]'s crush!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
-		to_chat(attacker, span_warning("Your crush misses [defender]!"))
+		to_chat(attacker, span_warning(LANG("datum.426d14b5", list(defender))))
 		log_combat(attacker, defender, "attempted to hit", "crush")
 		return FALSE
 
@@ -127,7 +127,7 @@
 		attacker,
 	)
 
-	to_chat(attacker, span_danger("You've crushed [defender]!"))
+	to_chat(attacker, span_danger(LANG("datum.b4da0e59", list(defender))))
 
 	defender.apply_damage(damage, damage_type, affecting, armor_block)
 
@@ -186,7 +186,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You blast [defender] back!"))
+	to_chat(attacker, span_danger(LANG("datum.a7f070e8", list(defender))))
 	playsound(attacker, 'sound/effects/pop_expl.ogg', 50, TRUE)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 	new /obj/effect/temp_visual/explosion/fast(get_turf(defender))
@@ -277,11 +277,11 @@
 	set name = "Access Core Imprint"
 	set desc = "You try to remember some of the core Blood Steal protocols."
 	set category = "Blood Steal"
-	to_chat(usr, "<b><i>You try to remember core Blood Steal protocols.</i></b>")
+	to_chat(usr, LANG("mob.b92b9945", null))
 
-	to_chat(usr, "[span_notice("Feedbacker")]: Punch. Deal extra damage and steal blood, converting some damage dealt as health.")
-	to_chat(usr, "[span_notice("Knuckleblaster")]: Shove. Knocks opponent away. Deals negligible brute and stamina damage.")
+	to_chat(usr, LANG("mob.12a75e2d", list(span_notice("Feedbacker"))))
+	to_chat(usr, LANG("mob.a71f8b82", list(span_notice("Knuckleblaster"))))
 
-	to_chat(usr, "<b><i>In addition, by having your throw mode on when being shot at, you enter an active defense mode where you have a perfect, yet single-projectile parry with a moderately long refresh cooldown.</i></b>")
+	to_chat(usr, LANG("mob.e55f7ae2", null))
 
 #undef MARTIALART_BLOODSTEAL

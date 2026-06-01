@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MMI_MESSAGE_COOLDOWN (0.1 SECONDS)
 
 /datum/action/innate/mmi_comp_disconnect
@@ -250,7 +251,7 @@
 	for(var/atom/movable/location as anything in get_nested_locs(ai) + ai)
 		AddComponentFrom(REF(location), /datum/component/shuttle_move_deferred_checks, PROC_REF(post_movement_checks))
 	disconnect_action.Grant(ai)
-	to_chat(ai, span_notice("Established connection with remote circuit."))
+	to_chat(ai, span_notice(LANG("obj.33f512fb", null)))
 
 /obj/item/circuit_component/mmi/proc/occupant_or_container_moved(atom/movable/occupant_or_container, atom/old_loc)
 	SIGNAL_HANDLER
@@ -293,7 +294,7 @@
 		for(var/atom/movable/location as anything in get_nested_locs(ai) + ai)
 			RemoveComponentSource(REF(location), /datum/component/shuttle_move_deferred_checks)
 		ai.reset_perspective(null)
-		to_chat(ai, span_notice("Disconnected from remote circuit."))
+		to_chat(ai, span_notice(LANG("obj.68148943", null)))
 	occupant.remote_control = null
 	UnregisterSignal(occupant, list(COMSIG_MOB_CLICKON, COMSIG_QDELETING))
 	occupant = null

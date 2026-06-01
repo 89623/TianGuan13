@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Engineering modules for MODsuits
 
 ///Welding Protection - Makes the helmet protect from flashes and welding.
@@ -135,7 +136,7 @@
 
 /obj/item/mod/module/tether/used()
 	if(HAS_TRAIT_FROM(mod.wearer, TRAIT_TETHER_ATTACHED, REF(src)))
-		balloon_alert(mod.wearer, "already tethered!")
+		balloon_alert(mod.wearer, LANG("obj.5550f24a", null))
 		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
 		return FALSE
 	return ..()
@@ -290,14 +291,14 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(src)))
-		balloon_alert(user, "already tethered!")
+		balloon_alert(user, LANG("obj.5550f24a", null))
 		return
 
 	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
-		balloon_alert(user, "already tethered!")
+		balloon_alert(user, LANG("obj.5550f24a", null))
 		return
 
-	balloon_alert(user, "attached tether")
+	balloon_alert(user, LANG("obj.8133fa02", null))
 	user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -316,33 +317,33 @@
 		return
 
 	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
-		balloon_alert(user, "already tethered!")
+		balloon_alert(user, LANG("obj.5550f24a", null))
 		return
 
 	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
-		balloon_alert(user, "already tethered!")
+		balloon_alert(user, LANG("obj.5550f24a", null))
 		return
 
 	if (target == user)
-		balloon_alert(user, "attached tether")
+		balloon_alert(user, LANG("obj.8133fa02", null))
 		user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src), no_target_trait = TRUE)
 		return
 
-	balloon_alert(user, "attaching tether...")
-	to_chat(target, span_userdanger("[user] is trying to attach a tether to you!"))
+	balloon_alert(user, LANG("obj.7b2e6eab", null))
+	to_chat(target, span_userdanger(LANG("obj.be29c7c5", list(user))))
 	if (!do_after(user, 5 SECONDS, target))
 		return
 
 	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))
-		balloon_alert(user, "already tethered!")
+		balloon_alert(user, LANG("obj.5550f24a", null))
 		return
 
 	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
-		balloon_alert(user, "already tethered!")
+		balloon_alert(user, LANG("obj.5550f24a", null))
 		return
 
-	balloon_alert(user, "attached tether")
-	to_chat(target, span_userdanger("[user] attaches a tether to you!"))
+	balloon_alert(user, LANG("obj.8133fa02", null))
+	to_chat(target, span_userdanger(LANG("obj.1ef2d7c5", list(user))))
 	target.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src), no_target_trait = TRUE)
 
 /obj/item/tether_anchor/proc/tether_snapped(datum/component/tether/tether, tether_source)

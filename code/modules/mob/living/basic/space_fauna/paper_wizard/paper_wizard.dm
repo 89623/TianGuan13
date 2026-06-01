@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/paper_wizard
 	name = "Mjor the Creative"
 	desc = "A wizard with a taste for the arts."
@@ -125,7 +126,7 @@
 
 	if(!(attack_flags & (ATTACKER_STAMINA_ATTACK|ATTACKER_SHOVING)))
 		attacker.adjust_brute_loss(20)
-		to_chat(attacker, span_warning("The clone casts a spell to damage you before he dies!"))
+		to_chat(attacker, span_warning(LANG("mob.bbf07ad8", null)))
 
 
 /mob/living/basic/paper_wizard/copy/examine(mob/user)
@@ -161,7 +162,7 @@
 
 /obj/effect/temp_visual/paperwiz_dying/Initialize(mapload)
 	. = ..()
-	visible_message(span_bolddanger("The wizard cries out in pain as a gate appears behind him, sucking him in!"))
+	visible_message(span_bolddanger(LANG("obj.1480e3fb", null)))
 	playsound(get_turf(src), 'sound/effects/magic/mandswap.ogg', 50, vary = TRUE, pressure_affected = TRUE)
 	playsound(get_turf(src), 'sound/effects/hallucinations/wail.ogg', 50, vary = TRUE, pressure_affected = TRUE)
 	RegisterSignal(src, COMSIG_PREQDELETED, PROC_REF(on_delete))

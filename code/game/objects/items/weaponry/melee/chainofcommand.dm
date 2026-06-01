@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/melee/chainofcommand
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses. Can be used to hasten allies with right-click."
@@ -42,7 +43,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(victim == user)
-		to_chat(user, span_warning("You consider lashing yourself, but hesitate at the thought of how much it would hurt."))
+		to_chat(user, span_warning(LANG("obj.e2bd58bf", null)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	user.do_attack_animation(victim)

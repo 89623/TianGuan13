@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Fish sources that're usually related to rifts or anomalies go here.
 
 /datum/fish_source/carp_rift
@@ -152,7 +153,7 @@
 		var/obj/effect/heretic_influence/fishfluence = challenge.location
 		// But only if it's an open rift
 		if(!istype(fishfluence))
-			to_chat(user, span_notice("You glimpse something fairly uninteresting."))
+			to_chat(user, span_notice(LANG("datum.f0c231e0", null)))
 			return
 		fishfluence.after_drain(user)
 		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
@@ -162,7 +163,7 @@
 			// They can also gain an extra influence point if they infused their rod.
 			if(HAS_TRAIT(challenge.used_rod, TRAIT_ROD_MANSUS_INFUSED))
 				heretic_datum.adjust_knowledge_points(1)
-			to_chat(user, span_boldnotice("Your infused rod improves your knowledge gain!"))
+			to_chat(user, span_boldnotice(LANG("datum.31eb22fa", null)))
 		return
 
 	// Non-heretics instead go crazy

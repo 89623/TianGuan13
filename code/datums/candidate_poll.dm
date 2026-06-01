@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The datum that describes one instance of candidate polling
 /datum/candidate_poll
 	/// The role the poll is for
@@ -73,7 +74,7 @@
 		return FALSE
 	if(time_left() <= 0)
 		if(!silent)
-			to_chat(candidate, span_danger("Sorry, you were too late for the consideration!"))
+			to_chat(candidate, span_danger(LANG("datum.e15458a6", null)))
 			SEND_SOUND(candidate, 'sound/machines/buzz/buzz-sigh.ogg')
 		return FALSE
 
@@ -131,12 +132,12 @@
 	if(!ignore_list)
 		GLOB.poll_ignore[ignoring_category] = list()
 	GLOB.poll_ignore[ignoring_category] += candidate.ckey
-	to_chat(candidate, span_danger("Choice registered: Never for this round."))
+	to_chat(candidate, span_danger(LANG("datum.4f534602", null)))
 	remove_candidate(candidate, silent = TRUE)
 
 /datum/candidate_poll/proc/undo_never_for_this_round(mob/candidate)
 	GLOB.poll_ignore[ignoring_category] -= candidate.ckey
-	to_chat(candidate, span_notice("Choice registered: Eligible for this round"))
+	to_chat(candidate, span_notice(LANG("datum.eee5e8b2", null)))
 
 /datum/candidate_poll/proc/trim_candidates()
 	list_clear_nulls(signed_up)

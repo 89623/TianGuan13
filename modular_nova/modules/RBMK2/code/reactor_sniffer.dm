@@ -115,7 +115,7 @@
 
 /obj/machinery/rbmk2_sniffer/proc/link_reactor(mob/user, obj/machinery/power/rbmk2/desired_reactor)
 	if(desired_reactor in linked_reactors)
-		balloon_alert(user, "already linked!")
+		balloon_alert(user, LANG("obj.cc32a1c7", null))
 		return FALSE
 
 	linked_reactors[desired_reactor] = TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Used to set up a basic AI controller on a mob for admin ease of use
 /datum/admin_ai_template
 	/// What do admins see when selecting this option?
@@ -16,7 +17,7 @@
 /// Actually perform the process
 /datum/admin_ai_template/proc/apply(mob/living/target, client/user)
 	if (QDELETED(target) || !isliving(target))
-		to_chat(user, span_warning("Invalid target for AI controller."))
+		to_chat(user, span_warning(LANG("datum.69f93880", null)))
 		return
 	if (gather_information(target, user))
 		apply_controller(target, user)
@@ -55,7 +56,7 @@
 
 /datum/admin_ai_template/proc/apply_controller(mob/living/target, client/user)
 	if (QDELETED(target))
-		to_chat(user, span_warning("Target stopped existing while you were answering prompts :("))
+		to_chat(user, span_warning(LANG("datum.34215114", null)))
 		return
 
 	QDEL_NULL(target.ai_controller)

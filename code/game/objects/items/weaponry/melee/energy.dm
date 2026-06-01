@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	abstract_type = /obj/item/melee/energy
@@ -235,7 +236,7 @@
 	var/obj/item/stock_parts/power_store/our_cell = user.cell
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && !(our_cell.use(hitcost)))
 		attack_self(user)
-		to_chat(user, span_notice("It's out of charge!"))
+		to_chat(user, span_notice(LANG("obj.c57f8413", null)))
 		return
 	return ..()
 
@@ -318,11 +319,11 @@
 
 /obj/item/melee/energy/sword/saber/multitool_act(mob/living/user, obj/item/tool)
 	if(hacked)
-		to_chat(user, span_warning("It's already fabulous!"))
+		to_chat(user, span_warning(LANG("obj.82f87bea", null)))
 		return
 	hacked = TRUE
 	sword_color_icon = "rainbow"
-	to_chat(user, span_warning("RNBW_ENGAGE"))
+	to_chat(user, span_warning(LANG("obj.6710b2e4", null)))
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/melee/energy/sword/pirate
@@ -533,7 +534,7 @@
 	SIGNAL_HANDLER
 
 	if(charge <= 0 && !HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		balloon_alert(user, "no charge!")
+		balloon_alert(user, LANG("obj.c0d39a14", null))
 		return COMPONENT_BLOCK_TRANSFORM
 
 /obj/item/melee/energy/sword/surplus/proc/do_jiggle(mob/user)

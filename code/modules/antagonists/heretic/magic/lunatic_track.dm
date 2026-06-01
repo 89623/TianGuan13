@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/lunatic_track
 	name = "Moonlight Echo"
 	desc = "Track your ringleader."
@@ -24,7 +25,7 @@
 	owner.balloon_alert(owner, get_balloon_message(ascended_heretic))
 
 	if(ascended_heretic.stat == DEAD)
-		to_chat(owner, span_hierophant("[ascended_heretic] is dead. Weep for the lie has struck out."))
+		to_chat(owner, span_hierophant(LANG("datum.9185ca5d", list(ascended_heretic))))
 
 	StartCooldown()
 	return TRUE

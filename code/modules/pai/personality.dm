@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * name
  * key
@@ -12,14 +13,14 @@
 
 /datum/pai_candidate/proc/savefile_save(mob/user)
 	if(is_guest_key(user.key))
-		to_chat(usr, span_warning("You cannot save pAI information as a guest."))
+		to_chat(usr, span_warning(LANG("datum.efaa03cf", null)))
 		return FALSE
 	var/savefile/F = new /savefile(src.savefile_path(user))
 	WRITE_FILE(F["name"], name)
 	WRITE_FILE(F["description"], description)
 	WRITE_FILE(F["comments"], comments)
 	WRITE_FILE(F["version"], 1)
-	to_chat(usr, span_boldnotice("You have saved pAI information locally."))
+	to_chat(usr, span_boldnotice(LANG("datum.e9e46543", null)))
 	return TRUE
 
 // loads the savefile corresponding to the mob's ckey

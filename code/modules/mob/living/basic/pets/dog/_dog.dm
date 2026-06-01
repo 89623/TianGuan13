@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Add 'walkies' as valid input
 /datum/pet_command/follow/dog
 	activate_on_befriend = TRUE
@@ -94,7 +95,7 @@
 ///Proc to run on a successful taming attempt
 /mob/living/basic/pet/dog/tamed(mob/living/tamer, atom/food)
 	. = ..()
-	visible_message(span_notice("[src] licks at [tamer] in a friendly manner!"))
+	visible_message(span_notice(LANG("mob.7f59ee93", list(src, tamer))))
 
 /// A dog bone fully heals a dog, and befriends it if it's not your friend.
 /obj/item/dog_bone

@@ -12,7 +12,7 @@
 
 /obj/item/organ/empowered_borer_egg/on_find(mob/living/finder)
 	..()
-	to_chat(finder, span_warning("You found an unknown egg in [owner]'s [zone]!"))
+	to_chat(finder, span_warning(LANG("obj.6cf60afd", list(owner, zone))))
 
 /obj/item/organ/empowered_borer_egg/Initialize(mapload)
 	. = ..()
@@ -25,7 +25,7 @@
 
 /obj/item/organ/empowered_borer_egg/on_mob_remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
-	visible_message(span_warning(span_italics("As [src] is cut out of [M], it quickly vibrates and shatters, leaving nothing but some goop!")))
+	visible_message(span_warning(span_italics(LANG("obj.424d6b54", list(src, M)))))
 	new/obj/effect/decal/cleanable/food/egg_smudge(get_turf(src))
 	qdel(src)
 

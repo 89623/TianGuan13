@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/reactive_armor_shell
 	name = "reactive armor shell"
 	desc = "An experimental suit of armor, awaiting installation of an anomaly core."
@@ -23,7 +24,7 @@
 		var/armour_path = is_path_in_list(anomaly.anomaly_type, anomaly_armour_types, TRUE)
 		if(!armour_path)
 			armour_path = /obj/item/clothing/suit/armor/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armour coded
-		to_chat(user, span_notice("You insert [anomaly] into the chest plate, and the armour gently hums to life."))
+		to_chat(user, span_notice(LANG("obj.8b9ca857", list(anomaly))))
 		new armour_path(get_turf(src))
 		qdel(src)
 		qdel(anomaly)
@@ -67,7 +68,7 @@
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !active
-	to_chat(user, span_notice("[src] is now [active ? "active" : "inactive"]."))
+	to_chat(user, span_notice(LANG("obj.7051ec5e", list(src, active ? "active" : "inactive"))))
 	update_icon()
 	add_fingerprint(user)
 
@@ -460,7 +461,7 @@
 		return
 
 	if (isliving(victim))
-		to_chat(victim, span_userdanger("You're thrown back by a wave of pressure!"))
+		to_chat(victim, span_userdanger(LANG("obj.6d7a9eef", null)))
 	var/turf/throwtarget = get_edge_target_turf(source, get_dir(source, get_step_away(victim, source, 1)))
 	victim.safe_throw_at(throwtarget, 1, 1, source, force = MOVE_FORCE_EXTREMELY_STRONG)
 

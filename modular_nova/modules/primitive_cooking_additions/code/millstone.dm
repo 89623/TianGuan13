@@ -53,11 +53,11 @@
 
 /obj/structure/millstone/click_alt(mob/user)
 	if(!length(contents))
-		balloon_alert(user, "nothing inside!")
+		balloon_alert(user, LANG("obj.c2ebeaa8", null))
 		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
-	balloon_alert(user, "removed all items")
+	balloon_alert(user, LANG("obj.35edb25f", null))
 	return CLICK_ACTION_SUCCESS
 
 /obj/structure/millstone/click_ctrl_shift(mob/user)
@@ -94,11 +94,11 @@
 /obj/structure/millstone/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/storage/bag))
 		if(length(contents) >= maximum_contained_items)
-			balloon_alert(user, "already full")
+			balloon_alert(user, LANG("obj.e3949c3a", null))
 			return TRUE
 
 		if(!length(attacking_item.contents))
-			balloon_alert(user, "nothing to transfer!")
+			balloon_alert(user, LANG("obj.7e39eb37", null))
 			return TRUE
 
 		for(var/obj/item/food/grown/target_item in attacking_item.contents)
@@ -108,33 +108,33 @@
 			target_item.forceMove(src)
 
 		if (length(contents) >= maximum_contained_items)
-			balloon_alert(user, "filled!")
+			balloon_alert(user, LANG("obj.f5ddc80d", null))
 
 		else
-			balloon_alert(user, "transferred")
+			balloon_alert(user, LANG("obj.1ce4361d", null))
 
 		return TRUE
 
 	if(!(istype(attacking_item, /obj/item/food/grown) || istype(attacking_item, /obj/item/grown)))
-		balloon_alert(user, "can only mill plants")
+		balloon_alert(user, LANG("obj.24f71cd2", null))
 		return ..()
 
 	if(length(contents) >= maximum_contained_items)
-		balloon_alert(user, "already full")
+		balloon_alert(user, LANG("obj.e3949c3a", null))
 		return
 
 	attacking_item.forceMove(src)
-	balloon_alert(user, "transferred [attacking_item]")
+	balloon_alert(user, LANG("obj.5567b4ed", list(attacking_item)))
 	return TRUE
 
 /// Takes the content's seeds and spits them out on the turf, as well as grinding whatever the contents may be
 /obj/structure/millstone/proc/mill_it_up(mob/living/carbon/human/user)
 	if(!length(contents))
-		balloon_alert(user, "nothing to mill")
+		balloon_alert(user, LANG("obj.13bdb106", null))
 		return
 
 	if(user.get_stamina_loss() > MILLSTONE_STAMINA_MINIMUM)
-		balloon_alert(user, "too tired")
+		balloon_alert(user, LANG("obj.1401aa77", null))
 		return
 
 	if(!length(contents) || !in_range(src, user))

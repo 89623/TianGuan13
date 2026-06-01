@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Whether the station has been nuked itself. TRUE only if the station was actually hit by the nuke, otherwise FALSE
 GLOBAL_VAR_INIT(station_was_nuked, FALSE)
 /// The source of the last nuke that went off
@@ -103,7 +104,7 @@ GLOBAL_VAR(station_nuke_source)
 /// Checks if the disk inserted is a real nuke disk or not.
 /obj/machinery/nuclearbomb/proc/disk_check(obj/item/disk/nuclear/inserted_disk)
 	if(inserted_disk.fake)
-		say("Authentication failure; disk not recognised.")
+		say(LANG("obj.3bdf181a", null))
 		return FALSE
 
 	return TRUE
@@ -246,7 +247,7 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/attack_hand_secondary(mob/user, list/modifiers)
 	if(deconstruction_state != NUKESTATE_CORE_EXPOSED)
 		return ..()
-	to_chat(user, span_danger("You can't hold [core] with your bare hands!"))
+	to_chat(user, span_danger(LANG("obj.03187382", list(core))))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/nuclearbomb/can_interact(mob/user)
@@ -493,7 +494,7 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/proc/set_anchor(mob/anchorer)
 	if(isinspace() && !anchored)
 		if(anchorer)
-			to_chat(anchorer, span_warning("There is nothing to anchor to!"))
+			to_chat(anchorer, span_warning(LANG("obj.27de9d44", null)))
 		return
 
 	set_anchored(!anchored)
@@ -515,7 +516,7 @@ GLOBAL_VAR(station_nuke_source)
 /// Arms the nuke, or disarms it if it's already active.
 /obj/machinery/nuclearbomb/proc/toggle_nuke_armed()
 	if(safety)
-		to_chat(usr, span_danger("The safety is still on."))
+		to_chat(usr, span_danger(LANG("obj.6a4902c4", null)))
 		return
 
 	timing = !timing
@@ -715,15 +716,14 @@ GLOBAL_VAR(station_nuke_source)
 	if(istype(gibbed.loc, /obj/structure/closet/secure_closet/freezer))
 		var/obj/structure/closet/secure_closet/freezer/freezer = gibbed.loc
 		if(!freezer.jones)
-			to_chat(gibbed, span_bolddanger("You hold onto [freezer] as [source] goes off. \
-				Luckily, as [freezer] is lead-lined, you survive."))
+			to_chat(gibbed, span_bolddanger(LANG("_root.b17ec2e5", list(freezer, source, freezer))))
 			freezer.jones = TRUE
 			return FALSE
 
 	if(gibbed.stat == DEAD)
 		return FALSE
 
-	to_chat(gibbed, span_userdanger("You are shredded to atoms by [source]!"))
+	to_chat(gibbed, span_userdanger(LANG("_root.19eb52d3", list(source))))
 	gibbed.investigate_log("has been gibbed by a nuclear blast.", INVESTIGATE_DEATHS)
 	gibbed.gib(DROP_ALL_REMAINS)
 	return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/fish/starfish/chrystarfish
 	name = "chrystarfish"
 	fish_id = "chrystarfish"
@@ -79,14 +80,14 @@
 /obj/item/fish/starfish/chrystarfish/flinch_on_eat(mob/living/eater, mob/living/feeder)
 	if(status != FISH_ALIVE)
 		return
-	to_chat(feeder, span_warning("[src] slips out of the spacetime in pain!"))
+	to_chat(feeder, span_warning(LANG("obj.1589b174", list(src))))
 
 	var/tp_range = 6 * clamp(weight/average_weight, 3, 9) // usually 6, plus or minus fish weight
 	// teleports itself if on a turf otherwise its container - whatever it is
 	do_teleport(isturf(loc) ? src : loc, get_turf(feeder), tp_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/item/fish/starfish/chrystarfish/suicide_act(mob/living/user)
-	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
+	visible_message(span_suicide(LANG("obj.9929165c", list(user, src))))
 	forceMove(user)
 	// *everything*
 	for(var/obj/thing in user.get_contents())
@@ -305,7 +306,7 @@
 	beauty = FISH_BEAUTY_UGLY
 
 /obj/item/fish/flumpulus/suicide_act(mob/living/user)
-	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
+	visible_message(span_suicide(LANG("obj.9929165c", list(user, src))))
 	forceMove(user)
 	. = MANUAL_SUICIDE
 	for(var/i in 1 to rand(5, 15))
@@ -393,17 +394,17 @@
 	max_pressure = WARNING_HIGH_PRESSURE
 
 /obj/item/fish/gullion/suicide_act(mob/living/user)
-	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
+	visible_message(span_suicide(LANG("obj.9929165c", list(user, src))))
 	forceMove(user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
 	var/oxygen_in_air = locate(/datum/gas/oxygen) in environment.gases
 	if(!oxygen_in_air || (status == FISH_DEAD))
-		visible_message(span_suicide("[user] chokes and dies! (Wait, from the fish or from lack of air?)"))
+		visible_message(span_suicide(LANG("obj.c048796b", list(user))))
 		return OXYLOSS
 
 	user.petrify(statue_timer = INFINITY)
 	user.death()
-	visible_message(span_suicide("[user]'s skin turns into quartz upon contact with the oxygen in the air!'"))
+	visible_message(span_suicide(LANG("obj.dd161a69", list(user))))
 	qdel(src)
 	return MANUAL_SUICIDE
 
@@ -469,12 +470,12 @@
 		AddElement(/datum/element/haunted, COLOR_GREEN)
 
 /obj/item/fish/mossglob/suicide_act(mob/living/user)
-	visible_message(span_suicide("[user] sticks [user.p_their()] arm deep into [src]! It looks like they're trying to offer themselves to it!"))
+	visible_message(span_suicide(LANG("obj.a22a91ae", list(user, user.p_their(), src))))
 	user.drop_everything()
 	set_status(FISH_ALIVE)
 	transform = transform.Scale(1.15, 1.15)
 	update_size_and_weight(new_size = size * 1.15, new_weight = weight * 1.15)
-	visible_message(span_suicide("[user] is absorbed into [src]!"))
+	visible_message(span_suicide(LANG("obj.af6e4763", list(user, src))))
 	objectify(user, src)
 	return MANUAL_SUICIDE_NONLETHAL
 
@@ -568,9 +569,9 @@
 /obj/item/fish/babbelfish/suicide_act(mob/living/user)
 	if(status == FISH_DEAD)
 		if(moron_inside)
-			visible_message(span_suicide("[user] puts [src] against their lips, but [src] is already full!"))
+			visible_message(span_suicide(LANG("obj.c1ceab4f", list(user, src, src))))
 			return SHAME
-		visible_message(span_suicide("[user] puts [src] against their lips, but [src]'s psychic afterimage sucks [user.p_them()] inward!"))
+		visible_message(span_suicide(LANG("obj.97b7ba4e", list(user, src, src, user.p_them()))))
 		user.drop_everything()
 		objectify(user, src)
 		user.fully_replace_character_name(null, name) // fish's name
@@ -580,11 +581,11 @@
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(check_loc))
 		return MANUAL_SUICIDE_NONLETHAL // in case they somehow break out
 
-	visible_message(span_suicide("[user] puts [src] against their lips! It looks like they're preparing to say something!"))
+	visible_message(span_suicide(LANG("obj.2cc81b64", list(user, src))))
 	var/psychic_speech = tgui_input_text(user, message = "Say something!", title = "What are your last words?", timeout = 15 SECONDS)
 	if(!psychic_speech || !locate(src) in user.get_contents())
 		user.say("Err, umm... uhh... erm...", forced = "blustering like a moron due to babbelfish suicide")
-		visible_message(span_suicide("[user] dies from shame!"))
+		visible_message(span_suicide(LANG("obj.b597bc0a", list(user))))
 		return OXYLOSS
 
 	voice_of_god(psychic_speech, user, list("big", "alertalien"), base_multiplier = 5, include_speaker = TRUE, forced = TRUE, ignore_spam = TRUE)
@@ -628,7 +629,7 @@
  * This is punishment for neglecting your catches.
  */
 /obj/item/fish/babbelfish/proc/psy_wail()
-	manual_emote("wails!")
+	manual_emote(LANG("obj.243f29f1", null))
 	playsound(src, 'sound/mobs/non-humanoids/fish/fish_psyblast.ogg', 100)
 	var/list/mob/living/mobs_in_range = get_hearers_in_range(7, src)
 	for(var/mob/living/screeched in mobs_in_range)
@@ -664,7 +665,7 @@
 		fishie.set_status(FISH_DEAD)
 		affected++
 	if(affected)
-		visible_message(span_bolddanger("[src]'s wail kills [affected] fish nearby!")) // m-m-m-m-m-MONSTER KILL
+		visible_message(span_bolddanger(LANG("obj.ba19230c", list(src, affected)))) // m-m-m-m-m-MONSTER KILL
 
 /obj/item/fish/babbelfish/attack_hand(mob/living/user, list/modifiers)
 
@@ -672,10 +673,10 @@
 		return ..()
 
 	if((user.usable_hands < 2) && !HAS_TRAIT(user, TRAIT_STRENGTH))
-		to_chat(user, span_notice("[src] is too dense to twist apart with only one hand."))
+		to_chat(user, span_notice(LANG("obj.18aeef6d", list(src))))
 		return
 
-	to_chat(user, span_danger("You start pulling and twisting [src], trying to split it down the middle..."))
+	to_chat(user, span_danger(LANG("obj.2d7800f5", list(src))))
 	if(!do_after(user, 5 SECONDS, src))
 		return
 
@@ -750,15 +751,15 @@
 	. = ..()
 	var/obj/item/organ/ears/ears = target_mob.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
-		to_chat(user, span_notice("[target_mob == user ? "You don't have" : target_mob + "has no"] ears to shove [src] into!"))
+		to_chat(user, span_notice(LANG("obj.8cf1802a", list(target_mob == user ? "You don't have" : target_mob + "has no", src))))
 		return
 
-	to_chat(user, span_danger("You start shoving [src] into [target_mob == user ? "your" : target_mob + "'s"] ears. Probably a bad idea."))
+	to_chat(user, span_danger(LANG("obj.64989322", list(src, target_mob == user ? "your" : target_mob + "'s"))))
 	if(!do_after(user, 2.5 SECONDS * (target_mob == user ? 1 : 3), src))
 		return
 
 	user.apply_damage(25, BRUTE, user.get_bodypart(ears.zone), attacking_item = src)
-	to_chat(user, span_notice("As you're shoving them in, the [src] take on a life of their own and brutishly crawl right into [target_mob == user ? "your" : target_mob + "'s"] ears, taking their place entirely while maiming [target_mob == user ? "your" : target_mob.p_their()]  [ears.zone]!"))
+	to_chat(user, span_notice(LANG("obj.f5145fcc", list(src, target_mob == user ? "your" : target_mob + "'s", target_mob == user ? "your" : target_mob.p_their(), ears.zone))))
 	playsound(user, 'sound/effects/magic/demon_consume.ogg', vol = 100, falloff_exponent = 2, vary = TRUE)
 	// bad moodlet
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -776,7 +777,7 @@
 	)
 
 	if(HAS_MIND_TRAIT(organ_owner, TRAIT_TOWER_OF_BABEL))
-		to_chat(organ_owner, span_noticealien("You don't feel that much different this time. Looks like your brain has attuned to the [src]'s effect."))
+		to_chat(organ_owner, span_noticealien(LANG("obj.0f7c6714", list(src))))
 		return
 
 	if(!removal_holder)
@@ -811,14 +812,14 @@
 	// Reset
 	organ_owner.remove_all_languages(source = LANGUAGE_ALL)
 	organ_owner.copy_languages(removal_holder)
-	to_chat(organ_owner, span_notice("You feel significantly more mundane."))
+	to_chat(organ_owner, span_notice(LANG("obj.2ef87727", null)))
 	QDEL_NULL(removal_holder)
 	QDEL_NULL(bound_component)
 
 /obj/item/organ/ears/babbelfish/proc/on_drain_magic(mob/user)
-	to_chat(user, span_noticealien("Your [src] pop as they protect your mind from psychic phenomena!"))
+	to_chat(user, span_noticealien(LANG("obj.250f5d05", list(src))))
 	adjust_temporary_deafness(40 SECONDS)
 
 /obj/item/organ/ears/babbelfish/proc/on_expire(mob/user)
-	to_chat(user, span_noticealien("Your [src] suddenly burst apart!"))
+	to_chat(user, span_noticealien(LANG("obj.ebece85d", list(src))))
 	apply_organ_damage(maxHealth, maxHealth)

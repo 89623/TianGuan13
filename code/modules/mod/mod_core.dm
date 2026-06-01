@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/mod/core
 	name = "MOD core"
 	desc = "A non-functional MOD core. Inform the admins if you see this."
@@ -438,7 +439,7 @@
 	if(uses_needed <= 0 || !plasma.use(uses_needed))
 		return FALSE
 	add_charge(uses_needed * charge_given)
-	balloon_alert(user, "core refueled")
+	balloon_alert(user, LANG("obj.ed4d5313", null))
 	return TRUE
 
 #undef PLASMA_CORE_ORE_CHARGE

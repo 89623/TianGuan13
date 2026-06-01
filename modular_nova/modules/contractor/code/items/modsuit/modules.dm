@@ -20,13 +20,13 @@
 	. = ..()
 	if(!istype(attacking_item, /obj/item/melee/baton/telescopic/contractor_baton) || eaten_baton)
 		return
-	balloon_alert(user, "[attacking_item] inserted")
+	balloon_alert(user, LANG("obj.048c1f34", list(attacking_item)))
 	eaten_baton = TRUE
 	qdel(attacking_item)
 
 /obj/item/mod/module/baton_holster/on_activation()
 	if(!eaten_baton)
-		balloon_alert(mod.wearer, "no baton inserted")
+		balloon_alert(mod.wearer, LANG("obj.42fbaa8a", null))
 		return
 	return ..()
 

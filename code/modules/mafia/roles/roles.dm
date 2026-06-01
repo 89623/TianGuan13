@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mafia_role
 	var/name = JOB_ASSISTANT
 	var/desc = "You are a crewmember without any special abilities."
@@ -158,7 +159,7 @@
 /datum/mafia_role/proc/greet()
 	mafia_alert = new(body, src)
 	SEND_SOUND(body, 'sound/ambience/misc/ambifailure.ogg')
-	to_chat(body, span_danger("You are the [name]."))
+	to_chat(body, span_danger(LANG("datum.369163e5", list(name))))
 	to_chat(body, span_danger("[desc]"))
 	switch(team)
 		if(MAFIA_TEAM_MAFIA)
@@ -167,7 +168,7 @@
 			to_chat(body,span_danger("You are a crewmember. Find out and lynch the changelings!"))
 		if(MAFIA_TEAM_SOLO)
 			to_chat(body,span_danger("You are not aligned to town or mafia. Accomplish your own objectives!"))
-	to_chat(body, "<span class='warningplain'><b>Be sure to read <a href=\"https://tgstation13.org/wiki/Mafia\">the wiki page</a> to learn more, if you have no idea what's going on.</b></span>")
+	to_chat(body, LANG("datum.dfe0a809", null))
 
 /datum/mafia_role/proc/reveal_role(datum/mafia_controller/game, verbose = FALSE)
 	if((role_flags & ROLE_REVEALED))

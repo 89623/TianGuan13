@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit admin permissions.", ADMIN_CATEGORY_MAIN)
 	user.holder.edit_admin_permissions(PERMISSIONS_PAGE_PERMISSIONS)
@@ -389,7 +390,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		log_admin("[key_name(usr)] attempted to edit admin permissions without sufficient rights.")
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, span_adminprefix("Admin Edit blocked: Advanced ProcCall detected."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.6651f679", null)), confidential = TRUE)
 		return
 	var/datum/asset/permissions_assets = get_asset_datum(/datum/asset/simple/namespaced/common)
 	permissions_assets.send(usr.client)
@@ -409,19 +410,19 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		skip = TRUE
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_admins) && task == "rank")
 		if(admin_ckey in GLOB.protected_admins)
-			to_chat(usr, span_adminprefix("Editing the rank of this admin is blocked by server configuration."), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.18dc5107", null)), confidential = TRUE)
 			return
 	if(!CONFIG_GET(flag/admin_legacy_system) && CONFIG_GET(flag/protect_legacy_ranks) && task == "permissions")
 		if((target_admin_datum.ranks & GLOB.protected_ranks).len > 0)
-			to_chat(usr, span_adminprefix("Editing the flags of this rank is blocked by server configuration."), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.2885d5b9", null)), confidential = TRUE)
 			return
 	if(CONFIG_GET(flag/load_legacy_ranks_only) && (task == "add" || task == "rank" || task == "permissions"))
-		to_chat(usr, span_adminprefix("Database rank loading is disabled, only temporary changes can be made to a rank's permissions and permanently creating a new rank is blocked."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.543091c3", null)), confidential = TRUE)
 		legacy_only = TRUE
 
 	if(check_rights(R_DBRANKS, FALSE) && !skip)
 		if(!SSdbcore.Connect())
-			to_chat(usr, span_danger("Unable to connect to database, changes are temporary only."), confidential = TRUE)
+			to_chat(usr, span_danger(LANG("datum.dc493429", null)), confidential = TRUE)
 			use_db = FALSE
 		else
 			use_db = tgui_alert(usr,"Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", list("Permanent", "Temporary", "Cancel"))
@@ -473,7 +474,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, span_adminprefix("Admin Addition blocked: Advanced ProcCall detected."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.a4498f67", null)), confidential = TRUE)
 		return
 	if(admin_ckey)
 		. = admin_ckey
@@ -483,7 +484,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!.)
 		return FALSE
 	if(!admin_ckey && (. in (GLOB.admin_datums+GLOB.deadmins)))
-		to_chat(usr, span_danger("[admin_key] is already an admin."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("datum.e857f21f", list(admin_key))), confidential = TRUE)
 		return FALSE
 	if(!use_db)
 		return
@@ -497,7 +498,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		return FALSE
 	if(query_admin_in_db.NextRow())
 		qdel(query_admin_in_db)
-		to_chat(usr, span_danger("[admin_key] already listed in admin database. Check the Housekeeping tab if they don't appear in the list of admins."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("datum.72437ed0", list(admin_key))), confidential = TRUE)
 		return FALSE
 	QDEL_NULL(query_admin_in_db)
 	var/datum/db_query/query_add_admin = SSdbcore.NewQuery(
@@ -521,7 +522,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, span_adminprefix("Admin Removal blocked: Advanced ProcCall detected."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.c8a18517", null)), confidential = TRUE)
 		return
 	if(tgui_alert(usr,"Are you sure you want to remove [admin_ckey]?", "Confirm Removal", list("Do it", "Cancel")) != "Do it")
 		return
@@ -576,7 +577,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(owner.prefs.read_preference(/datum/preference/toggle/bypass_deadmin_in_centcom) && is_centcom_level(owner.mob.z) && !istype(owner.mob, /mob/dead/new_player))
 		return FALSE
 
-	to_chat(owner, span_interface("You are now a normal player."), confidential = TRUE)
+	to_chat(owner, span_interface(LANG("datum.2989f127", null)), confidential = TRUE)
 	var/old_owner = owner
 	deactivate()
 	message_admins("[old_owner] deadmined via auto-deadmin config.")
@@ -589,7 +590,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!check_rights(R_PERMISSIONS) || (use_db && !check_rights(R_DBRANKS)))
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, span_adminprefix("Rank Modification blocked: Advanced ProcCall detected."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.51762576", null)), confidential = TRUE)
 		return
 
 	var/rank_type = RANK_SOURCE_TEMPORARY
@@ -758,7 +759,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(!check_rights(R_PERMISSIONS))
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, span_adminprefix("Rank Modification blocked: Advanced ProcCall detected."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.51762576", null)), confidential = TRUE)
 		return
 	var/new_flags = input_bitfield(
 		usr,
@@ -805,13 +806,13 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 /// Polls usr for a new rank to add to either JUST this round, or the DB
 /datum/admins/proc/add_rank()
 	if(!check_rights(R_PERMISSIONS))
-		to_chat(usr, span_adminprefix("You don't have the permissions for this."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.c74d3a14", null)), confidential = TRUE)
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, span_adminprefix("Rank Addition blocked: Advanced ProcCall detected."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.218240b0", null)), confidential = TRUE)
 		return
 	if(usr.client.holder.can_edit_rights_flags() == NONE)
-		to_chat(usr, span_adminprefix("You are not allowed to add any rights."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.ce8d3635", null)), confidential = TRUE)
 		return
 
 	var/new_rank_name = input("Please input a new rank", "New custom rank") as text|null
@@ -820,7 +821,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 
 	var/list/datum/admin_rank/existing_ranks = ranks_from_rank_name(new_rank_name)
 	if (length(existing_ranks))
-		to_chat(usr, span_adminprefix("A rank by this name already exists, sorry!."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.e9bd10a2", null)), confidential = TRUE)
 		return
 
 	var/rights = input_bitfield(
@@ -854,7 +855,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	var/use_db = FALSE
 	if(check_rights(R_DBRANKS, FALSE))
 		if(!SSdbcore.Connect())
-			to_chat(usr, span_danger("Unable to connect to database, changes are temporary only."), confidential = TRUE)
+			to_chat(usr, span_danger(LANG("datum.dc493429", null)), confidential = TRUE)
 			use_db = FALSE
 		else
 			var/use_db_response = tgui_alert(usr,"Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", list("Permanent", "Temporary", "Cancel"))
@@ -873,7 +874,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	else
 		custom_rank = new(new_rank_name, RANK_SOURCE_TEMPORARY, rights, excluded_rights, edit_rights)
 	if(QDELETED(custom_rank))
-		to_chat(usr, span_danger("Rank creation failed, check runtimes."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("datum.7773701a", null)), confidential = TRUE)
 		return
 
 	GLOB.admin_ranks += custom_rank
@@ -927,7 +928,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		log_admin("[key_name(usr)] attempted to remove a rank without sufficient rights.")
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, span_adminprefix("Rank Deletion blocked: Advanced ProcCall detected."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.d77d6407", null)), confidential = TRUE)
 		return
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		if(R.name == admin_rank && ((R.rights & usr.client.holder.can_edit_rights_flags()) != R.rights))
@@ -957,7 +958,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			local_only_deletion = FALSE
 
 	if(!local_only_deletion && CONFIG_GET(flag/load_legacy_ranks_only))
-		to_chat(usr, span_adminprefix("Database Rank deletion not permitted while database rank loading is disabled, deleting our local copy."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.54580546", null)), confidential = TRUE)
 		local_only_deletion = TRUE
 
 	if(!local_only_deletion)
@@ -970,7 +971,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			return
 		if(query_admins_with_rank.NextRow())
 			qdel(query_admins_with_rank)
-			to_chat(usr, span_danger("Error: Rank deletion attempted while db rank still used; Tell a coder, this shouldn't happen."), confidential = TRUE)
+			to_chat(usr, span_danger(LANG("datum.3a3296c0", null)), confidential = TRUE)
 			return
 		QDEL_NULL(query_admins_with_rank)
 
@@ -1020,7 +1021,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		log_admin("[key_name(usr)] attempted to edit rank permissions without sufficient rights.")
 		return
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, span_adminprefix("Rank Edit blocked: Advanced ProcCall detected."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.cce62be5", null)), confidential = TRUE)
 		return
 	var/datum/asset/permissions_assets = get_asset_datum(/datum/asset/simple/namespaced/common)
 	permissions_assets.send(usr.client)
@@ -1030,10 +1031,10 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		return
 	var/datum/admin_rank/target_rank = target_ranks[1]
 	if(target_rank.name != admin_rank) // Somehow
-		to_chat(usr, span_adminprefix("Passed rank does not match target, somehow."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.be62b3a2", null)), confidential = TRUE)
 		return
 	if((target_rank.rights & usr.client.holder.can_edit_rights_flags()) != target_rank.rights)
-		to_chat(usr, span_adminprefix("You don't have edit rights to all the rights this rank has, you aren't allowed to modify it."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.ce5e669d", null)), confidential = TRUE)
 		return
 
 	var/attempt_db = FALSE
@@ -1062,13 +1063,13 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	// This means an admin could in theory bypass protections if they modified a linked rank (such as game admin) which is not also protected
 	// It might be wise to make the permissions afforded by protected ranks inviolable. I'm unsure.
 	if(CONFIG_GET(flag/load_legacy_ranks_only))
-		to_chat(usr, span_adminprefix("Database rank loading is disabled, only temporary changes can be made to a rank's permissions."), confidential = TRUE)
+		to_chat(usr, span_adminprefix(LANG("datum.b9847051", null)), confidential = TRUE)
 		attempt_db = FALSE
 
 	var/use_db = FALSE
 	if(attempt_db)
 		if(!SSdbcore.Connect())
-			to_chat(usr, span_danger("Unable to connect to database, canceling."), confidential = TRUE)
+			to_chat(usr, span_danger(LANG("datum.131855b8", null)), confidential = TRUE)
 			return
 		use_db = TRUE
 
@@ -1091,7 +1092,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			working_exclude_rights = query_db_rank_info.item[2]
 			working_can_edit_rights = query_db_rank_info.item[3]
 		else // Couldn't find anything, no db memes then
-			to_chat(usr, span_adminprefix("Rank does not exist in database, exiting."), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.74f1b6c6", null)), confidential = TRUE)
 			qdel(query_db_rank_info)
 			return
 		QDEL_NULL(query_db_rank_info)
@@ -1126,7 +1127,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			allowed_edit_field = usr.client.holder.can_edit_rights_flags(),
 		)
 		if(isnull(new_flags))
-			to_chat(usr, span_adminprefix("Canceled editing rank."), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.8ca3b825", null)), confidential = TRUE)
 			return
 
 		// Gotta turn it off and on again
@@ -1210,6 +1211,6 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		qdel(query_sync_lastadminrank)
 		return
 	QDEL_NULL(query_sync_lastadminrank)
-	to_chat(usr, span_admin("Sync of [admin_key] successful."), confidential = TRUE)
+	to_chat(usr, span_admin(LANG("datum.916f8200", list(admin_key))), confidential = TRUE)
 
 #undef PERMISSIONS_LOGS_PER_PAGE

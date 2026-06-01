@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/ridden/wheelchair/motorized
 	name = "motorized wheelchair"
 	desc = "A chair with big wheels. It seems to have a motor in it."
@@ -80,12 +81,12 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/relaymove(mob/living/user, direction)
 	if(!power_cell)
-		to_chat(user, span_warning("There seems to be no cell installed in [src]."))
+		to_chat(user, span_warning(LANG("obj.bb1d0ce6", list(src))))
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
 	if(power_cell.charge < energy_usage / max(power_efficiency, 1))
-		to_chat(user, span_warning("The display on [src] blinks 'Out of Power'."))
+		to_chat(user, span_warning(LANG("obj.082736e9", list(src))))
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
@@ -94,7 +95,7 @@
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
 		return ..()
-	to_chat(user, span_notice("You remove [power_cell] from [src]."))
+	to_chat(user, span_notice(LANG("obj.cbed3266", list(power_cell, src))))
 	user.put_in_hands(power_cell)
 	power_cell = null
 
@@ -108,12 +109,12 @@
 
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(power_cell)
-			to_chat(user, span_warning("There is a power cell already installed."))
+			to_chat(user, span_warning(LANG("obj.3b01fcf5", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		tool.forceMove(src)
 		power_cell = tool
-		to_chat(user, span_notice("You install the [tool]."))
+		to_chat(user, span_notice(LANG("obj.f2af2311", list(tool))))
 		refresh_parts()
 		return ITEM_INTERACT_SUCCESS
 
@@ -194,7 +195,7 @@
 /// Detonate an armed explosive on this wheelchair
 /obj/vehicle/ridden/wheelchair/motorized/detonate_bomb()
 	if (obj_flags & EMAGGED)
-		visible_message(span_boldwarning("[src] explodes!!"))
+		visible_message(span_boldwarning(LANG("obj.73d3c345", list(src))))
 		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
 	return ..()
 
@@ -218,9 +219,9 @@
 			ramtarget.throw_at(throw_target, 2, 3)
 			ramtarget.Knockdown(8 SECONDS)
 			ramtarget.adjust_stamina_loss(35)
-			visible_message(span_danger("[src] crashes into [ramtarget], sending [disabled] and [ramtarget] flying!"))
+			visible_message(span_danger(LANG("obj.590ec4fc", list(src, ramtarget, disabled, ramtarget))))
 		else
-			visible_message(span_danger("[src] crashes into [bumped_atom], sending [disabled] flying!"))
+			visible_message(span_danger(LANG("obj.599ad85b", list(src, bumped_atom, disabled))))
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
 /obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -228,13 +229,13 @@
 		return FALSE
 
 	if (!panel_open)
-		balloon_alert(user, "panel is closed!")
+		balloon_alert(user, LANG("obj.c6eae104", null))
 		return FALSE
 
 	if (!bomb_attached)
 		RegisterSignal(src, COMSIG_WHEELCHAIR_BELL_RANG, PROC_REF(on_bell_rang))
-	balloon_alert(user, "bomb implanted...?")
-	visible_message(span_warning("A bomb appears in [src], what the fuck?"))
+	balloon_alert(user, LANG("obj.c8ac1224", null))
+	visible_message(span_warning(LANG("obj.62fa4bd1", list(src))))
 	obj_flags |= EMAGGED
 	return TRUE
 

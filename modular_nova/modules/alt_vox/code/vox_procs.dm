@@ -34,7 +34,7 @@
 		return
 	vox_type = selection
 
-	to_chat(src, "Vox voice set to [vox_type]")
+	to_chat(src, LANG("mob.403e8ab9", list(vox_type)))
 
 
 /mob/living/silicon/ai/verb/display_word_string()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/cyberimp/bci
 	name = "brain-computer interface"
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
@@ -135,7 +136,7 @@
 	if (bci.owner.stat == DEAD)
 		return
 
-	to_chat(bci.owner, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
+	to_chat(bci.owner, LANG("obj.dabd65ca", list(span_robot("[html_encode(sent_message)]"))))
 
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
@@ -177,7 +178,7 @@
 		return
 
 	parent.cell.give(shock_damage * 2)
-	to_chat(source, span_notice("You absorb some of the shock into your [parent.name]!"))
+	to_chat(source, span_notice(LANG("obj.a5584887", list(parent.name))))
 
 /obj/item/circuit_component/bci_core/proc/on_examine(datum/source, mob/mob, list/examine_text)
 	SIGNAL_HANDLER
@@ -231,10 +232,10 @@
 	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))
-		to_chat(owner, span_boldwarning("[circuit_component.parent] has no power cell."))
+		to_chat(owner, span_boldwarning(LANG("datum.2bd539cc", list(circuit_component.parent))))
 	else
-		to_chat(owner, span_info("[circuit_component.parent]'s [cell.name] has <b>[cell.percent()]%</b> charge left."))
-		to_chat(owner, span_info("You can recharge it by using a cyborg recharging station."))
+		to_chat(owner, span_info(LANG("datum.458a2f5f", list(circuit_component.parent, cell.name, cell.percent()))))
+		to_chat(owner, span_info(LANG("datum.d802482f", null)))
 
 /datum/action/innate/bci_charge_action/process(seconds_per_tick)
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
@@ -323,14 +324,14 @@
 		return
 
 	if (locked)
-		balloon_alert(user, "it's locked!")
+		balloon_alert(user, LANG("obj.2ffcba26", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if (isnull(bci_to_implant))
-		balloon_alert(user, "no bci inserted!")
+		balloon_alert(user, LANG("obj.bf8bccc5", null))
 	else
 		user.put_in_hands(bci_to_implant)
-		balloon_alert(user, "ejected bci")
+		balloon_alert(user, LANG("obj.ccfe917c", null))
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -340,16 +341,16 @@
 
 	var/obj/item/organ/cyberimp/bci/new_bci = tool
 	if (!(locate(/obj/item/integrated_circuit) in new_bci))
-		balloon_alert(user, "bci has no circuit!")
+		balloon_alert(user, LANG("obj.a2d6e3a7", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant
 	user.transferItemToLoc(new_bci, src)
 	bci_to_implant = new_bci
 	if (isnull(previous_bci_to_implant))
-		balloon_alert(user, "inserted bci")
+		balloon_alert(user, LANG("obj.f39f0abc", null))
 	else
-		balloon_alert(user, "swapped bci")
+		balloon_alert(user, LANG("obj.13f4c845", null))
 		user.put_in_hands(previous_bci_to_implant)
 	return ITEM_INTERACT_SUCCESS
 
@@ -394,14 +395,14 @@
 		bci_organ.Remove(carbon_occupant)
 
 		if (isnull(bci_to_implant))
-			say("Occupant's previous brain-computer interface has been transferred to internal storage unit.")
+			say(LANG("obj.d1e8e764", null))
 			carbon_occupant.transferItemToLoc(bci_organ, src)
 			bci_to_implant = bci_organ
 		else
-			say("Occupant's previous brain-computer interface has been ejected.")
+			say(LANG("obj.feff2605", null))
 			bci_organ.forceMove(drop_location())
 	else if (!isnull(bci_to_implant))
-		say("Occupant has been injected with [bci_to_implant].")
+		say(LANG("obj.57a571e5", list(bci_to_implant)))
 		bci_to_implant.Insert(carbon_occupant)
 
 /obj/machinery/bci_implanter/open_machine(drop = TRUE, density_to_set = FALSE)
@@ -422,7 +423,7 @@
 	if (istype(occupant))
 		var/obj/item/organ/cyberimp/bci/bci_organ = carbon_occupant.get_organ_by_type(/obj/item/organ/cyberimp/bci)
 		if (isnull(bci_organ) && isnull(bci_to_implant))
-			say("No brain-computer interface inserted, and occupant does not have one. Insert a BCI to implant one.")
+			say(LANG("obj.a34d2176", null))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 			return FALSE
 
@@ -451,7 +452,7 @@
 		close_machine(null, user)
 		return
 	else if (locked)
-		balloon_alert(user, "it's locked!")
+		balloon_alert(user, LANG("obj.2ffcba26", null))
 		return
 
 	open_machine()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Attempts to spawn a crate twice based on the list of available locations
 /obj/machinery/quantum_server/proc/attempt_spawn_cache(list/possible_turfs)
 	if(!length(possible_turfs))
@@ -150,15 +151,15 @@
 		disk_ban += "powers"
 
 	if(length(import_ban))
-		to_chat(neo, span_warning("This domain forbids the use of [english_list(import_ban)], your externally loaded [english_list(disk_ban)] will not be granted!"))
+		to_chat(neo, span_warning(LANG("obj.ae02fc76", list(english_list(import_ban), english_list(disk_ban)))))
 
 	var/return_flags = NONE
 	return_flags = SEND_SIGNAL(neo, COMSIG_BITRUNNER_STOCKING_GEAR, avatar, domain_forbids_flags)
 
 	if(return_flags & BITRUNNER_GEAR_LOAD_FAILED)
-		to_chat(neo, span_warning("At least one of your external data sources has encountered a failure in its loading process. Check for overlapping or inactive disks."))
+		to_chat(neo, span_warning(LANG("obj.43439264", null)))
 	if(return_flags & BITRUNNER_GEAR_LOAD_BLOCKED)
-		to_chat(neo, span_warning("At least one of your external data sources has been blocked from fully loading. Check domain restrictions."))
+		to_chat(neo, span_warning(LANG("obj.848987ec", null)))
 
 	var/obj/item/organ/brain/neo_brain = neo.get_organ_slot(ORGAN_SLOT_BRAIN)
 	for(var/obj/item/skillchip/skill_chip as anything in neo_brain?.skillchips)

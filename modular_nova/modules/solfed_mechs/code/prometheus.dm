@@ -102,7 +102,7 @@
 		ram_target = assembly_target
 
 	if(!ram_target)
-		to_chat(user, span_warning("No valid target directly ahead!"))
+		to_chat(user, span_warning(LANG("datum.7dcc1b4e", null)))
 		return
 
 	// Wind-up with do_after (2 seconds)

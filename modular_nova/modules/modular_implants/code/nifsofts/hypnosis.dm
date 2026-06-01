@@ -27,22 +27,22 @@
 
 	var/mob/living/carbon/human/target_human = user.pulling
 	if(!istype(target_human) || user.grab_state < GRAB_AGGRESSIVE)
-		to_chat(user, span_warning("You need to aggressively grab someone to hypnotize them."))
+		to_chat(user, span_warning(LANG("datum.cd204ed1", null)))
 		return FALSE
 
 	if(!target_human.client?.prefs?.read_preference(/datum/preference/toggle/erp/sex_toy))
-		to_chat(user, span_warning("[target_human] doesn't want to be hypnotized."))
+		to_chat(user, span_warning(LANG("datum.6e3a87c5", list(target_human))))
 		return FALSE
 
-	to_chat(user, span_notice("You begin to place [target_human] into a hypnotic trance."))
+	to_chat(user, span_notice(LANG("datum.960b6e35", list(target_human))))
 
 	if(!do_after(user, 12 SECONDS, target_human))
 		return FALSE
 
 	var/choice = tgui_alert(target_human, "Do you believe in hypnosis? (This will allow [user] to issue hypnotic suggestions.)", "Hypnosis", list("Yes", "No"))
 	if(choice != "Yes")
-		to_chat(user, span_warning("[target_human]'s attention breaks despite your efforts. They clearly don't seem interested!"))
-		to_chat(target_human, span_warning("Your attention breaks as you realize that you don't want to listen to [user]'s suggestions."))
+		to_chat(user, span_warning(LANG("datum.d8d3b450", list(target_human))))
+		to_chat(target_human, span_warning(LANG("datum.6dbd22c2", list(user))))
 		return FALSE
 
 	user.visible_message(span_purple("[target_human] falls into a deep, hypnotic slumber right at the snap of your fingers."), span_purple("You suddenly fall limp at the snap of [user]'s fingers."))
@@ -53,12 +53,12 @@
 	var/secondary_choice = tgui_alert(user, "Would you like to give [target_human] a hypnotic suggestion or release them?", "Hypnosis", list("Suggestion", "Release"))
 	while(secondary_choice == "Suggestion" && target_human.IsSleeping())
 		if(!in_range(user, target_human))
-			to_chat(user, span_warning("You must be in whisper range to [target_human] in order to give hypnotic suggestions."))
+			to_chat(user, span_warning(LANG("datum.3d9269d2", list(target_human))))
 			target_human.SetSleeping(0)
 			return FALSE
 
 		var/input_text = tgui_input_text(user, "What would you like to suggest?", "Hypnotic Suggestion", max_length = MAX_MESSAGE_LEN)
-		to_chat(user, span_purple("You whisper into [target_human]'s ears in a soothing voice."))
+		to_chat(user, span_purple(LANG("datum.fd2015cb", list(target_human))))
 		to_chat(target_human, span_hypnophrase("[input_text]"))
 		secondary_choice = tgui_alert(user, "Would you like to give [target_human] an additional hypnotic suggestion or release them?", "Hypnosis", list("Suggestion", "Release"))
 

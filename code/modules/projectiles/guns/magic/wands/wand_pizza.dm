@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Turns things you hit into pizza.
  */
@@ -12,7 +13,7 @@
 	max_charges = 20
 
 /obj/item/gun/magic/wand/pizza/zap_self(mob/living/user, suicide = FALSE)
-	to_chat(user, span_notice("You can't bring yourself to commit to a permanent transformation into pizza right now."))
+	to_chat(user, span_notice(LANG("obj.0f10f583", null)))
 	return
 
 /obj/item/gun/magic/wand/pizza/do_suicide(mob/living/user)

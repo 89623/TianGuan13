@@ -24,12 +24,12 @@
 	if((item_flags & IN_INVENTORY) || (item_flags & IN_STORAGE))
 		return
 
-	to_chat(user, span_notice("You fasten the frame to the floor and begin to inflate the latex pillows..."))
+	to_chat(user, span_notice(LANG("obj.b6068d4a", null)))
 	if(!do_after(user, 8 SECONDS, src))
-		to_chat(user, span_warning("You fail to assemble [src]."))
+		to_chat(user, span_warning(LANG("obj.cf42f374", list(src))))
 		return
 
-	to_chat(user, span_notice("You assemble [src]."))
+	to_chat(user, span_notice(LANG("obj.8abb2b26", list(src))))
 	var/obj/structure/bed/bdsm_bed/assembled_bed = new
 	assembled_bed.forceMove(loc)
 	qdel(src)
@@ -51,12 +51,12 @@
 
 /obj/structure/bed/bdsm_bed/click_ctrl_shift(mob/user)
 	add_fingerprint(user)
-	to_chat(user, span_notice("You begin unfastening the frame of [src] and deflating the latex pillows..."))
+	to_chat(user, span_notice(LANG("obj.a6fe25de", list(src))))
 	if(!do_after(user, 8 SECONDS, src))
-		to_chat(user, span_warning("You fail to disassemble [src]."))
+		to_chat(user, span_warning(LANG("obj.ff0e3819", list(src))))
 		return
 
-	to_chat(user, span_notice("You disassemble [src]."))
+	to_chat(user, span_notice(LANG("obj.fd5c1c1d", list(src))))
 	var/obj/item/construction_kit/bdsm/bed/created_kit = new
 	created_kit.forceMove(loc)
 	qdel(src)
@@ -143,7 +143,7 @@
 
 	if(buckled_mob != user)
 		if(!do_after(user, 5 SECONDS, buckled_mob)) // Timer for unbuckling one mob with another mob
-			to_chat(user, span_warning("You fail to unbuckle [buckled_mob] from [src]."))
+			to_chat(user, span_warning(LANG("obj.da90255e", list(buckled_mob, src))))
 			return FALSE
 
 		buckled_mob.visible_message(span_notice("[user] unbuckles [buckled_mob] from [src]."),\
@@ -152,7 +152,7 @@
 
 	else
 		if(!do_after(user, 10 SECONDS, buckled_mob)) // Timer for unbuckling one mob with another mob
-			to_chat(user, span_warning("You fail to unbuckle yourself from [src]."))
+			to_chat(user, span_warning(LANG("obj.f7cd4294", list(src))))
 			return FALSE
 
 		user.visible_message(span_notice("You unbuckle yourself from [src]."),\
@@ -181,11 +181,11 @@
 
 	if(affected_mob == user)
 		if(!do_after(user, 10 SECONDS, affected_mob)) // Timer to buckle the mob itself
-			to_chat(user, span_warning("You fail to buckle yourself to [src]!"))
+			to_chat(user, span_warning(LANG("obj.47a77d50", list(src))))
 			return FALSE
 
 		if(!is_user_buckle_possible(affected_mob, user, check_loc))
-			to_chat(user, span_warning("You are unable to buckle yourself to [src]!"))
+			to_chat(user, span_warning(LANG("obj.38c69261", list(src))))
 			return FALSE
 
 		if(buckle_mob(affected_mob, check_loc = check_loc))
@@ -200,13 +200,13 @@
 		span_hear("You hear metal clanking."))
 
 	if(!do_after(user, 5 SECONDS, affected_mob)) // Timer to buckle one mob by another
-		to_chat(user, span_warning("You fail to buckle [affected_mob] to [src]!"))
+		to_chat(user, span_warning(LANG("obj.17254991", list(affected_mob, src))))
 		return FALSE
 
 	// Sanity check before we attempt to buckle. Is everything still in a kosher state for buckling after the 3 seconds have elapsed?
 	// Covers situations where, for example, the chair was moved or there's some other issue.
 	if(!is_user_buckle_possible(affected_mob, user, check_loc))
-		to_chat(user, span_warning("You are unable to buckle [affected_mob] to [src]!"))
+		to_chat(user, span_warning(LANG("obj.788b1731", list(affected_mob, src))))
 		return FALSE
 
 	// Place to insert a description of a successful attempt for a user mob
@@ -275,11 +275,11 @@
 
 /obj/structure/chair/x_stand/click_ctrl_shift(mob/user)
 	add_fingerprint(user)
-	to_chat(user, span_notice("You begin unfastening the frame of [src]..."))
+	to_chat(user, span_notice(LANG("obj.54379957", list(src))))
 	if(!do_after(user, 8 SECONDS, src))
 		return
 
-	to_chat(user, span_notice("You disassemble [src]."))
+	to_chat(user, span_notice(LANG("obj.fd5c1c1d", list(src))))
 	new /obj/item/construction_kit/bdsm/x_stand(loc)
 	unbuckle_all_mobs()
 	qdel(src)

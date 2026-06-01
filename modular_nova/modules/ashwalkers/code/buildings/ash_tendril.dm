@@ -7,16 +7,16 @@
 		return ..()
 
 	if(!user.mind.has_antag_datum(/datum/antagonist/ashwalker))
-		balloon_alert(user, "must be an ashwalker!")
+		balloon_alert(user, LANG("obj.e7b0b1c6", null))
 		return
 
 	var/obj/item/organ/monster_core/regenerative_core/regen_core = attacking_item
 
 	if(!regen_core.decay_timer)
-		balloon_alert(user, "organ already revitalized!")
+		balloon_alert(user, LANG("obj.c0ed1f0f", null))
 		return
 	if(!regen_core.preserve())
-		balloon_alert(user, "organ decayed!")
+		balloon_alert(user, LANG("obj.614a4bdc", null))
 		return
 	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	balloon_alert_to_viewers("[src] revitalizes [regen_core]!")
@@ -139,7 +139,7 @@
 /obj/structure/lavaland/ash_walker/proc/revive_ashwalker(mob/living/carbon/human/revived_ashwalker)
 	var/obj/structure/reviving_ashwalker_egg/spawned_egg = new(get_step(loc, pick(GLOB.alldirs)))
 	revived_ashwalker.forceMove(spawned_egg)
-	to_chat(revived_ashwalker, span_warning("The tendril has decided to be merciful and revive you within a minute, have patience."))
+	to_chat(revived_ashwalker, span_warning(LANG("obj.5993c5c6", null)))
 
 /obj/structure/reviving_ashwalker_egg
 	name = "occupied ashwalker egg"

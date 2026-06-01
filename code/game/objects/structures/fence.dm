@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Chain link fences
 //Sprites ported from /VG/
 
@@ -60,14 +61,14 @@
 /obj/structure/fence/attackby(obj/item/W, mob/user)
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(!cuttable)
-			to_chat(user, span_warning("This section of the fence can't be cut!"))
+			to_chat(user, span_warning(LANG("obj.abc38e5c", null)))
 			return
 		if(invulnerable)
-			to_chat(user, span_warning("This fence is too strong to cut through!"))
+			to_chat(user, span_warning(LANG("obj.7a620b1c", null)))
 			return
 		var/current_stage = hole_size
 		if(current_stage >= MAX_HOLE_SIZE)
-			to_chat(user, span_warning("This fence has too much cut out of it already!"))
+			to_chat(user, span_warning(LANG("obj.d2086221", null)))
 			return
 
 		user.visible_message(span_danger("\The [user] starts cutting through \the [src] with \the [W]."),\
@@ -127,7 +128,7 @@
 	return TRUE
 
 /obj/structure/fence/door/proc/toggle(mob/user)
-	visible_message(span_notice("\The [user] [density ? "opens" : "closes"] \the [src]."))
+	visible_message(span_notice(LANG("obj.e42e36cb", list(user, density ? "opens" : "closes", src))))
 	set_density(!density)
 	update_icon_state()
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)

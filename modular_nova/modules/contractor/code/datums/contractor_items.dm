@@ -32,9 +32,9 @@
 	if(item)
 		var/atom/item_to_create = new item(get_turf(user))
 		if(user.put_in_hands(item_to_create))
-			to_chat(user, span_notice("Your purchase materializes into your hands!"))
+			to_chat(user, span_notice(LANG("datum.25367579", null)))
 		else
-			to_chat(user, span_notice("Your purchase materializes onto the floor."))
+			to_chat(user, span_notice(LANG("datum.2e0caff6", null)))
 
 	return TRUE
 

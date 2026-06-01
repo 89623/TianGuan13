@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /mob/living/basic/slime/emp_act(severity)
 	. = ..()
@@ -52,7 +53,7 @@
 
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	to_chat(user, span_danger("[attacking_item] passes right through [src]!"))
+	to_chat(user, span_danger(LANG("mob.360039ae", list(attacking_item, src))))
 	return TRUE
 
 ///Attempts to use the item to discipline the unruly slime
@@ -67,7 +68,7 @@
 ///Handles feeding a sheet of plasma to a slime
 /mob/living/basic/slime/proc/use_sheet(obj/item/stack/sheet/mineral/plasma/delicious_sheet, mob/living/user)
 	befriend(user)
-	to_chat(user, span_notice("You feed the slime the plasma. It chirps happily."))
+	to_chat(user, span_notice(LANG("mob.bbf8e9b2", null)))
 	delicious_sheet.use(1)
 	new /obj/effect/temp_visual/heart(loc)
 	return
@@ -75,7 +76,7 @@
 ///Handles feeding a slim with a bag full of extracts
 /mob/living/basic/slime/proc/use_xeno_bag(obj/item/storage/bag/xeno/xeno_bag, mob/living/user)
 	if(!crossbreed_modification)
-		to_chat(user, span_warning("The slime is not currently being mutated."))
+		to_chat(user, span_warning(LANG("mob.b5dc4ea2", null)))
 		return
 	var/has_output = FALSE //Have we outputted text?
 	var/has_found = FALSE //Have we found an extract to be added?
@@ -96,9 +97,9 @@
 		return
 
 	if(!has_found)
-		to_chat(user, span_warning("There are no extracts in the bag that this slime will accept!"))
+		to_chat(user, span_warning(LANG("mob.221b378c", null)))
 	else
-		to_chat(user, span_notice("You feed the slime some extracts from the bag."))
+		to_chat(user, span_notice(LANG("mob.e6fbb3c6", null)))
 		playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 
 ///Handles the adverse effects of water on slimes

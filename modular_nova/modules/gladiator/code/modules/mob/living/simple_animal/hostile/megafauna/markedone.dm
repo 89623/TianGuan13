@@ -195,11 +195,11 @@
 	if(isliving(A))
 		var/mob/living/living_atom = A
 		forceMove(get_turf(living_atom))
-		visible_message(span_danger("[src] knocks [living_atom] down!"))
+		visible_message(span_danger(LANG("mob.b28257ff", list(src, living_atom))))
 		living_atom.Paralyze(20)
 		discharge()
 	else if(istype(A, /turf/closed))
-		visible_message(span_danger("[src] crashes headfirst into [A]!"))
+		visible_message(span_danger(LANG("mob.fecb5e36", list(src, A))))
 		discharge(1.5)
 
 /// Makes the Marked One unhappy and more befitting of his "hostile" subtype status.

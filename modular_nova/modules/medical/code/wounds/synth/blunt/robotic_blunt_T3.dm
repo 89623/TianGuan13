@@ -107,13 +107,13 @@
 		return FALSE
 
 	if(user.grab_state < GRAB_AGGRESSIVE)
-		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [LOWER_TEXT(name)]!"))
+		to_chat(user, span_warning(LANG("datum.27ba3491", list(victim, victim.p_their(), LOWER_TEXT(name)))))
 		return TRUE
 
 	user.visible_message(span_danger("[user] begins softly pressing against [victim]'s collapsed [limb.plaintext_zone]..."), \
 	span_notice("You begin softly pressing against [victim]'s collapsed [limb.plaintext_zone]..."), \
 	ignored_mobs = victim)
-	to_chat(victim, span_userdanger("[user] begins pressing against your collapsed [limb.plaintext_zone]!"))
+	to_chat(victim, span_userdanger(LANG("datum.d8ddd0a6", list(user, limb.plaintext_zone))))
 
 	var/delay_mult = 1
 	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
@@ -163,19 +163,19 @@
 	if ((user != victim && user.combat_mode))
 		user.visible_message(span_bolddanger("[user] molds [their_or_other] [limb.plaintext_zone] into a really silly shape! What a goofball!"), \
 			span_danger("You maliciously mold [victim]'s [limb.plaintext_zone] into a weird shape, damaging it in the process!"), ignored_mobs = victim)
-		to_chat(victim, span_userdanger("[user] molds your [limb.plaintext_zone] into a weird shape, damaging it in the process!"))
+		to_chat(victim, span_userdanger(LANG("datum.f52343f8", list(user, limb.plaintext_zone))))
 
 		limb.receive_damage(brute = MOLD_METAL_SABOTAGE_BRUTE_DAMAGE, wound_bonus = CANT_WOUND, damage_source = user)
 	else if (prob(chance))
 		user.visible_message(span_green("[user] carefully molds [their_or_other] [limb.plaintext_zone] into the proper shape!"), \
 			span_green("You carefully mold [victim]'s [limb.plaintext_zone] into the proper shape!"), ignored_mobs = victim)
-		to_chat(victim, span_green("[user] carefully molds your [limb.plaintext_zone] into the proper shape!"))
-		to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone] has been molded into the proper shape! Your next step is to use a screwdriver/wrench to secure your internals."))
+		to_chat(victim, span_green(LANG("datum.9602052f", list(user, limb.plaintext_zone))))
+		to_chat(user, span_green(LANG("datum.71158630", list(capitalize(your_or_other), limb.plaintext_zone))))
 		set_superstructure_status(TRUE)
 	else
 		user.visible_message(span_danger("[user] accidentally molds [their_or_other] [limb.plaintext_zone] into the wrong shape!"), \
 			span_danger("You accidentally mold [your_or_other] [limb.plaintext_zone] into the wrong shape!"), ignored_mobs = victim)
-		to_chat(victim, span_userdanger("[user] accidentally molds your [limb.plaintext_zone] into the wrong shape!"))
+		to_chat(victim, span_userdanger(LANG("datum.7252d2cc", list(user, limb.plaintext_zone))))
 
 		limb.receive_damage(brute = MOLD_METAL_FAILURE_BRUTE_DAMAGE, damage_source = user, wound_bonus = CANT_WOUND)
 
@@ -187,7 +187,7 @@
 	if (sufficiently_insulated_gloves || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 		return
 
-	to_chat(user, span_danger("You burn your hand on [victim]'s [limb.plaintext_zone]!"))
+	to_chat(user, span_danger(LANG("datum.cef570a9", list(victim, limb.plaintext_zone))))
 	var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 	affecting?.receive_damage(burn = MOLD_METAL_HAND_BURNT_BURN_DAMAGE, damage_source = limb)
 
@@ -223,12 +223,12 @@
 		wound_path = /datum/wound/burn/robotic/overheat/critical // it really isnt that bad, overheat wounds are a bit funky
 		user.visible_message(span_danger("[user] heats [victim]'s [limb.plaintext_zone] aggressively, overheating it far beyond the necessary point!"), \
 			span_danger("You heat [victim]'s [limb.plaintext_zone] aggressively, overheating it far beyond the necessary point!"), ignored_mobs = victim)
-		to_chat(victim, span_userdanger("[user] heats your [limb.plaintext_zone] aggressively, overheating it far beyond the necessary point!"))
+		to_chat(victim, span_userdanger(LANG("datum.c9629217", list(user, limb.plaintext_zone))))
 
 	var/datum/wound/burn/robotic/overheat/overheat_wound = new wound_path
 	overheat_wound.apply_wound(limb, wound_source = welder)
 
-	to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone] is now heated, allowing it to be molded! Your next step is to have someone physically reset the superstructure with their hands."))
+	to_chat(user, span_green(LANG("datum.ec64a075", list(capitalize(your_or_other), limb.plaintext_zone))))
 	return TRUE
 
 /// Cost of an RCD to quickly fix our broken in raw matter
@@ -312,7 +312,7 @@
 		if (misused)
 			limb.receive_damage(brute = 10, damage_source = treating_rcd, wound_bonus = CANT_WOUND)
 		// the double message is fine here, since the first message also tells you if you fucked up and did some damage
-		to_chat(user, span_green("The superstructure has been reformed! Your next step is to secure the internals via a screwdriver/wrench."))
+		to_chat(user, span_green(LANG("datum.8de49cc7", null)))
 	return TRUE
 
 #undef ROBOTIC_T3_BLUNT_WOUND_RCD_COST
@@ -356,7 +356,7 @@
 	if (prob(success_chance))
 		user?.visible_message(span_green("[victim]'s [limb.plaintext_zone] lets out a sharp POP as [treating_plunger] forces it into its normal position!"), \
 			span_green("[victim]'s [limb.plaintext_zone] lets out a sharp POP as your [treating_plunger] forces it into its normal position!"))
-		to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone]'s structure has been reset to its proper position! Your next step is to secure it with a screwdriver/wrench, though bone gel would also work."))
+		to_chat(user, span_green(LANG("datum.c22aec15", list(capitalize(your_or_other), limb.plaintext_zone))))
 		set_superstructure_status(TRUE)
 	else
 		user?.visible_message(span_danger("[victim]'s [limb.plaintext_zone] splinters from [treating_plunger]'s plunging!"), \
@@ -377,7 +377,7 @@
 	set_superstructure_status(TRUE)
 
 /datum/wound/blunt/robotic/secures_internals/critical/handle_percussive_maintenance_failure(attacking_item, mob/living/user)
-	to_chat(victim, span_danger("Your [limb.plaintext_zone] only deforms more from the impact..."))
+	to_chat(victim, span_danger(LANG("datum.d19906ef", list(limb.plaintext_zone))))
 	limb.receive_damage(brute = 1, damage_source = attacking_item, wound_bonus = CANT_WOUND)
 
 /datum/wound/blunt/robotic/secures_internals/critical/uses_percussive_maintenance()

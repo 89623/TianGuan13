@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/decal/cleanable
 	gender = PLURAL
 	layer = CLEANABLE_FLOOR_OBJECT_LAYER
@@ -96,14 +97,14 @@
 		return NONE
 
 	if (!lazy_init_reagents()?.total_volume)
-		to_chat(user, span_notice("[src] isn't thick enough to scoop up!"))
+		to_chat(user, span_notice(LANG("obj.56281268", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if (!reagents.trans_to(tool, reagents.total_volume, transferred_by = user))
-		to_chat(user, span_warning("[tool] is full!"))
+		to_chat(user, span_warning(LANG("obj.21d5a38a", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You scoop up [reagents.total_volume > 0 ? "some of " : ""]\the [src] into \the [tool]!"))
+	to_chat(user, span_notice(LANG("obj.f8364cb7", list(reagents.total_volume > 0 ? "some of " : "", src, tool))))
 	if (!reagents.total_volume) //scooped up all of it
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS

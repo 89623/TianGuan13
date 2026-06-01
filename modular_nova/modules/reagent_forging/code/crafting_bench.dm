@@ -115,7 +115,7 @@
 /obj/structure/reagent_crafting_bench/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(in_use)
-		balloon_alert(user, "already in use")
+		balloon_alert(user, LANG("obj.d4caebbf", null))
 		return
 
 	update_appearance()
@@ -123,7 +123,7 @@
 	if(length(contents))
 		var/obj/item/contained_item = contents[1]
 		user.put_in_hands(contained_item)
-		balloon_alert(user, "[contained_item] retrieved")
+		balloon_alert(user, LANG("obj.a5cc9afc", list(contained_item)))
 		update_appearance()
 		return
 
@@ -136,13 +136,13 @@
 	var/chosen_recipe = show_radial_menu(user, src, radial_choice_list, radius = 38, require_near = TRUE, tooltips = TRUE)
 
 	if(!chosen_recipe)
-		balloon_alert(user, "no recipe choice")
+		balloon_alert(user, LANG("obj.8f0f83fa", null))
 		return
 
 	var/datum/crafting_bench_recipe/recipe_to_use = recipe_names_to_path[chosen_recipe]
 	selected_recipe = new recipe_to_use
 
-	balloon_alert(user, "recipe chosen")
+	balloon_alert(user, LANG("obj.62281d41", null))
 	update_appearance()
 
 /// Clears the current recipe and sets hits to completion to zero
@@ -152,12 +152,12 @@
 
 /obj/structure/reagent_crafting_bench/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(in_use)
-		balloon_alert(user, "already in use")
+		balloon_alert(user, LANG("obj.d4caebbf", null))
 		return
 
 	if(istype(attacking_item, /obj/item/forging/complete))
 		if(length(contents))
-			balloon_alert(user, "already full")
+			balloon_alert(user, LANG("obj.e3949c3a", null))
 			return TRUE
 
 		attacking_item.forceMove(src)
@@ -169,7 +169,7 @@
 
 /obj/structure/reagent_crafting_bench/wrench_act(mob/living/user, obj/item/tool)
 	if(in_use)
-		balloon_alert(user, "it's currently in use!")
+		balloon_alert(user, LANG("obj.80cb9d94", null))
 		return
 
 	user.balloon_alert_to_viewers("disassembling...")
@@ -184,18 +184,18 @@
 
 /obj/structure/reagent_crafting_bench/hammer_act(mob/living/user, obj/item/tool)
 	if(in_use)
-		balloon_alert(user, "already in use")
+		balloon_alert(user, LANG("obj.d4caebbf", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(length(contents))
 		if(!istype(contents[1], /obj/item/forging/complete))
-			balloon_alert(user, "invalid item")
+			balloon_alert(user, LANG("obj.b390a7eb", null))
 			return ITEM_INTERACT_SUCCESS
 
 		var/obj/item/forging/complete/weapon_to_finish = contents[1]
 
 		if(!weapon_to_finish.spawning_item)
-			balloon_alert(user, "[weapon_to_finish] cannot be completed")
+			balloon_alert(user, LANG("obj.d264ea14", list(weapon_to_finish)))
 			return ITEM_INTERACT_SUCCESS
 
 		var/list/wood_required_for_weapons = list(
@@ -203,7 +203,7 @@
 		)
 
 		if(!can_we_craft_this(wood_required_for_weapons))
-			balloon_alert(user, "not enough wood")
+			balloon_alert(user, LANG("obj.6c0cc018", null))
 			return ITEM_INTERACT_SUCCESS
 
 		var/list/things_to_use = can_we_craft_this(wood_required_for_weapons, TRUE)
@@ -220,11 +220,11 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(!selected_recipe)
-		balloon_alert(user, "no recipe selected")
+		balloon_alert(user, LANG("obj.b3f60f0a", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!can_we_craft_this(selected_recipe.recipe_requirements))
-		balloon_alert(user, "missing ingredients")
+		balloon_alert(user, LANG("obj.23d287f1", null))
 		return ITEM_INTERACT_SUCCESS
 
 	in_use = TRUE
@@ -239,12 +239,12 @@
 		var/skill_modifier = user.mind.get_skill_modifier(selected_recipe.relevant_skill, SKILL_SPEED_MODIFIER) * 1 SECONDS
 
 		if(!do_after(user, skill_modifier, src))
-			balloon_alert(user, "stopped hammering")
+			balloon_alert(user, LANG("obj.80efa915", null))
 			in_use = FALSE
 			return ITEM_INTERACT_SUCCESS
 
 		if(!can_we_craft_this(selected_recipe.recipe_requirements))
-			balloon_alert(user, "missing ingredients")
+			balloon_alert(user, LANG("obj.23d287f1", null))
 			in_use = FALSE
 			return ITEM_INTERACT_SUCCESS
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Stabilising serum prevents monster organs from decaying before you can use them.
  */
@@ -13,14 +14,14 @@
 		return NONE
 	var/obj/item/organ/monster_core/target_core = interacting_with
 	if (!istype(target_core))
-		balloon_alert(user, "invalid target!")
+		balloon_alert(user, LANG("obj.5c77b90d", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if (!target_core.preserve())
-		balloon_alert(user, "organ decayed!")
+		balloon_alert(user, LANG("obj.614a4bdc", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "organ stabilized")
+	balloon_alert(user, LANG("obj.fab48b07", null))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -88,7 +89,7 @@
 	. = ..()
 
 	if (inert)
-		to_chat(target_carbon, span_notice("[src] breaks down as you try to insert it."))
+		to_chat(target_carbon, span_notice(LANG("obj.71199cdb", list(src))))
 		qdel(src)
 		return FALSE
 	if (!decay_timer)
@@ -170,16 +171,16 @@
  */
 /obj/item/organ/monster_core/proc/try_apply(atom/target, mob/user)
 	if (!isliving(target))
-		balloon_alert(user, "invalid target!")
+		balloon_alert(user, LANG("obj.5c77b90d", null))
 		return
 	if (inert)
-		balloon_alert(user, "organ decayed!")
+		balloon_alert(user, LANG("obj.614a4bdc", null))
 		return
 	var/mob/living/live_target = target
 	if (live_target.stat == DEAD)
-		balloon_alert(user, "they're dead!")
+		balloon_alert(user, LANG("obj.43a02ec6", null))
 		return
-	balloon_alert(user, "applied organ")
+	balloon_alert(user, LANG("obj.0266a6d2", null))
 	apply_to(target, user)
 
 /**

@@ -19,7 +19,7 @@
 	var/position = skillsofts_name_paths.Find(build_path, skillsofts_name_paths)
 	position = (position == length(skillsofts_name_paths)) ? 1 : (position + 1)
 	build_path = skillsofts_name_paths[position]
-	to_chat(user, span_notice("You register [skillsofts_name_paths[build_path]] chamber material with the board."))
+	to_chat(user, span_notice(LANG("obj.50b88af4", list(skillsofts_name_paths[build_path]))))
 	return TRUE
 
 /obj/item/circuitboard/machine/skill_station/examine(mob/user)

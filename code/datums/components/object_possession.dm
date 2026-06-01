@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Component that allows a user to control any object as if it were a mob. Does give the user incorporeal movement.
 /datum/component/object_possession
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -56,7 +57,7 @@
 /// Returns FALSE if we don't bind, TRUE if we succeed.
 /datum/component/object_possession/proc/bind_to_new_object(obj/target)
 	if((target.obj_flags & DANGEROUS_POSSESSION) && CONFIG_GET(flag/forbid_singulo_possession))
-		to_chat(parent, "[target] is too powerful for you to possess.", confidential = TRUE)
+		to_chat(parent, LANG("datum.6038d3b6", list(target)), confidential = TRUE)
 		return FALSE
 
 	var/mob/user = parent

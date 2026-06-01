@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/action/cooldown/spell/pointed/untie_shoes
 	name = "Untie Shoes"
@@ -32,15 +33,15 @@
 	. = ..()
 	if(spell_level == 2)
 		bypass_tie_status = TRUE
-		to_chat(owner, span_notice("You will now summon laces on laceless shoes, such as jackboots."))
+		to_chat(owner, span_notice(LANG("datum.a9634ca4", null)))
 
 	if(spell_level == 3)
 		summons_shoes = TRUE
-		to_chat(owner, span_notice("You will now summon shoes if your target has none."))
+		to_chat(owner, span_notice(LANG("datum.7e6823b3", null)))
 
 	if(spell_level == 4)
 		invocation_type = INVOCATION_NONE
-		to_chat(owner, span_boldnotice("Your invocations are now silent!"))
+		to_chat(owner, span_boldnotice(LANG("datum.197abee8", null)))
 
 /datum/action/cooldown/spell/pointed/untie_shoes/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
@@ -52,13 +53,13 @@
 /datum/action/cooldown/spell/pointed/untie_shoes/cast(mob/living/carbon/cast_on)
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
-		to_chat(owner, span_warning("The spell had no effect!"))
+		to_chat(owner, span_warning(LANG("datum.2ce7047e", null)))
 		return FALSE
 
 	if(isanimal_or_basicmob(cast_on))
 		cast_on.add_movespeed_modifier(/datum/movespeed_modifier/magic_ties)
 		addtimer(CALLBACK(cast_on, TYPE_PROC_REF(/mob/living, remove_movespeed_modifier), /datum/movespeed_modifier/magic_ties), 3 SECONDS * spell_level, TIMER_UNIQUE|TIMER_OVERRIDE)
-		to_chat(owner, span_warning("You tie [cast_on] with weak, magic laces!"))
+		to_chat(owner, span_warning(LANG("datum.0c2eac92", list(cast_on))))
 		if(invocation_type != INVOCATION_NONE) // extra feedback since it's weird for them
 			cast_on.balloon_alert_to_viewers("magically tied!")
 		else
@@ -77,12 +78,12 @@
 
 	if(isnull(shoes_to_tie))
 		if(!summons_shoes)
-			to_chat(owner, span_warning("[cast_on] isn't wearing any shoes!"))
+			to_chat(owner, span_warning(LANG("datum.8d5a9c0f", list(cast_on))))
 			return FALSE
 
 		shoes_to_tie = new shoe_to_cast(cast_on)
 		if(!cast_on.equip_to_slot_or_del(shoes_to_tie,	ITEM_SLOT_FEET))
-			to_chat(owner, span_warning("Couldn't equip shoes on [cast_on]!"))
+			to_chat(owner, span_warning(LANG("datum.6c35f4ea", list(cast_on))))
 			return FALSE
 
 		if(invocation_type != INVOCATION_NONE)

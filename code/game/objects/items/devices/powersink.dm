@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DISCONNECTED 0
 #define CLAMPED_OFF 1
 #define OPERATING 2
@@ -81,7 +82,7 @@
 		if(isturf(T) && T.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
 			attached = locate() in T
 			if(!attached)
-				to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
+				to_chat(user, span_warning(LANG("obj.2bd00208", list(src))))
 			else
 				set_mode(CLAMPED_OFF)
 				user.visible_message( \
@@ -89,7 +90,7 @@
 					span_notice("You bolt \the [src] into the floor and connect it to the cable."),
 					span_hear("You hear some wires being connected to something."))
 		else
-			to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
+			to_chat(user, span_warning(LANG("obj.2bd00208", list(src))))
 	else
 		set_mode(DISCONNECTED)
 		user.visible_message( \

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * Surgery Trays
@@ -125,10 +126,10 @@
 		return
 	var/turf/open/placement_turf = get_turf(user)
 	if(isgroundlessturf(placement_turf) || isclosedturf(placement_turf))
-		balloon_alert(user, "can't deploy!")
+		balloon_alert(user, LANG("obj.595347e7", null))
 		return TRUE
 	if(!user.transferItemToLoc(src, placement_turf))
-		balloon_alert(user, "tray stuck!")
+		balloon_alert(user, LANG("obj.6b5fa3df", null))
 		return TRUE
 	set_tray_mode(FALSE, user)
 	return
@@ -137,7 +138,7 @@
 	if(!user.can_perform_action(src, NEED_HANDS))
 		return ..()
 	if(!length(contents))
-		balloon_alert(user, "empty!")
+		balloon_alert(user, LANG("obj.6ef93b07", null))
 	else
 		var/obj/item/grabbies = pick(contents)
 		if(atom_storage.remove_single(user, grabbies, drop_location()))
@@ -147,11 +148,11 @@
 /obj/item/surgery_tray/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You begin taking apart [src]."))
+	to_chat(user, span_notice(LANG("obj.40506102", list(src))))
 	if(!tool.use_tool(src, user, 1 SECONDS))
 		return
 	deconstruct(TRUE)
-	to_chat(user, span_notice("[src] has been taken apart."))
+	to_chat(user, span_notice(LANG("obj.1ff26ff4", list(src))))
 
 /obj/item/surgery_tray/dump_contents()
 	var/atom/drop_point = drop_location()

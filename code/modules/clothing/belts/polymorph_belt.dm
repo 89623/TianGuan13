@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Belt which can turn you into a beast, once an anomaly core is inserted
 /obj/item/polymorph_belt
 	name = "polymorphic field inverter"
@@ -41,17 +42,17 @@
 		return NONE
 
 	if (active)
-		balloon_alert(user, "core already inserted!")
+		balloon_alert(user, LANG("obj.070ca8e4", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "inserting...")
+	balloon_alert(user, LANG("obj.14b48e79", null))
 
 	if (!do_after(user, delay = 3 SECONDS, target = src))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if (active)
-		balloon_alert(user, "core already inserted!")
+		balloon_alert(user, LANG("obj.070ca8e4", null))
 		return ITEM_INTERACT_BLOCKING
 
 	active = TRUE
@@ -68,25 +69,25 @@
 	if (!isliving(target_mob))
 		return
 	if (!isanimal_or_basicmob(target_mob))
-		balloon_alert(user, "target too complex!")
+		balloon_alert(user, LANG("obj.e299238f", null))
 		return TRUE
 	if (target_mob.mob_biotypes & (MOB_HUMANOID|MOB_ROBOTIC|MOB_SPECIAL|MOB_SPIRIT|MOB_UNDEAD))
-		balloon_alert(user, "incompatible!")
+		balloon_alert(user, LANG("obj.fbc9e3cd", null))
 		return TRUE
 	if (!target_mob.compare_sentience_type(SENTIENCE_ORGANIC))
-		balloon_alert(user, "target too intelligent!")
+		balloon_alert(user, LANG("obj.fed0dc14", null))
 		return TRUE
 	if (stored_mob_type == target_mob.type)
-		balloon_alert(user, "already scanned!")
+		balloon_alert(user, LANG("obj.71a3c5ef", null))
 		return TRUE
 	if (DOING_INTERACTION_WITH_TARGET(user, target_mob))
-		balloon_alert(user, "busy!")
+		balloon_alert(user, LANG("obj.8df72942", null))
 		return TRUE
-	balloon_alert(user, "scanning...")
-	visible_message(span_notice("[user] begins scanning [target_mob] with [src]."))
+	balloon_alert(user, LANG("obj.9ef11a33", null))
+	visible_message(span_notice(LANG("obj.7b69ed46", list(user, target_mob, src))))
 	if (!do_after(user, delay = 5 SECONDS, target = target_mob))
 		return TRUE
-	visible_message(span_notice("[user] scans [target_mob] with [src]."))
+	visible_message(span_notice(LANG("obj.ef72f9ec", list(user, target_mob, src))))
 	stored_mob_type = target_mob.type
 	update_transform_action()
 	// NOVA EDIT ADDITION START - For some reason this likes to reset our transform and get rid of size. Stop doing that!

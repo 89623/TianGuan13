@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/plumbing/grinder_chemical
 	name = "chemical grinder"
 	desc = "Chemical grinder. Can either grind or juice stuff you put in."
@@ -69,20 +70,20 @@
 		return
 	else if(istype(tool, /obj/item/storage/bag))
 		if(!anchored)
-			to_chat(user, span_warning("Anchor first to start [grinding ? "grind" : "juice"]."))
+			to_chat(user, span_warning(LANG("obj.dd8a1c91", list(grinding ? "grind" : "juice"))))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You dump items from [tool] into the grinder."))
+		to_chat(user, span_notice(LANG("obj.db4815e2", list(tool))))
 		for(var/obj/item/obj_item in tool.contents)
 			blend(obj_item)
 		return ITEM_INTERACT_SUCCESS
 	else if(!tool.tool_behaviour)
 		var/action = "[grinding ? "grind" : "juice"]"
 		if(!anchored)
-			to_chat(user, span_warning("Anchor first to star [action]."))
+			to_chat(user, span_warning(LANG("obj.c27125f7", list(action))))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You attempt to [action] [tool]."))
+		to_chat(user, span_notice(LANG("obj.032a97aa", list(action, tool))))
 		blend(tool)
 		return ITEM_INTERACT_SUCCESS
 

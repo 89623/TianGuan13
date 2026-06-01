@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Computer which starts the experimental cloning process
 /obj/machinery/computer/experimental_cloner
 	name = "experimental cloner control console"
@@ -44,14 +45,14 @@
 	if (istype(multi_tool.buffer, /obj/machinery/experimental_cloner_scanner))
 		unlink_scanner()
 		link_scanner(multi_tool.buffer)
-		balloon_alert(user, "scanner linked")
-		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+		balloon_alert(user, LANG("obj.6a2edc06", null))
+		to_chat(user, span_notice(LANG("obj.6d42c57e", list(multi_tool.buffer, src))))
 		return ITEM_INTERACT_SUCCESS
 	if (istype(multi_tool.buffer, /obj/machinery/experimental_cloner))
 		unlink_pod()
 		link_pod(multi_tool.buffer)
-		balloon_alert(user, "pod linked")
-		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+		balloon_alert(user, LANG("obj.6c115227", null))
+		to_chat(user, span_notice(LANG("obj.6d42c57e", list(multi_tool.buffer, src))))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/experimental_cloner/ui_interact(mob/user, datum/tgui/ui)

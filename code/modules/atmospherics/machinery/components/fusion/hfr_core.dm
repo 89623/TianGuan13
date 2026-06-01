@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * This section contain the hfr core with all the variables and the Initialize() and Destroy() procs
  */
@@ -209,5 +210,5 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/crowbar_deconstruction_act(mob/living/user, obj/item/tool, internal_pressure = 0)
 	internal_pressure = max(internal_fusion.return_pressure(), moderator_internal.return_pressure())
 	if(internal_pressure)
-		say("WARNING - Core can contain hazardous gases, deconstruct with caution!")
+		say(LANG("obj.c8129502", null))
 	return ..(user, tool, internal_pressure)

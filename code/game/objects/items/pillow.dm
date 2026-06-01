@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Pillow and pillow related items
 /obj/item/pillow
 	name = "pillow"
@@ -67,7 +68,7 @@
 	if(victim.is_mouth_covered() || !victim.get_bodypart(BODY_ZONE_HEAD))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
+		to_chat(user, span_notice(LANG("obj.45ea45fd", list(victim))))
 		return
 	if((victim.body_position == LYING_DOWN) || ((user.grab_state >= GRAB_AGGRESSIVE) && (user.pulling == victim)))
 		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
@@ -76,24 +77,24 @@
 /obj/item/pillow/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!bricked && istype(attacking_item, /obj/item/stack/sheet/mineral/sandstone))
 		var/obj/item/stack/sheet/mineral/sandstone/brick = attacking_item
-		balloon_alert(user, "inserting brick...")
+		balloon_alert(user, LANG("obj.120da198", null))
 		if(!do_after(user, 2 SECONDS, src))
 			return
 		if(!brick.use(1))
-			balloon_alert(user, "not enough bricks!")
+			balloon_alert(user, LANG("obj.ee0a5208", null))
 			return
-		balloon_alert(user, "bricked!")
+		balloon_alert(user, LANG("obj.9c9d0693", null))
 		become_bricked()
 		return
 	if(istype(attacking_item, /obj/item/clothing/neck/pillow_tag))
 		if(!pillow_trophy)
 			user.transferItemToLoc(attacking_item, src)
 			pillow_trophy = attacking_item
-			balloon_alert(user, "honor reclaimed!")
+			balloon_alert(user, LANG("obj.37337285", null))
 			update_appearance()
 			return
 		else
-			balloon_alert(user, "tag is intact.")
+			balloon_alert(user, LANG("obj.550f3414", null))
 			return
 	return ..()
 
@@ -108,16 +109,16 @@
 	if(!user.can_hold_items(src))
 		return CLICK_ACTION_BLOCKING
 	if(!pillow_trophy)
-		balloon_alert(user, "no tag!")
+		balloon_alert(user, LANG("obj.0b2a43af", null))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "removing tag...")
+	balloon_alert(user, LANG("obj.eb107e22", null))
 	if(!do_after(user, 2 SECONDS, src))
 		return CLICK_ACTION_BLOCKING
 	if(last_fighter)
 		pillow_trophy.desc = "A pillow tag taken from [last_fighter] after a gruesome pillow fight."
 	user.put_in_hands(pillow_trophy)
 	pillow_trophy = null
-	balloon_alert(user, "tag removed")
+	balloon_alert(user, LANG("obj.4000825a", null))
 	playsound(user,'sound/items/poster/poster_ripped.ogg', 50)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS

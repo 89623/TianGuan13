@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Note from Carnie:
 		The way datum/mind stuff works has been changed a lot.
 		Minds now represent IC characters rather than following a client around constantly.
@@ -242,14 +243,14 @@
 	if(href_list["remove_antag"])
 		var/datum/antagonist/A = locate(href_list["remove_antag"]) in antag_datums
 		if(!istype(A))
-			to_chat(usr,span_warning("Invalid antagonist ref to be removed."))
+			to_chat(usr,span_warning(LANG("datum.f4138f1f", null)))
 			return
 		A.admin_remove(usr)
 
 	if(href_list["open_antag_vv"])
 		var/datum/antagonist/to_vv = locate(href_list["open_antag_vv"]) in antag_datums
 		if(!istype(to_vv))
-			to_chat(usr, span_warning("Invalid antagonist ref to be vv'd."))
+			to_chat(usr, span_warning(LANG("datum.7527ecf4", null)))
 			return
 		usr.client?.debug_variables(to_vv)
 
@@ -259,7 +260,7 @@
 			return
 		var/datum/job/new_job = SSjob.get_job(new_role)
 		if (!new_job)
-			to_chat(usr, span_warning("Job not found."))
+			to_chat(usr, span_warning(LANG("datum.4e6dd1c7", null)))
 			return
 		set_assigned_role(new_job)
 
@@ -278,7 +279,7 @@
 					objective_pos = A.objectives.Find(old_objective)
 					break
 			if(!old_objective)
-				to_chat(usr,"Invalid objective.")
+				to_chat(usr,LANG("datum.7f63fc63", null))
 				return
 		else
 			if(href_list["target_antag"])
@@ -343,7 +344,7 @@
 				A.objectives -= objective
 				break
 		if(!objective)
-			to_chat(usr,"Invalid objective.")
+			to_chat(usr,LANG("datum.7f63fc63", null))
 			return
 		//qdel(objective) Needs cleaning objective destroys
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
@@ -357,7 +358,7 @@
 				objective = objective
 				break
 		if(!objective)
-			to_chat(usr,"Invalid objective.")
+			to_chat(usr,LANG("datum.7f63fc63", null))
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")

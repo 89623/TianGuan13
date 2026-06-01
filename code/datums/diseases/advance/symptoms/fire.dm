@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**Spontaneous Combustion
  * No effect to stealth.
  * No effect to resistance.
@@ -73,7 +74,7 @@
 		living_mob.show_message(span_hear("You hear a crackling noise."), type = MSG_AUDIBLE)
 	else
 		if(HAS_TRAIT(living_mob, TRAIT_ANOSMIA)) //Anosmia quirk holder can't smell anything.
-			to_chat(living_mob, span_warning("You feel hot."))
+			to_chat(living_mob, span_warning(LANG("datum.5e869a62", null)))
 		else
 			to_chat(living_mob, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
 

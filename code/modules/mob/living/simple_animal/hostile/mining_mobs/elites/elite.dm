@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TUMOR_INACTIVE 0
 #define TUMOR_ACTIVE 1
 #define TUMOR_PASSIVE 2
@@ -208,7 +209,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/spawn_elite(mob/dead/observer/elitemind)
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
-	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
+	visible_message(span_boldwarning(LANG("obj.8616ec7e", list(mychild, src))))
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(boosted)
 		mychild.PossessByPlayer(elitemind.key)
@@ -226,7 +227,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
-	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
+	visible_message(span_boldwarning(LANG("obj.8616ec7e", list(mychild, src))))
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	mychild.revive(HEAL_ALL)
 	if(boosted)
@@ -282,7 +283,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = NONE
 	if(istype(attacking_item, /obj/item/organ/monster_core/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
 		var/obj/item/organ/monster_core/regenerative_core/core = attacking_item
-		visible_message(span_boldwarning("As [user] drops the core into [src], [src] appears to swell."))
+		visible_message(span_boldwarning(LANG("obj.c37af7b7", list(user, src, src))))
 		icon_state = "advanced_tumor"
 		boosted = TRUE
 		set_light_range(6)
@@ -324,17 +325,17 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/border_check()
 	if(activator != null && get_dist(src, activator) >= 12)
 		activator.forceMove(loc)
-		visible_message(span_boldwarning("[activator] suddenly reappears above [src]!"))
+		visible_message(span_boldwarning(LANG("obj.5ba873c8", list(activator, src))))
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(mychild != null && get_dist(src, mychild) >= 12)
 		mychild.forceMove(loc)
-		visible_message(span_boldwarning("[mychild] suddenly reappears above [src]!"))
+		visible_message(span_boldwarning(LANG("obj.5ba873c8", list(mychild, src))))
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 
 /obj/structure/elite_tumor/proc/onEliteLoss()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
-	visible_message(span_boldwarning("[src] begins to convulse violently before beginning to dissipate."))
-	visible_message(span_boldwarning("As [src] closes, something is forced up from down below."))
+	visible_message(span_boldwarning(LANG("obj.954123e2", list(src))))
+	visible_message(span_boldwarning(LANG("obj.4e604f07", list(src))))
 	var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)
 	if(boosted)
 		if(mychild.loot_drop != null && prob(50))
@@ -353,13 +354,9 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		mychild.health = mychild.maxHealth
 	if(times_won == 1)
 		mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
-		to_chat(mychild, span_boldwarning("As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\n\
-			Despite this inferno being your home, you feel as if you aren't welcome here anymore.\n\
-			Without any guidance, your purpose is now for you to decide."))
-		to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor. Note, it's your only way to heal.\n\
-			Bear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight. In such a case, you will regain your full max health.\n\
-			Also, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
-		to_chat(mychild, span_boldbig("Note that you are a lavaland monster, and thus not allied to the station. You should not cooperate or act friendly with any station crew unless under extreme circumstances!"))
+		to_chat(mychild, span_boldwarning(LANG("obj.28e67ca0", null)))
+		to_chat(mychild, LANG("obj.61ba8e65", null))
+		to_chat(mychild, span_boldbig(LANG("obj.7ea05fce", null)))
 
 	REMOVE_TRAIT(mychild, TRAIT_UNCONVERTABLE, INNATE_TRAIT)
 
@@ -389,8 +386,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	elite.revive(HEAL_ALL)
 	user.visible_message(span_notice("[user] stabs [elite] with [src], reviving it."))
 	elite.playsound_local(get_turf(elite), 'sound/effects/magic.ogg', 40, 0)
-	to_chat(elite, span_userdanger("You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk."))
-	to_chat(elite, span_boldbig("Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!"))
+	to_chat(elite, span_userdanger(LANG("obj.3a95fb82", list(user, user, user.p_them(), user.p_their()))))
+	to_chat(elite, span_boldbig(LANG("obj.6ed51246", list(user))))
 	elite.maxHealth *= ELITE_POST_BATTLE_HEALTH_MULTIPLIER
 	elite.health = elite.maxHealth
 	elite.desc = "[elite.desc] However, this one appears to be less wild in nature, and calmer around people."

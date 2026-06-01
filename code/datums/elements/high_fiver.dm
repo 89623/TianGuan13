@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # High Fiver Element
  *
@@ -50,7 +51,7 @@
 	var/descriptor = "high-[high_ten ? "ten" : "five"]"
 
 	if(open_hands_taker <= 0)
-		to_chat(taker, span_warning("You can't [descriptor] [offerer] with no open hands!"))
+		to_chat(taker, span_warning(LANG("datum.5a944a67", list(descriptor, offerer))))
 		taker.add_mood_event(descriptor, /datum/mood_event/high_five_full_hand) // not so successful now!
 		return COMPONENT_OFFER_INTERRUPT
 
@@ -59,7 +60,7 @@
 	taker.add_mob_memory(/datum/memory/high_five, deuteragonist = offerer, high_five_type = descriptor, high_ten = high_ten)
 
 	if(high_ten)
-		to_chat(taker, span_nicegreen("You give high-tenning [offerer] your all!"))
+		to_chat(taker, span_nicegreen(LANG("datum.5884409f", list(offerer))))
 		offerer.visible_message(
 			span_notice("[taker] enthusiastically high-tens [offerer]!"),
 			span_nicegreen("Wow! You're high-tenned [taker]!"),
@@ -70,7 +71,7 @@
 		offerer.add_mood_event(descriptor, /datum/mood_event/high_ten)
 		taker.add_mood_event(descriptor, /datum/mood_event/high_ten)
 	else
-		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
+		to_chat(taker, span_nicegreen(LANG("datum.ab9cb292", list(offerer))))
 		offerer.visible_message(
 			span_notice("[taker] high-fives [offerer]!"),
 			span_nicegreen("All right! You're high-fived by [taker]!"),

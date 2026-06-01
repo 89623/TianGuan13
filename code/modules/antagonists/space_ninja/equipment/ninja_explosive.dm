@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Spider Charge
  *
@@ -49,7 +50,7 @@
 
 /obj/item/grenade/c4/ninja/plant_c4(atom/bomb_target, mob/living/user)
 	if(!IS_SPACE_NINJA(user))
-		say("Access denied.")
+		say(LANG("obj.077f9b52", null))
 		return FALSE
 	if(!check_loc(bomb_target, user))
 		return FALSE
@@ -89,10 +90,10 @@
  */
 /obj/item/grenade/c4/ninja/proc/check_loc(atom/bomb_target, mob/user)
 	if(isnull(detonation_area))
-		balloon_alert(user, "no location set!")
+		balloon_alert(user, LANG("obj.f999ee39", null))
 		return FALSE
 	if(get_area(bomb_target) != detonation_area)
 		if (!active)
-			balloon_alert(user, "wrong location!")
+			balloon_alert(user, LANG("obj.ca19c283", null))
 		return FALSE
 	return TRUE

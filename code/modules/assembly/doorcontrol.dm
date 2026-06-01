@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/assembly/control
 	name = "blast door controller"
 	desc = "A small electronic device able to control a blast door remotely."
@@ -53,17 +54,17 @@
 			id = "[change_id[start]]"
 		else
 			id = copytext(change_id, start, end)
-	balloon_alert(user, "id changed")
+	balloon_alert(user, LANG("obj.3852daee", null))
 	if(id != -1)
-		to_chat(user, span_notice("You change the ID to [id]."))
+		to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 	else
-		to_chat(user, span_notice("You now must interact with an pod door to generate an unique ID."))
+		to_chat(user, span_notice(LANG("obj.59a589e8", null)))
 
 /obj/item/assembly/control/interact_with_atom(obj/item/assembly/control/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
 	if(istype(interacting_with))
 		id = interacting_with.id
-		balloon_alert(user, "id changed")
+		balloon_alert(user, LANG("obj.3852daee", null))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/control/activate()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/flatpack
 	name = "flatpack"
 	desc = "A box containing a compactly packed machine. Use multitool to deploy."
@@ -57,14 +58,14 @@
 	if(isnull(board))
 		return ITEM_INTERACT_BLOCKING
 	if(!isturf(loc))
-		balloon_alert(user, "must deploy on the floor")
+		balloon_alert(user, LANG("obj.4033ccdc", null))
 		return ITEM_INTERACT_BLOCKING
 	var/turf/location = loc
 	if(!isopenturf(location))
-		balloon_alert(user, "can't deploy here")
+		balloon_alert(user, LANG("obj.8523d735", null))
 		return ITEM_INTERACT_BLOCKING
 	else if(location.is_blocked_turf(source_atom = src))
-		balloon_alert(user, "no space for deployment")
+		balloon_alert(user, LANG("obj.46ff061e", null))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert_to_viewers("deploying!")
 	if(!do_after(user, 1 SECONDS, target = src))
@@ -156,7 +157,7 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if (length(contents) >= MAX_FLAT_PACKS)
-		balloon_alert(user, "full!")
+		balloon_alert(user, LANG("obj.8abfbb3d", null))
 		return ITEM_INTERACT_BLOCKING
 	if (!user.transferItemToLoc(attacking_item, src))
 		return ITEM_INTERACT_BLOCKING

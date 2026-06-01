@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define AI_LAWS_ASIMOV "asimov"
 
 /// See [/proc/get_round_default_lawset], do not get directily.
@@ -379,7 +380,7 @@ GLOBAL_VAR(round_default_lawset)
 		replaceable_groups[LAW_SUPPLIED] = supplied.len
 
 	if(replaceable_groups.len == 0) // unable to replace any laws
-		to_chat(usr, span_alert("Unable to upload law to [owner ? owner : "the AI core"]."))
+		to_chat(usr, span_alert(LANG("datum.14da69d2", list(owner ? owner : "the AI core"))))
 		return
 
 	var/picked_group = pick_weight(replaceable_groups)

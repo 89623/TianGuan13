@@ -5,7 +5,7 @@
 	set category = "IC"
 
 	if (isturf(src.loc))
-		to_chat(src, span_danger("You are not within anything!"))
+		to_chat(src, span_danger(LANG("mob.72c5eb7d", null)))
 		return
 	if (loc && (!src.IsUnconscious())) // If user's location is a turf, if it is not null, and if the user is not unconcious, continue.
 		usr.emote("exme")
@@ -50,7 +50,7 @@
 		can_use = FALSE
 
 	if (!can_use)
-		to_chat(user, span_danger("You are not within anything!")) // If user is banned from chat, emotes, or the user is not within anything (ex. a locker) return.
+		to_chat(user, span_danger(LANG("datum.72c5eb7d", null))) // If user is banned from chat, emotes, or the user is not within anything (ex. a locker) return.
 		return FALSE //im keeping this to_chat because this seems like a really common use case and i dont want to annoy players
 	else if(!params) // User didn't put anything after *exme when using the say hotkey, or just used the emote raw? Open a window.
 		container_emote = tgui_input_text(user, "What would you like to emote?", "Container Emote", max_length = MAX_MESSAGE_LEN, multiline = TRUE)

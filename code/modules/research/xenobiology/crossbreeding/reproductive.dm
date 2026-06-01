@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Reproductive extracts:
 	When fed three monkey cubes, produces between
@@ -30,11 +31,11 @@ Reproductive extracts:
 		return NONE
 
 	if((last_produce + cooldown) > world.time)
-		to_chat(user, span_warning("[src] is still digesting!"))
+		to_chat(user, span_warning(LANG("obj.0d08ae8e", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(length(contents) >= feedAmount) //if for some reason the contents are full, but it didnt digest, attempt to digest again
-		to_chat(user, span_warning("[src] appears to be full but is not digesting! Maybe poking it stimulated it to digest."))
+		to_chat(user, span_warning(LANG("obj.d7c1d5eb", list(src))))
 		slime_storage?.processCubes(user)
 		return ITEM_INTERACT_BLOCKING
 
@@ -42,9 +43,9 @@ Reproductive extracts:
 		var/list/inserted = list()
 		tool.atom_storage.remove_type(/obj/item/food/monkeycube, src, feedAmount - length(contents), TRUE, FALSE, user, inserted)
 		if(!inserted.len)
-			to_chat(user, span_warning("There are no monkey cubes in the bio bag!"))
+			to_chat(user, span_warning(LANG("obj.83a8ffe6", null)))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You feed [length(inserted)] monkey cube[length(inserted) > 1 ? "s" : ""] to [src], and it pulses gently."))
+		to_chat(user, span_notice(LANG("obj.979b8ca0", list(length(inserted), length(inserted) > 1 ? "s" : "", src))))
 		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 		slime_storage?.processCubes(user)
 		return ITEM_INTERACT_SUCCESS
@@ -53,10 +54,10 @@ Reproductive extracts:
 		return NONE
 
 	if(!atom_storage?.attempt_insert(tool, user, override = TRUE, force = STORAGE_FULLY_LOCKED))
-		to_chat(user, span_notice("The [src] rejects [tool]!")) //in case it fails to insert for whatever reason you get feedback
+		to_chat(user, span_notice(LANG("obj.4933a936", list(src, tool)))) //in case it fails to insert for whatever reason you get feedback
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You feed [tool] to [src], and it pulses gently."))
+	to_chat(user, span_notice(LANG("obj.5a67e592", list(tool, src))))
 	slime_storage?.processCubes(user)
 	playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 	return ITEM_INTERACT_SUCCESS

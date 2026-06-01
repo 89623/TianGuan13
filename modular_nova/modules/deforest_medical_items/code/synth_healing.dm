@@ -126,7 +126,7 @@
 	if(!ishuman(target_mob))
 		return ..()
 	if(uses <= 0)
-		balloon_alert(user, "it's been used up!")
+		balloon_alert(user, LANG("obj.09a80560", null))
 		return ..()
 	var/obj/item/organ/target_organ = select_organ(target_mob, user)
 	if(isnull(target_organ))
@@ -135,7 +135,7 @@
 	if(!user.Adjacent(target_mob))
 		return
 	if(repair_organ(target_organ, user, target_mob))
-		to_chat(target_mob, span_notice("[user] successfully repairs your [target_organ]"))
+		to_chat(target_mob, span_notice(LANG("obj.e948fb69", list(user, target_organ))))
 
 // Attempts to directly repair a robotic organ item.
 /obj/item/cybernetic_repair_paste/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -154,7 +154,7 @@
 		surgery_step_bitflags = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
 
 	if(!LIMB_HAS_SURGERY_STATE(part_to_repair, (surgery_step_bitflags)))
-		balloon_alert(user, "requires open surgery!")
+		balloon_alert(user, LANG("obj.cfac94e0", null))
 		return
 
 	var/list/obj/item/organ/cyber_organs = list()
@@ -162,13 +162,13 @@
 		if(organ.organ_flags & ORGAN_ROBOTIC)
 			cyber_organs += organ
 	if(!length(cyber_organs))
-		balloon_alert(user, "lacks robotic organ!")
+		balloon_alert(user, LANG("obj.a9fc1837", null))
 		return
 	var/obj/item/organ/chosen_organ = tgui_input_list(user, "Repair which organ?", "Surgery", sort_list(cyber_organs))
 	// Brains specifically also require the bone saw, so check that as well.
 	if(chosen_organ.slot == ORGAN_SLOT_BRAIN)
 		if(!LIMB_HAS_SURGERY_STATE(part_to_repair, (SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)))
-			balloon_alert(user, "requires the bones to be sawed open!")
+			balloon_alert(user, LANG("obj.1aacd592", null))
 			return
 
 	return chosen_organ
@@ -176,24 +176,24 @@
 ///Attempts to repair the given robotic organ, and returns TRUE if successful.
 /obj/item/cybernetic_repair_paste/proc/repair_organ(obj/item/organ/target_organ, mob/living/user, mob/living/target_mob)
 	if(uses <= 0)
-		balloon_alert(user, "it's been used up!")
+		balloon_alert(user, LANG("obj.09a80560", null))
 		return
 	if(target_organ.damage <= NONE)
-		balloon_alert(user, "organ isn't broken!")
+		balloon_alert(user, LANG("obj.d7239964", null))
 		return
 	if(!do_after(user, 5 SECONDS, target_mob))
-		balloon_alert(user, "repair cancelled!")
+		balloon_alert(user, LANG("obj.48f0912f", null))
 		return
 
 	target_organ.apply_organ_damage(-repair_amount, required_organ_flag = ORGAN_ROBOTIC)
-	balloon_alert(user, "organ repaired")
-	to_chat(user, span_notice("You successfully repair [target_organ]."))
+	balloon_alert(user, LANG("obj.c42603a1", null))
+	to_chat(user, span_notice(LANG("obj.af0cd698", list(target_organ))))
 	if(target_organ.damage  > NONE)
-		to_chat(user, "The [target_organ] still has some lasting system damage that can be cleared.")
+		to_chat(user, LANG("obj.38273919", list(target_organ)))
 
 	uses -= 1
 	if(uses <= 0)
 		icon_state = "cyberpaste_spent"
-		to_chat(user, "The [src] runs out of gels and stops working.")
+		to_chat(user, LANG("obj.15d4ab83", list(src)))
 
 	return TRUE

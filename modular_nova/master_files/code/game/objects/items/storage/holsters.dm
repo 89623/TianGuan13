@@ -36,18 +36,18 @@
 		return NONE
 	// holster occupied?
 	if(length(contents))
-		to_chat(user, span_warning("[src]'s recharger cell port is obstructed! Remove everything else in the way first."))
+		to_chat(user, span_warning(LANG("obj.2748931a", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	// slot already occupied?
 	if(recharger_cell)
-		to_chat(user, span_warning("[src]'s recharger cell port is occupied! Remove it with a screwdriver first."))
+		to_chat(user, span_warning(LANG("obj.f8cc447d", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	// can transfer into holster?
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	recharger_cell = tool
 	tool.anchored = TRUE
-	to_chat(user, span_notice("You insert [tool] into [src]'s recharger cell port."))
+	to_chat(user, span_notice(LANG("obj.aa0a6269", list(tool, src))))
 	playsound(src, 'sound/items/weapons/kinetic_reload.ogg', 50, TRUE, -5)
 	return ITEM_INTERACT_SUCCESS
 
@@ -55,11 +55,11 @@
 	// attempt to eject the cell
 	. = ..()
 	if(!recharger_cell)
-		to_chat(user, span_warning("[src] doesn't have a cell to remove!"))
+		to_chat(user, span_warning(LANG("obj.e2fafc66", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	recharger_cell.forceMove(drop_location())
 	user.put_in_hands(recharger_cell)
-	to_chat(user, span_notice("You remove [recharger_cell] from [src]."))
+	to_chat(user, span_notice(LANG("obj.cbed3266", list(recharger_cell, src))))
 	unregister_cell()
 	return ITEM_INTERACT_SUCCESS
 

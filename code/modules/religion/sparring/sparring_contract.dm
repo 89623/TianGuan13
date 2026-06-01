@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/sparring_contract
 	desc = "A contract for setting up sparring matches. Both sparring partners must agree with the terms to begin."
 	icon = 'icons/obj/scrolls.dmi'
@@ -73,7 +74,7 @@
 	var/mob/user = usr
 
 	if(!ishuman(user))
-		to_chat(user, span_warning("This contract refuses to be signed by a lesser creature such as yourself."))
+		to_chat(user, span_warning(LANG("obj.0e840cce", null)))
 		return
 
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
@@ -85,7 +86,7 @@
 			resolved_opponents += resolved
 
 	if((user in resolved_opponents) && params["stakes"] == STAKES_HOLY_MATCH)
-		to_chat(user, span_warning("This contract refuses to be signed up for a holy match by a previous holy match loser. Pick a different stake!"))
+		to_chat(user, span_warning(LANG("obj.c9a25d22", null)))
 
 	//any updating of the terms should update the UI to display new terms
 	. = TRUE

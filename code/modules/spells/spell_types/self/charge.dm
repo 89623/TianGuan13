@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/charge
 	name = "Charge"
 	desc = "This spell can be used to recharge a variety of things in your hands, \
@@ -30,29 +31,29 @@
 			pulled_has_spells = TRUE
 
 		if(pulled_has_spells)
-			to_chat(pulled_living, span_notice("You feel raw magic flowing through you. It feels good!"))
-			to_chat(cast_on, span_notice("[pulled_living] suddenly feels very warm!"))
+			to_chat(pulled_living, span_notice(LANG("datum.cec8931e", null)))
+			to_chat(cast_on, span_notice(LANG("datum.c87ce25b", list(pulled_living))))
 			return
 
-		to_chat(pulled_living, span_notice("You feel very strange for a moment, but then it passes."))
+		to_chat(pulled_living, span_notice(LANG("datum.bc542ff0", null)))
 
 	// Then charge their main hand item, then charge their offhand item
 	var/obj/item/to_charge = cast_on.get_active_held_item() || cast_on.get_inactive_held_item()
 	if(!to_charge)
-		to_chat(cast_on, span_notice("You feel magical power surging through your hands, but the feeling rapidly fades."))
+		to_chat(cast_on, span_notice(LANG("datum.a7a61875", null)))
 		return
 
 	var/charge_return = SEND_SIGNAL(to_charge, COMSIG_ITEM_MAGICALLY_CHARGED, src, cast_on)
 
 	if(QDELETED(to_charge))
-		to_chat(cast_on, span_warning("[src] seems to react adversely with [to_charge]!"))
+		to_chat(cast_on, span_warning(LANG("datum.449950b5", list(src, to_charge))))
 		return
 
 	if(charge_return & COMPONENT_ITEM_BURNT_OUT)
-		to_chat(cast_on, span_warning("[to_charge] seems to react negatively to [src], becoming uncomfortably warm!"))
+		to_chat(cast_on, span_warning(LANG("datum.a67b2990", list(to_charge, src))))
 
 	else if(charge_return & COMPONENT_ITEM_CHARGED)
-		to_chat(cast_on, span_notice("[to_charge] suddenly feels very warm!"))
+		to_chat(cast_on, span_notice(LANG("datum.c87ce25b", list(to_charge))))
 
 	else
-		to_chat(cast_on, span_notice("[to_charge] doesn't seem to be react to [src]."))
+		to_chat(cast_on, span_notice(LANG("datum.bfa1e85c", list(to_charge, src))))

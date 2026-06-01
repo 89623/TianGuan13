@@ -82,10 +82,10 @@
 /obj/item/device/custom_kit/deluxe_hypo2/pre_convert_check(obj/target_obj, mob/user)
 	var/obj/item/hypospray/mkii/our_hypo = target_obj
 	if(our_hypo.type in subtypesof(/obj/item/hypospray/mkii/))
-		balloon_alert(user, "only works on basic mk. ii hypos!")
+		balloon_alert(user, LANG("obj.fbac7411", null))
 		return FALSE
 	if(our_hypo.vial != null)
-		balloon_alert(user, "unload the vial first!")
+		balloon_alert(user, LANG("obj.6a688e67", null))
 		return FALSE
 	return TRUE
 
@@ -202,17 +202,17 @@
 		var/obj/item/reagent_containers/cup/vial/container = hypo
 		container.forceMove(user.loc)
 		user.put_in_hands(container)
-		to_chat(user, span_notice("You remove [vial] from [src]."))
+		to_chat(user, span_notice(LANG("obj.cbed3266", list(vial, src))))
 		vial = null
 		update_icon()
 		playsound(loc, 'sound/items/weapons/empty.ogg', 50, 1)
 	else
-		to_chat(user, span_notice("This hypo isn't loaded!"))
+		to_chat(user, span_notice(LANG("obj.8aa8b107", null)))
 		return
 
 /obj/item/hypospray/mkii/proc/insert_vial(obj/item/new_vial, mob/living/user)
 	if(!is_type_in_list(new_vial, allowed_containers))
-		to_chat(user, span_notice("[src] doesn't accept this type of vial."))
+		to_chat(user, span_notice(LANG("obj.61106af5", list(src))))
 		return FALSE
 	var/atom/quickswap_loc = new_vial.loc
 	if(!user.transferItemToLoc(new_vial, src))
@@ -233,7 +233,7 @@
 	if(isnull(vial) || quickload)
 		insert_vial(tool, user)
 		return ITEM_INTERACT_SUCCESS
-	to_chat(user, span_warning("[src] can not hold more than one vial!"))
+	to_chat(user, span_warning(LANG("obj.9476963a", list(src))))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/hypospray/mkii/attack_self(mob/user)
@@ -259,12 +259,12 @@
 		else
 			CRASH("change_transfer_amount() called with invalid direction value")
 	amount_per_transfer = possible_transfer_amounts[index]
-	balloon_alert(user, "transferring [amount_per_transfer]u")
+	balloon_alert(user, LANG("obj.c9e1c7c3", list(amount_per_transfer)))
 
 /obj/item/hypospray/mkii/emag_act(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		to_chat(user, "[src] happens to be already overcharged.")
+		to_chat(user, LANG("obj.3eff8dec", list(src)))
 		return FALSE
 	if(inject_wait == DELUXE_WAIT_INJECT)
 		inject_wait = COMBAT_WAIT_INJECT
@@ -276,7 +276,7 @@
 		spray_wait = DELUXE_WAIT_SPRAY
 		spray_self = DELUXE_SELF_INJECT
 		inject_self = DELUXE_SELF_SPRAY
-	to_chat(user, "You overcharge [src]'s control circuit.")
+	to_chat(user, LANG("obj.3309dd5e", list(src)))
 	obj_flags |= EMAGGED
 	return TRUE
 
@@ -299,17 +299,17 @@
 	if(iscarbon(injectee))
 		var/obj/item/bodypart/affecting = injectee.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting)
-			to_chat(user, span_warning("The limb is missing!"))
+			to_chat(user, span_warning(LANG("obj.fc2e5421", null)))
 			return ITEM_INTERACT_BLOCKING
 	//Always log attemped injections for admins
 	var/contained = vial.reagents.get_reagent_log_string()
 	log_combat(user, injectee, "attemped to inject", src, addition="which had [contained]")
 
 	if(!vial)
-		to_chat(user, span_notice("[src] doesn't have any vial installed!"))
+		to_chat(user, span_notice(LANG("obj.2584595b", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!vial.reagents.total_volume)
-		to_chat(user, span_notice("[src]'s vial is empty!"))
+		to_chat(user, span_notice(LANG("obj.7c0822bf", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/fp_verb = mode == HYPO_SPRAY ? "spray" : "inject"
@@ -343,7 +343,7 @@
 
 	var/long_sound = amount_per_transfer >= 15
 	playsound(loc, long_sound ? 'modular_nova/modules/hyposprays/sound/hypospray_long.ogg' : pick('modular_nova/modules/hyposprays/sound/hypospray.ogg','modular_nova/modules/hyposprays/sound/hypospray2.ogg'), 50, 1, -1)
-	to_chat(user, span_notice("You [fp_verb] [amount_per_transfer] units of the solution. The hypospray's cartridge now contains [vial.reagents.total_volume] units."))
+	to_chat(user, span_notice(LANG("obj.7481ff5d", list(fp_verb, amount_per_transfer, vial.reagents.total_volume))))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 

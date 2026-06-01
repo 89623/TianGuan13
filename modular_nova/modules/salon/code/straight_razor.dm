@@ -26,22 +26,22 @@
 		var/mob/living/carbon/human/target_human = attacked_mob
 		var/location = user.zone_selected
 		if(!(location in list(BODY_ZONE_PRECISE_MOUTH)) && !user.combat_mode)
-			to_chat(user, span_warning("You stop, look down at what you're currently holding and ponder to yourself, \"This is probably to be used on their facial hair.\""))
+			to_chat(user, span_warning(LANG("obj.36405fbb", null)))
 			return
 		if(location == BODY_ZONE_PRECISE_MOUTH && !target_human.get_bodypart(BODY_ZONE_HEAD))
-			to_chat(user, span_warning("[target_human] doesn't have a head!"))
+			to_chat(user, span_warning(LANG("obj.618bead4", list(target_human))))
 			return
 		if(location == BODY_ZONE_PRECISE_MOUTH)
 			var/obj/item/bodypart/head/noggin = target_human.get_bodypart(BODY_ZONE_HEAD)
 			if(!(noggin.head_flags & HEAD_FACIAL_HAIR))
-				to_chat(user, span_warning("There is no facial hair to shave!"))
+				to_chat(user, span_warning(LANG("obj.f4b1d286", null)))
 				return
 			var/covering = target_human.is_mouth_covered()
 			if(covering)
-				to_chat(user, span_warning("[covering] is in the way!"))
+				to_chat(user, span_warning(LANG("obj.f4935eb9", list(covering))))
 				return
 			if(target_human.facial_hairstyle == "Shaved")
-				to_chat(user, span_warning("Already clean-shaven!"))
+				to_chat(user, span_warning(LANG("obj.ca2845a9", null)))
 				return
 
 			var/self_shaving = target_human == user // Shaving yourself?

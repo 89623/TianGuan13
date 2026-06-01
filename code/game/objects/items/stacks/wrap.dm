@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 /*
@@ -109,7 +110,7 @@
 		parcel.add_fingerprint(user)
 		return OXYLOSS
 	else
-		balloon_alert(user, "not enough paper!")
+		balloon_alert(user, LANG("obj.3fa08713", null))
 		return SHAME
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
@@ -139,7 +140,7 @@
 		if(!item.can_be_package_wrapped())
 			if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 				return NONE // put it in the bag instead of yelling
-			balloon_alert(user, "can't be wrapped!")
+			balloon_alert(user, LANG("obj.be71e026", null))
 			return ITEM_INTERACT_BLOCKING
 		if(user.is_holding(item))
 			if(!user.dropItemToGround(item))
@@ -169,10 +170,10 @@
 	else if(istype(interacting_with, /obj/structure/closet))
 		var/obj/structure/closet/closet = interacting_with
 		if(closet.opened)
-			balloon_alert(user, "can't wrap while open!")
+			balloon_alert(user, LANG("obj.a4697a6d", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!closet.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
-			balloon_alert(user, "can't wrap!")
+			balloon_alert(user, LANG("obj.7171f7eb", null))
 			return ITEM_INTERACT_BLOCKING
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(closet.loc))
@@ -191,12 +192,12 @@
 					break
 			// NOVA EDIT END
 		else
-			balloon_alert(user, "not enough paper!")
+			balloon_alert(user, LANG("obj.3fa08713", null))
 			return ITEM_INTERACT_BLOCKING
 	else if(istype(interacting_with,  /obj/machinery/portable_atmospherics))
 		var/obj/machinery/portable_atmospherics/portable_atmospherics = interacting_with
 		if(portable_atmospherics.anchored)
-			balloon_alert(user, "can't wrap while anchored!")
+			balloon_alert(user, LANG("obj.fbac689c", null))
 			return ITEM_INTERACT_BLOCKING
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(portable_atmospherics.loc))
@@ -207,11 +208,11 @@
 			parcel.add_fingerprint(user)
 			portable_atmospherics.add_fingerprint(user)
 		else
-			balloon_alert(user, "not enough paper!")
+			balloon_alert(user, LANG("obj.3fa08713", null))
 			return ITEM_INTERACT_BLOCKING
 
 	else
-		balloon_alert(user, "can't wrap!")
+		balloon_alert(user, LANG("obj.7171f7eb", null))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(span_notice("[user] wraps [interacting_with]."))

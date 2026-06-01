@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Bluespace crystals, used in telescience and when crushed it will blink you to a random turf.
 /obj/item/stack/ore/bluespace_crystal
 	name = "bluespace crystal"
@@ -49,7 +50,7 @@
 
 /obj/item/stack/ore/bluespace_crystal/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) // not caught in mid-air
-		visible_message(span_notice("[src] fizzles and disappears upon impact!"))
+		visible_message(span_notice(LANG("obj.d8c434f3", list(src))))
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/particle_effect/sparks(T)
 		playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -101,9 +102,9 @@
 	user.put_in_hands(BC)
 	use(1)
 	if(!amount)
-		to_chat(user, span_notice("You break the final crystal off."))
+		to_chat(user, span_notice(LANG("obj.7b64f981", null)))
 	else
-		to_chat(user, span_notice("You break off a crystal."))
+		to_chat(user, span_notice(LANG("obj.1e4b0cb9", null)))
 
 /obj/item/stack/sheet/bluespace_crystal/fifty
 	amount = 50

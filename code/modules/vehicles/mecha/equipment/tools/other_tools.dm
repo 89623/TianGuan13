@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 // Teleporter, Wormhole generator, Gravitational catapult, Armor booster modules,
 // Repair droid, Tesla Energy relay, Generators
@@ -493,7 +494,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
 	if(M.mech_type & EXOSUIT_MODULE_COMBAT)
-		to_chat(user, span_warning("[M] does not have the correct bolt configuration!"))
+		to_chat(user, span_warning(LANG("obj.f9e42ef5", list(M))))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
@@ -535,7 +536,7 @@
 
 /obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
 	if(mech.chassis_camera)
-		balloon_alert(user, "already has a camera!")
+		balloon_alert(user, LANG("obj.7ba4355a", null))
 		return ITEM_INTERACT_BLOCKING
 
 	. = ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// How long it takes from the gunpoint is initiated to reach stage 2
 #define GUNPOINT_DELAY_STAGE_2 (2.5 SECONDS)
 /// How long it takes from stage 2 starting to move up to stage 3
@@ -53,7 +54,7 @@
 
 	shooter.visible_message(span_danger("[shooter] aims [weapon] [distance_description]at [target]!"),
 		span_danger("You aim [weapon] [distance_description]at [target]!"), ignored_mobs = target)
-	to_chat(target, span_userdanger("[shooter] aims [weapon] [distance_description]at you!"))
+	to_chat(target, span_userdanger(LANG("datum.75e558aa", list(shooter, weapon, distance_description))))
 
 	shooter.Immobilize(0.75 SECONDS / distance)
 	if(!HAS_TRAIT(target, TRAIT_NOFEAR_HOLDUPS))
@@ -109,7 +110,7 @@
 	var/mob/living/shooter = parent
 	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
 		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)
-	to_chat(target, span_userdanger("[shooter] bumps into you and fumbles [shooter.p_their()] aim!"))
+	to_chat(target, span_userdanger(LANG("datum.56f417cd", list(shooter, shooter.p_their()))))
 	qdel(src)
 
 ///If the shooter shoves or grabs the target, cancel the holdup to avoid cheesing and forcing the charged shot
@@ -120,7 +121,7 @@
 		return
 	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
 		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)
-	to_chat(target, span_userdanger("[shooter] bumps into you and fumbles [shooter.p_their()] aim!"))
+	to_chat(target, span_userdanger(LANG("datum.56f417cd", list(shooter, shooter.p_their()))))
 	qdel(src)
 
 ///Update the damage multiplier for whatever stage we're entering into
@@ -129,13 +130,13 @@
 		return
 	stage = new_stage
 	if(stage == 2)
-		to_chat(parent, span_danger("You steady [weapon] on [target]."))
-		to_chat(target, span_userdanger("[parent] has steadied [weapon] on you!"))
+		to_chat(parent, span_danger(LANG("datum.bd9c19f0", list(weapon, target))))
+		to_chat(target, span_userdanger(LANG("datum.9d556a32", list(parent, weapon))))
 		damage_mult = GUNPOINT_MULT_STAGE_2
 		addtimer(CALLBACK(src, PROC_REF(update_stage), 3), GUNPOINT_DELAY_STAGE_3)
 	else if(stage == 3)
-		to_chat(parent, span_danger("You have fully steadied [weapon] on [target]."))
-		to_chat(target, span_userdanger("[parent] has fully steadied [weapon] on you!"))
+		to_chat(parent, span_danger(LANG("datum.828cbbef", list(weapon, target))))
+		to_chat(target, span_userdanger(LANG("datum.20465151", list(parent, weapon))))
 		damage_mult = GUNPOINT_MULT_STAGE_3
 
 ///Cancel the holdup if the shooter moves out of sight or out of range of the target
@@ -183,7 +184,7 @@
 	var/mob/living/shooter = parent
 	shooter.visible_message(span_danger("[shooter] breaks [shooter.p_their()] aim on [target]!"), \
 		span_danger("You are no longer aiming [weapon] at [target]."), ignored_mobs = target)
-	to_chat(target, span_userdanger("[shooter] breaks [shooter.p_their()] aim on you!"))
+	to_chat(target, span_userdanger(LANG("datum.c51526b3", list(shooter, shooter.p_their()))))
 	qdel(src)
 
 ///If the shooter is hit by an attack, they have a 50% chance to flinch and fire. If it hit the arm holding the trigger, it's an 80% chance to fire instead
@@ -225,13 +226,13 @@
 ///Prevents bumping the shooter to break gunpoint since shove does that
 /datum/component/gunpoint/proc/block_bumps_parent(mob/bumped, mob/living/bumper)
 	SIGNAL_HANDLER
-	to_chat(bumper, span_warning("[bumped] [bumped.p_are()] holding [target] at gunpoint, you cannot push past."))
+	to_chat(bumper, span_warning(LANG("datum.3e08d972", list(bumped, bumped.p_are(), target))))
 	return COMPONENT_LIVING_BLOCK_PRE_MOB_BUMP
 
 ///Prevents bumping the target by an ally to cheese and force the charged shot
 /datum/component/gunpoint/proc/block_bumps_target(mob/bumped, mob/living/bumper)
 	SIGNAL_HANDLER
-	to_chat(bumper, span_warning("[bumped] [bumped.p_are()] being held at gunpoint, it's not wise to push [bumped.p_them()]!"))
+	to_chat(bumper, span_warning(LANG("datum.8b2a4a6e", list(bumped, bumped.p_are(), bumped.p_them()))))
 	return COMPONENT_LIVING_BLOCK_PRE_MOB_BUMP
 
 #undef GUNPOINT_DELAY_STAGE_2

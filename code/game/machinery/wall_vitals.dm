@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/wallframe/status_display/vitals
 	name = "vitals display frame"
 	desc = "Used to build vitals displays. Secure on a wall nearby a stasis bed, operating table, \
@@ -153,7 +154,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 		set_patient(connected_table.patient)
 
 /obj/machinery/vitals_reader/wrench_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "detaching...")
+	balloon_alert(user, LANG("obj.277a49dc", null))
 	if(tool.use_tool(src, user, 6 SECONDS, volume = 50))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE)
@@ -165,16 +166,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
 	if(isnull(connected))
 		if(find_machine())
-			balloon_alert(user, "connected to [connected.name]")
+			balloon_alert(user, LANG("obj.19792e7e", list(connected.name)))
 		else
-			balloon_alert(user, "no connectable machines nearby!")
+			balloon_alert(user, LANG("obj.b02d9261", null))
 		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "disconnecting...")
+	balloon_alert(user, LANG("obj.731dc5a8", null))
 	if(!do_after(user, 2 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "disconnected from [connected.name]")
+	balloon_alert(user, LANG("obj.aeb0fd1d", list(connected.name)))
 	set_connection(null)
 	return ITEM_INTERACT_SUCCESS
 

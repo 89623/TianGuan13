@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///The selected target is not trackable
 #define RADAR_NOT_TRACKABLE 0
 ///The selected target is trackable
@@ -399,7 +400,7 @@
 
 	playsound(computer, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
 	if(isliving(computer.loc))
-		to_chat(computer.loc, span_userdanger("Your [computer.name] vibrates and lets out an ominous alarm. Uh oh."))
+		to_chat(computer.loc, span_userdanger(LANG("datum.60b954c6", list(computer.name))))
 	else
 		computer.audible_message(
 			span_danger("[computer] vibrates and lets out an ominous alarm. Uh oh."),

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
 
 /obj/structure/bed/nest
@@ -76,7 +77,7 @@
 
 	if(!do_after(captive, 100 SECONDS, target = src, hidden = TRUE))
 		if(captive.buckled)
-			to_chat(captive, span_warning("You fail to unbuckle yourself!"))
+			to_chat(captive, span_warning(LANG("obj.bca97c0d", null)))
 		return
 
 	captive.visible_message(span_warning("[captive.name] breaks free from the gelatinous resin!"),

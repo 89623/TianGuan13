@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Banana
 /obj/item/seeds/banana
 	name = "banana seed pack"
@@ -203,7 +204,7 @@
 
 /obj/item/food/grown/banana/bunch/monkeybomb/attack_self(mob/user, modifiers)
 	if(!is_simian(user))
-		return to_chat(user, span_notice("You don't really know what to do with this."))
+		return to_chat(user, span_notice(LANG("obj.4613b0b1", null)))
 	else start_ripening()
 
 /// Used for april fools mail

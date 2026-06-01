@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/railing
 	name = "railing"
 	desc = "Basic railing meant to protect idiots like you from falling."
@@ -91,22 +92,22 @@
 			if(!I.tool_start_check(user, amount=1))
 				return
 
-			to_chat(user, span_notice("You begin repairing [src]..."))
+			to_chat(user, span_notice(LANG("obj.93449ef4", list(src))))
 			if(I.use_tool(src, user, 40, volume=50))
 				atom_integrity = max_integrity
-				to_chat(user, span_notice("You repair [src]."))
+				to_chat(user, span_notice(LANG("obj.e94d13eb", list(src))))
 		else
-			to_chat(user, span_warning("[src] is already in good condition!"))
+			to_chat(user, span_warning(LANG("obj.7f6370b2", list(src))))
 		return
 
 
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(resistance_flags & INDESTRUCTIBLE)
-		to_chat(user, span_warning("You try to cut apart the railing, but it's too hard!"))
+		to_chat(user, span_warning(LANG("obj.3fa7a79f", null)))
 		I.play_tool_sound(src, 100)
 		return TRUE
-	to_chat(user, span_warning("You cut apart the railing."))
+	to_chat(user, span_warning(LANG("obj.69825462", null)))
 	I.play_tool_sound(src, 100)
 	deconstruct()
 	return TRUE
@@ -119,10 +120,10 @@
 ///Implements behaviour that makes it possible to unanchor the railing.
 /obj/structure/railing/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	to_chat(user, span_notice("You begin to [anchored ? "unfasten the railing from":"fasten the railing to"] the floor..."))
+	to_chat(user, span_notice(LANG("obj.1e7f4f4f", list(anchored ? "unfasten the railing from":"fasten the railing to"))))
 	if(I.use_tool(src, user, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_anchored), anchored)))
 		set_anchored(!anchored)
-		to_chat(user, span_notice("You [anchored ? "fasten the railing to":"unfasten the railing from"] the floor."))
+		to_chat(user, span_notice(LANG("obj.1175c81a", list(anchored ? "fasten the railing to":"unfasten the railing from"))))
 	return TRUE
 
 /obj/structure/railing/CanPass(atom/movable/mover, border_dir)

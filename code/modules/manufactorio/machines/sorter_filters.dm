@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/sortrouter_filter
 	/// name of the filter shown in UI
 	var/name
@@ -28,7 +29,7 @@
 	return name
 
 /datum/sortrouter_filter/proc/edit(mob/user)
-	to_chat(user, "This filter is not editable.")
+	to_chat(user, LANG("datum.5b104feb", null))
 
 /datum/sortrouter_filter/proc/meets_conditions(atom/checking)
 
@@ -94,7 +95,7 @@
 	name = initial(name)
 	if(!currently_listening)
 		name = "awaiting item"
-		to_chat(user, "Hit the sorter with the item of choice to set the filter.")
+		to_chat(user, LANG("datum.7c6059c8", null))
 		sorter.balloon_alert(user, "awaiting item!")
 		currently_listening = TRUE
 		RegisterSignal(sorter, COMSIG_ATOM_ATTACKBY, PROC_REF(sorter_hit))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/martial_art/kaza_ruk
 	name = "Kaza Ruk"
 	id = MARTIALART_KAZA_RUK
@@ -92,14 +93,14 @@
 
 /datum/martial_art/kaza_ruk/activate_style(mob/living/new_holder)
 	. = ..()
-	to_chat(new_holder, span_userdanger("You know the arts of [name]!"))
-	to_chat(new_holder, span_danger("Place your cursor over a move at the top of the screen to see what it does."))
+	to_chat(new_holder, span_userdanger(LANG("datum.29cbd7f1", list(name))))
+	to_chat(new_holder, span_danger(LANG("datum.a9fc34fd", null)))
 	neckchop.Grant(new_holder)
 	lowsweep.Grant(new_holder)
 	lungpunch.Grant(new_holder)
 
 /datum/martial_art/kaza_ruk/deactivate_style(mob/living/remove_from)
-	to_chat(remove_from, span_userdanger("You suddenly forget the arts of [name]..."))
+	to_chat(remove_from, span_userdanger(LANG("datum.b8403c53", list(name))))
 	neckchop?.Remove(remove_from)
 	lowsweep?.Remove(remove_from)
 	lungpunch?.Remove(remove_from)
@@ -143,7 +144,7 @@
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You [sweeping_language] sweep [defender]!"))
+	to_chat(attacker, span_danger(LANG("datum.f50544f6", list(sweeping_language, defender))))
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 
 	if(tail_sweeping)
@@ -163,7 +164,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You pound [defender] on the chest!"))
+	to_chat(attacker, span_danger(LANG("datum.3b6bf18e", list(defender))))
 	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	if(defender.losebreath <= 10)
 		defender.losebreath = clamp(defender.losebreath + 5, 0, 10)
@@ -182,7 +183,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You karate chop [defender]'s neck, rendering [defender.p_them()] unable to speak!"))
+	to_chat(attacker, span_danger(LANG("datum.cd29351a", list(defender, defender.p_them()))))
 	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	defender.apply_damage(10, attacker.get_attack_type(), BODY_ZONE_HEAD)
 	defender.adjust_silence_up_to(20 SECONDS, 20 SECONDS)
@@ -213,7 +214,7 @@
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You disarm [defender]!"))
+		to_chat(attacker, span_danger(LANG("datum.c4516d3a", list(defender))))
 		playsound(defender, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		log_combat(attacker, defender, "disarmed (Kaza Ruk)", addition = "(disarmed of [stuff_in_hand])")
 	return MARTIAL_ATTACK_INVALID // normal shove

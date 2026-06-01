@@ -135,12 +135,12 @@
 		investigate_log("Delam SCRAM tried to activate but an admin disabled it", INVESTIGATE_ATMOS)
 		playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 100, FALSE, MACHINE_SOUND_RANGE, ignore_walls = TRUE, use_reverb = TRUE, falloff_distance = MACHINE_SOUND_FALLOFF_DISTANCE)
 		radio.talk_into(src, "System fault! Unable to trigger.", warning_channel)
-		audible_message(span_danger("[src] makes a series of sad beeps. Someone has corrupted its software!"))
+		audible_message(span_danger(LANG("obj.bb645b94", list(src))))
 		return FALSE
 
 	if(world.time - SSticker.round_start_time > 60 MINUTES && trigger_reason != DIVINE_INTERVENTION)
 		playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 100, FALSE, MACHINE_SOUND_RANGE, ignore_walls = TRUE, use_reverb = TRUE, falloff_distance = MACHINE_SOUND_FALLOFF_DISTANCE)
-		audible_message(span_danger("[src] makes a series of sad beeps. The internal charge only lasts about 60 minutes... what a feat of engineering!"))
+		audible_message(span_danger(LANG("obj.e7859c36", list(src))))
 		investigate_log("Delam SCRAM signal was received but failed precondition check. (Round time or trigger reason)", INVESTIGATE_ATMOS)
 		return FALSE
 
@@ -221,7 +221,7 @@
 
 /// Shatter the supermatter chamber windows
 /obj/structure/window/reinforced/plasma/proc/shatter_window()
-	visible_message(span_danger("[src] shatters in the freon fire!"))
+	visible_message(span_danger(LANG("obj.d3a1e337", list(src))))
 	explosion(src, SHATTER_DEVASTATION_RANGE, SHATTER_HEAVY_RANGE, SHATTER_LIGHT_RANGE, SHATTER_FLAME_RANGE, SHATTER_FLASH_RANGE)
 	qdel(src)
 
@@ -230,7 +230,7 @@
 
 	// good job buddy, sacrificing yourself for the greater good
 	playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 100, FALSE, MACHINE_SOUND_RANGE, ignore_walls = TRUE, use_reverb = TRUE, falloff_distance = MACHINE_SOUND_FALLOFF_DISTANCE)
-	visible_message(span_danger("[src] beeps a sorrowful melody and collapses into a pile of twisted metal and foam!"), blind_message = span_danger("[src] beeps a sorrowful melody!"))
+	visible_message(span_danger(LANG("obj.57e2ff49", list(src))), blind_message = span_danger("[src] beeps a sorrowful melody!"))
 	deconstruct(FALSE)
 
 /// Drain the internal energy, if the crystal damage is above 100 we heal it a bit. Not much, but should be good to let them recover.
@@ -303,12 +303,12 @@
 		return
 
 	if(!COOLDOWN_FINISHED(src, scram_button))
-		balloon_alert(user, "on cooldown!")
+		balloon_alert(user, LANG("obj.d4ae5d4d", null))
 		return
 
 	if(!validate_suppression_status())
 		playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE, BUTTON_SOUND_RANGE, falloff_distance = BUTTON_SOUND_FALLOFF_DISTANCE)
-		audible_message(span_danger("[src] makes a sad buzz and goes dark. Did someone activate it already?")) // Look through the window, buddy
+		audible_message(span_danger(LANG("obj.a654238b", list(src)))) // Look through the window, buddy
 		burn_out()
 		return
 
@@ -317,7 +317,7 @@
 
 	// Give them a cheeky instructions card. But only one! If you lost it, question your engineering prowess in this moment
 	if(button_stage == BUTTON_IDLE)
-		visible_message(span_danger("A plastic card falls out of [src]!"))
+		visible_message(span_danger(LANG("obj.a48114cc", list(src))))
 		user.put_in_hands(new /obj/item/paper/paperslip/corporate/fluff/delam_procedure(get_turf(user)))
 		button_stage = BUTTON_AWAKE
 		return
@@ -330,7 +330,7 @@
 	// For roundstart only, after that it's on you!
 	if(world.time - SSticker.round_start_time > 60 MINUTES)
 		playsound(src.loc, 'sound/machines/compiler/compiler-failure.ogg', 50, FALSE, BUTTON_SOUND_RANGE, falloff_distance = BUTTON_SOUND_FALLOFF_DISTANCE)
-		audible_message(span_danger("[src] makes a series of sad beeps. The internal charge only lasts about 60 minutes... what a feat of engineering! Looks like it's all on you to save the day."))
+		audible_message(span_danger(LANG("obj.13c72738", list(src))))
 		burn_out()
 		return
 
@@ -338,7 +338,7 @@
 	button_stage = BUTTON_ARMED
 	update_appearance()
 	radio.talk_into(src, "SUPERMATTER EMERGENCY STOP BUTTON ARMED!", RADIO_CHANNEL_ENGINEERING)
-	visible_message(span_danger("[user] swings open the plastic cover on [src]!"))
+	visible_message(span_danger(LANG("obj.638ae7b3", list(user, src))))
 
 	// Let the admins know someone's fucked up
 	message_admins("[ADMIN_LOOKUPFLW(user)] just uncovered [src].")
@@ -350,14 +350,14 @@
 /obj/machinery/button/delam_scram/proc/confirm_action(mob/user, list/modifiers)
 	if(tgui_alert(usr, "Are you really sure that you want to push this?", "It looked scarier on HBO.", list("No", "Yes")) != "Yes")
 		button_stage = BUTTON_AWAKE
-		visible_message(span_danger("[user] slowly closes the plastic cover on [src]!"))
+		visible_message(span_danger(LANG("obj.6d296c39", list(user, src))))
 		update_appearance()
 		return
 
 	// Make scary sound and flashing light
 	playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE, BUTTON_SOUND_RANGE, ignore_walls = TRUE, use_reverb = TRUE, falloff_distance = BUTTON_SOUND_FALLOFF_DISTANCE)
 	button_stage = BUTTON_PUSHED
-	visible_message(span_danger("[user] smashes [src] with their hand!"))
+	visible_message(span_danger(LANG("obj.3160e1ea", list(user, src))))
 	message_admins("[ADMIN_LOOKUPFLW(user)] pushed [src]!")
 	investigate_log("[key_name(user)] pushed [src]!", INVESTIGATE_ATMOS)
 	flick_overlay_view("[base_icon_state]-overlay-active", 20 SECONDS)

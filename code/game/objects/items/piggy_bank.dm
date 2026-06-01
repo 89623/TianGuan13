@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Piggy banks. They store your hard-earned money until you or someone destroys it.
  * If the persistence id is set, money will be carried between rounds until broken.
@@ -102,7 +103,7 @@
 	. = ..()
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return
-	balloon_alert(user, "rattle rattle...")
+	balloon_alert(user, LANG("obj.8b7ed7bc", null))
 	if(!do_after(user, 0.5 SECONDS, src))
 		return
 	var/percentile = round(calculate_dosh_amount()/maximum_value * 100, 1)
@@ -132,13 +133,13 @@
 	var/dosh_amount = calculate_dosh_amount()
 
 	if(dosh_amount >= maximum_value)
-		balloon_alert(user, "it's full!")
+		balloon_alert(user, LANG("obj.2cb7d354", null))
 	else if(dosh_amount + creds_value > maximum_value)
-		balloon_alert(user, "too much cash!")
+		balloon_alert(user, LANG("obj.dca03cee", null))
 	else if(!user.transferItemToLoc(item, src))
-		balloon_alert(user, "stuck in your hands!")
+		balloon_alert(user, LANG("obj.e8dcafaf", null))
 	else
-		balloon_alert(user, "inserted [creds_value] creds")
+		balloon_alert(user, LANG("obj.d486be19", list(creds_value)))
 		sanitize_piggy_bank_contents_len()
 	return TRUE
 

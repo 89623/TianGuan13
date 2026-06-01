@@ -21,17 +21,17 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 	if(istype(interacting_with, /turf/open/misc/asteroid/basalt/lava_land_surface)) //eventually we could spread this to more than just lavaland?
 		var/turf/interacting_turf = interacting_with
 		if(locate(/obj/structure/worm_tunnel) in interacting_turf)
-			to_chat(user, span_warning("There is already a tunnel here!"))
+			to_chat(user, span_warning(LANG("obj.1e217031", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		var/tunnel_name = tgui_input_text(user, "What would you like to name the tunnel?", "Tunnel Naming (20 Character Max)", max_length = 20)
 		if(isnull(tunnel_name))
-			to_chat(user, span_warning("You have decided against creating a tunnel!"))
+			to_chat(user, span_warning(LANG("obj.a307bf25", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		//if we have the primitive skill, perhaps add some functionality to this
 		if(!do_after(user, tunnel_creation, target = interacting_turf))
-			to_chat(user, span_warning("You have decided against creating a tunnel!"))
+			to_chat(user, span_warning(LANG("obj.a307bf25", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/structure/worm_tunnel/created_tunnel = new /obj/structure/worm_tunnel(interacting_turf)
@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 		GLOB.ashwalker_tunnels += created_tunnel
 		tunnels_remaining -= 1
 		if(tunnels_remaining <= 0)
-			to_chat(user, span_warning("[src] has been exhausted!"))
+			to_chat(user, span_warning(LANG("obj.03795134", list(src))))
 			qdel(src)
 
 		return ITEM_INTERACT_BLOCKING
@@ -65,15 +65,15 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 /obj/structure/worm_tunnel/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stack/sheet/mineral/wood))
 		if(covered_tunnel)
-			to_chat(user, span_warning("There is already wood blocking [src]!"))
+			to_chat(user, span_warning(LANG("obj.9f3ce6e6", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!tool.use(2))
-			to_chat(user, span_warning("You are unable to use [tool] to cover [src]!"))
+			to_chat(user, span_warning(LANG("obj.c3779f35", list(tool, src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!do_after(user, 5 SECONDS, target = src))
-			to_chat(user, span_notice("You decide against covering [src]."))
+			to_chat(user, span_notice(LANG("obj.1a9bcffd", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		covered_tunnel = TRUE
@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 	. = ..()
 	if(covered_tunnel)
 		if(!do_after(user, 5 SECONDS, target = src))
-			to_chat(user, span_notice("You decide against uncovering [src]."))
+			to_chat(user, span_notice(LANG("obj.b5343c68", list(src))))
 			return
 
 		var/obj/item/stack/spawning_stack = new /obj/item/stack/sheet/mineral/wood(get_turf(user))
@@ -101,18 +101,18 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 	if(isashwalker(user))
 		if(!do_after(user, 10 SECONDS * skill_modifier, target = src))
-			to_chat(user, span_notice("You decide against going through [src]."))
+			to_chat(user, span_notice(LANG("obj.78e26844", list(src))))
 			return
 
 	else
-		to_chat(user, span_warning("You are attempting to enter [src]! It fights back! Perhaps some persistence will help?"))
+		to_chat(user, span_warning(LANG("obj.1efd7c97", list(src))))
 		for(var/iterations in 1 to 3)
 			if(!do_after(user, 6 SECONDS * skill_modifier, target = src))
 				return
 			user.adjust_brute_loss(10)
 
 	if(tunnel_choice.covered_tunnel)
-		to_chat(user, span_warning("[tunnel_choice] was covered! Returning back to the start!"))
+		to_chat(user, span_warning(LANG("obj.4f6e6756", list(tunnel_choice))))
 		return
 
 	user.forceMove(get_turf(tunnel_choice))
@@ -123,7 +123,7 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 
 /obj/structure/worm_tunnel/shovel_act(mob/living/user, obj/item/tool)
 	if(!do_after(user, 10 SECONDS, target = src))
-		to_chat(user, span_notice("You decide against filling in [src]."))
+		to_chat(user, span_notice(LANG("obj.76e8fe68", list(src))))
 		return
 
 	qdel(src)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// Abstract parent object for bread items. Should not be made obtainable in game.
 /obj/item/food/bread
@@ -387,8 +388,8 @@
 
 /obj/item/food/baguette/proc/begin_swordplay(mob/user)
 	visible_message(
-		span_notice("[user] begins wielding [src] like a sword!"),
-		span_notice("You begin wielding [src] like a sword, with a firm grip on the bottom as an imaginary handle.")
+		span_notice(LANG("obj.bc696875", list(user, src))),
+		span_notice(LANG("obj.629fffbf", list(src)))
 	)
 	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, SWORDPLAY_TRAIT)
 	attack_verb_continuous = list("slashes", "cuts")
@@ -410,8 +411,8 @@
 
 	if(user)
 		visible_message(
-			span_notice("[user] no longer holds [src] like a sword!"),
-			span_notice("You go back to holding [src] normally.")
+			span_notice(LANG("obj.2d743686", list(user, src))),
+			span_notice(LANG("obj.fd8bdd13", list(src)))
 		)
 
 /obj/item/food/baguette/proc/on_sword_dropped(datum/source, mob/user)

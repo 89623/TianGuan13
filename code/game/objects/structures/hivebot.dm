@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/hivebot_beacon
 	name = "beacon"
 	desc = "Some odd beacon thing."
@@ -11,13 +12,13 @@
 /obj/structure/hivebot_beacon/Initialize(mapload)
 	. = ..()
 	do_smoke(2, src, loc)
-	visible_message(span_bolddanger("[src] warps in!"))
+	visible_message(span_bolddanger(LANG("obj.f94e2e40", list(src))))
 	playsound(src.loc, 'sound/effects/empulse.ogg', 25, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(warpbots)), rand(1 SECONDS, 1 MINUTES))
 
 /obj/structure/hivebot_beacon/proc/warpbots()
 	icon_state = "def_radar"
-	visible_message(span_danger("[src] turns on!"))
+	visible_message(span_danger(LANG("obj.05f621b3", list(src))))
 	while(bot_amt > 0)
 		bot_amt--
 		switch(bot_type)
@@ -28,7 +29,7 @@
 			if("rapid")
 				new /mob/living/basic/hivebot/rapid(get_turf(src))
 	sleep(10 SECONDS)
-	visible_message(span_bolddanger("[src] warps out!"))
+	visible_message(span_bolddanger(LANG("obj.26fe3bf7", list(src))))
 	playsound(src.loc, 'sound/effects/empulse.ogg', 25, TRUE)
 	qdel(src)
 	return

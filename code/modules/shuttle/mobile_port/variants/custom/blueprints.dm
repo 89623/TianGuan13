@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/client_image_holder/shuttle_construction_visualization
 	image_icon = 'icons/effects/alphacolors.dmi'
 	image_state = "transparent"
@@ -175,17 +176,17 @@
 		return
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(shuttle.master_blueprint?.resolve() != src)
-		to_chat(user, span_warning("Only the master blueprint for \the [shuttle] grants you the right to rechristen [shuttle.p_them()]!"))
+		to_chat(user, span_warning(LANG("obj.db2737a5", list(shuttle, shuttle.p_them()))))
 		return
 	var/turf/user_turf = get_turf(user)
 	if(user_turf && isshuttleturf(user_turf))
-		to_chat(user, span_warning("You can't rechristen \the [shuttle] from inside of [shuttle.p_them()]!"))
+		to_chat(user, span_warning(LANG("obj.fb64aa6e", list(shuttle, shuttle.p_them()))))
 		return
 	if(!source.isGlass)
-		to_chat(user, span_warning("You can't break [source] against [attacked]!"))
+		to_chat(user, span_warning(LANG("obj.15e5e604", list(source, attacked))))
 		return
 	if(source.reagents.total_volume < CHEMICAL_QUANTISATION_LEVEL)
-		to_chat(user, span_warning("You should put some christening fluid in [source]!"))
+		to_chat(user, span_warning(LANG("obj.ecf7408b", list(source))))
 		return
 	INVOKE_ASYNC(src, PROC_REF(christen), user, shuttle, attacked, user.active_hand_index)
 
@@ -208,7 +209,7 @@
 	bottle = istype(bottle) && bottle.isGlass && bottle
 	var/shuttle_exists = !QDELETED(shuttle)
 	if(!shuttle_exists)
-		to_chat(user, span_warning("Wasn't there supposed to be a shuttle here?"))
+		to_chat(user, span_warning(LANG("obj.374efaf1", null)))
 	var/has_blueprints = !QDELETED(src) && (src in user.gather_belongings())
 	var/turf/attacked_turf = attacked
 	var/is_closed_turf = isclosedturf(attacked_turf)
@@ -450,12 +451,12 @@
 		var/obj/docking_port/mobile/other_shuttle = other_blueprints.shuttle_ref?.resolve()
 		if(istype(other_shuttle))
 			return
-		balloon_alert(user, "copying blueprints...")
+		balloon_alert(user, LANG("obj.b32eeb89", null))
 		if(!do_after(user, 5 SECONDS, other_blueprints))
-			balloon_alert(user, "interrupted!")
+			balloon_alert(user, LANG("obj.c67b5d27", null))
 			return ITEM_INTERACT_FAILURE
 		other_blueprints.link_to_shuttle(shuttle)
-		balloon_alert(user, "copied")
+		balloon_alert(user, LANG("obj.7ff7de27", null))
 		return ITEM_INTERACT_SUCCESS
 	if(istype(interacting_with, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/borg = interacting_with
@@ -463,15 +464,15 @@
 		if(!other_blueprints)
 			return
 		if(other_blueprints.shuttles.Find(shuttle_ref))
-			balloon_alert(user, "already has these blueprints!")
-		balloon_alert(user, "copying blueprints...")
+			balloon_alert(user, LANG("obj.6e924f05", null))
+		balloon_alert(user, LANG("obj.b32eeb89", null))
 		if(!do_after(user, 5 SECONDS, borg))
-			balloon_alert(user, "interrupted")
+			balloon_alert(user, LANG("obj.0c4ac08a", null))
 			return ITEM_INTERACT_FAILURE
 		if(QDELETED(other_blueprints))
 			return ITEM_INTERACT_FAILURE
 		other_blueprints.shuttles |= shuttle_ref
-		balloon_alert(user, "copied")
+		balloon_alert(user, LANG("obj.7ff7de27", null))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/shuttle_blueprints/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

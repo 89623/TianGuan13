@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(VVlocked, list("vars", "datum_flags", "client", "mob")) //Requires DEBUG
 GLOBAL_PROTECT(VVlocked)
 GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays")) //Requires DEBUG or FUN
@@ -101,7 +102,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			L[var_value] = mod_list_add_ass(O) //hehe
 	if (O)
 		if (O.vv_edit_var(objectvar, L) == FALSE)
-			to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
+			to_chat(src, LANG("client.473659ab", null), confidential = TRUE)
 			return
 	log_world("### ListVarEdit by [src]: [(O ? O.type : "/list")] [objectvar]: ADDED=[var_value]")
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
@@ -111,10 +112,10 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if(!check_rights(R_VAREDIT))
 		return
 	if(!istype(L, /list))
-		to_chat(src, "Not a List.", confidential = TRUE)
+		to_chat(src, LANG("client.3aba73b6", null), confidential = TRUE)
 		return
 	if(isalist(L))
-		to_chat(src, "alists are currently unsupported", confidential = TRUE)
+		to_chat(src, LANG("client.b131dbf3", null), confidential = TRUE)
 		return
 
 	if(L.len > 1000)
@@ -146,7 +147,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			L = L.Copy()
 			list_clear_nulls(L)
 			if (!O.vv_edit_var(objectvar, L))
-				to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
+				to_chat(src, LANG("client.473659ab", null), confidential = TRUE)
 				return
 			log_world("### ListVarEdit by [src]: [O.type] [objectvar]: CLEAR NULLS")
 			log_admin("[key_name(src)] modified [original_name]'s [objectvar]: CLEAR NULLS")
@@ -156,7 +157,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		if(variable == "(CLEAR DUPES)")
 			L = unique_list(L)
 			if (!O.vv_edit_var(objectvar, L))
-				to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
+				to_chat(src, LANG("client.473659ab", null), confidential = TRUE)
 				return
 			log_world("### ListVarEdit by [src]: [O.type] [objectvar]: CLEAR DUPES")
 			log_admin("[key_name(src)] modified [original_name]'s [objectvar]: CLEAR DUPES")
@@ -166,7 +167,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		if(variable == "(SHUFFLE)")
 			L = shuffle(L)
 			if (!O.vv_edit_var(objectvar, L))
-				to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
+				to_chat(src, LANG("client.473659ab", null), confidential = TRUE)
 				return
 			log_world("### ListVarEdit by [src]: [O.type] [objectvar]: SHUFFLE")
 			log_admin("[key_name(src)] modified [original_name]'s [objectvar]: SHUFFLE")
@@ -203,9 +204,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	default = vv_get_class(objectvar, variable)
 
-	to_chat(src, "Variable appears to be <b>[uppertext(default)]</b>.", confidential = TRUE)
+	to_chat(src, LANG("client.a7b53abf", list(uppertext(default))), confidential = TRUE)
 
-	to_chat(src, "Variable contains: [variable]", confidential = TRUE)
+	to_chat(src, LANG("client.34502e1e", list(variable)), confidential = TRUE)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
@@ -221,7 +222,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 				dir_text += "WEST"
 
 		if(dir_text)
-			to_chat(usr, "If a direction, direction is: [dir_text]", confidential = TRUE)
+			to_chat(usr, LANG("client.091219d6", list(dir_text)), confidential = TRUE)
 
 	var/original_var = variable
 
@@ -271,7 +272,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 				L[new_var] = old_assoc_value
 	if (O)
 		if (O.vv_edit_var(objectvar, L) == FALSE)
-			to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
+			to_chat(src, LANG("client.473659ab", null), confidential = TRUE)
 			return
 	log_world("### ListVarEdit by [src]: [(O ? O.type : "/list")] [objectvar]: [original_var]=[new_var]")
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]")
@@ -299,7 +300,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	if(param_var_name)
 		if(!(param_var_name in O.vars))
-			to_chat(src, "A variable with this name ([param_var_name]) doesn't exist in this datum ([O])", confidential = TRUE)
+			to_chat(src, LANG("client.c5dca644", list(param_var_name, O)), confidential = TRUE)
 			return
 		variable = param_var_name
 
@@ -324,11 +325,11 @@ GLOBAL_PROTECT(VVpixelmovement)
 	var/default = vv_get_class(variable, var_value)
 
 	if(isnull(default))
-		to_chat(src, "Unable to determine variable type.", confidential = TRUE)
+		to_chat(src, LANG("client.79202fb9", null), confidential = TRUE)
 	else
-		to_chat(src, "Variable appears to be <b>[uppertext(default)]</b>.", confidential = TRUE)
+		to_chat(src, LANG("client.a7b53abf", list(uppertext(default))), confidential = TRUE)
 
-	to_chat(src, "Variable contains: [var_value]", confidential = TRUE)
+	to_chat(src, LANG("client.34502e1e", list(var_value)), confidential = TRUE)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
@@ -343,7 +344,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 				dir_text += "WEST"
 
 		if(dir_text)
-			to_chat(src, "If a direction, direction is: [dir_text]", confidential = TRUE)
+			to_chat(src, LANG("client.091219d6", list(dir_text)), confidential = TRUE)
 
 	if(autodetect_class && default != VV_NULL)
 		if (default == VV_TEXT)
@@ -380,7 +381,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 
 	if (O.vv_edit_var(variable, var_new) == FALSE)
-		to_chat(src, "Your edit was rejected by the object.", confidential = TRUE)
+		to_chat(src, LANG("client.473659ab", null), confidential = TRUE)
 		return
 	vv_update_display(O, "varedited", VV_MSG_EDITED)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_VAR_EDIT, args)

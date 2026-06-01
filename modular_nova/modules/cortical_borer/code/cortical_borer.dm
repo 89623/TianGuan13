@@ -337,8 +337,8 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 		return
 	if(ckey || key)
 		return
-	to_chat(user, span_warning("As a borer, you have the option to be friendly or not. Note that how you act will determine how a host responds!"))
-	to_chat(user, span_warning("You are a cortical borer! You can fear someone to make them stop moving, but make sure to inhabit them! You only grow/heal/talk when inside a host!"))
+	to_chat(user, span_warning(LANG("mob.70e87326", null)))
+	to_chat(user, span_warning(LANG("mob.4caf4163", null)))
 	ckey = user.ckey
 	if(mind)
 		mind.add_antag_datum(/datum/antagonist/cortical_borer)
@@ -389,7 +389,7 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 
 //borers shouldnt be able to whisper...
 /mob/living/basic/cortical_borer/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language, ignore_spam = FALSE, forced, filterproof)
-	to_chat(src, span_warning("You are not able to whisper!"))
+	to_chat(src, span_warning(LANG("mob.41174de8", null)))
 	return FALSE
 
 //previously had borers unable to emote... but that means less RP, and we want that
@@ -409,7 +409,7 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 	list/message_mods = list(),
 )
 	if(!inside_human())
-		to_chat(src, span_warning("You are not able to speak without a host!"))
+		to_chat(src, span_warning(LANG("mob.7bfda57f", null)))
 		return
 	if(host_sugar())
 		message = scramble_message_replace_chars(message, 10)
@@ -429,17 +429,17 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 		return
 
 	//this is when they speak normally
-	to_chat(human_host, span_purple("Cortical Link: [src] sings, \"[message]\""))
+	to_chat(human_host, span_purple(LANG("mob.5f7cdf19", list(src, message))))
 	var/logging_texttwo = "[key_name(src)] spoke to [key_name(human_host)]: [message]"
 	log_say(logging_texttwo)
-	to_chat(src, span_purple("Cortical Link: [src] sings, \"[message]\""))
+	to_chat(src, span_purple(LANG("mob.5f7cdf19", list(src, message))))
 	for(var/mob/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, src)
 		to_chat(dead_mob, span_purple("[link] Cortical Hivemind: [src] sings to [human_host], \"[message]\""))
 
 //borers should not be able to pull anything
 /mob/living/basic/cortical_borer/start_pulling(atom/movable/AM, state, force, supress_message)
-	to_chat(src, span_warning("You cannot pull things!"))
+	to_chat(src, span_warning(LANG("mob.8d65fa79", null)))
 	return
 
 /// Called on Life() for the borer to age a bit
@@ -462,15 +462,15 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 	if(maturity_age == maturity_threshold)
 		if(chemical_evolution < limited_borer) //you can only have a default of 10 at a time
 			chemical_evolution++
-			to_chat(src, span_notice("You gain a chemical evolution point. Spend it to learn a new chemical!"))
+			to_chat(src, span_notice(LANG("mob.bcbaa000", null)))
 		else
-			to_chat(src, span_warning("You were unable to gain a chemical evolution point due to having the max!"))
+			to_chat(src, span_warning(LANG("mob.83ac3e7a", null)))
 	if(maturity_age >= (maturity_threshold * 2))
 		if(stat_evolution < limited_borer)
 			stat_evolution++
-			to_chat(src, span_notice("You gain a stat evolution point. Spend it to become stronger!"))
+			to_chat(src, span_notice(LANG("mob.bed4978e", null)))
 		else
-			to_chat(src, span_warning("You were unable to gain a stat evolution point due to having the max!"))
+			to_chat(src, span_warning(LANG("mob.e9bb5c5b", null)))
 		maturity_age = 0
 
 /// Use to recalculate a borer's health and chemical stats when something retroactively affects them

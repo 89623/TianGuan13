@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///////////////////////////////////
 ////////  Mecha wreckage   ////////
 ///////////////////////////////////
@@ -59,12 +60,12 @@
 	..()
 	. = TRUE
 	if(salvage_num <= 0 || !length(welder_salvage))
-		to_chat(user, span_notice("You don't see anything that can be cut with [I]!"))
+		to_chat(user, span_notice(LANG("obj.ff7a3a1d", list(I))))
 		return
 	if(!I.use_tool(src, user, 0, volume=50))
 		return
 	if(prob(30))
-		to_chat(user, span_notice("You fail to salvage anything valuable from [src]!"))
+		to_chat(user, span_notice(LANG("obj.93800b2c", list(src))))
 		return
 	var/type = pick(welder_salvage)
 	var/N = new type(get_turf(user))
@@ -77,7 +78,7 @@
 	..()
 	. = TRUE
 	if(wires_removed)
-		to_chat(user, span_notice("You don't see anything that can be cut with [I]!"))
+		to_chat(user, span_notice(LANG("obj.ff7a3a1d", list(I))))
 		return
 	var/N = new /obj/item/stack/cable_coil(get_turf(user), rand(1,3))
 	user.visible_message(span_notice("[user] cuts [N] from [src]."), span_notice("You cut [N] from [src]."))
@@ -92,7 +93,7 @@
 		user.visible_message(span_notice("[user] pries [S] from [src]."), span_notice("You pry [S] from [src]."))
 		crowbar_salvage -= S
 		return
-	to_chat(user, span_notice("You don't see anything that can be pried with [I]!"))
+	to_chat(user, span_notice(LANG("obj.4147eda5", list(I))))
 
 /obj/structure/mecha_wreckage/transfer_ai(interaction, mob/user, mob/living/silicon/ai/ai_mob, obj/item/aicard/card)
 	if(!..())
@@ -102,16 +103,16 @@
 	if(interaction != AI_TRANS_TO_CARD) //AIs can only be transferred in one direction, from the wreck to the card.
 		return
 	if(!AI) //No AI in the wreck
-		to_chat(user, span_warning("No AI backups found."))
+		to_chat(user, span_warning(LANG("obj.da4175a4", null)))
 		return
 	cut_overlays() //Remove the recovery beacon overlay
 	AI.forceMove(card) //Move the dead AI to the card.
 	card.AI = AI
 	if(AI.client) //AI player is still in the dead AI and is connected
-		to_chat(AI, span_notice("The remains of your file system have been recovered on a mobile storage device."))
+		to_chat(AI, span_notice(LANG("obj.720b30eb", null)))
 	else //Give the AI a heads-up that it is probably going to get fixed.
 		AI.notify_revival("You have been recovered from the wreckage!", source = card)
-	to_chat(user, "[span_boldnotice("Backup files recovered")]: [AI.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")
+	to_chat(user, LANG("obj.b4406c8c", list(span_boldnotice("Backup files recovered"), AI.name, rand(1000,9999), name)))
 	AI = null
 
 /obj/structure/mecha_wreckage/gygax

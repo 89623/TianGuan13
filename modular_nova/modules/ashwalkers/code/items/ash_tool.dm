@@ -129,7 +129,7 @@
 	to_chat(user, span_warning(sent_message))
 	user.adjust_brute_loss(damage_amount)
 	if(!do_after(user, 4 SECONDS, target = src))
-		to_chat(user, span_warning("You stop the process of planting [src]!"))
+		to_chat(user, span_warning(LANG("obj.c6a599a2", list(src))))
 		return FALSE
 
 	return TRUE
@@ -156,7 +156,7 @@
 	if(!harm_user(user, "[src] wraps around your chest and begins to tighten, causing an odd needling sensation...", 20))
 		return
 
-	to_chat(living_user, span_warning("[src] leaps from you satisfied and begins to grossly assemble itself!"))
+	to_chat(living_user, span_warning(LANG("obj.223994ce", list(src))))
 	var/type = pick(spawn_list)
 	new type(user.loc)
 	playsound(get_turf(src), 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * Maintenance Drone
@@ -256,18 +257,18 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	Stun(70)
-	to_chat(src, span_danger("<b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)..."))
+	to_chat(src, span_danger(LANG("mob.a1165eea", null)))
 	if(severity == 1)
 		adjust_brute_loss(heavy_emp_damage)
-		to_chat(src, span_userdanger("HeAV% DA%^MMA+G TO I/O CIR!%UUT!"))
+		to_chat(src, span_userdanger(LANG("mob.9a31ac5b", null)))
 
 /mob/living/basic/drone/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
 	SIGNAL_HANDLER
-	to_chat(src, "--- [alarm_type] alarm detected in [source_area.name]!")
+	to_chat(src, LANG("mob.fc8f672c", list(alarm_type, source_area.name)))
 
 /mob/living/basic/drone/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
 	SIGNAL_HANDLER
-	to_chat(src, "--- [alarm_type] alarm in [source_area.name] has been cleared.")
+	to_chat(src, LANG("mob.2707e92b", list(alarm_type, source_area.name)))
 
 /mob/living/basic/drone/proc/set_shy(new_shy)
 	shy = new_shy

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///String to access turbine part typepath to upgrade
 #define TURBINE_UPGRADE_PART "part"
 ///String to access turbine part required amount to upgrade
@@ -71,17 +72,17 @@
 
 	var/list/required_parts = get_tier_upgrades()
 	if(!length(required_parts))
-		balloon_alert(user, "already at max tier!")
+		balloon_alert(user, LANG("obj.ccd1dcb9", null))
 		return ITEM_INTERACT_FAILURE
 
 	var/obj/item/stack/sheet/material = attacking_item
 	if(!istype(material, required_parts[TURBINE_UPGRADE_PART]))
-		balloon_alert(user, "incorrect part!")
+		balloon_alert(user, LANG("obj.0d6c438e", null))
 		return ITEM_INTERACT_FAILURE
 
 	var/amount = required_parts[TURBINE_UPGRADE_AMOUNT]
 	if(material.amount < amount)
-		balloon_alert(user, "requires [amount] sheets!")
+		balloon_alert(user, LANG("obj.9c6111d7", list(amount)))
 		return ITEM_INTERACT_FAILURE
 
 	if(do_after(user, current_tier SECONDS, src) && material.use(amount))

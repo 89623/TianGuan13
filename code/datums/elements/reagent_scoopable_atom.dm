@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/element/reagent_scoopable_atom
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
 	argument_hash_start_idx = 2
@@ -32,6 +33,6 @@
 	if(!reagent_to_extract)
 		return ITEM_INTERACT_BLOCKING
 	if(!container.reagents.add_reagent(reagent_to_extract, rand(5, 10)))
-		to_chat(user, span_warning("[container] is full."))
+		to_chat(user, span_warning(LANG("datum.8e2d390c", list(container))))
 	user.visible_message(span_notice("[user] scoops [LOWER_TEXT(reagent_to_extract::name)] from [source] with [container]."), span_notice("You scoop out [LOWER_TEXT(reagent_to_extract::name)] from [source] using [container]."))
 	return ITEM_INTERACT_SUCCESS

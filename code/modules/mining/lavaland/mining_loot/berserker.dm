@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
 #define DAMAGE_TO_CHARGE_SCALE 0.75
@@ -102,8 +103,8 @@
 	berserk_charge = clamp(round(berserk_charge + berserk_value), 0, MAX_BERSERK_CHARGE)
 	if(berserk_charge >= MAX_BERSERK_CHARGE)
 		var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
-		to_chat(owner, span_cult_large("Berserk mode is fully charged."))
-		balloon_alert(owner, "berserk charged")
+		to_chat(owner, span_cult_large(LANG("obj.7958328a", null)))
+		balloon_alert(owner, LANG("obj.b9d33b7a", null))
 		ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /obj/item/clothing/head/hooded/berserker/IsReflect()
@@ -112,7 +113,7 @@
 /// Starts berserk, reducing incoming brute by 50%, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
 /obj/item/clothing/head/hooded/berserker/proc/berserk_mode(mob/living/carbon/human/user)
 	var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
-	to_chat(user, span_cult("You enter berserk mode."))
+	to_chat(user, span_cult(LANG("obj.c1e42e9b", null)))
 	playsound(user, 'sound/effects/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
 	user.physiology.brute_mod *= 0.5
@@ -133,7 +134,7 @@
 		return
 	var/datum/action/item_action/berserk_mode/ragemode = locate() in actions
 	ragemode?.build_all_button_icons(UPDATE_BUTTON_STATUS)
-	to_chat(user, span_cult("You exit berserk mode."))
+	to_chat(user, span_cult(LANG("obj.16618cc1", null)))
 	playsound(user, 'sound/effects/magic/summonitems_generic.ogg', 50)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/berserk)
 	user.physiology.brute_mod *= 2

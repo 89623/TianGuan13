@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/eye/camera/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	// If we're moving outside the space of our projector, then just... don't
 	var/obj/machinery/holopad/H = origin_ref?.resolve()
@@ -239,7 +240,7 @@
 	var/obj/item/disk/holodisk/holodisk_original = tool
 
 	if (!holodisk_original.record)
-		to_chat(user, span_warning("[holodisk_original] has no record on it!"))
+		to_chat(user, span_warning(LANG("obj.2a9511f3", list(holodisk_original))))
 		return ITEM_INTERACT_BLOCKING
 
 	if (!record)
@@ -249,7 +250,7 @@
 	record.caller_image = holodisk_original.record.caller_image
 	record.entries = holodisk_original.record.entries.Copy()
 	record.language = holodisk_original.record.language
-	to_chat(user, span_notice("You copy the record from [holodisk_original] to [src] by connecting the ports!"))
+	to_chat(user, span_notice(LANG("obj.3154be97", list(holodisk_original, src))))
 	name = holodisk_original.name
 
 	return ITEM_INTERACT_SUCCESS

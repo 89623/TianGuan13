@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/mechpad
 	name = "orbital mech pad"
 	desc = "A slab of heavy plating designed to withstand orbital-drop impacts. Through some sort of advanced bluespace tech, this one seems able to send and receive Mechs. Requires linking to a console to function."
@@ -36,14 +37,14 @@
 		return NONE
 
 	multitool.set_buffer(src)
-	balloon_alert(user, "saved to multitool buffer")
+	balloon_alert(user, LANG("obj.84afb909", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mechpad/wirecutter_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		return NONE
 	mech_only = !mech_only
-	to_chat(user, span_notice("You [mech_only ? "mend" : "cut"] the lifeform restriction wire."))
+	to_chat(user, span_notice(LANG("obj.8ef70580", list(mech_only ? "mend" : "cut"))))
 	return ITEM_INTERACT_SUCCESS
 
 /**

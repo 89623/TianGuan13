@@ -3,7 +3,7 @@
 	set category = "Mentor"
 	set name = "Mentor PM"
 	if(!is_mentor())
-		to_chat(src, span_danger("Error: Mentor-PM-Panel: Only Mentors and Admins may use this command."))
+		to_chat(src, span_danger(LANG("client.d0d80bb7", null)))
 		return
 	var/list/client/targets[0]
 	for(var/client/T) // What a cursed proc this is
@@ -33,13 +33,13 @@
 		target = whom
 	if(!target)
 		if(is_mentor())
-			to_chat(src, span_danger("Error: Mentor-PM: Client not found."))
+			to_chat(src, span_danger(LANG("client.4abe29ec", null)))
 		else
 			mentorhelp(msg)	//Mentor we are replying to left. Mentorhelp instead(check below)
 		return
 
 	if(is_mentor(whom))
-		to_chat(GLOB.mentors, span_purple(span_mentor("[src] has started replying to [whom]'s mhelp.")))
+		to_chat(GLOB.mentors, span_purple(span_mentor(LANG("client.fe41380a", list(src, whom)))))
 
 	//get message text, limit its length.and clean/escape html
 	if(!msg)
@@ -47,12 +47,12 @@
 
 		if(!msg)
 			if (is_mentor(whom))
-				to_chat(GLOB.mentors, span_mentor(span_purple("[src] has stopped their reply to [whom]'s mhelp.")))
+				to_chat(GLOB.mentors, span_mentor(span_purple(LANG("client.ccaf83b5", list(src, whom)))))
 			return
 
 		if(!target)
 			if(is_mentor())
-				to_chat(src, span_danger("Error: Mentor-PM: Client not found."))
+				to_chat(src, span_danger(LANG("client.4abe29ec", null)))
 			else
 				mentorhelp(msg)	//Mentor we are replying to has vanished, Mentorhelp instead (how the fuck does this work?let's hope it works,shrug)
 				return
@@ -63,7 +63,7 @@
 
 	if(!msg)
 		if (is_mentor(whom))
-			to_chat(GLOB.mentors, span_mentor(span_purple("[src] has stopped their reply to [whom]'s mhelp.")))
+			to_chat(GLOB.mentors, span_mentor(span_purple(LANG("client.ccaf83b5", list(src, whom)))))
 		return
 	log_mentor("Mentor PM: [key_name(src)]->[key_name(target)]: [msg]")
 
@@ -72,17 +72,17 @@
 	var/show_char = CONFIG_GET(flag/mentors_mobname_only)
 	if(target.is_mentor())
 		if(is_mentor())//both are mentors
-			to_chat(target, span_mentor(span_purple("Mentor PM from-<b>[key_name_mentor(src, target, TRUE, FALSE, FALSE)]</b>: [msg]")))
-			to_chat(src, span_mentor(span_blue("Mentor PM to-<b>[key_name_mentor(target, target, TRUE, FALSE, FALSE)]</b>: [msg]")))
+			to_chat(target, span_mentor(span_purple(LANG("client.4f79da08", list(key_name_mentor(src, target, TRUE, FALSE, FALSE), msg)))))
+			to_chat(src, span_mentor(span_blue(LANG("client.04a36481", list(key_name_mentor(target, target, TRUE, FALSE, FALSE), msg)))))
 
 		else		//recipient is a mentor but sender is not
-			to_chat(target, span_mentor(span_purple("Reply PM from-<b>[key_name_mentor(src, target, TRUE, FALSE, show_char)]</b>: [msg]")))
-			to_chat(src, span_mentor("Mentor PM to-<b>[key_name_mentor(target, target, TRUE, FALSE, FALSE)]</b>: [msg]"))
+			to_chat(target, span_mentor(span_purple(LANG("client.0339519f", list(key_name_mentor(src, target, TRUE, FALSE, show_char), msg)))))
+			to_chat(src, span_mentor(LANG("client.04a36481", list(key_name_mentor(target, target, TRUE, FALSE, FALSE), msg))))
 
 	else
 		if(is_mentor())	//sender is a mentor but recipient is not.
-			to_chat(target, span_mentor(span_purple("Mentor PM from-<b>[key_name_mentor(src, target, TRUE, FALSE, FALSE)]</b>: [msg]")))
-			to_chat(src, span_mentor("Mentor PM to-<b>[key_name_mentor(target, target, TRUE, FALSE, show_char)]</b>: [msg]"))
+			to_chat(target, span_mentor(span_purple(LANG("client.4f79da08", list(key_name_mentor(src, target, TRUE, FALSE, FALSE), msg)))))
+			to_chat(src, span_mentor(LANG("client.04a36481", list(key_name_mentor(target, target, TRUE, FALSE, show_char), msg))))
 
 	//we don't use message_Mentors here because the sender/receiver might get it too // We should make it an argument for that proc to ignore the sender, then. :(
 	var/show_char_sender = !is_mentor() && CONFIG_GET(flag/mentors_mobname_only)

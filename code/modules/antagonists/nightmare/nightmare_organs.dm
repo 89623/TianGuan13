@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// How many life ticks are required for the nightmare's heart to revive the nightmare.
 #define HEART_RESPAWN_THRESHHOLD (80 SECONDS)
 /// A special flag value used to make a nightmare heart not grant a light eater. Appears to be unused.
@@ -20,7 +21,7 @@
 
 	if(brain_owner.dna.species.id != SPECIES_NIGHTMARE)
 		brain_owner.set_species(/datum/species/shadow/nightmare, replace_missing = FALSE)
-		visible_message(span_warning("[brain_owner] thrashes as [src] takes root in [brain_owner.p_their()] body!"))
+		visible_message(span_warning(LANG("obj.97d3c43d", list(brain_owner, src, brain_owner.p_their()))))
 
 	our_jaunt = new(brain_owner)
 	our_jaunt.Grant(brain_owner)
@@ -143,7 +144,7 @@
 		Remove(owner, HEART_SPECIAL_SHADOWIFY)
 		old_owner.set_species(/datum/species/shadow)
 		Insert(old_owner, HEART_SPECIAL_SHADOWIFY)
-		to_chat(owner, span_userdanger("You feel the shadows invade your skin, leaping into the center of your chest! You're alive!"))
+		to_chat(owner, span_userdanger(LANG("obj.2da456aa", null)))
 		SEND_SOUND(owner, sound('sound/effects/ghost.ogg'))
 	owner.visible_message(span_warning("[owner] staggers to [owner.p_their()] feet!"))
 	playsound(owner, 'sound/effects/hallucinations/far_noise.ogg', 50, TRUE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define POLLING_COOLDOWN_TIME 2 MINUTES
 
 /// Gives all current occupants a notification that the server is going down
@@ -104,14 +105,14 @@
 		return FALSE
 
 	if(generated_domain.mission_min_candidates && (!COOLDOWN_FINISHED(src, polling_cooldown)))
-		say("Advanced NPC algorithms resetting, please wait [DisplayTimeText(polling_cooldown)] or load a different domain.")
+		say(LANG("obj.12caee26", list(DisplayTimeText(polling_cooldown))))
 		playsound(src, "sound/machines/buzz-[pick("sigh", "two")].ogg", 50, TRUE)
 		return FALSE
 
 	var/list/mob/lucky_ghosts
 	if(generated_domain.mission_min_candidates)
 		playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
-		say("Loading advanced NPCs...")
+		say(LANG("obj.fd3a5e1c", null))
 		var/list/mob/candidates = SSpolling.poll_ghost_candidates("Do you want to play as a virtual [generated_domain.spawner_role] in a bitrunner domain?", ROLE_GHOST_ROLE, ROLE_GHOST_ROLE, 15 SECONDS, POLL_IGNORE_SHUTTLE_DENIZENS, TRUE)
 		for(var/amount in 1 to generated_domain.mission_max_candidates)
 			if(length(candidates)) // If no candidates, fails in code below anyways
@@ -120,12 +121,12 @@
 		if(length(lucky_ghosts) < generated_domain.mission_min_candidates)
 			notify_ghosts("Not enough candidates for [generated_domain.spawner_role]! Aborting mission!")
 			playsound(src, "sound/machines/buzz-[pick("sigh", "two")].ogg", 50, TRUE)
-			say("Error! Unable to load advanced NPCs. Please try again or select different domain.")
+			say(LANG("obj.703af0a6", null))
 			COOLDOWN_START(src, polling_cooldown, POLLING_COOLDOWN_TIME)
 			return FALSE
 
 		playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
-		say("Success!")
+		say(LANG("obj.07d3d8bd", null))
 
 	generated_domain.load_advanced_npcs(lucky_ghosts)
 	RegisterSignal(generated_domain, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(on_template_loaded))

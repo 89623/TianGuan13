@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Note that we can stack explosive implants and thus increase the payload's devastation radius. (https://github.com/tgstation/tgstation/pull/50674)
  * That's why the three devastation values for the microbomb implant are balanced around in such a way
@@ -74,7 +75,7 @@
 	if(cause == "death" && HAS_TRAIT(imp_in, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION))
 		return FALSE
 	if(announce_activation)
-		to_chat(imp_in, span_notice("You activate your [name]."))
+		to_chat(imp_in, span_notice(LANG("obj.47ec381b", list(name))))
 	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [ADMIN_VERBOSEJMP(boomturf)], with cause of [cause].")
@@ -124,7 +125,7 @@
  */
 /obj/item/implant/explosive/proc/timed_explosion()
 	if (isnull(imp_in))
-		visible_message(span_warning("[src] starts beeping ominously!"))
+		visible_message(span_warning(LANG("obj.c9a523c0", list(src))))
 	else
 		imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
 		if(notify_ghosts)

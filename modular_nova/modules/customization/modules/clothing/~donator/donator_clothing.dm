@@ -843,7 +843,7 @@
 		update_icon()
 		ooser.update_worn_mask()
 		ooser.update_mob_action_buttons()
-		to_chat(ooser, span_notice("You toggle the [src] to [possible_colors[c_color_index]]."))
+		to_chat(ooser, span_notice(LANG("obj.df28159d", list(src, possible_colors[c_color_index]))))
 
 // Donation reward for asky / Zulie
 /obj/item/clothing/suit/hooded/cloak/zuliecloak
@@ -1081,10 +1081,10 @@
 	if(!isliving(user))
 		return CLICK_ACTION_BLOCKING
 	if(user.get_active_held_item() != src)
-		to_chat(user, span_warning("You must hold the [src] in your hand to do this!"))
+		to_chat(user, span_warning(LANG("obj.a549c0e7", list(src))))
 		return CLICK_ACTION_BLOCKING
 	voice_filter = voice_filter ? null : initial(voice_filter)
-	to_chat(user, span_notice("Mask voice muffling [voice_filter ? "enabled" : "disabled"]."))
+	to_chat(user, span_notice(LANG("obj.51325fc9", list(voice_filter ? "enabled" : "disabled"))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/mask/gas/psycho_malice/Initialize(mapload)
@@ -1105,10 +1105,10 @@
 		wear_hair_over = !wear_hair_over
 		if(wear_hair_over)
 			alternate_worn_layer = BACK_LAYER
-			to_chat(user, "You [is_worn ? "" : "will "]sweep your hair over the mask.")
+			to_chat(user, LANG("obj.4bb16fa0", list(is_worn ? "" : "will ")))
 		else
 			alternate_worn_layer = initial(alternate_worn_layer)
-			to_chat(user, "You [is_worn ? "" : "will "]sweep your hair under the mask.")
+			to_chat(user, LANG("obj.94bde333", list(is_worn ? "" : "will ")))
 
 		user.update_worn_mask()
 
@@ -1201,7 +1201,7 @@
 
 /obj/item/clothing/glasses/welding/steampunk_goggles/attack_self(mob/user)
 	if(user.get_item_by_slot(ITEM_SLOT_HEAD) == src)
-		to_chat(user, span_warning("You can't seem to slip those on your eyes from the top of your head!"))
+		to_chat(user, span_warning(LANG("obj.53af2bfe", null)))
 		return
 	. = ..()
 
@@ -1219,11 +1219,11 @@
 		return ..()
 
 	if(welding_upgraded)
-		to_chat(user, span_warning("\The [src] was already upgraded to have welding protection!"))
+		to_chat(user, span_warning(LANG("obj.46d52b74", list(src))))
 		return
 	qdel(attacking_item)
 	welding_upgraded = TRUE
-	to_chat(user, span_notice("You upgrade \the [src] with some welding shutters, offering you the ability to toggle welding protection!"))
+	to_chat(user, span_notice(LANG("obj.67444809", list(src))))
 	actions += new /datum/action/item_action/toggle_steampunk_goggles_welding_protection(src)
 
 /// Proc that handles the whole toggling the welding protection on and off, with user feedback.
@@ -1233,7 +1233,7 @@
 	if(!toggle_welding_protection(user))
 		return FALSE
 
-	to_chat(user, span_notice("You slide \the [src]'s welding shutters slider, [welding_protection ? "closing" : "opening"] them."))
+	to_chat(user, span_notice(LANG("obj.c7a04596", list(src, welding_protection ? "closing" : "opening"))))
 	playsound(user, shutters_sound, 100, TRUE)
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge! Ctrl-click to toggle waddle dampeners."
 	name = "clown shoes"
@@ -36,13 +37,13 @@
 	if(!isliving(user))
 		return CLICK_ACTION_BLOCKING
 	if(user.get_active_held_item() != src)
-		to_chat(user, span_warning("You must hold the [src] in your hand to do this!"))
+		to_chat(user, span_warning(LANG("obj.a549c0e7", list(src))))
 		return CLICK_ACTION_BLOCKING
 	if (!enabled_waddle)
-		to_chat(user, span_notice("You switch off the waddle dampeners!"))
+		to_chat(user, span_notice(LANG("obj.9bbe0817", null)))
 		enabled_waddle = TRUE
 	else
-		to_chat(user, span_notice("You switch on the waddle dampeners!"))
+		to_chat(user, span_notice(LANG("obj.62f263e1", null)))
 		enabled_waddle = FALSE
 	return CLICK_ACTION_SUCCESS
 

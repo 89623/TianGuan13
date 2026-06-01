@@ -203,7 +203,7 @@
 
 /obj/machinery/power/rbmk2/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
 	if(active)
-		balloon_alert(user, "turn off before upgrading!")
+		balloon_alert(user, LANG("obj.81f59132", null))
 		return FALSE
 
 	. = ..()
@@ -216,12 +216,12 @@
 	if(!jammed)
 		return FALSE
 	if(atom_integrity <= damage_to_deal)
-		balloon_alert(user, "too damaged!")
+		balloon_alert(user, LANG("obj.ea198d83", null))
 		return FALSE
 	if(attacking_item.use_tool(src, user, 4 SECONDS, volume = 50) && jam(user, FALSE))
 		take_damage(damage_to_deal, armour_penetration = 100)
 		src.Shake(duration = 0.5 SECONDS)
-		balloon_alert(user, "unjammed!")
+		balloon_alert(user, LANG("obj.a1f4b10e", null))
 		return TRUE
 	return FALSE
 
@@ -231,7 +231,7 @@
 		src.add_fingerprint(user)
 		stored_rod.add_fingerprint(user)
 		if(remove_rod(user))
-			balloon_alert(user, "rod removed!")
+			balloon_alert(user, LANG("obj.ef4127ab", null))
 		return TRUE
 
 /obj/machinery/power/rbmk2/proc/remove_rod(mob/living/user, do_throw = FALSE)
@@ -385,7 +385,7 @@
 
 	if(venting) //Can't change when they're already on.
 		if(user)
-			balloon_alert(user, "turn vents off first")
+			balloon_alert(user, LANG("obj.05f7fc92", null))
 		return FALSE
 
 	vent_reverse_direction = desired_state
@@ -393,7 +393,7 @@
 	if(user)
 		user.log_message("had vents set to [vent_reverse_direction ? "reverse" : "normal"] by [src]", LOG_GAME)
 		investigate_log("had vents set to [vent_reverse_direction ? "reverse" : "normal"] by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
-		balloon_alert(user, "vents switched to [vent_reverse_direction ? "pulling" : "pushing"]")
+		balloon_alert(user, LANG("obj.fe3b480c", list(vent_reverse_direction ? "pulling" : "pushing")))
 	else
 		var/turf/our_turf = get_turf(src)
 		log_game("[src] had vents set to [vent_reverse_direction ? "reverse" : "normal"] at [AREACOORD(our_turf)]")

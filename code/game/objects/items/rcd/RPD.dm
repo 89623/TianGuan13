@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //RAPID PIPE DISPENSER
 
 #define ATMOS_CATEGORY 0
@@ -296,13 +297,13 @@
 
 		// Check if the upgrade's already present
 		if(rpd_disk.upgrade_flags & upgrade_flags)
-			balloon_alert(user, "already installed!")
+			balloon_alert(user, LANG("obj.1519de2c", null))
 			return ITEM_INTERACT_BLOCKING
 
 		// Adds the upgrade from the disk and then deletes the disk
 		upgrade_flags |= rpd_disk.upgrade_flags
 		playsound(loc, 'sound/machines/click.ogg', 50, vary = TRUE)
-		balloon_alert(user, "upgrade installed")
+		balloon_alert(user, LANG("obj.aabb4585", null))
 		qdel(rpd_disk)
 		return ITEM_INTERACT_SUCCESS
 
@@ -344,16 +345,16 @@
 		var/obj/machinery/atmospherics/pipe/smart/target_smart_pipe = attack_target
 		if(istype(target_smart_pipe))
 			if(target_smart_pipe.dir == ALL_CARDINALS)
-				balloon_alert(user, "has no unconnected directions!")
+				balloon_alert(user, LANG("obj.1c240eb1", null))
 				return ITEM_INTERACT_FAILURE
 			var/old_init_dir = target_smart_pipe.get_init_directions()
 			if(old_init_dir == p_init_dir)
-				balloon_alert(user, "already configured!")
+				balloon_alert(user, LANG("obj.0aeb8a0a", null))
 				return ITEM_INTERACT_FAILURE
 			// Check for differences in unconnected directions
 			var/target_differences = (p_init_dir ^ old_init_dir) & ~target_smart_pipe.connections
 			if(!target_differences)
-				balloon_alert(user, "already configured for its directions!")
+				balloon_alert(user, LANG("obj.c6534f6b", null))
 				return ITEM_INTERACT_FAILURE
 
 			playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
@@ -363,7 +364,7 @@
 
 			// Double check to make sure that nothing has changed. If anything we were about to change was connected during do_after, abort
 			if(target_differences & target_smart_pipe.connections)
-				balloon_alert(user, "can't configure for its direction!")
+				balloon_alert(user, LANG("obj.a6e52783", null))
 				return ITEM_INTERACT_FAILURE
 			// Grab the current initializable directions, which may differ from old_init_dir if someone else was working on the same pipe at the same time
 			var/current_init_dir = target_smart_pipe.get_init_directions()
@@ -372,7 +373,7 @@
 			var/new_init_dir = (current_init_dir & ~target_differences) | (p_init_dir & target_differences)
 			// Don't make a smart pipe with only one connection
 			if(ISSTUB(new_init_dir))
-				balloon_alert(user, "no one directional pipes allowed!")
+				balloon_alert(user, LANG("obj.0181f57b", null))
 				return ITEM_INTERACT_FAILURE
 			target_smart_pipe.set_init_directions(new_init_dir)
 			// We're now reconfigured.
@@ -487,7 +488,7 @@
 	if(target.pipe_color && target.piping_layer)
 		paint_color = GLOB.pipe_color_name[target.pipe_color]
 		pipe_layers = PIPE_LAYER(target.piping_layer)
-		balloon_alert(user, "color/layer copied")
+		balloon_alert(user, LANG("obj.066f1497", null))
 		return ITEM_INTERACT_SUCCESS
 
 /**
@@ -577,7 +578,7 @@
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source_mob, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
 	if(multi_layer)
-		balloon_alert(source_mob, "turn off multi layer!")
+		balloon_alert(source_mob, LANG("obj.8210df88", null))
 		return
 	if(INCAPACITATED_IGNORING(source_mob, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
@@ -591,7 +592,7 @@
 	else //mice with side-scrolling wheels are apparently a thing and fuck this up
 		return
 	SStgui.update_uis(src)
-	balloon_alert(source_mob, "set pipe layer to [get_active_pipe_layers()[1]]")
+	balloon_alert(source_mob, LANG("obj.30eac174", list(get_active_pipe_layers()[1])))
 
 
 /obj/item/rpd_upgrade

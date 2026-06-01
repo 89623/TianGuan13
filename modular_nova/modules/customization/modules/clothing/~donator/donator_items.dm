@@ -51,11 +51,11 @@
 /// This makes it so you have to extend it.
 /obj/item/hairbrush/switchblade/attack(mob/target, mob/user)
 	if(!extended)
-		to_chat(user, span_warning("Try extending the blade first, silly!"))
+		to_chat(user, span_warning(LANG("obj.d8e59ffa", null)))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(target.stat == DEAD)
-		to_chat(user, span_warning("There isn't much point brushing someone who can't appreciate it!"))
+		to_chat(user, span_warning(LANG("obj.227e6d84", null)))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	brush(target, user)
@@ -209,7 +209,7 @@
 /obj/vehicle/ridden/wheelchair/hardlight/post_unbuckle_mob()
 	. = ..()
 
-	visible_message(span_notice("[src] flickers and disappears as the hardlight emitters disengage."))
+	visible_message(span_notice(LANG("obj.b9697850", list(src))))
 	qdel(src)
 
 
@@ -281,11 +281,11 @@
 	. = ..()
 	var/mob/living/living_user = user
 	if(!istype(user) || !living_user.has_quirk(/datum/quirk/paraplegic))
-		to_chat(user, "You feel like [src] wouldn't be very helpful to you.")
+		to_chat(user, LANG("obj.ff4002fa", list(src)))
 		return
 	var/datum/action/action = new action_to_grant(user)
 	action.Grant(user)
-	to_chat(user, "[src] vanishes in a puff of smoke!")
+	to_chat(user, LANG("obj.3ee05b0b", list(src)))
 	qdel(src)
 
 /obj/item/lipstick/quantum/sqn

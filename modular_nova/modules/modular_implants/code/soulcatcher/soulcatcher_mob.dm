@@ -94,7 +94,7 @@
 	set category = "IC"
 
 	if(!able_to_leave)
-		to_chat(src, span_warning("You are unable to leave the soulcatcher."))
+		to_chat(src, span_warning(LANG("mob.f0ac5649", null)))
 		return FALSE
 
 	if(tgui_alert(src, "Are you sure you wish to leave the soulcatcher? IF you had a body, this will return you to your body", "Soulcatcher", list("Yes", "No")) != "Yes")
@@ -129,7 +129,7 @@
 		return
 
 	if((!able_to_speak && !communicating_externally) || (!able_to_speak_as_container && communicating_externally))
-		to_chat(src, span_warning("You are unable to speak!"))
+		to_chat(src, span_warning(LANG("mob.be0faa66", null)))
 		return FALSE
 
 	var/datum/soulcatcher_room/room = current_room.resolve()
@@ -145,7 +145,7 @@
 		return FALSE
 
 	if((!able_to_emote && !communicating_externally) || (!able_to_emote_as_container && communicating_externally))
-		to_chat(src, span_warning("You are unable to emote!"))
+		to_chat(src, span_warning(LANG("mob.32e1b9f8", null)))
 		return FALSE
 
 	var/datum/soulcatcher_room/room = current_room.resolve()

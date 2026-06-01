@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Number of animals infesting disposal bins.
 GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
@@ -125,15 +126,15 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			toggle_panel_open()
 			I.play_tool_sound(src)
-			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
+			to_chat(user, span_notice(LANG("obj.e132e3de", list(panel_open ? "remove":"attach"))))
 			return
 		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
 			if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return
 
-			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
+			to_chat(user, span_notice(LANG("obj.a65f8584", list(src))))
 			if(I.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) && panel_open)
-				to_chat(user, span_notice("You slice the floorweld off \the [src]."))
+				to_chat(user, span_notice(LANG("obj.455ac4a0", list(src))))
 				deconstruct()
 			return
 
@@ -167,7 +168,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 			new /obj/item/food/cheese/wedge(king.drop_location())
 		else
 			var/pickedtrash = pick(GLOB.ratking_trash)
-			to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
+			to_chat(king, span_notice(LANG("obj.c0978ad3", null)))
 			new pickedtrash(king.drop_location())
 
 	if (cheese)
@@ -177,7 +178,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		var/mob/living/basic/mouse/new_subject = new(king.drop_location())
 		ADD_TRAIT(new_subject, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 		playsound(new_subject, 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg', 100)
-		visible_message(span_warning("[new_subject] climbs out of [src]!"))
+		visible_message(span_warning(LANG("obj.dc5ea840", list(new_subject, src))))
 
 /// Moves an item into the diposal bin
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/disposing_item, mob/user)
@@ -211,7 +212,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	if(target.buckled || target.has_buckled_mobs())
 		return FALSE
 	if(target.mob_size > MOB_SIZE_HUMAN)
-		to_chat(user, span_warning("[target] doesn't fit inside [src]!"))
+		to_chat(user, span_warning(LANG("obj.704f9398", list(target, src))))
 		return FALSE
 	add_fingerprint(user)
 	if(user == target)
@@ -356,7 +357,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 	. = STORAGE_DUMP_HANDLED
 
-	to_chat(user, span_notice("You dump out [storage.parent] into [src]."))
+	to_chat(user, span_notice(LANG("obj.c6073def", list(storage.parent, src))))
 
 	for(var/obj/item/to_dump in storage.real_location)
 		if(user.active_storage != storage && to_dump.on_found(user))
@@ -370,12 +371,12 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 /obj/machinery/disposal/force_pushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	. = ..()
-	visible_message(span_warning("[src] is ripped free from the floor!"))
+	visible_message(span_warning(LANG("obj.11b84a7c", list(src))))
 	deconstruct()
 
 /obj/machinery/disposal/move_crushed(atom/movable/pusher, force = MOVE_FORCE_DEFAULT, direction)
 	. = ..()
-	visible_message(span_warning("[src] is ripped free from the floor!"))
+	visible_message(span_warning(LANG("obj.11b84a7c", list(src))))
 	deconstruct()
 
 
@@ -403,7 +404,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	target.forceMove(src)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
+	to_chat(src, span_danger(LANG("obj.c7af2faa", list(target.name, src))))
 	log_combat(shover, target, "shoved", "into [src] (disposal bin)[weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED
 
@@ -418,7 +419,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	items_to_sweep.Cut()
 
 	update_appearance()
-	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
+	to_chat(user, span_notice(LANG("obj.2c5626d8", list(src))))
 	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 
@@ -452,7 +453,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 /obj/machinery/disposal/bin/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/bag = weapon
-		to_chat(user, span_warning("You empty the bag."))
+		to_chat(user, span_warning(LANG("obj.297edb3f", null)))
 		bag.atom_storage.remove_all(src)
 		update_appearance()
 	else
@@ -463,14 +464,14 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	if(istype(weapon, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/new_tagger = weapon
 		if(mounted_tagger)
-			balloon_alert(user, "already has a tagger!")
+			balloon_alert(user, LANG("obj.16919f81", null))
 			return
 		if(HAS_TRAIT(new_tagger, TRAIT_NODROP) || !user.transferItemToLoc(new_tagger, src))
-			balloon_alert(user, "stuck to your hand!")
+			balloon_alert(user, LANG("obj.edd6b8ce", null))
 			return
 		new_tagger.moveToNullspace()
 		user.visible_message(span_notice("[user] snaps \the [new_tagger] onto [src]!"))
-		balloon_alert(user, "tagger returned")
+		balloon_alert(user, LANG("obj.a6b7a20f", null))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		mounted_tagger = new_tagger
 		update_appearance()
@@ -481,14 +482,14 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 /obj/machinery/disposal/bin/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(!mounted_tagger)
-		balloon_alert(user, "no destination tagger!")
+		balloon_alert(user, LANG("obj.721a9f5a", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!user.put_in_hands(mounted_tagger))
-		balloon_alert(user, "destination tagger falls!")
+		balloon_alert(user, LANG("obj.9c1f69b9", null))
 		mounted_tagger = null
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message(span_notice("[user] unhooks the [mounted_tagger] from [src]."))
-	balloon_alert(user, "tagger pulled")
+	balloon_alert(user, LANG("obj.6aa54a2e", null))
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	mounted_tagger = null
 	update_appearance(UPDATE_OVERLAYS)
@@ -568,10 +569,10 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		var/mob/thrower = throwingdatum?.get_thrower()
 		if((istype(thrower) && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(75))
 			AM.forceMove(src)
-			visible_message(span_notice("[AM] lands in [src]."))
+			visible_message(span_notice(LANG("obj.bcabc0c6", list(AM, src))))
 			update_appearance()
 		else
-			visible_message(span_notice("[AM] bounces off of [src]'s rim!"))
+			visible_message(span_notice(LANG("obj.04dfef78", list(AM, src))))
 			return ..()
 	else
 		return ..()
@@ -629,7 +630,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	var/turf/final_turf = length(open_turfs) ? pick(open_turfs) : drop_location()
 	var/mob/living/startled_animal = new contained_animal(drop_location())
 	startled_animal.Move(final_turf)
-	visible_message(span_notice("A startled [startled_animal] jumps out of [src]."))
+	visible_message(span_notice(LANG("obj.8b9d6900", list(startled_animal, src))))
 	contained_animal = null
 
 /// Initiates flushing
@@ -735,7 +736,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	else if(ismob(AM))
 		var/mob/M = AM
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
-			to_chat(M, span_warning("You hit the edge of the chute."))
+			to_chat(M, span_warning(LANG("obj.4395c960", null)))
 			return
 		M.forceMove(src)
 	flush()

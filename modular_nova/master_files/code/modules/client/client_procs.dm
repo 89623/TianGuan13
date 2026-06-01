@@ -2,7 +2,7 @@
 ////  Toggles Selected quirks on selected mobs
 /client/proc/toggle_quirk(mob/living/carbon/human/selected_mob)
 	if (!istype(selected_mob))
-		to_chat(usr, "This can only be used on /mob/living/carbon/human.")
+		to_chat(usr, LANG("client.7d5ef419", null))
 		return
 
 	var/list/options = list("Clear"="Clear")
@@ -14,7 +14,7 @@
 	var/result = tgui_input_list(usr, "Choose quirk to add/remove", "Mob Quirks", options)
 
 	if(QDELETED(selected_mob))
-		to_chat(usr, "Mob doesn't exist anymore")
+		to_chat(usr, LANG("client.4068a4c3", null))
 		return
 
 	if(result)
@@ -31,7 +31,7 @@
 ////  "Teaches" Martial arts to the selected mob
 /client/proc/teach_martial_art(mob/living/carbon/selected_mob)
 	if (!istype(selected_mob))
-		to_chat(usr, "This can only be used on /mob/living/carbon.")
+		to_chat(usr, LANG("client.5519505c", null))
 		return
 
 	var/list/artpaths = subtypesof(/datum/martial_art)
@@ -44,7 +44,7 @@
 		return
 
 	if(QDELETED(selected_mob))
-		to_chat(usr, "Mob doesn't exist anymore")
+		to_chat(usr, LANG("client.4068a4c3", null))
 		return
 	if(result)
 		var/chosenart = artnames[result]
@@ -58,7 +58,7 @@
 	if (istype(selected_mob))
 		var/result = tgui_input_list(usr, "Choose a new species","Species", GLOB.species_list)
 		if(QDELETED(selected_mob))
-			to_chat(usr, "Mob doesn't exist anymore")
+			to_chat(usr, LANG("client.4068a4c3", null))
 			return
 		if(result)
 			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [selected_mob] to [result]")

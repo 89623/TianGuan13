@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// How much to scale the explosion ranges for blastcannon shots.
 #define BLASTCANNON_RANGE_EXP (1 / GLOB.DYN_EX_SCALE)
 /// How much to scale the explosion ranges for blastcannon shots.
@@ -94,13 +95,13 @@
 		return ..()
 
 	if(bomb)
-		to_chat(user, span_warning("[bomb] is already attached to [src]!"))
+		to_chat(user, span_warning(LANG("obj.6620462c", list(bomb, src))))
 		return
 	if(!bomb_to_attach.ready())
-		to_chat(user, span_warning("What good would an incomplete bomb do?"))
+		to_chat(user, span_warning(LANG("obj.449c772d", null)))
 		return FALSE
 	if(!user.transferItemToLoc(bomb_to_attach, src))
-		to_chat(user, span_warning("[bomb_to_attach] seems to be stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.dc050dd7", list(bomb_to_attach))))
 		return FALSE
 
 	user.visible_message(span_warning("[user] attaches [bomb_to_attach] to [src]!"))
@@ -154,7 +155,7 @@
 	var/light = (arguments[EXARG_KEY_LIGHT_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
 	var/range = max(heavy, medium, light, 0)
 	if(!range)
-		visible_message(span_warning("[src] lets out a little \"phut\"."))
+		visible_message(span_warning(LANG("obj.e59aaf3c", list(src))))
 		return
 
 	if(!ismob(loc))

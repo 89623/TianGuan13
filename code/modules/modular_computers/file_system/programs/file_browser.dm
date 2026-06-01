@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(print_types, init_print_types())
 
 /proc/init_print_types()
@@ -29,10 +30,10 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 
 /proc/check_can_print_canvas(_typepath, _image_file, obj/item/modular_computer/computer, mob/user)
 	if(!(computer.hardware_flag & PROGRAM_CONSOLE))
-		to_chat(user, span_notice("Printing error: Canvas printing is only supported on stationary consoles."))
+		to_chat(user, span_notice(LANG("_root.434e5d8f", null)))
 		return FALSE
 	if(computer.stored_paper < CANVAS_PAPER_COST)
-		to_chat(user, span_notice("Printing error: Your printer needs at least [CANVAS_PAPER_COST] paper to print a canvas."))
+		to_chat(user, span_notice(LANG("_root.ca37f652", list(CANVAS_PAPER_COST))))
 		return FALSE
 	return TRUE
 
@@ -59,7 +60,7 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 
 /proc/check_can_print_photo(_typepath, _image_file, obj/item/modular_computer/computer, mob/user)
 	if(computer.stored_paper < PHOTO_PAPER_COST)
-		to_chat(user, span_notice("Printing error: Your printer needs at least [PHOTO_PAPER_COST] paper to print a photo."))
+		to_chat(user, span_notice(LANG("_root.fc1dac70", list(PHOTO_PAPER_COST))))
 		return FALSE
 	return TRUE
 

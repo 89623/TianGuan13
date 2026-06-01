@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Cleaving saw
 
 /obj/item/melee/cleaving_saw
@@ -151,7 +152,7 @@
 	var/obj/item/crusher_trophy/trophy = interacting_with
 	if(isnull(trophy.wildhunter_drop))
 		return NONE
-	balloon_alert(user, "cutting trophy...")
+	balloon_alert(user, LANG("obj.b19c1d0b", null))
 	if(!do_after(user, 4 SECONDS, trophy))
 		return ITEM_INTERACT_BLOCKING
 	new trophy.wildhunter_drop(trophy.drop_location())

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* This file contains standalone items for debug purposes. */
 /obj/item/debug
 	abstract_type = /obj/item/debug
@@ -81,14 +82,14 @@
 		if(!isliving(user))
 			return
 		var/mob/living/living_user = user
-		to_chat(user, span_warning("As you try to use [src], you hear strange tearing sounds, as if the coder gods were attempting to reach out and choke you themselves."))
+		to_chat(user, span_warning(LANG("obj.241e9faf", list(src))))
 		playsound(src, 'sound/effects/dimensional_rend.ogg')
 		sleep(4 SECONDS)
 		var/confirmation = tgui_alert(user, "Are you certain you want to do that?", "Admins Only. Last Chance.", list("Yes", "No"))
 		if(!confirmation || confirmation == ("No"))
 			return
 		if(!user.client.holder) //safety if the admin readmined to save their ass lol.
-			to_chat(user, span_reallybig("You shouldn't have done that..."))
+			to_chat(user, span_reallybig(LANG("obj.df7c67c6", null)))
 			playsound(src, 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg')
 			sleep(3 SECONDS)
 			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)

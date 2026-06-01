@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Total cheese goal to sacrifice to [REDACTED] during wizard grand rituals.
  * The easiest way for a wizard to procure cheese is with Summon Cheese spell, which summons 9 per cast.
@@ -131,7 +132,7 @@
 
 	target_area = pick(possible_areas)
 	if (validate_area()) // Well this is risky but probably not every area on the station is going to get deleted, right?
-		to_chat(owner, span_alert("The next nexus of power lies within [initial(target_area.name)]"))
+		to_chat(owner, span_alert(LANG("datum.a386fd93", list(initial(target_area.name)))))
 
 /// Checks if you're actually able to draw a rune here
 /datum/action/cooldown/grand_ritual/proc/start_drawing_rune()
@@ -219,11 +220,11 @@
 	if(total_cheese_sacrificed >= CHEESE_SACRIFICE_GOAL)
 		if(!total_cheese_goal_met)
 			total_cheese_goal_met = TRUE
-			to_chat(owner, span_revenbignotice("YES! CHEESE! CHEESE FOR EVERYONE! SUCH A GRAND FEAST! YOU SHALL HAVE YOUR PRIZE, MY CHAMPION!!"))
+			to_chat(owner, span_revenbignotice(LANG("datum.0c6ed1ca", null)))
 		else
-			to_chat(owner, span_revennotice("You hear maddening laughter as you are hit with an overwhelming odor of fine cheddar..."))
+			to_chat(owner, span_revennotice(LANG("datum.0f392b72", null)))
 	else if (total_cheese_sacrificed)
-		to_chat(owner, span_revendanger("You please me, mortal. Do continue to send cheese, my feast still needs <b>[CHEESE_SACRIFICE_GOAL - total_cheese_sacrificed]</b> more to be magnificent..."))
+		to_chat(owner, span_revendanger(LANG("datum.e179a5c2", list(CHEESE_SACRIFICE_GOAL - total_cheese_sacrificed))))
 	rune = null
 	times_completed++
 	set_new_area()

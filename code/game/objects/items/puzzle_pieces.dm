@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Every time you got lost looking for keycards, increment: 2
 
 //**************
@@ -113,7 +114,7 @@
 	if(puzzle_id && puzzle_id != try_id)
 		return FALSE
 	if(!density)
-		visible_message(span_warning("The door can't seem to be closed."))
+		visible_message(span_warning(LANG("obj.7a7c11f6", null)))
 		return TRUE
 	if(open_message)
 		visible_message(span_notice(open_message))
@@ -130,7 +131,7 @@
 		return
 	var/obj/item/keycard/key = attacking_item
 	if(!try_puzzle_open(key.puzzle_id))
-		to_chat(user, span_notice("[src] buzzes. This must not be the right key."))
+		to_chat(user, span_notice(LANG("obj.ba6733a2", list(src))))
 
 //Test doors. Gives admins a few doors to use quickly should they so choose for events.
 /obj/machinery/door/puzzle/keycard/yellow_required
@@ -302,7 +303,7 @@
 	for(var/checking_light in light_list)
 		if(!checking_light)
 			return
-	visible_message(span_boldnotice("[src] becomes fully charged!"))
+	visible_message(span_boldnotice(LANG("obj.ab5e3534", list(src))))
 	powered = TRUE
 	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 100, TRUE)
@@ -362,7 +363,7 @@
 		return
 	used = single_use
 	update_icon_state()
-	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
+	visible_message(span_notice(LANG("obj.ec678311", list(user, src))), span_notice(LANG("obj.65312797", list(src))))
 	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 

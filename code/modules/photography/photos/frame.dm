@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Picture frames
 
 /obj/item/wallframe/picture
@@ -20,7 +21,7 @@
 			displayed = I
 			update_appearance()
 		else
-			to_chat(user, span_warning("\The [src] already contains a photo."))
+			to_chat(user, span_warning(LANG("obj.2c26fb44", list(src))))
 	..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -31,7 +32,7 @@
 	if(contents.len)
 		var/obj/item/I = pick(contents)
 		user.put_in_hands(I)
-		to_chat(user, span_notice("You carefully remove the photo from \the [src]."))
+		to_chat(user, span_notice(LANG("obj.4acd23f1", list(src))))
 		displayed = null
 		update_appearance()
 	return ..()
@@ -121,10 +122,10 @@
 /obj/structure/sign/picture_frame/proc/try_deconstruct(mob/living/user, obj/item/tool)
 	if(!can_decon)
 		return FALSE
-	to_chat(user, span_notice("You start unsecuring [name]..."))
+	to_chat(user, span_notice(LANG("obj.08ee3372", list(name))))
 	if(tool.use_tool(src, user, 3 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		to_chat(user, span_notice("You unsecure [name]."))
+		to_chat(user, span_notice(LANG("obj.eea293d1", list(name))))
 		deconstruct()
 	return TRUE
 
@@ -149,7 +150,7 @@
 
 	if(istype(I, /obj/item/photo))
 		if(framed)
-			to_chat(user, span_warning("\The [src] already contains a photo."))
+			to_chat(user, span_warning(LANG("obj.2c26fb44", list(src))))
 			return TRUE
 		var/obj/item/photo/P = I
 		if(!user.transferItemToLoc(P, src))

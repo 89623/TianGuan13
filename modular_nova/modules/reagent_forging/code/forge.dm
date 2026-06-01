@@ -369,7 +369,7 @@
 		level_to_upgrade_to = user.mind.get_skill_level(/datum/skill/smithing)
 
 	if((forge_level == level_to_upgrade_to) && !forced)
-		to_chat(user, span_notice("[src] was already upgraded by your level of expertise!"))
+		to_chat(user, span_notice(LANG("obj.b7ba98a8", list(src))))
 		return
 
 	switch(level_to_upgrade_to) // Remember to carry things over from past levels in case someone skips levels in upgrading
@@ -431,8 +431,8 @@
 
 	if(in_use) // If the forge is currently in use by someone (or there is a tray in it) then we cannot use it
 		if(used_tray)
-			balloon_alert(user, "remove [used_tray] first")
-		balloon_alert(user, "forge busy")
+			balloon_alert(user, LANG("obj.b1553344", list(used_tray)))
+		balloon_alert(user, LANG("obj.e2c6aa1f", null))
 		return TRUE
 
 	if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood)) // Wood is a weak fuel, and will only get the forge up to 50 temperature
@@ -532,11 +532,11 @@
 	else
 		forge_fuel_weak += 5 MINUTES
 	in_use = FALSE
-	balloon_alert(user, "fueled [src]")
+	balloon_alert(user, LANG("obj.c537012b", list(src)))
 	user.mind.adjust_experience(/datum/skill/smithing, 5) // You gain small amounts of experience from useful fueling
 
 	if(prob(CHARCOAL_CHANCE) && !is_strong_fuel)
-		to_chat(user, span_notice("[src]'s fuel is packed densely enough to have made some charcoal!"))
+		to_chat(user, span_notice(LANG("obj.c19ef717", list(src))))
 		addtimer(CALLBACK(src, PROC_REF(spawn_coal)), 1 MINUTES)
 
 /// Takes given ore and smelts it, possibly producing extra sheets if upgraded
@@ -574,12 +574,12 @@
 /obj/structure/reagent_forge/proc/handle_weapon_imbue(obj/attacking_item, mob/living/user)
 	//This code will refuse all non-ashwalkers & non-icecats from imbuing
 	if(!ishuman(user))
-		to_chat(user, span_danger("It is impossible for you to imbue!")) //maybe remove (ashwalkers & icecats only) after some time
+		to_chat(user, span_danger(LANG("obj.e1495fed", null))) //maybe remove (ashwalkers & icecats only) after some time
 		return
 
 	var/mob/living/carbon/human/human_user = user
 	if(!is_species(human_user, /datum/species/lizard/ashwalker) && !is_species(human_user, /datum/species/human/felinid/primitive))
-		to_chat(user, span_danger("It is impossible for you to imbue!")) //maybe remove (ashwalkers & icecats only) after some time
+		to_chat(user, span_danger(LANG("obj.e1495fed", null))) //maybe remove (ashwalkers & icecats only) after some time
 		return
 
 	in_use = TRUE
@@ -624,12 +624,12 @@
 /obj/structure/reagent_forge/proc/handle_clothing_imbue(obj/attacking_item, mob/living/user)
 	//This code will refuse all non-ashwalkers & non-icecats from imbuing
 	if(!ishuman(user))
-		to_chat(user, span_danger("It is impossible for you to imbue!")) //maybe remove (ashwalkers & icecats only) after some time
+		to_chat(user, span_danger(LANG("obj.e1495fed", null))) //maybe remove (ashwalkers & icecats only) after some time
 		return
 
 	var/mob/living/carbon/human/human_user = user
 	if(!is_species(human_user, /datum/species/lizard/ashwalker) && !is_species(human_user, /datum/species/human/felinid/primitive))
-		to_chat(user, span_danger("It is impossible for you to imbue!")) //maybe remove (ashwalkers & icecats only) after some time
+		to_chat(user, span_danger(LANG("obj.e1495fed", null))) //maybe remove (ashwalkers & icecats only) after some time
 		return
 
 	in_use = TRUE
@@ -691,7 +691,7 @@
 		fail_message(user, "stopped setting [ceramic_item]")
 		return
 
-	balloon_alert(user, "finished setting [ceramic_item]")
+	balloon_alert(user, LANG("obj.e70febeb", list(ceramic_item)))
 	var/obj/item/ceramic/spawned_ceramic = new ceramic_item.forge_item(get_turf(src))
 	user.mind.adjust_experience(/datum/skill/production, 50)
 	spawned_ceramic.color = ceramic_item.color
@@ -816,7 +816,7 @@
 		user.mind.adjust_experience(/datum/skill/smithing, 5) // Billowing, like fueling, gives you some experience in forging
 
 	in_use = FALSE
-	balloon_alert(user, "successfully heated [src]")
+	balloon_alert(user, LANG("obj.7c734f2d", list(src)))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_forge/tong_act(mob/living/user, obj/item/tool)
@@ -854,7 +854,7 @@
 		in_use = FALSE
 		forge_item.in_use = FALSE
 		user.mind.adjust_experience(/datum/skill/smithing, 5) // Heating up forge items grants some experience
-		balloon_alert(user, "successfully heated [search_incomplete]")
+		balloon_alert(user, LANG("obj.7c734f2d", list(search_incomplete)))
 		return ITEM_INTERACT_SUCCESS
 
 	// Here we check the item used on us (tongs) for a stack of some kind to create an object from
@@ -898,7 +898,7 @@
 		COOLDOWN_START(incomplete_item, heating_remainder, FORGE_HEATING_DURATION)
 		in_use = FALSE
 		forge_item.in_use = FALSE
-		balloon_alert(user, "prepared [search_incomplete] into [user_choice]")
+		balloon_alert(user, LANG("obj.1784b6db", list(search_incomplete, user_choice)))
 		search_stack = locate(/obj/item/stack) in forge_item.contents
 
 		if(!search_stack)
@@ -915,7 +915,7 @@
 	var/glassblowing_amount = BASELINE_HEATING_DURATION / user.mind.get_skill_modifier(/datum/skill/production, SKILL_SPEED_MODIFIER)
 
 	if(in_use)
-		to_chat(user, span_warning("You cannot do multiple things at the same time!"))
+		to_chat(user, span_warning(LANG("obj.0f1f355a", null)))
 		return ITEM_INTERACT_SUCCESS
 	in_use = TRUE
 
@@ -932,7 +932,7 @@
 		fail_message(user, "[find_glass] is still has remaining heat.")
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_notice("You begin heating up [blowing_item]."))
+	to_chat(user, span_notice(LANG("obj.612cae70", list(blowing_item))))
 
 	if(!do_after(user, glassblowing_speed, target = src))
 		fail_message(user, "[blowing_item] is interrupted in its heating process.")
@@ -940,7 +940,7 @@
 
 	COOLDOWN_START(find_glass, remaining_heat, glassblowing_amount)
 	find_glass.total_time = glassblowing_amount
-	to_chat(user, span_notice("You finish heating up [blowing_item]."))
+	to_chat(user, span_notice(LANG("obj.ea0991c2", list(blowing_item))))
 	user.mind.adjust_experience(/datum/skill/smithing, 5)
 	user.mind.adjust_experience(/datum/skill/production, 10)
 	in_use = FALSE

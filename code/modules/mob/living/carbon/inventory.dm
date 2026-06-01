@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Convers HIDEX to ITEM_SLOT_X, should be phased out in favor of using latter everywhere later
 /proc/hidden_slots_to_inventory_slots(hidden_slots)
 	var/obscured = NONE
@@ -371,9 +372,9 @@
 	if (!target_tank)
 		return
 	if(internal || (is_external && external))
-		to_chat(src, span_notice("You switch your internals to [target_tank]."))
+		to_chat(src, span_notice(LANG("mob.f466c5bf", list(target_tank))))
 	else
-		to_chat(src, span_notice("You open [target_tank] valve."))
+		to_chat(src, span_notice(LANG("mob.3064e1a9", list(target_tank))))
 	return open_internals(target_tank, is_external)
 
 /**
@@ -387,14 +388,14 @@
 /mob/living/carbon/proc/toggle_close_internals(is_external = FALSE)
 	if (!internal && !external)
 		return
-	to_chat(src, span_notice("You close [is_external ? external : internal] valve."))
+	to_chat(src, span_notice(LANG("mob.a754a57e", list(is_external ? external : internal))))
 	return close_internals(is_external)
 
 /// Prepares emergency disconnect from open air tanks and notifies in chat. Usually called after mob suddenly unequips breathing apparatus.
 /mob/living/carbon/proc/cutoff_internals()
 	if (!external && !internal)
 		return
-	to_chat(src, span_notice("Your internals disconnect from [external || internal] and the valve closes."))
+	to_chat(src, span_notice(LANG("mob.4af06c7c", list(external || internal))))
 	close_all_airtanks()
 
 /**

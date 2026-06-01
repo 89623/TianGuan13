@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/projectile/finger_guns
 	name = "Finger Guns"
 	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets. \
@@ -34,11 +35,11 @@
 		var/mob/living/carbon/human/human_invoker = invoker
 		if(human_invoker.incapacitated)
 			if(feedback)
-				to_chat(human_invoker, span_warning("You can't properly point your fingers while incapacitated."))
+				to_chat(human_invoker, span_warning(LANG("datum.3fad9b41", null)))
 			return FALSE
 		if(human_invoker.get_active_held_item())
 			if(feedback)
-				to_chat(human_invoker, span_warning("You can't properly fire your finger guns with something in your hand."))
+				to_chat(human_invoker, span_warning(LANG("datum.ce74923c", null)))
 			return FALSE
 
 	return ..()

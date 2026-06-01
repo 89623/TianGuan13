@@ -148,7 +148,7 @@
 		return TRUE
 	machine_color = choice
 	update_icon()
-	to_chat(user, span_notice("You change the color of the milking machine."))
+	to_chat(user, span_notice(LANG("obj.a06fb715", null)))
 	return TRUE
 
 // Checking if we can use the menu
@@ -279,7 +279,7 @@
 		return ..()
 
 	if(affected_mob.arousal >= 60 && (current_mode != MILKING_PUMP_MODE_OFF) && (current_mode != MILKING_PUMP_MODE_LOW))
-		to_chat(affected_mob, span_purple("You are too horny to try to get out!"))
+		to_chat(affected_mob, span_purple(LANG("obj.c39ebd4b", null)))
 		return FALSE
 
 	affected_mob.visible_message(span_notice("[affected_mob] unbuckles [affected_mob.p_them()]self from [src]."),\
@@ -321,17 +321,17 @@
 	if(beaker && new_beaker)
 		try_put_in_hand(beaker, user)
 		beaker = new_beaker
-		to_chat(user, span_notice("You swap out the current beaker with a new one in a single uninterrupted motion."))
+		to_chat(user, span_notice(LANG("obj.e4a3d849", null)))
 		return TRUE
 
 	if(beaker)
 		try_put_in_hand(beaker, user)
 		beaker = null
-		to_chat(user, span_notice("You take the beaker out of [src]"))
+		to_chat(user, span_notice(LANG("obj.4a9d437c", list(src))))
 
 	if(new_beaker)
 		beaker = new_beaker
-		to_chat(user, span_notice("You put the beaker in [src]"))
+		to_chat(user, span_notice(LANG("obj.b2436965", list(src))))
 
 	return TRUE
 
@@ -408,13 +408,13 @@
 	current_mob.adjust_pain(pain_amounts[current_mode] * seconds_per_tick)
 
 /obj/structure/chair/milking_machine/click_ctrl_shift(mob/user)
-	to_chat(user, span_notice("You begin to disassemble [src]..."))
+	to_chat(user, span_notice(LANG("obj.9014c0cc", list(src))))
 	if(!do_after(user, 8 SECONDS, src))
-		to_chat(user, span_warning("You fail to disassemble [src]!"))
+		to_chat(user, span_warning(LANG("obj.a485293d", list(src))))
 		return
 
 	deconstruct(TRUE)
-	to_chat(user, span_notice("You disassemble [src]."))
+	to_chat(user, span_notice(LANG("obj.fd5c1c1d", list(src))))
 
 // Machine deconstruction process handler
 /obj/structure/chair/milking_machine/atom_deconstruct(disassembled)
@@ -590,7 +590,7 @@
 		return
 	if(action == "ejectCreature")
 		unbuckle_mob(current_mob)
-		to_chat(usr, span_notice("You eject [current_mob] from [src]"))
+		to_chat(usr, span_notice(LANG("obj.a8a1f902", list(current_mob, src))))
 		return TRUE
 
 	if(action == "ejectBeaker")
@@ -602,28 +602,28 @@
 		current_mode = MILKING_PUMP_MODE_OFF
 		pump_state = MILKING_PUMP_STATE_OFF
 		update_all_visuals()
-		to_chat(usr, span_notice("You turn off [src]"))
+		to_chat(usr, span_notice(LANG("obj.24bed793", list(src))))
 		return TRUE
 
 	if(action == "setLowMode")
 		current_mode = MILKING_PUMP_MODE_LOW
 		pump_state = MILKING_PUMP_STATE_ON
 		update_all_visuals()
-		to_chat(usr, span_notice("You switch [src] onto low mode"))
+		to_chat(usr, span_notice(LANG("obj.4e7ad275", list(src))))
 		return TRUE
 
 	if(action == "setMediumMode")
 		current_mode = MILKING_PUMP_MODE_MEDIUM
 		pump_state = MILKING_PUMP_STATE_ON
 		update_all_visuals()
-		to_chat(usr, span_notice("You switch [src] onto medium mode"))
+		to_chat(usr, span_notice(LANG("obj.b32e0682", list(src))))
 		return TRUE
 
 	if(action == "setHardMode")
 		current_mode = MILKING_PUMP_MODE_HARD
 		pump_state = MILKING_PUMP_STATE_ON
 		update_all_visuals()
-		to_chat(usr, span_notice("You switch [src] onto hard mode"))
+		to_chat(usr, span_notice(LANG("obj.b339e16b", list(src))))
 		return TRUE
 
 	if(action == "unplug")
@@ -632,25 +632,25 @@
 		pump_state = MILKING_PUMP_STATE_OFF
 		current_selected_organ = null
 		update_all_visuals()
-		to_chat(usr, span_notice("You detach the liner."))
+		to_chat(usr, span_notice(LANG("obj.ebf01deb", null)))
 		return TRUE
 
 	if(action == "setBreasts")
 		current_selected_organ = current_breasts
 		update_all_visuals()
-		to_chat(usr, span_notice("You attach the liner to [current_selected_organ]."))
+		to_chat(usr, span_notice(LANG("obj.80cd6825", list(current_selected_organ))))
 		return TRUE
 
 	if(action == "setVagina")
 		current_selected_organ = current_vagina
 		update_all_visuals()
-		to_chat(usr, span_notice("You attach the liner to [current_selected_organ]."))
+		to_chat(usr, span_notice(LANG("obj.80cd6825", list(current_selected_organ))))
 		return TRUE
 
 	if(action == "setTesticles")
 		current_selected_organ = current_testicles
 		update_all_visuals()
-		to_chat(usr, span_notice("You attach the liner to [current_selected_organ]."))
+		to_chat(usr, span_notice(LANG("obj.80cd6825", list(current_selected_organ))))
 		return TRUE
 
 	if(action == "setMilk")

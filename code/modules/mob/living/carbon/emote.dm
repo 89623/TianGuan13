@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/emote/living/carbon
 	abstract_type = /datum/emote/living/carbon
 	mob_type_allowed_typecache = list(/mob/living/carbon)
@@ -72,11 +73,11 @@
 /datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	if(!length(user.get_empty_held_indexes()))
-		to_chat(user, span_warning("You don't have any free hands to make a circle with."))
+		to_chat(user, span_warning(LANG("datum.2638bd17", null)))
 		return
 	var/obj/item/hand_item/circlegame/N = new(user)
 	if(user.put_in_hands(N))
-		to_chat(user, span_notice("You make a circle with your hand."))
+		to_chat(user, span_notice(LANG("datum.4fbaf10b", null)))
 
 /datum/emote/living/carbon/meow
 	key = "meow"
@@ -151,10 +152,10 @@
 	. = ..()
 	var/obj/item/hand_item/noogie/noogie = new(user)
 	if(user.put_in_hands(noogie))
-		to_chat(user, span_notice("You ready your noogie'ing hand."))
+		to_chat(user, span_notice(LANG("datum.98291b48", null)))
 	else
 		qdel(noogie)
-		to_chat(user, span_warning("You're incapable of noogie'ing in your current state."))
+		to_chat(user, span_warning(LANG("datum.fbf58f9b", null)))
 
 /datum/emote/living/carbon/roll
 	key = "roll"
@@ -199,10 +200,10 @@
 	. = ..()
 	var/obj/item/hand_item/slapper/N = new(user)
 	if(user.put_in_hands(N))
-		to_chat(user, span_notice("You ready your slapping hand."))
+		to_chat(user, span_notice(LANG("datum.cb3c809c", null)))
 	else
 		qdel(N)
-		to_chat(user, span_warning("You're incapable of slapping in your current state."))
+		to_chat(user, span_warning(LANG("datum.e391ec00", null)))
 
 
 /datum/emote/living/carbon/hand
@@ -215,10 +216,10 @@
 	. = ..()
 	var/obj/item/hand_item/hand/hand = new(user)
 	if(user.put_in_hands(hand))
-		to_chat(user, span_notice("You ready your hand."))
+		to_chat(user, span_notice(LANG("datum.00db68bc", null)))
 	else
 		qdel(hand)
-		to_chat(user, span_warning("You're incapable of using your hand in your current state."))
+		to_chat(user, span_warning(LANG("datum.cd24a73a", null)))
 
 
 /datum/emote/living/carbon/snap

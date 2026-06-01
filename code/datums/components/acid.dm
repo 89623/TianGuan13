@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/acid.dmi', "default", appearance_flags = RESET_COLOR|KEEP_APART))
 
 /**
@@ -244,7 +245,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return NONE
 
 	user.apply_damage(5, BURN, user.get_active_hand())
-	to_chat(user, span_userdanger("The acid on \the [source] burns your hand!"))
+	to_chat(user, span_userdanger(LANG("datum.36919fc5", list(source))))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(source, SFX_SEAR, 50, TRUE)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -269,5 +270,5 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!crosser.acid_act(acid_power, acid_used, FEET))
 		return
 	playsound(crosser, SFX_SEAR, 50, TRUE)
-	to_chat(crosser, span_userdanger("The acid on \the [parent] burns you!"))
+	to_chat(crosser, span_userdanger(LANG("datum.5e2a49d3", list(parent))))
 	set_volume(max(acid_volume - acid_used, 10))

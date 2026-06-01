@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Global assoc list. [ckey] = [spellbook entry type]
 GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
@@ -131,7 +132,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		return
 	if(!GLOB.wizardstart.len)
 		SSjob.send_to_late_join(owner.current)
-		to_chat(owner, "HOT INSERTION, GO GO GO")
+		to_chat(owner, LANG("datum.8cff2ba6", null))
 	owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
@@ -272,7 +273,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	wiz_age = APPRENTICE_AGE_MIN
 
 /datum/antagonist/wizard/apprentice/greet()
-	to_chat(owner, "<B>You are [master.current.real_name]'s apprentice! You are bound by magic contract to follow [master.p_their()] orders and help [master.p_them()] in accomplishing [master.p_their()] goals.")
+	to_chat(owner, LANG("datum.264c55f9", list(master.current.real_name, master.p_their(), master.p_them(), master.p_their())))
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/assign_ritual()
@@ -349,7 +350,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard/apprentice/imposter/greet()
 	. = ..()
-	to_chat(owner, "<B>Trick and confuse the crew to misdirect malice from your handsome original!</B>")
+	to_chat(owner, LANG("datum.e369c0fb", null))
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/imposter/equip_wizard()

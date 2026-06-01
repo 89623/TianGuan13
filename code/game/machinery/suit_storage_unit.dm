@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 // SUIT STORAGE UNIT /////////////////
 /obj/machinery/suit_storage_unit
@@ -325,11 +326,11 @@
 			set_access(list())
 			return TRUE
 		if(user.get_idcard() != id)
-			balloon_alert(user, "not your unit!")
+			balloon_alert(user, LANG("obj.055cc4b0", null))
 			return FALSE
 
 	if(!allowed(user))
-		balloon_alert(user, "access denied!")
+		balloon_alert(user, LANG("obj.1bd3ceeb", null))
 		return FALSE
 
 	return TRUE
@@ -452,13 +453,13 @@
 		return
 	var/mob/living/target = A
 	if(!state_open)
-		to_chat(user, span_warning("The unit's doors are shut!"))
+		to_chat(user, span_warning(LANG("obj.5c1b145b", null)))
 		return
 	if(!is_operational)
-		to_chat(user, span_warning("The unit is not operational!"))
+		to_chat(user, span_warning(LANG("obj.1515b029", null)))
 		return
 	if(occupant || helmet || suit || storage)
-		to_chat(user, span_warning("It's too cluttered inside to fit in!"))
+		to_chat(user, span_warning(LANG("obj.fb287085", null)))
 		return
 
 	if(target == user)
@@ -505,7 +506,7 @@
 		uv = FALSE
 		locked = FALSE
 		if(uv_super)
-			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
+			visible_message(span_warning(LANG("obj.af504df7", list(src))))
 			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 50, TRUE)
 			do_smoke(0, src, src, smoke_type = /datum/effect_system/fluid_spread/smoke/bad/black)
 			QDEL_NULL(helmet)
@@ -517,9 +518,9 @@
 			wires.cut_all()
 		else
 			if(!mob_occupant)
-				visible_message(span_notice("[src]'s door slides open. The glowing yellow lights dim to a gentle green."))
+				visible_message(span_notice(LANG("obj.b849ad70", list(src))))
 			else
-				visible_message(span_warning("[src]'s door slides open, barraging you with the nauseating smell of charred flesh."))
+				visible_message(span_warning(LANG("obj.dce30060", list(src))))
 				qdel(mob_occupant.GetComponent(/datum/component/irradiated))
 			playsound(src, 'sound/machines/airlock/airlockclose.ogg', 25, TRUE)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
@@ -569,7 +570,7 @@
 	if(locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, span_warning("[src]'s door won't budge!"))
+			to_chat(user, span_warning(LANG("obj.c4e897cb", list(src))))
 		return
 	open_machine()
 	dump_inventory_contents()
@@ -594,8 +595,8 @@
 
 	add_fingerprint(user)
 	if(locked)
-		visible_message(span_notice("You see [user] kicking against the doors of [src]!"), \
-			span_notice("You start kicking against the doors..."))
+		visible_message(span_notice(LANG("obj.014be919", list(user, src))), \
+			span_notice(LANG("obj.bb1bb47f", null)))
 		addtimer(CALLBACK(src, PROC_REF(resist_open), user), 30 SECONDS)
 	else
 		open_machine()
@@ -603,8 +604,8 @@
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
 	if(!state_open && occupant && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
-		visible_message(span_notice("You see [user] burst out of [src]!"), \
-			span_notice("You escape the cramped confines of [src]!"))
+		visible_message(span_notice(LANG("obj.afbf7f90", list(user, src))), \
+			span_notice(LANG("obj.19d802a7", list(src))))
 		open_machine()
 
 /obj/machinery/suit_storage_unit/multitool_act(mob/living/user, obj/item/tool)
@@ -612,11 +613,11 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(locked)
-		balloon_alert(user, "unlock first!")
+		balloon_alert(user, LANG("obj.08c1dea0", null))
 		return ITEM_INTERACT_BLOCKING
 
 	access_locked = !access_locked
-	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
+	balloon_alert(user, LANG("obj.ee8de855", list(access_locked ? "locked" : "unlocked")))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/suit_storage_unit/proc/can_install_card_reader(mob/user)
@@ -624,7 +625,7 @@
 		return FALSE
 
 	if(locked)
-		balloon_alert(user, "unlock first!")
+		balloon_alert(user, LANG("obj.08c1dea0", null))
 		return FALSE
 
 	return TRUE
@@ -641,19 +642,19 @@
 			return ITEM_INTERACT_BLOCKING
 		qdel(tool)
 		card_reader_installed = TRUE
-		balloon_alert(user, "card reader installed")
+		balloon_alert(user, LANG("obj.49c02850", null))
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/item/card/id/id = null
 	if(!state_open && is_operational && card_reader_installed && !isnull((id = tool.GetID())))
 		if(panel_open)
-			balloon_alert(user, "close panel!")
+			balloon_alert(user, LANG("obj.4337ae3e", null))
 			return ITEM_INTERACT_BLOCKING
 		if(locked)
-			balloon_alert(user, "unlock first!")
+			balloon_alert(user, LANG("obj.08c1dea0", null))
 			return ITEM_INTERACT_BLOCKING
 		if(access_locked)
-			balloon_alert(user, "access panel locked!")
+			balloon_alert(user, LANG("obj.2f7cddda", null))
 			return ITEM_INTERACT_BLOCKING
 
 		// change the access type
@@ -682,48 +683,48 @@
 				req_one_access = null
 				set_access(list())
 		if(!isnull(id_card))
-			balloon_alert(user, "now owned by [id.registered_name]")
+			balloon_alert(user, LANG("obj.02dad179", list(id.registered_name)))
 		else
-			balloon_alert(user, "set to [choice]")
+			balloon_alert(user, LANG("obj.28f94138", list(choice)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(state_open && is_operational)
 		if(istype(tool, /obj/item/clothing/suit))
 			if(suit)
-				to_chat(user, span_warning("The unit already contains a suit!"))
+				to_chat(user, span_warning(LANG("obj.e5454a91", null)))
 				return ITEM_INTERACT_BLOCKING
 			if(!user.transferItemToLoc(tool, src))
 				return ITEM_INTERACT_BLOCKING
 			suit = tool
 		else if(istype(tool, /obj/item/clothing/head))
 			if(helmet)
-				to_chat(user, span_warning("The unit already contains a helmet!"))
+				to_chat(user, span_warning(LANG("obj.9382d344", null)))
 				return ITEM_INTERACT_BLOCKING
 			if(!user.transferItemToLoc(tool, src))
 				return ITEM_INTERACT_BLOCKING
 			helmet = tool
 		else if(istype(tool, /obj/item/clothing/mask))
 			if(mask)
-				to_chat(user, span_warning("The unit already contains a mask!"))
+				to_chat(user, span_warning(LANG("obj.20b41724", null)))
 				return ITEM_INTERACT_BLOCKING
 			if(!user.transferItemToLoc(tool, src))
 				return ITEM_INTERACT_BLOCKING
 			mask = tool
 		else if(istype(tool, /obj/item/storage/backpack) || istype(tool, /obj/item/mod/control))
 			if(mod)
-				to_chat(user, span_warning("The unit already contains a backpack or MOD!"))
+				to_chat(user, span_warning(LANG("obj.33ff488b", null)))
 				return ITEM_INTERACT_BLOCKING
 			if(!user.transferItemToLoc(tool, src))
 				return ITEM_INTERACT_BLOCKING
 			mod = tool
 		else
 			if(storage)
-				to_chat(user, span_warning("The auxiliary storage compartment is full!"))
+				to_chat(user, span_warning(LANG("obj.2898b419", null)))
 				return ITEM_INTERACT_BLOCKING
 			if(!user.transferItemToLoc(tool, src))
 				return ITEM_INTERACT_BLOCKING
 			storage = tool
-		visible_message(span_notice("[user] inserts [tool] into [src]"), span_notice("You load [tool] into [src]."))
+		visible_message(span_notice(LANG("obj.69e210b8", list(user, tool, src))), span_notice(LANG("obj.91f19664", list(tool, src))))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -746,7 +747,7 @@
 	if(state_open)
 		return NONE
 	if(uv || locked)
-		to_chat(user, span_warning("You can't open the panel while its [locked ? "locked" : "decontaminating"]"))
+		to_chat(user, span_warning(LANG("obj.155654a6", list(locked ? "locked" : "decontaminating"))))
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_screwdriver(user, tool)
@@ -760,10 +761,10 @@
 /obj/machinery/suit_storage_unit/rename_checks(mob/living/user)
 	. = TRUE
 	if(locked)
-		balloon_alert(user, "unlock first!")
+		balloon_alert(user, LANG("obj.08c1dea0", null))
 		return FALSE
 	if(!access_check(user))
-		balloon_alert(user, "not yours to rename!")
+		balloon_alert(user, LANG("obj.691adc91", null))
 		return FALSE
 
 /// If the SSU needs to have any communications wires cut.

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 ///makes this file more legible
 #define IS_OPEN(parent) isgroundlessturf(parent)
@@ -406,9 +407,9 @@
 /obj/item/trapdoor_remote/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!internals)
-		to_chat(user, span_warning("[src] has no internals!"))
+		to_chat(user, span_warning(LANG("obj.d0a8684a", list(src))))
 		return
-	to_chat(user, span_notice("You pop [internals] out of [src]."))
+	to_chat(user, span_notice(LANG("obj.b2ebb56a", list(internals, src))))
 	internals.forceMove(get_turf(src))
 	internals = null
 
@@ -416,9 +417,9 @@
 	if(!istype(assembly))
 		return NONE
 	if(internals)
-		balloon_alert(user, "doesn't fit!")
+		balloon_alert(user, LANG("obj.7f1af016", null))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "added")
+	balloon_alert(user, LANG("obj.c001ae59", null))
 	internals = assembly
 	user.transferItemToLoc(assembly, src)
 	return ITEM_INTERACT_SUCCESS
@@ -495,7 +496,7 @@
 	if(!isopenspaceturf(target_turf))
 		return NONE
 	in_use = TRUE
-	balloon_alert(user, "constructing trapdoor")
+	balloon_alert(user, LANG("obj.14259684", null))
 	if(!do_after(user, 5 SECONDS, interacting_with))
 		in_use = FALSE
 		return ITEM_INTERACT_BLOCKING
@@ -504,6 +505,6 @@
 		return ITEM_INTERACT_BLOCKING
 	var/turf/new_turf = target_turf.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	new_turf.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = TRUE)
-	balloon_alert(user, "trapdoor constructed")
+	balloon_alert(user, LANG("obj.ff550070", null))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

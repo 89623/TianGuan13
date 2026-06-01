@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/mob_spawn
 	name = "Mob Spawner"
 	density = TRUE
@@ -190,7 +191,7 @@
 	if(LAZYFIND(ckeys_trying_to_spawn, user.ckey))
 		return
 	if(uses <= 0 && !infinite_use)
-		to_chat(user, span_warning("This spawner is out of charges!"))
+		to_chat(user, span_warning(LANG("obj.3f72bc17", null)))
 		return FALSE
 	if(!can_ghost_take(user))
 		return FALSE
@@ -246,15 +247,15 @@
 /// Checks if a ghost can take this ghost role.
 /obj/effect/mob_spawn/ghost_role/proc/can_ghost_take(mob/dead/observer/user)
 	if(is_banned_from(user.ckey, role_ban))
-		to_chat(user, span_warning("You are banned from this role!"))
+		to_chat(user, span_warning(LANG("obj.8b2c3968", null)))
 		return FALSE
 	// NOVA EDIT ADDITION START
 	if(is_banned_from(user.ckey, BAN_GHOST_ROLE_SPAWNER)) // Ghost role bans
-		to_chat(user, span_warning("Error, you are banned from playing ghost roles!"))
+		to_chat(user, span_warning(LANG("obj.6eeb0d8d", null)))
 		return FALSE
 	// NOVA EDIT ADDITION END
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER) && !(flags_1 & ADMIN_SPAWNED_1))
-		to_chat(user, span_warning("An admin has temporarily disabled non-admin ghost roles!"))
+		to_chat(user, span_warning(LANG("obj.2e1b465d", null)))
 		return FALSE
 	if(QDELETED(src) || QDELETED(user))
 		return FALSE

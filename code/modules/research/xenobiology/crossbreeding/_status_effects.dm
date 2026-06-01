@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /atom/movable/screen/alert/status_effect/rainbow_protection
 	name = "Rainbow Protection"
 	desc = "You are defended from harm, but so are those you might seek to injure!"
@@ -68,8 +69,8 @@
 
 /datum/status_effect/slimerecall/on_apply()
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(resistField))
-	to_chat(owner, span_danger("You feel a sudden tug from an unknown force, and feel a pull to bluespace!"))
-	to_chat(owner, span_notice("Resist if you wish avoid the force!"))
+	to_chat(owner, span_danger(LANG("datum.050c2363", null)))
+	to_chat(owner, span_notice(LANG("datum.b15d18ac", null)))
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
 	owner.add_overlay(bluespace)
 	return ..()
@@ -83,12 +84,12 @@
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
 	owner.cut_overlay(bluespace)
 	if(interrupted || !ismob(target))
-		to_chat(owner, span_warning("The bluespace tug fades away, and you feel that the force has passed you by."))
+		to_chat(owner, span_warning(LANG("datum.57dd41e1", null)))
 		return
 	var/turf/old_location = get_turf(owner)
 	if(do_teleport(owner, target.loc, channel = TELEPORT_CHANNEL_QUANTUM)) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
 		old_location.visible_message(span_warning("[owner] disappears in a flurry of sparks!"))
-		to_chat(owner, span_warning("The unknown force snatches briefly you from reality, and deposits you next to [target]!"))
+		to_chat(owner, span_warning(LANG("datum.d30bfab3", list(target))))
 
 /atom/movable/screen/alert/status_effect/freon/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
@@ -595,7 +596,7 @@
 		if(sheets.len)
 			var/obj/item/stack/sheet/S = pick(sheets)
 			S.add(1)
-			to_chat(owner, span_notice("[linked_extract] adds a layer of slime to [S], which metamorphosizes into another sheet of material!"))
+			to_chat(owner, span_notice(LANG("datum.877aa0b0", list(linked_extract, S))))
 	return ..()
 
 
@@ -643,7 +644,7 @@
 	var/obj/item/item = owner.get_active_held_item()
 	if(item)
 		if(IS_EDIBLE(item) && (item.microwave_act(microwaver = owner) & COMPONENT_MICROWAVE_SUCCESS))
-			to_chat(owner, span_warning("[linked_extract] flares up brightly, and your hands alone are enough cook [item]!"))
+			to_chat(owner, span_warning(LANG("datum.4c149c6f", list(linked_extract, item))))
 		else
 			item.attackby(fire, owner)
 	return ..()
@@ -663,25 +664,25 @@
 	if(owner.fire_stacks > 0 && prob(80))
 		owner.adjust_wet_stacks(1)
 		if(owner.fire_stacks <= 0)
-			to_chat(owner, span_notice("[linked_extract] coats you in a watery goo, extinguishing the flames."))
+			to_chat(owner, span_notice(LANG("datum.3982074a", list(linked_extract))))
 	var/obj/O = owner.get_active_held_item()
 	if(O)
 		O.extinguish() //All shamelessly copied from water's expose_obj, since I didn't seem to be able to get it here for some reason.
 		O.wash(CLEAN_TYPE_ACID)
 	// Monkey cube
 	if(istype(O, /obj/item/food/monkeycube))
-		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It makes [O] expand!"))
+		to_chat(owner, span_warning(LANG("datum.398078f3", list(linked_extract, O))))
 		var/obj/item/food/monkeycube/cube = O
 		cube.Expand()
 
 	// Dehydrated carp
 	else if(istype(O, /obj/item/toy/plush/carpplushie/dehy_carp))
-		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It makes [O] expand!"))
+		to_chat(owner, span_warning(LANG("datum.398078f3", list(linked_extract, O))))
 		var/obj/item/toy/plush/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
-		to_chat(owner, span_warning("[linked_extract] kept your hands wet! It wets [O]!"))
+		to_chat(owner, span_warning(LANG("datum.dce72588", list(linked_extract, O))))
 		var/obj/item/stack/sheet/hairlesshide/HH = O
 		new /obj/item/stack/sheet/wethide(get_turf(HH), HH.amount)
 		qdel(HH)
@@ -738,7 +739,7 @@
 			emergency_turf = get_turf(owner)
 			range = 50
 		if(do_teleport(owner, emergency_turf, range, channel = TELEPORT_CHANNEL_BLUESPACE))
-			to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
+			to_chat(owner, span_notice(LANG("datum.f3a415fa", list(linked_extract))))
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
 	healthcheck = owner.health
@@ -794,7 +795,7 @@
 			clone = null
 			qdel(linked_extract)
 		if(!clone || clone.stat == DEAD)
-			to_chat(owner, span_notice("[linked_extract] desperately tries to move your soul to a living body, but can't find one!"))
+			to_chat(owner, span_notice(LANG("datum.bba4d87d", list(linked_extract))))
 			qdel(linked_extract)
 	..()
 
@@ -835,7 +836,7 @@
 	var/originalname
 
 /datum/status_effect/stabilized/green/on_apply()
-	to_chat(owner, span_warning("You feel different..."))
+	to_chat(owner, span_warning(LANG("datum.2c1d4eab", null)))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		originalDNA = new H.dna.type
@@ -852,7 +853,7 @@
 	return null
 
 /datum/status_effect/stabilized/green/on_remove()
-	to_chat(owner, span_notice("You feel more like yourself."))
+	to_chat(owner, span_notice(LANG("datum.fd69a5b8", null)))
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
 		originalDNA.copy_dna(human.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
@@ -888,7 +889,7 @@
 /datum/status_effect/stabilized/pink/on_apply()
 	faction_name = FACTION_PINK_EXTRACT(owner)
 	owner.add_ally(faction_name)
-	to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
+	to_chat(owner, span_notice(LANG("datum.64dd5457", list(linked_extract))))
 	return ..()
 
 /datum/status_effect/stabilized/pink/tick(seconds_between_ticks)
@@ -897,9 +898,9 @@
 	if(has_ally)
 		if(owner.has_status_effect(/datum/status_effect/brokenpeace))
 			owner.remove_ally(faction_name)
-			to_chat(owner, span_userdanger("The peace has been broken! Hostile creatures will now react to you!"))
+			to_chat(owner, span_userdanger(LANG("datum.46d095e6", null)))
 	else if(!owner.has_status_effect(/datum/status_effect/brokenpeace))
-		to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
+		to_chat(owner, span_notice(LANG("datum.64dd5457", list(linked_extract))))
 		owner.add_ally(faction_name)
 	return ..()
 
@@ -989,8 +990,8 @@
 		return
 
 	draining_ref = WEAKREF(draining)
-	to_chat(owner, span_boldnotice("You feel your hands melt around [draining]'s neck as you start to drain [draining.p_them()] of [draining.p_their()] life!"))
-	to_chat(draining, span_userdanger("[owner]'s hands melt around your neck as you can feel your life starting to drain away!"))
+	to_chat(owner, span_boldnotice(LANG("datum.ac198230", list(draining, draining.p_them(), draining.p_their()))))
+	to_chat(draining, span_userdanger(LANG("datum.4935a86f", list(owner))))
 
 /datum/status_effect/stabilized/black/get_examine_text()
 	var/mob/living/draining = draining_ref?.resolve()
@@ -1005,7 +1006,7 @@
 
 	var/mob/living/drained = draining_ref.resolve()
 	if(drained.stat == DEAD)
-		to_chat(owner, span_warning("[drained] is dead, you cannot drain anymore life from them!"))
+		to_chat(owner, span_warning(LANG("datum.d735e2ed", list(drained))))
 		draining_ref = null
 		return
 

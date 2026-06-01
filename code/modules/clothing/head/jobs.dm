@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //defines the drill hat's yelling setting
 #define DRILL_DEFAULT "default"
 #define DRILL_SHOUTING "shouting"
@@ -229,12 +230,12 @@
 /// Now to solve where all these keep coming from
 /obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
 	if(!COOLDOWN_FINISHED(src, candy_cooldown))
-		to_chat(user, span_warning("A candy corn was just taken! You should wait a couple minutes, lest you burn through the stash."))
+		to_chat(user, span_warning(LANG("obj.ab3176d0", null)))
 		return CLICK_ACTION_BLOCKING
 
 	var/obj/item/food/candy_corn/sweets = new /obj/item/food/candy_corn(src)
 	user.put_in_hands(sweets)
-	to_chat(user, span_notice("You slip a candy corn from \the [src]."))
+	to_chat(user, span_notice(LANG("obj.2d1eb4d8", list(src))))
 	COOLDOWN_START(src, candy_cooldown, CANDY_CD_TIME)
 
 	return CLICK_ACTION_SUCCESS
@@ -332,10 +333,10 @@
 	. = ..()
 
 	if(LAZYLEN(contents) >= max_items)
-		balloon_alert(user, "full!")
+		balloon_alert(user, LANG("obj.8abfbb3d", null))
 		return
 	if(item.w_class > max_weight)
-		balloon_alert(user, "too big!")
+		balloon_alert(user, LANG("obj.a5e64cbb", null))
 		return
 
 	var/desired_phrase = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
@@ -345,7 +346,7 @@
 	if(item.loc != user || !user.transferItemToLoc(item, src))
 		return
 
-	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot of [src]."))
+	to_chat(user, span_notice(LANG("obj.19130491", list(item, thtotext(contents.len), src))))
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	set_phrase(desired_phrase,item)
 
@@ -535,7 +536,7 @@
 /obj/item/clothing/head/hats/warden/drill/wirecutter_act(mob/living/user, obj/item/I)
 	..()
 	if(mode != DRILL_CANADIAN)
-		to_chat(user, span_danger("You broke the voice circuit!"))
+		to_chat(user, span_danger(LANG("obj.06558b7b", null)))
 		mode = DRILL_CANADIAN
 	return TRUE
 
@@ -665,11 +666,11 @@
 	. = ..()
 	if(.)
 		return
-	balloon_alert(user, "[flags_inv & HIDEHAIR ? "loosening" : "tightening"] strings...")
+	balloon_alert(user, LANG("obj.c90dae9a", list(flags_inv & HIDEHAIR ? "loosening" : "tightening")))
 	if(!do_after(user, 3 SECONDS, src))
 		return
 	flags_inv ^= HIDEHAIR
-	balloon_alert(user, "[flags_inv & HIDEHAIR ? "tightened" : "loosened "] strings")
+	balloon_alert(user, LANG("obj.e45cf7d0", list(flags_inv & HIDEHAIR ? "tightened" : "loosened ")))
 	return TRUE
 
 /obj/item/clothing/head/utility/surgerycap/examine(mob/user)

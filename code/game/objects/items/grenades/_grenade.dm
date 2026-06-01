@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Base class for all grenades.
  */
@@ -107,16 +108,16 @@
  */
 /obj/item/grenade/proc/botch_check(mob/living/carbon/human/user)
 	if(sticky && prob(50)) // to add risk to sticky tape grenade cheese, no return cause we still prime as normal after.
-		to_chat(user, span_warning("What the... [src] is stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.ad59b8fb", list(src))))
 		ADD_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
 
 	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
 	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE) && prob(50))
-		to_chat(user, span_warning("Huh? How does this thing work?"))
+		to_chat(user, span_warning(LANG("obj.0cac9174", null)))
 		arm_grenade(user, 5, FALSE)
 		return TRUE
 	else if(!clumsy && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
-		to_chat(user, span_warning("You pull the pin on [src]. Attached to it is a pink ribbon that says, \"[span_clown("HONK")]\""))
+		to_chat(user, span_warning(LANG("obj.6369db90", list(src, span_clown("HONK")))))
 		arm_grenade(user, 5, FALSE)
 		return TRUE
 
@@ -132,9 +133,9 @@
 
 /obj/item/grenade/attack_self(mob/user)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
-		to_chat(user, span_notice("You try prying [src] off your hand..."))
+		to_chat(user, span_notice(LANG("obj.9dd76f84", list(src))))
 		if(do_after(user, 7 SECONDS, target = src))
-			to_chat(user, span_notice("You manage to remove [src] from your hand."))
+			to_chat(user, span_notice(LANG("obj.93d7a2d7", list(src))))
 			REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
 		return
 
@@ -156,7 +157,7 @@
 	if(user)
 		add_fingerprint(user)
 		if(msg)
-			to_chat(user, span_warning("You prime [src]! [capitalize(DisplayTimeText(det_time))]!"))
+			to_chat(user, span_warning(LANG("obj.cfa52eca", list(src, capitalize(DisplayTimeText(det_time))))))
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
@@ -225,9 +226,9 @@
 	if(change_det_time())
 		tool.play_tool_sound(src)
 		if(det_time == 0)
-			to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
+			to_chat(user, span_notice(LANG("obj.a057a771", null)))
 		else
-			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
+			to_chat(user, span_notice(LANG("obj.0c97dd37", list(DisplayTimeText(det_time)))))
 		return TRUE
 
 /obj/item/grenade/multitool_act(mob/living/user, obj/item/tool)
@@ -243,11 +244,11 @@
 	if(!user.can_perform_action(src))
 		return
 	if(newtime == "Instant" && change_det_time(0))
-		to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
+		to_chat(user, span_notice(LANG("obj.a057a771", null)))
 		return
 	newtime = round(text2num(newtime))
 	if(change_det_time(newtime))
-		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
+		to_chat(user, span_notice(LANG("obj.0c97dd37", list(DisplayTimeText(det_time)))))
 
 /**
  * Sets det_time to a number in SECONDS

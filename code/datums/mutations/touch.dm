@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mutation/shock
 	name = "Shock Touch"
 	desc = "The affected can channel excess electricity through their hands without shocking themselves, allowing them to shock others. Mostly harmless! Mostly... "
@@ -72,7 +73,7 @@
 				living_victim.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 			return TRUE
 
-	to_chat(caster, span_warning("The electricity doesn't seem to affect [victim]..."))
+	to_chat(caster, span_warning(LANG("datum.241db94c", list(victim))))
 	return TRUE
 
 /obj/item/melee/touch_attack/shock
@@ -141,7 +142,7 @@
 		return .
 	var/obj/item/bodypart/transfer_limb = cast_on.get_active_hand()
 	if(!IS_ORGANIC_LIMB(transfer_limb))
-		to_chat(cast_on, span_notice("You fail to channel your mending powers through your inorganic hand."))
+		to_chat(cast_on, span_notice(LANG("datum.a7698fa5", null)))
 		return FALSE
 
 	return TRUE
@@ -211,7 +212,7 @@
 	mendicant.update_damage_overlays()
 
 	hurtguy.visible_message(span_notice("[mendicant] lays hands on [hurtguy]!"))
-	to_chat(hurtguy, span_boldnotice("[mendicant] lays hands on you, healing you!"))
+	to_chat(hurtguy, span_boldnotice(LANG("datum.530dd52a", list(mendicant))))
 	new /obj/effect/temp_visual/heal(get_turf(hurtguy), COLOR_VERY_PALE_LIME_GREEN)
 	return success
 
@@ -326,14 +327,14 @@
 		if(!blood_transferred)
 			return
 
-		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
+		to_chat(mendicant, span_notice(LANG("datum.bac9a504", null)))
 		. = TRUE
 		// Because we do our own spin on it!
 		if(hurtguy.get_blood_compatibility(mendicant) == FALSE)
 			hurtguy.adjust_tox_loss((blood_transferred * 0.1) * pain_multiplier) // 1 dmg per 10 blood
-			to_chat(hurtguy, span_notice("Your veins feel thicker, but they itch a bit."))
+			to_chat(hurtguy, span_notice(LANG("datum.dabf8c6a", null)))
 		else
-			to_chat(hurtguy, span_notice("Your veins feel thicker!"))
+			to_chat(hurtguy, span_notice(LANG("datum.01fb81ab", null)))
 		return
 
 	if(hurtguy_blood < BLOOD_VOLUME_MAXIMUM)
@@ -346,14 +347,14 @@
 	if(!blood_received)
 		return
 
-	to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
+	to_chat(hurtguy, span_notice(LANG("datum.86c975b7", null)))
 	. = TRUE
 	// Because we do our own spin on it!
 	if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
 		mendicant.adjust_tox_loss((blood_received * 0.1) * pain_multiplier) // 1 dmg per 10 blood
-		to_chat(mendicant, span_notice("Your veins swell and itch!"))
+		to_chat(mendicant, span_notice(LANG("datum.c3882566", null)))
 	else
-		to_chat(mendicant, span_notice("Your veins swell!"))
+		to_chat(mendicant, span_notice(LANG("datum.ba324022", null)))
 	if(!.)
 		mendicant.balloon_alert(hurtguy, "no damaged organic limbs!")
 
@@ -420,7 +421,7 @@
 
 	motherfucker_to_hurt.update_damage_overlays()
 
-	to_chat(motherfucker_to_hurt, span_bolddanger("[smiter] [smite_text_to_target], hurting you!"))
+	to_chat(motherfucker_to_hurt, span_bolddanger(LANG("datum.60faab55", list(smiter, smite_text_to_target))))
 	motherfucker_to_hurt.emote("scream")
 	new /obj/effect/temp_visual/explosion(get_turf(motherfucker_to_hurt), evil_smite ? LIGHT_COLOR_BLOOD_MAGIC : LIGHT_COLOR_HOLY_MAGIC)
 	. = TRUE

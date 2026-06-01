@@ -45,7 +45,7 @@
 /obj/machinery/cell_charger_multi/click_alt(mob/user, list/modifiers)
 	if(!can_interact(user) || !LAZYLEN(charging_batteries))
 		return
-	to_chat(user, span_notice("You press the quick release as all the cells pop out!"))
+	to_chat(user, span_notice(LANG("obj.1869cd63", null)))
 	for(var/i in charging_batteries)
 		removecell()
 	return CLICK_ACTION_SUCCESS
@@ -74,24 +74,24 @@
 		return NONE
 
 	if(machine_stat & BROKEN)
-		to_chat(user, span_warning("[src] is broken!"))
+		to_chat(user, span_warning(LANG("obj.e2c73115", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!anchored)
-		to_chat(user, span_warning("[src] isn't attached to the ground!"))
+		to_chat(user, span_warning(LANG("obj.f467682f", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/stock_parts/power_store/cell/inserting_cell = tool
 	if(inserting_cell.chargerate <= 0)
-		to_chat(user, span_warning("[inserting_cell] cannot be recharged!"))
+		to_chat(user, span_warning(LANG("obj.d4b2e04f", list(inserting_cell))))
 		return ITEM_INTERACT_BLOCKING
 	if(LAZYLEN(charging_batteries) >= max_batteries)
-		to_chat(user, span_warning("[src] is full, and cannot hold anymore cells!"))
+		to_chat(user, span_warning(LANG("obj.4599e642", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	else
 		var/area/current_area = loc.loc // Gets our locations location, like a dream within a dream
 		if(!isarea(current_area))
 			return ITEM_INTERACT_BLOCKING
 		if(current_area.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-			to_chat(user, span_warning("[src] blinks red as you try to insert the cell!"))
+			to_chat(user, span_warning(LANG("obj.ebb2a520", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool,src))
 			return ITEM_INTERACT_BLOCKING
@@ -128,7 +128,7 @@
 	if(!LAZYLEN(charging_batteries))
 		return
 
-	to_chat(user, span_notice("You telekinetically remove [removecell(user)] from [src]."))
+	to_chat(user, span_notice(LANG("obj.2e70f313", list(removecell(user), src))))
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

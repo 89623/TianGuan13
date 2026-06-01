@@ -21,7 +21,7 @@
 	if(check_rail || !use(1))
 		return NONE
 
-	to_chat(user, span_notice("You place [src] on [target_turf]."))
+	to_chat(user, span_notice(LANG("obj.7a67ae81", list(src, target_turf))))
 	new /obj/structure/railroad(target_turf)
 	return ITEM_INTERACT_SUCCESS
 

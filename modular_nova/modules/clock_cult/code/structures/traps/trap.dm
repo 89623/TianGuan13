@@ -35,7 +35,7 @@
 		user.balloon_alert(user, "space occupied!")
 		return
 
-	to_chat(user, span_brass("You place [src], use a <b>clockwork slab</b> to link it to other traps."))
+	to_chat(user, span_brass(LANG("obj.9da76c9d", list(src))))
 	var/obj/new_obj = new result_path(target)
 	new_obj.setDir(user.dir)
 
@@ -79,12 +79,12 @@
 
 /obj/structure/destructible/clockwork/trap/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	balloon_alert(user, "unwrenching...")
+	balloon_alert(user, LANG("obj.2e66bdcd", null))
 
 	if(!do_after(user, 5 SECONDS, target = src))
 		return
 
-	balloon_alert(user, "detached [src]")
+	balloon_alert(user, LANG("obj.cf015430", list(src)))
 	new unwrench_path(get_turf(src))
 
 	qdel(src)
@@ -146,22 +146,22 @@
 	if(slab.buffer)
 
 		if(takes_input)
-			to_chat(user, span_brass("You connect [slab.buffer.parent] to [parent]."))
+			to_chat(user, span_brass(LANG("datum.809d0b8e", list(slab.buffer.parent, parent))))
 			add_output(slab.buffer)
 			slab.buffer = null
 
 		else
-			to_chat(user, span_brass("That device does not accept input."))
+			to_chat(user, span_brass(LANG("datum.f3ce5c37", null)))
 
 	else
 
 		if(sends_input)
-			to_chat(user, span_brass("You prepare to connect [parent] with other devices."))
+			to_chat(user, span_brass(LANG("datum.db8d38f0", list(parent))))
 			slab.buffer = src
 
 		else
 
-			to_chat(user, span_brass("That device does not output anything."))
+			to_chat(user, span_brass(LANG("datum.53c778d4", null)))
 
 /// Sends a signal to activate to every outputting component in `outputs`
 /datum/component/clockwork_trap/proc/trigger_connected()

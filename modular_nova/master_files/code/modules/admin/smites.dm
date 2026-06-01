@@ -23,7 +23,7 @@
 /datum/smite/cone_of_shame/effect(client/user, mob/living/target)
 	. = ..()
 	if (!iscarbon(target) && !iscyborg(target))
-		to_chat(user, span_warning("This must be used on a carbon or cyborg mob."), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.749b91f2", null)), confidential = TRUE)
 		return
 	var/obj/item/clothing/head/cone_of_shame/bad_dog/thecone = new
 	if(iscarbon(target))
@@ -50,7 +50,7 @@
 /datum/smite/maidification/effect(client/user, mob/living/target)
 	. = ..()
 	if (!iscarbon(target))
-		to_chat(user, span_warning("This must be used on a carbon mob."), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.0c41c4cf", null)), confidential = TRUE)
 		return
 	var/list/items = list(
 		/obj/item/clothing/head/costume/maid_headband = ITEM_SLOT_HEAD,

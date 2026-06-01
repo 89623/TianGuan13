@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Newspapers
  * A static version of the newscaster, that won't update as new stories are added.
@@ -85,16 +86,16 @@
 /obj/item/newspaper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (tool.tool_behaviour == TOOL_SCREWDRIVER || tool.tool_behaviour == TOOL_WIRECUTTER || tool.sharpness)
 		if (punctured)
-			balloon_alert(user, "already has holes!")
+			balloon_alert(user, LANG("obj.7eb80c32", null))
 			return ITEM_INTERACT_BLOCKING
 
 		var/used_verb = "cutting out"
 		if (tool.sharpness != SHARP_EDGED || tool.tool_behaviour == TOOL_SCREWDRIVER)
 			used_verb = "puncturing"
 
-		balloon_alert(user, "[used_verb] peekholes...")
+		balloon_alert(user, LANG("obj.8e802b31", list(used_verb)))
 		if (!do_after(user, 3 SECONDS, src))
-			balloon_alert(user, "interrupted!")
+			balloon_alert(user, LANG("obj.c67b5d27", null))
 			return ITEM_INTERACT_BLOCKING
 
 		playsound(src, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
@@ -121,7 +122,7 @@
 	user.balloon_alert(user, "scribbling...")
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	if (!do_after(user, 2 SECONDS, src))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return ITEM_INTERACT_BLOCKING
 
 	user.balloon_alert(user, "scribbled!")

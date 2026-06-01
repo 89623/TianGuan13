@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Root of shared behaviour for mobs spawned by blobs, is abstract and should not be spawned
 /mob/living/basic/blob_minion
 	abstract_type = /mob/living/basic/blob_minion
@@ -54,4 +55,4 @@
 /// Called when our factory is destroyed
 /mob/living/basic/blob_minion/proc/on_factory_destroyed()
 	SIGNAL_HANDLER
-	to_chat(src, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
+	to_chat(src, span_userdanger(LANG("mob.a3e8864c", null)))

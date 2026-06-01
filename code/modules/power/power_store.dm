@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ETHEREAL_CELL_DRAIN_TIME (3.5 SECONDS)
 #define ETHEREAL_CELL_POWER_DRAIN (0.75 * STANDARD_CELL_CHARGE)
 /// The factor by which we multiply drain to get how much we gain
@@ -270,7 +271,7 @@
 	charge = 0
 	update_appearance()
 	if(user.stat != DEAD)
-		to_chat(user, span_suicide("There's not enough charge in [src] to kill you!"))
+		to_chat(user, span_suicide(LANG("obj.64efa883", list(src))))
 		return SHAME
 	addtimer(CALLBACK(src, PROC_REF(gib_user), user, discharged_energy), 3 SECONDS)
 	return MANUAL_SUICIDE
@@ -305,7 +306,7 @@
 /// Handles letting an ethereal drain our charge into their stomach
 /obj/item/stock_parts/power_store/proc/ethereal_drain(mob/living/carbon/human/user, obj/item/organ/stomach/ethereal/used_stomach)
 	if(charge() <= 0)
-		balloon_alert(user, "out of charge!")
+		balloon_alert(user, LANG("obj.6428cbcd", null))
 		return
 
 	var/obj/item/stock_parts/power_store/stomach_cell = used_stomach.cell
@@ -314,7 +315,7 @@
 
 	while(do_after(user, ETHEREAL_CELL_DRAIN_TIME, target = src))
 		if(isnull(used_stomach) || (used_stomach != user.get_organ_slot(ORGAN_SLOT_STOMACH)))
-			balloon_alert(user, "stomach removed!?")
+			balloon_alert(user, LANG("obj.102b018f", null))
 			return
 
 		var/our_charge = charge()
@@ -326,10 +327,10 @@
 		update_appearance(UPDATE_OVERLAYS)
 
 		if(stomach_cell.used_charge() <= 0)
-			balloon_alert(user, "your charge is full!")
+			balloon_alert(user, LANG("obj.5e4dbacc", null))
 			return
 		if(charge() <= 0)
-			balloon_alert(user, "out of charge!")
+			balloon_alert(user, LANG("obj.6428cbcd", null))
 			return
 
 /obj/item/stock_parts/power_store/blob_act(obj/structure/blob/B)

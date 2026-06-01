@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///An item that can be used to gather information on the fish, such as but not limited to: health, hunger and traits.
 /obj/item/fish_analyzer
 	name = "fish analyzer"
@@ -91,10 +92,10 @@
 
 /obj/item/fish_analyzer/ui_interact(mob/living/user, datum/tgui/ui)
 	if(isnull(scanned_object))
-		balloon_alert(user, "no specimen data!")
+		balloon_alert(user, LANG("obj.20ddafce", null))
 		return TRUE
 	if(istype(user) && !(scanned_object in (view(7, get_turf(src)) | user.get_equipped_items(INCLUDE_HELD))))
-		balloon_alert(user, "specimen data lost!")
+		balloon_alert(user, LANG("obj.d7f51219", null))
 		unregister_scanned()
 		return TRUE
 
@@ -107,7 +108,7 @@
 	if(!istype(user)) //observers shouldn't disrupt things.
 		return ..()
 	if(!scanned_object || !(scanned_object in (view(7, get_turf(src)) | user.get_equipped_items(INCLUDE_HELD))))
-		balloon_alert(user, "specimen data lost!")
+		balloon_alert(user, LANG("obj.d7f51219", null))
 		unregister_scanned()
 		return UI_CLOSE
 	return ..()

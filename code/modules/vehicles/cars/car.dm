@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/sealed/car
 	layer = ABOVE_MOB_LAYER
 	move_resist = MOVE_FORCE_VERY_STRONG
@@ -38,10 +39,10 @@
 		mob_exit(future_pedestrian, silent)
 		return TRUE
 	if (escape_time > 0)
-		to_chat(user, span_notice("You push against the back of \the [src]'s trunk to try and get out."))
+		to_chat(user, span_notice(LANG("obj.686c4487", list(src))))
 		if(!do_after(user, escape_time, target = src))
 			return FALSE
-	to_chat(user,span_danger("[user] gets out of [src]."))
+	to_chat(user,span_danger(LANG("obj.705572da", list(user, src))))
 	mob_exit(future_pedestrian, silent)
 	return TRUE
 
@@ -49,14 +50,14 @@
 	. = ..()
 	if(!(car_traits & CAN_KIDNAP))
 		return
-	to_chat(user, span_notice("You start opening [src]'s trunk."))
+	to_chat(user, span_notice(LANG("obj.b5f2dd6f", list(src))))
 	if(!do_after(user, 30))
 		return
 	if(return_amount_of_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
-		to_chat(user, span_notice("The people stuck in [src]'s trunk all come tumbling out."))
+		to_chat(user, span_notice(LANG("obj.ad6d868a", list(src))))
 		dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
 		return
-	to_chat(user, span_notice("It seems [src]'s trunk was empty."))
+	to_chat(user, span_notice(LANG("obj.80d9fa41", list(src))))
 
 ///attempts to force a mob into the car
 /obj/vehicle/sealed/car/proc/mob_try_forced_enter(mob/forcer, mob/kidnapped, silent = FALSE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 SUBSYSTEM_DEF(polling)
 	name = "Polling"
 	ss_flags = SS_BACKGROUND | SS_NO_INIT
@@ -291,7 +292,7 @@ SUBSYSTEM_DEF(polling)
 			return FALSE
 	// NOVA EDIT ADDITION BEGIN
 	if(is_banned_from(potential_candidate.ckey, BAN_GHOST_TAKEOVER) || is_banned_from(potential_candidate.ckey, BAN_ANTAGONIST))
-		to_chat(potential_candidate, "There was a ghost prompt for: [role], unfortunately you are banned from ghost takeovers.")
+		to_chat(potential_candidate, LANG("datum.d98eeea4", list(role)))
 		return FALSE
 	// NOVA EDIT ADDITION END
 	if(role && potential_candidate.client)

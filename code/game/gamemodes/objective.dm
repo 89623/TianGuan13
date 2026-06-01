@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 GLOBAL_LIST_EMPTY(objectives) //NOVA EDIT ADDITION
 
@@ -916,7 +917,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sort_names(possible_targets)
 		target = new_target.mind
 	else
-		to_chat(admin, span_boldwarning("No active AIs with minds."))
+		to_chat(admin, span_boldwarning(LANG("datum.78a01c03", null)))
 	update_explanation_text()
 
 /datum/objective/steal_n_of_type

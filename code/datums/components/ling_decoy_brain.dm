@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Component applied to ling brains to make them into decoy brains, as ling brains are vestigial and don't do anything
 /datum/component/ling_decoy_brain
 	/// The ling this brain is linked to
@@ -51,14 +52,13 @@
 			talk_action.brain_ref = source
 
 		if(the_real_ling.key)
-			to_chat(the_real_ling, span_ghostalert("We detect our decoy brain has been placed within a Man-Machine Interface. \
-				We can use the \"MMI Talk\" action to command it to speak."))
+			to_chat(the_real_ling, span_ghostalert(LANG("datum.71cdfe0f", null)))
 		else
 			the_real_ling.notify_revival("Your decoy brain has been placed in an MMI, re-enter your body to talk via it!", source = the_real_ling, flashwindow = TRUE)
 		talk_action.Grant(the_real_ling)
 
 	else if(talk_action?.owner == the_real_ling)
-		to_chat(the_real_ling, span_ghostalert("We can no longer detect our decoy brain."))
+		to_chat(the_real_ling, span_ghostalert(LANG("datum.be9ef7a8", null)))
 		talk_action.Remove(the_real_ling)
 
 /// Clear up the decoy if the ling is de-linged

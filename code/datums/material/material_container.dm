@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*!
 	This datum should be used for handling mineral contents of machines and whatever else is supposed to hold minerals and make use of them.
 
@@ -323,7 +324,7 @@
 			//duffle bags needs to be unzipped
 			if(target_item.atom_storage?.locked)
 				if(!(mat_container_flags & MATCONTAINER_SILENT))
-					to_chat(user, span_warning("[target_item] has its storage locked"))
+					to_chat(user, span_warning(LANG("datum.bd01ee28", list(target_item))))
 				return
 
 			//anything that isn't a stack cannot be split so find out if we have enough space, we don't want to consume half the contents of an object & leave it in a broken state
@@ -334,7 +335,7 @@
 					total_amount += get_item_material_amount(weapon)
 				if(!has_space(total_amount))
 					if(!(mat_container_flags & MATCONTAINER_SILENT))
-						to_chat(user, span_warning("[parent] does not have enough space for [target_item]!"))
+						to_chat(user, span_warning(LANG("datum.106a78ac", list(parent, target_item))))
 					return
 
 			first_checks = FALSE

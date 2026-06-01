@@ -252,7 +252,7 @@
 			qdel(stored_item)
 	else if(spawn_selection == "Toggle Auto-Clear")
 		auto_clear = !auto_clear
-		to_chat(user, span_notice("The RPED will now [(auto_clear ? "destroy" : "keep")] items left-over after upgrades."))
+		to_chat(user, span_notice(LANG("obj.fd17f6f1", list((auto_clear ? "destroy" : "keep")))))
 	else if(spawn_selection == "Cables")
 		atom_storage.attempt_insert(new /obj/item/stack/cable_coil(src), user, TRUE)
 	else if(spawn_selection == "Glass")

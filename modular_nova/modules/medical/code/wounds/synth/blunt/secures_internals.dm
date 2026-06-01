@@ -38,13 +38,13 @@
 		if(effective_damage && prob(33))
 			var/obj/item/stack/medical/wrap/gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 			var/gauze_text = (!isnull(gauze) ? ", although the [gauze] helps to prevent some of the leakage" : "")
-			to_chat(victim, span_danger("Your [limb.plaintext_zone] sizzles as some gel leaks and warps the exterior metal[gauze_text]..."))
+			to_chat(victim, span_danger(LANG("datum.b0082fe8", list(limb.plaintext_zone, gauze_text))))
 
 		if(regen_time_elapsed > regen_time_needed)
 			if(!victim || !limb)
 				qdel(src)
 				return
-			to_chat(victim, span_green("The gel within your [limb.plaintext_zone] has fully hardened, allowing you to re-solder it!"))
+			to_chat(victim, span_green(LANG("datum.96be4f7f", list(limb.plaintext_zone))))
 			gelled = FALSE
 			ready_to_resolder = TRUE
 			ready_to_secure_internals = FALSE
@@ -226,7 +226,7 @@
 			victim_message = span_userdanger("Your [limb.plaintext_zone] fragments and splinters as [user] tears it open with [user.p_their()] crowbar!")
 
 		playsound(get_turf(crowbarring_item), 'sound/effects/bang.ogg', 35, TRUE) // we did it!
-		to_chat(user, span_green("You've torn [your_or_other] [limb.plaintext_zone] open, heavily damaging it but making it a lot easier to screwdriver the internals!"))
+		to_chat(user, span_green(LANG("datum.8a50c887", list(your_or_other, limb.plaintext_zone))))
 		var/damage = CROWBAR_OPEN_BRUTE_DAMAGE
 		if (limb_essential()) // can't be disabled
 			damage *= CROWBAR_OPEN_ESSENTIAL_LIMB_DAMAGE_MULT
@@ -309,7 +309,7 @@
 	user?.visible_message(span_notice("[user] begins the delicate operation of securing the internals of [their_or_other] [limb.plaintext_zone]..."), \
 		span_notice("You begin the delicate operation of securing the internals of [your_or_other] [limb.plaintext_zone]..."))
 	if (confused)
-		to_chat(user, span_warning("You are confused by the layout of [your_or_other] [limb.plaintext_zone]! A diagnostic hud would help, as would knowing robo/engi wires! You could also tear the limb open with a crowbar, or get someone else to help."))
+		to_chat(user, span_warning(LANG("datum.2dff842e", list(your_or_other, limb.plaintext_zone))))
 
 	if (!securing_item.use_tool(target = victim, user = user, delay = (10 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
@@ -317,7 +317,7 @@
 	if (prob(chance))
 		user?.visible_message(span_green("[user] finishes securing the internals of [their_or_other] [limb.plaintext_zone]!"), \
 			span_green("You finish securing the internals of [your_or_other] [limb.plaintext_zone]!"))
-		to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone]'s internals are now secure! Your next step is to weld/cauterize it."))
+		to_chat(user, span_green(LANG("datum.998a6cc5", list(capitalize(your_or_other), limb.plaintext_zone))))
 		ready_to_secure_internals = FALSE
 		ready_to_resolder = TRUE
 	else
@@ -335,7 +335,7 @@
  */
 /datum/wound/blunt/robotic/secures_internals/proc/apply_gel(obj/item/stack/medical/bone_gel/gel, mob/user)
 	if (gelled)
-		to_chat(user, span_warning("[user == victim ? "Your" : "[victim]'s"] [limb.plaintext_zone] is already filled with bone gel!"))
+		to_chat(user, span_warning(LANG("datum.7c5b47cb", list(user == victim ? "Your" : "[victim]'s", limb.plaintext_zone))))
 		return TRUE
 
 	var/delay_mult = 1
@@ -353,7 +353,7 @@
 	gel.use(1)
 	if(user != victim)
 		user.visible_message(span_notice("[user] finishes applying [gel] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [gel] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] finishes applying [gel] to your [limb.plaintext_zone], and you can hear the sizzling of the metal..."))
+		to_chat(victim, span_userdanger(LANG("datum.79735462", list(user, gel, limb.plaintext_zone))))
 	else
 		victim.visible_message(span_notice("[victim] finishes applying [gel] to [victim.p_their()] [limb.plaintext_zone], emitting a funny fizzing sound!"), span_notice("You finish applying [gel] to your [limb.plaintext_zone], and you can hear the sizzling of the metal..."))
 

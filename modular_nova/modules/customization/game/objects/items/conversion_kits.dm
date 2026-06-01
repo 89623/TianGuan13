@@ -12,7 +12,7 @@
 	if(isturf(interacting_with)) //This shouldn't be needed, but apparently it throws runtimes otherwise.
 		return NONE
 	if(interacting_with.type != from_obj) //Checks whether the item is eligible to be converted
-		to_chat(user, span_warning("It looks like this kit won't work on [interacting_with]..."))
+		to_chat(user, span_warning(LANG("obj.b040226a", list(interacting_with))))
 		return ITEM_INTERACT_BLOCKING
 	if(!pre_convert_check(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING

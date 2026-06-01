@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/jaunt/shadow_walk
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
@@ -35,7 +36,7 @@
 	var/turf/cast_turf = get_turf(owner)
 	if(cast_turf.get_lumcount() >= light_threshold)
 		if(feedback)
-			to_chat(owner, span_warning("It isn't dark enough here!"))
+			to_chat(owner, span_warning(LANG("datum.44e16a52", null)))
 		return FALSE
 	return TRUE
 
@@ -94,7 +95,7 @@
 /obj/effect/dummy/phased_mob/shadow/phased_check(mob/living/user, direction)
 	. = ..()
 	if(. && isspaceturf(.))
-		to_chat(user, span_warning("It really would not be wise to go into space."))
+		to_chat(user, span_warning(LANG("obj.1461d35f", null)))
 		return FALSE
 	if(check_light_level(.))
 		if(!light_step_warning())
@@ -134,7 +135,7 @@
 
 /obj/effect/dummy/phased_mob/shadow/proc/light_step_warning()
 	if(!light_alert_given) //Give the user a warning that they're leaving the darkness
-		balloon_alert(jaunter, "leaving the shadows...")
+		balloon_alert(jaunter, LANG("obj.f70fd6f6", null))
 		light_alert_given = TRUE
 		COOLDOWN_START(src, light_step_cooldown, 0.75 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(reactivate_light_alert)), 1 SECONDS) //You get a .5 second window to bypass the warning before it comes back

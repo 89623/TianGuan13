@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///defined truthy result for `handle_unique_ai()`, which makes initialize return INITIALIZE_HINT_QDEL
 #define SHOULD_QDEL_MODULE 1
 
@@ -57,7 +58,7 @@
 //The proc other things should be calling
 /obj/item/ai_module/proc/install(datum/ai_laws/law_datum, mob/user)
 	if(!bypass_law_amt_check && (!laws.len || laws[1] == "")) //So we don't loop trough an empty list and end up with runtimes.
-		to_chat(user, span_warning("ERROR: No laws found on board."))
+		to_chat(user, span_warning(LANG("obj.34fc2140", null)))
 		return
 
 	var/overflow = FALSE
@@ -77,17 +78,17 @@
 					tot_laws++
 
 		if(tot_laws > CONFIG_GET(number/silicon_max_law_amount) && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
-			to_chat(user, span_alert("Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."))
+			to_chat(user, span_alert(LANG("obj.9102746a", list(law_datum.owner ? law_datum.owner : "the AI core"))))
 			message_admins("[ADMIN_LOOKUPFLW(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUPFLW(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			log_silicon("[key_name(user)] tried to upload laws to [law_datum.owner ? key_name(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			overflow = TRUE
 
 	var/law2log = transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
 	if(law_datum.owner)
-		to_chat(user, span_notice("Upload complete. [law_datum.owner]'s laws have been modified."))
+		to_chat(user, span_notice(LANG("obj.dd28f825", list(law_datum.owner))))
 		law_datum.owner.law_change_counter++
 	else
-		to_chat(user, span_notice("Upload complete."))
+		to_chat(user, span_notice(LANG("obj.527d6339", null)))
 
 	var/time = round_timestamp()
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
@@ -116,7 +117,7 @@
 //The proc that actually changes the silicon's laws.
 /obj/item/ai_module/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
 	if(law_datum.owner)
-		to_chat(law_datum.owner, span_userdanger("[sender] has uploaded a change to the laws you must follow using a [name]."))
+		to_chat(law_datum.owner, span_userdanger(LANG("obj.41e8a210", list(sender, name))))
 
 /obj/item/ai_module/core
 	desc = "An AI Module for programming core laws to an AI."

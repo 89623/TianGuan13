@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //DO NOT ADD MORE TO THIS FILE.
 //Use vv_do_topic() for datums!
 /client/proc/view_var_Topic(href, href_list, hsrc)
@@ -21,7 +22,7 @@
 
 		var/mob/M = locate(href_list["rename"]) in GLOB.mob_list
 		if(!istype(M))
-			to_chat(usr, "This can only be used on instances of type /mob", confidential = TRUE)
+			to_chat(usr, LANG("client.d9988527", null), confidential = TRUE)
 			return
 
 		var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
@@ -43,7 +44,7 @@
 
 		var/atom/A = locate(href_list["rotatedatum"])
 		if(!istype(A))
-			to_chat(usr, "This can only be done to instances of type /atom", confidential = TRUE)
+			to_chat(usr, LANG("client.c4e29691", null), confidential = TRUE)
 			return
 
 		switch(href_list["rotatedir"])
@@ -68,7 +69,7 @@
 			return
 
 		if(!L)
-			to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
+			to_chat(usr, LANG("client.4068a4c3", null), confidential = TRUE)
 			return
 
 		var/newamt
@@ -92,7 +93,7 @@
 				L.adjust_stamina_loss(amount, forced = TRUE)
 				newamt = L.get_stamina_loss()
 			else
-				to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)
+				to_chat(usr, LANG("client.19bd3e86", list(Text, L)), confidential = TRUE)
 				return
 
 		if(amount != 0)

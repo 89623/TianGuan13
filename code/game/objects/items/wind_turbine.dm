@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TURBINE_MAX_STORED_POWER (0.2 * STANDARD_CELL_CHARGE)
 #define TURBINE_ANIMATION_TICKS_PER_TILE (1)
 #define TURBINE_ANIMATION_TICKS (4)
@@ -246,24 +247,24 @@
 /obj/item/portable_wind_turbine/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/stock_parts/capacitor))
 		if (cap)
-			balloon_alert(user, "already has a capacitor!")
+			balloon_alert(user, LANG("obj.f5b1842a", null))
 			return TRUE
 		user.transferItemToLoc(attacking_item, src)
 		cap = attacking_item
-		balloon_alert(user, "inserted the [attacking_item]")
+		balloon_alert(user, LANG("obj.3c264ea5", list(attacking_item)))
 		return TRUE
 	if(!is_type_in_typecache(attacking_item, allowed_devices))
 		return ..()
 	if(isnull(cap))
-		balloon_alert(user, "no capacitor inserted!")
+		balloon_alert(user, LANG("obj.888798eb", null))
 		return TRUE
 	if(charging)
-		balloon_alert(user, "already charging something!")
+		balloon_alert(user, LANG("obj.f5acf363", null))
 		return TRUE
 	if(istype(attacking_item, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = attacking_item
 		if(!energy_gun.can_charge)
-			balloon_alert(user, "not rechargable!")
+			balloon_alert(user, LANG("obj.642754d6", null))
 			return TRUE
 	user.transferItemToLoc(attacking_item, src)
 	charging = attacking_item
@@ -317,7 +318,7 @@
 				available_power -= power_to_give
 				if(charging_cell.charge == charging_cell.maxcharge)
 					playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-					say("[charging] has finished recharging!")
+					say(LANG("obj.53fdf44c", list(charging)))
 				else
 					using_power = TRUE
 		update_appearance()

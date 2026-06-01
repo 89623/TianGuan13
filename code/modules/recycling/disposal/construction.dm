@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Disposal pipe construction
 // This is the pipe that you drag around, not the attached ones.
 
@@ -105,7 +106,7 @@
 	..()
 	if(anchored)
 		set_anchored(FALSE)
-		to_chat(user, span_notice("You detach the [pipename] from the underfloor."))
+		to_chat(user, span_notice(LANG("obj.358dbc5d", list(pipename))))
 	else
 		var/ispipe = is_pipe() // Indicates if we should change the level of this pipe
 
@@ -113,11 +114,11 @@
 		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && isfloorturf(T))
 			var/obj/item/crowbar/held_crowbar = user.is_holding_tool_quality(TOOL_CROWBAR)
 			if(!held_crowbar || !T.crowbar_act(user, held_crowbar))
-				to_chat(user, span_warning("You can only attach the [pipename] if the floor plating is removed!"))
+				to_chat(user, span_warning(LANG("obj.fdcc4d76", list(pipename))))
 				return TRUE
 
 		if(!ispipe && iswallturf(T))
-			to_chat(user, span_warning("You can't build [pipename]s on walls, only disposal pipes!"))
+			to_chat(user, span_warning(LANG("obj.bb0c84eb", list(pipename))))
 			return TRUE
 
 		if(ispipe)
@@ -137,11 +138,11 @@
 			var/found_trunk = locate(/obj/structure/disposalpipe/trunk) in T
 
 			if(!found_trunk)
-				to_chat(user, span_warning("The [pipename] requires a trunk underneath it in order to work!"))
+				to_chat(user, span_warning(LANG("obj.7fb0e4d2", list(pipename))))
 				return TRUE
 
 		set_anchored(TRUE)
-		to_chat(user, span_notice("You attach the [pipename] to the underfloor."))
+		to_chat(user, span_notice(LANG("obj.55e1aa7e", list(pipename))))
 	I.play_tool_sound(src, 100)
 	update_appearance()
 	return TRUE
@@ -151,20 +152,20 @@
 	if(anchored)
 		var/turf/T = get_turf(src)
 		if(!is_pipe() && ((locate(/obj/machinery/disposal) in T) || ((locate(/obj/structure/disposaloutlet) in T))))
-			to_chat(user, span_warning("A disposals machine already exists here!"))
+			to_chat(user, span_warning(LANG("obj.d3af997a", null)))
 			return TRUE
 
 		if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 			return TRUE
 
-		to_chat(user, span_notice("You start welding the [pipename] in place..."))
+		to_chat(user, span_notice(LANG("obj.c34a1fb8", list(pipename))))
 		if(I.use_tool(src, user, 8, volume=50))
-			to_chat(user, span_notice("The [pipename] has been welded in place."))
+			to_chat(user, span_notice(LANG("obj.cb0f358b", list(pipename))))
 			var/obj/O = new pipe_type(loc, src)
 			transfer_fingerprints_to(O)
 
 	else
-		to_chat(user, span_warning("You need to attach it to the plating first!"))
+		to_chat(user, span_warning(LANG("obj.0acfc80c", null)))
 	return TRUE
 
 /obj/structure/disposalconstruct/proc/is_pipe()

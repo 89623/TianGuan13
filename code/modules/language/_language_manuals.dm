@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/language_manual
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "book2"
@@ -13,10 +14,10 @@
 		return
 
 	if(user.has_language(language))
-		to_chat(user, span_boldwarning("You start skimming through [src], but you already know [initial(language.name)]."))
+		to_chat(user, span_boldwarning(LANG("obj.6e7d7669", list(src, initial(language.name)))))
 		return
 
-	to_chat(user, span_bolddanger("You start skimming through [src], and [flavour_text]."))
+	to_chat(user, span_bolddanger(LANG("obj.0550275b", list(src, flavour_text))))
 
 	user.grant_language(language)
 	user.remove_blocked_language(language, source=LANGUAGE_ALL)
@@ -110,7 +111,7 @@
 
 /obj/item/language_manual/dronespeak_manual/attack_self(mob/living/user)
 	if(!(isdrone(user) || issilicon(user)))
-		to_chat(user, span_danger("You beat yourself over the head with [src]!"))
+		to_chat(user, span_danger(LANG("obj.ffff29ef", list(src))))
 		return
 
 	return ..()

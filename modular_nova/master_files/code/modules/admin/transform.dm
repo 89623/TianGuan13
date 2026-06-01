@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(pp_transformables, list(
 		return
 
 	if(!ismob(selected_mob))
-		to_chat(usr, "This can only be used on instances of type /mob.")
+		to_chat(usr, LANG("datum.7ba1e557", null))
 		return
 
 	if (!newTypeName)

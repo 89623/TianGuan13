@@ -265,11 +265,11 @@
 	if(!blood_drain)
 		power_usage += (blood_drain_rate * blood_conversion_rate)
 
-		balloon_alert(linked_mob, "blood draining disabled")
+		balloon_alert(linked_mob, LANG("obj.07112999", null))
 		return TRUE
 
 	power_usage -= (blood_drain_rate * blood_conversion_rate)
-	balloon_alert(linked_mob, "blood draining enabled")
+	balloon_alert(linked_mob, LANG("obj.109abd50", null))
 	return TRUE
 
 ///Checks if the NIF is able to draw blood as a power source?
@@ -380,11 +380,11 @@
 		nif_icon = tag
 
 	if(alert)
-		to_chat(linked_mob, span_warning("[nif_icon] <b>NIF Alert</b>: [message_to_send]"))
+		to_chat(linked_mob, span_warning(LANG("obj.7c9e38dd", list(nif_icon, message_to_send))))
 		linked_mob.playsound_local(linked_mob, bad_sound, 60, FALSE)
 		return
 
-	to_chat(linked_mob, span_cyan_nova("[nif_icon] <b>NIF Message</b>: [message_to_send]"))
+	to_chat(linked_mob, span_cyan_nova(LANG("obj.10c3dd1e", list(nif_icon, message_to_send))))
 	linked_mob.playsound_local(linked_mob, good_sound, 60, FALSE)
 
 
@@ -411,7 +411,7 @@
 		return
 	var/added_stun_duration = 20 SECONDS / severity // the previous stun duration added by the parent call
 	owner.AdjustStun(-added_stun_duration) // we want to negate that stun here
-	to_chat(owner, span_warning("You feel a stinging pain in your head!"))
+	to_chat(owner, span_warning(LANG("obj.bedf9715", null)))
 	if(!durability_loss_vulnerable)
 		return FALSE
 

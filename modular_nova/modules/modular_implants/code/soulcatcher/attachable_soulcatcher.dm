@@ -84,11 +84,11 @@
 
 /obj/item/attachable_soulcatcher/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isitem(interacting_with) || is_type_in_list(interacting_with, blacklisted_items))
-		balloon_alert(user, "incompatible!")
+		balloon_alert(user, LANG("obj.fbc9e3cd", null))
 		return NONE
 
 	if(interacting_with.GetComponent(/datum/component/soulcatcher))
-		balloon_alert(user, "already attached!")
+		balloon_alert(user, LANG("obj.c0bc11f3", null))
 		return ITEM_INTERACT_BLOCKING
 
 

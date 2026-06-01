@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/status_effect/stop_drop_roll
 	id = "stop_drop_roll"
 	alert_type = null
@@ -11,7 +12,7 @@
 		return FALSE
 
 	if(!owner.Knockdown(tick_interval * 2, ignore_canstun = TRUE) || owner.body_position != LYING_DOWN)
-		to_chat(owner, span_warning("You try to stop, drop, and roll - but you can't get on the ground!"))
+		to_chat(owner, span_warning(LANG("datum.b1fa4f84", null)))
 		return FALSE
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(stop_rolling))
@@ -69,7 +70,7 @@
 	SIGNAL_HANDLER
 
 	if(!QDELING(owner))
-		to_chat(owner, span_notice("You stop rolling around."))
+		to_chat(owner, span_notice(LANG("datum.7f698e49", null)))
 	qdel(src)
 
 /// Called when we've successfully extinguished ourselves.

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/weightlessness
 	name = "Localized Weightloss Malfunction"
 	max_stages = 4
@@ -40,4 +41,4 @@
 /datum/disease/weightlessness/cure(add_resistance)
 	. = ..()
 	affected_mob.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 95, purge_ratio = 0.4)
-	to_chat(affected_mob, span_danger("You fall to the floor as your body stops rejecting gravity."))
+	to_chat(affected_mob, span_danger(LANG("datum.25068996", null)))

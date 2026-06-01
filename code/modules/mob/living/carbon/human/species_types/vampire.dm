@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 ///how many vampires exist in each house
 #define VAMPIRES_PER_HOUSE 5
@@ -53,12 +54,12 @@
 		return
 	vampire.adjust_blood_volume(-0.125 * seconds_per_tick)
 	if(vampire.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_SURVIVE)
-		to_chat(vampire, span_danger("You ran out of blood!"))
+		to_chat(vampire, span_danger(LANG("datum.f729390e", null)))
 		vampire.investigate_log("has been dusted by a lack of blood (vampire).", INVESTIGATE_DEATHS)
 		vampire.dust()
 	var/area/A = get_area(vampire)
 	if(istype(A, /area/station/service/chapel))
-		to_chat(vampire, span_warning("You don't belong here!"))
+		to_chat(vampire, span_warning(LANG("datum.07655515", null)))
 		vampire.adjust_fire_loss(10 * seconds_per_tick)
 		vampire.adjust_fire_stacks(3 * seconds_per_tick)
 		vampire.ignite_mob()
@@ -178,7 +179,7 @@
 	if(!istype(used_item, /obj/item/reagent_containers/blood))
 		return NONE
 	if(used_item.reagents?.total_volume <= 0)
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
@@ -194,7 +195,7 @@
 	if(!do_after(user, time, bloodbag))
 		return
 
-	to_chat(user, span_notice("You swallow a gulp of [src]."))
+	to_chat(user, span_notice(LANG("obj.d0158148", list(src))))
 	playsound(bloodbag, 'sound/items/drink.ogg', 50, TRUE) //slurp
 	bloodbag.reagents.trans_to(user, bloodbag.reagents.maximum_volume * 0.05, transferred_by = user, methods = INGEST)
 	if(bloodbag.reagents.total_volume > 0)
@@ -214,7 +215,7 @@
 	var/mob/living/carbon/user = owner
 	var/obj/item/organ/tongue/vampire/licker_drinker = target
 	if(!COOLDOWN_FINISHED(licker_drinker, drain_cooldown))
-		to_chat(user, span_warning("You just drained blood, wait a few seconds!"))
+		to_chat(user, span_warning(LANG("datum.5dcd793c", null)))
 		return FALSE
 
 	if(!iscarbon(user.pulling))
@@ -222,32 +223,32 @@
 
 	var/mob/living/carbon/victim = user.pulling
 	if(user.get_blood_volume() >= BLOOD_VOLUME_MAXIMUM)
-		to_chat(user, span_warning("You're already full!"))
+		to_chat(user, span_warning(LANG("datum.3aec2368", null)))
 		return FALSE
 	if(victim.stat == DEAD)
-		to_chat(user, span_warning("You need a living victim!"))
+		to_chat(user, span_warning(LANG("datum.cbeaa122", null)))
 		return FALSE
 	var/blood_name = LOWER_TEXT(user.get_bloodtype()?.get_blood_name())
 	if(!victim.get_blood_volume() || victim.get_blood_reagent() != user.get_blood_reagent())
 		if (blood_name)
-			to_chat(user, span_warning("[victim] doesn't have [blood_name]!"))
+			to_chat(user, span_warning(LANG("datum.509e4326", list(victim, blood_name))))
 		else
-			to_chat(user, span_warning("[victim] doesn't have anything inside of them you could stomach!"))
+			to_chat(user, span_warning(LANG("datum.f731b502", list(victim))))
 		return FALSE
 	COOLDOWN_START(licker_drinker, drain_cooldown, 3 SECONDS)
 	if(victim.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 		victim.show_message(span_warning("[user] tries to bite you, but stops before touching you!"))
-		to_chat(user, span_warning("[victim] is blessed! You stop just in time to avoid catching fire."))
+		to_chat(user, span_warning(LANG("datum.135f1a2f", list(victim))))
 		return FALSE
 	if(victim.has_reagent(/datum/reagent/consumable/garlic))
 		victim.show_message(span_warning("[user] tries to bite you, but recoils in disgust!"))
-		to_chat(user, span_warning("[victim] reeks of garlic! you can't bring yourself to drain such tainted blood."))
+		to_chat(user, span_warning(LANG("datum.bd4a7b92", list(victim))))
 		return FALSE
 	if(!do_after(user, 3 SECONDS, target = victim, hidden = TRUE))
 		return FALSE
 
 	victim.show_message(span_danger("[user] is draining your blood!"))
-	to_chat(user, span_notice("You drain some blood!"))
+	to_chat(user, span_notice(LANG("datum.4bcde641", null)))
 	playsound(user, 'sound/items/drink.ogg', 30, TRUE, -2)
 
 	// Since we adjust the user first, we need to take the victim's blood volume into account.
@@ -259,7 +260,7 @@
 	victim.adjust_blood_volume(-amount_drained)
 
 	if(!victim.get_blood_volume())
-		to_chat(user, span_notice("You finish off [victim]'s [blood_name] supply."))
+		to_chat(user, span_notice(LANG("datum.2165913a", list(victim, blood_name))))
 	return TRUE
 
 /obj/item/organ/heart/vampire

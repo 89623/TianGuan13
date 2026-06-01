@@ -36,7 +36,7 @@
 	. = ..()
 
 	if(HAS_TRAIT(cast_on, TRAIT_NODISMEMBER))
-		to_chat(cast_on, span_warning("ERROR: LIMB DISENGAGEMENT PROTOCOLS OFFLINE. Seek out a maintenance technician."))
+		to_chat(cast_on, span_warning(LANG("datum.9fdea796", null)))
 		return
 
 	var/list/exclusions = list()
@@ -50,7 +50,7 @@
 			robot_parts += possible_part
 
 	if (!length(robot_parts))
-		to_chat(cast_on, "ERROR: Limb disengagement protocols report no compatible cybernetics currently installed. Seek out a maintenance technician.")
+		to_chat(cast_on, LANG("datum.38f8fb75", null))
 		return
 
 	var/obj/item/bodypart/limb_to_detach = tgui_input_list(cast_on, "Limb to detach", "Cybernetic Limb Detachment", sort_names(robot_parts))

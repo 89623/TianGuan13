@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Greed's slot machine: Used in the Greed ruin. Deals damage on each use, with a successful use giving a d20 of fate.
 /obj/structure/cursed_slot_machine
 	name = "greed's slot machine"
@@ -62,11 +63,11 @@
 	var/signal_value = SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_USE, max_curse_amount)
 
 	if(!COOLDOWN_FINISHED(src, spin_cooldown) || (signal_value & SLOT_MACHINE_USE_POSTPONE))
-		to_chat(user, span_danger("The machine doesn't engage. You get the compulsion to try again in a few seconds."))
+		to_chat(user, span_danger(LANG("obj.f62b8c91", null)))
 		return FALSE
 
 	if(signal_value & SLOT_MACHINE_USE_CANCEL) // failsafe in case we don't want to let the machine be used for some reason (like if we're maxed out on curses but not getting gibbed)
-		say("We're sorry, but we can no longer serve you at this establishment.")
+		say(LANG("obj.51ad7ddd", null))
 		return FALSE
 
 	in_use = TRUE
@@ -91,7 +92,7 @@
 	playsound(src, 'sound/machines/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
 	new prize(get_turf(src))
 	if(user)
-		to_chat(user, span_boldwarning("You've hit the jackpot!!! Laughter echoes around you as your reward appears in the machine's place."))
+		to_chat(user, span_boldwarning(LANG("obj.3d84ca5b", null)))
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CURSED_SLOT_MACHINE_WON)
 	qdel(src)
@@ -112,7 +113,7 @@
 /obj/structure/cursed_money/proc/collapse()
 	if(QDELETED(src))
 		return
-	visible_message(span_warning("[src] falls in on itself, with the canvas rotting away and contents vanishing."))
+	visible_message(span_warning(LANG("obj.2bff6ada", list(src))))
 	qdel(src)
 
 /obj/structure/cursed_money/attack_hand(mob/living/user, list/modifiers)

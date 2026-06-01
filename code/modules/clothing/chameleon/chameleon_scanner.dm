@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Small handheld chameleon item that allows a user to mimic the outfit of another person quickly.
 /obj/item/chameleon_scanner
 	// No name or desc by default, set up by the cham action
@@ -87,10 +88,10 @@
 		return
 
 	if(!COOLDOWN_FINISHED(src, scan_cooldown))
-		balloon_alert(scanner, "not ready yet!")
+		balloon_alert(scanner, LANG("obj.7f0aa913", null))
 		return
 	if(get_dist(scanner, mob_copying) > scan_range)
-		balloon_alert(scanner, "too far away!")
+		balloon_alert(scanner, LANG("obj.a462ee7c", null))
 		return
 	// Very short scan timer, keep you on your toes
 	if(!do_after(scanner, 0.5 SECONDS, scanned, hidden = TRUE))

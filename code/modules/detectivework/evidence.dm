@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //CONTAINS: Evidence bags
 
 /obj/item/evidencebag
@@ -66,7 +67,7 @@
 
 /obj/item/evidencebag/attack_self(mob/user)
 	if(!atom_storage.get_total_weight())
-		to_chat(user, span_notice("[src] is empty."))
+		to_chat(user, span_notice(LANG("obj.ab993876", list(src))))
 		return
 	user.visible_message(span_notice("[user] empties [src]."), span_notice("You empty [src]."),\
 	span_hear("You hear someone rustle around in a plastic bag, and remove something."))

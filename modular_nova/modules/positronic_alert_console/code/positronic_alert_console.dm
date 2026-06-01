@@ -25,28 +25,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/posialert, 28)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, robotics_cooldown))
 		COOLDOWN_RESET(src, robotics_cooldown)
-		to_chat(user, span_notice("You have removed the mute on [src]."))
+		to_chat(user, span_notice(LANG("obj.3ba19649", list(src))))
 		return
 	mute_reason = null
 	mute_reason = stripped_input(user, "What would the reason for the mute be? (max characters is 20)", "Mute Reason", "", 20)
 	if(!mute_reason)
-		to_chat(user, span_warning("[src] requires a reason to mute!"))
+		to_chat(user, span_warning(LANG("obj.7aca210e", list(src))))
 		return
 	COOLDOWN_START(src, robotics_cooldown, 5 MINUTES)
-	to_chat(user, span_notice("You have muted [src] for five minutes."))
+	to_chat(user, span_notice(LANG("obj.079df7a0", list(src))))
 
 /obj/machinery/posialert/attack_ghost(mob/user)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, robotics_cooldown))
-		to_chat(user, span_warning("[src] has been muted! Remaining time on mute is [COOLDOWN_TIMELEFT(src, robotics_cooldown) * 0.1] seconds."))
-		to_chat(user, span_warning("[src]'s mute reason: [mute_reason]"))
+		to_chat(user, span_warning(LANG("obj.aa401517", list(src, COOLDOWN_TIMELEFT(src, robotics_cooldown) * 0.1))))
+		to_chat(user, span_warning(LANG("obj.15266a2a", list(src, mute_reason))))
 		return
 	if(!COOLDOWN_FINISHED(src, ghost_cooldown))
-		to_chat(user, span_warning("[src] is currently still on cooldown! Remaining time on cooldown is [COOLDOWN_TIMELEFT(src, ghost_cooldown) * 0.1] seconds."))
+		to_chat(user, span_warning(LANG("obj.3b4f1cdc", list(src, COOLDOWN_TIMELEFT(src, ghost_cooldown) * 0.1))))
 		return
 	COOLDOWN_START(src, ghost_cooldown, 30 SECONDS)
 	flick("posialertflash",src)
-	say("There are positronic personalities available.")
+	say(LANG("obj.fff6b55e", null))
 	aas_config_announce(/datum/aas_config_entry/posibrain_alert, list(), src, list(announcement_channel))
 	playsound(loc, 'sound/machines/ping.ogg', 50)
 

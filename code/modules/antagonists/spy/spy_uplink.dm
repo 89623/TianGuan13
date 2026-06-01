@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Spy uplink
  *
@@ -96,7 +97,7 @@
 /// Wraps the stealing process in a scanning effect.
 /datum/component/spy_uplink/proc/start_stealing(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	if(!isturf(stealing.loc) && stealing.loc != spy)
-		to_chat(spy, span_warning("Your uplink blinks red: [stealing] cannot be extracted from there."))
+		to_chat(spy, span_warning(LANG("datum.307ebb76", list(stealing))))
 		return FALSE
 
 	log_combat(spy, stealing, "started stealing", parent, "(spy bounty)")
@@ -141,10 +142,10 @@
 	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), hidden = TRUE))
 		return FALSE
 	if(bounty.claimed)
-		to_chat(spy, span_warning("Your uplink blinks red: The bounty for [stealing] has been claimed by another spy!"))
+		to_chat(spy, span_warning(LANG("datum.86b2d04f", list(stealing))))
 		return FALSE
 	if(spy.is_holding(stealing) && !spy.dropItemToGround(stealing))
-		to_chat(spy, span_warning("Your uplink blinks red: [stealing] seems stuck to your hand!"))
+		to_chat(spy, span_warning(LANG("datum.432b57b2", list(stealing))))
 		return FALSE
 
 	var/bounty_key = bounty.get_dupe_protection_key(stealing)
@@ -162,8 +163,7 @@
 	if(isitem(reward))
 		spy.put_in_hands(reward)
 
-	to_chat(spy, span_notice("Bounty complete! You have been rewarded with \a [reward].\
-		[reward.loc == spy ? "" : " <i>Find it at your feet.</i>"]"))
+	to_chat(spy, span_notice(LANG("datum.33e62f45", list(reward, reward.loc == spy ? "" : " <i>Find it at your feet.</i>"))))
 
 	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 

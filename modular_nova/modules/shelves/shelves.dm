@@ -53,12 +53,12 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/cargo_shelf/relay_container_resist_act(mob/living/user, obj/structure/closet/crate)
-	to_chat(user, span_notice("You begin attempting to knock [crate] out of [src]"))
+	to_chat(user, span_notice(LANG("obj.131cb2d0", list(crate, src))))
 	if(do_after(user, 30 SECONDS, target = crate))
 		if(!user || user.stat != CONSCIOUS || user.loc != crate || crate.loc != src)
 			return // If the user is in a strange condition, return early.
-		visible_message(span_warning("[crate] falls off of [src]!"),
-			span_notice("You manage to knock [crate] free of [src]"),
+		visible_message(span_warning(LANG("obj.73a87d59", list(crate, src))),
+			span_notice(LANG("obj.5415abf5", list(crate, src))),
 			span_notice("You hear a thud."))
 		crate.forceMove(get_spill_location()) // Try to push it somewhere
 
@@ -73,19 +73,19 @@
 /// Returns if this crate can actually be loaded
 /obj/structure/cargo_shelf/proc/can_load(obj/structure/closet/crate/crate, mob/user, y_offset)
 	if(crate_count() >= capacity) // If we don't find an empty slot, return early.
-		balloon_alert(user, "shelf full!")
+		balloon_alert(user, LANG("obj.2f9c3550", null))
 		return FALSE
 	if (y_offset <= 12)
 		if(crates_stored[1])
-			balloon_alert(user, "shelf occupied!")
+			balloon_alert(user, LANG("obj.c2d5cd66", null))
 			return FALSE
 	else if (y_offset <= 21)
 		if(crates_stored[2])
-			balloon_alert(user, "shelf occupied!")
+			balloon_alert(user, LANG("obj.c2d5cd66", null))
 			return FALSE
 	else
 		if(crates_stored[3])
-			balloon_alert(user, "shelf occupied!")
+			balloon_alert(user, LANG("obj.c2d5cd66", null))
 			return FALSE
 	return TRUE
 
@@ -174,7 +174,7 @@
 	// -----------------------------------------
 	if (istype(over, /turf/open) && istype(loc, /obj/structure/cargo_shelf))
 		if(get_dist(user, over_location) > 1)
-			balloon_alert(user, "too far!")
+			balloon_alert(user, LANG("obj.f5e75781", null))
 			return
 		var/obj/structure/cargo_shelf/shelf = loc
 		shelf.unload(src, user, over)
@@ -257,7 +257,7 @@
 	if(building)
 		return
 	building = TRUE
-	to_chat(user, span_notice("You start constructing [src]..."))
+	to_chat(user, span_notice(LANG("obj.11bacef4", list(src))))
 	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			building = FALSE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/heart/gland/blood
 	abductor_hint = "pseudonuclear hemo-destabilizer. Periodically randomizes the abductee's bloodtype into a random reagent."
 	cooldown_low = 1200
@@ -13,7 +14,7 @@
 	if(!ishuman(owner) || !owner.dna.species)
 		return
 	var/mob/living/carbon/human/owner_mob = owner
-	to_chat(owner_mob, span_warning("You feel your blood heat up for a moment."))
+	to_chat(owner_mob, span_warning(LANG("obj.c7d57c8f", null)))
 	var/datum/reagent/new_blood_reagent = get_random_reagent_id()
 	// Try to find a corresponding blood type for this reagent
 	var/datum/blood_type/new_blood_type = get_blood_type(new_blood_reagent)

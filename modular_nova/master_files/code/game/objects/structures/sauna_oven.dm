@@ -53,9 +53,9 @@
 
 /obj/structure/sauna_oven/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH)
-		balloon_alert(user, "deconstructing...")
+		balloon_alert(user, LANG("obj.44f0e678", null))
 		if(attacking_item.use_tool(src, user, 60, volume = 50))
-			balloon_alert(user, "deconstructed")
+			balloon_alert(user, LANG("obj.80451b1c", null))
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 30)
 			qdel(src)
 
@@ -70,12 +70,12 @@
 			some water to [src]."))
 			water_amount += 5 * SAUNA_WATER_PER_WATER_UNIT
 		else
-			balloon_alert(user, "no water!")
+			balloon_alert(user, LANG("obj.ac11e966", null))
 
 	else if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/wood = attacking_item
 		if(fuel_amount > SAUNA_MAXIMUM_FUEL)
-			balloon_alert(user, "it's full!")
+			balloon_alert(user, LANG("obj.2cb7d354", null))
 			return
 		fuel_amount += SAUNA_LOG_FUEL * wood.amount
 		wood.use(wood.amount)

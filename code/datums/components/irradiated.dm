@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define RADIATION_IMMEDIATE_TOX_DAMAGE 10
 
 #define RADIATION_TOX_DAMAGE_PER_INTERVAL 2
@@ -138,7 +139,7 @@
 	)
 
 	if(human_parent.is_blind())
-		to_chat(human_parent, span_boldwarning("Your [affected_limb.plaintext_zone] feels like it's bubbling, then burns like hell!"))
+		to_chat(human_parent, span_boldwarning(LANG("datum.b08d5509", list(affected_limb.plaintext_zone))))
 
 	human_parent.apply_damage(RADIATION_BURN_SPLOTCH_DAMAGE, BURN, affected_limb, wound_clothing = FALSE)
 	playsound(
@@ -181,10 +182,10 @@
 
 	if (isliving(source))
 		var/mob/living/living_source = source
-		to_chat(user, span_bolddanger("[icon2html(geiger_counter, user)] Subject is irradiated. Contamination traces back to roughly [DisplayTimeText(world.time - beginning_of_irradiation, 5)] ago. Current toxin levels: [living_source.get_tox_loss()]."))
+		to_chat(user, span_bolddanger(LANG("datum.8088beff", list(icon2html(geiger_counter, user), DisplayTimeText(world.time - beginning_of_irradiation, 5), living_source.get_tox_loss()))))
 	else
 		// In case the green wasn't obvious enough...
-		to_chat(user, span_bolddanger("[icon2html(geiger_counter, user)] Target is irradiated."))
+		to_chat(user, span_bolddanger(LANG("datum.a2f92d92", list(icon2html(geiger_counter, user)))))
 
 	return COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL
 

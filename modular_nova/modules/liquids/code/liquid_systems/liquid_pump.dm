@@ -29,13 +29,13 @@
 
 /obj/structure/liquid_pump/attack_hand(mob/user)
 	if(!anchored)
-		to_chat(user, span_warning("[src] needs to be anchored first!"))
+		to_chat(user, span_warning(LANG("obj.ed8d24fe", list(src))))
 		return
-	to_chat(user, span_notice("You turn [src] [turned_on ? "off" : "on"]."))
+	to_chat(user, span_notice(LANG("obj.c2fd54ba", list(src, turned_on ? "off" : "on"))))
 	toggle_working()
 
 /obj/structure/liquid_pump/click_alt(mob/living/user)
-	to_chat(user, span_notice("You flick [src]'s spewing mode [spewing_mode ? "off" : "on"]."))
+	to_chat(user, span_notice(LANG("obj.a22a1b24", list(src, spewing_mode ? "off" : "on"))))
 	spewing_mode = !spewing_mode
 	update_icon()
 	return CLICK_ACTION_SUCCESS

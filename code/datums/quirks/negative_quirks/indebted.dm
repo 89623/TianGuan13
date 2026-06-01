@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/quirk/indebted
 	name = "Indebted"
 	desc = "Bad life decisions, medical bills, student loans, whatever it may be, you've incurred quite the debt. A portion of all you receive will go towards extinguishing it."
@@ -15,7 +16,7 @@
 	var/debt = PAYCHECK_CREW * rand(275, 325)
 	account.account_debt += debt
 	RegisterSignal(account, COMSIG_BANK_ACCOUNT_DEBT_PAID, PROC_REF(on_debt_paid))
-	to_chat(client_source.mob, span_warning("You remember, you've a hefty, [debt] [MONEY_NAME_SINGULAR] debt to pay..."))
+	to_chat(client_source.mob, span_warning(LANG("datum.f11371b4", list(debt, MONEY_NAME_SINGULAR))))
 
 ///Once the debt is extinguished, award an achievement and a pin for actually taking care of it.
 /datum/quirk/indebted/proc/on_debt_paid(datum/bank_account/source)

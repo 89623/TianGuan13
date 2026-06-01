@@ -1,7 +1,8 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 ADMIN_VERB(dsay, R_NONE, "DSay", "Speak to the dead.", ADMIN_CATEGORY_GAME, message as text)
 	if(user.prefs.muted & MUTE_DEADCHAT)
-		to_chat(user, span_danger("You cannot send DSAY messages (muted)."), confidential = TRUE)
+		to_chat(user, span_danger(LANG("datum.ba44f832", null)), confidential = TRUE)
 		return
 
 	if (user.handle_spam_prevention(message,MUTE_DEADCHAT))

@@ -82,7 +82,7 @@
 	old_brain.Remove(human_holder, special = TRUE, movement_flags = NO_ID_TRANSFER)
 
 	new_slime_brain.Insert(human_holder, special = TRUE, movement_flags = NO_ID_TRANSFER)
-	to_chat(human_holder, span_warning("Your massive core pulses with bioelectricity!"))
+	to_chat(human_holder, span_warning(LANG("datum.91ce5813", null)))
 	if(old_brain)
 		old_brain.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_brain)
@@ -91,7 +91,7 @@
 		qdel(new_slime_stomach)
 		return
 	new_slime_stomach.Insert(human_holder, special = TRUE)
-	to_chat(human_holder, span_warning("You feel your massive golgi apparatus squish!"))
+	to_chat(human_holder, span_warning(LANG("datum.c15bf254", null)))
 	if(old_stomach)
 		old_stomach.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_stomach)
@@ -149,7 +149,7 @@
 				- 2 * seconds_per_tick,
 			)
 		if(SPT_PROB(5, seconds_per_tick))
-			to_chat(organ_owner, span_purple("Your body's thirst for plasma is quenched, your inner and outer membrane using it to regenerate."))
+			to_chat(organ_owner, span_purple(LANG("obj.9ebc9628", null)))
 
 	if(chem.type == /datum/reagent/water)
 		if (HAS_TRAIT(organ_owner, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(organ_owner, TRAIT_WATER_BREATHING))
@@ -158,7 +158,7 @@
 		organ_owner.adjust_blood_volume(-3 * seconds_per_tick)
 		organ_owner.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if(SPT_PROB(1, seconds_per_tick))
-			to_chat(organ_owner, span_warning("The water starts to weaken and adulterate your insides!"))
+			to_chat(organ_owner, span_warning(LANG("obj.68ac02fb", null)))
 		return COMSIG_MOB_STOP_REAGENT_TICK
 
 /obj/item/organ/stomach/slime
@@ -298,7 +298,7 @@
 	)
 	brainmob?.notify_revival("You are being revived!", sound = null, source = src) // no sound since it's a whopping 60 second wait time after this
 	if(!do_after(user, 60 SECONDS, src))
-		to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+		to_chat(user, span_warning(LANG("obj.6c40dd89", list(item, src))))
 		return TRUE
 
 	user.visible_message(
@@ -350,7 +350,7 @@
 			bodypart.drop_limb()
 			continue
 	new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
-	to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
+	to_chat(owner, span_purple(LANG("obj.25459c26", null)))
 	return TRUE
 
 // HEALING SECTION
@@ -402,7 +402,7 @@
 			healing = FALSE
 			blood_units_to_lose += 1 * seconds_per_tick
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(slime, span_warning("You can't pull your body together and regenerate with water inside it!"))
+				to_chat(slime, span_warning(LANG("datum.f1cfa42c", null)))
 
 	slime.adjust_blood_volume(-blood_units_to_lose)
 
@@ -1171,10 +1171,10 @@
 	if(slime_restricted && !isjellyperson(slime))
 		return
 	if(core.gps_active)
-		to_chat(owner,span_notice("You tune out the electromagnetic signals from your core so they are ignored by GPS receivers upon its rejection."))
+		to_chat(owner,span_notice(LANG("datum.a93c22e1", null)))
 		core.gps_active = FALSE
 	else
-		to_chat(owner, span_notice("You fine-tune the electromagnetic signals from your core to be picked up by GPS receivers upon its rejection."))
+		to_chat(owner, span_notice(LANG("datum.ad1151d7", null)))
 		core.gps_active = TRUE
 
 #undef SLIME_ACTIONS_ICON_FILE

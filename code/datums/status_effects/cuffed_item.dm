@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * The status effect given by the cuffable_item.
  * It basically binds an item to your arm, basically making it undroppable until the cuffs or item are removed, usually done by one of:
@@ -190,7 +191,7 @@
 	if(!leash_to_mob.dropItemToGround(cuffed))
 		qdel(src)
 		return
-	to_chat(leash_to_mob, span_warning("[cuffs] binding [cuffed] to [owner] tugs it out of your grasp!"))
+	to_chat(leash_to_mob, span_warning(LANG("datum.1d71ec19", list(cuffs, cuffed, owner))))
 
 /// Stops it from being stored anywhere
 /datum/status_effect/cuffed_item/proc/block_storage_insert(obj/item/source, atom/target_storage, mob/user, force, messages)

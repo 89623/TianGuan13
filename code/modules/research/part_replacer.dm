@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///RPED. Allows installing & exchaging parts on machines
 /obj/item/storage/part_replacer
 	name = "rapid part exchange device"
@@ -101,7 +102,7 @@
 		if(target_holder.total_volume)
 			target_holder.force_stop_reacting()
 			target_holder.clear_reagents()
-			to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
+			to_chat(usr, span_notice(LANG("obj.cb7b836a", list(src, inserted_component))))
 		target_holder.flags = target_holder.flags << 5 //masks all flags upto DUNKABLE(1<<5) i.e. removes all methods of transfering reagents to/from the object
 /**
  * Signal handler for a part is removed from the BRPED.

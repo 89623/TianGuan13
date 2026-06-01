@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Toys!
  * Contains
  * Balloons
@@ -67,12 +68,12 @@
 		return NONE
 	var/obj/structure/reagent_dispensers/RD = interacting_with
 	if(RD.reagents.total_volume <= 0)
-		to_chat(user, span_warning("[RD] is empty."))
+		to_chat(user, span_warning(LANG("obj.ab993876", list(RD))))
 	else if(reagents.total_volume >= 10)
-		to_chat(user, span_warning("[src] is full."))
+		to_chat(user, span_warning(LANG("obj.8e2d390c", list(src))))
 	else
 		interacting_with.reagents.trans_to(src, 10, transferred_by = user)
-		to_chat(user, span_notice("You fill the balloon with the contents of [interacting_with]."))
+		to_chat(user, span_notice(LANG("obj.d9e89dd7", list(interacting_with))))
 		desc = "A translucent balloon with some form of liquid sloshing around in it."
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -82,12 +83,12 @@
 	if(istype(I, /obj/item/reagent_containers/cup))
 		if(I.reagents)
 			if(I.reagents.total_volume <= 0)
-				to_chat(user, span_warning("[I] is empty."))
+				to_chat(user, span_warning(LANG("obj.ab993876", list(I))))
 			else if(reagents.total_volume >= 10)
-				to_chat(user, span_warning("[src] is full."))
+				to_chat(user, span_warning(LANG("obj.8e2d390c", list(src))))
 			else
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
-				to_chat(user, span_notice("You fill the balloon with the contents of [I]."))
+				to_chat(user, span_notice(LANG("obj.d9e89dd7", list(I))))
 				I.reagents.trans_to(src, 10, transferred_by = user)
 				update_appearance()
 	else if(I.get_sharpness())
@@ -173,10 +174,10 @@
 
 	var/obj/item/toy/balloon/long/hit_by = attacking_item
 	if(hit_by.current_color == current_color)
-		to_chat(user, span_warning("You must use balloons of different colours to do that!"))
+		to_chat(user, span_warning(LANG("obj.6d8bf663", null)))
 		return ..()
 	visible_message(
-		span_notice("[user.name] starts contorting up a balloon animal!"),
+		span_notice(LANG("obj.b068d552", list(user.name))),
 		blind_message = span_hear("You hear balloons being contorted."),
 		vision_distance = 3,
 		ignored_mobs = user,
@@ -413,9 +414,9 @@
 	current_mode++
 	playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, vary = TRUE)
 	if (current_mode <= modes.len)
-		balloon_alert(user, "set to [current_mode]")
+		balloon_alert(user, LANG("obj.28f94138", list(current_mode)))
 	else
-		balloon_alert(user, "turned off")
+		balloon_alert(user, LANG("obj.49613fe4", null))
 		current_mode = CAPTAINSAID_MODE_OFF
 	icon_state = "captainsaid_[modes[current_mode]]"
 	update_appearance(UPDATE_ICON)
@@ -519,17 +520,17 @@
 
 	if(istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
-			to_chat(user, span_warning("It's already fully loaded!"))
+			to_chat(user, span_warning(LANG("obj.0125c732", null)))
 			return 1
 		if (A.amount_left <= 0)
-			to_chat(user, span_warning("There are no more caps!"))
+			to_chat(user, span_warning(LANG("obj.810f1d3f", null)))
 			return 1
 		if (A.amount_left < (7 - src.bullets))
 			src.bullets += A.amount_left
-			to_chat(user, span_notice("You reload [A.amount_left] cap\s."))
+			to_chat(user, span_notice(LANG("obj.bb480265", list(A.amount_left))))
 			A.amount_left = 0
 		else
-			to_chat(user, span_notice("You reload [7 - src.bullets] cap\s."))
+			to_chat(user, span_notice(LANG("obj.bb480265", list(7 - src.bullets))))
 			A.amount_left -= 7 - src.bullets
 			src.bullets = 7
 		A.update_appearance()
@@ -539,7 +540,7 @@
 
 /obj/item/toy/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, span_warning(LANG("obj.e8ba50af", null)))
 		return ITEM_INTERACT_BLOCKING
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
@@ -644,7 +645,7 @@
 			saber_color = "red"
 		else
 			return ITEM_INTERACT_SUCCESS
-	balloon_alert(user, "changed to [saber_color]")
+	balloon_alert(user, LANG("obj.0f5dd0ed", list(saber_color)))
 	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
@@ -661,11 +662,11 @@
 
 /obj/item/toy/sword/multitool_act(mob/living/user, obj/item/tool)
 	if(hacked)
-		to_chat(user, span_warning("It's already fabulous!"))
+		to_chat(user, span_warning(LANG("obj.82f87bea", null)))
 		return
 	hacked = TRUE
 	saber_color = "rainbow"
-	to_chat(user, span_warning("RNBW_ENGAGE"))
+	to_chat(user, span_warning(LANG("obj.6710b2e4", null)))
 	update_appearance(UPDATE_ICON)
 
 
@@ -674,13 +675,13 @@
 	if(istype(weapon, /obj/item/toy/sword))
 		var/obj/item/toy/sword/attatched_sword = weapon
 		if(HAS_TRAIT(weapon, TRAIT_NODROP))
-			to_chat(user, span_warning("[weapon] is stuck to your hand, you can't attach it to [src]!"))
+			to_chat(user, span_warning(LANG("obj.3347228a", list(weapon, src))))
 			return
 		else if(HAS_TRAIT(src, TRAIT_NODROP))
-			to_chat(user, span_warning("[src] is stuck to your hand, you can't attach it to [weapon]!"))
+			to_chat(user, span_warning(LANG("obj.3347228a", list(src, weapon))))
 			return
 		else
-			to_chat(user, span_notice("You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool."))
+			to_chat(user, span_notice(LANG("obj.86ccbb1e", null)))
 			var/obj/item/dualsaber/toy/new_saber = new /obj/item/dualsaber/toy(user.loc)
 			if(attatched_sword.hacked || hacked)
 				new_saber.hacked = TRUE
@@ -736,14 +737,14 @@
 
 /obj/item/toy/windup_toolbox/attack_self(mob/user)
 	if(!active)
-		to_chat(user, span_notice("You wind up [src], it begins to rumble."))
+		to_chat(user, span_notice(LANG("obj.dd8feeeb", list(src))))
 		active = TRUE
 		update_appearance()
 		playsound(src, 'sound/effects/pope_entry.ogg', 100)
 		Rumble()
 		addtimer(CALLBACK(src, PROC_REF(stopRumble)), 60 SECONDS)
 	else
-		to_chat(user, span_warning("[src] is already active!"))
+		to_chat(user, span_warning(LANG("obj.428888db", list(src))))
 
 /obj/item/toy/windup_toolbox/proc/Rumble()
 	var/static/list/transforms
@@ -765,7 +766,7 @@
 /obj/item/toy/windup_toolbox/proc/stopRumble()
 	active = FALSE
 	update_appearance()
-	visible_message(span_warning("[src] slowly stops rattling and falls still, its latch snapping shut.")) //subtle difference
+	visible_message(span_warning(LANG("obj.070bf440", list(src)))) //subtle difference
 	playsound(loc, 'sound/items/weapons/batonextend.ogg', 100, TRUE)
 	animate(src, transform = matrix())
 
@@ -790,7 +791,7 @@
 	return 0
 
 /obj/item/dualsaber/toy/impale(mob/living/user)//Stops Toy Dualsabers from injuring clowns
-	to_chat(user, span_warning("You twirl around a bit before losing your balance and impaling yourself on [src]."))
+	to_chat(user, span_warning(LANG("obj.c47c8878", list(src))))
 	user.adjust_stamina_loss(25)
 
 /obj/item/toy/katana
@@ -832,8 +833,8 @@
 /obj/item/toy/snappop/proc/pop_burst(n = 3, c = TRUE)
 	do_sparks(n, c, src)
 	new ash_type(loc)
-	visible_message(span_warning("[src] explodes!"),
-		span_hear("You hear a snap!"))
+	visible_message(span_warning(LANG("obj.e64b7ad7", list(src))),
+		span_hear(LANG("obj.14e56519", null)))
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 	qdel(src)
 
@@ -856,7 +857,7 @@
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(issilicon(H) || M.move_intent == MOVE_INTENT_RUN)
-			to_chat(M, span_danger("You step on the snap pop!"))
+			to_chat(M, span_danger(LANG("obj.12e7f80c", null)))
 			pop_burst(2, 0)
 
 /obj/item/toy/snappop/phoenix
@@ -1006,13 +1007,13 @@
 		icon_state = "nuketoyidle"
 	else
 		var/timeleft = (cooldown - world.time)
-		to_chat(user, span_alert("Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display."))
+		to_chat(user, span_alert(LANG("obj.b3d05500", list(round(timeleft/10)))))
 		sleep(0.5 SECONDS)
 
 /obj/item/toy/nuke/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
 		return FALSE
-	balloon_alert(user, "explosive simulation enabled")
+	balloon_alert(user, LANG("obj.9e4cff18", null))
 	obj_flags |= EMAGGED
 	return TRUE
 
@@ -1031,7 +1032,7 @@
 /obj/item/toy/minimeteor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
 		return FALSE
-	to_chat(user, span_warning("You short circuit whatever electronics exist inside. The \"meteor\" suddenly feels a lot heavier...?"))
+	to_chat(user, span_warning(LANG("obj.5bd1a37a", null)))
 	// not adding a balloon alert here since its hard to actually describe what this emag does in the balloon
 	obj_flags |= EMAGGED
 	return TRUE
@@ -1068,7 +1069,7 @@
 				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(shake_camera), M, 2, 1), 0.8 SECONDS)
 
 	else
-		to_chat(user, span_alert("Nothing happens."))
+		to_chat(user, span_alert(LANG("obj.1ee6cac0", null)))
 
 /*
  * Snowballs
@@ -1135,7 +1136,7 @@
 		user.visible_message(span_warning("[user] rotates a cogwheel on [src]."), span_notice("You rotate a cogwheel on [src], it plays a loud noise!"), span_hear("You hear cogwheels turning."))
 		playsound(src, 'sound/effects/magic/clockwork/ark_activation.ogg', 50, FALSE)
 	else
-		to_chat(user, span_alert("The cogwheels are already turning!"))
+		to_chat(user, span_alert(LANG("obj.a2a5f9e9", null)))
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	. = ..()
@@ -1175,13 +1176,13 @@
 		user.visible_message(span_notice("[user] pulls back the string on [src]."))
 		icon_state = "[initial(icon_state)]_used"
 		sleep(0.5 SECONDS)
-		audible_message(span_danger("[icon2html(src, viewers(src))] Hiss!"))
+		audible_message(span_danger(LANG("obj.ff496e95", list(icon2html(src, viewers(src))))))
 		var/list/possible_sounds = list('sound/mobs/non-humanoids/hiss/hiss1.ogg', 'sound/mobs/non-humanoids/hiss/hiss2.ogg', 'sound/mobs/non-humanoids/hiss/hiss3.ogg', 'sound/mobs/non-humanoids/hiss/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, TRUE)
 		addtimer(VARSET_CALLBACK(src, icon_state, "[initial(icon_state)]"), 4.5 SECONDS)
 	else
-		to_chat(user, span_warning("The string on [src] hasn't rewound all the way!"))
+		to_chat(user, span_warning(LANG("obj.b5b57465", list(src))))
 		return
 
 // TOY MOUSEYS :3 :3 :3
@@ -1216,7 +1217,7 @@
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
-		to_chat(user, span_notice("[src] says \"[toysay]\""))
+		to_chat(user, span_notice(LANG("obj.6b8a3f43", list(src, toysay))))
 		playsound(user, toysound, 20, TRUE)
 
 /obj/item/toy/figure/cmo
@@ -1448,7 +1449,7 @@
 	if(!new_name || !user.is_holding(src))
 		return
 	doll_name = new_name
-	to_chat(user, span_notice("You name the dummy as \"[doll_name]\"."))
+	to_chat(user, span_notice(LANG("obj.4056970a", list(doll_name))))
 	name = "[initial(name)] - [doll_name]"
 
 /obj/item/toy/dummy/Initialize(mapload)
@@ -1488,7 +1489,7 @@
 		user.visible_message(span_notice("[user] adjusts the dial on [src]."))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/radiostatic.ogg', 50, FALSE), 0.5 SECONDS)
 	else
-		to_chat(user, span_warning("The dial on [src] jams up"))
+		to_chat(user, span_warning(LANG("obj.537047d0", list(src))))
 		return
 
 /obj/item/toy/braintoy
@@ -1669,7 +1670,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	player_input(user, input)
 
 /obj/item/toy/intento/proc/boot()
-	say("Game starting!")
+	say(LANG("obj.221d8bb4", null))
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 
 	state = STATE_STARTING
@@ -1748,12 +1749,12 @@ GLOBAL_LIST_EMPTY(intento_players)
 		if(award_score > 0)
 			user.client.give_award(/datum/award/score/intento_score, user, award_score)
 
-	say("GAME OVER. Your score was [score]!")
+	say(LANG("obj.d41c5ae3", list(score)))
 	playsound(src, 'sound/machines/synth/synth_no.ogg', 50, FALSE)
 
 	if(user && loc == user && obj_flags & EMAGGED)
 		ADD_TRAIT(src, TRAIT_NODROP, type)
-		to_chat(user, span_userdanger("Bad mistake."))
+		to_chat(user, span_userdanger(LANG("obj.9d6a1558", null)))
 
 		state = STATE_RETALIATION
 		next_process = world.time
@@ -1807,7 +1808,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "negative feedback loop enabled")
+	balloon_alert(user, LANG("obj.2179ada2", null))
 	return TRUE
 
 /obj/item/toy/intento/Destroy()
@@ -1867,7 +1868,7 @@ GLOBAL_LIST_EMPTY(intento_players)
 /obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	var/dist = get_dist(M, user)
 	if(dist < min_reach)
-		to_chat(user, span_warning("[M] is too close to use [src] on."))
+		to_chat(user, span_warning(LANG("obj.c1b00c5c", list(M, src))))
 		return
 	M.attack_hand(user, modifiers)
 

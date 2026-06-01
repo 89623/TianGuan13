@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_EVENTS)
 	if(!isobserver(user) && SSticker.HasRoundStarted())
 		message_admins("[key_name_admin(user)] checked AI laws via the Law Panel.")
@@ -56,7 +57,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	var/list/relevant_laws = borgo.laws.inherent
 	var/lawindex = relevant_laws.Find(law)
 	if(!lawindex)
-		to_chat(user, span_danger("Something went wrong, we couldn't move that law."))
+		to_chat(user, span_danger(LANG("datum.22084e40", null)))
 		return FALSE
 
 	switch(direction)
@@ -101,7 +102,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 
 	var/lawindex = relevant_laws.Find(oldlaw)
 	if(!lawindex)
-		to_chat(user, span_danger("Something went wrong, we couldn't edit that law."))
+		to_chat(user, span_danger(LANG("datum.4685fb16", null)))
 		return FALSE
 
 	relevant_laws[lawindex] = newlaw
@@ -113,7 +114,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 /datum/law_panel/proc/edit_law_priority_helper(mob/living/user, mob/living/silicon/borgo, law)
 	var/old_prio = borgo.laws.supplied.Find(law)
 	if(!old_prio)
-		to_chat(user, span_danger("Something went wrong, we couldn't edit that law."))
+		to_chat(user, span_danger(LANG("datum.4685fb16", null)))
 		return FALSE
 
 	var/new_prio = tgui_input_number(user, "Enter a new priority.", "Edit priority", old_prio, 50, 0)
@@ -122,7 +123,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 
 	// Sanity
 	if(old_prio != borgo.laws.supplied.Find(law))
-		to_chat(user, span_danger("[borgo]'s laws may have changed since you have edited priority, please re-try."))
+		to_chat(user, span_danger(LANG("datum.3d39029d", list(borgo))))
 		return FALSE
 
 	// If it's far beyond any existing values, just re-add it normally
@@ -144,7 +145,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			return FALSE
 		// Sanity
 		if(law != borgo.laws.supplied[old_prio] || existing_law != borgo.laws.supplied[new_prio])
-			to_chat(user, span_danger("[borgo]'s laws have changed since you have edited priority, please re-try."))
+			to_chat(user, span_danger(LANG("datum.be2ebdcd", list(borgo))))
 			return FALSE
 
 		if(swap_or_remove == "Swap")
@@ -168,7 +169,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 
 	// Sanity
 	if(old_prio != borgo.laws.supplied.Find(law))
-		to_chat(user, span_danger("[borgo]'s may laws have changed since you have edited priority, please re-try."))
+		to_chat(user, span_danger(LANG("datum.0a3eacde", list(borgo))))
 		return FALSE
 
 	// At this point the slot is free, insert it as normal
@@ -210,7 +211,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	if(params["ref"])
 		borgo = locate(params["ref"]) in GLOB.silicon_mobs
 		if(QDELETED(borgo))
-			to_chat(usr, span_danger("That cyborg is invalid."))
+			to_chat(usr, span_danger(LANG("datum.b8c19230", null)))
 			return TRUE
 
 	switch(action)

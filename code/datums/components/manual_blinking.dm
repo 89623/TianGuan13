@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/manual_blinking
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -37,14 +38,14 @@
 	START_PROCESSING(SSdcs, src)
 	last_blink = world.time
 	if (display_message)
-		to_chat(carbon_parent, span_notice("You suddenly realize you're blinking manually."))
+		to_chat(carbon_parent, span_notice(LANG("datum.cf393347", null)))
 
 /datum/component/manual_blinking/Destroy(force)
 	REMOVE_TRAIT(parent, TRAIT_PREVENT_BLINK_LOOPS, REF(src))
 	parent_eyes = null
 	STOP_PROCESSING(SSdcs, src)
 	if (display_message)
-		to_chat(parent, span_notice("You revert back to automatic blinking."))
+		to_chat(parent, span_notice(LANG("datum.729807fd", null)))
 	var/mob/living/carbon/carbon_parent = parent
 	carbon_parent.cure_blind(REF(src))
 	carbon_parent.update_eyes()
@@ -74,12 +75,12 @@
 /datum/component/manual_blinking/process()
 	if(world.time > (last_blink + warning_delay + grace_period))
 		if(!warn_dying)
-			to_chat(parent, span_userdanger("Your eyes begin to wither, you need to blink!"))
+			to_chat(parent, span_userdanger(LANG("datum.38086a24", null)))
 			warn_dying = TRUE
 		parent_eyes.apply_organ_damage(damage_rate)
 	else if(world.time > (last_blink + warning_delay))
 		if(!warn_grace)
-			to_chat(parent, span_danger("You feel a need to blink!"))
+			to_chat(parent, span_danger(LANG("datum.9ee3434d", null)))
 			warn_grace = TRUE
 
 /datum/component/manual_blinking/proc/check_added_organ(mob/who_cares, obj/item/organ/added_organ)

@@ -18,7 +18,7 @@
 //Maybe when Teshari aren't an ass to sprite for...
 /obj/item/clothing/suit/space/voskhod/mob_can_equip(mob/living/equipper, slot, disable_warning, bypass_equip_delay_self, ignore_equipped, indirect_action)
 	if(isteshari(equipper))
-		to_chat(equipper, span_warning("[src] is far too big for you!"))
+		to_chat(equipper, span_warning(LANG("obj.c9ddda16", list(src))))
 		return FALSE
 
 	return ..()
@@ -41,7 +41,7 @@
 //...I'll start asking for unique sprites for them.
 /obj/item/clothing/head/helmet/space/voskhod/mob_can_equip(mob/living/equipper, slot, disable_warning, bypass_equip_delay_self, ignore_equipped, indirect_action)
 	if(isteshari(equipper))
-		to_chat(equipper, span_warning("[src] is far too big for you!"))
+		to_chat(equipper, span_warning(LANG("obj.c9ddda16", list(src))))
 		return FALSE
 
 	return ..()

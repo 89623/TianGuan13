@@ -64,8 +64,8 @@
 	loaded_preference = new(user.client)
 	loaded_preference.load_character(prefdata_names.Find(choice))
 
-	balloon_alert(user, "character set!")
-	to_chat(user, span_notice("Character set to [choice] sucessfully!"))
+	balloon_alert(user, LANG("obj.0a6e4860", null))
+	to_chat(user, span_notice(LANG("obj.49b76751", list(choice))))
 
 /datum/orderable_item/bitrunning_tech/ability_tier0
 	cost_per_order = 350

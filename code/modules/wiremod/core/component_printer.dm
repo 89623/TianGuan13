@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Component printer, creates components for integrated circuits.
 /obj/machinery/component_printer
 	name = "component printer"
@@ -77,9 +78,9 @@
 		var/amount_inserted = materials.insert_item(tool, user_data = ID_DATA(user))
 
 		if(amount_inserted)
-			to_chat(user, span_notice("[tool] worth [amount_inserted / SHEET_MATERIAL_AMOUNT] sheets of material was consumed by [src]"))
+			to_chat(user, span_notice(LANG("obj.b0c812fc", list(tool, amount_inserted / SHEET_MATERIAL_AMOUNT, src))))
 		else
-			to_chat(user, span_warning("[tool] was rejected by [src]"))
+			to_chat(user, span_warning(LANG("obj.7b90bf30", list(tool, src))))
 
 		return amount_inserted > 0 ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
 
@@ -230,7 +231,7 @@
 
 	circuit.linked_component_printer = WEAKREF(src)
 	circuit.update_static_data_for_all_viewers()
-	balloon_alert(user, "successfully linked to the integrated circuit")
+	balloon_alert(user, LANG("obj.4074c598", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
@@ -456,7 +457,7 @@
 	if(istype(tool, /obj/item/circuit_component/module))
 		var/obj/item/circuit_component/module/module = tool
 		if(HAS_TRAIT(module, TRAIT_CIRCUIT_UNDUPABLE))
-			balloon_alert(user, "integrated circuit cannot be saved!")
+			balloon_alert(user, LANG("obj.71eb5c59", null))
 			return ITEM_INTERACT_BLOCKING
 
 		data["dupe_data"] = list()
@@ -468,7 +469,7 @@
 	else if(istype(tool, /obj/item/integrated_circuit))
 		var/obj/item/integrated_circuit/integrated_circuit = tool
 		if(HAS_TRAIT(integrated_circuit, TRAIT_CIRCUIT_UNDUPABLE))
-			balloon_alert(user, "integrated circuit cannot be saved!")
+			balloon_alert(user, LANG("obj.71eb5c59", null))
 			return ITEM_INTERACT_BLOCKING
 
 		data["dupe_data"] = integrated_circuit.convert_to_json()
@@ -488,7 +489,7 @@
 		return NONE
 
 	if(!data["name"])
-		balloon_alert(user, "it needs a name!")
+		balloon_alert(user, LANG("obj.907a9f6e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	for(var/list/component_data as anything in scanned_designs)
@@ -503,7 +504,7 @@
 /obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
 	scanned_designs += list(data)
 
-	balloon_alert(user, "module has been saved.")
+	balloon_alert(user, LANG("obj.232e4b3e", null))
 	playsound(src, 'sound/machines/ping.ogg', 50)
 
 	update_static_data_for_all_viewers()

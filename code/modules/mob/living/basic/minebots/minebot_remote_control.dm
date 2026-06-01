@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BOMB_COOLDOWN 20 SECONDS
 /obj/item/minebot_remote_control
 	name = "Remote Control"
@@ -31,7 +32,7 @@
 		return .
 
 	if(!COOLDOWN_FINISHED(src, bomb_timer))
-		balloon_alert(user, "on cooldown!")
+		balloon_alert(user, LANG("obj.d4ae5d4d", null))
 		return TRUE
 
 	prime_bomb(user)

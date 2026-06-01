@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mafia_role/mafia
 	name = "Changeling"
 	desc = "You're a member of the changeling hive. Talk during the Night period to coordinate with your allies, and kill all non-Changelings."
@@ -21,7 +22,7 @@
 /datum/mafia_role/mafia/proc/mafia_text(datum/mafia_controller/source)
 	SIGNAL_HANDLER
 
-	to_chat(body, "<b>Vote for who to kill tonight. The killer will be chosen randomly from voters.</b>")
+	to_chat(body, LANG("datum.928146ac", null))
 
 /datum/mafia_role/mafia/thoughtfeeder
 	name = "Thoughtfeeder"

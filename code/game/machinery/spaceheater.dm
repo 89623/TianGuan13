@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define HEATER_MODE_STANDBY "standby"
 #define HEATER_MODE_HEAT "heat"
 #define HEATER_MODE_COOL "cool"
@@ -220,10 +221,10 @@
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		add_fingerprint(user)
 		if(!panel_open)
-			to_chat(user, span_warning("The hatch must be open to insert a power cell!"))
+			to_chat(user, span_warning(LANG("obj.3e6ca1e0", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
+			to_chat(user, span_warning(LANG("obj.3606d540", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
@@ -309,13 +310,13 @@
 	mode = HEATER_MODE_STANDBY
 	if(!isnull(user))
 		if(QDELETED(cell))
-			balloon_alert(user, "no cell!")
+			balloon_alert(user, LANG("obj.0210855e", null))
 		else if(!cell.charge())
-			balloon_alert(user, "no charge!")
+			balloon_alert(user, LANG("obj.c0d39a14", null))
 		else if(!is_operational)
-			balloon_alert(user, "not operational!")
+			balloon_alert(user, LANG("obj.1dd04a29", null))
 		else
-			balloon_alert(user, "turned [on ? "on" : "off"]")
+			balloon_alert(user, LANG("obj.8fcfde3c", list(on ? "on" : "off")))
 	update_appearance()
 	if(on)
 		SSair.start_processing_machine(src)
@@ -427,7 +428,7 @@
 		return
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
+			to_chat(user, span_warning(LANG("obj.3606d540", null)))
 			return
 		else if(!user.transferItemToLoc(item, src))
 			return
@@ -443,7 +444,7 @@
 		if(!user.transferItemToLoc(container, src))
 			return
 		replace_beaker(user, container)
-		to_chat(user, span_notice("You add [container] to [src]'s water bath."))
+		to_chat(user, span_notice(LANG("obj.d3cc5907", list(container, src))))
 		ui_interact(user)
 		return
 	//Dropper tools

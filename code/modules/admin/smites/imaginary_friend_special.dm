@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CHOICE_RANDOM_APPEARANCE "Random"
 #define CHOICE_PREFS_APPEARANCE "Look-a-like"
 #define CHOICE_POLL_GHOSTS "Offer to ghosts"
@@ -38,14 +39,14 @@
 
 	var/client/friend_candidate_client = picked_client
 	if(QDELETED(friend_candidate_client))
-		to_chat(user, span_warning("Selected player no longer has a client, aborting."))
+		to_chat(user, span_warning(LANG("datum.80b653a8", null)))
 		return FALSE
 
 	if(isliving(friend_candidate_client.mob) && (tgui_alert(user, "This player already has a living mob ([friend_candidate_client.mob]). Do you still want to turn them into an Imaginary Friend?", "Remove player from mob?", list("Do it!", "Cancel")) != "Do it!"))
 		return FALSE
 
 	if(QDELETED(friend_candidate_client))
-		to_chat(user, span_warning("Selected player no longer has a client, aborting."))
+		to_chat(user, span_warning(LANG("datum.80b653a8", null)))
 		return FALSE
 
 	friend_candidates = list(friend_candidate_client)
@@ -65,7 +66,7 @@
 	)
 	var/volunteer_count = length(volunteers)
 	if (volunteer_count == 0)
-		to_chat(user, span_warning("No candidates volunteered, aborting."))
+		to_chat(user, span_warning(LANG("datum.b6513cb8", null)))
 		return FALSE
 
 	shuffle_inplace(volunteers)
@@ -82,11 +83,11 @@
 	. = ..()
 
 	if(QDELETED(target))
-		to_chat(user, span_warning("The target mob no longer exists, aborting."))
+		to_chat(user, span_warning(LANG("datum.ecf8d7a0", null)))
 		return
 
 	if(!length(friend_candidates))
-		to_chat(user, span_warning("No provided imaginary friend candidates, aborting."))
+		to_chat(user, span_warning(LANG("datum.9103ec22", null)))
 		return
 
 	var/list/final_clients = list()
@@ -96,7 +97,7 @@
 		final_clients += client
 
 	if(!length(final_clients))
-		to_chat(user, span_warning("No provided imaginary friend candidates had clients, aborting."))
+		to_chat(user, span_warning(LANG("datum.5c5e6c70", null)))
 		return
 
 	for (var/client/friend_candidate_client as anything in final_clients)

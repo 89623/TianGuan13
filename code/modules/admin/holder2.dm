@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(admin_datums)
 GLOBAL_PROTECT(admin_datums)
 GLOBAL_LIST_EMPTY(protected_admins)
@@ -478,7 +479,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 			return TRUE
 		else
 			if(show_msg)
-				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>", confidential = TRUE)
+				to_chat(usr, LANG("_root.67720ec7", list(rights2text(rights_required," "))), confidential = TRUE)
 	return FALSE
 
 //probably a bit iffy - will hopefully figure out a better solution

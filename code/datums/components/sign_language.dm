@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Defines used to determine whether a sign language user can sign or not, and if not, why they cannot.
 #define SIGN_OKAY 0
 #define SIGN_ONE_HAND 1
@@ -140,7 +141,7 @@
 
 	var/mob/living/carbon/carbon_parent = parent
 	if(HAS_MIND_TRAIT(carbon_parent, TRAIT_MIMING))
-		to_chat(carbon_parent, span_green("You stop yourself from signing in favor of the artform of mimery!"))
+		to_chat(carbon_parent, span_green(LANG("datum.50ef3460", null)))
 		return COMPONENT_CANNOT_SPEAK
 
 	switch(check_signables_state())
@@ -232,7 +233,7 @@
 		return NONE // Run normal checks
 	else if(check_signables_state() != SIGN_OKAY || HAS_MIND_TRAIT(carbon_parent, TRAIT_MIMING)) // Cannot cast if miming or not SIGN_OKAY
 		if(feedback)
-			to_chat(carbon_parent, span_warning("You can't sign the words to invoke [spell]!"))
+			to_chat(carbon_parent, span_warning(LANG("datum.a6e21b55", list(spell))))
 		return SPELL_INVOCATION_FAIL
 
 	return SPELL_INVOCATION_ALWAYS_SUCCEED

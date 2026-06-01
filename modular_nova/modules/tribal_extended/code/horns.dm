@@ -40,11 +40,11 @@
 /// Blows the horn if the user has enough stamina
 /obj/item/blowing_horn/attack_self(mob/living/user)
 	if (user.get_stamina_loss() > BHORN_STAMINA_MINIMUM)
-		balloon_alert(user, "too tired!")
+		balloon_alert(user, LANG("obj.6ba63ace", null))
 		return
 	var/bhorn_origin = get_turf(user)
 	if (user.is_mouth_covered())
-		balloon_alert(user, "something is in the way!")
+		balloon_alert(user, LANG("obj.ae97e927", null))
 		return
 	else if (isspaceturf(bhorn_origin))
 		user.visible_message(
@@ -53,7 +53,7 @@
 		)
 		return
 	if(!COOLDOWN_FINISHED(src, bhorn_cooldown))
-		balloon_alert(user, "wait [COOLDOWN_TIMELEFT(src, bhorn_cooldown) / 10] seconds!")
+		balloon_alert(user, LANG("obj.a1066372", list(COOLDOWN_TIMELEFT(src, bhorn_cooldown) / 10)))
 		return
 	else
 		user.visible_message(
@@ -78,7 +78,7 @@
 	if(isnull(selected_tune))
 		return
 	current_tune = selected_tune
-	to_chat(user, span_notice("You prepare to sound the horn with the pattern: '[current_tune]'."))
+	to_chat(user, span_notice(LANG("obj.1ad1ca6b", list(current_tune))))
 
 /// Adds additional info to horn examination
 /obj/item/blowing_horn/examine(mob/user)
@@ -129,16 +129,16 @@
 /// Plays war horn sound globally to all valid players
 /obj/structure/war_horn/attack_hand(mob/living/user)
 	if (!ishuman(user))
-		balloon_alert(user, "you cannot use this!")
+		balloon_alert(user, LANG("obj.6ac5a489", null))
 		return
 	if (user.get_stamina_loss() > WHORN_STAMINA_MINIMUM)
-		balloon_alert(user, "too tired!")
+		balloon_alert(user, LANG("obj.6ba63ace", null))
 		return
 	if (user.is_mouth_covered())
-		balloon_alert(user, "something is in the way!")
+		balloon_alert(user, LANG("obj.ae97e927", null))
 		return
 	if(!COOLDOWN_FINISHED(src, whorn_cooldown))
-		balloon_alert(user, "wait [COOLDOWN_TIMELEFT(src, whorn_cooldown) / 10] seconds!")
+		balloon_alert(user, LANG("obj.a1066372", list(COOLDOWN_TIMELEFT(src, whorn_cooldown) / 10)))
 		return
 	///This shouldn't happen as the war horn spawns in the natives camps and isn't movable.
 	var/location = get_turf(user)
@@ -171,7 +171,7 @@
 	if(isnull(selected_tune))
 		return
 	current_tune = selected_tune
-	to_chat(user, span_notice("You prepare to sound the horn with the pattern: '[current_tune]'."))
+	to_chat(user, span_notice(LANG("obj.1ad1ca6b", list(current_tune))))
 
 /// Cleanup macros
 #undef BHORN_STAMINA_MINIMUM

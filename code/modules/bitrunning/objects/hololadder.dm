@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/hololadder
 	name = "hololadder"
 
@@ -65,10 +66,10 @@
 		return
 
 	if(!HAS_TRAIT(user, TRAIT_TEMPORARY_BODY))
-		balloon_alert(user, "no connection detected")
+		balloon_alert(user, LANG("obj.acea3d3b", null))
 		return
 
-	balloon_alert(user, "disconnecting...")
+	balloon_alert(user, LANG("obj.731dc5a8", null))
 	if(do_after(user, travel_time, src))
 		SEND_SIGNAL(user, COMSIG_BITRUNNER_LADDER_SEVER)
 

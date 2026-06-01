@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // AI (i.e. game AI, not the AI player) controlled bots
 /mob/living/simple_animal/bot
 	abstract_type = /mob/living/simple_animal/bot
@@ -151,7 +152,7 @@
 	remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	update_appearance()
-	balloon_alert(src, "turned on")
+	balloon_alert(src, LANG("mob.9fae209b", null))
 	diag_hud_set_botstat()
 	return TRUE
 
@@ -160,7 +161,7 @@
 	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	bot_reset() //Resets an AI's call, should it exist.
-	balloon_alert(src, "turned off")
+	balloon_alert(src, LANG("mob.49613fe4", null))
 	update_appearance()
 
 /mob/living/simple_animal/bot/proc/get_bot_flag(checked_mode, checked_flag)
@@ -224,7 +225,7 @@
 /// Allows this bot to be controlled by a ghost, who will become its mind
 /mob/living/simple_animal/bot/proc/enable_possession(user, mapload = FALSE)
 	if (paicard)
-		balloon_alert(user, "already sapient!")
+		balloon_alert(user, LANG("mob.acb2822f", null))
 		return
 	can_be_possessed = TRUE
 	var/can_announce = !mapload && COOLDOWN_FINISHED(src, offer_ghosts_cooldown)
@@ -253,7 +254,7 @@
 		return
 	if (user)
 		log_combat(user, src, "ejected [key_name(src)] from control of [src] ([initial(src.name)]).")
-	to_chat(src, span_warning("You feel yourself fade as your personality matrix is reset!"))
+	to_chat(src, span_warning(LANG("mob.7b8db25c", null)))
 	ghostize(can_reenter_corpse = FALSE)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	speak("Personality matrix reset!")
@@ -262,7 +263,7 @@
 /// Returns true if this mob can be controlled
 /mob/living/simple_animal/bot/proc/check_possession(mob/potential_possessor)
 	if (!can_be_possessed)
-		to_chat(potential_possessor, span_warning("The bot's personality download has been disabled!"))
+		to_chat(potential_possessor, span_warning(LANG("mob.48ac3f1b", null)))
 	return can_be_possessed
 
 /// Fired after something takes control of this mob
@@ -311,7 +312,7 @@
 	return ..()
 
 /mob/living/simple_animal/bot/proc/explode()
-	visible_message(span_boldnotice("[src] blows apart!"))
+	visible_message(span_boldnotice(LANG("mob.cf5a5d74", list(src))))
 	do_sparks(3, TRUE, src)
 	var/atom/location_destroyed = drop_location()
 	if(prob(50))
@@ -321,7 +322,7 @@
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_LOCKED) //First emag application unlocks the bot's interface. Apply a screwdriver to use the emag again.
 		bot_cover_flags &= ~BOT_COVER_LOCKED
-		balloon_alert(user, "cover unlocked")
+		balloon_alert(user, LANG("mob.dea8a973", null))
 		return TRUE
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) && bot_cover_flags & BOT_COVER_MAINTS_OPEN) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		bot_cover_flags |= BOT_COVER_EMAGGED
@@ -329,13 +330,13 @@
 		bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
-		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
+		to_chat(src, span_userdanger(LANG("mob.9993bc7a", null)))
 		to_chat(src, span_boldnotice(get_emagged_message()))
 		if(user)
 			log_combat(user, src, "emagged")
 		return TRUE
 	else //Bot is unlocked, but the maint panel has not been opened with a screwdriver (or through the UI) yet.
-		balloon_alert(user, "open maintenance panel first!")
+		balloon_alert(user, LANG("mob.483e87aa", null))
 		return FALSE
 
 /mob/living/simple_animal/bot/examine(mob/user)
@@ -418,7 +419,7 @@
 	if(!topic_denied(user))
 		ui_interact(user)
 	else
-		to_chat(user, span_warning("[src]'s interface is not responding!"))
+		to_chat(user, span_warning(LANG("mob.79365a68", list(src))))
 
 /mob/living/simple_animal/bot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -432,26 +433,26 @@
 
 /mob/living/simple_animal/bot/proc/unlock_with_id(mob/user)
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
-		to_chat(user, span_danger("ERROR"))
+		to_chat(user, span_danger(LANG("mob.c59119c7", null)))
 		return
 	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-		to_chat(user, span_warning("Please close the access panel before [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]locking it."))
+		to_chat(user, span_warning(LANG("mob.d543b27c", list(bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""))))
 		return
 	if(!allowed(user))
-		to_chat(user, span_warning("Access denied."))
+		to_chat(user, span_warning(LANG("mob.077f9b52", null)))
 		return
 	bot_cover_flags ^= BOT_COVER_LOCKED
-	to_chat(user, span_notice("Controls are now [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]."))
+	to_chat(user, span_notice(LANG("mob.69241576", list(bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"))))
 	return TRUE
 
 /mob/living/simple_animal/bot/screwdriver_act(mob/living/user, obj/item/tool)
 	if(bot_cover_flags & BOT_COVER_LOCKED)
-		to_chat(user, span_warning("The maintenance panel is locked!"))
+		to_chat(user, span_warning(LANG("mob.d77049ca", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	tool.play_tool_sound(src)
 	bot_cover_flags ^= BOT_COVER_MAINTS_OPEN
-	to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "opened" : "closed"]."))
+	to_chat(user, span_notice(LANG("mob.bdad7caf", list(bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "opened" : "closed"))))
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/welder_act(mob/living/user, obj/item/tool)
@@ -460,10 +461,10 @@
 		return FALSE
 
 	if(health >= maxHealth)
-		to_chat(user, span_warning("[src] does not need a repair!"))
+		to_chat(user, span_warning(LANG("mob.bd2f7a25", list(src))))
 		return ITEM_INTERACT_SUCCESS
 	if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
-		to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
+		to_chat(user, span_warning(LANG("mob.00eb70c0", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(tool.use_tool(src, user, 0 SECONDS, volume=40))
@@ -480,9 +481,9 @@
 		return
 	if(attacking_item.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-			balloon_alert(user, "open the access panel!")
+			balloon_alert(user, LANG("mob.a005019a", null))
 		else
-			balloon_alert(user, "removing pAI...")
+			balloon_alert(user, LANG("mob.032a9865", null))
 			if(!do_after(user, 3 SECONDS, target = src) || !paicard)
 				return
 			user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"),span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
@@ -718,15 +719,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 		access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
 		if(client)
 			reset_access_timer_id = addtimer(CALLBACK (src, PROC_REF(bot_reset)), 60 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
-			to_chat(src, span_notice("[span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[summoner]</b>. Proceed to <b>[end_area]</b>.")]<br>[path.len-1] meters to destination. You have been granted additional door access for 60 seconds."))
+			to_chat(src, span_notice(LANG("mob.56f18cf5", list(span_big("Priority waypoint set by [icon2html(calling_ai, src)] <b>[summoner]</b>. Proceed to <b>[end_area]</b>."), path.len-1))))
 		if(message)
-			to_chat(calling_ai, span_notice("[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination."))
+			to_chat(calling_ai, span_notice(LANG("mob.32701a6f", list(icon2html(src, calling_ai), name, end_area, path.len-1))))
 		pathset = TRUE
 		mode = BOT_RESPONDING
 		tries = 0
 	else
 		if(message)
-			to_chat(calling_ai, span_danger("Failed to calculate a valid route. Ensure destination is clear of obstructions and within range."))
+			to_chat(calling_ai, span_danger(LANG("mob.6a68232b", null)))
 		calling_ai = null
 		set_path(null)
 
@@ -743,7 +744,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/bot_reset()
 	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
-		to_chat(calling_ai, span_danger("Call command to a bot has been reset."))
+		to_chat(calling_ai, span_danger(LANG("mob.72a05055", null)))
 		calling_ai = null
 	if(reset_access_timer_id)
 		deltimer(reset_access_timer_id)
@@ -917,7 +918,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("ejectpai")
 			return
 		else
-			to_chat(src, span_warning("Unidentified control sequence received:[command]"))
+			to_chat(src, span_warning(LANG("mob.ba56af15", list(command))))
 
 // calculates a path to the current destination
 // given an optional turf to avoid
@@ -994,7 +995,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		return
 	var/mob/user = ui.user
 	if(!allowed(user))
-		to_chat(user, span_warning("Access denied."))
+		to_chat(user, span_warning(LANG("mob.077f9b52", null)))
 		return
 
 	if(action == "lock")
@@ -1066,19 +1067,19 @@ Pass a positive integer as an argument to override a bot's default speed.
 /// Places a pAI in control of this mob
 /mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/pai_card/card)
 	if(paicard)
-		balloon_alert(user, "slot occupied!")
+		balloon_alert(user, LANG("mob.1f80dacd", null))
 		return
 	if(key)
-		balloon_alert(user, "personality already present!")
+		balloon_alert(user, LANG("mob.7d1d5726", null))
 		return
 	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
-		balloon_alert(user, "slot inaccessible!")
+		balloon_alert(user, LANG("mob.da6c1dfc", null))
 		return
 	if(!(bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT))
-		balloon_alert(user, "incompatible firmware!")
+		balloon_alert(user, LANG("mob.c1d8775d", null))
 		return
 	if(!card.pai || !card.pai.mind)
-		balloon_alert(user, "pAI is inactive!")
+		balloon_alert(user, LANG("mob.77050c1d", null))
 		return
 	if(!user.transferItemToLoc(card, src))
 		return
@@ -1090,7 +1091,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	set_active_language(paicard.pai.get_selected_language())
 	user.visible_message(span_notice("[user] inserts [card] into [src]!"), span_notice("You insert [card] into [src]."))
 	paicard.pai.mind.transfer_to(src)
-	to_chat(src, span_notice("You sense your form change as you are uploaded into [src]."))
+	to_chat(src, span_notice(LANG("mob.7feab226", list(src))))
 	name = paicard.pai.name
 	original_faction = get_faction()
 	original_allies = allies
@@ -1121,7 +1122,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else
 		log_combat(src, paicard.pai, "ejected")
 	if(announce)
-		to_chat(paicard.pai, span_notice("You feel your control fade as [paicard] ejects from [initial(src.name)]."))
+		to_chat(paicard.pai, span_notice(LANG("mob.6ecb209b", list(paicard, initial(src.name)))))
 	paicard = null
 	name = initial(src.name)
 	set_faction(original_faction)

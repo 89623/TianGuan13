@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define INCLUSIVE_MODE 1
 #define EXCLUSIVE_MODE 2
 #define RECOGNIZER_MODE 3
@@ -90,7 +91,7 @@
 	return FALSE
 
 /obj/item/assembly/voice/proc/send_pulse()
-	visible_message("clicks.", visible_message_flags = EMOTE_MESSAGE)
+	visible_message(LANG("obj.c72c06d5", null), visible_message_flags = EMOTE_MESSAGE)
 	playsound(src, 'sound/effects/whirthunk.ogg', 30)
 	addtimer(CALLBACK(src, PROC_REF(pulse)), 2 SECONDS)
 
@@ -98,7 +99,7 @@
 	..()
 	mode %= modes.len
 	mode++
-	to_chat(user, span_notice("You set [src] into [modes[mode]] mode."))
+	to_chat(user, span_notice(LANG("obj.f0df0b23", list(src, modes[mode]))))
 	listening = FALSE
 	recorded = ""
 	return TRUE
@@ -107,7 +108,7 @@
 	if(!secured || holder)
 		return FALSE
 	listening = !listening
-	say("[listening ? "Now" : "No longer"] recording input.")
+	say(LANG("obj.ec82e580", list(listening ? "Now" : "No longer")))
 	return TRUE
 
 /obj/item/assembly/voice/attack_self(mob/user)

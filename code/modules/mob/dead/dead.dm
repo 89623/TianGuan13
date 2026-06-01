@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Dead mobs can exist whenever. This is needful
 
 INITIALIZE_IMMEDIATE(/mob/dead)
@@ -60,7 +61,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		return
 
 	var/client/hopper = client
-	to_chat(hopper, span_notice("Sending you to [pick]."))
+	to_chat(hopper, span_notice(LANG("mob.4cf0422f", list(pick))))
 	var/atom/movable/screen/splash/fade_in = new(null, null, hopper, FALSE)
 	fade_in.fade(FALSE)
 

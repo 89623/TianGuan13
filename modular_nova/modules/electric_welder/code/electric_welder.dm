@@ -26,10 +26,10 @@
 	powered = !powered
 	playsound(src, 'sound/effects/sparks/sparks4.ogg', 100, TRUE)
 	if(powered)
-		to_chat(user, span_notice("You turn [src] on."))
+		to_chat(user, span_notice(LANG("obj.303771eb", list(src))))
 		switched_on()
 		return
-	to_chat(user, span_notice("You turn [src] off."))
+	to_chat(user, span_notice(LANG("obj.b0e072ec", list(src))))
 	switched_off()
 
 /obj/item/weldingtool/electric/switched_on(mob/user)

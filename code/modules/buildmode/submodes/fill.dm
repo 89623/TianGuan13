@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define FILL_WARNING_MIN 150
 
 /datum/buildmode_mode/fill
@@ -8,9 +9,7 @@
 
 /datum/buildmode_mode/fill/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Select corner")] -> Left Mouse Button on turf/obj/mob\n\
-		[span_bold("Delete region")] -> Left Mouse Button + Alt on turf/obj/mob\n\
-		[span_bold("Select object type")] -> Right Mouse Button on buildmode button"))
+		LANG("datum.57fc8fe7", list(span_bold("Select corner"), span_bold("Delete region"), span_bold("Select object type")))))
 	)
 
 /datum/buildmode_mode/fill/change_settings(client/c)
@@ -30,7 +29,7 @@
 
 /datum/buildmode_mode/fill/handle_click(client/c, params, obj/object)
 	if(isnull(objholder))
-		to_chat(c, span_warning("Select an object type first."))
+		to_chat(c, span_warning(LANG("datum.7c68ae63", null)))
 		deselect_region()
 		return
 	..()

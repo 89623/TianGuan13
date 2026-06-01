@@ -13,7 +13,7 @@
 
 /obj/item/hairbrush/attack(mob/target, mob/user)
 	if(target.stat == DEAD)
-		to_chat(user, span_warning("There isn't much point brushing someone who can't appreciate it!"))
+		to_chat(user, span_warning(LANG("obj.227e6d84", null)))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	brush(target, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -27,15 +27,15 @@
 		var/location = user.zone_selected
 
 		if(!(location in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_GROIN)))
-			to_chat(user, span_warning("You stop, look down at what you're currently holding and ponder to yourself, \"This is probably to be used on their hair.\""))
+			to_chat(user, span_warning(LANG("obj.d67fde78", null)))
 			return
 
 		if(location == BODY_ZONE_HEAD)
 			if(!head)
-				to_chat(user, span_warning("[human_target] has no head!"))
+				to_chat(user, span_warning(LANG("obj.14898dbc", list(human_target))))
 				return
 			if(human_target.is_mouth_covered(ITEM_SLOT_HEAD))
-				to_chat(user, span_warning("You can't brush [human_target]'s hair while [human_target.p_their()] head is covered!"))
+				to_chat(user, span_warning(LANG("obj.4d58e6cb", list(human_target, human_target.p_their()))))
 				return
 			if(human_target.hairstyle == "Bald" || human_target.hairstyle == "Skinhead")
 				brush_target = "head"
@@ -43,7 +43,7 @@
 				brush_target = "hair"
 		else if(location == BODY_ZONE_PRECISE_MOUTH)
 			if(human_target.is_mouth_covered())
-				to_chat(user, span_warning("You can't brush [human_target]'s facial hair while [human_target.p_their()] mouth is covered!"))
+				to_chat(user, span_warning(LANG("obj.c30a802f", list(human_target, human_target.p_their()))))
 				return
 			if(human_target.facial_hairstyle != "Shaved")
 				brush_target = "beard"
@@ -94,7 +94,7 @@
 	else if(istype(target, /mob/living/basic/pet))
 		if(!do_after(user, brush_speed, target))
 			return
-		to_chat(user, span_notice("[target] closes [target.p_their()] eyes as you brush [target.p_them()]!"))
+		to_chat(user, span_notice(LANG("obj.35c16eeb", list(target, target.p_their(), target.p_them()))))
 		playsound(target, 'modular_nova/modules/hairbrush/sounds/brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)
 		var/mob/living/living_user = user
 		if(istype(living_user))

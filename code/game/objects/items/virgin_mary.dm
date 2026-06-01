@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/virgin_mary
 	name = "\proper a picture of the virgin mary"
 	desc = "A small, cheap icon depicting the virgin mother."
@@ -23,13 +24,13 @@
 	if(isnull(user.mind))
 		return
 	if(HAS_TRAIT(user, TRAIT_MAFIAINITIATE)) //Only one nickname fuckhead
-		to_chat(user, span_warning("You have already been initiated into the mafioso life."))
+		to_chat(user, span_warning(LANG("obj.321de230", null)))
 		return
 	if(used_up)
 		return
 
 	ADD_TRAIT(user, TRAIT_MAFIAINITIATE, TRAIT_GENERIC) // Adding the trait early because you could burn multiple at once for a very long name
-	to_chat(user, span_notice("As you burn the picture, a nickname comes to mind..."))
+	to_chat(user, span_notice(LANG("obj.60b79987", null)))
 	var/nickname = tgui_input_text(user, "Pick a nickname", "Mafioso Nicknames", max_length = NICKNAME_CAP)
 	nickname = reject_bad_name(nickname, allow_numbers = FALSE, max_length = NICKNAME_CAP, ascii_only = TRUE)
 	if(!nickname)
@@ -44,7 +45,7 @@
 	user.real_name = new_name
 	used_up = TRUE
 	user.say("My soul will burn like this saint if I betray my family. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
-	to_chat(user, span_userdanger("Being inducted into the mafia does not grant antagonist status."))
+	to_chat(user, span_userdanger(LANG("obj.8ad28133", null)))
 
 #undef NICKNAME_CAP
 

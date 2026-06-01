@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon
 	cooldown_time = 30 SECONDS
 	shared_cooldown = NONE
@@ -153,7 +154,7 @@
 	)
 
 	if (!QDELETED(owner) && owner.stat != DEAD)
-		to_chat(owner, span_userdanger("Your cocoon falls apart!"))
+		to_chat(owner, span_userdanger(LANG("datum.17956ba6", null)))
 
 	playsound(cocoon, 'sound/effects/splat.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 

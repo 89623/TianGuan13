@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Glasses
 /obj/item/clothing/glasses
 	name = "glasses"
@@ -61,7 +62,7 @@
 		var/obj/item/organ/eyes/eyes = H.get_organ_slot(ORGAN_SLOT_EYES)
 		if(!H.is_blind())
 			if(H.glasses == src)
-				to_chat(H, span_danger("[src] overloads and blinds you!"))
+				to_chat(H, span_danger(LANG("obj.2e0a3fb0", list(src))))
 				H.flash_act(visual = 1)
 				H.adjust_temp_blindness(6 SECONDS)
 				H.set_eye_blur_if_lower(10 SECONDS)
@@ -328,7 +329,7 @@
 		var/mob/living/crusher = movable
 		if(crusher.move_intent != MOVE_INTENT_WALK && (!(crusher.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || crusher.buckled))
 			playsound(src, 'sound/effects/footstep/glass_step.ogg', 30, TRUE)
-			visible_message(span_warning("[crusher] steps on [src], damaging it!"))
+			visible_message(span_warning(LANG("obj.81ee3210", list(crusher, src))))
 			take_damage(100, sound_effect = FALSE)
 
 /obj/item/clothing/glasses/regular/atom_destruction(damage_flag)
@@ -472,16 +473,16 @@
 /obj/item/syndicate_contacts/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!user.get_organ_slot(ORGAN_SLOT_EYES))
-		to_chat(user, span_warning("You have no eyes to apply the contacts to!"))
+		to_chat(user, span_warning(LANG("obj.71907987", null)))
 		return
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 
-	to_chat(user, span_notice("You begin applying the contact lenses to your eyes..."))
+	to_chat(user, span_notice(LANG("obj.34843ebd", null)))
 	if(!do_after(user, 3 SECONDS, src))
 		return
-	to_chat(user, span_notice("The contacts seamlessly merge with your iris."))
+	to_chat(user, span_notice(LANG("obj.e7c4a490", null)))
 	eyes.flash_protect += FLASH_PROTECTION_WELDER
-	to_chat(user, span_warning("\The [src] disintegrates into nothing."))
+	to_chat(user, span_warning(LANG("obj.f3f00ed6", list(src))))
 	qdel(src)
 
 /obj/item/clothing/glasses/welding

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///how many people can play basketball without issues (running out of spawns, procs not expecting more than this amount of people, etc)
 #define BASKETBALL_MIN_PLAYER_COUNT 2
 #define BASKETBALL_MAX_PLAYER_COUNT 7
@@ -378,7 +379,7 @@ GLOBAL_VAR(basketball_game)
 
 	var/client/ghost_client = user.client
 	if(!SSticker.HasRoundStarted())
-		to_chat(ghost_client, span_warning("Wait for the round to start."))
+		to_chat(ghost_client, span_warning(LANG("datum.c73d9fd9", null)))
 		return
 
 	switch(action)

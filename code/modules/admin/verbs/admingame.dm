@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(cmd_player_panel, R_ADMIN, "Player Panel", "See all players and their Player Panel.", ADMIN_CATEGORY_GAME)
 	user.holder.player_panel_new()
 
@@ -5,7 +6,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	log_admin("[key_name(user)] checked the individual player panel for [key_name(player)][isobserver(user.mob)?"":" while in game"].")
 
 	if(!player)
-		to_chat(user, span_warning("You seem to be selecting a mob that doesn't exist anymore."), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.7eb67256", null)), confidential = TRUE)
 		return
 
 	// NOVA EDIT ADDITION START
@@ -257,7 +258,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		REMOVE_TRAIT(mob, TRAIT_GODMODE, ADMIN_TRAIT)
 	else
 		ADD_TRAIT(mob, TRAIT_GODMODE, ADMIN_TRAIT)
-	to_chat(usr, span_adminnotice("Toggled [had_trait ? "OFF" : "ON"]"), confidential = TRUE)
+	to_chat(usr, span_adminnotice(LANG("client.e33619a9", list(had_trait ? "OFF" : "ON"))), confidential = TRUE)
 
 	log_admin("[key_name(usr)] has toggled [key_name(mob)]'s nodamage to [had_trait ? "Off" : "On"]")
 	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(mob)]'s nodamage to [had_trait ? "Off" : "On"]"
@@ -282,7 +283,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 			break
 
 	if(!G_found)//If a ghost was not found.
-		to_chat(user, "<font color='red'>There is no active key like that in the game or the person is not currently a ghost.</font>", confidential = TRUE)
+		to_chat(user, LANG("datum.85114620", null), confidential = TRUE)
 		return
 
 	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
@@ -293,7 +294,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 				SSjob.send_to_late_join(new_monkey)
 				G_found.mind.transfer_to(new_monkey) //be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.PossessByPlayer(G_found.key)
-				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
+				to_chat(new_monkey, LANG("datum.fbf8a749", null), confidential = TRUE)
 				var/msg = span_adminnotice("[key_name_admin(user)] has respawned [new_monkey.key] as a filthy monkey.")
 				message_admins(msg)
 				admin_ticket_log(new_monkey, msg)
@@ -367,7 +368,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	message_admins(msg)
 	admin_ticket_log(new_character, msg)
 
-	to_chat(new_character, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
+	to_chat(new_character, LANG("datum.fbf8a749", null), confidential = TRUE)
 
 	BLACKBOX_LOG_ADMIN_VERB("Respawn Character")
 	return new_character
@@ -431,7 +432,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 	else
 		user.enable_combo_hud()
 
-	to_chat(user, "You toggled your admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
+	to_chat(user, LANG("datum.df46362e", list(user.combo_hud_enabled ? "ON" : "OFF")), confidential = TRUE)
 	message_admins("[key_name_admin(user)] toggled their admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
 	log_admin("[key_name(user)] toggled their admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[user.combo_hud_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
@@ -474,10 +475,10 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 ADMIN_VERB(show_traitor_panel, R_ADMIN, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME, mob/target_mob)
 	var/datum/mind/target_mind = target_mob.mind
 	if(!target_mind)
-		to_chat(user, "This mob has no mind!", confidential = TRUE)
+		to_chat(user, LANG("datum.61c768df", null), confidential = TRUE)
 		return
 	if(!istype(target_mob) && !istype(target_mind))
-		to_chat(user, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		to_chat(user, LANG("datum.0c07ee28", null), confidential = TRUE)
 		return
 	target_mind.traitor_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Traitor Panel")
@@ -494,7 +495,7 @@ ADMIN_VERB(show_skill_panel, R_ADMIN, "Show Skill Panel", "Edit mobs's experienc
 
 ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls for drastic lag mitigation.", ADMIN_CATEGORY_GAME)
 	if(!SSlag_switch.initialized)
-		to_chat(user, span_notice("The Lag Switch subsystem has not yet been initialized."))
+		to_chat(user, span_notice(LANG("datum.cd666423", null)))
 		return
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Lag Switches</title></head><body><h2><B>Lag (Reduction) Switches</B></h2>")
 	dat += "Automatic Trigger: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch_option=TOGGLE_AUTO'><b>[SSlag_switch.auto_switch ? "On" : "Off"]</b></a><br/>"

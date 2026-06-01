@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/holochip
 	name = "credit holochip"
 	desc = "A hard-light chip encoded with an amount of credits. It is a modern replacement for physical money that can be directly converted to virtual currency and vice-versa. Keep away from magnets."
@@ -108,14 +109,14 @@
 
 	var/obj/item/holochip/merged_holochip = tool
 	credits += merged_holochip.credits
-	balloon_alert(user, "merged!")
+	balloon_alert(user, LANG("obj.71582d76", null))
 	update_appearance()
 	qdel(merged_holochip)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/holochip/click_alt(mob/user)
 	if(loc != user)
-		to_chat(user, span_warning("You must be holding the holochip to continue!"))
+		to_chat(user, span_warning(LANG("obj.9a84bf97", null)))
 		return CLICK_ACTION_BLOCKING
 	var/split_amount = tgui_input_number(user, "How many [MONEY_NAME] do you want to extract from the holochip? (Max: [credits] [MONEY_SYMBOL])", "Holochip", max_value = credits)
 	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH) || loc != user)
@@ -126,7 +127,7 @@
 		if(!user.put_in_hands(chip))
 			chip.forceMove(user.drop_location())
 		add_fingerprint(user)
-	to_chat(user, span_notice("You extract [split_amount] [MONEY_NAME] into a new holochip."))
+	to_chat(user, span_notice(LANG("obj.7c1a5de2", list(split_amount, MONEY_NAME))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/holochip/emp_act(severity)
@@ -135,7 +136,7 @@
 		return
 	var/wipe_chance = 60 / severity
 	if(prob(wipe_chance))
-		visible_message(span_warning("[src] fizzles and disappears!"))
+		visible_message(span_warning(LANG("obj.960220e0", list(src))))
 		qdel(src) //rip cash
 
 /obj/item/holochip/thousand

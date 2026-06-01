@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define KIT_RECON "recon"
 #define KIT_BLOODY_SPAI "bloodyspai"
 #define KIT_STEALTHY "stealth"
@@ -790,18 +791,18 @@
 
 	if(IS_NUKE_OP(human_target)) // this wont proc due to ..() but i guess its good as a just-in-case?
 		if(human_target == user)
-			to_chat(user, span_userdanger("You're already a nuclear operative, dumbass! The implant disintegrates within you! You feel sick..."))
+			to_chat(user, span_userdanger(LANG("obj.566da373", null)))
 			human_target.Stun(10 SECONDS)
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 10)
 			return FALSE
 		else
-			to_chat(user, span_notice("You finish implanting [human_target], but you don't really notice a difference. Huh."))
-			to_chat(human_target, span_userdanger("Nothing seems to really happen, but you start to feel a little ill.."))
+			to_chat(user, span_notice(LANG("obj.1a2566a2", list(human_target))))
+			to_chat(human_target, span_userdanger(LANG("obj.108b9ee0", null)))
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
 	if(!human_target.is_antag()) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
-		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
+		to_chat(human_target, span_notice(LANG("obj.c1f4076e", null)))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
 
@@ -810,8 +811,8 @@
 	nuke_datum.nukeop_outfit = null
 	human_target.mind?.add_antag_datum(nuke_datum)
 	human_target.add_faction(ROLE_SYNDICATE)
-	to_chat(human_target, span_warning("You are now a nuclear operative. Your main objective, if you were an antagonist and willing, is presumably to assist the nuclear operative team and secure the disk."))
-	to_chat(human_target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the nuclear operatives."))
+	to_chat(human_target, span_warning(LANG("obj.d25b2ca8", null)))
+	to_chat(human_target, span_userdanger(LANG("obj.98006100", null)))
 	return TRUE
 
 /obj/item/implant/nuclear_operative/removed(mob/target, silent = FALSE, special = FALSE)
@@ -821,8 +822,8 @@
 	var/mob/living/living_target = target
 	living_target.mind.remove_antag_datum(/datum/antagonist/nukeop)
 	living_target.remove_faction(ROLE_SYNDICATE)
-	to_chat(target, span_notice("You feel a little less nuclear."))
-	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
+	to_chat(target, span_notice(LANG("obj.d9e5ff51", null)))
+	to_chat(target, span_userdanger(LANG("obj.e5c81136", null)))
 	return TRUE
 
 /obj/item/storage/box/syndie_kit/poster_box

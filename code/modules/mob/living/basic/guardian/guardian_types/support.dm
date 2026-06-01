@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Quick-moving mob which can teleport things to a beacon and heal its allies
 /mob/living/basic/guardian/support
 	guardian_type = GUARDIAN_SUPPORT
@@ -46,7 +47,7 @@
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		ignored_mobs = src,
 	)
-	to_chat(src, span_notice("You heal [healed]!"))
+	to_chat(src, span_notice(LANG("mob.2ac5ea2b", list(healed))))
 	playsound(healed, attack_sound, 50, TRUE, TRUE, frequency = -1) // play punch sound in REVERSE
 
 
@@ -91,7 +92,7 @@
 		var/mob/living/basic/guardian/guardian_owner = owner
 		beacon.add_atom_colour(guardian_owner.guardian_colour, FIXED_COLOUR_PRIORITY)
 	RegisterSignal(beacon, COMSIG_QDELETING, PROC_REF(on_beacon_deleted))
-	to_chat(src, span_bolddanger("Beacon placed! You may now warp targets and objects to it, including your user, via Alt+Click."))
+	to_chat(src, span_bolddanger(LANG("datum.f2a29293", null)))
 	StartCooldown()
 	return TRUE
 

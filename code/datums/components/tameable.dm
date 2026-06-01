@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///This component lets you make specific mobs tameable by feeding them
 /datum/component/tameable
 	///If true, this atom can only be domesticated by one person
@@ -73,7 +74,7 @@
 	if(QDELETED(animal) || chosen_name == animal.name)
 		return
 	if(!chosen_name)
-		to_chat(tamer, span_warning("Please enter a valid name."))
+		to_chat(tamer, span_warning(LANG("datum.cf7854ad", null)))
 		rename_pet(animal, tamer)
 		return
 	animal.fully_replace_character_name(animal.name, chosen_name)

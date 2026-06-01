@@ -29,10 +29,10 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 
 /obj/item/cargo_teleporter/attack_self(mob/user, modifiers)
 	if(length(marker_children) >= 3)
-		to_chat(user, span_warning("You may only have three spawned markers from [src]!"))
+		to_chat(user, span_warning(LANG("obj.914f223c", list(src))))
 		return
 
-	to_chat(user, span_notice("You place a cargo marker below your feet."))
+	to_chat(user, span_notice(LANG("obj.8d4706e7", null)))
 	var/obj/effect/decal/cleanable/cargo_mark/spawned_marker = new /obj/effect/decal/cleanable/cargo_mark(get_turf(src))
 	playsound(src, 'sound/machines/click.ogg', 50)
 	spawned_marker.parent_item = src
@@ -56,12 +56,12 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 			return CLICK_ACTION_BLOCKING
 
 		selected_mark = cargo_mark_selection
-		to_chat(user, span_notice("You have selected [selected_mark] as the default mark. ALT-CLICK to open up the options to change the selection."))
+		to_chat(user, span_notice(LANG("obj.cbef4e70", list(selected_mark))))
 		return CLICK_ACTION_SUCCESS
 
 /obj/item/cargo_teleporter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, use_cooldown))
-		to_chat(user, span_warning("[src] is still on cooldown!"))
+		to_chat(user, span_warning(LANG("obj.ed35e11f", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(isnull(selected_mark))
@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 			return ITEM_INTERACT_BLOCKING
 
 		selected_mark = choice
-		to_chat(user, span_notice("You have selected [selected_mark] as the default mark. ALT-CLICK to open up the options to change the selection."))
+		to_chat(user, span_notice(LANG("obj.cbef4e70", list(selected_mark))))
 
 	if(get_dist(user, interacting_with) > 1)
 		return ITEM_INTERACT_BLOCKING
@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 
 /obj/effect/decal/cleanable/cargo_mark/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/cargo_teleporter))
-		to_chat(user, span_notice("You remove [src] using [attacking_item]."))
+		to_chat(user, span_notice(LANG("obj.2258075e", list(src, attacking_item))))
 		playsound(src, 'sound/machines/click.ogg', 50)
 		qdel(src)
 		return

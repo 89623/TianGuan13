@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Stack type objects!
  * Contains:
  * Stacks
@@ -158,7 +159,7 @@
 	if(!is_cyborg)
 		return TRUE
 	if (user)
-		to_chat(user, span_warning("[src] is too integrated into your chassis and can't be ground up!"))
+		to_chat(user, span_warning(LANG("obj.d1eb91bc", list(src))))
 	return FALSE
 
 /obj/item/stack/grind_atom(datum/reagents/target_holder, mob/user)
@@ -601,11 +602,11 @@
 		// then a more specific message about how much they need and what they need specifically
 		if(singular_name)
 			if(amount > 1)
-				to_chat(user, span_warning("You need at least [amount] [singular_name]\s to do this!"))
+				to_chat(user, span_warning(LANG("obj.5cd4f455", list(amount, singular_name))))
 			else
-				to_chat(user, span_warning("You need at least [amount] [singular_name] to do this!"))
+				to_chat(user, span_warning(LANG("obj.9a65a4af", list(amount, singular_name))))
 		else
-			to_chat(user, span_warning("You need at least [amount] to do this!"))
+			to_chat(user, span_warning(LANG("obj.bcfd9069", list(amount))))
 
 		return FALSE
 
@@ -762,7 +763,7 @@
 	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	split_n_take(user, stackmaterial)
-	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))
+	to_chat(user, span_notice(LANG("obj.61430dd1", list(stackmaterial))))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /** Splits the stack into two stacks, returns the new stack.
@@ -801,7 +802,7 @@
 	if(can_merge(W, inhand = TRUE))
 		var/obj/item/stack/S = W
 		if(merge(S))
-			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
+			to_chat(user, span_notice(LANG("obj.447269be", list(S.name, S.get_amount(), S.singular_name))))
 	else
 		. = ..()
 

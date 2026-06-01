@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define STATUE_FILTER "statue_filter"
 #define FILTER_COLOR "#34b347"
 #define RECALL_DURATION 3 SECONDS
@@ -140,7 +141,7 @@
 /obj/item/frog_contract/proc/select_frog_name(mob/user, mob/new_frog)
 	var/frog_name = sanitize_name(tgui_input_text(user, "Choose your frog's name!", "Name pet toad", "leaper", MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!frog_name)
-		to_chat(user, span_warning("Please enter a valid name."))
+		to_chat(user, span_warning(LANG("obj.cf7854ad", null)))
 		select_frog_name(user, new_frog)
 		return
 	new_frog.name = frog_name
@@ -148,12 +149,12 @@
 /obj/item/frog_contract/proc/select_frog_color(mob/user, mob/living/basic/leaper/new_frog)
 	var/frog_color = tgui_color_picker(user, "Select your frog's color!" , "Pet toad color", COLOR_GREEN)
 	if(isnull(frog_color))
-		to_chat(user, span_warning("Please choose a valid color."))
+		to_chat(user, span_warning(LANG("obj.7a1f0f3e", null)))
 		select_frog_color(user, new_frog)
 		return
 	var/list/hsv_frog = rgb2hsv(frog_color)
 	if(hsv_frog[3] < MINIMUM_COLOR_VALUE)
-		to_chat(user, span_danger("This color is too dark!"))
+		to_chat(user, span_danger(LANG("obj.e02e28ce", null)))
 		select_frog_color(user, new_frog)
 		return
 	new_frog.set_color_overlay(frog_color)

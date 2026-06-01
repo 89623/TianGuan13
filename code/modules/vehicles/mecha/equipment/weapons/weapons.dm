@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
 	abstract_type = /obj/item/mecha_parts/mecha_equipment/weapon
@@ -263,7 +264,7 @@
 	if(!action_checks(target))
 		return
 	playsound(chassis, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
-	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>HONK</font>")
+	to_chat(source, LANG("obj.a7e4a2c8", list(icon2html(src, source))))
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(HAS_TRAIT(M, TRAIT_DEAF))
 			continue
@@ -560,7 +561,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(mob/source, atom/target, list/modifiers)
 	. = ..()
 	if(.)
-		to_chat(usr, "[icon2html(src, usr)]<font color='red' size='5'>HONK</font>")
+		to_chat(usr, LANG("obj.a7e4a2c8", list(icon2html(src, usr))))
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/proj_init(obj/item/punching_glove/PG)
 	if(!istype(PG))
@@ -650,10 +651,10 @@
 		. = ..()
 		var/mob/living/mobtarget = target
 		if(mobtarget.move_resist == MOVE_FORCE_OVERPOWERING) //No megafauna or bolted AIs, please.
-			balloon_alert(source, "too strong!")
+			balloon_alert(source, LANG("obj.efd191e8", null))
 			return
 		if(secmech.cargo_hold.contents.len >= secmech.cargo_hold.cargo_capacity)
-			balloon_alert(source, "no room!")
+			balloon_alert(source, LANG("obj.ad6c6384", null))
 			return
 
 		playsound(chassis, clampsound, 50, FALSE, -6)

@@ -131,16 +131,16 @@
 
 	var/obj/item/ammo_casing/used_casing = tool
 	if(!used_casing.ammo_stack_type)
-		balloon_alert(user, "used casing can't stack")
+		balloon_alert(user, LANG("obj.3c774c38", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!ammo_stack_type)
-		balloon_alert(user, "target can't stack!")
+		balloon_alert(user, LANG("obj.d3684a89", null))
 		return ITEM_INTERACT_BLOCKING
 	if(ammo_stack_type != used_casing.ammo_stack_type)
-		balloon_alert(user, "can't stack together!")
+		balloon_alert(user, LANG("obj.13971459", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!loaded_projectile || !used_casing.loaded_projectile)
-		balloon_alert(user, "can't stack empty casings!")
+		balloon_alert(user, LANG("obj.f2fbdb00", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/ammo_box/magazine/ammo_stack = new ammo_stack_type(drop_location())

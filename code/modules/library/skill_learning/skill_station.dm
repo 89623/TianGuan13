@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SKILLCHIP_IMPLANT_TIME (15 SECONDS)
 #define SKILLCHIP_REMOVAL_TIME (15 SECONDS)
 
@@ -86,7 +87,7 @@
 /obj/machinery/skill_station/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(I,/obj/item/skillchip))
 		if(inserted_skillchip)
-			to_chat(user,span_notice("There's already a skillchip inside."))
+			to_chat(user,span_notice(LANG("obj.79dadda3", null)))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
@@ -125,9 +126,9 @@
 	var/mob/living/carbon/carbon_occupant = occupant
 	var/implant_msg = carbon_occupant.implant_skillchip(inserted_skillchip, FALSE)
 	if(implant_msg)
-		to_chat(carbon_occupant,span_notice("Operation failed! [implant_msg]"))
+		to_chat(carbon_occupant,span_notice(LANG("obj.6c1f297e", list(implant_msg))))
 	else
-		to_chat(carbon_occupant,span_notice("Operation complete!"))
+		to_chat(carbon_occupant,span_notice(LANG("obj.601d05d1", null)))
 		inserted_skillchip = null
 
 	update_appearance()
@@ -138,7 +139,7 @@
 		return
 
 	if(to_be_removed.is_on_cooldown())
-		to_chat(occupant, span_notice("DANGER! Operation cannot be completed, removal is unsafe."))
+		to_chat(occupant, span_notice(LANG("obj.34a93719", null)))
 		CRASH("Unusual error - [usr] attempted to start removal of [to_be_removed] when the interface state should not have allowed it.")
 
 	working = TRUE
@@ -154,15 +155,15 @@
 	var/mob/living/carbon/carbon_occupant = occupant
 
 	if(to_be_removed.is_on_cooldown())
-		to_chat(carbon_occupant,span_notice("Safety mechanisms activated! Skillchip cannot be safely removed."))
+		to_chat(carbon_occupant,span_notice(LANG("obj.28c8b230", null)))
 		return
 
 	if(!istype(carbon_occupant))
-		to_chat(carbon_occupant,span_notice("Occupant does not appear to be a carbon-based lifeform!"))
+		to_chat(carbon_occupant,span_notice(LANG("obj.8909706a", null)))
 		return
 
 	if(!carbon_occupant.remove_skillchip(to_be_removed))
-		to_chat(carbon_occupant,span_notice("Failed to remove skillchip!"))
+		to_chat(carbon_occupant,span_notice(LANG("obj.c897c2b8", null)))
 		return
 
 	if(to_be_removed.removable)
@@ -170,29 +171,29 @@
 	else
 		qdel(to_be_removed)
 
-	to_chat(carbon_occupant, span_notice("Operation complete!"))
+	to_chat(carbon_occupant, span_notice(LANG("obj.601d05d1", null)))
 
 /obj/machinery/skill_station/proc/toggle_chip_active(obj/item/skillchip/to_be_toggled)
 	var/mob/living/carbon/carbon_occupant = occupant
 
 	if(to_be_toggled.is_on_cooldown())
-		to_chat(carbon_occupant,span_notice("Safety mechanisms activated! Skillchip cannot be safely modified."))
+		to_chat(carbon_occupant,span_notice(LANG("obj.9477eb84", null)))
 		return
 
 	if(!istype(carbon_occupant))
-		to_chat(carbon_occupant,span_notice("Occupant does not appear to be a carbon-based lifeform!"))
+		to_chat(carbon_occupant,span_notice(LANG("obj.8909706a", null)))
 		return
 
 	if(to_be_toggled.is_active())
 		var/active_msg = to_be_toggled.try_deactivate_skillchip(FALSE, FALSE)
 		if(active_msg)
-			to_chat(carbon_occupant,span_notice("Failed to deactivate skillchip! [active_msg]"))
+			to_chat(carbon_occupant,span_notice(LANG("obj.df63b833", list(active_msg))))
 		return
 
 	// This code will fire when to_be_toggled.active is FALSE
 	var/active_msg = to_be_toggled.try_activate_skillchip(FALSE, FALSE)
 	if(active_msg)
-		to_chat(carbon_occupant,span_notice("Failed to activate skillchip! [active_msg]"))
+		to_chat(carbon_occupant,span_notice(LANG("obj.33ab955e", list(active_msg))))
 
 /obj/machinery/skill_station/ui_data(mob/user)
 	. = ..()

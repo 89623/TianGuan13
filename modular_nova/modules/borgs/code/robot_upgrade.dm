@@ -158,7 +158,7 @@
 	if(!.)
 		return
 	if(borgo.hasAdvanced)
-		to_chat(user, span_warning("This unit already has advanced materials installed!"))
+		to_chat(user, span_warning(LANG("obj.47637a71", null)))
 		return FALSE;
 
 	var/obj/item/stack/sheet/plasteel/cyborg/plasteel_holder = new(borgo.model)
@@ -302,7 +302,7 @@
 		return
 	var/obj/item/borg/hydraulic_clamp/better/big_clamp = locate() in cyborg.model.modules
 	if(big_clamp)
-		to_chat(user, span_warning("This cyborg is already equipped with an improved integrated hydraulic clamp!"))
+		to_chat(user, span_warning(LANG("obj.325242d5", null)))
 		return FALSE
 
 	big_clamp = new(cyborg.model)
@@ -362,10 +362,10 @@
 	if(!.)
 		return
 	if(borg.hasAffection)
-		to_chat(usr, span_warning("This unit already has a affection module installed!"))
+		to_chat(usr, span_warning(LANG("obj.d476f03d", null)))
 		return FALSE
 	if(!(TRAIT_R_WIDE in borg.model.model_features))
-		to_chat(usr, span_warning("This unit's chassis does not support this module."))
+		to_chat(usr, span_warning(LANG("obj.ac52b8ab", null)))
 		return FALSE
 
 	var/obj/item/quadborg_tongue/quadtongue = new /obj/item/quadborg_tongue(borg.model)
@@ -402,7 +402,7 @@
 	if(!istype(mob))
 		return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(interacting_with, TRAIT_AFFECTION_AVERSION)) // Checks for Affection Aversion trait
-		to_chat(user, span_warning("ERROR: [interacting_with] is on the Do Not Lick registry!"))
+		to_chat(user, span_warning(LANG("obj.d3e97a9e", list(interacting_with))))
 		return ITEM_INTERACT_BLOCKING
 	if(check_zone(borg.zone_selected) == "head")
 		borg.visible_message(span_warning("\the [borg] affectionally licks \the [mob]'s face!"), span_notice("You affectionally lick \the [mob]'s face!"))
@@ -423,7 +423,7 @@
 
 /obj/item/quadborg_nose/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(interacting_with, TRAIT_AFFECTION_AVERSION)) // Checks for Affection Aversion trait
-		to_chat(user, span_warning("ERROR: [interacting_with] is on the No Nosing registry!"))
+		to_chat(user, span_warning(LANG("obj.6f4e619c", list(interacting_with))))
 		return ITEM_INTERACT_BLOCKING
 
 	do_attack_animation(interacting_with, null, src)
@@ -446,10 +446,10 @@
 	if(.)
 
 		if(borg.hasShrunk)
-			to_chat(usr, span_warning("This unit already has a shrink module installed!"))
+			to_chat(usr, span_warning(LANG("obj.cd8c9ce8", null)))
 			return FALSE
 		if(TRAIT_R_SMALL in borg.model.model_features)
-			to_chat(usr, span_warning("This unit's chassis cannot be shrunk any further."))
+			to_chat(usr, span_warning(LANG("obj.81a5b808", null)))
 			return FALSE
 		borg.hasShrunk = TRUE
 		ADD_TRAIT(borg, TRAIT_NO_TRANSFORM, REF(src))
@@ -499,7 +499,7 @@
 		return
 	var/obj/item/kinky_shocker/cur_shocker = locate() in borg.model.modules
 	if(cur_shocker)
-		to_chat(usr, span_warning("This unit already has a dominatrix module installed!"))
+		to_chat(usr, span_warning(LANG("obj.06524a4e", null)))
 		return FALSE
 
 	var/obj/item/kinky_shocker/shocker = new /obj/item/kinky_shocker()

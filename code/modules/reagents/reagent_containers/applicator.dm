@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Generic reagent applicator type for pills and patches
 /obj/item/reagent_containers/applicator
 	name = "generic reagent applicator"
@@ -36,7 +37,7 @@
 		if(self_delay)
 			if(!do_after(user, self_delay, target_mob))
 				return ITEM_INTERACT_BLOCKING
-		to_chat(target_mob, span_notice("You [apply_method] [src]."))
+		to_chat(target_mob, span_notice(LANG("obj.d6171b71", list(apply_method, src))))
 		on_consumption(user, user, modifiers)
 		return ITEM_INTERACT_SUCCESS
 

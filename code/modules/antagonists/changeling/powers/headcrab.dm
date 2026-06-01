@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define LAST_RESORT_EXPLOSION_RANGE 2
 #define LAST_RESORT_BLIND_RANGE 4
 
@@ -93,7 +94,7 @@
 
 	stored_mind.transfer_to(crab, force_key_move = TRUE)
 	spawn_location.transfer_observers_to(crab)
-	to_chat(crab, span_warning("We burst out of the remains of our former body in a shower of gore!"))
+	to_chat(crab, span_warning(LANG("datum.c3cca68d", null)))
 	active = FALSE
 
 /// Ruptures nearby walls using the torn_wall component. Also it destroys objects with density.

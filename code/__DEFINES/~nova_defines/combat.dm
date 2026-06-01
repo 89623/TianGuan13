@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //Stamina threshold from which resisting a grab becomes hard
 #define STAMINA_THRESHOLD_HARD_RESIST 80
@@ -29,7 +30,7 @@
 //It's really not recommended to use this proc to give feedback, hence why silent is defaulting to true.
 /mob/living/carbon/proc/KnockToFloor(silent = TRUE, ignore_canknockdown = FALSE, knockdown_amt = 1)
 	if(!silent && body_position != LYING_DOWN)
-		to_chat(src, span_warning("You are knocked to the floor!"))
+		to_chat(src, span_warning(LANG("mob.b27ae9b8", null)))
 	Knockdown(knockdown_amt, ignore_canknockdown)
 
 /mob/living/proc/StaminaKnockdown(stamina_damage, disarm, brief_stun, hardstun, ignore_canknockdown = FALSE, paralyze_amount, knockdown_amt = 1)
@@ -113,7 +114,7 @@
 /datum/species/proc/try_suplex(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	target.visible_message(span_danger("[user.name] holds [target.name] tight and starts lifting [target.p_them()] up!"), \
 			span_userdanger("[user.name] holds you tight and lifts you up!"), ignored_mobs=user)
-	to_chat(user, span_danger("You hold [target.name] tight and lift [target.p_them()] up..."))
+	to_chat(user, span_danger(LANG("datum.5572671b", list(target.name, target.p_them()))))
 	user.changeNext_move(SUPLEX_TIMER)
 	if(!do_after(user, SUPLEX_TIMER, target) || !grab_maneuver_state_check(user, target))
 		return FALSE
@@ -126,7 +127,7 @@
 		moved_turf = next_turf
 	target.visible_message(span_danger("[user.name] suplexes [target.name] down to the ground!"), \
 		span_userdanger("[user.name] suplexes you!"), ignored_mobs=user)
-	to_chat(user, span_danger("You suplex [target.name]!"))
+	to_chat(user, span_danger(LANG("datum.f0504370", list(target.name))))
 	user.StaminaKnockdown(30, TRUE, TRUE)
 	user.SpinAnimation(7,1)
 	target.SpinAnimation(7,1)
@@ -142,11 +143,11 @@
 	if(target.stat != CONSCIOUS)
 		time_doing = 2 SECONDS
 		target.visible_message(span_danger("[user] holds [target]'s head tightly..."), ignored_mobs = user)
-		to_chat(user, span_danger("You grasp [target]'s head to prepare to slam it down..."))
+		to_chat(user, span_danger(LANG("datum.54b6f603", list(target))))
 	else
 		target.visible_message(span_danger("[user] holds [target]'s head and tries to overpower [target.p_them()]!"), \
 			span_userdanger("You struggle as [user] holds your head and tries to overpower you!"), ignored_mobs = user)
-		to_chat(user, span_danger("You grasp [target]'s head and try to overpower [target.p_them()]..."))
+		to_chat(user, span_danger(LANG("datum.5fe6c355", list(target, target.p_them()))))
 	user.changeNext_move(time_doing)
 	if(!do_after(user, time_doing, target) || !grab_maneuver_state_check(user, target))
 		return
@@ -158,7 +159,7 @@
 
 	target.visible_message(span_danger("[user.name] violently slams [target.name]'s head into the floor!"), \
 		span_userdanger("[user.name] slams your head against the floor!"), ignored_mobs = user)
-	to_chat(user, span_danger("You slam [target.name]'s head against the floor!"))
+	to_chat(user, span_danger(LANG("datum.ec810fde", list(target.name))))
 
 	// wound bonus because if you're doing this you probably really don't like the other guy so you're looking forward to inconveniencing them (with a fracture)
 	var/fun_times_at_the_headbash_factory = (head_knock ? 8 : 3)
@@ -177,18 +178,18 @@
 
 	if (!pregen_data.can_be_applied_to(affecting, random_roll = FALSE))
 		if (!(affecting.biological_state & BIO_JOINTED))
-			to_chat(user, span_warning("[target]'s [affecting.plaintext_zone] has no joint to dislocate!"))
+			to_chat(user, span_warning(LANG("datum.32a9850f", list(target, affecting.plaintext_zone))))
 		return FALSE
 
 	user.changeNext_move(4 SECONDS)
 	target.visible_message(span_danger("[user.name] twists [target.name]'s [affecting.name] violently!"), \
 			span_userdanger("[user.name] twists your [affecting.name] violently!"), ignored_mobs=user)
-	to_chat(user, span_danger("You start twisting [target.name]'s [affecting.name] violently!"))
+	to_chat(user, span_danger(LANG("datum.5089db74", list(target.name, affecting.name))))
 	if(!do_after(user, 4 SECONDS, target) || !grab_maneuver_state_check(user, target))
 		return FALSE
 	target.visible_message(span_danger("[user.name] dislocates [target.name]'s [affecting.name]!"), \
 		span_userdanger("[user.name] dislocates your [affecting.name]!"), ignored_mobs=user)
-	to_chat(user, span_danger("You dislocate [target.name]'s [affecting.name]!"))
+	to_chat(user, span_danger(LANG("datum.e6b8feaf", list(target.name, affecting.name))))
 	affecting.force_wound_upwards(/datum/wound/blunt/bone/moderate)
 	log_combat(user, target, "dislocates", "the [affecting.name]")
 	return TRUE

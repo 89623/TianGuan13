@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/transform
 	name = "Transform"
 	desc = "We take on the appearance and voice of one we have absorbed. Costs 5 chemicals."
@@ -15,7 +16,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice(LANG("obj.e3a56819", list(src))))
 		qdel(src)
 		return
 	. = ..()
@@ -31,7 +32,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/under/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice(LANG("obj.e3a56819", list(src))))
 		qdel(src)
 		return
 	. = ..()
@@ -48,7 +49,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/suit/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice(LANG("obj.e3a56819", list(src))))
 		qdel(src)
 		return
 	. = ..()
@@ -65,7 +66,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/head/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice(LANG("obj.e3a56819", list(src))))
 		qdel(src)
 		return
 	. = ..()
@@ -81,7 +82,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice(LANG("obj.e3a56819", list(src))))
 		qdel(src)
 		return
 	. = ..()
@@ -97,7 +98,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice(LANG("obj.e3a56819", list(src))))
 		qdel(src)
 		return
 	. = ..()
@@ -113,7 +114,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice(LANG("obj.e3a56819", list(src))))
 		qdel(src)
 		return
 	. = ..()
@@ -130,7 +131,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/changeling/attack_hand(mob/user, list/modifiers)
 	if(loc == user && IS_CHANGELING(user))
-		to_chat(user, span_notice("You reabsorb [src] into your body."))
+		to_chat(user, span_notice(LANG("obj.e3a56819", list(src))))
 		qdel(src)
 		return
 	. = ..()

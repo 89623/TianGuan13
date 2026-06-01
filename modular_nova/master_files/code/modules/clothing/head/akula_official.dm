@@ -77,14 +77,14 @@
 		return
 	var/obj/item/clothing/hitting_hat = tool
 	if(hitting_hat.clothing_flags & STACKABLE_HELMET_EXEMPT)
-		balloon_alert(user, "doesn't fit!")
+		balloon_alert(user, LANG("obj.7f1af016", null))
 		return ITEM_INTERACT_BLOCKING
 	if(attached_hat)
-		balloon_alert(user, "already something inside!")
+		balloon_alert(user, LANG("obj.63c6598c", null))
 		return ITEM_INTERACT_BLOCKING
 
 	attached_hat = hitting_hat
-	balloon_alert(user, "[hitting_hat] put inside")
+	balloon_alert(user, LANG("obj.c52b20a5", list(hitting_hat)))
 	hitting_hat.forceMove(src)
 	icon_state = "empty"
 	update_appearance()
@@ -104,7 +104,7 @@
 		return NONE
 
 	user.put_in_active_hand(attached_hat)
-	balloon_alert(user, "[attached_hat] removed")
+	balloon_alert(user, LANG("obj.2a4235b4", list(attached_hat)))
 	attached_hat = null
 	icon_state = "helmet"
 	update_appearance()

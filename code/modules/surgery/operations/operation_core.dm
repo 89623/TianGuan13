@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/basic/core_removal
 	name = "extract core"
 	rnd_name = "Corectomy (Extract Core)" // source: i made it up
@@ -40,4 +41,4 @@
 			span_notice("[surgeon] successfully extracts [core_count] core\s from [patient]!"),
 		)
 	else
-		to_chat(surgeon, span_warning("There aren't any cores left in [patient]!"))
+		to_chat(surgeon, span_warning(LANG("datum.bd396b2c", list(patient))))

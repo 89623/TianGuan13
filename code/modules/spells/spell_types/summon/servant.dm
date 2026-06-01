@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/action/cooldown/spell/summon_mob
 	name = "Summon Servant"
@@ -43,7 +44,7 @@
 	var/mob/living/to_summon = summon_weakref?.resolve()
 
 	if(QDELETED(to_summon))
-		to_chat(owner, span_warning("You can't seem to summon your [servant_title] - it seems they've vanished from reality, or never existed in the first place..."))
+		to_chat(owner, span_warning(LANG("datum.38953d12", list(servant_title))))
 		return SPELL_CANCEL_CAST
 
 /datum/action/cooldown/spell/summon_mob/cast()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Chance per second to print a warning text
 #define LIVING_FLESH_WARN_CHANCE 3
 /// Chance per second to perform an unwanted interaction
@@ -67,7 +68,7 @@
 		return
 	var/mob/living/carbon/human/victim = current_bodypart.owner
 	if(SPT_PROB(LIVING_FLESH_WARN_CHANCE, SSMOBS_DT))
-		to_chat(victim, span_warning("The skin on your [current_bodypart.plaintext_zone] crawls."))
+		to_chat(victim, span_warning(LANG("mob.876ba568", list(current_bodypart.plaintext_zone))))
 
 	victim.adjust_nutrition(-1.5)
 
@@ -78,7 +79,7 @@
 		if(HAS_TRAIT(victim, TRAIT_IMMOBILIZED))
 			return
 		step(victim, pick(GLOB.cardinals))
-		to_chat(victim, span_warning("Your [current_bodypart.plaintext_zone] moves on its own!"))
+		to_chat(victim, span_warning(LANG("mob.46a218a8", list(current_bodypart.plaintext_zone))))
 		return
 
 	var/list/candidates = list()
@@ -201,7 +202,7 @@
 /mob/living/basic/living_limb_flesh/proc/wake_up(atom/limb)
 	if(QDELETED(src))
 		return
-	visible_message(span_warning("[src] begins flailing around!"))
+	visible_message(span_warning(LANG("mob.acbe287a", list(src))))
 	Shake(6, 6, 0.5 SECONDS)
 	ai_controller.set_ai_status(AI_STATUS_ON)
 	forceMove(limb.drop_location())

@@ -12,14 +12,14 @@
 		return
 	flick("puddle-oil-splash", src)
 	reagents.expose(user, TOUCH, 20) //Covers target in 20u of fuel.
-	to_chat(user, span_warning("You touch the pool of fuel, only to get fuel all over yourself! It would be wise to wash this off with water."))
+	to_chat(user, span_warning(LANG("obj.792a46c3", null)))
 
 /obj/structure/water_source/fuel_well/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	flick("puddle-oil-splash", src)
 	return ..()
 
 /obj/structure/water_source/fuel_well/shovel_act(mob/living/user, obj/item/tool)
-	to_chat(user, "You fill in [src] with soil.")
+	to_chat(user, LANG("obj.c188d34b", list(src)))
 	tool.play_tool_sound(src)
 	deconstruct()
 
@@ -27,7 +27,7 @@
 	var/obj/item/weldingtool/attacking_welder = tool
 	if(istype(attacking_welder) && !attacking_welder.welding)
 		if(attacking_welder.reagents.has_reagent(/datum/reagent/fuel, attacking_welder.max_fuel))
-			to_chat(user, span_warning("Your [attacking_welder.name] is already full!"))
+			to_chat(user, span_warning(LANG("obj.c9271270", list(attacking_welder.name))))
 			return
 
 		reagents.trans_to(attacking_welder, attacking_welder.max_fuel, transferred_by = user)
@@ -75,18 +75,18 @@
 //attack hand is for cleaning stuff, but if the well isn't working, then we can't wash!
 /obj/structure/water_source/brick_well/attack_hand(mob/living/user, list/modifiers)
 	if(!cover_work())
-		to_chat(user, span_warning("[src] needs to have [get_turf(src)] dug out to work!"))
+		to_chat(user, span_warning(LANG("obj.f235da32", list(src, get_turf(src)))))
 		return
 
 	return ..()
 
 /obj/structure/water_source/brick_well/shovel_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("You begin to deconstruct [src]."))
+	to_chat(user, span_notice(LANG("obj.9f054c5c", list(src))))
 	tool.play_tool_sound(src)
 	if(!do_after(user, 5 SECONDS, target = src))
 		return
 
-	to_chat(user, span_notice("You deconstruct [src]."))
+	to_chat(user, span_notice(LANG("obj.a33d1bb6", list(src))))
 	tool.play_tool_sound(src)
 	deconstruct()
 
@@ -94,24 +94,24 @@
 /obj/structure/water_source/brick_well/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/stack/sheet/mineral/wood))
 		if(well_covered)
-			to_chat(user, span_notice("[src] is already covered..."))
+			to_chat(user, span_notice(LANG("obj.0d3178b1", list(src))))
 			return
 
 		if(!attacking_item.use(3))
-			to_chat(user, span_warning("[src] requires three pieces of wood to construct a cover!"))
+			to_chat(user, span_warning(LANG("obj.3c2fca98", list(src))))
 			return
 
-		to_chat(user, span_notice("You begin to build a cover."))
+		to_chat(user, span_notice(LANG("obj.96289978", null)))
 		if(!do_after(user, 5 SECONDS, target = src))
 			return
 
-		to_chat(user, span_notice("You built a cover."))
+		to_chat(user, span_notice(LANG("obj.43e27bb8", null)))
 		well_covered = TRUE
 		add_overlay("well_cover")
 		return
 
 	if(!cover_work())
-		to_chat(user, span_warning("[src] needs to have [get_turf(src)] dug out to work!"))
+		to_chat(user, span_warning(LANG("obj.f235da32", list(src, get_turf(src)))))
 		return
 
 	return ..()

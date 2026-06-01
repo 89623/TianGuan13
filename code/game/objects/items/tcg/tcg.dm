@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TAPPED_ANGLE 90
 #define UNTAPPED_ANGLE 0
 
@@ -140,7 +141,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	if(istype(item, /obj/item/tcgcard_deck))
 		var/obj/item/tcgcard_deck/old_deck = item
 		if(length(old_deck.contents) >= 30)
-			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
+			to_chat(user, span_notice(LANG("obj.144f42a1", null)))
 			return
 		user.transferItemToLoc(src, old_deck)
 		flipped = old_deck.flipped
@@ -165,7 +166,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	animate(src, transform = ntransform, time = 2, easing = SINE_EASING)
 
 /obj/item/tcgcard/proc/flip_card(mob/user)
-	to_chat(user, span_notice("You turn the card over."))
+	to_chat(user, span_notice(LANG("obj.3e45ade6", null)))
 	if(!flipped)
 		name = "Trading Card"
 		desc = "It's the back of a trading card... no peeking!"
@@ -258,7 +259,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	. = ..()
 	if(istype(item, /obj/item/tcgcard))
 		if(contents.len >= 30)
-			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
+			to_chat(user, span_notice(LANG("obj.144f42a1", null)))
 			return FALSE
 		var/obj/item/tcgcard/new_card = item
 		new_card.flipped = flipped
@@ -399,11 +400,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	for(var/template in cards)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), series, template)
-	to_chat(user, span_notice("Wow! Check out these cards!"))
+	to_chat(user, span_notice(LANG("obj.c05f2479", null)))
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 	if(prob(contains_coin))
-		to_chat(user, span_notice("...and it came with a flipper, too!"))
+		to_chat(user, span_notice(LANG("obj.31604725", null)))
 		new /obj/item/coin/thunderdome(get_turf(user))
 	qdel(src)
 

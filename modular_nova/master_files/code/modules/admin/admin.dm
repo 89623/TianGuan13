@@ -14,7 +14,7 @@ ADMIN_VERB(toggledchat, R_ADMIN, "Toggle Dead Chat", "Toggle dis bitch.", ADMIN_
 			return
 	else // otherwise just toggle it
 		GLOB.dchat_allowed = !GLOB.dchat_allowed
-	to_chat(world, span_oocplain("<B>The dead chat channel has been globally [GLOB.dchat_allowed ? "enabled" : "disabled"].</B>"))
+	to_chat(world, span_oocplain(LANG("_root.82b48831", list(GLOB.dchat_allowed ? "enabled" : "disabled"))))
 
 /datum/admin_help
 	/// Have we requested this ticket to stop being part of the Ticket Ping subsystem?
@@ -71,7 +71,7 @@ ADMIN_VERB(toggledchat, R_ADMIN, "Toggle Dead Chat", "Toggle dis bitch.", ADMIN_
 
 	add_verb(initiator, /client/verb/mentorhelp) // Way to override mentorhelp cooldown.
 
-	to_chat(initiator, span_adminhelp("Your ticket was converted to Mentorhelp"))
+	to_chat(initiator, span_adminhelp(LANG("datum.75d05deb", null)))
 	initiator.mentorhelp(full_text)
 	initiator.giveadminhelpverb()
 

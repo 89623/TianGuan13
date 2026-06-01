@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define REGIME_TELEPORTER "Teleporter"
 #define REGIME_GATE "Gate"
 
@@ -88,10 +89,10 @@
 		return
 
 	if(!check_hub_connection())
-		say("Error: Unable to detect hub.")
+		say(LANG("obj.534e8533", null))
 		return
 	if(calibrating)
-		say("Error: Calibration in progress. Stand by.")
+		say(LANG("obj.94a2986b", null))
 		return
 
 	switch(action)
@@ -135,9 +136,9 @@
 	calibrating = FALSE
 	if(check_hub_connection())
 		power_station.teleporter_hub.calibrated = TRUE
-		say("Calibration complete.")
+		say(LANG("obj.e9cb2c41", null))
 	else
-		say("Error: Unable to detect hub.")
+		say(LANG("obj.534e8533", null))
 	power_station.update_appearance()
 
 /obj/machinery/computer/teleporter/proc/check_hub_connection()
@@ -211,7 +212,7 @@
 		user.log_message("set the teleporter target to [targets[desc]].]", LOG_GAME)
 	else
 		if (!length(targets))
-			to_chat(user, span_alert("No active connected stations located."))
+			to_chat(user, span_alert(LANG("obj.2e9bff88", null)))
 			return
 
 		var/desc = tgui_input_list(usr, "Select a station to lock in", "Locking Computer", sort_list(targets))

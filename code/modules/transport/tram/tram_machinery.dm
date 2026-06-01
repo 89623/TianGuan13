@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/assembly/control/transport
 	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
@@ -20,12 +21,12 @@
 		return
 
 	if(get_dist(change_platform, src) > 15)
-		balloon_alert(user, "out of range!")
+		balloon_alert(user, LANG("obj.2201997f", null))
 		return
 
 	id = change_platform.platform_code
-	balloon_alert(user, "platform changed")
-	to_chat(user, span_notice("You change the platform ID to [change_platform.name]."))
+	balloon_alert(user, LANG("obj.ed615b2a", null))
+	to_chat(user, span_notice(LANG("obj.60bd7fff", list(change_platform.name))))
 
 /obj/item/assembly/control/transport/call_button
 	name = "tram call button"
@@ -100,7 +101,7 @@
 	if(in_range(user, src))
 		return attack_hand(user)
 	else
-		to_chat(user, span_warning("You are too far away to activate the button!"))
+		to_chat(user, span_warning(LANG("obj.cccb5c88", null)))
 
 /obj/machinery/button/transport/tram/setup_device()
 	. = ..()

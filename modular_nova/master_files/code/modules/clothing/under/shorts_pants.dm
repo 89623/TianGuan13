@@ -78,7 +78,7 @@
 
 /obj/item/clothing/under/pants/nova/chaps/click_ctrl_shift(mob/user)
 	if(attached_accessories) //Make sure they don't have any attachments first
-		balloon_alert(user, "remove attached accessories!")
+		balloon_alert(user, LANG("obj.8e29c0ed", null))
 		return
 	//Converts the Chaps into an attachment
 	//See accessories.dm for the accessory version

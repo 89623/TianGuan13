@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 
@@ -59,7 +60,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 /datum/highlander_controller/proc/new_highlander(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
 
-	to_chat(new_crewmember, span_userdanger("<i>THERE CAN BE ONLY ONE!!!</i>"))
+	to_chat(new_crewmember, span_userdanger(LANG("datum.47f94506", null)))
 	new_crewmember.make_scottish()
 
 /**

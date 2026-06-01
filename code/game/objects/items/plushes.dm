@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/toy/plush
 	name = "plush"
 	desc = "This is the special coder plush, do not steal."
@@ -124,45 +125,45 @@
 /obj/item/toy/plush/attack_self(mob/user)
 	. = ..()
 	if(stuffed || grenade)
-		to_chat(user, span_notice("You pet [src]. D'awww."))
+		to_chat(user, span_notice(LANG("obj.5b936446", list(src))))
 		if(grenade && !grenade.active)
 			user.log_message("activated a hidden grenade in [src].", LOG_VICTIM)
 			grenade.arm_grenade(user, msg = FALSE, volume = 10)
 	else
-		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
+		to_chat(user, span_notice(LANG("obj.c7a2d29c", list(src))))
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(I.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
-				to_chat(user, span_warning("You already murdered it!"))
+				to_chat(user, span_warning(LANG("obj.78c08dc0", null)))
 				return
 			if(!divine)
 				user.visible_message(span_notice("[user] tears out the stuffing from [src]!"), span_notice("You rip a bunch of the stuffing from [src]. Murderer."))
 				I.play_tool_sound(src)
 				stuffed = FALSE
 			else
-				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
+				to_chat(user, span_notice(LANG("obj.e532fc33", list(src))))
 				user.adjust_drunk_effect(20, up_to = 50)
 
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code
 				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
-					to_chat(user, span_notice("There is no escape. No recall or intervention can work in this place."))
+					to_chat(user, span_notice(LANG("obj.8c0817aa", null)))
 				else
-					to_chat(user, span_notice("There is no escape. Although recall or intervention can work in this place, attempting to flee from [src]'s immense power would be futile."))
+					to_chat(user, span_notice(LANG("obj.dcc84c1c", list(src))))
 				user.visible_message(span_notice("[user] lays down their weapons and begs for [src]'s mercy!"), span_notice("You lay down your weapons and beg for [src]'s mercy."))
 				user.drop_all_held_items()
 		else
-			to_chat(user, span_notice("You remove the grenade from [src]."))
+			to_chat(user, span_notice(LANG("obj.183b7f6c", list(src))))
 			user.put_in_hands(grenade)
 		return
 	if(isgrenade(I))
 		if(stuffed)
-			to_chat(user, span_warning("You need to remove some stuffing first!"))
+			to_chat(user, span_warning(LANG("obj.c6530043", null)))
 			return
 		if(grenade)
-			to_chat(user, span_warning("[src] already has a grenade!"))
+			to_chat(user, span_warning(LANG("obj.4d044d10", list(src))))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
@@ -427,7 +428,7 @@
 /obj/item/toy/plush/ratplush/proc/clash_of_the_plushies(obj/item/toy/plush/narplush/P)
 	clash_target = P
 	P.clashing = TRUE
-	say("YOU.")
+	say(LANG("obj.71020c0f", null))
 	P.say("Ratvar?!")
 	var/obj/item/toy/plush/a_winnar_is
 	var/victory_chance = 10
@@ -487,7 +488,7 @@
 		qdel(P)
 		clash_target = null
 	else
-		say("NO! I will not be banished again...")
+		say(LANG("obj.5d0034f5", null))
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
 		playsound(src, 'sound/effects/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
 		playsound(P, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
@@ -805,7 +806,7 @@
 	if(!istype(nana))
 		return ..()
 	nana.forceMove(src) // go into the cotton stomach
-	to_chat(feeder, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
+	to_chat(feeder, span_notice(LANG("obj.dff5f1a6", list(nana, src))))
 	playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(eat), feeder, nana), 3 SECONDS)
 	return ITEM_INTERACT_SUCCESS

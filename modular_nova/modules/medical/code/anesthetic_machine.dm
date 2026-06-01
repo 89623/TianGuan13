@@ -34,16 +34,16 @@
 		return ..()
 
 	if(mask_out)
-		to_chat(user, span_warning("There is someone currently attached to the [src]!"))
+		to_chat(user, span_warning(LANG("obj.c7bf1a64", list(src))))
 		return TRUE
 
 	if(attached_tank)
-		to_chat(user, span_warning("[attached_tank] must be removed from [src] first!"))
+		to_chat(user, span_warning(LANG("obj.74a68849", list(attached_tank, src))))
 		return TRUE
 
 	new /obj/item/anesthetic_machine_kit(get_turf(src))
 	tool.play_tool_sound(user)
-	to_chat(user, span_notice("You deconstruct the [src]."))
+	to_chat(user, span_notice(LANG("obj.ba57ad95", list(src))))
 	qdel(src)
 	return TRUE
 
@@ -64,7 +64,7 @@
 	. = ..()
 	if(!retract_mask())
 		return FALSE
-	visible_message(span_notice("[user] retracts [attached_mask] back into [src]."))
+	visible_message(span_notice(LANG("obj.9d9d530a", list(user, attached_mask, src))))
 
 /obj/machinery/anesthetic_machine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacking_item, /obj/item/tank))
@@ -74,7 +74,7 @@
 		attached_tank.forceMove(loc)
 
 	attacking_item.forceMove(src) // Put new tank in, set it as attached tank
-	visible_message(span_notice("[user] inserts [attacking_item] into [src]."))
+	visible_message(span_notice(LANG("obj.05c6f8ca", list(user, attacking_item, src))))
 	attached_tank = attacking_item
 	update_icon()
 
@@ -83,7 +83,7 @@
 		return CLICK_ACTION_BLOCKING
 
 	attached_tank.forceMove(loc)
-	to_chat(user, span_notice("You remove the [attached_tank]."))
+	to_chat(user, span_notice(LANG("obj.c8aaf6b8", list(attached_tank))))
 	attached_tank = null
 	update_icon()
 	if(mask_out)
@@ -129,7 +129,7 @@
 	if(!do_after(user, 5 SECONDS, over))
 		return
 	if(!over.equip_to_appropriate_slot(attached_mask))
-		to_chat(user, span_warning("You are unable to attach the [attached_mask] to [over]!"))
+		to_chat(user, span_warning(LANG("obj.0630635e", list(attached_mask, over))))
 		return
 
 	user.visible_message(span_warning("[user] attaches the [attached_mask] to [over]."), span_notice("You attach the [attached_mask] to [over]"))
@@ -146,7 +146,7 @@
 
 	var/mob/living/carbon/carbon_target = attached_mask.loc
 	if(get_dist(src, get_turf(attached_mask)) > 1) // If too far away, detach
-		to_chat(carbon_target, span_warning("[attached_mask] is ripped off of your face!"))
+		to_chat(carbon_target, span_warning(LANG("obj.791d0917", list(attached_mask))))
 		retract_mask()
 		return PROCESS_KILL
 
@@ -207,7 +207,7 @@
 		return
 
 	if(loc != our_machine) //If it isn't in the machine, then it retracts when dropped
-		to_chat(user, span_notice("[src] retracts back into the [our_machine]."))
+		to_chat(user, span_notice(LANG("obj.0d40a496", list(src, our_machine))))
 		our_machine.retract_mask()
 
 /obj/item/clothing/mask/breath/anesthetic/adjust_visor(mob/living/carbon/user)

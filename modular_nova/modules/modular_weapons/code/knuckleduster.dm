@@ -194,7 +194,7 @@
 				COMBAT_MESSAGE_RANGE,
 				attacker,
 			)
-			to_chat(attacker, span_danger("You knock [defender] out with a haymaker!"))
+			to_chat(attacker, span_danger(LANG("datum.00087ddb", list(defender))))
 			defender.apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 			defender.SetSleeping(3 SECONDS) // this is still punishing enough i think
 			log_combat(attacker, defender, "knocked out (boxing) ")
@@ -208,7 +208,7 @@
 					COMBAT_MESSAGE_RANGE,
 					attacker,
 				)
-				to_chat(attacker, span_danger("You knock [defender] around with a haymaker!"))
+				to_chat(attacker, span_danger(LANG("datum.5eb2f1d2", list(defender))))
 				defender.adjust_staggered_up_to(0.5 SECONDS, 10 SECONDS) // probably not enough to increase the window to eat more crits
 				defender.apply_damage(15, STAMINA, blocked = armor_block) // if you're punching the guy who's baton-resistant, you might just want to shoot him, actually
 				log_combat(attacker, defender, "knocked around (boxing) ")
@@ -221,7 +221,7 @@
 					COMBAT_MESSAGE_RANGE,
 					attacker,
 				)
-				to_chat(attacker, span_danger("You knock [defender] down with a haymaker!"))
+				to_chat(attacker, span_danger(LANG("datum.e1cca3ed", list(defender))))
 				defender.adjust_staggered_up_to(2 SECONDS, 10 SECONDS) // slight increase in window to eat more crits
 				defender.apply_effect(1 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 				// in regards to knockdown: "1 second seems a bit low"
@@ -238,5 +238,5 @@
 			attacker,
 		)
 		defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
-		to_chat(attacker, span_danger("You stagger [defender] with a haymaker!"))
+		to_chat(attacker, span_danger(LANG("datum.fde652f7", list(defender))))
 		log_combat(attacker, defender, "staggered (boxing) ")

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/action/cooldown/mob_cooldown/minedrone
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
@@ -47,7 +48,7 @@
 
 	owner.sync_lighting_plane_cutoff()
 
-	to_chat(owner, span_notice("You toggle your meson vision [(owner.sight & SEE_TURFS) ? "on" : "off"]."))
+	to_chat(owner, span_notice(LANG("datum.c6cd7787", list((owner.sight & SEE_TURFS) ? "on" : "off"))))
 
 /datum/action/cooldown/mob_cooldown/missile_launcher
 	name = "Launch Missile"

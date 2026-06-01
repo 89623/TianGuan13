@@ -22,17 +22,17 @@
 
 	// do you have a penis?
 	if(!user.has_penis())
-		to_chat(user, span_danger("You can't stroke your penis if you don't have one."))
+		to_chat(user, span_danger(LANG("obj.d2b97fa6", null)))
 		qdel(src)
 		return
 
 	// is the penis exposed?
 	if(!user.has_penis(required_state = REQUIRE_GENITAL_EXPOSED))
-		to_chat(user, span_danger("You need to expose your penis in order to stroke it."))
+		to_chat(user, span_danger(LANG("obj.c1189c0a", null)))
 		return
 
 	if(user.is_wearing_condom()) // i give up actually, the code from climax was refusing to work and not like its contributing to the goal here... just press the climax button
-		to_chat(user, span_danger("You can't cum on something if you are wearing a condom... - Try climaxing instead."))
+		to_chat(user, span_danger(LANG("obj.3ab13b5f", null)))
 		return
 
 	if(target == user)
@@ -40,7 +40,7 @@
 
 	else if(target.is_refillable() && target.is_drainable())
 		if(target.reagents.holder_full())
-			to_chat(user, span_warning("[target] is full."))
+			to_chat(user, span_warning(LANG("obj.8e2d390c", list(target))))
 			return
 		user.visible_message(span_warning("[user] starts masturbating into [target]!"), span_danger("You start masturbating into [target]!"))
 	else

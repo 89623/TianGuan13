@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/abductor/experiment
 	name = "experimentation machine"
 	desc = "A large man-sized tube sporting a complex array of surgical machinery."
@@ -44,7 +45,7 @@
 		return
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
-		to_chat(user, span_warning("[src]'s door won't budge!"))
+		to_chat(user, span_warning(LANG("obj.c4e897cb", list(src))))
 
 /obj/machinery/abductor/experiment/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -135,17 +136,17 @@
 	if(occupant in history)
 		return "Specimen already in database."
 	if(occupant.stat == DEAD)
-		say("Specimen deceased - please provide fresh sample.")
+		say(LANG("obj.57471c89", null))
 		return "Specimen deceased."
 	var/obj/item/organ/heart/gland/GlandTest = locate() in occupant.organs
 	if(!GlandTest)
-		say("Experimental dissection not detected!")
+		say(LANG("obj.fa2d31bc", null))
 		return "No glands detected!"
 	if(occupant.mind != null && occupant.ckey != null)
 		LAZYINITLIST(abductee_minds)
 		LAZYADD(history, occupant)
 		LAZYADD(abductee_minds, occupant.mind)
-		say("Processing specimen...")
+		say(LANG("obj.e681e6c1", null))
 		sleep(0.5 SECONDS)
 		switch(text2num(type))
 			if(1)
@@ -172,7 +173,7 @@
 			playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 			return "Experiment failed! No replacement organ detected."
 	else
-		say("Brain activity nonexistent - disposing sample...")
+		say(LANG("obj.e3f681f6", null))
 		open_machine()
 		send_back(occupant)
 		return "Specimen braindead - disposed."

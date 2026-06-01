@@ -1,9 +1,10 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(change_shuttle_events, R_ADMIN|R_FUN, "Change Shuttle Events", "Change the events on a shuttle.", ADMIN_CATEGORY_SHUTTLE)
 	//At least for now, just letting admins modify the emergency shuttle is fine
 	var/obj/docking_port/mobile/port = SSshuttle.emergency
 
 	if(!port)
-		to_chat(user, span_admin("Uh oh, couldn't find the escape shuttle!"))
+		to_chat(user, span_admin(LANG("datum.64253f25", null)))
 
 	var/list/options = list("Clear"="Clear")
 
@@ -63,7 +64,7 @@ ADMIN_VERB(cancel_shuttle, R_ADMIN, "Cancel Shuttle", "Recall the shuttle, regar
 
 ADMIN_VERB(disable_shuttle, R_ADMIN, "Disable Shuttle", "Those fuckers aren't getting out.", ADMIN_CATEGORY_SHUTTLE)
 	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
-		to_chat(user, span_warning("Error, shuttle is already disabled."))
+		to_chat(user, span_warning(LANG("datum.b8472aba", null)))
 		return
 
 	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
@@ -86,7 +87,7 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, "Disable Shuttle", "Those fuckers aren't ge
 
 ADMIN_VERB(enable_shuttle, R_ADMIN, "Enable Shuttle", "Those fuckers ARE getting out.", ADMIN_CATEGORY_SHUTTLE)
 	if(SSshuttle.emergency.mode != SHUTTLE_DISABLED)
-		to_chat(user, span_warning("Error, shuttle not disabled."))
+		to_chat(user, span_warning(LANG("datum.a398338c", null)))
 		return
 
 	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")

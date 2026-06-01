@@ -4,26 +4,26 @@
 	if(!istype(requester))
 		return
 	if(QDELETED(door))
-		to_chat(src, span_warning("Connection lost! Unable to locate airlock on network."))
+		to_chat(src, span_warning(LANG("mob.e2f038f5", null)))
 		return
 	if(!istype(door))
 		return
 
 	if(!COOLDOWN_FINISHED(door, answer_cd))
-		to_chat(src, span_warning("Your processor is still cooling down."))
+		to_chat(src, span_warning(LANG("mob.3bc179f8", null)))
 		return
 
 	if(!requester.can_track(src))
-		to_chat(src, span_notice("Unable to track requester."))
+		to_chat(src, span_notice(LANG("mob.40687e41", null)))
 		return
 	if(!door.hasPower())
-		to_chat(src, span_warning("This airlock isn't powered."))
+		to_chat(src, span_warning(LANG("mob.556a36e2", null)))
 		return
 	if(!door.canAIControl())
-		to_chat(src, span_notice("Unable to access airlock."))
+		to_chat(src, span_notice(LANG("mob.9fde653a", null)))
 		return
 	if(door.obj_flags & EMAGGED)
-		to_chat(src, "Airlock is unresponsive.")
+		to_chat(src, LANG("mob.302a0309", null))
 		return
 
 	COOLDOWN_START(door, answer_cd, 10 SECONDS)

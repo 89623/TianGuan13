@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 /obj/machinery/computer/upload
@@ -17,14 +18,14 @@
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(!current)
-			to_chat(user, span_alert("You haven't selected anything to transmit laws to!"))
+			to_chat(user, span_alert(LANG("obj.0c5e775e", null)))
 			return
 		if(!can_upload_to(current))
-			to_chat(user, span_alert("Upload failed! Check to make sure [current.name] is functioning properly."))
+			to_chat(user, span_alert(LANG("obj.45caa6cb", list(current.name))))
 			current = null
 			return
 		if(!is_valid_z_level(get_turf(current), get_turf(user)))
-			to_chat(user, span_alert("Upload failed! Unable to establish a connection to [current.name]. You're too far away!"))
+			to_chat(user, span_alert(LANG("obj.a2299260", list(current.name))))
 			current = null
 			return
 		M.install(current.laws, user)
@@ -51,9 +52,9 @@
 	current = select_active_ai(user, z, TRUE)
 
 	if (!current)
-		to_chat(user, span_alert("No active AIs detected!"))
+		to_chat(user, span_alert(LANG("obj.c8b193f9", null)))
 	else
-		to_chat(user, span_notice("[current.name] selected for law changes."))
+		to_chat(user, span_notice(LANG("obj.1ba2e700", list(current.name))))
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
@@ -72,9 +73,9 @@
 	current = select_active_free_borg(user)
 
 	if(!current)
-		to_chat(user, span_alert("No active unslaved cyborgs detected."))
+		to_chat(user, span_alert(LANG("obj.9d4f84e5", null)))
 	else
-		to_chat(user, span_notice("[current.name] selected for law changes."))
+		to_chat(user, span_notice(LANG("obj.1ba2e700", list(current.name))))
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !iscyborg(B))

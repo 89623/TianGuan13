@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/geiger_counter //DISCLAIMER: I know nothing about how real-life Geiger counters work. This will not be realistic. ~Xhuis
 	name = "\improper Geiger counter"
 	desc = "A handheld device used for detecting and measuring radiation pulses."
@@ -65,7 +66,7 @@
 		qdel(GetComponent(/datum/component/geiger_sound))
 
 	update_appearance(UPDATE_ICON)
-	balloon_alert(user, "switch [scanning ? "on" : "off"]")
+	balloon_alert(user, LANG("obj.008b17a1", list(scanning ? "on" : "off")))
 
 /obj/item/geiger_counter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
@@ -108,13 +109,13 @@
 	if (SEND_SIGNAL(target, COMSIG_GEIGER_COUNTER_SCAN, user, src) & COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL)
 		return
 
-	to_chat(user, span_notice("[icon2html(src, user)] [isliving(target) ? "Subject" : "Target"] is free of radioactive contamination."))
+	to_chat(user, span_notice(LANG("obj.1f84066b", list(icon2html(src, user), isliving(target) ? "Subject" : "Target"))))
 
 /obj/item/geiger_counter/click_alt(mob/living/user)
 	if(!scanning)
-		to_chat(user, span_warning("[src] must be on to reset its radiation level!"))
+		to_chat(user, span_warning(LANG("obj.d528d657", list(src))))
 		return CLICK_ACTION_BLOCKING
-	to_chat(user, span_notice("You flush [src]'s radiation counts, resetting it to normal."))
+	to_chat(user, span_notice(LANG("obj.ab060bf8", list(src))))
 	last_perceived_radiation_danger = null
 	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS

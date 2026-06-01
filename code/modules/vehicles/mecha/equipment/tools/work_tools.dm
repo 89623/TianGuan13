@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //Hydraulic clamp, Kill clamp, Extinguisher, RCD, Cable layer.
 
@@ -58,9 +59,9 @@
 				if(M.ammo_resupply(box, source, TRUE))
 					return ..()
 		if(have_ammo)
-			to_chat(source, "No further supplies can be provided to [M].")
+			to_chat(source, LANG("obj.d220eddf", list(M)))
 		else
-			to_chat(source, "No providable supplies found in cargo hold")
+			to_chat(source, LANG("obj.3c29a20c", null))
 		return
 
 	if(istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/machinery/door/airlock))
@@ -198,10 +199,10 @@
 	var/turf/in_front = get_step(chassis, chassis.dir)
 	var/obj/structure/reagent_dispensers/watertank/refill_source = locate(/obj/structure/reagent_dispensers/watertank) in in_front
 	if(!refill_source)
-		to_chat(user, span_notice("Refill failed. No compatible tank found."))
+		to_chat(user, span_notice(LANG("obj.8109a519", null)))
 		return
 	if(!refill_source.reagents?.total_volume)
-		to_chat(user, span_notice("Refill failed. Source tank empty."))
+		to_chat(user, span_notice(LANG("obj.1d1dc324", null)))
 		return
 
 	refill_source.reagents.trans_to(src, reagents.maximum_volume)
@@ -304,7 +305,7 @@
 	if (!(target in view(RCD_RANGE, get_turf(chassis))))
 		return
 	if(get_dist(chassis, target) > RCD_RANGE)
-		balloon_alert(source, "out of range!")
+		balloon_alert(source, LANG("obj.2201997f", null))
 		return
 	initial_location = chassis.loc
 
@@ -335,20 +336,20 @@
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/ripley/mecha, attach_right = FALSE, mob/user)
 	if(mecha.type != /obj/vehicle/sealed/mecha/ripley)
-		to_chat(user, span_warning("This conversion kit can only be applied to APLU MK-I models."))
+		to_chat(user, span_warning(LANG("obj.5614c0bb", null)))
 		return FALSE
 	var/obj/vehicle/sealed/mecha/ripley/workmech = mecha
 	if(LAZYLEN(workmech.cargo_hold))
-		to_chat(user, span_warning("[mecha]'s cargo hold must be empty before this conversion kit can be applied."))
+		to_chat(user, span_warning(LANG("obj.a9bf12d5", list(mecha))))
 		return FALSE
 	if(!(mecha.mecha_flags & PANEL_OPEN)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
-		to_chat(user, span_warning("[mecha] panel must be open in order to allow this conversion kit."))
+		to_chat(user, span_warning(LANG("obj.ae616ae0", list(mecha))))
 		return FALSE
 	if(LAZYLEN(mecha.occupants)) //We're actually making a new mech and swapping things over, it might get weird if players are involved
-		to_chat(user, span_warning("[mecha] must be unoccupied before this conversion kit can be applied."))
+		to_chat(user, span_warning(LANG("obj.44a07f53", list(mecha))))
 		return FALSE
 	if(!mecha.cell) //Turns out things break if the cell is missing
-		to_chat(user, span_warning("The conversion process requires a cell installed."))
+		to_chat(user, span_warning(LANG("obj.eb7e06b8", null)))
 		return FALSE
 	return TRUE
 
@@ -406,6 +407,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy/can_attach(obj/vehicle/sealed/mecha/ripley/mecha, attach_right = FALSE, mob/user)
 	if(mecha.equip_by_category[MECHA_L_ARM] || mecha.equip_by_category[MECHA_R_ARM]) //Paddys can't use RIPLEY-type equipment
-		to_chat(user, span_warning("This kit cannot be applied with hardpoint equipment attached."))
+		to_chat(user, span_warning(LANG("obj.c59448cf", null)))
 		return FALSE
 	return ..()

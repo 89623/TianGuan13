@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * Upon completion of a civilian bounty, one of these is created.
@@ -105,7 +106,7 @@
 
 /obj/item/bounty_cube/debug_cube/attack_self(mob/user)
 	if(!isliving(user))
-		to_chat(user, span_warning("You aren't eligible to use this!"))
+		to_chat(user, span_warning(LANG("obj.ac470b2d", null)))
 		return ..()
 
 	if(!set_up)
@@ -114,7 +115,7 @@
 			set_up(random_bounty(), squeezer.get_idcard())
 			set_up = TRUE
 			return ..()
-		to_chat(user, span_notice("It can't detect your bank account."))
+		to_chat(user, span_notice(LANG("obj.eae3ace2", null)))
 
 	return ..()
 

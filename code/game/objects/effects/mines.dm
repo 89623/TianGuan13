@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/mine
 	name = "dummy mine"
 	desc = "Better stay away from that thing."
@@ -58,7 +59,7 @@
 	armed = TRUE
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
-	visible_message(span_danger("\The [src] beeps softly, indicating it is now active."), vision_distance = COMBAT_MESSAGE_RANGE)
+	visible_message(span_danger(LANG("obj.9b515b40", list(src))), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /// Can this mine trigger on the passed movable?
 /obj/effect/mine/proc/can_trigger(atom/movable/on_who)
@@ -95,7 +96,7 @@
 		else
 			return //it didn't actually touch the mine, don't blow
 
-	visible_message(span_danger("[icon2html(src, viewers(src))] *click*"))
+	visible_message(span_danger(LANG("obj.e46c4846", list(icon2html(src, viewers(src))))))
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	if(gonna_blow)
 		RegisterSignal(arrived, COMSIG_MOVABLE_MOVED, PROC_REF(triggermine)) //wait for it to finish the movement before blowing so it takes proper damage
@@ -112,7 +113,7 @@
 
 	if(!foot_on_mine && gone.flags_1 & ON_BORDER_1)
 		if(gone.dir == REVERSE_DIR(direction)) //see if a north facing border atom (ie window) travels south (and other directions as needed)
-			visible_message(span_danger("[icon2html(src, viewers(src))] *click*"))
+			visible_message(span_danger(LANG("obj.e46c4846", list(icon2html(src, viewers(src))))))
 			playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 			triggermine() //it "passed" over the mine briefly, triggering it in the process
 		return //either it blew up the mine, or it didn't and we don't have to worry about anything else.
@@ -134,9 +135,9 @@
 	if(triggered) //too busy detonating to detonate again
 		return
 	if(triggerer)
-		visible_message(span_danger("[triggerer] sets off [icon2html(src, viewers(src))] [src]!"))
+		visible_message(span_danger(LANG("obj.9caa6cf7", list(triggerer, icon2html(src, viewers(src)), src))))
 	else
-		visible_message(span_danger("[icon2html(src, viewers(src))] [src] detonates!"))
+		visible_message(span_danger(LANG("obj.af810510", list(icon2html(src, viewers(src)), src))))
 
 	do_sparks(3, TRUE, src)
 	mineEffect(triggerer)
@@ -191,7 +192,7 @@
 
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
 	if(isliving(victim) && victim.client && Adjacent(victim))
-		to_chat(victim, span_userdanger("You have been kicked FOR NO REISIN!"))
+		to_chat(victim, span_userdanger(LANG("obj.6d610405", null)))
 		qdel(victim.client)
 
 /obj/effect/mine/gas
@@ -277,7 +278,7 @@
 		return
 
 	playsound(src, 'sound/items/weapons/armbomb.ogg', 70, TRUE)
-	to_chat(user, span_warning("You arm \the [src], causing it to shake! It will deploy in 3 seconds."))
+	to_chat(user, span_warning(LANG("obj.c3ee90c8", list(src))))
 	active = TRUE
 	addtimer(CALLBACK(src, PROC_REF(deploy_mine)), 3 SECONDS)
 
@@ -286,7 +287,7 @@
 	do_alert_animation()
 	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE, -3)
 	var/obj/effect/mine/new_mine = new mine_type(get_turf(src))
-	visible_message(span_danger("\The [src] releases a puff of smoke, revealing \a [new_mine]!"))
+	visible_message(span_danger(LANG("obj.90817ac9", list(src, new_mine))))
 	var/obj/effect/particle_effect/fluid/smoke/poof = new (get_turf(src))
 	poof.lifetime = 3
 	qdel(src)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A spooky skull which heals lavaland mobs, attacks miners, and infests their bodies
 /mob/living/basic/mining/legion_brood
 	name = "legion"
@@ -72,7 +73,7 @@
 		created_by = null
 
 	if (isliving(target) && faction_check_atom(target) && !istype(target, mob_creator?.type))
-		visible_message(span_warning("[src] melds with [target]'s flesh!"))
+		visible_message(span_warning(LANG("mob.3790545e", list(src, target))))
 		target.apply_status_effect(/datum/status_effect/regenerative_core)
 		new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
 		death()
@@ -81,7 +82,7 @@
 
 /// Turn the targeted mob into one of us
 /mob/living/basic/mining/legion_brood/proc/infest(mob/living/carbon/human/target)
-	visible_message(span_warning("[name] burrows into the flesh of [target]!"))
+	visible_message(span_warning(LANG("mob.c3edd4e6", list(name, target))))
 	var/spawn_type = get_legion_type(target)
 	var/mob/living/basic/mining/legion/new_legion = new spawn_type(loc)
 	new_legion.consume(target)

@@ -65,7 +65,7 @@
 	var/mob/living/carbon/affected_carbon = usr
 	if(istype(deprivation_helmet))
 		if(deprivation_helmet == affected_carbon.head)
-			to_chat(usr, span_notice("You can't reach the deprivation helmet switch!"))
+			to_chat(usr, span_notice(LANG("datum.9049a337", null)))
 		else
 			deprivation_helmet.SwitchHelmet("vision")
 
@@ -82,7 +82,7 @@
 	var/mob/living/carbon/affected_carbon = usr
 	if(istype(deprivation_helmet))
 		if(deprivation_helmet == affected_carbon.head)
-			to_chat(usr, span_notice("You can't reach the deprivation helmet switch!"))
+			to_chat(usr, span_notice(LANG("datum.9049a337", null)))
 		else
 			deprivation_helmet.SwitchHelmet("hearing")
 
@@ -99,7 +99,7 @@
 	var/mob/living/carbon/affected_carbon = usr
 	if(istype(deprivation_helmet))
 		if(deprivation_helmet == affected_carbon.head)
-			to_chat(usr, span_notice("You can't reach the deprivation helmet switch!"))
+			to_chat(usr, span_notice(LANG("datum.9049a337", null)))
 		else
 			deprivation_helmet.SwitchHelmet("speech")
 

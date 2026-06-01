@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// --Food storage component--
 /// This component lets you slide one item into large foods, such as bread, cheese wheels, or cakes.
 /// Consuming food storages with an item inside can cause unique interactions, such as eating glass shards.
@@ -65,11 +66,11 @@
 		return NONE
 
 	if(inserted_item.w_class > minimum_weight_class)
-		to_chat(user, span_warning("[inserted_item] won't fit in [parent]."))
+		to_chat(user, span_warning(LANG("datum.6b579e25", list(inserted_item, parent))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!QDELETED(stored_item))
-		to_chat(user, span_warning("There's something in [parent]."))
+		to_chat(user, span_warning(LANG("datum.36dae0c4", list(parent))))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
@@ -111,11 +112,11 @@
 	if(!do_after(user, 1.5 SECONDS, target = parent))
 		return
 	if(!user.temporarilyRemoveItemFromInventory(inserted_item))
-		to_chat(user, span_warning("You can't seem to insert [inserted_item] into [parent]."))
+		to_chat(user, span_warning(LANG("datum.6ee2a600", list(inserted_item, parent))))
 		return
 
 	var/atom/food = parent
-	to_chat(user, span_notice("You slip [inserted_item] inside [parent]."))
+	to_chat(user, span_notice(LANG("datum.cd76ff7c", list(inserted_item, parent))))
 	inserted_item.forceMove(food)
 	user.log_message("inserted [inserted_item] into [parent].", LOG_ATTACK)
 	food.add_fingerprint(user)
@@ -132,7 +133,7 @@
 	if(!do_after(user, 10 SECONDS, target = parent))
 		return
 	if(QDELETED(stored_item))
-		to_chat(user, span_warning("There's nothing in [parent]."))
+		to_chat(user, span_warning(LANG("datum.1bbf91ac", list(parent))))
 		return
 	remove_item(user)
 
@@ -176,7 +177,7 @@
 	var/discovered = FALSE
 	if(prob(good_chance_of_discovery)) //finding the item, without biting it
 		discovered = TRUE
-		to_chat(target, span_warning("It feels like there's something in [parent]...!"))
+		to_chat(target, span_warning(LANG("datum.29d4be14", list(parent))))
 
 	else if(prob(bad_chance_of_discovery)) //finding the item, BY biting it
 		user.log_message("just fed [key_name(target)] \a [stored_item] which was hidden in [parent].", LOG_ATTACK)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Bot Construction
 
 /obj/item/bot_assembly
@@ -28,7 +29,7 @@
  */
 /obj/item/bot_assembly/proc/can_finish_build(obj/item/tool, mob/user, drop_item = 1)
 	if(istype(loc, /obj/item/storage/backpack))
-		to_chat(user, span_warning("You must take [src] out of [loc] first!"))
+		to_chat(user, span_warning(LANG("obj.91014460", list(src, loc))))
 		return FALSE
 	if(!tool || !user || (drop_item && !user.temporarilyRemoveItemFromInventory(tool)))
 		return FALSE
@@ -78,7 +79,7 @@
 	bucket_obj.forceMove(bot)
 	bot.name = created_name
 	bot.robot_arm = tool.type
-	to_chat(user, span_notice("You add [tool] to [src]. Beep boop!"))
+	to_chat(user, span_notice(LANG("obj.8dc6c819", list(tool, src))))
 	qdel(tool)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

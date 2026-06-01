@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/toilet
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
@@ -127,16 +128,16 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/grabbed_mob = user.pulling
 		if(user.grab_state < GRAB_AGGRESSIVE)
-			to_chat(user, span_warning("You need a tighter grip!"))
+			to_chat(user, span_warning(LANG("obj.ef8434d1", null)))
 			return
 		if(grabbed_mob.loc != get_turf(src))
-			to_chat(user, span_warning("[grabbed_mob] needs to be on [src]!"))
+			to_chat(user, span_warning(LANG("obj.ecbcee6a", list(grabbed_mob, src))))
 			return
 		if(swirlie)
 			return
 		if(cover_open)
 			if(!reagents.total_volume)
-				to_chat(user, span_notice("\The [src] is dry!"))
+				to_chat(user, span_notice(LANG("obj.6b017b25", list(src))))
 				return
 			grabbed_mob.visible_message(span_danger("[user] starts to give [grabbed_mob] a swirlie!"), span_userdanger("[user] starts to give you a swirlie..."))
 			swirlie = grabbed_mob
@@ -145,7 +146,7 @@
 				swirlie = null
 				return
 			if(!reagents.total_volume)
-				to_chat(user, span_notice("\The [src] is dry!"))
+				to_chat(user, span_notice(LANG("obj.6b017b25", list(src))))
 				return
 			grabbed_mob.visible_message(span_danger("[user] gives [grabbed_mob] a swirlie!"), span_userdanger("[user] gives you a swirlie!"), span_hear("You hear a toilet flushing."))
 			if(iscarbon(grabbed_mob))
@@ -168,14 +169,14 @@
 
 	if(cistern_open && !cover_open && IsReachableBy(user))
 		if(!LAZYLEN(cistern_items))
-			to_chat(user, span_notice("The cistern is empty."))
+			to_chat(user, span_notice(LANG("obj.a594405f", null)))
 			return
 		var/obj/item/random_cistern_item = pick(cistern_items)
 		if(ishuman(user))
 			user.put_in_hands(random_cistern_item)
 		else
 			random_cistern_item.forceMove(drop_location())
-		to_chat(user, span_notice("You find [random_cistern_item] in the cistern."))
+		to_chat(user, span_notice(LANG("obj.414d7c35", list(random_cistern_item))))
 		return
 
 	if(!flushing && LAZYLEN(fishes) && cover_open)
@@ -184,7 +185,7 @@
 			user.put_in_hands(random_fish)
 		else
 			random_fish.forceMove(drop_location())
-		to_chat(user, span_notice("You take [random_fish] out of the toilet, poor thing."))
+		to_chat(user, span_notice(LANG("obj.519d43da", list(random_fish))))
 
 /obj/structure/toilet/click_alt(mob/living/user)
 	if(flushing)
@@ -199,7 +200,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(reagents.total_volume <= 50)
-		to_chat(user, span_notice("You press the flush lever, but nothing happens."))
+		to_chat(user, span_notice(LANG("obj.f32b94cc", null)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	flushing = TRUE
@@ -250,23 +251,23 @@
 	add_fingerprint(user)
 	if(cover_open && istype(tool, /obj/item/fish))
 		if(LAZYLEN(fishes) >= 3)
-			to_chat(user, span_warning("There's too many fishes, flush them down first."))
+			to_chat(user, span_warning(LANG("obj.ac1a59e8", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("\The [tool] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.2aed385c", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/fish/the_fish = tool
 		if(the_fish.status == FISH_DEAD)
-			to_chat(user, span_warning("You place [tool] into [src], may it rest in peace."))
+			to_chat(user, span_warning(LANG("obj.a26bdd82", list(tool, src))))
 		else
-			to_chat(user, span_notice("You place [tool] into [src], hopefully no one will miss it!"))
+			to_chat(user, span_notice(LANG("obj.f632b66f", list(tool, src))))
 		LAZYADD(fishes, tool)
 		return ITEM_INTERACT_SUCCESS
 
 	if(cistern_open)
 		if(istype(tool, /obj/item/stock_parts/water_recycler))
 			if(has_water_reclaimer)
-				to_chat(user, span_warning("[src] already has a water recycler installed."))
+				to_chat(user, span_warning(LANG("obj.961979fc", list(src))))
 				return ITEM_INTERACT_BLOCKING
 
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
@@ -276,16 +277,16 @@
 			return ITEM_INTERACT_SUCCESS
 
 		if(tool.w_class > WEIGHT_CLASS_NORMAL)
-			to_chat(user, span_warning("[tool] does not fit!"))
+			to_chat(user, span_warning(LANG("obj.8003c77c", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		if(w_items + tool.w_class > WEIGHT_CLASS_HUGE)
-			to_chat(user, span_warning("The cistern is full!"))
+			to_chat(user, span_warning(LANG("obj.1ab7e020", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot put it in the cistern!"))
+			to_chat(user, span_warning(LANG("obj.4ad55373", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		add_cistern_item(tool)
-		to_chat(user, span_notice("You carefully place [tool] into the cistern."))
+		to_chat(user, span_notice(LANG("obj.44111058", list(tool))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!cover_open)
@@ -296,19 +297,19 @@
 			return NONE
 
 		if(stuck_item)
-			to_chat(user, span_warning("There's already something blocking [src]'s drain pipe!"))
+			to_chat(user, span_warning(LANG("obj.d76d2052", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("\The [tool] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.2aed385c", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 
 		stuck_item = tool
-		to_chat(user, span_notice("You drop [tool] into [src]'s bowl."))
+		to_chat(user, span_notice(LANG("obj.358982ae", list(tool, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(reagents.total_volume <= 0)
-		to_chat(user, span_notice("\The [src] is dry."))
+		to_chat(user, span_notice(LANG("obj.9043fdab", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/food/monkeycube))
@@ -321,12 +322,12 @@
 		return NONE
 
 	if(container.reagents.holder_full())
-		to_chat(user, span_notice("\The [container] is full."))
+		to_chat(user, span_notice(LANG("obj.03adc6e9", list(container))))
 		return ITEM_INTERACT_BLOCKING
 
 	reagents.trans_to(container, container.amount_per_transfer_from_this, transferred_by = user)
 	begin_reclamation()
-	to_chat(user, span_notice("You fill [container] from [src]. Gross."))
+	to_chat(user, span_notice(LANG("obj.15cece66", list(container, src))))
 	return ITEM_INTERACT_SUCCESS
 
 /// Hides an item inside the toilet for later retrievalk
@@ -336,7 +337,7 @@
 	LAZYADD(cistern_items, thing)
 
 /obj/structure/toilet/crowbar_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("You start to [cistern_open ? "replace the lid on" : "lift the lid off"] the cistern..."))
+	to_chat(user, span_notice(LANG("obj.32273724", list(cistern_open ? "replace the lid on" : "lift the lid off"))))
 	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
 	if(tool.use_tool(src, user, 30))
 		user.visible_message(
@@ -349,17 +350,17 @@
 
 /obj/structure/toilet/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cistern_open)
-		to_chat(user, span_warning("You need to open [src]'s cistern first!"))
+		to_chat(user, span_warning(LANG("obj.05e5dae0", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!has_water_reclaimer)
-		to_chat(user, span_warning("\the [src] doesn't have a water reclaimer installed."))
+		to_chat(user, span_warning(LANG("obj.9114de6d", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
 	has_water_reclaimer = FALSE
 	new /obj/item/stock_parts/water_recycler(drop_location())
-	to_chat(user, span_notice("You remove the water reclaimer from \the [src]."))
+	to_chat(user, span_notice(LANG("obj.ba5e5958", list(src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/toilet/wrench_act(mob/living/user, obj/item/tool)

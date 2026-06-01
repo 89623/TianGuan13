@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/ammo_casing/foam_dart
 	name = "foam dart"
 	desc = "It's Donk or Don't! Ages 8 and up."
@@ -52,7 +53,7 @@
 	dart.modified = TRUE
 	dart.damage_type = BRUTE
 	dart.set_embed(null) // Cap is what makes them sticky
-	to_chat(user, span_notice("You pop the safety cap off [src]."))
+	to_chat(user, span_notice(LANG("obj.013544a5", list(src))))
 	update_appearance()
 
 /obj/item/ammo_casing/foam_dart/riot

@@ -78,7 +78,7 @@
 /obj/structure/chair/shibari_stand/user_buckle_mob(mob/living/buckled, mob/user, check_loc = TRUE)
 
 	if(!buckled.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("Looks like [buckled] doesn't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.f3f1a07e", list(buckled))))
 		return FALSE
 
 	if(!is_user_buckle_possible(buckled, user, check_loc))
@@ -90,10 +90,10 @@
 
 	var/mob/living/carbon/human/hooman = buckled
 	if(!(istype(hooman.w_uniform, /obj/item/clothing/under/shibari/full)))
-		to_chat(user, span_warning("You'll need to completely tie their body!"))
+		to_chat(user, span_warning(LANG("obj.8ec1abee", null)))
 		return FALSE
 	if(!istype(user.get_active_held_item(), /obj/item/stack/shibari_rope))
-		to_chat(user, span_warning("You'll need to be holding shibari ropes to tie them to the stand!!"))
+		to_chat(user, span_warning(LANG("obj.25413933", null)))
 		return FALSE
 
 	if(buckled != user)
@@ -107,10 +107,10 @@
 			return FALSE
 
 		if(!(istype(hooman.w_uniform, /obj/item/clothing/under/shibari/full)))
-			to_chat(user, span_warning("You'll need to completely tie their body!"))
+			to_chat(user, span_warning(LANG("obj.8ec1abee", null)))
 			return FALSE
 		if(!istype(user.get_active_held_item(), /obj/item/stack/shibari_rope))
-			to_chat(user, span_warning("You'll need to be holding shibari ropes to tie them to the stand!"))
+			to_chat(user, span_warning(LANG("obj.a3ccb6be", null)))
 			return FALSE
 
 		if(buckle_mob(buckled, check_loc = check_loc))
@@ -127,7 +127,7 @@
 		else
 			return FALSE
 	else
-		to_chat(user, span_warning("You cannot buckle yourself to this stand, there is no way that level of self-bondage exists!"))
+		to_chat(user, span_warning(LANG("obj.dcc364c0", null)))
 		return FALSE
 
 /obj/structure/chair/shibari_stand/atom_deconstruct(disassembled)
@@ -189,12 +189,12 @@
 
 //Disassembling shibari stand
 /obj/structure/chair/shibari_stand/click_ctrl_shift(mob/user)
-	to_chat(user, span_notice("You begin unfastening the frame of \the [src]..."))
+	to_chat(user, span_notice(LANG("obj.58aebeb0", list(src))))
 	if(!do_after(user, 8 SECONDS, src))
-		to_chat(user, span_warning("You fail to disassemble \the [src]."))
+		to_chat(user, span_warning(LANG("obj.542e67b3", list(src))))
 		return FALSE
 
-	to_chat(user, span_notice("You disassemble \the [src]."))
+	to_chat(user, span_notice(LANG("obj.9dea2112", list(src))))
 	var/obj/item/construction_kit/bdsm/shibari/kit = new(get_turf(src))
 	kit.set_greyscale(greyscale_colors)
 	unbuckle_all_mobs()
@@ -212,7 +212,7 @@
 		starting_colors = greyscale_colors
 	)
 	menu.ui_interact(usr)
-	to_chat(user, span_notice("You switch the frame's plastic fittings color."))
+	to_chat(user, span_notice(LANG("obj.4e7ad089", null)))
 	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chair/shibari_stand/examine(mob/user)

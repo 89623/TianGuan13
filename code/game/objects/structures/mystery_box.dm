@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // the different states of the mystery box
 /// Closed, can't interact
 #define MYSTERY_BOX_COOLING_DOWN 0
@@ -200,7 +201,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 
 /// The box has finished choosing, mark it as available for grabbing
 /obj/structure/mystery_box/proc/present_weapon()
-	visible_message(span_notice("[src] presents [presented_item]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	visible_message(span_notice(LANG("obj.cf1ed391", list(src, presented_item))), vision_distance = COMBAT_MESSAGE_RANGE)
 	box_state = MYSTERY_BOX_PRESENTING
 	box_expire_timer = addtimer(CALLBACK(src, PROC_REF(start_expire_offer)), MBOX_DURATION_PRESENTING, TIMER_STOPPABLE)
 
@@ -221,7 +222,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	box_expire_timer = null
 	addtimer(CALLBACK(src, PROC_REF(ready_again)), MBOX_DURATION_STANDBY)
 	if(uses_left <= 0)
-		visible_message("[src] breaks down.")
+		visible_message(LANG("obj.1a8eed52", list(src)))
 		deconstruct(disassembled = FALSE)
 
 /// The cooldown between activations has finished, shake to show that
@@ -298,7 +299,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 
 /obj/structure/mystery_box/fishing/activate(mob/living/user)
 	if(user.mind && minds_that_opened_us?[WEAKREF(user.mind)] >= 3)
-		to_chat(user, span_warning("[src] refuses to open to you anymore. Perhaps you should present it to someone else..."))
+		to_chat(user, span_warning(LANG("obj.bf27436a", list(src))))
 		return
 	return ..()
 

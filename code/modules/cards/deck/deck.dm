@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DECK_SHUFFLE_TIME (5 SECONDS)
 #define DECK_SYNDIE_SHUFFLE_TIME (3 SECONDS)
 
@@ -116,7 +117,7 @@
  */
 /obj/item/toy/cards/deck/proc/get_top_card(mob/living/user)
 	if(count_cards() == 0)
-		to_chat(user, span_warning("There are no more cards to draw!"))
+		to_chat(user, span_warning(LANG("obj.aee197f9", null)))
 		return
 	var/list/cards = fetch_card_atoms()
 	return cards[1]
@@ -162,7 +163,7 @@
 
 /obj/item/toy/cards/deck/click_alt(mob/living/user)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
+		to_chat(user, span_notice(LANG("obj.cf06320f", list(src))))
 		return CLICK_ACTION_BLOCKING
 
 	shuffle_cards(user)
@@ -194,7 +195,7 @@
 		return NONE
 
 	if (!insert(tool))
-		to_chat(user, span_warning("\The [src] is stacked too high!"))
+		to_chat(user, span_warning(LANG("obj.64e89a57", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/card_grammar = istype(tool, /obj/item/toy/singlecard) ? "card" : "cards"

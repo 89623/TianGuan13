@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///This type is responsible for any map generation behavior that is done in areas, override this to allow for
 ///area-specific map generation. This generation is ran by areas in initialize.
 /datum/map_generator
@@ -149,23 +150,23 @@ ADMIN_VERB(debug_nature_map_generator, R_DEBUG, "Test Nature Map Generator", "Te
 
 	//maxx maxy and current z so that if you fuck up, you only fuck up one entire z level instead of the entire universe
 	if(!startInput || !endInput)
-		to_chat(user, "Missing Input")
+		to_chat(user, LANG("datum.e4f62e31", null))
 		return
 
 	var/list/startCoords = splittext(startInput, ";")
 	var/list/endCoords = splittext(endInput, ";")
 	if(!startCoords || !endCoords)
-		to_chat(user, "Invalid Coords")
-		to_chat(user, "Start Input: [startInput]")
-		to_chat(user, "End Input: [endInput]")
+		to_chat(user, LANG("datum.2485b4f3", null))
+		to_chat(user, LANG("datum.8ba8422e", list(startInput)))
+		to_chat(user, LANG("datum.d8fd7484", list(endInput)))
 		return
 
 	var/turf/Start = locate(text2num(startCoords[1]),text2num(startCoords[2]),text2num(startCoords[3]))
 	var/turf/End = locate(text2num(endCoords[1]),text2num(endCoords[2]),text2num(endCoords[3]))
 	if(!Start || !End)
-		to_chat(user, "Invalid Turfs")
-		to_chat(user, "Start Coords: [startCoords[1]] - [startCoords[2]] - [startCoords[3]]")
-		to_chat(user, "End Coords: [endCoords[1]] - [endCoords[2]] - [endCoords[3]]")
+		to_chat(user, LANG("datum.7e75e68e", null))
+		to_chat(user, LANG("datum.4930ee47", list(startCoords[1], startCoords[2], startCoords[3])))
+		to_chat(user, LANG("datum.2d3b836c", list(endCoords[1], endCoords[2], endCoords[3])))
 		return
 
 	var/static/list/clusters = list(
@@ -187,7 +188,7 @@ ADMIN_VERB(debug_nature_map_generator, R_DEBUG, "Test Nature Map Generator", "Te
 	var/theCluster = 0
 	if(moduleClusters != "None")
 		if(!clusters[moduleClusters])
-			to_chat(user, "Invalid Cluster Flags")
+			to_chat(user, LANG("datum.7f14aa20", null))
 			return
 		theCluster = clusters[moduleClusters]
 	else
@@ -198,9 +199,9 @@ ADMIN_VERB(debug_nature_map_generator, R_DEBUG, "Test Nature Map Generator", "Te
 			M.clusterCheckFlags = theCluster
 
 
-	to_chat(user, "Defining Region")
+	to_chat(user, LANG("datum.86c4e3f5", null))
 	N.defineRegion(Start, End)
-	to_chat(user, "Region Defined")
-	to_chat(user, "Generating Region")
+	to_chat(user, LANG("datum.39462895", null))
+	to_chat(user, LANG("datum.e9306dc8", null))
 	N.generate()
-	to_chat(user, "Generated Region")
+	to_chat(user, LANG("datum.d7ae2a6c", null))

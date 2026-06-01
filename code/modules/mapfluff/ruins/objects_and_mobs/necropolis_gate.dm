@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //The necropolis gate is used to call forth Legion from the Necropolis.
 /obj/structure/necropolis_gate
 	name = "necropolis gate"
@@ -95,7 +96,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/attack_hand(mob/user, list/modifiers)
 	if(locked)
-		to_chat(user, span_bolddanger("It's [open ? "stuck open":"locked"]."))
+		to_chat(user, span_bolddanger(LANG("obj.c8ae7385", list(open ? "stuck open":"locked"))))
 		return
 	toggle_the_gate(user)
 	return ..()
@@ -107,7 +108,7 @@
 	var/turf/T = get_turf(src)
 	if(open)
 		new /obj/effect/temp_visual/necropolis(T)
-		visible_message(span_boldwarning("The door slams closed!"))
+		visible_message(span_boldwarning(LANG("obj.5e1d6c62", null)))
 		sleep(0.1 SECONDS)
 		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 80000)
 		sleep(0.1 SECONDS)
@@ -130,7 +131,7 @@
 		cut_overlay(door_overlay)
 		new /obj/effect/temp_visual/necropolis/open(T)
 		sleep(0.2 SECONDS)
-		visible_message(span_warning("The door starts to grind open..."))
+		visible_message(span_warning(LANG("obj.30b994df", null)))
 		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 20000)
 		sleep(2.2 SECONDS)
 		sight_blocker.forceMove(src)
@@ -176,7 +177,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	if(.)
 		locked = TRUE
 		var/turf/T = get_turf(src)
-		visible_message(span_userdanger("Something horrible emerges from the Necropolis!"))
+		visible_message(span_userdanger(LANG("obj.5d9c4a61", null)))
 		if(legion_damaged)
 			message_admins("Legion took damage while the necropolis gate was closed, and has released itself!")
 			log_game("Legion took damage while the necropolis gate was closed and released itself.")

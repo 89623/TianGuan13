@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DUALWIELD_PENALTY_EXTRA_MULTIPLIER 1.4
 #define FIRING_PIN_REMOVAL_DELAY 50
 
@@ -256,7 +257,7 @@
 		return FALSE
 	if(tk_firing(user))
 		visible_message(
-			span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
+			span_danger(LANG("obj.087c6e3b", list(src, pointblank ? " point blank at [pbtarget]!" : "!"))),
 			blind_message = span_hear("You hear a gunshot!"),
 			vision_distance = COMBAT_MESSAGE_RANGE
 		)
@@ -278,7 +279,7 @@
 				ignored_mobs = pbtarget,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
-			to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
+			to_chat(pbtarget, span_userdanger(LANG("obj.4ace98d3", list(user, src))))
 		if(pb_knockback > 0 && ismob(pbtarget))
 			var/mob/PBT = pbtarget
 			var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
@@ -302,7 +303,7 @@
 		return ..()
 	var/mob/living/holder = loc
 	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
-		to_chat(holder, span_boldwarning("[src] breaks down!"))
+		to_chat(holder, span_boldwarning(LANG("obj.8e75b695", list(src))))
 		holder.playsound_local(get_turf(src), 'sound/items/weapons/smash.ogg', 50, TRUE)
 	return ..()
 
@@ -361,10 +362,10 @@
 
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
-		balloon_alert(user, "already holding [gunpoint_component.target == interacting_with ? "them" : "someone"] up!")
+		balloon_alert(user, LANG("obj.a8a0e2f2", list(gunpoint_component.target == interacting_with ? "them" : "someone")))
 		return ITEM_INTERACT_BLOCKING
 	if (user == interacting_with)
-		balloon_alert(user, "can't hold yourself up!")
+		balloon_alert(user, LANG("obj.9f94e30e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(do_after(user, 0.5 SECONDS, interacting_with))
@@ -418,7 +419,7 @@
 
 	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands
 	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
-		balloon_alert(user, "use both hands!")
+		balloon_alert(user, LANG("obj.cf2ec0c7", null))
 		return ITEM_INTERACT_BLOCKING
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
@@ -441,7 +442,7 @@
 				var/target_zone = user.get_random_valid_zone(blacklisted_parts = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM), even_weights = TRUE, bypass_warning = TRUE)
 				if(!target_zone)
 					return
-				to_chat(user, span_userdanger("You shoot yourself in the foot with [src]!"))
+				to_chat(user, span_userdanger(LANG("obj.e953dcd9", list(src))))
 				process_fire(user, user, FALSE, null, target_zone)
 				SEND_SIGNAL(user, COMSIG_MOB_CLUMSY_SHOOT_FOOT)
 				if(!tk_firing(user) && !HAS_TRAIT(src, TRAIT_NODROP))
@@ -463,8 +464,8 @@
 			pin.auth_fail(user)
 			return FALSE
 	else
-		to_chat(user, span_warning("[src]'s trigger is locked. This weapon doesn't have a firing pin installed!"))
-		balloon_alert(user, "trigger locked, firing pin needed!")
+		to_chat(user, span_warning(LANG("obj.a9524f5f", list(src))))
+		balloon_alert(user, LANG("obj.a2de96da", null))
 	return FALSE
 
 /// Called to put ammo back in a gun which recharges itself, should call super if successful
@@ -482,7 +483,7 @@
 	if(chambered?.loaded_projectile)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
-				to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
+				to_chat(user, span_warning(LANG("obj.20d18c40", list(src))))
 				firing_burst = FALSE
 				return FALSE
 		var/sprd
@@ -581,7 +582,7 @@
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 				if(chambered.harmful) // Is the bullet chambered harmful?
-					to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
+					to_chat(user, span_warning(LANG("obj.20d18c40", list(src))))
 					return NONE
 			var/sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * total_random_spread)
 			before_firing(target,user)
@@ -729,7 +730,7 @@
 /obj/item/gun/proc/fire_at_opener(mob/user, obj/item/mail/traitor/letter)
 	if(!user.put_in_hands(src)) //this won't ever fail under normal circumstances, but will happen with the admin versions
 		forceMove(user.loc)
-	to_chat(user, span_danger("As you open [letter], you see [src] inside! [about_to_shoot_inside_mail_text]"))
+	to_chat(user, span_danger(LANG("obj.1f2ca233", list(letter, src, about_to_shoot_inside_mail_text))))
 	if(!can_shoot())
 		shoot_with_empty_chamber(user)
 		return

@@ -131,11 +131,11 @@
 	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour != TOOL_ROLLINGPIN)
 		tool_behaviour = TOOL_ROLLINGPIN
-		to_chat(user, span_notice("You attach the rolling pin bit to [src]."))
+		to_chat(user, span_notice(LANG("obj.127a6e47", list(src))))
 		icon_state = "rolling_bolt_cyborg"
 	else
 		tool_behaviour = TOOL_KNIFE
-		to_chat(user, span_notice("You attach the knife bit to [src]."))
+		to_chat(user, span_notice(LANG("obj.935df823", list(src))))
 		icon_state = "knife_screw_cyborg"
 
 // Wirebrush for janiborg

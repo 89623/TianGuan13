@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Ash drake suit
 
 /obj/item/drake_remains
@@ -108,11 +109,11 @@
 
 /obj/item/melee/ghost_sword/attack_self(mob/user)
 	if(!COOLDOWN_FINISHED(src, summon_cooldown))
-		to_chat(user, span_warning("You just recently called out for aid. You don't want to annoy the spirits!"))
+		to_chat(user, span_warning(LANG("obj.6c5d71bc", null)))
 		return
 
 	COOLDOWN_START(src, summon_cooldown, 60 SECONDS)
-	to_chat(user, span_notice("You call out for aid, attempting to summon spirits to your side."))
+	to_chat(user, span_notice(LANG("obj.7d5120b1", null)))
 	notify_ghosts(
 		"[user.real_name] is raising [user.p_their()] [name], calling for your help!",
 		source = user,
@@ -271,7 +272,7 @@
 	COOLDOWN_START(src, use_cooldown, create_delay + 1)
 
 	if(!do_after(user, create_delay, target_turf))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		COOLDOWN_RESET(src, use_cooldown)
 		qdel(lava_visual)
 		return ITEM_INTERACT_FAILURE

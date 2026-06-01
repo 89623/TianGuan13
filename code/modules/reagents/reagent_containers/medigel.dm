@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Gel skins
 /datum/atom_skin/med_gel
 	abstract_type = /datum/atom_skin/med_gel
@@ -58,13 +59,13 @@
 
 /obj/item/reagent_containers/medigel/mode_change_message(mob/user)
 	var/squirt_mode = amount_per_transfer_from_this == initial(amount_per_transfer_from_this)
-	to_chat(user, span_notice("You will now apply the medigel's contents in [squirt_mode ? "extended sprays":"short bursts"]. You'll now use [amount_per_transfer_from_this] units per use."))
+	to_chat(user, span_notice(LANG("obj.21b32362", list(squirt_mode ? "extended sprays":"short bursts", amount_per_transfer_from_this))))
 
 /obj/item/reagent_containers/medigel/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
 		return NONE
 	if(!reagents || !reagents.total_volume)
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -75,7 +76,7 @@
 				return ITEM_INTERACT_BLOCKING
 			if(!reagents || !reagents.total_volume)
 				return ITEM_INTERACT_BLOCKING
-		to_chat(interacting_with, span_notice("You [apply_method] yourself with [src]."))
+		to_chat(interacting_with, span_notice(LANG("obj.7d788d27", list(apply_method, src))))
 
 	else
 		log_combat(user, interacting_with, "attempted to apply", src, reagents.get_reagent_log_string())

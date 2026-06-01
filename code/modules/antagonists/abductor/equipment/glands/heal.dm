@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define REJECTION_VOMIT_FLAGS (MOB_VOMIT_BLOOD | MOB_VOMIT_STUN | MOB_VOMIT_KNOCKDOWN | MOB_VOMIT_FORCE)
 
 /obj/item/organ/heart/gland/heal
@@ -70,7 +71,7 @@
 		return
 	if(owner.get_blood_volume() < BLOOD_VOLUME_OKAY)
 		owner.set_blood_volume(BLOOD_VOLUME_NORMAL)
-		to_chat(owner, span_warning("You feel your blood pulsing within you."))
+		to_chat(owner, span_warning(LANG("obj.1789724b", null)))
 		return
 
 	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
@@ -97,7 +98,7 @@
 		appendix.forceMove(owner.drop_location())
 		owner.visible_message(span_warning("[owner] vomits up his [appendix.name]!"), span_userdanger("You suddenly vomit up your [appendix.name]!"))
 	else
-		to_chat(owner, span_warning("You feel a weird rumble in your bowels..."))
+		to_chat(owner, span_warning(LANG("obj.9a4fda06", null)))
 
 	var/appendix_type = /obj/item/organ/appendix
 	if(owner?.dna?.species?.mutantappendix)
@@ -112,7 +113,7 @@
 		liver.Remove(owner)
 		liver.forceMove(owner.drop_location())
 	else
-		to_chat(owner, span_warning("You feel a weird rumble in your bowels..."))
+		to_chat(owner, span_warning(LANG("obj.9a4fda06", null)))
 
 	var/liver_type = /obj/item/organ/liver
 	if(owner?.dna?.species?.mutantliver)
@@ -127,7 +128,7 @@
 		lungs.Remove(owner)
 		lungs.forceMove(owner.drop_location())
 	else
-		to_chat(owner, span_warning("You feel a weird rumble inside your chest..."))
+		to_chat(owner, span_warning(LANG("obj.a5d60c89", null)))
 
 	var/lung_type = /obj/item/organ/lungs
 	if(owner.dna.species && owner.dna.species.mutantlungs)
@@ -142,7 +143,7 @@
 		stomach.Remove(owner)
 		stomach.forceMove(owner.drop_location())
 	else
-		to_chat(owner, span_warning("You feel a weird rumble in your bowels..."))
+		to_chat(owner, span_warning(LANG("obj.9a4fda06", null)))
 
 	var/stomach_type = /obj/item/organ/stomach
 	if(owner?.dna?.species?.mutantstomach)
@@ -157,7 +158,7 @@
 		eyes.Remove(owner)
 		eyes.forceMove(owner.drop_location())
 	else
-		to_chat(owner, span_warning("You feel a weird rumble behind your eye sockets..."))
+		to_chat(owner, span_warning(LANG("obj.1f4d42cf", null)))
 
 	addtimer(CALLBACK(src, PROC_REF(finish_replace_eyes)), rand(10 SECONDS, 20 SECONDS))
 
@@ -175,7 +176,7 @@
 		playsound(owner, SFX_DESECRATION, 50, TRUE, -1)
 		limb.drop_limb()
 	else
-		to_chat(owner, span_warning("You feel a weird tingle in your [parse_zone(body_zone)]... even if you don't have one."))
+		to_chat(owner, span_warning(LANG("obj.2e9c29e3", list(parse_zone(body_zone)))))
 
 	addtimer(CALLBACK(src, PROC_REF(finish_replace_limb), body_zone), rand(15 SECONDS, 30 SECONDS))
 

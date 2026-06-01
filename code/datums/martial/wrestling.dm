@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 The contents of this file were originally licensed under CC-BY-NC-SA 3.0 as part of Goonstation(https://ss13.co).
 However, /tg/station and derivative codebases have been granted the right to use this code under the terms of the AGPL.
@@ -10,10 +11,10 @@ If you make a derivative work from this code, you must include this notification
 	set desc = "Remember how to wrestle."
 	set category = "Wrestling"
 
-	to_chat(usr, "<b><i>You flex your muscles and have a revelation...</i></b>")
-	to_chat(usr, "[span_notice("Clinch")]: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful.")
-	to_chat(usr, "[span_notice("Suplex")]: Shove someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor.")
-	to_chat(usr, "[span_notice("Advanced grab")]: Grab. Passively causes stamina damage when grabbing someone.")
+	to_chat(usr, LANG("mob.f1a0dcbb", null))
+	to_chat(usr, LANG("mob.6963c6df", list(span_notice("Clinch"))))
+	to_chat(usr, LANG("mob.e6244ed1", list(span_notice("Suplex"))))
+	to_chat(usr, LANG("mob.559339a9", list(span_notice("Advanced grab"))))
 
 /datum/martial_art/wrestling
 	name = "Wrestling"
@@ -134,8 +135,8 @@ If you make a derivative work from this code, you must include this notification
 
 /datum/martial_art/wrestling/activate_style(mob/living/new_holder)
 	. = ..()
-	to_chat(new_holder, span_userdanger("SNAP INTO A THIN TIM!"))
-	to_chat(new_holder, span_danger("Place your cursor over a move at the top of the screen to see what it does."))
+	to_chat(new_holder, span_userdanger(LANG("datum.819ecd18", null)))
+	to_chat(new_holder, span_danger(LANG("datum.a9fc34fd", null)))
 	drop.Grant(new_holder)
 	kick.Grant(new_holder)
 	slam.Grant(new_holder)
@@ -143,7 +144,7 @@ If you make a derivative work from this code, you must include this notification
 	strike.Grant(new_holder)
 
 /datum/martial_art/wrestling/deactivate_style(mob/living/remove_from)
-	to_chat(remove_from, span_userdanger("You no longer feel that the tower of power is too sweet to be sour..."))
+	to_chat(remove_from, span_userdanger(LANG("datum.8917f12a", null)))
 	drop?.Remove(remove_from)
 	kick?.Remove(remove_from)
 	slam?.Remove(remove_from)
@@ -158,7 +159,7 @@ If you make a derivative work from this code, you must include this notification
 	if(!defender)
 		return
 	if(!attacker.pulling || attacker.pulling != defender)
-		to_chat(attacker, span_warning("You need to have [defender] in a cinch!"))
+		to_chat(attacker, span_warning(LANG("datum.9c0a4c7c", list(defender))))
 		return
 	defender.forceMove(attacker.loc)
 	defender.setDir(get_dir(defender, attacker))
@@ -166,7 +167,7 @@ If you make a derivative work from this code, you must include this notification
 	defender.Stun(8 SECONDS)
 	defender.visible_message(span_danger("[attacker] starts spinning around with [defender]!"), \
 					span_userdanger("You're spun around by [attacker]!"), span_hear("You hear aggressive shuffling!"), null, attacker)
-	to_chat(attacker, span_danger("You start spinning around with [defender]!"))
+	to_chat(attacker, span_danger(LANG("datum.43078a06", list(defender))))
 	attacker.emote("scream")
 
 	for (var/i in 1 to 20)
@@ -209,18 +210,18 @@ If you make a derivative work from this code, you must include this notification
 		// These are necessary because of the sleep call.
 
 		if (get_dist(attacker, defender) > 1)
-			to_chat(attacker, span_warning("[defender] is too far away!"))
+			to_chat(attacker, span_warning(LANG("datum.d8fecc16", list(defender))))
 			return
 
 		if (!isturf(attacker.loc) || !isturf(defender.loc))
-			to_chat(attacker, span_warning("You can't throw [defender] from here!"))
+			to_chat(attacker, span_warning(LANG("datum.4a32c09e", list(defender))))
 			return
 
 		defender.forceMove(attacker.loc) // Maybe this will help with the wallthrowing bug.
 
 		defender.visible_message(span_danger("[attacker] throws [defender]!"), \
 						span_userdanger("You're thrown by [attacker]!"), span_hear("You hear aggressive shuffling and a loud thud!"), null, attacker)
-		to_chat(attacker, span_danger("You throw [defender]!"))
+		to_chat(attacker, span_danger(LANG("datum.a94c3e80", list(defender))))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 		var/turf/T = get_edge_target_turf(attacker, attacker.dir)
 		if (T && isturf(T))
@@ -242,7 +243,7 @@ If you make a derivative work from this code, you must include this notification
 	if(!defender)
 		return
 	if(!attacker.pulling || attacker.pulling != defender)
-		to_chat(attacker, span_warning("You need to have [defender] in a cinch!"))
+		to_chat(attacker, span_warning(LANG("datum.9c0a4c7c", list(defender))))
 		return
 	defender.forceMove(attacker.loc)
 	attacker.setDir(get_dir(attacker, defender))
@@ -250,7 +251,7 @@ If you make a derivative work from this code, you must include this notification
 
 	defender.visible_message(span_danger("[attacker] lifts [defender] up!"), \
 					span_userdanger("You're lifted up by [attacker]!"), span_hear("You hear aggressive shuffling!"), null, attacker)
-	to_chat(attacker, span_danger("You lift [defender] up!"))
+	to_chat(attacker, span_danger(LANG("datum.75f83b69", list(defender))))
 
 	FlipAnimation()
 
@@ -304,11 +305,11 @@ If you make a derivative work from this code, you must include this notification
 		defender.pixel_y = defender.base_pixel_y
 
 		if (get_dist(attacker, defender) > 1)
-			to_chat(attacker, span_warning("[defender] is too far away!"))
+			to_chat(attacker, span_warning(LANG("datum.d8fecc16", list(defender))))
 			return
 
 		if (!isturf(attacker.loc) || !isturf(defender.loc))
-			to_chat(attacker, span_warning("You can't slam [defender] here!"))
+			to_chat(attacker, span_warning(LANG("datum.f7115f20", list(defender))))
 			return
 
 		defender.forceMove(attacker.loc)
@@ -322,7 +323,7 @@ If you make a derivative work from this code, you must include this notification
 
 		defender.visible_message(span_danger("[attacker] [fluff] [defender]!"), \
 						span_userdanger("You're [fluff]ed by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
-		to_chat(attacker, span_danger("You [fluff] [defender]!"))
+		to_chat(attacker, span_danger(LANG("datum.22d557f3", list(fluff, defender))))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 		if (!defender.stat)
 			defender.emote("scream")
@@ -367,7 +368,7 @@ If you make a derivative work from this code, you must include this notification
 
 		defender.visible_message(span_danger("[attacker] headbutts [defender]!"), \
 						span_userdanger("You're headbutted by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
-		to_chat(attacker, span_danger("You headbutt [defender]!"))
+		to_chat(attacker, span_danger(LANG("datum.b8d5c585", list(defender))))
 		defender.adjust_brute_loss(rand(10,20))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 		defender.Unconscious(2 SECONDS)
@@ -382,7 +383,7 @@ If you make a derivative work from this code, you must include this notification
 
 	defender.visible_message(span_danger("[attacker] roundhouse-kicks [defender]!"), \
 					span_userdanger("You're roundhouse-kicked by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
-	to_chat(attacker, span_danger("You roundhouse-kick [defender]!"))
+	to_chat(attacker, span_danger(LANG("datum.0ddb6fa6", list(defender))))
 	playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 	defender.adjust_brute_loss(rand(10,20))
 
@@ -430,12 +431,12 @@ If you make a derivative work from this code, you must include this notification
 								span_userdanger("...and dive head-first into the ground, ouch!"))
 				attacker.adjust_brute_loss(rand(10,20))
 				attacker.Paralyze(60)
-			to_chat(attacker, span_warning("[defender] is too far away!"))
+			to_chat(attacker, span_warning(LANG("datum.d8fecc16", list(defender))))
 			return
 
 		if (!isturf(attacker.loc) || !isturf(defender.loc))
 			attacker.pixel_y = attacker.base_pixel_y
-			to_chat(attacker, span_warning("You can't drop onto [defender] from here!"))
+			to_chat(attacker, span_warning(LANG("datum.12301f68", list(defender))))
 			return
 
 		if(attacker)
@@ -448,7 +449,7 @@ If you make a derivative work from this code, you must include this notification
 
 		defender.visible_message(span_danger("[attacker] leg-drops [defender]!"), \
 						span_userdanger("You're leg-dropped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
-		to_chat(attacker, span_danger("You leg-drop [defender]!"))
+		to_chat(attacker, span_danger(LANG("datum.fc4f7111", list(defender))))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 		attacker.emote("scream")
 
@@ -488,7 +489,7 @@ If you make a derivative work from this code, you must include this notification
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You get [defender] in a cinch!"))
+	to_chat(attacker, span_danger(LANG("datum.7842fb29", list(defender))))
 	defender.Stun(rand(6 SECONDS, 10 SECONDS))
 	log_combat(attacker, defender, "cinched")
 	return MARTIAL_ATTACK_SUCCESS

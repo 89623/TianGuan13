@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/ai_restorer
 	filename = "ai_restore"
 	filedesc = "AI Manager & Restorer"
@@ -65,28 +66,28 @@
 	if(!computer)
 		return NONE
 	if(stored_card)
-		to_chat(user, span_warning("You try to insert \the [used_aicard] into \the [computer.name], but the slot is occupied."))
+		to_chat(user, span_warning(LANG("datum.df431d9d", list(used_aicard, computer.name))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(used_aicard, computer))
 		return ITEM_INTERACT_BLOCKING
 
 	stored_card = used_aicard
-	to_chat(user, span_notice("You insert \the [used_aicard] into \the [computer.name]."))
+	to_chat(user, span_notice(LANG("datum.a9ab5056", list(used_aicard, computer.name))))
 	return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/ai_restorer/try_eject(mob/living/user, forced = FALSE)
 	if(!stored_card)
 		if(user)
-			to_chat(user, span_warning("There is no card in \the [computer.name]."))
+			to_chat(user, span_warning(LANG("datum.46f68c06", list(computer.name))))
 		return FALSE
 
 	if(restoring && !forced)
 		if(user)
-			to_chat(user, span_warning("Safeties prevent you from removing the card until reconstruction is complete..."))
+			to_chat(user, span_warning(LANG("datum.efa91847", null)))
 		return FALSE
 
 	if(user && computer.Adjacent(user))
-		to_chat(user, span_notice("You remove [stored_card] from [computer.name]."))
+		to_chat(user, span_notice(LANG("datum.cbed3266", list(stored_card, computer.name))))
 		user.put_in_hands(stored_card)
 	else
 		stored_card.forceMove(computer.drop_location())

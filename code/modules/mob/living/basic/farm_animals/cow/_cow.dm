@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //cow
 /mob/living/basic/cow
 	name = "cow"
@@ -80,7 +81,7 @@
 
 /mob/living/basic/cow/tamed(mob/living/tamer, atom/food)
 	. = ..()
-	visible_message("[src] [tame_message] as it seems to bond with [tamer].", "You [self_tame_message], recognizing [tamer] as your new pal.")
+	visible_message(LANG("mob.705b395a", list(src, tame_message, tamer)), LANG("mob.a328a518", list(self_tame_message, tamer)))
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
 
 /*

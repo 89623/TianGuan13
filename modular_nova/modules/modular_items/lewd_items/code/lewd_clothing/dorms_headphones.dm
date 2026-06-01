@@ -41,12 +41,12 @@
 	if(!(src == user.ears))
 		return
 	REMOVE_TRAIT(user, TRAIT_DEAF, CLOTHING_TRAIT)
-	to_chat(user, span_purple("You can finally hear the world around you once more."))
+	to_chat(user, span_purple(LANG("obj.230ca85f", null)))
 
 /obj/item/clothing/ears/dorms_headphones/proc/toggle(owner)
 	playing_music = !playing_music
 	update_icon()
-	to_chat(owner, span_notice("You turn the music [playing_music ? "on. It plays relaxing music." : "off."]"))
+	to_chat(owner, span_notice(LANG("obj.66066e77", list(playing_music ? "on. It plays relaxing music." : "off."))))
 
 /datum/action/item_action/toggle_dorms_headphones
 	name = "Toggle Headphones' Music"
