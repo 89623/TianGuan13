@@ -80,8 +80,14 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
         catalog.namespace_count()
     );
     if !dry_run {
+        // 合并已存在目录：保留已被 rewrite 改写（源码里已不是字面量）的 key（重同步必需）。
+        catalog.load_dir(out);
         catalog.write(out)?;
-        eprintln!("已写入英文主目录: {}", out.display());
+        eprintln!(
+            "已写入英文主目录: {}（合并后 {} 条）",
+            out.display(),
+            catalog.entry_count()
+        );
     }
     Ok(())
 }
