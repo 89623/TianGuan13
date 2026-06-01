@@ -114,7 +114,7 @@
 	var/list/options = gps_locators
 	if(area_aim)
 		options += GLOB.teleportlocs
-	var/victim = tgui_input_list(user, "Select target", "Artillery Targeting", options)
+	var/victim = tgui_input_list(user, LANG("obj.04cb3631", null), LANG("obj.2db5299a", null), options)
 	if(isnull(victim))
 		return
 	if(isnull(options[victim]))

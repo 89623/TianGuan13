@@ -47,7 +47,7 @@
 	. = ..()
 	if(.)
 		return
-	var/message_text = tgui_input_text(user, "Write out your Do action:", "Do (Longer)", max_length = MAX_MESSAGE_LEN, multiline = TRUE)
+	var/message_text = tgui_input_text(user, LANG("datum.4408a64f", null), LANG("datum.0f042af7", null), max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	if (!message_text)
 		return
 

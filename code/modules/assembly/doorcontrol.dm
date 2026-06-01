@@ -41,7 +41,7 @@
 		var/area/door_area = get_area(M)
 		display_ids += "[door_area.name]([M.id])"
 
-	var/change_id = tgui_input_list(user, "Set Controller ID", "Controller ID", display_ids)
+	var/change_id = tgui_input_list(user, LANG("obj.c920a899", null), LANG("obj.21b9fbfd", null), display_ids)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 

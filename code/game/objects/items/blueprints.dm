@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///The area is a "Station" area, showing no special text.
 #define AREA_STATION 1
 ///The area is in outdoors (lavaland/icemoon/jungle/space), therefore unclaimed territories.
@@ -214,7 +215,7 @@
 /obj/item/blueprints/proc/edit_area(mob/user)
 	var/area/area_editing = get_area(src)
 	var/prevname = "[area_editing.name]"
-	var/new_name = tgui_input_text(user, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
+	var/new_name = tgui_input_text(user, LANG("obj.e83e886e", null), LANG("obj.401a4485", null), max_length = MAX_NAME_LEN)
 	if(isnull(new_name) || !length(new_name) || new_name == prevname)
 		return
 

@@ -17,6 +17,5 @@
 /// args 为参数 /list（与模板里的 {0}/{1}… 对应），无参数时传 null。
 #define LANG(key, args) (lang_format(key, args))
 
-/// 按单个接收者（user）的 locale 本地化 + 格式化。用于定向文本
-/// （to_chat(单人, …)、balloon_alert(viewer, …)）。user 为 null 时回退到全服 locale。
+/// 兼容旧调用的定向文本入口；当前服务器强制使用全服 locale。
 #define LANGU(user, key, args) (lang_format_for(user, key, args))

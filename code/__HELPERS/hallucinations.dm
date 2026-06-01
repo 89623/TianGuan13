@@ -251,17 +251,17 @@ ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucinat
 			if(initial(delusion_type.abstract_hallucination_parent) == delusion_type)
 				delusions -= delusion_type
 
-	var/chosen = tgui_input_list(user, "Select a delusion type. Custom will allow for custom icon entry.", "Select Delusion", delusions)
+	var/chosen = tgui_input_list(user, LANG("_root.600abcb8", null), LANG("_root.c59913cd", null), delusions)
 	if(!chosen || !ispath(chosen, /datum/hallucination/delusion))
 		return
 
 	var/list/delusion_args = list()
 	var/static/list/options = list("Yes", "No")
-	var/duration = tgui_input_number(user, "How long should it last in seconds?", "Delusion: Duration", max_value = INFINITY, min_value = 1, default = 30)
-	var/affects_us = (tgui_alert(user, "Should they see themselves as the delusion?", "Delusion: Affects us", options) == "Yes")
-	var/affects_others = (tgui_alert(user, "Should they see everyone else delusion?", "Delusion: Affects others", options) == "Yes")
-	var/skip_nearby = (tgui_alert(user, "Should the delusion only affect people outside of their view?", "Delusion: Skip in view", options) == "Yes")
-	var/play_wabbajack = (tgui_alert(user, "Play the wabbajack sound when it happens?", "Delusion: Wabbajack sound", options) == "Yes")
+	var/duration = tgui_input_number(user, LANG("_root.abe62312", null), LANG("_root.8998adea", null), max_value = INFINITY, min_value = 1, default = 30)
+	var/affects_us = (tgui_alert(user, LANG("_root.8b6a2599", null), LANG("_root.8e75602a", null), options) == "Yes")
+	var/affects_others = (tgui_alert(user, LANG("_root.2aaf5209", null), LANG("_root.b27655ea", null), options) == "Yes")
+	var/skip_nearby = (tgui_alert(user, LANG("_root.1d114b20", null), LANG("_root.cc170e65", null), options) == "Yes")
+	var/play_wabbajack = (tgui_alert(user, LANG("_root.08351d1d", null), LANG("_root.b3cfe24d", null), options) == "Yes")
 
 	delusion_args = list(
 		chosen,
@@ -278,11 +278,11 @@ ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucinat
 		if(!custom_icon_file)
 			return
 
-		var/custom_icon_state = tgui_input_text(user, "What icon state do you wanna use from the file?", "Custom Delusion: Icon State")
+		var/custom_icon_state = tgui_input_text(user, LANG("_root.e05ee5bb", null), LANG("_root.77143ff1", null))
 		if(!custom_icon_state)
 			return
 
-		var/custom_name = tgui_input_text(user, "What name should it show up as? (Can be empty)", "Custom Delusion: Name", max_length = MAX_NAME_LEN)
+		var/custom_name = tgui_input_text(user, LANG("_root.f8de00d3", null), LANG("_root.30697ff9", null), max_length = MAX_NAME_LEN)
 
 		delusion_args += list(
 			custom_icon_file = custom_icon_file,

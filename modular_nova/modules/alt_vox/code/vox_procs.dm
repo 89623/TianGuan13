@@ -29,7 +29,7 @@
 
 	if(incapacitated)
 		return
-	var/selection = tgui_input_list(src, "Please select a new VOX voice:", "VOX VOICE", vox_voices)
+	var/selection = tgui_input_list(src, LANG("mob.9a2655f5", null), LANG("mob.e1b6c58d", null), vox_voices)
 	if(selection == null)
 		return
 	vox_type = selection

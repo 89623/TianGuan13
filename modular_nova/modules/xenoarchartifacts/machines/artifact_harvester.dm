@@ -294,7 +294,7 @@
 			return
 		if(!inserted_battery.battery_effect)
 			return
-		if(tgui_alert(usr, "This action will dump all charge, safety gear is recommended before proceeding", "Warning", list("Continue", "Cancel")) != "Continue")
+		if(tgui_alert(usr, LANG("obj.35ecb97c", null), LANG("obj.acf3640b", null), list("Continue", "Cancel")) != "Continue")
 			return
 
 		if(!inserted_battery.battery_effect.activated)

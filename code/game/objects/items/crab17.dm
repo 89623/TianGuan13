@@ -17,7 +17,7 @@
 	if(dumped)
 		to_chat(user, span_warning(LANG("obj.6644dda3", null)))
 		return FALSE
-	if(tgui_alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", list("Yes", "No")) == "Yes")
+	if(tgui_alert(user, LANG("obj.915f079d", null), LANG("obj.5cb2cca8", null), list("Yes", "No")) == "Yes")
 		if(dumped || QDELETED(src)) //Prevents fuckers from cheesing alert
 			return FALSE
 		var/turf/targetturf = get_safe_random_station_turf_equal_weight()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /client/proc/admin_delete(datum/D)
 	var/atom/A = D
 	var/coords = ""
@@ -13,7 +14,7 @@
 		else
 			jmp_coords = coords = "in nullspace"
 
-	if (tgui_alert(usr, "Are you sure you want to delete:\n[D]\n[coords]?", "Confirmation", list("Yes", "No")) == "Yes")
+	if (tgui_alert(usr, LANG("client.69e783da", list(D, coords)), LANG("client.15bc27b6", null), list("Yes", "No")) == "Yes")
 		log_admin("[key_name(usr)] deleted [D] [coords]")
 		message_admins("[key_name_admin(usr)] deleted [D] [jmp_coords]")
 		BLACKBOX_LOG_ADMIN_VERB("Delete")

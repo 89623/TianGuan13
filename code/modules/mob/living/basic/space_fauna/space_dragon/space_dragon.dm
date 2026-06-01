@@ -103,7 +103,7 @@
 	if(!isnull(chosen_colour))
 		return
 	if(client.get_award_status(/datum/award/achievement/misc/sharkdragon))
-		if(tgui_alert(src, "Shall you take the dragon form or the shark form?","Shark Form Unlocked", list("Dragon","Shark")) == "Shark")
+		if(tgui_alert(src, LANG("mob.6f918cfd", null),LANG("mob.5b013f86", null), list("Dragon","Shark")) == "Shark")
 			sharkify()
 	rename_dragon()
 	select_colour()
@@ -131,7 +131,7 @@
 
 /// Allows the space dragon to pick a funny name
 /mob/living/basic/space_dragon/proc/rename_dragon()
-	var/chosen_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
+	var/chosen_name = sanitize_name(reject_bad_text(tgui_input_text(src, LANG("mob.53566b0f", null), LANG("mob.628ceef3", null), real_name, MAX_NAME_LEN)))
 	if(!chosen_name) // Null or empty or rejected
 		to_chat(src, span_warning(LANG("mob.1741625b", null)))
 		rename_dragon()

@@ -63,7 +63,7 @@
 	new /obj/item/assembly/igniter(loc)
 
 /obj/machinery/igniter/multitool_act(mob/living/user, obj/item/tool)
-	var/change_id = tgui_input_number(user, "Set the igniter controller's ID", "Igniter ID", id, 100)
+	var/change_id = tgui_input_number(user, LANG("obj.042c4d04", null), LANG("obj.d7898442", null), id, 100)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
@@ -207,7 +207,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	new /obj/item/wallframe/sparker(loc)
 
 /obj/machinery/sparker/multitool_act(mob/living/user, obj/item/tool)
-	var/change_id = tgui_input_number(user, "Set the sparker controller's ID", "Sparker ID", id, 100)
+	var/change_id = tgui_input_number(user, LANG("obj.fa08ed98", null), LANG("obj.8961924c", null), id, 100)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id

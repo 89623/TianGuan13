@@ -10,7 +10,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 /client/proc/vv_parse_text(O, new_var)
 	if(O && findtext(new_var,"\["))
-		var/process_vars = tgui_alert(usr,"\[] detected in string, process as variables?","Process Variables?",list("Yes","No"))
+		var/process_vars = tgui_alert(usr,LANG("client.14e65026", null),LANG("client.1475e70e", null),list("Yes","No"))
 		if(process_vars == "Yes")
 			. = string2listofvars(new_var, O)
 
@@ -25,7 +25,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (!subtypes || !subtypes.len)
 		return FALSE
 	if (subtypes?.len)
-		switch(tgui_alert(usr,"Strict object type detection?", "Type detection", list("Strictly this type","This type and subtypes", "Cancel")))
+		switch(tgui_alert(usr,LANG("client.77dd7327", null), LANG("client.a2557075", null), list("Strictly this type","This type and subtypes", "Cancel")))
 			if("Strictly this type")
 				return FALSE
 			if("This type and subtypes")
@@ -97,7 +97,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	L += list(var_value) //var_value could be a list
 
-	switch(tgui_alert(usr,"Would you like to associate a value with the list entry?",,list("Yes","No")))
+	switch(tgui_alert(usr,LANG("client.7b72fee3", null),,list("Yes","No")))
 		if("Yes")
 			L[var_value] = mod_list_add_ass(O) //hehe
 	if (O)
@@ -119,7 +119,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		return
 
 	if(L.len > 1000)
-		var/confirm = tgui_alert(usr, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", list("Continue", "Abort"))
+		var/confirm = tgui_alert(usr, LANG("client.337f0b71", null), LANG("client.acf3640b", null), list("Continue", "Abort"))
 		if(confirm != "Continue")
 			return
 
@@ -181,7 +181,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (index == null)
 		return
 	var/assoc = 0
-	var/prompt = tgui_alert(usr, "Do you want to edit the key or its assigned value?", "Associated List", list("Key", "Assigned Value", "Cancel"))
+	var/prompt = tgui_alert(usr, LANG("client.22199e70", null), LANG("client.96c7da58", null), list("Key", "Assigned Value", "Cancel"))
 	if (prompt == "Cancel")
 		return
 	if (prompt == "Assigned Value")

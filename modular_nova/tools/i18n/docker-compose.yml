@@ -8,7 +8,7 @@
 # Tolgee 只在开发期作管理平台，译者在此机翻预填 + 人工校对。
 services:
   tolgee:
-    image: tolgee/tolgee:v3.121.2
+    image: tolgee/tolgee:latest
     restart: unless-stopped
     ports:
       - "8085:8080"

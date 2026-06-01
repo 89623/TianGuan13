@@ -14,11 +14,11 @@
 	if(!ispath(objholder))
 		objholder = pick_closest_path(target_path)
 		if(!objholder)
-			tgui_alert(usr,"No path was selected")
+			tgui_alert(usr,LANG("datum.2cd7ebee", null))
 			return
 		else if(ispath(objholder, /area))
 			objholder = null
-			tgui_alert(usr,"That path is not allowed.")
+			tgui_alert(usr,LANG("datum.45653dfd", null))
 			return
 	BM.preview_selected_item(objholder)
 

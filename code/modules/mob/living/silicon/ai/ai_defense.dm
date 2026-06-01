@@ -108,7 +108,7 @@
 				if(ACCESS_ROBOTICS in access)
 					consent_override = TRUE
 		if(mind)
-			consent = tgui_alert(src, "[user] is attempting to open your access panel, unlock the cover?", "AI Access Panel", list("Yes", "No"))
+			consent = tgui_alert(src, LANG("mob.8f134fed", list(user)), LANG("mob.2e10dbce", null), list("Yes", "No"))
 			if(consent == "No" && !consent_override && !emagged)
 				to_chat(user, span_notice(LANG("mob.b967804b", list(src))))
 				return ITEM_INTERACT_SUCCESS

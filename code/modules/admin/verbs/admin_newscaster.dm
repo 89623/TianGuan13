@@ -290,13 +290,13 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 		return
 	var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_name[channel_name]
 	if(potential_channel)
-		tgui_alert(usr, "ERROR: Feed channel with that name already exists on the Network.", list("Okay"))
+		tgui_alert(usr, LANG("datum.fc1f0659", null), list("Okay"))
 		return TRUE
 	if(!channel_desc)
 		return TRUE
 	if(isnull(channel_locked))
 		return TRUE
-	var/choice = tgui_alert(usr, "Please confirm feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
+	var/choice = tgui_alert(usr, LANG("datum.e41c8fc3", null),LANG("datum.0eacab27", null), list("Confirm","Cancel"))
 	if(choice == "Confirm")
 		GLOB.news_network.create_feed_channel(channel_name, "Centcom Official", channel_desc, locked = channel_locked)
 		SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
@@ -344,7 +344,7 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 		return
 	current_channel = potential_channel
 
-	var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_BROADCAST_LEN, multiline = TRUE)
+	var/temp_message = tgui_input_text(usr, LANG("datum.cb9369e7", null), LANG("datum.0eacab27", null), feed_channel_message, max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 	if(length(temp_message) <= 1)
 		return TRUE
 	if(temp_message)

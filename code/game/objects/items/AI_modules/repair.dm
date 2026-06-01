@@ -12,7 +12,7 @@
 	var/lawpos = 1
 
 /obj/item/ai_module/remove/attack_self(mob/user)
-	lawpos = tgui_input_number(user, "Law to delete", "Law Removal", lawpos, 50)
+	lawpos = tgui_input_number(user, LANG("obj.998c60d7", null), LANG("obj.1bedd90d", null), lawpos, 50)
 	if(!lawpos || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	to_chat(user, span_notice(LANG("obj.2bf6f5a8", list(lawpos))))

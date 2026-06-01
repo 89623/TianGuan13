@@ -30,7 +30,7 @@ ADMIN_VERB(announce, R_ADMIN, "Announce", "Announce your desires to the world.",
 
 ADMIN_VERB(unprison, R_ADMIN, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/prisoner in GLOB.mob_list)
 	if(!is_centcom_level(prisoner.z))
-		tgui_alert(user, "[prisoner.name] is not prisoned.")
+		tgui_alert(user, LANG("datum.dc88f6bd", list(prisoner.name)))
 		return
 
 	SSjob.send_to_late_join(prisoner)
@@ -151,7 +151,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 ADMIN_VERB(drop_everything, R_ADMIN, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/dropee in GLOB.mob_list)
-	var/confirm = tgui_alert(user, "Make [dropee] drop everything?", "Message", list("Yes", "No"))
+	var/confirm = tgui_alert(user, LANG("datum.0ca8446b", list(dropee)), LANG("datum.affb7d7e", null), list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 

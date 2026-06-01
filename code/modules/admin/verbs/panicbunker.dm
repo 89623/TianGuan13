@@ -15,7 +15,7 @@ ADMIN_VERB(panic_bunker, R_SERVER, "Toggle Panic Bunker", "Toggles the panic bun
 		CONFIG_SET(number/panic_bunker_living, time_rec)
 		CONFIG_SET(string/panic_bunker_message, message)
 
-		var/interview_sys = tgui_alert(user, "Should the interview system be enabled? (Allows players to connect under the hour limit and force them to be manually approved to play)", "Enable interviews?", list("Enable", "Disable"))
+		var/interview_sys = tgui_alert(user, LANG("datum.1de63792", null), LANG("datum.11e10022", null), list("Enable", "Disable"))
 		interview = interview_sys == "Enable"
 		CONFIG_SET(flag/panic_bunker_interview, interview)
 	CONFIG_SET(flag/panic_bunker, new_pb)

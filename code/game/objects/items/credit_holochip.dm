@@ -118,7 +118,7 @@
 	if(loc != user)
 		to_chat(user, span_warning(LANG("obj.9a84bf97", null)))
 		return CLICK_ACTION_BLOCKING
-	var/split_amount = tgui_input_number(user, "How many [MONEY_NAME] do you want to extract from the holochip? (Max: [credits] [MONEY_SYMBOL])", "Holochip", max_value = credits)
+	var/split_amount = tgui_input_number(user, LANG("obj.9e18f6a9", list(MONEY_NAME, credits, MONEY_SYMBOL)), LANG("obj.b2a9e22d", null), max_value = credits)
 	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH) || loc != user)
 		return CLICK_ACTION_BLOCKING
 	var/new_credits = spend(split_amount, TRUE)

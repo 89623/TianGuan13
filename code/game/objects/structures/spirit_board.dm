@@ -63,7 +63,7 @@
 			header = "Spirit board",
 		)
 
-	var/new_planchette = tgui_input_list(ghost, "Choose the letter.", "Seance!", ghosty_options)
+	var/new_planchette = tgui_input_list(ghost, LANG("obj.46360ed7", null), LANG("obj.fc8dad6f", null), ghosty_options)
 	if(isnull(new_planchette))
 		return
 	if(!Adjacent(ghost) || !COOLDOWN_FINISHED(src, next_use))

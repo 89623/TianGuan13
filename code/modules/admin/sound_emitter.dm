@@ -82,7 +82,7 @@
 		return
 	var/mob/user = usr
 	if(href_list["edit_label"])
-		var/new_label = tgui_input_text(user, "Choose a new label", "Sound Emitter", max_length = MAX_NAME_LEN)
+		var/new_label = tgui_input_text(user, LANG("obj.13b11a77", null), LANG("obj.92fe04ac", null), max_length = MAX_NAME_LEN)
 		if(!new_label)
 			return
 		maptext = MAPTEXT(new_label)
@@ -94,7 +94,7 @@
 		sound_file = new_file
 		to_chat(user, span_notice(LANG("obj.43093ae4", list(sound_file))), confidential = TRUE)
 	if(href_list["edit_volume"])
-		var/new_volume = tgui_input_number(user, "Choose a volume", "Sound Emitter", sound_volume, 100)
+		var/new_volume = tgui_input_number(user, LANG("obj.176fc62e", null), LANG("obj.92fe04ac", null), sound_volume, 100)
 		if(!new_volume)
 			return
 		sound_volume = new_volume
@@ -102,7 +102,7 @@
 	if(href_list["edit_mode"])
 		var/new_mode
 		var/mode_list = list("Local (normal sound)" = SOUND_EMITTER_LOCAL, "Direct (not affected by environment/location)" = SOUND_EMITTER_DIRECT)
-		new_mode = tgui_input_list(user, "Choose a new mode", "Sound Emitter", mode_list)
+		new_mode = tgui_input_list(user, LANG("obj.99e1430c", null), LANG("obj.92fe04ac", null), mode_list)
 		if(!new_mode)
 			return
 		motus_operandi = mode_list[new_mode]
@@ -110,13 +110,13 @@
 	if(href_list["edit_range"])
 		var/new_range
 		var/range_list = list("Radius (all mobs within a radius)" = SOUND_EMITTER_RADIUS, "Z-Level (all mobs on the same z)" = SOUND_EMITTER_ZLEVEL, "Global (all players)" = SOUND_EMITTER_GLOBAL)
-		new_range = tgui_input_list(user, "Choose a new range", "Sound Emitter", range_list)
+		new_range = tgui_input_list(user, LANG("obj.45180e70", null), LANG("obj.92fe04ac", null), range_list)
 		if(!new_range)
 			return
 		emitter_range = range_list[new_range]
 		to_chat(user, span_notice(LANG("obj.9bff0436", list(emitter_range))), confidential = TRUE)
 	if(href_list["edit_radius"])
-		var/new_radius = tgui_input_number(user, "Choose a radius", "Sound Emitter", sound_volume, 127)
+		var/new_radius = tgui_input_number(user, LANG("obj.b9d5ee06", null), LANG("obj.92fe04ac", null), sound_volume, 127)
 		if(!new_radius)
 			return
 		play_radius = new_radius

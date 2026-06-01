@@ -6,7 +6,7 @@
 	var/duration
 
 /datum/smite/curse_of_babel/configure(client/user)
-	duration = tgui_input_number(user, "How many minutes would you like this effect to last?", "Time", 1, 60, -1, round_value = FALSE) MINUTES
+	duration = tgui_input_number(user, LANG("datum.af1e8a1b", null), LANG("datum.eb531f1b", null), 1, 60, -1, round_value = FALSE) MINUTES
 
 /datum/smite/curse_of_babel/effect(client/user, mob/living/carbon/target)
 	. = ..()

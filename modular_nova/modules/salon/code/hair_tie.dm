@@ -53,7 +53,7 @@
 	return ..()
 
 /obj/item/clothing/head/hair_tie/attack_self(mob/user)
-	var/hair_id = tgui_input_list(user, "How does your hair look when it's up?", "Pick!", SSaccessories.hairstyles_list)
+	var/hair_id = tgui_input_list(user, LANG("obj.cef6ad5b", null), LANG("obj.26d3def8", null), SSaccessories.hairstyles_list)
 	if(!hair_id || hair_id == "Bald")
 		balloon_alert(user, LANG("obj.bf18be82", null))
 		return

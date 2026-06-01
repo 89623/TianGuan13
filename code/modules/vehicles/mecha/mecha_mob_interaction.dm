@@ -210,7 +210,7 @@
 			if(!AI.can_shunt || !AI.hacked_apcs.len)
 				to_chat(AI, span_warning("[AI.can_shunt ? "No hacked APCs available." : "No shunting capabilities."]"))
 				return
-			var/confirm = tgui_alert(AI, "Shunt to a random APC? You won't have anywhere else to go!", "Confirm Emergency Shunt", list("Yes", "No"))
+			var/confirm = tgui_alert(AI, LANG("obj.b5d53c5a", null), LANG("obj.31520d9b", null), list("Yes", "No"))
 			if(confirm == "Yes")
 				/// Mechs with open cockpits can have the pilot shot by projectiles, or EMPs may destroy the AI inside
 				/// Alternatively, destroying the mech will shunt the AI if they can shunt, or a deadeye wizard can hit

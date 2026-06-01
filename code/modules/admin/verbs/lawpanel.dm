@@ -22,10 +22,10 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 
 /datum/law_panel/proc/add_law_helper(mob/living/user, mob/living/silicon/borgo)
 	var/list/lawtypes = list(LAW_ZEROTH, LAW_HACKED, LAW_ION, LAW_INHERENT, LAW_SUPPLIED) // in order of priority
-	var/lawtype = tgui_input_list(user, "Select law type", "Law type", lawtypes)
+	var/lawtype = tgui_input_list(user, LANG("datum.7343ade7", null), LANG("datum.016be05e", null), lawtypes)
 	if(isnull(lawtype))
 		return FALSE
-	var/lawtext = tgui_input_text(user, "Input law text", "Law text") // admin verb so no max length and also any user-level input is config based already so ehhhh
+	var/lawtext = tgui_input_text(user, LANG("datum.fa57421e", null), LANG("datum.371fe1ed", null)) // admin verb so no max length and also any user-level input is config based already so ehhhh
 	if(!lawtext)
 		return FALSE
 	if(QDELETED(src) || QDELETED(borgo))
@@ -78,7 +78,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	return TRUE
 
 /datum/law_panel/proc/edit_law_text_helper(mob/living/user, mob/living/silicon/borgo, lawtype, oldlaw)
-	var/newlaw = tgui_input_text(user, "Edit this law's text.", "Edit law", oldlaw)
+	var/newlaw = tgui_input_text(user, LANG("datum.d5ac7105", null), LANG("datum.0dc203c5", null), oldlaw)
 	if(!newlaw || QDELETED(src) || QDELETED(borgo))
 		return FALSE
 
@@ -117,7 +117,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 		to_chat(user, span_danger(LANG("datum.4685fb16", null)))
 		return FALSE
 
-	var/new_prio = tgui_input_number(user, "Enter a new priority.", "Edit priority", old_prio, 50, 0)
+	var/new_prio = tgui_input_number(user, LANG("datum.430489d2", null), LANG("datum.7423dd8a", null), old_prio, 50, 0)
 	if(!new_prio || QDELETED(src) || QDELETED(borgo))
 		return FALSE
 
@@ -140,7 +140,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			// Nowhere to go from here
 			options -= "Move down"
 
-		var/swap_or_remove = tgui_alert(user, "There's already a law at that priority level. What should be done to it?", "Existing law", options)
+		var/swap_or_remove = tgui_alert(user, LANG("datum.324b2b90", null), LANG("datum.8f9cdce2", null), options)
 		if(swap_or_remove == "Cancel" || !swap_or_remove || QDELETED(src) || QDELETED(borgo))
 			return FALSE
 		// Sanity

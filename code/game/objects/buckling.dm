@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /atom/movable
 	/// Whether the atom allows mobs to be buckled to it. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE
 	var/can_buckle = FALSE
@@ -23,7 +24,7 @@
 		return
 	if(can_buckle && has_buckled_mobs())
 		if(length(buckled_mobs) > 1)
-			var/mob/living/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			var/mob/living/unbuckled = tgui_input_list(user, LANG("atom.15d59dc6", null), LANG("atom.768fd2d4", null), sort_names(buckled_mobs))
 			if(isnull(unbuckled))
 				return
 			if(user_unbuckle_mob(unbuckled,user))
@@ -39,7 +40,7 @@
 		return
 	if(Adjacent(user) && can_buckle && has_buckled_mobs())
 		if(length(buckled_mobs) > 1)
-			var/mob/living/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			var/mob/living/unbuckled = tgui_input_list(user, LANG("atom.15d59dc6", null), LANG("atom.768fd2d4", null), sort_names(buckled_mobs))
 			if(isnull(unbuckled))
 				return
 			return user_unbuckle_mob(unbuckled,user)

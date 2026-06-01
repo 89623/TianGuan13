@@ -178,7 +178,7 @@
 
 	locations["None (Dangerous)"] = PORTAL_LOCATION_DANGEROUS
 
-	var/teleport_location_key = tgui_input_list(user, "Teleporter to lock on", "Hand Teleporter", sort_list(locations))
+	var/teleport_location_key = tgui_input_list(user, LANG("obj.46030f63", null), LANG("obj.40db05ec", null), sort_list(locations))
 	if (isnull(teleport_location_key))
 		return
 	if(user.get_active_held_item() != src || user.incapacitated)

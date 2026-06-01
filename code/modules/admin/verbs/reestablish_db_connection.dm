@@ -6,10 +6,10 @@ ADMIN_VERB(reestablish_db_connection, R_NONE, "Reestablish DB Connection", "Atte
 
 	if (SSdbcore.IsConnected())
 		if (!user.holder.check_for_rights(R_DEBUG))
-			tgui_alert(user,"The database is already connected! (Only those with +debug can force a reconnection)", "The database is already connected!")
+			tgui_alert(user,LANG("datum.5c442773", null), LANG("datum.9cf82a0f", null))
 			return
 
-		var/reconnect = tgui_alert(user,"The database is already connected! If you *KNOW* that this is incorrect, you can force a reconnection", "The database is already connected!", list("Force Reconnect", "Cancel"))
+		var/reconnect = tgui_alert(user,LANG("datum.edf02f70", null), LANG("datum.9cf82a0f", null), list("Force Reconnect", "Cancel"))
 		if (reconnect != "Force Reconnect")
 			return
 

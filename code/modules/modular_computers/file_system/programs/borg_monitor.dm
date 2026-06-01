@@ -124,7 +124,7 @@
 	if(robot.stat == DEAD) //Dead borgs will listen to you no longer
 		to_chat(user, span_warning(LANG("datum.0105be06", list(robot))))
 		return FALSE
-	var/message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message", max_length = MAX_MESSAGE_LEN)
+	var/message = tgui_input_text(user, LANG("datum.74b3ea97", null), LANG("datum.5673afd0", null), max_length = MAX_MESSAGE_LEN)
 	if(!message)
 		return FALSE
 	send_message(message, robot, user)

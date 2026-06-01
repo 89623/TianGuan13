@@ -39,7 +39,7 @@
 	var/list/display_names = generate_display_names()
 	if(!length(display_names))
 		return
-	var/choice = tgui_input_list(user, "Which item would you like to order?", "Select an Item", display_names)
+	var/choice = tgui_input_list(user, LANG("obj.61abbbd2", null), LANG("obj.71faa22a", null), display_names)
 	if(isnull(choice) || isnull(display_names[choice]))
 		return
 	if(!can_use_beacon(user))

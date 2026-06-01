@@ -111,7 +111,7 @@
 		balloon_alert(user, LANG("obj.fc25e5c8", null))
 		return
 	var/job = manifest_data.rank
-	if (tgui_alert(user, "Announce arrival of [name] as [job]?", "Are you ready?", list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
+	if (tgui_alert(user, LANG("obj.32b6fbe2", list(name, job)), LANG("obj.cae34731", null), list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
 		return
 	if (QDELETED(src) || !user.can_perform_action(src, interaction_flags_click))
 		return

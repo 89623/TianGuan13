@@ -422,7 +422,7 @@
 		stock_parts += servo
 
 	if(length(stock_parts))
-		var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, "Which part to remove?", "Part Removal", stock_parts)
+		var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, LANG("obj.7c3b7cb8", null), LANG("obj.d650b468", null), stock_parts)
 		if(!(locate(part_to_remove) in contents))
 			return
 		user.put_in_hands(part_to_remove)

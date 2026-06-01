@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	marker_children += spawned_marker
 
 /obj/item/cargo_teleporter/click_alt(mob/user)
-	var/option_selection = tgui_input_list(user, "What would you like to do?", "Cargo Teleporter Options", list("Remove all markers", "Set default marker"))
+	var/option_selection = tgui_input_list(user, LANG("obj.ab3c2f64", null), LANG("obj.0f787456", null), list("Remove all markers", "Set default marker"))
 	if(isnull(option_selection))
 		return CLICK_ACTION_BLOCKING
 
@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 		return CLICK_ACTION_SUCCESS
 
 	if(option_selection == "Set default marker")
-		var/cargo_mark_selection = tgui_input_list(user, "Select which cargo mark to teleport the items to?", "Cargo Mark Selection", GLOB.cargo_marks)
+		var/cargo_mark_selection = tgui_input_list(user, LANG("obj.bc23398a", null), LANG("obj.7be8426e", null), GLOB.cargo_marks)
 		if(isnull(cargo_mark_selection))
 			return CLICK_ACTION_BLOCKING
 
@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 		return ITEM_INTERACT_BLOCKING
 
 	if(isnull(selected_mark))
-		var/choice = tgui_input_list(user, "Select which cargo mark to teleport the items to?", "Cargo Mark Selection", GLOB.cargo_marks)
+		var/choice = tgui_input_list(user, LANG("obj.bc23398a", null), LANG("obj.7be8426e", null), GLOB.cargo_marks)
 		if(isnull(choice))
 			return ITEM_INTERACT_BLOCKING
 

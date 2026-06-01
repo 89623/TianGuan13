@@ -10,8 +10,8 @@
 	var/incidents
 
 /datum/smite/bad_luck/configure(client/user)
-	silent = tgui_alert(user, "Do you want to apply the omen with a player notification?", "Notify Player?", list("Notify", "Silent")) == "Silent"
-	incidents = tgui_input_number(user, "For how many incidents will the omen last? 0 means permanent.", "Duration?", default = 0, round_value = 1)
+	silent = tgui_alert(user, LANG("datum.c5311705", null), LANG("datum.d2553aea", null), list("Notify", "Silent")) == "Silent"
+	incidents = tgui_input_number(user, LANG("datum.d285fd8d", null), LANG("datum.fe7116d6", null), default = 0, round_value = 1)
 	if(incidents == 0)
 		incidents = INFINITY
 

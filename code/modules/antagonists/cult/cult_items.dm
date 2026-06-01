@@ -338,7 +338,7 @@ Striking a noncultist, however, will tear their flesh."}
 	rebind_blade(user)
 
 /obj/item/melee/cultblade/haunted/proc/unbind_blade(mob/user)
-	var/holup = tgui_alert(user, "Are you sure you wish to unseal the spirit within?", "Sealed Evil In A Jar", list("I need the power!", "Maybe not..."))
+	var/holup = tgui_alert(user, LANG("obj.0895241c", null), LANG("obj.16d24568", null), list("I need the power!", "Maybe not..."))
 	if(holup != "I need the power!")
 		return
 	to_chat(user, span_cult_bold(LANG("obj.ce92b0c6", null)))

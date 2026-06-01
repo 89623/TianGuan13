@@ -95,7 +95,7 @@
 	for(var/id in stored_research.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(id)
 		name_to_id[design.name] = id
-	var/result = tgui_input_list(user, "Select Design", "Select Design", sort_list(name_to_id))
+	var/result = tgui_input_list(user, LANG("obj.57e1c126", null), LANG("obj.57e1c126", null), sort_list(name_to_id))
 	if(isnull(result))
 		return ITEM_INTERACT_FAILURE
 	design_id = name_to_id[result]

@@ -53,7 +53,7 @@
 		to_chat(cast_on, LANG("datum.38f8fb75", null))
 		return
 
-	var/obj/item/bodypart/limb_to_detach = tgui_input_list(cast_on, "Limb to detach", "Cybernetic Limb Detachment", sort_names(robot_parts))
+	var/obj/item/bodypart/limb_to_detach = tgui_input_list(cast_on, LANG("datum.373bb2de", null), LANG("datum.3f13cdd9", null), sort_names(robot_parts))
 	if (QDELETED(src) || QDELETED(cast_on) || QDELETED(limb_to_detach))
 		return
 

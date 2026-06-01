@@ -28,7 +28,7 @@
 	return ..()
 
 /datum/action/innate/cult/comm/Activate()
-	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood", max_length = MAX_MESSAGE_LEN)
+	var/input = tgui_input_text(usr, LANG("datum.40c487df", null), LANG("datum.c9d49206", null), max_length = MAX_MESSAGE_LEN)
 	if(!input || !IsAvailable(feedback = TRUE))
 		return
 
@@ -39,7 +39,7 @@
 
 	var/list/soft_filter_result = CAN_BYPASS_FILTER(usr) ? null : is_soft_ic_filtered(input)
 	if(soft_filter_result)
-		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr,LANG("datum.6308a68e", list(soft_filter_result[CHAT_FILTER_INDEX_WORD], soft_filter_result[CHAT_FILTER_INDEX_REASON])), LANG("datum.b0fe106c", null), list("Yes", "No")) != "Yes")
 			return
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[html_encode(input)]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[input]\"")
@@ -121,11 +121,11 @@
 
 		choices[team_member.current.real_name] = team_member
 
-	var/new_master = tgui_input_list(owner, "Select another cult member to pass the cult's Master role onto.", "Pass the Mantle", choices)
+	var/new_master = tgui_input_list(owner, LANG("datum.85dd128f", null), LANG("datum.53cc29d3", null), choices)
 	if (!new_master || !IsAvailable())
 		return
 
-	var/confirmation = tgui_alert(owner, "Are you sure that you want to make [new_master] the new Master? This can only be done once!", "Pass the Mantle", list("Yes", "No"))
+	var/confirmation = tgui_alert(owner, LANG("datum.ff35a8e2", list(new_master)), LANG("datum.53cc29d3", null), list("Yes", "No"))
 	if (confirmation != "Yes" || !IsAvailable())
 		return
 
@@ -141,7 +141,7 @@
 		return
 
 	SEND_SOUND(master, sound('sound/effects/magic.ogg', volume = 33))
-	confirmation = tgui_alert(master, "[owner.real_name] is offering their role as the cult's Master to you! Do you wish to accept it?", "Take the Mantle", list("Yes", "No"))
+	confirmation = tgui_alert(master, LANG("datum.c3eca223", list(owner.real_name)), LANG("datum.96db51f3", null), list("Yes", "No"))
 
 	if (confirmation != "Yes")
 		to_chat(owner, span_cult(LANG("datum.728c2578", list(new_master))))

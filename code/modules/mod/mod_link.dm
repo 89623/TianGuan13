@@ -93,7 +93,7 @@
 		mod_link.frequency = tool_frequency
 		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && mod_link.frequency)
-		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
+		var/response = tgui_alert(user, LANG("obj.b3cc9f4c", null), LANG("obj.df842ebb", null), list("Copy", "Imprint"))
 		if(!user.is_holding(tool))
 			return ITEM_INTERACT_BLOCKING
 		switch(response)
@@ -195,7 +195,7 @@
 	mod_link?.end_call()
 
 /obj/item/clothing/neck/link_scryer/attack_self(mob/user, modifiers)
-	var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, MAX_NAME_LEN))
+	var/new_label = reject_bad_text(tgui_input_text(user, LANG("obj.ef858bfd", null), LANG("obj.043408e2", null), label, MAX_NAME_LEN))
 	if(!user.is_holding(src))
 		return
 	if(!new_label)
@@ -252,7 +252,7 @@
 		mod_link.frequency = tool_frequency
 		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && mod_link.frequency)
-		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
+		var/response = tgui_alert(user, LANG("obj.b3cc9f4c", null), LANG("obj.df842ebb", null), list("Copy", "Imprint"))
 		if(!user.is_holding(tool))
 			return ITEM_INTERACT_BLOCKING
 		switch(response)
@@ -508,7 +508,7 @@
 	if(!length(callers))
 		calling_link.holder.balloon_alert(user, "no targets on freq [calling_link.frequency]!")
 		return
-	var/chosen_link = tgui_input_list(user, "Choose ID to call from [calling_link.frequency] frequency", "MODlink", callers)
+	var/chosen_link = tgui_input_list(user, LANG("_root.9e56910d", list(calling_link.frequency)), LANG("_root.0e8e3aef", null), callers)
 	if(!chosen_link)
 		return
 	calling_link.call_link(GLOB.mod_link_ids[callers[chosen_link]], user)

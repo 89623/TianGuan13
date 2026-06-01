@@ -182,7 +182,7 @@
 
 /obj/machinery/powerator/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	current_power = tgui_input_number(user, "How much power (in Watts) would you like to draw? Max: [display_power(max_power, FALSE)]", "Power Draw", current_power, max_power, 0)
+	current_power = tgui_input_number(user, LANG("obj.57e01f16", list(display_power(max_power, FALSE))), LANG("obj.7057368a", null), current_power, max_power, 0)
 	if(isnull(current_power))
 		return
 

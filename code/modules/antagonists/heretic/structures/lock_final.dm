@@ -69,7 +69,7 @@
 /// Turn a ghost into an 'orrible beast
 /obj/structure/lock_tear/proc/ghost_to_monster(mob/dead/observer/user, should_ask = TRUE)
 	if(should_ask)
-		var/ask = tgui_alert(user, "Become a monster?", "Ascended Rift", list("Yes", "No"))
+		var/ask = tgui_alert(user, LANG("obj.aeb57de1", null), LANG("obj.b0439e09", null), list("Yes", "No"))
 		if(ask != "Yes" || QDELETED(src) || QDELETED(user))
 			return FALSE
 	var/monster_type = pick(monster_types)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define OBJECTIFY_TIME (5 SECONDS)
 
 /// Turns the target into an object (for instance bread)
@@ -23,7 +24,7 @@
 	if(isnull(desired_object) || !ispath(desired_object))
 		return FALSE //The user pressed "Cancel"
 	if(!ispath(desired_object, /atom))
-		tgui_alert(user, "ERROR: Incorrect / improper path given.")
+		tgui_alert(user, LANG("datum.c57fb711", null))
 		return FALSE
 	transform_path = desired_object
 

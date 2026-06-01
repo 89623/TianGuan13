@@ -5,7 +5,7 @@
 
 	if(incapacitated)
 		return
-	switch(alert("Would you like to enter cryo? This will ghost you. Remember to AHELP before cryoing out of important roles, even with no admins online.",,"Yes.","No."))
+	switch(alert(LANG("mob.8efa8a6a", null),,LANG("mob.20d783b8", null),"No."))
 		if("Yes.")
 			src.ghostize(FALSE)
 			minor_announce("Station AI has disconnected from system networks and moved to remote storage. Preparing for new AI personality upload.", "Station AI")

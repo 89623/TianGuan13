@@ -3,7 +3,7 @@
 
 /datum/admins/proc/list_bombers()
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr, "The game hasn't started yet!")
+		tgui_alert(usr, LANG("datum.8a212f07", null))
 		return
 	var/data = "<b>Bombing List</b><hr>"
 	for(var/entry in GLOB.bombers)
@@ -12,7 +12,7 @@
 
 /datum/admins/proc/list_signalers()
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr, "The game hasn't started yet!")
+		tgui_alert(usr, LANG("datum.8a212f07", null))
 		return
 	var/data = "<b>Showing last [length(GLOB.investigate_signaler)] signalers.</b><hr>"
 	for(var/entry in GLOB.investigate_signaler)
@@ -21,7 +21,7 @@
 
 /datum/admins/proc/list_law_changes()
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr, "The game hasn't started yet!")
+		tgui_alert(usr, LANG("datum.8a212f07", null))
 		return
 	var/data = "<b>Showing last [length(GLOB.lawchanges)] law changes.</b><hr>"
 	for(var/entry in GLOB.lawchanges)
@@ -59,7 +59,7 @@
 
 /datum/admins/proc/show_manifest()
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr, "The game hasn't started yet!")
+		tgui_alert(usr, LANG("datum.8a212f07", null))
 		return
 	GLOB.manifest.ui_interact(usr)
 

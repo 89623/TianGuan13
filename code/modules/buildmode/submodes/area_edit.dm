@@ -65,7 +65,7 @@
 	var/list/modifiers = params2list(params)
 
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
-		var/choice = alert("Are you sure you want to fill area?", "Area Fill Confirmation", "Yes", "No")
+		var/choice = alert(LANG("datum.9ecddd9e", null), LANG("datum.e681f2d9", null), LANG("datum.41ba0ff5", null), "No")
 		if(choice != "Yes")
 			return
 		for(var/turf/T in block(get_turf(cornerA),get_turf(cornerB)))

@@ -49,8 +49,8 @@
 	var/randomname = pick(GLOB.last_names)
 	var/newname = tgui_input_text(
 		owner.current,
-		"You are the nuclear operative [title]. Please choose a last name for your family.",
-		"Name change",
+		LANG("datum.232cff57", list(title)),
+		LANG("datum.b4bf4c54", null),
 		randomname,
 		max_length = MAX_NAME_LEN,
 	)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Middleware to handle quirks
 /datum/preference_middleware/quirks
 	var/tainted = FALSE
@@ -23,7 +24,7 @@
 		message += "Would you like to continue?"
 	else
 		message += "If you do not have enough points to cover the removed quirks, your quirks will be reset. Would you like to continue?"
-	var/response = tgui_alert(user, message.Join(" "), "Quirks Incompatible", list("Yes", "No"))
+	var/response = tgui_alert(user, message.Join(" "), LANG("datum.5a0b3375", null), list("Yes", "No"))
 	if(response != "Yes")
 		return TRUE
 

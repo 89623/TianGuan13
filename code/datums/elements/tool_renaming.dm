@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define OPTION_RENAME "Rename"
 #define OPTION_DESCRIPTION "Description"
 #define OPTION_RESET "Reset"
@@ -38,7 +39,7 @@
 /datum/element/tool_renaming/proc/async_rename(mob/living/user, obj/renamed_obj, description_option)
 	if(!renamed_obj.rename_checks(user))
 		return
-	var/custom_choice = tgui_input_list(user, "What would you like to edit?", "Customization", list(OPTION_RENAME, description_option? OPTION_DESCRIPTION : null, OPTION_RESET))
+	var/custom_choice = tgui_input_list(user, LANG("datum.7a708639", null), LANG("datum.61e3a16f", null), list(OPTION_RENAME, description_option? OPTION_DESCRIPTION : null, OPTION_RESET))
 	if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj) || isnull(custom_choice))
 		return
 

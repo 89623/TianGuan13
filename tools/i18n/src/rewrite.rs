@@ -39,6 +39,14 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         "audible_message" => Some(&[0, 1, 3]),
         "say" => Some(&[0]),
         "manual_emote" => Some(&[0]),
+        // 提示/对话框（玩家可见）。只取消息+标题；按钮/选项列表/返回值不动，
+        // 以免破坏 `if(alert(...) == "Yes")` 之类的比较。alert 取 [0,1,2] 同时覆盖
+        // `alert("msg")` 与 `alert(user, msg, title)` 两种写法（非字符串实参会被安全跳过）。
+        "alert" => Some(&[0, 1, 2]),
+        "tgui_alert" => Some(&[1, 2]),
+        "tgui_input_list" => Some(&[1, 2]),
+        "tgui_input_text" => Some(&[1, 2]),
+        "tgui_input_number" => Some(&[1, 2]),
         _ => None,
     }
 }

@@ -51,10 +51,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			to_chat(user, LANG("obj.05e0afaf", null))
 			return
 		attaching_evidence = TRUE
-		var/name = tgui_input_text(user, "Please enter the evidence name", "Detective's Board", max_length = MAX_NAME_LEN)
+		var/name = tgui_input_text(user, LANG("obj.cae7aff5", null), LANG("obj.a7f441ba", null), max_length = MAX_NAME_LEN)
 		if(!name)
 			name = item.name
-		var/desc = tgui_input_text(user, "Please enter the evidence description", "Detective's Board", max_length = MAX_DESC_LEN)
+		var/desc = tgui_input_text(user, LANG("obj.43fd2730", null), LANG("obj.a7f441ba", null), max_length = MAX_DESC_LEN)
 		if(!desc)
 			desc = item.desc
 

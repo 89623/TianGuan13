@@ -162,7 +162,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user, list/modifiers)
 	if(!open && !changing_openness)
-		var/safety = tgui_alert(user, "You think this might be a bad idea...", "Knock on the door?", list("Proceed", "Abort"))
+		var/safety = tgui_alert(user, LANG("obj.64d9dd2e", null), LANG("obj.3a7eb13e", null), list("Proceed", "Abort"))
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated)
 			return
 		user.visible_message(span_warning("[user] knocks on [src]..."), span_bolddanger("You tentatively knock on [src]..."))

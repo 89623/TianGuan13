@@ -56,7 +56,7 @@
 
 	var/important = is_job_important(id_card)
 	if(important)
-		if(tgui_alert(usr, "You are a member of security and/or command, make sure that you ahelp before punching out! If you decide to punch back in later, you will need to go to the Head of Personnel or Head of Security. Do you wish to continue?", "[filedesc]", list("No", "Yes")) != "Yes")
+		if(tgui_alert(usr, LANG("datum.ba0f4939", null), "[filedesc]", list("No", "Yes")) != "Yes")
 			return FALSE
 
 	log_econ("[id_card.registered_name] clocked out from role [id_card.get_trim_assignment()]")

@@ -74,7 +74,7 @@
 
 /// Switches the current tune of the horn to the next in the list
 /obj/item/blowing_horn/proc/switch_tune(mob/user)
-	var/selected_tune = tgui_input_list(user, "Select a tune to play", "Tunes available", tune_patterns)
+	var/selected_tune = tgui_input_list(user, LANG("obj.a0460f47", null), LANG("obj.b2882ac2", null), tune_patterns)
 	if(isnull(selected_tune))
 		return
 	current_tune = selected_tune
@@ -167,7 +167,7 @@
 
 /// Switches the current tune of the horn to the next in the list
 /obj/structure/war_horn/proc/switch_tune(mob/user)
-	var/selected_tune = tgui_input_list(user, "Select a tune to play", "Tunes available", tune_patterns)
+	var/selected_tune = tgui_input_list(user, LANG("obj.a0460f47", null), LANG("obj.b2882ac2", null), tune_patterns)
 	if(isnull(selected_tune))
 		return
 	current_tune = selected_tune

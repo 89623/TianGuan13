@@ -122,7 +122,7 @@
 	. = ..()
 	if(!IS_HERETIC(user))
 		return
-	var/cardname = tgui_input_list(user, "Shapeshift into?", "Shapeshift", fused_ids)
+	var/cardname = tgui_input_list(user, LANG("obj.54547418", null), LANG("obj.1a90e85e", null), fused_ids)
 	if(!cardname)
 		balloon_alert(user, LANG("obj.9368ca26", null))
 		return ..()

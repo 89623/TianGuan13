@@ -48,7 +48,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/list/soft_filter_result = filter_result || is_soft_ooc_filtered(msg)
 
 	if (soft_filter_result)
-		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr,LANG("client.6308a68e", list(soft_filter_result[CHAT_FILTER_INDEX_WORD], soft_filter_result[CHAT_FILTER_INDEX_REASON])), LANG("client.b0fe106c", null), list("Yes", "No")) != "Yes")
 			return
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[html_encode(msg)]\"")
 		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[msg]\"")
@@ -59,7 +59,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	msg = emoji_parse(msg)
 
 	if(SSticker.HasRoundStarted() && ((msg[1] in list(".",";",":","#")) || findtext_char(msg, "say", 1, 5)))
-		if(tgui_alert(usr,"Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr,LANG("client.296c835c", list(raw_msg)), LANG("client.11754bf0", null), list("Yes", "No")) != "Yes")
 			return
 
 	if(!holder)
@@ -165,7 +165,7 @@ ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OO
 		return
 
 ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
-	if(tgui_alert(user, "Are you sure you want to reset the OOC color of all players?", "Reset Player OOC Color", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, LANG("datum.26e132eb", null), LANG("datum.53dce6c2", null), list("Yes", "No")) != "Yes")
 		return
 	message_admins("[key_name_admin(user)] has reset the players' ooc color.")
 	log_admin("[key_name_admin(user)] has reset player ooc color.")
@@ -271,7 +271,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	players = sort_list(players)
 
 	// Request the player to ignore
-	var/selection = tgui_input_list(src, "Select a player", "Ignore", players)
+	var/selection = tgui_input_list(src, LANG("client.6123f9f9", null), LANG("client.284fb6b0", null), players)
 
 	// Stop running if we didn't receieve a valid selection
 	if(isnull(selection) || !(selection in players))
@@ -312,7 +312,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		return
 
 	// Request the player to unignore
-	var/selection = tgui_input_list(src, "Select a player", "Unignore", prefs.ignoring)
+	var/selection = tgui_input_list(src, LANG("client.6123f9f9", null), LANG("client.7b269124", null), prefs.ignoring)
 
 	// Stop running if we didn't receive a selection
 	if(isnull(selection))

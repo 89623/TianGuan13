@@ -59,7 +59,7 @@
 			helbent = TRUE
 		to_chat(affected_mob, span_hierophant(LANG("datum.b4953290", null)))
 		var/timeisticking = world.time
-		var/RPSchoice = tgui_alert(affected_mob, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors", list("rock" , "paper" , "scissors"), 60)
+		var/RPSchoice = tgui_alert(affected_mob, LANG("datum.b9ecf418", null), LANG("datum.a6e46146", null), list("rock" , "paper" , "scissors"), 60)
 		if(QDELETED(affected_mob) || (timeisticking+(1.1 MINUTES) < world.time))
 			reaping = FALSE
 			return //good job, you ruined it

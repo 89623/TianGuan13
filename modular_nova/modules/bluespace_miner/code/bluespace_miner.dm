@@ -174,7 +174,7 @@
 		balloon_alert(user, LANG("obj.22db95db", null))
 		return TRUE
 
-	var/choice = tgui_input_list(user, "Which would you like to triple?", "Focus Mode", ore_chance)
+	var/choice = tgui_input_list(user, LANG("obj.e8a256e6", null), LANG("obj.7b2f4115", null), ore_chance)
 	if(isnull(choice))
 		return FALSE
 

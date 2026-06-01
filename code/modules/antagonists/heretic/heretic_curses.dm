@@ -47,7 +47,7 @@
 			continue
 		potential_targets["[human_to_check.real_name]"] = human_to_check
 
-	var/chosen_mob = tgui_input_list(user, "Select the victim you wish to curse.", name, sort_list(potential_targets, GLOBAL_PROC_REF(cmp_text_asc)))
+	var/chosen_mob = tgui_input_list(user, LANG("datum.0f16b371", null), name, sort_list(potential_targets, GLOBAL_PROC_REF(cmp_text_asc)))
 	if(isnull(chosen_mob))
 		return FALSE
 
@@ -58,7 +58,7 @@
 
 	// Yes, you COULD curse yourself, not sure why but you could
 	if(to_curse == user)
-		var/are_you_sure = tgui_alert(user, "Are you sure you want to curse yourself?", name, list("Yes", "No"))
+		var/are_you_sure = tgui_alert(user, LANG("datum.09f4d8cf", null), name, list("Yes", "No"))
 		if(are_you_sure != "Yes")
 			return FALSE
 
@@ -212,7 +212,7 @@
 		if(initial(species_type.changesource_flags) & RACE_SWAP)
 			chooseable_races[species_type.name] = species_type
 
-	var/species_name = tgui_input_list(user, "Choose a race", "Choose a race to turn your victim into", chooseable_races)
+	var/species_name = tgui_input_list(user, LANG("datum.6e03ad2e", null), LANG("datum.765f27f3", null), chooseable_races)
 	if(!species_name)
 		return FALSE
 	chosen_species = chooseable_races[species_name]

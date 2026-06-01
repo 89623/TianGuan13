@@ -100,7 +100,7 @@
 
 /obj/machinery/xenoarch/researcher/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	var/choice = tgui_input_list(user, "Remove the rocks from [src]?", "Rock Removal", list("Yes", "No"))
+	var/choice = tgui_input_list(user, LANG("obj.b097b2e9", list(src)), LANG("obj.0dc643ee", null), list("Yes", "No"))
 	if(choice != "Yes")
 		return
 	var/turf/src_turf = get_turf(src)
@@ -112,7 +112,7 @@
 /obj/machinery/xenoarch/researcher/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	var/turf/src_turf = get_turf(src)
-	var/choice = tgui_input_list(user, "Choose which reward you would like!", "Reward Choice", list("Lavaland Chest (100)", "Anomalous Crystal (100)", "Bepis Tech (60)"))
+	var/choice = tgui_input_list(user, LANG("obj.ca9d4149", null), LANG("obj.96c1a202", null), list("Lavaland Chest (100)", "Anomalous Crystal (100)", "Bepis Tech (60)"))
 	if(!choice)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -206,7 +206,7 @@
 		return
 
 /obj/machinery/xenoarch/digger/attack_hand(mob/living/user, list/modifiers)
-	var/choice = tgui_input_list(user, "Remove the rocks from [src]?", "Rock Removal", list("Yes", "No"))
+	var/choice = tgui_input_list(user, LANG("obj.b097b2e9", list(src)), LANG("obj.0dc643ee", null), list("Yes", "No"))
 	if(choice != "Yes")
 		return
 

@@ -201,7 +201,7 @@
 	LAZYADD(ckeys_trying_to_spawn, user_ckey)
 	// NOVA EDIT ADDITION START
 	if(restricted_species && !(user.client?.prefs?.read_preference(/datum/preference/choiced/species) in restricted_species))
-		var/incorrect_species = tgui_alert(user, "Current species preference incompatible, proceed with random appearance?", "Incompatible Species", list("Yes", "No"))
+		var/incorrect_species = tgui_alert(user, LANG("obj.55d53048", null), LANG("obj.ecb1db77", null), list("Yes", "No"))
 		if(incorrect_species != "Yes")
 			LAZYREMOVE(ckeys_trying_to_spawn, user_ckey)
 			return
@@ -228,7 +228,7 @@
 	if(!prompt_fail && (allow_custom_character & GHOSTROLE_TAKE_PREFS_APPEARANCE) && user.client)
 		//if we have gotten to this point, they have already waived their species pref.-- they were told they need to use the specific species already
 		if(!apply_prefs && (restricted_species && (user.client?.prefs?.read_preference(/datum/preference/choiced/species) in restricted_species)) || !restricted_species)
-			apply_prefs = tgui_alert(user, "Use currently loaded character preferences?", "Appearance Type", list("Yes", "No"), 10 SECONDS) == "Yes"
+			apply_prefs = tgui_alert(user, LANG("obj.f2f3fd0e", null), LANG("obj.de8726f5", null), list("Yes", "No"), 10 SECONDS) == "Yes"
 	// NOVA EDIT ADDITION END
 
 	if(!prompt_fail && !pre_ghost_take(user))

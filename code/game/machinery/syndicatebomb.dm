@@ -263,12 +263,12 @@
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
-	var/new_timer = tgui_input_number(user, "Set the timer[add_boom_wires ? " (the longer the timer, the harder to defuse!)" : ""]", "Countdown", timer_set, maximum_timer, minimum_timer)
+	var/new_timer = tgui_input_number(user, LANG("obj.ac2624e4", list(add_boom_wires ? " (the longer the timer, the harder to defuse!)" : "")), LANG("obj.8f2cc50c", null), timer_set, maximum_timer, minimum_timer)
 	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	timer_set = new_timer
 	visible_message(span_notice(LANG("obj.713f7f53", list(icon2html(src, viewers(src)), timer_set))))
-	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
+	var/choice = tgui_alert(user, LANG("obj.c682e92b", null), LANG("obj.1f079ac4", null), list("Yes","No"))
 	if(choice != "Yes" || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(active)

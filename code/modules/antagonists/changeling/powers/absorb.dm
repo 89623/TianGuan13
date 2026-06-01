@@ -218,8 +218,7 @@
 		exit_hivemind()
 
 /mob/eye/imaginary_friend/hivemind/proc/exit_hivemind()
-	var/response = tgui_alert(src, "Are you sure you want to exit the hivemind? \
-		You can't re-enter it, though you can still be revived.", "Confirm Exit", list("Exit", "Stay"))
+	var/response = tgui_alert(src, LANG("mob.8736418a", null), LANG("mob.d25e56ec", null), list("Exit", "Stay"))
 	if(response != "Exit" || QDELETED(src))
 		return
 	ghostize(TRUE)
@@ -281,7 +280,7 @@
 		qdel(src)
 		return FALSE
 
-	var/chosen = tgui_input_list(owner, "Choose a member to eject from the hivemind.", "Eject Hivemind Member", freeloaders)
+	var/chosen = tgui_input_list(owner, LANG("datum.61ffd144", null), LANG("datum.9b71a0c6", null), freeloaders)
 	var/mob/eye/imaginary_friend/hivemind/freeloader = freeloaders[chosen]
 	if(QDELETED(freeloader) || QDELETED(src))
 		return FALSE

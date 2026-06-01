@@ -124,7 +124,7 @@
 	. = ..()
 	if(manual_reset)
 		if(reset_timer <= 0)
-			if(tgui_alert(user, reset_message, "Reset the ore vent?", list("Yes", "No")) != "Yes")
+			if(tgui_alert(user, reset_message, LANG("obj.b703ddac", null), list("Yes", "No")) != "Yes")
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 			reset_vent(TRUE)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

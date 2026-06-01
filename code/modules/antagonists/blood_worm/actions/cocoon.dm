@@ -227,7 +227,7 @@
 	total_blood_required = 500
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/Activate(atom/target)
-	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will become a juvenile, gaining stat increases and the ability to spit corrosive blood, but losing the ability to ventcrawl.", "Mature", list("Yes", "No"), 30 SECONDS) != "Yes")
+	if (tgui_alert(owner, LANG("datum.3480740d", list(cocoon_time / 10)), LANG("datum.2c43205c", null), list("Yes", "No"), 30 SECONDS) != "Yes")
 		return
 	if (!IsAvailable(feedback = TRUE))
 		return
@@ -263,7 +263,7 @@
 	total_blood_required = 1500
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile/Activate(atom/target)
-	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will become an adult, gaining stat increases and the ability to spit bursts of corrosive blood by right-clicking with Spit Blood while outside of a host.", "Mature", list("Yes", "No"), 30 SECONDS) != "Yes")
+	if (tgui_alert(owner, LANG("datum.42c1db72", list(cocoon_time / 10)), LANG("datum.2c43205c", null), list("Yes", "No"), 30 SECONDS) != "Yes")
 		return
 	if (!IsAvailable(feedback = TRUE))
 		return
@@ -315,7 +315,7 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/Activate(atom/target)
-	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will create [num_hatchlings + 1] new hatchlings, including yourself.", "Reproduce", list("Yes", "No"), 30 SECONDS) != "Yes")
+	if (tgui_alert(owner, LANG("datum.3f5e2f61", list(cocoon_time / 10, num_hatchlings + 1)), LANG("datum.04221edf", null), list("Yes", "No"), 30 SECONDS) != "Yes")
 		return
 	if (!IsAvailable(feedback = TRUE))
 		return
@@ -350,7 +350,7 @@
 		cancel()
 		owner.balloon_alert(owner, "no candidates!") // We can't host this balloon alert on a deleted cocoon.
 		return
-	if (num_candidates < num_hatchlings && tgui_alert(owner, "There are only [num_candidates]/[num_hatchlings] candidates for hatchlings, want to proceed anyway?", "Ghost Shortage", list("Yes", "No"), 10 SECONDS) != "Yes")
+	if (num_candidates < num_hatchlings && tgui_alert(owner, LANG("datum.18557cf7", list(num_candidates, num_hatchlings)), LANG("datum.52fa9576", null), list("Yes", "No"), 10 SECONDS) != "Yes")
 		cancel()
 		return
 

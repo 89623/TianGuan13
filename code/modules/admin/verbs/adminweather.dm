@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather on the z-level you choose.", ADMIN_CATEGORY_EVENTS)
 
 	var/list/weather_choices = list()
@@ -5,18 +6,18 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 		for(var/datum/weather/weather_type as anything in subtypesof(/datum/weather))
 			weather_choices[initial(weather_type.type)] = weather_type
 
-	var/datum/weather/weather_choice = tgui_input_list(user, "Choose a weather to run", "Weather", weather_choices)
+	var/datum/weather/weather_choice = tgui_input_list(user, LANG("datum.ab4c79f4", null), LANG("datum.858e003b", null), weather_choices)
 	if(!weather_choice)
 		return
 	weather_choice = weather_choices[weather_choice]
 
 	var/turf/current_turf = get_turf(user.mob)
-	var/z_level = tgui_input_number(user, "Z-Level to target", "Z-Level", min_value = 1, max_value = world.maxz, default = current_turf?.z)
+	var/z_level = tgui_input_number(user, LANG("datum.07c3ce55", null), LANG("datum.3321c9cb", null), min_value = 1, max_value = world.maxz, default = current_turf?.z)
 	if(!isnum(z_level))
 		return
 
 	var/static/list/custom_options = list("Default", "Custom", "Cancel")
-	var/custom_choice = tgui_alert(user, "How would you like to run the weather settings?", "Custom Weather", custom_options)
+	var/custom_choice = tgui_alert(user, LANG("datum.cd6b6119", null), LANG("datum.f9bf3c1d", null), custom_options)
 	switch(custom_choice)
 		if("Default")
 			SSweather.run_weather(weather_choice, z_level) // default settings
@@ -32,7 +33,7 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 		area_choices[area_instance.type] ||= list()
 		area_choices[area_instance.type] |= area_instance
 
-	var/area/area_choice = tgui_input_list(user, "Select an area for weather to target", "Target Area", area_choices)
+	var/area/area_choice = tgui_input_list(user, LANG("datum.f13674c6", null), LANG("datum.f99c2e5c", null), area_choices)
 	if(!area_choice)
 		return
 	area_choice = area_choices[area_choice]
@@ -47,7 +48,7 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 	var/datum/reagent/reagent_choice
 	if((weather_bitflags & (WEATHER_TURFS|WEATHER_MOBS)))
 		var/static/list/reagent_options = list("Yes", "No", "Cancel")
-		var/reagent_option = tgui_alert(user, "Would you like to make the weather use a custom reagent?", "Weather Reagent", reagent_options)
+		var/reagent_option = tgui_alert(user, LANG("datum.cb1417b5", null), LANG("datum.39b4eb7d", null), reagent_options)
 		switch(reagent_option)
 			if("Cancel")
 				return
@@ -66,7 +67,7 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 	if(weather_bitflags & (WEATHER_THUNDER))
 		var/static/list/thunder_choices = GLOB.thunder_chance_options
 
-		var/thunder_choice = tgui_input_list(user, "How much thunder would you like", "Thunder", thunder_choices)
+		var/thunder_choice = tgui_input_list(user, LANG("datum.220554c0", null), LANG("datum.e05764b0", null), thunder_choices)
 		if(!thunder_choice)
 			return
 		thunder_value = GLOB.thunder_chance_options[thunder_choice]

@@ -97,7 +97,7 @@
 	if(cooldown)
 		return
 
-	var/cyborg_ask = tgui_alert(target_ghost, "Become a cyborg?", "Are you a terminator?", list("Yes", "No"))
+	var/cyborg_ask = tgui_alert(target_ghost, LANG("obj.67280640", null), LANG("obj.1a69af28", null), list("Yes", "No"))
 	if(cyborg_ask == "No" || !src || QDELETED(src))
 		return FALSE
 

@@ -36,7 +36,7 @@
 			dye_general(target_human, user)
 
 /obj/item/fur_dyer/proc/dye_general(mob/living/carbon/human/target_human, mob/living/user)
-	var/selected_mutant_color = tgui_alert(user, "Please select which mutant color you'd like to change", "Select Color", list("One", "Two", "Three"))
+	var/selected_mutant_color = tgui_alert(user, LANG("obj.6b5bdf74", null), LANG("obj.42c123ce", null), list("One", "Two", "Three"))
 
 	if(!selected_mutant_color)
 		return
@@ -94,7 +94,7 @@
 		to_chat(user, span_danger(LANG("obj.c00e7ad5", list(target_human))))
 		return
 
-	var/selected_marking_id = tgui_input_list(user, "Please select which marking you'd like to color!", "Select marking", current_markings[selected_marking_area])
+	var/selected_marking_id = tgui_input_list(user, LANG("obj.a756a344", null), LANG("obj.7ae3b525", null), current_markings[selected_marking_area])
 
 	if(!selected_marking_id)
 		return

@@ -59,14 +59,14 @@
 			to_chat(user, span_warning(LANG("obj.fc5e7ca0", list(target_mob))))
 			return FALSE
 
-		var/datum/soulcatcher_room/target_room = tgui_input_list(user, "Choose a room to send [target_mob]'s soul to.", name, linked_soulcatcher.soulcatcher_rooms, timeout = 30 SECONDS)
+		var/datum/soulcatcher_room/target_room = tgui_input_list(user, LANG("obj.7b18270f", list(target_mob)), name, linked_soulcatcher.soulcatcher_rooms, timeout = 30 SECONDS)
 		if(!target_room)
 			return FALSE
 
 		SEND_SOUND(target_ghost, 'sound/announcer/notice/notice2.ogg')
 		window_flash(target_ghost.client)
 
-		if(tgui_alert(target_ghost, "[user] wants to transfer you to [target_room] inside of a soulcatcher, do you accept?", name, list("Yes", "No"), 30 SECONDS, autofocus = FALSE) != "Yes")
+		if(tgui_alert(target_ghost, LANG("obj.b5cb76d3", list(user, target_room)), name, list("Yes", "No"), 30 SECONDS, autofocus = FALSE) != "Yes")
 			to_chat(user, span_warning(LANG("obj.8aba20fa", list(target_mob))))
 			COOLDOWN_START(src, rsd_scan_cooldown, RSD_ATTEMPT_COOLDOWN)
 			return FALSE
@@ -82,14 +82,14 @@
 		linked_soulcatcher.scan_body(target_mob, user)
 		return TRUE
 
-	var/datum/soulcatcher_room/target_room = tgui_input_list(user, "Choose a room to send [target_mob]'s soul to.", name, linked_soulcatcher.soulcatcher_rooms, timeout = 30 SECONDS)
+	var/datum/soulcatcher_room/target_room = tgui_input_list(user, LANG("obj.7b18270f", list(target_mob)), name, linked_soulcatcher.soulcatcher_rooms, timeout = 30 SECONDS)
 	if(!target_room)
 		return FALSE
 
 	SEND_SOUND(target_mob, 'sound/announcer/notice/notice2.ogg')
 	window_flash(target_mob.client)
 
-	if((tgui_alert(target_mob, "Do you wish to enter [target_room]? This will remove you from your body until you leave.", name, list("Yes", "No"), 30 SECONDS, FALSE) != "Yes") || (tgui_alert(target_mob, "Are you sure about this?", name, list("Yes", "No"), 30 SECONDS, FALSE) != "Yes"))
+	if((tgui_alert(target_mob, LANG("obj.879b416d", list(target_room)), name, list("Yes", "No"), 30 SECONDS, FALSE) != "Yes") || (tgui_alert(target_mob, LANG("obj.f56e50aa", null), name, list("Yes", "No"), 30 SECONDS, FALSE) != "Yes"))
 		COOLDOWN_START(src, rsd_scan_cooldown, RSD_ATTEMPT_COOLDOWN)
 		to_chat(user, span_warning(LANG("obj.8aba20fa", list(target_mob))))
 		return FALSE
@@ -140,7 +140,7 @@
 		to_chat(user, span_warning(LANG("obj.fde8f7a0", list(target_mob))))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/mob/living/soulcatcher_soul/chosen_soul = tgui_input_list(user, "Choose a soul to transfer into the body", name, soul_list)
+	var/mob/living/soulcatcher_soul/chosen_soul = tgui_input_list(user, LANG("obj.e8cb7960", null), name, soul_list)
 	if(!chosen_soul)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

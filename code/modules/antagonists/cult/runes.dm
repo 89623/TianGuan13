@@ -492,7 +492,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 
-	var/input_rune_key = tgui_input_list(user, "Rune to teleport to", "Teleportation Target", potential_runes) //we know what key they picked
+	var/input_rune_key = tgui_input_list(user, LANG("obj.544bd69a", null), LANG("obj.0e23a8a3", null), potential_runes) //we know what key they picked
 	if(isnull(input_rune_key))
 		return
 	if(isnull(potential_runes[input_rune_key]))
@@ -726,7 +726,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		return
 
 	if(length(potential_revive_mobs) > 1 && user.mind)
-		mob_to_revive = tgui_input_list(user, "Cultist to revive", "Revive Cultist", potential_revive_mobs)
+		mob_to_revive = tgui_input_list(user, LANG("obj.798038d4", null), LANG("obj.80e8f0b2", null), potential_revive_mobs)
 		if(isnull(mob_to_revive))
 			return
 	else
@@ -833,7 +833,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		to_chat(user, span_warning(LANG("obj.663fc422", null)))
 		fail_invoke()
 		return
-	var/mob/living/cultist_to_summon = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", cultists)
+	var/mob/living/cultist_to_summon = tgui_input_list(user, LANG("obj.af9bc35c", list(src)), LANG("obj.de6752c5", null), cultists)
 	var/fail_logmsg = "Summon Cultist rune activated by [user] at [COORD(src)] failed - "
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated)
 		return
@@ -969,7 +969,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	. = ..()
 	var/mob/living/user = invokers[1]
 	var/turf/T = get_turf(src)
-	var/choice = tgui_alert(user, "You tear open a connection to the spirit realm...", "Spirit Realm", list("Summon a Cult Ghost", "Ascend as a Dark Spirit"))
+	var/choice = tgui_alert(user, LANG("obj.30b71847", null), LANG("obj.471d5175", null), list("Summon a Cult Ghost", "Ascend as a Dark Spirit"))
 	if(choice == "Summon a Cult Ghost")
 		if(!is_station_level(T.z))
 			to_chat(user, span_cult_italic(LANG("obj.885ee24f", null)))

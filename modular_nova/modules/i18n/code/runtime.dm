@@ -67,12 +67,9 @@ GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 /proc/lang_format(key, list/args)
 	return lang_resolve(key, args, null)
 
-/// 单接收者 locale 版本（定向文本用）。见 LANGU 宏。user 为 null 时回退全服 locale。
+/// 兼容旧调用的单接收者入口；当前部署模式强制使用全服 locale。
 /proc/lang_format_for(mob/user, key, list/args)
-	var/locale
-	if(istype(user))
-		locale = user.client?.prefs?.read_preference(/datum/preference/choiced/ui_language)
-	return lang_resolve(key, args, locale)
+	return lang_resolve(key, args, null)
 
 // ---- 反查表（name/desc 等「变量类」文本接入运行时）----
 //

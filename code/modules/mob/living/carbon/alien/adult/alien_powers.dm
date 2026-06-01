@@ -94,7 +94,7 @@ Doesn't work on other aliens/AI.*/
 /datum/action/cooldown/alien/make_structure/proc/check_for_vents()
 	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in owner.loc
 	if(atmos_thing)
-		var/are_you_sure = tgui_alert(owner, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", list("Yes", "No"))
+		var/are_you_sure = tgui_alert(owner, LANG("datum.b7a61e8d", list(atmos_thing)), LANG("datum.7a61f01e", null), list("Yes", "No"))
 		if(are_you_sure != "Yes")
 			return FALSE
 		if(QDELETED(src) || QDELETED(owner) || !check_for_duplicate())
@@ -128,7 +128,7 @@ Doesn't work on other aliens/AI.*/
 		to_chat(owner, span_noticealien(LANG("datum.e0e0d3c8", null)))
 		return FALSE
 
-	var/mob/living/chosen_recipient = tgui_input_list(owner, "Select whisper recipient", "Whisper", sort_names(possible_recipients))
+	var/mob/living/chosen_recipient = tgui_input_list(owner, LANG("datum.48821bef", null), LANG("datum.fc9f00ae", null), sort_names(possible_recipients))
 	if(!chosen_recipient)
 		return FALSE
 
@@ -169,11 +169,11 @@ Doesn't work on other aliens/AI.*/
 		to_chat(owner, span_noticealien(LANG("datum.1eeb6ed1", null)))
 		return FALSE
 
-	var/mob/living/carbon/donation_target = tgui_input_list(owner, "Target to transfer to", "Plasma Donation", sort_names(aliens_around))
+	var/mob/living/carbon/donation_target = tgui_input_list(owner, LANG("datum.bb11bcb3", null), LANG("datum.35ef877a", null), sort_names(aliens_around))
 	if(!donation_target)
 		return FALSE
 
-	var/amount = tgui_input_number(owner, "Amount", "Transfer Plasma to [donation_target]", max_value = carbon_owner.getPlasma())
+	var/amount = tgui_input_number(owner, LANG("datum.9956090a", null), LANG("datum.43b7de3b", list(donation_target)), max_value = carbon_owner.getPlasma())
 	if(QDELETED(donation_target) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE) || isnull(amount) || amount <= 0)
 		return FALSE
 
@@ -326,7 +326,7 @@ Doesn't work on other aliens/AI.*/
 	return TRUE
 
 /datum/action/cooldown/alien/make_structure/resin/Activate(atom/target)
-	var/choice = tgui_input_list(owner, "Select a shape to build", "Resin building", structures)
+	var/choice = tgui_input_list(owner, LANG("datum.52919f5d", null), LANG("datum.f1aa9a5d", null), structures)
 	if(isnull(choice) || QDELETED(src) || QDELETED(owner) || !check_for_duplicate() || !IsAvailable(feedback = TRUE))
 		return FALSE
 

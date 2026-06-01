@@ -40,7 +40,7 @@
 	INVOKE_ASYNC(src, PROC_REF(malfshunt), malf)
 
 /obj/machinery/power/apc/proc/malfshunt(mob/living/silicon/ai/malf)
-	var/confirm = tgui_alert(malf, "Are you sure that you want to shunt? This will take you out of your core!", "Shunt to [name]?", list("Yes", "No"))
+	var/confirm = tgui_alert(malf, LANG("obj.04af11f3", null), LANG("obj.5a3041d8", list(name)), list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 	malf.ShutOffDoomsdayDevice()
@@ -112,7 +112,7 @@
 	user.visible_message(span_notice("[user] slots [card] into [src]..."), span_notice("Transfer process initiated. Sending request for AI approval..."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	SEND_SOUND(occupier, sound('sound/announcer/notice/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
-	if(tgui_alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
+	if(tgui_alert(occupier, LANG("obj.cb27ec1c", list(user, card.name)), LANG("obj.401c4350", null), list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
 		to_chat(user, span_danger(LANG("obj.019aacdb", null)))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		transfer_in_progress = FALSE

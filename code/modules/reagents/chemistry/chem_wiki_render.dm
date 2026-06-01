@@ -12,8 +12,8 @@ ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and genera
 
 	var/input_text = tgui_input_text(
 		user,
-		"Input a name of a reagent, or a series of reagents split with a comma (no spaces) to get its wiki table entry",
-		"Recipe",
+		LANG("datum.102b8371", null),
+		LANG("datum.e1c04ddb", null),
 		max_length = MAX_MESSAGE_LEN,
 		) //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
 	if(!input_text)

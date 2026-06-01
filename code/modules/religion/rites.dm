@@ -406,7 +406,7 @@
 			continue
 		if(!(unfiltered_area.area_flags & HIDDEN_AREA))
 			filtered += unfiltered_area
-	area_instance = tgui_input_list(user, "Choose an area to mark as an arena!", "Arena Declaration", filtered)
+	area_instance = tgui_input_list(user, LANG("datum.2d87232f", null), LANG("datum.fe2c6b9e", null), filtered)
 	if(isnull(area_instance))
 		return FALSE
 	. = ..()

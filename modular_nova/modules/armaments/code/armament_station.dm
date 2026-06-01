@@ -70,7 +70,7 @@
 		if(!attacking_card.points)
 			to_chat(user, span_warning(LANG("obj.c883815d", list(attacking_card))))
 			return
-		var/points_to_transfer = clamp(tgui_input_number(user, "How many points do you want to transfer?", "Transfer Points", 1, attacking_card.points, 1), 0, attacking_card.points)
+		var/points_to_transfer = clamp(tgui_input_number(user, LANG("obj.ac788a70", null), LANG("obj.bfebd140", null), 1, attacking_card.points, 1), 0, attacking_card.points)
 
 		if(!points_to_transfer)
 			return

@@ -111,7 +111,7 @@
 			to_chat(user, span_warning(LANG("obj.f554aa51", null)))
 			return ITEM_INTERACT_FAILURE
 
-		var/newdescription = sanitize_text(tgui_input_text(user, "What do you want to write?", "Floppy Disk", max_length = MAX_TEXT_LENGTH, multiline = TRUE))
+		var/newdescription = sanitize_text(tgui_input_text(user, LANG("obj.2e96b467", null), LANG("obj.91b89937", null), max_length = MAX_TEXT_LENGTH, multiline = TRUE))
 		if(!newdescription)
 			return ITEM_INTERACT_FAILURE
 

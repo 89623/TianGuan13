@@ -44,7 +44,7 @@
 	if(active)
 		dump_loot(user)
 		return
-	var/scramble_response = tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel"))
+	var/scramble_response = tgui_alert(user, LANG("obj.282b3cb4", null), LANG("obj.39df10f1", null), list("Yes", "Cancel"))
 	if(scramble_response != "Yes")
 		return
 	if(active || !user.can_perform_action(src))

@@ -92,7 +92,7 @@
 			droppable_parts += proximity_monitor
 		if(!length(droppable_parts))
 			return ITEM_INTERACT_BLOCKING
-		var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
+		var/obj/item/choice = tgui_input_list(user, LANG("obj.9fd18d79", null), LANG("obj.d650b468", null), sort_names(droppable_parts))
 		if(isnull(choice))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))

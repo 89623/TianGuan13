@@ -86,7 +86,7 @@
 		return
 	if(!anchored)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	var/warning = tgui_alert(user, "Are you sure you want to empty the soup container?","Flush soup container?", list("Flush", "Cancel"))
+	var/warning = tgui_alert(user, LANG("obj.cdffafe0", null),LANG("obj.6ea42650", null), list("Flush", "Cancel"))
 	if(warning == "Flush" && user.can_perform_action(src))
 		reagents.clear_reagents()
 		if(biological_sample)

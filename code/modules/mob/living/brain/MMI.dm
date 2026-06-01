@@ -61,7 +61,7 @@
 			to_chat(user, span_warning(LANG("obj.4843ca8b", list(newbrain))))
 			return
 		if(!newbrain.brainmob)
-			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
+			var/install = tgui_alert(user, LANG("obj.f1f04b31", list(newbrain)), LANG("obj.a84be5c1", null), list("Yes", "No"))
 			if(install != "Yes")
 				return
 			if(!user.transferItemToLoc(newbrain, src))

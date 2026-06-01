@@ -7,7 +7,7 @@
 		to_chat(usr, span_danger(LANG("mob.34d73204", null)), confidential = TRUE)
 		return
 
-	var/request_url = tgui_input_text(usr, "Please input a URL. Supported sources: [replacetext(replacetext(CONFIG_GET(string/request_internet_allowed), "\\", ""), ",", ", ")].", "Request Intenet sound")
+	var/request_url = tgui_input_text(usr, LANG("mob.bd1a1916", list(replacetext(replacetext(CONFIG_GET(string/request_internet_allowed), "\\", ""), ",", ", "))), LANG("mob.513492bc", null))
 	if(!request_url)
 		return
 
@@ -16,7 +16,7 @@
 		to_chat(usr, span_danger(LANG("mob.c3fdf371", list(replacetext(CONFIG_GET(string/request_internet_allowed), "\\", " ")))), confidential = TRUE)
 		return
 
-	var/credit = tgui_alert(usr, "Credit yourself for requesting this song? (will show up as [usr.ckey])", "Credit Yourself?", list("No", "Yes", "Cancel"))
+	var/credit = tgui_alert(usr, LANG("mob.7ab8bf08", list(usr.ckey)), LANG("mob.eda2ecd3", null), list("No", "Yes", "Cancel"))
 
 	if(credit == "Cancel" || isnull(credit))
 		return

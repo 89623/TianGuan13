@@ -303,12 +303,12 @@
 	. += span_notice(LANG("obj.8c6bde29", list(EXAMINE_HINT("wrench"))))
 
 /obj/item/stack/ducts/attack_self(mob/user)
-	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers, GLOB.plumbing_layer_names["[duct_layer]"])
+	var/new_layer = tgui_input_list(user, LANG("obj.0d8e05e2", null), LANG("obj.6a7ee8f6", null), GLOB.plumbing_layers, GLOB.plumbing_layer_names["[duct_layer]"])
 	if(!user.is_holding(src))
 		return
 	if(new_layer)
 		duct_layer = GLOB.plumbing_layers[new_layer]
-	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors, GLOB.pipe_color_name[duct_color])
+	var/new_color = tgui_input_list(user, LANG("obj.c374a224", null), LANG("obj.0e20b7b5", null), GLOB.pipe_paint_colors, GLOB.pipe_color_name[duct_color])
 	if(!user.is_holding(src))
 		return
 	if(new_color)

@@ -148,7 +148,7 @@
 			else
 				currentcolor = colors[selection]
 	else if(istype(action, /datum/action/item_action/dtcleargrid))
-		var/yesnomaybe = tgui_alert(user, "Are you sure you wanna clear the canvas?", "", list("Yes", "No", "Maybe"))
+		var/yesnomaybe = tgui_alert(user, LANG("obj.8fc9b6a9", null), "", list("Yes", "No", "Maybe"))
 		if(QDELETED(src) || !user.can_perform_action(src))
 			return
 		switch(yesnomaybe)

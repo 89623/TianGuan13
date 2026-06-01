@@ -33,7 +33,7 @@
 
 
 /obj/item/assault_pod/attack_self(mob/living/user)
-	var/target_area = tgui_input_list(user, "Area to land", "Landing Zone", GLOB.teleportlocs)
+	var/target_area = tgui_input_list(user, LANG("obj.56e38f67", null), LANG("obj.232df88b", null), GLOB.teleportlocs)
 	if(isnull(target_area))
 		return
 	if(isnull(GLOB.teleportlocs[target_area]))

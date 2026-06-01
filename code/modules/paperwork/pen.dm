@@ -263,7 +263,7 @@
 	if(loc != user)
 		to_chat(user, span_warning(LANG("obj.24985dda", null)))
 		return CLICK_ACTION_BLOCKING
-	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (0-360)", "Rotate Pen Head", max_value = 360)
+	var/deg = tgui_input_number(user, LANG("obj.ec2d01be", null), LANG("obj.33b60fa7", null), max_value = 360)
 	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 		return CLICK_ACTION_BLOCKING
 	degrees = deg

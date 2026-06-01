@@ -103,7 +103,7 @@
 		balloon_alert(user, LANG("obj.df944ab2", null))
 		return NONE
 
-	var/confirmed = tgui_alert(user, "Are you sure you want to call [initial(selected_atom.name)] here?", "Confirmation", list("Yes", "No"))
+	var/confirmed = tgui_alert(user, LANG("obj.e9453223", list(initial(selected_atom.name))), LANG("obj.15bc27b6", null), list("Yes", "No"))
 	if(confirmed != "Yes")
 		return ITEM_INTERACT_BLOCKING
 

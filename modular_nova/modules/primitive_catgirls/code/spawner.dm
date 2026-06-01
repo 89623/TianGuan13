@@ -147,7 +147,7 @@
 			message_admins("[key_name(user)] has attempted to put [key_name(target)] back into [src]. [ADMIN_JMP(src)]")
 			return
 
-		else if(tgui_alert(user, "Would you like to place [target] into [src]?", "Put back to sleep?", list("Yes", "No")) == "Yes")
+		else if(tgui_alert(user, LANG("obj.4de87da9", list(target, src)), LANG("obj.ce673bcd", null), list("Yes", "No")) == "Yes")
 
 			visible_message(span_infoplain(LANG("obj.2462b77d", list(user, target, src))))
 
@@ -160,7 +160,7 @@
 			message_admins("[key_name(user)] has put [key_name(target)] back into [src]. [ADMIN_JMP(src)]")
 
 	if(target == user)
-		if(tgui_alert(target, "Would you like to go back to sleep?", "Go back to sleep?", list("Yes", "No")) != "Yes")
+		if(tgui_alert(target, LANG("obj.641d1330", null), LANG("obj.c8f6a36c", null), list("Yes", "No")) != "Yes")
 			return
 
 		visible_message(span_infoplain(LANG("obj.d1cc4edc", list(user, src))))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Datum that holds a proc for additional options when running an event.
 /// Prototypes are declared here, non-prototypes on the event files.
 /datum/event_admin_setup
@@ -74,7 +75,7 @@
 	if(!should_warn())
 		return
 	var/mob/admin = usr
-	if(tgui_alert(usr, "WARNING: [warning_text]", event_control.name, list("Yes", "No")) == "Yes")
+	if(tgui_alert(usr, LANG("datum.ff82528e", list(warning_text)), event_control.name, list("Yes", "No")) == "Yes")
 		if(snitch_text)
 			message_admins("[admin.ckey] [snitch_text]")
 	else
@@ -131,9 +132,9 @@
 /datum/event_admin_setup/minimum_candidate_requirement/prompt_admins()
 	var/candidate_count = count_candidates()
 	if(candidate_count < min_candidates)
-		tgui_alert(usr, output_text, "Error")
+		tgui_alert(usr, output_text, LANG("datum.c6e0fad1", null))
 		return ADMIN_CANCEL_EVENT
-	tgui_alert(usr, "[candidate_count] candidates found!", event_control.name)
+	tgui_alert(usr, LANG("datum.3e5b73ab", list(candidate_count)), event_control.name)
 
 /// Checks for candidates. Should return the total number of candidates
 /datum/event_admin_setup/minimum_candidate_requirement/proc/count_candidates()

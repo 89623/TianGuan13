@@ -772,7 +772,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!opened && istype(weapon, /obj/item/airlock_painter))
 		if(!length(paint_jobs))
 			return
-		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", paint_jobs)
+		var/choice = tgui_input_list(user, LANG("obj.b1b228ff", null), LANG("obj.aa8f9e75", null), paint_jobs)
 		if(isnull(choice))
 			return
 
@@ -857,7 +857,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(num_choices == 1)
 			choice = access_choices[1]
 		else
-			choice = tgui_input_list(user, "Set Access Type", "Access Type", access_choices)
+			choice = tgui_input_list(user, LANG("obj.369a15ea", null), LANG("obj.8cf8426e", null), access_choices)
 		if(isnull(choice))
 			return
 

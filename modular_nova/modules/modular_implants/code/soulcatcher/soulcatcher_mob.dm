@@ -97,10 +97,10 @@
 		to_chat(src, span_warning(LANG("mob.f0ac5649", null)))
 		return FALSE
 
-	if(tgui_alert(src, "Are you sure you wish to leave the soulcatcher? IF you had a body, this will return you to your body", "Soulcatcher", list("Yes", "No")) != "Yes")
+	if(tgui_alert(src, LANG("mob.19325a1b", null), LANG("mob.49410bda", null), list("Yes", "No")) != "Yes")
 		return FALSE
 
-	if(tgui_alert(src, "Are you really sure about this?", "Soulcatcher", list("Yes", "No")) != "Yes")
+	if(tgui_alert(src, LANG("mob.38a62079", null), LANG("mob.49410bda", null), list("Yes", "No")) != "Yes")
 		return FALSE
 
 	return_to_body()

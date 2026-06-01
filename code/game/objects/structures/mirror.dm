@@ -149,12 +149,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		if(beard_dresser.facial_hairstyle == "Shaved")
 			balloon_alert(beard_dresser, LANG("obj.2baa2eba", null))
 			return
-		var/shave_beard = tgui_alert(beard_dresser, "Shave your beard?", "Grooming", list("Yes", "No"))
+		var/shave_beard = tgui_alert(beard_dresser, LANG("obj.b9c92f08", null), LANG("obj.62de8b3c", null), list("Yes", "No"))
 		if(shave_beard == "Yes" && can_use_mirror(beard_dresser))
 			beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
 		return
 
-	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
+	var/new_style = tgui_input_list(beard_dresser, LANG("obj.be20145f", null), LANG("obj.62de8b3c", null), SSaccessories.facial_hairstyles_list)
 
 	if(isnull(new_style) || !can_use_mirror(beard_dresser))
 		return
@@ -167,7 +167,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
-	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", SSaccessories.hairstyles_list)
+	var/new_style = tgui_input_list(hairdresser, LANG("obj.f24e1bc1", null), LANG("obj.62de8b3c", null), SSaccessories.hairstyles_list)
 	if(isnull(new_style) || !can_use_mirror(hairdresser))
 		return
 	if(HAS_TRAIT(hairdresser, TRAIT_BALD))
@@ -178,7 +178,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	hairdresser.set_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/proc/change_name(mob/living/carbon/human/user)
-	var/newname = sanitize_name(tgui_input_text(user, "Who are we again?", "Name change", user.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
+	var/newname = sanitize_name(tgui_input_text(user, LANG("obj.3dc7eef8", null), LANG("obj.b4bf4c54", null), user.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
 	if(!newname || !can_use_mirror(user))
 		return
 	user.real_name = newname
@@ -190,7 +190,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 // Erm ackshually the proper term is species. Get it right??
 /obj/structure/mirror/proc/change_race(mob/living/carbon/human/race_changer)
-	var/racechoice = tgui_input_list(race_changer, "What are we again?", "Race change", selectable_races)
+	var/racechoice = tgui_input_list(race_changer, LANG("obj.d842af96", null), LANG("obj.838e24b8", null), selectable_races)
 	if(isnull(racechoice) || !can_use_mirror(race_changer))
 		return
 
@@ -201,7 +201,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/datum/species/newrace = GLOB.species_prototypes[new_race_path]
 	var/attributes_desc = newrace.get_physical_attributes()
 
-	var/answer = tgui_alert(race_changer, attributes_desc, "Become a [newrace]?", list("Yes", "No"))
+	var/answer = tgui_alert(race_changer, attributes_desc, LANG("obj.cec93002", list(newrace)), list("Yes", "No"))
 	if(!answer || !can_use_mirror(race_changer))
 		return
 	if(answer != "Yes")
@@ -211,7 +211,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	on_species_change(race_changer, newrace)
 	race_changer.set_species(new_race_path, icon_update = FALSE)
 	if(HAS_TRAIT(race_changer, TRAIT_USES_SKINTONES))
-		var/new_s_tone = tgui_input_list(race_changer, "Choose your skin tone", "Race change", GLOB.skin_tones)
+		var/new_s_tone = tgui_input_list(race_changer, LANG("obj.affd0a03", null), LANG("obj.838e24b8", null), GLOB.skin_tones)
 		if(new_s_tone && can_use_mirror(race_changer))
 			race_changer.skin_tone = new_s_tone
 			race_changer.dna.update_ui_block(/datum/dna_block/identity/skin_tone)
@@ -237,7 +237,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 // saved you a click (many)
 /obj/structure/mirror/proc/change_sex(mob/living/carbon/human/sexy)
 
-	var/chosen_sex = tgui_input_list(sexy, "Become a..", "Confirmation", list("Warlock", "Witch", "Wizard", "Itzard")) // YOU try coming up with the 'it' version of wizard
+	var/chosen_sex = tgui_input_list(sexy, LANG("obj.06e45421", null), LANG("obj.15bc27b6", null), list("Warlock", "Witch", "Wizard", "Itzard")) // YOU try coming up with the 'it' version of wizard
 	if(!chosen_sex || !can_use_mirror(sexy))
 		return
 
@@ -255,7 +255,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			sexy.gender = NEUTER
 			to_chat(sexy, span_notice("Woah dude, you feel like something else!"))
 
-	var/chosen_physique = tgui_input_list(sexy, "Alter your physique as well?", "Confirmation", list("Warlock Physique", "Witch Physique", "Wizards Don't Need Gender"))
+	var/chosen_physique = tgui_input_list(sexy, LANG("obj.1403ad51", null), LANG("obj.15bc27b6", null), list("Warlock Physique", "Witch Physique", "Wizards Don't Need Gender"))
 
 	if(chosen_physique && chosen_physique != "Wizards Don't Need Gender" && can_use_mirror(sexy))
 		sexy.physique = (chosen_physique == "Warlock Physique") ? MALE : FEMALE
@@ -382,7 +382,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	selectable_races = sort_list(selectable_races)
 
 /obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the damn beard
-	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
+	var/new_style = tgui_input_list(beard_dresser, LANG("obj.be20145f", null), LANG("obj.62de8b3c", null), SSaccessories.facial_hairstyles_list)
 	if(isnull(new_style) || !can_use_mirror(beard_dresser))
 		return
 
@@ -390,7 +390,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 //Magic mirrors can change hair color as well
 /obj/structure/mirror/magic/change_hair(mob/living/carbon/human/user)
-	var/hairchoice = tgui_alert(user, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
+	var/hairchoice = tgui_alert(user, LANG("obj.49a85821", null), LANG("obj.1fc0c9f4", null), list("Style", "Color"))
 	if(!can_use_mirror(user))
 		return
 	if(hairchoice == "Style") //So you just want to use a mirror then?

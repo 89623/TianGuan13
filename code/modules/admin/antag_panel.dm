@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_VAR(antag_prototypes)
 
 //Things to do somewhere in the future (If you're reading this feel free to do any of these)
@@ -101,10 +102,10 @@ GLOBAL_VAR(antag_prototypes)
 
 /datum/mind/proc/traitor_panel()
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr, "Not before round-start!", "Alert")
+		tgui_alert(usr, LANG("datum.c14ed660", null), LANG("datum.055c248b", null))
 		return
 	if(QDELETED(src))
-		tgui_alert(usr, "This mind doesn't have a mob, or is deleted! For some reason!", "Edit Memory")
+		tgui_alert(usr, LANG("datum.70a9c349", null), LANG("datum.c53e77e4", null))
 		return
 
 	var/out = "<B>[name]</B>[(current && (current.real_name != name))?" (as [current.real_name])":""]<br>"

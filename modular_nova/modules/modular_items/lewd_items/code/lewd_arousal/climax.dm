@@ -39,7 +39,7 @@
 				genitals.Add(CLIMAX_BOTH)
 		else if(has_penis())
 			genitals.Add(CLIMAX_PENIS)
-		climax_choice = tgui_alert(src, "You are climaxing, choose which genitalia to climax with.", "Genitalia Preference!", genitals)
+		climax_choice = tgui_alert(src, LANG("mob.d2fdc32c", null), LANG("mob.6136bced", null), genitals)
 
 	switch(gender)
 		if(MALE)
@@ -92,7 +92,7 @@
 			if(interactable_inrange_open_containers.len)
 				buttons += CLIMAX_OPEN_CONTAINER
 
-			var/penis_climax_choice = tgui_alert(src, "Choose where to shoot your load.", "Load preference!", buttons)
+			var/penis_climax_choice = tgui_alert(src, LANG("mob.7cd3302c", null), LANG("mob.328dbd2f", null), buttons)
 
 			var/create_cum_decal = FALSE
 
@@ -102,7 +102,7 @@
 					span_userlove(LANG("mob.28062261", null)), pref_to_check = /datum/preference/toggle/erp)
 
 			else if(penis_climax_choice == CLIMAX_OPEN_CONTAINER)
-				var/target_choice = tgui_input_list(src, "Choose a container to cum into.", "Choose target!", interactable_inrange_open_containers)
+				var/target_choice = tgui_input_list(src, LANG("mob.78e89e0e", null), LANG("mob.93ab300d", null), interactable_inrange_open_containers)
 				if(isnull(target_choice))
 					create_cum_decal = TRUE
 					visible_message(span_userlove(LANG("mob.47e60ad7", list(src, self_their))), \
@@ -135,7 +135,7 @@
 							span_userlove(LANG("mob.28062261", null)), pref_to_check = /datum/preference/toggle/erp)
 
 			else
-				var/target_choice = tgui_input_list(src, "Choose a person to cum in or on.", "Choose target!", interactable_inrange_humans)
+				var/target_choice = tgui_input_list(src, LANG("mob.4beec21e", null), LANG("mob.93ab300d", null), interactable_inrange_humans)
 				if(!target_choice)
 					create_cum_decal = TRUE
 					visible_message(span_userlove(LANG("mob.47e60ad7", list(src, self_their))), \
@@ -158,7 +158,7 @@
 							target_buttons += "sheath"
 					target_buttons += "On [target_human_them]"
 
-					var/climax_into_choice = tgui_input_list(src, "Where on or in [target_human] do you wish to cum?", "Final frontier!", target_buttons)
+					var/climax_into_choice = tgui_input_list(src, LANG("mob.a90ce281", list(target_human)), LANG("mob.57ec68b8", null), target_buttons)
 
 					if(!climax_into_choice)
 						create_cum_decal = TRUE

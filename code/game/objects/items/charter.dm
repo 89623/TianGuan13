@@ -36,10 +36,7 @@
 		to_chat(user, span_warning(LANG("obj.fce0590b", null)))
 		return
 
-	var/new_name = tgui_input_text(user, "What do you want to name \
-		[station_name()]? Keep in mind particularly terrible names may be \
-		rejected by your employers, while names using the standard format \
-		will be accepted automatically.", "Station Name", max_length = MAX_CHARTER_LEN)
+	var/new_name = tgui_input_text(user, LANG("obj.69884448", list(station_name())), LANG("obj.5cf4ddeb", null), max_length = MAX_CHARTER_LEN)
 
 	if(response_timer_id)
 		to_chat(user, span_warning(LANG("obj.fce0590b", null)))

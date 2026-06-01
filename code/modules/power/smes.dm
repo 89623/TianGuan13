@@ -250,7 +250,7 @@
 		//select cable layer
 		var/terminal_cable_layer = installing_cable.target_layer
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+			var/choice = tgui_input_list(user, LANG("obj.4ece58d6", null), LANG("obj.3925bd26", null), GLOB.cable_name_to_layer)
 			if(isnull(choice) \
 				|| !user.is_holding(installing_cable) \
 				|| !user.Adjacent(src) \

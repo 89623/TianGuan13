@@ -147,7 +147,7 @@
 			return
 		areas[place.name] = place
 
-	var/area_choice = tgui_input_list(creator, "Choose an area to expand or make a new area", "Area Expansion", areas)
+	var/area_choice = tgui_input_list(creator, LANG("_root.c96bf839", null), LANG("_root.2970f2dc", null), areas)
 	if(isnull(area_choice))
 		to_chat(creator, span_warning(LANG("_root.32935ad0", null)))
 		return
@@ -156,7 +156,7 @@
 	var/area/newA
 	var/area/oldA = get_area(get_turf(creator))
 	if(!isarea(area_choice))
-		var/str = tgui_input_text(creator, "New area name", "Blueprint Editing", max_length = MAX_NAME_LEN)
+		var/str = tgui_input_text(creator, LANG("_root.e83e886e", null), LANG("_root.293628f4", null), max_length = MAX_NAME_LEN)
 		if(!str)
 			return
 		newA = new area_choice

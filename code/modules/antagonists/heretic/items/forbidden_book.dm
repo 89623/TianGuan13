@@ -108,7 +108,7 @@
 	var/list/curse_list = list()
 	for(var/datum/heretic_knowledge/curse/curses as anything in subtypesof(/datum/heretic_knowledge/curse))
 		curse_list[curses.name] = curses
-	var/selected_curse = tgui_input_list(user, "Cast any curse", "Select a curse!", curse_list, timeout = 0)
+	var/selected_curse = tgui_input_list(user, LANG("obj.dea5e403", null), LANG("obj.fb34bebc", null), curse_list, timeout = 0)
 	if(!selected_curse)
 		return NONE
 

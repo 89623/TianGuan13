@@ -20,6 +20,9 @@ cargo build --release --manifest-path tools/i18n/Cargo.toml
 echo "==> 刷新英文主目录 strings/i18n/en"
 "$TOOL" extract --dme tgstation.dme --out strings/i18n/en
 
+echo "==> 刷新 TGUI 静态文本目录 strings/i18n/en/tgui.json"
+node tools/i18n/tgui-catalog.mjs extract
+
 echo "==> 改写新出现的纯字符串消息为 LANG()（幂等；核心文件自动加 NOVA EDIT 标记）"
 "$TOOL" rewrite --dme tgstation.dme
 

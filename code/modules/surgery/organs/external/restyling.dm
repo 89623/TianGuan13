@@ -69,7 +69,7 @@
 ///Restyles the external organ from a list of valid options
 /obj/item/organ/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	var/list/restyles = get_valid_restyles()
-	var/new_style = tgui_input_list(trimmer, "Select a new style", "Grooming", restyles)
+	var/new_style = tgui_input_list(trimmer, LANG("obj.7a2f6e0b", null), LANG("obj.62de8b3c", null), restyles)
 
 	trimmer.visible_message(
 		span_notice("[trimmer] tries to change [original_target == trimmer ? trimmer.p_their() : original_target.name + "'s"] [name]."),

@@ -285,8 +285,8 @@
 			"name" = "[user]",
 			"observer" = isobserver(user),
 		),
-		// NOVA EDIT ADDITION START - i18n - 注入玩家界面语言供 TGUI 本地化 (config.locale)
-		"locale" = (user.client?.prefs?.read_preference(/datum/preference/choiced/ui_language)) || DEFAULT_UI_LOCALE,
+		// NOVA EDIT ADDITION START - i18n - 注入全服界面语言供 TGUI 本地化 (config.locale)
+		"locale" = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE,
 		// NOVA EDIT ADDITION END
 	)
 	var/data = custom_data || with_data && src_object.ui_data(user)

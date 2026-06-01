@@ -507,14 +507,14 @@
 	return .
 
 /obj/item/storage/mail_counterfeit_device/attack_self(mob/user, modifiers)
-	var/mail_type = tgui_alert(user, "Make it look like an envelope or like normal mail?", "Mail Counterfeiting", list("Mail", "Envelope"))
+	var/mail_type = tgui_alert(user, LANG("obj.9a949a9e", null), LANG("obj.c9a1116a", null), list("Mail", "Envelope"))
 	if(isnull(mail_type))
 		return FALSE
 	if(loc != user)
 		return FALSE
 	mail_type = LOWER_TEXT(mail_type)
 
-	var/mail_armed = tgui_alert(user, "Arm it?", "Mail Counterfeiting", list("Yes", "No")) == "Yes"
+	var/mail_armed = tgui_alert(user, LANG("obj.fb5e9936", null), LANG("obj.c9a1116a", null), list("Yes", "No")) == "Yes"
 	if(isnull(mail_armed))
 		return FALSE
 	if(loc != user)
@@ -530,7 +530,7 @@
 		mail_recipients += locked_mind
 		mail_recipients_for_input += avoid_assoc_duplicate_keys(person.name, used_names)
 
-	var/recipient = tgui_input_list(user, "Choose a recipient", "Mail Counterfeiting", mail_recipients_for_input)
+	var/recipient = tgui_input_list(user, LANG("obj.45062d17", null), LANG("obj.c9a1116a", null), mail_recipients_for_input)
 	if(isnull(recipient))
 		return FALSE
 	if(!(src in user.contents))
@@ -548,7 +548,7 @@
 	shady_mail.made_by_cached_name = user.mind.name
 
 	if(index == 1)
-		var/mail_name = tgui_input_text(user, "Enter mail title, or leave it blank", "Mail Counterfeiting", max_length = MAX_LABEL_LEN)
+		var/mail_name = tgui_input_text(user, LANG("obj.7ddc9b90", null), LANG("obj.c9a1116a", null), max_length = MAX_LABEL_LEN)
 		if(!(src in user.contents))
 			return FALSE
 		if(reject_bad_text(mail_name, max_length = MAX_LABEL_LEN, ascii_only = FALSE))

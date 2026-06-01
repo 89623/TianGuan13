@@ -379,7 +379,7 @@
 	if (active)
 		return ITEM_INTERACT_BLOCKING
 
-	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
+	var/newspread = tgui_input_number(user, LANG("obj.8a9e8a20", null), LANG("obj.9058a819", null), 5, 100, 5)
 	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return ITEM_INTERACT_BLOCKING
 

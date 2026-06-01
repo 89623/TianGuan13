@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ANOMALY_INTENSITY_MINOR "Minor Intensity"
 #define ANOMALY_INTENSITY_MODERATE "Moderate Intensity"
 #define ANOMALY_INTENSITY_MAJOR "Major Intensity"
@@ -50,13 +51,13 @@
 	var/ghost_override
 
 /datum/event_admin_setup/anomaly_ectoplasm/prompt_admins()
-	if(tgui_alert(usr, "Override the anomaly effect and power?", "You'll be ruining the authenticity.", list("Yes", "No")) == "Yes")
+	if(tgui_alert(usr, LANG("datum.51a7e598", null), LANG("datum.8fe2bbb8", null), list("Yes", "No")) == "Yes")
 		var/list/power_values = list(ANOMALY_INTENSITY_MINOR, ANOMALY_INTENSITY_MODERATE, ANOMALY_INTENSITY_MAJOR)
-		chosen_effect = tgui_input_list(usr, "Provide effect override", "Criiiiinge.", power_values)
+		chosen_effect = tgui_input_list(usr, LANG("datum.54a5ddfe", null), LANG("datum.33bcf117", null), power_values)
 		if(!chosen_effect)
 			return ADMIN_CANCEL_EVENT
 
-		ghost_override = tgui_input_number(usr, "How many ghosts do you want simulate orbiting your anomaly? (determines the effect radius).", "Seriously, CRINGE.", 0, 20, 1)
+		ghost_override = tgui_input_number(usr, LANG("datum.b954873b", null), LANG("datum.c8332864", null), 0, 20, 1)
 		if(!ghost_override)
 			return ADMIN_CANCEL_EVENT
 

@@ -25,7 +25,7 @@
 
 /datum/buildmode_mode/proccall/handle_click(client/target_client, params, datum/object as null|area|mob|obj|turf)
 	if(!proc_name || !proc_args)
-		tgui_alert(target_client, "Undefined ProcCall or arguments.")
+		tgui_alert(target_client, LANG("datum.94c65453", null))
 		return
 
 	if(!hascall(object, proc_name))

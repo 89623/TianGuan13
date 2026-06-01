@@ -173,7 +173,7 @@
 		choices[item] = index
 		index++
 
-	var/selection = tgui_input_list(user, "Which item would you like to prioritize?", "Choose an item to prioritize", choices)
+	var/selection = tgui_input_list(user, LANG("obj.9795ff20", null), LANG("obj.ac3fd5c0", null), choices)
 	if(!selection)
 		return
 

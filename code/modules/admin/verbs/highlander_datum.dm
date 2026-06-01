@@ -73,7 +73,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
  */
 /client/proc/only_one(was_delayed = FALSE)
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"The game hasn't started yet!")
+		tgui_alert(usr,LANG("client.8a212f07", null))
 		return
 
 	if(was_delayed) //sends more accurate logs

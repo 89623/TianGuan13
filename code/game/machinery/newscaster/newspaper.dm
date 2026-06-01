@@ -114,7 +114,7 @@
 		user.balloon_alert(user, "already scribbled!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/new_scribble_text = tgui_input_text(user, "What do you want to scribble?", "Write something", max_length = MAX_MESSAGE_LEN)
+	var/new_scribble_text = tgui_input_text(user, LANG("obj.7d95ec7d", null), LANG("obj.024920fa", null), max_length = MAX_MESSAGE_LEN)
 	if (isnull(new_scribble_text))
 		return ITEM_INTERACT_BLOCKING
 

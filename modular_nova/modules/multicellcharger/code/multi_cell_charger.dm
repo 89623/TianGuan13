@@ -181,7 +181,7 @@
 		var/list/buttons = list()
 		for(var/obj/item/stock_parts/power_store/cell/battery in charging_batteries)
 			buttons["[battery.name] ([round(battery.percent(), 1)]%)"] = battery
-		var/cell_name = tgui_input_list(user, "Please choose what cell you'd like to remove.", "Remove a cell", buttons)
+		var/cell_name = tgui_input_list(user, LANG("obj.8ba5d457", null), LANG("obj.bbe3072d", null), buttons)
 		charging = buttons[cell_name]
 	else
 		charging = LAZYACCESS(charging_batteries, 1)

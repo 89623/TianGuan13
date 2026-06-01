@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/mass_hallucination
 	name = "Mass Hallucination"
 	description = "All crewmembers start to hallucinate the same thing."
@@ -103,13 +104,13 @@
 	var/list/admin_forced_args
 
 /datum/event_admin_setup/mass_hallucination/prompt_admins()
-	var/force = tgui_alert(usr, "Do you want to force a hallucination?", event_control.name, list("Yes", "No", "Cancel"))
+	var/force = tgui_alert(usr, LANG("datum.22d021f5", null), event_control.name, list("Yes", "No", "Cancel"))
 	if(force == "Cancel")
 		return ADMIN_CANCEL_EVENT
 	if(force != "Yes")
 		return
 
-	var/force_what = tgui_alert(usr, "Generic hallucination or Custom configured delusion? (Delusions are those which make people appear as other mobs)", event_control.name, list("Hallucination", "Custom Delusion", "Cancel"))
+	var/force_what = tgui_alert(usr, LANG("datum.a47c0075", null), event_control.name, list("Hallucination", "Custom Delusion", "Cancel"))
 	switch(force_what)
 		if("Cancel")
 			return ADMIN_CANCEL_EVENT

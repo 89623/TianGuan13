@@ -69,10 +69,10 @@
 	if(message_protected)
 		balloon_alert(activator, LANG("obj.51f2a1ea", null))
 		return
-	var/messenger = tgui_input_text(activator, "Set your username", "Holonet Gaming Network", max_length = MAX_NAME_LEN)
+	var/messenger = tgui_input_text(activator, LANG("obj.11375e02", null), LANG("obj.ce720437", null), max_length = MAX_NAME_LEN)
 	if(!messenger)
 		messenger = pick(GLOB.hacker_aliases)
-	var/message = tgui_input_text(activator, "Write your message", "Holonet Gaming Network", max_length = MAX_PLAQUE_LEN)
+	var/message = tgui_input_text(activator, LANG("obj.9f141b4e", null), LANG("obj.ce720437", null), max_length = MAX_PLAQUE_LEN)
 	if(!message)
 		return
 	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 75)

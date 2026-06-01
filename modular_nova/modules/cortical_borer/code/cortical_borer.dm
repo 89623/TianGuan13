@@ -332,7 +332,7 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 		return
 	if(stat == DEAD)
 		return
-	var/choice = tgui_input_list(usr, "Do you want to control [src]?", "Confirmation", list("Yes", "No"))
+	var/choice = tgui_input_list(usr, LANG("mob.95784ba5", list(src)), LANG("mob.15bc27b6", null), list("Yes", "No"))
 	if(choice != "Yes")
 		return
 	if(ckey || key)

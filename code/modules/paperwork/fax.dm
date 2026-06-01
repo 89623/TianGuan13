@@ -169,7 +169,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 /obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
 	if (panel_open)
 		return
-	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", max_length = 128)
+	var/new_fax_name = tgui_input_text(user, LANG("obj.ab6918e5", null), LANG("obj.d66c9d74", null), max_length = 128)
 	if (!new_fax_name)
 		return ITEM_INTERACT_SUCCESS
 	if (new_fax_name != fax_name)

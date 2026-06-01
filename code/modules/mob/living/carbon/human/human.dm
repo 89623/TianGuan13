@@ -236,7 +236,7 @@
 				return
 
 			if(href_list["physical_status"])
-				var/health_status = tgui_input_list(human_user, "Specify a new physical status for this person.", "Medical HUD", PHYSICAL_STATUSES, target_record.physical_status)
+				var/health_status = tgui_input_list(human_user, LANG("mob.dd014c79", null), LANG("mob.45a266f7", null), PHYSICAL_STATUSES, target_record.physical_status)
 				if(!health_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 
@@ -244,7 +244,7 @@
 				return
 
 			if(href_list["mental_status"])
-				var/health_status = tgui_input_list(human_user, "Specify a new mental status for this person.", "Medical HUD", MENTAL_STATUSES, target_record.mental_status)
+				var/health_status = tgui_input_list(human_user, LANG("mob.bedf90bd", null), LANG("mob.45a266f7", null), MENTAL_STATUSES, target_record.mental_status)
 				if(!health_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_MEDICAL_HUD))
 					return
 
@@ -296,7 +296,7 @@
 				return
 			if(ishuman(human_or_ghost_user) && href_list["status"])
 				var/mob/living/carbon/human/human_user = human_or_ghost_user
-				var/new_status = tgui_input_list(human_user, "Specify a new criminal status for this person.", "Security HUD", WANTED_STATUSES(), target_record.wanted_status)
+				var/new_status = tgui_input_list(human_user, LANG("mob.35dee82b", null), LANG("mob.3397c83f", null), WANTED_STATUSES(), target_record.wanted_status)
 				if(!new_status || !target_record || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 					return
 
@@ -360,8 +360,8 @@
 				var/mob/living/carbon/human/human_user = human_or_ghost_user
 				if(href_list["add_citation"])
 					var/max_fine = CONFIG_GET(number/maxfine)
-					var/citation_name = tgui_input_text(human_user, "Citation crime", "Security HUD", max_length = MAX_MESSAGE_LEN)
-					var/fine = tgui_input_number(human_user, "Citation fine", "Security HUD", 50, max_fine, 5)
+					var/citation_name = tgui_input_text(human_user, LANG("mob.f7fd721f", null), LANG("mob.3397c83f", null), max_length = MAX_MESSAGE_LEN)
+					var/fine = tgui_input_number(human_user, LANG("mob.cecaeff2", null), LANG("mob.3397c83f", null), 50, max_fine, 5)
 					if(!fine || !target_record || !citation_name || !allowed_access || !isnum(fine) || fine > max_fine || fine <= 0 || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
 
@@ -375,7 +375,7 @@
 					return
 
 				if(href_list["add_crime"])
-					var/crime_name = tgui_input_text(human_user, "Crime name", "Security HUD", max_length = MAX_MESSAGE_LEN)
+					var/crime_name = tgui_input_text(human_user, LANG("mob.2c695e96", null), LANG("mob.3397c83f", null), max_length = MAX_MESSAGE_LEN)
 					if(!target_record || !crime_name || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
 
@@ -389,7 +389,7 @@
 					return
 
 				if(href_list["add_note"])
-					var/new_note = tgui_input_text(human_user, "Security note", "Security Records", max_length = MAX_MESSAGE_LEN, multiline = TRUE)
+					var/new_note = tgui_input_text(human_user, LANG("mob.311406a2", null), LANG("mob.ec55346e", null), max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 					if(!target_record || !new_note || !allowed_access || !human_user.canUseHUD() || !HAS_TRAIT(human_user, TRAIT_SECURITY_HUD))
 						return
 
@@ -831,7 +831,7 @@
 			var/name = initial(mut.name)
 			options[dna.check_mutation(mut) ? "[name] (Remove)" : "[name] (Add)"] = mut
 
-		var/result = tgui_input_list(usr, "Choose mutation to add/remove", "Mutation Mod", options)
+		var/result = tgui_input_list(usr, LANG("mob.6ce09b81", null), LANG("mob.16c79387", null), options)
 		if(!result)
 			return
 
@@ -860,7 +860,7 @@
 			var/qname = initial(quirk_type.name)
 			options[has_quirk(quirk_type) ? "[qname] (Remove)" : "[qname] (Add)"] = quirk_type
 
-		var/result = tgui_input_list(usr, "Choose quirk to add/remove", "Quirk Mod", options)
+		var/result = tgui_input_list(usr, LANG("mob.b1be79e5", null), LANG("mob.a87fa01b", null), options)
 		if(!result)
 			return
 
@@ -878,7 +878,7 @@
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
-		var/result = tgui_input_list(usr, "Please choose a new species", "Species", sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc)))
+		var/result = tgui_input_list(usr, LANG("mob.04cfe579", null), LANG("mob.85a5d525", null), sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc)))
 		if(result)
 			var/newtype = GLOB.species_list[result]
 			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src] to [result]")

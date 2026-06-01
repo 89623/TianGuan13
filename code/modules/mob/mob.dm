@@ -863,7 +863,7 @@
 	//Check if the ghost is tied to a body; if so, after confirming they want to abandon it, set the body DNR
 	//(Respawn already detaches them from the body permanently... just doesn't actually make the body itself unrevivable)
 	if(user_ghost.can_reenter_corpse)
-		if(tgui_alert(usr, "Are you sure you want to Respawn? Your old body will become unrevivable!", "Respawn", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("mob.5d242575", null), LANG("mob.7625587d", null), list("Yes", "No")) != "Yes")
 			return
 		user_ghost.stay_dead()
 	//NOVA EDIT ADDITION END
@@ -903,7 +903,7 @@
 			to_chat(usr, LANG("mob.dbe71e92", list(DisplayTimeText(death_time, 1))))
 			to_chat(usr, span_warning(LANG("mob.1c8a18b8", list(DisplayTimeText(required_delay, 1)))))
 			return FALSE
-		if(tgui_alert(usr, "You have been dead for [DisplayTimeText(death_time, 1)] out of required [DisplayTimeText(required_delay, 1)]. Do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("mob.92dfb30e", list(DisplayTimeText(death_time, 1), DisplayTimeText(required_delay, 1))), LANG("mob.7625587d", null), list("Yes", "No")) != "Yes")
 			return FALSE
 	return TRUE
 

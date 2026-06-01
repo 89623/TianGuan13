@@ -6,7 +6,7 @@ ADMIN_VERB(admin_change_title_screen, R_FUN, "Title Screen: Change", "Upload a n
 	log_admin("[key_name(user)] is changing the title screen.")
 	message_admins("[key_name_admin(user)] is changing the title screen.")
 
-	switch(alert(usr, "Please select a new title screen.", "Title Screen", "Change", "Reset", "Cancel"))
+	switch(alert(usr, LANG("datum.901865e9", null), LANG("datum.b4e55da5", null), "Change", "Reset", "Cancel"))
 		if("Change")
 			var/file = input(user) as icon|null
 			if(!file)

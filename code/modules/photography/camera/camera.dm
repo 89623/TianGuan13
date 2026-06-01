@@ -128,10 +128,10 @@
 		if(loc != user)
 			to_chat(user, span_warning(LANG("obj.df42aeed", null)))
 			return FALSE
-		desired_x = tgui_input_number(user, "Set camera half width Aperture", "Zoom", picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
+		desired_x = tgui_input_number(user, LANG("obj.507e9348", null), LANG("obj.83e3de03", null), picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
 		if(!desired_x || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
-		desired_y = tgui_input_number(user, "Set camera half height Aperture", "Zoom", picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
+		desired_y = tgui_input_number(user, LANG("obj.2161e974", null), LANG("obj.83e3de03", null), picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
 		if(!desired_y || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
 
@@ -356,11 +356,11 @@
 
 		var/name_customized = FALSE
 		if(can_customise)
-			var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+			var/customise = tgui_alert(user, LANG("obj.dd7d7cb0", null), LANG("obj.61e3a16f", null), list("Yes", "No"))
 			if(customise == "Yes")
-				var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
-				var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
-				var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
+				var/name1 = tgui_input_text(user, LANG("obj.438188aa", null), LANG("obj.e81360ea", null), max_length = 32)
+				var/desc1 = tgui_input_text(user, LANG("obj.4bdb2db7", null), LANG("obj.495197c1", null), max_length = 128)
+				var/caption = tgui_input_text(user, LANG("obj.25cccceb", null), LANG("obj.bc426663", null), max_length = 256)
 				if(name1)
 					picture.picture_name = name1
 					name_customized = TRUE

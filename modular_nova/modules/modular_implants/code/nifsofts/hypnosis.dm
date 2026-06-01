@@ -39,7 +39,7 @@
 	if(!do_after(user, 12 SECONDS, target_human))
 		return FALSE
 
-	var/choice = tgui_alert(target_human, "Do you believe in hypnosis? (This will allow [user] to issue hypnotic suggestions.)", "Hypnosis", list("Yes", "No"))
+	var/choice = tgui_alert(target_human, LANG("datum.c82d6e5b", list(user)), LANG("datum.d9547f33", null), list("Yes", "No"))
 	if(choice != "Yes")
 		to_chat(user, span_warning(LANG("datum.d8d3b450", list(target_human))))
 		to_chat(target_human, span_warning(LANG("datum.6dbd22c2", list(user))))
@@ -50,17 +50,17 @@
 	target_human.SetSleeping(60 SECONDS)
 	target_human.log_message("[target_human] was placed into a hypnotic sleep by [user].", LOG_GAME)
 
-	var/secondary_choice = tgui_alert(user, "Would you like to give [target_human] a hypnotic suggestion or release them?", "Hypnosis", list("Suggestion", "Release"))
+	var/secondary_choice = tgui_alert(user, LANG("datum.d4090a38", list(target_human)), LANG("datum.d9547f33", null), list("Suggestion", "Release"))
 	while(secondary_choice == "Suggestion" && target_human.IsSleeping())
 		if(!in_range(user, target_human))
 			to_chat(user, span_warning(LANG("datum.3d9269d2", list(target_human))))
 			target_human.SetSleeping(0)
 			return FALSE
 
-		var/input_text = tgui_input_text(user, "What would you like to suggest?", "Hypnotic Suggestion", max_length = MAX_MESSAGE_LEN)
+		var/input_text = tgui_input_text(user, LANG("datum.31eaca3e", null), LANG("datum.43b95ef9", null), max_length = MAX_MESSAGE_LEN)
 		to_chat(user, span_purple(LANG("datum.fd2015cb", list(target_human))))
 		to_chat(target_human, span_hypnophrase("[input_text]"))
-		secondary_choice = tgui_alert(user, "Would you like to give [target_human] an additional hypnotic suggestion or release them?", "Hypnosis", list("Suggestion", "Release"))
+		secondary_choice = tgui_alert(user, LANG("datum.df22715e", list(target_human)), LANG("datum.d9547f33", null), list("Suggestion", "Release"))
 
 	user.visible_message(span_purple("You wake up from your deep, hypnotic slumber. The suggestions from [user] now settled into your mind."), span_purple("[target_human] wakes up from their slumber."))
 	target_human.SetSleeping(0)

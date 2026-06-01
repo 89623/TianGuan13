@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/spacevine
 	name = "Space Vines"
 	typepath = /datum/round_event/spacevine
@@ -83,7 +84,7 @@
 	min_choices = 0
 
 /datum/event_admin_setup/multiple_choice/spacevine/prompt_admins()
-	var/customize_mutations = tgui_alert(usr, "Select mutations?", event_control.name, list("Custom", "Random", "Cancel"))
+	var/customize_mutations = tgui_alert(usr, LANG("datum.62e9e805", null), event_control.name, list("Custom", "Random", "Cancel"))
 	switch(customize_mutations)
 		if("Custom")
 			return ..()

@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(!istype(T) || !is_station_level(T.z))
 		to_chat(owner, span_warning(LANG("datum.c52eee3b", null)))
 		return
-	if(tgui_alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", list("confirm = TRUE;", "confirm = FALSE;")) != "confirm = TRUE;")
+	if(tgui_alert(owner, LANG("datum.1a2c29a7", null), LANG("datum.568017da", null), list("confirm = TRUE;", "confirm = FALSE;")) != "confirm = TRUE;")
 		return
 	if (active || owner_AI.stat == DEAD)
 		return //prevent the AI from activating an already active doomsday or while they are dead
@@ -685,7 +685,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(!owner_AI.can_place_transformer(src))
 		return
 	active = TRUE
-	if(tgui_alert(owner, "Are you sure you want to place the machine here?", "Are you sure?", list("Yes", "No")) == "No")
+	if(tgui_alert(owner, LANG("datum.10de3b95", null), LANG("datum.77344162", null), list("Yes", "No")) == "No")
 		active = FALSE
 		return
 	if(!owner_AI.can_place_transformer(src))

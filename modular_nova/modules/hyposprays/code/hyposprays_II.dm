@@ -179,7 +179,7 @@
 	. += span_notice(LANG("obj.d40fc237", list(amount_per_transfer)))
 
 /obj/item/hypospray/mkii/click_ctrl_shift(mob/user)
-	var/choice = tgui_input_list(user, "GAGSify the hypo or reset to default?", "Fashion", list("GAGS", "Nope"))
+	var/choice = tgui_input_list(user, LANG("obj.87717fa7", null), LANG("obj.2767631d", null), list("GAGS", "Nope"))
 	if(choice == "GAGS")
 		icon_state = gags_bodystate
 		//choices go here

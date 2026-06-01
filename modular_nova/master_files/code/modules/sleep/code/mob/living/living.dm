@@ -8,8 +8,8 @@
 		return
 	var/duration = tgui_input_number(
 		src,
-		"How many minutes do you want to sleep for? Enter 0 to sleep indefinitely. Resist to wake up.",
-		"Sleep: Duration",
+		LANG("mob.4a484e50", null),
+		LANG("mob.2d9c4faa", null),
 		max_value = 300,
 		min_value = 0,
 		default = 1

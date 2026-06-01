@@ -88,10 +88,10 @@
 		if(engraved)
 			to_chat(user, span_warning(LANG("obj.7bf1e20f", null)))
 			return
-		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
+		var/namechoice = tgui_input_text(user, LANG("obj.d3715416", null), LANG("obj.0ff4af90", null), max_length = MAX_NAME_LEN)
 		if(!namechoice)
 			return
-		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization", max_length = MAX_PLAQUE_LEN)
+		var/descriptionchoice = tgui_input_text(user, LANG("obj.da9a22e1", null), LANG("obj.0ff4af90", null), max_length = MAX_PLAQUE_LEN)
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still
@@ -161,10 +161,10 @@
 		if(engraved)
 			to_chat(user, span_warning(LANG("obj.7bf1e20f", null)))
 			return
-		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
+		var/namechoice = tgui_input_text(user, LANG("obj.d3715416", null), LANG("obj.0ff4af90", null), max_length = MAX_NAME_LEN)
 		if(!namechoice)
 			return
-		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization", max_length = MAX_PLAQUE_LEN)
+		var/descriptionchoice = tgui_input_text(user, LANG("obj.da9a22e1", null), LANG("obj.0ff4af90", null), max_length = MAX_PLAQUE_LEN)
 		if(!descriptionchoice)
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still

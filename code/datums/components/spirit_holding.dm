@@ -123,7 +123,7 @@
 /datum/component/spirit_holding/proc/custom_name(mob/awakener, iteration = 1)
 	if(iteration > 5)
 		return "indecision" // The spirit of indecision
-	var/chosen_name = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN))
+	var/chosen_name = sanitize_name(tgui_input_text(bound_spirit, LANG("datum.56d23a21", null), LANG("datum.bc37260b", null), max_length = MAX_NAME_LEN))
 	if(!chosen_name) // with the way that sanitize_name works, it'll actually send the error message to the awakener as well.
 		to_chat(awakener, span_warning(LANG("datum.dff1f7d1", null))) // more verbose than what sanitize_name might pass in it's error message
 		return custom_name(awakener, iteration++)

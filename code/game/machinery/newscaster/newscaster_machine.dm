@@ -667,15 +667,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 	var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_name[channel_name]
 	if(potential_channel)
-		tgui_alert(user, "ERROR: Feed channel with that name already exists on the Network.", list("Okay"))
+		tgui_alert(user, LANG("obj.fc1f0659", null), list("Okay"))
 		return TRUE
 
 	var/list/hard_filter_result = is_ic_filtered(channel_name)
 	if(hard_filter_result)
-		tgui_alert(user, "Your channel name contains: (\"[hard_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
+		tgui_alert(user, LANG("obj.83df229a", list(hard_filter_result[CHAT_FILTER_INDEX_WORD])))
 		return TRUE
 
-	var/choice = tgui_alert(user, "Please confirm feed channel creation","Network Channel Handler", list("Confirm", "Cancel"))
+	var/choice = tgui_alert(user, LANG("obj.e41c8fc3", null),LANG("obj.0eacab27", null), list("Confirm", "Cancel"))
 	creating_channel = FALSE
 	if(choice != "Confirm")
 		update_static_data(user)
@@ -684,7 +684,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	var/approval_time = CROSS_SECTOR_CANCEL_TIME
 	var/list/soft_filter_result = is_soft_ooc_filtered(channel_name)
 	if(soft_filter_result)
-		if(tgui_alert(user,"Your channel name contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user,LANG("obj.51cdbe29", list(soft_filter_result[CHAT_FILTER_INDEX_WORD], soft_filter_result[CHAT_FILTER_INDEX_REASON])), LANG("obj.b0fe106c", null), list("Yes", "No")) != "Yes")
 			return
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \
 			They may be using a disallowed term for a cross-station newscaster channel. Increasing delay time to reject.\n\n Channel name: \"[html_encode(channel_name)]\"")
@@ -762,7 +762,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			existing_authors += iterated_feed_channel.author
 	if(!newscaster_username || (newscaster_username in existing_authors))
 		creating_channel = FALSE
-		tgui_alert(user, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
+		tgui_alert(user, LANG("obj.a301f276", null), list("Okay"))
 		return TRUE
 	creating_channel = TRUE
 	return TRUE
@@ -781,7 +781,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(current_channel.receiving_cross_sector)
 		return
 
-	var/temp_message = tgui_input_text(user, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
+	var/temp_message = tgui_input_text(user, LANG("obj.cb9369e7", null), LANG("obj.0eacab27", null), feed_channel_message, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	if(length(temp_message) <= 1)
 		return TRUE
 

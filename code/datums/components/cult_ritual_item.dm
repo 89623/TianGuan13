@@ -204,7 +204,7 @@
  */
 /datum/component/cult_ritual_item/proc/do_scrape_rune(obj/effect/rune/rune, mob/living/cultist)
 	if(rune.log_when_erased)
-		var/confirm = tgui_alert(cultist, "Erasing this [rune.cultist_name] rune may work against your goals.", "Begin to erase the [rune.cultist_name] rune?", list("Proceed", "Abort"))
+		var/confirm = tgui_alert(cultist, LANG("datum.eebcd33a", list(rune.cultist_name)), LANG("datum.ef2f5224", list(rune.cultist_name)), list("Proceed", "Abort"))
 		if(confirm != "Proceed")
 			return
 
@@ -261,7 +261,7 @@
 		stack_trace("[type] - [cultist] attempted to scribe a rune, but the global rune list is empty!")
 		return FALSE
 
-	entered_rune_name = tgui_input_list(cultist, "Choose a rite to scribe", "Sigils of Power", GLOB.rune_types)
+	entered_rune_name = tgui_input_list(cultist, LANG("datum.c98ec040", null), LANG("datum.7e07427a", null), GLOB.rune_types)
 	if(isnull(entered_rune_name))
 		return FALSE
 	if(!can_scribe_rune(tool, cultist))
@@ -273,7 +273,7 @@
 		return FALSE
 
 	if(initial(rune_to_scribe.req_keyword))
-		chosen_keyword = tgui_input_text(cultist, "Keyword for the new rune", "Words of Power", max_length = MAX_NAME_LEN)
+		chosen_keyword = tgui_input_text(cultist, LANG("datum.faea84a1", null), LANG("datum.bf4a41cd", null), max_length = MAX_NAME_LEN)
 		if(!chosen_keyword)
 			drawing_a_rune = FALSE
 			start_scribe_rune(tool, cultist)
@@ -366,7 +366,7 @@
 	if(summon_objective.check_completion())
 		to_chat(cultist, span_cult_large(LANG("datum.eadbfcf8", null)))
 		return FALSE
-	var/confirm_final = tgui_alert(cultist, "This is the FINAL step to summon Nar'Sie; it is a long, painful ritual and the crew will be alerted to your presence.", "Are you prepared for the final battle?", list("My life for Nar'Sie!", "No"))
+	var/confirm_final = tgui_alert(cultist, LANG("datum.a1364cbf", null), LANG("datum.31a81d64", null), list("My life for Nar'Sie!", "No"))
 	if(confirm_final == "No")
 		to_chat(cultist, span_cult(LANG("datum.0f232fbd", null)))
 		return

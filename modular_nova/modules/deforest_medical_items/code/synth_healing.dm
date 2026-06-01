@@ -164,7 +164,7 @@
 	if(!length(cyber_organs))
 		balloon_alert(user, LANG("obj.a9fc1837", null))
 		return
-	var/obj/item/organ/chosen_organ = tgui_input_list(user, "Repair which organ?", "Surgery", sort_list(cyber_organs))
+	var/obj/item/organ/chosen_organ = tgui_input_list(user, LANG("obj.458e2fa7", null), LANG("obj.ec79b456", null), sort_list(cyber_organs))
 	// Brains specifically also require the bone saw, so check that as well.
 	if(chosen_organ.slot == ORGAN_SLOT_BRAIN)
 		if(!LIMB_HAS_SURGERY_STATE(part_to_repair, (SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)))

@@ -746,7 +746,7 @@
 	filter_result = is_soft_ic_filtered(input)
 
 	if(filter_result)
-		if(tgui_alert(user,"Your emote contains \"[filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to emote it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user,LANG("datum.ac82e7e2", list(filter_result[CHAT_FILTER_INDEX_WORD], filter_result[CHAT_FILTER_INDEX_REASON])), LANG("datum.b0fe106c", null), list("Yes", "No")) != "Yes")
 			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, LOWER_TEXT(config.soft_ic_filter_regex.match))
 			log_filter("Soft IC Emote", input, filter_result)
 			return FALSE
@@ -776,7 +776,7 @@
 		if("Both")
 			return EMOTE_VISIBLE | EMOTE_AUDIBLE
 		else
-			tgui_alert(usr,"Unable to use this emote, must be either hearable or visible.")
+			tgui_alert(usr,LANG("datum.0c48235d", null))
 			return FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)

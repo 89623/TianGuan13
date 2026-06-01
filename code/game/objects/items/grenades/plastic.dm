@@ -98,7 +98,7 @@
 	detonate()
 
 /obj/item/grenade/c4/attack_self(mob/user)
-	var/newtime = tgui_input_number(user, "Please set the timer", "C4 Timer", minimum_timer, maximum_timer, minimum_timer)
+	var/newtime = tgui_input_number(user, LANG("obj.f519f046", null), LANG("obj.1bbe1e8e", null), minimum_timer, maximum_timer, minimum_timer)
 	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	det_time = newtime

@@ -354,7 +354,7 @@
 	. += span_notice(LANG("obj.39082dd4", null))
 
 /obj/item/spear/explosive/click_alt(mob/user)
-	var/input = tgui_input_text(user, "What do you want your war cry to be? You will shout it when you hit someone in melee.", "War Cry", max_length = 50)
+	var/input = tgui_input_text(user, LANG("obj.f47fa021", null), LANG("obj.f9b8ae78", null), max_length = 50)
 	if(input)
 		war_cry = input
 	return CLICK_ACTION_SUCCESS

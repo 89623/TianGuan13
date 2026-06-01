@@ -184,7 +184,7 @@
 			target_board = circuit_boards[board_name]
 
 	else
-		var/option = tgui_input_list(user, "Select Circuitboard To Install"," Available Boards", circuit_boards)
+		var/option = tgui_input_list(user, LANG("obj.37d17d95", null),LANG("obj.cd01a6f2", null), circuit_boards)
 		target_board = circuit_boards[option]
 		// Everything still where it should be after the UI closed?
 		if(QDELETED(target_board) || QDELETED(src) || QDELETED(user) || !(target_board in replacer) || !user.is_holding(replacer))

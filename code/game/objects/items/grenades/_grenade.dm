@@ -238,7 +238,7 @@
 
 	. = TRUE
 
-	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", possible_fuse_time)
+	var/newtime = tgui_input_list(user, LANG("obj.504dadf9", null), LANG("obj.8a311a4d", null), possible_fuse_time)
 	if (isnull(newtime))
 		return
 	if(!user.can_perform_action(src))

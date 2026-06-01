@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/smite/retcon
 	name = "Retcon"
 	/// how long until the thing attacked by this smite gets deleted
@@ -6,7 +7,7 @@
 	var/fade_out_timer
 
 /datum/smite/retcon/configure(client/user)
-	timer = tgui_input_number(user, "How long should it take before the target disappears, in seconds?", "Retcon", 5)
+	timer = tgui_input_number(user, LANG("datum.8db8cba1", null), LANG("datum.350e933f", null), 5)
 
 	if (isnull(timer))
 		return FALSE

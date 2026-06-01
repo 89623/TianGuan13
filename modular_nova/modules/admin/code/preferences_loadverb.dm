@@ -1,5 +1,5 @@
 ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a character preferences JSON file to the server.", ADMIN_CATEGORY_MAIN)
-	var/player_key = tgui_input_text(user, "Enter player CKey to replace their save file", "Import Preferences")
+	var/player_key = tgui_input_text(user, LANG("datum.0043cff0", null), LANG("datum.8cc1c53b", null))
 	if(!length(player_key))
 		return
 
@@ -10,7 +10,7 @@ ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a characte
 		return
 
 	// Prevent spelling mistakes
-	var/confirmation = tgui_alert(user, "Import preferences for \"[player_key]\"?", "Import Preferences", list("Confirm", "Cancel"))
+	var/confirmation = tgui_alert(user, LANG("datum.e93c3b9c", list(player_key)), LANG("datum.8cc1c53b", null), list("Confirm", "Cancel"))
 	if(confirmation != "Confirm")
 		return
 
@@ -20,12 +20,12 @@ ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a characte
 
 	// Prevent accidental overwriting
 	if(save_exists)
-		var/overwrite_confirmation = tgui_alert(user, "File already exists for \"[player_key]\". Overwrite existing file?", "Import Preferences", list("Overwrite", "Cancel"))
+		var/overwrite_confirmation = tgui_alert(user, LANG("datum.8e589fb0", list(player_key)), LANG("datum.8cc1c53b", null), list("Overwrite", "Cancel"))
 		if(overwrite_confirmation != "Overwrite")
 			return
 	// Prevent accidental typos
 	else
-		var/creation_confirmation = tgui_alert(user, "File not found for \"[player_key]\". Create new file?", "Import Preferences", list("Create", "Cancel"))
+		var/creation_confirmation = tgui_alert(user, LANG("datum.d808a3d1", list(player_key)), LANG("datum.8cc1c53b", null), list("Create", "Cancel"))
 		if(creation_confirmation != "Create")
 			return
 

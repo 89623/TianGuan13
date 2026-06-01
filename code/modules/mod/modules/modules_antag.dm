@@ -329,7 +329,7 @@
 	if(current_disguise)
 		return_look()
 		return
-	var/picked_name = tgui_input_list(activator, "Select look to change into", "Chameleon Settings", possible_disguises)
+	var/picked_name = tgui_input_list(activator, LANG("obj.902ee4e7", null), LANG("obj.e9bc5fb4", null), possible_disguises)
 	if(!possible_disguises[picked_name] || mod.active || mod.activating)
 		return
 	current_disguise = possible_disguises[picked_name]

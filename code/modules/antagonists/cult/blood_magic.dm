@@ -59,7 +59,7 @@
 			to_chat(owner, span_cult_italic(LANG("datum.c9083c13", list(limit))))
 		else
 			to_chat(owner, span_cult_bold_italic(LANG("datum.01574ffc", list(RUNELESS_MAX_BLOODCHARGE))))
-		var/nullify_spell = tgui_input_list(owner, "Spell to remove", "Current Spells", spells)
+		var/nullify_spell = tgui_input_list(owner, LANG("datum.505587d6", null), LANG("datum.dbf3b700", null), spells)
 		if(isnull(nullify_spell))
 			return
 		qdel(nullify_spell)
@@ -71,11 +71,11 @@
 		var/cult_name = initial(J.name)
 		possible_spells[cult_name] = J
 	possible_spells += "(REMOVE SPELL)"
-	entered_spell_name = tgui_input_list(owner, "Blood spell to prepare", "Spell Choices", possible_spells)
+	entered_spell_name = tgui_input_list(owner, LANG("datum.78812c56", null), LANG("datum.d7423432", null), possible_spells)
 	if(isnull(entered_spell_name))
 		return
 	if(entered_spell_name == "(REMOVE SPELL)")
-		var/nullify_spell = tgui_input_list(owner, "Spell to remove", "Current Spells", spells)
+		var/nullify_spell = tgui_input_list(owner, LANG("datum.505587d6", null), LANG("datum.dbf3b700", null), spells)
 		if(isnull(nullify_spell))
 			return
 		qdel(nullify_spell)
@@ -528,7 +528,7 @@
 	if(is_away_level(T.z))
 		to_chat(user, span_cult_italic(LANG("obj.285c37e2", null)))
 		return
-	var/input_rune_key = tgui_input_list(user, "Rune to teleport to", "Teleportation Target", potential_runes) //we know what key they picked
+	var/input_rune_key = tgui_input_list(user, LANG("obj.544bd69a", null), LANG("obj.0e23a8a3", null), potential_runes) //we know what key they picked
 	if(isnull(input_rune_key))
 		return
 	if(isnull(potential_runes[input_rune_key]))

@@ -6,7 +6,7 @@
 
 ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connected players.", ADMIN_CATEGORY_FUN, sound as sound)
 	var/freq = 1
-	var/vol = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
+	var/vol = tgui_input_number(user, LANG("datum.71bfda44", null), max_value = 100)
 	if(!vol)
 		return
 	vol = clamp(vol, 1, 100)
@@ -21,7 +21,7 @@ ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connec
 	admin_sound.status = SOUND_STREAM
 	admin_sound.volume = vol
 
-	var/res = tgui_alert(user, "Show the title of this song to the players?", "Play Sound", list("Yes", "No", "Cancel"))
+	var/res = tgui_alert(user, LANG("datum.61b0a770", null), LANG("datum.87f06ba1", null), list("Yes", "No", "Cancel"))
 	switch(res)
 		if("Yes")
 			to_chat(world, span_boldannounce("An admin played: [sound]"), confidential = TRUE)
@@ -43,7 +43,7 @@ ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connec
 ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
 	log_admin("[key_name(user)] played a local sound [sound]")
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
-	var/volume = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
+	var/volume = tgui_input_number(user, LANG("datum.71bfda44", null), max_value = 100)
 	playsound(get_turf(user.mob), sound, volume || 50, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
@@ -54,7 +54,7 @@ ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a soun
 		return
 	log_admin("[key_name(user)] played a direct mob sound [sound] to [key_name_admin(target)].")
 	message_admins("[key_name_admin(user)] played a direct mob sound [sound] to [ADMIN_LOOKUPFLW(target)].")
-	var/volume = tgui_input_number(user, "What volume would you like the sound to play at?", max_value = 100)
+	var/volume = tgui_input_number(user, LANG("datum.71bfda44", null), max_value = 100)
 	var/sound/admin_sound = sound(sound)
 	if(volume)
 		admin_sound.volume = volume
@@ -105,9 +105,9 @@ GLOBAL_VAR_INIT(web_sound_cooldown, 0)
 		music_extra_data["album"] = data["album"]
 		duration = data["duration"] * 1 SECONDS
 		if (duration > 10 MINUTES)
-			if((tgui_alert(user, "This song is over 10 minutes long. Are you sure you want to play it?", "Length Warning", list("No", "Yes", "Cancel")) != "Yes"))
+			if((tgui_alert(user, LANG("_root.1ac0e2fa", null), LANG("_root.52a67462", null), list("No", "Yes", "Cancel")) != "Yes"))
 				return
-		var/include_song_data = tgui_alert(user, "Show the title of and link to this song to the players?\n[title]", "Song Info", list("Yes", "No", "Cancel"))
+		var/include_song_data = tgui_alert(user, LANG("_root.a45d69f3", list(title)), LANG("_root.4e1c9f3f", null), list("Yes", "No", "Cancel"))
 		switch(include_song_data)
 			if("Yes")
 				music_extra_data["title"] = data["title"]
@@ -120,7 +120,7 @@ GLOBAL_VAR_INIT(web_sound_cooldown, 0)
 				music_extra_data["album"] = "Default"
 			if("Cancel", null)
 				return
-		var/credit_yourself = tgui_alert(user, "Display who played the song?", "Credit Yourself", list("Yes", "No", "Cancel"))
+		var/credit_yourself = tgui_alert(user, LANG("_root.50f4492c", null), LANG("_root.d839031d", null), list("Yes", "No", "Cancel"))
 
 		var/list/to_chat_message = list()
 
@@ -159,7 +159,7 @@ GLOBAL_VAR_INIT(web_sound_cooldown, 0)
 		web_sound_url = null
 		stop_web_sounds = TRUE
 	if(web_sound_url && !findtext(web_sound_url, GLOB.is_http_protocol))
-		tgui_alert(user, "The media provider returned a content URL that isn't using the HTTP or HTTPS protocol. This is a security risk and the sound will not be played.", "Security Risk", list("OK"))
+		tgui_alert(user, LANG("_root.622d4b7b", null), LANG("_root.294348b2", null), list("OK"))
 		to_chat(user, span_boldwarning(LANG("_root.5c67a399", null)), confidential = TRUE)
 
 		return
@@ -185,11 +185,10 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(play_web_sound)
 
 ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
 	if(!CLIENT_COOLDOWN_FINISHED(GLOB, web_sound_cooldown))
-		if(tgui_alert(user, "Someone else is already playing an Internet sound! It has [DisplayTimeText(CLIENT_COOLDOWN_TIMELEFT(GLOB, web_sound_cooldown), 1)] remaining. \
-		Would you like to override?", "Musicalis Interruptus", list("No","Yes")) != "Yes")
+		if(tgui_alert(user, LANG("datum.58373547", list(DisplayTimeText(CLIENT_COOLDOWN_TIMELEFT(GLOB, web_sound_cooldown), 1))), LANG("datum.8cff532b", null), list("No","Yes")) != "Yes")
 			return
 
-	var/web_sound_input = tgui_input_text(user, "Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound", null)
+	var/web_sound_input = tgui_input_text(user, LANG("datum.b5e0747f", null), LANG("datum.0bd20399", null), null)
 
 	if(length(web_sound_input))
 		web_sound_input = trim(web_sound_input)
@@ -202,7 +201,7 @@ ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given interne
 		web_sound(user.mob, null)
 
 ADMIN_VERB(set_round_end_sound, R_SOUND, "Set Round End Sound", "Set the sound that plays on round end.", ADMIN_CATEGORY_FUN, sound as sound)
-	var/volume = tgui_input_number(user, "What volume would you like this sound to play at?", max_value = 100)
+	var/volume = tgui_input_number(user, LANG("datum.c1f5f6f4", null), max_value = 100)
 	var/sound/admin_sound = sound(sound)
 	if(volume)
 		admin_sound.volume = volume

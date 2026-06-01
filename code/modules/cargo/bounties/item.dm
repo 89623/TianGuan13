@@ -60,7 +60,7 @@
 	var/obj/item/card/id/id = living_user.get_idcard()
 	if(!id?.registered_account)
 		return
-	var/choice = tgui_input_list(living_user, "Choose a bounty.", "New Bounty", subtypesof(/datum/bounty))
+	var/choice = tgui_input_list(living_user, LANG("obj.65586d14", null), LANG("obj.24bf5f87", null), subtypesof(/datum/bounty))
 	var/datum/bounty/new_chore = text2path("[choice]")
 	id.registered_account.set_bounty(new new_chore, id)
 	balloon_alert(user, LANG("obj.bd697b4b", null))
@@ -78,7 +78,7 @@
 	if(!isliving(user))
 		return
 	var/mob/living/living_user = user
-	var/choice = tgui_input_list(living_user, "Choose a bounty.", "New Bounty", subtypesof(/datum/bounty))
+	var/choice = tgui_input_list(living_user, LANG("obj.65586d14", null), LANG("obj.24bf5f87", null), subtypesof(/datum/bounty))
 	var/datum/bounty/new_chore = text2path("[choice]")
 	if(new_chore.global_exempt)
 		to_chat(user, span_warning(LANG("obj.3615f262", null)))

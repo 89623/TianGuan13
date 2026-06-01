@@ -176,7 +176,7 @@
 				update_appearance()
 				return
 			else
-				bomb_timer = tgui_input_number(user, "Set the bomb timer", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
+				bomb_timer = tgui_input_number(user, LANG("obj.2d92aef2", null), LANG("obj.07affdff", null), bomb_timer, bomb_timer_max, bomb_timer_min)
 				if(!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return
 				bomb_defused = FALSE
@@ -245,7 +245,7 @@
 		if(!user.can_write(used_item))
 			return ITEM_INTERACT_FAILURE
 		var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
-		box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
+		box.boxtag += tgui_input_text(user, LANG("obj.56f1e668", list(box)), box, max_length = 30)
 		if(!user.can_perform_action(src))
 			return ITEM_INTERACT_FAILURE
 		balloon_alert(user, LANG("obj.b180f54a", null))

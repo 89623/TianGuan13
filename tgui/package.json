@@ -20,8 +20,10 @@
 	"private": true,
 	"scripts": {
 		"tgui:analyze": "rspack --analyze",
-		"tgui:build": "rspack build",
+		"tgui:build": "node ../tools/i18n/tgui-catalog.mjs sync && rspack build",
 		"tgui:dev": "bun --smol packages/tgui-dev-server/index.ts",
+		"tgui:i18n": "node ../tools/i18n/tgui-catalog.mjs sync",
+		"tgui:i18n:extract": "node ../tools/i18n/tgui-catalog.mjs extract",
 		"tgui:test": "bun test",
 		"tgui:tsc": "tsc"
 	},

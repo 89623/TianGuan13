@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/touch/flesh_surgery
 	name = "Knit Flesh"
 	desc = "A touch spell that allows you to either harvest or restore flesh of target. \
@@ -220,7 +221,7 @@
 		victim.balloon_alert(caster, "no organs there!")
 		return FALSE
 
-	var/chosen_organ = tgui_input_list(caster, "Which organ do you want to extract?", name, sort_list(organs_we_can_remove))
+	var/chosen_organ = tgui_input_list(caster, LANG("datum.6eba9cd8", null), name, sort_list(organs_we_can_remove))
 	if(isnull(chosen_organ))
 		return FALSE
 	var/obj/item/organ/picked_organ = organs_we_can_remove[chosen_organ]
@@ -232,7 +233,7 @@
 
 	// Sure you can remove your own organs, fun party trick
 	if(carbon_victim == caster)
-		var/are_you_sure = tgui_alert(caster, "Are you sure you want to remove your own [chosen_organ]?", "Are you sure?", list("Yes", "No"))
+		var/are_you_sure = tgui_alert(caster, LANG("datum.15bf88f1", list(chosen_organ)), LANG("datum.77344162", null), list("Yes", "No"))
 		if(are_you_sure != "Yes" || !extraction_checks(picked_organ, hand, victim, caster))
 			return FALSE
 
@@ -312,8 +313,8 @@
 
 	if(using_on_self && replacing_with_failing)
 		var/are_you_sure = tgui_alert(caster,
-			"Are you sure you want to replace your [organ_victim_already_has.name] with a non-functional [inserted_organ.name]?",
-			"Are you sure?",
+			LANG("datum.2669b1c3", list(organ_victim_already_has.name, inserted_organ.name)),
+			LANG("datum.77344162", null),
 			list("Yes", "No"))
 		if(!are_you_sure)
 			return FALSE

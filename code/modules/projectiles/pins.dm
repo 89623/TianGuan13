@@ -285,7 +285,7 @@
 		gun_owners -= user.get_bank_account()
 		pin_owner = null
 		return ITEM_INTERACT_SUCCESS
-	var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit")
+	var/transaction_amount = tgui_input_number(user, LANG("obj.0b8f2b73", null), LANG("obj.5d591f0b", null))
 	if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return ITEM_INTERACT_BLOCKING
 	pin_owner = id.registered_account
@@ -315,7 +315,7 @@
 	if(active_prompt_user == user)
 		return FALSE
 	active_prompt_user = user
-	var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] [MONEY_NAME_AUTOPURAL(payment_amount)] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"), 15 SECONDS)
+	var/license_request = tgui_alert(user, LANG("obj.d6432968", list(payment_amount, MONEY_NAME_AUTOPURAL(payment_amount), ( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]")), LANG("obj.7a86e54b", null), list("Yes", "No"), 15 SECONDS)
 	if(!user.can_perform_action(src))
 		active_prompt_user = null
 		return FALSE

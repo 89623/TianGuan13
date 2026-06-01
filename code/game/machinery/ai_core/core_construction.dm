@@ -194,7 +194,7 @@
 		return FALSE
 
 	if(!mmi.brain_check(user))
-		var/wants_install = (tgui_alert(user, "This [AI_CORE_BRAIN(mmi)] is inactive, would you like to make an inactive AI?", "Installing AI [AI_CORE_BRAIN(mmi)]", list("Yes", "No")) == "Yes")
+		var/wants_install = (tgui_alert(user, LANG("obj.ea321598", list(AI_CORE_BRAIN(mmi))), LANG("obj.a7fbb8a2", list(AI_CORE_BRAIN(mmi))), list("Yes", "No")) == "Yes")
 		if(!wants_install)
 			return FALSE
 		if(QDELETED(src) || QDELETED(user) || QDELETED(mmi) || !user.is_holding(mmi) || !Adjacent(user))

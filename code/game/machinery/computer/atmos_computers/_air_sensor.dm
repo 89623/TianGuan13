@@ -213,7 +213,7 @@
 		available_sensors += GLOB.station_gas_chambers[chamber_id]
 
 	//make the choice
-	var/chamber_name = tgui_input_list(user, "Select Sensor Purpose", "Select Sensor ID", available_sensors)
+	var/chamber_name = tgui_input_list(user, LANG("obj.365f366e", null), LANG("obj.7a50f4a5", null), available_sensors)
 	if(isnull(chamber_name))
 		return
 

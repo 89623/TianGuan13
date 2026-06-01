@@ -24,17 +24,17 @@
 
 /// Set up any stored variables before we actually apply the controller
 /datum/admin_ai_template/proc/gather_information(mob/living/target, client/user)
-	override_client = tgui_alert(user, "Would you like this controller to be active even while the mob has a client controlling it?", "Override Client?", list("Yes", "No"))
+	override_client = tgui_alert(user, LANG("datum.f30c3159", null), LANG("datum.f4191ee1", null), list("Yes", "No"))
 	if (isnull(override_client))
 		return FALSE
 	override_client = override_client == "Yes"
 
-	idle_chance = tgui_input_number(user, "How likely (% chance per second) should this mob be to move to another tile when it's not doing anything else?", "Walk Chance", max_value = 100, min_value = 0)
+	idle_chance = tgui_input_number(user, LANG("datum.93e5b6b4", null), LANG("datum.f8820a53", null), max_value = 100, min_value = 0)
 	if (isnull(idle_chance))
 		return FALSE
 
 	if (isnull(make_hostile))
-		make_hostile = tgui_alert(user, "Do you want to override this mob's faction with the hostile faction?", "Override Faction?", list("Yes", "No"))
+		make_hostile = tgui_alert(user, LANG("datum.a4351e97", null), LANG("datum.83d61e9d", null), list("Yes", "No"))
 		if (isnull(make_hostile))
 			return FALSE
 		make_hostile = make_hostile == "Yes"
@@ -47,7 +47,7 @@
 			"Hard Crit" = HARD_CRIT,
 			"Dead (will probably get stuck punching a corpse forever)" = DEAD,
 		)
-		var/selected_stat = tgui_input_list(user, "Attack targets at the maximum health level of...?", "Persistence Level", stat_types, "Soft Crit")
+		var/selected_stat = tgui_input_list(user, LANG("datum.ec321bd0", null), LANG("datum.038f382e", null), stat_types, "Soft Crit")
 		if (isnull(selected_stat))
 			return FALSE
 		minimum_stat = stat_types[selected_stat]
@@ -114,25 +114,25 @@
 
 	var/static/list/all_projectiles = subtypesof(/obj/projectile)
 	// These don't really browsable user-friendly names because there's a lot of duplicates, sorry admins
-	projectile_type = tgui_input_list(user, "What projectile should we fire?", "Select ammo", all_projectiles)
+	projectile_type = tgui_input_list(user, LANG("datum.f8a1452f", null), LANG("datum.989903c8", null), all_projectiles)
 	if (isnull(projectile_type))
 		return FALSE
 
-	fire_cooldown = tgui_input_number(user, "How many seconds between shots?", "Fire Rate", round_value = FALSE, max_value = 10, min_value = 0.2, default = 1)
+	fire_cooldown = tgui_input_number(user, LANG("datum.9b10adc8", null), LANG("datum.9edf8f98", null), round_value = FALSE, max_value = 10, min_value = 0.2, default = 1)
 	if (isnull(fire_cooldown))
 		return FALSE
 	fire_cooldown = fire_cooldown SECONDS
 
-	burst_shots = tgui_input_number(user, "How many shots to fire per burst?", "Burst Count", max_value = 100, min_value = 1, default = 1)
+	burst_shots = tgui_input_number(user, LANG("datum.22e9587f", null), LANG("datum.911d476f", null), max_value = 100, min_value = 1, default = 1)
 	if (isnull(burst_shots))
 		return FALSE
 	if (burst_shots > 1)
-		burst_interval = tgui_input_number(user, "How many seconds delay between burst shots?", "Burst Rate", round_value = FALSE, max_value = 2, min_value = 0.1, default = 0.2)
+		burst_interval = tgui_input_number(user, LANG("datum.6331f117", null), LANG("datum.bd7ccc08", null), round_value = FALSE, max_value = 2, min_value = 0.1, default = 0.2)
 		if (isnull(burst_interval))
 			return FALSE
 		burst_interval = burst_interval SECONDS
 
-	var/pick_sound = tgui_alert(user, "Select a firing sound effect?", "Select Sound", list("Yes", "No"))
+	var/pick_sound = tgui_alert(user, LANG("datum.401c664c", null), LANG("datum.08da9daf", null), list("Yes", "No"))
 	if (isnull(pick_sound))
 		return FALSE
 	if (pick_sound == "Yes")
@@ -142,11 +142,11 @@
 
 /// Decide our movement details
 /datum/admin_ai_template/hostile_ranged/proc/decide_min_max_range(mob/living/target, client/user)
-	min_range = tgui_input_number(user, "How far should this mob try to stay away from its target?", "Min Distance", max_value = 9, min_value = 0, default = 2)
+	min_range = tgui_input_number(user, LANG("datum.619385dd", null), LANG("datum.30292e8c", null), max_value = 9, min_value = 0, default = 2)
 	if (isnull(min_range))
 		return FALSE
 
-	max_range = tgui_input_number(user, "How close should this mob try to stay to its target?", "Max Distance", max_value = 9, min_value = 1, default = 6)
+	max_range = tgui_input_number(user, LANG("datum.546d55b7", null), LANG("datum.dff79737", null), max_value = 9, min_value = 1, default = 6)
 	if (isnull(max_range))
 		return FALSE
 
@@ -205,7 +205,7 @@
 		for (var/datum/action/cooldown/mob_cooldown as anything in all_mob_actions)
 			actions_by_name["[initial(mob_cooldown.name)] ([mob_cooldown])"] = mob_cooldown
 
-	ability_type = tgui_input_list(user, "Which ability should it use?", "Select Ability", actions_by_name)
+	ability_type = tgui_input_list(user, LANG("datum.8b352ce8", null), LANG("datum.2e3c8a5c", null), actions_by_name)
 	if (isnull(ability_type))
 		return FALSE
 
@@ -214,11 +214,11 @@
 
 /// Decide our movement details, some copy/paste here unfortunately
 /datum/admin_ai_template/ability/proc/decide_min_max_range(mob/living/target, client/user)
-	min_range = tgui_input_number(user, "How far should this mob try to stay away from its target?", "Min Distance", max_value = 9, min_value = 0, default = 2)
+	min_range = tgui_input_number(user, LANG("datum.619385dd", null), LANG("datum.30292e8c", null), max_value = 9, min_value = 0, default = 2)
 	if (isnull(min_range))
 		return FALSE
 
-	max_range = tgui_input_number(user, "How close should this mob try to stay to its target?", "Max Distance", max_value = 9, min_value = 1, default = 6)
+	max_range = tgui_input_number(user, LANG("datum.546d55b7", null), LANG("datum.dff79737", null), max_value = 9, min_value = 1, default = 6)
 	if (isnull(max_range))
 		return FALSE
 
@@ -264,7 +264,7 @@
 		for (var/datum/action/cooldown/mob_cooldown as anything in all_mob_actions)
 			actions_by_name["[initial(mob_cooldown.name)] ([mob_cooldown])"] = mob_cooldown
 
-	ability_type = tgui_input_list(user, "Which ability should it use?", "Select Ability", actions_by_name)
+	ability_type = tgui_input_list(user, LANG("datum.8b352ce8", null), LANG("datum.2e3c8a5c", null), actions_by_name)
 	if (isnull(ability_type))
 		return FALSE
 	ability_type = actions_by_name[ability_type]
@@ -329,11 +329,11 @@
 	if (!.)
 		return FALSE
 
-	flipout_chance = tgui_input_number(user, "What's the % chance per second we'll get mad for no reason?", "Tantrum Chance", round_value = FALSE, max_value = 100, min_value = 0, default = 0.5)
+	flipout_chance = tgui_input_number(user, LANG("datum.5f616817", null), LANG("datum.e5535337", null), round_value = FALSE, max_value = 100, min_value = 0, default = 0.5)
 	if (isnull(flipout_chance))
 		return FALSE
 
-	calm_down_chance = tgui_input_number(user, "What's the % chance per second we'll stop being mad?", "Zen Chance", round_value = FALSE, max_value = 100, min_value = 0, default = 10)
+	calm_down_chance = tgui_input_number(user, LANG("datum.5b609494", null), LANG("datum.e0d8289b", null), round_value = FALSE, max_value = 100, min_value = 0, default = 10)
 	if (isnull(calm_down_chance))
 		return FALSE
 
@@ -379,7 +379,7 @@
 	if (!.)
 		return FALSE
 
-	var/find_a_mob = tgui_alert(user, "Make this mob a minion of a mob in your tile? (If you don't do this you will need to use the befriend proc)", "Set Master?", list("Yes", "No"))
+	var/find_a_mob = tgui_alert(user, LANG("datum.04d834f0", null), LANG("datum.221797d2", null), list("Yes", "No"))
 	if (isnull(override_client))
 		return FALSE
 	find_a_mob = find_a_mob == "Yes"
@@ -395,7 +395,7 @@
 		mobs_in_my_tile[dude.real_name] = dude
 
 	if (length(mobs_in_my_tile))
-		var/picked = tgui_input_list(user, "Select new master.", "Set Master", mobs_in_my_tile + "Try Again", "Try Again")
+		var/picked = tgui_input_list(user, LANG("datum.3908d021", null), LANG("datum.590e932d", null), mobs_in_my_tile + "Try Again", "Try Again")
 		if (isnull(picked))
 			return FALSE
 		if (picked == "Try Again")
@@ -404,7 +404,7 @@
 		da_boss = mobs_in_my_tile[picked]
 		return TRUE
 
-	var/find_a_mob = tgui_alert(user, "No applicable mobs found. Try again?", "Try Again?", list("Yes", "No"))
+	var/find_a_mob = tgui_alert(user, LANG("datum.8a335625", null), LANG("datum.1250141c", null), list("Yes", "No"))
 	if (isnull(find_a_mob))
 		return FALSE
 	find_a_mob = find_a_mob == "Yes"

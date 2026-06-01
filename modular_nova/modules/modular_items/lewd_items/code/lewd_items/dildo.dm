@@ -234,13 +234,13 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 	if(!src || !user || user.incapacitated || !in_range(user, src))
 		return FALSE
 
-	var/color_choice = tgui_input_list(user, "Choose a color for your dildo.", "Dildo Color", GLOB.dildo_colors)
+	var/color_choice = tgui_input_list(user, LANG("obj.c73d5af2", null), LANG("obj.42633708", null), GLOB.dildo_colors)
 	if(color_choice)
 		sanitize_inlist(color_choice, GLOB.dildo_colors, "Red")
 		color = GLOB.dildo_colors[color_choice]
 
 	update_icon_state()
-	var/transparency_choice = tgui_input_number(user, "Choose the transparency of your dildo. Lower is more transparent! (192-255)", "Dildo Transparency", 255, 255, 192)
+	var/transparency_choice = tgui_input_number(user, LANG("obj.67a1442e", null), LANG("obj.55445ab9", null), 255, 255, 192)
 	if(transparency_choice)
 		sanitize_integer(transparency_choice, 191, 255, 192)
 		alpha = transparency_choice

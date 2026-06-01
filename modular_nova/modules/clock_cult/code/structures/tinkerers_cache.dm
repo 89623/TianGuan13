@@ -48,7 +48,7 @@
 		if(initial(path.research_locked) && !(path in GLOB.clockwork_research_unlocked_recipes))
 			real_possibilities -= name
 
-	var/selection = tgui_input_list(user, "Select an item to create at the forge.", "Forging", real_possibilities)
+	var/selection = tgui_input_list(user, LANG("obj.4eb138e4", null), LANG("obj.2f97697f", null), real_possibilities)
 
 	if(!selection)
 		return

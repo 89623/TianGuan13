@@ -73,7 +73,7 @@
 	var/destination = null
 
 	if(home == dock || ("[our_computer.shuttleId]_custom" == dock.shuttle_id))
-		switch(tgui_alert(user, send_off_text, "Send Off Shuttle?", send_off_options))
+		switch(tgui_alert(user, send_off_text, LANG("obj.15e88805", null), send_off_options))
 			if("Yes")
 				destination = away.shuttle_id
 	else if(away == dock)
@@ -83,7 +83,7 @@
 				send_off_text += "\n\nCustom location loaded, try to dock?"
 				send_off_options += "Send to custom"
 				break
-		switch(tgui_alert(user, send_off_text, "Call Shuttle?", send_off_options))
+		switch(tgui_alert(user, send_off_text, LANG("obj.219ef204", null), send_off_options))
 			if("Yes")
 				destination = home.shuttle_id
 			if("Send to custom")
@@ -113,8 +113,8 @@
 	if(destination_names.len < 1)
 		balloon_alert(user, LANG("obj.94391c75", null))
 		return NONE
-	var/picked_home = tgui_input_list(user, "choose which dock to designate as the shuttle's home point...", "Choose Home Dock", destination_names)
-	var/picked_away = tgui_input_list(user, "choose which dock to designate as the shuttle's away point...", "Choose Away Dock", destination_names)
+	var/picked_home = tgui_input_list(user, LANG("obj.30e731ac", null), LANG("obj.0492c512", null), destination_names)
+	var/picked_away = tgui_input_list(user, LANG("obj.78e7ffe7", null), LANG("obj.1c4d3f0b", null), destination_names)
 	if(picked_home && can_use(user))
 		shuttle_home_id = LAZYACCESS(destination_ids, picked_home)
 	if(picked_away && can_use(user))

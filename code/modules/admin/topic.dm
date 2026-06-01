@@ -150,7 +150,7 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		if(tgui_alert(usr, "Really cancel current round end delay? The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Undelay round end", list("Yes", "No")) == "No")
+		if(tgui_alert(usr, LANG("datum.1a379431", list(SSticker.admin_delay_notice)), LANG("datum.d931e692", null), list("Yes", "No")) == "No")
 			return
 
 		SSticker.admin_delay_notice = null
@@ -166,8 +166,8 @@
 			return
 
 		message_admins(span_adminnotice("[key_name_admin(usr)] is considering ending the round."))
-		if(tgui_alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", list("Yes", "No")) == "Yes")
-			if(tgui_alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", list("Yes", "No")) == "Yes")
+		if(tgui_alert(usr, LANG("datum.a421b35a", null), LANG("datum.15bc27b6", null), list("Yes", "No")) == "Yes")
+			if(tgui_alert(usr, LANG("datum.043ec219", null), LANG("datum.15bc27b6", null), list("Yes", "No")) == "Yes")
 				message_admins(span_adminnotice("[key_name_admin(usr)] has ended the round."))
 				SSticker.force_ending = ADMIN_FORCE_END_ROUND //Yeah there we go APC destroyed mission accomplished
 				return
@@ -187,7 +187,7 @@
 
 		var/delmob = TRUE
 		if(!isobserver(M))
-			switch(tgui_alert(usr,"Delete old mob?","Message",list("Yes","No","Cancel")))
+			switch(tgui_alert(usr,LANG("datum.77d992b5", null),LANG("datum.affb7d7e", null),list("Yes","No","Cancel")))
 				if("Cancel")
 					return
 				if("No")
@@ -222,7 +222,7 @@
 			if(!check_if_greater_rights_than(M.client))
 				to_chat(usr, span_danger(LANG("datum.3b765e14", null)), confidential = TRUE)
 				return
-			if(tgui_alert(usr, "Kick [key_name(M)]?", "Confirm", list("Yes", "No")) != "Yes")
+			if(tgui_alert(usr, LANG("datum.2495f3bd", list(key_name(M))), LANG("datum.3c1da715", null), list("Yes", "No")) != "Yes")
 				return
 			if(!M)
 				to_chat(usr, span_danger(LANG("datum.bd46e6a6", list(M))), confidential = TRUE)
@@ -276,7 +276,7 @@
 	else if(href_list["deletemessage"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/safety = tgui_alert(usr,"Delete message/note?",,list("Yes","No"));
+		var/safety = tgui_alert(usr,LANG("datum.231e6355", null),,list("Yes","No"));
 		if (safety == "Yes")
 			var/message_id = href_list["deletemessage"]
 			delete_message(message_id)
@@ -284,7 +284,7 @@
 	else if(href_list["deletemessageempty"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/safety = tgui_alert(usr,"Delete message/note?",,list("Yes","No"));
+		var/safety = tgui_alert(usr,LANG("datum.231e6355", null),,list("Yes","No"));
 		if (safety == "Yes")
 			var/message_id = href_list["deletemessageempty"]
 			delete_message(message_id, browse = TRUE)
@@ -438,7 +438,7 @@
 			to_chat(usr, LANG("datum.f61bfd33", null), confidential = TRUE)
 			return
 
-		if(tgui_alert(usr, "Send [key_name(M)] to Prison?", "Message", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("datum.c86d8a4f", list(key_name(M))), LANG("datum.affb7d7e", null), list("Yes", "No")) != "Yes")
 			return
 
 		do_sparks(10, TRUE, M, spark_type = /datum/effect_system/basic/spark_spread/quantum) // NOVA EDIT ADDITION - Immersion-friendly Admin Prison
@@ -462,7 +462,7 @@
 			to_chat(usr, span_warning(LANG("datum.b00938b9", list(M))), confidential = TRUE)
 			return
 
-		if(tgui_alert(usr, "Send [key_name(M)] back to Lobby?", "Message", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("datum.40bafdaa", list(key_name(M))), LANG("datum.affb7d7e", null), list("Yes", "No")) != "Yes")
 			return
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
@@ -476,7 +476,7 @@
 		if(!check_rights(R_FUN))
 			return
 
-		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("datum.c688d4ff", null), LANG("datum.affb7d7e", null), list("Yes", "No")) != "Yes")
 			return
 
 		var/mob/M = locate(href_list["tdome1"])
@@ -502,7 +502,7 @@
 		if(!check_rights(R_FUN))
 			return
 
-		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("datum.c688d4ff", null), LANG("datum.affb7d7e", null), list("Yes", "No")) != "Yes")
 			return
 
 		var/mob/M = locate(href_list["tdome2"])
@@ -528,7 +528,7 @@
 		if(!check_rights(R_FUN))
 			return
 
-		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("datum.c688d4ff", null), LANG("datum.affb7d7e", null), list("Yes", "No")) != "Yes")
 			return
 
 		var/mob/M = locate(href_list["tdomeadmin"])
@@ -551,7 +551,7 @@
 		if(!check_rights(R_FUN))
 			return
 
-		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("datum.c688d4ff", null), LANG("datum.affb7d7e", null), list("Yes", "No")) != "Yes")
 			return
 
 		var/mob/M = locate(href_list["tdomeobserve"])
@@ -603,7 +603,7 @@
 			return
 
 		var/move = TRUE
-		switch(tgui_alert(usr,"Move new AI to AI spawn location?","Move AI?", list("Yes", "No","Cancel")))
+		switch(tgui_alert(usr,LANG("datum.ecfe8c78", null),LANG("datum.3dd15d72", null), list("Yes", "No","Cancel")))
 			if("Cancel", null)
 				return
 			if("No")
@@ -946,7 +946,7 @@
 			return
 
 		if(!SSticker.HasRoundStarted())
-			tgui_alert(usr,"The game hasn't started yet!")
+			tgui_alert(usr,LANG("datum.8a212f07", null))
 			return
 
 		var/mob/M = locate(href_list["traitor"])
@@ -966,7 +966,7 @@
 			return
 
 		if(!SSticker.HasRoundStarted())
-			tgui_alert(usr,"The game hasn't started yet!")
+			tgui_alert(usr,LANG("datum.8a212f07", null))
 			return
 
 		var/target = locate(href_list["skill"])
@@ -1019,7 +1019,7 @@
 			return
 		if(SSticker.IsRoundInProgress())
 			var/afkonly = text2num(href_list["afkonly"])
-			if(tgui_alert(usr,"Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message",list("Yes","Cancel")) != "Yes")
+			if(tgui_alert(usr,LANG("datum.d0987f76", list(afkonly ? "AFK" : "")),LANG("datum.affb7d7e", null),list("Yes","Cancel")) != "Yes")
 				to_chat(usr, LANG("datum.34207859", null), confidential = TRUE)
 				return
 			var/list/listkicked = kick_clients_in_lobby(span_danger("You were kicked from the lobby by [usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"]."), afkonly)
@@ -1045,7 +1045,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/list/type_choices = typesof(/datum/station_goal)
-		var/picked = tgui_input_list(usr, "Choose goal type", "Station Goal", type_choices)
+		var/picked = tgui_input_list(usr, LANG("datum.46a6d2a6", null), LANG("datum.381f9f9f", null), type_choices)
 		if(!picked)
 			return
 		var/datum/station_goal/G = new picked()
@@ -1156,7 +1156,7 @@
 		var/data = list("key" = usr.key)
 		var/answer = href_list["slowquery"]
 		if(answer == "yes")
-			if(tgui_alert(usr, "Did you just press any admin buttons?", "Query server hang report", list("Yes", "No")) == "Yes")
+			if(tgui_alert(usr, LANG("datum.8272d331", null), LANG("datum.85e385f2", null), list("Yes", "No")) == "Yes")
 				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
 				if(response)
 					data["response"] = response
@@ -1339,7 +1339,7 @@
 			to_chat(usr, span_warning(LANG("datum.091cead0", null)))
 			return
 
-		switch(tgui_alert(usr, "Would you like the effects to apply immediately or at the end of the round? Applying them now will make it clear it was an admin commendation.", "<3?", list("Apply now", "Apply at round end", "Cancel")))
+		switch(tgui_alert(usr, LANG("datum.b8eae451", null), "<3?", list("Apply now", "Apply at round end", "Cancel")))
 			if("Apply now")
 				heart_recepient.receive_heart(usr, instant = TRUE)
 			if("Apply at round end")

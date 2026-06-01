@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 		transfer_fingerprints_to(M)
 
 /obj/item/stack/marker_beacon/click_alt(mob/living/user)
-	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
+	var/input_color = tgui_input_list(user, LANG("obj.5d507f45", null), LANG("obj.287a5f1a", null), GLOB.marker_beacon_colors)
 	if(isnull(input_color) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
 	picked_color = input_color
@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 	return ..()
 
 /obj/structure/marker_beacon/click_alt(mob/living/user)
-	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
+	var/input_color = tgui_input_list(user, LANG("obj.5d507f45", null), LANG("obj.287a5f1a", null), GLOB.marker_beacon_colors)
 	if(isnull(input_color) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
 	picked_color = input_color

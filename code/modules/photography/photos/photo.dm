@@ -84,7 +84,7 @@
 	if(IS_WRITING_UTENSIL(P))
 		if(!user.can_write(P))
 			return
-		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
+		var/txt = tgui_input_text(user, LANG("obj.e7b47880", null), LANG("obj.c5ae4096", null), max_length = 128)
 		if(txt && user.can_perform_action(src))
 			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			scribble = txt
@@ -119,7 +119,7 @@
 	set name = "Rename photo"
 	set src in usr
 
-	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)
+	var/n_name = tgui_input_text(usr, LANG("obj.ab5cb1c6", null), LANG("obj.a9ed249c", null), max_length = MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
 	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated)
 		name = "photo[(n_name ? "- '[n_name]'" : null)]"

@@ -94,7 +94,7 @@
 /obj/item/folder/biscuit/attack_self(mob/user)
 	add_fingerprint(user)
 	if (!cracked)
-		if (tgui_alert(user, "Do you want to crack it open?", "Biscuit Cracking", list("Yes", "No")) != "Yes")
+		if (tgui_alert(user, LANG("obj.41734e8f", null), LANG("obj.e70d9bb9", null), list("Yes", "No")) != "Yes")
 			return
 		cracked = TRUE
 		contents_hidden = FALSE
@@ -150,7 +150,7 @@
 		return ..()
 	if(has_been_sealed)
 		return
-	if(tgui_alert(user, "Do you want to seal it? This can only be done once.", "Biscuit Sealing", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, LANG("obj.24895061", null), LANG("obj.c91fe971", null), list("Yes", "No")) != "Yes")
 		return
 	cracked = FALSE
 	has_been_sealed = TRUE

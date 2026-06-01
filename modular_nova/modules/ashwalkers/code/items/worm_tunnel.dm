@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 			to_chat(user, span_warning(LANG("obj.1e217031", null)))
 			return ITEM_INTERACT_BLOCKING
 
-		var/tunnel_name = tgui_input_text(user, "What would you like to name the tunnel?", "Tunnel Naming (20 Character Max)", max_length = 20)
+		var/tunnel_name = tgui_input_text(user, LANG("obj.4766d484", null), LANG("obj.1f9f3afe", null), max_length = 20)
 		if(isnull(tunnel_name))
 			to_chat(user, span_warning(LANG("obj.a307bf25", null)))
 			return ITEM_INTERACT_BLOCKING
@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(ashwalker_tunnels)
 		cut_overlay("tunnel_cover")
 		return
 
-	var/obj/structure/worm_tunnel/tunnel_choice = tgui_input_list(user, "Which worm tunnel would you travel to?", "Worm Tunnel Choice", GLOB.ashwalker_tunnels)
+	var/obj/structure/worm_tunnel/tunnel_choice = tgui_input_list(user, LANG("obj.92bb454b", null), LANG("obj.c1a702fa", null), GLOB.ashwalker_tunnels)
 	if(isnull(tunnel_choice))
 		return
 

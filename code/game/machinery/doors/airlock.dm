@@ -1497,7 +1497,7 @@
 		return
 
 	// reads from the airlock painter's `available paintjob` list. lets the player choose a paint option, or cancel painting
-	var/current_paintjob = tgui_input_list(user, "Paintjob for this airlock", "Customize", sort_list(painter.available_paint_jobs))
+	var/current_paintjob = tgui_input_list(user, LANG("obj.c8a93815", null), LANG("obj.7641981c", null), sort_list(painter.available_paint_jobs))
 	if(isnull(current_paintjob) || !in_range(src, user) || !painter.can_use(user)) // if the user clicked cancel on the popup, or moved away, or ran out of ink, return
 		return
 

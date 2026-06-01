@@ -468,7 +468,7 @@
 			L["([L.len]) [nav_beacon.name] locked"] = null
 
 	playsound(console, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
-	var/selected = tgui_input_list(usr, "Choose location to jump to", "Locations", sort_list(L))
+	var/selected = tgui_input_list(usr, LANG("datum.665f2f99", null), LANG("datum.e8415773", null), sort_list(L))
 	if(isnull(selected))
 		playsound(console, 'sound/machines/terminal/terminal_prompt_deny.ogg', 25, FALSE)
 		return

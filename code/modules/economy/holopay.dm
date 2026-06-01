@@ -85,7 +85,7 @@
 			balloon_alert(user, LANG("obj.981ecc80", null))
 			to_chat(user, span_warning(LANG("obj.14dbb8b1", null)))
 			return FALSE
-		if(force_fee && tgui_alert(item_holder, "This holopay has a [force_fee] [MONEY_SYMBOL] fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
+		if(force_fee && tgui_alert(item_holder, LANG("obj.81a7c95a", list(force_fee, MONEY_SYMBOL)), LANG("obj.54c77a01", null), list("Pay", "Cancel")) != "Pay")
 			return TRUE
 		process_payment(user)
 		return TRUE
@@ -98,7 +98,7 @@
 			to_chat(user, span_warning(LANG("obj.02709041", list(MONEY_NAME))))
 			return FALSE
 		/// Charges force fee or uses pay what you want
-		var/cash_deposit = force_fee || tgui_input_number(user, "How much? (Max: [chip.credits])", "Patronage", max_value = chip.credits)
+		var/cash_deposit = force_fee || tgui_input_number(user, LANG("obj.348052fb", list(chip.credits)), LANG("obj.7029a1e6", null), max_value = chip.credits)
 		/// Exit sanity checks
 		if(!cash_deposit)
 			return TRUE
@@ -274,7 +274,7 @@
 		to_chat(user, span_warning(LANG("obj.14dbb8b1", null)))
 		return FALSE
 	/// If the user has enough money, ask them the amount or charge the force fee
-	var/amount = force_fee || tgui_input_number(user, "How much? (Max: [payee.account_balance])", "Patronage", max_value = payee.account_balance)
+	var/amount = force_fee || tgui_input_number(user, LANG("obj.348052fb", list(payee.account_balance)), LANG("obj.7029a1e6", null), max_value = payee.account_balance)
 	/// Exit checks in case the user cancelled or entered an invalid amount
 	if(!amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return FALSE

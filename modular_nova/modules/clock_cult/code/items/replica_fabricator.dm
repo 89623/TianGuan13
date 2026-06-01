@@ -104,7 +104,7 @@
 		to_chat(user, span_clockyellow(LANG("obj.d263fb55", list(BRASS_POWER_COST))))
 		return
 
-	var/sheets = tgui_input_number(user, "How many sheets do you want to fabricate?", "Sheet Fabrication", 0, round(power / BRASS_POWER_COST), 0)
+	var/sheets = tgui_input_number(user, LANG("obj.9be98f31", null), LANG("obj.c567cd91", null), 0, round(power / BRASS_POWER_COST), 0)
 	if(!sheets)
 		return
 

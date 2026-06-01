@@ -77,13 +77,13 @@
 		return
 
 	var/original_host = source
-	var/fakename = sanitize_name(tgui_input_text(user, "Enter a name for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
+	var/fakename = sanitize_name(tgui_input_text(user, LANG("obj.9ef208cc", null), LANG("obj.cc7d4a46", null), max_length = MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!fakename || source != original_host || !user.can_perform_action(source))
 		return
-	var/fakejob = sanitize_name(tgui_input_text(user, "Enter a job for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
+	var/fakejob = sanitize_name(tgui_input_text(user, LANG("obj.d1ae3c92", null), LANG("obj.cc7d4a46", null), max_length = MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!fakejob || source != original_host || !user.can_perform_action(source))
 		return
-	var/attach_fake_photo = tgui_alert(user, "Attach a fake photo?", "Forge Message", list("Yes", "No")) == "Yes"
+	var/attach_fake_photo = tgui_alert(user, LANG("obj.193b7fc9", null), LANG("obj.cc7d4a46", null), list("Yes", "No")) == "Yes"
 
 	var/datum/computer_file/program/messenger/app = locate() in source.stored_files
 	var/datum/computer_file/program/messenger/target_app = locate() in target.stored_files

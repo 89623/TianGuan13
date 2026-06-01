@@ -343,7 +343,7 @@
 /mob/living/carbon/human/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
-	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	var/mobpath = tgui_input_list(usr, LANG("mob.12b851bf", list(src)), LANG("mob.6ae5a861", null), sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(mobpath))
 		return
 	if(!safe_animal(mobpath))
@@ -377,7 +377,7 @@
 /mob/proc/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
-	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	var/mobpath = tgui_input_list(usr, LANG("mob.12b851bf", list(src)), LANG("mob.6ae5a861", null), sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(mobpath))
 		return
 	if(!safe_animal(mobpath))

@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		"[SENSOR_COORDS]" = "Tracking",
 	)
 
-	var/new_mode_str = tgui_input_list(user, "Adjust suit sensors", "Adjust Sensors", sensor_mode_text_to_num, senor_mode_num_to_text["[jumpsuit.sensor_mode]"])
+	var/new_mode_str = tgui_input_list(user, LANG("datum.39478e73", null), LANG("datum.e1301fbe", null), sensor_mode_text_to_num, senor_mode_num_to_text["[jumpsuit.sensor_mode]"])
 	var/new_mode = sensor_mode_text_to_num[new_mode_str]
 	if(isnull(new_mode)) // also catches returning null
 		return
@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 			continue
 		accessory_choices[jumpsuit_accessory.name] += jumpsuit_accessory
 
-	var/chosen_accessory_name = tgui_input_list(user, "Select which accessory to strip", "Select Accessory", accessory_choices)
+	var/chosen_accessory_name = tgui_input_list(user, LANG("datum.3adab450", null), LANG("datum.82e6d13b", null), accessory_choices)
 	var/obj/item/clothing/accessory/chosen_accessory = accessory_choices[chosen_accessory_name]
 	if(isnull(chosen_accessory))
 		return

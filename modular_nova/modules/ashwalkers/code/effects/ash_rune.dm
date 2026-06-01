@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(ash_rituals)
 	if(current_ritual && is_species(user, /datum/species/lizard/ashwalker))
 		current_ritual.ritual_start(src)
 		return
-	current_ritual = tgui_input_list(user, "Choose the ritual to begin...", "Ritual Choice", GLOB.ash_rituals)
+	current_ritual = tgui_input_list(user, LANG("obj.1775c84e", null), LANG("obj.1606d62c", null), GLOB.ash_rituals)
 	if(!current_ritual)
 		return
 	current_ritual = GLOB.ash_rituals[current_ritual]

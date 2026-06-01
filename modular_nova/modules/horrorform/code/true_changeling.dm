@@ -235,7 +235,7 @@
 	if(length(potential_targets) == 1)
 		lunch = potential_targets[1]
 	else
-		lunch = tgui_input_list(horrorform, "Choose a human to devour.", "Lunch", potential_targets)
+		lunch = tgui_input_list(horrorform, LANG("datum.d1266dcd", null), LANG("datum.2c0141b3", null), potential_targets)
 	if(!lunch && !ishuman(lunch))
 		return FALSE
 	if(lunch.get_brute_loss() + lunch.get_fire_loss() >= 200) //Overall physical damage, basically

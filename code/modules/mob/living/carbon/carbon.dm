@@ -1018,7 +1018,7 @@
 		if(!check_rights(R_SPAWN))
 			return
 
-		var/edit_action = tgui_alert(usr, "What would you like to do?", "Modify Body Part", list("Replace", "Remove"))
+		var/edit_action = tgui_alert(usr, LANG("mob.ab3c2f64", null), LANG("mob.aec4ac4d", null), list("Replace", "Remove"))
 		if(!edit_action)
 			return
 
@@ -1032,7 +1032,7 @@
 			for(var/zone in GLOB.all_body_zones)
 				limb_list[parse_zone(zone)] = zone
 
-		var/result = tgui_input_list(usr, "Please choose which bodypart to [LOWER_TEXT(edit_action)]","[edit_action] Bodypart", sort_list(limb_list))
+		var/result = tgui_input_list(usr, LANG("mob.c7f8857f", list(LOWER_TEXT(edit_action))),LANG("mob.99c8fbd1", list(edit_action)), sort_list(limb_list))
 		if (!result)
 			return
 
@@ -1066,7 +1066,7 @@
 		for (var/obj/item/bodypart/part_type as anything in sort_list(limbtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 			limb_picks[replacetext("[part_type]", "/obj/item/bodypart/", ":")] = part_type
 
-		var/choice = tgui_input_list(usr, "Select a bodypart type to add", "Add/Replace Bodypart", limb_picks)
+		var/choice = tgui_input_list(usr, LANG("mob.10279f6b", null), LANG("mob.b1b85b77", null), limb_picks)
 		if (!choice)
 			return
 
@@ -1088,7 +1088,7 @@
 		for(var/i in artpaths)
 			var/datum/martial_art/M = i
 			artnames[initial(M.name)] = M
-		var/result = tgui_input_list(usr, "Choose the martial art to teach", "JUDO CHOP", sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+		var/result = tgui_input_list(usr, LANG("mob.59620913", null), LANG("mob.918a4230", null), sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1103,7 +1103,7 @@
 
 	if(href_list[VV_HK_GIVE_TRAUMA])
 		var/list/traumas = subtypesof(/datum/brain_trauma)
-		var/result = tgui_input_list(usr, "Choose the brain trauma to apply", "Traumatize", sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+		var/result = tgui_input_list(usr, LANG("mob.116e9cf9", null), LANG("mob.23b3404e", null), sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(!usr)
 			return
 		if(QDELETED(src))

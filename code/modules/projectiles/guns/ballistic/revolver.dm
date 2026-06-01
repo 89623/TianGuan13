@@ -231,7 +231,7 @@
 	if(loc != user)
 		to_chat(user, span_warning(LANG("obj.88d11d27", null)))
 		return CLICK_ACTION_BLOCKING
-	var/new_aim_time = tgui_input_number(user, "How long will you pause before pulling the trigger (seconds)?", "Do you feel lucky?", (aim_time / (1 SECONDS)), 10, 0)
+	var/new_aim_time = tgui_input_number(user, LANG("obj.7cb8fcd1", null), LANG("obj.fb0ce01c", null), (aim_time / (1 SECONDS)), 10, 0)
 	if(loc != user || user.incapacitated)
 		return CLICK_ACTION_BLOCKING
 	aim_time = new_aim_time * (1 SECONDS)

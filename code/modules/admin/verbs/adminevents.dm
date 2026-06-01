@@ -113,7 +113,7 @@ ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a c
 	log_admin("Admin [key_name(user)] has added a new AI law - [input]")
 	message_admins("Admin [key_name_admin(user)] has added a new AI law - [input]")
 
-	var/show_log = tgui_alert(user, "Show ion message?", "Message", list("Yes", "No"))
+	var/show_log = tgui_alert(user, LANG("datum.5d9fa149", null), LANG("datum.affb7d7e", null), list("Yes", "No"))
 	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new
@@ -126,11 +126,11 @@ ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.",
 	var/list/nukes = list()
 	for (var/obj/machinery/nuclearbomb/bomb in world)
 		nukes += bomb
-	var/obj/machinery/nuclearbomb/nuke = tgui_input_list(user, "", "Toggle Nuke", nukes)
+	var/obj/machinery/nuclearbomb/nuke = tgui_input_list(user, "", LANG("datum.dc37cb91", null), nukes)
 	if (isnull(nuke))
 		return
 	if(!nuke.timing)
-		var/newtime = tgui_input_number(user, "Set activation timer.", "Activate Nuke", nuke.timer_set)
+		var/newtime = tgui_input_number(user, LANG("datum.fe354fbd", null), LANG("datum.f03e09c8", null), nuke.timer_set)
 		if(!newtime)
 			return
 		nuke.timer_set = newtime
@@ -142,7 +142,7 @@ ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.",
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[nuke.timing]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 ADMIN_VERB(change_sec_level, R_ADMIN, "Set Security Level", "Changes the security level. Announcement effects only.", ADMIN_CATEGORY_EVENTS)
-	var/level = tgui_input_list(user, "Select Security Level:", "Set Security Level", SSsecurity_level.available_levels)
+	var/level = tgui_input_list(user, LANG("datum.2b07c557", null), LANG("datum.867fbc31", null), SSsecurity_level.available_levels)
 
 	if(!level)
 		return
@@ -159,8 +159,8 @@ ADMIN_VERB(command_report_footnote, R_FUN, "Command Report Footnote", "Adds a fo
 
 	command_report_footnote.message = tgui_input_text(
 		user,
-		"This message will be attached to the bottom of the roundstart threat report.",
-		"P.S.",
+		LANG("datum.0c3ef29f", null),
+		LANG("datum.394670e9", null),
 	)
 	if(!command_report_footnote.message)
 		GLOB.communications_controller.block_command_report -= 1
@@ -169,8 +169,8 @@ ADMIN_VERB(command_report_footnote, R_FUN, "Command Report Footnote", "Adds a fo
 
 	command_report_footnote.signature = tgui_input_text(
 		user,
-		"Whose signature will appear on this footnote?",
-		"Also sign here, here, aaand here.",
+		LANG("datum.a004306f", null),
+		LANG("datum.6221e12f", null),
 	)
 
 	if(!command_report_footnote.signature)
@@ -189,8 +189,8 @@ ADMIN_VERB(command_report_content, R_FUN, "Command Report Content", "Sets the ma
 	GLOB.communications_controller.block_command_report += 1
 	GLOB.communications_controller.command_report_main_content = tgui_input_text(
 		user,
-		"This message will be the main content of the roundstart command report, above the threat report (if enabled).",
-		"To Whom It May Concern",
+		LANG("datum.f7b6bce3", null),
+		LANG("datum.57bd42d3", null),
 	)
 	GLOB.communications_controller.block_command_report -= 1
 	message_admins("[key_name_admin(user)] has [GLOB.communications_controller.command_report_main_content ? "set" : "cleared"] the main content of the roundstart command report.")
@@ -201,8 +201,8 @@ ADMIN_VERB(delay_command_report, R_FUN, "Delay Command Report", "Prevents the ro
 
 ///Reformats a narration message. First provides a prompt asking if the user wants to reformat their message, then allows them to pick from a list of spans to use.
 /client/proc/reformat_narration(input)
-	if(tgui_alert(mob, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
-		var/text_span = tgui_input_list(mob, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
+	if(tgui_alert(mob, LANG("client.827ba886", null), LANG("client.7bdd69db", null), list("Yes", "No")) == "Yes")
+		var/text_span = tgui_input_list(mob, LANG("client.ec1363e7", null), LANG("client.d6101a86", null), GLOB.spanname_to_formatting)
 		if(isnull(text_span)) //In case the user just quit the prompt.
 			return text_span
 		text_span = GLOB.spanname_to_formatting[text_span]

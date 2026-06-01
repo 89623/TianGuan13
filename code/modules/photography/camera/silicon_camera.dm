@@ -50,7 +50,7 @@
 	for(var/datum/picture/stored_photo as anything in stored)
 		nametemp += stored_photo.picture_name
 		temp[stored_photo.picture_name] = stored_photo
-	var/find = tgui_input_list(user, "Select image", "Storage", nametemp)
+	var/find = tgui_input_list(user, LANG("obj.1ac29f4f", null), LANG("obj.d95a3efe", null), nametemp)
 	if(isnull(find) || isnull(temp[find]))
 		return
 	return temp[find]

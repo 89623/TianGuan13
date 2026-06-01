@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Wiki books that are linked to the configured wiki link.
 
 /// The size of the window that the wiki books open in.
@@ -53,7 +54,7 @@
 		return
 	credit_book_to_reader(user)
 	if(user.client.byond_version < 516) //Remove this once 516 is stable
-		if(tgui_alert(user, "This book's page will open in your browser. Are you sure?", "Open The Wiki", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, LANG("obj.a29d550e", null), LANG("obj.f2d1a8c3", null), list("Yes", "No")) != "Yes")
 			return
 		DIRECT_OUTPUT(user, link("[wiki_url]/[page_link]"))
 	else

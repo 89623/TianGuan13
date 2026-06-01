@@ -585,14 +585,14 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away mission for the station.", ADMIN_CATEGORY_EVENTS)
 	if(!GLOB.the_gateway)
-		if(tgui_alert(user, "There's no home gateway on the station. You sure you want to continue ?", "Uh oh", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, LANG("datum.79f7ccfd", null), LANG("datum.222318f5", null), list("Yes", "No")) != "Yes")
 			return
 
 	var/list/possible_options = GLOB.potentialRandomZlevels + "Custom"
 	var/away_name
 	var/datum/space_level/away_level
 	var/secret = FALSE
-	if(tgui_alert(user, "Do you want your mission secret? (This will prevent ghosts from looking at your map in any way other than through a living player's eyes.)", "Are you $$$ekret?", list("Yes", "No")) == "Yes")
+	if(tgui_alert(user, LANG("datum.b4cfc0ff", null), LANG("datum.ed5faa39", null), list("Yes", "No")) == "Yes")
 		secret = TRUE
 	var/answer = input(user, "What kind?","Away") as null|anything in possible_options
 	switch(answer)
@@ -891,12 +891,12 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		if(!check_rights(R_DEBUG))
 			return
 		var/confirmation_string = "This will load every single away mission in the [map_directory] directory. This might cause a bit of lag that can only be cleared on a world restart. Are you sure you want to do this?"
-		confirmation_alert_result = tgui_alert(usr, confirmation_string, "DEBUG ONLY!!!", list("Yes", "Cancel"))
+		confirmation_alert_result = tgui_alert(usr, confirmation_string, LANG("datum.53702fae", null), list("Yes", "Cancel"))
 		if(confirmation_alert_result != "Yes")
 			return
 
 		var/current_wait_time = CONFIG_GET(number/gateway_delay)
-		switch(tgui_alert(usr, "Do you want to zero out the cooldown for access to these maps? Currently [DisplayTimeText(current_wait_time)]", "OH FUCK!!!", list("Yes", "No", "Cancel")))
+		switch(tgui_alert(usr, LANG("datum.4659069d", list(DisplayTimeText(current_wait_time))), LANG("datum.f05d1f99", null), list("Yes", "No", "Cancel")))
 			if("No")
 				new_wait = current_wait_time
 			if("Cancel")

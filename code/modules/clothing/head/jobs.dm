@@ -339,7 +339,7 @@
 		balloon_alert(user, LANG("obj.a5e64cbb", null))
 		return
 
-	var/desired_phrase = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
+	var/desired_phrase = tgui_input_text(user, LANG("obj.411d96e2", null), LANG("obj.40c2df28", null), "gadget", max_length = 26)
 	if(!desired_phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
@@ -359,13 +359,13 @@
 	var/list/found_items = list()
 	for(var/found_regex in items_by_regex)
 		found_items += items_by_regex[found_regex]
-	var/obj/found_item = tgui_input_list(user, "What item do you want to remove?", "Item Removal", found_items)
+	var/obj/found_item = tgui_input_list(user, LANG("obj.27c63961", null), LANG("obj.5d644c43", null), found_items)
 	if(!found_item || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return CLICK_ACTION_BLOCKING
 	user.put_in_inactive_hand(found_item)
 
 /obj/item/clothing/head/fedora/inspector_hat/click_alt(mob/user)
-	var/new_prefix = tgui_input_text(user, "What should be the new prefix?", "Activation prefix", prefix, max_length = 24)
+	var/new_prefix = tgui_input_text(user, LANG("obj.3654701a", null), LANG("obj.63cc3135", null), prefix, max_length = 24)
 	if(!new_prefix || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return CLICK_ACTION_BLOCKING
 	set_prefix(new_prefix)

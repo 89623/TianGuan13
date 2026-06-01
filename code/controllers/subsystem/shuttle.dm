@@ -515,8 +515,8 @@ SUBSYSTEM_DEF(shuttle)
 	if(admin_emergency_no_recall)
 		var/admin_no_recall_alert = tgui_alert(
 			user,
-			"An administrator has disabled the emergency shuttle recall function, are you sure you want to proceed with the recall?",
-			"Admin Level Recall Confirmation",
+			LANG("datum.8ddaa020", null),
+			LANG("datum.0e62521f", null),
 			list("Yes", "No"),
 		)
 		if(admin_no_recall_alert == "Yes")
@@ -527,8 +527,8 @@ SUBSYSTEM_DEF(shuttle)
 	if(emergency_no_recall)
 		var/general_no_recall_alert = tgui_alert(
 			user,
-			"The emergency shuttle recall function is currently disabled by game code, are you sure you want to proceed with the recall?",
-			"Recall Confirmation",
+			LANG("datum.c67b0991", null),
+			LANG("datum.dbc06ac8", null),
 			list("Yes", "No"),
 		)
 		if(general_no_recall_alert == "Yes")

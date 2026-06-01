@@ -110,7 +110,7 @@
 	for(var/datum/gas/gas as anything in possible_gases)
 		gas_selection[initial(gas.name)] = gas
 
-	var/picked_gas = tgui_input_list(owner, "Select a gas to emit.", "Gas Producer", gas_selection)
+	var/picked_gas = tgui_input_list(owner, LANG("datum.f55c67bb", null), LANG("datum.29e9f1c6", null), gas_selection)
 	StartCooldown()
 	if(picked_gas == "None")
 		stop_gas()

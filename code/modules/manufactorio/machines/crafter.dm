@@ -58,7 +58,7 @@
 		if(!(ispath(as_obj, /obj) && !ispath(as_obj, /obj/effect) && initial(as_obj.anchored)) && craftsman.is_recipe_available(potential_recipe, user))
 			continue
 		unavailable += potential_recipe
-	var/result = tgui_input_list(usr, "Recipe", "Select Recipe", (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes) - unavailable)
+	var/result = tgui_input_list(usr, LANG("obj.e1c04ddb", null), LANG("obj.de7575f9", null), (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes) - unavailable)
 	if(isnull(result) || result == recipe || !user.can_perform_action(src))
 		return ITEM_INTERACT_FAILURE
 	recipe = result

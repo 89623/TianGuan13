@@ -177,7 +177,7 @@
 	if(!can_vandalize(user, tool))
 		return ITEM_INTERACT_BLOCKING
 
-	var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
+	var/choice = tgui_input_list(usr, LANG("obj.50eb78d2", null), LANG("obj.ced429a6", null), list("Title", "Contents", "Author", "Cancel"))
 	if(isnull(choice))
 		return ITEM_INTERACT_BLOCKING
 	if(!can_vandalize(user, tool))
@@ -194,7 +194,7 @@
 	return NONE
 
 /obj/item/book/proc/vandalize_title(mob/living/user, obj/item/tool)
-	var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
+	var/newtitle = reject_bad_text(tgui_input_text(user, LANG("obj.14cba6fc", null), LANG("obj.7e7c2662", null), max_length = 30))
 	if(!newtitle)
 		balloon_alert(user, LANG("obj.4b1a454f", null))
 		return ITEM_INTERACT_BLOCKING
@@ -210,7 +210,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/book/proc/vandalize_contents(mob/living/user, obj/item/tool)
-	var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", max_length = MAX_PAPER_LENGTH, multiline = TRUE)
+	var/content = tgui_input_text(user, LANG("obj.8d3c150b", null), LANG("obj.2512f076", null), max_length = MAX_PAPER_LENGTH, multiline = TRUE)
 	if(!content)
 		balloon_alert(user, LANG("obj.4b1a454f", null))
 		return ITEM_INTERACT_BLOCKING
@@ -222,7 +222,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/book/proc/vandalize_author(mob/living/user, obj/item/tool)
-	var/author = tgui_input_text(user, "Write the author's name", "Author Name", max_length = MAX_NAME_LEN)
+	var/author = tgui_input_text(user, LANG("obj.6007aef5", null), LANG("obj.6ab6907e", null), max_length = MAX_NAME_LEN)
 	if(!author)
 		balloon_alert(user, LANG("obj.4b1a454f", null))
 		return ITEM_INTERACT_BLOCKING

@@ -886,7 +886,7 @@
 		to_chat(admin, span_warning(LANG("datum.06283c25", null)))
 		return
 
-	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
+	if(tgui_alert(admin, LANG("datum.6375d72f", null), LANG("datum.c61774cb", null), list("Yes", "No")) == "Yes")
 		to_chat(owner.current, span_danger(LANG("datum.ceb53cb3", null)))
 		to_chat(owner.current, span_danger(LANG("datum.b88a54a4", list(new_target.real_name, new_target.mind?.assigned_role?.title || "human"))))
 
@@ -904,7 +904,7 @@
 	for(var/mob/living/carbon/human/old_target as anything in sac_targets)
 		removable[old_target.name] = old_target
 
-	var/name_of_removed = tgui_input_list(admin, "Choose a human to remove", "Who to Spare", removable)
+	var/name_of_removed = tgui_input_list(admin, LANG("datum.3a273619", null), LANG("datum.e5a5bc00", null), removable)
 	if(QDELETED(src) || !admin.client?.holder || isnull(name_of_removed))
 		return
 	var/mob/living/carbon/human/chosen_target = removable[name_of_removed]
@@ -915,7 +915,7 @@
 		to_chat(admin, span_warning(LANG("datum.8360d073", list(name_of_removed, owner))))
 		return
 
-	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
+	if(tgui_alert(admin, LANG("datum.6375d72f", null), LANG("datum.c61774cb", null), list("Yes", "No")) == "Yes")
 		to_chat(owner.current, span_danger(LANG("datum.18b68f72", null)))
 
 /**
@@ -926,7 +926,7 @@
 		to_chat(admin, span_warning(LANG("datum.dddf66eb", null)))
 		return
 
-	var/change_num = tgui_input_number(admin, "Add or remove knowledge points", "Points", 0, 100, -100)
+	var/change_num = tgui_input_number(admin, LANG("datum.865305fb", null), LANG("datum.4c684fb6", null), 0, 100, -100)
 	if(!change_num || QDELETED(src))
 		return
 

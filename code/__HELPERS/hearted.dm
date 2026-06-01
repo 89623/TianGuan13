@@ -40,7 +40,7 @@
 /mob/proc/query_heart(attempt=1)
 	if(!client || attempt > 3)
 		return
-	if(attempt == 1 && tgui_alert(src, "Was there another character you noticed being kind this round that you would like to anonymously thank?", "<3?", list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
+	if(attempt == 1 && tgui_alert(src, LANG("mob.60e93335", null), "<3?", list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
 		return
 
 	var/heart_nominee

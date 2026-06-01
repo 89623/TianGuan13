@@ -34,7 +34,7 @@
 		to_chat(dressing_human, span_warning(LANG("obj.46fd52b3", null)))
 		return
 
-	var/choice = tgui_input_list(user, "Underwear, Bra, Undershirt, or Socks?", "Changing", list("Underwear", "Underwear Color", "Bra", "Bra Color", "Undershirt", "Undershirt Color", "Socks", "Socks Color")) //NOVA EDIT ADDITION - Colorable Undershirt/Socks/Bra
+	var/choice = tgui_input_list(user, LANG("obj.e9f42888", null), LANG("obj.e27ef6c6", null), list("Underwear", "Underwear Color", "Bra", "Bra Color", "Undershirt", "Undershirt Color", "Socks", "Socks Color")) //NOVA EDIT ADDITION - Colorable Undershirt/Socks/Bra
 	if(isnull(choice))
 		return
 

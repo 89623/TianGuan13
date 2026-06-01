@@ -518,7 +518,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return finish_preview_icon(preview_icon)
 
 /datum/antagonist/proc/edit_memory(mob/user)
-	var/new_memo = tgui_input_text(user, "Write a new memory", "Antag Memory", antag_memory, multiline = TRUE)
+	var/new_memo = tgui_input_text(user, LANG("datum.134420a7", null), LANG("datum.4afa0de8", null), antag_memory, multiline = TRUE)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo

@@ -39,7 +39,7 @@
 		to_chat(user, span_warning(LANG("obj.68c86737", list(src, COOLDOWN_TIMELEFT(src, respawn_cooldown) / 10))))
 		return FALSE
 
-	var/choice = tgui_alert(user, "Do you wish to use the respawner? If you have a body, you will not be able to return to it.", name, list("Yes", "No"))
+	var/choice = tgui_alert(user, LANG("obj.435f556f", null), name, list("Yes", "No"))
 	if(choice != "Yes")
 		return FALSE
 

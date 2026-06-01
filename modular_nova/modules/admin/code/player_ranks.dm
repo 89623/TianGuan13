@@ -12,7 +12,7 @@ ADMIN_VERB(manage_player_ranks, R_PERMISSIONS, "Manage Player Ranks", "Manage wh
 	if(!check_rights(R_PERMISSIONS))
 		return
 
-	var/choice = tgui_alert(usr, "Which rank would you like to manage?", "Manage Player Ranks", NOVA_PLAYER_RANKS)
+	var/choice = tgui_alert(usr, LANG("datum.37c60523", null), LANG("datum.658a4ef0", null), NOVA_PLAYER_RANKS)
 	if(!choice || !(choice in NOVA_PLAYER_RANKS))
 		return
 
@@ -36,7 +36,7 @@ ADMIN_VERB(manage_player_ranks, R_PERMISSIONS, "Manage Player Ranks", "Manage wh
 	var/group_title = LOWER_TEXT(replacetext(group, " ", "_"))
 
 	var/list/choices = list("Add", "Remove")
-	switch(tgui_alert(usr, "What would you like to do?", "Manage [group]s", choices))
+	switch(tgui_alert(usr, LANG("datum.ab3c2f64", null), LANG("datum.74de5d85", list(group)), choices))
 		if("Add")
 			var/name = input(usr, "Please enter the CKEY (case-insensitive) of the person you would like to make a [group]:", "Add a [group]") as null|text
 			if(!name)
@@ -91,11 +91,11 @@ ADMIN_VERB(migrate_player_ranks, R_PERMISSIONS|R_DEBUG|R_SERVER, "Migrate Player
 	if(!CONFIG_GET(flag/sql_enabled))
 		return
 
-	var/choice = tgui_alert(usr, "Which rank would you like to migrate?", "Migrate Player Ranks", NOVA_PLAYER_RANKS)
+	var/choice = tgui_alert(usr, LANG("datum.e91e75fa", null), LANG("datum.87963233", null), NOVA_PLAYER_RANKS)
 	if(!choice || !(choice in NOVA_PLAYER_RANKS))
 		return
 
-	if(tgui_alert(usr, "Are you sure that you would like to migrate [choice]s to the SQL-based system?", "Migrate Player Ranks", list("Yes", "No")) != "Yes")
+	if(tgui_alert(usr, LANG("datum.74ed3b7a", list(choice)), LANG("datum.87963233", null), list("Yes", "No")) != "Yes")
 		return
 
 	log_admin("[key_name(usr)] is migrating the [choice] player rank from its legacy system to the SQL-based one.")

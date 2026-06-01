@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PTURRET_UNSECURED  0
 #define PTURRET_BOLTED  1
 #define PTURRET_START_INTERNAL_ARMOUR  2
@@ -184,7 +185,7 @@
 				return
 
 	if(used.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING) //you can rename turrets like bots!
-		var/choice = tgui_input_text(user, "Enter a new turret name", "Turret Classification", finish_name, max_length = MAX_NAME_LEN)
+		var/choice = tgui_input_text(user, LANG("obj.24c20c19", null), LANG("obj.a528e6f6", null), finish_name, max_length = MAX_NAME_LEN)
 		if(!choice)
 			return
 		if(!user.can_perform_action(src))

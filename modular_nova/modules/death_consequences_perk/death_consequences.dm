@@ -47,7 +47,7 @@
 		return
 
 	if (linked_trauma.permakill_if_at_max_degradation && ((linked_trauma.current_degradation + increment) >= linked_trauma.max_degradation))
-		if (tgui_alert(usr, "This will put you over/at your maximum degradation threshold and PERMANENTLY KILL YOU!!! Are you SURE you want to do this?", "WARNING", list("Yes", "No"), timeout = 7 SECONDS) != "Yes")
+		if (tgui_alert(usr, LANG("mob.badd68ff", null), LANG("mob.91bcab30", null), list("Yes", "No"), timeout = 7 SECONDS) != "Yes")
 			return
 
 	linked_trauma.adjust_degradation(increment)

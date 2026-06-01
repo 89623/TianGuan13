@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 	. = ..()
 	var/datum/component/mind_linker/active_linking/nif/link = target
 
-	var/choice = tgui_input_list(owner, "Chose your option", "Hivemind Configuration Menu", list("Link a user","Remove a user","Change Hivemind color","Change active Hivemind","Leave a Hivemind", "Toggle invites"))
+	var/choice = tgui_input_list(owner, LANG("datum.2c5f94cd", null), LANG("datum.ea227845", null), list("Link a user","Remove a user","Change Hivemind color","Change active Hivemind","Leave a Hivemind", "Toggle invites"))
 	if(!choice)
 		return
 
@@ -117,7 +117,7 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 	var/mob/living/carbon/human/user = owner
 	var/datum/nifsoft/hivemind/hivemind = user.find_nifsoft(/datum/nifsoft/hivemind)
 
-	var/datum/component/mind_linker/active_linking/nif/new_active_hivemind = tgui_input_list(user, "Choose a Hivemind to set as active.", "Switch Hivemind", hivemind.network_list)
+	var/datum/component/mind_linker/active_linking/nif/new_active_hivemind = tgui_input_list(user, LANG("datum.f358e8a8", null), LANG("datum.4dec7afb", null), hivemind.network_list)
 	if(!new_active_hivemind)
 		return FALSE
 
@@ -135,7 +135,7 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 	var/list/network_list = hivemind.network_list
 	network_list -= hivemind.user_network
 
-	var/datum/component/mind_linker/active_linking/nif/hivemind_to_leave = tgui_input_list(user, "Choose a Hivemind to disconnect from.", "Remove Hivemind", network_list)
+	var/datum/component/mind_linker/active_linking/nif/hivemind_to_leave = tgui_input_list(user, LANG("datum.ed9400eb", null), LANG("datum.407f8a5c", null), network_list)
 	if(!hivemind_to_leave)
 		return FALSE
 
@@ -204,11 +204,11 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 
 	hivemind_users -= owner
 
-	var/mob/living/carbon/human/person_to_add = tgui_input_list(owner, "Choose a person to invite to your Hivemind.", "Invite User", hivemind_users)
+	var/mob/living/carbon/human/person_to_add = tgui_input_list(owner, LANG("datum.a322720f", null), LANG("datum.f1ab09ff", null), hivemind_users)
 	if(!person_to_add)
 		return
 
-	if(tgui_alert(person_to_add, "[owner] wishes to add you to their Hivemind, do you accept?", "Incoming Hivemind Invite", list("Accept", "Reject")) != "Accept")
+	if(tgui_alert(person_to_add, LANG("datum.80f5af11", list(owner)), LANG("datum.e8c8c153", null), list("Accept", "Reject")) != "Accept")
 		to_chat(owner, span_warning(LANG("datum.43ce1eb7", list(person_to_add))))
 		return
 
@@ -226,7 +226,7 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 ///Removes a user from the list of connected people within a hivemind
 /datum/component/mind_linker/active_linking/nif/proc/remove_user()
 	var/mob/living/carbon/human/owner = parent
-	var/mob/living/carbon/human/person_to_remove = tgui_input_list(owner, "Choose a person to remove from your Hivemind.", "Remove User", linked_mobs)
+	var/mob/living/carbon/human/person_to_remove = tgui_input_list(owner, LANG("datum.01e1b6e4", null), LANG("datum.ebb9838f", null), linked_mobs)
 
 	if(!person_to_remove)
 		return
@@ -275,7 +275,7 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 /obj/item/hivemind_keyboard/proc/send_message(mob/living/carbon/human/user)
 	var/mob/living/carbon/human/kebyoard_owner = source_user
 	var/mob/living/carbon/human/network_owner = connected_network.parent
-	var/message = tgui_input_text(user, "Enter a message to transmit.", "[connected_network.network_name] Telepathy", max_length = MAX_MESSAGE_LEN)
+	var/message = tgui_input_text(user, LANG("obj.3006d3ea", null), LANG("obj.df0464a5", list(connected_network.network_name)), max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(src) || QDELETED(user) || user.stat == DEAD)
 		return
 

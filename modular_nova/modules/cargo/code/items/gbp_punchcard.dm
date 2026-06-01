@@ -97,7 +97,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(punchcard.punches < punchcard.max_punches)
-		if(tgui_alert(user, "You haven't finished the punchcard! Are you sure you want to redeem, starting the 15 minute timer?", "A real goof effort right here", list("No", "Yes")) != "Yes")
+		if(tgui_alert(user, LANG("obj.13921cdc", null), LANG("obj.43fefaf3", null), list("No", "Yes")) != "Yes")
 			return
 
 	if(!punchcard.punches) // check to see if someone left the dialog open to redeem a card twice

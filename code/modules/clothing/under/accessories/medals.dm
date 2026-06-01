@@ -20,7 +20,7 @@
 
 /// Input a reason for the medal for the round end screen
 /obj/item/clothing/accessory/medal/proc/provide_reason(mob/living/carbon/human/distinguished, mob/user)
-	commendation_message = tgui_input_text(user, "Reason for this commendation? It will be recorded by Nanotrasen.", "Commendation", max_length = 140)
+	commendation_message = tgui_input_text(user, LANG("obj.64c0d70d", null), LANG("obj.f21c4046", null), max_length = 140)
 	return !!commendation_message
 
 /obj/item/clothing/accessory/medal/attach(obj/item/clothing/under/attach_to, mob/living/attacher)

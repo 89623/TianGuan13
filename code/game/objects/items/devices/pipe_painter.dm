@@ -30,7 +30,7 @@
 	return NONE
 
 /obj/item/pipe_painter/attack_self(mob/user)
-	paint_color = tgui_input_list(user, "Which colour do you want to use?", "Pipe painter", GLOB.pipe_paint_colors)
+	paint_color = tgui_input_list(user, LANG("obj.14deab37", null), LANG("obj.e47df031", null), GLOB.pipe_paint_colors)
 
 /obj/item/pipe_painter/examine(mob/user)
 	. = ..()

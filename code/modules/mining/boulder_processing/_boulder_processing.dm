@@ -291,7 +291,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/card/id/id_card = tool
-		var/amount = tgui_input_number(user, "How many mining points do you wish to claim? ID Balance: [id_card.registered_account.mining_points], stored mining points: [points_held]", "Transfer Points", max_value = points_held, min_value = 0, round_value = 1)
+		var/amount = tgui_input_number(user, LANG("obj.10aab1fb", list(id_card.registered_account.mining_points, points_held)), LANG("obj.bfebd140", null), max_value = points_held, min_value = 0, round_value = 1)
 		if(!amount)
 			return ITEM_INTERACT_BLOCKING
 		if(amount > points_held)

@@ -35,7 +35,7 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 		options += TGS_RESTART;
 
 	if(SSticker.admin_delay_notice)
-		if(alert(user, "Are you sure? An admin has already delayed the round end for the following reason: [SSticker.admin_delay_notice]", "Confirmation", "Yes", "No") != "Yes")
+		if(alert(user, LANG("datum.94dee4b3", list(SSticker.admin_delay_notice)), LANG("datum.15bc27b6", null), "Yes", "No") != "Yes")
 			return FALSE
 
 	var/result = input(user, "Select reboot method", "World Reboot", options[1]) as null|anything in options
@@ -83,7 +83,7 @@ ADMIN_VERB(cancel_reboot, R_SERVER, "Cancel Reboot", "Cancels a pending world re
 	message_admins("[key_name_admin(user)] cancelled the pending world reboot.")
 
 ADMIN_VERB(end_round, R_SERVER, "End Round", "Forcibly ends the round and allows the server to restart normally.", ADMIN_CATEGORY_SERVER)
-	var/confirm = tgui_alert(user, "End the round and  restart the game world?", "End Round", list("Yes", "Cancel"))
+	var/confirm = tgui_alert(user, LANG("datum.35cf047f", null), LANG("datum.90364329", null), list("Yes", "Cancel"))
 	if(confirm != "Yes")
 		return
 	SSticker.force_ending = FORCE_END_ROUND
@@ -120,7 +120,7 @@ ADMIN_VERB(start_now, R_SERVER, "Start Now", "Start the round RIGHT NOW.", ADMIN
 		return
 
 	if(!user.is_localhost())
-		var/response = tgui_alert(user, "Are you sure you want to start the round?", "Start Now", list("Start Now", "Cancel"))
+		var/response = tgui_alert(user, LANG("datum.fc7fa821", null), LANG("datum.4aef6455", null), list("Start Now", "Cancel"))
 		if(response != "Start Now")
 			return
 	SSticker.start_immediately = TRUE
@@ -133,7 +133,7 @@ ADMIN_VERB(start_now, R_SERVER, "Start Now", "Start the round RIGHT NOW.", ADMIN
 
 ADMIN_VERB(delay_round_end, R_ADMIN, "Delay Round End", "Prevent the server from restarting.", ADMIN_CATEGORY_SERVER) // NOVA EDIT CHANGE - Admins can delay the round end - ORIGINAL: ADMIN_VERB(delay_round_end, R_SERVER, "Delay Round End", "Prevent the server from restarting.", ADMIN_CATEGORY_SERVER)
 	if(SSticker.delay_end)
-		tgui_alert(user, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
+		tgui_alert(user, LANG("datum.cc553680", list(SSticker.admin_delay_notice)), LANG("datum.055c248b", null), list("Ok"))
 		return
 
 	var/delay_reason = input(user, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
@@ -142,7 +142,7 @@ ADMIN_VERB(delay_round_end, R_ADMIN, "Delay Round End", "Prevent the server from
 		return
 
 	if(SSticker.delay_end)
-		tgui_alert(user, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
+		tgui_alert(user, LANG("datum.cc553680", list(SSticker.admin_delay_notice)), LANG("datum.055c248b", null), list("Ok"))
 		return
 
 	SSticker.delay_end = TRUE
@@ -214,7 +214,7 @@ ADMIN_VERB(delay, R_SERVER, "Delay Pre-Game", "Delay the game start.", ADMIN_CAT
 	if(!newtime)
 		return
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		return tgui_alert(user, "Too late... The game has already started!")
+		return tgui_alert(user, LANG("datum.d5a7f84f", null))
 	newtime = newtime*10
 	SSticker.SetTimeLeft(newtime)
 	SSticker.start_immediately = FALSE

@@ -9,7 +9,7 @@
 	laws = list("")
 
 /obj/item/ai_module/core/freeformcore/attack_self(mob/user)
-	var/targName = tgui_input_text(user, "Enter a new core law for the AI.", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
+	var/targName = tgui_input_text(user, LANG("obj.c38e88d5", null), LANG("obj.f2d27273", null), laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName))
@@ -17,7 +17,7 @@
 		return
 	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
 	if(soft_filter_result)
-		if(tgui_alert(user,"Your law contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user,LANG("obj.785540fc", list(soft_filter_result[CHAT_FILTER_INDEX_WORD], soft_filter_result[CHAT_FILTER_INDEX_REASON])), LANG("obj.b0fe106c", null), list("Yes", "No")) != "Yes")
 			return
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(targName)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
@@ -34,11 +34,11 @@
 	laws = list("")
 
 /obj/item/ai_module/supplied/freeform/attack_self(mob/user)
-	var/newpos = tgui_input_number(user, "Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority ", lawpos, 50, 15)
+	var/newpos = tgui_input_number(user, LANG("obj.440d46d1", null), LANG("obj.2b743674", null), lawpos, 50, 15)
 	if(!newpos || !user.is_holding(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	lawpos = newpos
-	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
+	var/targName = tgui_input_text(user, LANG("obj.dded9ced", null), LANG("obj.f2d27273", null), laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName))
@@ -46,7 +46,7 @@
 		return
 	var/list/soft_filter_result = is_soft_ooc_filtered(targName)
 	if(soft_filter_result)
-		if(tgui_alert(user,"Your law contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user,LANG("obj.785540fc", list(soft_filter_result[CHAT_FILTER_INDEX_WORD], soft_filter_result[CHAT_FILTER_INDEX_REASON])), LANG("obj.b0fe106c", null), list("Yes", "No")) != "Yes")
 			return
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(targName)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")

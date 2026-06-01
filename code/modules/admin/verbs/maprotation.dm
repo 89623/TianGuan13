@@ -21,7 +21,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 			mapname += "\]"
 
 		maprotatechoices[mapname] = virtual_map
-	var/chosenmap = tgui_input_list(user, "Choose a map to change to", "Change Map", sort_list(maprotatechoices)|"Custom")
+	var/chosenmap = tgui_input_list(user, LANG("datum.5a77597a", null), LANG("datum.0ed5c647", null), sort_list(maprotatechoices)|"Custom")
 	if (isnull(chosenmap))
 		return
 
@@ -56,7 +56,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 		qdel(M)
 		var/config_file = null
 		var/list/json_value = list()
-		var/config = tgui_alert(user,"Would you like to upload an additional config for this map?", "Map Config", list("Yes", "No"))
+		var/config = tgui_alert(user,LANG("datum.c3afbf7b", null), LANG("datum.14d16896", null), list("Yes", "No"))
 		if(config == "Yes")
 			config_file = input(user, "Pick file:", "Config JSON File") as null|file
 			if(isnull(config_file))
@@ -80,7 +80,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 			if(isnull(virtual_map.map_name))
 				virtual_map.map_name = "Custom"
 
-			var/shuttles = tgui_alert(user,"Do you want to modify the shuttles?", "Map Shuttles", list("Yes", "No"))
+			var/shuttles = tgui_alert(user,LANG("datum.40d4a6e7", null), LANG("datum.effa4eab", null), list("Yes", "No"))
 			if(shuttles == "Yes")
 				for(var/s in virtual_map.shuttles)
 					var/shuttle = input(user, s, "Map Shuttles") as null|text

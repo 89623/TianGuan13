@@ -323,7 +323,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		ghostize(TRUE) // Can return with TRUE
 		return TRUE
 	// NOVA EDIT ADDITION END
-	var/response = tgui_alert(usr, "Are you sure you want to ghost? If you ghost whilst still alive you cannot re-enter your body!", "Confirm Ghost Observe", list("Ghost", "Stay in Body"))
+	var/response = tgui_alert(usr, LANG("mob.6b44eb18", null), LANG("mob.34dcf73a", null), list("Ghost", "Stay in Body"))
 	if(response != "Ghost")
 		return FALSE//didn't want to ghost after-all
 	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body. U ded.
@@ -334,7 +334,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	var/response = tgui_alert(usr, "Are you sure you want to ghost? If you ghost whilst still alive you cannot re-enter your body!", "Confirm Ghost Observe", list("Ghost", "Stay in Body"))
+	var/response = tgui_alert(usr, LANG("mob.6b44eb18", null), LANG("mob.34dcf73a", null), list("Ghost", "Stay in Body"))
 	if(response != "Ghost")
 		return
 	ghostize(FALSE)
@@ -403,7 +403,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, span_warning(LANG("mob.855d6efc", null)))
 		return FALSE
 
-	var/response = tgui_alert(usr, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone.", "Are you sure you want to stay dead?", list("DNR","Save Me"))
+	var/response = tgui_alert(usr, LANG("mob.a2d1577c", null), LANG("mob.c2e89b71", null), list("DNR","Save Me"))
 	if(response == "DNR")
 		stay_dead()
 
@@ -470,7 +470,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	for(var/area/A as anything in get_sorted_areas())
 		if(!(A.area_flags & HIDDEN_AREA))
 			filtered += A
-	var/area/thearea = tgui_input_list(usr, "Area to jump to", "BOOYEA", filtered)
+	var/area/thearea = tgui_input_list(usr, LANG("mob.6a7d6e97", null), LANG("mob.d3501f61", null), filtered)
 
 	if(isnull(thearea))
 		return
@@ -502,7 +502,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
 	var/target = null
 
-	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
+	target = tgui_input_list(usr, LANG("mob.49fce9a4", null), LANG("mob.311f1d41", null), possible_destinations)
 	if(isnull(target))
 		return
 	if (!isobserver(usr))
@@ -534,7 +534,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/views = list()
 		for(var/i in 7 to max_view)
 			views |= i
-		var/new_view = tgui_input_list(usr, "New view", "Modify view range", views)
+		var/new_view = tgui_input_list(usr, LANG("mob.5136f3cf", null), LANG("mob.a48cf5f2", null), views)
 		if(new_view)
 			client.view_size.setTo(clamp(new_view, 7, max_view) - 7)
 	else
@@ -578,7 +578,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
 	var/target = null
 
-	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
+	target = tgui_input_list(usr, LANG("mob.49fce9a4", null), LANG("mob.311f1d41", null), possible_destinations)
 	if(isnull(target))
 		return
 	if (!isobserver(usr))
@@ -770,7 +770,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(!(L in GLOB.player_list) && !L.mind)
 			possessible += L
 
-	var/mob/living/target = tgui_input_list(usr, "Your new life begins today!", "Possess Mob", sort_names(possessible))
+	var/mob/living/target = tgui_input_list(usr, LANG("mob.fd5afff2", null), LANG("mob.7e143c1b", null), sort_names(possessible))
 
 	if(!target)
 		return FALSE
@@ -780,7 +780,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return FALSE
 
 	if(can_reenter_corpse && mind?.current)
-		if(tgui_alert(usr, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", list("Yes", "No")) == "No")
+		if(tgui_alert(usr, LANG("mob.aecc5c43", list(mind.current.name)), LANG("mob.55cc6be3", null), list("Yes", "No")) == "No")
 			return FALSE
 	if(target.key)
 		to_chat(src, span_warning(LANG("mob.8c29cd8b", null)))

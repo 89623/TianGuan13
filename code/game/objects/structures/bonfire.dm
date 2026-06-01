@@ -44,7 +44,7 @@
 /obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(used_item, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/rods = used_item
-		var/choice = tgui_alert(user, "What would you like to construct?", "Bonfire", list("Stake","Grill"))
+		var/choice = tgui_alert(user, LANG("obj.c942d6ab", null), LANG("obj.e4d12e40", null), list("Stake","Grill"))
 		if(isnull(choice))
 			return
 		rods.use(1)

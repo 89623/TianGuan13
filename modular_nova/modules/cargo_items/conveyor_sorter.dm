@@ -97,7 +97,7 @@
 	. += span_notice(LANG("obj.fbae40a6", null))
 
 /obj/effect/decal/conveyor_sorter/attack_hand(mob/living/user, list/modifiers)
-	var/user_choice = tgui_input_list(user, "Choose which direction to sort to!", "Direction choice", directions) // this would be cooler as a radial
+	var/user_choice = tgui_input_list(user, LANG("obj.d72879d2", null), LANG("obj.f366a6b9", null), directions) // this would be cooler as a radial
 	if(!user_choice)
 		return ..()
 

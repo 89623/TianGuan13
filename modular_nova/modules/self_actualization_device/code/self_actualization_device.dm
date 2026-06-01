@@ -180,7 +180,7 @@
 	update_appearance()
 
 	// defaults to rejecting it unless specified otherwise
-	if(tgui_alert(occupant, "The SAD you are within is about to rejuvenate you, resetting your body to its default state (in character preferences). Do you consent?", "Rejuvenate", list("Yes", "No"), timeout = 10 SECONDS) == "Yes")
+	if(tgui_alert(occupant, LANG("obj.849efc77", null), LANG("obj.b77e9c60", null), list("Yes", "No"), timeout = 10 SECONDS) == "Yes")
 		player_consent = CONSENT_GRANTED
 		say(LANG("obj.d44835f5", list(DisplayTimeText(processing_time), display_power(active_power_usage))))
 		to_chat(occupant, span_warning(LANG("obj.233cda98", list(DisplayTimeText(processing_time)))))

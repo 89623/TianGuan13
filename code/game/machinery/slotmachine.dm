@@ -203,7 +203,7 @@
 			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 			return ITEM_INTERACT_BLOCKING
 
-		var/msg = tgui_input_text(user, "Name of your slot machine (optional)", "Slot Customization", "Slot Machine", max_length = MAX_NAME_LEN)
+		var/msg = tgui_input_text(user, LANG("obj.37f4d822", null), LANG("obj.c3b5a0c4", null), "Slot Machine", max_length = MAX_NAME_LEN)
 		if(msg)
 			name = msg
 

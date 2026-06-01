@@ -144,7 +144,7 @@ Stabilized extracts:
 	generate_mobtype()
 
 /obj/item/slimecross/stabilized/gold/attack_self(mob/user)
-	var/choice = tgui_input_list(user, "Which do you want to reset?", "Familiar Adjustment", sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name")))
+	var/choice = tgui_input_list(user, LANG("obj.60072d1f", null), LANG("obj.9561baf1", null), sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name")))
 	if(isnull(choice))
 		return
 	if(!user.can_perform_action(src))
@@ -165,7 +165,7 @@ Stabilized extracts:
 		saved_mind = null
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Name")
-		var/newname = sanitize_name(tgui_input_text(user, "Would you like to change the name of [mob_name]", "Name change", mob_name, MAX_NAME_LEN))
+		var/newname = sanitize_name(tgui_input_text(user, LANG("obj.ebe3820a", list(mob_name)), LANG("obj.b4bf4c54", null), mob_name, MAX_NAME_LEN))
 		if(newname)
 			mob_name = newname
 		to_chat(user, span_notice(LANG("obj.94cb2bcd", list(src))))

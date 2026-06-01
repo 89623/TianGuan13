@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/picket_sign
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "picket"
@@ -60,7 +61,7 @@
 	if(!istype(target, /obj/item/picket_sign))
 		return FALSE
 	var/obj/item/picket_sign/sign = target
-	var/input = tgui_input_text(owner, "What would you like to write on the sign?", "Sign Label", max_length = 30)
+	var/input = tgui_input_text(owner, LANG("datum.bf32c05c", null), LANG("datum.90a47a6f", null), max_length = 30)
 	if(input && owner.can_perform_action(sign))
 		sign.label = input
 		sign.AddComponent(/datum/component/rename, "[input] sign", "It reads: [input]")

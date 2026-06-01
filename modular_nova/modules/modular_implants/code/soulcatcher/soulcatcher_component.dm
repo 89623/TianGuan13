@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 	if(!soulcatcher_owner)
 		return FALSE
 
-	if(tgui_alert(soulcatcher_owner, "Do you wish to allow [joiner_name] into your soulcatcher?", name, list("Yes", "No"), autofocus = FALSE) != "Yes")
+	if(tgui_alert(soulcatcher_owner, LANG("datum.77f800aa", list(joiner_name)), name, list("Yes", "No"), autofocus = FALSE) != "Yes")
 		return FALSE
 
 	return TRUE
@@ -444,7 +444,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 		to_chat(src, span_warning(LANG("mob.12c11998", null)))
 		return FALSE
 
-	var/datum/component/soulcatcher/soulcatcher_to_join = tgui_input_list(src, "Choose a soulcatcher to join", "Enter a soulcatcher", joinable_soulcatchers)
+	var/datum/component/soulcatcher/soulcatcher_to_join = tgui_input_list(src, LANG("mob.08d0cbc9", null), LANG("mob.0327af66", null), joinable_soulcatchers)
 	if(!soulcatcher_to_join || !(soulcatcher_to_join in joinable_soulcatchers))
 		return FALSE
 
@@ -464,7 +464,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 		room_to_join = rooms_to_join[1]
 
 	else
-		room_to_join = tgui_input_list(src, "Choose a room to enter", "Enter a room", rooms_to_join)
+		room_to_join = tgui_input_list(src, LANG("mob.4df897d1", null), LANG("mob.fc0082d2", null), rooms_to_join)
 
 	if(!room_to_join)
 		to_chat(src, span_warning(LANG("mob.929fb5d2", null)))

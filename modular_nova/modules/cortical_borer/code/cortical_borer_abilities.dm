@@ -251,7 +251,7 @@
 		if(foci in cortical_owner.body_focuses)
 			continue
 		fancy_list["[foci.name] ([foci.cost] points)"] = foci
-	var/focus_choice = tgui_input_list(cortical_owner, "Learn a focus!", "Focus Choice", fancy_list)
+	var/focus_choice = tgui_input_list(cortical_owner, LANG("datum.3b0d0681", null), LANG("datum.a03360aa", null), fancy_list)
 	if(!focus_choice)
 		owner.balloon_alert(owner, "focus not chosen")
 		return
@@ -284,7 +284,7 @@
 	if(length(cortical_owner.human_host.reagents.reagent_list) <= 0)
 		owner.balloon_alert(owner, "no reagents in host")
 		return
-	var/datum/reagent/reagent_choice = tgui_input_list(cortical_owner, "Choose a chemical to learn.", "Chemical Selection", cortical_owner.human_host.reagents.reagent_list)
+	var/datum/reagent/reagent_choice = tgui_input_list(cortical_owner, LANG("datum.6ae2bb36", null), LANG("datum.47ba8fa7", null), cortical_owner.human_host.reagents.reagent_list)
 	if(!reagent_choice)
 		owner.balloon_alert(owner, "chemical not chosen")
 		return
@@ -330,7 +330,7 @@
 	if(!length(cortical_owner.potential_chemicals))
 		owner.balloon_alert(owner, "all chemicals learned")
 		return
-	var/datum/reagent/reagent_choice = tgui_input_list(cortical_owner, "Choose a chemical to learn.", "Chemical Selection", cortical_owner.potential_chemicals)
+	var/datum/reagent/reagent_choice = tgui_input_list(cortical_owner, LANG("datum.6ae2bb36", null), LANG("datum.47ba8fa7", null), cortical_owner.potential_chemicals)
 	if(!reagent_choice)
 		owner.balloon_alert(owner, "no chemical chosen")
 		return
@@ -427,7 +427,7 @@
 	if(length(potential_freezers) == 1)
 		incite_fear(potential_freezers[1])
 		return
-	var/mob/living/carbon/human/choose_fear = tgui_input_list(cortical_owner, "Choose who you will fear!", "Fear Choice", potential_freezers)
+	var/mob/living/carbon/human/choose_fear = tgui_input_list(cortical_owner, LANG("datum.9419e976", null), LANG("datum.3a1ff1b7", null), potential_freezers)
 	if(!choose_fear)
 		owner.balloon_alert(owner, "no target chosen")
 		return
@@ -544,7 +544,7 @@
 		return
 
 	//if the list of possible host is more than one, allow choosing a host
-	var/choose_host = tgui_input_list(cortical_owner, "Choose your host!", "Host Choice", usable_hosts)
+	var/choose_host = tgui_input_list(cortical_owner, LANG("datum.e0804c5d", null), LANG("datum.21b68012", null), usable_hosts)
 	if(!choose_host)
 		owner.balloon_alert(owner, "no target selected")
 		return
@@ -757,7 +757,7 @@
 			return
 	owner.balloon_alert(owner, "asking host...")
 	cortical_owner.chemical_storage -= chemical_cost
-	var/host_choice = tgui_input_list(cortical_owner.human_host,"Do you accept to be a willing host?", "Willing Host Request", list("Yes", "No"))
+	var/host_choice = tgui_input_list(cortical_owner.human_host,LANG("datum.dc53a04f", null), LANG("datum.c4728aac", null), list("Yes", "No"))
 	if(host_choice != "Yes")
 		owner.balloon_alert(owner, "host not willing!")
 		StartCooldown()

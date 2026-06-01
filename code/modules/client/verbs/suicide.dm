@@ -35,7 +35,7 @@
 	if(!can_suicide())
 		return FALSE
 
-	var/confirm = tgui_alert(src, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
+	var/confirm = tgui_alert(src, LANG("mob.0f68d22d", null), LANG("mob.65e1185a", null), list("Yes", "No"))
 
 	// ensure our situation didn't change while we were sleeping waiting for the tgui_alert.
 	if(!can_suicide() || (ckey != oldkey))

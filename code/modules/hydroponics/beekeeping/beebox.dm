@@ -208,7 +208,7 @@
 		else
 			visible_message(span_danger(LANG("obj.da54237f", list(user, src))))
 	else
-		var/option = tgui_alert(user, "Which piece do you wish to remove?", "Apiary Adjustment", list("Honey Frame", "Queen Bee"))
+		var/option = tgui_alert(user, LANG("obj.b323dbb5", null), LANG("obj.de401597", null), list("Honey Frame", "Queen Bee"))
 		if(!option || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
 		switch(option)

@@ -81,7 +81,7 @@
 	if(length(choices) == 1)
 		selected_snack = choices[1]
 	else
-		var/selected = tgui_input_list(user, "Select Snack", "Snack Selection", choices)
+		var/selected = tgui_input_list(user, LANG("obj.fbaf03cc", null), LANG("obj.15b3bb0a", null), choices)
 		if(!selected)
 			return
 		selected_snack = choices[selected]

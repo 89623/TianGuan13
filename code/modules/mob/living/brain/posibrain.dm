@@ -77,7 +77,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	addtimer(CALLBACK(src, PROC_REF(check_success)), ask_delay)
 
 /obj/item/mmi/posibrain/click_alt(mob/living/user)
-	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, max_length = MAX_NAME_LEN)
+	var/input_seed = tgui_input_text(user, LANG("obj.c6826ce5", null), LANG("obj.43e77270", null), ask_role, max_length = MAX_NAME_LEN)
 	if(isnull(input_seed) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice(LANG("obj.6af35397", list(input_seed))))
@@ -118,7 +118,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		return
 	if(is_occupied() || is_banned_from(user.ckey, ROLE_POSIBRAIN) || QDELETED(src) || QDELETED(user))
 		return
-	var/posi_ask = tgui_alert(user, "Become a [name]? (Warning, You can no longer be revived, and all past lives will be forgotten!)", "Confirm", list("Yes","No"))
+	var/posi_ask = tgui_alert(user, LANG("obj.23728653", list(name)), LANG("obj.3c1da715", null), list("Yes","No"))
 	if(posi_ask != "Yes" || QDELETED(src))
 		return
 	if(HAS_TRAIT(brainmob, TRAIT_SUICIDED)) //clear suicide status if the old occupant suicided.

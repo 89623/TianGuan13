@@ -140,7 +140,7 @@
 		return
 	//Confirmation for living changelings if they want to fake their death
 	if(user.stat != DEAD)
-		if(tgui_alert(user, "Are we sure we wish to fake our own death?", "Feign Death", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, LANG("datum.50ad749c", null), LANG("datum.497dae9f", null), list("Yes", "No")) != "Yes")
 			return
 		if(QDELETED(user) || QDELETED(src) || !can_enter_stasis(user))
 			return

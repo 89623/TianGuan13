@@ -221,7 +221,7 @@
 
 ///Lets the user select a reagent in the vat to spill out.
 /obj/machinery/icecream_vat/proc/spill_reagents(mob/living/user)
-	var/datum/reagent/reagent_to_remove = tgui_input_list(user, "Select a reagent to purge from the vat.", "Remove reagent", reagents.reagent_list, ui_state = GLOB.conscious_state)
+	var/datum/reagent/reagent_to_remove = tgui_input_list(user, LANG("obj.8148244b", null), LANG("obj.723af3f7", null), reagents.reagent_list, ui_state = GLOB.conscious_state)
 	if(isnull(reagent_to_remove) || !user.can_perform_action(src, action_bitflags = ALLOW_RESTING))
 		return
 	balloon_alert(user, LANG("obj.0b3f7d72", list(reagent_to_remove.name)))

@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		balloon_alert(user, LANG("obj.29e70654", null))
 		return
 
-	var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
+	var/chosen_beacon = tgui_input_list(user, LANG("obj.533cc7a1", null), LANG("obj.761ae691", null), sort_names(possible_beacons))
 	if(isnull(chosen_beacon))
 		return
 

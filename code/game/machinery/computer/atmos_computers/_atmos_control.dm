@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// GENERAL AIR CONTROL (a.k.a atmos computer)
 /obj/machinery/computer/atmos_control
 	name = "atmospherics monitoring"
@@ -81,7 +82,7 @@
 		available_devices[GLOB.station_gas_chambers[chamber_identifier]] = chamber_identifier
 
 	// As long as we dont put any funny chars in the strings it should match.
-	var/new_name = tgui_input_list(user, "Select the device set", "Reconnect", available_devices)
+	var/new_name = tgui_input_list(user, LANG("obj.833e770c", null), LANG("obj.3efd9519", null), available_devices)
 	if(isnull(new_name))
 		return FALSE
 	var/new_id = available_devices[new_name]

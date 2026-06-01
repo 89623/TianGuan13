@@ -9,7 +9,7 @@
 	. = ..()
 	if(isnull(user))
 		return
-	var/name_temp = tgui_input_text(user, "Input a vial label!", "Rename", apply_to.name)
+	var/name_temp = tgui_input_text(user, LANG("datum.b86e30b9", null), LANG("datum.759cae98", null), apply_to.name)
 	if(name_temp)
 		var/obj/item/applying_to = apply_to
 		applying_to.name = name_temp

@@ -46,7 +46,7 @@ ADMIN_VERB(investigate_show, R_NONE, "Investigate", "Browse various detailed log
 
 	var/list/combined = sort_list(logs_present) + sort_list(logs_missing)
 
-	var/selected = tgui_input_list(user, "Investigate what?", "Investigation", combined)
+	var/selected = tgui_input_list(user, LANG("datum.54a28c48", null), LANG("datum.544bcdeb", null), combined)
 	if(isnull(selected))
 		return
 	if(!(selected in combined) || selected == "---")

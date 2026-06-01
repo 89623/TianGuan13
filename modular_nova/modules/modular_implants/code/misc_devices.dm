@@ -24,7 +24,7 @@
 		balloon_alert(user, LANG("obj.7d323743", null))
 		return FALSE
 	var/list/installed_nifsofts = target_nif.loaded_nifsofts
-	var/datum/nifsoft/nifsoft_to_remove = tgui_input_list(user, "Chose a NIFSoft to remove.", "[src]", installed_nifsofts)
+	var/datum/nifsoft/nifsoft_to_remove = tgui_input_list(user, LANG("obj.440711be", null), "[src]", installed_nifsofts)
 
 	if(!nifsoft_to_remove)
 		return FALSE
@@ -70,7 +70,7 @@
 		balloon_alert(user, LANG("obj.5a991104", list(target_mob)))
 		return ITEM_INTERACT_BLOCKING
 
-	var/datum/nifsoft/nifsoft_to_remove = tgui_input_list(user, "Choose a NIFSoft to remove.", "[src]", target_nif.loaded_nifsofts)
+	var/datum/nifsoft/nifsoft_to_remove = tgui_input_list(user, LANG("obj.39543217", null), "[src]", target_nif.loaded_nifsofts)
 	if(!nifsoft_to_remove)
 		return ITEM_INTERACT_BLOCKING
 

@@ -281,7 +281,7 @@
 	var/uses_cargo_budget = FALSE // NOVA EDIT ADDITION - boolean flag to check if we are using the cargo budget without doing excessive shenanigans.
 	if(requestonly && !self_paid && (!(pack.order_flags & ORDER_GOODY) || (pack.order_flags & ORDER_DEPARTMENTAL_GOODY))) // NOVA EDIT CHANGE - should never have a dept goodie thats not a goody. ORIGINAL: if(requestonly && !self_paid && !(pack.order_flags & ORDER_GOODY))
 		working_list = SSshuttle.request_list
-		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
+		reason = tgui_input_text(user, LANG("obj.ba5380f4", null), name, max_length = MAX_MESSAGE_LEN)
 		if(isnull(reason))
 			return
 
@@ -289,7 +289,7 @@
 		if(account?.account_job)
 			personal_department = SSeconomy.get_dep_account(account.account_job.paycheck_department)
 			if(!(personal_department.account_holder == "Cargo Budget"))
-				var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))
+				var/dept_choice = tgui_alert(user, LANG("obj.b7de779a", null), LANG("obj.a672d0c4", null), list("Cargo Budget", "[personal_department.account_holder]"))
 				if(!dept_choice)
 					return
 				if(dept_choice == "Cargo Budget")

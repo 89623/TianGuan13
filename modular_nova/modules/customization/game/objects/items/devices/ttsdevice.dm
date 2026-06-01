@@ -11,7 +11,7 @@
 /obj/item/ttsdevice/attack_self(mob/user)
 	user.balloon_alert_to_viewers("typing...", "started typing...")
 	playsound(src, 'modular_nova/master_files/sound/items/tts/started_type.ogg', 50, TRUE)
-	var/str = tgui_input_text(user, "What would you like the device to say?", "Say Text", "", max_length = MAX_MESSAGE_LEN, encode = FALSE)
+	var/str = tgui_input_text(user, LANG("obj.d06b5e31", null), LANG("obj.31c9ab2a", null), "", max_length = MAX_MESSAGE_LEN, encode = FALSE)
 	if(QDELETED(src) || !user.can_perform_action(src))
 		return
 	if(!str)
@@ -28,7 +28,7 @@
 	str = null
 
 /obj/item/ttsdevice/item_ctrl_click(mob/user)
-	var/noisechoice = tgui_input_list(user, "What noise would you like to make?", "Robot Noises", list("Beep","Buzz","Ping"))
+	var/noisechoice = tgui_input_list(user, LANG("obj.53c6f073", null), LANG("obj.8763d5bc", null), list("Beep","Buzz","Ping"))
 	if(noisechoice == "Beep")
 		user.audible_message("makes their TTS beep!", audible_message_flags = EMOTE_MESSAGE)
 		playsound(user, 'sound/machines/beep/twobeep.ogg', 50, 1, -1)
@@ -43,7 +43,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/ttsdevice/click_ctrl_shift(mob/user)
-	var/new_name = reject_bad_name(tgui_input_text(user, "Name your Text-to-Speech device. This matters for displaying it in the chat bar.", "Set TTS Device Name", "", max_length = MAX_NAME_LEN))
+	var/new_name = reject_bad_name(tgui_input_text(user, LANG("obj.76cc3c52", null), LANG("obj.33a8e4aa", null), "", max_length = MAX_NAME_LEN))
 	if(new_name)
 		name = "[new_name]'s [initial(name)]"
 	else

@@ -247,7 +247,7 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 
 ADMIN_VERB(drop_bomb, R_FUN, "Drop Bomb", "Cause an explosion of varying strength at your location", ADMIN_CATEGORY_FUN)
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
-	var/choice = tgui_input_list(user, "What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap", "Drop Bomb", choices)
+	var/choice = tgui_input_list(user, LANG("datum.6b74fb9d", null), LANG("datum.2860e853", null), choices)
 	if(isnull(choice))
 		return
 	var/turf/epicenter = user.mob.loc
@@ -339,12 +339,12 @@ ADMIN_VERB(test_cardpack_distribution, R_DEBUG, "Test Cardpack Distribution", "T
 	if(!SStrading_card_game.loaded)
 		message_admins("The card subsystem is not currently loaded")
 		return
-	var/pack = tgui_input_list(user, "Which pack should we test?", "You fucked it didn't you", sort_list(SStrading_card_game.card_packs))
+	var/pack = tgui_input_list(user, LANG("datum.b41790cd", null), LANG("datum.2d815bdc", null), sort_list(SStrading_card_game.card_packs))
 	if(!pack)
 		return
-	var/batch_count = tgui_input_number(user, "How many times should we open it?", "Don't worry, I understand")
-	var/batch_size = tgui_input_number(user, "How many cards per batch?", "I hope you remember to check the validation")
-	var/guar = tgui_input_number(user, "Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system")
+	var/batch_count = tgui_input_number(user, LANG("datum.4d264d30", null), LANG("datum.e172866c", null))
+	var/batch_size = tgui_input_number(user, LANG("datum.5d1e15a3", null), LANG("datum.9d3d62d0", null))
+	var/guar = tgui_input_number(user, LANG("datum.c2d2fcea", null), LANG("datum.c2230a42", null))
 	SStrading_card_game.check_card_distribution(pack, batch_size, batch_count, guar)
 
 ADMIN_VERB(print_cards, R_DEBUG, "Print Cards", "Print all cards to chat.", ADMIN_CATEGORY_DEBUG)
@@ -357,33 +357,33 @@ ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION,
 		for (var/datum/action/cooldown/mob_cooldown as anything in all_mob_actions)
 			actions_by_name["[initial(mob_cooldown.name)] ([mob_cooldown])"] = mob_cooldown
 
-	var/ability = tgui_input_list(user, "Choose an ability", "Ability", actions_by_name)
+	var/ability = tgui_input_list(user, LANG("datum.037e009e", null), LANG("datum.aeb9f33f", null), actions_by_name)
 	if(isnull(ability))
 		return
 
 	var/ability_type = actions_by_name[ability]
 	var/datum/action/cooldown/mob_cooldown/add_ability
 
-	var/make_sequence = tgui_alert(user, "Would you like this action to be a sequence of multiple abilities?", "Sequence Ability", list("Yes", "No"))
+	var/make_sequence = tgui_alert(user, LANG("datum.d4eb895f", null), LANG("datum.27191d52", null), list("Yes", "No"))
 	if(make_sequence == "Yes")
 		add_ability = new /datum/action/cooldown/mob_cooldown(ability_recipient)
 		add_ability.sequence_actions = list()
 		while(!isnull(ability_type))
-			var/ability_delay = tgui_input_number(user, "Enter the delay in seconds before the next ability in the sequence is used", "Ability Delay", 2)
+			var/ability_delay = tgui_input_number(user, LANG("datum.5b24dfdc", null), LANG("datum.c0323dc7", null), 2)
 			if(isnull(ability_delay) || ability_delay < 0)
 				ability_delay = 0
 			add_ability.sequence_actions[ability_type] = ability_delay * 1 SECONDS
-			ability = tgui_input_list(user, "Choose a new sequence ability", "Sequence Ability", actions_by_name)
+			ability = tgui_input_list(user, LANG("datum.ab7c7ef7", null), LANG("datum.27191d52", null), actions_by_name)
 			ability_type = actions_by_name[ability]
-		var/ability_cooldown = tgui_input_number(user, "Enter the sequence abilities cooldown in seconds", "Ability Cooldown", 2)
+		var/ability_cooldown = tgui_input_number(user, LANG("datum.d0676d7f", null), LANG("datum.7adb2d18", null), 2)
 		if(isnull(ability_cooldown) || ability_cooldown < 0)
 			ability_cooldown = 2
 		add_ability.cooldown_time = ability_cooldown * 1 SECONDS
-		var/ability_melee_cooldown = tgui_input_number(user, "Enter the abilities melee cooldown in seconds", "Melee Cooldown", 2)
+		var/ability_melee_cooldown = tgui_input_number(user, LANG("datum.5dfd060c", null), LANG("datum.cb24c5b4", null), 2)
 		if(isnull(ability_melee_cooldown) || ability_melee_cooldown < 0)
 			ability_melee_cooldown = 2
 		add_ability.melee_cooldown_time = ability_melee_cooldown * 1 SECONDS
-		add_ability.name = tgui_input_text(user, "Choose ability name", "Ability name", "Generic Ability", max_length = MAX_NAME_LEN)
+		add_ability.name = tgui_input_text(user, LANG("datum.68ba7c46", null), LANG("datum.eef0b58b", null), "Generic Ability", max_length = MAX_NAME_LEN)
 		add_ability.create_sequence_actions()
 	else
 		add_ability = new ability_type(ability_recipient)
@@ -404,7 +404,7 @@ ADMIN_VERB(remove_mob_action, R_FUN, "Remove Mob Action", ADMIN_VERB_NO_DESCRIPT
 	if(!length(target_abilities))
 		return
 
-	var/chosen_ability = tgui_input_list(user, "Choose the spell to remove from [removal_target]", "Depower", sort_list(target_abilities))
+	var/chosen_ability = tgui_input_list(user, LANG("datum.9fd5efdc", list(removal_target)), LANG("datum.36872840", null), sort_list(target_abilities))
 	if(isnull(chosen_ability))
 		return
 	var/datum/action/cooldown/mob_cooldown/to_remove = target_abilities[chosen_ability]
@@ -417,7 +417,7 @@ ADMIN_VERB(remove_mob_action, R_FUN, "Remove Mob Action", ADMIN_VERB_NO_DESCRIPT
 	BLACKBOX_LOG_ADMIN_VERB("Remove Mob Ability")
 
 ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/spell_recipient)
-	var/which = tgui_alert(user, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
+	var/which = tgui_alert(user, LANG("datum.f926544a", null), LANG("datum.1967f954", null), list("Name", "Typepath"))
 	if(!which)
 		return
 	if(QDELETED(spell_recipient))
@@ -435,14 +435,14 @@ ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CAT
 		else
 			spell_list += to_add
 
-	var/chosen_spell = tgui_input_list(user, "Choose the spell to give to [spell_recipient]", "ABRAKADABRA", sort_list(spell_list))
+	var/chosen_spell = tgui_input_list(user, LANG("datum.4a478215", list(spell_recipient)), LANG("datum.a55c6f39", null), sort_list(spell_list))
 	if(isnull(chosen_spell))
 		return
 	var/datum/action/cooldown/spell/spell_path = which == "Typepath" ? chosen_spell : spell_list[chosen_spell]
 	if(!ispath(spell_path))
 		return
 
-	var/robeless = (tgui_alert(user, "Would you like to force this spell to be robeless?", "Robeless Casting?", list("Force Robeless", "Use Spell Setting")) == "Force Robeless")
+	var/robeless = (tgui_alert(user, LANG("datum.8fe49527", null), LANG("datum.d1641999", null), list("Force Robeless", "Use Spell Setting")) == "Force Robeless")
 
 	if(QDELETED(spell_recipient))
 		to_chat(user, span_warning(LANG("datum.25ac67c7", null)))
@@ -470,7 +470,7 @@ ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	if(!length(target_spell_list))
 		return
 
-	var/chosen_spell = tgui_input_list(user, "Choose the spell to remove from [removal_target]", "ABRAKADABRA", sort_list(target_spell_list))
+	var/chosen_spell = tgui_input_list(user, LANG("datum.9fd5efdc", list(removal_target)), LANG("datum.a55c6f39", null), sort_list(target_spell_list))
 	if(isnull(chosen_spell))
 		return
 	var/datum/action/cooldown/spell/to_remove = target_spell_list[chosen_spell]
@@ -483,7 +483,7 @@ ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	BLACKBOX_LOG_ADMIN_VERB("Remove Spell")
 
 ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/victim)
-	var/datum/disease/disease = tgui_input_list(user, "Choose the disease to give to that guy", "ACHOO", sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	var/datum/disease/disease = tgui_input_list(user, LANG("datum.1bc99a53", null), LANG("datum.75cd3f6d", null), sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(!disease)
 		return
 	victim.ForceContractDisease(new disease, FALSE, TRUE)
@@ -492,7 +492,7 @@ ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [disease]."))
 
 ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker in world)
-	var/message = tgui_input_text(user, "What do you want the message to be?", "Make Sound", encode = FALSE)
+	var/message = tgui_input_text(user, LANG("datum.43f83808", null), LANG("datum.f119adcc", null), encode = FALSE)
 	if(!message)
 		return
 	speaker.say(message, sanitize = FALSE)
@@ -511,8 +511,8 @@ ADMIN_VERB(manage_sect, R_ADMIN, "Manage Religious Sect", "Manages the chaplain'
 	if (!isnull(GLOB.religious_sect))
 		var/you_sure = tgui_alert(
 			user,
-			"The Chaplain has already chosen [GLOB.religious_sect.name], override their selection?",
-			"Replace God?",
+			LANG("datum.04a00f60", list(GLOB.religious_sect.name)),
+			LANG("datum.ee32b53b", null),
 			list("Yes", "Cancel"),
 		)
 		if (you_sure != "Yes")
@@ -523,7 +523,7 @@ ADMIN_VERB(manage_sect, R_ADMIN, "Manage Religious Sect", "Manages the chaplain'
 		choices["nothing"] = null
 		for(var/datum/religion_sect/sect as anything in subtypesof(/datum/religion_sect))
 			choices[initial(sect.name)] = sect
-	var/choice = tgui_input_list(user, "Set new Chaplain sect", "God Picker", choices)
+	var/choice = tgui_input_list(user, LANG("datum.e82b3b10", null), LANG("datum.711d37b1", null), choices)
 	if(isnull(choice))
 		return
 	if(choice == "nothing")
@@ -567,10 +567,10 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "Spawn Debug Full Crew", "Creates a f
 		return
 
 	// Two input checks here to make sure people are certain when they're using this.
-	if(tgui_alert(user, "This command will create a bunch of dummy crewmembers with minds, job, and datacore entries, which will take a while and fill the manifest.", "Spawn Crew", list("Yes", "Cancel")) != "Yes")
+	if(tgui_alert(user, LANG("datum.4e1a6fb5", null), LANG("datum.3da3029e", null), list("Yes", "Cancel")) != "Yes")
 		return
 
-	if(!user.is_localhost() && tgui_alert(user, "You are not on localhost! Are you sure?", "Spawn Crew (Be certain)", list("Yes", "Cancel")) != "Yes")
+	if(!user.is_localhost() && tgui_alert(user, LANG("datum.6a0ce11a", null), LANG("datum.6424ee15", null), list("Yes", "Cancel")) != "Yes")
 		return
 
 	// Find the observer spawn, so we have a place to dump the dummies.
@@ -656,8 +656,8 @@ ADMIN_VERB(debug_spell_requirements, R_DEBUG, "Debug Spell Requirements", "View 
 
 ADMIN_VERB(load_lazy_template, R_ADMIN, "Load/Jump Lazy Template", "Loads a lazy template and/or jumps to it.", ADMIN_CATEGORY_EVENTS)
 	var/list/choices = LAZY_TEMPLATE_KEY_LIST_ALL()
-	var/choice = tgui_input_list(user, "Key?", "Lazy Loader", choices)
-	var/teleport_to_template = tgui_input_list(user, "Jump to template after loading?", "Where to?", list("Yes", "No"))
+	var/choice = tgui_input_list(user, LANG("datum.3e390d40", null), LANG("datum.09afa419", null), choices)
+	var/teleport_to_template = tgui_input_list(user, LANG("datum.346fe89a", null), LANG("datum.2a9ec0ea", null), list("Yes", "No"))
 	if(!choice)
 		return
 
@@ -668,7 +668,7 @@ ADMIN_VERB(load_lazy_template, R_ADMIN, "Load/Jump Lazy Template", "Loads a lazy
 
 	var/already_loaded = LAZYACCESS(SSmapping.loaded_lazy_templates, choice)
 	var/force_load = FALSE
-	if(already_loaded && (tgui_alert(user, "Template already loaded.", "", list("Jump", "Load Again")) == "Load Again"))
+	if(already_loaded && (tgui_alert(user, LANG("datum.739f65e0", null), "", list("Jump", "Load Again")) == "Load Again"))
 		force_load = TRUE
 
 	var/datum/turf_reservation/reservation = SSmapping.lazy_load_template(choice, force = force_load)
@@ -698,8 +698,8 @@ ADMIN_VERB(create_mob_worm, R_FUN, "Create Mob Worm", "Attach a linked list of m
 
 	var/attempted_target_path = tgui_input_text(
 		user,
-		"Enter typepath of a mob you'd like to make your chain from.",
-		"Typepath",
+		LANG("datum.cb1c65e7", null),
+		LANG("datum.1a01b0f5", null),
 		"[/mob/living/basic/pet/dog/corgi/ian]",
 	)
 
@@ -712,7 +712,7 @@ ADMIN_VERB(create_mob_worm, R_FUN, "Create Mob Worm", "Attach a linked list of m
 	if(isnull(desired_mob) || !ispath(desired_mob) || QDELETED(head))
 		return //The user pressed "Cancel"
 
-	var/amount = tgui_input_number(user, "How long should our tail be?", "Worm Configurator", default = 3, min_value = 1)
+	var/amount = tgui_input_number(user, LANG("datum.a8aca1d0", null), LANG("datum.6b06d7a3", null), default = 3, min_value = 1)
 	if (isnull(amount) || amount < 1 || QDELETED(head))
 		return
 	head.AddComponent(/datum/component/mob_chain)
@@ -734,7 +734,7 @@ ADMIN_VERB(give_ai_controller, R_FUN, "Give AI Controller", ADMIN_VERB_NO_DESCRI
 		for (var/datum/admin_ai_template/template as anything in controllers)
 			controllers_by_name["[initial(template.name)]"] = template
 
-	var/chosen = tgui_input_list(user, "Which template should we apply?", "Select Template", controllers_by_name)
+	var/chosen = tgui_input_list(user, LANG("datum.45c5c789", null), LANG("datum.5a4a8b3a", null), controllers_by_name)
 	if (isnull(chosen))
 		return
 
@@ -767,10 +767,10 @@ ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, "Clear Smart Asset Cache", "Clear t
 
 ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/my_guy)
 	if (isnull(my_guy.ai_controller))
-		var/create_controller = tgui_alert(user, "Target has no AI controller, add one?", "Give AI?", list("Yes", "No")) == "Yes"
+		var/create_controller = tgui_alert(user, LANG("datum.46d83d37", null), LANG("datum.4bdb3aef", null), list("Yes", "No")) == "Yes"
 		if (!create_controller)
 			return
-		var/run_with_mind = tgui_alert(user, "Run AI controller while the target has a client?", "Override Client?", list("Yes", "No"))
+		var/run_with_mind = tgui_alert(user, LANG("datum.c2016a3a", null), LANG("datum.f4191ee1", null), list("Yes", "No"))
 		if (isnull(run_with_mind))
 			return
 		if (QDELETED(my_guy))
@@ -788,40 +788,40 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 	var/list/visible_emotes
 	var/list/sounds
 
-	speech_chance = tgui_input_number(user, "Enter chance per second to say something", "Speech Chance", default = 2, min_value = 0, max_value = 100, round_value = FALSE)
+	speech_chance = tgui_input_number(user, LANG("datum.c5c7923d", null), LANG("datum.dd711a20", null), default = 2, min_value = 0, max_value = 100, round_value = FALSE)
 	if (isnull(speech_chance))
 		return
 
 	var/add_another
 	var/next_line
 
-	add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] spoken line?", "Spoken Lines", list("Yes", "No"))
+	add_another = tgui_alert(user, LANG("datum.bcdb1bf9", list(length(spoken_lines) ? "another" : "a")), LANG("datum.c4273cf6", null), list("Yes", "No"))
 	while (add_another  == "Yes")
-		next_line = tgui_input_text(user, "Enter [length(spoken_lines) ? "another" : "a"] thing spoken out loud.", "Spoken Lines")
+		next_line = tgui_input_text(user, LANG("datum.51389345", list(length(spoken_lines) ? "another" : "a")), LANG("datum.c4273cf6", null))
 		if (isnull(next_line))
 			return
 		LAZYADD(spoken_lines, next_line)
-		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] spoken line?", "Spoken Lines", list("Yes", "No"))
+		add_another = tgui_alert(user, LANG("datum.bcdb1bf9", list(length(spoken_lines) ? "another" : "a")), LANG("datum.c4273cf6", null), list("Yes", "No"))
 	if (isnull(add_another))
 		return
 
-	add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can hear?", "Audible Emotes", list("Yes", "No"))
+	add_another = tgui_alert(user, LANG("datum.f9e9381d", list(length(spoken_lines) ? "another" : "a")), LANG("datum.ce2edca1", null), list("Yes", "No"))
 	while (add_another == "Yes")
-		next_line = tgui_input_text(user, "Enter [length(spoken_lines) ? "another" : "an"] emote which people can hear.", "Audible Emotes")
+		next_line = tgui_input_text(user, LANG("datum.27062f17", list(length(spoken_lines) ? "another" : "an")), LANG("datum.ce2edca1", null))
 		if (isnull(next_line))
 			return
 		LAZYADD(audible_emotes, next_line)
-		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can hear?", "Audible Emotes", list("Yes", "No"))
+		add_another = tgui_alert(user, LANG("datum.f9e9381d", list(length(spoken_lines) ? "another" : "a")), LANG("datum.ce2edca1", null), list("Yes", "No"))
 	if (isnull(add_another))
 		return
 
-	add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can see?", "Visible Emotes", list("Yes", "No"))
+	add_another = tgui_alert(user, LANG("datum.4c86173c", list(length(spoken_lines) ? "another" : "a")), LANG("datum.43020c0d", null), list("Yes", "No"))
 	while (add_another == "Yes")
-		next_line = tgui_input_text(user, "Enter [length(spoken_lines) ? "another" : "an"] emote which people can see.", "Visible Emotes")
+		next_line = tgui_input_text(user, LANG("datum.29db1359", list(length(spoken_lines) ? "another" : "an")), LANG("datum.43020c0d", null))
 		if (isnull(next_line))
 			return
 		LAZYADD(visible_emotes, next_line)
-		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can see?", "Visible Emotes", list("Yes", "No"))
+		add_another = tgui_alert(user, LANG("datum.4c86173c", list(length(spoken_lines) ? "another" : "a")), LANG("datum.43020c0d", null), list("Yes", "No"))
 	if (isnull(add_another))
 		return
 
@@ -829,13 +829,13 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 		return // Well you didn't tell it to say anything...
 
 	if (length(spoken_lines) || length(audible_emotes))
-		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] sound to play when doing something audible?", "Sounds", list("Yes", "No"))
+		add_another = tgui_alert(user, LANG("datum.ad50e3d5", list(length(spoken_lines) ? "another" : "a")), LANG("datum.e2b85e52", null), list("Yes", "No"))
 		while (add_another == "Yes")
 			next_line = input("", "Select sound",) as null|sound
 			if (isnull(next_line))
 				return
 			LAZYADD(sounds, next_line)
-			add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] sound to play when doing something audible?", "Sounds", list("Yes", "No"))
+			add_another = tgui_alert(user, LANG("datum.ad50e3d5", list(length(spoken_lines) ? "another" : "a")), LANG("datum.e2b85e52", null), list("Yes", "No"))
 		if (isnull(add_another))
 			return
 
@@ -877,20 +877,20 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 	// second: poll admins for the name, description, price, and quantity.
 	if(isnull(chosen))
 		return
-	var/name = tgui_input_text(user, "Name of the item to sell?", "Item listing name", "Arcane Object", max_length = MAX_NAME_LEN)
+	var/name = tgui_input_text(user, LANG("datum.02e2ab58", null), LANG("datum.dda67683", null), "Arcane Object", max_length = MAX_NAME_LEN)
 	if(isnull(name))
 		return
-	var/description = tgui_input_text(user, "Custom description of the item to sell?", "Item listing description", "[chosen::desc]", max_length = 200)
+	var/description = tgui_input_text(user, LANG("datum.4640c340", null), LANG("datum.f6dd515f", null), "[chosen::desc]", max_length = 200)
 	if(isnull(description))
 		return
-	var/price = tgui_input_number(user, "Price for the item listing?", "Item listing price", max_value = INFINITY, min_value = 1, round_value = TRUE)
+	var/price = tgui_input_number(user, LANG("datum.96761edf", null), LANG("datum.91d17d0d", null), max_value = INFINITY, min_value = 1, round_value = TRUE)
 	if(isnull(price))
 		return
-	var/quantity = tgui_input_number(user, "Quantity of the item to sell?", "Item listing quantity", default = 1, max_value = 100, min_value = 1, round_value = TRUE)
+	var/quantity = tgui_input_number(user, LANG("datum.1940bff8", null), LANG("datum.c7876276", null), default = 1, max_value = 100, min_value = 1, round_value = TRUE)
 	if(isnull(quantity))
 		return
 	//lastly: pick a category for the item to go under
-	var/category = tgui_input_list(user, "Category to list the item under?", "Item listing category", BLACKMARKET_CATEGORIES)
+	var/category = tgui_input_list(user, LANG("datum.07c3f521", null), LANG("datum.b622031c", null), BLACKMARKET_CATEGORIES)
 	if(isnull(category))
 		return
 

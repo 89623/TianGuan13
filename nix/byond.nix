@@ -64,18 +64,29 @@ let
   };
 
   mkTool =
-    name:
+    {
+      name,
+      extraEnv ? "",
+    }:
     writeShellScriptBin name ''
       export BYOND_SYSTEM="${byondUnpacked}/opt/byond"
       export LD_LIBRARY_PATH="$BYOND_SYSTEM/bin''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+      ${extraEnv}
       exec "$BYOND_SYSTEM/bin/${name}" "$@"
     '';
 in
 symlinkJoin {
   name = "byond-${version}";
   paths = [
-    (mkTool "DreamMaker")
-    (mkTool "DreamDaemon")
+    (mkTool { name = "DreamMaker"; })
+    (mkTool {
+      name = "DreamDaemon";
+      # 32 位 BYOND 进程地址空间只有 ~3GB；rust_g 的 iconforge 用 rayon 全核并行解码 DMI
+      # 生成精灵图集，峰值内存会撑爆 32 位地址空间 → Rust OOM abort（核心转储，表现为
+      # 客户端一进大厅服务端就崩、停在按钮界面不刷日志）。限制 rayon 线程数压低峰值内存。
+      # 实测 2 即可稳定；可在外部用 `RAYON_NUM_THREADS=N DreamDaemon …` 覆盖。
+      extraEnv = ''export RAYON_NUM_THREADS="''${RAYON_NUM_THREADS:-2}"'';
+    })
   ];
   passthru = {
     inherit version byondUnpacked;

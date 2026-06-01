@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 ///global reference to the current theme, if there is one.
 GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
@@ -12,7 +13,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	set name = "Setup Anonymous Names"
 
 	if(GLOB.current_anonymous_theme)
-		var/response = tgui_alert(usr, "Anon mode is currently enabled. Disable?", "cold feet", list("Disable Anon Names", "Keep it Enabled"))
+		var/response = tgui_alert(usr, LANG("client.17d87780", null), LANG("client.d4252aef", null), list("Disable Anon Names", "Keep it Enabled"))
 		if(response != "Disable Anon Names")
 			return
 		message_admins(span_adminnotice("[key_name_admin(usr)] has disabled anonymous names."))
@@ -30,8 +31,8 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	var/alert_players = "No"
 	if(SSticker.current_state > GAME_STATE_PREGAME) //before anonnames is done, for asking a sleep
 		if(initial(chosen_theme.extras_enabled))
-			extras_enabled = tgui_alert(usr, extras_enabled, "extras", list("Yes", "No"))
-		alert_players = tgui_alert(usr, "Alert crew? These are IC Themed FROM centcom.", "announcement", list("Yes", "No"))
+			extras_enabled = tgui_alert(usr, extras_enabled, LANG("client.e433b7ef", null), list("Yes", "No"))
+		alert_players = tgui_alert(usr, LANG("client.773cce17", null), LANG("client.1c3eb6ba", null), list("Yes", "No"))
 	//turns "Yes" and "No" into TRUE and FALSE
 	extras_enabled = extras_enabled == "Yes"
 	alert_players = alert_players == "Yes"

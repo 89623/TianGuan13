@@ -129,7 +129,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	var/choice = tgui_input_list(user, "Underwear, Bra, Undershirt, or Socks?", "Changing", list("Underwear", "Bra", "Undershirt","Socks")) //NOVA EDIT ADDITION - Underwear and Bra split
+	var/choice = tgui_input_list(user, LANG("obj.e9f42888", null), LANG("obj.e27ef6c6", null), list("Underwear", "Bra", "Undershirt","Socks")) //NOVA EDIT ADDITION - Underwear and Bra split
 	if(!Adjacent(user))
 		return
 	switch(choice)

@@ -2267,12 +2267,12 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			return
 
 		var/old_name = real_name
-		var/new_name = sanitize_name(tgui_input_text(usr, "Enter the new name.", "Admin Rename", real_name))
+		var/new_name = sanitize_name(tgui_input_text(usr, LANG("mob.e6c2c78b", null), LANG("mob.7fb5d4bc", null), real_name))
 		if(!new_name || new_name == real_name)
 			return
 
 		fully_replace_character_name(real_name, new_name)
-		var/replace_preferences = !isnull(client) && (tgui_alert(usr, "Would you like to update the client's preference with the new name?", "Pref Overwrite", list("Yes", "No")) == "Yes")
+		var/replace_preferences = !isnull(client) && (tgui_alert(usr, LANG("mob.d6beda10", null), LANG("mob.f5707c0d", null), list("Yes", "No")) == "Yes")
 		if(replace_preferences)
 			client.prefs.write_preference(GLOB.preference_entries[/datum/preference/name/real_name], new_name)
 
@@ -2827,11 +2827,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 		impediments[initial(possible.id)] = possible
 
-	var/chosen = tgui_input_list(admin, "What speech impediment?", "Impede Speech", impediments)
+	var/chosen = tgui_input_list(admin, LANG("mob.5b04e700", null), LANG("mob.f5eec1eb", null), impediments)
 	if(!chosen || !ispath(impediments[chosen], /datum/status_effect/speech) || QDELETED(src) || !check_rights(NONE))
 		return
 
-	var/duration = tgui_input_number(admin, "How long should it last (in seconds)? Max is infinite duration.", "Duration", 0, INFINITY, 0 SECONDS)
+	var/duration = tgui_input_number(admin, LANG("mob.fc1b7690", null), LANG("mob.b3eba48a", null), 0, INFINITY, 0 SECONDS)
 	if(!isnum(duration) || duration <= 0 || QDELETED(src) || !check_rights(NONE))
 		return
 
@@ -2843,7 +2843,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	var/list/mood_events = typesof(/datum/mood_event)
 
-	var/chosen = tgui_input_list(admin, "What mood event?", "Add Mood Event", mood_events)
+	var/chosen = tgui_input_list(admin, LANG("mob.23a74f6b", null), LANG("mob.58a76f3a", null), mood_events)
 	if (!chosen || QDELETED(src) || !check_rights(NONE))
 		return
 
@@ -2859,7 +2859,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		mood_events[event] = category
 
 
-	var/datum/mood_event/chosen = tgui_input_list(admin, "What mood event?", "Remove Mood Event", mood_events)
+	var/datum/mood_event/chosen = tgui_input_list(admin, LANG("mob.23a74f6b", null), LANG("mob.b6a51714", null), mood_events)
 	if (!chosen || QDELETED(src) || !check_rights(NONE))
 		return
 
@@ -3003,7 +3003,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/del_mob = FALSE
 	var/mob/old_mob
 	var/list/possible_players = list("Poll Ghosts") + sort_list(GLOB.clients)
-	var/client/guardian_client = tgui_input_list(admin, "Pick the player to put in control.", "Guardian Controller", possible_players)
+	var/client/guardian_client = tgui_input_list(admin, LANG("mob.eb214719", null), LANG("mob.a3ddb461", null), possible_players)
 	if(isnull(guardian_client))
 		return
 	else if(guardian_client == "Poll Ghosts")
@@ -3011,19 +3011,19 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(chosen_one)
 			guardian_client = chosen_one.client
 		else
-			tgui_alert(admin, "No ghost candidates.", "Guardian Controller")
+			tgui_alert(admin, LANG("mob.fd90b5fc", null), LANG("mob.a3ddb461", null))
 			return
 	else
 		old_mob = guardian_client.mob
-		if(isobserver(old_mob) || tgui_alert(admin, "Do you want to delete [guardian_client]'s old mob?", "Guardian Controller", list("Yes"," No")) == "Yes")
+		if(isobserver(old_mob) || tgui_alert(admin, LANG("mob.ac29935c", list(guardian_client)), LANG("mob.a3ddb461", null), list("Yes"," No")) == "Yes")
 			del_mob = TRUE
-	var/picked_type = tgui_input_list(admin, "Pick the guardian type.", "Guardian Controller", subtypesof(/mob/living/basic/guardian))
-	var/picked_theme = tgui_input_list(admin, "Pick the guardian theme.", "Guardian Controller", list(GUARDIAN_THEME_TECH, GUARDIAN_THEME_MAGIC, GUARDIAN_THEME_CARP, GUARDIAN_THEME_MINER, "Random"))
+	var/picked_type = tgui_input_list(admin, LANG("mob.c7a193cd", null), LANG("mob.a3ddb461", null), subtypesof(/mob/living/basic/guardian))
+	var/picked_theme = tgui_input_list(admin, LANG("mob.2eb6da14", null), LANG("mob.a3ddb461", null), list(GUARDIAN_THEME_TECH, GUARDIAN_THEME_MAGIC, GUARDIAN_THEME_CARP, GUARDIAN_THEME_MINER, "Random"))
 	if(picked_theme == "Random")
 		picked_theme = null //holopara code handles not having a theme by giving a random one
-	var/picked_name = tgui_input_text(admin, "Name the guardian, leave empty to let player name it.", "Guardian Controller", max_length = MAX_NAME_LEN)
+	var/picked_name = tgui_input_text(admin, LANG("mob.947d33c1", null), LANG("mob.a3ddb461", null), max_length = MAX_NAME_LEN)
 	var/picked_color = tgui_color_picker(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", COLOR_WHITE)
-	if(tgui_alert(admin, "Confirm creation.", "Guardian Controller", list("Yes", "No")) != "Yes")
+	if(tgui_alert(admin, LANG("mob.4ef76d04", null), LANG("mob.a3ddb461", null), list("Yes", "No")) != "Yes")
 		return
 	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)
 	summoned_guardian.set_summoner(src, different_person = TRUE)

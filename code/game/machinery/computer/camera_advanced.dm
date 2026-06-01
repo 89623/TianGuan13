@@ -234,7 +234,7 @@
 	var/list/cameras_by_tag = SScameras.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
 
 	playsound(origin, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
-	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", cameras_by_tag)
+	var/camera = tgui_input_list(usr, LANG("datum.f2e8bac6", null), LANG("datum.65c72ac4", null), cameras_by_tag)
 	if(isnull(camera))
 		return
 

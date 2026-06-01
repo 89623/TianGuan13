@@ -1,6 +1,6 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /client/proc/cmd_mass_modify_object_variables(datum/target, var_name)
-	if(tgui_alert(src, "Are you sure you'd like to mass-modify every instance of the [var_name] variable? This can break everything if you do not know what you are doing.", "Slow down, chief!", list("Yes", "No"), 60 SECONDS) != "Yes")
+	if(tgui_alert(src, LANG("client.06906caa", list(var_name)), LANG("client.0b1b237a", null), list("Yes", "No"), 60 SECONDS) != "Yes")
 		return
 
 	if(!check_rights(R_VAREDIT))
@@ -49,7 +49,7 @@
 	if(variable in GLOB.VVpixelmovement)
 		if(!check_rights(R_DEBUG))
 			return
-		var/prompt = tgui_alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", list("ABORT ", "Continue", " ABORT"))
+		var/prompt = tgui_alert(src, LANG("client.5cf56dd3", null), LANG("client.3be55d75", null), list("ABORT ", "Continue", " ABORT"))
 		if (prompt != "Continue")
 			return
 

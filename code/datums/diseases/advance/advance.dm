@@ -429,7 +429,7 @@
 
 	if(D.symptoms.len > 0)
 
-		var/new_name = tgui_input_text(user, "Name your new disease", "New Name", max_length = MAX_NAME_LEN)
+		var/new_name = tgui_input_text(user, LANG("_root.50798e0d", null), LANG("_root.fbcf69b9", null), max_length = MAX_NAME_LEN)
 		if(!new_name)
 			return
 		D.Refresh()
@@ -438,7 +438,7 @@
 
 		var/list/targets = list("Random")
 		targets += sort_names(GLOB.human_list)
-		var/target = tgui_input_list(user, "Viable human target", "Disease Target", targets)
+		var/target = tgui_input_list(user, LANG("_root.0aee4b73", null), LANG("_root.62f433be", null), targets)
 		if(isnull(target))
 			return
 		var/mob/living/carbon/human/H

@@ -532,7 +532,7 @@
 		affixes.Add("---SUFFIXES---")
 		affixes.Add(suffixes)
 		//admin picks, cleanup the ones we didn't do and handle chosen
-		var/picked_affix_name = tgui_input_list(usr, "Affix to add to [src]", "Enchant [src]", affixes)
+		var/picked_affix_name = tgui_input_list(usr, LANG("obj.d6c2ebb8", list(src)), LANG("obj.4a0c8da4", list(src)), affixes)
 		if(isnull(picked_affix_name))
 			return
 		if(!affixes[picked_affix_name] || QDELETED(src))

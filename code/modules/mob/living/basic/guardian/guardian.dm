@@ -173,7 +173,7 @@
 	if (isnull(client))
 		return
 
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", generate_random_name(), MAX_NAME_LEN)))
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, LANG("mob.53566b0f", null), LANG("mob.628ceef3", null), generate_random_name(), MAX_NAME_LEN)))
 	if (!new_name) //redo proc until we get a good name
 		to_chat(src, span_warning(LANG("mob.facf268a", null)))
 		return guardian_rename()

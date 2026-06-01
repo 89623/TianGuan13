@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
 /obj/machinery/trading_card_holder/attack_hand_secondary(mob/user)
 	if(isnull(current_summon))
-		var/card_name = tgui_input_text(user, "Insert card name", "Blank Card Naming", "blank card", max_length = MAX_NAME_LEN)
+		var/card_name = tgui_input_text(user, LANG("obj.9bcb3a42", null), LANG("obj.79d1cedd", null), "blank card", max_length = MAX_NAME_LEN)
 		if(isnull(card_name) || !user.can_perform_action(src))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		current_summon = new /obj/structure/trading_card_summon/blank(locate(x + summon_offset_x, y + summon_offset_y, z))
@@ -231,12 +231,12 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/structure/trading_card_summon/proc/modify_stats(mob/living/user)
-	summon_power = num2text(tgui_input_number(user, "Please input power value", "Stat Modification", text2num(template.power), 25))
+	summon_power = num2text(tgui_input_number(user, LANG("obj.8d37f80e", null), LANG("obj.b964bd8e", null), text2num(template.power), 25))
 	if(summon_power == template.power)
 		power_color = DEFAULT_POWER_COLOR
 	else
 		power_color = modified_color
-	summon_resolve = num2text(tgui_input_number(user, "Please input resolve value", "Stat Modification", text2num(template.resolve), 25))
+	summon_resolve = num2text(tgui_input_number(user, LANG("obj.0f776e64", null), LANG("obj.b964bd8e", null), text2num(template.resolve), 25))
 	if(summon_resolve == template.resolve)
 		resolve_color = DEFAULT_RESOLVE_COLOR
 	else
@@ -271,8 +271,8 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	return name_chaser
 
 /obj/structure/trading_card_summon/blank/modify_stats(mob/living/user)
-	summon_power = num2text(tgui_input_number(user, "Please input power value", "Stat Modification", text2num(summon_power), 25))
-	summon_resolve = num2text(tgui_input_number(user, "Please input resolve value", "Stat Modification", text2num(summon_resolve), 25))
+	summon_power = num2text(tgui_input_number(user, LANG("obj.8d37f80e", null), LANG("obj.b964bd8e", null), text2num(summon_power), 25))
+	summon_resolve = num2text(tgui_input_number(user, LANG("obj.0f776e64", null), LANG("obj.b964bd8e", null), text2num(summon_resolve), 25))
 	update_overlays()
 
 #undef STAT_Y

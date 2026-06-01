@@ -13,7 +13,7 @@
 	var/rating_to_choose = input(target_client, "Enter number of rating", "Number", "1")
 	rating_to_choose = text2num(rating_to_choose)
 	if(!isnum(rating_to_choose))
-		tgui_alert(target_client, "Input a number.")
+		tgui_alert(target_client, LANG("datum.575f43b6", null))
 		return
 
 	rating = rating_to_choose

@@ -39,7 +39,7 @@
 		refund(0.8)
 		return
 
-	var/mob/living/carbon/human/target = tgui_input_list(user, "Choose a follower to project into:", "Dream Projection", followers)
+	var/mob/living/carbon/human/target = tgui_input_list(user, LANG("datum.e806b2e6", null), LANG("datum.57a2a9a3", null), followers)
 	if(QDELETED(target) || target.stat == DEAD || isnull(target.mind?.holy_role))
 		refund(0.8)
 		return

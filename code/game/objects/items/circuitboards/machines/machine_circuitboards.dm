@@ -679,7 +679,7 @@
 	. = ITEM_INTERACT_FAILURE
 	if(all_products_free)
 		return
-	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(valid_vendor_names_paths))
+	var/choice = tgui_input_list(user, LANG("obj.39554213", null), LANG("obj.71faa22a", null), sort_list(valid_vendor_names_paths))
 	if(isnull(choice))
 		return
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
@@ -874,7 +874,7 @@
 
 /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 	. = ..()
-	var/new_cost = tgui_input_number(user, "New cost for using this medical kiosk", "Pricing", custom_cost, 1000, 10)
+	var/new_cost = tgui_input_number(user, LANG("obj.e8673629", null), LANG("obj.039fe93c", null), custom_cost, 1000, 10)
 	if(!new_cost || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(loc != user)

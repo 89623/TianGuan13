@@ -21,6 +21,34 @@ export function createStats(verbose: boolean): StatsOptions {
 }
 
 const dirname = path.resolve();
+const tguiPackageDir = path.resolve(dirname, './packages/tgui');
+const isTguiPackageSource = (modulePath: string) =>
+  modulePath.startsWith(`${tguiPackageDir}${path.sep}`);
+
+const swcReactOptions = (importSource?: string) => {
+  const reactOptions: {
+    importSource?: string;
+    runtime: 'automatic';
+  } = {
+    runtime: 'automatic',
+  };
+
+  if (importSource) {
+    reactOptions.importSource = importSource;
+  }
+
+  return {
+    jsc: {
+      parser: {
+        syntax: 'typescript',
+        tsx: true,
+      },
+      transform: {
+        react: reactOptions,
+      },
+    },
+  };
+};
 
 export default defineConfig({
   context: dirname,
@@ -37,22 +65,23 @@ export default defineConfig({
       {
         test: /\.([tj]s(x)?|cjs)$/,
         type: 'javascript/auto',
-        use: [
+        oneOf: [
           {
-            loader: 'builtin:swc-loader',
-            options: {
-              jsc: {
-                parser: {
-                  syntax: 'typescript',
-                  tsx: true,
-                },
-                transform: {
-                  react: {
-                    runtime: 'automatic',
-                  },
-                },
+            include: isTguiPackageSource,
+            use: [
+              {
+                loader: 'builtin:swc-loader',
+                options: swcReactOptions('tgui/i18n'),
               },
-            },
+            ],
+          },
+          {
+            use: [
+              {
+                loader: 'builtin:swc-loader',
+                options: swcReactOptions(),
+              },
+            ],
           },
         ],
       },

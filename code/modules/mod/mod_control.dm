@@ -290,7 +290,7 @@
 			if(!module.removable)
 				continue
 			removable_modules += module
-		var/obj/item/mod/module/module_to_remove = tgui_input_list(user, "Which module to remove?", "Module Removal", removable_modules)
+		var/obj/item/mod/module/module_to_remove = tgui_input_list(user, LANG("obj.72076eda", null), LANG("obj.91186385", null), removable_modules)
 		if(!module_to_remove?.mod)
 			return ITEM_INTERACT_BLOCKING
 		uninstall(module_to_remove)

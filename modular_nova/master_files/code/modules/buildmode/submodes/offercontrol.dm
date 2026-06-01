@@ -12,7 +12,7 @@
 	var/mob/living/mob_to_offer = object
 
 	if(mob_to_offer.key)
-		var/response = tgui_alert(target_client, "This mob already has a ckey attached, continue?", "Mob already posessed!", list("Continue", "Cancel"))
+		var/response = tgui_alert(target_client, LANG("datum.0375aae9", null), LANG("datum.5a31f6e6", null), list("Continue", "Cancel"))
 		if(response != "Continue")
 			return
 

@@ -25,7 +25,7 @@
 	if(used)
 		return
 	if(ckey_whitelist && !(LOWER_TEXT(user.ckey) in ckey_whitelist))
-		alert(user, "Sorry, This spawner is not for you!", "", "Ok")
+		alert(user, LANG("obj.6eeca111", null), "", "Ok")
 		return
 	if(is_banned_from(user.ckey, BAN_GHOST_ROLE_SPAWNER))
 		to_chat(user, LANG("obj.6eeb0d8d", null))
@@ -65,10 +65,10 @@
 	if(!user || !user.client)
 		return
 	if(species_whitelist && !(user.client.prefs?.read_preference(/datum/preference/choiced/species) in species_whitelist))
-		alert(user, "Sorry, This spawner is limited to those species: [species_string]. Please switch your character.", "", "Ok")
+		alert(user, LANG("obj.69a54c3a", list(species_string)), "", "Ok")
 		return
 	if(gender_whitelist && !(user.client.prefs?.read_preference(/datum/preference/choiced/gender) in gender_whitelist))
-		alert(user, "Sorry, This spawner is limited to those genders: [gender_string]. Please switch your character.", "", "Ok")
+		alert(user, LANG("obj.0d651b53", list(gender_string)), "", "Ok")
 		return
 	if(used)
 		return

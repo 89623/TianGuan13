@@ -98,7 +98,7 @@
 	if(mode)
 		to_chat(user, span_notice(LANG("obj.11cd7563", list(src))))
 		//Now let them chose the text.
-		var/str = reject_bad_text(tgui_input_text(user, "Label text", "Set Label", label, MAX_NAME_LEN))
+		var/str = reject_bad_text(tgui_input_text(user, LANG("obj.2f79724a", null), LANG("obj.379a7e7e", null), label, MAX_NAME_LEN))
 		if(!str || QDELETED(src) || !user.is_holding(src))
 			to_chat(user, span_warning(LANG("obj.7b1614ec", null)))
 			return

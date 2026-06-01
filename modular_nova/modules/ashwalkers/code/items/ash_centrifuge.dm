@@ -14,7 +14,7 @@
 	if(!length(reagents.reagent_list))
 		return CLICK_ACTION_BLOCKING
 
-	var/datum/user_input = tgui_input_list(user, "Select which chemical to remove.", "Removal Selection", reagents.reagent_list)
+	var/datum/user_input = tgui_input_list(user, LANG("obj.0a9964b3", null), LANG("obj.a932fd8a", null), reagents.reagent_list)
 
 	if(isnull(user_input))
 		balloon_alert(user, LANG("obj.72281623", null))
@@ -35,7 +35,7 @@
 	if(!length(reagents.reagent_list))
 		return
 
-	var/datum/user_input = tgui_input_list(user, "Select which chemical to keep, the rest removed.", "Keep Selection", reagents.reagent_list)
+	var/datum/user_input = tgui_input_list(user, LANG("obj.00ce1a55", null), LANG("obj.c9c32469", null), reagents.reagent_list)
 
 	if(isnull(user_input))
 		balloon_alert(user, LANG("obj.72281623", null))

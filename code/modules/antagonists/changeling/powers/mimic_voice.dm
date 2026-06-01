@@ -18,7 +18,7 @@
 		to_chat(user, span_notice(LANG("datum.67a9ab0b", null)))
 		return
 
-	var/mimic_voice = sanitize_name(tgui_input_text(user, "Enter a name to mimic", "Mimic Voice", max_length = MAX_NAME_LEN))
+	var/mimic_voice = sanitize_name(tgui_input_text(user, LANG("datum.8ab945b2", null), LANG("datum.6bc9723c", null), max_length = MAX_NAME_LEN))
 	if(!mimic_voice)
 		return
 	..()

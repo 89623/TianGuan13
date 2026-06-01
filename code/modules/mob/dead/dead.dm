@@ -50,14 +50,14 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		if(1)
 			pick = csa[1]
 		else
-			pick = tgui_input_list(src, "Server to jump to", "Server Hop", csa)
+			pick = tgui_input_list(src, LANG("mob.17bb19eb", null), LANG("mob.b8fb2a34", null), csa)
 
 	if(isnull(pick))
 		return
 
 	var/addr = csa[pick]
 
-	if(tgui_alert(usr, "Jump to server [pick] ([addr])?", "Server Hop", list("Yes", "No")) != "Yes")
+	if(tgui_alert(usr, LANG("mob.cb56e410", list(pick, addr)), LANG("mob.b8fb2a34", null), list("Yes", "No")) != "Yes")
 		return
 
 	var/client/hopper = client

@@ -343,7 +343,7 @@
 		balloon_alert(user, LANG("obj.7197f413", null))
 		return FALSE
 
-	var/choice = tgui_input_list(user, "Choose a slot machine theme", "Theme Selection", slot_themes)
+	var/choice = tgui_input_list(user, LANG("obj.25dfb2ec", null), LANG("obj.ff0d9178", null), slot_themes)
 	if(isnull(choice))
 		return ITEM_INTERACT_BLOCKING
 	build_path = slot_themes[choice]

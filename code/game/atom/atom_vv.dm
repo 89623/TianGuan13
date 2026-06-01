@@ -35,7 +35,7 @@
 
 	if(href_list[VV_HK_ADD_REAGENT])
 		if(!reagents)
-			var/amount = tgui_input_number(usr, "Specify the reagent size of [src]", "Set Reagent Size", 50)
+			var/amount = tgui_input_number(usr, LANG("atom.5e9da115", list(src)), LANG("atom.79ad2c0f", null), 50)
 			if(!amount)
 				return
 			create_reagents(amount)
@@ -44,7 +44,7 @@
 			return
 
 		var/chosen_id
-		switch(tgui_alert(usr, "Choose a method.", "Add Reagents", list("Search", "Choose from a list", "I'm feeling lucky")))
+		switch(tgui_alert(usr, LANG("atom.dc95397f", null), LANG("atom.a21ddbb3", null), list("Search", "Choose from a list", "I'm feeling lucky")))
 			if("Search")
 				var/valid_id
 				while(!valid_id)
@@ -66,7 +66,7 @@
 
 		if(!chosen_id)
 			return
-		var/amount = tgui_input_number(usr, "Choose the amount to add.", "Choose the amount.", reagents.maximum_volume - reagents.total_volume, reagents.maximum_volume)
+		var/amount = tgui_input_number(usr, LANG("atom.acdb4d7b", null), LANG("atom.3b3f4833", null), reagents.maximum_volume - reagents.total_volume, reagents.maximum_volume)
 		if(!amount)
 			return
 		reagents.add_reagent(chosen_id, amount)
@@ -111,7 +111,7 @@
 		message_admins(span_notice(message))
 
 	if(href_list[VV_HK_ADD_AI])
-		var/result = tgui_input_list(usr, "Choose the AI controller to apply to this atom WARNING: Not all AI works on all atoms.", "AI controller", sort_list(subtypesof(/datum/ai_controller), GLOBAL_PROC_REF(cmp_typepaths_asc)))
+		var/result = tgui_input_list(usr, LANG("atom.640de2a9", null), LANG("atom.fff81a5e", null), sort_list(subtypesof(/datum/ai_controller), GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(result)
 			ai_controller = new result(src)
 
@@ -178,7 +178,7 @@
 	if(href_list[VV_HK_AUTO_RENAME])
 		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
-		if(newname && !(is_ic_filtered(newname) || is_soft_ic_filtered(newname) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) != "Confirm"))
+		if(newname && !(is_ic_filtered(newname) || is_soft_ic_filtered(newname) && tgui_alert(usr, LANG("atom.9b4d40a4", null), LANG("atom.fc9f6a2c", null), list("Confirm", "Cancel")) != "Confirm"))
 			vv_auto_rename(newname)
 
 	if(href_list[VV_HK_EDIT_FILTERS])

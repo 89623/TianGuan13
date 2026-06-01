@@ -121,7 +121,7 @@
 		user.balloon_alert(user, "already exploding!")
 		return
 
-	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, "Would you like to activate the evidence disposal bomb now?", "BYE BYE", list("Yes","No"))
+	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, LANG("obj.4a09f031", null), LANG("obj.2754c85b", null), list("Yes","No"))
 
 	if(i_dont_even_think_once_about_blowing_stuff_up != "Yes" || currently_exploding || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))
 		return

@@ -173,7 +173,7 @@
 	candidate_mind.grab_ghost()
 	to_chat(src, LANG("mob.447375bd", list(span_boldbig("You are a butter bear!"))))
 	var/default_name = "Terrygold"
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are \the [src]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, LANG("mob.e36094c4", list(src)), LANG("mob.b4bf4c54", null), default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
 	if(new_name)
 		to_chat(src, span_notice(LANG("mob.e590eb95", list(new_name))))
 		name = new_name

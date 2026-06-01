@@ -151,7 +151,7 @@
 	if(!length(names))
 		user.visible_message(span_notice("[user]'s pinpointer fails to detect a signal."), span_notice("Your pinpointer fails to detect a signal."))
 		return
-	var/pinpoint_target = tgui_input_list(user, "Person to track", "Pinpoint", sort_list(names))
+	var/pinpoint_target = tgui_input_list(user, LANG("obj.6a2d6f87", null), LANG("obj.fd79c8ae", null), sort_list(names))
 	if(isnull(pinpoint_target))
 		return
 	if(isnull(names[pinpoint_target]))

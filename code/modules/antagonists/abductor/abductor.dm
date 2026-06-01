@@ -160,12 +160,12 @@
 	var/list/current_teams = list()
 	for(var/datum/team/abductor_team/T in GLOB.antagonist_teams)
 		current_teams[T.name] = T
-	var/choice = tgui_input_list(admin,"Add to which team ?", "Abductor Teams", current_teams + "new team")
+	var/choice = tgui_input_list(admin,LANG("datum.bfde5ec0", null), LANG("datum.1fd70d29", null), current_teams + "new team")
 	if (choice == "new team")
 		team = new
-		if(tgui_alert(admin, "Use a Custom Skin Color?", "Alien Spraypainter", list("Yes", "No")) == "Yes")
+		if(tgui_alert(admin, LANG("datum.f013b5a5", null), LANG("datum.a04b8be4", null), list("Yes", "No")) == "Yes")
 			// Keep in mind the darker colors don't look all that great, but it's easier to just reference an existing color list than make a new one
-			var/colorchoice = tgui_input_list(admin, "Select Which Color?", "Alien Spraypainter", GLOB.color_list_ethereal + "Custom Color")
+			var/colorchoice = tgui_input_list(admin, LANG("datum.1d1b0c16", null), LANG("datum.a04b8be4", null), GLOB.color_list_ethereal + "Custom Color")
 			if(colorchoice == "Custom Color")
 				colorchoice = tgui_color_picker(admin, "Pick new color", "Alien Spraypainter", COLOR_WHITE)
 			else
@@ -188,7 +188,7 @@
 		to_chat(admin, span_warning(LANG("datum.7c97eadc", null)))
 		return
 	var/mob/living/carbon/human/new_abductor = owner.current
-	var/gear = tgui_alert(admin,"Agent or Scientist Gear", "Gear", list("Agent", "Scientist"))
+	var/gear = tgui_alert(admin,LANG("datum.14a1875b", null), LANG("datum.5f9667bc", null), list("Agent", "Scientist"))
 	if(gear)
 		if(gear == "Agent")
 			new_abductor.equipOutfit(/datum/outfit/abductor/agent)

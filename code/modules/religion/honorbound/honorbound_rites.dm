@@ -15,7 +15,7 @@
 	if(!length(honor.guilty))
 		to_chat(user, span_warning(LANG("datum.0ce77776", list(GLOB.deity))))
 		return FALSE
-	var/forgiven_choice = tgui_input_list(user, "Choose one of [GLOB.deity]'s guilty to forgive", "Forgive", honor.guilty)
+	var/forgiven_choice = tgui_input_list(user, LANG("datum.de903664", list(GLOB.deity)), LANG("datum.5ecbfba7", null), honor.guilty)
 	if(isnull(forgiven_choice))
 		return FALSE
 	who = forgiven_choice
@@ -142,7 +142,7 @@
 	return ..()
 
 /datum/religion_rites/deaconize/crusader/invite_deacon(mob/living/carbon/human/invited)
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
+	var/ask = tgui_alert(invited, LANG("datum.4c1c781d", list(GLOB.deity)), LANG("datum.5d69f114", null), list("Yes", "No"), 60 SECONDS)
 	if(ask != "Yes")
 		return
 	potential_deacon = invited

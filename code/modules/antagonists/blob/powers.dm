@@ -100,7 +100,7 @@
 		var/obj/structure/blob/special/node/blob = GLOB.blob_nodes[index]
 		nodes["Blob Node #[index] ([get_area_name(blob)])"] = blob
 
-	var/node_name = tgui_input_list(src, "Choose a node to jump to", "Node Jump", nodes)
+	var/node_name = tgui_input_list(src, LANG("mob.b1ad3dd0", null), LANG("mob.acb4759c", null), nodes)
 	if(isnull(node_name) || isnull(nodes[node_name]))
 		return FALSE
 

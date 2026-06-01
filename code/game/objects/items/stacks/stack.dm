@@ -759,7 +759,7 @@
 	if(is_zero_amount(delete_if_zero = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
-	var/stackmaterial = tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max)
+	var/stackmaterial = tgui_input_number(user, LANG("obj.395bedeb", null), LANG("obj.b8b759f1", null), max_value = max)
 	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	split_n_take(user, stackmaterial)

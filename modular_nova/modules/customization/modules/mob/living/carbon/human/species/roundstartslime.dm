@@ -728,8 +728,8 @@
 /datum/action/innate/alter_form/proc/alter_skin_colours(mob/living/carbon/human/alterer)
 	var/skintone_string = tgui_input_list(
 		alterer,
-		"Choose your character's new skin color:",
-		"Form Alteration",
+		LANG("datum.dfb6cc1e", null),
+		LANG("datum.7aaef146", null),
 		GLOB.skin_tone_names
 	)
 
@@ -786,20 +786,20 @@
 
 	var/marking_reset = tgui_alert(
 		alterer,
-		"Would you like to reset your markings to match your new colors?",
-		"Reset markings",
+		LANG("datum.1b099a27", null),
+		LANG("datum.9439a802", null),
 		list("Yes", "No"),
 	)
 	var/mutant_part_reset = tgui_alert(
 		alterer,
-		"Would you like to reset your mutant body parts(not limbs) to match your new colors?",
-		"Reset mutant parts",
+		LANG("datum.69e2f7b0", null),
+		LANG("datum.78c4118f", null),
 		list("Yes", "No"),
 	)
 	var/hair_reset = tgui_alert(
 		alterer,
-		"Would you like to reset your hair to match your new colors?",
-		"Reset hair",
+		LANG("datum.d9a5dee1", null),
+		LANG("datum.9ced8c05", null),
 		list("Hair", "Facial Hair", "Both", SPRITE_ACCESSORY_NONE),
 	)
 
@@ -904,8 +904,8 @@
 		key_list.Remove("Genitals")
 	var/dna_alteration = tgui_input_list(
 		alterer,
-		"Select what part of your DNA you'd like to alter",
-		"DNA Alteration",
+		LANG("datum.00f45ca3", null),
+		LANG("datum.a351df4f", null),
 		key_list,
 	)
 	if(!dna_alteration)
@@ -957,8 +957,8 @@
 		mutant_part_list[block::feature_key] = block
 	var/chosen_key = tgui_input_list(
 		alterer,
-		"Select the part you want to alter",
-		"Body Part Alterations",
+		LANG("datum.1afe48a5", null),
+		LANG("datum.20a1aa5c", null),
 		mutant_part_list,
 	)
 	if(!chosen_key)
@@ -967,8 +967,8 @@
 	var/choice_list = available_choices[chosen_key]
 	var/chosen_name_key = tgui_input_list(
 		alterer,
-		"What do you want the part to become?",
-		"Body Part Alterations",
+		LANG("datum.a3da619c", null),
+		LANG("datum.20a1aa5c", null),
 		choice_list,
 	)
 	if(!chosen_name_key)
@@ -1038,8 +1038,8 @@
 	var/list/candidates = GLOB.body_marking_sets
 	var/chosen_name = tgui_input_list(
 		alterer,
-		"Select which set of markings would you like to change into",
-		"Marking Alterations",
+		LANG("datum.c46516be", null),
+		LANG("datum.9c8eed2d", null),
 		candidates,
 	)
 	if(!chosen_name)
@@ -1065,8 +1065,8 @@
 
 	var/dna_alteration = tgui_input_list(
 		alterer,
-		"Select what bodypart you'd like to alter",
-		"Genital Alteration",
+		LANG("datum.be2e024f", null),
+		LANG("datum.0954ca9b", null),
 		genital_list
 	)
 	if(!dna_alteration)

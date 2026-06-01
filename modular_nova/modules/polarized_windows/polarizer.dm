@@ -16,7 +16,7 @@
 
 
 /obj/item/assembly/control/polarizer/attack_self(mob/living/user)
-	var/change_id = tgui_input_number(user, "Set [src]'s ID", "Polarization ID", text2num(id), 1000)
+	var/change_id = tgui_input_number(user, LANG("obj.9369c29f", list(src)), LANG("obj.48940215", null), text2num(id), 1000)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 

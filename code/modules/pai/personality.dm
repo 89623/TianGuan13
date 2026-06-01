@@ -48,7 +48,7 @@
 	if (isnull(version) || version != 1)
 		fdel(path)
 		if (!silent)
-			tgui_alert(user, "Your savefile was incompatible with this version and was deleted.")
+			tgui_alert(user, LANG("datum.49fb47f7", null))
 		return FALSE
 
 	F["name"] >> src.name

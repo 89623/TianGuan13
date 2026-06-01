@@ -249,7 +249,7 @@
 	if(istype(tool, /obj/item/pen))
 		if(taught_skill || taught_language)
 			to_chat(user, span_warning(LANG("obj.5fac06e5", null)))
-			var/erase_choice = tgui_input_list(user, "Erase Knowledge?", "Book Choice", list("Yes", "No"))
+			var/erase_choice = tgui_input_list(user, LANG("obj.e4fd7f70", null), LANG("obj.1abeb53a", null), list("Yes", "No"))
 			if(isnull(erase_choice))
 				return ITEM_INTERACT_BLOCKING
 
@@ -269,7 +269,7 @@
 			teach_sign = FALSE
 			return ITEM_INTERACT_SUCCESS
 
-		var/writing_choice = tgui_input_list(user, "What would you like to write in the book?", "Book Choice", list("Languages", "Skills"))
+		var/writing_choice = tgui_input_list(user, LANG("obj.fcaa3f7e", null), LANG("obj.1abeb53a", null), list("Languages", "Skills"))
 		if(isnull(writing_choice))
 			return ITEM_INTERACT_BLOCKING
 

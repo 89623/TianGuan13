@@ -11,7 +11,7 @@
 	if (isnull(timer))
 		return FALSE
 
-	var/gib_on_loss = tgui_alert(user, "What should happen to them when they lose?", "Puzzgrid", list("Gib", "New puzzle")) == "Gib"
+	var/gib_on_loss = tgui_alert(user, LANG("datum.0d24710c", null), LANG("datum.a87eab73", null), list("Gib", "New puzzle")) == "Gib"
 
 	src.gib_on_loss = gib_on_loss
 	src.timer = timer == 0 ? null : (timer * 1 SECONDS)

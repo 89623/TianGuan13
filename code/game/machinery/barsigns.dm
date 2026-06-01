@@ -214,7 +214,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 
 /obj/machinery/barsign/proc/pick_sign(mob/user)
-	var/picked_name = tgui_input_list(user, "Available Signage", "Bar Sign", sort_list(get_bar_names()))
+	var/picked_name = tgui_input_list(user, LANG("obj.12e064c4", null), LANG("obj.2d0865d0", null), sort_list(get_bar_names()))
 	if(isnull(picked_name))
 		return
 	set_sign_by_name(picked_name)

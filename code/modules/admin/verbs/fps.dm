@@ -8,7 +8,7 @@ ADMIN_VERB(set_server_fps, R_DEBUG, "Set Server FPS", "Sets game speed in frames
 		to_chat(user, span_danger(LANG("datum.42da98c4", null)), confidential = TRUE)
 		return
 	if(new_fps > cfg_fps * 1.5)
-		if(tgui_alert(user, "You are setting fps to a high value:\n\t[new_fps] frames-per-second\n\tconfig.fps = [cfg_fps]","Warning!",list("Confirm","ABORT-ABORT-ABORT")) != "Confirm")
+		if(tgui_alert(user, LANG("datum.fe8ba640", list(new_fps, cfg_fps)),LANG("datum.59b208b7", null),list("Confirm","ABORT-ABORT-ABORT")) != "Confirm")
 			return
 
 	var/msg = "[key_name(user)] has modified world.fps to [new_fps]"

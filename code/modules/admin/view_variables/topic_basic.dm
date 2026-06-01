@@ -63,7 +63,7 @@
 		names += "---Elements---"
 		names += sort_list(subtypesof(/datum/element), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-		var/result = tgui_input_list(usr, "Choose a component/element to add", "Add Component", names)
+		var/result = tgui_input_list(usr, LANG("client.b5f3aef0", null), LANG("client.82754beb", null), names)
 		if(isnull(result))
 			return
 		if(!usr || result == "---Components---" || result == "---Elements---")
@@ -77,7 +77,7 @@
 		if(ispath(result, /datum/component))
 			var/datum/component/comp_path = result
 			if(initial(comp_path.dupe_mode) == COMPONENT_DUPE_SOURCES)
-				add_source = tgui_input_text(usr, "Enter a source for the component", "Add Component", "ADMIN-ABUSE")
+				add_source = tgui_input_text(usr, LANG("client.52d2a67f", null), LANG("client.82754beb", null), "ADMIN-ABUSE")
 				if(isnull(add_source))
 					return
 
@@ -107,7 +107,7 @@
 		names += "---Elements---"
 		// We have to list every element here because there is no way to know what element is on this object without doing some sort of hack.
 		names += sort_list(subtypesof(/datum/element), GLOBAL_PROC_REF(cmp_typepaths_asc))
-		var/path = tgui_input_list(usr, "Choose a component/element to remove. All elements listed here may not be on the datum.", "Remove element", names)
+		var/path = tgui_input_list(usr, LANG("client.a9682676", null), LANG("client.e8962738", null), names)
 		if(isnull(path))
 			return
 		if(!usr || path == "---Components---" || path == "---Elements---")
@@ -120,7 +120,7 @@
 			var/method = vv_subtype_prompt(target.type)
 			targets_to_remove_from = get_all_of_type(target.type, method)
 
-			if(alert(usr, "Are you sure you want to mass-delete [path] on [target.type]?", "Mass Remove Confirmation", "Yes", "No") == "No")
+			if(alert(usr, LANG("client.707f2016", list(path, target.type)), LANG("client.0bea6872", null), "Yes", "No") == "No")
 				return
 
 		for(var/datum/target_to_remove_from as anything in targets_to_remove_from)

@@ -394,7 +394,7 @@
 		return
 
 	//Ask the user to pick a channel from what it has available.
-	var/chosen_channel = tgui_input_list(usr, "Select a channel", "Channel Selection", list("Default","None") + radio.channels)
+	var/chosen_channel = tgui_input_list(usr, LANG("mob.d694447f", null), LANG("mob.24c57c76", null), list("Default","None") + radio.channels)
 	if(isnull(chosen_channel))
 		return
 	if(chosen_channel == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.

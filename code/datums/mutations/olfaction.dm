@@ -79,7 +79,7 @@
 		to_chat(caster, span_warning(LANG("datum.a61ab04f", list(sniffed))))
 		return
 
-	var/mob/living/carbon/new_target = tgui_input_list(caster, "Scent to remember", "Scent Tracking", sort_names(possibles))
+	var/mob/living/carbon/new_target = tgui_input_list(caster, LANG("datum.5269b6c6", null), LANG("datum.aa74bb34", null), sort_names(possibles))
 	if(QDELETED(src) || QDELETED(caster))
 		return
 

@@ -74,7 +74,7 @@
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	var/new_height = tgui_input_number(user,
-		"At what water level should the pump stop pumping from 0 to [LIQUID_HEIGHT_CONSIDER_FULL_TILE]? 0 disables.",
+		LANG("obj.b2112d21", list(LIQUID_HEIGHT_CONSIDER_FULL_TILE)),
 		"[src]",
 		default = height_regulator,
 		min_value = 0,

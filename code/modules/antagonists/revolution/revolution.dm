@@ -24,9 +24,7 @@
 	// No revolution exists which means admin adding this will create a new revolution team
 	// This causes problems because revolution teams (currently) require a dynamic datum to process its victory / defeat conditions
 	if(!(locate(/datum/team/revolution) in GLOB.antagonist_teams))
-		var/confirm = tgui_alert(admin, "Notice: Revolutions do not function 100% when created via traitor panel instead of dynamic. \
-			The leaders will be able to convert as normal, but the shuttle will not be blocked and there will be no announcements when either side wins. \
-			Are you sure?", "Be Wary", list("Yes", "No"))
+		var/confirm = tgui_alert(admin, LANG("datum.18a906d7", null), LANG("datum.f4089654", null), list("Yes", "No"))
 		if(QDELETED(src) || QDELETED(new_owner.current) || confirm != "Yes")
 			return
 

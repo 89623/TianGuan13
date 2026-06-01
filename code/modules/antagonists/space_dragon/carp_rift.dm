@@ -79,7 +79,7 @@
 		dragon_mob.balloon_alert(dragon_mob, "too far offstation!")
 		return
 
-	var/area/chosen_area = tgui_input_list(owner, "Select the area you'd like to be pointed towards.", "Locate Rift", dragon_datum.chosen_rift_areas)
+	var/area/chosen_area = tgui_input_list(owner, LANG("datum.e0e9d885", null), LANG("datum.8c302f0d", null), dragon_datum.chosen_rift_areas)
 	if(!chosen_area)
 		return
 	if(chosen_area == get_area(dragon_mob))
@@ -310,7 +310,7 @@
 			to_chat(user, span_warning(LANG("obj.d8c34444", null)))
 			return FALSE
 		is_listed = TRUE
-	var/carp_ask = tgui_alert(user, "Become a carp?", "Carp Rift", list("Yes", "No"))
+	var/carp_ask = tgui_alert(user, LANG("obj.12be2aee", null), LANG("obj.0c1a6fb0", null), list("Yes", "No"))
 	if(carp_ask != "Yes" || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)

@@ -1,10 +1,11 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Throw an immovable rod at the target
 /datum/smite/rod
 	name = "Immovable Rod"
 	var/force_looping = FALSE
 
 /datum/smite/rod/configure(client/user)
-	var/loop_input = tgui_alert(usr,"Would you like this rod to force-loop across space z-levels?", "Loopy McLoopface", list("Yes", "No"))
+	var/loop_input = tgui_alert(usr,LANG("datum.9820a3d3", null), LANG("datum.8ae1b7f8", null), list("Yes", "No"))
 
 	force_looping = (loop_input == "Yes")
 

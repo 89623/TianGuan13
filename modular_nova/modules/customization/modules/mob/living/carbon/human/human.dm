@@ -110,7 +110,7 @@
 	if(underwear_visibility != UNDERWEAR_HIDE_ALL)
 		choice_list += list("Hide all" = "hide")
 
-	var/picked_visibility = tgui_input_list(src, "Choose visibility setting", "Show/Hide underwear", choice_list)
+	var/picked_visibility = tgui_input_list(src, LANG("mob.8c64f99e", null), LANG("mob.4522a2a8", null), choice_list)
 
 	if(!picked_visibility)
 		return
@@ -261,11 +261,11 @@
 		return
 
 	var/static/list/choices = list("drunkenness", "jittering")
-	var/impairment = tgui_input_list(src, "Select an impairment to perform:", "Impairments", choices)
+	var/impairment = tgui_input_list(src, LANG("mob.bb8313b7", null), LANG("mob.7fb01f5b", null), choices)
 	if(!impairment)
 		return
 
-	var/duration = tgui_input_number(src, "How long would you like to feign [impairment] for?", "Duration in seconds", DEFAULT_TIME, MAX_TIME)
+	var/duration = tgui_input_number(src, LANG("mob.75c5068d", list(impairment)), LANG("mob.7840540c", null), DEFAULT_TIME, MAX_TIME)
 	switch(impairment)
 		if("drunkenness")
 			var/mob/living/living_user = usr

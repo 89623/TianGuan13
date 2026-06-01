@@ -194,7 +194,7 @@
 		return
 	if(!length(contents))
 		return
-	var/obj/item/book/choice = tgui_input_list(user, "Book to remove from the shelf", "Remove Book", sort_names(contents.Copy()))
+	var/obj/item/book/choice = tgui_input_list(user, LANG("obj.ef5db367", null), LANG("obj.d7b57abc", null), sort_names(contents.Copy()))
 	if(isnull(choice))
 		return
 	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))

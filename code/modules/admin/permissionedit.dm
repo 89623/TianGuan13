@@ -425,7 +425,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			to_chat(usr, span_danger(LANG("datum.dc493429", null)), confidential = TRUE)
 			use_db = FALSE
 		else
-			use_db = tgui_alert(usr,"Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", list("Permanent", "Temporary", "Cancel"))
+			use_db = tgui_alert(usr,LANG("datum.a3b76d99", null), LANG("datum.30a52229", null), list("Permanent", "Temporary", "Cancel"))
 			if(isnull(use_db) || use_db == "Cancel")
 				return
 			if(use_db == "Permanent")
@@ -524,7 +524,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, span_adminprefix(LANG("datum.c8a18517", null)), confidential = TRUE)
 		return
-	if(tgui_alert(usr,"Are you sure you want to remove [admin_ckey]?", "Confirm Removal", list("Do it", "Cancel")) != "Do it")
+	if(tgui_alert(usr,LANG("datum.097dd57a", list(admin_ckey)), LANG("datum.ce9910aa", null), list("Do it", "Cancel")) != "Do it")
 		return
 	GLOB.admin_datums -= admin_ckey
 	GLOB.deadmins -= admin_ckey
@@ -858,7 +858,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			to_chat(usr, span_danger(LANG("datum.dc493429", null)), confidential = TRUE)
 			use_db = FALSE
 		else
-			var/use_db_response = tgui_alert(usr,"Permanent changes are saved to the database for future rounds, temporary changes will affect only the current round", "Permanent or Temporary?", list("Permanent", "Temporary", "Cancel"))
+			var/use_db_response = tgui_alert(usr,LANG("datum.a3b76d99", null), LANG("datum.30a52229", null), list("Permanent", "Temporary", "Cancel"))
 			if(isnull(use_db_response) || use_db_response == "Cancel")
 				return
 			if(use_db_response == "Permanent")
@@ -981,7 +981,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			to_chat(usr, span_danger("Error: Rank deletion attempted while rank still used; Tell a coder, this shouldn't happen."), confidential = TRUE)
 			return
 
-	if(tgui_alert(usr,"Are you sure you want to remove [admin_rank]?", "Confirm Removal", list("Do it","Cancel")) != "Do it")
+	if(tgui_alert(usr,LANG("datum.097dd57a", list(admin_rank)), LANG("datum.ce9910aa", null), list("Do it","Cancel")) != "Do it")
 		return
 
 	var/m1 = "[key_name_admin(usr)] removed rank [admin_rank] [local_only_deletion ? "temporarially" : "permanently"]"
@@ -1102,7 +1102,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		working_can_edit_rights = target_rank.can_edit_rights
 
 	while(TRUE)
-		var/what_to_edit = tgui_input_list(usr, "What do you want to edit", "Rank Editing", list("Rights", "Excluded Rights", "Edit Rights", "Finished"))
+		var/what_to_edit = tgui_input_list(usr, LANG("datum.a8a7dc4d", null), LANG("datum.3398cc65", null), list("Rights", "Excluded Rights", "Edit Rights", "Finished"))
 		var/existing_flags = NONE
 		var/pretty_name
 		switch(what_to_edit)

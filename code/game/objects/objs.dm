@@ -185,12 +185,12 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(!check_rights(R_DEBUG|R_SERVER))
 			return
-		var/action_type = tgui_alert(usr, "Strict type ([type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))
+		var/action_type = tgui_alert(usr, LANG("obj.68e254d3", list(type)),,list("Strict type","Type and subtypes","Cancel"))
 		if(action_type == "Cancel" || !action_type)
 			return
-		if(tgui_alert(usr, "Are you really sure you want to delete all objects of type [type]?",,list("Yes","No")) != "Yes")
+		if(tgui_alert(usr, LANG("obj.c71c8697", list(type)),,list("Yes","No")) != "Yes")
 			return
-		if(tgui_alert(usr, "Second confirmation required. Delete?",,list("Yes","No")) != "Yes")
+		if(tgui_alert(usr, LANG("obj.bd025aa5", null),,list("Yes","No")) != "Yes")
 			return
 		var/O_type = type
 		switch(action_type)

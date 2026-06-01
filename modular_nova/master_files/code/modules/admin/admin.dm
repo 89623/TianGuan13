@@ -41,7 +41,7 @@ ADMIN_VERB(toggledchat, R_ADMIN, "Toggle Dead Chat", "Toggle dis bitch.", ADMIN_
 		return TRUE
 
 	if(handler && handler != usr.ckey)
-		var/response = tgui_alert(usr, "This ticket is already being handled by [handler]. Do you want to continue?", "Ticket already assigned", list("Yes", "No"))
+		var/response = tgui_alert(usr, LANG("datum.38e616ab", list(handler)), LANG("datum.9783196e", null), list("Yes", "No"))
 		if(!response || response == "No")
 			return FALSE
 
@@ -65,7 +65,7 @@ ADMIN_VERB(toggledchat, R_ADMIN, "Toggle Dead Chat", "Toggle dis bitch.", ADMIN_
 		return FALSE
 
 	if(handler && handler != usr.ckey)
-		var/response = tgui_alert(usr, "This ticket is already being handled by [handler]. Do you want to continue?", "Ticket already assigned", list("Yes", "No"))
+		var/response = tgui_alert(usr, LANG("datum.38e616ab", list(handler)), LANG("datum.9783196e", null), list("Yes", "No"))
 		if(!response || response == "No")
 			return FALSE
 

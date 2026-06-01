@@ -791,7 +791,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 	if(!GLOB.communications_controller.can_announce(user, is_ai))
 		to_chat(user, span_alert(LANG("obj.201fe056", null)))
 		return
-	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement", max_length = MAX_MESSAGE_LEN)
+	var/input = tgui_input_text(user, LANG("obj.05aea922", null), LANG("obj.4893e36f", null), max_length = MAX_MESSAGE_LEN)
 	if(!input || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(user.try_speak(input))

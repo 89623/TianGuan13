@@ -68,7 +68,7 @@
 		if(popup)
 			return FALSE
 		popup = TRUE
-		var/response = tgui_alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", list("Yes", "No"))
+		var/response = tgui_alert(imp_in, LANG("obj.6a87d4a8", list(name)), LANG("obj.9813cad0", list(name)), list("Yes", "No"))
 		popup = FALSE
 		if(response != "Yes")
 			return FALSE

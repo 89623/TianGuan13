@@ -87,7 +87,7 @@
 		to_chat(user, boxed_message(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
 	if(length(fingerprints) < max_storage)
 		while(length(fingerprints) + length(new_prints) > max_storage)
-			var/to_remove = tgui_input_list(user, "Too many prints, cancel to discard all", "What to discard", new_fibers)
+			var/to_remove = tgui_input_list(user, LANG("obj.1a62e74f", null), LANG("obj.ce5258f1", null), new_fibers)
 			if(isnull(to_remove))
 				return ITEM_INTERACT_FAILURE
 			new_prints -= to_remove
@@ -97,7 +97,7 @@
 			fingerprints[fingerprint] = get_name_from_fingerprint(fingerprint)
 	if(length(fibers) < max_storage)
 		while(length(fibers) + length(new_fibers) > max_storage)
-			var/to_remove = tgui_input_list(user, "Too many prints, cancel to discard all", "What to discard", new_fibers)
+			var/to_remove = tgui_input_list(user, LANG("obj.1a62e74f", null), LANG("obj.ce5258f1", null), new_fibers)
 			if(isnull(to_remove))
 				return ITEM_INTERACT_FAILURE
 			new_fibers -= to_remove

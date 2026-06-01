@@ -125,7 +125,7 @@
 
 /// Add or remove the potential to put more bros in here
 /datum/antagonist/brother/proc/update_recruitments_remaining(mob/admin)
-	var/new_count = tgui_input_number(admin, "How many more people should be able to be recruited?", "Adjust Conversions Remaining", default = 1, min_value = 0)
+	var/new_count = tgui_input_number(admin, LANG("datum.dcd666e6", null), LANG("datum.4f1d1b63", null), default = 1, min_value = 0)
 	if (isnull(new_count))
 		return
 	team.set_brothers_left(new_count)

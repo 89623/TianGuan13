@@ -153,16 +153,16 @@
 	if(LAZYLEN(servers) == 1)
 		var/server_name = servers[1]
 		var/server_ip = servers[server_name]
-		var/confirm = tgui_alert(src, "Are you sure you want to swap to [server_name] ([server_ip])?", "Swapping server!", list("Send me there", "Stay here"))
+		var/confirm = tgui_alert(src, LANG("mob.a04f30de", list(server_name, server_ip)), LANG("mob.632a24f2", null), list("Send me there", "Stay here"))
 		if(confirm == "Connect me!")
 			to_chat_immediate(src, "So long, spaceman.")
 			client << link(server_ip)
 		return
-	var/server_name = tgui_input_list(src, "Please select the server you wish to swap to:", "Swap servers!", servers)
+	var/server_name = tgui_input_list(src, LANG("mob.fb214cc7", null), LANG("mob.993e96ea", null), servers)
 	if(!server_name)
 		return
 	var/server_ip = servers[server_name]
-	var/confirm = tgui_alert(src, "Are you sure you want to swap to [server_name] ([server_ip])?", "Swapping server!", list("Connect me!", "Stay here!"))
+	var/confirm = tgui_alert(src, LANG("mob.a04f30de", list(server_name, server_ip)), LANG("mob.632a24f2", null), list("Connect me!", "Stay here!"))
 	if(confirm == "Connect me!")
 		to_chat_immediate(src, "So long, spaceman.")
 		src.client << link(server_ip)

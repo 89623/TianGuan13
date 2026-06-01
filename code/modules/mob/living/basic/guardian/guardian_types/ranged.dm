@@ -134,7 +134,7 @@
 	StartCooldown(360 SECONDS)
 
 	if (length(placed_snares) >= maximum_snares)
-		var/picked_snare = tgui_input_list(owner, "Choose a snare to replace.", "Remove Snare", sort_names(placed_snares))
+		var/picked_snare = tgui_input_list(owner, LANG("datum.8ed0ddbd", null), LANG("datum.2ef3a982", null), sort_names(placed_snares))
 		if(isnull(picked_snare))
 			return FALSE
 		qdel(picked_snare)

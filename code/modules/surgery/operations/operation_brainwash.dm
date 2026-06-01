@@ -26,7 +26,7 @@
 	return image(/atom/movable/screen/alert/hypnosis::overlay_icon, /atom/movable/screen/alert/hypnosis::overlay_state)
 
 /datum/surgery_operation/organ/brainwash/pre_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
-	operation_args[OPERATION_OBJECTIVE] = tgui_input_text(surgeon, "Choose the objective to imprint on your patient's brain", "Brainwashing", max_length = MAX_MESSAGE_LEN)
+	operation_args[OPERATION_OBJECTIVE] = tgui_input_text(surgeon, LANG("datum.a04a1e3a", null), LANG("datum.442e449c", null), max_length = MAX_MESSAGE_LEN)
 	return !!operation_args[OPERATION_OBJECTIVE]
 
 /datum/surgery_operation/organ/brainwash/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)

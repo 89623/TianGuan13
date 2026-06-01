@@ -80,7 +80,7 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	var/new_heldname = sanitize_name(tgui_input_text(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
+	var/new_heldname = sanitize_name(tgui_input_text(user, LANG("obj.74b71c72", null), LANG("obj.5d267af8", null), heldname, MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!new_heldname || !user.is_holding(src))
 		return
 	heldname = new_heldname

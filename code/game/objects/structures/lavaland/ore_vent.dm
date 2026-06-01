@@ -240,7 +240,7 @@
  * This confirms that the user wants to start the wave defense event, and that they can start it.
  */
 /obj/structure/ore_vent/proc/pre_wave_defense(mob/user, spawn_drone = TRUE, mech_scan = FALSE)
-	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, excavation_warning, LANG("obj.b7a016b4", null), list("Yes", "No")) != "Yes")
 		return FALSE
 	if(!can_interact(user) && !mech_scan)
 		return FALSE
@@ -785,7 +785,7 @@
 
 /obj/structure/ore_vent/debug/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	var/datum/material/choice = tgui_input_list(user, "Choose a material to add/remove.", "New material", subtypesof(/datum/material))
+	var/datum/material/choice = tgui_input_list(user, LANG("obj.cefe22c2", null), LANG("obj.faf8cd1e", null), subtypesof(/datum/material))
 	if(!choice)
 		return
 	if(mineral_breakdown[choice])
@@ -794,13 +794,13 @@
 		return
 	mineral_breakdown += choice
 	balloon_alert_to_viewers("added [choice::name]")
-	var/value = tgui_input_number(user, "What weight should it have?", "ore pickweight", 1, 100, 1)
+	var/value = tgui_input_number(user, LANG("obj.1e9ff560", null), LANG("obj.db0a4d77", null), 1, 100, 1)
 	mineral_breakdown[choice] = value
 	balloon_alert_to_viewers("weighting of [value] added")
 
 /obj/structure/ore_vent/debug/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	var/choice = tgui_input_list(user, "Choose a vent size.", "New size", list(SMALL_VENT_TYPE, MEDIUM_VENT_TYPE, LARGE_VENT_TYPE))
+	var/choice = tgui_input_list(user, LANG("obj.abcee23a", null), LANG("obj.1ca125c4", null), list(SMALL_VENT_TYPE, MEDIUM_VENT_TYPE, LARGE_VENT_TYPE))
 	if(!choice)
 		return
 	vent_size_setup(random = FALSE, force_size = choice, map_loading = FALSE)

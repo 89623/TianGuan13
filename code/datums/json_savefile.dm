@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * A savefile implementation that handles all data using json.
  * Also saves it using JSON too, fancy.
@@ -99,7 +100,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	var/temporary_file_storage = "data/preferences_export_working_directory/[file_name]"
 
 	if(!text2file(json_encode(tree, JSON_PRETTY_PRINT), temporary_file_storage))
-		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.", "Export Preferences JSON")
+		tgui_alert(requester, LANG("datum.e95dbce0", null), LANG("datum.55f8ff4f", null))
 		return
 
 	var/exportable_json = file(temporary_file_storage)
@@ -111,10 +112,10 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 /// Just done like this to make the code in the export_json_to_client() proc a bit cleaner.
 /datum/json_savefile/proc/json_export_checks(mob/requester)
 	if(!COOLDOWN_FINISHED(src, download_cooldown))
-		tgui_alert(requester, "You must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, download_cooldown))] before exporting your preferences again!", "Export Preferences JSON")
+		tgui_alert(requester, LANG("datum.2b0c3c69", list(DisplayTimeText(COOLDOWN_TIMELEFT(src, download_cooldown)))), LANG("datum.55f8ff4f", null))
 		return FALSE
 
-	if(tgui_alert(requester, "Are you sure you want to export your preferences as a JSON file? This will save to a file on your computer.", "Export Preferences JSON", list("Cancel", "Yes")) == "Yes")
+	if(tgui_alert(requester, LANG("datum.1b23178a", null), LANG("datum.55f8ff4f", null), list("Cancel", "Yes")) == "Yes")
 		return TRUE
 
 	return FALSE

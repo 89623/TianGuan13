@@ -139,7 +139,7 @@
 
 
 /obj/item/frog_contract/proc/select_frog_name(mob/user, mob/new_frog)
-	var/frog_name = sanitize_name(tgui_input_text(user, "Choose your frog's name!", "Name pet toad", "leaper", MAX_NAME_LEN), allow_numbers = TRUE)
+	var/frog_name = sanitize_name(tgui_input_text(user, LANG("obj.739143e5", null), LANG("obj.b5420f9c", null), "leaper", MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!frog_name)
 		to_chat(user, span_warning(LANG("obj.cf7854ad", null)))
 		select_frog_name(user, new_frog)

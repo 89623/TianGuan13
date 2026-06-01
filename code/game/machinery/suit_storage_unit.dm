@@ -663,7 +663,7 @@
 			"Departmental",
 			"None",
 		)
-		var/choice = tgui_input_list(user, "Set Access Type", "Access Type", choices)
+		var/choice = tgui_input_list(user, LANG("obj.369a15ea", null), LANG("obj.8cf8426e", null), choices)
 		if(isnull(choice))
 			return ITEM_INTERACT_BLOCKING
 		id_card = null

@@ -723,7 +723,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	interacting_slime.set_pacified_behaviour()
 	to_chat(interacting_slime, span_warning(LANG("obj.f148d43b", null)))
 	to_chat(user, span_notice(LANG("obj.e4d938d6", null)))
-	var/newname = sanitize_name(tgui_input_text(user, "Would you like to give the slime a name?", "Name your new pet", "Pet Slime", MAX_NAME_LEN))
+	var/newname = sanitize_name(tgui_input_text(user, LANG("obj.1354cabd", null), LANG("obj.f428d0a3", null), "Pet Slime", MAX_NAME_LEN))
 
 	if (!newname)
 		newname = "Pet Slime"
@@ -755,7 +755,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/slimepotion/sentience/click_alt(mob/living/user)
-	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
+	potion_reason = tgui_input_text(user, LANG("obj.010edc16", null), LANG("obj.c46d6966", null), potion_reason, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/slimepotion/sentience/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -864,7 +864,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 	user.do_attack_animation(interacting_with)
 	prompted = 1
-	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No")) != "Yes")
+	if(tgui_alert(usr,LANG("obj.0230e6de", list(switchy_mob)),,list("Yes","No")) != "Yes")
 		prompted = 0
 		return ITEM_INTERACT_BLOCKING
 
@@ -1077,7 +1077,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 	to_chat(user, span_notice(LANG("obj.7b2474e5", list(src, user))))
 
-	var/new_name = sanitize_name(tgui_input_text(renaming_mob, "What would you like your name to be?", "Input a name", renaming_mob.real_name, MAX_NAME_LEN))
+	var/new_name = sanitize_name(tgui_input_text(renaming_mob, LANG("obj.53566b0f", null), LANG("obj.e767d1fc", null), renaming_mob.real_name, MAX_NAME_LEN))
 
 	if(!new_name || QDELETED(src) || QDELETED(renaming_mob) || new_name == renaming_mob.real_name || !renaming_mob.Adjacent(user))
 		being_used = FALSE

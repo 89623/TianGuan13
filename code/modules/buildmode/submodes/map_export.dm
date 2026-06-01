@@ -17,7 +17,7 @@
 		"Object Property Saving" = SAVE_OBJECT_PROPERTIES,
 		"Atmos Saving" = SAVE_ATMOS,
 	)
-	var/what_to_change = tgui_input_list(builder, "What export setting would you like to toggle?", "Map Exporter", options)
+	var/what_to_change = tgui_input_list(builder, LANG("datum.aee19dd7", null), LANG("datum.859277a9", null), options)
 	if (!what_to_change)
 		return
 	save_flag ^= options[what_to_change]
@@ -44,7 +44,7 @@
 		return
 	//Emergency check
 	if(get_dist(cornerA, cornerB) > 60 || cornerA.z != cornerB.z)
-		var/confirm = tgui_alert(builder, "Are you sure about this? Exporting large maps may take quite a while.", "Map Exporter", list("Yes", "No"))
+		var/confirm = tgui_alert(builder, LANG("datum.561bb3d9", null), LANG("datum.859277a9", null), list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 
@@ -86,7 +86,7 @@ GLOBAL_VAR_INIT(map_writing_running, FALSE)
 
 	//Step 2: Write the data to a file and give map to client
 	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss", TIMEZONE_UTC)
-	var/file_name = sanitize_filename(tgui_input_text(usr, "Filename?", "Map Exporter", "exported_map_[date]"))
+	var/file_name = sanitize_filename(tgui_input_text(usr, LANG("_root.3a4b5379", null), LANG("_root.859277a9", null), "exported_map_[date]"))
 	send_exported_map(usr, file_name, dat)
 	to_chat(usr, span_green(LANG("_root.7ee62fb6", null)))
 	GLOB.map_writing_running = FALSE

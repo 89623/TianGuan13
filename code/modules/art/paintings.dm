@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	if(!finalized || !isliving(user))
 		return
 	if(!painting_metadata.loaded_from_json)
-		if(tgui_alert(user, "The painting hasn't been archived yet and will be lost at the end of the shift if not placed in an elegible frame. Continue?","Unarchived Painting",list("Yes","No")) != "Yes")
+		if(tgui_alert(user, LANG("obj.b3d4d969", null),LANG("obj.c410a53c", null),list("Yes","No")) != "Yes")
 			return
 	var/mob/living/living_user = user
 	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 		to_chat(user, span_warning(LANG("obj.a47d5fc1", null)))
 		return
 	var/sniped_amount = painting_metadata.credit_value
-	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
+	var/offer_amount = tgui_input_number(user, LANG("obj.fedfee58", null), LANG("obj.086e5b08", null), (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
 	if(!offer_amount || QDELETED(user) || QDELETED(src) || !istype(loc, /obj/structure/sign/painting) || !user.can_perform_action(loc, FORBID_TELEKINESIS_REACH))
 		return
 	if(sniped_amount != painting_metadata.credit_value)
@@ -313,7 +313,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
 		return
-	if(tgui_alert(user, "Do you want to change the frame appearance now? You can do so later this shift with Alt-Click as long as you're a patron.","Patronage Frame",list("Yes","No")) != "Yes")
+	if(tgui_alert(user, LANG("obj.cbb75003", null),LANG("obj.1ed3c6d9", null),list("Yes","No")) != "Yes")
 		return
 	if(!can_select_frame(user))
 		return
@@ -447,13 +447,13 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
 		return TRUE
-	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece", max_length = MAX_NAME_LEN)
+	var/new_name = tgui_input_text(user, LANG("obj.8790d2a6", null), LANG("obj.ff0f7709", null), max_length = MAX_NAME_LEN)
 	new_name = reject_bad_name(new_name, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
 	if(isnull(new_name))
 		return FALSE
 	if(new_name != painting_metadata.title && user.can_perform_action(src))
 		painting_metadata.title = new_name
-	switch(tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No", "Cancel")))
+	switch(tgui_alert(user, LANG("obj.851cfc93", null), LANG("obj.d9d5ab38", null), list("Yes", "No", "Cancel")))
 		if("Yes")
 			return TRUE
 		if("No")

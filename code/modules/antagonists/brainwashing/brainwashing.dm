@@ -67,7 +67,7 @@
 			objectives += objective
 	while(tgui_alert(admin, "Add another objective?", "More Brainwashing", list("Yes","No")) == "Yes")
 
-	if(tgui_alert(admin,"Confirm Brainwashing?","Are you sure?",list("Yes","No")) == "No")
+	if(tgui_alert(admin,LANG("datum.e77519bb", null),LANG("datum.77344162", null),list("Yes","No")) == "No")
 		return
 
 	if(!LAZYLEN(objectives))

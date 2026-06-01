@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 	var/call_solfed_check1 = "Are you sure you want to message the Sol Federation? Un-necessary communications may result in a \
 		large fine or 25 years in federal prison."
 	/// Boolean for Solfed message
-	if(tgui_input_list(user, call_solfed_check1, "Call 911", list("Yes", "No")) != "Yes")
+	if(tgui_input_list(user, call_solfed_check1, LANG("obj.a55d189b", null), list("Yes", "No")) != "Yes")
 		return
 	message_admins("[ADMIN_LOOKUPFLW(user)] has acknowledged the faulty SolFed call consequences.")
 	/// Variable for reason in calling the feeds
@@ -284,10 +284,10 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 	message_admins("[ADMIN_LOOKUPFLW(user)] is considering calling the Sol Federation [called_group_pretty].")
 	var/call_911_msg_are_you_sure = "Are you sure you want to call 911? Faulty 911 calls results in a $20,000 fine and a 5 year superjail \
 		sentence."
-	if(tgui_input_list(user, call_911_msg_are_you_sure, "Call 911", list("Yes", "No")) != "Yes")
+	if(tgui_input_list(user, call_911_msg_are_you_sure, LANG("obj.a55d189b", null), list("Yes", "No")) != "Yes")
 		return
 	message_admins("[ADMIN_LOOKUPFLW(user)] has acknowledged the faulty 911 call consequences.")
-	if(tgui_input_list(user, GLOB.call911_do_and_do_not[called_group], "Call [called_group_pretty]", list("Yes", "No")) != "Yes")
+	if(tgui_input_list(user, GLOB.call911_do_and_do_not[called_group], LANG("obj.ddc9dafa", list(called_group_pretty)), list("Yes", "No")) != "Yes")
 		return
 	message_admins("[ADMIN_LOOKUPFLW(user)] has read and acknowleged the recommendations for what to call and not call [called_group_pretty] for.")
 	var/reason_to_call_911 = stripped_input(user, "What do you wish to call 911 [called_group_pretty] for?", "Call 911", null, MAX_MESSAGE_LEN)
@@ -726,7 +726,7 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 /obj/item/solfed_reporter/swat_caller/questions(mob/user)
 	var/question = "Does the situation require additional S.W.A.T. backup, involve the station impeding you from doing your job, \
 		or involve the station making a fraudulent 911 call and needing an arrest made on the caller?"
-	if(tgui_input_list(user, question, "S.W.A.T. Backup Caller", list("Yes", "No")) != "Yes")
+	if(tgui_input_list(user, question, LANG("obj.5fb95d86", null), list("Yes", "No")) != "Yes")
 		to_chat(user, LANG("obj.7bf95de9", null))
 		return FALSE
 	message_admins("[ADMIN_LOOKUPFLW(user)] has voted to summon S.W.A.T backup.")
@@ -789,7 +789,7 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 	cell_phone_number = "Dogginos"
 
 /obj/item/solfed_reporter/pizza_managers/questions(mob/user)
-	if(tgui_input_list(user, "Is the station refusing to pay their bill of $35,000, including a fifteen percent tip for delivery drivers?", "Dogginos Uncompliant Customer Reporter", list("Yes", "No")) != "Yes")
+	if(tgui_input_list(user, LANG("obj.b1767b1d", null), LANG("obj.450c0637", null), list("Yes", "No")) != "Yes")
 		to_chat(user, LANG("obj.903fd6fd", null))
 		return FALSE
 	message_admins("[ADMIN_LOOKUPFLW(user)] has voted to summon Dogginos management to resolve the lack of payment.")

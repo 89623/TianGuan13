@@ -21,7 +21,7 @@
 	else
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
-		chosen_circuit = tgui_input_list(user, "Circuit to remove", "Circuit Removal", list("airlock","firelock","fire alarm","air alarm","APC"), chosen_circuit)
+		chosen_circuit = tgui_input_list(user, LANG("obj.059c4b2b", null), LANG("obj.7654ccd5", null), list("airlock","firelock","fire alarm","air alarm","APC"), chosen_circuit)
 		if(isnull(chosen_circuit))
 			to_chat(user, span_notice(LANG("obj.d7fc1ab3", list(src))))
 			return

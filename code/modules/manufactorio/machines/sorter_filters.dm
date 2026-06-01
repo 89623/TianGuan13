@@ -55,7 +55,7 @@
 	name = "input is tagged X"
 
 /datum/sortrouter_filter/is_tagged/edit(mob/user)
-	var/target = tgui_input_list(user, "Select a tag", "Tag", sort_list(GLOB.TAGGERLOCATIONS))
+	var/target = tgui_input_list(user, LANG("datum.643f4765", null), LANG("datum.a01fc126", null), sort_list(GLOB.TAGGERLOCATIONS))
 	if(isnull(target) || !user.can_perform_action(sorter, ALLOW_SILICON_REACH))
 		return
 	value = GLOB.TAGGERLOCATIONS.Find(target)
@@ -75,7 +75,7 @@
 	name = "input's name contains"
 
 /datum/sortrouter_filter/name_contains/edit(mob/user)
-	var/target = tgui_input_text(user, "What should it contain?", "Name", value, 12)
+	var/target = tgui_input_text(user, LANG("datum.8354c9b9", null), LANG("datum.e81360ea", null), value, 12)
 	if(isnull(target)|| !user.can_perform_action(sorter, ALLOW_SILICON_REACH))
 		return
 	value = target

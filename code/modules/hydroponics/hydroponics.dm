@@ -974,7 +974,7 @@
 			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE))
 				continue // Don't show genes that can't be removed.
 			current_traits[gene.name] = gene
-		var/removed_trait = tgui_input_list(user, "Trait to remove from the [myseed.plantname]", "Plant Trait Removal", sort_list(current_traits))
+		var/removed_trait = tgui_input_list(user, LANG("obj.85196e44", list(myseed.plantname)), LANG("obj.1a15d997", null), sort_list(current_traits))
 		if(isnull(removed_trait))
 			return
 		if(!user.can_perform_action(src))
@@ -1051,7 +1051,7 @@
 			for(var/muties in myseed.mutatelist)
 				var/obj/item/seeds/another_mut = new muties
 				fresh_mut_list[another_mut.plantname] = muties
-			var/locked_mutation = tgui_input_list(user, "Mutation to lock", "Plant Mutation Locks", sort_list(fresh_mut_list))
+			var/locked_mutation = tgui_input_list(user, LANG("obj.b895b194", null), LANG("obj.6d3b207d", null), sort_list(fresh_mut_list))
 			if(isnull(locked_mutation))
 				return
 			if(isnull(fresh_mut_list[locked_mutation]))
@@ -1116,7 +1116,7 @@
 		return
 	if(!anchored)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	var/warning = tgui_alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", list("Yes", "No"))
+	var/warning = tgui_alert(user, LANG("obj.edd6fd6a", null),LANG("obj.f7a59134", null), list("Yes", "No"))
 	if(warning == "Yes" && user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		empty_tray(user)
 	update_appearance()

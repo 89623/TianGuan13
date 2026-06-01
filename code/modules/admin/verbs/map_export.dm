@@ -1,15 +1,16 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coordinates and download it.", ADMIN_CATEGORY_DEBUG)
 	var/user_x = user.mob.x
 	var/user_y = user.mob.y
 	var/user_z = user.mob.z
-	var/z_level = tgui_input_number(user, "Export Which Z-Level?", "Map Exporter", user_z || 2)
-	var/start_x = tgui_input_number(user, "Start X?", "Map Exporter", user_x || 1, world.maxx, 1)
-	var/start_y = tgui_input_number(user, "Start Y?", "Map Exporter", user_y || 1, world.maxy, 1)
-	var/end_x = tgui_input_number(user, "End X?", "Map Exporter", user_x || 1, world.maxx, 1)
-	var/end_y = tgui_input_number(user, "End Y?", "Map Exporter", user_y || 1, world.maxy, 1)
+	var/z_level = tgui_input_number(user, LANG("datum.8b31294f", null), LANG("datum.859277a9", null), user_z || 2)
+	var/start_x = tgui_input_number(user, LANG("datum.28b1557f", null), LANG("datum.859277a9", null), user_x || 1, world.maxx, 1)
+	var/start_y = tgui_input_number(user, LANG("datum.c2d76058", null), LANG("datum.859277a9", null), user_y || 1, world.maxy, 1)
+	var/end_x = tgui_input_number(user, LANG("datum.4782996e", null), LANG("datum.859277a9", null), user_x || 1, world.maxx, 1)
+	var/end_y = tgui_input_number(user, LANG("datum.9a36bc67", null), LANG("datum.859277a9", null), user_y || 1, world.maxy, 1)
 	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss", TIMEZONE_UTC)
-	var/file_name = sanitize_filename(tgui_input_text(user, "Filename?", "Map Exporter", "exported_map_[date]"))
-	var/confirm = tgui_alert(user, "Are you sure you want to do this? This will cause extreme lag!", "Map Exporter", list("Yes", "No"))
+	var/file_name = sanitize_filename(tgui_input_text(user, LANG("datum.3a4b5379", null), LANG("datum.859277a9", null), "exported_map_[date]"))
+	var/confirm = tgui_alert(user, LANG("datum.957cc0e2", null), LANG("datum.859277a9", null), list("Yes", "No"))
 
 	if(confirm != "Yes")
 		return

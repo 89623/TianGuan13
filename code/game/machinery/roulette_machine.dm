@@ -188,7 +188,7 @@
 			addtimer(CALLBACK(src, PROC_REF(play), user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 			return TRUE
 		else
-			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", max_length = MAX_NAME_LEN)
+			var/msg = tgui_input_text(user, LANG("obj.f0477a15", null), LANG("obj.70a81bf2", null), "Roulette Machine", max_length = MAX_NAME_LEN)
 			if(!msg)
 				return
 			name = msg

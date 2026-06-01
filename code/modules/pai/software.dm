@@ -165,7 +165,7 @@
 		balloon_alert(src, LANG("mob.5d371b08", null))
 		return FALSE
 	balloon_alert(src, LANG("mob.f937c63e", null))
-	if(tgui_alert(holder, "[src] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "Checking DNA", list("Yes", "No")) != "Yes")
+	if(tgui_alert(holder, LANG("mob.d9c62591", list(src)), LANG("mob.5430925c", null), list("Yes", "No")) != "Yes")
 		balloon_alert(src, LANG("mob.1a2fa12f", null))
 		return FALSE
 	holder.visible_message(span_notice("[holder] presses [holder.p_their()] thumb against [src]."), span_notice("You press your thumb against [src]."), span_notice("[src] makes a sharp clicking sound as it extracts DNA material from [holder]."))

@@ -502,7 +502,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	//NOVA EDIT ADDITION BEGIN - ADMIN
 	if(handler && handler != usr.ckey)
-		var/response = tgui_alert(usr, "This ticket is already being handled by [handler]. Do you want to continue?", "Ticket already assigned", list("Yes", "No"))
+		var/response = tgui_alert(usr, LANG("datum.38e616ab", list(handler)), LANG("datum.9783196e", null), list("Yes", "No"))
 		if(!response || response == "No")
 			return
 	//NOVA EDIT ADDITION END
@@ -523,7 +523,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	//NOVA EDIT ADDITION BEGIN - ADMIN
 	if(handler && handler != usr.ckey)
-		var/response = tgui_alert(usr, "This ticket is already being handled by [handler]. Do you want to continue?", "Ticket already assigned", list("Yes", "No"))
+		var/response = tgui_alert(usr, LANG("datum.38e616ab", list(handler)), LANG("datum.9783196e", null), list("Yes", "No"))
 		if(!response || response == "No")
 			return
 	//NOVA EDIT ADDITION END
@@ -548,7 +548,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	//NOVA EDIT ADDITION BEGIN - ADMIN
 	if(handler && handler != usr.ckey)
-		var/response = tgui_alert(usr, "This ticket is already being handled by [handler]. Do you want to continue?", "Ticket already assigned", list("Yes", "No"))
+		var/response = tgui_alert(usr, LANG("datum.38e616ab", list(handler)), LANG("datum.9783196e", null), list("Yes", "No"))
 		if(!response || response == "No")
 			return
 	//NOVA EDIT ADDITION END
@@ -575,7 +575,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	//NOVA EDIT ADDITION BEGIN - ADMIN
 	if(handler && handler != usr.ckey)
-		var/response = tgui_alert(usr, "This ticket is already being handled by [handler]. Do you want to continue?", "Ticket already assigned", list("Yes", "No"))
+		var/response = tgui_alert(usr, LANG("datum.38e616ab", list(handler)), LANG("datum.9783196e", null), list("Yes", "No"))
 		if(!response || response == "No")
 			return
 	//NOVA EDIT ADDITION END

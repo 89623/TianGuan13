@@ -344,7 +344,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 		balloon_alert(user, LANG("obj.73adc92f", null))
 		return
 
-	var/user_input = tgui_alert(user, "What would you like to do?", "Choice Selection", list("Create", "Remove"))
+	var/user_input = tgui_alert(user, LANG("obj.ab3c2f64", null), LANG("obj.bb0ac569", null), list("Create", "Remove"))
 	if(!user_input)
 		return
 

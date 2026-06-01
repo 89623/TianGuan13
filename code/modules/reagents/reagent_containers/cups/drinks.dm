@@ -466,7 +466,7 @@
 		balloon_alert(user, LANG("obj.3c6fe8ea", null))
 		return CLICK_ACTION_BLOCKING
 
-	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", custom_drink_name, 45, FALSE), 64)
+	var/new_name = reject_bad_text(tgui_input_text(user, LANG("obj.49eaa853", null), LANG("obj.da7b2f30", null), custom_drink_name, 45, FALSE), 64)
 	if(!new_name)
 		balloon_alert(user, LANG("obj.98fc4ad4", null))
 		using_custom_drinks = FALSE
@@ -475,7 +475,7 @@
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return CLICK_ACTION_BLOCKING
 
-	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
+	var/new_desc = reject_bad_text(tgui_input_text(user, LANG("obj.937d5ec4", null), LANG("obj.5f0097b5", null), custom_drink_desc, 64, TRUE), 128)
 	if(!new_desc)
 		balloon_alert(user, LANG("obj.f41bd3b7", null))
 		using_custom_drinks = FALSE

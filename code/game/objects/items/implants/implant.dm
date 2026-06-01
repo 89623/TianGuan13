@@ -215,7 +215,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(params["implant_action"] == "self_destruct")
-		var/warning = tgui_alert(user, "Activation will harmlessly self-destruct this implant. Proceed?", "You sure?", list("Yes", "No"))
+		var/warning = tgui_alert(user, LANG("obj.a926878c", null), LANG("obj.be968efe", null), list("Yes", "No"))
 		if(warning != "Yes" || QDELETED(src) || QDELETED(user) || QDELETED(console) || isnull(imp_in))
 			return TRUE
 		if(!console.is_operational || !user.can_perform_action(console, NEED_DEXTERITY|ALLOW_SILICON_REACH))

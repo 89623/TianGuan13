@@ -174,7 +174,7 @@ Slimecrossing Items
 		return
 	if(pokemon.mind)
 		to_chat(user, span_notice(LANG("obj.2a23d692", list(pokemon))))
-		if(tgui_alert(pokemon, "Would you like to enter [user]'s capture device?", "Gold Capture Device", list("Yes", "No")) == "Yes")
+		if(tgui_alert(pokemon, LANG("obj.899669bb", list(user)), LANG("obj.baa986aa", null), list("Yes", "No")) == "Yes")
 			if(user.can_perform_action(src) && user.can_perform_action(pokemon))
 				to_chat(user, span_notice(LANG("obj.e1789f82", list(pokemon))))
 				to_chat(pokemon, span_notice(LANG("obj.ebbaa692", null)))

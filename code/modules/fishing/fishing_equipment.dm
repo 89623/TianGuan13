@@ -597,7 +597,7 @@
 	var/list/choices = list()
 	for(var/datum/fish_trait/trait_type as anything in fish.fish_traits)
 		choices[trait_type::name] = trait_type
-	var/choice = tgui_input_list(user, "Choose a trait to extract", "Fish Trait Extraction", choices)
+	var/choice = tgui_input_list(user, LANG("obj.bfe509c9", null), LANG("obj.b528d59f", null), choices)
 	if(!choice || QDELETED(fish) || !user.is_holding(src) || !fish.IsReachableBy(user))
 		return ITEM_INTERACT_BLOCKING
 

@@ -24,7 +24,7 @@
 	if(is_banned_from(user.ckey, BAN_MOB_CONTROL))
 		to_chat(user, LANG("mob.2fdfbaa8", null))
 		return
-	var/query = tgui_alert(user, "Become [src]?", "Take mob control", list("Yes", "No"))
+	var/query = tgui_alert(user, LANG("mob.41bb31fc", list(src)), LANG("mob.b251a324", null), list("Yes", "No"))
 	if(!query || query == "No" || !src || QDELETED(src))
 		return
 	if(key)

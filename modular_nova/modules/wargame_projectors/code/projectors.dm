@@ -88,7 +88,7 @@
 	select_hologram(user)
 
 /obj/item/wargame_projector/click_alt(mob/user)
-	var/selected_color = tgui_input_list(user, "Select a color", "Color Selection", color_options)
+	var/selected_color = tgui_input_list(user, LANG("obj.c374a224", null), LANG("obj.503c427e", null), color_options)
 	if(isnull(selected_color))
 		balloon_alert(user, LANG("obj.4435cb6b", null))
 		return
@@ -99,7 +99,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/wargame_projector/item_ctrl_click(mob/user)
-	if(tgui_alert(usr,"Clear all currently active holograms?", "Hologram Removal", list("Yes", "No")) == "Yes")
+	if(tgui_alert(usr,LANG("obj.da18bc63", null), LANG("obj.f2e2c746", null), list("Yes", "No")) == "Yes")
 		for(var/hologram in projections)
 			qdel(hologram)
 	return CLICK_ACTION_SUCCESS

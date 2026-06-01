@@ -22,7 +22,7 @@
 		to_chat(src, span_danger(LANG("client.dd83f55e", null)))
 		return
 
-	var/choice = tgui_input_list(usr, "Which relay do you wish to use?", "Relay choice", available_relays)
+	var/choice = tgui_input_list(usr, LANG("client.ad08a62a", null), LANG("client.a135c8d5", null), available_relays)
 	if(isnull(choice))
 		return
 	var/address = available_relays[choice]

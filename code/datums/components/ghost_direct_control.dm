@@ -117,7 +117,7 @@
 
 /// We got far enough to establish that this mob is a valid target, let's try to posssess it
 /datum/component/ghost_direct_control/proc/attempt_possession(mob/our_mob, mob/dead/observer/hopeful_ghost)
-	var/ghost_asked = tgui_alert(usr, "Become [our_mob]?", "Are you sure?", list("Yes", "No"))
+	var/ghost_asked = tgui_alert(usr, LANG("datum.41bb31fc", list(our_mob)), LANG("datum.77344162", null), list("Yes", "No"))
 	if (ghost_asked != "Yes" || QDELETED(our_mob))
 		return
 	assume_direct_control(hopeful_ghost)

@@ -175,11 +175,8 @@
 			span_warning(LANG("obj.aaf18453", null)),
 			span_warning(LANG("obj.5aa4c7e6", null))
 		)
-		if(tgui_alert(user, "Vending machine is ID locked.\
-		Deconstruction will result in an catrostrophic self destruct.\
-		If you are the owner of this machine please unlink your account with an ID swipe before proceeding.\
-		Still proceed?",
-		"Vandalism protection protocol",
+		if(tgui_alert(user, LANG("obj.dd71deaf", null),
+		LANG("obj.95c869a6", null),
 		list("Yes", "No")) == "No")
 			return ITEM_INTERACT_FAILURE
 
@@ -213,7 +210,7 @@
 
 /obj/machinery/vending/custom/descformat(input, mob/living/user)
 	. = input
-	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60))
+	var/new_slogan = reject_bad_text(tgui_input_text(user, LANG("obj.57f3b8a7", null), LANG("obj.6295cf88", null), "Epic", max_length = 60))
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if (new_slogan)

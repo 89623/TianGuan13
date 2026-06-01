@@ -465,7 +465,7 @@
 		return
 
 	var/current_mode_text = GLOB.suit_sensor_mode_to_defines[sensor_mode + 1]
-	var/new_mode = tgui_input_list(user_mob, "Select a sensor mode", "Suit Sensors", GLOB.suit_sensor_mode_to_defines, current_mode_text)
+	var/new_mode = tgui_input_list(user_mob, LANG("obj.24e97e1e", null), LANG("obj.e765235b", null), GLOB.suit_sensor_mode_to_defines, current_mode_text)
 	if(isnull(new_mode))
 		return
 	if(!can_toggle_sensors(user_mob))

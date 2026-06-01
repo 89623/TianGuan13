@@ -234,7 +234,7 @@
 	if(!genital_list.len) //There is nothing to expose
 		return
 
-	var/obj/item/organ/genital/picked_organ = tgui_input_list(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals", genital_list)
+	var/obj/item/organ/genital/picked_organ = tgui_input_list(src, LANG("mob.1291c087", null), LANG("mob.dfba591a", null), genital_list)
 
 	if(!picked_organ || !(picked_organ in organs))
 		return
@@ -247,7 +247,7 @@
 		"Layer Above Clothes" = GENITAL_LAYER_HIGH,
 	)
 
-	var/picked_visibility = tgui_input_list(src, "Choose visibility setting", "Expose/Hide genitals", gen_vis_trans)
+	var/picked_visibility = tgui_input_list(src, LANG("mob.8c64f99e", null), LANG("mob.dfba591a", null), gen_vis_trans)
 
 	if(!picked_visibility || !picked_organ || !(picked_organ in organs))
 		return
@@ -279,7 +279,7 @@
 	if(!genital_list.len) //There is nothing to modify.
 		return
 
-	var/obj/item/organ/genital/picked_organ = tgui_input_list(src, "Choose which genitalia to the change arousal of", "Expose/Hide genitals", genital_list)
+	var/obj/item/organ/genital/picked_organ = tgui_input_list(src, LANG("mob.0bd22500", null), LANG("mob.dfba591a", null), genital_list)
 
 	if(!picked_organ || !(picked_organ in organs))
 		return
@@ -290,7 +290,7 @@
 		"Very aroused" = AROUSAL_FULL,
 	)
 
-	var/picked_arousal = tgui_input_list(src, "Choose arousal", "Toggle Arousal", gen_arous_trans)
+	var/picked_arousal = tgui_input_list(src, LANG("mob.f7ed617f", null), LANG("mob.963596b1", null), gen_arous_trans)
 
 	if(!picked_arousal || !picked_organ || !(picked_organ in organs))
 		return

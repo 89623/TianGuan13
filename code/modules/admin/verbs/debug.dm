@@ -16,10 +16,10 @@ ADMIN_VERB(air_status, R_DEBUG, "Air Status In Location", "Gets the air status f
 
 ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(user, "Wait until the game starts")
+		tgui_alert(user, LANG("datum.f838a6c3", null))
 		return
 	if(issilicon(target))
-		tgui_alert(user, "They are already a cyborg.")
+		tgui_alert(user, LANG("datum.bef9f2e8", null))
 		return
 	log_admin("[key_name(user)] has robotized [target.key].")
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, Robotize))
@@ -73,16 +73,16 @@ ADMIN_VERB(cmd_del_all_hard, R_DEBUG|R_SPAWN, "Hard-Del-All", "Hard delete all d
 	if(!type_to_del)
 		return
 
-	var/choice = alert(user, "ARE YOU SURE that you want to hard delete this type? It will cause MASSIVE lag.", "Hoooo lad what happen?", "Yes", "No")
+	var/choice = alert(user, LANG("datum.010bcc1f", null), LANG("datum.9ee05007", null), "Yes", "No")
 	if(choice != "Yes")
 		return
 
-	choice = alert(user, "Do you want to pre qdelete the atom? This will speed things up significantly, but may break depending on your level of fuckup.", "How do you even get it that bad", "Yes", "No")
+	choice = alert(user, LANG("datum.9913e52e", null), LANG("datum.23595b48", null), "Yes", "No")
 	var/should_pre_qdel = TRUE
 	if(choice == "No")
 		should_pre_qdel = FALSE
 
-	choice = alert(user, "Ok one last thing, do you want to yield to the game? or do it all at once. These are hard deletes remember.", "Jesus christ man", "Yield", "Ignore the server")
+	choice = alert(user, LANG("datum.feda24f1", null), LANG("datum.6b18d6f0", null), "Yield", "Ignore the server")
 	var/should_check_tick = TRUE
 	if(choice == "Ignore the server")
 		should_check_tick = FALSE
@@ -117,7 +117,7 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "Make Powernets", "Regene
 ADMIN_VERB_VISIBILITY(cmd_admin_grantfullaccess, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG, mob/M in world)
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(user, "Wait until the game starts")
+		tgui_alert(user, LANG("datum.f838a6c3", null))
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -151,14 +151,14 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full 
 			H.equip_to_slot(id, ITEM_SLOT_ID)
 
 	else
-		tgui_alert(user,"Invalid mob")
+		tgui_alert(user,LANG("datum.0342d1be", null))
 	BLACKBOX_LOG_ADMIN_VERB("Grant Full Access")
 	log_admin("[key_name(user)] has granted [M.key] full access.")
 	message_admins(span_adminnotice("[key_name_admin(user)] has granted [M.key] full access."))
 
 ADMIN_VERB(cmd_assume_direct_control, R_ADMIN, "Assume Direct Control", "Assume direct control of a mob.", ADMIN_CATEGORY_DEBUG, mob/M)
 	if(M.ckey)
-		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
+		if(tgui_alert(user,LANG("datum.cc755301", list(M.key, M.key)),,list("Yes","No")) != "Yes")
 			return
 	if(!M || QDELETED(M))
 		to_chat(user, span_warning(LANG("datum.fee9fdaf", null)))
@@ -180,14 +180,14 @@ ADMIN_VERB(cmd_give_direct_control, R_ADMIN, "Give Direct Control", "Give direct
 	if(!M)
 		return
 	if(M.ckey)
-		if(tgui_alert(user,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
+		if(tgui_alert(user,LANG("datum.eecd032f", list(M.key, M.key)),,list("Yes","No")) != "Yes")
 			return
-	var/client/newkey = tgui_input_list(user, "Pick the player to put in control.", "New player", sort_list(GLOB.clients))
+	var/client/newkey = tgui_input_list(user, LANG("datum.eb214719", null), LANG("datum.fdeacb81", null), sort_list(GLOB.clients))
 	if(isnull(newkey))
 		return
 	var/mob/oldmob = newkey.mob
 	var/delmob = FALSE
-	if((isobserver(oldmob) || tgui_alert(user,"Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))
+	if((isobserver(oldmob) || tgui_alert(user,LANG("datum.ac29935c", list(newkey)),LANG("datum.ec2ba959", null),list("Yes","No")) != "No"))
 		delmob = TRUE
 	if(!M || QDELETED(M))
 		to_chat(user, span_warning(LANG("datum.ecf8d7a0", null)))
@@ -415,7 +415,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		outfits[initial(O.name)] = path
 
-	var/dresscode = tgui_input_list(usr, "Select outfit", "Robust quick dress shop", baseoutfits + sort_list(outfits, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	var/dresscode = tgui_input_list(usr, LANG("client.05436964", null), LANG("client.0287867f", null), baseoutfits + sort_list(outfits, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if (isnull(dresscode))
 		return
 
@@ -429,7 +429,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 			var/datum/outfit/O = path
 			job_outfits[initial(O.name)] = path
 
-		dresscode = tgui_input_list(usr, "Select job equipment", "Robust quick dress shop", sort_list(job_outfits, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+		dresscode = tgui_input_list(usr, LANG("client.5d3c14c3", null), LANG("client.0287867f", null), sort_list(job_outfits, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -441,7 +441,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 			var/datum/outfit/O = path
 			plasmaman_outfits[initial(O.name)] = path
 
-		dresscode = tgui_input_list(usr, "Select plasmeme equipment", "Robust quick dress shop", sort_list(plasmaman_outfits, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+		dresscode = tgui_input_list(usr, LANG("client.2d3ee6f2", null), LANG("client.0287867f", null), sort_list(plasmaman_outfits, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		dresscode = plasmaman_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -450,7 +450,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 		var/list/custom_names = list()
 		for(var/datum/outfit/D in GLOB.custom_outfits)
 			custom_names[D.name] = D
-		var/selected_name = tgui_input_list(usr, "Select outfit", "Robust quick dress shop", sort_list(custom_names, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+		var/selected_name = tgui_input_list(usr, LANG("client.05436964", null), LANG("client.0287867f", null), sort_list(custom_names, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		dresscode = custom_names[selected_name]
 		if(isnull(dresscode))
 			return
@@ -459,7 +459,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", mob/living/M in world)
 	if(!istype(M))
-		tgui_alert(user,"Cannot revive a ghost")
+		tgui_alert(user,LANG("datum.df33f692", null))
 		return
 	M.revive(ADMIN_HEAL_ALL)
 
@@ -491,7 +491,7 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 	browser.open()
 
 ADMIN_VERB(debug_mob_lists, R_DEBUG, "Debug Mob Lists", "For when you just gotta know.", ADMIN_CATEGORY_DEBUG)
-	var/chosen_list = tgui_input_list(user, "Which list?", "Select List", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+	var/chosen_list = tgui_input_list(user, LANG("datum.4b0a08c9", null), LANG("datum.4212d113", null), list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 	if(isnull(chosen_list))
 		return
 	switch(chosen_list)
@@ -589,7 +589,7 @@ ADMIN_VERB(jump_to_ruin, R_DEBUG, "Jump to Ruin", "Displays a list of all placed
 
 		names[name] = ruin_landmark
 
-	var/ruinname = tgui_input_list(user, "Select ruin", "Jump to Ruin", sort_list(names))
+	var/ruinname = tgui_input_list(user, LANG("datum.8df54e6e", null), LANG("datum.56815530", null), sort_list(names))
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]
 	if(!istype(landmark))
 		return
@@ -617,13 +617,13 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 			themed_names[name] = list(ruin, theme, list(ruin.default_area))
 		names += sort_list(themed_names)
 
-	var/ruinname = tgui_input_list(user, "Select ruin", "Spawn Ruin", names)
+	var/ruinname = tgui_input_list(user, LANG("datum.8df54e6e", null), LANG("datum.0849f1d2", null), names)
 	var/data = names[ruinname]
 	if (!data)
 		return
 	var/datum/map_template/ruin/template = data[1]
 	if (exists[template])
-		var/response = tgui_alert(user,"There is already a [template] in existence.", "Spawn Ruin", list("Jump", "Place Another"))
+		var/response = tgui_alert(user,LANG("datum.48f9044e", list(template)), LANG("datum.0849f1d2", null), list("Jump", "Place Another"))
 		if (!response)
 			return
 		if (response == "Jump")
@@ -669,8 +669,8 @@ ADMIN_VERB(test_pathfinding, R_DEBUG, "Toggle Pathfind Testing", "Enables/Disabl
 ADMIN_VERB(clear_turf_reservations, R_DEBUG, "Clear Dynamic Turf Reservations", "Deallocates all reserved space, restoring it to round start conditions.", ADMIN_CATEGORY_DEBUG)
 	var/answer = tgui_alert(
 		user,
-		"WARNING: THIS WILL WIPE ALL RESERVED SPACE TO A CLEAN SLATE! ANY MOVING SHUTTLES, ELEVATORS, OR IN-PROGRESS PHOTOGRAPHY WILL BE DELETED!",
-		"Really wipe dynamic turfs?",
+		LANG("datum.ef8c440a", null),
+		LANG("datum.9c54956e", null),
 		list("YES", "NO"),
 	)
 	if(answer != "YES")
@@ -697,7 +697,7 @@ ADMIN_VERB(view_runtimes, R_DEBUG, "View Runtimes", "Opens the runtime viewer.",
 		if(GLOB.total_runtimes >= 100000)
 			warning = "There are a TON of runtimes, clicking any button (especially \"linear\") WILL LIKELY crash the server"
 		// Not using TGUI alert, because it's view runtimes, stuff is probably broken
-		alert(user, "[warning]. Proceed with caution. If you really need to see the runtimes, download the runtime log and view it in a text editor.", "HEED THIS WARNING CAREFULLY MORTAL")
+		alert(user, LANG("datum.dea2126e", list(warning)), LANG("datum.98d2c367", null))
 
 ADMIN_VERB(pump_random_event, R_DEBUG, "Pump Random Event", "Schedules the event subsystem to fire a new random event immediately. Some events may fire without notification.", ADMIN_CATEGORY_DEBUG)
 	SSevents.scheduled = world.time
@@ -736,7 +736,7 @@ ADMIN_VERB(show_line_profiling, R_DEBUG, "Show Line Profiling", "Shows tracked p
 	profile_show(user, sort)
 
 ADMIN_VERB(reload_configuration, R_DEBUG, "Reload Configuration", "Reloads the configuration from the default path on the disk, wiping any in-round modifications.", ADMIN_CATEGORY_DEBUG)
-	if(tgui_alert(user, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modifications?", "Really reset?", list("No", "Yes")) != "Yes")
+	if(tgui_alert(user, LANG("datum.b48abfc1", null), LANG("datum.a0c5403c", null), list("No", "Yes")) != "Yes")
 		return
 	config.admin_reload()
 
@@ -992,7 +992,7 @@ ADMIN_VERB(show_powernets, R_DEBUG, "Color Powernet Runs", "Colors every node an
 			marker.powernet_owner = REF(net)
 
 ADMIN_VERB(count_instances, R_DEBUG, "Count Atoms/Datums", "Count how many atom or datum instances there are of each type, then output it to a JSON to download.", ADMIN_CATEGORY_DEBUG)
-	var/option = tgui_alert(user, "What type of instances do you wish to count?", "Instance Count", list("Atoms", "Datums"))
+	var/option = tgui_alert(user, LANG("datum.0e991529", null), LANG("datum.b7b8d5c4", null), list("Atoms", "Datums"))
 	if(!option)
 		return
 	var/list/result
@@ -1037,17 +1037,16 @@ ADMIN_VERB(count_instances, R_DEBUG, "Count Atoms/Datums", "Count how many atom 
 ADMIN_VERB_VISIBILITY(export_save_to_dev_preference, ADMIN_VERB_VISIBLITY_FLAG_LOCALHOST)
 ADMIN_VERB(export_save_to_dev_preference, R_DEBUG, "Export Save as Dev Preferences", "Exports your savefile to be used by any guests that connect to your localost.", ADMIN_CATEGORY_SERVER)
 	if(!user.is_localhost())
-		tgui_alert(user, "You shouldn't be using this right now!", "Export Failed", list("OK"))
+		tgui_alert(user, LANG("datum.03700606", null), LANG("datum.08903686", null), list("OK"))
 		log_admin("[key_name(user)] attempted to export preferences to [DEV_PREFS_PATH] - this is normally locked to localhost only!")
 		stack_trace("Export Save as Dev Preferences was called by a non-localhost user!")
 		return
 	if(is_guest_key(user.key))
-		tgui_alert(user, "Guests don't have preferences to export.", "Export Failed", list("OK"))
+		tgui_alert(user, LANG("datum.c457cc05", null), LANG("datum.08903686", null), list("OK"))
 		return
 	var/datum/preferences/user_prefs = user.prefs
 	var/datum/json_savefile/dev_save = new(DEV_PREFS_PATH)
 	user_prefs.save_preferences()
 	user_prefs.savefile.copy_to_savefile(dev_save)
 	dev_save.save()
-	tgui_alert(user, "Exported preferences to [DEV_PREFS_PATH]. \
-		Next time you localhost as a guest it will use this savefile as-is.", "Export Complete", list("OK thanks"))
+	tgui_alert(user, LANG("datum.59d2fe22", list(DEV_PREFS_PATH)), LANG("datum.072ec1dc", null), list("OK thanks"))

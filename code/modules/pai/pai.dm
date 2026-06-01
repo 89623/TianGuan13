@@ -406,8 +406,8 @@
 		return FALSE
 	var/new_laws = tgui_input_text(
 		user,
-		"Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.",
-		"pAI Directive Configuration",
+		LANG("mob.9c7f6dc5", null),
+		LANG("mob.50ed9f0f", null),
 		laws.supplied[1],
 		max_length = 300,
 	)
@@ -453,7 +453,7 @@
  * @returns {boolean} - TRUE if successful, FALSE if not.
  */
 /mob/living/silicon/pai/proc/wipe_pai(mob/user)
-	if(tgui_alert(user, "Are you certain you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, LANG("mob.7fd173a5", null), LANG("mob.b46e0e79", null), list("Yes", "No")) != "Yes")
 		return FALSE
 	to_chat(src, span_warning(LANG("mob.19f078c3", null)))
 	to_chat(src, span_danger(LANG("mob.665654d8", null)))

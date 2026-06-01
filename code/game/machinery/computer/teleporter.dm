@@ -205,7 +205,7 @@
 	var/list/targets = get_targets()
 
 	if (regime_set == REGIME_TELEPORTER)
-		var/desc = tgui_input_list(usr, "Select a location to lock in", "Locking Computer", sort_list(targets))
+		var/desc = tgui_input_list(usr, LANG("obj.0b1dfa92", null), LANG("obj.3a28d7cf", null), sort_list(targets))
 		if(isnull(desc) || !user.can_perform_action(src, ALLOW_SILICON_REACH))
 			return
 		set_teleport_target(targets[desc])
@@ -215,7 +215,7 @@
 			to_chat(user, span_alert(LANG("obj.2e9bff88", null)))
 			return
 
-		var/desc = tgui_input_list(usr, "Select a station to lock in", "Locking Computer", sort_list(targets))
+		var/desc = tgui_input_list(usr, LANG("obj.9fb44fbc", null), LANG("obj.3a28d7cf", null), sort_list(targets))
 		if(isnull(desc)|| !user.can_perform_action(src, ALLOW_SILICON_REACH))
 			return
 		var/obj/machinery/teleport/station/target_station = targets[desc]

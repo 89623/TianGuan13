@@ -45,7 +45,7 @@ Self-sustaining extracts:
 		var/choice = english_list(req_chem_names, and_text = ", ")
 		choices[choice] = recipe
 
-	var/selectName = tgui_input_list(user, "Reagent(s) the extract will produce.", "Self-sustaining Reaction", choices)
+	var/selectName = tgui_input_list(user, LANG("obj.bf57772f", null), LANG("obj.8456440b", null), choices)
 	if(isnull(selectName))
 		return
 

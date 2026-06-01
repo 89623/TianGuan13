@@ -1794,7 +1794,7 @@
 	if(href_list[VV_HK_DEADCHAT_PLAYS])
 		if(!check_rights(R_FUN))
 			return
-		if(tgui_alert(usr, "Allow deadchat to control [src] via chat commands?", "Deadchat Plays [src]", list("Allow", "Cancel")) != "Allow")
+		if(tgui_alert(usr, LANG("atom.40a4f92b", list(src)), LANG("atom.6203ef2d", list(src)), list("Allow", "Cancel")) != "Allow")
 			return
 		// Alert is async, so quick sanity check to make sure we should still be doing this.
 		if(QDELETED(src))
@@ -2015,12 +2015,12 @@
  * Opens the modify faction ui.
  */
 /atom/movable/proc/edit_faction(mob/user)
-	var/prompt = tgui_alert(usr, "Would you like to Add or Remove faction?", "Add/Remove?", list("Add", "Remove"))
+	var/prompt = tgui_alert(usr, LANG("atom.c9cc9531", null), LANG("atom.8d04ee3a", null), list("Add", "Remove"))
 	if (isnull(prompt))
 		return FALSE
 
 	if (prompt == "Add")
-		var/faction_to_add = tgui_input_text(user, "Enter a faction name to add.", "Add Faction", max_length = MAX_NAME_LEN)
+		var/faction_to_add = tgui_input_text(user, LANG("atom.92170e86", null), LANG("atom.3302b0ca", null), max_length = MAX_NAME_LEN)
 		if(isnull(faction_to_add))
 			return FALSE
 
@@ -2034,7 +2034,7 @@
 
 		current_factions = sort_list(current_factions, GLOBAL_PROC_REF(cmp_text_asc)) // sort alphabetically
 
-		var/faction_to_remove = tgui_input_list(user, "Select a faction to remove.", "Remove faction", current_factions)
+		var/faction_to_remove = tgui_input_list(user, LANG("atom.db3f1c38", null), LANG("atom.792966e7", null), current_factions)
 		if(isnull(faction_to_remove))
 			return FALSE
 

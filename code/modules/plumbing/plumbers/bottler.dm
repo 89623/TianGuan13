@@ -64,7 +64,7 @@
 	if(!valid_output_configuration)
 		to_chat(user, span_warning(LANG("obj.e6c18213", null)))
 		return .
-	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = reagents.maximum_volume, round_value = TRUE)
+	var/new_amount = tgui_input_number(user, LANG("obj.5c45a8cc", null), LANG("obj.b7b9d7d4", null), max_value = reagents.maximum_volume, round_value = TRUE)
 	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return .
 	wanted_amount = new_amount

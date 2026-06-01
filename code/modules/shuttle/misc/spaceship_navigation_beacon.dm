@@ -55,7 +55,7 @@
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/tool)
 	..()
 
-	var/chosen_tag = tgui_input_text(user, "Enter the custom name for this beacon", "Beacon Reclassification", max_length = MAX_NAME_LEN)
+	var/chosen_tag = tgui_input_text(user, LANG("obj.85af715c", null), LANG("obj.e461ea59", null), max_length = MAX_NAME_LEN)
 	if(!chosen_tag)
 		return
 

@@ -50,7 +50,7 @@
 		to_chat(user, span_warning(LANG("obj.203c357f", null)))
 		return
 
-	var/message = tgui_input_text(user, "Input your text", "Keyboard", max_length = MAX_MESSAGE_LEN)
+	var/message = tgui_input_text(user, LANG("obj.e647e6d0", null), LANG("obj.28a551f5", null), max_length = MAX_MESSAGE_LEN)
 	entity.set_output(user)
 	output.set_output(message)
 	signal.set_output(COMPONENT_SIGNAL)

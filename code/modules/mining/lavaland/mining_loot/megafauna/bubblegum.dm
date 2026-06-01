@@ -8,7 +8,7 @@
 	icon_state = "vial"
 
 /obj/item/mayhem/attack_self(mob/user)
-	if(tgui_alert(user, "Breaking the bottle will cause nearby crewmembers to go into a murderous frenzy. Be sure you know what you are doing...", "Break the bottle?", list("Break it!", "DON'T")) != "Break it!")
+	if(tgui_alert(user, LANG("obj.d7a687a7", null), LANG("obj.42653979", null), list("Break it!", "DON'T")) != "Break it!")
 		return
 
 	if(QDELETED(src) || !user.is_holding(src) || user.incapacitated)

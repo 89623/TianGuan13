@@ -52,7 +52,7 @@
 
 	var/datum/component/spy_uplink/uplink = uplink_weakref?.resolve()
 	if(isnull(uplink))
-		tgui_alert(usr, "No spy uplink!", "Mission Failed")
+		tgui_alert(usr, LANG("datum.7b31d118", null), LANG("datum.486c2dd3", null))
 		return
 
 	uplink.ui_interact(usr)
@@ -63,18 +63,18 @@
 
 	var/datum/component/spy_uplink/uplink = uplink_weakref?.resolve()
 	if(isnull(uplink))
-		tgui_alert(usr, "No spy uplink!", "Mission Failed")
+		tgui_alert(usr, LANG("datum.7b31d118", null), LANG("datum.486c2dd3", null))
 		return
 
 	uplink.handler.force_refresh()
-	tgui_alert(usr, "Bounties refreshed.", "Mission Success")
+	tgui_alert(usr, LANG("datum.38f6a64e", null), LANG("datum.9fd516bd", null))
 
 /datum/antagonist/spy/proc/admin_create_spy_uplink()
 	if(!check_rights(R_ADMIN|R_DEBUG))
 		return
 
 	if(!auto_create_spy_uplink(owner.current, give_backup = FALSE))
-		tgui_alert(usr, "Failed to give [owner.current] a spy uplink - likely don't have a valid item to host it.", "Mission Failed")
+		tgui_alert(usr, LANG("datum.4f70a000", list(owner.current)), LANG("datum.486c2dd3", null))
 
 /datum/antagonist/spy/proc/bounty_handler_vv()
 	if(!check_rights(R_ADMIN|R_DEBUG))
@@ -82,7 +82,7 @@
 
 	var/datum/component/spy_uplink/uplink = uplink_weakref?.resolve()
 	if(isnull(uplink))
-		tgui_alert(usr, "No spy uplink!", "Mission Failed")
+		tgui_alert(usr, LANG("datum.7b31d118", null), LANG("datum.486c2dd3", null))
 		return
 
 	usr.client?.debug_variables(uplink.handler)

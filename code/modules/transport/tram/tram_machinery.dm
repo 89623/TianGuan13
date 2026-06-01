@@ -10,7 +10,7 @@
 	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/platform as anything in SStransport.nav_beacons[specific_transport_id])
 		LAZYADD(available_platforms, platform.name)
 
-	var/selected_platform = tgui_input_list(user, "Set the platform ID", "Platform", available_platforms)
+	var/selected_platform = tgui_input_list(user, LANG("obj.fddb791b", null), LANG("obj.47ba7975", null), available_platforms)
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/change_platform
 	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 		if(destination.name == selected_platform)

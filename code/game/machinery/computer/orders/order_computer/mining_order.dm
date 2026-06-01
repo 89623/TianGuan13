@@ -108,10 +108,10 @@
 		return ..()
 	var/obj/item/card/id/attacking_id = attacking_item
 	balloon_alert(user, LANG("obj.15ef6553", null))
-	var/point_movement = tgui_alert(user, "To ID (from card) or to card (from ID)?", "Mining Points Transfer", list(TO_USER_ID, TO_POINT_CARD))
+	var/point_movement = tgui_alert(user, LANG("obj.90fa83f2", null), LANG("obj.36c7058b", null), list(TO_USER_ID, TO_POINT_CARD))
 	if(!point_movement)
 		return
-	var/amount = tgui_input_number(user, "How much do you want to transfer? ID Balance: [attacking_id.registered_account.mining_points], Card Balance: [points]", "Transfer Points", min_value = 0, round_value = 1)
+	var/amount = tgui_input_number(user, LANG("obj.e9da4f50", list(attacking_id.registered_account.mining_points, points)), LANG("obj.bfebd140", null), min_value = 0, round_value = 1)
 	if(!amount)
 		return
 	switch(point_movement)

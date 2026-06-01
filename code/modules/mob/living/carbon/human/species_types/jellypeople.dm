@@ -728,7 +728,7 @@
 	if(!length(recipient_options))
 		to_chat(telepath, span_warning(LANG("datum.f20e11b6", null)))
 		return
-	var/mob/living/recipient = tgui_input_list(telepath, "Choose a telepathic message recipient", "Telepathy", sort_names(recipient_options))
+	var/mob/living/recipient = tgui_input_list(telepath, LANG("datum.2a466622", null), LANG("datum.ecb4d278", null), sort_names(recipient_options))
 	if(isnull(recipient) || telepath.stat == DEAD || !is_species(telepath, /datum/species/jelly/stargazer))
 		return
 	var/msg = tgui_input_text(telepath, title = "Telepathy", max_length = MAX_MESSAGE_LEN)

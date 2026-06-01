@@ -86,7 +86,7 @@
 /obj/machinery/ctf/spawner/attack_ghost(mob/user)
 	if(ctf_game.ctf_enabled == FALSE)
 		if(user.client && user.client.holder)
-			var/response = tgui_alert(user, "Enable this CTF game?", "CTF", list("Yes", "No"))
+			var/response = tgui_alert(user, LANG("obj.1361043e", null), LANG("obj.7a3ac95c", null), list("Yes", "No"))
 			if(response == "Yes")
 				toggle_id_ctf(user, game_id)
 			return

@@ -348,7 +348,7 @@ GLOBAL_DATUM_INIT(holo_scanline, /obj/effect/abstract/holo_scanline, new)
 	var/datum/species/synthetic/holosynth/species = dna?.species
 	if(!istype(species))
 		return
-	var/new_value = tgui_input_number(src, "Set transparency. 60 = most see-through, 100 = fully solid.", "Hologram Transparency", (dna?.features["holo_transparency"] || 60), 100, 60)
+	var/new_value = tgui_input_number(src, LANG("mob.68b04713", null), LANG("mob.5d8aa259", null), (dna?.features["holo_transparency"] || 60), 100, 60)
 	if(!new_value)
 		return
 	dna?.features["holo_transparency"] = new_value

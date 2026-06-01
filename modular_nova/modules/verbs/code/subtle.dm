@@ -33,7 +33,7 @@
 		to_chat(user, LANG("datum.edad7622", null))
 		return FALSE
 	else if(!params)
-		subtle_emote = tgui_input_text(user, "Choose an emote to display.", "Subtle", null, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
+		subtle_emote = tgui_input_text(user, LANG("datum.b0c1d36d", null), LANG("datum.94ebb5ba", null), null, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 		if(!subtle_emote)
 			return FALSE
 		subtle_message = subtle_emote
@@ -107,7 +107,7 @@
 		to_chat(user, span_warning(LANG("datum.edad7622", null)))
 		return FALSE
 	else if(!subtler_emote)
-		subtler_emote = tgui_input_text(user, "Choose an emote to display.", "Subtler" , max_length = MAX_MESSAGE_LEN, multiline = TRUE)
+		subtler_emote = tgui_input_text(user, LANG("datum.b0c1d36d", null), LANG("datum.7d3c6a2d", null) , max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 		if(!subtler_emote)
 			return FALSE
 
@@ -132,7 +132,7 @@
 			in_view.Remove(mob)
 
 		var/list/targets = list(SUBTLE_ONE_TILE_TEXT, SUBTLE_SAME_TILE_TEXT) + in_view
-		target = tgui_input_list(user, "Pick a target", "Target Selection", targets)
+		target = tgui_input_list(user, LANG("datum.153e9cb5", null), LANG("datum.eb4c7c3f", null), targets)
 		if(!target)
 			return FALSE
 

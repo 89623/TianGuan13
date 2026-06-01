@@ -383,7 +383,7 @@
 
 /datum/opposing_force/proc/handle(mob/user)
 	if(handling_admin)
-		var/choice = tgui_alert(user, "Another admin is currently handling this application, do you want to override them?", "Admin Handling", list("Yes", "No"))
+		var/choice = tgui_alert(user, LANG("datum.70ea9c74", null), LANG("datum.0ab73cbb", null), list("Yes", "No"))
 		if(choice == "No")
 			return
 	handling_admin = get_admin_ckey(user)
@@ -528,7 +528,7 @@
 /datum/opposing_force/proc/modify_request(mob/user)
 	if(status == OPFOR_STATUS_CHANGES_REQUESTED)
 		return
-	var/choice = tgui_alert(user, "Are you sure you want to request changes? This will unapprove all objectives.", "Confirm", list("Yes", "No"))
+	var/choice = tgui_alert(user, LANG("datum.b1634c02", null), LANG("datum.3c1da715", null), list("Yes", "No"))
 	if(choice != "Yes")
 		return
 	if(status == OPFOR_STATUS_CHANGES_REQUESTED) // The alert is not async, so this could change, thus being spammed.
@@ -583,7 +583,7 @@
 /datum/opposing_force/proc/close_application(mob/user)
 	if(status == OPFOR_STATUS_NOT_SUBMITTED)
 		return
-	var/choice = tgui_alert(user, "Are you sure you want withdraw your application?", "Confirm", list("Yes", "No"))
+	var/choice = tgui_alert(user, LANG("datum.26c2d033", null), LANG("datum.3c1da715", null), list("Yes", "No"))
 	if(choice != "Yes")
 		return
 	if(status == OPFOR_STATUS_NOT_SUBMITTED) // The alert is not async, so this could change, thus being spammed.

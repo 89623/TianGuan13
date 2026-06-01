@@ -348,7 +348,7 @@
 
 /// Confirms with the user that they really want to push the red button. Do it, you won't!
 /obj/machinery/button/delam_scram/proc/confirm_action(mob/user, list/modifiers)
-	if(tgui_alert(usr, "Are you really sure that you want to push this?", "It looked scarier on HBO.", list("No", "Yes")) != "Yes")
+	if(tgui_alert(usr, LANG("obj.0f8ce3b0", null), LANG("obj.b95a483c", null), list("No", "Yes")) != "Yes")
 		button_stage = BUTTON_AWAKE
 		visible_message(span_danger(LANG("obj.6d296c39", list(user, src))))
 		update_appearance()

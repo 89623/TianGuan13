@@ -49,7 +49,7 @@
 	if (isnull(summoner))
 		return
 	var/sender_key = key
-	var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian", max_length = MAX_MESSAGE_LEN)
+	var/input = tgui_input_text(src, LANG("mob.4be89c2d", null), LANG("mob.40cb012c", null), max_length = MAX_MESSAGE_LEN)
 	if (sender_key != key || !input) //guardian got reset, or did not enter anything
 		return
 
@@ -83,7 +83,7 @@
 
 /datum/action/cooldown/mob_cooldown/guardian_comms/Activate(atom/target)
 	StartCooldown(360 SECONDS)
-	var/input = tgui_input_text(owner, "Enter a message to tell your guardian", "Message", max_length = MAX_MESSAGE_LEN)
+	var/input = tgui_input_text(owner, LANG("datum.dbd90738", null), LANG("datum.affb7d7e", null), max_length = MAX_MESSAGE_LEN)
 	StartCooldown()
 	if (!input)
 		return FALSE
@@ -154,7 +154,7 @@
 		StartCooldown()
 		return FALSE
 
-	var/mob/living/basic/guardian/chosen_guardian = tgui_input_list(owner, "Pick the guardian you wish to reset", "Guardian Reset", sort_names(guardians))
+	var/mob/living/basic/guardian/chosen_guardian = tgui_input_list(owner, LANG("datum.a8f867aa", null), LANG("datum.ba3087b1", null), sort_names(guardians))
 	if (isnull(chosen_guardian))
 		to_chat(owner, span_holoparasite(LANG("datum.22bcccb9", list(length(guardians) > 1 ? "any of your guardians":"your guardian"))))
 		StartCooldown()

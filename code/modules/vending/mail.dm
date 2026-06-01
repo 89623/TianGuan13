@@ -124,7 +124,7 @@
 
 /// Prompts the player to select a department to sort the mail for. Returns if `null`.
 /obj/machinery/mailsorter/proc/sort_mail(mob/user)
-	var/sorting_dept = tgui_input_list(user, "Choose the department to sort mail for","Mail Sorting", sorting_departments)
+	var/sorting_dept = tgui_input_list(user, LANG("obj.5e061e26", null),LANG("obj.5a388381", null), sorting_departments)
 	if (!sorting_dept)
 		return
 	currentstate = STATE_SORTING
@@ -226,7 +226,7 @@
 /obj/machinery/mailsorter/proc/pick_mail(mob/user)
 	if(!length(mail_list))
 		return
-	var/obj/item/mail/mail_throw = tgui_input_list(user, "Choose the envelope to eject","Mail Sorting", mail_list)
+	var/obj/item/mail/mail_throw = tgui_input_list(user, LANG("obj.3d130988", null),LANG("obj.5a388381", null), mail_list)
 	if(!mail_throw)
 		return
 	currentstate = STATE_SORTING

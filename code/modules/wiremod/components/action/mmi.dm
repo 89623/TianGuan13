@@ -218,7 +218,7 @@
 		removing.forceMove(drop_location())
 
 /obj/item/circuit_component/mmi/proc/confirm_ai_connect(mob/living/silicon/ai/user, atom/movable/shell)
-	var/confirmation = tgui_alert(user, "Connect to [shell]?", buttons = list("Yes", "No"))
+	var/confirmation = tgui_alert(user, LANG("obj.43a8812a", list(shell)), buttons = list("Yes", "No"))
 	if(confirmation != "Yes")
 		return
 	if(QDELETED(src) || QDELETED(user) || QDELETED(shell) || !parent?.shell || !user.can_interact_with(shell) || !boris)

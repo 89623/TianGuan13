@@ -295,8 +295,8 @@
 
 	var/reason = tgui_input_text(
 		src,
-		"What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)",
-		"Confirm Shuttle Call",
+		LANG("mob.1426d190", list(CALL_SHUTTLE_REASON_LENGTH)),
+		LANG("mob.843a84ea", null),
 		max_length = MAX_MESSAGE_LEN,
 		encode = FALSE,
 	)
@@ -605,7 +605,7 @@
 			for(var/i in C.network)
 				cameralist[i] = i
 	var/old_network = network
-	network = tgui_input_list(U, "Which network would you like to view?", "Camera Network", sort_list(cameralist))
+	network = tgui_input_list(U, LANG("mob.3085eed0", null), LANG("mob.661fb89f", null), sort_list(cameralist))
 
 	if(!U.eyeobj)
 		U.view_core()
@@ -633,13 +633,13 @@
 		return
 
 	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + HOLOGRAM_CHOICE_CHARACTER
-	var/choice = tgui_input_list(usr, "What kind of hologram do you want?",	"Customize", choices)
+	var/choice = tgui_input_list(usr, LANG("mob.7484ee03", null),	LANG("mob.7641981c", null), choices)
 	if(!choice)
 		return
 
 	if(choice == HOLOGRAM_CHOICE_CHARACTER)
 		var/character_type = tgui_alert(usr,
-			"Would you like to base it off of your current character loadout, or a crewmember on the manifest?", "Customize",
+			LANG("mob.73c7ef7a", null), LANG("mob.7641981c", null),
 			list(CHARACTER_TYPE_CREWMEMBER, CHARACTER_TYPE_SELF)
 		)
 		switch(character_type)
@@ -680,7 +680,7 @@
 					return FALSE
 	else
 		var/list/options = GLOB.ai_hologram_category_options[choice]
-		var/option = tgui_input_list(usr, "Select a hologram", "Hologram", options)
+		var/option = tgui_input_list(usr, LANG("mob.0503da08", null), LANG("mob.4d9fb025", null), options)
 		if(!option)
 			return
 
@@ -1015,7 +1015,7 @@
 		return
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
-		target = tgui_input_list(src, "Which body to control?", "Direct Control", sort_names(possible))
+		target = tgui_input_list(src, LANG("mob.f7d93428", null), LANG("mob.44e23d5a", null), sort_names(possible))
 
 	if(isnull(target))
 		return
@@ -1107,7 +1107,7 @@
 
 /mob/living/silicon/ai/proc/show_camera_list()
 	var/list/cameras = SScameras.get_available_camera_by_tag_list(network)
-	var/camera_tag = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
+	var/camera_tag = tgui_input_list(src, LANG("mob.6e2a978f", null), LANG("mob.65c72ac4", null), cameras)
 	if(isnull(camera_tag))
 		return
 

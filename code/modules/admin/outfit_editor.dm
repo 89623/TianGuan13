@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /client/proc/open_outfit_editor(datum/outfit/target)
 	var/datum/outfit_editor/ui = new(usr, target)
@@ -119,7 +120,7 @@
 	if(!choice)
 		return
 	if(!ispath(choice))
-		tgui_alert(owner, "Invalid item", OUTFIT_EDITOR_NAME, list("oh no"))
+		tgui_alert(owner, LANG("datum.e0282434", null), OUTFIT_EDITOR_NAME, list("oh no"))
 		return
 	if(initial(choice.icon_state) == null) //hacky check copied from experimentor code
 		var/msg = "Warning: This item's icon_state is null, indicating it is very probably not actually a usable item."
@@ -197,7 +198,7 @@
 
 	if(!length(options))
 		return
-	var/option = tgui_input_list(owner, "Choose an item", OUTFIT_EDITOR_NAME, options)
+	var/option = tgui_input_list(owner, LANG("datum.da184112", null), OUTFIT_EDITOR_NAME, options)
 	if(isnull(option))
 		return
 	set_item(slot, option)

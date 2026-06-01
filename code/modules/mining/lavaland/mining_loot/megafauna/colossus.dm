@@ -40,7 +40,7 @@
 	return TRUE
 
 /datum/action/item_action/organ_action/colossus/do_effect(trigger_flags)
-	var/command = tgui_input_text(owner, "Speak with the Voice of God", "Command", max_length = MAX_MESSAGE_LEN)
+	var/command = tgui_input_text(owner, LANG("datum.9a10733a", null), LANG("datum.a4e844da", null), max_length = MAX_MESSAGE_LEN)
 	if(!command)
 		return FALSE
 	if(QDELETED(src) || QDELETED(owner))
@@ -318,7 +318,7 @@
 	if(.)
 		return
 	if(ready_to_deploy)
-		var/be_helper = tgui_alert(usr, "Become a Lightgeist? (Warning, You can no longer be revived!)", "Lightgeist Deployment", list("Yes", "No"))
+		var/be_helper = tgui_alert(usr, LANG("obj.7eab3a13", null), LANG("obj.a83f6f28", null), list("Yes", "No"))
 		if((be_helper == "Yes") && !QDELETED(src) && isobserver(user))
 			var/mob/living/basic/lightgeist/deployable = new(get_turf(loc))
 			deployable.PossessByPlayer(user.key)

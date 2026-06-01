@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	return !invoker.feast_of_owls
 
 /datum/heretic_knowledge/feast_of_owls/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/alert = tgui_alert(user,"Do you really want to forsake your ascension? This action cannot be reverted.", "Feast of Owls", list("Yes I'm sure", "No"), 30 SECONDS)
+	var/alert = tgui_alert(user,LANG("datum.5f83baba", null), LANG("datum.f9c939fa", null), list("Yes I'm sure", "No"), 30 SECONDS)
 	if(alert != "Yes I'm sure" || QDELETED(user) || QDELETED(src) || get_dist(user, loc) > 2)
 		return FALSE
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)

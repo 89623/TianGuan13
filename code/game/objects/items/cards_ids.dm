@@ -808,7 +808,7 @@
 	var/list/user_memories = user.mind.memories
 	var/datum/memory/key/account/user_key = user_memories[/datum/memory/key/account]
 	var/default_account = (istype(user_key) && user_key.remembered_id) || 11111
-	var/new_bank_id = tgui_input_number(user, "Enter the account ID to associate with this card.", "Link Bank Account", default_account, 999999, 111111)
+	var/new_bank_id = tgui_input_number(user, LANG("obj.aee8f391", null), LANG("obj.0bb92a6b", null), default_account, 999999, 111111)
 	if(!new_bank_id || QDELETED(user) || QDELETED(src) || issilicon(user) || !alt_click_can_use_id(user) || loc != user)
 		return FALSE
 	if(registered_account?.account_id == new_bank_id)
@@ -829,7 +829,7 @@
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return CLICK_ACTION_SUCCESS
 	if(registered_account.account_debt)
-		var/choice = tgui_alert(user, "Choose An Action", "Bank Account", list("Withdraw", "Pay Debt"))
+		var/choice = tgui_alert(user, LANG("obj.2264b9a7", null), LANG("obj.02d6f4c5", null), list("Withdraw", "Pay Debt"))
 		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
 			return CLICK_ACTION_BLOCKING
 		if(choice == "Pay Debt")
@@ -839,13 +839,13 @@
 		to_chat(user, span_warning(LANG("obj.784bf3f1", null)))
 		return CLICK_ACTION_BLOCKING
 	if(registered_account.replaceable && !registered_account.account_balance)
-		var/choice = tgui_alert(user, "This card's account is unassigned. Would you like to link a bank account?", "Bank Account", list("Link Account", "Leave Unassigned"))
+		var/choice = tgui_alert(user, LANG("obj.e135a793", null), LANG("obj.02d6f4c5", null), list("Link Account", "Leave Unassigned"))
 		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
 			return CLICK_ACTION_BLOCKING
 		if(choice == "Link Account")
 			set_new_account(user)
 			return CLICK_ACTION_SUCCESS
-	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] [MONEY_SYMBOL])", "Withdraw Funds", max_value = registered_account.account_balance)
+	var/amount_to_remove = tgui_input_number(user, LANG("obj.1db1578a", list(registered_account.account_balance, MONEY_SYMBOL)), LANG("obj.fe43b473", null), max_value = registered_account.account_balance)
 	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || issilicon(user) || loc != user)
 		return CLICK_ACTION_BLOCKING
 	if(!alt_click_can_use_id(user))
@@ -869,7 +869,7 @@
 		set_new_account(user)
 
 /obj/item/card/id/proc/pay_debt(user)
-	var/amount_to_pay = tgui_input_number(user, "How much do you want to pay? (Max: [registered_account.account_balance] [MONEY_SYMBOL])", "Debt Payment", max_value = min(registered_account.account_balance, registered_account.account_debt))
+	var/amount_to_pay = tgui_input_number(user, LANG("obj.daf2cebb", list(registered_account.account_balance, MONEY_SYMBOL)), LANG("obj.e3e73480", null), max_value = min(registered_account.account_balance, registered_account.account_debt))
 	if(!amount_to_pay || QDELETED(src) || loc != user || !alt_click_can_use_id(user))
 		return
 	var/prev_debt = registered_account.account_debt
@@ -1049,7 +1049,7 @@
 		if(trim.honorific_positions & readable_names[i]) //If the positions list has the same bit value as the readable list.
 			choices += i
 
-	var/chosen_position = tgui_input_list(user, "What position do you want your honorific in?", "Flair!", choices)
+	var/chosen_position = tgui_input_list(user, LANG("obj.9dc5bb17", null), LANG("obj.94949985", null), choices)
 	if(user.incapacitated || !in_contents_of(user))
 		return
 	var/honorific_position_to_use = readable_names[chosen_position]
@@ -1060,7 +1060,7 @@
 	if(honorific_position_to_use & HONORIFIC_POSITION_NONE)
 		balloon_alert(user, LANG("obj.713acf40", null))
 	else
-		var/new_honorific = tgui_input_list(user, "What honorific do you want to use?", "Flair!!!", trim.honorifics)
+		var/new_honorific = tgui_input_list(user, LANG("obj.4fc9bd57", null), LANG("obj.1f5234e6", null), trim.honorifics)
 		if(!new_honorific || user.incapacitated || !in_contents_of(user))
 			return
 		chosen_honorific = new_honorific
@@ -1229,7 +1229,7 @@
 	if(our_crayon.is_capped)
 		balloon_alert(user, LANG("obj.0c73c2ec", null))
 		return ITEM_INTERACT_BLOCKING
-	var/choice = tgui_alert(usr, "Recolor Department or Subdepartment?", "Recoloring ID...", list("Department", "Subdepartment"))
+	var/choice = tgui_alert(usr, LANG("obj.047f4295", null), LANG("obj.d0426924", null), list("Department", "Subdepartment"))
 	if(isnull(choice) \
 		|| QDELETED(user) \
 		|| QDELETED(src) \
@@ -1588,7 +1588,7 @@
 		to_chat(user, LANG("obj.ca977e40", null))
 		return ITEM_INTERACT_SUCCESS
 
-	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
+	var/choice = tgui_input_number(user, LANG("obj.4dbd622c", null), LANG("obj.2ca77ac0", null))
 	if(isnull(choice) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || !user.is_holding(src))
 		return ITEM_INTERACT_BLOCKING
 	time_to_assign = choice
@@ -1695,7 +1695,7 @@
 		. += span_smallnotice(LANG("obj.48a660a5", null))
 
 /obj/item/card/id/advanced/plainclothes/attack_self(mob/user)
-	var/popup_input = tgui_input_list(user, "Choose Action", "Two-Sided ID", list("Show", "Flip"))
+	var/popup_input = tgui_input_list(user, LANG("obj.dbbefb2b", null), LANG("obj.919e2009", null), list("Show", "Flip"))
 	if(!popup_input || !after_input_check(user))
 		return TRUE
 	if(popup_input == "Show")
@@ -1917,7 +1917,7 @@
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
 	if(!user.can_perform_action(user, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH))
 		return ..()
-	var/popup_input = tgui_input_list(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
+	var/popup_input = tgui_input_list(user, LANG("obj.dbbefb2b", null), LANG("obj.90d645dd", null), list("Show", "Forge/Reset", "Change Account ID"))
 	if(!popup_input || !after_input_check(user))
 		return TRUE
 	switch(popup_input)
@@ -1941,7 +1941,7 @@
 		return
 
 	///forge the ID if not forged.s
-	var/input_name = tgui_input_text(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN, encode = FALSE)
+	var/input_name = tgui_input_text(user, LANG("obj.f6a5f81a", null), LANG("obj.a70a8604", null), registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN, encode = FALSE)
 
 	if(!after_input_check(user))
 		return TRUE
@@ -1956,18 +1956,18 @@
 		else
 			input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 
-	var/target_occupation = tgui_input_text(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", max_length = MAX_NAME_LEN)
+	var/target_occupation = tgui_input_text(user, LANG("obj.7c2ff98c", null), LANG("obj.c279ab28", null), assignment ? assignment : "Assistant", max_length = MAX_NAME_LEN)
 	if(!after_input_check(user))
 		return TRUE
 	var/default_age = AGE_MIN
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		default_age = human_user.age ? clamp(human_user.age, AGE_MIN, AGE_MAX) : AGE_MIN
-	var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", default_age, AGE_MAX, AGE_MIN)
+	var/new_age = tgui_input_number(user, LANG("obj.51d5176c", null), LANG("obj.6ab5ab02", null), default_age, AGE_MAX, AGE_MIN)
 	if(!after_input_check(user))
 		return TRUE
 
-	var/wallet_spoofing = tgui_alert(user, "Activate wallet ID spoofing, allowing this card to force itself to occupy the visible ID slot in wallets?", "Wallet ID Spoofing", list("Yes", "No"))
+	var/wallet_spoofing = tgui_alert(user, LANG("obj.032f37bf", null), LANG("obj.34f6ae58", null), list("Yes", "No"))
 	if(!after_input_check(user))
 		return
 
@@ -2104,7 +2104,7 @@
 /obj/item/card/cardboard/proc/modify_card(mob/living/user, obj/item/item)
 	if(!user.mind)
 		return
-	var/popup_input = tgui_input_list(user, "What To Change", "Cardboard ID", list("Name", "Assignment", "Trim", "Reset"))
+	var/popup_input = tgui_input_list(user, LANG("obj.4f2894fd", null), LANG("obj.35317957", null), list("Name", "Assignment", "Trim", "Reset"))
 	if(!after_input_check(user, item, popup_input))
 		return
 	switch(popup_input)

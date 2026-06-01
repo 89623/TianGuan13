@@ -155,7 +155,7 @@
 	if(!tracker || tracker.stat == DEAD)
 		return
 
-	var/target_name = tgui_input_list(tracker, "Select a target", "Tracking", find_trackable_mobs())
+	var/target_name = tgui_input_list(tracker, LANG("datum.28009fc9", null), LANG("datum.e0f914ff", null), find_trackable_mobs())
 	if(!target_name || isnull(target_name))
 		return
 	var/datum/weakref/mob_ref = isnull(humans[target_name]) ? others[target_name] : humans[target_name]

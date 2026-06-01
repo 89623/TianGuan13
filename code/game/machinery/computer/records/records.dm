@@ -156,7 +156,7 @@
 		return FALSE
 
 	var/trimmed = copytext(mugshot.name, 9, MAX_NAME_LEN) // Remove "photo - "
-	var/name = tgui_input_text(user, "Enter the name of the new record.", "New Record", trimmed, max_length = MAX_NAME_LEN)
+	var/name = tgui_input_text(user, LANG("obj.57d81285", null), LANG("obj.f8524261", null), trimmed, max_length = MAX_NAME_LEN)
 	if(!name || !is_operational || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !mugshot || QDELETED(mugshot) || QDELETED(src))
 		return FALSE
 

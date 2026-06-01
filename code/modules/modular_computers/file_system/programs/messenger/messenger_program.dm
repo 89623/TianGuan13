@@ -402,7 +402,7 @@
 		chat.can_reply = FALSE
 		return
 	var/target_name = target.computer.saved_identification
-	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", max_length = MAX_MESSAGE_LEN, encode = FALSE)
+	var/input_message = tgui_input_text(user, LANG("datum.94c6e478", list(mime_mode ? "emojis":"a message")), LANG("datum.fe2ffd58", list(target_name ? " ([target_name])" : "")), max_length = MAX_MESSAGE_LEN, encode = FALSE)
 	send_message(user, input_message, list(chat), subtle = subtle) // NOVA EDIT CHANGE - ORIGINAL: send_message(user, input_message, list(chat))
 
 /// Helper proc that sends a message to everyone

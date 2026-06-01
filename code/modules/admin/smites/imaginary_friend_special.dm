@@ -23,14 +23,14 @@
 
 /datum/smite/custom_imaginary_friend/configure(client/user)
 	var/appearance_choice = tgui_alert(user,
-		"Do you want the imaginary friend(s) to share name and appearance with their currently selected character preferences?",
-		"Imaginary Friend Appearance?",
+		LANG("datum.eb8d3645", null),
+		LANG("datum.0eb2ecaa", null),
 		list(CHOICE_PREFS_APPEARANCE, CHOICE_RANDOM_APPEARANCE, CHOICE_CANCEL))
 	if (isnull(appearance_choice) || appearance_choice == CHOICE_CANCEL)
 		return FALSE
 	random_appearance = appearance_choice == CHOICE_RANDOM_APPEARANCE
 
-	var/picked_client = tgui_input_list(user, "Pick the player to put in control", "New Imaginary Friend", list(CHOICE_POLL_GHOSTS) + sort_list(GLOB.clients))
+	var/picked_client = tgui_input_list(user, LANG("datum.1d4472f0", null), LANG("datum.e5575a41", null), list(CHOICE_POLL_GHOSTS) + sort_list(GLOB.clients))
 	if(isnull(picked_client))
 		return FALSE
 
@@ -42,7 +42,7 @@
 		to_chat(user, span_warning(LANG("datum.80b653a8", null)))
 		return FALSE
 
-	if(isliving(friend_candidate_client.mob) && (tgui_alert(user, "This player already has a living mob ([friend_candidate_client.mob]). Do you still want to turn them into an Imaginary Friend?", "Remove player from mob?", list("Do it!", "Cancel")) != "Do it!"))
+	if(isliving(friend_candidate_client.mob) && (tgui_alert(user, LANG("datum.3d155d6e", list(friend_candidate_client.mob)), LANG("datum.a0c5cb31", null), list("Do it!", "Cancel")) != "Do it!"))
 		return FALSE
 
 	if(QDELETED(friend_candidate_client))
@@ -54,7 +54,7 @@
 
 /// Try to offer the role to ghosts
 /datum/smite/custom_imaginary_friend/proc/poll_ghosts(client/user)
-	var/how_many = tgui_input_number(user, "How many imaginary friends should be added?", "Imaginary friend count", default = 1, min_value = 1)
+	var/how_many = tgui_input_number(user, LANG("datum.7475eb5f", null), LANG("datum.8507aafb", null), default = 1, min_value = 1)
 	if (isnull(how_many) || how_many < 1)
 		return FALSE
 

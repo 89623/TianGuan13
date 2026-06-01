@@ -195,8 +195,8 @@
 
 		var/command = tgui_input_text(
 			user,
-			"Enter the command for your target to follow. Uses Left: [target_gland.mind_control_uses], Duration: [DisplayTimeText(target_gland.mind_control_duration)]",
-			"Enter command",
+			LANG("obj.a7ed86f2", list(target_gland.mind_control_uses, DisplayTimeText(target_gland.mind_control_duration))),
+			LANG("obj.d9e1fd5c", null),
 			max_length = MAX_MESSAGE_LEN,
 			)
 
@@ -223,7 +223,7 @@
 		if(living_target.stat == DEAD)
 			to_chat(user, span_warning(LANG("obj.d82b30a4", null)))
 			return
-		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message", max_length = MAX_MESSAGE_LEN)
+		var/message = tgui_input_text(user, LANG("obj.c07f4e25", null), LANG("obj.91737b81", null), max_length = MAX_MESSAGE_LEN)
 		if(!message)
 			return
 		if(QDELETED(living_target) || living_target.stat == DEAD)

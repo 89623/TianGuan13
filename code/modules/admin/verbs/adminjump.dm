@@ -118,7 +118,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(send_mob, R_ADMIN, "Send Mob", "Teleport the specifi
 	if(!length(sorted_areas))
 		to_chat(user, LANG("datum.2a026971", null), confidential = TRUE)
 		return
-	var/area/target_area = tgui_input_list(user, "Pick an area", "Send Mob", sorted_areas)
+	var/area/target_area = tgui_input_list(user, LANG("datum.7a731178", null), LANG("datum.e6339034", null), sorted_areas)
 	if(isnull(target_area))
 		return
 	if(!istype(target_area))

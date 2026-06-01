@@ -486,7 +486,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 
 // Allows admins to enable players to override SSD Time check.
 	if(allow_timer_override)
-		if(tgui_alert(user, "Would you like to place [target] into [src]?", "Place into Cryopod?", list("Yes", "No")) != "No")
+		if(tgui_alert(user, LANG("obj.4de87da9", list(target, src)), LANG("obj.5ec2df55", null), list("Yes", "No")) != "No")
 			to_chat(user, span_danger(LANG("obj.c1400d39", list(target, src, target.p_Theyre()))))
 			log_admin("[key_name(user)] has put [key_name(target)] into a overridden stasis pod.")
 			message_admins("[key_name(user)] has put [key_name(target)] into a overridden stasis pod. [ADMIN_JMP(src)]")
@@ -505,9 +505,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 					log_admin("[key_name(user)] has attempted to put [key_name(target)] into a stasis pod, but they were only disconnected for [round(((world.time - target.lastclienttime) / (1 MINUTES)), 1)] minutes.")
 					message_admins("[key_name(user)] has attempted to put [key_name(target)] into a stasis pod. [ADMIN_JMP(src)]")
 					return
-				else if(tgui_alert(user, "Would you like to place [target] into [src]?", "Place into Cryopod?", list("Yes", "No")) == "Yes")
+				else if(tgui_alert(user, LANG("obj.4de87da9", list(target, src)), LANG("obj.5ec2df55", null), list("Yes", "No")) == "Yes")
 					if(target.mind.assigned_role.req_admin_notify)
-						tgui_alert(user, "They are an important role! [AHELP_FIRST_MESSAGE]")
+						tgui_alert(user, LANG("obj.64072e62", list(AHELP_FIRST_MESSAGE)))
 					to_chat(user, span_danger(LANG("obj.c1400d39", list(target, src, target.p_Theyre()))))
 					log_admin("[key_name(user)] has put [key_name(target)] into a stasis pod.")
 					message_admins("[key_name(user)] has put [key_name(target)] into a stasis pod. [ADMIN_JMP(src)]")
@@ -527,15 +527,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		var/fridge_text = "Enter cryosleep?"
 		if(!despawn_to_ghostcafe || !quiet)
 			fridge_text += " ([CONFIG_GET(string/cryo_policy)])"
-		if(tgui_alert(target, fridge_text, "Enter Cryopod?", list("Yes", "No")) != "Yes")
+		if(tgui_alert(target, fridge_text, LANG("obj.adeeb696", null), list("Yes", "No")) != "Yes")
 			return
 
 	if(target == user)
 		if(target.mind.assigned_role.req_admin_notify)
-			tgui_alert(target, "You're an important role! [AHELP_FIRST_MESSAGE]")
+			tgui_alert(target, LANG("obj.44ef89c0", list(AHELP_FIRST_MESSAGE)))
 		var/datum/antagonist/antag = target.mind.has_antag_datum(/datum/antagonist)
 		if(antag)
-			tgui_alert(target, "You're \a [antag.name]! [AHELP_FIRST_MESSAGE]")
+			tgui_alert(target, LANG("obj.464111d1", list(antag.name, AHELP_FIRST_MESSAGE)))
 
 	if(LAZYLEN(target.buckled_mobs) > 0)
 		if(target == user)

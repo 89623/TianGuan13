@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Previously, body types could only be used on non-binary characters.
 /// PR #62733 changed this to allow all characters to use body type.
 /// This migration moves binary-gendered characters over to the "use gender" body type
@@ -23,4 +24,4 @@
 
 	// spawn b/c we need this to run during init but can't immediately because parent may still be initializing
 	spawn(1)
-		tgui_alert(parent, "The physique for [save_data["real_name"]] was previously set to \"Use gender\" but they have a non-binary gender. Non-binary physiques currently do not exist, so this character's physique has defaulted to female.", "Physique Migration for [save_data["real_name"]]")
+		tgui_alert(parent, LANG("datum.658e5fe2", list(save_data["real_name"])), LANG("datum.223201be", list(save_data["real_name"])))

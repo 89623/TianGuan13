@@ -70,8 +70,8 @@
 
 	var/display_stats = tgui_alert(
 		vote_creator,
-		"Should voting statistics be public?",
-		"Show voting stats?",
+		LANG("datum.7998d1d2", null),
+		LANG("datum.8c4cf8fe", null),
 		list("Yes", "No"),
 	)
 
@@ -79,7 +79,7 @@
 		return FALSE
 	display_statistics = display_stats == "Yes"
 
-	override_question = tgui_input_text(vote_creator, "What is the vote for?", "Custom Vote")
+	override_question = tgui_input_text(vote_creator, LANG("datum.499af380", null), LANG("datum.43aff5cd", null))
 	if(!override_question)
 		return FALSE
 

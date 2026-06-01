@@ -55,7 +55,7 @@
 				else
 					names += generate_random_name_species_based(pick(MALE, FEMALE), TRUE, GLOB.species_list[limb.limb_id] || /datum/species/human)
 
-	operation_args[OPERATION_NEW_NAME] = tgui_input_list(surgeon, "New name to assign", "Plastic Surgery", names)
+	operation_args[OPERATION_NEW_NAME] = tgui_input_list(surgeon, LANG("datum.2de2feac", null), LANG("datum.4706d458", null), names)
 	return !!operation_args[OPERATION_NEW_NAME]
 
 /datum/surgery_operation/limb/plastic_surgery/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)

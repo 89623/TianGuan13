@@ -143,7 +143,7 @@
 	set src in usr
 	if(usr.incapacitated)
 		return
-	if (tgui_alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", list("Yes", "No")) != "Yes")
+	if (tgui_alert(usr, LANG("obj.744e72e8", null), LANG("obj.e85534f6", null), list("Yes", "No")) != "Yes")
 		return
 	if(isturf(usr.loc) && src.loc == usr)
 		to_chat(usr, span_notice(LANG("obj.e08b5097", list(src))))

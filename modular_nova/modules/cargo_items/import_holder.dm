@@ -49,7 +49,7 @@
 		to_chat(user, span_notice(LANG("obj.12f289bb", null)))
 		return
 
-	var/obj/obj_choice = tgui_input_list(user, "Which goody case would you like to remove?", "Goody Case Holder Selection", goodycase_list)
+	var/obj/obj_choice = tgui_input_list(user, LANG("obj.8663600b", null), LANG("obj.937d4b3e", null), goodycase_list)
 	if(isnull(obj_choice))
 		return
 

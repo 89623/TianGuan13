@@ -22,7 +22,7 @@
 	if(!check_rights(R_SPAWN))
 		return
 
-	var/send_notice = tgui_alert(usr, "Add a paper notice about sending [name] into a cryopod?", "Leave a paper?", list("Yes", "No", "Cancel"))
+	var/send_notice = tgui_alert(usr, LANG("mob.6fe25d3d", list(name)), LANG("mob.c35aff6f", null), list("Yes", "No", "Cancel"))
 	if(send_notice != "Yes" && send_notice != "No")
 		return
 
@@ -51,10 +51,10 @@
 		to_chat(usr, span_warning(LANG("mob.b2b10715", null)))
 		return
 
-	var/notice = tgui_alert(usr, "Are you sure you want to load the clients current prefs onto their mob?", "Load Preferences", list("Yes", "No"))
+	var/notice = tgui_alert(usr, LANG("mob.3673dd56", null), LANG("mob.927b06df", null), list("Yes", "No"))
 	if(notice != "Yes")
 		return
-	var/quirks_prompt = tgui_alert(usr, "Reload their quirks too? This will clear any existing quirks on the mob.", "Load Quirks", list("Yes", "No"))
+	var/quirks_prompt = tgui_alert(usr, LANG("mob.789bc677", null), LANG("mob.16869b65", null), list("Yes", "No"))
 
 	var/mob/living/carbon/human/human_mob = src
 	human_mob.dna.mutant_bodyparts = list()

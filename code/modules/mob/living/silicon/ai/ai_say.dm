@@ -105,8 +105,8 @@
 
 	var/message = tgui_input_text(
 		src,
-		"WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'",
-		"Announcement",
+		LANG("mob.6ded948c", null),
+		LANG("mob.4893e36f", null),
 		src.last_announcement,
 		max_length = MAX_MESSAGE_LEN,
 	)

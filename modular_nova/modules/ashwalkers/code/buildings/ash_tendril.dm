@@ -62,7 +62,7 @@
 
 	else
 		balloon_alert_to_viewers("[src] reaches out to [human_user]...")
-		var/choice = tgui_alert(human_user, "Become an Ashwalker? You will abandon your previous life and body.", "Major Choice", list("Yes", "No"))
+		var/choice = tgui_alert(human_user, LANG("obj.551865dc", null), LANG("obj.ca114bf4", null), list("Yes", "No"))
 
 		if(choice != "Yes")
 			balloon_alert_to_viewers("[src] feels rejected and punishes [human_user]!")

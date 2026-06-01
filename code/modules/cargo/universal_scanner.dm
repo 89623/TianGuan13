@@ -117,7 +117,7 @@
 		if(loc != user)
 			to_chat(user, span_warning(LANG("obj.860d9859", list(src))))
 			return
-		var/chosen_price = tgui_input_number(user, "Set price", "Price", new_custom_price)
+		var/chosen_price = tgui_input_number(user, LANG("obj.9087a660", null), LANG("obj.75d9be55", null), new_custom_price)
 		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 			return
 		new_custom_price = chosen_price

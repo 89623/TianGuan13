@@ -184,7 +184,7 @@
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
 /obj/item/plunger/click_alt(mob/user)
-	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)
+	var/new_layer = tgui_input_list(user, LANG("obj.0d8e05e2", null), LANG("obj.6a7ee8f6", null), GLOB.plumbing_layers)
 	if(isnull(new_layer) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
 	target_layer = GLOB.plumbing_layers[new_layer]

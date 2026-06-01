@@ -320,7 +320,7 @@
 
 	currently_used = TRUE
 
-	var/inserted_message = tgui_input_text(owner, "What would you like to say over the ashen hivemind?", "Ashen Hivemind Message", max_length = CHAT_MESSAGE_MAX_LENGTH)
+	var/inserted_message = tgui_input_text(owner, LANG("datum.7c660e6f", null), LANG("datum.e4746e5f", null), max_length = CHAT_MESSAGE_MAX_LENGTH)
 	if(isnull(inserted_message))
 		currently_used = FALSE
 		return

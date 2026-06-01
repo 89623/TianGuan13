@@ -42,7 +42,7 @@
 		balloon_alert(user, LANG("obj.68287953", null))
 		return
 
-	if(tgui_alert(user, "Are you sure that this is the place you want to have the portal located at? This action is permanent and cannot be undone.", "Are you sure?", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, LANG("obj.b1598ee9", null), LANG("obj.77344162", null), list("Yes", "No")) != "Yes")
 		return
 
 	balloon_alert(user, LANG("obj.8b733ed3", null))

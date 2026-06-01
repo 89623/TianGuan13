@@ -165,7 +165,7 @@
 	if (!can_rotate || admin)
 		to_chat(user, span_warning(LANG("obj.1fabeebe", null)))
 		return FALSE
-	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
+	var/new_angle = tgui_input_number(user, LANG("obj.19bfb52d", null), LANG("obj.edfa1be4", null), rotation_angle, 360)
 	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return FALSE
 	set_angle(SIMPLIFY_DEGREES(new_angle))

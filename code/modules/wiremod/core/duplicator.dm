@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 ADMIN_VERB(load_circuit, R_VAREDIT, "Load Circuit", "Loads a circuit from a file or direct input.", ADMIN_CATEGORY_FUN)
 	var/list/errors = list()
 
-	var/option = alert(user, "Load by file or direct input?", "Load by file or string", "File", "Direct Input")
+	var/option = alert(user, LANG("datum.27977cb6", null), LANG("datum.abc5936e", null), "File", "Direct Input")
 	var/txt
 	switch(option)
 		if("File")

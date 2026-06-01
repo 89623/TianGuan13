@@ -26,7 +26,7 @@
 
 /// They're adjacent - ask them for their desired room number and, if it's new; what archetype they want.
 /obj/machinery/cafe_condo_teleporter/proc/prompt_and_check_in(mob/user, mob/target)
-	var/requested_condo = tgui_input_number(target, "What number room will you be checking into?", "Room Number", 1, min_value = 1)
+	var/requested_condo = tgui_input_number(target, LANG("obj.9c9c5b33", null), LANG("obj.ea08ae31", null), 1, min_value = 1)
 	if(!requested_condo)
 		return
 	if(requested_condo > SHORT_REAL_LIMIT)
@@ -43,7 +43,7 @@
 
 	else
 		var/datum/map_template/chosen_condo
-		var/map = tgui_input_list(user, "What Condo are you checking into?","Condo Archetypes", sort_list(SScondos.condo_templates))
+		var/map = tgui_input_list(user, LANG("obj.9d6ad98c", null),LANG("obj.852d3c65", null), sort_list(SScondos.condo_templates))
 		if(!map || !check_target_eligibility(target))
 			return
 		// Possible the room became active after we opened this UI - just enter it with a warning.

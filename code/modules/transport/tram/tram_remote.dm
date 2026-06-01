@@ -36,7 +36,7 @@
 	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/platform as anything in SStransport.nav_beacons[specific_transport_id])
 		LAZYADD(available_platforms, platform.name)
 
-	var/selected_platform = tgui_input_list(user, "Available destinations", "Where to?", available_platforms)
+	var/selected_platform = tgui_input_list(user, LANG("obj.741bc8ce", null), LANG("obj.2a9ec0ea", null), available_platforms)
 	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/potential_platform as anything in SStransport.nav_beacons[specific_transport_id])
 		if(potential_platform.name == selected_platform)
 			destination = potential_platform.platform_code
@@ -119,7 +119,7 @@
 	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		LAZYADD(transports_available, tram.specific_transport_id)
 
-	specific_transport_id = tgui_input_list(user, "Available transports", "Select a transport", transports_available)
+	specific_transport_id = tgui_input_list(user, LANG("obj.022bb138", null), LANG("obj.fc3f6f16", null), transports_available)
 
 	if(specific_transport_id)
 		balloon_alert(user, LANG("obj.b69231f3", null))

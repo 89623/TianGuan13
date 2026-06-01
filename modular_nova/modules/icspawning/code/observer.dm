@@ -11,13 +11,13 @@
 		outfits["Show All"] = "Show All"
 
 		var/dresscode
-		var/teleport_option = tgui_alert(usr, "How would you like to be spawned in?", "IC Quick Spawn", list("Bluespace", "Pod", "Cancel"))
+		var/teleport_option = tgui_alert(usr, LANG("mob.6e23e22e", null), LANG("mob.158170ae", null), list("Bluespace", "Pod", "Cancel"))
 		if (teleport_option == "Cancel")
 			return
-		var/character_option = tgui_alert(usr, "Which character?", "IC Quick Spawn", list("Selected Character", "Randomly Created", "Cancel"))
+		var/character_option = tgui_alert(usr, LANG("mob.7663c5c8", null), LANG("mob.158170ae", null), list("Selected Character", "Randomly Created", "Cancel"))
 		if (character_option == "Cancel")
 			return
-		var/initial_outfits = tgui_alert(usr, "Select outfit", "Quick Dress", list("Bluespace Tech", "Show All", "Cancel"))
+		var/initial_outfits = tgui_alert(usr, LANG("mob.05436964", null), LANG("mob.5e1733b1", null), list("Bluespace Tech", "Show All", "Cancel"))
 		if (initial_outfits == "Cancel")
 			return
 
@@ -32,13 +32,13 @@
 		// We're spawning someone else
 		var/give_return
 		if (user != usr)
-			give_return = tgui_alert(usr, "Do you want to give them the power to return? Not recommended for non-admins.", "Give power?", list("Yes", "No"))
+			give_return = tgui_alert(usr, LANG("mob.5de7b353", null), LANG("mob.3dd406d2", null), list("Yes", "No"))
 			if(!give_return)
 				return
 
 		var/addquirks
 		if(character_option == "Selected Character")
-			addquirks = tgui_input_list(src, "Include quirks?", "Quirky", list("Quirks & Loadout", "Quirks Only", "Loadout Only", "Neither"))
+			addquirks = tgui_input_list(src, LANG("mob.3e860394", null), LANG("mob.7ce56bad", null), list("Quirks & Loadout", "Quirks Only", "Loadout Only", "Neither"))
 			if(!addquirks)
 				return
 
@@ -105,7 +105,7 @@
 		var/datum/outfit/path_as_outfit = path
 		outfits[initial(path_as_outfit.name)] = path
 
-	var/dresscode = tgui_input_list(src, "Select outfit", "Robust quick dress shop", baseoutfits + sort_list(outfits))
+	var/dresscode = tgui_input_list(src, LANG("client.05436964", null), LANG("client.0287867f", null), baseoutfits + sort_list(outfits))
 
 	if (isnull(dresscode))
 		return

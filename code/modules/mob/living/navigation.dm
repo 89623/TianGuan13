@@ -46,7 +46,7 @@
 		balloon_alert(src, LANG("mob.f7ee8e03", null))
 		return
 
-	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
+	var/platform_code = tgui_input_list(src, LANG("mob.0e4a2fa4", null), LANG("mob.5abb374f", null), sort_list(destination_list))
 	var/atom/navigate_target = destination_list[platform_code]
 
 	if(isnull(navigate_target) || incapacitated)

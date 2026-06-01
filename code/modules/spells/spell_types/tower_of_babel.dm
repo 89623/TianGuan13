@@ -72,7 +72,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 
 /client/proc/tower_of_babel()
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"The game hasn't started yet!")
+		tgui_alert(usr,LANG("client.8a212f07", null))
 		return
 
 	GLOB.tower_of_babel = new /datum/tower_of_babel(usr)

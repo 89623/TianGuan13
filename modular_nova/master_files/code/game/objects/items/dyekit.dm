@@ -23,7 +23,7 @@
 
 	var/mob/living/carbon/human/human_target = target
 	var/static/list/dye_options = list(DYE_OPTION_HAIR_COLOR, DYE_OPTION_GRADIENT)
-	var/gradient_or_hair = tgui_alert(user, "What would you like to do?", "Hair Dye Spray", dye_options, autofocus = TRUE)
+	var/gradient_or_hair = tgui_alert(user, LANG("obj.ab3c2f64", null), LANG("obj.ac2dd580", null), dye_options, autofocus = TRUE)
 	if(!gradient_or_hair || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
@@ -43,12 +43,12 @@
 		human_target.set_haircolor(sanitize_hexcolor(new_color), update = TRUE)
 
 	else
-		var/beard_or_hair = tgui_input_list(user, "What do you want to dye?", "Character Preference", list("Hair", "Facial Hair"))
+		var/beard_or_hair = tgui_input_list(user, LANG("obj.104fcb0c", null), LANG("obj.78f80c29", null), list("Hair", "Facial Hair"))
 		if(!beard_or_hair || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
 
 		var/list/choices = beard_or_hair == "Hair" ? SSaccessories.hair_gradients_list : SSaccessories.facial_hair_gradients_list
-		var/new_grad_style = tgui_input_list(user, "Choose a color pattern:", "Dye Spray", choices)
+		var/new_grad_style = tgui_input_list(user, LANG("obj.2b2d0933", null), LANG("obj.a23f5593", null), choices)
 		if(!new_grad_style || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
 

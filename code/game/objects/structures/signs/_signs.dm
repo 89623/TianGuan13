@@ -86,7 +86,7 @@
 	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
-		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+		var/choice = tgui_input_list(user, LANG("obj.6625191a", null), LANG("obj.136f3177", null), GLOB.editable_sign_types)
 		if(isnull(choice))
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
@@ -171,7 +171,7 @@
 		return ..()
 	if(!length(GLOB.editable_sign_types))
 		CRASH("GLOB.editable_sign_types failed to populate")
-	var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+	var/choice = tgui_input_list(user, LANG("obj.6625191a", null), LANG("obj.136f3177", null), GLOB.editable_sign_types)
 	if(isnull(choice))
 		return ITEM_INTERACT_BLOCKING
 	if(!Adjacent(user)) //Make sure user is adjacent still.

@@ -23,7 +23,7 @@
 
 /datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
-	var/confirm = tgui_alert(user, "Are we sure we wish to destroy our body and create a headslug?", "Last Resort", list("Yes", "No"))
+	var/confirm = tgui_alert(user, LANG("datum.0c44419c", null), LANG("datum.b7897cbb", null), list("Yes", "No"))
 	if(active || confirm != "Yes")
 		return
 	active = TRUE
