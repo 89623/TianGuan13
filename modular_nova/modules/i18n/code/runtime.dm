@@ -2,27 +2,29 @@
 //
 // 目录文件：strings/i18n/<locale>/<namespace>.json，扁平的 {"key": "模板"}。
 // 模板用位置占位符 {0}/{1}…，允许按中文语序重排参数。
-// 复用 code/__HELPERS/_string_lists.dm 的 json_load / file2text 思路，惰性加载并缓存整个 locale。
+//
+// 设计要点：目录在「启动时一次性加载」(GLOBAL_LIST_INIT)，之后 LANG 读取路径**只读**，
+// 是纯函数——可安全用于标了 SpacemanDMM_should_be_pure 的 proc（如各类 examine 辅助）。
 
-/// 全服默认 locale。中文服可在配置/启动时设为 LANGUAGE_LOCALE_ZH_HANS。
+/// 全服默认 locale。中文服在 config 写 I18N_SERVER_LOCALE zh-Hans（见 config_entries.dm）。
 GLOBAL_VAR_INIT(i18n_server_locale, DEFAULT_UI_LOCALE)
 
-/// locale -> (key -> 模板) 的二级缓存。
-GLOBAL_LIST_EMPTY(i18n_cache)
+/// locale -> (key -> 模板)。启动时加载，运行期只读。
+GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 
-/// 运行期缺失的 key 集合（locale|key -> TRUE），供单元测试/CI 检查覆盖率。
-GLOBAL_LIST_EMPTY(i18n_missing_keys)
-
-/// 惰性加载某个 locale 的全部目录文件到 GLOB.i18n_cache。
-/proc/lang_load_locale(locale)
-	if(GLOB.i18n_cache[locale])
-		return GLOB.i18n_cache[locale]
-
-	var/list/merged = list()
-	var/dir = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/[locale]/"
-	if(fexists(dir))
+/// 扫描 strings/i18n/ 下各 locale 目录，加载全部 .json。仅启动时调用（GLOBAL_LIST_INIT）。
+/proc/build_i18n_cache()
+	var/list/cache = list()
+	var/base = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/"
+	if(!fexists(base))
+		return cache
+	for(var/locale_entry in flist(base))
+		if(!findtext(locale_entry, "/", -1)) // 只要目录（flist 给目录名带尾部 "/"）
+			continue
+		var/locale = copytext(locale_entry, 1, -1) // 去掉尾部 "/"
+		var/list/merged = list()
+		var/dir = "[base][locale_entry]"
 		for(var/filename in flist(dir))
-			// 只读 .json，跳过子目录（flist 给目录名带尾部 "/"）。
 			if(!findtext(filename, ".json", -length(".json")))
 				continue
 			var/list/decoded = json_decode(file2text("[dir][filename]"))
@@ -30,17 +32,15 @@ GLOBAL_LIST_EMPTY(i18n_missing_keys)
 				continue
 			for(var/key in decoded)
 				merged[key] = decoded[key]
+		cache[locale] = merged
+	return cache
 
-	GLOB.i18n_cache[locale] = merged
-	return merged
-
-/// 取某 locale 下某 key 的模板；缺失返回 null（不缓存缺失，交由调用方回退）。
+/// 纯读：取某 locale 下某 key 的模板；缺失返回 null。
 /proc/lang_template(key, locale)
-	var/list/catalog = lang_load_locale(locale)
-	return catalog[key]
+	var/list/catalog = GLOB.i18n_cache[locale]
+	return catalog?[key]
 
 /// 把模板里的 {0}/{1}… 用 args 依次替换（args 为 /list，元素按位置对应）。
-/// 支持 {{ }} 字面花括号转义。
 /proc/lang_interpolate(template, list/args)
 	if(!length(args))
 		return template
@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(i18n_missing_keys)
 		result = replacetext(result, "{[i - 1]}", "[args[i]]")
 	return result
 
-/// 核心：按给定 locale 查模板（缺则回退英文，再缺则记缺失并返回 key），最后做占位符替换。
+/// 核心（纯函数）：按 locale 查模板（缺则回退英文，再缺则返回 key），最后做占位符替换。
 /proc/lang_resolve(key, list/args, locale)
 	if(isnull(locale))
 		locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
@@ -59,8 +59,7 @@ GLOBAL_LIST_EMPTY(i18n_missing_keys)
 		template = lang_template(key, DEFAULT_UI_LOCALE) // 回退到英文源串
 
 	if(isnull(template))
-		GLOB.i18n_missing_keys["[locale]|[key]"] = TRUE
-		return key // 兜底：返回 key，避免崩溃；CI 据 GLOB.i18n_missing_keys 发现遗漏
+		return key // 兜底：返回 key，避免崩溃
 
 	return lang_interpolate(template, args)
 
@@ -81,24 +80,25 @@ GLOBAL_LIST_EMPTY(i18n_missing_keys)
 // 期把英文整串反查成译文。反查表 = 英文原文 -> 译文，仅含「无占位符的纯字符串」（name/desc
 // 几乎都是纯字符串）。译文随 Codex/Tolgee 落地自动生效，无需再改代码。
 
-/// locale -> (英文原文 -> 译文)
+/// locale -> (英文原文 -> 译文)。惰性构建（写 GLOB，仅供 /atom/Initialize 等非纯路径调用）。
 GLOBAL_LIST_EMPTY(i18n_reverse)
 
-/// 惰性构建某 locale 的反查表。
+/// 惰性构建某 locale 的反查表（从已加载的 GLOB.i18n_cache 读取）。
 /proc/lang_build_reverse(locale)
 	if(GLOB.i18n_reverse[locale])
 		return GLOB.i18n_reverse[locale]
 
-	var/list/english = lang_load_locale(DEFAULT_UI_LOCALE)
-	var/list/localized = lang_load_locale(locale)
+	var/list/english = GLOB.i18n_cache[DEFAULT_UI_LOCALE]
+	var/list/localized = GLOB.i18n_cache[locale]
 	var/list/reverse = list()
-	for(var/key in english)
-		var/en_text = english[key]
-		if(findtext(en_text, "{")) // 带占位符的走 LANG 调用，不走反查
-			continue
-		var/translated = localized[key]
-		if(translated && translated != en_text)
-			reverse[en_text] = translated
+	if(islist(english) && islist(localized))
+		for(var/key in english)
+			var/en_text = english[key]
+			if(findtext(en_text, "{")) // 带占位符的走 LANG 调用，不走反查
+				continue
+			var/translated = localized[key]
+			if(translated && translated != en_text)
+				reverse[en_text] = translated
 
 	GLOB.i18n_reverse[locale] = reverse
 	return reverse

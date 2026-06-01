@@ -18,7 +18,7 @@
 //!   - 幂等：已是 LANG(...) 的参数不是字符串字面量，不会被再次改写。
 
 use anyhow::{Context as _, Result};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
 use dm::ast::{AssignOp, BinaryOp, Expression, Follow, Spanned, Statement, Term};
@@ -69,9 +69,27 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
         cache: HashMap::new(),
     };
 
+    // pass 1：收集所有「纯函数」proc 名（SpacemanDMM_should_be_pure）。纯度沿继承传播，
+    // 子类型覆盖实现不会重复声明，故按 proc 名跳过（examine_hints 等本就应处处为纯）。
+    let mut pure_procs: HashSet<String> = HashSet::new();
+    for ty in tree.iter_types() {
+        for (proc_name, type_proc) in ty.procs.iter() {
+            for proc_value in type_proc.value.iter() {
+                if let Some(block) = &proc_value.code {
+                    if block_is_pure(block) {
+                        pure_procs.insert(proc_name.clone());
+                    }
+                }
+            }
+        }
+    }
+    // pass 2：改写（跳过纯函数名的 proc）。
     for ty in tree.iter_types() {
         let ns = namespace_for(&ty.path);
-        for (_proc_name, type_proc) in ty.procs.iter() {
+        for (proc_name, type_proc) in ty.procs.iter() {
+            if pure_procs.contains(proc_name) {
+                continue;
+            }
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
                     rw.visit_block(block, &ns);
@@ -111,6 +129,13 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
         if dry_run { "（dry-run，未落盘）" } else { "" }
     );
     Ok(())
+}
+
+/// 该 proc 是否标了 `set SpacemanDMM_should_be_pure`（纯函数，读全局会被 DreamChecker 判为破坏纯度）。
+fn block_is_pure(block: &[Spanned<Statement>]) -> bool {
+    block.iter().any(|s| {
+        matches!(&s.elem, Statement::Setting { name, .. } if name.as_str() == "SpacemanDMM_should_be_pure")
+    })
 }
 
 struct Rewriter<'a> {

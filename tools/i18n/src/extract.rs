@@ -11,6 +11,7 @@
 //! 本阶段只做抽取（产出英文主目录）；改写调用点为 LANG/LANGU 是后续阶段。
 
 use anyhow::{Context as _, Result};
+use std::collections::HashSet;
 use std::path::Path;
 
 use dm::ast::{AssignOp, BinaryOp, Expression, Follow, Statement, Term};
@@ -48,6 +49,20 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
         anyhow::bail!("DM 解析出现致命错误，无法继续抽取");
     }
 
+    // pass 1：收集纯函数 proc 名（与 rewrite 一致，按名跳过以覆盖继承纯度的子类型实现）。
+    let mut pure_procs: HashSet<String> = HashSet::new();
+    for ty in tree.iter_types() {
+        for (proc_name, type_proc) in ty.procs.iter() {
+            for proc_value in type_proc.value.iter() {
+                if let Some(block) = &proc_value.code {
+                    if block_is_pure(block) {
+                        pure_procs.insert(proc_name.clone());
+                    }
+                }
+            }
+        }
+    }
+
     let mut catalog = Catalog::new();
     for ty in tree.iter_types() {
         let namespace = namespace_for(&ty.path);
@@ -64,8 +79,11 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             }
         }
 
-        // 2) proc 体内的汇聚点调用。
-        for (_proc_name, type_proc) in ty.procs.iter() {
+        // 2) proc 体内的汇聚点调用（跳过纯函数名的 proc）。
+        for (proc_name, type_proc) in ty.procs.iter() {
+            if pure_procs.contains(proc_name) {
+                continue;
+            }
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
                     visit_block(block, &namespace, &mut catalog);
@@ -90,6 +108,13 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
         );
     }
     Ok(())
+}
+
+/// 该 proc 是否标了 `set SpacemanDMM_should_be_pure`（与 rewrite.rs 一致，跳过不抽取）。
+fn block_is_pure(block: &[dm::ast::Spanned<Statement>]) -> bool {
+    block.iter().any(|s| {
+        matches!(&s.elem, Statement::Setting { name, .. } if name.as_str() == "SpacemanDMM_should_be_pure")
+    })
 }
 
 fn emit(catalog: &mut Catalog, namespace: &str, template: &str) {

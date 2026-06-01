@@ -78,14 +78,14 @@
 
 	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
 	if(!QDELETED(our_cell))
-		. += span_notice(LANG("obj.a9d97eae", list(display_energy(our_cell.charge))))
+		. += span_notice("Its display shows: [display_energy(our_cell.charge)].")
 		if(opened)
-			. += span_notice(LANG("obj.b0f8c071", null))
-			. += span_notice(LANG("obj.ce305ae1", null))
+			. += span_notice("The cell can be removed with an empty hand.")
+			. += span_notice("Plasma sheets can be used to recharge the cell.")
 	else
-		. += span_warning(LANG("obj.65452ac4", null))
+		. += span_warning("It's missing a power cell.")
 
-	. += span_notice(LANG("obj.e45263dc", list(EXAMINE_HINT("screwed"), opened ? "shut" : "open")))
+	. += span_notice("Its battery compartment can be [EXAMINE_HINT("screwed")] [opened ? "shut" : "open"].")
 
 /obj/item/inducer/update_overlays()
 	. = ..()
@@ -257,12 +257,12 @@
 
 	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
 	if(!QDELETED(our_cell))
-		. += span_notice(LANG("obj.a9d97eae", list(display_energy(our_cell.charge))))
+		. += span_notice("Its display shows: [display_energy(our_cell.charge)].")
 		if(opened)
-			. += span_notice(LANG("obj.ce305ae1", null))
+			. += span_notice("Plasma sheets can be used to recharge the cell.")
 	else
-		. += span_warning(LANG("obj.65452ac4", null))
-	. += span_notice(LANG("obj.e45263dc", list(EXAMINE_HINT("screwed"), opened ? "shut" : "open")))
+		. += span_warning("It's missing a power cell.")
+	. += span_notice("Its battery compartment can be [EXAMINE_HINT("screwed")] [opened ? "shut" : "open"].")
 
 /obj/item/inducer/cyborg/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	return NONE
