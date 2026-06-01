@@ -28,7 +28,9 @@ fi
 
 for f in "${files[@]}"; do
   echo "==> 翻译 $f"
-  codex exec "你是 Space Station 13 游戏文本的专业本地化译者。\
+  # -c mcp_servers={}  关闭所有 MCP（避免加载本机一堆 MCP server）
+  # -s workspace-write 允许在仓库内读写文件
+  codex exec -c 'mcp_servers={}' -s workspace-write "你是 Space Station 13 游戏文本的专业本地化译者。\
 请把 $SRC/$f 中的英文值翻译为简体中文，写入 $DST/$f：\
 (1) key 完全保持不变；\
 (2) 逐字保留所有 {0}/{1}… 占位符与 HTML 标签（如 <b> <br> <span>）以及 DM 文本宏（如 \\improper、\\the）；\
