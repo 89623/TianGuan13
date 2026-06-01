@@ -27,9 +27,14 @@ DM 字符串抽取/改写工具（Rust，基于 SpacemanDMM 的 `dreammaker` 解
 cargo run --release --manifest-path tools/i18n/Cargo.toml -- \
   extract --dme tgstation.dme --out strings/i18n/en
 
-# 机翻预填 zh-Hans 草稿（需 TOLGEE_MT_API_KEY）
-TOLGEE_MT_API_KEY=... bun tools/i18n/mt/translate.ts \
-  --source strings/i18n/en --target strings/i18n/zh-Hans --lang zh-Hans
+# 增量翻译（Codex）：只翻「待译」条目——缺失 / 未译 / 中英混杂；大文件自动分批、断点续译
+bun tools/i18n/mt/i18n-mt.ts pending          # 先看各文件待译数量与样例（不调用 Codex）
+bash tools/i18n/mt/translate-codex.sh         # 翻译全部（或加 obj.json 指定文件）
+#   环境：I18N_LOCALE（默认 zh-Hans）、I18N_CHUNK（每批条数，默认 200）
+
+# 术语表：发现候选 + 与 Tolgee 同步
+bun tools/i18n/mt/glossary-sync.ts suggest    # 从英文目录挑高频未入表的候选术语
+bun tools/i18n/mt/glossary-sync.ts push       # 本地术语表 -> Tolgee（需 TOLGEE_* 环境变量）
 
 # 启动 Tolgee 平台并同步（详见 ../../modular_nova/tools/i18n/docker-compose.yml 与根目录 tolgee.config.ts）
 docker compose -f modular_nova/tools/i18n/docker-compose.yml up -d

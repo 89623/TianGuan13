@@ -271,6 +271,8 @@ rust_g64.dll
 
 # i18n Rust extraction tool build artifacts
 /tools/i18n/target/
+# i18n 翻译临时批次目录（i18n-mt.ts 用）
+/tools/i18n/mt/.pending/
 
 # Tolgee self-hosted platform data (modular_nova/tools/i18n/docker-compose.yml)
 /modular_nova/tools/i18n/tolgee-data/
