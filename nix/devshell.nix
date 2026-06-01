@@ -16,6 +16,7 @@
   unzip,
   curl,
   byond,
+  rust-g,
 }:
 
 let
@@ -48,9 +49,16 @@ mkShell {
   BYOND_SYSTEM = byond.passthru.home;
 
   shellHook = ''
+    # rust-g 原生库：detect 逻辑优先找仓库根的 ./librust_g.so（见 code/__DEFINES/rust_g.dm）。
+    # 软链到 Nix 里 autoPatchelf 过的版本（已 .gitignore: /*.so）。否则服务端启动会因 rust_g
+    # 加载失败而卡住。
+    if [ -f flake.nix ] && [ -d code ]; then
+      ln -sf ${rust-g}/lib/librust_g.so ./librust_g.so
+    fi
     echo "NovaSector dev shell — DM/TGUI + i18n 工具链已就绪"
     echo "  DreamMaker : $(command -v DreamMaker || echo '未找到')"
     echo "  bun        : $(bun --version 2>/dev/null || echo '未找到')"
     echo "  cargo      : $(cargo --version 2>/dev/null || echo '未找到')"
+    echo "  librust_g  : $(readlink -f librust_g.so 2>/dev/null || echo '未链接')"
   '';
 }

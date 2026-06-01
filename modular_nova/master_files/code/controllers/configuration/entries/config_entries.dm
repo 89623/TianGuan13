@@ -1,6 +1,16 @@
 /datum/config_entry/string/blackoutpolicy
 	config_entry_value = "You remember nothing after you've blacked out and you do not remember who or what events killed you, however, you can have faint recollection of what led up to it."
 
+// i18n: 全服默认界面语言（en / zh-Hans）。用于广播文本（visible_message 等）与 name/desc 等。
+// 在 config 文件里写一行：I18N_SERVER_LOCALE zh-Hans
+/datum/config_entry/string/i18n_server_locale
+	default = LANGUAGE_LOCALE_EN
+
+/datum/config_entry/string/i18n_server_locale/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		GLOB.i18n_server_locale = config_entry_value
+
 /datum/config_entry/flag/russian_text_formation
 
 // DISCORD GAME ALERT CONFIGS

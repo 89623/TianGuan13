@@ -24,14 +24,15 @@
         };
 
         byond = pkgs.callPackage ./nix/byond.nix { };
+        rust-g = pkgs.callPackage ./nix/rust_g.nix { };
       in
       {
         packages = {
-          inherit byond;
+          inherit byond rust-g;
           default = byond;
         };
 
-        devShells.default = pkgs.callPackage ./nix/devshell.nix { inherit byond; };
+        devShells.default = pkgs.callPackage ./nix/devshell.nix { inherit byond rust-g; };
       }
     );
 }
