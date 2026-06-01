@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
 	icon_state = "siphon"
@@ -24,9 +25,9 @@
 /obj/machinery/portable_atmospherics/pump/update_overlays()
 	. = ..()
 	if(holding)
-		. += "siphon-open"
+		. += LANG("obj.a47c8831", null)
 	if(connected_port)
-		. += "siphon-connector"
+		. += LANG("obj.af95ff65", null)
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	if(take_atmos_damage())

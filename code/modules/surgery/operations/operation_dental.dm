@@ -12,9 +12,9 @@
 
 /datum/surgery_operation/limb/add_dental_implant/all_required_strings()
 	. = list()
-	. += "operate on mouth (target mouth)"
+	. += LANG("datum.5c64277d", null)
 	. += ..()
-	. += "the mouth must have teeth"
+	. += LANG("datum.b0882657", null)
 
 /datum/surgery_operation/limb/add_dental_implant/get_default_radial_image()
 	return image('icons/hud/implants.dmi', "reagents")

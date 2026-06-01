@@ -234,20 +234,20 @@
 	. = ..()
 	if(secondary_magazine)
 		var/secondary_ammo_count = secondary_magazine.ammo_count()
-		. += "There is a secondary magazine."
-		. += "It has [secondary_ammo_count] round\s remaining."
-		. += "Shoot with right-click to swap to the secondary magazine after firing."
-		. += "If the magazine is empty, [src] will automatically swap to the secondary magazine."
-	. += "You can load a secondary magazine by right-clicking [src] with the magazine you want to load."
-	. += "You can remove a secondary magazine by alt-right-clicking [src]."
-	. += "Right-click to swap the magazine to the secondary position, and vice versa."
+		. += LANG("obj.98679eef", null)
+		. += LANG("obj.3fff7c5e", list(secondary_ammo_count))
+		. += LANG("obj.53592766", null)
+		. += LANG("obj.a241bf66", list(src))
+	. += LANG("obj.9d844144", list(src))
+	. += LANG("obj.9a19f019", list(src))
+	. += LANG("obj.116b7913", null)
 
 /obj/item/gun/ballistic/shotgun/bulldog/update_overlays()
 	. = ..()
 	if(secondary_magazine)
-		. += "[icon_state]_secondary_mag_[initial(secondary_magazine.icon_state)]"
+		. += LANG("obj.fe6b50a0", list(icon_state, initial(secondary_magazine.icon_state)))
 		if(!secondary_magazine.ammo_count())
-			. += "[icon_state]_secondary_mag_empty"
+			. += LANG("obj.35ba2705", list(icon_state))
 
 /obj/item/gun/ballistic/shotgun/bulldog/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!secondary_magazine)

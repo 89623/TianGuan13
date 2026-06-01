@@ -175,7 +175,7 @@
 	if(dead)
 		return .
 	if(light_enabled)
-		. += "[base_icon_state]_light"
+		. += LANG("obj.8f437c38", list(base_icon_state))
 
 /obj/item/kirbyplants/fern
 	name = "neglected fern"

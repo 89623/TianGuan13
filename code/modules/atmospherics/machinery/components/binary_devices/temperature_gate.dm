@@ -49,11 +49,11 @@
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/examine(mob/user)
 	. = ..()
-	. += "This device will let gas flow if the temperature of the gas in the input is [inverted ? "higher" : "lower"] than the temperature set in the interface."
+	. += LANG("obj.b15db99f", list(inverted ? "higher" : "lower"))
 	if(inverted)
-		. += "The device settings can be restored if a multitool is used on it."
+		. += LANG("obj.c982b509", null)
 	else
-		. += "The sensor's settings can be changed by using a multitool on the device."
+		. += LANG("obj.66558180", null)
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/update_icon_nopipes()
 	if(on && is_operational && is_gas_flowing)

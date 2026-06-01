@@ -239,9 +239,9 @@
 		if(ARTIFACT_EFFECT_SYNTH)
 			. += "Atomic synthesis"
 		else
-			. += "Low level energy emissions"
+			. += LANG("datum.ef7f7400", null)
 
-	. += "</b> have been detected <b>"
+	. += LANG("datum.9676fec0", null)
 
 	switch(release_method)
 		if(ARTIFACT_EFFECT_TOUCH)
@@ -251,7 +251,7 @@
 		if(ARTIFACT_EFFECT_PULSE)
 			. += "emitting in periodic bursts."
 		else
-			. += "emitting in an unknown way."
+			. += LANG("datum.1f0a74dc", null)
 
 	. += "</b>"
 
@@ -263,10 +263,10 @@
 		if(TRIGGER_PLASMA, TRIGGER_OXY, TRIGGER_CO2, TRIGGER_NITRO)
 			. += " Activation index involves <b>precise local atmospheric conditions</b>."
 		else
-			. += " Unable to determine any data about activation trigger."
+			. += LANG("datum.fdd55645", null)
 
 	if(istype(src, /datum/artifact_effect/machinery_mess) && prob(50))
-		. += " <b><font color='red'>Ţ̸̦̳̈́̾E̴͙̚R̶̗̹̜͒T̴̪͚͉͌͒I̵̛̥̐̅A̵̧̽͆R̵̜̜͋̃͑Y̷͉̚ ̵͇́S̴̻̙̔̑͜C̸̣̔͐A̷̠͆N̸̠̼̈́ ̸̮̔̎Ī̵̧̉̿N̵̅D̷̡̛̘̜͑̂I̸͔̮̪͌̕͝Ć̷͈̫̕Á̶̢͍̤͑Ț̶̑̐E̵̋̉͘ͅ:"
+		. += LANG("datum.b8fb5e78", null)
 		. += " [pick(MACHINERY_MESS_MOCKING)]</font></b>"
 
 /**

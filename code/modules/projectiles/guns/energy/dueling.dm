@@ -180,9 +180,9 @@
 /obj/item/gun/energy/dueling/examine_more(mob/user)
 	. = ..()
 	if(check_valid_duel(user, FALSE))
-		. += "The pairing code is: [duel.pairing_code]"
+		. += LANG("obj.255ee2b7", list(duel.pairing_code))
 	else
-		. += "[src] is currently unpaired."
+		. += LANG("obj.4f6d8234", list(src))
 
 /obj/item/gun/energy/dueling/proc/setting_iconstate()
 	switch(setting)

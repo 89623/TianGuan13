@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/limb/amputate
 	name = "amputate limb"
 	rnd_name = "Disarticulation (Amputation)"
@@ -113,4 +114,4 @@
 
 /datum/surgery_operation/limb/amputate/pegleg/all_required_strings()
 	. = ..()
-	. += "the limb must be wooden"
+	. += LANG("datum.a68caac1", null)

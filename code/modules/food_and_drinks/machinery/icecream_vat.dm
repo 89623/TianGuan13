@@ -113,7 +113,7 @@
 
 /obj/machinery/icecream_vat/examine(mob/user)
 	. = ..()
-	. += "You can use a [EXAMINE_HINT("spoon")] or [EXAMINE_HINT("soup ladle")] to spill reagents."
+	. += LANG("obj.bc0dbcba", list(EXAMINE_HINT("spoon"), EXAMINE_HINT("soup ladle")))
 
 /obj/machinery/icecream_vat/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()

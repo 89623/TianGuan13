@@ -245,7 +245,7 @@
 
 /obj/item/extinguisher/examine(mob/user)
 	. = ..()
-	. += "The safety is [safety ? "on" : "off"]."
+	. += LANG("obj.400bbae9", list(safety ? "on" : "off"))
 
 	if(reagents.total_volume)
 		. += span_notice("Alt-click to empty it.")

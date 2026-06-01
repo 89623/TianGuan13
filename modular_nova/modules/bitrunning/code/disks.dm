@@ -37,7 +37,7 @@
 	. = ..()
 	if(!isnull(loaded_preference))
 		var/name = loaded_preference.read_preference(/datum/preference/name/real_name)
-		. += "It currently has the character [name] loaded, with loadouts [(include_loadout ? "enabled" : "disabled")]"
+		. += LANG("obj.27bbe64d", list(name, (include_loadout ? "enabled" : "disabled")))
 		. += span_notice("Alt-Click to change loadout loading")
 
 /obj/item/disk/bitrunning/prefs/click_alt(mob/user)

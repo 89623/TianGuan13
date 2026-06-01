@@ -269,7 +269,7 @@
 	var/obj/item/ammo_casing/top_round = get_round()
 	if(!top_round)
 		return
-	. += "It has <b>[shells_left]</b> [casing_phrasing]\s remaining."
+	. += LANG("obj.da174e71", list(shells_left, casing_phrasing))
 	// this is kind of awkward phrasing, but it's the top/ready ammo in the box
 	// intended for people who have like three mislabeled magazines
 	. += span_notice("\A <b>[top_round]</b> is ready.")

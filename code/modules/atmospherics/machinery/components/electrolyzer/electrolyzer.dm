@@ -66,12 +66,12 @@
 
 /obj/machinery/electrolyzer/examine(mob/user)
 	. = ..()
-	. += "\The [src] is [on ? "on" : "off"], and the panel is [panel_open ? "open" : "closed"]."
+	. += LANG("obj.2bcd08b6", list(src, on ? "on" : "off", panel_open ? "open" : "closed"))
 
 	if(cell)
-		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+		. += LANG("obj.00f8f6f7", list(cell ? round(cell.percent(), 1) : 0))
 	else
-		. += "There is no power cell installed."
+		. += LANG("obj.b21d2f5d", null)
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("<b>Alt-click</b> to toggle [on ? "off" : "on"].")
 		. += span_notice("<b>Anchor</b> to drain power from APC instead of cell")
@@ -85,7 +85,7 @@
 /obj/machinery/electrolyzer/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += "electrolyzer-open"
+		. += LANG("obj.955b8669", null)
 
 /obj/machinery/electrolyzer/process_atmos()
 

@@ -214,15 +214,14 @@
 /obj/item/clothing/suit/space/examine(mob/user)
 	. = ..()
 	if(in_range(src, user) || isobserver(user))
-		. += "The thermal regulator is [thermal_on ? "on" : "off"] and the temperature is set to \
-			[round(temperature_setting-T0C,0.1)] &deg;C ([round(temperature_setting*1.8-459.67,0.1)] &deg;F)"
-		. += "The power meter shows [cell ? "[round(cell.percent(), 0.1)]%" : "!invalid!"] charge remaining."
+		. += LANG("obj.65e07705", list(thermal_on ? "on" : "off", round(temperature_setting-T0C,0.1), round(temperature_setting*1.8-459.67,0.1)))
+		. += LANG("obj.27ef0b50", list(cell ? "[round(cell.percent(), 0.1)]%" : "!invalid!"))
 		if(cell_cover_open)
-			. += "The cell cover is open exposing the cell and setting knobs."
+			. += LANG("obj.8dfaf6ca", null)
 			if(!cell)
-				. += "The slot for a cell is empty."
+				. += LANG("obj.e4ac54e1", null)
 			else
-				. += "\The [cell] is firmly in place."
+				. += LANG("obj.5b7e5f42", list(cell))
 
 /obj/item/clothing/suit/space/crowbar_act(mob/living/user, obj/item/tool)
 	toggle_spacesuit_cell(user)

@@ -115,8 +115,8 @@
 		. += screen_icon_screensaver
 
 	if(cpu.get_integrity() <= cpu.integrity_failure * cpu.max_integrity)
-		. += "bsod"
-		. += "broken"
+		. += LANG("obj.5ef7c604", null)
+		. += LANG("obj.be486638", null)
 	return .
 
 /// Eats the "source" arg because update_icon actually expects args now.

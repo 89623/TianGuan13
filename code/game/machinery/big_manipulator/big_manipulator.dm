@@ -162,7 +162,7 @@
 	. = ..()
 	var/mob/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
-		. += "You can see a poor [monkey_resolve.name] buckled to [src]. You wonder if it's getting paid enough."
+		. += LANG("obj.d0e14b2a", list(monkey_resolve.name, src))
 
 /obj/machinery/big_manipulator/attack_hand_secondary(mob/living/user, list/modifiers)
 	try_press_on(user)

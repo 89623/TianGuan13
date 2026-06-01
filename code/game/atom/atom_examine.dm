@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /atom
 	/// If non-null, overrides a/an/some in all cases
 	var/article
@@ -27,9 +28,9 @@
 			tag_string += (isnull(tags_list[atom_tag]) ? atom_tag : span_tooltip(tags_list[atom_tag], atom_tag))
 		// some regex to ensure that we don't add another "and" if the final element's main text (not tooltip) has one
 		tag_string = english_list(tag_string, and_text = (findtext(tag_string[length(tag_string)], regex(@">.*?and .*?<"))) ? " " : " and ")
-		. += "[p_They()] [p_are()] a [tag_string] [examine_descriptor(user)][post_desc_string]."
+		. += LANG("atom.0e340ddb", list(p_They(), p_are(), tag_string, examine_descriptor(user), post_desc_string))
 	else if(post_desc_string)
-		. += "[p_They()] [p_are()] a [examine_descriptor(user)][post_desc_string]."
+		. += LANG("atom.82f39ea0", list(p_They(), p_are(), examine_descriptor(user), post_desc_string))
 
 	if(reagents)
 		var/user_sees_reagents = user.can_see_reagents()
@@ -37,7 +38,7 @@
 		if(!(reagent_sigreturn & STOP_GENERIC_REAGENT_EXAMINE))
 			if(reagents.flags & TRANSPARENT)
 				if(reagents.total_volume)
-					. += "It contains <b>[reagents.total_volume]</b> units of various reagents[user_sees_reagents ? ":" : "."]"
+					. += LANG("atom.e9f1f44b", list(reagents.total_volume, user_sees_reagents ? ":" : "."))
 					if(user_sees_reagents || (reagent_sigreturn & ALLOW_GENERIC_REAGENT_EXAMINE)) //Show each individual reagent for detailed examination
 						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
 							. += "&bull; [round(current_reagent.volume, CHEMICAL_VOLUME_ROUNDING)] units of [current_reagent.name]"
@@ -45,7 +46,7 @@
 							. += span_warning("It is currently reacting!")
 						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
 				else
-					. += "It contains:<br>Nothing."
+					. += LANG("atom.252461f2", null)
 			else if(reagents.flags & AMOUNT_VISIBLE)
 				if(reagents.total_volume)
 					. += span_notice("It has [reagents.total_volume] unit\s left.")
@@ -136,7 +137,7 @@
 	for(var/custom_material in custom_materials)
 		var/datum/material/current_material = SSmaterials.get_material(custom_material)
 		mats_list += span_tooltip("It is made out of [current_material.name].", current_material.name)
-	. += "made of [english_list(mats_list)]"
+	. += LANG("atom.18275935", list(english_list(mats_list)))
 
 /**
  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_WINDOW (default 1 second)

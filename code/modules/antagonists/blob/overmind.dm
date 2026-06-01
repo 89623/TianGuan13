@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/eye/blob/examine(mob/user)
 	. = ..()
 	if(blobstrain)
-		. += "Its strain is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>."
+		. += LANG("mob.a1e2b6e4", list(blobstrain.color, blobstrain.name))
 
 /mob/eye/blob/update_health_hud()
 	if(!blob_core)
@@ -369,15 +369,15 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/eye/blob/get_status_tab_items()
 	. = ..()
 	if(blob_core)
-		. += "Core Health: [blob_core.get_integrity()]"
-		. += "Power Stored: [blob_points]/[max_blob_points]"
-		. += "Blobs to Win: [blobs_legit.len]/[blobwincount]"
+		. += LANG("mob.7786c79e", list(blob_core.get_integrity()))
+		. += LANG("mob.98a48fb8", list(blob_points, max_blob_points))
+		. += LANG("mob.41c202a1", list(blobs_legit.len, blobwincount))
 	if(free_strain_rerolls)
-		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
+		. += LANG("mob.637bd3ab", list(free_strain_rerolls))
 	if(!placed)
 		if(manualplace_min_time)
-			. += "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
-		. += "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]"
+			. += LANG("mob.5760c2e1", list(max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)))
+		. += LANG("mob.4aae48eb", list(max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)))
 
 /mob/eye/blob/Move(NewLoc, Dir = 0)
 	if(placed)

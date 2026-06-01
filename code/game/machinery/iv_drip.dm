@@ -367,7 +367,7 @@
 	. = ..()
 	if(get_dist(user, src) > 2)
 		return
-	. += "[src] is [mode ? "injecting" : "taking blood"]."
+	. += LANG("obj.120458d2", list(src, mode ? "injecting" : "taking blood"))
 	if(reagent_container)
 		if(reagent_container.reagents && reagent_container.reagents.reagent_list.len)
 			. += span_notice("Attached is \a [reagent_container] with [reagent_container.reagents.total_volume] units of liquid.")

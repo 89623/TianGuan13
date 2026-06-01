@@ -65,15 +65,15 @@
 	if(machine_stat & (NOPOWER|BROKEN) || panel_open)
 		return
 	if(!occupant)
-		. += "grinder_empty"
+		. += LANG("obj.a59e97f6", null)
 		. += emissive_appearance(icon, "grinder_empty", src, alpha = src.alpha)
 		return
 	if(operating)
-		. += "grinder_active"
+		. += LANG("obj.6fc4e868", null)
 		. += emissive_appearance(icon, "grinder_active", src, alpha = src.alpha)
-		. += "grinder_jaws_active"
+		. += LANG("obj.e327f5dd", null)
 		return
-	. += "grinder_loaded"
+	. += LANG("obj.d525d57a", null)
 	. += emissive_appearance(icon, "grinder_loaded", src, alpha = src.alpha)
 
 /obj/machinery/gibber/on_set_panel_open(old_value)

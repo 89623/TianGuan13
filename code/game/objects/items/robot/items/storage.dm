@@ -125,12 +125,12 @@
 	. = ..()
 	if(stored)
 		var/obj/item/reagent_containers/reagent_container = stored
-		. += "The apparatus currently has [reagent_container] secured, which contains:"
+		. += LANG("obj.f7a54f73", list(reagent_container))
 		if(length(reagent_container.reagents.reagent_list))
 			for(var/datum/reagent/reagent in reagent_container.reagents.reagent_list)
 				. += "[reagent.volume] units of [reagent.name]"
 		else
-			. += "Nothing."
+			. += LANG("obj.aa75d156", null)
 
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored beaker. ")
 
@@ -229,12 +229,12 @@
 
 /obj/item/borg/apparatus/organ_storage/examine()
 	. = ..()
-	. += "The organ bag currently contains:"
+	. += LANG("obj.a905d5d1", null)
 	if(stored)
 		var/obj/item/organ = stored
 		. += organ.name
 	else
-		. += "Nothing."
+		. += LANG("obj.aa75d156", null)
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored organ. ")
 
 /obj/item/borg/apparatus/organ_storage/click_alt(mob/living/silicon/robot/user)
@@ -280,7 +280,7 @@
 /obj/item/borg/apparatus/sheet_manipulator/examine()
 	. = ..()
 	if(stored)
-		. += "The apparatus currently has [stored] secured."
+		. += LANG("obj.929ca228", list(stored))
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored sheets. ")
 
 ///Apparatus allowing Engineer/Sabo borgs to manipulate circuit boards and more
@@ -330,7 +330,7 @@
 /obj/item/borg/apparatus/engineering/examine()
 	. = ..()
 	if(stored)
-		. += "The apparatus currently has [stored] secured."
+		. += LANG("obj.929ca228", list(stored))
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored item. ")
 
 /obj/item/borg/apparatus/engineering/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -380,5 +380,5 @@
 /obj/item/borg/apparatus/service/examine()
 	. = ..()
 	if(stored)
-		. += "The apparatus currently has [stored] secured."
+		. += LANG("obj.929ca228", list(stored))
 	. += span_notice("<i>Alt-click</i> will drop the currently secured item.")

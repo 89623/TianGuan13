@@ -514,7 +514,7 @@
 
 /obj/item/toy/gun/examine(mob/user)
 	. = ..()
-	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
+	. += LANG("obj.77ba1913", list(bullets == 1 ? "is" : "are", bullets))
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, list/modifiers, list/attack_modifiers)
 
@@ -572,7 +572,7 @@
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	. = ..()
-	. += "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
+	. += LANG("obj.77ba1913", list(amount_left == 1 ? "is" : "are", amount_left))
 
 /*
  * Toy swords
@@ -731,9 +731,9 @@
 /obj/item/toy/windup_toolbox/update_overlays()
 	. = ..()
 	if(active)
-		. += "single_latch_open"
+		. += LANG("obj.df9c250f", null)
 	else
-		. += "single_latch"
+		. += LANG("obj.7ab897b2", null)
 
 /obj/item/toy/windup_toolbox/attack_self(mob/user)
 	if(!active)

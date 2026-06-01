@@ -131,9 +131,9 @@
 		if(held_signs.len)
 			var/obj/item/clothing/suit/caution/sign_obj = held_signs[1]
 			if(held_signs.len > 1)
-				. += "\t[icon2html(sign_obj, user)] [convert_integer_to_words(length(held_signs))] [sign_obj.name]\s"
+				. += LANG("obj.a6311896", list(icon2html(sign_obj, user), convert_integer_to_words(length(held_signs)), sign_obj.name))
 			else
-				. += "\t[icon2html(sign_obj, user)] \a [sign_obj]"
+				. += LANG("obj.6dcfac0e", list(icon2html(sign_obj, user), sign_obj))
 		. += span_notice("\n<b>Left-click</b> to [contents.len > 1 ? "search [src]" : "remove [contents[1]]"].")
 		if(mybag)
 			. += span_notice("<b>Right-click</b> with a <b>[weight_class_to_text(mybag.atom_storage.max_specific_storage)] item</b> to put it in [mybag].")
@@ -352,14 +352,14 @@
 	if(mybag)
 		. += istype(mybag, /obj/item/storage/bag/trash/bluespace) ? "cart_bluespace_garbage" : "cart_garbage"
 	if(mymop)
-		. += "cart_mop"
+		. += LANG("obj.d23585e5", null)
 	if(mybroom)
-		. += "cart_broom"
+		. += LANG("obj.ee4d4e33", null)
 	if(myspray)
-		. += "cart_spray"
+		. += LANG("obj.a38add5f", null)
 	if(myreplacer)
-		. += "cart_replacer"
+		. += LANG("obj.08591f52", null)
 	if(held_signs.len)
-		. += "cart_sign[min(held_signs.len, 4)]"
+		. += LANG("obj.e0366b01", list(min(held_signs.len, 4)))
 
 #undef CART_HAS_MINIMUM_REAGENT_VOLUME

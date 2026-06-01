@@ -78,7 +78,7 @@
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	. = ..()
-	. += "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"]."
+	. += LANG("obj.1fee68ed", list(magpulse ? "enabled" : "disabled"))
 
 /obj/item/clothing/shoes/magboots/update_icon_state()
 	. = ..()

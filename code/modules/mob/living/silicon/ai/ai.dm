@@ -258,12 +258,12 @@
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()
 	if(stat != CONSCIOUS)
-		. += "Systems nonfunctional"
+		. += LANG("mob.d81c1b9d", null)
 		return
-	. += "System integrity: [(health + 100) * 0.5]%"
+	. += LANG("mob.fcb683cf", list((health + 100) * 0.5))
 	if(isturf(loc)) //only show if we're "in" a core
-		. += "Backup Power: [battery * 0.5]%"
-	. += "Connected cyborgs: [length(connected_robots)]"
+		. += LANG("mob.6eb432a1", list(battery * 0.5))
+	. += LANG("mob.4d314b4f", list(length(connected_robots)))
 	for(var/r in connected_robots)
 		var/mob/living/silicon/robot/connected_robot = r
 		var/robot_status = "Nominal"
@@ -281,7 +281,7 @@
 			Status: [robot_status]",
 			"src=[REF(src)];track_cyborg=[text_ref(connected_robot)]",
 		))
-	. += "AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]" //Count of total AI shells
+	. += LANG("mob.9db70d9f", list(LAZYLEN(GLOB.available_ai_shells))) //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
 	if(control_disabled)

@@ -103,6 +103,6 @@
 
 /datum/vote/custom_vote/initiate_vote(initiator, duration)
 	. = ..()
-	. += "\n[override_question]"
+	. += LANG("datum.65aac1b5", list(override_question))
 
 #undef MAX_CUSTOM_VOTE_OPTIONS

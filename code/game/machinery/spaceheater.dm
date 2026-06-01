@@ -97,9 +97,9 @@
 
 /obj/machinery/space_heater/examine(mob/user)
 	. = ..()
-	. += "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
+	. += LANG("obj.85c15b93", list(src, on ? "on" : "off", panel_open ? "open" : "closed"))
 	if(cell)
-		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+		. += LANG("obj.00f8f6f7", list(cell ? round(cell.percent(), 1) : 0))
 	else
 		. += span_warning("There is no power cell installed.")
 	if(in_range(user, src) || isobserver(user))
@@ -123,7 +123,7 @@
 	if(on)
 		. += emissive_appearance(icon, "[emissive_state ? emissive_state : base_icon_state + "-" + mode]-emissive", src, alpha = src.alpha)
 	if(panel_open)
-		. += "[base_icon_state]-open"
+		. += LANG("obj.2410b1d7", list(base_icon_state))
 		. += emissive_blocker(icon, "[base_icon_state]-open", src, alpha = src.alpha)
 
 /obj/machinery/space_heater/on_set_panel_open()
@@ -502,8 +502,8 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/update_overlays()
 	. += ..()
-	. += "[icon_state]-beaker"
-	. += "[base_icon_state]-rigged"
+	. += LANG("obj.6963f5ec", list(icon_state))
+	. += LANG("obj.6017b09d", list(base_icon_state))
 	. += emissive_blocker(icon, "[base_icon_state]-rigged", src, alpha = src.alpha)
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()

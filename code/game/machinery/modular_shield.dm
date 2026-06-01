@@ -491,9 +491,9 @@
 	. = ..()
 
 	if(isnull(shield_generator) && isnull(connected_node))
-		. += "It can be loosened and rotated with a screwdriver and wrench. It can be connected to a node or generator with a multitool."
+		. += LANG("obj.309f9a47", null)
 		return
-	. += "It can be loosed and rotated with a screwdriver and wrench, rotating it will sever its connection."
+	. += LANG("obj.f9c4372c", null)
 
 /obj/machinery/modular_shield/module/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()

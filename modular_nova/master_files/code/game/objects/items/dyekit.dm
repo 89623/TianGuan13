@@ -82,7 +82,7 @@
 
 /obj/item/dyespray/examine(mob/user)
 	. = ..()
-	. += "It has [uses] uses left."
+	. += LANG("obj.8e201a44", list(uses))
 
 #undef DYE_OPTION_HAIR_COLOR
 #undef DYE_OPTION_GRADIENT

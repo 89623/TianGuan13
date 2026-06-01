@@ -32,9 +32,9 @@
 
 /obj/item/clipboard/cyborg/examine()
 	. = ..()
-	. += "Alt-click to synthesize a piece of paper."
+	. += LANG("obj.38990762", null)
 	if(!COOLDOWN_FINISHED(src, printer_cooldown))
-		. += "Its integrated paper synthesizer seems to still be on cooldown."
+		. += LANG("obj.4a478e27", null)
 
 
 /obj/item/clipboard/cyborg/click_alt(mob/user)
@@ -468,7 +468,7 @@
 
 /obj/item/crowbar/cyborg/power/examine()
 	. = ..()
-	. += " It's fitted with a [tool_behaviour == TOOL_CROWBAR ? "prying" : "cutting"] head."
+	. += LANG("obj.fc5144aa", list(tool_behaviour == TOOL_CROWBAR ? "prying" : "cutting"))
 
 /obj/item/crowbar/cyborg/power/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/tools/change_jaws.ogg', 50, TRUE)
@@ -495,7 +495,7 @@
 
 /obj/item/screwdriver/cyborg/power/examine()
 	. = ..()
-	. += " It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"] head."
+	. += LANG("obj.fc5144aa", list(tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"))
 
 /obj/item/screwdriver/cyborg/power/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)

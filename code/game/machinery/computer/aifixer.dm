@@ -95,10 +95,10 @@
 		return
 
 	if(restoring)
-		. += "ai-fixer-on"
+		. += LANG("obj.29fcc53f", null)
 
 	if(!occupier)
-		. += "ai-fixer-empty"
+		. += LANG("obj.07bfdb9f", null)
 		return
 	switch(occupier.stat)
 		if(CONSCIOUS)

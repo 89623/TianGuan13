@@ -24,9 +24,9 @@
 /obj/structure/towel_bin/examine(mob/user)
 	. = ..()
 	if(amount <= 0)
-		. += "There are no towels in the bin."
+		. += LANG("obj.e7cf5721", null)
 	else
-		. += "There [amount == 1 ? "is one towel" : "are [amount] towels"] in the bin."
+		. += LANG("obj.c911e914", list(amount == 1 ? "is one towel" : "are [amount] towels"))
 
 
 /obj/structure/towel_bin/update_icon_state()

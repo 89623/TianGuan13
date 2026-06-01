@@ -168,7 +168,7 @@
 
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()
-	. += "Its master ID string seems to be [(!master_name || emagged) ? "empty" : master_name]."
+	. += LANG("mob.0fe75e3f", list((!master_name || emagged) ? "empty" : master_name))
 	//NOVA EDIT ADDITION BEGIN - CUSTOMIZATION
 	. += get_silicon_flavortext(user)
 	//NOVA EDIT ADDITION END
@@ -176,9 +176,9 @@
 /mob/living/silicon/pai/get_status_tab_items()
 	. = ..()
 	if(!stat)
-		. += "Emitter Integrity: [holochassis_health * (100 / HOLOCHASSIS_MAX_HEALTH)]."
+		. += LANG("mob.c3e78e3e", list(holochassis_health * (100 / HOLOCHASSIS_MAX_HEALTH)))
 	else
-		. += "Systems nonfunctional."
+		. += LANG("mob.b06617dd", null)
 
 /mob/living/silicon/pai/Exited(atom/movable/gone, direction)
 	if(gone == atmos_analyzer)

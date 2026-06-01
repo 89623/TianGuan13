@@ -47,7 +47,7 @@
 	if(user.Adjacent(src))
 		. += span_notice("Alt-click it to beam its contents to any nearby disposal bins.")
 	if(!LAZYLEN(dish_drive_contents))
-		. += "[src] is empty!"
+		. += LANG("obj.02d482cc", list(src))
 		return
 	// Makes a list of all dishes in the drive, as well as what dish will be taken out next.
 	var/list/dish_list = list()

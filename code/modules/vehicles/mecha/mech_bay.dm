@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	desc = "This port recharges a mech's internal power cell."
@@ -176,4 +177,4 @@
 		return
 	if(recharging_mech.cell.charge >= recharging_mech.cell.maxcharge)
 		return
-	. += "recharge_comp_on"
+	. += LANG("obj.aff73a2f", null)

@@ -92,7 +92,7 @@
 /obj/energy_ball/examine(mob/user)
 	. = ..()
 	if(orbiting_balls.len)
-		. += "There are [orbiting_balls.len] mini-balls orbiting it."
+		. += LANG("obj.8f45e687", list(orbiting_balls.len))
 
 /obj/energy_ball/proc/move(move_amount)
 	var/list/dirs = GLOB.alldirs.Copy()

@@ -408,7 +408,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	underlays.Cut()
 
 	if(name != initial(name))
-		. += "[base_icon_state]_label"
+		. += LANG("obj.6f754b5b", list(base_icon_state))
 
 #undef MORGUE_EMPTY
 #undef MORGUE_NO_MOBS

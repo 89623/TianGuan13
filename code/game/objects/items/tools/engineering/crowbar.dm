@@ -176,7 +176,7 @@
 
 /obj/item/crowbar/power/examine()
 	. = ..()
-	. += "It's fitted with a [tool_behaviour == first_tool_behavior ? inactive_text : active_text] head."
+	. += LANG("obj.ce18620c", list(tool_behaviour == first_tool_behavior ? inactive_text : active_text))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].

@@ -32,17 +32,17 @@
 /datum/wires/rbmk2/get_status()
 	var/obj/machinery/power/rbmk2/machine = holder
 	. = list()
-	. += "The power light is [machine.power && machine.powernet ? "yellow" : "off"]."
-	. += "The occupancy light is [machine.stored_rod ? "purple" : "off"]."
-	. += "The processing light is [machine.active ? "green" : "off"]."
-	. += "The safety light is [machine.safety ? "blue" : "flashing red"]."
+	. += LANG("datum.50637ffa", list(machine.power && machine.powernet ? "yellow" : "off"))
+	. += LANG("datum.3e1ae9d6", list(machine.stored_rod ? "purple" : "off"))
+	. += LANG("datum.0b8d503c", list(machine.active ? "green" : "off"))
+	. += LANG("datum.2c3bcfb8", list(machine.safety ? "blue" : "flashing red"))
 	if(machine.vent_reverse_direction)
-		. += "The vent light is [machine.venting ? "flashing orange and white" : "flashing red"]."
+		. += LANG("datum.1c191eb5", list(machine.venting ? "flashing orange and white" : "flashing red"))
 	else
-		. += "The vent light is [machine.venting ? "green" : "flashing red"]."
-	. += "The overclock light is [machine.overclocked ? "blinking blue" : "off"]."
-	. += "The cooling limiter display reads [machine.cooling_limiter]%"
-	. += "The anti-tamper light is [machine.tampered ? "flashing red" : "green"]."
+		. += LANG("datum.1c191eb5", list(machine.venting ? "green" : "flashing red"))
+	. += LANG("datum.52a85cc6", list(machine.overclocked ? "blinking blue" : "off"))
+	. += LANG("datum.a1d8dfbf", list(machine.cooling_limiter))
+	. += LANG("datum.230eb30a", list(machine.tampered ? "flashing red" : "green"))
 
 /datum/wires/rbmk2/on_pulse(wire, user)
 	var/obj/machinery/power/rbmk2/machine = holder

@@ -101,8 +101,8 @@
 	if(paper_to_add)
 		. += paper_to_add
 	if(!integrated_pen && pen) // NOVA EDIT - CARGO BORGS - ORIGINAL: if(pen)
-		. += "clipboard_pen"
-	. += "clipboard_over"
+		. += LANG("obj.6e6fa37b", null)
+	. += LANG("obj.02a973a4", null)
 
 /obj/item/clipboard/proc/get_paper_overlay()
 	if(isnull(top_paper))

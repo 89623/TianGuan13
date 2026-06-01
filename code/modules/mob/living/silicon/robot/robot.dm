@@ -262,12 +262,12 @@
 /mob/living/silicon/robot/get_status_tab_items()
 	. = ..()
 	if(cell)
-		. += "Charge Left: [display_energy(cell.charge)]/[display_energy(cell.maxcharge)]"
+		. += LANG("mob.b1a7b653", list(display_energy(cell.charge), display_energy(cell.maxcharge)))
 	else
-		. += "No Cell Inserted!"
+		. += LANG("mob.36c17f5e", null)
 
 	if(connected_ai)
-		. += "Master AI: [connected_ai.name]"
+		. += LANG("mob.575291cf", list(connected_ai.name))
 
 /mob/living/silicon/robot/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
 	SIGNAL_HANDLER

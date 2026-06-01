@@ -36,7 +36,7 @@
 
 /obj/structure/stripper_pole/examine(mob/user)
 	. = ..()
-	. += "The lights are currently <b>[lights_enabled ? "ON" : "OFF"]</b> and could be [lights_enabled ? "dis" : "en"]abled with <b>Alt-Click</b>."
+	. += LANG("obj.5f601baa", list(lights_enabled ? "ON" : "OFF", lights_enabled ? "dis" : "en"))
 
 
 /// The list of possible designs generated for the radial reskinning menu

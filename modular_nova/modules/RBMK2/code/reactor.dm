@@ -118,7 +118,7 @@
 /obj/machinery/power/rbmk2/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += "platform_panel"
+		. += LANG("obj.9f4a9e69", null)
 
 	if(stored_rod)
 
@@ -528,9 +528,9 @@
 
 	. += span_notice("A digital display on the side side says <b>MAX SAFE POWER: [display_power(safeties_max_power_generation)], WARRANTY VOID IF EXCEEDED</b>.")
 
-	. += "It is linked to [length(linked_sniffers)] sniffer(s)."
+	. += LANG("obj.bbb00e7d", list(length(linked_sniffers)))
 
-	. += "It is[!active?"n't":""] running."
+	. += LANG("obj.e87ba4d7", list(!active?"n't":""))
 
 	if(!power || !powernet)
 		. += span_warning("It is not connected to a power cable.")
@@ -538,7 +538,7 @@
 	if(!venting)
 		. += span_warning("The vents are closed.")
 	else if(vent_reverse_direction)
-		. += "Its vents are running in reverse."
+		. += LANG("obj.4ad27eca", null)
 	if(!stored_rod)
 		. += span_warning("It it is missing a RB-MK2 reactor rod.")
 	else if(jammed)
@@ -553,9 +553,9 @@
 
 /obj/machinery/power/rbmk2/examine_more(mob/user)
 	. = ..()
-	. += "It is running at <b>[power_efficiency*100]%</b> power efficiency."
-	. += "It can output in environments up to <b>[vent_pressure]kPa</b>."
-	. += "It can handle an estimated power load of <b>[display_power(max_power_generation)]</b> before going critical."
+	. += LANG("obj.f26dad54", list(power_efficiency*100))
+	. += LANG("obj.86da2e45", list(vent_pressure))
+	. += LANG("obj.ce3eec20", list(display_power(max_power_generation)))
 
 /obj/machinery/power/rbmk2/proc/transfer_rod_temperature(datum/gas_mixture/gas_source, allow_cooling_limiter = TRUE, multiplier = 1)
 	var/datum/gas_mixture/rod_mix = stored_rod.air_contents

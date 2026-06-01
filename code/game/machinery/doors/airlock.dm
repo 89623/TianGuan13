@@ -723,15 +723,15 @@
 		. += span_warning("Its access panel is smoking slightly.")
 	if(note)
 		if(!in_range(user, src))
-			. += "There's a [note.name] pinned to the front. You can't read it from here."
+			. += LANG("obj.72ecb685", list(note.name))
 		else
-			. += "There's a [note.name] pinned to the front..."
+			. += LANG("obj.829694bf", list(note.name))
 			. += note.examine(user)
 		. += span_notice("The attached [note.name] can be taken down with some [EXAMINE_HINT("wirecutters")].")
 	if(seal)
-		. += "It's been braced with \a [seal]."
+		. += LANG("obj.aa662bdb", list(seal))
 	if(welded)
-		. += "It's welded shut."
+		. += LANG("obj.e4f55b9c", null)
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
@@ -750,9 +750,9 @@
 				. += "There is a protective grille over its panel."
 	else if(security_level)
 		if(security_level == AIRLOCK_SECURITY_IRON)
-			. += "It looks a bit stronger."
+			. += LANG("obj.32577f8e", null)
 		else
-			. += "It looks very robust."
+			. += LANG("obj.2a62f2ee", null)
 
 	var/active_reta = has_active_reta_access()
 	if(active_reta)

@@ -41,10 +41,10 @@
 
 /obj/item/rwd/examine(mob/user)
 	. = ..()
-	. += "Dual wield & walk over floors to lay cable."
-	. += "It has [current_amount] pieces remaining."
-	. += "Right click on it to dispense a custom amount of cable."
-	. += "Alt click to change cable layer."
+	. += LANG("obj.415f15b8", null)
+	. += LANG("obj.8dc63c9e", list(current_amount))
+	. += LANG("obj.e0ae16cf", null)
+	. += LANG("obj.dff365af", null)
 
 /obj/item/rwd/update_icon_state()
 	switch(current_amount)

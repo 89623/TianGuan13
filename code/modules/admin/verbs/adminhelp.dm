@@ -384,10 +384,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!ref_src)
 		ref_src = "[REF(src)]"
 	. = ADMIN_FULLMONTY_NONAME(initiator.mob)
-	. += " (<A href='byond://?_src_=holder;[HrefToken()];showmessageckey=[initiator.ckey]'>NOTES</A>)"
+	. += LANG("datum.1037fb28", list(HrefToken(), initiator.ckey))
 	if(state == AHELP_ACTIVE)
 		if (CONFIG_GET(flag/popup_admin_pm))
-			. += " (<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];adminpopup=[REF(initiator)]'>POPUP</A>)"
+			. += LANG("datum.e2cdd57a", list(HrefToken(forceGlobal = TRUE), REF(initiator)))
 		. += ClosureLinks(ref_src)
 
 //private
@@ -395,9 +395,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(!ref_src)
 		ref_src = "[REF(src)]"
 	. = " (<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=reject'>REJT</A>)"
-	. += " (<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=icissue'>IC</A>)"
-	. += " (<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"
-	. += " (<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=resolve'>RSLVE</A>)"
+	. += LANG("datum.5ec8bf2c", list(HrefToken(forceGlobal = TRUE), ref_src))
+	. += LANG("datum.40cd514e", list(HrefToken(forceGlobal = TRUE), ref_src))
+	. += LANG("datum.78ee1acc", list(HrefToken(forceGlobal = TRUE), ref_src))
 
 //private
 /datum/admin_help/proc/LinkedReplyName(ref_src)

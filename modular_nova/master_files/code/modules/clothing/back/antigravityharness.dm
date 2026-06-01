@@ -213,15 +213,15 @@
 /obj/item/gravity_harness/examine(mob/user)
 	. = ..()
 	if(in_range(src, user) || isobserver(user))
-		. += "The gravity harness is [gravity_on ? "on" : "off"] and the field is set to [mode]"
-		. += "The power meter shows [current_cell ? "<b>[round(current_cell.percent(), 0.1)]%</b> charge remaining." : "[span_warning("\"MISSING CELL\"")]"]"
+		. += LANG("obj.c5c230c3", list(gravity_on ? "on" : "off", mode))
+		. += LANG("obj.876924dd", list(current_cell ? "<b>[round(current_cell.percent(), 0.1)]%</b> charge remaining." : "[span_warning("\"MISSING CELL\"")]"))
 
 		if(cell_cover_open)
-			. += "The cell cover is open, exposing the battery."
+			. += LANG("obj.a1abb4c6", null)
 			if(!current_cell)
 				. += span_warning("The cell slot is empty, showing bare connectors.")
 			else
-				. += "\The [current_cell] is firmly in place."
+				. += LANG("obj.5b7e5f42", list(current_cell))
 
 	return .
 

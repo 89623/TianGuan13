@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/silicon/ai/examine(mob/user)
 	. = list()
 	if(stat == DEAD)
@@ -23,9 +24,9 @@
 			else
 				. += span_warning("<B>[p_Their()] casing is melted and heat-warped!</B>")
 		if(deployed_shell)
-			. += "The wireless networking light is blinking."
+			. += LANG("mob.c0556282", null)
 		else if (!shunted && !client)
-			. += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem..."
+			. += LANG("mob.dbbd0a60", list(src))
 	//NOVA EDIT ADDITION BEGIN - CUSTOMIZATION
 	. += get_silicon_flavortext(user)
 	//NOVA EDIT ADDITION END

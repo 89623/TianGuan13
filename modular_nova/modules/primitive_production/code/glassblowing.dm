@@ -140,15 +140,15 @@
 	if(!length(glass.steps_remaining))
 		return
 	if(glass.steps_remaining[STEP_BLOW])
-		. += "The glass requires [glass.steps_remaining[STEP_BLOW]] more blowing actions! "
+		. += LANG("obj.1243f489", list(glass.steps_remaining[STEP_BLOW]))
 	if(glass.steps_remaining[STEP_SPIN])
-		. += "The glass requires [glass.steps_remaining[STEP_SPIN]] more spinning actions! "
+		. += LANG("obj.0558975b", list(glass.steps_remaining[STEP_SPIN]))
 	if(glass.steps_remaining[STEP_PADDLE])
-		. += "The glass requires [glass.steps_remaining[STEP_PADDLE]] more paddling actions! "
+		. += LANG("obj.a84744bb", list(glass.steps_remaining[STEP_PADDLE]))
 	if(glass.steps_remaining[STEP_SHEAR])
-		. += "The glass requires [glass.steps_remaining[STEP_SHEAR]] more shearing actions! "
+		. += LANG("obj.27a6c1a9", list(glass.steps_remaining[STEP_SHEAR]))
 	if(glass.steps_remaining[STEP_JACKS])
-		. += "The glass requires [glass.steps_remaining[STEP_JACKS]] more jacking actions!"
+		. += LANG("obj.d5d6212c", list(glass.steps_remaining[STEP_JACKS]))
 
 /obj/item/glassblowing/blowing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/item/glassblowing/molten_glass/attacking_glass = interacting_with

@@ -1,14 +1,15 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/silicon/robot/examine(mob/user)
 	. = list()
 	if(desc)
 		. += "[desc]"
 
 	var/model_name = model ? "\improper [model.name]" : "\improper Default"
-	. += "[p_Theyre()] currently <b>\a [model_name]-type</b> cyborg."
+	. += LANG("mob.6d297d48", list(p_Theyre(), model_name))
 
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
-		. += "[p_Theyre()] holding [icon2html(act_module, user)] \a [act_module]."
+		. += LANG("mob.49de5798", list(p_Theyre(), icon2html(act_module, user), act_module))
 	. += get_status_effect_examinations()
 	if (get_brute_loss())
 		if (get_brute_loss() < maxHealth*0.5)
@@ -31,7 +32,7 @@
 	if(opened)
 		. += span_warning("[p_Their()] cover is open and the power cell is [cell ? "installed" : "missing"].")
 	else
-		. += "[p_Their()] cover is closed[locked ? "" : ", and looks unlocked"]."
+		. += LANG("mob.9883c04b", list(p_Their(), locked ? "" : ", and looks unlocked"))
 
 	if(cell && cell.charge <= 0)
 		. += span_warning("[p_Their()] battery indicator is blinking red!")

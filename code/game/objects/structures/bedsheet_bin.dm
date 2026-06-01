@@ -603,11 +603,11 @@ LINEN BINS
 /obj/structure/bedsheetbin/examine(mob/user)
 	. = ..()
 	if(amount < 1)
-		. += "There are no bed sheets in the bin."
+		. += LANG("obj.b2bea8f1", null)
 	else if(amount == 1)
-		. += "There is one bed sheet in the bin."
+		. += LANG("obj.fb1d78cc", null)
 	else
-		. += "There are [amount] bed sheets in the bin."
+		. += LANG("obj.34dbdfc7", list(amount))
 
 /obj/structure/bedsheetbin/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))

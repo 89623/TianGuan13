@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * SSverb_manager, a subsystem that runs every tick and runs through its entire queue without yielding like SSinput.
  * this exists because of how the byond tick works and where user inputted verbs are put within it.
@@ -164,4 +165,4 @@ SUBSYSTEM_DEF(verb_manager)
 /datum/controller/subsystem/verb_manager/stat_entry(msg)
 	. = ..()
 	if(use_default_stats)
-		. += "V/S: [round(verbs_executed_per_second, 0.01)]"
+		. += LANG("datum.31a051d0", list(round(verbs_executed_per_second, 0.01)))

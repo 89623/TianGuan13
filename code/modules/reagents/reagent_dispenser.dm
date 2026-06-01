@@ -405,11 +405,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	. = ..()
 	if (paper_cups > 1)
-		. += "There are [paper_cups] paper cups left."
+		. += LANG("obj.bfa9c5dd", list(paper_cups))
 	else if (paper_cups == 1)
-		. += "There is one paper cup left."
+		. += LANG("obj.1abf54e4", null)
 	else
-		. += "There are no paper cups left."
+		. += LANG("obj.8c7d5c45", null)
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

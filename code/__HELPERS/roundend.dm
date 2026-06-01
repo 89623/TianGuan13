@@ -622,7 +622,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		hardcores += human_player
 	if(!length(hardcores))
 		return
-	. += "<div class='panel stationborder'><span class='header'>The following people made it out as a random hardcore character:</span>"
+	. += LANG("datum.095babc2", null)
 	. += "<ul class='playerlist'>"
 	for(var/mob/living/carbon/human/human_player in hardcores)
 		. += "<li>[printplayer(human_player.mind)] with a hardcore random score of [round(human_player.hardcore_survival_score)]</li>"

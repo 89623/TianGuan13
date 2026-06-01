@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/admins/proc/stickyban(action,data)
 	if(!check_rights(R_BAN))
 		return
@@ -361,8 +362,8 @@
 	if (ban["admin"])
 		. += "[ban["admin"]]<br />"
 	else
-		. += "LEGACY<br />"
-	. += "Caught keys<br />\n<ol>"
+		. += LANG("datum.f762f232", null)
+	. += LANG("datum.0fce5e3d", null)
 	for (var/key in ban["keys"])
 		if (ckey(key) == ckey)
 			continue
@@ -373,7 +374,7 @@
 			continue
 		. += "<li><a href='byond://?_src_=holder;[HrefToken()];stickyban=remove_alt&ckey=[ckey]&alt=[ckey(key)]'>\[-\]</a>[key]<a href='byond://?_src_=holder;[HrefToken()];stickyban=unexempt&ckey=[ckey]&alt=[ckey(key)]'>\[UE\]</a></li>"
 
-	. += "</ol>\n"
+	. += LANG("datum.6f19b335", null)
 
 /datum/admins/proc/stickyban_show()
 	if(!check_rights(R_BAN))

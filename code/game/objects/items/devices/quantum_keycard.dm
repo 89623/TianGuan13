@@ -34,7 +34,7 @@
 /obj/item/quantum_keycard/examine(mob/user)
 	. = ..()
 	if(qpad)
-		. += "It's currently linked to a quantum pad."
+		. += LANG("obj.c70bbc2b", null)
 
 		var/area_name = get_area_name(qpad)
 		if(area_name)

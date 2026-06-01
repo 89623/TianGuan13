@@ -428,7 +428,7 @@
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
 	if(can_adjust)
-		. += "Alt-click on [src] to wear it [adjusted == ALT_STYLE ? "normally" : "casually"]."
+		. += LANG("obj.617841c5", list(src, adjusted == ALT_STYLE ? "normally" : "casually"))
 	if(has_sensor == BROKEN_SENSORS)
 		. += span_warning("The medical sensors appear to be shorted out. You could repair it with some cabling.")
 	else if(has_sensor > NO_SENSORS)
@@ -446,8 +446,8 @@
 
 	if(LAZYLEN(attached_accessories))
 		var/list/accessories = list_accessories_with_icon(user)
-		. += "It has [english_list(accessories)] attached."
-		. += "Alt-Right-Click to remove [attached_accessories[1]]."
+		. += LANG("obj.da83e7bd", list(english_list(accessories)))
+		. += LANG("obj.fa3a64e1", list(attached_accessories[1]))
 
 /// Helper to list out all accessories with an icon besides it, for use in examine
 /obj/item/clothing/under/proc/list_accessories_with_icon(mob/user)

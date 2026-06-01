@@ -164,7 +164,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 	if(open)
 		if(broken)
-			. += "glass4_raised"
+			. += LANG("obj.94a79480", null)
 			return
 
 		switch(hp_percent)
@@ -179,7 +179,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		return
 
 	if(broken)
-		. += "glass4"
+		. += LANG("obj.7a053f51", null)
 	else
 		switch(hp_percent)
 			if(-INFINITY to 40)

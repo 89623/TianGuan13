@@ -457,7 +457,7 @@
 			if (1601 to 35000)
 				heat_prot = "extreme"
 		if (heat_prot)
-			. += "[src] offers the wearer [heat_protection] protection from heat, up to [max_heat_protection_temperature] kelvin."
+			. += LANG("obj.5a1b8f0e", list(src, heat_protection, max_heat_protection_temperature))
 
 		if(min_cold_protection_temperature)
 			readout += "It will insulate the wearer from [min_cold_protection_temperature <= SPACE_SUIT_MIN_TEMP_PROTECT ? span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space, down to [min_cold_protection_temperature] kelvin") : "cold, down to [min_cold_protection_temperature] kelvin"]."
@@ -477,7 +477,7 @@
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
 	if (armor_value < 0)
 		. = "-"
-	. += "\Roman[round(abs(armor_value), 10) / 10]"
+	. += LANG("obj.24882ded", list(round(abs(armor_value), 10) / 10))
 	return .
 
 /obj/item/clothing/atom_break(damage_flag)

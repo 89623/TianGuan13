@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MANUFACTURING_FAIL 0
 #define MANUFACTURING_SUCCESS 1
 
@@ -23,7 +24,7 @@
 /obj/machinery/power/manufacturing/examine(mob/user)
 	. = ..()
 	if(may_be_moved)
-		. += "It receives power via cable, but certain buildings do not need power."
+		. += LANG("obj.c2d89ffa", null)
 	. += length(contents - circuit) ? "It contains:" : "It contains no items."
 	for(var/atom/movable/thing as anything in contents - circuit)
 		var/text = thing.name

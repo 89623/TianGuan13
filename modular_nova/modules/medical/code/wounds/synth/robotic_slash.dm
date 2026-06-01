@@ -270,7 +270,7 @@
 	if (intensity_mult < 0.2 || (victim.stat == DEAD))
 		return
 
-	. += ", and "
+	. += LANG("datum.8fe6a58c", null)
 
 	var/extra
 	switch (intensity_mult)
@@ -288,12 +288,12 @@
 /datum/wound/electrical_damage/get_scanner_description(mob/user)
 	. = ..()
 
-	. += "\nWound status: [get_wound_status_info()]"
+	. += LANG("datum.a6893bf4", list(get_wound_status_info()))
 
 /datum/wound/electrical_damage/get_simple_scanner_description(mob/user)
 	. = ..()
 
-	. += "\nWound status: [get_wound_status_info()]"
+	. += LANG("datum.a6893bf4", list(get_wound_status_info()))
 
 /// Returns a string with our fault intensity and threshold to removal for use in health analyzers.
 /datum/wound/electrical_damage/proc/get_wound_status_info()

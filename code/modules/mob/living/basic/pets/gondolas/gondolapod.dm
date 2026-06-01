@@ -43,7 +43,7 @@
 /mob/living/basic/pet/gondola/gondolapod/update_overlays()
 	. = ..()
 	if(opened)
-		. += "[icon_state]_open"
+		. += LANG("mob.821ccaac", list(icon_state))
 
 /mob/living/basic/pet/gondola/gondolapod/examine(mob/user)
 	. = ..()

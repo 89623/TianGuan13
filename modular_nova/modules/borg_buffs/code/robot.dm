@@ -125,7 +125,7 @@
 
 /obj/item/cooking/cyborg/power/examine()
 	. = ..()
-	. += " It's fitted with a [tool_behaviour == TOOL_KNIFE ? "knife" : "rolling pin"] head."
+	. += LANG("obj.fc5144aa", list(tool_behaviour == TOOL_KNIFE ? "knife" : "rolling pin"))
 
 /obj/item/cooking/cyborg/power/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)

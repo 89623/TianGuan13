@@ -466,9 +466,9 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 /obj/item/gun/energy/marksman_revolver/examine(mob/user)
 	. = ..()
 	if(max_coins)
-		. += "It currently has [coin_count] out of [max_coins] coins, and takes [coin_regen_rate/10] seconds to recharge each one."
+		. += LANG("obj.feda2fd5", list(coin_count, max_coins, coin_regen_rate/10))
 	else
-		. += "It has infinite coins available for use."
+		. += LANG("obj.f0ee0dba", null)
 
 /obj/item/gun/energy/marksman_revolver/process(seconds_per_tick)
 	if(!max_coins || coin_count >= max_coins)

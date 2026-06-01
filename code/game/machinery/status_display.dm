@@ -266,11 +266,11 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 	var/obj/effect/overlay/status_display_text/message1_overlay = get_status_text(message_key_1)
 	var/obj/effect/overlay/status_display_text/message2_overlay = get_status_text(message_key_2)
 	if (message1_overlay || message2_overlay)
-		. += "<hr>The display says:"
+		. += LANG("obj.005a8a9c", null)
 		if (message1_overlay.message)
-			. += "\t<tt>[html_encode(message1_overlay.message)]</tt>"
+			. += LANG("obj.60707fd0", list(html_encode(message1_overlay.message)))
 		if (message2_overlay.message)
-			. += "\t<tt>[html_encode(message2_overlay.message)]</tt>"
+			. += LANG("obj.60707fd0", list(html_encode(message2_overlay.message)))
 
 // Helper procs for child display types.
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)
@@ -1195,9 +1195,9 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 /obj/machinery/greenscreen_camera/update_overlays()
 	. = ..()
 	if(isnull(display))
-		. += "camera_off"
+		. += LANG("obj.cfdd17c6", null)
 	else
-		. += "camera_on"
+		. += LANG("obj.72b50fc4", null)
 		. += emissive_appearance(icon, "camera_emissive", src, alpha = src.alpha)
 
 /// Send an emergency alert signal to all status displays

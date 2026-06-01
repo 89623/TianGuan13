@@ -85,12 +85,12 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/update_overlays()
 	. = ..()
 	if(grease_level >= 1)
-		. += "fryer_greasy"
+		. += LANG("obj.9afc72ad", null)
 
 /obj/machinery/deepfryer/examine(mob/user)
 	. = ..()
 	if(frying)
-		. += "You can make out \a [frying] in the oil."
+		. += LANG("obj.cae69383", list(frying))
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use]</b> units of oil per second.")
 

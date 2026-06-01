@@ -71,7 +71,7 @@
 	var/list/recorded_tool_speeds = list()
 	// handle drapes separately so they're always on the bottom
 	if (locate(/obj/item/surgical_drapes) in contents)
-		. += "drapes"
+		. += LANG("obj.b35acf7a", null)
 	// compile all the overlays from items inside us
 	for(var/obj/item/surgery_tool in src)
 		// the overlay we will use if we want to display this one

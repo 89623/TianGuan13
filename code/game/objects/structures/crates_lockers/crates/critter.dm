@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/closet/crate/critter
 	name = "critter crate"
 	desc = "A crate designed for safe transport of animals. It has an oxygen tank for safe transport in space."
@@ -40,12 +41,12 @@
 /obj/structure/closet/crate/critter/update_overlays()
 	. = ..()
 	if(opened)
-		. += "crittercrate_door_open"
+		. += LANG("obj.bba2684b", null)
 		return
 
-	. += "crittercrate_door"
+	. += LANG("obj.f72ae490", null)
 	if(manifest)
-		. += "manifest"
+		. += LANG("obj.0d197521", null)
 
 /obj/structure/closet/crate/critter/return_air()
 	if(tank)

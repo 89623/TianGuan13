@@ -75,12 +75,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(inverted)
 		. += span_notice("It is currently set to go in reverse.")
-	. += "\nLeft-click with a <b>wrench</b> to rotate clockwise."
-	. += "Right-click with a <b>wrench</b> to rotate counterclockwise."
-	. += "Left-click with a <b>screwdriver</b> to invert its direction."
-	. += "Right-click with a <b>screwdriver</b> to flip its belt around."
-	. += "Left-click with a <b>multitool</b> to toggle whether this conveyor receives power via cable. Toggling connects and disconnects."
-	. += "Using another <b>conveyor belt assembly</b> on this will place a <b>new conveyor belt<b> in the direction this one is pointing."
+	. += LANG("obj.abecaddd", null)
+	. += LANG("obj.66a80030", null)
+	. += LANG("obj.1d6b1b93", null)
+	. += LANG("obj.63e02c7c", null)
+	. += LANG("obj.367cae54", null)
+	. += LANG("obj.9e0dbde3", null)
 
 /obj/machinery/conveyor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

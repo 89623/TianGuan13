@@ -196,7 +196,7 @@
 	if(corrupted)
 		. += span_danger("This [name] seems to be faulty!")
 	else if(!isnull(charge_light_type))
-		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
+		. += LANG("obj.00f8f6f7", list(CEILING(percent(), 0.1))) //so it doesn't say 0% charge when the overlay indicates it still has charge
 
 /obj/item/stock_parts/power_store/proc/try_explode(max_charge = FALSE)
 	var/check_charge = charge

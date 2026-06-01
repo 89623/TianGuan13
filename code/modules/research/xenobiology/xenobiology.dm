@@ -28,7 +28,7 @@
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()
 	if(extract_uses > 1)
-		. += "It has [extract_uses] uses remaining."
+		. += LANG("obj.bfb90e09", list(extract_uses))
 
 /obj/item/slime_extract/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/slimepotion/enhancer))

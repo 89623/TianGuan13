@@ -80,7 +80,7 @@
 /obj/item/construction/rcd/examine(mob/user)
 	. = ..()
 	if(construction_upgrades)
-		. += "It has the following upgrades installed:"
+		. += LANG("obj.00a804a0", null)
 		if(construction_upgrades & RCD_UPGRADE_FRAMES)
 			. += /obj/item/rcd_upgrade/frames::name
 		if(construction_upgrades & RCD_UPGRADE_SIMPLE_CIRCUITS)

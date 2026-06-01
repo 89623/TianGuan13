@@ -31,7 +31,7 @@
 
 /obj/item/lipstick/examine(mob/user)
 	. = ..()
-	. += "Alt-click to change the style."
+	. += LANG("obj.84cbdc42", null)
 
 /obj/item/lipstick/update_icon_state()
 	icon_state = "[base_icon_state][open ? "_uncap" : null]"

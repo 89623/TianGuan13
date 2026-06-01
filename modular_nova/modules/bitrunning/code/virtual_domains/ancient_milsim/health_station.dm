@@ -64,7 +64,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/health_station, 32)
 			if(15 to 30)
 				. += "[base_icon_state]_light3"
 			else
-				. += "[base_icon_state]_light4"
+				. += LANG("obj.009de9a1", list(base_icon_state))
 
 /obj/machinery/health_station/examine(mob/living/carbon/user)
 	. = ..()

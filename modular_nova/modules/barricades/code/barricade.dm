@@ -765,7 +765,7 @@
 
 /obj/item/quickdeploy/examine(mob/user)
 	. = ..()
-	. += "This [src.name] is set up deploy [initial(thing_to_deploy.name)]." // initial() since thing_to_deploy is a typepath
+	. += LANG("obj.df62e7d8", list(src.name, initial(thing_to_deploy.name))) // initial() since thing_to_deploy is a typepath
 
 /obj/item/quickdeploy/attack_self(mob/user)
 	to_chat(user, span_notice(LANG("obj.fcec36d9", list(src))))

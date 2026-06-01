@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/life_candle
 	name = "life candle"
 	desc = "You are dead. Insert quarter to continue."
@@ -74,9 +75,9 @@
 /obj/structure/life_candle/examine(mob/user)
 	. = ..()
 	if(linked_minds.len)
-		. += "[src] is active, and linked to [linked_minds.len] souls."
+		. += LANG("obj.cd0c2060", list(src, linked_minds.len))
 	else
-		. += "It is static, still, unmoving."
+		. += LANG("obj.1d5fdbd8", null)
 
 /obj/structure/life_candle/process()
 	if(!linked_minds.len)

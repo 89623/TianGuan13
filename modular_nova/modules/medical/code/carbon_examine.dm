@@ -49,7 +49,7 @@
 					. += "\t<span class='warning'><b>[t_His] [LB.name] is suffering [W.a_or_from] [W.get_topic_name(user)]!!</b></span>"
 
 	if(!any_bodypart_damage)
-		. += "\t<span class='smallnotice'><i>[t_He] [t_Has] no significantly damaged bodyparts.</i></span>"
+		. += LANG("mob.d4aac760", list(t_He, t_Has))
 
 	var/list/visible_scars
 	if(all_scars)
@@ -59,6 +59,6 @@
 				LAZYADD(visible_scars, S)
 
 	if(!visible_scars)
-		. += "\t<span class='smallnotice'><i>[t_He] [t_Has] no visible scars.</i></span>"
+		. += LANG("mob.cded1d50", list(t_He, t_Has))
 
 	return .

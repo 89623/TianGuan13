@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/portable_atmospherics/scrubber
 	name = "portable air scrubber"
 	desc = "A portable variant of the station scrubbers, capable of filtering gas from the air around it or inserted tank. May also be wrenched into a port."
@@ -46,9 +47,9 @@
 	if(!use_overlays)
 		return
 	if(holding)
-		. += "scrubber-open"
+		. += LANG("obj.2f008b0c", null)
 	if(connected_port)
-		. += "scrubber-connector"
+		. += LANG("obj.0fecea81", null)
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	if(take_atmos_damage())

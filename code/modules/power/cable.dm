@@ -527,7 +527,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
-	. += "<b>Use it in hand</b> to change the layer you are placing on, amongst other things."
+	. += LANG("obj.6d90d850", null)
 
 /obj/item/stack/cable_coil/update_name()
 	if(novariants)

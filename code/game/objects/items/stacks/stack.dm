@@ -230,13 +230,13 @@
 		return
 	if(singular_name)
 		if(get_amount()>1)
-			. += "There are [get_amount()] [singular_name]\s in the stack."
+			. += LANG("obj.35e51020", list(get_amount(), singular_name))
 		else
-			. += "There is [get_amount()] [singular_name] in the stack."
+			. += LANG("obj.2319938c", list(get_amount(), singular_name))
 	else if(get_amount()>1)
-		. += "There are [get_amount()] in the stack."
+		. += LANG("obj.94de3961", list(get_amount()))
 	else
-		. += "There is [get_amount()] in the stack."
+		. += LANG("obj.0d568e89", list(get_amount()))
 	. += span_notice("<b>Right-click</b> with an empty hand to take a custom amount.")
 
 /obj/item/stack/proc/get_amount()

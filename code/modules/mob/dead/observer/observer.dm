@@ -979,7 +979,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/examine(mob/user)
 	. = ..()
 	if(!invisibility)
-		. += "It seems extremely obvious."
+		. += LANG("mob.cce52049", null)
 
 /mob/dead/observer/examine_more(mob/user)
 	if(!isAdminObserver(user))

@@ -44,7 +44,7 @@
 /obj/structure/spacevine/examine(mob/user)
 	. = ..()
 	if(!length(mutations))
-		. += "This vine has no mutations."
+		. += LANG("obj.a868aa5f", null)
 		return
 	var/text = "This vine has the following mutations:\n"
 	for(var/datum/spacevine_mutation/mutation as anything in mutations)

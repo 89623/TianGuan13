@@ -18,11 +18,11 @@
 /obj/machinery/anesthetic_machine/examine(mob/user)
 	. = ..()
 
-	. += "<b>Right-clicking</b> with a wrench will deconstruct the stand, if there is no tank attached."
+	. += LANG("obj.4e8b0863", null)
 	if(mask_out)
-		. += "<b>Click</b> on the stand to retract the mask, if the mask is currently out"
+		. += LANG("obj.e5d52495", null)
 	if(attached_tank)
-		. += "<b>Alt + Click</b> to remove [attached_tank]."
+		. += LANG("obj.4d2d032b", list(attached_tank))
 
 /obj/machinery/anesthetic_machine/Initialize(mapload)
 	. = ..()

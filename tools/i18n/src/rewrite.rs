@@ -21,7 +21,7 @@ use anyhow::{Context as _, Result};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use dm::ast::{BinaryOp, Expression, Follow, Spanned, Statement, Term};
+use dm::ast::{AssignOp, BinaryOp, Expression, Follow, Spanned, Statement, Term};
 
 use crate::extract::{build_template, placeholder_count};
 use crate::keys::{make_key, namespace_for};
@@ -213,7 +213,23 @@ impl<'a> Rewriter<'a> {
             return;
         }
         match expr {
-            Expression::BinaryOp { lhs, rhs, .. } | Expression::AssignOp { lhs, rhs, .. } => {
+            Expression::AssignOp { op, lhs, rhs } => {
+                // examine 文本：`. += <text>`（AddAssign，左侧是裸 `.`）。
+                if matches!(op, AssignOp::AddAssign) {
+                    if let Expression::Base { term, follow } = lhs.as_ref() {
+                        if follow.is_empty() {
+                            if let Term::Ident(id) = &term.elem {
+                                if id == "." {
+                                    self.try_rewrite_examine(rhs, ns);
+                                }
+                            }
+                        }
+                    }
+                }
+                self.visit_expr(lhs, ns);
+                self.visit_expr(rhs, ns);
+            }
+            Expression::BinaryOp { lhs, rhs, .. } => {
                 self.visit_expr(lhs, ns);
                 self.visit_expr(rhs, ns);
             }
@@ -300,6 +316,53 @@ impl<'a> Rewriter<'a> {
         if !new_edits.is_empty() {
             self.edits.entry(path).or_default().extend(new_edits);
         }
+    }
+
+    /// 改写 examine 的 `. += <text>`。以「文本节点自身的 Location」为锚（校验该处确为 `"`）：
+    /// 裸字符串 `. += "..."` / `. += "[interp]"` 的节点位置可靠 → 改写；span_*() 包裹的内层串
+    /// 位置指向宏定义（不是 `"`）→ 自动跳过（留待后续）。零损坏风险。
+    fn try_rewrite_examine(&mut self, rhs: &Expression, ns: &str) {
+        let mut nodes: Vec<&Spanned<Term>> = Vec::new();
+        collect_text_nodes(rhs, &mut nodes);
+        if nodes.len() != 1 {
+            return;
+        }
+        let node = nodes[0];
+        let Some(template) = build_template(rhs) else {
+            return;
+        };
+        let key = make_key(ns, &template);
+        let placeholders = placeholder_count(&template);
+
+        let loc = node.location;
+        let path = self.context.file_path(loc.file).to_path_buf();
+        if let Some(filter) = self.filter {
+            if !path.to_string_lossy().contains(filter) {
+                return;
+            }
+        }
+        let Some(src) = self.source(&path) else { return };
+        let Some(start) = line_col_to_byte(src, loc.line, loc.column) else {
+            return;
+        };
+        if src.as_bytes().get(start) != Some(&b'"') {
+            return; // 节点位置非开引号（span_* 宏展开等）→ 跳过
+        }
+        let Some((end, interp_args)) = scan_dm_string(src, start) else {
+            return;
+        };
+        if interp_args.len() != placeholders || in_preprocessor_directive(src, start) {
+            return;
+        }
+        let replacement = if interp_args.is_empty() {
+            format!("LANG(\"{key}\", null)")
+        } else {
+            format!("LANG(\"{key}\", list({}))", interp_args.join(", "))
+        };
+        self.edits
+            .entry(path)
+            .or_default()
+            .push(Edit { start, end, replacement });
     }
 
     fn recurse_term(&mut self, term: &Term, ns: &str) {

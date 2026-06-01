@@ -153,7 +153,7 @@
 	. = ..()
 
 	if(calibrating)
-		. += "message_server_calibrate"
+		. += LANG("obj.b588b326", null)
 
 // Preset messaging server
 /obj/machinery/telecomms/message_server/preset

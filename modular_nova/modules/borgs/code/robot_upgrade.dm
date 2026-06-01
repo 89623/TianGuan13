@@ -254,7 +254,7 @@
 /obj/item/borg/hydraulic_clamp/better/examine(mob/user)
 	. = ..()
 	var/crate_count = contents.len
-	. += "There is currently <b>[crate_count > 0 ? crate_count : "no"]</b> crate[crate_count > 1 ? "s" : ""] stored in the clamp's internal storage."
+	. += LANG("obj.c2e12e60", list(crate_count > 0 ? crate_count : "no", crate_count > 1 ? "s" : ""))
 
 /obj/item/borg/hydraulic_clamp/mail
 	name = "integrated rapid mail delivery device"
@@ -580,6 +580,6 @@
 /obj/item/borg/apparatus/cargo_papermanipulator/examine()
 	. = ..()
 	if(stored)
-		. += "The apparatus currently has [stored] secured."
+		. += LANG("obj.929ca228", list(stored))
 	. += span_notice("<i>Alt-click</i> will drop the currently secured item.")
 

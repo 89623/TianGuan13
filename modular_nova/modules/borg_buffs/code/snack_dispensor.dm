@@ -69,8 +69,8 @@
 
 /obj/item/borg_snack_dispenser/examine(mob/user)
 	. = ..()
-	. += "It is currently set to dispense [initial(selected_snack.name)]."
-	. += "You can AltClick it to [(launch_mode ? "disable" : "enable")] launch mode."
+	. += LANG("obj.77d6cd79", list(initial(selected_snack.name)))
+	. += LANG("obj.4a8f942a", list((launch_mode ? "disable" : "enable")))
 
 /obj/item/borg_snack_dispenser/attack_self(mob/user, modifiers)
 	var/list/choices = list()

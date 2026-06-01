@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * Holds procs designed to change one type of value, into another.
  * Contains:
@@ -143,35 +144,35 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 /proc/rights2text(rights, seperator="", prefix = "+")
 	seperator += prefix
 	if(rights & R_BUILD)
-		. += "[seperator]BUILDMODE"
+		. += LANG("_root.02250d71", list(seperator))
 	if(rights & R_ADMIN)
-		. += "[seperator]ADMIN"
+		. += LANG("_root.a3aaf018", list(seperator))
 	if(rights & R_BAN)
-		. += "[seperator]BAN"
+		. += LANG("_root.cf921ae3", list(seperator))
 	if(rights & R_FUN)
-		. += "[seperator]FUN"
+		. += LANG("_root.955189e8", list(seperator))
 	if(rights & R_SERVER)
-		. += "[seperator]SERVER"
+		. += LANG("_root.3b5db820", list(seperator))
 	if(rights & R_DEBUG)
-		. += "[seperator]DEBUG"
+		. += LANG("_root.4b8c901e", list(seperator))
 	if(rights & R_POSSESS)
-		. += "[seperator]POSSESS"
+		. += LANG("_root.35e678bb", list(seperator))
 	if(rights & R_PERMISSIONS)
-		. += "[seperator]PERMISSIONS"
+		. += LANG("_root.baa45262", list(seperator))
 	if(rights & R_STEALTH)
-		. += "[seperator]STEALTH"
+		. += LANG("_root.15c7c4f0", list(seperator))
 	if(rights & R_POLL)
-		. += "[seperator]POLL"
+		. += LANG("_root.f15dca4a", list(seperator))
 	if(rights & R_VAREDIT)
-		. += "[seperator]VAREDIT"
+		. += LANG("_root.8808eb83", list(seperator))
 	if(rights & R_SOUND)
-		. += "[seperator]SOUND"
+		. += LANG("_root.ea37d4e8", list(seperator))
 	if(rights & R_SPAWN)
-		. += "[seperator]SPAWN"
+		. += LANG("_root.67f2ce0e", list(seperator))
 	if(rights & R_AUTOADMIN)
-		. += "[seperator]AUTOLOGIN"
+		. += LANG("_root.bfb348b9", list(seperator))
 	if(rights & R_DBRANKS)
-		. += "[seperator]DBRANKS"
+		. += LANG("_root.655ffc19", list(seperator))
 	if(!.)
 		. = "NONE"
 	return .

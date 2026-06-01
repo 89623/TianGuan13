@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/picture
 	var/picture_name = "picture"
 	var/picture_desc = "This is a picture."
@@ -166,7 +167,7 @@
 		else
 			return null
 	var/n = data[data.len]
-	. += "/[n].png"
+	. += LANG("_root.2f4a5024", list(n))
 
 //BE VERY CAREFUL WITH THIS PROC, TO AVOID DUPLICATION.
 /datum/picture/proc/log_to_file()

@@ -151,7 +151,7 @@
 	if(owner?.current)
 		var/mob/eye/blob/blob_cam = owner.current
 		if(istype(blob_cam))
-			. += "(Progress: [length(blob_cam.blobs_legit)]/[blob_cam.blobwincount])"
+			. += LANG("datum.74a1094d", list(length(blob_cam.blobs_legit), blob_cam.blobwincount))
 
 /// A subtype of blob meant to represent the infective version.
 /datum/antagonist/blob/infection

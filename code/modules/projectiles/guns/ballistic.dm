@@ -223,15 +223,15 @@
 
 	if(selector_switch_icon)
 		if(burst_fire_selection)
-			. += "[initial(icon_state)]_burst"
+			. += LANG("obj.3daf344d", list(initial(icon_state)))
 		else
-			. += "[initial(icon_state)]_semi"
+			. += LANG("obj.904cf98e", list(initial(icon_state)))
 
 	if(show_bolt_icon)
 		if (bolt_type == BOLT_TYPE_LOCKING)
-			. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
+			. += LANG("obj.04da947e", list(icon_state, bolt_locked ? "_locked" : ""))
 		if (bolt_type == BOLT_TYPE_OPEN && bolt_locked)
-			. += "[icon_state]_bolt"
+			. += LANG("obj.08f47aa7", list(icon_state))
 
 	if(suppressed && can_unsuppress) // if it can't be unsuppressed, we assume the suppressor is integrated into the gun itself and don't generate an overlay
 		var/mutable_appearance/MA = mutable_appearance(icon, "[icon_state]_suppressor")
@@ -242,22 +242,22 @@
 		. += MA
 
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
-		. += "[icon_state]_empty"
+		. += LANG("obj.e046f1aa", list(icon_state))
 
 	if(gun_flags & TOY_FIREARM_OVERLAY)
-		. += "[icon_state]_toy"
+		. += LANG("obj.fd235a3f", list(icon_state))
 
 
 	if(!magazine || internal_magazine || !mag_display)
 		return
 
 	if(special_mags)
-		. += "[icon_state]_mag_[initial(magazine.icon_state)]"
+		. += LANG("obj.7bce84ec", list(icon_state, initial(magazine.icon_state)))
 		if(mag_display_ammo && !magazine.ammo_count())
-			. += "[icon_state]_mag_empty"
+			. += LANG("obj.8fab0e3b", list(icon_state))
 		return
 
-	. += "[icon_state]_mag"
+	. += LANG("obj.6e399cb5", list(icon_state))
 	if(!mag_display_ammo)
 		return
 
@@ -274,7 +274,7 @@
 		if(0.2 to 0.4)
 			capacity_number = 20
 	if(capacity_number)
-		. += "[icon_state]_mag_[capacity_number]"
+		. += LANG("obj.7bce84ec", list(icon_state, capacity_number))
 
 /obj/item/gun/ballistic/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
@@ -703,14 +703,14 @@
 /obj/item/gun/ballistic/examine(mob/user)
 	. = ..()
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
-	. += "It has <b>[get_ammo(count_chambered)]</b> round\s remaining."
+	. += LANG("obj.39a607b8", list(get_ammo(count_chambered)))
 
 	if (!chambered && !hidden_chambered)
-		. += "It does not seem to have a round chambered."
+		. += LANG("obj.7c1e0be7", null)
 	if (bolt_locked)
-		. += "The [bolt_wording] is locked back and needs to be released before firing or de-fouling."
+		. += LANG("obj.433966e9", list(bolt_wording))
 	if (suppressor)
-		. += "It has a suppressor [can_unsuppress ? "attached that can be removed with <b>alt+click</b>." : "that is integral or can't otherwise be removed."]"
+		. += LANG("obj.9997e48d", list(can_unsuppress ? "attached that can be removed with <b>alt+click</b>." : "that is integral or can't otherwise be removed."))
 	if(can_misfire)
 		. += span_danger("You get the feeling this might explode if you fire it...")
 		if(misfire_probability > 0)

@@ -59,18 +59,18 @@
 /obj/item/assembly/control/transport/remote/examine(mob/user)
 	. = ..()
 	if(!specific_transport_id)
-		. += "There is an X showing on the display."
-		. += "Left-click to link to a tram."
+		. += LANG("obj.59acba55", null)
+		. += LANG("obj.4122d173", null)
 		return
-	. += "The rapid mode light is [options ? "on" : "off"]."
+	. += LANG("obj.17586260", list(options ? "on" : "off"))
 	if(cooldown)
-		. += "The number on the display shows [DisplayTimeText(cooldown, 1)]."
+		. += LANG("obj.ea68d8fe", list(DisplayTimeText(cooldown, 1)))
 	else
-		. += "The display indicates ready."
-	. += "Left-click to dispatch tram."
-	. += "Right-click to set destination."
-	. += "Ctrl-click to toggle safety bypass."
-	. += "Alt-click to change configured tram."
+		. += LANG("obj.fcea8009", null)
+	. += LANG("obj.e4536749", null)
+	. += LANG("obj.c1427208", null)
+	. += LANG("obj.d217f6c5", null)
+	. += LANG("obj.f81f3d84", null)
 
 /obj/item/assembly/control/transport/remote/update_icon_state()
 	. = ..()

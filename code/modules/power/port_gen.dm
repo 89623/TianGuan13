@@ -74,7 +74,7 @@
 
 /obj/machinery/power/port_gen/examine(mob/user)
 	. = ..()
-	. += "It is[!active?"n't":""] running."
+	. += LANG("obj.e87ba4d7", list(!active?"n't":""))
 
 /////////////////
 // P.A.C.M.A.N //

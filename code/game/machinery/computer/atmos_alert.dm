@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/atmos_alert
 	name = "atmospheric alert console"
 	desc = "Used to monitor the station's air alarms."
@@ -93,10 +94,10 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(priority_alarms.len)
-		. += "alert:2"
+		. += LANG("obj.6603b89b", null)
 		return
 	if(minor_alarms.len)
-		. += "alert:1"
+		. += LANG("obj.8e61dcae", null)
 
 // Subtype with the board pre-set to check only station areas and the mining station
 /obj/machinery/computer/atmos_alert/station_only

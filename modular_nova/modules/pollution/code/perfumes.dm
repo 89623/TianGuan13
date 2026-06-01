@@ -28,9 +28,9 @@
 /obj/item/perfume/examine(mob/user)
 	. = ..()
 	if(uses_remaining)
-		. += "It has [uses_remaining] use\s left."
+		. += LANG("obj.5bf37df5", list(uses_remaining))
 	else
-		. += "It is empty."
+		. += LANG("obj.53b0d090", null)
 	if(has_cap)
 		. += span_notice("Alt-click [src] to [ cap ? "take the cap off" : "put the cap on"].")
 

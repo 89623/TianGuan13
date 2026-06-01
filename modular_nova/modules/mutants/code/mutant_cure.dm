@@ -69,12 +69,12 @@
 /obj/item/rna_extractor/update_overlays()
 	. = ..()
 	if(loaded_vial)
-		. += "extractor_load"
+		. += LANG("obj.ec8aa408", null)
 
 /obj/item/rna_extractor/examine(mob/user)
 	. = ..()
 	if(loaded_vial)
-		. += "It has an extracted RNA sample in it."
+		. += LANG("obj.4ae9cd5d", null)
 
 /obj/item/rna_extractor/Destroy()
 	if(loaded_vial)
@@ -101,12 +101,12 @@
 /obj/item/rna_vial/update_overlays(updates)
 	. = ..()
 	if(contains_rna)
-		. += "rnavial_load"
+		. += LANG("obj.bfb2fb9d", null)
 
 /obj/item/rna_vial/examine(mob/user)
 	. = ..()
 	if(contains_rna)
-		. += "It has an RNA sample in it."
+		. += LANG("obj.f7c805cb", null)
 
 /obj/item/hnz_cure
 	name = "HNZ-1 cure vial"
@@ -320,7 +320,7 @@
 /obj/machinery/rnd/rna_recombinator/update_overlays()
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN|MAINT) || !loaded_item)
-		. += "lathe_empty"
+		. += LANG("obj.54d6b40e", null)
 
 #undef STATUS_IDLE
 #undef STATUS_RECOMBINATING_CURE

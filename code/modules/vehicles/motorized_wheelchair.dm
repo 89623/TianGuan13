@@ -174,13 +174,13 @@
 /obj/vehicle/ridden/wheelchair/motorized/examine(mob/user)
 	. = ..()
 	if((obj_flags & EMAGGED) && panel_open)
-		. += "There is a bomb under the maintenance panel."
-	. += "There is a small screen on it, [(in_range(user, src) || isobserver(user)) ? "[power_cell ? "it reads:" : "but it is dark."]" : "but you can't see it from here."]"
+		. += LANG("obj.20f17428", null)
+	. += LANG("obj.96370217", list((in_range(user, src) || isobserver(user)) ? "[power_cell ? "it reads:" : "but it is dark."]" : "but you can't see it from here."))
 	if(!power_cell || (!in_range(user, src) && !isobserver(user)))
 		return
-	. += "Speed: [speed]"
-	. += "Energy efficiency: [power_efficiency]"
-	. += "Power: [display_energy(power_cell.charge)] out of [display_energy(power_cell.maxcharge)]"
+	. += LANG("obj.6ed256aa", list(speed))
+	. += LANG("obj.38dedf79", list(power_efficiency))
+	. += LANG("obj.10e76530", list(display_energy(power_cell.charge), display_energy(power_cell.maxcharge)))
 
 /obj/vehicle/ridden/wheelchair/motorized/Move(newloc, direct)
 	. = ..()

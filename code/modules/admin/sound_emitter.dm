@@ -41,9 +41,9 @@
 	. += "[span_boldnotice("Sound File:")] [sound_file ? sound_file : "None chosen"]"
 	. += span_boldnotice("Mode:</span> [motus_operandi]")
 	. += span_boldnotice("Range:</span> [emitter_range]")
-	. += "<b>Sound is playing at [sound_volume]% volume.</b>"
+	. += LANG("obj.1b13d093", list(sound_volume))
 	if(user.client.holder)
-		. += "<b>Alt-click it to quickly activate it!</b>"
+		. += LANG("obj.8294ab94", null)
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/sound_emitter/attack_ghost(mob/user)

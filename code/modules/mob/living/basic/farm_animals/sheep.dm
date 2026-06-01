@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/sheep
 	name = "sheep"
 	desc = "Known for their soft wool and use in sacrificial rituals. Big fan of grass."
@@ -50,7 +51,7 @@
 	if(stat == DEAD)
 		return
 	if(cult_converted)
-		. += "hat"
+		. += LANG("mob.3e35135b", null)
 
 /// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to have special interaction with sacrificing a lamb
 /mob/living/basic/sheep/proc/on_sacrificed(datum/source, list/invokers)

@@ -125,9 +125,9 @@
 	. = ..()
 	if(display_timer)
 		if(det_time > 0)
-			. += "The timer is set to [DisplayTimeText(det_time)]."
+			. += LANG("obj.611a39c5", list(DisplayTimeText(det_time)))
 		else
-			. += "\The [src] is set for instant detonation."
+			. += LANG("obj.d5ab0ca5", list(src))
 	if (dud_flags & GRENADE_USED)
 		. += span_warning("It looks like [p_theyve()] already been used.")
 

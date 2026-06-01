@@ -120,10 +120,10 @@
 	if(custom_glass_overlay)
 		return
 	if(broken)
-		. += "[initial(icon_state)]_broken"
+		. += LANG("obj.e55880fc", list(initial(icon_state)))
 		return
 	if(!open)
-		. += "[initial(icon_state)]_closed"
+		. += LANG("obj.b0e8ca9b", list(initial(icon_state)))
 		return
 
 /obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -492,7 +492,7 @@
 /obj/structure/displaycase/forsale/update_overlays()
 	. = ..()
 	if(!broken && !open)
-		. += "[initial(icon_state)]_overlay"
+		. += LANG("obj.53a03f86", list(initial(icon_state)))
 
 /obj/structure/displaycase/forsale/insert_showpiece(obj/item/new_showpiece, mob/user)
 	if(..())

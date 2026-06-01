@@ -55,7 +55,7 @@
 /obj/item/gun/ballistic/automatic/c20r/update_overlays()
 	. = ..()
 	if(!chambered && empty_indicator) //this is duplicated due to a layering issue with the select fire icon.
-		. += "[icon_state]_empty"
+		. += LANG("obj.e046f1aa", list(icon_state))
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/firing_pin
@@ -273,7 +273,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	. = ..()
-	. += "<b>alt + click</b> to [cover_open ? "close" : "open"] the dust cover."
+	. += LANG("obj.587c1359", list(cover_open ? "close" : "open"))
 	if(cover_open && magazine)
 		. += span_notice("It seems like you could use an <b>empty hand</b> to remove the magazine.")
 
@@ -291,7 +291,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/update_overlays()
 	. = ..()
-	. += "l6_door_[cover_open ? "open" : "closed"]"
+	. += LANG("obj.80e4285c", list(cover_open ? "open" : "closed"))
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/try_fire_gun(atom/target, mob/living/user, params)
@@ -436,10 +436,10 @@
 /obj/item/gun/ballistic/automatic/battle_rifle/update_overlays()
 	. = ..()
 	if(degradation_stage)
-		. += "[base_icon_state]_empty"
+		. += LANG("obj.e046f1aa", list(base_icon_state))
 	else if(shots_before_degradation)
 		var/ratio_for_overlay = CEILING(clamp(shots_before_degradation / max_shots_before_degradation, 0, 1) * 3, 1)
-		. += "[icon_state]_stage_[ratio_for_overlay]"
+		. += LANG("obj.95986cfb", list(icon_state, ratio_for_overlay))
 
 /obj/item/gun/ballistic/automatic/battle_rifle/emp_act(severity)
 	. = ..()

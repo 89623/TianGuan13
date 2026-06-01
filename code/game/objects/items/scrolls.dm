@@ -42,7 +42,7 @@
 /obj/item/teleportation_scroll/examine(mob/user)
 	. = ..()
 	if(uses > 0)
-		. += "It has [uses] use\s remaining."
+		. += LANG("obj.4b3096b5", list(uses))
 
 /obj/item/teleportation_scroll/attack_self(mob/user)
 	. = ..()

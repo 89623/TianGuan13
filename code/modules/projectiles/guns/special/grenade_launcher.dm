@@ -16,7 +16,7 @@
 
 /obj/item/gun/grenadelauncher/examine(mob/user)
 	. = ..()
-	. += "[grenades.len] / [max_grenades] grenades loaded."
+	. += LANG("obj.5985ebcc", list(grenades.len, max_grenades))
 
 /obj/item/gun/grenadelauncher/apply_fantasy_bonuses(bonus)
 	. = ..()

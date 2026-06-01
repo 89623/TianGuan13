@@ -92,7 +92,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		"<b>Effects:</b> [capitalize(cultist_desc)]\n"+\
 		"<b>Required Acolytes:</b> [req_cultists_text ? "[req_cultists_text]":"[req_cultists]"]"
 		if(req_keyword && keyword)
-			. += "<b>Keyword:</b> [keyword]"
+			. += LANG("obj.d19aed4d", list(keyword))
 
 /obj/effect/rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -705,7 +705,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 /obj/effect/rune/raise_dead/examine(mob/user)
 	. = ..()
 	if(IS_CULTIST(user) || user.stat == DEAD)
-		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - GLOB.sacrifices_used]"
+		. += LANG("obj.dbeff3d1", list(LAZYLEN(GLOB.sacrificed) - GLOB.sacrifices_used))
 
 /obj/effect/rune/raise_dead/invoke(list/invokers)
 	if(rune_in_use)

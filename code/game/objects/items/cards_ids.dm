@@ -886,10 +886,10 @@
 		return
 
 	if(registered_account && !isnull(registered_account.account_id))
-		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] [MONEY_SYMBOL]."
+		. += LANG("obj.64d20363", list(registered_account.account_holder, registered_account.account_balance, MONEY_SYMBOL))
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
-			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] [MONEY_SYMBOL]."
+			. += LANG("obj.736a52f8", list(linked_dept.account_holder, linked_dept.account_balance, MONEY_SYMBOL))
 	else
 		. += span_notice("Alt-Right-Click the ID to set the linked bank account.")
 
@@ -925,17 +925,17 @@
 	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(registered_age)
-		. += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""]"
+		. += LANG("obj.8f92c333", list(registered_age, (registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""))
 	if(registered_account)
 		if(registered_account.mining_points)
-			. += "There's [registered_account.mining_points] mining point\s loaded onto the card's bank account."
-		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] [MONEY_SYMBOL]."
+			. += LANG("obj.9a12c1cc", list(registered_account.mining_points))
+		. += LANG("obj.64d20363", list(registered_account.account_holder, registered_account.account_balance, MONEY_SYMBOL))
 		if(registered_account.account_debt)
 			. += span_warning("The account is currently indebted for [registered_account.account_debt] [MONEY_SYMBOL]. [100*DEBT_COLLECTION_COEFF]% of all earnings will go towards extinguishing it.")
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				. += "The [D.account_holder] reports a balance of [D.account_balance] [MONEY_SYMBOL]."
+				. += LANG("obj.d59824b6", list(D.account_holder, D.account_balance, MONEY_SYMBOL))
 		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
 		. += span_info("You can insert [MONEY_NAME] into the linked account by pressing holochips, cash, or coins against the ID.")
 		if(registered_account.replaceable)

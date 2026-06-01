@@ -297,7 +297,7 @@
 
 /obj/item/emergency_bed/silicon/examine(mob/user)
 	. = ..()
-	. += "The dock is [loaded ? "loaded" : "empty"]."
+	. += LANG("obj.5d5580ef", list(loaded ? "loaded" : "empty"))
 
 /obj/item/emergency_bed/silicon/deploy_bed(mob/user, atom/location)
 	if(loaded)

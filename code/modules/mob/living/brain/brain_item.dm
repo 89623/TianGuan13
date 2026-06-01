@@ -436,7 +436,7 @@
 		brain_message = span_warning("You can feel your mind flickering on and off...")
 
 	if(.)
-		. += "\n[brain_message]"
+		. += LANG("obj.65aac1b5", list(brain_message))
 	else
 		return brain_message
 

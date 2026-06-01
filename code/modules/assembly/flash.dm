@@ -56,7 +56,7 @@
 	attached_overlays = list()
 	. = ..()
 	if(burnt_out)
-		. += "flashburnt"
+		. += LANG("obj.45adb942", null)
 		attached_overlays += "flashburnt"
 	if(flashing)
 		. += flashing_overlay

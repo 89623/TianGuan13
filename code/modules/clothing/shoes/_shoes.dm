@@ -74,9 +74,9 @@
 		return
 
 	if(tied == SHOES_UNTIED)
-		. += "The [fastening_type] are [untied_adjective()]."
+		. += LANG("obj.2d5779db", list(fastening_type, untied_adjective()))
 	else if(tied == SHOES_KNOTTED)
-		. += "The [fastening_type] are all knotted together."
+		. += LANG("obj.8a5b63c4", list(fastening_type))
 
 /obj/item/clothing/shoes/visual_equipped(mob/user, slot)
 	. = ..()

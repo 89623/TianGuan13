@@ -88,7 +88,7 @@
 /mob/living/basic/pet/dog/corgi/examine(mob/user)
 	. = ..()
 	if(access_card)
-		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
+		. += LANG("mob.b3e288b8", list(icon2html(access_card, user), access_card, p_them()))
 
 /**
  * Corgis get full protection from their equipped fashion items if attacked in a way that passes def_zone,

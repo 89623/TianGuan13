@@ -84,12 +84,12 @@
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
-	. += "It currently holds [get_matter(user)]/[max_matter] matter-units."
+	. += LANG("obj.8f831dd1", list(get_matter(user), max_matter))
 	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
-		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
+		. += LANG("obj.d0a7ad91", list(silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"))
 		var/iron = get_silo_iron()
 		if(iron)
-			. += "Remote connection has iron in equivalent to [iron] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
+			. += LANG("obj.66136bac", list(iron)) //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -180,7 +180,7 @@
 	if(has_ammobar)
 		var/ratio = ceil((matter / max_matter) * ammo_sections)
 		if(ratio > 0)
-			. += "[icon_state]_charge[ratio]"
+			. += LANG("obj.c9f2648e", list(icon_state, ratio))
 
 /**
  * Uses resource to do some action. Returns amount of resource used or TRUE/FALSE if only an dry run is required

@@ -394,7 +394,7 @@
 	if (!superstructure_remedied)
 		. = "The superstructure must be reformed."
 		if (!limb_malleable())
-			. += " The limb must be heated to thermal overload, then manually molded with a firm grasp"
+			. += LANG("datum.3b533da7", null)
 		else
-			. += " The limb has been sufficiently heated, and can be manually molded with a firm grasp/repeated application of a low-force object"
-		. += " - OR an RCD may be used with little risk."
+			. += LANG("datum.69d638ce", null)
+		. += LANG("datum.937e9222", null)

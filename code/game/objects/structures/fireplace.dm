@@ -108,7 +108,7 @@
 			. += "fireplace_fire3"
 		if(80000 to MAXIMUM_BURN_TIMER) //NOVA EDIT original: if(2000 to MAXIMUM_BURN_TIMER)
 			. += "fireplace_fire4"
-	. += "fireplace_glow"
+	. += LANG("obj.13e7b66b", null)
 
 /obj/structure/fireplace/proc/adjust_light()
 	if(!lit)

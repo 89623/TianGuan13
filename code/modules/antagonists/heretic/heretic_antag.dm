@@ -960,13 +960,13 @@
 	. = ..()
 
 	. += "<br>"
-	. += "<i><b>Current Targets:</b></i><br>"
+	. += LANG("datum.8c06fe40", null)
 	if(LAZYLEN(sac_targets))
 		for(var/mob/living/carbon/human/target as anything in sac_targets)
 			. += " - <b>[target.real_name]</b>, the [target.mind?.assigned_role?.title || "human"].<br>"
 
 	else
-		. += "<i>None!</i><br>"
+		. += LANG("datum.fa63c79d", null)
 	. += "<br>"
 
 /datum/antagonist/heretic/proc/purchase_knowledge(datum/heretic_knowledge/knowledge_type, category = HERETIC_KNOWLEDGE_TREE, update = TRUE)

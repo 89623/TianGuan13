@@ -27,13 +27,13 @@
 /obj/item/clothing/mask/bandana/examine(mob/user)
 	. = ..()
 	if(up)
-		. += "Use in-hand to untie it to wear as a mask!"
+		. += LANG("obj.e6aed8fe", null)
 		return
 	if(slot_flags & ITEM_SLOT_NECK)
-		. += "Alt-click to untie it to wear as a mask!"
+		. += LANG("obj.a2c77b37", null)
 	else
-		. += "Use in-hand to tie it up to wear as a hat!"
-		. += "Alt-click to tie it up to wear on your neck!"
+		. += LANG("obj.4c797f6d", null)
+		. += LANG("obj.cc9dd2b8", null)
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjust_visor(user)

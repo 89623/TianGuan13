@@ -76,11 +76,11 @@
 /obj/item/flamethrower/update_overlays()
 	. = ..()
 	if(igniter)
-		. += "+igniter[status]"
+		. += LANG("obj.2fa60805", list(status))
 	if(ptank)
-		. += "+ptank"
+		. += LANG("obj.67d69fa6", null)
 	if(lit)
-		. += "+lit"
+		. += LANG("obj.b03713e1", null)
 
 /obj/item/flamethrower/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!ptank)

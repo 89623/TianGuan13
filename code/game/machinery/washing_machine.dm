@@ -354,7 +354,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /obj/machinery/washing_machine/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += "wm_panel"
+		. += LANG("obj.d1d686a2", null)
 
 /obj/machinery/washing_machine/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open || busy)

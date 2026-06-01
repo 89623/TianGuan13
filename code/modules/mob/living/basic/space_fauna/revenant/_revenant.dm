@@ -171,10 +171,10 @@
 
 /mob/living/basic/revenant/get_status_tab_items()
 	. = ..()
-	. += "Current Essence: [essence >= max_essence ? essence : "[essence] / [max_essence]"] E"
-	. += "Total Essence Stolen: [essence_accumulated] SE"
-	. += "Unused Stolen Essence: [essence_excess] SE"
-	. += "Perfect Souls Stolen: [perfectsouls]"
+	. += LANG("mob.af38c7c6", list(essence >= max_essence ? essence : "[essence] / [max_essence]"))
+	. += LANG("mob.8f7bf93d", list(essence_accumulated))
+	. += LANG("mob.b11c561f", list(essence_excess))
+	. += LANG("mob.e3158766", list(perfectsouls))
 
 /mob/living/basic/revenant/update_health_hud()
 	if(isnull(hud_used))

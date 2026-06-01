@@ -443,7 +443,7 @@
 			. += {"One of its eye sockets is currently occupied by a flash.\n
 			[span_info("It has an empty eye socket for another <b>flash</b>.")]"}
 		else
-			. += "It has two eye sockets occupied by flashes."
+			. += LANG("obj.d0c0915e", null)
 		. += span_notice("You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.")
 
 /obj/item/bodypart/head/robot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

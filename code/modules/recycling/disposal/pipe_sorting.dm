@@ -50,11 +50,11 @@
 /obj/structure/disposalpipe/sorting/mail/examine(mob/user)
 	. = ..()
 	if(sortTypes.len)
-		. += "It is tagged with the following tags:"
+		. += LANG("obj.831ec6a5", null)
 		for(var/t in sortTypes)
 			. += "\t[GLOB.TAGGERLOCATIONS[t]]."
 	else
-		. += "It has no sorting tags set."
+		. += LANG("obj.66467605", null)
 
 /obj/structure/disposalpipe/sorting/mail/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/dest_tagger))

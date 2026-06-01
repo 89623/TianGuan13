@@ -87,7 +87,7 @@
 	. = ..()
 	. += image(icon = screen_image.icon, icon_state = screen_image.icon_state)
 	if(pai?.hacking_cable)
-		. += "[initial(icon_state)]-connector"
+		. += LANG("obj.1c90a73e", list(initial(icon_state)))
 
 /obj/item/pai_card/vv_edit_var(vname, vval)
 	. = ..()

@@ -1192,7 +1192,7 @@
 /obj/item/clothing/glasses/welding/steampunk_goggles/examine(mob/user)
 	. = ..()
 	if(welding_upgraded)
-		. += "It has been upgraded with welding shutters, which are currently [welding_protection ? "closed" : "opened"]."
+		. += LANG("obj.8ace0874", list(welding_protection ? "closed" : "opened"))
 
 /obj/item/clothing/glasses/welding/steampunk_goggles/item_action_slot_check(slot, mob/user)
 	. = ..()
@@ -1880,7 +1880,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/korpstech, 32)
 
 /obj/item/clothing/suit/armor/hos/elofy/examine_more(mob/user)
 	. = ..()
-	. += "It seems particularly soft and has subtle ballistic fibers intwined with the soft fabric that is perfectedly tailored to the body that wears it. Each golden engraving seems to reflect against your eyes with a slightly blinding flare. This is part of a full set of Luna Wolves Legion battle garb."
+	. += LANG("obj.c5354189", null)
 
 /datum/atom_skin/hat_elofy
 	abstract_type = /datum/atom_skin/hat_elofy

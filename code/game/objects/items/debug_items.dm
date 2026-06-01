@@ -45,7 +45,7 @@
 
 /obj/item/debug/omnitool/examine()
 	. = ..()
-	. += " The mode is: [tool_behaviour]"
+	. += LANG("obj.ddeb8de7", list(tool_behaviour))
 
 /obj/item/debug/omnitool/proc/check_menu(mob/user)
 	if(!istype(user))

@@ -31,8 +31,8 @@
 
 /obj/structure/showcase/fakesec/update_overlays()
 	. = ..()
-	. += "security"
-	. += "security_key"
+	. += LANG("obj.0051dfa7", null)
+	. += LANG("obj.dd35ddce", null)
 
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"
@@ -176,7 +176,7 @@
 		if(SHOWCASE_SCREWDRIVERED)
 			. += "It has its screws loosened."
 		else
-			. += "If you see this, something is wrong."
+			. += LANG("obj.31a5af9d", null)
 
 #undef SHOWCASE_CONSTRUCTED
 #undef SHOWCASE_SCREWDRIVERED

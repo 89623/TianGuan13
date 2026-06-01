@@ -153,9 +153,9 @@
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
 	if(total_paper)
-		. += "It contains [total_paper > 1 ? "[total_paper] papers" : "one paper"]."
+		. += LANG("obj.1a9d7988", list(total_paper > 1 ? "[total_paper] papers" : "one paper"))
 	else
-		. += "It doesn't contain anything."
+		. += LANG("obj.fbbb0e83", null)
 
 /obj/item/paper_bin/update_icon_state()
 	if(total_paper < 1)

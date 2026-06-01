@@ -116,7 +116,7 @@
 	if (pancakeCount)
 		for(var/obj/item/food/pancakes/ING in contents)
 			ingredients_listed += "[ING.name], "
-		. += "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)]."
+		. += LANG("obj.accf60d7", list(contents.len?"[ingredients_listed]":"no ingredient, ", initial(name)))
 
 /obj/item/food/pancakes/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/food/pancakes))

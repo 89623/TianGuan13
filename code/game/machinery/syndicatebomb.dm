@@ -117,9 +117,9 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	. = ..()
-	. += "The patented external shell design is resistant to \"probably all\" forms of external explosive compression, protecting the electronically-trigged bomb core from accidental early detonation."
+	. += LANG("obj.aa2fce4a", null)
 	if(istype(payload))
-		. += "A small window reveals some information about the payload: [payload.desc]."
+		. += LANG("obj.6812cc3d", list(payload.desc))
 	if(examinable_countdown)
 		. += span_notice("A digital display on it reads \"[seconds_remaining()]\".")
 		if(active)

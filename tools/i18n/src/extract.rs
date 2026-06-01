@@ -13,7 +13,7 @@
 use anyhow::{Context as _, Result};
 use std::path::Path;
 
-use dm::ast::{BinaryOp, Expression, Follow, Statement, Term};
+use dm::ast::{AssignOp, BinaryOp, Expression, Follow, Statement, Term};
 
 use crate::catalog::Catalog;
 use crate::keys::{make_key, namespace_for};
@@ -196,7 +196,21 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog) {
             visit_expr(lhs, ns, catalog);
             visit_expr(rhs, ns, catalog);
         }
-        Expression::AssignOp { lhs, rhs, .. } => {
+        Expression::AssignOp { op, lhs, rhs } => {
+            // examine 文本：`. += <text>`（AddAssign，左侧裸 `.`）。
+            if matches!(op, AssignOp::AddAssign) {
+                if let Expression::Base { term, follow } = lhs.as_ref() {
+                    if follow.is_empty() {
+                        if let Term::Ident(id) = &term.elem {
+                            if id == "." {
+                                if let Some(template) = build_template(rhs) {
+                                    emit(catalog, ns, &template);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             visit_expr(lhs, ns, catalog);
             visit_expr(rhs, ns, catalog);
         }

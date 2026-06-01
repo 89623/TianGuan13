@@ -45,7 +45,7 @@
 /obj/machinery/skill_station/update_overlays()
 	. = ..()
 	if(working)
-		. += "working"
+		. += LANG("obj.0fe73f7c", null)
 
 /obj/machinery/skill_station/relaymove(mob/living/user, direction)
 	open_machine()

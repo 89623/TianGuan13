@@ -54,12 +54,7 @@
 /obj/machinery/self_actualization_device/examine_more(mob/user)
 	. = ..()
 
-	. += "With the power of modern neurological scanning and synthflesh cosmetic surgery, the Vey-Medical Corporation \
-		has teamed up with Nanotrasen Human Resources (and elsewise)  to bring you the Self-Actualization Device! \
-		Ever revived a patient and had them file a malpractice lawsuit because their head got attached to the wrong body? \
-		Just slap 'em in the SAD and turn it on! Their frown will turn upside down as they're reconstituted as their ideal self \
-		via the magic technology of brain scanning! Within a few short moments, they'll be popped out as their ideal self, \
-		ready to continue on with their day lawsuit-free!"
+	. += LANG("obj.f8e857fe", null)
 
 	return .
 

@@ -60,9 +60,9 @@
 /obj/item/food/vendor_tray_meal/examine_more(mob/user)
 	. = ..()
 	. += span_notice("<i>You browse the back of the box...</i>")
-	. += "\t[span_warning("Warning: Packaged in a factory where every allergen known is present.")]"
-	. += "\t[span_warning("Warning: Contents might be hot.")]"
-	. += "\t[span_info("Per 200g serving contains: 8g Sodium; 25g Fat, of which 22g are saturated; 2g Sugar.")]"
+	. += LANG("obj.294efb1f", list(span_warning("Warning: Packaged in a factory where every allergen known is present.")))
+	. += LANG("obj.294efb1f", list(span_warning("Warning: Contents might be hot.")))
+	. += LANG("obj.294efb1f", list(span_info("Per 200g serving contains: 8g Sodium; 25g Fat, of which 22g are saturated; 2g Sugar.")))
 	return .
 
 /obj/item/food/vendor_tray_meal/burger

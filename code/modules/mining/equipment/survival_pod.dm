@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*****************************Survival Pod********************************/
 /area/misc/survivalpod
 	name = "\improper Emergency Shelter"
@@ -39,7 +40,7 @@
 /obj/item/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	. += "This capsule has the [template.name] stored."
+	. += LANG("obj.e79b836b", list(template.name))
 	. += template.description
 
 /obj/item/survivalcapsule/interact(mob/living/user)
@@ -213,7 +214,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 /obj/machinery/sleeper/survival_pod/update_overlays()
 	. = ..()
 	if(!state_open)
-		. += "sleeper_cover"
+		. += LANG("obj.ac6abc68", null)
 
 //Lifeform Stasis Unit
 /obj/machinery/stasis/survival_pod

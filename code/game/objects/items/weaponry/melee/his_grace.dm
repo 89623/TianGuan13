@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //His Grace is a very special weapon granted only to traitor chaplains.
 //When awakened, He thirsts for blood and begins ticking a "bloodthirst" counter.
 //The wielder of His Grace is immune to stuns and gradually heals.
@@ -86,11 +87,11 @@
 /obj/item/his_grace/update_overlays()
 	. = ..()
 	if(ascended)
-		. += "triple_latch"
+		. += LANG("obj.10c5ad6f", null)
 	else if(awakened)
-		. += "single_latch_open"
+		. += LANG("obj.df9c250f", null)
 	else
-		. += "single_latch"
+		. += LANG("obj.7ab897b2", null)
 
 /obj/item/his_grace/attack_self(mob/living/user)
 	if(!awakened)

@@ -54,9 +54,9 @@
 /obj/item/spellbook/examine(mob/user)
 	. = ..()
 	if(owner)
-		. += "There is a small signature on the front cover: \"[owner]\"."
+		. += LANG("obj.9cdd04e8", list(owner))
 	else
-		. += "It appears to have no author."
+		. += LANG("obj.ddaae055", null)
 
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)

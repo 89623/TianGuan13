@@ -46,7 +46,7 @@
 
 /obj/item/gun/ballistic/automatic/smart_machine_gun/examine(mob/user)
 	. = ..()
-	. += "<b>RMB with an empty hand</b> to [cover_open ? "close" : "open"] the dust cover."
+	. += LANG("obj.a7e31ec3", list(cover_open ? "close" : "open"))
 	if(cover_open && magazine)
 		. += span_notice("It seems like you could use an <b>empty hand</b> to remove the magazine.")
 
@@ -79,7 +79,7 @@
 
 /obj/item/gun/ballistic/automatic/smart_machine_gun/update_overlays()
 	. = ..()
-	. += "[base_icon_state]_door_open"
+	. += LANG("obj.aa834301", list(base_icon_state))
 
 /obj/item/gun/ballistic/automatic/smart_machine_gun/unrestricted
 	pin = /obj/item/firing_pin

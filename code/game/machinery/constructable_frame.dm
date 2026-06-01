@@ -22,7 +22,7 @@
 /obj/structure/frame/examine(user)
 	. = ..()
 	if(circuit)
-		. += "It has \a [circuit] installed."
+		. += LANG("obj.4243143d", list(circuit))
 
 /obj/structure/frame/CanAllowThrough(atom/movable/mover, border_dir)
 	if(isprojectile(mover))

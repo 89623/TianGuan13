@@ -91,7 +91,7 @@
 /obj/item/gun/energy/recharge/update_overlays()
 	. = ..()
 	if(!no_charge_state && !can_shoot())
-		. += "[base_icon_state]_empty"
+		. += LANG("obj.e046f1aa", list(base_icon_state))
 
 /obj/item/gun/energy/recharge/update_icon_state()
 	. = ..()

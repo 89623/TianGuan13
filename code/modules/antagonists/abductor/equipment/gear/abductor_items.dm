@@ -679,7 +679,7 @@ Return to step 11 of normal process."}
 
 /obj/item/abductor/alien_omnitool/examine()
 	. = ..()
-	. += " The mode is: [tool_behaviour]"
+	. += LANG("obj.ddeb8de7", list(tool_behaviour))
 
 /obj/item/abductor/alien_omnitool/attack_self(mob/user)
 	if(!user)

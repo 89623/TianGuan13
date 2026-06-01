@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Industrial extracts:
 	Slowly consume plasma, produce items with it.
@@ -14,7 +15,7 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/examine(mob/user)
 	. = ..()
-	. += "It currently has [plasmaabsorbed] units of plasma floating inside the outer shell, out of [plasmarequired] units."
+	. += LANG("obj.501e5dcd", list(plasmaabsorbed, plasmarequired))
 
 /obj/item/slimecross/industrial/proc/do_after_spawn(obj/item/spawned)
 	return

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/station_alert
 	name = "station alert console"
 	desc = "Used to access the station's automated alert system."
@@ -39,7 +40,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(length(alert_control?.listener.alarms)) /// NOVA EDIT - Fixing master - Original: if(length(alert_control.listener.alarms))
-		. += "alert:2"
+		. += LANG("obj.6603b89b", null)
 
 /**
  * Signal handler for calling an icon update in case an alarm is added or cleared

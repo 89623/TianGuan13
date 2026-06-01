@@ -60,7 +60,7 @@
 		puffs_left = span_blue("[puffs_left]")
 	else
 		puffs_left = span_danger("[puffs_left]")
-	. += "Its rotary display shows its canister can be used [puffs_left] more times."
+	. += LANG("obj.42970442", list(puffs_left))
 
 /obj/item/inhaler/Exited(atom/movable/gone, direction)
 	. = ..()

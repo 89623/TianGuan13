@@ -147,7 +147,7 @@
 	if(ticking != TRUE)
 		return
 	/// note: this timer overlay increments one frame every second (to simulate a clock ticking). If you want to instead have it do a full cycle in a minute, set the 'delay' of each frame of the icon overlay to 75 rather than 10, and the worn overlay to twice that.
-	. += "rbt_ticking"
+	. += LANG("obj.a3a17e04", null)
 
 /obj/item/reverse_bear_trap/proc/arm() //hulen
 	ticking = TRUE

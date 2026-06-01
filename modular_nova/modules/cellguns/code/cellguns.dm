@@ -17,7 +17,7 @@
 /obj/item/gun/energy/cell_loaded/examine(mob/user)
 	. = ..()
 	if(maxcells)
-		. += "<b>[installedcells.len]</b> out of <b>[maxcells]</b> cell slots are filled."
+		. += LANG("obj.caf41c05", list(installedcells.len, maxcells))
 		. += span_info("You can use Alt Click with an empty hand to remove the most recently inserted cell from the chamber.")
 
 		for(var/cell in installedcells)
@@ -57,7 +57,7 @@
 	ratio = get_charge_ratio()
 
 	if(!ratio && display_empty)
-		. += "[icon_state]_empty"
+		. += LANG("obj.e046f1aa", list(icon_state))
 		return
 
 	var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)

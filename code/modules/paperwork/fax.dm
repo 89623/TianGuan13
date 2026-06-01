@@ -109,7 +109,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 /obj/machinery/fax/update_overlays()
 	. = ..()
 	if (panel_open)
-		. += "fax_panel"
+		. += LANG("obj.c4be9d6d", null)
 	var/obj/item/loaded = loaded_item_ref?.resolve()
 	if (loaded)
 		. += mutable_appearance(icon, find_overlay_state(loaded, "contain"))

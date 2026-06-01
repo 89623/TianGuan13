@@ -741,7 +741,7 @@
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
 	. = ..()
-	. += "Bloody halberd, blood bolt barrage, and blood beam cost [BLOOD_HALBERD_COST], [BLOOD_BARRAGE_COST], and [BLOOD_BEAM_COST] charges respectively."
+	. += LANG("obj.01e93bb1", list(BLOOD_HALBERD_COST, BLOOD_BARRAGE_COST, BLOOD_BEAM_COST))
 
 /**
  * handles inhand use of blood rites on constructs, humans, or non-living blood sources

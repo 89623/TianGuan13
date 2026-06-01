@@ -118,7 +118,7 @@
 /obj/machinery/power/micro_reactor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "It is[!active?"n't":""] running."
+		. += LANG("obj.e87ba4d7", list(!active?"n't":""))
 
 /obj/machinery/power/micro_reactor/bapgm
 	name = "B.A.P.G.M."

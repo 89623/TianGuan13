@@ -73,7 +73,7 @@
 
 /obj/item/weldingtool/electric/examine()
 	. = ..()
-	. += "[src] is currently [powered ? "powered" : "unpowered"]."
+	. += LANG("obj.3d8854c2", list(src, powered ? "powered" : "unpowered"))
 
 /obj/item/weldingtool/electric/update_icon_state()
 	if(powered)

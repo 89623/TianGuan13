@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/status_effect/grouped/heretic_dreams
 	id = "heretic_dreams"
 	duration = STATUS_EFFECT_PERMANENT
@@ -88,7 +89,7 @@
 
 /datum/dream/heretic/GenerateDream(mob/living/carbon/dreamer)
 	. = list()
-	. += "you wander through the forest of Mansus"
+	. += LANG("datum.d92dfe44", null)
 	. += "there is a " + pick("pond", "well", "lake", "puddle", "stream", "spring", "brook", "marsh")
 
 	if(isnull(allowed_typecaches_by_root_type))
@@ -109,8 +110,8 @@
 	if(!something_found)
 		. += pick("it's pitch black", "ihe reflections are vague", "you stroll aimlessly")
 	else
-		. += "the images fade in the ripples"
-	. += "you feel exhausted"
+		. += LANG("datum.eed1260e", null)
+	. += LANG("datum.dd403118", null)
 
 /datum/mood_event/mansus_dream_fatigue
 	description = "I must recover before I can dream of Mansus again."

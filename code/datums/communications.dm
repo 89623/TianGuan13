@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define COMMUNICATION_COOLDOWN (30 SECONDS)
 #define COMMUNICATION_COOLDOWN_AI (30 SECONDS)
 #define COMMUNICATION_COOLDOWN_MEETING (5 MINUTES)
@@ -88,7 +89,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 
 	. = ""
 	. += "<center><img src='[SSassets.transport.get_asset_url("nanotrasen-logo")]' width='50%'></center><hr>"
-	. += "<center><h2>[command_name()], TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]</h2></center><hr>"
+	. += LANG("datum.40be71bf", list(command_name(), time2text(world.realtime, "DDD, MMM DD"), CURRENT_STATION_YEAR))
 	. += command_report_main_content || get_main_report_content()
 	if(CONFIG_GET(flag/no_dynamic_report))
 		if(isnull(greenshift))
@@ -98,7 +99,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 		if(isnull(greenshift)) // if we're not forced to be greenshift or not - check if we are an actual greenshift
 			greenshift = SSdynamic.current_tier.tier == 0 && dynamic_report == /datum/dynamic_tier/greenshift::advisory_report
 
-		. += "<hr><h3>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector:</h3>"
+		. += LANG("datum.f0c94775", null)
 		. += dynamic_report
 
 	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
@@ -115,7 +116,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 			station_goal_strings += station_goal.get_report()
 
 	if(length(station_goal_strings) > 0) // if we have any special orders to report, add them in
-		. += "<hr><h4>Special Orders for [station_name()]:</h4>"
+		. += LANG("datum.97f23a71", list(station_name()))
 		. += station_goal_strings.Join("<hr>")
 
 	var/list/trait_list_strings = list()

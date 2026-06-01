@@ -44,7 +44,7 @@
 /obj/item/pinpointer/examine(mob/user)
 	. = ..()
 	if(target)
-		. += "It is currently tracking [target]."
+		. += LANG("obj.e56e24ae", list(target))
 
 /obj/item/pinpointer/proc/toggle_on()
 	active = !active
@@ -71,12 +71,12 @@
 	if(!active)
 		return
 	if(!target)
-		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
+		. += LANG("obj.08d79a62", list(alert ? "alert" : "", icon_suffix))
 		return
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
 	if(!here || !there || here.z != there.z)
-		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
+		. += LANG("obj.08d79a62", list(alert ? "alert" : "", icon_suffix))
 		return
 	. += get_direction_icon(here, there)
 
@@ -189,7 +189,7 @@
 		return
 	var/mob/mob_holder = get(target, /mob)
 	if(istype(mob_holder))
-		. += "Its pair is being held by [mob_holder]."
+		. += LANG("obj.fda45894", list(mob_holder))
 		return
 
 /obj/item/pinpointer/shuttle

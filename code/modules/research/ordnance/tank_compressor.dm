@@ -32,8 +32,8 @@
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/examine()
 	. = ..()
-	. += "This one is rated for up to [TANK_COMPRESSOR_PRESSURE_LIMIT] kPa."
-	. += "Can be opened with a screwdriver and rotated with a wrench. The green port is the input, the red one is the output."
+	. += LANG("obj.c54b28c4", list(TANK_COMPRESSOR_PRESSURE_LIMIT))
+	. += LANG("obj.770b1cd8", null)
 
 /// Stores the record of the gas data for a significant enough tank leak
 /datum/data/compressor_record

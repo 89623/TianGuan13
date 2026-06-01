@@ -88,7 +88,7 @@
 /obj/machinery/rbmk2_sniffer/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += "reactor_sniffer_panel"
+		. += LANG("obj.d91c8b9d", null)
 
 /obj/machinery/rbmk2_sniffer/Destroy()
 	for(var/obj/machinery/power/rbmk2/reactor as anything in linked_reactors)
@@ -135,7 +135,7 @@
 /obj/machinery/rbmk2_sniffer/examine(mob/user)
 	. = ..()
 
-	. += "It is linked to [length(linked_reactors)] reactor(s)."
+	. += LANG("obj.69586ccd", list(length(linked_reactors)))
 
 	if(last_meltdown)
 		. += span_danger("It is flashing red!")

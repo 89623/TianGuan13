@@ -119,7 +119,7 @@
 /mob/eye/camera/ai/examine(mob/user) //Displays a silicon's laws to ghosts
 	. = ..()
 	if(istype(ai) && ai.laws && isobserver(user))
-		. += "<b>[ai] has the following laws:</b>"
+		. += LANG("mob.b79bbe52", list(ai))
 		for(var/law in ai.laws.get_law_list(include_zeroth = TRUE))
 			. += law
 

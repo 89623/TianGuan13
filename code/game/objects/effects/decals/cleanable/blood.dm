@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/decal/cleanable/blood
 	name = "pool of blood"
 	desc = "It's slippery and gooey. Perhaps it's the chef's cooking?"
@@ -769,7 +770,7 @@
 	if(LAZYLEN(species_types) + LAZYLEN(shoe_types) == 0)
 		return
 
-	. += "You recognise the footprints as belonging to:"
+	. += LANG("obj.bfd46e14", null)
 	for(var/obj/item/clothing/shoes/sole as anything in shoe_types)
 		var/article = initial(sole.article) || (initial(sole.gender) == PLURAL ? "Some" : "A")
 		. += "[icon2html(initial(sole.icon), user, initial(sole.icon_state))] [article] <B>[initial(sole.name)]</B>."

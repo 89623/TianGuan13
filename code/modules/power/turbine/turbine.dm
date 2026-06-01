@@ -124,7 +124,7 @@
 	. = ..()
 
 	if(panel_open)
-		. += "[base_icon_state]_open"
+		. += LANG("obj.821ccaac", list(base_icon_state))
 
 	set_overlays(.)
 

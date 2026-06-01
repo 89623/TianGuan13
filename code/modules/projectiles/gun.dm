@@ -194,13 +194,13 @@
 	. = ..()
 	if(!pinless)
 		if(pin)
-			. += "It has \a [pin] installed."
+			. += LANG("obj.4243143d", list(pin))
 			if(pin.pin_removable)
 				. += span_info("[pin] looks like [pin.p_they()] could be removed with some <b>tools</b>.")
 			else
 				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] looks impossible to remove.")
 		else
-			. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
+			. += LANG("obj.890cac08", null)
 
 	var/healthpercent = (atom_integrity/max_integrity) * 100
 	switch(healthpercent)

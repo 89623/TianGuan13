@@ -30,12 +30,12 @@
 /datum/surgery_operation/organ/repair/all_required_strings()
 	. = ..()
 	if(!repeatable)
-		. += "the organ must be moderately damaged"
+		. += LANG("datum.a3673597", null)
 
 /datum/surgery_operation/organ/repair/all_blocked_strings()
 	. = ..()
 	if(!repeatable)
-		. += "the organ must not have been surgically repaired prior"
+		. += LANG("datum.f5dcfebb", null)
 
 /datum/surgery_operation/organ/repair/on_success(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	organ.set_organ_damage(organ.maxHealth * heal_to_percent)

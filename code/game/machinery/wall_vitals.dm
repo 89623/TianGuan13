@@ -335,7 +335,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 	if(isnull(patient))
 		return
 
-	. += "buttons"
+	. += LANG("obj.4ade3023", null)
 
 	var/hp_color = percent_to_color((patient.maxHealth - patient.health) / patient.maxHealth)
 	. += get_ekg_and_resp(hp_color)

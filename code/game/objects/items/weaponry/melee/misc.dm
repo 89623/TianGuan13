@@ -327,7 +327,7 @@
 /obj/item/carpenter_hammer/examine(mob/user)
 	. = ..()
 	. += ""
-	. += "Real World Tip:"
+	. += LANG("obj.ab9134d9", null)
 	. += pick(
 		"Every building, from hospitals to homes, has a room that serves as the heart of the building \
 		and carries blood and nutrients to its extremities. Try to find the heart of your home!",

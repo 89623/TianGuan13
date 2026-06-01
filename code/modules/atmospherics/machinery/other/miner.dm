@@ -114,7 +114,7 @@
 /obj/machinery/atmospherics/miner/update_overlays()
 	. = ..()
 	if(broken)
-		. += "broken"
+		. += LANG("obj.be486638", null)
 		return
 
 	if(active)

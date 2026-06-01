@@ -168,12 +168,12 @@
 	. = list()
 
 	var/datum/martial_art/plasma_fist/martial = GET_ACTIVE_MARTIAL_ART(holder)
-	. += "<b><i>You clench your fists and have a flashback of knowledge...</i></b>"
-	. += "[span_notice("Tornado Sweep")]: Punch Punch Shove. Repulses opponent and everyone back."
-	. += "[span_notice("Throwback")]: Shove Punch Shove. Throws the opponent and an item at them."
-	. += "[span_notice("The Plasma Fist")]: Punch Shove Shove Shove Punch. Instantly gibs an opponent.[martial.nobomb ? "" : " Each kill with this grows your [span_notice("Apotheosis")] explosion size."]"
+	. += LANG("datum.b438a230", null)
+	. += LANG("datum.7b044891", list(span_notice("Tornado Sweep")))
+	. += LANG("datum.519e0700", list(span_notice("Throwback")))
+	. += LANG("datum.ff9d3099", list(span_notice("The Plasma Fist"), martial.nobomb ? "" : " Each kill with this grows your [span_notice("Apotheosis")] explosion size."))
 	if(!martial.nobomb)
-		. += "[span_notice("Apotheosis")]: Use [span_notice("The Plasma Fist")] on yourself. Sends you away in a glorious explosion."
+		. += LANG("datum.6824d3fb", list(span_notice("Apotheosis"), span_notice("The Plasma Fist")))
 	return .
 
 

@@ -560,17 +560,17 @@
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
-		. += "The local area hazard light is flashing."
-		. += "The fault location display is [my_area.fault_location] ([my_area.fault_status == AREA_FAULT_AUTOMATIC ? "Automatic Detection" : "Manual Trigger"])."
+		. += LANG("obj.3ad9a286", null)
+		. += LANG("obj.d05e0bfe", list(my_area.fault_location, my_area.fault_status == AREA_FAULT_AUTOMATIC ? "Automatic Detection" : "Manual Trigger"))
 		if(is_station_level(z))
-			. += "The station security alert level is [SSsecurity_level.get_current_level_as_text()]."
-		. += "<b>Left-Click</b> to activate all firelocks in this area."
-		. += "<b>Right-Click</b> to reset firelocks in this area."
+			. += LANG("obj.e5a011c7", list(SSsecurity_level.get_current_level_as_text()))
+		. += LANG("obj.85916893", null)
+		. += LANG("obj.9d65a459", null)
 	else
 		if(is_station_level(z))
-			. += "The station security alert level is [SSsecurity_level.get_current_level_as_text()]."
-		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
-		. += "<b>Left-Click</b> to activate all firelocks in this area."
+			. += LANG("obj.e5a011c7", list(SSsecurity_level.get_current_level_as_text()))
+		. += LANG("obj.70b85ec4", list(my_area.fire_detect ? "lit" : "unlit"))
+		. += LANG("obj.85916893", null)
 
 // Allows Silicons to disable thermal sensor
 /obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)

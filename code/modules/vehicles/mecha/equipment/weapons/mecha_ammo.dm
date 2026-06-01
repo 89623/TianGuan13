@@ -40,7 +40,7 @@
 /obj/item/mecha_ammo/examine(mob/user)
 	. = ..()
 	if(rounds)
-		. += "There [rounds > 1?"are":"is"] [rounds] [ammo_type][rounds > 1?"s":""] left."
+		. += LANG("obj.3205e5c3", list(rounds > 1?"are":"is", rounds, ammo_type, rounds > 1?"s":""))
 	else
 		. += span_notice("Use in-hand to fold it into a sheet of iron.")
 

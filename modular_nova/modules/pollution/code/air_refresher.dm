@@ -14,9 +14,9 @@
 /obj/item/air_refresher/examine(mob/user)
 	. = ..()
 	if(uses_remaining)
-		. += "It has [uses_remaining] use\s left."
+		. += LANG("obj.5bf37df5", list(uses_remaining))
 	else
-		. += "It is empty."
+		. += LANG("obj.53b0d090", null)
 
 /obj/item/air_refresher/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(uses_remaining <= 0)

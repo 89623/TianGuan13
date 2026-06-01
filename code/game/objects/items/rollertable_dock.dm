@@ -26,7 +26,7 @@
 
 /obj/item/rolling_table_dock/examine(mob/user)
 	. = ..()
-	. += "The dock is [loaded ? "loaded" : "empty"]."
+	. += LANG("obj.5d5580ef", list(loaded ? "loaded" : "empty"))
 
 /obj/item/rolling_table_dock/deploy_rolling_table(mob/user, atom/location)
 	if(loaded)

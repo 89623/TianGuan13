@@ -53,9 +53,9 @@
 /obj/machinery/cell_charger_multi/examine(mob/user)
 	. = ..()
 	if(!LAZYLEN(charging_batteries))
-		. += "There are no cells in [src]."
+		. += LANG("obj.4d1f049a", list(src))
 	else
-		. += "There are [LAZYLEN(charging_batteries)] cells in [src]."
+		. += LANG("obj.894e8427", list(LAZYLEN(charging_batteries), src))
 		for(var/obj/item/stock_parts/power_store/cell/charging in charging_batteries)
 			. += "There's [charging] cell in the charger, current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))

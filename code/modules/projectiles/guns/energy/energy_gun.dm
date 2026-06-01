@@ -201,7 +201,7 @@
 /obj/item/gun/energy/e_gun/nuclear/update_overlays()
 	. = ..()
 	if(reactor_overloaded)
-		. += "[icon_state]_fail_3"
+		. += LANG("obj.aab395ce", list(icon_state))
 		return
 
 	switch(fail_tick)

@@ -283,12 +283,12 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "Atom ProcCall", datum/th
 		if(returnedlist.len)
 			var/assoc_check = returnedlist[1]
 			if(istext(assoc_check) && (returnedlist[assoc_check] != null))
-				. += "[procname] returned an associative list:"
+				. += LANG("client.5bf232fa", list(procname))
 				for(var/key in returnedlist)
 					. += "\n[key] = [returnedlist[key]]"
 
 			else
-				. += "[procname] returned a list:"
+				. += LANG("client.df1bd9d4", list(procname))
 				for(var/elem in returnedlist)
 					. += "\n[elem]"
 		else

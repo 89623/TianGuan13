@@ -94,7 +94,7 @@
 /obj/item/gun/ballistic/revolver/examine(mob/user)
 	. = ..()
 	var/live_ammo = get_ammo(FALSE, FALSE)
-	. += "[live_ammo ? live_ammo : "None"] of those are live rounds."
+	. += LANG("obj.88488fc4", list(live_ammo ? live_ammo : "None"))
 	. += span_notice("It can be spun with [EXAMINE_HINT("alt-click")].")
 
 /obj/item/gun/ballistic/revolver/ignition_effect(atom/A, mob/user)

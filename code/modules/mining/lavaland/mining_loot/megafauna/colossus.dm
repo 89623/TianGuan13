@@ -111,7 +111,7 @@
 	. = ..()
 	if(isobserver(user))
 		. += observer_desc
-		. += "It is activated by [activation_method]."
+		. += LANG("obj.d44c7a15", list(activation_method))
 
 /obj/machinery/anomalous_crystal/Hear(atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, list/message_mods = list(), message_range)
 	. = ..()

@@ -206,9 +206,9 @@
 /obj/structure/spawner/nether/examine(mob/user)
 	. = ..()
 	if(isskeleton(user) || iszombie(user))
-		. += "A direct link to another dimension full of creatures very happy to see you. [span_nicegreen("You can see your house from here!")]"
+		. += LANG("obj.b9b2140e", list(span_nicegreen("You can see your house from here!")))
 	else
-		. += "A direct link to another dimension full of creatures not very happy to see you. [span_warning("Entering the link would be a very bad idea.")]"
+		. += LANG("obj.98bc5219", list(span_warning("Entering the link would be a very bad idea.")))
 
 /obj/structure/spawner/nether/attack_hand(mob/user, list/modifiers)
 	. = ..()

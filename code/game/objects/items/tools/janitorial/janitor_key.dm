@@ -32,7 +32,7 @@
 /obj/item/access_key/examine(mob/user)
 	. = ..()
 	if(department_access)
-		. += "It currently holds access to the [department_access] region."
+		. += LANG("obj.6d9d2718", list(department_access))
 
 /obj/item/access_key/examine_more(mob/user)
 	. = ..()

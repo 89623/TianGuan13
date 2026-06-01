@@ -6,12 +6,12 @@
 
 /obj/machinery/power/apc/examine()
 	. = ..()
-	. += "It [arc_shielded ? "has" : "does not have"] arc shielding installed."
+	. += LANG("obj.299cd915", list(arc_shielded ? "has" : "does not have"))
 	if(panel_open)
 		if(arc_shielded)
-			. += "The arc shielding could be removed with a <b>wrench</b>."
+			. += LANG("obj.8e4dbe43", null)
 		else
-			. += "It could be arc shielded with a <b>sheet of bronze</b>."
+			. += LANG("obj.9332b3fc", null)
 
 /obj/machinery/power/apc/late_process(seconds_per_tick)
 	. = ..()

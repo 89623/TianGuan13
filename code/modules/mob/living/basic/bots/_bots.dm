@@ -346,11 +346,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 	. = ..()
 	if(health < maxHealth)
 		if(health > (maxHealth * 0.3))
-			. += "[src]'s parts look loose."
+			. += LANG("mob.784637f2", list(src))
 		else
-			. += "[src]'s parts look very loose!"
+			. += LANG("mob.b53e8b04", list(src))
 	else
-		. += "[src] is in pristine condition."
+		. += LANG("mob.20cc3650", list(src))
 
 	. += span_notice("[p_Their()] maintenance panel is [bot_access_flags & BOT_COVER_MAINTS_OPEN ? "open" : "closed"].")
 	. += span_info("You can use a <b>screwdriver</b> to [bot_access_flags & BOT_COVER_MAINTS_OPEN ? "close" : "open"] [p_them()].")

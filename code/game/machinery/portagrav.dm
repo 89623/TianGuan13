@@ -62,16 +62,16 @@
 /obj/machinery/power/portagrav/update_overlays()
 	. = ..()
 	if(anchored)
-		. += "portagrav_anchors"
+		. += LANG("obj.c9ca3209", null)
 	if(on)
-		. += "portagrav_lights"
-		. += "activated"
+		. += LANG("obj.5cf26434", null)
+		. += LANG("obj.bcf4b118", null)
 
 /obj/machinery/power/portagrav/examine(mob/user)
 	. = ..()
-	. += "It is [on ? "on" : "off"]."
-	. += "The charge meter reads: [!isnull(cell) ? "[round(cell.percent(), 1)]%" : "NO CELL"]."
-	. += "It is[anchored ? "" : " not"] anchored."
+	. += LANG("obj.62eee539", list(on ? "on" : "off"))
+	. += LANG("obj.6860392a", list(!isnull(cell) ? "[round(cell.percent(), 1)]%" : "NO CELL"))
+	. += LANG("obj.421c7a18", list(anchored ? "" : " not"))
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
 

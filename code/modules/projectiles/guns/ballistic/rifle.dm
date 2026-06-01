@@ -45,7 +45,7 @@
 
 /obj/item/gun/ballistic/rifle/examine(mob/user)
 	. = ..()
-	. += "The bolt is [bolt_locked ? "open" : "closed"]."
+	. += LANG("obj.d938d824", list(bolt_locked ? "open" : "closed"))
 
 ///////////////////////
 // BOLT ACTION RIFLE //
@@ -257,7 +257,7 @@
 
 /obj/item/gun/ballistic/rifle/rebarxbow/examine(mob/user)
 	. = ..()
-	. += "The crossbow is [bolt_locked ? "not ready" : "ready"] to fire."
+	. += LANG("obj.e56dbb2e", list(bolt_locked ? "not ready" : "ready"))
 
 /obj/item/gun/ballistic/rifle/rebarxbow/update_overlays()
 	. = ..()

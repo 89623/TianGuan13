@@ -45,10 +45,10 @@
 
 /obj/item/mmi/proc/add_mmi_overlay()
 	if(brainmob && brainmob.stat != DEAD)
-		. += "mmi_alive"
+		. += LANG("obj.31525610", null)
 		return
 	if(brain)
-		. += "mmi_dead"
+		. += LANG("obj.21fbac2c", null)
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)

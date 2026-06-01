@@ -107,12 +107,12 @@
 	if(isnull(stored_gun) || !stored_gun.max_mod_capacity)
 		return
 
-	. += "<b>[stored_gun.get_remaining_mod_capacity()]%</b> mod capacity remaining."
+	. += LANG("mob.15082120", list(stored_gun.get_remaining_mod_capacity()))
 
 	for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
 		. += span_notice("There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.")
 	if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
-		. += "The [src] appears to be in <b>sleep mode</b>. You can restore normal functions by <b>tapping</b> it."
+		. += LANG("mob.bb32306b", list(src))
 
 
 /mob/living/basic/mining_drone/welder_act(mob/living/user, obj/item/welder)

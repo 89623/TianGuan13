@@ -137,7 +137,7 @@
 /turf/open/examine(mob/user)
 	. = ..()
 	if(leave_footprints && (footprint_entrance_dirs || footprint_exit_dirs) && (LAZYLEN(footprint_shoe_types) || LAZYLEN(footprint_species_types)))
-		. += "You recognise the footprints as belonging to:"
+		. += LANG("turf.bfd46e14", null)
 		for(var/obj/item/clothing/shoes/sole as anything in footprint_shoe_types)
 			var/article = initial(sole.article) || (initial(sole.gender) == PLURAL ? "Some" : "A")
 			. += "[icon2html(initial(sole.icon), user, initial(sole.icon_state))] [article] <b>[initial(sole.name)]</b>."

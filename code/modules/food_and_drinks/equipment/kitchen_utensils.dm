@@ -133,7 +133,7 @@
 
 /obj/item/knife/kitchen/silicon/examine()
 	. = ..()
-	. += "It's fitted with a [tool_behaviour] head."
+	. += LANG("obj.ce18620c", list(tool_behaviour))
 
 /obj/item/knife/kitchen/silicon/attack_self(mob/user)
 	playsound(get_turf(user), 'sound/items/tools/change_drill.ogg', 50, TRUE)

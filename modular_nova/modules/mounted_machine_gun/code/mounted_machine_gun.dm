@@ -79,7 +79,7 @@
 /obj/machinery/mounted_machine_gun/update_overlays()
 	. = ..()
 	if(ammo_box)
-		. += "ammo_box"
+		. += LANG("obj.8e9727ca", null)
 
 	switch(barrel_heat)
 		if(BARREL_HEAT_THRESHOLD_LOW to BARREL_HEAT_THRESHOLD_HIGH)

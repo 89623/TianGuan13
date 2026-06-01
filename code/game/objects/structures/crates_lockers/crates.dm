@@ -88,15 +88,15 @@
 /obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
 	. = new_overlays
 	if(manifest)
-		. += "manifest"
+		. += LANG("obj.0d197521", null)
 
 	if(!opened)
 		if(broken)
-			. += "securecrateemag"
+			. += LANG("obj.7a2cbc78", null)
 		else if(locked)
-			. += "securecrater"
+			. += LANG("obj.dcb72258", null)
 		else if(secure)
-			. += "securecrateg"
+			. += LANG("obj.4838769b", null)
 
 	if(welded)
 		var/mutable_appearance/weld_overlay = mutable_appearance(icon, "welded")

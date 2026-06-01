@@ -343,24 +343,24 @@
 	. = ..()
 	if(machine_stat & BROKEN)
 		if(opened != APC_COVER_REMOVED)
-			. += "The cover is broken and can probably be <i>pried</i> off with enough force."
+			. += LANG("obj.f9928a22", null)
 			return
 		if(terminal && has_electronics)
-			. += "The cover is missing but can be replaced using a new frame."
+			. += LANG("obj.22bb51d4", null)
 		return
 	if(opened)
 		if(has_electronics && terminal)
-			. += "The cover is [opened == APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
+			. += LANG("obj.5666b50b", list(opened == APC_COVER_REMOVED?"removed":"open", cell ? "installed" : "missing"))
 		else
 			. += {"It's [ !terminal ? "not" : "" ] wired up.\n
 			The electronics are[!has_electronics?"n't":""] installed."}
 	else
 		if(machine_stat & MAINT)
-			. += "The cover is closed. Something is wrong with it. It doesn't work."
+			. += LANG("obj.20a9b831", null)
 		else if(malfhack)
-			. += "The cover is broken. It may be hard to force it open."
+			. += LANG("obj.25a01cf9", null)
 		else
-			. += "The cover is closed."
+			. += LANG("obj.7e4d1cfa", null)
 
 /obj/machinery/power/apc/atom_break(damage_flag)
 	. = ..()

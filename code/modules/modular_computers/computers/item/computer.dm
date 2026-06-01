@@ -267,7 +267,7 @@
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
 	if(stored_id)
-		. += "[src] is displaying [stored_id]:"
+		. += LANG("obj.cc747659", list(src, stored_id))
 		. += stored_id.get_id_examine_strings(user)
 
 /obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
@@ -447,27 +447,27 @@
 			. += span_warning("It's falling apart!")
 
 	if(long_ranged)
-		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
+		. += LANG("obj.a03a234c", null)
 	. += span_notice("It has [max_capacity] GQ of storage capacity.")
 
 	if(stored_id)
 		if(Adjacent(user))
-			. += "It has \the [stored_id] card inserted in its card slot.[alt_stored_id ? "" : " [span_info("Alt-click to eject it.")]"]"
+			. += LANG("obj.c56aa713", list(stored_id, alt_stored_id ? "" : " [span_info("Alt-click to eject it.")]"))
 		else
-			. += "Its identification card slot is currently occupied."
+			. += LANG("obj.2660a372", null)
 
 	if(alt_stored_id)
 		if(Adjacent(user))
-			. += "It has \the [alt_stored_id] card stored in its secondary card slot. [span_info("Alt-click to eject it.")]"
+			. += LANG("obj.8b608d63", list(alt_stored_id, span_info("Alt-click to eject it.")))
 		else
-			. += "Its secondary identification card slot is currently occupied."
+			. += LANG("obj.58122db3", null)
 
 	if(internal_cell)
 		. += span_info("Right-click it with a screwdriver to eject the [internal_cell].")
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
-	. += "Storage capacity: [used_capacity]/[max_capacity]GQ"
+	. += LANG("obj.018626ee", list(used_capacity, max_capacity))
 
 	for(var/datum/computer_file/app_examine as anything in stored_files)
 		if(app_examine.on_examine(src, user))

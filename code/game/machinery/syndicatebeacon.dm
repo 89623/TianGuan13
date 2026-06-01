@@ -127,9 +127,9 @@
 
 /obj/machinery/power/singularity_beacon/syndicate/no_escape/examine(mob/user)
 	. = ..()
-	. += "\The [src] is [active ? "on" : "off"]."
+	. += LANG("obj.bcf51b45", list(src, active ? "on" : "off"))
 	if(cell)
-		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+		. += LANG("obj.00f8f6f7", list(cell ? round(cell.percent(), 1) : 0))
 
 /obj/machinery/power/singularity_beacon/syndicate/no_escape/get_cell()
 	return cell

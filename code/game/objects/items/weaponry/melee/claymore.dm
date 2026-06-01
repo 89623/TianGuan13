@@ -158,7 +158,7 @@
 
 /obj/item/claymore/highlander/examine(mob/user)
 	. = ..()
-	. += "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
+	. += LANG("obj.05dbe464", list(!notches ? "nothing" : "[notches] notches"))
 	if(nuke_disk)
 		. += span_boldwarning("It's holding the nuke disk!")
 

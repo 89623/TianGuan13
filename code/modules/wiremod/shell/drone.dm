@@ -26,11 +26,11 @@
 	. = ..()
 	if(health < maxHealth)
 		if(health > maxHealth/3)
-			. += "[src]'s parts look loose."
+			. += LANG("mob.784637f2", list(src))
 		else
-			. += "[src]'s parts look very loose!"
+			. += LANG("mob.b53e8b04", list(src))
 	else
-		. += "[src] is in pristine condition."
+		. += LANG("mob.20cc3650", list(src))
 
 /mob/living/circuit_drone/updatehealth()
 	. = ..()

@@ -326,12 +326,12 @@
 /datum/wound/burn/robotic/overheat/get_scanner_description(mob/user)
 	. = ..()
 
-	. += "\nWound status: [get_wound_status_info()]"
+	. += LANG("datum.a6893bf4", list(get_wound_status_info()))
 
 /datum/wound/burn/robotic/overheat/get_simple_scanner_description(mob/user)
 	. = ..()
 
-	. += "\nWound status: [get_wound_status_info()]"
+	. += LANG("datum.a6893bf4", list(get_wound_status_info()))
 
 // this wound is unaffected by cryoxadone and pyroxadone
 /datum/wound/burn/robotic/overheat/on_xadone(power)

@@ -17,8 +17,8 @@
 
 /obj/structure/kitchenspike_frame/examine(mob/user)
 	. = ..()
-	. += "It can be <b>welded</b> apart."
-	. += "You could attach <b>[MEATSPIKE_IRONROD_REQUIREMENT]</b> iron rods to it to create a <b>Meat Spike</b>."
+	. += LANG("obj.2c4221ed", null)
+	. += LANG("obj.70722c11", list(MEATSPIKE_IRONROD_REQUIREMENT))
 
 /obj/structure/kitchenspike_frame/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -87,8 +87,8 @@
 
 /obj/structure/kitchenspike/examine(mob/user)
 	. = ..()
-	. += "<b>Drag a mob</b> onto it to hook it in place."
-	. += "A <b>crowbar</b> could remove those spikes."
+	. += LANG("obj.faa50213", null)
+	. += LANG("obj.fc822c8c", null)
 
 /obj/structure/kitchenspike/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))

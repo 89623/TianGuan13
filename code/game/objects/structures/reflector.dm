@@ -43,7 +43,7 @@
 /obj/structure/reflector/examine(mob/user)
 	. = ..()
 	if(finished)
-		. += "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"]."
+		. += LANG("obj.85161655", list(rotation_angle, can_rotate ? "unlocked" : "locked"))
 		if(!admin)
 			if(can_rotate)
 				. += span_notice("Use your <b>hand</b> to adjust its direction.")

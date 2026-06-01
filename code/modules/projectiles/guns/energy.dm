@@ -288,19 +288,19 @@
 
 	var/ratio = get_charge_ratio()
 	if(ratio == 0 && display_empty)
-		. += "[icon_state]_empty"
+		. += LANG("obj.e046f1aa", list(icon_state))
 		return
 
 	if(shot_type_fluff_overlay)
-		. += "[icon_state]_[initial(shot.select_name)]_extra"
+		. += LANG("obj.bd565408", list(icon_state, initial(shot.select_name)))
 
 	// NOVA EDIT ADDITION START: labeled charge mode
 	if(shaded_charge == SHADED_CHARGE_MODE_LABELED) // support a third shaded_charge state
-		. += "[icon_state]_[initial(shot.select_name)]_charge[ratio]"
+		. += LANG("obj.3aa330f9", list(icon_state, initial(shot.select_name), ratio))
 		return
 	// NOVA EDIT ADDITION END
 	if(shaded_charge)
-		. += "[icon_state]_charge[ratio]"
+		. += LANG("obj.c9f2648e", list(icon_state, ratio))
 		return
 	var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)
 	for(var/i = ratio, i >= 1, i--)

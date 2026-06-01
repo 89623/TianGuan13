@@ -53,10 +53,10 @@
 	if(beaker)
 		var/is_close
 		if(Adjacent(user)) //don't reveal exactly what's inside unless they're close enough to see the UI anyway.
-			. += "It contains \a [beaker]."
+			. += LANG("obj.eaca0139", list(beaker))
 			is_close = TRUE
 		else
-			. += "It has a beaker inside it."
+			. += LANG("obj.41c3a8a2", null)
 		. += span_info("Alt-click to eject [is_close ? beaker : "the beaker"].")
 
 /obj/machinery/computer/pandemic/attack_hand_secondary(mob/user, list/modifiers)
@@ -120,7 +120,7 @@
 /obj/machinery/computer/pandemic/update_overlays()
 	. = ..()
 	if(wait)
-		. += "waitlight"
+		. += LANG("obj.1ab9daa6", null)
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

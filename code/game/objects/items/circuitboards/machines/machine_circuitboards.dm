@@ -536,9 +536,9 @@
 
 /obj/item/circuitboard/machine/holopad/examine(mob/user)
 	. = ..()
-	. += "There is a connection port on this board that could be <b>pulsed</b>"
+	. += LANG("obj.7ee1da5d", null)
 	if(secure)
-		. += "There is a red light flashing next to the word \"secure\""
+		. += LANG("obj.977ac07b", null)
 
 /obj/item/circuitboard/machine/launchpad
 	name = "Bluespace Launchpad"
@@ -885,7 +885,7 @@
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
 	. = ..()
-	. += "The cost to use this kiosk is set to [custom_cost]."
+	. += LANG("obj.7673fcd9", list(custom_cost))
 
 /obj/item/circuitboard/machine/limbgrower
 	name = "Limb Grower"

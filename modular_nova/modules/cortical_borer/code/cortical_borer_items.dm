@@ -22,13 +22,13 @@
 /obj/item/cortical_cage/update_overlays()
 	. = ..()
 	if(trapped_borer)
-		. += "borer"
+		. += LANG("obj.3b0e4b66", null)
 	if(internal_radio)
-		. += "radio"
+		. += LANG("obj.07c2940c", null)
 	if(opened)
-		. += "doors_open"
+		. += LANG("obj.172f534e", null)
 	else
-		. += "doors_closed"
+		. += LANG("obj.7d49369e", null)
 
 /obj/item/cortical_cage/attack_self(mob/user, modifiers)
 	opened = !opened

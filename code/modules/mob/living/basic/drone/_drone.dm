@@ -221,15 +221,15 @@
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))
-		. += "It is holding [internal_storage.examine_title(user)] in its internal storage."
+		. += LANG("mob.30690125", list(internal_storage.examine_title(user)))
 
 	//Cosmetic hat - provides no function other than looks
 	if(head && !(head.item_flags & ABSTRACT))
-		. += "It is wearing [head.examine_title(user)] on its head."
+		. += LANG("mob.499182b9", list(head.examine_title(user)))
 
 	//Braindead
 	if(!client && stat != DEAD)
-		. += "Its status LED is blinking at a steady rate."
+		. += LANG("mob.a7ef884e", null)
 
 	//Hacked
 	if(hacked)

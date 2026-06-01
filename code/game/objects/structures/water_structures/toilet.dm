@@ -231,7 +231,7 @@
 /obj/structure/toilet/update_overlays()
 	. = ..()
 	if(!flushing && cover_open)
-		. += "[base_icon_state]-water"
+		. += LANG("obj.2a2998b6", list(base_icon_state))
 
 /obj/structure/toilet/dump_contents()
 	for(var/obj/toilet_item in (cistern_items + fishes))

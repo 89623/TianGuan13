@@ -872,9 +872,9 @@
 	. = ..()
 	if(charges != INFINITE_CHARGES)
 		if(charges_left)
-			. += "It's roughly [PERCENT(charges_left/charges)]% full."
+			. += LANG("obj.4a138c11", list(PERCENT(charges_left/charges)))
 		else
-			. += "It is empty."
+			. += LANG("obj.53b0d090", null)
 	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].")
 
 

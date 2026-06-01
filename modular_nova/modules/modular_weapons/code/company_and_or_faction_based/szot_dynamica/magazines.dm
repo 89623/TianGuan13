@@ -80,11 +80,7 @@
 /obj/item/ammo_box/magazine/recharge/plasma_battery/examine_more(mob/user)
 	. = ..()
 
-	. += "The Mark-2 Energy Cells for plasma-based weaponry are a unique combination of neccessity and ingenuity. \
-		Using an inner sleeve of quartz and cupronickel, these cells are capable of absorbing thermal energy and converting it \
-		into electric potential through thermal expansion and piezo-electricity. While the capacity of shots are quite low, \
-		this is due to plasma guns requirement to burn small amounts of material inside a compressed medium. \
-		The results are often viscious burns on contacted skin, though travel often cools it too much for punching through armor."
+	. += LANG("obj.c14a2df8", null)
 
 	return .
 

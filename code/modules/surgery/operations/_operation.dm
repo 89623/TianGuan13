@@ -631,7 +631,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	SHOULD_CALL_PARENT(TRUE)
 	. = bitfield_to_list(all_surgery_states_required, SURGERY_STATE_GUIDES("must"))
 	if(!(operation_flags & OPERATION_STANDING_ALLOWED))
-		. += "the patient must be lying down"
+		. += LANG("datum.36e2c473", null)
 
 /// Returns a list of strings indicating any of the requirements for this operation
 /// "Any requirements" are formatted as "At least one of the following must be true:"
@@ -642,13 +642,13 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/parsed_any_flags = any_surgery_states_required
 	if((parsed_any_flags & ALL_SURGERY_BONE_STATES) == ALL_SURGERY_BONE_STATES)
 		parsed_any_flags &= ~ALL_SURGERY_BONE_STATES
-		. += "the bone must be sawed or drilled"
+		. += LANG("datum.b0b90f7a", null)
 	if((parsed_any_flags & ALL_SURGERY_SKIN_STATES) == ALL_SURGERY_SKIN_STATES)
 		parsed_any_flags &= ~ALL_SURGERY_SKIN_STATES
-		. += "the skin must be cut or opened"
+		. += LANG("datum.6169e351", null)
 	if((parsed_any_flags & ALL_SURGERY_VESSEL_STATES) == ALL_SURGERY_VESSEL_STATES)
 		parsed_any_flags &= ~ALL_SURGERY_VESSEL_STATES
-		. += "the blood vessels must be clamped or unclamped" // weird phrasing but whatever
+		. += LANG("datum.58749902", null) // weird phrasing but whatever
 
 	. += bitfield_to_list(parsed_any_flags, SURGERY_STATE_GUIDES("must"))
 
@@ -658,7 +658,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	if(operation_flags & OPERATION_SELF_OPERABLE)
-		. += "a surgeon may perform this on themselves"
+		. += LANG("datum.23c47d06", null)
 
 /// Returns a list of strings indicating blocked states for this operation
 /// "Blocked requirements" are formatted as "However, none of the following may be true:"
@@ -669,17 +669,17 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/parsed_blocked_flags = any_surgery_states_blocked
 	if((parsed_blocked_flags & ALL_SURGERY_BONE_STATES) == ALL_SURGERY_BONE_STATES)
 		parsed_blocked_flags &= ~ALL_SURGERY_BONE_STATES
-		. += "the bone must be intact"
+		. += LANG("datum.48ffc383", null)
 	if((parsed_blocked_flags & ALL_SURGERY_SKIN_STATES) == ALL_SURGERY_SKIN_STATES)
 		parsed_blocked_flags &= ~ALL_SURGERY_SKIN_STATES
-		. += "the skin must be intact"
+		. += LANG("datum.549976a6", null)
 	if((parsed_blocked_flags & ALL_SURGERY_VESSEL_STATES) == ALL_SURGERY_VESSEL_STATES)
 		parsed_blocked_flags &= ~ALL_SURGERY_VESSEL_STATES
-		. += "the blood vessels must be intact"
+		. += LANG("datum.9c2bbe98", null)
 
 	. += bitfield_to_list(parsed_blocked_flags, SURGERY_STATE_GUIDES("must not"))
 	if(!(operation_flags & OPERATION_IGNORE_CLOTHES))
-		. += "the operation site must not be obstructed by clothing"
+		. += LANG("datum.8fef5297", null)
 
 /**
  * Returns what icon this surgery uses by default on the radial wheel if it does not implement its own radial options
@@ -1260,17 +1260,17 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/basic/all_required_strings()
 	. = list()
 	if(required_biotype)
-		. += "operate on [target_zone ? "[parse_zone(target_zone)] (target [parse_zone(target_zone)])" : "patient"]"
+		. += LANG("datum.0738e641", list(target_zone ? "[parse_zone(target_zone)] (target [parse_zone(target_zone)])" : "patient"))
 	else if(target_zone)
-		. += "operate on [parse_zone(target_zone)] (target [parse_zone(target_zone)])"
+		. += LANG("datum.dbd0e04f", list(parse_zone(target_zone), parse_zone(target_zone)))
 	. += ..()
 
 /datum/surgery_operation/basic/all_blocked_strings()
 	. = ..()
 	if(required_biotype & MOB_ROBOTIC)
-		. += "the patient must not be organic"
+		. += LANG("datum.b2e7d352", null)
 	else if(required_biotype)
-		. += "the patient must not be robotic"
+		. += LANG("datum.5f2a4254", null)
 
 /datum/surgery_operation/basic/is_available(mob/living/patient, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -1332,9 +1332,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/limb/all_blocked_strings()
 	. = ..()
 	if(required_bodytype & BODYTYPE_ROBOTIC)
-		. += "the limb must not be organic"
+		. += LANG("datum.9d38377e", null)
 	else if(required_bodytype & BODYTYPE_ORGANIC)
-		. += "the limb must not be cybernetic"
+		. += LANG("datum.93920bb7", null)
 
 /datum/surgery_operation/limb/get_operation_target(atom/movable/operating_on, body_zone)
 	if (isliving(operating_on))
@@ -1390,9 +1390,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/organ/all_blocked_strings()
 	. = ..()
 	if(required_organ_flag & BODYTYPE_ROBOTIC)
-		. += "the organ must not be organic"
+		. += LANG("datum.bfdf82a8", null)
 	else if(required_organ_flag & ORGAN_TYPE_FLAGS)
-		. += "the organ must not be cybernetic"
+		. += LANG("datum.b72fb0a2", null)
 
 /datum/surgery_operation/organ/get_default_radial_image()
 	return get_generic_limb_radial_image(target_type::zone)

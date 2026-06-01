@@ -129,9 +129,9 @@
 	. = ..()
 
 	if(tool_behaviour)
-		. += "It has a [tool_behaviour] extended out."
+		. += LANG("obj.10b36c8d", list(tool_behaviour))
 	else
-		. += "It's folded."
+		. += LANG("obj.5378d752", null)
 
 /obj/item/spess_knife/update_icon_state()
 	icon_state = initial(icon_state)

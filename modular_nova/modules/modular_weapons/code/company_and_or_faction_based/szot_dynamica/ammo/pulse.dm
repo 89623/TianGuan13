@@ -107,7 +107,7 @@
 /obj/item/ammo_casing/pulse/update_overlays()
 	. = ..()
 	if(remaining_uses <= 0)
-		. += "zaibas_bullet_0"
+		. += LANG("obj.f906a5be", null)
 		return
 	var/use_percent = remaining_uses / max_uses
 	switch(use_percent)

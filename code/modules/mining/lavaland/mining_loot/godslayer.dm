@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/suit/hooded/cloak/godslayer
 	name = "godslayer armour"
 	icon_state = "godslayer"
@@ -39,7 +40,7 @@
 /obj/item/clothing/suit/hooded/cloak/godslayer/examine(mob/user)
 	. = ..()
 	if(loc == user && !COOLDOWN_FINISHED(src, effect_cooldown))
-		. += "You feel like the revival effect will be able to occur again in [COOLDOWN_TIMELEFT(src, effect_cooldown) / 10] seconds."
+		. += LANG("obj.78534566", list(COOLDOWN_TIMELEFT(src, effect_cooldown) / 10))
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/equipped(mob/user, slot)
 	. = ..()

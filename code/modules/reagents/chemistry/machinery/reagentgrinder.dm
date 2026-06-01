@@ -126,10 +126,10 @@
 	. = ..()
 
 	if(!QDELETED(beaker))
-		. += "[base_icon_state]-beaker"
+		. += LANG("obj.6963f5ec", list(base_icon_state))
 
 	if(anchored && !panel_open && is_operational)
-		. += "[base_icon_state]-on"
+		. += LANG("obj.d872f05f", list(base_icon_state))
 
 /obj/machinery/reagentgrinder/Exited(atom/movable/gone, direction)
 	. = ..()

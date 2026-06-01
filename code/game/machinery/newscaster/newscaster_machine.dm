@@ -122,7 +122,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			. += "crack2"
 			. += emissive_blocker(icon, "crack2", src, alpha = src.alpha)
 		else
-			. += "crack3"
+			. += LANG("obj.48ab67bb", null)
 			. += emissive_blocker(icon, "crack3", src, alpha = src.alpha)
 
 /obj/machinery/newscaster/ui_interact(mob/user, datum/tgui/ui)

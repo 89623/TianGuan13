@@ -62,7 +62,7 @@
 	. = ..()
 	if(icon_keyboard)
 		if(keyboard_change_icon && (machine_stat & NOPOWER))
-			. += "[icon_keyboard]_off"
+			. += LANG("obj.441aec21", list(icon_keyboard))
 		else
 			. += icon_keyboard
 

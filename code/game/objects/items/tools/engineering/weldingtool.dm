@@ -90,7 +90,7 @@
 		ratio = ceil(ratio*4) * 25
 		. += "[initial(icon_state)][ratio]"
 	if(welding)
-		. += "[initial(icon_state)]-on"
+		. += LANG("obj.d872f05f", list(initial(icon_state)))
 
 
 /obj/item/weldingtool/process(seconds_per_tick)
@@ -283,7 +283,7 @@
 
 /obj/item/weldingtool/examine(mob/user)
 	. = ..()
-	. += "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+	. += LANG("obj.0d3482c9", list(get_fuel(), max_fuel))
 
 /obj/item/weldingtool/get_temperature()
 	return welding * heat

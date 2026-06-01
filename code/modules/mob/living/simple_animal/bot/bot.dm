@@ -343,11 +343,11 @@
 	. = ..()
 	if(health < maxHealth)
 		if(health > maxHealth/3)
-			. += "[src]'s parts look loose."
+			. += LANG("mob.784637f2", list(src))
 		else
-			. += "[src]'s parts look very loose!"
+			. += LANG("mob.b53e8b04", list(src))
 	else
-		. += "[src] is in pristine condition."
+		. += LANG("mob.20cc3650", list(src))
 	. += span_notice("[p_Their()] maintenance panel is [bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "open" : "closed"].")
 	. += span_info("You can use a <b>screwdriver</b> to [bot_cover_flags & BOT_COVER_MAINTS_OPEN ? "close" : "open"] it.")
 	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
@@ -360,7 +360,7 @@
 		if(!(bot_cover_flags & BOT_COVER_MAINTS_OPEN))
 			. += span_info("You can use a <b>hemostat</b> to remove it.")
 	if(access_card)
-		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
+		. += LANG("mob.b3e288b8", list(icon2html(access_card, user), access_card, p_them()))
 
 /mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0 && prob(10))

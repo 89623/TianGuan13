@@ -172,9 +172,9 @@
 /obj/item/hypospray/mkii/examine(mob/user)
 	. = ..()
 	if(vial)
-		. += "[vial] has [vial.reagents.total_volume]u remaining."
+		. += LANG("obj.9a358873", list(vial, vial.reagents.total_volume))
 	else
-		. += "It has no vial loaded in."
+		. += LANG("obj.d3cd4f54", null)
 	. += span_notice("Ctrl-Shift-Click to change up the colors or reset them.")
 	. += span_notice("Left-click or right-click in-hand to increase or decrease its application amount. It is currently set to [amount_per_transfer] units.")
 

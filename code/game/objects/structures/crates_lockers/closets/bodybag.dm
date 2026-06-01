@@ -55,7 +55,7 @@
 /obj/structure/closet/body_bag/update_overlays()
 	. = ..()
 	if(tag_name)
-		. += "bodybag_label"
+		. += LANG("obj.7f32b079", null)
 	if(pinned)
 		var/image/paper_image = image(icon, "paper[(pinned.is_empty() || !pinned.show_written_words) ? "" : "_written"]")
 		paper_image.color = pinned.color

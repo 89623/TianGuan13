@@ -48,9 +48,9 @@
 	if(!open_status)
 		return
 	if(length(contents) == 1)
-		. += "There is one [contents_tag] left."
+		. += LANG("obj.5886344e", list(contents_tag))
 	else
-		. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] [contents_tag]s left."
+		. += LANG("obj.b0d8d1e6", list(contents.len <= 0 ? "no" : "[contents.len]", contents_tag))
 
 /obj/item/storage/fancy/attack_self(mob/user)
 	if(open_status == FANCY_CONTAINER_CLOSED)
@@ -495,7 +495,7 @@
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
 	if(!contents.len)
-		. += "[base_icon_state]_empty"
+		. += LANG("obj.e046f1aa", list(base_icon_state))
 
 /obj/item/storage/fancy/rollingpapers/empty
 	spawn_count = 0
@@ -709,13 +709,13 @@
 			has_chocolate = TRUE
 
 	if (has_sugar)
-		. += "condi_display_sugar"
+		. += LANG("obj.292fb400", null)
 	if (has_sweetener)
-		. += "condi_display_sweetener"
+		. += LANG("obj.5ccbfc62", null)
 	if (has_creamer)
-		. += "condi_display_creamer"
+		. += LANG("obj.2b59d9e1", null)
 	if (has_chocolate)
-		. += "condi_display_chocolate"
+		. += LANG("obj.2673868a", null)
 
 /obj/item/storage/fancy/coffee_condi_display/PopulateContents()
 	for(var/i in 1 to 4)

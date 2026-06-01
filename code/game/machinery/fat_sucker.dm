@@ -115,22 +115,22 @@
 
 	if(!state_open)
 		if(processing)
-			. += "[icon_state]_door_on"
-			. += "[icon_state]_stack"
-			. += "[icon_state]_smoke"
-			. += "[icon_state]_green"
+			. += LANG("obj.7899e2f5", list(icon_state))
+			. += LANG("obj.e4f50815", list(icon_state))
+			. += LANG("obj.d3bd928a", list(icon_state))
+			. += LANG("obj.9b5135fc", list(icon_state))
 		else
-			. += "[icon_state]_door_off"
+			. += LANG("obj.89f945cd", list(icon_state))
 			if(occupant)
 				if(powered())
-					. += "[icon_state]_stack"
-					. += "[icon_state]_yellow"
+					. += LANG("obj.e4f50815", list(icon_state))
+					. += LANG("obj.4e490100", list(icon_state))
 			else
-				. += "[icon_state]_red"
+				. += LANG("obj.18a5f6ca", list(icon_state))
 	else if(powered())
-		. += "[icon_state]_red"
+		. += LANG("obj.18a5f6ca", list(icon_state))
 	if(panel_open)
-		. += "[icon_state]_panel"
+		. += LANG("obj.be400d5d", list(icon_state))
 
 /obj/machinery/fat_sucker/process(seconds_per_tick)
 	if(!processing)

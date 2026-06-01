@@ -279,17 +279,17 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 //so we can add some stuff to status, making it easier to read... maybe some hud some day
 /mob/living/basic/cortical_borer/get_status_tab_items()
 	. = ..()
-	. += "Chemical Storage: [chemical_storage]/[max_chemical_storage]"
-	. += "Chemical Evolution Points: [chemical_evolution]"
-	. += "Stat Evolution Points: [stat_evolution]"
+	. += LANG("mob.b30780e7", list(chemical_storage, max_chemical_storage))
+	. += LANG("mob.19f71564", list(chemical_evolution))
+	. += LANG("mob.61c7d4be", list(stat_evolution))
 	. += ""
 	if(host_sugar())
-		. += "Sugar detected! Unable to generate resources!"
+		. += LANG("mob.ceb5139c", null)
 		. += ""
-	. += "OBJECTIVES:"
-	. += "1) [GLOB.objective_egg_borer_number] borers producing [GLOB.objective_egg_egg_number] eggs: [GLOB.successful_egg_number]/[GLOB.objective_egg_borer_number]"
-	. += "2) [GLOB.objective_willing_hosts] willing hosts: [length(GLOB.willing_hosts)]/[GLOB.objective_willing_hosts]"
-	. += "3) [GLOB.objective_blood_borer] borers learning [GLOB.objective_blood_chem] chemicals from the blood: [GLOB.successful_blood_chem]/[GLOB.objective_blood_borer]"
+	. += LANG("mob.350e88a2", null)
+	. += LANG("mob.d84844d9", list(GLOB.objective_egg_borer_number, GLOB.objective_egg_egg_number, GLOB.successful_egg_number, GLOB.objective_egg_borer_number))
+	. += LANG("mob.d3a51354", list(GLOB.objective_willing_hosts, length(GLOB.willing_hosts), GLOB.objective_willing_hosts))
+	. += LANG("mob.bdc02ee8", list(GLOB.objective_blood_borer, GLOB.objective_blood_chem, GLOB.successful_blood_chem, GLOB.objective_blood_borer))
 
 /mob/living/basic/cortical_borer/Life(seconds_per_tick)
 	. = ..()

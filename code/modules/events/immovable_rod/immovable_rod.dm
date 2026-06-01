@@ -66,10 +66,7 @@
 		. += span_notice("So far, this rod has not hit any mobs.")
 		return
 
-	. += "\t<span class='notice'>So far, this rod has hit: \n\
-		\t\t[num_mobs_hit] mobs total, \n\
-		\t\t[num_sentient_mobs_hit] of which were sentient, and \n\
-		\t\t[num_sentient_people_hit] of which were sentient people</span>"
+	. += LANG("obj.fb149573", list(num_mobs_hit, num_sentient_mobs_hit, num_sentient_people_hit))
 
 /obj/effect/immovablerod/Topic(href, href_list)
 	if(href_list["orbit"])

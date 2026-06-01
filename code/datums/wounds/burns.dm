@@ -184,7 +184,7 @@
 
 /datum/wound/burn/flesh/severity_text(simple = FALSE)
 	. = ..()
-	. += " Burn / "
+	. += LANG("datum.e254fbcf", null)
 	switch(infection)
 		if(-INFINITY to WOUND_INFECTION_MODERATE)
 			. += "No"
@@ -196,7 +196,7 @@
 			. += "<b>Critical</b>"
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
 			. += "<b>Total</b>"
-	. += " Infection"
+	. += LANG("datum.c0f84c4e", null)
 
 /datum/wound/burn/flesh/get_scanner_description(mob/user)
 	if(strikes_to_lose_limb <= 0) // Unclear if it can go below 0, best to not take the chance
@@ -208,7 +208,7 @@
 	. += "<div class='ml-3'>"
 
 	if(infection <= sanitization && flesh_damage <= flesh_healing)
-		. += "No further treatment required: Burns will heal shortly."
+		. += LANG("datum.7174ce99", null)
 	else
 		switch(infection)
 			if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
@@ -220,10 +220,10 @@
 			if(WOUND_INFECTION_SEPTIC to INFINITY)
 				. += "Infection Level: [span_deadsay("LOSS IMMINENT")]\n"
 		if(infection > sanitization)
-			. += "\tSurgical debridement, antibiotics/sterilizers, or regenerative mesh will rid infection. Paramedic UV penlights are also effective.\n"
+			. += LANG("datum.a90463d2", null)
 
 		if(flesh_damage > 0)
-			. += "Flesh damage detected: Application of ointment, regenerative mesh, Synthflesh, or ingestion of \"Miner's Salve\" will repair damaged flesh. Good nutrition, rest, and keeping the wound clean can also slowly repair flesh.\n"
+			. += LANG("datum.d76514c7", null)
 	. += "</div>"
 
 /*

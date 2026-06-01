@@ -231,9 +231,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	if(!cases.len)
 		return
 	if(cases[current_case].notices < MAX_ICON_NOTICES)
-		. += "notices_[cases[current_case].notices]"
+		. += LANG("obj.ec949744", list(cases[current_case].notices))
 	else
-		. += "notices_[MAX_ICON_NOTICES]"
+		. += LANG("obj.ec949744", list(MAX_ICON_NOTICES))
 /**
  * Removes an item from the notice board
  *

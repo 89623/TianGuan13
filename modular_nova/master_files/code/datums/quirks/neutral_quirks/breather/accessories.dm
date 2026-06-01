@@ -8,7 +8,7 @@
 
 /obj/item/clothing/accessory/breathing/examine(mob/user)
 	. = ..()
-	. += "The dogtag reads: I breathe [breath_type]."
+	. += LANG("obj.d01780c9", list(breath_type))
 
 /obj/item/clothing/accessory/breathing/accessory_equipped(obj/item/clothing/under/uniform, user)
 	. = ..()

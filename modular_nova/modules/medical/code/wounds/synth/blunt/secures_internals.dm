@@ -71,21 +71,21 @@
 
 	var/to_add = get_wound_status()
 	if (!isnull(to_add))
-		. += "\nWound status: [to_add]"
+		. += LANG("datum.a6893bf4", list(to_add))
 
 /datum/wound/blunt/robotic/secures_internals/get_simple_scanner_description(mob/user)
 	. = ..()
 
 	var/to_add = get_wound_status()
 	if (!isnull(to_add))
-		. += "\nWound status: [to_add]"
+		. += LANG("datum.a6893bf4", list(to_add))
 
 /// Returns info specific to the dynamic state of the wound.
 /datum/wound/blunt/robotic/secures_internals/proc/get_wound_status(mob/user)
 	if (crowbarred_open)
-		. += "The limb has been torn open, allowing ease of access to internal components, but also disabling it. "
+		. += LANG("datum.c05cf886", null)
 	if (gelled)
-		. += "Bone gel has been applied, causing progressive corrosion of the metal, but eventually securing the internals. "
+		. += LANG("datum.b0db91dc", null)
 
 /datum/wound/blunt/robotic/secures_internals/item_can_treat(obj/item/potential_treater, mob/user)
 	if (potential_treater.tool_behaviour == TOOL_WELDER || potential_treater.tool_behaviour == TOOL_CAUTERY)
@@ -406,11 +406,11 @@
 
 	var/wound_step = get_wound_step_info()
 	if (wound_step)
-		. += "\n\n<b>Current step</b>: [span_notice(wound_step)]"
+		. += LANG("datum.727cdec4", list(span_notice(wound_step)))
 
 /datum/wound/blunt/robotic/secures_internals/get_simple_scanner_description(mob/user)
 	. = ..()
 
 	var/wound_step = get_wound_step_info()
 	if (wound_step)
-		. += "\n\n<b>Current step</b>: [span_notice(wound_step)]"
+		. += LANG("datum.727cdec4", list(span_notice(wound_step)))

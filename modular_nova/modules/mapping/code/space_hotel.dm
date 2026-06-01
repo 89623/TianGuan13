@@ -69,7 +69,7 @@
 
 /obj/item/permanent_portal_creator/space_hotel/examine(mob/user)
 	. = ..()
-	. += "\nThis one seems to have the Twin Nexus hotel's logo engraved on its back."
+	. += LANG("obj.d17d2f62", null)
 
 
 /obj/item/permanent_portal_anchor
@@ -165,7 +165,7 @@
 	if(!room_number)
 		return
 
-	. += "It has an engraving on it that reads: \"Guest Room [room_number]\""
+	. += LANG("obj.3a0a2491", list(room_number))
 
 
 /obj/item/key_card/hotel_room/master

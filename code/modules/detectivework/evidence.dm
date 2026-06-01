@@ -52,7 +52,7 @@
 	in_evidence.pixel_x = 0
 	in_evidence.pixel_y = 0
 	. += in_evidence
-	. += "evidence"
+	. += LANG("obj.b26fcc30", null)
 
 /obj/item/evidencebag/proc/on_insert(datum/storage/storage, obj/item/to_insert, mob/user, force)
 	SIGNAL_HANDLER

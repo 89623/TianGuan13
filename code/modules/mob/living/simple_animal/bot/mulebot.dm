@@ -223,7 +223,7 @@
 /mob/living/simple_animal/bot/mulebot/update_overlays()
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-		. += "[base_icon]-hatch"
+		. += LANG("mob.ffe63cbe", list(base_icon))
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
 	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)
@@ -466,11 +466,11 @@
 /mob/living/simple_animal/bot/mulebot/get_status_tab_items()
 	. = ..()
 	if(cell)
-		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
+		. += LANG("mob.b1a7b653", list(cell.charge, cell.maxcharge))
 	else
-		. += "No Cell Inserted!"
+		. += LANG("mob.36c17f5e", null)
 	if(load)
-		. += "Current Load: [get_load_name()]"
+		. += LANG("mob.2b54dea2", list(get_load_name()))
 
 
 /mob/living/simple_animal/bot/mulebot/call_bot()

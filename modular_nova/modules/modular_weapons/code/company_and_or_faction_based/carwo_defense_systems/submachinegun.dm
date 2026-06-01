@@ -135,7 +135,7 @@
 	var/suffix = get_ammo_suffix()
 	if(!suffix)
 		return
-	. += "[icon_state]_mag_[suffix]"
+	. += LANG("obj.7bce84ec", list(icon_state, suffix))
 
 /obj/item/gun/ballistic/automatic/sol_pdw/update_icon_state()
 	. = ..()

@@ -277,7 +277,7 @@
 /obj/structure/closet/crate/mail/update_overlays()
 	. = ..()
 	if(postmarked)
-		. += "mail_nt"
+		. += LANG("obj.eb3e0e6d", null)
 
 /// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
 /obj/structure/closet/crate/mail/proc/populate(amount)
@@ -502,8 +502,8 @@
 /obj/item/storage/mail_counterfeit_device/examine_more(mob/user)
 	. = ..()
 	. += span_notice("<i>You notice the manufacturer information on the side of the device...</i>")
-	. += "\t[span_info("Guerilla Letter Assembler")]"
-	. += "\t[span_info("GLA Postal Service, right on schedule.")]"
+	. += LANG("obj.294efb1f", list(span_info("Guerilla Letter Assembler")))
+	. += LANG("obj.294efb1f", list(span_info("GLA Postal Service, right on schedule.")))
 	return .
 
 /obj/item/storage/mail_counterfeit_device/attack_self(mob/user, modifiers)

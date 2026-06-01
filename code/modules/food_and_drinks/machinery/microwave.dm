@@ -273,7 +273,7 @@
 	. += border_icon_state
 
 	if(!open)
-		. += "[base_icon_state]door_handle"
+		. += LANG("obj.71c3a79c", list(base_icon_state))
 
 	if(!(machine_stat & NOPOWER) || cell_powered)
 		. += emissive_appearance(icon, "emissive_[border_icon_state]", src, alpha = src.alpha)

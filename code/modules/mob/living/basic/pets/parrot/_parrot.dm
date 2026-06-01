@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/examine(mob/user)
 	. = ..()
-	. += "It appears to [isnull(held_item) ? "not be holding anything." : "be holding \a [held_item]."]"
+	. += LANG("mob.3835c57b", list(isnull(held_item) ? "not be holding anything." : "be holding \a [held_item]."))
 
 	if(stat != DEAD)
 		return
@@ -157,7 +157,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/get_status_tab_items()
 	. = ..()
-	. += "Held Item: [held_item]"
+	. += LANG("mob.f913de2a", list(held_item))
 
 /mob/living/basic/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()

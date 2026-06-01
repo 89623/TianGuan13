@@ -69,7 +69,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 
 /obj/structure/glowshroom/examine(mob/user)
 	. = ..()
-	. += "This is a [generation]\th generation [name]!"
+	. += LANG("obj.d736b741", list(generation, name))
 
 /**
  * Creates a new glowshroom structure.

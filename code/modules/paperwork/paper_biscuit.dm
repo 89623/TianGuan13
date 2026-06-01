@@ -60,7 +60,7 @@
 	else
 		. += span_notice("You'll need to crack it open to access its contents.")
 		if(contained_slip)
-			. += "This one contains [contained_slip.name]."
+			. += LANG("obj.4d91809e", list(contained_slip.name))
 
 /obj/item/folder/biscuit/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()

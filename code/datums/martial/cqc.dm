@@ -381,15 +381,15 @@
 /datum/martial_art/cqc/get_style_help()
 	. = list()
 
-	. += "<b><i>You try to remember some of the basics of CQC.</i></b>"
+	. += LANG("datum.5a0a1ff0", null)
 
-	. += "[span_notice("Slam")]: Grab Punch. Slam opponent into the ground, knocking them down."
-	. += "[span_notice("CQC Kick")]: Punch Punch. Knocks opponent away. Knocks out stunned opponents and does stamina damage."
-	. += "[span_notice("Restrain")]: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a chokehold."
-	. += "[span_notice("Pressure")]: Shove Grab. Decent stamina damage."
-	. += "[span_notice("Consecutive CQC")]: Shove Shove Punch. Mainly offensive move, huge damage and decent stamina damage."
+	. += LANG("datum.1c8561d8", list(span_notice("Slam")))
+	. += LANG("datum.d7f076cc", list(span_notice("CQC Kick")))
+	. += LANG("datum.7cc06215", list(span_notice("Restrain")))
+	. += LANG("datum.5fee4093", list(span_notice("Pressure")))
+	. += LANG("datum.674011eb", list(span_notice("Consecutive CQC")))
 
-	. += "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>"
+	. += LANG("datum.46c32390", null)
 	return .
 
 ///Subtype of CQC. Only used for the chef.

@@ -75,14 +75,7 @@
 /obj/item/clothing/head/helmet/cin_surplus_helmet/examine_more(mob/user)
 	. = ..()
 
-	. += "The GZ-03 series of coalition armor was a collaborative project between the HC and TransOrbital \
-		to develop a frontline soldier's armor set that could withstand attacks from the Solar Federation's \
-		then relatively new pulse ballistics. The design itself is based upon a far older pattern \
-		of armor originally developed by SolFed themselves, which was the standard pattern of armor design \
-		granted to the first colony ships leaving Sol. Armor older than any of the CIN member states, \
-		upgraded with modern technology. This helmet in particular encloses the entire head save for \
-		the face, and should come with a glass visor and relatively comfortable internal padding. Should, \
-		anyways, surplus units such as this are infamous for arriving with several missing accessories."
+	. += LANG("obj.38ad9672", null)
 
 	return .
 
@@ -179,15 +172,7 @@
 /obj/item/clothing/suit/armor/vest/cin_surplus_vest/examine_more(mob/user)
 	. = ..()
 
-	. += "The GZ-03 series of coalition armor was a collaborative project between the HC and TransOrbital \
-		to develop a frontline soldier's armor set that could withstand attacks from the Solar Federation's \
-		then relatively new pulse ballistics. The design itself is based upon a far older pattern \
-		of armor originally developed by SolFed themselves, which was the standard pattern of armor design \
-		granted to the first colony ships leaving Sol. Armor older than any of the CIN member states, \
-		upgraded with modern technology. This vest in particular is made up of several large, dense plates \
-		front and back. While vests like this were also produced with extra plating to protect the groin, many \
-		surplus vests are missing them due to the popularity of removing the plates and using them as seating \
-		during wartime."
+	. += LANG("obj.26b90a59", null)
 
 	return .
 

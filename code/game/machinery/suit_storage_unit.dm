@@ -233,35 +233,35 @@
 	. = ..()
 	//if things aren't powered, these show anyways
 	if(panel_open)
-		. += "[base_icon_state]_panel"
+		. += LANG("obj.be400d5d", list(base_icon_state))
 	if(state_open)
-		. += "[base_icon_state]_open"
+		. += LANG("obj.821ccaac", list(base_icon_state))
 		if(suit || mod)
-			. += "[base_icon_state]_suit"
+			. += LANG("obj.73ae2173", list(base_icon_state))
 		if(helmet)
-			. += "[base_icon_state]_helm"
+			. += LANG("obj.b3bdd6c4", list(base_icon_state))
 		if(storage)
-			. += "[base_icon_state]_storage"
+			. += LANG("obj.5513b8fc", list(base_icon_state))
 	if(!(machine_stat & BROKEN || machine_stat & NOPOWER))
 		if(state_open)
-			. += "[base_icon_state]_lights_open"
+			. += LANG("obj.5b42c8cc", list(base_icon_state))
 		else
 			if(uv)
 				if(uv_super)
-					. += "[base_icon_state]_super"
-				. += "[base_icon_state]_lights_red"
+					. += LANG("obj.9459de16", list(base_icon_state))
+				. += LANG("obj.a52c1e2b", list(base_icon_state))
 			else
-				. += "[base_icon_state]_lights_closed"
+				. += LANG("obj.63fe3d1e", list(base_icon_state))
 		//top lights
 		if(uv)
 			if(uv_super)
-				. += "[base_icon_state]_uvstrong"
+				. += LANG("obj.44d33008", list(base_icon_state))
 			else
-				. += "[base_icon_state]_uv"
+				. += LANG("obj.4b57c28f", list(base_icon_state))
 		else if(locked)
-			. += "[base_icon_state]_locked"
+			. += LANG("obj.657c9d88", list(base_icon_state))
 		else
-			. += "[base_icon_state]_ready"
+			. += LANG("obj.1d9253ec", list(base_icon_state))
 
 /obj/machinery/suit_storage_unit/examine(mob/user)
 	. = ..()

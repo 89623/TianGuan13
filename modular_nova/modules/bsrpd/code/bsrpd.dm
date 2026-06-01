@@ -53,12 +53,12 @@
 /obj/item/pipe_dispenser/bluespace/examine(mob/user)
 	. = ..()
 	if(user.Adjacent(src))
-		. += "Currently has [ranged_use_cost == 0 ? "infinite" : current_capacity / ranged_use_cost] charges remaining."
+		. += LANG("obj.97010a9e", list(ranged_use_cost == 0 ? "infinite" : current_capacity / ranged_use_cost))
 		if(ranged_use_cost != 0)
-			. += "The Bluespace Anomaly Core slot is empty."
+			. += LANG("obj.687fe48c", null)
 
 	else
-		. += "You cannot see the charge capacity."
+		. += LANG("obj.d747a74c", null)
 
 	. += span_notice("<b>Alt-Click</b> to toggle remote piping.")
 

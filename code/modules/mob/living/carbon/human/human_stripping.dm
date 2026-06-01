@@ -53,11 +53,11 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(jumpsuit.has_sensor == HAS_SENSORS)
-		. += "adjust_sensor"
+		. += LANG("datum.e9d7f9a1", null)
 	if(jumpsuit.can_adjust)
-		. += "adjust_jumpsuit"
+		. += LANG("datum.0c5400d9", null)
 	if(length(jumpsuit.attached_accessories))
-		. += "strip_accessory"
+		. += LANG("datum.d895fa37", null)
 
 /datum/strippable_item/mob_item_slot/jumpsuit/perform_alternate_action(atom/source, mob/user, action_key, obj/item/item)
 	if (!..())

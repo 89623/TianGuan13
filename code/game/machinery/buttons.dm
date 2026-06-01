@@ -109,12 +109,12 @@
 	. = ..()
 
 	if(panel_open && board)
-		. += "[base_icon_state]-overlay-board"
+		. += LANG("obj.fafe9020", list(base_icon_state))
 	if(panel_open && device)
 		if(istype(device, /obj/item/assembly/signaler))
-			. += "[base_icon_state]-overlay-signaler"
+			. += LANG("obj.24cdf9f0", list(base_icon_state))
 		else
-			. += "[base_icon_state]-overlay-device"
+			. += LANG("obj.d61293a9", list(base_icon_state))
 
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
 		. += emissive_appearance(icon, "[base_icon_state]-light-mask", src, alpha = src.alpha)

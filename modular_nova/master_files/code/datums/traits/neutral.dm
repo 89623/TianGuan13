@@ -68,7 +68,7 @@
 	. = ..()
 
 	if(stat != DEAD && HAS_TRAIT(src, TRAIT_DNR) && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
-		. += "\n[span_boldwarning("This individual is unable to be revived, and may be permanently dead if allowed to die!")]"
+		. += LANG("mob.65aac1b5", list(span_boldwarning("This individual is unable to be revived, and may be permanently dead if allowed to die!")))
 
 /datum/atom_hud/data/human/dnr
 	hud_icons = list(DNR_HUD)

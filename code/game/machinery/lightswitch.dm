@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The light switch. Can have multiple per area.
 /obj/machinery/light_switch
 	name = "light switch"
@@ -68,7 +69,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 /obj/machinery/light_switch/examine(mob/user)
 	. = ..()
-	. += "It is [(machine_stat & NOPOWER) ? "unpowered" : (area.lightswitch ? "on" : "off")]."
+	. += LANG("obj.62eee539", list((machine_stat & NOPOWER) ? "unpowered" : (area.lightswitch ? "on" : "off")))
 	. += span_notice("It's <b>screwed</b> and secured to the wall.")
 
 /obj/machinery/light_switch/interact(mob/user)

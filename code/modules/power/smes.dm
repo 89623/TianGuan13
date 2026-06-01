@@ -143,12 +143,12 @@
 		return
 
 	if(show_display_lights)
-		. += "smes-op[outputting ? 1 : 0]"
-		. += "smes-oc[inputting ? 1 : 0]"
+		. += LANG("obj.23dd6dcd", list(outputting ? 1 : 0))
+		. += LANG("obj.b4af861a", list(inputting ? 1 : 0))
 
 		var/clevel = chargedisplay()
 		if(clevel > 0)
-			. += "smes-og[clevel]"
+			. += LANG("obj.1ed3ee6e", list(clevel))
 
 /obj/machinery/power/smes/get_save_vars()
 	. = ..()

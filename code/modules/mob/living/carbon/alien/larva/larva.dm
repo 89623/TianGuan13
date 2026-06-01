@@ -54,7 +54,7 @@
 // This comment is 12 years old I hope it's fixed by now
 /mob/living/carbon/alien/larva/get_status_tab_items()
 	. = ..()
-	. += "Progress: [amount_grown]/[max_grown]"
+	. += LANG("mob.d20378e1", list(amount_grown, max_grown))
 
 /mob/living/carbon/alien/larva/Login()
 	. = ..()

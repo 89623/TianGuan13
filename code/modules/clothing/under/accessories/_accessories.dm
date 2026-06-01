@@ -217,8 +217,8 @@
 
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()
-	. += "It can be attached to a uniform."
-	. += "It can be worn above or below your suit. Right-click to toggle."
+	. += LANG("obj.4361f54c", null)
+	. += LANG("obj.a0af4e47", null)
 
 /obj/item/clothing/accessory/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

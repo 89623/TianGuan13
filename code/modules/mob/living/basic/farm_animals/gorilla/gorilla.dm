@@ -80,7 +80,7 @@
 /mob/living/basic/gorilla/update_overlays()
 	. = ..()
 	if (is_holding_items())
-		. += "standing_overlay"
+		. += LANG("mob.2d98ad10", null)
 
 /mob/living/basic/gorilla/update_icon_state()
 	. = ..()

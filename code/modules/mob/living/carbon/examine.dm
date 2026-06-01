@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Adds a newline to the examine list if the above entry is not empty and it is not the first element in the list
 #define ADD_NEWLINE_IF_NECESSARY(list) if(length(list) > 0 && list[length(list)]) { list += "" }
 #define CARBON_EXAMINE_EMBEDDING_MAX_DIST 4
@@ -152,7 +153,7 @@
 		if(user.nutrition < NUTRITION_LEVEL_STARVING - 50)
 			. += span_hypnophrase("[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.")
 		else
-			. += "<b>[t_He] [t_is] quite chubby.</b>"
+			. += LANG("mob.002771a9", list(t_He, t_is))
 	switch(disgust)
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
 			. += "[t_He] look[p_s()] a bit grossed out."
@@ -223,7 +224,7 @@
 	else if(!appears_dead)
 		if(src != user)
 			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.holy_role && user != src)
-				. += "[t_He] [t_has] a holy aura about [t_him]."
+				. += LANG("mob.664ba4bd", list(t_He, t_has, t_him))
 				living_user.add_mood_event("religious_comfort", /datum/mood_event/religiously_comforted)
 
 		switch(stat)
@@ -280,7 +281,7 @@
 	if(length(hud_info))
 		. += hud_info
 	if(isobserver(user))
-		. += "<b>Quirks:</b> [get_quirk_string(FALSE, CAT_QUIRK_ALL)]"
+		. += LANG("mob.8bd56559", list(get_quirk_string(FALSE, CAT_QUIRK_ALL)))
 	// NOVA EDIT ADDITION START
 	if(isobserver(user) || user.mind?.can_see_exploitables || user.mind?.has_exploitables_override)
 		var/datum/record/crew/target_records = find_record(get_face_name(get_id_name("")))
@@ -288,15 +289,15 @@
 			var/background_text = target_records.background_information
 			var/exploitable_text = target_records.exploitable_information
 			if((length(background_text) > RECORDS_INVISIBLE_THRESHOLD))
-				. += "<a href='byond://?src=[REF(src)];bgrecords=1'>\[View background info\]</a>"
+				. += LANG("mob.488c4167", list(REF(src)))
 			if((length(exploitable_text) > RECORDS_INVISIBLE_THRESHOLD) && ((exploitable_text) != EXPLOITABLE_DEFAULT_TEXT))
-				. += "<a href='byond://?src=[REF(src)];exprecords=1'>\[View exploitable info\]</a>"
+				. += LANG("mob.bc67db17", list(REF(src)))
 
 	if(length(.))
 		. += EXAMINE_SECTION_BREAK // append header to the previous line so it doesn't get a line break added in jointext() later on
 
 	if(gunpointing)
-		. += "<span class='warning'><b>[t_He] [t_is] holding [gunpointing.target.name] at gunpoint with [gunpointing.aimed_gun.name]!</b></span>\n"
+		. += LANG("mob.3dd4cfa2", list(t_He, t_is, gunpointing.target.name, gunpointing.aimed_gun.name))
 	if(length(gunpointed))
 		for(var/datum/gunpoint/GP in gunpointed)
 			. += "<span class='warning'><b>[GP.source.name] [GP.source.p_are()] holding [t_him] at gunpoint with [GP.aimed_gun.name]!</b></span>\n"
@@ -426,10 +427,10 @@
 	var/t_is = p_are()
 	//head
 	if(head && !(obscured_slots & HIDEHEADGEAR) && !HAS_TRAIT(head, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_is] wearing [head.examine_title(user)] on [t_his] head."
+		. += LANG("mob.0cfdca44", list(t_He, t_is, head.examine_title(user), t_his))
 	//back
 	if(back && !HAS_TRAIT(back, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [back.examine_title(user)] on [t_his] back."
+		. += LANG("mob.127d0478", list(t_He, t_has, back.examine_title(user), t_his))
 	//Hands
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
@@ -442,7 +443,7 @@
 		. += "[t_He] [t_has] a [corresponding_item.examine_title(user)] in place of [t_his] [initial(part.plaintext_zone)]."
 	//gloves
 	if(gloves && !(obscured_slots & HIDEGLOVES) && !HAS_TRAIT(gloves, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [gloves.examine_title(user)] on [t_his] hands."
+		. += LANG("mob.b09af672", list(t_He, t_has, gloves.examine_title(user), t_his))
 	else if(GET_ATOM_BLOOD_DECAL_LENGTH(src) && num_hands)
 		var/list/blood_stains = GET_ATOM_BLOOD_DECALS(src)
 		var/datum/blood_type/blood_type = blood_stains[blood_stains[length(blood_stains)]]
@@ -456,23 +457,23 @@
 		. += span_warning("[t_He] [t_is] [icon2html(handcuffed, user)] [cables_or_cuffs]!")
 	//shoes
 	if(shoes && !(obscured_slots & HIDESHOES)  && !HAS_TRAIT(shoes, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_is] wearing [shoes.examine_title(user)] on [t_his] feet."
+		. += LANG("mob.9a62d1c3", list(t_He, t_is, shoes.examine_title(user), t_his))
 	//mask
 	if(wear_mask && !(obscured_slots & HIDEMASK)  && !HAS_TRAIT(wear_mask, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [wear_mask.examine_title(user)] on [t_his] face."
+		. += LANG("mob.cd240e46", list(t_He, t_has, wear_mask.examine_title(user), t_his))
 	if(wear_neck && !(obscured_slots & HIDENECK)  && !HAS_TRAIT(wear_neck, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_is] wearing [wear_neck.examine_title(user)] around [t_his] neck."
+		. += LANG("mob.9bd1e977", list(t_He, t_is, wear_neck.examine_title(user), t_his))
 	//eyes
 	if(!(obscured_slots & HIDEEYES))
 		if(glasses  && !HAS_TRAIT(glasses, TRAIT_EXAMINE_SKIP))
-			. += "[t_He] [t_has] [glasses.examine_title(user)] covering [t_his] eyes."
+			. += LANG("mob.541facde", list(t_He, t_has, glasses.examine_title(user), t_his))
 		else if(HAS_TRAIT(src, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 			. += span_warning("<B>[t_His] eyes are glowing with an unnatural red aura!</B>")
 		else if(HAS_TRAIT(src, TRAIT_BLOODSHOT_EYES))
 			. += span_warning("<B>[t_His] eyes are bloodshot!</B>")
 	//ears
 	if(ears && !(obscured_slots & HIDEEARS) && !HAS_TRAIT(ears, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [ears.examine_title(user)] on [t_his] ears."
+		. += LANG("mob.eb5359f6", list(t_He, t_has, ears.examine_title(user), t_his))
 
 // Yes there's a lot of copypasta here, we can improve this later when carbons are less dumb in general
 /mob/living/carbon/human/get_clothing_examine_info(mob/living/user)
@@ -493,45 +494,45 @@
 			if(length(accessories))
 				accessory_message = " with [english_list(accessories)] attached"
 
-		. += "[t_He] [t_is] wearing [w_uniform.examine_title(user)][accessory_message]."
+		. += LANG("mob.d3e3a886", list(t_He, t_is, w_uniform.examine_title(user), accessory_message))
 	//head
 	if(head && !(obscured_slots & HIDEHEADGEAR) && !HAS_TRAIT(head, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_is] wearing [head.examine_title(user)] on [t_his] head."
+		. += LANG("mob.0cfdca44", list(t_He, t_is, head.examine_title(user), t_his))
 	//mask
 	if(wear_mask && !(obscured_slots & HIDEMASK)  && !HAS_TRAIT(wear_mask, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [wear_mask.examine_title(user)] on [t_his] face."
+		. += LANG("mob.cd240e46", list(t_He, t_has, wear_mask.examine_title(user), t_his))
 	//neck
 	if(wear_neck && !(obscured_slots & HIDENECK)  && !HAS_TRAIT(wear_neck, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_is] wearing [wear_neck.examine_title(user)] around [t_his] neck."
+		. += LANG("mob.9bd1e977", list(t_He, t_is, wear_neck.examine_title(user), t_his))
 	//eyes
 	if(!(obscured_slots & HIDEEYES))
 		if(glasses  && !HAS_TRAIT(glasses, TRAIT_EXAMINE_SKIP))
-			. += "[t_He] [t_has] [glasses.examine_title(user)] covering [t_his] eyes."
+			. += LANG("mob.541facde", list(t_He, t_has, glasses.examine_title(user), t_his))
 		else if(HAS_TRAIT(src, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 			. += span_warning("<B>[t_His] eyes are glowing with an unnatural red aura!</B>")
 		else if(HAS_TRAIT(src, TRAIT_BLOODSHOT_EYES))
 			. += span_warning("<B>[t_His] eyes are bloodshot!</B>")
 	//ears
 	if(ears && !(obscured_slots & HIDEEARS) && !HAS_TRAIT(ears, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [ears.examine_title(user)] on [t_his] ears."
+		. += LANG("mob.eb5359f6", list(t_He, t_has, ears.examine_title(user), t_his))
 	//suit/armor
 	if(wear_suit && !HAS_TRAIT(wear_suit, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_is] wearing [wear_suit.examine_title(user)]."
+		. += LANG("mob.a8e61db4", list(t_He, t_is, wear_suit.examine_title(user)))
 		//suit/armor storage
 		if(s_store && !(obscured_slots & HIDESUITSTORAGE) && !HAS_TRAIT(s_store, TRAIT_EXAMINE_SKIP))
-			. += "[t_He] [t_is] carrying [s_store.examine_title(user)] on [t_his] [wear_suit.name]."
+			. += LANG("mob.a1105a26", list(t_He, t_is, s_store.examine_title(user), t_his, wear_suit.name))
 	//back
 	if(back && !HAS_TRAIT(back, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [back.examine_title(user)] on [t_his] back."
+		. += LANG("mob.127d0478", list(t_He, t_has, back.examine_title(user), t_his))
 	//ID
 	if(wear_id && !HAS_TRAIT(wear_id, TRAIT_EXAMINE_SKIP))
 		var/obj/item/card/id/id = wear_id.GetID()
 		if(id && get_dist(user, src) <= ID_EXAMINE_DISTANCE)
 			var/id_href = "<a href='byond://?src=[REF(src)];see_id=1;id_ref=[REF(id)];id_name=[id.registered_name];examine_time=[world.time]'>[wear_id.examine_title(user)]</a>"
-			. += "[t_He] [t_is] wearing [id_href]."
+			. += LANG("mob.a8e61db4", list(t_He, t_is, id_href))
 
 		else
-			. += "[t_He] [t_is] wearing [wear_id.examine_title(user)]."
+			. += LANG("mob.a8e61db4", list(t_He, t_is, wear_id.examine_title(user)))
 	//Hands
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
@@ -544,7 +545,7 @@
 		. += "[t_He] [t_has] [corresponding_item.examine_title(user)] in place of [t_his] [initial(part.plaintext_zone)]."
 	//gloves
 	if(gloves && !(obscured_slots & HIDEGLOVES) && !HAS_TRAIT(gloves, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [gloves.examine_title(user)] on [t_his] hands."
+		. += LANG("mob.b09af672", list(t_He, t_has, gloves.examine_title(user), t_his))
 	else if(GET_ATOM_BLOOD_DECAL_LENGTH(src) || blood_in_hands)
 		if(num_hands)
 			. += span_warning("[t_He] [t_has] [num_hands > 1 ? "" : "a "]blood-stained hand[num_hands > 1 ? "s" : ""]!")
@@ -554,10 +555,10 @@
 		. += span_warning("[t_He] [t_is] [icon2html(handcuffed, user)] [cables_or_cuffs]!")
 	//belt
 	if(belt && !(obscured_slots & HIDEBELT) && !HAS_TRAIT(belt, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [belt.examine_title(user)] about [t_his] waist."
+		. += LANG("mob.e82d58d3", list(t_He, t_has, belt.examine_title(user), t_his))
 	//shoes
 	if(shoes && !(obscured_slots & HIDESHOES)  && !HAS_TRAIT(shoes, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_is] wearing [shoes.examine_title(user)] on [t_his] feet."
+		. += LANG("mob.9a62d1c3", list(t_He, t_is, shoes.examine_title(user), t_his))
 
 /// Collects info displayed about any HUDs the user has when examining src
 /mob/living/carbon/proc/get_hud_examine_info(mob/living/user)
@@ -570,8 +571,8 @@
 	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)) && (user.stat == CONSCIOUS || isobserver(user)) && user != src)
 		var/datum/record/crew/target_record = find_record(perpname)
 		if(target_record)
-			. += "Rank: [target_record.rank]"
-			. += "<a href='byond://?src=[REF(src)];hud=1;photo_front=1;examine_time=[world.time]'>\[Front photo\]</a><a href='byond://?src=[REF(src)];hud=1;photo_side=1;examine_time=[world.time]'>\[Side photo\]</a>"
+			. += LANG("mob.63d84f9d", list(target_record.rank))
+			. += LANG("mob.4b800153", list(REF(src), world.time, REF(src), world.time))
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD) && HAS_TRAIT(user, TRAIT_SECURITY_HUD))
 			title = separator_hr("Medical & Security Analysis")
 			. += get_medhud_examine_info(user, target_record)
@@ -586,7 +587,7 @@
 			. += get_sechud_examine_info(user, target_record)
 		// NOVA EDIT ADDITION START - EXAMINE RECORDS
 		if(target_record && length(target_record.past_general_records) > RECORDS_INVISIBLE_THRESHOLD)
-			. += "<a href='byond://?src=[REF(src)];hud=[HAS_TRAIT(user, TRAIT_SECURITY_HUD) ? "s" : "m"];genrecords=1;examine_time=[world.time]'>\[View general records\]</a>"
+			. += LANG("mob.fe8a5632", list(REF(src), HAS_TRAIT(user, TRAIT_SECURITY_HUD) ? "s" : "m", world.time))
 		// NOVA EDIT ADDITION END - EXAMINE RECORDS
 
 	// applies the separator correctly without an extra line break
@@ -603,19 +604,19 @@
 		if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
 			cybers += cyberimp.examine_title(user)
 	if(length(cybers))
-		. += "<span class='notice ml-1'>Detected cybernetic modifications:</span>"
+		. += LANG("mob.6cde43c8", null)
 		. += "<span class='notice ml-2'>[english_list(cybers, and_text = ", and")]</span>"
 	if(target_record)
 		. += "<a href='byond://?src=[REF(src)];hud=m;physical_status=1;examine_time=[world.time]'>\[[target_record.physical_status]\]</a>"
 		. += "<a href='byond://?src=[REF(src)];hud=m;mental_status=1;examine_time=[world.time]'>\[[target_record.mental_status]\]</a>"
 	else
-		. += "\[Record Missing\]"
-		. += "\[Record Missing\]"
-	. += "<a href='byond://?src=[REF(src)];hud=m;evaluation=1;examine_time=[world.time]'>\[Medical evaluation\]</a>"
-	. += "<a href='byond://?src=[REF(src)];hud=m;quirk=1;examine_time=[world.time]'>\[See quirks\]</a>"
+		. += LANG("mob.c448069e", null)
+		. += LANG("mob.c448069e", null)
+	. += LANG("mob.d6b62fa0", list(REF(src), world.time))
+	. += LANG("mob.9e8539b6", list(REF(src), world.time))
 	//NOVA EDIT ADDITION BEGIN - EXAMINE RECORDS
 	if(target_record && length(target_record.past_medical_records) > RECORDS_INVISIBLE_THRESHOLD)
-		. += "<a href='byond://?src=[REF(src)];hud=m;medrecords=1;examine_time=[world.time]'>\[View medical records\]</a>"
+		. += LANG("mob.068e479e", list(REF(src), world.time))
 	//NOVA EDIT ADDITION END - EXAMINE RECORDS
 
 /// Collects information displayed about src when examined by a user with a security HUD.
@@ -630,18 +631,16 @@
 		if(target_record.security_note)
 			security_note = target_record.security_note
 	if(ishuman(user))
-		. += "Criminal status: <a href='byond://?src=[REF(src)];hud=s;status=1;examine_time=[world.time]'>\[[wanted_status]\]</a>"
+		. += LANG("mob.880ccdb6", list(REF(src), world.time, wanted_status))
 	else
-		. += "Criminal status: [wanted_status]"
-	. += "Important Notes: [security_note]"
-	. += "Security record: <a href='byond://?src=[REF(src)];hud=s;view=1;examine_time=[world.time]'>\[View\]</a>"
+		. += LANG("mob.24a93bad", list(wanted_status))
+	. += LANG("mob.b2c16cd0", list(security_note))
+	. += LANG("mob.c9e964b4", list(REF(src), world.time))
 	if(ishuman(user))
-		. += "<a href='byond://?src=[REF(src)];hud=s;add_citation=1;examine_time=[world.time]'>\[Add citation\]</a>\
-			<a href='byond://?src=[REF(src)];hud=s;add_crime=1;examine_time=[world.time]'>\[Add crime\]</a>\
-			<a href='byond://?src=[REF(src)];hud=s;add_note=1;examine_time=[world.time]'>\[Add note\]</a>"
+		. += LANG("mob.df1ba23b", list(REF(src), world.time, REF(src), world.time, REF(src), world.time))
 		// NOVA EDIT ADDITION BEGIN - EXAMINE RECORDS
 		if(target_record && length(target_record.past_security_records) > RECORDS_INVISIBLE_THRESHOLD)
-			. += "<a href='byond://?src=[REF(src)];hud=s;secrecords=1;examine_time=[world.time]'>\[View past security records\]</a>"
+			. += LANG("mob.02f6be9a", list(REF(src), world.time))
 		// NOVA EDIT ADDITION END - EXAMINE RECORDS
 
 /mob/living/carbon/human/examine_more(mob/user)

@@ -131,7 +131,7 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += "From bottom to top, this cart contains:"
+	. += LANG("obj.60bee37d", null)
 	for(var/obj/item/flatpack as anything in contents)
 		. += flatpack.name
 

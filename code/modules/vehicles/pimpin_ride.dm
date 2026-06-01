@@ -33,7 +33,7 @@
 /obj/vehicle/ridden/janicart/examine(mob/user)
 	. = ..()
 	if (installed_upgrade)
-		. += "It has been upgraded with [installed_upgrade], which can be removed with a screwdriver."
+		. += LANG("obj.62c34c57", list(installed_upgrade))
 
 /obj/vehicle/ridden/janicart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
@@ -86,9 +86,9 @@
 	. = ..()
 	if(trash_bag)
 		if(istype(trash_bag, /obj/item/storage/bag/trash/bluespace))
-			. += "cart_bluespace_garbage"
+			. += LANG("obj.56dca20d", null)
 		else
-			. += "cart_garbage"
+			. += LANG("obj.d6add812", null)
 	if(installed_upgrade)
 		var/mutable_appearance/overlay = new(SSgreyscale.GetColoredIconByType(installed_upgrade.overlay_greyscale_config, installed_upgrade.greyscale_colors))
 		overlay.icon_state = "janicart_upgrade"

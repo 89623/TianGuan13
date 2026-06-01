@@ -280,7 +280,7 @@
 		"<b>Material Effects:</b> [span_notice("[overmind.blobstrain.analyzerdescdamage]")]",
 		"<b>Material Properties:</b> [span_notice("[overmind.blobstrain.analyzerdesceffect || "N/A"]")]")
 	else
-		. += "<b>No Material Detected!</b>"
+		. += LANG("obj.036ad2ed", null)
 
 /obj/structure/blob/proc/typereport(mob/user)
 	RETURN_TYPE(/list)
@@ -344,17 +344,17 @@
 	. = ..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || hud_to_check.hud_users[user])
-		. += "<b>Your HUD displays an extensive report...</b><br>"
+		. += LANG("obj.c9320b45", null)
 		if(overmind)
 			. += overmind.blobstrain.examine(user)
 		else
-			. += "<b>Core neutralized. Critical mass no longer attainable.</b>"
+			. += LANG("obj.e3832e90", null)
 		. += chemeffectreport(user)
 		. += typereport(user)
 	else
 		if((user == overmind || isobserver(user)) && overmind)
 			. += overmind.blobstrain.examine(user)
-		. += "It seems to be made of [get_chem_name()]."
+		. += LANG("obj.83aa5c88", list(get_chem_name()))
 
 /obj/structure/blob/proc/scannerreport()
 	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."

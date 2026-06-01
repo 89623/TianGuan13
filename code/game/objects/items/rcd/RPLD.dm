@@ -106,8 +106,8 @@
 
 /obj/item/construction/plumbing/examine(mob/user)
 	. = ..()
-	. += "You can scroll your mouse wheel to change the piping layer."
-	. += "You can right click a fluid duct to set the Plumbing RPD to its color and layer."
+	. += LANG("obj.2e9a54dc", null)
+	. += LANG("obj.d398c822", null)
 
 /obj/item/construction/plumbing/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

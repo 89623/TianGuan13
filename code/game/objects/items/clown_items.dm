@@ -325,7 +325,7 @@
 /obj/item/balloon_mallet/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
-		. += "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+		. += LANG("obj.651e3ab8", null)
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
 	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)

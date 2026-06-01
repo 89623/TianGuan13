@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Updates features and clothing attached to a specific limb with limb-specific offsets
 /mob/living/carbon/proc/update_features(feature_key)
 	switch(feature_key)
@@ -548,7 +549,7 @@
 	if(should_draw_greyscale && draw_color)
 		. += draw_color
 	if(is_invisible)
-		. += "invisible"
+		. += LANG("obj.5f8ad21e", null)
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue
@@ -573,10 +574,10 @@
 		. += limb_gender
 	. += limb_id
 	. += husk_type
-	. += "husk"
+	. += LANG("obj.4c75537f", null)
 	. += body_zone
 	if(is_invisible)
-		. += "invisible"
+		. += LANG("obj.5f8ad21e", null)
 	. += "[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))
