@@ -1,0 +1,20 @@
+{
+  "_root.2f31b6de": "Datetime entered is improperly formatted or not later than current server time.",
+  "_root.42a4a644": "\\red SDQL2: You have an error in your SDQL syntax, unexpected \\\" in query: \\\"<font color=gray>{0}</font>\\\" following \\\"<font color=gray>{1}</font>\\\". Please check your syntax, and try again.",
+  "_root.4f6e4edd": "\\red SDQL2: You have an error in your SDQL syntax, unexpected ' in query: \\\"<font color=gray>{0}</font>\\\" following \\\"<font color=gray>{1}</font>\\\". Please check your syntax, and try again.",
+  "_root.5b7affb2": "Target could not be infected. Check mob biotype compatibility or resistances.",
+  "_root.5d33e7c4": "Your mob has been taken over by a ghost!",
+  "_root.5e41bbf3": "<span class='oocplain'><B>The OOC channel has been globally {0}",
+  "_root.6bc0fb16": "\\red SDQL2: You have an error in your SDQL syntax, unmatched \\\" in query: \\\"<font color=gray>{0}</font>\\\". Please check your syntax, and try again.",
+  "_root.78b7fa0b": "{0} doesn't have valid product and reagent volumes! Please tell Fermi.",
+  "_root.8659f80a": "Proccall on {0}/proc/{1} is disallowed!",
+  "_root.874b77af": "You can't give ghosts control of a ghost. They're already ghosts.",
+  "_root.a103df81": "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:{0}",
+  "_root.bb6b8e05": "\\red SDQL2: You have an error in your SDQL syntax, unmatched ' in query: \\\"<font color=gray>{0}</font>\\\". Please check your syntax, and try again.",
+  "_root.bdd5ecfe": "You have been {0} from {1} by {2}",
+  "_root.cb900832": "There were no ghosts willing to take control.",
+  "_root.de87838d": "<span class='notice ml-1'>No wounds detected in subject.</span>",
+  "_root.e6bc385a": "Calling Del() is not allowed",
+  "_root.e9faa125": "Control of your mob has been offered to dead players.",
+  "_root.f85de588": "You have been {0} from {1} by the SPAM AUTOMUTE system. Contact an admin."
+}

@@ -1,0 +1,5 @@
+author: "sernseek"
+delete-after: True
+changes:
+  - rscadd: "新增全量本地化（i18n）基础设施：DM 运行时查表 LANG()/LANGU()、玩家界面语言偏好、TGUI 本地化助手，以及简体中文语言支持的脚手架。"
+  - code_imp: "新增 tools/i18n（基于 SpacemanDMM 的 Rust 字符串抽取/改写工具）、Tolgee 平台配置、机翻流水线与 NixOS 开发 flake。"

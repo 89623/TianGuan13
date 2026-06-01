@@ -36,6 +36,7 @@ export type Config = {
   title: string;
   user: User;
   window: TguiWindow;
+  locale: string; // NOVA EDIT ADDITION - i18n - 玩家界面语言 (en / zh-Hans)，由 tgui.dm get_payload 注入
 };
 
 export type DebugState = {

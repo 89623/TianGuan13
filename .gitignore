@@ -15,6 +15,7 @@
 
 #Ignore IDE files we don't need in the repo.
 /.vs/**/*
+.vscode/settings.json
 /tgstation/FileContentIndex/**/*
 /FileContentIndex/**/*
 /v17/**/*
@@ -262,3 +263,15 @@ define_sanity_output.txt
 # Running OpenDream locally
 tgstation.json
 rust_g64.dll
+
+# Nix (flake dev environment, see flake.nix / nix/)
+/result
+/result-*
+.direnv/
+
+# i18n Rust extraction tool build artifacts
+/tools/i18n/target/
+
+# Tolgee self-hosted platform data (modular_nova/tools/i18n/docker-compose.yml)
+/modular_nova/tools/i18n/tolgee-data/
+/modular_nova/tools/i18n/tolgee-db/

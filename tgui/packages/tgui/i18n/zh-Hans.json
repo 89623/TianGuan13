@@ -1,0 +1,20 @@
+{
+  "ammo_workbench.ui.title": "弹药工作台",
+  "ammo_workbench.ui.tab_ammunition": "弹药",
+  "ammo_workbench.ui.tab_materials": "材料",
+  "ammo_workbench.ui.machine_settings": "机器设置",
+  "ammo_workbench.ui.current_efficiency": "当前效率：",
+  "ammo_workbench.ui.time_per_round": "每发耗时：{0} 秒",
+  "ammo_workbench.ui.overclock": "超频",
+  "ammo_workbench.ui.loaded_magazine": "已装填弹匣",
+  "ammo_workbench.ui.eject": "弹出",
+  "ammo_workbench.ui.available_types": "可用弹药类型",
+  "ammo_workbench.ui.module_management": "模块管理",
+  "ammo_workbench.ui.loaded_module": "已装载模块：{0}",
+  "ammo_workbench.ui.owners_manual": "用户手册",
+  "ammo_workbench.ui.manual_p1": "弹药工作台默认可制造基础的非致命弹药（如橡皮弹、IHDF）。",
+  "ammo_workbench.ui.manual_p2": "授权模块可从货运购买，或在足够研究后打印，从而解锁其他弹药变体的制造，例如致命弹、穿甲弹或空尖弹。这些模块可重复使用、次数无限，但其许多产物需要额外的或稀有的材料才能打印。请明智地使用！",
+  "ammo_workbench.ui.materials": "材料",
+  "ammo_workbench.ui.sheets": "{0} 张",
+  "ammo_workbench.ui.release": "释放"
+}
