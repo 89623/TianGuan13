@@ -510,6 +510,14 @@ const DM_LABEL_SOURCES = [
   ['modular_nova/master_files/code/__DEFINES', true, /#define\s+JOB_\w+\s+"([^"]+)"/g],
   // 怪癖名：各 quirk 子类型的 `name = "..."`。
   ['code/datums/quirks', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  // 精灵配件名（发型/胡须/纹身/渐变样式…，角色设置下拉，按名选择=标识符）。
+  ['code/datums/sprite_accessories.dm', false, /^\s*name\s*=\s*"([^"]+)"/gm],
+  ['modular_nova/master_files/code/datums/sprite_accessories', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  ['modular_nova/modules/customization/icons/sprite_accessories', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  // 语言名（语言 tab）。
+  ['code/modules/language', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  // 注：物种名带 \improper 宏（`name = "\improper Human"`），且 species_types 目录混入器官/部件
+  // 名（噪音 + 可能让 P1 误跳过）。要接物种需先剥离 \improper/\proper 宏再抽，留作后续细化。
 ];
 
 function dmFilesUnder(absPath, recursive, out) {
