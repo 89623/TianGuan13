@@ -610,9 +610,14 @@ function extract() {
 
   for (const key of Object.keys(enCatalog)) {
     const existing = existingZh[key];
-    const generated = phraseTranslation(key) ?? reverseZh[key];
-    zhCatalog[key] =
-      generated ?? (existing && existing !== key ? existing : key);
+    // 用户已有译文**最优先**，绝不被自动生成覆盖。否则每次 extract 都会把整句人工译文降级为
+    // phraseTranslation/reverse 的词级重组（如「创建指挥报告」→「创建指挥 Report」）。
+    // 只有「尚无译文」的新键才用自动生成回填。
+    if (existing && existing !== key) {
+      zhCatalog[key] = existing;
+      continue;
+    }
+    zhCatalog[key] = phraseTranslation(key) ?? reverseZh[key] ?? key;
   }
 
   writeJson(stringsCatalogPath('en'), enCatalog);
