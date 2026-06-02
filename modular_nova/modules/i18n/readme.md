@@ -51,7 +51,10 @@ locale 解析：
 ### TG Proc/File Changes:
 
 - `code/modules/tgui/tgui.dm`: `/datum/tgui/proc/get_payload` —— ① 在 config 负载注入 `"locale"`（供 TGUI 读 `config.locale`）；② 全服 locale≠en 时对 `ui_data`/`ui_static_data` 跑 `lang_reverse_tree`，把负载里**含空白的多词字符串**反查为译文（接入非 atom datum 的 name/desc/说明等动态内容）。均 NOVA EDIT ADDITION。
-- `code/__HELPERS/_string_lists.dm`: `load_strings_file` —— 全服 locale≠en 时优先读本地化副本 `[directory]/[locale]/[filepath]`（如 `strings/zh-Hans/fishing_tips.txt`），缺则回退英文（NOVA EDIT ADDITION）。接入 `strings/` 里玩家可见的 flavor 数据文件。
+- **`strings/` flavor 数据文件并入主目录（统一体系，取代旧平行副本）**：抽取器 `extract` 的 flavor pass（`tools/i18n/src/extract.rs` 的 `FLAVOR_FILES`/`FLAVOR_DIRS` 白名单）把玩家可见 flavor（tips/ion_laws/junkmail/抗体/伤痕描述等）逐字抽进 `strings.json` 命名空间（保留 `@pick`/`@`/HTML token；排除口音表/人名/词频/名字生成器/关键词表）。运行时在 load 处反查落地（均 NOVA EDIT ADDITION，gated 全服 locale≠en，多词门槛，**无需运行时白名单**——只有目录内 flavor 会被改写）：
+  - `code/__HELPERS/_string_lists.dm` 的 `load_strings_file`（`.json`）：照常 `json_load` 英文文件后跑 `lang_reverse_tree` 递归反查字符串叶子。
+  - `code/__HELPERS/type2type.dm` 的 `/world/proc/file2list`（`.txt`）：构建行列表后逐行 `lang_reverse_phrase`（早期 GLOBAL_LIST_INIT 时 locale 仍为默认 en，跳过）。
+  - 译文填进 `strings/i18n/<locale>/strings.json` 即生效。
 - **P1b 关键 datum 家族 New() 反查**（NOVA EDIT ADDITION，全服 locale≠en 时用全量 `lang_reverse_text` 反查 name/desc，覆盖聊天 `[名]` 单词类插值）：`code/modules/reagents/chemistry/reagents.dm`（`/datum/reagent/New`：name/description）、`code/datums/actions/action.dm`（`/datum/action/New`：name/desc）、`code/datums/quirks/_quirk.dm`（`/datum/quirk/New`：name/desc）。
 - **P4 表情（emote）反查**（NOVA EDIT ADDITION）：`code/datums/emotes.dm` 的 `/datum/emote/New()` 反查 name 与全部 message 形态变量（`message`/`message_mime`/`message_alien`/`message_larva`/`message_robot`/`message_AI`/`message_monkey`/`message_animal_or_basic`/`message_param`）。配套抽取器 `SINK_VARS` 增列这些变体（`tools/i18n/src/extract.rs`），`message_param` 译文须保留 `%t`。emote 每类型仅 New 一次，开销可忽略。
 - **P5 数据 datum 家族反查**（NOVA EDIT ADDITION，全服 locale≠en 时）：gas —— `code/controllers/subsystem/air.dm` 的 `SSair.Initialize()` 遍历 `GLOB.meta_gas_info` 反查 name/desc（gas datum 从不实例化；放 SS Init 是因为 `meta_gas_info` 是 GLOBAL_LIST_INIT，早于 `i18n_cache` 不能在 `meta_gas_list` 内反查）；disease —— `code/datums/diseases/_disease.dm` 新增 `/datum/disease/New()` 反查 name/desc；material —— `code/controllers/subsystem/materials.dm` 的 `initialize_material` 反查 name/desc。

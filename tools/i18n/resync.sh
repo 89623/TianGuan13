@@ -17,7 +17,7 @@ TOOL=tools/i18n/target/release/nova-i18n
 echo "==> 构建 nova-i18n"
 cargo build --release --manifest-path tools/i18n/Cargo.toml
 
-echo "==> 刷新英文主目录 strings/i18n/en"
+echo "==> 刷新英文主目录 strings/i18n/en（含 DM sink/SINK_VARS + strings/ flavor 数据 → strings.json）"
 "$TOOL" extract --dme tgstation.dme --out strings/i18n/en
 
 echo "==> 刷新 TGUI 静态文本目录 strings/i18n/en/tgui.json"

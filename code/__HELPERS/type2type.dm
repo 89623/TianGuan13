@@ -13,9 +13,18 @@
 //Splits the text of a file at seperator and returns them in a list.
 //returns an empty list if the file doesn't exist
 /world/proc/file2list(filename, seperator="\n", trim = TRUE)
+	var/list/result
 	if (trim)
-		return splittext(trim(file2text(filename)),seperator)
-	return splittext(file2text(filename),seperator)
+		result = splittext(trim(file2text(filename)),seperator)
+	else
+		result = splittext(file2text(filename),seperator)
+	// NOVA EDIT ADDITION START - i18n - strings/ flavor .txt 已并入主目录（strings 命名空间）：全服非英文
+	// 时逐行整串反查（多词门槛）。只命中目录内 flavor（tips/junkmail…）；names/词频表是单词或不在目录 →
+	// 天然 no-op。早期 GLOBAL_LIST_INIT（names 等）此时 locale 仍为默认 en，直接跳过。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		for(var/i in 1 to length(result))
+			result[i] = lang_reverse_phrase(result[i])
+	return result
 
 //Turns a direction into text
 /proc/dir2text(direction)

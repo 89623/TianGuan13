@@ -61,10 +61,12 @@
 
 /datum/disease/New()
 	. = ..()
-	// NOVA EDIT ADDITION START - i18n - 疾病名/描述创建时整串反查（全服中文时；按感染实例化，gated 后开销小）
+	// NOVA EDIT ADDITION START - i18n - 疾病名/描述/治疗/传播文本创建时整串反查（全服中文时；按感染实例化，gated 后开销小）
 	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
 		name = lang_reverse_text(name)
 		desc = lang_reverse_text(desc)
+		cure_text = lang_reverse_text(cure_text)
+		spread_text = lang_reverse_text(spread_text)
 	// NOVA EDIT ADDITION END
 
 /datum/disease/Destroy()

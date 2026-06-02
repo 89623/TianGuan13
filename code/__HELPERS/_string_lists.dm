@@ -44,15 +44,11 @@ GLOBAL_VAR(string_filename_current_key)
 	if(!GLOB.string_cache)
 		GLOB.string_cache = new
 
-	// NOVA EDIT ADDITION START - i18n - 全服非英文时优先读本地化副本 [directory]/[locale]/[filepath]
-	// （如 strings/zh-Hans/fishing_tips.txt）；缺则回退英文原文件。接入 strings/ 里的玩家可见 flavor。
-	var/effective_path = "[directory]/[filepath]"
-	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
-		var/localized_path = "[directory]/[GLOB.i18n_server_locale]/[filepath]"
-		if(fexists(localized_path))
-			effective_path = localized_path
-	if(fexists(effective_path))
-		GLOB.string_cache[filepath] = json_load(effective_path)
-	else
-		CRASH("file not found: [directory]/[filepath]")
+	GLOB.string_cache[filepath] = json_load("[directory]/[filepath]")
+
+	// NOVA EDIT ADDITION START - i18n - strings/ flavor 数据已并入主目录（strings 命名空间）：全服非英文
+	// 时递归反查字符串叶子（译文在 strings/i18n/<locale>/strings.json）。多词门槛 + 「只有 flavor 被抽进
+	// 目录」→ names/口音表/词频表等天然 no-op，无需运行时白名单。(取代旧的平行副本方案。)
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE && islist(GLOB.string_cache[filepath]))
+		lang_reverse_tree(GLOB.string_cache[filepath])
 	// NOVA EDIT ADDITION END
