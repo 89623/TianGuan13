@@ -62,8 +62,9 @@ locale 解析：
 - **腿 B：AC 子串兜底层 `lang_fallback_apply` 挂接**（fallback.dm，NOVA EDIT ADDITION）。字典改为从内存反查表 `lang_build_reverse` 自动构建——**仅含空格的多词短语**（单词排除避免子串误伤），并合并可选人工 `strings/i18n/<locale>/_fallback.json`。挂接点（均 gated 全服 locale≠en）：
   - browse —— `code/datums/browser.dm` 的 `get_content()` 返回前过 AC（覆盖遗留 HTML 界面）；
   - 聊天 —— `code/modules/tgchat/to_chat.dm` 的 `to_chat`/`to_chat_immediate` 的 html/text，**额外受 config `I18N_CHAT_FALLBACK` 开关控制（默认关）**，覆盖「英文拼进变量再 to_chat」的长尾；
-  - 状态栏 —— `code/controllers/subsystem/statpanel.dm` 的 `set_status_tab` 对条目文本过 AC（不动点击链接）；
+  - 状态栏 —— `code/controllers/subsystem/statpanel.dm` 的 `set_status_tab`：**顶部 `global_data`（Map/Round ID/Time Dilation/Round Timer/Server Time…）与角色 `other_str` 均过 AC**（经 `i18n_localize_stat_list` 返回本地化副本，不改共享 global_data、不动点击链接）；
   - maptext —— `code/_onclick/hud/screen_objects/new_player.dm`（大厅信息）、`code/modules/escape_menu/title.dm`（菜单标题）过 AC（maptext 不被抽取，相关 phrases 需进 `_fallback.json` 才生效）。
+  - **已建 `strings/i18n/zh-Hans/_fallback.json` 起步清单**：覆盖上面这些「不被抽取但已挂 AC」的静态短语（Starting in / players ready / Another day on… / Round ID / Time Dilation / Map: / Round Timer / Server Time / (Feedback) 等）。译文可按需增改；只对**已挂 AC 的输出口**生效，往里塞没挂 AC 的（verb 面板/纸张）无效。
 - **`lang_build_reverse` 早期调用加固**（runtime.dm）：`i18n_cache` 尚未就绪时返回空表但**不缓存**，避免极早期调用把空反查表钉死、毒化后续全部反查（gas/material 等 SS Init 期调用的前置保障）。
 - `tgui/packages/tgui/events/types.ts`: `Config` 类型新增 `locale: string`（NOVA EDIT ADDITION）。
 - `tgui/rspack.config.ts`: `packages/tgui` 使用 `tgui/i18n` JSX runtime，自动本地化静态 JSX 文本；
