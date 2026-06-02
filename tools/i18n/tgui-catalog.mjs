@@ -516,8 +516,13 @@ const DM_LABEL_SOURCES = [
   ['modular_nova/modules/customization/icons/sprite_accessories', true, /^\s*name\s*=\s*"([^"]+)"/gm],
   // 语言名（语言 tab）。
   ['code/modules/language', true, /^\s*name\s*=\s*"([^"]+)"/gm],
-  // 注：物种名带 \improper 宏（`name = "\improper Human"`），且 species_types 目录混入器官/部件
-  // 名（噪音 + 可能让 P1 误跳过）。要接物种需先剥离 \improper/\proper 宏再抽，留作后续细化。
+  // 配装物品名（loadout 配装 tab；偏好按 item_path 存，name 仅显示=安全）。
+  ['code/modules/loadout/categories', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  ['modular_nova/modules/loadout/code', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  // 待接（无干净单一源/有坑，需专门处理）：
+  //  - 物种名：带 \improper 宏（`name = "\improper Human"`）+ species_types 目录混器官/部件名
+  //    （噪音 + 误让 P1 跳过）。需先剥 \improper/\proper 再抽、且只取 /datum/species 块。
+  //  - 反派名：散在 code/modules/antagonists 各处，整目录抽会混入目标/技能等海量非偏好名。
 ];
 
 function dmFilesUnder(absPath, recursive, out) {
