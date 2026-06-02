@@ -108,7 +108,7 @@ All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no
 
 **运行（NixOS）**：`nix develop` → `tools/build/build.sh` → `DreamDaemon tgstation.dmb <port> -trusted`。`librust_g.so` 由 devShell 自动软链（缺它服务端卡死）。**32 位 rust_g iconforge OOM**：客户端进大厅时 iconforge（rayon 并行）生成精灵图集会撑爆 32 位地址空间 → abort 核心转储（表现为停在大厅、服务端不刷日志，**非 i18n bug**）；`nix/byond.nix` 的 DreamDaemon 包装器已默认 `RAYON_NUM_THREADS=2` 修复。切全服中文：配置项 `I18N_SERVER_LOCALE zh-Hans`。
 
-**翻译（Codex）**：用 `tools/i18n/mt/translate-codex.sh`（内部 `codex exec -c 'mcp_servers={}' -c 'model_reasoning_effort="low"' -s workspace-write`，禁用 MCP，输出写入 `.pending/*.codex.log`）。逐文件增量翻译，默认每次最多 `I18N_MAX_AGENTS=8` 个 Codex agent，失败即停；重跑同一命令会从剩余待译继续。保留 `{0}` 占位符与 HTML/DM 文本宏，套用术语表 `tools/i18n/mt/glossary.zh-Hans.json`。人工校对走**在线本地化平台**（自选——译文是 `strings/i18n/<locale>/*.json` 扁平 JSON，Crowdin / Lokalise / Weblate / Tolgee Cloud 等都能导入导出；不再用自托管 Tolgee）。
+**翻译（Codex）**：用 `tools/i18n/mt/translate-codex.sh`（内部 `codex exec -c 'mcp_servers={}' -c 'model_reasoning_effort="low"' -s workspace-write`，禁用 MCP，输出写入 `.pending/*.codex.log`）。逐文件增量翻译，默认 `I18N_MAX_CODEX_CALLS=0`，即单并发串行跑完整个待译队列：一批结束合并后才启动下一批；失败即停，重跑同一命令会从剩余待译继续。为省 token，Codex 中间批次用临时数字 ID，且默认只发送本批命中的术语；最终目录仍是 `strings/i18n/<locale>/*.json`。保留 `{0}` 占位符与 HTML/DM 文本宏，套用术语表 `tools/i18n/mt/glossary.zh-Hans.json`。`bun tools/i18n/mt/i18n-mt.ts terms <ns>` 可筛出术语不一致，`bash tools/i18n/mt/translate-codex.sh translate-terms <ns>` 只让 Codex 修这些条目。人工校对走**在线本地化平台**（自选——译文是 `strings/i18n/<locale>/*.json` 扁平 JSON，Crowdin / Lokalise / Weblate / Tolgee Cloud 等都能导入导出；不再用自托管 Tolgee）。
 
 **命令手册与文件地图**：游戏/TGUI 翻译、在线平台导入导出、上游同步、构建启动等命令集中在 `tools/i18n/README.md`；**全部 i18n 文件位置（含运行时钉死的目录）一览**见 `modular_nova/modules/i18n/readme.md` 的「文件地图」。
 
@@ -119,7 +119,10 @@ All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no
 - **非 atom datum 文本（试剂/法术/研究/说明书等）经 TGUI 接入**：`get_payload`（tgui.dm，NOVA EDIT）对 `ui_data`/`ui_static_data` 跑 `lang_reverse_tree`——递归反查负载里**含空白的多词字符串**（单词跳过避免碰撞），datum 文本在 UI 里即显示译文（译了的话）。
 - **examine 的 `. += "…"` 已接入**（rewrite 处理 AddAssign，含 span 包裹）。
 - **关键 datum 家族的 name/desc 在创建时反查（P1b）**：`/datum/reagent`、`/datum/action`、`/datum/quirk` 的 `New()` 内联 NOVA EDIT 反查 name/desc（用全量 `lang_reverse_text`，覆盖**聊天里 `[试剂名]` 等单词类插值**——P1 的 TGUI 多词门槛漏掉的）。locale==en 时仅一次比较，零开销。
+- **表情（emote）已接入（P4）**：`/datum/emote/New()`（emotes.dm，NOVA EDIT）反查 name 与全部 message 形态变量（默剧/外星/AI/机器人/猴/动物/`message_param` 等）；抽取器 `SINK_VARS` 已增列这些变体，`message_param` 译文须保留 `%t`。emote 每类型仅 New 一次。**聊天里最高频的可见文本之一。**
+- **气体/疾病/材料 name/desc 已接入（P5）**：gas 经 `SSair.Initialize()` 遍历 `GLOB.meta_gas_info` 反查（gas datum 从不实例化，且 `meta_gas_info` 是 GLOBAL_LIST_INIT 早于 `i18n_cache`，故放 SS Init）；disease 经新增 `/datum/disease/New()`；material 经 `initialize_material`。覆盖聊天里这些家族的单词类名。
 - **`strings/` 数据文件已可接入**：`load_strings_file`（_string_lists.dm，NOVA EDIT）locale≠en 时优先读 `strings/<locale>/<原路径>` 副本，缺则回退英文。放译文副本即生效（tips/ion_laws/hallucination/junkmail 等玩家可见 flavor）；口音表/人名表不放副本=永远英文。
-- 仍未接入：聊天里 `[datum.name]` 这类**单词类**插值（TGUI 多词门槛漏，需 P1b 家族 New() 反查）、`browse()`/`output()`/`maptext` 旧式渲染、verb `set name`、纸张/签名等玩家书写内容（本就不该翻）。
+- **AC 子串兜底层已挂接（腿 B）**：`lang_fallback_apply`（fallback.dm，rustg Aho-Corasick）字典从内存反查表自动构建——**仅多词短语**（单词排除避免子串误伤），可选合并人工 `strings/i18n/<locale>/_fallback.json`。挂接点（全服 locale≠en）：browse（`browser.dm` 的 `get_content`）、状态栏（`statpanel.dm` 的 `set_status_tab`，不动点击链接）、大厅/逃逸菜单 maptext（maptext 不被抽取，phrases 需进 `_fallback.json`）。**聊天**（`to_chat`/`to_chat_immediate`）的 AC 额外受 config **`I18N_CHAT_FALLBACK`（默认关）**控制——开后翻「英文拼进变量再 to_chat」长尾，代价是热路径每行开销 + 可能误翻。`lang_build_reverse` 已加固：`i18n_cache` 未就绪时返回空表但不缓存（防极早期调用毒化反查表）。
+- 仍未接入：verb `set name`（BYOND 命令面板编译期元数据，运行时难本地化）、纸张/签名等玩家书写内容（本就不该翻）。`browse()`/`output()`/`maptext` 的残留英文现经腿 B 的 AC 兜底（仅多词、需译文进字典）尽力翻，非逐句精确改写。
 - 实际中文覆盖仍需人工校对；TGUI 当前已抽取约 4,904 条，前端运行时子集只打包已译/语义 key。
 - **TGUI 自动本地化注意**：按英文原文查表，运行时无法区分「字面量文案」与「正好等于常见词的动态数据」；个别误翻把英文原文加进 `tgui/packages/tgui/i18n/localize.ts` 的 `NO_AUTO_TRANSLATE` 即全局豁免。

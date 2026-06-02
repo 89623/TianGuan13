@@ -20,7 +20,24 @@ use crate::catalog::Catalog;
 use crate::keys::{make_key, namespace_for};
 
 /// 视为玩家可见的变量名。
-const SINK_VARS: &[&str] = &["name", "desc", "message", "flavor_text", "title"];
+/// message_* 系列是 /datum/emote 的各形态表情模板（人形/默剧/外星/AI/机器人等），玩家在聊天
+/// 高频可见；它们是 var 赋值而非 sink 调用，靠抽取进目录 + /datum/emote/New() 整串反查落地。
+const SINK_VARS: &[&str] = &[
+    "name",
+    "desc",
+    "message",
+    "flavor_text",
+    "title",
+    // /datum/emote 表情模板变体。
+    "message_mime",
+    "message_alien",
+    "message_larva",
+    "message_robot",
+    "message_AI",
+    "message_monkey",
+    "message_animal_or_basic",
+    "message_param",
+];
 
 /// 汇聚点 proc 名 -> 其消息参数下标。
 fn sink_message_args(name: &str) -> Option<&'static [usize]> {

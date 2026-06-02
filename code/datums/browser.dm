@@ -112,11 +112,16 @@
 </html>"}
 
 /datum/browser/proc/get_content()
-	return {"
+	// NOVA EDIT ADDITION START - i18n - 遗留 browse HTML 经 AC 子串兜底（低频；仅全服中文时；英文服 no-op）
+	var/full_content = {"
 		[get_header()]
 		[content]
 		[get_footer()]
 	"}
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		return lang_fallback_apply(full_content)
+	return full_content
+	// NOVA EDIT ADDITION END
 
 /datum/browser/proc/open(use_on_close = TRUE)
 	if(isnull(window_id)) //null check because this can potentially nuke goonchat

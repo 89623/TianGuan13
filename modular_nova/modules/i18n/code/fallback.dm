@@ -1,9 +1,14 @@
 // NovaSector 全量汉化 (i18n) —— 运行时英→中兜底层（Aho-Corasick）。
 //
 // 对「尚未被 LANG/LANGU 改写」或「无法静态抽取」的残留英文，在输出边界做一次多模式
-// 子串替换。来源：strings/i18n/<locale>/_fallback.json，扁平的 {"english": "中文"}。
+// 子串替换。字典两来源：
+//   1. 主字典——内存反查表 lang_build_reverse(locale)（即已翻译的 name/desc/message/title 等
+//      无占位符整串），**仅取含空格的多词短语**：单词做子串替换会误伤（"Door"→"Doorknob"），
+//      单词类名靠源头 lang_reverse_text 整串反查覆盖（见 runtime.dm / 各 New() 反查）。
+//   2. 可选人工补充——strings/i18n/<locale>/_fallback.json，扁平 {"english": "中文"}（不受多词
+//      过滤限制，人工显式覆盖）。
 // 注意：纯子串替换，不保证语序正确，仅用于过渡期与长尾「不漏英文」。已被 LANG 处理过的
-// 文本不应再过此层（避免二次替换）。
+// 文本不应再过此层（中文不匹配英文 pattern，天然 no-op，但仍尽量避免二次过）。
 
 /// locale -> "ready" | "none"，避免重复读盘/重复 setup。
 GLOBAL_LIST_EMPTY(i18n_fallback_state)
@@ -14,12 +19,22 @@ GLOBAL_LIST_EMPTY(i18n_fallback_state)
 	if(state)
 		return state == "ready"
 
-	var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/[locale]/_fallback.json"
-	if(!fexists(path))
-		GLOB.i18n_fallback_state[locale] = "none"
-		return FALSE
+	// 主字典：内存反查表里「含空格的多词短语」（单词排除，避免子串误伤）。
+	var/list/dict = list()
+	var/list/reverse = lang_build_reverse(locale)
+	for(var/english in reverse)
+		if(!findtext(english, " "))
+			continue
+		dict[english] = reverse[english]
 
-	var/list/dict = json_decode(file2text(path))
+	// 可选人工补充/覆盖（不受多词过滤限制）。
+	var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/[locale]/_fallback.json"
+	if(fexists(path))
+		var/list/manual = json_decode(file2text(path))
+		if(islist(manual))
+			for(var/english in manual)
+				dict[english] = manual[english]
+
 	if(!length(dict))
 		GLOB.i18n_fallback_state[locale] = "none"
 		return FALSE

@@ -709,6 +709,10 @@
 			new_maptext = "<span style='text-align: center; vertical-align: middle; font-size: 18px'>[time_remaining_str()]</span><br /> \
 				<span style='text-align: center; vertical-align: middle'>[LAZYLEN(GLOB.clients)] player\s</span>"
 
+	// NOVA EDIT ADDITION START - i18n - 大厅信息 maptext 经 AC 子串兜底（仅全服中文时；maptext 不被抽取，phrases 需进 _fallback.json）
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		new_maptext = lang_fallback_apply(new_maptext)
+	// NOVA EDIT ADDITION END
 	maptext = MAPTEXT(new_maptext)
 
 /atom/movable/screen/lobby/new_player_info/proc/time_remaining_str()

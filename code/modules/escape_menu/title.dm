@@ -35,7 +35,12 @@ GLOBAL_DATUM(escape_menu_title, /atom/movable/screen/escape_menu/title)
 		</span>
 	"}
 
-	maptext = "<font align='top'>" + subtitle_text + MAPTEXT_PIXELLARI(title_text) + "</font>"
+	var/full_maptext = "<font align='top'>" + subtitle_text + MAPTEXT_PIXELLARI(title_text) + "</font>"
+	// NOVA EDIT ADDITION START - i18n - 逃逸菜单标题 maptext 经 AC 子串兜底（仅全服中文时；"Another day on..." 需进 _fallback.json）
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		full_maptext = lang_fallback_apply(full_maptext)
+	// NOVA EDIT ADDITION END
+	maptext = full_maptext
 
 /atom/movable/screen/escape_menu/title/proc/on_station_name_changed()
 	SIGNAL_HANDLER

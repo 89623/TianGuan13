@@ -9,6 +9,9 @@
 /// 全服默认 locale。中文服在 config 写 I18N_SERVER_LOCALE zh-Hans（见 config_entries.dm）。
 GLOBAL_VAR_INIT(i18n_server_locale, DEFAULT_UI_LOCALE)
 
+/// 是否启用聊天层 AC 子串兜底（默认关）。config I18N_CHAT_FALLBACK 控制（见 config_entries.dm + fallback.dm）。
+GLOBAL_VAR_INIT(i18n_chat_fallback, FALSE)
+
 /// locale -> (key -> 模板)。启动时加载，运行期只读。
 GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 
@@ -87,15 +90,18 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 
 	var/list/english = GLOB.i18n_cache[DEFAULT_UI_LOCALE]
 	var/list/localized = GLOB.i18n_cache[locale]
+	// i18n_cache 尚未就绪（极早期 GLOBAL_LIST_INIT 期间被调用）：返回空表但**不缓存**，
+	// 否则会把空反查表钉死到 GLOB.i18n_reverse[locale]，毒化之后所有反查。
+	if(!islist(english) || !islist(localized))
+		return list()
 	var/list/reverse = list()
-	if(islist(english) && islist(localized))
-		for(var/key in english)
-			var/en_text = english[key]
-			if(findtext(en_text, "{")) // 带占位符的走 LANG 调用，不走反查
-				continue
-			var/translated = localized[key]
-			if(translated && translated != en_text)
-				reverse[en_text] = translated
+	for(var/key in english)
+		var/en_text = english[key]
+		if(findtext(en_text, "{")) // 带占位符的走 LANG 调用，不走反查
+			continue
+		var/translated = localized[key]
+		if(translated && translated != en_text)
+			reverse[en_text] = translated
 
 	GLOB.i18n_reverse[locale] = reverse
 	return reverse

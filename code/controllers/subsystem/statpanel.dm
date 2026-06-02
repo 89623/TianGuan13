@@ -126,9 +126,24 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
 	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
+	var/list/status_items = target.mob?.get_status_tab_items()
+	// NOVA EDIT ADDITION START - i18n - 状态栏条目 AC 子串兜底（低频，仅全服中文时；只翻文本，不动点击链接）
+	if(status_items && GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		for(var/i in 1 to length(status_items))
+			var/entry = status_items[i]
+			if(istext(entry))
+				status_items[i] = lang_fallback_apply(entry)
+				continue
+			if(islist(entry)) // [text, 高亮text, link] 或 ["same_line", text, url]：只翻文本，不动 link
+				var/list/sub = entry
+				if(length(sub) >= 1 && istext(sub[1]) && sub[1] != "same_line")
+					sub[1] = lang_fallback_apply(sub[1])
+				if(length(sub) >= 2 && istext(sub[2]))
+					sub[2] = lang_fallback_apply(sub[2])
+	// NOVA EDIT ADDITION END
 	target.stat_panel.send_message("update_stat", list(
 		"global_data" = global_data,
-		"other_str" = target.mob?.get_status_tab_items(),
+		"other_str" = status_items,
 	))
 
 /datum/controller/subsystem/statpanels/proc/set_MC_tab(client/target)

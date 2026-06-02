@@ -84,6 +84,20 @@
 	if(!name)
 		name = key
 
+	// NOVA EDIT ADDITION START - i18n - 表情模板/名称创建时整串反查译文（全服中文时；emote 每类型仅 New 一次）
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		name = lang_reverse_text(name)
+		message = lang_reverse_text(message)
+		message_mime = lang_reverse_text(message_mime)
+		message_alien = lang_reverse_text(message_alien)
+		message_larva = lang_reverse_text(message_larva)
+		message_robot = lang_reverse_text(message_robot)
+		message_AI = lang_reverse_text(message_AI)
+		message_monkey = lang_reverse_text(message_monkey)
+		message_animal_or_basic = lang_reverse_text(message_animal_or_basic)
+		message_param = lang_reverse_text(message_param) // 译文须保留 %t
+	// NOVA EDIT ADDITION END
+
 /**
  * Handles the modifications and execution of emotes.
  *

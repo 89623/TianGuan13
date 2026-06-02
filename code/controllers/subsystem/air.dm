@@ -96,6 +96,16 @@ SUBSYSTEM_DEF(air)
 	gas_reactions = init_gas_reactions()
 	hotspot_reactions = init_hotspot_reactions()
 
+	// NOVA EDIT ADDITION START - i18n - gas 名/描述运行时整串反查（meta_gas_info 是 GLOBAL_LIST_INIT，
+	// 早于 i18n_cache 不能在 meta_gas_list 内反查；放 SS Init 时 i18n_cache 已就绪。覆盖单词类 gas 名）
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		for(var/gas_path in GLOB.meta_gas_info)
+			var/list/gas_info = GLOB.meta_gas_info[gas_path]
+			gas_info[META_GAS_NAME] = lang_reverse_text(gas_info[META_GAS_NAME])
+			if(gas_info[META_GAS_DESC])
+				gas_info[META_GAS_DESC] = lang_reverse_text(gas_info[META_GAS_DESC])
+	// NOVA EDIT ADDITION END
+
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()

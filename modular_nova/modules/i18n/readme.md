@@ -52,7 +52,15 @@ locale 解析：
 
 - `code/modules/tgui/tgui.dm`: `/datum/tgui/proc/get_payload` —— ① 在 config 负载注入 `"locale"`（供 TGUI 读 `config.locale`）；② 全服 locale≠en 时对 `ui_data`/`ui_static_data` 跑 `lang_reverse_tree`，把负载里**含空白的多词字符串**反查为译文（接入非 atom datum 的 name/desc/说明等动态内容）。均 NOVA EDIT ADDITION。
 - `code/__HELPERS/_string_lists.dm`: `load_strings_file` —— 全服 locale≠en 时优先读本地化副本 `[directory]/[locale]/[filepath]`（如 `strings/zh-Hans/fishing_tips.txt`），缺则回退英文（NOVA EDIT ADDITION）。接入 `strings/` 里玩家可见的 flavor 数据文件。
-- **P1b 关键 datum 家族 New() 反查**（NOVA EDIT ADDITION，全服 locale≠en 时用全量 `lang_reverse_text` 反查 name/desc，覆盖聊天 `[名]` 单词类插值）：`code/modules/reagents/chemistry/reagents.dm`（`/datum/reagent/New`：name/description）、`code/datums/actions/action.dm`（`/datum/action/New`：name/desc）、`code/datums/quirks/_quirk.dm`（`/datum/quirk/New`：name/desc）。其余 datum 家族（disease/material/gas/emote 等，多为单例 + TGUI 显示，已由上面的 get_payload 反查覆盖）按需再加。
+- **P1b 关键 datum 家族 New() 反查**（NOVA EDIT ADDITION，全服 locale≠en 时用全量 `lang_reverse_text` 反查 name/desc，覆盖聊天 `[名]` 单词类插值）：`code/modules/reagents/chemistry/reagents.dm`（`/datum/reagent/New`：name/description）、`code/datums/actions/action.dm`（`/datum/action/New`：name/desc）、`code/datums/quirks/_quirk.dm`（`/datum/quirk/New`：name/desc）。
+- **P4 表情（emote）反查**（NOVA EDIT ADDITION）：`code/datums/emotes.dm` 的 `/datum/emote/New()` 反查 name 与全部 message 形态变量（`message`/`message_mime`/`message_alien`/`message_larva`/`message_robot`/`message_AI`/`message_monkey`/`message_animal_or_basic`/`message_param`）。配套抽取器 `SINK_VARS` 增列这些变体（`tools/i18n/src/extract.rs`），`message_param` 译文须保留 `%t`。emote 每类型仅 New 一次，开销可忽略。
+- **P5 数据 datum 家族反查**（NOVA EDIT ADDITION，全服 locale≠en 时）：gas —— `code/controllers/subsystem/air.dm` 的 `SSair.Initialize()` 遍历 `GLOB.meta_gas_info` 反查 name/desc（gas datum 从不实例化；放 SS Init 是因为 `meta_gas_info` 是 GLOBAL_LIST_INIT，早于 `i18n_cache` 不能在 `meta_gas_list` 内反查）；disease —— `code/datums/diseases/_disease.dm` 新增 `/datum/disease/New()` 反查 name/desc；material —— `code/controllers/subsystem/materials.dm` 的 `initialize_material` 反查 name/desc。
+- **腿 B：AC 子串兜底层 `lang_fallback_apply` 挂接**（fallback.dm，NOVA EDIT ADDITION）。字典改为从内存反查表 `lang_build_reverse` 自动构建——**仅含空格的多词短语**（单词排除避免子串误伤），并合并可选人工 `strings/i18n/<locale>/_fallback.json`。挂接点（均 gated 全服 locale≠en）：
+  - browse —— `code/datums/browser.dm` 的 `get_content()` 返回前过 AC（覆盖遗留 HTML 界面）；
+  - 聊天 —— `code/modules/tgchat/to_chat.dm` 的 `to_chat`/`to_chat_immediate` 的 html/text，**额外受 config `I18N_CHAT_FALLBACK` 开关控制（默认关）**，覆盖「英文拼进变量再 to_chat」的长尾；
+  - 状态栏 —— `code/controllers/subsystem/statpanel.dm` 的 `set_status_tab` 对条目文本过 AC（不动点击链接）；
+  - maptext —— `code/_onclick/hud/screen_objects/new_player.dm`（大厅信息）、`code/modules/escape_menu/title.dm`（菜单标题）过 AC（maptext 不被抽取，相关 phrases 需进 `_fallback.json` 才生效）。
+- **`lang_build_reverse` 早期调用加固**（runtime.dm）：`i18n_cache` 尚未就绪时返回空表但**不缓存**，避免极早期调用把空反查表钉死、毒化后续全部反查（gas/material 等 SS Init 期调用的前置保障）。
 - `tgui/packages/tgui/events/types.ts`: `Config` 类型新增 `locale: string`（NOVA EDIT ADDITION）。
 - `tgui/rspack.config.ts`: `packages/tgui` 使用 `tgui/i18n` JSX runtime，自动本地化静态 JSX 文本；
   `tgui-panel` / `tgui-say` 保持 React 原生 runtime。
@@ -79,12 +87,16 @@ locale 解析：
 - **完整命令手册**：见 `tools/i18n/README.md` 的「命令速查」。常用入口：
   - 进入环境：`nix develop`
   - 游戏/TGUI 重同步：`bash tools/i18n/resync.sh`
-  - 翻译游戏命名空间：`I18N_MAX_AGENTS=4 bash tools/i18n/mt/translate-codex.sh obj.json`
-  - 翻译 TGUI：`I18N_MAX_AGENTS=4 bash tools/i18n/mt/translate-codex.sh tgui.json`
+  - 翻译游戏命名空间：`bash tools/i18n/mt/translate-codex.sh obj.json`
+  - 修复术语不一致：`bash tools/i18n/mt/translate-codex.sh translate-terms obj.json`
+  - 翻译 TGUI：`bash tools/i18n/mt/translate-codex.sh tgui.json`
   - 人工校对：把 `strings/i18n/<locale>/*.json` 导入你选的在线平台，校对后导回；TGUI 改完后 `node tools/i18n/tgui-catalog.mjs sync`
   - 构建并启动：`tools/build/build.sh && DreamDaemon tgstation.dmb 1337 -trusted`
 - **切全服中文**：配置项 `I18N_SERVER_LOCALE zh-Hans`（`config/`）。游戏文本、name/desc 反查、
   以及 `packages/tgui` 中已进入前端目录的静态文本都跟随这个全服 locale。
+- **聊天层 AC 兜底（可选）**：配置项 `I18N_CHAT_FALLBACK TRUE`（默认关）。开后全服中文时对每条聊天里
+  的残留英文（仅多词短语）做子串兜底翻译，覆盖「英文拼进变量再 to_chat」的长尾；代价是热路径每行
+  开销 + 可能误翻，建议开启后实测。browse / 状态栏 / maptext 的 AC 兜底不受此开关控制（本就低频）。
 - **NixOS 上启动**：`nix develop` 后 `tools/build/build.sh` 编译，`DreamDaemon tgstation.dmb <port> -trusted`
   运行。`librust_g.so` 由 devShell 自动软链（缺它日志子系统会卡死，见 `nix/rust_g.nix`）。
 - **32 位 rust_g iconforge OOM 崩溃（重要）**：BYOND/rust_g 在 Linux 是 **32 位**进程（地址空间

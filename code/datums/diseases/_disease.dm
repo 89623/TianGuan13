@@ -59,6 +59,14 @@
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 
+/datum/disease/New()
+	. = ..()
+	// NOVA EDIT ADDITION START - i18n - 疾病名/描述创建时整串反查（全服中文时；按感染实例化，gated 后开销小）
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		name = lang_reverse_text(name)
+		desc = lang_reverse_text(desc)
+	// NOVA EDIT ADDITION END
+
 /datum/disease/Destroy()
 	. = ..()
 	if(affected_mob)

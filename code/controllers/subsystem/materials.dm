@@ -76,6 +76,11 @@ SUBSYSTEM_DEF(materials)
 		return null
 
 	mat_id = mat_ref.id
+	// NOVA EDIT ADDITION START - i18n - 材料名/描述创建时整串反查（全服中文时；SS init 期 i18n_cache 已就绪，覆盖单词类材料名）
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		mat_ref.name = lang_reverse_text(mat_ref.name)
+		mat_ref.desc = lang_reverse_text(mat_ref.desc)
+	// NOVA EDIT ADDITION END
 	materials[mat_id] = mat_ref
 	flat_materials += mat_ref
 	materials_by_type[mat_type] += list(mat_ref)
