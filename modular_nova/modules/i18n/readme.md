@@ -51,6 +51,7 @@ locale 解析：
 ### TG Proc/File Changes:
 
 - `code/modules/tgui/tgui.dm`: `/datum/tgui/proc/get_payload` —— ① 在 config 负载注入 `"locale"`（供 TGUI 读 `config.locale`）；② 全服 locale≠en 时对 `ui_data`/`ui_static_data` 跑 `lang_reverse_tree`，把负载里**含空白的多词字符串**反查为译文（接入非 atom datum 的 name/desc/说明等动态内容）。均 NOVA EDIT ADDITION。
+- **标识符耦合显示名走 TS 端 + P1 跳过（避免破坏 act，零上游 .tsx 改动）**：职业/怪癖/食物类别/精灵配件的 `name`/`title` 在 TGUI 里既是显示又是 `act()` 标识符——P1 改 ui_data 值会破坏操作（多词名翻了 act 就坏）。机制：① `tgui-catalog.mjs` 的 `DM_LABEL_SOURCES`（`code/__DEFINES/jobs.dm` 的 `#define JOB_X "…"`、`code/datums/quirks` 的 `name`、food 全局列表）把这些 DM 名读进 `tgui.json` 前端目录，TS 端 auto-localize 只翻**显示**（act 用原英文值，安全；TS 端无多词门槛，单词类如 Meat/Cursed 也翻）。② `runtime.dm` 的 `GLOB.i18n_tgui_strings`（en/tgui.json 的 key 集）+ `lang_reverse_phrase_tgui` 让 `lang_reverse_tree`（P1）**跳过出现在 tgui 目录里的串**，不改数据=保住标识符。descriptions 等非标识符长文本仍走 P1。
 - **`strings/` flavor 数据文件并入主目录（统一体系，取代旧平行副本）**：抽取器 `extract` 的 flavor pass（`tools/i18n/src/extract.rs` 的 `FLAVOR_FILES`/`FLAVOR_DIRS` 白名单）把玩家可见 flavor（tips/ion_laws/junkmail/抗体/伤痕描述等）逐字抽进 `strings.json` 命名空间（保留 `@pick`/`@`/HTML token；排除口音表/人名/词频/名字生成器/关键词表）。运行时在 load 处反查落地（均 NOVA EDIT ADDITION，gated 全服 locale≠en，多词门槛，**无需运行时白名单**——只有目录内 flavor 会被改写）：
   - `code/__HELPERS/_string_lists.dm` 的 `load_strings_file`（`.json`）：照常 `json_load` 英文文件后跑 `lang_reverse_tree` 递归反查字符串叶子。
   - `code/__HELPERS/type2type.dm` 的 `/world/proc/file2list`（`.txt`）：构建行列表后逐行 `lang_reverse_phrase`（早期 GLOBAL_LIST_INIT 时 locale 仍为默认 en，跳过）。

@@ -123,6 +123,30 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 		return text
 	return lang_reverse_text(text)
 
+/// TGUI 前端目录（en/tgui.json）里的英文串集合。这些串由 TS 端 auto-localize **只翻显示**，
+/// 故 P1（lang_reverse_tree）必须跳过它们——很多是 act() 标识符（职业名/怪癖名/配件名…），
+/// 改了 ui_data 值会破坏操作；交给 TS 端翻显示、数据保持英文最安全。同时这也覆盖了**单词类**
+/// 标识符名（P1 的多词门槛本就漏掉、但 TS 端无门槛能翻）。启动加载、运行只读。
+GLOBAL_LIST_INIT(i18n_tgui_strings, build_tgui_string_set())
+
+/proc/build_tgui_string_set()
+	var/list/result = list()
+	var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/[DEFAULT_UI_LOCALE]/tgui.json"
+	if(!fexists(path))
+		return result
+	var/list/decoded = json_decode(file2text(path))
+	if(islist(decoded))
+		for(var/key in decoded)
+			result[key] = TRUE
+	return result
+
+/// TGUI 负载专用反查：若该串属于 TGUI 前端目录（TS 端会翻显示），P1 跳过不动数据（保住标识符）；
+/// 否则走多词反查（datum 描述等不在前端目录的长文本）。
+/proc/lang_reverse_phrase_tgui(text)
+	if(istext(text) && GLOB.i18n_tgui_strings[text])
+		return text
+	return lang_reverse_phrase(text)
+
 /// 递归把一个 list（含嵌套 list / 关联 list）里的字符串「值」按多词门槛反查为全服 locale 译文。
 /// 用于 TGUI 的 ui_data/ui_static_data 负载：把非 atom datum 的 name/desc/说明等动态内容本地化。
 /// key 不动（程序用的标识）；就地改写并返回。幂等（已译的中文不会再匹配英文 key）。
@@ -137,11 +161,11 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 			if(islist(value))
 				lang_reverse_tree(value)
 			else if(istext(value))
-				data[key] = lang_reverse_phrase(value)
+				data[key] = lang_reverse_phrase_tgui(value)
 		else
 			// flat 元素（无关联值）
 			if(islist(key))
 				lang_reverse_tree(key)
 			else if(istext(key))
-				data[i] = lang_reverse_phrase(key)
+				data[i] = lang_reverse_phrase_tgui(key)
 	return data

@@ -496,29 +496,63 @@ function addText(catalog, text) {
   }
 }
 
-// 食物偏好类别名来自 DM 全局列表（code/__DEFINES/~nova_defines/_globalvars/food.dm），作为动态数据
-// 传给 FoodPreferences.tsx 并经自动本地化 runtime 渲染（{foodName} 子节点）。它们不是 TS 字面量，
-// 故从 DM 文件读取其引号键并入前端目录，使其可翻（runtime 无多词门槛，单词类如 Meat 也能命中）。
-const FOOD_CATEGORY_DM = path.join(
-  ROOT,
-  'code/__DEFINES/~nova_defines/_globalvars/food.dm',
-);
+// 「标识符耦合的 DM 显示名」——这些 name/title 在 TGUI 里既是显示又是 act() 标识符（食物类别、
+// 职业、怪癖…），不能让 DM 端 P1 改数据（会破坏 act）。改为从 DM 源读进前端 tgui 目录，由 TS
+// runtime 只翻**显示**（act 用原英文值，安全）；运行时 P1 会跳过出现在 tgui 目录里的串。
+// runtime 无多词门槛，单词类（Meat/Cursed…）也能命中。
+// 每项：[相对路径, 是否递归扫目录下 .dm, 捕获组1=可翻串的正则(必须 /g)]。
+// 注意：路径钉死，上游若重命名这些目录，抽取会静默漏掉（少翻、不崩、不冲突），改路径即可。
+const DM_LABEL_SOURCES = [
+  // 食物类别：全局列表的引号键。
+  ['code/__DEFINES/~nova_defines/_globalvars/food.dm', false, /"([^"]+)"\s*=/g],
+  // 职业名/部门名：job_types 用 `title = JOB_X`（#define 常量），字面量在 jobs.dm 的 #define 里。
+  ['code/__DEFINES/jobs.dm', false, /#define\s+\w+\s+"([^"]+)"/g],
+  ['modular_nova/master_files/code/__DEFINES', true, /#define\s+JOB_\w+\s+"([^"]+)"/g],
+  // 怪癖名：各 quirk 子类型的 `name = "..."`。
+  ['code/datums/quirks', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+];
 
-function extractFoodCategories(catalog) {
-  let source;
+function dmFilesUnder(absPath, recursive, out) {
+  let stat;
   try {
-    source = fs.readFileSync(FOOD_CATEGORY_DM, 'utf8');
+    stat = fs.statSync(absPath);
   } catch {
-    return;
+    return out;
   }
-  for (const match of source.matchAll(/"([^"]+)"\s*=/g)) {
-    addText(catalog, match[1]);
+  if (!stat.isDirectory()) {
+    out.push(absPath);
+    return out;
+  }
+  for (const entry of fs.readdirSync(absPath, { withFileTypes: true })) {
+    const entryPath = path.join(absPath, entry.name);
+    if (entry.isDirectory()) {
+      if (recursive) dmFilesUnder(entryPath, recursive, out);
+    } else if (entry.name.endsWith('.dm')) {
+      out.push(entryPath);
+    }
+  }
+  return out;
+}
+
+function extractDmLabels(catalog) {
+  for (const [rel, recursive, regex] of DM_LABEL_SOURCES) {
+    for (const file of dmFilesUnder(path.join(ROOT, rel), recursive, [])) {
+      let source;
+      try {
+        source = fs.readFileSync(file, 'utf8');
+      } catch {
+        continue;
+      }
+      for (const match of source.matchAll(regex)) {
+        addText(catalog, match[1]);
+      }
+    }
   }
 }
 
 function extractCatalog() {
   const catalog = {};
-  extractFoodCategories(catalog);
+  extractDmLabels(catalog);
   for (const filePath of walk(TGUI_SOURCE_DIR)) {
     const source = fs.readFileSync(filePath, 'utf8');
     const sourceFile = ts.createSourceFile(
