@@ -28,6 +28,18 @@ const SINK_VARS: &[&str] = &[
     "message",
     "flavor_text",
     "title",
+    // 其它可靠的玩家可见显示字段（type 变量；非 desc 的别名 / 专有显示串）。
+    "description",      // /datum/reagent 等用 description（非 desc）——之前完全漏抽。
+    "taste_description", // 试剂味道（"It tastes of …"）。
+    "display_name",     // 机器/发射台等的展示名。
+    "wiki_desc",        // wiki 界面描述。
+    "war_declaration",  // 核弹战争宣言（全员公告）。
+    "explanation_text", // /datum/objective 反派目标文本（反派面板 + 授予时聊天）。
+    // ② 类「type 变量里的整条消息，经 to_chat 发出」——多为 span_*() 包裹，抽取得到内层文本，
+    // 运行时靠聊天 AC 子串层（I18N_CHAT_FALLBACK）在包裹串里命中替换（整串反查会因 span 包裹不匹配）。
+    "gain_text",        // 脑创伤等获得时消息（45 处）。
+    "lose_text",        // 失去时消息。
+    "playstyle_string", // 特殊角色玩法说明。
     // /datum/disease 玩家可见字段（医疗/疫病 UI）。
     "cure_text",
     "spread_text",
