@@ -32,6 +32,12 @@ const TRANSLATABLE_PROPS = new Set([
 
 const OPTION_TEXT_PROPS = new Set(['displayText', 'label', 'text', 'title']);
 
+// 偏好「feature 定义」里的 name/description（如 height_scaling.tsx 的 `name: 'Body Height'`）。
+// 这些是对象字面量属性、非 JSX 文本，但 PreferencesMenu 渲染 feature.name 时经自动本地化 runtime
+// 查前端目录显示。仅在 feature 定义目录下抽取，避免把任意 .tsx 里的 name/description 当文案。
+const FEATURE_LABEL_PROPS = new Set(['name', 'description']);
+const FEATURE_DEF_DIR = `${path.sep}PreferencesMenu${path.sep}preferences${path.sep}features${path.sep}`;
+
 const COMMON_ZH = {
   Abandon: '放弃',
   Achievement: '成就',
@@ -490,8 +496,29 @@ function addText(catalog, text) {
   }
 }
 
+// 食物偏好类别名来自 DM 全局列表（code/__DEFINES/~nova_defines/_globalvars/food.dm），作为动态数据
+// 传给 FoodPreferences.tsx 并经自动本地化 runtime 渲染（{foodName} 子节点）。它们不是 TS 字面量，
+// 故从 DM 文件读取其引号键并入前端目录，使其可翻（runtime 无多词门槛，单词类如 Meat 也能命中）。
+const FOOD_CATEGORY_DM = path.join(
+  ROOT,
+  'code/__DEFINES/~nova_defines/_globalvars/food.dm',
+);
+
+function extractFoodCategories(catalog) {
+  let source;
+  try {
+    source = fs.readFileSync(FOOD_CATEGORY_DM, 'utf8');
+  } catch {
+    return;
+  }
+  for (const match of source.matchAll(/"([^"]+)"\s*=/g)) {
+    addText(catalog, match[1]);
+  }
+}
+
 function extractCatalog() {
   const catalog = {};
+  extractFoodCategories(catalog);
   for (const filePath of walk(TGUI_SOURCE_DIR)) {
     const source = fs.readFileSync(filePath, 'utf8');
     const sourceFile = ts.createSourceFile(
@@ -501,6 +528,8 @@ function extractCatalog() {
       true,
       filePath.endsWith('.jsx') ? ts.ScriptKind.JSX : ts.ScriptKind.TSX,
     );
+
+    const isFeatureDef = filePath.includes(FEATURE_DEF_DIR);
 
     function visit(node) {
       if (ts.isJsxText(node)) {
@@ -512,7 +541,11 @@ function extractCatalog() {
         }
       } else if (ts.isPropertyAssignment(node)) {
         const name = propertyName(node.name);
-        if (TRANSLATABLE_PROPS.has(name) || OPTION_TEXT_PROPS.has(name)) {
+        if (
+          TRANSLATABLE_PROPS.has(name) ||
+          OPTION_TEXT_PROPS.has(name) ||
+          (isFeatureDef && FEATURE_LABEL_PROPS.has(name))
+        ) {
           addText(catalog, literalText(node.initializer));
         }
       }
