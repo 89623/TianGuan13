@@ -489,8 +489,13 @@ function literalText(node) {
   return null;
 }
 
+/// 剥离 DM 语法宏（\improper/\proper），使抽出的串与运行时 TGUI 收到的（宏已解析）对齐。
+function stripGrammarMacros(text) {
+  return typeof text === 'string' ? text.replace(/\\(improper|proper)\s*/g, '') : text;
+}
+
 function addText(catalog, text) {
-  const normalized = normalizeText(text);
+  const normalized = normalizeText(stripGrammarMacros(text));
   if (normalized) {
     catalog[normalized] = normalized;
   }
@@ -519,10 +524,12 @@ const DM_LABEL_SOURCES = [
   // 配装物品名（loadout 配装 tab；偏好按 item_path 存，name 仅显示=安全）。
   ['code/modules/loadout/categories', true, /^\s*name\s*=\s*"([^"]+)"/gm],
   ['modular_nova/modules/loadout/code', true, /^\s*name\s*=\s*"([^"]+)"/gm],
-  // 待接（无干净单一源/有坑，需专门处理）：
-  //  - 物种名：带 \improper 宏（`name = "\improper Human"`）+ species_types 目录混器官/部件名
-  //    （噪音 + 误让 P1 跳过）。需先剥 \improper/\proper 再抽、且只取 /datum/species 块。
-  //  - 反派名：散在 code/modules/antagonists 各处，整目录抽会混入目标/技能等海量非偏好名。
+  // 物种名（角色 tab 物种浏览器；按 speciesKey/id 选择，name 仅显示=安全）。第 4 项剥 \improper/\proper
+  // 宏（`name = "\improper Human"` → "Human"，与运行时 TGUI 收到的串对齐）。species_types 目录会混入
+  // 少量内联器官/部件名（无害噪音：进 tgui 目录后由 TS 端翻显示、P1 跳过；非物种处仍可被翻）。
+  ['code/modules/mob/living/carbon/human/species_types', true, /^\tname\s*=\s*"([^"]+)"/gm],
+  ['modular_nova/modules/customization/modules/mob/living/carbon/human', true, /^\tname\s*=\s*"([^"]+)"/gm],
+  // 待接：反派名散在 code/modules/antagonists 各处，整目录抽会混入目标/技能等海量非偏好名，需专门源。
 ];
 
 function dmFilesUnder(absPath, recursive, out) {
@@ -557,7 +564,7 @@ function extractDmLabels(catalog) {
         continue;
       }
       for (const match of source.matchAll(regex)) {
-        addText(catalog, match[1]);
+        addText(catalog, match[1]); // addText 内部已剥 \improper/\proper
       }
     }
   }
