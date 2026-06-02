@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The default command report announcement sound.
 #define DEFAULT_ANNOUNCEMENT_SOUND "default_announcement"
 
@@ -9,7 +10,7 @@
 #define CUSTOM_SOUND_PRESET "Custom Sound"
 
 ADMIN_VERB(change_command_name, R_ADMIN, "Change Command Name", "Change the name of Central Command.", ADMIN_CATEGORY_EVENTS)
-	var/input = input(user, "Please input a new name for Central Command.", "What?", "") as text|null
+	var/input = input(user, LANG("datum.1162650f", null), LANG("datum.29297405", null), "") as text|null
 	if(!input)
 		return
 	change_command_name(input)

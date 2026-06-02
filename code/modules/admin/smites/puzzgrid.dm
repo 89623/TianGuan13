@@ -7,7 +7,7 @@
 	var/gib_on_loss
 
 /datum/smite/puzzgrid/configure(client/user)
-	var/timer = input(user, "How long should other people have to solve the grid? 0 gives infinite time.", "Puzzgrid", 0) as num | null
+	var/timer = input(user, LANG("datum.6102fe88", null), LANG("datum.a87eab73", null), 0) as num | null
 	if (isnull(timer))
 		return FALSE
 

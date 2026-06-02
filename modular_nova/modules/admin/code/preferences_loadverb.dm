@@ -30,7 +30,7 @@ ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a characte
 			return
 
 	// Upload the new JSON file
-	var/uploaded_file = input(user, "Choose a JSON file to upload", "Import Preferences") as null|file
+	var/uploaded_file = input(user, LANG("datum.eb3708b5", null), LANG("datum.8cc1c53b", null)) as null|file
 	// Reject non-files, nulls, or blank files
 	if(!isfile(uploaded_file) || !length(uploaded_file))
 		return

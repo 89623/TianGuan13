@@ -766,7 +766,7 @@
 	return stripped_multiline_input(usr, "Choose an emote to display.", "Me" , null, MAX_MESSAGE_LEN) // NOVA EDIT CHANGE - ORIGINAL : return copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
 
 /datum/emote/living/custom/proc/get_custom_emote_type_from_user()
-	var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable", "Both")
+	var/type = input(LANG("datum.84071f4a", null)) as null|anything in list("Visible", "Hearable", "Both")
 
 	switch(type)
 		if("Visible")

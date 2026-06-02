@@ -284,7 +284,7 @@ ADMIN_VERB(drop_bomb, R_FUN, "Drop Bomb", "Cause an explosion of varying strengt
 	BLACKBOX_LOG_ADMIN_VERB("Drop Bomb")
 
 ADMIN_VERB(drop_bomb_dynex, R_FUN, "Drop DynEx Bomb", "Cause an explosion of varying strength at your location.", ADMIN_CATEGORY_FUN)
-	var/ex_power = input(user, "Explosive Power:") as null|num
+	var/ex_power = input(user, LANG("datum.73d10f27", null)) as null|num
 	var/turf/epicenter = get_turf(user.mob)
 	if(!ex_power || !epicenter)
 		return
@@ -294,21 +294,21 @@ ADMIN_VERB(drop_bomb_dynex, R_FUN, "Drop DynEx Bomb", "Cause an explosion of var
 	BLACKBOX_LOG_ADMIN_VERB("Drop Dynamic Bomb")
 
 ADMIN_VERB(get_dynex_range, R_FUN, "Get DynEx Range", "Get the estimated range of a bomb using explosive power.", ADMIN_CATEGORY_DEBUG)
-	var/ex_power = input(user, "Explosive Power:") as null|num
+	var/ex_power = input(user, LANG("datum.73d10f27", null)) as null|num
 	if (isnull(ex_power))
 		return
 	var/range = round((2 * ex_power)**GLOB.DYN_EX_SCALE)
 	to_chat(user, LANG("datum.b6a72f7f", list(round(range*0.25), round(range*0.5), round(range))), confidential = TRUE)
 
 ADMIN_VERB(get_dynex_power, R_FUN, "Get DynEx Power", "Get the estimated required power of a bomb to reach the given range.", ADMIN_CATEGORY_DEBUG)
-	var/ex_range = input(user, "Light Explosion Range:") as null|num
+	var/ex_range = input(user, LANG("datum.077f0bac", null)) as null|num
 	if (isnull(ex_range))
 		return
 	var/power = (0.5 * ex_range)**(1/GLOB.DYN_EX_SCALE)
 	to_chat(user, LANG("datum.08f203ac", list(power)), confidential = TRUE)
 
 ADMIN_VERB(set_dynex_scale, R_FUN, "Set DynEx Scale", "Set the scale multiplier on dynex explosions. Default 0.5.", ADMIN_CATEGORY_DEBUG)
-	var/ex_scale = input(user, "New DynEx Scale:") as null|num
+	var/ex_scale = input(user, LANG("datum.6aea3154", null)) as null|num
 	if(!ex_scale)
 		return
 	GLOB.DYN_EX_SCALE = ex_scale
@@ -831,7 +831,7 @@ ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIP
 	if (length(spoken_lines) || length(audible_emotes))
 		add_another = tgui_alert(user, LANG("datum.ad50e3d5", list(length(spoken_lines) ? "another" : "a")), LANG("datum.e2b85e52", null), list("Yes", "No"))
 		while (add_another == "Yes")
-			next_line = input("", "Select sound",) as null|sound
+			next_line = input("", LANG("datum.99f89fee", null),) as null|sound
 			if (isnull(next_line))
 				return
 			LAZYADD(sounds, next_line)

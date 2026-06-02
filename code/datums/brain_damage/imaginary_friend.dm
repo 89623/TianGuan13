@@ -373,7 +373,7 @@
 		to_chat(user, span_boldwarning(LANG("datum.edad7622", null)))
 		return FALSE
 	else if(!params)
-		message = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
+		message = copytext(sanitize(input(LANG("datum.b0c1d36d", null)) as text|null), 1, MAX_MESSAGE_LEN)
 	else
 		message = params
 	. = ..()

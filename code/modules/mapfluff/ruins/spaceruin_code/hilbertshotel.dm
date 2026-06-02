@@ -55,9 +55,9 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 	// Input text changes depending on if you're using this in yourself or someone else.
 	if(user == target)
-		chosenRoomNumber = input(target, "What number room will you be checking into?", "Room Number") as null|num
+		chosenRoomNumber = input(target, LANG("obj.9c9c5b33", null), LANG("obj.ea08ae31", null)) as null|num
 	else
-		chosenRoomNumber = input(target, "[user] is inviting you to enter \the [src]. What number room will you be checking into?", "Room Number") as null|num
+		chosenRoomNumber = input(target, LANG("obj.26c4e8a5", list(user, src)), LANG("obj.ea08ae31", null)) as null|num
 
 	if(!chosenRoomNumber)
 		return

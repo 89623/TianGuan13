@@ -10,7 +10,7 @@
 	)
 
 /datum/buildmode_mode/tweakcomps/change_settings(client/target_client)
-	var/rating_to_choose = input(target_client, "Enter number of rating", "Number", "1")
+	var/rating_to_choose = input(target_client, LANG("datum.de032259", null), LANG("datum.cc8ce72b", null), "1")
 	rating_to_choose = text2num(rating_to_choose)
 	if(!isnum(rating_to_choose))
 		tgui_alert(target_client, LANG("datum.575f43b6", null))

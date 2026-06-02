@@ -3,7 +3,7 @@ ADMIN_VERB(spawn_pollution, R_ADMIN, "Spawn Pollution", "Spawns an amount of cho
 	var/choice = tgui_input_list(user, LANG("datum.4231e790", null), LANG("datum.306e67cf", null), singleton_list)
 	if(!choice)
 		return
-	var/amount_choice = input("Amount of pollution:") as null|num
+	var/amount_choice = input(LANG("datum.1d1b0f4f", null)) as null|num
 	if(!amount_choice)
 		return
 	var/turf/epicenter = get_turf(user.mob)

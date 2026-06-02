@@ -479,7 +479,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(admin_ckey)
 		. = admin_ckey
 	else
-		admin_key = input("New admin's key","Admin key") as text|null
+		admin_key = input(LANG("datum.1bc7d09f", null),LANG("datum.0f7e1049", null)) as text|null
 		. = ckey(admin_key)
 	if(!.)
 		return FALSE
@@ -624,7 +624,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			if (!(rank_name in display_rank_names))
 				display_rank_names += rank_name
 
-		var/next_rank = input("Please select a rank, or select [RANK_DONE] if you are finished.") as null|anything in display_rank_names
+		var/next_rank = input(LANG("datum.36aa1492", list(RANK_DONE))) as null|anything in display_rank_names
 
 		if (isnull(next_rank))
 			return
@@ -641,7 +641,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			continue
 
 		if (next_rank == "*New Rank*")
-			var/new_rank_name = input("Please input a new rank", "New custom rank") as text|null
+			var/new_rank_name = input(LANG("datum.47b1768d", null), LANG("datum.947fe91a", null)) as text|null
 			if (!new_rank_name)
 				return
 
@@ -815,7 +815,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		to_chat(usr, span_adminprefix(LANG("datum.ce8d3635", null)), confidential = TRUE)
 		return
 
-	var/new_rank_name = input("Please input a new rank", "New custom rank") as text|null
+	var/new_rank_name = input(LANG("datum.47b1768d", null), LANG("datum.947fe91a", null)) as text|null
 	if (!new_rank_name)
 		return
 

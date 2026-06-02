@@ -11,7 +11,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		jobs += job.title
 
-	var/input_contents = input(user, "Pick a job to join as:", "Latejoin Job Selection") as null|anything in jobs
+	var/input_contents = input(user, LANG("datum.d90e81b8", null), LANG("datum.67faa477", null)) as null|anything in jobs
 
 	if(!input_contents)
 		return

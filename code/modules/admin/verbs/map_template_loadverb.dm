@@ -40,7 +40,7 @@ ADMIN_VERB(map_template_load, R_DEBUG, "Map Template - Place", "Place a map temp
 	user.images -= preview
 
 ADMIN_VERB(map_template_upload, R_DEBUG, "Map Template - Upload", "Upload a map template to the server.", ADMIN_CATEGORY_DEBUG)
-	var/map = input(user, "Choose a Map Template to upload to template storage","Upload Map Template") as null|file
+	var/map = input(user, LANG("datum.b3f7e640", null),LANG("datum.588f2e44", null)) as null|file
 	if(!map)
 		return
 	if(copytext("[map]", -4) != ".dmm")//4 == length(".dmm")

@@ -15,7 +15,7 @@
 	if(!check_rights_for(target_client, R_DEBUG))
 		return
 
-	proc_name = input("Proc name, eg: fake_blood", "Proc:", null) as text|null
+	proc_name = input(LANG("datum.5a6a7f47", null), LANG("datum.a03a6d4f", null), null) as text|null
 	if(!proc_name)
 		return
 

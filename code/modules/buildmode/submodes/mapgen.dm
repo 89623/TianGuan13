@@ -16,7 +16,7 @@
 	for(var/path in gen_paths)
 		var/datum/map_generator/MP = path
 		options[initial(MP.buildmode_name)] = path
-	var/type = input(c,"Select Generator Type","Type") as null|anything in options
+	var/type = input(c,LANG("datum.3a64eda6", null),LANG("datum.18446660", null)) as null|anything in options
 	if(!type)
 		return
 

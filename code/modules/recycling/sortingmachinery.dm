@@ -400,7 +400,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/sales_tagger/click_alt(mob/user)
-	var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
+	var/potential_cut = input(LANG("obj.64a2bf7c", null),LANG("obj.9464744c", list(round(cut_min*100), round(cut_max*100)))) as num|null
 	if(!potential_cut)
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)

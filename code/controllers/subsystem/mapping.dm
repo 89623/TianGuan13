@@ -594,7 +594,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	var/secret = FALSE
 	if(tgui_alert(user, LANG("datum.b4cfc0ff", null), LANG("datum.ed5faa39", null), list("Yes", "No")) == "Yes")
 		secret = TRUE
-	var/answer = input(user, "What kind?","Away") as null|anything in possible_options
+	var/answer = input(user, LANG("datum.368ebd69", null),LANG("datum.d418d931", null)) as null|anything in possible_options
 	switch(answer)
 		if("Custom")
 			var/mapfile = input(user, "Pick file:", "File") as null|file

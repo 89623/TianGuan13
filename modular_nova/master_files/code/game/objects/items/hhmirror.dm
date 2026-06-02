@@ -32,7 +32,7 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes")
+	var/choice = input(user, LANG("obj.7dc7e71c", null), LANG("obj.02611a76", null)) as null|anything in list("name", "race", "gender", "hair", "eyes")
 
 	switch(choice)
 		if("name")
@@ -150,7 +150,7 @@
 	if(!charges == 0) // Later, should also have a lock
 		var/mob/living/carbon/human/human_user = user
 
-		var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "gender", "hair", "eyes")
+		var/choice = input(user, LANG("obj.7dc7e71c", null), LANG("obj.02611a76", null)) as null|anything in list("name", "gender", "hair", "eyes")
 
 		switch(choice)
 			if("name")

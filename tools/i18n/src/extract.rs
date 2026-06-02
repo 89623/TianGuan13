@@ -35,6 +35,7 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         // 以免破坏 `if(alert(...) == "Yes")` 之类的比较。alert 取 [0,1,2] 同时覆盖
         // `alert("msg")` 与 `alert(user, msg, title)` 两种写法（非字符串实参会被安全跳过）。
         "alert" => Some(&[0, 1, 2]),
+        "input" => Some(&[0, 1, 2]),
         "tgui_alert" => Some(&[1, 2]),
         "tgui_input_list" => Some(&[1, 2]),
         "tgui_input_text" => Some(&[1, 2]),
@@ -211,6 +212,18 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog) {
             // 汇聚点调用检测。
             if let Term::Call(name, args) = &term.elem {
                 if let Some(indices) = sink_message_args(name.as_str()) {
+                    for &i in indices {
+                        if let Some(arg) = args.get(i) {
+                            if let Some(template) = build_template(arg) {
+                                emit(catalog, ns, &template);
+                            }
+                        }
+                    }
+                }
+            }
+            // input() 是专用 Term::Input（非 Call），与 rewrite 保持一致地抽取其消息/标题。
+            if let Term::Input { args, .. } = &term.elem {
+                if let Some(indices) = sink_message_args("input") {
                     for &i in indices {
                         if let Some(arg) = args.get(i) {
                             if let Some(template) = build_template(arg) {

@@ -9,6 +9,9 @@
 # 环境：
 #   I18N_LOCALE（默认 zh-Hans）
 #   I18N_CHUNK（每批条数，默认 200）
+#   I18N_MAX_AGENTS（每次运行最多启动 Codex agent 数，默认 8；0 表示不限）
+#   I18N_CONTINUE_ON_FAIL=1（可选，失败后继续；默认失败即停，避免额度/登录错误时继续开 agent）
+#   I18N_CODEX_DELAY_MS（可选，每个 Codex agent 之间等待的毫秒数）
 #   I18N_CODEX_REASONING（默认 low；翻译不需要 xhigh）
 #   I18N_CODEX_MODEL（可选，覆盖 codex 默认模型）
 #   I18N_CODEX_STDIO=inherit（可选，恢复 Codex 全量输出；默认写入 .pending/*.codex.log）

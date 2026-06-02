@@ -50,8 +50,8 @@ locale 解析：
 
 ### TG Proc/File Changes:
 
-- `code/modules/tgui/tgui.dm`: `/datum/tgui/proc/get_payload` —— 在 config 负载注入 `"locale"`，
-  供 TGUI 读取全服 `config.locale`（NOVA EDIT ADDITION）。
+- `code/modules/tgui/tgui.dm`: `/datum/tgui/proc/get_payload` —— ① 在 config 负载注入 `"locale"`（供 TGUI 读 `config.locale`）；② 全服 locale≠en 时对 `ui_data`/`ui_static_data` 跑 `lang_reverse_tree`，把负载里**含空白的多词字符串**反查为译文（接入非 atom datum 的 name/desc/说明等动态内容）。均 NOVA EDIT ADDITION。
+- `code/__HELPERS/_string_lists.dm`: `load_strings_file` —— 全服 locale≠en 时优先读本地化副本 `[directory]/[locale]/[filepath]`（如 `strings/zh-Hans/fishing_tips.txt`），缺则回退英文（NOVA EDIT ADDITION）。接入 `strings/` 里玩家可见的 flavor 数据文件。
 - `tgui/packages/tgui/events/types.ts`: `Config` 类型新增 `locale: string`（NOVA EDIT ADDITION）。
 - `tgui/rspack.config.ts`: `packages/tgui` 使用 `tgui/i18n` JSX runtime，自动本地化静态 JSX 文本；
   `tgui-panel` / `tgui-say` 保持 React 原生 runtime。
@@ -78,8 +78,8 @@ locale 解析：
 - **完整命令手册**：见 `tools/i18n/README.md` 的「命令速查」。常用入口：
   - 进入环境：`nix develop`
   - 游戏/TGUI 重同步：`bash tools/i18n/resync.sh`
-  - 翻译游戏命名空间：`I18N_CHUNK=100 bash tools/i18n/mt/translate-codex.sh obj.json`
-  - 翻译 TGUI：`I18N_CHUNK=100 bash tools/i18n/mt/translate-codex.sh tgui.json`
+  - 翻译游戏命名空间：`I18N_MAX_AGENTS=4 bash tools/i18n/mt/translate-codex.sh obj.json`
+  - 翻译 TGUI：`I18N_MAX_AGENTS=4 bash tools/i18n/mt/translate-codex.sh tgui.json`
   - 人工校对：把 `strings/i18n/<locale>/*.json` 导入你选的在线平台，校对后导回；TGUI 改完后 `node tools/i18n/tgui-catalog.mjs sync`
   - 构建并启动：`tools/build/build.sh && DreamDaemon tgstation.dmb 1337 -trusted`
 - **切全服中文**：配置项 `I18N_SERVER_LOCALE zh-Hans`（`config/`）。游戏文本、name/desc 反查、

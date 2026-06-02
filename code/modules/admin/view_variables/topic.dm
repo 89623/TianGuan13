@@ -63,7 +63,7 @@
 
 		var/Text = href_list["adjustDamage"]
 
-		var/amount = input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num|null
+		var/amount = input(LANG("client.30cacb39", null),LANG("client.f478806c", list(Text)),0) as num|null
 
 		if (isnull(amount))
 			return
@@ -124,9 +124,9 @@
 
 		var/new_val
 		if(href_list["var_tweak"] == "damtype")
-			new_val = input("Enter the new damage type for [editing]","Set Damtype", existing_val) in list(BRUTE, BURN, TOX, OXY, STAMINA, BRAIN)
+			new_val = input(LANG("client.ca4ec840", list(editing)),LANG("client.19927a68", null), existing_val) in list(BRUTE, BURN, TOX, OXY, STAMINA, BRAIN)
 		else
-			new_val = input("Enter the new value for [editing]'s [href_list["var_tweak"]]","Set [href_list["var_tweak"]]", existing_val) as num|null
+			new_val = input(LANG("client.1a67ed87", list(editing, href_list["var_tweak"])),LANG("client.dd6af93a", list(href_list["var_tweak"])), existing_val) as num|null
 		if(isnull(new_val) || new_val == existing_val || QDELETED(editing) || !check_rights(R_VAREDIT))
 			return
 

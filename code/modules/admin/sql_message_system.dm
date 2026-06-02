@@ -7,7 +7,7 @@
 		return
 	var/target_ckey = ckey(target_key)
 	if(!target_key && (type == "note" || type == "message" || type == "watchlist entry"))
-		var/new_key = input(usr,"Who would you like to create a [type] for?","Enter a key or ckey",null) as null|text
+		var/new_key = input(usr,LANG("_root.32f7d0a1", list(type)),LANG("_root.ec188cbb", null),null) as null|text
 		if(!new_key)
 			return
 		var/new_ckey = ckey(new_key)
@@ -36,7 +36,7 @@
 	if(!target_ckey)
 		target_ckey = admin_ckey
 	if(!text)
-		text = input(usr,"Write your [type]","Create [type]") as null|message
+		text = input(usr,LANG("_root.44391fbf", list(type)),LANG("_root.4c321ae2", list(type))) as null|message
 		if(!text)
 			return
 	if(!server)
@@ -53,7 +53,7 @@
 				return
 	if(isnull(expiry))
 		if(tgui_alert(usr, LANG("_root.b439f5ff", null), LANG("_root.baffecd8", null), list("Yes", "No", "Cancel")) == "Yes")
-			var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons.", "Set expiry time", ISOtime()) as null|text
+			var/expire_time = input(LANG("_root.591b2d60", list(type)), LANG("_root.c2d4e8e5", null), ISOtime()) as null|text
 			if(!expire_time)
 				return
 			var/datum/db_query/query_validate_expire_time = SSdbcore.NewQuery(
@@ -72,7 +72,7 @@
 				expiry = query_validate_expire_time.item[1]
 			qdel(query_validate_expire_time)
 	if(type == "note" && isnull(note_severity))
-		note_severity = input("Set the severity of the note.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+		note_severity = input(LANG("_root.d0d9fedd", null), LANG("_root.8099f04b", null), null, null) as null|anything in list("High", "Medium", "Minor", "None")
 		if(!note_severity)
 			return
 	var/list/parameters = list(
@@ -180,7 +180,7 @@
 		var/target_key = query_find_edit_message.item[2]
 		var/admin_key = query_find_edit_message.item[3]
 		var/old_text = query_find_edit_message.item[4]
-		var/new_text = input("Input new [type]", "New [type]", "[old_text]") as null|message
+		var/new_text = input(LANG("_root.726d229c", list(type)), LANG("_root.01f27128", list(type)), "[old_text]") as null|message
 		if(!new_text)
 			qdel(query_find_edit_message)
 			return
@@ -231,7 +231,7 @@
 		var/admin_key = query_find_edit_expiry_message.item[3]
 		var/old_expiry = query_find_edit_expiry_message.item[4]
 		var/new_expiry
-		var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons. Enter -1 to remove expiry time.", "Set expiry time", old_expiry) as null|text
+		var/expire_time = input(LANG("_root.9a1b08e8", list(type)), LANG("_root.c2d4e8e5", null), old_expiry) as null|text
 		if(!expire_time)
 			qdel(query_find_edit_expiry_message)
 			return
@@ -303,7 +303,7 @@
 			old_severity = "NA"
 		var/editor_key = usr.key
 		var/editor_ckey = usr.ckey
-		var/new_severity = input("Set the severity of the note.", "Severity", null, null) as null|anything in list("high", "medium", "minor", "none") //lowercase for edit log consistency
+		var/new_severity = input(LANG("_root.d0d9fedd", null), LANG("_root.8099f04b", null), null, null) as null|anything in list("high", "medium", "minor", "none") //lowercase for edit log consistency
 		if(!new_severity)
 			qdel(query_find_edit_note_severity)
 			return

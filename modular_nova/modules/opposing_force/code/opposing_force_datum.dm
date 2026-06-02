@@ -896,7 +896,7 @@
 
 /// Allows a user to import an OPFOR from json
 /datum/opposing_force/proc/json_import(mob/importer)
-	var/file_uploaded = input(importer, "Choose a .json file to upload. (This WILL override your inputted data)", "Upload JSON template") as null|file
+	var/file_uploaded = input(importer, LANG("datum.6a099157", null), LANG("datum.03676ccb", null)) as null|file
 	if(!file_uploaded)
 		return
 	if(copytext("[file_uploaded]", -5) != ".json") //5 == length(".json")

@@ -44,7 +44,15 @@ GLOBAL_VAR(string_filename_current_key)
 	if(!GLOB.string_cache)
 		GLOB.string_cache = new
 
-	if(fexists("[directory]/[filepath]"))
-		GLOB.string_cache[filepath] = json_load("[directory]/[filepath]")
+	// NOVA EDIT ADDITION START - i18n - 全服非英文时优先读本地化副本 [directory]/[locale]/[filepath]
+	// （如 strings/zh-Hans/fishing_tips.txt）；缺则回退英文原文件。接入 strings/ 里的玩家可见 flavor。
+	var/effective_path = "[directory]/[filepath]"
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		var/localized_path = "[directory]/[GLOB.i18n_server_locale]/[filepath]"
+		if(fexists(localized_path))
+			effective_path = localized_path
+	if(fexists(effective_path))
+		GLOB.string_cache[filepath] = json_load(effective_path)
 	else
 		CRASH("file not found: [directory]/[filepath]")
+	// NOVA EDIT ADDITION END

@@ -23,7 +23,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 	for(var/_theme in typesof(/datum/anonymous_theme))
 		var/datum/anonymous_theme/theme = _theme
 		input_list[initial(theme.name)] = theme
-	var/result = input(usr, "Choose an anonymous theme","going dark") as null|anything in input_list
+	var/result = input(usr, LANG("client.5e9ec89b", null),LANG("client.afd2e858", null)) as null|anything in input_list
 	if(!usr || !result || result == "Cancel")
 		return
 	var/datum/anonymous_theme/chosen_theme = input_list[result]

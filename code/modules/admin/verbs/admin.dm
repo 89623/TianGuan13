@@ -1,6 +1,6 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(show_tip, R_ADMIN, "Show Tip", "Sends a tip to all players.", ADMIN_CATEGORY_MAIN)
-	var/input = input(user, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
+	var/input = input(user, LANG("datum.766cc272", null), LANG("datum.56212106", null), "") as message|null
 	if(!input)
 		return
 
@@ -18,7 +18,7 @@ ADMIN_VERB(show_tip, R_ADMIN, "Show Tip", "Sends a tip to all players.", ADMIN_C
 	BLACKBOX_LOG_ADMIN_VERB("Show Tip")
 
 ADMIN_VERB(announce, R_ADMIN, "Announce", "Announce your desires to the world.", ADMIN_CATEGORY_MAIN)
-	var/message = input(user, "Global message to send:", "Admin Announce")  as message|null
+	var/message = input(user, LANG("datum.5d9a880a", null), LANG("datum.80d9e104", null))  as message|null
 	if(!message)
 		return
 
@@ -54,7 +54,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 	if(!check_rights(R_ADMIN))
 		return
 	var/message = pick(GLOB.admiral_messages)
-	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
+	message = input(LANG("client.e8c4e7fd", null), LANG("client.85810a6d", null), message) as text|null
 
 	if(!message)
 		return
@@ -107,7 +107,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 	if(!check_rights(R_VAREDIT))
 		return
 
-	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
+	var/add_or_remove = input(LANG("datum.ff38684b", null), LANG("datum.a7ca69cf", null)) as null|anything in list("Add","Remove")
 	if(!add_or_remove)
 		return
 	var/list/available_traits = list()
@@ -124,7 +124,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 				var/name = GLOB.admin_trait_name_map[trait] || trait
 				available_traits[name] = trait
 
-	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sort_list(available_traits)
+	var/chosen_trait = input(LANG("datum.cf396259", null), LANG("datum.1ea630e0", null)) as null|anything in sort_list(available_traits)
 	if(!chosen_trait)
 		return
 	chosen_trait = available_traits[chosen_trait]

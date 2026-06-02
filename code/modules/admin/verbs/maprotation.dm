@@ -30,7 +30,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 		log_admin("[key_name(user)] is changing the map to a custom map")
 		var/datum/map_config/virtual_map = new
 
-		var/map_file = input(user, "Pick file:", "Map File") as null|file
+		var/map_file = input(user, LANG("datum.56488294", null), LANG("datum.fb118b01", null)) as null|file
 		if(isnull(map_file))
 			return
 
@@ -58,7 +58,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 		var/list/json_value = list()
 		var/config = tgui_alert(user,LANG("datum.c3afbf7b", null), LANG("datum.14d16896", null), list("Yes", "No"))
 		if(config == "Yes")
-			config_file = input(user, "Pick file:", "Config JSON File") as null|file
+			config_file = input(user, LANG("datum.56488294", null), LANG("datum.9ff9cae6", null)) as null|file
 			if(isnull(config_file))
 				return
 			if(copytext("[config_file]", -5) != ".json")
@@ -76,7 +76,7 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 				return
 		else
 			virtual_map = load_map_config()
-			virtual_map.map_name = input(user, "Choose the name for the map", "Map Name") as null|text
+			virtual_map.map_name = input(user, LANG("datum.e6fc49a9", null), LANG("datum.26e91a0b", null)) as null|text
 			if(isnull(virtual_map.map_name))
 				virtual_map.map_name = "Custom"
 

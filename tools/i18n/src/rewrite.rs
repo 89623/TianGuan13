@@ -43,6 +43,7 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         // 以免破坏 `if(alert(...) == "Yes")` 之类的比较。alert 取 [0,1,2] 同时覆盖
         // `alert("msg")` 与 `alert(user, msg, title)` 两种写法（非字符串实参会被安全跳过）。
         "alert" => Some(&[0, 1, 2]),
+        "input" => Some(&[0, 1, 2]),
         "tgui_alert" => Some(&[1, 2]),
         "tgui_input_list" => Some(&[1, 2]),
         "tgui_input_text" => Some(&[1, 2]),
@@ -236,6 +237,13 @@ impl<'a> Rewriter<'a> {
         if let Expression::Base { term, follow } = expr {
             if let Term::Call(name, args) = &term.elem {
                 if let Some(indices) = sink_message_args(name.as_str()) {
+                    self.try_rewrite_call(term.location, args, indices, ns);
+                }
+            }
+            // input() 是 dreammaker 的专用 Term::Input（因 `as type in list` 语法），不是 Call。
+            // 复用同一套实参定位（term.location 指向 input 关键字，find_open_paren 找其 `(`）。
+            if let Term::Input { args, .. } = &term.elem {
+                if let Some(indices) = sink_message_args("input") {
                     self.try_rewrite_call(term.location, args, indices, ns);
                 }
             }

@@ -139,7 +139,7 @@
 	if(!check_rights_for(user.client, R_DEBUG))
 		return
 	if(action == "runCodeFile")
-		params["code"] = file2text(input(user, "Input File") as null|file)
+		params["code"] = file2text(input(user, LANG("datum.02b08ff6", null)) as null|file)
 		if(isnull(params["code"]))
 			return
 		action = "runCode"

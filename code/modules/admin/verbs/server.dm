@@ -38,7 +38,7 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 		if(alert(user, LANG("datum.94dee4b3", list(SSticker.admin_delay_notice)), LANG("datum.15bc27b6", null), "Yes", "No") != "Yes")
 			return FALSE
 
-	var/result = input(user, "Select reboot method", "World Reboot", options[1]) as null|anything in options
+	var/result = input(user, LANG("datum.d218dc1f", null), LANG("datum.f801363f", null), options[1]) as null|anything in options
 	if(isnull(result))
 		return
 
@@ -136,7 +136,7 @@ ADMIN_VERB(delay_round_end, R_ADMIN, "Delay Round End", "Prevent the server from
 		tgui_alert(user, LANG("datum.cc553680", list(SSticker.admin_delay_notice)), LANG("datum.055c248b", null), list("Ok"))
 		return
 
-	var/delay_reason = input(user, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
+	var/delay_reason = input(user, LANG("datum.dfaedb85", null), LANG("datum.3ec40d76", null)) as null|text
 
 	if(isnull(delay_reason))
 		return
@@ -210,7 +210,7 @@ ADMIN_VERB(toggle_respawn, R_SERVER, "Toggle Respawn", "Toggle the ability to re
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Respawn", "[new_state_text]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 ADMIN_VERB(delay, R_SERVER, "Delay Pre-Game", "Delay the game start.", ADMIN_CATEGORY_SERVER)
-	var/newtime = input(user, "Set a new time in seconds. Set -1 for indefinite delay.", "Set Delay", round(SSticker.GetTimeLeft()/10)) as num|null
+	var/newtime = input(user, LANG("datum.623c5ef9", null), LANG("datum.8f2b8869", null), round(SSticker.GetTimeLeft()/10)) as num|null
 	if(!newtime)
 		return
 	if(SSticker.current_state > GAME_STATE_PREGAME)
@@ -230,8 +230,8 @@ ADMIN_VERB(delay, R_SERVER, "Delay Pre-Game", "Delay the game start.", ADMIN_CAT
 ADMIN_VERB(set_admin_notice, R_SERVER, "Set Admin Notice", "Set an announcement that appears to everyone who joins the server. Only lasts this round.", ADMIN_CATEGORY_SERVER)
 	var/new_admin_notice = input(
 		user,
-		"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):",
-		"Set Notice",
+		LANG("datum.7baedd28", null),
+		LANG("datum.b8478097", null),
 		GLOB.admin_notice,
 	) as message|null
 	if(new_admin_notice == null)

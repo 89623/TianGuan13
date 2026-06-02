@@ -10,7 +10,7 @@
 		targets["[T]"] = T
 
 	var/list/sorted = sort_list(targets)
-	var/target = input(src, "To whom shall we send a message?", "Mentor PM", null) in sorted|null
+	var/target = input(src, LANG("client.ff86bcc5", null), LANG("client.3d1c7496", null), null) in sorted|null
 	cmd_mentor_pm(targets[target], null)
 	SSblackbox.record_feedback("tally", "Mentor_verb", TRUE, "APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

@@ -10,8 +10,8 @@
 /datum/smite/objectify/configure(client/user)
 	var/attempted_target_path = input(
 		user,
-		"Enter typepath of an atom you'd like to turn your victim into.",
-		"Typepath",
+		LANG("datum.f5dd6594", null),
+		LANG("datum.1a01b0f5", null),
 		"[/obj/item/food/bread/plain]",
 	) as null|text
 

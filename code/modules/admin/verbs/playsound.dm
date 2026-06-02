@@ -49,7 +49,7 @@ ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only yo
 
 ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)
 	if(!target)
-		target = input(user, "Choose a mob to play the sound to. Only they will hear it.", "Play Mob Sound") as null|anything in sort_names(GLOB.player_list)
+		target = input(user, LANG("datum.65a0ea09", null), LANG("datum.dfea01ae", null)) as null|anything in sort_names(GLOB.player_list)
 	if(QDELETED(target))
 		return
 	log_admin("[key_name(user)] played a direct mob sound [sound] to [key_name_admin(target)].")

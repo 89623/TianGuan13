@@ -85,20 +85,36 @@ bun tools/i18n/mt/i18n-mt.ts pending
 # 看某个命名空间，例如 obj.json
 bun tools/i18n/mt/i18n-mt.ts pending obj.json
 
-# 翻译全部游戏/TGUI 命名空间（很久，适合分批跑）
+# 翻译全部游戏/TGUI 命名空间（默认每次最多 8 个 Codex agent；重跑会续译）
 bash tools/i18n/mt/translate-codex.sh
 
 # 翻译某个游戏命名空间
-I18N_CHUNK=100 bash tools/i18n/mt/translate-codex.sh obj.json
+I18N_MAX_AGENTS=4 bash tools/i18n/mt/translate-codex.sh obj.json
 
 # 翻译后再检查剩余待译
 bun tools/i18n/mt/i18n-mt.ts pending obj.json
 ```
 
-`I18N_CHUNK` 控制每批喂给 Codex 的条数，默认 `200`；大文件建议 `50` 到 `100`，更稳。翻译脚本默认
-把 Codex 输出写到 `tools/i18n/mt/.pending/*.codex.log`，终端只显示批次进度条和合并数量。相关环境变量：
+翻译脚本每批启动一个 Codex agent。默认 `I18N_MAX_AGENTS=8`，到上限会正常退出；重跑同一命令会重新计算
+`pending`，从剩余待译继续，不会重翻已合并条目。Codex 失败时默认立刻停止，避免额度 / 登录错误后继续开新
+agent。
+
+`I18N_CHUNK` 控制每批喂给 Codex 的条数，默认 `200`；调小更稳但 agent 更多，调大能减少 agent 数但更容易输出不完整。
+翻译脚本默认把 Codex 输出写到 `tools/i18n/mt/.pending/*.codex.log`，终端只显示批次进度条和合并数量。相关环境变量：
 
 ```sh
+# 默认 8；设为 0 才会不限量跑完整个 pending 队列
+I18N_MAX_AGENTS=8
+
+# 兼容别名：同义于 I18N_MAX_AGENTS
+I18N_MAX_BATCHES=8
+
+# 可选：失败后继续；默认失败即停，避免 usage limit / reauth 错误时继续开 agent
+I18N_CONTINUE_ON_FAIL=1
+
+# 可选：每个 Codex agent 之间等待，单位毫秒
+I18N_CODEX_DELAY_MS=2000
+
 # 默认 low，覆盖用户全局 xhigh，翻译任务没必要高推理
 I18N_CODEX_REASONING=low
 
@@ -123,7 +139,7 @@ node tools/i18n/tgui-catalog.mjs sync
 bun tools/i18n/mt/i18n-mt.ts pending tgui.json
 
 # 翻译 TGUI 命名空间
-I18N_CHUNK=100 bash tools/i18n/mt/translate-codex.sh tgui.json
+I18N_MAX_AGENTS=4 bash tools/i18n/mt/translate-codex.sh tgui.json
 
 # TGUI 翻译完或从在线平台导回译文后，都要同步前端运行时目录
 node tools/i18n/tgui-catalog.mjs sync
@@ -155,7 +171,7 @@ return <Button>{t('tgui.print_amount', [amount])}</Button>;
 典型流程：
 
 ```sh
-# 1) 机翻预填（Codex），先把英文目录翻一遍 / 补译
+# 1) 机翻预填（Codex），先把英文目录翻一遍 / 补译；默认每次最多 8 个 agent，重跑续译
 bash tools/i18n/mt/translate-codex.sh
 
 # 2) 把 strings/i18n/<locale>/*.json 导入你选的平台 → 人工校对 → 导出回这些文件

@@ -10,7 +10,7 @@
 		return
 
 	if(!new_type)
-		new_type = input("Mob type path:", "Mob type") as text|null
+		new_type = input(LANG("mob.4cffd853", null), LANG("mob.cca2da41", null)) as text|null
 
 	if(istext(new_type))
 		new_type = text2path(new_type)

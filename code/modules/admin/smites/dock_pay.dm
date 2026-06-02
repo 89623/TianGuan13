@@ -19,7 +19,7 @@
 	if (card.registered_account.account_balance == 0)
 		to_chat(user,  span_warning(LANG("datum.170d76a8", null)))
 		return
-	var/new_cost = input("How much pay are we docking? Negative = giving money. Current balance: [card.registered_account.account_balance] [MONEY_NAME].", "BUDGET CUTS") as num|null
+	var/new_cost = input(LANG("datum.90cc6c0b", list(card.registered_account.account_balance, MONEY_NAME)), LANG("datum.6582c9e9", null)) as num|null
 	if (!new_cost)
 		return
 	if(new_cost < 0)

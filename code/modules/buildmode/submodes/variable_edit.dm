@@ -21,7 +21,7 @@
 	valueholder = null
 
 /datum/buildmode_mode/varedit/change_settings(client/c)
-	varholder = input(c, "Enter variable name:" ,"Name", "name")
+	varholder = input(c, LANG("datum.5e21b7bd", null) ,LANG("datum.e81360ea", null), "name")
 
 	if(!vv_varname_lockcheck(varholder))
 		return

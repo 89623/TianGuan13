@@ -28,7 +28,7 @@
 		to_chat(user, span_warning(LANG("obj.dba114b6", null)))
 		return
 
-	var/user_choice = input(user, "Choose the digging depth. 1 to 30", "Digging Depth Selection") as null|num
+	var/user_choice = input(user, LANG("obj.b490defd", null), LANG("obj.187c7b42", null)) as null|num
 	if(!user_choice)
 		dig_amount = 1
 		dig_speed = 1

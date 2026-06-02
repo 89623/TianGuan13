@@ -120,7 +120,7 @@
 			var/datum/outfit/O = path
 			job_outfits[initial(O.name)] = path
 
-		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sort_list(job_outfits)
+		dresscode = input(LANG("client.5d3c14c3", null), LANG("client.0287867f", null)) as null|anything in sort_list(job_outfits)
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -132,7 +132,7 @@
 			var/datum/outfit/O = path
 			plasmaman_outfits[initial(O.name)] = path
 
-		dresscode = input("Select plasmeme equipment", "Robust quick dress shop") as null|anything in sort_list(plasmaman_outfits)
+		dresscode = input(LANG("client.2d3ee6f2", null), LANG("client.0287867f", null)) as null|anything in sort_list(plasmaman_outfits)
 		dresscode = plasmaman_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -141,7 +141,7 @@
 		var/list/custom_names = list()
 		for(var/datum/outfit/req_outfit in GLOB.custom_outfits)
 			custom_names[req_outfit.name] = req_outfit
-		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in sort_list(custom_names)
+		var/selected_name = input(LANG("client.05436964", null), LANG("client.0287867f", null)) as null|anything in sort_list(custom_names)
 		dresscode = custom_names[selected_name]
 		if(isnull(dresscode))
 			return

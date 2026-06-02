@@ -919,7 +919,7 @@
 		if(!check_rights(R_DEBUG))
 			return
 
-		var/result = input(usr, "This will delete the mob, are you sure?", "Turn into MMI") in list("Yes", "No")
+		var/result = input(usr, LANG("mob.02ac63fa", null), LANG("mob.852300b3", null)) in list("Yes", "No")
 		if(result != "Yes")
 			return
 

@@ -255,7 +255,7 @@
 		usr.client?.debug_variables(to_vv)
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.name_occupations)
+		var/new_role = input(LANG("datum.974afcee", null), LANG("datum.fddd8e45", null), assigned_role.title) as null|anything in sort_list(SSjob.name_occupations)
 		if(isnull(new_role))
 			return
 		var/datum/job/new_job = SSjob.get_job(new_role)
@@ -293,7 +293,7 @@
 					if(1)
 						target_antag = antag_datums[1]
 					else
-						var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in sort_list(antag_datums) + "(new custom antag)"
+						var/datum/antagonist/target = input(LANG("datum.3da6e66c", null), LANG("datum.8ae087fe", null), LANG("datum.707d7f85", null)) as null|anything in sort_list(antag_datums) + "(new custom antag)"
 						if (QDELETED(target))
 							return
 						else if(target == "(new custom antag)")
@@ -308,7 +308,7 @@
 			if(old_objective.name in GLOB.admin_objective_list)
 				def_value = old_objective.name
 
-		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in GLOB.admin_objective_list
+		var/selected_type = input(LANG("datum.4f1a9544", null), LANG("datum.ab83c996", null), def_value) as null|anything in GLOB.admin_objective_list
 		selected_type = GLOB.admin_objective_list[selected_type]
 		if (!selected_type)
 			return
@@ -376,14 +376,14 @@
 				if(1)
 					target_antag = antag_datums[1]
 				else
-					var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in sort_list(antag_datums) + "(new custom antag)"
+					var/datum/antagonist/target = input(LANG("datum.3da6e66c", null), LANG("datum.8ae087fe", null), LANG("datum.707d7f85", null)) as null|anything in sort_list(antag_datums) + "(new custom antag)"
 					if (QDELETED(target))
 						return
 					else if(target == "(new custom antag)")
 						target_antag = add_antag_datum(/datum/antagonist/custom)
 					else
 						target_antag = target
-		var/replace_existing = input("Replace existing objectives?","Replace objectives?") in list("Yes", "No")
+		var/replace_existing = input(LANG("datum.f020efbf", null),LANG("datum.ac04ceee", null)) in list("Yes", "No")
 		if (isnull(replace_existing))
 			return
 		replace_existing = replace_existing == "Yes"
@@ -391,7 +391,7 @@
 		if (!replace_existing)
 			replace_escape = FALSE
 		else
-			replace_escape = input("Replace survive/escape/martyr objectives?","Replace objectives?") in list("Yes", "No")
+			replace_escape = input(LANG("datum.6e286bd3", null),LANG("datum.ac04ceee", null)) in list("Yes", "No")
 			if (isnull(replace_escape))
 				return
 			replace_escape = replace_escape == "Yes"

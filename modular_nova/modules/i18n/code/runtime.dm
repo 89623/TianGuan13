@@ -109,3 +109,33 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 		return text
 	var/list/reverse = lang_build_reverse(locale)
 	return reverse[text] || text
+
+/// 「多词」门槛的反查：仅含空白（多词/短语）的串才查表，避免把 On/None/枚举值/ckey 这类
+/// 单词误翻（动态数据常正好等于某常见词）。短语类（datum 的 desc、多词 name）才反查。
+/proc/lang_reverse_phrase(text)
+	if(!istext(text) || !findtext(text, " "))
+		return text
+	return lang_reverse_text(text)
+
+/// 递归把一个 list（含嵌套 list / 关联 list）里的字符串「值」按多词门槛反查为全服 locale 译文。
+/// 用于 TGUI 的 ui_data/ui_static_data 负载：把非 atom datum 的 name/desc/说明等动态内容本地化。
+/// key 不动（程序用的标识）；就地改写并返回。幂等（已译的中文不会再匹配英文 key）。
+/proc/lang_reverse_tree(list/data)
+	if(!islist(data))
+		return data
+	for(var/i in 1 to length(data))
+		var/key = data[i]
+		var/value = (istext(key) || ispath(key)) ? data[key] : null
+		if(!isnull(value))
+			// 关联项：key -> value，只本地化 value
+			if(islist(value))
+				lang_reverse_tree(value)
+			else if(istext(value))
+				data[key] = lang_reverse_phrase(value)
+		else
+			// flat 元素（无关联值）
+			if(islist(key))
+				lang_reverse_tree(key)
+			else if(istext(key))
+				data[i] = lang_reverse_phrase(key)
+	return data

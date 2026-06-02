@@ -136,7 +136,7 @@
 	if (isnull(pick_sound))
 		return FALSE
 	if (pick_sound == "Yes")
-		projectile_sound = input("", "Select fire sound",) as null|sound
+		projectile_sound = input("", LANG("datum.69f8d024", null),) as null|sound
 
 	return TRUE
 

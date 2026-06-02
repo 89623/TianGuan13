@@ -139,12 +139,12 @@
 
 ADMIN_VERB(debug_nature_map_generator, R_DEBUG, "Test Nature Map Generator", "Test the nature map generator", ADMIN_CATEGORY_DEBUG)
 	var/datum/map_generator/nature/N = new()
-	var/startInput = input(user, "Start turf of Map, (X;Y;Z)", "Map Gen Settings", "1;1;1") as text|null
+	var/startInput = input(user, LANG("datum.1ff2d245", null), LANG("datum.892abeeb", null), "1;1;1") as text|null
 
 	if (isnull(startInput))
 		return
 
-	var/endInput = input(user, "End turf of Map (X;Y;Z)", "Map Gen Settings", "[world.maxx];[world.maxy];[user.mob.z]") as text|null
+	var/endInput = input(user, LANG("datum.113a3b57", null), LANG("datum.892abeeb", null), "[world.maxx];[world.maxy];[user.mob.z]") as text|null
 	if (isnull(endInput))
 		return
 
@@ -182,7 +182,7 @@ ADMIN_VERB(debug_nature_map_generator, R_DEBUG, "Test Nature Map Generator", "Te
 		"All atoms" = CLUSTER_CHECK_ALL_ATOMS,
 	)
 
-	var/moduleClusters = input("Cluster Flags (Cancel to leave unchanged from defaults)","Map Gen Settings") as null|anything in clusters
+	var/moduleClusters = input(LANG("datum.f69eb53f", null),LANG("datum.892abeeb", null)) as null|anything in clusters
 	//null for default
 
 	var/theCluster = 0

@@ -131,7 +131,7 @@ ADMIN_VERB(disable_mapping_verbs, R_DEBUG, "Disable Mapping Verbs", "Disable all
 
 ADMIN_VERB_VISIBILITY(count_objects_on_z_level, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(count_objects_on_z_level, R_DEBUG, "Count Objects On Z-Level", "Counts the number of objects of a certain type on a specific z-level.", ADMIN_CATEGORY_MAPPING)
-	var/level = input(user, "Which z-level?","Level?") as text|null
+	var/level = input(user, LANG("datum.fd40161b", null),LANG("datum.75959238", null)) as text|null
 	if(!level)
 		return
 	var/num_level = text2num(level)
@@ -140,7 +140,7 @@ ADMIN_VERB(count_objects_on_z_level, R_DEBUG, "Count Objects On Z-Level", "Count
 	if(!isnum(num_level))
 		return
 
-	var/type_text = input(user, "Which type path?","Path?") as text|null
+	var/type_text = input(user, LANG("datum.de1bc4fe", null),LANG("datum.b999e666", null)) as text|null
 	if(!type_text)
 		return
 	var/type_path = text2path(type_text)
@@ -169,7 +169,7 @@ ADMIN_VERB(count_objects_on_z_level, R_DEBUG, "Count Objects On Z-Level", "Count
 
 ADMIN_VERB_VISIBILITY(count_objects_all, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(count_objects_all, R_DEBUG, "Count Objects All", "Counts the number of objects of a certain type in the game world.", ADMIN_CATEGORY_MAPPING)
-	var/type_text = input(user, "Which type path?","") as text|null
+	var/type_text = input(user, LANG("datum.de1bc4fe", null),"") as text|null
 	if(!type_text)
 		return
 	var/type_path = text2path(type_text)

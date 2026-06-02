@@ -28,7 +28,7 @@
 
 /obj/item/debug/human_spawner/attack_self(mob/user)
 	..()
-	var/choice = input("Select a species", "Human Spawner", null) in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
+	var/choice = input(LANG("obj.2dc4c8fd", null), LANG("obj.1df368e5", null), null) in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
 	selected_species = GLOB.species_list[choice]
 
 /obj/item/debug/omnitool

@@ -69,7 +69,7 @@ ADMIN_VERB(add_whitelist, R_ADMIN, "Add Whitelist", "Adds a given ckey to the wh
 		to_chat(user, span_warning(LANG("datum.a22807d5", null)))
 		return
 
-	var/ckey_to_whitelist = input(user, "Enter a ckey to add to the whitelist.", "Ckey Input") as text|null
+	var/ckey_to_whitelist = input(user, LANG("datum.42bd108c", null), LANG("datum.1efabe26", null)) as text|null
 	ckey_to_whitelist = ckey(ckey_to_whitelist)
 	if(!ckey_to_whitelist)
 		return

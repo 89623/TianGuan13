@@ -517,7 +517,7 @@
 		"Medical" = "/obj/item/robot_model/ninja/ninja_medical",
 		"Saboteur" = "/obj/item/robot_model/ninja_saboteur",
 	)
-	var/choice = input(src,"What role do you wish to become?","Select Role") in sort_list(modelselected)
+	var/choice = input(src,LANG("mob.5fca178d", null),LANG("mob.a1b9dfd8", null)) in sort_list(modelselected)
 	model.transform_to(modelselected[choice])
 	//NOVA EDIT ADDITION END
 

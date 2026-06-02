@@ -274,7 +274,7 @@ ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucinat
 	)
 
 	if(ispath(chosen, /datum/hallucination/delusion/custom))
-		var/custom_icon_file = input(user, "Pick file for custom delusion:", "Custom Delusion: File") as null|file
+		var/custom_icon_file = input(user, LANG("_root.1cead7ea", null), LANG("_root.e4d4ac1e", null)) as null|file
 		if(!custom_icon_file)
 			return
 

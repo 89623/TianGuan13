@@ -88,7 +88,7 @@
 		maptext = MAPTEXT(new_label)
 		to_chat(user, span_notice(LANG("obj.e122e42b", list(maptext))), confidential = TRUE)
 	if(href_list["edit_sound_file"])
-		var/new_file = input(user, "Choose a sound file.", "Sound Emitter") as null|sound
+		var/new_file = input(user, LANG("obj.9ba58e6e", null), LANG("obj.92fe04ac", null)) as null|sound
 		if(!new_file)
 			return
 		sound_file = new_file

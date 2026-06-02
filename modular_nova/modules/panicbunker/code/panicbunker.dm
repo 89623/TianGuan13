@@ -5,7 +5,7 @@ ADMIN_VERB(addbunkerbypass, R_ADMIN, "Add PB Bypass", "Allows a given ckey to co
 		to_chat(usr, span_adminnotice(LANG("datum.5bf16f98", null)))
 		return
 
-	var/ckeytobypass = input(user, "Enter a ckey to add panic bunker bypass for.", "Ckey Input") as text|null
+	var/ckeytobypass = input(user, LANG("datum.964a8230", null), LANG("datum.1efabe26", null)) as text|null
 	if(!ckeytobypass)
 		return
 
@@ -23,7 +23,7 @@ ADMIN_VERB(revokebunkerbypass, R_ADMIN, "Revoke PB Bypass", "Revoke's a ckey's p
 		to_chat(usr, span_adminnotice(LANG("datum.5bf16f98", null)))
 		return
 
-	var/ckeytobypass = input(user, "Enter a ckey to revoke panic bunker bypass for.", "Ckey Input") as text|null
+	var/ckeytobypass = input(user, LANG("datum.ba961577", null), LANG("datum.1efabe26", null)) as text|null
 	if(!ckeytobypass)
 		return
 

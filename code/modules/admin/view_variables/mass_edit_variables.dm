@@ -28,7 +28,7 @@
 
 		names = sort_list(names)
 
-		variable = input(src, "Which var?", "Var") as null|anything in names
+		variable = input(src, LANG("client.3e95c4ff", null), LANG("client.61b9a9e1", null)) as null|anything in names
 	else
 		variable = var_name
 

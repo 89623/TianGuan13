@@ -101,7 +101,7 @@
 		var/name = printer.printables[typepath]["name"]
 		choices[name] = typepath
 
-	var/choice = input(user, "Select a structure to deploy:", "FOBricator") in choices
+	var/choice = input(user, LANG("datum.3b2fc4c9", null), LANG("datum.668b224e", null)) in choices
 	if (!choice)
 		return
 
@@ -173,7 +173,7 @@
 		var/name = printer.printables[typepath]["name"]
 		choices[name] = typepath
 
-	var/choice = input(user, "Select a structure to deploy:", "FOBricator") in choices
+	var/choice = input(user, LANG("datum.3b2fc4c9", null), LANG("datum.668b224e", null)) in choices
 	if(!choice)
 		return
 

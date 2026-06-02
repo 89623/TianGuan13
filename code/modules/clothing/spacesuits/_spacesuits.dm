@@ -234,8 +234,7 @@
 		range_low = -20 // emagged min temp c
 		range_high = 120 // emagged max temp c
 
-	var/deg_c = input(user, "What temperature would you like to set the thermal regulator to? \
-		([range_low]-[range_high] degrees celcius)") as null|num
+	var/deg_c = input(user, LANG("obj.30fa3a87", list(range_low, range_high))) as null|num
 	if(deg_c && deg_c >= range_low && deg_c <= range_high)
 		temperature_setting = round(T0C + deg_c, 0.1)
 		to_chat(user, span_notice(LANG("obj.0bfcae78", list(deg_c))))

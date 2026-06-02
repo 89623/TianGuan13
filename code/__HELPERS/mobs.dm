@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //check_target_facings() return defines
 /// Two mobs are facing the same direction
 #define FACING_SAME_DIR 1
@@ -545,7 +546,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/list/borgs = active_free_borgs()
 	if(borgs.len)
 		if(user)
-			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sort_list(borgs)
+			. = input(user,LANG("_root.50f8e154", null), LANG("_root.6a0425b6", null), borgs[1]) in sort_list(borgs)
 		else
 			. = pick(borgs)
 	return .
@@ -554,7 +555,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/list/ais = active_ais(FALSE, z, skip_syndicate, only_syndicate)
 	if(ais.len)
 		if(user)
-			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sort_list(ais)
+			. = input(user,LANG("_root.9c8188ec", null), LANG("_root.a67d88fd", null), ais[1]) in sort_list(ais)
 		else
 			. = pick(ais)
 	return .

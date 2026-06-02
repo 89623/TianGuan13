@@ -5,4 +5,6 @@ changes:
   - code_imp: "新增 tools/i18n（基于 SpacemanDMM 的 Rust 字符串抽取/改写工具）、Codex 机翻流水线与 NixOS 开发 flake；人工校对走自选的在线本地化平台。"
   - code_imp: "界面语言改为全服配置控制，并移除玩家个人界面语言偏好。"
   - code_imp: "TGUI 静态文本接入统一 i18n 目录，并在构建时同步前端翻译目录。"
-  - code_imp: "本地化抽取/改写扩展到提示与对话框（alert / tgui_alert / tgui_input_*）的消息与标题文本。"
+  - code_imp: "本地化抽取/改写扩展到提示与对话框（alert / input / tgui_alert / tgui_input_*）的消息与标题文本。"
+  - code_imp: "TGUI 负载（ui_data/ui_static_data）中的多词文本在全服中文时自动反查译文，接入试剂/法术/研究/说明书等非 atom datum 的动态内容。"
+  - code_imp: "字符串列表加载支持本地化副本（strings/<locale>/），可本地化 tips、AI 离子法律、幻觉、垃圾邮件等 flavor 数据文件。"

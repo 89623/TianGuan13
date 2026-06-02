@@ -96,7 +96,7 @@ All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no
 
 **工具（Rust，`tools/i18n/`，基于 SpacemanDMM 的 dreammaker 解析器）**：
 - `nova-i18n extract` —— 抽取玩家可见英文到 `strings/i18n/en/`（与 rewrite **共用 `build_template` 算 key**；合并已存在目录）。
-- `nova-i18n rewrite` —— 幂等把汇聚点的字符串消息改写为 `LANG(...)`；核心文件首行加 `// NOVA EDIT - I18N CODEMOD` 标记；跳过 `#define` 宏体。已覆盖的 sink：`to_chat`/`visible_message`/`audible_message`/`balloon_alert`/`say`/`manual_emote`、examine 的 `. += "…"`、以及提示/对话框 `alert`/`tgui_alert`/`tgui_input_list`/`tgui_input_text`/`tgui_input_number`（仅改消息+标题，**不动**按钮/选项列表/返回值，以免破坏 `if(alert(...)=="Yes")` 比较）。
+- `nova-i18n rewrite` —— 幂等把汇聚点的字符串消息改写为 `LANG(...)`；核心文件首行加 `// NOVA EDIT - I18N CODEMOD` 标记；跳过 `#define` 宏体。已覆盖的 sink：`to_chat`/`visible_message`/`audible_message`/`balloon_alert`/`say`/`manual_emote`、examine 的 `. += "…"`、以及提示/对话框 `alert`/`input`/`tgui_alert`/`tgui_input_list`/`tgui_input_text`/`tgui_input_number`（仅改消息+标题，**不动**按钮/选项列表/返回值/`as type in list`，以免破坏 `if(alert(...)=="Yes")` 比较。注：`input()` 是 dreammaker 的 `Term::Input` 不是 `Call`，工具在 `visit_expr` 专门处理）。
 - `node tools/i18n/tgui-catalog.mjs extract` —— 抽取 TGUI 静态 JSX 文本到 `strings/i18n/en/tgui.json`，复用现有中文译文/术语并同步前端目录。
 - 重同步（合并上游后）：`bash tools/i18n/resync.sh`。CI：`.github/workflows/i18n.yml`。
 
@@ -108,15 +108,17 @@ All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no
 
 **运行（NixOS）**：`nix develop` → `tools/build/build.sh` → `DreamDaemon tgstation.dmb <port> -trusted`。`librust_g.so` 由 devShell 自动软链（缺它服务端卡死）。**32 位 rust_g iconforge OOM**：客户端进大厅时 iconforge（rayon 并行）生成精灵图集会撑爆 32 位地址空间 → abort 核心转储（表现为停在大厅、服务端不刷日志，**非 i18n bug**）；`nix/byond.nix` 的 DreamDaemon 包装器已默认 `RAYON_NUM_THREADS=2` 修复。切全服中文：配置项 `I18N_SERVER_LOCALE zh-Hans`。
 
-**翻译（Codex）**：用 `tools/i18n/mt/translate-codex.sh`（内部 `codex exec -c 'mcp_servers={}' -c 'model_reasoning_effort="low"' -s workspace-write`，禁用 MCP，输出写入 `.pending/*.codex.log`）。逐文件增量翻译，保留 `{0}` 占位符与 HTML/DM 文本宏，套用术语表 `tools/i18n/mt/glossary.zh-Hans.json`。人工校对走**在线本地化平台**（自选——译文是 `strings/i18n/<locale>/*.json` 扁平 JSON，Crowdin / Lokalise / Weblate / Tolgee Cloud 等都能导入导出；不再用自托管 Tolgee）。
+**翻译（Codex）**：用 `tools/i18n/mt/translate-codex.sh`（内部 `codex exec -c 'mcp_servers={}' -c 'model_reasoning_effort="low"' -s workspace-write`，禁用 MCP，输出写入 `.pending/*.codex.log`）。逐文件增量翻译，默认每次最多 `I18N_MAX_AGENTS=8` 个 Codex agent，失败即停；重跑同一命令会从剩余待译继续。保留 `{0}` 占位符与 HTML/DM 文本宏，套用术语表 `tools/i18n/mt/glossary.zh-Hans.json`。人工校对走**在线本地化平台**（自选——译文是 `strings/i18n/<locale>/*.json` 扁平 JSON，Crowdin / Lokalise / Weblate / Tolgee Cloud 等都能导入导出；不再用自托管 Tolgee）。
 
 **命令手册与文件地图**：游戏/TGUI 翻译、在线平台导入导出、上游同步、构建启动等命令集中在 `tools/i18n/README.md`；**全部 i18n 文件位置（含运行时钉死的目录）一览**见 `modular_nova/modules/i18n/readme.md` 的「文件地图」。
 
 **当前覆盖（重要，勿误解为"全部已汉化"）**：
-- 已抽取到目录（可进在线平台/Codex 翻译）：约 73,700 条（含 TGUI 静态文本约 4,904 条）。
-- 已接入运行时 `LANG`（译了就能在游戏里显示）：约 15,700 处**消息/提示类**调用点（含新增的 alert/tgui_* 对话框约 2,093 处）。
-- **name/desc 等变量类文本已接入**：`/atom/Initialize`（master_files/code/game/atoms.dm）+ runtime.dm 的 `lang_reverse_text` 反查表（英文整串→译文，仅无占位符纯串，全服 locale≠en 时生效）。**地图(.dmm) 上放置的物件/区域 name/desc 也走这条**（都过 Initialize），故无需单独抽 .dmm。
+- 已抽取到目录（可进在线平台/Codex 翻译）：约 74,000 条（含 TGUI 静态文本约 4,904 条）。
+- 已接入运行时 `LANG`（译了就能在游戏里显示）：约 16,000 处**消息/提示类**调用点（含 alert/input/tgui_* 对话框）。
+- **atom name/desc 已接入**：`/atom/Initialize`（master_files/code/game/atoms.dm）+ `lang_reverse_text` 反查表（英文整串→译文，仅无占位符纯串，全服 locale≠en 时生效）。**地图(.dmm) 放置的物件/区域 name/desc 也走这条**（都过 Initialize）。
+- **非 atom datum 文本（试剂/法术/研究/说明书等）经 TGUI 接入**：`get_payload`（tgui.dm，NOVA EDIT）对 `ui_data`/`ui_static_data` 跑 `lang_reverse_tree`——递归反查负载里**含空白的多词字符串**（单词跳过避免碰撞），datum 文本在 UI 里即显示译文（译了的话）。
 - **examine 的 `. += "…"` 已接入**（rewrite 处理 AddAssign，含 span 包裹）。
-- 仍未接入：纸张/签名等**玩家书写内容**（本就不该翻）、运行期 `name = "…"` 重新赋值（仅 Initialize 期反查）、多段拼接/纯 `[var]` 拼成的消息。
+- **`strings/` 数据文件已可接入**：`load_strings_file`（_string_lists.dm，NOVA EDIT）locale≠en 时优先读 `strings/<locale>/<原路径>` 副本，缺则回退英文。放译文副本即生效（tips/ion_laws/hallucination/junkmail 等玩家可见 flavor）；口音表/人名表不放副本=永远英文。
+- 仍未接入：聊天里 `[datum.name]` 这类**单词类**插值（TGUI 多词门槛漏，需 P1b 家族 New() 反查）、`browse()`/`output()`/`maptext` 旧式渲染、verb `set name`、纸张/签名等玩家书写内容（本就不该翻）。
 - 实际中文覆盖仍需人工校对；TGUI 当前已抽取约 4,904 条，前端运行时子集只打包已译/语义 key。
 - **TGUI 自动本地化注意**：按英文原文查表，运行时无法区分「字面量文案」与「正好等于常见词的动态数据」；个别误翻把英文原文加进 `tgui/packages/tgui/i18n/localize.ts` 的 `NO_AUTO_TRANSLATE` 即全局豁免。

@@ -118,7 +118,7 @@ ADMIN_VERB(advanced_proc_call, R_DEBUG, "Advanced ProcCall", "Call a proc on any
 			target = null
 			targetselected = FALSE
 
-	var/procpath = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
+	var/procpath = input(LANG("client.4c2dfb15", null),LANG("client.15b42aa3", null), null) as text|null
 	if(!procpath)
 		return
 
@@ -232,7 +232,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 #endif
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "Atom ProcCall", datum/thing as null|area|mob|obj|turf)
-	var/procname = input(user, "Proc name, eg: fake_blood","Proc:", null) as text|null
+	var/procname = input(user, LANG("datum.5a6a7f47", null),LANG("datum.a03a6d4f", null), null) as text|null
 	if(!procname)
 		return
 	if(!hascall(thing, procname))
@@ -257,14 +257,14 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "Atom ProcCall", datum/th
 		to_chat(user, ., confidential = TRUE)
 
 /client/proc/get_callproc_args()
-	var/argnum = input("Number of arguments","Number:",0) as num|null
+	var/argnum = input(LANG("client.6600cbf5", null),LANG("client.3315a00c", null),0) as num|null
 	if(isnull(argnum))
 		return
 
 	. = list()
 	var/list/named_args = list()
 	while(argnum--)
-		var/named_arg = input("Leave blank for positional argument. Positional arguments will be considered as if they were added first.", "Named argument") as text|null
+		var/named_arg = input(LANG("client.66fc208c", null), LANG("client.a944057b", null)) as text|null
 		var/value = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 		if (!value["class"])
 			return

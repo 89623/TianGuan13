@@ -58,7 +58,7 @@
 		return
 	var/alias
 	if(action == "Yes with Alias")
-		var/msg = reject_bad_name(input(usr, "Set your character's alias for this role", "Alias") as text|null)
+		var/msg = reject_bad_name(input(usr, LANG("obj.988dbfa7", null), LANG("obj.ccc9af4f", null)) as text|null)
 		if(!msg)
 			return
 		alias = msg

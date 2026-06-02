@@ -610,7 +610,7 @@
 	if(!cortical_owner.inside_human())
 		owner.balloon_alert(owner, "must be in a host")
 		return
-	var/borer_message = input(cortical_owner, "What would you like to force your host to say?", "Force Speak") as message|null
+	var/borer_message = input(cortical_owner, LANG("datum.cff11def", null), LANG("datum.69d11ea4", null)) as message|null
 	if(!borer_message)
 		owner.balloon_alert(owner, "no message given")
 		return

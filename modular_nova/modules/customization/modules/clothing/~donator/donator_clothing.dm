@@ -131,7 +131,7 @@
 		var/list/selects = colors.Copy()
 		selects["Save"] = "Save"
 		selects["Delete"] = "Delete"
-		var/selection = input(user, "", "Color Menu", currentcolor) as null|anything in selects
+		var/selection = input(user, "", LANG("obj.cdae6578", null), currentcolor) as null|anything in selects
 		if(QDELETED(src) || !user.can_perform_action(src))
 			return
 		switch(selection)
@@ -659,7 +659,7 @@
 /obj/item/clothing/gloves/ring/hypno/ui_action_click(mob/living/user, action)
 	if(!isliving(user) || !can_use(user))
 		return
-	var/message = input(user, "Speak with a hypnotic whisper", "Whisper")
+	var/message = input(user, LANG("obj.e07a49a6", null), LANG("obj.fc9f00ae", null))
 	if(QDELETED(src) || QDELETED(user) || !message || !user.can_speak())
 		return
 	user.whisper(message, spans = spans)
@@ -1444,7 +1444,7 @@
 		return
 
 	if(istype(attacking_item, /obj/item/pen) || istype(attacking_item, /obj/item/toy/crayon))
-		var/choice = input(user, "Select the license type", "License Type Selection") as null|anything in possible_types
+		var/choice = input(user, LANG("obj.8a06c968", null), LANG("obj.1ae692ef", null)) as null|anything in possible_types
 		if(!isnull(choice))
 			name = "license to [choice]"
 
@@ -1626,7 +1626,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/korpstech, 32)
 /obj/item/clothing/accessory/hypno_watch/ui_action_click(mob/living/user, action)
 	if(!isliving(user) || !can_use(user))
 		return
-	var/message = input(user, "Speak with a hypnotic whisper", "Whisper")
+	var/message = input(user, LANG("obj.e07a49a6", null), LANG("obj.fc9f00ae", null))
 	if(QDELETED(src) || QDELETED(user) || !message || !user.can_speak())
 		return
 	user.whisper(message, spans = spans)

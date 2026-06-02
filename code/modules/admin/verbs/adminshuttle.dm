@@ -17,7 +17,7 @@ ADMIN_VERB(change_shuttle_events, R_ADMIN|R_FUN, "Change Shuttle Events", "Chang
 		options[((event in active) ? "(Remove)" : "(Add)") + initial(event.name)] = event
 
 	//Throw up an ugly menu with the shuttle events and the options to add or remove them, or clear them all
-	var/result = input(user, "Choose an event to add/remove", "Shuttle Events") as null|anything in sort_list(options)
+	var/result = input(user, LANG("datum.54487c0d", null), LANG("datum.ab79d7fb", null)) as null|anything in sort_list(options)
 
 	if(result == "Clear")
 		port.event_list.Cut()

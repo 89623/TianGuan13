@@ -3,7 +3,7 @@
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
 	message_admins("[key_name_admin(user)] has started answering [ADMIN_LOOKUPFLW(target)]'s prayer.")
-	var/msg = input(user, "Message:", "Subtle PM to [target.key]") as text|null
+	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.03de8cc3", list(target.key))) as text|null
 
 	if(!msg)
 		message_admins("[key_name_admin(user)] decided not to answer [ADMIN_LOOKUPFLW(target)]'s prayer")
@@ -46,12 +46,12 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 		return
 
 	if (!sender)
-		sender = input("Who is the message from?", "Sender") as null|anything in list(RADIO_CHANNEL_CENTCOM,RADIO_CHANNEL_SYNDICATE)
+		sender = input(LANG("client.25741089", null), LANG("client.2bc502a9", null)) as null|anything in list(RADIO_CHANNEL_CENTCOM,RADIO_CHANNEL_SYNDICATE)
 		if(!sender)
 			return
 
 	message_admins("[key_name_admin(src)] has started answering [key_name_admin(target)]'s [sender] request.")
-	var/input = input("Please enter a message to reply to [key_name(target)] via their headset.","Outgoing message from [sender]", "") as text|null
+	var/input = input(LANG("client.deaf7443", list(key_name(target))),LANG("client.3bc3c9ab", list(sender)), "") as text|null
 	if(!input)
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(target)]'s [sender] request.")
 		return
@@ -66,7 +66,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 	BLACKBOX_LOG_ADMIN_VERB("Headset Message")
 
 ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "Global Narrate", "Send a direct narration to all connected players.", ADMIN_CATEGORY_EVENTS)
-	var/msg = input(user, "Message:", "Enter the text you wish to appear to everyone:") as text|null
+	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.7c26d5bd", null)) as text|null
 	if (!msg)
 		return
 	msg = user.reformat_narration(msg)
@@ -76,10 +76,10 @@ ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "Global Narrate", "Send a direct na
 	BLACKBOX_LOG_ADMIN_VERB("Global Narrate")
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "Local Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/locale in world)
-	var/range = input(user, "Range:", "Narrate to mobs within how many tiles:", 7) as num|null
+	var/range = input(user, LANG("datum.c5d1936b", null), LANG("datum.520ed99b", null), 7) as num|null
 	if(!range)
 		return
-	var/msg = input(user, "Message:", "Enter the text you wish to appear to everyone within view:") as text|null
+	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.4d8da095", null)) as text|null
 	if (!msg)
 		return
 	msg = user.reformat_narration(msg)
@@ -91,7 +91,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "Local Narrate", A
 	BLACKBOX_LOG_ADMIN_VERB("Local Narrate")
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
-	var/msg = input(user, "Message:", "Enter the text you wish to appear to your target:") as text|null
+	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.5d97ad04", null)) as text|null
 
 	if( !msg )
 		return
@@ -106,7 +106,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate",
 	BLACKBOX_LOG_ADMIN_VERB("Direct Narrate")
 
 ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a custom law to the Silicons.", ADMIN_CATEGORY_EVENTS)
-	var/input = input(user, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
+	var/input = input(user, LANG("datum.d01816bc", null), LANG("datum.29297405", null), "") as text|null
 	if(!input)
 		return
 

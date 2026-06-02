@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /client/proc/vv_get_class(var_name, var_value)
 	if(isnull(var_value))
 		. = VV_NULL
@@ -104,7 +105,7 @@
 		if(extra_classes)
 			classes += extra_classes
 
-		.["class"] = input(src, "What kind of data?", "Variable Type", default_class) as null|anything in classes
+		.["class"] = input(src, LANG("client.8e0f156d", null), LANG("client.7c42245a", null), default_class) as null|anything in classes
 		if(holder && holder.marked_datum && .["class"] == markstring)
 			.["class"] = VV_MARKED_DATUM
 

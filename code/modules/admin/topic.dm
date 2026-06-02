@@ -111,7 +111,7 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num|null
+		var/timer = input(LANG("datum.7a9fa483", null),LANG("datum.a982065d", null), SSshuttle.emergency.timeLeft() ) as num|null
 		if(!timer)
 			return
 		SSshuttle.emergency.setTimer(timer SECONDS)
@@ -403,7 +403,7 @@
 		if(!ismob(M))
 			to_chat(usr, LANG("datum.79c90543", null), confidential = TRUE)
 			return
-		var/speech = input("What will [key_name(M)] say?", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
+		var/speech = input(LANG("datum.36afaae5", list(key_name(M))), LANG("datum.58eebcb9", null), "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
 		M.say(speech, forced = "admin speech")
@@ -844,7 +844,7 @@
 		if (!check_rights(R_ADMIN))
 			return
 
-		var/message = input(owner, "As well as a popup, they'll also be sent a message to reply to. What do you want that to be?", "Message") as text|null
+		var/message = input(owner, LANG("datum.fa1640eb", null), LANG("datum.affb7d7e", null)) as text|null
 		if (!message)
 			to_chat(owner, span_notice(LANG("datum.0b619045", null)))
 			return
@@ -907,7 +907,7 @@
 			return
 
 		var/mob/M = locate(href_list["playsoundto"])
-		var/S = input("", "Select a sound file",) as null|sound
+		var/S = input("", LANG("datum.9ffc2daa", null),) as null|sound
 		if(S)
 			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb/play_direct_mob_sound, S, M)
 
@@ -1050,11 +1050,11 @@
 			return
 		var/datum/station_goal/G = new picked()
 		if(picked == /datum/station_goal)
-			var/newname = input("Enter goal name:") as text|null
+			var/newname = input(LANG("datum.f1b9ec85", null)) as text|null
 			if(!newname)
 				return
 			G.name = newname
-			var/description = input("Enter CentCom message contents:") as message|null
+			var/description = input(LANG("datum.d738f81b", null)) as message|null
 			if(!description)
 				return
 			G.report_message = description
@@ -1157,7 +1157,7 @@
 		var/answer = href_list["slowquery"]
 		if(answer == "yes")
 			if(tgui_alert(usr, LANG("datum.8272d331", null), LANG("datum.85e385f2", null), list("Yes", "No")) == "Yes")
-				var/response = input(usr,"What were you just doing?","Query server hang report") as null|text
+				var/response = input(usr,LANG("datum.28a2eed5", null),LANG("datum.85e385f2", null)) as null|text
 				if(response)
 					data["response"] = response
 			logger.Log(LOG_CATEGORY_DEBUG_SQL, "server hang", data)

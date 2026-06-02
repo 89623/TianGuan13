@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //////////////////////////
 //Movable Screen Objects//
@@ -51,7 +52,7 @@ ADMIN_VERB(test_movable_UI, R_DEBUG, "Spawn Movable UI Object", "Spawn a movable
 	M.maptext = MAPTEXT("Movable")
 	M.maptext_width = 64
 
-	var/screen_l = input(user, "Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Movable UI Object") as text|null
+	var/screen_l = input(user, LANG("datum.a9622be6", null),LANG("datum.df64e0c8", null)) as text|null
 	if(!screen_l)
 		return
 
@@ -65,7 +66,7 @@ ADMIN_VERB(test_snap_ui, R_DEBUG, "Spawn Snap UI Object", "Spawn a snap UI objec
 	S.maptext = MAPTEXT("Snap")
 	S.maptext_width = 64
 
-	var/screen_l = input(user,"Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Snap UI Object") as text|null
+	var/screen_l = input(user,LANG("datum.a9622be6", null),LANG("datum.1ad9c84d", null)) as text|null
 	if(!screen_l)
 		return
 

@@ -9,8 +9,8 @@ ADMIN_VERB(panic_bunker, R_SERVER, "Toggle Panic Bunker", "Toggles the panic bun
 	var/time_rec = 0
 	var/message = ""
 	if(new_pb)
-		time_rec = input(user, "How many living minutes should they need to play? 0 to disable.", "Shit's fucked isn't it", CONFIG_GET(number/panic_bunker_living)) as num
-		message = input(user, "What should they see when they log in?", "MMM", CONFIG_GET(string/panic_bunker_message)) as text
+		time_rec = input(user, LANG("datum.540b8679", null), LANG("datum.f8299fde", null), CONFIG_GET(number/panic_bunker_living)) as num
+		message = input(user, LANG("datum.7ca7f984", null), LANG("datum.dda90665", null), CONFIG_GET(string/panic_bunker_message)) as text
 		message = replacetext(message, "%minutes%", time_rec)
 		CONFIG_SET(number/panic_bunker_living, time_rec)
 		CONFIG_SET(string/panic_bunker_message, message)

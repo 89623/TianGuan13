@@ -134,7 +134,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			value = "null"
 		names["#[i] [key] = [value]"] = i
 	if (!index)
-		var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)" + "(CLEAR NULLS)" + "(CLEAR DUPES)" + "(SHUFFLE)"
+		var/variable = input(LANG("client.3e95c4ff", null),LANG("client.61b9a9e1", null)) as null|anything in names + "(ADD VAR)" + "(CLEAR NULLS)" + "(CLEAR DUPES)" + "(SHUFFLE)"
 
 		if(variable == null)
 			return
@@ -311,7 +311,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 		names = sort_list(names)
 
-		variable = input("Which var?","Var") as null|anything in names
+		variable = input(LANG("client.3e95c4ff", null),LANG("client.61b9a9e1", null)) as null|anything in names
 		if(!variable)
 			return
 

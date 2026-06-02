@@ -10,6 +10,7 @@
 //
 // 环境：I18N_LOCALE（默认 zh-Hans）。translate 需要 codex CLI（禁用 MCP 运行）。
 // Codex 输出默认写入 tools/i18n/mt/.pending/*.codex.log，终端只显示批次进度。
+// 默认每次最多启动 8 个 Codex agent，避免一次跑完整库耗尽额度；重跑会从剩余待译继续。
 
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -25,6 +26,23 @@ const CODEX_REASONING = process.env.I18N_CODEX_REASONING ?? 'low';
 const CODEX_MODEL = process.env.I18N_CODEX_MODEL;
 const CODEX_STDIO = process.env.I18N_CODEX_STDIO ?? 'log';
 const PROGRESS_WIDTH = Number(process.env.I18N_PROGRESS_WIDTH ?? 28);
+
+function envInt(name: string, fallback: number): number {
+  const raw = process.env[name];
+  if (raw == null || raw === '') {
+    return fallback;
+  }
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) && parsed >= 0 ? Math.floor(parsed) : fallback;
+}
+
+function envFlag(name: string): boolean {
+  return /^(1|true|yes|on)$/i.test(process.env[name] ?? '');
+}
+
+const MAX_AGENTS = envInt('I18N_MAX_AGENTS', envInt('I18N_MAX_BATCHES', 8));
+const CODEX_DELAY_MS = envInt('I18N_CODEX_DELAY_MS', 0);
+const CONTINUE_ON_FAIL = envFlag('I18N_CONTINUE_ON_FAIL');
 
 type Catalog = Record<string, string>;
 type TranslatedBatch = {
@@ -226,6 +244,13 @@ function tailFile(file: string, lines = 30): string {
   return fs.readFileSync(file, 'utf8').split(/\r?\n/).slice(-lines).join('\n');
 }
 
+async function sleep(ms: number): Promise<void> {
+  if (ms <= 0) {
+    return;
+  }
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function runCodex(prompt: string, logPath: string): Promise<boolean> {
   const args = [
     'exec',
@@ -357,9 +382,10 @@ async function translateBatch(
   };
 }
 
-async function cmdTranslate(args: string[]) {
+async function cmdTranslate(args: string[]): Promise<boolean> {
   fs.mkdirSync(PENDING_DIR, { recursive: true });
   fs.mkdirSync(DST_DIR, { recursive: true });
+  let agentsStarted = 0;
   for (const file of namespaceFiles(args)) {
     const pending = computePending(file);
     const keys = Object.keys(pending);
@@ -376,20 +402,33 @@ async function cmdTranslate(args: string[]) {
         (CODEX_MODEL ? `, model=${CODEX_MODEL}` : '') +
         (CODEX_STDIO === 'inherit'
           ? ', stdout=inherit'
-          : ', stdout=.pending/*.codex.log'),
+          : ', stdout=.pending/*.codex.log') +
+        (MAX_AGENTS > 0
+          ? `, agents=${agentsStarted}/${MAX_AGENTS}`
+          : ', agents=unlimited'),
     );
     const dstFile = path.join(DST_DIR, file);
     for (let start = 0, idx = 0; start < keys.length; start += CHUNK, idx++) {
+      if (MAX_AGENTS > 0 && agentsStarted >= MAX_AGENTS) {
+        console.log(
+          `达到本次 Codex agent 上限 I18N_MAX_AGENTS=${MAX_AGENTS}。重跑同一命令会从剩余待译继续；需要不限量可设 I18N_MAX_AGENTS=0。`,
+        );
+        return true;
+      }
       const batch: Catalog = {};
       for (const key of keys.slice(start, start + CHUNK))
         batch[key] = pending[key];
       const batchNo = idx + 1;
+      const agentNo = agentsStarted + 1;
+      const agentLabel =
+        MAX_AGENTS > 0 ? `agent ${agentNo}/${MAX_AGENTS}` : `agent ${agentNo}`;
       const timer = startProgress(
         file,
         idx,
         batches,
-        `批 ${batchNo}/${batches} Codex 翻译 ${Object.keys(batch).length} 条`,
+        `${agentLabel} 批 ${batchNo}/${batches} Codex 翻译 ${Object.keys(batch).length} 条`,
       );
+      agentsStarted++;
       const translatedBatch = await translateBatch(file, idx, batch);
       if (!translatedBatch) {
         finishProgress(
@@ -399,6 +438,12 @@ async function cmdTranslate(args: string[]) {
           batches,
           `批 ${batchNo}/${batches} 失败`,
         );
+        if (!CONTINUE_ON_FAIL) {
+          console.error(
+            '已停止，避免继续启动新的 Codex agent。处理登录/额度/日志里的错误后，重跑同一命令会从剩余待译继续；若确实要跳过失败继续，设 I18N_CONTINUE_ON_FAIL=1。',
+          );
+          return false;
+        }
         continue;
       }
       const translated = translatedBatch.catalog;
@@ -426,15 +471,21 @@ async function cmdTranslate(args: string[]) {
           `  术语表 +${translatedBatch.glossaryAdded}（已并入 ${path.relative(ROOT, GLOSSARY_PATH)}）`,
         );
       }
+      await sleep(CODEX_DELAY_MS);
     }
   }
   console.log(`完成。请抽检后提交 strings/i18n/${LOCALE}。`);
+  return true;
 }
 
 const [cmd, ...rest] = process.argv.slice(2);
 if (cmd === 'pending') cmdPending(rest);
-else if (cmd === 'translate' || cmd === undefined) await cmdTranslate(rest);
-else {
+else if (cmd === 'translate' || cmd === undefined) {
+  const ok = await cmdTranslate(rest);
+  if (!ok) {
+    process.exit(1);
+  }
+} else {
   console.error('用法: i18n-mt.ts pending|translate [namespace...]');
   process.exit(1);
 }

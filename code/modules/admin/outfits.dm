@@ -13,7 +13,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	SStgui.update_user_uis(admin)
 
 /datum/admins/proc/load_outfit(mob/admin)
-	var/outfit_file = input("Pick outfit json file:", "File") as null|file
+	var/outfit_file = input(LANG("datum.ac56c1ab", null), LANG("datum.c79013ac", null)) as null|file
 	if(!outfit_file)
 		return
 	var/filedata = file2text(outfit_file)

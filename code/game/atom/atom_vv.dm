@@ -116,7 +116,7 @@
 			ai_controller = new result(src)
 
 	if(href_list[VV_HK_MODIFY_TRANSFORM])
-		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate","Shear")
+		var/result = input(usr, LANG("atom.87afafb8", null),LANG("atom.502f2082", null)) as null|anything in list("Scale","Translate","Rotate","Shear")
 		var/matrix/M = transform
 		if(!result)
 			return
@@ -147,17 +147,17 @@
 		SEND_SIGNAL(src, COMSIG_ATOM_VV_MODIFY_TRANSFORM)
 
 	if(href_list[VV_HK_SPIN_ANIMATION])
-		var/num_spins = input(usr, "Do you want infinite spins?", "Spin Animation") in list("Yes", "No")
+		var/num_spins = input(usr, LANG("atom.548a341c", null), LANG("atom.4979cc62", null)) in list("Yes", "No")
 		if(num_spins == "No")
-			num_spins = input(usr, "How many spins?", "Spin Animation") as null|num
+			num_spins = input(usr, LANG("atom.7cdbbbf8", null), LANG("atom.4979cc62", null)) as null|num
 		else
 			num_spins = -1
 		if(!num_spins)
 			return
-		var/spins_per_sec = input(usr, "How many spins per second?", "Spin Animation") as null|num
+		var/spins_per_sec = input(usr, LANG("atom.7e3529c0", null), LANG("atom.4979cc62", null)) as null|num
 		if(!spins_per_sec)
 			return
-		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
+		var/direction = input(usr, LANG("atom.0b76de35", null), LANG("atom.4979cc62", null)) in list("Clockwise", "Counter-clockwise")
 		switch(direction)
 			if("Clockwise")
 				direction = 1
@@ -170,13 +170,13 @@
 	if(href_list[VV_HK_STOP_ALL_ANIMATIONS])
 		// Critical: Needs to be accessible in case of animation spam breaking shit
 		// Do not TGUIfy
-		var/result = input(usr, "Are you sure?", "Stop Animating") in list("Yes", "No")
+		var/result = input(usr, LANG("atom.77344162", null), LANG("atom.aa79af7e", null)) in list("Yes", "No")
 		if(result == "Yes")
 			animate(src, transform = null, flags = ANIMATION_END_NOW) // Literally just fucking stop animating entirely because admin said so
 		return
 
 	if(href_list[VV_HK_AUTO_RENAME])
-		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
+		var/newname = input(usr, LANG("atom.04b1bd5b", null), LANG("atom.19468889", null)) as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
 		if(newname && !(is_ic_filtered(newname) || is_soft_ic_filtered(newname) && tgui_alert(usr, LANG("atom.9b4d40a4", null), LANG("atom.fc9f6a2c", null), list("Confirm", "Cancel")) != "Confirm"))
 			vv_auto_rename(newname)

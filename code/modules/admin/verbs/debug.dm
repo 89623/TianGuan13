@@ -32,7 +32,7 @@ ADMIN_VERB(cmd_admin_robotize, R_FUN, "Make Cyborg", ADMIN_VERB_NO_DESCRIPTION, 
 	if(!length(types))
 		return
 
-	var/key = input(usr, "Choose an object to delete.", "Delete:") as null|anything in sort_list(types)
+	var/key = input(usr, LANG("client.794af202", null), LANG("client.00117a7e", null)) as null|anything in sort_list(types)
 
 	if(!key)
 		return
@@ -729,7 +729,7 @@ ADMIN_VERB(show_line_profiling, R_DEBUG, "Show Line Profiling", "Shows tracked p
 		"Total Time" = GLOBAL_PROC_REF(cmp_profile_time_dsc),
 		"Call Count" = GLOBAL_PROC_REF(cmp_profile_count_dsc),
 	)
-	var/sort = input(user, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
+	var/sort = input(user, LANG("datum.d1c54494", null), LANG("datum.8a38adfd", null), "Avg time") as null|anything in sortlist
 	if (!sort)
 		return
 	sort = sortlist[sort]
