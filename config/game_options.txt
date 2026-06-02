@@ -631,3 +631,12 @@ SPY_HARD_REWARD_TC_THRESHOLD 15
 ## Nova i18n: server-wide UI/message locale.
 ## Supported values: en, zh-Hans
 I18N_SERVER_LOCALE zh-Hans
+
+## Nova i18n: chat-layer Aho-Corasick substring fallback.
+## When enabled (and locale != en), every to_chat line is run through a substring
+## dictionary (auto-built from the multi-word entries of strings/i18n/<locale>/*.json)
+## to translate residual English that isn't a LANG() call — mainly text assembled into
+## a variable then sent to chat. Cost: per-line scan + rare multi-word mis-translation.
+## browse / status panel / lobby maptext fallback is always on when locale != en; only
+## chat is gated by this flag. Default off. Set to 1 to enable.
+I18N_CHAT_FALLBACK 1

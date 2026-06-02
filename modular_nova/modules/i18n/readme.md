@@ -98,9 +98,19 @@ locale 解析：
   - 构建并启动：`tools/build/build.sh && DreamDaemon tgstation.dmb 1337 -trusted`
 - **切全服中文**：配置项 `I18N_SERVER_LOCALE zh-Hans`（`config/`）。游戏文本、name/desc 反查、
   以及 `packages/tgui` 中已进入前端目录的静态文本都跟随这个全服 locale。
-- **聊天层 AC 兜底（可选）**：配置项 `I18N_CHAT_FALLBACK TRUE`（默认关）。开后全服中文时对每条聊天里
-  的残留英文（仅多词短语）做子串兜底翻译，覆盖「英文拼进变量再 to_chat」的长尾；代价是热路径每行
-  开销 + 可能误翻，建议开启后实测。browse / 状态栏 / maptext 的 AC 兜底不受此开关控制（本就低频）。
+- **聊天层 AC 兜底（可选）**：
+  - **AC = Aho-Corasick 子串替换层**（`fallback.dm` 的 `lang_fallback_apply`，基于 rust_g 的
+    `rustg_acreplace`）。在文本输出口把一段文本里出现的英文短语一次性按字典换成中文。用于「不是
+    `LANG()` 调用、整串反查也搞不定」的残留英文——主要是**英文先拼进变量再 `to_chat`**、browse 老网页文案。
+  - **字典从哪来（重要）**：**不是独立文件**。运行时由 `lang_build_reverse` 从已加载的
+    `strings/i18n/<locale>/*.json`（即你正常翻译的那套目录）现算——**只取含空格的多词短语**（单词排除，
+    避免子串误伤）。所以**你翻 `strings/i18n/zh-Hans/*.json`，AC 字典就自动更新**，无需维护额外文件。
+    可选人工补充 `strings/i18n/<locale>/_fallback.json`（扁平 `{"english":"中文"}`，默认不存在）。
+  - **怎么开**：`config/game_options.txt` 写 `I18N_CHAT_FALLBACK 1`（flag，默认关；裸写名字或 `1`=开，
+    `0`=关），重启 `DreamDaemon`（配置启动时读，**无需重新编译**）。
+  - **范围**：此开关**只管聊天**（`to_chat`/`to_chat_immediate`）。browse / 状态栏 / 大厅 maptext 的 AC
+    兜底「locale≠en 就一直开」，不受此开关控制（本就低频）。
+  - **代价**：聊天是热路径，每行多一次 AC 扫描 + 多词短语偶尔误翻动态数据 → 默认关，翻好后开启实测。
 - **NixOS 上启动**：`nix develop` 后 `tools/build/build.sh` 编译，`DreamDaemon tgstation.dmb <port> -trusted`
   运行。`librust_g.so` 由 devShell 自动软链（缺它日志子系统会卡死，见 `nix/rust_g.nix`）。
 - **32 位 rust_g iconforge OOM 崩溃（重要）**：BYOND/rust_g 在 Linux 是 **32 位**进程（地址空间
