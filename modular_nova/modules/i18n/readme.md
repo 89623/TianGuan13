@@ -52,6 +52,7 @@ locale 解析：
 
 - `code/modules/tgui/tgui.dm`: `/datum/tgui/proc/get_payload` —— ① 在 config 负载注入 `"locale"`（供 TGUI 读 `config.locale`）；② 全服 locale≠en 时对 `ui_data`/`ui_static_data` 跑 `lang_reverse_tree`，把负载里**含空白的多词字符串**反查为译文（接入非 atom datum 的 name/desc/说明等动态内容）。均 NOVA EDIT ADDITION。
 - `code/__HELPERS/_string_lists.dm`: `load_strings_file` —— 全服 locale≠en 时优先读本地化副本 `[directory]/[locale]/[filepath]`（如 `strings/zh-Hans/fishing_tips.txt`），缺则回退英文（NOVA EDIT ADDITION）。接入 `strings/` 里玩家可见的 flavor 数据文件。
+- **P1b 关键 datum 家族 New() 反查**（NOVA EDIT ADDITION，全服 locale≠en 时用全量 `lang_reverse_text` 反查 name/desc，覆盖聊天 `[名]` 单词类插值）：`code/modules/reagents/chemistry/reagents.dm`（`/datum/reagent/New`：name/description）、`code/datums/actions/action.dm`（`/datum/action/New`：name/desc）、`code/datums/quirks/_quirk.dm`（`/datum/quirk/New`：name/desc）。其余 datum 家族（disease/material/gas/emote 等，多为单例 + TGUI 显示，已由上面的 get_payload 反查覆盖）按需再加。
 - `tgui/packages/tgui/events/types.ts`: `Config` 类型新增 `locale: string`（NOVA EDIT ADDITION）。
 - `tgui/rspack.config.ts`: `packages/tgui` 使用 `tgui/i18n` JSX runtime，自动本地化静态 JSX 文本；
   `tgui-panel` / `tgui-say` 保持 React 原生 runtime。

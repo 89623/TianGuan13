@@ -118,6 +118,7 @@ All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no
 - **atom name/desc 已接入**：`/atom/Initialize`（master_files/code/game/atoms.dm）+ `lang_reverse_text` 反查表（英文整串→译文，仅无占位符纯串，全服 locale≠en 时生效）。**地图(.dmm) 放置的物件/区域 name/desc 也走这条**（都过 Initialize）。
 - **非 atom datum 文本（试剂/法术/研究/说明书等）经 TGUI 接入**：`get_payload`（tgui.dm，NOVA EDIT）对 `ui_data`/`ui_static_data` 跑 `lang_reverse_tree`——递归反查负载里**含空白的多词字符串**（单词跳过避免碰撞），datum 文本在 UI 里即显示译文（译了的话）。
 - **examine 的 `. += "…"` 已接入**（rewrite 处理 AddAssign，含 span 包裹）。
+- **关键 datum 家族的 name/desc 在创建时反查（P1b）**：`/datum/reagent`、`/datum/action`、`/datum/quirk` 的 `New()` 内联 NOVA EDIT 反查 name/desc（用全量 `lang_reverse_text`，覆盖**聊天里 `[试剂名]` 等单词类插值**——P1 的 TGUI 多词门槛漏掉的）。locale==en 时仅一次比较，零开销。
 - **`strings/` 数据文件已可接入**：`load_strings_file`（_string_lists.dm，NOVA EDIT）locale≠en 时优先读 `strings/<locale>/<原路径>` 副本，缺则回退英文。放译文副本即生效（tips/ion_laws/hallucination/junkmail 等玩家可见 flavor）；口音表/人名表不放副本=永远英文。
 - 仍未接入：聊天里 `[datum.name]` 这类**单词类**插值（TGUI 多词门槛漏，需 P1b 家族 New() 反查）、`browse()`/`output()`/`maptext` 旧式渲染、verb `set name`、纸张/签名等玩家书写内容（本就不该翻）。
 - 实际中文覆盖仍需人工校对；TGUI 当前已抽取约 4,904 条，前端运行时子集只打包已译/语义 key。

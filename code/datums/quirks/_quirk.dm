@@ -47,6 +47,11 @@
 	. = ..()
 	for(var/trait in no_process_traits)
 		LAZYADD(process_update_signals, list(SIGNAL_ADDTRAIT(trait), SIGNAL_REMOVETRAIT(trait)))
+	// NOVA EDIT ADDITION START - i18n - 全服中文时反查特质 name/desc
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		name = lang_reverse_text(name)
+		desc = lang_reverse_text(desc)
+	// NOVA EDIT ADDITION END
 
 /datum/quirk/Destroy()
 	if(quirk_holder)
