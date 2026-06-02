@@ -85,35 +85,56 @@ bun tools/i18n/mt/i18n-mt.ts pending
 # 看某个命名空间，例如 obj.json
 bun tools/i18n/mt/i18n-mt.ts pending obj.json
 
-# 翻译全部游戏/TGUI 命名空间（默认每次最多 8 个 Codex agent；重跑会续译）
+# 看译文里哪些条目没有按术语表统一用词（不调用 Codex）
+bun tools/i18n/mt/i18n-mt.ts terms obj.json
+
+# 翻译全部游戏/TGUI 命名空间（默认单并发串行跑完整个待译队列）
 bash tools/i18n/mt/translate-codex.sh
 
 # 翻译某个游戏命名空间
-I18N_MAX_AGENTS=4 bash tools/i18n/mt/translate-codex.sh obj.json
+bash tools/i18n/mt/translate-codex.sh obj.json
+
+# 只让 Codex 修复术语表不一致的条目
+bash tools/i18n/mt/translate-codex.sh translate-terms obj.json
 
 # 翻译后再检查剩余待译
 bun tools/i18n/mt/i18n-mt.ts pending obj.json
 ```
 
-翻译脚本每批启动一个 Codex agent。默认 `I18N_MAX_AGENTS=8`，到上限会正常退出；重跑同一命令会重新计算
-`pending`，从剩余待译继续，不会重翻已合并条目。Codex 失败时默认立刻停止，避免额度 / 登录错误后继续开新
-agent。
+翻译脚本按批次顺序启动 Codex 调用，不做并行：一批结束并合并后，才会启动下一批。默认
+`I18N_MAX_CODEX_CALLS=0`，表示不限批次数，串行跑到队列完成或失败。Codex 失败时默认立刻停止，避免额度 / 登录错误后继续开新
+调用；重跑同一命令会重新计算 `pending`，从剩余待译继续，不会重翻已合并条目。
 
-`I18N_CHUNK` 控制每批喂给 Codex 的条数，默认 `200`；调小更稳但 agent 更多，调大能减少 agent 数但更容易输出不完整。
+为省 token，翻译中间批次会使用临时数字 ID（例如 `{"0":"English text"}`），并把同批重复英文源合并成一个 ID；
+Codex 输出后再由脚本映射回真实目录 key。这对 TGUI 尤其重要，因为很多 TGUI key 本身就是英文长句。脚本默认每批
+只把“本批英文源里命中的术语”发送给 Codex，不再每批发送完整术语表。
+
+`terms` / `translate-terms` 使用同一份 `tools/i18n/mt/glossary.zh-Hans.json`：如果英文源里出现术语表 key，
+但现有中文译文没有包含对应译名，就会被筛进 `tools/i18n/mt/.pending/glossary-mismatches.<locale>.json`。
+`translate-terms` 只重翻这些条目，用来统一术语，不会处理普通缺译项。
+
+`I18N_CHUNK` 控制每批喂给 Codex 的条数，默认 `200`；调小更稳但调用更多，调大能减少调用数但更容易输出不完整。
 翻译脚本默认把 Codex 输出写到 `tools/i18n/mt/.pending/*.codex.log`，终端只显示批次进度条和合并数量。相关环境变量：
 
 ```sh
-# 默认 8；设为 0 才会不限量跑完整个 pending 队列
-I18N_MAX_AGENTS=8
+# 默认 0：不限批次数，但仍然单并发串行
+I18N_MAX_CODEX_CALLS=0
 
-# 兼容别名：同义于 I18N_MAX_AGENTS
-I18N_MAX_BATCHES=8
+# 兼容旧名：同义于 I18N_MAX_CODEX_CALLS
+I18N_MAX_AGENTS=0
+I18N_MAX_BATCHES=0
 
-# 可选：失败后继续；默认失败即停，避免 usage limit / reauth 错误时继续开 agent
+# 可选：限制一次命令只跑 4 批
+I18N_MAX_CODEX_CALLS=4
+
+# 可选：失败后继续；默认失败即停，避免 usage limit / reauth 错误时继续开调用
 I18N_CONTINUE_ON_FAIL=1
 
-# 可选：每个 Codex agent 之间等待，单位毫秒
+# 可选：每个 Codex 调用之间等待，单位毫秒
 I18N_CODEX_DELAY_MS=2000
+
+# 可选：每批发送完整术语表；默认只发送本批命中的术语，更省 token
+I18N_FULL_GLOSSARY=1
 
 # 默认 low，覆盖用户全局 xhigh，翻译任务没必要高推理
 I18N_CODEX_REASONING=low
@@ -138,8 +159,14 @@ node tools/i18n/tgui-catalog.mjs sync
 # 查看 TGUI 待译
 bun tools/i18n/mt/i18n-mt.ts pending tgui.json
 
+# 查看 TGUI 术语不一致
+bun tools/i18n/mt/i18n-mt.ts terms tgui.json
+
 # 翻译 TGUI 命名空间
-I18N_MAX_AGENTS=4 bash tools/i18n/mt/translate-codex.sh tgui.json
+bash tools/i18n/mt/translate-codex.sh tgui.json
+
+# 只修 TGUI 术语
+bash tools/i18n/mt/translate-codex.sh translate-terms tgui.json
 
 # TGUI 翻译完或从在线平台导回译文后，都要同步前端运行时目录
 node tools/i18n/tgui-catalog.mjs sync
@@ -171,7 +198,7 @@ return <Button>{t('tgui.print_amount', [amount])}</Button>;
 典型流程：
 
 ```sh
-# 1) 机翻预填（Codex），先把英文目录翻一遍 / 补译；默认每次最多 8 个 agent，重跑续译
+# 1) 机翻预填（Codex），先把英文目录翻一遍 / 补译；默认单并发串行跑完整个队列
 bash tools/i18n/mt/translate-codex.sh
 
 # 2) 把 strings/i18n/<locale>/*.json 导入你选的平台 → 人工校对 → 导出回这些文件
@@ -193,6 +220,10 @@ bun tools/i18n/mt/glossary-sync.ts suggest
 
 术语表本体 `tools/i18n/mt/glossary.zh-Hans.json`（英文->中文；保持英文则 value 同 key）由 Codex 机翻直接套用；
 上线在线平台后，多数平台自带术语表/词汇表功能，可把这份 JSON 导入平台维护。
+
+Codex 翻译时可以把本批新发现的固定专名写入 `.pending/*.glossary.json`，但合并阶段会保守过滤：
+只自动收录缩写、带型号/符号的名称、明确的多词专名、少量显式允许的一词专名，以及 `LOWERCASE_TERM_ALLOWLIST` 里的小写游戏术语。
+颜色、方向、大小、普通形容词、普通地点词、普通职业泛称、多义词等不会自动进入术语表；这类词应交给正文上下文翻译。
 
 ### 同步上游
 
