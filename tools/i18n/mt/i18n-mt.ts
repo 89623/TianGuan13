@@ -527,6 +527,21 @@ function hasEnglishWord(s: string): boolean {
   return /[a-z]{3,}/.test(stripNoise(s));
 }
 
+/**
+ * 「已含中文的译文里是否还残留*该补译*的英文」——比 hasEnglishWord 多剥一层有意保留的专名/代码：
+ * CamelCase 标识符（NIFSoft/MULEbot/Ckey）、首字母大写专名（Katsuobushi/Sidecar/Godfather）、
+ * 斜杠代码串（obj/turf/mob）。这些在中文串里几乎都是刻意保留的术语，不该触发「中英混杂→重译」
+ * 的死循环。注意：此剥离*只*用于已有中文的重做判定，不能用于判断「英文源是否该译」
+ * （那里若剥大写，会把 "Reinforced Window" 这类 Title Case 标题误判成已译）。
+ */
+function hasStrayEnglishInTranslation(zh: string): boolean {
+  const t = stripNoise(zh)
+    .replace(/\b[A-Za-z]*[a-z][A-Z][A-Za-z]*\b/g, ' ') // 内部大写标识符：NIFSoft, MULEbot, Ckey
+    .replace(/\b[A-ZÀ-Þ][a-zà-ÿ]{2,}\b/g, ' ') // 首字母大写专名：Katsuobushi, Sidecar, Lanca
+    .replace(/\b[a-z]+(?:\/[a-z]+)+\b/g, ' '); // 斜杠代码串：obj/turf/mob
+  return /[a-z]{3,}/.test(t);
+}
+
 /** 该 key 是否需要（重新）翻译。 */
 function needsTranslation(enVal: string, zhVal: string | undefined): boolean {
   if (zhVal == null || zhVal === '') return hasEnglishWord(enVal); // 缺失
