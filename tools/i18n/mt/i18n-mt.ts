@@ -400,6 +400,34 @@ const GENERIC_GLOSSARY_REJECTS = new Set([
   'yellow',
 ]);
 
+// 通用「中心词」（房间/设施/位置/泛物名）。多词短语若以这些词结尾，多是描述性名称（房间名、
+// 设施名、泛指物品），翻译是组合式的、无需锁进术语表——别让它们污染/膨胀术语表。
+// 注意：不含组织/品牌词（Company/Industries/Consortium/Systems…），那些是专名要保留。
+const GENERIC_HEAD_NOUNS = new Set([
+  'storage', 'office', 'room', 'rooms', 'hall', 'hallway', 'bay', 'lab',
+  'laboratory', 'labs', 'dock', 'docks', 'chamber', 'chambers', 'wing',
+  'outpost', 'restroom', 'restrooms', 'bathroom', 'bathrooms', 'dormitory',
+  'dormitories', 'dorms', 'cell', 'cells', 'kitchen', 'vault', 'hold', 'deck',
+  'corridor', 'junction', 'foyer', 'lobby', 'lounge', 'closet', 'locker',
+  'lockers', 'pantry', 'freezer', 'vehicle', 'depot', 'terminal', 'platform',
+  'atrium', 'courtyard', 'yard', 'range', 'armory', 'brig', 'morgue', 'chapel',
+  'library', 'gym', 'arcade', 'cafeteria', 'canteen', 'quarters', 'barracks',
+  'division', 'department', 'center', 'centre', 'facility', 'area', 'sector',
+  'post', 'supply', 'supplies', 'tech',
+  // 不收 'station'/'module'：地图/站点名（Beta Station…）与 "X Module" 多为专名/保留英文。
+]);
+
+/// 取短语最后一个英文词（小写）。
+function headWord(term: string): string {
+  const words = term.match(/[A-Za-z]+/g) ?? [];
+  return (words[words.length - 1] ?? '').toLowerCase();
+}
+
+function isGenericPhrase(term: string): boolean {
+  const words = term.match(/[A-Za-z]+/g) ?? [];
+  return words.length >= 2 && GENERIC_HEAD_NOUNS.has(headWord(term));
+}
+
 function saveGlossary() {
   const sorted: Record<string, string> = {};
   for (const k of Object.keys(glossary).sort()) sorted[k] = glossary[k];
@@ -409,6 +437,11 @@ function saveGlossary() {
 function isGlossaryAdditionCandidate(en: string): boolean {
   const term = en.trim();
   if (term.length < 3 || term !== en || /[{}<>]/.test(term)) {
+    return false;
+  }
+
+  // 描述性短语（房间/设施/泛物名，以通用中心词结尾）不入术语表——翻译是组合式的、无需锁定。
+  if (isGenericPhrase(term)) {
     return false;
   }
 
@@ -1413,6 +1446,32 @@ async function cmdTranslate(
 }
 
 // 第一个参数不是已知子命令时（如直接传 `tgui.json`）默认走 translate（与旧 wrapper 行为一致）。
+/// 清理术语表里的「描述性短语」（房间/设施/泛物名，以通用中心词结尾）——它们不该当固定术语。
+/// 默认 dry-run 只预览；--apply 或 I18N_PRUNE_APPLY=1 才实际删除（删后请 git diff 复核）。
+function cmdPruneGlossary(args: string[]): void {
+  const apply = args.includes('--apply') || envFlag('I18N_PRUNE_APPLY');
+  // 跳过「保持英文」条目（value===key，如 /vg/station、CDK Station）——那是有意保留的。
+  const flagged = Object.keys(glossary).filter(
+    (k) => isGenericPhrase(k) && glossary[k] !== k,
+  );
+  console.log(
+    `术语表 ${Object.keys(glossary).length} 条；可清理（描述性短语，通用中心词结尾）${flagged.length} 条：`,
+  );
+  for (const k of flagged.slice(0, 40)) console.log(`  - ${k}  →  ${glossary[k]}`);
+  if (flagged.length > 40) console.log(`  …（共 ${flagged.length} 条）`);
+  if (!apply) {
+    console.log(
+      '\n以上为预览（dry-run）。确认无误后加 --apply（或 I18N_PRUNE_APPLY=1）实际删除。',
+    );
+    return;
+  }
+  for (const k of flagged) delete glossary[k];
+  saveGlossary();
+  console.log(
+    `\n已删除 ${flagged.length} 条，术语表现 ${Object.keys(glossary).length} 条。请 git diff 复核。`,
+  );
+}
+
 const SUBCOMMANDS = new Set([
   'pending',
   'terms',
@@ -1420,6 +1479,7 @@ const SUBCOMMANDS = new Set([
   'translate',
   'translate-terms',
   'repair-terms',
+  'prune-glossary',
 ]);
 const argv = process.argv.slice(2);
 const isCmd = argv.length > 0 && SUBCOMMANDS.has(argv[0]);
@@ -1428,6 +1488,7 @@ const rest = isCmd ? argv.slice(1) : argv;
 
 if (cmd === 'pending') cmdPending(rest);
 else if (cmd === 'terms' || cmd === 'term-pending') cmdTerms(rest);
+else if (cmd === 'prune-glossary') cmdPruneGlossary(rest);
 else if (cmd === 'translate-terms' || cmd === 'repair-terms') {
   if (!(await cmdTranslate(rest, 'terms'))) process.exit(1);
 } else {
