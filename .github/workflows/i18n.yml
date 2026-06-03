@@ -64,4 +64,4 @@ jobs:
           commit-message: 'i18n: resync catalogs + rewrite new player-facing strings'
           body: |
             自动重同步：刷新 `strings/i18n/en` 并把新出现的纯字符串消息改写为 `LANG()`。
-            待办：用 Codex 把英文目录的新增项翻译到 `strings/i18n/zh-Hans`（见 tools/i18n/mt/translate-codex.sh）。
+            待办：用 Codex 把英文目录的新增项翻译到 `strings/i18n/zh-Hans`（见 tools/i18n/mt/i18n-mt.ts）。

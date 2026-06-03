@@ -4,7 +4,7 @@
 // 思路：逐 key 判定状态（已译 / 缺失 / 未译 / 中英混杂），只把「待译」的那批喂给 Codex，
 // 翻完合并回 zh-Hans。避免整文件重译，且能把 obj.json 这种里中英混杂的条目挑出来重做。
 //
-// 入口：`bash tools/i18n/mt/translate-codex.sh ...`（薄 shim）或直接 `bun tools/i18n/mt/i18n-mt.ts ...`。
+// 入口：`bun tools/i18n/mt/i18n-mt.ts ...`（已 chmod +x，亦可 `./tools/i18n/mt/i18n-mt.ts ...`）。
 // 命令（第一个参数不是子命令时默认 translate，如 `... tgui.json`）：
 //   pending [ns...]         # 只报告各文件待译数量与样例（不调用模型）
 //   terms [ns...]           # 只报告译文与术语表不一致的条目

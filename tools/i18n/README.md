@@ -89,13 +89,13 @@ bun tools/i18n/mt/i18n-mt.ts pending obj.json
 bun tools/i18n/mt/i18n-mt.ts terms obj.json
 
 # 翻译全部游戏/TGUI 命名空间（默认单并发串行跑完整个待译队列）
-bash tools/i18n/mt/translate-codex.sh
+bun tools/i18n/mt/i18n-mt.ts
 
 # 翻译某个游戏命名空间
-bash tools/i18n/mt/translate-codex.sh obj.json
+bun tools/i18n/mt/i18n-mt.ts obj.json
 
 # 只让 Codex 修复术语表不一致的条目
-bash tools/i18n/mt/translate-codex.sh translate-terms obj.json
+bun tools/i18n/mt/i18n-mt.ts translate-terms obj.json
 
 # 翻译后再检查剩余待译
 bun tools/i18n/mt/i18n-mt.ts pending obj.json
@@ -163,10 +163,10 @@ bun tools/i18n/mt/i18n-mt.ts pending tgui.json
 bun tools/i18n/mt/i18n-mt.ts terms tgui.json
 
 # 翻译 TGUI 命名空间
-bash tools/i18n/mt/translate-codex.sh tgui.json
+bun tools/i18n/mt/i18n-mt.ts tgui.json
 
 # 只修 TGUI 术语
-bash tools/i18n/mt/translate-codex.sh translate-terms tgui.json
+bun tools/i18n/mt/i18n-mt.ts translate-terms tgui.json
 
 # TGUI 翻译完或从在线平台导回译文后，都要同步前端运行时目录
 node tools/i18n/tgui-catalog.mjs sync
@@ -199,7 +199,7 @@ return <Button>{t('tgui.print_amount', [amount])}</Button>;
 
 ```sh
 # 1) 机翻预填（Codex），先把英文目录翻一遍 / 补译；默认单并发串行跑完整个队列
-bash tools/i18n/mt/translate-codex.sh
+bun tools/i18n/mt/i18n-mt.ts
 
 # 2) 把 strings/i18n/<locale>/*.json 导入你选的平台 → 人工校对 → 导出回这些文件
 #    （各平台用自带 CLI / 网页上传下载，格式选「扁平 JSON / key-value JSON」）

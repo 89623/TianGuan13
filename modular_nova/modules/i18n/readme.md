@@ -43,7 +43,7 @@ locale 解析：
 - `tools/i18n/src/*.rs` —— Rust 抽取（`extract`）/ 改写（`rewrite`），基于 SpacemanDMM 的 dreammaker。
 - `tools/i18n/tgui-catalog.mjs` —— TGUI 静态文本抽取 + 同步前端子集（`tgui:build` 会自动 `sync`）。
 - `tools/i18n/resync.sh` —— 合并上游后一键重同步（extract + rewrite + tgui 同步）。
-- `tools/i18n/mt/` —— Codex 机翻（`translate-codex.sh` / `i18n-mt.ts`）+ 术语表 `glossary.zh-Hans.json` + 候选发现 `glossary-sync.ts suggest`。
+- `tools/i18n/mt/` —— 机翻（`i18n-mt.ts`，后端 codex/claude/openai）+ 术语表 `glossary.zh-Hans.json` + 候选发现 `glossary-sync.ts suggest`。
 - `tools/i18n/README.md` —— 命令速查。
 
 **人工校对平台：** 自选**在线**本地化平台（导入导出 `strings/i18n/<locale>/*.json`；Crowdin / Lokalise / Weblate / Tolgee Cloud 等）。自托管 Tolgee 已移除。
@@ -93,9 +93,9 @@ locale 解析：
 - **完整命令手册**：见 `tools/i18n/README.md` 的「命令速查」。常用入口：
   - 进入环境：`nix develop`
   - 游戏/TGUI 重同步：`bash tools/i18n/resync.sh`
-  - 翻译游戏命名空间：`bash tools/i18n/mt/translate-codex.sh obj.json`
-  - 修复术语不一致：`bash tools/i18n/mt/translate-codex.sh translate-terms obj.json`
-  - 翻译 TGUI：`bash tools/i18n/mt/translate-codex.sh tgui.json`
+  - 翻译游戏命名空间：`bun tools/i18n/mt/i18n-mt.ts obj.json`
+  - 修复术语不一致：`bun tools/i18n/mt/i18n-mt.ts translate-terms obj.json`
+  - 翻译 TGUI：`bun tools/i18n/mt/i18n-mt.ts tgui.json`
   - 人工校对：把 `strings/i18n/<locale>/*.json` 导入你选的在线平台，校对后导回；TGUI 改完后 `node tools/i18n/tgui-catalog.mjs sync`
   - 构建并启动：`tools/build/build.sh && DreamDaemon tgstation.dmb 1337 -trusted`
 - **切全服中文**：配置项 `I18N_SERVER_LOCALE zh-Hans`（`config/`）。游戏文本、name/desc 反查、
