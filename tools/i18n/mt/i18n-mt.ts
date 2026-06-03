@@ -27,6 +27,16 @@ const PENDING_DIR = path.join(import.meta.dir, '.pending');
 const CODEX_REASONING = process.env.I18N_CODEX_REASONING ?? 'low';
 const CODEX_MODEL = process.env.I18N_CODEX_MODEL;
 const CODEX_STDIO = process.env.I18N_CODEX_STDIO ?? 'log';
+// 翻译后端：codex（默认，agent 写文件）| claude（Claude Code CLI，agent 写文件）| openai（API，HTTP 返回 JSON）。
+const BACKEND = (process.env.I18N_BACKEND ?? 'codex').toLowerCase();
+const CLAUDE_MODEL = process.env.I18N_CLAUDE_MODEL; // 可选，覆盖 claude 默认模型
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? process.env.I18N_OPENAI_API_KEY;
+const OPENAI_MODEL = process.env.I18N_OPENAI_MODEL ?? 'gpt-4o-mini';
+const OPENAI_BASE_URL = (
+  process.env.I18N_OPENAI_BASE_URL ?? 'https://api.openai.com/v1'
+).replace(/\/+$/, '');
+const BACKEND_LABEL =
+  BACKEND === 'openai' ? 'OpenAI' : BACKEND === 'claude' ? 'Claude Code' : 'Codex';
 const PROGRESS_WIDTH = Number(process.env.I18N_PROGRESS_WIDTH ?? 28);
 
 function envInt(name: string, fallback: number): number {
@@ -726,12 +736,24 @@ async function sleep(ms: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function runCodex(
-  prompt: string,
-  logPath: string,
-  successProbe?: () => boolean,
-): Promise<boolean> {
-  const args = [
+/// 构造 agent CLI 命令（codex / claude；两者都能读写工作区文件，复用「agent 写 outPath + 轮询」流程）。
+function agentCommand(prompt: string): [string, string[]] {
+  if (BACKEND === 'claude') {
+    return [
+      'claude',
+      [
+        '-p',
+        '--permission-mode',
+        'acceptEdits',
+        '--allowedTools',
+        'Read,Write,Edit',
+        ...(CLAUDE_MODEL ? ['--model', CLAUDE_MODEL] : []),
+        prompt,
+      ],
+    ];
+  }
+  // codex（默认）
+  const codexArgs = [
     'exec',
     '-c',
     'mcp_servers={}',
@@ -742,16 +764,23 @@ async function runCodex(
     '--color',
     'never',
   ];
-
   if (CODEX_MODEL) {
-    args.push('-m', CODEX_MODEL);
+    codexArgs.push('-m', CODEX_MODEL);
   }
+  codexArgs.push(prompt);
+  return ['codex', codexArgs];
+}
 
-  args.push(prompt);
+async function runCodex(
+  prompt: string,
+  logPath: string,
+  successProbe?: () => boolean,
+): Promise<boolean> {
+  const [cmd, args] = agentCommand(prompt);
 
   if (CODEX_STDIO === 'inherit') {
     return await new Promise((resolve) => {
-      const child = spawn('codex', args, {
+      const child = spawn(cmd, args, {
         cwd: ROOT,
         env: { ...process.env, NO_COLOR: '1' },
         stdio: 'inherit',
@@ -789,13 +818,13 @@ async function runCodex(
     [
       `\n=== ${new Date().toISOString()} ===`,
       `cwd: ${ROOT}`,
-      `codex ${args.slice(0, -1).join(' ')} <prompt>`,
+      `${cmd} ${args.slice(0, -1).join(' ')} <prompt>`,
       '',
     ].join('\n'),
   );
 
   return await new Promise((resolve) => {
-    const child = spawn('codex', args, {
+    const child = spawn(cmd, args, {
       cwd: ROOT,
       env: { ...process.env, NO_COLOR: '1' },
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -836,6 +865,75 @@ async function runCodex(
       resolve(outputReady);
     });
   });
+}
+
+/// OpenAI API 后端：把本批 JSON 直接发给 chat completions，要求返回译好的 JSON，写入 outPath。
+/// 与 agent 后端不同——不读写工作区文件、不需要 CLI；用 OPENAI_API_KEY + OPENAI_MODEL（可配 base_url
+/// 走兼容 OpenAI 协议的服务，如 DeepSeek/通义/本地 vLLM）。不产出术语表新增（addPath）。
+async function runOpenAI(
+  batch: Catalog,
+  mode: WorkMode,
+  outPath: string,
+  logPath: string,
+): Promise<boolean> {
+  if (!OPENAI_API_KEY) {
+    console.error('  ⚠ 未设置 OPENAI_API_KEY（或 I18N_OPENAI_API_KEY）');
+    return false;
+  }
+  const task =
+    mode === 'terms'
+      ? '这些条目的现有译文与术语表不一致；请重新给出自然中文译文，并严格套用术语表。'
+      : '把每个值翻译为目标语言。';
+  const system =
+    `你是 Space Station 13 游戏文本的专业本地化译者，目标语言：${LOCALE}。${task}` +
+    `输入是紧凑 JSON：键 -> 唯一英文源。把每个值翻译为目标语言，规则：` +
+    `(1) 键完全不变；(2) 逐字保留 {0}/{1}… 占位符、HTML 标签、DM 文本宏（如 \\improper、\\the）；` +
+    `(3) 严格遵循术语表（value===key 的词保持英文不翻，其余英文务必译为中文，不要中英混杂）；` +
+    `(4) 大写缩写（APC/RCD/AI 等）保留英文；(5) 只返回紧凑合法 JSON 对象，键与输入完全一致，不要 Markdown、不要解释。` +
+    `术语表（仅本批命中）：\n${glossaryHint(batch)}`;
+  fs.mkdirSync(path.dirname(logPath), { recursive: true });
+  try {
+    const res = await fetch(`${OPENAI_BASE_URL}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        temperature: 0,
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: JSON.stringify(batch) },
+        ],
+      }),
+    });
+    if (!res.ok) {
+      fs.appendFileSync(
+        logPath,
+        `\n=== openai HTTP ${res.status} ===\n${await res.text()}\n`,
+      );
+      return false;
+    }
+    const data = (await res.json()) as {
+      choices?: { message?: { content?: string } }[];
+    };
+    const content = data?.choices?.[0]?.message?.content;
+    if (typeof content !== 'string') {
+      fs.appendFileSync(logPath, `\n=== openai 无 content ===\n`);
+      return false;
+    }
+    const parsed = JSON.parse(content);
+    fs.writeFileSync(outPath, `${JSON.stringify(parsed)}\n`);
+    return true;
+  } catch (err) {
+    fs.appendFileSync(
+      logPath,
+      `\n=== openai error: ${(err as Error)?.message} ===\n`,
+    );
+    return false;
+  }
 }
 
 function shortIdBatch(batch: Catalog): {
@@ -1012,17 +1110,27 @@ async function translateBatch(
     `不确定是否固定，就不要加入术语表。本批没有合格新增术语就写 {}。` +
     `以下术语表只列本批命中的术语；若需要完整术语表可用 I18N_FULL_GLOSSARY=1 运行。术语表：\n${glossaryHint(batch)}`;
 
-  const ok = await runCodex(prompt, logPath, () =>
-    Boolean(
-      reusableCatalog(inPath, keysPath, outPath, codexBatch, idToKeys, batch),
-    ),
-  );
+  const ok =
+    BACKEND === 'openai'
+      ? await runOpenAI(codexBatch, mode, outPath, logPath)
+      : await runCodex(prompt, logPath, () =>
+          Boolean(
+            reusableCatalog(
+              inPath,
+              keysPath,
+              outPath,
+              codexBatch,
+              idToKeys,
+              batch,
+            ),
+          ),
+        );
   if (!ok) {
     const logHint =
       CODEX_STDIO === 'inherit'
         ? 'Codex 输出已直接打印到终端'
         : `日志：${path.relative(ROOT, logPath)}`;
-    console.error(`\n  ⚠ Codex 执行失败，${logHint}`);
+    console.error(`\n  ⚠ ${BACKEND_LABEL} 执行失败，${logHint}`);
     const tail = tailFile(logPath);
     if (tail) {
       console.error(tail);
@@ -1037,13 +1145,13 @@ async function translateBatch(
   }
 
   if (!fs.existsSync(outPath)) {
-    console.error(`  ⚠ Codex 未产出 ${path.relative(ROOT, outPath)}`);
+    console.error(`  ⚠ ${BACKEND_LABEL} 未产出 ${path.relative(ROOT, outPath)}`);
     return null;
   }
   const catalog = mapTranslatedBatch(readCatalog(outPath), idToKeys, batch);
   if (Object.keys(catalog).length === 0 && Object.keys(batch).length > 0) {
     console.error(
-      `  ⚠ Codex 输出没有可映射的临时数字 ID：${path.relative(ROOT, outPath)}`,
+      `  ⚠ ${BACKEND_LABEL} 输出没有可映射的临时数字 ID：${path.relative(ROOT, outPath)}`,
     );
     return null;
   }
