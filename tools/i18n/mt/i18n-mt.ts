@@ -4,15 +4,21 @@
 // 思路：逐 key 判定状态（已译 / 缺失 / 未译 / 中英混杂），只把「待译」的那批喂给 Codex，
 // 翻完合并回 zh-Hans。避免整文件重译，且能把 obj.json 这种里中英混杂的条目挑出来重做。
 //
-// 命令：
-//   bun tools/i18n/mt/i18n-mt.ts pending [ns...]      # 只报告各文件待译数量与样例（不调用 Codex）
-//   bun tools/i18n/mt/i18n-mt.ts terms [ns...]        # 只报告译文与术语表不一致的条目
-//   bun tools/i18n/mt/i18n-mt.ts translate [ns...]    # 计算待译 -> Codex 翻译 -> 合并回 zh-Hans
-//   bun tools/i18n/mt/i18n-mt.ts translate-terms [ns...] # 只让 Codex 修正术语不一致的条目
+// 入口：`bash tools/i18n/mt/translate-codex.sh ...`（薄 shim）或直接 `bun tools/i18n/mt/i18n-mt.ts ...`。
+// 命令（第一个参数不是子命令时默认 translate，如 `... tgui.json`）：
+//   pending [ns...]         # 只报告各文件待译数量与样例（不调用模型）
+//   terms [ns...]           # 只报告译文与术语表不一致的条目
+//   translate [ns...]       # 计算待译 -> 模型翻译 -> 合并回 zh-Hans
+//   translate-terms [ns...] # 只让模型修正术语不一致的条目
 //
-// 环境：I18N_LOCALE（默认 zh-Hans）。translate 需要 codex CLI（禁用 MCP 运行）。
-// Codex 输出默认写入 tools/i18n/mt/.pending/*.codex.log，终端只显示批次进度。
-// 默认串行跑完整个待译队列：始终只启动 1 个 Codex 调用，结束后再进入下一批。
+// 后端（I18N_BACKEND，默认 codex）：
+//   codex  —— Codex CLI（agent 写文件，禁用 MCP）。  claude —— Claude Code CLI（`claude -p`）。
+//   openai —— OpenAI 兼容 API（HTTP；OPENAI_API_KEY + I18N_OPENAI_MODEL/BASE_URL，可走 DeepSeek/通义/vLLM）。
+//
+// 配置：tools/i18n/mt/.env 启动时自动加载（KEY=VALUE；shell 显式变量优先）。见 .env.example。
+//   I18N_LOCALE(zh-Hans) / I18N_CHUNK(openai 400, agent 200) / I18N_CONCURRENCY(openai 4, agent 1)
+//   I18N_NO_REUSE=1(关跨命名空间复用) / I18N_MAX_CODEX_CALLS / I18N_CONTINUE_ON_FAIL / I18N_FULL_GLOSSARY
+// agent 输出默认写入 tools/i18n/mt/.pending/*.codex.log，终端只显示批次进度。
 
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -1218,10 +1224,34 @@ async function translateBatch(
   };
 }
 
+/// 按后端检查前置条件（agent 查 CLI 是否在 PATH，openai 查 key）。失败返回 false。
+function checkBackendReady(): boolean {
+  if (BACKEND === 'openai') {
+    if (!OPENAI_API_KEY) {
+      console.error('I18N_BACKEND=openai 需设置 OPENAI_API_KEY（或 I18N_OPENAI_API_KEY）。');
+      return false;
+    }
+    return true;
+  }
+  if (BACKEND !== 'codex' && BACKEND !== 'claude') {
+    console.error(`未知 I18N_BACKEND=${BACKEND}（可选 codex / claude / openai）。`);
+    return false;
+  }
+  const cli = BACKEND === 'claude' ? 'claude' : 'codex';
+  if (!Bun.which(cli)) {
+    console.error(
+      `未找到 ${cli} CLI。请先安装并登录 ${BACKEND_LABEL}（或改 I18N_BACKEND=openai 用 API）。`,
+    );
+    return false;
+  }
+  return true;
+}
+
 async function cmdTranslate(
   args: string[],
   mode: WorkMode = 'pending',
 ): Promise<boolean> {
+  if (!checkBackendReady()) return false;
   fs.mkdirSync(PENDING_DIR, { recursive: true });
   fs.mkdirSync(DST_DIR, { recursive: true });
   // 优化①：跨命名空间复用表（仅 pending 模式；terms 模式要重译修术语，不复用）。
@@ -1360,22 +1390,24 @@ async function cmdTranslate(
   return true;
 }
 
-const [cmd, ...rest] = process.argv.slice(2);
+// 第一个参数不是已知子命令时（如直接传 `tgui.json`）默认走 translate（与旧 wrapper 行为一致）。
+const SUBCOMMANDS = new Set([
+  'pending',
+  'terms',
+  'term-pending',
+  'translate',
+  'translate-terms',
+  'repair-terms',
+]);
+const argv = process.argv.slice(2);
+const isCmd = argv.length > 0 && SUBCOMMANDS.has(argv[0]);
+const cmd = isCmd ? argv[0] : 'translate';
+const rest = isCmd ? argv.slice(1) : argv;
+
 if (cmd === 'pending') cmdPending(rest);
 else if (cmd === 'terms' || cmd === 'term-pending') cmdTerms(rest);
 else if (cmd === 'translate-terms' || cmd === 'repair-terms') {
-  const ok = await cmdTranslate(rest, 'terms');
-  if (!ok) {
-    process.exit(1);
-  }
-} else if (cmd === 'translate' || cmd === undefined) {
-  const ok = await cmdTranslate(rest);
-  if (!ok) {
-    process.exit(1);
-  }
+  if (!(await cmdTranslate(rest, 'terms'))) process.exit(1);
 } else {
-  console.error(
-    '用法: i18n-mt.ts pending|terms|translate|translate-terms [namespace...]',
-  );
-  process.exit(1);
+  if (!(await cmdTranslate(rest))) process.exit(1);
 }
