@@ -32,7 +32,24 @@
 #   I18N_CODEX_MODEL / I18N_CLAUDE_MODEL（可选，覆盖各 agent 后端默认模型）
 #   I18N_CODEX_STDIO=inherit（可选，恢复 agent 全量输出；默认写入 .pending/*.codex.log）
 set -euo pipefail
-cd "$(dirname "$0")/../../.."
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR/../../.."
+
+# 加载 tools/i18n/mt/.env（若存在）；**已设置的 shell 变量优先**（只填未设置的，不覆盖）。
+# i18n-mt.ts 也会各自加载（同样 shell 优先）；这里加载是给本脚本 bash 层的后端检查用。
+# 复制 .env.example 为 .env 填好即可，免去每次手敲。
+if [ -f "$SCRIPT_DIR/.env" ]; then
+  while IFS= read -r line || [ -n "$line" ]; do
+    line="${line#"${line%%[![:space:]]*}"}" # 去左侧空白
+    case "$line" in '' | '#'*) continue ;; esac
+    key="${line%%=*}"
+    val="${line#*=}"
+    key="$(printf '%s' "$key" | tr -d '[:space:]')"
+    [ -z "$key" ] && continue
+    val="${val#\"}"; val="${val%\"}"; val="${val#\'}"; val="${val%\'}" # 去两端引号
+    [ -z "${!key+x}" ] && export "$key=$val"
+  done < "$SCRIPT_DIR/.env"
+fi
 
 backend="${I18N_BACKEND:-codex}"
 

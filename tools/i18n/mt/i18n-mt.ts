@@ -18,6 +18,28 @@ import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
+// 加载 tools/i18n/mt/.env（若存在）：KEY=VALUE 行；已在环境里的变量优先（shell 覆盖 .env）。
+// 必须在下面读取 process.env 的 const 之前执行。
+(() => {
+  const envPath = path.join(import.meta.dir, '.env');
+  if (!fs.existsSync(envPath)) return;
+  for (const raw of fs.readFileSync(envPath, 'utf8').split('\n')) {
+    const line = raw.trim();
+    if (!line || line.startsWith('#')) continue;
+    const eq = line.indexOf('=');
+    if (eq < 0) continue;
+    const key = line.slice(0, eq).trim();
+    let val = line.slice(eq + 1).trim();
+    if (
+      (val.startsWith('"') && val.endsWith('"')) ||
+      (val.startsWith("'") && val.endsWith("'"))
+    ) {
+      val = val.slice(1, -1);
+    }
+    if (key && !(key in process.env)) process.env[key] = val;
+  }
+})();
+
 const ROOT = path.resolve(import.meta.dir, '../../..');
 const LOCALE = process.env.I18N_LOCALE ?? 'zh-Hans';
 const EN_DIR = path.join(ROOT, 'strings/i18n/en');
