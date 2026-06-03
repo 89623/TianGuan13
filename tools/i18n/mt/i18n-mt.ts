@@ -930,13 +930,15 @@ async function runCodex(
   });
 }
 
-/// OpenAI API 后端：把本批 JSON 直接发给 chat completions，要求返回译好的 JSON，写入 outPath。
-/// 与 agent 后端不同——不读写工作区文件、不需要 CLI；用 OPENAI_API_KEY + OPENAI_MODEL（可配 base_url
-/// 走兼容 OpenAI 协议的服务，如 DeepSeek/通义/本地 vLLM）。不产出术语表新增（addPath）。
+/// OpenAI API 后端：把本批 JSON 发给 chat completions，要求返回 {translations, glossary_additions}，
+/// translations 写 outPath、glossary_additions 写 addPath（与 agent 后端一致，自动扩术语表；
+/// mergeGlossaryAdditions 之后还会再过滤一遍）。用 OPENAI_API_KEY + OPENAI_MODEL（可配 base_url
+/// 走兼容 OpenAI 协议的服务，如 DeepSeek/通义/本地 vLLM）。
 async function runOpenAI(
   batch: Catalog,
   mode: WorkMode,
   outPath: string,
+  addPath: string,
   logPath: string,
 ): Promise<boolean> {
   if (!OPENAI_API_KEY) {
@@ -949,10 +951,16 @@ async function runOpenAI(
       : '把每个值翻译为目标语言。';
   const system =
     `你是 Space Station 13 游戏文本的专业本地化译者，目标语言：${LOCALE}。${task}` +
-    `输入是紧凑 JSON：键 -> 唯一英文源。把每个值翻译为目标语言，规则：` +
+    `输入是紧凑 JSON：键 -> 唯一英文源。规则：` +
     `(1) 键完全不变；(2) 逐字保留 {0}/{1}… 占位符、HTML 标签、DM 文本宏（如 \\improper、\\the）；` +
     `(3) 严格遵循术语表（value===key 的词保持英文不翻，其余英文务必译为中文，不要中英混杂）；` +
-    `(4) 大写缩写（APC/RCD/AI 等）保留英文；(5) 只返回紧凑合法 JSON 对象，键与输入完全一致，不要 Markdown、不要解释。` +
+    `(4) 大写缩写（APC/RCD/AI 等）保留英文。` +
+    `只返回一个 JSON 对象：{"translations": {键 -> 译文，键与输入完全一致}, ` +
+    `"glossary_additions": {英文固定专名 -> 中文}}，不要 Markdown、不要解释。` +
+    `glossary_additions 只收术语表里没有的「固定专名」：品牌、阵营/组织、物种、舰船/站点/地图名、` +
+    `唯一装备/武器/药剂/材料、型号、缩写、必须保留英文的命令或程序名；` +
+    `不要收普通单词、多义词、颜色、大小、方向、形容词、泛称名词、可随语境翻译的词` +
+    `（如 white/black/large/small/left/right/agent/vendor/crate）。不确定就不收。没有就写 {}。` +
     `术语表（仅本批命中）：\n${glossaryHint(batch)}`;
   fs.mkdirSync(path.dirname(logPath), { recursive: true });
   try {
@@ -988,7 +996,21 @@ async function runOpenAI(
       return false;
     }
     const parsed = JSON.parse(content);
-    fs.writeFileSync(outPath, `${JSON.stringify(parsed)}\n`);
+    // 兼容：模型若直接返回 id->译文（无 translations 包裹），则整体当 translations。
+    const translations =
+      parsed && typeof parsed === 'object' && parsed.translations &&
+      typeof parsed.translations === 'object'
+        ? parsed.translations
+        : parsed;
+    fs.writeFileSync(outPath, `${JSON.stringify(translations)}\n`);
+    const additions = parsed?.glossary_additions;
+    if (
+      additions &&
+      typeof additions === 'object' &&
+      Object.keys(additions).length > 0
+    ) {
+      fs.writeFileSync(addPath, `${JSON.stringify(additions)}\n`);
+    }
     return true;
   } catch (err) {
     fs.appendFileSync(
@@ -1175,7 +1197,7 @@ async function translateBatch(
 
   const ok =
     BACKEND === 'openai'
-      ? await runOpenAI(codexBatch, mode, outPath, logPath)
+      ? await runOpenAI(codexBatch, mode, outPath, addPath, logPath)
       : await runCodex(prompt, logPath, () =>
           Boolean(
             reusableCatalog(
