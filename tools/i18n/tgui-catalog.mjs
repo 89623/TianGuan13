@@ -570,9 +570,78 @@ function extractDmLabels(catalog) {
   }
 }
 
+// 反派偏好（反派 tab）：定义在 TS 里（`key` 是 act 标识符，`name`/`description` 仅显示=安全；
+// 且 TS 端 bundle、不经 DM ui_data，P1 无关）。定义文件多为 .ts，walk() 只扫 .tsx/.jsx 故漏掉。
+// 这里专门抽 antag 定义的 name + description（内联模板字符串数组 + 同目录的共享 description 常量）。
+const ANTAG_DEF_DIR = path.join(
+  TGUI_SOURCE_DIR,
+  'interfaces/PreferencesMenu/antagonists',
+);
+
+function tsFilesUnder(dir, out = []) {
+  let entries;
+  try {
+    entries = fs.readdirSync(dir, { withFileTypes: true });
+  } catch {
+    return out;
+  }
+  for (const entry of entries) {
+    const entryPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      tsFilesUnder(entryPath, out);
+    } else if (entry.name.endsWith('.ts') || entry.name.endsWith('.tsx')) {
+      out.push(entryPath);
+    }
+  }
+  return out;
+}
+
+function extractAntagonistLabels(catalog) {
+  for (const file of tsFilesUnder(ANTAG_DEF_DIR)) {
+    let source;
+    try {
+      source = fs.readFileSync(file, 'utf8');
+    } catch {
+      continue;
+    }
+    const sf = ts.createSourceFile(
+      file,
+      source,
+      ts.ScriptTarget.Latest,
+      true,
+      file.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
+    );
+    const visit = (node) => {
+      if (ts.isPropertyAssignment(node)) {
+        const name = propertyName(node.name);
+        if (name === 'name') {
+          addText(catalog, literalText(node.initializer));
+        } else if (
+          name === 'description' &&
+          ts.isArrayLiteralExpression(node.initializer)
+        ) {
+          for (const element of node.initializer.elements) {
+            addText(catalog, literalText(element));
+          }
+        }
+      } else if (
+        ts.isVariableDeclaration(node) &&
+        node.initializer &&
+        ts.isNoSubstitutionTemplateLiteral(node.initializer)
+      ) {
+        // 共享 description 常量，如 TRAITOR_MECHANICAL_DESCRIPTION = `...`。
+        addText(catalog, literalText(node.initializer));
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(sf);
+  }
+}
+
 function extractCatalog() {
   const catalog = {};
   extractDmLabels(catalog);
+  extractAntagonistLabels(catalog);
   for (const filePath of walk(TGUI_SOURCE_DIR)) {
     const source = fs.readFileSync(filePath, 'utf8');
     const sourceFile = ts.createSourceFile(
