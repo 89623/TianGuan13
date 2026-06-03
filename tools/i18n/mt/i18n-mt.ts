@@ -535,6 +535,30 @@ function computePending(file: string): Catalog {
   return pending;
 }
 
+function writeSorted(file: string, catalog: Catalog): void {
+  const sorted: Catalog = {};
+  for (const key of Object.keys(catalog).sort()) sorted[key] = catalog[key];
+  fs.writeFileSync(file, `${JSON.stringify(sorted, null, 2)}\n`);
+}
+
+/// 跨命名空间「英文原文 -> 已有合格译文」全局表（仅取已译、非中英混杂的条目）。
+/// 用于翻译前复用：同一英文别处已译过就直接套用，不再调模型。与运行时全局反查假设一致。
+function buildGlobalReverse(): Map<string, string> {
+  const reverse = new Map<string, string>();
+  for (const file of namespaceFiles([])) {
+    const en = readCatalog(path.join(EN_DIR, file));
+    const zh = readCatalog(path.join(DST_DIR, file));
+    for (const key of Object.keys(en)) {
+      const e = en[key];
+      const z = zh[key];
+      if (z != null && z !== e && !needsTranslation(e, z) && !reverse.has(e)) {
+        reverse.set(e, z);
+      }
+    }
+  }
+  return reverse;
+}
+
 function termMismatches(
   enVal: string,
   zhVal: string | undefined,
@@ -652,8 +676,19 @@ function glossaryHint(batch: Catalog): string {
   return entries.map(([en, zh]) => `- ${en} => ${zh}`).join('\n');
 }
 
-// 每批喂给 Codex 的条数（大文件如 obj.json 必须分批，否则超上下文）。
-const CHUNK = Number(process.env.I18N_CHUNK ?? 200);
+// 每批喂给模型的条数（大文件如 obj.json 必须分批，否则超上下文）。openai 是单次请求、可吃更大批，
+// 默认调大以减少调用次数/开销；agent 后端保持 200。可用 I18N_CHUNK 覆盖。
+const CHUNK = Number(
+  process.env.I18N_CHUNK ?? (BACKEND === 'openai' ? 400 : 200),
+);
+// 并发批数。agent（codex/claude）重、默认串行(1)；openai 是 API，可并行加速（受额度/限流约束）。
+const CONCURRENCY = Math.max(
+  1,
+  envInt('I18N_CONCURRENCY', BACKEND === 'openai' ? 4 : 1),
+);
+// 跨命名空间复用：同一英文已在别处译过就直接复用、不再调模型（省调用 + 译名一致）。默认开，
+// 与运行时「EN→译文」全局反查的假设一致。I18N_NO_REUSE=1 关闭。
+const REUSE = !envFlag('I18N_NO_REUSE');
 
 function progressLine(
   file: string,
@@ -1167,11 +1202,17 @@ async function cmdTranslate(
 ): Promise<boolean> {
   fs.mkdirSync(PENDING_DIR, { recursive: true });
   fs.mkdirSync(DST_DIR, { recursive: true });
+  // 优化①：跨命名空间复用表（仅 pending 模式；terms 模式要重译修术语，不复用）。
+  const globalReverse =
+    mode === 'pending' && REUSE ? buildGlobalReverse() : new Map<string, string>();
   let codexCallsStarted = 0;
+  let stopped = false; // 达到上限或失败：停止开新调用
+  let hardFail = false; // 失败且不续跑：返回 false
   for (const file of namespaceFiles(args)) {
+    if (stopped) break;
     const pending =
       mode === 'terms' ? computeTermPending(file) : computePending(file);
-    const keys = Object.keys(pending);
+    let keys = Object.keys(pending);
     if (keys.length === 0) {
       console.log(
         `${file}: 无${mode === 'terms' ? '术语不一致' : '待译'}，跳过`,
@@ -1185,88 +1226,112 @@ async function cmdTranslate(
     ) {
       return false;
     }
+    // 优化①：先用全局表把「别处已译过的英文」直接填上，不再调模型。
+    if (mode === 'pending' && REUSE && globalReverse.size) {
+      const merged = readCatalog(dstFile);
+      let prefilled = 0;
+      const remaining: string[] = [];
+      for (const key of keys) {
+        const reused = globalReverse.get(pending[key]);
+        if (reused !== undefined) {
+          merged[key] = reused;
+          prefilled++;
+        } else {
+          remaining.push(key);
+        }
+      }
+      if (prefilled) {
+        writeSorted(dstFile, merged);
+        console.log(`${file}: 复用已有译文 ${prefilled} 条（不调用模型）`);
+      }
+      keys = remaining;
+    }
+    if (keys.length === 0) {
+      continue;
+    }
     const batches = Math.ceil(keys.length / CHUNK);
     console.log(
-      `${file}: ${mode === 'terms' ? '术语不一致' : '待译'} ${keys.length}，分 ${batches} 批（每批 ${CHUNK}）`,
+      `${file}: ${mode === 'terms' ? '术语不一致' : '待译'} ${keys.length}，分 ${batches} 批（每批 ${CHUNK}，并发 ${CONCURRENCY}，后端 ${BACKEND_LABEL}）`,
     );
-    console.log(
-      `Codex: reasoning=${CODEX_REASONING}` +
-        (CODEX_MODEL ? `, model=${CODEX_MODEL}` : '') +
-        (CODEX_STDIO === 'inherit'
-          ? ', stdout=inherit'
-          : ', stdout=.pending/*.codex.log') +
-        (MAX_CODEX_CALLS > 0
-          ? `, calls=${codexCallsStarted}/${MAX_CODEX_CALLS}`
-          : ', calls=unlimited'),
-    );
+    // 预切批。
+    const batchItems: { idx: number; batch: Catalog }[] = [];
     for (let start = 0, idx = 0; start < keys.length; start += CHUNK, idx++) {
-      if (MAX_CODEX_CALLS > 0 && codexCallsStarted >= MAX_CODEX_CALLS) {
-        console.log(
-          `达到本次 Codex 调用上限 I18N_MAX_CODEX_CALLS=${MAX_CODEX_CALLS}。重跑同一命令会从剩余待译继续；需要不限量可设 I18N_MAX_CODEX_CALLS=0。`,
-        );
-        return true;
-      }
       const batch: Catalog = {};
       for (const key of keys.slice(start, start + CHUNK))
         batch[key] = pending[key];
-      const batchNo = idx + 1;
-      const callNo = codexCallsStarted + 1;
-      const callLabel =
-        MAX_CODEX_CALLS > 0
-          ? `call ${callNo}/${MAX_CODEX_CALLS}`
-          : `call ${callNo}`;
-      const timer = startProgress(
-        file,
-        idx,
-        batches,
-        `${callLabel} 批 ${batchNo}/${batches} Codex 翻译 ${Object.keys(batch).length} 条`,
-      );
-      codexCallsStarted++;
-      const translatedBatch = await translateBatch(file, idx, batch, mode);
-      if (!translatedBatch) {
+      batchItems.push({ idx, batch });
+    }
+    // 优化②：并发池（CONCURRENCY 个 worker 拉取批；合并落盘是同步块、worker 间不会交错，安全）。
+    let nextItem = 0;
+    const worker = async (): Promise<void> => {
+      while (!stopped) {
+        const item = batchItems[nextItem++];
+        if (!item) return;
+        if (MAX_CODEX_CALLS > 0 && codexCallsStarted >= MAX_CODEX_CALLS) {
+          stopped = true;
+          console.log(
+            `达到本次调用上限 I18N_MAX_CODEX_CALLS=${MAX_CODEX_CALLS}。重跑同一命令会从剩余待译继续；需要不限量可设 I18N_MAX_CODEX_CALLS=0。`,
+          );
+          return;
+        }
+        const batchNo = item.idx + 1;
+        const callNo = ++codexCallsStarted;
+        const timer = startProgress(
+          file,
+          item.idx,
+          batches,
+          `call ${callNo}${MAX_CODEX_CALLS > 0 ? `/${MAX_CODEX_CALLS}` : ''} 批 ${batchNo}/${batches} ${BACKEND_LABEL} 翻译 ${Object.keys(item.batch).length} 条`,
+        );
+        const translatedBatch = await translateBatch(
+          file,
+          item.idx,
+          item.batch,
+          mode,
+        );
+        if (!translatedBatch) {
+          finishProgress(timer, file, item.idx, batches, `批 ${batchNo}/${batches} 失败`);
+          if (!CONTINUE_ON_FAIL) {
+            stopped = true;
+            hardFail = true;
+          }
+          continue;
+        }
+        // 同步合并落盘（read→apply→write 无 await，并发安全；断点续译：重跑会重算待译）。
+        const merged = readCatalog(dstFile);
+        let applied = 0;
+        for (const key of Object.keys(translatedBatch.catalog)) {
+          if (key in item.batch) {
+            merged[key] = translatedBatch.catalog[key];
+            applied++;
+            if (REUSE) globalReverse.set(item.batch[key], translatedBatch.catalog[key]);
+          }
+        }
+        writeSorted(dstFile, merged);
         finishProgress(
           timer,
           file,
-          idx,
+          batchNo,
           batches,
-          `批 ${batchNo}/${batches} 失败`,
+          translatedBatch.reused
+            ? `批 ${batchNo}/${batches} 复用 .pending 输出，合并 ${applied}`
+            : `批 ${batchNo}/${batches} 合并 ${applied}`,
         );
-        if (!CONTINUE_ON_FAIL) {
-          console.error(
-            '已停止，避免继续启动新的 Codex 调用。处理登录/额度/日志里的错误后，重跑同一命令会从剩余待译继续；若确实要跳过失败继续，设 I18N_CONTINUE_ON_FAIL=1。',
+        if (translatedBatch.glossaryAdded) {
+          console.log(
+            `  术语表 +${translatedBatch.glossaryAdded}（已并入 ${path.relative(ROOT, GLOSSARY_PATH)}）`,
           );
-          return false;
         }
-        continue;
+        if (CODEX_DELAY_MS) await sleep(CODEX_DELAY_MS);
       }
-      const translated = translatedBatch.catalog;
-      // 每批翻完即合并落盘（断点续译：重跑会重新计算待译，已译的不再出现）。
-      const merged = readCatalog(dstFile);
-      let applied = 0;
-      for (const key of Object.keys(translated)) {
-        if (key in batch) {
-          merged[key] = translated[key];
-          applied++;
-        }
-      }
-      const sorted: Catalog = {};
-      for (const key of Object.keys(merged).sort()) sorted[key] = merged[key];
-      fs.writeFileSync(dstFile, `${JSON.stringify(sorted, null, 2)}\n`);
-      finishProgress(
-        timer,
-        file,
-        batchNo,
-        batches,
-        translatedBatch.reused
-          ? `批 ${batchNo}/${batches} 复用 .pending 输出，合并 ${applied}`
-          : `批 ${batchNo}/${batches} 合并 ${applied}`,
+    };
+    await Promise.all(
+      Array.from({ length: Math.min(CONCURRENCY, batchItems.length) }, worker),
+    );
+    if (hardFail) {
+      console.error(
+        '已停止，避免继续启动新的调用。处理登录/额度/日志里的错误后，重跑同一命令会从剩余待译继续；若确实要跳过失败继续，设 I18N_CONTINUE_ON_FAIL=1。',
       );
-      if (translatedBatch.glossaryAdded) {
-        console.log(
-          `  术语表 +${translatedBatch.glossaryAdded}（已并入 ${path.relative(ROOT, GLOSSARY_PATH)}）`,
-        );
-      }
-      await sleep(CODEX_DELAY_MS);
+      return false;
     }
   }
   console.log(`完成。请抽检后提交 strings/i18n/${LOCALE}。`);

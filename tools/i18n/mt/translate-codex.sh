@@ -16,9 +16,13 @@
 #   例：I18N_BACKEND=openai OPENAI_API_KEY=sk-... bash tools/i18n/mt/translate-codex.sh tgui.json
 #       I18N_BACKEND=claude bash tools/i18n/mt/translate-codex.sh tgui.json
 #
+# 优化（默认已开/合理值）：
+#   I18N_CONCURRENCY（并发批数；openai 默认 4，agent 默认 1。API 后端调大可显著加速，注意限流/额度）
+#   I18N_NO_REUSE=1（关闭「跨命名空间复用」；默认开：同一英文别处已译过就直接套用、不再调模型）
+#
 # 环境：
 #   I18N_LOCALE（默认 zh-Hans）
-#   I18N_CHUNK（每批条数，默认 200）
+#   I18N_CHUNK（每批条数；openai 默认 400、agent 默认 200）
 #   I18N_MAX_CODEX_CALLS（每次运行最多启动的模型调用数，默认 0 不限；仍然单并发串行）
 #   I18N_MAX_AGENTS（兼容旧名，同义于 I18N_MAX_CODEX_CALLS）
 #   I18N_CONTINUE_ON_FAIL=1（可选，失败后继续；默认失败即停，避免额度/登录错误时继续开调用）
