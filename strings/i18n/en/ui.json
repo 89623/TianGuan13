@@ -17,5 +17,6 @@
   "ui.tag_flammable": "flammable",
   "ui.tag_freeze_proof": "freeze-proof",
   "ui.tag_indestructible": "indestructible",
-  "ui.tag_lava_proof": "lava-proof"
+  "ui.tag_lava_proof": "lava-proof",
+  "ui.tip_of_the_round": "Tip of the round"
 }
