@@ -709,6 +709,23 @@ function extractCatalog() {
         ) {
           addText(catalog, literalText(node.initializer));
         }
+      } else if (
+        ts.isStringLiteral(node) ||
+        ts.isNoSubstitutionTemplateLiteral(node)
+      ) {
+        // TS 逻辑里的「句子型」UI 文案（return / 三元 / 赋值的字符串字面量；JSX 文本/属性分支抓不到，
+        // 如 PersonalityPage 的 'You have no personality.'）。运行时 auto-localize 会按英文原文翻这些
+        // 渲染出的串，缺的只是把它们抽进目录。保守启发式（含空格 + 首字母大写 + 句末标点 + 无
+        // </>/{}/=/_ 等标识符/标签字符）只取自然语句，避开 className/key/路径/act 标识符。
+        const t = node.text;
+        if (
+          /\s/.test(t) &&
+          /^[A-Z]/.test(t) &&
+          /[.!?]$/.test(t) &&
+          !/[<>{}/=_]/.test(t)
+        ) {
+          addText(catalog, t);
+        }
       }
 
       ts.forEachChild(node, visit);
