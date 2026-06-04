@@ -513,10 +513,13 @@ const DM_LABEL_SOURCES = [
   // 职业名/部门名：job_types 用 `title = JOB_X`（#define 常量），字面量在 jobs.dm 的 #define 里。
   ['code/__DEFINES/jobs.dm', false, /#define\s+\w+\s+"([^"]+)"/g],
   ['modular_nova/master_files/code/__DEFINES', true, /#define\s+JOB_\w+\s+"([^"]+)"/g],
-  // 怪癖名：各 quirk 子类型的 `name = "..."`（核心 + modular_nova 的 master_files quirks，
-  // 否则 Brain Degeneration / Nerve Stapled 这类下游 quirk 名漏抽、前端永远英文）。
+  // 怪癖名：各 quirk 子类型的 `name = "..."`。核心 quirks 目录全是 quirk，直接抽；modular_nova 的
+  // quirk 散在 master_files/datums/{quirks,traits}、modules/*_quirk、lewd_quirks、changeling 等
+  // 20+ 处 → 用 requireMarker '/datum/quirk' 递归扫、只取 quirk 文件的 name(不碰物品/生物名)。
   ['code/datums/quirks', true, /^\s*name\s*=\s*"([^"]+)"/gm],
-  ['modular_nova/master_files/code/datums/quirks', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  ['modular_nova', true, /^\s*name\s*=\s*"([^"]+)"/gm, '/datum/quirk'],
+  // 替代职业名(alt_titles 下拉选项)：每行一个 "Title",。按名选择但前端只翻显示=安全。
+  ['modular_nova/modules/alternative_job_titles', true, /^\s+"([A-Za-z][^"]*)",?\s*$/gm],
   // 人格名（特质与个性→人格 tab；按 datum 路径选择，name 仅显示=安全）。
   ['code/datums/personality', true, /^\s*name\s*=\s*"([^"]+)"/gm],
   ['modular_nova/master_files/code/datums/personality', true, /^\s*name\s*=\s*"([^"]+)"/gm],
@@ -567,7 +570,13 @@ function dmFilesUnder(absPath, recursive, out) {
     out.push(absPath);
     return out;
   }
-  for (const entry of fs.readdirSync(absPath, { withFileTypes: true })) {
+  let entries;
+  try {
+    entries = fs.readdirSync(absPath, { withFileTypes: true });
+  } catch {
+    return out; // 无权限目录（如 tolgee-*）等：跳过，不崩。
+  }
+  for (const entry of entries) {
     const entryPath = path.join(absPath, entry.name);
     if (entry.isDirectory()) {
       if (recursive) dmFilesUnder(entryPath, recursive, out);
@@ -579,12 +588,17 @@ function dmFilesUnder(absPath, recursive, out) {
 }
 
 function extractDmLabels(catalog) {
-  for (const [rel, recursive, regex] of DM_LABEL_SOURCES) {
+  // 每项 [相对路径, 递归?, 正则(组1=可翻串)]，可选第 4 项 requireMarker：仅对**文件内容含该标记**
+  // 的 .dm 抽取（用于类型过滤——如散落各处的 /datum/quirk 名，递归扫但只取 quirk 文件，不碰物品名）。
+  for (const [rel, recursive, regex, requireMarker] of DM_LABEL_SOURCES) {
     for (const file of dmFilesUnder(path.join(ROOT, rel), recursive, [])) {
       let source;
       try {
         source = fs.readFileSync(file, 'utf8');
       } catch {
+        continue;
+      }
+      if (requireMarker && !source.includes(requireMarker)) {
         continue;
       }
       for (const match of source.matchAll(regex)) {

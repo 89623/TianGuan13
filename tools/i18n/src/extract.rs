@@ -35,6 +35,11 @@ const SINK_VARS: &[&str] = &[
     "wiki_desc",        // wiki 界面描述。
     "war_declaration",  // 核弹战争宣言（全员公告）。
     "explanation_text", // /datum/objective 反派目标文本（反派面板 + 授予时聊天）。
+    // /datum/personality 玩法效果行（特质与个性→人格 tab 卡片里的 ±/+/- 描述；经偏好常量 asset 渲染，
+    // 由 master_files/code/modules/client/preferences/assets.dm 的 lang_reverse_pref_descriptions 反查）。
+    "pos_gameplay_desc",
+    "neg_gameplay_desc",
+    "neut_gameplay_desc",
     // ② 类「type 变量里的整条消息，经 to_chat 发出」——多为 span_*() 包裹，抽取得到内层文本，
     // 运行时靠聊天 AC 子串层（I18N_CHAT_FALLBACK）在包裹串里命中替换（整串反查会因 span 包裹不匹配）。
     "gain_text",        // 脑创伤等获得时消息（45 处）。

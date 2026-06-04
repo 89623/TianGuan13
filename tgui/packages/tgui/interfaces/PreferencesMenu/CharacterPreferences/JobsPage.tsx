@@ -285,11 +285,13 @@ function JobRow(props: JobRowProps) {
                 <Dropdown
                   width="100%"
                   // NOVA EDIT CHANGE START - ORIGINAL: options={job.alt_titles}
-                  // i18n: 拆成 {value, displayText} 让 auto-localize 只翻 displayText、value(act 标识符)保持英文。
+                  // i18n: 拆成 {value, displayText} 让 auto-localize 只翻 displayText、value(act 标识符)保持英文；
+                  // 折叠按钮显示走 displayText prop(同样可翻)，否则按钮只显示 selected 原值(英文)。
                   options={job.alt_titles.map((title) => ({
                     value: title,
                     displayText: title,
                   }))}
+                  displayText={alt_title_selected}
                   // NOVA EDIT CHANGE END
                   selected={alt_title_selected}
                   onSelected={(value) =>
