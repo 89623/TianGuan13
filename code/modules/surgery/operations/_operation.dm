@@ -143,7 +143,7 @@
 	visible_message(
 		span_notice(LANG("mob.7fd065ca", list(src, p_their(), limb.plaintext_zone, tool))),
 		span_notice(LANG("mob.68ad7539", list(limb.plaintext_zone, tool))),
-		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
+		span_hear(LANG("mob.233eec79", list(tool?.get_temperature() ? "singeing" : "stitching"))),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
@@ -159,7 +159,7 @@
 	visible_message(
 		span_notice(LANG("mob.da168bca", list(src, p_their(), limb.plaintext_zone, tool))),
 		span_notice(LANG("mob.6c63ce71", list(limb.plaintext_zone, tool))),
-		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
+		span_hear(LANG("mob.233eec79", list(tool?.get_temperature() ? "singeing" : "stitching"))),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)

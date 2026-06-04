@@ -320,7 +320,7 @@
  * * cooker - The mob that initiated the cook cycle
  */
 /obj/machinery/cauldron/proc/start(mob/cooker)
-	visible_message(span_notice(LANG("obj.2769877b", list(src))), null, span_hear("You hear bubbling as the cauldron ignites."))
+	visible_message(span_notice(LANG("obj.2769877b", list(src))), null, span_hear(LANG("obj.b05372a3", null)))
 	operating = TRUE
 	update_appearance()
 	cook_loop(cycles = 10, cooker = cooker)

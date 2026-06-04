@@ -85,7 +85,7 @@
 	visible_message(
 		span_danger(LANG("obj.784fc69f", list(hitting_projectile, source))),
 		null,
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		span_hear(LANG("obj.e2bdcbdd", null)),
 	)
 	consume_everything(hitting_projectile)
 	return COMPONENT_BULLET_BLOCKED

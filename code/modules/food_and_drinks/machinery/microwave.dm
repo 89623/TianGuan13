@@ -632,7 +632,7 @@
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 			return
 
-	visible_message(span_notice(LANG("obj.2769877b", list(src))), null, span_hear("You hear a microwave humming."))
+	visible_message(span_notice(LANG("obj.2769877b", list(src))), null, span_hear(LANG("obj.a14ceee4", null)))
 	operating = TRUE
 	set_light(l_range = 1.5, l_power = 1.2, l_on = TRUE)
 	soundloop.start()

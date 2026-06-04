@@ -380,7 +380,7 @@
 		var/old_grab_state = user.grab_state
 		var/grab_upgrade_time = instant ? 0 : 30
 		visible_message(span_danger(LANG("mob.3fb0f052", list(user, user.p_their(), src))), \
-						span_userdanger(LANG("mob.d2a382bf", list(user, user.p_their()))), span_hear("You hear aggressive shuffling!"), null, user)
+						span_userdanger(LANG("mob.d2a382bf", list(user, user.p_their()))), span_hear(LANG("mob.7314bbd1", null)), null, user)
 		to_chat(user, span_danger(LANG("mob.84e264a3", list(src))))
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
@@ -513,12 +513,12 @@
 		log_combat(user, src, "attacked")
 		playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 		visible_message(span_danger(LANG("mob.4f554285", list(user.name, src))), \
-						span_userdanger(LANG("mob.a597d194", list(user.name))), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
+						span_userdanger(LANG("mob.a597d194", list(user.name))), span_hear(LANG("mob.a88c3258", null)), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger(LANG("mob.bcc2c3f4", list(src))))
 		return TRUE
 	else
 		visible_message(span_danger(LANG("mob.f669f0df", list(user.name, src))), \
-						span_danger(LANG("mob.4870f385", list(user.name))), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
+						span_danger(LANG("mob.4870f385", list(user.name))), span_hear(LANG("mob.e8eabf78", null)), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning(LANG("mob.2ebed70e", list(src))))
 
 	return FALSE
@@ -536,13 +536,13 @@
 		if(prob(90))
 			log_combat(L, src, "attacked")
 			visible_message(span_danger(LANG("mob.4f554285", list(L.name, src))), \
-							span_userdanger(LANG("mob.a597d194", list(L.name))), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
+							span_userdanger(LANG("mob.a597d194", list(L.name))), span_hear(LANG("mob.a88c3258", null)), COMBAT_MESSAGE_RANGE, L)
 			to_chat(L, span_danger(LANG("mob.bcc2c3f4", list(src))))
 			playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 			return TRUE
 		else
 			visible_message(span_danger(LANG("mob.f669f0df", list(L.name, src))), \
-							span_danger(LANG("mob.4870f385", list(L.name))), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, L)
+							span_danger(LANG("mob.4870f385", list(L.name))), span_hear(LANG("mob.e8eabf78", null)), COMBAT_MESSAGE_RANGE, L)
 			to_chat(L, span_warning(LANG("mob.2ebed70e", list(src))))
 			return FALSE
 
@@ -611,7 +611,7 @@
 		visible_message(
 			span_danger(LANG("mob.d2d8eb7d", list(src, source))), \
 			span_userdanger(LANG("mob.0f9914f6", null)), \
-			span_hear("You hear a heavy electrical crack.") \
+			span_hear(LANG("mob.495976fb", null)) \
 		)
 	return shock_damage
 
@@ -874,7 +874,7 @@
 ///Send the chat feedback message for shoving
 /mob/living/proc/get_shoving_message(mob/living/shover, obj/item/weapon, shove_flags)
 	visible_message(span_danger(LANG("mob.53e00938", list(shover, name, weapon ? " with [weapon]" : ""))),
-		span_userdanger(LANG("mob.f2fa237f", list(shover, weapon ? " with [weapon]" : ""))), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, shover)
+		span_userdanger(LANG("mob.f2fa237f", list(shover, weapon ? " with [weapon]" : ""))), span_hear(LANG("mob.7314bbd1", null)), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger(LANG("mob.5523666e", list(name, weapon ? " with [weapon]" : ""))))
 
 /mob/living/proc/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)

@@ -255,7 +255,7 @@
 		visible_message(
 			span_warning(LANG("mob.82786ff9", list(src, cable))),
 			span_userdanger(LANG("mob.bef9236c", list(cable))),
-			span_hear("You hear electricity crack."),
+			span_hear(LANG("mob.a1b757b9", null)),
 		)
 		// Finely toasted
 		ADD_TRAIT(src, TRAIT_BEING_SHOCKED, TRAIT_GENERIC)

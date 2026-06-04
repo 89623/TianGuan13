@@ -223,7 +223,7 @@
 	visible_message(
 		span_warning(LANG("mob.30826eb5", list(src, target))),
 		span_notice(LANG("mob.7c5ebf31", list(target))),
-		span_warning("You hear a disgusting slurping sound..."),
+		span_warning(LANG("mob.3a8da1a7", null)),
 	)
 
 	if (!do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))

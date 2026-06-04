@@ -377,7 +377,7 @@
 		else
 			visible_message(span_danger(LANG("obj.f8a193c6", list(src))), \
 				LANG("obj.79b34f35", null),
-				span_hear("You hear heavy droning fade out."))
+				span_hear(LANG("obj.90862691", null)))
 			deactivate()
 			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
 	else

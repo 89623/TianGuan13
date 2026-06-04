@@ -43,7 +43,7 @@
 	if(istype(attacking_item, /obj/item/radio))
 		internal_radio = attacking_item
 		internal_radio.forceMove(src)
-		visible_message(LANG("obj.0799ae70", list(internal_radio, src)), LANG("obj.eeaf6739", list(internal_radio, src)), "You hear a clicking sound.")
+		visible_message(LANG("obj.0799ae70", list(internal_radio, src)), LANG("obj.eeaf6739", list(internal_radio, src)), LANG("obj.5584e97e", null))
 		update_appearance()
 		return
 	return ..()

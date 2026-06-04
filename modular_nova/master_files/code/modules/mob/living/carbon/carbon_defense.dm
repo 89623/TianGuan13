@@ -10,7 +10,7 @@
 			playsound(target.loc, 'sound/items/weapons/slap.ogg', 50, TRUE, -1)
 			visible_message(LANG("mob.9d2c8ef8", list(src, target)),
 				LANG("mob.8a0b09fc", list(target)),\
-			"You hear a slap.")
+			LANG("mob.977bc069", null))
 			target.unwag_tail()
 			return
 	if(zone_selected == BODY_ZONE_PRECISE_GROIN && target.dir == src.dir)
@@ -21,14 +21,14 @@
 					src.update_damage_overlays()
 				visible_message(span_danger(LANG("mob.5c9798e0", list(src, target))),
 				span_danger(LANG("mob.0b9b9807", list(target))),
-				"You hear a slap.", ignored_mobs = list(target))
+				LANG("mob.977bc069", null), ignored_mobs = list(target))
 				playsound(target.loc, 'sound/effects/snap.ogg', 50, TRUE, ASS_SLAP_EXTRA_RANGE)
 				to_chat(target, span_danger(LANG("mob.070c4b69", list(src))))
 				return
 			else
 				visible_message(span_danger(LANG("mob.d2f98dd8", list(src, target))),
 				span_danger(LANG("mob.87ffdab3", list(target))),
-				"You hear a slap.", ignored_mobs = list(target))
+				LANG("mob.977bc069", null), ignored_mobs = list(target))
 				playsound(target.loc, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, ASS_SLAP_EXTRA_RANGE)
 				to_chat(target, span_danger(LANG("mob.83a01671", list(src))))
 				return
@@ -37,7 +37,7 @@
 			playsound(target.loc, 'sound/items/weapons/slap.ogg', 50, TRUE, ASS_SLAP_EXTRA_RANGE)
 			visible_message(LANG("mob.6f21ff2d", list(src, target)),\
 				LANG("mob.88ff6e0b", list(target)),\
-				"You hear a slap.", ignored_mobs = list(target))
+				LANG("mob.977bc069", null), ignored_mobs = list(target))
 			to_chat(target, LANG("mob.49d20886", list(src)))
 			return
 	return ..()

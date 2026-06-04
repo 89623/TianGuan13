@@ -9,7 +9,7 @@
 	if (prob(90))
 		playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 		visible_message(span_danger(LANG("mob.83af7d2c", list(user, src))), \
-						span_userdanger(LANG("mob.cd11ce48", list(user))), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+						span_userdanger(LANG("mob.cd11ce48", list(user))), span_hear(LANG("mob.6c7f8149", null)), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger(LANG("mob.23132e2f", list(src))))
 		if ((stat != DEAD) && (damage > 4.9))
 			Unconscious(rand(100,200))
@@ -20,7 +20,7 @@
 	else
 		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 		visible_message(span_danger(LANG("mob.a20fe5ff", list(user, src))), \
-						span_danger(LANG("mob.95e7861b", list(user))), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
+						span_danger(LANG("mob.95e7861b", list(user))), span_hear(LANG("mob.b8189c1e", null)), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning(LANG("mob.1ee8eb9a", list(src))))
 		log_combat(user, src, "attacked and missed")
 

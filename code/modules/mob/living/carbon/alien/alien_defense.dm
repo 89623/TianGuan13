@@ -30,7 +30,7 @@ In all, this is a lot like the monkey code. /N
 		user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 		visible_message(span_danger(LANG("mob.4f554285", list(user.name, src))), \
-						span_userdanger(LANG("mob.a597d194", list(user.name))), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
+						span_userdanger(LANG("mob.a597d194", list(user.name))), span_hear(LANG("mob.a88c3258", null)), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger(LANG("mob.bcc2c3f4", list(src))))
 		adjust_brute_loss(1)
 		log_combat(user, src, "attacked")

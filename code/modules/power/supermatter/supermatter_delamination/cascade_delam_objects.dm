@@ -80,7 +80,7 @@
 	visible_message(
 		span_warning(LANG("obj.831cd4e0", list(hitting_projectile, src))),
 		null,
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		span_hear(LANG("obj.e2bdcbdd", null)),
 	)
 
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)

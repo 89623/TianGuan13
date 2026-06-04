@@ -43,7 +43,7 @@
 		return TRUE
 	visible_message(span_notice(LANG("obj.fe86d6ab", list(user, src))),
 		span_notice(LANG("obj.a44b2da5", list(src, tool))),
-		span_hear("You hear welding."))
+		span_hear(LANG("obj.1aa82fa3", null)))
 	new /obj/item/stack/sheet/iron(loc, MEATSPIKE_IRONROD_REQUIREMENT)
 	qdel(src)
 	return TRUE

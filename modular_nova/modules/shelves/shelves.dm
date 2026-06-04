@@ -59,7 +59,7 @@
 			return // If the user is in a strange condition, return early.
 		visible_message(span_warning(LANG("obj.73a87d59", list(crate, src))),
 			span_notice(LANG("obj.5415abf5", list(crate, src))),
-			span_notice("You hear a thud."))
+			span_notice(LANG("obj.34acf327", null)))
 		crate.forceMove(get_spill_location()) // Try to push it somewhere
 
 /// Spits out how many crates are currently stored, counting the non nulls

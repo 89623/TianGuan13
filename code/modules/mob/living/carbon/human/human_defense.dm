@@ -115,7 +115,7 @@
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 	playsound(loc, active_arm.unarmed_attack_sound, 25, TRUE, -1)
 	visible_message(span_danger(LANG("mob.5db40571", list(user, hulk_verb, src))), \
-					span_userdanger(LANG("mob.5db40571", list(user, hulk_verb, src))), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
+					span_userdanger(LANG("mob.5db40571", list(user, hulk_verb, src))), span_hear(LANG("mob.6c7f8149", null)), null, user)
 	to_chat(user, span_danger(LANG("mob.22d557f3", list(hulk_verb, src))))
 	apply_damage(15, BRUTE, wound_bonus=10)
 
@@ -154,7 +154,7 @@
 		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
 			playsound(loc, 'sound/items/weapons/slash.ogg', 25, TRUE, -1)
 			visible_message(span_danger(LANG("mob.a40152e8", list(user, src))), \
-							span_userdanger(LANG("mob.5edb27d4", list(user))), span_hear("You hear aggressive shuffling!"), null, user)
+							span_userdanger(LANG("mob.5edb27d4", list(user))), span_hear(LANG("mob.7314bbd1", null)), null, user)
 			to_chat(user, span_danger(LANG("mob.c4516d3a", list(src))))
 		else if(!user.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/items/weapons/pierce.ogg', 25, TRUE, -1)
@@ -162,13 +162,13 @@
 				Paralyze(40)
 				log_combat(user, src, "pinned")
 				visible_message(span_danger(LANG("mob.30d7b60d", list(user, src))), \
-								span_userdanger(LANG("mob.f3eb3b9d", list(user))), span_hear("You hear shuffling and a muffled groan!"), null, user)
+								span_userdanger(LANG("mob.f3eb3b9d", list(user))), span_hear(LANG("mob.1e8332d6", null)), null, user)
 				to_chat(user, span_danger(LANG("mob.69d8155b", list(src))))
 			else
 				Knockdown(30)
 				log_combat(user, src, "tackled")
 				visible_message(span_danger(LANG("mob.694c58a4", list(user, src))), \
-								span_userdanger(LANG("mob.cdbc888e", list(user))), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
+								span_userdanger(LANG("mob.cdbc888e", list(user))), span_hear(LANG("mob.b75dfa76", null)), null, user)
 				to_chat(user, span_danger(LANG("mob.366dfec3", list(src))))
 		return TRUE
 
@@ -200,7 +200,7 @@
 		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/items/weapons/slash.ogg', 25, TRUE, -1)
 			visible_message(span_danger(LANG("mob.d91638bb", list(user, src))), \
-							span_userdanger(LANG("mob.b3afba13", list(user))), span_hear("You hear aggressive shuffling!"), null, user)
+							span_userdanger(LANG("mob.b3afba13", list(user))), span_hear(LANG("mob.7314bbd1", null)), null, user)
 			to_chat(user, span_danger(LANG("mob.c4516d3a", list(src))))
 		else if(!HAS_TRAIT(src, TRAIT_INCAPACITATED))
 			playsound(loc, 'sound/items/weapons/pierce.ogg', 25, TRUE, -1)
@@ -209,13 +209,13 @@
 			throw_at(shovetarget, 4, 2, user, force = MOVE_FORCE_OVERPOWERING)
 			log_combat(user, src, "shoved")
 			visible_message(span_danger(LANG("mob.694c58a4", list(user, src))), \
-							span_userdanger(LANG("mob.7e73d114", list(user))), span_hear("You hear aggressive shuffling followed by a loud thud!"), null, user)
+							span_userdanger(LANG("mob.7e73d114", list(user))), span_hear(LANG("mob.b75dfa76", null)), null, user)
 			to_chat(user, span_danger(LANG("mob.507c75bb", list(src))))
 		else
 			Paralyze(5 SECONDS)
 			playsound(loc, 'sound/items/weapons/punch3.ogg', 25, TRUE, -1)
 			visible_message(span_danger(LANG("mob.aa98af2a", list(user, src))), \
-							span_userdanger(LANG("mob.de690ad0", list(user))), span_hear("You hear something slam loudly onto the floor!"), null, user)
+							span_userdanger(LANG("mob.de690ad0", list(user))), span_hear(LANG("mob.153bae93", null)), null, user)
 			to_chat(user, span_danger(LANG("mob.7da14578", list(src))))
 			log_combat(user, src, "slammed into the ground")
 		return TRUE
@@ -227,7 +227,7 @@
 		if(!damage)
 			playsound(loc, 'sound/items/weapons/slashmiss.ogg', 50, TRUE, -1)
 			visible_message(span_danger(LANG("mob.7e03b2e8", list(user, src))), \
-							span_userdanger(LANG("mob.4cff792a", list(user))), span_hear("You hear a swoosh!"), null, user)
+							span_userdanger(LANG("mob.4cff792a", list(user))), span_hear(LANG("mob.b8189c1e", null)), null, user)
 			to_chat(user, span_danger(LANG("mob.a04b65d2", list(src))))
 			return FALSE
 		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(user.zone_selected))
@@ -235,7 +235,7 @@
 
 		playsound(loc, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
 		visible_message(span_danger(LANG("mob.f6263099", list(user, src))), \
-						span_userdanger(LANG("mob.69901f7d", list(user))), span_hear("You hear a sickening sound of a slice!"), null, user)
+						span_userdanger(LANG("mob.69901f7d", list(user))), span_hear(LANG("mob.0a6af96c", null)), null, user)
 		to_chat(user, span_danger(LANG("mob.131938c9", list(src))))
 		if(dismembering_strike(user, user.zone_selected)) //Dismemberment successful
 			apply_damage(damage, BRUTE, affecting, armor_block)

@@ -537,7 +537,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
 		if(movesuccess)
-			visible_message(span_warning(LANG("obj.92d5c56f", null)), null, "<i>You hear a sharp crack.</i>")
+			visible_message(span_warning(LANG("obj.92d5c56f", null)), null, LANG("obj.0d2ac336", null))
 			to_chat(user, span_cult(LANG("obj.555fd372", list(moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"))))
 		else
 			to_chat(user, span_cult(LANG("obj.555fd372", list(moveuserlater ? "r vision blurs briefly, but nothing happens":" try send everything above the rune away, but the teleportation fails"))))

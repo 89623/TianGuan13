@@ -111,7 +111,7 @@
 		step_away(src, mecha_attacker)
 		log_combat(user, src, "pushed", mecha_attacker)
 		visible_message(span_warning(LANG("mob.c106d8a6", list(mecha_attacker, src))), \
-						span_warning(LANG("mob.9078dd7a", list(mecha_attacker))), span_hear("You hear aggressive shuffling!"), 5, list(mecha_attacker))
+						span_warning(LANG("mob.9078dd7a", list(mecha_attacker))), span_hear(LANG("mob.7314bbd1", null)), 5, list(mecha_attacker))
 		to_chat(mecha_attacker, span_danger(LANG("mob.31202482", list(src))))
 		return
 
@@ -157,7 +157,7 @@
 		))
 
 	visible_message(span_danger("[mecha_attacker.name] [mecha_attacker.attack_verbs[1]] [src]!"), \
-		span_userdanger(LANG("mob.9ab70b39", list(mecha_attacker.name, mecha_attacker.attack_verbs[2]))), span_hear("You hear a sickening sound of flesh [mecha_attacker.attack_verbs[3]] flesh!"), COMBAT_MESSAGE_RANGE, list(mecha_attacker))
+		span_userdanger(LANG("mob.9ab70b39", list(mecha_attacker.name, mecha_attacker.attack_verbs[2]))), span_hear(LANG("mob.1b6c62e7", list(mecha_attacker.attack_verbs[3]))), COMBAT_MESSAGE_RANGE, list(mecha_attacker))
 	to_chat(mecha_attacker, span_danger(LANG("mob.22d557f3", list(mecha_attacker.attack_verbs[1], src))))
 	..()
 	return damage
