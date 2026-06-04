@@ -536,7 +536,8 @@ function hasEnglishWord(s: string): boolean {
  */
 function hasStrayEnglishInTranslation(zh: string): boolean {
   const t = stripNoise(zh)
-    .replace(/\b[A-Za-z]*[a-z][A-Z][A-Za-z]*\b/g, ' ') // 内部大写标识符：NIFSoft, MULEbot, Ckey
+    .replace(/\b[A-Za-z]*[a-z][A-Z][A-Za-z]*\b/g, ' ') // 内部大写标识符（小写后接大写）：iPod, Ckey
+    .replace(/\b[A-Z]{2,}[a-zà-ÿ][A-Za-z]*\b/g, ' ') // 缩写前缀标识符：NIFSoft, NIFsoft, MULEbot
     .replace(/\b[A-ZÀ-Þ][a-zà-ÿ]{2,}\b/g, ' ') // 首字母大写专名：Katsuobushi, Sidecar, Lanca
     .replace(/\b[a-z]+(?:\/[a-z]+)+\b/g, ' '); // 斜杠代码串：obj/turf/mob
   return /[a-z]{3,}/.test(t);
@@ -548,7 +549,8 @@ function needsTranslation(enVal: string, zhVal: string | undefined): boolean {
   if (zhVal === enVal) return hasEnglishWord(enVal); // 与英文相同 = 未译（纯代码/符号除外）
   const stray = hasEnglishWord(zhVal);
   if (!CJK.test(zhVal) && stray) return true; // 无中文却有英文词 → 未译
-  if (CJK.test(zhVal) && stray) return true; // 中英混杂 → 重译
+  if (CJK.test(zhVal) && stray && hasStrayEnglishInTranslation(zhVal))
+    return true; // 中英混杂 → 重译（剥掉刻意保留的专名/代码后仍有英文才重做，避免对 NIFSoft/Katsuobushi 死循环）
   return false; // 看起来已完整翻译（或纯符号/缩写）
 }
 
