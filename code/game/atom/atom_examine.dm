@@ -210,7 +210,8 @@
  */
 /atom/proc/examine_title(mob/user, thats = FALSE)
 	var/examine_icon = get_examine_icon(user)
-	return "[examine_icon ? "[examine_icon] " : ""][thats ? "[examine_thats] ":""]<em>[get_examine_name(user)]</em>"
+	// NOVA EDIT CHANGE - ORIGINAL: [thats ? "[examine_thats] ":""] - i18n: 反查 "That's"/"This is" 前缀（仅这两个值，全服 locale≠en 时本地化；examine_thats 是 var 初始化、codemod 不改，故在用例处反查）
+	return "[examine_icon ? "[examine_icon] " : ""][thats ? "[lang_reverse_text(examine_thats)] ":""]<em>[get_examine_name(user)]</em>"
 
 /**
  * Returns an extended list of examine strings for any contained ID cards.
