@@ -83,6 +83,19 @@ GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 /// locale -> (英文原文 -> 译文)。惰性构建（写 GLOB，仅供 /atom/Initialize 等非纯路径调用）。
 GLOBAL_LIST_EMPTY(i18n_reverse)
 
+/// 剥掉 BYOND 文法宏 \improper/\proper，得到「显示形态」串。
+/// 两种来源都要剥：① 运行时 name/desc 里是**编译期标记字节**（DM 源写 "\improper" 即该字节，
+/// 故 replacetext 用 "\improper" 能匹配）；② 目录 JSON 里存的是**字面** "\improper"（反斜杠+improper，
+/// 用 "\\improper" 匹配）。规整到无宏并 trim，使两端对齐（否则带 \improper 的名永远查不中）。
+/proc/lang_strip_grammar_macros(text)
+	if(!istext(text))
+		return text
+	text = replacetext(text, "\improper", "") // 运行时标记字节形态
+	text = replacetext(text, "\proper", "")
+	text = replacetext(text, "\\improper", "") // 目录字面形态
+	text = replacetext(text, "\\proper", "")
+	return trim(text)
+
 /// 惰性构建某 locale 的反查表（从已加载的 GLOB.i18n_cache 读取）。
 /proc/lang_build_reverse(locale)
 	if(GLOB.i18n_reverse[locale])
@@ -102,6 +115,12 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 		var/translated = localized[key]
 		if(translated && translated != en_text)
 			reverse[en_text] = translated
+			// 文法宏对齐：额外登记「剥宏」形态键，让运行时带标记字节的 name（如
+			// "\improper Space Cigarettes packet"）也能命中（值同样剥宏，去掉中文里多余的 \improper）。
+			if(findtext(en_text, "\\improper") || findtext(en_text, "\\proper"))
+				var/stripped_key = lang_strip_grammar_macros(en_text)
+				if(stripped_key && !reverse[stripped_key])
+					reverse[stripped_key] = lang_strip_grammar_macros(translated)
 
 	GLOB.i18n_reverse[locale] = reverse
 	return reverse
@@ -114,7 +133,15 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 	if(locale == DEFAULT_UI_LOCALE)
 		return text
 	var/list/reverse = lang_build_reverse(locale)
-	return reverse[text] || text
+	. = reverse[text]
+	if(!isnull(.))
+		return .
+	// 未直接命中：若含文法宏标记字节，剥宏后再查一次（对齐目录里的剥宏形态键）。
+	if(findtext(text, "\improper") || findtext(text, "\proper"))
+		. = reverse[lang_strip_grammar_macros(text)]
+		if(!isnull(.))
+			return .
+	return text
 
 /// 「多词」门槛的反查：仅含空白（多词/短语）的串才查表，避免把 On/None/枚举值/ckey 这类
 /// 单词误翻（动态数据常正好等于某常见词）。短语类（datum 的 desc、多词 name）才反查。
