@@ -1,4 +1,21 @@
 {
   "ui.examine_thats": "That's",
-  "ui.examine_this_is": "This is"
+  "ui.examine_this_is": "This is",
+  "ui.descriptor_clothing": "clothing",
+  "ui.descriptor_cyborg": "cyborg",
+  "ui.descriptor_floor": "floor",
+  "ui.descriptor_item": "item",
+  "ui.descriptor_machine": "machine",
+  "ui.descriptor_object": "object",
+  "ui.descriptor_structure": "structure",
+  "ui.descriptor_wall": "wall",
+  "ui.tag_abstract": "abstract",
+  "ui.tag_indestructible": "indestructible",
+  "ui.tag_lava_proof": "lava-proof",
+  "ui.tag_acid_proof": "acid-proof",
+  "ui.tag_freeze_proof": "freeze-proof",
+  "ui.tag_fire_proof": "fire-proof",
+  "ui.tag_crush_proof": "crush-proof",
+  "ui.tag_bomb_proof": "bomb-proof",
+  "ui.tag_flammable": "flammable"
 }

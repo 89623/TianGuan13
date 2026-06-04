@@ -25,12 +25,13 @@
 	if (length(tags_list))
 		var/tag_string = list()
 		for (var/atom_tag in tags_list)
-			tag_string += (isnull(tags_list[atom_tag]) ? atom_tag : span_tooltip(tags_list[atom_tag], atom_tag))
+			// NOVA EDIT CHANGE - ORIGINAL: ... ? atom_tag : span_tooltip(tags_list[atom_tag], atom_tag)) - i18n: 反查 tag 显示词(flammable/fire-proof…)，词进 ui.json；tooltip 文本不动
+			tag_string += (isnull(tags_list[atom_tag]) ? lang_reverse_text(atom_tag) : span_tooltip(tags_list[atom_tag], lang_reverse_text(atom_tag)))
 		// some regex to ensure that we don't add another "and" if the final element's main text (not tooltip) has one
 		tag_string = english_list(tag_string, and_text = (findtext(tag_string[length(tag_string)], regex(@">.*?and .*?<"))) ? " " : " and ")
-		. += LANG("atom.0e340ddb", list(p_They(), p_are(), tag_string, examine_descriptor(user), post_desc_string))
+		. += LANG("atom.0e340ddb", list(p_They(), p_are(), tag_string, lang_reverse_text(examine_descriptor(user)), post_desc_string)) // NOVA EDIT - i18n: 反查描述词(machine/structure/item…)，词进 ui.json
 	else if(post_desc_string)
-		. += LANG("atom.82f39ea0", list(p_They(), p_are(), examine_descriptor(user), post_desc_string))
+		. += LANG("atom.82f39ea0", list(p_They(), p_are(), lang_reverse_text(examine_descriptor(user)), post_desc_string)) // NOVA EDIT - i18n: 反查描述词(machine/structure/item…)，词进 ui.json
 
 	if(reagents)
 		var/user_sees_reagents = user.can_see_reagents()
