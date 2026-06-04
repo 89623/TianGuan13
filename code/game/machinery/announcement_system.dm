@@ -259,6 +259,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	// Fallback - first line
 	if (!announcement_message)
 		announcement_message = announcement_lines_map[announcement_lines_map[1]]
+	// NOVA EDIT ADDITION - i18n - 全服中文时反查整条模板译文（在 %VAR 替换前；模板用 %PERSON 等占位符、
+	// 不被反查的 { 守卫跳过；译文须保留 %VAR 占位符）。译文进 strings/i18n/<locale>/ui.json。
+	announcement_message = lang_reverse_text(announcement_message)
+	// NOVA EDIT ADDITION END
 	// Replace variables with their value
 	for(var/variable in vars_and_tooltips_map)
 		announcement_message = replacetext_char(announcement_message, "%[variable]", variables_map[variable] || "\[NO DATA\]")

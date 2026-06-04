@@ -70,6 +70,36 @@ fn is_sentence_like(s: &str) -> bool {
         && s.chars().any(|c| c.is_ascii_lowercase())
 }
 
+/// 从 list 字面量里抽「多词字符串值」（用于 /datum/aas_config_entry 的 announcement_lines_map
+/// 公告模板：`list("Message" = "%PERSON has signed up as %RANK")`）。取 assoc 的**值**(键如
+/// "Message"/"RETA Granted" 不抽)；模板用 %VAR 占位符（含空格、无 {），运行时在 compile_announce
+/// 用 lang_reverse_text 整条反查、再做 %VAR 替换。
+fn emit_message_list(expr: &Expression, ns: &str, catalog: &mut Catalog) {
+    let Expression::Base { term, follow } = expr else {
+        return;
+    };
+    if !follow.is_empty() {
+        return;
+    }
+    let args = match &term.elem {
+        Term::List(args) => args,
+        Term::Call(name, args) if name == "list" => args,
+        _ => return,
+    };
+    for arg in args.iter() {
+        let val_expr = if let Expression::AssignOp { rhs, .. } = arg {
+            rhs.as_ref()
+        } else {
+            arg
+        };
+        if let Some(t) = build_template(val_expr) {
+            if t.contains(' ') && !t.contains('{') {
+                emit(catalog, ns, &t);
+            }
+        }
+    }
+}
+
 /// 汇聚点 proc 名 -> 其消息参数下标。
 fn sink_message_args(name: &str) -> Option<&'static [usize]> {
     match name {
@@ -131,10 +161,17 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             // 仅 /datum/config_entry 类型且「句子型」default 才抽，避开数字/标志/路径等非显示默认值。
             let is_config_default =
                 var_name == "default" && ty.path.starts_with("/datum/config_entry");
-            if !is_sink && !is_config_default {
+            // aas_config_entry 的公告模板（list，含 %VAR 占位符的玩家可见公告）。
+            let is_aas_template = var_name == "announcement_lines_map"
+                && ty.path.starts_with("/datum/aas_config_entry");
+            if !is_sink && !is_config_default && !is_aas_template {
                 continue;
             }
             if let Some(expr) = &type_var.value.expression {
+                if is_aas_template {
+                    emit_message_list(expr, &namespace, &mut catalog);
+                    continue;
+                }
                 if let Some(template) = build_template(expr) {
                     if is_config_default && !is_sentence_like(&template) {
                         continue;
