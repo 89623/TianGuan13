@@ -114,7 +114,7 @@
 
 /datum/component/dart_insert/proc/on_dart_examine_more(datum/source, mob/user, list/examine_list)
 	var/obj/item/parent_item = parent
-	examine_list += span_notice("You can see a [parent_item.name] inserted into it.")
+	examine_list += span_notice(LANG("datum.17d5598e", list(parent_item.name)))
 
 /datum/component/dart_insert/proc/on_leave_dart()
 	SIGNAL_HANDLER

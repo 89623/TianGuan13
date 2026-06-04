@@ -73,10 +73,10 @@
 /datum/component/gun_safety/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += "<span>The safety is [safety_currently_on ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].</span>"
+	examine_list += LANG("datum.f361a6c4", list(safety_currently_on ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"))
 	var/keybinding = examiner.client?.prefs?.key_bindings?["toggle_safety"]?[1]
 	if (!isnull(keybinding))
-		examine_list += "Press [span_notice("[keybinding]")] with it in hand to toggle the safety."
+		examine_list += LANG("datum.22650fb4", list(span_notice("[keybinding]")))
 
 /// Small proc to update the actio button's icon, just so I can not have to copypaste the same thing several times.
 /datum/component/gun_safety/proc/update_action_button_state()

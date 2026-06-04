@@ -21,7 +21,7 @@
 /datum/element/reagent_scoopable_atom/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_info("Some <b>[reagent_to_extract::name]</b> could probably be scooped up with a <b>container</b>.")
+	examine_list += span_info(LANG("datum.7515092e", list(reagent_to_extract::name)))
 
 /datum/element/reagent_scoopable_atom/proc/on_item_interaction(atom/source, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER

@@ -49,9 +49,9 @@
 ///signal called on parent being examined while not coated
 /datum/element/envenomable_casing/proc/on_examine_before_dip(obj/item/ammo_casing/casing, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("You can dip it in a chemical to deliver a poisonous kick.")
+	examine_list += span_notice(LANG("datum.300be675", null))
 
 ///ditto, but after it's been coated
 /datum/element/envenomable_casing/proc/on_examine_after_dip(obj/item/ammo_casing/casing, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_warning("It's coated in some kind of chemical...")
+	examine_list += span_warning(LANG("datum.01f6d509", null))

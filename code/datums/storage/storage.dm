@@ -288,7 +288,7 @@
 	if(isnull(can_hold_description))
 		return
 
-	examine_list += span_notice("You can examine this further to check what kind of extra items it can hold.")
+	examine_list += span_notice(LANG("datum.bdf12796", null))
 
 /datum/storage/proc/handle_extra_examination(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -296,7 +296,7 @@
 	if(isnull(can_hold_description))
 		return
 
-	examine_list += span_notice("[source] can hold: [can_hold_description]")
+	examine_list += span_notice(LANG("datum.ba700223", list(source, can_hold_description)))
 
 /// Almost 100% of the time the lists passed into set_holdable are reused for each instance
 /// Just fucking cache it 4head

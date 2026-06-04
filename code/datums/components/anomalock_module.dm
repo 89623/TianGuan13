@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/anomaly_locked_module
 	var/obj/item/assembly/signaler/anomaly/core
 	/// Accepted types of anomaly cores.
@@ -116,14 +117,14 @@
 	if(!length(accepted_anomalies))
 		return
 	if(core)
-		examine_list += span_notice("There is a [core.name] installed in it. [core_removable ? "You could remove it with a <b>screwdriver</b>..." : "Unfortunately, due to a design quirk, it's unremovable."]")
+		examine_list += span_notice(LANG("datum.38c48b00", list(core.name, core_removable ? "You could remove it with a <b>screwdriver</b>..." : "Unfortunately, due to a design quirk, it's unremovable.")))
 		return
 	var/list/core_list = list()
 	for(var/atom/core_path as anything in accepted_anomalies)
 		core_list += initial(core_path.name)
-	examine_list += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
+	examine_list += span_notice(LANG("datum.1d9be268", list(english_list(core_list, and_text = " or "))))
 	if(!core_removable)
-		examine_list += span_notice("Due to some design quirk, once a core is inserted, it won't be removable.")
+		examine_list += span_notice(LANG("datum.8a5d1e4d", null))
 
 /datum/component/anomaly_locked_module/proc/on_update_icon_state(obj/item/mod/module/source)
 	SIGNAL_HANDLER

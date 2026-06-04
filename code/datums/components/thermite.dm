@@ -100,7 +100,7 @@
 /datum/component/thermite/proc/on_examine(turf/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_warning("[source.p_Theyre()] covered in thermite.")
+	examine_list += span_warning(LANG("datum.a5c2b2be", list(source.p_Theyre())))
 
 /// Used to maintain the thermite overlay on the parent [/turf].
 /datum/component/thermite/proc/on_update_overlays(turf/parent_turf, list/overlays)

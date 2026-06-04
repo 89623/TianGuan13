@@ -37,9 +37,9 @@
 /datum/component/faction_granter/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(used)
-		examine_list += span_notice("[parent]'s favor granting power has been used up.")
+		examine_list += span_notice(LANG("datum.e49af80c", list(parent)))
 	else
-		examine_list += span_notice("Using [parent] in your hand will grant you favor with [faction_to_grant]\s")
+		examine_list += span_notice(LANG("datum.a7283f94", list(parent, faction_to_grant)))
 
 ///signal called on parent being interacted with in hand
 /datum/component/faction_granter/proc/on_self_attack(atom/source, mob/user)

@@ -106,8 +106,7 @@
 /datum/status_effect/cuffed_item/proc/on_examine_more(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_warning("There's [cuffed.examine_title(user)] bound to [owner.p_their()] \
-		[cuffed_to.plaintext_zone] by [cuffs.examine_title(user)].")
+	examine_list += span_warning(LANG("datum.e1e53bc4", list(cuffed.examine_title(user), owner.p_their(), cuffed_to.plaintext_zone, cuffs.examine_title(user))))
 
 /// What happens if the limb we're cuffed to is removed?
 /datum/status_effect/cuffed_item/proc/cuffed_to_removed(datum/source, mob/living/carbon/owner, special)

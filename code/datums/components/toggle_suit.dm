@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * Simple component for allowing a user to change an atom's appearance on alt-click.
  * When toggled, changes the atom's icon_state between [base_icon_state] and [base_icon_state]_t.
@@ -60,7 +61,7 @@
 /datum/component/toggle_icon/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("Alt-click on [source] to toggle the [toggle_noun].")
+	examine_list += span_notice(LANG("datum.7eaeb659", list(source, toggle_noun)))
 
 /*
  * Signal proc for COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM.

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// An element that lets you engrave walls when right click is used
 /datum/element/wall_engraver
 
@@ -18,7 +19,7 @@
 ///signal called on parent being examined
 /datum/element/wall_engraver/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("You can engrave some walls with your secondary attack if you can think of something interesting to engrave.")
+	examine_list += span_notice(LANG("datum.34e73833", null))
 
 ///signal called on parent being used to right click attack something
 /datum/element/wall_engraver/proc/on_item_pre_attack_secondary(datum/source, atom/target, mob/living/user)

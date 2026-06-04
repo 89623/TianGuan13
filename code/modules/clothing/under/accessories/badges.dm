@@ -159,9 +159,9 @@
 
 	if(ismob(source))
 		// Examining a mob wearing the clothes, wearing the dogtag will also show the message
-		examine_list += "A dogtag is hanging around [source.p_their()] neck: [display]"
+		examine_list += LANG("obj.98bf8839", list(source.p_their(), display))
 	else
-		examine_list += "A dogtag is attached to [source]: [display]"
+		examine_list += LANG("obj.4d92482a", list(source, display))
 
 /obj/item/clothing/accessory/dogtag/allergy
 	name = "Allergy dogtag"

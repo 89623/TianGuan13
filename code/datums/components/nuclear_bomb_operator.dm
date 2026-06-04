@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Nuclear Bomb Operator
  *
@@ -72,7 +73,7 @@
 	if (!held_disk)
 		return
 	var/mob/mob_parent = parent
-	examine_list += span_notice("Wait... [mob_parent.p_are()] [mob_parent.p_they()] holding [held_disk]?")
+	examine_list += span_notice(LANG("datum.ec83588a", list(mob_parent.p_are(), mob_parent.p_they(), held_disk)))
 
 /// Drop the disk when we are killed
 /datum/component/nuclear_bomb_operator/proc/on_death(atom/parent_atom)

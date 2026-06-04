@@ -137,12 +137,11 @@ component_cell_out_of_charge/component_cell_removed proc using loc where necessa
 	SIGNAL_HANDLER
 
 	if(!inserted_cell)
-		examine_list += span_danger("It does not have a cell inserted!")
+		examine_list += span_danger(LANG("datum.69047385", null))
 	else if(!inside_robot)
-		examine_list += span_notice("It has [inserted_cell] inserted. It has <b>[inserted_cell.percent()]%</b> charge left. \
-						Ctrl+Shift+Click to remove the [inserted_cell].")
+		examine_list += span_notice(LANG("datum.690c950a", list(inserted_cell, inserted_cell.percent(), inserted_cell)))
 	else
-		examine_list += span_notice("It is drawing power from an external powersource, reading <b>[inserted_cell.percent()]%</b> charge.")
+		examine_list += span_notice(LANG("datum.26f28bdb", list(inserted_cell.percent())))
 
 /// Handling of cell removal.
 /datum/component/cell/proc/remove_cell(datum/source, mob/user)

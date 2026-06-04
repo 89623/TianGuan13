@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///the point where you can notice the item is hungry on examine.
 #define HUNGER_THRESHOLD_WARNING 25
 ///the point where the item has a chance to eat something on every tick. possibly you!
@@ -48,9 +49,9 @@
 	if(!awakened)
 		return //we should not reveal we are cursed until equipped
 	if(current_health < max_health)
-		examine_list += span_notice("[parent] looks sick from something it ate.")
+		examine_list += span_notice(LANG("datum.73f8e6e0", list(parent)))
 	if(hunger > HUNGER_THRESHOLD_WARNING)
-		examine_list += span_danger("[parent] hungers for something to eat...")
+		examine_list += span_danger(LANG("datum.e9eb0f23", list(parent)))
 
 ///signal called from equipping parent
 /datum/component/curse_of_hunger/proc/on_equip(datum/source, mob/equipper, slot)

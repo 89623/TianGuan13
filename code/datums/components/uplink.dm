@@ -132,11 +132,10 @@
 
 	if(user != owner)
 		return
-	examine_list += span_warning("[parent] contains your hidden uplink\
-		[unlock_code ? ", the code to unlock it is [span_boldwarning(unlock_code)]" : null].")
+	examine_list += span_warning(LANG("datum.0fc3c144", list(parent, unlock_code ? ", the code to unlock it is [span_boldwarning(unlock_code)]" : null)))
 
 	if(failsafe_code)
-		examine_list += span_warning("The failsafe code is [span_boldwarning(failsafe_code)].")
+		examine_list += span_warning(LANG("datum.41a0dd78", list(span_boldwarning(failsafe_code))))
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
 	SIGNAL_HANDLER

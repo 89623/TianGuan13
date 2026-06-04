@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Component for simplemobs and basicmobs that allow them to carry crates.
  */
@@ -41,7 +42,7 @@
 
 	var/num_crates = LAZYLEN(crates_in_hand)
 	if(num_crates > 0)
-		examine_list += span_notice("[source.p_Theyre()] carrying [num_crates == 1 ? "a crate":"[num_crates] crates"].")
+		examine_list += span_notice(LANG("datum.15756cd3", list(source.p_Theyre(), num_crates == 1 ? "a crate":"[num_crates] crates")))
 
 /// Signal proc for [COMSIG_LIVING_UNARMED_ATTACK] to allow mobs to pick up or drop crates
 /datum/component/crate_carrier/proc/on_unarm_attack(mob/living/source, atom/target, proximity, modifiers)

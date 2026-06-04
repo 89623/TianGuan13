@@ -603,7 +603,7 @@
 	SIGNAL_HANDLER
 
 	if (currently_crushing)
-		examine_text += span_boldwarning("[owner] is crushing [constricted.p_them()] with [owner.p_their()] tail!")
+		examine_text += span_boldwarning(LANG("obj.0659e3b0", list(owner, constricted.p_them(), owner.p_their())))
 
 /// Signal proc for constricted qdeleting. Sets constricted to null.
 /obj/structure/serpentine_tail/proc/constricted_qdeleting(datum/signal_source)

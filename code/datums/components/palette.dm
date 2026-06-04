@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * A component that stores colors for use by painting-related items like spraycans or palettes
  * which can be accessed through a radial menu by right clicking the item while it's held by the user mob.
@@ -46,8 +47,8 @@
 /datum/component/palette/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("<b>Right-Click</b> this item while it's in your active hand to open/close its color picker menu.")
-	examine_list += span_notice("In the color picker, <b>Left-Click</b> a color button to pick it or <b>Right-Click</b> to remove it.")
+	examine_list += span_notice(LANG("datum.281dcaa5", null))
+	examine_list += span_notice(LANG("datum.91a65b8a", null))
 
 /datum/component/palette/proc/on_attack_self_secondary(datum/source, mob/user)
 	SIGNAL_HANDLER

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Makes anything that it attaches to incapable of producing light
  */
@@ -62,10 +63,10 @@
 /// Signal handler for light eater flavortext
 /datum/element/light_eaten/proc/on_examine(atom/eaten_light, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
-	examine_text += span_warning("It's dark and empty...")
+	examine_text += span_warning(LANG("datum.2accee4a", null))
 	if(isliving(examiner) && prob(20))
 		var/mob/living/target = examiner
-		examine_text += span_danger("You can feel something in [eaten_light.p_them()] gnash at your eyes!")
+		examine_text += span_danger(LANG("datum.3bf32c08", list(eaten_light.p_them())))
 		target.adjust_temp_blindness(10 SECONDS)
 		target.set_eye_blur_if_lower(20 SECONDS)
 	return NONE

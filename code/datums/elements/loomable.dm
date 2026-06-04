@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Element that makes items turn into other items when you use them on a loom (or any other thing really if you change the var)
 /datum/element/loomable
 	element_flags = ELEMENT_BESPOKE
@@ -45,7 +46,7 @@
 /datum/element/loomable/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("You could probably process [source] at \a <b>[initial(loom_type.name)]</b>.")
+	examine_list += span_notice(LANG("datum.219e0b66", list(source, initial(loom_type.name))))
 
 /// Checks if the thing we clicked on can be used as a loom, and if we can actually loom the source at present (an example being does the stack have enough in it (if its a stack))
 /datum/element/loomable/proc/try_and_loom_me(obj/item/source, atom/target, mob/living/user)

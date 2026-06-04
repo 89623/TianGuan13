@@ -219,9 +219,9 @@
 		var/mob/living/carbon/human/human_wearer = source
 		// Examining a mob wearing the clothes, wearing the pin will also show the message
 		var/obj/item/clothing/attached_to = loc
-		examine_list += "A green pin is attached to [human_wearer.p_their()] [attached_to.name][owner ? ", belonging to [owner]." : "."][green_time_remaining_text]"
+		examine_list += LANG("obj.0db9523a", list(human_wearer.p_their(), attached_to.name, owner ? ", belonging to [owner]." : ".", green_time_remaining_text))
 	else
-		examine_list += "A green pin is attached to [source][owner ? ", belonging to [owner]." : "."][green_time_remaining_text]"
+		examine_list += LANG("obj.8b4e1eee", list(source, owner ? ", belonging to [owner]." : ".", green_time_remaining_text))
 
 /obj/item/clothing/accessory/green_pin/examine(mob/user)
 	. = ..()
@@ -235,7 +235,7 @@
 	// How many hours of playtime left until the green pin expires
 	var/green_time_remaining = sanitize_integer((PLAYTIME_GREEN - owner.client?.get_exp_living(pure_numeric = TRUE) / 60), 0, (PLAYTIME_GREEN / 60))
 	if(green_time_remaining > 0)
-		examine_text += (" It reads '[green_time_remaining] hour[green_time_remaining >= 2 ? "s" : ""].'")
+		examine_text += (LANG("obj.664b49c2", list(green_time_remaining, green_time_remaining >= 2 ? "s" : "")))
 
 	. += span_nicegreen(examine_text)
 

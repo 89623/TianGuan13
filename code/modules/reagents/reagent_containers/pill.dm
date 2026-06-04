@@ -23,9 +23,9 @@
 /obj/item/reagent_containers/applicator/pill/proc/reagent_special_examine(datum/source, mob/user, list/examine_list, can_see_insides = FALSE)
 	SIGNAL_HANDLER
 	if (layers_remaining)
-		examine_list += span_notice("Its sugary shell will last approximately [layers_remaining] seconds in a human stomach.")
+		examine_list += span_notice(LANG("obj.1ff85a32", list(layers_remaining)))
 	else
-		examine_list += span_warning("Its shell is completely dissolved!")
+		examine_list += span_warning(LANG("obj.3e00a07d", null))
 
 ///Runs the consumption code, can be overriden for special effects
 /obj/item/reagent_containers/applicator/pill/on_consumption(mob/living/consumer, mob/giver, list/modifiers)

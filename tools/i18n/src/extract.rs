@@ -62,6 +62,12 @@ const SINK_VARS: &[&str] = &[
 /// 「句子型」玩家可见文案启发式：多词自然语句（含空格 + 首字母大写 + 含小写字母 + 无占位符）。
 /// 用于把「不在 sink 调用处」的玩家可见静态串（config_entry 公告默认值、具名累加器 examine 句）
 /// 抽进目录，靠聊天 AC 子串层翻译。含 {0} 的插值模板排除（那需 LANG 改写、且会被 AC 守卫跳过）。
+/// examine 信号处理器（COMSIG_ATOM_EXAMINE）的累加器参数名——`examine_list += "…"` 等，
+/// 是 examine 输出、必玩家可见，与裸 `.` 同等处理（全抽 + 改写为 LANG）。
+pub fn is_examine_accumulator(id: &str) -> bool {
+    matches!(id, "examine_list" | "examine_text" | "examine_strings")
+}
+
 fn is_sentence_like(s: &str) -> bool {
     let s = s.trim();
     s.contains(' ')
@@ -437,7 +443,9 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog) {
                     if follow.is_empty() {
                         if let Term::Ident(id) = &term.elem {
                             if let Some(template) = build_template(rhs) {
-                                if id == "." {
+                                // 裸 `.` 与 examine 信号处理器的累加器（examine_list/text/strings）：
+                                // examine 输出，必玩家可见 → 全抽（含插值，供 LANG）。其它具名累加器只抽静态句供 AC。
+                                if id == "." || is_examine_accumulator(id) {
                                     emit(catalog, ns, &template);
                                 } else if is_sentence_like(&template) {
                                     emit(catalog, ns, &template);

@@ -312,7 +312,7 @@
 /obj/item/label/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("It has a label with some words written on it. Use a hand labeler to remove it.")
+	examine_list += span_notice(LANG("obj.2cbb0990", null))
 
 /// Applies a label to the name of what we're stuck to in the format of: "parent_name (label)"
 /obj/item/label/proc/apply_label()

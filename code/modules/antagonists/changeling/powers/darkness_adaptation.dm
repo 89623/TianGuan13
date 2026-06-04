@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/darkness_adaptation
 	name = "Darkness Adaptation"
 	desc = "Our skin pigmentation and eyes rapidly change to suit the darkness. \
@@ -88,7 +89,7 @@
 	SIGNAL_HANDLER
 
 	if(last_alpha > dark_color_threshold)
-		examine_list += span_warning("[owner.p_Their()] skin is shimmering unnaturally in the light.")
+		examine_list += span_warning(LANG("datum.8f62491d", list(owner.p_Their())))
 
 /datum/status_effect/darkness_adapted/proc/get_darkness()
 	var/turf/owner_turf = get_turf(owner)

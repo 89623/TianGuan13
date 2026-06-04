@@ -89,8 +89,8 @@
 /obj/item/style_meter/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("You feel like a <b>multitool</b> could be used on this.")
-	examine_list += span_notice("<b>Alt-click</b> to remove the style meter.")
+	examine_list += span_notice(LANG("obj.9d14e21b", null))
+	examine_list += span_notice(LANG("obj.67ca0ed9", null))
 
 
 /// Signal proc to remove from glasses

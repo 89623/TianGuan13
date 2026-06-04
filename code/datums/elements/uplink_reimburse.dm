@@ -35,10 +35,10 @@
 	SIGNAL_HANDLER
 
 	if(!IS_TRAITOR(user) && !IS_NUKE_OP(user))
-		examine_list += span_warning("There's a label on the side, but it's written in indecipherable gibberish. You have no idea what it means!")
+		examine_list += span_warning(LANG("datum.cea30691", null))
 		return
 
-	examine_list += span_notice("There's a label written in codespeak on the side, saying that this item can be refunded for [refundable_tc] by applying it onto an uplink.")
+	examine_list += span_notice(LANG("datum.ca11e097", list(refundable_tc)))
 
 /datum/element/uplink_reimburse/proc/reimburse(obj/item/refund_item, mob/user, datum/component/uplink/uplink_comp)
 	SIGNAL_HANDLER

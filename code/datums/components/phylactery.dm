@@ -82,16 +82,15 @@
 	if(IS_WIZARD(user) || isobserver(user))
 		if(user.mind == lich_mind)
 			var/time_to_revive = base_respawn_time + (num_resurrections * time_per_resurrection)
-			examine_list += span_green("Your phylactery. The next time you meet an untimely demise, \
-				you will revive at this object in <b>[time_to_revive / 10 / 60] minute\s</b>.")
+			examine_list += span_green(LANG("datum.23966f08", list(time_to_revive / 10 / 60)))
 		else
-			examine_list += span_green("A lich's phylactery. This one belongs to [lich_mind].")
+			examine_list += span_green(LANG("datum.934e5966", list(lich_mind)))
 
 		if(num_resurrections > 0)
-			examine_list += span_green("<i>There's [num_resurrections] notches in the side of it.</i>")
+			examine_list += span_green(LANG("datum.1869a55e", list(num_resurrections)))
 
 	else
-		examine_list += span_green("A terrible aura surrounds this item. Its very existence is offensive to life itself...")
+		examine_list += span_green(LANG("datum.78cd1e88", null))
 
 /**
  * Signal proc for [COMSIG_QDELETING] registered on the lich's mind.

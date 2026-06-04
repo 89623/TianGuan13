@@ -42,9 +42,9 @@
 /datum/component/spirit_holding/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(!bound_spirit)
-		examine_list += span_notice("[parent] sleeps.[allow_channeling ? " Use [parent] in your hands to attempt to awaken it." : ""]")
+		examine_list += span_notice(LANG("datum.6468dd8f", list(parent, allow_channeling ? " Use [parent] in your hands to attempt to awaken it." : "")))
 		return
-	examine_list += span_notice("[parent] is alive.")
+	examine_list += span_notice(LANG("datum.31f81a0f", list(parent)))
 
 ///signal fired on self attacking parent
 /datum/component/spirit_holding/proc/on_attack_self(datum/source, mob/user)

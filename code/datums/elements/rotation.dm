@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/element/simple_rotation
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
@@ -42,7 +43,7 @@
 /datum/element/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
-		examine_list += span_notice("This requires a wrench to be rotated.")
+		examine_list += span_notice(LANG("datum.9f200911", null))
 
 /datum/element/simple_rotation/proc/rotate_right(datum/source, mob/user)
 	SIGNAL_HANDLER

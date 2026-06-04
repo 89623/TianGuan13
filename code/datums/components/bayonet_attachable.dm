@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Component which allows you to attach a bayonet to an item,
  * be it a piece of clothing or a tool.
@@ -87,12 +88,12 @@
 	SIGNAL_HANDLER
 
 	if(isnull(bayonet))
-		examine_list += "It has a <b>bayonet</b> lug on it."
+		examine_list += LANG("datum.746915cb", null)
 		return
 
-	examine_list += "It has \a [bayonet] [removable ? "" : "permanently "]affixed to it."
+	examine_list += LANG("datum.1aad168c", list(bayonet, removable ? "" : "permanently "))
 	if(removable)
-		examine_list += span_info("[bayonet] looks like it can be <b>unscrewed</b> from [bayonet].")
+		examine_list += span_info(LANG("datum.241c08c2", list(bayonet, bayonet)))
 
 /datum/component/bayonet_attachable/proc/on_pre_attack(obj/item/source, atom/target, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER

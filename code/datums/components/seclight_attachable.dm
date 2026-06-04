@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Component which allows you to attach a seclight to an item,
  * be it a piece of clothing or a tool.
@@ -256,9 +257,9 @@
 	SIGNAL_HANDLER
 
 	if(light)
-		examine_list += "It has \a [light] [is_light_removable ? "mounted on it with a few <b>screws</b>" : "permanently mounted on it"]."
+		examine_list += LANG("datum.73387108", list(light, is_light_removable ? "mounted on it with a few <b>screws</b>" : "permanently mounted on it"))
 	else
-		examine_list += "It has a mounting point for a <b>seclite</b>."
+		examine_list += LANG("datum.fed02d0f", null)
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] that updates our parent with our seclite overlays, if we have some.
 /datum/component/seclite_attachable/proc/on_update_overlays(obj/item/source, list/overlays)

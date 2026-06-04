@@ -132,4 +132,4 @@
 
 /datum/component/holoray_trail/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_info("Right-click while held to toggle the projection trail ([enabled ? "on" : "off"]).")
+	examine_list += span_info(LANG("datum.21bc598e", list(enabled ? "on" : "off")))

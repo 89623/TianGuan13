@@ -215,13 +215,13 @@
 /datum/component/gunpoint/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(user in viewers(target))
-		examine_list += span_boldwarning("[parent] [parent.p_are()] holding [target] at gunpoint with [weapon]!")
+		examine_list += span_boldwarning(LANG("datum.13ef5812", list(parent, parent.p_are(), target, weapon)))
 
 ///Shows if the examine target is being held at gunpoint
 /datum/component/gunpoint/proc/examine_target(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(user in viewers(parent))
-		examine_list += span_boldwarning("[target] [target.p_are()] being held at gunpoint by [parent]!")
+		examine_list += span_boldwarning(LANG("datum.94725e20", list(target, target.p_are(), parent)))
 
 ///Prevents bumping the shooter to break gunpoint since shove does that
 /datum/component/gunpoint/proc/block_bumps_parent(mob/bumped, mob/living/bumper)

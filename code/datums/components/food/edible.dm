@@ -240,20 +240,20 @@ Behavior that's still missing from this component that original food items had t
 		return
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
-		examine_list += span_notice("It is [LOWER_TEXT(english_list(types))].")
+		examine_list += span_notice(LANG("datum.62eee539", list(LOWER_TEXT(english_list(types)))))
 
 	var/quality = get_perceived_food_quality(user)
 	if(quality > 0)
 		var/quality_label = GLOB.food_quality_description[quality]
-		examine_list += span_green("You find this meal [quality_label].")
+		examine_list += span_green(LANG("datum.1434dd59", list(quality_label)))
 	else if (quality == 0)
-		examine_list += span_notice("You find this meal edible.")
+		examine_list += span_notice(LANG("datum.3aee60d1", null))
 	else if (quality <= FOOD_QUALITY_DANGEROUS)
-		examine_list += span_warning("You may die from eating this meal.")
+		examine_list += span_warning(LANG("datum.fb550620", null))
 	else if (quality <= TOXIC_FOOD_QUALITY_THRESHOLD)
-		examine_list += span_warning("You find this meal disgusting!")
+		examine_list += span_warning(LANG("datum.6f35e3f8", null))
 	else
-		examine_list += span_warning("You find this meal inedible.")
+		examine_list += span_warning(LANG("datum.c1859e8e", null))
 
 	if(owner.reagents.total_volume > 0)
 		var/purity = owner.reagents.get_average_purity(/datum/reagent/consumable)
@@ -271,7 +271,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/datum/mind/mind = user.mind
 	if(mind && HAS_TRAIT_FROM(owner, TRAIT_FOOD_CHEF_MADE, REF(mind)))
-		examine_list += span_green("[owner] was made by you!")
+		examine_list += span_green(LANG("datum.8bfff79c", list(owner)))
 
 	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch(bitecount)
@@ -282,10 +282,10 @@ Behavior that's still missing from this component that original food items had t
 			if(2, 3)
 				examine_list += span_notice("[owner] was bitten [bitecount] times!")
 			else
-				examine_list += span_notice("[owner] was bitten multiple times!")
+				examine_list += span_notice(LANG("datum.146a9176", list(owner)))
 
 	if(GLOB.debugging_enabled)
-		examine_list += span_notice("Reagent purities:")
+		examine_list += span_notice(LANG("datum.43ba72ff", null))
 		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 			examine_list += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")
 
@@ -294,7 +294,7 @@ Behavior that's still missing from this component that original food items had t
 	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 	checkLiked(fraction, user)
 	if (!owner.reagents.get_reagent_amount(/datum/reagent/consumable/salt))
-		examine_list += span_notice("It could use a little more Sodium Chloride...")
+		examine_list += span_notice(LANG("datum.703e1c66", null))
 	if (isliving(user))
 		var/mob/living/living_user = user
 		living_user.taste_container(owner.reagents)

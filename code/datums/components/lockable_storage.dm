@@ -105,7 +105,7 @@
 /datum/component/lockable_storage/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(can_hack_open)
-		examine_list += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
+		examine_list += LANG("datum.12cbbf44", list(panel_open ? "unscrewed" : "screwed shut"))
 
 /**
  * Called when a screwdriver is used on the parent, if it's hackable.

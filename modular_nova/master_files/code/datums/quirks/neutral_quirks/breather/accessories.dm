@@ -21,4 +21,4 @@
 /obj/item/clothing/accessory/breathing/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/accessory_wearer = user
-	examine_list += "[accessory_wearer.p_Their()] <b>[name]</b> reads: 'I breathe [breath_type]'."
+	examine_list += LANG("obj.f8e5d072", list(accessory_wearer.p_Their(), name, breath_type))

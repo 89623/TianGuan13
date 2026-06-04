@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Makes an atom a shell that is able to take in an attached circuit.
 /datum/component/shell
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -132,21 +133,21 @@
 		return
 
 	if(!attached_circuit)
-		examine_text += span_notice("There is no integrated circuit attached.")
+		examine_text += span_notice(LANG("datum.75523855", null))
 		return
 
-	examine_text += span_notice("There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].")
-	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
+	examine_text += span_notice(LANG("datum.446e065d", list(source)))
+	examine_text += span_notice(LANG("datum.5baa16e7", list(locked? "locked" : "unlocked")))
 	var/obj/item/stock_parts/power_store/cell = attached_circuit.cell
-	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
+	examine_text += span_notice(LANG("datum.00f8f6f7", list(cell ? round(cell.percent(), 1) : 0)))
 
 	if (shell_flags & SHELL_FLAG_USB_PORT)
-		examine_text += span_notice("There is a <b>USB port</b> on the front.")
+		examine_text += span_notice(LANG("datum.673807e0", null))
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		examine_text += span_notice("The shell does not require a battery to function and will draw from the area's APC whenever possible.")
+		examine_text += span_notice(LANG("datum.c8bf911d", null))
 		if(!source.anchored)
-			examine_text += span_danger("<b>The integrated circuit is non-functional whilst the shell is unanchored.</b>")
+			examine_text += span_danger(LANG("datum.4cb38fcd", null))
 
 
 /**

@@ -19,14 +19,14 @@
 /datum/computer_file/program/ai_restorer/on_examine(obj/item/modular_computer/source, mob/user)
 	var/list/examine_text = list()
 	if(!stored_card)
-		examine_text += "It has a slot installed for an intelliCard."
+		examine_text += LANG("datum.450206ee", null)
 		return examine_text
 
 	if(computer.Adjacent(user))
-		examine_text += "It has a slot installed for an intelliCard which contains: [stored_card.name]"
+		examine_text += LANG("datum.89f54fb8", list(stored_card.name))
 	else
-		examine_text += "It has a slot installed for an intelliCard, which appears to be occupied."
-	examine_text += span_info("Alt-click to eject the intelliCard.")
+		examine_text += LANG("datum.e7bc1361", null)
+	examine_text += span_info(LANG("datum.329547e0", null))
 	return examine_text
 
 /datum/computer_file/program/ai_restorer/kill_program(mob/user)

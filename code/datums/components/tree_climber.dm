@@ -55,7 +55,7 @@
 /datum/component/tree_climber/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	if(current_tree)
-		examine_text += "It is clinging to [current_tree]!"
+		examine_text += LANG("datum.96933566", list(current_tree))
 
 /datum/component/tree_climber/proc/can_climb_tree(obj/structure/flora/tree/target)
 	if(current_tree)

@@ -85,15 +85,15 @@
 	// but at least it's readable?
 	if(amount_created > 1)
 		if(result_gender == PLURAL)
-			examine_list += span_notice("It can be turned into [amount_created] [result_name] with [span_bold(tool_desc)]!")
+			examine_list += span_notice(LANG("datum.eb167b60", list(amount_created, result_name, span_bold(tool_desc))))
 		else
-			examine_list += span_notice("It can be turned into [amount_created] [result_name][plural_s(result_name)] with [span_bold(tool_desc)]!")
+			examine_list += span_notice(LANG("datum.71fd0050", list(amount_created, result_name, plural_s(result_name), span_bold(tool_desc))))
 
 	else
 		if(result_gender == PLURAL)
-			examine_list += span_notice("It can be turned into some [result_name] with [span_bold(tool_desc)]!")
+			examine_list += span_notice(LANG("datum.9e1ea931", list(result_name, span_bold(tool_desc))))
 		else
-			examine_list += span_notice("It can be turned into \a [result_name] with [span_bold(tool_desc)]!")
+			examine_list += span_notice(LANG("datum.737700ae", list(result_name, span_bold(tool_desc))))
 
 /**
  * Adds context sensitivy directly to the processable file for screentips

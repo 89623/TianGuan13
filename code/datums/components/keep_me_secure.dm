@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ### Keep Me Secure component!
  *
@@ -71,17 +72,17 @@
 /datum/component/keep_me_secure/proc/on_examine(mob/living/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_boldnotice("[parent] should be secured at all times.")
+	examine_list += span_boldnotice(LANG("datum.98780910", list(parent)))
 	if(is_secured())
-		examine_list += span_notice("Right now, it is.")
+		examine_list += span_notice(LANG("datum.216a9413", null))
 	else
-		examine_list += span_warning("Right now, it isn't...")
-	examine_list += span_notice("Examine closer for more info.")
+		examine_list += span_warning(LANG("datum.e174a235", null))
+	examine_list += span_notice(LANG("datum.859339a4", null))
 
 /// signal sent when parent is examined more
 /datum/component/keep_me_secure/proc/on_examine_more(mob/living/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("For [parent] to be secure, it needs to be:")
-	examine_list += span_notice("1. Always on the move, and...")
-	examine_list += span_notice("2. Held or dragged by someone.")
+	examine_list += span_notice(LANG("datum.edfcf34b", list(parent)))
+	examine_list += span_notice(LANG("datum.741847f1", null))
+	examine_list += span_notice(LANG("datum.c5281bd4", null))

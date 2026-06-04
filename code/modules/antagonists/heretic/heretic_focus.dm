@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Heretic focus element, simple element for making an item a heretic focus,
 /// allowing heretics to cast advanced spells (examine message included).
 /datum/element/heretic_focus
@@ -34,7 +35,7 @@
 	if(!IS_HERETIC(user))
 		return
 
-	examine_list += span_notice("Allows you to cast advanced heretic spells when worn.")
+	examine_list += span_notice(LANG("datum.ea97498f", null))
 
 /**
  * Signal proc for [COMSIG_ITEM_EQUIPPED].

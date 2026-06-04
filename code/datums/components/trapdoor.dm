@@ -275,7 +275,7 @@
 	if(is_under_shuttle())
 		return
 	if(conspicuous)
-		examine_text += "There seems to be a tiny gap around this tile with some wires that you might be able to pulse with a <b>multitool</b>."
+		examine_text += LANG("datum.b0e52a2c", null)
 
 /**
  * ## try_opening

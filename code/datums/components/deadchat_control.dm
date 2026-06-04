@@ -201,12 +201,12 @@
 	if(!isobserver(user))
 		return
 
-	examine_list += span_notice("[A.p_Theyre()] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
+	examine_list += span_notice(LANG("datum.0366779e", list(A.p_Theyre(), (deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy")))
 
 	if(deadchat_mode & DEMOCRACY_MODE)
-		examine_list += span_notice("Type a command into chat to vote on an action. This happens once every [input_cooldown * 0.1] second\s.")
+		examine_list += span_notice(LANG("datum.283d4fe2", list(input_cooldown * 0.1)))
 	else if(deadchat_mode & ANARCHY_MODE)
-		examine_list += span_notice("Type a command into chat to perform. You may do this once every [input_cooldown * 0.1] second\s.")
+		examine_list += span_notice(LANG("datum.28be2737", list(input_cooldown * 0.1)))
 
 	var/extended_examine = "<span class='notice'>Command list:"
 

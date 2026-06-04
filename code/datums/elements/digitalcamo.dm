@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/element/digitalcamo
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 	var/list/attached_mobs = list()
@@ -40,7 +41,7 @@
 /datum/element/digitalcamo/proc/on_examine(datum/source, mob/M, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_warning("[source.p_their()] skin seems to be shifting like something is moving below it.")
+	examine_list += span_warning(LANG("datum.cf0a0dbf", list(source.p_their())))
 
 /datum/element/digitalcamo/proc/can_track(datum/source, mob/user)
 	SIGNAL_HANDLER

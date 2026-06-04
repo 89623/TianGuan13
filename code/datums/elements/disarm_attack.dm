@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///An element that allows items to be used to shove people around just like right-clicking would.
 /datum/element/disarm_attack
 
@@ -42,4 +43,4 @@
 /datum/element/disarm_attack/proc/examine(obj/item/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(can_disarm_attack(source, user, user, FALSE))
-		examine_list += span_notice("You can use it to <b>shove</b> people with <b>right-click</b>.")
+		examine_list += span_notice(LANG("datum.88bc6626", null))

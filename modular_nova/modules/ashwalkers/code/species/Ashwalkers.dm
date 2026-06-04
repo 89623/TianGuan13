@@ -123,9 +123,9 @@
 /datum/component/ash_age/proc/on_examine(atom/target_atom, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(human_target.has_status_effect(/datum/status_effect/ash_age))
-		examine_list += span_notice("[human_target] has not yet reached the age for evolving.")
+		examine_list += span_notice(LANG("datum.bea066b6", list(human_target)))
 		return
-	examine_list += span_warning("[human_target] has reached the age for evolving!")
+	examine_list += span_warning(LANG("datum.97db1288", list(human_target)))
 
 /datum/status_effect/ash_age
 	id = "ash_age"

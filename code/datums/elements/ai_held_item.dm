@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # AI Held Item Element
  *
@@ -54,7 +55,7 @@
 	var/obj/item/carried_item = get_held_item(source)
 	if (!carried_item)
 		return
-	examine_text += span_notice("[source.p_They()] [source.p_are()] carrying [carried_item.examine_title(user)].")
+	examine_text += span_notice(LANG("datum.c5be016b", list(source.p_They(), source.p_are(), carried_item.examine_title(user))))
 
 /// If we died, drop anything we were carrying
 /datum/element/ai_held_item/proc/on_death(mob/living/ol_yeller)

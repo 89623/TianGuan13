@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Defines that clamp the beauty of the aquarium, to prevent it from making most areas great or horrid all by itself.
 #define MIN_AQUARIUM_BEAUTY -3500
 #define MAX_AQUARIUM_BEAUTY 6000
@@ -300,11 +301,11 @@
 
 /datum/component/aquarium/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("Its temperature and fluid are currently set to [EXAMINE_HINT("[fluid_temp] K")] and [EXAMINE_HINT(fluid_type)].")
+	examine_list += span_notice(LANG("datum.e95b15de", list(EXAMINE_HINT("[fluid_temp] K"), EXAMINE_HINT(fluid_type))))
 	var/panel_open = HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN)
-	examine_list += span_notice("[EXAMINE_HINT("Alt-click")] to [panel_open ? "close" : "open"] the control and feed panel.")
+	examine_list += span_notice(LANG("datum.ec61de44", list(EXAMINE_HINT("Alt-click"), panel_open ? "close" : "open")))
 	if(panel_open && source.reagents.total_volume)
-		examine_list += span_notice("You can use a plunger to empty the feed storage.")
+		examine_list += span_notice(LANG("datum.2aae1d90", null))
 
 ///Check if an item can be inserted into the aquarium
 /datum/component/aquarium/proc/can_insert(atom/movable/source, obj/item/item, mob/living/user)

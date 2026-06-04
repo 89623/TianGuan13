@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Obeys Commands Component
  * Manages a list of pet command datums, allowing you to boss it around
@@ -83,7 +84,7 @@
 		return
 	if (!(user in source.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return
-	examine_list += span_notice("[source.p_They()] seem[source.p_s()] happy to see you!")
+	examine_list += span_notice(LANG("datum.0de9163d", list(source.p_They(), source.p_s())))
 
 /datum/component/obeys_commands/proc/on_key_pressed(mob/living/friend)
 	SIGNAL_HANDLER

@@ -255,13 +255,14 @@ impl<'a> Rewriter<'a> {
         }
         match expr {
             Expression::AssignOp { op, lhs, rhs } => {
-                // examine 文本：`. += <text>`（AddAssign，左侧是裸 `.`）。
+                // examine 文本：裸 `.`，以及 examine 信号处理器的累加器（examine_list/text/strings +=，
+                // COMSIG_ATOM_EXAMINE 的输出参数，必玩家可见）。
                 if matches!(op, AssignOp::AddAssign) {
                     if let Expression::Base { term, follow } = lhs.as_ref() {
                         if follow.is_empty() {
                             if let Term::Ident(id) = &term.elem {
-                                if id == "." {
-                                    self.try_rewrite_examine(term.location, rhs, ns);
+                                if id == "." || crate::extract::is_examine_accumulator(id) {
+                                    self.try_rewrite_examine(term.location, id, rhs, ns);
                                 }
                             }
                         }
@@ -365,7 +366,7 @@ impl<'a> Rewriter<'a> {
     ///
     /// 安全：要求 rhs 源码里**恰好一个**顶层字符串字面量（span_notice("x") 满足；
     /// 形如 `foo("x") + "y"` 的有两个 → 跳过，避免改错那一个）。
-    fn try_rewrite_examine(&mut self, dot_loc: dm::Location, rhs: &Expression, ns: &str) {
+    fn try_rewrite_examine(&mut self, dot_loc: dm::Location, anchor: &str, rhs: &Expression, ns: &str) {
         let mut nodes: Vec<&Spanned<Term>> = Vec::new();
         collect_text_nodes(rhs, &mut nodes);
         if nodes.len() != 1 {
@@ -387,16 +388,16 @@ impl<'a> Rewriter<'a> {
         let Some(dot_start) = line_col_to_byte(src, dot_loc.line, dot_loc.column) else {
             return;
         };
-        if src.as_bytes().get(dot_start) != Some(&b'.') {
-            return; // 锚不是 `.` → 定位有误，跳过
+        if !src.as_bytes()[dot_start..].starts_with(anchor.as_bytes()) {
+            return; // 锚与 LHS 标识符（`.` 或 examine_list 等）不符 → 定位有误，跳过
         }
         let line_end = logical_line_end(src, dot_start);
 
-        // 在 (dot_start, line_end] 里找顶层字符串字面量；要求恰好一个。
+        // 在标识符之后、line_end 内找顶层字符串字面量；要求恰好一个。
         let bytes = src.as_bytes();
         let mut first: Option<(usize, usize, Vec<String>)> = None;
         let mut count = 0usize;
-        let mut i = dot_start + 1;
+        let mut i = dot_start + anchor.len();
         while i < line_end {
             if bytes[i] == b'"' {
                 let Some((lstart, end, args)) = scan_dm_string(src, i) else {

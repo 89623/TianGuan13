@@ -260,12 +260,12 @@
 
 	if(!can_i_see)
 		return
-	examine_list += span_notice("Use a [catalyst_type::name] to interact with this.")
+	examine_list += span_notice(LANG("datum.d28722e7", list(catalyst_type::name)))
 	if(isnull(easy_access_sect))
 		if(operation_flags & RELIGION_TOOL_SECTSELECT)
-			examine_list += span_notice("This looks like it can be used to select a sect.")
+			examine_list += span_notice(LANG("datum.dea5dddb", null))
 			return
 	if(operation_flags & RELIGION_TOOL_SACRIFICE)//this can be moved around if things change but usually no rites == no sacrifice
-		examine_list += span_notice("Desired items can be used on this to increase favor.")
+		examine_list += span_notice(LANG("datum.18d77425", null))
 	if(easy_access_sect.rites_list && operation_flags & RELIGION_TOOL_INVOKE)
-		examine_list += span_notice("You can invoke rites from this.")
+		examine_list += span_notice(LANG("datum.0759faf6", null))

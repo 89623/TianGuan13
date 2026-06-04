@@ -77,7 +77,7 @@
 /obj/item/reagent_containers/cup/soup_pot/proc/reagent_special_examine(datum/source, mob/user, list/examine_list, can_see_insides = FALSE)
 	SIGNAL_HANDLER
 
-	examine_list += "Inside, you can see:"
+	examine_list += LANG("obj.0cd99d60", null)
 
 	if(LAZYLEN(added_ingredients) || reagents.total_volume > 0)
 		var/list/ingredient_amounts = list()
@@ -98,19 +98,19 @@
 				unknown_volume += current_reagent.volume
 
 		if(unknown_volume > 0)
-			examine_list += "&bull; [round(unknown_volume, 0.01)] units of unknown reagents"
+			examine_list += LANG("obj.d7680a11", list(round(unknown_volume, 0.01)))
 
 		if(reagents.total_volume > 0)
 			if(can_see_insides)
-				examine_list += span_notice("The contents of [src] have a temperature of [reagents.chem_temp]K.")
+				examine_list += span_notice(LANG("obj.fd836d89", list(src, reagents.chem_temp)))
 			else if(reagents.chem_temp > WATER_BOILING_POINT) // boiling point
-				examine_list += span_notice("The contents of [src] are boiling.")
+				examine_list += span_notice(LANG("obj.54f7ce2f", list(src)))
 
 	else
-		examine_list += "Nothing."
+		examine_list += LANG("obj.aa75d156", null)
 
 	if(reagents.is_reacting)
-		examine_list += span_warning("It is currently mixing!")
+		examine_list += span_warning(LANG("obj.5648f7f5", null))
 
 	return STOP_GENERIC_REAGENT_EXAMINE
 

@@ -45,9 +45,9 @@
 
 	if(!is_our_spy(user))
 		return
-	examine_list += span_notice("You recognize this as your <i>spy uplink</i>.")
-	examine_list += span_notice("- [EXAMINE_HINT("Use it in hand")] to view your bounty list.")
-	examine_list += span_notice("- [EXAMINE_HINT("Right click")] with it on a bounty target to claim it.")
+	examine_list += span_notice(LANG("datum.32ac4b36", null))
+	examine_list += span_notice(LANG("datum.9a5f7ab0", list(EXAMINE_HINT("Use it in hand"))))
+	examine_list += span_notice(LANG("datum.ff18e074", list(EXAMINE_HINT("Right click"))))
 
 /datum/component/spy_uplink/proc/block_pda_bombs(obj/item/source)
 	SIGNAL_HANDLER

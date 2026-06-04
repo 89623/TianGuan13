@@ -172,7 +172,7 @@
 	SIGNAL_HANDLER
 
 	if (isobserver(mob))
-		examine_text += span_notice("[source.p_They()] [source.p_have()] <a href='byond://?src=[REF(src)];open_implant=1'>\a [parent] implanted in [source.p_them()]</a>.")
+		examine_text += span_notice(LANG("obj.4930d946", list(source.p_They(), source.p_have(), REF(src), parent, source.p_them())))
 
 /obj/item/circuit_component/implant_core/Topic(href, list/href_list)
 	..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Opens up a USB port that can be connected to by circuits, creating registerable circuit components
 /datum/component/usb_port
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -146,14 +147,14 @@
 	SIGNAL_HANDLER
 
 	if (isnull(attached_circuit))
-		examine_text += span_notice("There is a USB port on the front.")
+		examine_text += span_notice(LANG("datum.e31f4156", null))
 	else
-		examine_text += span_notice("[attached_circuit.shell || attached_circuit] is connected to [parent.p_them()] by a USB port.")
+		examine_text += span_notice(LANG("datum.958d6b39", list(attached_circuit.shell || attached_circuit, parent.p_them())))
 
 /datum/component/usb_port/proc/on_examine_shell(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_notice("[source.p_They()] [source.p_are()] attached to [parent] with a USB cable.")
+	examine_text += span_notice(LANG("datum.9c24ace9", list(source.p_They(), source.p_are(), parent)))
 
 /datum/component/usb_port/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/connecting_cable, mob/user)
 	SIGNAL_HANDLER

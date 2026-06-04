@@ -77,7 +77,7 @@
 	if(!is_type_in_typecache(user, allowed_mobs))
 		return
 
-	examine_list += span_warning("Ctrl + Click [source] to slide under!\n")
+	examine_list += span_warning(LANG("datum.da090843", list(source)))
 
 // Loads our drone under door slide component dependency
 /obj/machinery/door/Initialize(mapload)

@@ -112,9 +112,9 @@ GLOBAL_LIST_EMPTY(polarization_controllers)
 /datum/component/polarization_controller/proc/on_window_examine(datum/source, mob/user, list/examine_strings)
 	SIGNAL_HANDLER
 
-	examine_strings += span_notice("It has a polarization controller installed.")
-	examine_strings += span_notice("Use a <b>window polarizing controller</b> on it to link it to that controller's current ID.")
-	examine_strings += span_notice("Use a <b>multitool</b> on it to remove the polarization controller.")
+	examine_strings += span_notice(LANG("datum.300f20e5", null))
+	examine_strings += span_notice(LANG("datum.39dfbdcf", null))
+	examine_strings += span_notice(LANG("datum.1be226fe", null))
 
 
 /**

@@ -45,8 +45,8 @@ This component is used in vat growing to swab for microbiological samples which 
 /datum/component/swabbing/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(LAZYLEN(swabbed_items))
-		examine_list += span_nicegreen("There is a microbiological sample on [parent]!")
-		examine_list += "[span_notice("You can see the following micro-organisms:")]\n"
+		examine_list += span_nicegreen(LANG("datum.32fcb17c", list(parent)))
+		examine_list += LANG("datum.9cd8fade", list(span_notice("You can see the following micro-organisms:")))
 		for(var/i in swabbed_items)
 			var/datum/biological_sample/samp = i
 			for(var/organism in samp.micro_organisms)

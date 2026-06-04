@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ### Soul Stealer component!
  *
@@ -31,7 +32,7 @@
 /datum/component/soul_stealer/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("It will steal the soul of anyone it defeats in battle.")
+	examine_list += span_notice(LANG("datum.3e3a54a2", null))
 
 	var/num_souls = length(soulstones)
 	switch(num_souls)

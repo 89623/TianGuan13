@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Animated beings of stone. They have increased defenses, and do not need to breathe. They must eat minerals to live, which give additional buffs.
 /datum/species/golem
 	name = "Golem"
@@ -110,8 +111,7 @@
 	if(source.appears_alive())
 		return
 
-	examine_text += span_warning("This golem appears to be in a state of disrepair. \
-		It may be possible to rebuild it by adding minerals into its form.")
+	examine_text += span_warning(LANG("datum.b0dffa55", null))
 
 /datum/species/golem/proc/rebuild_check(mob/living/carbon/human/source, mob/living/user, obj/item/tool, ...)
 	SIGNAL_HANDLER

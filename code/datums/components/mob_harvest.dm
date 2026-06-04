@@ -98,11 +98,11 @@
 	SIGNAL_HANDLER
 
 	if(amount_ready < 1)
-		examine_list += span_notice("[parent] seems like they could use a bit more time.")
+		examine_list += span_notice(LANG("datum.71160715", list(parent)))
 	if(amount_ready > 1)
-		examine_list += span_notice("[parent] looks like they can be harvested about [amount_ready] times.")
+		examine_list += span_notice(LANG("datum.ef467691", list(parent, amount_ready)))
 	if(amount_ready == 1)
-		examine_list += span_notice("[parent] looks ready to be harvested.")
+		examine_list += span_notice(LANG("datum.e68c2251", list(parent)))
 
 ///signal called on parent being attacked with an item
 /datum/component/mob_harvest/proc/on_attackby(datum/source, obj/item/used_item, mob/user)
