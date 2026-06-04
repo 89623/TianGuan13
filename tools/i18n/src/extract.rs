@@ -75,7 +75,7 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
     match name {
         "to_chat" => Some(&[1]),
         "balloon_alert" => Some(&[1]),
-        "visible_message" => Some(&[0, 1]),
+        "visible_message" => Some(&[0, 1, 2]), // [2]=blind_message（盲人可见）。
         "audible_message" => Some(&[0, 1, 3]),
         "say" => Some(&[0]),
         "manual_emote" => Some(&[0]),
