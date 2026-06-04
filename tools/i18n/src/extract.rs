@@ -59,6 +59,17 @@ const SINK_VARS: &[&str] = &[
     "message_param",
 ];
 
+/// 「句子型」玩家可见文案启发式：多词自然语句（含空格 + 首字母大写 + 含小写字母 + 无占位符）。
+/// 用于把「不在 sink 调用处」的玩家可见静态串（config_entry 公告默认值、具名累加器 examine 句）
+/// 抽进目录，靠聊天 AC 子串层翻译。含 {0} 的插值模板排除（那需 LANG 改写、且会被 AC 守卫跳过）。
+fn is_sentence_like(s: &str) -> bool {
+    let s = s.trim();
+    s.contains(' ')
+        && !s.contains('{')
+        && s.chars().next().is_some_and(|c| c.is_ascii_uppercase())
+        && s.chars().any(|c| c.is_ascii_lowercase())
+}
+
 /// 汇聚点 proc 名 -> 其消息参数下标。
 fn sink_message_args(name: &str) -> Option<&'static [usize]> {
     match name {
@@ -115,11 +126,19 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
 
         // 1) 变量初始化（name/desc 等）。
         for (var_name, type_var) in ty.vars.iter() {
-            if !SINK_VARS.contains(&var_name.as_str()) {
+            let is_sink = SINK_VARS.contains(&var_name.as_str());
+            // config_entry 的 default：玩家可见公告/模板（安全等级公告、提示等，从配置加载、非 sink 调用）。
+            // 仅 /datum/config_entry 类型且「句子型」default 才抽，避开数字/标志/路径等非显示默认值。
+            let is_config_default =
+                var_name == "default" && ty.path.starts_with("/datum/config_entry");
+            if !is_sink && !is_config_default {
                 continue;
             }
             if let Some(expr) = &type_var.value.expression {
                 if let Some(template) = build_template(expr) {
+                    if is_config_default && !is_sentence_like(&template) {
+                        continue;
+                    }
                     emit(&mut catalog, &namespace, &template);
                 }
             }
@@ -373,13 +392,17 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog) {
             visit_expr(rhs, ns, catalog);
         }
         Expression::AssignOp { op, lhs, rhs } => {
-            // examine 文本：`. += <text>`（AddAssign，左侧裸 `.`）。
+            // examine / 消息累加：`. += <text>`（裸 `.`）原样抽；具名累加器（combined_msg += span_*("…")
+            // 等，self-examine、descriptor 等）仅抽「静态句子型」串供聊天 AC 兜底——span 是宏、AST 判不出
+            // 包裹，故用内容启发式；插值模板(含 {0})排除（那需 LANG 改写）。
             if matches!(op, AssignOp::AddAssign) {
                 if let Expression::Base { term, follow } = lhs.as_ref() {
                     if follow.is_empty() {
                         if let Term::Ident(id) = &term.elem {
-                            if id == "." {
-                                if let Some(template) = build_template(rhs) {
+                            if let Some(template) = build_template(rhs) {
+                                if id == "." {
+                                    emit(catalog, ns, &template);
+                                } else if is_sentence_like(&template) {
                                     emit(catalog, ns, &template);
                                 }
                             }
