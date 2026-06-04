@@ -52,6 +52,21 @@ GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 		result = replacetext(result, "{[i - 1]}", "[args[i]]")
 	return result
 
+/// BYOND 文法宏（\the \a \improper 等，无参、由引擎按名词上下文在**编译期/输出期**处理）。模板从 JSON
+/// 加载后引擎不再处理 → 会字面显示。中文无冠词/复数、且上下文已丢失，直接剥掉。`\b` 防 \theory 等误伤；
+/// 已转义的反斜杠（\\）开头不会被这里的单反斜杠模式吃掉。只列已知文法宏，不碰 \n \t \" 等真转义。
+GLOBAL_VAR_INIT(i18n_text_macro_regex, regex(@"\\(improper|proper|themselves|theirs|himself|herself|itself|their|them|they|roman|Roman|the|The|hers|she|She|her|his|him|its|it|It|he|He|an|An|a|A)\b", "g"))
+
+/// 处理从 JSON 模板带出的 BYOND 转义/文法宏（rewrite 把编译期字面量改成 LANG 后，这些转义不再被引擎
+/// 处理）：① 剥文法宏；② 还原转义引号 \" → "。仅在串含反斜杠时调用。
+/proc/lang_process_text_escapes(text)
+	if(!istext(text))
+		return text
+	var/regex/macro_re = GLOB.i18n_text_macro_regex
+	text = macro_re.Replace(text, "")
+	text = replacetext(text, "\\\"", "\"") // \" → "
+	return text
+
 /// 核心（纯函数）：按 locale 查模板（缺则回退英文，再缺则返回 key），最后做占位符替换。
 /proc/lang_resolve(key, list/args, locale)
 	if(isnull(locale))
@@ -64,7 +79,9 @@ GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 	if(isnull(template))
 		return key // 兜底：返回 key，避免崩溃
 
-	return lang_interpolate(template, args)
+	. = lang_interpolate(template, args)
+	if(findtext(., "\\")) // 仅含反斜杠（文法宏/转义）时才处理，绝大多数消息直接返回
+		. = lang_process_text_escapes(.)
 
 /// 全服 locale 版本（广播类文本用）。见 LANG 宏。
 /proc/lang_format(key, list/args)
