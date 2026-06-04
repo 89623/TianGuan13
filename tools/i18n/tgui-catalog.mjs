@@ -541,6 +541,18 @@ const DM_LABEL_SOURCES = [
   // 少量内联器官/部件名（无害噪音：进 tgui 目录后由 TS 端翻显示、P1 跳过；非物种处仍可被翻）。
   ['code/modules/mob/living/carbon/human/species_types', true, /^\tname\s*=\s*"([^"]+)"/gm],
   ['modular_nova/modules/customization/modules/mob/living/carbon/human', true, /^\tname\s*=\s*"([^"]+)"/gm],
+  // choiced 偏好「选项显示名」(角色设置下拉)。前端 dropdowns.tsx 用 {displayText, value}：
+  // displayText 走目录翻显示、value 是 act 标识符保持英文=安全。只抽 display 串(非 value)。
+  // 仅取定义为「字面量」的源；GLOB 动态填充的(addiction/organ/lunchbox 等)及 genital(来自
+  // sprite accessories，已被上面 sprite_accessories 覆盖)不在此列。
+  // 肤色显示名：GLOB.skin_tone_names 的关联值(键是 act 用的肤色 id，不抽)。mobs.dm 内仅此一处关联表。
+  ['code/__HELPERS/mobs.dm', false, /^\t"[^"]+"\s*=\s*"([^"]+)",/gm],
+  // 身高显示名：height_scaling_strings(键是 HUMAN_HEIGHT_* 定义)。
+  ['modular_nova/modules/height_scaling/code/preferences.dm', false, /"\[HUMAN_HEIGHT_[^\]]+\]"\s*=\s*"([^"]+)"/g],
+  // 脚步声选项(扁平 list，值即显示)。文件内大写引号串恰好只有这 5 个选项。
+  ['modular_nova/master_files/code/modules/client/preferences/footstep_sound.dm', false, /"([A-Z][a-z]+)"/g],
+  // 渗透点显示名(UPLINK_* = "PDA"/"Radio"/...)。
+  ['code/modules/client/preferences/uplink_location.dm', false, /=\s*"([A-Z][^"]*)"/g],
   // 待接：反派名散在 code/modules/antagonists 各处，整目录抽会混入目标/技能等海量非偏好名，需专门源。
 ];
 
