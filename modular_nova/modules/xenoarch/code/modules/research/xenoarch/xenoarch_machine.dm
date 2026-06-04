@@ -119,7 +119,7 @@
 	switch(choice)
 		if("Lavaland Chest (100)")
 			if(current_research < 100)
-				balloon_alert(user, "insufficient research!")
+				balloon_alert(user, LANG("obj.8aef966b", null))
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			current_research -= 100
@@ -128,7 +128,7 @@
 
 		if("Anomalous Crystal (100)")
 			if(current_research < 100)
-				balloon_alert(user, "insufficient research!")
+				balloon_alert(user, LANG("obj.8aef966b", null))
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			current_research -= 100
@@ -138,7 +138,7 @@
 
 		if("Bepis Tech (60)")
 			if(current_research < 60)
-				balloon_alert(user, "insufficient research!")
+				balloon_alert(user, LANG("obj.8aef966b", null))
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			current_research -= 60

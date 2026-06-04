@@ -209,12 +209,12 @@
 		if(SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION, SCHOOL_PSYCHIC)
 			return
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN, SCHOOL_SANGUINE)
-			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))
+			to_chat(user, span_userdanger(LANG("datum.476840f2", list(GLOB.deity))))
 			lightningbolt(user)
 			user.mind.set_holy_role(NONE)
 			qdel(src)
 			owner.add_mood_event("honorbound", /datum/mood_event/banished) //add mood event after we already cleared our events
-			to_chat(user, span_userdanger("You have been excommunicated! You are no longer holy!"))
+			to_chat(user, span_userdanger(LANG("datum.6d078d97", null)))
 		else
 			to_chat(user, span_userdanger(LANG("datum.45e82239", list(GLOB.deity, school == SCHOOL_UNSET ? "strange" : school))))
 			lightningbolt(user)

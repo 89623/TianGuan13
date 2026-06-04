@@ -399,7 +399,7 @@
 				if(!tool.tool_start_check(user, amount = 5))
 					return ITEM_INTERACT_BLOCKING
 
-				balloon_alert(user, "adding cables...")
+				balloon_alert(user, LANG("obj.a59792f9", null))
 				if(!tool.use_tool(src, user, 2 SECONDS, volume = 50, amount = 5) || state != FRAME_STATE_EMPTY)
 					return ITEM_INTERACT_BLOCKING
 

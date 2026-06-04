@@ -412,7 +412,7 @@
 					qdel(nearby_atom)
 
 		if(11 to 20) // Spawn 4 ai-controlled marauders to fuck shit up
-			visible_message(span_warning("A group of clockwork marauders appear, before being obscured by a cloud of smoke!"))
+			visible_message(span_warning(LANG("obj.fcdc92fa", null)))
 
 			for(var/direction in list(NORTH, SOUTH, EAST, WEST))
 				var/turf/tile = get_step(src, direction)

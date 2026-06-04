@@ -151,7 +151,7 @@
 		if(INLET, OUTLET)
 			var/port = "[type == INLET ? "input" : "output"] port"
 			user.balloon_alert(user, "[port] configured")
-			to_chat(user, span_notice("[src] has connected [multi_tool.buffer] to its [port]."))
+			to_chat(user, span_notice(LANG("obj.5d8623f7", list(src, multi_tool.buffer, port))))
 	to_chat(user, span_notice(LANG("obj.877a4dfa", list(src))))
 	multi_tool.set_buffer(src)
 

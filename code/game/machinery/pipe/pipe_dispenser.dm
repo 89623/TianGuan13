@@ -108,7 +108,7 @@
 
 						var/obj/structure/disposalconstruct/disposal_out = new (loc, p_type)
 						if(!disposal_out.can_place())
-							to_chat(usr, span_warning("There's not enough room to build that here!"))
+							to_chat(usr, span_warning(LANG("obj.661530b5", null)))
 							qdel(disposal_out)
 							return
 
@@ -139,7 +139,7 @@
 			if (ISNOTSTUB(target_dir))
 				p_init_dir = target_dir
 			else
-				to_chat(usr, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				to_chat(usr, span_warning(LANG("obj.0c06b2dc", list(src))))
 
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS

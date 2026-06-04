@@ -568,7 +568,7 @@
 
 		if("reset_tasking_index")
 			master_tasking.current_index = 1
-			balloon_alert(ui.user, "tasking index reset")
+			balloon_alert(ui.user, LANG("obj.2e7940d6", null))
 			maybe_wake()
 			return TRUE
 

@@ -195,39 +195,39 @@
 	var/new_name = name
 	switch(notches)
 		if(1)
-			to_chat(user, span_notice("Your first kill - hopefully one of many. You scratch a notch into [src]'s blade."))
-			to_chat(user, span_warning("You feel your fallen foe's soul entering your blade, restoring your wounds!"))
+			to_chat(user, span_notice(LANG("obj.6f471bdf", list(src))))
+			to_chat(user, span_warning(LANG("obj.6c66a8a6", null)))
 			new_name = "notched claymore"
 		if(2)
-			to_chat(user, span_notice("Another falls before you. Another soul fuses with your own. Another notch in the blade."))
+			to_chat(user, span_notice(LANG("obj.178f7da6", null)))
 			new_name = "double-notched claymore"
 			add_atom_colour(rgb(255, 235, 235), ADMIN_COLOUR_PRIORITY)
 		if(3)
-			to_chat(user, span_notice("You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b>"))
+			to_chat(user, span_notice(LANG("obj.fccca70a", null)))
 			new_name = "triple-notched claymore"
 			add_atom_colour(rgb(255, 215, 215), ADMIN_COLOUR_PRIORITY)
 		if(4)
-			to_chat(user, span_notice("You've lost count of</span> <span class='bolddanger'>how many you've killed."))
+			to_chat(user, span_notice(LANG("obj.c925539e", null)))
 			new_name = "many-notched claymore"
 			add_atom_colour(rgb(255, 195, 195), ADMIN_COLOUR_PRIORITY)
 		if(5)
-			to_chat(user, span_bolddanger("Five voices now echo in your mind, cheering the slaughter."))
+			to_chat(user, span_bolddanger(LANG("obj.2a8b29d8", null)))
 			new_name = "battle-tested claymore"
 			add_atom_colour(rgb(255, 175, 175), ADMIN_COLOUR_PRIORITY)
 		if(6)
-			to_chat(user, span_bolddanger("Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe."))
+			to_chat(user, span_bolddanger(LANG("obj.ebe67399", null)))
 			new_name = "battle-scarred claymore"
 			add_atom_colour(rgb(255, 155, 155), ADMIN_COLOUR_PRIORITY)
 		if(7)
-			to_chat(user, span_bolddanger("Kill. Butcher. <i>Conquer.</i>"))
+			to_chat(user, span_bolddanger(LANG("obj.2a4f3f34", null)))
 			new_name = "vicious claymore"
 			add_atom_colour(rgb(255, 135, 135), ADMIN_COLOUR_PRIORITY)
 		if(8)
-			to_chat(user, span_userdanger("IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i>"))
+			to_chat(user, span_userdanger(LANG("obj.e9c6a7fd", null)))
 			new_name = "bloodthirsty claymore"
 			add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
 		if(9)
-			to_chat(user, span_userdanger("ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE."))
+			to_chat(user, span_userdanger(LANG("obj.568cd39c", null)))
 			new_name = "gore-stained claymore"
 			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
 		if(10)

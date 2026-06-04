@@ -53,11 +53,11 @@
 				return FALSE
 			// Don't let people off station futz with the station network.
 			if(!is_station_level(z))
-				balloon_alert(user, "out of range!")
+				balloon_alert(user, LANG("obj.2201997f", null))
 				return TRUE
 
 			expunge_record_info(target)
-			balloon_alert(user, "record expunged")
+			balloon_alert(user, LANG("obj.0f11207f", null))
 			playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
 			investigate_log("[key_name(user)] expunged the record of [target.name].", INVESTIGATE_RECORDS)
 
@@ -69,7 +69,7 @@
 			return TRUE
 
 		if("logout")
-			balloon_alert(user, "logged out")
+			balloon_alert(user, LANG("obj.73a72999", null))
 			playsound(src, 'sound/machines/terminal/terminal_off.ogg', 70, TRUE)
 			authenticated = FALSE
 
@@ -78,7 +78,7 @@
 		if("purge_records")
 			// Don't let people off station futz with the station network.
 			//NOVA EDIT BEGIN: disable record purging/expunging to stop people messing around with the AI effortlessly
-			balloon_alert(usr, "access denied!")
+			balloon_alert(usr, LANG("obj.1bd3ceeb", null))
 			return TRUE
 			/*
 			if(!is_station_level(z))

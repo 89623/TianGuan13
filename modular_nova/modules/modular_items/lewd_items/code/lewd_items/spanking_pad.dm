@@ -68,7 +68,7 @@
 	switch(user.zone_selected) //to let code know what part of body we gonna spank.
 		if(BODY_ZONE_PRECISE_GROIN)
 			if(!target.is_bottomless())
-				to_chat(user, span_danger("[target]'s butt is covered!"))
+				to_chat(user, span_danger(LANG("obj.6b7eb5bf", list(target))))
 				return
 			message = (user == target) ? pick("spanks themselves with [src]", "uses [src] to slap their hips") : pick("slaps [target]'s hips with [src]", "uses [src] to slap [target]'s butt", "spanks [target] with [src], making a loud slapping noise", "slaps [target]'s thighs with [src]")
 			if(prob(40) && (target.stat != DEAD))

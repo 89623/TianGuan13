@@ -91,13 +91,13 @@
 			mode = HUG_MODE_NICE
 	switch(mode)
 		if(HUG_MODE_NICE)
-			to_chat(user, span_infoplain("Power reset. Hugs!"))
+			to_chat(user, span_infoplain(LANG("obj.60f99919", null)))
 		if(HUG_MODE_HUG)
-			to_chat(user, span_infoplain("Power increased!"))
+			to_chat(user, span_infoplain(LANG("obj.66c0e486", null)))
 		if(HUG_MODE_SHOCK)
-			to_chat(user, "<span class='warningplain'>BZZT. Electrifying arms...</span>")
+			to_chat(user, LANG("obj.1aaf7f88", null))
 		if(HUG_MODE_CRUSH)
-			to_chat(user, "<span class='warningplain'>ERROR: ARM ACTUATORS OVERLOADED.</span>")
+			to_chat(user, LANG("obj.0a022aa3", null))
 
 /obj/item/borg/cyborghug/attack(mob/living/attacked_mob, mob/living/silicon/robot/user, list/modifiers, list/attack_modifiers)
 	if(attacked_mob == user)

@@ -205,11 +205,11 @@
 	var/healthpercent = (atom_integrity/max_integrity) * 100
 	switch(healthpercent)
 		if(60 to 95)
-			. += span_info("It looks slightly damaged.")
+			. += span_info(LANG("obj.bc3c8a23", null))
 		if(25 to 60)
-			. += span_warning("It appears heavily damaged.")
+			. += span_warning(LANG("obj.27d47c4b", null))
 		if(0 to 25)
-			. += span_boldwarning("It's falling apart!")
+			. += span_boldwarning(LANG("obj.ad6c0cee", null))
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)

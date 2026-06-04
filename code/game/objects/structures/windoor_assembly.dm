@@ -112,7 +112,7 @@
 					span_notice("You start to disassemble the windoor assembly..."))
 
 				if(W.use_tool(src, user, 40, volume=50))
-					to_chat(user, span_notice("You disassemble the windoor assembly."))
+					to_chat(user, span_notice(LANG("obj.e5955219", null)))
 					var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
 					if (!QDELETED(RG))
 						RG.add_fingerprint(user)
@@ -139,7 +139,7 @@
 						if(WD.dir == dir)
 							to_chat(user, span_warning("There is already a windoor in that location!"))
 							return
-					to_chat(user, span_notice("You secure the windoor assembly."))
+					to_chat(user, span_notice(LANG("obj.feaf53d7", null)))
 					set_anchored(TRUE)
 					if(secure)
 						name = "secure anchored windoor assembly"
@@ -154,7 +154,7 @@
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!anchored)
 						return
-					to_chat(user, span_notice("You unsecure the windoor assembly."))
+					to_chat(user, span_notice(LANG("obj.f8d3bc8f", null)))
 					set_anchored(FALSE)
 					if(secure)
 						name = "secure windoor assembly"
@@ -165,16 +165,16 @@
 			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
 				var/obj/item/stack/sheet/plasteel/P = W
 				if(P.get_amount() < 2)
-					to_chat(user, span_warning("You need more plasteel to do this!"))
+					to_chat(user, span_warning(LANG("obj.d0ad9de3", null)))
 					return
-				to_chat(user, span_notice("You start to reinforce the windoor with plasteel..."))
+				to_chat(user, span_notice(LANG("obj.8042a31e", null)))
 
 				if(do_after(user,40, target = src))
 					if(!src || secure || P.get_amount() < 2)
 						return
 
 					P.use(2)
-					to_chat(user, span_notice("You reinforce the windoor."))
+					to_chat(user, span_notice(LANG("obj.ba48339d", null)))
 					secure = TRUE
 					if(anchored)
 						name = "secure anchored windoor assembly"
@@ -190,9 +190,9 @@
 						return
 					var/obj/item/stack/cable_coil/CC = W
 					if(!CC.use(1))
-						to_chat(user, span_warning("You need more cable to do this!"))
+						to_chat(user, span_warning(LANG("obj.bc76c590", null)))
 						return
-					to_chat(user, span_notice("You wire the windoor."))
+					to_chat(user, span_notice(LANG("obj.d99b42df", null)))
 					state = "02"
 					if(secure)
 						name = "secure wired windoor assembly"
@@ -211,7 +211,7 @@
 					if(state != "02")
 						return
 
-					to_chat(user, span_notice("You cut the windoor wires."))
+					to_chat(user, span_notice(LANG("obj.048e7ef7", null)))
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					state = "01"
 					if(secure)
@@ -233,7 +233,7 @@
 					if(!src || electronics)
 						W.forceMove(drop_location())
 						return
-					to_chat(user, span_notice("You install the airlock electronics."))
+					to_chat(user, span_notice(LANG("obj.2b65dc12", null)))
 					name = "near finished windoor assembly"
 					electronics = W
 
@@ -246,7 +246,7 @@
 					span_notice("You start to uninstall electronics from the airlock assembly..."))
 
 				if(W.use_tool(src, user, 40, volume=100) && electronics)
-					to_chat(user, span_notice("You remove the airlock electronics."))
+					to_chat(user, span_notice(LANG("obj.a5dac4b8", null)))
 					name = "wired windoor assembly"
 					var/obj/item/electronics/airlock/ae
 					ae = electronics
@@ -256,14 +256,14 @@
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(W.tool_behaviour == TOOL_CROWBAR)
 				if(!electronics)
-					to_chat(usr, span_warning("The assembly is missing electronics!"))
+					to_chat(usr, span_warning(LANG("obj.0098cf03", null)))
 					return
 				user.visible_message(span_notice("[user] pries the windoor into the frame."),
 					span_notice("You start prying the windoor into the frame..."))
 
 				if(W.use_tool(src, user, 40, volume=100) && electronics)
 					set_density(TRUE) //Shouldn't matter but just incase
-					to_chat(user, span_notice("You finish the windoor."))
+					to_chat(user, span_notice(LANG("obj.640bb6ba", null)))
 					finish_door()
 
 			else
@@ -280,12 +280,12 @@
 		return
 	switch(state)
 		if("01")
-			. += span_notice("\The [src] needs [span_boldnotice("wiring")], or could be [span_boldnotice("un-wrenched")] from the floor.")
+			. += span_notice(LANG("obj.c884d56a", list(src, span_boldnotice("wiring"), span_boldnotice("un-wrenched"))))
 		if("02")
 			if(!electronics)
-				. += span_notice("\The [src] needs [span_boldnotice("airlock electronics")] to continue installation, or [span_boldnotice("wirecutters")] to take apart.")
+				. += span_notice(LANG("obj.8a016b75", list(src, span_boldnotice("airlock electronics"), span_boldnotice("wirecutters"))))
 			else
-				. += span_notice("\The [src] is ready to be [span_boldnotice("levered")] into place with a [span_boldnotice("crowbar")].")
+				. += span_notice(LANG("obj.8289058c", list(src, span_boldnotice("levered"), span_boldnotice("crowbar"))))
 
 /obj/structure/windoor_assembly/proc/finish_door()
 	var/obj/machinery/door/window/windoor

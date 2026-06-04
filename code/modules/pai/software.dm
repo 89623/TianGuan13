@@ -59,7 +59,7 @@
 			door_jack(params["mode"])
 			return TRUE
 		if("Encryption Slot")
-			balloon_alert(usr, "radio frequencies [!encrypt_mod ? "enabled" : "disabled"]")
+			balloon_alert(usr, LANG("mob.8b934582", list(!encrypt_mod ? "enabled" : "disabled")))
 			encrypt_mod = !encrypt_mod
 			radio.subspace_transmission = !radio.subspace_transmission
 			return TRUE
@@ -201,7 +201,7 @@
 		if(PAI_SCAN_TARGET)
 			var/mob/living/carbon/target = get_holder()
 			if(isnull(target))
-				balloon_alert(src, "not being carried!")
+				balloon_alert(src, LANG("mob.391bc95e", null))
 				return FALSE
 			healthscan(src, target)
 			return TRUE
@@ -209,10 +209,10 @@
 		if(PAI_SCAN_MASTER)
 			var/mob/living/resolved_master = find_master()
 			if(isnull(resolved_master))
-				balloon_alert(src, "no master detected!")
+				balloon_alert(src, LANG("mob.aa43d117", null))
 				return FALSE
 			if(!is_valid_z_level(get_turf(src), get_turf(resolved_master)))
-				balloon_alert(src, "master out of range!")
+				balloon_alert(src, LANG("mob.9aa8b1f5", null))
 				return FALSE
 			healthscan(src, resolved_master)
 			return TRUE

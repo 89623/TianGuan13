@@ -397,7 +397,7 @@
 			var/dispensed_amount = 0
 
 			if(isAI(living_mob))
-				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
+				to_chat(living_mob, span_warning(LANG("obj.418b3309", list(src))))
 				return TRUE
 
 			for(var/obj/item/dispensed_item in contents)

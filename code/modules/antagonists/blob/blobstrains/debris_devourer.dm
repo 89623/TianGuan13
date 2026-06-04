@@ -66,13 +66,13 @@
 	else
 		switch (round(max(min(DEBRIS_DENSITY, 10),0)))
 			if (0)
-				. += span_notice("There is not currently enough absorbed debris to reduce damage.")
+				. += span_notice(LANG("datum.57c10414", null))
 			if (1 to 3)
-				. += span_notice("Absorbed debris is currently reducing incoming damage by a very low amount.") // these roughly correspond with force description strings
+				. += span_notice(LANG("datum.9298d6c3", null)) // these roughly correspond with force description strings
 			if (4 to 7)
-				. += span_notice("Absorbed debris is currently reducing incoming damage by a low amount.")
+				. += span_notice(LANG("datum.6fba288e", null))
 			if (8 to 10)
-				. += span_notice("Absorbed debris is currently reducing incoming damage by a medium amount.")
+				. += span_notice(LANG("datum.179a13d2", null))
 
 /datum/blobstrain/debris_devourer/on_blobmob_atom_interacted(mob/living/minion, atom/interacted_atom, adjacent, modifiers)
 	. = ..()

@@ -141,7 +141,7 @@ no power level overlay is currently in the overlays list.
 
 	switch(state)
 		if(FG_UNSECURED)
-			to_chat(user, span_warning("[src] needs to be wrenched to the floor!"))
+			to_chat(user, span_warning(LANG("obj.acb3909a", list(src))))
 
 		if(FG_SECURED)
 			if(!welder.tool_start_check(user, amount=1))
@@ -152,7 +152,7 @@ no power level overlay is currently in the overlays list.
 				span_hear("You hear welding."))
 			if(welder.use_tool(src, user, 20, volume=50) && state == FG_SECURED)
 				state = FG_WELDED
-				to_chat(user, span_notice("You weld the field generator to the floor."))
+				to_chat(user, span_notice(LANG("obj.dda769af", null)))
 
 		if(FG_WELDED)
 			if(!welder.tool_start_check(user, amount=1))
@@ -163,7 +163,7 @@ no power level overlay is currently in the overlays list.
 				span_hear("You hear welding."))
 			if(welder.use_tool(src, user, 20, volume=50) && state == FG_WELDED)
 				state = FG_SECURED
-				to_chat(user, span_notice("You cut \the [src] free from the floor."))
+				to_chat(user, span_notice(LANG("obj.0568c93c", list(src))))
 
 	return TRUE
 

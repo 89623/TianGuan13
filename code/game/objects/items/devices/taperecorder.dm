@@ -431,13 +431,13 @@
 				if(loc != user)
 					return
 				tapeflip()
-				balloon_alert(user, "flipped tape")
+				balloon_alert(user, LANG("obj.2cfdfd3a", null))
 				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', 70, FALSE)
 			if("Unwind tape")
 				if(loc != user)
 					return
 				unspool()
-				balloon_alert(user, "unspooled tape")
+				balloon_alert(user, LANG("obj.d8137fec", null))
 
 /obj/item/tape/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(prob(50))

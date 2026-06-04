@@ -113,13 +113,13 @@
 	switch(action)
 		if("siphon")
 			if(is_station_level(src.z) || is_centcom_level(src.z))
-				say("Siphon of station [MONEY_NAME] has begun!")
+				say(LANG("obj.bd6f0c76", list(MONEY_NAME)))
 				start_siphon(ui.user)
 			else
-				say("Error: Console not in reach of station, withdrawal cannot begin.")
+				say(LANG("obj.8aeb705e", null))
 			. = TRUE
 		if("halt")
-			say("Station [MONEY_NAME_SINGULAR] withdrawal halted.")
+			say(LANG("obj.3bbcdc77", list(MONEY_NAME_SINGULAR)))
 			end_siphon()
 			. = TRUE
 

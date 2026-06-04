@@ -243,7 +243,7 @@
 				)
 				return
 			if(DIG_ROCK)
-				to_chat(user, span_notice("You successfully dig around the item."))
+				to_chat(user, span_notice(LANG("obj.c2a25e9a", null)))
 
 	if (istype(attacking_item, /obj/item/xenoarch/handheld_scanner))
 		var/obj/item/xenoarch/handheld_scanner/scanner = attacking_item
@@ -301,10 +301,10 @@
 				)
 				return
 			if(BRUSH_UNCOVER)
-				to_chat(user, span_notice("You successfully brush around the item, fully revealing the item!"))
+				to_chat(user, span_notice(LANG("obj.63b96783", null)))
 				return
 			if(BRUSH_NONE)
-				to_chat(user, span_notice("You brush around the item, but it wasn't revealed... hammer some more."))
+				to_chat(user, span_notice(LANG("obj.377f381a", null)))
 
 	if(istype(attacking_item, /obj/item/xenoarch/handheld_radar))
 		to_chat(user, span_warning(LANG("obj.9a40e4e5", null)))

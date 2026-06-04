@@ -482,7 +482,7 @@
 		if("lock")
 			if(HAS_SILICON_ACCESS(user))
 				if((obj_flags & EMAGGED) || (machine_stat & (BROKEN|MAINT)) || remote_control_user)
-					to_chat(user, span_warning("The APC does not respond to the command!"))
+					to_chat(user, span_warning(LANG("obj.42a87168", null)))
 				else
 					locked = !locked
 					update_appearance()

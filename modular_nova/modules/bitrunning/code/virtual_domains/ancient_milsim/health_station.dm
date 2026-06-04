@@ -58,11 +58,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/health_station, 32)
 	if(charge_amount >= 0)
 		switch(charge_amount)
 			if(60 to 100)
-				. += "[base_icon_state]_light1"
+				. += LANG("obj.eb52df0e", list(base_icon_state))
 			if(30 to 60)
-				. += "[base_icon_state]_light2"
+				. += LANG("obj.0f2527b9", list(base_icon_state))
 			if(15 to 30)
-				. += "[base_icon_state]_light3"
+				. += LANG("obj.379b8b45", list(base_icon_state))
 			else
 				. += LANG("obj.009de9a1", list(base_icon_state))
 
@@ -102,7 +102,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/health_station, 32)
 		if("Health Scan")
 			healthscan(user, user, advanced = TRUE)
 			chemscan(user, user)
-			balloon_alert(user, "analyzing vitals")
+			balloon_alert(user, LANG("obj.2cbcf779", null))
 			playsound(user.loc, 'sound/items/healthanalyzer.ogg', 40, TRUE)
 		if("Heal Wounds")
 			playsound(user.loc, 'sound/machines/ping.ogg', 40, TRUE)

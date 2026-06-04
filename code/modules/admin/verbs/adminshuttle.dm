@@ -115,13 +115,13 @@ ADMIN_VERB(hostile_environment, R_ADMIN, "Hostile Environment", "Disable the shu
 	switch(tgui_alert(user, LANG("datum.2d66d006", null), LANG("datum.9b16bc89", null), list("Enable", "Disable", "Clear All")))
 		if("Enable")
 			if (SSshuttle.hostile_environments["Admin"] == TRUE)
-				to_chat(user, span_warning("Error, admin hostile environment already enabled."))
+				to_chat(user, span_warning(LANG("datum.241ca48b", null)))
 			else
 				message_admins(span_adminnotice("[key_name_admin(user)] Enabled an admin hostile environment"))
 				SSshuttle.registerHostileEnvironment("Admin")
 		if("Disable")
 			if (!SSshuttle.hostile_environments["Admin"])
-				to_chat(user, span_warning("Error, no admin hostile environment found."))
+				to_chat(user, span_warning(LANG("datum.65421b0d", null)))
 			else
 				message_admins(span_adminnotice("[key_name_admin(user)] Disabled the admin hostile environment"))
 				SSshuttle.clearHostileEnvironment("Admin")
@@ -169,12 +169,12 @@ ADMIN_VERB(shuttle_panel, R_ADMIN, "Shuttle Manipulator", "Opens the shuttle man
 			setTimer(ignitionTime)
 
 		if("Delete Shuttle")
-			if(tgui_alert(user, "Really delete [name || shuttle_id]?", "Delete Shuttle", list("Cancel", "Really!")) != "Really!")
+			if(tgui_alert(user, LANG("obj.704b413e", list(name || shuttle_id)), LANG("obj.fc0656cd", null), list("Cancel", "Really!")) != "Really!")
 				return
 			jumpToNullSpace()
 
 		if("Into The Sunset (delete & greentext 'escape')")
-			if(tgui_alert(user, "Really delete [name || shuttle_id] and greentext escape objectives?", "Delete Shuttle", list("Cancel", "Really!")) != "Really!")
+			if(tgui_alert(user, LANG("obj.87737fd2", list(name || shuttle_id)), LANG("obj.fc0656cd", null), list("Cancel", "Really!")) != "Really!")
 				return
 			intoTheSunset()
 

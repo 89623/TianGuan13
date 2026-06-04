@@ -735,19 +735,19 @@
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
-				. += "Its wires are exposed!"
+				. += LANG("obj.4b2b4e69", null)
 			if(AIRLOCK_SECURITY_IRON)
-				. += "Its wires are hidden behind a welded iron cover."
+				. += LANG("obj.e6967fab", null)
 			if(AIRLOCK_SECURITY_PLASTEEL_I_S)
-				. += "There is some shredded plasteel inside."
+				. += LANG("obj.e74e803e", null)
 			if(AIRLOCK_SECURITY_PLASTEEL_I)
-				. += "Its wires are behind an inner layer of plasteel."
+				. += LANG("obj.89cf08a2", null)
 			if(AIRLOCK_SECURITY_PLASTEEL_O_S)
-				. += "There is some shredded plasteel inside."
+				. += LANG("obj.e74e803e", null)
 			if(AIRLOCK_SECURITY_PLASTEEL_O)
-				. += "There is a welded plasteel cover hiding its wires."
+				. += LANG("obj.d49aea0a", null)
 			if(AIRLOCK_SECURITY_PLASTEEL)
-				. += "There is a protective grille over its panel."
+				. += LANG("obj.2e8875d2", null)
 	else if(security_level)
 		if(security_level == AIRLOCK_SECURITY_IRON)
 			. += LANG("obj.32577f8e", null)
@@ -1686,10 +1686,10 @@
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			if(seal)
-				to_chat(user, span_notice("[src]'s seal needs to be removed first."))
+				to_chat(user, span_notice(LANG("obj.4cf29275", list(src))))
 				return FALSE
 			if(security_level != AIRLOCK_SECURITY_NONE)
-				to_chat(user, span_notice("[src]'s reinforcement needs to be removed first."))
+				to_chat(user, span_notice(LANG("obj.03d64f97", list(src))))
 				return FALSE
 			return list("delay" = 5 SECONDS, "cost" = 32)
 	return FALSE
@@ -1778,14 +1778,14 @@
 				loseMainPower()
 				update_appearance()
 			else
-				to_chat(usr, span_warning("Main power is already offline."))
+				to_chat(usr, span_warning(LANG("obj.787b7316", null)))
 			. = TRUE
 		if("disrupt-backup")
 			if(!backup_power_timer)
 				loseBackupPower()
 				update_appearance()
 			else
-				to_chat(usr, span_warning("Backup power is already offline."))
+				to_chat(usr, span_warning(LANG("obj.2a8873f1", null)))
 			. = TRUE
 		if("shock-restore")
 			shock_restore(usr)

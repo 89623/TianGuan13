@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 				else
 					positions += "([i]) - [quick_bound.name]"
 
-			var/position = tgui_input_list(living_user, "Where to quickbind to?", "Quickbind Slot", positions)
+			var/position = tgui_input_list(living_user, LANG("obj.5cb75a78", null), LANG("obj.8a2f9e9d", null), positions)
 			if(!position)
 				return FALSE
 

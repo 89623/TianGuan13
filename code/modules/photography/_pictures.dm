@@ -160,7 +160,7 @@
 			var/month = copytext_char(timestamp, 5, 7)
 			var/day = copytext_char(timestamp, 7, 9)
 			var/round = data[4]
-			. += "[year]/[month]/[day]/round-[round]"
+			. += LANG("_root.f21668cf", list(year, month, day, round))
 		if("O")
 			var/list/path = data.Copy(2, data.len)
 			. += path.Join("")

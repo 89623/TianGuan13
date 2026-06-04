@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(global_pet_updates)
 GLOBAL_LIST_EMPTY(virtual_pets_list)
 
@@ -503,7 +504,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			else if(hat_selections[chosen_type])
 				var/datum/award/required_cheevo = cheevo_hats[chosen_type]
 				if(length(SSachievements.achievements) && required_cheevo && !ui.user.client.get_award_status(required_cheevo))
-					to_chat(ui.user, span_info("This customization requires the \"[span_bold(initial(required_cheevo.name))]\ achievement to be unlocked."))
+					to_chat(ui.user, span_info(LANG("datum.49fd8406", list(span_bold(initial(required_cheevo.name))))))
 				else
 					selected_hat["type"] = chosen_type
 					var/state_to_use = initial(chosen_type.worn_icon_state) || initial(chosen_type.icon_state)

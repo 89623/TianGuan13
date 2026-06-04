@@ -152,7 +152,7 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 
 		if("createStory")
 			if(!current_channel)
-				to_chat(usr, "select a channel first!")
+				to_chat(usr, LANG("datum.5575955f", null))
 				return TRUE
 			var/current_channel_id = params["current"]
 			create_story(channel_id = current_channel_id)
@@ -238,14 +238,14 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 			return TRUE
 
 		if("setCriminalName")
-			var/temp_name = tgui_input_text(usr, "Write the Criminal's Name", "Warrent Alert Handler", "John Doe", max_length = MAX_NAME_LEN, multiline = FALSE)
+			var/temp_name = tgui_input_text(usr, LANG("datum.37782efd", null), LANG("datum.f19e98eb", null), "John Doe", max_length = MAX_NAME_LEN, multiline = FALSE)
 			if(!temp_name)
 				return TRUE
 			criminal_name = temp_name
 			return TRUE
 
 		if("setCrimeData")
-			var/temp_desc = tgui_input_text(usr, "Write the Criminal's Crimes", "Warrent Alert Handler", "Unknown", max_length = MAX_BROADCAST_LEN, multiline = TRUE)
+			var/temp_desc = tgui_input_text(usr, LANG("datum.bf012c81", null), LANG("datum.f19e98eb", null), "Unknown", max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 			if(!temp_desc)
 				return TRUE
 			crime_description = temp_desc

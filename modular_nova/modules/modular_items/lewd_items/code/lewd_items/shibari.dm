@@ -293,12 +293,12 @@
 
 			var/obj/item/stack/shibari_rope/split_rope = split_stack(1)
 			if(!split_rope)
-				to_chat(user, span_warning("You don't have enough ropes!"))
+				to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 				return
 
 			var/obj/item/clothing/under/shibari/body_rope = them.w_uniform
 			if(body_rope.glow != split_rope.glow)
-				to_chat(user, span_warning("You can't mix these types of ropes!"))
+				to_chat(user, span_warning(LANG("obj.44de1419", null)))
 				split_rope.forceMove(get_turf(them))
 				return
 
@@ -345,12 +345,12 @@
 				split_rope = split_stack(1)
 
 			if(!split_rope)
-				to_chat(user, span_warning("You don't have enough ropes!"))
+				to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 				return
 
 			var/obj/item/clothing/under/shibari/body_rope = them.w_uniform
 			if(body_rope.glow != split_rope.glow)
-				to_chat(user, span_warning("You can't mix these type of ropes!"))
+				to_chat(user, span_warning(LANG("obj.0b5f985d", null)))
 				split_rope.forceMove(get_turf(them))
 				return
 
@@ -386,12 +386,12 @@
 		if(SHIBARI_TIGHTNESS_HIGH)
 			tightness = SHIBARI_TIGHTNESS_LOW
 			playsound_if_pref(loc, 'modular_nova/modules/modular_items/lewd_items/sounds/latex.ogg', 25)
-			balloon_alert(user, "slightly tightened the ropes")
+			balloon_alert(user, LANG("obj.6408b0b7", null))
 		if(SHIBARI_TIGHTNESS_LOW)
 			tightness = SHIBARI_TIGHTNESS_MED
 			playsound_if_pref(loc, 'modular_nova/modules/modular_items/lewd_items/sounds/latex.ogg', 50)
-			balloon_alert(user, "moderately tightened the ropes")
+			balloon_alert(user, LANG("obj.9f200dd9", null))
 		if(SHIBARI_TIGHTNESS_MED)
 			tightness = SHIBARI_TIGHTNESS_HIGH
 			playsound_if_pref(loc, 'modular_nova/modules/modular_items/lewd_items/sounds/latex.ogg', 75)
-			balloon_alert(user, "strongly tightened the ropes")
+			balloon_alert(user, LANG("obj.520d1b38", null))

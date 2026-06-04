@@ -426,7 +426,7 @@
 			our_pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(tgui_alert(user, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) == "I'm Sure")
+			if(tgui_alert(user, LANG("obj.77344162", null), LANG("obj.04b76580", null), list("I'm Sure", "Abort")) == "I'm Sure")
 				pad = null
 		if("launch")
 			sending = TRUE

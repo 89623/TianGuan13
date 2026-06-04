@@ -301,12 +301,12 @@
 				if(usr)
 					var/mob/user = usr
 					if(user.put_in_hands(found_seed))
-						to_chat(user, span_notice("You take [found_seed] out of the slot."))
+						to_chat(user, span_notice(LANG("obj.3d630a50", list(found_seed))))
 					else
-						to_chat(user, span_notice("[found_seed] falls onto the floor."))
+						to_chat(user, span_notice(LANG("obj.f57ed75b", list(found_seed))))
 				else
 					found_seed.forceMove(drop_location())
-					visible_message(span_notice("[found_seed] falls onto the floor."), null, span_hear("You hear a soft clatter."), COMBAT_MESSAGE_RANGE)
+					visible_message(span_notice(LANG("obj.f57ed75b", list(found_seed))), null, span_hear(LANG("obj.6e0be4c4", null)), COMBAT_MESSAGE_RANGE)
 				. = TRUE
 
 /obj/machinery/seed_extractor/ui_assets(mob/user)

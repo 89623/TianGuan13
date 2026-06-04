@@ -297,36 +297,36 @@
 		if("Trash bag")
 			if(!mybag)
 				return
-			balloon_alert(user, "detached [mybag]")
+			balloon_alert(user, LANG("obj.cf015430", list(mybag)))
 			user.put_in_hands(mybag)
 		if("Mop")
 			if(!mymop)
 				return
-			balloon_alert(user, "removed [mymop]")
+			balloon_alert(user, LANG("obj.c6b4aa68", list(mymop)))
 			user.put_in_hands(mymop)
 		if("Broom")
 			if(!mybroom)
 				return
-			balloon_alert(user, "removed [mybroom]")
+			balloon_alert(user, LANG("obj.c6b4aa68", list(mybroom)))
 			user.put_in_hands(mybroom)
 		if("Spray bottle")
 			if(!myspray)
 				return
-			balloon_alert(user, "removed [myspray]")
+			balloon_alert(user, LANG("obj.c6b4aa68", list(myspray)))
 			user.put_in_hands(myspray)
 		if("Light replacer")
 			if(!myreplacer)
 				return
-			balloon_alert(user, "removed [myreplacer]")
+			balloon_alert(user, LANG("obj.c6b4aa68", list(myreplacer)))
 			user.put_in_hands(myreplacer)
 		if("Sign")
 			if(!held_signs.len)
 				return
 			var/obj/item/clothing/suit/caution/removed_sign = held_signs[1]
 			if(length(held_signs) > 1)
-				balloon_alert(user, "removed \a [removed_sign]")
+				balloon_alert(user, LANG("obj.6980add6", list(removed_sign)))
 			else
-				balloon_alert(user, "removed [removed_sign]")
+				balloon_alert(user, LANG("obj.c6b4aa68", list(removed_sign)))
 			user.put_in_hands(removed_sign)
 		else
 			return

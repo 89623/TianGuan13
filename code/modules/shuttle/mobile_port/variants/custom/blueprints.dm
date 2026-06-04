@@ -495,22 +495,22 @@
 			var/turf/shuttle_origin = get_turf(usr)
 			var/check_status = shuttle_build_check(shuttle_origin, shuttle_turfs, shuttle_areas)
 			if(check_status & ORIGIN_NOT_ON_SHUTTLE)
-				balloon_alert(usr, "not on shuttle frame!")
+				balloon_alert(usr, LANG("obj.45e1d622", null))
 				return TRUE
 			if(check_status & TOO_MANY_SHUTTLES)
-				balloon_alert(usr, "too many shuttles exist!")
+				balloon_alert(usr, LANG("obj.524613df", null))
 				return TRUE
 			if(check_status & ABOVE_MAX_SHUTTLE_SIZE)
-				balloon_alert(usr, "frame too big!")
+				balloon_alert(usr, LANG("obj.b6c1f7eb", null))
 				return TRUE
 			if(check_status & CUSTOM_AREA_NOT_COMPLETELY_CONTAINED)
-				balloon_alert(usr, "frame must completely enclose custom areas!")
+				balloon_alert(usr, LANG("obj.17dc3bec", null))
 				return TRUE
 			if(check_status & INTERSECTS_NON_WHITELISTED_AREA)
-				balloon_alert(usr, "frame overlaps disallowed areas!")
+				balloon_alert(usr, LANG("obj.f936886b", null))
 				return TRUE
 			if(check_status & CONTAINS_APC_OF_NON_CUSTOM_AREA)
-				balloon_alert(usr, "frame contains apc of non-custom area!")
+				balloon_alert(usr, LANG("obj.5dcace64", null))
 				return TRUE
 			var/obj/docking_port/mobile/custom/shuttle = create_shuttle(
 				usr,
@@ -525,49 +525,49 @@
 			return TRUE
 		if("tryLinkShuttle")
 			if(shuttle_ref?.resolve())
-				balloon_alert(usr, "already linked!")
+				balloon_alert(usr, LANG("obj.cc32a1c7", null))
 				return TRUE
 			var/obj/docking_port/mobile/custom/shuttle = SSshuttle.get_containing_shuttle(usr)
 			if(!shuttle)
-				balloon_alert(usr, "not on shuttle!")
+				balloon_alert(usr, LANG("obj.b44481aa", null))
 				return TRUE
 			if(!istype(shuttle))
-				balloon_alert(usr, "incompatible shuttle type!")
+				balloon_alert(usr, LANG("obj.91ca6587", null))
 				return TRUE
 			var/obj/item/shuttle_blueprints/master = shuttle.master_blueprint?.resolve()
 			if(master && (master != src))
-				balloon_alert(usr, "master blueprint already exists!")
+				balloon_alert(usr, LANG("obj.d90307e2", null))
 				return TRUE
 			link_to_shuttle(shuttle, TRUE)
 			return TRUE
 		if("promoteToMaster")
 			var/obj/docking_port/mobile/custom/shuttle = shuttle_ref?.resolve()
 			if(!shuttle)
-				balloon_alert(usr, "not linked!")
+				balloon_alert(usr, LANG("obj.59204d3b", null))
 				return TRUE
 			var/obj/item/shuttle_blueprints/master = shuttle.master_blueprint?.resolve()
 			if(master)
-				balloon_alert(usr, "master blueprint already exists!")
+				balloon_alert(usr, LANG("obj.d90307e2", null))
 				return TRUE
 			shuttle.master_blueprint = WEAKREF(src)
 			return TRUE
 		if("createNewArea")
 			var/obj/docking_port/mobile/custom/shuttle = shuttle_ref?.resolve()
 			if(!shuttle)
-				balloon_alert(usr, "not linked!")
+				balloon_alert(usr, LANG("obj.59204d3b", null))
 				return TRUE
 			var/area_name = params["name"]
 			if(!area_name)
-				balloon_alert(usr, "no name given!")
+				balloon_alert(usr, LANG("obj.7e8e988c", null))
 				return TRUE
 			var/area/current_area = get_area(usr)
 			var/area/default_area = shuttle.default_area
 			if(current_area != default_area)
-				balloon_alert(usr, "must be in default area!")
+				balloon_alert(usr, LANG("obj.2d4553a9", null))
 				return TRUE
 			var/list/turfs = detect_room(get_turf(usr), max_size = CONFIG_GET(number/max_shuttle_size), extra_check = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(custom_shuttle_room_check), shuttle, null))
 			if(!length(turfs))
-				balloon_alert(usr, "invalid room!")
+				balloon_alert(usr, LANG("obj.56e89721", null))
 				return TRUE
 			var/area/shuttle/custom/new_area = new()
 			new_area.name = area_name
@@ -582,20 +582,20 @@
 		if("releaseArea")
 			var/obj/docking_port/mobile/custom/shuttle = shuttle_ref?.resolve()
 			if(!shuttle)
-				balloon_alert(usr, "not linked!")
+				balloon_alert(usr, LANG("obj.59204d3b", null))
 				return TRUE
 			var/area/current_area = get_area(usr)
 			if(!shuttle.shuttle_areas[current_area])
-				balloon_alert(usr, "not on shuttle!")
+				balloon_alert(usr, LANG("obj.b44481aa", null))
 				return TRUE
 			var/area/default_area = shuttle.default_area
 			if(current_area == default_area)
-				balloon_alert(usr, "can't release default area!")
+				balloon_alert(usr, LANG("obj.23ab986c", null))
 				return TRUE
 			var/obj/machinery/power/apc/current_area_apc = current_area.apc
 			var/obj/machinery/power/apc/default_area_apc = default_area.apc
 			if(current_area_apc && default_area_apc)
-				balloon_alert(usr, "remove the apc first!")
+				balloon_alert(usr, LANG("obj.e4082bf3", null))
 				return TRUE
 			var/list/turfs = current_area.get_turfs_by_zlevel(shuttle.z)
 			set_turfs_to_area(turfs, default_area)
@@ -607,12 +607,12 @@
 		if("mergeIntoArea")
 			var/obj/docking_port/mobile/custom/shuttle = shuttle_ref?.resolve()
 			if(!shuttle)
-				balloon_alert(usr, "not linked!")
+				balloon_alert(usr, LANG("obj.59204d3b", null))
 				return TRUE
 			var/area/current_area = get_area(usr)
 			var/area/default_area = shuttle.default_area
 			if(current_area != default_area)
-				balloon_alert(usr, "must be in default area!")
+				balloon_alert(usr, LANG("obj.2d4553a9", null))
 				return TRUE
 			var/area/merge_area = locate(params["area"])
 			if(!istype(merge_area))
@@ -624,13 +624,13 @@
 			var/list/actual_adjacent_areas = list()
 			var/list/turfs = detect_room(get_turf(usr), max_size = CONFIG_GET(number/max_shuttle_size), extra_check = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(custom_shuttle_room_check), shuttle, actual_adjacent_areas))
 			if(!length(turfs))
-				balloon_alert(usr, "invalid room!")
+				balloon_alert(usr, LANG("obj.56e89721", null))
 				return TRUE
 			if(!actual_adjacent_areas[merge_area])
-				balloon_alert(usr, "selected area not connected to room!")
+				balloon_alert(usr, LANG("obj.5167717b", null))
 				return TRUE
 			if(merge_area.apc && default_area.apc && turfs[get_turf(default_area.apc)])
-				balloon_alert(usr, "remove the apc first!")
+				balloon_alert(usr, LANG("obj.e4082bf3", null))
 				return TRUE
 			set_turfs_to_area(turfs, merge_area)
 			for(var/obj/machinery/door/firedoor/firelock as anything in merge_area.firedoors + default_area.firedoors)
@@ -639,59 +639,59 @@
 		if("renameArea")
 			var/obj/docking_port/mobile/custom/shuttle = shuttle_ref?.resolve()
 			if(!shuttle)
-				balloon_alert(usr, "not linked!")
+				balloon_alert(usr, LANG("obj.59204d3b", null))
 				return TRUE
 			var/area/current_area = get_area(usr)
 			if(!shuttle.shuttle_areas[current_area])
-				balloon_alert(usr, "not on shuttle!")
+				balloon_alert(usr, LANG("obj.b44481aa", null))
 				return TRUE
 			var/area/default_area = shuttle.default_area
 			if(current_area == default_area)
-				balloon_alert(usr, "can't rename default area!")
+				balloon_alert(usr, LANG("obj.c01c0d46", null))
 				return TRUE
 			var/new_name = params["name"]
 			if(!new_name)
-				balloon_alert(usr, "no name given!")
+				balloon_alert(usr, LANG("obj.7e8e988c", null))
 				return TRUE
 			rename_area(current_area, new_name)
 			return TRUE
 		if("expandWithFrame")
 			var/obj/docking_port/mobile/custom/shuttle = shuttle_ref?.resolve()
 			if(!shuttle)
-				balloon_alert(usr, "not linked!")
+				balloon_alert(usr, LANG("obj.59204d3b", null))
 				return TRUE
 			var/list/turfs = list()
 			var/list/areas = list()
 			var/turf/origin = get_turf(usr)
 			var/check_status = shuttle_expand_check(origin, shuttle, turfs, areas)
 			if(check_status & ORIGIN_NOT_ON_SHUTTLE)
-				balloon_alert(usr, "not on shuttle frame!")
+				balloon_alert(usr, LANG("obj.45e1d622", null))
 				return TRUE
 			if(check_status & FRAME_NOT_ADJACENT_TO_LINKED_SHUTTLE)
-				balloon_alert(usr, "not connected to linked shuttle!")
+				balloon_alert(usr, LANG("obj.2c30f8a5", null))
 				return TRUE
 			if(check_status & ABOVE_MAX_SHUTTLE_SIZE)
-				balloon_alert(usr, "frame too big!")
+				balloon_alert(usr, LANG("obj.b6c1f7eb", null))
 				return TRUE
 			if(check_status & CUSTOM_AREA_NOT_COMPLETELY_CONTAINED)
-				balloon_alert(usr, "frame must completely enclose custom areas!")
+				balloon_alert(usr, LANG("obj.17dc3bec", null))
 				return TRUE
 			if(check_status & INTERSECTS_NON_WHITELISTED_AREA)
-				balloon_alert(usr, "frame overlaps disallowed areas!")
+				balloon_alert(usr, LANG("obj.f936886b", null))
 				return TRUE
 			if(check_status & CONTAINS_APC_OF_NON_CUSTOM_AREA)
-				balloon_alert(usr, "frame includes apc of non-custom area!")
+				balloon_alert(usr, LANG("obj.6d51372b", null))
 				return TRUE
 			expand_shuttle(usr, shuttle, turfs, areas)
 			return TRUE
 		if("cleanupEmptyTurfs")
 			var/obj/docking_port/mobile/custom/shuttle = shuttle_ref?.resolve()
 			if(!shuttle)
-				balloon_alert(usr, "not linked!")
+				balloon_alert(usr, LANG("obj.59204d3b", null))
 				return TRUE
 			var/obj/item/shuttle_blueprints/master = shuttle.master_blueprint?.resolve()
 			if(master && master != src)
-				balloon_alert(usr, "not master blueprints!")
+				balloon_alert(usr, LANG("obj.a3e8b610", null))
 			clear_empty_shuttle_turfs(shuttle)
 
 /obj/item/shuttle_blueprints/crude

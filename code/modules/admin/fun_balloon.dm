@@ -79,7 +79,7 @@
 
 		if("select_antag")
 			var/list/paths = subtypesof(/datum/antagonist)
-			antag_type = input(usr,"Select antag", "Antagonist selection") as null|anything in sort_list(paths)
+			antag_type = input(usr,LANG("obj.fe8eda00", null), LANG("obj.5763302b", null)) as null|anything in sort_list(paths)
 			make_antag = TRUE
 
 		if("pop")

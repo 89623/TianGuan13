@@ -276,7 +276,7 @@
 			if (ISNOTSTUB(target_dir))
 				p_init_dir = target_dir
 			else
-				to_chat(ui.user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				to_chat(ui.user, span_warning(LANG("obj.0c06b2dc", list(src))))
 				return FALSE
 
 		if("init_reset")
@@ -420,7 +420,7 @@
 					return ITEM_INTERACT_FAILURE
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
-					balloon_alert(user, "target is blocked!")
+					balloon_alert(user, LANG("obj.93c79d91", null))
 					return ITEM_INTERACT_FAILURE
 				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
 
@@ -430,7 +430,7 @@
 				var/obj/structure/disposalconstruct/new_disposals_segment = new (attack_target, queued_pipe_type, queued_pipe_dir, queued_pipe_flipped)
 
 				if(!new_disposals_segment.can_place())
-					balloon_alert(user, "not enough room!")
+					balloon_alert(user, LANG("obj.0289e33d", null))
 					qdel(new_disposals_segment)
 					return ITEM_INTERACT_FAILURE
 
@@ -447,12 +447,12 @@
 					return ITEM_INTERACT_FAILURE
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
-					balloon_alert(user, "something in the way!")
+					balloon_alert(user, LANG("obj.7dd60dd8", null))
 					return ITEM_INTERACT_FAILURE
 
 				var/turf/target_turf = get_turf(attack_target)
 				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
-					balloon_alert(user, "something in the way!")
+					balloon_alert(user, LANG("obj.7dd60dd8", null))
 					return ITEM_INTERACT_FAILURE
 
 				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)

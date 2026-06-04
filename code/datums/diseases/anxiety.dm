@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/anxiety
 	name = "Severe Anxiety"
 	form = "Condition"
@@ -20,18 +21,18 @@
 	switch(stage)
 		if(2) //also changes say, see say.dm
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(affected_mob, span_notice("You feel anxious."))
+				to_chat(affected_mob, span_notice(LANG("datum.459e6703", null)))
 		if(3)
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_notice("Your stomach flutters."))
+				to_chat(affected_mob, span_notice(LANG("datum.fd6f0431", null)))
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(affected_mob, span_notice("You feel panicky."))
+				to_chat(affected_mob, span_notice(LANG("datum.68dc6663", null)))
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You're overtaken with panic!"))
+				to_chat(affected_mob, span_danger(LANG("datum.1f4fe26e", null)))
 				affected_mob.adjust_confusion(rand(2 SECONDS, 3 SECONDS))
 		if(4)
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel butterflies in your stomach."))
+				to_chat(affected_mob, span_danger(LANG("datum.8c61d67c", null)))
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.visible_message(span_danger("[affected_mob] stumbles around in a panic."), \
 												span_userdanger("You have a panic attack!"))

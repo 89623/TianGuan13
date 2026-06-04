@@ -40,7 +40,7 @@
 		if(EARTHCRACKER_ACTIVE)
 			if(activation_timer)
 				return FALSE
-			var/response = tgui_alert(user, "Activate the earthcracker?", "Activate?", list("Yes", "No")) == "Yes"
+			var/response = tgui_alert(user, LANG("obj.cc4c4e5d", null), LANG("obj.bd9ac51e", null), list("Yes", "No")) == "Yes"
 			if(!response)
 				return FALSE
 			if(!user.Adjacent(src))
@@ -52,7 +52,7 @@
 			activation_timer = addtimer(CALLBACK(src, PROC_REF(strike_the_earth)), 1.2 SECONDS)
 			return TRUE
 		if(EARTHCRACKER_SPENT)
-			balloon_alert(user, "used up!")
+			balloon_alert(user, LANG("obj.804f0d80", null))
 			return FALSE
 
 /obj/item/earthcracker/update_icon_state()

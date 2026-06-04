@@ -521,16 +521,16 @@
 		return TRUE
 	switch(mode)
 		if(DRILL_DEFAULT)
-			to_chat(user, span_notice("You set the voice circuit to the middle position."))
+			to_chat(user, span_notice(LANG("obj.53a9183e", null)))
 			mode = DRILL_SHOUTING
 		if(DRILL_SHOUTING)
-			to_chat(user, span_notice("You set the voice circuit to the last position."))
+			to_chat(user, span_notice(LANG("obj.15ddb2d8", null)))
 			mode = DRILL_YELLING
 		if(DRILL_YELLING)
-			to_chat(user, span_notice("You set the voice circuit to the first position."))
+			to_chat(user, span_notice(LANG("obj.a1725d07", null)))
 			mode = DRILL_DEFAULT
 		if(DRILL_CANADIAN)
-			to_chat(user, span_danger("You adjust voice circuit but nothing happens, probably because it's broken."))
+			to_chat(user, span_danger(LANG("obj.b43081fa", null)))
 	return TRUE
 
 /obj/item/clothing/head/hats/warden/drill/wirecutter_act(mob/living/user, obj/item/I)

@@ -257,7 +257,7 @@
 		if("buy_raw_tc")
 			if (uplink_handler.telecrystals <= 0)
 				return
-			var/desired_amount = tgui_input_number(ui.user, "How many raw telecrystals to buy?", "Buy Raw TC", default = uplink_handler.telecrystals, max_value = uplink_handler.telecrystals)
+			var/desired_amount = tgui_input_number(ui.user, LANG("datum.c14353c2", null), LANG("datum.6707c1d8", null), default = uplink_handler.telecrystals, max_value = uplink_handler.telecrystals)
 			if(!desired_amount || desired_amount < 1)
 				return
 			uplink_handler.purchase_raw_tc(ui.user, desired_amount, parent)

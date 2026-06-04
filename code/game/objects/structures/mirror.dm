@@ -244,16 +244,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	switch(chosen_sex)
 		if("Warlock")
 			sexy.gender = MALE
-			to_chat(sexy, span_notice("Man, you feel like a man!"))
+			to_chat(sexy, span_notice(LANG("obj.1acbd57e", null)))
 		if("Witch")
 			sexy.gender = FEMALE
-			to_chat(sexy, span_notice("Man, you feel like a woman!"))
+			to_chat(sexy, span_notice(LANG("obj.bf69e8f9", null)))
 		if("Wizard")
 			sexy.gender = PLURAL
-			to_chat(sexy, span_notice("Woah dude, you feel like a dude!"))
+			to_chat(sexy, span_notice(LANG("obj.eeb46680", null)))
 		if("Itzard")
 			sexy.gender = NEUTER
-			to_chat(sexy, span_notice("Woah dude, you feel like something else!"))
+			to_chat(sexy, span_notice(LANG("obj.d933fcaa", null)))
 
 	var/chosen_physique = tgui_input_list(sexy, LANG("obj.1403ad51", null), LANG("obj.15bc27b6", null), list("Warlock Physique", "Witch Physique", "Wizards Don't Need Gender"))
 

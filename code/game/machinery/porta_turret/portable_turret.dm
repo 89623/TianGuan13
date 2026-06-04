@@ -284,7 +284,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				toggle_on(!on)
 				return TRUE
 			else
-				to_chat(usr, span_warning("It has to be secured first!"))
+				to_chat(usr, span_warning(LANG("obj.15ff9438", null)))
 		if("authweapon")
 			turret_flags ^= TURRET_FLAG_AUTH_WEAPONS
 			return TRUE

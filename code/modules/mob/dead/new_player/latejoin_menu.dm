@@ -146,17 +146,17 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 				params["job"] = job
 
 			if(!SSticker?.IsRoundInProgress())
-				tgui_alert(owner, "The round is either not ready, or has already finished...", "Oh No!")
+				tgui_alert(owner, LANG("datum.59f8e275", null), LANG("datum.a75e79b9", null))
 				return TRUE
 
 			if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
-				tgui_alert(owner, "There is an administrative lock on entering the game for non-observers!", "Oh No!")
+				tgui_alert(owner, LANG("datum.66a42caa", null), LANG("datum.a75e79b9", null))
 				return TRUE
 
 			// NOVA EDIT ADDITION START - Flavourtext requirement
 			if(CONFIG_GET(flag/min_flavor_text))
 				if(length_char(owner.client.prefs.read_preference(/datum/preference/text/flavor_text)) < CONFIG_GET(number/flavor_text_character_requirement))
-					to_chat(owner, span_notice("You need at least [CONFIG_GET(number/flavor_text_character_requirement)] characters of flavor text to join the round. You have [length_char(owner.client.prefs.read_preference(/datum/preference/text/flavor_text))] characters."))
+					to_chat(owner, span_notice(LANG("datum.d926f941", list(CONFIG_GET(number/flavor_text_character_requirement), length_char(owner.client.prefs.read_preference(/datum/preference/text/flavor_text))))))
 					return
 			// NOVA EDIT END
 
@@ -171,7 +171,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 			if(SSticker.queued_players.len && !(ckey(owner.key) in GLOB.admin_datums))
 				if((living_player_count() >= relevant_cap) || (owner != SSticker.queued_players[1]))
-					tgui_alert(owner, "The server is full!", "Oh No!")
+					tgui_alert(owner, LANG("datum.7434c3ca", null), LANG("datum.a75e79b9", null))
 					return TRUE
 
 			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  *This is NOW the gradual affects that each chemical applies on every process() proc. Nutrients now use a more robust reagent holder in order to apply less insane
  * stat changes as opposed to 271 lines of individual statline effects. Shoutout to the original comments on chems, I just cleaned a few up.
@@ -39,10 +40,10 @@
 	switch(rand(0, 50))
 		if(41 to 50)
 			adjust_plant_health(round(-5 * modifier))
-			visible_message(span_warning("\The [myseed.plantname] starts to wilt and burn!"))
+			visible_message(span_warning(LANG("obj.3b8db4ca", list(myseed.plantname))))
 
 		if(21 to 40)
-			visible_message(span_notice("\The [myseed.plantname] appears unusually reactive..."))
+			visible_message(span_notice(LANG("obj.03c4d648", list(myseed.plantname))))
 
 		if(11 to 20)
 			if(modifier >= 0.5)

@@ -367,22 +367,22 @@
 				// At lower pp, give out a little warning
 				clear_mood_event("smell")
 				if(prob(5))
-					to_chat(src, span_notice("There is an unpleasant smell in the air."))
+					to_chat(src, span_notice(LANG("mob.bdb286ee", null)))
 			if(5 to 20)
 				//At somewhat higher pp, warning becomes more obvious
 				if(prob(15))
-					to_chat(src, span_warning("You smell something horribly decayed inside this room."))
+					to_chat(src, span_warning(LANG("mob.31657472", null)))
 					add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
 			if(15 to 30)
 				//Small chance to vomit. By now, people have internals on anyway
 				if(prob(5))
-					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
+					to_chat(src, span_warning(LANG("mob.591c0f7c", null)))
 					add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 					vomit(VOMIT_CATEGORY_DEFAULT)
 			if(30 to INFINITY)
 				//Higher chance to vomit. Let the horror start
 				if(prob(25))
-					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
+					to_chat(src, span_warning(LANG("mob.591c0f7c", null)))
 					add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 					vomit(VOMIT_CATEGORY_DEFAULT)
 			else

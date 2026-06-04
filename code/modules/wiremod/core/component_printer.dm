@@ -161,7 +161,7 @@
 				return TRUE
 
 			if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
-				say("Not enough materials.")
+				say(LANG("obj.8080461f", null))
 				return TRUE
 
 			balloon_alert_to_viewers("printed [design.name]")
@@ -417,7 +417,7 @@
 				return TRUE
 
 			if (!materials.mat_container.has_materials(design["materials"], efficiency_coeff))
-				say("Not enough materials.")
+				say(LANG("obj.8080461f", null))
 				return TRUE
 
 			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"], user_data = user_data)

@@ -318,7 +318,7 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 		if("refresh")
 			// This is primarily to stop malicious users from trying to lag the server by spamming this verb
 			if(!COOLDOWN_FINISHED(user.client, char_directory_cooldown))
-				to_chat(user, span_warning("Please wait before refreshing the directory again."))
+				to_chat(user, span_warning(LANG("datum.f6085a38", null)))
 				return
 			COOLDOWN_START(user.client, char_directory_cooldown, 10)
 			update_static_data(user, ui)

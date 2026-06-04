@@ -79,22 +79,22 @@
 			var/green_value = current_color[2] + current_color[6] + current_color[10] //rg + gg + bg
 			var/blue_value = current_color[3] + current_color[7] + current_color[11] //rb + gb + bb
 			if(red_value > MODPAINT_MAX_SECTION_COLORS)
-				balloon_alert(usr, "total red too high! ([red_value*100]%/[MODPAINT_MAX_SECTION_COLORS*100]%)")
+				balloon_alert(usr, LANG("obj.94c8081a", list(red_value*100, MODPAINT_MAX_SECTION_COLORS*100)))
 				return
 			else if(red_value < MODPAINT_MIN_SECTION_COLORS)
-				balloon_alert(usr, "total red too low! ([red_value*100]%/[MODPAINT_MIN_SECTION_COLORS*100]%)")
+				balloon_alert(usr, LANG("obj.00a80405", list(red_value*100, MODPAINT_MIN_SECTION_COLORS*100)))
 				return
 			if(green_value > MODPAINT_MAX_SECTION_COLORS)
-				balloon_alert(usr, "total green too high! ([green_value*100]%/[MODPAINT_MAX_SECTION_COLORS*100]%)")
+				balloon_alert(usr, LANG("obj.891561e0", list(green_value*100, MODPAINT_MAX_SECTION_COLORS*100)))
 				return
 			else if(green_value < MODPAINT_MIN_SECTION_COLORS)
-				balloon_alert(usr, "total green too low! ([green_value*100]%/[MODPAINT_MIN_SECTION_COLORS*100]%)")
+				balloon_alert(usr, LANG("obj.081c98a3", list(green_value*100, MODPAINT_MIN_SECTION_COLORS*100)))
 				return
 			if(blue_value > MODPAINT_MAX_SECTION_COLORS)
-				balloon_alert(usr, "total blue too high! ([blue_value*100]%/[MODPAINT_MAX_SECTION_COLORS*100]%)")
+				balloon_alert(usr, LANG("obj.76ffe680", list(blue_value*100, MODPAINT_MAX_SECTION_COLORS*100)))
 				return
 			else if(blue_value < MODPAINT_MIN_SECTION_COLORS)
-				balloon_alert(usr, "total blue too low! ([blue_value*100]%/[MODPAINT_MIN_SECTION_COLORS*100]%)")
+				balloon_alert(usr, LANG("obj.3a65a150", list(blue_value*100, MODPAINT_MIN_SECTION_COLORS*100)))
 				return
 			for(var/color_value in total_colors)
 				total_color_value += color_value
@@ -105,10 +105,10 @@
 					balloon_alert(usr, "one of colors too low! ([color_value*100]%/[MODPAINT_MIN_COLOR_VALUE*100]%")
 					return
 			if(total_color_value > MODPAINT_MAX_OVERALL_COLORS)
-				balloon_alert(usr, "total colors too high! ([total_color_value*100]%/[MODPAINT_MAX_OVERALL_COLORS*100]%)")
+				balloon_alert(usr, LANG("obj.12331105", list(total_color_value*100, MODPAINT_MAX_OVERALL_COLORS*100)))
 				return
 			else if(total_color_value < MODPAINT_MIN_OVERALL_COLORS)
-				balloon_alert(usr, "total colors too low! ([total_color_value*100]%/[MODPAINT_MIN_OVERALL_COLORS*100]%)")
+				balloon_alert(usr, LANG("obj.8920fe70", list(total_color_value*100, MODPAINT_MIN_OVERALL_COLORS*100)))
 				return
 			editing_mod.set_mod_color(current_color)
 			SStgui.close_uis(src)

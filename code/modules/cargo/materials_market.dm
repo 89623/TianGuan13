@@ -261,12 +261,12 @@
 			else if(can_buy_via_budget)
 				account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if(!account_payable)
-				say("No bank account detected!")
+				say(LANG("obj.89f005dd", null))
 				return
 
 			//sanity checks for available quantity & budget
 			if(quantity > SSstock_market.materials_quantity[material_bought])
-				say("Not enough materials on the market to purchase!")
+				say(LANG("obj.d06fdef0", null))
 				return
 
 			var/cost = SSstock_market.materials_prices[material_bought] * quantity
@@ -281,14 +281,14 @@
 				// Check if this order exceeded the market limit
 				var/prior_sheets = current_order.pack.contains[sheet_to_buy]
 				if(prior_sheets + quantity > SSstock_market.materials_quantity[material_bought] )
-					say("There aren't enough sheets on the market! Please wait for more sheets to be traded before adding more.")
+					say(LANG("obj.2d722752", null))
 					playsound(living_user, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
 					return
 
 				// Check if the order exceeded the purchase limit
 				var/prior_stacks = ROUND_UP(prior_sheets / MAX_STACK_SIZE)
 				if(prior_stacks >= MAX_STACK_LIMIT)
-					say("There are already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
+					say(LANG("obj.ebbbc8ae", null))
 					playsound(living_user, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
 					return
 
@@ -297,7 +297,7 @@
 				if(!isnull(current_order.paying_account)) //order is already being paid by another account
 					paying_account = current_order.paying_account
 				if(current_order.get_final_cost() + cost > paying_account.account_balance)
-					say("Order exceeds available budget! Please send it before purchasing more.")
+					say(LANG("obj.c6819234", null))
 					return
 
 				// Finally Append to this order
@@ -322,11 +322,11 @@
 			)
 			//first time order compute the correct cost and compare
 			if(new_order.get_final_cost() > account_payable.account_balance)
-				say("Not enough money to start purchase!")
+				say(LANG("obj.76ba2ace", null))
 				qdel(new_order)
 				return
 
-			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
+			say(LANG("obj.7e5306e0", null))
 			SSshuttle.shopping_list += new_order
 			return TRUE
 

@@ -46,31 +46,31 @@
 	switch(custom_choice)
 		if(OPTION_RENAME)
 			var/old_name = renamed_obj.name
-			var/input = tgui_input_text(user, "What do you want to name [renamed_obj]?", "Object Name", "[old_name]", MAX_NAME_LEN)
+			var/input = tgui_input_text(user, LANG("datum.4e5fcc1e", list(renamed_obj)), LANG("datum.b2f87f0e", null), "[old_name]", MAX_NAME_LEN)
 			if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj))
 				return
 			if(input == old_name || !input)
-				to_chat(user, span_notice("You changed [renamed_obj] to... well... [renamed_obj]."))
+				to_chat(user, span_notice(LANG("datum.faa1c330", list(renamed_obj, renamed_obj))))
 				return
 			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.nameformat(input, user), renamed_obj.desc)
-			to_chat(user, span_notice("You have successfully renamed \the [old_name] to [renamed_obj]."))
+			to_chat(user, span_notice(LANG("datum.03914adf", list(old_name, renamed_obj))))
 			renamed_obj.update_appearance(UPDATE_NAME)
 
 		if(OPTION_DESCRIPTION)
 			var/old_desc = renamed_obj.desc
-			var/input = tgui_input_text(user, "Describe [renamed_obj]", "Description", "[old_desc]", MAX_DESC_LEN)
+			var/input = tgui_input_text(user, LANG("datum.2603c9f5", list(renamed_obj)), LANG("datum.495197c1", null), "[old_desc]", MAX_DESC_LEN)
 			if(QDELETED(renamed_obj) || !user.can_perform_action(renamed_obj))
 				return
 			if(input == old_desc || !input)
-				to_chat(user, span_notice("You decide against changing [renamed_obj]'s description."))
+				to_chat(user, span_notice(LANG("datum.37a3f15c", list(renamed_obj))))
 				return
 			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.name, renamed_obj.descformat(input, user))
-			to_chat(user, span_notice("You have successfully changed [renamed_obj]'s description."))
+			to_chat(user, span_notice(LANG("datum.cf74bca9", list(renamed_obj))))
 			renamed_obj.update_appearance(UPDATE_DESC)
 
 		if(OPTION_RESET)
 			qdel(renamed_obj.GetComponent(/datum/component/rename))
-			to_chat(user, span_notice("You have successfully reset [renamed_obj]'s name[renamed_obj.obj_flags & RENAME_NO_DESC? "." : " and description."]"))
+			to_chat(user, span_notice(LANG("datum.11ad748c", list(renamed_obj, renamed_obj.obj_flags & RENAME_NO_DESC? "." : " and description."))))
 			renamed_obj.rename_reset()
 			renamed_obj.update_appearance(UPDATE_NAME | UPDATE_DESC)
 

@@ -201,11 +201,11 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 				var/obj/item/held_item = user.get_active_held_item()
 				var/obj/item/card/id/id_card = held_item?.GetID()
 				if (!istype(id_card))
-					to_chat(user, span_warning("You need to swipe your ID!"))
+					to_chat(user, span_warning(LANG("obj.79240bdf", null)))
 					playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 				if (!(ACCESS_CAPTAIN in id_card.access))
-					to_chat(user, span_warning("You are not authorized to do this!"))
+					to_chat(user, span_warning(LANG("obj.d75ab765", null)))
 					playsound(src, 'sound/machines/terminal/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
@@ -213,14 +213,14 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			if (new_sec_level < SEC_LEVEL_GREEN || new_sec_level > SEC_LEVEL_AMBER) //NOVA EDIT CHANGE - ALERTS
 				return
 			if (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_DELTA)
-				to_chat(user, span_warning("Central Command has placed a lock on the alert level due to a doomsday!"))
+				to_chat(user, span_warning(LANG("obj.063be43e", null)))
 				return
 			if (SSsecurity_level.get_current_level_as_number() == new_sec_level)
 				return
 
 			SSsecurity_level.set_level(new_sec_level)
 
-			to_chat(user, span_notice("Authorization confirmed. Modifying security level."))
+			to_chat(user, span_notice(LANG("obj.a922c8ed", null)))
 			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			// Only notify people if an actual change happened
@@ -252,13 +252,13 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			var/emagged = obj_flags & EMAGGED
 			if (emagged)
 				message_syndicate(message, user)
-				to_chat(user, span_danger("SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND."))
+				to_chat(user, span_danger(LANG("obj.c101b635", null)))
 			else if(syndicate)
 				message_syndicate(message, user)
-				to_chat(user, span_danger("Message transmitted to Syndicate Command."))
+				to_chat(user, span_danger(LANG("obj.540e7c2c", null)))
 			else
 				message_centcom(message, user)
-				to_chat(user, span_notice("Message transmitted to Central Command."))
+				to_chat(user, span_notice(LANG("obj.4fe931f7", null)))
 
 			var/associates = (emagged || syndicate) ? "the Syndicate": "CentCom"
 			user.log_talk(message, LOG_SAY, tag = "message to [associates]")
@@ -277,7 +277,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			if (!can_purchase_this_shuttle(shuttle))
 				return
 			if (!shuttle.prerequisites_met())
-				to_chat(user, span_alert("You have not met the requirements for purchasing this shuttle."))
+				to_chat(user, span_alert(LANG("obj.2e89e7c6", null)))
 				return
 			var/datum/bank_account/bank_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if (bank_account.account_balance < shuttle.credit_cost)
@@ -309,7 +309,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 				return
 			var/reason = trim(html_encode(params["reason"]), MAX_MESSAGE_LEN)
 			nuke_request(reason, user)
-			to_chat(user, span_notice("Request sent."))
+			to_chat(user, span_notice(LANG("obj.264742bb", null)))
 			user.log_message("has requested the nuclear codes from CentCom with reason \"[reason]\"", LOG_SAY)
 			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [user]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", SSstation.announcer.get_rand_report_sound())
 			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
@@ -319,7 +319,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 				return
 			if (!(obj_flags & EMAGGED))
 				return
-			to_chat(user, span_notice("Backup routing data restored."))
+			to_chat(user, span_notice(LANG("obj.0bec1635", null)))
 			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 			obj_flags &= ~EMAGGED
 		if ("sendToOtherSector")
@@ -337,12 +337,12 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			GLOB.communications_controller.soft_filtering = FALSE
 			var/list/hard_filter_result = is_ic_filtered(message)
 			if(hard_filter_result)
-				tgui_alert(user, "Your message contains: (\"[hard_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
+				tgui_alert(user, LANG("obj.cc7c1035", list(hard_filter_result[CHAT_FILTER_INDEX_WORD])))
 				return
 
 			var/list/soft_filter_result = is_soft_ooc_filtered(message)
 			if(soft_filter_result)
-				if(tgui_alert(user,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+				if(tgui_alert(user,LANG("obj.033f2d55", list(soft_filter_result[CHAT_FILTER_INDEX_WORD], soft_filter_result[CHAT_FILTER_INDEX_REASON])), LANG("obj.b0fe106c", null), list("Yes", "No")) != "Yes")
 					return
 				message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
 				log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
@@ -359,10 +359,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			to_chat(
 				GLOB.admins,
 				span_adminnotice( \
-					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to send \
-					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
-					<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
-					[html_encode(message)]" \
+					LANG("obj.3a1f365b", list(ADMIN_LOOKUPFLW(user), destination, GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME), REF(src), html_encode(message))) \
 				)
 			)
 
@@ -411,7 +408,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 				authenticated = TRUE
 				authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 				authorize_name = "Unknown"
-				to_chat(user, span_warning("[src] lets out a quiet alarm as its login is overridden."))
+				to_chat(user, span_warning(LANG("obj.3e53aa9c", list(src))))
 				playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 25, FALSE)
 			else if(isliving(user))
 				var/mob/living/L = user
@@ -443,19 +440,19 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 		// Request codes for the Captain's Spare ID safe.
 		if("requestSafeCodes")
 			if(SSjob.assigned_captain)
-				to_chat(user, span_warning("There is already an assigned Captain or Acting Captain on deck!"))
+				to_chat(user, span_warning(LANG("obj.859c54d7", null)))
 				return
 
 			if(SSjob.safe_code_timer_id)
-				to_chat(user, span_warning("The safe code has already been requested and is being delivered to your station!"))
+				to_chat(user, span_warning(LANG("obj.9a54917a", null)))
 				return
 
 			if(SSjob.safe_code_requested)
-				to_chat(user, span_warning("The safe code has already been requested and delivered to your station!"))
+				to_chat(user, span_warning(LANG("obj.fe41434d", null)))
 				return
 
 			if(!SSid_access.spare_id_safe_code)
-				to_chat(user, span_warning("There is no safe code to deliver to your station!"))
+				to_chat(user, span_warning(LANG("obj.93cb4b70", null)))
 				return
 
 			var/turf/pod_location = get_turf(src)
@@ -495,7 +492,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			deadchat_broadcast(" has dialed for a pizza order from Dogginos using an emagged communications console.", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
 			GLOB.pizza_order = pick(GLOB.pizza_names)
 			call_911(EMERGENCY_RESPONSE_EMAG)
-			to_chat(usr, span_notice("Thank you for choosing Dogginos, [GLOB.pizza_order]!"))
+			to_chat(usr, span_notice(LANG("obj.5f7f9c68", list(GLOB.pizza_order))))
 			playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 		if("toggleEngOverride")
 			if(emergency_access_cooldown(usr)) //if were in cooldown, dont allow the following code

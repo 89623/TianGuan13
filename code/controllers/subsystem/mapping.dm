@@ -597,11 +597,11 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	var/answer = input(user, LANG("datum.368ebd69", null),LANG("datum.d418d931", null)) as null|anything in possible_options
 	switch(answer)
 		if("Custom")
-			var/mapfile = input(user, "Pick file:", "File") as null|file
+			var/mapfile = input(user, LANG("datum.56488294", null), LANG("datum.c79013ac", null)) as null|file
 			if(!mapfile)
 				return
 			away_name = "[mapfile] custom"
-			to_chat(user, span_notice("Loading [away_name]..."), MESSAGE_TYPE_DEBUG)
+			to_chat(user, span_notice(LANG("datum.7333f99a", list(away_name))), MESSAGE_TYPE_DEBUG)
 			var/datum/map_template/template = new(mapfile, "Away Mission")
 			away_level = template.load_new_z(secret)
 		else

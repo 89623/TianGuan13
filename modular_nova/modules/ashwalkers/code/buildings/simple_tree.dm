@@ -189,37 +189,37 @@
 	. = ..()
 	switch(tree_stage)
 		if(TREE_STAGE_ONE)
-			. += span_notice("Very tiny! The tree is still very much a seedling.")
+			. += span_notice(LANG("obj.5f95429a", null))
 
 		if(TREE_STAGE_TWO)
-			. += span_notice("Getting bigger! The tree is truly a sapling now.")
+			. += span_notice(LANG("obj.f58fe028", null))
 
 		if(TREE_STAGE_THREE)
-			. += span_notice("Hooray! The tree has survived the ordeal, and has become fully grown.")
+			. += span_notice(LANG("obj.6cc2248d", null))
 			if(COOLDOWN_FINISHED(src, harvest_cooldown))
-				. += span_notice("There are fruits that look ready to pick.")
+				. += span_notice(LANG("obj.a62607f5", null))
 
 			if(COOLDOWN_FINISHED(src, wood_cooldown))
-				. += span_notice("There are some branches that look ready to cut down with something sharp.")
+				. += span_notice(LANG("obj.86288e99", null))
 
 			if(length(graft_list) < 3)
-				. += span_notice("You are able to graft samples of other plants to this tree.")
+				. += span_notice(LANG("obj.d2f9425d", null))
 
 			for(var/obj/item/graft/grafted_item in graft_list)
 				. += span_notice("A sample of [grafted_item.plant_dna.plantname] is grafted on.")
 
 			if(tree_bee)
-				. += span_notice("A big queen bee can be seen flying around the tree.")
+				. += span_notice(LANG("obj.7dff0128", null))
 				if(COOLDOWN_FINISHED(src, honeycomb_cooldown))
-					. += span_notice("The hive looks ready to harvest. Use some cutters or knives.")
+					. += span_notice(LANG("obj.7a8e6c0a", null))
 
 			if(tapped_tree)
-				. += span_notice("There is a tap poking out the side of the tree.")
+				. += span_notice(LANG("obj.c2d1280a", null))
 				if(COOLDOWN_FINISHED(src, sap_cooldown))
-					. += span_notice("Some sap is leaking out the tap-- collect it!")
+					. += span_notice(LANG("obj.d4808225", null))
 
 			else
-				. += span_notice("You can use a screwdriver to tap this tree.")
+				. += span_notice(LANG("obj.ee670769", null))
 
 /obj/structure/simple_tree/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stack/worm_fertilizer))

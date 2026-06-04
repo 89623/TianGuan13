@@ -297,10 +297,10 @@
 			var/random_ailment = rand(1, side_effect_risk)
 			switch(random_ailment)
 				if(1)
-					to_chat(linked_mob, span_warning("You feel sick to your stomach!"))
+					to_chat(linked_mob, span_warning(LANG("obj.822899b3", null)))
 					linked_mob.adjust_disgust(25)
 				if(2)
-					to_chat(linked_mob, span_warning("You feel a wave of fatigue roll over you!"))
+					to_chat(linked_mob, span_warning(LANG("obj.32585a14", null)))
 					linked_mob.adjust_stamina_loss(50)
 
 		if(NIF_CALIBRATION_STAGE_FINISHED to INFINITY)

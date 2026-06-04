@@ -218,10 +218,10 @@
 	switch(user.zone_selected)
 		if(BODY_ZONE_PRECISE_GROIN)
 			if(!vagina)
-				to_chat(user, span_danger("[target_mob] doesn't have suitable genitalia for that!"))
+				to_chat(user, span_danger(LANG("obj.1e01aa77", list(target_mob))))
 				return
 			if(!(target_mob.is_bottomless() || vagina.visibility_preference == GENITAL_ALWAYS_SHOW))
-				to_chat(user, span_danger("[target_mob]'s groin is covered!"))
+				to_chat(user, span_danger(LANG("obj.27926522", list(target_mob))))
 				return
 			message = pick(
 				"delicately rubs [target_mob]'s vagina with [src]",
@@ -244,7 +244,7 @@
 
 		if(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
 			if(target_mob.is_mouth_covered())
-				to_chat(user, span_danger("[target_mob]'s mouth is covered!"))
+				to_chat(user, span_danger(LANG("obj.64a8a5e2", list(target_mob))))
 				return
 			message = pick(
 				"fucks [target_mob]'s mouth with [src]",

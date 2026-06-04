@@ -99,11 +99,11 @@
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
-				balloon_alert(user, "frequency copied")
+				balloon_alert(user, LANG("obj.06579ce3", null))
 				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
 				mod_link.frequency = tool_frequency
-				balloon_alert(user, "frequency set")
+				balloon_alert(user, LANG("obj.83368858", null))
 				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/control/proc/can_call()
@@ -258,11 +258,11 @@
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
-				balloon_alert(user, "frequency copied")
+				balloon_alert(user, LANG("obj.06579ce3", null))
 				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
 				mod_link.frequency = tool_frequency
-				balloon_alert(user, "frequency set")
+				balloon_alert(user, LANG("obj.83368858", null))
 				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands)

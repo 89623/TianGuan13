@@ -129,7 +129,7 @@
 			_key = text2num(_key)
 			if(user.keys_held["Ctrl"]) //do we assign a new hotkey?
 				cam_hotkeys[_key] = eyeobj.loc
-				to_chat(src, "Location saved to Camera Group [_key].")
+				to_chat(src, LANG("mob.8c4492b6", list(_key)))
 				return
 			if(cam_hotkeys[_key]) //if this is false, no hotkey for this slot exists.
 				cam_prev = eyeobj.loc
@@ -649,10 +649,10 @@
 				for(var/datum/record/locked/record in GLOB.manifest.locked)//Look in data core locked.
 					personnel_list["[record.name]: [record.rank]"] = record.character_appearance//Pull names, rank, and image.
 				if(!length(personnel_list))
-					tgui_alert(usr,"No suitable records found. Aborting.")
+					tgui_alert(usr,LANG("mob.311ff435", null))
 					return
 
-				var/input = tgui_input_list(usr, "Select a crew member", "Station Member", sort_list(personnel_list))
+				var/input = tgui_input_list(usr, LANG("mob.1245c321", null), LANG("mob.3e2aca90", null), sort_list(personnel_list))
 				if(isnull(input))
 					return
 				if(isnull(personnel_list[input]))
@@ -664,9 +664,7 @@
 
 			if(CHARACTER_TYPE_SELF)
 				var/confirmation = tgui_alert(usr,
-					"WARNING: Your AI hologram will take the appearance of your currently selected character \
-					([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). \
-					Are you sure you want to proceed?", "Customize",
+					LANG("mob.9c336f6e", list(usr.client.prefs?.read_preference(/datum/preference/name/real_name))), LANG("mob.7641981c", null),
 					list("Yes","No")
 				)
 				if(confirmation == "Yes")

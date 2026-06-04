@@ -58,7 +58,7 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather
 					for(var/datum/reagent/reagent_type as anything in subtypesof(/datum/reagent))
 						reagent_choices[initial(reagent_type.type)] = reagent_type
 
-				reagent_choice = tgui_input_list(user, "Select a reagent for the rain", "Rain Reagent", reagent_choices)
+				reagent_choice = tgui_input_list(user, LANG("datum.a7588a05", null), LANG("datum.3214d219", null), reagent_choices)
 				if(!reagent_choice)
 					return
 				reagent_choice = reagent_choices[reagent_choice]

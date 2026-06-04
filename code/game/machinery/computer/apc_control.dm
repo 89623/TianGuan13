@@ -170,7 +170,7 @@
 					auth_id = "[user_id_card.registered_name] ([user_id_card.assignment]):"
 					log_activity("[auth_id] attempted to log into the terminal")
 					playsound(src, 'sound/machines/terminal/terminal_error.ogg', 50, FALSE)
-					say("ID rejected, access denied!")
+					say(LANG("obj.20a665ea", null))
 				return
 			auth_id = "Unknown (Unknown):"
 			log_activity("[auth_id] attempted to log into the terminal")

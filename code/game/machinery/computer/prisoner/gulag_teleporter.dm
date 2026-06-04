@@ -102,13 +102,13 @@
 			return TRUE
 		if("toggle_open")
 			if(teleporter.locked)
-				to_chat(usr, span_alert("The teleporter must be unlocked first."))
+				to_chat(usr, span_alert(LANG("obj.807428a0", null)))
 				return
 			teleporter.toggle_open()
 			return TRUE
 		if("teleporter_lock")
 			if(teleporter.state_open)
-				to_chat(usr, span_alert("The teleporter must be closed first."))
+				to_chat(usr, span_alert(LANG("obj.d08f94ad", null)))
 				return
 			teleporter.locked = !teleporter.locked
 			return TRUE

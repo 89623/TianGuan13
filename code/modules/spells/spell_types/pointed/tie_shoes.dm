@@ -93,26 +93,26 @@
 		if(SHOES_TIED)
 			if(shoes_to_tie.fastening_type == SHOES_SLIPON)
 				if(bypass_tie_status)
-					to_chat(owner, span_warning("You magically grant laces to [cast_on]'s shoes!"))
+					to_chat(owner, span_warning(LANG("datum.793e8ffa", list(cast_on))))
 					cast_on.balloon_alert(owner, "laced!")
 					shoes_to_tie.fastening_type = SHOES_LACED
 					if(invocation_type != INVOCATION_NONE)
 						playsound(cast_on, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 					return TRUE
 				else
-					to_chat(owner, span_warning("[cast_on] is wearing laceless shoes!"))
+					to_chat(owner, span_warning(LANG("datum.634d6b69", list(cast_on))))
 					cast_on.balloon_alert(owner, "laceless!")
 					return FALSE
 
-			to_chat(owner, span_warning("You untie [cast_on]'s shoes!"))
+			to_chat(owner, span_warning(LANG("datum.4377e56f", list(cast_on))))
 			cast_on.balloon_alert(owner, "untied!")
 			shoes_to_tie.adjust_laces(SHOES_UNTIED, force_lacing = TRUE)
 		if(SHOES_UNTIED)
-			to_chat(owner, span_warning("You knot [cast_on]'s laces!"))
+			to_chat(owner, span_warning(LANG("datum.b0d50179", list(cast_on))))
 			cast_on.balloon_alert(owner, "knotted!")
 			shoes_to_tie.adjust_laces(SHOES_KNOTTED, force_lacing = TRUE)
 		if(SHOES_KNOTTED)
-			to_chat(owner, span_warning("[cast_on]'s laces are already knotted!"))
+			to_chat(owner, span_warning(LANG("datum.849c039f", list(cast_on))))
 			return FALSE
 
 // We need to override this, as trying to change next_use_time in cast() will just result in it being overridden.

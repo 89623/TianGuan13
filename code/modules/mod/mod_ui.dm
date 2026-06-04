@@ -96,7 +96,7 @@
 				locked = !locked
 				balloon_alert(ui.user, "[locked ? "locked" : "unlocked"]")
 			else
-				balloon_alert(ui.user, "access insufficent!")
+				balloon_alert(ui.user, LANG("obj.68742331", null))
 				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		if("call")
 			if(!mod_link.link_call)

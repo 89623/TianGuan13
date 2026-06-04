@@ -172,18 +172,18 @@
 			if(flush)
 				flush = FALSE
 			else
-				var/confirm = tgui_alert(usr, "Are you sure you want to wipe this card's memory?", name, list("Yes", "No"))
+				var/confirm = tgui_alert(usr, LANG("obj.fd1883ca", null), name, list("Yes", "No"))
 				if(confirm == "Yes" && !..())
 					flush = TRUE
 					wipe_ai()
 			. = TRUE
 		if("wireless")
 			AI.set_control_disabled(!AI.control_disabled)
-			to_chat(AI, span_warning("[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"))
+			to_chat(AI, span_warning(LANG("obj.95d9adcc", list(src, AI.control_disabled ? "disabled" : "enabled"))))
 			. = TRUE
 		if("radio")
 			AI.radio_enabled = !AI.radio_enabled
-			to_chat(AI, span_warning("Your Subspace Transceiver has been [AI.radio_enabled ? "enabled" : "disabled"]!"))
+			to_chat(AI, span_warning(LANG("obj.96bd9bed", list(AI.radio_enabled ? "enabled" : "disabled"))))
 			. = TRUE
 	update_appearance()
 

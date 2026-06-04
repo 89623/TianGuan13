@@ -352,10 +352,10 @@
 					var/datum/reagents/holder = beaker.reagents
 					var/to_dispense = max(0, min(amount, holder.maximum_volume - holder.total_volume))
 					if(!to_dispense)
-						say("The container is full!")
+						say(LANG("obj.371fe5cf", null))
 						return
 					if(!cell.use(to_dispense * power_cost))
-						say("Not enough energy to complete operation!")
+						say(LANG("obj.151cff6f", null))
 						return
 					beaker.add_hiddenprint(ui.user)
 					holder.add_reagent(reagent, to_dispense, reagtemp = dispensed_temperature, added_purity = base_reagent_purity)
@@ -415,7 +415,7 @@
 			return TRUE
 
 		if("clear_recipes")
-			if(is_operational && tgui_alert(ui.user, "Clear all recipes?", "Clear?", list("Yes", "No")) == "Yes")
+			if(is_operational && tgui_alert(ui.user, LANG("obj.f2f93223", null), LANG("obj.65ed6063", null), list("Yes", "No")) == "Yes")
 				saved_recipes = list()
 				return TRUE
 
@@ -427,10 +427,10 @@
 		if("save_recording")
 			if(!is_operational)
 				return
-			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name", max_length = MAX_NAME_LEN, encode = FALSE)
+			var/name = tgui_input_text(ui.user, LANG("obj.9016fe3a", null), LANG("obj.63014c04", null), max_length = MAX_NAME_LEN, encode = FALSE)
 			if(!ui.user.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
-			if(saved_recipes[name] && tgui_alert(ui.user, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
+			if(saved_recipes[name] && tgui_alert(ui.user, LANG("obj.3ab497df", list(name)),, list("Yes", "No")) == "No")
 				return
 			if(name && recording_recipe)
 				for(var/reagent in recording_recipe)
@@ -451,11 +451,11 @@
 		//NOVA EDIT ADDITION BEGIN - CHEMISTRY QOL
 		if("custom_amount")
 			if(!beaker)
-				to_chat(usr, span_warning("Insert a container first!"))
+				to_chat(usr, span_warning(LANG("obj.93a3fcbf", null)))
 				return
 			if(customTransferAmount)
 				transferAmounts -= customTransferAmount
-			customTransferAmount = clamp(input(usr, "Please enter your desired transfer amount.", "Transfer amount", 0) as num|null, 0, beaker.volume)
+			customTransferAmount = clamp(input(usr, LANG("obj.cf059c6f", null), LANG("obj.9749dd49", null), 0) as num|null, 0, beaker.volume)
 			transferAmounts += customTransferAmount
 			return TRUE
 		//NOVA EDIT ADDITION END

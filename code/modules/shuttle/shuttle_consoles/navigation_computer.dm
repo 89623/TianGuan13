@@ -222,9 +222,9 @@
 	if(landing_clear != SHUTTLE_DOCKER_LANDING_CLEAR)
 		switch(landing_clear)
 			if(SHUTTLE_DOCKER_BLOCKED)
-				to_chat(current_user, span_warning("Invalid transit location."))
+				to_chat(current_user, span_warning(LANG("obj.105e4ce1", null)))
 			if(SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT)
-				to_chat(current_user, span_warning("Unknown object detected in landing zone. Please designate another location."))
+				to_chat(current_user, span_warning(LANG("obj.02dee687", null)))
 		return
 
 	///Make one use port that deleted after fly off, to don't lose info that need on to properly fly off.

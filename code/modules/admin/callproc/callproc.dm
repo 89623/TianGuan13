@@ -112,7 +112,7 @@ ADMIN_VERB(advanced_proc_call, R_DEBUG, "Advanced ProcCall", "Call a proc on any
 				return
 			target = value["value"]
 			if(!istype(target))
-				to_chat(usr, span_danger("Invalid target."), confidential = TRUE)
+				to_chat(usr, span_danger(LANG("client.0c331727", null)), confidential = TRUE)
 				return
 		if("No")
 			target = null

@@ -78,7 +78,7 @@
 			if("reset_voted")
 				if(voted)
 					voted.Cut()
-				to_chat(user,span_notice("You reset the voter buffer. Everyone can vote again."))
+				to_chat(user,span_notice(LANG("obj.541518dd", null)))
 			if("raffle")
 				raffle(user)
 			if("shred")

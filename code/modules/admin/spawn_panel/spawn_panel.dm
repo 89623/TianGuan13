@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define WHERE_FLOOR_BELOW_MOB "Current location"
 #define WHERE_SUPPLY_BELOW_MOB "Current location (droppod)"
 #define WHERE_MOB_HAND "In own mob's hand"
@@ -72,7 +73,7 @@
 
 	switch(action)
 		if("select-new-DMI")
-			var/icon/new_icon = input("Select a new icon file:", "Icon") as null|icon
+			var/icon/new_icon = input(LANG("datum.6217b7fe", null), LANG("datum.ef7ff638", null)) as null|icon
 			if(new_icon)
 				selected_atom_icon = new_icon
 				available_icon_states = icon_states(selected_atom_icon)
@@ -251,12 +252,12 @@
 			if(PRECISE_MODE_MARK)
 				var/client/admin_client = user.client
 				admin_client.mark_datum(target)
-				to_chat(user, span_notice("Marked object: [icon2html(target, user)] [span_bold("[target]")]"))
+				to_chat(user, span_notice(LANG("datum.825cfc64", list(icon2html(target, user), span_bold("[target]")))))
 				toggle_precise_mode(PRECISE_MODE_OFF)
 				SStgui.update_uis(src)
 
 			if(PRECISE_MODE_COPY)
-				to_chat(user, span_notice("Picked object: [icon2html(target, user)] [span_bold("[target]")]"))
+				to_chat(user, span_notice(LANG("datum.9ea51386", list(icon2html(target, user), span_bold("[target]")))))
 				selected_atom = target
 				toggle_precise_mode(PRECISE_MODE_OFF)
 				SStgui.update_uis(src)

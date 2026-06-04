@@ -115,7 +115,7 @@
 			var/turf/T = loc
 
 			if(repair_grille())
-				balloon_alert(user, "grille rebuilt")
+				balloon_alert(user, LANG("obj.5d0d7ecc", null))
 			if(!clear_tile(user))
 				return FALSE
 
@@ -126,7 +126,7 @@
 			//checks if its a valid build direction
 			if(!initial(window_path.fulltile))
 				if(!valid_build_direction(loc, user.dir, is_fulltile = FALSE))
-					balloon_alert(user, "window already here!")
+					balloon_alert(user, LANG("obj.6cae9ae5", null))
 					return FALSE
 
 			var/obj/structure/window/WD = new window_path(T, user.dir)

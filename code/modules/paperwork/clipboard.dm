@@ -187,7 +187,7 @@
 				if(!integrated_pen)
 					remove_pen(usr)
 				else
-					to_chat(usr, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
+					to_chat(usr, span_warning(LANG("obj.6babffe5", list(src, pen))))
 				. = TRUE
 		// Take paper out
 		if("remove_paper")
@@ -207,7 +207,7 @@
 			var/obj/item/paper/paper = locate(params["ref"]) in src
 			if(istype(paper))
 				top_paper = paper
-				to_chat(usr, span_notice("You move [paper] to the top."))
+				to_chat(usr, span_notice(LANG("obj.24e3e6b1", list(paper))))
 				update_icon()
 				. = TRUE
 		// Rename the paper (it's a verb)

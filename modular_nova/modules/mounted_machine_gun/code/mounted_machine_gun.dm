@@ -83,9 +83,9 @@
 
 	switch(barrel_heat)
 		if(BARREL_HEAT_THRESHOLD_LOW to BARREL_HEAT_THRESHOLD_HIGH)
-			. += "[base_icon_state]_barrel_hot"
+			. += LANG("obj.47344d1b", list(base_icon_state))
 		if(BARREL_HEAT_THRESHOLD_HIGH to INFINITY)
-			. += "[base_icon_state]_barrel_overheat"
+			. += LANG("obj.a67af16c", list(base_icon_state))
 
 /obj/machinery/mounted_machine_gun/examine(mob/user)
 	. = ..()
@@ -97,9 +97,9 @@
 	. += span_notice(LANG("obj.137b003e", null))
 	switch(barrel_heat)
 		if(BARREL_HEAT_THRESHOLD_LOW to BARREL_HEAT_THRESHOLD_HIGH)
-			. += span_warning("The barrel looks hot.")
+			. += span_warning(LANG("obj.7a5ef9bd", null))
 		if(BARREL_HEAT_THRESHOLD_HIGH to INFINITY)
-			. += span_warning("The barrel looks moulten!")
+			. += span_warning(LANG("obj.717ab7f7", null))
 	if(overheated)
 		. += span_danger(LANG("obj.bf3ee46b", null))
 

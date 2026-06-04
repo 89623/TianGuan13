@@ -506,13 +506,13 @@ Return to step 11 of normal process."}
 	if(AbductorCheck(user))
 		switch(mode)
 			if(BATON_STUN)
-				. += span_warning("The baton is in stun mode.")
+				. += span_warning(LANG("obj.77bd5034", null))
 			if(BATON_SLEEP)
-				. += span_warning("The baton is in sleep inducement mode.")
+				. += span_warning(LANG("obj.e662057d", null))
 			if(BATON_CUFF)
-				. += span_warning("The baton is in restraining mode.")
+				. += span_warning(LANG("obj.fbaded58", null))
 			if(BATON_PROBE)
-				. += span_warning("The baton is in probing mode.")
+				. += span_warning(LANG("obj.a99d040b", null))
 
 /obj/item/radio/headset/abductor
 	name = "alien headset"

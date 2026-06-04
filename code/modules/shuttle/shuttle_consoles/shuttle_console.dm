@@ -177,7 +177,7 @@
 		return SHUTTLE_CONSOLE_DESTINVALID
 	switch(SSshuttle.moveShuttle(shuttleId, dest_id, TRUE))
 		if(DOCKING_SUCCESS)
-			say("Shuttle departing. Please stand away from the doors.")
+			say(LANG("obj.41f54f77", null))
 			log_shuttle("[key_name(user)] has sent shuttle \"[shuttleId]\" towards \"[dest_id]\", using [src].")
 			return SHUTTLE_CONSOLE_SUCCESS
 		else
@@ -195,22 +195,22 @@
 		if("move")
 			switch (send_shuttle(params["shuttle_id"], usr)) //Try to send the shuttle, tell the user what happened
 				if (SHUTTLE_CONSOLE_ACCESSDENIED)
-					to_chat(usr, span_warning("Access denied."))
+					to_chat(usr, span_warning(LANG("obj.077f9b52", null)))
 					return
 				if (SHUTTLE_CONSOLE_ENDGAME)
-					to_chat(usr, span_warning("You've already escaped. Never going back to that place again!"))
+					to_chat(usr, span_warning(LANG("obj.0cab7660", null)))
 					return
 				if (SHUTTLE_CONSOLE_RECHARGING)
-					to_chat(usr, span_warning("Shuttle engines are not ready for use."))
+					to_chat(usr, span_warning(LANG("obj.7567d480", null)))
 					return
 				if (SHUTTLE_CONSOLE_INTRANSIT)
-					to_chat(usr, span_warning("Shuttle already in transit."))
+					to_chat(usr, span_warning(LANG("obj.a804452a", null)))
 					return
 				if (SHUTTLE_CONSOLE_DESTINVALID)
-					to_chat(usr, span_warning("Invalid destination."))
+					to_chat(usr, span_warning(LANG("obj.545a7071", null)))
 					return
 				if (SHUTTLE_CONSOLE_ERROR)
-					to_chat(usr, span_warning("Unable to comply."))
+					to_chat(usr, span_warning(LANG("obj.3804550d", null)))
 					return
 				if (SHUTTLE_CONSOLE_SUCCESS)
 					return TRUE //No chat message here because the send_shuttle proc makes the console itself speak
@@ -221,11 +221,11 @@
 				return TRUE
 		if("request")
 			if(!COOLDOWN_FINISHED(src, request_cooldown))
-				to_chat(usr, span_warning("CentCom is still processing last authorization request!"))
+				to_chat(usr, span_warning(LANG("obj.191a51b7", null)))
 				return
 			COOLDOWN_START(src, request_cooldown, 1 MINUTES)
-			to_chat(usr, span_notice("Your request has been received by CentCom."))
-			to_chat(GLOB.admins, "<b>SHUTTLE: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A href='byond://?_src_=holder;[HrefToken()];move_shuttle=[shuttleId]'>Move Shuttle</a>)(<A href='byond://?_src_=holder;[HrefToken()];unlock_shuttle=[REF(src)]'>Lock/Unlock Shuttle</a>)</b> is requesting to move or unlock the shuttle.</font>")
+			to_chat(usr, span_notice(LANG("obj.5209056f", null)))
+			to_chat(GLOB.admins, LANG("obj.ac968526", list(ADMIN_LOOKUPFLW(usr), HrefToken(), shuttleId, HrefToken(), REF(src))))
 			return TRUE
 
 /obj/machinery/computer/shuttle/emag_act(mob/user, obj/item/card/emag/emag_card)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/science
 	filename = "experi_track"
 	filedesc = "Nanotrasen Science Hub"
@@ -101,12 +102,12 @@
 	switch (action)
 		if ("toggleLock")
 			if(computer.obj_flags & EMAGGED)
-				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
+				to_chat(usr, span_boldwarning(LANG("datum.45bb9000", null)))
 				return TRUE
 			if(lock_access in computer?.stored_id?.access)
 				locked = !locked
 			else
-				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
+				to_chat(usr, span_boldwarning(LANG("datum.819506be", null)))
 			return TRUE
 		if ("researchNode")
 			research_node(params["node_id"], usr)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Pocket items (Moved to backpack)
 /datum/loadout_category/pocket
 	category_name = "Other"
@@ -218,7 +219,7 @@
 		if("select_lipstick_style")
 			var/list/their_loadout = manager.get_current_loadout()// NOVA EDIT CHANGE - Multiple loadout presets - ORIGINAL: var/list/their_loadout = manager.preferences.read_preference(/datum/preference/loadout)
 			var/old_style = their_loadout?[item_path]?[INFO_LAYER] || MIDDLE_LIP
-			var/chosen = tgui_input_list(user, "Pick a lipstick style. (This determines where it sits on your sprite.)", "Pick a style", list(UPPER_LIP, MIDDLE_LIP, LOWER_LIP), old_style)
+			var/chosen = tgui_input_list(user, LANG("datum.e406bbbe", null), LANG("datum.ecec67a0", null), list(UPPER_LIP, MIDDLE_LIP, LOWER_LIP), old_style)
 			their_loadout =  manager.get_current_loadout()// NOVA EDIT CHANGE - Multiple loadout presets - ORIGINAL: their_loadout = manager.preferences.read_preference(/datum/preference/loadout) // after sleep: sanity check
 			if(their_loadout?[item_path]) // Validate they still have it equipped
 				their_loadout[item_path][INFO_LAYER] = chosen

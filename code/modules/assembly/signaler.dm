@@ -100,11 +100,11 @@
 		if("signal")
 			if(cooldown_length > 0)
 				if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_SIGNALLER_SEND))
-					balloon_alert(ui.user, "recharging!")
+					balloon_alert(ui.user, LANG("obj.ba1fd79a", null))
 					return
 				TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, cooldown_length)
 			INVOKE_ASYNC(src, PROC_REF(signal))
-			balloon_alert(ui.user, "signaled")
+			balloon_alert(ui.user, LANG("obj.619d443f", null))
 			. = TRUE
 		if("freq")
 			var/new_frequency = sanitize_frequency(unformat_frequency(params["freq"]), TRUE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/particle_editor
 	/// movable whose particles we want to be editing
 	var/atom/movable/target
@@ -162,7 +163,7 @@
 						var_value[3] = var_value[1]
 					var_value = generator(arglist(var_value))
 				if(P_DATA_ICON_ADD)
-					var_value = input("Pick icon:", "Icon") as null|icon
+					var_value = input(LANG("datum.f5b090a6", null), LANG("datum.ef7ff638", null)) as null|icon
 					if(!var_value)
 						return FALSE
 					var/list/new_values = list()

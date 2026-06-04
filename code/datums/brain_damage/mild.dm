@@ -112,10 +112,10 @@
 			if(6 to 9)
 				owner.adjust_slurring(1 MINUTES)
 			if(10)
-				to_chat(owner, span_notice("You forget for a moment what you were doing."))
+				to_chat(owner, span_notice(LANG("datum.ff0ff386", null)))
 				owner.Stun(20)
 			if(11)
-				to_chat(owner, span_warning("You faint."))
+				to_chat(owner, span_warning(LANG("datum.e095b564", null)))
 				owner.Unconscious(80)
 
 	..()

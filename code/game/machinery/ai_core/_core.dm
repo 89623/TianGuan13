@@ -96,23 +96,23 @@
 
 	switch(state)
 		if(CORE_STATE_EMPTY)
-			. += span_notice("There is a <b>slot</b> for a circuit board, the frame can be <b>melted</b> down.")
+			. += span_notice(LANG("obj.154d655e", null))
 		if(CORE_STATE_CIRCUIT)
-			. += span_notice("The circuit board can be <b>screwed</b> into place or <b>pried</b> out.")
+			. += span_notice(LANG("obj.d8fef889", null))
 		if(CORE_STATE_SCREWED)
-			. += span_notice("The frame can be <b>wired</b>, the circuit board can be <b>unfastened</b>.")
+			. += span_notice(LANG("obj.3b22edee", null))
 		if(CORE_STATE_CABLED)
 			if(!core_mmi)
-				. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
+				. += span_notice(LANG("obj.ff6f3985", null))
 			else
 				var/accept_laws = TRUE
 				if(core_mmi.laws.id != DEFAULT_AI_LAWID || !core_mmi.brainmob || !core_mmi.brainmob?.mind)
 					accept_laws = FALSE
-				. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across." : ""]")
+				. += span_notice(LANG("obj.002cd3d4", list(AI_CORE_BRAIN(core_mmi), accept_laws ? " A law module can be <b>swiped</b> across." : "")))
 		if(CORE_STATE_GLASSED)
-			. += span_notice("The monitor [core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
+			. += span_notice(LANG("obj.55a19de7", list(core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : "")))
 		if(CORE_STATE_FINISHED)
-			. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
+			. += span_notice(LANG("obj.47ea0a83", list(core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : ".")))
 
 /obj/structure/ai_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(state < CORE_STATE_FINISHED)

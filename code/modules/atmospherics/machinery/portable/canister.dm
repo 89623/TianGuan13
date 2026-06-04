@@ -618,7 +618,7 @@
 
 	switch(action)
 		if("relabel")
-			var/label = tgui_input_list(usr, "New canister label", "Canister", GLOB.gas_id_to_canister)
+			var/label = tgui_input_list(usr, LANG("obj.6bca2b58", null), LANG("obj.de5b4446", null), GLOB.gas_id_to_canister)
 			if(isnull(label))
 				return
 			var/newtype = GLOB.gas_id_to_canister[label]

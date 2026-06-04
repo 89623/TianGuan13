@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED,FALSE)
 			obj_flags ^= EMAGGED
-			say("Safeties reset. Restarting...")
+			say(LANG("obj.a0c41511", null))
 			usr.log_message("disabled Holodeck safeties.", LOG_GAME)
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)

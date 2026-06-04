@@ -100,10 +100,10 @@
 
 		if(5 to INFINITY)
 			if(max_curse_count != DEFAULT_MAX_CURSE_COUNT) // this probably will only happen through admin schenanigans letting people stack up infinite curses or something
-				to_chat(owner, span_boldwarning("Do you <i>still</i> think you're in control?"))
+				to_chat(owner, span_boldwarning(LANG("datum.9264c01d", null)))
 				return
 
-			to_chat(owner, span_userdanger("Why couldn't I get one more try?!"))
+			to_chat(owner, span_userdanger(LANG("datum.986bd4a6", null)))
 			owner.investigate_log("has been gibbed by the cursed status effect after accumulating [curse_count] curses.", INVESTIGATE_DEATHS)
 			owner.gib(DROP_ALL_REMAINS)
 			qdel(src)

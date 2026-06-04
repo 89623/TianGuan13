@@ -172,9 +172,9 @@
 
 	switch(deconstruction_state)
 		if(SHOWCASE_CONSTRUCTED)
-			. += "It's fully constructed."
+			. += LANG("obj.5b7c1318", null)
 		if(SHOWCASE_SCREWDRIVERED)
-			. += "It has its screws loosened."
+			. += LANG("obj.54a9be56", null)
 		else
 			. += LANG("obj.31a5af9d", null)
 

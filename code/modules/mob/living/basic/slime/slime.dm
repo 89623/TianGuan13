@@ -237,17 +237,17 @@
 
 	switch(powerlevel)
 		if(SLIME_MIN_POWER to SLIME_EXTRA_SHOCK_COST)
-			. += "It is flickering gently with harmless levels of electrical activity."
+			. += LANG("mob.36e2b432", null)
 
 		if(SLIME_EXTRA_SHOCK_COST to SLIME_MEDIUM_POWER)
-			. += "It is glowing brightly with medium levels electrical activity."
+			. += LANG("mob.e3d0050d", null)
 
 
 		if(SLIME_MEDIUM_POWER to SLIME_MAX_POWER)
-			. += "It is glowing alarmingly with high levels of electrical activity."
+			. += LANG("mob.2bd9f8e8", null)
 
 		if(SLIME_MAX_POWER)
-			. += span_boldwarning("It is radiating with massive levels of electrical activity!")
+			. += span_boldwarning(LANG("mob.fa596d20", null))
 	if(overcrowded)
 		. += span_warning(LANG("mob.4e40c4c1", null))
 

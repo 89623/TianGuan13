@@ -323,18 +323,18 @@
 		if("Yes")
 			if(multi_payment)
 				gun_owners += credit_card_details
-				to_chat(user, span_notice("Gun rental terms agreed to, have a secure day!"))
+				to_chat(user, span_notice(LANG("obj.ae9c24fa", null)))
 
 			else if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun License"))
 				if(pin_owner)
 					pin_owner.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
 				gun_owners += credit_card_details
-				to_chat(user, span_notice("Gun license purchased, have a secure day!"))
+				to_chat(user, span_notice(LANG("obj.b19aab89", null)))
 			else
-				to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
+				to_chat(user, span_warning(LANG("obj.def1b651", null)))
 
 		if("No", null)
-			to_chat(user, span_warning("ERROR: User has declined to purchase gun license!"))
+			to_chat(user, span_warning(LANG("obj.aaccd4da", null)))
 
 	active_prompt_user = null
 	return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun

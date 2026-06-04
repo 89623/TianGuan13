@@ -20,7 +20,7 @@
 			return TRUE
 		if(PAI_DOOR_JACK_CANCEL)
 			QDEL_NULL(hacking_cable)
-			visible_message(span_notice("The cable retracts into the pAI."))
+			visible_message(span_notice(LANG("mob.35396c1c", null)))
 			return TRUE
 	return FALSE
 

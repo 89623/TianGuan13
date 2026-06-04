@@ -116,13 +116,13 @@
 			disabled_modules |= BORG_MODULE_ALL_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\""))
+			audible_message(span_warning(LANG("mob.a33df38f", list(src))))
 
 			if(builtInCamera)
 				builtInCamera.camera_enabled = FALSE
-				to_chat(src, span_userdanger("CRITICAL ERROR: Built in security camera OFFLINE."))
+				to_chat(src, span_userdanger(LANG("mob.e94f8582", null)))
 
-			to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
+			to_chat(src, span_userdanger(LANG("mob.424a6e05", null)))
 
 		if(BORG_CHOOSE_MODULE_TWO)
 			if(disabled_modules & BORG_MODULE_TWO_DISABLED)
@@ -131,8 +131,8 @@
 			disabled_modules |= BORG_MODULE_TWO_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
-			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
+			audible_message(span_warning(LANG("mob.1ebf612c", list(src, module_num))))
+			to_chat(src, span_userdanger(LANG("mob.34e8ceeb", list(module_num))))
 
 		if(BORG_CHOOSE_MODULE_THREE)
 			if(disabled_modules & BORG_MODULE_THREE_DISABLED)
@@ -141,8 +141,8 @@
 			disabled_modules |= BORG_MODULE_THREE_DISABLED
 
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
-			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
+			audible_message(span_warning(LANG("mob.1ebf612c", list(src, module_num))))
+			to_chat(src, span_userdanger(LANG("mob.34e8ceeb", list(module_num))))
 
 	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
 	if(module)
@@ -174,7 +174,7 @@
 			disabled_modules &= ~BORG_MODULE_ALL_DISABLED
 			if(builtInCamera)
 				builtInCamera.camera_enabled = TRUE
-				to_chat(src, span_notice("You hear your built in security camera focus adjust as it comes back online!"))
+				to_chat(src, span_notice(LANG("mob.0045c379", null)))
 
 		if(BORG_CHOOSE_MODULE_TWO)
 			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))

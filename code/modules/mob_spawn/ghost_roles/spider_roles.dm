@@ -28,15 +28,15 @@
 	if(istype(user, /mob/living/basic/spider/giant/midwife))
 		switch(spawner.amount_grown)
 			if(0 to 24)
-				. += span_info("These eggs look shrunken and dormant.")
+				. += span_info(LANG("obj.03996bba", null))
 			if(25 to 49)
-				. += span_info("These eggs have begun to move, pulsating, gestating...")
+				. += span_info(LANG("obj.11362670", null))
 			if(50 to 74)
-				. += span_info("These eggs are rippling, unseen life stirring beneath its skin.")
+				. += span_info(LANG("obj.95cfab54", null))
 			if(75 to 99)
-				. += span_info("These eggs swell with unseen life. They are almost ready to burst.")
+				. += span_info(LANG("obj.4734a7c9", null))
 			if(100 to INFINITY)
-				. += span_info("These eggs are plump, teeming with life. Any moment now...")
+				. += span_info(LANG("obj.d252a30b", null))
 
 /obj/structure/spider/eggcluster/abnormal
 	name = "abnormal egg cluster"

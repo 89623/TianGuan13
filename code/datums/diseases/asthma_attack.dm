@@ -247,7 +247,7 @@
 		if (6)
 			if (!max_stage_reached)
 				max_stage_reached = TRUE
-				to_chat(affected_mob, span_userdanger("You feel your windpipe squeeze shut!"))
+				to_chat(affected_mob, span_userdanger(LANG("datum.371978e8", null)))
 			wheeze_chance = 0
 			if (SPT_PROB(10, seconds_per_tick))
 				affected_mob.emote("gag")

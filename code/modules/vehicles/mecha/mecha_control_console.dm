@@ -56,11 +56,11 @@
 			var/obj/item/mecha_parts/mecha_tracking/our_mecha_tracker = locate(params["tracker_ref"])
 			if(!istype(our_mecha_tracker))
 				return
-			var/message = tgui_input_text(usr, "Input message", "Transmit message", max_length = MAX_MESSAGE_LEN)
+			var/message = tgui_input_text(usr, LANG("obj.58b44bad", null), LANG("obj.d2feee32", null), max_length = MAX_MESSAGE_LEN)
 			var/obj/vehicle/sealed/mecha/our_mecha = our_mecha_tracker.chassis
 			if(trim(message) && our_mecha)
 				to_chat(our_mecha.occupants, message)
-				to_chat(usr, span_notice("Message sent."))
+				to_chat(usr, span_notice(LANG("obj.f32fb30b", null)))
 				. = TRUE
 		if("shock")
 			var/obj/item/mecha_parts/mecha_tracking/our_mecha_tracker = locate(params["tracker_ref"])

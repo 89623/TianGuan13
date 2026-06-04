@@ -155,7 +155,7 @@
 			if(!HAS_SILICON_ACCESS(user))
 				return
 			if((obj_flags & EMAGGED) || (machine_stat & BROKEN))
-				to_chat(user, span_warning("The turret control is unresponsive!"))
+				to_chat(user, span_warning(LANG("obj.998439f7", null)))
 				return
 			locked = !locked
 			return TRUE

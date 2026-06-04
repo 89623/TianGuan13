@@ -34,9 +34,9 @@
 
 	switch(hole_size)
 		if(MEDIUM_HOLE)
-			. += "There is a large hole in \the [src]."
+			. += LANG("obj.97b257b4", list(src))
 		if(LARGE_HOLE)
-			. += "\The [src] has been completely cut through."
+			. += LANG("obj.fe9982e8", list(src))
 
 /obj/structure/fence/end
 	icon_state = "end"
@@ -78,12 +78,12 @@
 			if(current_stage == hole_size)
 				switch(++hole_size)
 					if(MEDIUM_HOLE)
-						visible_message(span_notice("\The [user] cuts into \the [src] some more."))
-						to_chat(user, span_info("You could probably fit yourself through that hole now. Although climbing through would be much faster if you made it even bigger."))
+						visible_message(span_notice(LANG("obj.49794e1c", list(user, src))))
+						to_chat(user, span_info(LANG("obj.3421d97f", null)))
 						AddElement(/datum/element/climbable)
 					if(LARGE_HOLE)
-						visible_message(span_notice("\The [user] completely cuts through \the [src]."))
-						to_chat(user, span_info("The hole in \the [src] is now big enough to walk through."))
+						visible_message(span_notice(LANG("obj.e0d9f291", list(user, src))))
+						to_chat(user, span_info(LANG("obj.22decf31", list(src))))
 						RemoveElement(/datum/element/climbable)
 
 				update_cut_status()

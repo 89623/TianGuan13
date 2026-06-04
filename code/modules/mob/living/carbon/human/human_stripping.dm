@@ -182,11 +182,11 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 	switch (shoes.tied)
 		if (SHOES_UNTIED)
-			. += "knot"
+			. += LANG("datum.9afc35d5", null)
 		if (SHOES_TIED)
-			. += "untie"
+			. += LANG("datum.09e67054", null)
 		if (SHOES_KNOTTED)
-			. += "unknot"
+			. += LANG("datum.b63605a8", null)
 
 /datum/strippable_item/mob_item_slot/feet/perform_alternate_action(atom/source, mob/user, action_key, obj/item/item)
 	if(!..())

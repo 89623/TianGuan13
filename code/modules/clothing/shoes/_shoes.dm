@@ -247,17 +247,17 @@
 
 			if(2 to 5) // .4% chance to stumble and lurch forward
 				our_guy.throw_at(get_step(our_guy, our_guy.dir), 3, 2)
-				to_chat(our_guy, span_danger("You stumble on your [untied_adjective()] [fastening_type] and lurch forward!"))
+				to_chat(our_guy, span_danger(LANG("obj.66472685", list(untied_adjective(), fastening_type))))
 
 			if(6 to 13) // .7% chance to stumble and fling what we're holding
 				var/have_anything = FALSE
 				for(var/obj/item/I in our_guy.held_items)
 					have_anything = TRUE
 					our_guy.accident(I)
-				to_chat(our_guy, span_danger("You trip on your [fastening_type] a bit[have_anything ? ", flinging what you were holding" : ""]!"))
+				to_chat(our_guy, span_danger(LANG("obj.54252380", list(fastening_type, have_anything ? ", flinging what you were holding" : ""))))
 
 			if(14 to 25) // 1.3ish% chance to stumble and be a bit off balance (like being disarmed)
-				to_chat(our_guy, span_danger("You stumble a bit on your [untied_adjective()] [fastening_type]!"))
+				to_chat(our_guy, span_danger(LANG("obj.2a31d479", list(untied_adjective(), fastening_type))))
 				our_guy.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 
 			if(26 to 1000)

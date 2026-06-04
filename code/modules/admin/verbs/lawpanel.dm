@@ -34,8 +34,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	switch(lawtype)
 		if(LAW_ZEROTH)
 			if(borgo.laws.zeroth || borgo.laws.zeroth_borg)
-				var/zero_override_alert = tgui_alert(user, "This silicon already has a zeroth law, \
-					this will override their existing one. Are you sure?", "Zeroth law override", list("Yes", "No"))
+				var/zero_override_alert = tgui_alert(user, LANG("datum.c657cbe0", null), LANG("datum.7d5ea3fe", null), list("Yes", "No"))
 				if(zero_override_alert != "Yes" || QDELETED(src) || QDELETED(borgo))
 					return FALSE
 
@@ -63,13 +62,13 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 	switch(direction)
 		if("up")
 			if(lawindex == length(relevant_laws)) // Already at the top? Sanity
-				to_chat(user, span_danger("Something went wrong, we couldn't move that law."))
+				to_chat(user, span_danger(LANG("datum.22084e40", null)))
 				return FALSE
 
 			relevant_laws.Swap(lawindex + 1, lawindex)
 		if("down")
 			if(lawindex == 1) // Already at the bottom? Sanity
-				to_chat(user, span_danger("Something went wrong, we couldn't move that law."))
+				to_chat(user, span_danger(LANG("datum.22084e40", null)))
 				return FALSE
 
 			relevant_laws.Swap(lawindex - 1, lawindex)

@@ -73,11 +73,11 @@
 	. = ..()
 	switch(engine_state)
 		if(ENGINE_UNWRENCHED)
-			. += span_notice("\The [src] is unbolted from the floor. It needs to be wrenched to the floor to be installed.")
+			. += span_notice(LANG("obj.6069f641", list(src)))
 		if(ENGINE_WRENCHED)
-			. += span_notice("\The [src] is bolted to the floor and can be unbolted with a wrench. It needs to be welded to the floor to finish installation.")
+			. += span_notice(LANG("obj.43e866e2", list(src)))
 		if(ENGINE_WELDED)
-			. += span_notice("\The [src] is welded to the floor and can be unwelded. It is currently fully installed.")
+			. += span_notice(LANG("obj.a96c6f0f", list(src)))
 
 /obj/machinery/power/shuttle_engine/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item?.tool_behaviour == TOOL_WELDER && engine_state == ENGINE_WRENCHED)
@@ -132,7 +132,7 @@
 	. = ..()
 	switch(engine_state)
 		if(ENGINE_UNWRENCHED)
-			to_chat(user, span_warning("\The [src] needs to be wrenched to the floor!"))
+			to_chat(user, span_warning(LANG("obj.077f2570", list(src))))
 		if(ENGINE_WRENCHED)
 			if(!tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return TRUE
@@ -143,7 +143,7 @@
 
 			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume = 50))
 				engine_state = ENGINE_WELDED
-				to_chat(user, span_notice("You weld \the [src] to the floor."))
+				to_chat(user, span_notice(LANG("obj.290f680d", list(src))))
 				alter_engine_power(engine_power)
 
 		if(ENGINE_WELDED)
@@ -156,7 +156,7 @@
 
 			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume = 50))
 				engine_state = ENGINE_WRENCHED
-				to_chat(user, span_notice("You cut \the [src] free from the floor."))
+				to_chat(user, span_notice(LANG("obj.0568c93c", list(src))))
 				alter_engine_power(-engine_power)
 	return TRUE
 

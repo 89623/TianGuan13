@@ -51,11 +51,11 @@
 	. = ..()
 	switch(stage)
 		if(LIGHT_CONSTRUCT_EMPTY)
-			. += span_notice("It's an empty frame with no wires.")
+			. += span_notice(LANG("obj.b73d03f2", null))
 		if(LIGHT_CONSTRUCT_WIRED)
-			. += span_notice("It is wired, but the bolts are not screwed in.")
+			. += span_notice(LANG("obj.f04ddf2d", null))
 		if(LIGHT_CONSTRUCT_CLOSED)
-			. += span_notice("The casing is closed.")
+			. += span_notice(LANG("obj.f6ba5737", null))
 	if(cell_connectors)
 		if(cell)
 			. += span_notice(LANG("obj.d65bfb24", list(cell)))
@@ -109,9 +109,9 @@
 		if(LIGHT_CONSTRUCT_EMPTY)
 			if(tool.tool_behaviour == TOOL_WRENCH)
 				if(cell)
-					to_chat(user, span_warning("You have to remove the cell first!"))
+					to_chat(user, span_warning(LANG("obj.3218f2b7", null)))
 					return
-				to_chat(user, span_notice("You begin deconstructing [src]..."))
+				to_chat(user, span_notice(LANG("obj.2f7a5f8d", list(src))))
 				if (tool.use_tool(src, user, 30, volume=50))
 					user.visible_message(span_notice("[user.name] deconstructs [src]."), \
 						span_notice("You deconstruct [src]."), span_hear("You hear a ratchet."))
@@ -127,11 +127,11 @@
 					user.visible_message(span_notice("[user.name] adds wires to [src]."), \
 						span_notice("You add wires to [src]."))
 				else
-					to_chat(user, span_warning("You need one length of cable to wire [src]!"))
+					to_chat(user, span_warning(LANG("obj.41542255", list(src))))
 				return
 		if(LIGHT_CONSTRUCT_WIRED)
 			if(tool.tool_behaviour == TOOL_WRENCH)
-				to_chat(usr, span_warning("You have to remove the wires first!"))
+				to_chat(usr, span_warning(LANG("obj.de6ac88c", null)))
 				return
 
 			if(tool.tool_behaviour == TOOL_WIRECUTTER)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //"Don't leave food on the floor, that's how we get ants"
 
 #define DECOMPOSITION_TIME (20 MINUTES) // NOVA EDIT CHANGE - ORIGINAL: #define DECOMPOSITION_TIME (10 MINUTES)
@@ -132,11 +133,11 @@
 	var/time_d = get_time()
 	switch(time_d / original_time)
 		if(0.5 to 0.75) // 25% rotten
-			examine_list += span_notice("[parent] looks kinda stale.")
+			examine_list += span_notice(LANG("datum.df72183b", list(parent)))
 		if(0.25 to 0.5) // 50% rotten
-			examine_list += span_notice("[parent] is starting to look pretty gross.")
+			examine_list += span_notice(LANG("datum.3391c9aa", list(parent)))
 		if(0 to 0.25) // 75% rotten
-			examine_list += span_danger("[parent] barely looks edible.")
+			examine_list += span_danger(LANG("datum.678e3408", list(parent)))
 
 #undef DECOMPOSITION_TIME
 #undef DECOMPOSITION_TIME_GROSS

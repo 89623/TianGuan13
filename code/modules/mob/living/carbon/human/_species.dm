@@ -626,7 +626,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
-					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
+					to_chat(H, span_warning(LANG("datum.dae58471", list(I.name))))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_EYES)
@@ -650,7 +650,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
-					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
+					to_chat(H, span_warning(LANG("datum.dae58471", list(I.name))))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_LPOCKET)
@@ -663,7 +663,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
-					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
+					to_chat(H, span_warning(LANG("datum.dae58471", list(I.name))))
 				return FALSE
 			return TRUE
 		if(ITEM_SLOT_RPOCKET)
@@ -676,7 +676,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
-					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
+					to_chat(H, span_warning(LANG("datum.dae58471", list(I.name))))
 				return FALSE
 			return TRUE
 		if(ITEM_SLOT_SUITSTORE)
@@ -684,14 +684,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				return FALSE
 			if(!H.wear_suit)
 				if(!disable_warning)
-					to_chat(H, span_warning("You need a suit before you can attach this [I.name]!"))
+					to_chat(H, span_warning(LANG("datum.360d4820", list(I.name))))
 				return FALSE
 			var/any_suit_storage = (is_type_in_typecache(I, GLOB.any_suit_storage) || I.w_class == WEIGHT_CLASS_TINY)
 			if(any_suit_storage)
 				return TRUE
 			if(I.w_class > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
-					to_chat(H, span_warning("\The [I] is too big to attach!")) //should be src?
+					to_chat(H, span_warning(LANG("datum.e1af9077", list(I)))) //should be src?
 				return FALSE
 			if( is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
@@ -984,13 +984,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.adjust_staggered_up_to(1 SECONDS, 10 SECONDS)
 			target.visible_message(span_warning("[user]'s [atk_verb] briefly winds [target]!"), \
 				span_warning("You are briefly winded by [user]'s [atk_verb]!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] briefly winds [target]!"))
+			to_chat(user, span_warning(LANG("datum.5635177d", list(atk_verb, target))))
 
 		if (1 to 10)
 			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
 			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, their eyes water! Ouch!"), \
 				span_warning("You are hit viciously by [user]'s [atk_verb], and your eyes begin to water!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] causes [target] to tear up!"))
+			to_chat(user, span_warning(LANG("datum.b8a6a913", list(atk_verb, target))))
 
 		if (11 to 30)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
@@ -998,7 +998,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
 			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling in agony! Damn!"), \
 				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed daze!"))
+			to_chat(user, span_warning(LANG("datum.4228bb62", list(atk_verb, target))))
 
 		if(31 to 40)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
@@ -1006,13 +1006,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.adjust_temp_blindness_up_to(5 SECONDS, 10 SECONDS)
 			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling blindly in agony! Goddamn!"), \
 				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying, blinding blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed, blind daze!"))
+			to_chat(user, span_warning(LANG("datum.185962d4", list(atk_verb, target))))
 
 		if (41 to 45)
 			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you knock them off their feet! Holy shit!"), \
 				span_warning("You are hit viciously by [user]'s [atk_verb] and sent toppling head over heels!"), span_hear("You hear a sickening thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] lands, and you send [target] sailing off their feet!"))
+			to_chat(user, span_warning(LANG("datum.a04cd885", list(atk_verb, target))))
 
 		if (46 to INFINITY)
 			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
@@ -1020,7 +1020,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.apply_damage(5, BRUTE, affecting, armor_block, wound_bonus = limb_accuracy * 2) //Mostly for the crunchy wounding effect than actually doing damage
 			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you hit them off their feet with a loud crunch! Fucking hell!"), \
 				span_warning("You are hit viciously by [user]'s [atk_verb], and suddenly feel an overwhelming pain as you topple head over heels!"), span_hear("You hear a sickening crack and a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] lands, and [target] is sent crashing to the floor with the immense force! Good god!"))
+			to_chat(user, span_warning(LANG("datum.723ae72f", list(atk_verb, target))))
 
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)

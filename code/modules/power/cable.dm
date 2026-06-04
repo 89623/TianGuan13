@@ -824,13 +824,13 @@ GLOBAL_LIST(hub_radial_layer_list)
 	switch(layer_result)
 		if("Layer 1")
 			CL = CABLE_LAYER_1
-			to_chat(user, span_warning("You toggle L1 connection."))
+			to_chat(user, span_warning(LANG("obj.2b35d65d", null)))
 		if("Layer 2")
 			CL = CABLE_LAYER_2
-			to_chat(user, span_warning("You toggle L2 connection."))
+			to_chat(user, span_warning(LANG("obj.772ee4f3", null)))
 		if("Layer 3")
 			CL = CABLE_LAYER_3
-			to_chat(user, span_warning("You toggle L3 connection."))
+			to_chat(user, span_warning(LANG("obj.66489bed", null)))
 
 	cut_cable_from_powernet(FALSE)
 

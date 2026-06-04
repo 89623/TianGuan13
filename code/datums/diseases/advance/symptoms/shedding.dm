@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*Alopecia
  * No change to stealth
  * Slight increase to resistance
@@ -35,14 +36,14 @@
 		switch(disease.stage)
 			if(3, 4)
 				if((affected_human.hairstyle == "Bald") && (affected_human.hairstyle != "Balding Hair"))
-					to_chat(affected_human, span_warning("Your hair starts to fall out in clumps..."))
+					to_chat(affected_human, span_warning(LANG("datum.cc5e9c19", null)))
 					addtimer(CALLBACK(src, PROC_REF(baldify), affected_human, FALSE), 5 SECONDS)
 			if(5)
 				if((affected_human.facial_hairstyle != "Shaved") || (affected_human.hairstyle != "Bald"))
 					if(affected_human.hairstyle == "Balding Hair")
-						to_chat(affected_human, span_warning("The little hair you have left starts to fall out in clumps..."))
+						to_chat(affected_human, span_warning(LANG("datum.1fbafdb4", null)))
 					else
-						to_chat(affected_human, span_warning("Your hair starts to fall out in clumps..."))
+						to_chat(affected_human, span_warning(LANG("datum.cc5e9c19", null)))
 					addtimer(CALLBACK(src, PROC_REF(baldify), affected_human, TRUE), 3 SECONDS)
 
 /datum/symptom/shedding/proc/baldify(mob/living/carbon/human/baldie, fully_bald)

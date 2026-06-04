@@ -82,7 +82,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 				options += option
 				option = reject_bad_name(option, allow_numbers = TRUE, max_length = MAX_LENGTH_TITLE, cap_after_symbols = FALSE)
 			if(length(options) < 2)
-				to_chat(user, span_danger("2 options minimum required to start a bet."))
+				to_chat(user, span_danger(LANG("datum.3a96fc6d", null)))
 				return
 			created_bet = new(user, title, description, options)
 			return TRUE
@@ -95,7 +95,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 			if(isnull(bet_placed_on))
 				return
 			if(bet_placed_on == created_bet)
-				to_chat(user, span_danger("You can't bet on your own poll!"))
+				to_chat(user, span_danger(LANG("datum.86658971", null)))
 				return
 			var/money_betting = params["money_betting"]
 			if(!isnum(money_betting))

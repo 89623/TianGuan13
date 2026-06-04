@@ -943,14 +943,14 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	var/local_only_deletion
 	switch(target_rank.source)
 		if(RANK_SOURCE_LOCAL)
-			to_chat(usr, span_adminprefix("Localhost rank cannot be deleted."), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.83182db4", null)), confidential = TRUE)
 			return
 		// This handles protected ranks on its own
 		if(RANK_SOURCE_TXT)
-			to_chat(usr, span_adminprefix("Text ranks cannot be meaningfully deleted, go modify admin_ranks.txt"), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.20ac44a2", null)), confidential = TRUE)
 			return
 		if(RANK_SOURCE_BACKUP)
-			to_chat(usr, span_adminprefix("Backup ranks cannot usefully be deleted, as they are stored in a temp json, go uh... edit that? I guess?."), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.83599c1a", null)), confidential = TRUE)
 			return
 		if(RANK_SOURCE_TEMPORARY)
 			local_only_deletion = TRUE
@@ -1040,14 +1040,14 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	var/attempt_db = FALSE
 	switch(target_rank.source)
 		if(RANK_SOURCE_LOCAL)
-			to_chat(usr, span_adminprefix("Localhost rank cannot be modified."), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.77bbe6e5", null)), confidential = TRUE)
 			return
 		// This handles protected ranks on its own
 		if(RANK_SOURCE_TXT)
-			to_chat(usr, span_adminprefix("Text ranks cannot be meaningfully modified, go modify admin_ranks.txt"), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.bb8eb939", null)), confidential = TRUE)
 			return
 		if(RANK_SOURCE_BACKUP)
-			to_chat(usr, span_adminprefix("Backup ranks cannot usefully be modified, as they are stored in a temp json, go uh... edit that? I guess?."), confidential = TRUE)
+			to_chat(usr, span_adminprefix(LANG("datum.54d62ab7", null)), confidential = TRUE)
 			return
 		// For completeness
 		if(RANK_SOURCE_TEMPORARY)

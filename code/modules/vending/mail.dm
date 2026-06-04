@@ -117,7 +117,7 @@
 			pick_mail(user)
 		if ("Dump")
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
-			to_chat(user, span_notice("[src] dumps [length(mail_list)] envelope\s on the floor."))
+			to_chat(user, span_notice(LANG("obj.64363dbe", list(src, length(mail_list)))))
 			dump_all_mail()
 		if ("Sort")
 			sort_mail(user)

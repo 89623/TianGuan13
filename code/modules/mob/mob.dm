@@ -829,7 +829,7 @@
 
 	switch(CONFIG_GET(flag/allow_respawn))
 		if(RESPAWN_FLAG_NEW_CHARACTER)
-			if(tgui_alert(usr, "Note, respawning is only allowed as another character. If you don't have another free slot you may not be able to respawn.", "Respawn", list("Ok", "Nevermind")) != "Ok")
+			if(tgui_alert(usr, LANG("mob.d9177f13", null), LANG("mob.7625587d", null), list("Ok", "Nevermind")) != "Ok")
 				return
 
 		if(RESPAWN_FLAG_FREE)
@@ -837,9 +837,9 @@
 
 		if(RESPAWN_FLAG_DISABLED)
 			if (!check_rights_for(usr.client, R_ADMIN))
-				to_chat(usr, span_boldnotice("Respawning is not enabled!"))
+				to_chat(usr, span_boldnotice(LANG("mob.cbff20c4", null)))
 				return
-			if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+			if (tgui_alert(usr, LANG("mob.ea1bb66a", null), LANG("mob.7625587d", null), list("Yes", "No")) != "Yes")
 				return
 
 	if (stat != DEAD)

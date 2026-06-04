@@ -136,11 +136,11 @@
 			return
 		switch(selection)
 			if("Save")
-				var/name = input(user, "", "Name the color!", "Pastel Purple") as text|null
+				var/name = input(user, "", LANG("obj.90b562f4", null), "Pastel Purple") as text|null
 				if(name)
 					colors[name] = currentcolor
 			if("Delete")
-				var/delet = input(user, "", "Color Menu", currentcolor) as null|anything in colors
+				var/delet = input(user, "", LANG("obj.cdae6578", null), currentcolor) as null|anything in colors
 				if(delet)
 					colors.Remove(delet)
 			if(null)
@@ -165,7 +165,7 @@
 				return
 			if("Maybe")
 				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-				audible_message(span_warning("The [src] buzzes!"))
+				audible_message(span_warning(LANG("obj.5c228379", list(src))))
 				return
 
 /obj/item/canvas/drawingtablet/get_paint_tool_color()

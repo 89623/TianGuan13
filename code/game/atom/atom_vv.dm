@@ -48,7 +48,7 @@
 			if("Search")
 				var/valid_id
 				while(!valid_id)
-					chosen_id = tgui_input_text(usr, "Enter the ID of the reagent you want to add.", "Search reagents")
+					chosen_id = tgui_input_text(usr, LANG("atom.d4cf7df6", null), LANG("atom.13046490", null))
 					if(isnull(chosen_id)) //Get me out of here!
 						break
 					if (!ispath(text2path(chosen_id)))
@@ -58,9 +58,9 @@
 					else
 						valid_id = TRUE
 					if(!valid_id)
-						to_chat(usr, span_warning("A reagent with that ID doesn't exist!"))
+						to_chat(usr, span_warning(LANG("atom.66e644d8", null)))
 			if("Choose from a list")
-				chosen_id = tgui_input_list(usr, "Choose a reagent to add.", "Choose a reagent.", sort_list(subtypesof(/datum/reagent), GLOBAL_PROC_REF(cmp_typepaths_asc)))
+				chosen_id = tgui_input_list(usr, LANG("atom.2aa83079", null), LANG("atom.a34b595f", null), sort_list(subtypesof(/datum/reagent), GLOBAL_PROC_REF(cmp_typepaths_asc)))
 			if("I'm feeling lucky")
 				chosen_id = pick(subtypesof(/datum/reagent))
 
@@ -122,25 +122,25 @@
 			return
 		switch(result)
 			if("Scale")
-				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				var/x = input(usr, LANG("atom.53fee51e", null),LANG("atom.502f2082", null)) as null|num
+				var/y = input(usr, LANG("atom.d8cf5989", null),LANG("atom.502f2082", null)) as null|num
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Scale(x,y)
 			if("Translate")
-				var/x = input(usr, "Choose x mod (negative = left, positive = right)","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod (negative = down, positive = up)","Transform Mod") as null|num
+				var/x = input(usr, LANG("atom.ef5f1db9", null),LANG("atom.502f2082", null)) as null|num
+				var/y = input(usr, LANG("atom.0163f037", null),LANG("atom.502f2082", null)) as null|num
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Translate(x,y)
 			if("Shear")
-				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				var/x = input(usr, LANG("atom.53fee51e", null),LANG("atom.502f2082", null)) as null|num
+				var/y = input(usr, LANG("atom.d8cf5989", null),LANG("atom.502f2082", null)) as null|num
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Shear(x,y)
 			if("Rotate")
-				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
+				var/angle = input(usr, LANG("atom.0b9647f1", null),LANG("atom.502f2082", null)) as null|num
 				if(isnull(angle))
 					return
 				transform = M.Turn(angle)

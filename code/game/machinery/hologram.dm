@@ -328,11 +328,11 @@ Possible to do for anyone motivated enough:
 			if(isAI(usr))
 				var/mob/living/silicon/ai/ai_user = usr
 				ai_user.eyeobj.setLoc(get_turf(src))
-				to_chat(usr, span_info("AIs can not request AI presence. Jumping instead."))
+				to_chat(usr, span_info(LANG("obj.7fa43829", null)))
 				return
 			if(last_request + 200 < world.time)
 				last_request = world.time
-				to_chat(usr, span_info("You requested an AI's presence."))
+				to_chat(usr, span_info(LANG("obj.62150041", null)))
 				var/area/area = get_area(src)
 				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
 					if(!AI.client)
@@ -340,7 +340,7 @@ Possible to do for anyone motivated enough:
 					to_chat(AI, span_info("Your presence is requested at <a href='byond://?src=[REF(AI)];jump_to_holopad=[REF(src)]'>\the [area]</a>. <a href='byond://?src=[REF(AI)];project_to_holopad=[REF(src)]'>Project Hologram?</a>"))
 				return TRUE
 			else
-				to_chat(usr, span_info("A request for AI presence was already sent recently."))
+				to_chat(usr, span_info(LANG("obj.4c616922", null)))
 				return
 		if("holocall")
 			if(outgoing_call)
@@ -352,7 +352,7 @@ Possible to do for anyone motivated enough:
 					if(A)
 						LAZYADD(callnames[A], I)
 				callnames -= get_area(src)
-				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sort_names(callnames))
+				var/result = tgui_input_list(usr, LANG("obj.ec9662ac", null), LANG("obj.b9631c42", null), sort_names(callnames))
 				if(isnull(result))
 					return
 				if(QDELETED(usr) || outgoing_call)
@@ -366,7 +366,7 @@ Possible to do for anyone motivated enough:
 					calling = TRUE
 					return TRUE
 			else
-				to_chat(usr, span_warning("You must stand on the holopad to make a call!"))
+				to_chat(usr, span_warning(LANG("obj.34cbf958", null)))
 		if("connectcall")
 			var/datum/holocall/call_to_connect = locate(params["holopad"]) in holo_calls
 			if(!QDELETED(call_to_connect))

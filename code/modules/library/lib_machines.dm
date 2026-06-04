@@ -114,20 +114,20 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			return TRUE
 		if("search")
 			if(!prevent_db_spam())
-				say("Database cables refreshing. Please wait a moment.")
+				say(LANG("obj.0d9e5574", null))
 				return
 			INVOKE_ASYNC(src, PROC_REF(update_db_info))
 			return TRUE
 		if("switch_page")
 			if(!prevent_db_spam())
-				say("Database cables refreshing. Please wait a moment.")
+				say(LANG("obj.0d9e5574", null))
 				return
 			search_page = sanitize_page_input(params["page"], search_page, page_count)
 			INVOKE_ASYNC(src, PROC_REF(update_db_info))
 			return TRUE
 		if("clear_data") //The cap just walked in on your browsing, quick! delete it!
 			if(!prevent_db_spam())
-				say("Database cables refreshing. Please wait a moment.")
+				say(LANG("obj.0d9e5574", null))
 				return
 			title = initial(title)
 			author = initial(author)
@@ -499,7 +499,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			return TRUE
 		if("upload")
 			if(!prevent_db_spam())
-				say("Database cables refreshing. Please wait a moment.")
+				say(LANG("obj.0d9e5574", null))
 				return
 			var/upload_category = params["category"]
 			if(!(upload_category in SSlibrary.upload_categories)) //Nice try
@@ -510,20 +510,20 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		if("news_post")
 			// We grey out the button UI-side, but let's just be safe to guard against spammy spammers.
 			if(!COOLDOWN_FINISHED(src, newscaster_cooldown))
-				say("Not enough time has passed since the last news post. Please wait.")
+				say(LANG("obj.8b8371f4", null))
 				return
 			if(!GLOB.news_network)
-				say("No news network found on station. Aborting.")
+				say(LANG("obj.95ec6c6e", null))
 			var/datum/feed_channel/library_channel = GLOB.news_network.network_channels_by_name[LIBRARY_NEWSFEED]
 			if(isnull(library_channel))
 				GLOB.news_network.create_feed_channel(LIBRARY_NEWSFEED, "Library", "The official station book club!", null)
 
 			var/obj/machinery/libraryscanner/scan = get_scanner()
 			if(!scan)
-				say("No nearby scanner detected. Aborting.")
+				say(LANG("obj.1c542547", null))
 				return
 			GLOB.news_network.submit_article(scan.cache.content, "[scan.cache.author]: [scan.cache.title]", LIBRARY_NEWSFEED, null)
-			say("Upload complete. Your uploaded title is now available on station newscasters.")
+			say(LANG("obj.16d801e8", null))
 			COOLDOWN_START(src, newscaster_cooldown, NEWSCASTER_COOLDOWN)
 			return TRUE
 		if("print_book")
@@ -755,7 +755,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	switch(action)
 		if("scan")
 			if(cache?.compare(held_book.book_data))
-				say("This book is already in my internal cache")
+				say(LANG("obj.7e289cca", null))
 				return
 			cache = held_book.book_data.return_copy()
 			flick("bigscanner1", src)

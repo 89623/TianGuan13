@@ -92,14 +92,14 @@
 
 	switch(state)
 		if(WINDOW_SCREWED_TO_FRAME)
-			. += span_notice("The window is <b>screwed</b> to the frame.")
+			. += span_notice(LANG("obj.c09e8fdf", null))
 		if(WINDOW_IN_FRAME)
-			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
+			. += span_notice(LANG("obj.e02e3584", null))
 		if(WINDOW_OUT_OF_FRAME)
 			if (anchored)
-				. += span_notice("The window is <b>screwed</b> to the floor.")
+				. += span_notice(LANG("obj.ebe146b0", null))
 			else
-				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
+				. += span_notice(LANG("obj.7134205a", null))
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -221,26 +221,26 @@
 
 	switch(state)
 		if(WINDOW_SCREWED_TO_FRAME)
-			to_chat(user, span_notice("You begin to unscrew the window from the frame..."))
+			to_chat(user, span_notice(LANG("obj.56e5b5cf", null)))
 			if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_IN_FRAME
-				to_chat(user, span_notice("You unfasten the window from the frame."))
+				to_chat(user, span_notice(LANG("obj.a12ab5b0", null)))
 		if(WINDOW_IN_FRAME)
-			to_chat(user, span_notice("You begin to screw the window to the frame..."))
+			to_chat(user, span_notice(LANG("obj.7a615707", null)))
 			if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_SCREWED_TO_FRAME
-				to_chat(user, span_notice("You fasten the window to the frame."))
+				to_chat(user, span_notice(LANG("obj.df59932b", null)))
 		if(WINDOW_OUT_OF_FRAME)
 			if(anchored)
-				to_chat(user, span_notice("You begin to unscrew the frame from the floor..."))
+				to_chat(user, span_notice(LANG("obj.9d5eabeb", null)))
 				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 					set_anchored(FALSE)
-					to_chat(user, span_notice("You unfasten the frame from the floor."))
+					to_chat(user, span_notice(LANG("obj.0ca6ccca", null)))
 			else
-				to_chat(user, span_notice("You begin to screw the frame to the floor..."))
+				to_chat(user, span_notice(LANG("obj.ef898ce0", null)))
 				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 					set_anchored(TRUE)
-					to_chat(user, span_notice("You fasten the frame to the floor."))
+					to_chat(user, span_notice(LANG("obj.3ab9bdb1", null)))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/wrench_act(mob/living/user, obj/item/tool)
@@ -266,15 +266,15 @@
 
 	switch(state)
 		if(WINDOW_IN_FRAME)
-			to_chat(user, span_notice("You begin to lever the window out of the frame..."))
+			to_chat(user, span_notice(LANG("obj.aa80fd44", null)))
 			if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_OUT_OF_FRAME
-				to_chat(user, span_notice("You pry the window out of the frame."))
+				to_chat(user, span_notice(LANG("obj.f810f857", null)))
 		if(WINDOW_OUT_OF_FRAME)
-			to_chat(user, span_notice("You begin to lever the window back into the frame..."))
+			to_chat(user, span_notice(LANG("obj.a759764d", null)))
 			if(tool.use_tool(src, user, 5 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_SCREWED_TO_FRAME
-				to_chat(user, span_notice("You pry the window back into the frame."))
+				to_chat(user, span_notice(LANG("obj.ef3bab8e", null)))
 		else
 			return FALSE
 
@@ -528,11 +528,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 					user.visible_message(span_notice("[user] holds \the [tool] to the security screws on \the [src]..."),
 						span_notice("You begin heating the security screws on \the [src]..."))
 					if(tool.use_tool(src, user, 15 SECONDS, volume = 100))
-						to_chat(user, span_notice("The security screws are glowing white hot and look ready to be removed."))
+						to_chat(user, span_notice(LANG("obj.6f2c4612", null)))
 						state = RWINDOW_BOLTS_HEATED
 						addtimer(CALLBACK(src, PROC_REF(cool_bolts)), 30 SECONDS)
 			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The security screws need to be heated first!"))
+				to_chat(user, span_warning(LANG("obj.226cfe0d", null)))
 
 		if(RWINDOW_BOLTS_HEATED)
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
@@ -540,9 +540,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 										span_notice("You dig into the heated screws hard and they start turning..."))
 				if(tool.use_tool(src, user, 50, volume = 50))
 					state = RWINDOW_BOLTS_OUT
-					to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
+					to_chat(user, span_notice(LANG("obj.52e8eb7d", null)))
 			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The security screws need to be removed first!"))
+				to_chat(user, span_warning(LANG("obj.b436b070", null)))
 
 		if(RWINDOW_BOLTS_OUT)
 			if(tool.tool_behaviour == TOOL_CROWBAR)
@@ -550,9 +550,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 										span_notice("You wedge \the [tool] into the gap in the frame and start prying..."))
 				if(tool.use_tool(src, user, 40, volume = 50))
 					state = RWINDOW_POPPED
-					to_chat(user, span_notice("The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut."))
+					to_chat(user, span_notice(LANG("obj.781504da", null)))
 			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The gap needs to be pried first!"))
+				to_chat(user, span_warning(LANG("obj.b834e198", null)))
 
 		if(RWINDOW_POPPED)
 			if(tool.tool_behaviour == TOOL_WIRECUTTER)
@@ -560,20 +560,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 										span_notice("You start cutting the exposed bars on \the [src]"))
 				if(tool.use_tool(src, user, 20, volume = 50))
 					state = RWINDOW_BARS_CUT
-					to_chat(user, span_notice("The panels falls out of the way exposing the frame bolts."))
+					to_chat(user, span_notice(LANG("obj.bc012cc9", null)))
 			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The bars need to be cut first!"))
+				to_chat(user, span_warning(LANG("obj.7fef2ecb", null)))
 
 		if(RWINDOW_BARS_CUT)
 			if(tool.tool_behaviour == TOOL_WRENCH)
 				user.visible_message(span_notice("[user] starts unfastening \the [src] from the frame..."),
 					span_notice("You start unfastening the bolts from the frame..."))
 				if(tool.use_tool(src, user, 40, volume = 50))
-					to_chat(user, span_notice("You unscrew the bolts from the frame and the window pops loose."))
+					to_chat(user, span_notice(LANG("obj.6152c847", null)))
 					state = WINDOW_OUT_OF_FRAME
 					set_anchored(FALSE)
 			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The bolts need to be loosened first!"))
+				to_chat(user, span_warning(LANG("obj.58a878dd", null)))
 
 
 	if (tool.tool_behaviour)
@@ -603,15 +603,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 		return
 	switch(state)
 		if(RWINDOW_SECURE)
-			. += span_notice("It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.")
+			. += span_notice(LANG("obj.1cbbbebc", null))
 		if(RWINDOW_BOLTS_HEATED)
-			. += span_notice("The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now.")
+			. += span_notice(LANG("obj.935bbf32", null))
 		if(RWINDOW_BOLTS_OUT)
-			. += span_notice("The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in.")
+			. += span_notice(LANG("obj.9e37608c", null))
 		if(RWINDOW_POPPED)
-			. += span_notice("The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>.")
+			. += span_notice(LANG("obj.02a1e27e", null))
 		if(RWINDOW_BARS_CUT)
-			. += span_notice("The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.")
+			. += span_notice(LANG("obj.0ee0a74b", null))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/spawner, 0)
 

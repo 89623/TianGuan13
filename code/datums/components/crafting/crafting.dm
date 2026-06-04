@@ -601,7 +601,7 @@
 				while(make_action(crafting_recipe, user))
 					crafted_items++
 				if(crafted_items)
-					to_chat(user, span_notice("You made [crafted_items] item\s."))
+					to_chat(user, span_notice(LANG("datum.50616c77", list(crafted_items))))
 			else
 				make_action(crafting_recipe, user)
 			busy = FALSE

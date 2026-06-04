@@ -67,11 +67,11 @@
 		if(CONSCIOUS)
 			return TRUE
 		if(SOFT_CRIT)
-			to_chat(src, span_warning("You can't commit suicide while in a critical condition!"))
+			to_chat(src, span_warning(LANG("mob.8f3165ed", null)))
 		if(UNCONSCIOUS, HARD_CRIT)
-			to_chat(src, span_warning("You need to be conscious to commit suicide!"))
+			to_chat(src, span_warning(LANG("mob.48cfee80", null)))
 		if(DEAD)
-			to_chat(src, span_warning("You're already dead!"))
+			to_chat(src, span_warning(LANG("mob.28e380e1", null)))
 	return FALSE
 
 /// Inserts in logging and death + mind dissociation when we're fully done with ending the life of our mob, as well as adjust the health. We will disallow re-entering the body when this is called.

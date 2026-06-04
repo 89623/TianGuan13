@@ -71,9 +71,9 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/current_empowerment = empowerment
 	switch(current_empowerment)
 		if(SCYTHE_EMPOWERED)
-			. += span_notice("[src] is empowered and humming with energy.")
+			. += span_notice(LANG("obj.144db259", list(src)))
 		if(SCYTHE_SATED)
-			. += span_notice("[src] is sated, but still demands more. Perform the death knell!")
+			. += span_notice(LANG("obj.d44873ee", list(src)))
 		else
 			. += span_notice(LANG("obj.8a7d6391", list(src)))
 

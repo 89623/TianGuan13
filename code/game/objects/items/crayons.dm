@@ -417,7 +417,7 @@
 			set_painting_tool_color(paint_color)
 			. = TRUE
 		if("enter_text")
-			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer, max_length = MAX_MESSAGE_LEN)
+			var/txt = tgui_input_text(usr, LANG("obj.ec26454b", null), LANG("obj.7990a4f3", null), text_buffer, max_length = MAX_MESSAGE_LEN)
 			if(isnull(txt))
 				return
 			txt = crayon_text_strip(txt)
@@ -562,7 +562,7 @@
 					affected_turfs += left
 					affected_turfs += right
 				else
-					balloon_alert(user, "no room!")
+					balloon_alert(user, LANG("obj.ad6c6384", null))
 					return ITEM_INTERACT_BLOCKING
 		created_art.add_hiddenprint(user)
 		if(istagger)

@@ -174,7 +174,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			make_activator(user)
 			if(boosted)
 				mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
-				to_chat(mychild, "<b>Someone has activated your tumor.  You will be returned to fight shortly, get ready!</b>")
+				to_chat(mychild, LANG("obj.64a9683d", null))
 			addtimer(CALLBACK(src, PROC_REF(return_elite)), 3 SECONDS)
 			INVOKE_ASYNC(src, PROC_REF(arena_checks))
 		if(TUMOR_INACTIVE)
@@ -184,25 +184,21 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				return
 			activity = TUMOR_ACTIVE
 			var/mob/dead/observer/elitemind = null
-			visible_message(span_boldwarning("[src] begins to convulse.  Your instincts tell you to step back."))
+			visible_message(span_boldwarning(LANG("obj.0ada0ace", list(src))))
 			make_activator(user)
 			if(!boosted)
 				addtimer(CALLBACK(src, PROC_REF(spawn_elite)), 3 SECONDS)
 				return
-			visible_message(span_boldwarning("Something within [src] stirs..."))
+			visible_message(span_boldwarning(LANG("obj.db55f0e8", list(src))))
 			var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, poll_time = 5 SECONDS, checked_target = src, ignore_category = POLL_IGNORE_LAVALAND_ELITE, alert_pic = src, role_name_text = "lavaland elite")
 			if(chosen_one)
-				audible_message(span_boldwarning("The stirring sounds increase in volume!"))
+				audible_message(span_boldwarning(LANG("obj.df067659", null)))
 				elitemind = chosen_one
 				elitemind.playsound_local(get_turf(elitemind), 'sound/effects/magic.ogg', 40, 0)
-				to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.\nIn a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.\n\
-					Your attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.\n\
-					While the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\n\
-					If you want to win, you'll have to use your powers in creative ways to ensure the kill. It's suggested you try using them all as soon as possible.\n\
-					Should you win, you'll receive extra information regarding what to do after. Good luck!</b>")
+				to_chat(elitemind, LANG("obj.621d36fd", null))
 				addtimer(CALLBACK(src, PROC_REF(spawn_elite), elitemind), 10 SECONDS)
 			else
-				visible_message(span_boldwarning("The stirring stops, and nothing emerges.  Perhaps try again later."))
+				visible_message(span_boldwarning(LANG("obj.4a45436b", null)))
 				activity = TUMOR_INACTIVE
 				clear_activator(user)
 

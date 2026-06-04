@@ -12,7 +12,7 @@
 			try_reactivate(drone)
 		if("Cannibalize")
 			if(drone.health >= drone.maxHealth)
-				to_chat(drone, span_warning("You're already in perfect condition!"))
+				to_chat(drone, span_warning(LANG("mob.d6154b77", null)))
 				return
 			drone.visible_message(span_notice("[drone] begins to cannibalize parts from [src]."), span_notice("You begin to cannibalize parts from [src]..."))
 			if(do_after(drone, 6 SECONDS, 0, target = src))
@@ -22,7 +22,7 @@
 				ghostize(can_reenter_corpse = FALSE)
 				qdel(src)
 			else
-				to_chat(drone, span_warning("You need to remain still to cannibalize [src]!"))
+				to_chat(drone, span_warning(LANG("mob.e9f618aa", list(src))))
 
 /mob/living/basic/drone/attack_drone_secondary(mob/living/basic/drone/drone)
 	return SECONDARY_ATTACK_CALL_NORMAL

@@ -662,10 +662,10 @@
 			user.visible_message(success_msg)
 			return SUCCESS
 		if(ALREADY_LIT)
-			balloon_alert(user, "already lit!")
+			balloon_alert(user, LANG("obj.dcd2a9ba", null))
 			return ALREADY_LIT
 		if(NO_FUEL)
-			balloon_alert(user, "out of fuel!")
+			balloon_alert(user, LANG("obj.ab3fa3bc", null))
 			return NO_FUEL
 
 /obj/item/flashlight/flare/candle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

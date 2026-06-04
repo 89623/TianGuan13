@@ -29,7 +29,7 @@
 				if(2)
 					organ_owner.manual_emote(pick("oofs silently.", "looks like [organ_owner.p_their()] bones hurt.", "grimaces, as though [organ_owner.p_their()] bones hurt."))
 				if(3)
-					to_chat(organ_owner, span_warning("Your bones hurt!"))
+					to_chat(organ_owner, span_warning(LANG("obj.8d18c471", null)))
 		if(chem.overdosed)
 			if(SPT_PROB(2, seconds_per_tick)) //big oof
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly...

@@ -1067,16 +1067,16 @@
 		switch(honorific_position_to_use)
 			if(HONORIFIC_POSITION_FIRST)
 				honorific_position = HONORIFIC_POSITION_FIRST
-				balloon_alert(user, "honorific set: display first name")
+				balloon_alert(user, LANG("obj.020aec31", null))
 			if(HONORIFIC_POSITION_LAST)
 				honorific_position = HONORIFIC_POSITION_LAST
-				balloon_alert(user, "honorific set: display last name")
+				balloon_alert(user, LANG("obj.bc21fa4b", null))
 			if(HONORIFIC_POSITION_FIRST_FULL)
 				honorific_position = HONORIFIC_POSITION_FIRST_FULL
-				balloon_alert(user, "honorific set: start of full name")
+				balloon_alert(user, LANG("obj.f8e58b57", null))
 			if(HONORIFIC_POSITION_LAST_FULL)
 				honorific_position = HONORIFIC_POSITION_LAST_FULL
-				balloon_alert(user, "honorific set: end of full name")
+				balloon_alert(user, LANG("obj.fa93d3ce", null))
 
 	update_label()
 
@@ -1244,12 +1244,12 @@
 			if(!do_after(user, 2 SECONDS))
 				return ITEM_INTERACT_BLOCKING
 			department_color_override = our_crayon.paint_color
-			balloon_alert(user, "recolored")
+			balloon_alert(user, LANG("obj.620759a1", null))
 		if("Subdepartment")
 			if(!do_after(user, 1 SECONDS))
 				return ITEM_INTERACT_BLOCKING
 			subdepartment_color_override = our_crayon.paint_color
-			balloon_alert(user, "recolored")
+			balloon_alert(user, LANG("obj.620759a1", null))
 	update_icon()
 	return ITEM_INTERACT_SUCCESS
 
@@ -1895,17 +1895,17 @@
 				return TRUE
 
 			if(!(access_type in target_card.access))
-				to_chat(usr, span_notice("ID error: ID card rejected your attempted access modification."))
+				to_chat(usr, span_notice(LANG("obj.de93f293", null)))
 				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 				return TRUE
 
 			if(!can_add_wildcards(list(access_type), try_wildcard))
-				to_chat(usr, span_notice("ID error: ID card rejected your attempted access modification."))
+				to_chat(usr, span_notice(LANG("obj.de93f293", null)))
 				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 				return TRUE
 
 			if(!add_access(list(access_type), try_wildcard))
-				to_chat(usr, span_notice("ID error: ID card rejected your attempted access modification."))
+				to_chat(usr, span_notice(LANG("obj.de93f293", null)))
 				LOG_ID_ACCESS_CHANGE(usr, src, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 				return TRUE
 
@@ -2109,7 +2109,7 @@
 		return
 	switch(popup_input)
 		if("Name")
-			var/raw_input = tgui_input_text(user, "What name would you like to put on this card?", "Cardboard card name", scribbled_name || (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN)
+			var/raw_input = tgui_input_text(user, LANG("obj.34be26e5", null), LANG("obj.835af484", null), scribbled_name || (ishuman(user) ? user.real_name : user.name), max_length = MAX_NAME_LEN)
 			var/input_name = sanitize_name(raw_input, allow_numbers = TRUE)
 			if(!after_input_check(user, item, input_name, scribbled_name))
 				return
@@ -2118,7 +2118,7 @@
 			var/list/details = item.get_writing_implement_details()
 			details_colors[INDEX_NAME_COLOR] = details["color"] || COLOR_BLACK
 		if("Assignment")
-			var/input_assignment = tgui_input_text(user, "What assignment would you like to put on this card?", "Cardboard card job ssignment", scribbled_assignment || "Assistant", max_length = MAX_NAME_LEN)
+			var/input_assignment = tgui_input_text(user, LANG("obj.55baa58a", null), LANG("obj.c9ae5c73", null), scribbled_assignment || "Assistant", max_length = MAX_NAME_LEN)
 			if(!after_input_check(user, item, input_assignment, scribbled_assignment))
 				return
 			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
@@ -2134,7 +2134,7 @@
 					if(trim?.trim_state && trim.assignment)
 						possible_trims |= replacetext(trim.trim_state, "trim_", "")
 				sortTim(possible_trims, GLOBAL_PROC_REF(cmp_typepaths_asc))
-			var/input_trim = tgui_input_list(user, "Select trim to apply to your card.\nNote: This will not grant any trim accesses.", "Forge Trim", possible_trims)
+			var/input_trim = tgui_input_list(user, LANG("obj.3fdb257b", null), LANG("obj.866d932c", null), possible_trims)
 			if(!input_trim || !after_input_check(user, item, input_trim, scribbled_trim))
 				return
 			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)

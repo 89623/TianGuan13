@@ -552,7 +552,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 					if(!marked_atom)
 						return TRUE
 					port.set_input(marked_atom)
-					balloon_alert(usr, "updated [port.name]'s value to marked object.")
+					balloon_alert(usr, LANG("obj.02b03386", list(port.name)))
 					return TRUE
 				if(!marker.marked_atom)
 					port.set_input(null)
@@ -585,7 +585,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			var/string_form = copytext("[value]", 1, PORT_MAX_STRING_DISPLAY)
 			if(length(string_form) >= PORT_MAX_STRING_DISPLAY-1)
 				string_form += "..."
-			balloon_alert(usr, "[port.name] value: [string_form]")
+			balloon_alert(usr, LANG("obj.471684d4", list(port.name, string_form)))
 			. = TRUE
 		if("set_display_name")
 			var/new_name = params["display_name"]
@@ -649,7 +649,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			. = TRUE
 		if("add_setter_or_getter")
 			if(setter_and_getter_count >= max_setters_and_getters)
-				balloon_alert(usr, "setter and getter count at maximum capacity")
+				balloon_alert(usr, LANG("obj.8e5cb3ee", null))
 				return
 			var/designated_type = /obj/item/circuit_component/variable/getter
 			if(params["is_setter"])
@@ -680,11 +680,11 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if((!admin_only && !isAdminGhostAI(ui.user)) || !check_rights_for(ui.user.client, R_SPAWN))
 				var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
 				if(!printer)
-					balloon_alert(ui.user, "linked printer not found!")
+					balloon_alert(ui.user, LANG("obj.ced0899d", null))
 					return
 				component = printer.print_component(component_path, user_data = ID_DATA(usr))
 				if(!component)
-					balloon_alert(ui.user, "failed to make the component!")
+					balloon_alert(ui.user, LANG("obj.12ad7005", null))
 					return
 			else
 				if(!ispath(component_path, /obj/item/circuit_component))

@@ -191,7 +191,7 @@
 	COOLDOWN_START(src, startle_cd, TERROR_STARTLE_COOLDOWN)
 	switch (rand(1, 3))
 		if (1)
-			to_chat(owner, span_warning("You are startled!"))
+			to_chat(owner, span_warning(LANG("datum.c2110630", null)))
 			owner.emote("jump")
 			owner.Immobilize(0.1 SECONDS * (terror_buildup / TERROR_BUILDUP_FEAR))
 
@@ -207,7 +207,7 @@
 					span_warning("You drop \the [held_item]!"), null, COMBAT_MESSAGE_RANGE)
 
 		if (3)
-			to_chat(owner, span_warning("You lose your balance!"))
+			to_chat(owner, span_warning(LANG("datum.03e28c7a", null)))
 			owner.adjust_staggered_up_to(2 SECONDS * (terror_buildup / TERROR_BUILDUP_FEAR), 20 SECONDS)
 			owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/spooked)
 			addtimer(CALLBACK(src, PROC_REF(speed_up)), 3 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)

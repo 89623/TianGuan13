@@ -149,7 +149,7 @@
 
 			if(DIG_DELETE)
 				user.balloon_alert(user, "rock crumbles badly!")
-				to_chat(user, span_warning("The rock crumbles, leaving nothing behind."))
+				to_chat(user, span_warning(LANG("obj.3a2fa2eb", null)))
 				return ITEM_INTERACT_BLOCKING
 
 			if(DIG_ROCK)

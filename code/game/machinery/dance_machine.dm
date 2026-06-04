@@ -99,7 +99,7 @@
 
 		if("select_track")
 			if(!isnull(music_player.active_song_sound))
-				to_chat(user, span_warning("Error: You cannot change the song until the current one is over."))
+				to_chat(user, span_warning(LANG("obj.976d4352", null)))
 				return TRUE
 
 			var/datum/track/new_song = music_player.songs[params["track"]]

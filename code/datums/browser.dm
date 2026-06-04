@@ -427,9 +427,9 @@
 			if ("string")
 				setting["value"] = stripped_input(user, "Enter new value for [setting["desc"]]", "Enter new value for [setting["desc"]]", setting["value"])
 			if ("number")
-				setting["value"] = input(user, "Enter new value for [setting["desc"]]", "Enter new value for [setting["desc"]]") as num
+				setting["value"] = input(user, LANG("datum.3ec3cdd5", list(setting["desc"])), LANG("datum.3ec3cdd5", list(setting["desc"]))) as num
 			if ("color")
-				setting["value"] = input(user, "Enter new value for [setting["desc"]]", "Enter new value for [setting["desc"]]", setting["value"]) as color
+				setting["value"] = input(user, LANG("datum.3ec3cdd5", list(setting["desc"])), LANG("datum.3ec3cdd5", list(setting["desc"])), setting["value"]) as color
 			if ("boolean")
 				setting["value"] = (setting["value"] == "Yes") ? "No" : "Yes"
 			if ("ckey")

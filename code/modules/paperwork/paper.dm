@@ -669,7 +669,7 @@
 			var/obj/item/holding = user.get_active_held_item()
 			var/stamp_info = holding?.get_writing_implement_details()
 			if(!stamp_info || (stamp_info["interaction_mode"] != MODE_STAMPING))
-				to_chat(src, span_warning("You can't stamp with the [holding]!"))
+				to_chat(src, span_warning(LANG("obj.828dbf7a", list(holding))))
 				return TRUE
 
 			var/stamp_class = stamp_info["stamp_class"];
@@ -742,7 +742,7 @@
 			add_raw_text(paper_input, writing_implement_data["font"], writing_implement_data["color"], writing_implement_data["use_bold"], check_rights_for(user?.client, R_FUN))
 
 			log_paper("[key_name(user)] wrote to [name]: \"[paper_input]\"")
-			to_chat(user, "You have added to your paper masterpiece!");
+			to_chat(user, LANG("obj.08cd468e", null));
 
 			update_static_data_for_all_viewers()
 			update_appearance()

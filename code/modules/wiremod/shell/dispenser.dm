@@ -161,7 +161,7 @@
 	switch(action)
 		if("add_vend_component")
 			if(length(vendor_components) >= max_vendor_components)
-				balloon_alert(user, "you have hit vendor component limit!")
+				balloon_alert(user, LANG("obj.04d51444", null))
 				return
 			var/obj/item/circuit_component/vendor_component/vendor_component = new(parent)
 			parent.add_component(vendor_component, user)

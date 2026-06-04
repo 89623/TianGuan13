@@ -73,10 +73,10 @@ SUBSYSTEM_DEF(pai)
 			return TRUE
 		if("withdraw")
 			if(!candidate.ready)
-				to_chat(user, span_warning("You need to submit an application before you can withdraw one."))
+				to_chat(user, span_warning(LANG("datum.ab879adb", null)))
 				return FALSE
 			candidate.ready = FALSE
-			to_chat(user, span_notice("Your pAI candidacy has been withdrawn."))
+			to_chat(user, span_notice(LANG("datum.98d3bf02", null)))
 			return TRUE
 	return FALSE
 

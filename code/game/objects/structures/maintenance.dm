@@ -161,7 +161,7 @@ at the cost of risking a vicious bite.**/
 				pants_color = chosen_color
 		if("Create Artefact")
 			if(!COOLDOWN_FINISHED(src, use_cooldown) || status != ALTAR_INACTIVE)
-				to_chat(user, span_warning("[src] is not ready to create something new yet..."))
+				to_chat(user, span_warning(LANG("obj.819dde18", list(src))))
 				return
 			pants_stageone()
 	return TRUE

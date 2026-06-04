@@ -438,7 +438,7 @@
 			return TRUE
 		if("set_ai")
 			if(length(active_ais(check_mind = FALSE, z = z)) <= 0)
-				to_chat(user, span_alert("No active AIs detected."))
+				to_chat(user, span_alert(LANG("obj.ec342faf", null)))
 				return
 
 			var/selected_ai = select_active_ai(user, z) // this one runs input()
@@ -449,11 +449,11 @@
 				return TRUE
 			if(forced_ai == selected_ai) // same AI = clear
 				clear_forced_ai()
-				to_chat(user, span_notice("You reset [src]'s AI setting."))
+				to_chat(user, span_notice(LANG("obj.d15eae6c", list(src))))
 				return TRUE
 
 			set_forced_ai(selected_ai, user)
-			to_chat(user, span_notice("You set [src]'s AI setting to [forced_ai_name]."))
+			to_chat(user, span_notice(LANG("obj.22933fd4", list(src, forced_ai_name))))
 			log_silicon("[key_name(user)] set the default AI for a cyborg shell to [key_name(selected_ai)] at [loc_name(user)]")
 			return TRUE
 

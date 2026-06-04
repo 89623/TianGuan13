@@ -136,14 +136,14 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 				D.AddElement(/datum/element/movetype_handler)
 			ADD_TRAIT(D,chosen_trait,source)
 		if("Remove")
-			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")
+			var/specific = input(LANG("datum.c2061a2b", null), LANG("datum.a7ca69cf", null)) as null|anything in list("All","Specific")
 			if(!specific)
 				return
 			switch(specific)
 				if("All")
 					source = null
 				if("Specific")
-					source = input("Source to be removed","Trait Remove/Add") as null|anything in sort_list(GET_TRAIT_SOURCES(D, chosen_trait))
+					source = input(LANG("datum.ade9fd61", null),LANG("datum.a7ca69cf", null)) as null|anything in sort_list(GET_TRAIT_SOURCES(D, chosen_trait))
 					if(!source)
 						return
 			REMOVE_TRAIT(D,chosen_trait,source)

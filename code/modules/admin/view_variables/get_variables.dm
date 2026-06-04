@@ -117,19 +117,19 @@
 
 	switch(.["class"])
 		if(VV_TEXT)
-			.["value"] = input("Enter new text:", "Text", current_value) as null|text
+			.["value"] = input(LANG("client.75221e2e", null), LANG("client.75a3cf7e", null), current_value) as null|text
 			if(.["value"] == null)
 				.["class"] = null
 				return
 		if(VV_MESSAGE)
-			.["value"] = input("Enter new text:", "Text", current_value) as null|message
+			.["value"] = input(LANG("client.75221e2e", null), LANG("client.75a3cf7e", null), current_value) as null|message
 			if(.["value"] == null)
 				.["class"] = null
 				return
 
 
 		if(VV_NUM)
-			.["value"] = input("Enter new number:", "Num", current_value) as null|num
+			.["value"] = input(LANG("client.90604e00", null), LANG("client.8cc2af2a", null), current_value) as null|num
 			if(.["value"] == null)
 				.["class"] = null
 				return
@@ -174,7 +174,7 @@
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			var/value = input(LANG("client.00c33bc8", null), LANG("client.1b04a393", null), current_value) as null|anything in things
 			if(!value)
 				.["class"] = null
 				return
@@ -187,7 +187,7 @@
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			var/value = input(LANG("client.00c33bc8", null), LANG("client.1b04a393", null), current_value) as null|anything in things
 			if(!value)
 				.["class"] = null
 				return
@@ -200,7 +200,7 @@
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			var/value = input(LANG("client.00c33bc8", null), LANG("client.1b04a393", null), current_value) as null|anything in things
 			if(!value)
 				.["class"] = null
 				return
@@ -213,26 +213,26 @@
 				.["class"] = null
 				return
 			var/list/things = vv_reference_list(type, subtypes)
-			var/value = input("Select reference:", "Reference", current_value) as null|anything in things
+			var/value = input(LANG("client.00c33bc8", null), LANG("client.1b04a393", null), current_value) as null|anything in things
 			if(!value)
 				.["class"] = null
 				return
 			.["value"] = WEAKREF(things[value])
 
 		if(VV_CLIENT)
-			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in GLOB.clients
+			.["value"] = input(LANG("client.00c33bc8", null), LANG("client.1b04a393", null), current_value) as null|anything in GLOB.clients
 			if(.["value"] == null)
 				.["class"] = null
 				return
 
 		if(VV_FILE)
-			.["value"] = input("Pick file:", "File") as null|file
+			.["value"] = input(LANG("client.56488294", null), LANG("client.c79013ac", null)) as null|file
 			if(.["value"] == null)
 				.["class"] = null
 				return
 
 		if(VV_ICON)
-			.["value"] = input("Pick icon:", "Icon") as null|icon
+			.["value"] = input(LANG("client.f5b090a6", null), LANG("client.ef7ff638", null)) as null|icon
 			if(.["value"] == null)
 				.["class"] = null
 				return
@@ -299,7 +299,7 @@
 			.["type"] = /list
 			var/list/value = list()
 
-			var/expectation = alert("Would you like to populate the list", "Populate List?", "Yes", "No")
+			var/expectation = alert(LANG("client.71c7f840", null), LANG("client.63eaf03d", null), LANG("client.41ba0ff5", null), "No")
 			if(!expectation || expectation == "No")
 				.["value"] = value
 				return .
@@ -332,7 +332,7 @@
 			.["value"] = D
 
 		if(VV_COLOR)
-			.["value"] = input("Enter new color:", "Color", current_value) as color|null
+			.["value"] = input(LANG("client.aca4fc25", null), LANG("client.0e20b7b5", null), current_value) as color|null
 			if(.["value"] == null)
 				.["class"] = null
 				return

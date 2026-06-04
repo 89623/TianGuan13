@@ -69,15 +69,15 @@
 			return
 		switch(rand(1,3))
 			if(1) //You Tied!
-				to_chat(affected_mob, span_hierophant("You tie, and the malevolent spirits disappear... for now."))
+				to_chat(affected_mob, span_hierophant(LANG("datum.8108699c", null)))
 				reaping = FALSE
 			if(2) //You lost!
-				to_chat(affected_mob, span_hierophant("You lose, and the malevolent spirits smirk eerily as they surround your body."))
+				to_chat(affected_mob, span_hierophant(LANG("datum.44a41d25", null)))
 				affected_mob.investigate_log("has lost rock paper scissors with the grim reaper and been dusted.", INVESTIGATE_DEATHS)
 				affected_mob.dust()
 				return
 			if(3) //VICTORY ROYALE
-				to_chat(affected_mob, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
+				to_chat(affected_mob, span_hierophant(LANG("datum.d178975f", null)))
 				affected_mob.client.give_award(/datum/award/achievement/jobs/helbitaljanken, affected_mob)
 				affected_mob.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
 				holder.del_reagent(type)

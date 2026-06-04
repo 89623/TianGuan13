@@ -67,7 +67,7 @@
 	if (user.combat_mode)
 		switch(user.grab_state)
 			if (GRAB_PASSIVE)
-				to_chat(user, span_warning("You need a better grip to do that!"))
+				to_chat(user, span_warning(LANG("datum.d5471d98", null)))
 				return
 			if (GRAB_AGGRESSIVE)
 				if (gentle_push)

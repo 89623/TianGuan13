@@ -364,7 +364,7 @@
 		if("wanted")
 			var/list/crimes = target.crimes
 			if(!length(crimes))
-				balloon_alert(user, "no crimes")
+				balloon_alert(user, LANG("obj.8a6e6cf1", null))
 				return FALSE
 
 			input_description += "\n\n<b>WANTED FOR:</b>"

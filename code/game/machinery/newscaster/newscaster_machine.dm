@@ -116,10 +116,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(75 to 100)
 			return
 		if(50 to 75)
-			. += "crack1"
+			. += LANG("obj.4abafffc", null)
 			. += emissive_blocker(icon, "crack1", src, alpha = src.alpha)
 		if(25 to 50)
-			. += "crack2"
+			. += LANG("obj.6f402691", null)
 			. += emissive_blocker(icon, "crack2", src, alpha = src.alpha)
 		else
 			. += LANG("obj.48ab67bb", null)
@@ -305,7 +305,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("createStory")
 			if(!current_channel)
-				balloon_alert(user, "select a channel first!")
+				balloon_alert(user, LANG("obj.5575955f", null))
 				return TRUE
 			var/current_channel_id = params["current"]
 			create_story(user, channel_id = current_channel_id)
@@ -351,7 +351,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				var/mob/living/living_user = user
 				id_card = living_user.get_idcard(hand_first = TRUE)
 			if(!(admin_access in id_card?.GetAccess()))
-				say("Clearance not found.")
+				say(LANG("obj.78e732a0", null))
 				return TRUE
 			var/questionable_message = params["messageID"]
 			for(var/datum/feed_message/iterated_feed_message as anything in current_channel.messages)
@@ -365,7 +365,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				var/mob/living/living_user = user
 				id_card = living_user.get_idcard(hand_first = TRUE)
 			if(!(admin_access in id_card?.GetAccess()))
-				say("Clearance not found.")
+				say(LANG("obj.78e732a0", null))
 				return TRUE
 			var/questionable_message = params["messageID"]
 			for(var/datum/feed_message/iterated_feed_message in current_channel.messages)
@@ -379,7 +379,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				var/mob/living/living_user = user
 				id_card = living_user.get_idcard(hand_first = TRUE)
 			if(!(admin_access in id_card?.GetAccess()))
-				say("Clearance not found.")
+				say(LANG("obj.78e732a0", null))
 				return TRUE
 			var/selected_channel_id = (params["channel"])
 			if(isnull(selected_channel_id))
@@ -421,14 +421,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("setCriminalName")
-			var/temp_name = tgui_input_text(user, "Write the Criminal's Name", "Warrent Alert Handler", "John Doe", max_length = MAX_NAME_LEN, multiline = FALSE)
+			var/temp_name = tgui_input_text(user, LANG("obj.37782efd", null), LANG("obj.f19e98eb", null), "John Doe", max_length = MAX_NAME_LEN, multiline = FALSE)
 			if(!temp_name)
 				return TRUE
 			criminal_name = temp_name
 			return TRUE
 
 		if("setCrimeData")
-			var/temp_desc = tgui_input_text(user, "Write the Criminal's Crimes", "Warrent Alert Handler", "Unknown", max_length = MAX_BROADCAST_LEN, multiline = TRUE)
+			var/temp_desc = tgui_input_text(user, LANG("obj.bf012c81", null), LANG("obj.f19e98eb", null), "Unknown", max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 			if(!temp_desc)
 				return TRUE
 			crime_description = temp_desc
@@ -467,7 +467,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(current_user || newscaster_username)
 				current_user = null
 				newscaster_username = null
-				say("Account Reset.")
+				say(LANG("obj.c924fceb", null))
 				return TRUE
 
 		if("deleteRequest")

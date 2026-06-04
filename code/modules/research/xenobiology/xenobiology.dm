@@ -165,14 +165,14 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(M))
 				M.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			to_chat(user, span_notice("You spit out a monkey cube."))
+			to_chat(user, span_notice(LANG("obj.83fde922", null)))
 			return 120
 		if(SLIME_ACTIVATE_MAJOR)
-			to_chat(user, span_notice("Your [name] starts pulsing..."))
+			to_chat(user, span_notice(LANG("obj.e6616254", list(name))))
 			if(do_after(user, 4 SECONDS, target = user))
 				var/mob/living/basic/slime/new_slime = new(get_turf(user), /datum/slime_type/grey)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-				to_chat(user, span_notice("You spit out [new_slime]."))
+				to_chat(user, span_notice(LANG("obj.90cd020c", list(new_slime))))
 				return 350
 			else
 				return 0
@@ -267,11 +267,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 		if(SLIME_ACTIVATE_MINOR)
 			user.adjust_nutrition(50)
 			user.adjust_blood_volume(50)
-			to_chat(user, span_notice("You activate [src], and your body is refilled with fresh slime jelly!"))
+			to_chat(user, span_notice(LANG("obj.113fd7a8", list(src))))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			to_chat(user, span_notice("You activate [src], and it releases regenerative chemicals!"))
+			to_chat(user, span_notice(LANG("obj.00c8ac9c", list(src))))
 			user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly,10)
 			return 600
 
@@ -294,7 +294,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			var/turf/open/T = get_turf(user)
 			if(istype(T))
 				T.atmos_spawn_air("[GAS_PLASMA]=20")
-			to_chat(user, span_warning("You activate [src], and a cloud of plasma bursts out of your skin!"))
+			to_chat(user, span_warning(LANG("obj.c4ade60c", list(src))))
 			return 900
 
 /obj/item/slime_extract/orange
@@ -305,7 +305,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/orange/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			to_chat(user, span_notice("You activate [src]. You start feeling hot!"))
+			to_chat(user, span_notice(LANG("obj.3a6e5644", list(src))))
 			user.reagents.add_reagent(/datum/reagent/consumable/capsaicin,10)
 			return 150
 
@@ -313,7 +313,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			user.reagents.add_reagent(/datum/reagent/phosphorus,5)//
 			user.reagents.add_reagent(/datum/reagent/potassium,5) // = smoke, along with any reagents inside mr. slime
 			user.reagents.add_reagent(/datum/reagent/consumable/sugar,5)     //
-			to_chat(user, span_warning("You activate [src], and a cloud of smoke bursts out of your skin!"))
+			to_chat(user, span_warning(LANG("obj.c894bb30", list(src))))
 			return 450
 
 /obj/item/slime_extract/yellow
@@ -325,11 +325,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			if(species.glow_intensity != LUMINESCENT_DEFAULT_GLOW)
-				to_chat(user, span_warning("Your glow is already enhanced!"))
+				to_chat(user, span_warning(LANG("obj.8f098c0c", null)))
 				return
 			species.update_glow(user, 5)
 			addtimer(CALLBACK(species, TYPE_PROC_REF(/datum/species/jelly/luminescent, update_glow), user, LUMINESCENT_DEFAULT_GLOW), 1 MINUTES)
-			to_chat(user, span_notice("You start glowing brighter."))
+			to_chat(user, span_notice(LANG("obj.13ead7ee", null)))
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user]'s skin starts flashing intermittently..."), span_warning("Your skin starts flashing intermittently..."))
@@ -347,7 +347,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/red/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			to_chat(user, span_notice("You activate [src]. You start feeling fast!"))
+			to_chat(user, span_notice(LANG("obj.aa4e9a70", list(src))))
 			user.reagents.add_reagent(/datum/reagent/medicine/ephedrine,5)
 			return 450
 
@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/blue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			to_chat(user, span_notice("You activate [src]. Your genome feels more stable!"))
+			to_chat(user, span_notice(LANG("obj.b639d348", list(src))))
 			user.reagents.add_reagent(/datum/reagent/medicine/mutadone, 10)
 			user.reagents.add_reagent(/datum/reagent/medicine/potass_iodide, 10)
 			return 250
@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/darkblue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			to_chat(user, span_notice("You activate [src]. You start feeling colder!"))
+			to_chat(user, span_notice(LANG("obj.f7de864d", list(src))))
 			user.extinguish_mob()
 			user.adjust_wet_stacks(20)
 			user.reagents.add_reagent(/datum/reagent/consumable/frostoil,6)
@@ -395,7 +395,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			var/turf/open/T = get_turf(user)
 			if(istype(T))
 				T.atmos_spawn_air("[GAS_N2]=40;[TURF_TEMPERATURE(2.7)]")
-			to_chat(user, span_warning("You activate [src], and icy air bursts out of your skin!"))
+			to_chat(user, span_warning(LANG("obj.17713ae7", list(src))))
 			return 900
 
 /obj/item/slime_extract/pink
@@ -407,7 +407,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			if(user.gender != MALE && user.gender != FEMALE)
-				to_chat(user, span_warning("You can't swap your gender!"))
+				to_chat(user, span_warning(LANG("obj.ec46f52a", null)))
 				return
 
 			if(user.gender == MALE)
@@ -433,20 +433,20 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/green/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			to_chat(user, span_warning("You feel yourself reverting to human form..."))
+			to_chat(user, span_warning(LANG("obj.1e52ec7e", null)))
 			if(do_after(user, 12 SECONDS, target = user))
-				to_chat(user, span_warning("You feel human again!"))
+				to_chat(user, span_warning(LANG("obj.e759ff15", null)))
 				user.set_species(/datum/species/human)
 				return
-			to_chat(user, span_notice("You stop the transformation."))
+			to_chat(user, span_notice(LANG("obj.ce7ee5bf", null)))
 
 		if(SLIME_ACTIVATE_MAJOR)
-			to_chat(user, span_warning("You feel yourself radically changing your slime type..."))
+			to_chat(user, span_warning(LANG("obj.91b72427", null)))
 			if(do_after(user, 12 SECONDS, target = user))
-				to_chat(user, span_warning("You feel different!"))
+				to_chat(user, span_warning(LANG("obj.f080466d", null)))
 				user.set_species(pick(/datum/species/jelly/slime, /datum/species/jelly/stargazer))
 				return
-			to_chat(user, span_notice("You stop the transformation."))
+			to_chat(user, span_notice(LANG("obj.ce7ee5bf", null)))
 
 /obj/item/slime_extract/lightpink
 	name = "light pink slime extract"
@@ -479,17 +479,17 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/black/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			to_chat(user, span_userdanger("You feel something <i>wrong</i> inside you..."))
+			to_chat(user, span_userdanger(LANG("obj.4b777fea", null)))
 			user.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE)
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)
-			to_chat(user, span_warning("You feel your own light turning dark..."))
+			to_chat(user, span_warning(LANG("obj.7f9dd1e0", null)))
 			if(do_after(user, 12 SECONDS, target = user))
-				to_chat(user, span_warning("You feel a longing for darkness."))
+				to_chat(user, span_warning(LANG("obj.47f520df", null)))
 				user.set_species(pick(/datum/species/shadow))
 				return
-			to_chat(user, span_notice("You stop feeding [src]."))
+			to_chat(user, span_notice(LANG("obj.d9e92749", list(src))))
 
 /obj/item/slime_extract/oil
 	name = "oil slime extract"
@@ -499,7 +499,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/oil/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			to_chat(user, span_warning("You vomit slippery oil."))
+			to_chat(user, span_warning(LANG("obj.ef49238a", null)))
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 			new /obj/effect/decal/cleanable/blood/oil/slippery(get_turf(user))
 			return 450
@@ -507,12 +507,12 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user]'s skin starts pulsing and glowing ominously..."), span_userdanger("You feel unstable..."))
 			if(do_after(user, 6 SECONDS, target = user))
-				to_chat(user, span_userdanger("You explode!"))
+				to_chat(user, span_userdanger(LANG("obj.7e08d4c4", null)))
 				explosion(user, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
 				user.investigate_log("has been gibbed by an oil slime extract explosion.", INVESTIGATE_DEATHS)
 				user.gib(DROP_ALL_REMAINS)
 				return
-			to_chat(user, span_notice("You stop feeding [src], and the feeling passes."))
+			to_chat(user, span_notice(LANG("obj.1a5a712d", list(src))))
 
 /obj/item/slime_extract/adamantine
 	name = "adamantine slime extract"
@@ -523,21 +523,21 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			if(HAS_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR))
-				to_chat(user, span_warning("Your skin is already hardened!"))
+				to_chat(user, span_warning(LANG("obj.297c3374", null)))
 				return
 			ADD_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR, ADAMANTINE_EXTRACT_TRAIT)
-			to_chat(user, span_notice("You feel your skin harden and become more resistant."))
+			to_chat(user, span_notice(LANG("obj.02924b70", null)))
 			user.physiology.damage_resistance += 25
 			addtimer(CALLBACK(src, PROC_REF(reset_armor), user), 120 SECONDS)
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
-			to_chat(user, span_warning("You feel your body rapidly hardening..."))
+			to_chat(user, span_warning(LANG("obj.3af3c7c6", null)))
 			if(do_after(user, 12 SECONDS, target = user))
-				to_chat(user, span_warning("You feel solid."))
+				to_chat(user, span_warning(LANG("obj.22b4a5f5", null)))
 				user.set_species(/datum/species/golem)
 				return
-			to_chat(user, span_notice("You stop feeding [src], and your body returns to its slimelike state."))
+			to_chat(user, span_notice(LANG("obj.f04d1d11", list(src))))
 
 /obj/item/slime_extract/adamantine/proc/reset_armor(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR, ADAMANTINE_EXTRACT_TRAIT)
@@ -555,15 +555,15 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/bluespace/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			to_chat(user, span_warning("You feel your body vibrating..."))
+			to_chat(user, span_warning(LANG("obj.89acf0de", null)))
 			if(do_after(user, 2.5 SECONDS, target = user))
-				to_chat(user, span_warning("You teleport!"))
+				to_chat(user, span_warning(LANG("obj.345b6857", null)))
 				do_teleport(user, get_turf(user), 6, asoundin = 'sound/items/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 				return 300
 
 		if(SLIME_ACTIVATE_MAJOR)
 			if(!teleport_ready)
-				to_chat(user, span_notice("You feel yourself anchoring to this spot..."))
+				to_chat(user, span_notice(LANG("obj.b0b8c120", null)))
 				var/turf/T = get_turf(user)
 				teleport_x = T.x
 				teleport_y = T.y
@@ -573,7 +573,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 				teleport_ready = FALSE
 				if(teleport_x && teleport_y && teleport_z)
 					var/turf/T = locate(teleport_x, teleport_y, teleport_z)
-					to_chat(user, span_notice("You snap back to your anchor point!"))
+					to_chat(user, span_notice(LANG("obj.49af2e40", null)))
 					do_teleport(user, T,  asoundin = 'sound/items/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 					return 450
 
@@ -613,14 +613,14 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			user.reagents.add_reagent(/datum/reagent/medicine/salbutamol,15)
-			to_chat(user, span_notice("You feel like you don't need to breathe!"))
+			to_chat(user, span_notice(LANG("obj.2dd94d5e", null)))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
 			var/turf/open/T = get_turf(user)
 			if(istype(T))
 				T.atmos_spawn_air("[GAS_O2]=11;[GAS_N2]=41;[TURF_TEMPERATURE(T20C)]")
-				to_chat(user, span_warning("You activate [src], and fresh air bursts out of your skin!"))
+				to_chat(user, span_warning(LANG("obj.313bf375", list(src))))
 				return 600
 
 /obj/item/slime_extract/sepia
@@ -639,7 +639,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			to_chat(user, span_warning("You feel time slow down..."))
+			to_chat(user, span_warning(LANG("obj.1bb380e3", null)))
 			if(do_after(user, 3 SECONDS, target = user))
 				new /obj/effect/timestop(get_turf(user), 2, 50, list(user))
 				return 900
@@ -656,7 +656,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			user.dna.update_uf_block(/datum/dna_block/feature/mutant_color)
 			user.updateappearance(mutcolor_update=1)
 			species.update_glow(user)
-			to_chat(user, span_notice("You feel different..."))
+			to_chat(user, span_notice(LANG("obj.2c1d4eab", null)))
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)

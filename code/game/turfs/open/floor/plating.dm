@@ -260,14 +260,14 @@
 	switch(deconstruction_state)
 		if(PLATE_INTACT)
 			if(tool_used.tool_behaviour == TOOL_WRENCH)
-				balloon_alert(user, "loosening bolts...")
+				balloon_alert(user, LANG("turf.67113ddb", null))
 				if(tool_used.use_tool(src, user, 10 SECONDS, volume=100))
 					if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_INTACT)
 						return TRUE
 					deconstruction_state = PLATE_BOLTS_LOOSENED
 					update_appearance(UPDATE_ICON)
 					drop_screws()
-					balloon_alert(user, "removed bolts")
+					balloon_alert(user, LANG("turf.704bde31", null))
 				return TRUE
 
 		if(PLATE_BOLTS_LOOSENED)
@@ -275,34 +275,34 @@
 				if(TOOL_WELDER)
 					if(!tool_used.tool_start_check(user, amount=3))
 						return
-					balloon_alert(user, "slicing...")
+					balloon_alert(user, LANG("turf.6e1259d1", null))
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
 						if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_BOLTS_LOOSENED)
 							return TRUE
 						deconstruction_state = PLATE_CUT
 						update_appearance(UPDATE_ICON)
-						balloon_alert(user, "sliced through")
+						balloon_alert(user, LANG("turf.e5000003", null))
 					return TRUE
 
 				if(TOOL_SCREWDRIVER)
-					balloon_alert(user, "securing bolts...")
+					balloon_alert(user, LANG("turf.6cbd8c3e", null))
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
 						if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_BOLTS_LOOSENED)
 							return TRUE
 						deconstruction_state = PLATE_INTACT
 						update_appearance(UPDATE_ICON)
-						balloon_alert(user, "secured")
+						balloon_alert(user, LANG("turf.065f7e36", null))
 					return TRUE
 			return FALSE
 
 		if(PLATE_CUT)
 			switch(tool_used.tool_behaviour)
 				if(TOOL_CROWBAR)
-					balloon_alert(user, "prying off...")
+					balloon_alert(user, LANG("turf.c52378ec", null))
 					if(tool_used.use_tool(src, user, 20 SECONDS, volume=100))
 						if(!istype(src,  /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_CUT)
 							return TRUE
-						balloon_alert(user, "pried off")
+						balloon_alert(user, LANG("turf.86726efa", null))
 						new /obj/item/stack/sheet/plasteel(src, 2)
 						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					return TRUE
@@ -310,13 +310,13 @@
 				if(TOOL_WELDER)
 					if(!tool_used.tool_start_check(user, amount=3))
 						return
-					balloon_alert(user, "welding back on...")
+					balloon_alert(user, LANG("turf.2fe0cb8f", null))
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
 						if(!istype(src,  /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_CUT)
 							return TRUE
 						deconstruction_state = PLATE_BOLTS_LOOSENED
 						update_appearance(UPDATE_ICON)
-						balloon_alert(user, "welded back on")
+						balloon_alert(user, LANG("turf.b054b8b5", null))
 					return TRUE
 			return FALSE
 	return FALSE

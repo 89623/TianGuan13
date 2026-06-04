@@ -869,15 +869,15 @@
 		return
 	switch(target_hair)
 		if("Hair")
-			var/new_style = tgui_input_list(owner, "Select a hair style", "Hair Alterations", SSaccessories.hairstyles_list)
+			var/new_style = tgui_input_list(owner, LANG("datum.2e464f6c", null), LANG("datum.68c7fd08", null), SSaccessories.hairstyles_list)
 			if(new_style)
 				alterer.set_hairstyle(new_style, update = TRUE)
 		if("Facial Hair")
-			var/new_style = tgui_input_list(alterer, "Select a facial hair style", "Hair Alterations", SSaccessories.facial_hairstyles_list)
+			var/new_style = tgui_input_list(alterer, LANG("datum.df720244", null), LANG("datum.68c7fd08", null), SSaccessories.facial_hairstyles_list)
 			if(new_style)
 				alterer.set_facial_hairstyle(new_style, update = TRUE)
 		if("Hair Color")
-			var/hair_area = tgui_alert(alterer, "Select which color you would like to change", "Hair Color Alterations", list("Hairstyle", "Facial Hair", "Both"))
+			var/hair_area = tgui_alert(alterer, LANG("datum.a2fbdd01", null), LANG("datum.acfbf5c7", null), list("Hairstyle", "Facial Hair", "Both"))
 			if(!hair_area)
 				return
 			var/new_hair_color = tgui_color_picker(alterer, "Select your new hair color", "Hair Color Alterations", alterer.dna.features[FEATURE_MUTANT_COLOR])
@@ -913,15 +913,15 @@
 	switch(dna_alteration)
 		if("Body Size")
 			if(oversized_user && !HAS_TRAIT(alterer, TRAIT_OVERSIZED))
-				var/reset_size = tgui_alert(alterer, "Do you wish to return to being oversized?", "Size Change", list("Yes", "No"))
+				var/reset_size = tgui_alert(alterer, LANG("datum.ad188441", null), LANG("datum.0eaf6f27", null), list("Yes", "No"))
 				if(reset_size == "Yes")
 					alterer.add_quirk(/datum/quirk/oversized)
 					return
 
 			var/new_body_size = tgui_input_number(
 				alterer,
-				"Choose your desired sprite size: ([BODY_SIZE_MIN * 100]% to [BODY_SIZE_MAX * 100]%). Warning: May make your character look distorted",
-				"Size Change",
+				LANG("datum.768912b9", list(BODY_SIZE_MIN * 100, BODY_SIZE_MAX * 100)),
+				LANG("datum.0eaf6f27", null),
 				default = min(alterer.dna.features["body_size"] * 100, BODY_SIZE_MAX * 100),
 				max_value = BODY_SIZE_MAX * 100,
 				min_value = BODY_SIZE_MIN * 100,
@@ -1082,8 +1082,8 @@
 			var/obj/item/organ/genital/breasts/melons = alterer.get_organ_slot(ORGAN_SLOT_BREASTS)
 			var/new_size = tgui_input_list(
 				alterer,
-				"Choose your character's breasts size:",
-				"DNA Alteration",
+				LANG("datum.2fbf9488", null),
+				LANG("datum.a351df4f", null),
 				GLOB.breast_size_to_number,
 			)
 			if(!new_size)
@@ -1098,8 +1098,8 @@
 				max_girth = alterer.dna.features["penis_size"]
 			var/new_girth = tgui_input_number(
 				alterer,
-				"Choose your penis girth:\n(1-[max_girth] (based on length) in inches)",
-				"Character Preference",
+				LANG("datum.761a4cc3", list(max_girth)),
+				LANG("datum.78f80c29", null),
 				max_value = max_girth,
 				min_value = 1
 			)
@@ -1111,8 +1111,8 @@
 			var/obj/item/organ/genital/penis/wang = alterer.get_organ_slot(ORGAN_SLOT_PENIS)
 			var/new_length = tgui_input_number(
 				alterer,
-				"Choose your penis length:\n([PENIS_MIN_LENGTH]-[PENIS_MAX_LENGTH] inches)",
-				"DNA Alteration",
+				LANG("datum.577a274c", list(PENIS_MIN_LENGTH, PENIS_MAX_LENGTH)),
+				LANG("datum.a351df4f", null),
 				max_value = PENIS_MAX_LENGTH,
 				min_value = PENIS_MIN_LENGTH,
 			)
@@ -1128,8 +1128,8 @@
 			var/obj/item/organ/genital/penis/schlong = alterer.get_organ_slot(ORGAN_SLOT_PENIS)
 			var/new_sheath = tgui_input_list(
 				alterer,
-				"Choose your penis sheath",
-				"DNA Alteration",
+				LANG("datum.a6d8073a", null),
+				LANG("datum.a351df4f", null),
 				SHEATH_MODES,
 			)
 			if(new_sheath)
@@ -1144,8 +1144,8 @@
 			var/obj/item/organ/genital/testicles/avocados = alterer.get_organ_slot(ORGAN_SLOT_TESTICLES)
 			var/new_size = tgui_input_list(
 				alterer,
-				"Choose your character's testicles size:",
-				"Character Preference",
+				LANG("datum.4c74bfeb", null),
+				LANG("datum.78f80c29", null),
 				GLOB.preference_balls_sizes,
 			)
 			if(new_size)

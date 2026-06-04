@@ -106,13 +106,13 @@
 			. = TRUE
 		if("calibrate")
 			if(!target_ref)
-				say("Error: No target set to calibrate to.")
+				say(LANG("obj.a28167a8", null))
 				return
 			if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
-				say("Hub is already calibrated!")
+				say(LANG("obj.fc143950", null))
 				return
 
-			say("Processing hub calibration to target...")
+			say(LANG("obj.0b73f952", null))
 			calibrating = TRUE
 			power_station.update_appearance()
 			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 5 SECONDS * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration

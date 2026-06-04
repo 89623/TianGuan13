@@ -336,14 +336,14 @@
 			if(QDELETED(inserted_board))
 				return
 			if(print_tier > max_part_tier)
-				say("Design too complex.")
+				say(LANG("obj.77f3272f", null))
 				return
 			for(var/obj/item/component as anything in inserted_board.flatpack_components)
 				if(inserted_board.req_components[component] != get_flatpack_component_count(component))
 					say("Not enough [get_flatpack_component_name(component)].")
 					return
 			if(!materials.has_materials(needed_mats, creation_efficiency))
-				say("Not enough materials to begin production.")
+				say(LANG("obj.f818a085", null))
 				return
 			playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
 
@@ -371,7 +371,7 @@
 
 			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benefit from it
 			if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.4 * initial(active_power_usage))))
-				say("No power to dispense sheets")
+				say(LANG("obj.c98ac214", null))
 				return
 
 			materials.retrieve_stack(amount, material)

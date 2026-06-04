@@ -236,17 +236,17 @@
 			if(stepTurf)
 				var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
 				if(salt)
-					to_chat(L, span_warning("[salt] bars your passage!"))
+					to_chat(L, span_warning(LANG("client.47d96764", list(salt))))
 					if(isrevenant(L))
 						var/mob/living/basic/revenant/ghostie = L
 						ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
 						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)
-					to_chat(L, span_warning("Some strange aura is blocking the way."))
+					to_chat(L, span_warning(LANG("client.570f77d7", null)))
 					return
 				if(locate(/obj/effect/blessing) in stepTurf)
-					to_chat(L, span_warning("Holy energies block your path!"))
+					to_chat(L, span_warning(LANG("client.1fa44391", null)))
 					return
 
 				L.forceMove(stepTurf)

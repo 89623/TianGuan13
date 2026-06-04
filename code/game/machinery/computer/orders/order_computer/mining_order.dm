@@ -120,13 +120,13 @@
 				amount = points
 			attacking_id.registered_account.mining_points += amount
 			points -= amount
-			to_chat(user, span_notice("You transfer [amount] mining points from [src] to [attacking_id]."))
+			to_chat(user, span_notice(LANG("obj.2fb09f9c", list(amount, src, attacking_id))))
 		if(TO_POINT_CARD)
 			if(amount > attacking_id.registered_account.mining_points)
 				amount = attacking_id.registered_account.mining_points
 			attacking_id.registered_account.mining_points -= amount
 			points += amount
-			to_chat(user, span_notice("You transfer [amount] mining points from [attacking_id] to [src]."))
+			to_chat(user, span_notice(LANG("obj.2fb09f9c", list(amount, attacking_id, src))))
 
 #undef TO_POINT_CARD
 #undef TO_USER_ID

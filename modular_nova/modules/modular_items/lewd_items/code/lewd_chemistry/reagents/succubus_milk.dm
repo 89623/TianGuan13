@@ -128,7 +128,7 @@
 				return
 			if(BREAST_SIZE_BEYOND_MEASUREMENT)
 				exposed_mob.visible_message(span_notice("[exposed_mob]'s [pick(words_for_bigger)] [pick(bigger_boob_text_list)] [pick(public_bigger_action_text_list)]"))
-				to_chat(exposed_mob, span_purple("Your [pick(words_for_bigger)] [pick(bigger_boob_text_list)] [pick(action_text_list)]about [mob_breasts.genital_size] inches in diameter."))
+				to_chat(exposed_mob, span_purple(LANG("datum.1fcb21d6", list(pick(words_for_bigger), pick(bigger_boob_text_list), pick(action_text_list), mob_breasts.genital_size))))
 			else
 				if(mob_breasts?.genital_size >= (max_breast_size - 2))
 					exposed_mob.visible_message(span_notice("[exposed_mob]'s [pick(words_for_bigger)] [pick(bigger_boob_text_list)] [pick(public_bigger_action_text_list)]"))
@@ -143,7 +143,7 @@
 
 			if(BREAST_SIZE_BEYOND_MEASUREMENT)
 				exposed_mob.visible_message(span_notice("[exposed_mob]'s [pick(boob_text_list)] [pick(public_bigger_action_text_list)]"))
-				to_chat(exposed_mob, span_purple("Your [pick(words_for_bigger)] [pick(bigger_boob_text_list)] [pick(action_text_list)]about [mob_breasts.genital_size] inches in diameter."))
+				to_chat(exposed_mob, span_purple(LANG("datum.1fcb21d6", list(pick(words_for_bigger), pick(bigger_boob_text_list), pick(action_text_list), mob_breasts.genital_size))))
 			else
 				if(mob_breasts?.genital_size >= (max_breast_size - 2))
 					exposed_mob.visible_message(span_notice("[exposed_mob]'s [pick(boob_text_list)] [pick(public_bigger_action_text_list)]"))

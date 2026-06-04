@@ -57,12 +57,12 @@
 			if (0)
 				flags_inv = HIDEHAIR
 				icon_state = initial(icon_state) + "_open"
-				to_chat(user, span_notice("You pull the balaclava away, revealing your face."))
+				to_chat(user, span_notice(LANG("obj.daf7a4c3", null)))
 				open = 1
 			if (1)
 				flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 				icon_state = initial(icon_state) + "_mouth"
-				to_chat(user, span_notice("You adjust the balaclava up to cover your mouth."))
+				to_chat(user, span_notice(LANG("obj.18093b32", null)))
 				open = 2
 			else
 				flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDEHAIR

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/tgs_event_handler/impl
 	var/datum/timedevent/reattach_timer
 
@@ -20,7 +21,7 @@
 			message_admins("TGS: Deployment failed!")
 		if(TGS_EVENT_DEPLOYMENT_COMPLETE)
 			message_admins("TGS: Deployment complete!")
-			to_chat(world, span_boldannounce("Server updated, changes will be applied on the next round..."))
+			to_chat(world, span_boldannounce(LANG("datum.72f1bdad", null)))
 		if(TGS_EVENT_WATCHDOG_DETACH)
 			message_admins("TGS restarting...")
 			reattach_timer = addtimer(CALLBACK(src, PROC_REF(LateOnReattach)), 1 MINUTES, TIMER_STOPPABLE)
@@ -28,7 +29,7 @@
 			var/datum/tgs_version/old_version = world.TgsVersion()
 			var/datum/tgs_version/new_version = args[2]
 			if(!old_version.Equals(new_version))
-				to_chat(world, span_boldannounce("TGS updated to v[new_version.deprefixed_parameter]"))
+				to_chat(world, span_boldannounce(LANG("datum.55562201", list(new_version.deprefixed_parameter))))
 			else
 				message_admins("TGS: Back online")
 			if(reattach_timer)

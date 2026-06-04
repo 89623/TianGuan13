@@ -272,7 +272,7 @@
 		if(BODY_ZONE_CHEST)//Listening to the chest
 			user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
 			if(HAS_TRAIT(user, TRAIT_DEAF))
-				to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. Fat load of good it does you though, since you can't hear."))
+				to_chat(user, span_notice(LANG("obj.73dd56a4", list(src, carbon_patient, body_part))))
 				return
 			else
 				render_list += span_info("You place [src] against [carbon_patient]'s [body_part]:\n")
@@ -336,11 +336,11 @@
 				render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//they're okay :D
 
 		if(BODY_ZONE_PRECISE_EYES)
-			balloon_alert(user, "can't do that!")
+			balloon_alert(user, LANG("obj.c3d89266", null))
 			return
 
 		if(BODY_ZONE_PRECISE_MOUTH)
-			balloon_alert(user, "can't do that!")
+			balloon_alert(user, LANG("obj.c3d89266", null))
 			return
 
 		else//targeting an extremity or the head

@@ -77,23 +77,23 @@
 
 	switch(state)
 		if(FRAME_STATE_EMPTY)
-			. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose." : "into place."]")
+			. += span_notice(LANG("obj.9315b531", list(EXAMINE_HINT("anchored"), anchored ? "loose." : "into place.")))
 			if(anchored)
-				. += span_warning("It's missing a circuit board!")
+				. += span_warning(LANG("obj.5cbee47b", null))
 			else
-				. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
+				. += span_notice(LANG("obj.a8e6c385", list(EXAMINE_HINT("welded"), EXAMINE_HINT("screwed"))))
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
-			. += span_notice("The circuit board can be [EXAMINE_HINT("pried")] out.")
-			. += span_info("A circuit board is installed and should be [EXAMINE_HINT("screwed")] in place.")
+			. += span_notice(LANG("obj.9acc7fc4", list(EXAMINE_HINT("pried"))))
+			. += span_info(LANG("obj.56a31c25", list(EXAMINE_HINT("screwed"))))
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
-			. += span_notice("The circuit board can be [EXAMINE_HINT("screwed")] loose.")
-			. += span_info("It should be [EXAMINE_HINT("wired")] with 5 cables.")
+			. += span_notice(LANG("obj.6f63985c", list(EXAMINE_HINT("screwed"))))
+			. += span_info(LANG("obj.1e675669", list(EXAMINE_HINT("wired"))))
 		if(FRAME_COMPUTER_STATE_WIRED)
-			. += span_notice("Its wires can be [EXAMINE_HINT("cut")].")
-			. += span_info("It should be [EXAMINE_HINT("fitted")] with 2 glass panels.")
+			. += span_notice(LANG("obj.fccc9815", list(EXAMINE_HINT("cut"))))
+			. += span_info(LANG("obj.18ea9037", list(EXAMINE_HINT("fitted"))))
 		if(FRAME_COMPUTER_STATE_GLASSED)
-			. += span_notice("The screen can be [EXAMINE_HINT("pried")] out.")
-			. += span_info("The monitor should be [EXAMINE_HINT("screwed")] on to complete it.")
+			. += span_notice(LANG("obj.907c3a0f", list(EXAMINE_HINT("pried"))))
+			. += span_info(LANG("obj.810e24e0", list(EXAMINE_HINT("screwed"))))
 
 /obj/structure/frame/computer/circuit_added(obj/item/circuitboard/added)
 	state = FRAME_COMPUTER_STATE_BOARD_INSTALLED
@@ -172,21 +172,21 @@
 	switch(state)
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
 			tool.play_tool_sound(src)
-			balloon_alert(user, "circuit secured")
+			balloon_alert(user, LANG("obj.c5ab0826", null))
 			state = FRAME_COMPUTER_STATE_BOARD_SECURED
 			update_appearance(UPDATE_ICON_STATE)
 			return ITEM_INTERACT_SUCCESS
 
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
 			tool.play_tool_sound(src)
-			balloon_alert(user, "circuit unsecured")
+			balloon_alert(user, LANG("obj.d67779af", null))
 			state = FRAME_COMPUTER_STATE_BOARD_INSTALLED
 			update_appearance(UPDATE_ICON_STATE)
 			return ITEM_INTERACT_SUCCESS
 
 		if(FRAME_COMPUTER_STATE_WIRED)
 			if(!user.combat_mode)
-				balloon_alert(user, "no glass!")
+				balloon_alert(user, LANG("obj.57cb305d", null))
 				return ITEM_INTERACT_BLOCKING
 
 		if(FRAME_COMPUTER_STATE_GLASSED)
@@ -201,22 +201,22 @@
 	switch(state)
 		if(FRAME_COMPUTER_STATE_BOARD_INSTALLED)
 			tool.play_tool_sound(src)
-			balloon_alert(user, "circuit removed")
+			balloon_alert(user, LANG("obj.6bf68b48", null))
 			circuit.add_fingerprint(user)
 			circuit.forceMove(drop_location())
 			return ITEM_INTERACT_SUCCESS
 
 		if(FRAME_COMPUTER_STATE_BOARD_SECURED)
-			balloon_alert(user, "unsecure the circuit!")
+			balloon_alert(user, LANG("obj.cbb665f7", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(FRAME_COMPUTER_STATE_WIRED)
-			balloon_alert(user, "remove the wiring!")
+			balloon_alert(user, LANG("obj.54ba1ec9", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			tool.play_tool_sound(src)
-			balloon_alert(user, "glass removed")
+			balloon_alert(user, LANG("obj.480f9459", null))
 			state = FRAME_COMPUTER_STATE_WIRED
 			update_appearance(UPDATE_ICON_STATE)
 			var/obj/item/stack/sheet/glass/dropped_glass = new (drop_location(), 2)

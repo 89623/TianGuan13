@@ -400,15 +400,15 @@
 			if(!access_check(user))
 				return
 			if (occupant && safeties)
-				say("Alert: safeties triggered, occupant detected!")
+				say(LANG("obj.608c93a2", null))
 				return
 			else if (!helmet && !mask && !suit && !mod && !storage && !occupant)
-				to_chat(user, "There's nothing inside [src] to disinfect!")
+				to_chat(user, LANG("obj.53f7a913", list(src)))
 				return
 			else
 				if (occupant)
 					var/mob/living/mob_occupant = occupant
-					to_chat(mob_occupant, span_userdanger("[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!"))
+					to_chat(mob_occupant, span_userdanger(LANG("obj.303d7705", list(src, !mob_occupant.stat ? "alive" : "away"))))
 				cook()
 		if ("lock", "unlock")
 			if(locked && !access_check(user))

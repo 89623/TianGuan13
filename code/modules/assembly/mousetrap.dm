@@ -126,13 +126,13 @@
 					affecting = victim.get_bodypart(pick(GLOB.leg_zones))
 					victim.Paralyze(6 SECONDS)
 				else
-					to_chat(victim, span_notice("Your [victim.shoes.name] protects you from [src]."))
+					to_chat(victim, span_notice(LANG("obj.222eddfb", list(victim.shoes.name, src))))
 			if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 				if(!victim.gloves)
 					affecting = victim.get_bodypart(type)
 					victim.Stun(6 SECONDS)
 				else
-					to_chat(victim, span_notice("Your [victim.gloves.name] protects you from [src]."))
+					to_chat(victim, span_notice(LANG("obj.222eddfb", list(victim.gloves.name, src))))
 		if(affecting)
 			victim.apply_damage(1, BRUTE, affecting, wound_bonus = CANT_WOUND)
 	else if(ismouse(target))

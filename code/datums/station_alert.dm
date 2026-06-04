@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/station_alert
 	/// Holder of the datum
 	var/holder
@@ -92,12 +93,12 @@
 			if(length(named_cameras) == 1)
 				chosen_camera = named_cameras[1]
 			else
-				chosen_camera = tgui_input_list(ai, "Choose a camera to jump to", "Camera Selection", named_cameras)
+				chosen_camera = tgui_input_list(ai, LANG("datum.0154133c", null), LANG("datum.b61403d2", null), named_cameras)
 				if(isnull(chosen_camera))
 					return
 			var/obj/machinery/camera/selected_camera = named_cameras[chosen_camera]
 			if(!selected_camera.can_use())
-				to_chat(ai, span_warning("Camera is unavailable!"))
+				to_chat(ai, span_warning(LANG("datum.783dddda", null)))
 				return
 			ai.switchCamera(selected_camera)
 			return TRUE

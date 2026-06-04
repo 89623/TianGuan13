@@ -55,11 +55,11 @@
 
 	switch(timeleft(crystalize_timer_id))
 		if(0 to CRYSTALIZE_STAGE_ENGULFING)
-			examine_list += span_warning("Crystals are almost engulfing [examined_human]! ")
+			examine_list += span_warning(LANG("obj.88802632", list(examined_human)))
 		if(CRYSTALIZE_STAGE_ENGULFING to CRYSTALIZE_STAGE_ENCROACHING)
-			examine_list += span_notice("Crystals are starting to cover [examined_human]. ")
+			examine_list += span_notice(LANG("obj.65a4b8d3", list(examined_human)))
 		if(CRYSTALIZE_STAGE_SMALL to INFINITY)
-			examine_list += span_notice("Some crystals are coming out of [examined_human]. ")
+			examine_list += span_notice(LANG("obj.f0bc5f80", list(examined_human)))
 
 ///On stat changes, if the victim is no longer dead but they're crystalizing, cancel it, if they become dead, start the crystalizing process if possible
 /obj/item/organ/heart/ethereal/proc/on_stat_change(mob/living/victim, new_stat)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/tram_controls
 	name = "tram controls"
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
@@ -234,7 +235,7 @@
 	SIGNAL_HANDLER
 	switch(response_code)
 		if(REQUEST_SUCCESS)
-			say("The next station is: [response_info]")
+			say(LANG("obj.7270e8d6", list(response_info)))
 
 		if(REQUEST_FAIL)
 			if(!LAZYFIND(relevant, src))
@@ -242,11 +243,11 @@
 
 			switch(response_info)
 				if(NOT_IN_SERVICE)
-					say("The tram is not in service. Please contact the nearest engineer.")
+					say(LANG("obj.62001e6e", null))
 				if(INVALID_PLATFORM)
-					say("Configuration error. Please contact the nearest engineer.")
+					say(LANG("obj.7de17690", null))
 				if(INTERNAL_ERROR)
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					say(LANG("obj.335c006a", null))
 				else
 					return
 

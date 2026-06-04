@@ -174,7 +174,7 @@
 			if (!iscarbon(atom_target))
 				return FALSE
 			var/mob/living/carbon/carbon_target = atom_target
-			visible_message(span_danger("[carbon_target]'s spinal cord is obliterated with a sickening crunch!"), ignored_mobs = list(carbon_target))
+			visible_message(span_danger(LANG("atom.2ab608ee", list(carbon_target))), ignored_mobs = list(carbon_target))
 			carbon_target.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
 			return TRUE
 		if(CRUSH_CRIT_SQUISH_LIMB) // limb squish!

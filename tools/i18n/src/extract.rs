@@ -369,8 +369,16 @@ fn visit_stmt(stmt: &Statement, ns: &str, catalog: &mut Catalog) {
             }
             visit_block(block, ns, catalog);
         }
-        Statement::Switch { input, default, .. } => {
+        Statement::Switch {
+            input,
+            cases,
+            default,
+        } => {
             visit_expr(input, ns, catalog);
+            // 修复：之前 `..` 漏掉了 cases —— switch 各 case 分支体里的语句全部没被抽取。
+            for (_case_conditions, blk) in cases.iter() {
+                visit_block(blk, ns, catalog);
+            }
             if let Some(blk) = default {
                 visit_block(blk, ns, catalog);
             }

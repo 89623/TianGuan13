@@ -144,7 +144,7 @@
 
 		if("add")//Generate Supply Order first
 			if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_EXPRESSPOD_CONSOLE))
-				say("Railgun recalibrating. Stand by.")
+				say(LANG("obj.220d397b", null))
 				return
 			var/id = params["id"]
 			id = text2path(id) || id

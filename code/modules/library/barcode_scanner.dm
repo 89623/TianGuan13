@@ -89,7 +89,7 @@
 			var/datum/book_info/our_copy = target_book.book_data.return_copy()
 			linked_computer.inventory[ref(our_copy)] = our_copy
 			linked_computer.inventory_update()
-			balloon_alert(user, "added to inventory")
+			balloon_alert(user, LANG("obj.343374d0", null))
 			playsound(src, 'sound/items/barcodebeep.ogg', 20, FALSE)
 			return ITEM_INTERACT_SUCCESS
 
@@ -105,13 +105,13 @@
 	switch(scan_mode)
 		if(BARCODE_SCANNER_CHECKIN)
 			scan_mode = BARCODE_SCANNER_CHECKOUT
-			balloon_alert(user, "check-out mode")
+			balloon_alert(user, LANG("obj.1361e854", null))
 		if(BARCODE_SCANNER_CHECKOUT)
 			scan_mode = BARCODE_SCANNER_INVENTORY
-			balloon_alert(user, "inventory adding mode")
+			balloon_alert(user, LANG("obj.608dcf88", null))
 		if(BARCODE_SCANNER_INVENTORY)
 			scan_mode = BARCODE_SCANNER_CHECKIN
-			balloon_alert(user, "check-in mode")
+			balloon_alert(user, LANG("obj.2f121511", null))
 	playsound(loc, 'sound/items/click.ogg', 20, TRUE)
 
 #undef BARCODE_SCANNER_CHECKIN

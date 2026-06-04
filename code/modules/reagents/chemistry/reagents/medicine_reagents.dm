@@ -777,7 +777,7 @@
 
 	switch(current_cycle)
 		if(16) //~3u
-			to_chat(affected_mob, span_warning("You start to feel tired..."))
+			to_chat(affected_mob, span_warning(LANG("datum.1cc84b02", null)))
 			affected_mob.adjust_eye_blur(2 SECONDS * metabolization_ratio * seconds_per_tick)
 			if(SPT_PROB(66, seconds_per_tick))
 				affected_mob.emote("yawn")
@@ -1738,11 +1738,11 @@
 				affected_mob.losebreath++
 				need_mob_update = TRUE
 			if(SPT_PROB(10, seconds_per_tick))
-				to_chat(affected_mob, span_userdanger("You have a sudden fit!"))
+				to_chat(affected_mob, span_userdanger(LANG("datum.1ee2c590", null)))
 				affected_mob.emote("moan")
 				affected_mob.Paralyze(20) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
-			to_chat(affected_mob, span_userdanger("You feel too exhausted to continue!")) // at this point you will eventually die unless you get charcoal
+			to_chat(affected_mob, span_userdanger(LANG("datum.cb58ff58", null))) // at this point you will eventually die unless you get charcoal
 			need_mob_update = affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 			need_mob_update += affected_mob.adjust_stamina_loss(2 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 		if(82 to INFINITY)

@@ -450,7 +450,7 @@
 			switch(action)
 				if("sleep")
 					if(player_gold < DEFAULT_ITEM_PRICE / 2)
-						say("You don't have enough gold to rest!")
+						say(LANG("obj.553fb1a1", null))
 						return TRUE
 					player_gold -= DEFAULT_ITEM_PRICE / 2
 					playsound(loc, 'sound/vehicles/mecha/skyfall_power_up.ogg', 40)
@@ -460,10 +460,10 @@
 				if("buy_item")
 					var/datum/battle_arcade_gear/gear = battle_arcade_gear_list[params["purchasing_item"]]
 					if(latest_unlocked_world != gear.world_available || equipped_gear[gear.slot] == gear)
-						say("That item is not in stock.")
+						say(LANG("obj.bbce64d1", null))
 						return TRUE
 					if(player_gold < (DEFAULT_ITEM_PRICE * all_worlds[latest_unlocked_world]))
-						say("You don't have enough gold to buy that!")
+						say(LANG("obj.1dda4b33", null))
 						return TRUE
 					player_gold -= DEFAULT_ITEM_PRICE * all_worlds[latest_unlocked_world]
 					equipped_gear[gear.slot] = gear
@@ -477,7 +477,7 @@
 					var/world_travelling = all_worlds.Find(params["selected_arena"])
 					var/max_unlocked_worlds = all_worlds.Find(latest_unlocked_world)
 					if(world_travelling > max_unlocked_worlds)
-						say("That world is not unlocked yet!")
+						say(LANG("obj.2070d72c", null))
 						return TRUE
 					player_current_world = all_worlds[world_travelling]
 					setup_new_opponent(gamer)
@@ -521,7 +521,7 @@
 					return TRUE
 				if(BATTLE_ARCADE_PLAYER_HEAVY_ATTACK)
 					if(player_current_mp < SPELL_MP_COST)
-						say("You don't have enough MP to heavy attack!")
+						say(LANG("obj.dc280b1c", null))
 						player_turn = TRUE
 						return TRUE
 					player_current_mp -= SPELL_MP_COST
@@ -529,7 +529,7 @@
 					return TRUE
 				if(BATTLE_ARCADE_PLAYER_COUNTERATTACK)
 					if(player_current_mp < SPELL_MP_COST)
-						say("You don't have enough MP to counterattack!")
+						say(LANG("obj.75cafd82", null))
 						player_turn = TRUE
 						return TRUE
 					player_current_mp -= SPELL_MP_COST

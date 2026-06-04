@@ -24,7 +24,7 @@ ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connec
 	var/res = tgui_alert(user, LANG("datum.61b0a770", null), LANG("datum.87f06ba1", null), list("Yes", "No", "Cancel"))
 	switch(res)
 		if("Yes")
-			to_chat(world, span_boldannounce("An admin played: [sound]"), confidential = TRUE)
+			to_chat(world, span_boldannounce(LANG("datum.1f3d7eda", list(sound))), confidential = TRUE)
 		if("Cancel")
 			return
 

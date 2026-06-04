@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/silicon/robot/borgo)
 	var/datum/borgpanel/borgpanel = new(user.mob, borgo)
 	borgpanel.ui_interact(user.mob)
@@ -70,7 +71,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 		return
 	switch (action)
 		if ("set_charge")
-			var/newcharge = tgui_input_number(usr, "Set new charge", borg.name, borg.cell.charge, borg.cell.maxcharge)
+			var/newcharge = tgui_input_number(usr, LANG("datum.fa7fa66f", null), borg.name, borg.cell.charge, borg.cell.maxcharge)
 			if(isnull(newcharge))
 				return
 			borg.cell.charge = newcharge
@@ -126,7 +127,7 @@ ADMIN_VERB(borg_panel, R_ADMIN, "Show Borg Panel", ADMIN_VERB_NO_DESCRIPTION, AD
 				message_admins("[key_name_admin(user)] disabled scrambled codes on [ADMIN_LOOKUPFLW(borg)].")
 				log_silicon("[key_name(user)] disabled scrambled codes on [key_name(borg)].")
 		if ("rename")
-			var/new_name = sanitize_name(tgui_input_text(user, "What would you like to name this cyborg?", "Cyborg Reclassification", borg.real_name, MAX_NAME_LEN), allow_numbers = TRUE)
+			var/new_name = sanitize_name(tgui_input_text(user, LANG("datum.4a18dab4", null), LANG("datum.5d267af8", null), borg.real_name, MAX_NAME_LEN), allow_numbers = TRUE)
 			if(!new_name)
 				return
 			message_admins("[key_name_admin(user)] renamed [ADMIN_LOOKUPFLW(borg)] to [new_name].")

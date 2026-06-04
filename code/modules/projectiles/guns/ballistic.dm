@@ -354,7 +354,7 @@
 							)
 							if(!(world.time >= casing.shot_timestamp + CASING_HOT_DELAY))
 								var/obj/item/bodypart/affecting = wielder.get_inactive_hand()
-								to_chat(wielder, span_warning("As if to add insult to injury, \the [casing] lands in the perfect way... to burn your [affecting.plaintext_zone]."))
+								to_chat(wielder, span_warning(LANG("obj.1e5c9eec", list(casing, affecting.plaintext_zone))))
 								wielder.apply_damage(5, BURN, affecting, wound_bonus = CANT_WOUND)
 						if(CASING_CATCH_FAILED_PLACEMENT)
 							hitting_ground = TRUE
@@ -366,12 +366,12 @@
 						if(CASING_CATCH_SUCCESSFUL)
 							hitting_ground = FALSE
 							casing.update_appearance()
-							to_chat(wielder, span_notice("You reach out and catch \the [casing] as it ejects from [src]. Awesome."))
+							to_chat(wielder, span_notice(LANG("obj.0ce5d4b6", list(casing, src))))
 						if(CASING_CATCH_SUCCESSFUL_OUCH)
 							hitting_ground = FALSE
 							casing.update_appearance()
 							var/obj/item/bodypart/affecting = wielder.get_inactive_hand()
-							to_chat(wielder, span_notice("You reach out and catch \the [casing] as it ejects from [src]. Awesome. Your [affecting.plaintext_zone] hurts, though."))
+							to_chat(wielder, span_notice(LANG("obj.fef96297", list(casing, src, affecting.plaintext_zone))))
 							wielder.apply_damage(4, BURN, affecting, wound_bonus = CANT_WOUND)
 				if(hitting_ground)
 					casing.bounce_away(TRUE)

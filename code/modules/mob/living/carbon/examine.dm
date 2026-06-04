@@ -156,11 +156,11 @@
 			. += LANG("mob.002771a9", list(t_He, t_is))
 	switch(disgust)
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-			. += "[t_He] look[p_s()] a bit grossed out."
+			. += LANG("mob.0644e3b9", list(t_He, p_s()))
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-			. += "[t_He] look[p_s()] really grossed out."
+			. += LANG("mob.65e4e21d", list(t_He, p_s()))
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-			. += "[t_He] look[p_s()] extremely disgusted."
+			. += LANG("mob.dde353df", list(t_He, p_s()))
 
 	var/apparent_blood_volume = CAN_HAVE_BLOOD(src) ? get_blood_volume(apply_modifiers = TRUE) : BLOOD_VOLUME_NORMAL
 	if(HAS_TRAIT(src, TRAIT_USES_SKINTONES) && ishuman(src))
@@ -169,11 +169,11 @@
 			apparent_blood_volume -= (BLOOD_VOLUME_NORMAL * 0.25) // knocks you down a few pegs
 	switch(apparent_blood_volume)
 		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			. += span_warning("[t_He] [t_has] pale skin.")
+			. += span_warning(LANG("mob.9a539b7d", list(t_He, t_has)))
 		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			. += span_boldwarning("[t_He] look[p_s()] like pale death.")
+			. += span_boldwarning(LANG("mob.b1f473b7", list(t_He, p_s())))
 		if(-INFINITY to BLOOD_VOLUME_BAD)
-			. += span_deadsay("<b>[t_He] resemble[p_s()] a crushed, empty juice pouch.</b>")
+			. += span_deadsay(LANG("mob.0c558c7b", list(t_He, p_s())))
 
 	if(is_bleeding())
 		var/list/obj/item/bodypart/bleeding_limbs = list()
@@ -229,12 +229,12 @@
 
 		switch(stat)
 			if(UNCONSCIOUS, HARD_CRIT)
-				. += span_notice("[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.")
+				. += span_notice(LANG("mob.738a7088", list(t_He, t_is, t_him, p_s())))
 			if(SOFT_CRIT)
-				. += span_notice("[t_He] [t_is] barely conscious.")
+				. += span_notice(LANG("mob.089eac99", list(t_He, t_is)))
 			if(CONSCIOUS)
 				if(HAS_TRAIT(src, TRAIT_DUMB))
-					. += "[t_He] [t_has] a stupid expression on [t_his] face."
+					. += LANG("mob.124f9dfa", list(t_He, t_has, t_his))
 		var/obj/item/organ/brain/brain = get_organ_by_type(/obj/item/organ/brain)
 		if(brain && isnull(ai_controller))
 			var/npc_message = ""
@@ -259,13 +259,13 @@
 		ADD_NEWLINE_IF_NECESSARY(.)
 		switch(scar_severity)
 			if(1 to 4)
-				. += span_tinynoticeital("[t_He] [t_has] visible scarring, you can look again to take a closer look...")
+				. += span_tinynoticeital(LANG("mob.76524eb4", list(t_He, t_has)))
 			if(5 to 8)
-				. += span_smallnoticeital("[t_He] [t_has] several bad scars, you can look again to take a closer look...")
+				. += span_smallnoticeital(LANG("mob.201cf016", list(t_He, t_has)))
 			if(9 to 11)
-				. += span_notice("<i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i>")
+				. += span_notice(LANG("mob.69bfba01", list(t_He, t_has)))
 			if(12 to INFINITY)
-				. += span_notice("<b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b>")
+				. += span_notice(LANG("mob.5d17a5c8", list(t_He, t_is)))
 
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += span_warning(LANG("mob.e8e8db67", null))

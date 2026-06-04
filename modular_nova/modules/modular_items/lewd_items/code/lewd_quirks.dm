@@ -121,15 +121,15 @@
 
 	switch(satisfaction)
 		if(0 to 100)
-			to_chat(human_owner, span_purple("You can't STAND it, you need a partner NOW!"))
+			to_chat(human_owner, span_purple(LANG("datum.92568c12", null)))
 		if(101 to 150)
-			to_chat(human_owner, span_purple("You'd hit that. Yeah. That's at least a six."))
+			to_chat(human_owner, span_purple(LANG("datum.53a4021d", null)))
 		if(151 to 200)
-			to_chat(human_owner, span_purple("Your clothes are feeling tight."))
+			to_chat(human_owner, span_purple(LANG("datum.ea96daa1", null)))
 		if(201 to 250)
-			to_chat(human_owner, span_purple("Desire fogs your decisions."))
+			to_chat(human_owner, span_purple(LANG("datum.6aed1717", null)))
 		if(251 to 1000)
-			to_chat(human_owner, span_purple("Jeez, it's hot in here..."))
+			to_chat(human_owner, span_purple(LANG("datum.30d4e9a5", null)))
 
 /**
  * If we have another human in view, return true

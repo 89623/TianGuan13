@@ -42,7 +42,7 @@
 			infected_mob.losebreath = max(0, infected_mob.losebreath - 4)
 			infected_mob.adjust_oxy_loss(-7)
 			if(prob(base_message_chance))
-				to_chat(infected_mob, span_notice("You realize you haven't been breathing."))
+				to_chat(infected_mob, span_notice(LANG("datum.41c2a203", null)))
 			if(regenerate_blood)
 				infected_mob.adjust_blood_volume(1, maximum = BLOOD_VOLUME_NORMAL)
 		else

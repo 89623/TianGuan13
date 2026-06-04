@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BUILDING_WALL_ABILITY "building wall ability"
 
 /datum/action/cooldown/mob_cooldown/bot/build_girder
@@ -100,7 +101,7 @@
 			if(isnull(my_sheet))
 				return
 			if(is_type_in_typecache(my_sheet, eject_blacklist))
-				to_chat(owner, span_warning("You're unable to eject [my_sheet]!"))
+				to_chat(owner, span_warning(LANG("datum.64a4f43c", list(my_sheet))))
 				return
 
 			my_sheet.forceMove(owner.drop_location())

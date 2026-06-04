@@ -9,38 +9,38 @@
 	switch(interaction)
 		if(AI_TRANS_TO_CARD)
 			if(!ai_assistant)
-				balloon_alert(user, "no ai in unit!")
+				balloon_alert(user, LANG("obj.5acaeb8d", null))
 				return
-			balloon_alert(user, "transferring to card...")
+			balloon_alert(user, LANG("obj.495368c1", null))
 			if(!do_after(user, 5 SECONDS, target = src))
-				balloon_alert(user, "interrupted!")
+				balloon_alert(user, LANG("obj.c67b5d27", null))
 				return
 			if(!ai_assistant)
-				balloon_alert(user, "no ai in unit!")
+				balloon_alert(user, LANG("obj.5acaeb8d", null))
 				return
-			balloon_alert(user, "ai transferred to card")
+			balloon_alert(user, LANG("obj.4343266d", null))
 			ai_exit_mod(card)
 
 		if(AI_TRANS_FROM_CARD) //Using an AI card to upload to the suit.
 			intAI = card.AI
 			if(!intAI)
-				balloon_alert(user, "no ai in card!")
+				balloon_alert(user, LANG("obj.2439cc2e", null))
 				return
 			if(ai_assistant)
-				balloon_alert(user, "already has ai!")
+				balloon_alert(user, LANG("obj.f4745b10", null))
 				return
 			if(intAI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				intAI.disconnect_shell()
 			if(intAI.stat || !intAI.client)
-				balloon_alert(user, "ai unresponsive!")
+				balloon_alert(user, LANG("obj.5f76f1b5", null))
 				return
-			balloon_alert(user, "transferring to unit...")
+			balloon_alert(user, LANG("obj.1db976b4", null))
 			if(!do_after(user, 5 SECONDS, target = src))
-				balloon_alert(user, "interrupted!")
+				balloon_alert(user, LANG("obj.c67b5d27", null))
 				return
 			if(ai_assistant)
 				return
-			balloon_alert(user, "ai transferred to unit")
+			balloon_alert(user, LANG("obj.305eeca4", null))
 			ai_enter_mod(intAI)
 			card.AI = null
 

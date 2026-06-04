@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/budgetorders
 	filename = "orderapp"
 	filedesc = "NT Shopping Network"
@@ -261,7 +262,7 @@
 			var/reason = ""
 			var/datum/bank_account/personal_department
 			if((requestonly && !self_paid) || !(computer.stored_id?.GetID()))
-				reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
+				reason = tgui_input_text(user, LANG("datum.ba5380f4", null), name, max_length = MAX_MESSAGE_LEN)
 				if(isnull(reason) || ..())
 					return
 
@@ -269,7 +270,7 @@
 			if(id_card_customer?.registered_account?.account_job && !self_paid) //Find a budget to pull from
 				personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
 				if(!(personal_department.account_holder == "Cargo Budget"))
-					var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
+					var/dept_choice = tgui_alert(user, LANG("datum.b7de779a", null), LANG("datum.78858682", null), list("Cargo Budget", "[personal_department.account_holder]"))
 					if(!dept_choice)
 						return
 					if(dept_choice == "Cargo Budget")

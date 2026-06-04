@@ -293,18 +293,14 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 				/datum/action/cooldown/spell/aoe/magic_missile,
 				/datum/action/cooldown/spell/pointed/projectile/fireball,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned powerful, \
-				destructive spells. You are able to cast magic missile and fireball."))
+			to_chat(owner, span_bold(LANG("datum.193a7517", list(master.current.real_name))))
 
 		if(APPRENTICE_BLUESPACE)
 			spells_to_grant = list(
 				/datum/action/cooldown/spell/teleport/area_teleport/wizard,
 				/datum/action/cooldown/spell/jaunt/ethereal_jaunt,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned reality-bending \
-				mobility spells. You are able to cast teleport and ethereal jaunt."))
+			to_chat(owner, span_bold(LANG("datum.6dbd2910", list(master.current.real_name))))
 
 		if(APPRENTICE_HEALING)
 			spells_to_grant = list(
@@ -314,17 +310,13 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 			items_to_grant = list(
 				/obj/item/gun/magic/staff/healing,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned life-saving \
-				survival spells. You are able to cast charge and forcewall, and have a staff of healing."))
+			to_chat(owner, span_bold(LANG("datum.fcc49e0b", list(master.current.real_name))))
 		if(APPRENTICE_ROBELESS)
 			spells_to_grant = list(
 				/datum/action/cooldown/spell/aoe/knock,
 				/datum/action/cooldown/spell/pointed/mind_transfer,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned stealthy, \
-				robeless spells. You are able to cast knock and mindswap."))
+			to_chat(owner, span_bold(LANG("datum.6df261e9", list(master.current.real_name))))
 
 	for(var/spell_type in spells_to_grant)
 		var/datum/action/cooldown/spell/new_spell = new spell_type(owner)

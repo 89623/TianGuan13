@@ -434,13 +434,13 @@
 	else if(has_sensor > NO_SENSORS)
 		switch(sensor_mode)
 			if(SENSOR_OFF)
-				. += "Its sensors appear to be disabled."
+				. += LANG("obj.cb8daeb7", null)
 			if(SENSOR_LIVING)
-				. += "Its binary life sensors appear to be enabled."
+				. += LANG("obj.22584281", null)
 			if(SENSOR_VITALS)
-				. += "Its vital tracker appears to be enabled."
+				. += LANG("obj.52237525", null)
 			if(SENSOR_COORDS)
-				. += "Its vital tracker and tracking beacon appear to be enabled."
+				. += LANG("obj.7b9f0004", null)
 	else
 		. += span_tooltip("You can always get new suit sensors to install from a lathe.", "It isn't equipped with medical sensors.")
 
@@ -475,13 +475,13 @@
 	if (loc == user_mob)
 		switch(sensor_mode)
 			if(SENSOR_OFF)
-				to_chat(user_mob, span_notice("You disable your suit's remote sensing equipment."))
+				to_chat(user_mob, span_notice(LANG("obj.37ff0635", null)))
 			if(SENSOR_LIVING)
-				to_chat(user_mob, span_notice("Your suit will now only report whether you are alive or dead."))
+				to_chat(user_mob, span_notice(LANG("obj.4d6371ab", null)))
 			if(SENSOR_VITALS)
-				to_chat(user_mob, span_notice("Your suit will now only report your exact vital lifesigns."))
+				to_chat(user_mob, span_notice(LANG("obj.67d31d55", null)))
 			if(SENSOR_COORDS)
-				to_chat(user_mob, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
+				to_chat(user_mob, span_notice(LANG("obj.03395326", null)))
 
 /obj/item/clothing/under/item_ctrl_click(mob/user)
 	if(!can_toggle_sensors(user))
@@ -501,13 +501,13 @@
 
 	switch(has_sensor)
 		if(LOCKED_SENSORS)
-			balloon_alert(toggler, "sensor controls locked!")
+			balloon_alert(toggler, LANG("obj.cf083aaf", null))
 			return FALSE
 		if(BROKEN_SENSORS)
-			balloon_alert(toggler, "sensors shorted!")
+			balloon_alert(toggler, LANG("obj.e4cf865a", null))
 			return FALSE
 		if(NO_SENSORS)
-			balloon_alert(toggler, "no sensors to adjust!")
+			balloon_alert(toggler, LANG("obj.ab31e8cc", null))
 			return FALSE
 
 	return TRUE

@@ -387,19 +387,19 @@ GLOBAL_VAR(basketball_game)
 			if(GLOB.basketball_signup[ghost_client.ckey] || GLOB.basketball_bad_signup[ghost_client.ckey])
 				GLOB.basketball_signup -= ghost_client.ckey
 				GLOB.basketball_bad_signup -= ghost_client.ckey
-				to_chat(ghost_client, span_notice("You unregister from basketball."))
+				to_chat(ghost_client, span_notice(LANG("datum.c2072afc", null)))
 			else
 				GLOB.basketball_signup[ghost_client.ckey] = TRUE
-				to_chat(ghost_client, span_notice("You sign up for basketball."))
+				to_chat(ghost_client, span_notice(LANG("datum.62b4b2cd", null)))
 
 			check_signups()
 			return TRUE
 		if("basketball_start")
 			if(!GLOB.basketball_signup[ghost_client.ckey])
-				to_chat(ghost_client, span_notice("You must sign up to start the game."))
+				to_chat(ghost_client, span_notice(LANG("datum.7c6f1672", null)))
 				return
 			if(current_map)
-				to_chat(ghost_client, span_notice("Wait for current basketball game to finish."))
+				to_chat(ghost_client, span_notice(LANG("datum.1b7e3397", null)))
 				return
 			try_autostart()
 			return TRUE

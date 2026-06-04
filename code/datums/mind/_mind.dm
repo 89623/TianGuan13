@@ -444,7 +444,7 @@
 				var/datum/component/uplink/uplink = find_syndicate_uplink()
 				if(!uplink)
 					return
-				var/progression = input("Set new progression points for [key]","Syndicate uplink", uplink.uplink_handler.progression_points) as null | num
+				var/progression = input(LANG("datum.9bf1ef15", list(key)),LANG("datum.37b70b93", null), uplink.uplink_handler.progression_points) as null | num
 				if(isnull(progression))
 					return
 				uplink.uplink_handler.progression_points = progression
@@ -453,7 +453,7 @@
 			if("uplink")
 				var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
 				if(!give_uplink(antag_datum = traitor_datum || null))
-					to_chat(usr, span_danger("Equipping a syndicate failed!"))
+					to_chat(usr, span_danger(LANG("datum.d4b042a1", null)))
 					log_admin("[key_name(usr)] tried and failed to give [current] an uplink.")
 				else
 					log_admin("[key_name(usr)] gave [current] an uplink.")

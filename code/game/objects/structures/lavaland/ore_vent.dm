@@ -165,11 +165,11 @@
 	if(discovered)
 		switch(boulder_size)
 			if(BOULDER_SIZE_SMALL)
-				. += span_notice("This vent produces [span_bold("small")] boulders containing [ore_string]")
+				. += span_notice(LANG("obj.e76905f2", list(span_bold("small"), ore_string)))
 			if(BOULDER_SIZE_MEDIUM)
-				. += span_notice("This vent produces [span_bold("medium")] boulders containing [ore_string]")
+				. += span_notice(LANG("obj.e76905f2", list(span_bold("medium"), ore_string)))
 			if(BOULDER_SIZE_LARGE)
-				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
+				. += span_notice(LANG("obj.e76905f2", list(span_bold("large"), ore_string)))
 	else
 		. += span_notice(LANG("obj.93755b0f", list(span_bold("Mining Scanner"))))
 

@@ -59,9 +59,9 @@
 	scanmode = (scanmode + 1) % SCANMODE_COUNT
 	switch(scanmode)
 		if(SCANMODE_HEALTH)
-			to_chat(user, span_notice("You switch the health analyzer to check physical health."))
+			to_chat(user, span_notice(LANG("obj.7ad4b9bb", null)))
 		if(SCANMODE_WOUND)
-			to_chat(user, span_notice("You switch the health analyzer to report extra info on wounds."))
+			to_chat(user, span_notice(LANG("obj.7ed4e387", null)))
 
 /obj/item/healthanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))

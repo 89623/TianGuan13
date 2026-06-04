@@ -147,15 +147,15 @@
 
 	switch(deconstruction_state)
 		if(HDD_PANEL_CLOSED)
-			. += "The front panel is closed. You can see some recesses which may have <b>screws</b>."
+			. += LANG("obj.3d193e85", null)
 		if(HDD_PANEL_OPEN)
-			. += "The front panel is dangling open. The HDD is in a secure housing. Looks like you'll have to <b>pry</b> it loose."
+			. += LANG("obj.6fd85e29", null)
 		if(HDD_PRIED)
-			. += "The front panel is dangling open. The HDD has been pried from its housing. It is still connected by <b>wires</b>."
+			. += LANG("obj.96d69275", null)
 		if(HDD_CUT_LOOSE)
-			. += "The front panel is dangling open. All you can see inside are cut wires and mangled metal."
+			. += LANG("obj.241a3dea", null)
 		if(HDD_OVERLOADED)
-			. += "The front panel is dangling open. The HDD inside is destroyed and the wires are all burned."
+			. += LANG("obj.60d7daf0", null)
 
 /obj/machinery/rnd/server/master/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!tool.tool_behaviour)
@@ -173,15 +173,15 @@
 		return NONE
 	switch(deconstruction_state)
 		if(HDD_PANEL_CLOSED)
-			balloon_alert(user, "you can't find a place to insert it!")
+			balloon_alert(user, LANG("obj.a25d70e1", null))
 		if(HDD_PANEL_OPEN)
-			balloon_alert(user, "you weren't trained to install this!")
+			balloon_alert(user, LANG("obj.7af774c3", null))
 		if(HDD_PRIED)
-			balloon_alert(user, "the HDD housing is completely broken, it won't fit!")
+			balloon_alert(user, LANG("obj.2f71f57c", null))
 		if(HDD_CUT_LOOSE)
-			balloon_alert(user, "the HDD housing is completely broken and all the wires are cut!")
+			balloon_alert(user, LANG("obj.92f20bf3", null))
 		if(HDD_OVERLOADED)
-			balloon_alert(user, "the inside is scorched and all the wires are burned!")
+			balloon_alert(user, LANG("obj.a226ff1b", null))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/rnd/server/master/screwdriver_act(mob/living/user, obj/item/tool)

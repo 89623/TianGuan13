@@ -76,7 +76,7 @@
 	switch(current_stage)
 		if(1)
 			species_target.damage_modifier += 10
-			to_chat(human_target, span_notice("Your body seems to be sturdier..."))
+			to_chat(human_target, span_notice(LANG("datum.75fb3742", null)))
 
 		if(2)
 			var/obj/item/bodypart/arm/left/left_arm = human_target.get_bodypart(BODY_ZONE_L_ARM)
@@ -90,7 +90,7 @@
 				right_arm.unarmed_damage_high += 5
 
 			ADD_TRAIT(human_target, TRAIT_BOULDER_BREAKER, REF(src))
-			to_chat(human_target, span_notice("Your arms seem denser and stronger..."))
+			to_chat(human_target, span_notice(LANG("datum.0c9f0175", null)))
 
 		if(3)
 			var/datum/action/ashen_actions/hivemind_speak/grant_hivemind = new /datum/action/ashen_actions/hivemind_speak(human_target)
@@ -98,22 +98,22 @@
 
 		if(4)
 			human_target.add_movespeed_modifier(/datum/movespeed_modifier/ash_aged)
-			to_chat(human_target, span_notice("Your body seems lighter..."))
+			to_chat(human_target, span_notice(LANG("datum.390547b8", null)))
 
 		if(5)
 			var/obj/item/organ/ashen_armblade/summoned_organ = new /obj/item/organ/ashen_armblade()
 			summoned_organ.Insert(human_target)
-			to_chat(human_target, span_notice("Your arm shakes in agitation..."))
+			to_chat(human_target, span_notice(LANG("datum.6f16876f", null)))
 
 		if(6)
 			ADD_TRAIT(human_target, TRAIT_LAVA_IMMUNE, REF(src))
 			var/datum/action/cooldown/mob_cooldown/fire_breath/granted_action
 			granted_action = new(human_target)
 			granted_action.Grant(human_target)
-			to_chat(human_target, span_notice("Your body feels hotter..."))
+			to_chat(human_target, span_notice(LANG("datum.91f4b4c2", null)))
 
 		if(7 to INFINITY)
-			to_chat(human_target, span_warning("You have already reached the pinnacle of your current body!"))
+			to_chat(human_target, span_warning(LANG("datum.a52e94f0", null)))
 
 /// Speed mod
 /datum/movespeed_modifier/ash_aged

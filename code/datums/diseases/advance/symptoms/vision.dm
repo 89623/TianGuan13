@@ -50,10 +50,10 @@
 	switch(source_disease.stage)
 		if(1, 2)
 			if(prob(base_message_chance) && !suppress_warning)
-				to_chat(infected_mob, span_warning("Your eyes itch."))
+				to_chat(infected_mob, span_warning(LANG("datum.ce8cbe9f", null)))
 
 		if(3, 4)
-			to_chat(infected_mob, span_boldwarning("Your eyes burn!"))
+			to_chat(infected_mob, span_boldwarning(LANG("datum.e50633b6", null)))
 			infected_mob.set_eye_blur_if_lower(20 SECONDS)
 			eyes.apply_organ_damage(1)
 

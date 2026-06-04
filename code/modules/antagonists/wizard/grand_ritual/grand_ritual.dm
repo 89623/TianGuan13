@@ -230,8 +230,7 @@
 	set_new_area()
 	switch (times_completed)
 		if (GRAND_RITUAL_RUNES_WARNING_POTENCY)
-			to_chat(owner, span_warning("Your collected power is growing, \
-				but further rituals will alert your enemies to your position."))
+			to_chat(owner, span_warning(LANG("datum.b231d727", null)))
 		if (GRAND_RITUAL_IMMINENT_FINALE_POTENCY)
 			var/message = "You are overflowing with power! \
 				Your next Grand Ritual will allow you to choose a powerful effect, and grant you victory."

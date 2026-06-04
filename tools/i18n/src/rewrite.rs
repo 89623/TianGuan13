@@ -204,8 +204,16 @@ impl<'a> Rewriter<'a> {
                 }
                 self.visit_block(block, ns);
             }
-            Statement::Switch { input, default, .. } => {
+            Statement::Switch {
+                input,
+                cases,
+                default,
+            } => {
                 self.visit_expr(input, ns);
+                // 修复：之前 `..` 漏掉了 cases —— switch 各 case 分支体里的语句全部没被改写。
+                for (_case_conditions, blk) in cases.iter() {
+                    self.visit_block(blk, ns);
+                }
                 if let Some(blk) = default {
                     self.visit_block(blk, ns);
                 }

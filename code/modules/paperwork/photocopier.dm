@@ -288,9 +288,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(ass)
 				if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
 					if(ass == usr)
-						to_chat(usr, span_notice("You feel kind of silly, copying your ass with your clothes on."))
+						to_chat(usr, span_notice(LANG("obj.1c5c262c", null)))
 					else
-						to_chat(usr, span_notice("You feel kind of silly, copying [ass]\'s ass with [ass.p_their()] clothes on."))
+						to_chat(usr, span_notice(LANG("obj.4d2a02df", list(ass, ass.p_their()))))
 					return FALSE
 				do_copies(CALLBACK(src, PROC_REF(make_ass_copy)), usr, ASS_PAPER_USE, ASS_TONER_USE, num_copies)
 				return TRUE
@@ -319,7 +319,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				remove_photocopy(usr, object_copy)
 				object_copy = null
 			else if(check_ass())
-				to_chat(ass, span_notice("You feel a slight pressure on your ass."))
+				to_chat(ass, span_notice(LANG("obj.9aae3e00", null)))
 			return TRUE
 
 		// AI printing photos from their saved images.
@@ -328,7 +328,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				return FALSE
 			var/mob/living/silicon/ai/tempAI = usr
 			if(!length(tempAI.aicamera.stored))
-				balloon_alert(usr, "no images saved!")
+				balloon_alert(usr, LANG("obj.75905408", null))
 				return FALSE
 			var/datum/picture/selection = tempAI.aicamera.selectpicture(usr)
 			do_copies(CALLBACK(src, PROC_REF(make_photo_copy), selection, PHOTO_COLOR), usr, PHOTO_PAPER_USE, PHOTO_TONER_USE, 1)

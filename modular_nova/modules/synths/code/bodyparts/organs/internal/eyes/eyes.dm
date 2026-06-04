@@ -13,10 +13,10 @@
 
 	switch(severity)
 		if(EMP_HEAVY)
-			to_chat(owner, span_warning("Alert:Severe electromagnetic interference clouds your optics with static. Error Code: I-CS6"))
+			to_chat(owner, span_warning(LANG("obj.dd0ddb0c", null)))
 			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, maxHealth, required_organ_flag = ORGAN_ROBOTIC)
 		if(EMP_LIGHT)
-			to_chat(owner, span_warning("Alert: Mild interference clouds your optics with static. Error Code: I-CS0"))
+			to_chat(owner, span_warning(LANG("obj.5188865a", null)))
 			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, maxHealth, required_organ_flag = ORGAN_ROBOTIC)
 
 /datum/design/synth_eyes

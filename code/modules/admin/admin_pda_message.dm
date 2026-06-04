@@ -61,7 +61,7 @@ ADMIN_VERB(message_pda, R_ADMIN, "PDA Message", "Send a message to a user's PDA.
 					targets += messenger
 
 			if(!length(targets))
-				to_chat(usr, span_warning("ERROR: Target is unavailable."))
+				to_chat(usr, span_warning(LANG("datum.c5f6b9a2", null)))
 				return FALSE
 
 			var/datum/signal/subspace/messaging/tablet_message/signal = new(null, list(
@@ -82,7 +82,7 @@ ADMIN_VERB(message_pda, R_ADMIN, "PDA Message", "Send a message to a user's PDA.
 				signal.send_to_receivers()
 
 			if(!(force || signal.data["reject"]))
-				to_chat(usr, span_warning("ERROR: PDA message was rejected by the telecomms setup."))
+				to_chat(usr, span_warning(LANG("datum.9538ae0b", null)))
 				return FALSE
 
 			var/recipient = spam ? "everyone" : get_messenger_name(targets[1])

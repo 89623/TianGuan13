@@ -175,9 +175,9 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
 				if(!brainmob.client)
-					. += "It appears to be in stand-by mode." //afk
+					. += LANG("obj.f6906ec4", null) //afk
 			if(DEAD)
-				. += span_deadsay("It appears to be completely inactive.")
+				. += span_deadsay(LANG("obj.6e66cf42", null))
 	else
 		. += "[dead_message]"
 		if(ask_role)

@@ -117,17 +117,13 @@
 	// Flavor for why the brain is scarred
 	switch(note_type)
 		if(NOTE_STUCK_IN_MAIL)
-			. += span_notice("According to the note, this jar must've been stuck in the mail for at least 50 years...")
+			. += span_notice(LANG("obj.3bae428a", null))
 		if(NOTE_MORBID_GIFT)
-			. += span_notice("It reads...")
-			. += span_notice("Greetings, XXX. I stumbled upon a hermit in my travels, \
-			whose quirks immediately piqued my interest. I'm sure his brain will be as useful to your research \
-			as it has been to mine. Signed, YYY.")
+			. += span_notice(LANG("obj.c0451ef0", null))
+			. += span_notice(LANG("obj.b06cbbb9", null))
 		if(NOTE_DISCARDED_LOST_CREW)
-			. += span_notice("It reads...")
-			. += span_notice("Hey, XXX. Management wanted me to discard this poor schmuck's brain, \
-			claiming it's 'too damaged to viably recover', so I figured I might as well throw you a bone. \
-			I know you like these sorts of things. Signed, ZZZ.")
+			. += span_notice(LANG("obj.c0451ef0", null))
+			. += span_notice(LANG("obj.c7fa32e3", null))
 
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/brain_in_a_jar/Initialize(mapload)

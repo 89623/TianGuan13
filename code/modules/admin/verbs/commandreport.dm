@@ -101,13 +101,13 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 		if("set_report_sound")
 			if(params["picked_sound"] == CUSTOM_SOUND_PRESET)
 				played_sound = DEFAULT_ANNOUNCEMENT_SOUND // fallback by default
-				var/sound_file = input(ui_user, "Select sound file", "Upload sound") as sound|null
+				var/sound_file = input(ui_user, LANG("datum.f011fe55", null), LANG("datum.fde59690", null)) as sound|null
 				if(!sound_file)
-					tgui_alert(ui_user, "The custom sound could not be loaded. The standard sound will be played.", "Loading error", list("Ok"))
+					tgui_alert(ui_user, LANG("datum.43d1d768", null), LANG("datum.e990db78", null), list("Ok"))
 					return
 
 				if(!IS_SOUND_FILE(sound_file))
-					tgui_alert(ui_user, "Invalid file type. Please select a sound file.", "Loading error", list("Ok"))
+					tgui_alert(ui_user, LANG("datum.b42cc5a2", null), LANG("datum.e990db78", null), list("Ok"))
 					return
 
 				played_sound = sound_file
@@ -126,10 +126,10 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 			subheader = params["new_subheader"]
 		if("submit_report")
 			if(!command_name)
-				to_chat(ui_user, span_danger("You can't send a report with no command name."))
+				to_chat(ui_user, span_danger(LANG("datum.5f2f2558", null)))
 				return
 			if(!params["report"])
-				to_chat(ui_user, span_danger("You can't send a report with no contents."))
+				to_chat(ui_user, span_danger(LANG("datum.5f7b3dac", null)))
 				return
 			command_report_content = params["report"]
 			send_announcement()

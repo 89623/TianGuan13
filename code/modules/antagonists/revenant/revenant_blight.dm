@@ -64,7 +64,7 @@
 		if(5)
 			if(!finalstage)
 				finalstage = TRUE
-				to_chat(affected_mob, span_revenbignotice("You feel like [pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")]."))
+				to_chat(affected_mob, span_revenbignotice(LANG("datum.b64c520b", list(pick("nothing's worth it anymore", "nobody ever needed your help", "nothing you did mattered", "everything you tried to do was worthless")))))
 				affected_mob.adjust_stamina_loss(22.5 * seconds_per_tick, updating_stamina = FALSE)
 				new /obj/effect/temp_visual/revenant(affected_mob.loc)
 				if(affected_mob.dna && affected_mob.dna.species)

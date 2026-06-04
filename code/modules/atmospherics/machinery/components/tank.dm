@@ -550,11 +550,11 @@
 		if(TANK_FRAME)
 			var/screwed_hint = EXAMINE_HINT("screwed")
 			var/plating_hint = EXAMINE_HINT("metal plating")
-			. += span_notice("[src] is [screwed_hint] together and now just needs some [plating_hint].")
+			. += span_notice(LANG("obj.7c901f23", list(src, screwed_hint, plating_hint)))
 		if(TANK_PLATING_UNSECURED)
 			var/crowbar_hint = EXAMINE_HINT("crowbar")
 			var/welder_hint = EXAMINE_HINT("welder")
-			. += span_notice("The plating has been firmly attached and would need a [crowbar_hint] to detach, but still needs to be sealed by a [welder_hint].")
+			. += span_notice(LANG("obj.672e92af", list(crowbar_hint, welder_hint)))
 
 /obj/structure/tank_frame/atom_deconstruct(disassembled)
 	if(disassembled)

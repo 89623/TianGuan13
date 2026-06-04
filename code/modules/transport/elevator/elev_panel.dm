@@ -312,7 +312,7 @@
 	switch(action)
 		if("move_lift")
 			if(!allowed(usr))
-				balloon_alert(usr, "access denied!")
+				balloon_alert(usr, LANG("obj.1bd3ceeb", null))
 				return
 
 			var/desired_z = params["z"]

@@ -83,11 +83,11 @@
 	. = ..()
 	switch(state)
 		if(TRAM_SCREWED_TO_FRAME)
-			. += span_notice("The panel is [EXAMINE_HINT("screwed")] to the frame. To dismantle use a [EXAMINE_HINT("screwdriver.")]")
+			. += span_notice(LANG("obj.e48e29d4", list(EXAMINE_HINT("screwed"), EXAMINE_HINT("screwdriver."))))
 		if(TRAM_IN_FRAME)
-			. += span_notice("The panel is [EXAMINE_HINT("unscrewed,")] but [EXAMINE_HINT("pried")] into the frame. To dismantle use a [EXAMINE_HINT("crowbar.")]")
+			. += span_notice(LANG("obj.2509026e", list(EXAMINE_HINT("unscrewed,"), EXAMINE_HINT("pried"), EXAMINE_HINT("crowbar."))))
 		if(TRAM_OUT_OF_FRAME)
-			. += span_notice("The panel is [EXAMINE_HINT("pried")] out of the frame, but still[EXAMINE_HINT("wired.")] To dismantle use [EXAMINE_HINT("wirecutters.")]")
+			. += span_notice(LANG("obj.0c375eb0", list(EXAMINE_HINT("pried"), EXAMINE_HINT("wired."), EXAMINE_HINT("wirecutters."))))
 
 /obj/structure/tram/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item?.tool_behaviour == TOOL_WELDER && atom_integrity < max_integrity)
@@ -172,11 +172,11 @@
 				span_notice("You begin to unscrew the tram panel from the frame..."))
 				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					state = TRAM_IN_FRAME
-					to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
+					to_chat(user, span_notice(LANG("obj.52e8eb7d", null)))
 					return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			if(tool.tool_behaviour)
-				to_chat(user, span_warning("The security screws need to be removed first!"))
+				to_chat(user, span_warning(LANG("obj.b436b070", null)))
 
 		if(TRAM_IN_FRAME)
 			if(tool.tool_behaviour == TOOL_CROWBAR)
@@ -184,7 +184,7 @@
 				span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
 				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					state = TRAM_OUT_OF_FRAME
-					to_chat(user, span_notice("The panel pops out of the frame, exposing some cabling that look like they can be cut."))
+					to_chat(user, span_notice(LANG("obj.71715436", null)))
 					return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
@@ -198,7 +198,7 @@
 				user.visible_message(span_notice("[user] starts cutting the connective cabling on \the [src]..."),
 				span_notice("You start cutting the connective cabling on \the [src]"))
 				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
-					to_chat(user, span_notice("The panels falls out of the way exposing the frame backing."))
+					to_chat(user, span_notice(LANG("obj.d74adce8", null)))
 					deconstruct(disassembled = TRUE)
 
 			if(tool.tool_behaviour == TOOL_CROWBAR)
@@ -208,7 +208,7 @@
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			if(tool.tool_behaviour)
-				to_chat(user, span_warning("The cabling need to be cut first!"))
+				to_chat(user, span_warning(LANG("obj.037e6c30", null)))
 
 	return ..()
 

@@ -160,16 +160,16 @@
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
 			mode = THROW_LOLLIPOP_MODE
-			to_chat(user, span_notice("Module is now throwing lollipops."))
+			to_chat(user, span_notice(LANG("obj.d6f6ab2a", null)))
 		if(THROW_LOLLIPOP_MODE)
 			mode = THROW_GUMBALL_MODE
-			to_chat(user, span_notice("Module is now blasting gumballs."))
+			to_chat(user, span_notice(LANG("obj.dd4ad962", null)))
 		if(THROW_GUMBALL_MODE)
 			mode = DISPENSE_ICECREAM_MODE
-			to_chat(user, span_notice("Module is now dispensing ice cream."))
+			to_chat(user, span_notice(LANG("obj.0ebb97d3", null)))
 		if(DISPENSE_ICECREAM_MODE)
 			mode = DISPENSE_LOLLIPOP_MODE
-			to_chat(user, span_notice("Module is now dispensing lollipops."))
+			to_chat(user, span_notice(LANG("obj.52b3c381", null)))
 
 /obj/item/borg/lollipop/ice_cream
 	name = "ice cream fabricator"

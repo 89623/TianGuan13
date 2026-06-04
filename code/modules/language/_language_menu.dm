@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/language_menu
 	var/datum/language_holder/language_holder
 
@@ -71,7 +72,7 @@
 		if("grant_language")
 			if((is_admin || isobserver(speaker)) && language_datum)
 				var/list/choices = list("Only Spoken", "Only Understood", "Both")
-				var/choice = tgui_input_list(user, "How do you want to add this language?", "[language_datum]", choices)
+				var/choice = tgui_input_list(user, LANG("datum.cc783534", null), "[language_datum]", choices)
 				if(isnull(choice))
 					return
 				var/adding_flags = NONE
@@ -90,7 +91,7 @@
 					block_being_removed_on += "spoken"
 
 				if(ask_to_remove_block)
-					choice = tgui_alert(user, "Do you want to lift the blockage that's also preventing the language to be [block_being_removed_on.Join(" or ")]?", "[language_datum]", list("Yes", "No"))
+					choice = tgui_alert(user, LANG("datum.cd4b54ef", list(block_being_removed_on.Join(" or "))), "[language_datum]", list("Yes", "No"))
 					if(choice == "Yes")
 						language_holder.remove_blocked_language(language_datum, adding_flags, LANGUAGE_ALL)
 				language_holder.grant_language(language_datum, adding_flags)
@@ -101,7 +102,7 @@
 		if("remove_language")
 			if((is_admin || isobserver(speaker)) && language_datum)
 				var/list/choices = list("Only Spoken", "Only Understood", "Both")
-				var/choice = tgui_input_list(user, "Which part do you wish to remove?", "[language_datum]", choices)
+				var/choice = tgui_input_list(user, LANG("datum.7cc48e12", null), "[language_datum]", choices)
 				if(isnull(choice))
 					return
 				var/removing_flags = NONE

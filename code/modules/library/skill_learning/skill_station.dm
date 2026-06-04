@@ -286,7 +286,7 @@
 				stack_trace("[usr] tried to toggle skillchip activation when [src] was in an invalid state.")
 				return TRUE
 			if(inserted_skillchip)
-				to_chat(occupant,span_notice("You eject the skillchip."))
+				to_chat(occupant,span_notice(LANG("obj.55cb250d", null)))
 				var/mob/living/carbon/human/H = occupant
 				H.put_in_hands(inserted_skillchip)
 				inserted_skillchip = null

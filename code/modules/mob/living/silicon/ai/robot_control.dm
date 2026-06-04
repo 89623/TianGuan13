@@ -96,7 +96,7 @@
 
 			owner.bot_ref = WEAKREF(bot)
 			owner.setting_waypoint = TRUE
-			to_chat(our_user, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
+			to_chat(our_user, span_notice(LANG("datum.5350f02f", null)))
 		if("interface") //Remotely connect to a bot!
 			owner.bot_ref = WEAKREF(bot)
 			if(isbasicbot(bot))

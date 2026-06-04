@@ -174,12 +174,11 @@
 		return
 	switch(diode.rating)
 		if(1)
-			. += "<i>\The [diode.name] is fit neatly into the casing.</i>"
+			. += LANG("obj.9ed0fe28", list(diode.name))
 		if(2)
-			. += "<i>\The [diode.name] is secured in place, with a little bit of room left between it and the focus lens.</i>"
+			. += LANG("obj.5c980240", list(diode.name))
 		if(3 to 4)
-			. += "<i>\The [diode.name]'s size is much smaller compared to the previous generation lasers, \
-			and the wide margin between it and the focus lens could probably house <b>a crystal</b> of some sort.</i>"
+			. += LANG("obj.3b48a208", list(diode.name))
 
 /obj/item/laser_pointer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	laser_act(interacting_with, user, modifiers)

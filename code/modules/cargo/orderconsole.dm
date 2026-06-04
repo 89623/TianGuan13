@@ -408,7 +408,7 @@
 
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
-				say("The supply shuttle is departing.")
+				say(LANG("obj.c8889dde", null))
 				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				//create the paper from the SSshuttle.shopping_list
@@ -437,7 +437,7 @@
 					requisition_paper.update_appearance()
 
 				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
+				say(LANG("obj.8a1a83d6", list(SSshuttle.supply.timeLeft(600))))
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 
 			. = TRUE
@@ -455,7 +455,7 @@
 				return
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
-				say("The supply shuttle has been loaned to CentCom.")
+				say(LANG("obj.a29fce78", null))
 				ui.user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
 				ui.user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE

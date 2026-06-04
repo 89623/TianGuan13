@@ -151,7 +151,7 @@
 												"shocks [target]'s pussy with [src]",
 												"leans [src] against [target]'s vagina, turning it on")
 				else
-					to_chat(user, span_danger("Looks like [target]'s groin is covered!"))
+					to_chat(user, span_danger(LANG("obj.c5b0317d", list(target))))
 					return
 
 			else if(penis)
@@ -161,7 +161,7 @@
 												"shocks [target]'s penis with [src]",
 												"leans [src] against [target]'s penis, turning shocker on")
 				else
-					to_chat(user, span_danger("Looks like [target]'s groin is covered!"))
+					to_chat(user, span_danger(LANG("obj.c5b0317d", list(target))))
 					return
 
 			else if(vagina)
@@ -171,7 +171,7 @@
 												"shocks [target]'s pussy with [src]",
 												"leans [src] against [target]'s vagina, turning it on")
 				else
-					to_chat(user, span_danger("Looks like [target]'s groin is covered!"))
+					to_chat(user, span_danger(LANG("obj.c5b0317d", list(target))))
 					return
 
 			else
@@ -181,7 +181,7 @@
 												"shocks [target]'s tummy with [src]",
 												"leans [src] against [target]'s belly, turning it on")
 				else
-					to_chat(user, span_danger("Looks like [target]'s groin is covered!"))
+					to_chat(user, span_danger(LANG("obj.c5b0317d", list(target))))
 					return
 
 		if(BODY_ZONE_CHEST)
@@ -194,7 +194,7 @@
 												"shocks [target]'s nipples with [src]",
 												"leans [src] against [target]'s tits, turning it on")
 				else
-					to_chat(user, span_danger("Looks like [target]'s chest is covered!"))
+					to_chat(user, span_danger(LANG("obj.b0aede84", list(target))))
 					return
 
 			else
@@ -204,7 +204,7 @@
 												"shocks [target]'s nipples with [src]",
 												"leans [src] against [target]'s chest, turning it on")
 				else
-					to_chat(user, span_danger("Looks like [target]'s chest is covered!"))
+					to_chat(user, span_danger(LANG("obj.b0aede84", list(target))))
 					return
 
 		if(BODY_ZONE_R_ARM)
@@ -216,10 +216,10 @@
 												"shocks [target]'s right arm with [src]",
 												"leans [src] against [target]'s right arm, turning it on")
 				else
-					to_chat(user, span_danger("[target]'s arms are covered!"))
+					to_chat(user, span_danger(LANG("obj.be453223", list(target))))
 					return
 			else
-				to_chat(user, span_danger("[target] doesn't have any arms!"))
+				to_chat(user, span_danger(LANG("obj.a8f1e4ff", list(target))))
 				return
 
 		if(BODY_ZONE_L_ARM)
@@ -231,10 +231,10 @@
 												"shocks [target]'s left arm with [src]",
 												"leans [src] against [target]'s left arm, turning it on")
 				else
-					to_chat(user, span_danger("[target]'s arms are covered!"))
+					to_chat(user, span_danger(LANG("obj.be453223", list(target))))
 					return
 			else
-				to_chat(user, span_danger("[target] doesn't have any arms!"))
+				to_chat(user, span_danger(LANG("obj.a8f1e4ff", list(target))))
 				return
 
 		if(BODY_ZONE_HEAD)
@@ -245,7 +245,7 @@
 											"shocks [target]'s neck with [src]",
 											"leans [src] against [target]'s neck, turning it on")
 			else
-				to_chat(user, span_danger("[target]'s head is covered!"))
+				to_chat(user, span_danger(LANG("obj.7eb6b85e", list(target))))
 				return
 
 		if(BODY_ZONE_L_LEG)
@@ -257,10 +257,10 @@
 												"shocks [target]'s left foot with [src]",
 												"leans [src] against [target]'s left leg, turning it on")
 				else
-					to_chat(user, span_danger("[target]'s toes are covered!"))
+					to_chat(user, span_danger(LANG("obj.d1d633f8", list(target))))
 					return
 			else
-				to_chat(user, span_danger("[target] doesn't have any legs!"))
+				to_chat(user, span_danger(LANG("obj.0137a1dc", list(target))))
 				return
 
 		if(BODY_ZONE_R_LEG)
@@ -273,10 +273,10 @@
 												"leans [src] against [target]'s right leg, turning it on")
 
 				else
-					to_chat(user, span_danger("[target]'s toes are covered!"))
+					to_chat(user, span_danger(LANG("obj.d1d633f8", list(target))))
 					return
 			else
-				to_chat(user, span_danger("[target] doesn't have any legs!"))
+				to_chat(user, span_danger(LANG("obj.0137a1dc", list(target))))
 				return
 	if(!targetedsomewhere)
 		return

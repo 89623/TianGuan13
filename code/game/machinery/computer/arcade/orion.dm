@@ -526,17 +526,17 @@
 	var/time_for_next_level
 	switch(dialogue_level)
 		if(0)
-			say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
+			say(LANG("obj.b055e13d", list(rand(1,1000))))
 			time_for_next_level = 2 SECONDS
 		if(1)
-			say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")
+			say(LANG("obj.9aca0637", null))
 			time_for_next_level = 3 SECONDS
 		if(2)
-			say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
+			say(LANG("obj.c539ee8d", null))
 			playsound(loc, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 			time_for_next_level = 0.36 SECONDS
 		if(3 to INFINITY)
-			visible_message(span_userdanger("[src] explodes!"))
+			visible_message(span_userdanger(LANG("obj.e64b7ad7", list(src))))
 			explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 8, flame_range = 16)
 			qdel(src)
 			return

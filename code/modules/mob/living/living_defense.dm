@@ -134,12 +134,12 @@
 
 	switch (proj.suppressed)
 		if (SUPPRESSED_QUIET)
-			to_chat(src, span_userdanger("You're shot by \a [proj][organ_hit_text]!"))
+			to_chat(src, span_userdanger(LANG("mob.3d93b648", list(proj, organ_hit_text))))
 		if (SUPPRESSED_NONE)
-			visible_message(span_danger("[src] is hit by \a [proj][organ_hit_text]!"), \
-					span_userdanger("You're hit by \a [proj][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			visible_message(span_danger(LANG("mob.b8e00457", list(src, proj, organ_hit_text))), \
+					span_userdanger(LANG("mob.c436bcdf", list(proj, organ_hit_text))), null, COMBAT_MESSAGE_RANGE)
 			if(is_blind())
-				to_chat(src, span_userdanger("You feel something hit you[organ_hit_text]!"))
+				to_chat(src, span_userdanger(LANG("mob.2b66bba3", list(organ_hit_text))))
 
 	if(proj.is_hostile_projectile())
 		apply_projectile_effects(proj, def_zone, blocked)
@@ -396,28 +396,28 @@
 		if(GRAB_AGGRESSIVE)
 			var/add_log = ""
 			if(HAS_TRAIT(user, TRAIT_PACIFISM))
-				visible_message(span_danger("[user] firmly grips [src]!"),
-								span_danger("[user] firmly grips you!"), span_hear("You hear aggressive shuffling!"), null, user)
-				to_chat(user, span_danger("You firmly grip [src]!"))
+				visible_message(span_danger(LANG("mob.44b45775", list(user, src))),
+								span_danger(LANG("mob.686f06f7", list(user))), span_hear(LANG("mob.7314bbd1", null)), null, user)
+				to_chat(user, span_danger(LANG("mob.27fb4b7d", list(src))))
 				add_log = " (pacifist)"
 			else
-				visible_message(span_danger("[user] grabs [src] aggressively!"), \
-								span_userdanger("[user] grabs you aggressively!"), span_hear("You hear aggressive shuffling!"), null, user)
-				to_chat(user, span_danger("You grab [src] aggressively!"))
+				visible_message(span_danger(LANG("mob.3d4572c2", list(user, src))), \
+								span_userdanger(LANG("mob.082a0486", list(user))), span_hear(LANG("mob.7314bbd1", null)), null, user)
+				to_chat(user, span_danger(LANG("mob.08cd2c37", list(src))))
 			stop_pulling()
 			log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 		if(GRAB_NECK)
 			log_combat(user, src, "grabbed", addition="neck grab")
-			visible_message(span_danger("[user] grabs [src] by the neck!"),\
-							span_userdanger("[user] grabs you by the neck!"), span_hear("You hear aggressive shuffling!"), null, user)
-			to_chat(user, span_danger("You grab [src] by the neck!"))
+			visible_message(span_danger(LANG("mob.d035543c", list(user, src))),\
+							span_userdanger(LANG("mob.4a245b22", list(user))), span_hear(LANG("mob.7314bbd1", null)), null, user)
+			to_chat(user, span_danger(LANG("mob.33f0d717", list(src))))
 			if(!buckled && !density)
 				Move(user.loc)
 		if(GRAB_KILL)
 			log_combat(user, src, "strangled", addition="kill grab")
-			visible_message(span_danger("[user] is strangling [src]!"), \
-							span_userdanger("[user] is strangling you!"), span_hear("You hear aggressive shuffling!"), null, user)
-			to_chat(user, span_danger("You're strangling [src]!"))
+			visible_message(span_danger(LANG("mob.0e871a75", list(user, src))), \
+							span_userdanger(LANG("mob.b813d555", list(user))), span_hear(LANG("mob.7314bbd1", null)), null, user)
+			to_chat(user, span_danger(LANG("mob.789d764f", list(src))))
 			if(!buckled && !density)
 				Move(user.loc)
 	user.set_pull_offsets(src, user.grab_state)

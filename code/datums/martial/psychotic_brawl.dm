@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/martial_art/psychotic_brawling
 	name = "Psychotic Brawling"
 	id = MARTIALART_PSYCHOBRAWL
@@ -46,7 +47,7 @@
 							null,
 							attacker,
 						)
-						to_chat(attacker, span_danger("You violently grab [defender]!"))
+						to_chat(attacker, span_danger(LANG("datum.a2ee96d0", list(defender))))
 						attacker.setGrabState(GRAB_AGGRESSIVE) //Instant aggressive grab
 					else
 						log_combat(attacker, defender, "grabbed", addition="passively")
@@ -66,7 +67,7 @@
 				null,
 				attacker,
 			)
-			to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
+			to_chat(attacker, span_danger(LANG("datum.22d557f3", list(atk_verb, defender))))
 			playsound(defender, 'sound/items/weapons/punch1.ogg', 40, TRUE, -1)
 			defender.apply_damage(defender_damage, attacker.get_attack_type(), BODY_ZONE_HEAD)
 			attacker.apply_damage(rand(5, 10), attacker.get_attack_type(), BODY_ZONE_HEAD)
@@ -91,7 +92,7 @@
 				null,
 				attacker,
 			)
-			to_chat(attacker, span_danger("You [atk_verb] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"))
+			to_chat(attacker, span_danger(LANG("datum.6546b2e4", list(atk_verb, defender, defender.p_them()))))
 			defender.apply_damage(rand(15, 30), attacker.get_attack_type())
 			playsound(defender, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 			var/throwtarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))

@@ -58,12 +58,12 @@
 		if (EMP_HEAVY)
 			//apply_organ_damage(20, BRAIN_DAMAGE_SEVERE) // NOVA EDIT REMOVAL
 			// NOVA EDIT ADDITION START
-			to_chat(owner, span_boldwarning("You feel [pick("like your brain is being fried", "a sharp pain in your head")]!")) //default alert text for emps
+			to_chat(owner, span_boldwarning(LANG("obj.a2506f01", list(pick("like your brain is being fried", "a sharp pain in your head"))))) //default alert text for emps
 			apply_organ_damage((20*emp_dmg_mult), emp_dmg_max) //implement cap
 			// NOVA EDIT ADDITION END
 		if (EMP_LIGHT)
 			//apply_organ_damage(10, BRAIN_DAMAGE_MILD) // NOVA EDIT REMOVAL
 			// NOVA EDIT ADDITION START
-			to_chat(owner, span_warning("You feel [pick("disoriented", "confused", "dizzy")].")) //default alert text for emps
+			to_chat(owner, span_warning(LANG("obj.20f1ebe8", list(pick("disoriented", "confused", "dizzy"))))) //default alert text for emps
 			apply_organ_damage((10*emp_dmg_mult), emp_dmg_max) //implement cap
 			// NOVA EDIT ADDITION END

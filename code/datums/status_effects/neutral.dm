@@ -488,7 +488,7 @@
 	//These run on specific cycles
 	switch(current_cycle)
 		if(0)
-			to_chat(owner, span_userdanger("You feel like you're being pulled across to somewhere else. You feel empty inside."))
+			to_chat(owner, span_userdanger(LANG("datum.3cae511f", null)))
 
 		//phase 1
 		if(1 to EIGENSTASIUM_PHASE_1_END)
@@ -498,7 +498,7 @@
 		//phase 2
 		if(EIGENSTASIUM_PHASE_1_END to EIGENSTASIUM_PHASE_2_END)
 			if(current_cycle == 51)
-				to_chat(owner, span_userdanger("You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!"))
+				to_chat(owner, span_userdanger(LANG("datum.62944451", null)))
 				owner.set_jitter_if_lower(400 SECONDS)
 				owner.Knockdown(10)
 
@@ -528,7 +528,7 @@
 			switch(phase_3_cycle) //Loops 0 -> 1 -> 2 -> 1 -> 2 -> 1 ...ect.
 				if(0)
 					owner.set_jitter_if_lower(200 SECONDS)
-					to_chat(owner, span_userdanger("Your eigenstate starts to rip apart, drawing in alternative reality versions of yourself!"))
+					to_chat(owner, span_userdanger(LANG("datum.227b7685", null)))
 				if(1)
 					var/typepath = owner.type
 					alt_clone = new typepath(owner.loc)
@@ -557,7 +557,7 @@
 			do_sparks(5, FALSE, owner)
 			owner.Sleeping(100)
 			owner.set_jitter_if_lower(100 SECONDS)
-			to_chat(owner, span_userdanger("You feel your eigenstate settle, as \"you\" become an alternative version of yourself!"))
+			to_chat(owner, span_userdanger(LANG("datum.06c61ccc", null)))
 			owner.emote("me",1,"flashes into reality suddenly, gasping as they gaze around in a bewildered and highly confused fashion!",TRUE)
 			owner.log_message("has become an alternative universe version of themselves via EIGENSTASIUM.", LOG_GAME)
 			//new you new stuff

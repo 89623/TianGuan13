@@ -174,7 +174,7 @@
 		if(BODY_ZONE_L_LEG)
 			targetedsomewhere = TRUE
 			if(!target.has_feet())
-				to_chat(user, span_danger("[target] is missing their left leg!"))
+				to_chat(user, span_danger(LANG("obj.a9f6f816", list(target))))
 				return
 			if(current_whip_type == "hard")
 				message = (user == target) ? pick("Knocks [target.p_them()]self down with [src]", "Uses [src] to knock [target.p_them()]self on the ground") : pick("drops [target] to the ground with [src]", "uses [src] to put [target] on [target.p_their()] knees")
@@ -200,7 +200,7 @@
 		if(BODY_ZONE_R_LEG)
 			targetedsomewhere = TRUE
 			if(!target.has_feet())
-				to_chat(user, span_danger("[target] is missing their right leg!"))
+				to_chat(user, span_danger(LANG("obj.5cbada26", list(target))))
 				return
 			if(current_whip_type == "hard")
 				message = (user == target) ? pick("knocks [target.p_them()]self down with [src]", "uses [src] to knock [target.p_them()]self on the ground") : pick("Hardly drops [target] on the ground with [src]", "uses [src] to put [target] on [target.p_their()] knees")
@@ -235,7 +235,7 @@
 		if(BODY_ZONE_PRECISE_GROIN)
 			targetedsomewhere = TRUE
 			if(!target.is_bottomless())
-				to_chat(user, span_danger("[target]'s butt is covered!"))
+				to_chat(user, span_danger(LANG("obj.6b7eb5bf", list(target))))
 				return
 			if(current_whip_type == "weak")
 				message = (user == target) ? pick("whips [target.p_them()]self with [src]", "flogs [target.p_them()]self with [src]") :pick("playfully flogs [target]'s thighs with [src]", "flogs [target] with [src]", "mercilessly flogs [target] with [src]")
@@ -296,9 +296,9 @@
 	toggle_mode()
 	switch(current_whip_type)
 		if("hard")
-			to_chat(user, span_notice("[src] is now hard. Someone need to be punished!"))
+			to_chat(user, span_notice(LANG("obj.9791a27b", list(src))))
 		if("weak")
-			to_chat(user, span_notice("[src] feels softer. Easy mode!"))
+			to_chat(user, span_notice(LANG("obj.a8075e2f", list(src))))
 	update_icon()
 	update_icon_state()
 

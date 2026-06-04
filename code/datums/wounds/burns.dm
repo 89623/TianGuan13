@@ -94,16 +94,16 @@
 			if(SPT_PROB(15, seconds_per_tick))
 				victim.adjust_tox_loss(0.2)
 				if(prob(6))
-					to_chat(victim, span_warning("The blisters on your [limb.plaintext_zone] ooze a strange pus..."))
+					to_chat(victim, span_warning(LANG("datum.c8eb2eb0", list(limb.plaintext_zone))))
 
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
 			if(!disabling)
 				if(SPT_PROB(1, seconds_per_tick))
-					to_chat(victim, span_warning("<b>Your [limb.plaintext_zone] completely locks up, as you struggle for control against the infection!</b>"))
+					to_chat(victim, span_warning(LANG("datum.79160caf", list(limb.plaintext_zone))))
 					set_disabling(TRUE)
 					return
 			else if(SPT_PROB(4, seconds_per_tick))
-				to_chat(victim, span_notice("You regain sensation in your [limb.plaintext_zone], but it's still in terrible shape!"))
+				to_chat(victim, span_notice(LANG("datum.be234a2e", list(limb.plaintext_zone))))
 				set_disabling(FALSE)
 				return
 
@@ -113,17 +113,17 @@
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
 			if(!disabling)
 				if(SPT_PROB(1.5, seconds_per_tick))
-					to_chat(victim, span_warning("<b>You suddenly lose all sensation of the festering infection in your [limb.plaintext_zone]!</b>"))
+					to_chat(victim, span_warning(LANG("datum.1619323d", list(limb.plaintext_zone))))
 					set_disabling(TRUE)
 					return
 			else if(SPT_PROB(1.5, seconds_per_tick))
-				to_chat(victim, span_notice("You can barely feel your [limb.plaintext_zone] again, and you have to strain to retain motor control!"))
+				to_chat(victim, span_notice(LANG("datum.5a66e4e7", list(limb.plaintext_zone))))
 				set_disabling(FALSE)
 				return
 
 			if(SPT_PROB(2.48, seconds_per_tick))
 				if(prob(20))
-					to_chat(victim, span_warning("You contemplate life without your [limb.plaintext_zone]..."))
+					to_chat(victim, span_warning(LANG("datum.b38357b1", list(limb.plaintext_zone))))
 					victim.adjust_tox_loss(0.75)
 				else
 					victim.adjust_tox_loss(1)
@@ -133,11 +133,11 @@
 				strikes_to_lose_limb--
 				switch(strikes_to_lose_limb)
 					if(2 to INFINITY)
-						to_chat(victim, span_deadsay("<b>The infection in your [limb.plaintext_zone] is literally dripping off, you feel horrible!</b>"))
+						to_chat(victim, span_deadsay(LANG("datum.e444e6b2", list(limb.plaintext_zone))))
 					if(1)
-						to_chat(victim, span_deadsay("<b>Infection has just about completely claimed your [limb.plaintext_zone]!</b>"))
+						to_chat(victim, span_deadsay(LANG("datum.be9fc50a", list(limb.plaintext_zone))))
 					if(0)
-						to_chat(victim, span_deadsay("<b>The last of the nerve endings in your [limb.plaintext_zone] wither away, as the infection completely paralyzes your joint connector.</b>"))
+						to_chat(victim, span_deadsay(LANG("datum.f42815aa", list(limb.plaintext_zone))))
 						threshold_penalty *= 2 // piss easy to destroy
 						set_disabling(TRUE)
 
@@ -187,15 +187,15 @@
 	. += LANG("datum.e254fbcf", null)
 	switch(infection)
 		if(-INFINITY to WOUND_INFECTION_MODERATE)
-			. += "No"
+			. += LANG("datum.08be49ad", null)
 		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-			. += "Moderate"
+			. += LANG("datum.9513b5d7", null)
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
-			. += "<b>Severe</b>"
+			. += LANG("datum.a436f6ff", null)
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-			. += "<b>Critical</b>"
+			. += LANG("datum.60ddd138", null)
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
-			. += "<b>Total</b>"
+			. += LANG("datum.af1d3c2d", null)
 	. += LANG("datum.c0f84c4e", null)
 
 /datum/wound/burn/flesh/get_scanner_description(mob/user)
@@ -212,13 +212,13 @@
 	else
 		switch(infection)
 			if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-				. += "Infection Level: Moderate\n"
+				. += LANG("datum.dcd0bfae", null)
 			if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
-				. += "Infection Level: Severe\n"
+				. += LANG("datum.e341cc73", null)
 			if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-				. += "Infection Level: [span_deadsay("CRITICAL")]\n"
+				. += LANG("datum.7232a45f", list(span_deadsay("CRITICAL")))
 			if(WOUND_INFECTION_SEPTIC to INFINITY)
-				. += "Infection Level: [span_deadsay("LOSS IMMINENT")]\n"
+				. += LANG("datum.7232a45f", list(span_deadsay("LOSS IMMINENT")))
 		if(infection > sanitization)
 			. += LANG("datum.a90463d2", null)
 

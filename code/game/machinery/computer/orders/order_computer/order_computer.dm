@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 			if(!used_id_card || !used_id_card.registered_account)
-				say("No bank account detected!")
+				say(LANG("obj.89f005dd", null))
 				return
 			if(!purchase_items(used_id_card))
 				return
@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 				return
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 			if(!used_id_card || !used_id_card.registered_account)
-				say("No bank account detected!")
+				say(LANG("obj.89f005dd", null))
 				return
 			if(!purchase_items(used_id_card, express = TRUE))
 				return

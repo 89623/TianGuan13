@@ -52,13 +52,13 @@
 			if("Stake")
 				can_buckle = TRUE
 				buckle_requires_restraints = TRUE
-				to_chat(user, span_notice("You add a rod to \the [src]."))
+				to_chat(user, span_notice(LANG("obj.e0efcfd2", list(src))))
 				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_z = 16
 				underlays += rod_underlay
 			if("Grill")
 				grill = TRUE
-				to_chat(user, span_notice("You add a grill to \the [src]."))
+				to_chat(user, span_notice(LANG("obj.cbd79414", list(src))))
 				add_overlay("bonfire_grill")
 			else
 				return ..()

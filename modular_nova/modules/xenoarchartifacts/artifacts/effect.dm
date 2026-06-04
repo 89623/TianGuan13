@@ -225,19 +225,19 @@
 	. = "<b>"
 	switch(type_name)
 		if(ARTIFACT_EFFECT_ENERGY)
-			. += "Concentrated energy emissions"
+			. += LANG("datum.8e470fa4", null)
 		if(ARTIFACT_EFFECT_PSIONIC)
-			. += "Intermittent psionic wavefront"
+			. += LANG("datum.6ec27538", null)
 		if(ARTIFACT_EFFECT_ELECTRO)
-			. += "Electromagnetic energy"
+			. += LANG("datum.ab34e1c7", null)
 		if(ARTIFACT_EFFECT_PARTICLE)
-			. += "High frequency particles"
+			. += LANG("datum.217b41ac", null)
 		if(ARTIFACT_EFFECT_ORGANIC)
-			. += "Organically reactive exotic particles"
+			. += LANG("datum.94053b41", null)
 		if(ARTIFACT_EFFECT_BLUESPACE)
-			. += "Interdimensional/bluespace? phasing"
+			. += LANG("datum.61a27f21", null)
 		if(ARTIFACT_EFFECT_SYNTH)
-			. += "Atomic synthesis"
+			. += LANG("datum.3bff8118", null)
 		else
 			. += LANG("datum.ef7f7400", null)
 
@@ -245,11 +245,11 @@
 
 	switch(release_method)
 		if(ARTIFACT_EFFECT_TOUCH)
-			. += "interspersed throughout substructure and shell."
+			. += LANG("datum.958720ee", null)
 		if(ARTIFACT_EFFECT_AURA)
-			. += "emitting in an ambient energy field."
+			. += LANG("datum.188b6f62", null)
 		if(ARTIFACT_EFFECT_PULSE)
-			. += "emitting in periodic bursts."
+			. += LANG("datum.24c8b4f9", null)
 		else
 			. += LANG("datum.1f0a74dc", null)
 
@@ -257,11 +257,11 @@
 
 	switch(trigger)
 		if(TRIGGER_TOUCH, TRIGGER_WATER, TRIGGER_ACID, TRIGGER_VOLATILE, TRIGGER_TOXIN)
-			. += " Activation index involves <b>physical interaction</b> with artifact surface."
+			. += LANG("datum.56412fde", null)
 		if(TRIGGER_FORCE, TRIGGER_ENERGY, TRIGGER_HEAT, TRIGGER_COLD)
-			. += " Activation index involves <b>energetic interaction</b> with artifact surface."
+			. += LANG("datum.59d10d6d", null)
 		if(TRIGGER_PLASMA, TRIGGER_OXY, TRIGGER_CO2, TRIGGER_NITRO)
-			. += " Activation index involves <b>precise local atmospheric conditions</b>."
+			. += LANG("datum.6aba8b24", null)
 		else
 			. += LANG("datum.fdd55645", null)
 

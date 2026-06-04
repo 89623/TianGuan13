@@ -176,7 +176,7 @@
 				attacked.adjust_pain(PAIN_DEFAULT)
 
 			else
-				to_chat(user, span_danger("Looks like [attacked]'s groin is covered!"))
+				to_chat(user, span_danger(LANG("obj.c5b0317d", list(attacked))))
 				return
 
 		if(BODY_ZONE_CHEST)
@@ -188,7 +188,7 @@
 				attacked.adjust_pain(PAIN_DEFAULT * 0.66)
 
 			else
-				to_chat(user, span_danger("Looks like [attacked]'s chest is covered!"))
+				to_chat(user, span_danger(LANG("obj.b0aede84", list(attacked))))
 				return
 
 	if(!targeted_somewhere)

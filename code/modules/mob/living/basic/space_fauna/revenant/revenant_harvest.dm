@@ -75,13 +75,13 @@
 
 	switch(essence_drained)
 		if(1 to 30)
-			to_chat(src, span_revennotice("[target] will not yield much essence. Still, every bit counts."))
+			to_chat(src, span_revennotice(LANG("mob.57c0a392", list(target))))
 		if(30 to 70)
-			to_chat(src, span_revennotice("[target] will yield an average amount of essence."))
+			to_chat(src, span_revennotice(LANG("mob.9bf81dae", list(target))))
 		if(70 to 90)
-			to_chat(src, span_revenboldnotice("Such a feast! [target] will yield much essence to you."))
+			to_chat(src, span_revenboldnotice(LANG("mob.92833fd0", list(target))))
 		if(90 to INFINITY)
-			to_chat(src, span_revenbignotice("Ah, the perfect soul. [target] will yield massive amounts of essence to you."))
+			to_chat(src, span_revenbignotice(LANG("mob.1271f729", list(target))))
 
 	if(!do_after(src, (rand(15, 25) DECISECONDS), target, timed_action_flags = IGNORE_HELD_ITEM)) //how about now
 		to_chat(src, span_revenwarning(LANG("mob.bcf6fa71", list(target ? "[target]'s" : "[target_their]"))))

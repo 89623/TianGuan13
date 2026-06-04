@@ -492,20 +492,20 @@
 	switch (loading)
 		if (CTF_LOADING_UNLOADED)
 			if (isnull(GLOB.ctf_spawner))
-				to_chat(user, span_boldwarning("Couldn't find a CTF spawner. Call a maintainer!"))
+				to_chat(user, span_boldwarning(LANG("_root.5cbc1435", null)))
 				return
 
-			to_chat(user, span_notice("Loading CTF..."))
+			to_chat(user, span_notice(LANG("_root.5cbf36c9", null)))
 
 			loading = CTF_LOADING_LOADING
 			if(activated_id == CTF_GHOST_CTF_GAME_ID) //Only ghost CTF supports map loading, if CTF is started by an admin elsewhere the map loader should not be used.
 				if(!GLOB.ctf_spawner.load_map(user))
-					to_chat(user, span_warning("CTF loading was cancelled"))
+					to_chat(user, span_warning(LANG("_root.0078b0eb", null)))
 					loading = CTF_LOADING_UNLOADED
 					return
 			loading = CTF_LOADING_LOADED
 		if (CTF_LOADING_LOADING)
-			to_chat(user, span_warning("CTF is loading!"))
+			to_chat(user, span_warning(LANG("_root.86c3bb79", null)))
 
 			return
 

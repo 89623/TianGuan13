@@ -233,21 +233,21 @@
 			if(!log_data[index])
 				return
 			if(scanner_busy)
-				balloon_alert(ui.user, "scanner busy!")
+				balloon_alert(ui.user, LANG("obj.d1dc28fd", null))
 				return
 			log_data.Cut(index, index + 1)
-			balloon_alert(ui.user, "log deleted")
+			balloon_alert(ui.user, LANG("obj.3322d3d4", null))
 			ui.send_update()
 		if("print")
 			if(!length(log_data))
-				balloon_alert(ui.user, "no logs!")
+				balloon_alert(ui.user, LANG("obj.bd1bb18b", null))
 				return
 			if(scanner_busy)
-				balloon_alert(ui.user, "scanner busy!")
+				balloon_alert(ui.user, LANG("obj.d1dc28fd", null))
 				return
 			scanner_busy = TRUE
 			playsound(src, 'sound/machines/printer.ogg', 50)
-			balloon_alert(ui.user, "printing report...")
+			balloon_alert(ui.user, LANG("obj.6a68c3d7", null))
 			addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 3 SECONDS)
 
 /obj/item/detective_scanner/proc/clear_logs(mob/living/user)

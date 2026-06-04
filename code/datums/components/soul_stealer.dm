@@ -37,11 +37,11 @@
 	var/num_souls = length(soulstones)
 	switch(num_souls)
 		if(0)
-			examine_list += span_notice("It has not consumed any souls yet.")
+			examine_list += span_notice(LANG("datum.53ffccd7", null))
 		if(1 to 9)
-			examine_list += span_notice("There are <b>[num_souls]</b> souls trapped within it.")
+			examine_list += span_notice(LANG("datum.859bffb0", list(num_souls)))
 		if(10 to INFINITY)
-			examine_list += span_notice("A staggering <b>[num_souls]</b> souls have been claimed by it! And it hungers for more!")
+			examine_list += span_notice(LANG("datum.eedf32f7", list(num_souls)))
 
 /datum/component/soul_stealer/proc/on_afterattack(obj/item/source, atom/target, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER

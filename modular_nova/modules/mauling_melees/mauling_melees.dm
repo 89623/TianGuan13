@@ -125,13 +125,13 @@
 	switch(worn_variant)
 		if (MACHETE_BACK)
 			worn_variant = MACHETE_WAIST
-			to_chat(user, "You adjust [src] to hang sideways behind your back.")
+			to_chat(user, LANG("obj.9e4c3905", list(src)))
 		if (MACHETE_WAIST)
 			worn_variant = MACHETE_LEG
-			to_chat(user, "You adjust [src] to hang down your leg.")
+			to_chat(user, LANG("obj.cbf5e8fa", list(src)))
 		if (MACHETE_LEG)
 			worn_variant = MACHETE_BACK
-			to_chat(user, "You adjust [src] to hang across your back.")
+			to_chat(user, LANG("obj.e9bfd247", list(src)))
 	update_appearance()
 
 #undef MACHETE_BACK

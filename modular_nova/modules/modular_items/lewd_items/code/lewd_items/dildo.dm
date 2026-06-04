@@ -107,11 +107,11 @@
 		if(BODY_ZONE_PRECISE_GROIN)
 			var/obj/item/organ/genital/vagina = target.get_organ_slot(ORGAN_SLOT_VAGINA)
 			if(!vagina)
-				to_chat(user, span_danger("[target] don't have suitable genitalia for that!"))
+				to_chat(user, span_danger(LANG("obj.f296b715", list(target))))
 				return FALSE
 
 			if(!(target.is_bottomless() || vagina.visibility_preference == GENITAL_ALWAYS_SHOW))
-				to_chat(user, span_danger("[target]'s groin is covered!"))
+				to_chat(user, span_danger(LANG("obj.27926522", list(target))))
 				return FALSE
 
 			message = (user == target) ? pick("rubs [target.p_their()] vagina with [src]", "gently jams [target.p_their()] pussy with [src]", "fucks [target.p_their()] vagina with a [src]") : pick("delicately rubs [target]'s vagina with [src]", "uses [src] to fuck [target]'s vagina", "jams [target]'s pussy with [src]", "teasing [target]'s pussy with [src]")
@@ -135,7 +135,7 @@
 
 		if(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES) //Mouth only. Sorry, perverts. No eye/ear penetration for you today.
 			if(target.is_mouth_covered())
-				to_chat(user, span_danger("Looks like [target]'s mouth is covered!"))
+				to_chat(user, span_danger(LANG("obj.135b3b1c", list(target))))
 				return FALSE
 
 			message = (user == target) ? pick("licks [src] erotically", "sucks on [src], slowly inserting it into [target.p_their()] throat") : pick("fucks [target]'s mouth with [src]", "inserts [src] into [target]'s throat, choking [target.p_them()]", "forces [target] to suck [src]", "inserts [src] into [target]'s throat")

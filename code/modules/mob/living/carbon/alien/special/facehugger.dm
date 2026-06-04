@@ -78,9 +78,9 @@
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			. += span_bolddanger("[src] is not moving.")
+			. += span_bolddanger(LANG("obj.8cd79fd7", list(src)))
 		if(CONSCIOUS)
-			. += span_bolddanger("[src] seems to be active!")
+			. += span_bolddanger(LANG("obj.dbd4aad2", list(src)))
 	if (sterile)
 		. += span_bolddanger(LANG("obj.f6fdd2f1", null))
 

@@ -142,7 +142,7 @@
 				target.adjust_pleasure(DEFAULT_PLEASURE_INCREASE)
 
 			else
-				to_chat(user, span_danger("Looks like [target]'s groin is covered!"))
+				to_chat(user, span_danger(LANG("obj.c5b0317d", list(target))))
 				return
 
 			if(prob(50) && (target.stat != DEAD))
@@ -160,7 +160,7 @@
 					target.try_lewd_autoemote(pick("twitch_s", "moan"))
 
 			else
-				to_chat(user, span_danger("Looks like [target]'s chest is covered!"))
+				to_chat(user, span_danger(LANG("obj.b0aede84", list(target))))
 				return
 	if(!targetedsomewhere)
 		return
@@ -171,13 +171,13 @@
 	toggle_mode()
 	switch(vibration_mode)
 		if("low")
-			to_chat(user, span_notice("Vibration mode now is low. Bzzz..."))
+			to_chat(user, span_notice(LANG("obj.e12c5aec", null)))
 		if("medium")
-			to_chat(user, span_notice("Vibration mode now is medium. Bzzzz!"))
+			to_chat(user, span_notice(LANG("obj.64762236", null)))
 		if("hard")
-			to_chat(user, span_notice("Vibration mode now is hard. Careful with that thing."))
+			to_chat(user, span_notice(LANG("obj.f9232b07", null)))
 		if("off")
-			to_chat(user, span_notice("Vibrator turned off. Fun's over?"))
+			to_chat(user, span_notice(LANG("obj.d11412a8", null)))
 	update_icon()
 	update_icon_state()
 

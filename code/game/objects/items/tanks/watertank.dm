@@ -262,19 +262,19 @@
 			nozzle_mode = RESIN_LAUNCHER
 			if(uses_pack)
 				tank.icon_state = "waterbackpackatmos_1"
-			balloon_alert(user, "switched to resin launcher")
+			balloon_alert(user, LANG("obj.567793aa", null))
 			return
 		if(RESIN_LAUNCHER)
 			nozzle_mode = RESIN_FOAM
 			if(uses_pack)
 				tank.icon_state = "waterbackpackatmos_2"
-			balloon_alert(user, "switched to resin foam")
+			balloon_alert(user, LANG("obj.9138c32b", null))
 			return
 		if(RESIN_FOAM)
 			nozzle_mode = EXTINGUISHER
 			if(uses_pack)
 				tank.icon_state = "waterbackpackatmos_0"
-			balloon_alert(user, "switched to fire extinguisher")
+			balloon_alert(user, LANG("obj.b0638d2a", null))
 			return
 	return
 

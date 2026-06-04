@@ -128,24 +128,24 @@
 			return TRUE
 		if ("start_scan")
 			if (isnull(input))
-				balloon_alert(ui.user, "no linked scanner!")
+				balloon_alert(ui.user, LANG("obj.1398f248", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (isnull(input.occupant))
-				balloon_alert(ui.user, "scanner empty!")
+				balloon_alert(ui.user, LANG("obj.b54f9423", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (!iscarbon(input.occupant))
-				balloon_alert(ui.user, "invalid subject!")
+				balloon_alert(ui.user, LANG("obj.446687b1", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			var/mob/living/carbon/carbon_occupant = input.occupant
 			if (!carbon_occupant.has_dna())
-				balloon_alert(ui.user, "invalid subject!")
+				balloon_alert(ui.user, LANG("obj.446687b1", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (input.scanning)
-				balloon_alert(ui.user, "scanner busy!")
+				balloon_alert(ui.user, LANG("obj.d1dc28fd", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 
@@ -154,15 +154,15 @@
 			return TRUE
 		if ("start_clone")
 			if (isnull(output))
-				balloon_alert(ui.user, "no linked pod!")
+				balloon_alert(ui.user, LANG("obj.46d7373c", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (output.running)
-				balloon_alert(ui.user, "pod busy!")
+				balloon_alert(ui.user, LANG("obj.f8717682", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (isnull(stored_record))
-				balloon_alert(ui.user, "no stored DNA!")
+				balloon_alert(ui.user, LANG("obj.345f0970", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 

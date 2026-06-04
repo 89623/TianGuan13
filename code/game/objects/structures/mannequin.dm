@@ -134,20 +134,20 @@
 		return
 	switch(choice)
 		if("Underwear")
-			var/new_undies = tgui_input_list(user, "Select the mannequin's underwear", "Changing", SSaccessories.underwear_list)
+			var/new_undies = tgui_input_list(user, LANG("obj.b034ba46", null), LANG("obj.e27ef6c6", null), SSaccessories.underwear_list)
 			if(new_undies)
 				underwear_name = new_undies
 		if("Undershirt")
-			var/new_undershirt = tgui_input_list(user, "Select the mannequin's undershirt", "Changing", SSaccessories.undershirt_list)
+			var/new_undershirt = tgui_input_list(user, LANG("obj.8349214a", null), LANG("obj.e27ef6c6", null), SSaccessories.undershirt_list)
 			if(new_undershirt)
 				undershirt_name = new_undershirt
 		if("Socks")
-			var/new_socks = tgui_input_list(user, "Select the mannequin's socks", "Changing", SSaccessories.socks_list)
+			var/new_socks = tgui_input_list(user, LANG("obj.3481a4f6", null), LANG("obj.e27ef6c6", null), SSaccessories.socks_list)
 			if(new_socks)
 				socks_name = new_socks
 		//NOVA EDIT ADDITION BEGIN - Underwear and Bra split
 		if("Bra")
-			var/new_bra = tgui_input_list(user, "Select the mannequin's bra", "Changing", SSaccessories.bra_list)
+			var/new_bra = tgui_input_list(user, LANG("obj.73ee763e", null), LANG("obj.e27ef6c6", null), SSaccessories.bra_list)
 			if(new_bra)
 				bra_name = new_bra
 		//NOVA EDIT END

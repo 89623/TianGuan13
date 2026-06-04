@@ -233,13 +233,13 @@
 	. = ..()
 	switch(severity)
 		if(SEVERITY_DEAD)
-			. += span_notice("This card indicates that the patient is deceased or is not expected to survive.")
+			. += span_notice(LANG("obj.718ef421", null))
 		if(SEVERITY_IMMEDIATE)
-			. += span_notice("This card indicates that the patient is in a critical condition and requires immediate attention.")
+			. += span_notice(LANG("obj.f5eb8b0f", null))
 		if(SEVERITY_DELAYED)
-			. += span_notice("This card indicates that the patient is seriously injured, but not in immediate danger.")
+			. += span_notice(LANG("obj.9af4f4ad", null))
 		if(SEVERITY_MINIMAL)
-			. += span_notice("This card indicates that the patient is only slightly injured.")
+			. += span_notice(LANG("obj.e156d0b3", null))
 
 	. += span_smallnoticeital(LANG("obj.a60bfbb2", null))
 

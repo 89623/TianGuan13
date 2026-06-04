@@ -48,11 +48,11 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 		if(REGULAR_RESTART, REGULAR_RESTART_DELAYED, NO_EVENT_RESTART)
 			var/delay = 1
 			if(result == REGULAR_RESTART_DELAYED)
-				delay = input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
+				delay = input(LANG("datum.14beaff1", null), LANG("datum.d3863989", null), 5) as num|null
 			if(!delay)
 				return FALSE
 			if(!user.is_localhost())
-				if(alert(user,"Are you sure you want to restart the server?","This server is live", "Restart", "Cancel") != "Restart")
+				if(alert(user,LANG("datum.83714097", null),LANG("datum.311a780e", null), "Restart", "Cancel") != "Restart")
 					return FALSE
 
 			if (result != NO_EVENT_RESTART)
@@ -60,13 +60,13 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 
 			SSticker.Reboot(init_by, "admin reboot - by [user.key] [user.holder.fakekey ? "(stealth)" : ""]", delay * 10)
 		if(HARD_RESTART)
-			to_chat(world, "World reboot - [init_by]")
+			to_chat(world, LANG("datum.4a152bc2", list(init_by)))
 			world.Reboot()
 		if(HARDEST_RESTART)
-			to_chat(world, "Hard world reboot - [init_by]")
+			to_chat(world, LANG("datum.ffaeb44e", list(init_by)))
 			world.Reboot(fast_track = TRUE)
 		if(TGS_RESTART)
-			to_chat(world, "Server restart - [init_by]")
+			to_chat(world, LANG("datum.589a8707", list(init_by)))
 			world.TgsEndProcess()
 
 #undef REGULAR_RESTART
@@ -181,17 +181,17 @@ ADMIN_VERB(toggle_respawn, R_SERVER, "Toggle Respawn", "Toggle the ability to re
 		if(RESPAWN_FLAG_DISABLED) // respawn currently disabled
 			new_state = RESPAWN_FLAG_FREE
 			new_state_text = "Enabled"
-			to_chat(world, span_bold("You may now respawn."), confidential = TRUE)
+			to_chat(world, span_bold(LANG("datum.53d44fc6", null)), confidential = TRUE)
 
 		if(RESPAWN_FLAG_FREE) // respawn currently enabled
 			new_state = RESPAWN_FLAG_NEW_CHARACTER
 			new_state_text = "Enabled, Different Slot"
-			to_chat(world, span_bold("You may now respawn as a different character."), confidential = TRUE)
+			to_chat(world, span_bold(LANG("datum.abc943d4", null)), confidential = TRUE)
 
 		if(RESPAWN_FLAG_NEW_CHARACTER) // respawn currently enabled for different slot characters only
 			new_state = RESPAWN_FLAG_DISABLED
 			new_state_text = "Disabled"
-			to_chat(world, span_bold("You may no longer respawn."), confidential = TRUE)
+			to_chat(world, span_bold(LANG("datum.3e39f8b5", null)), confidential = TRUE)
 
 		else
 			WARNING("Invalid respawn state in config: [respawn_state]")

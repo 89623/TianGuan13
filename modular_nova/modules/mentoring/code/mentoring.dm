@@ -285,18 +285,18 @@
 					language_list += list("Galactic Standard Sign Language")
 
 				if(length(language_list) < 1 || current_lang < SKILL_LEVEL_MASTER)
-					to_chat(user, span_warning("You are not a master at languages, and therefore cannot write books teaching languages."))
+					to_chat(user, span_warning(LANG("obj.f27dc797", null)))
 					return ITEM_INTERACT_BLOCKING
 
-				var/language_choice = tgui_input_list(user, "Which language would you like to write about?", "Language Selection", language_list)
+				var/language_choice = tgui_input_list(user, LANG("obj.8d3f892a", null), LANG("obj.2d244b3b", null), language_list)
 				if(isnull(language_choice))
-					to_chat(user, span_notice("You decide against writing."))
+					to_chat(user, span_notice(LANG("obj.5e71fe34", null)))
 					return ITEM_INTERACT_BLOCKING
 
 				if(!do_progress_loop(user, writing_progress, writing_sentences, 5, 60 SECONDS, "You resume writing from where you left off..."))
 					return ITEM_INTERACT_BLOCKING
 
-				to_chat(user, span_notice("You finish writing inside the book about your language."))
+				to_chat(user, span_notice(LANG("obj.ab6055be", null)))
 				playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 				if(language_choice == "Galactic Standard Sign Language")
 					teach_sign = TRUE
@@ -316,23 +316,23 @@
 					our_skills[initial(skill.name)] = skill
 
 				if(!length(our_skills))
-					to_chat(user, span_warning("You don't know any skills to write about!"))
+					to_chat(user, span_warning(LANG("obj.fa4788c3", null)))
 					return ITEM_INTERACT_BLOCKING
 
-				var/skill_choice = tgui_input_list(user, "Which skill would you like to write about?", "Skill Selection", our_skills)
+				var/skill_choice = tgui_input_list(user, LANG("obj.83a599b3", null), LANG("obj.5b84b37a", null), our_skills)
 				if(isnull(skill_choice))
-					to_chat(user, span_notice("You decide against writing."))
+					to_chat(user, span_notice(LANG("obj.5e71fe34", null)))
 					return ITEM_INTERACT_BLOCKING
 
 				var/skill_level = user.mind?.get_skill_level(our_skills[skill_choice])
 				if(skill_level < SKILL_LEVEL_APPRENTICE)
-					to_chat(user, span_warning("You are not skilled enough to write about this skill!"))
+					to_chat(user, span_warning(LANG("obj.32b3e64c", null)))
 					return ITEM_INTERACT_BLOCKING
 
 				if(!do_progress_loop(user, writing_progress, writing_sentences, 5, 60 SECONDS, "You resume writing from where you left off..."))
 					return ITEM_INTERACT_BLOCKING
 
-				to_chat(user, span_notice("You finish writing inside the book about your skill."))
+				to_chat(user, span_notice(LANG("obj.900f31cf", null)))
 				playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 				taught_skill = our_skills[skill_choice]
 				author_level = skill_level - 1

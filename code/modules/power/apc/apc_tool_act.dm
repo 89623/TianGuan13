@@ -331,12 +331,12 @@
 			has_electronics = APC_ELECTRONICS_SECURED
 			set_machine_stat(machine_stat & ~MAINT)
 			W.play_tool_sound(src)
-			balloon_alert(user, "board fastened")
+			balloon_alert(user, LANG("obj.e041e2cf", null))
 		if(APC_ELECTRONICS_SECURED)
 			has_electronics = APC_ELECTRONICS_INSTALLED
 			set_machine_stat(machine_stat | MAINT)
 			W.play_tool_sound(src)
-			balloon_alert(user, "board unfastened")
+			balloon_alert(user, LANG("obj.6744f6f3", null))
 		else
 			balloon_alert(user, LANG("obj.97b3363e", null))
 			return

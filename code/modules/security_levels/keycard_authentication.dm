@@ -106,7 +106,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 			if(!living_user || !istype(living_user))
 				return TRUE
 			if(!COOLDOWN_FINISHED(src, access_grant_cooldown))
-				balloon_alert(usr, "on cooldown!")
+				balloon_alert(usr, LANG("obj.d4ae5d4d", null))
 				return TRUE
 			var/obj/item/card/id/advanced/card = living_user.get_idcard(hand_first = TRUE)
 			if(!card)

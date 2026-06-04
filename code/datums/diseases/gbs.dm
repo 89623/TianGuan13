@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/gbs
 	name = "GBS"
 	desc = "An extremely rare and dangerous disease that has been researched little due to its potentially apocalyptic nature."
@@ -27,9 +28,9 @@
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("gasp")
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your body hurts all over!"))
+				to_chat(affected_mob, span_danger(LANG("datum.0fc5812b", null)))
 		if(4)
-			to_chat(affected_mob, span_userdanger("Your body feels as if it's trying to rip itself apart!"))
+			to_chat(affected_mob, span_userdanger(LANG("datum.44448775", null)))
 			if(SPT_PROB(30, seconds_per_tick))
 				affected_mob.investigate_log("has been gibbed by GBS.", INVESTIGATE_DEATHS)
 				affected_mob.gib(DROP_ALL_REMAINS)

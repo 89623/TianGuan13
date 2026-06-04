@@ -241,7 +241,7 @@
 			if(inject_chem(chem, usr))
 				. = TRUE
 				if((obj_flags & EMAGGED) && prob(5))
-					to_chat(usr, span_warning("Chemical system re-route detected, results may not be as expected!"))
+					to_chat(usr, span_warning(LANG("obj.300439fe", null)))
 
 /obj/machinery/sleeper/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

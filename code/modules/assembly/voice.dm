@@ -57,15 +57,15 @@
 		if(INCLUSIVE_MODE)
 			recorded = raw_message
 			listening = FALSE
-			say("Activation message is '[recorded]'.", sanitize = FALSE, language = message_language)
+			say(LANG("obj.3a309903", list(recorded)), sanitize = FALSE, language = message_language)
 		if(EXCLUSIVE_MODE)
 			recorded = raw_message
 			listening = FALSE
-			say("Activation message is '[recorded]'.", sanitize = FALSE, language = message_language)
+			say(LANG("obj.3a309903", list(recorded)), sanitize = FALSE, language = message_language)
 		if(RECOGNIZER_MODE)
 			recorded = speaker.get_voice()
 			listening = FALSE
-			say("Your voice pattern is saved.", language = message_language)
+			say(LANG("obj.d629613e", null), language = message_language)
 		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
 				send_pulse()

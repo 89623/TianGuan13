@@ -82,7 +82,7 @@
 						relative_turf = locate(1, 1, 1)
 
 				if (!relative_turf)
-					to_chat(user, span_warning("Could not determine a valid relative location."))
+					to_chat(user, span_warning(LANG("datum.0549d3ce", null)))
 					return
 
 				target = locate(relative_turf.x + X, relative_turf.y + Y, relative_turf.z + Z)

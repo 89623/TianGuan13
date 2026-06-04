@@ -29,31 +29,31 @@
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	switch(state)
 		if(CORE_STATE_EMPTY)
-			balloon_alert(user, "nothing to screw in there!")
+			balloon_alert(user, LANG("obj.cc83c63c", null))
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CIRCUIT)
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CIRCUIT)))
 				return ITEM_INTERACT_BLOCKING
-			balloon_alert(user, "board secured")
+			balloon_alert(user, LANG("obj.e9892414", null))
 			UPDATE_STATE(CORE_STATE_SCREWED)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_SCREWED)
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_SCREWED)))
 				return ITEM_INTERACT_BLOCKING
-			balloon_alert(user, "board unsecured")
+			balloon_alert(user, LANG("obj.8b7c5fd2", null))
 			UPDATE_STATE(CORE_STATE_CIRCUIT)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_CABLED)
-			balloon_alert(user, "can't reach the board!")
+			balloon_alert(user, LANG("obj.33852620", null))
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_GLASSED)
 			if(!anchored)
-				balloon_alert(user, "isn't anchored!")
+				balloon_alert(user, LANG("obj.25a662c1", null))
 				return ITEM_INTERACT_BLOCKING
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_GLASSED)))
 				return ITEM_INTERACT_BLOCKING
 			if(suicide_check())
-				balloon_alert(user, "processor is completely useless!")
+				balloon_alert(user, LANG("obj.469f0767", null))
 				return ITEM_INTERACT_BLOCKING
 
 			var/atom/movable/alert_source = src
@@ -65,20 +65,20 @@
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_FINISHED)
 			if(!core_mmi?.brainmob?.mind || suicide_check())
-				balloon_alert(user, "processor is inactive!")
+				balloon_alert(user, LANG("obj.1a71685b", null))
 				return ITEM_INTERACT_BLOCKING
 
 			if(!anchored)
-				balloon_alert(user, "anchor it first!")
+				balloon_alert(user, LANG("obj.c16d48e2", null))
 				return ITEM_INTERACT_BLOCKING
 
-			balloon_alert(user, "connecting neural network...")
+			balloon_alert(user, LANG("obj.f1bc28cc", null))
 			if(!tool.use_tool(src, user, 10 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_FINISHED)))
 				return ITEM_INTERACT_BLOCKING
 
 			var/atom/movable/alert_source = ai_structure_to_mob()
 			if(!alert_source)
-				balloon_alert(user, "processor is inactive!")
+				balloon_alert(user, LANG("obj.1a71685b", null))
 				return ITEM_INTERACT_BLOCKING
 
 			alert_source.balloon_alert(user, "connected neural network")
@@ -87,7 +87,7 @@
 /obj/structure/ai_core/crowbar_act(mob/living/user, obj/item/tool)
 	switch(state)
 		if(CORE_STATE_EMPTY)
-			balloon_alert(user, "nothing to pry out!")
+			balloon_alert(user, LANG("obj.2fa9bc29", null))
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CIRCUIT)
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CIRCUIT)))
@@ -97,11 +97,11 @@
 			UPDATE_STATE(CORE_STATE_EMPTY)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_SCREWED)
-			balloon_alert(user, "won't budge!")
+			balloon_alert(user, LANG("obj.13d01237", null))
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CABLED)
 			if(!core_mmi)
-				balloon_alert(user, "nothing to pry out!")
+				balloon_alert(user, LANG("obj.2fa9bc29", null))
 				return ITEM_INTERACT_BLOCKING
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)
 				return ITEM_INTERACT_BLOCKING
@@ -117,17 +117,17 @@
 			UPDATE_STATE(CORE_STATE_CABLED)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_FINISHED)
-			balloon_alert(user, "display is on!")
+			balloon_alert(user, LANG("obj.1f67c891", null))
 			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/wirecutter_act(mob/living/user, obj/item/tool)
 	switch(state)
 		if(CORE_STATE_EMPTY to CORE_STATE_CIRCUIT)
-			balloon_alert(user, "nothing to cut!")
+			balloon_alert(user, LANG("obj.89358e90", null))
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CABLED)
 			if(core_mmi)
-				balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] in the way!")
+				balloon_alert(user, LANG("obj.84ae9144", list(AI_CORE_BRAIN(core_mmi))))
 				return ITEM_INTERACT_BLOCKING
 
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || core_mmi)
@@ -137,7 +137,7 @@
 			UPDATE_STATE(CORE_STATE_SCREWED)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_GLASSED)
-			balloon_alert(user, "nothing left to cut!")
+			balloon_alert(user, LANG("obj.ea8b2b38", null))
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_FINISHED)
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_FINISHED)))

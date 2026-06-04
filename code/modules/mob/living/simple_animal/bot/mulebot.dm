@@ -302,11 +302,11 @@
 			if(bot_mode_flags & BOT_MODE_ON)
 				turn_off()
 			else if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-				to_chat(user, span_warning("[name]'s maintenance panel is open!"))
+				to_chat(user, span_warning(LANG("mob.100cd79e", list(name))))
 				return
 			else if(cell)
 				if(!turn_on())
-					to_chat(user, span_warning("You can't switch on [src]!"))
+					to_chat(user, span_warning(LANG("mob.8660e133", list(src))))
 					return
 			return TRUE
 		else
@@ -330,18 +330,18 @@
 		if("destination")
 			var/new_dest
 			if(pda)
-				new_dest = tgui_input_list(user, "Enter Destination", "Mulebot Settings", GLOB.deliverybeacontags, destination)
+				new_dest = tgui_input_list(user, LANG("mob.c6744401", null), LANG("mob.031a4a1d", null), GLOB.deliverybeacontags, destination)
 			else
 				new_dest = params["value"]
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
-			var/new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, max_length = MAX_NAME_LEN)
+			var/new_id = tgui_input_text(user, LANG("mob.a3c6bc88", null), LANG("mob.89704444", null), id, max_length = MAX_NAME_LEN)
 			if(new_id)
 				set_id(new_id)
 				name = "\improper MULEbot [new_id]"
 		if("sethome")
-			var/new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
+			var/new_home = tgui_input_list(user, LANG("mob.ae7a26e6", null), LANG("mob.031a4a1d", null), GLOB.deliverybeacontags, home_destination)
 			if(new_home)
 				home_destination = new_home
 		if("unload")
@@ -360,16 +360,16 @@
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
 		if(SIGH)
-			audible_message(span_hear("[src] makes a sighing buzz."))
+			audible_message(span_hear(LANG("mob.f7366c55", list(src))))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		if(ANNOYED)
-			audible_message(span_hear("[src] makes an annoyed buzzing sound."))
+			audible_message(span_hear(LANG("mob.b73d2a12", list(src))))
 			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
 		if(DELIGHT)
-			audible_message(span_hear("[src] makes a delighted ping!"))
+			audible_message(span_hear(LANG("mob.c4b5365b", list(src))))
 			playsound(src, 'sound/machines/ping.ogg', 50, FALSE)
 		if(CHIME)
-			audible_message(span_hear("[src] makes a chiming sound!"))
+			audible_message(span_hear(LANG("mob.3582e919", list(src))))
 			playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
 	flick("[base_icon]1", src)
 

@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 			announcer = "Sol Federation Marshal Department"
 			poll_question = "The station has called for the Marshals. Will you respond?"
 		if(EMERGENCY_RESPONSE_ATMOS)
-			team_size = tgui_input_number(usr, "How many techs would you like dispatched?", "How badly did you screw up?", 3, 3, 1)
+			team_size = tgui_input_number(usr, LANG("obj.5fcfb34a", null), LANG("obj.d18ed2c6", null), 3, 3, 1)
 			cops_to_send = /datum/antagonist/ert/request_911/atmos
 			announcement_message = "Crewmembers of [station_name()]. this is the Sol Federation's 811 dispatch. We've received a report of stationwide structural damage, atmospherics loss, fire, or otherwise, and we are \
 				sending an Advanced Atmospherics team to support your station.\n\n\

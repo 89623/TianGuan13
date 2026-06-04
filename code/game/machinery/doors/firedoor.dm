@@ -828,11 +828,11 @@
 	. = ..()
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
-			. += span_notice("It is <i>unbolted</i> from the floor. The circuit could be removed with a <b>crowbar</b>.")
+			. += span_notice(LANG("obj.05340c9f", null))
 			if(!reinforced && !directional)
-				. += span_notice("It could be reinforced with plasteel.")
+				. += span_notice(LANG("obj.c0a1cd47", null))
 		if(CONSTRUCTION_NO_CIRCUIT)
-			. += span_notice("There are no <i>firelock electronics</i> in the frame. The frame could be <b>welded</b> apart .")
+			. += span_notice(LANG("obj.274ad987", null))
 
 /obj/structure/firelock_frame/update_icon_state()
 	icon_state = "[base_icon_state][constructionStep]"
@@ -858,7 +858,7 @@
 				return
 			if(attacking_object.tool_behaviour == TOOL_WRENCH)
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
-					to_chat(user, span_warning("There's already a firelock there."))
+					to_chat(user, span_warning(LANG("obj.0d7012d0", null)))
 					return
 				attacking_object.play_tool_sound(src)
 				user.visible_message(span_notice("[user] starts bolting down [src]..."), \
@@ -882,14 +882,14 @@
 				return
 			if(istype(attacking_object, /obj/item/stack/sheet/plasteel))
 				if(directional)
-					to_chat(user, span_warning("[src] can not be reinforced."))
+					to_chat(user, span_warning(LANG("obj.212a4b92", list(src))))
 					return
 				var/obj/item/stack/sheet/plasteel/plasteel_sheet = attacking_object
 				if(reinforced)
-					to_chat(user, span_warning("[src] is already reinforced."))
+					to_chat(user, span_warning(LANG("obj.b1291ce0", list(src))))
 					return
 				if(plasteel_sheet.get_amount() < 2)
-					to_chat(user, span_warning("You need more plasteel to reinforce [src]."))
+					to_chat(user, span_warning(LANG("obj.08c912f3", list(src))))
 					return
 				user.visible_message(span_notice("[user] begins reinforcing [src]..."), \
 					span_notice("You begin reinforcing [src]..."))

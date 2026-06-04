@@ -103,7 +103,7 @@
 				drip.vars[slot] = null
 
 		if("rename")
-			var/newname = tgui_input_text(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME, max_length = MAX_NAME_LEN)
+			var/newname = tgui_input_text(owner, LANG("datum.f392fe89", null), OUTFIT_EDITOR_NAME, max_length = MAX_NAME_LEN)
 			if(newname)
 				drip.name = newname
 		if("save")
@@ -171,7 +171,7 @@
 				suit = new suit //initial() doesn't like lists
 				options = suit.allowed
 			if(!length(options)) //nothing will happen, but don't let the user think it's broken
-				to_chat(owner, span_warning("No options available for the current suit."))
+				to_chat(owner, span_warning(LANG("datum.c6a9008c", null)))
 
 		if("belt")
 			options = typesof(/obj/item/storage/belt)

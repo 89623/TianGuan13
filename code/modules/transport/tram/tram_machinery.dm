@@ -51,24 +51,24 @@
 
 	switch(response_code)
 		if(REQUEST_SUCCESS)
-			say("The tram has been called to the platform.")
+			say(LANG("obj.29253678", null))
 
 		if(REQUEST_FAIL)
 			switch(response_info)
 				if(BROKEN_BEYOND_REPAIR)
-					say("The tram has suffered a catastrophic failure. Please seek alternate modes of travel.")
+					say(LANG("obj.aa703320", null))
 				if(NOT_IN_SERVICE) //tram has no power or other fault, but it's not broken forever
-					say("The tram is not in service due to loss of power or system problems. Please contact the nearest engineer to check power and controller.")
+					say(LANG("obj.5b62f6a7", null))
 				if(INVALID_PLATFORM) //engineer needs to fix button
-					say("Button configuration error. Please contact the nearest engineer.")
+					say(LANG("obj.7825f195", null))
 				if(TRANSPORT_IN_USE)
-					say("The tram is tramversing the station, please wait.")
+					say(LANG("obj.317f4589", null))
 				if(INTERNAL_ERROR)
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					say(LANG("obj.335c006a", null))
 				if(NO_CALL_REQUIRED) //already here
-					say("The tram is already here. Please board the tram and select a destination.")
+					say(LANG("obj.c7cb3b73", null))
 				else
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					say(LANG("obj.335c006a", null))
 
 /obj/item/assembly/control/transport/call_button/activate()
 	if(cooldown)

@@ -335,7 +335,7 @@
 
 	switch(other_unbuckle)
 		if(CANNOT_FORCE_UNBUCKLE)
-			to_chat(unbuckler, span_warning("You can't dismount [source]'s rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"))
+			to_chat(unbuckler, span_warning(LANG("datum.2286a46c", list(source, length(source.buckled_mobs) == 1 ? "" : "s"))))
 		if(CAN_DISARM_UNBUCKLE)
 			parent_disarmed(source, unbuckler)
 
@@ -360,11 +360,11 @@
 			if(!disarmer.is_blind())
 				switch(disarm_chance)
 					if(50 to INFINITY)
-						to_chat(disarmer, span_warning("[source] barely holds stable as you shove them around! Keep at it!"))
+						to_chat(disarmer, span_warning(LANG("datum.4296b608", list(source))))
 					if(25 to 50)
-						to_chat(disarmer, span_warning("[source] holds stable as you shove them around! Weakening [source.p_their()] stability would help..."))
+						to_chat(disarmer, span_warning(LANG("datum.17e3a5aa", list(source, source.p_their()))))
 					if(-INFINITY to 25)
-						to_chat(disarmer, span_warning("[source] effortlessly holds stable as you shove them around! You'd need to weaken [source.p_their()] stability...!"))
+						to_chat(disarmer, span_warning(LANG("datum.62860f36", list(source, source.p_their()))))
 		return
 	source.visible_message(
 		span_warning("As [disarmer] shoves [source] around, [throwing] is thrown from [parent]!"),
@@ -392,11 +392,11 @@
 			if(!disarmer.is_blind())
 				switch(disarm_chance)
 					if(50 to INFINITY)
-						to_chat(disarmer, span_warning("[rider] barely holds on to [parent] as you shove them around! Keep at it!"))
+						to_chat(disarmer, span_warning(LANG("datum.3e4be57e", list(rider, parent))))
 					if(25 to 50)
-						to_chat(disarmer, span_warning("[rider] holds on to [parent] as you shove them around! Weakening [rider.p_their()] [pick("balance", "grip", "hold")] would help..."))
+						to_chat(disarmer, span_warning(LANG("datum.0be34028", list(rider, parent, rider.p_their(), pick("balance", "grip", "hold")))))
 					if(-INFINITY to 25)
-						to_chat(disarmer, span_warning("[rider] effortlessly holds on to [parent] as you shove them around! You'd need to weaken [rider.p_their()] [pick("balance", "grip", "hold")]...!"))
+						to_chat(disarmer, span_warning(LANG("datum.1d436a6d", list(rider, parent, rider.p_their(), pick("balance", "grip", "hold")))))
 		return
 
 	rider.visible_message(

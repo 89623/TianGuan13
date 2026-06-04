@@ -97,9 +97,9 @@
 
 	switch(class)
 		if(VV_RESTORE_DEFAULT)
-			to_chat(src, "Finding items...", confidential = TRUE)
+			to_chat(src, LANG("client.a7b247d9", null), confidential = TRUE)
 			var/list/items = get_all_of_type(target.type, strict_type)
-			to_chat(src, "Changing [items.len] items...", confidential = TRUE)
+			to_chat(src, LANG("client.21c9b9eb", list(items.len)), confidential = TRUE)
 			for(var/thing in items)
 				if (!thing)
 					continue
@@ -115,7 +115,7 @@
 			var/pre_processing = new_value
 			var/unique
 			if (varsvars?.len)
-				unique = tgui_alert(src, "Process vars unique to each instance, or same for all?", "Variable Association", list("Unique", "Same"))
+				unique = tgui_alert(src, LANG("client.88c860f0", null), LANG("client.e6e5f425", null), list("Unique", "Same"))
 				if(unique == "Unique")
 					unique = TRUE
 				else
@@ -123,9 +123,9 @@
 					for(var/V in varsvars)
 						new_value = replacetext(new_value,"\[[V]]","[target.vars[V]]")
 
-			to_chat(src, "Finding items...", confidential = TRUE)
+			to_chat(src, LANG("client.a7b247d9", null), confidential = TRUE)
 			var/list/items = get_all_of_type(target.type, strict_type)
-			to_chat(src, "Changing [items.len] items...", confidential = TRUE)
+			to_chat(src, LANG("client.21c9b9eb", list(items.len)), confidential = TRUE)
 			for(var/thing in items)
 				if (!thing)
 					continue
@@ -142,7 +142,7 @@
 				CHECK_TICK
 
 		if (VV_NEW_TYPE)
-			var/many = tgui_alert(src, "Create only one [value["type"]] and assign each or a new one for each thing", "How Many", list("One", "Many", "Cancel"))
+			var/many = tgui_alert(src, LANG("client.c1d2934a", list(value["type"])), LANG("client.93ccb966", null), list("One", "Many", "Cancel"))
 			if (many == "Cancel")
 				return
 			if (many == "Many")
@@ -151,9 +151,9 @@
 				many = FALSE
 
 			var/type = value["type"]
-			to_chat(src, "Finding items...", confidential = TRUE)
+			to_chat(src, LANG("client.a7b247d9", null), confidential = TRUE)
 			var/list/items = get_all_of_type(target.type, strict_type)
-			to_chat(src, "Changing [items.len] items...", confidential = TRUE)
+			to_chat(src, LANG("client.21c9b9eb", list(items.len)), confidential = TRUE)
 			for(var/thing in items)
 				if (!thing)
 					continue

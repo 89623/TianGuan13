@@ -428,7 +428,7 @@
 			return
 		if("change_message")
 			if(showpiece && !holographic_showpiece)
-				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, max_length = MAX_PLAQUE_LEN)
+				var/new_trophy_message = tgui_input_text(usr, LANG("obj.4eb968d1", null), LANG("obj.2c36c536", null), trophy_message, max_length = MAX_PLAQUE_LEN)
 				if(!new_trophy_message)
 					return
 				trophy_message = new_trophy_message
@@ -539,32 +539,32 @@
 	switch(action)
 		if("Buy")
 			if(!showpiece)
-				to_chat(usr, span_notice("There's nothing for sale."))
+				to_chat(usr, span_notice(LANG("obj.85410e60", null)))
 				return TRUE
 			if(broken)
-				to_chat(usr, span_notice("[src] appears to be broken."))
+				to_chat(usr, span_notice(LANG("obj.9b2d5e64", list(src))))
 				return TRUE
 			if(!payments_acc)
-				to_chat(usr, span_notice("[src] hasn't been registered yet."))
+				to_chat(usr, span_notice(LANG("obj.12494732", list(src))))
 				return TRUE
 			if(!usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return TRUE
 			if(!potential_acc)
-				to_chat(usr, span_notice("No ID card detected."))
+				to_chat(usr, span_notice(LANG("obj.9caa768c", null)))
 				return
 			var/datum/bank_account/account = potential_acc.registered_account
 			if(!account)
-				to_chat(usr, span_notice("[potential_acc] has no account registered!"))
+				to_chat(usr, span_notice(LANG("obj.f7f686dd", list(potential_acc))))
 				return
 			if(!account.has_money(sale_price))
-				to_chat(usr, span_notice("You do not possess the funds to purchase this."))
+				to_chat(usr, span_notice(LANG("obj.20e02771", null)))
 				return TRUE
 			else
 				account.adjust_money(-sale_price, "Display Case: [capitalize(showpiece.name)]")
 				if(payments_acc)
 					payments_acc.adjust_money(sale_price, "Display Case: [capitalize(showpiece.name)]")
 				usr.put_in_hands(showpiece)
-				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] [MONEY_NAME]."))
+				to_chat(usr, span_notice(LANG("obj.1af3cc8a", list(showpiece, sale_price, MONEY_NAME))))
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
@@ -573,7 +573,7 @@
 				return TRUE
 		if("Open")
 			if(!payments_acc)
-				to_chat(usr, span_notice("[src] hasn't been registered yet."))
+				to_chat(usr, span_notice(LANG("obj.12494732", list(src))))
 				return TRUE
 			if(!potential_acc || !potential_acc.registered_account)
 				return
@@ -596,17 +596,17 @@
 				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 				return
 
-			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000)
+			var/new_price_input = tgui_input_number(usr, LANG("obj.5fa906cc", null), LANG("obj.78cf09d8", null), 10, 1000)
 			if(!new_price_input || QDELETED(usr) || QDELETED(src))
 				return
 			if(payments_acc != potential_acc.registered_account)
-				to_chat(usr, span_warning("[src] rejects your new price."))
+				to_chat(usr, span_warning(LANG("obj.93939c6b", list(src))))
 				return
 			if(!usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-				to_chat(usr, span_warning("You need to get closer!"))
+				to_chat(usr, span_warning(LANG("obj.797948f3", null)))
 				return
 			sale_price = new_price_input
-			to_chat(usr, span_notice("The cost is now set to [sale_price]."))
+			to_chat(usr, span_notice(LANG("obj.fdb4bef1", list(sale_price))))
 			SStgui.update_uis(src)
 			return TRUE
 	. = TRUE

@@ -220,7 +220,7 @@
 				return
 			current_pad.display_name = new_name
 		if("remove")
-			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Orbital Pad", list("I'm Sure", "Abort")) == "I'm Sure")
+			if(usr && tgui_alert(usr, LANG("obj.77344162", null), LANG("obj.d6d07aba", null), list("I'm Sure", "Abort")) == "I'm Sure")
 				remove_pad(current_pad)
 				selected_id = null
 		if("launch")

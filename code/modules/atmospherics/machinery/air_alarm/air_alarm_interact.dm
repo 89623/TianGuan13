@@ -115,14 +115,14 @@
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/cable = W
 				if(cable.get_amount() < 5)
-					to_chat(user, span_warning("You need five lengths of cable to wire the air alarm!"))
+					to_chat(user, span_warning(LANG("obj.44b093d6", null)))
 					return
 				user.visible_message(span_notice("[user.name] wires the air alarm."), \
 									span_notice("You start wiring the air alarm..."))
 				if (do_after(user, 2 SECONDS, target = src))
 					if (cable.get_amount() >= 5 && buildstage == AIR_ALARM_BUILD_NO_WIRES)
 						cable.use(5)
-						to_chat(user, span_notice("You wire the air alarm."))
+						to_chat(user, span_notice(LANG("obj.038ce342", null)))
 						wires.repair()
 						aidisabled = FALSE
 						locked = FALSE
@@ -135,7 +135,7 @@
 		if(AIR_ALARM_BUILD_NO_CIRCUIT)
 			if(istype(W, /obj/item/electronics/airalarm))
 				if(user.temporarilyRemoveItemFromInventory(W))
-					to_chat(user, span_notice("You insert the circuit."))
+					to_chat(user, span_notice(LANG("obj.a4c18684", null)))
 					buildstage = AIR_ALARM_BUILD_NO_WIRES
 					update_appearance()
 					qdel(W)

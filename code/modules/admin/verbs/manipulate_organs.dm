@@ -13,7 +13,7 @@ ADMIN_VERB(manipulate_organs, R_DEBUG, "Manipulate Organs", "Manipulate the orga
 				var/dat = replacetext("[path]", "/obj/item/organ/", ":")
 				organs[dat] = path
 
-			var/obj/item/organ/organ_to_grant = tgui_input_list(user, "Select organ type", "Organ Manipulation", organs)
+			var/obj/item/organ/organ_to_grant = tgui_input_list(user, LANG("datum.e25f24ad", null), LANG("datum.c883f126", null), organs)
 			if(isnull(organ_to_grant))
 				return
 			if(isnull(organs[organ_to_grant]))
@@ -29,7 +29,7 @@ ADMIN_VERB(manipulate_organs, R_DEBUG, "Manipulate Organs", "Manipulate the orga
 				var/dat = replacetext("[path]", "/obj/item/implant/", ":")
 				organs[dat] = path
 
-			var/obj/item/implant/implant_to_grant = tgui_input_list(user, "Select implant type", "Organ Manipulation", organs)
+			var/obj/item/implant/implant_to_grant = tgui_input_list(user, LANG("datum.998c4325", null), LANG("datum.c883f126", null), organs)
 			if(isnull(implant_to_grant))
 				return
 			if(isnull(organs[implant_to_grant]))
@@ -37,7 +37,7 @@ ADMIN_VERB(manipulate_organs, R_DEBUG, "Manipulate Organs", "Manipulate the orga
 			implant_to_grant = organs[implant_to_grant]
 			implant_to_grant = new implant_to_grant
 			if(!implant_to_grant.implant(carbon_victim))
-				to_chat(user, span_notice("[carbon_victim] is unable to hold this implant!"))
+				to_chat(user, span_notice(LANG("datum.caa15185", list(carbon_victim))))
 				qdel(implant_to_grant)
 				return
 			log_admin("[key_name(user)] has added implant [implant_to_grant.type] to [key_name(carbon_victim)]")
@@ -50,7 +50,7 @@ ADMIN_VERB(manipulate_organs, R_DEBUG, "Manipulate Organs", "Manipulate the orga
 			for(var/obj/item/implant/user_implants as anything in carbon_victim.implants)
 				organs["[user_implants.name] ([user_implants.type])"] = user_implants
 
-			var/obj/item/organ_to_modify = tgui_input_list(user, "Select organ/implant", "Organ Manipulation", organs)
+			var/obj/item/organ_to_modify = tgui_input_list(user, LANG("datum.6f2db0b2", null), LANG("datum.c883f126", null), organs)
 			if(isnull(organ_to_modify))
 				return
 			if(isnull(organs[organ_to_modify]))

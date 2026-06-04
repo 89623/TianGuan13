@@ -262,20 +262,20 @@ ADMIN_VERB(drop_bomb, R_FUN, "Drop Bomb", "Cause an explosion of varying strengt
 		if("Maxcap")
 			explosion(epicenter, devastation_range = GLOB.MAX_EX_DEVESTATION_RANGE, heavy_impact_range = GLOB.MAX_EX_HEAVY_RANGE, light_impact_range = GLOB.MAX_EX_LIGHT_RANGE, flash_range = GLOB.MAX_EX_FLASH_RANGE, adminlog = TRUE, ignorecap = TRUE, explosion_cause = user.mob)
 		if("Custom Bomb")
-			var/range_devastation = input(user, "Devastation range (in tiles):") as null|num
+			var/range_devastation = input(user, LANG("datum.aa69bbaa", null)) as null|num
 			if(range_devastation == null)
 				return
-			var/range_heavy = input(user, "Heavy impact range (in tiles):") as null|num
+			var/range_heavy = input(user, LANG("datum.c40eea7b", null)) as null|num
 			if(range_heavy == null)
 				return
-			var/range_light = input(user, "Light impact range (in tiles):") as null|num
+			var/range_light = input(user, LANG("datum.9eec93bb", null)) as null|num
 			if(range_light == null)
 				return
-			var/range_flash = input(user, "Flash range (in tiles):") as null|num
+			var/range_flash = input(user, LANG("datum.5bd47f00", null)) as null|num
 			if(range_flash == null)
 				return
 			if(range_devastation > GLOB.MAX_EX_DEVESTATION_RANGE || range_heavy > GLOB.MAX_EX_HEAVY_RANGE || range_light > GLOB.MAX_EX_LIGHT_RANGE || range_flash > GLOB.MAX_EX_FLASH_RANGE)
-				if(tgui_alert(user, "Bomb is bigger than the maxcap. Continue?",,list("Yes","No")) != "Yes")
+				if(tgui_alert(user, LANG("datum.6e916adb", null),,list("Yes","No")) != "Yes")
 					return
 			epicenter = get_turf(user.mob) //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range = range_devastation, heavy_impact_range = range_heavy, light_impact_range = range_light, flash_range = range_flash, adminlog = TRUE, ignorecap = TRUE, explosion_cause = user.mob)

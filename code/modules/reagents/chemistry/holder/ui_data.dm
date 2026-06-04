@@ -289,20 +289,20 @@
 			ui_reaction_id = text2path(params["id"])
 			return TRUE
 		if("search_reagents")
-			var/input_reagent = tgui_input_list(usr, "Select reagent", "Reagent", GLOB.name2reagent)
+			var/input_reagent = tgui_input_list(usr, LANG("datum.b9a56639", null), LANG("datum.c5160de6", null), GLOB.name2reagent)
 			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
 			var/datum/reagent/reagent = GLOB.chemical_reagents_list[input_reagent]
 			if(!reagent)
-				to_chat(usr, "Could not find reagent!")
+				to_chat(usr, LANG("datum.b70f4a0c", null))
 				return FALSE
 			ui_reagent_id = reagent.type
 			return TRUE
 		if("search_recipe")
-			var/input_reagent = (input("Enter the name of product reagent", "Input") as text|null)
+			var/input_reagent = (input(LANG("datum.6f251b5d", null), LANG("datum.8c7e56a2", null)) as text|null)
 			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
 			var/datum/reagent/reagent = GLOB.chemical_reagents_list[input_reagent]
 			if(!reagent)
-				to_chat(usr, "Could not find product reagent!")
+				to_chat(usr, LANG("datum.d383e9a6", null))
 				return
 			ui_reaction_id = get_reaction_from_indexed_possibilities(reagent.type)
 			return TRUE

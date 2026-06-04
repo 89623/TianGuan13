@@ -202,7 +202,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 						qdel(Obj)
 					CHECK_TICK
 				if(!i)
-					to_chat(usr, "No objects of this type exist")
+					to_chat(usr, LANG("obj.d6c5da78", null))
 					return
 				log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
 				message_admins(span_notice("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) "))
@@ -214,7 +214,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 						qdel(Obj)
 					CHECK_TICK
 				if(!i)
-					to_chat(usr, "No objects of this type exist")
+					to_chat(usr, LANG("obj.d6c5da78", null))
 					return
 				log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
 				message_admins(span_notice("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) "))

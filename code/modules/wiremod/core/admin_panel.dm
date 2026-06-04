@@ -44,7 +44,7 @@ ADMIN_VERB(view_all_circuits, R_ADMIN, "View All Circuits", "List all circuits i
 
 	switch (action)
 		if ("duplicate_circuit")
-			if (alert(usr, "This will spawn the new circuit at where you are, are you sure?", "Confirm", "Yes", "No") != "Yes")
+			if (alert(usr, LANG("datum.23acd2f6", null), LANG("datum.3c1da715", null), "Yes", "No") != "Yes")
 				return FALSE
 
 			var/list/errors = list()
@@ -53,7 +53,7 @@ ADMIN_VERB(view_all_circuits, R_ADMIN, "View All Circuits", "List all circuits i
 			new_circuit.load_circuit_data(circuit.convert_to_json(), errors)
 
 			if (length(errors))
-				to_chat(usr, span_warning("Somehow, duplicating the circuit failed:"))
+				to_chat(usr, span_warning(LANG("datum.a9e1807f", null)))
 				for (var/error in errors)
 					to_chat(usr, span_warning(error))
 		if ("follow_circuit")

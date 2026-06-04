@@ -31,7 +31,7 @@
 				null,
 				attacker,
 			)
-			to_chat(attacker, span_danger("You latch your tail to [defender], [atk_verb] them to the ground!"))
+			to_chat(attacker, span_danger(LANG("datum.da48b359", list(defender, atk_verb))))
 			defender.apply_damage(rand(5, 10), attacker.get_attack_type())
 			playsound(attacker, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 			defender.Knockdown(2 SECONDS)
@@ -52,7 +52,7 @@
 				null,
 				attacker,
 			)
-			to_chat(attacker, span_danger("In one motion, you [atk_verb] [defender] quickly!"))
+			to_chat(attacker, span_danger(LANG("datum.77f1c6e9", list(atk_verb, defender))))
 			defender.apply_damage(rand(10, 15), attacker.get_attack_type())
 			playsound(attacker, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 			defender.drop_all_held_items()

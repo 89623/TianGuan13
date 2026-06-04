@@ -228,9 +228,9 @@ ADMIN_VERB(load_circuit, R_VAREDIT, "Load Circuit", "Loads a circuit from a file
 	var/txt
 	switch(option)
 		if("File")
-			txt = file2text(input(user, "Input File") as null|file)
+			txt = file2text(input(user, LANG("datum.02b08ff6", null)) as null|file)
 		if("Direct Input")
-			txt = input(user, "Input JSON", "Input JSON") as text|null
+			txt = input(user, LANG("datum.4a49cfa7", null), LANG("datum.4a49cfa7", null)) as text|null
 
 	if(!txt)
 		return

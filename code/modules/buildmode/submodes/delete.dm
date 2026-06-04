@@ -46,7 +46,7 @@
 							qdel(Obj)
 						CHECK_TICK
 					if(!i)
-						to_chat(usr, "No instances of this type exist")
+						to_chat(usr, LANG("datum.bbf7720b", null))
 						return
 					log_admin("[key_name(usr)] deleted all instances of type [O_type] ([i] instances deleted) ")
 					message_admins(span_notice("[key_name(usr)] deleted all instances of type [O_type] ([i] instances deleted) "))
@@ -58,7 +58,7 @@
 							qdel(Obj)
 						CHECK_TICK
 					if(!i)
-						to_chat(usr, "No instances of this type exist")
+						to_chat(usr, LANG("datum.bbf7720b", null))
 						return
 					log_admin("[key_name(usr)] deleted all instances of type or subtype of [O_type] ([i] instances deleted) ")
 					message_admins(span_notice("[key_name(usr)] deleted all instances of type or subtype of [O_type] ([i] instances deleted) "))

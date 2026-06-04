@@ -153,12 +153,12 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 
 	switch(recent_uses)
 		if(3)
-			to_chat(usr, span_warning("\The [src] is starting to heat up."))
+			to_chat(usr, span_warning(LANG("obj.47ad7c1d", list(src))))
 		if(4)
-			to_chat(usr, span_userdanger("\The [src] is heating up dangerously from overuse!"))
+			to_chat(usr, span_userdanger(LANG("obj.2ed45f48", list(src))))
 		if(5) // overload
 			broken_hailer = TRUE
-			to_chat(usr, span_userdanger("\The [src]'s power modulator overloads and breaks."))
+			to_chat(usr, span_userdanger(LANG("obj.d1e0dd64", list(src))))
 			return
 
 	// select phrase to play

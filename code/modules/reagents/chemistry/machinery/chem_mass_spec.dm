@@ -360,17 +360,17 @@
 	switch(action)
 		if("activate")
 			if(QDELETED(beaker1))
-				say("Missing input beaker!")
+				say(LANG("obj.5b0996ec", null))
 				return
 			if(QDELETED(beaker2))
-				say("Missing output beaker!")
+				say(LANG("obj.4a1552b9", null))
 				return
 
 			//adjust timer for purification
 			progress_time = 0
 			estimate_time()
 			if(delay_time <= 0)
-				say("No work to be done!")
+				say(LANG("obj.5890d1b0", null))
 				return
 
 			//start the purification process

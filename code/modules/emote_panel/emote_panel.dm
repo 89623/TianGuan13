@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/emote_panel
 	var/list/blacklisted_emotes = list("me", "help")
 
@@ -42,7 +43,7 @@
 			var/datum/emote/emote = GLOB.emote_list[emote_key][1]
 			var/emote_param
 			if(emote.message_param && use_params)
-				emote_param = tgui_input_text(ui.user, "Add params to the emote...", emote.message_param, max_length = MAX_MESSAGE_LEN)
+				emote_param = tgui_input_text(ui.user, LANG("datum.47682473", null), emote.message_param, max_length = MAX_MESSAGE_LEN)
 			ui.user.emote(emote_key, message = emote_param, intentional = TRUE)
 
 /datum/emote_panel/ui_interact(mob/user, datum/tgui/ui)

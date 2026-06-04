@@ -58,7 +58,7 @@
 	switch(action)
 		if("PRG_beginReconstruction")
 			if(occupier?.health < 100)
-				to_chat(usr, span_notice("Reconstruction in progress. This will take several minutes."))
+				to_chat(usr, span_notice(LANG("obj.66296f84", null)))
 				playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
 				restoring = TRUE
 				occupier.notify_revival("Your core files are being restored!", source = src)
@@ -102,9 +102,9 @@
 		return
 	switch(occupier.stat)
 		if(CONSCIOUS)
-			. += "ai-fixer-full"
+			. += LANG("obj.fbc47030", null)
 		if(UNCONSCIOUS, HARD_CRIT)
-			. += "ai-fixer-404"
+			. += LANG("obj.633a18ba", null)
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())

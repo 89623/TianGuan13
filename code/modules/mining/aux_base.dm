@@ -148,16 +148,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 				return
 			var/shuttle_error = SSshuttle.moveShuttle(shuttleId, params["shuttle_id"], 1)
 			if(launch_warning)
-				say("Launch sequence activated! Prepare for drop!!", spans = list(SPAN_DANGER))
+				say(LANG("obj.c7bd7dd2", null), spans = list(SPAN_DANGER))
 				playsound(loc, 'sound/machines/warning-buzzer.ogg', 70, FALSE)
 				launch_warning = FALSE
 				blind_drop_ready = FALSE
 				log_shuttle("[key_name(usr)] has launched the auxiliary base.")
 				return TRUE
 			else if(!shuttle_error)
-				say("Shuttle request uploaded. Please stand away from the doors.")
+				say(LANG("obj.9ffc0ea9", null))
 			else
-				say("Shuttle interface failed.")
+				say(LANG("obj.43b430dc", null))
 		if("random")
 			if(possible_destinations)
 				return
@@ -168,10 +168,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			var/turf/LZ = pick(all_mining_turfs) //Pick a random mining Z-level turf
 			if(!ismineralturf(LZ) && !isasteroidturf(LZ))
 			//Find a suitable mining turf. Reduces chance of landing in a bad area
-				to_chat(usr, span_warning("Landing zone scan failed. Please try again."))
+				to_chat(usr, span_warning(LANG("obj.555bc007", null)))
 				return
 			if(set_landing_zone(LZ, usr) != ZONE_SET)
-				to_chat(usr, span_warning("Landing zone unsuitable. Please recalculate."))
+				to_chat(usr, span_warning(LANG("obj.a16b63b3", null)))
 				return
 			blind_drop_ready = FALSE
 			return TRUE
@@ -294,15 +294,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		if(ZONE_SET)
 			qdel(src)
 		if(BAD_ZLEVEL)
-			to_chat(user, span_warning("This uplink can only be used in a designed mining zone."))
+			to_chat(user, span_warning(LANG("obj.c466d820", null)))
 		if(BAD_AREA)
-			to_chat(user, span_warning("Unable to acquire a targeting lock. Find an area clear of structures or entirely within one."))
+			to_chat(user, span_warning(LANG("obj.ca621534", null)))
 		if(BAD_COORDS)
-			to_chat(user, span_warning("Location is too close to the edge of the station's scanning range. Move several paces away and try again."))
+			to_chat(user, span_warning(LANG("obj.d053df6d", null)))
 		if(BAD_TURF)
-			to_chat(user, span_warning("The landing zone contains turfs unsuitable for a base. Make sure you've removed all walls and dangerous terrain from the landing zone."))
+			to_chat(user, span_warning(LANG("obj.0517cea8", null)))
 		if(BAD_LAYER)
-			to_chat(user, span_warning("This area is not hazardous enough to justify an auxiliary base. Try again on a deeper layer."))
+			to_chat(user, span_warning(LANG("obj.757f7d6d", null)))
 
 /obj/item/assault_pod/mining/unrestricted
 	name = "omni-locational landing field designator"

@@ -656,13 +656,13 @@
 	switch(rand(1,5))
 		if(1)
 			if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
-				to_chat(owner, span_warning("Your leg spasms!"))
+				to_chat(owner, span_warning(LANG("datum.31a2b028", null)))
 				step(owner, pick(GLOB.cardinals))
 		if(2)
 			var/obj/item/held_item = owner.get_active_held_item()
 			if(!held_item)
 				return
-			to_chat(owner, span_warning("Your fingers spasm!"))
+			to_chat(owner, span_warning(LANG("datum.c460dc69", null)))
 			owner.log_message("used [held_item] due to a Muscle Spasm", LOG_ATTACK)
 			held_item.attack_self(owner)
 		if(3)
@@ -676,13 +676,13 @@
 			for(var/mob/living/nearby_mobs in oview(owner, range))
 				targets += nearby_mobs
 			if(LAZYLEN(targets))
-				to_chat(owner, span_warning("Your arm spasms!"))
+				to_chat(owner, span_warning(LANG("datum.1a12789c", null)))
 				owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
 				owner.ClickOn(pick(targets))
 			owner.set_combat_mode(FALSE)
 		if(4)
 			owner.set_combat_mode(TRUE)
-			to_chat(owner, span_warning("Your arm spasms!"))
+			to_chat(owner, span_warning(LANG("datum.1a12789c", null)))
 			owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
 			owner.ClickOn(owner)
 			owner.set_combat_mode(FALSE)
@@ -692,7 +692,7 @@
 			for(var/turf/nearby_turfs in oview(owner, 3))
 				targets += nearby_turfs
 			if(LAZYLEN(targets) && held_item)
-				to_chat(owner, span_warning("Your arm spasms!"))
+				to_chat(owner, span_warning(LANG("datum.1a12789c", null)))
 				owner.log_message("threw [held_item] due to a Muscle Spasm", LOG_ATTACK)
 				owner.throw_item(pick(targets))
 
@@ -930,16 +930,16 @@
 		if(prob(50)) // Most of the damage is done through random chance. When tested yielded an average 100 brute with 200u ants.
 			switch(rand(1,50))
 				if (1 to 8) //16% Chance
-					to_chat(victim, span_danger("You scratch at the ants on your scalp!."))
+					to_chat(victim, span_danger(LANG("datum.aee70297", null)))
 					owner.apply_damage(0.4 * seconds_between_ticks, BRUTE, BODY_ZONE_HEAD)
 				if (9 to 29) //40% chance
-					to_chat(victim, span_danger("You scratch at the ants on your arms!"))
+					to_chat(victim, span_danger(LANG("datum.efe7e4f9", null)))
 					owner.apply_damage(1.2 * seconds_between_ticks, BRUTE, pick(GLOB.arm_zones))
 				if (30 to 49) //38% chance
-					to_chat(victim, span_danger("You scratch at the ants on your leg!"))
+					to_chat(victim, span_danger(LANG("datum.7b0fa781", null)))
 					owner.apply_damage(1.2 * seconds_between_ticks, BRUTE, pick(GLOB.leg_zones))
 				if(50) // 2% chance
-					to_chat(victim, span_danger("You rub some ants away from your eyes!"))
+					to_chat(victim, span_danger(LANG("datum.ef7630bb", null)))
 					victim.set_eye_blur_if_lower(6 SECONDS)
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--

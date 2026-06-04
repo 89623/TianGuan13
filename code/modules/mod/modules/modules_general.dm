@@ -463,7 +463,7 @@
 			if(!value)
 				return
 			if(is_color_dark(value, 50))
-				balloon_alert(mod.wearer, "too dark!")
+				balloon_alert(mod.wearer, LANG("obj.272335f1", null))
 				return
 			set_light_color(value)
 			update_clothing_slots()

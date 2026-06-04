@@ -296,7 +296,7 @@
 
 			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
 			if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.4 * initial(active_power_usage))))
-				say("No power to dispense sheets")
+				say(LANG("obj.c98ac214", null))
 				return
 
 			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = ID_DATA(usr))
@@ -304,7 +304,7 @@
 
 		if("build")
 			if(busy)
-				say("Warning: fabricator is busy!")
+				say(LANG("obj.96798cc7", null))
 				return
 
 			//validate design
@@ -315,10 +315,10 @@
 			if(!istype(design))
 				return FALSE
 			if(!(isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)))
-				say("This fabricator does not have the necessary keys to decrypt this design.")
+				say(LANG("obj.ea5ed026", null))
 				return FALSE
 			if(design.build_type && !(design.build_type & allowed_buildtypes))
-				say("This fabricator does not have the necessary manipulation systems for this design.")
+				say(LANG("obj.5d6aeb6b", null))
 				return FALSE
 
 			//validate print quantity
@@ -337,7 +337,7 @@
 			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
-				say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
+				say(LANG("obj.5134774a", list(print_quantity > 1 ? "s" : "")))
 				return FALSE
 
 			//compute power & time to print 1 item

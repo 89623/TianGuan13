@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/gastrolosis
 	name = "Invasive Gastrolosis"
 	desc = "A bizarre disease that causes the host to grow snail-like features, eventually turning into a human-snail hybrid."
@@ -62,7 +63,7 @@
 			if(!tongue && SPT_PROB(2.5, seconds_per_tick))
 				var/obj/item/organ/tongue/snail/new_tongue = new()
 				new_tongue.Insert(affected_mob)
-				to_chat(affected_mob, span_userdanger("You feel your speech slow down..."))
+				to_chat(affected_mob, span_userdanger(LANG("datum.13dae636", null)))
 				return
 
 			if(shell && eyes && tongue && SPT_PROB(2.5, seconds_per_tick))

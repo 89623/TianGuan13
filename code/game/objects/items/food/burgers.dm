@@ -248,7 +248,7 @@
 	var/paranormal_activity = rand(100)
 	switch(paranormal_activity)
 		if(97 to 100)
-			audible_message("[src] rattles a length of chain.")
+			audible_message(LANG("obj.180c86cb", list(src)))
 			playsound(loc, 'sound/misc/chain_rattling.ogg', 300, TRUE)
 		if(91 to 96)
 			say(pick("OoOoOoo.", "OoooOOooOoo!!"))
@@ -263,7 +263,7 @@
 		if(62 to 64)
 			playsound(loc, SFX_HALLUCINATION_I_SEE_YOU, 50, TRUE, ignore_walls = FALSE)
 		if(61)
-			visible_message("[src] spews out a glob of ectoplasm!")
+			visible_message(LANG("obj.e9d44c5e", list(src)))
 			new /obj/effect/decal/cleanable/greenglow/ecto(loc)
 			playsound(loc, 'sound/effects/splat.ogg', 200, TRUE)
 

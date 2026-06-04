@@ -218,7 +218,7 @@
 
 		if(1 to 20)
 			user.visible_message(span_warning("[user] lands a solid [tackle_word] on [target], knocking them both down hard!"), span_userdanger("You land a solid [tackle_word] on [target], knocking you both down hard!"), ignored_mobs = target)
-			to_chat(target, span_userdanger("[user] lands a solid [tackle_word] on you, knocking you both down hard!"))
+			to_chat(target, span_userdanger(LANG("datum.ef5d3e62", list(user, tackle_word))))
 
 			target.apply_damage(30, STAMINA)
 			target.Paralyze(0.5 SECONDS)
@@ -228,7 +228,7 @@
 
 		if(21 to 49) // really good hit, the target is definitely worse off here. Without positive modifiers, this is as good a tackle as you can land
 			user.visible_message(span_warning("[user] lands an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!"), span_userdanger("You land an expert [tackle_word] on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!"), ignored_mobs = target)
-			to_chat(target, span_userdanger("[user] lands an expert [tackle_word] on you, knocking you down hard and maintaining a passive grab!"))
+			to_chat(target, span_userdanger(LANG("datum.29007525", list(user, tackle_word))))
 
 			// Ignore_canstun has to be true, or else a stunimmune user would stay knocked down.
 			user.SetKnockdown(0, ignore_canstun = TRUE)
@@ -244,7 +244,7 @@
 			var/stamcritted_user = HAS_TRAIT_FROM(user, TRAIT_INCAPACITATED, STAMINA)
 			if(stamcritted_user) // in case the user went into stamcrit from the tackle itself and cannot actually aggro grab (since they will be crit) we make the tackle effectivelly mutually assured...stamina crit
 				user.visible_message(span_warning("[user] lands a monsterly reckless [tackle_word] on [target], knocking both of them senseless!"), span_userdanger("You land a monsterly reckless [tackle_word] on [target], knocking both of you senseless!"), ignored_mobs = target)
-				to_chat(target, span_userdanger("[user] lands a monsterly reckless [tackle_word] on you, knocking the both of you senseless!"))
+				to_chat(target, span_userdanger(LANG("datum.998e040d", list(user, tackle_word))))
 				user.forceMove(get_turf(target))
 				target.apply_damage(100, STAMINA) // CRASHING THIS PLANE WITH NO SURVIVORS
 				target.Paralyze(1 SECONDS)
@@ -252,7 +252,7 @@
 				target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 3, 10 SECONDS)
 			else
 				user.visible_message(span_warning("[user] lands a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), span_userdanger("You land a monster [tackle_word] on [target], knocking [target.p_them()] senseless and applying an aggressive pin!"), ignored_mobs = target)
-				to_chat(target, span_userdanger("[user] lands a monster [tackle_word] on you, knocking you senseless and aggressively pinning you!"))
+				to_chat(target, span_userdanger(LANG("datum.64e2b3ec", list(user, tackle_word))))
 
 				// Ignore_canstun has to be true, or else a stunimmune user would stay knocked down.
 				user.SetKnockdown(0, ignore_canstun = TRUE)
@@ -315,7 +315,7 @@
 
 		if(1 to 20) // It's not completely terrible! But you are somewhat vulernable for doing it.
 			user.visible_message(span_warning("[user] lands a weak [tackle_word] on [target], briefly staggering [target.p_them()]!"), span_userdanger("You land a weak [tackle_word] on [target], briefly staggering [target.p_them()]!"), ignored_mobs = target)
-			to_chat(target, span_userdanger("[user] lands a weak [tackle_word] on you, staggering you!"))
+			to_chat(target, span_userdanger(LANG("datum.56dd2cc0", list(user, tackle_word))))
 
 			user.Knockdown(1 SECONDS)
 			user.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
@@ -324,7 +324,7 @@
 
 		if(21 to 49) // oughe
 			user.visible_message(span_warning("[user] lands a dreadful [tackle_word] on [target], briefly knocking [user.p_them()] to the ground!"), span_userdanger("You land a dreadful [tackle_word] on [target], briefly knocking you to the ground!"), ignored_mobs = target)
-			to_chat(target, span_userdanger("[user] lands a dreadful [tackle_word] on you, briefly knocking [user.p_them()] to the ground!"))
+			to_chat(target, span_userdanger(LANG("datum.11f05829", list(user, tackle_word, user.p_them()))))
 
 			user.Knockdown(3 SECONDS)
 			user.apply_damage(40, STAMINA)
@@ -332,7 +332,7 @@
 
 		if(50 to INFINITY) // It has been decided that you will suffer
 			user.visible_message(span_danger("[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into [target], knocking [user.p_them()]self silly!"), span_userdanger("You botch your [tackle_word] and slam your head into [target], knocking yourself silly!"), ignored_mobs = target)
-			to_chat(target, span_userdanger("[user] botches [user.p_their()] [tackle_word] and slams [user.p_their()] head into you, knocking [user.p_them()]self silly!"))
+			to_chat(target, span_userdanger(LANG("datum.d4296f04", list(user, user.p_their(), tackle_word, user.p_their(), user.p_them()))))
 
 			user.Paralyze(3 SECONDS)
 			user.apply_damage(80, STAMINA)

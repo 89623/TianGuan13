@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/beesease
 	name = "Beesease"
 	form = "Parasite"
@@ -21,12 +22,12 @@
 	switch(stage)
 		if(2) //also changes say, see say.dm
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_notice("You taste honey in your mouth."))
+				to_chat(affected_mob, span_notice(LANG("datum.20db2db2", null)))
 		if(3)
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_notice("Your stomach rumbles."))
+				to_chat(affected_mob, span_notice(LANG("datum.200b6fea", null)))
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your stomach stings painfully."))
+				to_chat(affected_mob, span_danger(LANG("datum.9946fd2e", null)))
 				if(prob(20))
 					affected_mob.adjust_tox_loss(2)
 		if(4)
@@ -34,7 +35,7 @@
 				affected_mob.visible_message(span_danger("[affected_mob] buzzes."), \
 												span_userdanger("Your stomach buzzes violently!"))
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel something moving in your throat."))
+				to_chat(affected_mob, span_danger(LANG("datum.cc67bbbf", null)))
 			if(SPT_PROB(0.5, seconds_per_tick))
 				affected_mob.visible_message(span_danger("[affected_mob] coughs up a swarm of bees!"), \
 													span_userdanger("You cough up a swarm of bees!"))

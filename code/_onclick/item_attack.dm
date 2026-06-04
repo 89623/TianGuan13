@@ -431,8 +431,8 @@
 					adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 					if(stat == CONSCIOUS)
 						visible_message(
-							span_danger("[src] is knocked senseless!"),
-							span_userdanger("You're knocked senseless!"),
+							span_danger(LANG("mob.33da1965", list(src))),
+							span_userdanger(LANG("mob.ac602fc8", null)),
 						)
 						set_confusion_if_lower(20 SECONDS)
 						adjust_eye_blur(20 SECONDS)
@@ -454,8 +454,8 @@
 			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
 					visible_message(
-						span_danger("[src] is knocked down!"),
-						span_userdanger("You're knocked down!"),
+						span_danger(LANG("mob.4d0a47f7", list(src))),
+						span_userdanger(LANG("mob.dc89d29f", null)),
 					)
 					apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 

@@ -405,7 +405,7 @@
 	switch(action)
 		if("eject")
 			if(is_printing)
-				say("The buffer is locked while printing.")
+				say(LANG("obj.7fc577b1", null))
 				return
 
 			replace_beaker(ui.user)
@@ -420,7 +420,7 @@
 
 		if("transfer")
 			if(is_printing)
-				say("The buffer is locked while printing.")
+				say(LANG("obj.7fc577b1", null))
 				return
 
 			var/reagent_ref = params["reagentRef"]
@@ -429,13 +429,13 @@
 
 			if(amount == -1) // Set custom amount
 				var/mob/user = ui.user //Hold a reference of the user if the UI is closed
-				amount = round(tgui_input_number(user, "Enter amount to transfer", "Transfer amount", round_value = FALSE), CHEMICAL_VOLUME_ROUNDING)
+				amount = round(tgui_input_number(user, LANG("obj.08b34adc", null), LANG("obj.9749dd49", null), round_value = FALSE), CHEMICAL_VOLUME_ROUNDING)
 				if(!amount || !user.can_perform_action(src))
 					return FALSE
 
 			var/should_transfer = is_transfering || (target == "buffer") // we should always transfer if target is the buffer
 			if(should_transfer && isnull(beaker)) // if there's no beaker, we cannot transfer
-				say("No reagent container is inserted.")
+				say(LANG("obj.0a21046a", null))
 				return FALSE
 
 			var/reagents_from
@@ -515,8 +515,8 @@
 			// NOVA EDIT ADDITION END
 			var/item_name = tgui_input_text(
 				usr,
-				"Container name",
-				"Name",
+				LANG("obj.fb66f8b6", null),
+				LANG("obj.e81360ea", null),
 				item_name_default,
 				max_length = MAX_NAME_LEN,
 			)

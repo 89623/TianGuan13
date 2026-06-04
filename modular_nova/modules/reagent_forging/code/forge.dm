@@ -125,39 +125,39 @@
 
 	switch(forge_level)
 		if(FORGE_LEVEL_YOU_PLAY_LIKE_A_NOOB)
-			. += span_notice("This forge has not been upgraded yet.")
+			. += span_notice(LANG("obj.50292b06", null))
 
 		if(FORGE_LEVEL_NOVICE)
-			. += span_notice("This forge has been upgraded by a novice smith.")
+			. += span_notice(LANG("obj.b72417bd", null))
 
 		if(FORGE_LEVEL_APPRENTICE)
-			. += span_notice("This forge has been upgraded by an apprentice smith.")
+			. += span_notice(LANG("obj.919a7005", null))
 
 		if(FORGE_LEVEL_JOURNEYMAN)
-			. += span_notice("This forge has been upgraded by a journeyman smith.")
+			. += span_notice(LANG("obj.d88ec7b5", null))
 
 		if(FORGE_LEVEL_EXPERT)
-			. += span_notice("This forge has been upgraded by an expert smith.")
+			. += span_notice(LANG("obj.becda68d", null))
 
 		if(FORGE_LEVEL_MASTER)
-			. += span_notice("This forge has been upgraded by a master smith.")
+			. += span_notice(LANG("obj.eebfe21f", null))
 
 		if(FORGE_LEVEL_LEGENDARY)
-			. += span_hierophant("This forge has been upgraded by a legendary smith.") // Legendary skills give you the greatest gift of all, cool text
+			. += span_hierophant(LANG("obj.1674e5f9", null)) // Legendary skills give you the greatest gift of all, cool text
 
 	switch(temperature_loss_reduction)
 		if(0)
-			. += span_notice("[src] will lose heat at a normal rate.")
+			. += span_notice(LANG("obj.2a821d81", list(src)))
 		if(1)
-			. += span_notice("[src] will lose heat slightly slower than usual.")
+			. += span_notice(LANG("obj.84124d1e", list(src)))
 		if(2)
-			. += span_notice("[src] will lose heat a bit slower than usual.")
+			. += span_notice(LANG("obj.e40efdc3", list(src)))
 		if(3)
-			. += span_notice("[src] will lose heat much slower than usual.")
+			. += span_notice(LANG("obj.38a9bec5", list(src)))
 		if(4)
-			. += span_notice("[src] will lose heat signficantly slower than usual.")
+			. += span_notice(LANG("obj.cfa94561", list(src)))
 		if(5)
-			. += span_notice("[src] will lose heat at a practically negligible rate.")
+			. += span_notice(LANG("obj.438b6152", list(src)))
 
 	. += span_notice(LANG("obj.b2413374", list(src, forge_temperature, target_temperature)))
 
@@ -375,38 +375,38 @@
 	switch(level_to_upgrade_to) // Remember to carry things over from past levels in case someone skips levels in upgrading
 		if(SKILL_LEVEL_NONE)
 			if(!forced)
-				to_chat(user, span_notice("You'll need some forging skills to really understand how to upgrade [src]."))
+				to_chat(user, span_notice(LANG("obj.555ff34a", list(src))))
 			return
 
 		if(SKILL_LEVEL_NOVICE)
 			if(!forced)
-				to_chat(user, span_notice("With some experience, you've come to realize there are some easily fixable spots with poor insulation..."))
+				to_chat(user, span_notice(LANG("obj.d588bd10", null)))
 			temperature_loss_reduction = 1
 			forge_level = FORGE_LEVEL_NOVICE
 
 		if(SKILL_LEVEL_APPRENTICE)
 			if(!forced)
-				to_chat(user, span_notice("Further insulation and protection of the thinner areas means [src] will lose heat just that little bit slower."))
+				to_chat(user, span_notice(LANG("obj.f48485ab", list(src))))
 			temperature_loss_reduction = 2
 			forge_level = FORGE_LEVEL_APPRENTICE
 
 		if(SKILL_LEVEL_JOURNEYMAN)
 			if(!forced)
-				to_chat(user, span_notice("Some careful placement and stoking of the flame will allow you to keep at least the embers burning..."))
+				to_chat(user, span_notice(LANG("obj.f238749f", null)))
 			minimum_target_temperature = 25 // Will allow quicker reheating from having no fuel
 			temperature_loss_reduction = 3
 			forge_level = FORGE_LEVEL_JOURNEYMAN
 
 		if(SKILL_LEVEL_EXPERT)
 			if(!forced)
-				to_chat(user, span_notice("[src] has become nearly perfect, able to hold heat for long enough that even a piece of wood can outmatch the longevity of lesser forges."))
+				to_chat(user, span_notice(LANG("obj.3a5c9a07", list(src))))
 			temperature_loss_reduction = 4
 			minimum_target_temperature = 25
 			forge_level = FORGE_LEVEL_EXPERT
 
 		if(SKILL_LEVEL_MASTER)
 			if(!forced)
-				to_chat(user, span_notice("The perfect forge for a perfect metalsmith, with your knowledge it should bleed heat so slowly, that not even you will live to see [src] cool."))
+				to_chat(user, span_notice(LANG("obj.bce158ad", list(src))))
 			temperature_loss_reduction = MAX_TEMPERATURE_LOSS_DECREASE
 			minimum_target_temperature = 25
 			forge_level = FORGE_LEVEL_MASTER
@@ -414,10 +414,10 @@
 		if(SKILL_LEVEL_LEGENDARY)
 			if(!forced)
 				if(is_species(user, /datum/species/lizard/ashwalker) || is_species(user, /datum/species/human/felinid/primitive))
-					to_chat(user, span_notice("With just the right heat treating technique, metal could be made to accept reagents..."))
+					to_chat(user, span_notice(LANG("obj.f7c6d9ad", null)))
 					create_reagent_forge()
 				if(forge_level == FORGE_LEVEL_MASTER)
-					to_chat(user, span_warning("It is impossible to further improve the forge!"))
+					to_chat(user, span_warning(LANG("obj.bd1b18c4", null)))
 			temperature_loss_reduction = MAX_TEMPERATURE_LOSS_DECREASE
 			minimum_target_temperature = 25 // This won't matter except in a few cases here, but we still need to cover those few cases
 			forge_level = FORGE_LEVEL_LEGENDARY

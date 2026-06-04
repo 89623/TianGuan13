@@ -348,12 +348,12 @@ Nothing else in the console has ID requirements.
 	switch (action)
 		if ("toggleLock")
 			if(obj_flags & EMAGGED)
-				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
+				to_chat(usr, span_boldwarning(LANG("obj.45bb9000", null)))
 				return TRUE
 			if(allowed(usr))
 				board.locked = !board.locked
 			else
-				to_chat(usr, span_boldwarning("Unauthorized Access."))
+				to_chat(usr, span_boldwarning(LANG("obj.96cdd2af", null)))
 			return TRUE
 
 		if ("researchNode")
@@ -375,36 +375,36 @@ Nothing else in the console has ID requirements.
 		if ("uploadDisk")
 			if (params["type"] == RND_DESIGN_DISK)
 				if(QDELETED(d_disk))
-					say("No design disk inserted!")
+					say(LANG("obj.94315700", null))
 					return TRUE
 				for(var/D in d_disk.blueprints)
 					if(D)
 						stored_research.add_design(D, TRUE)
-				say("Uploading blueprints from disk.")
+				say(LANG("obj.e8f0d152", null))
 				d_disk.on_upload(stored_research, src)
 				return TRUE
 			if (params["type"] == RND_TECH_DISK)
 				if(!COOLDOWN_FINISHED(src, cooldowncopy)) // prevents MC hang
-					say("Servers busy!")
+					say(LANG("obj.d8db2984", null))
 					return
 				if (QDELETED(t_disk))
-					say("No tech disk inserted!")
+					say(LANG("obj.2dbab853", null))
 					return TRUE
 				COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
-				say("Uploading technology disk.")
+				say(LANG("obj.d2991b26", null))
 				t_disk.stored_research.copy_research_to(stored_research)
 			return TRUE
 
 		//Tech disk-only action.
 		if ("loadTech")
 			if(!COOLDOWN_FINISHED(src, cooldowncopy)) // prevents MC hang
-				say("Servers busy!")
+				say(LANG("obj.d8db2984", null))
 				return
 			if(QDELETED(t_disk))
-				say("No tech disk inserted!")
+				say(LANG("obj.2dbab853", null))
 				return
 			COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
-			say("Downloading to technology disk.")
+			say(LANG("obj.de2b87b4", null))
 			stored_research.copy_research_to(t_disk.stored_research)
 			return TRUE
 

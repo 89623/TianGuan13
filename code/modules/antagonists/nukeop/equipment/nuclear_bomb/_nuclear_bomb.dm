@@ -77,28 +77,28 @@ GLOBAL_VAR(station_nuke_source)
 	. = ..()
 	switch(deconstruction_state)
 		if(NUKESTATE_UNSCREWED)
-			. += span_notice("The front panel has been unscrewed and can be <b>pried open</b>.")
+			. += span_notice(LANG("obj.a7ba745d", null))
 		if(NUKESTATE_PANEL_REMOVED)
-			. += span_notice("The inner plate is exposed and can be cut with a <b>welding tool</b>.")
+			. += span_notice(LANG("obj.3015b503", null))
 		if(NUKESTATE_WELDED)
-			. += span_notice("The inner plate has been cut through and can be <b>pried off</b>.")
+			. += span_notice(LANG("obj.9d02306a", null))
 		if(NUKESTATE_CORE_EXPOSED)
-			. += span_danger("The inner chamber is exposed, revealing [core] to the outside!")
-			. += span_notice("The damaged inner plate covering the inner chamber can be replaced with some <b>iron</b>.")
+			. += span_danger(LANG("obj.65741786", list(core)))
+			. += span_notice(LANG("obj.ddc3212b", null))
 		if(NUKESTATE_CORE_REMOVED)
-			. += span_notice("The inner chamber is exposed, but is empty.")
+			. += span_notice(LANG("obj.9de89da8", null))
 		if(NUKESTATE_INTACT)
-			. += span_notice("The front panel is secured.")
+			. += span_notice(LANG("obj.ef1f51eb", null))
 
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
-			. += span_notice("The device is awaiting activation codes.")
+			. += span_notice(LANG("obj.47cf0ad0", null))
 		if(NUKE_OFF_UNLOCKED)
-			. += span_notice("The device is set and is ready for arming the detonation countdown.")
+			. += span_notice(LANG("obj.bfc2bb86", null))
 		if(NUKE_ON_TIMING)
-			. += span_danger("There are [get_time_left()] seconds until detonation.")
+			. += span_danger(LANG("obj.67769c50", list(get_time_left())))
 		if(NUKE_ON_EXPLODING)
-			. += span_bolddanger("It is in the process of exploding. Perhaps reviewing your affairs is in order.")
+			. += span_bolddanger(LANG("obj.434851f6", null))
 
 
 /// Checks if the disk inserted is a real nuke disk or not.
@@ -124,21 +124,21 @@ GLOBAL_VAR(station_nuke_source)
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
 			if(istype(weapon, /obj/item/screwdriver/nuke))
-				to_chat(user, span_notice("You start removing [src]'s front panel's screws..."))
+				to_chat(user, span_notice(LANG("obj.6d8d832f", list(src))))
 				if(!weapon.use_tool(src, user, 6 SECONDS, volume = 100))
 					return TRUE
 				deconstruction_state = NUKESTATE_UNSCREWED
-				to_chat(user, span_notice("You remove the screws from [src]'s front panel."))
+				to_chat(user, span_notice(LANG("obj.dc412c3f", list(src))))
 				update_appearance()
 				return TRUE
 
 		if(NUKESTATE_UNSCREWED)
 			if(istype(weapon, /obj/item/screwdriver/nuke))
-				to_chat(user, span_notice("You start screwing [src]'s front panel back in..."))
+				to_chat(user, span_notice(LANG("obj.a8a852a5", list(src))))
 				if(!weapon.use_tool(src, user, 8 SECONDS, volume = 100))
 					return TRUE
 				deconstruction_state = NUKESTATE_INTACT
-				to_chat(user, span_notice("You screw [src]'s front panel back into place."))
+				to_chat(user, span_notice(LANG("obj.e6153d3f", list(src))))
 				deconstruction_state = NUKESTATE_INTACT
 				update_appearance()
 				return TRUE
@@ -147,10 +147,10 @@ GLOBAL_VAR(station_nuke_source)
 			if(weapon.tool_behaviour == TOOL_WELDER)
 				if(!weapon.tool_start_check(user, amount = 1))
 					return TRUE
-				to_chat(user, span_notice("You start cutting [src]'s inner plate..."))
+				to_chat(user, span_notice(LANG("obj.7b940279", list(src))))
 				if(!weapon.use_tool(src, user, 8 SECONDS, volume=100))
 					return TRUE
-				to_chat(user, span_notice("You cut [src]'s inner plate."))
+				to_chat(user, span_notice(LANG("obj.4c9fc8e8", list(src))))
 				deconstruction_state = NUKESTATE_WELDED
 				update_appearance()
 				return TRUE
@@ -158,26 +158,26 @@ GLOBAL_VAR(station_nuke_source)
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(weapon, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = weapon
-				to_chat(user, span_notice("You start loading the plutonium core into [core_box]..."))
+				to_chat(user, span_notice(LANG("obj.855b7b50", list(core_box))))
 				if(!do_after(user, 5 SECONDS, target = src, hidden = TRUE))
 					return TRUE
 				if(core_box.load(core, user))
-					to_chat(user, span_notice("You load the plutonium core into [core_box]."))
+					to_chat(user, span_notice(LANG("obj.f5ef12ec", list(core_box))))
 					deconstruction_state = NUKESTATE_CORE_REMOVED
 					update_appearance()
 					core = null
 				else
-					to_chat(user, span_warning("You fail to load the plutonium core into [core_box]. [core_box] has already been used!"))
+					to_chat(user, span_warning(LANG("obj.514ef5d5", list(core_box, core_box))))
 				return TRUE
 
 			if(istype(weapon, /obj/item/stack/sheet/iron))
 				if(!weapon.tool_start_check(user, amount = 20))
 					return TRUE
 
-				to_chat(user, span_notice("You begin repairing [src]'s inner metal plate..."))
+				to_chat(user, span_notice(LANG("obj.c12fad84", list(src))))
 				if(!weapon.use_tool(src, user, 10 SECONDS, amount = 20))
 					return TRUE
-				to_chat(user, span_notice("You repair [src]'s inner metal plate. The radiation is contained."))
+				to_chat(user, span_notice(LANG("obj.4f8b6189", list(src))))
 				deconstruction_state = NUKESTATE_PANEL_REMOVED
 				STOP_PROCESSING(SSobj, core)
 				update_appearance()
@@ -186,24 +186,24 @@ GLOBAL_VAR(station_nuke_source)
 		if(NUKESTATE_CORE_REMOVED)
 			if(astype(weapon, /obj/item/nuke_core_container)?.core && !istype(weapon, /obj/item/nuke_core_container/supermatter))
 				var/obj/item/nuke_core_container/core_box = weapon
-				to_chat(user, span_notice("You pry open [core_box] and begin placing [core_box.core] into [src]'s inner chamber..."))
+				to_chat(user, span_notice(LANG("obj.5990c1c6", list(core_box, core_box.core, src))))
 				if(!do_after(user, 15 SECONDS, src))
 					return TRUE
 				core_box.core.forceMove(src)
 				core = core_box.core
-				to_chat(user, span_notice("You place [core_box.core] into [src]'s inner chamber."))
+				to_chat(user, span_notice(LANG("obj.18949095", list(core_box.core, src))))
 				deconstruction_state = NUKESTATE_CORE_EXPOSED
 				update_appearance()
 				core_box.icon_state = core_box::icon_state
 				core_box.core = null
 				return TRUE
 			if(istype(weapon, /obj/item/nuke_core) && !istype(weapon, /obj/item/nuke_core/supermatter_sliver))
-				to_chat(user, span_notice("You begin placing [weapon] into [src]'s inner chamber..."))
+				to_chat(user, span_notice(LANG("obj.da6645dd", list(weapon, src))))
 				if(!do_after(user, 6 SECONDS, src))
 					return TRUE
 				weapon.forceMove(src)
 				core = weapon
-				to_chat(user, span_notice("You place [weapon] into [src]'s inner chamber."))
+				to_chat(user, span_notice(LANG("obj.18949095", list(weapon, src))))
 				deconstruction_state = NUKESTATE_CORE_EXPOSED
 				update_appearance()
 				return TRUE
@@ -213,32 +213,32 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/crowbar_act(mob/user, obj/item/tool)
 	switch(deconstruction_state)
 		if(NUKESTATE_UNSCREWED)
-			to_chat(user, span_notice("You start removing [src]'s front panel..."))
+			to_chat(user, span_notice(LANG("obj.427be926", list(src))))
 			if(!tool.use_tool(src, user, 30, volume=100))
 				return TRUE
-			to_chat(user, span_notice("You remove [src]'s front panel."))
+			to_chat(user, span_notice(LANG("obj.71da5252", list(src))))
 			deconstruction_state = NUKESTATE_PANEL_REMOVED
 			update_appearance()
 			return TRUE
 		if(NUKESTATE_WELDED)
-			to_chat(user, span_notice("You start prying off [src]'s inner plate..."))
+			to_chat(user, span_notice(LANG("obj.7578532c", list(src))))
 			if(!tool.use_tool(src, user, 30, volume=100))
 				return TRUE
 			if(core)
-				to_chat(user, span_notice("You pry off [src]'s inner plate. You can see the core's green glow!"))
+				to_chat(user, span_notice(LANG("obj.eea6038b", list(src))))
 				deconstruction_state = NUKESTATE_CORE_EXPOSED
 				START_PROCESSING(SSobj, core)
 			else
-				to_chat(user, span_notice("You pry off [src]'s inner plate. The inner chamber is empty, save for some beer stains."))
+				to_chat(user, span_notice(LANG("obj.b555edb5", list(src))))
 				deconstruction_state = NUKESTATE_CORE_REMOVED
 			update_appearance()
 			new /obj/item/stack/sheet/iron(loc, 15)
 			return TRUE
 		if(NUKESTATE_PANEL_REMOVED)
-			to_chat(user, span_notice("You start levering [src]'s inner panel back into place..."))
+			to_chat(user, span_notice(LANG("obj.479f73b6", list(src))))
 			if(!tool.use_tool(src, user, 30, volume = 100))
 				return TRUE
-			to_chat(user, span_notice("You lever [src]'s inner panel back into place."))
+			to_chat(user, span_notice(LANG("obj.691e006e", list(src))))
 			deconstruction_state = NUKESTATE_UNSCREWED
 			update_appearance()
 			return TRUE

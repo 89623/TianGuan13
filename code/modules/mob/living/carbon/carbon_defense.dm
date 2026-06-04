@@ -522,16 +522,16 @@
 
 		switch(damage)
 			if(1)
-				to_chat(src, span_warning("Your eyes sting a little."))
+				to_chat(src, span_warning(LANG("mob.6b19b638", null)))
 				if(prob(40))
 					eyes.apply_organ_damage(1)
 
 			if(2)
-				to_chat(src, span_warning("Your eyes burn."))
+				to_chat(src, span_warning(LANG("mob.f9e0ed1a", null)))
 				eyes.apply_organ_damage(rand(2, 4))
 
 			if(3 to INFINITY)
-				to_chat(src, span_warning("Your eyes itch and burn severely!"))
+				to_chat(src, span_warning(LANG("mob.19ed56ae", null)))
 				eyes.apply_organ_damage(rand(12, 16))
 
 		if(eyes.damage > 10)

@@ -671,7 +671,7 @@
 		if("remove_item")
 			var/atom/movable/item = locate(params["item_reference"]) in movable.contents
 			item?.forceMove(movable.drop_location())
-			to_chat(user, span_notice("You take out [item] from [movable]."))
+			to_chat(user, span_notice(LANG("datum.0b17bc84", list(item, movable))))
 		if("rename_fish")
 			var/new_name = sanitize_name(params["chosen_name"])
 			var/atom/movable/fish = locate(params["fish_reference"]) in movable.contents

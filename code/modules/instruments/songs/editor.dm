@@ -123,7 +123,7 @@
 			tempo = sanitize_tempo(5) // default 120 BPM
 			return TRUE
 		if("add_new_line")
-			var/newline = tgui_input_text(user, "Enter your line", parent.name, max_length = MUSIC_MAXLINECHARS)
+			var/newline = tgui_input_text(user, LANG("datum.82770ab1", null), parent.name, max_length = MUSIC_MAXLINECHARS)
 			if(!newline || !in_range(parent, user))
 				return
 			if(lines.len > MUSIC_MAXLINES)
@@ -141,7 +141,7 @@
 			var/line_to_edit = params["line_editing"]
 			if(line_to_edit > lines.len || line_to_edit < 1)
 				return FALSE
-			var/new_line_text = tgui_input_text(user, "Enter your line ", parent.name, lines[line_to_edit], max_length = MUSIC_MAXLINECHARS)
+			var/new_line_text = tgui_input_text(user, LANG("datum.9981ce49", null), parent.name, lines[line_to_edit], max_length = MUSIC_MAXLINECHARS)
 			if(isnull(new_line_text) || !in_range(parent, user))
 				return FALSE
 			lines[line_to_edit] = new_line_text

@@ -38,13 +38,13 @@ ADMIN_VERB(manage_player_ranks, R_PERMISSIONS, "Manage Player Ranks", "Manage wh
 	var/list/choices = list("Add", "Remove")
 	switch(tgui_alert(usr, LANG("datum.ab3c2f64", null), LANG("datum.74de5d85", list(group)), choices))
 		if("Add")
-			var/name = input(usr, "Please enter the CKEY (case-insensitive) of the person you would like to make a [group]:", "Add a [group]") as null|text
+			var/name = input(usr, LANG("datum.65a3b9e7", list(group)), LANG("datum.67e0cfc0", list(group))) as null|text
 			if(!name)
 				return
 
 			var/player_to_be = ckey(name)
 			if(!player_to_be)
-				to_chat(usr, span_warning("\"[name]\" is not a valid CKEY."))
+				to_chat(usr, span_warning(LANG("datum.f33b2d5b", list(name))))
 				return
 
 			var/success = SSplayer_ranks.add_player_to_group(usr.client, player_to_be, group_title)
@@ -57,13 +57,13 @@ ADMIN_VERB(manage_player_ranks, R_PERMISSIONS, "Manage Player Ranks", "Manage wh
 
 
 		if("Remove")
-			var/name = input(usr, "Please enter the CKEY (case-insensitive) of the person you would like to no longer be a [group]:", "Remove a [group]") as null|text
+			var/name = input(usr, LANG("datum.64ae4cce", list(group)), LANG("datum.48e12e43", list(group))) as null|text
 			if(!name)
 				return
 
 			var/player_that_was = ckey(name)
 			if(!player_that_was)
-				to_chat(usr, span_warning("\"[name]\" is not a valid CKEY."))
+				to_chat(usr, span_warning(LANG("datum.f33b2d5b", list(name))))
 				return
 
 			var/success = SSplayer_ranks.remove_player_from_group(usr.client, player_that_was, group_title)

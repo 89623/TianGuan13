@@ -172,7 +172,7 @@
 
 	switch(random)
 		if(1)
-			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak with just a fragment of their abilities."))
+			to_chat(user, span_danger(LANG("obj.26637981", null)))
 			consumer.dna.features = list(
 				FEATURE_MUTANT_COLOR = "#A02720",
 				FEATURE_TAIL_LIZARD = "Dark Tiger",
@@ -193,14 +193,14 @@
 			wings.Insert(consumer)
 
 		if(2)
-			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
+			to_chat(user, span_danger(LANG("obj.106940f4", null)))
 			consumer.set_species(/datum/species/skeleton)
 		if(3)
-			to_chat(user, span_danger("Power courses through you! You can now shift your form at will."))
+			to_chat(user, span_danger(LANG("obj.93c9b102", null)))
 			var/datum/action/cooldown/spell/shapeshift/dragon/dragon_shapeshift = new(user.mind || user)
 			dragon_shapeshift.Grant(user)
 		if(4)
-			to_chat(user, span_danger("You feel like you could walk straight through lava now."))
+			to_chat(user, span_danger(LANG("obj.92793011", null)))
 			ADD_TRAIT(user, TRAIT_LAVA_IMMUNE, type)
 
 	playsound(user,'sound/items/drink.ogg', 30, TRUE)

@@ -116,14 +116,14 @@
 	switch(action)
 		if("eject_item")
 			if(busy)
-				balloon_alert(user, "already busy!")
+				balloon_alert(user, LANG("obj.adac0bea", null))
 				return TRUE
 			if(loaded_item)
 				unload_item()
 				return TRUE
 		if("deconstruct")
 			if(!user_try_decon_id(params["deconstruct_id"]))
-				say("Destructive analysis failed!")
+				say(LANG("obj.e159d195", null))
 			return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)

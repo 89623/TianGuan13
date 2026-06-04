@@ -145,10 +145,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		if("add_case")
 			if(cases.len == MAX_CASES)
 				return FALSE
-			var/new_case = tgui_input_text(user, "Please enter the case name", "Detective's Board", max_length = MAX_NAME_LEN)
+			var/new_case = tgui_input_text(user, LANG("obj.cb9afd4e", null), LANG("obj.a7f441ba", null), max_length = MAX_NAME_LEN)
 			if(!new_case)
 				return FALSE
-			var/case_color = tgui_input_list(user, "Please choose case color", "Detective's Board", case_colors)
+			var/case_color = tgui_input_list(user, LANG("obj.856cf889", null), LANG("obj.a7f441ba", null), case_colors)
 			if(!case_color)
 				return FALSE
 
@@ -172,7 +172,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 				update_appearance(UPDATE_ICON)
 				return TRUE
 		if("rename_case")
-			var/new_name = tgui_input_text(user, "Please enter the new name for the case",  "Detective's Board", max_length = MAX_NAME_LEN)
+			var/new_name = tgui_input_text(user, LANG("obj.f8ec0ea5", null),  LANG("obj.a7f441ba", null), max_length = MAX_NAME_LEN)
 			if(new_name)
 				var/datum/case/case = locate(params["case_ref"]) in cases
 				case.name = new_name

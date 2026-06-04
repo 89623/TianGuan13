@@ -185,12 +185,12 @@
 			if(0 to 200)
 				fail_tick += (2*(fail_chance))
 				M.adjust_fire_loss(3)
-				to_chat(M, span_userdanger("Your [name] feels warmer."))
+				to_chat(M, span_userdanger(LANG("obj.c79c28b6", list(name))))
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
 				M.adjust_fire_loss(10)
 				reactor_overloaded = TRUE
-				to_chat(M, span_userdanger("Your [name]'s reactor overloads!"))
+				to_chat(M, span_userdanger(LANG("obj.a9d1d97f", list(name))))
 
 /obj/item/gun/energy/e_gun/nuclear/emp_act(severity)
 	. = ..()
@@ -206,11 +206,11 @@
 
 	switch(fail_tick)
 		if(0)
-			. += "[icon_state]_fail_0"
+			. += LANG("obj.789b47b6", list(icon_state))
 		if(1 to 150)
-			. += "[icon_state]_fail_1"
+			. += LANG("obj.697651e7", list(icon_state))
 		if(151 to INFINITY)
-			. += "[icon_state]_fail_2"
+			. += LANG("obj.36b04b89", list(icon_state))
 
 /obj/item/gun/energy/e_gun/lethal
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)

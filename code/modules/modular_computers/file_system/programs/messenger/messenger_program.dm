@@ -165,7 +165,7 @@
 	switch(action)
 		if("PDA_ringSet")
 			var/mob/living/user = usr
-			var/new_ringtone = tgui_input_text(user, "Enter a new ringtone", "Ringtone", ringtone, max_length = MAX_MESSAGE_LEN, encode = FALSE)
+			var/new_ringtone = tgui_input_text(user, LANG("datum.0217372d", null), LANG("datum.d1ce8515", null), ringtone, max_length = MAX_MESSAGE_LEN, encode = FALSE)
 			if(!computer.can_interact(user))
 				computer.balloon_alert(user, "can't reach!")
 				return FALSE
@@ -222,11 +222,11 @@
 
 		if("PDA_sendEveryone")
 			if(!sending_and_receiving)
-				to_chat(usr, span_notice("ERROR: This device has sending disabled."))
+				to_chat(usr, span_notice(LANG("datum.c18de318", null)))
 				return FALSE
 
 			if(!spam_mode)
-				to_chat(usr, span_notice("ERROR: This device does not have mass-messaging perms."))
+				to_chat(usr, span_notice(LANG("datum.d637215d", null)))
 				return FALSE
 
 			if(!can_send_everyone_message())
@@ -260,7 +260,7 @@
 
 		if("PDA_sendMessage")
 			if(!sending_and_receiving)
-				to_chat(usr, span_notice("ERROR: This device has sending disabled."))
+				to_chat(usr, span_notice(LANG("datum.c18de318", null)))
 				return FALSE
 
 			// target ref, can either be a chat in saved_chats
@@ -287,7 +287,7 @@
 					var/datum/pda_chat/target_chat = target
 					target_messenger = target_chat.recipient?.resolve()
 					if(!istype(target_messenger))
-						to_chat(usr, span_notice("ERROR: Recipient no longer exists."))
+						to_chat(usr, span_notice(LANG("datum.63815360", null)))
 						return FALSE
 				else if(istype(target, /datum/computer_file/program/messenger))
 					target_messenger = target

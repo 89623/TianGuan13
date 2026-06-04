@@ -1067,7 +1067,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			say_span = selection
 			if(changing_voice)
 				owner.speech_span = say_span
-			to_chat(usr, span_notice("Voice set to [selection]."))
+			to_chat(usr, span_notice(LANG("obj.fb642bd5", list(selection))))
 		if("verb")
 			say_verb = strip_html(params["verb"], MAX_NAME_LEN)
 			if(changing_voice)

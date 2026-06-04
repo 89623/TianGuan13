@@ -322,7 +322,7 @@
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
 			if(isnull(user_id_card))
-				say("No ID card found.")
+				say(LANG("obj.73f9bb56", null))
 				return FALSE
 
 			//we have points
@@ -338,7 +338,7 @@
 			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
-				to_chat(usr, span_warning("Required access not found."))
+				to_chat(usr, span_warning(LANG("obj.b4807c07", null)))
 			else
 				var/datum/material/mat = locate(params["id"])
 
@@ -377,7 +377,7 @@
 					output = alloy.create_result(src)
 				unload_mineral(output)
 			else
-				to_chat(usr, span_warning("Required access not found."))
+				to_chat(usr, span_warning(LANG("obj.b4807c07", null)))
 			return TRUE
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)

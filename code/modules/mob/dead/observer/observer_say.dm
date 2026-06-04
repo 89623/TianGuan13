@@ -50,7 +50,7 @@
 				SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/dsay, message)
 			if(MODE_PUPPET)
 				if(!mind.current.say(message))
-					to_chat(src, span_warning("Your linked body was unable to speak!"))
+					to_chat(src, span_warning(LANG("mob.78676d3b", null)))
 		return
 
 	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)

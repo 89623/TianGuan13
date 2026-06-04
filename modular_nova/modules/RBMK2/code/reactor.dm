@@ -500,7 +500,7 @@
 
 			safety = !safety
 
-			balloon_alert(user, "safeties are [safety ? "on" : "off"]")
+			balloon_alert(user, LANG("obj.2ca76580", list(safety ? "on" : "off")))
 			. = TRUE
 			if(isliving(user))
 				user.log_message("turned the safety [safety ? "on" : "off"] of [src]", LOG_GAME)
@@ -513,7 +513,7 @@
 
 			overclocked = !overclocked
 
-			balloon_alert(user, "overclocking is [overclocked ? "on" : "off"]")
+			balloon_alert(user, LANG("obj.0b854533", list(overclocked ? "on" : "off")))
 			. = TRUE
 			if(isliving(user))
 				user.log_message("turned the overclock [overclocked ? "on" : "off"] of [src]", LOG_GAME)

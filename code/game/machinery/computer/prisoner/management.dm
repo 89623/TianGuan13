@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// List of all implants currently implanted into a mob
 GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 
@@ -77,7 +78,7 @@ GLOBAL_LIST_EMPTY_TYPED(tracked_implants, /obj/item/implant)
 			return TRUE
 
 		if("set_id_goal")
-			var/num = tgui_input_number(usr, "Enter the prisoner's goal", "Prisoner Management", 100, 1000, 1)
+			var/num = tgui_input_number(usr, LANG("obj.b89e3452", null), LANG("obj.a1472c54", null), 100, 1000, 1)
 			if(!isnum(num) || QDELETED(src) || QDELETED(contained_id) || QDELETED(usr))
 				return TRUE
 			if(!is_operational || !usr.can_perform_action(src, NEED_DEXTERITY|ALLOW_SILICON_REACH))

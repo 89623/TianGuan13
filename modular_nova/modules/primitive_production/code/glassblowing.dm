@@ -288,7 +288,7 @@
 				glass.chosen_item = null
 				glass.steps_remaining = null
 				glass.is_finished = FALSE
-				to_chat(usr, span_notice("You start over with the [src]."))
+				to_chat(usr, span_notice(LANG("obj.917dced0", list(src))))
 
 
 /**

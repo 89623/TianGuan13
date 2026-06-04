@@ -121,17 +121,17 @@
 	if(awakened)
 		switch(bloodthirst)
 			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
-				. += span_his_grace("[src] isn't very hungry. Not yet.")
+				. += span_his_grace(LANG("obj.018c139b", list(src)))
 			if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
-				. += span_his_grace("[src] would like a snack.")
+				. += span_his_grace(LANG("obj.f9c249d0", list(src)))
 			if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
-				. += span_his_grace("[src] is quite hungry now.")
+				. += span_his_grace(LANG("obj.b53a7cf5", list(src)))
 			if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-				. += span_his_grace("[src] is openly salivating at the sight of you. Be careful.")
+				. += span_his_grace(LANG("obj.d6f1bcb8", list(src)))
 			if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-				. += "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>"
+				. += LANG("obj.c21e081d", list(src))
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				. += "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>"
+				. += LANG("obj.cdbff527", list(src))
 	else
 		. += span_his_grace(LANG("obj.bdd6ec7b", list(src)))
 

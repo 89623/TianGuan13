@@ -313,7 +313,7 @@
 			if(INVOCATION_WHISPER, INVOCATION_SHOUT)
 				if(!caster.get_organ_slot(ORGAN_SLOT_TONGUE))
 					invocation(caster)
-					to_chat(caster, span_warning("Your lack of tongue is making it difficult to say the correct words to cast [src]..."))
+					to_chat(caster, span_warning(LANG("datum.d539a462", list(src))))
 					StartCooldown(2 SECONDS)
 					return SPELL_CANCEL_CAST
 
@@ -324,7 +324,7 @@
 						span_warning("[caster] wiggles around [caster.p_their()] [arm_describer]."),
 						ignored_mobs = caster,
 					)
-					to_chat(caster, span_warning("You can't position your hands correctly to invoke [src][caster.num_hands > 0 ? "" : ", as you have none"]..."))
+					to_chat(caster, span_warning(LANG("datum.f99e6898", list(src, caster.num_hands > 0 ? "" : ", as you have none"))))
 					StartCooldown(2 SECONDS)
 					return SPELL_CANCEL_CAST
 

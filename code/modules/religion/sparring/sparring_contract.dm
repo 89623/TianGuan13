@@ -105,7 +105,7 @@
 			if(!left_partner || !right_partner || !left_partner.mind || !right_partner.mind)
 				return
 			if(HAS_TRAIT(left_partner, TRAIT_SPARRING) || HAS_TRAIT(right_partner, TRAIT_SPARRING))
-				to_chat(user, span_warning("One participant is already sparring!"))
+				to_chat(user, span_warning(LANG("obj.556a2e4d", null)))
 				return
 			var/chaplain = left_partner.mind.holy_role ? left_partner : right_partner
 			var/opponent = left_partner.mind.holy_role ? right_partner : left_partner
@@ -113,7 +113,7 @@
 			qdel(src)
 		if("sign")
 			if(user == left_partner || user == right_partner)
-				to_chat(user, span_warning("You've already signed one side of the contract."))
+				to_chat(user, span_warning(LANG("obj.3276abd4", null)))
 				return
 			var/area/arena_condition_name = GLOB.areas_by_type[arena_condition]
 			arena_condition_name = format_text(arena_condition_name.name)
@@ -138,7 +138,7 @@
 			//if you change the terms you have to get the other person to sign again.
 			if(terms_changed && (left_partner || right_partner))
 				signed_by = list(null, null)//remove weakrefs
-				to_chat(user, span_warning("You will need to get your sparring partner to sign again under these new terms you've set."))
+				to_chat(user, span_warning(LANG("obj.ca59baa9", null)))
 			//fluff and signing
 			var/datum/weakref/user_ref = WEAKREF(user)
 			if(params["sign_position"] == CONTRACT_LEFT_FIELD)

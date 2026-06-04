@@ -5,7 +5,7 @@
 			if(!tool.tool_start_check(user, amount = 1))
 				return ITEM_INTERACT_BLOCKING
 			user.balloon_alert_to_viewers("[camera_construction_state == CAMERA_STATE_WELDED ? "un" : null]welding...")
-			audible_message(span_hear("You hear welding."))
+			audible_message(span_hear(LANG("obj.1aa82fa3", null)))
 			if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
 				user.balloon_alert_to_viewers("stopped [camera_construction_state == CAMERA_STATE_WELDED ? "un" : null]welding!")
 				return
@@ -18,7 +18,7 @@
 				return ITEM_INTERACT_BLOCKING
 			if(!tool.tool_start_check(user, amount=2))
 				return ITEM_INTERACT_BLOCKING
-			audible_message(span_hear("You hear welding."))
+			audible_message(span_hear(LANG("obj.1aa82fa3", null)))
 			if(!tool.use_tool(src, user, 100, volume=50))
 				return ITEM_INTERACT_BLOCKING
 			user.visible_message(span_warning("[user] unwelds [src], leaving it as just a frame bolted to the wall."),
@@ -31,12 +31,12 @@
 	switch(camera_construction_state)
 		if(CAMERA_STATE_WIRED)
 			tool.play_tool_sound(src)
-			var/input = tgui_input_text(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret", "Set Network", "SS13", max_length = MAX_NAME_LEN)
+			var/input = tgui_input_text(user, LANG("obj.458189f7", null), LANG("obj.3ecb8b4e", null), "SS13", max_length = MAX_NAME_LEN)
 			if(isnull(input))
 				return ITEM_INTERACT_BLOCKING
 			var/list/tempnetwork = splittext(input, ",")
 			if(!length(tempnetwork))
-				to_chat(user, span_warning("No network found, please hang up and try your call again!"))
+				to_chat(user, span_warning(LANG("obj.88594d26", null)))
 				return ITEM_INTERACT_BLOCKING
 			for(var/i in tempnetwork)
 				tempnetwork -= i
@@ -47,7 +47,7 @@
 			return ITEM_INTERACT_SUCCESS
 		if(CAMERA_STATE_FINISHED)
 			toggle_panel_open()
-			to_chat(user, span_notice("You screw the camera's panel [panel_open ? "open" : "closed"]."))
+			to_chat(user, span_notice(LANG("obj.1b40f8a1", list(panel_open ? "open" : "closed"))))
 			tool.play_tool_sound(src)
 			update_appearance()
 			return ITEM_INTERACT_SUCCESS
@@ -58,7 +58,7 @@
 		if(CAMERA_STATE_WIRED)
 			new /obj/item/stack/cable_coil(drop_location(), 2)
 			tool.play_tool_sound(src)
-			to_chat(user, span_notice("You cut the wires from the circuits."))
+			to_chat(user, span_notice(LANG("obj.e89d2de0", null)))
 			camera_construction_state = CAMERA_STATE_WELDED
 			return ITEM_INTERACT_SUCCESS
 		if(CAMERA_STATE_FINISHED)
@@ -155,10 +155,10 @@
 			if(istype(attacking_item, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/attacking_cable = attacking_item
 				if(attacking_cable.use(2))
-					to_chat(user, span_notice("You add wires to [src]."))
+					to_chat(user, span_notice(LANG("obj.b1f7e13c", list(src))))
 					camera_construction_state = CAMERA_STATE_WIRED
 				else
-					to_chat(user, span_warning("You need two lengths of cable to wire a camera!"))
+					to_chat(user, span_warning(LANG("obj.a7a9a50c", null)))
 				return
 		if(CAMERA_STATE_FINISHED)
 			if(istype(attacking_item, /obj/item/modular_computer))
@@ -176,7 +176,7 @@
 				itemname = computer.name
 				itemname = sanitize(itemname)
 				info = sanitize(info)
-				to_chat(user, span_notice("You hold \the [itemname] up to the camera..."))
+				to_chat(user, span_notice(LANG("obj.7ff8ed27", list(itemname))))
 				user.log_talk(itemname, LOG_GAME, log_globally=TRUE, tag="Pressed to camera")
 				user.changeNext_move(CLICK_CD_MELEE)
 
@@ -212,7 +212,7 @@
 				var/item_name = sanitize(last_shown_paper.name)
 
 				// Start the process of holding it up to the camera.
-				to_chat(user, span_notice("You hold \the [item_name] up to the camera..."))
+				to_chat(user, span_notice(LANG("obj.7ff8ed27", list(item_name))))
 				user.log_talk(item_name, LOG_GAME, log_globally=TRUE, tag="Pressed to camera")
 				user.changeNext_move(CLICK_CD_MELEE)
 

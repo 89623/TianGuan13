@@ -300,7 +300,7 @@
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
-				target = input("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature) as num|null
+				target = input(LANG("obj.8399bf28", list(min_temperature, max_temperature)), name, target_temperature) as num|null
 				if(!isnull(target))
 					. = TRUE
 			else if(adjust)

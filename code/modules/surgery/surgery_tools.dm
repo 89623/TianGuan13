@@ -672,7 +672,7 @@
 	. = TRUE
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.name2reagent)
+			var/selected_reagent = tgui_input_list(usr, LANG("obj.fda84413", null), LANG("obj.f379b47b", null), GLOB.name2reagent)
 			if(!selected_reagent)
 				return FALSE
 

@@ -142,7 +142,7 @@ Bonus
 				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power), explosion_cause = src)
 			Alkali_fire_stage_4(M, A)
 			M.ignite_mob()
-			to_chat(M, span_userdanger("Your sweat bursts into flames!"))
+			to_chat(M, span_userdanger(LANG("datum.6b64782f", null)))
 			M.emote("scream")
 		if(5)
 			if(M.fire_stacks < 0)
@@ -150,7 +150,7 @@ Bonus
 				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power), explosion_cause = src)
 			Alkali_fire_stage_5(M, A)
 			M.ignite_mob()
-			to_chat(M, span_userdanger("Your skin erupts into an inferno!"))
+			to_chat(M, span_userdanger(LANG("datum.7b3fb5c3", null)))
 			M.emote("scream")
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_4(mob/living/M, datum/disease/advance/A)

@@ -147,7 +147,7 @@
 /obj/structure/deployable_barricade/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
-			visible_message(span_danger("[src] explodes!"))
+			visible_message(span_danger(LANG("obj.e64b7ad7", list(src))))
 			deconstruct(FALSE)
 			return
 		if(EXPLODE_HEAVY)
@@ -486,11 +486,11 @@
 	. = ..()
 	switch(build_state)
 		if(BARRICADE_METAL_FIRM)
-			. += span_info("The cover plate is <b>screwed</b> in place.")
+			. += span_info(LANG("obj.005242a6", null))
 		if(BARRICADE_METAL_ANCHORED)
-			. += span_info("The cover plate is <i>unscrewed</i>, but it is <b>bolted</b> to the ground.")
+			. += span_info(LANG("obj.f828552a", null))
 		if(BARRICADE_METAL_LOOSE)
-			. += span_info("The anchor points are <i>unbolted</i>, use a <b>crowbar</b> to disassemble it.")
+			. += span_info(LANG("obj.4cb2ab2d", null))
 
 	if(barricade_upgrade_type)
 		. += span_info(LANG("obj.03f6cd95", list(barricade_upgrade_type)))
@@ -574,7 +574,7 @@
 		if(BARRICADE_METAL_LOOSE) //Anchor bolts loosened step. Apply crowbar to unseat the panel and take apart the whole thing. Apply wrench to resecure anchor bolts
 			var/turf/mystery_turf = get_turf(src)
 			if(!isopenturf(mystery_turf))
-				to_chat(user, span_warning("You cannot install [src] here!"))
+				to_chat(user, span_warning(LANG("obj.99d960da", list(src))))
 				return TRUE
 
 			for(var/obj/structure/deployable_barricade/B in loc)
@@ -613,7 +613,7 @@
 
 		if(BARRICADE_METAL_FIRM)
 			if(!barricade_upgrade_type) //Check to see if we actually have upgrades to remove.
-				to_chat(user, span_warning("This barricade has no installed upgrades to remove!"))
+				to_chat(user, span_warning(LANG("obj.d85d0630", null)))
 				return TRUE
 
 			user.visible_message(span_notice("[user] begins to detach the armor plates from [src]."),

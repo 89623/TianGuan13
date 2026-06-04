@@ -235,18 +235,18 @@
 			playsound(src, hitsound, 45)
 		if(1 to 10)
 			// No check, final warning as they struggle, also funny.
-			visible_message(span_bolddanger("[src] thrashes against [moc]'s grasp!"))
+			visible_message(span_bolddanger(LANG("obj.9aaa72b8", list(src, moc))))
 			moc.shake_up_animation()
 		if(10 to 15)
 			if(last_effect == PATIENCE_FLINCH)
 				return
-			visible_message(span_danger("[src] flinches away from [moc]!"))
+			visible_message(span_danger(LANG("obj.662fe836", list(src, moc))))
 			moc.shake_up_animation()
 			last_effect = PATIENCE_FLINCH
 		if(15 to 20)
 			if(last_effect == PATIENCE_UNCOMFY)
 				return
-			visible_message(span_notice("[src] seems uncomfortable in [moc]'s grasp."))
+			visible_message(span_notice(LANG("obj.13cf0172", list(src, moc))))
 			last_effect = PATIENCE_UNCOMFY
 
 	return
@@ -790,18 +790,18 @@
 			organ_owner.remove_all_languages(source = LANGUAGE_ALL)
 			//but speak everything
 			organ_owner.grant_all_languages(language_flags = SPOKEN_LANGUAGE, grant_omnitongue = FALSE, source = LANGUAGE_BABEL)
-			to_chat(organ_owner, span_noticealien("You feel like you've been given the first half of a cosmic puzzle!"))
+			to_chat(organ_owner, span_noticealien(LANG("obj.741cfcb8", null)))
 		if(46 to 90)
 			// Can speak nothing
 			organ_owner.remove_all_languages(source = LANGUAGE_ALL)
 			// but understand everything
 			organ_owner.grant_all_languages(language_flags = UNDERSTOOD_LANGUAGE, grant_omnitongue = FALSE, source = LANGUAGE_BABEL)
-			to_chat(organ_owner, span_noticealien("You feel like you've been given the second half of a cosmic puzzle!"))
+			to_chat(organ_owner, span_noticealien(LANG("obj.3941e6d0", null)))
 		if(91 to 100)
 			// jackpot!
 			organ_owner.grant_all_languages(language_flags = ALL, grant_omnitongue = TRUE, source = LANGUAGE_BABEL)
-			to_chat(organ_owner, span_noticealien("You feel like you've been given both halves of a cosmic puzzle!"))
-			to_chat(organ_owner, span_boldnicegreen("So <i>that's</i> what they said to you that one time..."))
+			to_chat(organ_owner, span_noticealien(LANG("obj.c85aad15", null)))
+			to_chat(organ_owner, span_boldnicegreen(LANG("obj.b559b9f5", null)))
 
 	if(organ_owner.mind)
 		ADD_TRAIT(organ_owner.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT) // only one roll per mind

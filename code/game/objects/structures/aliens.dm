@@ -390,18 +390,18 @@
 	if(user.get_organ_by_type(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURSTING)
-				to_chat(user, span_notice("The child is hatching out."))
+				to_chat(user, span_notice(LANG("obj.b8f3bd4d", null)))
 				return
 			if(BURST)
-				to_chat(user, span_notice("You clear the hatched egg."))
+				to_chat(user, span_notice(LANG("obj.ffbd1b4a", null)))
 				playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 				qdel(src)
 				return
 			if(GROWING)
-				to_chat(user, span_notice("The child is not developed yet."))
+				to_chat(user, span_notice(LANG("obj.fbd3e851", null)))
 				return
 			if(GROWN)
-				to_chat(user, span_notice("You retrieve the child."))
+				to_chat(user, span_notice(LANG("obj.33f071ba", null)))
 				Burst(kill=FALSE)
 				return
 	else

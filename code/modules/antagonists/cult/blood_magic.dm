@@ -918,7 +918,7 @@
 	switch(choice)
 		if("Bloody Halberd (150)")
 			if(uses < BLOOD_HALBERD_COST)
-				to_chat(user, span_cult_italic("You need [BLOOD_HALBERD_COST] charges to perform this rite."))
+				to_chat(user, span_cult_italic(LANG("obj.19f7fe79", list(BLOOD_HALBERD_COST))))
 				return
 			uses -= BLOOD_HALBERD_COST
 			var/turf/current_position = get_turf(user)
@@ -928,35 +928,35 @@
 			halberd_act_granted.Grant(user, rite)
 			rite.halberd_act = halberd_act_granted
 			if(user.put_in_hands(rite))
-				to_chat(user, span_cult_italic("A [rite.name] appears in your hand!"))
+				to_chat(user, span_cult_italic(LANG("obj.272b459e", list(rite.name))))
 			else
 				user.visible_message(span_warning("A [rite.name] appears at [user]'s feet!"), \
 					span_cult_italic("A [rite.name] materializes at your feet."))
 
 		if("Blood Bolt Barrage (300)")
 			if(uses < BLOOD_BARRAGE_COST)
-				to_chat(user, span_cult_italic("You need [BLOOD_BARRAGE_COST] charges to perform this rite."))
+				to_chat(user, span_cult_italic(LANG("obj.19f7fe79", list(BLOOD_BARRAGE_COST))))
 				return
 			var/obj/rite = new /obj/item/gun/magic/wand/arcane_barrage/blood()
 			uses -= BLOOD_BARRAGE_COST
 			qdel(src)
 			if(user.put_in_hands(rite))
-				to_chat(user, span_cult("<b>Your hands glow with power!</b>"))
+				to_chat(user, span_cult(LANG("obj.0290afd4", null)))
 			else
-				to_chat(user, span_cult_italic("You need a free hand for this rite!"))
+				to_chat(user, span_cult_italic(LANG("obj.3f1aebae", null)))
 				qdel(rite)
 
 		if("Blood Beam (500)")
 			if(uses < BLOOD_BEAM_COST)
-				to_chat(user, span_cult_italic("You need [BLOOD_BEAM_COST] charges to perform this rite."))
+				to_chat(user, span_cult_italic(LANG("obj.19f7fe79", list(BLOOD_BEAM_COST))))
 				return
 			var/obj/rite = new /obj/item/blood_beam()
 			uses -= BLOOD_BEAM_COST
 			qdel(src)
 			if(user.put_in_hands(rite))
-				to_chat(user, span_cult_large("<b>Your hands glow with POWER OVERWHELMING!!!</b>"))
+				to_chat(user, span_cult_large(LANG("obj.32a879c3", null)))
 			else
-				to_chat(user, span_cult_italic("You need a free hand for this rite!"))
+				to_chat(user, span_cult_italic(LANG("obj.3f1aebae", null)))
 				qdel(rite)
 
 /obj/item/melee/blood_magic/manipulator/proc/check_menu(mob/living/user)

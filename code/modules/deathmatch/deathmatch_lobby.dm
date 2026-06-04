@@ -424,7 +424,7 @@
 			if (usr.ckey != host)
 				return FALSE
 			if (map.min_players > players.len)
-				to_chat(usr, span_warning("Not enough players to start yet."))
+				to_chat(usr, span_warning(LANG("datum.b09ae9ec", null)))
 				return FALSE
 			start_game()
 			return TRUE

@@ -82,7 +82,7 @@
 			while(do_after(usr, 1 SECONDS, chassis) && get_integrity() < max_integrity)
 				repair_damage(30)
 			if(get_integrity() == max_integrity)
-				balloon_alert(usr, "repair complete")
+				balloon_alert(usr, LANG("obj.fe98aec3", null))
 			. = FALSE
 	var/result = handle_ui_act(action,params,ui,state)
 	if(result) //if handle_ui_act returned anything at all lets just return that instead

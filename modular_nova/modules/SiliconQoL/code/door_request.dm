@@ -34,7 +34,7 @@
 				door.unbolt()
 			door.open()
 			playsound(door, 'sound/machines/ping.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
-			to_chat(src, "<span class='notice'>You open the [door] for [requester].</span>")
+			to_chat(src, LANG("mob.ba6e08b6", list(door, requester)))
 			// Clear the per-(player, door) AI-request cooldown since the ask succeeded — they may need to ask again later.
 			door.requesters -= "[requester.ckey]_[REF(door)]"
 		if("bolt")
@@ -48,4 +48,4 @@
 		if("deny")
 			playsound(door, 'sound/machines/buzz/buzz-sigh.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
 			door.visible_message(span_notice("The door buzzes, [src] has denied your request."), vision_distance = COMBAT_MESSAGE_RANGE)
-			to_chat(src, "You deny [requester]'s request.")
+			to_chat(src, LANG("mob.dd7cb86a", list(requester)))

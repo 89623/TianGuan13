@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Generate a random name based off of one of the roundstart languages
  *
@@ -260,7 +261,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 							. += job.title //Returns a job.
 						else
 							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
-							. += "Bug"
+							. += LANG("_root.2571b1a5", null)
 				safety -= 1
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.

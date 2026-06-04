@@ -40,13 +40,13 @@
 	switch(stat)
 		if(CONSCIOUS)
 			if(shell)
-				. += "[p_They()] appear[p_s()] to be an [deployed ? "active" : "empty"] AI shell."
+				. += LANG("mob.e65160d9", list(p_They(), p_s(), deployed ? "active" : "empty"))
 			else if(!client)
-				. += "[p_They()] appear[p_s()] to be in stand-by mode." //afk
+				. += LANG("mob.76e341a1", list(p_They(), p_s())) //afk
 		if(SOFT_CRIT, UNCONSCIOUS, HARD_CRIT)
-			. += span_warning("[p_They()] do[p_es()]n't seem to be responding.")
+			. += span_warning(LANG("mob.1959200f", list(p_They(), p_es())))
 		if(DEAD)
-			. += span_deadsay("[p_They()] look[p_s()] like its system is corrupted and requires a reset.")
+			. += span_deadsay(LANG("mob.2daf9e8b", list(p_They(), p_s())))
 	//NOVA EDIT ADDITION BEGIN - CUSTOMIZATION
 	. += get_silicon_flavortext(user)
 	//NOVA EDIT ADDITION END

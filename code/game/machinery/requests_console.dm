@@ -193,12 +193,12 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			// Check if user can call this emergency (prevent self-calls) RETA
 			var/user_dept = reta_get_user_department(usr)
 			if(user_dept == target_dept && !isAdminGhostAI(usr))
-				to_chat(usr, span_alert("You cannot call your own department for emergency assistance."))
+				to_chat(usr, span_alert(LANG("obj.a01640cd", null)))
 				return
 
 			// Check cooldown RETA
 			if(origin_dept && target_dept && reta_on_cooldown(origin_dept, target_dept))
-				to_chat(usr, span_alert("Emergency calls to [target_dept] are on cooldown."))
+				to_chat(usr, span_alert(LANG("obj.3cd6ab48", list(target_dept))))
 				return
 
 			emergency = emergency_type
@@ -291,7 +291,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			return TRUE
 		if("send_announcement")
 			if(!COOLDOWN_FINISHED(src, announcement_cooldown))
-				to_chat(usr, span_alert("Intercomms recharging. Please stand by."))
+				to_chat(usr, span_alert(LANG("obj.201fe056", null)))
 				return
 			if(!can_send_announcements)
 				return
@@ -300,7 +300,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 			var/message = reject_bad_text(trim(html_encode(params["message"]), MAX_MESSAGE_LEN), ascii_only = FALSE)
 			if(!message)
-				to_chat(usr, span_alert("Invalid message."))
+				to_chat(usr, span_alert(LANG("obj.2b32249f", null)))
 				return
 			if(isliving(usr))
 				var/mob/living/L = usr
@@ -318,7 +318,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		if("quick_reply")
 			var/recipient = params["reply_recipient"]
 
-			var/reply_message = reject_bad_text(tgui_input_text(usr, "Write a quick reply to [recipient]", "Awaiting Input"), ascii_only = FALSE)
+			var/reply_message = reject_bad_text(tgui_input_text(usr, LANG("obj.d90b255e", list(recipient)), LANG("obj.e1dec803", null)), ascii_only = FALSE)
 			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)
 				return
 			if(!reply_message)
@@ -337,7 +337,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				return
 			var/message = reject_bad_text(trim(html_encode(params["message"]), MAX_MESSAGE_LEN), ascii_only = FALSE)
 			if(!message)
-				to_chat(usr, span_alert("Invalid message."))
+				to_chat(usr, span_alert(LANG("obj.2b32249f", null)))
 				has_mail_send_error = TRUE
 				return TRUE
 			var/request_type = params["request_type"]

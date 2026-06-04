@@ -1235,11 +1235,11 @@
 		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				. += "It looks slightly damaged."
+				. += LANG("obj.bc3c8a23", null)
 			if(25 to 50)
-				. += "It appears heavily damaged."
+				. += LANG("obj.27d47c4b", null)
 			if(0 to 25)
-				. += span_warning("It's falling apart!")
+				. += span_warning(LANG("obj.ad6c0cee", null))
 
 /obj/machinery/examine_descriptor(mob/user)
 	return "machine"

@@ -259,15 +259,15 @@ Behavior that's still missing from this component that original food items had t
 		var/purity = owner.reagents.get_average_purity(/datum/reagent/consumable)
 		switch(purity)
 			if(0 to 0.2)
-				examine_list += span_warning("It is made of terrible ingredients shortening the effect...")
+				examine_list += span_warning(LANG("datum.2d8efb5b", null))
 			if(0.2 to 0.4)
-				examine_list += span_warning("It is made of synthetic ingredients shortening the effect.")
+				examine_list += span_warning(LANG("datum.df9bf2b2", null))
 			if(0.4 to 0.6)
-				examine_list += span_notice("It is made of average quality ingredients.")
+				examine_list += span_notice(LANG("datum.cacee4e7", null))
 			if(0.6 to 0.8)
-				examine_list += span_green("It is made of organic ingredients prolonging the effect.")
+				examine_list += span_green(LANG("datum.8f300331", null))
 			if(0.8 to 1)
-				examine_list += span_green("It is made of finest ingredients prolonging the effect!")
+				examine_list += span_green(LANG("datum.ef938bc6", null))
 
 	var/datum/mind/mind = user.mind
 	if(mind && HAS_TRAIT_FROM(owner, TRAIT_FOOD_CHEF_MADE, REF(mind)))
@@ -278,9 +278,9 @@ Behavior that's still missing from this component that original food items had t
 			if(0)
 				pass()
 			if(1)
-				examine_list += span_notice("[owner] was bitten by someone!")
+				examine_list += span_notice(LANG("datum.67083ac3", list(owner)))
 			if(2, 3)
-				examine_list += span_notice("[owner] was bitten [bitecount] times!")
+				examine_list += span_notice(LANG("datum.f86a4da7", list(owner, bitecount)))
 			else
 				examine_list += span_notice(LANG("datum.146a9176", list(owner)))
 

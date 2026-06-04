@@ -112,11 +112,11 @@
 	var/use_percent = remaining_uses / max_uses
 	switch(use_percent)
 		if(0.7 to 1)
-			. += "zaibas_bullet_3"
+			. += LANG("obj.756eb315", null)
 		if(0.3 to 0.7)
-			. += "zaibas_bullet_2"
+			. += LANG("obj.14e9fb58", null)
 		if(0.1 to 0.3)
-			. += "zaibas_bullet_1"
+			. += LANG("obj.7599f217", null)
 
 /obj/projectile/bullet/pulse
 	name = "pulse energy"

@@ -233,7 +233,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 
 			var/datum/controller/subsystem/subsystem = locate(params["ref"]) in subsystems
 			if(isnull(subsystem))
-				to_chat(ui.user, span_warning("Failed to locate subsystem."))
+				to_chat(ui.user, span_warning(LANG("datum.72f94059", null)))
 				return
 
 			ui.user.client.debug_variables(subsystem)

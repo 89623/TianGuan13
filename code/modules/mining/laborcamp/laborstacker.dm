@@ -102,39 +102,39 @@
 				var/obj/item/card/id/advanced/prisoner/worn_prisoner_id = worn_id
 				worn_prisoner_id.points += stacking_machine.points
 				stacking_machine.points = 0
-				say("Points transferred.")
+				say(LANG("obj.8bb19476", null))
 				return TRUE
 			else
 				if(COOLDOWN_FINISHED(src, say_cooldown))
-					say("No valid id for point transfer detected.")
+					say(LANG("obj.02480055", null))
 					COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 
 		if("move_shuttle")
 			if(isnull(SSshuttle.getShuttle("laborcamp")))
 				if(COOLDOWN_FINISHED(src, say_cooldown))
-					say("Shuttle not found.")
+					say(LANG("obj.20fb4291", null))
 					COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 				return
 
 			var/list/labor_shuttle_mobs = find_labor_shuttle_mobs()
 			if(length(labor_shuttle_mobs) > 1 || labor_shuttle_mobs[1] != user_mob)
 				if(COOLDOWN_FINISHED(src, say_cooldown))
-					say("Prisoners may only be released one at a time.")
+					say(LANG("obj.9d8fb001", null))
 					COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 				return
 
 			switch(SSshuttle.moveShuttle("laborcamp", "laborcamp_home", TRUE))
 				if(1)
 					if(COOLDOWN_FINISHED(src, say_cooldown))
-						say("Shuttle not found.")
+						say(LANG("obj.20fb4291", null))
 						COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 				if(2)
 					if(COOLDOWN_FINISHED(src, say_cooldown))
-						say("Shuttle already at station.")
+						say(LANG("obj.58de3a65", null))
 						COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 				if(3)
 					if(COOLDOWN_FINISHED(src, say_cooldown))
-						say("No permission to dock could be granted.")
+						say(LANG("obj.8f4dc87d", null))
 						COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 				else
 					if(!(obj_flags & EMAGGED))
@@ -143,7 +143,7 @@
 
 						aas_config_announce(/datum/aas_config_entry/security_labor_stacker, list("PERSON" = user_mob.real_name), src, list(RADIO_CHANNEL_SECURITY))
 					user_mob.log_message("has completed their labor points goal and is now sending the gulag shuttle back to the station.", LOG_GAME)
-					say("Labor sentence finished, shuttle returning.")
+					say(LANG("obj.b670bfe4", null))
 					initiated_launch = TRUE
 					return TRUE
 

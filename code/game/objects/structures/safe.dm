@@ -204,9 +204,9 @@ FLOOR SAFES
 	switch(action)
 		if("open")
 			if(!check_unlocked() && !open && !broken)
-				to_chat(user, span_warning("You cannot open [src], as its lock is engaged!"))
+				to_chat(user, span_warning(LANG("obj.3d3f4337", list(src))))
 				return
-			to_chat(user, span_notice("You [open ? "close" : "open"] [src]."))
+			to_chat(user, span_notice(LANG("obj.d6171b71", list(open ? "close" : "open", src))))
 			open = !open
 			update_appearance()
 			return TRUE
@@ -214,7 +214,7 @@ FLOOR SAFES
 			if(open)
 				return
 			if(broken)
-				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
+				to_chat(user, span_warning(LANG("obj.ee82e86c", null)))
 				return
 			var/ticks = text2num(params["num"])
 			for(var/iterate in 1 to ticks)
@@ -235,7 +235,7 @@ FLOOR SAFES
 			if(open)
 				return
 			if(broken)
-				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
+				to_chat(user, span_warning(LANG("obj.ee82e86c", null)))
 				return
 			var/ticks = text2num(params["num"])
 			for(var/iterate in 1 to ticks)

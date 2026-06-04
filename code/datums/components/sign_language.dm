@@ -159,15 +159,15 @@
 			return COMPONENT_IGNORE_CAN_SPEAK
 
 		if(SIGN_ARMLESS) // No arms
-			to_chat(carbon_parent, span_warning("You can't sign with no hands!"))
+			to_chat(carbon_parent, span_warning(LANG("datum.c8c9fc3b", null)))
 			return COMPONENT_CANNOT_SPEAK
 
 		if(SIGN_ARMS_DISABLED) // Arms but they're disabled
-			to_chat(carbon_parent, span_warning("You can't sign with your hands right now!"))
+			to_chat(carbon_parent, span_warning(LANG("datum.e544294d", null)))
 			return COMPONENT_CANNOT_SPEAK
 
 		if(SIGN_TRAIT_BLOCKED) // Hands blocked or emote mute
-			to_chat(carbon_parent, span_warning("You can't sign at the moment!"))
+			to_chat(carbon_parent, span_warning(LANG("datum.b188e451", null)))
 			return COMPONENT_CANNOT_SPEAK
 
 	// Assuming none of the above fail, sign language users can speak

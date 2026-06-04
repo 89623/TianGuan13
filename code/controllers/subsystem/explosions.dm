@@ -114,9 +114,9 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input(user, "Devastation range (Tiles):") as num
-			heavy = input(user, "Heavy impact range (Tiles):") as num
-			light = input(user, "Light impact range (Tiles):") as num
+			dev = input(user, LANG("datum.6b1cf2e6", null)) as num
+			heavy = input(user, LANG("datum.54a896b7", null)) as num
+			light = input(user, LANG("datum.923a0ff5", null)) as num
 
 	var/max_range = max(dev, heavy, light)
 	var/x0 = epicenter.x
