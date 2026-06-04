@@ -1,0 +1,15 @@
+{
+  "ui.descriptor_clothing": "服装",
+  "ui.descriptor_cyborg": "赛博格",
+  "ui.descriptor_floor": "地板",
+  "ui.descriptor_item": "物品",
+  "ui.descriptor_machine": "机器",
+  "ui.descriptor_object": "物体",
+  "ui.descriptor_structure": "结构",
+  "ui.descriptor_wall": "墙",
+  "ui.examine_thats": "那是",
+  "ui.examine_this_is": "这是",
+  "ui.tag_abstract": "抽象的",
+  "ui.tag_flammable": "易燃的",
+  "ui.tag_indestructible": "不可摧毁的"
+}
