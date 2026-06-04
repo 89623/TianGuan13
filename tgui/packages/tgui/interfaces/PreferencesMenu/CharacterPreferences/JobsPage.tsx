@@ -284,7 +284,13 @@ function JobRow(props: JobRowProps) {
               ) : (
                 <Dropdown
                   width="100%"
-                  options={job.alt_titles}
+                  // NOVA EDIT CHANGE START - ORIGINAL: options={job.alt_titles}
+                  // i18n: 拆成 {value, displayText} 让 auto-localize 只翻 displayText、value(act 标识符)保持英文。
+                  options={job.alt_titles.map((title) => ({
+                    value: title,
+                    displayText: title,
+                  }))}
+                  // NOVA EDIT CHANGE END
                   selected={alt_title_selected}
                   onSelected={(value) =>
                     act('set_job_title', { job: name, new_title: value })

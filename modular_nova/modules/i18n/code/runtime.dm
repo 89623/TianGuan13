@@ -169,3 +169,31 @@ GLOBAL_LIST_INIT(i18n_tgui_strings, build_tgui_string_set())
 			else if(istext(key))
 				data[i] = lang_reverse_phrase_tgui(key)
 	return data
+
+/// 偏好菜单「常量数据 asset」(/datum/asset/json/preferences) 是服务器启动生成一次的静态资源，
+/// **不经 get_payload**，故 lang_reverse_tree 永远碰不到它。此 pass 专供该 asset：只反查
+/// **纯显示字段**（各种 description）——这些绝非 act() 标识符，可安全整串替换（用 lang_reverse_text
+/// 全量匹配，无多词门槛，短描述也能命中）；name/title/choices/department 等是标识符，一律不动。
+/// 递归走嵌套 list。全服 locale==en 时 lang_reverse_text 直接原样返回（零行为变化）。
+GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
+	"description" = TRUE,\
+	"pos_gameplay_description" = TRUE,\
+	"neg_gameplay_description" = TRUE,\
+	"neut_gameplay_description" = TRUE,\
+))
+
+/proc/lang_reverse_pref_descriptions(list/data)
+	if(!islist(data))
+		return data
+	for(var/i in 1 to length(data))
+		var/key = data[i]
+		var/value = (istext(key) || ispath(key)) ? data[key] : null
+		if(isnull(value))
+			if(islist(key))
+				lang_reverse_pref_descriptions(key)
+			continue
+		if(islist(value))
+			lang_reverse_pref_descriptions(value)
+		else if(istext(value) && GLOB.i18n_pref_desc_keys[key])
+			data[key] = lang_reverse_text(value)
+	return data

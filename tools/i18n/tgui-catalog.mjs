@@ -513,8 +513,20 @@ const DM_LABEL_SOURCES = [
   // 职业名/部门名：job_types 用 `title = JOB_X`（#define 常量），字面量在 jobs.dm 的 #define 里。
   ['code/__DEFINES/jobs.dm', false, /#define\s+\w+\s+"([^"]+)"/g],
   ['modular_nova/master_files/code/__DEFINES', true, /#define\s+JOB_\w+\s+"([^"]+)"/g],
-  // 怪癖名：各 quirk 子类型的 `name = "..."`。
+  // 怪癖名：各 quirk 子类型的 `name = "..."`（核心 + modular_nova 的 master_files quirks，
+  // 否则 Brain Degeneration / Nerve Stapled 这类下游 quirk 名漏抽、前端永远英文）。
   ['code/datums/quirks', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  ['modular_nova/master_files/code/datums/quirks', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  // 人格名（特质与个性→人格 tab；按 datum 路径选择，name 仅显示=安全）。
+  ['code/datums/personality', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  ['modular_nova/master_files/code/datums/personality', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  // 配装分类 Tab 名（loadout 顶部 Head/Face/Suits/Neck…，用 `category_name = "..."`，
+  // 与物品名的 `name=` 不同正则；前端按分类切换、显示走目录翻=安全）。
+  ['code/modules/loadout/categories', true, /\bcategory_name\s*=\s*"([^"]+)"/g],
+  ['code/modules/loadout/loadout_categories.dm', false, /\bcategory_name\s*=\s*"([^"]+)"/g],
+  ['modular_nova/modules/loadout/code', true, /\bcategory_name\s*=\s*"([^"]+)"/g],
+  // 下游新增的配装分类（Face/Undersuit/Belt/Weapons/Toys 等）在 loadouts（复数）模块里。
+  ['modular_nova/modules/loadouts', true, /\bcategory_name\s*=\s*"([^"]+)"/g],
   // 精灵配件名（发型/胡须/纹身/渐变样式…，角色设置下拉，按名选择=标识符）。
   ['code/datums/sprite_accessories.dm', false, /^\s*name\s*=\s*"([^"]+)"/gm],
   ['modular_nova/master_files/code/datums/sprite_accessories', true, /^\s*name\s*=\s*"([^"]+)"/gm],
