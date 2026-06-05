@@ -8,6 +8,7 @@
 	icon_state = "kineticmachinegun"
 	base_icon_state = "kineticmachinegun"
 	inhand_icon_state = "kineticgun"
+	weapon_weight = WEAPON_MEDIUM
 	recharge_time = 3 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/machinegun)
 	max_mod_capacity = 65

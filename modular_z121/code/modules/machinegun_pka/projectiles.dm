@@ -4,6 +4,6 @@
 
 /obj/projectile/kinetic/machinegun
 	name = "serial kinetic force"
-	damage = 20
+	damage = 15
 	range = 3
 	mod_mult = 0.5
