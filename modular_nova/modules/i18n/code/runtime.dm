@@ -138,6 +138,13 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 				var/stripped_key = lang_strip_grammar_macros(en_text)
 				if(stripped_key && !reverse[stripped_key])
 					reverse[stripped_key] = lang_strip_grammar_macros(translated)
+			// 转义引号对齐：目录里的 `\"` 是 dreammaker 解析器保留的源码转义，但 BYOND 运行时字符串里
+			// 是裸 `"`，反查（输入=运行时串）查带 `\"` 的 key 永远不命中 → 额外登记「裸引号」形态键。
+			// 影响所有含转义引号的玩家可见文本（物种 lore、带引号的 name/desc 等）。译文同样去转义。
+			if(findtext(en_text, "\\\""))
+				var/unescaped_key = replacetext(en_text, "\\\"", "\"")
+				if(unescaped_key != en_text && !reverse[unescaped_key])
+					reverse[unescaped_key] = replacetext(translated, "\\\"", "\"")
 
 	GLOB.i18n_reverse[locale] = reverse
 	return reverse
