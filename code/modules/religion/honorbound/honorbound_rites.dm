@@ -59,7 +59,7 @@
 	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the paper is still there
 		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
-	autograph.visible_message(span_notice("Words magically form on [autograph]!"))
+	autograph.visible_message(span_notice(LANG("datum.fe9139d9", list(autograph))))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	new /obj/item/paper/holy_writ(tool_turf)
 	qdel(autograph)

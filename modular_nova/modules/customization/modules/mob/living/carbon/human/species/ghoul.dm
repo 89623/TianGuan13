@@ -145,11 +145,11 @@
 				return FALSE
 
 			// Pry it off...
-			user.visible_message("[user] grabs onto [p_their()] own [affecting.name] and pulls.", span_notice("You grab hold of your [affecting.name] and yank hard."))
+			user.visible_message(LANG("datum.5f800618", list(user, p_their(), affecting.name)), span_notice(LANG("datum.b7e14cd9", list(affecting.name))))
 			if (!do_after(user, 3 SECONDS, target))
 				return TRUE
 
-			user.visible_message("[user]'s [affecting.name] comes right off in their hand.", span_notice("Your [affecting.name] pops right off."))
+			user.visible_message(LANG("datum.9550d599", list(user, affecting.name)), span_notice(LANG("datum.0c8a4ff0", list(affecting.name))))
 			playsound(get_turf(user), 'sound/effects/meatslap.ogg', 40, 1) //ill change these sounds later
 
 			// Destroy Limb, Drop Meat, Pick Up
@@ -183,16 +183,16 @@
 
 		if((target_zone in limbs))
 			if(user == target)
-				user.visible_message("[user] begins mashing [attacking_item] into [target]'s torso.", span_notice("You begin mashing [attacking_item] into your torso."))
+				user.visible_message(LANG("datum.a00150e5", list(user, attacking_item, target)), span_notice(LANG("datum.83347fed", list(attacking_item))))
 			else
-				user.visible_message("[user] begins mashing [attacking_item] into [target]'s torso.", span_notice("You begin mashing [attacking_item] into [target]'s torso."))
+				user.visible_message(LANG("datum.a00150e5", list(user, attacking_item, target)), span_notice(LANG("datum.2611cce4", list(attacking_item, target))))
 
 			// Leave Melee Chain (so deleting the meat doesn't throw an error) <--- aka, deleting the meat that called this very proc.
 			spawn(1)
 				if(do_after(user, 3 SECONDS, target))
 					// Attach the part!
 					var/obj/item/bodypart/newBP = target.newBodyPart(target_zone, FALSE)
-					target.visible_message("The meat sprouts digits and becomes [target]'s new [newBP.name]!", span_notice("The meat sprouts digits and becomes your new [newBP.name]!"))
+					target.visible_message(LANG("datum.436af93d", list(target, newBP.name)), span_notice(LANG("datum.997dc0b9", list(newBP.name))))
 					newBP.try_attach_limb(target)
 					qdel(attacking_item)
 					playsound(get_turf(target), 'sound/effects/meatslap.ogg', 50, 1)

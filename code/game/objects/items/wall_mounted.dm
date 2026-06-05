@@ -54,9 +54,9 @@
 		return ITEM_INTERACT_FAILURE
 
 	playsound(loc, 'sound/machines/click.ogg', 75, TRUE)
-	user.visible_message(span_notice("[user.name] attaches [src] to the wall."),
-		span_notice("You attach [src] to the wall."),
-		span_hear("You hear clicking."))
+	user.visible_message(span_notice(LANG("obj.fe7f09cf", list(user.name, src))),
+		span_notice(LANG("obj.24f9e520", list(src))),
+		span_hear(LANG("obj.dcc6c1b0", null)))
 
 	var/floor_to_support = get_dir(user, support_structure)
 	var/obj/hanging_object = new result_path(get_turf(user))

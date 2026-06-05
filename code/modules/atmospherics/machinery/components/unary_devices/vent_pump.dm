@@ -323,10 +323,10 @@
 	to_chat(user, span_notice(LANG("obj.df6124ff", null)))
 	if(welder.use_tool(src, user, 20, volume=50))
 		if(!welded)
-			user.visible_message(span_notice("[user] welds the vent shut."), span_notice("You weld the vent shut."), span_hear("You hear welding."))
+			user.visible_message(span_notice(LANG("obj.5119a0c2", list(user))), span_notice(LANG("obj.ff218103", null)), span_hear(LANG("obj.1aa82fa3", null)))
 			welded = TRUE
 		else
-			user.visible_message(span_notice("[user] unwelded the vent."), span_notice("You unweld the vent."), span_hear("You hear welding."))
+			user.visible_message(span_notice(LANG("obj.199af01d", list(user))), span_notice(LANG("obj.d53fb270", null)), span_hear(LANG("obj.1aa82fa3", null)))
 			welded = FALSE
 		update_appearance(UPDATE_ICON)
 		pipe_vision_img = image(src, loc, dir = dir)
@@ -353,7 +353,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user, list/modifiers)
 	if(!welded || !(do_after(user, 2 SECONDS, target = src)))
 		return
-	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
+	user.visible_message(span_warning(LANG("obj.66d277ff", list(user, src))), span_notice(LANG("obj.488de2de", null)), span_hear(LANG("obj.94e00bf8", null)))
 	welded = FALSE
 	update_appearance(UPDATE_ICON)
 	pipe_vision_img = image(src, loc, dir = dir)

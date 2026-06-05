@@ -30,6 +30,6 @@
 /obj/item/food/grown/banana/banana_spider_spawnable/proc/spawnspider()
 	if(!QDELETED(src))
 		var/mob/living/basic/banana_spider/banana_spider = new(get_turf(loc))
-		banana_spider.visible_message(span_notice("The banana spider chitters as it stretches its legs"))
+		banana_spider.visible_message(span_notice(LANG("obj.59afccc9", null)))
 		qdel(src)
 

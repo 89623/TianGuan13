@@ -93,17 +93,17 @@
 /obj/effect/immovablerod/wizard/penetrate(mob/living/penetrated)
 	if(penetrated.can_block_magic())
 		penetrated.visible_message(
-			span_danger("[src] hits [penetrated], but it bounces back, then vanishes!"),
-			span_userdanger("[src] hits you... but it bounces back, then vanishes!"),
-			span_danger("You hear a weak, sad, CLANG.")
+			span_danger(LANG("obj.ecda7c96", list(src, penetrated))),
+			span_userdanger(LANG("obj.10039ff5", list(src))),
+			span_danger(LANG("obj.3b73601e", null))
 			)
 		stop_travel()
 		return
 
 	penetrated.visible_message(
-		span_danger("[penetrated] is penetrated by an immovable rod!"),
-		span_userdanger("The [src] penetrates you!"),
-		span_danger("You hear a CLANG!"),
+		span_danger(LANG("obj.c2b59118", list(penetrated))),
+		span_userdanger(LANG("obj.a037ec7d", list(src))),
+		span_danger(LANG("obj.425d6ace", null)),
 		)
 	penetrated.adjust_brute_loss(70 + damage_bonus)
 
@@ -113,8 +113,8 @@
 		return ..() // There's no wizard in this rod? It's pretty much a normal rod at this point
 
 	strongman.visible_message(
-		span_boldwarning("[src] transforms into [wizard] as [strongman] suplexes them!"),
-		span_warning("As you grab [src], it suddenly turns into [wizard] as you suplex them!")
+		span_boldwarning(LANG("obj.2db788e8", list(src, wizard, strongman))),
+		span_warning(LANG("obj.482404e9", list(src, wizard)))
 		)
 	to_chat(wizard, span_boldwarning(LANG("obj.3a279d69", list(strongman))))
 	stop_travel()

@@ -110,8 +110,8 @@
 	if(tip_time > 0)
 		to_chat(tipper, span_warning(LANG("datum.6b2cdc4a", list(tipped_mob))))
 		tipped_mob.visible_message(
-			span_warning("[tipper] begins tipping over [tipped_mob]."),
-			span_userdanger("[tipper] begins tipping you over!"),
+			span_warning(LANG("datum.e3192b73", list(tipper, tipped_mob))),
+			span_userdanger(LANG("datum.bb15c33e", list(tipper))),
 			ignored_mobs = tipper
 		)
 
@@ -142,8 +142,8 @@
 		tipped_mob.log_message("has been tipped over by [key_name(tipper)].", LOG_ATTACK)
 		tipper.log_message("has tipped over [key_name(tipped_mob)].", LOG_ATTACK)
 	tipped_mob.visible_message(
-		span_warning("[tipper] tips over [tipped_mob]."),
-		span_userdanger("You are tipped over by [tipper]!"),
+		span_warning(LANG("datum.4453010c", list(tipper, tipped_mob))),
+		span_userdanger(LANG("datum.423cedf4", list(tipper))),
 		ignored_mobs = tipper
 		)
 
@@ -167,8 +167,8 @@
 	if(untip_time > 0)
 		to_chat(untipper, span_notice(LANG("datum.0c010732", list(tipped_mob))))
 		tipped_mob.visible_message(
-			span_notice("[untipper] begins righting [tipped_mob]."),
-			span_notice("[untipper] begins righting you."),
+			span_notice(LANG("datum.6f0a085c", list(untipper, tipped_mob))),
+			span_notice(LANG("datum.93254bb3", list(untipper))),
 			ignored_mobs = untipper
 		)
 
@@ -193,8 +193,8 @@
 
 	to_chat(untipper, span_notice(LANG("datum.692d18ff", list(tipped_mob))))
 	tipped_mob.visible_message(
-		span_notice("[untipper] rights [tipped_mob]."),
-		span_notice("You are righted by [untipper]!"),
+		span_notice(LANG("datum.94a4bfcc", list(untipper, tipped_mob))),
+		span_notice(LANG("datum.2f5ff94e", list(untipper))),
 		ignored_mobs = untipper
 		)
 
@@ -217,8 +217,8 @@
 	post_untipped_callback?.Invoke()
 
 	tipped_mob.visible_message(
-		span_notice("[tipped_mob] rights itself."),
-		span_notice("You right yourself.")
+		span_notice(LANG("datum.0eceadcc", list(tipped_mob))),
+		span_notice(LANG("datum.11daa230", null))
 		)
 
 /**

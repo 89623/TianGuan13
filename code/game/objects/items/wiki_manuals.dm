@@ -50,7 +50,7 @@
 /obj/item/book/manual/wiki/display_content(mob/living/user)
 	var/wiki_url = CONFIG_GET(string/wikiurl)
 	if(!wiki_url)
-		user.balloon_alert(user, "this book is empty!")
+		user.balloon_alert(user, LANG("obj.b5b6d696", null))
 		return
 	credit_book_to_reader(user)
 	if(user.client.byond_version < 516) //Remove this once 516 is stable
@@ -90,7 +90,7 @@
 	page_link = "Space_Law"
 
 /obj/item/book/manual/wiki/security_space_law/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] pretends to read \the [src] intently... then promptly dies of laughter!"))
+	user.visible_message(span_suicide(LANG("obj.567e38b0", list(user, src))))
 	return OXYLOSS
 
 /obj/item/book/manual/wiki/infections
@@ -201,7 +201,7 @@
 
 /obj/item/book/manual/wiki/ordnance/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/H = user
-	user.visible_message(span_suicide("[user] starts dancing to the Rhumba Beat! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.33aba52d", list(user, user.p_theyre()))))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	if(QDELETED(H))
 		return

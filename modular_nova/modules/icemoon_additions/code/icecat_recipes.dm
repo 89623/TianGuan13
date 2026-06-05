@@ -32,8 +32,8 @@
 		being_used = FALSE
 		return FALSE
 
-	target_mob.visible_message(span_notice("[user] leans down and smears twinned streaks of glistening bloodresin upon [target_mob], then straightens up with ritual purpose..."))
-	user.say("Let the ice know you forevermore as +[new_name]+.")
+	target_mob.visible_message(span_notice(LANG("obj.92619f8a", list(user, target_mob))))
+	user.say(LANG("obj.36cf7670", list(new_name)))
 
 	user.log_message("used [src] on [target_mob], renaming it to [new_name].", LOG_GAME)
 
@@ -159,12 +159,12 @@
 	if(istype(interacting_with, /obj/item/organ/lungs))
 		var/obj/item/organ/lungs/target_lungs = interacting_with
 		if(IS_ROBOTIC_ORGAN(target_lungs))
-			user.balloon_alert(user, "lungs must be organic!")
+			user.balloon_alert(user, LANG("obj.9a92ba7e", null))
 			return
 		var/location = get_turf(target_lungs)
 		playsound(location, 'sound/effects/slosh.ogg', 25, TRUE)
-		user.visible_message(span_notice("[user] pours a strange blue liquid over the set of lungs. The flesh starts glistening in a strange cyan light, transforming before your very eyes!"),
-			span_notice("Recalling the instructions for the lung transfiguration ritual, you pour the liquid over the flesh of the organ. Soon, the lungs glow in a mute cyan light, before they turn dim and change form before your very eyes!"))
+		user.visible_message(span_notice(LANG("obj.3455b305", list(user))),
+			span_notice(LANG("obj.e9a719fd", null)))
 		var/obj/item/organ/lungs/icebox_adapted/new_lungs = new(location)
 		new_lungs.damage = target_lungs.damage
 		qdel(target_lungs)

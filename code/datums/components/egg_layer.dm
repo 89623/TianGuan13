@@ -67,7 +67,7 @@
 	if(eggs_left > max_eggs_held)
 		to_chat(attacker, span_warning(LANG("datum.42ca0324", list(parent))))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	attacker.visible_message(span_notice("[attacker] hand-feeds [food] to [parent]."), span_notice("You hand-feed [food] to [parent]."))
+	attacker.visible_message(span_notice(LANG("datum.61640911", list(attacker, food, parent))), span_notice(LANG("datum.781810b1", list(food, parent))))
 	at_least_atom.visible_message(pick(feed_messages))
 	qdel(food)
 	eggs_left += min(eggs_left + eggs_added_from_eating, max_eggs_held)

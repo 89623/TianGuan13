@@ -280,7 +280,7 @@
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
 	if(iscarbon(living_mob) && living_mob.stat == CONSCIOUS)
-		living_mob.say("ARRRRRRRRRRRGH!!!", forced= "recycler grinding")
+		living_mob.say(LANG("obj.0a82f701", null), forced= "recycler grinding")
 
 	if(!issilicon(living_mob))
 		add_mob_blood(living_mob)

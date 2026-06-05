@@ -71,7 +71,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	// Note that we can either be emagged by having the button we are inside swiped,
 	// or by someone emagging the assembly directly after removing it (to be cheeky)
 	var/atom/balloon_alert_loc = get(src, /obj/machinery/button) || src
-	balloon_alert_loc.balloon_alert(user, "safeties overridden")
+	balloon_alert_loc.balloon_alert(user, LANG("obj.bd40a80f", null))
 	return TRUE
 
 // Multitooling emagged elevator buttons will fix the safeties
@@ -119,30 +119,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	// We can't call an elevator that doesn't exist
 	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
 	if(!lift)
-		loc.balloon_alert(activator, "no elevator connected!")
+		loc.balloon_alert(activator, LANG("obj.331b0191", null))
 		return FALSE
 
 	// We can't call an elevator that's moving. You may say "you totally can do that", but that's not modelled
 	if(lift.controller_status & CONTROLS_LOCKED)
-		loc.balloon_alert(activator, "elevator is moving!")
+		loc.balloon_alert(activator, LANG("obj.98536372", null))
 		return FALSE
 
 	// If the elevator is already here, open the doors.
 	var/obj/structure/transport/linear/prime_lift = lift.return_closest_platform_to_z(loc.z)
 	if(prime_lift.z == loc.z)
 		INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/transport_controller/linear, open_lift_doors_callback))
-		loc.balloon_alert(activator, "elevator is here!")
+		loc.balloon_alert(activator, LANG("obj.d2d10e7c", null))
 		return TRUE
 
 	// At this point, we can start moving.
 
 	// Give the user, if supplied, a balloon alert.
 	if(activator)
-		loc.balloon_alert(activator, "elevator called")
+		loc.balloon_alert(activator, LANG("obj.7b841736", null))
 
 	// Actually try to move the lift. This will sleep.
 	if(!lift.move_to_zlevel(loc.z, CALLBACK(src, PROC_REF(check_button))))
-		loc.balloon_alert(activator, "elevator out of service!")
+		loc.balloon_alert(activator, LANG("obj.de46e5e4", null))
 		return FALSE
 
 	// From here on all returns are TRUE, as we successfully moved the lift, even if we maybe didn't reach our floor
@@ -154,13 +154,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	// Our lift platform survived, but it didn't reach our landing z.
 	if(!QDELETED(prime_lift) && prime_lift.z != loc.z)
 		if(!QDELETED(activator))
-			loc.balloon_alert(activator, "elevator out of service!")
+			loc.balloon_alert(activator, LANG("obj.de46e5e4", null))
 		playsound(loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		return TRUE
 
 	// Everything went according to plan
 	if(!QDELETED(activator))
-		loc.balloon_alert(activator, "elevator arrived")
+		loc.balloon_alert(activator, LANG("obj.ea74a93c", null))
 
 	return TRUE
 

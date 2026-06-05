@@ -116,12 +116,12 @@
 	. = ..()
 
 	if(!user.combat_mode)
-		user.visible_message(span_notice("[user] knocks on [src]."), \
-			span_notice("You knock on [src]."))
+		user.visible_message(span_notice(LANG("obj.a41de491", list(user, src))), \
+			span_notice(LANG("obj.a57c3d4a", list(src))))
 		playsound(src, knock_sound, 50, TRUE)
 	else
-		user.visible_message(span_warning("[user] bashes [src]!"), \
-			span_warning("You bash [src]!"))
+		user.visible_message(span_warning(LANG("obj.6f19d1b0", list(user, src))), \
+			span_warning(LANG("obj.b771210b", list(src))))
 		playsound(src, bash_sound, 100, TRUE)
 
 /obj/structure/tram/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -168,8 +168,8 @@
 	switch(state)
 		if(TRAM_SCREWED_TO_FRAME)
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice("[user] begins to unscrew the tram panel from the frame..."),
-				span_notice("You begin to unscrew the tram panel from the frame..."))
+				user.visible_message(span_notice(LANG("obj.af481d02", list(user))),
+				span_notice(LANG("obj.0a11790d", null)))
 				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					state = TRAM_IN_FRAME
 					to_chat(user, span_notice(LANG("obj.52e8eb7d", null)))
@@ -180,30 +180,30 @@
 
 		if(TRAM_IN_FRAME)
 			if(tool.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice("[user] wedges \the [tool] into the tram panel's gap in the frame and starts prying..."),
-				span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
+				user.visible_message(span_notice(LANG("obj.bcaca1b6", list(user, tool))),
+				span_notice(LANG("obj.4906368b", list(tool))))
 				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					state = TRAM_OUT_OF_FRAME
 					to_chat(user, span_notice(LANG("obj.71715436", null)))
 					return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice("[user] resecures the tram panel to the frame..."),
-				span_notice("You resecure the tram panel to the frame..."))
+				user.visible_message(span_notice(LANG("obj.71337c68", list(user))),
+				span_notice(LANG("obj.40c6a64f", null)))
 				state = TRAM_SCREWED_TO_FRAME
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		if(TRAM_OUT_OF_FRAME)
 			if(tool.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(span_notice("[user] starts cutting the connective cabling on \the [src]..."),
-				span_notice("You start cutting the connective cabling on \the [src]"))
+				user.visible_message(span_notice(LANG("obj.8a0b9559", list(user, src))),
+				span_notice(LANG("obj.de0b3ebb", list(src))))
 				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					to_chat(user, span_notice(LANG("obj.d74adce8", null)))
 					deconstruct(disassembled = TRUE)
 
 			if(tool.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice("[user] snaps the tram panel into place."),
-				span_notice("You snap the tram panel into place..."))
+				user.visible_message(span_notice(LANG("obj.f35770e7", list(user))),
+				span_notice(LANG("obj.9eab20da", null)))
 				state = TRAM_IN_FRAME
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -568,8 +568,8 @@
 		if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
 			return
 		locked = !locked
-		user.visible_message(span_warning("[user] [locked ? "welds \the [src] in place" : "repairs \the [src]"] with [tool]."), \
-			span_warning("You finish welding \the [src], [locked ? "locking it in place." : "it can move freely again!"]"), null, COMBAT_MESSAGE_RANGE)
+		user.visible_message(span_warning(LANG("obj.2d971cef", list(user, locked ? "welds \the [src] in place" : "repairs \the [src]", tool))), \
+			span_warning(LANG("obj.d0de5e68", list(src, locked ? "locking it in place." : "it can move freely again!"))), null, COMBAT_MESSAGE_RANGE)
 
 		if(locked)
 			deploy_spoiler()

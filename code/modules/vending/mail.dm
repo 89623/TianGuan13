@@ -206,8 +206,8 @@
 					loaded++
 					mail_list += mail
 		if(loaded)
-			user.visible_message(span_notice("[user] loads \the [src] with \the [thingy]."), \
-			span_notice("You load \the [src] with \the [thingy]."))
+			user.visible_message(span_notice(LANG("obj.d8b0a4dd", list(user, src, thingy))), \
+			span_notice(LANG("obj.ae0abc0e", list(src, thingy))))
 			if(length(thingy.contents))
 				to_chat(user, span_warning(LANG("obj.94d8d593", null)))
 			return TRUE

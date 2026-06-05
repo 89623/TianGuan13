@@ -100,10 +100,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(!deconstructable)
 		balloon_alert(user, LANG("obj.490a1292", null))
 		return NONE
-	user.visible_message(span_notice("[user] starts detaching [src]..."), span_notice("You start detaching [src]..."))
+	user.visible_message(span_notice(LANG("obj.ac4b08c7", list(user, src))), span_notice(LANG("obj.4e190a11", list(src))))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 3 SECONDS))
-		user.visible_message(span_notice("[user] detaches [src]!"), span_notice("You detach [src] from the wall."))
+		user.visible_message(span_notice(LANG("obj.03a71949", list(user, src))), span_notice(LANG("obj.aa18b3fe", list(src))))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct()
 		return ITEM_INTERACT_SUCCESS
@@ -446,8 +446,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if (!changed || QDELETED(user) || !IN_GIVEN_RANGE(user, src, 3)) // 3 range gives a tiny bit of leeway if you try to run away after using it
 		return
 	user.visible_message(
-		span_bolddanger("The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!"),
-		span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"),
+		span_bolddanger(LANG("obj.8181b64c", list(user, user.p_their()))),
+		span_notice(LANG("obj.db85e607", null)),
 	)
 
 	var/turf/user_turf = get_turf(user)

@@ -140,7 +140,7 @@
 		return FALSE
 	tool.play_tool_sound(src)
 	framed.forceMove(drop_location())
-	user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
+	user.visible_message(span_warning(LANG("obj.2e91e3aa", list(user, framed, src))))
 	set_and_save_framed(null)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS

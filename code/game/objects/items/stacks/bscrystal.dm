@@ -39,7 +39,7 @@
 	return 1
 
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
-	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
+	user.visible_message(span_warning(LANG("obj.a1d666d4", list(user, src))), span_danger(LANG("obj.e79ecc98", list(src))))
 	new /obj/effect/particle_effect/sparks(loc)
 	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	blink_mob(user)

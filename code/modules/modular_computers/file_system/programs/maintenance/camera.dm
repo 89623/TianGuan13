@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/maintenance/camera
 	filename = "camera_app"
 	filedesc = "Camera"
@@ -172,5 +173,5 @@
 			ui.user.put_in_hands(new_photo)
 			playsound(computer.physical, 'sound/machines/printer.ogg', 100, TRUE)
 			computer.stored_paper--
-			computer.visible_message(span_notice("\The [computer] prints out a paper."))
+			computer.visible_message(span_notice(LANG("datum.7a4642f7", list(computer))))
 			return TRUE

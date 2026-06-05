@@ -130,7 +130,7 @@
 	if(!user.transferItemToLoc(tool, src))
 		balloon_alert(user, LANG("obj.edd6b8ce", null))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] snaps [tool] onto [src]!"))
+	user.visible_message(span_notice(LANG("obj.2b5df12c", list(user, tool, src))))
 	balloon_alert(user, LANG("obj.439e2543", null))
 	//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 	if(wand.selected_target)
@@ -138,7 +138,7 @@
 		if(patient_ref != target_ref)
 			clearScans()
 		patient_ref = target_ref
-		user.visible_message(span_notice("[wand.return_patient()] has been set as the current patient."))
+		user.visible_message(span_notice(LANG("obj.07cefc96", list(wand.return_patient()))))
 		wand.selected_target = null
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	scanner_wand = tool
@@ -157,7 +157,7 @@
 		balloon_alert(user, LANG("obj.da9fc6f8", null))
 		scanner_wand = null
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	user.visible_message(span_notice("[user] unhooks the [scanner_wand] from [src]."))
+	user.visible_message(span_notice(LANG("obj.75deeac2", list(user, scanner_wand, src))))
 	balloon_alert(user, LANG("obj.e419468e", null))
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	scanner_wand = null
@@ -173,7 +173,7 @@
 		return
 	if(user)
 		if (emag_card)
-			user.visible_message(span_warning("[user] waves a suspicious card by the [src]'s biometric scanner!"))
+			user.visible_message(span_warning(LANG("obj.d9c51228", list(user, src))))
 		balloon_alert(user, LANG("obj.965f2362", null))
 	obj_flags |= EMAGGED
 	var/obj/item/circuitboard/board = circuit

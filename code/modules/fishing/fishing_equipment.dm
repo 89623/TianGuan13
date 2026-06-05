@@ -617,7 +617,7 @@
 	trait.remove_from_fish(fish)
 	loaded_injector = new /obj/item/fish_gene(src, trait_type)
 
-	user.visible_message(span_notice("[user] injects [fish] with [src]."), span_notice("You extract the \"[trait_type::name]\" trait into [fish]."))
+	user.visible_message(span_notice(LANG("obj.194296a7", list(user, fish, src))), span_notice(LANG("obj.c7c8534f", list(trait_type::name, fish))))
 	if(HAS_TRAIT(fish, TRAIT_FISH_GENEGUNNED))
 		fish.set_status(FISH_DEAD)
 	ADD_TRAIT(fish, TRAIT_FISH_GENEGUNNED, TRAIT_GENERIC)
@@ -668,7 +668,7 @@
 	if(!trait.apply_to_fish(fish))
 		to_chat(user, span_warning(LANG("obj.90110eeb", list(trait_type::name, fish, fish.p_they(TRUE), fish.p_have(), fish.p_are()))))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] injects [fish] with [tool]."), span_notice("You inject the \"[trait_type::name]\" trait into [fish]."))
+	user.visible_message(span_notice(LANG("obj.194296a7", list(user, fish, tool))), span_notice(LANG("obj.25784bc4", list(trait_type::name, fish))))
 	qdel(src)
 	if(HAS_TRAIT(fish, TRAIT_FISH_GENEGUNNED))
 		fish.set_status(FISH_DEAD)

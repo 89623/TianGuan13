@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 
 BLOOD-DRUNK MINER
@@ -155,8 +156,8 @@ Difficulty: Medium
 
 	changeNext_move(CLICK_CD_MELEE)
 	victim.visible_message(
-		span_danger("[src] slashes at [victim] with [p_their()] cleaving saw!"),
-		span_userdanger("You are slashed at by [src]'s cleaving saw!"),
+		span_danger(LANG("mob.63c38c5e", list(src, victim, p_their()))),
+		span_userdanger(LANG("mob.92e05745", list(src))),
 	)
 
 	var/datum/callback/melee_callback = CALLBACK(miner_saw, TYPE_PROC_REF(/obj/item/melee/cleaving_saw/miner, melee_attack_chain), src, victim, modifiers)

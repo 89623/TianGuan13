@@ -61,9 +61,9 @@
 	if(!istype(attacked_with, /obj/item/bodypart/leg/left/robot) && !istype(attacked_with, /obj/item/bodypart/leg/right/robot))
 		return
 	if(ismob(loc))
-		user.balloon_alert(user, "drop the helmet first!")
+		user.balloon_alert(user, LANG("obj.3bee8c5b", null))
 		return
-	user.balloon_alert(user, "leg attached")
+	user.balloon_alert(user, LANG("obj.be522028", null))
 	new /obj/item/bot_assembly/vim(loc)
 	qdel(attacked_with)
 	qdel(src)

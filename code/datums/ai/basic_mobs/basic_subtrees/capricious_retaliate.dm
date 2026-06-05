@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Add or remove people to our retaliation shitlist just on an arbitrary whim
 /datum/ai_planning_subtree/capricious_retaliate
 	/// Blackboard key which tells us how to select valid targets
@@ -19,7 +20,7 @@
 		var/deaggro_chance = controller.blackboard[BB_RANDOM_DEAGGRO_CHANCE] || 10
 		if (!SPT_PROB(deaggro_chance, seconds_per_tick))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-		pawn.visible_message(span_notice("[pawn] calms down.")) // We can blackboard key this if anyone else actually wants to customise it
+		pawn.visible_message(span_notice(LANG("datum.7e5c0be2", list(pawn)))) // We can blackboard key this if anyone else actually wants to customise it
 		controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
 		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		controller.CancelActions() // Otherwise they will try and get one last kick in
@@ -50,12 +51,12 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target, world.time)
-	pawn.visible_message(span_warning("[pawn] glares grumpily at [final_target]!"))
+	pawn.visible_message(span_warning(LANG("datum.17d7796f", list(pawn, final_target))))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Called if we try but fail to target something
 /datum/ai_behavior/capricious_retaliate/proc/failed_targeting(atom/pawn)
-	pawn.visible_message(span_notice("[pawn] grumbles.")) // We're pissed off but with no outlet to vent our frustration upon
+	pawn.visible_message(span_notice(LANG("datum.00581f59", list(pawn)))) // We're pissed off but with no outlet to vent our frustration upon
 
 /datum/ai_behavior/capricious_retaliate/finish_action(datum/ai_controller/controller, succeeded, ignore_faction)
 	. = ..()

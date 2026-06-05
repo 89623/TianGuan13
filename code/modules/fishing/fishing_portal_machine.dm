@@ -123,7 +123,7 @@
 	if(istype(spot, /obj/machinery/fishing_portal_generator)) //Don't link it to itself or other fishing portals.
 		return
 	if(length(linked_fishing_spots) >= max_fishing_spots)
-		spot.balloon_alert(user, "cannot link more!")
+		spot.balloon_alert(user, LANG("obj.9ce3062b", null))
 		return ITEM_INTERACT_BLOCKING
 	for(var/other_spot in linked_fishing_spots)
 		var/datum/fish_source/stored = linked_fishing_spots[other_spot]
@@ -132,12 +132,12 @@
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(spot, TRAIT_UNLINKABLE_FISHING_SPOT))
-		spot.balloon_alert(user, "unlinkable fishing spot!")
+		spot.balloon_alert(user, LANG("obj.d5274abf", null))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 15, FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		return ITEM_INTERACT_BLOCKING
 	LAZYSET(linked_fishing_spots, spot, source)
 	RegisterSignal(spot, SIGNAL_REMOVETRAIT(TRAIT_FISHING_SPOT), PROC_REF(unlink_fishing_spot))
-	spot.balloon_alert(user, "fishing spot linked")
+	spot.balloon_alert(user, LANG("obj.c6f938da", null))
 	playsound(spot, 'sound/machines/ping.ogg', 15, TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	return ITEM_INTERACT_SUCCESS
 

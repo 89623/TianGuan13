@@ -280,8 +280,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	user.put_in_hands(drawn_card)
 	drawn_card.flipped = flipped //If it's a face down deck, it'll be drawn face down, if it's a face up pile you'll draw it face up.
 	drawn_card.update_icon_state()
-	user.visible_message(span_notice("[user] draws a card from \the [src]!"), \
-					span_notice("You draw a card from \the [src]!"))
+	user.visible_message(span_notice(LANG("obj.4ba8743a", list(user, src))), \
+					span_notice(LANG("obj.dd975292", list(src))))
 	if(contents.len <= 1)
 		var/obj/item/tcgcard/final_card = contents[1]
 		user.transferItemToLoc(final_card, drop_location())
@@ -300,8 +300,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	if(user.active_storage)
 		user.active_storage.hide_contents(user)
 	if(visable)
-		user.visible_message(span_notice("[user] shuffles \the [src]!"), \
-						span_notice("You shuffle \the [src]!"))
+		user.visible_message(span_notice(LANG("obj.99badea6", list(user, src))), \
+						span_notice(LANG("obj.12d2bb6d", list(src))))
 
 
 /**

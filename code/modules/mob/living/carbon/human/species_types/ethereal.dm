@@ -152,7 +152,7 @@
 	emageffect = TRUE
 	if(user)
 		to_chat(user, span_notice(LANG("datum.faaba625", list(source))))
-	source.visible_message(span_danger("[source] starts flickering in an array of colors!"))
+	source.visible_message(span_danger(LANG("datum.d9a905be", list(source))))
 	handle_emag(source)
 	addtimer(CALLBACK(src, PROC_REF(stop_emag), source), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 	return TRUE
@@ -178,7 +178,7 @@
 /datum/species/ethereal/proc/stop_emag(mob/living/carbon/human/ethereal)
 	emageffect = FALSE
 	refresh_light_color(ethereal)
-	ethereal.visible_message(span_danger("[ethereal] stops flickering and goes back to their normal state!"))
+	ethereal.visible_message(span_danger(LANG("datum.b91d4100", list(ethereal))))
 
 /datum/species/ethereal/proc/handle_glow_emote(mob/living/carbon/human/ethereal, power, range, flare = FALSE, duration = 5 SECONDS, flare_time = 0)
 	powermult = power

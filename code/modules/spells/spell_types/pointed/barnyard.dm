@@ -33,8 +33,8 @@
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
 		cast_on.visible_message(
-			span_danger("[cast_on]'s face bursts into flames, which instantly burst outward, leaving [cast_on.p_them()] unharmed!"),
-			span_danger("Your face starts burning up, but the flames are repulsed by your anti-magic protection!"),
+			span_danger(LANG("datum.b8eb8e4b", list(cast_on, cast_on.p_them()))),
+			span_danger(LANG("datum.d6a4377f", null)),
 		)
 		to_chat(owner, span_warning(LANG("datum.2ce7047e", null)))
 		return FALSE
@@ -43,8 +43,8 @@
 	var/obj/item/clothing/mask/animal/cursed_mask = new chosen_type(get_turf(target))
 
 	cast_on.visible_message(
-		span_danger("[target]'s face bursts into flames, and a barnyard animal's head takes its place!"),
-		span_userdanger("Your face burns up, and shortly after the fire you realise you have the face of a [cursed_mask.animal_type]!"),
+		span_danger(LANG("datum.392d8383", list(target))),
+		span_userdanger(LANG("datum.556606cc", list(cursed_mask.animal_type))),
 	)
 
 	// Can't drop? Nuke it

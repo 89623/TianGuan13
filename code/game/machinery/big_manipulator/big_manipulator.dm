@@ -332,9 +332,9 @@
 		balloon_alert(user, LANG("obj.0578d4f6", null))
 		return
 
-	poor_monkey.balloon_alert(user, "trying to buckle...")
+	poor_monkey.balloon_alert(user, LANG("obj.df34f844", null))
 	if(!do_after(user, 3 SECONDS, poor_monkey))
-		poor_monkey.balloon_alert(user, "interrupted")
+		poor_monkey.balloon_alert(user, LANG("obj.0c4ac08a", null))
 		return
 
 	balloon_alert(user, LANG("obj.364fbfe2", null))

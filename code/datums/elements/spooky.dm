@@ -75,7 +75,7 @@
 
 	human.Paralyze(2 SECONDS)
 	human.set_species(/datum/species/skeleton)
-	human.visible_message(span_warning("[human] has given up on life as a mortal."))
+	human.visible_message(span_warning(LANG("datum.2f83fd04", list(human))))
 	to_chat(human, span_boldnotice(LANG("datum.27b0fc44", null)))
 	to_chat(human,
 		span_boldnotice(LANG("datum.7252a1f4", list(too_spooky ? "Help your fellow skeletons into bringing out the spooky-pocalypse." : "")))

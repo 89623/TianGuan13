@@ -738,8 +738,8 @@
 				else
 					say(LANG("obj.95a9feeb", list(src)))
 			else
-				target.visible_message(span_warning("[user] prods [target] with [src]. Luckily, it shut off due to being in the wrong area."), \
-					span_warning("[user] prods you with [src]. Luckily, it shut off due to being in the wrong area."))
+				target.visible_message(span_warning(LANG("obj.c25d9d9b", list(user, target, src))), \
+					span_warning(LANG("obj.4d9fd2fd", list(user, src))))
 				turn_off()
 				balloon_alert(user, LANG("obj.9de834dd", null))
 				playsound(src, SFX_SPARKS, 75, TRUE, -1)
@@ -760,9 +760,9 @@
 /obj/item/melee/baton/security/loaded/departmental/emag_act(mob/user)
 	if(!emagged)
 		if(user)
-			user.visible_message(span_warning("Sparks fly from [src]!"),
-							span_warning("You scramble [src]'s departmental lock, allowing it to be used freely!"),
-							span_hear("You hear a faint electrical spark."))
+			user.visible_message(span_warning(LANG("obj.4ebe3de5", list(src))),
+							span_warning(LANG("obj.8a48054b", list(src))),
+							span_hear(LANG("obj.e9bee9b3", null)))
 		balloon_alert(user, LANG("obj.d11dba2f", null))
 		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED

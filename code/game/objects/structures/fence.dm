@@ -71,8 +71,8 @@
 			to_chat(user, span_warning(LANG("obj.d2086221", null)))
 			return
 
-		user.visible_message(span_danger("\The [user] starts cutting through \the [src] with \the [W]."),\
-		span_danger("You start cutting through \the [src] with \the [W]."))
+		user.visible_message(span_danger(LANG("obj.f1ee30ed", list(user, src, W))),\
+		span_danger(LANG("obj.cedca70c", list(src, W))))
 
 		if(do_after(user, CUT_TIME*W.toolspeed, target = src))
 			if(current_stage == hole_size)

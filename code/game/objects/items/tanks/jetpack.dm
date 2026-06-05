@@ -153,8 +153,8 @@
 	if (!ishuman(user))
 		return
 	var/mob/living/carbon/human/suffocater = user
-	suffocater.say("WHAT THE FUCK IS CARBON DIOXIDE?")
-	suffocater.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
+	suffocater.say(LANG("obj.ea4679ae", null))
+	suffocater.visible_message(span_suicide(LANG("obj.7338d70e", list(user, user.p_them(), src, user.p_they()))))
 	return OXYLOSS
 
 /obj/item/tank/jetpack/emp_act(severity)

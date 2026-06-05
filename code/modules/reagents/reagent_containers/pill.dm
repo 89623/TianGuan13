@@ -66,7 +66,7 @@
 		to_chat(user, span_warning(LANG("obj.8e2d390c", list(target))))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_warning("[user] slips something into [target]!"), span_notice("You dissolve [src] in [target]."), null, 2)
+	user.visible_message(span_warning(LANG("obj.17fceef6", list(user, target))), span_notice(LANG("obj.a6017650", list(src, target))), null, 2)
 	reagents.trans_to(target, reagents.total_volume, transferred_by = user)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

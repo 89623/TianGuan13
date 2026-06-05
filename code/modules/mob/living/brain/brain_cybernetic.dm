@@ -30,7 +30,7 @@
 			to_chat(user, span_warning(LANG("obj.7ca3d4a6", list(src))))
 			return TRUE
 
-		user.visible_message(span_notice("[user] slowly starts to repair [src] with [item]."), span_notice("You slowly start to repair [src] with [item]."))
+		user.visible_message(span_notice(LANG("obj.30049e42", list(user, src, item))), span_notice(LANG("obj.6f08d6eb", list(src, item))))
 		var/did_repair = FALSE
 		while(damage > 0)
 			if(item.use_tool(src, user, 3 SECONDS, volume = 50))
@@ -41,9 +41,9 @@
 
 		if (did_repair)
 			if (damage > 0)
-				user.visible_message(span_notice("[user] partially repairs [src] with [item]."), span_notice("You partially repair [src] with [item]."))
+				user.visible_message(span_notice(LANG("obj.6500d6a2", list(user, src, item))), span_notice(LANG("obj.e25e65d9", list(src, item))))
 			else
-				user.visible_message(span_notice("[user] fully repairs [src] with [item], causing its warning light to stop flashing."), span_notice("You fully repair [src] with [item], causing its warning light to stop flashing."))
+				user.visible_message(span_notice(LANG("obj.c7f2f527", list(user, src, item))), span_notice(LANG("obj.90b5d6b8", list(src, item))))
 		else
 			to_chat(user, span_warning(LANG("obj.8a2acaec", list(src, item))))
 

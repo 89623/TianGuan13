@@ -118,12 +118,12 @@
 		return ..()
 	if(discount_pct_off == COUPON_OMEN)
 		to_chat(user, span_warning(LANG("obj.8fe8cd2d", list(attacked_obj))))
-		attacked_obj.say("Coupon fulfillment already in progress...")
+		attacked_obj.say(LANG("obj.75ad4e01", null))
 		return
 
 	inserted_console = attacked_obj
 	LAZYADD(inserted_console.loaded_coupons, src)
-	inserted_console.say("Coupon for [initial(discounted_pack.name)] applied!")
+	inserted_console.say(LANG("obj.2fd860df", list(initial(discounted_pack.name))))
 	forceMove(inserted_console)
 
 /obj/item/coupon/Destroy()

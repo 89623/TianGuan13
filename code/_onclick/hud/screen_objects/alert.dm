@@ -526,7 +526,7 @@
 		return
 
 	too_slowing_this_guy = TRUE
-	offerer.visible_message(span_notice("[rube] rushes in to high-five [offerer], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
+	offerer.visible_message(span_notice(LANG("atom.445b4eb0", list(rube, offerer))), span_nicegreen(LANG("atom.5151a7a8", list(rube))), ignored_mobs=rube)
 	to_chat(rube, span_nicegreen(LANG("atom.013b2b77", list(offerer))))
 	addtimer(CALLBACK(src, PROC_REF(too_slow_p2), offerer, rube), 0.5 SECONDS)
 
@@ -535,7 +535,7 @@
 	var/mob/living/rube = owner
 	var/mob/living/offerer = offer?.owner
 	if(!QDELETED(rube) && !QDELETED(offerer))
-		offerer.visible_message(span_danger("[offerer] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
+		offerer.visible_message(span_danger(LANG("atom.5fbb74d7", list(offerer, rube))), span_nicegreen(LANG("atom.809f34e8", list(rube, rube.p_them()))), span_hear(LANG("atom.576f52df", null)), ignored_mobs=rube)
 		to_chat(rube, span_userdanger("[uppertext("NO! [offerer] PULLS [offerer.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")]"))
 		playsound(offerer, 'sound/items/weapons/thudswoosh.ogg', 100, TRUE, 1)
 		rube.Knockdown(1 SECONDS)

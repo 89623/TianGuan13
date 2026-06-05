@@ -28,14 +28,14 @@
 		return FALSE
 
 	if(!COOLDOWN_FINISHED(src, whistle_cooldown_minigame))
-		clicker.balloon_alert(clicker, "cant cast for [COOLDOWN_TIMELEFT(src, whistle_cooldown_minigame) *0.1] seconds!")
+		clicker.balloon_alert(clicker, LANG("datum.36ad20c0", list(COOLDOWN_TIMELEFT(src, whistle_cooldown_minigame) *0.1)))
 		unset_ranged_ability(clicker)
 		return FALSE
 
 	return ..()
 
 /datum/action/innate/timeout/do_ability(mob/living/clicker, mob/living/carbon/human/target)
-	clicker.say("FOUL BY [target]!", forced = "whistle")
+	clicker.say(LANG("datum.756c16ff", list(target)), forced = "whistle")
 	playsound(clicker, 'sound/items/whistle/whistle.ogg', 30, FALSE, 4)
 
 	new /obj/effect/timestop(get_turf(target), 0, 5 SECONDS, list(clicker), TRUE, TRUE)

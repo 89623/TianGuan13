@@ -118,7 +118,7 @@
 /obj/item/storage/toolbox/guncase/traitor/click_alt_secondary(mob/user)
 	. = ..()
 	if(currently_exploding)
-		user.balloon_alert(user, "already exploding!")
+		user.balloon_alert(user, LANG("obj.b98ad083", null))
 		return
 
 	var/i_dont_even_think_once_about_blowing_stuff_up = tgui_alert(user, LANG("obj.4a09f031", null), LANG("obj.2754c85b", null), list("Yes","No"))
@@ -335,8 +335,8 @@
 
 	balloon_alert(user, LANG("obj.ddc1329a", null))
 	user.visible_message(
-		span_danger("[user] bashes [src] with [tool]!"),
-		span_danger("You bash [src] with [tool]!"),
+		span_danger(LANG("obj.2a0f4de0", list(user, src, tool))),
+		span_danger(LANG("obj.acf5f95a", list(src, tool))),
 		null,
 		COMBAT_MESSAGE_RANGE,
 	)

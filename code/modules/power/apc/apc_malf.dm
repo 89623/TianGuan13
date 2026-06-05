@@ -109,7 +109,7 @@
 	if(!user_turf)
 		return FALSE
 	transfer_in_progress = TRUE
-	user.visible_message(span_notice("[user] slots [card] into [src]..."), span_notice("Transfer process initiated. Sending request for AI approval..."))
+	user.visible_message(span_notice(LANG("obj.936825ea", list(user, card, src))), span_notice(LANG("obj.91fafcee", null)))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	SEND_SOUND(occupier, sound('sound/announcer/notice/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
 	if(tgui_alert(occupier, LANG("obj.cb27ec1c", list(user, card.name)), LANG("obj.401c4350", null), list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
@@ -131,7 +131,7 @@
 	if(!occupier || !card)
 		transfer_in_progress = FALSE
 		return FALSE
-	user.visible_message(span_notice("[user] transfers [occupier] to [card]!"), span_notice("Transfer complete! [occupier] is now stored in [card]."))
+	user.visible_message(span_notice(LANG("obj.e626614c", list(user, occupier, card))), span_notice(LANG("obj.7a313b00", list(occupier, card))))
 	to_chat(occupier, span_notice(LANG("obj.7a3cd229", list(user, card.name))))
 	occupier.forceMove(card)
 	card.AI = occupier

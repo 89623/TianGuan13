@@ -79,7 +79,7 @@
 			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
 			return
 		playsound(chassis, clampsound, 50, FALSE, -6)
-		chassis.visible_message(span_notice("[chassis] lifts [target] and starts to load it into cargo compartment."))
+		chassis.visible_message(span_notice(LANG("obj.a5dc4d5e", list(chassis, target))))
 		clamptarget.set_anchored(TRUE)
 		if(!do_after_cooldown(target, source, flags = MECH_DO_AFTER_DIR_CHANGE_FLAG|MECH_DO_AFTER_ADJACENCY_FLAG))
 			clamptarget.set_anchored(FALSE)
@@ -102,12 +102,12 @@
 	if(!source.combat_mode)
 		step_away(victim, chassis)
 		if(killer_clamp)
-			target.visible_message(span_danger("[chassis] tosses [target] like a piece of paper!"), \
-				span_userdanger("[chassis] tosses you like a piece of paper!"))
+			target.visible_message(span_danger(LANG("obj.c86e9eac", list(chassis, target))), \
+				span_userdanger(LANG("obj.bd3563f3", list(chassis))))
 		else
 			to_chat(source, "[icon2html(src, source)][span_notice("You push [target] out of the way.")]")
-			chassis.visible_message(span_notice("[chassis] pushes [target] out of the way."), \
-			span_notice("[chassis] pushes you aside."))
+			chassis.visible_message(span_notice(LANG("obj.c106d8a6", list(chassis, target))), \
+			span_notice(LANG("obj.c8391f89", list(chassis))))
 		return ..()
 
 	if(victim.check_block(chassis, clamp_damage, name, attack_type = OVERWHELMING_ATTACK))
@@ -126,14 +126,14 @@
 			torn_off = TRUE
 		if(torn_off)
 			playsound(src, get_dismember_sound(), 80, TRUE)
-			carbon_victim.visible_message(span_danger("[chassis] rips [carbon_victim]'s arms off!"), \
-						span_userdanger("[chassis] rips your arms off!"))
+			carbon_victim.visible_message(span_danger(LANG("obj.b932339a", list(chassis, carbon_victim))), \
+						span_userdanger(LANG("obj.8ad9c8f3", list(chassis))))
 			log_combat(source, carbon_victim, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
 	var/armor_check = clamp(victim.run_armor_check(null, MELEE) / 3, 0, 100) //our target only benefits from a third of their armor. Because it's a huge ass clamp
-	victim.visible_message(span_danger("[chassis] squeezes [victim]!"), \
-						span_userdanger("[chassis] squeezes you!"),\
-						span_hear("You hear something crack."))
+	victim.visible_message(span_danger(LANG("obj.34197213", list(chassis, victim))), \
+						span_userdanger(LANG("obj.a8ad6d4c", list(chassis))),\
+						span_hear(LANG("obj.79fb0a97", null)))
 	log_combat(source, victim, "attacked", "[name]", "(Combat mode: [source.combat_mode ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
 	var/final_damage = isalien(victim) ? clamp_damage * 3 : clamp_damage
 	chassis.do_attack_animation(victim)

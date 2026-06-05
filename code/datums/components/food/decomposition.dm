@@ -124,7 +124,7 @@
 			result.reagents.clear_reagents()
 			decomp.reagents.trans_to(result, decomp.reagents.total_volume)
 		SEND_SIGNAL(result, COMSIG_OBJ_DECOMPOSITION_RESULT, decomp)
-	decomp.visible_message(span_warning("[decomp] gets overtaken by mold[produce_ants ? " and ants":""]! Gross!"))
+	decomp.visible_message(span_warning(LANG("datum.c40de04e", list(decomp, produce_ants ? " and ants":""))))
 	qdel(decomp)
 	return
 

@@ -61,7 +61,7 @@
 
 		// Combat mode gives one brute damage.
 		if(user.combat_mode && human_target != user)
-			user.visible_message(span_warning("[user] scrapes the bristles uncomfortably over [human_target]'s [brush_target]."), span_warning("You scrape the bristles uncomfortably over [human_target]'s [brush_target]."), ignored_mobs=list(human_target))
+			user.visible_message(span_warning(LANG("obj.2e871356", list(user, human_target, brush_target))), span_warning(LANG("obj.44dd25c5", list(human_target, brush_target))), ignored_mobs=list(human_target))
 			human_target.show_message(span_warning("[user] scrapes the bristles uncomfortably over your [brush_target]!"))
 			if(brush_target != "tail")
 				head.receive_damage(1)
@@ -75,18 +75,18 @@
 		// Self brushing
 		if(human_target == user)
 			if(HAS_TRAIT(user, TRAIT_SELF_AWARE) || HAS_TRAIT(user, TRAIT_HAIR_EXPERT)) // Do they have self awareness or the hair expert trait? If so, give them the better moodlet.
-				human_target.visible_message(span_notice("[user] masterfully brushes [user.p_their()] [brush_target]!"), span_notice("You masterfully brush your [brush_target]."))
+				human_target.visible_message(span_notice(LANG("obj.882b9bd5", list(user, user.p_their(), brush_target))), span_notice(LANG("obj.8a9119eb", list(brush_target))))
 				human_target.add_mood_event("brushed", /datum/mood_event/brushed/self/expert, brush_target)
 			else
-				human_target.visible_message(span_notice("[user] brushes [user.p_their()] [brush_target]!"), span_notice("You brush your [brush_target]."))
+				human_target.visible_message(span_notice(LANG("obj.1fb5e2b7", list(user, user.p_their(), brush_target))), span_notice(LANG("obj.a6eb0794", list(brush_target))))
 				human_target.add_mood_event("brushed", /datum/mood_event/brushed/self, brush_target)
 		else // Brushing others
 			if(HAS_TRAIT(user, TRAIT_HAIR_EXPERT)) // Do they have the hair expert trait? If so, give them the better moodlet.
-				user.visible_message(span_notice("[user] masterfully brushes [human_target]'s [brush_target]!"), span_notice("You masterfully brush [human_target]'s [brush_target]."), ignored_mobs=list(human_target))
+				user.visible_message(span_notice(LANG("obj.307ab497", list(user, human_target, brush_target))), span_notice(LANG("obj.9d70f0ad", list(human_target, brush_target))), ignored_mobs=list(human_target))
 				human_target.show_message(span_notice("[user] masterfully brushes your [brush_target]!"), MSG_VISUAL)
 				human_target.add_mood_event("brushed", /datum/mood_event/brushed/expert, user, brush_target)
 			else
-				user.visible_message(span_notice("[user] brushes [human_target]'s [brush_target]!"), span_notice("You brush [human_target]'s [brush_target]."), ignored_mobs=list(human_target))
+				user.visible_message(span_notice(LANG("obj.c233cbf6", list(user, human_target, brush_target))), span_notice(LANG("obj.8ce39d25", list(human_target, brush_target))), ignored_mobs=list(human_target))
 				human_target.show_message(span_notice("[user] brushes your [brush_target]!"), MSG_VISUAL)
 				human_target.add_mood_event("brushed", /datum/mood_event/brushed, user, brush_target)
 		playsound(human_target, 'modular_nova/modules/hairbrush/sounds/brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)

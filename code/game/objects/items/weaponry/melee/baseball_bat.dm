@@ -56,7 +56,7 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
 	if(homerun_ready)
-		user.visible_message(span_userdanger("It's a home run!"))
+		user.visible_message(span_userdanger(LANG("obj.44b428d0", null)))
 		if(!QDELETED(target))
 			target.throw_at(throw_target, rand(8,10), 14, user)
 		SSexplosions.medturf += throw_target

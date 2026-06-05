@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Pretend to be dead
 /datum/ai_behavior/play_dead
 
@@ -20,7 +21,7 @@
 	var/mob/living/basic/basic_pawn = controller.pawn
 	if(QDELETED(basic_pawn) || basic_pawn.stat) // imagine actually dying while playing dead. hell, imagine being the kid waiting for your pup to get back up :(
 		return
-	basic_pawn.visible_message(span_notice("[basic_pawn] miraculously springs back to life!"))
+	basic_pawn.visible_message(span_notice(LANG("datum.387c7144", list(basic_pawn))))
 	REMOVE_TRAIT(basic_pawn, TRAIT_FAKEDEATH, BASIC_MOB_DEATH_TRAIT)
 	basic_pawn.look_alive()
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)

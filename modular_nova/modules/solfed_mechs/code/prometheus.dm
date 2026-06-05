@@ -111,8 +111,8 @@
 
 	playsound(chassis, 'sound/effects/clang.ogg', 70, TRUE)
 	user.visible_message(
-		span_danger("[chassis] slams its hydraulic ram into [ram_target] with a deafening clang!"),
-		span_danger("You slam the hydraulic ram into [ram_target]!"),
+		span_danger(LANG("datum.3b9990b9", list(chassis, ram_target))),
+		span_danger(LANG("datum.3ac11040", list(ram_target))),
 		null,
 		COMBAT_MESSAGE_RANGE
 	)

@@ -43,7 +43,7 @@
 	if(AI)
 		QDEL_NULL(AI)
 	QDEL_LIST(crowbar_salvage)
-	src.visible_message(span_danger("[src]'s superstructure folds in on itself, collapsing into a heap of unsalvageable scrap!"))
+	src.visible_message(span_danger(LANG("obj.6f69a617", list(src))))
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	for(var/mob/living/witness in range(2, src))
 		shake_camera(witness, 2, 1)
@@ -69,7 +69,7 @@
 		return
 	var/type = pick(welder_salvage)
 	var/N = new type(get_turf(user))
-	user.visible_message(span_notice("[user] cuts [N] from [src]."), span_notice("You cut [N] from [src]."))
+	user.visible_message(span_notice(LANG("obj.909aaca8", list(user, N, src))), span_notice(LANG("obj.bf9d5c9d", list(N, src))))
 	if(!isstack(N))
 		welder_salvage -= type
 	salvage_num--
@@ -81,7 +81,7 @@
 		to_chat(user, span_notice(LANG("obj.ff7a3a1d", list(I))))
 		return
 	var/N = new /obj/item/stack/cable_coil(get_turf(user), rand(1,3))
-	user.visible_message(span_notice("[user] cuts [N] from [src]."), span_notice("You cut [N] from [src]."))
+	user.visible_message(span_notice(LANG("obj.909aaca8", list(user, N, src))), span_notice(LANG("obj.bf9d5c9d", list(N, src))))
 	wires_removed = TRUE
 
 /obj/structure/mecha_wreckage/crowbar_act(mob/living/user, obj/item/I)
@@ -90,7 +90,7 @@
 	if(crowbar_salvage.len)
 		var/obj/S = pick(crowbar_salvage)
 		S.forceMove(user.drop_location())
-		user.visible_message(span_notice("[user] pries [S] from [src]."), span_notice("You pry [S] from [src]."))
+		user.visible_message(span_notice(LANG("obj.f2c1aebe", list(user, S, src))), span_notice(LANG("obj.c6d17dba", list(S, src))))
 		crowbar_salvage -= S
 		return
 	to_chat(user, span_notice(LANG("obj.4147eda5", list(I))))

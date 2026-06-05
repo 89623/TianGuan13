@@ -45,7 +45,7 @@
 		to_chat(target_human, span_warning(LANG("datum.6dbd22c2", list(user))))
 		return FALSE
 
-	user.visible_message(span_purple("[target_human] falls into a deep, hypnotic slumber right at the snap of your fingers."), span_purple("You suddenly fall limp at the snap of [user]'s fingers."))
+	user.visible_message(span_purple(LANG("datum.d6ddff46", list(target_human))), span_purple(LANG("datum.32c2acd2", list(user))))
 	user.emote("snap")
 	target_human.SetSleeping(60 SECONDS)
 	target_human.log_message("[target_human] was placed into a hypnotic sleep by [user].", LOG_GAME)
@@ -62,5 +62,5 @@
 		to_chat(target_human, span_hypnophrase("[input_text]"))
 		secondary_choice = tgui_alert(user, LANG("datum.df22715e", list(target_human)), LANG("datum.d9547f33", null), list("Suggestion", "Release"))
 
-	user.visible_message(span_purple("You wake up from your deep, hypnotic slumber. The suggestions from [user] now settled into your mind."), span_purple("[target_human] wakes up from their slumber."))
+	user.visible_message(span_purple(LANG("datum.a8b89c67", list(user))), span_purple(LANG("datum.99f08fb9", list(target_human))))
 	target_human.SetSleeping(0)

@@ -31,7 +31,7 @@
 	user.balloon_alert_to_viewers("trying to revive [carbon_target]")
 
 	if(!do_after(user, 3 SECONDS, carbon_target))
-		user.balloon_alert(user, "stopped reviving [carbon_target]")
+		user.balloon_alert(user, LANG("obj.09a569c9", list(carbon_target)))
 		return
 
 	if(carbon_target.stat != DEAD)

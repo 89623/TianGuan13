@@ -243,14 +243,14 @@
 /obj/structure/thermoplastic/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	if(secured)
-		user.visible_message(span_notice("[user] begins to unscrew the tile..."),
-		span_notice("You begin to unscrew the tile..."))
+		user.visible_message(span_notice(LANG("obj.571d20f0", list(user))),
+		span_notice(LANG("obj.679179c6", null)))
 		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 			secured = FALSE
 			to_chat(user, span_notice(LANG("obj.4630c562", null)))
 	else
-		user.visible_message(span_notice("[user] begins to fasten the tile..."),
-		span_notice("You begin to fasten the tile..."))
+		user.visible_message(span_notice(LANG("obj.8fdf6425", list(user))),
+		span_notice(LANG("obj.8993a9b9", null)))
 		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 			secured = TRUE
 			to_chat(user, span_notice(LANG("obj.9248c7b7", null)))
@@ -264,8 +264,8 @@
 		return FALSE
 
 	else
-		user.visible_message(span_notice("[user] wedges \the [tool] into the tile's gap in the edge and starts prying..."),
-		span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
+		user.visible_message(span_notice(LANG("obj.b9f905f9", list(user, tool))),
+		span_notice(LANG("obj.4906368b", list(tool))))
 		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 			to_chat(user, span_notice(LANG("obj.735aa41b", null)))
 			var/obj/item/stack/thermoplastic/pulled_tile = new floor_tile()

@@ -35,11 +35,11 @@
 	if(lit)
 		lit = FALSE
 		STOP_PROCESSING(SSobj, src)
-		user.visible_message(span_notice("[user] turns off [src]."), span_notice("You turn off [src]."))
+		user.visible_message(span_notice(LANG("obj.10018e19", list(user, src))), span_notice(LANG("obj.833a0800", list(src))))
 	else if (fuel_amount)
 		lit = TRUE
 		START_PROCESSING(SSobj, src)
-		user.visible_message(span_notice("[user] turns on [src]."), span_notice("You turn on [src]."))
+		user.visible_message(span_notice(LANG("obj.96d11239", list(user, src))), span_notice(LANG("obj.11cd7563", list(src))))
 	update_icon()
 
 /obj/structure/sauna_oven/update_overlays()
@@ -65,9 +65,7 @@
 			return ..()
 		if(reagent_container.reagents.has_reagent(/datum/reagent/water))
 			reagent_container.reagents.remove_reagent(/datum/reagent/water, 5)
-			user.visible_message(span_notice("[user] pours some \
-			water into [src]."), span_notice("You pour \
-			some water to [src]."))
+			user.visible_message(span_notice(LANG("obj.5f7ac2eb", list(user, src))), span_notice(LANG("obj.cab26e05", list(src))))
 			water_amount += 5 * SAUNA_WATER_PER_WATER_UNIT
 		else
 			balloon_alert(user, LANG("obj.ac11e966", null))
@@ -79,20 +77,14 @@
 			return
 		fuel_amount += SAUNA_LOG_FUEL * wood.amount
 		wood.use(wood.amount)
-		user.visible_message(span_notice("[user] tosses some \
-			wood into [src]."), span_notice("You add \
-			some fuel to [src]."))
+		user.visible_message(span_notice(LANG("obj.2dc25b27", list(user, src))), span_notice(LANG("obj.bd3682ed", list(src))))
 	else if(istype(attacking_item, /obj/item/paper_bin))
 		var/obj/item/paper_bin/paper_bin = attacking_item
-		user.visible_message(span_notice("[user] throws [attacking_item] into \
-			[src]."), span_notice("You add [attacking_item] to [src].\
-			"))
+		user.visible_message(span_notice(LANG("obj.8938881b", list(user, attacking_item, src))), span_notice(LANG("obj.0c27fe26", list(attacking_item, src))))
 		fuel_amount += SAUNA_PAPER_FUEL * paper_bin.total_paper
 		qdel(paper_bin)
 	else if(istype(attacking_item, /obj/item/paper))
-		user.visible_message(span_notice("[user] throws [attacking_item] into \
-			[src]."), span_notice("You throw [attacking_item] into [src].\
-			"))
+		user.visible_message(span_notice(LANG("obj.8938881b", list(user, attacking_item, src))), span_notice(LANG("obj.9a474d8d", list(attacking_item, src))))
 		fuel_amount += SAUNA_PAPER_FUEL
 		qdel(attacking_item)
 	return ..()

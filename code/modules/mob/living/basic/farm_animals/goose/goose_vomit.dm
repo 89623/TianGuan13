@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Repeatedly throw up until there's nothing left inside, regrettably sufficiently complex that it requires its own file
 /datum/action/cooldown/mob_cooldown/goose_vomit
 	name = "Vomit"
@@ -28,11 +29,11 @@
 		return FALSE
 	if (!length(owner.contents))
 		if (feedback)
-			owner.balloon_alert(owner, "stomach empty!")
+			owner.balloon_alert(owner, LANG("datum.46138ad1", null))
 		return FALSE
 	if (!isliving(owner))
 		if (feedback)
-			owner.balloon_alert(owner, "you're not alive!")
+			owner.balloon_alert(owner, LANG("datum.221df4b7", null))
 		return FALSE
 	return TRUE
 

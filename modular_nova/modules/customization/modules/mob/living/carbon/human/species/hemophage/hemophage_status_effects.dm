@@ -79,7 +79,7 @@
 		to_chat(carbon_owner, span_warning(LANG("datum.be0033f3", null)))
 		return
 
-	carbon_owner.balloon_alert(carbon_owner, "hemokinetic regen activated!")
+	carbon_owner.balloon_alert(carbon_owner, LANG("datum.8c1dcd4c", null))
 	return ..()
 
 

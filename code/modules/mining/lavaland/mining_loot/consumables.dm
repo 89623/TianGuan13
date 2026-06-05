@@ -70,7 +70,7 @@
 		if(wisp.loc == src)
 			qdel(wisp)
 		else
-			wisp.visible_message(span_notice("[wisp] has a sad feeling for a moment, then it passes."))
+			wisp.visible_message(span_notice(LANG("obj.7d3922a1", list(wisp))))
 	return ..()
 
 /obj/effect/wisp

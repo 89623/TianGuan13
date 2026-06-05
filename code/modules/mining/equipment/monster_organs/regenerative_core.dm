@@ -39,7 +39,7 @@
 /obj/item/organ/monster_core/regenerative_core/apply_to(mob/living/target, mob/user)
 	target.add_mood_event("legion_core", /datum/mood_event/healsbadman)
 	if (target != user)
-		target.visible_message(span_notice("[user] forces [target] to apply [src]... Black tendrils entangle and reinforce [target.p_them()]!"))
+		target.visible_message(span_notice(LANG("obj.2b88b1d5", list(user, target, src, target.p_them()))))
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
 	else
 		to_chat(user, span_notice(LANG("obj.b351649b", list(src))))

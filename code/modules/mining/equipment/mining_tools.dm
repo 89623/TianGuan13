@@ -22,10 +22,10 @@
 	attack_verb_simple = list("hit", "pierce", "slice", "attack")
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins digging into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.8f4dbf49", list(user, user.p_their(), user.p_theyre()))))
 	if(use_tool(user, user, 30, volume=50))
 		return BRUTELOSS
-	user.visible_message(span_suicide("[user] couldn't do it!"))
+	user.visible_message(span_suicide(LANG("obj.fa7da766", list(user))))
 	return SHAME
 
 /obj/item/pickaxe/rusted
@@ -139,10 +139,10 @@
 	AddElement(/datum/element/gravedigger)
 
 /obj/item/shovel/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins digging their own grave! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.8345228a", list(user, user.p_theyre()))))
 	if(use_tool(user, user, 30, volume=50))
 		return BRUTELOSS
-	user.visible_message(span_suicide("[user] couldn't do it!"))
+	user.visible_message(span_suicide(LANG("obj.fa7da766", list(user))))
 	return SHAME
 
 /obj/item/shovel/spade

@@ -53,14 +53,14 @@
 	. = ..()
 	if(!buildable_sign)
 		return ITEM_INTERACT_FAILURE
-	user.visible_message(span_notice("[user] starts removing [src]..."), \
-		span_notice("You start unfastening [src]."))
+	user.visible_message(span_notice(LANG("obj.5ce1ea33", list(user, src))), \
+		span_notice(LANG("obj.28344c5b", list(src))))
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 4 SECONDS))
 		return ITEM_INTERACT_FAILURE
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	user.visible_message(span_notice("[user] unfastens [src]."), \
-		span_notice("You unfasten [src]."))
+	user.visible_message(span_notice(LANG("obj.875275dc", list(user, src))), \
+		span_notice(LANG("obj.32b2f4c0", list(src))))
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
@@ -73,12 +73,12 @@
 		return TRUE
 	if(!I.tool_start_check(user, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user] starts repairing [src]..."), \
-		span_notice("You start repairing [src]."))
+	user.visible_message(span_notice(LANG("obj.992cf3c3", list(user, src))), \
+		span_notice(LANG("obj.e15bcf13", list(src))))
 	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
 		return TRUE
-	user.visible_message(span_notice("[user] finishes repairing [src]."), \
-		span_notice("You finish repairing [src]."))
+	user.visible_message(span_notice(LANG("obj.17fe1725", list(user, src))), \
+		span_notice(LANG("obj.616dfcb1", list(src))))
 	atom_integrity = max_integrity
 	return TRUE
 
@@ -92,8 +92,8 @@
 		if(!Adjacent(user)) //Make sure user is adjacent still.
 			to_chat(user, span_warning(LANG("obj.04b699fe", null)))
 			return
-		user.visible_message(span_notice("[user] begins changing [src]."), \
-			span_notice("You begin changing [src]."))
+		user.visible_message(span_notice(LANG("obj.b93bbfc1", list(user, src))), \
+			span_notice(LANG("obj.82e7edbe", list(src))))
 		if(!do_after(user, 4 SECONDS, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
 			return
 		var/sign_type = GLOB.editable_sign_types[choice]
@@ -105,8 +105,8 @@
 		changedsign.pixel_y = pixel_y
 		changedsign.atom_integrity = atom_integrity
 		qdel(src)
-		user.visible_message(span_notice("[user] finishes changing the sign."), \
-			span_notice("You finish changing the sign."))
+		user.visible_message(span_notice(LANG("obj.8e3751a9", list(user))), \
+			span_notice(LANG("obj.22d094cf", null)))
 		return
 	return ..()
 
@@ -177,11 +177,11 @@
 	if(!Adjacent(user)) //Make sure user is adjacent still.
 		to_chat(user, span_warning(LANG("obj.04b699fe", null)))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("You begin changing [src]."))
+	user.visible_message(span_notice(LANG("obj.82e7edbe", list(src))))
 	if(!do_after(user, 4 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 	set_sign_type(GLOB.editable_sign_types[choice])
-	user.visible_message(span_notice("You finish changing the sign."))
+	user.visible_message(span_notice(LANG("obj.22d094cf", null)))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -203,8 +203,8 @@
 		placed_sign.pixel_x = 32
 	else if(dir & WEST)
 		placed_sign.pixel_x = -32
-	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
-		span_notice("You attach the sign to [target_turf]."))
+	user.visible_message(span_notice(LANG("obj.44286aef", list(user, src, target_turf))), \
+		span_notice(LANG("obj.bcd62313", list(target_turf))))
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
@@ -221,12 +221,12 @@
 		return TRUE
 	if(!I.tool_start_check(user, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user] starts repairing [src]..."), \
-		span_notice("You start repairing [src]."))
+	user.visible_message(span_notice(LANG("obj.992cf3c3", list(user, src))), \
+		span_notice(LANG("obj.e15bcf13", list(src))))
 	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
 		return TRUE
-	user.visible_message(span_notice("[user] finishes repairing [src]."), \
-		span_notice("You finish repairing [src]."))
+	user.visible_message(span_notice(LANG("obj.17fe1725", list(user, src))), \
+		span_notice(LANG("obj.616dfcb1", list(src))))
 	atom_integrity = max_integrity
 	return TRUE
 

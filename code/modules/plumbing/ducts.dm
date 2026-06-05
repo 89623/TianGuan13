@@ -251,9 +251,9 @@
 	wrench.play_tool_sound(src)
 
 	user.visible_message( \
-	"[user] ununfastens \the [src].", \
-	span_notice("You unfasten \the [src]."), \
-	span_hear("You hear ratcheting."))
+	LANG("obj.ebca8c91", list(user, src)), \
+	span_notice(LANG("obj.5cb76786", list(src))), \
+	span_hear(LANG("obj.706a8c3e", null)))
 
 	deconstruct()
 	return ITEM_INTERACT_SUCCESS
@@ -336,7 +336,7 @@
 		var/datum/overlap = ducting_layer_check(open_turf, duct_layer)
 		if(!isnull(overlap))
 			if(user)
-				open_turf.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
+				open_turf.balloon_alert(user, LANG("obj.bda81211", list(istype(overlap, /obj/machinery/duct) ? "duct" : "machine")))
 			return ITEM_INTERACT_FAILURE
 
 		new /obj/machinery/duct(open_turf, duct_color, duct_layer)

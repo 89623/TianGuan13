@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A bunch of bad effects that can maim or kill you (for science!!!)
 /datum/gizmodes/bad
 	possible_active_modes = list(
@@ -94,7 +95,7 @@
 	return
 
 /datum/gizpulse/ominous/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
-	holder.audible_message(span_hear("You hear an ominous hum."))
+	holder.audible_message(span_hear(LANG("datum.301995ea", null)))
 
 /datum/gizpulse/thrower/grenade
 	throwables = list(

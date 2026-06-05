@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ### A fertile egg component!
  *
@@ -64,7 +65,7 @@
 	current_growth += rand(minimum_growth_rate, maximum_growth_rate) * seconds_per_tick
 	if(current_growth < total_growth_required)
 		return
-	parent_atom.visible_message(span_notice("[parent] hatches with a quiet cracking sound."))
+	parent_atom.visible_message(span_notice(LANG("datum.ad60dd61", list(parent))))
 	new embryo_type(get_turf(parent_atom))
 	post_hatch?.Invoke(embryo_type)
 	// We destroy the parent on hatch, which will destroy the component as well, which will stop us processing.

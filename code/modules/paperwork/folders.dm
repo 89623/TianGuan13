@@ -26,7 +26,7 @@
 	var/folder_type_name = "folder"
 
 /obj/item/folder/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.8cc04502", list(user, user.p_theyre()))))
 	return OXYLOSS
 
 /obj/item/folder/Initialize(mapload)

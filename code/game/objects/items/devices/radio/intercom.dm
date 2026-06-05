@@ -84,15 +84,15 @@
 
 /obj/item/radio/intercom/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(unscrewed)
-		user.visible_message(span_notice("[user] starts tightening [src]'s screws..."), span_notice("You start screwing in [src]..."))
+		user.visible_message(span_notice(LANG("obj.d065917f", list(user, src))), span_notice(LANG("obj.3f00c4f6", list(src))))
 		if(tool.use_tool(src, user, 30, volume=50))
-			user.visible_message(span_notice("[user] tightens [src]'s screws!"), span_notice("You tighten [src]'s screws."))
+			user.visible_message(span_notice(LANG("obj.3065a8ec", list(user, src))), span_notice(LANG("obj.023abbe2", list(src))))
 			unscrewed = FALSE
 			update_appearance(UPDATE_OVERLAYS)
 	else
-		user.visible_message(span_notice("[user] starts loosening [src]'s screws..."), span_notice("You start unscrewing [src]..."))
+		user.visible_message(span_notice(LANG("obj.eff9ca5b", list(user, src))), span_notice(LANG("obj.f4529b06", list(src))))
 		if(tool.use_tool(src, user, 40, volume=50))
-			user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
+			user.visible_message(span_notice(LANG("obj.b3c7a951", list(user, src))), span_notice(LANG("obj.bb7969d3", list(src))))
 			unscrewed = TRUE
 			update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
@@ -106,10 +106,10 @@
 	if(!unscrewed)
 		to_chat(user, span_warning(LANG("obj.9269e98a", list(src))))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] starts unsecuring [src]..."), span_notice("You start unsecuring [src]..."))
+	user.visible_message(span_notice(LANG("obj.096bdf2b", list(user, src))), span_notice(LANG("obj.08ee3372", list(src))))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 80))
-		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
+		user.visible_message(span_notice(LANG("obj.21675bf4", list(user, src))), span_notice(LANG("obj.aa18b3fe", list(src))))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS

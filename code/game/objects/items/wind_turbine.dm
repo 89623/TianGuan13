@@ -178,7 +178,7 @@
 		return
 	user.Paralyze(5)
 	user.Knockdown(10)
-	user.visible_message(span_danger("[user] gets whacked in the head by the [src]'s spinning blades!"), span_userdanger("You get hit in the head by the [src] and fall over!"))
+	user.visible_message(span_danger(LANG("obj.d2b408f3", list(user, src))), span_userdanger(LANG("obj.eb29bec6", list(src))))
 	// imaginary friends call sleep in their emotes
 	// even though imaginary friends can't put on a wind turbine I still have to do this
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/, emote), "scream")
@@ -214,17 +214,17 @@
 /obj/item/portable_wind_turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(charging)
-		user.balloon_alert(user, "remove the [charging] first!")
+		user.balloon_alert(user, LANG("obj.a1771494", list(charging)))
 		return FALSE
 	if(cap)
 		tool.play_tool_sound(src, 50)
-		user.balloon_alert(user, "capacitor removed")
+		user.balloon_alert(user, LANG("obj.fdf8404a", null))
 		cap.forceMove(drop_location())
 		available_power = 0
 		cap = null
 		return TRUE
 	else
-		user.balloon_alert(user, "no capacitor!")
+		user.balloon_alert(user, LANG("obj.a525b367", null))
 		return FALSE
 
 /obj/item/portable_wind_turbine/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/melee/sabre
 	name = "officer's sabre"
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
@@ -47,8 +48,8 @@
 
 /obj/item/melee/sabre/proc/bane_message(mob/living/target, mob/living/attacker)
 	target.visible_message(
-		span_warning("[src] tears through [target] with unnatural ease!"),
-		span_boldwarning("As [src] tears into your body, you feel the weight of authority collapse into your wounds!"),
+		span_warning(LANG("obj.9d90db71", list(src, target))),
+		span_boldwarning(LANG("obj.cf39d318", list(src))),
 	)
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
 
@@ -64,7 +65,7 @@
 	playsound(container.parent, 'sound/items/sheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.e6bf66ba", list(user, user.p_their(), src, user.p_theyre()))))
 	var/i = 0
 	ADD_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 	if(iscarbon(user))

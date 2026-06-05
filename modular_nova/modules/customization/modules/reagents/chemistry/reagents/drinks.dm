@@ -41,9 +41,9 @@
 /obj/item/reagent_containers/cup/soda_cans/nova/attack(mob/M, mob/living/user)
 	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
 		if(M == user)
-			user.visible_message(span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"), span_notice("You crush the can of [src] on your forehead."))
+			user.visible_message(span_warning(LANG("obj.58fd28bc", list(user, src, user.p_their()))), span_notice(LANG("obj.918576da", list(src))))
 		else
-			user.visible_message(span_warning("[user] crushes the can of [src] on [M]'s forehead!"), span_notice("You crush the can of [src] on [M]'s forehead."))
+			user.visible_message(span_warning(LANG("obj.7ba56bac", list(user, src, M))), span_notice(LANG("obj.d0fb0ba1", list(src, M))))
 		playsound(M,'sound/items/weapons/pierce.ogg', rand(10,50), TRUE)
 		var/obj/item/trash/can/nova/crushed_can = new /obj/item/trash/can/nova(M.loc)
 		crushed_can.icon_state = icon_state

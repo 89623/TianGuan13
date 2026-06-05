@@ -347,7 +347,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	to_edit.layer = new_layer
 
 /obj/item/cigarette/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
+	user.visible_message(span_suicide(LANG("obj.1593f0ac", list(user, src, user.p_they(), user.p_theyre(), user.p_them()))))
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/cigarette/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
@@ -440,11 +440,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	// Custom handling for the hallucination effect
 	if(reagents?.has_reagent(/datum/reagent/flash_powder))
 		if(!isliving(loc))
-			loc.visible_message(span_hear("\The [src] burns up!"))
+			loc.visible_message(span_hear(LANG("obj.7a9f2e3c", list(src))))
 			qdel(src)
 			return
 		var/mob/living/user = loc
-		loc.visible_message(span_hear("[user]'s [name] burns up as [p_they(user)] fall to the ground!"), span_danger("The solution violently explodes!"))
+		loc.visible_message(span_hear(LANG("obj.6f00a940", list(user, name, p_they(user)))), span_danger(LANG("obj.3378a74b", null)))
 		user.flash_act(INFINITY, visual = TRUE, length = 5 SECONDS)
 		user.playsound_local(get_turf(user), SFX_EXPLOSION, 50, TRUE)
 		user.cause_hallucination(/datum/hallucination/death, "trick trick [name]")
@@ -512,14 +512,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(isnull(guy_infront))
 		smoker.visible_message(
-			span_notice("[smoker] exhales a large cloud of smoke from [src]."),
-			span_notice("You exhale a large cloud of smoke from [src]."),
+			span_notice(LANG("obj.bb2695f1", list(smoker, src))),
+			span_notice(LANG("obj.7086910b", list(src))),
 		)
 
 	else if(ishuman(guy_infront) && guy_infront.get_bodypart(BODY_ZONE_HEAD) && !guy_infront.is_pepper_proof())
 		smoker.visible_message(
-			span_notice("[smoker] exhales a large cloud of smoke from [src] directly at [guy_infront]'s face!"),
-			span_notice("You exhale a large cloud of smoke from [src] directly at [guy_infront]'s face."),
+			span_notice(LANG("obj.e53d3934", list(smoker, src, guy_infront))),
+			span_notice(LANG("obj.b10825a5", list(src, guy_infront))),
 			ignored_mobs = guy_infront,
 		)
 		to_chat(guy_infront, span_warning(LANG("obj.918ef629", list(smoker, name))))
@@ -527,8 +527,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	else
 		smoker.visible_message(
-			span_notice("[smoker] exhales a large cloud of smoke from [src] at [guy_infront]."),
-			span_notice("You exhale a large cloud of smoke from [src] at [guy_infront]."),
+			span_notice(LANG("obj.179d668b", list(smoker, src, guy_infront))),
+			span_notice(LANG("obj.bf5a0917", list(src, guy_infront))),
 		)
 
 	if(!isturf(smoker.loc))
@@ -615,11 +615,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!isnull(user))
 		if(done_early)
 			if(isfloorturf(location) && location.has_gravity())
-				user.visible_message(span_notice("[user] calmly drops and treads on [src], putting it out instantly."))
+				user.visible_message(span_notice(LANG("obj.a632d8e7", list(user, src))))
 				new /obj/effect/decal/cleanable/ash(location)
 				long_exhale(user)
 			else
-				user.visible_message(span_notice("[user] pinches out [src]."))
+				user.visible_message(span_notice(LANG("obj.d380cf10", list(user, src))))
 			how_long_have_we_been_smokin = 0 SECONDS
 		else
 			to_chat(user, span_notice(LANG("obj.a821e0ac", list(name))))
@@ -976,7 +976,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/cigarette/pipe/put_out(mob/user, done_early = FALSE)
 	lit = FALSE
 	if(done_early)
-		user.visible_message(span_notice("[user] puts out [src]."), span_notice("You put out [src]."))
+		user.visible_message(span_notice(LANG("obj.f63d4f5a", list(user, src))), span_notice(LANG("obj.00731180", list(src))))
 
 	else
 		if(user)
@@ -1095,7 +1095,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.add_reagent(/datum/reagent/drug/nicotine, 50)
 
 /obj/item/vape/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!"))//it doesn't give you cancer, it is cancer
+	user.visible_message(span_suicide(LANG("obj.7e62ee3d", list(user, user.p_they()))))//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/vape/screwdriver_act(mob/living/user, obj/item/tool)

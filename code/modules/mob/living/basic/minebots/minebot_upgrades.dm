@@ -14,7 +14,7 @@
 
 /obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/basic/mining_drone/minebot, mob/user)
 	if(minebot.melee_damage_upper != initial(minebot.melee_damage_upper))
-		user.balloon_alert(user, "already has armor!")
+		user.balloon_alert(user, LANG("obj.f3026bc8", null))
 		return
 	minebot.melee_damage_lower += 7
 	minebot.melee_damage_upper += 7
@@ -67,7 +67,7 @@
 
 /obj/item/mine_bot_upgrade/regnerative_shield/upgrade_bot(mob/living/basic/mining_drone/minebot, mob/user)
 	if(HAS_TRAIT(minebot, TRAIT_REGEN_SHIELD))
-		user.balloon_alert(minebot, "already has it!")
+		user.balloon_alert(minebot, LANG("obj.c25ab3eb", null))
 		return
 	var/static/list/shield_layers = list(
 		/obj/effect/overlay/minebot_top_shield,

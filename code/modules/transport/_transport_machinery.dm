@@ -121,13 +121,13 @@
 /obj/machinery/transport/proc/try_fix_machine(obj/machinery/transport/machine, mob/living/user, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 
-	machine.balloon_alert(user, "percussive maintenance...")
+	machine.balloon_alert(user, LANG("obj.9dc90226", null))
 	if(!tool.use_tool(machine, user, 7 SECONDS, volume = 50))
-		machine.balloon_alert(user, "interrupted!")
+		machine.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
 
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 75, use_reverb = TRUE)
-	machine.balloon_alert(user, "success!")
+	machine.balloon_alert(user, LANG("obj.61c91505", null))
 	UnregisterSignal(src, repair_signals)
 	LAZYNULL(repair_signals)
 	methods_to_fix = list()

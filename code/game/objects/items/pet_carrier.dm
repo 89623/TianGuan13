@@ -128,13 +128,13 @@
 
 /obj/item/pet_carrier/relaymove(mob/living/user, direction)
 	if(open)
-		loc.visible_message(span_notice("[user] climbs out of [src]!"), \
-		span_warning("[user] jumps out of [src]!"))
+		loc.visible_message(span_notice(LANG("obj.dc5ea840", list(user, src))), \
+		span_warning(LANG("obj.76224ddb", list(user, src))))
 		remove_occupant(user)
 		return
 	else if(!locked)
-		loc.visible_message(span_notice("[user] pushes open the door to [src]!"), \
-		span_warning("[user] pushes open the door of [src]!"))
+		loc.visible_message(span_notice(LANG("obj.50131e72", list(user, src))), \
+		span_warning(LANG("obj.bd4c23e0", list(user, src))))
 		open = TRUE
 		update_appearance()
 		return
@@ -149,17 +149,17 @@
 		to_chat(loc, span_warning(LANG("obj.8c3cd2c5", list(user))))
 		if(!do_after(user, rand(300, 400), target = user) || open || !locked || !(user in occupants))
 			return
-		loc.visible_message(span_warning("[user] flips the lock switch on [src] by reaching through!"), null, null, null, user)
+		loc.visible_message(span_warning(LANG("obj.90127c57", list(user, src))), null, null, null, user)
 		to_chat(user, span_bolddanger(LANG("obj.dbbc7e43", null)))
 		locked = FALSE
 		playsound(src, 'sound/machines/airlock/boltsup.ogg', 30, TRUE)
 		update_appearance()
 	else
-		loc.visible_message(span_warning("[src] starts rattling as something pushes against the door!"), null, null, null, user)
+		loc.visible_message(span_warning(LANG("obj.2e27f495", list(src))), null, null, null, user)
 		to_chat(user, span_notice(LANG("obj.50248e7e", list(src))))
 		if(!do_after(user, 20 SECONDS, target = user) || open || !locked || !(user in occupants))
 			return
-		loc.visible_message(span_warning("[user] shoves out of [src]!"), null, null, null, user)
+		loc.visible_message(span_warning(LANG("obj.a10af49b", list(user, src))), null, null, null, user)
 		to_chat(user, span_notice(LANG("obj.f3b47c38", list(src))))
 		locked = FALSE
 		open = TRUE
@@ -175,8 +175,8 @@
 
 /obj/item/pet_carrier/mouse_drop_dragged(atom/over_atom, mob/user, src_location, over_location, params)
 	if(isopenturf(over_atom) && open && occupants.len)
-		user.visible_message(span_notice("[user] unloads [src]."), \
-		span_notice("You unload [src] onto [over_atom]."))
+		user.visible_message(span_notice(LANG("obj.13965714", list(user, src))), \
+		span_notice(LANG("obj.0293051b", list(src, over_atom))))
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)
 
@@ -194,8 +194,8 @@
 	if(pet_carrier_full(src))
 		to_chat(user, span_warning(LANG("obj.c110f18e", list(src))))
 		return
-	user.visible_message(span_notice("[user] starts loading [target] into [src]."), \
-	span_notice("You start loading [target] into [src]..."), null, null, target)
+	user.visible_message(span_notice(LANG("obj.1693085c", list(user, target, src))), \
+	span_notice(LANG("obj.2b7d648d", list(target, src))), null, null, target)
 	to_chat(target, span_userdanger(LANG("obj.db00533d", list(user, user.p_their(), name))))
 	if(!do_after(user, 3 SECONDS, target))
 		return
@@ -204,8 +204,8 @@
 	if(pet_carrier_full(src)) //Run the checks again, just in case
 		to_chat(user, span_warning(LANG("obj.c110f18e", list(src))))
 		return
-	user.visible_message(span_notice("[user] loads [target] into [src]!"), \
-	span_notice("You load [target] into [src]."), null, null, target)
+	user.visible_message(span_notice(LANG("obj.049974f6", list(user, target, src))), \
+	span_notice(LANG("obj.91f19664", list(target, src))), null, null, target)
 	to_chat(target, span_userdanger(LANG("obj.fd3be8b5", list(user, user.p_their(), name))))
 	add_occupant(target)
 

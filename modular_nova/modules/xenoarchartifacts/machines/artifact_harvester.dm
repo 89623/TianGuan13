@@ -47,8 +47,8 @@
 
 	if(!inserted_battery && user.transferItemToLoc(tool, src))
 		user.visible_message(
-			span_notice("[user] inserts [tool] into [src]."),
-			span_notice("You insert [tool] into [src]."),
+			span_notice(LANG("obj.05c6f8ca", list(user, tool, src))),
+			span_notice(LANG("obj.8ce99939", list(tool, src))),
 			blind_message = span_hear("You hear click."),
 		)
 		playsound(src, 'sound/machines/crate/crate_open.ogg', 30, 10)

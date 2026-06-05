@@ -69,7 +69,7 @@
 		affected_mob.emote(pick("twitch","drool"))
 	if(!HAS_TRAIT(affected_mob, TRAIT_FLOORED))
 		if(SPT_PROB(1.5, seconds_per_tick))
-			affected_mob.visible_message(span_danger("[affected_mob] collapses onto the floor!"))
+			affected_mob.visible_message(span_danger(LANG("datum.5d39e298", list(affected_mob))))
 			affected_mob.Paralyze(135,TRUE)
 			affected_mob.drop_all_held_items()
 	if(need_mob_update)

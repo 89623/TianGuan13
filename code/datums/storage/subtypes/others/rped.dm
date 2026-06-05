@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  *Storage component used for RPEDs. Rather than manually setting everything with a get_part_rating() value, we just check if it has the variable required for insertion.
  */
@@ -101,7 +102,7 @@
 	parts_list = reverse_range(sortTim(parts_list, GLOBAL_PROC_REF(cmp_rped_sort)))
 	current_lowest_tier = parts_list[1].get_part_rating()
 	if(ismob(parent.loc))
-		parent.balloon_alert(parent.loc, "dropping lowest rated parts...")
+		parent.balloon_alert(parent.loc, LANG("datum.f50d38d8", null))
 
 	var/dump_loc = user.drop_location()
 	for(var/obj/item/part in parts_list)

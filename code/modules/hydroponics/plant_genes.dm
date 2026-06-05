@@ -251,7 +251,7 @@
 		misc_smudge.name = "[our_plant.name] smudge"
 		misc_smudge.color = "#82b900"
 
-	our_plant.visible_message(span_warning("[our_plant] is squashed."),span_hear("You hear a smack."))
+	our_plant.visible_message(span_warning(LANG("datum.78677814", list(our_plant))),span_hear(LANG("datum.70c6d120", null)))
 	SEND_SIGNAL(our_plant, COMSIG_PLANT_ON_SQUASH, target)
 
 	our_plant.reagents?.expose(our_turf)
@@ -764,7 +764,7 @@
 	if(target_tray.myseed) // Check if there's another seed in the next tray.
 		if(target_tray.myseed.type == origin_tray.myseed.type && target_tray.plant_status != HYDROTRAY_PLANT_DEAD)
 			return FALSE // It should not destroy its own kind.
-		target_tray.visible_message(span_warning("The [target_tray.myseed.plantname] is overtaken by [origin_tray.myseed.plantname]!"))
+		target_tray.visible_message(span_warning(LANG("datum.213b699b", list(target_tray.myseed.plantname, origin_tray.myseed.plantname))))
 		QDEL_NULL(target_tray.myseed)
 	target_tray.set_seed(origin_tray.myseed.Copy())
 	target_tray.age = 0
@@ -772,7 +772,7 @@
 	target_tray.lastcycle = world.time
 	target_tray.set_weedlevel(0, update_icon = FALSE) // Reset
 	target_tray.set_pestlevel(0) // Reset
-	target_tray.visible_message(span_warning("The [origin_tray.myseed.plantname] spreads!"))
+	target_tray.visible_message(span_warning(LANG("datum.4cf6adef", list(origin_tray.myseed.plantname))))
 	if(target_tray.myseed)
 		target_tray.name = "[initial(target_tray.name)] ([target_tray.myseed.plantname])"
 	else
@@ -840,7 +840,7 @@
 /datum/plant_gene/trait/plant_laughter/proc/laughter(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
-	our_plant.audible_message(span_notice("[our_plant] lets out burst of laughter."))
+	our_plant.audible_message(span_notice(LANG("datum.d1656910", list(our_plant))))
 	playsound(our_plant, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /**

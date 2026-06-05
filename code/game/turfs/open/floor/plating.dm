@@ -181,8 +181,8 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(prob(attacking_item.force * 20 - 25))
-		user.visible_message(span_danger("[user] smashes through [src]!"), \
-						span_danger("You smash through [src] with [attacking_item]!"))
+		user.visible_message(span_danger(LANG("turf.1a64b3af", list(user, src))), \
+						span_danger(LANG("turf.f750bfe3", list(src, attacking_item))))
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else
 		to_chat(user, span_danger(LANG("turf.d31ae83e", list(src))))

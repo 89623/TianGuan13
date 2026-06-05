@@ -50,13 +50,13 @@
 
 	//no scanning if its a husk or DNA-less Species
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA))
-		user.visible_message(span_notice("[user] analyzes [interacting_with]'s genetic sequence."))
+		user.visible_message(span_notice(LANG("obj.6529f0ce", list(user, interacting_with))))
 		balloon_alert(user, LANG("obj.6cece6aa", null))
 		playsound(user, 'sound/items/healthanalyzer.ogg', 50) // close enough
 		gene_scan(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
 
-	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic sequence."), span_warning("[interacting_with] has no readable genetic sequence!"))
+	user.visible_message(span_notice(LANG("obj.484b8766", list(user, interacting_with))), span_warning(LANG("obj.1b5e0706", list(interacting_with))))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
@@ -73,16 +73,16 @@
 
 	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA) && !HAS_TRAIT(interacting_with, TRAIT_NO_DNA_COPY))
-		user.visible_message(span_warning("[user] is scanning [interacting_with]'s genetic makeup."))
+		user.visible_message(span_warning(LANG("obj.9e20c061", list(user, interacting_with))))
 		if(!do_after(user, 3 SECONDS, interacting_with))
 			balloon_alert(user, LANG("obj.afa319fc", null))
-			user.visible_message(span_warning("[user] fails to scan [interacting_with]'s genetic makeup."))
+			user.visible_message(span_warning(LANG("obj.7e55a88c", list(user, interacting_with))))
 			return ITEM_INTERACT_BLOCKING
 		makeup_scan(interacting_with, user)
 		balloon_alert(user, LANG("obj.2c8f5042", null))
 		return ITEM_INTERACT_SUCCESS
 
-	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic makeup."), span_warning("[interacting_with] has no readable genetic makeup!"))
+	user.visible_message(span_notice(LANG("obj.a321b282", list(user, interacting_with))), span_warning(LANG("obj.9be3dc87", list(interacting_with))))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/attack_self(mob/user)

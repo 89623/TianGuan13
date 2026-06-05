@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(hivemind_users)
 	linked_mob.put_in_hands(linked_keyboard)
 	linked_keyboard.source_user = linked_mob
 
-	linked_mob.visible_message(span_notice("The [linked_keyboard] materializes in [linked_mob]'s hands."), span_notice("The [linked_keyboard] appears in your hands."))
+	linked_mob.visible_message(span_notice(LANG("datum.1e0f2099", list(linked_keyboard, linked_mob))), span_notice(LANG("datum.bf8a0a38", list(linked_keyboard))))
 	return TRUE
 
 /datum/action/innate/hivemind_config

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// An element which enables certain items to tap people on their knees to measure brain health
 /datum/element/kneejerk
 
@@ -37,8 +38,8 @@
 		return
 
 	user.do_attack_animation(target)
-	target.visible_message(span_warning("[user] gently taps [target]'s knee with [item]."), \
-		span_userdanger("[user] taps your knee with [item]."))
+	target.visible_message(span_warning(LANG("datum.a9b2ecce", list(user, target, item))), \
+		span_userdanger(LANG("datum.9acbe40d", list(user, item))))
 
 	if(target.stat == DEAD) //dead men have no reflexes!
 		return
@@ -50,17 +51,17 @@
 
 	if(target_brain_damage < BRAIN_DAMAGE_MILD) //a healthy brain produces a normal reaction
 		playsound(target, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
-		target.visible_message(span_danger("[target]'s leg kicks out sharply!"), \
-			span_danger("Your leg kicks out sharply!"))
+		target.visible_message(span_danger(LANG("datum.8c8d6499", list(target))), \
+			span_danger(LANG("datum.239ebc7e", null)))
 
 	else if(target_brain_damage < BRAIN_DAMAGE_SEVERE) //a mildly damaged brain produces a delayed reaction
 		playsound(target, 'sound/items/weapons/punchmiss.ogg', 15, TRUE, -1)
-		target.visible_message(span_danger("After a moment, [target]'s leg kicks out sharply!"), \
-			span_danger("After a moment, your leg kicks out sharply!"))
+		target.visible_message(span_danger(LANG("datum.b4c589e1", list(target))), \
+			span_danger(LANG("datum.50753496", null)))
 
 	else if(target_brain_damage < BRAIN_DAMAGE_DEATH) //a severely damaged brain produces a delayed + weaker reaction
 		playsound(target, 'sound/items/weapons/punchmiss.ogg', 5, TRUE, -1)
-		target.visible_message(span_danger("After a moment, [target]'s leg kicks out weakly!"), \
-			span_danger("After a moment, your leg kicks out weakly!"))
+		target.visible_message(span_danger(LANG("datum.244a9edc", list(target))), \
+			span_danger(LANG("datum.443cf2b2", null)))
 
 	return

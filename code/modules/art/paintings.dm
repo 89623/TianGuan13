@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 		user.transfer_item_to_turf(canvas, get_turf(src), silent = FALSE)
 		painting = canvas
 		canvas.layer = layer+0.1
-		user.visible_message(span_notice("[user] puts \the [canvas] on \the [src]."),span_notice("You place \the [canvas] on \the [src]."))
+		user.visible_message(span_notice(LANG("obj.dc77a240", list(user, canvas, src))),span_notice(LANG("obj.98e51b72", list(canvas, src))))
 		return ITEM_INTERACT_SUCCESS
 
 
@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	if(finalized || painting_metadata.loaded_from_json)
 		return
 	if(!in_range(src, user))
-		user.balloon_alert(user, "too far away!")
+		user.balloon_alert(user, LANG("obj.a462ee7c", null))
 		return
 	if(!try_rename(user))
 		return
@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 		return
 	painting_metadata.frame_type = result
 	var/obj/structure/sign/painting/our_frame = loc
-	our_frame.balloon_alert(user, "frame set to [result]")
+	our_frame.balloon_alert(user, LANG("obj.14b8a1b6", list(result)))
 	our_frame.update_appearance()
 
 /obj/item/canvas/proc/can_select_frame(mob/user)

@@ -76,8 +76,8 @@
 	if(. || !consequences)
 		return
 
-	rider.visible_message(span_warning("[rider] falls off of [living_parent]!"), \
-					span_warning("You fall off of [living_parent]!"))
+	rider.visible_message(span_warning(LANG("datum.73a87d59", list(rider, living_parent))), \
+					span_warning(LANG("datum.fc7fb0d4", list(living_parent))))
 	rider.Paralyze(1 SECONDS)
 	rider.Knockdown(4 SECONDS)
 	living_parent.unbuckle_mob(rider)
@@ -148,8 +148,8 @@
 	if(!iscyborg(movable_parent) && !isanimal_or_basicmob(movable_parent))
 		return
 	var/turf/target = get_edge_target_turf(movable_parent, movable_parent.dir)
-	rider.visible_message(span_warning("[rider] is thrown clear of [movable_parent]!"), \
-	span_warning("You're thrown clear of [movable_parent]!"))
+	rider.visible_message(span_warning(LANG("datum.65b13390", list(rider, movable_parent))), \
+	span_warning(LANG("datum.11241ed0", list(movable_parent))))
 	rider.throw_at(target, throw_range, throw_speed, movable_parent, gentle = gentle)
 
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
@@ -231,7 +231,7 @@
 		return
 	ridden.Shake(pixelshiftx = 1, pixelshifty = 0, duration = 1 SECONDS)
 	ridden.spin(spintime = 1 SECONDS, speed = 1)
-	ridden.balloon_alert(rider, "tries to shake you off!")
+	ridden.balloon_alert(rider, LANG("datum.2725ca5e", null))
 	new /datum/riding_minigame(ridden, rider)
 
 /datum/component/riding/creature/human/RegisterWithParent()
@@ -347,8 +347,8 @@
 	rider.Paralyze(1 SECONDS)
 	rider.Knockdown(4 SECONDS)
 	rider.visible_message(
-		span_warning("[seat] pushes [rider] off of [seat.p_them()]!"),
-		span_warning("[seat] pushes you off of [seat.p_them()]!"),
+		span_warning(LANG("datum.e1b18424", list(seat, rider, seat.p_them()))),
+		span_warning(LANG("datum.02caf09e", list(seat, seat.p_them()))),
 	)
 
 

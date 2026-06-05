@@ -236,15 +236,15 @@
 	var/mob/living/spy = usr
 	var/obj/item/held_thing = spy.get_active_held_item()
 	if(isnull(held_thing))
-		spy.balloon_alert(spy, "you need to hold something!")
+		spy.balloon_alert(spy, LANG("datum.06dce00b", null))
 		return
 
 	if(!is_type_in_list(held_thing, valid_types))
-		held_thing.balloon_alert(spy, "invalid item!")
+		held_thing.balloon_alert(spy, LANG("datum.2a5c32b1", null))
 		return
 
 	var/datum/antagonist/spy/spy_datum = target
 	spy_datum.create_spy_uplink(spy, held_thing)
-	held_thing.balloon_alert(spy, "uplink created")
+	held_thing.balloon_alert(spy, LANG("datum.8ea2b041", null))
 
 	qdel(src)

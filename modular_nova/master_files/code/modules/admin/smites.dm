@@ -33,13 +33,13 @@
 			shamed.dropItemToGround(worn_necky)
 		if(shamed.equip_to_slot_if_possible(thecone, ITEM_SLOT_NECK, qdel_on_fail = TRUE, disable_warning = TRUE, redraw_mob = TRUE))
 			smite_item_protection(thecone)
-			shamed.visible_message(span_warning("A Cone of Shame appears around [shamed]'s neck!"))
+			shamed.visible_message(span_warning(LANG("datum.e44fe85d", list(shamed))))
 		return
 	if(iscyborg(target))
 		var/mob/living/silicon/robot/borgy = target
 		borgy.place_on_head(thecone)
 		smite_item_protection(thecone)
-		borgy.visible_message(span_warning("A Cone of Shame appears around [borgy]'s neck!"))
+		borgy.visible_message(span_warning(LANG("datum.e44fe85d", list(borgy))))
 		return
 	qdel(thecone)
 
@@ -64,4 +64,4 @@
 		var/obj/item/clothing/new_item = new path
 		if(target.equip_to_slot_or_del(new_item, slot))
 			smite_item_protection(new_item)
-	shamed.visible_message(span_warning("A maid uniform appears on [shamed]!"))
+	shamed.visible_message(span_warning(LANG("datum.082b521b", list(shamed))))

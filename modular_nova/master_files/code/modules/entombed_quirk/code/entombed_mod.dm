@@ -103,11 +103,11 @@
 	if (!isnull(inventory))
 		src.atom_storage.remove_all()
 		to_chat(who, span_notice(LANG("obj.009139e7", null)))
-		who.balloon_alert(who, "emptied out MOD storage items!")
+		who.balloon_alert(who, LANG("obj.a0c52d16", null))
 		return TRUE
 
 	to_chat(who, span_warning(LANG("obj.a253e0ac", null)))
-	who.balloon_alert(who, "can't strip a fused MODsuit!")
+	who.balloon_alert(who, LANG("obj.6e9e5f7e", null))
 	return ..()
 
 /obj/item/mod/control/pre_equipped/entombed/retract(mob/user, obj/item/part, instant)
@@ -118,7 +118,7 @@
 		if (tomb_quirk && tomb_quirk.deploy_locked)
 			if (istype(part, /obj/item/clothing)) // make sure it's a modsuit piece and not a module, we retract those too
 				if (!istype(part, /obj/item/clothing/head/mod)) // they can only retract the helmet, them's the sticks
-					human_user.balloon_alert(human_user, "part is fused to you - can't retract!")
+					human_user.balloon_alert(human_user, LANG("obj.b852a53c", null))
 					playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 					return
 	return ..()
@@ -129,7 +129,7 @@
 		var/datum/quirk/equipping/entombed/tomb_quirk = human_user.get_quirk(/datum/quirk/equipping/entombed)
 		//if we're deploy_locked, just disable this functionality entirely
 		if (tomb_quirk && tomb_quirk.deploy_locked)
-			human_user.balloon_alert(human_user, "you can only retract your helmet, and only manually!")
+			human_user.balloon_alert(human_user, LANG("obj.789ceba3", null))
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return
 	return ..()

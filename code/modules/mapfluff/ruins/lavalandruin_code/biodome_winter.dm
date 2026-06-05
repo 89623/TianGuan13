@@ -42,7 +42,7 @@
 		var/obj/hit_object = hit_atom
 		var/success = hit_object.freeze()
 		if(!success && hit_object.resistance_flags & FREEZE_PROOF)
-			hit_object.visible_message(span_warning("[hit_object] is freeze-proof!"))
+			hit_object.visible_message(span_warning(LANG("obj.67339001", list(hit_object))))
 
 	else if(isliving(hit_atom))
 		var/mob/living/hit_mob = hit_atom

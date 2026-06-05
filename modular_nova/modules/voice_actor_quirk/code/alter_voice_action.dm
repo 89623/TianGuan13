@@ -107,7 +107,7 @@
 	else
 		set_primary_voice()
 		to_chat(owner, span_green(LANG("datum.0c37e040", null)))
-	owner.balloon_alert(owner, "voice changed")
+	owner.balloon_alert(owner, LANG("datum.658bbcbb", null))
 	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 ///Swaps to the Voice Actor quirk's secondary chat color, TTS voice, and blooper

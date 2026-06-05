@@ -60,7 +60,7 @@
 		return
 
 	if(user.is_holding(src))
-		user.visible_message(span_notice("[user] checks [user.p_their()] card."), span_notice("The card reads: [cardname]."))
+		user.visible_message(span_notice(LANG("obj.4609dced", list(user, user.p_their()))), span_notice(LANG("obj.950390d4", list(cardname))))
 		if(blank)
 			. += span_notice(LANG("obj.3d65578b", null))
 	else if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
@@ -103,7 +103,7 @@
 	return NONE
 
 /obj/item/toy/singlecard/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] an unlucky card!"))
+	user.visible_message(span_suicide(LANG("obj.efda23f0", list(user, user.p_their(), src, user.p_they(), user.p_have()))))
 	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE)
 	return BRUTELOSS
 

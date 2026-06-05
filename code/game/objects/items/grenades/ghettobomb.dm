@@ -270,7 +270,7 @@
 			return
 		if(!user.transferItemToLoc(assembly, src))
 			return
-		user.balloon_alert(user, "attached")
+		user.balloon_alert(user, LANG("obj.b0ad167d", null))
 
 		var/obj/item/grenade/iedcasing/pipebomb = new(drop_location())
 		for(var/atom/movable/item_inside as anything in contents)

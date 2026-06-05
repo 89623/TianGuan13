@@ -155,7 +155,7 @@
 	var/obj/structure/blob/shield/shield = locate(/obj/structure/blob/shield) in tile
 	if(!shield)
 		shield = create_special(BLOB_UPGRADE_STRONG_COST, /obj/structure/blob/shield, 0, FALSE, tile)
-		shield?.balloon_alert(src, "upgraded to [shield.name]!")
+		shield?.balloon_alert(src, LANG("mob.8908bb9e", list(shield.name)))
 		return FALSE
 
 	if(!can_buy(BLOB_UPGRADE_REFLECTOR_COST))
@@ -168,7 +168,7 @@
 
 	to_chat(src, span_warning(LANG("mob.6a3296a3", null)))
 	shield = shield.change_to(/obj/structure/blob/shield/reflective, src)
-	shield.balloon_alert(src, "upgraded to [shield.name]!")
+	shield.balloon_alert(src, LANG("mob.8908bb9e", list(shield.name)))
 
 /** Preliminary check before polling ghosts. */
 /mob/eye/blob/proc/create_blobbernaut()
@@ -270,7 +270,7 @@
 	if(blob.point_return)
 		add_points(blob.point_return)
 		to_chat(src, span_notice(LANG("mob.d6ab76c5", list(blob.point_return, blob))))
-		blob.balloon_alert(src, "+[blob.point_return] resource\s")
+		blob.balloon_alert(src, LANG("mob.e2ae8afb", list(blob.point_return)))
 
 	qdel(blob)
 

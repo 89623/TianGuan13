@@ -357,15 +357,15 @@
 
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_warning("Someone in [src] begins to wriggle!"), \
-		span_notice("You start wriggling, attempting to loosen [src]'s buckles... (this will take about [DisplayTimeText(breakout_time)].)"), \
-		span_hear("You hear straining cloth from [src]."))
+	user.visible_message(span_warning(LANG("obj.f7341b20", list(src))), \
+		span_notice(LANG("obj.ca864905", list(src, DisplayTimeText(breakout_time)))), \
+		span_hear(LANG("obj.e8a08630", list(src))))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || !sinched )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
-		user.visible_message(span_danger("[user] successfully broke out of [src]!"),
-							span_notice("You successfully break out of [src]!"))
+		user.visible_message(span_danger(LANG("obj.37696909", list(user, src))),
+							span_notice(LANG("obj.81c31f6b", list(src))))
 		if(istype(loc, /obj/machinery/disposal))
 			return ..()
 		bust_open()
@@ -397,15 +397,15 @@
 	if(!sinched)
 		for(var/mob/living/target in contents)
 			to_chat(target, span_userdanger("You feel the lining of [src] tighten around you! Soon, you won't be able to escape!"))
-		user.visible_message(span_notice("[user] begins sinching down the buckles on [src]."))
+		user.visible_message(span_notice(LANG("obj.ff620842", list(user, src))))
 		if(!(do_after(user,(sinch_time),target = src)))
 			return
 	sinched = !sinched
 	if(sinched)
 		playsound(loc, sinch_sound, 15, TRUE, -2)
-	user.visible_message(span_notice("[user] [sinched ? null : "un"]sinches [src]."),
-							span_notice("You [sinched ? null : "un"]sinch [src]."),
-							span_hear("You hear stretching followed by metal clicking from [src]."))
+	user.visible_message(span_notice(LANG("obj.486f285f", list(user, sinched ? null : "un", src))),
+							span_notice(LANG("obj.a96e20b3", list(sinched ? null : "un", src))),
+							span_hear(LANG("obj.63bd5c2d", list(src))))
 	user.log_message("[sinched ? "sinched":"unsinched"] secure environmental bag [src]", LOG_GAME)
 	update_appearance()
 
@@ -623,14 +623,14 @@
 	user.changeNext_move(6 SECONDS)
 	user.last_special = world.time + 6 SECONDS
 	user.visible_message(
-		span_warning("Something in [src] begins to wriggle!"),
-		span_notice("You start wriggling, attempting to climb out of [src]... (This will take about [DisplayTimeText(breakout_time)].)"),
-		span_hear("You hear straining cloth from [src]."),
+		span_warning(LANG("obj.96af6461", list(src))),
+		span_notice(LANG("obj.147319cc", list(src, DisplayTimeText(breakout_time)))),
+		span_hear(LANG("obj.e8a08630", list(src))),
 	)
 	if(do_after(user, breakout_time, src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(breakout_checks), user)))
 		user.visible_message(
-			span_danger("[user] climbs out of [src]!"),
-			span_notice("You successfully climb out of [src]!"),
+			span_danger(LANG("obj.dc5ea840", list(user, src))),
+			span_notice(LANG("obj.303818af", list(src))),
 		)
 		open(user, force = TRUE, special_effects = FALSE)
 
@@ -646,7 +646,7 @@
 	if(!(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION))
 		new /obj/effect/decal/cleanable/shreds(loc, name)
 		new /obj/item/stack/sheet/cloth(loc, 4)
-	loc.visible_message(span_warning("[src] unwinds into threads!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	loc.visible_message(span_warning(LANG("obj.f5ccae42", list(src))), vision_distance = COMBAT_MESSAGE_RANGE)
 	playsound(loc, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE, frequency = 0.5)
 	for(var/mob/living/left_behind in src)
 		left_behind.Knockdown(3 SECONDS)

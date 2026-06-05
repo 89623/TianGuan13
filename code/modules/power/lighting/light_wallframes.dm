@@ -56,9 +56,9 @@
 		return
 
 	playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
-	user.visible_message(span_notice("[user.name] attaches [src] to the floor."),
-		span_notice("You attach [src] to the floor."),
-		span_hear("You hear clicking."))
+	user.visible_message(span_notice(LANG("obj.930e8417", list(user.name, src))),
+		span_notice(LANG("obj.867aa3e9", list(src))),
+		span_hear(LANG("obj.dcc6c1b0", null)))
 
 	new /obj/structure/light_construct/floor(local_turf)
 	qdel(src)

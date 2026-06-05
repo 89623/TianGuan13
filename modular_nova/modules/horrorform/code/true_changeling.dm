@@ -190,17 +190,17 @@
 		return
 	var/mob/living/simple_animal/hostile/true_changeling/horrorform = owner
 	if(!horrorform.stored_changeling)
-		horrorform.balloon_alert(horrorform, "our only form!")
+		horrorform.balloon_alert(horrorform, LANG("datum.2911850e", null))
 		return FALSE
 	if(horrorform.stored_changeling.stat == DEAD)
-		horrorform.balloon_alert(horrorform, "body is dead!")
+		horrorform.balloon_alert(horrorform, LANG("datum.960f64f5", null))
 		return FALSE
 	if(world.time - horrorform.transformed_time < TRUE_CHANGELING_REFORM_THRESHOLD)
 		var/timeleft = (horrorform.transformed_time + TRUE_CHANGELING_REFORM_THRESHOLD) - world.time
-		horrorform.balloon_alert(horrorform, "wait [round(timeleft/600)+1] minutes!")
+		horrorform.balloon_alert(horrorform, LANG("datum.477205bd", list(round(timeleft/600)+1)))
 		return FALSE
-	horrorform.visible_message(span_warning("[horrorform] suddenly crunches and twists into a smaller form!"), \
-						span_danger("We return to our lesser form."))
+	horrorform.visible_message(span_warning(LANG("datum.52d94552", list(horrorform))), \
+						span_danger(LANG("datum.724348e9", null)))
 	horrorform.stored_changeling.loc = get_turf(horrorform)
 	horrorform.mind.transfer_to(horrorform.stored_changeling)
 	horrorform.stored_changeling.Stun(2 SECONDS)
@@ -221,7 +221,7 @@
 		return
 	var/mob/living/simple_animal/hostile/true_changeling/horrorform = owner
 	if(horrorform.devouring)
-		horrorform.balloon_alert(horrorform, "already eating!")
+		horrorform.balloon_alert(horrorform, LANG("datum.bb024e45", null))
 		return FALSE
 	var/list/potential_targets = list()
 	for(var/mob/living/carbon/human/victim in range(1, usr))
@@ -229,7 +229,7 @@
 			continue
 		potential_targets.Add(victim)
 	if(!length(potential_targets))
-		horrorform.balloon_alert(horrorform, "no carbons!")
+		horrorform.balloon_alert(horrorform, LANG("datum.683ebdd2", null))
 		return FALSE
 	var/mob/living/carbon/human/lunch
 	if(length(potential_targets) == 1)
@@ -239,19 +239,19 @@
 	if(!lunch && !ishuman(lunch))
 		return FALSE
 	if(lunch.get_brute_loss() + lunch.get_fire_loss() >= 200) //Overall physical damage, basically
-		horrorform.visible_message(span_warning("[lunch] provides no further nutrients for [horrorform]!"), \
-						span_danger("[lunch] has no more useful flesh for us to consume!!"))
+		horrorform.visible_message(span_warning(LANG("datum.43d50654", list(lunch, horrorform))), \
+						span_danger(LANG("datum.81583f28", list(lunch))))
 		return FALSE
 	horrorform.devouring = TRUE
-	horrorform.visible_message(span_warning("[horrorform] begins ripping apart and feasting on [lunch]!"), \
-					span_danger("We begin to feast upon [lunch]..."))
+	horrorform.visible_message(span_warning(LANG("datum.0c2809d4", list(horrorform, lunch))), \
+					span_danger(LANG("datum.f0d6616c", list(lunch))))
 	if(!do_after(usr, 5 SECONDS, lunch))
 		horrorform.devouring = FALSE
 		return FALSE
 	horrorform.devouring = FALSE
 	lunch.adjust_brute_loss(60)
-	horrorform.visible_message(span_warning("[horrorform] tears a chunk from [lunch]'s flesh!"), \
-					span_danger("We tear a chunk of flesh from [lunch] and devour it!"))
+	horrorform.visible_message(span_warning(LANG("datum.94d1f932", list(horrorform, lunch))), \
+					span_danger(LANG("datum.2ad7f95d", list(lunch))))
 	to_chat(lunch, span_userdanger(LANG("datum.24ee6241", list(horrorform))))
 	lunch.spawn_gibs()
 	var/dismembered = FALSE

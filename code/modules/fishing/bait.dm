@@ -36,10 +36,10 @@
 
 /obj/item/bait_can/proc/retrieve_bait(mob/user)
 	if(!uses_left)
-		user.balloon_alert(user, "empty")
+		user.balloon_alert(user, LANG("obj.6bdf3fe5", null))
 		return
 	if(!COOLDOWN_FINISHED(src, bait_removal_cooldown))
-		user.balloon_alert(user, "wait a bit")
+		user.balloon_alert(user, LANG("obj.5cf1376b", null))
 		return
 	COOLDOWN_START(src, bait_removal_cooldown, cooldown_time)
 	update_appearance()

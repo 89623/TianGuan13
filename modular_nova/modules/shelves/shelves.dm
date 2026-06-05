@@ -103,12 +103,12 @@
 /obj/structure/cargo_shelf/proc/unload(obj/structure/closet/crate/crate, mob/user, turf/unload_turf)
 	var/unloading_to_turf = istype(unload_turf)
 	if(unloading_to_turf && unload_turf.is_blocked_turf(exclude_mobs = TRUE)) // Shelf to shelf
-		unload_turf.balloon_alert(user, "no room!")
+		unload_turf.balloon_alert(user, LANG("obj.ad6c6384", null))
 		return FALSE
 	if(!do_after(user, use_delay, target = crate))
 		return FALSE
 	if(unloading_to_turf && unload_turf.is_blocked_turf(exclude_mobs = TRUE)) // make sure we still are able to put it here
-		unload_turf.balloon_alert(user, "no room!")
+		unload_turf.balloon_alert(user, LANG("obj.ad6c6384", null))
 		return FALSE
 	if(!locate(crate) in src)
 		return FALSE // If something has happened to the crate while we were waiting, abort!
@@ -264,8 +264,8 @@
 			return
 		var/obj/structure/cargo_shelf/rack = new /obj/structure/cargo_shelf(get_turf(src))
 		user.visible_message(
-			span_notice("[user] assembles \a [rack]."),
-			span_notice("You assemble \a [rack]."),
+			span_notice(LANG("obj.3dc1a1cd", list(user, rack))),
+			span_notice(LANG("obj.e671a056", list(rack))),
 		)
 		rack.add_fingerprint(user)
 		qdel(src)

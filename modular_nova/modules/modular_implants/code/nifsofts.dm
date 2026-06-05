@@ -93,16 +93,16 @@
 		return FALSE
 
 	if(installed_nif.broken)
-		installed_nif.balloon_alert(installed_nif.linked_mob, "your NIF is broken")
+		installed_nif.balloon_alert(installed_nif.linked_mob, LANG("datum.7e1fdd6b", null))
 		return FALSE
 
 	if(cooldown && on_cooldown)
-		installed_nif.balloon_alert(installed_nif.linked_mob, "[src.name] is currently on cooldown.")
+		installed_nif.balloon_alert(installed_nif.linked_mob, LANG("datum.c236a4b7", list(src.name)))
 		return FALSE
 
 	if(active)
 		active = FALSE
-		installed_nif.balloon_alert(installed_nif.linked_mob, "[src.name] is no longer running")
+		installed_nif.balloon_alert(installed_nif.linked_mob, LANG("datum.c552cb43", list(src.name)))
 		installed_nif.power_usage -= active_cost
 		return TRUE
 
@@ -110,7 +110,7 @@
 		return FALSE
 
 	if(active_mode)
-		installed_nif.balloon_alert(installed_nif.linked_mob, "[src.name] is now running")
+		installed_nif.balloon_alert(installed_nif.linked_mob, LANG("datum.23c755c9", list(src.name)))
 		installed_nif.power_usage += active_cost
 		active = TRUE
 

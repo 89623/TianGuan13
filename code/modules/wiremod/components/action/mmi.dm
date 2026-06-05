@@ -136,7 +136,7 @@
 	if(istype(item, /obj/item/mmi))
 		target_mmi = item
 		if(!target_mmi.brainmob)
-			shell.balloon_alert(user, "no consciousness detected!")
+			shell.balloon_alert(user, LANG("obj.dfbc0812", null))
 			return ITEM_INTERACT_FAILURE
 		new_occupant = target_mmi.brainmob
 	else if(istype(item, /obj/item/borg/upgrade/ai))
@@ -145,10 +145,10 @@
 		return
 	var/datum/component/shell/shell_comp = shell.GetComponent(/datum/component/shell)
 	if(shell_comp.locked)
-		shell.balloon_alert(user, "locked!")
+		shell.balloon_alert(user, LANG("obj.5d71bae2", null))
 		return ITEM_INTERACT_FAILURE
 	if(brain || boris)
-		shell.balloon_alert(user, "already has brain!")
+		shell.balloon_alert(user, LANG("obj.c6d97e37", null))
 		return ITEM_INTERACT_FAILURE
 	if(!user.transferItemToLoc(item, src))
 		return ITEM_INTERACT_FAILURE
@@ -228,7 +228,7 @@
 /obj/item/circuit_component/mmi/proc/do_ai_connect(mob/living/silicon/ai/user, atom/movable/shell)
 	if(occupant)
 		if(occupant != user)
-			shell.balloon_alert(user, "occupied!")
+			shell.balloon_alert(user, LANG("obj.e2478aef", null))
 		return
 	set_occupant(user)
 

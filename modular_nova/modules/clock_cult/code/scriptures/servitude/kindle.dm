@@ -36,8 +36,8 @@
 		hit_mob.add_overlay(forbearance)
 		addtimer(CALLBACK(hit_mob, TYPE_PROC_REF(/atom, cut_overlay), forbearance), 10 SECONDS)
 
-		hit_mob.visible_message(span_warning("[hit_mob] stares blankly, as a field of energy flows around them."), \
-									   span_userdanger("You feel a slight shock as a wave of energy flows past you."))
+		hit_mob.visible_message(span_warning(LANG("datum.958a7bbc", list(hit_mob))), \
+									   span_userdanger(LANG("datum.25702594", null)))
 
 		playsound(invoker, 'sound/effects/magic/mm_hit.ogg', 50, TRUE)
 		return TRUE
@@ -53,7 +53,7 @@
 		hit_mob.color = LIGHT_COLOR_BLOOD_MAGIC
 		animate(hit_mob, color = mob_color, time = 30 SECONDS)
 
-		hit_mob.say("Fwebar uloft'gib mirlig yro'fara!")
+		hit_mob.say(LANG("datum.e14bfb2c", null))
 
 		to_chat(invoker, span_warning(LANG("datum.bfed218f", list(hit_mob))))
 		to_chat(hit_mob, span_warning(LANG("datum.4856e25c", null)))

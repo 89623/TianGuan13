@@ -68,11 +68,11 @@
 
 	var/distance_ranged = get_dist(user, interacting_with)
 	if(distance_ranged > maximum_target_range)
-		user.balloon_alert(user, "out of range")
+		user.balloon_alert(user, LANG("obj.0fdcc754", null))
 		return ITEM_INTERACT_BLOCKING
 
 	target_range = distance_ranged
-	user.balloon_alert(user, "range set: [target_range]")
+	user.balloon_alert(user, LANG("obj.600585cb", list(target_range)))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/ballistic/automatic/sol_grenade_launcher/no_mag

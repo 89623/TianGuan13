@@ -50,10 +50,10 @@
 	new_spell.Grant(user)
 	user.log_message("learned the spell [action_name] ([new_spell])", LOG_ATTACK, color = "orange")
 	if(uses <= 0)
-		user.visible_message(span_warning("[src] glows dark for a second!"))
+		user.visible_message(span_warning(LANG("obj.bff10564", list(src))))
 
 /obj/item/book/granter/action/spell/recoil(mob/living/user)
-	user.visible_message(span_warning("[src] glows in a black light!"))
+	user.visible_message(span_warning(LANG("obj.67eebe91", list(src))))
 
 /// Simple granter that's replaced with a random spell granter on Initialize.
 /obj/item/book/granter/action/spell/random

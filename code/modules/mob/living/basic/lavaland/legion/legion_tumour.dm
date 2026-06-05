@@ -73,7 +73,7 @@
 		target.apply_status_effect(applied_status)
 
 		if (target != user)
-			target.visible_message(span_notice("[user] splatters [target] with [src]... Disgusting tendrils pull [target.p_their()] wounds shut!"))
+			target.visible_message(span_notice(LANG("obj.f7aabbe0", list(user, target, src, target.p_their()))))
 		else
 			to_chat(user, span_notice(LANG("obj.4ad3be5c", list(src))))
 		return TRUE
@@ -82,7 +82,7 @@
 		return FALSE
 
 	log_combat(user, target, "used a Legion Tumour on", src, "as they are in crit, this will turn them into a Legion.")
-	target.visible_message(span_boldwarning("[user] splatters [target] with [src]... and it springs into horrible life!"))
+	target.visible_message(span_boldwarning(LANG("obj.286b4571", list(user, target, src))))
 	var/mob/living/basic/mining/legion_brood/skull = new(target.loc)
 	skull.melee_attack(target)
 	return TRUE
@@ -147,7 +147,7 @@
 	if (QDELETED(src) || QDELETED(owner))
 		return
 	owner.log_message("has been turned into a Legion by their tumour.", LOG_VICTIM)
-	owner.visible_message(span_boldwarning("Black tendrils burst from [owner]'s flesh, covering them in amorphous flesh!"))
+	owner.visible_message(span_boldwarning(LANG("obj.cc95cfb2", list(owner))))
 	var/mob/living/basic/mining/legion/new_legion = new spawn_type(owner.loc)
 	new_legion.consume(owner)
 	qdel(src)

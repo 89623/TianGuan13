@@ -474,7 +474,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 	clicker.playsound_local(clicker, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE)
 
-	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
+	clicked_machine.audible_message(span_userdanger(LANG("datum.4aa7a19c", list(clicked_machine))))
 	addtimer(CALLBACK(src, PROC_REF(animate_machine), clicker, clicked_machine), 5 SECONDS) //kabeep!
 	unset_ranged_ability(clicker, span_danger("Sending override signal..."))
 	adjust_uses(-1) //adjust after we unset the active ability since we may run out of charges, thus deleting the ability
@@ -577,7 +577,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		build_all_button_icons()
 
-	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
+	clicked_machine.audible_message(span_userdanger(LANG("datum.4aa7a19c", list(clicked_machine))))
 	addtimer(CALLBACK(src, PROC_REF(detonate_machine), clicker, clicked_machine), 5 SECONDS) //kaboom!
 	unset_ranged_ability(clicker, span_danger("Overcharging machine..."))
 	return TRUE
@@ -1126,35 +1126,35 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 
 	if (!ai_clicker.can_see(clicked_on))
-		clicked_on.balloon_alert(ai_clicker, "can't see!")
+		clicked_on.balloon_alert(ai_clicker, LANG("datum.99dc0bd6", null))
 		return FALSE
 
 	if (ismachinery(clicked_on))
 		var/obj/machinery/clicked_machine = clicked_on
 		if (!clicked_machine.is_operational)
-			clicked_machine.balloon_alert(ai_clicker, "not operational!")
+			clicked_machine.balloon_alert(ai_clicker, LANG("datum.1dd04a29", null))
 			return FALSE
 
 	if (!(is_type_in_list(clicked_on, compatable_typepaths)))
-		clicked_on.balloon_alert(ai_clicker, "incompatable!")
+		clicked_on.balloon_alert(ai_clicker, LANG("datum.4b0e2a28", null))
 		return FALSE
 
 	if (istype(clicked_on, /obj/machinery/door/airlock)) // I HATE THIS CODE SO MUCHHH
 		var/obj/machinery/door/airlock/clicked_airlock = clicked_on
 		if (!clicked_airlock.canAIControl(ai_clicker))
-			clicked_airlock.balloon_alert(ai_clicker, "unable to interface!")
+			clicked_airlock.balloon_alert(ai_clicker, LANG("datum.0685f876", null))
 			return FALSE
 
 	if (istype(clicked_on, /obj/machinery/airalarm))
 		var/obj/machinery/airalarm/alarm = clicked_on
 		if (alarm.aidisabled)
-			alarm.balloon_alert(ai_clicker, "unable to interface!")
+			alarm.balloon_alert(ai_clicker, LANG("datum.0685f876", null))
 			return FALSE
 
 	if (istype(clicked_on, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/clicked_apc = clicked_on
 		if (clicked_apc.aidisabled)
-			clicked_apc.balloon_alert(ai_clicker, "unable to interface!")
+			clicked_apc.balloon_alert(ai_clicker, LANG("datum.0685f876", null))
 			return FALSE
 
 	if (!clicked_on.emag_act(ai_clicker))
@@ -1204,7 +1204,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/action/innate/ai/ranged/core_tilt/do_ability(mob/living/clicker, atom/clicked_on)
 
 	if (!COOLDOWN_FINISHED(src, time_til_next_tilt))
-		clicker.balloon_alert(clicker, "on cooldown!")
+		clicker.balloon_alert(clicker, LANG("datum.d4ae5d4d", null))
 		return FALSE
 
 	if (!isAI(clicker))
@@ -1219,7 +1219,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 
 	if (target == ai_clicker.loc)
-		target.balloon_alert(ai_clicker, "can't roll on yourself!")
+		target.balloon_alert(ai_clicker, LANG("datum.a61264ee", null))
 		return FALSE
 
 	var/picked_dir = get_dir(ai_clicker, target)
@@ -1305,21 +1305,21 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 
 	if(!isvendor(clicked_on))
-		clicked_on.balloon_alert(ai_clicker, "not a vendor!")
+		clicked_on.balloon_alert(ai_clicker, LANG("datum.a582c424", null))
 		return FALSE
 
 	var/obj/machinery/vending/clicked_vendor = clicked_on
 
 	if (clicked_vendor.tilted)
-		clicked_vendor.balloon_alert(ai_clicker, "already tilted!")
+		clicked_vendor.balloon_alert(ai_clicker, LANG("datum.4fe53e58", null))
 		return FALSE
 
 	if (!clicked_vendor.tiltable)
-		clicked_vendor.balloon_alert(ai_clicker, "cannot be tilted!")
+		clicked_vendor.balloon_alert(ai_clicker, LANG("datum.c2ad8271", null))
 		return FALSE
 
 	if (!clicked_vendor.is_operational)
-		clicked_vendor.balloon_alert(ai_clicker, "inoperable!")
+		clicked_vendor.balloon_alert(ai_clicker, LANG("datum.5cc584d9", null))
 		return FALSE
 
 	var/picked_dir_string = show_radial_menu(ai_clicker, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), clicker, clicked_vendor))
@@ -1333,7 +1333,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, time_to_tilt)
-	clicked_vendor.visible_message(span_warning("[clicked_vendor] starts falling over..."))
+	clicked_vendor.visible_message(span_warning(LANG("datum.4abd7a5b", list(clicked_vendor))))
 	clicked_vendor.balloon_alert_to_viewers("falling over...")
 	addtimer(CALLBACK(src, PROC_REF(do_vendor_tilt), clicked_vendor, target), time_to_tilt)
 

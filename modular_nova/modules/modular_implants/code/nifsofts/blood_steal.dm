@@ -108,8 +108,8 @@
 	// Similar to a normal punch, should we have a value of 0 for our lower force, we simply miss outright.
 	if(!lower_force)
 		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
-		defender.visible_message(span_warning("[attacker]'s crush misses [defender]!"), \
-			span_danger("You avoid [attacker]'s crush!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
+		defender.visible_message(span_warning(LANG("datum.a12205d1", list(attacker, defender))), \
+			span_danger(LANG("datum.db4abd6b", list(attacker))), span_hear(LANG("datum.b8189c1e", null)), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_warning(LANG("datum.426d14b5", list(defender))))
 		log_combat(attacker, defender, "attempted to hit", "crush")
 		return FALSE
@@ -120,9 +120,9 @@
 	playsound(defender, attack_sound, 25, TRUE, -1)
 
 	defender.visible_message(
-		span_danger("[attacker] crushed [defender]!"),
-		span_userdanger("You're crushed by [attacker]!"),
-		span_hear("You hear a sickening sound of metal hitting flesh!"),
+		span_danger(LANG("datum.42adf5cd", list(attacker, defender))),
+		span_userdanger(LANG("datum.74372ae1", list(attacker))),
+		span_hear(LANG("datum.d91738b7", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
@@ -180,9 +180,9 @@
 
 	attacker.do_attack_animation(defender)
 	defender.visible_message(
-		span_danger("[attacker] blasts [defender] back!"),
-		span_userdanger("You're blasted back by [attacker]!"),
-		span_hear("You hear a sickening sound of metal hitting flesh!"),
+		span_danger(LANG("datum.ed2e91e6", list(attacker, defender))),
+		span_userdanger(LANG("datum.ab02e6c5", list(attacker))),
+		span_hear(LANG("datum.d91738b7", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
@@ -242,14 +242,14 @@
 	if(isbodypart(affecting) && !IS_ROBOTIC_LIMB(affecting))
 		var/new_def_zone = affecting.body_zone
 		hitting_projectile.def_zone = new_def_zone
-		attacker.visible_message(span_warning("[attacker] attempts parrying [hitting_projectile] with [attacker.p_their()] bare hand... and cloves it asunder!"))
+		attacker.visible_message(span_warning(LANG("datum.1f8ec8b2", list(attacker, hitting_projectile, attacker.p_their()))))
 		COOLDOWN_START(src, parry_cooldown_timer, 5 SECONDS)
 		addtimer(CALLBACK(src, PROC_REF(parry_availability), attacker), 5 SECONDS)
 		attacker.projectile_hit(hitting_projectile, new_def_zone)
 		return COMPONENT_BULLET_ACTED
 
 	hitting_projectile.set_angle((hitting_projectile.angle + 180) % 360 + rand(-3, 3))
-	hitting_projectile.visible_message(span_warning("[attacker] expertly parries [hitting_projectile] with [attacker.p_their()] bare hand!"))
+	hitting_projectile.visible_message(span_warning(LANG("datum.0b95cb4e", list(attacker, hitting_projectile, attacker.p_their()))))
 	hitting_projectile.firer = attacker
 	hitting_projectile.speed *= 1.25
 	hitting_projectile.damage *= 1.25
@@ -268,7 +268,7 @@
 /// * attacker - The mob to notify about parry availability
 /datum/martial_art/blood_steal/proc/parry_availability(mob/living/attacker)
 	if(COOLDOWN_FINISHED(src, parry_cooldown_timer))
-		attacker.balloon_alert(holder, "parry refreshed!")
+		attacker.balloon_alert(holder, LANG("datum.29e44720", null))
 
 /// Displays help information about the Blood Steal martial art abilities
 /// This verb shows the user information about the Feedbacker and Knuckleblaster attacks,

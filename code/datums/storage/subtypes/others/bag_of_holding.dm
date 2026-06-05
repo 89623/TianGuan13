@@ -40,8 +40,8 @@
 /datum/storage/bag_of_holding/proc/create_rift(obj/item/inserted, mob/living/user)
 	var/turf/rift_loc = get_turf(parent)
 	user.visible_message(
-		span_userdanger("The Bluespace interfaces of the two devices catastrophically malfunction!"),
-		span_danger("The Bluespace interfaces of the two devices catastrophically malfunction!"),
+		span_userdanger(LANG("datum.e4acc002", null)),
+		span_danger(LANG("datum.e4acc002", null)),
 	)
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(rift_loc)].")

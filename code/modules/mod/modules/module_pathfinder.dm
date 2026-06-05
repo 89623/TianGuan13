@@ -70,7 +70,7 @@
 	if(target == user)
 		to_chat(user, span_notice(LANG("obj.00233369", list(implant))))
 	else
-		target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you with [implant]."))
+		target.visible_message(span_notice(LANG("obj.218aaa2d", list(user, target))), span_notice(LANG("obj.af336e9c", list(user, implant))))
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 
 /obj/item/mod/module/pathfinder/on_use(mob/activator)
@@ -127,7 +127,7 @@
 		if(atom_on_turf == recaller)
 			balloon_alert(recaller, LANG("obj.cb0eb67c", null))
 		else
-			recaller.balloon_alert(recaller, "suit is worn by somebody else!")
+			recaller.balloon_alert(recaller, LANG("obj.a5428869", null))
 		return FALSE
 
 	in_transit = TRUE
@@ -235,10 +235,10 @@
 /datum/action/item_action/mod_recall/do_effect(trigger_flags)
 	var/obj/item/implant/mod/implant = target
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
-		implant.balloon_alert(owner, "on cooldown!")
+		implant.balloon_alert(owner, LANG("datum.d4ae5d4d", null))
 		return
 	if(implant.module.recall(owner))
-		implant.balloon_alert(owner, "suit incoming...")
+		implant.balloon_alert(owner, LANG("datum.cfbd2b82", null))
 		COOLDOWN_START(src, recall_cooldown, 5 SECONDS)
 
 /// Special pod subtype we use just to make insertion check easy

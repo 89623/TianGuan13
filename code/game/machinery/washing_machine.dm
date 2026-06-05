@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 					balloon_alert(user, LANG("obj.e79ca7b4", null))
 					return
 
-				victim.visible_message(span_danger("[user] is trying to force [victim] into [src]!"))
+				victim.visible_message(span_danger(LANG("obj.7a0f23a6", list(user, victim, src))))
 				log_game("[key_name_and_tag(user)] is forcing [key_name_and_tag(victim)] into a washing machine")
 				if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(check_aggro_grab), user)))
 					return

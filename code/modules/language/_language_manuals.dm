@@ -35,19 +35,19 @@
 	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 
 	if(M.stat == DEAD)
-		M.visible_message(span_danger("[user] smacks [M]'s lifeless corpse with [src]."), span_userdanger("[user] smacks your lifeless corpse with [src]."), span_hear("You hear smacking."))
+		M.visible_message(span_danger(LANG("obj.d96b11d6", list(user, M, src))), span_userdanger(LANG("obj.25819aec", list(user, src))), span_hear(LANG("obj.e821c025", null)))
 	else if(M.has_language(language))
-		M.visible_message(span_danger("[user] beats [M] over the head with [src]!"), span_userdanger("[user] beats you over the head with [src]!"), span_hear("You hear smacking."))
+		M.visible_message(span_danger(LANG("obj.908ad4aa", list(user, M, src))), span_userdanger(LANG("obj.f3960582", list(user, src))), span_hear(LANG("obj.e821c025", null)))
 	else
-		M.visible_message(span_notice("[user] teaches [M] by beating [M.p_them()] over the head with [src]!"), span_boldnotice("As [user] hits you with [src], [flavour_text]."), span_hear("You hear smacking."))
+		M.visible_message(span_notice(LANG("obj.4936305e", list(user, M, M.p_them(), src))), span_boldnotice(LANG("obj.e1674db8", list(user, src, flavour_text))), span_hear(LANG("obj.e821c025", null)))
 		M.grant_language(language, source = LANGUAGE_MIND)
 		use_charge(user)
 
 /obj/item/language_manual/proc/use_charge(mob/user)
 	charges--
 	if(!charges)
-		user.visible_message(span_notice("The cover of [user]'s book start shifting and changing! It falls out of [user.p_their()] hands!"),
-							span_warning("The cover and contents of [src] start shifting and changing! It slips out of your hands!"))
+		user.visible_message(span_notice(LANG("obj.d3148291", list(user, user.p_their()))),
+							span_warning(LANG("obj.4d96de82", list(src))))
 		new /obj/item/book/manual/random(get_turf(src))
 		qdel(src)
 
@@ -104,7 +104,7 @@
 /obj/item/language_manual/dronespeak_manual/attack(mob/living/M, mob/living/user)
 	// If they are not drone or silicon, we don't want them to learn this language.
 	if(!(isdrone(M) || issilicon(M)))
-		M.visible_message(span_danger("[user] beats [M] over the head with [src]!"), span_userdanger("[user] beats you over the head with [src]!"), span_hear("You hear smacking."))
+		M.visible_message(span_danger(LANG("obj.908ad4aa", list(user, M, src))), span_userdanger(LANG("obj.f3960582", list(user, src))), span_hear(LANG("obj.e821c025", null)))
 		return
 
 	return ..()

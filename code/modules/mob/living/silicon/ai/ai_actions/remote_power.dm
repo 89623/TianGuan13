@@ -26,7 +26,7 @@
 		return FALSE
 
 	if(!isapc(clicked_on))
-		clicked_on.balloon_alert(ai_clicker, "not an APC!")
+		clicked_on.balloon_alert(ai_clicker, LANG("datum.dcf12c3d", null))
 		return FALSE
 
 	if(ai_clicker.battery - 50 <= 0)

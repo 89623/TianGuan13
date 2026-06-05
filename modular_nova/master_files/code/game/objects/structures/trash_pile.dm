@@ -57,7 +57,7 @@
 	// Human mob
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		human_user.visible_message("[user] searches through \the [src].", span_notice("You search through \the [src]."))
+		human_user.visible_message(LANG("obj.942cd352", list(user, src)), span_notice(LANG("obj.afc32f9f", list(src))))
 		// Do the searching
 		if(do_after(user, rand(4 SECONDS, 6 SECONDS), target = src))
 			if(src.loc) // Let's check if the pile still exists
@@ -94,8 +94,8 @@
 	return TRUE
 
 /obj/structure/trash_pile/proc/dive_in_pile(mob/user)
-	user.visible_message(span_warning("[user] starts diving into [src]."), \
-								span_notice("You start diving into [src]..."))
+	user.visible_message(span_warning(LANG("obj.625b9c58", list(user, src))), \
+								span_notice(LANG("obj.bb4c711c", list(src))))
 	var/adjusted_dive_time = hide_person_time
 	if(HAS_TRAIT(user, TRAIT_RESTRAINED)) // hiding takes twice as long when restrained.
 		adjusted_dive_time *= 2

@@ -94,7 +94,7 @@
 	if(anchored)
 		to_chat(user, span_warning(LANG("obj.2893b16b", list(src))))
 		return ITEM_INTERACT_SUCCESS
-	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
+	user.visible_message(span_notice(LANG("obj.87859cea", list(user, src))), span_notice(LANG("obj.344c0686", list(src))))
 	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice(LANG("obj.fc814806", list(src))))
@@ -108,24 +108,24 @@
 	if(!tool.tool_start_check(user, amount=1))
 		return ITEM_INTERACT_BLOCKING
 	if(atom_integrity < max_integrity)
-		user.visible_message(span_notice("[user] starts to repair [src]."),
-							span_notice("You begin repairing [src]..."),
-							span_hear("You hear welding."))
+		user.visible_message(span_notice(LANG("obj.7cfba828", list(user, src))),
+							span_notice(LANG("obj.93449ef4", list(src))),
+							span_hear(LANG("obj.1aa82fa3", null)))
 		if(tool.use_tool(src, user, 4 SECONDS, volume=40))
 			atom_integrity = max_integrity
-			user.visible_message(span_notice("[user] repairs [src]."), \
-								span_notice("You finish repairing [src]."))
+			user.visible_message(span_notice(LANG("obj.639f2d4f", list(user, src))), \
+								span_notice(LANG("obj.616dfcb1", list(src))))
 	else if(!anchored)
-		user.visible_message(span_notice("[user] starts to weld [src] to the floor."),
-							span_notice("You start to weld [src] to the floor..."),
-							span_hear("You hear welding."))
+		user.visible_message(span_notice(LANG("obj.9600c364", list(user, src))),
+							span_notice(LANG("obj.7765e0fa", list(src))),
+							span_hear(LANG("obj.1aa82fa3", null)))
 		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
 			set_anchored(TRUE)
 			to_chat(user, span_notice(LANG("obj.46f0194b", list(src))))
 	else
-		user.visible_message(span_notice("[user] starts to cut [src] free from the floor."),
-							span_notice("You start to cut [src] free from the floor..."),
-							span_hear("You hear welding."))
+		user.visible_message(span_notice(LANG("obj.078cc3d3", list(user, src))),
+							span_notice(LANG("obj.41ed57fe", list(src))),
+							span_hear(LANG("obj.1aa82fa3", null)))
 		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
 			set_anchored(FALSE)
 			to_chat(user, span_notice(LANG("obj.6a908a91", list(src))))
@@ -290,10 +290,10 @@
 
 /obj/structure/reflector/ui_interact(mob/user, datum/tgui/ui)
 	if(!finished)
-		user.balloon_alert(user, "nothing to rotate!")
+		user.balloon_alert(user, LANG("obj.dead6374", null))
 		return
 	if(!can_rotate)
-		user.balloon_alert(user, "can't rotate!")
+		user.balloon_alert(user, LANG("obj.e8f6efb5", null))
 		ui?.close()
 		return
 	ui = SStgui.try_update_ui(user, src, ui)

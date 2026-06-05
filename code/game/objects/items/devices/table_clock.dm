@@ -42,9 +42,9 @@
 		return
 	if(break_clock(break_sound = 'sound/effects/magic/clockwork/ark_activation.ogg'))
 		user.visible_message(
-			span_warning("[user] smashes \the [src] so hard it stops breaking!"),
-			span_bolddanger("I can't stand this stupid machine anymore! Shut up already!"),
-			span_notice("You hear repeated smashing!"),
+			span_warning(LANG("obj.9269ffbf", list(user, src))),
+			span_bolddanger(LANG("obj.d00b3664", null)),
+			span_notice(LANG("obj.ed8c165e", null)),
 		)
 
 /obj/item/table_clock/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle, quickstart, throw_type_path = /datum/thrownthing)
@@ -59,12 +59,12 @@
 		to_chat(user, span_warning(LANG("obj.d7466fc2", null)))
 		return
 	if(times_broken > MAX_CLOCK_REPAIRS)
-		user.balloon_alert(user, "clock unrepairable!")
+		user.balloon_alert(user, LANG("obj.414324aa", null))
 		return
-	user.balloon_alert(user, "fixing clock...")
+	user.balloon_alert(user, LANG("obj.6007692b", null))
 	if(!do_after(user, 10 SECONDS, src))
 		return
-	user.balloon_alert(user, "clock repaired!")
+	user.balloon_alert(user, LANG("obj.c296b9e5", null))
 	broken = FALSE
 	soundloop.start()
 	update_appearance(UPDATE_ICON)

@@ -511,9 +511,9 @@
 		icon = existing_equip.icon
 		icon_state = existing_equip.icon_state
 		qdel(existing_equip)
-		user.visible_message(span_notice("[user] hollows out [src] and puts something in."), span_notice("You attach the concealed weapon bay to [mech] within the shell of [src]."))
+		user.visible_message(span_notice(LANG("obj.848b6078", list(user, src))), span_notice(LANG("obj.9dfc6221", list(mech, src))))
 	else
-		user.visible_message(span_notice("[user] attaches [src] to [mech]."), span_notice("You attach [src] to [mech]."))
+		user.visible_message(span_notice(LANG("obj.c24be4ca", list(user, src, mech))), span_notice(LANG("obj.c1fbc99d", list(src, mech))))
 	attach(mech, attach_right)
 	mech.mech_type |= EXOSUIT_MODULE_CONCEALED_WEP_BAY
 	return TRUE

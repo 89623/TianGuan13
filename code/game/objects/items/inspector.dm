@@ -69,8 +69,8 @@
 /obj/item/inspector/item_ctrl_click(mob/user)
 	if(!cell_cover_open || !cell)
 		return CLICK_ACTION_BLOCKING
-	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
-		span_notice("You remove [cell]."))
+	user.visible_message(span_notice(LANG("obj.ea367116", list(user, cell, src))), \
+		span_notice(LANG("obj.1973523e", list(cell))))
 	cell.add_fingerprint(user)
 	user.put_in_hands(cell)
 	cell = null

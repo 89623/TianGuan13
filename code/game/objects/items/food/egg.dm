@@ -127,7 +127,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 
 	var/obj/machinery/griddle/hit_griddle = interacting_with
 	if(length(hit_griddle.griddled_objects) >= hit_griddle.max_items)
-		interacting_with.balloon_alert(user, "no room!")
+		interacting_with.balloon_alert(user, LANG("obj.ad6c6384", null))
 		return ITEM_INTERACT_BLOCKING
 	var/atom/broken_egg = new /obj/item/food/rawegg(interacting_with.loc)
 	if(LAZYACCESS(modifiers, ICON_X))
@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	reagents.trans_to(broken_egg, reagents.total_volume, copy_only = TRUE)
 
 	hit_griddle.AddToGrill(broken_egg, user)
-	interacting_with.balloon_alert(user, "cracks [src] open")
+	interacting_with.balloon_alert(user, LANG("obj.da470110", list(src)))
 
 	qdel(src)
 	return ITEM_INTERACT_BLOCKING
@@ -291,8 +291,8 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 			to_chat(user, span_warning(LANG("obj.f0081b30", null)))
 		else
 			fork.icon_state = "forkloaded"
-			user.visible_message(span_notice("[user] takes a piece of omelette with [user.p_their()] fork!"), \
-				span_notice("You take a piece of omelette with your fork."))
+			user.visible_message(span_notice(LANG("obj.20bb5f72", list(user, user.p_their()))), \
+				span_notice(LANG("obj.d2bce3d3", null)))
 
 			var/datum/reagent/reagent = pick(reagents.reagent_list)
 			reagents.remove_reagent(reagent.type, 1)
@@ -376,7 +376,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 
 	var/obj/machinery/griddle/hit_griddle = interacting_with
 	if(length(hit_griddle.griddled_objects) >= hit_griddle.max_items)
-		interacting_with.balloon_alert(user, "no room!")
+		interacting_with.balloon_alert(user, LANG("obj.ad6c6384", null))
 		return ITEM_INTERACT_BLOCKING
 	var/atom/broken_egg = new /obj/item/food/rawegg/spore(interacting_with.loc)
 	if(LAZYACCESS(modifiers, ICON_X))
@@ -387,7 +387,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	reagents.trans_to(broken_egg, reagents.total_volume, copy_only = TRUE)
 
 	hit_griddle.AddToGrill(broken_egg, user)
-	interacting_with.balloon_alert(user, "cracks [src] open")
+	interacting_with.balloon_alert(user, LANG("obj.da470110", list(src)))
 
 	qdel(src)
 	return ITEM_INTERACT_BLOCKING

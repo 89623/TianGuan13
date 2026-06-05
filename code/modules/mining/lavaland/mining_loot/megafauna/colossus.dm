@@ -24,18 +24,18 @@
 		return FALSE
 	if(world.time < cords.next_command)
 		if (feedback)
-			owner.balloon_alert(owner, "wait [DisplayTimeText(cords.next_command - world.time)]!")
+			owner.balloon_alert(owner, LANG("datum.3eb6e0ba", list(DisplayTimeText(cords.next_command - world.time))))
 		return FALSE
 	if(isliving(owner))
 		var/mob/living/living = owner
 		if(!living.can_speak())
 			if (feedback)
-				owner.balloon_alert(owner, "can't speak!")
+				owner.balloon_alert(owner, LANG("datum.b9e9408a", null))
 			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
 			if (feedback)
-				owner.balloon_alert(owner, "unconscious!")
+				owner.balloon_alert(owner, LANG("datum.dc8b5a42", null))
 			return FALSE
 	return TRUE
 
@@ -45,7 +45,7 @@
 		return FALSE
 	if(QDELETED(src) || QDELETED(owner))
 		return FALSE
-	owner.say(".x[command]")
+	owner.say(LANG("datum.4744c02d", list(command)))
 	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/can_speak_with()

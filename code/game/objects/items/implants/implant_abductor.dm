@@ -15,7 +15,7 @@
 		return
 
 	if(isnull(home) && !link_pad())
-		imp_in.balloon_alert(imp_in, "no teleport pads detected!")
+		imp_in.balloon_alert(imp_in, LANG("obj.060a0eb1", null))
 		return
 
 	home.Retrieve(imp_in)

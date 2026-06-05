@@ -356,7 +356,7 @@
 	if(!value)
 		status_report += "Nothing"
 
-	pad.visible_message(span_notice("[pad] activates!"))
+	pad.visible_message(span_notice(LANG("obj.f40f5858", list(pad))))
 	pad.finish_sending()
 	sending = FALSE
 
@@ -392,17 +392,17 @@
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	if(!pad)
 		status_report = "No pad detected. Build or link a pad."
-		pad.audible_message(span_notice("[pad] beeps."))
+		pad.audible_message(span_notice(LANG("obj.40fc0359", list(pad))))
 		return
 	if(pad?.panel_open)
 		status_report = "Please screwdrive pad closed to send. "
-		pad.audible_message(span_notice("[pad] beeps."))
+		pad.audible_message(span_notice(LANG("obj.40fc0359", list(pad))))
 		return
 	if(sending)
 		return
 	sending = TRUE
 	status_report = "Sending... "
-	pad.visible_message(span_notice("[pad] starts charging up."))
+	pad.visible_message(span_notice(LANG("obj.50bf02a4", list(pad))))
 	pad.set_is_sending(TRUE)
 	sending_timer = addtimer(CALLBACK(src, PROC_REF(send), check_global, user), warmup_time, TIMER_STOPPABLE)
 	if(load_holding_facility)

@@ -111,7 +111,7 @@
 	if(!isfloorturf(loc_turf))
 		to_chat(user, span_warning(LANG("obj.de34c64e", list(src))))
 		return ITEM_INTERACT_SUCCESS
-	user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
+	user.visible_message(span_notice(LANG("obj.7015292b", list(user))), span_notice(LANG("obj.6bcc8576", null)))
 	ChangeToWall()
 	return ITEM_INTERACT_SUCCESS
 
@@ -129,7 +129,7 @@
 	return
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
-	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))
+	user.visible_message(span_notice(LANG("obj.53c21018", list(user))), span_notice(LANG("obj.f2e26fd8", null)))
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else

@@ -259,7 +259,7 @@
 			)
 				return ITEM_INTERACT_BLOCKING
 			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
-		user.visible_message(span_notice("[user.name] starts adding cables to [src]."))
+		user.visible_message(span_notice(LANG("obj.0a08c985", list(user.name, src))))
 		balloon_alert(user, LANG("obj.a59792f9", null))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 
@@ -275,7 +275,7 @@
 			do_sparks(5, TRUE, src)
 			return ITEM_INTERACT_BLOCKING
 		cable.use(10)
-		user.visible_message(span_notice("[user.name] adds cables to [src]."))
+		user.visible_message(span_notice(LANG("obj.bd55397c", list(user.name, src))))
 		balloon_alert(user, LANG("obj.e501673b", null))
 
 		//build the terminal and link it to the network

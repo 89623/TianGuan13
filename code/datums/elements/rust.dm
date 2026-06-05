@@ -59,11 +59,11 @@
 			if(!item.tool_start_check(user, amount=1))
 				return
 
-			user.balloon_alert(user, "burning off rust...")
+			user.balloon_alert(user, LANG("datum.b78f59e6", null))
 
 			if(!item.use_tool(source, user, 5 SECONDS))
 				return
-			user.balloon_alert(user, "burned off rust")
+			user.balloon_alert(user, LANG("datum.dc2bae26", null))
 			Detach(source)
 			return
 
@@ -71,10 +71,10 @@
 		if(TOOL_RUSTSCRAPER)
 			if(!item.tool_start_check(user))
 				return
-			user.balloon_alert(user, "scraping off rust...")
+			user.balloon_alert(user, LANG("datum.6191683f", null))
 			if(!item.use_tool(source, user, 2 SECONDS))
 				return
-			user.balloon_alert(user, "scraped off rust")
+			user.balloon_alert(user, LANG("datum.1d4849bb", null))
 			Detach(source)
 			return
 
@@ -91,7 +91,7 @@
 /datum/element/rust/proc/on_interaction(datum/source, mob/user, obj/item/tool, modifiers)
 	SIGNAL_HANDLER
 	if(istype(tool, /obj/item/stack/tile) || istype(tool, /obj/item/stack/rods))
-		user.balloon_alert(user, "floor too rusted!")
+		user.balloon_alert(user, LANG("datum.6f21e441", null))
 		return ITEM_INTERACT_BLOCKING
 
 /// For rust applied by heretics

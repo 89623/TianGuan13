@@ -461,8 +461,8 @@
 		return ..()
 	if(tool.tool_behaviour == TOOL_SCREWDRIVER) //If it's a screwdriver open it.
 		tool.play_tool_sound(src, 75)
-		user.visible_message(span_notice("[user.name] opens [src]'s casing."), \
-			span_notice("You open [src]'s casing."), span_hear("You hear a noise."))
+		user.visible_message(span_notice(LANG("obj.4f36580f", list(user.name, src))), \
+			span_notice(LANG("obj.7e79dc6e", list(src))), span_hear(LANG("obj.02c5e764", null)))
 		deconstruct(disassembled = TRUE)
 		return
 
@@ -646,7 +646,7 @@
 			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
 			if(stomach.drain_time > world.time)
 				return
-			user.visible_message(span_notice("[user] clamps their hand around the [fitting], electricity jumping around inside!")) //NOVA EDIT CHANGE - Ethereal Rework 2024 - ORIGINALl: to_chat(user, span_notice("You start channeling some power through the [fitting] into your body."))
+			user.visible_message(span_notice(LANG("obj.2d5edb14", list(user, fitting)))) //NOVA EDIT CHANGE - Ethereal Rework 2024 - ORIGINALl: to_chat(user, span_notice("You start channeling some power through the [fitting] into your body."))
 			to_chat(user, span_purple(LANG("obj.55169163", list(fitting)))) // NOVA EDIT ADDITION - Ethereal Rework 2024
 			stomach.drain_time = world.time + LIGHT_DRAIN_TIME
 			while(do_after(user, LIGHT_DRAIN_TIME, target = src))
@@ -656,7 +656,7 @@
 					stomach.adjust_charge(LIGHT_POWER_GAIN)
 				else
 					to_chat(user, span_warning(LANG("obj.97c3ba9a", list(fitting))))
-					user.visible_message(span_notice("[user] tries to draw more power from the [fitting], but the cell seems dead!")) //NOVA EDIT ADDITION - Ethereal Rework 2024
+					user.visible_message(span_notice(LANG("obj.9f2c9f13", list(user, fitting)))) //NOVA EDIT ADDITION - Ethereal Rework 2024
 			return
 
 		if(user.gloves)

@@ -43,7 +43,7 @@
 	SIGNAL_HANDLER
 
 	if(safety_currently_on)
-		user.balloon_alert(user, "safety on!")
+		user.balloon_alert(user, LANG("datum.6860930d", null))
 		return COMPONENT_CANCEL_GUN_FIRE
 
 /// Calls toggle_safeties if the action type for doing so is used
@@ -63,8 +63,8 @@
 
 	playsound(parent, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	user.visible_message(
-		span_notice("[user] toggles [parent]'s safety [safety_currently_on ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"]."),
-		span_notice("You toggle [parent]'s safety [safety_currently_on ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"].")
+		span_notice(LANG("datum.ed1c26f1", list(user, parent, safety_currently_on ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>"))),
+		span_notice(LANG("datum.19865f2b", list(parent, safety_currently_on ? "<font color='#00ff15'>ON</font>" : "<font color='#ff0000'>OFF</font>")))
 	)
 
 	SEND_SIGNAL(parent, COMSIG_GUN_SAFETY_TOGGLED)

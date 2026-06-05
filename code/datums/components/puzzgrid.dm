@@ -146,14 +146,14 @@
 /datum/component/puzzgrid/proc/out_of_lives()
 	var/atom/movable/movable_parent = parent
 	if (istype(movable_parent))
-		movable_parent.say("Ran out of lives!", forced = "puzzgrid component")
+		movable_parent.say(LANG("datum.6f4ceab6", null), forced = "puzzgrid component")
 
 	fail()
 
 /datum/component/puzzgrid/proc/out_of_time()
 	var/atom/movable/movable_parent = parent
 	if (istype(movable_parent))
-		movable_parent.say("Ran out of time!", forced = "puzzgrid component")
+		movable_parent.say(LANG("datum.55ce74a6", null), forced = "puzzgrid component")
 
 	fail()
 

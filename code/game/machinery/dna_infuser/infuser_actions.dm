@@ -47,8 +47,8 @@
 
 	var/modifiers = params2list(params)
 	clicker.visible_message(
-		span_danger("[clicker] spits ink!"),
-		span_bold("You spit ink."),
+		span_danger(LANG("datum.57e3b0cc", list(clicker))),
+		span_bold(LANG("datum.ba23fa18", null)),
 	)
 	var/obj/projectile/ink_spit/ink = new /obj/projectile/ink_spit(clicker.loc)
 	ink.aim_projectile(target, clicker, modifiers)

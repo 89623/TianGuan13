@@ -143,9 +143,9 @@
 /obj/item/food/canned/envirochow/proc/apply_buff(mob/living/simple_animal/hungry_pet, mob/living/dog_mom)
 	hungry_pet.apply_status_effect(/datum/status_effect/limited_buff/health_buff) //the status effect keeps track of the stacks
 	hungry_pet.visible_message(
-		span_notice("[hungry_pet] chows down on [src]."),
-		span_nicegreen("You chow down on [src]."),
-		span_notice("You hear sloppy eating noises."))
+		span_notice(LANG("obj.57beace5", list(hungry_pet, src))),
+		span_nicegreen(LANG("obj.5db7a36f", list(src))),
+		span_notice(LANG("obj.055568ca", null)))
 	SEND_SIGNAL(src, COMSIG_FOOD_CONSUMED, hungry_pet, dog_mom ? dog_mom : hungry_pet) //If there is no dog mom, we assume the pet fed itself.
 	playsound(loc, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)
 	qdel(src)
@@ -173,7 +173,7 @@
 	if(can_splat_on)
 		victim.adjust_temp_blindness_up_to(2.5 SECONDS, 3 SECONDS)
 		victim.adjust_confusion_up_to(2.5 SECONDS, 3 SECONDS)
-	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
+	victim.visible_message(span_warning(LANG("obj.435f3e65", list(victim, src))), span_userdanger(LANG("obj.3659c69f", list(src))))
 	playsound(victim, SFX_DESECRATION, 50, TRUE)
 
 /obj/item/food/canned/chap

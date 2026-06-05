@@ -164,9 +164,9 @@
 			source.Knockdown(0.5 SECONDS)
 			terror_buildup += HUG_TERROR_AMOUNT
 			source.visible_message(
-				span_warning("[source] recoils in fear as [hugger] waves [hugger.p_their()] arms and shrieks at [source.p_them()]!"),
-				span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"),
-				span_hear("You hear someone shriek in fear. How embarassing!"),
+				span_warning(LANG("datum.8d88e3d8", list(source, hugger, hugger.p_their(), source.p_them()))),
+				span_boldwarning(LANG("datum.a4e9fc9a", null)),
+				span_hear(LANG("datum.ca3e82f1", null)),
 				)
 			return COMPONENT_BLOCK_MISC_HELP
 
@@ -177,17 +177,17 @@
 	if (hug_buildup > 0)
 		terror_buildup += hug_buildup
 		source.visible_message(
-			span_warning("[source] recoils in fear as [hugger] attempts to hug [source.p_them()]!"),
-			span_boldwarning("You recoil in terror as [hugger] attempts to hug you!"),
-			span_hear("You hear someone shriek in fear. How embarassing!"),
+			span_warning(LANG("datum.3d251bff", list(source, hugger, source.p_them()))),
+			span_boldwarning(LANG("datum.a07b5488", list(hugger))),
+			span_hear(LANG("datum.ca3e82f1", null)),
 			)
 		return COMPONENT_BLOCK_MISC_HELP
 
 	terror_buildup -= HUG_TERROR_AMOUNT
 	source.visible_message(
-		span_notice("[source] seems to relax as [hugger] gives [source.p_them()] a comforting hug."),
-		span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
-		span_hear("You hear shuffling and a sigh of relief."),
+		span_notice(LANG("datum.74f8d4ef", list(source, hugger, source.p_them()))),
+		span_nicegreen(LANG("datum.b8be0ae7", list(hugger))),
+		span_hear(LANG("datum.5197d49c", null)),
 	)
 
 /// Remove all terror buildup when we become fearless

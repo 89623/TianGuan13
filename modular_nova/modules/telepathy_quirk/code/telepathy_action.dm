@@ -24,17 +24,17 @@
 
 	if (!isliving(cast_on))
 		to_chat(owner, span_warning(LANG("datum.86d94ab7", null)))
-		owner.balloon_alert(owner, "not a thing with thoughts!")
+		owner.balloon_alert(owner, LANG("datum.54c4ac35", null))
 		return FALSE
 
 	var/mob/living/living_target = cast_on
 	if (living_target.stat == DEAD)
 		to_chat(owner, span_warning(LANG("datum.d4f4d012", null)))
-		owner.balloon_alert(owner, "can't transmit to the dead!")
+		owner.balloon_alert(owner, LANG("datum.db17d585", null))
 		return FALSE
 
 	if (get_dist(living_target, owner) > cast_range)
-		owner.balloon_alert(owner, "too far away!")
+		owner.balloon_alert(owner, LANG("datum.a462ee7c", null))
 		return FALSE
 
 	return TRUE
@@ -49,7 +49,7 @@
 		return . | SPELL_CANCEL_CAST
 
 	if(get_dist(cast_on, owner) > cast_range)
-		owner.balloon_alert(owner, "they're too far!")
+		owner.balloon_alert(owner, LANG("datum.d000a673", null))
 		return . | SPELL_CANCEL_CAST
 
 	if(!message || length(message) == 0)
@@ -62,10 +62,10 @@
 
 		if(isnull(last_target))
 			last_target_ref = null
-			owner.balloon_alert(owner, "last target is not available!")
+			owner.balloon_alert(owner, LANG("datum.15c94c57", null))
 			return
 		else if(get_dist(last_target, owner) > cast_range)
-			owner.balloon_alert(owner, "[last_target] is too far away!")
+			owner.balloon_alert(owner, LANG("datum.d8fecc16", list(last_target)))
 			return
 
 		blocked = TRUE
@@ -84,7 +84,7 @@
 /datum/action/cooldown/spell/pointed/telepathy/cast(mob/living/cast_on)
 	. = ..()
 	owner.visible_message(
-		span_warning("[owner]'s attention locks onto [cast_on]."),
+		span_warning(LANG("datum.f7ffc2f3", list(owner, cast_on))),
 		ignored_mobs = owner,
 	)
 	send_thought(owner, cast_on, message)
@@ -112,7 +112,7 @@
 		if(target.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 			target.create_chat_message(target, target.get_selected_language(), message, list("italics")) // it appears over them since they hear it in their head
 	else
-		owner.balloon_alert(owner, "something blocks your thoughts!")
+		owner.balloon_alert(owner, LANG("datum.072288c9", null))
 		to_chat(owner, span_warning(LANG("datum.37192448", null)))
 		return
 

@@ -14,9 +14,9 @@
 			if(drone.health >= drone.maxHealth)
 				to_chat(drone, span_warning(LANG("mob.d6154b77", null)))
 				return
-			drone.visible_message(span_notice("[drone] begins to cannibalize parts from [src]."), span_notice("You begin to cannibalize parts from [src]..."))
+			drone.visible_message(span_notice(LANG("mob.8c80d390", list(drone, src))), span_notice(LANG("mob.74e0be9e", list(src))))
 			if(do_after(drone, 6 SECONDS, 0, target = src))
-				drone.visible_message(span_notice("[drone] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
+				drone.visible_message(span_notice(LANG("mob.64937659", list(drone, src))), span_notice(LANG("mob.06a78d09", list(src))))
 				drone.adjust_brute_loss(-src.maxHealth)
 				new /obj/effect/decal/cleanable/blood/splatter/oil(get_turf(src))
 				ghostize(can_reenter_corpse = FALSE)
@@ -67,10 +67,10 @@
 
 		to_chat(user, span_warning(LANG("mob.395d3f48", list(pick(faux_gadgets), src, pick(faux_problems)))))
 		return
-	user.visible_message(span_notice("[user] begins to reactivate [src]."), span_notice("You begin to reactivate [src]..."))
+	user.visible_message(span_notice(LANG("mob.54283747", list(user, src))), span_notice(LANG("mob.69f146bf", list(src))))
 	if(do_after(user, 3 SECONDS, 1, target = src))
 		revive(HEAL_ALL)
-		user.visible_message(span_notice("[user] reactivates [src]!"), span_notice("You reactivate [src]."))
+		user.visible_message(span_notice(LANG("mob.687f7322", list(user, src))), span_notice(LANG("mob.62d7022f", list(src))))
 		alert_drones(DRONE_NET_CONNECT)
 		if(G)
 			to_chat(G, span_ghostalert(LANG("mob.7be24552", list(name, user))))
@@ -81,9 +81,9 @@
 /mob/living/basic/drone/screwdriver_act(mob/living/user, obj/item/tool)
 	if(stat == DEAD)
 		if(isdrone(user))
-			user.balloon_alert(user, "reactivate instead!")
+			user.balloon_alert(user, LANG("mob.86c53db9", null))
 		else
-			user.balloon_alert(user, "can't fix!")
+			user.balloon_alert(user, LANG("mob.e376d250", null))
 		return FALSE
 	if(health >= maxHealth)
 		to_chat(user, span_warning(LANG("mob.aec17137", list(src))))
@@ -103,13 +103,13 @@
 	if(user == src)
 		return FALSE
 	user.visible_message(
-		span_notice("[user] starts resetting [src]..."),
-		span_notice("You press down on [src]'s factory reset control...")
+		span_notice(LANG("mob.5db860fd", list(user, src))),
+		span_notice(LANG("mob.011c5d4e", list(src)))
 		)
 	if(tool.use_tool(src, user, 5 SECONDS, volume=50))
 		user.visible_message(
-			span_notice("[user] resets [src]!"),
-			span_notice("You reset [src]'s directives to factory defaults!")
+			span_notice(LANG("mob.62700522", list(user, src))),
+			span_notice(LANG("mob.660bddb2", list(src)))
 			)
 		update_drone_hack(FALSE)
 	return ITEM_INTERACT_SUCCESS

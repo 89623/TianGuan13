@@ -39,9 +39,9 @@
 		to_chat(user, span_danger(LANG("obj.8d0a0182", list(to_be_leashed))))
 		return
 	/// Actually start the leashing part here
-	to_be_leashed.visible_message(span_warning("[user] raises the [src] to [to_be_leashed]'s neck!"),\
-				span_userdanger("[user] starts to bring the [src] to your neck!"),\
-				span_hear("You hear a light click as pressure builds in the air around your neck."))
+	to_be_leashed.visible_message(span_warning(LANG("obj.5d701de9", list(user, src, to_be_leashed))),\
+				span_userdanger(LANG("obj.4407d34f", list(user, src))),\
+				span_hear(LANG("obj.8f9d9ca9", null)))
 	if(!do_after(user, 2 SECONDS, to_be_leashed))
 		return
 	create_leash(user, to_be_leashed)
@@ -53,7 +53,7 @@
 
 	ouppy.AddComponent(/datum/component/leash/erp, src, 2)
 	if(our_leash_component.resolve()) // The component will immediately delete itself if there's an existing one; this sanity checks for feedback on if it failed.
-		ouppy.balloon_alert(user, "leashed!")
+		ouppy.balloon_alert(user, LANG("obj.39eed485", null))
 		return
 	else to_chat(user, span_danger(LANG("obj.264e86d2", list(ouppy))))
 
@@ -106,9 +106,9 @@
 			var/mob/living/yoinked = parent
 			yoinked.Move(get_step_towards(yoinked,user))
 			yoinked.adjust_stamina_loss(10)
-			yoinked.visible_message(span_warning("[yoinked] is pulled in as [user] tugs the [source]!"),\
-					span_userdanger("[user] suddenly tugs the [source], pulling you closer!"),\
-					span_userdanger("A sudden tug against your neck pulls you ahead!"))
+			yoinked.visible_message(span_warning(LANG("datum.adc2a27b", list(yoinked, user, source))),\
+					span_userdanger(LANG("datum.23918ada", list(user, source))),\
+					span_userdanger(LANG("datum.edf79728", null)))
 			COOLDOWN_START(leash_hookin, tug_cd, 1 SECONDS)
 
 /datum/component/leash/erp/proc/on_item_dropped(datum/source, mob/user)
@@ -127,9 +127,9 @@
 	if(istype(parent, /mob) && istype(owner,/obj/item))
 		var/mob/our_parent = parent
 		var/obj/item/our_owner = owner
-		our_parent.visible_message(span_warning("[our_parent] attempts to unhook [our_parent.p_them()]self from the leash!"), \
-			span_userdanger("You start to unhook yourself from the leash..."), \
-			span_userdanger("You fumble in the dark, looking to unhook the leash..."))
+		our_parent.visible_message(span_warning(LANG("datum.3b0ace6f", list(our_parent, our_parent.p_them()))), \
+			span_userdanger(LANG("datum.f501b9fe", null)), \
+			span_userdanger(LANG("datum.4c6015eb", null)))
 		if(do_after(our_parent, our_owner.breakouttime, target = our_parent))
 			to_chat(our_parent, span_notice(LANG("datum.7f964868", null)))
 			qdel(src)

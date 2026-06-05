@@ -112,14 +112,14 @@
 		return
 
 	if(bayonet)
-		source.balloon_alert(attacker, "already has \a [bayonet]!")
+		source.balloon_alert(attacker, LANG("datum.8af97977", list(bayonet)))
 		return
 
 	if(!attacker.transferItemToLoc(attacking_item, source))
 		return
 
 	add_bayonet(attacking_item, attacker)
-	source.balloon_alert(attacker, "attached")
+	source.balloon_alert(attacker, LANG("datum.b0ad167d", null))
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/bayonet_attachable/proc/add_bayonet(obj/item/new_bayonet, mob/attacher)
@@ -163,7 +163,7 @@
 
 /datum/component/bayonet_attachable/proc/unscrew_bayonet(obj/item/source, mob/user, obj/item/tool)
 	tool?.play_tool_sound(source)
-	source.balloon_alert(user, "unscrewed [bayonet]")
+	source.balloon_alert(user, LANG("datum.874b70af", list(bayonet)))
 
 	var/obj/item/to_remove = bayonet
 	to_remove.forceMove(source.drop_location())
@@ -205,7 +205,7 @@
 
 	if (!bayonet || allow_sawnoff)
 		return
-	source.balloon_alert(user, "bayonet must be removed!")
+	source.balloon_alert(user, LANG("datum.9708f54d", null))
 	return COMPONENT_CANCEL_SAWING_OFF
 
 /datum/component/bayonet_attachable/proc/on_sawn_off(obj/item/source, mob/user)

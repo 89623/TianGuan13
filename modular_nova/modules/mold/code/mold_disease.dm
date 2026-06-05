@@ -54,7 +54,7 @@
 				affected_mob.adjust_brute_loss(5) //It's damaging the muscles
 			if(SPT_PROB(2, seconds_per_tick))
 				affected_mob.adjust_stamina_loss(100, updating_stamina = FALSE)
-				affected_mob.visible_message(span_warning("[affected_mob] faints!"), span_userdanger("You surrender yourself and feel at peace..."))
+				affected_mob.visible_message(span_warning(LANG("datum.3f2076ad", list(affected_mob))), span_userdanger(LANG("datum.f1a296da", null)))
 				affected_mob.AdjustSleeping(10 SECONDS)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_userdanger(LANG("datum.8b1cef57", null)))

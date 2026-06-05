@@ -16,7 +16,7 @@
 	icon = 'icons/obj/weapons/restraints.dmi'
 
 /obj/item/restraints/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.2a557471", list(user, user.p_them(), src, user.p_theyre()))))
 	return OXYLOSS
 
 // Zipties, cable cuffs, etc. Can be cut with wirecutters instantly.
@@ -87,23 +87,23 @@
 /// Handles all of the checks and application in a typical situation where someone attacks a carbon victim with the handcuff item.
 /obj/item/restraints/handcuffs/proc/attempt_to_cuff(mob/living/carbon/victim, mob/living/user)
 	if(SEND_SIGNAL(victim, COMSIG_CARBON_CUFF_ATTEMPTED, user) & COMSIG_CARBON_CUFF_PREVENT)
-		victim.balloon_alert(user, "can't be handcuffed!")
+		victim.balloon_alert(user, LANG("obj.fb5794d8", null))
 		return
 
 	if(handcuffs_clumsiness_check(user))
 		return
 
 	if(!isnull(victim.handcuffed))
-		victim.balloon_alert(user, "already handcuffed!")
+		victim.balloon_alert(user, LANG("obj.957aa219", null))
 		return
 
 	if(!victim.canBeHandcuffed())
-		victim.balloon_alert(user, "can't be handcuffed!")
+		victim.balloon_alert(user, LANG("obj.fb5794d8", null))
 		return
 
 	victim.visible_message(
-		span_danger("[user] is trying to put [src] on [victim]!"),
-		span_userdanger("[user] is trying to put [src] on you!"),
+		span_danger(LANG("obj.0392eba8", list(user, src, victim))),
+		span_userdanger(LANG("obj.f60a7d99", list(user, src))),
 	)
 
 	if(victim.is_blind())
@@ -113,7 +113,7 @@
 	log_combat(user, victim, "attempted to handcuff")
 
 	if(!do_after(user, get_handcuff_time(user), victim, timed_action_flags = IGNORE_SLOWDOWNS) || !victim.canBeHandcuffed())
-		victim.balloon_alert(user, "failed to handcuff!")
+		victim.balloon_alert(user, LANG("obj.48910202", null))
 		to_chat(user, span_warning(LANG("obj.4edfbb12", list(victim))))
 		log_combat(user, victim, "failed to handcuff")
 		return
@@ -122,8 +122,8 @@
 	playsound(loc, cuffsuccesssound, 30, TRUE, -2)
 
 	victim.visible_message(
-		span_notice("[user] handcuffs [victim]."),
-		span_userdanger("[user] handcuffs you."),
+		span_notice(LANG("obj.490dffee", list(user, victim))),
+		span_userdanger(LANG("obj.25d2cc90", list(user))),
 	)
 
 	log_combat(user, victim, "successfully handcuffed")
@@ -397,7 +397,7 @@
 
 /obj/item/restraints/handcuffs/cult/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
-	wearer.visible_message(span_danger("[wearer]'s shackles shatter in a discharge of dark magic!"), span_userdanger("Your [src] shatters in a discharge of dark magic!"))
+	wearer.visible_message(span_danger(LANG("obj.b2ba5101", list(wearer))), span_userdanger(LANG("obj.9b140d2c", list(src))))
 	qdel(src)
 
 
@@ -455,7 +455,7 @@
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.e73a9ae4", list(user, user.p_their(), src, user.p_theyre()))))
 	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
@@ -523,7 +523,7 @@
 		var/obj/vehicle/ridden_vehicle = victim.buckled
 		if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
 			close_trap()
-			ridden_vehicle.visible_message(span_danger("[ridden_vehicle] triggers \the [src]."))
+			ridden_vehicle.visible_message(span_danger(LANG("obj.1e08ff15", list(ridden_vehicle, src))))
 			return
 
 	//don't close the trap if they're as small as a mouse
@@ -534,11 +534,11 @@
 
 	close_trap()
 	if(ignore_movetypes)
-		victim.visible_message(span_danger("\The [src] ensnares [victim]!"), \
-				span_userdanger("\The [src] ensnares you!"))
+		victim.visible_message(span_danger(LANG("obj.1d6a5dbd", list(src, victim))), \
+				span_userdanger(LANG("obj.3f77175e", list(src))))
 	else
-		victim.visible_message(span_danger("[victim] triggers \the [src]."), \
-				span_userdanger("You trigger \the [src]!"))
+		victim.visible_message(span_danger(LANG("obj.1e08ff15", list(victim, src))), \
+				span_userdanger(LANG("obj.a8049713", list(src))))
 
 	if(iscarbon(victim) && (victim.body_position == STANDING_UP || hit_prone) && !((def_zone == BODY_ZONE_PRECISE_R_HAND) || (def_zone == BODY_ZONE_PRECISE_L_HAND)))
 		var/mob/living/carbon/carbon_victim = victim

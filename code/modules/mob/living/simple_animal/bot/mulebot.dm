@@ -168,8 +168,8 @@
 		return ITEM_INTERACT_BLOCKING
 	cell.add_fingerprint(user)
 	user.visible_message(
-		span_notice("[user] crowbars [cell] out from [src]."),
-		span_notice("You pry [cell] out of [src]."),
+		span_notice(LANG("mob.bc70803f", list(user, cell, src))),
+		span_notice(LANG("mob.63cad190", list(cell, src))),
 	)
 	if(Adjacent(user) && !issilicon(user))
 		user.put_in_hands(cell)
@@ -187,8 +187,8 @@
 		cell = tool
 		diag_hud_set_mulebotcell()
 		user.visible_message(
-			span_notice("[user] inserts \a [cell] into [src]."),
-			span_notice("You insert [cell] into [src]."),
+			span_notice(LANG("mob.55c3143d", list(user, cell, src))),
+			span_notice(LANG("mob.8ce99939", list(cell, src))),
 		)
 		return ITEM_INTERACT_SUCCESS
 	if(is_wire_tool(tool) && (bot_cover_flags & BOT_COVER_MAINTS_OPEN))
@@ -200,8 +200,8 @@
 	. = ..()
 	if(ismob(load) && prob(1 + attacking_item.force * 2))
 		user.visible_message(
-			span_danger("[user] knocks [load] off [src] with \the [attacking_item]!"),
-			span_danger("You knock [load] off [src] with \the [attacking_item]!"),
+			span_danger(LANG("mob.60904e47", list(user, load, src, attacking_item))),
+			span_danger(LANG("mob.384d90da", list(load, src, attacking_item))),
 		)
 		unload(0)
 		return TRUE
@@ -680,14 +680,14 @@
 /mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
 	if (!(bot_cover_flags & BOT_COVER_EMAGGED) && !wires.is_cut(WIRE_AVOIDANCE))
 		if (!has_status_effect(/datum/status_effect/careful_driving))
-			crushed.visible_message(span_notice("[src] slows down to avoid crushing [crushed]."))
+			crushed.visible_message(span_notice(LANG("mob.8fa70cd9", list(src, crushed))))
 		apply_status_effect(/datum/status_effect/careful_driving)
 		return // Player mules must be emagged before they can trample
 
 	log_combat(src, crushed, "run over", addition = "(DAMTYPE: [uppertext(BRUTE)])")
 	crushed.visible_message(
-		span_danger("[src] drives over [crushed]!"),
-		span_userdanger("[src] drives over you!"),
+		span_danger(LANG("mob.bb65eec4", list(src, crushed))),
+		span_userdanger(LANG("mob.8300e9d1", list(src))),
 	)
 
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)

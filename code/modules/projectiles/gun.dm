@@ -264,17 +264,17 @@
 	else if(pointblank)
 		if(user == pbtarget)
 			user.visible_message(
-				span_danger("[user] fires [src] point blank at [user.p_them()]self!"),
-				span_userdanger("You fire [src] point blank at yourself!"),
-				span_hear("You hear a gunshot!"),
+				span_danger(LANG("obj.43a50ef1", list(user, src, user.p_them()))),
+				span_userdanger(LANG("obj.29cb2a67", list(src))),
+				span_hear(LANG("obj.89ccf80f", null)),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 		else
 			user.visible_message(
-				span_danger("[user] fires [src] point blank at [pbtarget]!"),
-				span_danger("You fire [src] point blank at [pbtarget]!"),
-				span_hear("You hear a gunshot!"),
+				span_danger(LANG("obj.c4baaa4b", list(user, src, pbtarget))),
+				span_danger(LANG("obj.96126c9a", list(src, pbtarget))),
+				span_hear(LANG("obj.89ccf80f", null)),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				ignored_mobs = pbtarget,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
@@ -286,9 +286,9 @@
 			PBT.throw_at(throw_target, pb_knockback, 2)
 	else if(!tk_firing(user))
 		user.visible_message(
-			span_danger("[user] fires [src]!"),
-			span_danger("You fire [src]!"),
-			span_hear("You hear a gunshot!"),
+			span_danger(LANG("obj.84c8fb6b", list(user, src))),
+			span_danger(LANG("obj.86b40dae", list(src))),
+			span_hear(LANG("obj.89ccf80f", null)),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
@@ -333,15 +333,15 @@
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
 		// yes this will sound silly for bows and wands, but that's a "gun" moment for you
 		user.visible_message(
-			span_danger("While trying to flip [src] [user] pulls the trigger accidentally!"),
-			span_userdanger("While trying to flip [src] you pull the trigger accidentally!"),
+			span_danger(LANG("obj.09734df9", list(src, user))),
+			span_userdanger(LANG("obj.d54c4d9c", list(src))),
 		)
 		process_fire(user, user, FALSE, user.get_random_valid_zone(even_weights = TRUE))
 		user.dropItemToGround(src, TRUE)
 	else
 		user.visible_message(
-			span_notice("[user] spins [src] around [user.p_their()] finger by the trigger. That's pretty badass."),
-			span_notice("You spin [src] around your finger by the trigger. That's pretty badass."),
+			span_notice(LANG("obj.f57a5fa3", list(user, src, user.p_their()))),
+			span_notice(LANG("obj.0b65d18c", list(src))),
 		)
 		playsound(src, 'sound/items/handling/ammobox_pickup.ogg', 20, FALSE)
 
@@ -620,13 +620,13 @@
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(pin?.pin_removable && user.is_holding(src))
-		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),
-		span_notice("You attempt to remove [pin] from [src]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		user.visible_message(span_warning(LANG("obj.0a85d99f", list(user, pin, src, I))),
+		span_notice(LANG("obj.e57949f7", list(pin, src, DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)))), null, 3)
 		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
 			if(!pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
 				return
-			user.visible_message(span_notice("[pin] is pried out of [src] by [user], destroying the pin in the process."),
-								span_warning("You pry [pin] out with [I], destroying the pin in the process."), null, 3)
+			user.visible_message(span_notice(LANG("obj.3ca69651", list(pin, src, user))),
+								span_warning(LANG("obj.3cce8d3c", list(pin, I))), null, 3)
 			QDEL_NULL(pin)
 			return ITEM_INTERACT_SUCCESS
 
@@ -637,13 +637,13 @@
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(pin?.pin_removable && user.is_holding(src))
-		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),
-		span_notice("You attempt to remove [pin] from [src]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		user.visible_message(span_warning(LANG("obj.0a85d99f", list(user, pin, src, I))),
+		span_notice(LANG("obj.e57949f7", list(pin, src, DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)))), null, 3)
 		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, 5, volume = 50))
 			if(!pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
 				return
-			user.visible_message(span_notice("[pin] is spliced out of [src] by [user], melting part of the pin in the process."),
-								span_warning("You splice [pin] out of [src] with [I], melting part of the pin in the process."), null, 3)
+			user.visible_message(span_notice(LANG("obj.96b906d8", list(pin, src, user))),
+								span_warning(LANG("obj.ef089eb3", list(pin, src, I))), null, 3)
 			QDEL_NULL(pin)
 			return TRUE
 
@@ -654,13 +654,13 @@
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(pin?.pin_removable && user.is_holding(src))
-		user.visible_message(span_warning("[user] attempts to remove [pin] from [src] with [I]."),
-		span_notice("You attempt to remove [pin] from [src]. (It will take [DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)].)"), null, 3)
+		user.visible_message(span_warning(LANG("obj.0a85d99f", list(user, pin, src, I))),
+		span_notice(LANG("obj.e57949f7", list(pin, src, DisplayTimeText(FIRING_PIN_REMOVAL_DELAY)))), null, 3)
 		if(I.use_tool(src, user, FIRING_PIN_REMOVAL_DELAY, volume = 50))
 			if(!pin) //check to see if the pin is still there, or we can spam messages by clicking multiple times during the tool delay
 				return
-			user.visible_message(span_notice("[pin] is ripped out of [src] by [user], mangling the pin in the process."),
-								span_warning("You rip [pin] out of [src] with [I], mangling the pin in the process."), null, 3)
+			user.visible_message(span_notice(LANG("obj.a6447eb5", list(pin, src, user))),
+								span_warning(LANG("obj.14171f9d", list(pin, src, I))), null, 3)
 			QDEL_NULL(pin)
 			return TRUE
 
@@ -675,26 +675,26 @@
 		return NONE
 
 	if(user == target)
-		target.visible_message(span_warning("[user] sticks [src] in [user.p_their()] mouth, ready to pull the trigger..."), \
-			span_userdanger("You stick [src] in your mouth, ready to pull the trigger..."))
+		target.visible_message(span_warning(LANG("obj.fe0c5c8f", list(user, src, user.p_their()))), \
+			span_userdanger(LANG("obj.c1e337b3", list(src))))
 	else
-		target.visible_message(span_warning("[user] points [src] at [target]'s head, ready to pull the trigger..."), \
-			span_userdanger("[user] points [src] at your head, ready to pull the trigger..."))
+		target.visible_message(span_warning(LANG("obj.9641a45e", list(user, src, target))), \
+			span_userdanger(LANG("obj.6c357ff9", list(user, src))))
 
 	fire_cd = TRUE
 
 	if(!bypass_timer && (!do_after(user, 12 SECONDS, target) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
 			if(user == target)
-				user.visible_message(span_notice("[user] decided not to shoot."))
+				user.visible_message(span_notice(LANG("obj.83e8e872", list(user))))
 			else if(target?.Adjacent(user))
-				target.visible_message(span_notice("[user] has decided to spare [target]"), span_notice("[user] has decided to spare your life!"))
+				target.visible_message(span_notice(LANG("obj.93dfebcc", list(user, target))), span_notice(LANG("obj.4e0d6547", list(user))))
 		fire_cd = FALSE
 		return ITEM_INTERACT_BLOCKING
 
 	fire_cd = FALSE
 
-	target.visible_message(span_warning("[user] pulls the trigger!"), span_userdanger("[(user == target) ? "You pull" : "[user] pulls"] the trigger!"))
+	target.visible_message(span_warning(LANG("obj.3153b1be", list(user))), span_userdanger(LANG("obj.4da13f67", list((user == target) ? "You pull" : "[user] pulls"))))
 
 	if(!chambered?.loaded_projectile)
 		shoot_with_empty_chamber()

@@ -198,12 +198,12 @@
 		return
 	REMOVE_TRAIT(user, TRAIT_ATTEMPTING_CHRISTENING, trait_source)
 	if(!new_name)
-		user.balloon_alert(user, "cancelled")
+		user.balloon_alert(user, LANG("obj.c22cf976", null))
 		return
 	new_name = apply_text_macros(new_name)
 	var/obj/item/hitting_implement = (locate(/obj/item/reagent_containers/cup/glass/bottle) in user.held_items) || user.get_item_for_held_index(hand)
 	if(!attacked.IsReachableBy(user, hitting_implement.reach))
-		user.balloon_alert(user, "out of range!")
+		user.balloon_alert(user, LANG("obj.2201997f", null))
 		return
 	var/obj/item/reagent_containers/cup/glass/bottle/bottle = hitting_implement
 	bottle = istype(bottle) && bottle.isGlass && bottle
@@ -278,9 +278,8 @@
 		user.visible_message(span_warning(msg), span_warning(self_msg))
 	else
 		user.visible_message(
-			span_notice("[user] christens the shuttle as <b>\the [new_name]</b> with [hitting_implement.get_examine_name()]\
-			[(bottle.reagents.total_volume < 30) ? "" : ", though the dearth of christening fluid makes for an unimpressive display"]."),
-			span_notice("You christen the shuttle as <b>\the [new_name]</b> with [hitting_implement.get_examine_name()].")
+			span_notice(LANG("obj.0f880b89", list(user, new_name, hitting_implement.get_examine_name(), (bottle.reagents.total_volume < 30) ? "" : ", though the dearth of christening fluid makes for an unimpressive display"))),
+			span_notice(LANG("obj.0ef0f713", list(new_name, hitting_implement.get_examine_name())))
 		)
 		user.do_attack_animation(attacked, used_item = bottle)
 		bottle.smash(attacked, user)

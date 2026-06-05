@@ -15,14 +15,14 @@
 		return
 
 	if(is_absorbing)
-		owner.balloon_alert(owner, "already absorbing!")
+		owner.balloon_alert(owner, LANG("datum.6deac844", null))
 		return
 
 	if(!owner.pulling || !iscarbon(owner.pulling))
-		owner.balloon_alert(owner, "needs grab!")
+		owner.balloon_alert(owner, LANG("datum.26fa5f54", null))
 		return
 	if(owner.grab_state <= GRAB_NECK)
-		owner.balloon_alert(owner, "needs tighter grip!")
+		owner.balloon_alert(owner, LANG("datum.c94c592f", null))
 		return
 
 	var/mob/living/carbon/target = owner.pulling
@@ -40,7 +40,7 @@
 		return
 
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("Absorb DNA", "4"))
-	owner.visible_message(span_danger("[owner] sucks the fluids from [target]!"), span_notice("We have absorbed [target]."))
+	owner.visible_message(span_danger(LANG("datum.d937450a", list(owner, target))), span_notice(LANG("datum.1876b9ef", list(target))))
 
 	if(target.client && target.mind)
 		var/mob/eye/imaginary_friend/hivemind/new_member = new(target.loc)

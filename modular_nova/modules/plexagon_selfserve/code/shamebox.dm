@@ -74,7 +74,7 @@
 /// Timeclock boxes are one time use. When unlocked, release the contents and go away.
 /obj/item/storage/lockbox/timeclock/proc/release_contents()
 	emptyStorage()
-	usr.visible_message(span_notice("[usr] activates the lockbox mechanism, releasing its contents before vanishing in a puff of bluespace smoke!"))
+	usr.visible_message(span_notice(LANG("obj.55e7b72e", list(usr))))
 	associated_card = null
 	qdel(src)
 

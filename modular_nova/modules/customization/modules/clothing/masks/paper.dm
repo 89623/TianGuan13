@@ -18,7 +18,7 @@
 /datum/atom_skin/paper_mask/apply(atom/apply_to, mob/user)
 	. = ..()
 	if(!user.is_holding_item_of_type(/obj/item/pen))
-		user.balloon_alert(user, "must be holding a pen!")
+		user.balloon_alert(user, LANG("datum.5cc7fdc9", null))
 		return
 
 	var/mob/living/carbon/carbon_user

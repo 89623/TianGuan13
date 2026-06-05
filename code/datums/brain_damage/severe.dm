@@ -190,7 +190,7 @@
 		if(prob(50))
 			owner.emote("yawn")
 		else if(prob(33)) //rarest message is a custom emote
-			owner.visible_message("rubs [owner.p_their()] eyes.", visible_message_flags = EMOTE_MESSAGE)
+			owner.visible_message(LANG("datum.49062e98", list(owner.p_their())), visible_message_flags = EMOTE_MESSAGE)
 	//drowsy, so fall asleep. you've had your chance to remedy it
 	else
 		to_chat(owner, span_warning(LANG("datum.09d9036b", null)))

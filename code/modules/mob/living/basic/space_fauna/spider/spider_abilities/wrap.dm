@@ -31,7 +31,7 @@
 		return FALSE
 	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		if (feedback)
-			owner.balloon_alert(owner, "busy!")
+			owner.balloon_alert(owner, LANG("datum.8df72942", null))
 		return FALSE
 	return TRUE
 
@@ -40,7 +40,7 @@
 	if(!.)
 		return
 
-	on_who.balloon_alert(on_who, "prepared to wrap")
+	on_who.balloon_alert(on_who, LANG("datum.a9ebac2a", null))
 	button_icon_state = "wrap_1"
 	build_all_button_icons()
 
@@ -50,13 +50,13 @@
 		return
 
 	if (refund_cooldown)
-		on_who.balloon_alert(on_who, "wrap cancelled")
+		on_who.balloon_alert(on_who, LANG("datum.b1af6028", null))
 	button_icon_state = "wrap_0"
 	build_all_button_icons()
 
 /datum/action/cooldown/mob_cooldown/wrap/Activate(atom/to_wrap)
 	if(!owner.Adjacent(to_wrap))
-		owner.balloon_alert(owner, "must be closer!")
+		owner.balloon_alert(owner, LANG("datum.48bf383d", null))
 		return FALSE
 
 	if(!ismovable(to_wrap) || to_wrap == owner)
@@ -64,13 +64,13 @@
 	if(isliving(to_wrap))
 		var/mob/living/living_target = to_wrap
 		if(living_target.mob_biotypes & MOB_SPECIAL)
-			owner.balloon_alert(owner, "can't wrap, too strong!")
+			owner.balloon_alert(owner, LANG("datum.0b99ae7d", null))
 			return FALSE
 		if(living_target.mob_biotypes & MOB_SPIRIT)
-			owner.balloon_alert(owner, "can't wrap ghosts!")
+			owner.balloon_alert(owner, LANG("datum.eb37832c", null))
 			return FALSE
 		if(isspider(living_target))
-			owner.balloon_alert(owner, "can't wrap spiders!")
+			owner.balloon_alert(owner, LANG("datum.11bf8ffb", null))
 			return FALSE
 	var/atom/movable/target_movable = to_wrap
 	if(target_movable.anchored)
@@ -84,13 +84,13 @@
 	if(isliving(to_wrap))
 		to_chat(to_wrap, span_userdanger(LANG("datum.8b44197b", list(owner))))
 	owner.visible_message(
-		span_notice("[owner] begins to secrete a sticky substance around [to_wrap]."),
-		span_notice("You begin wrapping [to_wrap] into a cocoon."),
+		span_notice(LANG("datum.d94ea157", list(owner, to_wrap))),
+		span_notice(LANG("datum.372e4e43", list(to_wrap))),
 	)
 	if(do_after(owner, wrap_time, target = to_wrap, interaction_key = DOAFTER_SOURCE_SPIDER))
 		wrap_target(to_wrap)
 	else
-		owner.balloon_alert(owner, "interrupted!")
+		owner.balloon_alert(owner, LANG("datum.c67b5d27", null))
 
 /datum/action/cooldown/mob_cooldown/wrap/proc/wrap_target(mob/living/to_wrap)
 	var/obj/structure/spider/cocoon/casing = new(to_wrap.loc)
@@ -104,8 +104,8 @@
 				egg_power.charges++
 				egg_power.build_all_button_icons()
 				owner.visible_message(
-					span_danger("[owner] sticks a proboscis into [living_wrapped] and sucks a viscous substance out."),
-					span_notice("You suck the nutriment out of [living_wrapped], feeding you enough to lay a cluster of enriched eggs."),
+					span_danger(LANG("datum.77cfd08c", list(owner, living_wrapped))),
+					span_notice(LANG("datum.ba925014", list(living_wrapped))),
 				)
 			ADD_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED, TRAIT_GENERIC)
 			living_wrapped.investigate_log("has been killed by being wrapped in a cocoon.", INVESTIGATE_DEATHS)

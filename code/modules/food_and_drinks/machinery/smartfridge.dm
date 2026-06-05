@@ -64,9 +64,9 @@
 			return ITEM_INTERACT_BLOCKING
 
 		user.visible_message(
-			span_notice("[user.name] starts to cut \the [src] free from the floor."),
-			span_notice("You start to cut [src] free from the floor..."),
-			span_hear("You hear welding."),
+			span_notice(LANG("obj.62651aed", list(user.name, src))),
+			span_notice(LANG("obj.41ed57fe", list(src))),
+			span_hear(LANG("obj.1aa82fa3", null)),
 		)
 
 		if(!tool.use_tool(src, user, delay=100, volume=100))
@@ -84,9 +84,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user.name] starts to weld \the [src] to the floor."),
-		span_notice("You start to weld [src] to the floor..."),
-		span_hear("You hear welding."),
+		span_notice(LANG("obj.9449da47", list(user.name, src))),
+		span_notice(LANG("obj.7765e0fa", list(src))),
+		span_hear(LANG("obj.1aa82fa3", null)),
 	)
 
 	if(!tool.use_tool(src, user, delay = 100, volume = 100))
@@ -105,9 +105,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user] is repairing [src]."),
-		span_notice("You begin repairing [src]..."),
-		span_hear("You hear welding."),
+		span_notice(LANG("obj.8170db4e", list(user, src))),
+		span_notice(LANG("obj.93449ef4", list(src))),
+		span_hear(LANG("obj.1aa82fa3", null)),
 	)
 
 	if(tool.use_tool(src, user, delay = 40, volume = 50))
@@ -265,7 +265,7 @@
 			accept_check(weapon) \
 		)
 			load(weapon, user)
-			user.visible_message(span_notice("[user] adds \the [weapon] to \the [src]."), span_notice("You add \the [weapon] to \the [src]."))
+			user.visible_message(span_notice(LANG("obj.5d1bd1e3", list(user, weapon, src))), span_notice(LANG("obj.b948ff9a", list(weapon, src))))
 			SStgui.update_uis(src)
 			if(visible_contents)
 				update_appearance()
@@ -287,11 +287,11 @@
 
 			if(loaded)
 				if(shown_contents_length >= max_n_of_items)
-					user.visible_message(span_notice("[user] loads \the [src] with \the [weapon]."), \
-						span_notice("You fill \the [src] with \the [weapon]."))
+					user.visible_message(span_notice(LANG("obj.d8b0a4dd", list(user, src, weapon))), \
+						span_notice(LANG("obj.fb425ba6", list(src, weapon))))
 				else
-					user.visible_message(span_notice("[user] loads \the [src] with \the [weapon]."), \
-						span_notice("You load \the [src] with \the [weapon]."))
+					user.visible_message(span_notice(LANG("obj.d8b0a4dd", list(user, src, weapon))), \
+						span_notice(LANG("obj.ae0abc0e", list(src, weapon))))
 				if(weapon.contents.len)
 					to_chat(user, span_warning(LANG("obj.94d8d593", null)))
 				if (visible_contents)

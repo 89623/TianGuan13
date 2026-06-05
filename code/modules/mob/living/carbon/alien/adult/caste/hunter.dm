@@ -85,7 +85,7 @@
 				if(H.check_block(src, 0, "\the [src]", attack_type = LEAP_ATTACK))
 					blocked = TRUE
 			if(!blocked)
-				L.visible_message(span_danger("[src] pounces on [L]!"), span_userdanger("[src] pounces on you!"))
+				L.visible_message(span_danger(LANG("mob.e82f512b", list(src, L))), span_userdanger(LANG("mob.c6188217", list(src))))
 				L.Paralyze(5 SECONDS)
 				sleep(0.2 SECONDS)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)

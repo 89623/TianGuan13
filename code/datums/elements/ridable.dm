@@ -59,13 +59,13 @@
 		ride_check_flags |= RIDER_NEEDS_ARMS
 
 	if(arms_needed && !equip_buckle_inhands(potential_rider, arms_needed, target_movable)) // can be either 1 (cyborg riding) or 2 (human piggybacking) hands
-		potential_rider.visible_message(span_warning("[potential_rider] can't get a grip on [target_movable] because [potential_rider.p_their()] hands are full!"),
-			span_warning("You can't get a grip on [target_movable] because your hands are full!"))
+		potential_rider.visible_message(span_warning(LANG("datum.a693854e", list(potential_rider, target_movable, potential_rider.p_their()))),
+			span_warning(LANG("datum.37e7c207", list(target_movable))))
 		return COMPONENT_BLOCK_BUCKLE
 
 	if((ride_check_flags & RIDER_NEEDS_LEGS) && HAS_TRAIT(potential_rider, TRAIT_FLOORED))
-		potential_rider.visible_message(span_warning("[potential_rider] can't get [potential_rider.p_their()] footing on [target_movable]!"),
-			span_warning("You can't get your footing on [target_movable]!"))
+		potential_rider.visible_message(span_warning(LANG("datum.8ece42c6", list(potential_rider, potential_rider.p_their(), target_movable))),
+			span_warning(LANG("datum.8f288f5f", list(target_movable))))
 		return COMPONENT_BLOCK_BUCKLE
 
 	var/mob/living/target_living = target_movable
@@ -73,8 +73,8 @@
 	// need to see if !equip_buckle_inhands() checks are enough to skip any needed incapac/restrain checks
 	// CARRIER_NEEDS_ARM shouldn't apply if the ridden isn't even a living mob
 	if((ride_check_flags & CARRIER_NEEDS_ARM) && !equip_buckle_inhands(target_living, 1, target_living, potential_rider)) // hardcode 1 hand for now
-		target_living.visible_message(span_warning("[target_living] can't get a grip on [potential_rider] because [target_living.p_their()] hands are full!"),
-			span_warning("You can't get a grip on [potential_rider] because your hands are full!"))
+		target_living.visible_message(span_warning(LANG("datum.a693854e", list(target_living, potential_rider, target_living.p_their()))),
+			span_warning(LANG("datum.37e7c207", list(potential_rider))))
 		return COMPONENT_BLOCK_BUCKLE
 
 	target_living.AddComponent(riding_component_type, potential_rider, force, ride_check_flags)

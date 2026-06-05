@@ -188,7 +188,7 @@
 
 	//begin recharging
 	recharging = TRUE
-	user.visible_message(span_notice("[user] starts recharging [interacting_with] with [src]."), span_notice("You start recharging [interacting_with] with [src]."))
+	user.visible_message(span_notice(LANG("obj.571e129a", list(user, interacting_with, src))), span_notice(LANG("obj.8965d95d", list(interacting_with, src))))
 
 	var/done_any = FALSE
 	while(target_cell.used_charge())
@@ -214,13 +214,13 @@
 
 	// Only show a message if we succeeded at least once
 	if(done_any)
-		user.visible_message(span_notice("[user] recharges [interacting_with]!"), span_notice("You recharge [interacting_with]!"))
+		user.visible_message(span_notice(LANG("obj.ab8d3172", list(user, interacting_with))), span_notice(LANG("obj.85e4228f", list(interacting_with))))
 
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inducer/attack_self(mob/user)
 	if(opened && !QDELETED(powerdevice))
-		user.visible_message(span_notice("[user] removes [powerdevice] from [src]!"), span_notice("You remove [powerdevice]."))
+		user.visible_message(span_notice(LANG("obj.6eec8634", list(user, powerdevice, src))), span_notice(LANG("obj.1973523e", list(powerdevice))))
 		powerdevice.update_appearance()
 		user.put_in_hands(powerdevice)
 		update_appearance(UPDATE_OVERLAYS)

@@ -16,15 +16,15 @@
 	if(!HAS_TRAIT(interacting_with, TRAIT_IS_AQUARIUM))
 		return NONE
 	if(upgrade_from_type != interacting_with.type)
-		interacting_with.balloon_alert(user, "wrong kind of aquarium!")
+		interacting_with.balloon_alert(user, LANG("obj.8c83c4ee", null))
 		return ITEM_INTERACT_BLOCKING
-	interacting_with.balloon_alert(user, "upgrading...")
+	interacting_with.balloon_alert(user, LANG("obj.9ff5151d", null))
 	if(!PERFORM_ALL_TESTS(aquarium_upgrade) && !do_after(user, 5 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	var/atom/movable/upgraded_aquarium = new upgrade_to_type(interacting_with.drop_location())
 	//This should transfer all the fish, reagents and settings from the aquarium component
 	interacting_with.TransferComponents(upgraded_aquarium)
-	upgraded_aquarium.balloon_alert(user, "upgraded")
+	upgraded_aquarium.balloon_alert(user, LANG("obj.d66b4110", null))
 	qdel(src)
 	qdel(interacting_with)
 	return ITEM_INTERACT_SUCCESS

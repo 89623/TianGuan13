@@ -95,7 +95,7 @@
 /obj/machinery/artifact/Destroy()
 	do_destroy_effects()
 	loc.visible_message(
-		span_danger("[src] breaks in pieces, releasing a wave of energy!"),
+		span_danger(LANG("obj.fb56a19e", list(src))),
 		blind_message = span_hear("You hear something break into pieces!"),
 	)
 	if(!QDELETED(first_effect))
@@ -337,8 +337,8 @@
  */
 /obj/machinery/artifact/proc/get_scan(mob/living/user, obj/item/xenoarch/handheld_scanner/scanner)
 	user.visible_message(
-		span_notice("[user] begins to scan [src] using [scanner]."),
-		span_notice("You begin to scan [src] using [scanner]..."),
+		span_notice(LANG("obj.f18b5d8d", list(user, src, scanner))),
+		span_notice(LANG("obj.c6c68360", list(src, scanner))),
 		blind_message = span_hear("You hear some kind of machine silently winding up."),
 	)
 	if(!do_after(user, scanner.scanning_speed * 5, target = src))

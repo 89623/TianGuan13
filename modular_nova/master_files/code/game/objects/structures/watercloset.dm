@@ -9,7 +9,7 @@
 			return FALSE
 
 		busy = TRUE
-		user.visible_message(span_notice("[user] starts washing [attacking_item] in [src]."), span_notice("You start washing [attacking_item] in [src]."))
+		user.visible_message(span_notice(LANG("obj.34cb5eb0", list(user, attacking_item, src))), span_notice(LANG("obj.4ee1043e", list(attacking_item, src))))
 
 		if(!do_after(user, 2 SECONDS, src))
 			busy = FALSE
@@ -25,7 +25,7 @@
 		washed_towel.make_used(user, silent = TRUE)
 
 		START_PROCESSING(SSobj, src)
-		user.visible_message(span_notice("[user] finishes washing [attacking_item] in [src]."), span_notice("You finish washing [washed_towel] in [src], leaving it quite wet."))
+		user.visible_message(span_notice(LANG("obj.dd8be228", list(user, attacking_item, src))), span_notice(LANG("obj.7f3444e9", list(washed_towel, src))))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 
 		busy = FALSE

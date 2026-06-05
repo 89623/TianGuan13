@@ -74,9 +74,9 @@
 
 	var/turf/turf_target = get_turf(interacting_with)
 	if(locate(barrier_type) in turf_target)
-		user.balloon_alert(user, "already occupied!")
+		user.balloon_alert(user, LANG("obj.a2ef4f74", null))
 		return ITEM_INTERACT_BLOCKING
-	turf_target.visible_message(span_warning("A storm of paper materializes!"))
+	turf_target.visible_message(span_warning(LANG("obj.bc1adea3", null)))
 	new /obj/effect/temp_visual/paper_scatter(turf_target)
 	playsound(turf_target, 'sound/effects/magic/smoke.ogg', 30)
 	new barrier_type(turf_target, user)

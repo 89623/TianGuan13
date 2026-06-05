@@ -187,4 +187,4 @@
 		return
 	victim.Knockdown(20)
 	playsound(loc, 'sound/misc/slip.ogg', 15)
-	victim.visible_message(span_danger("[victim] slips on [src]'s butter!"))
+	victim.visible_message(span_danger(LANG("mob.f2ef0804", list(victim, src))))

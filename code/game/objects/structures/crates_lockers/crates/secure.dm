@@ -182,8 +182,8 @@
 						if(iscarbon(user))
 							add_fingerprint(user)
 						locked = !locked
-						user.visible_message(span_notice("[user] unlocks [src]'s privacy lock."),
-										span_notice("You unlock [src]'s privacy lock."))
+						user.visible_message(span_notice(LANG("obj.7b27b479", list(user, src))),
+										span_notice(LANG("obj.924ba550", list(src))))
 						privacy_lock = FALSE
 						update_appearance()
 					else if(!silent)

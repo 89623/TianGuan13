@@ -284,7 +284,7 @@
 		destination = get_random_station_turf()
 
 	do_sparks(8, FALSE, victim)
-	victim.visible_message(span_notice("[victim] vanishes..."))
+	victim.visible_message(span_notice(LANG("obj.6c06c821", list(victim))))
 
 	victim.forceMove(src)
 

@@ -73,14 +73,13 @@
 
 /obj/item/newspaper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(\
-		"[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... \
-		until [user.p_their()] eyes light up with realization!"\
+		LANG("obj.cdb818f6", list(user, src, user.p_theyre(), user.p_their()))\
 	))
-	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF", forced = "newspaper suicide")
+	user.say(LANG("obj.56d548fe", null), forced = "newspaper suicide")
 	var/obj/item/reagent_containers/cup/glass/bottle/whiskey/last_drink = new(user.loc)
 	playsound(user, 'sound/items/drink.ogg', vol = rand(10, 50), vary = TRUE)
 	last_drink.reagents.trans_to(user, last_drink.reagents.total_volume, transferred_by = user)
-	user.visible_message(span_suicide("[user] downs the contents of [last_drink.name] in one gulp! Shoulda stuck to sudoku!"))
+	user.visible_message(span_suicide(LANG("obj.76f25974", list(user, last_drink.name))))
 	return TOXLOSS
 
 /obj/item/newspaper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -111,7 +110,7 @@
 		return NONE
 
 	if (scribble_page == current_page)
-		user.balloon_alert(user, "already scribbled!")
+		user.balloon_alert(user, LANG("obj.ec703799", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/new_scribble_text = tgui_input_text(user, LANG("obj.7d95ec7d", null), LANG("obj.024920fa", null), max_length = MAX_MESSAGE_LEN)
@@ -119,13 +118,13 @@
 		return ITEM_INTERACT_BLOCKING
 
 	add_fingerprint(user)
-	user.balloon_alert(user, "scribbling...")
+	user.balloon_alert(user, LANG("obj.49328fc5", null))
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	if (!do_after(user, 2 SECONDS, src))
 		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.balloon_alert(user, "scribbled!")
+	user.balloon_alert(user, LANG("obj.5d07eca0", null))
 	scribble_page = current_page
 	scribble_text = new_scribble_text
 	return ITEM_INTERACT_SUCCESS

@@ -17,13 +17,13 @@
 	if(target.mind)
 		if((SEND_SIGNAL(target.mind, COMSIG_PRE_MINDSHIELD_IMPLANT, user) & COMPONENT_MINDSHIELD_RESISTED))
 			if(!silent)
-				target.visible_message(span_warning("[target] seems to resist the implant!"), span_warning("You feel something interfering with your mental conditioning, but you resist it!"))
+				target.visible_message(span_warning(LANG("obj.67a3d80b", list(target))), span_warning(LANG("obj.ba69e512", null)))
 			removed(target, TRUE)
 			qdel(src)
 			return TRUE
 		if(SEND_SIGNAL(target.mind, COMSIG_MINDSHIELD_IMPLANTED, user) & COMPONENT_MINDSHIELD_DECONVERTED)
 			if(prob(1) || check_holidays(APRIL_FOOLS))
-				target.say("I'm out! I quit! Whose kidneys are these?", forced = "They're out! They quit! Whose kidneys do they have?")
+				target.say(LANG("obj.6c45651b", null), forced = "They're out! They quit! Whose kidneys do they have?")
 
 	target.add_traits(list(TRAIT_MINDSHIELD, TRAIT_UNCONVERTABLE), IMPLANT_TRAIT)
 	target.sec_hud_set_implants()

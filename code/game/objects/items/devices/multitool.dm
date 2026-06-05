@@ -74,7 +74,7 @@
 	var/area/local_area = get_area(src)
 	var/obj/machinery/power/apc/power_controller = local_area.apc
 	if(!power_controller)
-		user.balloon_alert(user, "couldn't find apc!")
+		user.balloon_alert(user, LANG("obj.d6493799", null))
 		return
 
 	var/dist = get_dist(src, power_controller)
@@ -84,7 +84,7 @@
 
 	switch(dist)
 		if (0)
-			user.balloon_alert(user, "found apc!")
+			user.balloon_alert(user, LANG("obj.9a452154", null))
 			return
 		if(1 to 5)
 			arrow_color = COLOR_GREEN
@@ -120,7 +120,7 @@
 		INVOKE_ASYNC(our_hud, TYPE_PROC_REF(/datum/hud, show_hud), our_hud.hud_version)
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
+	user.visible_message(span_suicide(LANG("obj.a409b30b", list(user, src, user.p_their(), user.p_theyre(), user.p_their()))))
 	return OXYLOSS//there's a reason it wasn't recommended by doctors
 
 /**

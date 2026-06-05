@@ -134,9 +134,9 @@
 /obj/item/kinetic_crusher/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!LAZYLEN(trophies))
-		user.balloon_alert(user, "no trophies!")
+		user.balloon_alert(user, LANG("obj.02c1f65a", null))
 		return ITEM_INTERACT_BLOCKING
-	user.balloon_alert(user, "trophies removed")
+	user.balloon_alert(user, LANG("obj.8bb119a2", null))
 	tool.play_tool_sound(src)
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		crusher_trophy.remove_from(src, user)
@@ -187,7 +187,7 @@
 	if(.)
 		return TRUE
 	if(!HAS_TRAIT(src, TRAIT_WIELDED) && !acts_as_if_wielded) // NOVA EDIT CHANGE - Original: if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		user.balloon_alert(user, "must be wielded!")
+		user.balloon_alert(user, LANG("obj.d5881829", null))
 		return TRUE
 	return .
 

@@ -314,7 +314,7 @@
 	if(over_object == user)
 		if(!briefcase)
 			return
-		user.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
+		user.visible_message(span_notice(LANG("obj.1fae3a21", list(usr, src))), span_notice(LANG("obj.a080d046", list(src))))
 		if(do_after(user, 3 SECONDS, target = user))
 			user.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents

@@ -210,9 +210,9 @@
 		if(!wrench.use_tool(src, user, 8 SECONDS))
 			return ITEM_INTERACT_BLOCKING
 		user.visible_message( \
-			"[user] disconnects [src].", \
-			span_notice("You unfasten [src] from [connected_port]."), \
-			span_hear("You hear a ratchet."))
+			LANG("obj.4acbf7f4", list(user, src)), \
+			span_notice(LANG("obj.bc4d4443", list(src, connected_port))), \
+			span_hear(LANG("obj.aa8a193f", null)))
 		investigate_log("was disconnected from [connected_port] by [key_name(user)].", INVESTIGATE_ENGINE)
 		disconnect_port()
 		update_appearance(UPDATE_OVERLAYS)
@@ -224,9 +224,9 @@
 	if(!connect_port(possible_connector, user))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message( \
-		"[user] connects [src].", \
-		span_notice("You fasten [src] to [possible_connector]."), \
-		span_hear("You hear a ratchet."))
+		LANG("obj.1450de58", list(user, src)), \
+		span_notice(LANG("obj.5cfbd1d1", list(src, possible_connector))), \
+		span_hear(LANG("obj.aa8a193f", null)))
 	update_appearance(UPDATE_OVERLAYS)
 	investigate_log("was connected to [possible_connector] by [key_name(user)].", INVESTIGATE_ENGINE)
 	return ITEM_INTERACT_SUCCESS

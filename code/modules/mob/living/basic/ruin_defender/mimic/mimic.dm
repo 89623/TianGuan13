@@ -41,8 +41,8 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(!. || !knockdown_people || !prob(15) || !istype(target))
 		return
 	target.Paralyze(4 SECONDS)
-	target.visible_message(span_danger("\The [src] knocks down \the [target]!"), \
-		span_userdanger("\The [src] knocks you down!"))
+	target.visible_message(span_danger(LANG("mob.a428d7ce", list(src, target))), \
+		span_userdanger(LANG("mob.3d2fe270", list(src))))
 
 
 // ****************************

@@ -79,7 +79,7 @@
 		worn_y_offset = -3
 		widen.Scale(1.25, 1)
 		transform = widen
-		user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
+		user.visible_message(span_notice(LANG("obj.484fb830", list(user, src))), span_notice(LANG("obj.53176fbf", list(src))))
 		flags_inv = NONE
 		flags_cover = NONE
 		return CLICK_ACTION_SUCCESS
@@ -88,7 +88,7 @@
 	slot_flags = initial(slot_flags)
 	worn_y_offset = initial(worn_y_offset)
 	transform = initial(transform)
-	user.visible_message(span_notice("[user] unties the neckercheif."), span_notice("You untie the neckercheif."))
+	user.visible_message(span_notice(LANG("obj.c5114452", list(user))), span_notice(LANG("obj.f86fb0d3", null)))
 	flags_inv = initial(flags_inv)
 	flags_cover = initial(flags_cover)
 	return CLICK_ACTION_SUCCESS

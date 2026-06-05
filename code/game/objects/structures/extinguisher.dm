@@ -68,11 +68,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(used_item.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
-		user.balloon_alert(user, "deconstructing cabinet...")
+		user.balloon_alert(user, LANG("obj.d601ee5f", null))
 		used_item.play_tool_sound(src)
 		if(used_item.use_tool(src, user, 60))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			user.balloon_alert(user, "cabinet deconstructed")
+			user.balloon_alert(user, LANG("obj.f0112ce5", null))
 			deconstruct(TRUE)
 		return
 
@@ -83,7 +83,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 			if(!user.transferItemToLoc(used_item, src))
 				return
 			stored_extinguisher = used_item
-			user.balloon_alert(user, "extinguisher stored")
+			user.balloon_alert(user, LANG("obj.1a9661ab", null))
 			update_appearance(UPDATE_ICON)
 			return TRUE
 		else
@@ -102,7 +102,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		return
 	if(stored_extinguisher)
 		user.put_in_hands(stored_extinguisher)
-		user.balloon_alert(user, "extinguisher removed")
+		user.balloon_alert(user, LANG("obj.91cf9b66", null))
 		if(!opened)
 			opened = 1
 			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
@@ -134,7 +134,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 
 /obj/structure/extinguisher_cabinet/proc/toggle_cabinet(mob/user)
 	if(opened && broken)
-		user.balloon_alert(user, "it's broken!")
+		user.balloon_alert(user, LANG("obj.77c0e4a7", null))
 	else
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened

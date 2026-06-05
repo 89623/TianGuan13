@@ -167,13 +167,13 @@
 		to_chat(user, span_warning(LANG("obj.5d3f1a5d", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
-	user.balloon_alert(user, "begins engraving runes...")
+	user.balloon_alert(user, LANG("obj.10c6aebc", null))
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 	if(!do_after(user, 30 SECONDS, target = src))
-		user.visible_message(span_warning("[user]'s engraving was interrupted."))
+		user.visible_message(span_warning(LANG("obj.24513b40", list(user))))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] completes the engraving — the fragment glows faintly."))
+	user.visible_message(span_notice(LANG("obj.aa1f6a22", list(user))))
 	new /obj/item/hearthkin_ship_fragment_active(get_turf(src))
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 	qdel(src)

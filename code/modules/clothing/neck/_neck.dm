@@ -107,8 +107,8 @@
 	// Success!
 	is_tied = !is_tied
 	user.visible_message(
-		span_notice("[user] adjusts [user.p_their()] tie[HAS_TRAIT(user, TRAIT_BALD) ? "" : " and runs a hand across [user.p_their()] head"]."),
-		span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"),
+		span_notice(LANG("obj.eede75bc", list(user, user.p_their(), HAS_TRAIT(user, TRAIT_BALD) ? "" : " and runs a hand across [user.p_their()] head"))),
+		span_notice(LANG("obj.aa8efb3b", list(is_tied ? "tied" : "untied", src))),
 	)
 	update_appearance(UPDATE_ICON)
 	user.update_clothing(ITEM_SLOT_NECK)
@@ -242,7 +242,7 @@
 	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
+	user.visible_message(span_suicide(LANG("obj.14b68f8b", list(user, src, user.p_their(), user.p_they()))))
 	return OXYLOSS
 
 /obj/item/clothing/neck/stethoscope/attack(mob/living/target, mob/living/user)
@@ -270,7 +270,7 @@
 	//determine what specific action we're taking
 	switch (body_part)
 		if(BODY_ZONE_CHEST)//Listening to the chest
-			user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
+			user.visible_message(span_notice(LANG("obj.e41447c5", list(user, src, carbon_patient, body_part))), ignored_mobs = user)
 			if(HAS_TRAIT(user, TRAIT_DEAF))
 				to_chat(user, span_notice(LANG("obj.73dd56a4", list(src, carbon_patient, body_part))))
 				return
@@ -312,7 +312,7 @@
 
 		if(BODY_ZONE_PRECISE_GROIN)//If we're targeting the groin
 			render_list += span_info("You carefully press down on [carbon_patient]'s abdomen:\n")
-			user.visible_message(span_notice("[user] presses their hands against [carbon_patient]'s abdomen."), ignored_mobs = user)
+			user.visible_message(span_notice(LANG("obj.78164d53", list(user, carbon_patient))), ignored_mobs = user)
 
 			//assess abdominal organs
 			var/appendix_okay = TRUE
@@ -346,10 +346,10 @@
 		else//targeting an extremity or the head
 			if(body_part ==  BODY_ZONE_HEAD)
 				render_list += span_info("You carefully press your fingers to [carbon_patient]'s neck:\n")
-				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s neck."), ignored_mobs = user)
+				user.visible_message(span_notice(LANG("obj.c29f8a0a", list(user, carbon_patient))), ignored_mobs = user)
 			else
 				render_list += span_info("You carefully press your fingers to [carbon_patient]'s [body_part]:\n")
-				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s [body_part]."), ignored_mobs = user)
+				user.visible_message(span_notice(LANG("obj.52598343", list(user, carbon_patient, body_part))), ignored_mobs = user)
 
 			var/cached_blood_volume = carbon_patient.get_blood_volume(apply_modifiers = TRUE)
 

@@ -39,11 +39,11 @@
 		return FALSE
 	if (HAS_TRAIT(owner, TRAIT_SHAPESHIFTED))
 		if (feedback)
-			owner.balloon_alert(owner, "not while shapeshifted!")
+			owner.balloon_alert(owner, LANG("datum.bcb9f4a7", null))
 		return FALSE
 	if (!isturf(owner.loc))
 		if (feedback)
-			owner.balloon_alert(owner, "get on the ground!")
+			owner.balloon_alert(owner, LANG("datum.cb9add09", null))
 		return FALSE
 	if (!check_consumed_blood(feedback))
 		return FALSE
@@ -203,7 +203,7 @@
 
 	if (total_consumed_blood < total_blood_required)
 		if (feedback)
-			worm.balloon_alert(worm, "only at [FLOOR(total_consumed_blood / total_blood_required * 100, 1)]% of required growth!")
+			worm.balloon_alert(worm, LANG("datum.c505c45d", list(FLOOR(total_consumed_blood / total_blood_required * 100, 1))))
 		return FALSE
 	return TRUE
 
@@ -323,7 +323,7 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/handle_timer()
-	cocoon.balloon_alert(owner, "polling ghosts")
+	cocoon.balloon_alert(owner, LANG("datum.e5fd6096", null))
 
 	candidates = SSpolling.poll_ghost_candidates(
 		question = "Would you like to become a newly hatched blood worm? (x[num_hatchlings])",
@@ -348,7 +348,7 @@
 		return
 	if (num_candidates <= 0)
 		cancel()
-		owner.balloon_alert(owner, "no candidates!") // We can't host this balloon alert on a deleted cocoon.
+		owner.balloon_alert(owner, LANG("datum.8430d6f7", null)) // We can't host this balloon alert on a deleted cocoon.
 		return
 	if (num_candidates < num_hatchlings && tgui_alert(owner, LANG("datum.18557cf7", list(num_candidates, num_hatchlings)), LANG("datum.52fa9576", null), list("Yes", "No"), 10 SECONDS) != "Yes")
 		cancel()

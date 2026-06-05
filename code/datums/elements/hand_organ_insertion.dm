@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/element/hand_organ_insertion
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
@@ -40,12 +41,12 @@
 		blind_message = span_hear("You hear squelching!")
 	)
 
-	user.balloon_alert(user, "inserting...")
+	user.balloon_alert(user, LANG("datum.14b48e79", null))
 
 	playsound(user, 'sound/items/handling/surgery/organ2.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 
 	if (!do_after(user, insertion_time, extra_checks = CALLBACK(src, PROC_REF(can_insert_organ), user, organ)))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("datum.c67b5d27", null))
 		return
 
 	zone_name = user.parse_zone_with_bodypart(organ.zone)
@@ -56,7 +57,7 @@
 		blind_message = span_hear("You hear a loud, final squelch!")
 	)
 
-	user.balloon_alert(user, "inserted!")
+	user.balloon_alert(user, LANG("datum.863baa0b", null))
 
 	playsound(user, 'sound/items/handling/surgery/organ1.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 	user.temporarilyRemoveItemFromInventory(organ, force = TRUE)
@@ -66,15 +67,15 @@
 
 /datum/element/hand_organ_insertion/proc/can_insert_organ(mob/living/carbon/user, obj/item/organ/organ, feedback = FALSE)
 	if (!user.get_bodypart(deprecise_zone(organ.zone)))
-		user.balloon_alert(user, "you don't have a [parse_zone(organ.zone)]!")
+		user.balloon_alert(user, LANG("datum.9e954968", list(parse_zone(organ.zone))))
 		return FALSE
 
 	var/obj/item/organ/existing_organ = user.get_organ_slot(organ.slot)
 	if (existing_organ)
-		user.balloon_alert(user, "your [existing_organ] [existing_organ.p_are()] in the way!")
+		user.balloon_alert(user, LANG("datum.efd41d03", list(existing_organ, existing_organ.p_are())))
 		return FALSE
 
 	if (!organ.useable)
-		user.balloon_alert(user, "unusable!")
+		user.balloon_alert(user, LANG("datum.1b07c613", null))
 		return FALSE
 	return TRUE

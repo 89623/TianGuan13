@@ -58,13 +58,13 @@
 	if(ismovable(target))
 		var/atom/movable/movable_target = target
 		if(target_needs_anchoring && !movable_target.anchored)
-			user.balloon_alert(user, "[movable_target] must be secured!")
+			user.balloon_alert(user, LANG("datum.f935315f", list(movable_target)))
 			return
 
 	if((required_amount > 1) && istype(source, /obj/item/stack))
 		var/obj/item/stack/source_stack = source
 		if(source_stack.amount < required_amount)
-			user.balloon_alert(user, "need [required_amount] of [source]!")
+			user.balloon_alert(user, LANG("datum.3d9f817c", list(required_amount, source)))
 			return
 
 	INVOKE_ASYNC(src, PROC_REF(loom_me), source, user, target)
@@ -83,7 +83,7 @@
 
 			if(!stack_we_use.use(required_amount))
 				if (!spawning_amount)
-					user.balloon_alert(user, "need [required_amount] of [source]!")
+					user.balloon_alert(user, LANG("datum.3d9f817c", list(required_amount, source)))
 				break
 
 			spawning_amount++
@@ -91,7 +91,7 @@
 
 	else
 		if(!do_after(user, loom_time * skill_modifier, target)) //NOVA EDIT ADDITION: Production Skill (Three Skills)
-			user.balloon_alert(user, "interrupted!")
+			user.balloon_alert(user, LANG("datum.c67b5d27", null))
 			return
 
 		qdel(source)

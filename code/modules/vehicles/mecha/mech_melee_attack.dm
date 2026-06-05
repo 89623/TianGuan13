@@ -27,7 +27,7 @@
 			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("turf.930925c9", list(mecha_attacker, src))), span_danger(LANG("turf.b9c76307", list(src))), null, COMBAT_MESSAGE_RANGE)
 	if(prob(hardness + mecha_attacker.force) && mecha_attacker.force > 20)
 		dismantle_wall(1)
 		playsound(src, mecha_attacker.destroy_wall_sound, 100, TRUE)
@@ -48,7 +48,7 @@
 			playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("obj.930925c9", list(mecha_attacker, src))), span_danger(LANG("obj.b9c76307", list(src))), null, COMBAT_MESSAGE_RANGE)
 	..()
 	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
@@ -64,7 +64,7 @@
 			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("obj.930925c9", list(mecha_attacker, src))), span_danger(LANG("obj.b9c76307", list(src))), null, COMBAT_MESSAGE_RANGE)
 	..()
 	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
@@ -82,7 +82,7 @@
 			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] smashes [src]!"), span_danger("You smash [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("obj.7a108798", list(mecha_attacker, src))), span_danger(LANG("obj.0bb07f95", list(src))), null, COMBAT_MESSAGE_RANGE)
 	// Additionally destroy any grilles
 	for(var/obj/structure/grille/grille in src.loc)
 		if(istype(grille))
@@ -102,7 +102,7 @@
 			playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("obj.930925c9", list(mecha_attacker, src))), span_danger(LANG("obj.b9c76307", list(src))), null, COMBAT_MESSAGE_RANGE)
 	..()
 	return take_damage(mecha_attacker.force, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker))
 

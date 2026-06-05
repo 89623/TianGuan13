@@ -105,7 +105,7 @@
 
 
 	user.visible_message(
-		span_notice("\The [user] points \the [src] at \the [scanned_atom] and performs a forensic scan."),
+		span_notice(LANG("obj.714a7407", list(user, src, scanned_atom))),
 		ignored_mobs = user
 	)
 	to_chat(user, span_notice(LANG("obj.b3852269", list(scanned_atom))))

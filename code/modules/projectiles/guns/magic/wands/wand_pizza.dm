@@ -82,7 +82,7 @@
 
 					var/mob/living/carbon/edward_pizza_hands = lunch_haver
 					edward_pizza_hands.make_item_prosthetic(the_piz, hand_index)
-					edward_pizza_hands.visible_message(span_warning("[edward_pizza_hands]'s [hand_zone] is transformed into \a [the_piz]!"))
+					edward_pizza_hands.visible_message(span_warning(LANG("obj.8144156c", list(edward_pizza_hands, hand_zone, the_piz))))
 
 	lunch_haver.set_combat_mode(FALSE) // You can't eat pizza if you're on combat mode
 	the_piz.attack(lunch_haver, lunch_haver)

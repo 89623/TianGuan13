@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/storage/fish_case
 	max_slots = 1
 	max_specific_storage = WEIGHT_CLASS_GIGANTIC
@@ -10,7 +11,7 @@
 
 	if(!HAS_TRAIT(to_insert, TRAIT_AQUARIUM_CONTENT))
 		if(messages && user)
-			user.balloon_alert(user, "can't hold!")
+			user.balloon_alert(user, LANG("datum.60b37357", null))
 		return FALSE
 	return .
 

@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(battle_royale_regions, list(
 		qdel(encouragement_implant) // no balloon alert - feedback is usually provided by the implant
 		return ITEM_INTERACT_BLOCKING
 
-	potential_winner.balloon_alert(user, "implanted")
+	potential_winner.balloon_alert(user, LANG("obj.5d667473", null))
 	SEND_SIGNAL(src, COMSIG_ROYALE_IMPLANTED, encouragement_implant)
 	return ITEM_INTERACT_SUCCESS
 

@@ -965,10 +965,10 @@
 	if(incapacitated)
 		return FALSE
 	if(!HAS_TRAIT(target, TRAIT_CAN_MOUNT_CYBORGS))
-		target.visible_message(span_warning("[target] really can't seem to mount [src]..."))
+		target.visible_message(span_warning(LANG("mob.d388ba33", list(target, src))))
 		return FALSE
 	if(model && !model.allow_riding)
-		target.visible_message(span_boldwarning("Unfortunately, [target] just can't seem to hold onto [src]!"))
+		target.visible_message(span_boldwarning(LANG("mob.d241b7c5", list(target, src))))
 		return FALSE
 
 	return ..()

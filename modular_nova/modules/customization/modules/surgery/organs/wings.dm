@@ -92,7 +92,7 @@
 	ADD_TRAIT(owner, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
 	if (owner.throw_at(dash_target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE, callback = TRAIT_CALLBACK_REMOVE(owner, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)))
 		playsound(owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE, TRUE)
-		owner.visible_message(span_warning("[usr] propels themselves forwards with a heavy wingbeat!"))
+		owner.visible_message(span_warning(LANG("datum.d2e165ec", list(usr))))
 		COOLDOWN_START(src, dash_cooldown, 6 SECONDS)
 		var/mob/living/dash_user = owner
 		if(istype(dash_user))
@@ -157,11 +157,11 @@
 		to_chat(user, span_warning(LANG("obj.a8e0a6a8", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(!isopenspaceturf(above) || !above.Adjacent(target)) //are we below a hole, is the target blocked, is the target adjacent to our hole
-		user.balloon_alert(user, "blocked!")
+		user.balloon_alert(user, LANG("obj.62d831a3", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/away_dir = get_dir(above, target)
-	user.visible_message(span_notice("[user] begins pushing themselves upwards with their wings!"), span_notice("Your wings start fluttering violently as you begin going upwards."))
+	user.visible_message(span_notice(LANG("obj.0f397e5e", list(user))), span_notice(LANG("obj.d36c236b", null)))
 	playsound(target, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50) //plays twice so people above and below can hear
 	playsound(user_turf, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50)
 	var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(target, away_dir), new /obj/effect/temp_visual/climbing_hook(user_turf, away_dir))

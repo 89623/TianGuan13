@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/alien/hide
 	name = "Hide"
 	desc = "Allows you to hide beneath tables and certain objects."
@@ -10,16 +11,16 @@
 	if(owner.layer == hide_layer)
 		owner.layer = initial(owner.layer)
 		owner.visible_message(
-			span_notice("[owner] slowly peeks up from the ground..."),
-			span_noticealien("You stop hiding."),
+			span_notice(LANG("datum.6a0aef44", list(owner))),
+			span_noticealien(LANG("datum.7ecbf127", null)),
 		)
 		ADD_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
 
 	else
 		owner.layer = hide_layer
 		owner.visible_message(
-			span_name("[owner] scurries to the ground!"),
-			span_noticealien("You are now hiding."),
+			span_name(LANG("datum.ae59a15c", list(owner))),
+			span_noticealien(LANG("datum.7b68aaca", null)),
 		)
 		REMOVE_TRAIT(owner, TRAIT_IGNORE_ELEVATION, ACTION_TRAIT)
 

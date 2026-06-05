@@ -77,7 +77,7 @@
 	if(HAS_TRAIT_FROM(user, TRAIT_PACIFISM, type))
 		to_chat(user, span_warning(LANG("obj.bf1c91c7", null)))
 		if(do_after(user, 5 SECONDS, target = user))
-			user.say("Yeah this Hippopotamus thing isn't working out. I quit!", forced = "hippocratic hippocrisy")
+			user.say(LANG("obj.07e1af13", null), forced = "hippocratic hippocrisy")
 			REMOVE_TRAIT(user, TRAIT_PACIFISM, type)
 
 	// they can still do it for rp purposes
@@ -87,20 +87,20 @@
 
 	to_chat(user, span_notice(LANG("obj.cb52973c", null)))
 	if(do_after(user, 4 SECONDS, target = user))
-		user.say("I swear to fulfill, to the best of my ability and judgment, this covenant:", forced = "hippocratic oath")
+		user.say(LANG("obj.57e46a08", null), forced = "hippocratic oath")
 	else
 		return fuck_it_up(user)
 	if(do_after(user, 2 SECONDS, target = user))
-		user.say("I will apply, for the benefit of the sick, all measures that are required, avoiding those twin traps of overtreatment and therapeutic nihilism.", forced = "hippocratic oath")
+		user.say(LANG("obj.3b1f3d77", null), forced = "hippocratic oath")
 	else
 		return fuck_it_up(user)
 	if(do_after(user, 3 SECONDS, target = user))
-		user.say("I will remember that I remain a member of society, with special obligations to all my fellow human beings, those sound of mind and body as well as the infirm.", forced = "hippocratic oath")
+		user.say(LANG("obj.4e3011fc", null), forced = "hippocratic oath")
 	else
 
 		return fuck_it_up(user)
 	if(do_after(user, 3 SECONDS, target = user))
-		user.say("If I do not violate this oath, may I enjoy life and art, respected while I live and remembered with affection thereafter. May I always act so as to preserve the finest traditions of my calling and may I long experience the joy of healing those who seek my help.", forced = "hippocratic oath")
+		user.say(LANG("obj.e8d9daae", null), forced = "hippocratic oath")
 	else
 		return fuck_it_up(user)
 

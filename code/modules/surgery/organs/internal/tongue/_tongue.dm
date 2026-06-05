@@ -259,11 +259,11 @@
 
 	if(isnull(statue))
 		if(feedback)
-			owner.balloon_alert(owner, "you can't seem to statue-ize!")
+			owner.balloon_alert(owner, LANG("datum.1db49ae6", null))
 		return FALSE // permanently bricked
 	if(owner.stat != CONSCIOUS)
 		if(feedback)
-			owner.balloon_alert(owner, "you're too weak!")
+			owner.balloon_alert(owner, LANG("datum.65a3f894", null))
 		return FALSE
 
 	return TRUE
@@ -274,13 +274,13 @@
 	var/is_statue = owner.loc == statue
 	if(!is_statue)
 		owner.visible_message(
-			span_notice("[owner] strikes a glorious pose."),
-			span_notice("You strike a glorious pose as you become a statue!"),
+			span_notice(LANG("datum.f310af96", list(owner))),
+			span_notice(LANG("datum.dd675abf", null)),
 		)
 
 	owner.balloon_alert(owner, is_statue ? "breaking free..." : "striking a pose...")
 	if(!do_after(owner, (is_statue ? 0.5 SECONDS : 3 SECONDS), target = get_turf(owner)))
-		owner.balloon_alert(owner, "interrupted!")
+		owner.balloon_alert(owner, LANG("datum.c67b5d27", null))
 		return
 
 	StartCooldown()
@@ -289,15 +289,15 @@
 	statue.desc = "statue depicting [owner.real_name]"
 
 	if(is_statue)
-		statue.visible_message(span_danger("[statue] becomes animated!"))
+		statue.visible_message(span_danger(LANG("datum.9c94ee86", list(statue))))
 		owner.forceMove(get_turf(statue))
 		statue.moveToNullspace()
 		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 	else
 		owner.visible_message(
-			span_notice("[owner] hardens into a silver statue."),
-			span_notice("You have become a silver statue!"),
+			span_notice(LANG("datum.aa360fa0", list(owner))),
+			span_notice(LANG("datum.b366833e", null)),
 		)
 		statue.set_visuals(owner.appearance)
 		statue.forceMove(get_turf(owner))
@@ -393,7 +393,7 @@
 	if(tongue.mothership == mothership)
 		to_chat(tongue_holder, span_notice(LANG("obj.927b529d", list(src))))
 
-	tongue_holder.visible_message(span_notice("[tongue_holder] holds [src] in their hands, and concentrates for a moment."), span_notice("You attempt to modify the attenuation of [src]."))
+	tongue_holder.visible_message(span_notice(LANG("obj.4cf26e6b", list(tongue_holder, src))), span_notice(LANG("obj.f5ce4436", list(src))))
 	if(do_after(tongue_holder, delay=15, target=src))
 		to_chat(tongue_holder, span_notice(LANG("obj.58fe1589", list(src))))
 		mothership = tongue.mothership

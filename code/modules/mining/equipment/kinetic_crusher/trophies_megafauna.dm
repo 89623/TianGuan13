@@ -230,10 +230,10 @@
 		return
 	var/mob/living/LivingUser = user
 	if(next_use_time > world.time)
-		LivingUser.visible_message(span_warning("[LivingUser] shakes the [src], but nothing happens..."))
+		LivingUser.visible_message(span_warning(LANG("obj.86997935", list(LivingUser, src))))
 		to_chat(LivingUser, LANG("obj.df0fd23d", null))
 		return
-	LivingUser.visible_message(span_boldwarning("[LivingUser] shakes the [src] and summons a legion skull!"))
+	LivingUser.visible_message(span_boldwarning(LANG("obj.8c8cf59b", list(LivingUser, src))))
 
 	var/mob/living/basic/mining/legion_brood/minion = new (LivingUser.loc)
 	minion.assign_creator(LivingUser)

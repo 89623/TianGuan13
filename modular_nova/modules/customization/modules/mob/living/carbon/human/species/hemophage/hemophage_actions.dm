@@ -50,10 +50,10 @@
 	if(!tumor || !istype(tumor)) // This shouldn't happen, but you can never be too careful.
 		return
 
-	owner.balloon_alert(owner, "[tumor.is_dormant ? "leaving" : "entering"] dormant state")
+	owner.balloon_alert(owner, LANG("datum.c3b43a81", list(tumor.is_dormant ? "leaving" : "entering")))
 
 	if(!do_after(owner, 3 SECONDS))
-		owner.balloon_alert(owner, "cancelled state change")
+		owner.balloon_alert(owner, LANG("datum.be74d0de", null))
 		return
 
 	to_chat(owner, span_notice("[tumor.is_dormant ? DORMANT_STATE_END_MESSAGE : DORMANT_STATE_START_MESSAGE]"))
@@ -91,12 +91,12 @@
 		return
 
 	if(living_owner.get_blood_volume() <= MINIMUM_VOLUME_FOR_REGEN)
-		living_owner.balloon_alert(living_owner, "blood level too low!")
+		living_owner.balloon_alert(living_owner, LANG("datum.8f68b52e", null))
 		return
 
 	if(living_owner.has_status_effect(/datum/status_effect/hemokinetic_regen))
 		living_owner.remove_status_effect(/datum/status_effect/hemokinetic_regen)
-		living_owner.balloon_alert(living_owner, "hemokinetic regen deactivated!")
+		living_owner.balloon_alert(living_owner, LANG("datum.7df765b3", null))
 	else
 		living_owner.apply_status_effect(/datum/status_effect/hemokinetic_regen)
 
@@ -131,7 +131,7 @@
 		return
 
 	if(carbon_owner.get_blood_volume() <= MINIMUM_VOLUME_FOR_REGEN)
-		carbon_owner.balloon_alert(carbon_owner, "blood level too low!")
+		carbon_owner.balloon_alert(carbon_owner, LANG("datum.8f68b52e", null))
 		return
 
 	// Fully clot one wound per use, priotizing the most oozy one.
@@ -157,7 +157,7 @@
 		carbon_owner.adjust_blood_volume(-50)
 		return ..()
 
-	carbon_owner.balloon_alert(carbon_owner, "no clottable wounds!")
+	carbon_owner.balloon_alert(carbon_owner, LANG("datum.988508cb", null))
 
 
 /// Called when the limb takes damage, the previous wounds return as they were before they got clotted.

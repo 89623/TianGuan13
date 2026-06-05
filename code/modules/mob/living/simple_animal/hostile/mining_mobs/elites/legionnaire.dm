@@ -227,7 +227,7 @@
 	else
 		smoke_location = get_turf(src)
 	if(myhead != null)
-		myhead.visible_message(span_boldwarning("[myhead] spews smoke from its maw!"))
+		myhead.visible_message(span_boldwarning(LANG("mob.227eb0f0", list(myhead))))
 	else if(!has_head)
 		visible_message(span_boldwarning(LANG("mob.7cbf7bc9", list(src))))
 	else

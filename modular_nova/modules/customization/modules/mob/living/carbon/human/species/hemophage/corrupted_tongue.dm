@@ -55,20 +55,20 @@
  */
 /datum/action/cooldown/hemophage/drain_victim/proc/has_valid_target(mob/living/carbon/hemophage)
 	if(!hemophage.pulling || !iscarbon(hemophage.pulling) || isalien(hemophage.pulling))
-		hemophage.balloon_alert(hemophage, "not pulling any valid target!")
+		hemophage.balloon_alert(hemophage, LANG("datum.bc764ad9", null))
 		return FALSE
 
 	var/mob/living/carbon/victim = hemophage.pulling
 	if(hemophage.get_blood_volume() >= BLOOD_VOLUME_MAXIMUM)
-		hemophage.balloon_alert(hemophage, "already full!")
+		hemophage.balloon_alert(hemophage, LANG("datum.e28c7f55", null))
 		return FALSE
 
 	if(victim.stat == DEAD)
-		hemophage.balloon_alert(hemophage, "needs a living victim!")
+		hemophage.balloon_alert(hemophage, LANG("datum.3b30952e", null))
 		return FALSE
 
 	if(!victim.get_blood_volume() || (victim.dna && ((HAS_TRAIT(victim, TRAIT_NOBLOOD)) || (victim.get_blood_reagent() != hemophage.get_blood_reagent()))))
-		hemophage.balloon_alert(hemophage, "[victim] doesn't have suitable blood!")
+		hemophage.balloon_alert(hemophage, LANG("datum.110f9880", list(victim)))
 		return FALSE
 
 	if(victim.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
@@ -82,7 +82,7 @@
 		return FALSE
 
 	if(ismonkey(victim) && (hemophage.get_blood_volume() >= BLOOD_VOLUME_NORMAL))
-		hemophage.balloon_alert(hemophage, "their inferior blood cannot sate you any further!")
+		hemophage.balloon_alert(hemophage, LANG("datum.8d41f733", null))
 		return FALSE
 
 	return TRUE
@@ -120,7 +120,7 @@
 	StartCooldown()
 
 	if(!do_after(hemophage, 3 SECONDS, target = victim))
-		hemophage.balloon_alert(hemophage, "stopped feeding")
+		hemophage.balloon_alert(hemophage, LANG("datum.4b403578", null))
 		return
 
 	var/drained_blood = min(victim.get_blood_volume(), HEMOPHAGE_DRAIN_AMOUNT, blood_volume_difference)

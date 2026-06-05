@@ -766,10 +766,10 @@
  */
 /obj/structure/transport/linear/proc/show_fluff_message(direction, mob/user)
 	if(direction == UP)
-		user.visible_message(span_notice("[user] moves the lift upwards."), span_notice("You move the lift upwards."))
+		user.visible_message(span_notice(LANG("obj.83cdae62", list(user))), span_notice(LANG("obj.2517ed54", null)))
 
 	if(direction == DOWN)
-		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
+		user.visible_message(span_notice(LANG("obj.1636dcb4", list(user))), span_notice(LANG("obj.955b533d", null)))
 
 /obj/machinery/door/poddoor/lift
 	name = "elevator door"

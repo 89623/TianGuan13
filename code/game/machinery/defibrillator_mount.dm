@@ -98,8 +98,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		if(HAS_TRAIT(new_defib, TRAIT_NODROP) || !user.transferItemToLoc(new_defib, src))
 			to_chat(user, span_warning(LANG("obj.1dbf8014", list(new_defib))))
 			return
-		user.visible_message(span_notice("[user] hooks up [new_defib] to [src]!"), \
-		span_notice("You press [new_defib] into the mount, and it clicks into place."))
+		user.visible_message(span_notice(LANG("obj.4f2c832c", list(user, new_defib, src))), \
+		span_notice(LANG("obj.a44cf35f", list(new_defib))))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		// Make sure the defib is set before processing begins.
 		defib = new_defib
@@ -128,13 +128,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	if(!clamps_locked)
 		to_chat(user, span_warning(LANG("obj.6b897277", list(src))))
 		return TRUE
-	user.visible_message(span_notice("[user] presses [multitool] into [src]'s ID slot..."), \
-	span_notice("You begin overriding the clamps on [src]..."))
+	user.visible_message(span_notice(LANG("obj.34d15c2f", list(user, multitool, src))), \
+	span_notice(LANG("obj.a051a656", list(src))))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	if(!do_after(user, 10 SECONDS, target = src) || !clamps_locked)
 		return
-	user.visible_message(span_notice("[user] pulses [multitool], and [src]'s clamps slide up."), \
-	span_notice("You override the locking clamps on [src]!"))
+	user.visible_message(span_notice(LANG("obj.64dec7f6", list(user, multitool, src))), \
+	span_notice(LANG("obj.9bffaec0", list(src))))
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	clamps_locked = FALSE
 	update_appearance()
@@ -164,11 +164,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		return CLICK_ACTION_BLOCKING
 	if(!user.put_in_hands(defib))
 		to_chat(user, span_warning(LANG("obj.1dde8a16", null)))
-		user.visible_message(span_notice("[user] unhooks [defib] from [src], dropping it on the floor."), \
-		span_notice("You slide out [defib] from [src] and unhook the charging cables, dropping it on the floor."))
+		user.visible_message(span_notice(LANG("obj.aa52b2dc", list(user, defib, src))), \
+		span_notice(LANG("obj.308f5f76", list(defib, src))))
 	else
-		user.visible_message(span_notice("[user] unhooks [defib] from [src]."), \
-		span_notice("You slide out [defib] from [src] and unhook the charging cables."))
+		user.visible_message(span_notice(LANG("obj.752093ee", list(user, defib, src))), \
+		span_notice(LANG("obj.1e4ff0bb", list(defib, src))))
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	return CLICK_ACTION_SUCCESS
 

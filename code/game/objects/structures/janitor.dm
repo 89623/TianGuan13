@@ -240,7 +240,7 @@
 		balloon_alert(user, LANG("obj.e7ae6c26", null))
 		return ITEM_INTERACT_SUCCESS
 	user.balloon_alert_to_viewers("starts dumping [src]...", "started dumping [src]...")
-	user.visible_message(span_notice("[user] begins to dumping the contents of [src]'s mop bucket."), span_notice("You begin to dump the contents of [src]'s mop bucket..."))
+	user.visible_message(span_notice(LANG("obj.be83cc5e", list(user, src))), span_notice(LANG("obj.f7d8c6f7", list(src))))
 	if(tool.use_tool(src, user, 5 SECONDS, volume = 50))
 		balloon_alert(user, LANG("obj.19759518", list(src)))
 		to_chat(user, span_notice(LANG("obj.f92781e2", list(src))))

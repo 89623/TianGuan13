@@ -237,13 +237,13 @@
 
 /obj/item/mod/core/standard/proc/mod_uninstall_cell(mob/living/user)
 	if(!cell)
-		mod.balloon_alert(user, "no cell!")
+		mod.balloon_alert(user, LANG("obj.0210855e", null))
 		return
-	mod.balloon_alert(user, "removing cell...")
+	mod.balloon_alert(user, LANG("obj.d17f808d", null))
 	if(!do_after(user, 1.5 SECONDS, target = mod))
-		mod.balloon_alert(user, "interrupted!")
+		mod.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
-	mod.balloon_alert(user, "cell removed")
+	mod.balloon_alert(user, LANG("obj.0dfdca6e", null))
 	playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	var/obj/item/cell_to_move = cell
 	cell_to_move.forceMove(drop_location())
@@ -261,15 +261,15 @@
 	if(!istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		return FALSE
 	if(!mod.open)
-		mod.balloon_alert(user, "cover closed!")
+		mod.balloon_alert(user, LANG("obj.252eb885", null))
 		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(cell)
-		mod.balloon_alert(user, "already has cell!")
+		mod.balloon_alert(user, LANG("obj.c7ff5001", null))
 		playsound(mod, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	install_cell(attacking_item)
-	mod.balloon_alert(user, "cell installed")
+	mod.balloon_alert(user, LANG("obj.0e9b65ee", null))
 	playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	return TRUE
 

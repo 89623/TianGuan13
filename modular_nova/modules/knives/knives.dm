@@ -38,7 +38,7 @@
 /obj/item/storage/belt/bowie_sheath/click_alt(mob/user)
 	if(length(contents))
 		var/obj/item/knife = contents[1]
-		user.visible_message(span_notice("[user] takes [knife] out of [src]."), span_notice("You take [knife] out of [src]."))
+		user.visible_message(span_notice(LANG("obj.1f34f194", list(user, knife, src))), span_notice(LANG("obj.604c7b94", list(knife, src))))
 		user.put_in_hands(knife)
 		update_appearance()
 		return CLICK_ACTION_SUCCESS

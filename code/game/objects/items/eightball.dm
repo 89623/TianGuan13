@@ -67,7 +67,7 @@
 		to_chat(user, span_warning(LANG("obj.7d63c9c3", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] starts shaking [src]."), span_notice("You start shaking [src]."), span_hear("You hear shaking and sloshing."))
+	user.visible_message(span_notice(LANG("obj.bc30abc3", list(user, src))), span_notice(LANG("obj.33c6ea09", list(src))), span_hear(LANG("obj.e1b985f1", null)))
 
 	shaking = TRUE
 

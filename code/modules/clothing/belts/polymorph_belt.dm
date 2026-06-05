@@ -156,12 +156,12 @@
 	animate(transform = matrix() * 1.3, time = animate_step, easing = SINE_EASING)
 	animate(transform = matrix() * 0.1, time = animate_step, easing = SINE_EASING)
 
-	cast_on.balloon_alert(cast_on, "transforming...")
+	cast_on.balloon_alert(cast_on, LANG("datum.0d60db5c", null))
 	if (!do_after(cast_on, delay = channel_time, target = cast_on))
 		animate(cast_on, transform = matrix(), time = 0, easing = SINE_EASING)
 		cast_on.transform = old_transform
 		return . | SPELL_CANCEL_CAST
-	cast_on.visible_message(span_warning("[cast_on]'s body rearranges itself with a horrible crunching sound!"))
+	cast_on.visible_message(span_warning(LANG("datum.ec00ef93", list(cast_on))))
 	playsound(cast_on, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/after_cast(atom/cast_on)

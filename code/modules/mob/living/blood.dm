@@ -246,7 +246,7 @@
 				to_chat(src, span_userdanger(LANG("mob.1ddcb441", null)))
 				// NOVA EDIT ADDITION START
 				if(ishemophage(src))
-					src.visible_message(span_warning("[src] convulses before crumpling to the floor, black veins beginning to throb outwardly along their body."), ignored_mobs = src)
+					src.visible_message(span_warning(LANG("mob.efe7df43", list(src))), ignored_mobs = src)
 				// NOVA EDIT ADDITION END
 		// Instantly die upon this threshold
 		if(-INFINITY to BLOOD_VOLUME_SURVIVE)

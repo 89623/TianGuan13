@@ -137,8 +137,8 @@
 /obj/machinery/replicator/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.item_flags & (ABSTRACT | DROPDEL))
 		user.visible_message(
-			span_notice("[user] tries to insert [attacking_item] into [src], but the opening is too small."),
-			span_notice("[attacking_item] doesn't fit into [src]."),
+			span_notice(LANG("obj.41238d7e", list(user, attacking_item, src))),
+			span_notice(LANG("obj.a9758700", list(attacking_item, src))),
 		)
 		return
 	if(!user.transferItemToLoc(attacking_item, src))

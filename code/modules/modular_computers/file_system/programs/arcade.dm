@@ -167,7 +167,7 @@
 				to_chat(gamer, span_notice(LANG("datum.8f26e725", null)))
 				return
 			else
-				computer.visible_message(span_notice("\The [computer] prints out paper."))
+				computer.visible_message(span_notice(LANG("datum.a6e88e99", list(computer))))
 				if(ticket_count >= 1)
 					new /obj/item/stack/arcadeticket((get_turf(computer)))
 					to_chat(gamer, span_notice(LANG("datum.a21fb8ef", list(computer))))

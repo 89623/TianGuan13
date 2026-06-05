@@ -61,7 +61,7 @@
 
 /turf/open/floor/catwalk_floor/crowbar_act(mob/user, obj/item/crowbar)
 	if(covered)
-		user.balloon_alert(user, "remove cover first!")
+		user.balloon_alert(user, LANG("turf.627322fd", null))
 		return FALSE
 	. = ..()
 

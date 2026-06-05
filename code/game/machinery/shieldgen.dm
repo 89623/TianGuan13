@@ -120,7 +120,7 @@
 		if(QDELING(parent_rune))
 			parent_rune = null
 			return ..()
-		parent_rune.visible_message(span_danger("The [parent_rune] fades away as [src] is destroyed!"))
+		parent_rune.visible_message(span_danger(LANG("obj.dd8bb783", list(parent_rune, src))))
 		QDEL_NULL(parent_rune)
 	return ..()
 
@@ -199,15 +199,15 @@
 		return
 
 	if (active)
-		user.visible_message(span_notice("[user] deactivated \the [src]."), \
-			span_notice("You deactivate \the [src]."), \
-			span_hear("You hear heavy droning fade out."))
+		user.visible_message(span_notice(LANG("obj.b32c9118", list(user, src))), \
+			span_notice(LANG("obj.03d7907e", list(src))), \
+			span_hear(LANG("obj.90862691", null)))
 		shields_down()
 	else
 		if(anchored)
-			user.visible_message(span_notice("[user] activated \the [src]."), \
-				span_notice("You activate \the [src]."), \
-				span_hear("You hear heavy droning."))
+			user.visible_message(span_notice(LANG("obj.dacba0d2", list(user, src))), \
+				span_notice(LANG("obj.41ddd503", list(src))), \
+				span_hear(LANG("obj.b290d1db", null)))
 			shields_up()
 		else
 			to_chat(user, span_warning(LANG("obj.110e25bd", null)))
@@ -501,15 +501,15 @@
 		return
 
 	if(active)
-		user.visible_message(span_notice("[user] turned \the [src] off."), \
-			span_notice("You turn off \the [src]."), \
-			span_hear("You hear heavy droning fade out."))
+		user.visible_message(span_notice(LANG("obj.a3f2f5d9", list(user, src))), \
+			span_notice(LANG("obj.67caf9d4", list(src))), \
+			span_hear(LANG("obj.90862691", null)))
 		deactivate()
 		user.log_message("deactivated [src].", LOG_GAME)
 	else
-		user.visible_message(span_notice("[user] turned \the [src] on."), \
-			span_notice("You turn on \the [src]."), \
-			span_hear("You hear heavy droning."))
+		user.visible_message(span_notice(LANG("obj.876889d5", list(user, src))), \
+			span_notice(LANG("obj.756bfe56", list(src))), \
+			span_hear(LANG("obj.b290d1db", null)))
 		activate()
 		user.log_message("activated [src].", LOG_GAME)
 	add_fingerprint(user)

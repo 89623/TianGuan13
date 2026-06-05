@@ -215,8 +215,8 @@
 	if(isskeleton(user) || iszombie(user))
 		to_chat(user, span_notice(LANG("obj.4ef15054", null)))
 	else
-		user.visible_message(span_warning("[user] is violently pulled into the link!"), \
-							span_userdanger("Touching the portal, you are quickly pulled through into a world of unimaginable horror!"))
+		user.visible_message(span_warning(LANG("obj.0a35c4b6", list(user))), \
+							span_userdanger(LANG("obj.0293a5ce", null)))
 		contents.Add(user)
 
 /obj/structure/spawner/nether/process(seconds_per_tick)

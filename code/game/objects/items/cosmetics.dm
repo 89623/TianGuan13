@@ -155,17 +155,17 @@
 		return
 
 	if(target == user)
-		user.visible_message(span_notice("[user] does [user.p_their()] lips with \the [src]."), \
-			span_notice("You take a moment to apply \the [src]. Perfect!"))
+		user.visible_message(span_notice(LANG("obj.977b44d3", list(user, user.p_their(), src))), \
+			span_notice(LANG("obj.49bba65b", list(src))))
 		target.update_lips(style, lipstick_color, lipstick_trait)
 		return
 
-	user.visible_message(span_warning("[user] begins to do [target]'s lips with \the [src]."), \
-		span_notice("You begin to apply \the [src] on [target]'s lips..."))
+	user.visible_message(span_warning(LANG("obj.322af481", list(user, target, src))), \
+		span_notice(LANG("obj.924ee509", list(src, target))))
 	if(!do_after(user, 2 SECONDS, target = target))
 		return
-	user.visible_message(span_notice("[user] does [target]'s lips with \the [src]."), \
-		span_notice("You apply \the [src] on [target]'s lips."))
+	user.visible_message(span_notice(LANG("obj.d6dd2418", list(user, target, src))), \
+		span_notice(LANG("obj.e889d01f", list(src, target))))
 	target.update_lips(style, lipstick_color, lipstick_trait)
 
 //you can wipe off lipstick with paper!
@@ -179,12 +179,12 @@
 		target.update_lips(null)
 		return
 
-	user.visible_message(span_warning("[user] begins to wipe [target]'s lipstick off with \the [src]."), \
-		span_notice("You begin to wipe off [target]'s lipstick..."))
+	user.visible_message(span_warning(LANG("obj.9930fd7e", list(user, target, src))), \
+		span_notice(LANG("obj.f0941421", list(target))))
 	if(!do_after(user, 1 SECONDS, target = target))
 		return
-	user.visible_message(span_notice("[user] wipes [target]'s lipstick off with \the [src]."), \
-		span_notice("You wipe off [target]'s lipstick."))
+	user.visible_message(span_notice(LANG("obj.3df4cd9e", list(user, target, src))), \
+		span_notice(LANG("obj.2de68598", list(target))))
 	target.update_lips(null)
 
 /* NOVA EDIT REMOVAL

@@ -126,7 +126,7 @@
 	SIGNAL_HANDLER
 	enabled = !enabled
 	var/atom/host = parent
-	host.balloon_alert(user, "trail [enabled ? "on" : "off"]")
+	host.balloon_alert(user, LANG("datum.886d6bfb", list(enabled ? "on" : "off")))
 	refresh_ray()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

@@ -34,5 +34,5 @@
 		return ITEM_INTERACT_BLOCKING
 	if(!container.reagents.add_reagent(reagent_to_extract, rand(5, 10)))
 		to_chat(user, span_warning(LANG("datum.8e2d390c", list(container))))
-	user.visible_message(span_notice("[user] scoops [LOWER_TEXT(reagent_to_extract::name)] from [source] with [container]."), span_notice("You scoop out [LOWER_TEXT(reagent_to_extract::name)] from [source] using [container]."))
+	user.visible_message(span_notice(LANG("datum.14a5f544", list(user, LOWER_TEXT(reagent_to_extract::name), source, container))), span_notice(LANG("datum.c775c2bb", list(LOWER_TEXT(reagent_to_extract::name), source, container))))
 	return ITEM_INTERACT_SUCCESS

@@ -26,7 +26,7 @@
 		contains_type = get_gift_type()
 
 /obj/item/gift/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] peeks inside [src] and cries [user.p_them()]self to death! It looks like [user.p_they()] [user.p_were()] on the naughty list..."))
+	user.visible_message(span_suicide(LANG("obj.43607308", list(user, src, user.p_them(), user.p_they(), user.p_were()))))
 	return BRUTELOSS
 
 /obj/item/gift/examine(mob/user)
@@ -44,9 +44,9 @@
 	var/obj/item/thing = new contains_type(get_turf(user))
 
 	if (QDELETED(thing)) //might contain something like metal rods that might merge with a stack on the ground
-		user.visible_message(span_danger("Oh no! The present that [user] opened had nothing inside it!"))
+		user.visible_message(span_danger(LANG("obj.45dcd969", list(user))))
 	else
-		user.visible_message(span_notice("[user] unwraps \the [src], finding \a [thing] inside!"))
+		user.visible_message(span_notice(LANG("obj.e6d1a6be", list(user, src, thing))))
 		user.investigate_log("has unwrapped a present containing [thing.type].", INVESTIGATE_PRESENTS)
 		user.put_in_hands(thing)
 		thing.add_fingerprint(user)

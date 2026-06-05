@@ -192,17 +192,17 @@
 	possible_transfer_amounts = list(2,5)
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.7ad276d9", list(user, src, user.p_their(), user.p_theyre()))))
 	if(do_after(user, 3 SECONDS, user))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
-			user.visible_message(span_suicide("[user] pulls the trigger!"))
+			user.visible_message(span_suicide(LANG("obj.3153b1be", list(user))))
 			spray(user, user)
 			return BRUTELOSS
 		else
-			user.visible_message(span_suicide("[user] pulls the trigger...but \the [src] is empty!"))
+			user.visible_message(span_suicide(LANG("obj.37fbc2b0", list(user, src))))
 			return SHAME
 	else
-		user.visible_message(span_suicide("[user] decided life was worth living."))
+		user.visible_message(span_suicide(LANG("obj.5796a762", list(user))))
 		return MANUAL_SUICIDE_NONLETHAL
 
 //spray tan
@@ -233,7 +233,7 @@
 	list_reagents = null
 
 /obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!"))
+	user.visible_message(span_suicide(LANG("obj.2bbecf09", list(user, src, user.p_theyre()))))
 	return OXYLOSS
 
 //water flower

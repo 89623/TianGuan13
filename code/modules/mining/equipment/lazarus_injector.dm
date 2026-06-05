@@ -47,7 +47,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/lazarus_injector/proc/expend(atom/revived_target, mob/user)
-	user.visible_message(span_notice("[user] injects [revived_target] with [src], reviving it."))
+	user.visible_message(span_notice(LANG("obj.b858eab1", list(user, revived_target, src))))
 	SSblackbox.record_feedback("tally", "lazarus_injector", 1, revived_target.type)
 	loaded = FALSE
 	playsound(src,'sound/effects/refill.ogg',50,TRUE)

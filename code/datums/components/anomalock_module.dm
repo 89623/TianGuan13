@@ -49,7 +49,7 @@
 /datum/component/anomaly_locked_module/proc/on_module_triggered(obj/item/mod/module/source, mob/living/wearer)
 	SIGNAL_HANDLER
 	if(!core)
-		source.balloon_alert(wearer, "no core!")
+		source.balloon_alert(wearer, LANG("datum.9c969525", null))
 		return MOD_ABORT_USE
 
 /datum/component/anomaly_locked_module/proc/on_item_interact(obj/item/mod/module/source, mob/living/user, obj/item/tool, list/modifiers)
@@ -57,7 +57,7 @@
 	if(!is_type_in_typecache(tool, accepted_anomalies))
 		return 0
 	if(core)
-		source.balloon_alert(user, "already has core!")
+		source.balloon_alert(user, LANG("datum.00b328e3", null))
 		return ITEM_INTERACT_FAILURE
 	if(pre_insert_callback)
 		var/callback_return
@@ -74,7 +74,7 @@
 	if(!user.transferItemToLoc(tool, source))
 		return ITEM_INTERACT_FAILURE
 	core = tool
-	source.balloon_alert(user, "core inserted")
+	source.balloon_alert(user, LANG("datum.de575d7b", null))
 	playsound(source, 'sound/machines/click.ogg', 30, TRUE)
 	source.update_appearance(UPDATE_ICON_STATE)
 	if(core_insert_callback)
@@ -88,18 +88,18 @@
 /datum/component/anomaly_locked_module/proc/on_screwdriver_act(obj/item/mod/module/source, mob/living/user, obj/item/tool)
 	SIGNAL_HANDLER
 	if(!core)
-		source.balloon_alert(user, "no core!")
+		source.balloon_alert(user, LANG("datum.9c969525", null))
 		return ITEM_INTERACT_FAILURE
 	if(!core_removable)
-		source.balloon_alert(user, "cannot remove core!")
+		source.balloon_alert(user, LANG("datum.34c3361c", null))
 	INVOKE_ASYNC(src, PROC_REF(try_remove_core), source, user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /datum/component/anomaly_locked_module/proc/try_remove_core(obj/item/mod/module/source, mob/living/user, obj/item/tool)
 	if(!do_after(user, 3 SECONDS, source))
-		source.balloon_alert(user, "interrupted!")
+		source.balloon_alert(user, LANG("datum.c67b5d27", null))
 		return
-	source.balloon_alert(user, "core removed")
+	source.balloon_alert(user, LANG("datum.8b10ca6a", null))
 	core.forceMove(source.drop_location())
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(core)

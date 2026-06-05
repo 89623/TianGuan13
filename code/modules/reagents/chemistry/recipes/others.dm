@@ -1050,7 +1050,7 @@
 			clear_products(holder, step_volume_added)
 			return
 	clear_products(holder, step_volume_added)
-	holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))] The reaction gives out a fizz, teleporting items everywhere!"))
+	holder.my_atom.audible_message(span_notice(LANG("datum.89c474ef", list(icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))))))
 
 /datum/chemical_reaction/ants // Breeding ants together, high sugar cost makes this take a while to farm.
 	results = list(/datum/reagent/ants = 3)

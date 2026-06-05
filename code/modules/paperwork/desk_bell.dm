@@ -197,9 +197,9 @@
 	var/obj/vehicle/ridden/wheelchair/chair = interacting_with
 
 	if (chair.bell_attached)
-		user.balloon_alert(user, "already has a bell!")
+		user.balloon_alert(user, LANG("obj.13ae863f", null))
 		return ITEM_INTERACT_FAILURE
-	user.balloon_alert(user, "attaching bell...")
+	user.balloon_alert(user, LANG("obj.17698377", null))
 	if (!do_after(user, 0.5 SECONDS, chair))
 		return ITEM_INTERACT_FAILURE
 

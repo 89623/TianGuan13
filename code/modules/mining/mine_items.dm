@@ -250,16 +250,16 @@
 		return
 	if(get_integrity() <= max_integrity * 0.05)
 		smacked.visible_message(
-			span_danger("[src] smashes into [smacked], breaking into pieces!"),
-			span_userdanger("You are smacked by [src] as it breaks into pieces!"),
+			span_danger(LANG("obj.3040ce29", list(src, smacked))),
+			span_userdanger(LANG("obj.dc13b692", list(src))),
 		)
 		playsound(src, 'sound/effects/break_stone.ogg', 50, vary = TRUE)
 		momentum = 0
 
 	else
 		smacked.visible_message(
-			span_danger("[src] smashes into [smacked]!"),
-			span_userdanger("You are smacked by [src]!"),
+			span_danger(LANG("obj.1eb45639", list(src, smacked))),
+			span_userdanger(LANG("obj.de5be33c", list(src))),
 		)
 	playsound(src, 'sound/effects/bang.ogg', 50, vary = TRUE)
 	take_damage(max_integrity * 0.05)

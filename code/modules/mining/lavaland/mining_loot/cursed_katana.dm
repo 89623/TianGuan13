@@ -116,8 +116,8 @@
 	return target.stat != DEAD && target != user
 
 /obj/item/cursed_katana/proc/strike(mob/living/target, mob/user)
-	user.visible_message(span_warning("[user] strikes [target] with [src]'s hilt!"),
-		span_notice("You hilt strike [target]!"))
+	user.visible_message(span_warning(LANG("obj.d16e03bf", list(user, target, src))),
+		span_notice(LANG("obj.c52c0091", list(target))))
 	to_chat(target, span_userdanger(LANG("obj.1b3c91fb", list(user))))
 	playsound(src, 'sound/items/weapons/genhit3.ogg', 50, TRUE)
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(strike_throw_impact))
@@ -142,8 +142,8 @@
 	return NONE
 
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)
-	user.visible_message(span_warning("[user] does a wide slice!"),
-		span_notice("You do a wide slice!"))
+	user.visible_message(span_warning(LANG("obj.ffee8198", list(user))),
+		span_notice(LANG("obj.4de3e26a", null)))
 	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE)
 	user.do_item_attack_animation(target, used_item = src, animation_type = ATTACK_ANIMATION_SLASH)
 	var/turf/user_turf = get_turf(user)
@@ -162,8 +162,8 @@
 	user.alpha = 150
 	user.SetInvisibility(INVISIBILITY_OBSERVER, id=type) // so hostile mobs cant see us or target us
 	user.add_sight(SEE_SELF) // so we can see us
-	user.visible_message(span_warning("[user] vanishes into thin air!"),
-		span_notice("You enter the dark cloak."))
+	user.visible_message(span_warning(LANG("obj.35dd700f", list(user))),
+		span_notice(LANG("obj.6013dbff", null)))
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	playsound(src, 'sound/effects/magic/smoke.ogg', 50, TRUE)
 	if(ishostile(target))
@@ -176,14 +176,14 @@
 	user.alpha = 255
 	user.RemoveInvisibility(type)
 	user.clear_sight(SEE_SELF)
-	user.visible_message(span_warning("[user] appears from thin air!"),
-		span_notice("You exit the dark cloak."))
+	user.visible_message(span_warning(LANG("obj.d7844256", list(user))),
+		span_notice(LANG("obj.86488090", null)))
 	playsound(src, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 
 /obj/item/cursed_katana/proc/cut(mob/living/target, mob/user)
-	user.visible_message(span_warning("[user] cuts [target]'s tendons!"),
-		span_notice("You tendon cut [target]!"))
+	user.visible_message(span_warning(LANG("obj.2ff1548d", list(user, target))),
+		span_notice(LANG("obj.379b1d29", list(target))))
 	to_chat(target, span_userdanger(LANG("obj.f1b054c2", list(user))))
 	user.do_item_attack_animation(target, used_item = src, animation_type = ATTACK_ANIMATION_SLASH)
 	target.apply_damage(damage = 15, sharpness = SHARP_EDGED, wound_bonus = 15)
@@ -196,8 +196,8 @@
 		status.add_stacks(6)
 
 /obj/item/cursed_katana/proc/dash(mob/living/target, mob/user)
-	user.visible_message(span_warning("[user] dashes through [target]!"),
-		span_notice("You dash through [target]!"))
+	user.visible_message(span_warning(LANG("obj.c0e0244e", list(user, target))),
+		span_notice(LANG("obj.d32789b6", list(target))))
 	to_chat(target, span_userdanger(LANG("obj.db6f2e15", list(user))))
 	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
 	target.apply_damage(damage = 17, sharpness = SHARP_POINTY, exposed_wound_bonus = 10)
@@ -214,8 +214,8 @@
 	do_teleport(user, dash_target, channel = TELEPORT_CHANNEL_MAGIC)
 
 /obj/item/cursed_katana/proc/shatter(mob/living/target, mob/user)
-	user.visible_message(span_warning("[user] shatters [src] over [target]!"),
-		span_notice("You shatter [src] over [target]!"))
+	user.visible_message(span_warning(LANG("obj.51f7e62c", list(user, src, target))),
+		span_notice(LANG("obj.f7043ebb", list(src, target))))
 	to_chat(target, span_userdanger(LANG("obj.efcbc60f", list(user, src))))
 	target.apply_damage(damage = ismining(target) ? 75 : 35, wound_bonus = 20)
 	user.do_attack_animation(target, ATTACK_EFFECT_SMASH)

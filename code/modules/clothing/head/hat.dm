@@ -135,7 +135,7 @@
 
 /// When we catch a bullet, fling away
 /obj/item/clothing/head/cowboy/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
-	victim.visible_message(span_warning("\The [bullet] sends [victim]'s hat flying!"))
+	victim.visible_message(span_warning(LANG("obj.daed300f", list(bullet, victim))))
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
 	throw_at(get_edge_target_turf(loc, pick(GLOB.alldirs)), range = 3, speed = 3)
 	playsound(victim, SFX_RICOCHET, 100, TRUE)

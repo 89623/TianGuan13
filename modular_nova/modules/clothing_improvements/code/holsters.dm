@@ -15,7 +15,7 @@
 		balloon_alert(user, LANG("obj.0d79cc4a", null))
 		return
 
-	user.visible_message(span_notice("[user] begins adjusting [src] to fit properly upon [clothing_to_mod]..."), span_notice("You begin adjusting [src] to fit properly upon [clothing_to_mod]..."))
+	user.visible_message(span_notice(LANG("obj.2812acac", list(user, src, clothing_to_mod))), span_notice(LANG("obj.1201a461", list(src, clothing_to_mod))))
 
 	if (do_after(user, 1.5 SECONDS))
 		clothing_to_mod.allowed += list(/obj/item/storage/belt/holster)

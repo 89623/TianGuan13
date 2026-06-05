@@ -88,7 +88,7 @@
 /obj/item/grown/log/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.get_sharpness())
 
-		user.balloon_alert(user, "made [plank_count] [plank_name]")
+		user.balloon_alert(user, LANG("obj.dac102ae", list(plank_count, plank_name)))
 		new plank_type(user.loc, plank_count)
 		qdel(src)
 		return
@@ -96,7 +96,7 @@
 	if(CheckAccepted(attacking_item))
 		var/obj/item/food/grown/leaf = attacking_item
 		if(HAS_TRAIT(leaf, TRAIT_DRIED))
-			user.balloon_alert(user, "torch crafted")
+			user.balloon_alert(user, LANG("obj.d1ec31a1", null))
 			var/obj/item/flashlight/flare/torch/new_torch = new /obj/item/flashlight/flare/torch(user.loc)
 			user.dropItemToGround(attacking_item)
 			user.put_in_active_hand(new_torch)

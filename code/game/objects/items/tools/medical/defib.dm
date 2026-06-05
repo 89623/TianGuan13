@@ -381,7 +381,7 @@
 
 /obj/item/shockpaddles/proc/finish_recharge()
 	var/turf/current_turf = get_turf(src)
-	current_turf.audible_message(span_notice("[src] beeps: Unit is recharged."))
+	current_turf.audible_message(span_notice(LANG("obj.a19ff7c7", list(src))))
 	playsound(src, 'sound/machines/defib/defib_ready.ogg', 50, FALSE)
 	cooldown = FALSE
 	update_appearance()
@@ -398,7 +398,7 @@
 	update_appearance()
 
 /obj/item/shockpaddles/suicide_act(mob/living/user)
-	user.visible_message(span_danger("[user] is putting the live paddles on [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_danger(LANG("obj.a7f0b7cf", list(user, user.p_their(), user.p_theyre()))))
 	if(req_defib)
 		defib.deductcharge(revivecost)
 	playsound(src, 'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
@@ -433,7 +433,7 @@
 		return
 	defib?.update_power()
 	if(req_defib && !defib.powered)
-		user.visible_message(span_warning("[defib] beeps: Not enough charge!"))
+		user.visible_message(span_warning(LANG("obj.9759bff2", list(defib))))
 		playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 		return
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
@@ -496,15 +496,15 @@
 	if(isliving(H.pulledby)) //CLEAR!
 		var/mob/living/M = H.pulledby
 		if(M.electrocute_act(dmg, H))
-			M.visible_message(span_danger("[M] is electrocuted by [M.p_their()] contact with [H]!"))
+			M.visible_message(span_danger(LANG("obj.f397137f", list(M, M.p_their(), H))))
 			M.emote("scream")
 
 /obj/item/shockpaddles/proc/do_disarm(mob/living/M, mob/living/user)
 	if(!DEFIB_CAN_HURT(src))
 		return
 	busy = TRUE
-	M.visible_message(span_danger("[user] touches [M] with [src]!"), \
-			span_userdanger("[user] touches [M] with [src]!"))
+	M.visible_message(span_danger(LANG("obj.4f8d7e3b", list(user, M, src))), \
+			span_userdanger(LANG("obj.4f8d7e3b", list(user, M, src))))
 	M.adjust_stamina_loss(60)
 	M.Knockdown(75)
 	M.set_jitter_if_lower(100 SECONDS)
@@ -518,19 +518,19 @@
 /obj/item/shockpaddles/proc/do_harm(mob/living/carbon/H, mob/living/user)
 	if(!DEFIB_CAN_HURT(src))
 		return
-	user.visible_message(span_warning("[user] begins to place [src] on [H]'s chest."),
-		span_warning("You overcharge the paddles and begin to place them onto [H]'s chest..."))
+	user.visible_message(span_warning(LANG("obj.1f68f204", list(user, src, H))),
+		span_warning(LANG("obj.247d249f", list(H))))
 	busy = TRUE
 	update_appearance()
 	if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded))))
-		user.visible_message(span_notice("[user] places [src] on [H]'s chest."),
-			span_warning("You place [src] on [H]'s chest and begin to charge them."))
+		user.visible_message(span_notice(LANG("obj.db5f72ea", list(user, src, H))),
+			span_warning(LANG("obj.0ddfe34a", list(src, H))))
 		var/turf/T = get_turf(defib)
 		playsound(src, 'sound/machines/defib/defib_charge.ogg', 50, FALSE)
 		if(req_defib)
-			T.audible_message(span_warning("\The [defib] lets out an urgent beep and lets out a steadily rising hum..."))
+			T.audible_message(span_warning(LANG("obj.21324a46", list(defib))))
 		else
-			user.audible_message(span_warning("[src] let out an urgent beep."))
+			user.audible_message(span_warning(LANG("obj.1071f76c", list(src))))
 		if(do_after(user, 1.5 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //Takes longer due to overcharging
 			if(!H)
 				do_cancel()
@@ -540,15 +540,15 @@
 				playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 				do_cancel()
 				return
-			user.visible_message(span_bolddanger("<i>[user] shocks [H] with \the [src]!"), span_warning("You shock [H] with \the [src]!"))
+			user.visible_message(span_bolddanger(LANG("obj.49bdbb51", list(user, H, src))), span_warning(LANG("obj.e770e316", list(H, src))))
 			playsound(src, 'sound/machines/defib/defib_zap.ogg', 100, TRUE, -1)
 			playsound(src, 'sound/items/weapons/egloves.ogg', 100, TRUE, -1)
 			H.emote("scream")
 			shock_pulling(45, H)
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
-					H.visible_message(span_warning("[H] thrashes wildly, clutching at [H.p_their()] chest!"),
-						span_userdanger("You feel a horrible agony in your chest!"))
+					H.visible_message(span_warning(LANG("obj.13658437", list(H, H.p_their()))),
+						span_userdanger(LANG("obj.21af2a52", null)))
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
 			log_combat(user, H, "overloaded the heart of", defib)
@@ -564,11 +564,11 @@
 		to_chat(user, span_boldwarning(LANG("obj.6659e60d", list(H, H.p_them(), span_warning("You might want to [span_blue("surgically revive [H.p_them()]")]...")))))
 		balloon_alert(user, LANG("obj.249ee985", null)) // immediately grabs their attention even if they dont see chat
 	// NOVA EDIT ADDITION END - SYNTH REVIVAL
-	user.visible_message(span_warning("[user] begins to place [src] on [H]'s chest."), span_warning("You begin to place [src] on [H]'s chest..."))
+	user.visible_message(span_warning(LANG("obj.1f68f204", list(user, src, H))), span_warning(LANG("obj.5853c65c", list(src, H))))
 	busy = TRUE
 	update_appearance()
 	if(do_after(user, 3 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
-		user.visible_message(span_notice("[user] places [src] on [H]'s chest."), span_warning("You place [src] on [H]'s chest."))
+		user.visible_message(span_notice(LANG("obj.db5f72ea", list(user, src, H))), span_warning(LANG("obj.fd944e65", list(src, H))))
 		playsound(src, 'sound/machines/defib/defib_charge.ogg', 75, FALSE)
 		var/obj/item/organ/heart = H.get_organ_by_type(/obj/item/organ/heart)
 		if(do_after(user, 2 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
@@ -583,7 +583,7 @@
 				do_cancel()
 				return
 			if(H.stat == DEAD)
-				H.visible_message(span_warning("[H]'s body convulses a bit."))
+				H.visible_message(span_warning(LANG("obj.4bf6b286", list(H))))
 				playsound(src, SFX_BODYFALL, 50, TRUE)
 				playsound(src, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
 				shock_pulling(30, H)
@@ -618,7 +618,7 @@
 					//NOVA EDIT ADDITION END - DNR TRAIT
 
 				if(fail_reason)
-					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - [fail_reason]"))
+					user.visible_message(span_warning(LANG("obj.5688cee0", list(req_defib ? "[defib]" : "[src]", fail_reason))))
 					playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 				else
 					var/total_brute = H.get_brute_loss()
@@ -637,7 +637,7 @@
 						need_mob_update += H.adjust_brute_loss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), updating_health = FALSE)
 					if(need_mob_update)
 						H.updatehealth() // Previous "adjust" procs don't update health, so we do it manually.
-					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful."))
+					user.visible_message(span_notice(LANG("obj.93b16b25", list(req_defib ? "[defib]" : "[src]"))))
 					playsound(src, 'sound/machines/defib/defib_success.ogg', 50, FALSE)
 					H.set_heartattack(FALSE)
 					if(defib_result == DEFIB_POSSIBLE)
@@ -654,7 +654,7 @@
 					log_combat(user, H, "revived", defib)
 					// NOVA EDIT ADDITION BEGIN - SYNTH REVIVAL
 					if (target_synthetic)
-						user.visible_message(span_boldwarning("[src] fire a powerful jolt of electricity into [H]'s vulnerable circuitry!"))
+						user.visible_message(span_boldwarning(LANG("obj.8dcfb9fc", list(src, H))))
 						to_chat(H, span_userdanger(LANG("obj.bedf9c10", list(user))))
 						// You may ask, why not just call H.emp_act()?
 						// well my dear reader, that EMPs contents. I only want to EMP bodyparts and organs specifically
@@ -672,23 +672,23 @@
 				do_success()
 				return
 			else if (!H.get_organ_by_type(/obj/item/organ/heart))
-				user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient's heart is missing. Operation aborted."))
+				user.visible_message(span_warning(LANG("obj.2163dc69", list(req_defib ? "[defib]" : "[src]"))))
 				playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 			else if(H.undergoing_cardiac_arrest())
 				playsound(src, 'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
 				if(!(heart.organ_flags & ORGAN_FAILING))
 					H.set_heartattack(FALSE)
 					do_success()
-					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again."))
+					user.visible_message(span_notice(LANG("obj.816f9c95", list(req_defib ? "[defib]" : "[src]"))))
 				else
-					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed, heart damage detected."))
+					user.visible_message(span_warning(LANG("obj.afa7a640", list(req_defib ? "[defib]" : "[src]"))))
 			else if(H.has_status_effect(/datum/status_effect/heart_attack))
-				user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Patient's heart has stabilized, further applications may be necessary."))
+				user.visible_message(span_notice(LANG("obj.54fbf461", list(req_defib ? "[defib]" : "[src]"))))
 				SEND_SIGNAL(H, COMSIG_HEARTATTACK_DEFIB)
 				playsound(src, 'sound/machines/defib/defib_zap.ogg', 50, TRUE, -1)
 				do_success()
 			else
-				user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Patient is not in a valid state. Operation aborted."))
+				user.visible_message(span_warning(LANG("obj.90d4a7ef", list(req_defib ? "[defib]" : "[src]"))))
 				playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 	do_cancel()
 

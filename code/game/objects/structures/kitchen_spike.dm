@@ -138,19 +138,19 @@
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob != user)
-		buckled_mob.visible_message(span_notice("[user] tries to pull [buckled_mob] free of [src]!"),\
-			span_notice("[user] is trying to pull you off [src], opening up fresh wounds!"),\
-			span_hear("You hear a squishy wet noise."))
+		buckled_mob.visible_message(span_notice(LANG("obj.3c9d86cb", list(user, buckled_mob, src))),\
+			span_notice(LANG("obj.1ef21b8e", list(user, src))),\
+			span_hear(LANG("obj.042cea85", null)))
 		if(!do_after(user, 30 SECONDS, target = src))
 			if(buckled_mob?.buckled)
-				buckled_mob.visible_message(span_notice("[user] fails to free [buckled_mob]!"),\
-					span_notice("[user] fails to pull you off of [src]."))
+				buckled_mob.visible_message(span_notice(LANG("obj.a73e5a74", list(user, buckled_mob))),\
+					span_notice(LANG("obj.5acac835", list(user, src))))
 			return
 
 	else
-		buckled_mob.visible_message(span_warning("[buckled_mob] struggles to break free from [src]!"),\
-		span_notice("You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)"),\
-		span_hear("You hear a wet squishing noise.."))
+		buckled_mob.visible_message(span_warning(LANG("obj.f9756b64", list(buckled_mob, src))),\
+		span_notice(LANG("obj.8fdd1484", list(src))),\
+		span_hear(LANG("obj.9cde913c", null)))
 		buckled_mob.adjust_brute_loss(30)
 		if(!do_after(buckled_mob, 2 MINUTES, target = src, hidden = TRUE))
 			if(buckled_mob?.buckled)

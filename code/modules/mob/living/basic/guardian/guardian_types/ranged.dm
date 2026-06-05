@@ -110,7 +110,7 @@
 /// We can't do any ranged attacks while in scout mode.
 /datum/status_effect/guardian_scout_mode/proc/on_ranged_attack()
 	SIGNAL_HANDLER
-	owner.balloon_alert(owner, "need to be in ranged mode!")
+	owner.balloon_alert(owner, LANG("datum.ce3aec94", null))
 	return COMPONENT_CANCEL_RANGED_ATTACK
 
 /// Place an invisible trap which alerts the guardian when it is crossed
@@ -142,7 +142,7 @@
 		StartCooldown(0)
 		return FALSE
 
-	owner.balloon_alert(owner, "snare deployed") // We need feedback because they are invisible
+	owner.balloon_alert(owner, LANG("datum.6accee33", null)) // We need feedback because they are invisible
 	var/turf/snare_loc = get_turf(owner)
 	var/obj/effect/abstract/surveillance_snare/new_snare = new(snare_loc, owner)
 	new_snare.assign_owner(owner)

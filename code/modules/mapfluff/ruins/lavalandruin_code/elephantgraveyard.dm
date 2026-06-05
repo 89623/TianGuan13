@@ -243,8 +243,8 @@
 	//player is attempting to open/close the grave with a shovel
 	if(!user.combat_mode)
 		user.visible_message(
-			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
-			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
+			span_notice(LANG("obj.e5f15a33", list(user, opened ? "close" : "dig open", src))),
+			span_notice(LANG("obj.0f8e8d4a", list(opened ? "closing" : "digging open", src))),
 		)
 		if(!weapon.use_tool(src, user, delay = 15, volume = 40))
 			return TRUE
@@ -271,8 +271,8 @@
 			return TRUE
 
 		user.visible_message(
-			span_notice("[user] Is attempting to remove [src]."),
-			span_notice("You start removing [src]."),
+			span_notice(LANG("obj.3b0d41e0", list(user, src))),
+			span_notice(LANG("obj.d6f54d34", list(src))),
 		)
 		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
 			return TRUE
@@ -289,16 +289,16 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(
-		span_warning("[src]'s dirt begins to shift and rumble!"),
-		span_notice("You desperately begin to claw at the dirt around you, trying to force yourself upwards through the soil... (this will take about [DisplayTimeText(breakout_time)].)"),
-		span_hear("You hear the sound of shifting dirt from [src]."),
+		span_warning(LANG("obj.b000f5e9", list(src))),
+		span_notice(LANG("obj.66170aca", list(DisplayTimeText(breakout_time)))),
+		span_hear(LANG("obj.a1de0101", list(src))),
 	)
 	if(do_after(user, breakout_time, target = src))
 		if(opened)
 			return
 		user.visible_message(
-			span_danger("[user] emerges from [src], scattering dirt everywhere!"),
-			span_notice("You triumphantly surface out of [src], scattering dirt all around the grave!"),
+			span_danger(LANG("obj.b7ff5367", list(user, src))),
+			span_notice(LANG("obj.978bf908", list(src))),
 		)
 		bust_open()
 	else

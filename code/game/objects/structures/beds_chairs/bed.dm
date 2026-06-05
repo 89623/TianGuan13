@@ -46,14 +46,14 @@
 
 	if(being_buckled == buckler)
 		being_buckled.visible_message(
-			span_notice("[buckler] lays down on [src]."),
-			span_notice("You lay down on [src]."),
+			span_notice(LANG("obj.b8becc1b", list(buckler, src))),
+			span_notice(LANG("obj.c0f9142e", list(src))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	else
 		being_buckled.visible_message(
-			span_notice("[buckler] lays [being_buckled] down on [src]."),
-			span_notice("[buckler] lays you down on [src]."),
+			span_notice(LANG("obj.61013276", list(buckler, being_buckled, src))),
+			span_notice(LANG("obj.66f8b7fd", list(buckler, src))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
@@ -63,14 +63,14 @@
 
 	if(being_unbuckled == unbuckler)
 		being_unbuckled.visible_message(
-			span_notice("[unbuckler] gets up from [src]."),
-			span_notice("You get up from [src]."),
+			span_notice(LANG("obj.08b0e968", list(unbuckler, src))),
+			span_notice(LANG("obj.e8acb4b6", list(src))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	else
 		being_unbuckled.visible_message(
-			span_notice("[unbuckler] pulls [being_unbuckled] up from [src]."),
-			span_notice("[unbuckler] pulls you up from [src]."),
+			span_notice(LANG("obj.7c44b748", list(unbuckler, being_unbuckled, src))),
+			span_notice(LANG("obj.dc9bfda3", list(unbuckler, src))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
@@ -220,13 +220,13 @@
 		if(has_buckled_mobs())
 			if(buckled_mobs.len > 1)
 				unbuckle_all_mobs()
-				user.visible_message(span_notice("[user] unbuckles all creatures from [src]."))
+				user.visible_message(span_notice(LANG("obj.20bfa265", list(user, src))))
 			else
 				user_unbuckle_mob(buckled_mobs[1],user)
 		else
 			silicon_bed.loaded = src
 			forceMove(silicon_bed)
-			user.visible_message(span_notice("[user] collects [src]."), span_notice("You collect [src]."))
+			user.visible_message(span_notice(LANG("obj.ff58d069", list(user, src))), span_notice(LANG("obj.aba2fd34", list(src))))
 		return TRUE
 	else
 		return ..()
@@ -240,7 +240,7 @@
 	if(has_buckled_mobs())
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
+	user.visible_message(span_notice(LANG("obj.9f9707bf", list(user, src))), span_notice(LANG("obj.f518f3ec", list(src))))
 	var/obj/structure/bed/medical/emergency/folding_bed = new foldable_type(get_turf(src))
 	user.put_in_hands(folding_bed)
 	qdel(src)
@@ -263,7 +263,7 @@
 			to_chat(user, span_warning(LANG("obj.88c827c9", list(silicon_bed))))
 			return
 
-		user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [silicon_bed]."))
+		user.visible_message(span_notice(LANG("obj.15550e4d", list(user, src))), span_notice(LANG("obj.91f19664", list(src, silicon_bed))))
 		silicon_bed.loaded = new/obj/structure/bed/medical/emergency(silicon_bed)
 		qdel(src) //"Load"
 		return
@@ -302,7 +302,7 @@
 /obj/item/emergency_bed/silicon/deploy_bed(mob/user, atom/location)
 	if(loaded)
 		loaded.forceMove(location)
-		user.visible_message(span_notice("[user] deploys [loaded]."), span_notice("You deploy [loaded]."))
+		user.visible_message(span_notice(LANG("obj.1596d21d", list(user, loaded))), span_notice(LANG("obj.4e3e93ee", list(loaded))))
 		loaded = null
 	else
 		to_chat(user, span_warning(LANG("obj.fd931656", null)))

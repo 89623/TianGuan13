@@ -127,9 +127,9 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		return FALSE
 	var/mob/living/lucky_winner = candidate
 
-	lucky_winner.audible_message(span_danger("You hear a great snapping, like the disjointing of muscle and bone."))
-	lucky_winner.visible_message(span_danger("[src] is attempting to devour [lucky_winner]!"), \
-			span_userdanger("[src] is attempting to devour you!"))
+	lucky_winner.audible_message(span_danger(LANG("mob.e960ea83", null)))
+	lucky_winner.visible_message(span_danger(LANG("mob.db121494", list(src, lucky_winner))), \
+			span_userdanger(LANG("mob.21e63fa2", list(src))))
 
 	playsound(lucky_winner, 'sound/mobs/non-humanoids/alien/alien_eat.ogg', 100)
 	if(!do_after(src, devour_time, lucky_winner, extra_checks = CALLBACK(src, PROC_REF(can_consume), lucky_winner)))
@@ -143,9 +143,9 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 			span_alien(LANG("mob.1db5f87b", list(lucky_winner))))
 		return TRUE
 
-	lucky_winner.audible_message(span_danger("You hear a deep groan, and a harsh snap like a mantrap."))
-	lucky_winner.visible_message(span_danger("[src] devours [lucky_winner]!"), \
-			span_userdanger("[src] devours you!"))
+	lucky_winner.audible_message(span_danger(LANG("mob.52d89c6a", null)))
+	lucky_winner.visible_message(span_danger(LANG("mob.3db76372", list(src, lucky_winner))), \
+			span_userdanger(LANG("mob.ad6f7be6", list(src))))
 	log_combat(src, lucky_winner, "devoured")
 	melting_pot.consume_thing(lucky_winner)
 	return TRUE

@@ -189,19 +189,19 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	parent_integrity -= seconds_per_tick
 	if(parent_integrity <= 0)
-		target_turf.visible_message(span_warning("[target_turf] collapses under its own weight into a puddle of goop and undigested debris!"))
+		target_turf.visible_message(span_warning(LANG("datum.b79f8e77", list(target_turf))))
 		target_turf.acid_melt()
 	else if(parent_integrity <= 4 && stage <= 3)
-		target_turf.visible_message(span_warning("[target_turf] begins to crumble under the acid!"))
+		target_turf.visible_message(span_warning(LANG("datum.79981454", list(target_turf))))
 		stage = 4
 	else if(parent_integrity <= 8 && stage <= 2)
-		target_turf.visible_message(span_warning("[target_turf] is struggling to withstand the acid!"))
+		target_turf.visible_message(span_warning(LANG("datum.02419d6e", list(target_turf))))
 		stage = 3
 	else if(parent_integrity <= 16 && stage <= 1)
-		target_turf.visible_message(span_warning("[target_turf] is being melted by the acid!"))
+		target_turf.visible_message(span_warning(LANG("datum.5c8223b0", list(target_turf))))
 		stage = 2
 	else if(parent_integrity <= 24 && stage == 0)
-		target_turf.visible_message(span_warning("[target_turf] is holding up against the acid!"))
+		target_turf.visible_message(span_warning(LANG("datum.323a6a79", list(target_turf))))
 		stage = 1
 
 /// Used to maintain the acid overlay on the parent [/atom].

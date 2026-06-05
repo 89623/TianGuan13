@@ -155,8 +155,8 @@
 		projectile.damage /= 2 // The damage is pretty solid normally, but with the explosion and all the RNG that comes with, it's nearly a 1-shot. This evens a playing field a bit.
 	projectile.fire(null, interacting_with)
 
-	user.visible_message(span_danger("[user] makes a[upgraded ? " devastating" : "" ] blazing slash at [interacting_with]!"),\
-		span_notice("You take a blazing swipe at [interacting_with]!"))
+	user.visible_message(span_danger(LANG("obj.3d1faf08", list(user, upgraded ? " devastating" : "", interacting_with))),\
+		span_notice(LANG("obj.de5635d5", list(interacting_with))))
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', vol = 75, vary = FALSE, extrarange = 3)
 	playsound(src, 'sound/items/weapons/slash.ogg', vol = 50, vary = FALSE, extrarange = 3)
 

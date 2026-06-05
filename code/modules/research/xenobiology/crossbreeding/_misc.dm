@@ -95,7 +95,7 @@ Slimecrossing Items
 		return
 	to_chat(user, span_notice(LANG("obj.c6edd408", list(src))))
 	var/obj/B = new /obj/structure/barricade/slime(get_turf(loc))
-	B.visible_message(span_warning("[src] suddenly grows into a large, gelatinous barrier!"))
+	B.visible_message(span_warning(LANG("obj.beefbf5d", list(src))))
 	qdel(src)
 
 //Slime barricade - Chilling Grey

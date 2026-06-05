@@ -199,13 +199,13 @@
 /// Validates whether the target turf can be interacted with.
 /obj/machinery/computer/camera_advanced/xenobio/proc/validate_turf(mob/living/user, turf/open/target_turf)
 	if(!SScameras.is_visible_by_cameras(target_turf))
-		target_turf.balloon_alert(user, "outside of view!")
+		target_turf.balloon_alert(user, LANG("obj.75aa5f0a", null))
 		return FALSE
 
 	var/area/turfarea = get_area(target_turf)
 	var/mob/eye/camera/remote/xenobio/remote_eye = user.remote_control
 	if(turfarea.name != remote_eye.allowed_area && !(turfarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		target_turf.balloon_alert(user, "invalid area!")
+		target_turf.balloon_alert(user, LANG("obj.3043f66f", null))
 		return FALSE
 
 	return TRUE
@@ -217,9 +217,9 @@
 		return
 
 	if(stored_slimes.len == 1)
-		target_turf.visible_message(span_notice("The slime is spat out!"))
+		target_turf.visible_message(span_notice(LANG("obj.6e3a44d3", null)))
 	else
-		target_turf.visible_message(span_notice("[stored_slimes.len] slimes are spat out!"))
+		target_turf.visible_message(span_notice(LANG("obj.202907e0", list(stored_slimes.len))))
 
 	for(var/mob/living/basic/slime/stored_slime in stored_slimes)
 		stored_slime.forceMove(target_turf)
@@ -240,7 +240,7 @@
 
 	if(stored_slimes.len >= max_slimes)
 		to_chat(user, span_warning(LANG("obj.0b2410a0", null)))
-		target_slime.balloon_alert(user, "storage full")
+		target_slime.balloon_alert(user, LANG("obj.159ebc90", null))
 		return TRUE
 
 	if(target_slime.ckey)
@@ -249,7 +249,7 @@
 
 	if(target_slime.buckled)
 		target_slime.stop_feeding(silent = TRUE)
-	target_slime.visible_message(span_notice("The slime gets sucked up!"))
+	target_slime.visible_message(span_notice(LANG("obj.d054f086", null)))
 	suck_up(target_slime)
 	target_slime.forceMove(src)
 	stored_slimes += target_slime
@@ -264,7 +264,7 @@
 /obj/machinery/computer/camera_advanced/xenobio/proc/feed_slime(mob/living/user, turf/open/target_turf)
 	if(stored_monkeys < 1)
 		to_chat(user, span_warning(LANG("obj.9c064048", list(src, stored_monkeys))))
-		target_turf.balloon_alert(user, "not enough monkeys")
+		target_turf.balloon_alert(user, LANG("obj.e93ab252", null))
 		return
 
 	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE, user)
@@ -288,7 +288,7 @@
 	if(isnull(connected_recycler))
 		to_chat(user, span_warning(LANG("obj.9b3b2796", null)))
 		if(target_atom)
-			target_atom.balloon_alert(user, "no recycler linked!")
+			target_atom.balloon_alert(user, LANG("obj.b6fd66f1", null))
 		return FALSE
 	return TRUE
 
@@ -297,11 +297,11 @@
 	PRIVATE_PROC(TRUE)
 	if(!ismonkey(target_human))
 		if(user)
-			target_human.balloon_alert(user, "not a monkey!")
+			target_human.balloon_alert(user, LANG("obj.7673769d", null))
 		return FALSE
 	if(target_human.stat < DEAD)
 		if(user)
-			target_human.balloon_alert(user, "not dead!")
+			target_human.balloon_alert(user, LANG("obj.f5271c5d", null))
 		return FALSE
 	return TRUE
 
@@ -336,7 +336,7 @@
 		return
 
 	suck_up(target_monkey)
-	target_monkey.visible_message(span_notice("The monkey shoots up as [target_monkey.p_theyre()] reclaimed for recycling!"))
+	target_monkey.visible_message(span_notice(LANG("obj.9049b83f", list(target_monkey.p_theyre()))))
 	connected_recycler.use_energy(500 JOULES)
 	stored_monkeys += connected_recycler.cube_production
 	stored_monkeys = round(stored_monkeys, 0.1) //Prevents rounding errors

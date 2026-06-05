@@ -236,7 +236,7 @@
 
 		ingredients += tool
 		open()
-		user.visible_message(span_notice("[user] adds \a [tool] to \the [src]."), span_notice("You add [tool] to \the [src]."))
+		user.visible_message(span_notice(LANG("obj.6776a8ee", list(user, tool, src))), span_notice(LANG("obj.dc741820", list(tool, src))))
 		user.mind?.adjust_experience(/datum/skill/primitive, 2)
 		update_appearance()
 		return ITEM_INTERACT_BLOCKING

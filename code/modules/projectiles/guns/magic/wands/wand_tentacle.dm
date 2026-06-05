@@ -125,9 +125,9 @@
 /datum/status_effect/incapacitating/immobilized/wizard_tentacle/proc/on_helped(mob/source, mob/helping)
 	SIGNAL_HANDLER
 	if (helping == owner)
-		owner.balloon_alert(owner, "can't reach!")
+		owner.balloon_alert(owner, LANG("datum.fba9228d", null))
 		return NONE
-	source.visible_message(span_notice("[helping] rips [source] from the tentacle's grasp!"))
+	source.visible_message(span_notice(LANG("datum.0e8b01a6", list(helping, source))))
 	release()
 	return COMPONENT_BLOCK_MISC_HELP
 
@@ -156,7 +156,7 @@
 	. = ..()
 	if (!owner || !had_tentacle)
 		return
-	owner.visible_message(span_suicide("The tentacle drags [owner] directly to hell!"))
+	owner.visible_message(span_suicide(LANG("datum.474e0e8f", list(owner))))
 	owner.unequip_everything()
 	animate(owner, transform = matrix() * 0, time = RETRACT_TIME)
 	animate(owner, pixel_y = -12, time = RETRACT_TIME, flags = ANIMATION_PARALLEL)

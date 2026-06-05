@@ -8,12 +8,12 @@
 /datum/action/cooldown/mob_cooldown/spit_ore/IsAvailable(feedback)
 	if(is_jaunting(owner))
 		if(feedback)
-			owner.balloon_alert(owner, "currently underground!")
+			owner.balloon_alert(owner, LANG("datum.63f9f23a", null))
 		return FALSE
 
 	if(!length(owner.contents))
 		if(feedback)
-			owner.balloon_alert(owner, "no ores to spit!")
+			owner.balloon_alert(owner, LANG("datum.7d329646", null))
 		return FALSE
 	return TRUE
 
@@ -37,7 +37,7 @@
 
 	if(!isasteroidturf(location) && !ismineralturf(location))
 		if(feedback)
-			owner.balloon_alert(owner, "available only on mining floor or wall!")
+			owner.balloon_alert(owner, LANG("datum.67c8f07a", null))
 		return FALSE
 
 	return TRUE
@@ -55,7 +55,7 @@
 		return
 
 	if(!is_jaunting(owner))
-		owner.visible_message(span_danger("[owner] buries into the ground, vanishing from sight!"))
+		owner.visible_message(span_danger(LANG("datum.2a2c29f3", list(owner))))
 		playsound(get_turf(owner), 'sound/effects/break_stone.ogg', 50, TRUE, -1)
 		holder = new /obj/effect/dummy/phased_mob/grub_burrow(current_loc, owner)
 		return TRUE
@@ -63,7 +63,7 @@
 	holder = owner.loc
 	holder.eject_jaunter()
 	holder = null
-	owner.visible_message(span_danger("[owner] emerges from the ground!"))
+	owner.visible_message(span_danger(LANG("datum.5b8bb693", list(owner))))
 
 	if(ismineralturf(current_loc))
 		var/turf/closed/mineral/mineral_turf = current_loc

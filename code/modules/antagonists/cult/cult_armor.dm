@@ -118,7 +118,7 @@
 		return
 	playsound(src, 'sound/effects/pray_chaplain.ogg', 60, TRUE)
 
-	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
+	exorcist.visible_message(span_notice(LANG("obj.453de01c", list(exorcist, src))))
 	var/new_item_path = GLOB.holy_armor_type || pick(subtypesof(/obj/item/storage/box/holy))
 	var/obj/item/new_item = new new_item_path()
 	//take everything out and delete the box.
@@ -221,10 +221,10 @@
 
 ///Callback when the shield breaks, since cult robes are stupid and have different effects.
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
-	wearer.visible_message(span_danger("[wearer]'s robes neutralize [attack_text] in a burst of blood-red sparks!"))
+	wearer.visible_message(span_danger(LANG("obj.f459e36d", list(wearer, attack_text))))
 	new /obj/effect/temp_visual/cult/sparks(get_turf(wearer))
 	if(new_current_charges == 0)
-		wearer.visible_message(span_danger("The runed shield around [wearer] suddenly disappears!"))
+		wearer.visible_message(span_danger(LANG("obj.f4603c3e", list(wearer))))
 
 /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 	name = "empowered cultist helmet"

@@ -167,7 +167,7 @@
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
 	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
-	balloon_loc.balloon_alert(user, "ingredient added")
+	balloon_loc.balloon_alert(user, LANG("obj.c7d35a0f", null))
 	user.face_atom(balloon_loc)
 
 	LAZYADD(added_ingredients, item)
@@ -187,7 +187,7 @@
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
 	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
-	balloon_loc.balloon_alert(user, "ingredient removed")
+	balloon_loc.balloon_alert(user, LANG("obj.b7deabfd", null))
 	user.face_atom(balloon_loc)
 
 	update_appearance(UPDATE_OVERLAYS)

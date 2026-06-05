@@ -197,13 +197,13 @@
 		return TRUE
 	if(istype(attacking_item, /obj/item/pickaxe))
 		user.visible_message(
-			span_notice("[user] begins smashing the [src]..."),
-			span_notice("You begin smashing the [src]...."),
+			span_notice(LANG("obj.494c4505", list(user, src))),
+			span_notice(LANG("obj.b8e9b3f0", list(src))),
 		)
 		if(!do_after(user, 2.5 SECONDS, target = src))
 			user.visible_message(
-				span_warning("[user] slips and smashes the boulder with extra force!"),
-				span_warning("You slip and smash the boulder with extra force!"),
+				span_warning(LANG("obj.1a44b09b", list(user))),
+				span_warning(LANG("obj.84b6068e", null)),
 				blind_message = span_hear("You hear a smash!"),
 			)
 			excavation_level += rand(10,50)
@@ -211,22 +211,22 @@
 		switch(try_dig(25))
 			if(DIG_DELETE)
 				user.visible_message(
-					span_warning("The [src] crumbles, leaving nothing behind."),
+					span_warning(LANG("obj.6db9ab42", list(src))),
 					blind_message = span_hear("You hear rocks crumbling."),
 				)
 				return
 			if(DIG_ROCK)
 				user.visible_message(
-					span_notice("[user] successfully digs the [src]. The item inside seems to be still intact."),
-					span_notice("You successfully dig the [src]. The item inside seems to be still intact."),
+					span_notice(LANG("obj.f37b4dcd", list(user, src))),
+					span_notice(LANG("obj.b996ea2a", list(src))),
 					blind_message = span_hear("You hear rocks crumbling."),
 				)
 
 	if(istype(attacking_item, /obj/item/xenoarch/hammer))
 		var/obj/item/xenoarch/hammer/hammer = attacking_item
 		user.visible_message(
-			span_notice("[user] begins carefully using their hammer..."),
-			span_notice("You begin carefully using your hammer..."),
+			span_notice(LANG("obj.3f8240a0", list(user))),
+			span_notice(LANG("obj.04bcd84c", null)),
 			blind_message = span_hear("You hear rhythmic knocking."),
 		)
 		if(!do_after(user, hammer.dig_speed, target = src))
@@ -238,7 +238,7 @@
 				CRASH("[hammer] tried to call try_dig() with an invalid dig_amount! Must have a positive value.")
 			if(DIG_DELETE)
 				user.visible_message(
-					span_warning("The boulder crumbles, leaving nothing behind."),
+					span_warning(LANG("obj.b150c4e6", null)),
 					blind_message = span_hear("You hear rock crumbling."),
 				)
 				return
@@ -251,8 +251,8 @@
 			to_chat(user, span_notice(LANG("obj.eb7905b5", null)))
 			return
 		user.visible_message(
-			span_notice("[user] begins to scan [src] using [scanner]."),
-			span_notice("You begin to scan [src] using [scanner]."),
+			span_notice(LANG("obj.f18b5d8d", list(user, src, scanner))),
+			span_notice(LANG("obj.c849e69f", list(src, scanner))),
 			blind_message = span_hear("You hear some kind of machine silently winding up."),
 		)
 		if(!do_after(user, scanner.scanning_speed, target = src))
@@ -270,8 +270,8 @@
 			to_chat(user, span_notice(LANG("obj.c8acb66e", null)))
 			return
 		user.visible_message(
-			span_notice("[user] begins measuring the [src]."),
-			span_notice("You begin carefully using your measuring tape."),
+			span_notice(LANG("obj.caad5216", list(user, src))),
+			span_notice(LANG("obj.cfbbc627", null)),
 			blind_message = span_hear("You hear the sound of a tape measure unwinding."),
 		)
 		if(!do_after(user, 4 SECONDS, target = src))
@@ -285,8 +285,8 @@
 	if(istype(attacking_item, /obj/item/xenoarch/brush))
 		var/obj/item/xenoarch/brush/brush = attacking_item
 		user.visible_message(
-			span_notice("[user] carefully brushes [src]."),
-			span_notice("You begin carefully using your brush."),
+			span_notice(LANG("obj.f2fa9edc", list(user, src))),
+			span_notice(LANG("obj.f49f7bc1", null)),
 			blind_message = span_hear("You hear rustling."),
 		)
 		if(!do_after(user, brush.dig_speed, target = src))
@@ -296,7 +296,7 @@
 		switch(try_uncover())
 			if(BRUSH_DELETE)
 				user.visible_message(
-					span_warning("The boulder crumbles, leaving nothing behind."),
+					span_warning(LANG("obj.b150c4e6", null)),
 					blind_message = span_hear("You hear rock crumbling."),
 				)
 				return
@@ -318,8 +318,8 @@
 		sampler.used = TRUE
 		sampler.icon_state = "sampler"
 		user.visible_message(
-			span_notice("[user] takes sample of [src]."),
-			span_notice("You successfully took a sample of [src]. Now take it to the radiocarbon spectrometer."),
+			span_notice(LANG("obj.e0d4d8b3", list(user, src))),
+			span_notice(LANG("obj.c2615fa0", list(src))),
 			blind_message = span_hear("You hear a snap."),
 		)
 

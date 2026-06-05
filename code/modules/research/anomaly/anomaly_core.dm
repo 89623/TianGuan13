@@ -25,7 +25,7 @@
 
 /obj/item/assembly/signaler/anomaly/manual_suicide(datum/mind/suicidee)
 	var/mob/living/user = suicidee.current
-	user.visible_message(span_suicide("[user]'s [name] is reacting to the radio signal, warping [user.p_their()] body!"))
+	user.visible_message(span_suicide(LANG("obj.22ad34d4", list(user, name, user.p_their()))))
 	user.set_suicide(TRUE)
 	user.gib(DROP_ALL_REMAINS)
 

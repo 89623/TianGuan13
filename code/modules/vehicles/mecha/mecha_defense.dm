@@ -65,7 +65,7 @@
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/items/weapons/tap.ogg', 40, TRUE, -1)
-	user.visible_message(span_danger("[user] hits [src]. Nothing happens."), null, null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger(LANG("obj.f0afc3af", list(user, src))), null, null, COMBAT_MESSAGE_RANGE)
 	log_message("Attack by hand/paw (no damage). Attacker - [user].", LOG_MECHA, color="red")
 
 /obj/vehicle/sealed/mecha/attack_paw(mob/user, list/modifiers)
@@ -357,9 +357,9 @@
 
 	var/hit_verb = length(attacking_item.attack_verb_simple) ? "[pick(attacking_item.attack_verb_simple)]" : "hit"
 	user.visible_message(
-		span_danger("[user] [hit_verb][plural_s(hit_verb)] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
-		span_danger("You [hit_verb] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
-		span_hear("You hear a [hit_verb]."),
+		span_danger(LANG("obj.ba2c5c81", list(user, hit_verb, plural_s(hit_verb), src, attacking_item, damage_taken ? "." : ", without leaving a mark!"))),
+		span_danger(LANG("obj.93c74fc1", list(hit_verb, src, attacking_item, damage_taken ? "." : ", without leaving a mark!"))),
+		span_hear(LANG("obj.cb4c165c", list(hit_verb))),
 		COMBAT_MESSAGE_RANGE,
 	)
 

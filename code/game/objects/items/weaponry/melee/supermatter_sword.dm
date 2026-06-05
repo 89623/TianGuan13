@@ -91,7 +91,7 @@
 	return COMPONENT_BULLET_BLOCKED
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!"))
+	user.visible_message(span_suicide(LANG("obj.dca60f36", list(user, src, user.p_theyre(), user.p_them()))))
 	user.dropItemToGround(src, TRUE)
 	shard.Bumped(user)
 
@@ -110,7 +110,7 @@
 		return
 	playsound(turf, 'sound/effects/supermatter.ogg', 50, TRUE)
 	turf.visible_message(
-		span_danger("[turf] smacks into [src] and rapidly flashes to ash."),
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		span_danger(LANG("obj.784fc69f", list(turf, src))),
+		span_hear(LANG("obj.e2bdcbdd", null)),
 	)
 	shard.Bump(turf)

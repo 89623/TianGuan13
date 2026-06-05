@@ -92,7 +92,7 @@
 	return ..()
 
 /obj/item/spear/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.0be0bc23", list(user, src, user.p_theyre()))))
 	if (!do_after(user, 4 SECONDS, target = src))
 		return SHAME
 	var/obj/item/bodypart/head/head = user.get_bodypart(BODY_ZONE_HEAD)
@@ -191,7 +191,7 @@
 	playsound(src, 'sound/effects/grillehit.ogg', 50)
 	new spear_leftovers(get_turf(src))
 	if(isliving(loc))
-		loc.balloon_alert(loc, "spear broken!")
+		loc.balloon_alert(loc, LANG("obj.5f195437", null))
 	return ..()
 
 /obj/item/spear/get_material_prefixes(list/materials)
@@ -341,7 +341,7 @@
 	return ..()
 
 /obj/item/spear/explosive/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.0be0bc23", list(user, src, user.p_theyre()))))
 	user.say("[war_cry]", forced="spear warcry")
 	explosive.forceMove(user)
 	explosive.detonate()
@@ -589,17 +589,17 @@
 
 /datum/action/item_action/skybulge/do_effect(trigger_flags)
 	if(!HAS_TRAIT(target, TRAIT_WIELDED))
-		owner.balloon_alert(owner, "not dual-wielded!")
+		owner.balloon_alert(owner, LANG("datum.137351e6", null))
 		return
 	var/time_left = S_TIMER_COOLDOWN_TIMELEFT(target, COOLDOWN_SKYBULGE_JUMP)
 	if(time_left)
-		owner.balloon_alert(owner, "[FLOOR(time_left * 0.1, 0.1)]s cooldown!")
+		owner.balloon_alert(owner, LANG("datum.ccdbb19f", list(FLOOR(time_left * 0.1, 0.1))))
 		return
 	//do after shows the progress bar as feedback, so nothing here.
 	if(LAZYACCESS(owner.do_afters, target))
 		return
 
-	owner.balloon_alert(owner, "charging up...")
+	owner.balloon_alert(owner, LANG("datum.726adb87", null))
 	ADD_TRAIT(target, TRAIT_NEEDS_TWO_HANDS, ACTION_TRAIT)
 	INVOKE_ASYNC(src, PROC_REF(jump_up))
 

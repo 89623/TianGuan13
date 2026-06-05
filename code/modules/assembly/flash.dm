@@ -35,12 +35,12 @@
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
-		user.visible_message(span_suicide("[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but it's burnt out!"))
+		user.visible_message(span_suicide(LANG("obj.bda5d980", list(user, src, user.p_their()))))
 		return SHAME
 	else if(user.is_blind())
-		user.visible_message(span_suicide("[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but [user.p_theyre()] blind!"))
+		user.visible_message(span_suicide(LANG("obj.7c1a6d45", list(user, src, user.p_their(), user.p_theyre()))))
 		return SHAME
-	user.visible_message(span_suicide("[user] raises \the [src] up to [user.p_their()] eyes and activates it! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.f0a429d6", list(user, src, user.p_their(), user.p_theyre()))))
 	attack(user,user)
 	return FIRELOSS
 
@@ -75,7 +75,7 @@
 /obj/item/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	if(!burnt_out)
 		burnt_out = TRUE
-		loc?.visible_message(span_danger("[src] burns out!"),span_userdanger("[src] burns out!"))
+		loc?.visible_message(span_danger(LANG("obj.984ed7db", list(src))),span_userdanger(LANG("obj.984ed7db", list(src))))
 		update_appearance()
 
 /obj/item/assembly/flash/proc/flash_recharge(interval = 10)
@@ -192,13 +192,13 @@
 				flashed.Paralyze(flash_duration)
 				flashed.set_temp_blindness_if_lower(flash_duration)
 				if(user)
-					user.visible_message(span_warning("[user] overloads [flashed]'s sensors and computing with the flash!"), span_danger("You overload [flashed]'s sensors and computing with the flash!"))
+					user.visible_message(span_warning(LANG("obj.9095bf15", list(user, flashed))), span_danger(LANG("obj.132381a7", list(flashed))))
 				else
 					to_chat(flashed, LANG("obj.fc0768a6", list(src)))
 			else
 				flashed.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
 				if(user)
-					user.visible_message(span_warning("[user] blinds [flashed] with the flash!"), span_danger("You blind [flashed] with the flash!"))
+					user.visible_message(span_warning(LANG("obj.949abaf4", list(user, flashed))), span_danger(LANG("obj.e19fc6b7", list(flashed))))
 				else
 					to_chat(flashed, LANG("obj.147afb96", list(src)))
 		else
@@ -391,7 +391,7 @@
 	if(!flashed.flash_act(1, override_blindness_check = targeted, affect_silicon = TRUE))
 		if(targeted)
 			if(user)
-				user.visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_warning("You fail to hypno-flash [flashed]!"))
+				user.visible_message(span_warning(LANG("obj.2e83d7b3", list(user, flashed))), span_warning(LANG("obj.dbb394db", list(flashed))))
 			else
 				to_chat(flashed, span_danger(LANG("obj.9f62a165", list(src))))
 		return FALSE
@@ -405,7 +405,7 @@
 		return TRUE
 
 	if(user)
-		user.visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_danger("You hypno-flash [flashed]!"))
+		user.visible_message(span_danger(LANG("obj.949abaf4", list(user, flashed))), span_danger(LANG("obj.ccfaeef5", list(flashed))))
 	else
 		to_chat(flashed, LANG("obj.147afb96", list(src)))
 

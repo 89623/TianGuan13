@@ -36,8 +36,8 @@
 	var/moved = !(shove_flags & SHOVE_BLOCKED)
 	shover.visible_message(
 		span_danger("[shover.name] [response_disarm_continuous] [src][moved ? ", pushing [p_them()]" : ""]!"),
-		span_danger("You [response_disarm_simple] [src][moved ? ", pushing [p_them()]" : ""]!"),
-		span_hear("You hear aggressive shuffling!"),
+		span_danger(LANG("mob.ddf7e598", list(response_disarm_simple, src, moved ? ", pushing [p_them()]" : ""))),
+		span_hear(LANG("mob.7314bbd1", null)),
 		COMBAT_MESSAGE_RANGE,
 		list(src),
 	)

@@ -48,8 +48,8 @@
 		return
 	else if (isspaceturf(bhorn_origin))
 		user.visible_message(
-			span_emote("[user] raises the horn and blows into the void of space. Nothing happens."),
-			span_notice("You try to blow the horn into the vacuum of space. What did you expect?")
+			span_emote(LANG("obj.3ac3ded9", list(user))),
+			span_notice(LANG("obj.9d57fb38", null))
 		)
 		return
 	if(!COOLDOWN_FINISHED(src, bhorn_cooldown))
@@ -57,8 +57,8 @@
 		return
 	else
 		user.visible_message(
-			span_emote("[user] raises the horn and blows it with all their strength."),
-			span_notice("You blow the horn as hard as you can.")
+			span_emote(LANG("obj.058315ab", list(user))),
+			span_notice(LANG("obj.55bcbced", null))
 		)
 		for (var/mob/hearing_player as anything in SSmobs.clients_by_zlevel[user.z])
 			if (get_dist(hearing_player, user) >= 170)
@@ -144,8 +144,8 @@
 	var/location = get_turf(user)
 	if (!is_mining_level(user.z))
 		user.visible_message(
-			span_emote("[user] braces and lets out a weak sound from the instrument, tuned for a different atmosphere."),
-			span_warning("You blow the war horn, but it lets out a weak sound, tuned for a different atmosphere.")
+			span_emote(LANG("obj.d44f84f7", list(user))),
+			span_warning(LANG("obj.c65d19dc", null))
 		)
 		playsound(location, 'modular_nova/modules/admin/sound/duckhonk.ogg', 100, TRUE)
 		return
@@ -153,8 +153,8 @@
 	if (SSmapping.level_trait(user.z, ZTRAIT_ICE_RUINS_UNDERGROUND))
 		loc_text = "the depths of Freyja's caves"
 	user.visible_message(
-		span_emote("[user] braces and lets out a thunderous blast on the war horn."),
-		span_warning("You blow the war horn with all your strength.")
+		span_emote(LANG("obj.66d8ab1e", list(user))),
+		span_warning(LANG("obj.c78dea58", null))
 	)
 	for (var/mob/hearing_player in GLOB.player_list)
 		if (!is_mining_level(hearing_player.z) || HAS_TRAIT(hearing_player, TRAIT_DEAF))

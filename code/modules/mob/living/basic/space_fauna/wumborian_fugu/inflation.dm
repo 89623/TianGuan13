@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Action which inflates you, making you larger and stronger for the duration. Also invulnerable.
  * This is pretty much all just handled by a status effect.
@@ -18,11 +19,11 @@
 		return FALSE
 	if(!istype(owner, /mob/living/basic/wumborian_fugu)) // A shame but there's not any good way to make this work on other mobs
 		if (feedback)
-			owner.balloon_alert(owner, "not stretchy enough!")
+			owner.balloon_alert(owner, LANG("datum.4ba0f4b2", null))
 		return FALSE
 	if(HAS_TRAIT(owner, TRAIT_FUGU_GLANDED))
 		if (feedback)
-			owner.balloon_alert(owner, "already large!")
+			owner.balloon_alert(owner, LANG("datum.b924ae17", null))
 		return FALSE
 	return TRUE
 

@@ -112,7 +112,7 @@
 
 /datum/status_effect/bald_flare/on_apply()
 	. = ..()
-	owner.visible_message(span_warning("[owner]'s bald head releases a bright flash of light!"))
+	owner.visible_message(span_warning(LANG("datum.89ddbfcd", list(owner))))
 	for(var/mob/living/viewers in (viewers(3, owner) - owner))
 		viewers.flash_act()
 

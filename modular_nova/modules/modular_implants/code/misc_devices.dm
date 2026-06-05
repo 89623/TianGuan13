@@ -19,7 +19,7 @@
 		balloon_alert(user, LANG("obj.5a991104", list(target_mob)))
 		return
 
-	user.visible_message(span_warning("[user] starts to scan [src] [target_mob]"), span_notice("You start to scan [src] on [target_mob]"))
+	user.visible_message(span_warning(LANG("obj.6b13e291", list(user, src, target_mob))), span_notice(LANG("obj.87407a0f", list(src, target_mob))))
 	if(!do_after(user, 5 SECONDS, target_mob))
 		balloon_alert(user, LANG("obj.7d323743", null))
 		return FALSE
@@ -29,7 +29,7 @@
 	if(!nifsoft_to_remove)
 		return FALSE
 
-	user.visible_message(span_warning("[user] starts to use [src] on [target_mob]"), span_notice("You start to use [src] on [target_mob]"))
+	user.visible_message(span_warning(LANG("obj.8ed85cda", list(user, src, target_mob))), span_notice(LANG("obj.859f1e8a", list(src, target_mob))))
 	if(!do_after(user, 5 SECONDS, target_mob))
 		balloon_alert(user, LANG("obj.b68bc72b", null))
 		return FALSE
@@ -74,7 +74,7 @@
 	if(!nifsoft_to_remove)
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_warning("[user] starts to use [src] on [target_mob]"), span_notice("You start to use [src] on [target_mob]"))
+	user.visible_message(span_warning(LANG("obj.8ed85cda", list(user, src, target_mob))), span_notice(LANG("obj.859f1e8a", list(src, target_mob))))
 	if(!do_after(user, 5 SECONDS, target_mob))
 		balloon_alert(user, LANG("obj.b68bc72b", null))
 		return ITEM_INTERACT_BLOCKING
@@ -194,7 +194,7 @@
 		balloon_alert(user, LANG("obj.7d09f139", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] upgrades [target_glasses] with [src]."), span_notice("You upgrade [target_glasses] to be NIF HUD compatible."))
+	user.visible_message(span_notice(LANG("obj.39467e1b", list(user, target_glasses, src))), span_notice(LANG("obj.ed90886c", list(target_glasses))))
 	target_glasses.name = "\improper HUD-upgraded " + target_glasses.name
 	target_glasses.AddElement(/datum/element/nifsoft_hud)
 	playsound(target_glasses.loc, 'sound/items/weapons/circsawhit.ogg', 50, vary = TRUE)

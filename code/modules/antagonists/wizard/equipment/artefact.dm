@@ -31,7 +31,7 @@
 	if(charges > 0)
 		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
-		user.visible_message(span_bolddanger("[src] hums with power as [user] deals a blow to [activate_descriptor] itself!"))
+		user.visible_message(span_bolddanger(LANG("obj.33a2326f", list(src, user, activate_descriptor))))
 	else
 		to_chat(user, span_danger(LANG("obj.993da849", null)))
 
@@ -68,7 +68,7 @@
 	if(!HAS_TRAIT(tool, TRAIT_NULLROD_ITEM))
 		return NONE
 
-	user.visible_message(span_danger("[user] seals \the [src] with \the [tool]."))
+	user.visible_message(span_danger(LANG("obj.432b0b21", list(user, src, tool))))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -439,7 +439,7 @@
 
 /obj/item/runic_vendor_scepter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(scepter_is_busy_recharging)
-		user.balloon_alert(user, "busy!")
+		user.balloon_alert(user, LANG("obj.8df72942", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!check_allowed_items(interacting_with, not_inside = TRUE))
 		return NONE
@@ -453,30 +453,30 @@
 		vendor_on_turf.runic_explosion()
 		return  ITEM_INTERACT_SUCCESS
 	if(!summon_vendor_charges)
-		user.balloon_alert(user, "no charges!")
+		user.balloon_alert(user, LANG("obj.cfa89008", null))
 		return ITEM_INTERACT_BLOCKING
 	if(get_dist(afterattack_turf,src) > max_summon_range)
-		user.balloon_alert(user, "too far!")
+		user.balloon_alert(user, LANG("obj.f5e75781", null))
 		return ITEM_INTERACT_BLOCKING
 	if(get_turf(src) == afterattack_turf)
-		user.balloon_alert(user, "too close!")
+		user.balloon_alert(user, LANG("obj.079a7d8b", null))
 		return ITEM_INTERACT_BLOCKING
 	if(scepter_is_busy_summoning)
-		user.balloon_alert(user, "already summoning!")
+		user.balloon_alert(user, LANG("obj.59d84c5b", null))
 		return ITEM_INTERACT_BLOCKING
 	if(afterattack_turf.is_blocked_turf(TRUE))
-		user.balloon_alert(user, "blocked!")
+		user.balloon_alert(user, LANG("obj.62d831a3", null))
 		return ITEM_INTERACT_BLOCKING
 	if(summoning_time)
 		scepter_is_busy_summoning = TRUE
-		user.balloon_alert(user, "summoning...")
+		user.balloon_alert(user, LANG("obj.1e53ebe5", null))
 		if(!do_after(user, summoning_time, target = interacting_with))
 			scepter_is_busy_summoning = FALSE
 			return ITEM_INTERACT_BLOCKING
 		scepter_is_busy_summoning = FALSE
 	if(summon_vendor_charges)
 		playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
-		user.visible_message(span_warning("[user] summons a runic vendor!"))
+		user.visible_message(span_warning(LANG("obj.21432950", list(user))))
 		new /obj/machinery/vending/runic_vendor(afterattack_turf)
 		summon_vendor_charges--
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -485,12 +485,12 @@
 
 /obj/item/runic_vendor_scepter/attack_self(mob/user, modifiers)
 	. = ..()
-	user.balloon_alert(user, "recharging...")
+	user.balloon_alert(user, LANG("obj.2e29b52d", null))
 	scepter_is_busy_recharging = TRUE
 	if(!do_after(user, 5 SECONDS))
 		scepter_is_busy_recharging = FALSE
 		return
-	user.balloon_alert(user, "fully charged")
+	user.balloon_alert(user, LANG("obj.2a34860b", null))
 	scepter_is_busy_recharging = FALSE
 	summon_vendor_charges = RUNIC_SCEPTER_MAX_CHARGES
 

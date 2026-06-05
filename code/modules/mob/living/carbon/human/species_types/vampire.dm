@@ -183,9 +183,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user] stabs [used_item] with [user.p_their()] sharp teeth and drains its contents!"),
-		span_notice("You stab [used_item] with your sharp teeth and drain its contents!"),
-		span_hear("You hear a stabbing sound! ... Followed by slurping?"),
+		span_notice(LANG("obj.f479ad51", list(user, used_item, user.p_their()))),
+		span_notice(LANG("obj.b4570b27", list(used_item))),
+		span_hear(LANG("obj.1e0e197e", null)),
 		COMBAT_MESSAGE_RANGE,
 	)
 	INVOKE_ASYNC(src, PROC_REF(async_stab_bloodbag), user, used_item)

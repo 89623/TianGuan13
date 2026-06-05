@@ -81,12 +81,12 @@
 	log_combat(user, target, "attempted to inject", src)
 
 	if(target != user)
-		target.visible_message(span_danger("[user] is trying to inject [target] with [src]!"), \
-			span_userdanger("[user] is trying to inject you with [src]!"))
+		target.visible_message(span_danger(LANG("obj.acdf6580", list(user, target, src))), \
+			span_userdanger(LANG("obj.8938b767", list(user, src))))
 		if(!do_after(user, 3 SECONDS, target) || used)
 			return
-		target.visible_message(span_danger("[user] injects [target] with the syringe with [src]!"), \
-						span_userdanger("[user] injects you with the syringe with [src]!"))
+		target.visible_message(span_danger(LANG("obj.0fc297a4", list(user, target, src))), \
+						span_userdanger(LANG("obj.72963ac3", list(user, src))))
 
 	else
 		to_chat(user, span_notice(LANG("obj.56f3e92c", list(src))))

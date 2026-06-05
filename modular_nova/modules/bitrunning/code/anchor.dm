@@ -22,7 +22,7 @@
 		if(aas)
 			aas.broadcast("Potential secure datastream detected. Locking on the new spawn point.", list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_FACTION))
 	new /obj/effect/landmark/bitrunning/domain_anchor(drop_location())
-	user.balloon_alert(user, "connection stabilized!")
+	user.balloon_alert(user, LANG("obj.d5a6f4a2", null))
 	qdel(src)
 
 /obj/effect/landmark/bitrunning/domain_anchor

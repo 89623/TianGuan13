@@ -50,10 +50,10 @@
 		balloon_alert(user, LANG("obj.161985b7", null))
 		return
 
-	loc.balloon_alert(user, "dismantling [src]")
+	loc.balloon_alert(user, LANG("obj.4dc14b15", list(src)))
 	if(!tool.use_tool(src, user, delay = 2.5 SECONDS, amount = 2, volume = 50))
 		return
-	loc.balloon_alert(user, "[src] dismantled")
+	loc.balloon_alert(user, LANG("obj.b6cf49cc", list(src)))
 
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -195,10 +195,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 		balloon_alert(user, LANG("obj.161985b7", null))
 		return TRUE
 
-	loc.balloon_alert(user, "dismantling [src]")
+	loc.balloon_alert(user, LANG("obj.4dc14b15", list(src)))
 	if(!tool.use_tool(src, user, delay = 1.5 SECONDS, amount = 1, volume = 50))
 		return
-	loc.balloon_alert(user, "[src] dismantled")
+	loc.balloon_alert(user, LANG("obj.b6cf49cc", list(src)))
 
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -232,9 +232,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	tool.play_tool_sound(src, 50)
 	disable = !disable
 	if (disable)
-		user.visible_message(span_notice("[user] disables \the [src]!"), span_notice("You disable the connection to \the [src]."))
+		user.visible_message(span_notice(LANG("obj.bc94fd37", list(user, src))), span_notice(LANG("obj.02bb1fc0", list(src))))
 	if (!disable)
-		user.visible_message(span_notice("[user] reconnects \the [src]!"), span_notice("You fix the connection to \the [src]."))
+		user.visible_message(span_notice(LANG("obj.f9458d6d", list(user, src))), span_notice(LANG("obj.166ce20b", list(src))))
 	update_appearance()
 	return TRUE
 

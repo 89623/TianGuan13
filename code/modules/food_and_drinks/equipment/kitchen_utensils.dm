@@ -53,7 +53,7 @@
 	AddElement(/datum/element/eyestab)
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!"))
+	user.visible_message(span_suicide(LANG("obj.47a6be89", list(user, src, user.p_their(), user.p_theyre(), user.p_them()))))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	return BRUTELOSS
 
@@ -63,10 +63,10 @@
 
 	if(forkload)
 		if(M == user)
-			M.visible_message(span_notice("[user] eats a delicious forkful of omelette!"))
+			M.visible_message(span_notice(LANG("obj.c57a3940", list(user))))
 			M.reagents.add_reagent(forkload.type, 1)
 		else
-			M.visible_message(span_notice("[user] feeds [M] a delicious forkful of omelette!"))
+			M.visible_message(span_notice(LANG("obj.1d5f1bcf", list(user, M))))
 			M.reagents.add_reagent(forkload.type, 1)
 		icon_state = "fork"
 		forkload = null
@@ -193,7 +193,7 @@
 	exposed_wound_bonus = 14
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.ff61aa4e", list(user, user.p_their(), src, user.p_theyre()))))
 	return BRUTELOSS
 /* Trays  moved to /obj/item/storage/bag */
 
@@ -259,28 +259,28 @@
 
 	if(target_mob.is_mouth_covered(ITEM_SLOT_HEAD) || target_mob.is_mouth_covered(ITEM_SLOT_MASK))
 		if(target_mob == user)
-			target_mob.balloon_alert(user, "can't eat with mouth covered!")
+			target_mob.balloon_alert(user, LANG("obj.323ad734", null))
 		else
-			target_mob.balloon_alert(user, "[target_mob.p_their()] mouth is covered!")
+			target_mob.balloon_alert(user, LANG("obj.2b3c0878", list(target_mob.p_their())))
 		return TRUE
 
 	if(target_mob == user)
 		user.visible_message(
-			span_notice("[user] scoops a spoonful into [user.p_their()] mouth."),
-			span_notice("You scoop a spoonful into your mouth.")
+			span_notice(LANG("obj.92b3e547", list(user, user.p_their()))),
+			span_notice(LANG("obj.35476b60", null))
 		)
 
 	else
 		to_chat(target_mob, span_userdanger(LANG("obj.7aa66522", list(target_mob.is_blind() ? "Someone" : "[user]"))))
-		target_mob.balloon_alert(user, "feeding spoonful...")
+		target_mob.balloon_alert(user, LANG("obj.f758a280", null))
 		if(!do_after(user, 3 SECONDS, target_mob))
-			target_mob.balloon_alert(user, "interrupted!")
+			target_mob.balloon_alert(user, LANG("obj.c67b5d27", null))
 			return TRUE
 
 		to_chat(target_mob, span_userdanger(LANG("obj.423ae488", list(target_mob.is_blind() ? "You are forced to" : "[user] forces you to"))))
 		user.visible_message(
-			span_danger("[user] scoops a spoonful into [target_mob]'s mouth."),
-			span_notice("You scoop a spoonful into [target_mob]'s mouth.")
+			span_danger(LANG("obj.4409e170", list(user, target_mob))),
+			span_notice(LANG("obj.0f098418", list(target_mob)))
 		)
 
 	playsound(target_mob, 'sound/items/drink.ogg', rand(10,50), vary = TRUE)
@@ -300,11 +300,11 @@
 
 	var/amount_given = reagents.trans_to(attacked_atom, reagents.maximum_volume)
 	if(amount_given >= reagents.total_volume)
-		attacked_atom.balloon_alert(user, "spoon emptied")
+		attacked_atom.balloon_alert(user, LANG("obj.11d7c373", null))
 	else if(amount_given > 0)
-		attacked_atom.balloon_alert(user, "spoon partially emptied")
+		attacked_atom.balloon_alert(user, LANG("obj.404f2b3d", null))
 	else
-		attacked_atom.balloon_alert(user, "it's full!")
+		attacked_atom.balloon_alert(user, LANG("obj.2cb7d354", null))
 	return TRUE
 
 /obj/item/kitchen/spoon/pre_attack_secondary(atom/attacked_atom, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -320,9 +320,9 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(attacked_atom.reagents.trans_to(src, reagents.maximum_volume))
-		attacked_atom.balloon_alert(user, "grabbed spoonful")
+		attacked_atom.balloon_alert(user, LANG("obj.af3b4ccf", null))
 	else
-		attacked_atom.balloon_alert(user, "spoon is full!")
+		attacked_atom.balloon_alert(user, LANG("obj.ac3b077d", null))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/kitchen/spoon/plastic
@@ -399,7 +399,7 @@
 		return TRUE
 	if (!COOLDOWN_FINISHED(src, clack_cooldown))
 		return TRUE
-	user.visible_message(span_notice("[user] clacks [user.p_their()] [name] together like a crab. Click clack!"))
+	user.visible_message(span_notice(LANG("obj.12a1282f", list(user, user.p_their(), name))))
 	click_clack()
 	return TRUE
 

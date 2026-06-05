@@ -66,7 +66,7 @@
 	if(SEND_SIGNAL(source, COMSIG_ITEM_PRE_CUFFED_TO_MOB, user, cuffs) & BLOCK_ITEM_CUFF)
 		return
 
-	source.balloon_alert(user, "cuffing item...")
+	source.balloon_alert(user, LANG("datum.0640e813", null))
 	playsound(source, cuffs.cuffsound, 30, TRUE, -2)
 	if(!do_after(user, cuffs.get_handcuff_time(user), source))
 		return
@@ -74,8 +74,8 @@
 	playsound(source, cuffs.cuffsuccesssound, 30, TRUE, -2)
 
 	if(user.apply_status_effect(/datum/status_effect/cuffed_item, source, cuffs))
-		source.balloon_alert(user, "item cuffed to wrist")
+		source.balloon_alert(user, LANG("datum.4e3e479a", null))
 		return
 
-	source.balloon_alert(user, "couldn't cuff to wrist!")
+	source.balloon_alert(user, LANG("datum.6eb87360", null))
 	return

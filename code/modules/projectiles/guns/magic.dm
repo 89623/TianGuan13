@@ -149,11 +149,11 @@
 	to_chat(user, span_warning(LANG("obj.fac4051f", list(src))))
 
 /obj/item/gun/magic/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.7009f29d", list(user, src, user.p_their(), user.p_theyre()))))
 	if (can_user_shoot(user))
 		charges--
 		return do_suicide(user)
-	user.visible_message(span_suicide("...but nothing happens."))
+	user.visible_message(span_suicide(LANG("obj.0f15a9dc", null)))
 	return SHAME
 
 /// Extend to do something funny

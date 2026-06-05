@@ -57,11 +57,11 @@
 
 /datum/action/cooldown/spell/pointed/scan/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
-		owner.balloon_alert(owner, "not a valid target!")
+		owner.balloon_alert(owner, LANG("datum.c526d249", null))
 		return FALSE
 	var/mob/living/living_cast_on = cast_on
 	if(living_cast_on.stat == DEAD)
-		owner.balloon_alert(owner, "target is dead!")
+		owner.balloon_alert(owner, LANG("datum.1ed5f66b", null))
 		return FALSE
 
 	return TRUE
@@ -90,11 +90,11 @@
 	healthscan(living_owner, living_scanned, 1, TRUE)
 
 	owner.playsound_local(get_turf(owner), 'sound/effects/magic/smoke.ogg', 50, TRUE)
-	owner.balloon_alert(owner, "[living_scanned] scanned")
+	owner.balloon_alert(owner, LANG("datum.c26f8331", list(living_scanned)))
 	addtimer(CALLBACK(src, PROC_REF(send_cooldown_end_message), cooldown_time))
 
 /datum/action/cooldown/spell/pointed/scan/proc/send_cooldown_end_message()
-	owner?.balloon_alert(owner, "scan recharged")
+	owner?.balloon_alert(owner, LANG("datum.799e704d", null))
 
 /datum/status_effect/agent_pinpointer/scan
 	duration = 15 SECONDS

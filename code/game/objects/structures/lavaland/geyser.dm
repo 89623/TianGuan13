@@ -167,7 +167,7 @@
 		var/mob/living/carbon/H = hit_atom
 		if(!H.wear_mask)
 			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
-			H.visible_message(span_warning("The plunger slams into [H]'s face!"), span_warning("The plunger suctions to your face!"))
+			H.visible_message(span_warning(LANG("obj.c6e03993", list(H))), span_warning(LANG("obj.82ae4793", null)))
 
 /obj/item/plunger/attack_self(mob/user)
 	. = ..()

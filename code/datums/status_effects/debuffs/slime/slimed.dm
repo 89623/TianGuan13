@@ -33,7 +33,7 @@
 
 /// Try to get rid of it
 /atom/movable/screen/alert/status_effect/slimed/proc/remove_slime()
-	owner.balloon_alert(owner, "cleaning off slime...")
+	owner.balloon_alert(owner, LANG("atom.709da11f", null))
 	var/datum/status_effect/slimed/slime_effect = owner.has_status_effect(/datum/status_effect/slimed)
 	while (!QDELETED(src) && !isnull(slime_effect))
 		if (!can_wash())

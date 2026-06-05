@@ -165,9 +165,9 @@
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		add_dent(WALL_DENT_HIT)
-		user.visible_message(span_danger("[user] smashes \the [src]!"), \
-					span_danger("You smash \the [src]!"), \
-					span_hear("You hear a booming smash!"))
+		user.visible_message(span_danger(LANG("turf.b4956fef", list(user, src))), \
+					span_danger(LANG("turf.512fbab3", list(src))), \
+					span_hear(LANG("turf.ae515fb8", null)))
 	return TRUE
 
 /**

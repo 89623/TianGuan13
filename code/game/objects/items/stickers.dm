@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAX_STICKER_COUNT 15
 
 /**
@@ -81,7 +82,7 @@
 
 	if(!isnull(user))
 		user.do_attack_animation(target, used_item = src)
-		target.balloon_alert(user, "sticker sticked")
+		target.balloon_alert(user, LANG("obj.544a7c90", null))
 		var/mob/living/victim = target
 		if(istype(victim) && !isnull(victim.client))
 			user.log_message("stuck [src] to [key_name(victim)]", LOG_ATTACK)

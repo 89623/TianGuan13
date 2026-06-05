@@ -228,7 +228,7 @@
 	PROTECTED_PROC(TRUE)
 
 	Shake(duration = 1 SECONDS)
-	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get processed into bits by [src]!"))
+	rockman.visible_message(span_warning(LANG("obj.6107e3a2", list(rockman, src))), span_userdanger(LANG("obj.9a29a339", list(src))))
 	rockman.investigate_log("was gibbed by [src] for being a golem", INVESTIGATE_DEATHS)
 	rockman.gib(DROP_ALL_REMAINS)
 

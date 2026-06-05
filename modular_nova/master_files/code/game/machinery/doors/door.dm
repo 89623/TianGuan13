@@ -25,7 +25,7 @@
 		to_chat(user, span_warning(LANG("obj.12e1e022", null)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	src.balloon_alert(user, "ai requested!")
+	src.balloon_alert(user, LANG("obj.5239bd46", null))
 
 	for(var/mob/living/silicon/ai/AI as anything in GLOB.ai_list)
 		if(AI.stat == DEAD)

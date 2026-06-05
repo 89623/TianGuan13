@@ -557,7 +557,18 @@ fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog) {
 fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog) {
     match follow {
         Follow::Index(_, e) => visit_expr(e, ns, catalog),
-        Follow::Call(_, _, args) => {
+        Follow::Call(_, name, args) => {
+            // 方法调用形式的汇聚点（`user.visible_message(...)`/`src.say(...)`/`M.balloon_alert(...)` 等）。
+            // 此前只检测裸调用 `Term::Call`，漏掉了大量 `X.sink(...)` 形式（战斗/交互可见消息多为此形）。
+            if let Some(indices) = sink_message_args(name.as_str()) {
+                for &i in indices {
+                    if let Some(arg) = args.get(i) {
+                        if let Some(template) = build_template(arg) {
+                            emit(catalog, ns, &template);
+                        }
+                    }
+                }
+            }
             for a in args.iter() {
                 visit_expr(a, ns, catalog);
             }

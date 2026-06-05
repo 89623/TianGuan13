@@ -36,7 +36,7 @@
 		to_chat(H, span_warning(LANG("obj.ac75381d", list(src, oldBP.name))))
 		oldBP.dismember()
 
-	user.visible_message(span_notice("[H] presses a button on [src], and you hear a short mechanical noise."), span_notice("You feel a sharp sting as [src] plunges into your body."))
+	user.visible_message(span_notice(LANG("obj.00b55570", list(H, src))), span_notice(LANG("obj.d2eeea84", list(src))))
 
 	if(!storedbodypart.try_attach_limb(H))
 		to_chat(H, span_warning(LANG("obj.42f1dc61", list(src, storedbodypart))))

@@ -46,15 +46,15 @@
 	var/turf/first_step = get_step(get_turf(owner), dir_to_move)
 	var/turf/final_destination = wumpee.fulltile ? get_step(first_step, dir_to_move) : first_step
 	if(is_phase_blocked(first_step, wumpee, owner))
-		ascarbon.balloon_alert(ascarbon, "blocked!")
+		ascarbon.balloon_alert(ascarbon, LANG("datum.62d831a3", null))
 		return
 	if(wumpee.fulltile && is_phase_blocked(final_destination, wumpee, owner))
-		ascarbon.balloon_alert(ascarbon, "blocked!")
+		ascarbon.balloon_alert(ascarbon, LANG("datum.62d831a3", null))
 		return
 	// Phasing past our leash would just rubber-band us back — bail up front instead of running the full do_after.
 	var/datum/component/leash/leash = owner.GetComponent(/datum/component/leash)
 	if(leash?.owner && get_dist(final_destination, leash.owner) > leash.distance)
-		ascarbon.balloon_alert(ascarbon, "too far!")
+		ascarbon.balloon_alert(ascarbon, LANG("datum.f5e75781", null))
 		return
 
 	var/modified_pass_time = wumpee.fulltile ? (HOLOSYNTH_GLASS_FULLTILE_MULTIPLIER * pass_time) : pass_time
@@ -86,7 +86,7 @@
 		return
 
 	if(ascarbon.handcuffed || ascarbon.legcuffed)
-		ascarbon.balloon_alert(ascarbon, "restrained!")
+		ascarbon.balloon_alert(ascarbon, LANG("datum.eae3c3df", null))
 		return
 
 	passwindow_on(owner, type)

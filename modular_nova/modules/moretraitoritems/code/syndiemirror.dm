@@ -45,7 +45,7 @@
 
 		if(do_after(user, haircut_duration, target_human))
 			target_human.set_hairstyle(hair_id, update = TRUE)
-			user.visible_message(span_notice("[target_human]'s hair changes!"), span_notice("The nanites successfully alter [target_human]'s hair!"))
+			user.visible_message(span_notice(LANG("obj.239b02cf", list(target_human))), span_notice(LANG("obj.e0994307", list(target_human))))
 	else
 		var/facial_hair_id = tgui_input_list(user, LANG("obj.c5cd9bad", null), LANG("obj.f7de00bf", null), SSaccessories.facial_hairstyles_list)
 		if(!facial_hair_id)
@@ -58,7 +58,7 @@
 
 		if(do_after(user, facial_haircut_duration, target_human))
 			target_human.set_facial_hairstyle(facial_hair_id, update = TRUE)
-			user.visible_message(span_notice("[target_human]'s facial hair changes!"), span_notice("The nanites successfully alter [target_human]'s facial hair!"))
+			user.visible_message(span_notice(LANG("obj.aadb00ed", list(target_human))), span_notice(LANG("obj.3afdebe8", list(target_human))))
 
 /obj/item/storage/box/syndie_kit/chameleon/PopulateContents()
 	. = ..()

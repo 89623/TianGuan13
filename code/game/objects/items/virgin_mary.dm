@@ -44,14 +44,14 @@
 		new_name = "[user.real_name] \"[nickname]\""
 	user.real_name = new_name
 	used_up = TRUE
-	user.say("My soul will burn like this saint if I betray my family. I enter alive and I will have to get out dead.", forced = /obj/item/virgin_mary)
+	user.say(LANG("obj.d7a73f94", null), forced = /obj/item/virgin_mary)
 	to_chat(user, span_userdanger(LANG("obj.8ad28133", null)))
 
 #undef NICKNAME_CAP
 
 /obj/item/virgin_mary/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] starts saying their Hail Mary's at a terrifying pace! It looks like [user.p_theyre()] trying to enter the afterlife!"))
-	user.say("Hail Mary, full of grace, the Lord is with thee. Blessed are thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, mother of God, pray for us sinners, now and at the hour of our death. Amen. ", forced = /obj/item/virgin_mary)
+	user.visible_message(span_suicide(LANG("obj.c1b89b9e", list(user, user.p_theyre()))))
+	user.say(LANG("obj.03e034a1", null), forced = /obj/item/virgin_mary)
 	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 7.5 SECONDS)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom/movable, say), "O my Mother, preserve me this day from mortal sin..."), 5 SECONDS)
 	return MANUAL_SUICIDE

@@ -57,7 +57,7 @@
 	if(!istype(rod))
 		return
 	if(GLOB.fishing_challenges_by_user[user] || rod.fishing_line)
-		user.balloon_alert(user, "already fishing")
+		user.balloon_alert(user, LANG("datum.f3e36a83", null))
 		return COMPONENT_NO_AFTERATTACK
 	var/denial_reason = fish_source.reason_we_cant_fish(rod, user, parent)
 	if(denial_reason)

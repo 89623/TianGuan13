@@ -17,7 +17,7 @@
 	if(!pre_convert_check(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/converted_item = new to_obj
-	user.visible_message(span_notice("[user] modifies [interacting_with] into [converted_item]."), span_notice("You modify [interacting_with] into [converted_item]."))
+	user.visible_message(span_notice(LANG("obj.b0031472", list(user, interacting_with, converted_item))), span_notice(LANG("obj.85e7c294", list(interacting_with, converted_item))))
 	qdel(interacting_with)
 	qdel(src)
 	user.put_in_hands(converted_item)

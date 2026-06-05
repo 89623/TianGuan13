@@ -477,9 +477,9 @@
 		balloon_alert(user, LANG("obj.feaafe36", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
+	user.visible_message(span_notice(LANG("obj.fdd3b03f", list(user, tool, src))),
 		balloon_alert(user, LANG("obj.11758983", null)),
-		span_hear("You hear the chatter of a floppy drive."))
+		span_hear(LANG("obj.fa2ab998", null)))
 	busy = TRUE
 
 	if(!do_after(user, 1.5 SECONDS, target = src))

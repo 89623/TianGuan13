@@ -72,7 +72,7 @@
 	if(!memory_to_tattoo || !tattoo_artist.Adjacent(tattoo_holder) || !tattoo_holder.get_bodypart(selected_zone))
 		return
 
-	tattoo_artist.visible_message(span_notice("[tattoo_artist] begins to tattoo something onto [tattoo_target] of [tattoo_holder]..."))
+	tattoo_artist.visible_message(span_notice(LANG("obj.54ea6572", list(tattoo_artist, tattoo_target, tattoo_holder))))
 	if(!do_after(tattoo_artist, 5 SECONDS, tattoo_holder))
 		return
 	if(!tattoo_holder.get_bodypart(selected_zone))

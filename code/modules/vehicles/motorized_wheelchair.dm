@@ -168,7 +168,7 @@
 /obj/vehicle/ridden/wheelchair/motorized/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
 	panel_open = !panel_open
-	user.visible_message(span_notice("[user] [panel_open ? "opens" : "closes"] the maintenance panel on [src]."), span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
+	user.visible_message(span_notice(LANG("obj.33b322cf", list(user, panel_open ? "opens" : "closes", src))), span_notice(LANG("obj.aec23cf2", list(panel_open ? "open" : "close"))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/wheelchair/motorized/examine(mob/user)

@@ -63,7 +63,7 @@
 		if(invocation_type != INVOCATION_NONE) // extra feedback since it's weird for them
 			cast_on.balloon_alert_to_viewers("magically tied!")
 		else
-			cast_on.balloon_alert(owner, "magically tied!")
+			cast_on.balloon_alert(owner, LANG("datum.5deb4c26", null))
 		playsound(cast_on, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 		return TRUE
 
@@ -94,22 +94,22 @@
 			if(shoes_to_tie.fastening_type == SHOES_SLIPON)
 				if(bypass_tie_status)
 					to_chat(owner, span_warning(LANG("datum.793e8ffa", list(cast_on))))
-					cast_on.balloon_alert(owner, "laced!")
+					cast_on.balloon_alert(owner, LANG("datum.545623cb", null))
 					shoes_to_tie.fastening_type = SHOES_LACED
 					if(invocation_type != INVOCATION_NONE)
 						playsound(cast_on, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)
 					return TRUE
 				else
 					to_chat(owner, span_warning(LANG("datum.634d6b69", list(cast_on))))
-					cast_on.balloon_alert(owner, "laceless!")
+					cast_on.balloon_alert(owner, LANG("datum.12acca8e", null))
 					return FALSE
 
 			to_chat(owner, span_warning(LANG("datum.4377e56f", list(cast_on))))
-			cast_on.balloon_alert(owner, "untied!")
+			cast_on.balloon_alert(owner, LANG("datum.444446ae", null))
 			shoes_to_tie.adjust_laces(SHOES_UNTIED, force_lacing = TRUE)
 		if(SHOES_UNTIED)
 			to_chat(owner, span_warning(LANG("datum.b0d50179", list(cast_on))))
-			cast_on.balloon_alert(owner, "knotted!")
+			cast_on.balloon_alert(owner, LANG("datum.36456ef3", null))
 			shoes_to_tie.adjust_laces(SHOES_KNOTTED, force_lacing = TRUE)
 		if(SHOES_KNOTTED)
 			to_chat(owner, span_warning(LANG("datum.849c039f", list(cast_on))))

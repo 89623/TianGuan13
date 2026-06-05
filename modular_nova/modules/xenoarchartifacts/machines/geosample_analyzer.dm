@@ -52,8 +52,8 @@
 	current_sample = sampler
 	scanning = TRUE
 	user.visible_message(
-		span_notice("[user] inserts [sampler] into [src]."),
-		span_notice("You insert [sampler] into [src]."),
+		span_notice(LANG("obj.05c6f8ca", list(user, sampler, src))),
+		span_notice(LANG("obj.8ce99939", list(sampler, src))),
 		blind_message = span_notice("You hear click nearby."),
 	)
 	process_sample()

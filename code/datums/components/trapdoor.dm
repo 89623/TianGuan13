@@ -70,7 +70,7 @@
 	if(!isopenturf(new_parent))
 		if(isatom(new_parent))
 			var/atom/new_parent_atom = new_parent
-			new_parent_atom.visible_message(span_warning("The trapdoor mechanism under [new_parent_atom] is broken!"))
+			new_parent_atom.visible_message(span_warning(LANG("datum.b71af5b8", list(new_parent_atom))))
 		return COMPONENT_NOTRANSFER
 	if(SSshuttle.get_containing_shuttle(new_parent))
 		on_shuttle = TRUE
@@ -140,9 +140,9 @@
 	if(!assembly)
 		return
 	if(IS_OPEN(parent))
-		source.balloon_alert(user, "can't unlink trapdoor when its open")
+		source.balloon_alert(user, LANG("datum.7f40e850", null))
 		return
-	source.balloon_alert(user, "unlinking trapdoor")
+	source.balloon_alert(user, LANG("datum.e625c60f", null))
 	INVOKE_ASYNC(src, PROC_REF(async_try_unlink), source, user, tool)
 	return
 
@@ -154,15 +154,15 @@
 		return
 	var/obj/item/trapdoor_remote/remote = tool
 	if(!remote.internals)
-		source.balloon_alert(user, "missing internals")
+		source.balloon_alert(user, LANG("datum.6cb0ce7c", null))
 		return
 	if(IS_OPEN(parent))
-		source.balloon_alert(user, "can't link trapdoor when its open")
+		source.balloon_alert(user, LANG("datum.5f72265c", null))
 		return
 	if(assembly)
-		source.balloon_alert(user, "already linked")
+		source.balloon_alert(user, LANG("datum.8ee2cda6", null))
 		return
-	source.balloon_alert(user, "linking trapdoor")
+	source.balloon_alert(user, LANG("datum.2d580d19", null))
 	INVOKE_ASYNC(src, PROC_REF(async_try_link), source, user, tool)
 
 /datum/component/trapdoor/proc/async_try_link(turf/source, mob/user, obj/item/trapdoor_remote/remote)
@@ -171,11 +171,11 @@
 	if(QDELETED(src))
 		return
 	if(IS_OPEN(parent))
-		source.balloon_alert(user, "can't link trapdoor when its open")
+		source.balloon_alert(user, LANG("datum.5f72265c", null))
 		return
 	src.assembly = remote.internals
 	++assembly.linked
-	source.balloon_alert(user, "trapdoor linked")
+	source.balloon_alert(user, LANG("datum.06c8ad67", null))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
 	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
@@ -186,7 +186,7 @@
 	if(QDELETED(src))
 		return
 	if(IS_OPEN(parent))
-		source.balloon_alert(user, "can't unlink trapdoor when its open")
+		source.balloon_alert(user, LANG("datum.7f40e850", null))
 		return
 	assembly.linked = max(assembly.linked - 1, 0)
 	stored_decals = list()
@@ -194,7 +194,7 @@
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, PROC_REF(on_link_requested))
 	assembly = null
-	source.balloon_alert(user, "trapdoor unlinked")
+	source.balloon_alert(user, LANG("datum.5377410f", null))
 
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
@@ -248,7 +248,7 @@
 			post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), path, null, conspicuous, assembly)
 			return
 		// otherwise, break trapdoor
-		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
+		dying_trapdoor.visible_message(span_warning(LANG("datum.3bb6ec86", list(dying_trapdoor))))
 		if(assembly)
 			assembly.linked = max(assembly.linked - 1, 0)
 			stored_decals.Cut()
@@ -296,7 +296,7 @@
 		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, PROC_REF(decal_detached))
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
 	trapdoor_baseturfs = trapdoor_turf.get_baseturfs_to_depth(opening_depth)
-	trapdoor_turf.visible_message(span_warning("[trapdoor_turf] swings open!"))
+	trapdoor_turf.visible_message(span_warning(LANG("datum.61403a24", list(trapdoor_turf))))
 	trapdoor_turf.ScrapeAway(opening_depth, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)
 
 /**
@@ -309,10 +309,10 @@
 	var/turf/open/trapdoor_turf = parent
 	var/obj/structure/lattice/blocking = locate() in trapdoor_turf.contents
 	if(blocking)
-		trapdoor_turf.visible_message(span_warning("The trapdoor mechanism in [trapdoor_turf] tries to shut, but is jammed by [blocking]!"))
+		trapdoor_turf.visible_message(span_warning(LANG("datum.a62ed95f", list(trapdoor_turf, blocking))))
 		return
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_shut.ogg', 50)
-	trapdoor_turf.visible_message(span_warning("The trapdoor mechanism in [trapdoor_turf] swings shut!"))
+	trapdoor_turf.visible_message(span_warning(LANG("datum.7365d86d", list(trapdoor_turf))))
 	var/list/new_baseturfs = list()
 	new_baseturfs += trapdoor_turf.baseturfs
 	new_baseturfs += trapdoor_turf.type
@@ -352,7 +352,7 @@
 		return
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
 		if(loc && pulser)
-			loc.balloon_alert(pulser, "linking on cooldown!")
+			loc.balloon_alert(pulser, LANG("obj.4d1f829f", null))
 		return
 	attempt_link_up()
 	COOLDOWN_START(src, search_cooldown, search_cooldown_time)
@@ -361,15 +361,14 @@
 	var/turf/assembly_turf = get_turf(src)
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
 		var/timeleft = DisplayTimeText(COOLDOWN_TIMELEFT(src, search_cooldown))
-		assembly_turf.visible_message(span_warning("[src] is on cooldown! Please wait [timeleft]."), vision_distance = SAMETILE_MESSAGE_RANGE)
+		assembly_turf.visible_message(span_warning(LANG("obj.c95c9d1a", list(src, timeleft))), vision_distance = SAMETILE_MESSAGE_RANGE)
 		return
 	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAPDOOR_LINK, src) & LINKED_UP)
 		playsound(assembly_turf, 'sound/machines/chime.ogg', 50, TRUE)
-		assembly_turf.visible_message(span_notice("[src] has linked up to a nearby trapdoor! \
-		You may now use it to check where the trapdoor is... be careful!"), vision_distance = SAMETILE_MESSAGE_RANGE)
+		assembly_turf.visible_message(span_notice(LANG("obj.e630b7ef", list(src))), vision_distance = SAMETILE_MESSAGE_RANGE)
 	else
 		playsound(assembly_turf, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-		assembly_turf.visible_message(span_warning("[src] has failed to find a trapdoor nearby to link to."), vision_distance = SAMETILE_MESSAGE_RANGE)
+		assembly_turf.visible_message(span_warning(LANG("obj.ab361f8b", list(src))), vision_distance = SAMETILE_MESSAGE_RANGE)
 
 /**
  * ## trapdoor remotes!
@@ -430,24 +429,24 @@
 		return TRUE
 
 	if(!internals)
-		user.balloon_alert(user, "no device!")
+		user.balloon_alert(user, LANG("obj.3095f095", null))
 		return TRUE
 
 	if(!internals.linked)
 		internals.pulsed(user)
 		// The pulse linked successfully
 		if(internals.linked)
-			user.balloon_alert(user, "linked [internals.linked] trapdoors")
+			user.balloon_alert(user, LANG("obj.c1a9e344", list(internals.linked)))
 		// The pulse failed to link
 		else
-			user.balloon_alert(user, "link failed!")
+			user.balloon_alert(user, LANG("obj.b6682898", null))
 		return TRUE
 
 	if(!COOLDOWN_FINISHED(src, trapdoor_cooldown))
-		user.balloon_alert(user, "on cooldown!")
+		user.balloon_alert(user, LANG("obj.d4ae5d4d", null))
 		return TRUE
 
-	user.balloon_alert(user, "trapdoor triggered")
+	user.balloon_alert(user, LANG("obj.10d81e10", null))
 	playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 50, FALSE)
 	icon_state = "trapdoor_pressed"
 	addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), trapdoor_cooldown_time)
@@ -459,11 +458,11 @@
 	if (!user.is_holding(src))
 		return CLICK_ACTION_BLOCKING
 	if(!internals)
-		user.balloon_alert(user, "no device!")
+		user.balloon_alert(user, LANG("obj.3095f095", null))
 		return CLICK_ACTION_BLOCKING
 
 	internals.autoclose = !internals.autoclose
-	user.balloon_alert(user, "autoclose [internals.autoclose ? "enabled" : "disabled"]")
+	user.balloon_alert(user, LANG("obj.270ec772", list(internals.autoclose ? "enabled" : "disabled")))
 	return CLICK_ACTION_SUCCESS
 
 #undef TRAPDOOR_LINKING_SEARCH_RANGE

@@ -90,7 +90,7 @@
 	released_mob.reset_perspective()
 	released_mob.setDir(SOUTH)
 	if(display_messages)
-		released_mob.visible_message(span_warning("[released_mob] uncurls!"))
+		released_mob.visible_message(span_warning(LANG("obj.25d2d428", list(released_mob))))
 	if(!QDELETED(src))
 		qdel(src)
 	return TRUE
@@ -109,7 +109,7 @@
 /obj/item/mob_holder/on_found(mob/finder)
 	if(held_mob?.will_escape_storage())
 		to_chat(finder, span_warning(LANG("obj.8d109f54", list(held_mob.name))))
-		finder.visible_message(span_warning("\A [held_mob.name] pops out of the container [finder] is opening!"), ignored_mobs = finder)
+		finder.visible_message(span_warning(LANG("obj.fa0c4845", list(held_mob.name, finder))), ignored_mobs = finder)
 		release(display_messages = FALSE)
 		return
 

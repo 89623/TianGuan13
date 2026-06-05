@@ -49,7 +49,7 @@
 	var/mob/living/carbon/human/holder = get_id_holder()
 	if(holder)
 		playsound(holder, 'sound/machines/cryo_warning.ogg', 25, TRUE)
-		holder.balloon_alert(holder, "emergency access: [dept]")
+		holder.balloon_alert(holder, LANG("obj.e05854b2", list(dept)))
 
 	// Enhanced logging
 	var/access_names = list()
@@ -70,7 +70,7 @@
 	// User feedback before clearing
 	var/mob/living/carbon/human/holder = get_id_holder()
 	if(holder)
-		holder.balloon_alert(holder, "[dept] access expired")
+		holder.balloon_alert(holder, LANG("obj.96ee7a2c", list(dept)))
 		to_chat(holder, span_warning(LANG("obj.e7e8fd42", list(dept))))
 
 	// Remove department's temporary access from the main access list
@@ -111,7 +111,7 @@
 	// User feedback before clearing
 	var/mob/living/carbon/human/holder = get_id_holder()
 	if(holder)
-		holder.balloon_alert(holder, "emergency access expired")
+		holder.balloon_alert(holder, LANG("obj.eae77ee7", null))
 		to_chat(holder, span_warning(LANG("obj.9328cc61", null)))
 
 	// Collect all temporary access flags for logging

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Creates a hotspot and deletes the owner atom upon being exposed to high temperatures, by Melbert
 /datum/element/easy_ignite
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE // because turfs
@@ -30,7 +31,7 @@
 /datum/element/easy_ignite/proc/ignite(atom/igniting, mob/user)
 	var/delete_after = TRUE
 
-	igniting.visible_message(span_warning("[igniting] catch[igniting.p_es()] fire!"), span_warning("You ignite into flames!"))
+	igniting.visible_message(span_warning(LANG("datum.a6b672b2", list(igniting, igniting.p_es()))), span_warning(LANG("datum.ab80ff63", null)))
 	new /obj/effect/hotspot(isturf(igniting) ? igniting : igniting.loc)
 
 	if(isturf(igniting))
@@ -93,14 +94,14 @@
 /datum/element/easy_ignite/proc/item_ignition(obj/item/source, obj/item/tool, mob/user)
 	if(tool.get_temperature() >= required_temp)
 		source.visible_message(
-			span_warning("[user] ignites [source] with [tool]!"),
-			span_warning("You ignite [source] with [tool]!"),
+			span_warning(LANG("datum.e6ca8165", list(user, source, tool))),
+			span_warning(LANG("datum.47ff14d7", list(source, tool))),
 		)
 		ignite(source, user)
 		return TRUE
 
 	source.visible_message(
-		span_warning("[user] tries to ignite [source] with [tool]!"),
-		span_warning("You try to ignite [source] with [tool], but it's not hot enough!"),
+		span_warning(LANG("datum.4cbf85cf", list(user, source, tool))),
+		span_warning(LANG("datum.27d74a5d", list(source, tool))),
 	)
 	return FALSE

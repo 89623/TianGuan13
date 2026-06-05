@@ -67,7 +67,7 @@
 /obj/structure/light_construct/attack_hand(mob/user, list/modifiers)
 	if(!cell)
 		return
-	user.visible_message(span_notice("[user] removes [cell] from [src]!"), span_notice("You remove [cell]."))
+	user.visible_message(span_notice(LANG("obj.6eec8634", list(user, cell, src))), span_notice(LANG("obj.1973523e", list(cell))))
 	user.put_in_hands(cell)
 	cell = null
 	add_fingerprint(user)
@@ -94,8 +94,8 @@
 			to_chat(user, span_warning(LANG("obj.18df6061", null)))
 			return
 		if(user.temporarilyRemoveItemFromInventory(tool))
-			user.visible_message(span_notice("[user] hooks up [tool] to [src]."), \
-			span_notice("You add [tool] to [src]."))
+			user.visible_message(span_notice(LANG("obj.859ffee5", list(user, tool, src))), \
+			span_notice(LANG("obj.0c27fe26", list(tool, src))))
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			tool.forceMove(src)
 			cell = tool
@@ -113,8 +113,8 @@
 					return
 				to_chat(user, span_notice(LANG("obj.2f7a5f8d", list(src))))
 				if (tool.use_tool(src, user, 30, volume=50))
-					user.visible_message(span_notice("[user.name] deconstructs [src]."), \
-						span_notice("You deconstruct [src]."), span_hear("You hear a ratchet."))
+					user.visible_message(span_notice(LANG("obj.6d94607a", list(user.name, src))), \
+						span_notice(LANG("obj.a33d1bb6", list(src))), span_hear(LANG("obj.aa8a193f", null)))
 					playsound(src, 'sound/items/deconstruct.ogg', 75, TRUE)
 					deconstruct()
 				return
@@ -124,8 +124,8 @@
 				if(coil.use(1))
 					icon_state = "[fixture_type]-construct-stage2"
 					stage = LIGHT_CONSTRUCT_WIRED
-					user.visible_message(span_notice("[user.name] adds wires to [src]."), \
-						span_notice("You add wires to [src]."))
+					user.visible_message(span_notice(LANG("obj.1c9350ed", list(user.name, src))), \
+						span_notice(LANG("obj.b1f7e13c", list(src))))
 				else
 					to_chat(user, span_warning(LANG("obj.41542255", list(src))))
 				return
@@ -138,14 +138,14 @@
 				stage = LIGHT_CONSTRUCT_EMPTY
 				icon_state = "[fixture_type]-construct-stage1"
 				new /obj/item/stack/cable_coil(drop_location(), 1, "red")
-				user.visible_message(span_notice("[user.name] removes the wiring from [src]."), \
-					span_notice("You remove the wiring from [src]."), span_hear("You hear clicking."))
+				user.visible_message(span_notice(LANG("obj.e3ab888f", list(user.name, src))), \
+					span_notice(LANG("obj.8671a81f", list(src))), span_hear(LANG("obj.dcc6c1b0", null)))
 				tool.play_tool_sound(src, 100)
 				return
 
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice("[user.name] closes [src]'s casing."), \
-					span_notice("You close [src]'s casing."), span_hear("You hear screwing."))
+				user.visible_message(span_notice(LANG("obj.ab5a0f0c", list(user.name, src))), \
+					span_notice(LANG("obj.1aba22ed", list(src))), span_hear(LANG("obj.8616c74b", null)))
 				tool.play_tool_sound(src, 75)
 				switch(fixture_type)
 					if("tube")

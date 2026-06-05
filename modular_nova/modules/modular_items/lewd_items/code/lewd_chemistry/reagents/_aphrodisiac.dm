@@ -549,11 +549,11 @@
 
 	if(new_breasts.visibility_preference == GENITAL_ALWAYS_SHOW || exposed_mob.is_topless())
 		if(!suppress_chat) // So we don't spam chat
-			exposed_mob.visible_message(span_notice("[exposed_mob]'s bust suddenly expands!"))
+			exposed_mob.visible_message(span_notice(LANG("datum.f8b3ed18", list(exposed_mob))))
 			to_chat(exposed_mob, span_purple(LANG("datum.252d5a55", null)))
 	else
 		if(!suppress_chat)
-			exposed_mob.visible_message(span_notice("The area around [exposed_mob]'s chest suddenly bounces a bit."))
+			exposed_mob.visible_message(span_notice(LANG("datum.26d09cde", list(exposed_mob))))
 			to_chat(exposed_mob, span_purple(LANG("datum.3ccb4532", null)))
 
 	return new_breasts

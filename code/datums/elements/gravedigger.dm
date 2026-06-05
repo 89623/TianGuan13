@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Gravedigger element. Allows for graves to be dug from certain tiles
  */
@@ -35,10 +36,10 @@
 		return NONE
 
 	if(locate(/obj/structure/closet/crate/grave) in interacting_with)
-		user.balloon_alert(user, "grave already present!")
+		user.balloon_alert(user, LANG("datum.ac9058a6", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.balloon_alert(user, "digging grave...")
+	user.balloon_alert(user, LANG("datum.1db6d44a", null))
 	playsound(interacting_with, 'sound/effects/shovel_dig.ogg', 50, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(perform_digging), user, interacting_with, source)
 	return ITEM_INTERACT_BLOCKING

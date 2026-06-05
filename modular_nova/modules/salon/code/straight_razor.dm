@@ -45,11 +45,11 @@
 				return
 
 			var/self_shaving = target_human == user // Shaving yourself?
-			user.visible_message(span_notice("[user] starts to shave [self_shaving ? user.p_their() : "[target_human]'s"] facial hair with [src]."), \
-				span_notice("You take a moment to shave [self_shaving ? "your" : "[target_human]'s" ] facial hair with [src]..."))
+			user.visible_message(span_notice(LANG("obj.519fbfd3", list(user, self_shaving ? user.p_their() : "[target_human]'s", src))), \
+				span_notice(LANG("obj.4bdf607a", list(self_shaving ? "your" : "[target_human]'s", src))))
 			if(do_after(user, shaving_time, target = target_human))
-				user.visible_message(span_notice("[user] shaves [self_shaving ? user.p_their() : "[target_human]'s"] facial hair clean with [src]."), \
-					span_notice("You finish shaving[self_shaving ? "" : " [target_human]'s facial hair"] with [src]. Fast and clean!"))
+				user.visible_message(span_notice(LANG("obj.cd26529e", list(user, self_shaving ? user.p_their() : "[target_human]'s", src))), \
+					span_notice(LANG("obj.69264ffa", list(self_shaving ? "" : " [target_human]'s facial hair", src))))
 				shave(target_human)
 
 		else

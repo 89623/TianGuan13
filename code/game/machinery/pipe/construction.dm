@@ -308,9 +308,9 @@ Buildable meters
 
 	wrench.play_tool_sound(src)
 	user.visible_message( \
-		span_notice("[user] fastens \the [src]."), \
-		span_notice("You fasten \the [src]."), \
-		span_hear("You hear ratcheting."))
+		span_notice(LANG("obj.78b56604", list(user, src))), \
+		span_notice(LANG("obj.09ea7751", list(src))), \
+		span_hear(LANG("obj.706a8c3e", null)))
 
 	qdel(src)
 
@@ -325,9 +325,9 @@ Buildable meters
 	if(welder.use_tool(src, user, 2 SECONDS, volume=2))
 		new /obj/item/sliced_pipe(drop_location())
 		user.visible_message( \
-			"[user] welds \the [src] in two.", \
-			span_notice("You weld \the [src] in two."), \
-			span_hear("You hear welding."))
+			LANG("obj.e5ff7242", list(user, src)), \
+			span_notice(LANG("obj.de170f33", list(src))), \
+			span_hear(LANG("obj.1aa82fa3", null)))
 
 		qdel(src)
 
@@ -422,7 +422,7 @@ Buildable meters
 	T.flipped = flipped
 
 /obj/item/pipe/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] shoves [src] in [user.p_their()] mouth and turns it on! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.01606d69", list(user, src, user.p_their(), user.p_theyre()))))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		for(var/i in 1 to 20)

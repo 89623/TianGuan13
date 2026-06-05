@@ -33,13 +33,13 @@
 	if(!istype(wall) || !user.mind)
 		return
 	if(HAS_TRAIT_FROM(wall, TRAIT_NOT_ENGRAVABLE, ENGRAVED_TRAIT))
-		user.balloon_alert(user, "wall has already been engraved!")
+		user.balloon_alert(user, LANG("datum.a8695848", null))
 		return
 	if(HAS_TRAIT(wall, TRAIT_NOT_ENGRAVABLE))
-		user.balloon_alert(user, "wall cannot be engraved!")
+		user.balloon_alert(user, LANG("datum.a5e0ccfb", null))
 		return
 	if(!length(user.mind?.memories))
-		user.balloon_alert(user, "nothing memorable to engrave!")
+		user.balloon_alert(user, LANG("datum.97a68106", null))
 		return
 	var/datum/memory/memory_to_engrave = user.mind.select_memory("engrave")
 	if(!memory_to_engrave)
@@ -49,10 +49,10 @@
 	item.add_fingerprint(user)
 	playsound(item, item.hitsound, 30, TRUE, -1)
 	user.do_attack_animation(wall)
-	user.balloon_alert(user, "engraving wall...")
+	user.balloon_alert(user, LANG("datum.b6cd9c06", null))
 	if(!do_after(user, 5 SECONDS, target = wall))
 		return
-	user.balloon_alert(user, "wall engraved")
+	user.balloon_alert(user, LANG("datum.06dc20af", null))
 	user.do_attack_animation(wall)
 
 	var/do_persistent_save = !(memory_to_engrave.memory_flags & MEMORY_FLAG_NOPERSISTENCE)

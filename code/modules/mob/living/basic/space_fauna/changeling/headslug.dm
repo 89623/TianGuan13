@@ -64,11 +64,11 @@
 	if(victim.stat != DEAD)
 		return
 	if(HAS_TRAIT(victim, TRAIT_XENO_HOST))
-		target.balloon_alert(src, "already pregnant!") // Maybe the worst balloon alert in the codebase
+		target.balloon_alert(src, LANG("mob.ed5dba7c", null)) // Maybe the worst balloon alert in the codebase
 		return
 
 	if(!infect(victim))
-		target.balloon_alert(src, "failed to implant egg!")
+		target.balloon_alert(src, LANG("mob.8547d48a", null))
 		stack_trace("[key] in [src] failed to implant egg in [victim], despite all checks suggesting it should have worked!")
 		return
 

@@ -179,8 +179,8 @@
 /datum/component/cult_ritual_item/proc/do_destroy_girder(obj/structure/girder/cult/cult_girder, mob/living/cultist)
 	playsound(cult_girder, 'sound/items/weapons/resonator_blast.ogg', 40, TRUE, ignore_walls = FALSE)
 	cultist.visible_message(
-		span_warning("[cultist] strikes [cult_girder] with [parent]!"),
-		span_notice("You demolish [cult_girder].")
+		span_warning(LANG("datum.2acc8ee3", list(cultist, cult_girder, parent))),
+		span_notice(LANG("datum.f8d2422d", list(cult_girder)))
 		)
 	new /obj/item/stack/sheet/runed_metal(cult_girder.drop_location())
 	qdel(cult_girder)
@@ -305,7 +305,7 @@
 
 	cultist.visible_message(
 		span_warning("[cultist] [can_have_blood ? "cuts open [cultist.p_their()] arm and begins writing in [cultist.p_their()] own blood":"begins sketching out a strange design"]!"),
-		span_cult("You [can_have_blood ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.")
+		span_cult(LANG("datum.62346037", list(can_have_blood ? "slice open your arm and ":"")))
 		)
 
 	if(can_have_blood)
@@ -335,8 +335,8 @@
 		return FALSE
 
 	cultist.visible_message(
-		span_warning("[cultist] creates a strange circle[can_have_blood ? " in [cultist.p_their()] own blood":""]."),
-		span_cult("You finish drawing the arcane markings of the Geometer.")
+		span_warning(LANG("datum.7d95df5f", list(cultist, can_have_blood ? " in [cultist.p_their()] own blood":""))),
+		span_cult(LANG("datum.242fd3d3", null))
 		)
 
 	cleanup_shields()

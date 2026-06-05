@@ -113,7 +113,7 @@
 		owner.updatehealth()
 
 	if(body_damage_patched && prob(35)) // healing is called every few seconds, not every tick
-		owner.visible_message(span_warning("[owner]'s body twitches a bit."), span_notice("You feel like something is patching your injured body."))
+		owner.visible_message(span_warning(LANG("obj.ecbf70f4", list(owner))), span_notice(LANG("obj.8e85683a", null)))
 
 
 /obj/item/organ/cyberimp/chest/reviver/proc/revive_dead()
@@ -125,7 +125,7 @@
 
 	defib_cooldown += 16 SECONDS // delay so it doesn't spam
 
-	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
+	owner.visible_message(span_warning(LANG("obj.4bf6b286", list(owner))))
 	playsound(owner, SFX_BODYFALL, 50, TRUE)
 	playsound(owner, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
 	owner.set_heartattack(FALSE)
@@ -328,10 +328,10 @@
 		return NONE
 
 	if(core_applied)
-		user.balloon_alert(user, "core already installed!")
+		user.balloon_alert(user, LANG("obj.084484e9", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.balloon_alert(user, "core installed")
+	user.balloon_alert(user, LANG("obj.1a2673f9", null))
 	name = /obj/item/organ/cyberimp/chest/spine/atlas::name
 	desc = /obj/item/organ/cyberimp/chest/spine/atlas::desc
 	athletics_boost_multiplier = /obj/item/organ/cyberimp/chest/spine/atlas::athletics_boost_multiplier

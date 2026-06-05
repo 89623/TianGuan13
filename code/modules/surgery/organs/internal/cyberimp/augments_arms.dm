@@ -157,9 +157,9 @@
 	active_item.resistance_flags = active_item::resistance_flags
 	if(owner)
 		owner.visible_message(
-			span_notice("[owner] retracts [active_item] back into [owner.p_their()] [parse_zone(zone)]."),
-			span_notice("[active_item] snaps back into your [parse_zone(zone)]."),
-			span_hear("You hear a short mechanical noise."),
+			span_notice(LANG("obj.2b660e88", list(owner, active_item, owner.p_their(), parse_zone(zone)))),
+			span_notice(LANG("obj.effa8412", list(active_item, parse_zone(zone)))),
+			span_hear(LANG("obj.5f2c0be9", null)),
 		)
 
 		owner.transferItemToLoc(active_item, src, TRUE)
@@ -202,9 +202,9 @@
 			for(var/i in failure_message)
 				to_chat(owner, i)
 			return
-	owner.visible_message(span_notice("[owner] extends [active_item] from [owner.p_their()] [parse_zone(zone)]."),
-		span_notice("You extend [active_item] from your [parse_zone(zone)]."),
-		span_hear("You hear a short mechanical noise."))
+	owner.visible_message(span_notice(LANG("obj.c85432cb", list(owner, active_item, owner.p_their(), parse_zone(zone)))),
+		span_notice(LANG("obj.d3afb912", list(active_item, parse_zone(zone)))),
+		span_hear(LANG("obj.5f2c0be9", null)))
 	playsound(get_turf(owner), extend_sound, 50, TRUE)
 
 	if(length(items_list) > 1)
@@ -245,7 +245,7 @@
 		return
 	if(prob(30/severity) && owner && !(organ_flags & ORGAN_FAILING))
 		Retract()
-		owner.visible_message(span_danger("A loud bang comes from [owner]\'s [parse_zone(zone)]!"))
+		owner.visible_message(span_danger(LANG("obj.56edd909", list(owner, parse_zone(zone)))))
 		playsound(get_turf(owner), 'sound/items/weapons/flashbang.ogg', 100, TRUE)
 		to_chat(owner, span_userdanger(LANG("obj.8afd771b", list(parse_zone(zone)))))
 		owner.adjust_fire_stacks(20)
@@ -504,13 +504,13 @@
 	. = ..()
 	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
-	owner.balloon_alert(owner, "your arm spasms wildly!")
+	owner.balloon_alert(owner, LANG("obj.ece5764c", null))
 	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
 
 /obj/item/organ/cyberimp/arm/strongarm/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
-	owner.balloon_alert(owner, "your arm stops spasming!")
+	owner.balloon_alert(owner, LANG("obj.c7ddb052", null))
 
 /obj/item/organ/cyberimp/arm/strongarm/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -587,9 +587,9 @@
 
 	// Some mobs gib when killed, so we're logging early. At this point, we're definitely hitting, so...
 	living_target.visible_message(
-		span_danger("[source] [picked_hit_type]ed [living_target][ground_bounce ? " into [target_turf]" : ""]!"),
-		span_userdanger("You're [picked_hit_type]ed by [source][ground_bounce ? " into [target_turf]" : ""]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("obj.f0c1dcda", list(source, picked_hit_type, living_target, ground_bounce ? " into [target_turf]" : ""))),
+		span_userdanger(LANG("obj.291aabf5", list(picked_hit_type, source, ground_bounce ? " into [target_turf]" : ""))),
+		span_hear(LANG("obj.6c7f8149", null)),
 		COMBAT_MESSAGE_RANGE,
 		source,
 	)

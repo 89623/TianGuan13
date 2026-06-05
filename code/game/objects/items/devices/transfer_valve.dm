@@ -98,9 +98,9 @@
 		var/obj/vehicle/ridden/wheelchair/chair = interacting_with
 
 		if (chair.bomb_attached)
-			user.balloon_alert(user, "already has a TTV!")
+			user.balloon_alert(user, LANG("obj.7ebb669f", null))
 			return ITEM_INTERACT_FAILURE
-		user.balloon_alert(user, "attaching TTV...")
+		user.balloon_alert(user, LANG("obj.3124768f", null))
 		if (!do_after(user, 0.5 SECONDS, chair))
 			return ITEM_INTERACT_FAILURE
 

@@ -36,7 +36,7 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 	var/atom/visible_atom = targets[1] //The object that'll handle the messages
 	if(length(targets) == 1)
 		if(!subtle)
-			visible_atom.visible_message("[targets[1]] fizzes, there's nothing it can link to!")
+			visible_atom.visible_message(LANG("datum.c768b056", list(targets[1])))
 		return FALSE
 
 	var/subtle_keyword = subtle ? "subtle" : ""
@@ -54,7 +54,7 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 			target.alpha = 200
 			do_sparks(3, FALSE, target)
 
-	visible_atom.visible_message("The items shimmer and fizzle, turning a shade of violet blue.")
+	visible_atom.visible_message(LANG("datum.430c6bd3", null))
 	id_counter++
 	return TRUE
 
@@ -111,7 +111,7 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 		thing_to_send.forceMove(eigen_target)
 	else
 		if(!subtle)
-			object_sent_from.balloon_alert(thing_to_send, "nothing happens!")
+			object_sent_from.balloon_alert(thing_to_send, LANG("datum.bccffc95", null))
 		return FALSE
 	//Create ONE set of sparks for ALL times in iteration
 	if(!subtle && spark_time != world.time)

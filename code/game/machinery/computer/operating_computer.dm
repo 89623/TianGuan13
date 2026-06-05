@@ -71,9 +71,9 @@
 /obj/machinery/computer/operating/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/disk/surgery))
 		user.visible_message(
-			span_notice("[user] begins to load [tool] in [src]..."),
-			span_notice("You begin to load a surgery protocol from [tool]..."),
-			span_hear("You hear the chatter of a floppy drive."),
+			span_notice(LANG("obj.a8a3e32a", list(user, tool, src))),
+			span_notice(LANG("obj.bb289102", list(tool))),
+			span_hear(LANG("obj.fa2ab998", null)),
 		)
 		var/obj/item/disk/surgery/disky = tool
 		if(!do_after(user, 1 SECONDS, src))

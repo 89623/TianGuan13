@@ -103,7 +103,7 @@
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
 	if(I.use_tool(src, user, 0))
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		user.visible_message(span_notice("[user] takes the glass off [src]."), span_notice("You take the glass off [src]."))
+		user.visible_message(span_notice(LANG("obj.41d6fa40", list(user, src))), span_notice(LANG("obj.e83f2a0b", list(src))))
 		deconstruct(TRUE)
 	return TRUE
 
@@ -308,8 +308,8 @@
 				return
 		set_anchored(!anchored)
 		user.visible_message(
-			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly[anchored ? " into place" : null]."),
-			span_notice("You [anchored ? null : "un"]wrench the solar assembly[anchored ? " into place" : null]."),
+			span_notice(LANG("obj.7f4a0e52", list(user, anchored ? null : "un", anchored ? " into place" : null))),
+			span_notice(LANG("obj.ddbfc3b2", list(anchored ? null : "un", anchored ? " into place" : null))),
 		)
 		item_used.play_tool_sound(src, 75)
 		return TRUE
@@ -319,7 +319,7 @@
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = FALSE
 			update_appearance()
-			user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), span_notice("You take out the electronics from the solar assembly."))
+			user.visible_message(span_notice(LANG("obj.7ea665eb", list(user))), span_notice(LANG("obj.48861cc1", null)))
 			return TRUE
 
 		//prevent construction if something dense's on our tile
@@ -334,7 +334,7 @@
 			to_chat(user, span_warning(LANG("obj.b74f8f2c", null)))
 			return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		user.visible_message(span_notice("[user] places the glass on the solar assembly."),span_notice("You place the glass on the solar assembly."))
+		user.visible_message(span_notice(LANG("obj.0ea81752", list(user))),span_notice(LANG("obj.e92c0650", null)))
 		new /obj/machinery/power/tracker/(get_turf(src), src)
 		return TRUE
 
@@ -345,7 +345,7 @@
 			tracker = TRUE
 			update_appearance()
 			qdel(item_used)
-			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
+			user.visible_message(span_notice(LANG("obj.48ce76ed", list(user))), span_notice(LANG("obj.4d00b9e1", null)))
 			return TRUE
 
 	//make a list of all the glass
@@ -388,7 +388,7 @@
 
 		var/datum/material/glass_material = my_sheet.material_type
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
+		user.visible_message(span_notice(LANG("obj.0ea81752", list(user))), span_notice(LANG("obj.e92c0650", null)))
 		var/obj/machinery/power/solar/mySolar = new /obj/machinery/power/solar(get_turf(src), src)
 		mySolar.power_tier = glass_material_to_tier[glass_material]
 		mySolar.material_type = glass_material

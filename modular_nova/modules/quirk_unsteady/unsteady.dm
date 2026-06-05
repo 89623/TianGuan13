@@ -52,8 +52,8 @@
 	//don't display the message if already downed
 	if(!source.IsKnockdown())
 		source.visible_message(
-			span_warning("[source] falls over in a scramble!"),
-			span_userdanger("You fall over in a scramble!"),
+			span_warning(LANG("datum.26531e4d", list(source))),
+			span_userdanger(LANG("datum.2464a284", null)),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 

@@ -38,8 +38,8 @@
 
 /datum/status_effect/stop_drop_roll/proc/start_rolling()
 	owner.visible_message(
-		span_danger("[owner] rolls on the floor, trying to put [owner.p_them()]self out!"),
-		span_notice("You stop, drop, and roll!"),
+		span_danger(LANG("datum.60dd7723", list(owner, owner.p_them()))),
+		span_notice(LANG("datum.bfc63208", null)),
 	)
 	// Start with one weaker roll
 	reduce_firestacks(0.25)
@@ -76,8 +76,8 @@
 /// Called when we've successfully extinguished ourselves.
 /datum/status_effect/stop_drop_roll/proc/stop_rolling_successful()
 	owner.visible_message(
-		span_danger("[owner] successfully extinguishes [owner.p_them()]self!"),
-		span_notice("You extinguish yourself."),
+		span_danger(LANG("datum.4b0ab137", list(owner, owner.p_them()))),
+		span_notice(LANG("datum.b1a86997", null)),
 	)
 	qdel(src)
 
@@ -102,8 +102,8 @@
 
 /datum/status_effect/stop_drop_roll/hallucinating/start_rolling()
 	owner.visible_message(
-		span_danger("[owner] starts rolling around on the floor, flailing about!"),
-		span_notice("You stop, drop, and roll!"),
+		span_danger(LANG("datum.27c557c1", list(owner))),
+		span_notice(LANG("datum.bfc63208", null)),
 	)
 	reduce_firestacks(1) // more effective cause it's not real
 
@@ -125,7 +125,7 @@
 		hallucination.clear_fire()
 
 	owner.visible_message(
-		span_danger("[owner] stops flailing around on the ground."),
-		span_notice("You extinguish yourself."),
+		span_danger(LANG("datum.b06c240d", list(owner))),
+		span_notice(LANG("datum.b1a86997", null)),
 	)
 	qdel(src)

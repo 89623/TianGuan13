@@ -177,7 +177,7 @@
 	remove_tint(FALSE)
 	dirtiness = min(3, dirtiness + rand(2, 3))
 	apply_tint(TRUE)
-	user.visible_message(span_danger("[user] sprays [spraycan] into the face of [wearer]!"))
+	user.visible_message(span_danger(LANG("datum.92c48529", list(user, spraycan, wearer))))
 	to_chat(wearer, span_userdanger(LANG("datum.8794109e", list(user, spraycan))))
 	return COMPONENT_CANCEL_SPRAYPAINT
 

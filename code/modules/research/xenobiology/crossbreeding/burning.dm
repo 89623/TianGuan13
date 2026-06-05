@@ -34,7 +34,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
 	var/mob/living/basic/slime/new_slime = new(get_turf(user),/datum/slime_type/grey)
-	new_slime.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
+	new_slime.visible_message(span_danger(LANG("obj.0fd63bef", list(src, user))))
 	new_slime.befriend(user) //Gas, gas, gas
 	new_slime.bodytemperature = T0C + 400 //We gonna step on the gas.
 	new_slime.set_nutrition(SLIME_HUNGER_NUTRITION) //Tonight, we fight!
@@ -45,7 +45,7 @@ Burning extracts:
 	effect_desc = "Expels pepperspray in a radius when activated."
 
 /obj/item/slimecross/burning/orange/do_effect(mob/user)
-	user.visible_message(span_danger("[src] boils over with a caustic gas!"))
+	user.visible_message(span_danger(LANG("obj.e20c6d30", list(src))))
 	do_chem_smoke(7, user, get_turf(user), /datum/reagent/consumable/condensedcapsaicin, 100, log = TRUE)
 	..()
 
@@ -54,7 +54,7 @@ Burning extracts:
 	effect_desc = "Creates a clump of invigorating gel, it has healing properties and makes you feel good."
 
 /obj/item/slimecross/burning/purple/do_effect(mob/user)
-	user.visible_message(span_notice("[src] fills with a bubbling liquid!"))
+	user.visible_message(span_notice(LANG("obj.a7f03837", list(src))))
 	new /obj/item/slimecrossbeaker/autoinjector/slimestimulant(get_turf(user))
 	..()
 
@@ -63,7 +63,7 @@ Burning extracts:
 	effect_desc = "Freezes the floor around you and chills nearby people."
 
 /obj/item/slimecross/burning/blue/do_effect(mob/user)
-	user.visible_message(span_danger("[src] flash-freezes the area!"))
+	user.visible_message(span_danger(LANG("obj.b921ab3c", list(src))))
 	for(var/turf/open/T in range(3, get_turf(user)))
 		T.MakeSlippery(TURF_WET_PERMAFROST, min_wet_time = 10, wet_time_to_add = 5)
 	for(var/mob/living/carbon/M in range(5, get_turf(user)))
@@ -80,7 +80,7 @@ Burning extracts:
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
 		W.dismantle_wall(1)
 		playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
-	user.visible_message(span_danger("[src] pulses violently, and shatters the walls around it!"))
+	user.visible_message(span_danger(LANG("obj.af628e8f", list(src))))
 	..()
 
 /obj/item/slimecross/burning/yellow
@@ -88,7 +88,7 @@ Burning extracts:
 	effect_desc = "Electrocutes people near you."
 
 /obj/item/slimecross/burning/yellow/do_effect(mob/user)
-	user.visible_message(span_danger("[src] explodes into an electrical field!"))
+	user.visible_message(span_danger(LANG("obj.5ac68d52", list(src))))
 	playsound(get_turf(src), 'sound/items/weapons/zapbang.ogg', 50, TRUE)
 	for(var/mob/living/M in range(4,get_turf(user)))
 		if(M != user)
@@ -105,7 +105,7 @@ Burning extracts:
 	effect_desc = "Creates a cloud of plasma."
 
 /obj/item/slimecross/burning/darkpurple/do_effect(mob/user)
-	user.visible_message(span_danger("[src] sublimates into a cloud of plasma!"))
+	user.visible_message(span_danger(LANG("obj.09556aca", list(src))))
 	var/turf/T = get_turf(user)
 	T.atmos_spawn_air("[GAS_PLASMA]=60")
 	return ..()
@@ -115,7 +115,7 @@ Burning extracts:
 	effect_desc = "Expels a burst of chilling smoke while also filling you with regenerative jelly."
 
 /obj/item/slimecross/burning/darkblue/do_effect(mob/user)
-	user.visible_message(span_danger("[src] releases a burst of chilling smoke!"))
+	user.visible_message(span_danger(LANG("obj.a9a4aae4", list(src))))
 	user.reagents.add_reagent(/datum/reagent/medicine/regen_jelly, 10)
 	do_chem_smoke(7, user, get_turf(user), /datum/reagent/consumable/frostoil, 40, log = TRUE)
 	..()
@@ -136,7 +136,7 @@ Burning extracts:
 		ADD_TRAIT(food, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 		if(prob(50))
 			food.desc += " It smells strange..."
-	user.visible_message(span_danger("[src] produces a few pieces of food!"))
+	user.visible_message(span_danger(LANG("obj.df616b16", list(src))))
 	..()
 
 /obj/item/slimecross/burning/bluespace
@@ -144,7 +144,7 @@ Burning extracts:
 	effect_desc = "Teleports anyone directly next to you."
 
 /obj/item/slimecross/burning/bluespace/do_effect(mob/user)
-	user.visible_message(span_danger("[src] sparks, and lets off a shockwave of bluespace energy!"))
+	user.visible_message(span_danger(LANG("obj.b51a9a8f", list(src))))
 	for(var/mob/living/L in range(1, get_turf(user)))
 		if(L != user)
 			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
@@ -157,7 +157,7 @@ Burning extracts:
 	effect_desc = "Turns into a special camera that rewinds time when used."
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
-	user.visible_message(span_notice("[src] shapes itself into a camera!"))
+	user.visible_message(span_notice(LANG("obj.4c8a2920", list(src))))
 	new /obj/item/camera/rewind(get_turf(user))
 	..()
 
@@ -166,7 +166,7 @@ Burning extracts:
 	effect_desc = "Produces an extract cloning potion, which copies an extract, as well as its extra uses."
 
 /obj/item/slimecross/burning/cerulean/do_effect(mob/user)
-	user.visible_message(span_notice("[src] produces a potion!"))
+	user.visible_message(span_notice(LANG("obj.9aa588b9", list(src))))
 	new /obj/item/slimepotion/extract_cloner(get_turf(user))
 	..()
 
@@ -177,11 +177,11 @@ Burning extracts:
 /obj/item/slimecross/burning/pyrite/do_effect(mob/user)
 	var/area/user_area = get_area(user)
 	if(isnull(user_area.apc))
-		user.visible_message(span_danger("[src] releases a colorful wave of energy, but nothing seems to happen."))
+		user.visible_message(span_danger(LANG("obj.8d77652f", list(src))))
 		return
 
 	user_area.apc.break_lights()
-	user.visible_message(span_danger("[src] releases a colorful wave of energy, which shatters the lights!"))
+	user.visible_message(span_danger(LANG("obj.a7ba7839", list(src))))
 	..()
 
 /obj/item/slimecross/burning/red
@@ -189,7 +189,7 @@ Burning extracts:
 	effect_desc = "Makes nearby slimes rabid, and they'll also attack their friends."
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
-	user.visible_message(span_danger("[src] pulses a hazy red aura for a moment, which wraps around [user]!"))
+	user.visible_message(span_danger(LANG("obj.069c9dd9", list(src, user))))
 	for(var/mob/living/basic/slime/slime_in_view in view(7, get_turf(user)))
 		var/list/mob/living/friends = slime_in_view.ai_controller?.blackboard[BB_FRIENDS_LIST] - user
 		for(var/list/mob/living/ex_friend in friends)
@@ -211,9 +211,9 @@ Burning extracts:
 	var/obj/item/melee/arm_blade/slime/blade = new(user)
 	if(!L.put_in_hands(blade))
 		qdel(blade)
-		user.visible_message(span_warning("[src] melts onto [user]'s arm, boiling the flesh horribly!"))
+		user.visible_message(span_warning(LANG("obj.de3abc63", list(src, user))))
 	else
-		user.visible_message(span_danger("[src] sublimates the flesh around [user]'s arm, transforming the bone into a gruesome blade!"))
+		user.visible_message(span_danger(LANG("obj.d0f84a3f", list(src, user))))
 	user.emote("scream")
 	L.apply_damage(30, BURN, L.get_active_hand())
 	..()
@@ -223,7 +223,7 @@ Burning extracts:
 	effect_desc = "Creates a beaker of synthpax."
 
 /obj/item/slimecross/burning/pink/do_effect(mob/user)
-	user.visible_message(span_notice("[src] shrinks into a small, gel-filled pellet!"))
+	user.visible_message(span_notice(LANG("obj.772f31c2", list(src))))
 	new /obj/item/slimecrossbeaker/pax(get_turf(user))
 	..()
 
@@ -232,7 +232,7 @@ Burning extracts:
 	effect_desc = "Creates a gank squad of monsters that are friendly to the user."
 
 /obj/item/slimecross/burning/gold/do_effect(mob/user)
-	user.visible_message(span_danger("[src] shudders violently, and summons an army for [user]!"))
+	user.visible_message(span_danger(LANG("obj.e562250c", list(src, user))))
 	for(var/i in 1 to 3) //Less than gold normally does, since it's safer and faster.
 		var/mob/living/spawned_mob = create_random_mob(get_turf(user), HOSTILE_SPAWN)
 		spawned_mob.add_ally(user)
@@ -246,7 +246,7 @@ Burning extracts:
 	effect_desc = "Creates an explosion after a few seconds."
 
 /obj/item/slimecross/burning/oil/do_effect(mob/user)
-	user.visible_message(span_warning("[user] activates [src]. It's going to explode!"), span_danger("You activate [src]. It crackles in anticipation"))
+	user.visible_message(span_warning(LANG("obj.6b3796e1", list(user, src))), span_danger(LANG("obj.4b316014", list(src))))
 	addtimer(CALLBACK(src, PROC_REF(boom)), 5 SECONDS)
 
 /// Inflicts a blastwave upon every mob within a small radius.
@@ -265,7 +265,7 @@ Burning extracts:
 /obj/item/slimecross/burning/black/do_effect(mob/user)
 	if(!isliving(user))
 		return
-	user.visible_message(span_danger("[src] absorbs [user], transforming [user.p_them()] into a slime!"))
+	user.visible_message(span_danger(LANG("obj.debb66de", list(src, user, user.p_them()))))
 	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
 	transform.remove_on_restore = TRUE
 	transform.Grant(user)
@@ -277,7 +277,7 @@ Burning extracts:
 	effect_desc = "Paxes everyone in sight."
 
 /obj/item/slimecross/burning/lightpink/do_effect(mob/user)
-	user.visible_message(span_danger("[src] lets off a hypnotizing pink glow!"))
+	user.visible_message(span_danger(LANG("obj.e448a275", list(src))))
 	for(var/mob/living/carbon/C in view(7, get_turf(user)))
 		C.reagents.add_reagent(/datum/reagent/pax,5)
 	..()
@@ -287,7 +287,7 @@ Burning extracts:
 	effect_desc = "Creates a mighty adamantine shield."
 
 /obj/item/slimecross/burning/adamantine/do_effect(mob/user)
-	user.visible_message(span_notice("[src] crystallizes into a large shield!"))
+	user.visible_message(span_notice(LANG("obj.de20c2d2", list(src))))
 	new /obj/item/shield/adamantineshield(get_turf(user))
 	..()
 
@@ -296,6 +296,6 @@ Burning extracts:
 	effect_desc = "Creates the Rainbow Knife, a kitchen knife that deals random types of damage."
 
 /obj/item/slimecross/burning/rainbow/do_effect(mob/user)
-	user.visible_message(span_notice("[src] flattens into a glowing rainbow blade."))
+	user.visible_message(span_notice(LANG("obj.c61fe064", list(src))))
 	new /obj/item/knife/rainbowknife(get_turf(user))
 	..()

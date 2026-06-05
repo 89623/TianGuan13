@@ -463,17 +463,17 @@
 		return
 
 	if(target == user)
-		user.visible_message(span_warning("[user] starts squeezing into [src]!"), span_notice("You start working your way into [src]..."))
+		user.visible_message(span_warning(LANG("obj.c976082d", list(user, src))), span_notice(LANG("obj.f504df5a", list(src))))
 	else
-		target.visible_message(span_warning("[user] starts shoving [target] into [src]!"), span_userdanger("[user] starts shoving you into [src]!"))
+		target.visible_message(span_warning(LANG("obj.734f3f21", list(user, target, src))), span_userdanger(LANG("obj.8a888017", list(user, src))))
 
 	if(do_after(user, 3 SECONDS, target))
 		if(occupant || helmet || suit || storage)
 			return
 		if(target == user)
-			user.visible_message(span_warning("[user] slips into [src] and closes the door behind [user.p_them()]!"), span_notice("You slip into [src]'s cramped space and shut its door."))
+			user.visible_message(span_warning(LANG("obj.8c7b03f3", list(user, src, user.p_them()))), span_notice(LANG("obj.e98f1053", list(src))))
 		else
-			target.visible_message(span_warning("[user] pushes [target] into [src] and shuts its door!"), span_userdanger("[user] shoves you into [src] and shuts the door!"))
+			target.visible_message(span_warning(LANG("obj.297cf26c", list(user, target, src))), span_userdanger(LANG("obj.e274e947", list(user, src))))
 		close_machine(target)
 		add_fingerprint(user)
 
@@ -582,14 +582,14 @@
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_notice("You see [user] kicking against the doors of [src]!"), \
-		span_notice("You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)"), \
-		span_hear("You hear a thump from [src]."))
+	user.visible_message(span_notice(LANG("obj.014be919", list(user, src))), \
+		span_notice(LANG("obj.b62a303d", list(DisplayTimeText(breakout_time)))), \
+		span_hear(LANG("obj.a2fe6eff", list(src))))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
+		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
+			span_notice(LANG("obj.81c31f6b", list(src))))
 		open_machine()
 		dump_inventory_contents()
 
@@ -636,8 +636,8 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if(istype(tool, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
-		user.visible_message(span_notice("[user] is installing a card reader."),
-					span_notice("You begin installing the card reader."))
+		user.visible_message(span_notice(LANG("obj.ff29669a", list(user))),
+					span_notice(LANG("obj.57521e91", null)))
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
 			return ITEM_INTERACT_BLOCKING
 		qdel(tool)

@@ -71,9 +71,9 @@
 
 /// Fix us up
 /datum/component/torn_wall/proc/try_repair(atom/source, mob/user, obj/item/tool)
-	source.balloon_alert(user, "repairing...")
+	source.balloon_alert(user, LANG("datum.b52342a8", null))
 	if(!tool.use_tool(source, user, 5 SECONDS, amount = 2, volume = 50))
-		source.balloon_alert(user, "interrupted!")
+		source.balloon_alert(user, LANG("datum.c67b5d27", null))
 		return
 	current_stage--
 	if (current_stage < TORN_WALL_INITIAL)

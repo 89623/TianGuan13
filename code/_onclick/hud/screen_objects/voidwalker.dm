@@ -72,13 +72,13 @@
 		return
 
 	if(!istype(usr.loc, /obj/effect/dummy/phased_mob/space_dive))
-		usr.balloon_alert(usr, "must be space diving!")
+		usr.balloon_alert(usr, LANG("atom.8a23cdb7", null))
 		return
 
 	var/list/vomits = get_valid_vomits()
 
 	if(!vomits.len)
-		usr.balloon_alert(usr, "no nebula vomits!")
+		usr.balloon_alert(usr, LANG("atom.1fda59be", null))
 		return
 
 	var/obj/effect/dummy/phased_mob/space_dive/holder = usr.loc

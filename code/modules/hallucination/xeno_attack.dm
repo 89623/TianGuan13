@@ -87,8 +87,8 @@
 		return
 	hit_living.Paralyze(10 SECONDS)
 	hit_living.visible_message(
-		span_warning("[hit_living] flails around wildly."),
-		span_userdanger("[name] pounces on you!"),
+		span_warning(LANG("obj.587b582c", list(hit_living))),
+		span_userdanger(LANG("obj.c6188217", list(name))),
 	)
 
 /// Sets our icon to look like we're leaping.

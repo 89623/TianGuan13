@@ -399,7 +399,7 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 	if(end_piece)
 		end_piece.moveToNullspace()
 		QDEL_NULL(other_end)
-		user.visible_message(span_notice("[user] releases their grip on one end of the [src]."))
+		user.visible_message(span_notice(LANG("obj.a44d3925", list(user, src))))
 		end_in_hand = FALSE
 		return
 
@@ -408,11 +408,11 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 	other_end = new /obj/item/clothing/sextoy/dildo/double_dildo_end
 
 	if(!user.put_in_hands(other_end))
-		user.visible_message(span_notice("[user] tries to hold one end of [src] in [user.p_their()] hand, but [user.p_their()] hand isn't empty!"))
+		user.visible_message(span_notice(LANG("obj.310e4eef", list(user, src, user.p_their(), user.p_their()))))
 		return FALSE
 
 	other_end.parent_end = WEAKREF(src)
-	user.visible_message(span_notice("[user] holds one end of [src] in [user.p_their()] hand."))
+	user.visible_message(span_notice(LANG("obj.5c4c9361", list(user, src, user.p_their()))))
 	end_in_hand = TRUE
 	return TRUE
 

@@ -70,7 +70,7 @@
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(interacting_with == user)
-		interacting_with.visible_message(span_notice("[user] attempts to [apply_method] [src] on [user.p_them()]self."))
+		interacting_with.visible_message(span_notice(LANG("obj.b97b1831", list(user, apply_method, src, user.p_them()))))
 		if(self_delay)
 			if(!do_after(user, self_delay, interacting_with))
 				return ITEM_INTERACT_BLOCKING
@@ -81,16 +81,16 @@
 	else
 		log_combat(user, interacting_with, "attempted to apply", src, reagents.get_reagent_log_string())
 		interacting_with.visible_message(
-			span_danger("[user] attempts to [apply_method] [src] on [interacting_with]."),
-			span_userdanger("[user] attempts to [apply_method] [src] on you."),
+			span_danger(LANG("obj.af7ed728", list(user, apply_method, src, interacting_with))),
+			span_userdanger(LANG("obj.55908223", list(user, apply_method, src))),
 		)
 		if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), interacting_with))
 			return ITEM_INTERACT_BLOCKING
 		if(!reagents || !reagents.total_volume)
 			return ITEM_INTERACT_BLOCKING
 		interacting_with.visible_message(
-			span_danger("[user] [apply_method]s [interacting_with] down with [src]."),
-			span_userdanger("[user] [apply_method]s you down with [src]."),
+			span_danger(LANG("obj.9b4d2f27", list(user, apply_method, interacting_with, src))),
+			span_userdanger(LANG("obj.8f8cad87", list(user, apply_method, src))),
 		)
 
 	log_combat(user, interacting_with, "applied", src, reagents.get_reagent_log_string())
@@ -130,7 +130,7 @@
 		var/mob/living/carbon/carbies = interacting_with
 		if(HAS_TRAIT_FROM(carbies, TRAIT_HUSK, BURN) && carbies.get_fire_loss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
 			// give them a warning if the mob is a husk but synthflesh won't unhusk yet
-			carbies.visible_message(span_boldwarning("[carbies]'s burns need to be repaired first before synthflesh will unhusk it!"))
+			carbies.visible_message(span_boldwarning(LANG("obj.b7d1172b", list(carbies))))
 
 	return ..()
 

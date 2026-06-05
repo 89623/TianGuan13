@@ -242,7 +242,7 @@
 	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CAR_HONK))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CAR_HONK, 2 SECONDS)
-	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] loudly honks!"))
+	vehicle_entered_target.visible_message(span_danger(LANG("datum.9ffba65b", list(vehicle_entered_target))))
 	to_chat(owner, span_notice(LANG("datum.7fcccb63", list(vehicle_entered_target))))
 	if(istype(vehicle_target.inserted_key, /obj/item/bikehorn))
 		vehicle_target.inserted_key.attack_self(owner) //The bikehorn plays a sound instead
@@ -273,7 +273,7 @@
 	. = ..()
 	if(!.)
 		return
-	vehicle_entered_target.visible_message(span_danger("[vehicle_entered_target] starts dumping the people inside of it."))
+	vehicle_entered_target.visible_message(span_danger(LANG("datum.0a8f6a85", list(vehicle_entered_target))))
 	vehicle_entered_target.dump_specific_mobs(VEHICLE_CONTROL_KIDNAPPED)
 
 
@@ -328,7 +328,7 @@
 		to_chat(owner, span_danger(LANG("datum.9d717353", null)))
 		return
 	var/mob/clown = pick(drivers)
-	owner.say("Thank you for the fun ride, [clown.name]!")
+	owner.say(LANG("datum.745ae711", list(clown.name)))
 	clown_car.increment_thanks_counter()
 
 /datum/action/vehicle/ridden/wheelchair/bell
@@ -372,7 +372,7 @@
 		vehicle.unbuckle_mob(rider)
 		rider.throw_at(landing_turf, 2, 2)
 		rider.Paralyze(40)
-		vehicle.visible_message(span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"))
+		vehicle.visible_message(span_danger(LANG("datum.cc638fd1", list(rider, rider.p_their()))))
 		return
 	if((locate(/obj/structure/table) in landing_turf) || (locate(/obj/structure/fluff/tram_rail) in landing_turf))
 		if(locate(/obj/structure/fluff/tram_rail) in vehicle.loc.contents)
@@ -414,21 +414,21 @@
 		rider.Paralyze(50)
 		if(prob(15))
 			rider.visible_message(
-				span_danger("[rider] misses the landing and falls on [rider.p_their()] face!)"),
-				span_userdanger("You smack against the board, hard."),
+				span_danger(LANG("datum.260ceab6", list(rider, rider.p_their()))),
+				span_userdanger(LANG("datum.3f677595", null)),
 			)
 			rider.emote("scream")
 			rider.adjust_brute_loss(10)  // thats gonna leave a mark
 			return
 		rider.visible_message(
-			span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"),
-			span_userdanger("You fall flat onto the board!"),
+			span_danger(LANG("datum.cc638fd1", list(rider, rider.p_their()))),
+			span_userdanger(LANG("datum.319652e2", null)),
 		)
 		return
 
 	rider.visible_message(
-		span_notice("[rider] does a sick kickflip and catches [rider.p_their()] board in midair."),
-		span_notice("You do a sick kickflip, catching the board in midair! Stylish."),
+		span_notice(LANG("datum.daa465a3", list(rider, rider.p_their()))),
+		span_notice(LANG("datum.35b0f7f9", null)),
 	)
 	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, vary = TRUE)
 	rider.spin(spintime = 4, speed = 1)
@@ -459,7 +459,7 @@
 		return FALSE
 	var/obj/vehicle/sealed/car/vim/vim_mecha = vehicle_entered_target
 	if(!COOLDOWN_FINISHED(vim_mecha, sound_cooldown))
-		vim_mecha.balloon_alert(owner, "on cooldown!")
+		vim_mecha.balloon_alert(owner, LANG("datum.d4ae5d4d", null))
 		return FALSE
 	COOLDOWN_START(vim_mecha, sound_cooldown, VIM_SOUND_COOLDOWN)
 	vehicle_entered_target.visible_message(span_notice("[vehicle_entered_target] [sound_message]"))

@@ -623,7 +623,7 @@
 	if(!call_source || !call_source.alert_able || call_source.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
-	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [call_source.filedesc] notification: [alerttext]"))
+	physical.loc.visible_message(span_notice(LANG("obj.fa61f2cd", list(icon2html(physical, viewers(physical.loc)), src, call_source.filedesc, alerttext))))
 
 /obj/item/modular_computer/proc/ring(ringtone, list/balloon_alertees) // bring bring
 	if(!use_energy(check_programs = FALSE))
@@ -783,7 +783,7 @@
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
-		physical.visible_message(span_notice("\The [src] shuts down."))
+		physical.visible_message(span_notice(LANG("obj.f2e86379", list(src))))
 	enabled = FALSE
 	update_appearance()
 	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_SHUT_DOWN, loud)
@@ -865,12 +865,12 @@
 /obj/item/modular_computer/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	if(internal_cell)
-		user.balloon_alert(user, "cell removed")
+		user.balloon_alert(user, LANG("obj.0dfdca6e", null))
 		internal_cell.forceMove(drop_location())
 		internal_cell = null
 		return ITEM_INTERACT_SUCCESS
 	else
-		user.balloon_alert(user, "no cell!")
+		user.balloon_alert(user, LANG("obj.0210855e", null))
 
 /obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -878,7 +878,7 @@
 	if(!do_after(user, 2 SECONDS, target = physical))
 		return ITEM_INTERACT_BLOCKING
 	deconstruct(TRUE)
-	user.balloon_alert(user, "disassembled")
+	user.balloon_alert(user, LANG("obj.6da68488", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
@@ -1027,7 +1027,7 @@
 	alt_stored_id?.forceMove(droploc)
 	inserted_disk?.forceMove(droploc)
 	if (!disassembled)
-		physical.visible_message(span_notice("\The [src] breaks apart!"))
+		physical.visible_message(span_notice(LANG("obj.28286162", list(src))))
 	new /obj/item/stack/sheet/iron(droploc, steel_sheet_cost * (disassembled ? 1 : 0.5))
 	relay_qdel()
 

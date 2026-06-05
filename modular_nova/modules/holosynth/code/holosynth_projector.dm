@@ -148,8 +148,8 @@
 		UnregisterSignal(linked_mob, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 		linked_mob.apply_status_effect(/datum/status_effect/holosynth_dissolving)
 		linked_mob.visible_message(
-			span_danger("[linked_mob]'s whole body begins to fade away!"),
-			span_userdanger("You feel your projector being destroyed! You start to fade away!"),
+			span_danger(LANG("obj.2375be4d", list(linked_mob))),
+			span_userdanger(LANG("obj.22d6f512", null)),
 		)
 	return ..()
 
@@ -306,7 +306,7 @@
 	if(!isnull(should_strip_proc_path) && !call(linked_mob, should_strip_proc_path)(user))
 		return
 	pen.balloon_alert_to_viewers("stripping")
-	user.visible_message(span_warning("[user] begins to dump the contents of [pen]!"))
+	user.visible_message(span_warning(LANG("datum.55f50183", list(user, pen))))
 	INVOKE_ASYNC(src, PROC_REF(open_strip_menu), linked_mob, user)
 
 /datum/element/strippable/holosynth_pen/proc/open_strip_menu(mob/living/carbon/human/linked_mob, mob/user)

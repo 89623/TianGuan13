@@ -212,14 +212,14 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	. += GLOB.metal_recipes
 
 /obj/item/stack/sheet/iron/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.9e682343", list(user, user.p_them(), src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/stack/sheet/iron/welder_act(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/rods/two/new_item = new(user.loc)
 		user.visible_message(
-			span_notice("[user.name] shaped [src] into floor rods with [tool]."),
+			span_notice(LANG("obj.2183d9df", list(user.name, src, tool))),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/tile/iron/four/new_item = new(user.loc)
 		user.visible_message(
-			span_notice("[user.name] shaped [src] into floor tiles with [tool]."),
+			span_notice(LANG("obj.f0b0e648", list(user.name, src, tool))),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
@@ -248,10 +248,10 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	if(!user.Adjacent(build_on))
 		return ITEM_INTERACT_BLOCKING
 	if(isgroundlessturf(build_on))
-		user.balloon_alert(user, "can't place it here!")
+		user.balloon_alert(user, LANG("obj.b850b346", null))
 		return ITEM_INTERACT_BLOCKING
 	if(build_on.is_blocked_turf())
-		user.balloon_alert(user, "something is blocking the tile!")
+		user.balloon_alert(user, LANG("obj.7cd9573d", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/frame_path = null
@@ -269,25 +269,25 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 				cost = recipe.req_amount
 				break
 	if(get_amount() < cost)
-		user.balloon_alert(user, "need [cost] metal sheets!")
+		user.balloon_alert(user, LANG("obj.bf021e7a", list(cost)))
 		return ITEM_INTERACT_BLOCKING
 	var/experience = floor(time * CONSTRUCTION_XP_MULTIPLIER) // NOVA EDIT ADDITION: Construction Skill
 	time *= user.mind?.get_skill_modifier(/datum/skill/construction, SKILL_SPEED_MODIFIER) // NOVA EDIT ADDITION: Construction Skill
 	if(!do_after(user, time, build_on))
 		return ITEM_INTERACT_BLOCKING
 	if(build_on.is_blocked_turf())
-		user.balloon_alert(user, "something is blocking the tile!")
+		user.balloon_alert(user, LANG("obj.7cd9573d", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!use(cost))
-		user.balloon_alert(user, "not enough material!")
+		user.balloon_alert(user, LANG("obj.d86d54ad", null))
 		return ITEM_INTERACT_BLOCKING
 	if(frame_path)
 		var/obj/structure/frame/constructed_frame = new frame_path(build_on)
 		constructed_frame.setDir(REVERSE_DIR(user.dir)) //to align computer frame with player direction
-		user.balloon_alert(user, "frame created")
+		user.balloon_alert(user, LANG("obj.194ba0c8", null))
 	else
 		new/obj/structure/girder/displaced(build_on)
-		user.balloon_alert(user, "girder created")
+		user.balloon_alert(user, LANG("obj.ea3f7b38", null))
 	// NOVA EDIT ADDITION START: Construction Skill
 	if(experience)
 		user.mind?.adjust_experience(/datum/skill/construction, experience)
@@ -445,7 +445,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && IS_PEG_LIMB(affecting))
 		if(user == target)
-			user.visible_message(span_notice("[user] starts to fix their [affecting.name]."), span_notice("You start fixing [target == user ? "your" : "[target]'s"] [affecting.name]."))
+			user.visible_message(span_notice(LANG("obj.f33313cd", list(user, affecting.name))), span_notice(LANG("obj.d0ce07cf", list(target == user ? "your" : "[target]'s", affecting.name))))
 			if(!do_after(user, 5 SECONDS, target))
 				return ITEM_INTERACT_FAILURE
 		if(target.item_heal(user, brute_heal = 15, burn_heal = 15, heal_message_brute = "splintering", heal_message_burn = "charring", required_bodytype = BODYTYPE_PEG))

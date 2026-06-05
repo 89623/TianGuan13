@@ -113,14 +113,14 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(!user.Adjacent(source))
-		source.balloon_alert(user, "can't reach!")
+		source.balloon_alert(user, LANG("datum.fba9228d", null))
 		return
 
 	to_chat(source, span_notice(LANG("datum.b82de266", list(user, jumpsuit.name))))
 	if(!do_after(user, jumpsuit.strip_delay * 0.5, source) || !jumpsuit.set_sensor_mode(new_mode)) // takes the same amount of time as adjusting it
-		source.balloon_alert(user, "failed!")
+		source.balloon_alert(user, LANG("datum.31bf8acd", null))
 		return
-	source.balloon_alert(user, "changed sensors")
+	source.balloon_alert(user, LANG("datum.c15444aa", null))
 	to_chat(source, span_notice(LANG("datum.b9fea735", list(user, jumpsuit.name))))
 	user.log_message("changed suit sensors of [key_name(source)] to [new_mode_str]", LOG_ATTACK, color="red")
 	source.log_message("suit sensors changed to [new_mode_str] by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)
@@ -138,12 +138,12 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(!user.Adjacent(source))
-		source.balloon_alert(user, "can't reach!")
+		source.balloon_alert(user, LANG("datum.fba9228d", null))
 		return
 
 	to_chat(source, span_notice(LANG("datum.a842e1df", list(user, chosen_accessory, jumpsuit))))
 	if(!do_after(user, chosen_accessory.strip_delay, source))
-		source.balloon_alert(user, "failed!")
+		source.balloon_alert(user, LANG("datum.31bf8acd", null))
 		return
 
 	to_chat(source, span_notice(LANG("datum.d5cd600a", list(user, chosen_accessory, jumpsuit))))
@@ -307,8 +307,8 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	carbon_source.visible_message(
-		span_danger("[user] tries to [(carbon_source.internal != item) ? "open" : "close"] the valve on [source]'s [item.name]."),
-		span_userdanger("[user] tries to [(carbon_source.internal != item) ? "open" : "close"] the valve on your [item.name]."),
+		span_danger(LANG("_root.85725533", list(user, (carbon_source.internal != item) ? "open" : "close", source, item.name))),
+		span_userdanger(LANG("_root.f66f8316", list(user, (carbon_source.internal != item) ? "open" : "close", item.name))),
 		ignored_mobs = user,
 	)
 
@@ -325,8 +325,8 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 			return
 
 	carbon_source.visible_message(
-		span_danger("[user] [isnull(carbon_source.internal) ? "closes": "opens"] the valve on [source]'s [item.name]."),
-		span_userdanger("[user] [isnull(carbon_source.internal) ? "closes": "opens"] the valve on your [item.name]."),
+		span_danger(LANG("_root.8840ac46", list(user, isnull(carbon_source.internal) ? "closes": "opens", source, item.name))),
+		span_userdanger(LANG("_root.1571fbd2", list(user, isnull(carbon_source.internal) ? "closes": "opens", item.name))),
 		ignored_mobs = user,
 	)
 

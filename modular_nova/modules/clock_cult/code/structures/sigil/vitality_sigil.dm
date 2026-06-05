@@ -54,7 +54,7 @@
 		GLOB.clock_vitality += (affected_mob.client ? 30 : 10) // 100 (for clients) total in the ideal situation, since it'll take 7 pulses to go from full to crit
 		return
 
-	affected_mob.visible_message(span_clockred("[affected_mob] looks weak as the color fades from their body."), span_clockred("You feel your soul faltering..."))
+	affected_mob.visible_message(span_clockred(LANG("obj.a5fdc8da", list(affected_mob))), span_clockred(LANG("obj.417e1fad", null)))
 	GLOB.clock_vitality += (affected_mob.client ? 10 : 0) // Monkey or whatever? You get jackshit
 
 

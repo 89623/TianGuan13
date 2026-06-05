@@ -252,7 +252,7 @@
 	var/mob/living/basic/seedling/seed_owner = owner
 	if(seed_owner.combatant_state != SEEDLING_STATE_NEUTRAL)
 		if(feedback)
-			seed_owner.balloon_alert(seed_owner, "charging!")
+			seed_owner.balloon_alert(seed_owner, LANG("datum.944c88c7", null))
 		return FALSE
 	return TRUE
 
@@ -300,7 +300,7 @@
 	var/mob/living/basic/seedling/seed_owner = owner
 	if(seed_owner.combatant_state != SEEDLING_STATE_NEUTRAL)
 		if(feedback)
-			seed_owner.balloon_alert(seed_owner, "charging!")
+			seed_owner.balloon_alert(seed_owner, LANG("datum.944c88c7", null))
 		return FALSE
 	return TRUE
 

@@ -66,7 +66,7 @@
 				return
 			if(!user.transferItemToLoc(newbrain, src))
 				return
-			user.visible_message(span_notice("[user] sticks [newbrain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [newbrain]. Its brainwave activity alarm buzzes."))
+			user.visible_message(span_notice(LANG("obj.48eff2d6", list(user, newbrain, src))), span_notice(LANG("obj.c1b7c3b5", list(src, newbrain))))
 			brain = newbrain
 			brain.organ_flags |= ORGAN_FROZEN
 			name = "[initial(name)]: [copytext(newbrain.name, 1, -8)]"
@@ -78,7 +78,7 @@
 		var/mob/living/brain/B = newbrain.brainmob
 		if(!B.key && !newbrain.decoy_override)
 			B.notify_revival("Someone has put your brain in a MMI!", source = src)
-		user.visible_message(span_notice("[user] sticks \a [newbrain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [newbrain]."))
+		user.visible_message(span_notice(LANG("obj.610649c4", list(user, newbrain, src))), span_notice(LANG("obj.ce2edecd", list(src, newbrain))))
 
 		set_brainmob(newbrain.brainmob)
 		newbrain.brainmob = null

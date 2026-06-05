@@ -107,15 +107,15 @@
 		if(prob(fall_over_prob))
 			flippy_mcgee.Knockdown(1 SECONDS)
 			flippy_mcgee.visible_message(
-				span_notice("[flippy_mcgee] attempts to do a flip and falls over, what a doofus!"),
-				span_notice("You attempt to do a flip while still off balance from the last flip and fall down!")
+				span_notice(LANG("datum.b5bb2363", list(flippy_mcgee))),
+				span_notice(LANG("datum.4c981e64", null))
 			)
 			if(prob(fall_over_prob/2))
 				flippy_mcgee.adjust_brute_loss(1)
 		else
 			flippy_mcgee.visible_message(
-				span_notice("[flippy_mcgee] stumbles a bit after their flip."),
-				span_notice("You stumble a bit from still being off balance from your last flip.")
+				span_notice(LANG("datum.93cd805e", list(flippy_mcgee))),
+				span_notice(LANG("datum.c49a9370", null))
 			)
 
 /datum/emote/flip/backflip

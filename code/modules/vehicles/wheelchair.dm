@@ -105,7 +105,7 @@
 		return FALSE
 	remove_bell()
 	remove_bomb()
-	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
+	user.visible_message(span_notice(LANG("obj.9f9707bf", list(user, src))), span_notice(LANG("obj.f518f3ec", list(src))))
 	var/obj/vehicle/ridden/wheelchair/wheelchair_folded = new foldabletype(get_turf(src))
 	user.put_in_hands(wheelchair_folded)
 	qdel(src)

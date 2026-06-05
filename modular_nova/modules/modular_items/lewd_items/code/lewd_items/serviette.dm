@@ -28,7 +28,7 @@
 		to_chat(user, span_warning(LANG("obj.ccc3c0cc", list(interacting_with.name))))
 
 	else if(istype(interacting_with, /obj/effect/decal/cleanable))
-		user.visible_message(span_notice("[user] begins to clean \the [interacting_with.name] out with [src]."), span_warning("You begin to clean \the [interacting_with.name] out with [src]..."))
+		user.visible_message(span_notice(LANG("obj.8ea246c1", list(user, interacting_with.name, src))), span_warning(LANG("obj.d953b976", list(interacting_with.name, src))))
 		if(do_after(user, clean_speedies, target = interacting_with))
 			to_chat(user, span_notice(LANG("obj.b46f5b73", list(interacting_with.name))))
 			var/obj/effect/decal/cleanable/cleanies = interacting_with
@@ -40,7 +40,7 @@
 			user.put_in_hands(used_cloth)
 
 	else if(istype(interacting_with, /obj/structure/window))
-		user.visible_message(span_notice("[user] begins to clean \the [interacting_with.name] with [src]..."), span_notice("You begin to clean \the [interacting_with.name] with [src]..."))
+		user.visible_message(span_notice(LANG("obj.efee36ff", list(user, interacting_with.name, src))), span_notice(LANG("obj.d633de38", list(interacting_with.name, src))))
 		if(do_after(user, clean_speedies, target = interacting_with))
 			to_chat(user, span_notice(LANG("obj.c0ca4fbc", list(interacting_with.name))))
 			interacting_with.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -52,7 +52,7 @@
 			user.put_in_hands(used_cloth)
 
 	else
-		user.visible_message(span_notice("[user] begins to clean \the [interacting_with.name] with [src]..."), span_notice("You begin to clean \the [interacting_with.name] with [src]..."))
+		user.visible_message(span_notice(LANG("obj.efee36ff", list(user, interacting_with.name, src))), span_notice(LANG("obj.d633de38", list(interacting_with.name, src))))
 		if(do_after(user, clean_speedies, target = interacting_with))
 			to_chat(user, span_notice(LANG("obj.c0ca4fbc", list(interacting_with.name))))
 			if(user && isturf(interacting_with))

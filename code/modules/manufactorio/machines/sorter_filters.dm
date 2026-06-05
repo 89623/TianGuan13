@@ -96,7 +96,7 @@
 	if(!currently_listening)
 		name = "awaiting item"
 		to_chat(user, LANG("datum.7c6059c8", null))
-		sorter.balloon_alert(user, "awaiting item!")
+		sorter.balloon_alert(user, LANG("datum.2a0be425", null))
 		currently_listening = TRUE
 		RegisterSignal(sorter, COMSIG_ATOM_ATTACKBY, PROC_REF(sorter_hit))
 	else
@@ -107,7 +107,7 @@
 	currently_listening = FALSE
 	value = attacking_item.type
 	name = attacking_item.name
-	sorter.balloon_alert(user, "filter set")
+	sorter.balloon_alert(user, LANG("datum.caeb546f", null))
 	UnregisterSignal(sorter, COMSIG_ATOM_ATTACKBY)
 	return COMPONENT_NO_AFTERATTACK
 

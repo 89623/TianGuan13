@@ -90,7 +90,7 @@
 	if (lavaland_equipment_pressure_check(get_turf(source)))
 		return
 	smack_into(source)
-	source.visible_message(span_warning("[source] crashes into [target]!"))
+	source.visible_message(span_warning(LANG("datum.fcbe80cf", list(source, target))))
 	if (isliving(target))
 		smack_into(target)
 	qdel(src)

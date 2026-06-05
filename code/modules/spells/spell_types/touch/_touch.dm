@@ -194,7 +194,7 @@
 	if(!can_cast_spell(feedback = TRUE))
 		return FALSE
 	if(!(caster.mobility_flags & MOBILITY_USE))
-		caster.balloon_alert(caster, "can't reach out!")
+		caster.balloon_alert(caster, LANG("datum.a069b7a4", null))
 		return FALSE
 
 	return TRUE

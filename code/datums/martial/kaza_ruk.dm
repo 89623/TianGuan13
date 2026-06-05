@@ -41,12 +41,12 @@
 		return
 	var/datum/martial_art/source = target
 	if (source.streak == "neck_chop")
-		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
-		owner.balloon_alert(owner, "cleared")
+		owner.visible_message(span_danger(LANG("datum.addb3d5a", list(owner))), LANG("datum.17c24905", null))
+		owner.balloon_alert(owner, LANG("datum.3478a3ac", null))
 		source.streak = ""
 	else
-		owner.visible_message(span_danger("[owner] assumes the Neck Chop stance!"), "<b><i>Your next attack will be a Neck Chop.</i></b>")
-		owner.balloon_alert(owner, "neck chop")
+		owner.visible_message(span_danger(LANG("datum.51b49937", list(owner))), LANG("datum.6b624708", null))
+		owner.balloon_alert(owner, LANG("datum.6aa6210f", null))
 		source.streak = "neck_chop"
 
 /datum/action/low_sweep
@@ -62,12 +62,12 @@
 		return
 	var/datum/martial_art/source = target
 	if (source.streak == "low_sweep")
-		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
-		owner.balloon_alert(owner, "cleared")
+		owner.visible_message(span_danger(LANG("datum.addb3d5a", list(owner))), LANG("datum.17c24905", null))
+		owner.balloon_alert(owner, LANG("datum.3478a3ac", null))
 		source.streak = ""
 	else
-		owner.visible_message(span_danger("[owner] assumes the Low Sweep stance!"), "<b><i>Your next attack will be a Low Sweep.</i></b>")
-		owner.balloon_alert(owner, "low sweep")
+		owner.visible_message(span_danger(LANG("datum.3b4e3473", list(owner))), LANG("datum.9848b029", null))
+		owner.balloon_alert(owner, LANG("datum.99c04930", null))
 		source.streak = "low_sweep"
 
 /datum/action/lung_punch//referred to internally as 'quick choke'
@@ -83,12 +83,12 @@
 		return
 	var/datum/martial_art/source = target
 	if (source.streak == "quick_choke")
-		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
-		owner.balloon_alert(owner, "cleared")
+		owner.visible_message(span_danger(LANG("datum.addb3d5a", list(owner))), LANG("datum.17c24905", null))
+		owner.balloon_alert(owner, LANG("datum.3478a3ac", null))
 		source.streak = ""
 	else
-		owner.visible_message(span_danger("[owner] assumes the Lung Punch stance!"), "<b><i>Your next attack will be a Lung Punch.</i></b>")
-		owner.balloon_alert(owner, "lung punch")
+		owner.visible_message(span_danger(LANG("datum.553b45bf", list(owner))), LANG("datum.dd912fd8", null))
+		owner.balloon_alert(owner, LANG("datum.45dd754d", null))
 		source.streak = "quick_choke"//internal name for lung punch
 
 /datum/martial_art/kaza_ruk/activate_style(mob/living/new_holder)
@@ -138,9 +138,9 @@
 			sweeping_language = "tail"
 
 	defender.visible_message(
-		span_warning("[attacker] [sweeping_language] sweeps [defender]!"),
-		span_userdanger("Your legs are sweeped by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_warning(LANG("datum.f326b260", list(attacker, sweeping_language, defender))),
+		span_userdanger(LANG("datum.9efb8512", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		null,
 		attacker,
 	)
@@ -158,9 +158,9 @@
 /datum/martial_art/kaza_ruk/proc/quick_choke(mob/living/attacker, mob/living/defender)//is actually lung punch
 	attacker.do_attack_animation(defender)
 	defender.visible_message(
-		span_warning("[attacker] pounds [defender] on the chest!"),
-		span_userdanger("Your chest is slammed by [attacker]! You can't breathe!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_warning(LANG("datum.1f21d3a6", list(attacker, defender))),
+		span_userdanger(LANG("datum.6822785d", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
@@ -177,9 +177,9 @@
 		return MARTIAL_ATTACK_INVALID // Does 10 damage, so we can't let pacifists neck chop.
 	attacker.do_attack_animation(defender)
 	defender.visible_message(
-		span_warning("[attacker] karate chops [defender]'s neck!"),
-		span_userdanger("Your neck is karate chopped by [attacker], rendering you unable to speak!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_warning(LANG("datum.473b6855", list(attacker, defender))),
+		span_userdanger(LANG("datum.52274472", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
@@ -208,9 +208,9 @@
 	if(prob(60) && stuff_in_hand && defender.temporarilyRemoveItemFromInventory(stuff_in_hand))
 		attacker.put_in_hands(stuff_in_hand)
 		defender.visible_message(
-			span_danger("[attacker] disarms [defender]!"),
-			span_userdanger("You're disarmed by [attacker]!"),
-			span_hear("You hear aggressive shuffling!"),
+			span_danger(LANG("datum.d91638bb", list(attacker, defender))),
+			span_userdanger(LANG("datum.17a4149c", list(attacker))),
+			span_hear(LANG("datum.7314bbd1", null)),
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)
@@ -250,9 +250,9 @@
 			strike_language = "a whiplash tail spin"
 
 	source.visible_message(
-		span_warning("[source] follows up with [kicking ? kick_language : strike_language] against [target]!"),
-		span_notice("You deliver [kicking ? kick_language : strike_language] against [target]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_warning(LANG("datum.db28a333", list(source, kicking ? kick_language : strike_language, target))),
+		span_notice(LANG("datum.9c252dec", list(kicking ? kick_language : strike_language, target))),
+		span_hear(LANG("datum.6c7f8149", null)),
 	)
 	if(tail_usage)
 		source.emote(kicking ? "flip" : "spin")

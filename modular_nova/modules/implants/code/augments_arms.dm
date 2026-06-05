@@ -159,7 +159,7 @@
 
 	name = "enhanced razor claws"
 	desc += span_warning("\n\nThese have undergone a special honing process; they'll kill people even faster than they used to.")
-	user.visible_message(span_warning("[user] sharpens [src], [attacking_item] disintegrating!"), span_warning("You sharpen [src], making it much more deadly than before, but [attacking_item] disintegrates under the stress."))
+	user.visible_message(span_warning(LANG("obj.d6b60633", list(user, src, attacking_item))), span_warning(LANG("obj.e31199e5", list(src, attacking_item))))
 	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
 	qdel(attacking_item)
 	return ..()
@@ -186,8 +186,8 @@
 			effect_chance = 35
 	if(prob(effect_chance) && owner)
 		owner.visible_message(
-			span_danger("[owner]'s razor claws extend and retract rapidly!"),
-			span_warning("Your razor claws malfunction, extending and retracting uncontrollably!")
+			span_danger(LANG("obj.8beba6a5", list(owner))),
+			span_warning(LANG("obj.6da8e535", null))
 		)
 		if(active_item)
 			Retract()
@@ -234,8 +234,8 @@
 			effect_chance = 40
 	if(prob(effect_chance) && owner)
 		owner.visible_message(
-			span_danger("[owner]'s drill implant whirs and spins erratically!"),
-			span_warning("Your drill implant malfunctions, spinning wildly and making your whole arm shake!")
+			span_danger(LANG("obj.be0a22c5", list(owner))),
+			span_warning(LANG("obj.ce1b96e5", null))
 		)
 		if(active_item)
 			Retract()
@@ -287,7 +287,7 @@
 	recent_spin = world.time + spin_delay
 
 	playsound(user, 'modular_nova/master_files/sound/effects/robot_smoke.ogg', 50, FALSE)
-	user.visible_message(span_warning("[user] spins [src]'s bit, accelerating for a moment to <span class='bolddanger'>thousands of RPM.</span>"), span_notice("You spin [src]'s bit, accelerating for a moment to <span class='bolddanger'>thousands of RPM.</span>"))
+	user.visible_message(span_warning(LANG("obj.841b7e02", list(user, src))), span_notice(LANG("obj.a3f2d6f6", list(src))))
 
 /obj/item/organ/cyberimp/arm/toolkit/mining_drill/diamond
 	name = "\improper Dalba Masterworks 'Tunneler' Diamond Integrated Drill"

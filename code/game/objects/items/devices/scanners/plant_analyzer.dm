@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PLANT_ANALYZER_STAT_TAB 1
 #define PLANT_ANALYZER_CHEM_TAB 2
 
@@ -112,8 +113,8 @@
  */
 /obj/item/plant_analyzer/proc/plant_biotype_health_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
 	user.visible_message(
-		span_notice("[user] analyzes [scanned_mob]'s vitals."),
-		span_notice("You analyze [scanned_mob]'s vitals.")
+		span_notice(LANG("obj.e9abb56d", list(user, scanned_mob))),
+		span_notice(LANG("obj.cf14fd9f", list(scanned_mob)))
 		)
 
 	healthscan(user, scanned_mob, advanced = TRUE)
@@ -127,8 +128,8 @@
  */
 /obj/item/plant_analyzer/proc/plant_biotype_chem_scan(mob/living/scanned_mob, mob/living/carbon/human/user)
 	user.visible_message(
-		span_notice("[user] analyzes [scanned_mob]'s bloodstream."),
-		span_notice("You analyze [scanned_mob]'s bloodstream.")
+		span_notice(LANG("obj.ac0eec86", list(user, scanned_mob))),
+		span_notice(LANG("obj.a0e19a6d", list(scanned_mob)))
 		)
 	chemscan(user, scanned_mob)
 	add_fingerprint(user)

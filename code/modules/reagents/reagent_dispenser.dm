@@ -316,7 +316,7 @@
 			to_chat(user, span_warning(LANG("obj.c9271270", list(refilling_welder.name))))
 			return
 		reagents.trans_to(refilling_welder, refilling_welder.max_fuel, transferred_by = user)
-		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_welder.name]."), span_notice("You refill [refilling_welder]."))
+		user.visible_message(span_notice(LANG("obj.3f21aaca", list(user, user.p_their(), refilling_welder.name))), span_notice(LANG("obj.e125cbe7", list(refilling_welder))))
 		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 		refilling_welder.update_appearance()
 		return
@@ -327,7 +327,7 @@
 			to_chat(user, span_warning(LANG("obj.c9271270", list(refilling_lighter.name))))
 			return
 		reagents.trans_to(refilling_lighter, refilling_lighter.maximum_fuel, transferred_by = user)
-		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_lighter.name]."), span_notice("You refill [refilling_lighter]."))
+		user.visible_message(span_notice(LANG("obj.3f21aaca", list(user, user.p_their(), refilling_lighter.name))), span_notice(LANG("obj.e125cbe7", list(refilling_lighter))))
 		playsound(src, 'sound/effects/refill.ogg', 25, TRUE)
 		return
 
@@ -335,8 +335,8 @@
 		to_chat(user, span_warning(LANG("obj.acd296d8", list(src))))
 		return
 	user.visible_message(
-		span_danger("[user] catastrophically fails at refilling [user.p_their()] [attacking_item.name]!"),
-		span_userdanger("That was stupid of you."))
+		span_danger(LANG("obj.b1759db0", list(user, user.p_their(), attacking_item.name))),
+		span_userdanger(LANG("obj.4f5987e9", null)))
 	log_bomber(user, "detonated a", src, "via [attacking_item.name]")
 	boom(guaranteed_violent = TRUE) //NOVA EDIT CHANGE - ORIGINAL: boom()
 
@@ -436,7 +436,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(!paper_cups)
 		to_chat(user, span_warning(LANG("obj.a4421a43", null)))
 		return
-	user.visible_message(span_notice("[user] takes a cup from [src]."), span_notice("You take a paper cup from [src]."))
+	user.visible_message(span_notice(LANG("obj.20fbbf2a", list(user, src))), span_notice(LANG("obj.556bd48f", list(src))))
 	var/obj/item/reagent_containers/cup/glass/sillycup/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	paper_cups--

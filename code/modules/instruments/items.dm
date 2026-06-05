@@ -36,7 +36,7 @@
 	return TRUE
 
 /obj/item/instrument/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.c83392d7", list(user, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/instrument/ui_interact(mob/user, datum/tgui/ui)

@@ -154,7 +154,7 @@
 		to_chat(our_scanner, span_notice(LANG("datum.d38f0a24", null)))
 	else if(!(config_flags & EXPERIMENT_CONFIG_SILENT_FAIL))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 25)
-		our_scanner.say("The scan did not result in anything.")
+		our_scanner.say(LANG("datum.557a5593", null))
 
 /// Hooks on a successful autopsy experiment
 /datum/component/experiment_handler/proc/try_run_autopsy_experiment(obj/source, mob/living/target)
@@ -162,7 +162,7 @@
 
 	if (action_experiment(source, target))
 		playsound(source, 'sound/machines/ping.ogg', 25)
-		source.say("New unique autopsy successfully catalogued.")
+		source.say(LANG("datum.f644582d", null))
 
 /**
  * Announces a message to this experiment handler

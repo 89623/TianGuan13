@@ -21,7 +21,7 @@
 	VAR_FINAL/mode = FALSE
 
 /obj/item/hand_labeler/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is pointing [src] at [user.p_them()]self. [user.p_Theyre()] going to label [user.p_them()]self as a suicide!"))
+	user.visible_message(span_suicide(LANG("obj.6fdda4cb", list(user, src, user.p_them(), user.p_Theyre(), user.p_them()))))
 	labels_left = max(labels_left - 1, 0)
 
 	var/old_real_name = user.real_name
@@ -69,15 +69,15 @@
 		balloon_alert(user, LANG("obj.2d9360a1", null))
 		return FALSE
 	if(ismob(interacting_with))
-		interacting_with.balloon_alert(user, "can't label!")
+		interacting_with.balloon_alert(user, LANG("obj.5ff3c2ee", null))
 		return FALSE
 
 	var/cursor_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/cursor_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 	interacting_with.balloon_alert_to_viewers("labelled")
 	user.visible_message(
-		span_notice("[user] labels [interacting_with] with \"[label]\"."),
-		span_notice("You label [interacting_with] with \"[label]\"."),
+		span_notice(LANG("obj.2f36fc62", list(user, interacting_with, label))),
+		span_notice(LANG("obj.7ecf5901", list(interacting_with, label))),
 	)
 	var/obj/item/label/stick_label = new(null, label)
 	stick_label.stick_to_atom(interacting_with, cursor_x, cursor_y)
@@ -282,21 +282,21 @@
 
 	if(labeler.mode)
 		if(!length(labeler.label))
-			labeler.balloon_alert(user, "no text set!")
+			labeler.balloon_alert(user, LANG("obj.a4f400f4", null))
 			return ITEM_INTERACT_BLOCKING
 		if(labeler.label == label_name)
-			sticking_to.balloon_alert(user, "already labelled!")
+			sticking_to.balloon_alert(user, LANG("obj.0f280047", null))
 			return ITEM_INTERACT_BLOCKING
 		if(length(initial(sticking_to.name)) + length(labeler.label) > MAX_LABEL_LEN)
-			sticking_to.balloon_alert(user, "label too long!")
+			sticking_to.balloon_alert(user, LANG("obj.2d9360a1", null))
 			return ITEM_INTERACT_BLOCKING
 
 		update_label_name(labeler.label)
 		playsound(sticking_to, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
-		sticking_to.balloon_alert(user, "label renamed")
+		sticking_to.balloon_alert(user, LANG("obj.f4158377", null))
 	else
 		playsound(sticking_to, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
-		sticking_to.balloon_alert(user, "label removed")
+		sticking_to.balloon_alert(user, LANG("obj.0ec16bea", null))
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

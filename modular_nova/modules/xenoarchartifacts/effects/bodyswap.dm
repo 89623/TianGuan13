@@ -113,8 +113,8 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
 		|| mind_to_swap.key?[1] == "@" \
 	)
-		holder.balloon_alert(to_swap, "fizzles out!")
-		holder.balloon_alert(caster, "fizzles out!")
+		holder.balloon_alert(to_swap, LANG("datum.07286f14", null))
+		holder.balloon_alert(caster, LANG("datum.07286f14", null))
 		return FALSE
 
 	// MIND TRANSFER BEGIN

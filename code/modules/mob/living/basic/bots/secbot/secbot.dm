@@ -147,8 +147,8 @@
 
 	// Turns an oversight into a feature. Beepsky will now announce when pacifists taunt him over sec comms.
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		user.visible_message(span_notice("[user] taunts [src], daring [p_them()] to give chase!"), \
-			span_notice("You taunt [src], daring [p_them()] to chase you!"), span_hear("You hear someone shout a daring taunt!"), DEFAULT_MESSAGE_RANGE, user)
+		user.visible_message(span_notice(LANG("mob.b90dd7e1", list(user, src, p_them()))), \
+			span_notice(LANG("mob.cfaad9c8", list(src, p_them()))), span_hear(LANG("mob.cf9e616d", null)), DEFAULT_MESSAGE_RANGE, user)
 		speak("Taunted by pacifist scumbag [RUNECHAT_BOLD("[user]")] in [get_area(src)].", radio_channel)
 
 		// Interrupt the attack chain. We've already handled this scenario for pacifists.

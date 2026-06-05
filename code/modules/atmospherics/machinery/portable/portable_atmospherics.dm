@@ -285,9 +285,9 @@
 		disconnect()
 		wrench.play_tool_sound(src)
 		user.visible_message( \
-			"[user] disconnects [src].", \
-			span_notice("You unfasten [src] from the port."), \
-			span_hear("You hear a ratchet."))
+			LANG("obj.4acbf7f4", list(user, src)), \
+			span_notice(LANG("obj.4750b273", list(src))), \
+			span_hear(LANG("obj.aa8a193f", null)))
 		update_appearance()
 		return TRUE
 	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
@@ -299,9 +299,9 @@
 		return FALSE
 	wrench.play_tool_sound(src)
 	user.visible_message( \
-		"[user] connects [src].", \
-		span_notice("You fasten [src] to the port."), \
-		span_hear("You hear a ratchet."))
+		LANG("obj.1450de58", list(user, src)), \
+		span_notice(LANG("obj.ea2a40d3", list(src))), \
+		span_hear(LANG("obj.aa8a193f", null)))
 	update_appearance()
 	investigate_log("was connected to [possible_port] by [key_name(user)].", INVESTIGATE_ATMOS)
 	return TRUE

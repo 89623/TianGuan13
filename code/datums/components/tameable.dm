@@ -40,7 +40,7 @@
 		modified_tame_chance += 50
 		inform_tamer = TRUE
 
-	source.balloon_alert(attacker, "eats from your hand")
+	source.balloon_alert(attacker, LANG("datum.db39e69e", null))
 	if(prob(modified_tame_chance)) //note: lack of feedback message is deliberate, keep them guessing unless they're an expert!
 		on_tame(source, attacker, food, inform_tamer)
 	else
@@ -60,7 +60,7 @@
 	if(isliving(parent) && isliving(tamer))
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, befriend), tamer)
 		if(inform_tamer)
-			source.balloon_alert(tamer, "tamed")
+			source.balloon_alert(tamer, LANG("datum.5d376a35", null))
 
 	if(HAS_TRAIT(tamer, TRAIT_BEAST_EMPATHY))
 		INVOKE_ASYNC(src, PROC_REF(rename_pet), source, tamer)

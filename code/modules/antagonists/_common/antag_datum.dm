@@ -585,7 +585,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return FALSE
 	var/mob/living/owner_mob = owner.current
 	if (!force && !can_assign_self_objectives)
-		owner_mob.balloon_alert(owner_mob, "can't do that!")
+		owner_mob.balloon_alert(owner_mob, LANG("datum.c3d89266", null))
 		return FALSE
 	var/custom_objective_text = tgui_input_text(
 		owner_mob,

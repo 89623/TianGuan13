@@ -58,23 +58,23 @@
 		return
 
 	if (length(limb_to_detach.wounds) >= 1)
-		cast_on.balloon_alert(cast_on, "can't detach wounded limbs!")
+		cast_on.balloon_alert(cast_on, LANG("datum.fc194804", null))
 		playsound(cast_on, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return
 
-	cast_on.balloon_alert(cast_on, "detaching limb...")
+	cast_on.balloon_alert(cast_on, LANG("datum.521792ea", null))
 	playsound(cast_on, 'sound/items/tools/rped.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	cast_on.visible_message(span_notice("[cast_on] shuffles [cast_on.p_their()] [limb_to_detach.name] forward, actuators hissing and whirring as [cast_on.p_they()] disengage[cast_on.p_s()] the limb from its mount..."))
+	cast_on.visible_message(span_notice(LANG("datum.3ca6e695", list(cast_on, cast_on.p_their(), limb_to_detach.name, cast_on.p_they(), cast_on.p_s()))))
 
 	if(do_after(cast_on, 5 SECONDS))
-		cast_on.visible_message(span_notice("With a gentle twist, [cast_on] finally prises [cast_on.p_their()] [limb_to_detach.name] free from its socket."))
+		cast_on.visible_message(span_notice(LANG("datum.f31f90bf", list(cast_on, cast_on.p_their(), limb_to_detach.name))))
 		limb_to_detach.drop_limb()
 		cast_on.put_in_hands(limb_to_detach)
-		cast_on.balloon_alert(cast_on, "limb detached!")
+		cast_on.balloon_alert(cast_on, LANG("datum.9d4f9650", null))
 		if(prob(5))
 			playsound(cast_on, 'sound/items/champagne_pop.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		else
 			playsound(cast_on, 'sound/items/deconstruct.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	else
-		cast_on.balloon_alert(cast_on, "interrupted!")
+		cast_on.balloon_alert(cast_on, LANG("datum.c67b5d27", null))
 		playsound(cast_on, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

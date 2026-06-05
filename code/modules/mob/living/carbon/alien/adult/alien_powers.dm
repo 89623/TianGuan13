@@ -110,7 +110,7 @@ Doesn't work on other aliens/AI.*/
 	made_structure_type = /obj/structure/alien/weeds/node
 
 /datum/action/cooldown/alien/make_structure/plant_weeds/Activate(atom/target)
-	owner.visible_message(span_alertalien("[owner] plants some alien weeds!"))
+	owner.visible_message(span_alertalien(LANG("datum.f4785f5c", list(owner))))
 	return ..()
 
 /datum/action/cooldown/alien/whisper
@@ -223,7 +223,7 @@ Doesn't work on other aliens/AI.*/
 	if(get_dist(owner, target) > 1)
 		return FALSE
 	if(ismob(target)) //If it could corrode mobs, it would one-shot them.
-		owner.balloon_alert(owner, "doesn't work on creatures!")
+		owner.balloon_alert(owner, LANG("datum.78868d38", null))
 		return FALSE
 
 	return ..()
@@ -236,8 +236,8 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	owner.visible_message(
-		span_alertalien("[owner] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!"),
-		span_noticealien("You vomit globs of acid over [target]. It begins to sizzle and melt."),
+		span_alertalien(LANG("datum.0511a0b9", list(owner, target))),
+		span_noticealien(LANG("datum.0e8bf2af", list(target))),
 	)
 	return TRUE
 
@@ -289,8 +289,8 @@ Doesn't work on other aliens/AI.*/
 
 	var/modifiers = params2list(params)
 	clicker.visible_message(
-		span_danger("[clicker] spits neurotoxin!"),
-		span_alertalien("You spit neurotoxin."),
+		span_danger(LANG("datum.6e7b1bba", list(clicker))),
+		span_alertalien(LANG("datum.8de85284", null)),
 	)
 	var/obj/projectile/neurotoxin/neurotoxin = new /obj/projectile/neurotoxin(clicker.loc)
 	neurotoxin.aim_projectile(target, clicker, modifiers)
@@ -335,12 +335,12 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	owner.visible_message(
-		span_notice("[owner] vomits up a thick purple substance and begins to shape it."),
-		span_notice("You shape a [choice] out of resin."),
+		span_notice(LANG("datum.c2122394", list(owner))),
+		span_notice(LANG("datum.513c6195", list(choice))),
 	)
 	//NOVA EDIT START - Roundstart xenohybrid organs
 	if(build_duration && !do_after(owner, build_duration))
-		owner.balloon_alert(owner, "interrupted!")
+		owner.balloon_alert(owner, LANG("datum.c67b5d27", null))
 		return
 	//NOVA EDIT END
 	new choice_path(owner.loc)
@@ -369,14 +369,14 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/carbon/alien/adult/alieninated_owner = owner
 	var/obj/item/organ/stomach/alien/melting_pot = alieninated_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!melting_pot)
-		owner.visible_message(span_clown("[src] gags, and spits up a bit of purple liquid. Ewwww."), \
-			span_alien("You feel a pain in your... chest? There's nothing there there's nothing there no no n-"))
+		owner.visible_message(span_clown(LANG("datum.369f992d", list(src))), \
+			span_alien(LANG("datum.c018c1f0", null)))
 		return
 
 	if(!length(melting_pot.stomach_contents))
 		to_chat(owner, span_alien(LANG("datum.8e96e2aa", null)))
 		return
-	owner.visible_message(span_danger("[owner] hurls out the contents of their stomach!"))
+	owner.visible_message(span_danger(LANG("datum.12f6d2c4", list(owner))))
 	var/dir_angle = dir2angle(owner.dir)
 
 	playsound(owner, 'sound/mobs/non-humanoids/alien/alien_york.ogg', 100)

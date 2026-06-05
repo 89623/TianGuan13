@@ -18,7 +18,7 @@
 	var/datum/antagonist/lunatic/lunatic_datum = IS_LUNATIC(owner)
 	var/mob/living/carbon/human/ascended_heretic = lunatic_datum.ascended_body
 	if(!(ascended_heretic))
-		owner.balloon_alert(owner, "what cruel fate, your master is gone...")
+		owner.balloon_alert(owner, LANG("datum.35197ad9", null))
 		StartCooldown(1 SECONDS)
 		return FALSE
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)

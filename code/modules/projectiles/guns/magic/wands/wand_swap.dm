@@ -21,7 +21,7 @@
 
 /obj/item/gun/magic/wand/swap/do_suicide(mob/living/user)
 	. = ..()
-	user.visible_message(span_suicide("As the smoke clears, [user] is lying completely alive on [get_turf(user)]."))
+	user.visible_message(span_suicide(LANG("obj.4cfe1d9f", list(user, get_turf(user)))))
 	return SHAME
 
 /obj/item/ammo_casing/magic/swap

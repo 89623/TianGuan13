@@ -125,7 +125,7 @@
 	SIGNAL_HANDLER
 	if(target == parent)
 		var/mob/living/ridden = parent
-		ridden.balloon_alert(rider_pulling, "not while riding it!")
+		ridden.balloon_alert(rider_pulling, LANG("datum.381aa96a", null))
 		return COMSIG_LIVING_CANCEL_PULL
 
 /// This is called after the ridden atom is successfully moved and is used to handle icon stuff
@@ -351,8 +351,8 @@
 	if(!prob(disarm_chance))
 		if(disarm_chance > 0)
 			source.visible_message(
-				span_warning("[disarmer] shoves [source] around, trying to throw off [source.p_their()] rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"),
-				span_warning("[disarmer] shoves you around, trying to throw off your rider[length(source.buckled_mobs) == 1 ? "" : "s"]!"),
+				span_warning(LANG("datum.dd71de14", list(disarmer, source, source.p_their(), length(source.buckled_mobs) == 1 ? "" : "s"))),
+				span_warning(LANG("datum.bcbd6c0d", list(disarmer, length(source.buckled_mobs) == 1 ? "" : "s"))),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			if(source.is_blind())
@@ -367,8 +367,8 @@
 						to_chat(disarmer, span_warning(LANG("datum.62860f36", list(source, source.p_their()))))
 		return
 	source.visible_message(
-		span_warning("As [disarmer] shoves [source] around, [throwing] is thrown from [parent]!"),
-		span_warning("As [disarmer] shoves you around, [throwing] is thrown from you!"),
+		span_warning(LANG("datum.b868fa8e", list(disarmer, source, throwing, parent))),
+		span_warning(LANG("datum.f26dda62", list(disarmer, throwing))),
 	)
 	if(source.is_blind())
 		to_chat(source, span_warning(LANG("datum.d4da32db", list(length(source.buckled_mobs) == 1 ? "your rider" : "one of your riders"))))
@@ -383,8 +383,8 @@
 	if(!prob(disarm_chance))
 		if(disarm_chance > 0)
 			rider.visible_message(
-				span_warning("[disarmer] shoves [rider] around, trying to throw [rider.p_them()] off [parent]!"),
-				span_warning("As [disarmer] shoves you around, you [(disarm_chance >= 50 ? "barely" : (disarm_chance >= 25 ? "" : "effortlessly"))] manage to hold on to [parent]!"),
+				span_warning(LANG("datum.14ce6ecd", list(disarmer, rider, rider.p_them(), parent))),
+				span_warning(LANG("datum.1b7c9785", list(disarmer, (disarm_chance >= 50 ? "barely" : (disarm_chance >= 25 ? "" : "effortlessly")), parent))),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			if(rider.is_blind())
@@ -400,8 +400,8 @@
 		return
 
 	rider.visible_message(
-		span_warning("As [disarmer] shoves [rider] around, [rider.p_they()] lose [rider.p_their()] [pick("balance", "grip", "hold")] and fall off [parent]!"),
-		span_warning("As [disarmer] shoves you around, you lose your [pick("balance", "grip", "hold")] and fall off [parent]!")
+		span_warning(LANG("datum.f8e50698", list(disarmer, rider, rider.p_they(), rider.p_their(), pick("balance", "grip", "hold"), parent))),
+		span_warning(LANG("datum.817c7335", list(disarmer, pick("balance", "grip", "hold"), parent)))
 	)
 	if(rider.is_blind())
 		to_chat(rider, span_warning(LANG("datum.a2a4ca1e", list(pick("balance", "grip", "hold"), parent))))

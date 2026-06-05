@@ -214,15 +214,15 @@
 /datum/action/innate/cult/master/finalreck/proc/chant(chant_number)
 	switch(chant_number)
 		if(1)
-			owner.say("C'arta forbici!", language = /datum/language/common, forced = "cult invocation")
+			owner.say(LANG("datum.581134ab", null), language = /datum/language/common, forced = "cult invocation")
 		if(2)
-			owner.say("Pleggh e'ntrath!", language = /datum/language/common, forced = "cult invocation")
+			owner.say(LANG("datum.6383c927", null), language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/effects/magic/clockwork/narsie_attack.ogg', 50, TRUE)
 		if(3)
-			owner.say("Barhah hra zar'garis!", language = /datum/language/common, forced = "cult invocation")
+			owner.say(LANG("datum.312c3ee1", null), language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/effects/magic/clockwork/narsie_attack.ogg', 75, TRUE)
 		if(4)
-			owner.say("N'ath reth sh'yro eth d'rekkathnor!!!", language = /datum/language/common, forced = "cult invocation")
+			owner.say(LANG("datum.cc942f1a", null), language = /datum/language/common, forced = "cult invocation")
 			playsound(get_turf(owner),'sound/effects/magic/clockwork/narsie_attack.ogg', 100, TRUE)
 
 /datum/action/innate/cult/master/cultmark
@@ -403,23 +403,23 @@
 		playsound(throwee_turf, 'sound/effects/magic/exit_blood.ogg', 50)
 		new /obj/effect/temp_visual/cult/sparks(throwee_turf, clicker.dir)
 		throwee.visible_message(
-			span_warning("A pulse of magic whisks [throwee] away!"),
-			span_cult("A pulse of blood magic whisks you away..."),
+			span_warning(LANG("datum.0a5b7bb2", list(throwee))),
+			span_cult(LANG("datum.ac5b2b93", null)),
 		)
 
 		if(!do_teleport(throwee, clicked_on, channel = TELEPORT_CHANNEL_CULT))
 			to_chat(clicker, span_cult(LANG("datum.8247d14a", null)))
 			throwee.visible_message(
-				span_warning("...Except they don't go very far"),
-				span_cult("...Except you don't appear to have moved very far."),
+				span_warning(LANG("datum.5cb004cc", null)),
+				span_cult(LANG("datum.42da56c8", null)),
 			)
 			return FALSE
 
 		throwee_turf.Beam(clicked_on, icon_state = "sendbeam", time = 0.4 SECONDS)
 		new /obj/effect/temp_visual/cult/sparks(get_turf(clicked_on), clicker.dir)
 		throwee.visible_message(
-			span_warning("[throwee] appears suddenly in a pulse of magic!"),
-			span_cult("...And you appear elsewhere."),
+			span_warning(LANG("datum.15881f47", list(throwee))),
+			span_cult(LANG("datum.c5d70604", null)),
 		)
 
 		COOLDOWN_START(src, pulse_cooldown, pulse_cooldown_duration)

@@ -97,7 +97,7 @@
 	if(skyfall_charge_level)
 		abort_skyfall()
 		return
-	chassis.balloon_alert(owner, "charging skyfall...")
+	chassis.balloon_alert(owner, LANG("datum.0e83ac83", null))
 	INVOKE_ASYNC(src, PROC_REF(skyfall_charge_loop))
 
 /**
@@ -113,23 +113,23 @@
 	skyfall_charge_level++
 	switch(skyfall_charge_level)
 		if(1)
-			chassis.visible_message(span_warning("[chassis] clicks and whirrs for a moment, with a low hum emerging from the legs."))
+			chassis.visible_message(span_warning(LANG("datum.d0c15835", list(chassis))))
 			playsound(chassis, 'sound/items/tools/rped.ogg', 50, TRUE)
 		if(2)
-			chassis.visible_message(span_warning("[chassis] begins to shake, the sounds of electricity growing louder."))
+			chassis.visible_message(span_warning(LANG("datum.d9190259", list(chassis))))
 			chassis.Shake(1, 1, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 		if(3)
-			chassis.visible_message(span_warning("[chassis] assumes a pose as it rattles violently."))
+			chassis.visible_message(span_warning(LANG("datum.a017c020", list(chassis))))
 			chassis.Shake(2, 2, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			chassis.spark_system.start()
 			chassis.update_appearance(UPDATE_ICON_STATE)
 		if(4)
-			chassis.visible_message(span_warning("[chassis] sparks and shutters as it finalizes preparation."))
+			chassis.visible_message(span_warning(LANG("datum.d66aa2d8", list(chassis))))
 			playsound(chassis, 'sound/vehicles/mecha/skyfall_power_up.ogg', 50, TRUE)
 			chassis.Shake(3, 3, SKYFALL_SINGLE_CHARGE_TIME-1) // -1 gives space between the animates, so they don't interrupt eachother
 			chassis.spark_system.start()
 		if(SKYFALL_CHARGELEVEL_LAUNCH)
-			chassis.visible_message(span_danger("[chassis] leaps into the air!"))
+			chassis.visible_message(span_danger(LANG("datum.c4746687", list(chassis))))
 			playsound(chassis, 'sound/items/weapons/gun/general/rocket_launch.ogg', 50, TRUE)
 	if(skyfall_charge_level != SKYFALL_CHARGELEVEL_LAUNCH)
 		skyfall_charge_loop()
@@ -174,7 +174,7 @@
  */
 /datum/action/vehicle/sealed/mecha/skyfall/proc/land()
 	var/turf/landed_on = get_turf(chassis)
-	chassis.visible_message(span_danger("[chassis] lands from above!"))
+	chassis.visible_message(span_danger(LANG("datum.02e1211a", list(chassis))))
 	playsound(chassis, 'sound/effects/explosion/explosion1.ogg', 50, 1)
 	chassis.resistance_flags &= ~INDESTRUCTIBLE
 	chassis.mecha_flags &= ~(QUIET_STEPS|QUIET_TURNS|CANNOT_INTERACT)
@@ -226,7 +226,7 @@
  * Applies cooldown and resets charge level
  */
 /datum/action/vehicle/sealed/mecha/skyfall/proc/abort_skyfall()
-	chassis.balloon_alert(owner, "skyfall aborted")
+	chassis.balloon_alert(owner, LANG("datum.8b39286f", null))
 	S_TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_MISSILE_STRIKE, skyfall_charge_level * 10 SECONDS) //so aborting skyfall later in the process imposes a longer cooldown
 	skyfall_charge_level = 0
 	chassis.update_appearance(UPDATE_ICON_STATE)
@@ -285,7 +285,7 @@
  * Plus other flavor like the overlay
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/start_missile_targeting()
-	chassis.balloon_alert(owner, "missile mode on (click to target)")
+	chassis.balloon_alert(owner, LANG("datum.ff235ee8", null))
 	aiming_missile = TRUE
 	rockets_left = 3
 	RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, PROC_REF(on_melee_click))

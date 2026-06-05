@@ -114,8 +114,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		washing_face = TRUE
 
 	playsound(src, 'sound/machines/sink-faucet.ogg', 50)
-	user.visible_message(span_notice("[user] starts washing [user.p_their()] [washing_face ? "face" : "hands"]..."), \
-						span_notice("You start washing your [washing_face ? "face" : "hands"]..."))
+	user.visible_message(span_notice(LANG("obj.d6e9d9cd", list(user, user.p_their(), washing_face ? "face" : "hands"))), \
+						span_notice(LANG("obj.51a01636", list(washing_face ? "face" : "hands"))))
 	busy = TRUE
 
 	if(!do_after(user, 4 SECONDS, target = src))
@@ -136,8 +136,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	else
 		user.wash(CLEAN_WASH)
 
-	user.visible_message(span_notice("[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src]."), \
-						span_notice("You wash your [washing_face ? "face" : "hands"] using [src]."))
+	user.visible_message(span_notice(LANG("obj.b1726f63", list(user, user.p_their(), washing_face ? "face" : "hands", src))), \
+						span_notice(LANG("obj.3892bd55", list(washing_face ? "face" : "hands", src))))
 
 /obj/structure/sink/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
@@ -202,8 +202,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
 			user.set_stutter(baton.knockdown_time)
-			user.visible_message(span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"), \
-								span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
+			user.visible_message(span_warning(LANG("obj.0ce5feed", list(user, user.p_them(), baton.name))), \
+								span_userdanger(LANG("obj.97884035", list(baton))))
 			playsound(src, baton.on_stun_sound, 50, TRUE)
 			return ITEM_INTERACT_FAILURE
 
@@ -216,8 +216,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		reagents.expose(tool, TOUCH, 5 / max(reagents.total_volume, 5))
 		reagents.remove_all(5)
 		START_PROCESSING(SSobj, src)
-		user.visible_message(span_notice("[user] washes [tool] using [src]."), \
-							span_notice("You wash [tool] using [src]."))
+		user.visible_message(span_notice(LANG("obj.39b6ee6a", list(user, tool, src))), \
+							span_notice(LANG("obj.94ce754d", list(tool, src))))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sink/wrench_act(mob/living/user, obj/item/tool)

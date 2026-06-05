@@ -76,19 +76,19 @@
 
 	if(implant_time)
 		user.visible_message(
-			span_notice("[user] prepares to use [src] on [target]."),
-			span_notice("You prepare to use [src] on [target]."),
+			span_notice(LANG("obj.4e79cbb5", list(user, src, target))),
+			span_notice(LANG("obj.a3bf96f5", list(src, target))),
 		)
 		if(!do_after(user, (implant_time * surgery_speed), target))
 			return
 
 	if(target != user)
 		log_combat(user, target, "autosurgeon implanted [stored_organ] into", "[src]", "in [AREACOORD(target)]")
-		user.visible_message(span_notice("[user] presses a button on [src] as it plunges into [target]'s body."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
+		user.visible_message(span_notice(LANG("obj.9cb3659c", list(user, src, target))), span_notice(LANG("obj.8bbf310a", list(src, target))))
 	else
 		user.visible_message(
-			span_notice("[user] presses a button on [src] as it plunges into [user.p_their()] body."),
-			span_notice("You press a button on [src] as it plunges into your body."),
+			span_notice(LANG("obj.474deacb", list(user, src, user.p_their()))),
+			span_notice(LANG("obj.ceb24710", list(src))),
 		)
 
 	if (stored_organ.valid_zones && user.get_held_index_of_item(src))

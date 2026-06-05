@@ -79,11 +79,11 @@
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/Activate(atom/movable/target)
 	var/turf/beacon_loc = owner.loc
 	if(!isfloorturf(beacon_loc))
-		owner.balloon_alert(owner, "no room!")
+		owner.balloon_alert(owner, LANG("datum.ad6c6384", null))
 		return FALSE
 
 	if (!isnull(beacon))
-		beacon.visible_message("[beacon] vanishes!")
+		beacon.visible_message(LANG("datum.60f2b4e8", list(beacon)))
 		new /obj/effect/temp_visual/guardian/phase/out(beacon.loc)
 		qdel(beacon)
 
@@ -114,21 +114,21 @@
 /// Validate whether we can teleport this object
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/can_teleport(mob/living/source, atom/movable/target)
 	if (isnull(beacon))
-		source.balloon_alert(source, "no beacon!")
+		source.balloon_alert(source, LANG("datum.cbe78550", null))
 		return FALSE
 	if (isguardian(source))
 		var/mob/living/basic/guardian/guardian_mob = source
 		if (!guardian_mob.is_deployed())
-			source.balloon_alert(source, "manifest yourself!")
+			source.balloon_alert(source, LANG("datum.fdb35491", null))
 			return FALSE
 	if (!source.can_perform_action(target))
-		target.balloon_alert(source, "too far!")
+		target.balloon_alert(source, LANG("datum.f5e75781", null))
 		return FALSE
 	if (target.anchored)
-		target.balloon_alert(source, "it won't budge!")
+		target.balloon_alert(source, LANG("datum.73bdfe0e", null))
 		return FALSE
 	if(beacon.z != target.z)
-		target.balloon_alert(source, "too far from beacon!")
+		target.balloon_alert(source, LANG("datum.e045149d", null))
 		return FALSE
 	return TRUE
 
@@ -136,10 +136,10 @@
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/perform_teleport(mob/living/source, atom/target)
 	source.do_attack_animation(target)
 	playsound(target, 'sound/items/weapons/punch1.ogg', 50, TRUE, TRUE, frequency = -1)
-	source.balloon_alert(source, "teleporting...")
+	source.balloon_alert(source, LANG("datum.bda2b65d", null))
 	target.visible_message(
-		span_danger("[target] starts to glow faintly!"), \
-		span_userdanger("You start to faintly glow, and you feel strangely weightless!"))
+		span_danger(LANG("datum.56a19e75", list(target))), \
+		span_userdanger(LANG("datum.d65336fc", null)))
 	if(!do_after(source, teleport_time, target))
 		return
 	new /obj/effect/temp_visual/guardian/phase/out(target.loc)
@@ -147,8 +147,8 @@
 		var/mob/living/living_target = target
 		living_target.flash_act()
 	target.visible_message(
-		span_danger("[target] disappears in a flash of light!"), \
-		span_userdanger("Your vision is obscured by a flash of light!"), \
+		span_danger(LANG("datum.ef006406", list(target))), \
+		span_userdanger(LANG("datum.d3d7bf6c", null)), \
 	)
 	do_teleport(target, beacon, precision = 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 	new /obj/effect/temp_visual/guardian/phase(get_turf(target))

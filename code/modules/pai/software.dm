@@ -168,7 +168,7 @@
 	if(tgui_alert(holder, LANG("mob.d9c62591", list(src)), LANG("mob.5430925c", null), list("Yes", "No")) != "Yes")
 		balloon_alert(src, LANG("mob.1a2fa12f", null))
 		return FALSE
-	holder.visible_message(span_notice("[holder] presses [holder.p_their()] thumb against [src]."), span_notice("You press your thumb against [src]."), span_notice("[src] makes a sharp clicking sound as it extracts DNA material from [holder]."))
+	holder.visible_message(span_notice(LANG("mob.b9d5b346", list(holder, holder.p_their(), src))), span_notice(LANG("mob.68a48e94", list(src))), span_notice(LANG("mob.a488e2f0", list(src, holder))))
 	if(!holder.has_dna())
 		balloon_alert(src, LANG("mob.e733fff6", null))
 		return FALSE

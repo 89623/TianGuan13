@@ -448,7 +448,7 @@
 	if(is_simian(second_lifer))
 		return
 	// timer is long to let them panic and consider their folly, and because allergies take a while
-	second_lifer.visible_message(span_bolddanger("[second_lifer] starts swelling unhealthily in size. It looks like they had an allergic reaction to becoming a [folly_species]!"), span_userdanger("As your monkey features morph, you feel your allergies coming in. Oh no."))
+	second_lifer.visible_message(span_bolddanger(LANG("obj.326810c5", list(second_lifer, folly_species))), span_userdanger(LANG("obj.30e06d8a", null)))
 	// no brain or items. organs are funny though
 	second_lifer.inflate_gib(drop_bitflags = DROP_ORGANS|DROP_BODYPARTS, gib_time = 25 SECONDS, anim_time = 40 SECONDS)
 

@@ -82,7 +82,7 @@
 	if(!istype(M))
 		return FALSE
 	if(!silent)
-		M.visible_message(span_notice("[M] climbs into \the [src]!"))
+		M.visible_message(span_notice(LANG("obj.65c114e9", list(M, src))))
 	M.forceMove(src)
 	add_occupant(M)
 	return TRUE
@@ -103,7 +103,7 @@
 		M.throw_at(target_turf, 5, 10)
 
 	if(!silent)
-		M.visible_message(span_notice("[M] drops out of \the [src]!"))
+		M.visible_message(span_notice(LANG("obj.ae0bed74", list(M, src))))
 	return TRUE
 
 /obj/vehicle/sealed/proc/exit_location(M)

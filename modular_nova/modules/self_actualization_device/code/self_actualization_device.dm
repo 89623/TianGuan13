@@ -126,7 +126,7 @@
 	if(!powered() || !occupant || state_open || processing)
 		return CLICK_ACTION_BLOCKING
 
-	user.visible_message(span_notice("[user] presses the start button of the [src]."), span_notice("You press the start button of the [src]."))
+	user.visible_message(span_notice(LANG("obj.c6842664", list(user, src))), span_notice(LANG("obj.85e7cc68", list(src))))
 	get_consent()
 	return CLICK_ACTION_SUCCESS
 
@@ -264,7 +264,7 @@
 		victim_living.apply_damage(0.10 * damage, BURN, BODY_ZONE_R_LEG, wound_bonus = 14)
 		victim_living.apply_damage(0.10 * damage, BURN, BODY_ZONE_L_ARM, wound_bonus = 14)
 		victim_living.apply_damage(0.10 * damage, BURN, BODY_ZONE_R_ARM, wound_bonus = 14)
-		victim_living.visible_message(span_warning("[src] shuts down, forcefully ejecting [victim_living]!"), span_danger("The [src] shuts down mid-procedure! That can't be good..."))
+		victim_living.visible_message(span_warning(LANG("obj.403793f7", list(src, victim_living))), span_danger(LANG("obj.35d55cee", list(src))))
 
 	open_machine()
 
@@ -280,16 +280,16 @@
 	to_chat(user, span_notice(LANG("obj.58177e73", null)))
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(BREAKOUT_TIME)].)"), \
-		span_hear("You hear a metallic creaking from [src]."))
+	user.visible_message(span_notice(LANG("obj.485787b2", list(user, src))), \
+		span_notice(LANG("obj.43ad33b1", list(src, DisplayTimeText(BREAKOUT_TIME)))), \
+		span_hear(LANG("obj.a1d9c573", list(src))))
 	user.emote("scream")
 
 	if(do_after(user, BREAKOUT_TIME, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
+		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
+			span_notice(LANG("obj.81c31f6b", list(src))))
 		eject_old_you(damaged_goods = TRUE)
 
 /obj/machinery/self_actualization_device/screwdriver_act(mob/living/user, obj/item/tool)

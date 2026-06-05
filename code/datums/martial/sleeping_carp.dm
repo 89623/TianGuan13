@@ -83,9 +83,9 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	defender.visible_message(
-		span_danger("[attacker] violently twists [defender]'s [affecting]!"),
-		span_userdanger("[attacker] violently twists your [affecting]!"),
-		span_hear("You hear a sickening sound of bone snapping!"),
+		span_danger(LANG("datum.5de43719", list(attacker, defender, affecting))),
+		span_userdanger(LANG("datum.2600e742", list(attacker, affecting))),
+		span_hear(LANG("datum.36e1e105", null)),
 		null,
 		attacker,
 	)
@@ -100,9 +100,9 @@
 /datum/martial_art/the_sleeping_carp/proc/launch_kick(mob/living/attacker, mob/living/defender)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	defender.visible_message(
-		span_warning("[attacker] kicks [defender] square in the chest, sending them flying!"),
-		span_userdanger("You are kicked square in the chest by [attacker], sending you flying!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_warning(LANG("datum.af0d6b24", list(attacker, defender))),
+		span_userdanger(LANG("datum.41e34cba", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
@@ -119,12 +119,12 @@
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if(defender.body_position == STANDING_UP)
 		defender.Knockdown(4 SECONDS)
-		defender.visible_message(span_warning("[attacker] kicks [defender] in the head, sending them face first into the floor!"), \
-					span_userdanger("You are kicked in the head by [attacker], sending you crashing to the floor!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+		defender.visible_message(span_warning(LANG("datum.70df35be", list(attacker, defender))), \
+					span_userdanger(LANG("datum.e5e0b723", list(attacker))), span_hear(LANG("datum.6c7f8149", null)), COMBAT_MESSAGE_RANGE, attacker)
 	else
 		defender.drop_all_held_items()
-		defender.visible_message(span_warning("[attacker] kicks [defender] in the head!"), \
-					span_userdanger("You are kicked in the head by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+		defender.visible_message(span_warning(LANG("datum.76344bc4", list(attacker, defender))), \
+					span_userdanger(LANG("datum.770a4ed5", list(attacker))), span_hear(LANG("datum.6c7f8149", null)), COMBAT_MESSAGE_RANGE, attacker)
 	defender.apply_damage(40, STAMINA)
 	defender.adjust_dizzy_up_to(10 SECONDS, 10 SECONDS)
 	defender.adjust_temp_blindness_up_to(2 SECONDS, 10 SECONDS)
@@ -136,9 +136,9 @@
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	defender.visible_message(
-		span_warning("[attacker] violently slams [attacker.p_their()] knee into [defender]!"),
-		span_userdanger("You slam your knee straight into [defender]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_warning(LANG("datum.b6ab64c9", list(attacker, attacker.p_their(), defender))),
+		span_userdanger(LANG("datum.9f1eb581", list(defender))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
@@ -166,8 +166,8 @@
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.get_stamina_loss() >= 80) //We put our target to sleep.
 		defender.visible_message(
-			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold!"),
-			span_userdanger("[attacker] pinches something in your neck, and you fall unconscious!"),
+			span_danger(LANG("datum.a09d7870", list(attacker, defender))),
+			span_userdanger(LANG("datum.4f4d2cbb", list(attacker))),
 		)
 		grab_log_description = "grabbed and nerve pinched"
 		defender.Unconscious(10 SECONDS)
@@ -185,9 +185,9 @@
 		if(!isnull(head))
 			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
 			defender.visible_message(
-				span_danger("[attacker] snaps the neck of [defender]!"),
-				span_userdanger("Your neck is snapped by [attacker]!"),
-				span_hear("You hear a sickening snap!"),
+				span_danger(LANG("datum.45b3e8b3", list(attacker, defender))),
+				span_userdanger(LANG("datum.810237f6", list(attacker))),
+				span_hear(LANG("datum.c20f8aa4", null)),
 				ignored_mobs = attacker
 			)
 			to_chat(attacker, span_danger(LANG("datum.bb7d46bd", list(defender))))
@@ -259,8 +259,8 @@
 
 
 	carp_user.visible_message(
-		span_danger("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
-		span_userdanger("You deflect [hitting_projectile]!"),
+		span_danger(LANG("datum.8b7e67e7", list(carp_user, hitting_projectile, carp_user.p_They(), carp_user.p_their()))),
+		span_userdanger(LANG("datum.975cc868", list(hitting_projectile))),
 	)
 	playsound(carp_user, SFX_BULLET_MISS, 75, TRUE)
 	hitting_projectile.firer = carp_user
@@ -277,8 +277,8 @@
 		return
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
 	carp_user.visible_message(
-		span_danger("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
-		span_userdanger("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
+		span_danger(LANG("datum.89f25827", list(carp_user, attacker, touch_weapon))),
+		span_userdanger(LANG("datum.8d995965", list(attacker, touch_weapon))),
 	)
 	return COMPONENT_NO_AFTERATTACK
 
@@ -298,8 +298,8 @@
 		return NONE
 
 	carp_user.visible_message(
-		span_danger("[carp_user] cleanly avoids [attack_text] with incredible speed!"),
-		span_userdanger("You dodge [attack_text]"),
+		span_danger(LANG("datum.86baffa1", list(carp_user, attack_text))),
+		span_userdanger(LANG("datum.a149ae43", list(attack_text))),
 	)
 	playsound(carp_user.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 	return SUCCESSFUL_BLOCK
@@ -436,20 +436,20 @@
 			return ..()
 		var/mob/living/carbon/human/H = target
 		var/list/fluffmessages = list("club", "smack", "broadside", "beat", "slam")
-		H.visible_message(span_warning("[user] [pick(fluffmessages)]s [H] with [src]!"), \
-						span_userdanger("[user] [pick(fluffmessages)]s you with [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
+		H.visible_message(span_warning(LANG("obj.2fae1205", list(user, pick(fluffmessages), H, src))), \
+						span_userdanger(LANG("obj.7fb98adc", list(user, pick(fluffmessages), src))), span_hear(LANG("obj.6c7f8149", null)), null, user)
 		to_chat(user, span_danger(LANG("obj.ee318175", list(pick(fluffmessages), H, src))))
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, TRUE, -1)
 		H.adjust_stamina_loss(rand(13,20))
 		if(prob(10))
-			H.visible_message(span_warning("[H] collapses!"), \
-							span_userdanger("Your legs give out!"))
+			H.visible_message(span_warning(LANG("obj.b250dd93", list(H))), \
+							span_userdanger(LANG("obj.1ced27e2", null)))
 			H.Paralyze(8 SECONDS)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
-				H.visible_message(span_warning("[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"), \
-								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
+				H.visible_message(span_warning(LANG("obj.5b2d66f3", list(user, H, H.p_them()))), \
+								span_userdanger(LANG("obj.1ace6279", list(user))), span_hear(LANG("obj.6c7f8149", null)), null, user)
 				to_chat(user, span_danger(LANG("obj.8afcd6a2", list(H, H.p_them()))))
 				H.SetSleeping(60 SECONDS)
 				H.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15, 150)

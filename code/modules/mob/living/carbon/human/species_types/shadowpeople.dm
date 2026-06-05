@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "Shadow"
@@ -127,8 +128,8 @@
 		flashed.adjust_confusion_up_to(1 SECONDS, 3 SECONDS)
 
 	INVOKE_ASYNC(flashed, TYPE_PROC_REF(/mob, emote), "scream")
-	flashed.visible_message(span_danger("[flashed] wails in pain as a burst of light singes their flesh!"), \
-		span_danger("You wail in pain as the sudden burst of light singes your flesh!"), \
-		span_danger("Something wails in pain! It sounds like a terrifying monster! Good thing you can't see it, or you'd probably be freaking out right now."))
+	flashed.visible_message(span_danger(LANG("datum.76a40350", list(flashed))), \
+		span_danger(LANG("datum.dc75ceec", null)), \
+		span_danger(LANG("datum.0b4f450b", null)))
 
 	return FLASH_OVERRIDDEN

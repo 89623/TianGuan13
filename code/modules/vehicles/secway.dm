@@ -73,22 +73,22 @@
 	if(!istype(tool, /obj/item/food/grown/banana))
 		return NONE
 	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
-	user.visible_message(span_warning("[user] begins stuffing [tool] into [src]'s tailpipe."), span_warning("You begin stuffing [tool] into [src]'s tailpipe..."), ignored_mobs = occupants)
+	user.visible_message(span_warning(LANG("obj.f1db6f87", list(user, tool, src))), span_warning(LANG("obj.750f3b5e", list(tool, src))), ignored_mobs = occupants)
 	if(!do_after(user, 3 SECONDS, src))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_warning("[user] stuffs [tool] into [src]'s tailpipe."), span_warning("You stuff [tool] into [src]'s tailpipe."), ignored_mobs = occupants)
+	user.visible_message(span_warning(LANG("obj.a9bc12a4", list(user, tool, src))), span_warning(LANG("obj.cdaf5d7e", list(tool, src))), ignored_mobs = occupants)
 	eddie_murphy = tool
 	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/secway/attack_hand(mob/living/user, list/modifiers)
 	if(!eddie_murphy)
 		return ..()
-	user.visible_message(span_warning("[user] begins cleaning [eddie_murphy] out of [src]."), span_warning("You begin cleaning [eddie_murphy] out of [src]..."))
+	user.visible_message(span_warning(LANG("obj.2eb56fc8", list(user, eddie_murphy, src))), span_warning(LANG("obj.59ee87b2", list(eddie_murphy, src))))
 	if(!do_after(user, 6 SECONDS, target = src))
 		return ..()
-	user.visible_message(span_warning("[user] cleans [eddie_murphy] out of [src]."), span_warning("You manage to get [eddie_murphy] out of [src]."))
+	user.visible_message(span_warning(LANG("obj.76503203", list(user, eddie_murphy, src))), span_warning(LANG("obj.478705a0", list(eddie_murphy, src))))
 	eddie_murphy.forceMove(drop_location())
 	eddie_murphy = null
 

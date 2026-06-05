@@ -43,16 +43,16 @@
 	var/mob/living/basic/slime/slime_owner = owner
 
 	if(slime_owner.stat)
-		slime_owner.balloon_alert(slime_owner, "unconscious!")
+		slime_owner.balloon_alert(slime_owner, LANG("datum.dc8b5a42", null))
 		return
 	if(slime_owner.life_stage == SLIME_LIFE_STAGE_ADULT)
-		slime_owner.balloon_alert(slime_owner, "already adult!")
+		slime_owner.balloon_alert(slime_owner, LANG("datum.78aaed48", null))
 		return
 	if(slime_owner.amount_grown < SLIME_EVOLUTION_THRESHOLD)
-		slime_owner.balloon_alert(slime_owner, "need to grow!")
+		slime_owner.balloon_alert(slime_owner, LANG("datum.941ffa1d", null))
 		return
 	if(slime_owner.nutrition < nutrition_cost)
-		slime_owner.balloon_alert(slime_owner, "need food!")
+		slime_owner.balloon_alert(slime_owner, LANG("datum.41106740", null))
 		return
 
 	slime_owner.adjust_nutrition(-nutrition_cost)

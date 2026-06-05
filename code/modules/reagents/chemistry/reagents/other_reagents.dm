@@ -366,7 +366,7 @@
 		if(IS_CULTIST(affected_mob) && SPT_PROB(10, seconds_per_tick))
 			affected_mob.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
 			if(prob(10))
-				affected_mob.visible_message(span_danger("[affected_mob] starts having a seizure!"), span_userdanger("You have a seizure!"))
+				affected_mob.visible_message(span_danger(LANG("datum.e46c3046", list(affected_mob))), span_userdanger(LANG("datum.1d7bf17c", null)))
 				affected_mob.Unconscious(12 SECONDS)
 				to_chat(affected_mob, span_cult_large("[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 					"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")]."))
@@ -657,7 +657,7 @@
 			if(affected_human.w_uniform)
 				affected_mob.visible_message(pick("<b>[affected_mob]</b>'s collar pops up without warning.</span>", "<b>[affected_mob]</b> flexes [affected_mob.p_their()] arms."))
 			else
-				affected_mob.visible_message("<b>[affected_mob]</b> flexes [affected_mob.p_their()] arms.")
+				affected_mob.visible_message(LANG("datum.efe73f61", list(affected_mob, affected_mob.p_their())))
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.say(pick("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don???t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."), forced = /datum/reagent/spraytan)
 
@@ -910,7 +910,7 @@
 		return
 	var/mob/living/carbon/human/affected_human = affected_mob
 	to_chat(affected_human, span_boldwarning(LANG("datum.3d98ff44", null)))
-	affected_human.visible_message("<b>[affected_human]</b> suddenly transforms!")
+	affected_human.visible_message(LANG("datum.c034537e", list(affected_human)))
 	randomize_human_normie(affected_human)
 
 /datum/reagent/aslimetoxin
@@ -3229,7 +3229,7 @@
 		return
 	if(SPT_PROB(5, seconds_per_tick))
 		if(SPT_PROB(5, seconds_per_tick)) //Super rare statement
-			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = type)
+			victim.say(LANG("datum.6ada3ec1", null), forced = type)
 		else
 			victim.say(pick(ant_screams), forced = type)
 	if(SPT_PROB(15, seconds_per_tick))

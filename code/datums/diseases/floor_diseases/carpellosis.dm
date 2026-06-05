@@ -40,19 +40,19 @@
 			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
 				to_chat(affected_mob, span_warning(LANG("datum.84d5c396", null)))
 			else if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
-				affected_mob.visible_message("gnashes.", visible_message_flags = EMOTE_MESSAGE)
+				affected_mob.visible_message(LANG("datum.f6af129e", null), visible_message_flags = EMOTE_MESSAGE)
 		if(4)
 			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
 				gnash_someone()
 			else if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
-				affected_mob.visible_message("gnashes.", visible_message_flags = EMOTE_MESSAGE)
+				affected_mob.visible_message(LANG("datum.f6af129e", null), visible_message_flags = EMOTE_MESSAGE)
 		if(5)
 			max_stage_reached = TRUE
 			grant_ability()
 			if(SPT_PROB(2, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
 				gnash_someone()
 			else if(SPT_PROB(2, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
-				affected_mob.visible_message("gnashes.", visible_message_flags = EMOTE_MESSAGE)
+				affected_mob.visible_message(LANG("datum.f6af129e", null), visible_message_flags = EMOTE_MESSAGE)
 
 /datum/disease/carpellosis/Destroy()
 	if(ability_granted)
@@ -94,6 +94,6 @@
 		affected_mob.set_combat_mode(TRUE)
 		target.attack_paw(affected_mob)
 	else
-		affected_mob.visible_message("gnashes at [target.name].", visible_message_flags = EMOTE_MESSAGE)
+		affected_mob.visible_message(LANG("datum.43513639", list(target.name)), visible_message_flags = EMOTE_MESSAGE)
 
 #undef GNASHING_RANGE

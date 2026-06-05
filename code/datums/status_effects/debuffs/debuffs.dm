@@ -713,8 +713,8 @@
 		var/obj/item/I = H.get_active_held_item()
 		if(I && H.dropItemToGround(I))
 			H.visible_message(
-				span_notice("[H]'s hand convulses, and they drop their [I.name]!"),
-				span_userdanger("Your hand convulses violently, and you drop what you were holding!"),
+				span_notice(LANG("datum.98cb0284", list(H, I.name))),
+				span_userdanger(LANG("datum.d4cd2f78", null)),
 			)
 			H.adjust_jitter(10 SECONDS)
 
@@ -896,7 +896,7 @@
 			if(!prob(1)) // 99%
 				to_chat(victim, span_userdanger(LANG("datum.13ea6e8f", null)))
 			else // 1%
-				victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
+				victim.say(LANG("datum.9eac6c8f", null), forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
 	. = ..()
 

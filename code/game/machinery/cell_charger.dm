@@ -83,8 +83,8 @@ NOVA EDIT END */
 
 	charging = tool
 	user.visible_message(
-		span_notice("[user] inserts a cell into [src]."),
-		span_notice("You insert a cell into [src]."),
+		span_notice(LANG("obj.c4a3d920", list(user, src))),
+		span_notice(LANG("obj.0e4e6b90", list(src))),
 	)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -114,7 +114,7 @@ NOVA EDIT END */
 		return
 
 	charging.add_fingerprint(user)
-	user.visible_message(span_notice("[user] removes [charging] from [src]."), span_notice("You remove [charging] from [src]."))
+	user.visible_message(span_notice(LANG("obj.4a2c1fdd", list(user, charging, src))), span_notice(LANG("obj.cbed3266", list(charging, src))))
 	user.put_in_hands(removecell(drop_location()))
 
 /obj/machinery/cell_charger/attack_tk(mob/user)

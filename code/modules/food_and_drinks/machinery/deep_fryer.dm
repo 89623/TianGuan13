@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		if(!reagents.total_volume)
 			to_chat(user, span_warning(LANG("obj.c3382d27", list(tool))))
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] drops [tool] into [src]."), span_notice("You dissolve [tool] in [src]."))
+		user.visible_message(span_notice(LANG("obj.36dcc29b", list(user, tool, src))), span_notice(LANG("obj.a6017650", list(tool, src))))
 		tool.reagents.trans_to(src, tool.reagents.total_volume, transferred_by = user)
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
@@ -229,13 +229,13 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			return
 		var/mob/living/carbon/dunking_target = user.pulling
 		log_combat(user, dunking_target, "dunked", null, "into [src]")
-		user.visible_message(span_danger("[user] dunks [dunking_target]'s face in [src]!"))
+		user.visible_message(span_danger(LANG("obj.13093ec1", list(user, dunking_target, src))))
 		reagents.expose(dunking_target, TOUCH)
 		var/bio_multiplier = dunking_target.getarmor(BODY_ZONE_HEAD, BIO) * 0.01
 		var/target_temp = dunking_target.bodytemperature
 		var/cold_multiplier = 1
 		if(target_temp < TCMB + 10) // a tiny bit of leeway
-			dunking_target.visible_message(span_userdanger("[dunking_target] explodes from the entropic difference! Holy fuck!"))
+			dunking_target.visible_message(span_userdanger(LANG("obj.0b02fbff", list(dunking_target))))
 			dunking_target.investigate_log("has been gibbed by entropic difference (being dunked into [src]).", INVESTIGATE_DEATHS)
 			dunking_target.gib(DROP_ALL_REMAINS)
 			log_combat(user, dunking_target, "blew up", null, "by dunking them into [src]")

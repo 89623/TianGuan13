@@ -223,7 +223,7 @@
 		else
 			vial.forceMove(quickswap_loc)
 	vial = new_vial
-	user.visible_message(span_notice("[user] has loaded a vial into [src]."), span_notice("You have loaded [vial] into [src]."))
+	user.visible_message(span_notice(LANG("obj.39f29924", list(user, src))), span_notice(LANG("obj.cca0f3fd", list(vial, src))))
 	playsound(loc, 'sound/items/weapons/autoguninsert.ogg', 35, 1)
 	update_appearance()
 
@@ -315,8 +315,8 @@
 	var/fp_verb = mode == HYPO_SPRAY ? "spray" : "inject"
 
 	if(injectee != user)
-		injectee.visible_message(span_danger("[user] is trying to [fp_verb] [injectee] with [src]!"), \
-						span_userdanger("[user] is trying to [fp_verb] you with [src]!"))
+		injectee.visible_message(span_danger(LANG("obj.21830231", list(user, fp_verb, injectee, src))), \
+						span_userdanger(LANG("obj.32ec203b", list(user, fp_verb, src))))
 
 	var/selected_wait_time
 	if(injectee == user)
@@ -330,8 +330,8 @@
 		return ITEM_INTERACT_BLOCKING
 	log_attack("<font color='red'>[user.name] ([user.ckey]) applied [src] to [injectee.name] ([injectee.ckey]), which had [contained] (COMBAT MODE: [uppertext(user.combat_mode)]) (MODE: [mode])</font>")
 	if(injectee != user)
-		injectee.visible_message(span_danger("[user] uses the [src] on [injectee]!"), \
-						span_userdanger("[user] uses the [src] on you!"))
+		injectee.visible_message(span_danger(LANG("obj.8a9ddbdc", list(user, src, injectee))), \
+						span_userdanger(LANG("obj.2e71c97b", list(user, src))))
 	else
 		injectee.log_message("<font color='orange'>applied [src] to themselves ([contained]).</font>", LOG_ATTACK)
 

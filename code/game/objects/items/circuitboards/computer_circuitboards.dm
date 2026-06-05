@@ -729,7 +729,7 @@
 		var/on_shuttle_frame = HAS_TRAIT((get_turf(machine)), TRAIT_SHUTTLE_CONSTRUCTION_TURF)
 		machine.say(on_shuttle_frame ? "Console will automatically link on shuttle completion." : "No shuttle available for linking.")
 	else if(!istype(shuttle))
-		machine.say("Cannot link to this kind of shuttle!")
+		machine.say(LANG("obj.70714a10", null))
 	else
 		machine.connect_to_shuttle(TRUE, shuttle)
 

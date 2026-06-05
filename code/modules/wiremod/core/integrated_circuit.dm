@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 		set_cell(tool)
 		tool.add_fingerprint(user)
-		user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
+		user.visible_message(span_notice(LANG("obj.6c5b2d75", list(user, src))), span_notice(LANG("obj.8b86d93e", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(isidcard(tool))
@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(src)
-	user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
+	user.visible_message(span_notice(LANG("obj.71d44919", list(user, src))), span_notice(LANG("obj.ab55e82f", list(src))))
 	cell.forceMove(drop_location())
 	set_cell(null)
 	return ITEM_INTERACT_SUCCESS
@@ -556,9 +556,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 					return TRUE
 				if(!marker.marked_atom)
 					port.set_input(null)
-					marker.say("Cleared port ('[port.name]')'s value.")
+					marker.say(LANG("obj.8cfbd5b8", list(port.name)))
 					return TRUE
-				marker.say("Updated port ('[port.name]')'s value to the marked entity.")
+				marker.say(LANG("obj.b813be83", list(port.name)))
 				port.set_input(marker.marked_atom)
 				return TRUE
 
@@ -713,7 +713,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/usb_cable, mob/user)
 	SIGNAL_HANDLER
-	usb_cable.balloon_alert(user, "circuit needs to be in a compatible shell")
+	usb_cable.balloon_alert(user, LANG("obj.1472454e", null))
 	return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 /// Sets the display name that appears on the shell.

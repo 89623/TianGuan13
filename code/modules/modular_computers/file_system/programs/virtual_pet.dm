@@ -164,7 +164,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	SIGNAL_HANDLER
 
 	if(!COOLDOWN_FINISHED(src, on_clean_cooldown))
-		source.balloon_alert(user, "already clean!")
+		source.balloon_alert(user, LANG("datum.80e462c4", null))
 		return COMSIG_ATOM_CANCEL_CLEAN
 
 /datum/computer_file/program/virtual_pet/proc/on_playmate_find(datum/source)

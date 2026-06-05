@@ -105,8 +105,8 @@
 
 /obj/golfcart_rear/proc/after_escape(obj/container, mob/living/user)
 	user?.visible_message(
-		span_danger("The [container] falls off of the [src]!"),
-		span_userdanger("You knock the crate off the [src]!")
+		span_danger(LANG("obj.bf116803", list(container, src))),
+		span_userdanger(LANG("obj.76dc73d5", list(src)))
 	)
 	container.SpinAnimation(5, 1)
 	if (user && istype(container, /obj/structure/closet))
@@ -133,8 +133,8 @@
 ///Called when someone resists inside of the cargo hitch.
 /obj/golfcart_rear/relay_container_resist_act(mob/living/user, obj/container)
 	user.visible_message(
-		span_danger("[user] tries to escape the [container]!"),
-		span_userdanger("You try to escape the [container]!"),
+		span_danger(LANG("obj.76c1c11d", list(user, container))),
+		span_userdanger(LANG("obj.64e34bab", list(container))),
 	)
 	if (parent.has_buckled_mobs())
 		for (var/mob/driver in parent.buckled_mobs)

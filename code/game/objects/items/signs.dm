@@ -36,9 +36,9 @@
 		return
 	COOLDOWN_START(src, picket_sign_cooldown, 5 SECONDS)
 	if(label)
-		user.manual_emote("waves around \the \"[label]\" sign.")
+		user.manual_emote(LANG("obj.65861579", list(label)))
 	else
-		user.manual_emote("waves around a blank sign.")
+		user.manual_emote(LANG("obj.5817f70b", null))
 	var/direction = prob(50) ? -1 : 1
 	if(NSCOMPONENT(user.dir)) //So signs are waved horizontally relative to what way the player waving it is facing.
 		animate(user, pixel_w = (1 * direction), time = 0.1 SECONDS, easing = SINE_EASING, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)

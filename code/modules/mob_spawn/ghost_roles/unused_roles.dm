@@ -129,7 +129,7 @@
 	var/despawn = tgui_alert(usr, LANG("obj.c55a97bd", null), null, list("Yes", "No"))
 	if(despawn == "No" || !loc || !Adjacent(user))
 		return
-	user.visible_message(span_notice("[user.name] climbs back into cryosleep..."))
+	user.visible_message(span_notice(LANG("obj.4acbffaf", list(user.name))))
 	qdel(user)
 
 /datum/outfit/cryobartender

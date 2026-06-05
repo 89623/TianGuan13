@@ -107,7 +107,7 @@
 	var/mob/living/living_user = user
 	if(istype(living_user))
 		living_user.add_mood_event("hug", /datum/mood_event/warmhug/parsec, src)
-	user.visible_message(span_notice("[user] is licked by \the [src]."), span_notice("You get licked by \the [src]."))
+	user.visible_message(span_notice(LANG("obj.142f5fc7", list(user, src))), span_notice(LANG("obj.3bb3f2ed", list(src))))
 
 /datum/mood_event/warmhug/parsec
 	description = span_nicegreen("She licked me right on my nose! Awwwh!")

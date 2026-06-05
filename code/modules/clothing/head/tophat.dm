@@ -26,14 +26,14 @@
 	do_smoke(1, src, src, effect_type = /obj/effect/particle_effect/fluid/smoke/quick)
 
 	if(prob(10))
-		magician.visible_message(span_danger("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!"), span_danger("You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b>"))
+		magician.visible_message(span_danger(LANG("obj.ddb15db3", list(magician, src, hitby_wand))), span_danger(LANG("obj.afac0217", list(src, hitby_wand.name))))
 		var/wait_how_many_bees_did_that_guy_pull_out_of_his_hat = rand(4, 8)
 		for(var/b in 1 to wait_how_many_bees_did_that_guy_pull_out_of_his_hat)
 			var/mob/living/basic/bee/barry = new(get_turf(magician))
 			if(prob(20))
 				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
 	else
-		magician.visible_message(span_notice("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!"), span_notice("You tap [src] with your [hitby_wand.name] and pull out a cute bunny!"))
+		magician.visible_message(span_notice(LANG("obj.39b77f0b", list(magician, src, hitby_wand))), span_notice(LANG("obj.a2540c5b", list(src, hitby_wand.name))))
 		var/mob/living/basic/rabbit/bunbun = new(get_turf(magician))
 		bunbun.mob_try_pickup(magician, instant=TRUE)
 

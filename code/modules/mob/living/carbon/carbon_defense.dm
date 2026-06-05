@@ -342,8 +342,8 @@
 		if(buckled)
 			to_chat(helper, span_warning(LANG("mob.3c8ae24b", list(src))))
 			return
-		helper.visible_message(span_notice("[helper] shakes [src] trying to get [p_them()] up!"), \
-						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		helper.visible_message(span_notice(LANG("mob.b37c53ea", list(helper, src, p_them()))), \
+						null, span_hear(LANG("mob.953bef4f", null)), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_notice(LANG("mob.21148bad", list(src, p_them()))))
 		to_chat(src, span_notice(LANG("mob.7c76f215", list(helper))))
 	//NOVA EDIT ADDITION BEGIN - EMOTES -- SENSITIVE SNOUT TRAIT ADDITION
@@ -354,7 +354,7 @@
 			return
 		else
 			playsound(src, 'modular_nova/modules/emotes/sound/emotes/Nose_boop.ogg', 50, 0)
-			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the nose."))
+			helper.visible_message(span_notice(LANG("mob.f42ec18e", list(helper, src))), span_notice(LANG("mob.2d29e889", list(src))))
 			if(HAS_TRAIT(src, TRAIT_SENSITIVESNOUT) && is_location_accessible(BODY_ZONE_PRECISE_MOUTH))
 				var/datum/quirk/sensitivesnout/poor_snout = src.get_quirk(/datum/quirk/sensitivesnout)
 				poor_snout?.get_booped(helper)
@@ -369,8 +369,8 @@
 			visible_message(span_warning(LANG("mob.d5b951cc", list(helper, src, p_they(), p_s()))))
 			return
 		//NOVA EDIT ADDITION END
-		helper.visible_message(span_notice("[helper] gives [src] a pat on the head to make [p_them()] feel better!"), \
-					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		helper.visible_message(span_notice(LANG("mob.b35d589d", list(helper, src, p_them()))), \
+					null, span_hear(LANG("mob.f82cf905", null)), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_notice(LANG("mob.9a3446d2", list(src, p_them()))))
 		to_chat(src, span_notice(LANG("mob.a06f5c12", list(helper))))
 
@@ -385,8 +385,8 @@
 		//NOVA EDIT ADDITION END
 
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/tail)))
-		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
-					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		helper.visible_message(span_notice(LANG("mob.b3db66bb", list(helper, src))), \
+					null, span_hear(LANG("mob.f82cf905", null)), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_notice(LANG("mob.2c8aad2d", list(src))))
 		to_chat(src, span_notice(LANG("mob.853f2c72", list(helper))))
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH)) //How dare they!
@@ -396,8 +396,8 @@
 
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && (istype(head, /obj/item/clothing/head/costume/kitty) || istype(head, /obj/item/clothing/head/collectable/kitty)))
 		var/obj/item/clothing/head/faketail = head
-		helper.visible_message(span_danger("[helper] pulls on [src]'s tail... and it rips off!"), \
-					null, span_hear("You hear a ripping sound."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		helper.visible_message(span_danger(LANG("mob.e440773a", list(helper, src))), \
+					null, span_hear(LANG("mob.bd2aabe4", null)), DEFAULT_MESSAGE_RANGE, list(helper, src))
 		to_chat(helper, span_danger(LANG("mob.4fd5dfbc", list(src))))
 		to_chat(src, span_userdanger(LANG("mob.f704dd8e", list(helper))))
 		playsound(loc, 'sound/effects/cloth_rip.ogg', 75, TRUE)
@@ -407,8 +407,8 @@
 
 	else
 		if (helper.grab_state >= GRAB_AGGRESSIVE)
-			helper.visible_message(span_notice("[helper] embraces [src] in a tight bear hug!"), \
-						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			helper.visible_message(span_notice(LANG("mob.e1a3c908", list(helper, src))), \
+						null, span_hear(LANG("mob.953bef4f", null)), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice(LANG("mob.ed79a9e9", list(src))))
 			to_chat(src, span_notice(LANG("mob.1b43e6c2", list(helper))))
 		else
@@ -417,8 +417,8 @@
 				visible_message(span_warning(LANG("mob.a9294da7", list(helper, src, p_they(), p_s()))))
 				return
 			// NOVA EDIT ADDITION END
-			helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
-						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			helper.visible_message(span_notice(LANG("mob.dde9bc77", list(helper, src, p_them()))), \
+						null, span_hear(LANG("mob.953bef4f", null)), DEFAULT_MESSAGE_RANGE, list(helper, src))
 			to_chat(helper, span_notice(LANG("mob.04eb052a", list(src, p_them()))))
 			to_chat(src, span_notice(LANG("mob.98d5d27f", list(helper))))
 
@@ -685,7 +685,7 @@
 
 	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
-	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger(LANG("obj.90cd19d3", list(user, user.p_their(), grasped_part.name, bleeding_text))), span_notice(LANG("obj.262a8aae", list(grasped_part.name))), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
 

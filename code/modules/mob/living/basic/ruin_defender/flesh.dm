@@ -96,11 +96,11 @@
 		return
 
 	if (!prob(victim.combat_mode ? LIVING_FLESH_COMBAT_TOUCH_CHANCE : LIVING_FLESH_TOUCH_CHANCE) && candidate.can_be_pulled(user = victim, force = victim.pull_force))
-		victim.visible_message(span_warning("[victim]'s [current_bodypart.plaintext_zone] suddenly fastens around [candidate]!"))
+		victim.visible_message(span_warning(LANG("mob.245b2250", list(victim, current_bodypart.plaintext_zone, candidate))))
 		INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, start_pulling), candidate, supress_message = TRUE)
 		return
 
-	victim.visible_message(span_warning("[victim]'s [current_bodypart.plaintext_zone] suddenly spasms towards [candidate]!"))
+	victim.visible_message(span_warning(LANG("mob.71e330d0", list(victim, current_bodypart.plaintext_zone, candidate))))
 	var/active_hand = victim.active_hand_index
 	var/new_index = (current_bodypart.body_zone == BODY_ZONE_L_ARM) ? LEFT_HANDS : RIGHT_HANDS
 	if (active_hand != new_index)
@@ -148,9 +148,9 @@
 			part_type = /obj/item/bodypart/leg/right/flesh
 
 	if (!isnull(target_part))
-		target.visible_message(span_danger("[src] tears off [target]'s [target_part.plaintext_zone] and attaches itself in [target_part.p_their()] place!"), span_userdanger("[src] tears off your [target_part.plaintext_zone] and attaches itself in [target_part.p_their()] place!"))
+		target.visible_message(span_danger(LANG("mob.f3dfcf63", list(src, target, target_part.plaintext_zone, target_part.p_their()))), span_userdanger(LANG("mob.95c95cbc", list(src, target_part.plaintext_zone, target_part.p_their()))))
 	else
-		target.visible_message(span_danger("[src] attaches itself to where [target]'s [target.parse_zone_with_bodypart(target_zone)] used to be!"), span_userdanger("[src] attaches itself to where your [target.parse_zone_with_bodypart(target_zone)] used to be!"))
+		target.visible_message(span_danger(LANG("mob.748dff7f", list(src, target, target.parse_zone_with_bodypart(target_zone)))), span_userdanger(LANG("mob.00e513dd", list(src, target.parse_zone_with_bodypart(target_zone)))))
 
 	var/obj/item/bodypart/new_bodypart = new part_type()
 	forceMove(new_bodypart)
@@ -165,7 +165,7 @@
 	if(!detach_self())
 		return
 	var/turf/our_location = get_turf(src)
-	our_location.visible_message(span_warning("[part_owner][part_owner.p_s()] [current_bodypart.plaintext_zone] begins to convulse wildly!"))
+	our_location.visible_message(span_warning(LANG("mob.c0ae11f2", list(part_owner, part_owner.p_s(), current_bodypart.plaintext_zone))))
 
 /mob/living/basic/living_limb_flesh/proc/owner_died(datum/source, gibbed)
 	SIGNAL_HANDLER

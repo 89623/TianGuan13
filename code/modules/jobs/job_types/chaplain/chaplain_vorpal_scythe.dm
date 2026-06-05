@@ -134,7 +134,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 	var/death_knell_speed_mod = 1
 
-	potential_reaping.visible_message(span_danger("[user] begins to raise [src] above [potential_reaping]'s [head_name]."), span_userdanger("[user] begins to raise [src], aiming to slice off your [head_name]!"))
+	potential_reaping.visible_message(span_danger(LANG("obj.9b83bdbf", list(user, src, potential_reaping, head_name))), span_userdanger(LANG("obj.eafb0de5", list(user, src, head_name))))
 	if(potential_reaping.stat >= UNCONSCIOUS || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) //if the victim is incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly behead
 		death_knell_speed_mod *= 0.5
 	if(potential_reaping.stat != DEAD && potential_reaping.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to perform the death knell, even if they're still
@@ -149,7 +149,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	if(do_after(user,  15 SECONDS * death_knell_speed_mod, target = potential_reaping))
 		playsound(get_turf(potential_reaping), 'sound/items/weapons/bladeslice.ogg', 250, TRUE)
 		reaped_head.dismember()
-		user.visible_message(span_danger("[user] swings [src] down, slicing [potential_reaping]'s [head_name] clean off! You think [src] may have grown stronger!"), span_notice("As you perform the death knell on [potential_reaping], [src] gains power! For a time..."))
+		user.visible_message(span_danger(LANG("obj.b0af41f6", list(user, src, potential_reaping, head_name, src))), span_notice(LANG("obj.b8b2f030", list(potential_reaping, src))))
 		if(potential_empowerment == SCYTHE_SATED) //We don't want actual player heads to go wandering off, but it'll be funny if a bunch of monkeyhuman heads started floating around
 			reaped_head.AddComponent(/datum/component/haunted_item, \
 				haunt_color = "#7be595", \

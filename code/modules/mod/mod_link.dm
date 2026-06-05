@@ -274,9 +274,9 @@
 	if(mod_link.link_call)
 		mod_link.end_call()
 	else if(QDELETED(cell))
-		user.balloon_alert(user, "no cell installed!")
+		user.balloon_alert(user, LANG("obj.48299e41", null))
 	else if(!cell.charge)
-		user.balloon_alert(user, "no charge!")
+		user.balloon_alert(user, LANG("obj.c0d39a14", null))
 	else
 		call_link(user, mod_link)
 
@@ -412,23 +412,23 @@
 	if(!frequency)
 		return
 	if(!istype(called))
-		holder.balloon_alert(user, "invalid target!")
+		holder.balloon_alert(user, LANG("datum.5c77b90d", null))
 		return
 	var/mob/living/link_user = get_user_callback.Invoke()
 	if(!link_user)
 		return
 	if(HAS_TRAIT(link_user, TRAIT_IN_CALL))
-		holder.balloon_alert(user, "already calling!")
+		holder.balloon_alert(user, LANG("datum.e6b1f483", null))
 		return
 	var/mob/living/link_target = called.get_user_callback.Invoke()
 	if(!link_target)
-		holder.balloon_alert(user, "invalid target!")
+		holder.balloon_alert(user, LANG("datum.5c77b90d", null))
 		return
 	if(HAS_TRAIT(link_target, TRAIT_IN_CALL))
-		holder.balloon_alert(user, "target already in call!")
+		holder.balloon_alert(user, LANG("datum.2d5a23eb", null))
 		return
 	if(!can_call_callback.Invoke() || !called.can_call_callback.Invoke())
-		holder.balloon_alert(user, "can't call!")
+		holder.balloon_alert(user, LANG("datum.a929923b", null))
 		return
 	link_target.playsound_local(get_turf(called.holder), 'sound/items/weapons/ring.ogg', 15, vary = TRUE)
 	var/atom/movable/screen/alert/modlink_call/alert = link_target.throw_alert("[REF(src)]_modlink", /atom/movable/screen/alert/modlink_call)
@@ -506,7 +506,7 @@
 			continue
 		callers["[link.holder] ([id])"] = id
 	if(!length(callers))
-		calling_link.holder.balloon_alert(user, "no targets on freq [calling_link.frequency]!")
+		calling_link.holder.balloon_alert(user, LANG("_root.84e5a500", list(calling_link.frequency)))
 		return
 	var/chosen_link = tgui_input_list(user, LANG("_root.9e56910d", list(calling_link.frequency)), LANG("_root.0e8e3aef", null), callers)
 	if(!chosen_link)

@@ -12,7 +12,7 @@
 /obj/item/clothing/accessory/lawyers_badge/interact(mob/user)
 	. = ..()
 	if(prob(1))
-		user.say("The testimony contradicts the evidence!", forced = "[src]")
+		user.say(LANG("obj.635daae8", null), forced = "[src]")
 	user.point_at(src)
 
 /obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
@@ -25,7 +25,7 @@
 	SIGNAL_HANDLER
 
 	ASYNC
-		source.say("Objection!!", spans = list(SPAN_YELL), forced = "[src]")
+		source.say(LANG("obj.006d275c", null), spans = list(SPAN_YELL), forced = "[src]")
 
 /obj/item/clothing/accessory/clown_enjoyer_pin
 	name = "\improper Clown Pin"
@@ -38,7 +38,7 @@
 		return
 	if(locate(/obj/item/clothing/accessory/mime_fan_pin) in attach_to.attached_accessories)
 		if(user)
-			attach_to.balloon_alert(user, "can't pick both sides!")
+			attach_to.balloon_alert(user, LANG("obj.5cd15459", null))
 		return FALSE
 	return TRUE
 
@@ -66,7 +66,7 @@
 		return
 	if(locate(/obj/item/clothing/accessory/clown_enjoyer_pin) in attach_to.attached_accessories)
 		if(user)
-			attach_to.balloon_alert(user, "can't pick both sides!")
+			attach_to.balloon_alert(user, LANG("obj.5cd15459", null))
 		return FALSE
 	return TRUE
 
@@ -99,7 +99,7 @@
 
 	if(!isnull(attach_to.atom_storage))
 		if(user)
-			attach_to.balloon_alert(user, "not compatible!")
+			attach_to.balloon_alert(user, LANG("obj.68951c6c", null))
 		return FALSE
 	return TRUE
 
@@ -303,9 +303,9 @@
 		playsound(interacting_living, 'sound/items/weapons/throw.ogg', 30)
 		interacting_living.examinate(src)
 		to_chat(interacting_living, span_userdanger(LANG("obj.20dbfa2b", list(user, src))))
-		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
+		user.visible_message(span_warning(LANG("obj.e4872f2d", list(user, src, interacting_living))))
 	else
 		playsound(interacting_living, 'sound/items/weapons/throwsoft.ogg', 20)
 		interacting_living.examinate(src)
 		to_chat(interacting_living, span_boldwarning(LANG("obj.0b00b773", list(user, src))))
-		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))
+		user.visible_message(span_notice(LANG("obj.7eb4af66", list(user, src, interacting_living))))

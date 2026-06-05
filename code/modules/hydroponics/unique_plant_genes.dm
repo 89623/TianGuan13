@@ -134,7 +134,7 @@
 /datum/plant_gene/trait/attack/sunflower_attack/after_attack_effect(obj/item/our_plant, atom/target, mob/user, list/modifiers)
 	if(ismob(target))
 		var/mob/target_mob = target
-		user.visible_message("<font color='green'>[user] smacks [target_mob] with [user.p_their()] [our_plant.name]! <font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target_mob, user))
+		user.visible_message(LANG("datum.cb557737", list(user, target_mob, user.p_their(), our_plant.name)), ignored_mobs = list(target_mob, user))
 		if(target_mob != user)
 			to_chat(target_mob, LANG("datum.1eac2ff7", list(user, our_plant)))
 		to_chat(user, LANG("datum.b2455ad2", list(our_plant.name, target_mob)))
@@ -397,7 +397,7 @@
 	SIGNAL_HANDLER
 
 	if(!awakening && !isspaceturf(user.loc) && prob(25))
-		our_plant.visible_message(span_danger("[our_plant] begins to growl and shake!"))
+		our_plant.visible_message(span_danger(LANG("datum.adceb6ec", list(our_plant))))
 		begin_awaken(our_plant, 1 SECONDS)
 		our_plant.investigate_log("was awakened (via plant backfire) by [key_name(user)] at [AREACOORD(user)].", INVESTIGATE_BOTANY)
 
@@ -440,7 +440,7 @@
 		spawned_basicmob.set_varspeed(calculated_speed)
 
 	our_plant.forceMove(our_plant.drop_location())
-	spawned_mob.visible_message(span_notice("[our_plant] growls as it suddenly awakens!"))
+	spawned_mob.visible_message(span_notice(LANG("datum.9d783d13", list(our_plant))))
 	qdel(our_plant)
 
 /// Killer Tomato's transformation gene.
@@ -540,8 +540,8 @@
 
 	playsound(our_plant, 'sound/effects/fuse.ogg', our_seed.potency, FALSE)
 	user.visible_message(
-		span_warning("[user] plucks the stem from [our_plant]!"),
-		span_userdanger("You pluck the stem from [our_plant], which begins to hiss loudly!"),
+		span_warning(LANG("datum.54af9bec", list(user, our_plant))),
+		span_userdanger(LANG("datum.1e83bef8", list(our_plant))),
 	)
 	log_bomber(user, "primed a", our_plant, "for detonation")
 	detonate(our_plant)
@@ -589,8 +589,8 @@
 
 /datum/plant_gene/trait/bomb_plant/potency_based/trigger_detonation(obj/item/our_plant, mob/living/user)
 	user.visible_message(
-		span_warning("[user] primes [our_plant]!"),
-		span_userdanger("You prime [our_plant]!"),
+		span_warning(LANG("datum.48f9bbad", list(user, our_plant))),
+		span_userdanger(LANG("datum.9fc36db8", list(our_plant))),
 	)
 	log_bomber(user, "primed a", our_plant, "for detonation")
 
@@ -732,8 +732,8 @@
 	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 30, TRUE)
 	playsound(tool, 'sound/items/weapons/bladeslice.ogg', 30, TRUE)
 	user.visible_message(
-		span_notice("[user] carefully slices open a [source.myseed.species] pod, extracting a sap."),
-		span_notice("You carefully slice the [source.myseed.species]'s pod, collecting the fragrant, alluring sap."),
+		span_notice(LANG("datum.a41be391", list(user, source.myseed.species))),
+		span_notice(LANG("datum.59f6aa66", list(source.myseed.species))),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	return ITEM_INTERACT_SUCCESS

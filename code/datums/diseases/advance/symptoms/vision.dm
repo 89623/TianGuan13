@@ -68,8 +68,8 @@
 			if(prob(eyes.damage - eyes.low_threshold + 1))
 				if(remove_eyes)
 					infected_mob.visible_message(
-						span_warning("[infected_mob]'s eyes fall out of their sockets!"),
-						span_userdanger("Your eyes fall out of their sockets!"),
+						span_warning(LANG("datum.d36b898e", list(infected_mob))),
+						span_userdanger(LANG("datum.41d46c34", null)),
 					)
 					eyes.Remove(infected_mob)
 					eyes.forceMove(get_turf(infected_mob))

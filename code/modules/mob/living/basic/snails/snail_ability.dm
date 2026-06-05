@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/shell_retreat
 	name = "Shell Retreat"
 	desc = "Retreat to your shell!"
@@ -14,8 +15,8 @@
 	SIGNAL_HANDLER
 
 	owner.visible_message(
-		span_danger("[owner] slowly pops its head out of its shell!"),
-		span_userdanger("You pop your head out of your shell."),
+		span_danger(LANG("datum.45de441b", list(owner))),
+		span_userdanger(LANG("datum.f7bbb702", null)),
 	)
 	REMOVE_TRAIT(owner, TRAIT_SHELL_RETREATED, REF(src))
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_ATTEMPTED_MOVE, COMSIG_LIVING_DEATH))
@@ -23,8 +24,8 @@
 
 /datum/action/cooldown/mob_cooldown/shell_retreat/proc/retreat_into_shell()
 	owner.visible_message(
-		span_danger("[owner] quickly escapes into its shell!"),
-		span_userdanger("You hide in your shell.."),
+		span_danger(LANG("datum.d0aa95a3", list(owner))),
+		span_userdanger(LANG("datum.98bc13be", null)),
 	)
 	RegisterSignals(owner, list(COMSIG_LIVING_DEATH, COMSIG_MOVABLE_ATTEMPTED_MOVE), PROC_REF(unretreat_from_shell))
 	ADD_TRAIT(owner, TRAIT_SHELL_RETREATED, REF(src))

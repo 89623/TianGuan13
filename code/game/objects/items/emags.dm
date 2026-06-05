@@ -23,7 +23,7 @@
 
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
-		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
+		user.visible_message(span_notice(LANG("obj.ba4fa098", list(user, icon2html(src, viewers(user)), name))), span_notice(LANG("obj.023f33f7", list(src))))
 	add_fingerprint(user)
 
 /obj/item/card/emag/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -40,9 +40,8 @@
 		return FALSE
 
 	user.visible_message(
-		span_notice("[user] holds [emag_card] to [src], getting the two cards stuck together!"),
-		span_notice("As you hold [emag_card] to [src], [emag_card.p_their()] magnets attract to one another, \
-			and [emag_card.p_they()] become stuck together!"),
+		span_notice(LANG("obj.2ca12615", list(user, emag_card, src))),
+		span_notice(LANG("obj.2e0243a2", list(emag_card, src, emag_card.p_their(), emag_card.p_they()))),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	playsound(src, 'sound/effects/bang.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -110,7 +109,7 @@
 
 /obj/item/card/emagfake/attack_self(mob/user) //for assistants with balls of plasteel
 	if(Adjacent(user))
-		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
+		user.visible_message(span_notice(LANG("obj.ba4fa098", list(user, icon2html(src, viewers(user)), name))), span_notice(LANG("obj.023f33f7", list(src))))
 	add_fingerprint(user)
 
 /obj/item/card/emagfake/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

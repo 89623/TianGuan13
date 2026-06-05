@@ -78,7 +78,7 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/try_enter_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter, forced = FALSE)
 	if(!forced)
 		if(enter_blood_time > 0 SECONDS)
-			blood.visible_message(span_warning("[jaunter] starts to sink into [blood]!"))
+			blood.visible_message(span_warning(LANG("datum.45b48912", list(jaunter, blood))))
 			if(!do_after(jaunter, enter_blood_time, target = blood))
 				return FALSE
 
@@ -103,7 +103,7 @@
 		jaunter.put_in_hands(left_hand)
 		jaunter.put_in_hands(right_hand)
 
-	blood.visible_message(span_warning("[jaunter] sinks into [blood]!"))
+	blood.visible_message(span_warning(LANG("datum.37bb4466", list(jaunter, blood))))
 	playsound(jaunt_turf, 'sound/effects/magic/enter_blood.ogg', 50, TRUE, -1)
 	jaunter.extinguish_mob()
 
@@ -121,14 +121,14 @@
 			return FALSE
 
 		if(exit_blood_time > 0 SECONDS)
-			blood.visible_message(span_warning("[blood] starts to bubble..."))
+			blood.visible_message(span_warning(LANG("datum.b6425815", list(blood))))
 			if(!do_after(jaunter, exit_blood_time, target = blood))
 				return FALSE
 
 	if(!exit_jaunt(jaunter, get_turf(blood)))
 		return FALSE
 
-	blood.visible_message(span_boldwarning("[jaunter] rises out of [blood]!"))
+	blood.visible_message(span_boldwarning(LANG("datum.5e6f3bf5", list(jaunter, blood))))
 	return TRUE
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
@@ -190,7 +190,7 @@
 
 	if(victim.stat == CONSCIOUS)
 		jaunt_turf.visible_message(
-			span_warning("[victim] kicks free of [blood] just before entering it!"),
+			span_warning(LANG("datum.c264e304", list(victim, blood))),
 			blind_message = span_notice("You hear splashing and struggling."),
 		)
 		return FALSE
@@ -201,7 +201,7 @@
 	victim.forceMove(jaunter)
 	victim.emote("scream")
 	jaunt_turf.visible_message(
-		span_boldwarning("[jaunter] drags [victim] into [blood]!"),
+		span_boldwarning(LANG("datum.04233d8e", list(jaunter, victim, blood))),
 		blind_message = span_notice("You hear a splash."),
 	)
 
@@ -354,7 +354,7 @@
 		return
 	// Someone we've eaten has spontaneously revived; maybe regen coma, maybe a changeling
 	victim.forceMove(get_turf(victim))
-	victim.visible_message(span_warning("[victim] falls out of the air, covered in blood, with a confused look on their face."))
+	victim.visible_message(span_warning(LANG("datum.0923e59c", list(victim))))
 	exit_blood_effect(victim)
 
 	consumed_mobs -= victim

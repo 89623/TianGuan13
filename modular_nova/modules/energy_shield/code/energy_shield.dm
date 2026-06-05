@@ -490,7 +490,7 @@
 	hide_shield_visuals()
 	update_shield_hud()
 	playsound(wearer, 'sound/vehicles/mecha/mech_shield_drop.ogg', 40, TRUE)
-	wearer.visible_message(span_warning("[wearer]'s energy shield collapses!"))
+	wearer.visible_message(span_warning(LANG("obj.fc13ce50", list(wearer))))
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(do_sparks), 3, TRUE, wearer)
 
 /// Disables the shield and clears transient combat/recharge state.
@@ -558,7 +558,7 @@
 		recharge_visual_pending = FALSE
 		showing_recharge = TRUE
 		playsound(wearer, 'sound/items/eshield_recharge.ogg', 50, TRUE)
-		wearer.visible_message(span_notice("[wearer]'s energy shield hums back to life."))
+		wearer.visible_message(span_notice(LANG("obj.fd54dcfb", list(wearer))))
 		show_shield_visuals()
 
 	if(visuals_shown)

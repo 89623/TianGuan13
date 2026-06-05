@@ -197,7 +197,7 @@
 /obj/machinery/power/emitter/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(ismegafauna(user) && anchored)
 		set_anchored(FALSE)
-		user.visible_message(span_warning("[user] rips [src] free from its moorings!"))
+		user.visible_message(span_warning(LANG("obj.803715ba", list(user, src))))
 	else
 		. = ..()
 	if(. && !anchored)
@@ -301,9 +301,9 @@
 	if(welded)
 		if(!item.tool_start_check(user, amount=1))
 			return TRUE
-		user.visible_message(span_notice("[user.name] starts to cut \the [src] free from the floor."), \
-			span_notice("You start to cut [src] free from the floor..."), \
-			span_hear("You hear welding."))
+		user.visible_message(span_notice(LANG("obj.62651aed", list(user.name, src))), \
+			span_notice(LANG("obj.41ed57fe", list(src))), \
+			span_hear(LANG("obj.1aa82fa3", null)))
 		if(!item.use_tool(src, user, 20, 1, 50))
 			return FALSE
 		welded = FALSE
@@ -317,9 +317,9 @@
 		return TRUE
 	if(!item.tool_start_check(user, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user.name] starts to weld \the [src] to the floor."), \
-		span_notice("You start to weld [src] to the floor..."), \
-		span_hear("You hear welding."))
+	user.visible_message(span_notice(LANG("obj.9449da47", list(user.name, src))), \
+		span_notice(LANG("obj.7765e0fa", list(src))), \
+		span_hear(LANG("obj.1aa82fa3", null)))
 	if(!item.use_tool(src, user, 20, 1, 50))
 		return FALSE
 	welded = TRUE
@@ -397,7 +397,7 @@
 	if(!user.transferItemToLoc(energy_gun, src))
 		return
 	if(energy_gun.gun_flags & TURRET_INCOMPATIBLE)
-		user.balloon_alert(user, "[energy_gun] won't fit!")
+		user.balloon_alert(user, LANG("obj.adfcc7ca", list(energy_gun)))
 		return
 	gun = energy_gun
 	gun_properties = gun.get_turret_properties()

@@ -145,7 +145,7 @@
 
 	var/cleaning_themselves = target_mob == user
 
-	target_mob.visible_message(span_notice("[user] starts drying [cleaning_themselves ? "themselves" : target_mob] up with [src]."), span_notice("[cleaning_themselves ? "You start drying yourself" : "[user] starts drying you"] up with \the [src]."), ignored_mobs = cleaning_themselves ? null : user)
+	target_mob.visible_message(span_notice(LANG("obj.9aaa3fa5", list(user, cleaning_themselves ? "themselves" : target_mob, src))), span_notice(LANG("obj.50b44c37", list(cleaning_themselves ? "You start drying yourself" : "[user] starts drying you", src))), ignored_mobs = cleaning_themselves ? null : user)
 
 	if(!cleaning_themselves)
 		to_chat(user, span_notice(LANG("obj.147e561b", list(target_mob, src))))
@@ -155,7 +155,7 @@
 		return
 
 
-	target_mob.visible_message(span_notice("[user] finishes drying [cleaning_themselves ? "themselves" : target_mob] up with [src]."), span_notice("[cleaning_themselves ? "You finish drying yourself" : "[user] finishes drying you "] up with \the [src]."), ignored_mobs = cleaning_themselves ? null : user)
+	target_mob.visible_message(span_notice(LANG("obj.ae12c265", list(user, cleaning_themselves ? "themselves" : target_mob, src))), span_notice(LANG("obj.50b44c37", list(cleaning_themselves ? "You finish drying yourself" : "[user] finishes drying you ", src))), ignored_mobs = cleaning_themselves ? null : user)
 
 	if(!cleaning_themselves)
 		to_chat(user, span_notice(LANG("obj.e18a683a", list(target_mob, src))))
@@ -301,7 +301,7 @@
 
 		qdel(temp_holder)
 
-		user.visible_message(span_warning("[user] wrings [src], making a mess on \the [current_turf]!"), span_warning("You wring [src], making a mess on \the [current_turf]!"))
+		user.visible_message(span_warning(LANG("obj.3297ba3b", list(user, src, current_turf))), span_warning(LANG("obj.9edf5b37", list(src, current_turf))))
 		return CLICK_ACTION_SUCCESS
 
 

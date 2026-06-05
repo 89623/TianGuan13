@@ -125,14 +125,14 @@
 		attached_mask = new /obj/item/clothing/mask/breath/anesthetic(src)
 		update_icon()
 
-	user.visible_message(span_warning("[user] attemps to attach the [attached_mask] to [over]."), span_notice("You attempt to attach the [attached_mask] to [over]"))
+	user.visible_message(span_warning(LANG("obj.89d6fd63", list(user, attached_mask, over))), span_notice(LANG("obj.43d09dd9", list(attached_mask, over))))
 	if(!do_after(user, 5 SECONDS, over))
 		return
 	if(!over.equip_to_appropriate_slot(attached_mask))
 		to_chat(user, span_warning(LANG("obj.0630635e", list(attached_mask, over))))
 		return
 
-	user.visible_message(span_warning("[user] attaches the [attached_mask] to [over]."), span_notice("You attach the [attached_mask] to [over]"))
+	user.visible_message(span_warning(LANG("obj.f1a6aa58", list(user, attached_mask, over))), span_notice(LANG("obj.1fcfc481", list(attached_mask, over))))
 
 	// Open the tank externally
 	over.open_internals(attached_tank, is_external = TRUE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * A component to stun and cuff targets
  */
@@ -72,12 +73,12 @@
 /datum/component/stun_n_cuff/proc/cuff_target(mob/living/carbon/human_target)
 	if(human_target.handcuffed)
 		var/mob/living/living_parent = parent
-		living_parent.balloon_alert(human_target, "already cuffed!")
+		living_parent.balloon_alert(human_target, LANG("datum.9690d555", null))
 		return
 
 	playsound(parent, 'sound/items/weapons/cablecuff.ogg', 30, TRUE)
-	human_target.visible_message(span_danger("[parent] is trying to put zipties on [human_target]!"),\
-		span_danger("[parent] is trying to put zipties on you!"))
+	human_target.visible_message(span_danger(LANG("datum.ce1d235d", list(parent, human_target))),\
+		span_danger(LANG("datum.70425304", list(parent))))
 
 	if(!do_after(parent, handcuff_timer, human_target))
 		return
@@ -93,8 +94,8 @@
 	log_combat(parent, human_target, "honked")
 
 	human_target.visible_message(
-		span_danger("[parent] stuns [human_target]!"), \
-		span_userdanger("[parent] stuns you!"), \
+		span_danger(LANG("datum.5d105da3", list(parent, human_target))), \
+		span_userdanger(LANG("datum.1a84be86", list(parent))), \
 	)
 	COOLDOWN_START(src, stun_cooldown, stun_cooldown_timer)
 	post_stun_callback?.Invoke(human_target)

@@ -296,8 +296,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
-		user.visible_message(span_notice("[user] struggles to pry up [src] with [attacking_item]."), \
-		span_notice("You struggle to pry up [src] with [attacking_item]."))
+		user.visible_message(span_notice(LANG("obj.dbc1657a", list(user, src, attacking_item))), \
+		span_notice(LANG("obj.687670b4", list(src, attacking_item))))
 
 		if(!attacking_item.use_tool(src, user, 4 SECONDS, volume = 40))
 			return

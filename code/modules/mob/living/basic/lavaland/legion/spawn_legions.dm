@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Spawns a little worm nearby
 /datum/action/cooldown/mob_cooldown/skull_launcher
 	name = "Launch Legion"
@@ -22,7 +23,7 @@
 	if (!.)
 		return
 	if (!isturf(owner.loc))
-		owner.balloon_alert(owner, "no room!")
+		owner.balloon_alert(owner, LANG("datum.ad6c6384", null))
 		return FALSE
 	return TRUE
 
@@ -40,7 +41,7 @@
 		if (length(near_turfs))
 			target_turf = pick(near_turfs)
 		else if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
-			owner.balloon_alert(owner, "no room!")
+			owner.balloon_alert(owner, LANG("datum.ad6c6384", null))
 			StartCooldown(0.5 SECONDS)
 			return
 

@@ -14,7 +14,7 @@
 	update_appearance()
 
 /obj/item/toy/cards/cardhand/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!"))
+	user.visible_message(span_suicide(LANG("obj.022391dc", list(user, user.p_their(), src, user.p_they(), user.p_have()))))
 	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 	return BRUTELOSS
 
@@ -33,7 +33,7 @@
 		if(marked_color)
 			. += span_notice("There is a [marked_color] mark on the corner of a card in the cardhand!")
 	if(broadcast_check)
-		user.visible_message(span_notice("[user] checks [user.p_their()] cards."))
+		user.visible_message(span_notice(LANG("obj.dcbb3edd", list(user, user.p_their()))))
 
 
 /obj/item/toy/cards/cardhand/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)

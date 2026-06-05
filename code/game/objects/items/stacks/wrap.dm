@@ -30,8 +30,8 @@
 /obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	user.visible_message(
-		span_warning("[user] baps [target_mob] on the head with [src]!"),
-		span_warning("You bap [target_mob] on the head with [src]!"),
+		span_warning(LANG("obj.8b0641b8", list(user, target_mob, src))),
+		span_warning(LANG("obj.e4f49b01", list(target_mob, src))),
 	)
 	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 
@@ -100,7 +100,7 @@
 	return list(/datum/reagent/cellulose = 5)
 
 /obj/item/stack/package_wrap/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.e41d2360", list(user, user.p_them(), src, user.p_theyre()))))
 	if(use(3))
 		var/obj/item/delivery/big/parcel = new(get_turf(user.loc))
 		parcel.base_icon_state = "deliverypackage5"
@@ -215,7 +215,7 @@
 		balloon_alert(user, LANG("obj.7171f7eb", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] wraps [interacting_with]."))
+	user.visible_message(span_notice(LANG("obj.6d295e39", list(user, interacting_with))))
 	user.log_message("has used [name] on [key_name(interacting_with)]", LOG_ATTACK, color="blue")
 	return ITEM_INTERACT_SUCCESS
 
@@ -253,7 +253,7 @@
 /obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	user.visible_message(
-		span_warning("[user] baps [target_mob] on the head with [src]!"),
-		span_warning("You bap [target_mob] on the head with [src]!"),
+		span_warning(LANG("obj.8b0641b8", list(user, target_mob, src))),
+		span_warning(LANG("obj.e4f49b01", list(target_mob, src))),
 	)
 	target_mob.add_mood_event("roll", /datum/mood_event/bapped)

@@ -144,7 +144,7 @@
 
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
-	loc.balloon_alert(user, "disassembled")
+	loc.balloon_alert(user, LANG("obj.6da68488", null))
 
 	deconstruct(TRUE)
 

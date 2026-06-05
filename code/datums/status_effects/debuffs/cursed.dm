@@ -123,8 +123,8 @@
 		brand?.remove_wound()
 
 	owner.visible_message(
-		span_notice("The smoke slowly clears from [owner.name]..."),
-		span_notice("Your skin finally settles down and your throat no longer feels as dry... The brand disappearing confirms that the curse has been lifted."),
+		span_notice(LANG("datum.16931a8e", list(owner.name))),
+		span_notice(LANG("datum.4cfd38fd", null)),
 	)
 	qdel(src)
 

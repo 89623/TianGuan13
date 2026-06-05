@@ -5,7 +5,7 @@
 
 /datum/hallucination/telepathy/start()
 	var/datum/action/cooldown/spell/list_target/telepathy/mimiced_type = pick(typesof(/datum/action/cooldown/spell/list_target/telepathy))
-	hallucinator.balloon_alert(hallucinator, "you hear a voice")
+	hallucinator.balloon_alert(hallucinator, LANG("datum.d955e950", null))
 	to_chat(hallucinator, LANG("datum.ff930a65", list(initial(mimiced_type.bold_telepathy_span), initial(mimiced_type.telepathy_span), get_telepath_message())))
 	return TRUE
 

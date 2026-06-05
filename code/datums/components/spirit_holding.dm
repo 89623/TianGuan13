@@ -54,17 +54,17 @@
 /datum/component/spirit_holding/proc/get_ghost(mob/user)
 	var/atom/thing = parent
 	if(attempting_awakening)
-		thing.balloon_alert(user, "already channeling!")
+		thing.balloon_alert(user, LANG("datum.df509fcf", null))
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		thing.balloon_alert(user, "spirits are unwilling!")
+		thing.balloon_alert(user, LANG("datum.0d954cc7", null))
 		to_chat(user, span_warning(LANG("datum.6cce3f8d", list(parent))))
 		return
 	if(!allow_channeling && bound_spirit)
 		to_chat(user, span_warning(LANG("datum.1157919c", null)))
 		return
 	attempting_awakening = TRUE
-	thing.balloon_alert(user, "channeling...")
+	thing.balloon_alert(user, LANG("datum.7d95211b", null))
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Do you want to play as [span_notice("Spirit of [span_danger("[user.real_name]'s")] blade")]?",
 		check_jobban = ROLE_PAI,
@@ -83,7 +83,7 @@
 	var/atom/thing = parent
 
 	if(isnull(ghost))
-		thing.balloon_alert(awakener, "silence...")
+		thing.balloon_alert(awakener, LANG("datum.10cf62f1", null))
 		attempting_awakening = FALSE
 		return
 
@@ -159,8 +159,8 @@
 	to_chat(bound_spirit, span_userdanger(LANG("datum.34b4685d", null)))
 	QDEL_NULL(bound_spirit)
 	exorcised_movable.name = initial(exorcised_movable.name)
-	exorcist.visible_message(span_notice("[exorcist] exorcises [exorcised_movable]!"), \
-						span_notice("You successfully exorcise [exorcised_movable]!"))
+	exorcist.visible_message(span_notice(LANG("datum.c1631d36", list(exorcist, exorcised_movable))), \
+						span_notice(LANG("datum.ed46d17d", list(exorcised_movable))))
 	return COMSIG_END_BIBLE_CHAIN
 
 ///signal fired from parent being destroyed

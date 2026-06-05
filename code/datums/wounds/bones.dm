@@ -54,7 +54,7 @@
 			I = victim.get_inactive_held_item()
 
 		if(I && victim.dropItemToGround(I))
-			victim.visible_message(span_danger("[victim] drops [I] in shock!"), span_warning("<b>The force on your [limb.plaintext_zone] causes you to drop [I]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(span_danger(LANG("datum.66ca3db3", list(victim, I))), span_warning(LANG("datum.5d9af63c", list(limb.plaintext_zone, I))), vision_distance=COMBAT_MESSAGE_RANGE)
 
 	update_inefficiencies()
 	return ..()
@@ -127,8 +127,8 @@
 				to_chat(victim, span_danger(LANG("datum.028e2c91", list(limb.plaintext_zone, target))))
 			victim.apply_damage(rand(1, 5), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 		else
-			victim.visible_message(span_danger("[victim] weakly strikes [target] with [victim.p_their()] broken [limb.plaintext_zone], recoiling from pain!"), \
-			span_userdanger("You fail to strike [target] as the fracture in your [limb.plaintext_zone] lights up in unbearable pain!"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(span_danger(LANG("datum.2d895c2e", list(victim, target, victim.p_their(), limb.plaintext_zone))), \
+			span_userdanger(LANG("datum.90d60144", list(target, limb.plaintext_zone))), vision_distance=COMBAT_MESSAGE_RANGE)
 			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
 			victim.Stun(0.5 SECONDS)
 			victim.apply_damage(rand(3, 7), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
@@ -176,23 +176,23 @@
 				victim.bleed(blood_bled, TRUE)
 			if(7 to 13)
 				victim.visible_message(
-					span_smalldanger("A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest."),
-					span_danger("You cough up a bit of blood from the blow to your chest."),
+					span_smalldanger(LANG("datum.46806a45", list(victim, victim.p_their()))),
+					span_danger(LANG("datum.5bfa4a84", null)),
 					vision_distance = COMBAT_MESSAGE_RANGE,
 				)
 				victim.bleed(blood_bled, TRUE)
 			if(14 to 19)
 				victim.visible_message(
-					span_smalldanger("Blood spews out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
-					span_danger("You spit out a string of blood from the blow to your chest!"),
+					span_smalldanger(LANG("datum.0400a0ec", list(victim, victim.p_their()))),
+					span_danger(LANG("datum.fb2eb225", null)),
 					vision_distance = COMBAT_MESSAGE_RANGE,
 				)
 				victim.create_splatter(victim.dir)
 				victim.bleed(blood_bled)
 			if(20 to INFINITY)
 				victim.visible_message(
-					span_danger("Blood spurts out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
-					span_bolddanger("You choke up on a spray of blood from the blow to your chest!"),
+					span_danger(LANG("datum.e6cfe896", list(victim, victim.p_their()))),
+					span_bolddanger(LANG("datum.d1c3738b", null)),
 					vision_distance = COMBAT_MESSAGE_RANGE,
 				)
 				victim.bleed(blood_bled)
@@ -278,7 +278,7 @@
 /datum/wound/blunt/bone/moderate/proc/door_crush()
 	SIGNAL_HANDLER
 	if(prob(40))
-		victim.visible_message(span_danger("[victim]'s dislocated [limb.plaintext_zone] pops back into place!"), span_userdanger("Your dislocated [limb.plaintext_zone] pops back into place! Ow!"))
+		victim.visible_message(span_danger(LANG("datum.6eadcb4f", list(victim, limb.plaintext_zone))), span_userdanger(LANG("datum.a67fe5dc", list(limb.plaintext_zone))))
 		remove_wound()
 		return DOORCRUSH_NO_WOUND
 	return NONE
@@ -294,7 +294,7 @@
 		return TRUE
 
 	if(user.grab_state >= GRAB_AGGRESSIVE)
-		user.visible_message(span_danger("[user] begins twisting and straining [victim]'s dislocated [limb.plaintext_zone]!"), span_notice("You begin twisting and straining [victim]'s dislocated [limb.plaintext_zone]..."), ignored_mobs=victim)
+		user.visible_message(span_danger(LANG("datum.2f314c0f", list(user, victim, limb.plaintext_zone))), span_notice(LANG("datum.0cb40be0", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
 		to_chat(victim, span_userdanger(LANG("datum.e6ac13d4", list(user, limb.plaintext_zone))))
 		if(!user.combat_mode)
 			chiropractice(user)
@@ -310,13 +310,13 @@
 		return
 
 	if(prob(65))
-		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] back into place!"), span_notice("You snap [victim]'s dislocated [limb.plaintext_zone] back into place!"), ignored_mobs=victim)
+		user.visible_message(span_danger(LANG("datum.1287c3f4", list(user, victim, limb.plaintext_zone))), span_notice(LANG("datum.de8f7946", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
 		to_chat(victim, span_userdanger(LANG("datum.1c73e454", list(user, limb.plaintext_zone))))
 		victim.emote("scream")
 		victim.apply_damage(20, BRUTE, limb, wound_bonus = CANT_WOUND)
 		qdel(src)
 	else
-		user.visible_message(span_danger("[user] wrenches [victim]'s dislocated [limb.plaintext_zone] around painfully!"), span_danger("You wrench [victim]'s dislocated [limb.plaintext_zone] around painfully!"), ignored_mobs=victim)
+		user.visible_message(span_danger(LANG("datum.a5ace6cf", list(user, victim, limb.plaintext_zone))), span_danger(LANG("datum.1545de28", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
 		to_chat(victim, span_userdanger(LANG("datum.851073f0", list(user, limb.plaintext_zone))))
 		victim.apply_damage(10, BRUTE, limb, wound_bonus = CANT_WOUND)
 		chiropractice(user)
@@ -329,12 +329,12 @@
 		return
 
 	if(prob(65))
-		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), span_danger("You snap [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), ignored_mobs=victim)
+		user.visible_message(span_danger(LANG("datum.c37c1671", list(user, victim, limb.plaintext_zone))), span_danger(LANG("datum.a2b29c7f", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
 		to_chat(victim, span_userdanger(LANG("datum.4b234369", list(user, limb.plaintext_zone))))
 		victim.emote("scream")
 		victim.apply_damage(25, BRUTE, limb, wound_bonus = 30)
 	else
-		user.visible_message(span_danger("[user] wrenches [victim]'s dislocated [limb.plaintext_zone] around painfully!"), span_danger("You wrench [victim]'s dislocated [limb.plaintext_zone] around painfully!"), ignored_mobs=victim)
+		user.visible_message(span_danger(LANG("datum.a5ace6cf", list(user, victim, limb.plaintext_zone))), span_danger(LANG("datum.1545de28", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
 		to_chat(victim, span_userdanger(LANG("datum.851073f0", list(user, limb.plaintext_zone))))
 		victim.apply_damage(10, BRUTE, limb, wound_bonus = CANT_WOUND)
 		malpractice(user)
@@ -346,19 +346,19 @@
 	var/treatment_delay = base_treat_time * self_penalty_mult * scanned_mult
 
 	if(victim == user)
-		victim.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim.p_their()] [limb.plaintext_zone] with [tool]."), span_warning("You begin resetting your [limb.plaintext_zone] with [tool][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+		victim.visible_message(span_danger(LANG("datum.678245a6", list(user, scanned ? "expertly" : "", victim.p_their(), limb.plaintext_zone, tool))), span_warning(LANG("datum.214cd2a5", list(limb.plaintext_zone, tool, scanned ? ", keeping the holo-image's indications in mind" : ""))))
 	else
-		user.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim]'s [limb.plaintext_zone] with [tool]."), span_notice("You begin resetting [victim]'s [limb.plaintext_zone] with [tool][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+		user.visible_message(span_danger(LANG("datum.7504abb5", list(user, scanned ? "expertly" : "", victim, limb.plaintext_zone, tool))), span_notice(LANG("datum.0ff27111", list(victim, limb.plaintext_zone, tool, scanned ? ", keeping the holo-image's indications in mind" : ""))))
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	if(victim == user)
 		victim.apply_damage(15, BRUTE, limb, wound_bonus = CANT_WOUND)
-		victim.visible_message(span_danger("[user] finishes resetting [victim.p_their()] [limb.plaintext_zone]!"), span_userdanger("You reset your [limb.plaintext_zone]!"))
+		victim.visible_message(span_danger(LANG("datum.e9025407", list(user, victim.p_their(), limb.plaintext_zone))), span_userdanger(LANG("datum.6f89afad", list(limb.plaintext_zone))))
 	else
 		victim.apply_damage(10, BRUTE, limb, wound_bonus = CANT_WOUND)
-		user.visible_message(span_danger("[user] finishes resetting [victim]'s [limb.plaintext_zone]!"), span_nicegreen("You finish resetting [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
+		user.visible_message(span_danger(LANG("datum.e32ff69b", list(user, victim, limb.plaintext_zone))), span_nicegreen(LANG("datum.584cb6bc", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
 		to_chat(victim, span_userdanger(LANG("datum.e91c2c20", list(user, limb.plaintext_zone))))
 
 	victim.emote("scream")
@@ -464,7 +464,7 @@
 		to_chat(user, span_warning(LANG("datum.c1c26b4b", list(user == victim ? "Your" : "[victim]'s", limb.plaintext_zone))))
 		return TRUE
 
-	user.visible_message(span_danger("[user] begins hastily applying [I] to [victim]'s' [limb.plaintext_zone]..."), span_warning("You begin hastily applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone], disregarding the warning label..."))
+	user.visible_message(span_danger(LANG("datum.fff17a5c", list(user, I, victim, limb.plaintext_zone))), span_warning(LANG("datum.3b4922c4", list(I, user == victim ? "your" : "[victim]'s", limb.plaintext_zone))))
 
 	if(!do_after(user, base_treat_time * 1.5 * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
@@ -472,15 +472,15 @@
 	I.use(1)
 	victim.emote("scream")
 	if(user != victim)
-		user.visible_message(span_notice("[user] finishes applying [I] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [I] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
+		user.visible_message(span_notice(LANG("datum.51a9515a", list(user, I, victim, limb.plaintext_zone))), span_notice(LANG("datum.77f650f2", list(I, victim, limb.plaintext_zone))), ignored_mobs=victim)
 		to_chat(victim, span_userdanger(LANG("datum.9f3103a8", list(user, I, limb.plaintext_zone))))
 	else
 		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
 			if(prob(25 + (20 * (severity - 2)) - min(victim.get_drunk_amount(), 10))) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by drunkenness
-				victim.visible_message(span_danger("[victim] fails to finish applying [I] to [victim.p_their()] [limb.plaintext_zone], passing out from the pain!"), span_notice("You pass out from the pain of applying [I] to your [limb.plaintext_zone] before you can finish!"))
+				victim.visible_message(span_danger(LANG("datum.083ed5ef", list(victim, I, victim.p_their(), limb.plaintext_zone))), span_notice(LANG("datum.4d959db5", list(I, limb.plaintext_zone))))
 				victim.AdjustUnconscious(5 SECONDS)
 				return TRUE
-		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], grimacing from the pain!"), span_notice("You finish applying [I] to your [limb.plaintext_zone], and your bones explode in pain!"))
+		victim.visible_message(span_notice(LANG("datum.2d99bdf6", list(victim, I, victim.p_their(), limb.plaintext_zone))), span_notice(LANG("datum.e0b74748", list(I, limb.plaintext_zone))))
 
 	victim.apply_damage(25, BRUTE, limb, wound_bonus = CANT_WOUND)
 	victim.apply_damage(100, STAMINA)
@@ -493,17 +493,17 @@
 		to_chat(user, span_warning(LANG("datum.c1c26b4b", list(user == victim ? "Your" : "[victim]'s", limb.plaintext_zone))))
 		return
 
-	user.visible_message(span_danger("[user] begins applying [I] to [victim]'s' [limb.plaintext_zone]..."), span_warning("You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
+	user.visible_message(span_danger(LANG("datum.13838199", list(user, I, victim, limb.plaintext_zone))), span_warning(LANG("datum.9f7afe85", list(I, user == victim ? "your" : "[victim]'s", limb.plaintext_zone))))
 
 	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	I.use(1)
 	if(user != victim)
-		user.visible_message(span_notice("[user] finishes applying [I] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [I] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
+		user.visible_message(span_notice(LANG("datum.51a9515a", list(user, I, victim, limb.plaintext_zone))), span_notice(LANG("datum.77f650f2", list(I, victim, limb.plaintext_zone))), ignored_mobs=victim)
 		to_chat(victim, span_userdanger(LANG("datum.13e74f6f", list(user, I, limb.plaintext_zone))))
 	else
-		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], emitting a funny fizzing sound!"), span_notice("You finish applying [I] to your [limb.plaintext_zone], and feel a funny fizzy tickling as the bone begins to reform!"))
+		victim.visible_message(span_notice(LANG("datum.d8542688", list(victim, I, victim.p_their(), limb.plaintext_zone))), span_notice(LANG("datum.a3ac3523", list(I, limb.plaintext_zone))))
 
 	gelled = TRUE
 	processes = TRUE
@@ -518,7 +518,7 @@
 		to_chat(user, span_warning(LANG("datum.e466c687", list(user == victim ? "Your" : "[victim]'s", limb.plaintext_zone, I.name))))
 		return TRUE
 
-	user.visible_message(span_danger("[user] begins applying [I] to [victim]'s' [limb.plaintext_zone]..."), span_warning("You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
+	user.visible_message(span_danger(LANG("datum.13838199", list(user, I, victim, limb.plaintext_zone))), span_warning(LANG("datum.9f7afe85", list(I, user == victim ? "your" : "[victim]'s", limb.plaintext_zone))))
 
 	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
@@ -528,10 +528,10 @@
 
 	I.use(1)
 	if(user != victim)
-		user.visible_message(span_notice("[user] finishes applying [I] to [victim]'s [limb.plaintext_zone], emitting a fizzing noise!"), span_notice("You finish applying [I] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
+		user.visible_message(span_notice(LANG("datum.51a9515a", list(user, I, victim, limb.plaintext_zone))), span_notice(LANG("datum.77f650f2", list(I, victim, limb.plaintext_zone))), ignored_mobs=victim)
 		to_chat(victim, span_green(LANG("datum.c9c2d3f8", list(user, I, limb.plaintext_zone))))
 	else
-		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], !"), span_green("You finish applying [I] to your [limb.plaintext_zone], and you immediately begin to feel your bones start to reform!"))
+		victim.visible_message(span_notice(LANG("datum.396f91a2", list(victim, I, victim.p_their(), limb.plaintext_zone))), span_green(LANG("datum.37a93cc0", list(I, limb.plaintext_zone))))
 
 	taped = TRUE
 	processes = TRUE

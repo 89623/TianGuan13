@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/heart/gland/electric
 	abductor_hint = "electron accumulator/discharger. The abductee becomes fully immune to electric shocks. Additionally, they will randomly discharge electric bolts."
 	cooldown_low = 800
@@ -16,8 +17,8 @@
 	REMOVE_TRAIT(gland_owner, TRAIT_SHOCKIMMUNE, ABDUCTOR_GLAND_TRAIT)
 
 /obj/item/organ/heart/gland/electric/activate()
-	owner.visible_message(span_danger("[owner]'s skin starts emitting electric arcs!"),\
-	span_warning("You feel electric energy building up inside you!"))
+	owner.visible_message(span_danger(LANG("obj.b5f58a47", list(owner))),\
+	span_warning(LANG("obj.71627712", null)))
 	playsound(get_turf(owner), SFX_SPARKS, 100, TRUE, -1, SHORT_RANGE_SOUND_EXTRARANGE)
 	addtimer(CALLBACK(src, PROC_REF(zap)), rand(3 SECONDS, 10 SECONDS))
 

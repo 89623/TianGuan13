@@ -74,8 +74,8 @@
  * You can't accidentally eat the nuke disk, bro
  */
 /obj/item/disk/nuclear/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
-	M.visible_message(span_warning("[M] looks like [M.p_theyve()] just bitten into something important."), \
-						span_warning("Wait, is this the nuke disk?"))
+	M.visible_message(span_warning(LANG("obj.2d2a4880", list(M, M.p_theyve()))), \
+						span_warning(LANG("obj.c054326f", null)))
 
 	return discover_after
 
@@ -89,8 +89,8 @@
 			return
 
 		user.visible_message(
-			span_warning("[user] captures [src]!"),
-			span_userdanger("You've got the disk! Defend it with your life!"),
+			span_warning(LANG("obj.36873670", list(user, src))),
+			span_userdanger(LANG("obj.5561b4c4", null)),
 		)
 		forceMove(claymore)
 		claymore.nuke_disk = src
@@ -99,7 +99,7 @@
 	return ..()
 
 /obj/item/disk/nuclear/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.22d912d0", list(user, user.p_theyre()))))
 	playsound(src, 'sound/announcer/alarm/nuke_alarm.ogg', 50, -1, TRUE)
 	for(var/i in 1 to 100)
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? COLOR_VIBRANT_LIME : COLOR_RED, ADMIN_COLOUR_PRIORITY), i)
@@ -108,7 +108,7 @@
 
 /obj/item/disk/nuclear/proc/manual_suicide(mob/living/user)
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-	user.visible_message(span_suicide("[user] is destroyed by the nuclear blast!"))
+	user.visible_message(span_suicide(LANG("obj.4958528d", list(user))))
 	user.adjust_oxy_loss(200)
 	user.death(FALSE)
 

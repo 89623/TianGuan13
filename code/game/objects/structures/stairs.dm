@@ -379,7 +379,7 @@
 	if(!isstack(attacked_by))
 		return ..()
 	if(!anchored)
-		user.balloon_alert(user, "secure frame first")
+		user.balloon_alert(user, LANG("obj.6518c173", null))
 		return TRUE
 	var/obj/item/stack/material = attacked_by
 	if(material.stairs_type)

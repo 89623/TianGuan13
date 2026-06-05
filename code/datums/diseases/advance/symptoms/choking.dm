@@ -134,7 +134,7 @@ Bonus
 			Asphyxiate(M, A)
 			M.emote("gasp")
 			if(M.get_oxy_loss() >= (M.maxHealth / (200/120)))
-				M.visible_message(span_warning("[M] stops breathing, as if their lungs have totally collapsed!"))
+				M.visible_message(span_warning(LANG("datum.eb345e71", list(M))))
 				Asphyxiate_death(M, A)
 	return
 

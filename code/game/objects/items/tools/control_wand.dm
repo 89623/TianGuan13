@@ -184,12 +184,12 @@
 			return ITEM_INTERACT_BLOCKING
 
 	if (!door.check_access_list(access_list) || !door.requiresID())
-		interacting_with.balloon_alert(user, "can't access!")
+		interacting_with.balloon_alert(user, LANG("obj.0a322f06", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/area/door_area = get_area(door)
 	if(is_type_in_list(door_area, restricted_areas) && !is_my_domain(get_area(door)))
-		interacting_with.balloon_alert(user, "can't access!")
+		interacting_with.balloon_alert(user, LANG("obj.0a322f06", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/machinery/door/airlock/airlock = door
@@ -207,7 +207,7 @@
 
 		if (WAND_BOLT)
 			if (!istype(airlock))
-				interacting_with.balloon_alert(user, "only airlocks!")
+				interacting_with.balloon_alert(user, LANG("obj.fef81673", null))
 				return ITEM_INTERACT_BLOCKING
 
 			if (airlock.locked)
@@ -219,7 +219,7 @@
 
 		if (WAND_EMERGENCY)
 			if (!istype(airlock))
-				interacting_with.balloon_alert(user, "only airlocks!")
+				interacting_with.balloon_alert(user, LANG("obj.fef81673", null))
 				return ITEM_INTERACT_BLOCKING
 
 			airlock.emergency = !airlock.emergency
@@ -227,20 +227,20 @@
 
 		if (WAND_SHOCK)
 			if (!istype(airlock))
-				interacting_with.balloon_alert(user, "only airlocks!")
+				interacting_with.balloon_alert(user, LANG("obj.fef81673", null))
 				return ITEM_INTERACT_BLOCKING
 			if (!COOLDOWN_FINISHED(src, shock_cooldown))
-				interacting_with.balloon_alert(user, "shock pulse resetting!")
+				interacting_with.balloon_alert(user, LANG("obj.95a1cdda", null))
 				return ITEM_INTERACT_BLOCKING
 			if (airlock.isElectrified())
-				interacting_with.balloon_alert(user, "already electrified!")
+				interacting_with.balloon_alert(user, LANG("obj.904155e2", null))
 			else
 				airlock.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, user)
 				COOLDOWN_START(src, shock_cooldown, 10 SECONDS)
 
 		if (WAND_DEPOWER)
 			if (!istype(airlock))
-				interacting_with.balloon_alert(user, "only airlocks!")
+				interacting_with.balloon_alert(user, LANG("obj.fef81673", null))
 				return ITEM_INTERACT_BLOCKING
 			// First hit disrupts main power, backup comes back in ten seconds, if you stick around you can hit backup for 60 more seconds of downtime.
 			if (!airlock.main_power_timer)

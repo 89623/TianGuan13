@@ -131,7 +131,7 @@
 
 	initial_target = get_target(cast_on)
 	if(isnull(initial_target))
-		cast_on.balloon_alert(cast_on, "no targets nearby!")
+		cast_on.balloon_alert(cast_on, LANG("datum.41e497a4", null))
 		stop_channel_effect(cast_on)
 		return . | SPELL_CANCEL_CAST
 

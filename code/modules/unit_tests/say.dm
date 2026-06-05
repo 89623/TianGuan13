@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Test to verify message mods are parsed correctly
 /datum/unit_test/get_message_mods
 	var/mob/host_mob
@@ -69,7 +70,7 @@
 	var/mob/living/dummy = allocate(/mob/living)
 
 	RegisterSignal(dummy, COMSIG_MOB_SAY, PROC_REF(check_say))
-	dummy.say("Make sure the say signal gets the arglist say is past, no copies!")
+	dummy.say(LANG("datum.d2f36d44", null))
 
 /datum/unit_test/say_signal/proc/check_say(mob/living/source, list/say_args)
 	SIGNAL_HANDLER

@@ -29,7 +29,7 @@
 	return ..()
 
 /obj/item/electropack/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.38c9b9d8", list(user, user.p_them(), user.p_theyre()))))
 	return FIRELOSS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE

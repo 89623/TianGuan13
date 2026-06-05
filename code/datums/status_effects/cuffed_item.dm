@@ -196,13 +196,13 @@
 /datum/status_effect/cuffed_item/proc/block_storage_insert(obj/item/source, atom/target_storage, mob/user, force, messages)
 	SIGNAL_HANDLER
 	if(messages)
-		target_storage.balloon_alert(user, "can't store [source.name] while cuffed!")
+		target_storage.balloon_alert(user, LANG("datum.3913c79e", list(source.name)))
 	return BLOCK_STORAGE_INSERT
 
 /// Stops double cuff
 /datum/status_effect/cuffed_item/proc/block_item_cuff(obj/item/source, mob/cuffer, obj/item/cuffs)
 	SIGNAL_HANDLER
-	source.balloon_alert(cuffer, "cuffed to someone else!")
+	source.balloon_alert(cuffer, LANG("datum.36469744", null))
 	return BLOCK_ITEM_CUFF
 
 ///What happens if one of the items is moved away from the mob
@@ -246,20 +246,20 @@
 		return FALSE
 
 	if(!(user.mobility_flags & MOBILITY_USE) || (user != owner && !owner.IsReachableBy(user)))
-		owner.balloon_alert(user, "can't do it right now!")
+		owner.balloon_alert(user, LANG("datum.ce24dac8", null))
 		return FALSE
 
 	if(user != owner)
-		owner.visible_message(span_notice("[user] tries to remove [cuffs] binding [cuffed] to [owner]"), span_warning("[user] is trying to remove [cuffs] binding [cuffed] to you."))
+		owner.visible_message(span_notice(LANG("datum.f534000c", list(user, cuffs, cuffed, owner))), span_warning(LANG("datum.30155df6", list(user, cuffs, cuffed))))
 
-	owner.balloon_alert(user, "removing cuffs...")
+	owner.balloon_alert(user, LANG("datum.547b3cb3", null))
 	playsound(owner, cuffs.cuffsound, 30, TRUE, -2)
 	if(!do_after(user, cuffs.get_handcuff_time(user) * 1.5, owner, interaction_key = interaction_key) || QDELETED(src))
-		owner.balloon_alert(user, "interrupted!")
+		owner.balloon_alert(user, LANG("datum.c67b5d27", null))
 		return FALSE
 
 	if(user != owner)
-		owner.visible_message(span_notice("[user] removes [cuffs] binding [cuffed] to [owner]"), span_warning("[user] removes [cuffs] binding [cuffed] to you."))
+		owner.visible_message(span_notice(LANG("datum.c82c3caf", list(user, cuffs, cuffed, owner))), span_warning(LANG("datum.1ffa2e55", list(user, cuffs, cuffed))))
 
 	log_combat(user, owner, "removed restraints binding [cuffed] to")
 
@@ -267,7 +267,7 @@
 	var/mob/living/ref_owner = owner
 	ref_cuffs.forceMove(owner.drop_location()) //This will cause the status effect to delete itself, which unsets the 'cuffs' var
 	user.put_in_hands(ref_cuffs)
-	ref_owner.balloon_alert(user, "cuffs removed from item")
+	ref_owner.balloon_alert(user, LANG("datum.656a238c", null))
 
 	return TRUE
 

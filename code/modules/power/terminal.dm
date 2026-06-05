@@ -57,7 +57,7 @@
 	if(master && !master.can_terminal_dismantle())
 		return
 
-	user.visible_message(span_notice("[user.name] dismantles the cable terminal from [master]."))
+	user.visible_message(span_notice(LANG("obj.3de03659", list(user.name, master))))
 	balloon_alert(user, LANG("obj.3b4a022d", null))
 
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -71,7 +71,7 @@
 
 		var/obj/item/stack/cable_coil/cable = new (drop_location(), 10)
 		qdel(src)
-		cable.balloon_alert(user, "cable terminal dismantled")
+		cable.balloon_alert(user, LANG("obj.9bb4a12a", null))
 
 /obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I)
 	..()

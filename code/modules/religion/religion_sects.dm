@@ -137,7 +137,7 @@
 		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
 			blessed.update_damage_overlays()
 
-	blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
+	blessed.visible_message(span_notice(LANG("datum.45608eb3", list(chap, blessed, GLOB.deity))))
 	to_chat(blessed, span_boldnotice(LANG("datum.087b1ddd", list(GLOB.deity))))
 	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
@@ -176,7 +176,7 @@
 		if(target.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
 			charge_amount *= 2
 		R.cell?.charge += charge_amount
-		R.visible_message(span_notice("[chap] charges [R] with the power of [GLOB.deity]!"))
+		R.visible_message(span_notice(LANG("datum.1dc4e23b", list(chap, R, GLOB.deity))))
 		to_chat(R, span_boldnotice(LANG("datum.549c0199", list(GLOB.deity))))
 		R.add_mood_event("blessing", /datum/mood_event/blessing)
 		playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
@@ -201,7 +201,7 @@
 			to_chat(chap, span_warning(LANG("datum.a5876534", list(GLOB.deity))))
 			return BLESSING_IGNORED
 
-		blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
+		blessed.visible_message(span_notice(LANG("datum.1dc4e23b", list(chap, blessed, GLOB.deity))))
 		to_chat(blessed, span_boldnotice(LANG("datum.c11ab248", list(GLOB.deity))))
 		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 		playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
@@ -211,7 +211,7 @@
 	if(bodypart.heal_damage(5,5,BODYTYPE_ROBOTIC))
 		blessed.update_damage_overlays()
 
-	blessed.visible_message(span_notice("[chap] [did_we_charge ? "repairs and charges" : "repairs"] [blessed] with the power of [GLOB.deity]!"))
+	blessed.visible_message(span_notice(LANG("datum.50211bab", list(chap, did_we_charge ? "repairs and charges" : "repairs", blessed, GLOB.deity))))
 	to_chat(blessed, span_boldnotice(LANG("datum.a7d105f3", list(GLOB.deity, did_we_charge ? "repairs and charges" : "repairs"))))
 	playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
@@ -306,7 +306,7 @@
 		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
 			blessed.update_damage_overlays()
 
-	blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
+	blessed.visible_message(span_notice(LANG("datum.06d11c62", list(chap, blessed, GLOB.deity))))
 	to_chat(blessed, span_boldnotice(LANG("datum.435f4a39", list(GLOB.deity, GLOB.deity))))
 	playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
@@ -408,7 +408,7 @@
 		to_chat(chaplain, span_warning(LANG("datum.45f1cf41", null)))
 		return BLESSING_IGNORED
 
-	target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
+	target.visible_message(span_notice(LANG("datum.7aeb184d", list(chaplain, target))))
 	to_chat(target, span_boldnotice(LANG("datum.087b1ddd", list(GLOB.deity))))
 	playsound(chaplain, SFX_PUNCH, 25, vary = TRUE, extrarange = -1)
 	target.add_mood_event("blessing", /datum/mood_event/blessing)
@@ -461,7 +461,7 @@
 		return BLESSING_IGNORED
 
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
-	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
+	blessed.visible_message(span_notice(LANG("datum.7cfe2a5b", list(chap, blessed, GLOB.deity))))
 	to_chat(blessed, span_boldnotice(LANG("datum.20708b6b", list(GLOB.deity))))
 	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)

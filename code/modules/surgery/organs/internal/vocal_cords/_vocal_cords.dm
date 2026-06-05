@@ -38,7 +38,7 @@
 		return FALSE
 	if(QDELETED(src) || QDELETED(owner))
 		return FALSE
-	owner.say(".x[message]")
+	owner.say(LANG("datum.4744c02d", list(message)))
 	return TRUE
 
 /obj/item/organ/vocal_cords/adamantine/handle_speech(message)

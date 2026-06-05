@@ -28,4 +28,4 @@
 					to_chat(usr, span_notice(LANG("datum.8f26e725", null)))
 					return
 				else
-					computer.visible_message(span_notice("\The [computer] prints out a paper."))
+					computer.visible_message(span_notice(LANG("datum.7a4642f7", list(computer))))

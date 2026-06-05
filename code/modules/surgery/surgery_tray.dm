@@ -102,7 +102,7 @@
 	is_portable = new_mode
 	density = !is_portable
 	if(user)
-		user.visible_message(span_notice("[user] [is_portable ? "retracts" : "extends"] [src]'s wheels."), span_notice("You [is_portable ? "retract" : "extend"] [src]'s wheels."))
+		user.visible_message(span_notice(LANG("obj.750a51d2", list(user, is_portable ? "retracts" : "extends", src))), span_notice(LANG("obj.544de364", list(is_portable ? "retract" : "extend", src))))
 
 	if(is_portable)
 		interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP

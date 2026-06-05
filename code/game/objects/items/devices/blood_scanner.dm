@@ -25,7 +25,7 @@
 	var/obj/item/bodypart/poked_bit = poked_guy.get_bodypart(check_zone(user.zone_selected))
 	if(!poked_bit)
 		return
-	user.visible_message(span_notice("[user] pricks [poked_guy] with [src]."), span_notice("You begin scanning [poked_guy] with [src]."), ignored_mobs = poked_guy)
+	user.visible_message(span_notice(LANG("obj.ff814194", list(user, poked_guy, src))), span_notice(LANG("obj.49fb9a69", list(poked_guy, src))), ignored_mobs = poked_guy)
 	to_chat(poked_guy, span_notice(LANG("obj.f33df72c", list(user, src, poked_bit))))
 	var/success = do_after(user, 2 SECONDS, poked_guy)
 	if(success)
@@ -42,7 +42,7 @@
 		return NONE
 	var/mob/living/carbon/poked_guy = interacting_with
 	var/obj/item/bodypart/poked_bit = poked_guy.get_bodypart(check_zone(user.zone_selected))
-	user.visible_message(span_notice("[user] pricks [poked_guy] with [src]."), span_notice("You begin scanning [poked_guy] with [src]."), ignored_mobs = poked_guy)
+	user.visible_message(span_notice(LANG("obj.ff814194", list(user, poked_guy, src))), span_notice(LANG("obj.49fb9a69", list(poked_guy, src))), ignored_mobs = poked_guy)
 	to_chat(poked_guy, span_notice(LANG("obj.f33df72c", list(user, src, poked_bit))))
 	var/success = do_after(user, 2 SECONDS, poked_guy)
 	if(success)
@@ -81,7 +81,7 @@
 
 /obj/item/blood_scanner/proc/regret(mob/living/stabber, mob/living/stabbed, obj/item/bodypart/to_stab)
 	to_stab?.force_wound_upwards(/datum/wound/pierce/bleed/moderate/needle_fail, wound_source = "idiot moved with a needle in them")
-	stabber.visible_message(span_warning("[src]'s needle is ripped out, tearing a hole in [stabbed]'s [to_stab]!"), span_warning("Damnit! The needle is torn out, making a tiny hole in [stabbed.p_their()] [to_stab]."), ignored_mobs = stabbed)
+	stabber.visible_message(span_warning(LANG("obj.f9e33947", list(src, stabbed, to_stab))), span_warning(LANG("obj.a27ec79f", list(stabbed.p_their(), to_stab))), ignored_mobs = stabbed)
 	to_chat(stabbed, span_userdanger(LANG("obj.49ebdb86", list(src, to_stab))))
 
 /obj/item/blood_scanner/proc/usable_check(mob/living/person_scanning, atom/scanee)

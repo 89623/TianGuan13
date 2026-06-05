@@ -799,18 +799,18 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return
 	add_fingerprint(user)
 	if(target == user)
-		user.visible_message(span_notice("[user] starts climbing onto the photocopier!"), span_notice("You start climbing onto the photocopier..."))
+		user.visible_message(span_notice(LANG("obj.fb46d964", list(user))), span_notice(LANG("obj.d90343fc", null)))
 	else
-		user.visible_message(span_warning("[user] starts putting [target] onto the photocopier!"), span_notice("You start putting [target] onto the photocopier..."))
+		user.visible_message(span_warning(LANG("obj.06c1be2f", list(user, target))), span_notice(LANG("obj.cd293da6", list(target))))
 
 	if(do_after(user, 2 SECONDS, target = src))
 		if(!target || QDELETED(target) || QDELETED(src) || !Adjacent(target)) //check if the photocopier/target still exists.
 			return
 
 		if(target == user)
-			user.visible_message(span_notice("[user] climbs onto the photocopier!"), span_notice("You climb onto the photocopier."))
+			user.visible_message(span_notice(LANG("obj.8bb41664", list(user))), span_notice(LANG("obj.65dad908", null)))
 		else
-			user.visible_message(span_warning("[user] puts [target] onto the photocopier!"), span_notice("You put [target] onto the photocopier."))
+			user.visible_message(span_warning(LANG("obj.7203f651", list(user, target))), span_notice(LANG("obj.a8f5084c", list(target))))
 
 		target.forceMove(drop_location())
 		ass = target

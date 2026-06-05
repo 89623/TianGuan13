@@ -74,7 +74,7 @@
 		return FALSE
 	if(user)
 		if (emag_card)
-			user.visible_message(span_warning("[user] swipes [emag_card] through [src]!"))
+			user.visible_message(span_warning(LANG("obj.f9eb3449", list(user, emag_card, src))))
 		to_chat(user, span_notice(LANG("obj.6ff51e71", null)))
 	obj_flags |= EMAGGED
 	contraband = TRUE

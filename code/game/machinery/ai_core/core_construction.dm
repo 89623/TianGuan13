@@ -61,7 +61,7 @@
 				alert_source = ai_structure_to_mob() || alert_source
 			else
 				UPDATE_STATE(CORE_STATE_FINISHED)
-			alert_source.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
+			alert_source.balloon_alert(user, LANG("obj.a783a38a", list(core_mmi?.brainmob?.mind ? " and neural network" : "")))
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_FINISHED)
 			if(!core_mmi?.brainmob?.mind || suicide_check())
@@ -81,7 +81,7 @@
 				balloon_alert(user, LANG("obj.1a71685b", null))
 				return ITEM_INTERACT_BLOCKING
 
-			alert_source.balloon_alert(user, "connected neural network")
+			alert_source.balloon_alert(user, LANG("obj.af254d10", null))
 			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/crowbar_act(mob/living/user, obj/item/tool)

@@ -13,8 +13,8 @@
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.add_traits(list(TRAIT_GODMODE, TRAIT_PACIFISM), TRAIT_STATUS_EFFECT(id))
-	owner.visible_message(span_warning("[owner] shines with a brilliant rainbow light."),
-		span_notice("You feel protected by an unknown force!"))
+	owner.visible_message(span_warning(LANG("datum.ada79b7b", list(owner))),
+		span_notice(LANG("datum.84b42af2", null)))
 	// okay, now time for the rainbow animation.
 	owner.add_filter("rainbow_protection_[REF(src)]", 2, color_matrix_filter(list(0,0,0, 0,0.75,0, 0,0,1, 0,0.25,0), COLORSPACE_HSL))
 	var/color_filter = owner.get_filter("rainbow_protection_[REF(src)]")
@@ -27,8 +27,8 @@
 /datum/status_effect/rainbow_protection/on_remove()
 	owner.remove_filter("rainbow_protection_[REF(src)]")
 	owner.remove_traits(list(TRAIT_GODMODE, TRAIT_PACIFISM), TRAIT_STATUS_EFFECT(id))
-	owner.visible_message(span_notice("[owner] stops glowing, the rainbow light fading away."),
-		span_warning("You no longer feel protected..."))
+	owner.visible_message(span_notice(LANG("datum.98382e78", list(owner))),
+		span_warning(LANG("datum.acff69e0", null)))
 
 /atom/movable/screen/alert/status_effect/slimeskin
 	name = "Adamantine Slimeskin"
@@ -46,8 +46,8 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance += 10
-	owner.visible_message(span_warning("[owner] is suddenly covered in a strange, blue-ish gel!"),
-		span_notice("You are covered in a thick, rubbery gel."))
+	owner.visible_message(span_warning(LANG("datum.c2e8b446", list(owner))),
+		span_notice(LANG("datum.db53eb5f", null)))
 	return ..()
 
 /datum/status_effect/slimeskin/on_remove()
@@ -55,8 +55,8 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.damage_resistance -= 10
-	owner.visible_message(span_warning("[owner]'s gel coating liquefies and dissolves away."),
-		span_notice("Your gel second-skin dissolves!"))
+	owner.visible_message(span_warning(LANG("datum.3cb0c3a5", list(owner))),
+		span_notice(LANG("datum.ddf60702", null)))
 
 /datum/status_effect/slimerecall
 	id = "slime_recall"
@@ -88,7 +88,7 @@
 		return
 	var/turf/old_location = get_turf(owner)
 	if(do_teleport(owner, target.loc, channel = TELEPORT_CHANNEL_QUANTUM)) //despite being named a bluespace teleportation method the quantum channel is used to preserve precision teleporting with a bag of holding
-		old_location.visible_message(span_warning("[owner] disappears in a flurry of sparks!"))
+		old_location.visible_message(span_warning(LANG("datum.fe2a44b4", list(owner))))
 		to_chat(owner, span_warning(LANG("datum.d30bfab3", list(target))))
 
 /atom/movable/screen/alert/status_effect/freon/stasis
@@ -379,7 +379,7 @@
 			huggables += L
 	if(length(huggables))
 		var/mob/living/carbon/hugged = pick(huggables)
-		owner.visible_message(span_notice("[owner] hugs [hugged]!"), span_notice("You hug [hugged]!"))
+		owner.visible_message(span_notice(LANG("datum.1c007b3b", list(owner, hugged))), span_notice(LANG("datum.5d508689", list(hugged))))
 
 /datum/status_effect/tarcookie
 	id = "tarcookie"
@@ -485,7 +485,7 @@
 		return
 	if(linked_extract.get_held_mob() == owner)
 		return
-	owner.balloon_alert(owner, "[colour] extract faded!")
+	owner.balloon_alert(owner, LANG("datum.f4ecc4f4", list(colour)))
 	if(!QDELETED(linked_extract))
 		linked_extract.linked_effect = null
 		START_PROCESSING(SSobj,linked_extract)
@@ -731,7 +731,7 @@
 		linked_alert.icon_state = "slime_bluespace_on"
 
 	if(healthcheck && (healthcheck - owner.health) > 5)
-		owner.visible_message(span_warning("[linked_extract] notices the sudden change in [owner]'s physical health, and activates!"))
+		owner.visible_message(span_warning(LANG("datum.1f8532c8", list(linked_extract, owner))))
 		do_sparks(5,FALSE,owner)
 		var/turf/emergency_turf = find_safe_turf(owner.z, extended_safety_checks = TRUE)
 		var/range = 0
@@ -788,8 +788,8 @@
 /datum/status_effect/stabilized/cerulean/tick(seconds_between_ticks)
 	if(owner.stat == DEAD)
 		if(clone && clone.stat != DEAD)
-			owner.visible_message(span_warning("[owner] blazes with brilliant light, [linked_extract] whisking [owner.p_their()] soul away."),
-				span_notice("You feel a warm glow from [linked_extract], and you open your eyes... elsewhere."))
+			owner.visible_message(span_warning(LANG("datum.334bd2bf", list(owner, linked_extract, owner.p_their()))),
+				span_notice(LANG("datum.877534df", list(linked_extract))))
 			if(owner.mind)
 				owner.mind.transfer_to(clone)
 			clone = null
@@ -801,7 +801,7 @@
 
 /datum/status_effect/stabilized/cerulean/on_remove()
 	if(clone)
-		clone.visible_message(span_warning("[clone] dissolves into a puddle of goo!"))
+		clone.visible_message(span_warning(LANG("datum.cbf3de68", list(clone))))
 		clone.unequip_everything()
 		qdel(clone)
 
@@ -1105,7 +1105,7 @@
 			if(X.regencore)
 				X.regencore.interact_with_atom(owner, owner)
 				X.regencore = null
-				owner.visible_message(span_warning("[owner] flashes a rainbow of colors, and [owner.p_their()] skin is coated in a milky regenerative goo!"))
+				owner.visible_message(span_warning(LANG("datum.afa2aac1", list(owner, owner.p_their()))))
 				qdel(src)
 				qdel(linked_extract)
 	return ..()

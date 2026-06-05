@@ -32,11 +32,11 @@
 					affected_mob.adjust_tox_loss(2)
 		if(4)
 			if(SPT_PROB(5, seconds_per_tick))
-				affected_mob.visible_message(span_danger("[affected_mob] buzzes."), \
-												span_userdanger("Your stomach buzzes violently!"))
+				affected_mob.visible_message(span_danger(LANG("datum.9f1f2989", list(affected_mob))), \
+												span_userdanger(LANG("datum.6296b531", null)))
 			if(SPT_PROB(2.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger(LANG("datum.cc67bbbf", null)))
 			if(SPT_PROB(0.5, seconds_per_tick))
-				affected_mob.visible_message(span_danger("[affected_mob] coughs up a swarm of bees!"), \
-													span_userdanger("You cough up a swarm of bees!"))
+				affected_mob.visible_message(span_danger(LANG("datum.0573fed1", list(affected_mob))), \
+													span_userdanger(LANG("datum.001949bf", null)))
 				new /mob/living/basic/bee(affected_mob.loc)

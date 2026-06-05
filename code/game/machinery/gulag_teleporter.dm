@@ -100,17 +100,17 @@ The console is located at computer/gulag_teleporter.dm
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(
-		span_notice("You see [user] kicking against the door of [src]!"),
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(resist_time)].)"),
-		span_hear("You hear a metallic creaking from [src]."),
+		span_notice(LANG("obj.485787b2", list(user, src))),
+		span_notice(LANG("obj.43ad33b1", list(src, DisplayTimeText(resist_time)))),
+		span_hear(LANG("obj.a1d9c573", list(src))),
 	)
 
 	if(do_after(user, resist_time, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 		locked = FALSE
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
+		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
+			span_notice(LANG("obj.81c31f6b", list(src))))
 		open_machine()
 
 /obj/machinery/gulag_teleporter/proc/locate_reclaimer()

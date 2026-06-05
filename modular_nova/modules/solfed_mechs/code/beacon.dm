@@ -122,7 +122,7 @@ GLOBAL_DATUM(mech_drop_alert_handler, /datum/mech_drop_alert_handler)
 	if(activated)
 		return
 
-	user.visible_message(span_emote("[user] inputs ↑ ↑ ↓ → on the beacon interface."))
+	user.visible_message(span_emote(LANG("obj.f04fcccc", list(user))))
 	if(do_after(user, 1 SECONDS, user))
 		icon_state = "mech_beacon_on"
 		activated = TRUE

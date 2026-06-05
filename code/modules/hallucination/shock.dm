@@ -39,7 +39,7 @@
 	SET_PLANE_EXPLICIT(electrocution_skeleton_anim, ABOVE_GAME_PLANE, hallucinator)
 
 	to_chat(hallucinator, span_userdanger(LANG("datum.ee423401", null)))
-	hallucinator.visible_message(span_warning("[hallucinator] falls to the ground, shaking!"), ignored_mobs = hallucinator)
+	hallucinator.visible_message(span_warning(LANG("datum.b9883f93", list(hallucinator))), ignored_mobs = hallucinator)
 	hallucinator.client?.images |= shock_image
 	hallucinator.client?.images |= electrocution_skeleton_anim
 

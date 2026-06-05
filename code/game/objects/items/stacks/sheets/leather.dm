@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 /obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.get_sharpness())
 		playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
-		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
+		user.visible_message(span_notice(LANG("obj.cdc34796", list(user, src))), span_notice(LANG("obj.4a5f6834", list(src))), span_hear(LANG("obj.a4128978", null)))
 		if(do_after(user, 5 SECONDS, target = src))
 			to_chat(user, span_notice(LANG("obj.07e8728d", list(src.name))))
 			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)

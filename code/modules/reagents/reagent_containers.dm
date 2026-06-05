@@ -151,8 +151,8 @@
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(
-		span_danger("[user] splashes the contents of [src] onto [target][punctuation]"),
-		span_danger("You splash the contents of [src] onto [target][punctuation]"),
+		span_danger(LANG("obj.22e69bb6", list(user, src, target, punctuation))),
+		span_danger(LANG("obj.6e8c9c45", list(src, target, punctuation))),
 		ignored_mobs = target,
 	)
 	SEND_SIGNAL(target, COMSIG_ATOM_SPLASHED)
@@ -246,8 +246,8 @@
 		var/turf_splash_multiplier = 1 - splash_multiplier
 		var/mob/M = target
 		var/turf/target_turf = get_turf(target)
-		target.visible_message(span_danger("[M] is splashed with something!"), \
-						span_userdanger("[M] is splashed with something!"))
+		target.visible_message(span_danger(LANG("obj.99b5b6e0", list(M))), \
+						span_userdanger(LANG("obj.99b5b6e0", list(M))))
 		if(splasher)
 			log_combat(splasher, M, "splashed", src, "containing [reagents.get_reagent_log_string()] [was_thrown ? "(thrown)" : ""]")
 		reagents.expose(target, TOUCH, splash_multiplier)

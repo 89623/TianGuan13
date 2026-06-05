@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define HERALD_TRISHOT 1
 #define HERALD_DIRECTIONALSHOT 2
 #define HERALD_TELESHOT 3
@@ -285,7 +286,7 @@
 	. = ..()
 	if(prob(hit_reaction_chance))
 		return
-	owner.visible_message(span_danger("[owner]'s [src] emits a loud noise as [owner] is struck!"))
+	owner.visible_message(span_danger(LANG("obj.cdb7d5cb", list(owner, src, owner))))
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
 	playsound(get_turf(owner), 'sound/effects/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(reactionshot), owner), 1 SECONDS)

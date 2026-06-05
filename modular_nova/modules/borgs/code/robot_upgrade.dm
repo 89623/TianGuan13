@@ -405,9 +405,9 @@
 		to_chat(user, span_warning(LANG("obj.d3e97a9e", list(interacting_with))))
 		return ITEM_INTERACT_BLOCKING
 	if(check_zone(borg.zone_selected) == "head")
-		borg.visible_message(span_warning("\the [borg] affectionally licks \the [mob]'s face!"), span_notice("You affectionally lick \the [mob]'s face!"))
+		borg.visible_message(span_warning(LANG("obj.22e854db", list(borg, mob))), span_notice(LANG("obj.07757fa2", list(mob))))
 	else
-		borg.visible_message(span_warning("\the [borg] affectionally licks \the [mob]!"), span_notice("You affectionally lick \the [mob]!"))
+		borg.visible_message(span_warning(LANG("obj.2494f9fd", list(borg, mob))), span_notice(LANG("obj.2d2621f9", list(mob))))
 	playsound(borg, 'sound/effects/blob/attackblob.ogg', 50, 1)
 	return ITEM_INTERACT_SUCCESS
 
@@ -427,7 +427,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	do_attack_animation(interacting_with, null, src)
-	user.visible_message(span_notice("[user] [pick("nuzzles", "pushes", "boops")] \the [interacting_with.name] with their nose!"))
+	user.visible_message(span_notice(LANG("obj.a4ccf845", list(user, pick("nuzzles", "pushes", "boops"), interacting_with.name))))
 	return ITEM_INTERACT_SUCCESS
 
 /// The Shrinkening

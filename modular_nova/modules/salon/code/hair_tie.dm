@@ -67,8 +67,8 @@
 	if(!picked_hairstyle)
 		return
 	user.visible_message(
-		span_notice("[user.name] ties up [user.p_their()] hair."),
-		span_notice("You tie up your hair!"),
+		span_notice(LANG("obj.bc7e21c6", list(user.name, user.p_their()))),
+		span_notice(LANG("obj.ec3ecf10", null)),
 	)
 	actual_hairstyle = user.hairstyle
 	user.set_hairstyle(picked_hairstyle, update = TRUE)
@@ -80,8 +80,8 @@
 	if(!picked_hairstyle || !actual_hairstyle)
 		return
 	user.visible_message(
-		span_notice("[user.name] takes [src] out of [user.p_their()] hair."),
-		span_notice("You let down your hair!"),
+		span_notice(LANG("obj.ffa903f3", list(user.name, src, user.p_their()))),
+		span_notice(LANG("obj.e5d6035c", null)),
 	)
 	user.set_hairstyle(actual_hairstyle, update = TRUE)
 	actual_hairstyle = null
@@ -91,8 +91,8 @@
 		balloon_alert(user, LANG("obj.194a79c0", null))
 		return CLICK_ACTION_BLOCKING
 	user.visible_message(
-		span_danger("[user.name] puts [src] around [user.p_their()] fingers, beginning to flick it!"),
-		span_notice("You try to flick [src]!"),
+		span_danger(LANG("obj.e88a8775", list(user.name, src, user.p_their()))),
+		span_notice(LANG("obj.4496199f", list(src))),
 	)
 	flick_hair_tie(user)
 	return CLICK_ACTION_SUCCESS

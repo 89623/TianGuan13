@@ -365,8 +365,8 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	if(dug)
 		if(tool.use(DIG_SHEET_AMOUNT))
 			user.visible_message(
-				span_notice("[user] packs [src] back in."),
-				span_notice("You pack [src] back in."),
+				span_notice(LANG("turf.7d192565", list(user, src))),
+				span_notice(LANG("turf.8febbfc7", list(src))),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			refill_dug()
@@ -378,8 +378,8 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	if(footprint_entrance_dirs || footprint_exit_dirs)
 		if(tool.use(1))
 			user.visible_message(
-				span_notice("[user] fills in the footprints in [src]."),
-				span_notice("You fill in the footprints in [src]."),
+				span_notice(LANG("turf.4027f5a4", list(user, src))),
+				span_notice(LANG("turf.77a07424", list(src))),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			clear_footprints()

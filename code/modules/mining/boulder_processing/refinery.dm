@@ -163,6 +163,6 @@
 	update_light_value()
 
 /obj/machinery/bouldertech/refinery/smelter/maim_golem(mob/living/carbon/human/rockman)
-	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get melted into rock by [src]!"))
+	rockman.visible_message(span_warning(LANG("obj.6107e3a2", list(rockman, src))), span_userdanger(LANG("obj.127041f8", list(src))))
 	rockman.investigate_log("was melted by [src] for being a golem", INVESTIGATE_DEATHS)
 	rockman.dust()

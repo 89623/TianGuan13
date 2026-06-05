@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[new_holy_weapon.name]")
 
 /obj/item/nullrod/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
+	user.visible_message(span_suicide(LANG("obj.0197793e", list(user, user.p_them(), src, user.p_theyre()))))
 	return (BRUTELOSS|FIRELOSS)
 
 
@@ -289,7 +289,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 
 /obj/item/nullrod/vibro/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)) && attack_type == OVERWHELMING_ATTACK)
-		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+		owner.visible_message(span_danger(LANG("obj.6b9cc7b3", list(owner, attack_text, src))))
 		return TRUE
 	return FALSE
 
@@ -374,8 +374,8 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	menu_description = "An odd s(w)ord dealing a laughable amount of damage. Fits in pockets. Can be worn on the belt."
 
 /obj/item/nullrod/sord/suicide_act(mob/living/user) //a near-exact copy+paste of the actual sord suicide_act()
-	user.visible_message(span_suicide("[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so HOLY."), \
-	span_suicide("You try to impale yourself with [src], but it's TOO HOLY..."))
+	user.visible_message(span_suicide(LANG("obj.729a2df9", list(user, user.p_them(), src))), \
+	span_suicide(LANG("obj.482d0dc7", list(src))))
 	return SHAME
 
 // Relic War Hammer - Nothing special.
@@ -544,7 +544,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	menu_description = "A sharp fedora dealing a very high amount of throw damage, but none of melee. Fits in pockets. Can be worn on the head, obviously."
 
 /obj/item/nullrod/fedora/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get further from god!"))
+	user.visible_message(span_suicide(LANG("obj.d6c03f09", list(user, user.p_them(), src, user.p_theyre()))))
 	return (BRUTELOSS|FIRELOSS)
 
 // Dark Blessing - Replaces your arm with an armblade. Cannot be dropped.
@@ -908,7 +908,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	/// And so we return here if we are not entitled to a sneak attack.
 	if(!successful_sneak_attack)
 		if(sneak_attack_fail_message)
-			user.balloon_alert(living_target, "sneak attack avoided!")
+			user.balloon_alert(living_target, LANG("obj.ff299c8f", null))
 		return
 
 	/// And now we'll deal with sneak attack damage modifiers.
@@ -939,5 +939,5 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 
 	// We got a sneak attack!
 	living_target.apply_damage(round(sneak_attack_dice, DAMAGE_PRECISION), BRUTE, def_zone = affecting, blocked = armor_block, wound_bonus = exposed_wound_bonus, sharpness = SHARP_EDGED)
-	living_target.balloon_alert(user, "sneak attack!")
+	living_target.balloon_alert(user, LANG("obj.8277e597", null))
 	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 50, TRUE)

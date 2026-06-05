@@ -78,7 +78,7 @@
 				. += span_info(LANG("obj.11660acc", list(title)))
 
 /obj/item/paperwork/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins insulting the inefficiency of paperwork and bureaucracy. It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.472bb1e9", list(user, user.p_theyre()))))
 
 	var/obj/item/paper/new_paper = new /obj/item/paper(get_turf(src))
 	var/turf/turf_to_throw_at = get_ranged_target_turf(get_turf(src), pick(GLOB.alldirs))
@@ -86,9 +86,9 @@
 
 	var/obj/item/bodypart/BP = user.get_bodypart(pick(BODY_ZONE_HEAD))
 	if(BP?.dismember())
-		new_paper.visible_message(span_alert("The [src] launches a sheet of paper, instantly slicing off [user]'s head!"))
+		new_paper.visible_message(span_alert(LANG("obj.5a66a096", list(src, user))))
 	else
-		user.visible_message(span_suicide("[user] panics and starts choking to death!"))
+		user.visible_message(span_suicide(LANG("obj.dec784f1", list(user))))
 		return OXYLOSS
 
 	return MANUAL_SUICIDE

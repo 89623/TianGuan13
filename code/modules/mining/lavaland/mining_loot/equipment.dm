@@ -193,10 +193,10 @@
 
 	user.remove_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM), REF(src))
 	user.forceMove(get_turf(src))
-	user.visible_message(span_danger("[user] pops back into reality!"))
+	user.visible_message(span_danger(LANG("obj.9f44ab01", list(user))))
 
 /obj/effect/immortality_talisman/proc/vanish(mob/user)
-	user.visible_message(span_danger("[user] [vanish_description], leaving a hole in [user.p_their()] place!"))
+	user.visible_message(span_danger(LANG("obj.d02f1d62", list(user, vanish_description, user.p_their()))))
 
 	desc = "It's shaped an awful lot like [user.name]."
 	setDir(user.dir)

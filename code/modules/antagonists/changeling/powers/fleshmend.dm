@@ -13,7 +13,7 @@
 //Can be used whilst unconscious.
 /datum/action/changeling/fleshmend/sting_action(mob/living/user)
 	if(user.has_status_effect(/datum/status_effect/fleshmend))
-		user.balloon_alert(user, "already fleshmending!")
+		user.balloon_alert(user, LANG("datum.67856bf3", null))
 		return
 	..()
 	to_chat(user, span_notice(LANG("datum.e108028e", null)))

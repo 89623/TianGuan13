@@ -514,7 +514,7 @@
 
 /obj/item/relic/proc/shield_hit(mob/living/owner, attack_text, current_charges)
 	playsound(src, 'sound/items/weapons/marauder.ogg', 20, TRUE, frequency = 1.25)
-	owner.visible_message(span_danger("[owner]'s holds [src] up, blocking [attack_text] with a projected shield!"))
+	owner.visible_message(span_danger(LANG("obj.eb54fa0b", list(owner, src, attack_text))))
 	if(current_charges <= 0)
 		set_light_on(FALSE)
 		relic_message(span_notice("[src] stops glowing."))

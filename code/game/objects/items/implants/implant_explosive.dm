@@ -127,7 +127,7 @@
 	if (isnull(imp_in))
 		visible_message(span_warning(LANG("obj.c9a523c0", list(src))))
 	else
-		imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))
+		imp_in.visible_message(span_warning(LANG("obj.c9a523c0", list(imp_in))))
 		if(notify_ghosts)
 			notify_ghosts(
 				"[imp_in.real_name] is about to detonate their explosive implant!",
@@ -142,7 +142,7 @@
 	if(!panic_beep_sound)
 		sleep(delay * 0.25)
 	if(imp_in && !imp_in.stat && !no_paralyze)
-		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
+		imp_in.visible_message(span_warning(LANG("obj.4f2b1df7", list(imp_in))))
 		imp_in.Paralyze(14 SECONDS)
 
 	if(!panic_beep_sound)

@@ -139,8 +139,8 @@
 		target.Knockdown(SHOVE_KNOCKDOWN_HUMAN, daze_amount = 3 SECONDS)
 	if(!HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		Knockdown(SHOVE_KNOCKDOWN_COLLATERAL, daze_amount = 3 SECONDS)
-	target.visible_message(span_danger("[shover] shoves [target.name] into [name]!"),
-		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, list(shover))
+	target.visible_message(span_danger(LANG("mob.9cd0941b", list(shover, target.name, name))),
+		span_userdanger(LANG("mob.9092b59a", list(name, shover))), span_hear(LANG("mob.b75dfa76", null)), COMBAT_MESSAGE_RANGE, list(shover))
 	to_chat(shover, span_danger(LANG("mob.d6cb368b", list(target.name, name))))
 	log_combat(shover, target, "shoved", addition = "into [name][weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED

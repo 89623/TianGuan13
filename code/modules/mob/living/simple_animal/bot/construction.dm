@@ -292,7 +292,7 @@
 			// NOVA EDIT ADDITION BEGIN -- EXTRA ROBOTICS HEALTH ANALYZERS
 			var/obj/item/healthanalyzer/analyzer = tool
 			if (!analyzer.can_be_used_in_medibot())
-				user?.balloon_alert(user, "no attachment ports!")
+				user?.balloon_alert(user, LANG("obj.32f53224", null))
 				return
 			// NOVA EDIT ADDITION END
 			if(!user.temporarilyRemoveItemFromInventory(tool))

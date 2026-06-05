@@ -139,7 +139,7 @@
 	var/atom/movable/snack = new selected_snack(get_turf(src))
 	snack.throw_at(interacting_with, 7, 2, borg, TRUE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
-	borg.visible_message(span_notice("[src] launches [snack] at [interacting_with]!"))
+	borg.visible_message(span_notice(LANG("obj.78331797", list(src, snack, interacting_with))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/cookie/bacon

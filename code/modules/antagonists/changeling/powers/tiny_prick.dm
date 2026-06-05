@@ -113,7 +113,7 @@
 	if(!new_selected_dna || changeling.chosen_sting || selected_dna) // selected other sting or other DNA while sleeping
 		return
 	if(verify_valid_species && (TRAIT_NO_DNA_COPY in new_selected_dna.dna.species.inherent_traits))
-		user.balloon_alert(user, "dna incompatible!")
+		user.balloon_alert(user, LANG("datum.1be8328e", null))
 		return
 	selected_dna = new_selected_dna
 	return ..()
@@ -129,10 +129,10 @@
 		|| HAS_TRAIT(target, TRAIT_HUSK) \
 		|| HAS_TRAIT(target, TRAIT_BADDNA) \
 		|| (HAS_TRAIT(target, TRAIT_NO_DNA_COPY) && !ismonkey(target))) // sure, go ahead, make a monk-clone
-		user.balloon_alert(user, "incompatible DNA!")
+		user.balloon_alert(user, LANG("datum.74adc456", null))
 		return FALSE
 	if(target.has_status_effect(/datum/status_effect/temporary_transformation/trans_sting))
-		user.balloon_alert(user, "already transformed!")
+		user.balloon_alert(user, LANG("datum.817662bc", null))
 		return FALSE
 	return TRUE
 
@@ -169,7 +169,7 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if((HAS_TRAIT(L, TRAIT_HUSK)) || !L.has_dna())
-			user.balloon_alert(user, "incompatible DNA!")
+			user.balloon_alert(user, LANG("datum.74adc456", null))
 			return FALSE
 	return TRUE
 
@@ -187,7 +187,7 @@
 
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
-	target.visible_message(span_warning("A grotesque blade forms around [target.name]\'s arm!"), span_userdanger("Your arm twists and mutates, transforming into a horrific monstrosity!"), span_hear("You hear organic matter ripping and tearing!"))
+	target.visible_message(span_warning(LANG("datum.4f914b98", list(target.name))), span_userdanger(LANG("datum.5b7b8ca8", null)), span_hear(LANG("datum.581bebe7", null)))
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(remove_fake), target, blade), 1 MINUTES)
@@ -195,8 +195,8 @@
 
 /datum/action/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
-	target.visible_message(span_warning("With a sickening crunch, [target] reforms [target.p_their()] [blade.name] into an arm!"),
-	span_warning("[blade] reforms back to normal."), span_italics("You hear organic matter ripping and tearing!"))
+	target.visible_message(span_warning(LANG("datum.1f76d95a", list(target, target.p_their(), blade.name))),
+	span_warning(LANG("datum.671445a8", list(blade))), span_italics(LANG("datum.581bebe7", null)))
 
 	qdel(blade)
 	target.update_held_items()
@@ -247,11 +247,11 @@
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
-		user.balloon_alert(user, "no eyes!")
+		user.balloon_alert(user, LANG("datum.ac2c42c3", null))
 		return FALSE
 
 	if(IS_ROBOTIC_ORGAN(eyes))
-		user.balloon_alert(user, "robotic eyes!")
+		user.balloon_alert(user, LANG("datum.ac1d1725", null))
 		return FALSE
 
 	..()

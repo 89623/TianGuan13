@@ -86,7 +86,7 @@
 			var/obj/item/turretling = new design(drop_location())
 			qdel(src)
 			user.put_in_hands(turretling)
-			turretling.balloon_alert(user, "suit finished")
+			turretling.balloon_alert(user, LANG("obj.19a41b0d", null))
 
 /obj/item/turret_assembly/wrench_act(mob/living/user, obj/item/tool)
 	switch(step)

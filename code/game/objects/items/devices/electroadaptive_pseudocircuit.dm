@@ -62,8 +62,8 @@
 	circuits++
 	maptext = MAPTEXT(circuits)
 	user.visible_message(
-		span_notice("User breaks down [interacting_with] with [src]."),
-		span_notice("You recycle [interacting_with] into [src]. It now has material for <b>[circuits]</b> circuits.")
+		span_notice(LANG("obj.c1c343c9", list(interacting_with, src))),
+		span_notice(LANG("obj.3214e857", list(interacting_with, src, circuits)))
 	)
 	playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 	qdel(interacting_with)

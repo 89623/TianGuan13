@@ -36,7 +36,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 				to_chat(user, span_notice(LANG("obj.d8939e1d", list(grabbed_mob.name, src))))
 				return
 			user.changeNext_move(CLICK_CD_MELEE)
-			user.visible_message(span_danger("[user] slams [grabbed_mob] into [src]!"), span_danger("You slam [grabbed_mob] into [src]!"))
+			user.visible_message(span_danger(LANG("obj.9570ee0c", list(user, grabbed_mob, src))), span_danger(LANG("obj.4a5b07de", list(grabbed_mob, src))))
 			grabbed_mob.emote("scream")
 			grabbed_mob.adjust_brute_loss(8)
 		else
@@ -75,8 +75,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
 	if(I.use_tool(src, user, 20))
 		user.visible_message(span_notice("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!"),
-			span_notice("You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!"),
-			span_hear("You hear metal and squishing noises."))
+			span_notice(LANG("obj.52638468", list(exposed ? "screw the cap back into place" : "unscrew the cap on the drain"))),
+			span_hear(LANG("obj.98c5495a", null)))
 		exposed = !exposed
 	return TRUE
 
@@ -112,6 +112,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	preserved_food = TRUE
 
 /obj/item/food/urinalcake/attack_self(mob/living/user)
-	user.visible_message(span_notice("[user] squishes [src]!"), span_notice("You squish [src]."), "<i>You hear a squish.</i>")
+	user.visible_message(span_notice(LANG("obj.3255392e", list(user, src))), span_notice(LANG("obj.e29f2321", list(src))), LANG("obj.a5b23264", null))
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 0.8 SECONDS)

@@ -133,8 +133,8 @@
 
 	while(check_rebuild(source, user, mats))
 		user.visible_message(
-			span_notice("[user] uses some of [mats] to rebuild [source]'s form."),
-			span_notice("You use some of [mats] to rebuild [source]'s form."),
+			span_notice(LANG("datum.2a5811ff", list(user, mats, source))),
+			span_notice(LANG("datum.fec0a402", list(mats, source))),
 		)
 
 		var/do_after_time = 2 SECONDS
@@ -176,8 +176,8 @@
 
 		if(source.revive(excess_healing = 10)) // give a bit of organ/tox/oxy healing for free
 			source.visible_message(
-				span_notice("[source] stabilizes and reforms into a functional state!"),
-				span_boldnotice("You stabilize and reform into a functional state!"),
+				span_notice(LANG("datum.488d5444", list(source))),
+				span_boldnotice(LANG("datum.faa33782", null)),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 			source.set_resting(FALSE, silent = TRUE, instant = TRUE)
@@ -217,9 +217,8 @@
 	if(source.nutrition < NUTRITION_LEVEL_STARVING)
 		if(!early_warning && COOLDOWN_FINISHED(src, warning_cd) && source.stat < UNCONSCIOUS)
 			source.visible_message(
-				span_warning("[source] shudders weakly as their form begins to destabilize!"),
-				span_bolddanger("You feel your form destabilizing as you run low on material to sustain yourself! \
-					Find some minerals to eat soon, or you may crumble!"),
+				span_warning(LANG("datum.1ce1bcc7", list(source))),
+				span_bolddanger(LANG("datum.43d45a66", null)),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 			early_warning = TRUE
@@ -231,9 +230,8 @@
 	if(source.nutrition < 50)
 		if(!final_warning && COOLDOWN_FINISHED(src, warning_cd) && source.stat < UNCONSCIOUS)
 			source.visible_message(
-				span_warning("[source] looks like they're on the verge of falling apart!"),
-				span_userdanger("Your form shudders violently as you near complete destabilization! \
-					Eat some minerals quickly, or you may crumble!"),
+				span_warning(LANG("datum.8e7fdfa4", list(source))),
+				span_userdanger(LANG("datum.471b8267", null)),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 			final_warning = TRUE
@@ -244,8 +242,8 @@
 
 	if(source.nutrition < 2 && source.stat != DEAD)
 		source.visible_message(
-			span_warning("[source] shudders and crumbles into a pile of inert rocks!"),
-			span_userdanger("You run our of material to sustain your animated form, and crumble into a pile of inert rocks!"),
+			span_warning(LANG("datum.825c12ec", list(source))),
+			span_userdanger(LANG("datum.91b11341", null)),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 		source.investigate_log("starved to death as a golem", INVESTIGATE_DEATHS)

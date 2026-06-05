@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * A component to allow us to breed
  */
@@ -63,7 +64,7 @@
 		return
 
 	if(!ready_to_breed)
-		source.balloon_alert(source, "not ready!")
+		source.balloon_alert(source, LANG("datum.1125a29f", null))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	var/turf/delivery_destination = get_turf(source)

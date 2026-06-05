@@ -55,7 +55,7 @@
 	created_portals[1].name = beacon_portal_name
 	created_portals[2].name = anchor_portal_name
 
-	created_portals[1].balloon_alert(user, "entanglement successful!")
+	created_portals[1].balloon_alert(user, LANG("obj.74814878", null))
 
 	qdel(portal_anchor)
 	qdel(src)

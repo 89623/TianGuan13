@@ -112,7 +112,7 @@
 	for(var/mob/shade_to_deconvert in contents)
 		assign_master(shade_to_deconvert, exorcist)
 
-	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
+	exorcist.visible_message(span_notice(LANG("obj.453de01c", list(exorcist, src))))
 	UnregisterSignal(src, COMSIG_BIBLE_SMACKED)
 
 /**
@@ -211,7 +211,7 @@
 
 /obj/item/soulstone/suicide_act(mob/living/user)
 	. = ..()
-	user.visible_message(span_suicide("[user] is capturing [user.p_their()] own soul with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.b90e5d22", list(user, user.p_their(), src, user.p_theyre()))))
 	return capture_soul(user, null, TRUE) ? MANUAL_SUICIDE : BRUTELOSS
 
 ///////////////////Options for using captured souls///////////////////////////////////////
@@ -261,8 +261,8 @@
 		to_chat(user, span_userdanger(LANG("obj.29802e49", null)))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] holds [src] above [user.p_their()] head and forces it into [target_toolbox] with a flash of light!"), \
-		span_notice("You hold [src] above your head briefly, then force it into [target_toolbox], transferring the [occupant]'s soul!"), ignored_mobs = occupant)
+	user.visible_message(span_notice(LANG("obj.cb2c91c4", list(user, src, user.p_their(), target_toolbox))), \
+		span_notice(LANG("obj.72e96cff", list(src, target_toolbox, occupant))), ignored_mobs = occupant)
 	to_chat(occupant, span_userdanger(LANG("obj.f64835d2", list(user, target_toolbox))))
 	to_chat(occupant, span_deadsay(LANG("obj.e2eada4e", null)))
 
@@ -599,7 +599,7 @@
 	return list(/datum/reagent/hauntium = 25)
 
 /obj/item/ectoplasm/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the astral plane!"))
+	user.visible_message(span_suicide(LANG("obj.64bdc72d", list(user, src, user.p_theyre()))))
 	return OXYLOSS
 
 /obj/item/soulstone/mystic

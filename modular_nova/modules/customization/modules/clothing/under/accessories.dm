@@ -35,13 +35,13 @@
 
 	if(isliving(user))
 		if(stored_name)
-			user.visible_message(span_notice("[user] displays their [src.name].\nIt reads: [stored_name], [badge_string]."),span_notice("You display your [src.name].\nIt reads: [stored_name], [badge_string]."))
+			user.visible_message(span_notice(LANG("obj.15bd9113", list(user, src.name, stored_name, badge_string))),span_notice(LANG("obj.f2be5adc", list(src.name, stored_name, badge_string))))
 		else
-			user.visible_message(span_notice("[user] displays their [src.name].\nIt reads: [badge_string]."),span_notice("You display your [src.name]. It reads: [badge_string]."))
+			user.visible_message(span_notice(LANG("obj.29ea9509", list(user, src.name, badge_string))),span_notice(LANG("obj.d1ebdd6d", list(src.name, badge_string))))
 
 /obj/item/clothing/accessory/badge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message(span_danger("[user] invades [M]'s personal space, thrusting [src] into their face insistently."),span_danger("You invade [M]'s personal space, thrusting [src] into their face insistently."))
+		user.visible_message(span_danger(LANG("obj.574f1ad7", list(user, M, src))),span_danger(LANG("obj.186df07a", list(M, src))))
 		user.do_attack_animation(M)
 
 // Sheriff Badge (toy)
@@ -53,12 +53,12 @@
 	icon_state = "sheriff"
 
 /obj/item/clothing/accessory/badge/sheriff/attack_self(mob/user as mob)
-	user.visible_message("[user] shows their sheriff badge. There's a new sheriff in town!",\
-		"You flash the sheriff badge to everyone around you!")
+	user.visible_message(LANG("obj.e4163f94", list(user)),\
+		LANG("obj.7ce0f99d", null))
 
 /obj/item/clothing/accessory/badge/sheriff/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message(span_danger("[user] invades [M]'s personal space, the sheriff badge into their face!."),span_danger("You invade [M]'s personal space, thrusting the sheriff badge into their face insistently."))
+		user.visible_message(span_danger(LANG("obj.2684d6f8", list(user, M))),span_danger(LANG("obj.d128b8a9", list(M))))
 		user.do_attack_animation(M)
 
 //.Holobadges.
@@ -324,7 +324,7 @@
 	if(istype(tile))
 		tile.atmos_spawn_air("[GAS_WATER_VAPOR]=50;[TURF_TEMPERATURE(1000)]")
 	tile.balloon_alert_to_viewers("overloaded!")
-	tile.visible_message("<span class='danger'>[src] overloads, exploding in a cloud of hot steam!</span>")
+	tile.visible_message(LANG("obj.fa5bca17", list(src)))
 	playsound(tile, 'sound/effects/spray.ogg', 80)
 	for(var/mob/living/collateral in victims)
 		collateral.set_jitter_if_lower(15 SECONDS)

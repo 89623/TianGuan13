@@ -63,7 +63,7 @@
 	if(!check_loc(target, detonator.resolve())) // if its moved, deactivate the c4
 		var/obj/item/grenade/c4/ninja/new_c4 = new /obj/item/grenade/c4/ninja(target.loc)
 		new_c4.detonation_area = detonation_area
-		new_c4.say("Invalid location!")
+		new_c4.say(LANG("obj.7cd3ea2b", null))
 		target.cut_overlay(plastic_overlay, TRUE)
 		qdel(src)
 		return

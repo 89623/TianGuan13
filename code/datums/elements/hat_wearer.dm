@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # mobs that can wear hats!
  */
@@ -84,7 +85,7 @@
 
 /datum/element/hat_wearer/proc/place_hat(atom/movable/source, obj/item/item, mob/living/attacker)
 	if(!do_after(attacker, delay = 3 SECONDS, target = source))
-		source.balloon_alert(attacker, "must stay still!")
+		source.balloon_alert(attacker, LANG("datum.9d0f5eb3", null))
 		return
 	item.forceMove(source)
 

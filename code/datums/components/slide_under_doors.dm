@@ -78,19 +78,19 @@
 	if (user.loc == door)
 		return FALSE
 	if (!isturf(user.loc))
-		user.balloon_alert(user, "not on the ground!")
+		user.balloon_alert(user, LANG("datum.29adf317", null))
 		return FALSE
 	if (!door.IsReachableBy(user))
-		user.balloon_alert(user, "can't reach!")
+		user.balloon_alert(user, LANG("datum.fba9228d", null))
 		return FALSE
 	if (HAS_TRAIT(user, TRAIT_INCAPACITATED))
-		user.balloon_alert(user, "incapacitated!")
+		user.balloon_alert(user, LANG("datum.7ac2788b", null))
 		return FALSE
 	if (!(door.pass_flags_self & PASSDOORS))
-		door.balloon_alert(user, "impassable!")
+		door.balloon_alert(user, LANG("datum.3bbd67b1", null))
 		return FALSE
 	if (!door.density)
-		door.balloon_alert(user, "already open!")
+		door.balloon_alert(user, LANG("datum.5f82ab6e", null))
 		return FALSE
 	return TRUE
 

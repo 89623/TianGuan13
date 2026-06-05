@@ -102,8 +102,8 @@
 	if(!injectee.can_inject(target_zone = def_zone, injection_flags = inject_flags)) // if the syringe is blocked
 		blocked = 100
 	if(blocked == 100)
-		target.visible_message(span_danger("\The [src] is deflected!"),
-							span_userdanger("You are protected against \the [src]!"))
+		target.visible_message(span_danger(LANG("obj.a02a8043", list(src))),
+							span_userdanger(LANG("obj.5d4d8bcd", list(src))))
 		return
 
 	//Checks for allergies, and saves allergies to a list if they are present
@@ -148,9 +148,9 @@
 		else
 			injectee.reagents.add_reagent(meds.type, inject_amount, null, chemical_temp, meds.purity)
 
-	injectee.visible_message(span_notice("[src] embeds itself into [injectee]"), span_notice("You feel a small prick as [src] embeds itself into you."))
+	injectee.visible_message(span_notice(LANG("obj.3d1ae2b5", list(src, injectee))), span_notice(LANG("obj.bc971e59", list(src))))
 	if(prevention_used) //Used to signal that allergens were not injected into the target mob.
-		injectee.visible_message(span_notice("[src] lets out a short beep."), span_notice("You hear a short beep from [src]."))
+		injectee.visible_message(span_notice(LANG("obj.70ed195a", list(src))), span_notice(LANG("obj.5c77481e", list(src))))
 		playsound(loc, 'sound/machines/ping.ogg', 50, 1, -1)
 	return BULLET_ACT_HIT
 

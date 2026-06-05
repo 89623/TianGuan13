@@ -121,9 +121,9 @@
 		if(!can_be_shaved)
 			to_chat(user, span_warning(LANG("mob.b6c70b82", list(p_they(), p_do()))))
 			return
-		user.visible_message(span_notice("[user] starts to shave [src] using \the [attacking_item]."), span_notice("You start to shave [src] using \the [attacking_item]..."))
+		user.visible_message(span_notice(LANG("mob.215295a5", list(user, src, attacking_item))), span_notice(LANG("mob.490e22db", list(src, attacking_item))))
 		if(do_after(user, 5 SECONDS, target = src))
-			user.visible_message(span_notice("[user] shaves [src]'s hair using \the [attacking_item]."))
+			user.visible_message(span_notice(LANG("mob.3ca61c66", list(user, src, attacking_item))))
 			playsound(get_turf(src), 'sound/items/hair-clippers.ogg', 20, TRUE)
 			shaved = TRUE
 			icon_living = "[icon_living]_shaved"
@@ -219,7 +219,7 @@
 
 	if(isnull(item_to_add))
 		if (!isnull(user))
-			user.visible_message(span_notice("[user] pets [src]."), span_notice("You rest your hand on [src]'s head for a moment."))
+			user.visible_message(span_notice(LANG("mob.d1411f1b", list(user, src))), span_notice(LANG("mob.98fc1a7b", list(src))))
 			if(flags_1 & HOLOGRAM_1)
 				return
 			user.add_mood_event(REF(src), /datum/mood_event/pet_animal, src)
@@ -242,9 +242,9 @@
 		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
 			to_chat(user, span_notice(LANG("mob.65cc710d", list(real_name, item_to_add, p_them()))))
 		else
-			user.visible_message(span_notice("[user] puts [item_to_add] on [real_name]'s head. [src] looks at [user] and barks once."),
-				span_notice("You put [item_to_add] on [real_name]'s head. [src] gives you a peculiar look, then wags [p_their()] tail once and barks."),
-				span_hear("You hear a friendly-sounding bark."))
+			user.visible_message(span_notice(LANG("mob.62d82673", list(user, item_to_add, real_name, src, user))),
+				span_notice(LANG("mob.5447687d", list(item_to_add, real_name, src, p_their()))),
+				span_hear(LANG("mob.2f0583aa", null)))
 	item_to_add.forceMove(src)
 	inventory_head = item_to_add
 	update_corgi_fluff()

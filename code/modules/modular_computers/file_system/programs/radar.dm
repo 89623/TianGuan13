@@ -403,8 +403,8 @@
 		to_chat(computer.loc, span_userdanger(LANG("datum.60b954c6", list(computer.name))))
 	else
 		computer.audible_message(
-			span_danger("[computer] vibrates and lets out an ominous alarm. Uh oh."),
-			span_notice("[computer] begins to vibrate rapidly. Wonder what that means..."),
+			span_danger(LANG("datum.d10e6587", list(computer))),
+			span_notice(LANG("datum.cc399bfe", list(computer))),
 		)
 
 

@@ -136,7 +136,7 @@
 		return FALSE
 
 	if (!owner.Adjacent(target))
-		owner.balloon_alert(clicker, "too far!")
+		owner.balloon_alert(clicker, LANG("datum.f5e75781", null))
 		return FALSE
 
 	// Do the slap
@@ -155,8 +155,8 @@
 	var/mob/living/living_to_slap = to_slap
 
 	owner.visible_message(
-		span_warning("[owner] slaps [to_slap] with its tentacle!"),
-		span_notice("You slap [to_slap] with your tentacle."),
+		span_warning(LANG("datum.27223b04", list(owner, to_slap))),
+		span_notice(LANG("datum.60c8dd6d", list(to_slap))),
 	)
 	playsound(owner, 'sound/effects/emotes/assslap.ogg', 90)
 	var/atom/throw_target = get_edge_target_turf(to_slap, owner.dir)

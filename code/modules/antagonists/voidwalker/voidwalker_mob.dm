@@ -155,7 +155,7 @@
 			return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
 		if(hewmon.stat == HARD_CRIT && !hewmon.has_trauma_type(/datum/brain_trauma/voided))
-			hewmon.balloon_alert(src, "is in crit!")
+			hewmon.balloon_alert(src, LANG("mob.769f36ff", null))
 			hewmon.Stun(5 SECONDS) // blocks some crit movement mechanics from a bunch of sources
 			return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
@@ -212,20 +212,20 @@
 /// Start the kidnap interactions, including surprises for those who are already voided
 /mob/living/basic/voidwalker/proc/try_kidnap(mob/living/carbon/human/victim)
 	if(victim.has_trauma_type(/datum/brain_trauma/voided))
-		victim.balloon_alert(src, "already voided!")
+		victim.balloon_alert(src, LANG("mob.9b3f1038", null))
 		new /obj/effect/temp_visual/circle_wave/unsettle(get_turf(victim))
 		victim.SetSleeping(30 SECONDS)
 		return FALSE
 
 	if(victim.stat == DEAD)
-		victim.balloon_alert(src, "is dead!")
+		victim.balloon_alert(src, LANG("mob.0d5de9f8", null))
 		return FALSE
 
 	if(victim.stat == CONSCIOUS) //we're still beating them up!!
 		return TRUE
 
 	if(!istype(get_turf(victim), home_turf) && !(locate(kidnapping_decal) in get_turf(victim)))
-		victim.balloon_alert(src, "not in space!")
+		victim.balloon_alert(src, LANG("mob.0f3e726d", null))
 		return FALSE
 
 	if(!kidnapping)

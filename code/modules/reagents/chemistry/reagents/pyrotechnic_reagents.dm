@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/reagent/thermite
 	name = "Thermite"
@@ -153,7 +154,7 @@
 		reagent_explode(holder, volume, modifier = 5, strengthdiv = 10, clear_holder_reagents = FALSE, flame_factor = 1)
 		return SPARK_ACT_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL
 
-	holder.my_atom.visible_message(span_boldnotice("Sparks start flying around the gunpowder!"))
+	holder.my_atom.visible_message(span_boldnotice(LANG("datum.d6b0e8db", null)))
 	if (!(spark_flags & SPARK_ACT_ENCLOSED))
 		do_sparks(2, TRUE, get_turf(holder.my_atom))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reagent_explode), holder, volume, 5, 10), rand(5 SECONDS, 10 SECONDS))
@@ -239,7 +240,7 @@
 	if (iscarbon(holder.my_atom))
 		var/mob/living/carbon/victim = holder.my_atom
 		if (victim.stat != DEAD)
-			victim.visible_message(span_warning("[victim] starts violently coughing up smoke!"))
+			victim.visible_message(span_warning(LANG("datum.03e2da71", list(victim))))
 		victim.adjust_organ_loss(ORGAN_SLOT_LUNGS, volume / 15)
 	do_chem_smoke(amount = volume / 1.5, holder = holder.my_atom, location = location, carry = holder, silent = FALSE, log = TRUE)
 	return SPARK_ACT_NON_DESTRUCTIVE | SPARK_ACT_CLEAR_ALL

@@ -64,7 +64,7 @@
 		)
 
 	if (!host.revive())
-		host.balloon_alert(owner, "revival failed!")
+		host.balloon_alert(owner, LANG("datum.5028a8ea", null))
 		return FALSE
 
 	host.visible_message(
@@ -81,26 +81,26 @@
 		return FALSE
 	if (host.stat != DEAD)
 		if (feedback)
-			host.balloon_alert(owner, "not dead!")
+			host.balloon_alert(owner, LANG("datum.f5271c5d", null))
 		return FALSE
 	if (HAS_TRAIT(host, TRAIT_HUSK))
 		if (feedback)
-			host.balloon_alert(owner, "husked!")
+			host.balloon_alert(owner, LANG("datum.62afb343", null))
 		return FALSE
 	if (!host.get_organ_slot(ORGAN_SLOT_BRAIN))
 		if (feedback)
-			host.balloon_alert(owner, "no brain!")
+			host.balloon_alert(owner, LANG("datum.bbe41671", null))
 		return FALSE
 	if (host.get_organ_loss(ORGAN_SLOT_BRAIN) >= BRAIN_DAMAGE_DEATH && !HAS_TRAIT(host, TRAIT_BRAIN_DAMAGE_NODEATH))
 		if (feedback)
-			host.balloon_alert(owner, "brain too damaged!")
+			host.balloon_alert(owner, LANG("datum.45c3c09b", null))
 		return FALSE
 	if (host.health <= HEALTH_THRESHOLD_DEAD)
 		if (feedback)
-			host.balloon_alert(owner, "body too damaged!")
+			host.balloon_alert(owner, LANG("datum.0f64334c", null))
 		return FALSE
 	if (!host.can_be_revived()) // Fallback, ideally caught by earlier, more descriptive checks.
 		if (feedback)
-			host.balloon_alert(owner, "unable to revive!")
+			host.balloon_alert(owner, LANG("datum.c8789229", null))
 		return FALSE
 	return TRUE

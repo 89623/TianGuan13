@@ -45,7 +45,7 @@
 		return ..()
 
 	if(!silent)
-		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!"), ignored_mobs = owner.current)
+		owner.current.visible_message(span_deconversion_message(LANG("datum.220af5bd", list(owner.current, owner.current.p_theyve(), owner.current.p_their()))), ignored_mobs = owner.current)
 		to_chat(owner.current, span_userdanger(LANG("datum.0dcdd62b", null)))
 		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color=COLOR_CULT_RED)
 

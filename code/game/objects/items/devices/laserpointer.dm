@@ -303,9 +303,9 @@
 		laser.pixel_z = target.pixel_z + rand(-5,5)
 
 	if(outmsg)
-		user.visible_message(span_danger("[user] points [src] at [target]!"), outmsg) //NOVA EDIT CHANGE - ORIGINAL: to_chat(user, outmsg)
+		user.visible_message(span_danger(LANG("obj.59c3217a", list(user, src, target))), outmsg) //NOVA EDIT CHANGE - ORIGINAL: to_chat(user, outmsg)
 	else
-		user.visible_message(span_notice("[user] points [src] at [target]."), span_notice("You point [src] at [target].")) //NOVA EDIT CHANGE - ORIGINAL: to_chat(user, span_info("You point [src] at [target]."))
+		user.visible_message(span_notice(LANG("obj.8a67c495", list(user, src, target))), span_notice(LANG("obj.e0067749", list(src, target)))) //NOVA EDIT CHANGE - ORIGINAL: to_chat(user, span_info("You point [src] at [target]."))
 
 	//we have successfully shone our pointer, reduce our battery depending on whether we have an extra lens or not
 	energy -= crystal_lens ? 2 : 1

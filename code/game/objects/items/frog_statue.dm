@@ -22,12 +22,12 @@
 		return TRUE
 
 	if(!COOLDOWN_FINISHED(src, summon_cooldown))
-		user.balloon_alert(user, "recharging!")
+		user.balloon_alert(user, LANG("obj.ba1fd79a", null))
 		return TRUE
 
 	COOLDOWN_START(src, summon_cooldown, 30 SECONDS)
 	if(isnull(contained_frog))
-		user.balloon_alert(user, "no frog linked!")
+		user.balloon_alert(user, LANG("obj.53b06fe4", null))
 		return TRUE
 	if(contained_frog.loc == src)
 		release_frog(user)

@@ -137,9 +137,9 @@
 			if(!tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return TRUE
 
-			user.visible_message(span_notice("[user.name] starts to weld \the [src] to the floor."), \
-				span_notice("You start to weld \the [src] to the floor..."), \
-				span_hear("You hear welding."))
+			user.visible_message(span_notice(LANG("obj.9449da47", list(user.name, src))), \
+				span_notice(LANG("obj.f64483b9", list(src))), \
+				span_hear(LANG("obj.1aa82fa3", null)))
 
 			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume = 50))
 				engine_state = ENGINE_WELDED
@@ -150,9 +150,9 @@
 			if(!tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return TRUE
 
-			user.visible_message(span_notice("[user.name] starts to cut \the [src] free from the floor."), \
-				span_notice("You start to cut \the [src] free from the floor..."), \
-				span_hear("You hear welding."))
+			user.visible_message(span_notice(LANG("obj.62651aed", list(user.name, src))), \
+				span_notice(LANG("obj.bf750eff", list(src))), \
+				span_hear(LANG("obj.1aa82fa3", null)))
 
 			if(tool.use_tool(src, user, ENGINE_WELDTIME, volume = 50))
 				engine_state = ENGINE_WRENCHED

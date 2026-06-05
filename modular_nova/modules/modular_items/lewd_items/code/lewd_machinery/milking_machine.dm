@@ -282,9 +282,9 @@
 		to_chat(affected_mob, span_purple(LANG("obj.c39ebd4b", null)))
 		return FALSE
 
-	affected_mob.visible_message(span_notice("[affected_mob] unbuckles [affected_mob.p_them()]self from [src]."),\
-		span_notice("You unbuckle yourself from [src]."),\
-		span_hear("You hear metal clanking."))
+	affected_mob.visible_message(span_notice(LANG("obj.4d9602b6", list(affected_mob, affected_mob.p_them(), src))),\
+		span_notice(LANG("obj.bd5bbd6c", list(src))),\
+		span_hear(LANG("obj.4ea246f9", null)))
 	unbuckle_mob(affected_mob)
 	return TRUE
 

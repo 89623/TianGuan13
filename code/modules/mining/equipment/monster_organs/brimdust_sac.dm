@@ -118,7 +118,7 @@
 		return
 	if(!owner.can_resist())
 		return
-	owner.balloon_alert(owner, "shaking off the dust...")
+	owner.balloon_alert(owner, LANG("atom.ccce79c0", null))
 	var/datum/status_effect/stacking/brimdust_coating/dust = attached_effect
 	if (!do_after(owner, dust.stacks * 1.5 SECONDS, owner))
 		return
@@ -197,7 +197,7 @@
 		return
 	if(!COOLDOWN_FINISHED(src, explosion_cooldown))
 		return
-	owner.visible_message(span_boldwarning("The brimstone dust surrounding [owner] ignites!"))
+	owner.visible_message(span_boldwarning(LANG("datum.103e564a", list(owner))))
 	addtimer(CALLBACK(src, PROC_REF(explode)), 0.25 SECONDS)
 	COOLDOWN_START(src, explosion_cooldown, delay_between_explosions)
 

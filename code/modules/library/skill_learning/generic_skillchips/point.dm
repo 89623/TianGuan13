@@ -69,7 +69,7 @@
 		pick_color(user)
 	else
 		arrow_color = null
-		owner.balloon_alert(owner, "pointer reset")
+		owner.balloon_alert(owner, LANG("datum.3c26934e", null))
 		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON, force = TRUE)
 
 /datum/action/change_pointer_color/proc/pick_color(mob/user)
@@ -77,7 +77,7 @@
 	if(user != owner || !IsAvailable(feedback = TRUE))
 		return
 	arrow_color = ncolor
-	owner.balloon_alert(owner, "pointer updated")
+	owner.balloon_alert(owner, LANG("datum.37ec70c9", null))
 	build_all_button_icons(update_flags = UPDATE_BUTTON_ICON, force = TRUE)
 
 /datum/action/change_pointer_color/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force = FALSE)

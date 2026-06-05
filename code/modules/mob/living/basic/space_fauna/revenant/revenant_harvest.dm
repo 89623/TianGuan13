@@ -16,7 +16,7 @@
 		return FALSE
 
 	if(target.flags_1 & HOLOGRAM_1)
-		target.balloon_alert(src, "doesn't possess a soul!") // it's a machine generated visual
+		target.balloon_alert(src, LANG("mob.706c83c6", null)) // it's a machine generated visual
 		return
 
 	draining = TRUE
@@ -101,13 +101,13 @@
 	apply_status_effect(/datum/status_effect/revenant/revealed, 5 SECONDS)
 	apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 5 SECONDS)
 
-	target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target_their] skin turning an ashy gray."))
+	target.visible_message(span_warning(LANG("mob.a0d2e872", list(target, target_their))))
 
 	if(target.can_block_magic(MAGIC_RESISTANCE_HOLY))
 		to_chat(src, span_revenminor(LANG("mob.c9211b98", list(target))))
 		target.visible_message(
-			span_warning("[target] slumps onto the ground."),
-			span_revenwarning("Violet lights, dancing in your vision, receding--"),
+			span_warning(LANG("mob.ca7c6bf1", list(target))),
+			span_revenwarning(LANG("mob.4b327eec", null)),
 		)
 		return FALSE
 
@@ -116,8 +116,8 @@
 		to_chat(src, span_revenwarning(LANG("mob.dc233f8f", list(target ? "[target]'s soul has" : "[target_They_have]"))))
 		if(target)
 			target.visible_message(
-				span_warning("[target] slumps onto the ground."),
-				span_revenwarning("Violet lights, dancing in your vision, receding--"),
+				span_warning(LANG("mob.ca7c6bf1", list(target))),
+				span_revenwarning(LANG("mob.4b327eec", null)),
 			)
 		qdel(draining_beam)
 		return FALSE
@@ -135,8 +135,8 @@
 
 	to_chat(src, span_revennotice(LANG("mob.2816985d", list(target))))
 	target.visible_message(
-		span_warning("[target] slumps onto the ground."),
-		span_revenwarning("Violet lights, dancing in your vision, getting clo--"),
+		span_warning(LANG("mob.ca7c6bf1", list(target))),
+		span_revenwarning(LANG("mob.979ffd67", null)),
 	)
 
 	LAZYADD(drained_mobs, REF(target))

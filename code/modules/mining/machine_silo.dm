@@ -214,15 +214,15 @@
 	if(user_data[SILICON_OVERRIDE] || user_data[CHAMELEON_OVERRIDE] || astype(user_data["accesses"], /list)?.Find(ACCESS_QM))
 		return COMPONENT_ORE_SILO_ALLOW
 	if(user_data[ID_READ_FAILURE])
-		physical_receptacle.say("SILO ERR: ID interface failure. Please contact the Head of Personnel.")
+		physical_receptacle.say(LANG("obj.5c9f8139", null))
 		return COMPONENT_ORE_SILO_DENY
 	if(!user_data["account_id"] || !isnum(user_data["account_id"]))
 		if(prob(5))
-			physical_receptacle.say("SILO ERR: Bank account ID not found. Initiating anti-communist silo-access policy.")
-		physical_receptacle.say("SILO ERR: No account ID found. Please contact Head of Personnel.")
+			physical_receptacle.say(LANG("obj.3995e616", null))
+		physical_receptacle.say(LANG("obj.a2b942c6", null))
 		return COMPONENT_ORE_SILO_DENY
 	if(banned_users.Find(user_data["account_id"]))
-		physical_receptacle.say("SILO ERR: You are banned from using this ore silo.")
+		physical_receptacle.say(LANG("obj.e0a19881", null))
 		return COMPONENT_ORE_SILO_DENY
 	return COMPONENT_ORE_SILO_ALLOW
 

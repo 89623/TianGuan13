@@ -102,16 +102,16 @@
 		if(DOING_INTERACTION_WITH_TARGET(user, target_mob))
 			return ITEM_INTERACT_BLOCKING
 		target_mob.visible_message(
-			span_danger("[user] attempts to feed [target_mob] something from [src]."),
-			span_userdanger("[user] attempts to feed you something from [src]."),
+			span_danger(LANG("obj.ff0a489b", list(user, target_mob, src))),
+			span_userdanger(LANG("obj.ccd5c758", list(user, src))),
 		)
 		if(!do_after(user, 3 SECONDS, target_mob))
 			return ITEM_INTERACT_BLOCKING
 		if(!reagents || !reagents.total_volume)
 			return ITEM_INTERACT_BLOCKING // The drink might be empty after the delay, such as by spam-feeding
 		target_mob.visible_message(
-			span_danger("[user] feeds [target_mob] something from [src]."),
-			span_userdanger("[user] feeds you something from [src]."),
+			span_danger(LANG("obj.3a0ec431", list(user, target_mob, src))),
+			span_userdanger(LANG("obj.8f8c5865", list(user, src))),
 		)
 		if(target_mob.is_blind())
 			to_chat(target_mob, span_notice(LANG("obj.29599226", null)))
@@ -122,7 +122,7 @@
 			if(DOING_INTERACTION_WITH_TARGET(user, user))
 				return ITEM_INTERACT_BLOCKING
 			user.visible_message(
-				span_notice("[user] attempts to drink from [src]."),
+				span_notice(LANG("obj.4de62e04", list(user, src))),
 				ignored_mobs = list(user),
 			)
 			to_chat(user, span_notice(LANG("obj.d3904c62", list(src))))
@@ -131,7 +131,7 @@
 			if(!reagents || !reagents.total_volume)
 				return ITEM_INTERACT_BLOCKING
 			user.visible_message(
-				span_notice("[user] drinks from [src]."),
+				span_notice(LANG("obj.2221cda6", list(user, src))),
 				ignored_mobs = list(user),
 			)
 		to_chat(user, span_notice(LANG("obj.d0158148", list(src))))
@@ -588,21 +588,21 @@
 		var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 		if(is_right_clicking)
 			if(tool.reagents.total_volume == 0)
-				user.balloon_alert(user, "[tool] is dry!")
+				user.balloon_alert(user, LANG("obj.76cfe055", list(tool)))
 				return ITEM_INTERACT_BLOCKING
 			if(reagents.total_volume == reagents.maximum_volume)
-				user.balloon_alert(user, "[tool] is full!")
+				user.balloon_alert(user, LANG("obj.21d5a38a", list(tool)))
 				return ITEM_INTERACT_BLOCKING
 			tool.reagents.remove_all(tool.reagents.total_volume * SQUEEZING_DISPERSAL_RATIO)
 			tool.reagents.trans_to(src, tool.reagents.total_volume, transferred_by = user)
-			user.balloon_alert(user, "[tool] squeezed")
+			user.balloon_alert(user, LANG("obj.207c6bd9", list(tool)))
 			return ..()
 		// NOVA EDIT ADDITION END
 		if(reagents.total_volume < 1)
-			user.balloon_alert(user, "empty!")
+			user.balloon_alert(user, LANG("obj.6ef93b07", null))
 			return ITEM_INTERACT_BLOCKING
 		reagents.trans_to(tool, 5, transferred_by = user)
-		user.balloon_alert(user, "doused [tool]")
+		user.balloon_alert(user, LANG("obj.2232fa1b", list(tool)))
 		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
 		return ITEM_INTERACT_SUCCESS
 	if(isprox(tool)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)

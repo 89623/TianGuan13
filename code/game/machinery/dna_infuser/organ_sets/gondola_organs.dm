@@ -113,7 +113,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/liver/gondola/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/equip_target, slot)
 	SIGNAL_HANDLER
 	if(equip_target.w_class > WEIGHT_CLASS_TINY)
-		equip_target.balloon_alert(owner, "too weak to hold this!")
+		equip_target.balloon_alert(owner, LANG("obj.bb75f798", null))
 		return COMPONENT_BLOCK_EQUIP
 
 /// signal sent when owner tries to pull an item
@@ -122,12 +122,12 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.mob_size > MOB_SIZE_TINY)
-			living_target.balloon_alert(owner, "too weak to pull this!")
+			living_target.balloon_alert(owner, LANG("obj.8fad75e5", null))
 			return COMSIG_LIVING_CANCEL_PULL
 	if(isitem(target))
 		var/obj/item/item_target = target
 		if(item_target.w_class > WEIGHT_CLASS_TINY)
-			item_target.balloon_alert(owner, "too weak to pull this!")
+			item_target.balloon_alert(owner, LANG("obj.8fad75e5", null))
 			return COMSIG_LIVING_CANCEL_PULL
 
 /obj/item/organ/liver/gondola/proc/on_hug(mob/living/carbon/human/source, mob/living/carbon/hugged)

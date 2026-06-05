@@ -68,7 +68,7 @@
 
 	if(COOLDOWN_FINISHED(src, warn_cd) && owner.stat == CONSCIOUS)
 		to_chat(owner, span_notice(LANG("datum.e2cc0c22", null)))
-		owner.visible_message(span_warning("[owner] starts to recover from the exhaustion!"), ignored_mobs = owner)
+		owner.visible_message(span_warning(LANG("datum.eb815f68", list(owner))), ignored_mobs = owner)
 		COOLDOWN_START(src, warn_cd, 2.5 SECONDS)
 
 	return COMPONENT_IGNORE_CHANGE

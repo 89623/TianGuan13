@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MUSHROOM_SPORE_COOLDOWN 45 SECONDS
 
 /datum/species/mush //mush mush codecuck
@@ -84,7 +85,7 @@
 	if(QDELETED(victim))
 		return //can't leave spores if there's no shroom to spore
 
-	victim.visible_message(span_notice("Spores start growing around [victim]."), ignored_mobs = victim)
+	victim.visible_message(span_notice(LANG("obj.cb4c64eb", list(victim))), ignored_mobs = victim)
 	var/atom/particle_holder = victim.add_shared_particles(/particles/pollen/mushroom)
 	particle_holder.appearance_flags |= RESET_TRANSFORM
 	addtimer(CALLBACK(src, PROC_REF(create_spores), victim), MUSHROOM_SPORE_COOLDOWN)
@@ -97,7 +98,7 @@
 		return //can't leave more spores if there's no spores to spore
 
 	victim.remove_shared_particles(/particles/pollen/mushroom)
-	victim.visible_message(span_notice("Mushrooms sprout up around [victim]."), ignored_mobs = victim)
+	victim.visible_message(span_notice(LANG("obj.747f6557", list(victim))), ignored_mobs = victim)
 	new /obj/structure/glowshroom/brownshroom(get_turf(victim))
 
 /// Bodypart overlay for the mushroom cap organ

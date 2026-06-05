@@ -26,7 +26,7 @@
 	return S
 
 /obj/item/seeds/kudzu/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] swallows the pack of kudzu seeds! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.35744de4", list(user, user.p_theyre()))))
 	plant(user)
 	return BRUTELOSS
 
@@ -46,7 +46,7 @@
 	qdel(src)
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
-	user.visible_message(span_danger("[user] begins throwing seeds on the ground..."))
+	user.visible_message(span_danger(LANG("obj.92036855", list(user))))
 	if(do_after(user, 5 SECONDS, target = user.drop_location(), progress = TRUE))
 		plant(user)
 		to_chat(user, span_notice(LANG("obj.baa4d562", null)))

@@ -634,7 +634,7 @@
 	if(!bunch_turf)
 		return
 	if(!bunch_turf.IsReachableBy(owner) || !isopenturf(bunch_turf))
-		owner.balloon_alert(owner, "can't do that here!")
+		owner.balloon_alert(owner, LANG("datum.01811a12", null))
 		return
 	activating = TRUE
 	if(!do_after(owner, 1 SECONDS))

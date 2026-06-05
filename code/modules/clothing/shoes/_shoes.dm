@@ -36,7 +36,7 @@
 
 /obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
 	if(prob(50))
-		user.visible_message(span_suicide("[user] begins fastening \the [src] up waaay too tightly! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.724703b3", list(user, src, user.p_theyre()))))
 		var/obj/item/bodypart/leg/left = user.get_bodypart(BODY_ZONE_L_LEG)
 		var/obj/item/bodypart/leg/right = user.get_bodypart(BODY_ZONE_R_LEG)
 		if(left)
@@ -46,7 +46,7 @@
 		playsound(user, SFX_DESECRATION, 50, TRUE, -1)
 		return BRUTELOSS
 	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
-		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
+		user.visible_message(span_suicide(LANG("obj.da1c6b1c", list(user, user.p_their(), src))))
 		for(var/i in 1 to 3)
 			sleep(0.3 SECONDS)
 			playsound(user, 'sound/items/weapons/genhit2.ogg', 50, TRUE)
@@ -171,7 +171,7 @@
 		if(DOING_INTERACTION_WITH_TARGET(user, our_guy))
 			to_chat(user, span_warning(LANG("obj.87048759", list(src))))
 			return
-		user.visible_message(span_notice("[user] begins [tied ? "unknotting" : "[fastening_verb()]"] the [fastening_type] of [user.p_their()] [src.name]."), span_notice("You begin [tied ? "unknotting" : "[fastening_verb()]"] the [fastening_type] of your [src.name]..."))
+		user.visible_message(span_notice(LANG("obj.054c6435", list(user, tied ? "unknotting" : "[fastening_verb()]", fastening_type, user.p_their(), src.name))), span_notice(LANG("obj.d6986752", list(tied ? "unknotting" : "[fastening_verb()]", fastening_type, src.name))))
 		// NOVA EDIT ADDITION START
 		var/lace_time = src.lace_time
 		if(HAS_TRAIT(user, TRAIT_STICKY_FINGERS))
@@ -211,7 +211,7 @@
 			else
 				adjust_laces(SHOES_UNTIED, user)
 		else // if one of us moved
-			user.visible_message(span_danger("[our_guy] stamps on [user]'s hand, mid-[tied ? "knotting" : "un[fastening_verb()]"]!"), span_userdanger("Ow! [our_guy] stamps on your hand!"), list(our_guy))
+			user.visible_message(span_danger(LANG("obj.434f5608", list(our_guy, user, tied ? "knotting" : "un[fastening_verb()]"))), span_userdanger(LANG("obj.59f95b71", list(our_guy))), list(our_guy))
 			to_chat(our_guy, span_userdanger(LANG("obj.e6f1cafd", list(user, user.p_they(), user.p_were(), tied ? "knotting" : "un[fastening_verb()]", fastening_type))))
 			user.emote("scream")
 			user.apply_damage(10, BRUTE, user.get_active_hand(), wound_bonus = CANT_WOUND)
@@ -232,7 +232,7 @@
 	if(tied == SHOES_KNOTTED)
 		our_guy.Paralyze(5)
 		our_guy.Knockdown(10)
-		our_guy.visible_message(span_danger("[our_guy] trips on [our_guy.p_their()] knotted [fastening_type] and falls! What a klutz!"), span_userdanger("You trip on your knotted [fastening_type] and fall over!"))
+		our_guy.visible_message(span_danger(LANG("obj.9ce51e69", list(our_guy, our_guy.p_their(), fastening_type))), span_userdanger(LANG("obj.26d3eeb0", list(fastening_type))))
 		our_guy.add_mood_event("trip", /datum/mood_event/tripped) // well we realized they're knotted now!
 		our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/knotted))
 
@@ -243,7 +243,7 @@
 				our_guy.Paralyze(5)
 				our_guy.Knockdown(10)
 				our_guy.add_mood_event("trip", /datum/mood_event/tripped) // well we realized they're knotted now!
-				our_guy.visible_message(span_danger("[our_guy] trips on [our_guy.p_their()] [untied_adjective()] [fastening_type] and falls! What a klutz!"), span_userdanger("You trip on your [untied_adjective()] [fastening_type] and fall over!"))
+				our_guy.visible_message(span_danger(LANG("obj.10af9c65", list(our_guy, our_guy.p_their(), untied_adjective(), fastening_type))), span_userdanger(LANG("obj.271e1c16", list(untied_adjective(), fastening_type))))
 
 			if(2 to 5) // .4% chance to stumble and lurch forward
 				our_guy.throw_at(get_step(our_guy, our_guy.dir), 3, 2)

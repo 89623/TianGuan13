@@ -20,7 +20,7 @@
 
 	if(!is_valid_target(owner))
 		if(feedback)
-			owner.balloon_alert(owner, "no soul!")
+			owner.balloon_alert(owner, LANG("datum.f686d151", null))
 		return FALSE
 
 	return TRUE

@@ -249,10 +249,10 @@
 	. = ..()
 	var/obj/item/hand_item/stealer/stealing_hand = new(user)
 	if (user.put_in_hands(stealing_hand))
-		user.balloon_alert(user, "preparing to steal shoes...")
+		user.balloon_alert(user, LANG("datum.723868c5", null))
 	else
 		qdel(stealing_hand)
-		user.balloon_alert(user, "you can't steal shoes!")
+		user.balloon_alert(user, LANG("datum.03711a07", null))
 
 /datum/emote/living/carbon/tail
 	key = "tail"

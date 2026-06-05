@@ -39,7 +39,7 @@
 
 /obj/machinery/porta_turret_cover/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	if(parent_turret.locked)
-		user.balloon_alert(user, "controls locked")
+		user.balloon_alert(user, LANG("obj.3b78a635", null))
 		return ITEM_INTERACT_BLOCKING
 
 	multi_tool.set_buffer(parent_turret)

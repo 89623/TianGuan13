@@ -74,8 +74,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user] begins inserting [inserted_item] into [parent]."),
-		span_notice("You start to insert the [inserted_item] into [parent]."),
+		span_notice(LANG("datum.9e5bee5e", list(user, inserted_item, parent))),
+		span_notice(LANG("datum.261d0c5f", list(inserted_item, parent))),
 	)
 
 	INVOKE_ASYNC(src, PROC_REF(insert_item), inserted_item, user)
@@ -96,8 +96,8 @@
 	if(!food.can_interact(user))
 		return CLICK_ACTION_BLOCKING
 
-	user.visible_message(span_notice("[user] begins tearing at [parent]."), \
-					span_notice("You start to rip into [parent]."))
+	user.visible_message(span_notice(LANG("datum.c682907b", list(user, parent))), \
+					span_notice(LANG("datum.4e863fbf", list(parent))))
 
 	INVOKE_ASYNC(src, PROC_REF(begin_remove_item), user)
 	return CLICK_ACTION_SUCCESS
@@ -142,10 +142,10 @@
  */
 /datum/component/food_storage/proc/remove_item(mob/user)
 	if(user.put_in_hands(stored_item))
-		user.visible_message(span_warning("[user] slowly pulls [stored_item] out of [parent]."), \
-							span_warning("You slowly pull [stored_item] out of [parent]."))
+		user.visible_message(span_warning(LANG("datum.4f7d6a81", list(user, stored_item, parent))), \
+							span_warning(LANG("datum.b15858b0", list(stored_item, parent))))
 	else
-		stored_item.visible_message(span_warning("[stored_item] falls out of [parent]."))
+		stored_item.visible_message(span_warning(LANG("datum.23a54aed", list(stored_item, parent))))
 
 	update_stored_item()
 

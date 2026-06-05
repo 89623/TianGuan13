@@ -42,5 +42,5 @@
 	user.Knockdown(1 SECONDS)
 	user.throw_at(throw_target, throwing_range, throwing_force)
 
-	user.visible_message(span_warning("[weapon] sends [user] flying back as it fires!"), \
-		span_warning("[weapon] sends you flying back as it fires!"))
+	user.visible_message(span_warning(LANG("datum.9c25e0ba", list(weapon, user))), \
+		span_warning(LANG("datum.fd2a9cb9", list(weapon))))

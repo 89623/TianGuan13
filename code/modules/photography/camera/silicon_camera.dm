@@ -43,7 +43,7 @@
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
 	RETURN_TYPE(/datum/picture)
 	if(!length(stored))
-		user.balloon_alert(user, "no stored photos!")
+		user.balloon_alert(user, LANG("obj.eb74bb77", null))
 		return
 	var/list/nametemp = list()
 	var/list/temp = list()
@@ -127,6 +127,6 @@
 	printed.pixel_x = printed.base_pixel_x + rand(-10, 10)
 	printed.pixel_y = printed.base_pixel_y + rand(-10, 10)
 	user.toner -= printcost  //All fun allowed.
-	user.visible_message(span_notice("[user.name] spits out a photograph from a narrow slot on its chassis."), span_notice("You print a photograph."))
+	user.visible_message(span_notice(LANG("obj.adb9d4fa", list(user.name))), span_notice(LANG("obj.ea70dffc", null)))
 	balloon_alert(user, LANG("obj.11d97790", null))
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, TRUE, -3)

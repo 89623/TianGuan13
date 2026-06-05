@@ -76,7 +76,7 @@
 /obj/item/bong/attack_self(mob/user)
 	var/turf/location = get_turf(user)
 	if(lit)
-		user.visible_message(span_notice("[user] puts out [src]."), span_notice("You put out [src]."))
+		user.visible_message(span_notice(LANG("obj.f63d4f5a", list(user, src))), span_notice(LANG("obj.00731180", list(src))))
 		lit = FALSE
 		icon_state = icon_off
 		inhand_icon_state = icon_off
@@ -91,7 +91,7 @@
 /obj/item/bong/attack(mob/hit_mob, mob/user, def_zone)
 	if(!packed_item || !lit)
 		return
-	hit_mob.visible_message(span_notice("[user] starts [hit_mob == user ? "taking a hit from [src]." : "forcing [hit_mob] to take a hit from [src]!"]"), hit_mob == user ? span_notice("You start taking a hit from [src].") : span_userdanger("[user] starts forcing you to take a hit from [src]!"))
+	hit_mob.visible_message(span_notice(LANG("obj.d01a311c", list(user, hit_mob == user ? "taking a hit from [src]." : "forcing [hit_mob] to take a hit from [src]!"))), hit_mob == user ? span_notice("You start taking a hit from [src].") : span_userdanger("[user] starts forcing you to take a hit from [src]!"))
 	playsound(src, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 	if(!do_after(user, 40))
 		return

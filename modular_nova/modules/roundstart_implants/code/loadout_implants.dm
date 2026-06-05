@@ -26,7 +26,7 @@
 	else
 		//check if they're blind
 		if (user.is_blind())
-			user.balloon_alert(user, "can't activate magnification while blind!")
+			user.balloon_alert(user, LANG("obj.1b730dbc", null))
 			return
 
 		zoom.zoom(user)
@@ -68,8 +68,8 @@
 			effect_chance = 30
 	if(prob(effect_chance) && owner)
 		owner.visible_message(
-			span_danger("[owner]'s [active_item] suddenly spins and vibrates wildly!"),
-			span_warning("Your adjuster implant malfunctions, making your arm shake uncontrollably!")
+			span_danger(LANG("obj.3afbe1aa", list(owner, active_item))),
+			span_warning(LANG("obj.ebbd9df2", null))
 		)
 		if(active_item)
 			Retract()
@@ -98,8 +98,8 @@
 			effect_chance = 50
 	if(prob(effect_chance) && owner)
 		owner.visible_message(
-			span_danger("[owner]'s electrical toolset crackles with arcing electricity!"),
-			span_warning("Your electrical toolset sparks wildly, making your arm tingle!")
+			span_danger(LANG("obj.04c45439", list(owner))),
+			span_warning(LANG("obj.a5356239", null))
 		)
 		if(active_item)
 			Retract()
@@ -128,8 +128,8 @@
 			effect_chance = 40
 	if(prob(effect_chance) && owner)
 		owner.visible_message(
-			span_danger("[owner]'s arc welder discharges with a shower of sparks!"),
-			span_warning("Your arc welder implant short circuits, temporarily blinding you!")
+			span_danger(LANG("obj.068cbd17", list(owner))),
+			span_warning(LANG("obj.710095ff", null))
 		)
 		if(active_item)
 			Retract()
@@ -159,8 +159,8 @@
 			effect_chance = 25
 	if(prob(effect_chance) && owner)
 		owner.visible_message(
-			span_danger("[owner]'s triage implant's actuators twitch erratically!"),
-			span_warning("Your triage implant malfunctions, making your hand shake!")
+			span_danger(LANG("obj.208fa22e", list(owner))),
+			span_warning(LANG("obj.d42e98e2", null))
 		)
 		if(active_item)
 			Retract()
@@ -224,8 +224,8 @@
 			effect_chance = 30
 	if(prob(effect_chance) && owner)
 		owner.visible_message(
-			span_danger("[owner]'s thumbtip lighter sparks repeatedly!"),
-			span_warning("Your thumbtip lighter malfunctions, sparking uncontrollably!")
+			span_danger(LANG("obj.31ed1db0", list(owner))),
+			span_warning(LANG("obj.aa3f356e", null))
 		)
 		do_sparks(3, TRUE, owner)
 		owner.adjust_fire_stacks(1)
@@ -248,8 +248,8 @@
 			effect_chance = 35
 	if(prob(effect_chance) && owner)
 		owner.visible_message(
-			span_danger("[owner]'s forging implant hisses and steams!"),
-			span_warning("Your forging implant overheats uncomfortably!")
+			span_danger(LANG("obj.ad922bd0", list(owner))),
+			span_warning(LANG("obj.2eb25acf", null))
 		)
 		if(active_item)
 			Retract()
@@ -312,8 +312,8 @@
 			effect_chance = 25
 	if(prob(effect_chance) && owner)
 		owner.visible_message(
-			span_danger("[owner]'s cargo implant sparks and malfunctions!"),
-			span_warning("Your cargo implant shorts out briefly!")
+			span_danger(LANG("obj.e0266902", list(owner))),
+			span_warning(LANG("obj.2215234e", null))
 		)
 		do_sparks(3, TRUE, owner)
 		if(active_item)

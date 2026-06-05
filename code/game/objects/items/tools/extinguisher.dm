@@ -108,12 +108,12 @@
 
 	log_combat(user, wallopee, "prepared to use a bash attack with a [src] against [wallopee]")
 
-	wallopee.visible_message(span_danger("[user] begins to raise [src] above [wallopee]'s [head_name]."), span_userdanger("[user] begins to raise [src], aiming to cave in your [head_name]!"))
+	wallopee.visible_message(span_danger(LANG("obj.9b83bdbf", list(user, src, wallopee, head_name))), span_userdanger(LANG("obj.19ff9020", list(user, src, head_name))))
 
 	if(!do_after(user,  2 SECONDS, target = wallopee))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	wallopee.visible_message(span_danger("[user] brings [src] heavily down on [wallopee]'s [head_name]."), span_userdanger("[user] brings [src] heavily down on your [head_name]!"))
+	wallopee.visible_message(span_danger(LANG("obj.b2fb04a5", list(user, src, wallopee, head_name))), span_userdanger(LANG("obj.8051bcf0", list(user, src, head_name))))
 
 	var/min_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 30, wound_source = src)
 	var/max_wound = head_to_bash.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 50, wound_source = src)
@@ -214,14 +214,14 @@
 
 /obj/item/extinguisher/suicide_act(mob/living/carbon/user)
 	if (!safety && (reagents.total_volume >= 1))
-		user.visible_message(span_suicide("[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!"))
+		user.visible_message(span_suicide(LANG("obj.9fa8a972", list(user, user.p_their(), user.p_theyre()))))
 		interact_with_atom(user, user)
 		return OXYLOSS
 	else if (safety && (reagents.total_volume >= 1))
-		user.visible_message(span_warning("[user] puts the nozzle to [user.p_their()] mouth... The safety's still on!"))
+		user.visible_message(span_warning(LANG("obj.24d077ad", list(user, user.p_their()))))
 		return SHAME
 	else
-		user.visible_message(span_warning("[user] puts the nozzle to [user.p_their()] mouth... [src] is empty!"))
+		user.visible_message(span_warning(LANG("obj.13b2da04", list(user, user.p_their(), src))))
 		return SHAME
 
 /obj/item/extinguisher/attack_self(mob/user)
@@ -368,7 +368,7 @@
 	if(loc == user && reagents.total_volume)
 		reagents.expose(user.loc, TOUCH)
 		reagents.clear_reagents()
-		user.visible_message(span_notice("[user] empties out [src] onto the floor using the release valve."), span_info("You quietly empty out [src] using its release valve."))
+		user.visible_message(span_notice(LANG("obj.6f49410c", list(user, src))), span_info(LANG("obj.e1d68383", list(src))))
 
 // Firebot assembly
 /obj/item/extinguisher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

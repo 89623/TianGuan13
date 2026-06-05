@@ -25,7 +25,7 @@
 		balloon_alert(user, LANG("obj.f76d9d32", null))
 		return FALSE
 	printpicture(user, selection)
-	user.visible_message(span_notice("A picture appears on top of the chassis of [pai.name]!"), span_notice("You print a photograph."))
+	user.visible_message(span_notice(LANG("obj.ddc57374", list(pai.name))), span_notice(LANG("obj.ea70dffc", null)))
 	return TRUE
 
 /**

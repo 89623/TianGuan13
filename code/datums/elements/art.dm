@@ -33,8 +33,8 @@
 			user.add_mood_event("artbad", /datum/mood_event/artbad)
 			msg = "Wow, [source.p_they()] sucks."
 
-	user.visible_message(span_notice("[user] stops and looks intently at [source]."), \
-		span_notice("You appraise [source]... [msg]"))
+	user.visible_message(span_notice(LANG("datum.73935422", list(user, source))), \
+		span_notice(LANG("datum.1183c7b0", list(source, msg))))
 
 /datum/element/art/proc/on_examine(atom/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
@@ -63,8 +63,8 @@
 		user.add_mood_event("artbad", /datum/mood_event/artbad)
 		msg = "Wow, [source.p_they()] sucks."
 
-	user.visible_message(span_notice("[user] stops to inspect [source]."), \
-		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))
+	user.visible_message(span_notice(LANG("datum.31cf3ad1", list(user, source))), \
+		span_notice(LANG("datum.eaeec52b", list(source, msg))))
 
 /datum/element/art/commoner
 
@@ -87,5 +87,5 @@
 		user.add_mood_event("artbad", /datum/mood_event/artbad)
 		msg = "Wow, [source.p_they()] sucks."
 
-	user.visible_message(span_notice("[user] stops to inspect [source]."), \
-		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))
+	user.visible_message(span_notice(LANG("datum.31cf3ad1", list(user, source))), \
+		span_notice(LANG("datum.eaeec52b", list(source, msg))))

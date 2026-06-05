@@ -15,7 +15,7 @@
 	if(ishuman(mover))
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
-			H.visible_message(span_warning("[H] pushes through [src]!"), span_notice("You've seen and eaten worse than this."))
+			H.visible_message(span_warning(LANG("obj.be923758", list(H, src))), span_notice(LANG("obj.886b2007", null)))
 			return TRUE
 		else
 			to_chat(H, span_warning(LANG("obj.e9dc8df9", list(src))))
@@ -50,5 +50,5 @@
 	H.dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	user.updateappearance(mutcolor_update=1)
 	user.domutcheck()
-	user.visible_message(span_warning("[user]'s appearance shifts into [H]'s!"), \
-	span_bolddanger("[H.p_They()] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't."))
+	user.visible_message(span_warning(LANG("obj.41e9148a", list(user, H))), \
+	span_bolddanger(LANG("obj.282eb890", list(H.p_They(), H.p_s(), H.p_theyre(), H.p_they()))))

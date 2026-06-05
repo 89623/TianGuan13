@@ -278,8 +278,8 @@
 		shoot_with_empty_chamber(user)
 		spun = FALSE
 		user.visible_message(
-			span_danger("[user] tries to fire \the [src] aimed at something else, but only succeeds at looking like an idiot."),
-			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"),
+			span_danger(LANG("obj.e95dedf3", list(user, src))),
+			span_danger(LANG("obj.90852171", list(src))),
 		)
 		return TRUE // no melee attack
 	if(!spun)
@@ -302,8 +302,8 @@
 	if(aim_time <= 0)
 		return FALSE
 	user.visible_message(
-		span_danger("[user] aims \the [src] at [user.p_their()] [parse_zone(user.zone_selected)]..."),
-		span_userdanger("You aim \the [src] at your [parse_zone(user.zone_selected)]..."),
+		span_danger(LANG("obj.381a74d9", list(user, src, user.p_their(), parse_zone(user.zone_selected)))),
+		span_userdanger(LANG("obj.f1efe36d", list(src, parse_zone(user.zone_selected)))),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	if(prob(10) && !HAS_TRAIT(user, TRAIT_FEARLESS))
@@ -311,8 +311,8 @@
 	if(!do_after(user, aim_time, target))
 		if(!user.incapacitated)
 			user.visible_message(
-				span_danger("[user] loses [user.p_their()] nerve and puts \the [src] down."),
-				span_userdanger("You lose your nerve and put \the [src] down."),
+				span_danger(LANG("obj.f83820b0", list(user, user.p_their(), src))),
+				span_userdanger(LANG("obj.eb0ac5dc", list(src))),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 		return TRUE
@@ -349,18 +349,18 @@
 		if(loaded_rounds && is_target_face)
 			user.add_mood_event("russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
 		user.visible_message(
-			span_danger("[user][is_target_face ? "": " cowardly"] points \the [src] at [user.p_their()] [aimed_at_readable], pulls the trigger, and... nothing happens!"),
-			span_danger("You[is_target_face ? "": " cowardly"] point \the [src] at your [aimed_at_readable], pull the trigger, and... nothing happens!"),
-			span_hear("You hear a click!"),
+			span_danger(LANG("obj.e7e64728", list(user, is_target_face ? "": " cowardly", src, user.p_their(), aimed_at_readable))),
+			span_danger(LANG("obj.3dbfa656", list(is_target_face ? "": " cowardly", src, aimed_at_readable))),
+			span_hear(LANG("obj.dc441496", null)),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 		return TRUE // so they don't hit themselves in the forehead. because returning FALSE translates to "do melee attack" for whatever reason
 
 	user.visible_message(
-		span_danger("[user][is_target_face ? "": " cowardly"] aims \the [src] at [user.p_their()] [aimed_at_readable] as it goes off!"),
-		span_danger("You[is_target_face ? "": " cowardly"] aim \the [src] at your [aimed_at_readable] as it goes off![user.stat >= HARD_CRIT ? " <b>Everything suddenly goes black.</b>" : ""]"),
-		span_hear("You hear a grunt[user.stat == CONSCIOUS ? "" : ", followed by a thud"]!"),
+		span_danger(LANG("obj.787bde19", list(user, is_target_face ? "": " cowardly", src, user.p_their(), aimed_at_readable))),
+		span_danger(LANG("obj.73f6fe2e", list(is_target_face ? "": " cowardly", src, aimed_at_readable, user.stat >= HARD_CRIT ? " <b>Everything suddenly goes black.</b>" : ""))),
+		span_hear(LANG("obj.d69ae26b", list(user.stat == CONSCIOUS ? "" : ", followed by a thud"))),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
@@ -391,15 +391,15 @@
 			qdel(stone)
 			return
 		user.visible_message(
-			span_danger("[user]'s soul is captured by \the [src]!"),
-			span_userdanger("You've lost the gamble! Your soul is forfeit!"),
+			span_danger(LANG("obj.4e14d537", list(user, src))),
+			span_userdanger(LANG("obj.2bd83ab4", null)),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 		return
 
 	user.visible_message(
-		span_danger("[user] is punished for trying to cheat the game!"),
-		span_userdanger("You've lost the gamble! Not only is your soul forfeit, but it is whisked away for attempting to cheat death!"),
+		span_danger(LANG("obj.9a26ddce", list(user))),
+		span_userdanger(LANG("obj.4f50106a", null)),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	user.dust(drop_items = TRUE)
@@ -413,7 +413,7 @@
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) || is_clown_job(user.mind?.assigned_role))
 		return ..()
 	if(process_fire(user, user, FALSE, null, BODY_ZONE_HEAD))
-		user.visible_message(span_warning("[user] somehow manages to shoot [user.p_them()]self in the face!"), span_userdanger("You somehow shoot yourself in the face! How the hell?!"))
+		user.visible_message(span_warning(LANG("obj.8e788618", list(user, user.p_them()))), span_userdanger(LANG("obj.2cb5408d", null)))
 		user.emote("scream")
 		user.drop_all_held_items()
 		user.Paralyze(80)

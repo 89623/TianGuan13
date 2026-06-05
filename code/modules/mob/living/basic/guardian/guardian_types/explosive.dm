@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A durable guardian which can convert objects into hidden explosives.
 /mob/living/basic/guardian/explosive
 	guardian_type = GUARDIAN_EXPLOSIVE
@@ -63,7 +64,7 @@
 		explosive_checks = CALLBACK(src, PROC_REF(validate_target)), \
 		triggering_signals = boom_signals, \
 	)
-	target.balloon_alert(owner, "bomb planted")
+	target.balloon_alert(owner, LANG("datum.d241cecb", null))
 	StartCooldown()
 	return TRUE
 

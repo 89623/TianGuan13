@@ -56,18 +56,18 @@
 	var/mob/living/buckled = buckled_mob
 	if(buckled)
 		if(buckled != user)
-			buckled.visible_message(span_notice("[user] starts unbuckling [buckled] from [src]."),\
-				span_notice("[user] tries to unbuckle you from [src]."),\
-				span_hear("You hear loose ropes."))
+			buckled.visible_message(span_notice(LANG("obj.54090652", list(user, buckled, src))),\
+				span_notice(LANG("obj.7b1ccc3d", list(user, src))),\
+				span_hear(LANG("obj.aae6764c", null)))
 			if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 5 SECONDS : 10 SECONDS, buckled))
 				return FALSE
-			buckled.visible_message(span_notice("[user] unbuckles [buckled] from [src]."),\
-				span_notice("[user] unbuckles you from [src]."),\
-				span_hear("You hear loose ropes."))
+			buckled.visible_message(span_notice(LANG("obj.c58c7a9a", list(user, buckled, src))),\
+				span_notice(LANG("obj.8a13b258", list(user, src))),\
+				span_hear(LANG("obj.aae6764c", null)))
 		else
-			user.visible_message(span_notice("[user] starts unbuckling themselves from [src]."),\
-				span_notice("[user] unbuckles themselves from [src]."),\
-				span_hear("You hear loose ropes."))
+			user.visible_message(span_notice(LANG("obj.f2d47fc9", list(user, src))),\
+				span_notice(LANG("obj.75718bf6", list(user, src))),\
+				span_hear(LANG("obj.aae6764c", null)))
 		add_fingerprint(user)
 		if(isliving(buckled.pulledby))
 			var/mob/living/living_mob = buckled.pulledby
@@ -97,9 +97,9 @@
 		return FALSE
 
 	if(buckled != user)
-		buckled.visible_message(span_warning("[user] starts tying [buckled] to \the [src]!"),\
-			span_userdanger("[user] starts tying you to \the [src]!"),\
-			span_hear("You hear ropes being tightened."))
+		buckled.visible_message(span_warning(LANG("obj.22b778bd", list(user, buckled, src))),\
+			span_userdanger(LANG("obj.c2c84af6", list(user, src))),\
+			span_hear(LANG("obj.7323275e", null)))
 		if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 5 SECONDS : 10 SECONDS, buckled))
 			return FALSE
 
@@ -120,9 +120,9 @@
 			rope.use(1)
 			add_overlay(shibari_shadow_overlay)
 			add_rope_overlays(ropee.greyscale_colors, hooman?.dna?.mutant_bodyparts[FEATURE_TAUR])
-			buckled.visible_message(span_warning("[user] tied [buckled] to \the [src]!"),\
-				span_userdanger("[user] tied you to \the [src]!"),\
-				span_hear("You hear ropes being completely tightened."))
+			buckled.visible_message(span_warning(LANG("obj.a4ccf06d", list(user, buckled, src))),\
+				span_userdanger(LANG("obj.bb32a33b", list(user, src))),\
+				span_hear(LANG("obj.89f7878b", null)))
 			return TRUE
 		else
 			return FALSE

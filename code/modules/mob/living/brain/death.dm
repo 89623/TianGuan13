@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/brain/death(gibbed)
 	if(stat == DEAD)
 		return
@@ -5,8 +6,8 @@
 
 	if(!gibbed && container)//If not gibbed but in a container.
 		var/obj/item/mmi = container
-		mmi.visible_message(span_warning("[src]'s MMI flatlines!"), \
-					span_hear("You hear something flatline."))
+		mmi.visible_message(span_warning(LANG("mob.234ce8af", list(src))), \
+					span_hear(LANG("mob.642a3a82", null)))
 		mmi.update_appearance()
 
 	return ..()

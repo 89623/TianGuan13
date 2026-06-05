@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/signal_commander
 	filename = "signaler"
 	filedesc = "SignalCommander"
@@ -72,12 +73,12 @@
 
 	if(!COOLDOWN_FINISHED(src, signal_cooldown))
 		if(user)
-			computer.balloon_alert(user, "cooling down!")
+			computer.balloon_alert(user, LANG("datum.5aabc0e3", null))
 		return
 
 	COOLDOWN_START(src, signal_cooldown, signal_cooldown_time)
 	if(user)
-		computer.balloon_alert(user, "signaled")
+		computer.balloon_alert(user, LANG("datum.619d443f", null))
 
 	var/time = time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)
 	var/turf/T = get_turf(computer)

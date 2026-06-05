@@ -28,7 +28,7 @@
 
 	var/obj/structure/puzzgrid_effect/puzzgrid_effect = new(target.loc, target, puzzgrid, timer, gib_on_loss)
 	target.forceMove(puzzgrid_effect)
-	puzzgrid_effect.visible_message(span_warning("[target] has suddenly transformed into a fiendishly hard puzzle!"))
+	puzzgrid_effect.visible_message(span_warning(LANG("datum.9ac6a75b", list(target))))
 
 	playsound(puzzgrid_effect, 'sound/effects/magic.ogg', 70)
 
@@ -76,8 +76,8 @@
 	victim.forceMove(loc)
 	victim.Paralyze(5 SECONDS)
 	victim.visible_message(
-		span_notice("[victim] is unshackled from their fiendish prison!"),
-		span_notice("You are unshackled from your fiendish prison!"),
+		span_notice(LANG("obj.70442626", list(victim))),
+		span_notice(LANG("obj.ffcb9dac", null)),
 	)
 
 	victim.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
@@ -89,8 +89,8 @@
 /obj/structure/puzzgrid_effect/proc/loss_gib()
 	victim.forceMove(loc)
 	victim.visible_message(
-		span_bolddanger("You were unable to free [victim] from their fiendish prison, leaving them as nothing more than a smattering of mush!"),
-		span_bolddanger("Your compatriates were unable to free you from your fiendish prison, leaving you as nothing more than a smattering of mush!"),
+		span_bolddanger(LANG("obj.8dc329de", list(victim))),
+		span_bolddanger(LANG("obj.6b8258eb", null)),
 	)
 	victim.gib(DROP_ALL_REMAINS)
 	victim = null
@@ -102,7 +102,7 @@
 	if (isnull(puzzgrid))
 		victim.forceMove(loc)
 		victim.Paralyze(5 SECONDS)
-		victim.visible_message(span_bolddanger("Despite completely failing the puzzle, through unbelievable luck, [victim] manages to break out anyway!"))
+		victim.visible_message(span_bolddanger(LANG("obj.9ef614c1", list(victim))))
 		victim.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 		qdel(src)
 		victim = null

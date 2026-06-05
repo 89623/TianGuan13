@@ -58,7 +58,7 @@
 	if(!sliced)
 		slice(user, tool)
 		return ITEM_INTERACT_SUCCESS
-	user.visible_message(span_notice("[user] seperates [src] into individual slices with [tool]."))
+	user.visible_message(span_notice(LANG("obj.388bcfdc", list(user, src, tool))))
 	cut_apart()
 	return ITEM_INTERACT_SUCCESS
 
@@ -74,7 +74,7 @@
 	. = ..()
 	if(!sliced)
 		return
-	user.visible_message(span_notice("[user] takes a slice of [src]."), span_notice("You take a slice of [src]."))
+	user.visible_message(span_notice(LANG("obj.3fc50ba7", list(user, src))), span_notice(LANG("obj.352221ee", list(src))))
 	produce_slice(user)
 
 /obj/item/food/pizza/proc/get_slices_filter() //to not repeat code
@@ -86,7 +86,7 @@
 		return
 	tool?.play_tool_sound(src)
 	sliced = TRUE
-	user?.visible_message(span_notice("[user] cuts [src] into 6 slices with [tool]."))
+	user?.visible_message(span_notice(LANG("obj.d7c0b051", list(user, src, tool))))
 	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 
 /obj/item/food/pizza/proc/cut_apart()
@@ -496,7 +496,7 @@
 	if(!did_the_thing)
 		return
 	to_chat(user, span_userdanger(LANG("obj.051a811d", null))) //makes the reference more obvious
-	user.visible_message(span_warning("\The [src] breaks off [user]'s arm!"), span_warning("\The [src] breaks off your arm!"))
+	user.visible_message(span_warning(LANG("obj.cd35d899", list(src, user))), span_warning(LANG("obj.fd6197af", list(src))))
 	playsound(user, SFX_DESECRATION, 50, TRUE, -1)
 
 /obj/item/food/proc/i_kill_you(obj/item/item, mob/living/user)

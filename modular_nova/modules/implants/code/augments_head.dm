@@ -26,8 +26,8 @@
 	owner.spray_blood(owner.dir, 2)
 	owner.emote("cough")
 	owner.visible_message(
-		span_danger("[owner] suddenly coughs up a mouthful of blood, clutching at their chest!"),
-		span_danger("You feel your chest seize up, a worrying amount of blood flying out of your mouth as you cough uncontrollably.")
+		span_danger(LANG("obj.ad136f09", list(owner))),
+		span_danger(LANG("obj.5359b9c3", null))
 	)
 
 /obj/item/autosurgeon/syndicate/sandy
@@ -56,13 +56,13 @@
 
 	if(human_owner.is_neuroware_compatible())
 		human_owner.reagents.add_reagent(/datum/reagent/drug/twitch/synth, injection_amount)
-		owner.visible_message(span_danger("[owner.name] jolts suddenly as their Qani-Laaca system whirs to life, uploading a program into their computing matrix."), \
-				span_userdanger("You jolt suddenly as your Qani-Laaca system begins uploading a sensory acceleration program into your computing matrix."))
+		owner.visible_message(span_danger(LANG("datum.d0cc93d9", list(owner.name))), \
+				span_userdanger(LANG("datum.32fcd558", null)))
 		playsound(human_owner, 'sound/items/hypospray.ogg', 50, TRUE)
 	else
 		human_owner.reagents.add_reagent(/datum/reagent/drug/twitch, injection_amount)
-		owner.visible_message(span_danger("[owner.name] jolts suddenly as two small glass vials are fired from ports in the implant on their spine, shattering as they land."), \
-				span_userdanger("You jolt suddenly as your Qani-Laaca system ejects two empty glass vials rearward, shattering as they land."))
+		owner.visible_message(span_danger(LANG("datum.91c7767f", list(owner.name))), \
+				span_userdanger(LANG("datum.e0e6e853", null)))
 		playsound(human_owner, 'sound/items/hypospray.ogg', 50, TRUE)
 
 		var/obj/item/telegraph_vial = new /obj/item/qani_laaca_telegraph(get_turf(owner))
@@ -157,11 +157,11 @@
 	. = ..()
 
 	if(ismob(cast_on) || is_type_in_list(cast_on, emag_blacklist))
-		owner.balloon_alert(owner, "can't find data access point!")
+		owner.balloon_alert(owner, LANG("datum.58684a77", null))
 		return FALSE
 
 	if(get_dist(owner, cast_on) > hack_range)
-		owner.balloon_alert(owner, "too far away!")
+		owner.balloon_alert(owner, LANG("datum.a462ee7c", null))
 		return FALSE
 
 	return TRUE
@@ -174,8 +174,8 @@
 	playsound(owner, 'sound/effects/light_flicker.ogg', 50, TRUE)
 	var/beam = owner.Beam(cast_on, icon_state = "light_beam", time = 5 SECONDS)
 
-	owner.visible_message(span_bolddanger("[owner.name] makes an unusual buzzing sound as the air between [owner.p_them()] and [cast_on] crackles."), \
-			span_bolddanger("The air between you and [cast_on] begins to crackle audibly as the Binyat gets to work."))
+	owner.visible_message(span_bolddanger(LANG("datum.851e71c5", list(owner.name, owner.p_them(), cast_on))), \
+			span_bolddanger(LANG("datum.ed541b76", list(cast_on))))
 
 	if(!do_after(owner, 5 SECONDS, cast_on, IGNORE_SLOWDOWNS))
 		qdel(beam)
@@ -183,7 +183,7 @@
 		return
 
 	if(!cast_on.emag_act(owner))
-		owner.balloon_alert(owner, "can't hack this!")
+		owner.balloon_alert(owner, LANG("datum.294954ad", null))
 		StartCooldown(1 SECONDS) // Resets the spell to working after a second, just so its not spammed
 		return
 

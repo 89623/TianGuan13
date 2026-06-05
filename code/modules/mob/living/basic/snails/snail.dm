@@ -120,11 +120,11 @@
 
 	. = ITEM_INTERACT_BLOCKING
 	if(held_mob.stat == DEAD)
-		user.balloon_alert(user, "it's dead!")
+		user.balloon_alert(user, LANG("obj.5f159f3d", null))
 		return
 
 	if(locate(type) in interacting_with)
-		user.balloon_alert(user, "already has snail!")
+		user.balloon_alert(user, LANG("obj.5881ef41", null))
 		return
 
 	if(!do_after(user, 2 SECONDS, interacting_with))

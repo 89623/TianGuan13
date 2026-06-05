@@ -219,8 +219,8 @@
 	if(!iscarbon(living_mob))
 		living_mob.apply_damage(75, BRUTE, blocked = living_mob.run_armor_check(attack_flag = MELEE, silent = TRUE))
 		playsound(living_mob, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
-		living_mob.visible_message(span_danger("[living_mob] is brutally threshed by [vine]!"), \
-		span_userdanger("You are brutally threshed by [vine]!"))
+		living_mob.visible_message(span_danger(LANG("datum.40f3aa77", list(living_mob, vine))), \
+		span_userdanger(LANG("datum.58ed31e1", list(vine))))
 		log_combat(vine, living_mob, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
 		return
 
@@ -236,8 +236,8 @@
 			victim.apply_damage(50, BRUTE, def_zone = limb, wound_bonus = rand(-20,10), sharpness = SHARP_POINTY) //This one gets a bit lower damage because it ignores armor.
 			victim.Stun(1 SECONDS) //Stopped in place for a moment.
 			playsound(living_mob, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
-			living_mob.visible_message(span_danger("[living_mob] is nailed by a sharp thorn!"), \
-			span_userdanger("You are nailed by a sharp thorn!"))
+			living_mob.visible_message(span_danger(LANG("datum.e4a6aaa1", list(living_mob))), \
+			span_userdanger(LANG("datum.07c1ab51", null)))
 			log_combat(vine, living_mob, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
 			return
 
@@ -245,8 +245,8 @@
 			victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
 			victim.Knockdown(2 SECONDS)
 			playsound(victim, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
-			living_mob.visible_message(span_danger("[living_mob] is lacerated by an outburst of vines!"), \
-			span_userdanger("You are lacerated by an outburst of vines!"))
+			living_mob.visible_message(span_danger(LANG("datum.34e7bdaa", list(living_mob))), \
+			span_userdanger(LANG("datum.01f526cd", null)))
 			log_combat(vine, living_mob, "aggressively lacerated")
 			return
 
@@ -255,8 +255,8 @@
 	var/atom/throw_target = get_edge_target_turf(living_mob, get_dir(vine, get_step_away(living_mob, vine)))
 	victim.throw_at(throw_target, 3, 6)
 	playsound(victim, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-	living_mob.visible_message(span_danger("[living_mob] is smashed by a large vine!"), \
-	span_userdanger("You are smashed by a large vine!"))
+	living_mob.visible_message(span_danger(LANG("datum.e86f22b7", list(living_mob))), \
+	span_userdanger(LANG("datum.83da9f6a", null)))
 	log_combat(vine, living_mob, "aggressively smashed")
 
 /datum/spacevine_mutation/transparency

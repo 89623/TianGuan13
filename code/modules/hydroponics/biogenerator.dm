@@ -74,9 +74,9 @@
 		if(!tool.tool_start_check(user, amount=2))
 			return TRUE
 		user.visible_message(
-			span_notice("[user.name] starts to cut \the [src] free from the floor."),
-			span_notice("You start to cut [src] free from the floor..."),
-			span_hear("You hear welding."),
+			span_notice(LANG("obj.62651aed", list(user.name, src))),
+			span_notice(LANG("obj.41ed57fe", list(src))),
+			span_hear(LANG("obj.1aa82fa3", null)),
 		)
 		if(!tool.use_tool(src, user, 10 SECONDS, volume=100))
 			return FALSE
@@ -89,9 +89,9 @@
 	if(!tool.tool_start_check(user, amount=2))
 		return TRUE
 	user.visible_message(
-		span_notice("[user.name] starts to weld \the [src] to the floor."),
-		span_notice("You start to weld [src] to the floor..."),
-		span_hear("You hear welding."),
+		span_notice(LANG("obj.9449da47", list(user.name, src))),
+		span_notice(LANG("obj.7765e0fa", list(src))),
+		span_hear(LANG("obj.1aa82fa3", null)),
 	)
 	if(!tool.use_tool(src, user, 10 SECONDS, volume=100))
 		balloon_alert(user, LANG("obj.bcb4be71", null))
@@ -220,7 +220,7 @@
 		return
 	var/turf/drop_location = drop_location()
 	if(biomass > 0)
-		drop_location.visible_message(span_warning("Biomass spills from \the [src]'s biomass tank!"))
+		drop_location.visible_message(span_warning(LANG("obj.7d7dbe0b", list(src))))
 		playsound(drop_location, 'sound/effects/slosh.ogg', 25, vary = TRUE)
 		new /obj/effect/decal/cleanable/greenglow(drop_location)
 

@@ -58,7 +58,7 @@
 		return
 	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 	user.visible_message(
-		span_notice("\The [user] points \the [src] at \the [target] and performs a forensic scan.")
+		span_notice(LANG("obj.714a7407", list(user, src, target)))
 	)
 
 /obj/item/forensics_spoofer/proc/clear_values(list/the_list)
@@ -68,7 +68,7 @@
 /obj/item/forensics_spoofer/proc/scan(atom/target, mob/living/user)
 	do_fake_scan(target, user)
 	if(isnull(target.forensics))
-		target.balloon_alert(user, "nothing!")
+		target.balloon_alert(user, LANG("obj.b3b4b84f", null))
 		return ITEM_INTERACT_FAILURE
 	var/list/new_fibers = LAZYCOPY(target.forensics.fibers) - fibers
 	var/list/new_prints = LAZYCOPY(target.forensics.fingerprints) - fingerprints
@@ -124,7 +124,7 @@
 		target.add_fingerprint_list(list(chosen_fingerprint))
 		user.log_message("has tampered with the fingerprints/fibers of [src]. Added [chosen_fingerprint]", LOG_ATTACK)
 
-	target.balloon_alert(user, "[do_fibers ? "fiber" : "fingerprint"] added")
+	target.balloon_alert(user, LANG("obj.685295ad", list(do_fibers ? "fiber" : "fingerprint")))
 	target.add_hiddenprint(user)
 	COOLDOWN_START(src, tamper_cooldown, tamper_cooldown_time)
 

@@ -50,7 +50,7 @@
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)
 	if(!user.combat_mode || pushed_over || !isturf(loc))
 		return ..()
-	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
+	user.visible_message(span_warning(LANG("obj.1715c5fe", list(user, src))), span_danger(LANG("obj.52f6060f", list(src))))
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
@@ -130,7 +130,7 @@
 		return FALSE
 	if(!check_menu(user, crayon))
 		return FALSE
-	user.visible_message(span_notice("[user] gives [src] a new look."), span_notice("Voila! You give [src] a new look."))
+	user.visible_message(span_notice(LANG("obj.acff05e0", list(user, src))), span_notice(LANG("obj.b26f51bd", list(src))))
 	crayon.use_charges(1)
 	crayon.check_empty(user)
 	alpha = 255

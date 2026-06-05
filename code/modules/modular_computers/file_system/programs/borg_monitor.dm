@@ -40,7 +40,7 @@
 		username = "user [stored_card.registered_name]"
 	to_chat(borgo, span_userdanger(LANG("datum.9e83c38b", list(username))))//Damning evidence may be contained, so warn the borg
 	borgo.logevent("File request by [username]: /var/logs/syslog")
-	borgo.balloon_alert(user, "downloading logs")
+	borgo.balloon_alert(user, LANG("datum.0c29e299", null))
 	return TRUE
 
 /datum/computer_file/program/borg_monitor/process_tick(seconds_per_tick)

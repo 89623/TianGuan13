@@ -61,7 +61,7 @@
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
 		return FALSE
 	mind_control_uses--
-	owner.balloon_alert(owner, "new compulsion")
+	owner.balloon_alert(owner, LANG("obj.9f944227", null))
 	to_chat(owner, span_userdanger(LANG("obj.221865e7", null)))
 	to_chat(owner, span_mind_control("[command]"))
 	active_mind_control = TRUE
@@ -76,7 +76,7 @@
 /obj/item/organ/heart/gland/proc/clear_mind_control()
 	if(!ownerCheck() || !active_mind_control)
 		return FALSE
-	owner.balloon_alert(owner, "compulsion forgotten")
+	owner.balloon_alert(owner, LANG("obj.95e6670c", null))
 	to_chat(owner, span_userdanger(LANG("obj.e8ceee66", null)))
 	owner.clear_alert(ALERT_MIND_CONTROL)
 	active_mind_control = FALSE

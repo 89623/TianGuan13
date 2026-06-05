@@ -50,7 +50,7 @@
 		return
 
 	if(!attempt_slide(source_atom, user))
-		source_atom.balloon_alert(user, "something blocks the way!")
+		source_atom.balloon_alert(user, LANG("datum.a7d57b22", null))
 		return
 
 	source_atom.balloon_alert_to_viewers("something squeezes through!")

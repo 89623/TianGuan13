@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/ai_controller/basic_controller/bot/honkbot
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/secbot,
@@ -79,7 +80,7 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/datum/action/honk_ability = controller.blackboard[BB_HONK_ABILITY]
 	honk_ability?.Trigger()
-	living_pawn.manual_emote("celebrates with [living_target]!")
+	living_pawn.manual_emote(LANG("datum.7a01e7ea", list(living_target)))
 	living_pawn.emote("flip")
 	living_pawn.emote("beep")
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

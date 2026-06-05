@@ -62,7 +62,7 @@
 		return
 	var/mob/mob_parent = parent
 	held_disk.forceMove(mob_parent.drop_location())
-	mob_parent.visible_message(span_danger("[mob_parent] drops [held_disk] onto the ground!"))
+	mob_parent.visible_message(span_danger(LANG("datum.1a8f7f13", list(mob_parent, held_disk))))
 	disky = null
 	mob_parent.update_appearance(updates = UPDATE_ICON)
 
@@ -106,7 +106,7 @@
 	potential_disky.forceMove(mob_parent)
 	disky = WEAKREF(potential_disky)
 	mob_parent.update_appearance(updates = UPDATE_ICON)
-	mob_parent.balloon_alert(mob_parent, "disk secured!")
+	mob_parent.balloon_alert(mob_parent, LANG("datum.b2c799cf", null))
 	on_disk_collected?.InvokeAsync(potential_disky)
 
 /// Uses the disk on clicked atom, or places it on the ground
@@ -119,7 +119,7 @@
 
 	held_disk.forceMove(attacked_target)
 	disky = null
-	mob_parent.balloon_alert(mob_parent, "disk dropped!")
+	mob_parent.balloon_alert(mob_parent, LANG("datum.21a56fae", null))
 	mob_parent.update_appearance(updates = UPDATE_ICON)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

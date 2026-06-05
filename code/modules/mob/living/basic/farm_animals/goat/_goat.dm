@@ -84,8 +84,8 @@
 		edible_bodypart.dismember()
 
 	living_target.visible_message(
-		span_warning("[src] takes a big chomp out of [living_target]!"),
-		span_userdanger("[src] takes a big chomp out of your [edible_bodypart || "body"]!"),
+		span_warning(LANG("mob.097c1377", list(src, living_target))),
+		span_userdanger(LANG("mob.5e8b5fb9", list(src, edible_bodypart || "body"))),
 	)
 
 	return COMPONENT_HOSTILE_NO_ATTACK

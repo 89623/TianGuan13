@@ -51,5 +51,5 @@
 		burp.set_temperature(TRITIUM_MINIMUM_BURN_TEMPERATURE)
 		if(affected_mob.stat == CONSCIOUS)
 			to_chat(affected_mob, span_warning(LANG("datum.cad00aab", null)))
-	affected_mob.visible_message("burps out green gas.", visible_message_flags = EMOTE_MESSAGE)
+	affected_mob.visible_message(LANG("datum.94a8c219", null), visible_message_flags = EMOTE_MESSAGE)
 	affected_mob.loc.assume_air(burp)

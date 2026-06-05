@@ -28,7 +28,7 @@
 		to_chat(user, span_warning(LANG("datum.b6f72b4d", null)))
 		return FALSE
 
-	user.visible_message(span_notice("[user] suddenly falls into a deep slumber, [user.p_their()] eyes fluttering..."))
+	user.visible_message(span_notice(LANG("datum.4895edcf", list(user, user.p_their()))))
 	user.adjust_drowsiness(30 SECONDS)
 	return ..()
 

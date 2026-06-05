@@ -71,7 +71,7 @@
 		return
 	loc.balloon_alert_to_viewers("weaving...")
 	if(!do_after(user, 2 SECONDS))
-		loc.balloon_alert(user, "interrupted!")
+		loc.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
@@ -108,7 +108,7 @@
 		return
 
 	if(prob(25))
-		loc.balloon_alert(victim, "stuck in web!")
+		loc.balloon_alert(victim, LANG("obj.00433e54", null))
 		victim.Shake(duration = 0.2 SECONDS)
 
 	victim.adjust_stamina_loss(rand(10, 15))
@@ -244,7 +244,7 @@
 
 /obj/structure/spider/cocoon/Destroy()
 	var/turf/T = get_turf(src)
-	src.visible_message(span_warning("\The [src] splits open."))
+	src.visible_message(span_warning(LANG("obj.ed49dd86", list(src))))
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
 	return ..()

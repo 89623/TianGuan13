@@ -146,17 +146,17 @@
 			to_chat(user, span_warning(LANG("obj.da90255e", list(buckled_mob, src))))
 			return FALSE
 
-		buckled_mob.visible_message(span_notice("[user] unbuckles [buckled_mob] from [src]."),\
-			span_notice("[user] unbuckles you from [src]."),\
-			span_hear("You hear metal clanking."))
+		buckled_mob.visible_message(span_notice(LANG("obj.c58c7a9a", list(user, buckled_mob, src))),\
+			span_notice(LANG("obj.8a13b258", list(user, src))),\
+			span_hear(LANG("obj.4ea246f9", null)))
 
 	else
 		if(!do_after(user, 10 SECONDS, buckled_mob)) // Timer for unbuckling one mob with another mob
 			to_chat(user, span_warning(LANG("obj.f7cd4294", list(src))))
 			return FALSE
 
-		user.visible_message(span_notice("You unbuckle yourself from [src]."),\
-			span_hear("You hear metal clanking."))
+		user.visible_message(span_notice(LANG("obj.bd5bbd6c", list(src))),\
+			span_hear(LANG("obj.4ea246f9", null)))
 
 	unbuckle_mob(buckled_mob)
 
@@ -189,15 +189,15 @@
 			return FALSE
 
 		if(buckle_mob(affected_mob, check_loc = check_loc))
-			user.visible_message(span_warning("You buckle yourself to [src]!"),\
-				span_hear("You hear metal clanking."))
+			user.visible_message(span_warning(LANG("obj.98755165", list(src))),\
+				span_hear(LANG("obj.4ea246f9", null)))
 
 		toggle_mode(user)
 		return TRUE
 
-	affected_mob.visible_message(span_warning("[user] starts buckling [affected_mob] to [src]!"),\
-		span_userdanger("[user] starts buckling you to [src]!"),\
-		span_hear("You hear metal clanking."))
+	affected_mob.visible_message(span_warning(LANG("obj.fd9e0033", list(user, affected_mob, src))),\
+		span_userdanger(LANG("obj.1b8e86bd", list(user, src))),\
+		span_hear(LANG("obj.4ea246f9", null)))
 
 	if(!do_after(user, 5 SECONDS, affected_mob)) // Timer to buckle one mob by another
 		to_chat(user, span_warning(LANG("obj.17254991", list(affected_mob, src))))
@@ -213,9 +213,9 @@
 	if(!buckle_mob(affected_mob, check_loc = check_loc))
 		return FALSE
 
-	affected_mob.visible_message(span_warning("[user] buckled [affected_mob] to [src]!"),\
-		span_userdanger("[user] buckled you to [src]!"),\
-		span_hear("You hear metal clanking."))
+	affected_mob.visible_message(span_warning(LANG("obj.399356cf", list(user, affected_mob, src))),\
+		span_userdanger(LANG("obj.6436c125", list(user, src))),\
+		span_hear(LANG("obj.4ea246f9", null)))
 
 	toggle_mode(user)
 	return TRUE

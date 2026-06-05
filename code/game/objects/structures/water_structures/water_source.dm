@@ -33,8 +33,8 @@
 	if(selected_area in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES))
 		washing_face = TRUE
 	user.visible_message(
-		span_notice("[user] starts washing [user.p_their()] [washing_face ? "face" : "hands"]..."),
-		span_notice("You start washing your [washing_face ? "face" : "hands"]..."))
+		span_notice(LANG("obj.d6e9d9cd", list(user, user.p_their(), washing_face ? "face" : "hands"))),
+		span_notice(LANG("obj.51a01636", list(washing_face ? "face" : "hands"))))
 	busy = TRUE
 
 	if(!do_after(user, 4 SECONDS, target = src))
@@ -54,8 +54,8 @@
 		user.wash(CLEAN_WASH)
 
 	user.visible_message(
-		span_notice("[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src]."),
-		span_notice("You wash your [washing_face ? "face" : "hands"] using [src]."),
+		span_notice(LANG("obj.b1726f63", list(user, user.p_their(), washing_face ? "face" : "hands", src))),
+		span_notice(LANG("obj.3892bd55", list(washing_face ? "face" : "hands", src))),
 	)
 
 /obj/structure/water_source/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -84,8 +84,8 @@
 			user.set_stutter(baton.knockdown_time)
 			baton.cell.use(baton.cell_hit_cost)
 			user.visible_message(
-				span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"),
-				span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
+				span_warning(LANG("obj.0ce5feed", list(user, user.p_them(), baton.name))),
+				span_userdanger(LANG("obj.97884035", list(baton))))
 			playsound(src, baton.on_stun_sound, 50, TRUE)
 			return
 
@@ -105,8 +105,8 @@
 		attacking_item.wash(CLEAN_WASH)
 		reagents.expose(attacking_item, TOUCH, 5 / max(reagents.total_volume, 5))
 		user.visible_message(
-			span_notice("[user] washes [attacking_item] using [src]."),
-			span_notice("You wash [attacking_item] using [src]."))
+			span_notice(LANG("obj.39b6ee6a", list(user, attacking_item, src))),
+			span_notice(LANG("obj.94ce754d", list(attacking_item, src))))
 		return TRUE
 
 	return ..()

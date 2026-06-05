@@ -37,7 +37,7 @@
 	var/honorific_title
 
 /obj/item/card/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.84d2df68", list(user, user.p_their(), src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/card/update_overlays()
@@ -566,7 +566,7 @@
 		var/minor
 		if(registered_name && registered_age && registered_age < AGE_MINOR)
 			minor = " <b>[registered_age]</b>" //NOVA EDIT CHANGE
-		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
+		user.visible_message(span_notice(LANG("obj.b087d486", list(user, icon2html(src, viewers(user)), src.name, minor))), span_notice(LANG("obj.faf1c563", list(src.name, minor))))
 	add_fingerprint(user)
 
 /obj/item/card/id/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
@@ -1761,17 +1761,17 @@
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
 	// return ITEM_INTERACT_BLOCKING to cancel any part of the following the attack chain.
 	if(ishuman(interacting_with))
-		interacting_with.balloon_alert(user, "scanning ID card...")
+		interacting_with.balloon_alert(user, LANG("obj.99bff57d", null))
 
 		if(!do_after(user, 2 SECONDS, interacting_with, hidden = TRUE))
-			interacting_with.balloon_alert(user, "interrupted!")
+			interacting_with.balloon_alert(user, LANG("obj.c67b5d27", null))
 			return ITEM_INTERACT_BLOCKING
 
 		var/mob/living/carbon/human/human_target = interacting_with
 		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
 
 		if(!length(target_id_cards))
-			interacting_with.balloon_alert(user, "no IDs!")
+			interacting_with.balloon_alert(user, LANG("obj.d78b7df7", null))
 			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
@@ -1783,7 +1783,7 @@
 	if(isitem(interacting_with))
 		var/obj/item/target_item = interacting_with
 
-		interacting_with.balloon_alert(user, "scanning ID card...")
+		interacting_with.balloon_alert(user, LANG("obj.99bff57d", null))
 
 		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
 		var/target_item_id = target_item.GetID()
@@ -1792,7 +1792,7 @@
 			target_id_cards |= target_item_id
 
 		if(!length(target_id_cards))
-			interacting_with.balloon_alert(user, "no IDs!")
+			interacting_with.balloon_alert(user, LANG("obj.d78b7df7", null))
 			return ITEM_INTERACT_BLOCKING
 
 		var/selected_id = pick(target_id_cards)
@@ -2160,7 +2160,7 @@
 /obj/item/card/cardboard/attack_self(mob/user)
 	if(!Adjacent(user))
 		return
-	user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show \the [name]."))
+	user.visible_message(span_notice(LANG("obj.ba4fa098", list(user, icon2html(src, viewers(user)), name))), span_notice(LANG("obj.3f13aa85", list(name))))
 	add_fingerprint(user)
 
 /obj/item/card/cardboard/update_name()

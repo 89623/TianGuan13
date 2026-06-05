@@ -14,12 +14,12 @@
 		return
 
 	if(buckled == attacker ? prob(60) : prob(30)) //its easier to remove the slime from yourself
-		attacker.visible_message(span_warning("[attacker] attempts to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled] !"), \
-		span_danger("[buckled == attacker ? "You attempt" : "[attacker] attempts" ] to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled]!"))
+		attacker.visible_message(span_warning(LANG("mob.1a233b14", list(attacker, defender_slime.name, buckled == attacker ? "" : buckled))), \
+		span_danger(LANG("mob.61ec3cc7", list(buckled == attacker ? "You attempt" : "[attacker] attempts", defender_slime.name, buckled == attacker ? "" : buckled))))
 		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 		return
 
-	attacker.visible_message(span_warning("[attacker] manages to wrestle \the [defender_slime.name] off!"), span_notice("You manage to wrestle \the [defender_slime.name] off!"))
+	attacker.visible_message(span_warning(LANG("mob.76e0b410", list(attacker, defender_slime.name))), span_notice(LANG("mob.4f00f6d8", list(defender_slime.name))))
 	playsound(loc, 'sound/items/weapons/shove.ogg', 50, TRUE, -1)
 
 	defender_slime.discipline_slime()

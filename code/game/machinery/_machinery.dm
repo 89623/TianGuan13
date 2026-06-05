@@ -746,9 +746,9 @@
 			hit_with_what_noun += plural_s(hit_with_what_noun) // hit with "their hands"
 
 	user.visible_message(
-		span_danger("[user] smashes [src] with [user.p_their()] [hit_with_what_noun][damage ? "." : ", [no_damage_feedback]!"]"),
-		span_danger("You smash [src] with your [hit_with_what_noun][damage ? "." : ", [no_damage_feedback]!"]"),
-		span_hear("You hear a [damage ? "smash" : "thud"]."),
+		span_danger(LANG("obj.3d4bf711", list(user, src, user.p_their(), hit_with_what_noun, damage ? "." : ", [no_damage_feedback]!"))),
+		span_danger(LANG("obj.12903554", list(src, hit_with_what_noun, damage ? "." : ", [no_damage_feedback]!"))),
+		span_hear(LANG("obj.cb4c165c", list(damage ? "smash" : "thud"))),
 		COMBAT_MESSAGE_RANGE,
 	)
 	return TRUE
@@ -886,7 +886,7 @@
 		return deconstruct_on_fail ? default_deconstruction_crowbar(user, crowbar) : ITEM_INTERACT_BLOCKING
 
 	crowbar.play_tool_sound(src, 50)
-	user.visible_message(span_notice("[user] pries open [src]."), span_notice("You pry open [src]."))
+	user.visible_message(span_notice(LANG("obj.13d2a45b", list(user, src))), span_notice(LANG("obj.f68d6a77", list(src))))
 	open_machine(density_to_set = open_density)
 	if (close_after_pry) //Should it immediately close after prying? (If not, it must be closed elsewhere)
 		close_machine(density_to_set = closed_density)

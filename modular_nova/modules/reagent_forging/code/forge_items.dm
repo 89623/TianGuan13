@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(allowed_forging_materials, list(
 /obj/item/forging/incomplete/tong_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(length(tool.contents) > 0)
-		user.balloon_alert(user, "tongs are full already!")
+		user.balloon_alert(user, LANG("obj.8103c9e1", null))
 		return
 	forceMove(tool)
 	tool.icon_state = "tong_full"
@@ -323,13 +323,13 @@ GLOBAL_LIST_INIT(allowed_forging_materials, list(
 /obj/item/stack/tong_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!(material_type in GLOB.allowed_forging_materials))
-		user.balloon_alert(user, "can only forge metal!")
+		user.balloon_alert(user, LANG("obj.618f499c", null))
 		return
 	if(length(tool.contents) > 0)
-		user.balloon_alert(user, "tongs are full already!")
+		user.balloon_alert(user, LANG("obj.8103c9e1", null))
 		return FALSE
 	if(!material_type && !custom_materials)
-		user.balloon_alert(user, "invalid material!")
+		user.balloon_alert(user, LANG("obj.c8041e78", null))
 		return
 	forceMove(tool)
 	tool.icon_state = "tong_full"
@@ -337,7 +337,7 @@ GLOBAL_LIST_INIT(allowed_forging_materials, list(
 /obj/tong_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(length(tool.contents))
-		user.balloon_alert(user, "tongs are full already!")
+		user.balloon_alert(user, LANG("obj.8103c9e1", null))
 		return FALSE
 	if(obj_flags_nova & ANVIL_REPAIR)
 		forceMove(tool)

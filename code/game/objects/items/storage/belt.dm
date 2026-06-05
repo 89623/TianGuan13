@@ -18,7 +18,7 @@
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.00572afb", list(user, user.p_them(), src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/storage/belt/update_overlays()
@@ -706,7 +706,7 @@
 		balloon_alert(user, LANG("obj.76a90f7c", null))
 		return CLICK_ACTION_BLOCKING
 	var/obj/item/stored_item = contents[1]
-	user.visible_message(span_notice("[user] takes [stored_item] out of [src]."), span_notice("You take [stored_item] out of [src]."))
+	user.visible_message(span_notice(LANG("obj.1f34f194", list(user, stored_item, src))), span_notice(LANG("obj.604c7b94", list(stored_item, src))))
 	user.put_in_hands(stored_item)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
@@ -784,7 +784,7 @@
 	RegisterSignal(swordsman, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
 	swordsman.Immobilize(1 SECONDS)
 	eyed_fool = WEAKREF(cast_on)
-	swordsman.visible_message(span_danger("[swordsman] widens [swordsman.p_their()] stance, [swordsman.p_their()] hand hovering over \the [used_sheath]!"), span_notice("You prepare to counterattack [cast_on]!"))
+	swordsman.visible_message(span_danger(LANG("datum.3383b8e9", list(swordsman, swordsman.p_their(), swordsman.p_their(), used_sheath))), span_notice(LANG("datum.9b6cead5", list(cast_on))))
 	addtimer(CALLBACK(src, PROC_REF(relax), swordsman, used_sheath), 1 SECONDS)
 	COOLDOWN_START(used_sheath, full_ability_cooldown, 60 SECONDS)
 	unset_ranged_ability(swordsman)
@@ -809,7 +809,7 @@
 
 /datum/action/innate/blade_counter/proc/do_strike(mob/living/fool, mob/living/forward_thinker, obj/item/justicetool)
 	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
-	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [fool.p_their()] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
+	forward_thinker.visible_message(span_danger(LANG("datum.4ab7dca5", list(forward_thinker, justicetool, fool, fool.p_their()))), span_notice(LANG("datum.205effe7", list(justicetool, fool))))
 	fool.apply_damage(
 		damage = justicetool.force * COUNTERMULTIPLIER,
 		damagetype = justicetool.damtype,
@@ -845,8 +845,8 @@
 	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
 	var/obj/item/bodypart/risked_hand = forward_thinker.get_active_hand()
 	if(iscarbon(fool) && offending_hand.dismember(BRUTE, FALSE, WOUND_SLASH))
-		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [fool.p_their()] attack, sending [fool.p_their()] arm flying!"),
-										span_notice("You swiftly draw \the [justicetool] and cut off [fool]'s arm!"))
+		forward_thinker.visible_message(span_danger(LANG("datum.80965063", list(forward_thinker, justicetool, fool, fool.p_their(), fool.p_their()))),
+										span_notice(LANG("datum.eed9720c", list(justicetool, fool))))
 	else
 		fool.apply_damage(
 			damage = justicetool.force * COUNTERMULTIPLIER,
@@ -859,11 +859,11 @@
 			attack_direction = get_dir(forward_thinker, fool),
 			attacking_item = justicetool,
 		)
-		forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [fool.p_their()] attack!"),
-										span_notice("You swiftly draw \the [justicetool] and strike them mid-attack!"))
+		forward_thinker.visible_message(span_danger(LANG("datum.4ab7dca5", list(forward_thinker, justicetool, fool, fool.p_their()))),
+										span_notice(LANG("datum.104ac3aa", list(justicetool))))
 	if(!IS_ROBOTIC_LIMB(risked_hand))
-		forward_thinker.visible_message(span_danger("[forward_thinker]'s arm is unable to withstand the force of the attack!"),
-										span_danger("You feel a sharp pain as your arm is mutilated by the force of the attack!"))
+		forward_thinker.visible_message(span_danger(LANG("datum.9a15ba84", list(forward_thinker))),
+										span_danger(LANG("datum.a5d9f9d1", null)))
 		forward_thinker.apply_damage(
 		damage = 50,
 		damagetype = BRUTE,
@@ -888,13 +888,13 @@
 	if(!worthless_hand)
 		worthless_hand = holder.get_inactive_hand()
 		if(!worthless_hand)
-			holder.visible_message(span_danger("[holder]'s sheath misfires, sending their blade flying!"),
-									span_danger("Your sheath misfires, sending your blade flying!"))
+			holder.visible_message(span_danger(LANG("datum.6affd115", list(holder))),
+									span_danger(LANG("datum.fd1846c1", null)))
 			return
 
 	if(IS_ROBOTIC_LIMB(worthless_hand) || !worthless_hand.dismember(BRUTE, FALSE, WOUND_BLUNT))
-		holder.visible_message(span_danger("[holder]'s arm is mutilated as they misfire [holder.p_their()] sheathed blade!"),
-								span_danger("Your arm is mutilated as you fail to safely fire your blade!"))
+		holder.visible_message(span_danger(LANG("datum.461a984e", list(holder, holder.p_their()))),
+								span_danger(LANG("datum.c8a3c716", null)))
 		holder.apply_damage(
 			damage = 50,
 			damagetype = BRUTE,
@@ -904,8 +904,8 @@
 		)
 		return
 
-	holder.visible_message(span_danger("[holder]'s arm is violently torn off as they misfire [holder.p_their()] sheathed blade!"),
-							span_danger("Your arm is torn off as you fail to safely fire your blade!"))
+	holder.visible_message(span_danger(LANG("datum.f09d60ba", list(holder, holder.p_their()))),
+							span_danger(LANG("datum.c93061c0", null)))
 
 #undef COUNTERMULTIPLIER
 

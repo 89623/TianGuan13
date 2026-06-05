@@ -117,15 +117,15 @@
 	if(!is_wired)
 		return FALSE
 
-	user.visible_message(span_notice("[user] begins to remove the barbed wire on [src]."),
-	span_notice("You start removing the barbed wire on [src]."))
+	user.visible_message(span_notice(LANG("obj.80723fc6", list(user, src))),
+	span_notice(LANG("obj.6c617fd1", list(src))))
 
 	if(!do_after(user, 2 SECONDS, src))
 		return TRUE
 
 	playsound(src, 'sound/items/tools/wirecutter.ogg', 25, TRUE)
-	user.visible_message(span_notice("[user] removed the barbed wire on [src]."),
-	span_notice("You removed the barbed wire on [src]."))
+	user.visible_message(span_notice(LANG("obj.9beb2b84", list(user, src))),
+	span_notice(LANG("obj.520b25e6", list(src))))
 	modify_max_integrity(max_integrity - 50)
 	can_wire = TRUE
 	is_wired = FALSE
@@ -375,7 +375,7 @@
 		if(get_integrity() < max_integrity)
 			to_chat(user, span_warning(LANG("obj.144e028b", list(src))))
 			return CLICK_ACTION_BLOCKING
-		user.visible_message(span_notice("[user] starts folding [src] up!"), span_notice("You start folding [src] up!"))
+		user.visible_message(span_notice(LANG("obj.30058b49", list(user, src))), span_notice(LANG("obj.59bcce81", list(src))))
 		if(do_after(user, 5 SECONDS, src))
 			if(QDELETED(src)) //Copied encase we change states.
 				return
@@ -388,7 +388,7 @@
 			if(get_integrity() < max_integrity)
 				to_chat(user, span_warning(LANG("obj.144e028b", list(src))))
 				return CLICK_ACTION_BLOCKING
-			user.visible_message(span_notice("[user] folds [src] up!"), span_notice("You neatly fold [src] up!"))
+			user.visible_message(span_notice(LANG("obj.b0a8936b", list(user, src))), span_notice(LANG("obj.331d19d8", list(src))))
 			playsound(src, 'sound/items/tools/ratchet.ogg', 25, TRUE)
 			fold_up()
 			return CLICK_ACTION_SUCCESS
@@ -458,8 +458,8 @@
 	var/static/list/cade_types = list(BARRICADE_TYPE_BOMB = image(icon = 'modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "explosive_obj"), BARRICADE_TYPE_MELEE = image(icon = 'modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "brute_obj"), BARRICADE_TYPE_ACID = image(icon = 'modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "burn_obj"))
 	var/choice = show_radial_menu(user, src, cade_types, require_near = TRUE, tooltips = TRUE)
 
-	user.visible_message(span_notice("[user] starts attaching [choice] to [src]."),
-		span_notice("You start attaching [choice] to [src]."))
+	user.visible_message(span_notice(LANG("obj.62ceeafc", list(user, choice, src))),
+		span_notice(LANG("obj.1a6fb9ca", list(choice, src))))
 	if(!do_after(user, 2 SECONDS, src))
 		return FALSE
 
@@ -476,8 +476,8 @@
 
 	barricade_upgrade_type = choice
 
-	user.visible_message(span_notice("[user] attaches[choice] to [src]."),
-		span_notice("You attach [choice] to [src]."))
+	user.visible_message(span_notice(LANG("obj.0e8ba51b", list(user, choice, src))),
+		span_notice(LANG("obj.c1fbc99d", list(choice, src))))
 
 	playsound(src, 'sound/items/tools/screwdriver.ogg', 25, TRUE)
 	update_icon()
@@ -512,8 +512,8 @@
 		to_chat(user, span_warning(LANG("obj.805c0a92", list(src))))
 		return TRUE
 
-	user.visible_message(span_notice("[user] starts welding the damage on [src]."),
-	span_notice("You start welding the damage on [src]."))
+	user.visible_message(span_notice(LANG("obj.667d23cd", list(user, src))),
+	span_notice(LANG("obj.389c2290", list(src))))
 	playsound(src, 'sound/items/tools/welder2.ogg', 25, TRUE)
 
 	if(!do_after(user, 5 SECONDS, src))
@@ -526,8 +526,8 @@
 		to_chat(user, span_warning(LANG("obj.b6baa52c", null)))
 		return TRUE
 
-	user.visible_message(span_notice("[user] welds the damage on [src]."),
-	span_notice("You weld the damage on [src]."))
+	user.visible_message(span_notice(LANG("obj.ff8cbda5", list(user, src))),
+	span_notice(LANG("obj.4d8f671a", list(src))))
 	repair_damage(150)
 	update_icon()
 	playsound(src, 'sound/items/tools/welder2.ogg', 25, TRUE)
@@ -540,8 +540,8 @@
 			playsound(src, 'sound/items/tools/screwdriver.ogg', 25, TRUE)
 			if(!do_after(user, 1 SECONDS, src))
 				return TRUE
-			user.visible_message (span_notice ("[user] secures the panel on [src]."),
-			span_notice ("You secure the panel on [src]."))
+			user.visible_message (span_notice (LANG("obj.38ae2388", list(user, src))),
+			span_notice (LANG("obj.87614176", list(src))))
 			build_state = BARRICADE_METAL_FIRM
 			return TRUE
 
@@ -551,8 +551,8 @@
 			if(!do_after(user, 1 SECONDS, src))
 				return TRUE
 
-			user.visible_message (span_notice ("[user] removes the panel from [src]."),
-			span_notice ("You remove the panel from [src], revealing some <b>bolts</b> beneath it."))
+			user.visible_message (span_notice (LANG("obj.16243e85", list(user, src))),
+			span_notice (LANG("obj.d9e0a3fe", list(src))))
 			build_state = BARRICADE_METAL_ANCHORED
 			return TRUE
 
@@ -563,8 +563,8 @@
 			playsound(src, 'sound/items/tools/ratchet.ogg', 25, TRUE)
 			if(!do_after(user, 1 SECONDS, src))
 				return TRUE
-			user.visible_message (span_notice ("[user] loosens the anchor bolts on [src]."),
-			span_notice ("You loosen the anchor bolts on [src]."))
+			user.visible_message (span_notice (LANG("obj.2fdd55da", list(user, src))),
+			span_notice (LANG("obj.cb19021b", list(src))))
 			build_state = BARRICADE_METAL_LOOSE
 			anchored = FALSE
 			modify_max_integrity(initial(max_integrity) * 0.5)
@@ -586,8 +586,8 @@
 			if(!do_after(user, 1 SECONDS, src))
 				return TRUE
 
-			user.visible_message(span_notice("[user] tightens the anchor bolts on [src]."),
-			span_notice("You tighten the anchor bolts on [src]."))
+			user.visible_message(span_notice(LANG("obj.ca760092", list(user, src))),
+			span_notice(LANG("obj.662dddeb", list(src))))
 			build_state = BARRICADE_METAL_ANCHORED
 			anchored = TRUE
 			modify_max_integrity(initial(max_integrity))
@@ -598,15 +598,15 @@
 /obj/structure/deployable_barricade/metal/crowbar_act(mob/living/user, obj/item/tool)
 	switch(build_state)
 		if(BARRICADE_METAL_LOOSE) //Anchor bolts loosened step. Apply crowbar to unseat the panel and take apart the whole thing. Apply wrench to resecure anchor bolts
-			user.visible_message(span_notice("[user] begins to disassemble [src]."),
-			span_notice("You start to disassemble [src]."))
+			user.visible_message(span_notice(LANG("obj.d985cafd", list(user, src))),
+			span_notice(LANG("obj.ad4c8d5d", list(src))))
 
 			playsound(src, 'sound/items/tools/crowbar.ogg', 25, 1)
 			if(!do_after(user, 5 SECONDS, src))
 				return TRUE
 
-			user.visible_message(span_notice("[user] disassembles [src]."),
-			span_notice("You disassemble [src]."))
+			user.visible_message(span_notice(LANG("obj.64d85c99", list(user, src))),
+			span_notice(LANG("obj.fd5c1c1d", list(src))))
 			playsound(src, 'sound/items/deconstruct.ogg', 25, 1)
 			deconstruct(TRUE)
 			return TRUE
@@ -616,15 +616,15 @@
 				to_chat(user, span_warning(LANG("obj.d85d0630", null)))
 				return TRUE
 
-			user.visible_message(span_notice("[user] begins to detach the armor plates from [src]."),
-			span_notice("You begin to detach the armor plates from [src]."))
+			user.visible_message(span_notice(LANG("obj.63ac9a62", list(user, src))),
+			span_notice(LANG("obj.4515011d", list(src))))
 
 			playsound(src, 'sound/items/tools/crowbar.ogg', 25, 1)
 			if(!do_after(user, 5 SECONDS, src))
 				return TRUE
 
-			user.visible_message(span_notice("[user] detaches the armor plates from [src]."),
-			span_notice("You detach the armor plates from [src]."))
+			user.visible_message(span_notice(LANG("obj.170aa5d0", list(user, src))),
+			span_notice(LANG("obj.5c156e87", list(src))))
 			playsound(src, 'sound/items/deconstruct.ogg', 25, 1)
 
 			switch(barricade_upgrade_type)
@@ -681,22 +681,22 @@
 /obj/structure/deployable_barricade/metal/plasteel/crowbar_act(mob/living/user, obj/item/I)
 	switch(build_state)
 		if(BARRICADE_METAL_LOOSE) //Anchor bolts loosened step. Apply crowbar to unseat the panel and take apart the whole thing. Apply wrench to resecure anchor bolts
-			user.visible_message(span_notice("[user] begins to disassemble [src]."),
-			span_notice("You start to disassemble [src]."))
+			user.visible_message(span_notice(LANG("obj.d985cafd", list(user, src))),
+			span_notice(LANG("obj.ad4c8d5d", list(src))))
 
 			playsound(src, 'sound/items/tools/crowbar.ogg', 25, 1)
 			if(!do_after(user, 5 SECONDS, src))
 				return TRUE
 
-			user.visible_message(span_notice("[user] disassembles [src]."),
-			span_notice("You disassemble [src]."))
+			user.visible_message(span_notice(LANG("obj.64d85c99", list(user, src))),
+			span_notice(LANG("obj.fd5c1c1d", list(src))))
 			playsound(src, 'sound/items/deconstruct.ogg', 25, 1)
 			deconstruct(TRUE)
 			return TRUE
 		if(BARRICADE_METAL_FIRM)
 			linked = !linked
-			user.visible_message(span_notice("[user] has [linked ? "linked" : "unlinked" ] [src]."),
-			span_notice("You [linked ? "link" : "unlink" ] [src]."))
+			user.visible_message(span_notice(LANG("obj.90713791", list(user, linked ? "linked" : "unlinked", src))),
+			span_notice(LANG("obj.d6171b71", list(linked ? "link" : "unlink", src))))
 			for(var/direction in GLOB.cardinals)
 				for(var/obj/structure/deployable_barricade/metal/plasteel/cade in get_step(src, direction))
 					cade.update_icon()
@@ -719,7 +719,7 @@
 	density = !density
 
 	user?.visible_message(span_notice("[user] [closed ? "lowers" : "raises"] [src] ."),
-		span_notice("You [closed ? "lower" : "raise"] [src]."))
+		span_notice(LANG("obj.d6171b71", list(closed ? "lower" : "raise", src))))
 
 	if(!linked)
 		update_icon()

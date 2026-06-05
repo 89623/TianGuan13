@@ -581,7 +581,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	can_spawn_lore = FALSE
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	to_chat(user, span_warning(LANG("obj.d23917cd", null)))
-	user.visible_message(span_warning("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older."), vision_distance = 2)
+	user.visible_message(span_warning(LANG("obj.34409348", list(user, user.p_their(), user.p_they(), user.p_s(), user.p_they(), user.p_s()))), vision_distance = 2)
 	if(ishuman(user))
 		var/mob/living/carbon/human/fool = user
 		fool.age = clamp(fool.age + 10, AGE_MIN, AGE_MAX) //Fuck you
@@ -826,7 +826,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	if(!user.transferItemToLoc(draw_from, src))
 		return
 
-	user.visible_message(span_notice("[user] loads some paper into [src]."), span_notice("You load some paper into [src]."))
+	user.visible_message(span_notice(LANG("obj.ed52d749", list(user, src))), span_notice(LANG("obj.d1a9c5cc", list(src))))
 	audible_message(span_hear(LANG("obj.126f54a1", list(src))))
 	busy = TRUE
 	playsound(src, 'sound/machines/printer.ogg', 50)

@@ -48,7 +48,7 @@
 
 	if (parrot_source.stat == CONSCIOUS)
 		var/list/list_of_channels = parrot_source.get_available_channels()
-		parrot_source.say("[list_of_channels ? "[pick(list_of_channels)] " : null]BAWWWWWK LEAVE THE HEADSET BAWKKKKK!", forced = "attempted headset removal")
+		parrot_source.say(LANG("datum.a8861083", list(list_of_channels ? "[pick(list_of_channels)] " : null)), forced = "attempted headset removal")
 
 	return TRUE
 

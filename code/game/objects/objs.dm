@@ -110,8 +110,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 			message_verb_continuous = "ineffectively " + message_verb_continuous
 
 		user.visible_message(
-			span_danger("[user] [message_verb_continuous] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
-			span_danger("You [message_verb_simple] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
+			span_danger(LANG("obj.deff8f6f", list(user, message_verb_continuous, src, attacking_item, damage ? "." : ", [no_damage_feedback]!"))),
+			span_danger(LANG("obj.93c74fc1", list(message_verb_simple, src, attacking_item, damage ? "." : ", [no_damage_feedback]!"))),
 			null,
 			COMBAT_MESSAGE_RANGE,
 		)

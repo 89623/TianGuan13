@@ -161,8 +161,8 @@
 
 	if(target != user)
 		target.visible_message(
-			span_danger("[user] tries to force [src] into [target]'s [slot_name]!"),
-			span_userdanger("[user] tries to force [src] into your [slot_name]!")
+			span_danger(LANG("obj.4e1d1f43", list(user, src, target, slot_name))),
+			span_userdanger(LANG("obj.fa677b2b", list(user, src, slot_name)))
 		)
 		if(target.is_blind())
 			to_chat(target, span_userdanger(LANG("obj.e2972de4", list(slot_name))))
@@ -171,8 +171,8 @@
 			if(!do_after(user, 5 SECONDS, target))
 				return
 		target.visible_message(
-			span_danger("[user] forces [src] into [target]'s [slot_name]!"),
-			span_userdanger("[user] forces [src] into your [slot_name]!")
+			span_danger(LANG("obj.0aebbd49", list(user, src, target, slot_name))),
+			span_userdanger(LANG("obj.412a98cc", list(user, src, slot_name)))
 		)
 		if(target.is_blind())
 			to_chat(target, span_userdanger(LANG("obj.d2df7897", list(slot_name))))

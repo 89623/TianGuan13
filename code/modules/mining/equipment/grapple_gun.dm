@@ -43,10 +43,10 @@
 		return NONE
 
 	if(!lavaland_equipment_pressure_check(get_turf(user)) && !(obj_flags & EMAGGED))
-		user.balloon_alert(user, "gun mechanism won't work here!")
+		user.balloon_alert(user, LANG("obj.cc2994cc", null))
 		return ITEM_INTERACT_BLOCKING
 	if(get_dist(user, target) > 9)
-		user.balloon_alert(user, "too far away!")
+		user.balloon_alert(user, LANG("obj.a462ee7c", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/attacked_atom = get_turf(target)

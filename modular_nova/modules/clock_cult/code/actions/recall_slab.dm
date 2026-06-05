@@ -64,9 +64,9 @@
 
 			// Items in silicons warp the whole silicon
 			if(issilicon(holding_mark))
-				holding_mark.loc.visible_message(span_warning("[holding_mark] suddenly disappears!"))
+				holding_mark.loc.visible_message(span_warning(LANG("datum.65665160", list(holding_mark))))
 				holding_mark.forceMove(usr.loc)
-				holding_mark.loc.visible_message(span_warning("[holding_mark] suddenly appears!"))
+				holding_mark.loc.visible_message(span_warning(LANG("datum.4e88a79e", list(holding_mark))))
 				item_to_retrieve = null
 				break
 
@@ -93,13 +93,13 @@
 	if(!item_to_retrieve)
 		return
 
-	item_to_retrieve.loc?.visible_message(span_warning("[item_to_retrieve] suddenly disappears!"))
+	item_to_retrieve.loc?.visible_message(span_warning(LANG("datum.65665160", list(item_to_retrieve))))
 
 	if(isitem(item_to_retrieve) && usr.put_in_hands(item_to_retrieve))
-		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears in [usr]'s hand!"))
+		item_to_retrieve.loc.visible_message(span_warning(LANG("datum.ff6f288a", list(item_to_retrieve, usr))))
 
 	else
 		item_to_retrieve.forceMove(usr.drop_location())
-		item_to_retrieve.loc.visible_message(span_warning("[item_to_retrieve] suddenly appears!"))
+		item_to_retrieve.loc.visible_message(span_warning(LANG("datum.4e88a79e", list(item_to_retrieve))))
 
 	playsound(get_turf(item_to_retrieve), 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)

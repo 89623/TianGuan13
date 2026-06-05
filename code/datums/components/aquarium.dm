@@ -218,7 +218,7 @@
 		ADD_TRAIT(parent, TRAIT_AQUARIUM_PANEL_OPEN, AQUARIUM_TRAIT)
 		source.reagents.flags |= TRANSPARENT|REFILLABLE
 
-	source.balloon_alert(user, "panel [closing ? "closed" : "open"]")
+	source.balloon_alert(user, LANG("datum.a741c12e", list(closing ? "closed" : "open")))
 	source.update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -230,14 +230,14 @@
 		if(source.reagents && HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
 			return //don't block, we'll be transferring reagents to the feed storage.
 		if(!item.reagents.total_volume)
-			source.balloon_alert(user, "[item] is empty!")
+			source.balloon_alert(user, LANG("datum.02d482cc", list(item)))
 			return ITEM_INTERACT_BLOCKING
 		var/list/fishes = get_fishes()
 		if(!length(fishes))
-			source.balloon_alert(user, "no fish to feed!")
+			source.balloon_alert(user, LANG("datum.3404f9eb", null))
 			return ITEM_INTERACT_BLOCKING
 		feed_fishes(item, fishes)
-		source.balloon_alert(user, "fed the fish")
+		source.balloon_alert(user, LANG("datum.e297cdf6", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!HAS_TRAIT(item, TRAIT_AQUARIUM_CONTENT) || (!isitem(parent) && user.combat_mode))
@@ -247,12 +247,12 @@
 	if(!can_insert(source, item, user))
 		return ITEM_INTERACT_BLOCKING
 	if(broken)
-		source.balloon_alert(user, "aquarium is broken!")
+		source.balloon_alert(user, LANG("datum.37a2dde4", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, source))
-		user.balloon_alert(user, "stuck to your hand!")
+		user.balloon_alert(user, LANG("datum.edd6b8ce", null))
 		return ITEM_INTERACT_BLOCKING
-	source.balloon_alert(user, "added to aquarium")
+	source.balloon_alert(user, LANG("datum.b706dd54", null))
 	source.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -287,7 +287,7 @@
 /datum/component/aquarium/proc/on_plunger_act(atom/movable/source, obj/item/plunger/plunger, mob/living/user, reinforced)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
-		source.balloon_alert(user, "open panel first!")
+		source.balloon_alert(user, LANG("datum.a59b2c79", null))
 		return
 	INVOKE_ASYNC(src, PROC_REF(do_plunging), source, user)
 	return COMPONENT_NO_AFTERATTACK
@@ -700,7 +700,7 @@
 /datum/component/aquarium/proc/admire(atom/movable/source, mob/living/user)
 	if(!isliving(user))
 		return
-	source.balloon_alert(user, "admiring aquarium...")
+	source.balloon_alert(user, LANG("datum.41885c21", null))
 	if(!do_after(user, 5 SECONDS, target = source))
 		return
 	var/alive_fish = 0

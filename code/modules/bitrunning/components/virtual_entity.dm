@@ -40,7 +40,7 @@
 		return
 
 	if(location_area.area_flags_mapping & VIRTUAL_SAFE_AREA)
-		source.balloon_alert(source, "out of bounds!")
+		source.balloon_alert(source, LANG("datum.934b1143", null))
 		COOLDOWN_START(src, OOB_cooldown, 2 SECONDS)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 

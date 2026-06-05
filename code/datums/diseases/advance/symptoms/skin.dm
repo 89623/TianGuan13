@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*Polyvitiligo
  * Slight reduction to stealth
  * Greatly increases resistance
@@ -33,4 +34,4 @@
 				M.reagents.add_reagent(color, 5)
 		else
 			if (prob(50)) // spam
-				M.visible_message(span_warning("[M] looks rather vibrant..."), span_notice("The colors, man, the colors..."))
+				M.visible_message(span_warning(LANG("datum.0128ec25", list(M))), span_notice(LANG("datum.d0ddca87", null)))

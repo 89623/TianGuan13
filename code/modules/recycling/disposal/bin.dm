@@ -149,7 +149,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 /// The regal rat spawns ratty treasures from the disposal
 /obj/machinery/disposal/proc/rat_rummage(mob/living/basic/regal_rat/king)
-	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
+	king.visible_message(span_warning(LANG("obj.8106b184", list(king, src))),span_notice(LANG("obj.c4da6d68", list(src))))
 	if (!do_after(king, 2 SECONDS, src, interaction_key = "regalrat"))
 		return
 
@@ -185,8 +185,8 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	if(!user.transferItemToLoc(disposing_item, newloc = src))
 		return FALSE
 	user.visible_message(
-		span_notice("[user.name] places \the [disposing_item] into \the [src]."),
-		span_notice("You place \the [disposing_item] into \the [src]."),
+		span_notice(LANG("obj.c1906f28", list(user.name, disposing_item, src))),
+		span_notice(LANG("obj.e1885933", list(disposing_item, src))),
 	)
 	return TRUE
 
@@ -216,16 +216,16 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		return FALSE
 	add_fingerprint(user)
 	if(user == target)
-		user.visible_message(span_warning("[user] starts climbing into [src]."), span_notice("You start climbing into [src]..."))
+		user.visible_message(span_warning(LANG("obj.b2bccafa", list(user, src))), span_notice(LANG("obj.3b91193d", list(src))))
 	else
-		target.visible_message(span_danger("[user] starts putting [target] into [src]."), span_userdanger("[user] starts putting you into [src]!"))
+		target.visible_message(span_danger(LANG("obj.c44c68dd", list(user, target, src))), span_userdanger(LANG("obj.40c97a17", list(user, src))))
 	if(!do_after(user, 2 SECONDS, target) || QDELETED(src))
 		return FALSE
 	target.forceMove(src)
 	if(user == target)
-		user.visible_message(span_warning("[user] climbs into [src]."), span_notice("You climb into [src]."))
+		user.visible_message(span_warning(LANG("obj.8471597f", list(user, src))), span_notice(LANG("obj.fe005c29", list(src))))
 	else
-		target.visible_message(span_danger("[user] places [target] in [src]."), span_userdanger("[user] places you in [src]."))
+		target.visible_message(span_danger(LANG("obj.e628761b", list(user, target, src))), span_userdanger(LANG("obj.e630d9cf", list(user, src))))
 		log_combat(user, target, "stuffed", addition="into [src]")
 	update_appearance()
 	return TRUE
@@ -235,22 +235,22 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		bag.undeploy_bodybag(src)
 		qdel(bag)
 		user.visible_message(
-			span_warning("[user] stuffs the empty [bag.name] into [src]."),
-			span_notice("You stuff the empty [bag.name] into [src].")
+			span_warning(LANG("obj.730ccd16", list(user, bag.name, src))),
+			span_notice(LANG("obj.b604f9eb", list(bag.name, src)))
 		)
 		return TRUE
 
 	user.visible_message(
-		span_warning("[user] starts putting [bag] into [src]."),
-		span_notice("You start putting [bag] into [src]...")
+		span_warning(LANG("obj.c44c68dd", list(user, bag, src))),
+		span_notice(LANG("obj.207439a2", list(bag, src)))
 	)
 
 	if(!do_after(user, 4 SECONDS, bag) || QDELETED(src))
 		return FALSE
 
 	user.visible_message(
-		span_warning("[user] places [bag] in [src]."),
-		span_notice("You place [bag] in [src].")
+		span_warning(LANG("obj.e628761b", list(user, bag, src))),
+		span_notice(LANG("obj.484469c5", list(bag, src)))
 	)
 
 	if(!length(bag.contents))
@@ -402,8 +402,8 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	density = cur_density
 	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	target.forceMove(src)
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
-		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+	target.visible_message(span_danger(LANG("obj.565ee3b4", list(shover.name, target.name, src))),
+		span_userdanger(LANG("obj.d69cf19d", list(src, target.name))), span_hear(LANG("obj.b75dfa76", null)), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(src, span_danger(LANG("obj.c7af2faa", list(target.name, src))))
 	log_combat(shover, target, "shoved", "into [src] (disposal bin)[weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED
@@ -470,7 +470,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 			balloon_alert(user, LANG("obj.edd6b8ce", null))
 			return
 		new_tagger.moveToNullspace()
-		user.visible_message(span_notice("[user] snaps \the [new_tagger] onto [src]!"))
+		user.visible_message(span_notice(LANG("obj.ba2e2ebc", list(user, new_tagger, src))))
 		balloon_alert(user, LANG("obj.a6b7a20f", null))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		mounted_tagger = new_tagger
@@ -488,7 +488,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		balloon_alert(user, LANG("obj.9c1f69b9", null))
 		mounted_tagger = null
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	user.visible_message(span_notice("[user] unhooks the [mounted_tagger] from [src]."))
+	user.visible_message(span_notice(LANG("obj.75deeac2", list(user, mounted_tagger, src))))
 	balloon_alert(user, LANG("obj.6aa54a2e", null))
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	mounted_tagger = null

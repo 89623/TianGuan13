@@ -75,8 +75,8 @@
 
 /obj/machinery/power/singularity_beacon/screwdriver_act(mob/living/user, obj/item/tool)
 	user.visible_message( \
-			"[user] messes with \the [src] for a bit.", \
-			span_notice("You can't fit the screwdriver into \the [src]'s bolts! Try using a wrench."))
+			LANG("obj.a9dc0f20", list(user, src)), \
+			span_notice(LANG("obj.9a479330", list(src))))
 	return TRUE
 
 /obj/machinery/power/singularity_beacon/Destroy()

@@ -62,7 +62,7 @@
 		owner.set_jitter_if_lower(30 SECONDS)
 
 	if(strikes_left == 0)
-		owner.visible_message(span_danger("[owner]'s skin turns to dust!"), span_boldwarning("Your skin turns to dust!"))
+		owner.visible_message(span_danger(LANG("datum.4134b297", list(owner))), span_boldwarning(LANG("datum.5a99cf6c", null)))
 		owner.dust()
 		return
 

@@ -215,7 +215,7 @@
 	if(ishuman(flashed))
 		var/mob/living/carbon/human/human_flashed = flashed
 		human_flashed.force_say()
-	flashed.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+	flashed.say(LANG("datum.111ff1ea", null), forced = "That son of a bitch! They're in. (April Fools)")
 
 /datum/antagonist/rev/head/antag_listing_name()
 	return ..() + "(Leader)"
@@ -297,10 +297,10 @@
 		return
 	owner.current.balloon_alert_to_viewers("deconverted!")
 	if(ishuman(owner.current))
-		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
+		owner.current.visible_message(span_deconversion_message(LANG("datum.5cad8cb4", list(owner.current, owner.current.p_theyve(), owner.current.p_their()))), null, null, null, owner.current)
 		to_chat(owner, LANG("datum.ab565df1", null))
 	else if(issilicon(owner.current))
-		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initializing it."), null, null, null, owner.current)
+		owner.current.visible_message(span_deconversion_message(LANG("datum.15d8aa06", null)), null, null, null, owner.current)
 		to_chat(owner, span_userdanger(LANG("datum.3233eafd", null)))
 
 /datum/antagonist/rev/head/farewell()
@@ -309,12 +309,12 @@
 	owner.current.balloon_alert_to_viewers("deconverted!")
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
-			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
+			owner.current.visible_message(span_deconversion_message(LANG("datum.5cad8cb4", list(owner.current, owner.current.p_theyve(), owner.current.p_their()))), null, null, null, owner.current)
 			to_chat(owner, LANG("datum.5af83c96", null))
 		else
 			to_chat(owner, LANG("datum.8b9d212c", null))
 	else if(issilicon(owner.current))
-		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initializing it."), null, null, null, owner.current)
+		owner.current.visible_message(span_deconversion_message(LANG("datum.bb1040be", null)), null, null, null, owner.current)
 		to_chat(owner, span_userdanger(LANG("datum.f57ca622", null)))
 
 /// Handles rev removal via IC methods such as borging, mindshielding, blunt force trauma to the head or revs losing.

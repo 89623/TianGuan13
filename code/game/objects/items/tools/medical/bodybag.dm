@@ -42,7 +42,7 @@
 
 /obj/item/bodybag/suicide_act(mob/living/user)
 	if(isopenturf(user.loc))
-		user.visible_message(span_suicide("[user] is crawling into [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.829d7767", list(user, src, user.p_theyre()))))
 		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
 		R.add_fingerprint(user)
 		qdel(src)
@@ -101,7 +101,7 @@
 	if(user.incapacitated)
 		to_chat(loc, span_warning(LANG("obj.6c8499ad", null)))
 		return
-	loc.visible_message(span_warning("[user] suddenly appears in front of [loc]!"), span_userdanger("[user] breaks free of [src]!"))
+	loc.visible_message(span_warning(LANG("obj.5c9f73f8", list(user, loc))), span_userdanger(LANG("obj.23a7afd1", list(user, src))))
 	qdel(src)
 
 /obj/item/bodybag/environmental

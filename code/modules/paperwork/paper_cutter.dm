@@ -84,14 +84,14 @@
 		var/mob/living/carbon/carbon_user = user
 		var/obj/item/bodypart/user_head = carbon_user.get_bodypart(BODY_ZONE_HEAD)
 		if(isnull(user_head)) // So no head?
-			user.visible_message(span_suicide("[user] tries to behead [user.p_them()]self with [src], but [user.p_they()] [user.p_were()] already missing it! How embarassing!"))
+			user.visible_message(span_suicide(LANG("obj.84624dfb", list(user, user.p_them(), src, user.p_they(), user.p_were()))))
 			return SHAME
-		user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.8276f4aa", list(user, user.p_them(), src, user.p_theyre()))))
 		user_head.drop_limb()
 		playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
 		return BRUTELOSS
 	// If we have no blade, just beat ourselves up
-	user.visible_message(span_suicide("[user] repeatedly bashes [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.fdba8754", list(user, src, user.p_them(), user.p_theyre()))))
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 

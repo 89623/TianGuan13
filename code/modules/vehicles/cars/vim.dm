@@ -56,7 +56,7 @@
 		return FALSE
 	var/mob/living/animal_or_basic = entering
 	if(animal_or_basic.mob_size > maximum_mob_size)
-		entering.balloon_alert(entering, "can't fit inside!")
+		entering.balloon_alert(entering, LANG("obj.968bae1c", null))
 		return FALSE
 	return ..()
 

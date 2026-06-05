@@ -42,11 +42,11 @@
 
 	if (worm.host?.is_mouth_covered())
 		if (feedback)
-			owner.balloon_alert(owner, "mouth is covered!")
+			owner.balloon_alert(owner, LANG("datum.290d96e8", null))
 		return FALSE
 	if (worm.get_worm_health() - health_cost < minimum_health)
 		if (feedback)
-			owner.balloon_alert(owner, "out of blood!")
+			owner.balloon_alert(owner, LANG("datum.663d6bcb", null))
 		return FALSE
 
 	return ..()
@@ -104,7 +104,7 @@
 
 	var/mob/living/basic/blood_worm/worm = src.target
 	if (worm.get_worm_health() - health_cost * burst_count < minimum_health)
-		owner.balloon_alert(owner, "out of blood!")
+		owner.balloon_alert(owner, LANG("datum.663d6bcb", null))
 		return
 
 	owner.visible_message(
@@ -165,7 +165,7 @@
 		playsound(host, SFX_SIZZLE, vol = 80, vary = TRUE, ignore_walls = FALSE)
 		StartCooldown(20 SECONDS)
 	if (!something_to_melt)
-		host.balloon_alert(host, "not restrained!")
+		host.balloon_alert(host, LANG("datum.68d89622", null))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/melt_restraints_in_slot(mob/living/carbon/human/host, slot)
 	var/obj/restraints = host.get_item_by_slot(slot)
@@ -173,7 +173,7 @@
 	if (!istype(restraints))
 		return FALSE
 	if (restraints.resistance_flags & (INDESTRUCTIBLE | UNACIDABLE | ACID_PROOF))
-		host.balloon_alert(host, "\the [restraints] [restraints.p_are()] too tough!")
+		host.balloon_alert(host, LANG("datum.2dcb88ec", list(restraints, restraints.p_are())))
 		return FALSE
 
 	host.visible_message(
@@ -188,13 +188,13 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/finish_melting_restraints(obj/restraints)
-	restraints.visible_message(span_danger("\The [restraints] melt[restraints.p_s()] into a pile of goopy blood!"))
+	restraints.visible_message(span_danger(LANG("datum.46d33bb4", list(restraints, restraints.p_s()))))
 	new /obj/effect/decal/cleanable/blood/old(get_turf(restraints))
 	qdel(restraints)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/melt_closet(mob/living/carbon/human/host, obj/structure/closet/closet)
 	if (closet.resistance_flags & (INDESTRUCTIBLE | UNACIDABLE | ACID_PROOF))
-		host.balloon_alert(host, "\the [closet] [closet.p_are()] too tough!")
+		host.balloon_alert(host, LANG("datum.2dcb88ec", list(closet, closet.p_are())))
 		return FALSE
 
 	closet.visible_message(
@@ -211,7 +211,7 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/finish_melting_closet(obj/structure/closet/closet)
-	closet.visible_message(span_danger("\The [closet]'s hinges melt into a pile of goopy blood!"))
+	closet.visible_message(span_danger(LANG("datum.81de3d9a", list(closet))))
 	new /obj/effect/decal/cleanable/blood/old(get_turf(closet))
 
 	closet.welded = FALSE
@@ -221,7 +221,7 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/melt_cocoon(mob/living/carbon/human/host, obj/structure/spider/cocoon/cocoon)
 	if (cocoon.resistance_flags & (INDESTRUCTIBLE | UNACIDABLE | ACID_PROOF))
-		host.balloon_alert(host, "\the [cocoon] [cocoon.p_are()] too tough!")
+		host.balloon_alert(host, LANG("datum.2dcb88ec", list(cocoon, cocoon.p_are())))
 		return FALSE
 
 	cocoon.visible_message(
@@ -238,7 +238,7 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/finish_melting_cocoon(obj/structure/spider/cocoon/cocoon)
-	cocoon.visible_message(span_danger("\The [cocoon] melt[cocoon.p_s()] into a pile of goopy blood!"))
+	cocoon.visible_message(span_danger(LANG("datum.46d33bb4", list(cocoon, cocoon.p_s()))))
 	new /obj/effect/decal/cleanable/blood/old(get_turf(cocoon))
 	qdel(cocoon)
 

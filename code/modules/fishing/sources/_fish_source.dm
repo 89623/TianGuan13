@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT_TYPED(preset_fish_sources, /datum/fish_source, init_subtypes_w_path_keys(/datum/fish_source, list()))
 
 /**
@@ -296,9 +297,9 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
 	else if(istype(reward, /obj/effect/spawner)) // Do not attempt to forceMove() a spawner. It will break things, and the spawned item should already be at the mob's turf by now.
-		fisherman.balloon_alert(fisherman, "caught something!")
+		fisherman.balloon_alert(fisherman, LANG("datum.ba7cd601", null))
 		return
-	fisherman.balloon_alert(fisherman, "caught [reward]!")
+	fisherman.balloon_alert(fisherman, LANG("datum.3413f47a", list(reward)))
 
 	var/list/fishing_data
 	if (isfish(reward))

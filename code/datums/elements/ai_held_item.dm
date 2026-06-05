@@ -36,7 +36,7 @@
 	if (!carried_item)
 		return
 
-	source.visible_message(span_danger("[source] drops [carried_item] at [user]'s feet!"))
+	source.visible_message(span_danger(LANG("datum.07248897", list(source, carried_item, user))))
 	carried_item.forceMove(get_turf(user))
 	source.ai_controller.clear_blackboard_key(BB_SIMPLE_CARRY_ITEM)
 
@@ -65,6 +65,6 @@
 	if(!carried_item)
 		return
 
-	ol_yeller.visible_message(span_danger("[ol_yeller] drops [carried_item] as [ol_yeller.p_they()] die[ol_yeller.p_s()]."))
+	ol_yeller.visible_message(span_danger(LANG("datum.03d288d8", list(ol_yeller, carried_item, ol_yeller.p_they(), ol_yeller.p_s()))))
 	carried_item.forceMove(ol_yeller.drop_location())
 	ol_yeller.ai_controller.clear_blackboard_key(BB_SIMPLE_CARRY_ITEM)

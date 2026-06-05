@@ -713,7 +713,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/equip_delay_self_check(obj/item/I, mob/living/carbon/human/H, bypass_equip_delay_self)
 	if(!I.equip_delay_self || bypass_equip_delay_self)
 		return TRUE
-	H.visible_message(span_notice("[H] start putting on [I]..."), span_notice("You start putting on [I]..."))
+	H.visible_message(span_notice(LANG("datum.8f1b5729", list(H, I))), span_notice(LANG("datum.ce720265", list(I))))
 	return do_after(H, I.equip_delay_self, target = H)
 
 
@@ -820,7 +820,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				atk_verb_continuous = attacking_bodypart.unarmed_attack_verbs_continuous[atk_verb_index]
 			atk_effect = attacking_bodypart.unarmed_attack_effect
 		else  //Nothing? Okay. Fail.
-			user.balloon_alert(user, "can't attack!")
+			user.balloon_alert(user, LANG("datum.d96d836c", null))
 			return FALSE
 
 	user.do_attack_animation(target, atk_effect)
@@ -893,8 +893,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 		playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
-		target.visible_message(span_danger("[user]'s [atk_verb] misses [target]!"), \
-						span_danger("You avoid [user]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
+		target.visible_message(span_danger(LANG("datum.9177cc8c", list(user, atk_verb, target))), \
+						span_danger(LANG("datum.58e151ee", list(user, atk_verb))), span_hear(LANG("datum.b8189c1e", null)), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_warning(LANG("datum.6e3a9367", list(atk_verb, target))))
 		log_combat(user, target, "attempted to punch")
 		return FALSE
@@ -924,7 +924,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		atk_verb_continuous = attacking_bodypart.grappled_attack_verb_continuous
 
 	target.visible_message(span_danger("[user] [atk_verb_continuous] [target]!"), \
-					span_userdanger("[user] [atk_verb_continuous] you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
+					span_userdanger(LANG("datum.9ab70b39", list(user, atk_verb_continuous))), span_hear(LANG("datum.6c7f8149", null)), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger(LANG("datum.22d557f3", list(atk_verb, target))))
 
 	target.lastattacker = user.real_name
@@ -982,44 +982,44 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	switch(roll_them_bones)
 		if (-INFINITY to 0) //Mostly a gimmie, this one just keeps them staggered briefly
 			target.adjust_staggered_up_to(1 SECONDS, 10 SECONDS)
-			target.visible_message(span_warning("[user]'s [atk_verb] briefly winds [target]!"), \
-				span_warning("You are briefly winded by [user]'s [atk_verb]!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning(LANG("datum.9fcccdda", list(user, atk_verb, target))), \
+				span_warning(LANG("datum.38e1cca4", list(user, atk_verb))), span_hear(LANG("datum.c21e1095", null)), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning(LANG("datum.5635177d", list(atk_verb, target))))
 
 		if (1 to 10)
 			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, their eyes water! Ouch!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb], and your eyes begin to water!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning(LANG("datum.aec9a3ca", list(user, atk_verb, target))), \
+				span_warning(LANG("datum.8f7cdcc5", list(user, atk_verb))), span_hear(LANG("datum.c21e1095", null)), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning(LANG("datum.b8a6a913", list(atk_verb, target))))
 
 		if (11 to 30)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling in agony! Damn!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning(LANG("datum.dbc37004", list(user, atk_verb, target))), \
+				span_warning(LANG("datum.26cad71d", list(user, atk_verb))), span_hear(LANG("datum.c21e1095", null)), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning(LANG("datum.4228bb62", list(atk_verb, target))))
 
 		if(31 to 40)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_temp_blindness_up_to(5 SECONDS, 10 SECONDS)
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling blindly in agony! Goddamn!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying, blinding blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning(LANG("datum.408bb95c", list(user, atk_verb, target))), \
+				span_warning(LANG("datum.1b9f3a7f", list(user, atk_verb))), span_hear(LANG("datum.c21e1095", null)), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning(LANG("datum.185962d4", list(atk_verb, target))))
 
 		if (41 to 45)
 			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you knock them off their feet! Holy shit!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb] and sent toppling head over heels!"), span_hear("You hear a sickening thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning(LANG("datum.6f197d56", list(user, atk_verb, target))), \
+				span_warning(LANG("datum.1a29d567", list(user, atk_verb))), span_hear(LANG("datum.e92d3224", null)), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning(LANG("datum.a04cd885", list(atk_verb, target))))
 
 		if (46 to INFINITY)
 			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 			var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 			target.apply_damage(5, BRUTE, affecting, armor_block, wound_bonus = limb_accuracy * 2) //Mostly for the crunchy wounding effect than actually doing damage
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you hit them off their feet with a loud crunch! Fucking hell!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb], and suddenly feel an overwhelming pain as you topple head over heels!"), span_hear("You hear a sickening crack and a loud thud!"), COMBAT_MESSAGE_RANGE, user)
+			target.visible_message(span_warning(LANG("datum.c219ed4b", list(user, atk_verb, target))), \
+				span_warning(LANG("datum.044d33cc", list(user, atk_verb))), span_hear(LANG("datum.a149271b", null)), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning(LANG("datum.723ae72f", list(atk_verb, target))))
 
 
@@ -1044,8 +1044,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		attacker_style = GET_ACTIVE_MARTIAL_ART(owner)
 	if((owner != target) && target.check_block(owner, 0, owner.name, attack_type = UNARMED_ATTACK))
 		log_combat(owner, target, "attempted to touch")
-		target.visible_message(span_warning("[owner] attempts to touch [target]!"), \
-						span_danger("[owner] attempts to touch you!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, owner)
+		target.visible_message(span_warning(LANG("datum.037cd05a", list(owner, target))), \
+						span_danger(LANG("datum.b6efcc70", list(owner))), span_hear(LANG("datum.b8189c1e", null)), COMBAT_MESSAGE_RANGE, owner)
 		to_chat(owner, span_warning(LANG("datum.58bf0cb6", list(target))))
 		return
 

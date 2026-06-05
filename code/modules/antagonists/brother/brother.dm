@@ -72,7 +72,7 @@
 		return
 
 	if (flashed.stat != CONSCIOUS)
-		flashed.balloon_alert(source, "unconscious!")
+		flashed.balloon_alert(source, LANG("datum.dc8b5a42", null))
 		return
 
 #ifdef TESTING
@@ -80,7 +80,7 @@
 		flashed.mind_initialize()
 #else
 	if (isnull(flashed.mind) || !GET_CLIENT(flashed))
-		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
+		flashed.balloon_alert(source, LANG("datum.96a90739", list(flashed.p_their())))
 		return
 #endif
 
@@ -91,15 +91,15 @@
 			return
 
 	if (flashed.mind.has_antag_datum(/datum/antagonist/brother))
-		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
+		flashed.balloon_alert(source, LANG("datum.9e06faa2", list(flashed.p_theyre())))
 		return
 
 	if (HAS_MIND_TRAIT(flashed, TRAIT_UNCONVERTABLE))
-		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
+		flashed.balloon_alert(source, LANG("datum.8715318c", list(flashed.p_they())))
 		return
 
 	if (!team.add_brother(flashed, key_name(source))) // Shouldn't happen given the former, more specific checks but just in case
-		flashed.balloon_alert(source, "failed!")
+		flashed.balloon_alert(source, LANG("datum.31bf8acd", null))
 		return
 
 	source.log_message("converted [key_name(flashed)] to blood brother", LOG_ATTACK)
@@ -114,7 +114,7 @@
 		protagonist = flashed, \
 		antagonist = owner.current, \
 	)
-	flashed.balloon_alert(source, "converted")
+	flashed.balloon_alert(source, LANG("datum.72ad5488", null))
 
 /datum/antagonist/brother/antag_panel_data()
 	return "Conspirators : [get_brother_names()] | Remaining: [team.brothers_left]"

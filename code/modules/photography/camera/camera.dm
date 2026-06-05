@@ -199,12 +199,12 @@
 
 	if(!on)
 		if(user)
-			user.balloon_alert(user, "flash still charging!")
+			user.balloon_alert(user, LANG("obj.a9061853", null))
 		return FALSE
 
 	if(blending)
 		if(user)
-			user.balloon_alert(user, "image still blending!")
+			user.balloon_alert(user, LANG("obj.91acb640", null))
 		return FALSE
 
 	blending = TRUE
@@ -457,7 +457,7 @@
 
 /obj/item/camera/item_ctrl_click(mob/user)
 	print_monochrome = !print_monochrome
-	user.balloon_alert(user, "printing [print_monochrome ? "monochrome" : "in color"]")
+	user.balloon_alert(user, LANG("obj.94bde98c", list(print_monochrome ? "monochrome" : "in color")))
 	if(silent) // Don't out your silent cameras
 		user.playsound_local(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 	else

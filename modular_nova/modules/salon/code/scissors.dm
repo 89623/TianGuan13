@@ -55,11 +55,11 @@
 		if(HAS_TRAIT(user, TRAIT_HAIR_EXPERT))
 			if(do_after(user, haircut_duration_expert, target_human))
 				target_human.set_hairstyle(hair_id, update = TRUE)
-				user.visible_message(span_notice("[user] expertly cuts [target_human]'s hair!"), span_notice("You expertly cut [target_human]'s hair!"))
+				user.visible_message(span_notice(LANG("obj.a69b67eb", list(user, target_human))), span_notice(LANG("obj.9e851773", list(target_human))))
 		else
 			if(do_after(user, haircut_duration, target_human))
 				target_human.set_hairstyle(hair_id, update = TRUE)
-				user.visible_message(span_notice("[user] successfully cuts [target_human]'s hair!"), span_notice("You successfully cut [target_human]'s hair!"))
+				user.visible_message(span_notice(LANG("obj.7e424815", list(user, target_human))), span_notice(LANG("obj.29a95f7f", list(target_human))))
 				new /obj/effect/decal/cleanable/hair(get_turf(src))
 	else
 		if(!target_human.facial_hairstyle == "Shaved" && target_human.wear_mask)
@@ -80,9 +80,9 @@
 		if(HAS_TRAIT(user, TRAIT_HAIR_EXPERT))
 			if(do_after(user, facial_haircut_duration_expert, target_human))
 				target_human.set_facial_hairstyle(facial_hair_id, update = TRUE)
-				user.visible_message(span_notice("[user] expertly cuts [target_human]'s facial hair!"), span_notice("You expertly cut [target_human]'s facial hair!"))
+				user.visible_message(span_notice(LANG("obj.a5f4bee3", list(user, target_human))), span_notice(LANG("obj.bbf70127", list(target_human))))
 		else
 			if(do_after(user, facial_haircut_duration, target_human))
 				target_human.set_facial_hairstyle(facial_hair_id, update = TRUE)
-				user.visible_message(span_notice("[user] successfully cuts [target_human]'s facial hair!"), span_notice("You successfully cut [target_human]'s facial hair!"))
+				user.visible_message(span_notice(LANG("obj.6d1cf732", list(user, target_human))), span_notice(LANG("obj.184b944a", list(target_human))))
 				new /obj/effect/decal/cleanable/hair(get_turf(src))

@@ -321,7 +321,7 @@
 				if(caster.usable_hands <= 0)
 					var/arm_describer = (caster.num_hands >= 2 ? "arms limply" : (caster.num_hands == 1 ? "arm wildly" : "arm stumps"))
 					caster.visible_message(
-						span_warning("[caster] wiggles around [caster.p_their()] [arm_describer]."),
+						span_warning(LANG("datum.9b8ccbcd", list(caster, caster.p_their(), arm_describer))),
 						ignored_mobs = caster,
 					)
 					to_chat(caster, span_warning(LANG("datum.f99e6898", list(src, caster.num_hands > 0 ? "" : ", as you have none"))))

@@ -41,8 +41,8 @@
 
 					trans = round(reagents.trans_to(safe_thing, amount_per_transfer_from_this, transferred_by = user, methods = TOUCH), CHEMICAL_VOLUME_ROUNDING)
 
-					target.visible_message(span_danger("[user] tries to squirt something into [target]'s eyes, but fails!"), \
-											span_userdanger("[user] tries to squirt something into your eyes, but fails!"))
+					target.visible_message(span_danger(LANG("obj.7bb2a84a", list(user, target))), \
+											span_userdanger(LANG("obj.d146cf82", list(user))))
 					if(trans)
 						to_chat(user, span_notice(LANG("obj.20fce5c7", list(trans))))
 					update_appearance()
@@ -53,8 +53,8 @@
 				return ITEM_INTERACT_BLOCKING
 
 			target.visible_message(
-				span_danger("[user] squirts something into [target]'s eyes!"),
-				span_userdanger("[user] squirts something into your eyes!"),
+				span_danger(LANG("obj.d7ee09b3", list(user, target))),
+				span_userdanger(LANG("obj.9e3da4bc", list(user))),
 			)
 			SEND_SIGNAL(target, COMSIG_MOB_REAGENTS_DROPPED_INTO_EYES, user, src, reagents, fraction)
 			reagents.expose(target, TOUCH, fraction)

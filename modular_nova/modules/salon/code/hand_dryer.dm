@@ -24,6 +24,6 @@
 	busy = TRUE
 	if(do_after(user, 4 SECONDS, src))
 		busy = FALSE
-		user.visible_message("[user] dried their hands using \the [src].")
+		user.visible_message(LANG("obj.8459c139", list(user, src)))
 	else
 		busy = FALSE

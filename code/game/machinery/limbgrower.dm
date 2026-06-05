@@ -151,9 +151,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/disk/design_disk/limbs))
-		user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
-			span_notice("You begin to load designs from \the [tool]..."),
-			span_hear("You hear the clatter of a floppy drive."))
+		user.visible_message(span_notice(LANG("obj.fdd3b03f", list(user, tool, src))),
+			span_notice(LANG("obj.d4607832", list(tool))),
+			span_hear(LANG("obj.37c3e9f9", null)))
 		busy = TRUE
 		var/obj/item/disk/design_disk/limbs/limb_design_disk = tool
 		if(do_after(user, 2 SECONDS, target = src))

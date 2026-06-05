@@ -100,7 +100,7 @@
 
 	var/datum/job/clocked_in_job = id_component.stored_trim.job
 	if(!SSjob.OccupyRole(clocked_in_job.title))
-		computer.say("[capitalize(clocked_in_job.title)] has no free slots available, unable to punch in!")
+		computer.say(LANG("datum.5c039ce8", list(capitalize(clocked_in_job.title))))
 		return FALSE
 
 

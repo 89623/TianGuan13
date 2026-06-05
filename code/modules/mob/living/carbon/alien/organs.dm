@@ -241,8 +241,8 @@
 	var/atom/play_from = owner || src
 	var/stomach_text = owner ? "\the [owner]'s stomach" : "\the [src]"
 	if(prob(25))
-		play_from.audible_message(span_warning("You hear something rumbling inside [stomach_text]..."), \
-			span_warning("You hear something rumbling."), 4,\
+		play_from.audible_message(span_warning(LANG("obj.681b4f5b", list(stomach_text))), \
+			span_warning(LANG("obj.2305b96c", null)), 4,\
 			self_message = span_userdanger("Something is rumbling inside your stomach!"))
 
 	if(user.client)
@@ -274,8 +274,8 @@
 		if(damage_ratio < part_dam_ratio)
 			damage_ratio = part_dam_ratio
 
-	play_from.visible_message(span_danger("[user] [attack_verb] [stomach_text] wall with the [attack_name]!"), \
-			span_userdanger("[user] [attack_verb] your stomach wall with the [attack_name]!"))
+	play_from.visible_message(span_danger(LANG("obj.4c024c02", list(user, attack_verb, stomach_text, attack_name))), \
+			span_userdanger(LANG("obj.45cecbbe", list(user, attack_verb, attack_name))))
 
 	// At 100% damage, the stomach burts
 	// Otherwise, we give them a -50% -> 50% chance scaling with damage dealt
@@ -302,11 +302,11 @@
 		return
 	// Failure condition
 	if(isalienadult(user))
-		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
-			span_userdanger("As your hive's food bursts out of your stomach, one thought fills your mind. \"Oh, so this is how the other side feels\""))
+		play_from.visible_message(span_danger(LANG("obj.2d6fea1b", list(user, stomach_text))), \
+			span_userdanger(LANG("obj.2ac456f0", null)))
 	else // Just to be safe ya know?
-		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
-			span_userdanger("[user] escapes from your [stomach_text]. Hell, that hurts."))
+		play_from.visible_message(span_danger(LANG("obj.2d6fea1b", list(user, stomach_text))), \
+			span_userdanger(LANG("obj.e643766f", list(user, stomach_text))))
 
 	playsound(get_turf(play_from), 'sound/mobs/non-humanoids/alien/alien_explode.ogg', 100, extrarange = 4)
 	eject_stomach(border_diamond_range_turfs(play_from, 6), 5, 1.5, 1, 8)

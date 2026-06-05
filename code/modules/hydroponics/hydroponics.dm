@@ -931,7 +931,7 @@
 		return
 	else if(istype(O, /obj/item/cultivator))
 		if(weedlevel > 0)
-			user.visible_message(span_notice("[user] uproots the weeds."), span_notice("You remove the weeds from [src]."))
+			user.visible_message(span_notice(LANG("obj.d121fa7f", list(user))), span_notice(LANG("obj.6dfa88a0", list(src))))
 			set_weedlevel(0)
 			return
 		else
@@ -949,7 +949,7 @@
 			to_chat(user, span_notice(LANG("obj.5634b538", null)))
 			return
 		else
-			user.visible_message(span_notice("[user] grafts off a limb from [src]."), span_notice("You carefully graft off a portion of [src]."))
+			user.visible_message(span_notice(LANG("obj.5c4c6c8c", list(user, src))), span_notice(LANG("obj.4a20b12a", list(src))))
 			var/obj/item/graft/snip = myseed.create_graft()
 			if(!snip)
 				return // The plant did not return a graft.
@@ -1026,10 +1026,10 @@
 		if(!myseed && !weedlevel)
 			to_chat(user, span_warning(LANG("obj.264645e9", list(src))))
 			return
-		user.visible_message(span_notice("[user] starts digging out [src]'s plants..."),
-			span_notice("You start digging out [src]'s plants..."))
+		user.visible_message(span_notice(LANG("obj.4c06f45c", list(user, src))),
+			span_notice(LANG("obj.993d2039", list(src))))
 		if(O.use_tool(src, user, 50, volume=50) || (!myseed && !weedlevel))
-			user.visible_message(span_notice("[user] digs out the plants in [src]!"), span_notice("You dig out all of [src]'s plants!"))
+			user.visible_message(span_notice(LANG("obj.9fb5e30a", list(user, src))), span_notice(LANG("obj.f0b2c981", list(src))))
 			remove_plant()
 			return
 	else if(istype(O, /obj/item/gun/energy/floragun))

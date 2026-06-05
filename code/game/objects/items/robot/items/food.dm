@@ -73,9 +73,9 @@
 	check_amount()
 
 	if(into_hands)
-		user.visible_message(span_notice("[user] dispenses a treat into the hands of [atom_dispensed_to]."), span_notice("You dispense a treat into the hands of [atom_dispensed_to]."), span_hear("You hear a click."))
+		user.visible_message(span_notice(LANG("obj.8d6327a6", list(user, atom_dispensed_to))), span_notice(LANG("obj.5b7b0c69", list(atom_dispensed_to))), span_hear(LANG("obj.0f830183", null)))
 	else
-		user.visible_message(span_notice("[user] dispenses a treat."), span_notice("You dispense a treat."), span_hear("You hear a click."))
+		user.visible_message(span_notice(LANG("obj.724d84b8", list(user))), span_notice(LANG("obj.517990d2", null)), span_hear(LANG("obj.0f830183", null)))
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
@@ -96,7 +96,7 @@
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	lollipop.fire_casing(target, user, params, 0, 0, null, 0, src)
-	user.visible_message(span_warning("[user] blasts a flying lollipop at [target]!"))
+	user.visible_message(span_warning(LANG("obj.1ccfac1b", list(user, target))))
 	check_amount()
 
 /// Shoot a gumball
@@ -115,7 +115,7 @@
 	gumball.loaded_projectile.color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	playsound(src.loc, 'sound/items/weapons/bulletflyby3.ogg', 50, TRUE)
 	gumball.fire_casing(target, user, params, 0, 0, null, 0, src)
-	user.visible_message(span_warning("[user] shoots a high-velocity gumball at [target]!"))
+	user.visible_message(span_warning(LANG("obj.3039ca07", list(user, target))))
 	check_amount()
 
 /obj/item/borg/lollipop/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

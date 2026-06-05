@@ -420,8 +420,8 @@
 
 	if(AM.pulledby)
 		if(!supress_message)
-			AM.visible_message(span_danger("[src] pulls [AM] from [AM.pulledby]'s grip."), \
-							span_danger("[src] pulls you from [AM.pulledby]'s grip."), null, null, src)
+			AM.visible_message(span_danger(LANG("mob.013760f7", list(src, AM, AM.pulledby))), \
+							span_danger(LANG("mob.be29113a", list(src, AM.pulledby))), null, null, src)
 			to_chat(src, span_notice(LANG("mob.3c31c799", list(AM, AM.pulledby))))
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
@@ -458,19 +458,19 @@
 				*/ // NOVA EDIT REMOVAL END - Tail coiling
 				// NOVA EDIT ADDITION START - Tail coiling
 				if(zone_selected == BODY_ZONE_PRECISE_GROIN && M.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL) && src.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL))
-					M.visible_message(span_warning("[src] coils their tail with [AM], wow is that okay in public?!"), "[src] has entwined their tail with yours!")
+					M.visible_message(span_warning(LANG("mob.adf16c74", list(src, AM))), LANG("mob.fbfa396a", list(src)))
 					to_chat(src, LANG("mob.f0f92635", list(AM)))
 				else
 					var/mob/living/carbon/human/grabbed_human = M
 					var/grabbed_by_hands = (zone_selected == "l_arm" || zone_selected == "r_arm") && grabbed_human.usable_hands > 0
-					M.visible_message(span_warning("[src] grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
-									span_warning("[src] grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
+					M.visible_message(span_warning(LANG("mob.602aa520", list(src, M, grabbed_by_hands ? "by their hands":"passively"))), \
+									span_warning(LANG("mob.3619c450", list(src, grabbed_by_hands ? "by your hands":"passively"))), null, null, src)
 					to_chat(src, span_notice(LANG("mob.d2fe4965", list(M, grabbed_by_hands ? "by their hands":"passively"))))
 					grabbed_human.share_blood_on_touch(src, grabbed_by_hands ? ITEM_SLOT_GLOVES : ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 				// NOVA EDIT ADDITION END
 			else
-				M.visible_message(span_warning("[src] grabs [M] passively!"), \
-								span_warning("[src] grabs you passively!"), null, null, src)
+				M.visible_message(span_warning(LANG("mob.69eef1cf", list(src, M))), \
+								span_warning(LANG("mob.221d7df7", list(src))), null, null, src)
 				to_chat(src, span_notice(LANG("mob.36b256bb", list(M))))
 
 		if(isliving(M))
@@ -2110,7 +2110,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/mob_pickup(mob/living/user)
 	var/obj/item/mob_holder/holder = new inhand_holder_type(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
 	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, user, holder)
-	user.visible_message(span_warning("[user] scoops up [src]!"))
+	user.visible_message(span_warning(LANG("mob.20aafc4f", list(user, src))))
 	user.put_in_hands(holder)
 
 /mob/living/proc/set_name()
@@ -2133,8 +2133,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		to_chat(user, span_warning(LANG("mob.65a86c2b", list(src))))
 		return FALSE
 	if(!instant)
-		user.visible_message(span_warning("[user] starts trying to scoop up [src]!"), \
-						span_danger("You start trying to scoop up [src]..."), null, null, src)
+		user.visible_message(span_warning(LANG("mob.f32613ff", list(user, src))), \
+						span_danger(LANG("mob.9c285343", list(src))), null, null, src)
 		to_chat(src, span_userdanger(LANG("mob.d3b9676a", list(user))))
 		if(!do_after(user, 2 SECONDS, target = src))
 			return FALSE

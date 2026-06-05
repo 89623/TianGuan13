@@ -95,12 +95,12 @@
 	if (!decay_timer)
 		return TRUE
 	preserve(TRUE)
-	target_carbon.visible_message(span_notice("[src] stabilizes as it's inserted."))
+	target_carbon.visible_message(span_notice(LANG("obj.21df229c", list(src))))
 	return TRUE
 
 /obj/item/organ/monster_core/on_mob_remove(mob/living/carbon/target_carbon, special, movement_flags)
 	if (!inert && !special)
-		target_carbon?.visible_message(span_notice("[src] rapidly decays as it's removed."))
+		target_carbon?.visible_message(span_notice(LANG("obj.b1ed63fb", list(src))))
 		go_inert()
 	return ..()
 

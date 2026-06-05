@@ -53,7 +53,7 @@
 
 	var/mob/living/carbon/human/to_curse = potential_targets[chosen_mob]
 	if(QDELETED(to_curse))
-		loc.balloon_alert(user, "ritual failed, invalid choice!")
+		loc.balloon_alert(user, LANG("datum.c24e891b", null))
 		return FALSE
 
 	// Yes, you COULD curse yourself, not sure why but you could
@@ -67,7 +67,7 @@
 
 	var/turf/curse_turf = get_turf(to_curse)
 	if(!is_valid_z_level(curse_turf, loc) || get_dist(curse_turf, loc) > max_range * 1.5) // Give a bit of leeway on max range for people moving around
-		loc.balloon_alert(user, "ritual failed, too far!")
+		loc.balloon_alert(user, LANG("datum.bcd15e0f", null))
 		return FALSE
 
 	if(IS_HERETIC(to_curse) && to_curse != user)

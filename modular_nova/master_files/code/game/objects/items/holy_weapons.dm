@@ -166,8 +166,8 @@
 		balloon_alert(user, LANG("obj.38f46f8c", null))
 		return
 
-	user.visible_message(span_info("[user] kneels[target == user ? null : " next to [target]"] and begins to utter a prayer to [deity_name]."), \
-		span_info("You kneel[target == user ? null : " next to [target]"] and begin a prayer to [deity_name]."))
+	user.visible_message(span_info(LANG("obj.e873321a", list(user, target == user ? null : " next to [target]", deity_name))), \
+		span_info(LANG("obj.e64d95df", list(target == user ? null : " next to [target]", deity_name))))
 
 	praying = TRUE
 	if(do_after(user, 5 SECONDS, target = target))

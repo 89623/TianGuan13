@@ -28,7 +28,7 @@
 		return . | SPELL_CANCEL_CAST
 
 	if(get_dist(cast_on, owner) > target_radius)
-		owner.balloon_alert(owner, "they're too far!")
+		owner.balloon_alert(owner, LANG("datum.d000a673", null))
 		return . | SPELL_CANCEL_CAST
 
 	if(!message)
@@ -45,10 +45,10 @@
 
 	to_chat(owner, LANG("datum.5edafd57", list(bold_telepathy_span, cast_on, formatted_message)))
 	if(!cast_on.can_block_magic(antimagic_flags, charge_cost = 0) && !(HAS_TRAIT(cast_on, TRAIT_PSIONIC_DAMPENER))) // NOVA EDIT CHANGE - ORIGINAL: if(!cast_on.can_block_magic(antimagic_flags, charge_cost = 0)) //hear no evil
-		cast_on.balloon_alert(cast_on, "you hear a voice")
+		cast_on.balloon_alert(cast_on, LANG("datum.d955e950", null))
 		to_chat(cast_on, LANG("datum.04b5b31c", list(bold_telepathy_span, formatted_message)))
 	else
-		owner.balloon_alert(owner, "transmission blocked!")
+		owner.balloon_alert(owner, LANG("datum.65890d04", null))
 		to_chat(owner, span_warning(LANG("datum.c4fab014", null)))
 		failure_message_for_ghosts = "<span class='[bold_telepathy_span]'> (blocked by antimagic)</span>"
 

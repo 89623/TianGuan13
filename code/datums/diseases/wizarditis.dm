@@ -67,7 +67,7 @@
 		return
 
 	if(stage <= 3 && SPT_PROB(0.33 * stage, seconds_per_tick))
-		affected_mob.manual_emote("sniffles.")
+		affected_mob.manual_emote(LANG("datum.cb103bcf", null))
 
 	switch(stage)
 		if(2)

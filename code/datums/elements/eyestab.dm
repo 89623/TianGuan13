@@ -61,13 +61,13 @@
 	user.do_attack_animation(target)
 	if (target == user)
 		user.visible_message(
-			span_danger("[user] stabs [user.p_them()]self in the eye with [item]!"),
-			span_userdanger("You stab yourself in the eye with [item]!"),
+			span_danger(LANG("datum.bcc197c3", list(user, user.p_them(), item))),
+			span_userdanger(LANG("datum.ce50bb17", list(item))),
 		)
 	else
 		target.visible_message(
-			span_danger("[user] stabs [target] in the eye with [item]!"),
-			span_userdanger("[user] stabs you in the eye with [item]!"),
+			span_danger(LANG("datum.df8f2c80", list(user, target, item))),
+			span_userdanger(LANG("datum.bb4281c5", list(user, item))),
 		)
 
 	if (target_limb)

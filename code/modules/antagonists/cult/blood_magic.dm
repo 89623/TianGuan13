@@ -182,8 +182,8 @@
 
 /datum/action/innate/cult/blood_spell/emp/Activate()
 	owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
-	owner.visible_message(span_warning("[owner]'s hand flashes a bright blue!"), \
-		span_cult_italic("You speak the cursed words, emitting an EMP blast from your hand."))
+	owner.visible_message(span_warning(LANG("datum.57eb79b2", list(owner))), \
+		span_cult_italic(LANG("datum.35742b84", null)))
 	empulse(owner, 2, 5, emp_source = src)
 	charges--
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
@@ -221,14 +221,14 @@
 /datum/action/innate/cult/blood_spell/dagger/Activate()
 	var/turf/owner_turf = get_turf(owner)
 	owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
-	owner.visible_message(span_warning("[owner]'s hand glows red for a moment."), \
-		span_cult_italic("Your plea for aid is answered, and light begins to shimmer and take form within your hand!"))
+	owner.visible_message(span_warning(LANG("datum.c2ffc78a", list(owner))), \
+		span_cult_italic(LANG("datum.c6e16c5b", null)))
 	var/obj/item/summoned_blade = new summoned_type(owner_turf)
 	if(owner.put_in_hands(summoned_blade))
 		to_chat(owner, span_warning(LANG("datum.272b459e", list(summoned_blade))))
 	else
-		owner.visible_message(span_warning("A [summoned_blade] appears at [owner]'s feet!"), \
-			span_cult_italic("A [summoned_blade] materializes at your feet."))
+		owner.visible_message(span_warning(LANG("datum.0dd6259b", list(summoned_blade, owner))), \
+			span_cult_italic(LANG("datum.475f193d", list(summoned_blade))))
 	SEND_SOUND(owner, sound('sound/effects/magic.ogg', FALSE, 0, 25))
 	charges--
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
@@ -290,8 +290,8 @@
 
 /datum/action/innate/cult/blood_spell/veiling/Activate()
 	if(!revealing)
-		owner.visible_message(span_warning("Thin grey dust falls from [owner]'s hand!"), \
-			span_cult_italic("You invoke the veiling spell, hiding nearby runes."))
+		owner.visible_message(span_warning(LANG("datum.f4611087", list(owner))), \
+			span_cult_italic(LANG("datum.5cb89e27", null)))
 		charges--
 		SEND_SOUND(owner, sound('sound/effects/magic/smoke.ogg',0,1,25))
 		owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
@@ -309,8 +309,8 @@
 		name = "Reveal Runes"
 		button_icon_state = "back"
 	else
-		owner.visible_message(span_warning("A flash of light shines from [owner]'s hand!"), \
-			span_cult_italic("You invoke the counterspell, revealing nearby runes."))
+		owner.visible_message(span_warning(LANG("datum.05cf1904", list(owner))), \
+			span_cult_italic(LANG("datum.b3052c2f", null)))
 		charges--
 		owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
 		SEND_SOUND(owner, sound('sound/effects/magic/enter_blood.ogg',0,1,25))
@@ -451,8 +451,8 @@
 	if(IS_CULTIST(user) && isnull(GET_CULTIST(user)))
 		effect_coef = 0.2
 	user.visible_message(
-		span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"),
-		span_cult_italic("You attempt to stun [target] with the spell!"),
+		span_warning(LANG("obj.7e5e2159", list(user, user.p_their()))),
+		span_cult_italic(LANG("obj.47c8c5aa", list(target))),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
@@ -545,14 +545,14 @@
 	var/turf/origin = get_turf(user)
 	if(do_teleport(target, dest, channel = TELEPORT_CHANNEL_CULT))
 		origin.visible_message(
-			span_warning("Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!"),
-			span_cult_italic("You speak the words of the talisman and find yourself somewhere else!"),
-			span_hear("You hear a sharp crack."),
+			span_warning(LANG("obj.45f6937e", list(user, user.p_they(), user.p_s()))),
+			span_cult_italic(LANG("obj.2e73da7e", null)),
+			span_hear(LANG("obj.5f046dad", null)),
 		)
 		dest.visible_message(
-			span_warning("There is a boom of outrushing air as something appears above the rune!"),
+			span_warning(LANG("obj.a9354b8e", null)),
 			null,
-			span_hear("You hear a boom."),
+			span_hear(LANG("obj.7c4a0895", null)),
 		)
 		playsound(origin, SFX_PORTAL_ENTER, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 		playsound(dest, SFX_PORTAL_ENTER, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -572,7 +572,7 @@
 	if(IS_CULTIST(C))
 		return
 	if(!C.canBeHandcuffed())
-		user.visible_message(span_cult_italic("This victim doesn't have enough arms to complete the restraint!"))
+		user.visible_message(span_cult_italic(LANG("obj.e1c3d059", null)))
 		return
 	CuffAttack(C, user)
 	return ..()
@@ -580,8 +580,8 @@
 /obj/item/melee/blood_magic/shackles/proc/CuffAttack(mob/living/carbon/C, mob/living/user)
 	if(!C.handcuffed)
 		playsound(loc, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
-		C.visible_message(span_danger("[user] begins restraining [C] with dark magic!"), \
-								span_userdanger("[user] begins shaping dark magic shackles around your wrists!"))
+		C.visible_message(span_danger(LANG("obj.d1316dd3", list(user, C))), \
+								span_userdanger(LANG("obj.bc00950d", list(user))))
 		if(do_after(user, 3 SECONDS, C))
 			if(!C.handcuffed)
 				C.equip_to_slot_or_del(new /obj/item/restraints/handcuffs/cult, ITEM_SLOT_HANDCUFFED, indirect_action = TRUE)
@@ -641,7 +641,7 @@
 		var/mob/living/silicon/robot/candidate = target
 		if(candidate.mmi || candidate.shell)
 			channeling = TRUE
-			user.visible_message(span_danger("A dark cloud emanates from [user]'s hand and swirls around [candidate]!"))
+			user.visible_message(span_danger(LANG("obj.2ad19053", list(user, candidate))))
 			playsound(T, 'sound/machines/airlock/airlock_alien_prying.ogg', 80, TRUE)
 			var/prev_color = candidate.color
 			candidate.color = "black"
@@ -657,7 +657,7 @@
 				candidate.color = prev_color
 				return
 			candidate.grab_ghost()
-			user.visible_message(span_danger("The dark cloud recedes from what was formerly [candidate], revealing a [construct_class]!"))
+			user.visible_message(span_danger(LANG("obj.1776bd28", list(candidate, construct_class))))
 			make_new_construct_from_class(construct_class, THEME_CULT, candidate, user, FALSE, T)
 			uses--
 			qdel(candidate)
@@ -681,7 +681,7 @@
 
 		target.narsie_act()
 		uses--
-		user.visible_message(span_warning("Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!"))
+		user.visible_message(span_warning(LANG("obj.4fb25ac4", list(user))))
 		SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		channeling = FALSE
 		return ..()
@@ -717,7 +717,7 @@
 		return
 	uses--
 	var/mob/living/carbon/carbon_target = target
-	carbon_target.visible_message(span_warning("Otherworldly armor suddenly appears on [carbon_target]!"))
+	carbon_target.visible_message(span_warning(LANG("obj.9ffef632", list(carbon_target))))
 	carbon_target.equip_to_slot_or_del(new /obj/item/clothing/under/color/black,ITEM_SLOT_ICLOTHING)
 	carbon_target.equip_to_slot_or_del(new /obj/item/clothing/suit/hooded/cultrobes/alt(user), ITEM_SLOT_OCLOTHING)
 	carbon_target.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult/alt(user), ITEM_SLOT_FEET)
@@ -759,10 +759,10 @@
 		return
 	var/mob/living/carbon/human/human_bloodbag = target
 	if(!CAN_HAVE_BLOOD(human_bloodbag))
-		human_bloodbag.balloon_alert(user, "no blood!")
+		human_bloodbag.balloon_alert(user, LANG("obj.ce2814af", null))
 		return
 	if(human_bloodbag.stat == DEAD)
-		human_bloodbag.balloon_alert(user, "dead!")
+		human_bloodbag.balloon_alert(user, LANG("obj.1bf49ad4", null))
 		return
 	if(IS_CULTIST(human_bloodbag) && !heal_cultist(human_bloodbag, user))
 		return
@@ -784,15 +784,15 @@
 		to_chat(user,span_cult(LANG("obj.868847bc", null)))
 		return FALSE
 	if(uses <= 0)
-		construct_thing.balloon_alert(user, "out of blood!")
+		construct_thing.balloon_alert(user, LANG("obj.663d6bcb", null))
 		return FALSE
 	if(uses > missing_health)
 		construct_thing.adjust_health(-missing_health)
-		construct_thing.visible_message(span_warning("[construct_thing] is fully healed by [user]'s blood magic!"))
+		construct_thing.visible_message(span_warning(LANG("obj.a1f9b906", list(construct_thing, user))))
 		uses -= missing_health
 	else
 		construct_thing.adjust_health(-uses)
-		construct_thing.visible_message(span_warning("[construct_thing] is partially healed by [user]'s blood magic!"))
+		construct_thing.visible_message(span_warning(LANG("obj.4ac9ca81", list(construct_thing, user))))
 		uses = 0
 	playsound(get_turf(construct_thing), 'sound/effects/magic/staff_healing.ogg', 25)
 	user.Beam(construct_thing, icon_state="sendbeam", time = 1 SECONDS)
@@ -806,7 +806,7 @@
  */
 /obj/item/melee/blood_magic/manipulator/proc/heal_cultist(mob/living/carbon/human/human_bloodbag, mob/living/carbon/human/user)
 	if(uses <= 0)
-		human_bloodbag.balloon_alert(user, "out of blood!")
+		human_bloodbag.balloon_alert(user, LANG("obj.663d6bcb", null))
 		return FALSE
 
 	/// used to ensure the proc returns TRUE if we completely restore an undamaged persons blood
@@ -841,7 +841,7 @@
 		damage_healed = -1 * min(uses * (1 / SELF_HEAL_PENALTY), overall_damage)
 		healing_cost = damage_healed * SELF_HEAL_PENALTY
 	uses += round(healing_cost)
-	human_bloodbag.visible_message(span_warning("[human_bloodbag] is [uses == 0 ? "partially healed":"fully healed"] by [human_bloodbag == user ? "[human_bloodbag.p_their()]":"[human_bloodbag]'s"] blood magic!"))
+	human_bloodbag.visible_message(span_warning(LANG("obj.3834cd0f", list(human_bloodbag, uses == 0 ? "partially healed":"fully healed", human_bloodbag == user ? "[human_bloodbag.p_their()]":"[human_bloodbag]'s"))))
 
 	var/need_mob_update = FALSE
 	need_mob_update += human_bloodbag.adjust_oxy_loss(damage_healed * (human_bloodbag.get_oxy_loss() / overall_damage), updating_health = FALSE)
@@ -872,7 +872,7 @@
 	uses += BLOOD_DRAIN_GAIN
 	user.Beam(human_bloodbag, icon_state="drainbeam", time = 1 SECONDS)
 	playsound(get_turf(human_bloodbag), 'sound/effects/magic/enter_blood.ogg', 50)
-	human_bloodbag.visible_message(span_danger("[user] drains some of [human_bloodbag]'s blood!"))
+	human_bloodbag.visible_message(span_danger(LANG("obj.24938e6a", list(user, human_bloodbag))))
 	to_chat(user,span_cult_italic(LANG("obj.04279f3e", list(human_bloodbag))))
 	new /obj/effect/temp_visual/cult/sparks(get_turf(human_bloodbag))
 	return TRUE
@@ -930,8 +930,8 @@
 			if(user.put_in_hands(rite))
 				to_chat(user, span_cult_italic(LANG("obj.272b459e", list(rite.name))))
 			else
-				user.visible_message(span_warning("A [rite.name] appears at [user]'s feet!"), \
-					span_cult_italic("A [rite.name] materializes at your feet."))
+				user.visible_message(span_warning(LANG("obj.0dd6259b", list(rite.name, user))), \
+					span_cult_italic(LANG("obj.475f193d", list(rite.name))))
 
 		if("Blood Bolt Barrage (300)")
 			if(uses < BLOOD_BARRAGE_COST)

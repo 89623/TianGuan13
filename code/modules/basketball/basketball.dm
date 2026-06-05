@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MIN_DISARM_CHANCE 25
 #define MAX_DISARM_CHANCE 75
 
@@ -74,7 +75,7 @@
 		return
 
 	if((user.ckey in pickup_restriction_ckeys) && !COOLDOWN_FINISHED(src, pickup_cooldown))
-		user.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) *0.1] seconds!")
+		user.balloon_alert(user, LANG("obj.e3f32e15", list(COOLDOWN_TIMELEFT(src, pickup_cooldown) *0.1)))
 		return
 
 	reset_pickup_restriction()

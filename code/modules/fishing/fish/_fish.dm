@@ -266,16 +266,16 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 /obj/item/fish/suicide_act(mob/living/user)
 	if(force == 0)
-		user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but nothing happens!"))
+		user.visible_message(span_suicide(LANG("obj.6c2c8951", list(user, user.p_them(), src))))
 		return SHAME
-	user.visible_message(span_suicide("[user] starts rapidly slapping [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.e993a199", list(user, user.p_them(), src, user.p_theyre()))))
 	user.set_combat_mode(TRUE)
 	ADD_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
 	slapperoni(user, iteration = 1)
 	REMOVE_TRAIT(user, TRAIT_COMBAT_MODE_LOCK, REF(src))
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("[user] slaps [user.p_them()]self with [src], but fails to go through with it!"))
+	user.visible_message(span_suicide(LANG("obj.4141d7a7", list(user, user.p_them(), src))))
 	return SHAME
 
 /obj/item/fish/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
@@ -321,7 +321,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(!do_after(user, 2.5 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
 	// Sir... I'm afraid your fish is dying.
-	user.visible_message(span_notice("[user] checks the pulse of [src] with [tool]."), span_notice("You check the pulse of [src] with [tool]."))
+	user.visible_message(span_notice(LANG("obj.4c586727", list(user, src, tool))), span_notice(LANG("obj.6df4a388", list(src, tool))))
 	var/warns = get_health_warnings(user, always_deep = TRUE)
 	if(!warns)
 		to_chat(user, span_notice(LANG("obj.4dc26c63", list(src))))
@@ -342,9 +342,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	var/goodbye_text = "Bye bye [name]."
 	if(status == FISH_DEAD && !HAS_MIND_TRAIT(user, TRAIT_NAIVE))
 		goodbye_text = "May [p_they()] rest in peace..."
-	user.visible_message(span_notice("[user] releases [src] into [interacting_with]"), \
-		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
-		span_notice("You hear a splash."))
+	user.visible_message(span_notice(LANG("obj.79e41f5f", list(user, src, interacting_with))), \
+		span_notice(LANG("obj.2d014823", list(src, interacting_with, goodbye_text))), \
+		span_notice(LANG("obj.0b1a6e8f", null)))
 	released(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -1590,14 +1590,14 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if((/datum/fish_trait/predator in fish_traits) && prob(50))
 		if(in_aquarium)
 			user.visible_message(
-				span_warning("[src] dances around before biting [user]!"),
-				span_warning("[src] dances around before biting you!"),
+				span_warning(LANG("obj.85e99c29", list(src, user))),
+				span_warning(LANG("obj.17922d22", list(src))),
 				vision_distance = DEFAULT_MESSAGE_RANGE - 3,
 			)
 		else
 			user.visible_message(
-				span_warning("[src] bites [user]'s hand!"),
-				span_warning("You pet [src] as you hold [p_they()], only for [p_them()] to happily bite back!"),
+				span_warning(LANG("obj.c1e96533", list(src, user))),
+				span_warning(LANG("obj.6014fe51", list(src, p_they(), p_them()))),
 				vision_distance = DEFAULT_MESSAGE_RANGE - 3,
 			)
 		var/body_zone = pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)

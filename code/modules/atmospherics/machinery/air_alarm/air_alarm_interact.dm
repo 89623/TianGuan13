@@ -3,8 +3,8 @@
 /obj/machinery/airalarm/crowbar_act(mob/living/user, obj/item/tool)
 	if(buildstage != AIR_ALARM_BUILD_NO_WIRES)
 		return
-	user.visible_message(span_notice("[user.name] removes the electronics from [name]."), \
-						span_notice("You start prying out the circuit..."))
+	user.visible_message(span_notice(LANG("obj.fe9f9988", list(user.name, name))), \
+						span_notice(LANG("obj.330c1e13", null)))
 	tool.play_tool_sound(src)
 	if (tool.use_tool(src, user, 20))
 		if (buildstage == AIR_ALARM_BUILD_NO_WIRES)
@@ -117,8 +117,8 @@
 				if(cable.get_amount() < 5)
 					to_chat(user, span_warning(LANG("obj.44b093d6", null)))
 					return
-				user.visible_message(span_notice("[user.name] wires the air alarm."), \
-									span_notice("You start wiring the air alarm..."))
+				user.visible_message(span_notice(LANG("obj.24088500", list(user.name))), \
+									span_notice(LANG("obj.dcfa80c4", null)))
 				if (do_after(user, 2 SECONDS, target = src))
 					if (cable.get_amount() >= 5 && buildstage == AIR_ALARM_BUILD_NO_WIRES)
 						cable.use(5)
@@ -145,8 +145,8 @@
 				var/obj/item/electroadaptive_pseudocircuit/P = W
 				if(!P.adapt_circuit(user, circuit_cost = 0.025 * STANDARD_CELL_CHARGE))
 					return
-				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
-				span_notice("You adapt an air alarm circuit and slot it into the assembly."))
+				user.visible_message(span_notice(LANG("obj.bdc98e79", list(user, src))), \
+				span_notice(LANG("obj.1f2fc2a5", null)))
 				buildstage = AIR_ALARM_BUILD_NO_WIRES
 				update_appearance()
 				return

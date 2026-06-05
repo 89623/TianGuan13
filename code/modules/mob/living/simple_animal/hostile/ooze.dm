@@ -230,7 +230,7 @@
 		to_chat(src, span_warning(LANG("datum.fbf7fbeb", null)))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
-	owner.visible_message(span_warning("[ooze] starts attempting to [devour_verb] [eat_target]!"), span_notice("You start attempting to [devour_verb] [eat_target]."))
+	owner.visible_message(span_warning(LANG("datum.55a41841", list(ooze, devour_verb, eat_target))), span_notice(LANG("datum.bf113076", list(devour_verb, eat_target))))
 	if(!do_after(ooze, devour_time, eat_target))
 		return FALSE
 
@@ -245,7 +245,7 @@
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	RegisterSignal(vored_mob, COMSIG_QDELETING, PROC_REF(stop_consuming))
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
-	owner.visible_message(span_warning("[owner] [devour_verb]s [target]!"), span_notice("You [devour_verb] [target]."))
+	owner.visible_message(span_warning(LANG("datum.73829518", list(owner, devour_verb, target))), span_notice(LANG("datum.d6171b71", list(devour_verb, target))))
 	START_PROCESSING(SSprocessing, src)
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 
@@ -257,7 +257,7 @@
 		return
 	vored_mob.forceMove(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
-	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
+	owner.visible_message(span_warning(LANG("datum.554bf4a8", list(owner, vored_mob))), span_notice(LANG("datum.392778de", list(vored_mob))))
 	UnregisterSignal(vored_mob, COMSIG_QDELETING)
 	vored_mob = null
 	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
@@ -371,8 +371,8 @@
 	// for passing into aim_projectile, so we'll handle it here instead.
 	// We just need to make sure Pre-activate and Activate return TRUE so we make it this far
 	clicker.visible_message(
-		span_nicegreen("[clicker] launches a mending globule!"),
-		span_notice("You launch a mending globule."),
+		span_nicegreen(LANG("datum.13fdd54d", list(clicker))),
+		span_notice(LANG("datum.1c56fb0d", null)),
 	)
 
 	var/mob/living/simple_animal/hostile/ooze/oozy = clicker
@@ -470,7 +470,7 @@
 	if(!iscarbon(ooze.pulling))
 		to_chat(src, span_warning(LANG("datum.aecef809", null)))
 		return FALSE
-	owner.visible_message(span_nicegreen("[ooze] starts attempting to put [target] into a gel cocoon!"), span_notice("You start attempting to put [target] into a gel cocoon."))
+	owner.visible_message(span_nicegreen(LANG("datum.14119cee", list(ooze, target))), span_notice(LANG("datum.9dd6be84", list(target))))
 	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
 		return FALSE
 
@@ -489,7 +489,7 @@
 /datum/action/cooldown/gel_cocoon/proc/put_in_cocoon(mob/living/carbon/target)
 	var/obj/structure/gel_cocoon/cocoon = new /obj/structure/gel_cocoon(get_turf(target))
 	cocoon.insert_target(target)
-	owner.visible_message(span_nicegreen("[owner] has put [target] into a gel cocoon!"), span_notice("You put [target] into a gel cocoon."))
+	owner.visible_message(span_nicegreen(LANG("datum.64ccf422", list(owner, target))), span_notice(LANG("datum.a71cc89e", list(target))))
 
 /obj/structure/gel_cocoon
 	name = "gel cocoon"
@@ -506,8 +506,8 @@
 
 /obj/structure/gel_cocoon/container_resist_act(mob/living/user)
 	. = ..()
-	user.visible_message(span_notice("You see [user] breaking out of [src]!"), \
-		span_notice("You start tearing the soft tissue of the gel cocoon"))
+	user.visible_message(span_notice(LANG("obj.ee041f55", list(user, src))), \
+		span_notice(LANG("obj.08763a7e", null)))
 	if(!do_after(user, 1.5 SECONDS, target = src))
 		return FALSE
 	dump_inhabitant()
@@ -523,7 +523,7 @@
 	inhabitant.forceMove(get_turf(src))
 	playsound(get_turf(inhabitant), 'sound/effects/splat.ogg', 50, TRUE)
 	inhabitant.Paralyze(10)
-	inhabitant.visible_message(span_warning("[inhabitant] falls out of [src]!"), span_notice("You fall out of [src]."))
+	inhabitant.visible_message(span_warning(LANG("obj.64fbe43f", list(inhabitant, src))), span_notice(LANG("obj.730014fe", list(src))))
 	if(destroy_after)
 		qdel(src)
 

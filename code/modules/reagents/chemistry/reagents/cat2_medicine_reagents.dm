@@ -537,7 +537,7 @@
 	if(need_mob_update)
 		carbies.updatehealth()
 		if(show_message)
-			carbies.visible_message(span_nicegreen("A rubbery liquid partially coats [carbies]'s burns."))
+			carbies.visible_message(span_nicegreen(LANG("datum.08780947", list(carbies))))
 			if(carbies.stat != DEAD)
 				to_chat(carbies, span_danger(LANG("datum.803fb633", null)))
 				carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
@@ -549,7 +549,7 @@
 	//don't try to unhusk mobs above burn damage threshold
 	if(carbies.get_fire_loss() > UNHUSK_DAMAGE_THRESHOLD)
 		if(show_message && !need_mob_update)
-			carbies.visible_message(span_minoralert("The liquid fails to properly stick on [carbies]. [carbies]'s burns need to be repaired first!"))
+			carbies.visible_message(span_minoralert(LANG("datum.fe4b7775", list(carbies, carbies))))
 		return
 
 	var/datum/reagent/synthflesh = carbies.reagents.has_reagent(/datum/reagent/medicine/c2/synthflesh)
@@ -565,16 +565,16 @@
 		carbies.cure_husk(BURN)
 		carbies.reagents.remove_reagent(/datum/reagent/medicine/c2/synthflesh, current_volume) // consume the synthflesh, it won't do anything in their blood
 		//we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
-		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!"))
+		carbies.visible_message(span_nicegreen(LANG("datum.c4435ce4", list(carbies, carbies))))
 	else if(show_message && !need_mob_update)
 		// if they are laying in a pool of synthflesh, we don't want it sending a message every tick
 		if(methods & TOUCH)
 			if(TIMER_COOLDOWN_RUNNING(carbies, REF(carbies)))
 				return
 			TIMER_COOLDOWN_START(carbies, REF(carbies), 16 SECONDS)
-			carbies.visible_message(span_boldnotice("The liquid fails to properly stick on [carbies]. There isn't enough to unhusk!"))
+			carbies.visible_message(span_boldnotice(LANG("datum.499203e3", list(carbies))))
 		else
-			carbies.visible_message(span_nicegreen("A rubbery liquid partially mends [carbies]... It seems more is required to fully unhusk!"))
+			carbies.visible_message(span_nicegreen(LANG("datum.2875ff97", list(carbies))))
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/

@@ -149,7 +149,7 @@
 		return
 
 	var/mob/living/user = loc
-	user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
+	user.visible_message(span_danger(LANG("obj.60571bac", list(src, user))), span_userdanger(LANG("obj.f8e93394", list(src))))
 	user.adjust_fire_stacks(4)
 	user.ignite_mob()
 
@@ -498,7 +498,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 
 	var/turf/target_turf = get_offset_target_turf(target, rand(-1, 1), rand(-1, 1)) // choose a random tile adjacent to the clicked one
 	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
-	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
+	user.visible_message(span_warning(LANG("obj.222a4eda", list(user, target))), span_danger(LANG("obj.a569d9e3", list(target))))
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
 	new_coin.aim_projectile(target_turf, user)
 	new_coin.fire()

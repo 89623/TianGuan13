@@ -145,7 +145,7 @@
 	if(QDELETED(enchanting) || !(tool_turf == enchanting.loc)) //check if the arrow is still there
 		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
-	enchanting.visible_message(span_notice("[enchant_target] is blessed by holy fire!"))
+	enchanting.visible_message(span_notice(LANG("datum.e64ec40a", list(enchant_target))))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	new /obj/item/ammo_casing/arrow/holy/blazing(tool_turf)
 	qdel(enchanting)

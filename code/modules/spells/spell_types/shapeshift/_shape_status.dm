@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // A status effect for having a mob temporarily (usually) change form into that of another mob.
 // When the status effect is removed, the mob is reverted back to their human form in most cases.
 // If you want a more permanent polymorph, see [/proc/wabbajack].
@@ -74,7 +75,7 @@
 /// Called when the transformed mob tries to change into a different kind of mob, we wouldn't handle this well so we'll just turn back
 /datum/status_effect/shapechange_mob/proc/on_mob_transformed(mob/living/source)
 	var/mob/living/revealed_mob = caster_mob
-	source.visible_message(span_warning("[revealed_mob] gets pulled back to their normal form!"))
+	source.visible_message(span_warning(LANG("datum.91b5e5ae", list(revealed_mob))))
 	restore_caster()
 	revealed_mob.Paralyze(10 SECONDS, ignore_canstun = TRUE)
 

@@ -27,7 +27,7 @@
 		return FALSE
 	if (owner.movement_type & VENTCRAWLING)
 		if (feedback)
-			owner.balloon_alert(owner, "can't use while ventcrawling!")
+			owner.balloon_alert(owner, LANG("datum.fc8ddc5b", null))
 		return FALSE
 
 /datum/action/cooldown/mob_cooldown/domain/Activate(atom/target)
@@ -113,7 +113,7 @@
 		return FALSE
 	if (owner.movement_type & VENTCRAWLING)
 		if (feedback)
-			owner.balloon_alert(owner, "can't use while ventcrawling!")
+			owner.balloon_alert(owner, LANG("datum.fc8ddc5b", null))
 		return FALSE
 
 /datum/action/cooldown/mob_cooldown/riot/Activate(atom/target)

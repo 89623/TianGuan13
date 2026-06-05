@@ -89,11 +89,11 @@
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
 /obj/item/clothing/head/utility/chefhat/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef."))
-	user.say("Bork Bork Bork!", forced = "chef hat suicide")
+	user.visible_message(span_suicide(LANG("obj.2c8686e5", list(user, src, user.p_theyre()))))
+	user.say(LANG("obj.901f91a4", null), forced = "chef hat suicide")
 	sleep(2 SECONDS)
-	user.visible_message(span_suicide("[user] climbs into an imaginary oven!"))
-	user.say("BOOORK!", forced = "chef hat suicide")
+	user.visible_message(span_suicide(LANG("obj.36e784ac", list(user))))
+	user.say(LANG("obj.db6c7f0e", null), forced = "chef hat suicide")
 	playsound(user, 'sound/machines/ding.ogg', 50, TRUE)
 	return FIRELOSS
 

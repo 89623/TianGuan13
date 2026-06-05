@@ -39,7 +39,7 @@
 		return
 
 	if(time_until_stoppage > ATTACK_CURE_THRESHOLD)
-		owner.visible_message(span_nicegreen("[owner] relaxes [owner.p_their()] body and stops clutching at [owner.p_their()] chest!"), span_nicegreen("The pain in your chest has subsided. You're cured!"))
+		owner.visible_message(span_nicegreen(LANG("datum.cfc70d15", list(owner, owner.p_their(), owner.p_their()))), span_nicegreen(LANG("datum.3edd5f64", null)))
 		qdel(src)
 		return
 
@@ -151,7 +151,7 @@
 /datum/status_effect/heart_attack/proc/defib_shock(obj/item/shockpaddles/source)
 	SIGNAL_HANDLER
 	time_until_stoppage += 50 //Three shocks should save pretty much anyone.
-	owner.visible_message(span_nicegreen("[owner] seems to be relieved of their pain as they're shocked by the [source]!"), span_nicegreen("The [source] shocks your heart awake, and you feel the pain in your chest ease up!"))
+	owner.visible_message(span_nicegreen(LANG("datum.cbbc4259", list(owner, source))), span_nicegreen(LANG("datum.8015fbea", list(source))))
 
 ///Slightly reduces your timer, just like the minor shock signal. Slightly more relief because these use cases are generally more dangerous.
 /datum/status_effect/heart_attack/proc/electrocuted(datum/source, shock_damage)

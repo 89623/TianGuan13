@@ -50,9 +50,9 @@
 	if(isnull(weapon) || !target.dropItemToGround(weapon))
 		return
 	source.visible_message(
-		span_warning("[source] knocks [target]'s [weapon.name] out of [target.p_their()] hands with a kick!"),
-		span_notice("You channel the flow of gravity and knock [target]'s [weapon.name] out of [target.p_their()] hands with a kick!"),
-		span_hear("You hear a thud, followed by a clatter."),
+		span_warning(LANG("datum.95d37bb3", list(source, target, weapon.name, target.p_their()))),
+		span_notice(LANG("datum.52361481", list(target, weapon.name, target.p_their()))),
+		span_hear(LANG("datum.1fd40cab", null)),
 	)
 
 /datum/martial_art/spiders_bite/get_prefered_attacking_limb(mob/living/martial_artist, mob/living/target)

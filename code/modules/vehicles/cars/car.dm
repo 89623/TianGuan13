@@ -30,7 +30,7 @@
 		return
 	if((car_traits & CAN_KIDNAP) && isliving(dropping) && user != dropping)
 		var/mob/living/kidnapped = dropping
-		kidnapped.visible_message(span_warning("[user] starts forcing [kidnapped] into [src]!"))
+		kidnapped.visible_message(span_warning(LANG("obj.848525e9", list(user, kidnapped, src))))
 		mob_try_forced_enter(user, kidnapped)
 	return ..()
 
@@ -77,7 +77,7 @@
 ///Proc called when someone is forcefully stuffedd into a car
 /obj/vehicle/sealed/car/proc/mob_forced_enter(mob/kidnapped, silent = FALSE)
 	if(!silent)
-		kidnapped.visible_message(span_warning("[kidnapped] is forced into \the [src]!"))
+		kidnapped.visible_message(span_warning(LANG("obj.b48b8704", list(kidnapped, src))))
 		if(forced_enter_sound)
 			playsound(src, forced_enter_sound, 70, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	kidnapped.forceMove(src)

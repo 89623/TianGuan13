@@ -199,22 +199,22 @@
 /obj/item/organ/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	if(!(gps_active))
 		return
-	user.visible_message(span_warning("[user] begins jamming [user.p_their()] hand into a slime core! Slime goes everywhere!"),
-	span_notice("You jam your hand into the core, feeling for the densest point! Your arm is covered in slime!"),
-	span_notice("You hear an obscene squelching sound.")
+	user.visible_message(span_warning(LANG("obj.3c0f539e", list(user, user.p_their()))),
+	span_notice(LANG("obj.55e6dfc3", null)),
+	span_notice(LANG("obj.a3a10a91", null))
 	)
 	playsound(user, 'sound/items/handling/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 30 SECONDS, src))
-		user.visible_message(span_warning("[user]'s hand slips out of the core before [user.p_they()] can cause any harm!'"),
-		span_warning("Your hand slips out of the goopy core before you can find its densest point."),
-		span_notice("You hear a resounding plop.")
+		user.visible_message(span_warning(LANG("obj.8af75bd6", list(user, user.p_they()))),
+		span_warning(LANG("obj.b4e3b9f8", null)),
+		span_notice(LANG("obj.6619863a", null))
 		)
 		return
 
-	user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing..."),
-	span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissipates."),
-	span_notice("You hear a wet crunching sound."))
+	user.visible_message(span_warning(LANG("obj.348c75bd", list(user))),
+	span_notice(LANG("obj.800ce2fd", null)),
+	span_notice(LANG("obj.fce3336c", null)))
 	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
 	gps_active = FALSE
 	qdel(GetComponent(/datum/component/gps))
@@ -259,7 +259,7 @@
 	if(core_ejected)
 		return
 	core_ejected = TRUE
-	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
+	victim.visible_message(span_warning(LANG("obj.c7e30e8b", list(victim))), span_notice(LANG("obj.94d10721", null)), span_notice(LANG("obj.e2a17a4f", null)))
 	var/atom/death_loc = victim.drop_location()
 	victim.unequip_everything()
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)
@@ -293,8 +293,8 @@
 	if(!item.is_drainable() || item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100)
 		return FALSE
 	user.visible_message(
-		span_notice("[user] starts to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its cytoskeleton outwards..."),
-		span_notice("You start to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its membrane outwards...")
+		span_notice(LANG("obj.0f5d3e98", list(user, item, src))),
+		span_notice(LANG("obj.07336e74", list(item, src)))
 	)
 	brainmob?.notify_revival("You are being revived!", sound = null, source = src) // no sound since it's a whopping 60 second wait time after this
 	if(!do_after(user, 60 SECONDS, src))
@@ -302,20 +302,20 @@
 		return TRUE
 
 	user.visible_message(
-		span_notice("[user] pours the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane."),
-		span_notice("You pour the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane.")
+		span_notice(LANG("obj.ab769762", list(user, item, src))),
+		span_notice(LANG("obj.d05535be", list(item, src)))
 	)
 	item.reagents.clear_reagents() //removes the whole shit
 	if(isnull(brainmob))
-		user.balloon_alert(user, "brain is not a viable candidate for repair!")
+		user.balloon_alert(user, LANG("obj.4af1ada2", null))
 		return TRUE
 
 	brainmob.grab_ghost()
 	if(isnull(brainmob.stored_dna))
-		user.balloon_alert(user, "brain does not contain any dna!")
+		user.balloon_alert(user, LANG("obj.6423b615", null))
 		return TRUE
 	if(isnull(brainmob.client))
-		user.balloon_alert(user, "brain does not contain a mind!")
+		user.balloon_alert(user, LANG("obj.6602fdbf", null))
 		return TRUE
 	regenerate()
 	return TRUE
@@ -349,7 +349,7 @@
 		if(!istype(bodypart, /obj/item/bodypart/chest))
 			bodypart.drop_limb()
 			continue
-	new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
+	new_body.visible_message(span_warning(LANG("obj.6889a589", list(new_body, new_body.p_their()))))
 	to_chat(owner, span_purple(LANG("obj.25459c26", null)))
 	return TRUE
 
@@ -385,8 +385,8 @@
 			healing = FALSE
 			if(SPT_PROB(25, seconds_per_tick))
 				slime.visible_message(
-					span_danger("[slime]'s form begins to lose cohesion, seemingly drying out!"),
-					span_warning("Your body loses cohesion as it dries, only immersion can restore it!"),
+					span_danger(LANG("datum.9420f814", list(slime))),
+					span_warning(LANG("datum.7b41fefc", null)),
 				)
 
 	else
@@ -395,8 +395,8 @@
 			blood_units_to_lose += 2 * seconds_per_tick
 			if(SPT_PROB(25, seconds_per_tick))
 				slime.visible_message(
-					span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"),
-					span_warning("The water starts to dilute your body, dry it off!"),
+					span_danger(LANG("datum.96f776e1", list(slime))),
+					span_warning(LANG("datum.6ff37823", null)),
 				)
 		if(wetness_amount > REGEN_WATER_STACKS)
 			healing = FALSE
@@ -439,7 +439,7 @@
 		return
 
 	user.apply_status_effect(/datum/status_effect/slime_washing)
-	user.visible_message(span_purple("[user]'s outer membrane starts to develop a roiling film on the outside, absorbing grime into [user.p_their()] inner layer!"), span_purple("Your outer membrane develops a roiling film on the outside, absorbing grime off yourself and your clothes; as well as the floor beneath you."))
+	user.visible_message(span_purple(LANG("datum.16c42ded", list(user, user.p_their()))), span_purple(LANG("datum.fb262fdc", null)))
 
 /**
 * Called when you activate it again after casting the ability-- turning it off, so to say.
@@ -449,7 +449,7 @@
 		return
 
 	user.remove_status_effect(/datum/status_effect/slime_washing)
-	user.visible_message(span_notice("[user]'s outer membrane returns to normal, no longer cleaning [user.p_their()] surroundings."), span_notice("Your outer membrane returns to normal, filth no longer being cleansed."))
+	user.visible_message(span_notice(LANG("datum.e9972be8", list(user, user.p_their()))), span_notice(LANG("datum.6fea04cc", null)))
 
 /datum/status_effect/slime_washing
 	id = "slime_washing"
@@ -497,7 +497,7 @@
 
 	ADD_TRAIT(user, TRAIT_SLIME_HYDROPHOBIA, ACTION_TRAIT)
 	user.apply_status_effect(/datum/status_effect/slime_hydrophobia)
-	user.visible_message(span_purple("[user]'s outer membrane starts to ooze out an oily coating, [owner.p_their()] body becoming more viscous!"), span_purple("Your outer membrane starts to ooze out an oily coating, protecting you from water but making your body more viscous."))
+	user.visible_message(span_purple(LANG("datum.21b99687", list(user, owner.p_their()))), span_purple(LANG("datum.d5999846", null)))
 
 /**
 * Called when you activate it again after casting the ability-- turning it off, so to say.
@@ -508,7 +508,7 @@
 
 	REMOVE_TRAIT(user, TRAIT_SLIME_HYDROPHOBIA, ACTION_TRAIT)
 	user.remove_status_effect(/datum/status_effect/slime_hydrophobia)
-	user.visible_message(span_purple("[user]'s outer membrane returns to normal, [owner.p_their()] body drawing the oily coat back inside!"), span_purple("Your outer membrane returns to normal, water becoming dangerous to you once again."))
+	user.visible_message(span_purple(LANG("datum.c8afeadf", list(user, owner.p_their()))), span_purple(LANG("datum.ac76ad39", null)))
 
 /datum/movespeed_modifier/status_effect/slime_hydrophobia
 	multiplicative_slowdown = 1.5
@@ -685,7 +685,7 @@
 		return
 	alterer.visible_message(
 		span_notice("[owner] [shapeshift_text]"),
-		span_notice("You focus intently on altering your body while standing perfectly still...")
+		span_notice(LANG("datum.77be045a", null))
 	)
 	change_form(alterer)
 
@@ -1061,7 +1061,7 @@
 	if(alterer.get_organ_slot(ORGAN_SLOT_TESTICLES))
 		genital_list += list("Testicles Size")
 	if(!length(genital_list))
-		alterer.balloon_alert(alterer, "no genitals!")
+		alterer.balloon_alert(alterer, LANG("datum.e52cb7eb", null))
 
 	var/dna_alteration = tgui_input_list(
 		alterer,

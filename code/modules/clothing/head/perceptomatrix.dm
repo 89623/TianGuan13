@@ -180,8 +180,8 @@
 /datum/action/cooldown/spell/pointed/percept_hallucination/proc/blows_up_pancakes_with_mind(obj/item/food/pancakes/pancakes)
 
 	owner.visible_message(
-		span_userdanger("[owner] blows up [pancakes] with [owner.p_their()] mind!"),
-		span_userdanger("You blow up [pancakes] with your mind!")
+		span_userdanger(LANG("datum.2b2c0f3e", list(owner, pancakes, owner.p_their()))),
+		span_userdanger(LANG("datum.959f2f8f", list(pancakes)))
 	)
 
 	for(var/mob/chef in get_hearers_in_view(7, pancakes))

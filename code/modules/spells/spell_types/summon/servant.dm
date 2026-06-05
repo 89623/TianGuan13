@@ -28,16 +28,16 @@
 
 /datum/action/cooldown/spell/summon_mob/Grant(mob/grant_to)
 	. = ..()
-	owner.balloon_alert(owner, "conjuring a new [servant_title]...")
+	owner.balloon_alert(owner, LANG("datum.8f3091e3", list(servant_title)))
 	find_servant()
 
 /datum/action/cooldown/spell/summon_mob/before_cast(mob/living/invoker, feedback)
 	. = ..()
 	if(!selected_summon)
 		if(summoning_servant)
-			owner.balloon_alert(owner, "still conjuring!")
+			owner.balloon_alert(owner, LANG("datum.5c37e739", null))
 			return SPELL_CANCEL_CAST
-		owner.balloon_alert(owner, "conjuring [servant_title]...")
+		owner.balloon_alert(owner, LANG("datum.5dca8797", list(servant_title)))
 		find_servant()
 		return SPELL_CANCEL_CAST
 
@@ -52,7 +52,7 @@
 
 	var/mob/living/to_summon = summon_weakref?.resolve()
 
-	to_summon.visible_message(span_alert("[to_summon] suddenly vanishes into thin air!"), span_alert("You have been summoned to serve!"), span_hear("You hear something teleport away from nearby, off to serve..."))
+	to_summon.visible_message(span_alert(LANG("datum.e984aafb", list(to_summon))), span_alert(LANG("datum.0c0b6185", null)), span_hear(LANG("datum.e94513cb", null)))
 
 	do_teleport(
 		to_summon,
@@ -77,7 +77,7 @@
 
 	message_admins("[ADMIN_LOOKUPFLW(chosen_one)] was spawned as a Magical Servant ([servant_title])")
 	var/turf/spawn_location = get_turf(owner)
-	spawn_location.visible_message(span_userdanger("A Magical [servant_title] appears in a cloud of smoke!"))
+	spawn_location.visible_message(span_userdanger(LANG("datum.11f88301", list(servant_title))))
 	var/mob/living/carbon/human/human_servant = new(spawn_location)
 	human_servant.equipOutfit(/datum/outfit/butler)
 	do_smoke(0, src, spawn_location)

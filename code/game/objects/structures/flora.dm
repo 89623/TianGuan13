@@ -58,21 +58,21 @@
 		return ..()
 	if(can_uproot && used_item.tool_behaviour == TOOL_SHOVEL)
 		if(uprooted)
-			user.visible_message(span_notice("[user] starts to replant [src]..."),
-				span_notice("You start to replant [src]..."))
+			user.visible_message(span_notice(LANG("obj.4f410c36", list(user, src))),
+				span_notice(LANG("obj.d164ac92", list(src))))
 		else
-			user.visible_message(span_notice("[user] starts to uproot [src]..."),
-				span_notice("You start to uproot [src]..."))
+			user.visible_message(span_notice(LANG("obj.9697e68f", list(user, src))),
+				span_notice(LANG("obj.8d6b238d", list(src))))
 		used_item.play_tool_sound(src, 50)
 		if(!do_after(user, harvest_time, src))
 			return
 		if(uprooted)
-			user.visible_message(span_notice("[user] replants [src]."),
-				span_notice("You replant [src]."))
+			user.visible_message(span_notice(LANG("obj.da82b014", list(user, src))),
+				span_notice(LANG("obj.c8a4b141", list(src))))
 			replant(user)
 		else
-			user.visible_message(span_notice("[user] uproots [src]."),
-				span_notice("You uproot [src]."))
+			user.visible_message(span_notice(LANG("obj.c4487d54", list(user, src))),
+				span_notice(LANG("obj.b067f869", list(src))))
 			uproot(user)
 		used_item.play_tool_sound(src, 50)
 		return
@@ -80,8 +80,8 @@
 	if(!can_harvest(user, used_item))
 		return ..()
 
-	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
-		span_notice("You start to [harvest_verb] [src] with [used_item]..."))
+	user.visible_message(span_notice(LANG("obj.b74b3b4c", list(user, harvest_verb, src))),
+		span_notice(LANG("obj.ad7a2441", list(harvest_verb, src, used_item))))
 	play_attack_sound(used_item.force)
 	if(!do_after(user, harvest_time * used_item.toolspeed, src))
 		return
@@ -99,8 +99,8 @@
 	if(!can_harvest(user))
 		return
 
-	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
-		span_notice("You start to [harvest_verb] [src]..."))
+	user.visible_message(span_notice(LANG("obj.b74b3b4c", list(user, harvest_verb, src))),
+		span_notice(LANG("obj.9712cf58", list(harvest_verb, src))))
 	play_attack_sound()
 	if(!do_after(user, harvest_time, src))
 		return

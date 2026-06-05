@@ -301,7 +301,7 @@
 		to_chat(devourer, span_warning(LANG("datum.b7811aa5", null)))
 		return
 	to_chat(target, span_userdanger(LANG("datum.b17b4d8a", list(devourer))))
-	devourer.visible_message(span_warning("[devourer] consumes [target]!"))
+	devourer.visible_message(span_warning(LANG("datum.5b0a8f33", list(devourer, target))))
 	devourer.fully_heal()
 	playsound(devourer, 'sound/effects/splat.ogg', 50, TRUE)
 	//to be received on death

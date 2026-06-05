@@ -113,10 +113,10 @@
 /obj/item/udder/proc/handle_consumption(atom/movable/food, mob/user)
 	if(locate(food.type) in src)
 		if(user)
-			user.balloon_alert(user, "already full!")
+			user.balloon_alert(user, LANG("obj.e28c7f55", null))
 		return
 	playsound(udder_mob.loc,'sound/items/eatfood.ogg', 50, TRUE)
-	udder_mob.visible_message(span_notice("[udder_mob] gobbles up [food]!"), span_notice("You gobble up [food]!"))
+	udder_mob.visible_message(span_notice(LANG("obj.3c5ffc7a", list(udder_mob, food))), span_notice(LANG("obj.be370773", list(food))))
 	var/atom/movable/final_food = food
 	if(isstack(food)) //if stack, only consume 1
 		var/obj/item/stack/food_stack = food
@@ -182,7 +182,7 @@
 		return
 	var/transferred = reagents.trans_to(milk_holder, rand(5,10))
 	if(transferred)
-		user.visible_message(span_notice("[user] milks [udder_mob] using \the [milk_holder]."), span_notice("You milk [udder_mob] using \the [milk_holder]."))
+		user.visible_message(span_notice(LANG("obj.46321624", list(user, udder_mob, milk_holder))), span_notice(LANG("obj.4221b7a1", list(udder_mob, milk_holder))))
 	else
 		to_chat(user, span_warning(LANG("obj.514cc82b", null)))
 

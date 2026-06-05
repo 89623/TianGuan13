@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The max range we can zoom in on people from.
 #define MAX_LIONHUNTER_RANGE 30
 
@@ -50,7 +51,7 @@
 		return TRUE
 
 	if(currently_aiming)
-		user.balloon_alert(user, "already aiming!")
+		user.balloon_alert(user, LANG("obj.b326342a", null))
 		return FALSE
 
 	var/distance = get_dist(user, target)
@@ -62,7 +63,7 @@
 	if(distance <= min_distance || !isliving(target))
 		return TRUE
 
-	user.balloon_alert(user, "taking aim...")
+	user.balloon_alert(user, LANG("obj.f159f803", null))
 	user.playsound_local(get_turf(user), 'sound/items/weapons/gun/general/chunkyrack.ogg', 100, TRUE)
 
 	var/image/reticle = image(
@@ -93,7 +94,7 @@
 		viewer.client?.images -= reticle
 
 	if(!.)
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 
 	return .
 

@@ -374,7 +374,7 @@
 	if(iscarbon(target))
 		if(istype(get_area(target), /area/deathmatch))
 			target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 25) // Roughly 8 hits to kill
-			target.visible_message(span_warning("[target] grips their head in pain!"))
+			target.visible_message(span_warning(LANG("obj.e3abd235", list(target))))
 			return BULLET_ACT_HIT
 		for(var/x in target.get_traumas())//checks to see if the victim is already going through possession
 			if(istype(x, /datum/brain_trauma/special/imaginary_friend/trapped_owner))

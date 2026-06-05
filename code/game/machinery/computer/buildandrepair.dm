@@ -297,7 +297,7 @@
 
 	tool.play_tool_sound(src)
 	var/obj/machinery/new_machine = new circuit.build_path(loc)
-	new_machine.balloon_alert(user, "monitor connected")
+	new_machine.balloon_alert(user, LANG("obj.a5065fe1", null))
 	new_machine.setDir(dir)
 	transfer_fingerprints_to(new_machine)
 	// NOVA EDIT ADDITION BEGIN - Connecting Computers

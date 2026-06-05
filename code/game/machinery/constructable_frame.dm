@@ -73,9 +73,9 @@
 
 	balloon_alert(user, LANG("obj.b5ba9871", null))
 	user.visible_message(
-		span_warning("[user] begins disassembling [src]."),
-		span_notice("You start to disassemble [src]..."),
-		span_hear("You hear banging and clanking."),
+		span_warning(LANG("obj.9ef20f75", list(user, src))),
+		span_notice(LANG("obj.c234e380", list(src))),
+		span_hear(LANG("obj.225de764", null)),
 	)
 	if(!tool.use_tool(src, user, disassemble_time, amount = (tool.tool_behaviour == TOOL_WELDER ? 1 : 0), volume = 50) || state != FRAME_STATE_EMPTY)
 		return ITEM_INTERACT_BLOCKING

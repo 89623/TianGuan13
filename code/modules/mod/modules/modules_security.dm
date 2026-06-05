@@ -101,7 +101,7 @@
 		return
 	if(!check_power(use_energy_cost))
 		return
-	mod.wearer.visible_message(span_warning("[src] reacts to the attack with a smoke of pepper spray!"), span_notice("Your [src] releases a cloud of pepper spray!"))
+	mod.wearer.visible_message(span_warning(LANG("obj.56a96dc6", list(src))), span_notice(LANG("obj.5f5addb2", list(src))))
 	used()
 
 ///Holster - Instantly holsters any not huge gun.

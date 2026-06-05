@@ -36,7 +36,7 @@
 		var/obj/item/clothing/clothing_parent = parent
 		var/mob/parent_loc = clothing_parent.loc
 		if(!force && istype(parent_loc))
-			parent_loc.balloon_alert(parent_loc, "fireproof spray wears off of [parent]!")
+			parent_loc.balloon_alert(parent_loc, LANG("datum.8cce7dfe", list(parent)))
 	deltimer(fire_immunity_timer)
 	return ..()
 

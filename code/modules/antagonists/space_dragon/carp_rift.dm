@@ -26,14 +26,14 @@
 			return
 
 	if(!(rift_location in dragon.chosen_rift_areas))
-		owner.balloon_alert(owner, "can't summon a rift here! check your objectives!")
+		owner.balloon_alert(owner, LANG("datum.064e3674", null))
 		return
 
 	var/turf/rift_spawn_turf = get_turf(dragon)
 	if(isopenspaceturf(rift_spawn_turf))
-		owner.balloon_alert(dragon, "needs stable ground!")
+		owner.balloon_alert(dragon, LANG("datum.7593fbd1", null))
 		return
-	owner.balloon_alert(owner, "opening rift...")
+	owner.balloon_alert(owner, LANG("datum.0049dff2", null))
 	if(!do_after(owner, 10 SECONDS, target = owner))
 		return
 	if(locate(/obj/structure/carp_rift) in owner.loc)
@@ -76,14 +76,14 @@
 	if(!dragon_mob)
 		return
 	if(!is_station_level(dragon_mob.z))
-		dragon_mob.balloon_alert(dragon_mob, "too far offstation!")
+		dragon_mob.balloon_alert(dragon_mob, LANG("datum.4e357dbb", null))
 		return
 
 	var/area/chosen_area = tgui_input_list(owner, LANG("datum.e0e9d885", null), LANG("datum.8c302f0d", null), dragon_datum.chosen_rift_areas)
 	if(!chosen_area)
 		return
 	if(chosen_area == get_area(dragon_mob))
-		dragon_mob.balloon_alert(dragon_mob, "already here!")
+		dragon_mob.balloon_alert(dragon_mob, LANG("datum.949c6edc", null))
 		return
 
 	var/turf/chosen_turf = pick(get_area_turfs(chosen_area))

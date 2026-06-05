@@ -90,7 +90,7 @@
 
 	if(!isturf(owner.loc))
 		if (feedback)
-			owner.balloon_alert(owner, "can't reach the floor!")
+			owner.balloon_alert(owner, LANG("datum.677762a1", null))
 		return FALSE
 	return TRUE
 
@@ -138,7 +138,7 @@
 /datum/action/cooldown/grand_ritual/proc/start_drawing_rune()
 	var/atom/existing_rune = rune?.resolve()
 	if (existing_rune)
-		owner.balloon_alert(owner, "rune already exists!")
+		owner.balloon_alert(owner, LANG("datum.55e0def6", null))
 		return
 
 	var/turf/target_turf = get_turf(owner)
@@ -149,11 +149,11 @@
 		return
 
 	if (locate(/obj/effect/grand_rune) in range(3, target_turf))
-		owner.balloon_alert(owner, "rune too close!")
+		owner.balloon_alert(owner, LANG("datum.1f6cf152", null))
 		return
 
 	if (drawing_rune)
-		owner.balloon_alert(owner, "already drawing!")
+		owner.balloon_alert(owner, LANG("datum.2d5a873e", null))
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(draw_rune), target_turf)
@@ -162,13 +162,13 @@
 /datum/action/cooldown/grand_ritual/proc/draw_rune(turf/target_turf)
 	drawing_rune = TRUE
 	var/next_rune_typepath = get_appropriate_rune_typepath()
-	target_turf.balloon_alert(owner, "conjuring rune...")
+	target_turf.balloon_alert(owner, LANG("datum.3601ef04", null))
 	var/draw_effect_typepath = /obj/effect/temp_visual/wizard_rune/drawing
 	if(next_rune_typepath == /obj/effect/grand_rune/finale/cheesy)
 		draw_effect_typepath = /obj/effect/temp_visual/wizard_rune/drawing/cheese
 	var/obj/effect/temp_visual/wizard_rune/drawing/draw_effect = new draw_effect_typepath(target_turf)
 	if(!do_after(owner, 4 SECONDS, target_turf))
-		target_turf.balloon_alert(owner, "interrupted!")
+		target_turf.balloon_alert(owner, LANG("datum.c67b5d27", null))
 		drawing_rune = FALSE
 		qdel(draw_effect)
 		var/fail_effect_typepath = /obj/effect/temp_visual/wizard_rune/failed
@@ -193,7 +193,7 @@
 	if (evaporated_obstacles)
 		playsound(target_turf, 'sound/effects/magic/blind.ogg', 100, TRUE)
 
-	target_turf.balloon_alert(owner, "rune created")
+	target_turf.balloon_alert(owner, LANG("datum.676d721a", null))
 	var/obj/effect/grand_rune/new_rune = new next_rune_typepath(target_turf, times_completed)
 	if(istype(new_rune, /obj/effect/grand_rune/finale))
 		drew_finale = TRUE

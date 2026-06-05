@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * custom order datums
  * Used for less generic orders (ice cream for example)
@@ -189,8 +190,8 @@
 
 /datum/custom_order/reagent/drink/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	customer_pawn.visible_message(
-		span_danger("[customer_pawn] slurps up [order_item] in one go!"),
-		span_danger("You slurp up [order_item] in one go."),
+		span_danger(LANG("datum.982ccdf6", list(customer_pawn, order_item))),
+		span_danger(LANG("datum.8421fa2d", list(order_item))),
 	)
 	return ..()
 
@@ -215,7 +216,7 @@
 
 /datum/custom_order/reagent/soup/handle_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	customer_pawn.visible_message(
-		span_danger("[customer_pawn] pours [order_item] right down [customer_pawn.p_their()] hatch!"),
-		span_danger("You pour [order_item] down your hatch in one go."),
+		span_danger(LANG("datum.63e2b12f", list(customer_pawn, order_item, customer_pawn.p_their()))),
+		span_danger(LANG("datum.f98cd7bd", list(order_item))),
 	)
 	return ..()

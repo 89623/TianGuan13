@@ -119,7 +119,7 @@
 	else if(istype(item, /obj/item/stack/wrapping_paper) && !giftwrapped)
 		var/obj/item/stack/wrapping_paper/wrapping_paper = item
 		if(wrapping_paper.use(3))
-			user.visible_message(span_notice("[user] wraps the package in festive paper!"))
+			user.visible_message(span_notice(LANG("obj.7eb9f94d", list(user))))
 			giftwrapped = TRUE
 			greyscale_config = text2path("/datum/greyscale_config/gift[icon_state]")
 			set_greyscale(colors = wrapping_paper.greyscale_colors)
@@ -134,7 +134,7 @@
 		if(!user.transferItemToLoc(item, src))
 			to_chat(user, span_warning(LANG("obj.3326bf5a", list(item))))
 			return
-		user.visible_message(span_notice("[user] attaches [item] to [src]."), span_notice("You attach [item] to [src]."))
+		user.visible_message(span_notice(LANG("obj.c24be4ca", list(user, item, src))), span_notice(LANG("obj.c1fbc99d", list(item, src))))
 		note = item
 		update_appearance()
 
@@ -151,7 +151,7 @@
 		if(sales_tagger.paper_count <= 0)
 			to_chat(user, span_warning(LANG("obj.3b0e27cd", list(sales_tagger))))
 			return
-		user.visible_message(span_notice("[user] attaches a barcode to [src]."), span_notice("You attach a barcode to [src]."))
+		user.visible_message(span_notice(LANG("obj.10af87a7", list(user, src))), span_notice(LANG("obj.7eef88ad", list(src))))
 		sales_tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = sales_tagger.payments_acc	//new tag gets the tagger's current account.
@@ -273,7 +273,7 @@
 	desc = "Used to fool the disposal mail network into thinking that you're a harmless parcel. Does actually work as a regular destination tagger as well."
 
 /obj/item/dest_tagger/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins tagging [user.p_their()] final destination! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.61f8c7ff", list(user, user.p_their(), user.p_theyre()))))
 	if (islizard(user))
 		to_chat(user, span_notice(LANG("obj.a23ae7b6", null)))//lizard nerf
 	else

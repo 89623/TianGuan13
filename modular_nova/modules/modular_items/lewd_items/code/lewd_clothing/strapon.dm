@@ -135,8 +135,8 @@
 	if(strapon_item && user.is_holding(strapon_item))
 		strapon_item.forceMove(src)
 		user.visible_message(
-			span_notice("[user] puts the strapon back."),
-			span_notice("You put the strapon back."),
+			span_notice(LANG("obj.b538aec7", list(user))),
+			span_notice(LANG("obj.d6698bb9", null)),
 		)
 		return
 
@@ -148,13 +148,13 @@
 
 	if(user.put_in_hands(strapon_item))
 		user.visible_message(
-			span_notice("[user] holds the strapon in [user.p_their()] hand menacingly."),
-			span_notice("You hold the strapon in your hand menacingly."),
+			span_notice(LANG("obj.72b89516", list(user, user.p_their()))),
+			span_notice(LANG("obj.b197ece4", null)),
 		)
 	else
 		user.visible_message(
-			span_notice("[user] tries to hold the strapon in [user.p_their()] hand, but [user.p_their()] hand isn't empty!"),
-			span_notice("You try to hold the strapon in one of your hands, but your hands are not empty!"),
+			span_notice(LANG("obj.e58de30e", list(user, user.p_their(), user.p_their()))),
+			span_notice(LANG("obj.4996774f", null)),
 		)
 
 /// Makes a new item within contents

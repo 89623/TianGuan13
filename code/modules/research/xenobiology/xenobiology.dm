@@ -187,16 +187,16 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slime_extract/gold/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			user.visible_message(span_warning("[user] starts shaking!"),span_notice("Your [name] starts pulsing gently..."))
+			user.visible_message(span_warning(LANG("obj.49d50020", list(user))),span_notice(LANG("obj.4730dced", list(name))))
 			if(do_after(user, 4 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
 				spawned_mob.add_faction(FACTION_NEUTRAL)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_notice("You spit out [spawned_mob]!"))
+				user.visible_message(span_warning(LANG("obj.684bde97", list(user, spawned_mob))), span_notice(LANG("obj.ec7d601c", list(spawned_mob))))
 				return 300
 
 		if(SLIME_ACTIVATE_MAJOR)
-			user.visible_message(span_warning("[user] starts shaking violently!"),span_warning("Your [name] starts pulsing violently..."))
+			user.visible_message(span_warning(LANG("obj.ff912bfd", list(user))),span_warning(LANG("obj.35e1d481", list(name))))
 			if(do_after(user, 5 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
 				if(!user.combat_mode)
@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 				else
 					spawned_mob.add_faction(FACTION_SLIME)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_warning("You spit out [spawned_mob]!"))
+				user.visible_message(span_warning(LANG("obj.684bde97", list(user, spawned_mob))), span_warning(LANG("obj.ec7d601c", list(spawned_mob))))
 				return 600
 
 /obj/item/slime_extract/silver
@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(food_item))
 				food_item.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [food_item]!"), span_notice("You spit out [food_item]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, food_item))), span_notice(LANG("obj.ec7d601c", list(food_item))))
 			return 200
 		if(SLIME_ACTIVATE_MAJOR)
 			var/drink_type = get_random_drink()
@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 200
 
 /obj/item/slime_extract/metal
@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -254,7 +254,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 200
 
 /obj/item/slime_extract/purple
@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -332,11 +332,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			to_chat(user, span_notice(LANG("obj.13ead7ee", null)))
 
 		if(SLIME_ACTIVATE_MAJOR)
-			user.visible_message(span_warning("[user]'s skin starts flashing intermittently..."), span_warning("Your skin starts flashing intermittently..."))
+			user.visible_message(span_warning(LANG("obj.f7c64e44", list(user))), span_warning(LANG("obj.04920525", null)))
 			if(do_after(user, 2.5 SECONDS, target = user))
 				empulse(user, 1, 2, emp_source = src)
 				user.log_message("triggered EMP using [src] in [AREACOORD(src)]", LOG_GAME)
-				user.visible_message(span_warning("[user]'s skin flashes!"), span_warning("Your skin flashes as you emit an electromagnetic pulse!"))
+				user.visible_message(span_warning(LANG("obj.ff9e1903", list(user))), span_warning(LANG("obj.b0988c47", null)))
 				return 600
 
 /obj/item/slime_extract/red
@@ -352,7 +352,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
-			user.visible_message(span_warning("[user]'s skin flashes red for a moment..."), span_warning("Your skin flashes red as you emit rage-inducing pheromones..."))
+			user.visible_message(span_warning(LANG("obj.98e1c4fd", list(user))), span_warning(LANG("obj.c38edd12", null)))
 			for(var/mob/living/basic/slime/slime in viewers(get_turf(user), null))
 				slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE)
 				slime.visible_message(span_danger("The [slime] is driven into a frenzy!"))
@@ -373,7 +373,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.reagents.create_foam(/datum/effect_system/fluid_spread/foam, 20, log = TRUE)
-			user.visible_message(span_danger("Foam spews out from [user]'s skin!"), span_warning("You activate [src], and foam bursts out of your skin!"))
+			user.visible_message(span_danger(LANG("obj.27c97c9b", list(user))), span_warning(LANG("obj.65e640a7", list(src))))
 			return 600
 
 /obj/item/slime_extract/darkblue
@@ -412,14 +412,14 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 			if(user.gender == MALE)
 				user.gender = FEMALE
-				user.visible_message(span_boldnotice("[user] suddenly looks more feminine!"), span_boldwarning("You suddenly feel more feminine!"))
+				user.visible_message(span_boldnotice(LANG("obj.4ee216c9", list(user))), span_boldwarning(LANG("obj.42e37fc7", null)))
 			else
 				user.gender = MALE
-				user.visible_message(span_boldnotice("[user] suddenly looks more masculine!"), span_boldwarning("You suddenly feel more masculine!"))
+				user.visible_message(span_boldnotice(LANG("obj.7aa664c1", list(user))), span_boldwarning(LANG("obj.47ec0903", null)))
 			return 100
 
 		if(SLIME_ACTIVATE_MAJOR)
-			user.visible_message(span_warning("[user]'s skin starts flashing hypnotically..."), span_notice("Your skin starts forming odd patterns, pacifying creatures around you."))
+			user.visible_message(span_warning(LANG("obj.5ed6dbe8", list(user))), span_notice(LANG("obj.88e6f050", null)))
 			for(var/mob/living/carbon/C in viewers(user, null))
 				if(C != user)
 					C.reagents.add_reagent(/datum/reagent/pax,2)
@@ -460,7 +460,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -468,7 +468,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 450
 
 /obj/item/slime_extract/black
@@ -505,7 +505,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
-			user.visible_message(span_warning("[user]'s skin starts pulsing and glowing ominously..."), span_userdanger("You feel unstable..."))
+			user.visible_message(span_warning(LANG("obj.7381a34a", list(user))), span_userdanger(LANG("obj.5123d0ff", null)))
 			if(do_after(user, 6 SECONDS, target = user))
 				to_chat(user, span_userdanger(LANG("obj.7e08d4c4", null)))
 				explosion(user, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
@@ -591,7 +591,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -601,7 +601,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 250
 
 /obj/item/slime_extract/cerulean
@@ -635,7 +635,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -665,7 +665,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
-			user.visible_message(span_warning("[user] spits out [O]!"), span_notice("You spit out [O]!"))
+			user.visible_message(span_warning(LANG("obj.684bde97", list(user, O))), span_notice(LANG("obj.ec7d601c", list(O))))
 			return 150
 
 ////Slime-derived potions///
@@ -1045,10 +1045,10 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 	if(living_mob.gender == MALE)
 		living_mob.gender = FEMALE
-		living_mob.visible_message(span_boldnotice("[living_mob] suddenly looks more feminine!"), span_boldwarning("You suddenly feel more feminine!"))
+		living_mob.visible_message(span_boldnotice(LANG("obj.4ee216c9", list(living_mob))), span_boldwarning(LANG("obj.42e37fc7", null)))
 	else
 		living_mob.gender = MALE
-		living_mob.visible_message(span_boldnotice("[living_mob] suddenly looks more masculine!"), span_boldwarning("You suddenly feel more masculine!"))
+		living_mob.visible_message(span_boldnotice(LANG("obj.7aa664c1", list(living_mob))), span_boldwarning(LANG("obj.47ec0903", null)))
 	living_mob.regenerate_icons()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -1083,7 +1083,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 		being_used = FALSE
 		return ITEM_INTERACT_BLOCKING
 
-	renaming_mob.visible_message(span_notice("[span_name("[renaming_mob]")] has a new name, [span_name("[new_name]")]."), span_notice("Your old name of [span_name("[renaming_mob.real_name]")] fades away, and your new name [span_name("[new_name]")] anchors itself in your mind."))
+	renaming_mob.visible_message(span_notice(LANG("obj.eb4383de", list(span_name("[renaming_mob]"), span_name("[new_name]")))), span_notice(LANG("obj.fa4783b1", list(span_name("[renaming_mob.real_name]"), span_name("[new_name]")))))
 	message_admins("[ADMIN_LOOKUPFLW(user)] used [src] on [ADMIN_LOOKUPFLW(renaming_mob)], letting them rename themselves into [new_name].")
 	user.log_message("used [src] on [key_name(renaming_mob)], letting them rename themselves into [new_name].", LOG_GAME)
 

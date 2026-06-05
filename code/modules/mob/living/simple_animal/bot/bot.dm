@@ -469,7 +469,7 @@
 
 	if(tool.use_tool(src, user, 0 SECONDS, volume=40))
 		adjustHealth(-10)
-		user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
+		user.visible_message(span_notice(LANG("mob.c7f895f4", list(user, src))),span_notice(LANG("mob.e94d13eb", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -486,7 +486,7 @@
 			balloon_alert(user, LANG("mob.032a9865", null))
 			if(!do_after(user, 3 SECONDS, target = src) || !paicard)
 				return
-			user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"),span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
+			user.visible_message(span_notice(LANG("mob.2b39da6b", list(user, attacking_item, paicard, initial(src.name)))),span_notice(LANG("mob.9361d23b", list(paicard, initial(src.name), attacking_item))))
 			ejectpai(user)
 		return
 	return ..()
@@ -516,7 +516,7 @@
 	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
-		src.visible_message(span_notice("[paicard] is flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
+		src.visible_message(span_notice(LANG("mob.de6df2b8", list(paicard, initial(src.name)))), span_warning(LANG("mob.637e0713", list(initial(src.name)))))
 		ejectpai()
 
 	if (QDELETED(src))
@@ -1089,7 +1089,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		paicard.pai.fold_in()
 	copy_languages(paicard.pai, source_override = LANGUAGE_PAI)
 	set_active_language(paicard.pai.get_selected_language())
-	user.visible_message(span_notice("[user] inserts [card] into [src]!"), span_notice("You insert [card] into [src]."))
+	user.visible_message(span_notice(LANG("mob.afe0fa6f", list(user, card, src))), span_notice(LANG("mob.8ce99939", list(card, src))))
 	paicard.pai.mind.transfer_to(src)
 	to_chat(src, span_notice(LANG("mob.7feab226", list(src))))
 	name = paicard.pai.name

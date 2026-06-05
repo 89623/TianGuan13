@@ -823,8 +823,8 @@
 			return
 		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
 			var/knocked_down = target.Knockdown(SHOVE_KNOCKDOWN_SOLID, daze_amount = 3 SECONDS)
-			target.visible_message(span_danger("[name] shoves [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"),
-				span_userdanger("You[knocked_down ? "'re knocked down" : " resist falling down"] from a shove by [name]!"), span_hear("You hear aggressive shuffling [knocked_down ? "followed by a loud thud!" : ""]"), COMBAT_MESSAGE_RANGE, src)
+			target.visible_message(span_danger(LANG("mob.53e00938", list(name, target.name, knocked_down ? ", knocking [target.p_them()] down" : ""))),
+				span_userdanger(LANG("mob.e2265f52", list(knocked_down ? "'re knocked down" : " resist falling down", name))), span_hear(LANG("mob.ec85c958", list(knocked_down ? "followed by a loud thud!" : ""))), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger(LANG("mob.5523666e", list(target.name, knocked_down ? ", knocking [target.p_them()] down" : ""))))
 			log_combat(src, target, "shoved", "[knocked_down ? "knocking them down[weapon ? " with [weapon]" : ""]" : ""]")
 			return
@@ -832,8 +832,8 @@
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
 		if(target.Paralyze(SHOVE_CHAIN_PARALYZE))
 			target.apply_status_effect(/datum/status_effect/no_side_kick)
-			target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
-							span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+			target.visible_message(span_danger(LANG("mob.5d62b827", list(name, target.name, target.p_their()))),
+							span_userdanger(LANG("mob.db133c79", list(name))), span_hear(LANG("mob.b75dfa76", null)), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger(LANG("mob.5d840f0a", list(target.name, target.p_their()))))
 			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
 			log_combat(src, target, "kicks", "onto their side (paralyzing)")
@@ -848,8 +848,8 @@
 	if(target_held_item && target.get_timed_status_effect_duration(/datum/status_effect/staggered) && is_type_in_typecache(target_held_item, GLOB.shove_disarming_types) || target_held_item && target.body_position == LYING_DOWN)
 		target.dropItemToGround(target_held_item)
 		append_message = "causing [target.p_them()] to drop [target_held_item]"
-		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
-			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
+		target.visible_message(span_danger(LANG("mob.654b1725", list(target.name, target_held_item))),
+			span_warning(LANG("mob.bbdacc31", list(target_held_item))), null, COMBAT_MESSAGE_RANGE)
 
 	if(shove_flags & SHOVE_CAN_STAGGER)
 		target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)

@@ -29,7 +29,7 @@
 		return
 
 	if(target != user)
-		target.visible_message(span_warning("[user] is attempting to implant [target]."))
+		target.visible_message(span_warning(LANG("obj.3d57abfb", list(user, target))))
 		if(!do_after(user, 5 SECONDS, target))
 			return
 
@@ -40,7 +40,7 @@
 		if (target == user)
 			to_chat(user, span_notice(LANG("obj.4fb833c4", null)))
 		else
-			target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you."))
+			target.visible_message(span_notice(LANG("obj.218aaa2d", list(user, target))), span_notice(LANG("obj.75824e46", list(user))))
 		imp = null
 		update_appearance()
 	else

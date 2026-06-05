@@ -20,10 +20,10 @@
 		return NONE
 
 	if(item.is_capped)
-		user.balloon_alert(user, "take the cap off first!")
+		user.balloon_alert(user, LANG("datum.0c73c2ec", null))
 		return ITEM_INTERACT_BLOCKING
 	if(item.check_empty())
-		user.balloon_alert(user, "empty!")
+		user.balloon_alert(user, LANG("datum.6ef93b07", null))
 		return ITEM_INTERACT_BLOCKING
 
 	INVOKE_ASYNC(src, PROC_REF(open_ui), user, item, source)
@@ -60,7 +60,7 @@
 
 	can.use_charges()
 	if(can.pre_noise)
-		target.audible_message(span_hear("You hear spraying."))
+		target.audible_message(span_hear(LANG("datum.715ca92d", null)))
 		playsound(target.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
 	target.set_greyscale(menu.split_colors)

@@ -184,7 +184,7 @@
 		visible_message(span_warning(LANG("obj.3c240d2b", list(attachment.attached_to, src))))
 		QDEL_NULL(attachment)
 		update_appearance(UPDATE_ICON)
-	user.visible_message(span_warning("[user] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
+	user.visible_message(span_warning(LANG("obj.c24be4ca", list(user, src, target))), span_notice(LANG("obj.c1fbc99d", list(src, target))))
 	attach_iv(target, user)
 
 /obj/machinery/iv_drip/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -288,12 +288,12 @@
 ///called when an IV is attached
 /obj/machinery/iv_drip/proc/attach_iv(atom/target, mob/user)
 	if(isliving(target))
-		user.visible_message(span_warning("[usr] begins attaching [src] to [target]..."), span_warning("You begin attaching [src] to [target]."))
+		user.visible_message(span_warning(LANG("obj.78b07588", list(usr, src, target))), span_warning(LANG("obj.3a966352", list(src, target))))
 		if(!do_after(usr, 1 SECONDS, target))
 			return
 	else
 		mode = IV_INJECTING
-	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
+	usr.visible_message(span_warning(LANG("obj.c24be4ca", list(usr, src, target))), span_notice(LANG("obj.c1fbc99d", list(src, target))))
 	var/datum/reagents/container = get_reagents()
 	log_combat(usr, target, "attached", src, "containing: ([container.get_reagent_log_string()])")
 	add_fingerprint(usr)

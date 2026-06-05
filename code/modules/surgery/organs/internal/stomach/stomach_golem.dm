@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/stomach/golem
 	name = "silicate grinder"
 	icon_state = "stomach-p"
@@ -26,7 +27,7 @@
 	SIGNAL_HANDLER
 	if(istype(eating, /obj/item/food/golem_food))
 		return
-	source.balloon_alert(source, "minerals only!")
+	source.balloon_alert(source, LANG("obj.77a262b8", null))
 	return BLOCK_EAT_ATTEMPT
 
 /// Golem stomach cannot process nutriment except from minerals
@@ -70,7 +71,7 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.visible_message(span_warning("[owner] siezes up and becomes as rigid as a statue!"), span_warning("Your limbs fall still. You no longer have enough energy to move!"))
+	owner.visible_message(span_warning(LANG("datum.6a3e8ea9", list(owner))), span_warning(LANG("datum.9c634111", null)))
 	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING, TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED), TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
@@ -78,6 +79,6 @@
 	return span_warning("[owner.p_They()] [owner.p_are()] as still as a statue!")
 
 /datum/status_effect/golem_statued/on_remove()
-	owner.visible_message(span_notice("[owner] slowly stirs back into motion!"), span_notice("You have gathered enough strength to move your body once more."))
+	owner.visible_message(span_notice(LANG("datum.233459f4", list(owner))), span_notice(LANG("datum.f8e45967", null)))
 	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING, TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED), TRAIT_STATUS_EFFECT(id))
 	return ..()

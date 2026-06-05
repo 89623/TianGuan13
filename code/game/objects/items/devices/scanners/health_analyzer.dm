@@ -49,7 +49,7 @@
 		. += span_notice(LANG("obj.70d11c6e", list(src)))
 
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
+	user.visible_message(span_suicide(LANG("obj.1cd52c32", list(user, user.p_them(), src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/healthanalyzer/attack_self(mob/user)
@@ -77,8 +77,8 @@
 	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
 		var/turf/scan_turf = get_turf(user)
 		user.visible_message(
-			span_warning("[user] analyzes [scan_turf]'s vitals!"),
-			span_notice("You stupidly try to analyze [scan_turf]'s vitals!"),
+			span_warning(LANG("obj.2316cc3b", list(user, scan_turf))),
+			span_notice(LANG("obj.f9872b0a", list(scan_turf))),
 		)
 
 		var/floor_text = "<span class='info'>Analyzing results for <b>[scan_turf]</b> ([round_timestamp()]):</span><br>"
@@ -95,7 +95,7 @@
 		to_chat(user, span_info(LANG("obj.58992497", list(M))))
 		return
 
-	user.visible_message(span_notice("[user] analyzes [M]'s vitals."))
+	user.visible_message(span_notice(LANG("obj.e9abb56d", list(user, M))))
 	balloon_alert(user, LANG("obj.2cbcf779", null))
 	playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50)
 
@@ -739,8 +739,8 @@
 
 	add_fingerprint(user)
 	user.visible_message(
-		span_notice("[user] scans [interacting_with] for [scan_for_what]."),
-		span_notice("You scan [interacting_with] for [scan_for_what]."),
+		span_notice(LANG("obj.2369a909", list(user, interacting_with, scan_for_what))),
+		span_notice(LANG("obj.3ff3ac73", list(interacting_with, scan_for_what))),
 	)
 
 	if(!iscarbon(interacting_with))

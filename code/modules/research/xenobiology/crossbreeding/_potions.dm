@@ -49,11 +49,11 @@ Slimecrossing Potions
 		to_chat(user, span_warning(LANG("obj.45e49c00", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(peace_target != user)
-		peace_target.visible_message(span_danger("[user] starts to feed [peace_target] [src]!"),
-			span_userdanger("[user] starts to feed you [src]!"))
+		peace_target.visible_message(span_danger(LANG("obj.20a8029d", list(user, peace_target, src))),
+			span_userdanger(LANG("obj.d34eedb4", list(user, src))))
 	else
-		peace_target.visible_message(span_danger("[user] starts to drink [src]!"),
-			span_danger("You start to drink [src]!"))
+		peace_target.visible_message(span_danger(LANG("obj.5d249f52", list(user, src))),
+			span_danger(LANG("obj.0be85a3b", list(src))))
 
 	if(!do_after(user, 10 SECONDS, target = peace_target))
 		return ITEM_INTERACT_BLOCKING
@@ -93,8 +93,8 @@ Slimecrossing Potions
 		to_chat(user, span_warning(LANG("obj.1339ea17", list(love_target))))
 		return ITEM_INTERACT_BLOCKING
 
-	love_target.visible_message(span_danger("[user] starts to feed [love_target] a love potion!"),
-		span_userdanger("[user] starts to feed you a love potion!"))
+	love_target.visible_message(span_danger(LANG("obj.61a936f4", list(user, love_target))),
+		span_userdanger(LANG("obj.c8572f3a", list(user))))
 
 	if(!do_after(user, 5 SECONDS, target = love_target))
 		return ITEM_INTERACT_BLOCKING
@@ -204,7 +204,7 @@ Slimecrossing Potions
 	user.do_attack_animation(interacting_with)
 	revive_target.revive(HEAL_ALL)
 	revive_target.set_stat(CONSCIOUS)
-	revive_target.visible_message(span_notice("[revive_target] is filled with renewed vigor and blinks awake!"))
+	revive_target.visible_message(span_notice(LANG("obj.099b92cd", list(revive_target))))
 	revive_target.maxHealth -= 10 //Revival isn't healthy.
 	revive_target.health -= 10
 	revive_target.regenerate_icons()

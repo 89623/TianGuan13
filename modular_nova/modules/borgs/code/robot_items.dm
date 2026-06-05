@@ -367,7 +367,7 @@
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	plane_to_fire.throw_at(target, plane_to_fire.throw_range, plane_to_fire.throw_speed, user)
 	COOLDOWN_START(src, shooting_cooldown, shooting_delay)
-	user.visible_message(span_warning("[user] shoots a paper plane at [target]!"))
+	user.visible_message(span_warning(LANG("obj.040bacf1", list(user, target))))
 	check_amount()
 	return ITEM_INTERACT_SUCCESS
 

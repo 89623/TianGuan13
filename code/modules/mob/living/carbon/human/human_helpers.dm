@@ -380,8 +380,8 @@
 	else
 		message = "[heal_message_burn] on"
 	affecting.heal_damage(brute_heal, burn_heal, required_bodytype)
-	user.visible_message(span_notice("[user] fixes some of the [message] [src]'s [affecting.name]."), \
-		span_notice("You fix some of the [message] [src == user ? "your" : "[src]'s"] [affecting.name]."))
+	user.visible_message(span_notice(LANG("mob.8973b0c7", list(user, message, src, affecting.name))), \
+		span_notice(LANG("mob.f48cdd80", list(message, src == user ? "your" : "[src]'s", affecting.name))))
 	return TRUE
 
 /// Sets both mob's and eye organ's eye color values

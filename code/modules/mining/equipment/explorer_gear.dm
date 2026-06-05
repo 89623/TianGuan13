@@ -153,13 +153,13 @@
 		cold_protection = null
 		heat_protection = null
 		set_armor(/datum/armor/none)
-		user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use."))
+		user.visible_message(span_notice(LANG("obj.4aa7068c", list(user, src))), span_notice(LANG("obj.e2bd153e", list(src))))
 	else
 		slot_flags = initial(slot_flags)
 		cold_protection = initial(cold_protection)
 		heat_protection = initial(heat_protection)
 		set_armor(initial(armor_type))
-		user.visible_message(span_notice("[user] adjusts their [src] for defensive use."), span_notice("You adjust your [src] for defensive use."))
+		user.visible_message(span_notice(LANG("obj.76afedb8", list(user, src))), span_notice(LANG("obj.0b0b9063", list(src))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/hooded/cloakhood/goliath

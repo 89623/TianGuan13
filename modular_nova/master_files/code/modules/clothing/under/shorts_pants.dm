@@ -85,7 +85,7 @@
 	var/obj/item/clothing/accessory/chaps/chaps_accessory = new /obj/item/clothing/accessory/chaps(user.drop_location())
 	chaps_accessory.greyscale_colors = greyscale_colors
 	chaps_accessory.update_greyscale()
-	user.balloon_alert(user, "changed to accessory!")
+	user.balloon_alert(user, LANG("obj.67d9d81f", null))
 	qdel(src)
 	user.put_in_hands(chaps_accessory)
 

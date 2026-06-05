@@ -136,7 +136,7 @@
 	. = ..()
 	if(!is_wizard_or_friend(user))
 		to_chat(user, span_hypnophrase(LANG("obj.56d08662", null)))
-		user.balloon_alert(user, "the staff feels weaker as you touch it")
+		user.balloon_alert(user, LANG("obj.f98e124c", null))
 
 /obj/item/gun/magic/staff/healing/examine(mob/user)
 	. = ..()
@@ -173,7 +173,7 @@
 	if(user.mob_biotypes & MOB_UNDEAD)
 		user.dust(drop_items = TRUE)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("...but nothing happens."))
+	user.visible_message(span_suicide(LANG("obj.0f15a9dc", null)))
 	return SHAME
 
 /// Does random shit when fired
@@ -433,7 +433,7 @@
 /obj/item/gun/magic/staff/babel/do_suicide(mob/living/user)
 	. = ..()
 	process_fire(user, user, FALSE)
-	user.say("I wish I was dead.", forced = "failed babel staff suicide")
+	user.say(LANG("obj.0d861f29", null), forced = "failed babel staff suicide")
 	return SHAME
 
 /// Deals damage to the target and recharges their spells if they have any
@@ -490,7 +490,7 @@
 	. = ..()
 	playsound(user, fire_sound, 50, TRUE)
 	user.unequip_everything()
-	user.visible_message(span_suicide("[user] shrinks into nothing!"), span_suicide("You shrink into nothing!"))
+	user.visible_message(span_suicide(LANG("obj.1c8e52c7", list(user))), span_suicide(LANG("obj.3fee85c3", null)))
 	user.Stun(20 SECONDS, ignore_canstun = TRUE)
 	user.set_suicide(TRUE)
 	user.ghostize()

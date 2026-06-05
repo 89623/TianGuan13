@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/charged/beam/tesla
 	name = "Tesla Blast"
 	desc = "Charge up a tesla arc and release it at random nearby targets! \
@@ -31,8 +32,8 @@
 
 	if(to_beam.can_block_magic(antimagic_flags))
 		to_beam.visible_message(
-			span_warning("[to_beam] absorbs the spell, remaining unharmed!"),
-			span_userdanger("You absorb the spell, remaining unharmed!"),
+			span_warning(LANG("datum.55c1b3d9", list(to_beam))),
+			span_userdanger(LANG("datum.6372b935", null)),
 		)
 
 	else

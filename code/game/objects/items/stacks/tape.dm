@@ -63,7 +63,7 @@
 		to_chat(user, span_warning(LANG("obj.63bbf11d", list(target, src))))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] begins wrapping [target] with [src]."), span_notice("You begin wrapping [target] with [src]."))
+	user.visible_message(span_notice(LANG("obj.5adaa140", list(user, target, src))), span_notice(LANG("obj.11152b64", list(target, src))))
 	playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
 
 	if(!do_after(user, 3 SECONDS, target=target))
@@ -178,10 +178,10 @@
 		var/robot_is_damaged = robotic_pal.get_brute_loss()
 
 		if(!robot_is_damaged)
-			user.balloon_alert(user, "[robotic_pal] is not damaged!")
+			user.balloon_alert(user, LANG("obj.b9e59558", list(robotic_pal)))
 			return ITEM_INTERACT_BLOCKING
 
-		user.visible_message(span_notice("[user] begins repairing [robotic_pal] with [src]."), span_notice("You begin repairing [robotic_pal] with [src]."))
+		user.visible_message(span_notice(LANG("obj.23cbd9d2", list(user, robotic_pal, src))), span_notice(LANG("obj.df18f3f5", list(robotic_pal, src))))
 		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
 
 		if(!do_after(user, 3 SECONDS, target = robotic_pal))
@@ -196,17 +196,17 @@
 		return NONE
 
 	if(HAS_TRAIT(interacting_with, TRAIT_DUCT_TAPE_UNREPAIRABLE))
-		user.balloon_alert(user, "cannot be repaired with duct tape!")
+		user.balloon_alert(user, LANG("obj.6edc0a3a", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/object_to_repair = interacting_with
 	var/object_is_damaged = object_to_repair.get_integrity() < object_to_repair.max_integrity
 
 	if(!object_is_damaged)
-		user.balloon_alert(user, "[object_to_repair] is not damaged!")
+		user.balloon_alert(user, LANG("obj.b9e59558", list(object_to_repair)))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] begins repairing [object_to_repair] with [src]."), span_notice("You begin repairing [object_to_repair] with [src]."))
+	user.visible_message(span_notice(LANG("obj.23cbd9d2", list(user, object_to_repair, src))), span_notice(LANG("obj.df18f3f5", list(object_to_repair, src))))
 	playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
 
 	if(!do_after(user, 3 SECONDS, target = object_to_repair))

@@ -35,7 +35,7 @@ Recurring extracts:
 		extract.extract_uses++
 		cooldown = max_cooldown
 	else if(extract.extract_uses <= 0)
-		extract.visible_message(span_warning("The light inside [extract] flickers and dies out."))
+		extract.visible_message(span_warning(LANG("obj.4f98d5b8", list(extract))))
 		extract.desc = "A tiny, inert core, bleeding dark, cerulean-colored goo."
 		extract.icon_state = "prismatic"
 		qdel(src)

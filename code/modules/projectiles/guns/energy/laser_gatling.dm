@@ -78,7 +78,7 @@
 	if(user)
 		to_chat(user, span_notice(LANG("obj.5dacccb1", list(gun, src))))
 	else
-		src.visible_message(span_warning("\The [gun] snaps back onto \the [src]!"))
+		src.visible_message(span_warning(LANG("obj.88c24102", list(gun, src))))
 	update_appearance()
 	user.update_worn_back()
 

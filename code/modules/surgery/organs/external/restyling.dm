@@ -72,13 +72,13 @@
 	var/new_style = tgui_input_list(trimmer, LANG("obj.7a2f6e0b", null), LANG("obj.62de8b3c", null), restyles)
 
 	trimmer.visible_message(
-		span_notice("[trimmer] tries to change [original_target == trimmer ? trimmer.p_their() : original_target.name + "'s"] [name]."),
-		span_notice("You try to change [original_target == trimmer ? "your" : original_target.name + "'s"] [name].")
+		span_notice(LANG("obj.1439dc47", list(trimmer, original_target == trimmer ? trimmer.p_their() : original_target.name + "'s", name))),
+		span_notice(LANG("obj.0ea1ea1c", list(original_target == trimmer ? "your" : original_target.name + "'s", name)))
 	)
 	if(new_style && do_after(trimmer, style_speed, target = original_target))
 		trimmer.visible_message(
-			span_notice("[trimmer] successfully changes [original_target == trimmer ? trimmer.p_their() : original_target.name + "'s"] [name]."),
-			span_notice("You successfully change [original_target == trimmer ? "your" : original_target.name + "'s"] [name].")
+			span_notice(LANG("obj.d7630aac", list(trimmer, original_target == trimmer ? trimmer.p_their() : original_target.name + "'s", name))),
+			span_notice(LANG("obj.22c1fdd6", list(original_target == trimmer ? "your" : original_target.name + "'s", name)))
 		)
 
 		simple_change_sprite(restyles[new_style]) //turn name to type and pass it on

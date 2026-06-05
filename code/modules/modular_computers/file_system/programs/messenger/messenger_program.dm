@@ -167,7 +167,7 @@
 			var/mob/living/user = usr
 			var/new_ringtone = tgui_input_text(user, LANG("datum.0217372d", null), LANG("datum.d1ce8515", null), ringtone, max_length = MAX_MESSAGE_LEN, encode = FALSE)
 			if(!computer.can_interact(user))
-				computer.balloon_alert(user, "can't reach!")
+				computer.balloon_alert(user, LANG("datum.fba9228d", null))
 				return FALSE
 			return set_ringtone(new_ringtone, user)
 
@@ -642,7 +642,7 @@
 
 
 	// NOVA EDIT BEGIN - PDA messages show a visible message; again!
-	sender.visible_message(span_notice("[sender]'s PDA rings out with the soft sound of keypresses"), vision_distance = COMBAT_MESSAGE_RANGE)
+	sender.visible_message(span_notice(LANG("datum.6c38de54", list(sender))), vision_distance = COMBAT_MESSAGE_RANGE)
 	// NOVA EDIT END
 	var/shell_addendum = ""
 	if(istype(source, /obj/item/circuit_component))

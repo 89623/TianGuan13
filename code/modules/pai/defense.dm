@@ -55,7 +55,7 @@
 		return
 	fold_in()
 	if(user.put_in_hands(card))
-		user.visible_message(span_notice("[user] promptly scoops up [user.p_their()] pAI's card."))
+		user.visible_message(span_notice(LANG("mob.8be318e8", list(user, user.p_their()))))
 
 /mob/living/silicon/pai/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	. = ..()

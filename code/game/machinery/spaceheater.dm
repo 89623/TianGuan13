@@ -209,8 +209,8 @@
 /obj/machinery/space_heater/screwdriver_act(mob/living/user, obj/item/tool)
 	. = default_deconstruction_screwdriver(user, tool)
 	user.visible_message(
-		span_notice("[user] [panel_open ? "opens" : "closes"] the hatch on [src]."),
-		span_notice("You [panel_open ? "open" : "close"] the hatch on [src]."),
+		span_notice(LANG("obj.e2fd01b7", list(user, panel_open ? "opens" : "closes", src))),
+		span_notice(LANG("obj.8e621188", list(panel_open ? "open" : "close", src))),
 	)
 	return .
 
@@ -231,8 +231,8 @@
 		cell = tool
 		tool.add_fingerprint(usr)
 		user.visible_message(
-			span_notice("[user] inserts [tool] into [src]."),
-			span_notice("You insert [tool] into [src]."),
+			span_notice(LANG("obj.05c6f8ca", list(user, tool, src))),
+			span_notice(LANG("obj.8ce99939", list(tool, src))),
 		)
 		SStgui.update_uis(src)
 		return ITEM_INTERACT_SUCCESS
@@ -435,7 +435,7 @@
 		cell = item
 		item.add_fingerprint(usr)
 
-		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
+		user.visible_message(span_notice(LANG("obj.e75ad685", list(user, src))), span_notice(LANG("obj.416c5a90", list(src))))
 		SStgui.update_uis(src)
 	//reagent containers
 	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())

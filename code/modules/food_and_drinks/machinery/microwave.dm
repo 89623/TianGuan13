@@ -331,16 +331,16 @@
 		return NONE
 
 	user.visible_message(
-		span_notice("[user] starts to fix part of [src]."),
-		span_notice("You start to fix part of [src]..."),
+		span_notice(LANG("obj.6c102cee", list(user, src))),
+		span_notice(LANG("obj.98f18831", list(src))),
 	)
 
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user] fixes part of [src]."),
-		span_notice("You fix part of [src]."),
+		span_notice(LANG("obj.037dbf0e", list(user, src))),
+		span_notice(LANG("obj.fc597ad4", list(src))),
 	)
 	broken = KINDA_BROKEN // Fix it a bit
 	update_appearance()
@@ -351,16 +351,16 @@
 		return NONE
 
 	user.visible_message(
-		span_notice("[user] starts to fix part of [src]."),
-		span_notice("You start to fix part of [src]..."),
+		span_notice(LANG("obj.6c102cee", list(user, src))),
+		span_notice(LANG("obj.98f18831", list(src))),
 	)
 
 	if(!tool.use_tool(src, user, 2 SECONDS, amount = 1, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user] fixes [src]."),
-		span_notice("You fix [src]."),
+		span_notice(LANG("obj.39c573f3", list(user, src))),
+		span_notice(LANG("obj.3d88763b", list(src))),
 	)
 	broken = NOT_BROKEN
 	update_appearance()
@@ -433,7 +433,7 @@
 
 		ingredients += item
 		open(autoclose = 0.6 SECONDS)
-		user.visible_message(span_notice("[user] adds \a [item] to \the [src]."), span_notice("You add [item] to \the [src]."))
+		user.visible_message(span_notice(LANG("obj.6776a8ee", list(user, item, src))), span_notice(LANG("obj.dc741820", list(item, src))))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 

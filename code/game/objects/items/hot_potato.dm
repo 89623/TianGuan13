@@ -51,7 +51,7 @@
 
 /obj/item/hot_potato/proc/detonate()
 	var/atom/location = loc
-	location.visible_message(span_userdanger("[src] [detonate_explosion? "explodes" : "activates"]!"), span_userdanger("[src] activates! You've ran out of time!"))
+	location.visible_message(span_userdanger("[src] [detonate_explosion? "explodes" : "activates"]!"), span_userdanger(LANG("obj.fdc960fd", list(src))))
 	if(detonate_explosion && isliving(loc))
 		var/mob/living/victim_mob = loc
 		if(victim_mob.is_holding(src))
@@ -66,8 +66,8 @@
 
 /obj/item/hot_potato/attack_self(mob/user)
 	if(activate(timer, user))
-		user.visible_message(span_boldwarning("[user] squeezes [src], which promptly starts to flash red-hot colors!"), span_boldwarning("You squeeze [src], activating its countdown and attachment mechanism!"),
-		span_boldwarning("You hear a mechanical click and a loud beeping!"))
+		user.visible_message(span_boldwarning(LANG("obj.6f7433e7", list(user, src))), span_boldwarning(LANG("obj.d7c36b83", list(src))),
+		span_boldwarning(LANG("obj.a7ded507", null)))
 		return
 	return ..()
 
@@ -128,11 +128,11 @@
 		. = TRUE
 	if(.)
 		log_combat(user, victim, "forced a hot potato with explosive variables ([detonate_explosion]-[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_flash_range]/[detonate_fire_range]) onto")
-		user.visible_message(span_userdanger("[user] forces [src] onto [victim]!"), span_userdanger("You force [src] onto [victim]!"), span_boldwarning("You hear a mechanical click and a beep."))
+		user.visible_message(span_userdanger(LANG("obj.545300e4", list(user, src, victim))), span_userdanger(LANG("obj.69df4b7a", list(src, victim))), span_boldwarning(LANG("obj.1801cd2d", null)))
 		colorize(null)
 	else
 		log_combat(user, victim, "tried to force a hot potato with explosive variables ([detonate_explosion]-[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_flash_range]/[detonate_fire_range]) onto")
-		user.visible_message(span_boldwarning("[user] tried to force [src] onto [victim], but it could not attach!"), span_boldwarning("You try to force [src] onto [victim], but it is unable to attach!"), span_boldwarning("You hear a mechanical click and two buzzes."))
+		user.visible_message(span_boldwarning(LANG("obj.0b6012c7", list(user, src, victim))), span_boldwarning(LANG("obj.30441b52", list(src, victim))), span_boldwarning(LANG("obj.f2fce4a6", null)))
 		user.put_in_hands(src)
 
 /obj/item/hot_potato/dropped(mob/user)

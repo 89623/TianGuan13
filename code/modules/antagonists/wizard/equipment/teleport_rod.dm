@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Totally NOT a Rod of Discord
 /// Teleports you to where you click!
 /obj/item/teleport_rod
@@ -60,15 +61,15 @@
 	var/turf/start_turf = get_turf(user)
 	var/turf/target_turf = get_turf(interacting_with)
 	if(get_dist(start_turf, target_turf) > max_tp_range)
-		user.balloon_alert(user, "too far!")
+		user.balloon_alert(user, LANG("obj.f5e75781", null))
 		return .
 
 	if(!(target_turf in view(user, user.client?.view || world.view)))
-		user.balloon_alert(user, "out of view!")
+		user.balloon_alert(user, LANG("obj.1af28010", null))
 		return .
 
 	if(target_turf.is_blocked_turf(exclude_mobs = TRUE, source_atom = user))
-		user.balloon_alert(user, "obstructed!")
+		user.balloon_alert(user, LANG("obj.e959af4e", null))
 		return .
 
 	var/tp_result = do_teleport(
@@ -80,7 +81,7 @@
 	)
 
 	if(!tp_result)
-		user.balloon_alert(user, "teleport failed!")
+		user.balloon_alert(user, LANG("obj.62054e04", null))
 		return .
 
 	. = ITEM_INTERACT_SUCCESS
@@ -109,7 +110,7 @@
 
 	if(user.has_status_effect(/datum/status_effect/teleport_flux))
 		// The status effect handles the damage, but we'll add a special pop up for rod usage specifically
-		user.balloon_alert(user, "too soon!")
+		user.balloon_alert(user, LANG("obj.b0540d2d", null))
 
 	user.apply_status_effect(/datum/status_effect/teleport_flux)
 	return .

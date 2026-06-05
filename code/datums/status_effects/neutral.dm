@@ -471,12 +471,12 @@
 
 	if(!QDELETED(alt_clone)) //catch any stragglers
 		do_sparks(5, FALSE, alt_clone)
-		owner.visible_message("[owner] is snapped across to a different alternative reality!")
+		owner.visible_message(LANG("datum.49433464", list(owner)))
 		QDEL_NULL(alt_clone)
 
 	if(block_effects)
 		if(!stable_message)
-			owner.visible_message("You feel stable...for now.")
+			owner.visible_message(LANG("datum.8eb3cfaa", null))
 			stable_message = TRUE
 		return
 	stable_message = FALSE
@@ -535,7 +535,7 @@
 					alt_clone.appearance = owner.appearance
 					alt_clone.real_name = owner.real_name
 					RegisterSignal(alt_clone, COMSIG_QDELETING, PROC_REF(remove_clone_from_var))
-					owner.visible_message("[owner] splits into seemingly two versions of themselves!")
+					owner.visible_message(LANG("datum.8723bbd1", list(owner)))
 					do_teleport(alt_clone, get_turf(alt_clone), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 					do_sparks(5,FALSE,alt_clone)
 					alt_clone.emote("spin")
@@ -585,7 +585,7 @@
 /datum/status_effect/eigenstasium/on_remove()
 	if(!QDELETED(alt_clone))//catch any stragilers
 		do_sparks(5, FALSE, alt_clone)
-		owner.visible_message("One of the [owner]s suddenly phases out of reality in front of you!")
+		owner.visible_message(LANG("datum.a57d9736", list(owner)))
 		QDEL_NULL(alt_clone)
 	return ..()
 

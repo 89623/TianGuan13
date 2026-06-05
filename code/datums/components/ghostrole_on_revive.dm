@@ -156,7 +156,7 @@
 
 	else if(refuse_revival_if_failed)
 		reviving.death()
-		reviving.visible_message(span_deadsay("[reviving]'s soul is struggling to return!"))
+		reviving.visible_message(span_deadsay(LANG("datum.61967927", list(reviving))))
 
 
 /datum/component/ghostrole_on_revive/proc/add_orbit_twitching(mob/living/parent_mob)

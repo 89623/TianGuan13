@@ -21,8 +21,8 @@
 			audible_message(span_hear(LANG("obj.1aa82fa3", null)))
 			if(!tool.use_tool(src, user, 100, volume=50))
 				return ITEM_INTERACT_BLOCKING
-			user.visible_message(span_warning("[user] unwelds [src], leaving it as just a frame bolted to the wall."),
-				span_warning("You unweld [src], leaving it as just a frame bolted to the wall"))
+			user.visible_message(span_warning(LANG("obj.c0710c18", list(user, src))),
+				span_warning(LANG("obj.01dcc232", list(src))))
 			deconstruct(TRUE)
 			return ITEM_INTERACT_SUCCESS
 	return ..()

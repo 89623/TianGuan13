@@ -44,14 +44,14 @@
 	// Ethereals can't drain APCs under half charge, so that they are forced to look to alternative power sources if the station is running low
 	if(cell.charge() < half_max_charge)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "safeties prevent draining!"), ETHEREAL_APC_ALERT_DELAY)
-		user.visible_message(span_notice("[src] displays a red X, sealing ports as 'safeties enabled' flashes across the screen!")) // NOVA EDIT ADDITION
+		user.visible_message(span_notice(LANG("obj.cfb96552", list(src)))) // NOVA EDIT ADDITION
 		return
 
 	var/obj/item/stock_parts/power_store/stomach_cell = used_stomach.cell
 	used_stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "draining power..."), ETHEREAL_APC_ALERT_DELAY)
 	//NOVA EDIT CHANGE BEGIN - Ethereal Rework 2024
-	user.visible_message(span_notice("[user] presses their fingers into [src]'s screen, static jumping up [user.p_their()] arm as they drain it!"))
+	user.visible_message(span_notice(LANG("obj.274ca5fa", list(user, src, user.p_their()))))
 	to_chat(user, span_purple(LANG("obj.8b3bee53", list(src))))
 	//NOVA EDIT CHANGE END - Ethereal Rework 2024
 	while(do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
@@ -74,7 +74,7 @@
 
 		if(stomach_cell.used_charge() <= 0)
 			balloon_alert(user, LANG("obj.5e4dbacc", null))
-			user.visible_message(span_notice("[user] drops [user.p_their()] hand from [src], glowing at [user.p_their()] zenith!")) // NOVA EDIT ADDITION
+			user.visible_message(span_notice(LANG("obj.c04592c8", list(user, user.p_their(), src, user.p_their())))) // NOVA EDIT ADDITION
 			return
 		if(cell.charge() <= 0)
 			balloon_alert(user, LANG("obj.1328a0e7", null))
@@ -93,7 +93,7 @@
 	used_stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "transferring power..."), ETHEREAL_APC_ALERT_DELAY)
 	// NOVA EDIT ADDITION BEGIN - Ethereal Rework 2024
-	user.visible_message(span_notice("[user] presses [user.p_their()] fingers into [src]'s screen, [user.p_their()] arm alight with static as [user.p_they()] charge it!"))
+	user.visible_message(span_notice(LANG("obj.122e4d53", list(user, user.p_their(), src, user.p_their(), user.p_they()))))
 	to_chat(user, span_purple(LANG("obj.609a84d2", list(src))))
 	// NOVA EDIT ADDITION END - Ethereal Rework 2024
 	if(!do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
@@ -114,7 +114,7 @@
 
 	if(cell.used_charge() <= 0)
 		balloon_alert(user, LANG("obj.cbf89b69", null))
-		user.visible_message(span_notice("[src] displays a red X across the screen, sealing ports and rejecting [user]'s charge!")) // NOVA EDIT ADDITION - Ethereal Rework 2024
+		user.visible_message(span_notice(LANG("obj.d410508a", list(src, user)))) // NOVA EDIT ADDITION - Ethereal Rework 2024
 		return
 	if(stomach_cell.charge() <= 0)
 		balloon_alert(user, LANG("obj.6428cbcd", null))
@@ -129,7 +129,7 @@
 
 	if(opened && (!issilicon(user)))
 		if(cell)
-			user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
+			user.visible_message(span_notice(LANG("obj.ea367116", list(user, cell, src))))
 			balloon_alert(user, LANG("obj.0dfdca6e", null))
 			user.put_in_hands(cell)
 		return

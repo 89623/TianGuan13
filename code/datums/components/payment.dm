@@ -150,7 +150,7 @@
 		return FALSE
 
 	if(!idcard.can_be_used_in_payment(user))
-		atom_parent.say("Departmental accounts have been blacklisted from personal expenses due to embezzlement.")
+		atom_parent.say(LANG("datum.1a1c311c", null))
 		return FALSE
 
 	if(!(idcard.registered_account.has_money(total_cost)))
@@ -163,7 +163,7 @@
 				to_chat(user, span_warning(LANG("datum.beffae1b", null)))
 			if(PAYMENT_VENDING)
 				to_chat(user, span_warning(LANG("datum.107f4d46", null)))
-		atom_parent.balloon_alert(user, "needs [total_cost] [MONEY_NAME_AUTOPURAL(total_cost)]!")
+		atom_parent.balloon_alert(user, LANG("datum.0250228f", list(total_cost, MONEY_NAME_AUTOPURAL(total_cost))))
 		return FALSE
 	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery")
 	log_econ("[total_cost] [MONEY_NAME] were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")

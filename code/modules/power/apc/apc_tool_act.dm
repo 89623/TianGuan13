@@ -47,7 +47,7 @@
 		if(!electrocute_mob(user, shock_source, src, siemens_coeff = 1, dist_check = TRUE))//People with insulated gloves just attack the APC normally. They're just short of magical anyway
 			return NONE
 		do_sparks(5, TRUE, src)
-		user.visible_message(span_notice("[user.name] shoves [tool] into the internal components of [src], erupting into a cascade of sparks!"))
+		user.visible_message(span_notice(LANG("obj.af35b8b4", list(user.name, tool, src))))
 		if(shock_source == cell)//If the shock is coming from the cell just fully discharge it, because it's funny
 			cell.use(cell.charge)
 		return ITEM_INTERACT_SUCCESS
@@ -66,7 +66,7 @@
 	if(!user.transferItemToLoc(new_cell, src))
 		return ITEM_INTERACT_BLOCKING
 	cell = new_cell
-	user.visible_message(span_notice("[user.name] inserts the power cell to [src.name]!"))
+	user.visible_message(span_notice(LANG("obj.579519a7", list(user.name, src.name))))
 	balloon_alert(user, LANG("obj.9dcbef06", null))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -117,7 +117,7 @@
 			return ITEM_INTERACT_BLOCKING
 		terminal_cable_layer = GLOB.cable_name_to_layer[choice]
 
-	user.visible_message(span_notice("[user.name] starts addding cables to the APC frame."))
+	user.visible_message(span_notice(LANG("obj.c7315fb9", list(user.name))))
 	balloon_alert(user, LANG("obj.a59792f9", null))
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 
@@ -131,7 +131,7 @@
 		do_sparks(5, TRUE, src)
 		return ITEM_INTERACT_BLOCKING
 	installing_cable.use(10)
-	user.visible_message(span_notice("[user.name] adds cables to the APC frame."))
+	user.visible_message(span_notice(LANG("obj.4316c660", list(user.name))))
 	balloon_alert(user, LANG("obj.e501673b", null))
 	make_terminal(terminal_cable_layer)
 	terminal.connect_to_network()
@@ -150,7 +150,7 @@
 		balloon_alert(user, LANG("obj.c9c907fd", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user.name] inserts the power control board into [src]."))
+	user.visible_message(span_notice(LANG("obj.a3ba4937", list(user.name, src))))
 	balloon_alert(user, LANG("obj.f9ee154d", null))
 	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
@@ -172,8 +172,8 @@
 		if(!pseudocircuit.adapt_circuit(user, circuit_cost = 0.05 * STANDARD_CELL_CHARGE))
 			return ITEM_INTERACT_BLOCKING
 		user.visible_message(
-			span_notice("[user] fabricates a circuit and places it into [src]."),
-			span_notice("You adapt a power control board and click it into place in [src]'s guts."),
+			span_notice(LANG("obj.bdc98e79", list(user, src))),
+			span_notice(LANG("obj.77df737f", list(src))),
 		)
 		has_electronics = APC_ELECTRONICS_INSTALLED
 		locked = FALSE
@@ -189,8 +189,8 @@
 		bad_cell.forceMove(src)
 		cell = bad_cell
 		user.visible_message(
-			span_notice("[user] fabricates a weak power cell and places it into [src]."),
-			span_warning("Your [pseudocircuit.name] whirrs with strain as you create a weak power cell and place it into [src]!"),
+			span_notice(LANG("obj.1ece14d7", list(user, src))),
+			span_warning(LANG("obj.76eec662", list(pseudocircuit.name, src))),
 		)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -207,7 +207,7 @@
 		balloon_alert(user, LANG("obj.0116725f", null))
 		return ITEM_INTERACT_BLOCKING
 	if((machine_stat & BROKEN) && opened == APC_COVER_REMOVED && has_electronics && terminal) // Cover is the only thing broken, we do not need to remove elctronicks to replace cover
-		user.visible_message(span_notice("[user.name] replaces missing APC's cover."))
+		user.visible_message(span_notice(LANG("obj.4df99cf8", list(user.name))))
 		balloon_alert(user, LANG("obj.aac50979", null))
 		if(!do_after(user, 2 SECONDS, target = src)) // replacing cover is quicker than replacing whole frame
 			return ITEM_INTERACT_BLOCKING
@@ -221,7 +221,7 @@
 	if(has_electronics)
 		balloon_alert(user, LANG("obj.56319525", null))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user.name] replaces the damaged APC frame with a new one."))
+	user.visible_message(span_notice(LANG("obj.a693882f", list(user.name))))
 	balloon_alert(user, LANG("obj.ffc63280", null))
 	if(!do_after(user, 5 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
@@ -281,22 +281,22 @@
 		return
 	has_electronics = APC_ELECTRONICS_MISSING
 	if(machine_stat & BROKEN)
-		user.visible_message(span_notice("[user.name] breaks the power control board inside [name]!"), \
-			span_hear("You hear a crack."))
+		user.visible_message(span_notice(LANG("obj.01bda195", list(user.name, name))), \
+			span_hear(LANG("obj.b765f6e1", null)))
 		balloon_alert(user, LANG("obj.93b82b02", null))
 		return
 	else if(obj_flags & EMAGGED)
 		obj_flags &= ~EMAGGED
-		user.visible_message(span_notice("[user.name] discards an emagged power control board from [name]!"))
+		user.visible_message(span_notice(LANG("obj.1a807a77", list(user.name, name))))
 		balloon_alert(user, LANG("obj.82e0629b", null))
 		return
 	else if(malfhack)
-		user.visible_message(span_notice("[user.name] discards a strangely programmed power control board from [name]!"))
+		user.visible_message(span_notice(LANG("obj.40df041e", list(user.name, name))))
 		balloon_alert(user, LANG("obj.75d73b94", null))
 		malfai = null
 		malfhack = 0
 		return
-	user.visible_message(span_notice("[user.name] removes the power control board from [name]!"))
+	user.visible_message(span_notice(LANG("obj.3abfa99d", list(user.name, name))))
 	balloon_alert(user, LANG("obj.6e38fb3f", null))
 	new /obj/item/electronics/apc(loc)
 	return
@@ -317,7 +317,7 @@
 		return
 
 	if(cell)
-		user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
+		user.visible_message(span_notice(LANG("obj.ea367116", list(user, cell, src))))
 		balloon_alert(user, LANG("obj.0dfdca6e", null))
 		var/turf/user_turf = get_turf(user)
 		cell.forceMove(user_turf)
@@ -372,19 +372,19 @@
 		return
 	if(!welder.tool_start_check(user, amount=1))
 		return
-	user.visible_message(span_notice("[user.name] welds [src]."), \
-						span_hear("You hear welding."))
+	user.visible_message(span_notice(LANG("obj.99cc3d1a", list(user.name, src))), \
+						span_hear(LANG("obj.1aa82fa3", null)))
 	balloon_alert(user, LANG("obj.7e2a00fe", null))
 	if(!welder.use_tool(src, user, 50, volume=50))
 		return
 	if((machine_stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/iron(loc)
-		user.visible_message(span_notice("[user.name] cuts [src] apart with [welder]."))
-		user.balloon_alert(user, "disassembled the broken frame")
+		user.visible_message(span_notice(LANG("obj.ab2bd59f", list(user.name, src, welder))))
+		user.balloon_alert(user, LANG("obj.766b2d3c", null))
 	else
 		new /obj/item/wallframe/apc(loc)
-		user.visible_message(span_notice("[user.name] cuts [src] from the wall with [welder]."))
-		user.balloon_alert(user, "cut the frame from the wall")
+		user.visible_message(span_notice(LANG("obj.7cafae7f", list(user.name, src, welder))))
+		user.balloon_alert(user, LANG("obj.7dd741fd", null))
 	qdel(src)
 	return TRUE
 

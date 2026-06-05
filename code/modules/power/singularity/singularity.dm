@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The gravitational singularity
 /obj/singularity
 	name = "gravitational singularity"
@@ -97,9 +98,9 @@
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	var/mob/living/carbon/jedi = user
 	jedi.visible_message(
-		span_danger("[jedi]'s head begins to collapse in on itself!"),
-		span_userdanger("Your head feels like it's collapsing in on itself! This was really not a good idea!"),
-		span_hear("You hear something crack and explode in gore.")
+		span_danger(LANG("obj.b083772e", list(jedi))),
+		span_userdanger(LANG("obj.408b24b3", null)),
+		span_hear(LANG("obj.5fdbe95a", null))
 		)
 	jedi.Stun(3 SECONDS)
 	new /obj/effect/gibspawner/generic(get_turf(jedi), jedi)
@@ -462,8 +463,8 @@
 /obj/singularity/proc/apply_stun(mob/living/carbon/stunned_mob)
 	stunned_mob.apply_effect(60, EFFECT_STUN)
 	stunned_mob.visible_message(
-		span_danger("[stunned_mob] stares blankly at \the [src]!"),
-		span_userdanger("You look directly into \the [src] and feel weak.")
+		span_danger(LANG("obj.05393701", list(stunned_mob, src))),
+		span_userdanger(LANG("obj.e6dd2eb3", list(src)))
 	)
 
 /obj/singularity/proc/emp_area()

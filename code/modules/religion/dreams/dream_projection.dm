@@ -142,7 +142,7 @@
 	SIGNAL_HANDLER
 	to_chat(owner, span_warning(LANG("datum.8903cc72", null)))
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "gasp")
-	owner.visible_message(span_notice("[owner]'s eyes snap open as they are jolted awake!"), vision_distance = COMBAT_MESSAGE_RANGE, ignored_mobs = owner)
+	owner.visible_message(span_notice(LANG("datum.73c980c4", list(owner))), vision_distance = COMBAT_MESSAGE_RANGE, ignored_mobs = owner)
 	qdel(src)
 
 /datum/status_effect/dream_projection/proc/stop_projection()

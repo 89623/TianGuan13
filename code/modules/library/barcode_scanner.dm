@@ -49,7 +49,7 @@
 /obj/item/barcodescanner/proc/interact_with_book(obj/item/book/target_book, mob/living/user)
 	var/obj/machinery/computer/libraryconsole/bookmanagement/linked_computer = computer_ref?.resolve()
 	if(isnull(linked_computer))
-		user.balloon_alert(user, "not connected to computer!")
+		user.balloon_alert(user, LANG("obj.c10591b9", null))
 		return ITEM_INTERACT_BLOCKING
 
 	switch(scan_mode)
@@ -65,7 +65,7 @@
 				playsound(src, 'sound/items/barcodebeep.ogg', 20, FALSE)
 				return ITEM_INTERACT_SUCCESS
 
-			user.balloon_alert(user, "isn't checked out!")
+			user.balloon_alert(user, LANG("obj.59b7ec18", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(BARCODE_SCANNER_CHECKOUT)
@@ -82,7 +82,7 @@
 				balloon_alert(user, "set for check out")
 				playsound(src, 'sound/items/barcodebeep.ogg', 20, FALSE)
 				return ITEM_INTERACT_SUCCESS
-			user.balloon_alert(user, "not in inventory!")
+			user.balloon_alert(user, LANG("obj.d82f1725", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(BARCODE_SCANNER_INVENTORY)

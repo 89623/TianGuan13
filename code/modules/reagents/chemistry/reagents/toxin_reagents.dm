@@ -995,7 +995,7 @@
 			if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
 				affected_mob.set_heartattack(TRUE)
 				if(affected_mob.stat == CONSCIOUS)
-					affected_mob.visible_message(span_userdanger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart stopped!"))
+					affected_mob.visible_message(span_userdanger(LANG("datum.a043844a", list(affected_mob, affected_mob.p_their(), affected_mob.p_their()))))
 			else
 				affected_mob.losebreath += 10
 				need_mob_update = affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
@@ -1375,7 +1375,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/affected_mob)
 	. = ..()
-	affected_mob.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
+	affected_mob.say(LANG("datum.22e16360", null), forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1398,13 +1398,13 @@
 		var/obj/item/bodypart/BP = affected_mob.get_bodypart(selected_part)
 		if(BP)
 			playsound(affected_mob, SFX_DESECRATION, 50, TRUE, -1)
-			affected_mob.visible_message(span_warning("[affected_mob]'s bones hurt too much!!"), span_danger("Your bones hurt too much!!"))
-			affected_mob.say("OOF!!", forced = type)
+			affected_mob.visible_message(span_warning(LANG("datum.fb0437ae", list(affected_mob))), span_danger(LANG("datum.9a577421", null)))
+			affected_mob.say(LANG("datum.deeba4c2", null), forced = type)
 			affected_mob.apply_damage(20, BRUTE, BP, wound_bonus = rand(30, 130))
 
 		else //SUCH A LUST FOR REVENGE!!!
 			to_chat(affected_mob, span_warning(LANG("datum.3b9a9467", null)))
-			affected_mob.say("Why are we still here, just to suffer?", forced = type)
+			affected_mob.say(LANG("datum.c936f751", null), forced = type)
 
 /datum/reagent/toxin/bonehurtingjuice/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
@@ -1663,7 +1663,7 @@
 		return // There's too little waste to do anything.
 	if(istype(exposed_obj, /obj/effect/decal/cleanable/greenglow/waste))
 		var/obj/effect/decal/cleanable/greenglow/waste/goo = exposed_obj
-		goo.visible_message(span_warning("The new waste reactivates [goo]!"))
+		goo.visible_message(span_warning(LANG("datum.c0bf1d85", list(goo))))
 		goo.pre_dissolve(FALSE)
 	return ..()
 

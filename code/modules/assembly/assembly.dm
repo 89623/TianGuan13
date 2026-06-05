@@ -138,7 +138,7 @@
 
 		holder = new /obj/item/assembly_holder(drop_location())
 		holder.assemble(src, new_assembly, user)
-		holder.balloon_alert(user, "parts combined")
+		holder.balloon_alert(user, LANG("obj.4a0ae622", null))
 		return
 
 	if(istype(attacking_item, /obj/item/assembly_holder))

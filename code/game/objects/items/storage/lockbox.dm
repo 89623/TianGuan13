@@ -75,7 +75,7 @@
 		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		balloon_alert(user, LANG("obj.c20bce4a", null))
 		if (emag_card && user)
-			user.visible_message(span_warning("[user] swipes [emag_card] over [src], breaking it!"))
+			user.visible_message(span_warning(LANG("obj.3c26167e", list(user, emag_card, src))))
 		return TRUE
 	return FALSE
 

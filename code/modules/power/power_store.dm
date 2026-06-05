@@ -256,13 +256,13 @@
 	return TRUE
 
 /obj/item/stock_parts/power_store/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.8ab7a582", list(user, src, user.p_theyre()))))
 	do_sparks(2, TRUE, user)
 	var/eating_success = do_after(user, 5 SECONDS, src)
 	if(QDELETED(user))
 		return SHAME
 	if(!eating_success || QDELETED(src) || charge == 0)
-		user.visible_message(span_suicide("[user] chickens out!"))
+		user.visible_message(span_suicide(LANG("obj.700a662c", list(user))))
 		return SHAME
 	playsound(user, 'sound/effects/sparks/sparks1.ogg', charge / maxcharge)
 	var/damage = charge / (1 KILO JOULES)
@@ -311,7 +311,7 @@
 
 	var/obj/item/stock_parts/power_store/stomach_cell = used_stomach.cell
 	used_stomach.drain_time = world.time + ETHEREAL_CELL_DRAIN_TIME
-	user.visible_message(span_notice("[user] hovers their fingers above [src], arcs forming from its surface!")) // NOVA EDIT CHANGE - Ethereal Rework 2024 - ORIGINAL: to_chat(user, span_notice("You begin clumsily channeling power from [src] into your body."))
+	user.visible_message(span_notice(LANG("obj.8a0e6536", list(user, src)))) // NOVA EDIT CHANGE - Ethereal Rework 2024 - ORIGINAL: to_chat(user, span_notice("You begin clumsily channeling power from [src] into your body."))
 
 	while(do_after(user, ETHEREAL_CELL_DRAIN_TIME, target = src))
 		if(isnull(used_stomach) || (used_stomach != user.get_organ_slot(ORGAN_SLOT_STOMACH)))

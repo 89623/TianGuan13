@@ -189,7 +189,7 @@
 
 /obj/item/gun/ballistic/revolver/chaplain/attackby(obj/item/possibly_ammo, mob/user, list/modifiers, list/attack_modifiers)
 	if (isammocasing(possibly_ammo) || istype(possibly_ammo, /obj/item/ammo_box))
-		user.balloon_alert(user, "no manual reloads!")
+		user.balloon_alert(user, LANG("obj.7d7e46a8", null))
 		return
 
 	return ..()
@@ -201,11 +201,11 @@
 	if(needs_burden && (!burden || burden.burden_level < 9))
 		to_chat(user, span_warning(LANG("obj.011eae70", null)))
 		return
-	user.manual_emote("presses [user.p_their()] palms together...")
+	user.manual_emote(LANG("obj.d8a191ee", list(user.p_their())))
 	if(!do_after(user, 5 SECONDS, src))
 		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
-	user.say("#Oh great [GLOB.deity], give me the ammunition I need!", forced = "ammo prayer")
+	user.say(LANG("obj.49b2f755", list(GLOB.deity)), forced = "ammo prayer")
 	magazine.top_off()
 	user.playsound_local(get_turf(src), 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
 	chamber_round()

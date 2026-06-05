@@ -41,9 +41,9 @@
 					if(grab_attack)
 						log_combat(attacker, defender, "grabbed", addition="aggressively")
 						defender.visible_message(
-							span_warning("[attacker] violently grabs [defender]!"),
-							span_userdanger("You're violently grabbed by [attacker]!"),
-							span_hear("You hear sounds of aggressive fondling!"),
+							span_warning(LANG("datum.c089d79c", list(attacker, defender))),
+							span_userdanger(LANG("datum.0d8be3c1", list(attacker))),
+							span_hear(LANG("datum.1af6c3cc", null)),
 							null,
 							attacker,
 						)
@@ -61,9 +61,9 @@
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			attacker.emote("flip")
 			defender.visible_message(
-				span_danger("[attacker] [atk_verb]s [defender]!"),
-				span_userdanger("You're [atk_verb]ed by [attacker]!"),
-				span_hear("You hear a sickening sound of flesh hitting flesh!"),
+				span_danger(LANG("datum.73829518", list(attacker, atk_verb, defender))),
+				span_userdanger(LANG("datum.074fb9e3", list(atk_verb, attacker))),
+				span_hear(LANG("datum.6c7f8149", null)),
 				null,
 				attacker,
 			)
@@ -86,9 +86,9 @@
 
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			defender.visible_message(
-				span_danger("[attacker] [atk_verb]s [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"),
-				span_userdanger("You're [atk_verb]ed by [attacker] with such inhuman strength that it sends you flying backwards!"),
-				span_hear("You hear a sickening sound of flesh hitting flesh!"),
+				span_danger(LANG("datum.05d96ab4", list(attacker, atk_verb, defender, defender.p_them()))),
+				span_userdanger(LANG("datum.65df5c1f", list(atk_verb, attacker))),
+				span_hear(LANG("datum.6c7f8149", null)),
 				null,
 				attacker,
 			)

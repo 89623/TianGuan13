@@ -58,7 +58,7 @@
 
 /datum/action/chameleon_outfit/proc/save_outfit(mob/user, list/saved_paths)
 	if(!length(saved_paths))
-		owner.balloon_alert(user, "no outfit saved!")
+		owner.balloon_alert(user, LANG("datum.9c2f5c3e", null))
 		return
 
 	for(var/existing_outfit in custom_outfits)
@@ -70,7 +70,7 @@
 		next_custom_outfit = 1
 
 	LAZYSET(custom_outfits, "Custom Outfit #[next_custom_outfit]", saved_paths)
-	owner.balloon_alert(user, "outfit saved in slot [next_custom_outfit]")
+	owner.balloon_alert(user, LANG("datum.d0a305b7", list(next_custom_outfit)))
 	next_custom_outfit += 1
 
 /datum/action/chameleon_outfit/proc/select_outfit(mob/user)

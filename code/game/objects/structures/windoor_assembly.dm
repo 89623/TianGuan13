@@ -108,8 +108,8 @@
 				if(!W.tool_start_check(user, amount=1))
 					return
 
-				user.visible_message(span_notice("[user] disassembles the windoor assembly."),
-					span_notice("You start to disassemble the windoor assembly..."))
+				user.visible_message(span_notice(LANG("obj.191a3904", list(user))),
+					span_notice(LANG("obj.88c5f1a0", null)))
 
 				if(W.use_tool(src, user, 40, volume=50))
 					to_chat(user, span_notice(LANG("obj.e5955219", null)))
@@ -129,8 +129,8 @@
 					if(WD.dir == dir)
 						to_chat(user, span_warning("There is already a windoor in that location!"))
 						return
-				user.visible_message(span_notice("[user] secures the windoor assembly to the floor."),
-					span_notice("You start to secure the windoor assembly to the floor..."))
+				user.visible_message(span_notice(LANG("obj.49b00f4e", list(user))),
+					span_notice(LANG("obj.b5c22584", null)))
 
 				if(W.use_tool(src, user, 40, volume=100))
 					if(anchored)
@@ -148,8 +148,8 @@
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
 			else if(W.tool_behaviour == TOOL_WRENCH && anchored)
-				user.visible_message(span_notice("[user] unsecures the windoor assembly to the floor."),
-					span_notice("You start to unsecure the windoor assembly to the floor..."))
+				user.visible_message(span_notice(LANG("obj.b8259a4a", list(user))),
+					span_notice(LANG("obj.b3d125da", null)))
 
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!anchored)
@@ -183,7 +183,7 @@
 
 			//Adding cable to the assembly. Step 5 complete.
 			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
-				user.visible_message(span_notice("[user] wires the windoor assembly."), span_notice("You start to wire the windoor assembly..."))
+				user.visible_message(span_notice(LANG("obj.2bd6d785", list(user))), span_notice(LANG("obj.e8308e6d", null)))
 
 				if(do_after(user, 4 SECONDS, target = src))
 					if(!src || !anchored || src.state != "01")
@@ -205,7 +205,7 @@
 
 			//Removing wire from the assembly. Step 5 undone.
 			if(W.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(span_notice("[user] cuts the wires from the airlock assembly."), span_notice("You start to cut the wires from airlock assembly..."))
+				user.visible_message(span_notice(LANG("obj.bf1d728f", list(user))), span_notice(LANG("obj.345e8759", null)))
 
 				if(W.use_tool(src, user, 40, volume=100))
 					if(state != "02")
@@ -223,8 +223,8 @@
 			else if(istype(W, /obj/item/electronics/airlock))
 
 				W.play_tool_sound(src, 100)
-				user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."),
-					span_notice("You start to install electronics into the airlock assembly..."))
+				user.visible_message(span_notice(LANG("obj.1dc6640c", list(user))),
+					span_notice(LANG("obj.fb1066e6", null)))
 
 				if(do_after(user, 4 SECONDS, target = src))
 
@@ -242,8 +242,8 @@
 				if(!electronics)
 					return
 
-				user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."),
-					span_notice("You start to uninstall electronics from the airlock assembly..."))
+				user.visible_message(span_notice(LANG("obj.a05c355a", list(user))),
+					span_notice(LANG("obj.e494d3b2", null)))
 
 				if(W.use_tool(src, user, 40, volume=100) && electronics)
 					to_chat(user, span_notice(LANG("obj.a5dac4b8", null)))
@@ -258,8 +258,8 @@
 				if(!electronics)
 					to_chat(usr, span_warning(LANG("obj.0098cf03", null)))
 					return
-				user.visible_message(span_notice("[user] pries the windoor into the frame."),
-					span_notice("You start prying the windoor into the frame..."))
+				user.visible_message(span_notice(LANG("obj.a78577a6", list(user))),
+					span_notice(LANG("obj.84e887db", null)))
 
 				if(W.use_tool(src, user, 40, volume=100) && electronics)
 					set_density(TRUE) //Shouldn't matter but just incase

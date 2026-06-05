@@ -205,7 +205,7 @@
 	mod.wearer.apply_status_effect(/datum/status_effect/jump_jet)
 	var/turf/launch_from = get_turf(mod.wearer)
 	if (mod.wearer.zMove(UP, z_move_flags = ZMOVE_CHECK_PULLS))
-		launch_from.visible_message(span_warning("[mod.wearer] rockets into the air!"))
+		launch_from.visible_message(span_warning(LANG("obj.ac01fc95", list(mod.wearer))))
 	new /obj/effect/temp_visual/jet_plume(launch_from)
 
 	var/obj/item/mod/module/jetpack/linked_jetpack = locate() in mod.modules
@@ -548,8 +548,8 @@
 		mod.wearer.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * levels, 10 SECONDS)
 
 	mod.wearer.visible_message(
-		span_notice("[mod.wearer] lands on [fell_on] safely[extreme_fall ? ", but barely manages to stay on [p_their()] feet." : ", and quite stylishly on [p_their()] feet" ]."),
-		span_notice("[src] protects you from the damage!"),
+		span_notice(LANG("obj.481e6dd8", list(mod.wearer, fell_on, extreme_fall ? ", but barely manages to stay on [p_their()] feet." : ", and quite stylishly on [p_their()] feet"))),
+		span_notice(LANG("obj.645945bc", list(src))),
 	)
 	return ZIMPACT_CANCEL_DAMAGE|ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 
@@ -962,7 +962,7 @@
 	if(equipped)
 		balloon_alert(user, LANG("obj.573708ed", null))
 	if(!user.transferItemToLoc(tool, src))
-		user.balloon_alert(user, "it's stuck!")
+		user.balloon_alert(user, LANG("obj.ee463177", null))
 	equipped = tool
 	balloon_alert(user, LANG("obj.9b3ecfd0", null))
 	playsound(src, 'sound/items/click.ogg', 50, TRUE)

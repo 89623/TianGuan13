@@ -40,8 +40,8 @@
 		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
 			to_chat(user, span_warning(LANG("obj.1dbf8014", list(attacking_item))))
 			return
-		user.visible_message(span_notice("[user] clicks [attacking_item] into [src]!"), \
-		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
+		user.visible_message(span_notice(LANG("obj.f418bf1c", list(user, attacking_item, src))), \
+		span_notice(LANG("obj.359c76df", list(src))))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		stored = attacking_item
 		update_appearance()

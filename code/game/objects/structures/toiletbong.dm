@@ -29,8 +29,8 @@
 		forceMove(toilet.loc)
 
 	crafter.visible_message(
-		span_notice("[crafter] attaches the flamethrower to the repurposed toilet."),
-		span_notice("You attach the flamethrower to the repurposed toilet."),
+		span_notice(LANG("obj.ab5097c7", list(crafter))),
+		span_notice(LANG("obj.2764ac65", null)),
 	)
 	return ..()
 
@@ -42,12 +42,12 @@
 /obj/structure/toiletbong/attack_hand(mob/living/carbon/user)
 	. = ..()
 	if (!anchored)
-		user.balloon_alert(user, "secure it first!")
+		user.balloon_alert(user, LANG("obj.e30cef1e", null))
 		return
 	if (!LAZYLEN(contents))
-		user.balloon_alert(user, "it's empty!")
+		user.balloon_alert(user, LANG("obj.76a90f7c", null))
 		return
-	user.visible_message(span_boldnotice("[user] takes a huge drag on the [src]."))
+	user.visible_message(span_boldnotice(LANG("obj.9912c477", list(user, src))))
 	if (!do_after(user, 2 SECONDS, target = src))
 		return
 	var/turf/toiletbong_location = loc

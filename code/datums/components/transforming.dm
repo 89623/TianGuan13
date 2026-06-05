@@ -318,8 +318,8 @@
 		var/hurt_self_verb_simple = LAZYLEN(attack_verb_simple_on) ? pick(attack_verb_simple_on) : "hit"
 		var/hurt_self_verb_continuous = LAZYLEN(attack_verb_continuous_on) ? pick(attack_verb_continuous_on) : "hits"
 		user.visible_message(
-			span_warning("[user] triggers [parent] while holding it backwards and [hurt_self_verb_continuous] themself, like a doofus!"),
-			span_warning("You trigger [parent] while holding it backwards and [hurt_self_verb_simple] yourself, like a doofus!"),
+			span_warning(LANG("datum.c2369edf", list(user, parent, hurt_self_verb_continuous))),
+			span_warning(LANG("datum.c3311c64", list(parent, hurt_self_verb_simple))),
 		)
 		var/obj/item/item_parent = parent
 		switch(item_parent.damtype)

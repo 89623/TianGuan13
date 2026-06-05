@@ -29,8 +29,8 @@
 	log_combat(user, affected_mob, "attempted to inject", src, "([contained])")
 
 	if((affected_mob != user) && inject_others_time)
-		affected_mob.visible_message(span_danger("[user] is trying to inject [affected_mob]!"), \
-				span_userdanger("[user] is trying to inject something into you!"))
+		affected_mob.visible_message(span_danger(LANG("obj.551ee95a", list(user, affected_mob))), \
+				span_userdanger(LANG("obj.d7940928", list(user))))
 		if(!do_after(user, CHEM_INTERACT_DELAY(inject_others_time, user), affected_mob))
 			return FALSE
 

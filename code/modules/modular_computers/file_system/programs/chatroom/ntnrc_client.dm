@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define USERNAME_SIZE 32
 #define CHANNELNAME_SIZE 18
 #define MESSAGE_SIZE 2048
@@ -141,7 +142,7 @@
 				if(!computer)
 					// This program shouldn't even be runnable without computer.
 					CRASH("Var computer is null!")
-				computer.visible_message(span_warning("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning."))
+				computer.visible_message(span_warning(LANG("datum.712976d5", list(computer, logfile.size))))
 			return TRUE
 		if("PRG_renamechannel")
 			if(!authed)

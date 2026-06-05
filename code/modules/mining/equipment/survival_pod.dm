@@ -53,7 +53,7 @@
 	if(used)
 		return FALSE
 
-	loc.visible_message(span_warning("[src] begins to shake. Stand back!"))
+	loc.visible_message(span_warning(LANG("obj.bb0f5054", list(src))))
 	used = TRUE
 	addtimer(CALLBACK(src, PROC_REF(expand), user), 5 SECONDS)
 	if(iscarbon(user))
@@ -89,9 +89,9 @@
 /obj/item/survivalcapsule/proc/fail_feedback(status)
 	switch(status)
 		if(SHELTER_DEPLOY_BAD_AREA)
-			loc.visible_message(span_warning("[src] will not function in this area."))
+			loc.visible_message(span_warning(LANG("obj.b1f7838e", list(src))))
 		if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS, SHELTER_DEPLOY_OUTSIDE_MAP, SHELTER_DEPLOY_BANNED_OBJECTS)
-			loc.visible_message(span_warning("[src] doesn't have room to deploy! You need to clear a [template.width]x[template.height] area!"))
+			loc.visible_message(span_warning(LANG("obj.90300dc4", list(src, template.width, template.height))))
 
 /// Throws any mobs near the deployed location away from the item / shelter
 /// Does some math to make closer mobs get thrown further
@@ -233,8 +233,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 /obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
 	..()
 
-	user.visible_message(span_warning("[user] disassembles [src]."),
-		span_notice("You start to disassemble [src]..."), span_hear("You hear clanking and banging noises."))
+	user.visible_message(span_warning(LANG("obj.64d85c99", list(user, src))),
+		span_notice(LANG("obj.c234e380", list(src))), span_hear(LANG("obj.f070a678", null)))
 	if(I.use_tool(src, user, 20, volume=50))
 		new /obj/item/gps(loc)
 		qdel(src)

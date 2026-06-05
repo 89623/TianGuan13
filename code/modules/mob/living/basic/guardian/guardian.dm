@@ -303,7 +303,7 @@
 		forceMove(former_owner.loc)
 	to_chat(src, span_danger(LANG("mob.7c22baf2", null)))
 	visible_message(span_bolddanger(LANG("mob.865beffd", list(src))))
-	former_owner.visible_message(span_bolddanger("[former_owner]'s body is completely consumed by the strain of sustaining [src]!"))
+	former_owner.visible_message(span_bolddanger(LANG("mob.8d2eb57e", list(former_owner, src))))
 	former_owner.dust(drop_items = TRUE)
 
 /// Called when our health changes, inform our owner of why they are getting hurt (if they are)
@@ -311,7 +311,7 @@
 	if (QDELETED(src) || QDELETED(summoner) || amount <= 2)
 		return
 	to_chat(summoner, span_bolddanger(LANG("mob.1abc4198", list(name))))
-	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
+	summoner.visible_message(span_bolddanger(LANG("mob.141a7ced", list(summoner, src))))
 	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
 		to_chat(summoner, span_bolddanger(LANG("mob.6b5369cb", list(src))))
 		summoner.adjust_organ_loss(ORGAN_SLOT_BRAIN, amount * 0.5)

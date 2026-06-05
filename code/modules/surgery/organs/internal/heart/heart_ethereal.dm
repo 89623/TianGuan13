@@ -81,7 +81,7 @@
 		return // no reviving during mafia, or other inconvenient times.
 
 	to_chat(victim, span_nicegreen(LANG("obj.e8b35c00", null)))
-	victim.visible_message(span_notice("Crystals start forming around [victim]."), ignored_mobs = victim)
+	victim.visible_message(span_notice(LANG("obj.97caacaf", list(victim))), ignored_mobs = victim)
 
 	ADD_TRAIT(victim, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 
@@ -95,8 +95,8 @@
 /obj/item/organ/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone, obj/item/weapon)
 	SIGNAL_HANDLER
 	defender.visible_message(
-		span_notice("The crystals on [defender] are gently broken off."),
-		span_notice("The crystals on your corpse are gently broken off, and will need some time to recover."),
+		span_notice(LANG("obj.cc46b25e", list(defender))),
+		span_notice(LANG("obj.59600aa2", null)),
 	)
 	deltimer(crystalize_timer_id)
 	crystalize_timer_id = addtimer(CALLBACK(src, PROC_REF(crystalize), defender), CRYSTALIZE_DISARM_WAIT_TIME, TIMER_STOPPABLE) //Lets us restart the timer on disarm
@@ -153,8 +153,8 @@
 	var/mob/living/carbon/human/ethereal = source
 
 	ethereal.visible_message(
-		span_notice("The crystals on [ethereal] are completely shattered and stopped growing."),
-		span_warning("The crystals on your body have completely broken."),
+		span_notice(LANG("obj.cf75b94b", list(ethereal))),
+		span_warning(LANG("obj.6ca15501", null)),
 	)
 
 	stop_crystalization_process(ethereal)
@@ -185,7 +185,7 @@
 		stack_trace("Our crystal has no related heart")
 		return INITIALIZE_HINT_QDEL
 	src.ethereal_heart = ethereal_heart
-	ethereal_heart.owner.visible_message(span_notice("The crystals fully encase [ethereal_heart.owner]!"))
+	ethereal_heart.owner.visible_message(span_notice(LANG("obj.68bb0122", list(ethereal_heart.owner))))
 	to_chat(ethereal_heart.owner, span_notice(LANG("obj.c3d9ec8e", null)))
 	playsound(get_turf(src), 'sound/mobs/humanoids/ethereal/ethereal_crystalization.ogg', 50)
 	var/atom/movable/possible_chair = ethereal_heart.owner.buckled

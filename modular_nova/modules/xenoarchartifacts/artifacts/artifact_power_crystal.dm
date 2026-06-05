@@ -32,14 +32,14 @@
 	if(attacking_item.tool_behaviour == TOOL_WIRECUTTER) // If we want to remove the wiring
 		if(wired)
 			user.visible_message(
-				span_notice("[user] starts cutting off the wiring of the [src]."),
-				span_notice("You start cutting off the wiring of the [src]."),
+				span_notice(LANG("obj.65c1bf91", list(user, src))),
+				span_notice(LANG("obj.54162c5a", list(src))),
 				blind_message = span_hear("You hear cutting nearby."),
 			)
 			if(attacking_item.use_tool(src, user, 20, volume = 50))
 				user.visible_message(
-					span_notice("[user] cuts off the wiring of the [src]."),
-					span_notice("You cut off the wiring of the [src]."),
+					span_notice(LANG("obj.d74e74ba", list(user, src))),
+					span_notice(LANG("obj.cfaf99e0", list(src))),
 					blind_message = span_notice("Cutting sound stops."),
 				)
 				wired = FALSE
@@ -56,13 +56,13 @@
 				to_chat(user, span_red(LANG("obj.508c5cd0", null)))
 				return
 			user.visible_message(
-				span_notice("[user] starts putting the wiring all over the [src]."),
-				span_notice("You start putting the wiring all over the [src]."),
+				span_notice(LANG("obj.d94d19f6", list(user, src))),
+				span_notice(LANG("obj.89e6bce6", list(src))),
 			)
 			if(attacking_item.use_tool(src, user, 20, volume = 50))
 				user.visible_message(
-					span_notice("[user] puts the wiring all over the [src]."),
-					span_notice("You put the wiring all over the [src]."),
+					span_notice(LANG("obj.71f486e8", list(user, src))),
+					span_notice(LANG("obj.c0e1aa49", list(src))),
 				)
 				wired = TRUE
 				update_crystal()

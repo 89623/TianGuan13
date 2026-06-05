@@ -120,8 +120,8 @@
 		to_chat(user, span_warning(LANG("obj.47096764", list(src))))
 		target.apply_damage((force / 5), BRUTE)
 		playsound(loc, 'sound/items/weapons/punch1.ogg', 50, TRUE)
-		target.visible_message(span_danger("[user]'s powerfist lets out a dull thunk as [user.p_they()] punch[user.p_es()] [target.name]!"), \
-			span_userdanger("[user]'s punches you!"))
+		target.visible_message(span_danger(LANG("obj.9d61b1ea", list(user, user.p_they(), user.p_es(), target.name))), \
+			span_userdanger(LANG("obj.6d49be37", list(user))))
 		return
 
 	if(!molar_cmp_equals(gas_used.total_moles(), gas_per_fist * fist_pressure_setting))
@@ -129,12 +129,12 @@
 		to_chat(user, span_warning(LANG("obj.bef15588", list(src))))
 		playsound(loc, 'sound/items/weapons/punch4.ogg', 50, TRUE)
 		target.apply_damage((force / 2), BRUTE)
-		target.visible_message(span_danger("[user]'s powerfist lets out a weak hiss as [user.p_they()] punch[user.p_es()] [target.name]!"), \
-			span_userdanger("[user]'s punch strikes with force!"))
+		target.visible_message(span_danger(LANG("obj.56f3c2a5", list(user, user.p_they(), user.p_es(), target.name))), \
+			span_userdanger(LANG("obj.cdc29886", list(user))))
 		return
 
-	target.visible_message(span_danger("[user]'s powerfist lets out a loud hiss as [user.p_they()] punch[user.p_es()] [target.name]!"), \
-		span_userdanger("You cry out in pain as [user]'s punch flings you backwards!"))
+	target.visible_message(span_danger(LANG("obj.9e547937", list(user, user.p_they(), user.p_es(), target.name))), \
+		span_userdanger(LANG("obj.10e0ad1c", list(user))))
 	new /obj/effect/temp_visual/kinetic_blast(target.loc)
 	target.apply_damage(force * fist_pressure_setting, BRUTE, wound_bonus = CANT_WOUND)
 	playsound(src, 'sound/items/weapons/resonator_blast.ogg', 50, TRUE)

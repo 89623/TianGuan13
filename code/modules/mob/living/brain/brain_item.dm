@@ -218,12 +218,12 @@
 			to_chat(user, span_warning(LANG("obj.57f2d422", list(src))))
 			return TRUE
 
-		user.visible_message(span_notice("[user] starts to slowly pour the contents of [item] onto [src]."), span_notice("You start to slowly pour the contents of [item] onto [src]."))
+		user.visible_message(span_notice(LANG("obj.36b95001", list(user, item, src))), span_notice(LANG("obj.09d70374", list(item, src))))
 		if(!do_after(user, 3 SECONDS, src))
 			to_chat(user, span_warning(LANG("obj.6c40dd89", list(item, src))))
 			return TRUE
 		var/and_bright_shade = !shade_color ? "" : " and turn a slightly brighter shade of [shade_color]"
-		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape[and_bright_shade]."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape[and_bright_shade]."))
+		user.visible_message(span_notice(LANG("obj.66fef8d1", list(user, item, src, and_bright_shade))), span_notice(LANG("obj.029c8ce3", list(item, src, and_bright_shade))))
 		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		var/healto = max(0, damage - amount * 2)
 		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol

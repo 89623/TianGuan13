@@ -71,7 +71,7 @@
 		to_chat(user, span_notice(LANG("obj.45ea45fd", list(victim))))
 		return
 	if((victim.body_position == LYING_DOWN) || ((user.grab_state >= GRAB_AGGRESSIVE) && (user.pulling == victim)))
-		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
+		user.visible_message(LANG("obj.d6a6b453", list(user, victim)), span_notice(LANG("obj.7941b911", list(victim))), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
 
 /obj/item/pillow/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -151,7 +151,7 @@
 		if(!do_after(user, 1 SECONDS, victim))
 			break
 		victim.losebreath += 1
-	victim.visible_message("[victim] manages to escape being smothered!", span_notice("You break free!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	victim.visible_message(LANG("obj.76407c7e", list(victim)), span_notice(LANG("obj.9384be67", null)), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/item/pillow/random
 

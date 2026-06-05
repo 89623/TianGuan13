@@ -39,7 +39,7 @@
 	if(!process_scan) //since it's not scanning on process, it scans here.
 		scan_for_target()
 	toggle_on()
-	user.visible_message(span_notice("[user] [active ? "" : "de"]activates [user.p_their()] pinpointer."), span_notice("You [active ? "" : "de"]activate your pinpointer."))
+	user.visible_message(span_notice(LANG("obj.61f41892", list(user, active ? "" : "de", user.p_their()))), span_notice(LANG("obj.2130e177", list(active ? "" : "de"))))
 
 /obj/item/pinpointer/examine(mob/user)
 	. = ..()
@@ -118,7 +118,7 @@
 /obj/item/pinpointer/crew/attack_self(mob/living/user)
 	if(active)
 		toggle_on()
-		user.visible_message(span_notice("[user] deactivates [user.p_their()] pinpointer."), span_notice("You deactivate your pinpointer."))
+		user.visible_message(span_notice(LANG("obj.e071a189", list(user, user.p_their()))), span_notice(LANG("obj.a32108c2", null)))
 		return
 
 	if (has_owner && !pinpointer_owner)
@@ -149,7 +149,7 @@
 		name_counts[crewmember_name] = 1
 
 	if(!length(names))
-		user.visible_message(span_notice("[user]'s pinpointer fails to detect a signal."), span_notice("Your pinpointer fails to detect a signal."))
+		user.visible_message(span_notice(LANG("obj.c9da7801", list(user))), span_notice(LANG("obj.0231797f", null)))
 		return
 	var/pinpoint_target = tgui_input_list(user, LANG("obj.6a2d6f87", null), LANG("obj.fd79c8ae", null), sort_list(names))
 	if(isnull(pinpoint_target))
@@ -160,7 +160,7 @@
 		return
 	target = names[pinpoint_target]
 	toggle_on()
-	user.visible_message(span_notice("[user] activates [user.p_their()] pinpointer."), span_notice("You activate your pinpointer."))
+	user.visible_message(span_notice(LANG("obj.89f64c47", list(user, user.p_their()))), span_notice(LANG("obj.bf506523", null)))
 
 /obj/item/pinpointer/crew/scan_for_target()
 	if(target)

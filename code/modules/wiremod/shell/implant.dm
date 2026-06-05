@@ -36,7 +36,7 @@
 	var/mob/living/user = arguments[2]
 	var/force = arguments[4]
 	if(!force)
-		source.balloon_alert(user, "duplicate implant present!")
+		source.balloon_alert(user, LANG("obj.562f3ecf", null))
 		return COMPONENT_STOP_IMPLANTING
 
 /obj/item/implant/circuit/ui_host(mob/user)

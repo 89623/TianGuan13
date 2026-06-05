@@ -76,7 +76,7 @@
 /obj/item/melee/energy/suicide_act(mob/living/user)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		attack_self(user)
-	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
+	user.visible_message(span_suicide(LANG("obj.57e0562e", list(user, pick("slitting [user.p_their()] stomach open with", "falling on"), src, user.p_theyre()))))
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/melee/energy/process(seconds_per_tick)
@@ -174,7 +174,7 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/energy/axe/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.564e0568", list(user, src, user.p_their(), user.p_theyre()))))
 	return (BRUTELOSS|FIRELOSS)
 
 /// Energy swords.
@@ -488,16 +488,16 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_CHARGING_ESWORD))
-		user.balloon_alert(user, "busy!")
+		user.balloon_alert(user, LANG("obj.8df72942", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(charge <= max_charge)
-		user.balloon_alert(user, "attempting recharge...")
+		user.balloon_alert(user, LANG("obj.fe4c2687", null))
 		if(!do_after(user, charge_time, target = src, extra_checks = CALLBACK(src, PROC_REF(do_jiggle), user), interaction_key = DOAFTER_SOURCE_CHARGING_ESWORD, iconstate = "beat_the_heat"))
-			user.balloon_alert(user, "interrupted!")
+			user.balloon_alert(user, LANG("obj.c67b5d27", null))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	charge = max_charge
-	user.balloon_alert(user, "recharge successful")
+	user.balloon_alert(user, LANG("obj.b1075549", null))
 	playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -527,7 +527,7 @@
 
 	charge--
 	if(charge <= 0)
-		user.balloon_alert(user, "out of charge!")
+		user.balloon_alert(user, LANG("obj.6428cbcd", null))
 		attack_self(user)
 
 /obj/item/melee/energy/sword/surplus/proc/check_power(obj/item/source, mob/user, active)

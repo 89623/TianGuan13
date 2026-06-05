@@ -44,7 +44,7 @@
 		return
 
 	if(living_user.usable_hands <= 0)
-		source.balloon_alert(living_user, "you don't have hands!")
+		source.balloon_alert(living_user, LANG("datum.602a5533", null))
 		return
 
 	do_icon_toggle(source, living_user)
@@ -86,7 +86,7 @@
  * user - the mob doing the toggling
  */
 /datum/component/toggle_icon/proc/do_icon_toggle(atom/source, mob/living/user)
-	source.balloon_alert(user, "toggled [toggle_noun]")
+	source.balloon_alert(user, LANG("datum.6befe2b0", list(toggle_noun)))
 
 	toggled = !toggled
 	if(toggled)

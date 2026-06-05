@@ -50,8 +50,8 @@
 					to_chat(affected_mob, span_danger(LANG("datum.04e355dc", null)))
 			if(SPT_PROB(1.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger(LANG("datum.d2188718", null)))
-				affected_mob.visible_message(span_warning("[affected_mob] suddenly collapses!"), \
-											span_userdanger("You suddenly collapse!"))
+				affected_mob.visible_message(span_warning(LANG("datum.696fd78e", list(affected_mob))), \
+											span_userdanger(LANG("datum.ed060d17", null)))
 				affected_mob.Unconscious(rand(100, 200))
 				if(prob(1))
 					affected_mob.emote("snore")

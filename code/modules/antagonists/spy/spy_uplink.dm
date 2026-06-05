@@ -135,8 +135,8 @@
 /// If successful, proceeds to complete the bounty.
 /datum/component/spy_uplink/proc/steal_process(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	spy.visible_message(
-		span_warning("[spy] starts scanning [stealing] with a strange device..."),
-		span_notice("You start scanning [stealing], preparing it for extraction."),
+		span_warning(LANG("datum.d93da5e4", list(spy, stealing))),
+		span_notice(LANG("datum.be5f19a1", list(stealing))),
 	)
 
 	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), hidden = TRUE))

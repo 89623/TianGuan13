@@ -69,7 +69,7 @@
 	if(!atom_storage.get_total_weight())
 		to_chat(user, span_notice(LANG("obj.ab993876", list(src))))
 		return
-	user.visible_message(span_notice("[user] empties [src]."), span_notice("You empty [src]."),\
-	span_hear("You hear someone rustle around in a plastic bag, and remove something."))
+	user.visible_message(span_notice(LANG("obj.afa9d6d1", list(user, src))), span_notice(LANG("obj.b05fec39", list(src))),\
+	span_hear(LANG("obj.b15ca365", null)))
 	playsound(src,'sound/items/evidence_bag/evidence_bag_unzip.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	atom_storage.remove_all()

@@ -68,10 +68,10 @@
 	SIGNAL_HANDLER
 
 	if(spinning)
-		user.balloon_alert(user, "already active!")
+		user.balloon_alert(user, LANG("datum.8c159a0f", null))
 		return
 	if(!COOLDOWN_FINISHED(src, spin_cooldown))
-		user.balloon_alert(user, "on cooldown!")
+		user.balloon_alert(user, LANG("datum.d4ae5d4d", null))
 		return
 
 	start_spinning(user)

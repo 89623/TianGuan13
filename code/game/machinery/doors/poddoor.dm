@@ -207,7 +207,7 @@
 		var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 		var/amount = recipe.reqs[/obj/item/stack/sheet/plasteel]
 		new /obj/item/stack/sheet/plasteel(loc, amount)
-		user.balloon_alert(user, "torn apart")
+		user.balloon_alert(user, LANG("obj.9ca8e978", null))
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -260,9 +260,9 @@
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))
 		add_fingerprint(user)
-		user.visible_message(span_warning("[user] begins prying open [src]."),\
-					span_noticealien("You begin digging your claws into [src] with all your might!"),\
-					span_warning("You hear groaning metal..."))
+		user.visible_message(span_warning(LANG("obj.ed75aed8", list(user, src))),\
+					span_noticealien(LANG("obj.50e78ae8", list(src))),\
+					span_warning(LANG("obj.eaf18ca8", null)))
 		playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 
 		var/time_to_open = 5 SECONDS

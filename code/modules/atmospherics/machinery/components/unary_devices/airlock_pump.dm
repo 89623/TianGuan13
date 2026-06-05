@@ -265,7 +265,7 @@
 		airlock.run_animation(DOOR_DENY_ANIMATION) // Already cycling
 		return
 	if(!cycling_set_up)
-		airlock.say("Airlock pair not found.")
+		airlock.say(LANG("obj.c2634c2e", null))
 		return
 	if(airlock in external_airlocks)
 		// If it's not null - we shuttledocked
@@ -324,7 +324,7 @@
 		if(!source_airlock)
 			source_airlock = internal_airlocks[1]
 		if(is_cycling_audible)
-			source_airlock.say("Pressurizing airlock.")
+			source_airlock.say(LANG("obj.fa471a15", null))
 	else
 		cycle_pressure_target = docked_side_pressure != null ? docked_side_pressure : external_pressure_target
 		var/pressure_delta = tile_air_pressure - cycle_pressure_target
@@ -335,7 +335,7 @@
 		if(!source_airlock)
 			source_airlock = external_airlocks[1]
 		if(is_cycling_audible)
-			source_airlock.say("Decompressing airlock.")
+			source_airlock.say(LANG("obj.4da6178e", null))
 
 	return TRUE
 
@@ -400,7 +400,7 @@
 		safe_dock()
 	else
 		var/obj/machinery/door/airlock/source_airlock = pick(internal_airlocks)
-		source_airlock.say("Docking sequence initiated")
+		source_airlock.say(LANG("obj.47b7daf0", null))
 		start_cycle(ATMOS_DIRECTION_RELEASING)
 
 

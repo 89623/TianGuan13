@@ -422,10 +422,10 @@
 		return
 	if(recipe.time)
 		var/adjusted_time = 0
-		builder.balloon_alert(builder, "building...")
+		builder.balloon_alert(builder, LANG("obj.52675a5b", null))
 		builder.visible_message(
-			span_notice("[builder] starts building \a [recipe.title]."),
-			span_notice("You start building \a [recipe.title]..."),
+			span_notice(LANG("obj.78b8a9bf", list(builder, recipe.title))),
+			span_notice(LANG("obj.375174f5", list(recipe.title))),
 		)
 		if(HAS_TRAIT(builder, recipe.trait_booster))
 			adjusted_time = (recipe.time * recipe.trait_modifier)
@@ -433,7 +433,7 @@
 			adjusted_time = recipe.time
 		var/skill_modifier = builder.mind?.get_skill_modifier(/datum/skill/construction, SKILL_SPEED_MODIFIER) //NOVA EDIT ADDITION: Construction Skill
 		if(!do_after(builder, adjusted_time * skill_modifier, target = builder)) //NOVA EDIT ADDITION: Construction Skill
-			builder.balloon_alert(builder, "interrupted!")
+			builder.balloon_alert(builder, LANG("obj.c67b5d27", null))
 			return
 		if(!building_checks(builder, recipe, multiplier))
 			return
@@ -446,18 +446,18 @@
 	var/atom/created
 	if(recipe.max_res_amount > 1) // Is it a stack?
 		created = new recipe.result_type(builder.drop_location(), recipe.res_amount * multiplier)
-		builder.balloon_alert(builder, "built items")
+		builder.balloon_alert(builder, LANG("obj.84722102", null))
 
 	else if(ispath(recipe.result_type, /turf))
 		var/turf/covered_turf = builder.drop_location()
 		if(!isturf(covered_turf))
 			return
 		created = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
-		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
+		builder.balloon_alert(builder, LANG("obj.56f6de96", list(ispath(recipe.result_type, /turf/open) ? "floor" : "wall")))
 
 	else
 		created = new recipe.result_type(builder.drop_location())
-		builder.balloon_alert(builder, "built item")
+		builder.balloon_alert(builder, LANG("obj.82e05da9", null))
 
 	// split the material and use it for the craft
 	var/obj/item/stack/used_stack = split_stack(recipe.req_amount * multiplier)
@@ -523,27 +523,27 @@
 /// Checks if we can build here, validly.
 /obj/item/stack/proc/building_checks(mob/builder, datum/stack_recipe/recipe, multiplier)
 	if (get_amount() < recipe.req_amount * multiplier)
-		builder.balloon_alert(builder, "not enough material!")
+		builder.balloon_alert(builder, LANG("obj.d86d54ad", null))
 		return FALSE
 	var/turf/dest_turf = get_turf(builder)
 
 	if((recipe.crafting_flags & CRAFT_ONE_PER_TURF) && (locate(recipe.result_type) in dest_turf))
-		builder.balloon_alert(builder, "already one here!")
+		builder.balloon_alert(builder, LANG("obj.b47214a1", null))
 		return FALSE
 
 	if(recipe.crafting_flags & CRAFT_CHECK_DIRECTION)
 		if(!valid_build_direction(dest_turf, builder.dir, is_fulltile = (recipe.crafting_flags & CRAFT_IS_FULLTILE)))
-			builder.balloon_alert(builder, "won't fit here!")
+			builder.balloon_alert(builder, LANG("obj.eccd1eed", null))
 			return FALSE
 
 	if(recipe.crafting_flags & CRAFT_ON_SOLID_GROUND)
 		if(isclosedturf(dest_turf))
-			builder.balloon_alert(builder, "cannot be made on a wall!")
+			builder.balloon_alert(builder, LANG("obj.e630c100", null))
 			return FALSE
 
 		if(is_type_in_typecache(dest_turf, GLOB.turfs_without_ground))
 			if(!locate(/obj/structure/thermoplastic) in dest_turf) // for tram construction
-				builder.balloon_alert(builder, "must be made on solid ground!")
+				builder.balloon_alert(builder, LANG("obj.934c91b4", null))
 				return FALSE
 
 	if(recipe.crafting_flags & CRAFT_CHECK_DENSITY)
@@ -563,17 +563,17 @@
 
 	if(recipe.placement_checks & STACK_CHECK_ADJACENT)
 		if(locate(recipe.result_type) in range(1, dest_turf))
-			builder.balloon_alert(builder, "can't be near another!")
+			builder.balloon_alert(builder, LANG("obj.4a27ee63", null))
 			return FALSE
 
 	if(recipe.placement_checks & STACK_CHECK_TRAM_FORBIDDEN)
 		if(locate(/obj/structure/transport/linear/tram) in dest_turf || locate(/obj/structure/thermoplastic) in dest_turf)
-			builder.balloon_alert(builder, "can't be on tram!")
+			builder.balloon_alert(builder, LANG("obj.b5cc7ebf", null))
 			return FALSE
 
 	if(recipe.placement_checks & STACK_CHECK_TRAM_EXCLUSIVE)
 		if(!locate(/obj/structure/transport/linear/tram) in dest_turf)
-			builder.balloon_alert(builder, "must be made on a tram!")
+			builder.balloon_alert(builder, LANG("obj.8335c426", null))
 			return FALSE
 
 	return TRUE
@@ -598,7 +598,7 @@
 /obj/item/stack/tool_use_check(mob/living/user, amount, heat_required)
 	if(get_amount() < amount)
 		// general balloon alert that says they don't have enough
-		user.balloon_alert(user, "not enough material!")
+		user.balloon_alert(user, LANG("obj.d86d54ad", null))
 		// then a more specific message about how much they need and what they need specifically
 		if(singular_name)
 			if(amount > 1)

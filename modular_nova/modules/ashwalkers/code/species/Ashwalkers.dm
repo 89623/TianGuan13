@@ -191,12 +191,12 @@
 
 	if(locate(connected_organ.summoned_armblade) in connected_organ)
 		owner.put_in_active_hand(connected_organ.summoned_armblade)
-		owner.visible_message(span_warning("A grotesque blade forms around [owner]\'s arm!"), span_warning("Our arm twists and mutates, transforming it into a deadly blade."), span_hear("You hear organic matter ripping and tearing!"))
+		owner.visible_message(span_warning(LANG("datum.4f914b98", list(owner))), span_warning(LANG("datum.f4917b16", null)), span_hear(LANG("datum.581bebe7", null)))
 		playsound(get_turf(owner), 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
 	else
 		connected_organ.summoned_armblade.forceMove(connected_organ)
-		owner.visible_message(span_warning("With a sickening crunch, [owner] reforms [owner.p_their()] [connected_organ.summoned_armblade] into an arm!"), span_notice("We assimilate the [connected_organ.summoned_armblade] back into our body."), span_italics("You hear organic matter ripping and tearing!"))
+		owner.visible_message(span_warning(LANG("datum.1f76d95a", list(owner, owner.p_their(), connected_organ.summoned_armblade))), span_notice(LANG("datum.f00ab43e", list(connected_organ.summoned_armblade))), span_italics(LANG("datum.581bebe7", null)))
 		playsound(get_turf(owner), 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
 /obj/item/melee/ashen_blade
@@ -256,18 +256,18 @@
 		if((!opening.requiresID() || opening.allowed(user)) && opening.hasPower()) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message, power requirement is so this doesn't stop unpowered doors from being pried open if you have access
 			return
 		if(opening.locked)
-			opening.balloon_alert(user, "bolted!")
+			opening.balloon_alert(user, LANG("obj.6a3633c4", null))
 			return
 
 		if(opening.hasPower())
-			user.visible_message(span_warning("[user] jams [src] into the airlock and starts prying it open!"), span_warning("We start forcing the [opening] open."), \
-			span_hear("You hear a metal screeching sound."))
+			user.visible_message(span_warning(LANG("obj.573a3a08", list(user, src))), span_warning(LANG("obj.a36e868f", list(opening))), \
+			span_hear(LANG("obj.4e2b5bed", null)))
 			playsound(opening, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 			if(!do_after(user, 10 SECONDS, target = opening))
 				return
 
-		user.visible_message(span_warning("[user] forces the airlock to open with [user.p_their()] [src]!"), span_warning("We force the [opening] to open."), \
-		span_hear("You hear a metal screeching sound."))
+		user.visible_message(span_warning(LANG("obj.ec05ee4f", list(user, user.p_their(), src))), span_warning(LANG("obj.e5ba6600", list(opening))), \
+		span_hear(LANG("obj.4e2b5bed", null)))
 		opening.open(BYPASS_DOOR_CHECKS)
 
 /obj/item/melee/ashen_blade/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

@@ -17,7 +17,7 @@
 	reagents_add = list(/datum/reagent/water = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.2)
 
 /obj/item/seeds/watermelon/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.978f962c", list(user, src, user.p_theyre()))))
 	user.gib(DROP_ALL_REMAINS)
 	new product(drop_location())
 	qdel(src)
@@ -51,7 +51,7 @@
 	if(seed)
 		melon_pulp_count += round(seed.potency / 25)
 
-	user.balloon_alert(user, "scooped out [melon_pulp_count] pulp(s)")
+	user.balloon_alert(user, LANG("obj.b81bfe70", list(melon_pulp_count)))
 	for(var/i in 1 to melon_pulp_count)
 		new /obj/item/food/watermelonmush(user.loc)
 
@@ -123,7 +123,7 @@
 	if(seed)
 		holymelon_pulp_count += round(seed.potency / 25)
 
-	user.balloon_alert(user, "scooped out [holymelon_pulp_count] pulp(s)")
+	user.balloon_alert(user, LANG("obj.b81bfe70", list(holymelon_pulp_count)))
 	for(var/i in 1 to holymelon_pulp_count)
 		new /obj/item/food/holymelonmush(user.loc)
 
@@ -196,7 +196,7 @@
 	if(seed)
 		barrelmelon_pulp_count += round(seed.potency / 25)
 
-	user.balloon_alert(user, "scooped out [barrelmelon_pulp_count] pulp(s)")
+	user.balloon_alert(user, LANG("obj.b81bfe70", list(barrelmelon_pulp_count)))
 	for(var/i in 1 to barrelmelon_pulp_count)
 		new /obj/item/food/barrelmelonmush(user.loc)
 

@@ -76,7 +76,7 @@
 			owner.updatehealth()
 
 	if(totaldamage >= 0) // adjust_brute_loss() returns a negative value on successful damage adjustment
-		our_slime.balloon_alert(our_slime, "not food!")
+		our_slime.balloon_alert(our_slime, LANG("datum.fb932b9b", null))
 		our_slime.stop_feeding()
 		return
 

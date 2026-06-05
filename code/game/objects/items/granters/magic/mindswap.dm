@@ -53,6 +53,6 @@
 
 	else
 		// if the mind_transfer failed to transfer mobs (likely due to the target being catatonic).
-		user.visible_message(span_warning("[src] fizzles slightly as it stops glowing!"))
+		user.visible_message(span_warning(LANG("obj.d5cc56a3", list(src))))
 
 	stored_swap_ref = null

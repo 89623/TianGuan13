@@ -97,7 +97,7 @@
 	if(istype(user))
 		user.add_traits(list(TRAIT_CHUNKYFINGERS), REF(src))
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.balloon_alert(user, "next attack delayed!")
+	user.balloon_alert(user, LANG("obj.1ce67ba1", null))
 
 /**
  * Removes all glove-related bonuses, effects, and traits.
@@ -188,9 +188,9 @@
 		if(HAS_TRAIT(defender, TRAIT_BOXING_READY))
 			// boxer on boxer violence results in full boxing shenanigans. ggs
 			defender.visible_message(
-				span_danger("[attacker] knocks [defender] out with a haymaker!"),
-				span_userdanger("You're knocked unconscious by [attacker]!"),
-				span_hear("You hear a sickening sound of flesh hitting flesh!"),
+				span_danger(LANG("datum.454b0e16", list(attacker, defender))),
+				span_userdanger(LANG("datum.1ace6279", list(attacker))),
+				span_hear(LANG("datum.6c7f8149", null)),
 				COMBAT_MESSAGE_RANGE,
 				attacker,
 			)
@@ -202,9 +202,9 @@
 			// otherwise, if baton resistant, more stagger and stamina damage
 			if(HAS_TRAIT(defender, TRAIT_BATON_RESISTANCE))
 				defender.visible_message(
-					span_danger("[attacker] knocks [defender] around with a haymaker, staggering [defender.p_them()]!"),
-					span_userdanger("You're knocked around by [attacker]!"),
-					span_hear("You hear a sickening sound of flesh hitting flesh!"),
+					span_danger(LANG("datum.0280fff2", list(attacker, defender, defender.p_them()))),
+					span_userdanger(LANG("datum.b743a8b8", list(attacker))),
+					span_hear(LANG("datum.6c7f8149", null)),
 					COMBAT_MESSAGE_RANGE,
 					attacker,
 				)
@@ -215,9 +215,9 @@
 			else
 			// otherwise, sit down buddy (if you got crit once you're probably lined up to eat more crits)
 				defender.visible_message(
-					span_danger("[attacker] knocks [defender] down with a haymaker!"),
-					span_userdanger("You're knocked down by [attacker]!"),
-					span_hear("You hear a sickening sound of flesh hitting flesh!"),
+					span_danger(LANG("datum.0252723d", list(attacker, defender))),
+					span_userdanger(LANG("datum.f940daa3", list(attacker))),
+					span_hear(LANG("datum.6c7f8149", null)),
 					COMBAT_MESSAGE_RANGE,
 					attacker,
 				)
@@ -231,9 +231,9 @@
 				log_combat(attacker, defender, "knocked down (boxing) ")
 	else
 		defender.visible_message(
-			span_danger("[attacker] staggers [defender] with a haymaker!"),
-			span_userdanger("You're nearly knocked off your feet by [attacker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			span_danger(LANG("datum.962ddadc", list(attacker, defender))),
+			span_userdanger(LANG("datum.706ff840", list(attacker))),
+			span_hear(LANG("datum.6c7f8149", null)),
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)

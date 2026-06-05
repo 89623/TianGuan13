@@ -115,7 +115,7 @@
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/sheet/iron/new_item = new(user.loc)
 		user.visible_message(
-			span_notice("[user.name] shaped [src] into sheets with [tool]."),
+			span_notice(LANG("obj.88395aa2", list(user.name, src, tool))),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user
@@ -131,7 +131,7 @@
 	if(tool.use_tool(src, user, delay = 0, volume = 40))
 		var/obj/item/stack/rods/new_item = new(user.loc)
 		user.visible_message(
-			span_notice("[user.name] shaped [src] into rods with [tool]."),
+			span_notice(LANG("obj.de51624c", list(user.name, src, tool))),
 			blind_message = span_hear("You hear welding."),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			ignored_mobs = user

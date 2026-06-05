@@ -245,36 +245,36 @@
 	COOLDOWN_START(src, tool_scan, 2 SECONDS)
 
 	if(!(is_mining_level(user.z)))
-		user.balloon_alert(user, "error!")
+		user.balloon_alert(user, LANG("obj.bf18be82", null))
 		to_chat(user, span_warning(LANG("obj.58c396db", null)))
 		return FALSE
 
 	var/user_area = get_area(user)
 	if (!is_type_in_typecache(user_area, allowed_areas) || is_type_in_typecache(user_area, disallowed_areas))
-		user.balloon_alert(user, "error!")
+		user.balloon_alert(user, LANG("obj.bf18be82", null))
 		to_chat(user, span_warning(LANG("obj.4cec1c8b", null)))
 		return FALSE
 
 	var/datum/scavenge_profile/profile = get_profile(user)
 
-	user.visible_message(span_notice("[user] triggers a pulse from their handheld radar, scanning the surrounding area."), \
-	span_notice("You trigger a pulse from the handheld radar, scanning for potential dig sites."))
-	user.balloon_alert(user, "scanning signal..!")
+	user.visible_message(span_notice(LANG("obj.a2b7c8bc", list(user))), \
+	span_notice(LANG("obj.3e2f8e9a", null)))
+	user.balloon_alert(user, LANG("obj.295da20a", null))
 	if(!do_after(user, scanner_speed))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
-	user.balloon_alert(user, "triangulating signal..!")
+	user.balloon_alert(user, LANG("obj.b1893328", null))
 	if(!do_after(user, scanner_speed))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
-	user.balloon_alert(user, "locking signal..!")
+	user.balloon_alert(user, LANG("obj.e180bcdd", null))
 	if(!do_after(user, scanner_speed))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
 	var/candidate_turf = pick_valid_turf_in_range(user)
 
 	if(!candidate_turf)
-		user.balloon_alert(user, "not found!")
+		user.balloon_alert(user, LANG("obj.dfecbd69", null))
 		to_chat(user, span_warning(LANG("obj.fb3e8f74", null)))
 		return FALSE
 
@@ -284,7 +284,7 @@
 	if(prob(clamp(chance - 40, 0, 100)))
 		profile.site_radius++
 		to_chat(user, span_notice(LANG("obj.26a88fa9", null)))
-	user.balloon_alert(user, "site located!")
+	user.balloon_alert(user, LANG("obj.bef97ab6", null))
 	playsound(src, 'sound/machines/compiler/compiler-stage1.ogg', 75)
 	return TRUE
 
@@ -298,11 +298,11 @@
 	if(!profile.site)
 		return FALSE
 
-	user.visible_message(span_notice("[user] methodically scans the ground and digs through the sediment of [dig_turf]."), \
-	span_notice("You carefully scan and dig through the sediment of [dig_turf], searching for anything unusual."))
+	user.visible_message(span_notice(LANG("obj.a6135a4a", list(user, dig_turf))), \
+	span_notice(LANG("obj.ca1dccc5", list(dig_turf))))
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/archeology, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, digging_speed * skill_modifier, target = dig_turf))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
 
 	var/turf/site_turf = profile.site
@@ -313,8 +313,8 @@
 	var/dif_z = dig_turf.z - site_turf.z
 
 	if(dif_x > radius || dif_y > radius || dif_z != 0)
-		user.visible_message(span_notice("[user] scans and digs through [dig_turf], but doesn't seem to find anything of interest."), \
-		span_notice("You carefully dig through [dig_turf], but the scanner doesn't indicate anything useful here."))
+		user.visible_message(span_notice(LANG("obj.4805bbfb", list(user, dig_turf))), \
+		span_notice(LANG("obj.23574d45", list(dig_turf))))
 		return FALSE
 
 	profile.site = null
@@ -343,13 +343,13 @@
 	COOLDOWN_START(src, tool_scan, 2 SECONDS)
 	var/datum/scavenge_profile/profile = get_profile(user)
 	if(!profile.site)
-		user.balloon_alert(user, "error!")
+		user.balloon_alert(user, LANG("obj.bf18be82", null))
 		to_chat(user, span_warning(LANG("obj.a63d607f", null)))
 		return
 
 	var/turf/candidate_turf = profile.site
 	if(profile.site.z != user.z)
-		user.balloon_alert(user, "error!")
+		user.balloon_alert(user, LANG("obj.bf18be82", null))
 		to_chat(user, span_warning(LANG("obj.cd9674d7", null)))
 		return
 
@@ -361,7 +361,7 @@
 	// We pick the color (or break early) based on the distance we got.
 	switch(dist)
 		if (0 to 4)
-			user.balloon_alert(user, "site close!")
+			user.balloon_alert(user, LANG("obj.79e02d14", null))
 			return
 		if(5 to 10)
 			user.balloon_alert(user, "! ! ! !")
@@ -528,8 +528,8 @@
 					continue
 	if(show_message)
 		playsound(user, storage_type.rustle_sound, 50, TRUE)
-		user.visible_message(span_notice("[user] scoops up the rocks beneath [user.p_them()]."), \
-			span_notice("You scoop up the rocks beneath you with your [name]."))
+		user.visible_message(span_notice(LANG("obj.c22a23fc", list(user, user.p_them()))), \
+			span_notice(LANG("obj.8e0efbb8", list(name))))
 	spam_protection = FALSE
 
 /obj/item/storage/bag/xenoarch/adv

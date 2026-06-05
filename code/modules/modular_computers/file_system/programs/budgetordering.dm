@@ -194,11 +194,11 @@
 				return
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
-				computer.say("The supply shuttle is departing.")
+				computer.say(LANG("datum.c8889dde", null))
 				user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-				computer.say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
+				computer.say(LANG("datum.8a1a83d6", list(SSshuttle.supply.timeLeft(600))))
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 			. = TRUE
 		if("loan")
@@ -215,7 +215,7 @@
 				return
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
-				computer.say("The supply shuttle has been loaned to CentCom.")
+				computer.say(LANG("datum.a29fce78", null))
 				user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
 				user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
@@ -248,15 +248,15 @@
 
 			if(self_paid)
 				if(!istype(id_card_customer))
-					computer.say("No ID card detected.")
+					computer.say(LANG("datum.9caa768c", null))
 					return
 				if(IS_DEPARTMENTAL_CARD(id_card_customer))
-					computer.say("[id_card_customer] cannot be used to make purchases.")
+					computer.say(LANG("datum.8cd2261a", list(id_card_customer)))
 					return
 				account = id_card_customer.registered_account
 				name = id_card_customer.registered_account.account_holder
 				if(!istype(account))
-					computer.say("Invalid bank account.")
+					computer.say(LANG("datum.3ad4c193", null))
 					return
 
 			var/reason = ""
@@ -283,12 +283,12 @@
 
 			if(((pack.order_flags & ORDER_GOODY) && (!(pack.order_flags & ORDER_DEPARTMENTAL_GOODY) || uses_cargo_budget)) && !self_paid) // NOVA EDIT CHANGE - ORIGINAL: if((pack.order_flags & ORDER_GOODY) && !self_paid)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-				computer.say("ERROR: Small crates may only be purchased by private accounts.")
+				computer.say(LANG("datum.90374cfb", null))
 				return
 
 			if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-				computer.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
+				computer.say(LANG("datum.6627f598", list(CARGO_MAX_ORDER)))
 				return
 
 			if(!self_paid)
@@ -302,7 +302,7 @@
 			else
 				SSshuttle.shopping_list += SO
 				if(self_paid)
-					computer.say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
+					computer.say(LANG("datum.cf813d0c", list(account.account_holder)))
 			playsound(computer, 'sound/effects/coin2.ogg', 40, TRUE)
 			. = TRUE
 		if("remove")

@@ -118,13 +118,13 @@
 					to_chat(user, span_warning("Subject may not have abiotic items on!"))
 					return
 
-		user.visible_message(span_danger("[user] starts to put [C] into [src]!"))
+		user.visible_message(span_danger(LANG("obj.fa9f1c74", list(user, C, src))))
 
 		add_fingerprint(user)
 
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
-				user.visible_message(span_danger("[user] stuffs [C] into [src]!"))
+				user.visible_message(span_danger(LANG("obj.a6a57d11", list(user, C, src))))
 				C.forceMove(src)
 				set_occupant(C)
 				update_appearance()

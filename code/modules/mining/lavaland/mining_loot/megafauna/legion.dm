@@ -54,8 +54,8 @@
 	if(!do_after(user, 3 SECONDS, target = src))
 		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
-	user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \
-	span_notice("You hold [src] skyward, dispelling the storm!"))
+	user.visible_message(span_warning(LANG("obj.db79c540", list(user, src))), \
+	span_notice(LANG("obj.ef573bb4", list(src))))
 	playsound(user, 'sound/effects/magic/staff_change.ogg', 200, FALSE)
 	var/old_color = user.color
 	user.color = list(340/255, 240/255, 0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
@@ -126,5 +126,5 @@
 		for(var/obj/hit_thing in turf)
 			hit_thing.take_damage(20, BURN, ENERGY, FALSE)
 	playsound(target, 'sound/effects/magic/lightningbolt.ogg', 100, TRUE)
-	target.visible_message(span_danger("A thunderbolt strikes [target]!"))
+	target.visible_message(span_danger(LANG("obj.5fc332ba", list(target))))
 	explosion(target, light_impact_range = (boosted ? 1 : 0), flame_range = (boosted ? 2 : 1), silent = TRUE)

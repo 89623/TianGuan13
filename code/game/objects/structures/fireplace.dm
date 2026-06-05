@@ -71,18 +71,18 @@
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)
 		adjust_fuel_timer(LOG_BURN_TIMER * logs_used)
-		user.visible_message(span_notice("[user] tosses some wood into [src]."), span_notice("You add some fuel to [src]."))
+		user.visible_message(span_notice(LANG("obj.2dc25b27", list(user, src))), span_notice(LANG("obj.bd3682ed", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper_bin))
 		var/obj/item/paper_bin/paper_bin = tool
-		user.visible_message(span_notice("[user] throws [tool] into [src]."), span_notice("You add [tool] to [src]."))
+		user.visible_message(span_notice(LANG("obj.8938881b", list(user, tool, src))), span_notice(LANG("obj.0c27fe26", list(tool, src))))
 		adjust_fuel_timer(PAPER_BURN_TIMER * paper_bin.total_paper)
 		qdel(paper_bin)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper))
-		user.visible_message(span_notice("[user] throws [tool] into [src]."), span_notice("You throw [tool] into [src]."))
+		user.visible_message(span_notice(LANG("obj.8938881b", list(user, tool, src))), span_notice(LANG("obj.9a474d8d", list(tool, src))))
 		adjust_fuel_timer(PAPER_BURN_TIMER)
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS

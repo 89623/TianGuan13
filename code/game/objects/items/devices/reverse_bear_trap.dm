@@ -77,8 +77,8 @@
 		if(40 SECONDS to 50 SECONDS)
 			fear_string = "shakily"
 
-	carbon_user.visible_message(span_danger("[carbon_user] fiddles with and pulls at [src]..."), \
-		span_danger("You[isnull(fear_string) ? "" : " [fear_string]"] try to pull at [src]..."), "<i>You hear clicking and ticking.</i>")
+	carbon_user.visible_message(span_danger(LANG("obj.45910ea5", list(carbon_user, src))), \
+		span_danger(LANG("obj.f3239277", list(isnull(fear_string) ? "" : " [fear_string]", src))), LANG("obj.3bb492c8", null))
 	if(!do_after(user, 2 SECONDS, target = src))
 		struggling = FALSE
 		return
@@ -86,8 +86,8 @@
 		to_chat(user, span_warning(LANG("obj.49f7a530", null)))
 		escape_chance++
 	else
-		user.visible_message(span_warning("The lock on [user]'s [name] pops open!"), \
-		span_userdanger("You force open the padlock!"), "<i>You hear a single, pronounced click!</i>")
+		user.visible_message(span_warning(LANG("obj.321fa72d", list(user, name))), \
+		span_userdanger(LANG("obj.f52e2263", null)), LANG("obj.e2559f06", null))
 		REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 	struggling = FALSE
 
@@ -95,14 +95,14 @@
 	if(target.get_item_by_slot(ITEM_SLOT_HEAD))
 		to_chat(user, span_warning(LANG("obj.65bcb577", list(target.p_their()))))
 		return
-	target.visible_message(span_warning("[user] starts forcing [src] onto [target]'s head!"), \
-		span_userdanger("[target] starts forcing [src] onto your head!"), "<i>You hear clanking.</i>")
+	target.visible_message(span_warning(LANG("obj.ba5dd763", list(user, src, target))), \
+		span_userdanger(LANG("obj.958675a5", list(target, src))), LANG("obj.e325c27b", null))
 	to_chat(user, span_danger(LANG("obj.6fc81037", list(src, target))))
 
 	if(!do_after(user, 3 SECONDS, target = target) || target.get_item_by_slot(ITEM_SLOT_HEAD))
 		return
-	target.visible_message(span_warning("[user] forces and locks [src] onto [target]'s head!"), \
-		span_userdanger("[user] locks [src] onto your head!"), "<i>You hear a click, and then a timer ticking down.</i>")
+	target.visible_message(span_warning(LANG("obj.b66759c7", list(user, src, target))), \
+		span_userdanger(LANG("obj.99e303ed", list(user, src))), LANG("obj.f8581491", null))
 	to_chat(user, span_danger(LANG("obj.953c9369", list(src, target))))
 
 	user.dropItemToGround(src)
@@ -125,7 +125,7 @@
 		playsound(src, 'sound/effects/snap.ogg', 75, TRUE)
 	else
 		var/mob/living/carbon/human/jill = loc
-		jill.visible_message(span_boldwarning("[src] goes off in [jill]'s mouth, ripping [jill.p_their()] head apart!"), span_userdanger("[src] goes off!"))
+		jill.visible_message(span_boldwarning(LANG("obj.2978b1c2", list(src, jill, jill.p_their()))), span_userdanger(LANG("obj.6588413c", list(src))))
 		jill.emote("scream")
 		playsound(src, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)

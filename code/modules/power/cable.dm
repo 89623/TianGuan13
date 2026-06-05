@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	if (shock(user, 50))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] cuts the cable."), span_notice("You cut the cable."))
+	user.visible_message(span_notice(LANG("obj.6e0b244d", list(user))), span_notice(LANG("obj.85b64017", null)))
 	investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
 	deconstruct()
 	return ITEM_INTERACT_SUCCESS
@@ -555,9 +555,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/item/stack/cable_coil/suicide_act(mob/living/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
-		user.visible_message(span_suicide("[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.a4a763c0", list(user, src, user.p_theyre()))))
 	else
-		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.2a557471", list(user, user.p_them(), src, user.p_theyre()))))
 	return OXYLOSS
 
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
@@ -663,8 +663,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		balloon_alert(user, LANG("obj.aca69bd8", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] starts to fix some of the wires in [attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s"] [affecting.name]."),
-		span_notice("You start fixing some of the wires in [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
+	user.visible_message(span_notice(LANG("obj.78934db0", list(user, attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s", affecting.name))),
+		span_notice(LANG("obj.ddb7d553", list(attacked_humanoid == user ? "your" : "[attacked_humanoid]'s", affecting.name))))
 
 	var/use_delay = repeating ? 1 SECONDS : 0
 	if(user == attacked_humanoid)

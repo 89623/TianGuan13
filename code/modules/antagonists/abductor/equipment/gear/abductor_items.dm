@@ -210,7 +210,7 @@
 			return
 
 		if(carbon_target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-			user.balloon_alert(user, "foiled!")
+			user.balloon_alert(user, LANG("obj.6bcfcd23", null))
 			to_chat(user, span_warning(LANG("obj.ba8de394", null)))
 			return
 
@@ -229,7 +229,7 @@
 		if(QDELETED(living_target) || living_target.stat == DEAD)
 			return
 
-		living_target.balloon_alert(living_target, "you hear a voice")
+		living_target.balloon_alert(living_target, LANG("obj.d955e950", null))
 		to_chat(living_target, span_hear(LANG("obj.787f9bf0", list(span_abductor(message)))))
 		to_chat(user, span_notice(LANG("obj.3f465623", null)))
 		log_directed_talk(user, living_target, message, LOG_SAY, "abductor whisper")
@@ -268,7 +268,7 @@
 
 /obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
 	. = ..()
-	user.visible_message(span_suicide("[user] points [src] at [user.p_their()] head, it looks like [user.p_theyre()] going to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.9ce58cfb", list(user, src, user.p_their(), user.p_theyre()))))
 	// we want an animation, so lets manually handle suicide.
 	addtimer(CALLBACK(src, PROC_REF(shrink_death), user), 0)
 	return MANUAL_SUICIDE
@@ -397,8 +397,8 @@ Return to step 11 of normal process."}
 /obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override, clumsy)
 	switch (mode)
 		if(BATON_STUN)
-			target.visible_message(span_danger("[user] stuns [target] with [src]!"),
-				span_userdanger("[user] stuns you with [src]!"), visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
+			target.visible_message(span_danger(LANG("obj.9f93a4c5", list(user, target, src))),
+				span_userdanger(LANG("obj.c45c640e", list(user, src))), visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
 			target.set_jitter_if_lower(40 SECONDS)
 			target.set_confusion_if_lower(10 SECONDS)
 			target.set_stutter_if_lower(16 SECONDS)
@@ -426,24 +426,24 @@ Return to step 11 of normal process."}
 	if(INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB))
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 			to_chat(user, span_warning(LANG("obj.f6dc0984", null)))
-			target.visible_message(span_danger("[user] tried to induced sleep in [target] with [src], but is unsuccessful!"), \
-			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
+			target.visible_message(span_danger(LANG("obj.db6d6583", list(user, target, src))), \
+			span_userdanger(LANG("obj.9dd4e9f1", null)))
 			target.adjust_drowsiness(4 SECONDS)
 			return
-		target.visible_message(span_danger("[user] induces sleep in [target] with [src]!"), \
-		span_userdanger("You suddenly feel very drowsy!"))
+		target.visible_message(span_danger(LANG("obj.4bc74d37", list(user, target, src))), \
+		span_userdanger(LANG("obj.234f547d", null)))
 		target.Sleeping(sleep_time)
 		log_combat(user, target, "put to sleep")
 	else
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 			to_chat(user, span_warning(LANG("obj.059a4a43", null)))
-			target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src], but is unsuccessful!"), \
-			span_userdanger("Any sense of drowsiness is quickly diminished!"))
+			target.visible_message(span_danger(LANG("obj.e82842a8", list(user, target, src))), \
+			span_userdanger(LANG("obj.b838be03", null)))
 			return
 		target.adjust_drowsiness(2 SECONDS)
 		to_chat(user, span_warning(LANG("obj.2060e78a", null)))
-		target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src]!"), \
-							span_userdanger("You suddenly feel drowsy!"))
+		target.visible_message(span_danger(LANG("obj.9882cdc9", list(user, target, src))), \
+							span_userdanger(LANG("obj.d7416311", null)))
 
 /obj/item/melee/baton/abductor/proc/CuffAttack(mob/living/victim, mob/living/user)
 	if(!iscarbon(victim))
@@ -452,8 +452,8 @@ Return to step 11 of normal process."}
 	if(!carbon_victim.handcuffed)
 		if(carbon_victim.canBeHandcuffed())
 			playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
-			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
-									span_userdanger("[user] begins shaping an energy field around your hands!"))
+			carbon_victim.visible_message(span_danger(LANG("obj.a46fbd1b", list(user, carbon_victim, src))), \
+									span_userdanger(LANG("obj.3fbf6d4c", list(user))))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
 				if(!carbon_victim.handcuffed)
 					carbon_victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy(carbon_victim))
@@ -465,8 +465,8 @@ Return to step 11 of normal process."}
 			to_chat(user, span_warning(LANG("obj.14f2fed3", list(carbon_victim))))
 
 /obj/item/melee/baton/abductor/proc/ProbeAttack(mob/living/victim, mob/living/user)
-	victim.visible_message(span_danger("[user] probes [victim] with [src]!"), \
-						span_userdanger("[user] probes you!"))
+	victim.visible_message(span_danger(LANG("obj.2b2a81d0", list(user, victim, src))), \
+						span_userdanger(LANG("obj.9467f752", list(user))))
 
 	var/species = span_warning("Unknown species")
 	var/helptext = span_warning("Species unsuitable for experiments.")
@@ -497,7 +497,7 @@ Return to step 11 of normal process."}
 
 /obj/item/restraints/handcuffs/energy/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
-	wearer.visible_message(span_danger("[wearer]'s [name] breaks in a discharge of energy!"), span_userdanger("[wearer]'s [name] breaks in a discharge of energy!"))
+	wearer.visible_message(span_danger(LANG("obj.f045755b", list(wearer, name))), span_userdanger(LANG("obj.f045755b", list(wearer, name))))
 	do_sparks(4, FALSE, wearer.loc)
 	qdel(src)
 
@@ -540,7 +540,7 @@ Return to step 11 of normal process."}
 
 /obj/item/abductor_machine_beacon/attack_self(mob/user)
 	..()
-	user.visible_message(span_notice("[user] places down [src] and activates it."), span_notice("You place down [src] and activate it."))
+	user.visible_message(span_notice(LANG("obj.2008627f", list(user, src))), span_notice(LANG("obj.b34214b7", list(src))))
 	user.dropItemToGround(src)
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50)
 	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 3 SECONDS)

@@ -60,7 +60,7 @@
 /datum/element/airbag/proc/disarm_airbag(atom/movable/clicked_atom, mob/living/clicker)
 	var/empty_hand = LAZYACCESS(clicker.get_empty_held_indexes(), 1)
 	if(!empty_hand)
-		clicked_atom.balloon_alert(clicker, "no empty hand!")
+		clicked_atom.balloon_alert(clicker, LANG("datum.043f1522", null))
 		return
 	clicked_atom.balloon_alert_to_viewers("disarming airbag...")
 	if(do_after(clicker, DISARM_TIME, clicked_atom))
@@ -120,7 +120,7 @@
 	if(!loc.Adjacent(target) || !istype(target, /obj/structure/window))
 		return FALSE
 	if(HAS_TRAIT(target, TRAIT_AIRBAGGED))
-		user.balloon_alert(user, "already airbagged!")
+		user.balloon_alert(user, LANG("obj.dc054d33", null))
 		return FALSE
 	return TRUE
 

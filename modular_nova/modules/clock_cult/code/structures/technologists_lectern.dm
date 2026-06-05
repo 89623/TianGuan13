@@ -279,7 +279,7 @@
 		return
 
 	if(researching)
-		owner.balloon_alert(owner, "already researching!")
+		owner.balloon_alert(owner, LANG("obj.9da8b6db", null))
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(begin_research), owner, target_turf)

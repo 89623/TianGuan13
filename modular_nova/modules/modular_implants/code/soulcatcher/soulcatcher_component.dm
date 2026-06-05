@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 	if(istype(parent, /obj/item/handheld_soulcatcher))
 		var/obj/item/handheld_soulcatcher/parent_device = parent
 		playsound(parent_device, 'modular_nova/modules/modular_implants/sounds/default_good.ogg', 50, FALSE, ignore_walls = FALSE)
-		parent_device.visible_message(span_notice("[parent_device] beeps: [parent_body] is now scanned."))
+		parent_device.visible_message(span_notice(LANG("datum.1f4444cd", list(parent_device, parent_body))))
 
 	return TRUE
 

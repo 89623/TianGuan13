@@ -271,7 +271,7 @@
 				core = null
 				qdel(src)
 				user.put_in_hands(mod)
-				mod.balloon_alert(user, "unit finished")
+				mod.balloon_alert(user, LANG("obj.33113ef2", null))
 			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(part.use_tool(src, user, 0, volume=30))
 					balloon_alert(user, LANG("obj.b5142f35", null))

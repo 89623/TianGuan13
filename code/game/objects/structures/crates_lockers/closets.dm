@@ -787,8 +787,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		update_appearance()
 
 	else if(istype(weapon, /obj/item/electronics/airlock) && can_install_airlock_electronics(user))
-		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
-			span_notice("You start to install electronics into the [src]..."))
+		user.visible_message(span_notice(LANG("obj.f57d6a02", list(user, src))),\
+			span_notice(LANG("obj.5a2c3e4f", list(src))))
 
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_airlock_electronics), user)))
 			return
@@ -803,8 +803,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		update_appearance()
 
 	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER && can_unscrew_airlock_electronics(user))
-		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
-			span_notice("You begin to remove the electronics from the [src]..."))
+		user.visible_message(span_notice(LANG("obj.229442c3", list(user, src))),\
+			span_notice(LANG("obj.108516da", list(src))))
 
 		if (!weapon.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
 			return
@@ -825,8 +825,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		update_appearance()
 
 	else if(istype(weapon, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
-		user.visible_message(span_notice("[user] is installing a card reader."),
-					span_notice("You begin installing the card reader."))
+		user.visible_message(span_notice(LANG("obj.ff29669a", list(user))),
+					span_notice(LANG("obj.57521e91", null)))
 
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
 			return
@@ -837,8 +837,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		balloon_alert(user, LANG("obj.49c02850", null))
 
 	else if(weapon.tool_behaviour == TOOL_CROWBAR && can_pryout_card_reader(user))
-		user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
-			span_notice("You begin to pry the card reader out from [src]..."))
+		user.visible_message(span_notice(LANG("obj.dd026037", list(user, src))),\
+			span_notice(LANG("obj.2fc1f6e6", list(src))))
 
 		if(!weapon.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
 			return
@@ -893,14 +893,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				if(weapon.use_tool(src, user, 40, volume=50))
 					if(!opened)
 						return
-					user.visible_message(span_notice("[user] slices apart \the [src]."),
-									span_notice("You cut \the [src] apart with \the [weapon]."),
-									span_hear("You hear welding."))
+					user.visible_message(span_notice(LANG("obj.fe86d6ab", list(user, src))),
+									span_notice(LANG("obj.a44b2da5", list(src, weapon))),
+									span_hear(LANG("obj.1aa82fa3", null)))
 					deconstruct(TRUE)
 				return
 			else // for example cardboard box is cut with wirecutters
-				user.visible_message(span_notice("[user] cut apart \the [src]."), \
-									span_notice("You cut \the [src] apart with \the [weapon]."))
+				user.visible_message(span_notice(LANG("obj.fc66857a", list(user, src))), \
+									span_notice(LANG("obj.a44b2da5", list(src, weapon))))
 				deconstruct(TRUE)
 				return
 		if (user.combat_mode)
@@ -917,9 +917,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				return
 			welded = !welded
 			after_weld(welded)
-			user.visible_message(span_notice("[user] [welded ? "welds shut" : "unwelded"] \the [src]."),
-							span_notice("You [welded ? "weld" : "unwelded"] \the [src] with \the [weapon]."),
-							span_hear("You hear welding."))
+			user.visible_message(span_notice(LANG("obj.feb7fb3d", list(user, welded ? "welds shut" : "unwelded", src))),
+							span_notice(LANG("obj.4cf04b7a", list(welded ? "weld" : "unwelded", src, weapon))),
+							span_hear(LANG("obj.1aa82fa3", null)))
 			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [weapon]", LOG_GAME)
 			update_appearance()
 
@@ -964,14 +964,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	var/turf/T = get_turf(src)
 	add_fingerprint(user)
-	user.visible_message(span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."), \
-		span_warning("You [actuallyismob ? "try to ":""]stuff [O] into [src]."), \
-		span_hear("You hear clanging."))
+	user.visible_message(span_warning(LANG("obj.fad6e6cb", list(user, actuallyismob ? "tries to ":"", O, src))), \
+		span_warning(LANG("obj.83c84f47", list(actuallyismob ? "try to ":"", O, src))), \
+		span_hear(LANG("obj.53cc7254", null)))
 	if(actuallyismob)
 		if(do_after(user, 4 SECONDS, O))
-			user.visible_message(span_notice("[user] stuffs [O] into [src]."), \
-				span_notice("You stuff [O] into [src]."), \
-				span_hear("You hear a loud metal bang."))
+			user.visible_message(span_notice(LANG("obj.5235890c", list(user, O, src))), \
+				span_notice(LANG("obj.16ae1517", list(O, src))), \
+				span_hear(LANG("obj.fab8a7be", null)))
 			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Paralyze(40)
@@ -1065,9 +1065,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_warning("[src] begins to shake violently!"), \
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
-		span_hear("You hear banging from [src]."))
+	user.visible_message(span_warning(LANG("obj.912b79b5", list(src))), \
+		span_notice(LANG("obj.43ad33b1", list(src, DisplayTimeText(breakout_time)))), \
+		span_hear(LANG("obj.8df1b48f", list(src))))
 
 	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
 
@@ -1075,8 +1075,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(!user || user.stat != CONSCIOUS || (loc_required && (user.loc != src)) || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
-		user.visible_message(span_danger("[user] successfully broke out of [src]!"),
-							span_notice("You successfully break out of [src]!"))
+		user.visible_message(span_danger(LANG("obj.37696909", list(user, src))),
+							span_notice(LANG("obj.81c31f6b", list(src))))
 		bust_open()
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
@@ -1161,7 +1161,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	play_closet_lock_sound()
 	user.visible_message(
 		span_notice("[user] [locked ? "locks" : "unlocks"] [src]."),
-		span_notice("You [locked ? "locked" : "unlocked"] [src]."),
+		span_notice(LANG("obj.d6171b71", list(locked ? "locked" : "unlocked", src))),
 	)
 	update_appearance()
 	return TRUE
@@ -1253,9 +1253,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
-		span_userdanger("You're shoved into [src] by [shover.name]!"),
-		span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+	target.visible_message(span_danger(LANG("obj.9cd0941b", list(shover.name, target.name, src))),
+		span_userdanger(LANG("obj.9092b59a", list(src, shover.name))),
+		span_hear(LANG("obj.b75dfa76", null)), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(src, span_danger(LANG("obj.d6cb368b", list(target.name, src))))
 	log_combat(shover, target, "shoved", "into [src] (locker/crate)[weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED
@@ -1277,11 +1277,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/rename_checks(mob/living/user)
 	. = TRUE
 	if(locked)
-		src.balloon_alert(user, "unlock first!")
+		src.balloon_alert(user, LANG("obj.08c1dea0", null))
 		return FALSE
 
 	if(isnull(id_card) && secure)
-		src.balloon_alert(user, "not yours to rename!")
+		src.balloon_alert(user, LANG("obj.691adc91", null))
 		return FALSE
 
 ///Spears deal bonus damages to lockers
@@ -1290,8 +1290,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		HIDE_ATTACK_MESSAGES(attack_modifiers)
 		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 2)
 		user.visible_message(
-			span_danger("[user] stabs with precision [src]'s electronics with [attacking_item]!"),
-			span_danger("You stab with precision [src]'s electronics with [attacking_item]!"),
+			span_danger(LANG("obj.7f82c43d", list(user, src, attacking_item))),
+			span_danger(LANG("obj.8b2dac21", list(src, attacking_item))),
 			null,
 			COMBAT_MESSAGE_RANGE,
 		)

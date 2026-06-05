@@ -43,8 +43,8 @@
 		user.Move_Pulled(source_obj)
 
 		if (user.pulling.loc == source_obj.loc)
-			user.visible_message(span_notice("[user] places [user.pulling] onto [source_obj]."),
-				span_notice("You place [user.pulling] onto [source_obj]."))
+			user.visible_message(span_notice(LANG("datum.90421f65", list(user, user.pulling, source_obj))),
+				span_notice(LANG("datum.ae0dc246", list(user.pulling, source_obj))))
 			user.stop_pulling()
 
 		return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -77,8 +77,8 @@
 			if (GRAB_NECK to GRAB_KILL)
 				tablelimbsmash(user, pushed_mob, table)
 	else
-		pushed_mob.visible_message(span_notice("[user] begins to place [pushed_mob] onto [table]..."), \
-							span_userdanger("[user] begins to place [pushed_mob] onto [table]..."))
+		pushed_mob.visible_message(span_notice(LANG("datum.f9e2a953", list(user, pushed_mob, table))), \
+							span_userdanger(LANG("datum.f9e2a953", list(user, pushed_mob, table))))
 		if (do_after(user, 3.5 SECONDS, target = pushed_mob))
 			tableplace(user, pushed_mob, table)
 		else
@@ -121,8 +121,8 @@
 	if (istype(potential_spine))
 		tableplace_delay *= potential_spine.athletics_boost_multiplier
 
-	carried_mob.visible_message(span_notice("[user] begins to[skills_space] place [carried_mob] onto [table]..."),
-		span_userdanger("[user] begins to[skills_space] place [carried_mob] onto [table]..."))
+	carried_mob.visible_message(span_notice(LANG("datum.426e5861", list(user, skills_space, carried_mob, table))),
+		span_userdanger(LANG("datum.426e5861", list(user, skills_space, carried_mob, table))))
 	if (!do_after(user, tableplace_delay, target = carried_mob))
 		return ITEM_INTERACT_BLOCKING
 	user.unbuckle_mob(carried_mob)
@@ -133,8 +133,8 @@
 /datum/element/table_smash/proc/tableplace(mob/living/user, mob/living/pushed_mob, obj/structure/table/table)
 	pushed_mob.forceMove(table.loc)
 	pushed_mob.set_resting(TRUE, TRUE)
-	pushed_mob.visible_message(span_notice("[user] places [pushed_mob] onto [table]."), \
-		span_notice("[user] places [pushed_mob] onto [table]."))
+	pushed_mob.visible_message(span_notice(LANG("datum.90421f65", list(user, pushed_mob, table))), \
+		span_notice(LANG("datum.90421f65", list(user, pushed_mob, table))))
 	log_combat(user, pushed_mob, "placed", null, "onto [table]")
 
 /// Aggressively smash the mob onto the table
@@ -158,8 +158,8 @@
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
 	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [table]!"), \
-		span_userdanger("[user] slams you onto \the [table]!"))
+	pushed_mob.visible_message(span_danger(LANG("datum.88e2eb84", list(user, pushed_mob, table))), \
+		span_userdanger(LANG("datum.55d7ad7b", list(user, table))))
 	log_combat(user, pushed_mob, "tabled", null, "onto [table]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table)
 	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAMMING, pushed_mob, table)
@@ -176,8 +176,8 @@
 	pushed_mob.apply_damage(30, BRUTE, banged_limb, wound_bonus = extra_wound)
 	pushed_mob.apply_damage(60, STAMINA)
 	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
-	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [table]!"),
-		span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [table]"))
+	pushed_mob.visible_message(span_danger(LANG("datum.6979a6dc", list(user, pushed_mob, banged_limb.plaintext_zone, table))),
+		span_userdanger(LANG("datum.6c6e7d58", list(user, banged_limb.plaintext_zone, table))))
 	log_combat(user, pushed_mob, "head slammed", null, "against [table]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
 	table.take_damage(50)
@@ -191,8 +191,8 @@
 	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
 	target.Knockdown(SHOVE_KNOCKDOWN_TABLE, daze_amount = 3 SECONDS)
-	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
-		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+	target.visible_message(span_danger(LANG("obj.39cd95b6", list(shover.name, target.name, src))),
+		span_userdanger(LANG("obj.3873e9ee", list(src, shover.name))), span_hear(LANG("obj.b75dfa76", null)), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger(LANG("obj.b47544d4", list(target.name, src))))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 	log_combat(shover, target, "shoved", "onto [src] (table)[weapon ? " with [weapon]" : ""]")

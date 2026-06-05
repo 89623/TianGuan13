@@ -51,7 +51,7 @@
 	if(!patient_insertion_check(target, source))
 		return
 	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
-	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
+	chassis.visible_message(span_warning(LANG("obj.795199ec", list(chassis, target, src))))
 	if(!do_after(source, equip_cooldown, target, extra_checks=CALLBACK(src, PROC_REF(patient_insertion_check), target, source)))
 		return
 	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
@@ -60,7 +60,7 @@
 	patient = target
 	START_PROCESSING(SSobj, src)
 	to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded into [src]. Life support functions engaged.")]")
-	chassis.visible_message(span_warning("[chassis] loads [target] into [src]."))
+	chassis.visible_message(span_warning(LANG("obj.f703f7ec", list(chassis, target, src))))
 	log_message("[target] loaded. Life support functions engaged.", LOG_MECHA)
 	return ..()
 

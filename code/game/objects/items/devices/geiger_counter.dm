@@ -77,7 +77,7 @@
 	if(!CAN_IRRADIATE(interacting_with))
 		return NONE
 
-	user.visible_message(span_notice("[user] scans [interacting_with] with [src]."), span_notice("You scan [interacting_with]'s radiation levels with [src]..."))
+	user.visible_message(span_notice(LANG("obj.ef72f9ec", list(user, interacting_with, src))), span_notice(LANG("obj.40e34539", list(interacting_with, src))))
 	addtimer(CALLBACK(src, PROC_REF(scan), interacting_with, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents
 	return ITEM_INTERACT_SUCCESS
 

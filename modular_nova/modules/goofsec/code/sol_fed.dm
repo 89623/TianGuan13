@@ -843,7 +843,7 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 		return
 	message_admins("[ADMIN_LOOKUPFLW(user)] has begun to beam-out using their beam-out tool.")
 	to_chat(user, LANG("obj.bf24e932", null))
-	user.balloon_alert(user, "begun beam-out")
+	user.balloon_alert(user, LANG("obj.e3fc963c", null))
 	if(do_after(user, 30 SECONDS))
 		to_chat(user, LANG("obj.5e305e75", null))
 		message_admins("[ADMIN_LOOKUPFLW(user)] has beamed themselves out.")
@@ -864,7 +864,7 @@ GLOBAL_LIST_INIT(call911_do_and_do_not, list(
 			do_sparks(10, TRUE, user_turf, spark_type = /datum/effect_system/basic/spark_spread/quantum)
 			qdel(user)
 	else
-		user.balloon_alert(user, "beam-out cancelled")
+		user.balloon_alert(user, LANG("obj.f2813b79", null))
 
 #undef EMERGENCY_RESPONSE_POLICE
 #undef EMERGENCY_RESPONSE_ATMOS

@@ -33,8 +33,8 @@
 		eye_snatch_enthusiasm *= 0.7
 	user.do_attack_animation(target, used_item = src)
 	target.visible_message(
-		span_warning("[user] presses [src] against [target]'s skull!"),
-		span_userdanger("[user] presses [src] against your skull!"))
+		span_warning(LANG("obj.ef464dbc", list(user, src, target))),
+		span_userdanger(LANG("obj.f8df4665", list(user, src))))
 	if(!do_after(user, eye_snatch_enthusiasm, target = target, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, target)))
 		return
 
@@ -48,9 +48,9 @@
 
 	target.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = rand(min_wound, max_wound + 10), attacking_item = src)
 	target.visible_message(
-		span_danger("[src] pierces through [target]'s skull, horribly mutilating their eyes!"),
-		span_userdanger("Something penetrates your skull, horribly mutilating your eyes! Holy fuck!"),
-		span_hear("You hear a sickening sound of metal piercing flesh!")
+		span_danger(LANG("obj.e51eb72f", list(src, target))),
+		span_userdanger(LANG("obj.76efd358", null)),
+		span_hear(LANG("obj.eb55cb14", null))
 	)
 	eyeballies.apply_organ_damage(eyeballies.maxHealth)
 	target.emote("scream")

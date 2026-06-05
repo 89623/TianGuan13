@@ -358,7 +358,7 @@
 	carried.set_bot(src)
 	if(carried.icon_state == "toolbox_default")
 		carried.add_atom_colour(toolbox_color, FIXED_COLOUR_PRIORITY)
-	user.visible_message(span_warning("[user] scoops up [src]!"))
+	user.visible_message(span_warning(LANG("mob.20aafc4f", list(user, src))))
 	user.put_in_hands(carried)
 
 /obj/item/carried_repairbot

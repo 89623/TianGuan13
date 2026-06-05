@@ -30,7 +30,7 @@
 /// Stop being a monkey
 /datum/action/changeling/lesserform/proc/unmonkey(mob/living/carbon/human/user)
 	if(user.movement_type & VENTCRAWLING)
-		user.balloon_alert(user, "can't transform in pipes!")
+		user.balloon_alert(user, LANG("datum.ae935305", null))
 		return FALSE
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	var/datum/changeling_profile/chosen_form = changeling?.current_profile // NOVA EDIT CHANGE - ORIGINAL: var/datum/changeling_profile/chosen_form = select_form(changeling, user)

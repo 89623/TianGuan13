@@ -99,9 +99,9 @@ no power level overlay is currently in the overlays list.
 		return TRUE
 
 	user.visible_message(
-		span_notice("[user] turns on [src]."),
-		span_notice("You turn on [src]."),
-		span_hear("You hear heavy droning."))
+		span_notice(LANG("obj.96d11239", list(user, src))),
+		span_notice(LANG("obj.11cd7563", list(src))),
+		span_hear(LANG("obj.b290d1db", null)))
 	turn_on()
 	investigate_log("activated by [key_name(user)].", INVESTIGATE_ENGINE)
 
@@ -147,9 +147,9 @@ no power level overlay is currently in the overlays list.
 			if(!welder.tool_start_check(user, amount=1))
 				return TRUE
 			user.visible_message(
-				span_notice("[user] starts to weld [src] to the floor."),
-				span_notice("You start to weld \the [src] to the floor..."),
-				span_hear("You hear welding."))
+				span_notice(LANG("obj.9600c364", list(user, src))),
+				span_notice(LANG("obj.f64483b9", list(src))),
+				span_hear(LANG("obj.1aa82fa3", null)))
 			if(welder.use_tool(src, user, 20, volume=50) && state == FG_SECURED)
 				state = FG_WELDED
 				to_chat(user, span_notice(LANG("obj.dda769af", null)))
@@ -158,9 +158,9 @@ no power level overlay is currently in the overlays list.
 			if(!welder.tool_start_check(user, amount=1))
 				return TRUE
 			user.visible_message(
-				span_notice("[user] starts to cut [src] free from the floor."),
-				span_notice("You start to cut \the [src] free from the floor..."),
-				span_hear("You hear welding."))
+				span_notice(LANG("obj.078cc3d3", list(user, src))),
+				span_notice(LANG("obj.bf750eff", list(src))),
+				span_hear(LANG("obj.1aa82fa3", null)))
 			if(welder.use_tool(src, user, 20, volume=50) && state == FG_WELDED)
 				state = FG_SECURED
 				to_chat(user, span_notice(LANG("obj.0568c93c", list(src))))
@@ -171,7 +171,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(user.environment_smash == ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
 		set_anchored(FALSE)
-		user.visible_message(span_warning("[user] rips [src] free from its moorings!"))
+		user.visible_message(span_warning(LANG("obj.803715ba", list(user, src))))
 	else
 		..()
 	if(!anchored)

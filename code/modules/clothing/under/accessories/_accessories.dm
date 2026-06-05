@@ -43,17 +43,17 @@
 
 	if(atom_storage && attach_to.atom_storage)
 		if(user)
-			attach_to.balloon_alert(user, "isn't compatible!")
+			attach_to.balloon_alert(user, LANG("obj.2972456b", null))
 		return FALSE
 
 	if(attachment_slot && !(attach_to.body_parts_covered & attachment_slot))
 		if(user)
-			attach_to.balloon_alert(user, "can't attach there!")
+			attach_to.balloon_alert(user, LANG("obj.957513f2", null))
 		return FALSE
 
 	if(length(attach_to.attached_accessories) >= attach_to.max_number_of_accessories)
 		if(user)
-			attach_to.balloon_alert(user, "too many accessories!")
+			attach_to.balloon_alert(user, LANG("obj.12b04990", null))
 		return FALSE
 
 	return TRUE
@@ -198,7 +198,7 @@
 
 	source.remove_accessory(src)
 	forceMove(source.drop_location())
-	source.visible_message(span_warning("[src] falls off of [source]!"))
+	source.visible_message(span_warning(LANG("obj.73a87d59", list(src, source))))
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] on the uniform we're pinned to to add our overlays to the inventory icon
 /obj/item/clothing/accessory/proc/on_uniform_update(obj/item/source, list/overlays)

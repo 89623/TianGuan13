@@ -119,7 +119,7 @@
 	//switched off version of this air sensor but still anchored to the ground
 	var/obj/item/air_sensor/sensor = new(drop_location())
 	sensor.set_anchored(TRUE)
-	sensor.balloon_alert(user, "sensor turned off")
+	sensor.balloon_alert(user, LANG("obj.d1fb76aa", null))
 
 	//delete self
 	qdel(src)
@@ -150,7 +150,7 @@
 	switch(type)
 		if(INLET, OUTLET)
 			var/port = "[type == INLET ? "input" : "output"] port"
-			user.balloon_alert(user, "[port] configured")
+			user.balloon_alert(user, LANG("obj.920ca7ea", list(port)))
 			to_chat(user, span_notice(LANG("obj.5d8623f7", list(src, multi_tool.buffer, port))))
 	to_chat(user, span_notice(LANG("obj.877a4dfa", list(src))))
 	multi_tool.set_buffer(src)
@@ -248,10 +248,10 @@
 	if(!tool.tool_start_check(user, amount = 1))
 		return ITEM_INTERACT_BLOCKING
 
-	loc.balloon_alert(user, "dismantling sensor")
+	loc.balloon_alert(user, LANG("obj.f5bb869c", null))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 30, amount = 1))
 		return ITEM_INTERACT_BLOCKING
-	loc.balloon_alert(user, "sensor dismanteled")
+	loc.balloon_alert(user, LANG("obj.8a680189", null))
 
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS

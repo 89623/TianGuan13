@@ -116,7 +116,7 @@
 
 
 /obj/item/weldingtool/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.a31c308b", list(user, user.p_their(), user.p_theyre()))))
 	return FIRELOSS
 
 /obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
@@ -170,8 +170,8 @@
 		balloon_alert(user, LANG("obj.aca69bd8", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] starts to fix some of the dents on [attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s"] [affecting.name]."),
-		span_notice("You start fixing some of the dents on [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
+	user.visible_message(span_notice(LANG("obj.102599de", list(user, attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s", affecting.name))),
+		span_notice(LANG("obj.d9ca7e1b", list(attacked_humanoid == user ? "your" : "[attacked_humanoid]'s", affecting.name))))
 	var/use_delay = repeating ? 1 SECONDS : 0
 	if(user == attacked_humanoid)
 		use_delay = self_delay // NOVA EDIT CHANGE - ORIGINAL: use_delay = 5 SECONDS

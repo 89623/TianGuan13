@@ -119,14 +119,14 @@
 	if(user.combat_mode)
 		return FALSE
 	if(combat_mode)
-		user.balloon_alert(user, "can't repair in attack mode!")
+		user.balloon_alert(user, LANG("mob.5e4e3882", null))
 		return TRUE
 	if(maxHealth == health)
-		user.balloon_alert(user, "at full integrity!")
+		user.balloon_alert(user, LANG("mob.0656418a", null))
 		return TRUE
 	if(welder.use_tool(src, user, 0, volume=40))
 		adjust_brute_loss(-15)
-		user.balloon_alert(user, "successfully repaired!")
+		user.balloon_alert(user, LANG("mob.7c1135f9", null))
 	return TRUE
 
 /mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)

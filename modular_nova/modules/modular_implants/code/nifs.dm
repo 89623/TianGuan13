@@ -131,7 +131,7 @@
 	. = ..()
 
 	if(stored_ckey && stored_ckey != insertee.ckey && theft_protection)
-		insertee.audible_message(span_warning("[src] lets out a negative buzz before forcefully removing itself from [insertee]'s brain."))
+		insertee.audible_message(span_warning(LANG("obj.8e231416", list(src, insertee))))
 		playsound(insertee, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		Remove(insertee)
 		forceMove(get_turf(insertee))

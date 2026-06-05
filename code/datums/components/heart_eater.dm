@@ -162,20 +162,20 @@
 		interaction_key = "[DOAFTER_SOURCE_RIP_HEART]_[hand_index]",
 		max_interact_count = 1,
 		))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("datum.c67b5d27", null))
 		return
 	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
 	chest.force_wound_upwards(/datum/wound/blunt/bone/critical, wound_source = "heart ripped")
 	var/obj/item/organ/heart = target.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart)
-		target.balloon_alert(user, "no heart!?")
+		target.balloon_alert(user, LANG("datum.20f6c448", null))
 		return
 	heart.Remove(target)
 	to_chat(user, span_warning(LANG("datum.da480ea5", list(target, heart.name, target.p_their()))))
 	target.visible_message(
-		span_warning("[user] rips [target]'s [heart.name] out of [target.p_their()] chest!"),
-		span_userdanger("[user] rips your [heart.name] out of your chest!"),
-		span_userdanger("You feel something being torn out of your chest!"),
+		span_warning(LANG("datum.b03ee5e1", list(user, target, heart.name, target.p_their()))),
+		span_userdanger(LANG("datum.0578e1b2", list(user, heart.name))),
+		span_userdanger(LANG("datum.5deb60e0", null)),
 		ignored_mobs = list(user),
 		)
 	if(!user.put_in_hand(heart, hand_index))

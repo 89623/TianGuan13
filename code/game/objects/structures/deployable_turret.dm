@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// DEPLOYABLE TURRET (FORMERLY MANNED TURRET)
 //All of this file is five year old shitcode, and I'm too scared to touch more than I have to
 
@@ -56,7 +57,7 @@
 	if(!ishuman(user))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	used_wrench.play_tool_sound(user)
-	user.balloon_alert(user, "undeploying...")
+	user.balloon_alert(user, LANG("obj.d8917abe", null))
 	if(!do_after(user, undeploy_time, src))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/undeployed_object = new spawned_on_undeploy()

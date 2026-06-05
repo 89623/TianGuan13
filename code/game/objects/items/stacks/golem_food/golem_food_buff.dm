@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// An effect you gain from eating minerals
 /datum/golem_food_buff
 	/// If we can apply this while you already have a different status effect
@@ -102,7 +103,7 @@
 	consumed.forceMove(get_turf(consumer))
 	new_hand.held_gibtonite = null
 	qdel(new_hand)
-	consumer.visible_message(span_warning("[consumer] can't keep [consumed] down, and coughs it onto the ground!"))
+	consumer.visible_message(span_warning(LANG("datum.1815732a", list(consumer, consumed))))
 
 /datum/golem_food_buff/bluespace
 	exclusive = FALSE
@@ -118,4 +119,4 @@
 			consumer.dropItemToGround(stack)
 	if (consumer.put_in_hands(new_hand, del_on_fail = TRUE))
 		return
-	consumer.balloon_alert(consumer, "no free hands!")
+	consumer.balloon_alert(consumer, LANG("datum.1dee07cc", null))

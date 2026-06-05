@@ -51,9 +51,9 @@
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
 	. = ITEM_INTERACT_BLOCKING
 	if(I.use_tool(src, user, 50, volume = 50))
-		user.visible_message(span_notice("[user] pries \the [src] apart."),
-			span_notice("You pry apart \the [src]."),
-			span_hear("You hear splitting wood."))
+		user.visible_message(span_notice(LANG("obj.bb43d2f3", list(user, src))),
+			span_notice(LANG("obj.309c6090", list(src))),
+			span_hear(LANG("obj.5fcb16ad", null)))
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
 

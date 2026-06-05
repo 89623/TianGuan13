@@ -102,7 +102,7 @@
 
 /datum/action/cooldown/alien/make_structure/lay_egg/Activate(atom/target)
 	. = ..()
-	owner.visible_message(span_alertalien("[owner] lays an egg!"))
+	owner.visible_message(span_alertalien(LANG("datum.e0a767fe", list(owner))))
 
 //Button to let queen choose her praetorian.
 /datum/action/cooldown/alien/promote
@@ -183,8 +183,8 @@
 
 	to_chat(queen, span_noticealien(LANG("obj.d1b01c6f", list(to_promote))))
 	to_promote.visible_message(
-		span_alertalien("[to_promote] begins to expand, twist and contort!"),
-		span_noticealien("The queen has granted you a promotion to Praetorian!"),
+		span_alertalien(LANG("obj.c11d82d2", list(to_promote))),
+		span_noticealien(LANG("obj.31cae26d", null)),
 	)
 
 	var/mob/living/carbon/alien/lucky_winner = to_promote

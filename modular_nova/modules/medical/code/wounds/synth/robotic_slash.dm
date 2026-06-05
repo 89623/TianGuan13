@@ -363,23 +363,23 @@
 	var/your_or_other = (user == victim ? "your" : "[victim]'s")
 	var/replacing_or_suturing = (is_suture ? "repairing some" : "replacing")
 	while (suturing_item.tool_start_check())
-		user?.visible_message(span_danger("[user] begins [replacing_or_suturing] wiring within [their_or_other] [limb.plaintext_zone] with [suturing_item]..."), \
-			span_notice("You begin [replacing_or_suturing] wiring within [your_or_other] [limb.plaintext_zone] with [suturing_item]..."))
+		user?.visible_message(span_danger(LANG("datum.4f5c8ea4", list(user, replacing_or_suturing, their_or_other, limb.plaintext_zone, suturing_item))), \
+			span_notice(LANG("datum.d5a0e373", list(replacing_or_suturing, your_or_other, limb.plaintext_zone, suturing_item))))
 		if (!suturing_item.use_tool(target = victim, user = user, delay = ELECTRICAL_DAMAGE_SUTURE_WIRE_BASE_DELAY * delay_mult, amount = 1, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 			return
 
 		if (user != victim && user.combat_mode)
-			user?.visible_message(span_danger("[user] mangles some of [their_or_other] [limb.plaintext_zone]'s wiring!"), \
-				span_danger("You mangle some of [your_or_other] [limb.plaintext_zone]'s wiring!"), ignored_mobs = victim)
+			user?.visible_message(span_danger(LANG("datum.cc9d4da3", list(user, their_or_other, limb.plaintext_zone))), \
+				span_danger(LANG("datum.926fdc30", list(your_or_other, limb.plaintext_zone))), ignored_mobs = victim)
 			to_chat(victim, span_userdanger(LANG("datum.7da79057", list(capitalize(your_or_other), limb.plaintext_zone))))
 			adjust_intensity(change * 2)
 		else
 			var/repairs_or_replaces = (is_suture ? "repairs" : "replaces")
 			var/repair_or_replace = (is_suture ? "repair" : "replace")
-			user?.visible_message(span_notice("[user] [repairs_or_replaces] some of [their_or_other] [limb.plaintext_zone]'s wiring!"), \
-				span_notice("You [repair_or_replace] some of [your_or_other] [limb.plaintext_zone]'s wiring!"))
+			user?.visible_message(span_notice(LANG("datum.7eaaab3f", list(user, repairs_or_replaces, their_or_other, limb.plaintext_zone))), \
+				span_notice(LANG("datum.c133083d", list(repair_or_replace, your_or_other, limb.plaintext_zone))))
 			adjust_intensity(-change)
-			victim?.balloon_alert(user, "intensity reduced to [get_intensity_mult() * 100]%")
+			victim?.balloon_alert(user, LANG("datum.acf95ff0", list(get_intensity_mult() * 100)))
 
 		if (fixed())
 			return
@@ -427,21 +427,21 @@
 	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
 	var/your_or_other = (user == victim ? "your" : "[victim]'s")
 	while (wirecutting_tool.tool_start_check())
-		user?.visible_message(span_danger("[user] begins resetting misplaced wiring within [their_or_other] [limb.plaintext_zone]..."), \
-			span_notice("You begin resetting misplaced wiring within [your_or_other] [limb.plaintext_zone]..."))
+		user?.visible_message(span_danger(LANG("datum.58e07bd4", list(user, their_or_other, limb.plaintext_zone))), \
+			span_notice(LANG("datum.e44b0df5", list(your_or_other, limb.plaintext_zone))))
 		if (!wirecutting_tool.use_tool(target = victim, user = user, delay = ELECTRICAL_DAMAGE_WIRECUTTER_BASE_DELAY * delay_mult, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 			return
 
 		if (user != victim && user.combat_mode)
-			user?.visible_message(span_danger("[user] mangles some of [their_or_other] [limb.plaintext_zone]'s wiring!"), \
-				span_danger("You mangle some of [your_or_other] [limb.plaintext_zone]'s wiring!"), ignored_mobs = victim)
+			user?.visible_message(span_danger(LANG("datum.cc9d4da3", list(user, their_or_other, limb.plaintext_zone))), \
+				span_danger(LANG("datum.926fdc30", list(your_or_other, limb.plaintext_zone))), ignored_mobs = victim)
 			to_chat(victim, span_userdanger(LANG("datum.7da79057", list(capitalize(your_or_other), limb.plaintext_zone))))
 			adjust_intensity(change * 2)
 		else
-			user?.visible_message(span_notice("[user] resets some of [their_or_other] [limb.plaintext_zone]'s wiring!"), \
-				span_notice("You reset some of [your_or_other] [limb.plaintext_zone]'s wiring!"))
+			user?.visible_message(span_notice(LANG("datum.28dc76b8", list(user, their_or_other, limb.plaintext_zone))), \
+				span_notice(LANG("datum.168ac4fe", list(your_or_other, limb.plaintext_zone))))
 			adjust_intensity(-change)
-			victim?.balloon_alert(user, "intensity reduced to [get_intensity_mult() * 100]%")
+			victim?.balloon_alert(user, LANG("datum.acf95ff0", list(get_intensity_mult() * 100)))
 
 		if (fixed())
 			return

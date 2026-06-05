@@ -41,7 +41,7 @@
 		return FALSE
 
 	if(linked_mob.handcuffed)
-		linked_mob.balloon_alert(linked_mob, "handcuffed")
+		linked_mob.balloon_alert(linked_mob, LANG("datum.15d796f0", null))
 		activate()
 		return FALSE
 

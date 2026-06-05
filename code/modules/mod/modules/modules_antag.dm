@@ -249,7 +249,7 @@
 	. = ..()
 	if(!.)
 		return
-	mod.wearer.visible_message(span_warning("[mod.wearer] starts charging a kick!"), \
+	mod.wearer.visible_message(span_warning(LANG("obj.d1adb849", list(mod.wearer))), \
 		blind_message = span_hear("You hear a charging sound."))
 	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
 	balloon_alert(mod.wearer, LANG("obj.9dc8c02a", null))

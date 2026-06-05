@@ -198,7 +198,7 @@
 	if(I.heat < 1000)
 		return
 	set_lit(TRUE)
-	user.visible_message(span_notice("[user] lights up the [src]."))
+	user.visible_message(span_notice(LANG("obj.3460ffa1", list(user, src))))
 
 /obj/item/burner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!lit)
@@ -207,7 +207,7 @@
 	if(is_reagent_container(interacting_with))
 		var/obj/item/reagent_containers/container = interacting_with
 		container.reagents.expose_temperature(get_temperature())
-		user.visible_message(span_notice("[user] heats up [src]."), span_notice("You heat up [src]."))
+		user.visible_message(span_notice(LANG("obj.2d3444c8", list(user, src))), span_notice(LANG("obj.b3a40097", list(src))))
 		playsound(user, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
@@ -215,7 +215,7 @@
 		var/obj/item/item = interacting_with
 		if(item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			set_lit(TRUE)
-			user.visible_message(span_notice("[user] lights up [src]."), span_notice("You light up [src]."))
+			user.visible_message(span_notice(LANG("obj.872f59f0", list(user, src))), span_notice(LANG("obj.447f07cb", list(src))))
 			return ITEM_INTERACT_SUCCESS
 
 	return ITEM_INTERACT_BLOCKING
@@ -254,7 +254,7 @@
 		return
 	if(lit)
 		set_lit(FALSE)
-		user.visible_message(span_notice("[user] snuffs out [src]'s flame."))
+		user.visible_message(span_notice(LANG("obj.71ebf51e", list(user, src))))
 
 /obj/item/burner/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(lit && M.ignite_mob())

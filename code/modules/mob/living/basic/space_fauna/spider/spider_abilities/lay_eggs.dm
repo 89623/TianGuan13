@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/lay_eggs
 	name = "Lay Eggs"
 	desc = "Lay a cluster of eggs, which will soon grow into a normal spider."
@@ -30,12 +31,12 @@
 		return FALSE
 	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		if (feedback)
-			owner.balloon_alert(owner, "busy!")
+			owner.balloon_alert(owner, LANG("datum.8df72942", null))
 		return FALSE
 	var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 	if(eggs)
 		if (feedback)
-			owner.balloon_alert(owner, "already eggs here!")
+			owner.balloon_alert(owner, LANG("datum.f33507b8", null))
 		return FALSE
 	return TRUE
 
@@ -43,12 +44,12 @@
 	owner.balloon_alert_to_viewers("laying eggs...")
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	if(!do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = DOAFTER_SOURCE_SPIDER))
-		owner.balloon_alert(owner, "interrupted!")
+		owner.balloon_alert(owner, LANG("datum.c67b5d27", null))
 		StartCooldown(0 SECONDS)
 		return
 	var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 	if(eggs)
-		owner.balloon_alert(owner, "already eggs here!")
+		owner.balloon_alert(owner, LANG("datum.f33507b8", null))
 	else
 		lay_egg()
 	StartCooldown()
@@ -82,7 +83,7 @@
 		return FALSE
 	if (charges <= 0)
 		if (feedback)
-			owner.balloon_alert(owner, "must feed first!")
+			owner.balloon_alert(owner, LANG("datum.2bebcffa", null))
 		return FALSE
 	return TRUE
 

@@ -63,9 +63,9 @@
 /obj/machinery/botpad/proc/recall(mob/living/user)
 	var/atom/our_bot = launched_bot?.resolve()
 	if(isnull(our_bot))
-		user.balloon_alert(user, "no bots sent from the pad!")
+		user.balloon_alert(user, LANG("obj.81676f69", null))
 		return
-	user.balloon_alert(user, "bot sent back to pad")
+	user.balloon_alert(user, LANG("obj.342d35a1", null))
 	if(isbasicbot(our_bot))
 		var/mob/living/basic/bot/basic_bot = our_bot
 		basic_bot.summon_bot(src)

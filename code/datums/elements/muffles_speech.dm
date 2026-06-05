@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/element/muffles_speech
 
 /datum/element/muffles_speech/Attach(datum/target)
@@ -29,7 +30,7 @@
 		return NONE
 	// NOVA EDIT ADDITION END
 	if(!emote.hands_use_check && (emote.emote_type & EMOTE_AUDIBLE))
-		source.audible_message("makes a [pick("strong ", "weak ", "")]noise.", audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE)
+		source.audible_message(LANG("datum.2d4d2b60", list(pick("strong ", "weak ", ""))), audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE)
 		return COMPONENT_CANT_EMOTE
 	return NONE
 

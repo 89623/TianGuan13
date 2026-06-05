@@ -73,7 +73,7 @@
 		if(!CheckTurfsPressure())
 			damaged = FALSE
 			if(console)
-				console.say("Repairs complete, launching soon.")
+				console.say(LANG("obj.516aa6c3", null))
 		return
 
 //If this proc is high on the profiler add a cooldown to the stuff after this line
@@ -81,7 +81,7 @@
 	else if(CheckTurfsPressure())
 		damaged = TRUE
 		if(console)
-			console.say("Alert, hull breach detected!")
+			console.say(LANG("obj.47971f9c", null))
 		aas_config_announce(/datum/aas_config_entry/arrivals_broken, list(), command_span=TRUE)
 		if(mode != SHUTTLE_CALL)
 			sound_played = FALSE
@@ -161,13 +161,13 @@
 			if(cancel_reason)
 				mode = SHUTTLE_IDLE
 				if(console)
-					console.say("Launch cancelled, [cancel_reason].")
+					console.say(LANG("obj.b621b5d5", list(cancel_reason)))
 				return
 		force_depart = FALSE
 	. = ..()
 	if(!. && !docked && !damaged)
 		if(console)
-			console.say("Welcome to your new life, employees!")
+			console.say(LANG("obj.54010e2e", null))
 		for(var/L in queued_announces)
 			var/datum/callback/C = L
 			C.Invoke()

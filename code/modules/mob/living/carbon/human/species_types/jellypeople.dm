@@ -290,8 +290,8 @@
 		return
 	CHECK_DNA_AND_SPECIES(H)
 	H.visible_message(
-		span_notice("[owner] gains a look of concentration while standing perfectly still."),
-		span_notice("You focus intently on moving your body while standing perfectly still..."),
+		span_notice(LANG("datum.30ed0bfa", list(owner))),
+		span_notice(LANG("datum.03d94680", null)),
 	)
 
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
@@ -333,8 +333,8 @@
 	H.transfer_quirk_datums(spare)
 	H.mind.transfer_to(spare)
 	spare.visible_message(
-		span_warning("[H] distorts as a new body \"steps out\" of [H.p_them()]."),
-		span_notice("...and after a moment of disorentation, you're besides yourself!"),
+		span_warning(LANG("datum.1ce48dc3", list(H, H.p_them()))),
+		span_notice(LANG("datum.a726ca69", null)),
 	)
 
 
@@ -471,13 +471,13 @@
 	if(!can_swap(dupe)) //sanity check
 		return
 	if(M.current.stat == CONSCIOUS)
-		M.current.visible_message(span_notice("[M.current] stops moving and starts staring vacantly into space."),
-			span_notice("You stop moving this body..."))
+		M.current.visible_message(span_notice(LANG("datum.437c2d3c", list(M.current))),
+			span_notice(LANG("datum.97f627b5", null)))
 	else
 		to_chat(M.current, span_notice(LANG("datum.2442314d", null)))
 	M.current.transfer_quirk_datums(dupe)
 	M.transfer_to(dupe)
-	dupe.visible_message(span_notice("[dupe] blinks and looks around."), span_notice("...and move this one instead."))
+	dupe.visible_message(span_notice(LANG("datum.f0b7f66c", list(dupe))), span_notice(LANG("datum.026e037a", null)))
 
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
@@ -606,18 +606,18 @@
 			to_remove.forceMove(human_owner.drop_location())
 
 		species.current_extract = null
-		human_owner.balloon_alert(human_owner, "[to_remove.name] ejected")
+		human_owner.balloon_alert(human_owner, LANG("datum.2dcc5387", list(to_remove.name)))
 
 	else
 		var/obj/item/slime_extract/to_integrate = human_owner.get_active_held_item()
 		if(!istype(to_integrate) || to_integrate.extract_uses <= 0)
-			human_owner.balloon_alert(human_owner, "need an unused slime extract!")
+			human_owner.balloon_alert(human_owner, LANG("datum.735806fb", null))
 			return
 		if(!human_owner.temporarilyRemoveItemFromInventory(to_integrate))
 			return
 		to_integrate.forceMove(human_owner)
 		species.current_extract = to_integrate
-		human_owner.balloon_alert(human_owner, "[to_integrate.name] consumed")
+		human_owner.balloon_alert(human_owner, LANG("datum.ca199e48", list(to_integrate.name)))
 
 	for(var/datum/action/to_update as anything in species.luminescent_actions)
 		to_update.build_all_button_icons()

@@ -444,15 +444,15 @@ Behavior that's still missing from this component that original food items had t
 			return
 		if(fullness <= (600 * (1 + eater.overeatduration / (2000 SECONDS))) || HAS_TRAIT(eater, TRAIT_VORACIOUS))
 			eater.visible_message(
-				span_danger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed [eater] [parent]." : "stuff [parent] down [eater]'s throat hole! Gross."]"),
-				span_userdanger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed you [parent]." : "stuff [parent] down your throat hole! Gross."]")
+				span_danger(LANG("datum.6a589e64", list(feeder, eater.get_bodypart(BODY_ZONE_HEAD) ? "feed [eater] [parent]." : "stuff [parent] down [eater]'s throat hole! Gross."))),
+				span_userdanger(LANG("datum.6a589e64", list(feeder, eater.get_bodypart(BODY_ZONE_HEAD) ? "feed you [parent]." : "stuff [parent] down your throat hole! Gross.")))
 			)
 			if(eater.is_blind())
 				to_chat(eater, span_userdanger(LANG("datum.a2964620", null)))
 		else
 			eater.visible_message(
-				span_danger("[feeder] cannot force any more of [parent] down [eater]'s [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]"),
-				span_userdanger("[feeder] cannot force any more of [parent] down your [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]")
+				span_danger(LANG("datum.8968f0a2", list(feeder, parent, eater, eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."))),
+				span_userdanger(LANG("datum.5c9a4562", list(feeder, parent, eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh.")))
 			)
 			if(eater.is_blind())
 				to_chat(eater, span_userdanger(LANG("datum.23daaa27", null)))
@@ -463,8 +463,8 @@ Behavior that's still missing from this component that original food items had t
 			return
 		log_combat(feeder, eater, "fed", owner.reagents.get_reagent_log_string())
 		eater.visible_message(
-			span_danger("[feeder] forces [eater] to eat [parent]!"),
-			span_userdanger("[feeder] forces you to eat [parent]!")
+			span_danger(LANG("datum.723d26c4", list(feeder, eater, parent))),
+			span_userdanger(LANG("datum.65c76386", list(feeder, parent)))
 		)
 		if(eater.is_blind())
 			to_chat(eater, span_userdanger(LANG("datum.133c422d", null)))
@@ -557,7 +557,7 @@ Behavior that's still missing from this component that original food items had t
 	if(!iscarbon(eater))
 		return FALSE
 	if(eater.is_mouth_covered())
-		eater.balloon_alert(feeder, "mouth is covered!")
+		eater.balloon_alert(feeder, LANG("datum.290d96e8", null))
 		return FALSE
 
 	var/atom/food = parent
@@ -727,7 +727,7 @@ Behavior that's still missing from this component that original food items had t
 		return
 
 	if(bitecount == 0 || prob(50))
-		doggy.manual_emote("nibbles away at \the [food].")
+		doggy.manual_emote(LANG("datum.4d78ce19", list(food)))
 	bitecount++
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -769,7 +769,7 @@ Behavior that's still missing from this component that original food items had t
 
 	if(foodtypes & edible_flags)
 		food.reagents.trans_to(eater, food.reagents.total_volume, transferred_by = eater)
-		eater.visible_message(span_warning("[eater] eats [food]!"), span_notice("You eat [food]."))
+		eater.visible_message(span_warning(LANG("datum.bd6d6680", list(eater, food))), span_notice(LANG("datum.0a3b7200", list(food))))
 		playsound(get_turf(eater),'sound/items/eatfood.ogg', rand(30,50), TRUE)
 		qdel(food)
 		return COMPONENT_ATOM_EATEN

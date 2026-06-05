@@ -165,7 +165,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		var/safety = tgui_alert(user, LANG("obj.64d9dd2e", null), LANG("obj.3a7eb13e", null), list("Proceed", "Abort"))
 		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated)
 			return
-		user.visible_message(span_warning("[user] knocks on [src]..."), span_bolddanger("You tentatively knock on [src]..."))
+		user.visible_message(span_warning(LANG("obj.063d5068", list(user, src))), span_bolddanger(LANG("obj.467cb6ab", list(src))))
 		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, TRUE)
 		sleep(5 SECONDS)
 	return ..()

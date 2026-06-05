@@ -123,7 +123,7 @@
 	if(!rite_target)
 		return FALSE
 	rite_target.set_species(/datum/species/android)
-	rite_target.visible_message(span_notice("[rite_target] has been converted by the rite of [name]!"))
+	rite_target.visible_message(span_notice(LANG("datum.22f6e658", list(rite_target, name))))
 	return TRUE
 
 
@@ -380,11 +380,11 @@
 	if(QDELETED(blank_paper) || !(tool_turf == blank_paper.loc)) //check if the same paper is still there
 		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
-	blank_paper.visible_message(span_notice("words magically form on [blank_paper]!"))
+	blank_paper.visible_message(span_notice(LANG("datum.116a8c91", list(blank_paper))))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 	if(sect.existing_contract)
-		sect.existing_contract.visible_message(span_warning("[src] fizzles into nothing!"))
+		sect.existing_contract.visible_message(span_warning(LANG("datum.b8e21fc6", list(src))))
 		qdel(sect.existing_contract)
 	sect.existing_contract = new /obj/item/sparring_contract(tool_turf)
 	qdel(blank_paper)

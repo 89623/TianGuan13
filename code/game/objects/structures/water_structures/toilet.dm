@@ -119,7 +119,7 @@
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
 		playsound(src.loc, SFX_SWING_HIT, 25, TRUE)
-		swirlie.visible_message(span_danger("[user] slams the toilet seat onto [swirlie]'s head!"), span_userdanger("[user] slams the toilet seat onto your head!"), span_hear("You hear reverberating porcelain."))
+		swirlie.visible_message(span_danger(LANG("obj.5b574b95", list(user, swirlie))), span_userdanger(LANG("obj.2b65919d", list(user))), span_hear(LANG("obj.a187bef8", null)))
 		log_combat(user, swirlie, "swirlied (brute)")
 		swirlie.adjust_brute_loss(5)
 		return
@@ -139,7 +139,7 @@
 			if(!reagents.total_volume)
 				to_chat(user, span_notice(LANG("obj.6b017b25", list(src))))
 				return
-			grabbed_mob.visible_message(span_danger("[user] starts to give [grabbed_mob] a swirlie!"), span_userdanger("[user] starts to give you a swirlie..."))
+			grabbed_mob.visible_message(span_danger(LANG("obj.b4764cca", list(user, grabbed_mob))), span_userdanger(LANG("obj.954af9d8", list(user))))
 			swirlie = grabbed_mob
 			var/was_alive = (swirlie.stat != DEAD)
 			if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM))
@@ -148,7 +148,7 @@
 			if(!reagents.total_volume)
 				to_chat(user, span_notice(LANG("obj.6b017b25", list(src))))
 				return
-			grabbed_mob.visible_message(span_danger("[user] gives [grabbed_mob] a swirlie!"), span_userdanger("[user] gives you a swirlie!"), span_hear("You hear a toilet flushing."))
+			grabbed_mob.visible_message(span_danger(LANG("obj.465c412c", list(user, grabbed_mob))), span_userdanger(LANG("obj.4bc4d8aa", list(user))), span_hear(LANG("obj.088b58d1", null)))
 			if(iscarbon(grabbed_mob))
 				var/mob/living/carbon/carbon_grabbed = grabbed_mob
 				if(!carbon_grabbed.internal)
@@ -162,7 +162,7 @@
 			swirlie = null
 		else
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, TRUE)
-			grabbed_mob.visible_message(span_danger("[user] slams [grabbed_mob.name] into [src]!"), span_userdanger("[user] slams you into [src]!"))
+			grabbed_mob.visible_message(span_danger(LANG("obj.9570ee0c", list(user, grabbed_mob.name, src))), span_userdanger(LANG("obj.ccbe9669", list(user, src))))
 			log_combat(user, grabbed_mob, "toilet slammed")
 			grabbed_mob.adjust_brute_loss(5)
 		return
@@ -341,9 +341,9 @@
 	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
 	if(tool.use_tool(src, user, 30))
 		user.visible_message(
-			span_notice("[user] [cistern_open ? "replaces the lid on" : "lifts the lid off"] the cistern!"),
-			span_notice("You [cistern_open ? "replace the lid on" : "lift the lid off"] the cistern!"),
-			span_hear("You hear grinding porcelain."))
+			span_notice(LANG("obj.3af6aa38", list(user, cistern_open ? "replaces the lid on" : "lifts the lid off"))),
+			span_notice(LANG("obj.917e3a7d", list(cistern_open ? "replace the lid on" : "lift the lid off"))),
+			span_hear(LANG("obj.e00505d8", null)))
 		cistern_open = !cistern_open
 		update_appearance(UPDATE_ICON_STATE)
 	return ITEM_INTERACT_SUCCESS

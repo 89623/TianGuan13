@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Make a sticky web under yourself for area fortification
 /datum/action/cooldown/mob_cooldown/lay_web
 	name = "Spin Web"
@@ -31,19 +32,19 @@
 		return FALSE
 	if(DOING_INTERACTION(owner, DOAFTER_SOURCE_SPIDER))
 		if (feedback)
-			owner.balloon_alert(owner, "busy!")
+			owner.balloon_alert(owner, LANG("datum.8df72942", null))
 		return FALSE
 	if(!isturf(owner.loc))
 		if (feedback)
-			owner.balloon_alert(owner, "invalid location!")
+			owner.balloon_alert(owner, LANG("datum.5a6389ed", null))
 		return FALSE
 	if(HAS_TRAIT(owner.loc, TRAIT_SPINNING_WEB_TURF))
 		if (feedback)
-			owner.balloon_alert(owner, "already being webbed!")
+			owner.balloon_alert(owner, LANG("datum.ac884a8f", null))
 		return FALSE
 	if(obstructed_by_other_web())
 		if (feedback)
-			owner.balloon_alert(owner, "already webbed!")
+			owner.balloon_alert(owner, LANG("datum.b6e10a25", null))
 		return FALSE
 	return TRUE
 
@@ -63,7 +64,7 @@
 	if(do_after(owner, webbing_time, target = spider_turf, interaction_key = DOAFTER_SOURCE_SPIDER) && owner.loc == spider_turf)
 		plant_web(spider_turf, web)
 	else
-		owner?.balloon_alert(owner, "interrupted!") // Null check because we might have been interrupted via being disintegrated
+		owner?.balloon_alert(owner, LANG("datum.c67b5d27", null)) // Null check because we might have been interrupted via being disintegrated
 	REMOVE_TRAIT(spider_turf, TRAIT_SPINNING_WEB_TURF, REF(src))
 	build_all_button_icons()
 
@@ -165,7 +166,7 @@
 		return FALSE
 	if(!isturf(owner.loc))
 		if (feedback)
-			owner.balloon_alert(owner, "invalid location!")
+			owner.balloon_alert(owner, LANG("datum.5a6389ed", null))
 		return FALSE
 	return TRUE
 

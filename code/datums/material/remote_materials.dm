@@ -221,10 +221,10 @@ handles linking back and forth.
 	if (!istype(movable_parent))
 		return FALSE
 	if (!mat_container) //no silolink & local storage not supported
-		movable_parent.say("No access to material storage, please contact the quartermaster.")
+		movable_parent.say(LANG("datum.61413399", null))
 		return FALSE
 	if(check_hold && on_hold()) //silo on hold
-		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
+		movable_parent.say(LANG("datum.2b777263", null))
 		return FALSE
 	if(SEND_SIGNAL(movable_parent, COMSIG_ORE_SILO_PERMISSION_CHECKED, user_data, movable_parent) & COMPONENT_ORE_SILO_DENY)
 		return FALSE

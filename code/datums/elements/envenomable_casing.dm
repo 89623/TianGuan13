@@ -30,7 +30,7 @@
 	if(!target.is_open_container())
 		return NONE
 	if(!casing.loaded_projectile)
-		user.balloon_alert(user, "casing is already spent!")
+		user.balloon_alert(user, LANG("datum.df2a9347", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/datum/reagent/venom_applied = target.reagents.get_master_reagent()

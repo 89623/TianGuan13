@@ -56,7 +56,7 @@
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/list/rituals = heretic_datum.get_rituals()
 	if(!length(rituals))
-		loc.balloon_alert(user, "no rituals available!")
+		loc.balloon_alert(user, LANG("obj.bc2aa081", null))
 		is_in_use = FALSE
 		return
 
@@ -167,7 +167,7 @@
 
 	if(length(what_are_we_missing))
 		// Let them know it screwed up
-		loc.balloon_alert(user, "ritual failed, missing components!")
+		loc.balloon_alert(user, LANG("obj.1a08c859", null))
 		// Then let them know what they're missing
 		to_chat(user, span_hierophant_warning(LANG("obj.4a4e2a45", list(english_list(what_are_we_missing), ritual.name))))
 		return FALSE
@@ -223,7 +223,7 @@
 	// No feedback is given on failure here -
 	// the ritual itself should handle it (providing specifics as to why it failed)
 	if(ritual_result)
-		loc.balloon_alert(user, "ritual complete")
+		loc.balloon_alert(user, LANG("obj.3c6f6a53", null))
 
 	return ritual_result
 

@@ -52,7 +52,7 @@
 	R.transfer_fingerprints_to(TP)
 	TP.add_fingerprint(user)
 	TP.setDir(turn(src.dir, -90))
-	user.visible_message(span_notice("[user] inserts [R]."), span_notice("You insert [R]."))
+	user.visible_message(span_notice(LANG("obj.055270ea", list(user, R))), span_notice(LANG("obj.a134b5ec", list(R))))
 	qdel(R)
 
 
@@ -255,13 +255,13 @@
 	if(!isliving(AM))
 		if(!COOLDOWN_FINISHED(src, freight_output))
 			if(COOLDOWN_FINISHED(src, freight_message))
-				AM.visible_message(span_notice("Freight pod dispenser is recharging. Please wait."))
+				AM.visible_message(span_notice(LANG("obj.2c094d95", null)))
 				COOLDOWN_START(src, freight_message, 10 SECONDS)
 			return
 		COOLDOWN_START(src, freight_output, 2 SECONDS)
 
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
-	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
+	AM.visible_message(span_notice(LANG("obj.45e00279", list(pod, AM))), span_notice(LANG("obj.7ee5397c", list(pod))))
 	playsound(src, 'sound/items/weapons/emitter2.ogg', 50, TRUE)
 	pod.setDir(turn(src.dir, -90))
 	AM.forceMove(pod)

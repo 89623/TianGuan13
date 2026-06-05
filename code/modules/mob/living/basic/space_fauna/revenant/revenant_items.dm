@@ -30,8 +30,8 @@
 	if(inert)
 		return ..()
 	user.visible_message(
-		span_notice("[user] scatters [src] in all directions."),
-		span_notice("You scatter [src] across the area."),
+		span_notice(LANG("obj.e9f6fbdf", list(user, src))),
+		span_notice(LANG("obj.1da11af3", list(src))),
 	)
 	var/obj/structure/mirror/nearby_mirror = check_for_mirrors(drop_location(), 5)
 	if(nearby_mirror)
@@ -53,7 +53,7 @@
 /obj/item/ectoplasm/revenant/proc/transfer_to_mirror(obj/structure/mirror/nearby_mirror)
 	PRIVATE_PROC(TRUE)
 	nearby_mirror.TakeComponent(GetComponent(/datum/component/revenant_prison))
-	nearby_mirror.visible_message(span_revenwarning("A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"))
+	nearby_mirror.visible_message(span_revenwarning(LANG("obj.ff5c4cbb", list(src, nearby_mirror))))
 	log_game("A revenant was trapped inside [nearby_mirror]")
 	message_admins("A revenant was trapped inside [nearby_mirror] [ADMIN_JMP(nearby_mirror)]")
 
@@ -65,7 +65,7 @@
 		. += span_revenwarning(LANG("obj.d2af643f", null))
 
 /obj/item/ectoplasm/revenant/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!"))
+	user.visible_message(span_suicide(LANG("obj.85ae4475", list(user, src, user.p_theyre()))))
 	qdel(src)
 	return OXYLOSS
 

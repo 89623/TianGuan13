@@ -11,7 +11,7 @@
 	. = ..()
 	var/turf/tool_turf = get_turf(religious_tool)
 	var/obj/item/instrument/violin/fidis = new /obj/item/instrument/violin/festival(get_turf(religious_tool))
-	fidis.visible_message(span_notice("[fidis] appears!"))
+	fidis.visible_message(span_notice(LANG("datum.71cf4641", list(fidis))))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 
 /datum/religion_rites/portable_song_tuning
@@ -39,7 +39,7 @@
 	if(QDELETED(empower_target) || !(tool_turf == empower_target.loc)) //check if the instrument is still there
 		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
-	empower_target.visible_message(span_notice("[empower_target] glows for a moment."))
+	empower_target.visible_message(span_notice(LANG("datum.0d43f7c4", list(empower_target))))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	var/list/allowed_rites_from_bible = subtypesof(/datum/religion_rites/song_tuner)
 	empower_target.AddComponent( \

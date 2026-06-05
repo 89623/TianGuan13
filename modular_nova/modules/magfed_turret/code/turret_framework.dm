@@ -130,8 +130,8 @@
 
 		balloon_alert(user, LANG("obj.ddc1329a", null))
 		user.visible_message(
-			span_danger("[user] bashes [src] with [tool]!"),
-			span_danger("You bash [src] with [tool]!"),
+			span_danger(LANG("obj.2a0f4de0", list(user, src, tool))),
+			span_danger(LANG("obj.acf5f95a", list(src, tool))),
 			null,
 			COMBAT_MESSAGE_RANGE,
 		)

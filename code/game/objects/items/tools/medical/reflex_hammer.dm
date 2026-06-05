@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/reflexhammer
 	name = "reflex hammer"
 	desc = "A small plastic headed hammer, used to test for neurological damage."
@@ -16,6 +17,6 @@
 	AddElement(/datum/element/kneejerk)
 
 /obj/item/reflexhammer/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! Unfortunately, it's not a real hammer! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.da5988d9", list(user, user.p_them(), src, user.p_theyre()))))
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 	return STAMINALOSS | SHAME

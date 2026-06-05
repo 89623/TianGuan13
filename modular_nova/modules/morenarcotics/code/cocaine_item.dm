@@ -55,7 +55,7 @@
 	if(isnull(lungs) || istype(lungs, /obj/item/organ/lungs/synth))
 		to_chat(user, span_warning(LANG("obj.ffe7fde3", null)))
 		return
-	user.visible_message(span_notice("[user] starts snorting the [src]."))
+	user.visible_message(span_notice(LANG("obj.3a5b305f", list(user, src))))
 	if(do_after(user, 30))
 		to_chat(user, span_notice(LANG("obj.88742f46", list(src))))
 		if(reagents.total_volume)
@@ -90,7 +90,7 @@
 
 
 /obj/item/reagent_containers/cocainebrick/attack_self(mob/user)
-	user.visible_message(span_notice("[user] starts breaking up the [src]."))
+	user.visible_message(span_notice(LANG("obj.2c94b9ca", list(user, src))))
 	if(do_after(user,10))
 		to_chat(user, span_notice(LANG("obj.eb1bbccb", list(src))))
 		for(var/i = 1 to 5)

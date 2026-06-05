@@ -243,7 +243,7 @@
 		return CLICK_ACTION_BLOCKING
 
 	var/obj/item/organ = stored
-	user.visible_message(span_notice("[user] dumps [organ] from [src]."), span_notice("You dump [organ] from [src]."))
+	user.visible_message(span_notice(LANG("obj.9933dc27", list(user, organ, src))), span_notice(LANG("obj.9d3802a3", list(organ, src))))
 	organ.forceMove(drop_location())
 	return CLICK_ACTION_SUCCESS
 

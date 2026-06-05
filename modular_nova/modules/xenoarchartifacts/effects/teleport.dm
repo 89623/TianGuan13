@@ -8,8 +8,8 @@
 		return
 	if(teleport_around(user, 10))
 		user.visible_message(
-			span_warning("[user] is suddenly zapped away elsewhere!"),
-			span_warning("You are suddenly zapped away elsewhere!"),
+			span_warning(LANG("datum.d8c54a6a", list(user))),
+			span_warning(LANG("datum.fc17dd20", null)),
 			blind_message = span_hear("You hear zap nearby."),
 		)
 

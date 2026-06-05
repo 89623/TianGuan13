@@ -22,12 +22,12 @@
 	if(DOING_INTERACTION(owner, BUILDING_WALL_ABILITY))
 		return TRUE
 	if(!isopenturf(target) || isgroundlessturf(target))
-		owner.balloon_alert(owner, "cant build here!")
+		owner.balloon_alert(owner, LANG("datum.f3cc30a3", null))
 		return TRUE
 	var/obj/item/stack/rods/our_rods = locate() in owner
 	var/turf/turf_target = target
 	if(turf_target.is_blocked_turf())
-		owner.balloon_alert(owner, "blocked!")
+		owner.balloon_alert(owner, LANG("datum.62d831a3", null))
 		return TRUE
 	var/obj/effect/constructing_effect/effect = new(turf_target, 3 SECONDS)
 

@@ -393,7 +393,7 @@
 			balloon_alert(user, LANG("obj.c67b5d27", null))
 			return
 
-		loc.balloon_alert(user, "butchered")
+		loc.balloon_alert(user, LANG("obj.6fa9faa1", null))
 		new /obj/item/food/meat/slab/mouse(loc)
 		qdel(src)
 		return

@@ -151,7 +151,7 @@
 		return ITEM_INTERACT_SUCCESS
 	to_chat(src, span_danger(LANG("mob.776c94cf", null)))
 	var/atom/ai_structure = ai_mob_to_structure()
-	ai_structure.balloon_alert(user, "disconnected neural network")
+	ai_structure.balloon_alert(user, LANG("mob.41cde090", null))
 	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/ai/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)

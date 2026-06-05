@@ -356,7 +356,7 @@
 			return
 
 	update_bot_mode(new_mode = BOT_HEALING, update_hud = FALSE)
-	patient.visible_message("[src] is trying to tend the wounds of [patient]", span_userdanger("[src] is trying to tend your wounds!"))
+	patient.visible_message(LANG("mob.f192d16e", list(src, patient)), span_userdanger(LANG("mob.d27dca1b", list(src))))
 	if(!do_after(src, delay = 10 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION)) //NOVA EDIT CHANGE : Increased time as tradeoff for automated healing. ORIGINAL: if(!do_after(src, delay = 0.5 SECONDS, target = patient, interaction_key = TEND_DAMAGE_INTERACTION))
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
@@ -378,7 +378,7 @@
 		if(patient.get_current_damage_of_type(damage_type_healer) <= heal_threshold)
 			done_healing = TRUE
 
-	patient.visible_message(span_notice("[src] tends the wounds of [patient]!"), "[span_infoplain(span_green("[src] tends your wounds!"))]")
+	patient.visible_message(span_notice(LANG("mob.40476fec", list(src, patient))), "[span_infoplain(span_green("[src] tends your wounds!"))]")
 
 	if(done_healing)
 		visible_message(span_infoplain(LANG("mob.6051de99", list(src, p_their(), p_themselves()))))

@@ -51,11 +51,11 @@
 
 /obj/item/minebot_remote_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!primed)
-		user.balloon_alert(user, "not primed!")
+		user.balloon_alert(user, LANG("obj.d69a271b", null))
 		return ITEM_INTERACT_BLOCKING
 	var/turf/target_turf = get_turf(interacting_with)
 	if(isnull(target_turf) || isclosedturf(target_turf) || isgroundlessturf(target_turf))
-		user.balloon_alert(user, "invalid target!")
+		user.balloon_alert(user, LANG("obj.5c77b90d", null))
 		return ITEM_INTERACT_BLOCKING
 	playsound(src, 'sound/machines/beep/beep.ogg', 30)
 	clear_priming()

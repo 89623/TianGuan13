@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///This component allows something to be when crossed, for example for cockroaches.
 /datum/component/squashable
 	///Chance on crossed to be squashed
@@ -56,19 +57,19 @@
 		var/mob/living/crossing_mob = crossing_movable
 		if(crossing_mob.mob_size > MOB_SIZE_SMALL && !(crossing_mob.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 			if(HAS_TRAIT(crossing_mob, TRAIT_PACIFISM))
-				crossing_mob.visible_message(span_notice("[crossing_mob] carefully steps over [parent_as_living]."), span_notice("You carefully step over [parent_as_living] to avoid hurting it."))
+				crossing_mob.visible_message(span_notice(LANG("datum.24f383d0", list(crossing_mob, parent_as_living))), span_notice(LANG("datum.aef2f771", list(parent_as_living))))
 				return
 			if(should_squash)
-				crossing_mob.visible_message(span_notice("[crossing_mob] squashed [parent_as_living]."), span_notice("You squashed [parent_as_living]."))
+				crossing_mob.visible_message(span_notice(LANG("datum.998839f3", list(crossing_mob, parent_as_living))), span_notice(LANG("datum.502196ac", list(parent_as_living))))
 				Squish(parent_as_living)
 			else
-				parent_as_living.visible_message(span_notice("[parent_as_living] avoids getting crushed."))
+				parent_as_living.visible_message(span_notice(LANG("datum.97492c6a", list(parent_as_living))))
 	else if(isstructure(crossing_movable))
 		if(should_squash)
-			crossing_movable.visible_message(span_notice("[parent_as_living] is crushed under [crossing_movable]."))
+			crossing_movable.visible_message(span_notice(LANG("datum.52abe7fd", list(parent_as_living, crossing_movable))))
 			Squish(parent_as_living)
 		else
-			parent_as_living.visible_message(span_notice("[parent_as_living] avoids getting crushed."))
+			parent_as_living.visible_message(span_notice(LANG("datum.97492c6a", list(parent_as_living))))
 
 /datum/component/squashable/proc/Squish(mob/living/target)
 	if(squash_flags & SQUASHED_SHOULD_BE_GIBBED)

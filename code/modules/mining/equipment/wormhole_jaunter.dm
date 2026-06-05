@@ -16,7 +16,7 @@
 	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/wormhole_jaunter/attack_self(mob/user)
-	user.visible_message(span_notice("[user.name] activates \the [src]!"))
+	user.visible_message(span_notice(LANG("obj.c4887f35", list(user.name, src))))
 	SSblackbox.record_feedback("tally", "jaunter", 1, "User") // user activated
 	activate(user, TRUE)
 
@@ -78,7 +78,7 @@
 
 	var/mob/M = loc
 	if(istype(M) && triggered)
-		M.visible_message(span_userdanger("Your [src.name] overloads and activates!"))
+		M.visible_message(span_userdanger(LANG("obj.439c22f5", list(src.name))))
 		SSblackbox.record_feedback("tally", "jaunter", 1, "EMP") // EMP accidental activation
 		activate(M, FALSE, TRUE)
 	else if(triggered)
@@ -101,7 +101,7 @@
 		return
 
 	to_chat(user, span_userdanger(LANG("obj.f72a240e", list(src, chasm))))
-	chasm.visible_message(span_boldwarning("[user] falls into \the [chasm]!")) // To freak out any bystanders
+	chasm.visible_message(span_boldwarning(LANG("obj.cc559545", list(user, chasm)))) // To freak out any bystanders
 	SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // Chasm automatic activation
 	return COMPONENT_NO_CHASM_DROP
 

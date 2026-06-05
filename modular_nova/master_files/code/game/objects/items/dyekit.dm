@@ -34,7 +34,7 @@
 		if(!new_color || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
 
-		human_target.visible_message(span_notice("[user] starts applying hair dye to [dyeing_themselves ? "their own" : "[human_target]'s"] hair..."), span_notice("[dyeing_themselves ? "You start" : "[user] starts"] applying hair dye to [dyeing_themselves ? "your own" : "your"] hair..."), ignored_mobs = user)
+		human_target.visible_message(span_notice(LANG("obj.c2358a12", list(user, dyeing_themselves ? "their own" : "[human_target]'s"))), span_notice(LANG("obj.b7dd0d94", list(dyeing_themselves ? "You start" : "[user] starts", dyeing_themselves ? "your own" : "your"))), ignored_mobs = user)
 		if(!dyeing_themselves)
 			balloon_alert(user, LANG("obj.87b436e1", null))
 		if(!do_after(user, 3 SECONDS, target))
@@ -57,7 +57,7 @@
 		if(!new_grad_color || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
 
-		human_target.visible_message(span_notice("[user] starts applying hair dye to [dyeing_themselves ? "their own" : "[human_target]'s"] hair..."), span_notice("[dyeing_themselves ? "You start" : "[user] starts"] applying hair dye to [dyeing_themselves ? "your own" : "your"] hair..."), ignored_mobs = user)
+		human_target.visible_message(span_notice(LANG("obj.c2358a12", list(user, dyeing_themselves ? "their own" : "[human_target]'s"))), span_notice(LANG("obj.b7dd0d94", list(dyeing_themselves ? "You start" : "[user] starts", dyeing_themselves ? "your own" : "your"))), ignored_mobs = user)
 		if(!dyeing_themselves)
 			balloon_alert(user, LANG("obj.87b436e1", null))
 		if(!do_after(user, 3 SECONDS, target))
@@ -73,8 +73,8 @@
 	playsound(src, 'sound/effects/spray.ogg', 10, vary = TRUE)
 
 	human_target.visible_message(
-		span_notice("[user] finishes applying hair dye to [dyeing_themselves ? "their own" : "[human_target]'s"] hair, changing its color!"),
-		span_notice("[dyeing_themselves ? "You finish" : "[user] finishes"] applying hair dye to [dyeing_themselves ? "your own" : "your"] hair, changing its color!"), ignored_mobs = user)
+		span_notice(LANG("obj.aa012fcc", list(user, dyeing_themselves ? "their own" : "[human_target]'s"))),
+		span_notice(LANG("obj.3d587810", list(dyeing_themselves ? "You finish" : "[user] finishes", dyeing_themselves ? "your own" : "your"))), ignored_mobs = user)
 	if(!dyeing_themselves)
 		balloon_alert(user, LANG("obj.7fd26f0a", null))
 

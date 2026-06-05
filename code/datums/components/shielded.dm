@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * The shielded component causes the parent item to nullify a certain number of attacks against the wearer, see: shielded vests.
  */
@@ -202,6 +203,6 @@
 /// Default on_hit proc, since cult robes are stupid and have different descriptions/sparks
 /datum/component/shielded/proc/default_run_hit_callback(mob/living/owner, attack_text, current_charges)
 	do_sparks(2, TRUE, owner)
-	owner.visible_message(span_danger("[owner]'s shields deflect [attack_text] in a shower of sparks!"))
+	owner.visible_message(span_danger(LANG("datum.90bf1744", list(owner, attack_text))))
 	if(current_charges <= 0)
-		owner.visible_message(span_warning("[owner]'s shield overloads!"))
+		owner.visible_message(span_warning(LANG("datum.ba967d83", list(owner))))

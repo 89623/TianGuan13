@@ -38,7 +38,7 @@ Consuming extracts:
 		return ITEM_INTERACT_SUCCESS
 
 	nutriment_eaten = 0
-	user.visible_message(span_notice("[src] swells up and produces a small pile of cookies!"))
+	user.visible_message(span_notice(LANG("obj.a85dd0ec", list(src))))
 	playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
 	last_produced = world.time
 	for(var/i in 1 to cookies)
@@ -72,13 +72,13 @@ Consuming extracts:
 	var/mob/living/living_mob = interacting_with
 	var/fed = FALSE
 	if(living_mob == user)
-		living_mob.visible_message(span_notice("[user] eats [src]!"), span_notice("You eat [src]."))
+		living_mob.visible_message(span_notice(LANG("obj.bd6d6680", list(user, src))), span_notice(LANG("obj.0a3b7200", list(src))))
 		fed = TRUE
 	else
-		living_mob.visible_message(span_danger("[user] tries to force [living_mob] to eat [src]!"), span_userdanger("[user] tries to force you to eat [src]!"))
+		living_mob.visible_message(span_danger(LANG("obj.324f0486", list(user, living_mob, src))), span_userdanger(LANG("obj.4d361912", list(user, src))))
 		if(do_after(user, 2 SECONDS, target = living_mob))
 			fed = TRUE
-			living_mob.visible_message(span_danger("[user] forces [living_mob] to eat [src]!"), span_warning("[user] forces you to eat [src]."))
+			living_mob.visible_message(span_danger(LANG("obj.723d26c4", list(user, living_mob, src))), span_warning(LANG("obj.ab585e83", list(user, src))))
 	if(fed)
 		if(!HAS_TRAIT(living_mob, TRAIT_AGEUSIA))
 			to_chat(living_mob, span_notice(LANG("obj.c5883c1f", list(taste))))

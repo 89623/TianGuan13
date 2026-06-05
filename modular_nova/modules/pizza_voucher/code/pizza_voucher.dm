@@ -28,12 +28,12 @@
 	if(spent)
 		to_chat(user, span_warning(LANG("obj.72825869", list(src))))
 		return FALSE
-	user.visible_message(span_notice("[user] presses a button on [src]!"))
+	user.visible_message(span_notice(LANG("obj.69f56e26", list(user, src))))
 	desc = desc + " This one seems to be used-up."
 	spent = TRUE
-	user.visible_message(span_notice("A small bluespace rift opens just above [user]'s head and spits out a pizza box!"),
-		span_notice("A small bluespace rift opens just above your head and spits out a pizza box!"),
-		span_notice("You hear a fwoosh followed by a thump."),
+	user.visible_message(span_notice(LANG("obj.8e028098", list(user))),
+		span_notice(LANG("obj.c6351aac", null)),
+		span_notice(LANG("obj.c339c692", null)),
 	)
 	if(special_delivery)
 		priority_announce(

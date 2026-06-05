@@ -41,7 +41,7 @@
 	return FALSE
 
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/attacker, mob/living/defender)
-	attacker.say("TORNADO SWEEP!", forced="plasma fist")
+	attacker.say(LANG("datum.0aaa5721", null), forced="plasma fist")
 	dance_rotate(attacker, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), attacker, 'sound/items/weapons/punch1.ogg', 15, TRUE, -1))
 	tornado_spell.cast(attacker)
 	log_combat(attacker, defender, "tornado sweeped (Plasma Fist)")
@@ -49,9 +49,9 @@
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/attacker, mob/living/defender)
 	defender.visible_message(
-		span_danger("[attacker] hits [defender] with Plasma Punch!"),
-		span_userdanger("You're hit with a Plasma Punch by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("datum.22cc8208", list(attacker, defender))),
+		span_userdanger(LANG("datum.e8048de5", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		null,
 		attacker,
 	)
@@ -59,7 +59,7 @@
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(defender, get_dir(defender, get_step_away(defender, attacker)))
 	defender.throw_at(throw_target, 200, 4,attacker)
-	attacker.say("HYAH!", forced="plasma fist")
+	attacker.say(LANG("datum.2f5253bc", null), forced="plasma fist")
 	log_combat(attacker, defender, "threw back (Plasma Fist)")
 	return TRUE
 
@@ -68,11 +68,11 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
-	attacker.say("PLASMA FIST!", forced="plasma fist")
+	attacker.say(LANG("datum.b5ef43e2", null), forced="plasma fist")
 	defender.visible_message(
-		span_danger("[attacker] hits [defender] with THE PLASMA FIST TECHNIQUE!"),
-		span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("datum.dfeead67", list(attacker, defender))),
+		span_userdanger(LANG("datum.a1b7ac84", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		null,
 		attacker,
 	)
@@ -104,7 +104,7 @@
 	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target)
-	user.say("APOTHEOSIS!!", forced="plasma fist")
+	user.say(LANG("datum.6b008f49", null), forced="plasma fist")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)

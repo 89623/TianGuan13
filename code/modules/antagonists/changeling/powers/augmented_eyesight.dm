@@ -31,7 +31,7 @@
 
 	var/obj/item/organ/eyes/ling_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(isnull(ling_eyes))
-		user.balloon_alert(user, "no eyes!")
+		user.balloon_alert(user, LANG("datum.ac2c42c3", null))
 		return FALSE
 
 	..()

@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	overlay_mic_active = null
 
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
+	user.visible_message(span_suicide(LANG("obj.cdecc22b", list(user, src, user.p_their(), user.p_theyre(), user.p_them()))))
 	return TOXLOSS
 
 /obj/item/radio/headset/examine(mob/user)
@@ -460,17 +460,17 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		return ..()
 
 	if(keyslot2)
-		loc.balloon_alert(user, "cannot hold a third key!")
+		loc.balloon_alert(user, LANG("obj.45c882b7", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(key, src))
-		loc.balloon_alert(user, "cannot install!")
+		loc.balloon_alert(user, LANG("obj.b3c67530", null))
 		return ITEM_INTERACT_BLOCKING
 
 	keyslot2 = key
 	recalculateChannels()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	loc.balloon_alert(user, "encryption key installed")
+	loc.balloon_alert(user, LANG("obj.40711314", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/headset/recalculateChannels()

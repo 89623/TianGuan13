@@ -21,7 +21,7 @@
 	if(gibbed)
 		to_chat(user, span_notice(LANG("obj.678b0d8b", null)))
 		return
-	user.visible_message(span_notice("You see [user]'s soul dragged out of their body!"), span_notice("You feel your soul dragged away to a fresh body!"))
+	user.visible_message(span_notice(LANG("obj.ce4ced0f", list(user))), span_notice(LANG("obj.e211e3ed", null)))
 	var/typepath = user.type
 	var/mob/living/carbon/clone = new typepath(user.loc)
 	clone.real_name = user.real_name

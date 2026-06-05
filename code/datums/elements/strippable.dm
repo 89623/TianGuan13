@@ -153,8 +153,8 @@
 	var/is_silent = can_be_silent && HAS_TRAIT(user, TRAIT_STICKY_FINGERS)
 	if (!is_silent)
 		source.visible_message(
-			span_warning("[user] tries to remove [source]'s [item.name]."),
-			span_userdanger("[user] tries to remove your [item.name]."),
+			span_warning(LANG("datum.358cb361", list(user, source, item.name))),
+			span_userdanger(LANG("datum.c7f04489", list(user, item.name))),
 			blind_message = span_hear("You hear rustling."),
 			ignored_mobs = user,
 		)

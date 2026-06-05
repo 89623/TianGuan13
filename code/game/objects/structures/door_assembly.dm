@@ -91,7 +91,7 @@
 
 		if(mineral)
 			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-			user.visible_message(span_notice("[user] welds the [mineral] plating off the airlock assembly."), span_notice("You start to weld the [mineral] plating off the airlock assembly..."))
+			user.visible_message(span_notice(LANG("obj.595e3c41", list(user, mineral))), span_notice(LANG("obj.c5680a9b", list(mineral))))
 			if(tool.use_tool(src, user, 40, volume=50))
 				to_chat(user, span_notice(LANG("obj.04c8751b", list(mineral))))
 				new mineral_path(loc, 2)
@@ -99,7 +99,7 @@
 				transfer_assembly_vars(src, PA)
 
 		else if(glass)
-			user.visible_message(span_notice("[user] welds the glass panel out of the airlock assembly."), span_notice("You start to weld the glass panel out of the airlock assembly..."))
+			user.visible_message(span_notice(LANG("obj.6c6545fd", list(user))), span_notice(LANG("obj.4d93a372", null)))
 			if(tool.use_tool(src, user, 40, volume=50))
 				to_chat(user, span_notice(LANG("obj.d9d49b97", null)))
 				if(heat_proof_finished)
@@ -109,8 +109,8 @@
 					new /obj/item/stack/sheet/glass(get_turf(src))
 				glass = 0
 		else if(!anchored)
-			user.visible_message(span_warning("[user] disassembles the airlock assembly."), \
-								span_notice("You start to disassemble the airlock assembly..."))
+			user.visible_message(span_warning(LANG("obj.e0983c73", list(user))), \
+								span_notice(LANG("obj.86d28134", null)))
 			if(tool.use_tool(src, user, 40, volume=50))
 				to_chat(user, span_notice(LANG("obj.74c1dfb1", null)))
 				deconstruct(TRUE)
@@ -124,9 +124,9 @@
 					break
 
 			if(door_check)
-				user.visible_message(span_notice("[user] secures the airlock assembly to the floor."), \
-					span_notice("You start to secure the airlock assembly to the floor..."), \
-					span_hear("You hear wrenching."))
+				user.visible_message(span_notice(LANG("obj.ca15796d", list(user))), \
+					span_notice(LANG("obj.e76a0eda", null)), \
+					span_hear(LANG("obj.7eacbf56", null)))
 
 				if(tool.use_tool(src, user, 40, volume=100))
 					if(anchored)
@@ -138,9 +138,9 @@
 				to_chat(user, LANG("obj.f23c1bd4", null))
 
 		else
-			user.visible_message(span_notice("[user] unsecures the airlock assembly from the floor."), \
-				span_notice("You start to unsecure the airlock assembly from the floor..."), \
-				span_hear("You hear wrenching."))
+			user.visible_message(span_notice(LANG("obj.e46bef59", list(user))), \
+				span_notice(LANG("obj.07e30e4a", null)), \
+				span_hear(LANG("obj.7eacbf56", null)))
 			if(tool.use_tool(src, user, 40, volume=100))
 				if(!anchored)
 					return
@@ -152,8 +152,8 @@
 		if(!tool.tool_start_check(user, amount=1))
 			return
 
-		user.visible_message(span_notice("[user] wires the airlock assembly."), \
-							span_notice("You start to wire the airlock assembly..."))
+		user.visible_message(span_notice(LANG("obj.0560dc7b", list(user))), \
+							span_notice(LANG("obj.1cbdf49b", null)))
 		if(tool.use_tool(src, user, 40, amount=1))
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_WIRES)
 				return
@@ -162,8 +162,8 @@
 			name = "wired airlock assembly"
 
 	else if((tool.tool_behaviour == TOOL_WIRECUTTER) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
-		user.visible_message(span_notice("[user] cuts the wires from the airlock assembly."), \
-							span_notice("You start to cut the wires from the airlock assembly..."))
+		user.visible_message(span_notice(LANG("obj.bf1d728f", list(user))), \
+							span_notice(LANG("obj.7b33ed7c", null)))
 
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)
@@ -175,8 +175,8 @@
 
 	else if(istype(tool, /obj/item/electronics/airlock) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 		tool.play_tool_sound(src, 100)
-		user.visible_message(span_notice("[user] installs the electronics into the airlock assembly."), \
-							span_notice("You start to install electronics into the airlock assembly..."))
+		user.visible_message(span_notice(LANG("obj.1dc6640c", list(user))), \
+							span_notice(LANG("obj.fb1066e6", null)))
 		if(do_after(user, 4 SECONDS, target = src))
 			if( state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 				return
@@ -190,8 +190,8 @@
 
 
 	else if((tool.tool_behaviour == TOOL_CROWBAR) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
-		user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."), \
-								span_notice("You start to remove electronics from the airlock assembly..."))
+		user.visible_message(span_notice(LANG("obj.a05c355a", list(user))), \
+								span_notice(LANG("obj.bef30a55", null)))
 
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)
@@ -214,8 +214,8 @@
 				to_chat(user, span_warning(LANG("obj.ad6e1ca4", list(sheet, src))))
 				return
 			playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
-			user.visible_message(span_notice("[user] adds [sheet.name] to the airlock assembly."), \
-								span_notice("You start to install [sheet.name] into the airlock assembly..."))
+			user.visible_message(span_notice(LANG("obj.0886ae47", list(user, sheet.name))), \
+								span_notice(LANG("obj.4f07aac0", list(sheet.name))))
 			if(do_after(user, 4 SECONDS, target = src))
 				if(sheet.get_amount() < 1 || glass)
 					return
@@ -245,8 +245,8 @@
 				return
 
 			playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
-			user.visible_message(span_notice("[user] adds [sheet.name] to the airlock assembly."), \
-				span_notice("You start to install [sheet.name] into the airlock assembly..."))
+			user.visible_message(span_notice(LANG("obj.0886ae47", list(user, sheet.name))), \
+				span_notice(LANG("obj.4f07aac0", list(sheet.name))))
 			if(!do_after(user, 4 SECONDS, target = src) || sheet.get_amount() < 2 || mineral)
 				return
 			to_chat(user, span_notice(LANG("obj.fa170528", list(M))))
@@ -266,8 +266,8 @@
 			transfer_assembly_vars(src, MA, TRUE)
 
 	else if((tool.tool_behaviour == TOOL_SCREWDRIVER) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
-		user.visible_message(span_notice("[user] finishes the airlock."), \
-			span_notice("You start finishing the airlock..."))
+		user.visible_message(span_notice(LANG("obj.041fc707", list(user))), \
+			span_notice(LANG("obj.e58cd140", null)))
 
 		if(tool.use_tool(src, user, 40, volume=100))
 			if(loc && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER)

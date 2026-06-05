@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Allows players to place hats on the atom this is attached to
 /datum/component/hat_stabilizer
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -88,7 +89,7 @@
 	var/obj/item/hat = remove_hat()
 	if(!hat)
 		return
-	hat.visible_message(span_danger("[hat] goes flying off [hatless]'s head!"))
+	hat.visible_message(span_danger(LANG("datum.bc790b2b", list(hat, hatless))))
 	hat.throw_at(get_edge_target_turf(get_turf(hat), pick(GLOB.alldirs)), 2, 1, spin = TRUE)
 
 /datum/component/hat_stabilizer/proc/drop_hat(mob/hatless)
@@ -153,12 +154,12 @@
 		return
 
 	if(attached_hat)
-		movable_parent.balloon_alert(user, "hat already attached!")
+		movable_parent.balloon_alert(user, LANG("datum.3e3b122e", null))
 		return
 	if(isclothing(hitting_item))
 		var/obj/item/clothing/hat = hitting_item
 		if(hat.clothing_flags & STACKABLE_HELMET_EXEMPT)
-			movable_parent.balloon_alert(user, "invalid hat!")
+			movable_parent.balloon_alert(user, LANG("datum.c91fe7f9", null))
 			return
 
 	if(!user.transferItemToLoc(hitting_item, parent, force = FALSE, silent = TRUE))
@@ -173,7 +174,7 @@
 	head_angle = pick(1, -1)
 
 	if (!isnull(user))
-		movable_parent.balloon_alert(user, "hat attached")
+		movable_parent.balloon_alert(user, LANG("datum.cfd398c7", null))
 
 	if (!isclothing(parent))
 		movable_parent.update_appearance()
@@ -204,7 +205,7 @@
 		return
 	var/atom/movable/movable_parent = parent
 	if (remove_hat(user))
-		movable_parent.balloon_alert(user, "hat removed")
+		movable_parent.balloon_alert(user, LANG("datum.9254066e", null))
 	else
 		movable_parent.balloon_alert_to_viewers("the hat falls to the floor!")
 

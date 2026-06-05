@@ -113,7 +113,7 @@
  * This happens when a non-heretic fails the minigame. Their arm is ripped straight off and thrown into the rift.
  */
 /datum/fish_source/dimensional_rift/proc/on_epic_fail(mob/user, datum/fishing_challenge/challenge, success)
-	challenge.location.visible_message(span_danger("[challenge.location]'s tendrils lash out and pull on [user]'s [user.get_active_hand()], ripping it clean off and throwing it towards itself!"))
+	challenge.location.visible_message(span_danger(LANG("datum.22e01f23", list(challenge.location, user, user.get_active_hand()))))
 	var/obj/item/bodypart/random_arm = user.get_active_hand()
 	if (random_arm.dismember(BRUTE, FALSE))
 		random_arm.forceMove(user.drop_location())
@@ -136,7 +136,7 @@
 /datum/fish_source/dimensional_rift/proc/arm_fished(atom/spawn_location)
 	var/obj/item/bodypart/arm/random_arm = pick(subtypesof(/obj/item/bodypart/arm))
 	random_arm = new random_arm(spawn_location)
-	spawn_location.visible_message(span_notice("A [random_arm] is snatched up from beneath the eldritch depths of [spawn_location]!"))
+	spawn_location.visible_message(span_notice(LANG("datum.1190364f", list(random_arm, spawn_location))))
 	return random_arm
 
 /datum/fish_source/dimensional_rift/proc/influence_fished(mob/user, datum/fishing_challenge/challenge)
@@ -146,7 +146,7 @@
 	if(ishuman(user))
 		human_user = user
 
-	user.visible_message(span_danger("[user] reels [user.p_their()] [challenge.used_rod] in, catching a glimpse into the world beyond!"), span_notice("You catch.. a glimpse into the workings of the Mansus itself!"))
+	user.visible_message(span_danger(LANG("datum.babc1934", list(user, user.p_their(), challenge.used_rod))), span_notice(LANG("datum.fa7a4aba", null)))
 	// Heretics that fish in the rift gain knowledge.
 	if(IS_HERETIC(user))
 		human_user?.add_mood_event("rift fishing", /datum/mood_event/rift_fishing)

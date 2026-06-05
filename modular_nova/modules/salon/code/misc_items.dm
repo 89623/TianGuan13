@@ -39,17 +39,17 @@
 		return
 
 	if(target == user)
-		user.visible_message(span_notice("[user] does [user.p_their()] lips with \the [src]."), \
-			span_notice("You take a moment to apply \the [src]. Perfect!"))
+		user.visible_message(span_notice(LANG("obj.977b44d3", list(user, user.p_their(), src))), \
+			span_notice(LANG("obj.49bba65b", list(src))))
 		target.update_lips("lipstick", new_color, lipstick_trait)
 		return
 
-	user.visible_message(span_warning("[user] begins to do [target]'s lips with \the [src]."), \
-		span_notice("You begin to apply \the [src] on [target]'s lips..."))
+	user.visible_message(span_warning(LANG("obj.322af481", list(user, target, src))), \
+		span_notice(LANG("obj.924ee509", list(src, target))))
 	if(!do_after(user, 2 SECONDS, target = target))
 		return
-	user.visible_message(span_notice("[user] does [target]'s lips with \the [src]."), \
-		span_notice("You apply \the [src] on [target]'s lips."))
+	user.visible_message(span_notice(LANG("obj.d6dd2418", list(user, target, src))), \
+		span_notice(LANG("obj.e889d01f", list(src, target))))
 	target.update_lips("lipstick", new_color, lipstick_trait)
 
 /obj/item/hairbrush/comb
@@ -82,7 +82,7 @@
 	var/shaving_time = 5 SECONDS
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.01acdff1", list(user, user.p_them(), user.p_theyre()))))
 	shave(user, BODY_ZONE_PRECISE_MOUTH)
 	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
 	return BRUTELOSS
@@ -132,12 +132,12 @@
 			return
 
 		var/self_shaving = target_human == user // Shaving yourself?
-		user.visible_message(span_notice("[user] starts to shave [self_shaving ? user.p_their() : "[target_human]'s"] hair with [src]."), \
-			span_notice("You take a moment to shave [self_shaving ? "your" : "[target_human]'s" ] hair with [src]..."))
+		user.visible_message(span_notice(LANG("obj.49952d54", list(user, self_shaving ? user.p_their() : "[target_human]'s", src))), \
+			span_notice(LANG("obj.f1e29016", list(self_shaving ? "your" : "[target_human]'s", src))))
 
 		if(do_after(user, shaving_time, target = target_human))
-			user.visible_message(span_notice("[user] shaves [self_shaving ? user.p_their() : "[target_human]'s"] hair clean with [src]."), \
-				span_notice("You finish shaving [self_shaving ? "your" : " [target_human]'s"] hair with [src]. Fast and clean!"))
+			user.visible_message(span_notice(LANG("obj.a7aac793", list(user, self_shaving ? user.p_their() : "[target_human]'s", src))), \
+				span_notice(LANG("obj.fcc5b055", list(self_shaving ? "your" : " [target_human]'s", src))))
 
 			shave(target_human, location)
 
@@ -159,12 +159,12 @@
 			return
 
 		var/self_shaving = target_human == user // Shaving yourself?
-		user.visible_message(span_notice("[user] starts to shave [self_shaving ? user.p_their() : "[target_human]'s"] hair with [src]."), \
-			span_notice("You take a moment to shave [self_shaving ? "your" : "[target_human]'s" ] hair with [src]..."))
+		user.visible_message(span_notice(LANG("obj.49952d54", list(user, self_shaving ? user.p_their() : "[target_human]'s", src))), \
+			span_notice(LANG("obj.f1e29016", list(self_shaving ? "your" : "[target_human]'s", src))))
 
 		if(do_after(user, shaving_time, target = target_human))
-			user.visible_message(span_notice("[user] shaves [self_shaving ? user.p_their() : "[target_human]'s"] hair clean with [src]."), \
-				span_notice("You finish shaving [self_shaving ? "your" : " [target_human]'s"] hair with [src]. Fast and clean!"))
+			user.visible_message(span_notice(LANG("obj.a7aac793", list(user, self_shaving ? user.p_their() : "[target_human]'s", src))), \
+				span_notice(LANG("obj.fcc5b055", list(self_shaving ? "your" : " [target_human]'s", src))))
 
 			shave(target_human, location)
 

@@ -46,14 +46,14 @@
 
 /obj/structure/plaque/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
-	user.visible_message(span_notice("[user] starts removing [src]..."), \
-		span_notice("You start unfastening [src]."))
+	user.visible_message(span_notice(LANG("obj.5ce1ea33", list(user, src))), \
+		span_notice(LANG("obj.28344c5b", list(src))))
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 4 SECONDS))
 		return TRUE
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	user.visible_message(span_notice("[user] unfastens [src]."), \
-		span_notice("You unfasten [src]."))
+	user.visible_message(span_notice(LANG("obj.875275dc", list(user, src))), \
+		span_notice(LANG("obj.32b2f4c0", list(src))))
 	var/obj/item/plaque/unwrenched_plaque = new (get_turf(user))
 	if(engraved) //If it's still just a basic unengraved plaque, we can (and should) skip some of the below variable transfers.
 		unwrenched_plaque.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
@@ -74,12 +74,12 @@
 		return TRUE
 	if(!I.tool_start_check(user, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user] starts repairing [src]..."), \
-		span_notice("You start repairing [src]."))
+	user.visible_message(span_notice(LANG("obj.992cf3c3", list(user, src))), \
+		span_notice(LANG("obj.e15bcf13", list(src))))
 	if(!I.use_tool(src, user, 4 SECONDS, volume = 50))
 		return TRUE
-	user.visible_message(span_notice("[user] finishes repairing [src]."), \
-			span_notice("You finish repairing [src]."))
+	user.visible_message(span_notice(LANG("obj.17fe1725", list(user, src))), \
+			span_notice(LANG("obj.616dfcb1", list(src))))
 	atom_integrity = max_integrity
 	return TRUE
 
@@ -97,15 +97,15 @@
 		if(!Adjacent(user)) //Make sure user is adjacent still
 			to_chat(user, span_warning(LANG("obj.3101dc73", null)))
 			return
-		user.visible_message(span_notice("[user] begins engraving [src]."), \
-			span_notice("You begin engraving [src]."))
+		user.visible_message(span_notice(LANG("obj.b0391894", list(user, src))), \
+			span_notice(LANG("obj.0bc8ab95", list(src))))
 		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
 		desc = "The plaque reads: '[descriptionchoice]'"
 		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
-		user.visible_message(span_notice("[user] engraves [src]."), \
-			span_notice("You engrave [src]."))
+		user.visible_message(span_notice(LANG("obj.17007a0b", list(user, src))), \
+			span_notice(LANG("obj.fb0654f4", list(src))))
 		return
 	if(istype(I, /obj/item/pen))
 		if(engraved)
@@ -146,12 +146,12 @@
 		return TRUE
 	if(!I.tool_start_check(user, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user] starts repairing [src]..."), \
-		span_notice("You start repairing [src]."))
+	user.visible_message(span_notice(LANG("obj.992cf3c3", list(user, src))), \
+		span_notice(LANG("obj.e15bcf13", list(src))))
 	if(!I.use_tool(src, user, 4 SECONDS, volume = 50))
 		return TRUE
-	user.visible_message(span_notice("[user] finishes repairing [src]."), \
-		span_notice("You finish repairing [src]."))
+	user.visible_message(span_notice(LANG("obj.17fe1725", list(user, src))), \
+		span_notice(LANG("obj.616dfcb1", list(src))))
 	atom_integrity = max_integrity
 	return TRUE
 
@@ -170,15 +170,15 @@
 		if(!Adjacent(user)) //Make sure user is adjacent still
 			to_chat(user, span_warning(LANG("obj.3101dc73", null)))
 			return
-		user.visible_message(span_notice("[user] begins engraving [src]."), \
-			span_notice("You begin engraving [src]."))
+		user.visible_message(span_notice(LANG("obj.b0391894", list(user, src))), \
+			span_notice(LANG("obj.0bc8ab95", list(src))))
 		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
 		desc = "The plaque reads: '[descriptionchoice]'"
 		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
-		user.visible_message(span_notice("[user] engraves [src]."), \
-			span_notice("You engrave [src]."))
+		user.visible_message(span_notice(LANG("obj.17007a0b", list(user, src))), \
+			span_notice(LANG("obj.fb0654f4", list(src))))
 		return
 	if(istype(I, /obj/item/pen))
 		if(engraved)
@@ -204,8 +204,8 @@
 		placed_plaque.pixel_x = 32
 	else if(dir & WEST)
 		placed_plaque.pixel_x = -32
-	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
-		span_notice("You attach [src] to [target_turf]."))
+	user.visible_message(span_notice(LANG("obj.44286aef", list(user, src, target_turf))), \
+		span_notice(LANG("obj.c1fbc99d", list(src, target_turf))))
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	if(engraved)
 		placed_plaque.name = name

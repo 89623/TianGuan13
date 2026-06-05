@@ -71,7 +71,7 @@
 	if(!forced)
 		if(!check_teleport_valid(teleatom, destturf, channel, original_destination = destination))
 			if(ismob(teleatom))
-				teleatom.balloon_alert(teleatom, "something holds you back!")
+				teleatom.balloon_alert(teleatom, LANG("_root.e69c953f", null))
 			return FALSE
 
 	if(SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTING, destination, channel))

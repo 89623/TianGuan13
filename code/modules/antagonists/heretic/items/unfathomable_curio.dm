@@ -61,7 +61,7 @@
 		/datum/brain_trauma/severe/paralysis,
 		/datum/brain_trauma/severe/monophobia
 	)
-	wearer.visible_message(span_danger("[wearer]'s veil makes [attack_text] miss, but the force behind the blow causes it to disperse!"))
+	wearer.visible_message(span_danger(LANG("obj.7d740d9d", list(wearer, attack_text))))
 	if(IS_HERETIC(wearer))
 		return
 

@@ -291,8 +291,8 @@
 			if (emptied > 0)
 				owner.apply_damage(emptied * 5, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 				playsound(get_turf(src), 'sound/effects/splat.ogg', 50)
-				owner.visible_message(span_danger("Contents of [owner]'s intestines spill out from a huge cut in [owner.p_their()] [chest]!"),
-					span_userdanger("Contents of your intestines spill out from a huge cut in your [chest]!"))
+				owner.visible_message(span_danger(LANG("obj.d466eae0", list(owner, owner.p_their(), chest))),
+					span_userdanger(LANG("obj.5713d7be", list(chest))))
 			return
 
 	// Digest the stuff in our stomach, just a bit
@@ -427,7 +427,7 @@
 		return
 	if (owner.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE))
 		// Since we vomited with a force flag, we should've vomited out at least one item
-		owner.visible_message(span_danger("[owner] doubles over from [attacker]'s punch, vomiting out the contents of [owner.p_their()] stomach!"))
+		owner.visible_message(span_danger(LANG("obj.b8577265", list(owner, attacker, owner.p_their()))))
 
 /// 60% chance to spew out each item when vomiting
 /obj/item/organ/stomach/proc/on_vomit(mob/living/carbon/vomiter, distance, force)
@@ -452,7 +452,7 @@
 		var/emptied = empty_contents()
 		if (emptied > 0)
 			playsound(get_turf(src), 'sound/effects/splat.ogg', 50)
-		user.visible_message(span_warning("[user] cuts [src] open[emptied ? "!" : ", but it's empty."]"), span_notice("You cut [src] open[emptied ? "." : ", but there's nothing inside."]"))
+		user.visible_message(span_warning(LANG("obj.83b6fcfa", list(user, src, emptied ? "!" : ", but it's empty."))), span_notice(LANG("obj.a5266d1c", list(src, emptied ? "." : ", but there's nothing inside."))))
 		cut_open_damage += apply_organ_damage(maxHealth * 0.5)
 		return ITEM_INTERACT_SUCCESS
 

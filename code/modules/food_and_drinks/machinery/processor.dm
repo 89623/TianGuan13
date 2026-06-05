@@ -132,8 +132,8 @@
 	var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(tool)
 	if(recipe && user.transferItemToLoc(tool, src))
 		user.visible_message(
-			span_notice("[user] put [tool] into [src]."),
-			span_notice("You put [tool] into [src]."),
+			span_notice(LANG("obj.7f48475c", list(user, tool, src))),
+			span_notice(LANG("obj.6635fb59", list(tool, src))),
 		)
 		LAZYADD(processor_contents, tool)
 		return ITEM_INTERACT_SUCCESS
@@ -162,9 +162,9 @@
 	if(!LAZYLEN(processor_contents))
 		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 		return TRUE
-	user.visible_message(span_notice("[user] turns on [src]."), \
-		span_notice("You turn on [src]."), \
-		span_hear("You hear a food processor."))
+	user.visible_message(span_notice(LANG("obj.96d11239", list(user, src))), \
+		span_notice(LANG("obj.11cd7563", list(src))), \
+		span_hear(LANG("obj.94eba160", null)))
 	processing()
 
 
@@ -210,7 +210,7 @@
 
 /obj/machinery/processor/container_resist_act(mob/living/user)
 	user.forceMove(drop_location())
-	user.visible_message(span_notice("[user] crawls free of the processor!"))
+	user.visible_message(span_notice(LANG("obj.ab46cb0e", list(user))))
 
 /obj/machinery/processor/slime
 	name = "slime processor"

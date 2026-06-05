@@ -69,13 +69,13 @@
 
 	if(constant_dose_time < CONSTANT_DOSE_SAFE_LIMIT || !our_guy.get_blood_volume())
 		our_guy.visible_message(
-				span_danger("[our_guy]'s eyes fade from their evil looking red back to normal..."),
-				span_danger("Your vision slowly returns to normal as you lose your unnatural strength...")
+				span_danger(LANG("datum.1693b7d5", list(our_guy))),
+				span_danger(LANG("datum.54f0b59d", null))
 		)
 	else
 		our_guy.visible_message(
-			span_danger("[our_guy]'s veins violently explode, spraying blood everywhere!"),
-			span_danger("Your veins burst from the sheer stress put on them!")
+			span_danger(LANG("datum.0936e06b", list(our_guy))),
+			span_danger(LANG("datum.31068ee4", null))
 		)
 
 		var/obj/item/bodypart/bodypart = pick(our_guy.bodyparts)

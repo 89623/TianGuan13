@@ -179,6 +179,6 @@
 	var/mob/living/carbon/spike_owner = chem_spike.get_embed()?.owner
 	// Message first because it'll shift back into a tongue right after moving
 	if (istype(spike_owner))
-		spike_owner.visible_message(span_notice("[chem_spike] falls out of [spike_owner]!"))
+		spike_owner.visible_message(span_notice(LANG("datum.64fbe43f", list(chem_spike, spike_owner))))
 	chem_spike.forceMove(get_turf(chem_spike))
 	return TRUE

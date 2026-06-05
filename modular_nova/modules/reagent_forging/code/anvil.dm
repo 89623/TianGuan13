@@ -154,8 +154,8 @@
 
 	poor_target.AddElement(/datum/element/squish, 30 SECONDS)
 	poor_target.visible_message(
-		span_bolddanger("[src] falls on [poor_target], crushing them!"),
-		span_userdanger("You are crushed by [src]!")
+		span_bolddanger(LANG("obj.ce4a624a", list(src, poor_target))),
+		span_userdanger(LANG("obj.872dcdba", list(src)))
 	)
 	poor_target.Paralyze(5 SECONDS)
 	poor_target.emote("scream")

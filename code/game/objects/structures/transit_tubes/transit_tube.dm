@@ -39,7 +39,7 @@
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				to_chat(user, span_warning("Remove the pod first!"))
 				return
-			user.visible_message(span_notice("[user] starts to detach \the [src]."), span_notice("You start to detach \the [src]..."))
+			user.visible_message(span_notice(LANG("obj.0e82a036", list(user, src))), span_notice(LANG("obj.fcbdc7bc", list(src))))
 			if(W.use_tool(src, user, 2 SECONDS, volume=50))
 				to_chat(user, span_notice(LANG("obj.ca737bae", list(src))))
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)

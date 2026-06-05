@@ -64,7 +64,7 @@
 	locked = !locked
 	user.visible_message(
 		span_notice("[user] [locked ? "locks" : "unlocks"] [src]."),
-		span_notice("You [locked ? "locked" : "unlocked"] [src]."),
+		span_notice(LANG("obj.d6171b71", list(locked ? "locked" : "unlocked", src))),
 	)
 	update_appearance()
 

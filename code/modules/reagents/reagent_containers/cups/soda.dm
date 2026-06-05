@@ -43,12 +43,12 @@
 
 /obj/item/reagent_containers/cup/soda_cans/suicide_act(mob/living/carbon/human/H)
 	if(!reagents.total_volume)
-		H.visible_message(span_warning("[H] is trying to take a big sip from [src]... The can is empty!"))
+		H.visible_message(span_warning(LANG("obj.b5b535a2", list(H, src))))
 		return SHAME
 	if(!is_drainable())
 		open_soda(H)
 		sleep(1 SECONDS)
-	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
+	H.visible_message(span_suicide(LANG("obj.76037a1e", list(H, src, H.p_theyre()))))
 	playsound(H,'sound/items/drink.ogg', 80, TRUE)
 	reagents.trans_to(H, src.reagents.total_volume, transferred_by = H) //a big sip
 	sleep(0.5 SECONDS)
@@ -79,13 +79,13 @@
 
 	if(target == user)
 		user.visible_message(
-			span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"),
-			span_notice("You crush the can of [src] on your forehead."),
+			span_warning(LANG("obj.58fd28bc", list(user, src, user.p_their()))),
+			span_notice(LANG("obj.918576da", list(src))),
 		)
 	else
 		user.visible_message(
-			span_warning("[user] crushes the can of [src] on [target]'s forehead!"),
-			span_notice("You crush the can of [src] on [target]'s forehead."),
+			span_warning(LANG("obj.7ba56bac", list(user, src, target))),
+			span_notice(LANG("obj.d0fb0ba1", list(src, target))),
 		)
 	playsound(src, 'sound/items/weapons/pierce.ogg', rand(10, 50), TRUE)
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(target.drop_location())
@@ -115,7 +115,7 @@
 		return
 
 	if(prob(fizziness))
-		user.visible_message(span_danger("[user] opens [src], and is suddenly sprayed by the fizzing contents!"), span_danger("You pull back the tab of [src], and are suddenly sprayed with a torrent of liquid! Ahhh!!"))
+		user.visible_message(span_danger(LANG("obj.1cec24ac", list(user, src))), span_danger(LANG("obj.5f9f3284", list(src))))
 		burst_soda(user)
 		return
 
@@ -291,7 +291,7 @@
 /obj/item/reagent_containers/cup/soda_cans/attack_self_secondary(mob/user)
 	if(!is_drainable())
 		playsound(src, 'sound/items/can/can_shake.ogg', 50, TRUE)
-		user.visible_message(span_danger("[user] shakes [src]!"), span_danger("You shake up [src]!"), vision_distance=2)
+		user.visible_message(span_danger(LANG("obj.3d014bc6", list(user, src))), span_danger(LANG("obj.32289c20", list(src))), vision_distance=2)
 		fizziness += SODA_FIZZINESS_SHAKE
 		return
 	return ..()

@@ -95,9 +95,9 @@
 
 /obj/item/golfcart_kit/screwdriver_act(mob/living/user, obj/item/tool)
 	if (!isturf(loc))
-		user.balloon_alert(user, "set down first!")
+		user.balloon_alert(user, LANG("obj.cac4dae3", null))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] starts putting together the [src]..."), span_notice("You start assembling the [src]..."))
+	user.visible_message(span_notice(LANG("obj.0c813999", list(user, src))), span_notice(LANG("obj.cdc2203e", list(src))))
 	var/unboxing_duration = 7 SECONDS
 	INVOKE_ASYNC(src, PROC_REF(play_building_noises), user, unboxing_duration * tool.toolspeed)
 	if(!tool.use_tool(src, user, unboxing_duration))
@@ -105,7 +105,7 @@
 	if (!isturf(loc))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/vehicle/ridden/golfcart/cart = new(get_turf(src))
-	user.visible_message(span_notice("[user] assembles the [cart]!"), span_notice("You assemble the [cart]."))
+	user.visible_message(span_notice(LANG("obj.284475c7", list(user, cart))), span_notice(LANG("obj.19d6614f", list(cart))))
 	qdel(src)
 
 /obj/vehicle/ridden/golfcart/atom_break()
@@ -157,8 +157,8 @@
 	mob.throw_at(get_edge_target_turf(mob, dir), 2, 3)
 	RegisterSignal(mob, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(thrown_mob_landed))
 	mob.visible_message(
-		span_danger("[src] hits [mob] at full speed!"),
-		span_userdanger("[src] slams into you!"),
+		span_danger(LANG("obj.1395df01", list(src, mob))),
+		span_userdanger(LANG("obj.95075ba0", list(src))),
 	)
 
 ///Called when a resting victim is run over
@@ -174,8 +174,8 @@
 			playsound(src, 'sound/effects/pop_expl.ogg', 50, TRUE)
 			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 			victim.visible_message(
-				span_danger("[src] drives over [victim]!"),
-				span_userdanger("[src] drives over you!"),
+				span_danger(LANG("obj.bb65eec4", list(src, victim))),
+				span_userdanger(LANG("obj.8300e9d1", list(src))),
 			)
 
 			var/damage = rand(GOLFCART_RUN_OVER_DAMAGE - GOLFCART_RUN_OVER_DAMAGE / 5, GOLFCART_RUN_OVER_DAMAGE + GOLFCART_RUN_OVER_DAMAGE / 5)

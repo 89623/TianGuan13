@@ -1436,7 +1436,7 @@
 
 /obj/item/card/fuzzy_license/attack_self(mob/user)
 	if(Adjacent(user))
-		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name]."), span_notice("You show \the [src.name]."))
+		user.visible_message(span_notice(LANG("obj.ba4fa098", list(user, icon2html(src, viewers(user)), src.name))), span_notice(LANG("obj.3f13aa85", list(src.name))))
 	add_fingerprint(user)
 
 /obj/item/card/fuzzy_license/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -2092,7 +2092,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/korpstech, 32)
 
 	var/obj/item/food/griddle_toast/toaster_implant/toast = new(get_turf(imp_in))
 	var/adjective = pick("crispy", "delicious", "fresh")
-	imp_in.visible_message(span_notice("[imp_in] ejects a [adjective] toast!"), span_notice("With the familiar \"ding\", the toaster ejects a [adjective] toast."))
+	imp_in.visible_message(span_notice(LANG("obj.f964e979", list(imp_in, adjective))), span_notice(LANG("obj.80d1ae06", list(adjective))))
 
 	playsound(imp_in, 'sound/machines/ding.ogg', vol = 75, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	toast.throw_at(get_turf(imp_in), 2, 3)

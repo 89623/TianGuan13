@@ -52,7 +52,7 @@
 		to_chat(cast_on, span_userdanger(LANG("datum.86e5f959", null)))
 		ADD_TRAIT(cast_on, TRAIT_NO_SOUL, MAGIC_TRAIT)
 
-		cast_on.visible_message(span_danger("[cast_on] suddenly dies!"), ignored_mobs = cast_on)
+		cast_on.visible_message(span_danger(LANG("datum.f503c5aa", list(cast_on))), ignored_mobs = cast_on)
 		cast_on.investigate_log("has been killed by soul tap.", INVESTIGATE_DEATHS)
 		cast_on.death()
 

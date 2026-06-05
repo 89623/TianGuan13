@@ -97,7 +97,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		LAZYADD(charging_batteries, tool)
-		user.visible_message(span_notice("[user] inserts a cell into [src]."), span_notice("You insert a cell into [src]."))
+		user.visible_message(span_notice(LANG("obj.c4a3d920", list(user, src))), span_notice(LANG("obj.0e4e6b90", list(src))))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -171,7 +171,7 @@
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
 
-	user.visible_message(span_notice("[user] removes [charging] from [src]."), span_notice("You remove [charging] from [src]."))
+	user.visible_message(span_notice(LANG("obj.4a2c1fdd", list(user, charging, src))), span_notice(LANG("obj.cbed3266", list(charging, src))))
 
 /obj/machinery/cell_charger_multi/proc/removecell(mob/user)
 	if(!LAZYLEN(charging_batteries))

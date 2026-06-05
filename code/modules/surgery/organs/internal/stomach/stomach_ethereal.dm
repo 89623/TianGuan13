@@ -91,7 +91,7 @@
 			// NOVA EDIT ADDITION BEGIN
 			if (SPT_PROB(10, seconds_per_tick))
 				do_sparks(5, TRUE, carbon)
-				carbon.visible_message(span_danger("[carbon] sparks, [carbon.p_their()] body aglow with excess energy!"), span_warning("Your body ejects voltage as sparks, you should discharge some electricity!"))
+				carbon.visible_message(span_danger(LANG("obj.e3816704", list(carbon, carbon.p_their()))), span_warning(LANG("obj.2eb5dc8c", null)))
 			// NOVA EDIT ADDITION END
 		else
 			owner.clear_mood_event("charge")
@@ -100,7 +100,7 @@
 
 /obj/item/organ/stomach/ethereal/proc/discharge_process(mob/living/carbon/carbon)
 	to_chat(carbon, span_warning(LANG("obj.8b69f76e", null)))
-	carbon.visible_message(span_danger("[carbon] begins to spark violently!"))
+	carbon.visible_message(span_danger(LANG("obj.f82cf63f", list(carbon))))
 
 	var/static/mutable_appearance/overcharge //shameless copycode from lightning spell
 	overcharge = overcharge || mutable_appearance('icons/effects/effects.dmi', "electricity", EFFECTS_LAYER)
@@ -118,7 +118,7 @@
 		// Only a small amount of the energy gets discharged as the zap. The rest dissipates as heat. Keeps the damage and energy from the zap the same regardless of what STANDARD_CELL_CHARGE is.
 		var/discharged_energy = -adjust_charge(ETHEREAL_CHARGE_FULL - cell.charge()) * min(7500 / STANDARD_CELL_CHARGE, 1)
 		tesla_zap(source = carbon, zap_range = 2, power = discharged_energy, cutoff = 1 KILO JOULES, zap_flags = ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES)
-		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))
+		carbon.visible_message(span_danger(LANG("obj.2d05d578", list(carbon))), span_warning(LANG("obj.c985786a", null)))
 
 		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
 			carbon.apply_status_effect(/datum/status_effect/heart_attack)

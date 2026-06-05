@@ -312,7 +312,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/healing/tirimol/on_mob_delete(mob/living/affected_mob)
 	. = ..()
 	if(affected_mob.IsSleeping())
-		affected_mob.visible_message(span_notice("[icon2html(affected_mob, viewers(DEFAULT_MESSAGE_RANGE, src))] [affected_mob] lets out a hearty snore!"))//small way of letting people know the supersnooze is ended
+		affected_mob.visible_message(span_notice(LANG("datum.1e29c11f", list(icon2html(affected_mob, viewers(DEFAULT_MESSAGE_RANGE, src)), affected_mob))))//small way of letting people know the supersnooze is ended
 	for(var/datum/reagent/reagent as anything in cached_reagent_list)
 		if(!reagent)
 			continue
@@ -548,7 +548,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(affected_mob.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
 		explosion(affected_mob, light_impact_range = 1, explosion_cause = src)
 		qdel(heart)
-		affected_mob.visible_message(span_boldwarning("[affected_mob]'s heart explodes!"))
+		affected_mob.visible_message(span_boldwarning(LANG("datum.a754247c", list(affected_mob))))
 
 /datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/affected_mob, metabolization_ratio)
 	. = ..()
@@ -561,7 +561,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return ..()
 	explosion(affected_mob, light_impact_range = 1, explosion_cause = src)
 	qdel(heart)
-	affected_mob.visible_message(span_boldwarning("[affected_mob]'s heart explodes!"))
+	affected_mob.visible_message(span_boldwarning(LANG("datum.a754247c", list(affected_mob))))
 	return..()
 
 /datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/affected_mob)
@@ -1122,7 +1122,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.add_mood_event("sadness_inverse", /datum/mood_event/sadness_inverse)
 	switch(volume)
 		if(1 to INFINITY) // prevents microdosing from repeating this line
-			affected_mob.say("What?? No... NO...", forced = type)
+			affected_mob.say(LANG("datum.095917e8", null), forced = type)
 
 /datum/reagent/inverse/happiness/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
@@ -1162,14 +1162,14 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/baldium/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	affected_mob.add_shared_particles(/particles/smoke/steam/mald)
-	affected_mob.manual_emote("inhales sharply.")
+	affected_mob.manual_emote(LANG("datum.3df4eb0e", null))
 	to_chat(affected_mob, span_warning(LANG("datum.00721a9a", null)))
 
 /datum/reagent/inverse/baldium/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	affected_mob.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#fe0000")
 	affected_mob.remove_shared_particles(/particles/smoke/steam/mald)
-	affected_mob.manual_emote("exhales sharply.")
+	affected_mob.manual_emote(LANG("datum.313f4145", null))
 	to_chat(affected_mob, span_warning(LANG("datum.0b652637", null)))
 
 /datum/reagent/inverse/baldium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)

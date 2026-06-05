@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.add_mood_event("blessing", /datum/mood_event/blessing)
 	playsound(victim, 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
-	victim.visible_message(span_warning("[src] takes [bullet] in [victim]'s place!"))
+	victim.visible_message(span_warning(LANG("obj.4718bbda", list(src, bullet, victim))))
 	var/obj/structure/fluff/paper/stack/pages = new(get_turf(src))
 	pages.setDir(pick(GLOB.alldirs))
 	name = "punctured bible"
@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		user.AddComponent(/datum/component/omen/bible)
 
 /obj/item/book/bible/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.6db2c6d9", list(user, user.p_them(), deity_name, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/book/bible/proc/can_set_bible_skin(mob/living/user)
@@ -230,7 +230,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
 			built_in_his_image.update_damage_overlays()
 
-	built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
+	built_in_his_image.visible_message(span_notice(LANG("obj.45608eb3", list(user, built_in_his_image, deity_name))))
 	to_chat(built_in_his_image, span_boldnotice(LANG("obj.087b1ddd", list(deity_name))))
 	playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
 	built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 	if(target_mob.stat == DEAD)
 		if(GLOB.religious_sect?.sect_dead_bless(target_mob, user) == BLESSING_FAILED)
-			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
+			target_mob.visible_message(span_danger(LANG("obj.d96b11d6", list(user, target_mob, src))))
 			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		return
 
@@ -279,9 +279,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
 			carbon_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5, 60)
-			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
-	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
-			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
+			carbon_target.balloon_alert(carbon_target, LANG("obj.95af1747", null))
+	target_mob.visible_message(span_danger(LANG("obj.908ad4aa", list(user, target_mob, src))), \
+			span_userdanger(LANG("obj.908ad4aa", list(user, target_mob, src))))
 	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 	log_combat(user, target_mob, "attacked", src)
 
@@ -297,23 +297,23 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			return ITEM_INTERACT_SUCCESS
 		for(var/obj/effect/rune/nearby_runes in range(2, user))
 			nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
-		bible_smacked.balloon_alert(user, "floor smacked!")
+		bible_smacked.balloon_alert(user, LANG("obj.0ff509b6", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(bible_smacked.reagents?.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
-		bible_smacked.balloon_alert(user, "blessed")
+		bible_smacked.balloon_alert(user, LANG("obj.444448e5", null))
 		var/water2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/water)
 		bible_smacked.reagents.del_reagent(/datum/reagent/water)
 		bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
 		return ITEM_INTERACT_SUCCESS
 	if(bible_smacked.reagents?.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
-		bible_smacked.balloon_alert(user, "purified")
+		bible_smacked.balloon_alert(user, LANG("obj.39729838", null))
 		var/unholy2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
 		bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
 		bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2holy)
 		return ITEM_INTERACT_SUCCESS
 	if(istype(bible_smacked, /obj/item/book/bible) && !istype(bible_smacked, /obj/item/book/bible/syndicate))
-		bible_smacked.balloon_alert(user, "converted")
+		bible_smacked.balloon_alert(user, LANG("obj.72ad5488", null))
 		var/obj/item/book/bible/other_bible = bible_smacked
 		other_bible.name = name
 		other_bible.icon_state = icon_state
@@ -324,15 +324,15 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(istype(bible_smacked, /obj/item/melee/cultblade/haunted) && !IS_CULTIST(user))
 		var/obj/item/melee/cultblade/haunted/sword_smacked = bible_smacked
 		if(!sword_smacked.bound)
-			sword_smacked.balloon_alert(user, "must be bound!")
+			sword_smacked.balloon_alert(user, LANG("obj.9a835f30", null))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/melee/cultblade/haunted/sword = bible_smacked
-		sword.balloon_alert(user, "exorcising...")
+		sword.balloon_alert(user, LANG("obj.833ce5de", null))
 		playsound(src,'sound/effects/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 12 SECONDS, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			new /obj/item/nullrod/nullblade(get_turf(sword))
-			user.visible_message(span_notice("[user] exorcises [sword]!"))
+			user.visible_message(span_notice(LANG("obj.c1631d36", list(user, sword))))
 			qdel(sword)
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING

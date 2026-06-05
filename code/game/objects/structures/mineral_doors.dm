@@ -179,12 +179,12 @@
 		to_chat(user, span_warning(LANG("obj.4995b95a", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] starts to weld apart [src]!"), span_notice("You start welding apart [src]."))
+	user.visible_message(span_notice(LANG("obj.e556cda6", list(user, src))), span_notice(LANG("obj.6684844f", list(src))))
 	if(!I.use_tool(src, user, 60, 5, 50))
 		to_chat(user, span_warning(LANG("obj.1fa7b46f", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] welded [src] into pieces!"), span_notice("You welded apart [src]!"))
+	user.visible_message(span_notice(LANG("obj.8dea59c5", list(user, src))), span_notice(LANG("obj.34e337a3", list(src))))
 	deconstruct(TRUE)
 
 /obj/structure/mineral_door/proc/crowbar_door(mob/living/user, obj/item/I) //if the door is flammable, call this in crowbar_act() so we can still decon it
@@ -193,12 +193,12 @@
 		to_chat(user, span_warning(LANG("obj.4995b95a", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] starts to pry apart [src]!"), span_notice("You start prying apart [src]."))
+	user.visible_message(span_notice(LANG("obj.c667552f", list(user, src))), span_notice(LANG("obj.417bb56c", list(src))))
 	if(!I.use_tool(src, user, 60, volume = 50))
 		to_chat(user, span_warning(LANG("obj.66cf3cf8", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] pried [src] into pieces!"), span_notice("You pried apart [src]!"))
+	user.visible_message(span_notice(LANG("obj.7d06d691", list(user, src))), span_notice(LANG("obj.77bee8b6", list(src))))
 	deconstruct(TRUE)
 
 
@@ -324,11 +324,11 @@
 		return
 
 	if((!user.combat_mode) && istype(I, /obj/item/paper) && (atom_integrity < max_integrity))
-		user.visible_message(span_notice("[user] starts to patch the holes in [src]."), span_notice("You start patching some of the holes in [src]!"))
+		user.visible_message(span_notice(LANG("obj.9be150e7", list(user, src))), span_notice(LANG("obj.595c0a7f", list(src))))
 		if(do_after(user, 2 SECONDS, src))
 			atom_integrity = min(atom_integrity+4,max_integrity)
 			qdel(I)
-			user.visible_message(span_notice("[user] patches some of the holes in [src]."), span_notice("You patch some of the holes in [src]!"))
+			user.visible_message(span_notice(LANG("obj.ed169c7c", list(user, src))), span_notice(LANG("obj.928c5eb0", list(src))))
 			return TRUE
 
 	return ..()

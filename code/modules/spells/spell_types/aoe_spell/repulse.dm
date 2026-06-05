@@ -20,7 +20,7 @@
 	if(istype(cast_on.loc, /obj/structure/closet))
 		var/obj/structure/closet/open_closet = cast_on.loc
 		open_closet.open(force = TRUE)
-		open_closet.visible_message(span_warning("[open_closet] suddenly flies open!"))
+		open_closet.visible_message(span_warning(LANG("datum.95996b5c", list(open_closet))))
 
 	return ..()
 

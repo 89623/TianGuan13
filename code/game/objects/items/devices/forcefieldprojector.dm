@@ -61,7 +61,7 @@
 		force_proj_busy = FALSE
 
 	playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
-	user.visible_message(span_warning("[user] projects a forcefield!"),span_notice("You project a forcefield."))
+	user.visible_message(span_warning(LANG("obj.2ecfa761", list(user))),span_notice(LANG("obj.778563b0", null)))
 	var/obj/structure/projected_forcefield/F = new(T, src)
 	current_fields += F
 	user.changeNext_move(CLICK_CD_MELEE)

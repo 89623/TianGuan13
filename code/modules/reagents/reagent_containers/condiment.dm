@@ -38,7 +38,7 @@
 	return ..()
 
 /obj/item/reagent_containers/condiment/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!"))
+	user.visible_message(span_suicide(LANG("obj.d1ee45de", list(user, src, user.p_they()))))
 	return OXYLOSS
 
 /obj/item/reagent_containers/condiment/proc/try_eat(atom/target, mob/living/user)
@@ -48,21 +48,21 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(target == user)
 		user.visible_message(
-			span_notice("[user] swallows some of the contents of \the [src]."),
-			span_notice("You swallow some of the contents of \the [src]."),
+			span_notice(LANG("obj.43bd1281", list(user, src))),
+			span_notice(LANG("obj.7333b534", list(src))),
 		)
 	else
 		target.visible_message(
-			span_warning("[user] attempts to feed [target] from [src]."),
-			span_warning("[user] attempts to feed you from [src]."),
+			span_warning(LANG("obj.ea51e711", list(user, target, src))),
+			span_warning(LANG("obj.81aaf870", list(user, src))),
 		)
 		if(!do_after(user, 3 SECONDS, target))
 			return ITEM_INTERACT_BLOCKING
 		if(!reagents || !reagents.total_volume)
 			return ITEM_INTERACT_BLOCKING // The condiment might be empty after the delay.
 		target.visible_message(
-			span_warning("[user] fed [target] from [src]."),
-			span_warning("[user] fed you from [src]."),
+			span_warning(LANG("obj.57f4c86a", list(user, target, src))),
+			span_warning(LANG("obj.71a5734b", list(user, src))),
 		)
 		log_combat(user, target, "fed", reagents.get_reagent_log_string())
 
@@ -149,7 +149,7 @@
 	fill_icon_thresholds = null
 
 /obj/item/reagent_containers/condiment/saltshaker/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.09c26c10", list(user, user.p_theyre()))))
 	var/newname = "[name]"
 	name = "[user.name]"
 	user.name = newname
@@ -165,7 +165,7 @@
 		if(!reagents.has_reagent(/datum/reagent/consumable/salt, 2))
 			to_chat(user, span_warning(LANG("obj.fbef5466", null)))
 			return
-		user.visible_message(span_notice("[user] shakes some salt onto [target]."), span_notice("You shake some salt onto [target]."))
+		user.visible_message(span_notice(LANG("obj.83f89ba0", list(user, target))), span_notice(LANG("obj.9ac9c7cc", list(target))))
 		reagents.remove_reagent(/datum/reagent/consumable/salt, 2)
 		new/obj/effect/decal/cleanable/food/salt(target)
 		return ITEM_INTERACT_SUCCESS

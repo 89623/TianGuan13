@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A curse given to people to disencourage them from retaliating against someone who sacrificed them
 /datum/status_effect/heretic_curse
 	id = "heretic_curse"
@@ -79,9 +80,9 @@
 	var/obj/item/organ/removing_organ = pick(removable_organs)
 
 	if (carbon_owner.vomit(vomit_flags = VOMIT_CATEGORY_BLOOD))
-		carbon_owner.visible_message(span_boldwarning("[carbon_owner] vomits out [carbon_owner.p_their()] [removing_organ]"))
+		carbon_owner.visible_message(span_boldwarning(LANG("datum.68410156", list(carbon_owner, carbon_owner.p_their(), removing_organ))))
 	else
-		carbon_owner.visible_message(span_boldwarning("[carbon_owner]'s [removing_organ] rips itself out of `[carbon_owner.p_their()] chest!"))
+		carbon_owner.visible_message(span_boldwarning(LANG("datum.452f135a", list(carbon_owner, removing_organ, carbon_owner.p_their()))))
 
 	removing_organ.Remove(carbon_owner)
 

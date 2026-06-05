@@ -13,10 +13,10 @@
 		return NONE
 
 	if(HAS_TRAIT(interacting_with, TRAIT_RSD_COMPATIBLE))
-		user.balloon_alert(user, "already upgraded!")
+		user.balloon_alert(user, LANG("obj.7d09f139", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] upgrades [interacting_with] with [src]."), span_notice("You upgrade [interacting_with] to be RSD compatible."))
+	user.visible_message(span_notice(LANG("obj.39467e1b", list(user, interacting_with, src))), span_notice(LANG("obj.0fa829c7", list(interacting_with))))
 	interacting_with.AddElement(/datum/element/rsd_interface)
 	playsound(interacting_with.loc, 'sound/items/weapons/circsawhit.ogg', 50, vary = TRUE)
 

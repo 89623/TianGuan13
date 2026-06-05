@@ -41,7 +41,7 @@
 
 	var/turf/destination_turf = zlevels ? find_safe_turf(zlevels) : get_safe_random_station_turf_equal_weight()
 	if(!destination_turf)
-		source.balloon_alert(user, "uh oh...")
+		source.balloon_alert(user, LANG("datum.0a498e6e", null))
 		to_chat(user, span_warning(LANG("datum.f70ce44a", null)))
 		return
 

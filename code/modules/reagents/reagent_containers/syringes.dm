@@ -74,8 +74,8 @@
 		var/mob/living/living_target = target
 		if(living_target != user)
 			living_target.visible_message(
-				span_danger("[user] is trying to inject [living_target]!"),
-				span_userdanger("[user] is trying to inject you!"),
+				span_danger(LANG("obj.551ee95a", list(user, living_target))),
+				span_userdanger(LANG("obj.978a421a", list(user))),
 			)
 			if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), living_target, extra_checks = CALLBACK(src, PROC_REF(try_syringe), living_target, user)))
 				return ITEM_INTERACT_BLOCKING
@@ -84,8 +84,8 @@
 			if(living_target.reagents.holder_full())
 				return ITEM_INTERACT_BLOCKING
 			living_target.visible_message(
-				span_danger("[user] injects [living_target] with the syringe!"),
-				span_userdanger("[user] injects you with the syringe!"),
+				span_danger(LANG("obj.5cfdf6df", list(user, living_target))),
+				span_userdanger(LANG("obj.0fbcc917", list(user))),
 			)
 
 		if(living_target == user)
@@ -117,15 +117,15 @@
 		var/drawn_amount = reagents.maximum_volume - reagents.total_volume
 		if(target != user)
 			target.visible_message(
-				span_danger("[user] is trying to take a blood sample from [target]!"),
-				span_userdanger("[user] is trying to take a blood sample from you!"),
+				span_danger(LANG("obj.4cd737bb", list(user, target))),
+				span_userdanger(LANG("obj.cb931f73", list(user))),
 			)
 			if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target, extra_checks = CALLBACK(src, PROC_REF(try_syringe), living_target, user)))
 				return ITEM_INTERACT_BLOCKING
 			if(reagents.holder_full())
 				return ITEM_INTERACT_BLOCKING
 		if(living_target.transfer_blood_to(src, drawn_amount))
-			user.visible_message(span_notice("[user] takes a blood sample from [living_target]."))
+			user.visible_message(span_notice(LANG("obj.deeacac7", list(user, living_target))))
 		else
 			to_chat(user, span_warning(LANG("obj.15aca96f", list(living_target))))
 		return ITEM_INTERACT_SUCCESS

@@ -19,7 +19,7 @@
 			to_chat(master.current, span_warning(LANG("datum.fb8db412", list(owner))))
 		if(owner.current)
 			to_chat(owner.current, span_deconversion_message(LANG("datum.70c4b6ae", list(master ? " [master]":""))))
-			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] been freed from the chains of the Mansus!"), ignored_mobs = owner.current)
+			owner.current.visible_message(span_deconversion_message(LANG("datum.1d239388", list(owner.current, owner.current.p_theyve()))), ignored_mobs = owner.current)
 
 	master = null
 	return ..()

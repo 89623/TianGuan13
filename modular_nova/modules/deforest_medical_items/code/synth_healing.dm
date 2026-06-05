@@ -87,13 +87,13 @@
 	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
 	if(isnull(limb))
 		if(!silent)
-			patient.balloon_alert(user, "no [parse_zone(healed_zone)]!")
+			patient.balloon_alert(user, LANG("obj.e9a0d247", list(parse_zone(healed_zone))))
 		return FALSE
 	if(patient.reagents.has_reagent(/datum/reagent/medicine/nanite_slurry, 2))
-		patient.balloon_alert(user, "patch already applied on patient!")
+		patient.balloon_alert(user, LANG("obj.7414dd8a", null))
 		return FALSE
 	if(!IS_ROBOTIC_LIMB(limb))
-		patient.balloon_alert(user, "[limb.plaintext_zone] is not synthetic!")
+		patient.balloon_alert(user, LANG("obj.d732c4b2", list(limb.plaintext_zone)))
 		return FALSE
 	return TRUE
 

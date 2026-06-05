@@ -29,7 +29,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/space_heater/wall_mounted, 29)
 	efficiency = src::efficiency
 
 /obj/machinery/space_heater/wall_mounted/default_unfasten_wrench(mob/living/user, obj/item/wrench, time)
-	user.balloon_alert(user, "deconstructing...")
+	user.balloon_alert(user, LANG("obj.44f0e678", null))
 	wrench.play_tool_sound(src)
 	if(wrench.use_tool(src, user, 1 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -84,7 +84,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/space_heater/wall_mounted, 29)
 	user.transferItemToLoc(tool, src)
 	if(!isnull(cell))
 		user.put_in_hands(cell)
-		user.balloon_alert(user, "swapped")
+		user.balloon_alert(user, LANG("obj.c58bb764", null))
 	cell = tool
 	return ITEM_INTERACT_SUCCESS
 

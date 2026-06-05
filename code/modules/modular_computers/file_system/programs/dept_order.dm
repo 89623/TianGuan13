@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Stores an override value for the order cooldown to be used by the Dpt. Order Cooldown button in the secrets menu. When null, the override is not active.
 GLOBAL_VAR(department_cd_override)
 
@@ -144,10 +145,10 @@ GLOBAL_VAR(department_cd_override)
 
 		var/new_dept_type = find_department_to_link(computer.stored_id)
 		if(isnull(new_dept_type))
-			computer.physical.balloon_alert(orderer, "no department found!")
+			computer.physical.balloon_alert(orderer, LANG("datum.bf820d14", null))
 			playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		else
-			computer.physical.balloon_alert(orderer, "linked")
+			computer.physical.balloon_alert(orderer, LANG("datum.c85b9128", null))
 			playsound(computer, 'sound/machines/ping.ogg', 30, TRUE)
 			set_linked_department(new_dept_type)
 		return TRUE
@@ -159,7 +160,7 @@ GLOBAL_VAR(department_cd_override)
 	var/list/id_card_access = id_card?.GetAccess() || list()
 
 	if(length(use_access & id_card_access) <= 0)
-		computer.physical.balloon_alert(orderer, "access denied!")
+		computer.physical.balloon_alert(orderer, LANG("datum.1bd3ceeb", null))
 		playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
 
@@ -167,7 +168,7 @@ GLOBAL_VAR(department_cd_override)
 		if(isnull(department_order) || !(department_order in SSshuttle.shopping_list))
 			return TRUE
 		if(LAZYLEN(download_access & id_card_access) <= 0)
-			computer.physical.balloon_alert(orderer, "requires head of staff access!")
+			computer.physical.balloon_alert(orderer, LANG("datum.372d1501", null))
 			playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 			return TRUE
 
@@ -190,7 +191,7 @@ GLOBAL_VAR(department_cd_override)
 	var/datum/job_department/linked_department_real = SSjob.get_department_type(linked_department)
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(isnull(pack))
-		computer.physical.say("Something went wrong!")
+		computer.physical.say(LANG("datum.a8cd7f28", null))
 		CRASH("requested supply pack id \"[id]\" not found!")
 	if(!can_see_pack(pack) || !(pack.group in linked_department_real.associated_cargo_groups))
 		return
@@ -213,7 +214,7 @@ GLOBAL_VAR(department_cd_override)
 
 	if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
 		playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-		computer.physical.say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once!")
+		computer.physical.say(LANG("datum.1591ee22", list(CARGO_MAX_ORDER)))
 		return
 
 	department_order = new(
@@ -233,7 +234,7 @@ GLOBAL_VAR(department_cd_override)
 	if(!alert_silenced && alert_able)
 		aas_config_announce(/datum/aas_config_entry/department_orders, list("ORDER" = pack.name, "PERSON" = name), computer.physical, list(radio_channel), "Order Placed")
 		aas_config_announce(/datum/aas_config_entry/department_orders_cargo, list("DEPARTMENT" = linked_department.department_name), computer.physical, list(RADIO_CHANNEL_SUPPLY))
-	computer.physical.say("Order processed. Cargo will deliver the crate when it comes in on their shuttle. NOTICE: Heads of staff may override the order.")
+	computer.physical.say(LANG("datum.2f00e595", null))
 	calculate_cooldown(pack.cost)
 
 /// Signal when the supply shuttle begins to spawn orders. We forget the current order preventing it from being overridden (since it's already past the point of no return on undoing the order)

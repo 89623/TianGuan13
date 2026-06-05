@@ -111,9 +111,9 @@
 
 	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	user.visible_message(
-		span_warning("[user]'s missing limbs reform, making a loud, grotesque sound!"),
-		span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),
-		span_hear("You hear organic matter ripping and tearing!"),
+		span_warning(LANG("datum.dcde9284", list(user))),
+		span_userdanger(LANG("datum.eebb0cd6", null)),
+		span_hear(LANG("datum.581bebe7", null)),
 	)
 	user.emote("scream")
 	// Manually call this (outside of revive/fullheal) so we can pass our blacklist
@@ -157,7 +157,7 @@
 
 /datum/action/changeling/fakedeath/proc/can_enter_stasis(mob/living/user)
 	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
-		user.balloon_alert(user, "already reviving!")
+		user.balloon_alert(user, LANG("datum.2a02d01c", null))
 		return FALSE
 	return TRUE
 

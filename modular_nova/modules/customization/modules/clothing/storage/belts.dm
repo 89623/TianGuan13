@@ -60,10 +60,10 @@
 		return
 	var/obj/item/storage/belt/storage_pouch/pouch = locate() in real_location
 	if(!pouch)
-		pouch.balloon_alert(user, "no pouch!")
+		pouch.balloon_alert(user, LANG("datum.e29b497a", null))
 		return //oopsie!! If we don't have a pouch! You're fucked!
 	if(locked)
-		pouch.balloon_alert(user, "locked!")
+		pouch.balloon_alert(user, LANG("datum.5d71bae2", null))
 		return
 	pouch.atom_storage.dump_content_at(dest_object, user = user)
 
@@ -81,7 +81,7 @@
 			to_chat(user, span_notice(LANG("obj.02062406", list(drawn_item))))
 			update_appearance()
 			return CLICK_ACTION_SUCCESS
-		user.visible_message(span_notice("[user] takes [drawn_item] out of [src]."), span_notice("You take [drawn_item] out of [src]."))
+		user.visible_message(span_notice(LANG("obj.1f34f194", list(user, drawn_item, src))), span_notice(LANG("obj.604c7b94", list(drawn_item, src))))
 		update_appearance()
 	else
 		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))

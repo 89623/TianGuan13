@@ -125,7 +125,7 @@
 	else
 		if(!put_out_candle())
 			return CLICK_ACTION_BLOCKING
-		user.visible_message(span_notice("[user] snuffs [src]."))
+		user.visible_message(span_notice(LANG("obj.cacf9c16", list(user, src))))
 		return CLICK_ACTION_SUCCESS
 
 /*

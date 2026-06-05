@@ -33,8 +33,8 @@
 		return
 
 	cling.visible_message(
-		span_warning("[cling]'s skin suddenly starts shifting and shimmering!"),
-		span_notice("We shift our skin to adapt to the darkness."),
+		span_warning(LANG("datum.8fa83b9e", list(cling))),
+		span_notice(LANG("datum.57ba7274", null)),
 	)
 	var/datum/antagonist/changeling/changeling_data = cling.mind?.has_antag_datum(/datum/antagonist/changeling)
 	changeling_data?.chem_recharge_slowdown -= recharge_slowdown //Slows down chem regeneration
@@ -44,8 +44,8 @@
 		return
 
 	cling.visible_message(
-		span_warning("[cling]'s skin goes from shimmering to normal."),
-		span_notice("We stop adapting our skin to the darkness."),
+		span_warning(LANG("datum.d3c18a96", list(cling))),
+		span_notice(LANG("datum.fd3d229e", null)),
 	)
 	var/datum/antagonist/changeling/changeling_data = cling.mind?.has_antag_datum(/datum/antagonist/changeling)
 	changeling_data?.chem_recharge_slowdown += recharge_slowdown

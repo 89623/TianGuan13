@@ -53,9 +53,9 @@
 
 /obj/machinery/stasissleeper/click_alt(mob/user)
 	if(!panel_open)
-		user.visible_message(span_notice("\The [src] [state_open ? "hisses as it seals shut." : "hisses as it swings open."]."), \
-						span_notice("You [state_open ? "close" : "open"] \the [src]."), \
-						span_hear("You hear a nearby machine [state_open ? "seal shut." : "swing open."]."))
+		user.visible_message(span_notice(LANG("obj.6516aa25", list(src, state_open ? "hisses as it seals shut." : "hisses as it swings open."))), \
+						span_notice(LANG("obj.767bf180", list(state_open ? "close" : "open", src))), \
+						span_hear(LANG("obj.5e28d30e", list(state_open ? "seal shut." : "swing open."))))
 	if(state_open)
 		close_machine()
 	else

@@ -197,7 +197,7 @@
 	CRASH("[src] Bump()ed into non-atom thing [clong] ([clong.type])")
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
-	smeared_mob.visible_message(span_danger("[smeared_mob] is penetrated by an immovable rod!") , span_userdanger("The rod penetrates you!") , span_danger("You hear a CLANG!"))
+	smeared_mob.visible_message(span_danger(LANG("obj.c2b59118", list(smeared_mob))) , span_userdanger(LANG("obj.80ade64a", null)) , span_danger(LANG("obj.425d6ace", null)))
 
 	if(smeared_mob.stat != DEAD)
 		num_mobs_hit++
@@ -240,8 +240,8 @@
 /obj/effect/immovablerod/proc/suplex_rod(mob/living/strongman)
 	strongman.client?.give_award(/datum/award/achievement/jobs/feat_of_strength, strongman)
 	strongman.visible_message(
-		span_boldwarning("[strongman] suplexes [src] into the ground!"),
-		span_warning("As you suplex [src] into the ground, your body ripples with power!")
+		span_boldwarning(LANG("obj.276f3fd6", list(strongman, src))),
+		span_warning(LANG("obj.618729c1", list(src)))
 		)
 	sound_to_playing_players('sound/items/handling/lead_pipe/lead_pipe_drop.ogg')
 	new /obj/structure/festivus/anchored(drop_location())

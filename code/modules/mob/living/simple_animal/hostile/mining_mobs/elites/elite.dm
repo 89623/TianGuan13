@@ -165,12 +165,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		if(TUMOR_PASSIVE)
 			// Prevents the user from being forcemoved back and forth between two elite arenas.
 			if(HAS_TRAIT(user, TRAIT_ELITE_CHALLENGER))
-				user.visible_message(span_warning("[user] reaches for [src] with [user.p_their()] arm, but nothing happens."),
-					span_warning("You reach for [src] with your arm... but nothing happens."))
+				user.visible_message(span_warning(LANG("obj.49ac9177", list(user, src, user.p_their()))),
+					span_warning(LANG("obj.6fd67fc8", list(src))))
 				return
 			activity = TUMOR_ACTIVE
-			user.visible_message(span_boldwarning("[src] convulses as [user]'s arm enters its radius.  Uh-oh..."),
-				span_boldwarning("[src] convulses as your arm enters its radius.  Your instincts tell you to step back."))
+			user.visible_message(span_boldwarning(LANG("obj.a942aaee", list(src, user))),
+				span_boldwarning(LANG("obj.daace54e", list(src))))
 			make_activator(user)
 			if(boosted)
 				mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
@@ -179,8 +179,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			INVOKE_ASYNC(src, PROC_REF(arena_checks))
 		if(TUMOR_INACTIVE)
 			if(HAS_TRAIT(user, TRAIT_ELITE_CHALLENGER))
-				user.visible_message(span_warning("[user] reaches for [src] with [user.p_their()] arm, but nothing happens."),
-					span_warning("You reach for [src] with your arm... but nothing happens."))
+				user.visible_message(span_warning(LANG("obj.49ac9177", list(user, src, user.p_their()))),
+					span_warning(LANG("obj.6fd67fc8", list(src))))
 				return
 			activity = TUMOR_ACTIVE
 			var/mob/dead/observer/elitemind = null
@@ -375,12 +375,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 	var/mob/living/simple_animal/hostile/asteroid/elite/elite = interacting_with
 	if(elite.stat != DEAD || elite.sentience_type != SENTIENCE_BOSS || !elite.key)
-		user.visible_message(span_notice("It appears [elite] is unable to be revived right now. Perhaps try again later."))
+		user.visible_message(span_notice(LANG("obj.a4d9359b", list(elite))))
 		return ITEM_INTERACT_BLOCKING
 	elite.set_allies(list("[REF(user)]"))
 	elite.set_faction(null)
 	elite.revive(HEAL_ALL)
-	user.visible_message(span_notice("[user] stabs [elite] with [src], reviving it."))
+	user.visible_message(span_notice(LANG("obj.6bcad2d0", list(user, elite, src))))
 	elite.playsound_local(get_turf(elite), 'sound/effects/magic.ogg', 40, 0)
 	to_chat(elite, span_userdanger(LANG("obj.3a95fb82", list(user, user, user.p_them(), user.p_their()))))
 	to_chat(elite, span_boldbig(LANG("obj.6ed51246", list(user))))

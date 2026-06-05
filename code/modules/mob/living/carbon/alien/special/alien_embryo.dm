@@ -132,7 +132,7 @@
 		new_xeno.RemoveInvisibility(type)
 
 	if(gib_on_success)
-		new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner] in a shower of gore!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))
+		new_xeno.visible_message(span_danger(LANG("obj.2a9112cf", list(new_xeno, owner))), span_userdanger(LANG("obj.38137873", list(owner))), span_hear(LANG("obj.581bebe7", null)))
 		//owner.investigate_log("has been gibbed by an alien larva.", INVESTIGATE_DEATHS) // NOVA EDIT REMOVAL - ALIEN QOL - don't ever gib host.
 		//owner.gib(DROP_ORGANS|DROP_BODYPARTS)
 		// NOVA EDIT ADDITION BEGIN - ALIEN QOL - You aren't getting gibbed but you aren't going to be having fun
@@ -142,7 +142,7 @@
 		owner.investigate_log("has been chestbursted.", INVESTIGATE_DEATHS)
 		// NOVA EDIT ADDITION END - ALIEN QOL
 	else
-		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
+		new_xeno.visible_message(span_danger(LANG("obj.6f7f1178", list(new_xeno, owner))), span_userdanger(LANG("obj.38137873", list(owner))))
 		owner.log_message("had an alien larva within them escape (without being gibbed).", LOG_ATTACK, log_globally = FALSE)
 		owner.adjust_brute_loss(40)
 		owner.cut_overlay(overlay)

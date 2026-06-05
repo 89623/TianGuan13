@@ -116,7 +116,7 @@
 
 /obj/item/mod/module/timestopper/used(mob/activator)
 	if(timestop)
-		mod.balloon_alert(activator, "already freezing time!")
+		mod.balloon_alert(activator, LANG("obj.d3a82022", null))
 		return FALSE
 	return ..()
 
@@ -173,7 +173,7 @@
 /obj/item/mod/module/timeline_jumper/on_use(mob/activator)
 	if(!phased_mob)
 		//phasing out
-		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
+		mod.visible_message(span_warning(LANG("obj.c63f6716", list(mod.wearer))))
 		mod.wearer.SetAllImmobility(0)
 		mod.wearer.set_stamina_loss(0)
 		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
@@ -183,7 +183,7 @@
 		phased_mob.eject_jaunter()
 		phased_mob = null
 		UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
-		mod.visible_message(span_warning("[mod.wearer] drops into the timeline!"))
+		mod.visible_message(span_warning(LANG("obj.088f18c0", list(mod.wearer))))
 
 	//probably justifies its own sound but whatever
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)

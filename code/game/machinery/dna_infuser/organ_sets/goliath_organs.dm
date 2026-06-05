@@ -95,7 +95,7 @@
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(brain_owner, initial(rec_species.no_equip_flags))
 	if(hammer)
-		brain_owner.visible_message(span_warning("\The [hammer] disintegrates!"))
+		brain_owner.visible_message(span_warning(LANG("obj.5695beae", list(hammer))))
 		QDEL_NULL(hammer)
 
 /obj/item/goliath_infuser_hammer

@@ -220,7 +220,7 @@
 		return
 
 	rename_area(area_editing, new_name)
-	user.balloon_alert(user, "area renamed to [new_name]")
+	user.balloon_alert(user, LANG("obj.fab4b1ba", list(new_name)))
 	user.log_message("has renamed [prevname] to [new_name]", LOG_GAME)
 	return TRUE
 

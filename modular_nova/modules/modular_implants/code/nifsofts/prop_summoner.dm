@@ -51,13 +51,13 @@
 	if(tgui_alert(linked_mob, LANG("datum.775d81f7", null), program_name, list("Summon", "Dispel")) == "Dispel")
 		refund_activation_cost()
 		if(!length(summoned_items))
-			linked_mob.balloon_alert(linked_mob, "no summoned items!")
+			linked_mob.balloon_alert(linked_mob, LANG("datum.c44730b2", null))
 			return FALSE
 
 		var/obj/item/choice = tgui_input_list(linked_mob, LANG("datum.3dc9e139", null), program_name, summoned_items)
 
 		if(!choice)
-			linked_mob.balloon_alert(linked_mob, "no chosen item!")
+			linked_mob.balloon_alert(linked_mob, LANG("datum.ce5960aa", null))
 			return FALSE
 
 		summoned_items -= choice
@@ -65,7 +65,7 @@
 		return TRUE
 
 	if(length(summoned_items) >= max_summoned_items)
-		linked_mob.balloon_alert(linked_mob, "you have the max ammount of items summoned!")
+		linked_mob.balloon_alert(linked_mob, LANG("datum.7618fe8d", null))
 		refund_activation_cost()
 		return FALSE
 
@@ -84,7 +84,7 @@
 	new_item.name = name_tag + new_item.name
 
 	if(!linked_mob.put_in_hands(new_item))
-		linked_mob.balloon_alert(linked_mob, "[new_item] fails to materialize in your hands!")
+		linked_mob.balloon_alert(linked_mob, LANG("datum.8f2a5cc6", list(new_item)))
 		qdel(new_item)
 		refund_activation_cost()
 		return FALSE

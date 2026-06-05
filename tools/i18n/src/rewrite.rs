@@ -257,6 +257,13 @@ impl<'a> Rewriter<'a> {
             }
             self.recurse_term(&term.elem, ns);
             for f in follow.iter() {
+                // 方法调用形式的汇聚点（`X.visible_message(...)` 等）：用 follow 自身的 Location 定位、
+                // 改写消息参数。裸调用走上面的 Term::Call 分支；方法调用是 Follow::Call，此前完全漏改。
+                if let Follow::Call(_, name, fargs) = &f.elem {
+                    if let Some(indices) = sink_message_args(name.as_str()) {
+                        self.try_rewrite_call(f.location, fargs, indices, ns);
+                    }
+                }
                 self.recurse_follow(&f.elem, ns);
             }
             return;
@@ -627,6 +634,11 @@ fn line_col_to_byte(src: &str, line: u32, column: u16) -> Option<usize> {
 fn find_open_paren(src: &str, name_start: usize) -> Option<usize> {
     let b = src.as_bytes();
     let mut i = name_start;
+    // 方法调用 `X.method(...)` 的 Follow Location 指向属性访问标点（. : ?. ?:）而非方法名；
+    // 先跳过这些前导标点与空白。裸调用 Location 指向标识符首字符、无前导标点 → 对其为 no-op。
+    while i < b.len() && matches!(b[i], b'.' | b':' | b'?' | b' ' | b'\t') {
+        i += 1;
+    }
     while i < b.len() && (b[i].is_ascii_alphanumeric() || b[i] == b'_') {
         i += 1;
     }

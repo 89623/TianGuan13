@@ -221,10 +221,10 @@
 	if(!ismovable(target_atom) || istype(target_atom, /obj/structure/spacevine))
 		return
 	if(target_atom.anchored)
-		owner.balloon_alert(owner, "can't pull!")
+		owner.balloon_alert(owner, LANG("datum.cf190290", null))
 		return
 	if(get_dist(owner, target_atom) > vine_grab_distance)
-		owner.balloon_alert(owner, "too far!")
+		owner.balloon_alert(owner, LANG("datum.f5e75781", null))
 		return
 	var/list/target_turfs = get_line(owner, target_atom) - list(get_turf(owner), get_turf(target_atom))
 	for(var/turf/blockage in target_turfs)

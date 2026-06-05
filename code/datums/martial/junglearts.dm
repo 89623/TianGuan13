@@ -25,9 +25,9 @@
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
 			attacker.emote("spin")
 			defender.visible_message(
-				span_danger("[attacker]'s tail [atk_verb] [defender] down to the ground!"),
-				span_userdanger("Your body twists as you're [atk_verb] to the ground by [attacker]'s tail!"),
-				span_hear("You hear a snap, followed by a thud!"),
+				span_danger(LANG("datum.fd5e1b20", list(attacker, atk_verb, defender))),
+				span_userdanger(LANG("datum.c7a77b1a", list(atk_verb, attacker))),
+				span_hear(LANG("datum.895314d0", null)),
 				null,
 				attacker,
 			)
@@ -46,9 +46,9 @@
 			atk_verb = pick("whipped", "flogged", "lashed")
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
 			defender.visible_message(
-				span_danger("[attacker]'s tail [atk_verb] [defender] in one quick motion!"),
-				span_userdanger("You feel a sharp sting as you're [atk_verb] by [attacker]!"),
-				span_hear("You hear a sharp whipping noise!"),
+				span_danger(LANG("datum.e6c71944", list(attacker, atk_verb, defender))),
+				span_userdanger(LANG("datum.4115ef68", list(atk_verb, attacker))),
+				span_hear(LANG("datum.13c58946", null)),
 				null,
 				attacker,
 			)
@@ -66,9 +66,9 @@
 
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_BITE)
 			defender.visible_message(
-				span_danger("[attacker] [atk_verb]s [defender] violently!"),
-				span_userdanger("You're viciously [atk_verb]ed by [attacker]!"),
-				span_hear("You hear a violent gnawing sound!"),
+				span_danger(LANG("datum.b16baefa", list(attacker, atk_verb, defender))),
+				span_userdanger(LANG("datum.762b8a3b", list(atk_verb, attacker))),
+				span_hear(LANG("datum.41cd5294", null)),
 				null,
 				attacker,
 			)

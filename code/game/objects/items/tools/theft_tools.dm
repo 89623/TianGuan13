@@ -37,7 +37,7 @@
 		radiation_pulse(get_turf(src), max_range = 2, threshold = RAD_EXTREME_INSULATION)
 
 /obj/item/nuke_core/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is rubbing [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.fd87d5b8", list(user, src, user.p_them(), user.p_theyre()))))
 	return TOXLOSS
 
 //nuke core box, for carrying the core
@@ -211,9 +211,9 @@
 	else
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)] via throw impact.")
 		investigate_log("has consumed [key_name(victim)] via throw impact.", INVESTIGATE_ENGINE)
-	victim.visible_message(span_danger("As [victim] is hit by [src], both flash into dust and silence fills the room..."),\
-		span_userdanger("You're hit by [src] and everything suddenly goes silent.\n[src] flashes into dust, and soon as you can register this, you do as well."),\
-		span_hear("Everything suddenly goes silent."))
+	victim.visible_message(span_danger(LANG("obj.e16012cf", list(victim, src))),\
+		span_userdanger(LANG("obj.3496da58", list(src, src))),\
+		span_hear(LANG("obj.458bfed2", null)))
 	victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 	victim.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
@@ -224,9 +224,9 @@
 	..()
 	if(!isliving(user) || HAS_TRAIT(user, TRAIT_GODMODE)) //try to keep this in sync with supermatter's consume fail conditions
 		return FALSE
-	user.visible_message(span_danger("[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!"),\
-			span_userdanger("You reach for [src] with your hands. That was dumb."),\
-			span_hear("Everything suddenly goes silent."))
+	user.visible_message(span_danger(LANG("obj.188a090a", list(user, src, user.p_their()))),\
+			span_userdanger(LANG("obj.3d905c68", list(src))),\
+			span_hear(LANG("obj.458bfed2", null)))
 	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
@@ -338,9 +338,9 @@
 		qdel(AM)
 	if (user)
 		log_combat(user, AM, "consumed", sliver, "via [src]")
-		user.visible_message(span_danger("As [user] touches [AM] with \the [src], both flash into dust and silence fills the room..."),\
-			span_userdanger("You touch [AM] with [src], and everything suddenly goes silent.\n[AM] and [sliver] flash into dust, and soon as you can register this, you do as well."),\
-			span_hear("Everything suddenly goes silent."))
+		user.visible_message(span_danger(LANG("obj.09226cd2", list(user, AM, src))),\
+			span_userdanger(LANG("obj.e8594687", list(AM, src, AM, sliver))),\
+			span_hear(LANG("obj.458bfed2", null)))
 		user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 		user.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)

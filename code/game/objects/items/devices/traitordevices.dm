@@ -247,14 +247,14 @@ effective or pretty fucking useless.
 	apply_wibbly_filters(owner)
 	stealth_engaged = TRUE
 	build_all_button_icons(UPDATE_BUTTON_STATUS|UPDATE_BUTTON_BACKGROUND)
-	owner.balloon_alert(owner, "stealth mode engaged")
+	owner.balloon_alert(owner, LANG("datum.ac71df14", null))
 
 /datum/action/item_action/stealth_mode/proc/stealth_off()
 	owner.alpha = initial(owner.alpha)
 	remove_wibbly_filters(owner)
 	stealth_engaged = FALSE
 	build_all_button_icons(UPDATE_BUTTON_STATUS|UPDATE_BUTTON_BACKGROUND)
-	owner.balloon_alert(owner, "stealth mode disengaged")
+	owner.balloon_alert(owner, LANG("datum.86b844a8", null))
 
 /datum/action/item_action/stealth_mode/proc/get_alpha()
 	return clamp(255 - (255 * charge / max_charge), min_alpha, 255)
@@ -351,10 +351,10 @@ effective or pretty fucking useless.
 /obj/item/jammer/attack_self(mob/user, modifiers)
 	. = ..()
 	if (!COOLDOWN_FINISHED(src, jam_cooldown))
-		user.balloon_alert(user, "on cooldown!")
+		user.balloon_alert(user, LANG("obj.d4ae5d4d", null))
 		return
 
-	user.balloon_alert(user, "disruptor wave released!")
+	user.balloon_alert(user, LANG("obj.a8202bbc", null))
 	to_chat(user, span_notice(LANG("obj.ec480649", null)))
 	for (var/atom/potential_owner in view(disruptor_range, user))
 		disable_radios_on(potential_owner, ignore_syndie = TRUE)
@@ -365,7 +365,7 @@ effective or pretty fucking useless.
 	if(.)
 		return
 	to_chat(user, span_notice(LANG("obj.d6171b71", list(active ? "deactivate" : "activate", src))))
-	user.balloon_alert(user, "[active ? "deactivated" : "activated"] the jammer")
+	user.balloon_alert(user, LANG("obj.35a4ed94", list(active ? "deactivated" : "activated")))
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
@@ -381,10 +381,10 @@ effective or pretty fucking useless.
 		return
 
 	if (!(interacting_with in view(disruptor_range, user)))
-		user.balloon_alert(user, "out of reach!")
+		user.balloon_alert(user, LANG("obj.214c97de", null))
 		return
 
-	interacting_with.balloon_alert(user, "radio disrupted!")
+	interacting_with.balloon_alert(user, LANG("obj.52de2340", null))
 	to_chat(user, span_notice(LANG("obj.a47f3edb", list(interacting_with))))
 	disable_radios_on(interacting_with)
 

@@ -55,22 +55,22 @@
 	var/datum/action/cooldown/mob_cooldown/venomous_bite/bite = locate() in target.actions
 	if (isnull(bite))
 		if (!silent)
-			user?.balloon_alert(user, "no fangs!")
+			user?.balloon_alert(user, LANG("obj.1d126ca6", null))
 		return FALSE
 	if (!bite.IsAvailable())
 		if (!silent)
-			user?.balloon_alert(user, "fangs empty!")
+			user?.balloon_alert(user, LANG("obj.67c481ae", null))
 		return FALSE
 	if (reagents.holder_full())
 		if (!silent)
-			user?.balloon_alert(user, "siphon full!")
+			user?.balloon_alert(user, LANG("obj.8edd0d02", null))
 		return FALSE
 
 	if (iscarbon(user))
 		var/mob/living/carbon/carbon_target = target
 		if (carbon_target.is_mouth_covered())
 			if (!silent)
-				user.balloon_alert(user, "mouth covered!")
+				user.balloon_alert(user, LANG("obj.8b7fe4a7", null))
 			return FALSE
 
 	return TRUE

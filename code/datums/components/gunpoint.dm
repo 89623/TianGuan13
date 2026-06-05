@@ -52,8 +52,8 @@
 	var/distance = max(get_dist(shooter, target), 1) // treat 0 distance as adjacent
 	var/distance_description = (distance <= 1 ? "point blank " : "")
 
-	shooter.visible_message(span_danger("[shooter] aims [weapon] [distance_description]at [target]!"),
-		span_danger("You aim [weapon] [distance_description]at [target]!"), ignored_mobs = target)
+	shooter.visible_message(span_danger(LANG("datum.7833d4dc", list(shooter, weapon, distance_description, target))),
+		span_danger(LANG("datum.6a1af96d", list(weapon, distance_description, target))), ignored_mobs = target)
 	to_chat(target, span_userdanger(LANG("datum.75e558aa", list(shooter, weapon, distance_description))))
 
 	shooter.Immobilize(0.75 SECONDS / distance)
@@ -108,8 +108,8 @@
 	if(A != target)
 		return
 	var/mob/living/shooter = parent
-	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
-		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)
+	shooter.visible_message(span_danger(LANG("datum.c34d9d90", list(shooter, target, shooter.p_their()))), \
+		span_danger(LANG("datum.fdd20516", list(target))), ignored_mobs = target)
 	to_chat(target, span_userdanger(LANG("datum.56f417cd", list(shooter, shooter.p_their()))))
 	qdel(src)
 
@@ -119,8 +119,8 @@
 
 	if(T != target || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return
-	shooter.visible_message(span_danger("[shooter] bumps into [target] and fumbles [shooter.p_their()] aim!"), \
-		span_danger("You bump into [target] and fumble your aim!"), ignored_mobs = target)
+	shooter.visible_message(span_danger(LANG("datum.c34d9d90", list(shooter, target, shooter.p_their()))), \
+		span_danger(LANG("datum.fdd20516", list(target))), ignored_mobs = target)
 	to_chat(target, span_userdanger(LANG("datum.56f417cd", list(shooter, shooter.p_their()))))
 	qdel(src)
 
@@ -182,8 +182,8 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/shooter = parent
-	shooter.visible_message(span_danger("[shooter] breaks [shooter.p_their()] aim on [target]!"), \
-		span_danger("You are no longer aiming [weapon] at [target]."), ignored_mobs = target)
+	shooter.visible_message(span_danger(LANG("datum.fc377677", list(shooter, shooter.p_their(), target))), \
+		span_danger(LANG("datum.96ac5fb7", list(weapon, target))), ignored_mobs = target)
 	to_chat(target, span_userdanger(LANG("datum.c51526b3", list(shooter, shooter.p_their()))))
 	qdel(src)
 
@@ -206,8 +206,8 @@
 
 	if(prob(flinch_chance))
 		source.visible_message(
-			span_danger("[source] flinches!"),
-			span_danger("You flinch!"),
+			span_danger(LANG("datum.ab8ea379", list(source))),
+			span_danger(LANG("datum.ae3f04e7", null)),
 		)
 		INVOKE_ASYNC(src, PROC_REF(trigger_reaction))
 

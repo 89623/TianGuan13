@@ -109,7 +109,7 @@
 			all_scanned_items |= thing.type
 
 	if(!length(all_scanned_items))
-		scanned.balloon_alert(scanner, "nothing to scan!")
+		scanned.balloon_alert(scanner, LANG("obj.b9e6ec3c", null))
 		return
 
 	playsound(src, 'sound/machines/ping.ogg', vol = 30, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)

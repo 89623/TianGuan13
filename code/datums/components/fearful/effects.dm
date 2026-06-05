@@ -78,9 +78,9 @@
 		return
 
 	owner.visible_message(
-		span_warning("[owner] clutches [owner.p_their()] chest for a moment, then collapses to the floor."),
-		span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."),
-		span_hear("You hear something heavy collide with the ground."),
+		span_warning(LANG("datum.9290185c", list(owner, owner.p_their()))),
+		span_alert(LANG("datum.c57c064d", null)),
+		span_hear(LANG("datum.a632fb77", null)),
 	)
 	owner.apply_status_effect(/datum/status_effect/heart_attack)
 	owner.Unconscious(20 SECONDS)
@@ -162,7 +162,7 @@
 	owner.Knockdown(0.5 SECONDS)
 	breath_loop.start()
 	panic_end_timer = addtimer(CALLBACK(src, PROC_REF(stop_panic_attack)), rand(3 SECONDS, 5 SECONDS), TIMER_UNIQUE|TIMER_STOPPABLE)
-	owner.visible_message(span_warning("[owner] drops to the floor for a moment, clutching their chest."), span_alert("Your heart lurches in your chest. You can't take much more of this!"))
+	owner.visible_message(span_warning(LANG("datum.10e292a5", list(owner))), span_alert(LANG("datum.9cdc8d0a", null)))
 	return PANIC_ATTACK_TERROR_AMOUNT
 
 /datum/terror_handler/panic/proc/stop_panic_attack()
@@ -197,14 +197,14 @@
 
 		if (2)
 			owner.emote("scream")
-			owner.say("AAAAH!!", forced = "phobia")
+			owner.say(LANG("datum.3aaaabb4", null), forced = "phobia")
 			if (!prob(15 * (terror_buildup / TERROR_BUILDUP_FEAR)))
 				return
 			var/held_item = owner.get_active_held_item()
 			if (owner.dropItemToGround(held_item))
 				owner.visible_message(
-					span_danger("[owner.name] drops \the [held_item]!"),
-					span_warning("You drop \the [held_item]!"), null, COMBAT_MESSAGE_RANGE)
+					span_danger(LANG("datum.654b1725", list(owner.name, held_item))),
+					span_warning(LANG("datum.bbdacc31", list(held_item))), null, COMBAT_MESSAGE_RANGE)
 
 		if (3)
 			to_chat(owner, span_warning(LANG("datum.03e28c7a", null)))

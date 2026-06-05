@@ -80,7 +80,7 @@
 		return pai.on_saboteur(source, disrupt_duration)
 
 /obj/item/pai_card/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_They()] can't keep living without real human intimacy!"))
+	user.visible_message(span_suicide(LANG("obj.07c14856", list(user, src, user.p_They()))))
 	return OXYLOSS
 
 /obj/item/pai_card/update_overlays()

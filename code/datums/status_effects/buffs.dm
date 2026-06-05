@@ -85,7 +85,7 @@
 
 /datum/status_effect/wish_granters_gift/on_remove()
 	owner.revive(ADMIN_HEAL_ALL)
-	owner.visible_message(span_warning("[owner] appears to wake from the dead, having healed all wounds!"), span_notice("You have regenerated."))
+	owner.visible_message(span_warning(LANG("datum.2cccda3c", list(owner))), span_notice(LANG("datum.eaea70de", null)))
 
 
 /atom/movable/screen/alert/status_effect/wish_granters_gift
@@ -354,7 +354,7 @@
 				itemUser.updatehealth()
 
 /datum/status_effect/hippocratic_oath/proc/consume_owner()
-	owner.visible_message(span_notice("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty."))
+	owner.visible_message(span_notice(LANG("datum.6eda7f2a", list(owner))))
 	var/list/chems = list(/datum/reagent/medicine/sal_acid, /datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/oxandrolone)
 	var/mob/living/basic/snake/spawned = new(owner.loc, pick(chems))
 	spawned.name = "Asclepius's Snake"

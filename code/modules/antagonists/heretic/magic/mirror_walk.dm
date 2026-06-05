@@ -65,14 +65,14 @@
 		return
 
 	jaunter.Beam(nearby_reflection, icon_state = "light_beam", time = phase_out_time)
-	nearby_reflection.visible_message(span_warning("[nearby_reflection] begins to shimmer and shake slightly!"))
+	nearby_reflection.visible_message(span_warning(LANG("datum.61260e4c", list(nearby_reflection))))
 	if(!do_after(jaunter, phase_out_time, nearby_reflection, IGNORE_USER_LOC_CHANGE|IGNORE_INCAPACITATED, hidden = TRUE))
 		return
 
 	playsound(jaunter, 'sound/effects/magic/ethereal_enter.ogg', 50, TRUE, -1)
 	jaunter.visible_message(
-		span_boldwarning("[jaunter] phases out of reality, vanishing before your very eyes!"),
-		span_notice("You jump into the reflection coming off of [nearby_reflection], entering the mirror's realm."),
+		span_boldwarning(LANG("datum.2416af78", list(jaunter))),
+		span_notice(LANG("datum.e72bbad5", list(nearby_reflection))),
 	)
 
 	// Pass the turf of the nearby reflection to the parent call
@@ -97,7 +97,7 @@
 		return FALSE
 
 	nearby_reflection.Beam(phase_turf, icon_state = "light_beam", time = phase_in_time)
-	nearby_reflection.visible_message(span_warning("[nearby_reflection] begins to shimmer and shake slightly!"))
+	nearby_reflection.visible_message(span_warning(LANG("datum.61260e4c", list(nearby_reflection))))
 	if(!do_after(unjaunter, phase_in_time, nearby_reflection, hidden = TRUE))
 		return FALSE
 
@@ -120,8 +120,8 @@
 	if (!nearby_reflection) // Should only be true if you're forced out somehow, like by having the spell removed
 		return
 	unjaunter.visible_message(
-		span_boldwarning("[unjaunter] phases into reality before your very eyes!"),
-		span_notice("You jump out of the reflection coming off of [nearby_reflection], exiting the mirror's realm."),
+		span_boldwarning(LANG("datum.9223d186", list(unjaunter))),
+		span_notice(LANG("datum.2fda469e", list(nearby_reflection))),
 	)
 
 /**

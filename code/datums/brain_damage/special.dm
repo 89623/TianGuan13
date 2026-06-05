@@ -148,9 +148,9 @@
 	user.visible_message(span_warning("[user] [slip_in_message]."), ignored_mobs = user)
 
 	if(do_teleport(user, destination_turf, no_effects = TRUE))
-		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
+		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice(LANG("obj.7195f824", null)))
 	else
-		user.visible_message(span_warning("[user] [slip_out_message], ending up exactly where they left."), span_notice("...and find yourself where you started?"))
+		user.visible_message(span_warning(LANG("obj.a195a31c", list(user, slip_out_message))), span_notice(LANG("obj.52f75cc4", null)))
 
 
 /obj/effect/client_image_holder/bluespace_stream/attack_tk(mob/user)
@@ -408,7 +408,7 @@
 
 	if(get_dist(owner, beepsky) <= 1)
 		owner.playsound_local(owner, 'sound/items/weapons/egloves.ogg', 50)
-		owner.visible_message(span_warning("[owner]'s body jerks as if it was shocked."), span_userdanger("You feel the fist of the LAW."))
+		owner.visible_message(span_warning(LANG("datum.22ede1b1", list(owner))), span_userdanger(LANG("datum.7af357d2", null)))
 		owner.adjust_stamina_loss(rand(40, 70))
 		QDEL_NULL(beepsky)
 

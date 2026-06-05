@@ -152,7 +152,7 @@
 		log_combat(user, target.owner, "attempted to butcher", source)
 
 	if (length(target.contents))
-		user.visible_message(span_warning("[user] begins to gut [limb_descriptor]!"), span_notice("You begin to gut [limb_descriptor]..."), ignored_mobs = target.owner)
+		user.visible_message(span_warning(LANG("datum.887089b1", list(user, limb_descriptor))), span_notice(LANG("datum.f21e9c42", list(limb_descriptor))), ignored_mobs = target.owner)
 		if (target.owner)
 			to_chat(target.owner, span_warning(LANG("datum.d53ece4f", list(user, target.plaintext_zone))))
 
@@ -173,7 +173,7 @@
 				to_chat(user, span_warning("You need to butcher all other limbs first!"))
 				return
 
-	user.visible_message(span_warning("[user] begins to cut [limb_descriptor] apart!"), span_notice("You begin to cut [limb_descriptor] apart..."), ignored_mobs = target.owner)
+	user.visible_message(span_warning(LANG("datum.2b07cd8a", list(user, limb_descriptor))), span_notice(LANG("datum.4d769be6", list(limb_descriptor))), ignored_mobs = target.owner)
 	if (target.owner)
 		to_chat(target.owner, span_warning(LANG("datum.57920e8c", list(user, target.plaintext_zone))))
 
@@ -271,7 +271,7 @@
 			meat.subjectname = target.owner.real_name
 			meat.subjectjob = target.owner.job
 
-	user.visible_message(span_warning("[user] butchers [limb_descriptor]!"), span_notice("You butcher [limb_descriptor]."), ignored_mobs = target.owner)
+	user.visible_message(span_warning(LANG("datum.618fbb18", list(user, limb_descriptor))), span_notice(LANG("datum.6b530da7", list(limb_descriptor))), ignored_mobs = target.owner)
 	if (!target.owner)
 		target.drop_organs(violent_removal = TRUE) // Should not happen, but just in case
 		create_replacement_limb(target, drop_loc)
@@ -360,9 +360,9 @@
 		to_chat(user, span_warning(LANG("datum.87048759", list(victim))))
 		return
 
-	user.visible_message(span_danger("[user] is slitting [victim]'s throat!"), \
-					span_danger("You start slicing [victim]'s throat!"), \
-					span_hear("You hear a cutting noise!"), ignored_mobs = victim)
+	user.visible_message(span_danger(LANG("datum.0168619b", list(user, victim))), \
+					span_danger(LANG("datum.109c1fe3", list(victim))), \
+					span_hear(LANG("datum.7bfb4c6e", null)), ignored_mobs = victim)
 	victim.show_message(span_userdanger("Your throat is being slit by [user]!"), MSG_VISUAL, \
 					span_userdanger("Something is cutting into your neck!"), NONE)
 	log_combat(user, victim, "attempted throat slitting", source)
@@ -376,8 +376,8 @@
 						span_warning("Their neck has already been already cut, you can't make the bleeding any worse!"))
 		return
 
-	victim.visible_message(span_danger("[user] slits [victim]'s throat!"), \
-				span_userdanger("[user] slits your throat..."))
+	victim.visible_message(span_danger(LANG("datum.318dc71b", list(user, victim))), \
+				span_userdanger(LANG("datum.9546e227", list(user))))
 	log_combat(user, victim, "wounded via throat slitting", source)
 	victim.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
 	var/obj/item/bodypart/slit_throat = victim.get_bodypart(BODY_ZONE_HEAD)
@@ -398,8 +398,8 @@
 	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
 
 	if (target.flags_1 & HOLOGRAM_1)
-		butcher.visible_message(span_notice("[butcher] tries to butcher [target], but it vanishes."), \
-			span_notice("You try to butcher [target], but it vanishes."))
+		butcher.visible_message(span_notice(LANG("datum.c6ee05ed", list(butcher, target))), \
+			span_notice(LANG("datum.0163df0b", list(target))))
 		qdel(target)
 		return
 
@@ -476,8 +476,8 @@
 					diseased_remains.AddComponent(/datum/component/infective, diseases_to_add)
 
 	if (butcher)
-		butcher.visible_message(span_notice("[butcher] butchers [target]."), \
-			span_notice("You butcher [target]."))
+		butcher.visible_message(span_notice(LANG("datum.ebf4e8be", list(butcher, target))), \
+			span_notice(LANG("datum.6b530da7", list(target))))
 	butcher_callback?.Invoke(butcher, target)
 	target.harvest(butcher)
 	target.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)

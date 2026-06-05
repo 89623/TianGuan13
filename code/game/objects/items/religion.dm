@@ -32,8 +32,8 @@
 	if(morale_time > world.time)
 		to_chat(user, span_warning(LANG("obj.e63257db", list(src))))
 		return
-	user.visible_message("<span class='big notice'>[user] flourishes [src]!</span>", \
-	span_notice("You raise [src] skywards, inspiring your allies!"))
+	user.visible_message(LANG("obj.8c916550", list(user, src)), \
+	span_notice(LANG("obj.7e332b57", list(src))))
 	playsound(src, SFX_RUSTLE, 100, FALSE)
 	if(warcry)
 		user.say("[warcry]", forced="banner")
@@ -347,7 +347,7 @@
 	if(staffcooldown + staffwait > world.time)
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] chants deeply and waves [user.p_their()] staff!"))
+	user.visible_message(span_notice(LANG("obj.5ac62c8f", list(user, user.p_their()))))
 	if(do_after(user, 2 SECONDS, interacting_with))
 		interacting_with.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time

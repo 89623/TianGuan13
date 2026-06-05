@@ -37,9 +37,9 @@
 		if(manifest)
 			tear_manifest(user)
 
-		user.visible_message(span_notice("[user] pries \the [src] open."), \
-			span_notice("You pry open \the [src]."), \
-			span_hear("You hear splitting wood."))
+		user.visible_message(span_notice(LANG("obj.5e000044", list(user, src))), \
+			span_notice(LANG("obj.75ea16c7", list(src))), \
+			span_hear(LANG("obj.5fcb16ad", null)))
 		playsound(src.loc, 'sound/items/weapons/slashmiss.ogg', 75, TRUE)
 
 		var/turf/T = get_turf(src)

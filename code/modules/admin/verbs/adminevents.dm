@@ -11,7 +11,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message",
 
 	msg = user.reformat_narration(msg)
 
-	target.balloon_alert(target, "you hear a voice")
+	target.balloon_alert(target, LANG("datum.d955e950", null))
 	to_chat(target, LANG("datum.5ea2cf68", list(msg)), confidential = TRUE)
 
 	log_admin("SubtlePM: [key_name(user)] -> [key_name(target)] : [msg]")
@@ -60,7 +60,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 
 	log_directed_talk(mob, target, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(target)]'s [sender] message with: \"[input]\"")
-	target.balloon_alert(target, "you hear a voice")
+	target.balloon_alert(target, LANG("client.d955e950", null))
 	to_chat(target, span_hear(LANG("client.06743bb0", list(human_recipient ? "ears" : "radio receiver", sender == "Syndicate" ? "your benefactor" : "Central Command", sender == "Syndicate" ? ", agent." : ":", input))), confidential = TRUE)
 
 	BLACKBOX_LOG_ADMIN_VERB("Headset Message")

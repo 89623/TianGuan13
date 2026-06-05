@@ -139,7 +139,7 @@
 				to_chat(user, span_warning(LANG("obj.78c08dc0", null)))
 				return
 			if(!divine)
-				user.visible_message(span_notice("[user] tears out the stuffing from [src]!"), span_notice("You rip a bunch of the stuffing from [src]. Murderer."))
+				user.visible_message(span_notice(LANG("obj.d9de5815", list(user, src))), span_notice(LANG("obj.58a2777d", list(src))))
 				I.play_tool_sound(src)
 				stuffed = FALSE
 			else
@@ -152,7 +152,7 @@
 					to_chat(user, span_notice(LANG("obj.8c0817aa", null)))
 				else
 					to_chat(user, span_notice(LANG("obj.dcc84c1c", list(src))))
-				user.visible_message(span_notice("[user] lays down their weapons and begs for [src]'s mercy!"), span_notice("You lay down your weapons and beg for [src]'s mercy."))
+				user.visible_message(span_notice(LANG("obj.f5f84947", list(user, src))), span_notice(LANG("obj.98fe2e8a", list(src))))
 				user.drop_all_held_items()
 		else
 			to_chat(user, span_notice(LANG("obj.183b7f6c", list(src))))
@@ -167,8 +167,8 @@
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
-		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
-		span_danger("You slide [I] into [src]."))
+		user.visible_message(span_warning(LANG("obj.3a28423b", list(user, grenade, src))), \
+		span_danger(LANG("obj.797cf963", list(I, src))))
 		grenade = I
 		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
 		return
@@ -210,8 +210,8 @@
 			chance -= duty //do we mate for life?
 
 		if(prob(chance)) //did we bag a date?
-			user.visible_message(span_notice("[user] makes [Kisser] kiss [src]!"),
-									span_notice("You make [Kisser] kiss [src]!"))
+			user.visible_message(span_notice(LANG("obj.caa35028", list(user, Kisser, src))),
+									span_notice(LANG("obj.4eb4c0c9", list(Kisser, src))))
 			if(lover) //who cares for the past, we live in the present
 				lover.heartbreak(src)
 			new_lover(Kisser)
@@ -222,24 +222,24 @@
 
 	//then comes marriage
 	else if(Kisser.lover == src && Kisser.partner != src) //need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
-		user.visible_message(span_notice("[user] pronounces [Kisser] and [src] married! D'aw."),
-									span_notice("You pronounce [Kisser] and [src] married!"))
+		user.visible_message(span_notice(LANG("obj.2ee618e6", list(user, Kisser, src))),
+									span_notice(LANG("obj.5bf6f774", list(Kisser, src))))
 		new_partner(Kisser)
 		Kisser.new_partner(src)
 
 	//then comes a baby in a baby's carriage, or an adoption in an adoption's orphanage
 	else if(Kisser.partner == src && !plush_child) //the one advancing does not take ownership of the child and we have a one child policy in the toyshop
-		user.visible_message(span_notice("[user] is going to break [Kisser] and [src] by bashing them like that."),
-									span_notice("[Kisser] passionately embraces [src] in your hands. Look away you perv!"))
+		user.visible_message(span_notice(LANG("obj.9aa24540", list(user, Kisser, src))),
+									span_notice(LANG("obj.0b595dcb", list(Kisser, src))))
 		user.client.give_award(/datum/award/achievement/misc/rule8, user)
 		if(plop(Kisser))
-			user.visible_message(span_notice("Something drops at the feet of [user]."),
-							span_notice("The miracle of oh god did that just come out of [src]?!"))
+			user.visible_message(span_notice(LANG("obj.d622f7f5", list(user))),
+							span_notice(LANG("obj.c8e00048", list(src))))
 
 	//then comes protection, or abstinence if we are catholic
 	else if(Kisser.partner == src && plush_child)
-		user.visible_message(span_notice("[user] makes [Kisser] nuzzle [src]!"),
-									span_notice("You make [Kisser] nuzzle [src]!"))
+		user.visible_message(span_notice(LANG("obj.e56e0e07", list(user, Kisser, src))),
+									span_notice(LANG("obj.652bb603", list(Kisser, src))))
 
 	//then oh fuck something unexpected happened
 	else
@@ -429,7 +429,7 @@
 	clash_target = P
 	P.clashing = TRUE
 	say(LANG("obj.71020c0f", null))
-	P.say("Ratvar?!")
+	P.say(LANG("obj.300c4cba", null))
 	var/obj/item/toy/plush/a_winnar_is
 	var/victory_chance = 10
 	for(var/i in 1 to 10) //We only fight ten times max
@@ -690,7 +690,7 @@
 	var/suicide_count = 0
 
 /obj/item/toy/plush/moth/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.4cd5d9a1", list(user, src, user.p_them(), user.p_theyre()))))
 	suicide_count++
 	if(suicide_count < 3)
 		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."

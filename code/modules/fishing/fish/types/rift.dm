@@ -59,7 +59,7 @@
 
 /datum/embedding/chrystarfish/jostle_effects()
 	do_teleport(owner, get_turf(owner), 3, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-	owner.visible_message(span_danger("[owner] teleports as [parent] jostles inside of [owner.p_them()]!"))
+	owner.visible_message(span_danger(LANG("datum.96dd4912", list(owner, parent, owner.p_them()))))
 
 /obj/item/fish/starfish/chrystarfish/set_status(new_status, silent)
 	. = ..()
@@ -227,7 +227,7 @@
 	switch(patience)
 		if(0)
 			// No check, we always want sharky to bite jerky on 0
-			moc.visible_message(span_bolddanger("[src] bites directly into [moc] and squirms away from [moc.p_their()] grasp!"), span_userdanger("[src] sinks its fangs into you!!"))
+			moc.visible_message(span_bolddanger(LANG("obj.56751455", list(src, moc, moc.p_their()))), span_userdanger(LANG("obj.e569a0bb", list(src))))
 			moc.apply_damage(force, BRUTE, moc.get_active_hand(), wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness, attacking_item = src)
 			forceMove(moc.drop_location())
 			moc.painful_scream()
@@ -256,8 +256,8 @@
 
 /obj/item/fish/dolphish/pet_fish(mob/living/user, in_aquarium)
 	user.visible_message(
-		span_warning("[user] tries to pet [src], but it sinks its fangs into [user.p_their()] hand!"),
-		span_warning("You try to pet [src], but it sinks its fangs into your hand!"),
+		span_warning(LANG("obj.282b76f0", list(user, src, user.p_their()))),
+		span_warning(LANG("obj.c555261e", list(src))),
 		vision_distance = DEFAULT_MESSAGE_RANGE - 3,
 		)
 	user.apply_damage(force, BRUTE, user.get_active_hand(), wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness, attacking_item = src)
@@ -319,13 +319,13 @@
 	new_eyes = new new_eyes(user)
 	new_eyes.Insert(user)
 	playsound(user, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 50, TRUE)
-	user.visible_message("[user]'s [eyes ? eyes : "eye holes"] suddenly sprout stalks and turn into [new_eyes]!")
+	user.visible_message(LANG("obj.e73980e4", list(user, eyes ? eyes : "eye holes", new_eyes)))
 	ASYNC
 		user.emote("scream")
 		eyes.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 		sleep(5 SECONDS)
 		if(!QDELETED(eyes))
-			eyes.visible_message(span_danger("[eyes] rapidly turn to dust."))
+			eyes.visible_message(span_danger(LANG("obj.29def987", list(eyes))))
 			eyes.dust()
 
 /obj/item/fish/flumpulus/get_base_edible_reagents_to_add()
@@ -584,7 +584,7 @@
 	visible_message(span_suicide(LANG("obj.2cc81b64", list(user, src))))
 	var/psychic_speech = tgui_input_text(user, message = "Say something!", title = "What are your last words?", timeout = 15 SECONDS)
 	if(!psychic_speech || !locate(src) in user.get_contents())
-		user.say("Err, umm... uhh... erm...", forced = "blustering like a moron due to babbelfish suicide")
+		user.say(LANG("obj.2d013962", null), forced = "blustering like a moron due to babbelfish suicide")
 		visible_message(span_suicide(LANG("obj.b597bc0a", list(user))))
 		return OXYLOSS
 

@@ -86,7 +86,7 @@
 	else if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	cell = tool
-	user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
+	user.visible_message(span_notice(LANG("obj.6c5b2d75", list(user, src))), span_notice(LANG("obj.8b86d93e", list(src))))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 

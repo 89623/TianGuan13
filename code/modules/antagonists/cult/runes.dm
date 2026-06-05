@@ -298,10 +298,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 		convertee.adjust_fire_loss(-(burndamage * 0.75))
 
 	convertee.visible_message(
-		span_warning("[convertee] writhes in pain [(brutedamage || burndamage) \
+		span_warning(LANG("obj.0999e9fb", list(convertee, (brutedamage || burndamage) \
 			? "even as [convertee.p_their()] wounds heal and close" \
-			: "as the markings below [convertee.p_them()] glow a bloody red"]!"),
-		span_cult_large("<i>AAAAAAAAAAAAAA-</i>"),
+			: "as the markings below [convertee.p_them()] glow a bloody red"))),
+		span_cult_large(LANG("obj.58d6acb0", null)),
 	)
 
 	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
@@ -315,7 +315,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
-		convertee.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+		convertee.say(LANG("obj.111ff1ea", null), forced = "That son of a bitch! They're in. (April Fools)")
 
 	else
 		convertee.Unconscious(10 SECONDS)
@@ -548,7 +548,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(initial(A.name) == "Space")
 				actual_selected_rune.handle_portal("space", T)
 		if(movesuccess)
-			target.visible_message(span_warning("There is a boom of outrushing air as something appears above the rune!"), null, "<i>You hear a boom.</i>")
+			target.visible_message(span_warning(LANG("obj.a9354b8e", null)), null, LANG("obj.87dafc92", null))
 	else
 		fail_invoke()
 
@@ -760,8 +760,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			return
 	SEND_SOUND(mob_to_revive, 'sound/music/antag/bloodcult/bloodcult_gain.ogg')
 	to_chat(mob_to_revive, span_cult_large(LANG("obj.4fef73d1", null)))
-	mob_to_revive.visible_message(span_warning("[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes."), \
-		span_cult_large("You awaken suddenly from the void. You're alive!"))
+	mob_to_revive.visible_message(span_warning(LANG("obj.02fa3ddf", list(mob_to_revive, mob_to_revive.p_their()))), \
+		span_cult_large(LANG("obj.7aa19f94", null)))
 	rune_in_use = FALSE
 	return ..()
 
@@ -867,8 +867,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
-	cultist_to_summon.visible_message(span_warning("[cultist_to_summon] suddenly disappears in a flash of red light!"), \
-									  span_cult_italic("<b>Overwhelming vertigo consumes you as you are hurled through the air!</b>"))
+	cultist_to_summon.visible_message(span_warning(LANG("obj.2ea9ca50", list(cultist_to_summon))), \
+									  span_cult_italic(LANG("obj.9e33ff99", null)))
 	..()
 	visible_message(span_warning(LANG("obj.ba7e9eb3", list(src, cultist_to_summon))))
 	var/turf/old_turf = get_turf(cultist_to_summon)
@@ -1029,8 +1029,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		qdel(N)
 		ghosts--
 		if(new_human)
-			new_human.visible_message(span_warning("[new_human] suddenly dissolves into bones and ashes."), \
-					span_cult_large("Your link to the world fades. Your form breaks apart."))
+			new_human.visible_message(span_warning(LANG("obj.cd910468", list(new_human))), \
+					span_cult_large(LANG("obj.19ca3642", null)))
 			for(var/obj/I in new_human)
 				new_human.dropItemToGround(I, TRUE)
 			new_human.mind?.remove_antag_datum(/datum/antagonist/cult)
@@ -1039,8 +1039,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	else if(choice == "Ascend as a Dark Spirit")
 		affecting = user
 		affecting.add_atom_colour(RUNE_COLOR_DARKRED, ADMIN_COLOUR_PRIORITY)
-		affecting.visible_message(span_warning("[affecting] freezes statue-still, glowing an unearthly red."), \
-						span_cult("You see what lies beyond. All is revealed. In this form you find that your voice booms louder and you can mark targets for the entire cult"))
+		affecting.visible_message(span_warning(LANG("obj.aea82b2b", list(affecting))), \
+						span_cult(LANG("obj.891e3a6e", null)))
 		var/mob/dead/observer/G = affecting.ghostize(TRUE)
 		ADD_TRAIT(G, TRAIT_NO_OBSERVE, CULT_TRAIT)
 		var/datum/action/innate/cult/comm/spirit/CM = new
@@ -1051,12 +1051,12 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		GM.Grant(G)
 		while(!QDELETED(affecting))
 			if(!(affecting in T))
-				user.visible_message(span_warning("A spectral tendril wraps around [affecting] and pulls [affecting.p_them()] back to the rune!"))
+				user.visible_message(span_warning(LANG("obj.335f7c24", list(affecting, affecting.p_them()))))
 				Beam(affecting, icon_state="drainbeam", time = 2)
 				affecting.forceMove(get_turf(src)) //NO ESCAPE :^)
 			if(affecting.key)
-				affecting.visible_message(span_warning("[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming."), \
-					span_danger("You are re-united with your physical form. [src] releases its hold over you."))
+				affecting.visible_message(span_warning(LANG("obj.6762d988", list(affecting, affecting.p_them()))), \
+					span_danger(LANG("obj.75adab30", list(src))))
 				affecting.Paralyze(40)
 				break
 			if(affecting.health <= 10)

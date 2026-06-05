@@ -32,7 +32,7 @@
 		straitjacket = null
 
 	if(!handcuffs && !legcuffs && !straitjacket && !prisoner_shoes && !knotted_shoes && !some_manner_of_cage && !space_invader)
-		user.balloon_alert(user, "already free!")
+		user.balloon_alert(user, LANG("datum.b2d2162d", null))
 		return .
 	..()
 
@@ -95,16 +95,16 @@
 	playsound(user, 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg', 50, TRUE)
 	if(IS_CHANGELING(hapless_manhandler))
 		user.visible_message(
-			span_danger("[user] spews a mist of sizzling acid onto [hapless_manhandler]... but nothing happens!"),
-			span_changeling("We prepare our escape, spraying bio-acid on our captor... [span_danger("But nothing happened?!")]"),
-			span_danger("You hear retching, then a sizzling that terminates quite abruptly.")
+			span_danger(LANG("datum.0d9fd9aa", list(user, hapless_manhandler))),
+			span_changeling(LANG("datum.4b694fb3", list(span_danger("But nothing happened?!")))),
+			span_danger(LANG("datum.57dcc57a", null))
 			)
 		to_chat(hapless_manhandler, span_changeling(LANG("datum.174dd70b", null)))
 		return
 	user.visible_message(
-		span_danger("[user] spews a mist of sizzling acid onto [hapless_manhandler], using the opportunity to wrestle away."),
-		user.balloon_alert(user, "dissuading captor..."),
-		span_danger("You hear retching, then sizzling, quickly muffled by a loud keening of pain."))
+		span_danger(LANG("datum.b6684180", list(user, hapless_manhandler))),
+		user.balloon_alert(user, LANG("datum.129592f0", null)),
+		span_danger(LANG("datum.0ca6b9c5", null)))
 	hapless_manhandler.Stun(2 SECONDS)
 	hapless_manhandler.emote("scream")
 	hapless_manhandler.stop_pulling()

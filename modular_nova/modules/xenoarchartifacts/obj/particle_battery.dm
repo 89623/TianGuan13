@@ -61,8 +61,8 @@
 		if(!inserted_battery)
 			if(user.transferItemToLoc(attacking_item, src))
 				user.visible_message(
-					span_notice("[user] inserts battery into the utilizer."),
-					span_notice("You insert the battery into the utilizer."),
+					span_notice(LANG("obj.4263d56a", list(user))),
+					span_notice(LANG("obj.2f43105d", null)),
 					blind_message = span_notice("You hear click nearby."),
 				)
 				playsound(src, 'modular_nova/modules/aesthetics/lightswitch/sound/lightswitch.ogg', 25, FALSE)
@@ -278,14 +278,14 @@
 		inserted_battery.battery_effect.do_effect_touch(target_mob)
 		inserted_battery.stored_charge -= min(inserted_battery.stored_charge, 20) // we are spending quite a big amount of energy doing this
 		user.visible_message(
-			span_notice("[user] taps [target_mob] with [src], and it shudders on contact."),
-			span_notice("You tap [target_mob] with [src], and it shudders on contact."),
+			span_notice(LANG("obj.f6f39e24", list(user, target_mob, src))),
+			span_notice(LANG("obj.7254c8f8", list(target_mob, src))),
 			blind_message = span_hear("You hear silent zapping sounds."),
 		)
 	else
 		user.visible_message(
-			span_notice("[user] taps [target_mob] with [src], but nothing happens."),
-			span_notice("You tap [target_mob] with [src], but nothing happens."),
+			span_notice(LANG("obj.61ef528f", list(user, target_mob, src))),
+			span_notice(LANG("obj.0f6d7ff1", list(target_mob, src))),
 		)
 
 	if(inserted_battery.battery_effect)

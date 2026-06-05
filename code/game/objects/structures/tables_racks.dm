@@ -370,7 +370,7 @@
 	for(var/obj/item/thing in used_tray.contents)
 		AfterPutItemOnTable(thing, user)
 	used_tray.atom_storage.remove_all(drop_location())
-	user.visible_message(span_notice("[user] empties [used_tray] on [src]."))
+	user.visible_message(span_notice(LANG("obj.0256c0ac", list(user, used_tray, src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/proc/deck_act(mob/living/user, obj/item/toy/cards/deck/dealer_deck, list/modifiers, flip)
@@ -485,7 +485,7 @@
 
 	rable.loaded = src
 	forceMove(rable)
-	user.visible_message(span_notice("[user] collects \the [src]."), span_notice("You collect \the [src]."))
+	user.visible_message(span_notice(LANG("obj.37a40a4d", list(user, src))), span_notice(LANG("obj.5e4d6939", list(src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/thing, mob/living/user)
@@ -952,14 +952,14 @@
 
 	if(being_buckled == buckler)
 		being_buckled.visible_message(
-			span_notice("[buckler] lays down on [src]."),
-			span_notice("You lay down on [src]."),
+			span_notice(LANG("obj.b8becc1b", list(buckler, src))),
+			span_notice(LANG("obj.c0f9142e", list(src))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	else
 		being_buckled.visible_message(
-			span_notice("[buckler] lays [being_buckled] down on [src]."),
-			span_notice("[buckler] lays you down on [src]."),
+			span_notice(LANG("obj.61013276", list(buckler, being_buckled, src))),
+			span_notice(LANG("obj.66f8b7fd", list(buckler, src))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
@@ -969,14 +969,14 @@
 
 	if(being_unbuckled == unbuckler)
 		being_unbuckled.visible_message(
-			span_notice("[unbuckler] gets up from [src]."),
-			span_notice("You get up from [src]."),
+			span_notice(LANG("obj.08b0e968", list(unbuckler, src))),
+			span_notice(LANG("obj.e8acb4b6", list(src))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	else
 		being_unbuckled.visible_message(
-			span_notice("[unbuckler] pulls [being_unbuckled] up from [src]."),
-			span_notice("[unbuckler] pulls you up from [src]."),
+			span_notice(LANG("obj.7c44b748", list(unbuckler, being_unbuckled, src))),
+			span_notice(LANG("obj.dc9bfda3", list(unbuckler, src))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
@@ -1264,7 +1264,7 @@
 		balloon_alert(user, LANG("obj.cc3756c6", null))
 		return
 
-	user.visible_message(span_notice("[user] begins connecting [src]'s [air_tank] to [patient]'s [internals]."), span_notice("You begin connecting [src]'s [air_tank] to [patient]'s [internals]..."), ignored_mobs = patient)
+	user.visible_message(span_notice(LANG("obj.bbc9e886", list(user, src, air_tank, patient, internals))), span_notice(LANG("obj.8812aeaf", list(src, air_tank, patient, internals))), ignored_mobs = patient)
 	to_chat(patient, span_userdanger(LANG("obj.490c8301", list(user, src, air_tank, internals))))
 
 	if (!do_after(user, 4 SECONDS, patient))
@@ -1400,7 +1400,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
-	user.visible_message(span_danger("[user] kicks [src]."), null, null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger(LANG("obj.c2085da6", list(user, src))), null, null, COMBAT_MESSAGE_RANGE)
 	take_damage(rand(4,8), BRUTE, MELEE, 1)
 
 /obj/structure/rack/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -1472,7 +1472,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))
-		user.visible_message(span_notice("[user] assembles \a [R]."), span_notice("You assemble \a [R]."))
+		user.visible_message(span_notice(LANG("obj.3dc1a1cd", list(user, R))), span_notice(LANG("obj.e671a056", list(R))))
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage/cans
 	name = "can ring"
 	desc = "Holds up to six drink cans, and select bottles."
@@ -11,7 +12,7 @@
 	storage_type = /datum/storage/sixcan
 
 /obj/item/storage/cans/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins popping open a final cold one with the boys! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.c74f3c1a", list(user, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/storage/cans/update_icon_state()

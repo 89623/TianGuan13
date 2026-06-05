@@ -56,16 +56,16 @@
 	QDEL_IN(src, 0.5 SECONDS)
 
 /obj/item/food/monkeycube/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is putting [src] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.54641d90", list(user, src, user.p_their(), user.p_theyre()))))
 	var/eating_success = do_after(user, 1 SECONDS, src)
 	if(QDELETED(user)) //qdeletion: the nuclear option of self-harm
 		return SHAME
 	if(!eating_success || QDELETED(src)) //checks if src is gone or if they failed to wait for a second
-		user.visible_message(span_suicide("[user] chickens out!"))
+		user.visible_message(span_suicide(LANG("obj.700a662c", list(user))))
 		return SHAME
 	if(HAS_TRAIT(user, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
-		user.visible_message(span_suicide("[user] realizes [user.p_their()] body won't activate [src]!")
-		,span_warning("Your body won't activate [src]..."))
+		user.visible_message(span_suicide(LANG("obj.b51c9f89", list(user, user.p_their(), src)))
+		,span_warning(LANG("obj.5aea6245", list(src))))
 		return SHAME
 	playsound(user, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
 	user.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
@@ -79,7 +79,7 @@
 		to_chat(user, span_warning(LANG("obj.c1a8e53e", list(src))))
 		return
 	Expand()
-	user.visible_message(span_danger("[user]'s torso bursts open as a primate emerges!"))
+	user.visible_message(span_danger(LANG("obj.28cf210b", list(user))))
 	user.gib(DROP_BRAIN|DROP_BODYPARTS|DROP_ITEMS) // just remove the organs
 
 /obj/item/food/monkeycube/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// For scaling the effectiveness of certain effects to the total bodypart count
 #define GET_BODYPART_COEFFICIENT(X) round(X.len / BODYPARTS_DEFAULT_MAXIMUM , 0.1)
 /// Check if it's full body. These are mostly here so we can change just one place when we ever add more limbs (?)
@@ -183,7 +184,7 @@
 
 	owner.adjust_fire_stacks(fire_stacks_per_second * seconds_between_ticks * length(bodyparts))
 	if(owner.ignite_mob())
-		owner.visible_message(span_danger("[owner]'s body reacts with the atmosphere and bursts into flames!"), span_userdanger("Your body reacts with the atmosphere and bursts into flame!"))
+		owner.visible_message(span_danger(LANG("datum.a939c72d", list(owner))), span_userdanger(LANG("datum.2cb997a2", null)))
 
 #undef GET_BODYPART_COEFFICIENT
 #undef IS_FULL_BODY

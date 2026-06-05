@@ -39,8 +39,8 @@
 		return
 
 	user.visible_message(
-		span_warning("[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!"),
-		span_warning("You feel a draining as you pull the lever, but you know it'll be worth it."),
+		span_warning(LANG("obj.c40f7ec1", list(user, src, user.p_their()))),
+		span_warning(LANG("obj.f8000d14", null)),
 	)
 
 	icon_screen = "slots_screen_working"
@@ -121,8 +121,8 @@
 	if(.)
 		return
 	user.visible_message(
-		span_warning("[user] opens the bag and removes a die."),
-		span_warning("[span_boldwarning("You open the bag...!")] But all you see is a bag full of dice. Confused, you take one..."),
+		span_warning(LANG("obj.bd96ad1b", list(user))),
+		span_warning(LANG("obj.3fda8865", list(span_boldwarning("You open the bag...!")))),
 	)
 	var/turf/location = get_turf(user)
 	var/obj/item/dice/d20/fate/one_use/critical_fail = new(location)

@@ -62,8 +62,8 @@
 		return
 
 	user.visible_message(
-		span_notice("[user] attempts to [tool ? "cut":"remove"] the strand from around [owner == user ? "[owner.p_their()]":"[owner]'s"] neck..."),
-		span_notice("You attempt to [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck..."),
+		span_notice(LANG("datum.ffe92e65", list(user, tool ? "cut":"remove", owner == user ? "[owner.p_their()]":"[owner]'s"))),
+		span_notice(LANG("datum.0646f326", list(tool ? "cut":"remove", owner == user ? "your":"[owner]'s"))),
 	)
 
 	// Play a sound if we have a tool
@@ -78,8 +78,8 @@
 	tool?.play_tool_sound(owner)
 
 	user.visible_message(
-		span_notice("[user] successfully [tool ? "cut":"remove"] the strand from around [owner == user ? "[owner.p_their()]":"[owner]'s"] neck."),
-		span_notice("You successfully [tool ? "cut":"remove"] the strand from around [owner == user ? "your":"[owner]'s"] neck."),
+		span_notice(LANG("datum.81f5f7ea", list(user, tool ? "cut":"remove", owner == user ? "[owner.p_their()]":"[owner]'s"))),
+		span_notice(LANG("datum.425337c1", list(tool ? "cut":"remove", owner == user ? "your":"[owner]'s"))),
 	)
 	qdel(src)
 	return TRUE

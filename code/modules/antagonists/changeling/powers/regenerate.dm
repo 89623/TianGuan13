@@ -10,7 +10,7 @@
 
 /datum/action/changeling/regenerate/sting_action(mob/living/user)
 	if(!iscarbon(user))
-		user.balloon_alert(user, "nothing missing!")
+		user.balloon_alert(user, LANG("datum.e2f0ffe1", null))
 		return FALSE
 
 	..()
@@ -22,9 +22,9 @@
 	if(got_limbs_back)
 		playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		carbon_user.visible_message(
-			span_warning("[user]'s missing limbs reform, making a loud, grotesque sound!"),
-			span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),
-			span_hear("You hear organic matter ripping and tearing!"),
+			span_warning(LANG("datum.dcde9284", list(user))),
+			span_userdanger(LANG("datum.eebb0cd6", null)),
+			span_hear(LANG("datum.581bebe7", null)),
 		)
 		carbon_user.emote("scream")
 

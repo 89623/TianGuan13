@@ -59,7 +59,7 @@
 			connected_holopad.set_holocall(src)
 
 	if(!dialed_holopads.len)
-		calling_pad.say("Connection failure.")
+		calling_pad.say(LANG("datum.28e0851e", null))
 		qdel(src)
 		return
 
@@ -103,9 +103,9 @@
 	testing("Holocall disconnect")
 	if(H == connected_holopad)
 		var/area/A = get_area(connected_holopad)
-		calling_holopad.say("[A] holopad disconnected.")
+		calling_holopad.say(LANG("datum.e117d5a8", list(A)))
 	else if(H == calling_holopad && connected_holopad)
-		connected_holopad.say("[user] disconnected.")
+		connected_holopad.say(LANG("datum.d413f00d", list(user)))
 
 	ConnectionFailure(H, TRUE)
 
@@ -114,7 +114,7 @@
 	testing("Holocall connection failure: graceful [graceful]")
 	if(disconnected_holopad == connected_holopad || disconnected_holopad == calling_holopad)
 		if(!graceful && disconnected_holopad != calling_holopad)
-			calling_holopad.say("Connection failure.")
+			calling_holopad.say(LANG("datum.28e0851e", null))
 		qdel(src)
 		return
 
@@ -123,7 +123,7 @@
 	dialed_holopads -= disconnected_holopad
 	if(!dialed_holopads.len)
 		if(graceful)
-			calling_holopad.say("Call rejected.")
+			calling_holopad.say(LANG("datum.8914269d", null))
 		testing("No recipients, terminating")
 		qdel(src)
 
@@ -163,7 +163,7 @@
 	hangup = new(eye, src)
 	hangup.Grant(user)
 	playsound(answering_holopad, 'sound/machines/ping.ogg', 100)
-	answering_holopad.say("Connection established.")
+	answering_holopad.say(LANG("datum.a7ac031a", null))
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
@@ -180,7 +180,7 @@
 		if(!connected_holopad)
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
-				calling_holopad.say("No answer received.")
+				calling_holopad.say(LANG("datum.4b504e05", null))
 
 	if(!.)
 		testing("Holocall Check fail")
