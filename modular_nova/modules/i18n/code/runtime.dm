@@ -261,3 +261,27 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 		else if(istext(value) && GLOB.i18n_pref_desc_keys[key])
 			data[key] = lang_reverse_text(value)
 	return data
+
+/// 中文时长格式（无英文复数 / 无 " and " 连接词）。core 的 DisplayTimeText 在全服中文时改调此处。
+/// 当前为 zh-Hans 用词（天/小时/分钟/秒）——这是唯一非英文 locale；未来加 locale 时在此分支即可。
+/// 与 core DisplayTimeText 的分段逻辑一一对应，只换用词与拼接（中文直接连写）。
+/proc/lang_display_time_text(time_value, round_seconds_to = 0.1)
+	var/second = FLOOR(time_value * 0.1, round_seconds_to)
+	if(!second)
+		return "就在此刻"
+	if(second < 60)
+		return "[second]秒"
+	var/minute = FLOOR(second / 60, 1)
+	second = FLOOR(MODULUS(second, 60), round_seconds_to)
+	var/secondT = second ? "[second]秒" : ""
+	if(minute < 60)
+		return "[minute]分钟[secondT]"
+	var/hour = FLOOR(minute / 60, 1)
+	minute = MODULUS(minute, 60)
+	var/minuteT = minute ? "[minute]分钟" : ""
+	if(hour < 24)
+		return "[hour]小时[minuteT][secondT]"
+	var/day = FLOOR(hour / 24, 1)
+	hour = MODULUS(hour, 24)
+	var/hourT = hour ? "[hour]小时" : ""
+	return "[day]天[hourT][minuteT][secondT]"

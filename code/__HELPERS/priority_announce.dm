@@ -58,14 +58,14 @@
 	var/header
 	switch(type)
 		if(ANNOUNCEMENT_TYPE_PRIORITY)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Priority Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE(lang_reverse_text("Priority Announcement")) // NOVA EDIT - i18n: 反查公告标题（词进 ui.json）
 			if(length(title) > 0)
 				header += SUBHEADER_ANNOUNCEMENT_TITLE(title)
 		if(ANNOUNCEMENT_TYPE_CAPTAIN)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Captain's Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE(lang_reverse_text("Captain's Announcement")) // NOVA EDIT - i18n: 反查公告标题
 			GLOB.news_network.submit_article(text, "Captain's Announcement", NEWSCASTER_STATION_ANNOUNCEMENTS, null)
 		if(ANNOUNCEMENT_TYPE_SYNDICATE)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Syndicate Captain's Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE(lang_reverse_text("Syndicate Captain's Announcement")) // NOVA EDIT - i18n: 反查公告标题
 		else
 			header += generate_unique_announcement_header(title, sender_override)
 
@@ -188,7 +188,7 @@
 /proc/generate_unique_announcement_header(title, sender_override)
 	var/list/returnable_strings = list()
 	if(isnull(sender_override))
-		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] Update")
+		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] [lang_reverse_text("Update")]") // NOVA EDIT - i18n: 反查 "Update" 后缀（command_name 经聊天 AC 反查）
 	else
 		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE(sender_override)
 
