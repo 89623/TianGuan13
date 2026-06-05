@@ -76,7 +76,12 @@ const SINK_VARS: &[&str] = &[
 /// examine 信号处理器（COMSIG_ATOM_EXAMINE）的累加器参数名——`examine_list += "…"` 等，
 /// 是 examine 输出、必玩家可见，与裸 `.` 同等处理（全抽 + 改写为 LANG）。
 pub fn is_examine_accumulator(id: &str) -> bool {
-    matches!(id, "examine_list" | "examine_text" | "examine_strings")
+    matches!(
+        id,
+        // examine 信号处理器累加器 + 自我检查/体检累加器（combined_msg=自我检查、check_list=肢体伤情，
+        // 均 `+= span_*("…")` 拼成 to_chat 的玩家可见体检报告）。
+        "examine_list" | "examine_text" | "examine_strings" | "combined_msg" | "check_list"
+    )
 }
 
 fn is_sentence_like(s: &str) -> bool {

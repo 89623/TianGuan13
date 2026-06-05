@@ -285,3 +285,42 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 	hour = MODULUS(hour, 24)
 	var/hourT = hour ? "[hour]小时" : ""
 	return "[day]天[hourT][minuteT][secondT]"
+
+/// 身体部位名的**专用**反查（避开「chest=胸部 vs 储物箱」这类单词全局碰撞——只在部位语境调用）。
+/// 当前 zh-Hans 用词；core 的 parse_zone（部位 define→显示名）与 plaintext_zone（部位文本）显示处调用。
+/// locale==en 或非部位串 → 原样返回。键含多词部位（与全局目录值一致，无冲突）+ 单词部位（全局不收）。
+/proc/lang_zone(zone_text)
+	if(!istext(zone_text) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return zone_text
+	var/static/list/zmap = list(
+		"chest" = "胸部",
+		"head" = "头部",
+		"groin" = "腹股沟",
+		"left arm" = "左臂",
+		"right arm" = "右臂",
+		"left leg" = "左腿",
+		"right leg" = "右腿",
+		"left hand" = "左手",
+		"right hand" = "右手",
+		"left foot" = "左脚",
+		"right foot" = "右脚",
+		"mouth" = "嘴",
+		"eyes" = "眼睛",
+	)
+	return zmap[zone_text] || zone_text
+
+/// 代词的**专用**反查（he/she/it/is/his/him… → 中文）。不走全局反查——it/is/his 等是极常见短词，
+/// 全局整串反查会误伤正好等于这些词的动态数据；专用映射只在代词 proc / 模板代词实参处调用，零碰撞。
+/// 只覆盖可干净映射的代词与系动词（is/are→是、has/have→有）；语法后缀（does/do/s/es）保持英文。
+/// 大小写无关（中文无大小写）：按小写查，命中返回中文、否则原样（含 capitalize 后的英文回退）。
+/proc/lang_pronoun(word)
+	if(!istext(word) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return word
+	var/static/list/pmap = list(
+		"he" = "他", "she" = "她", "it" = "它", "they" = "他们",
+		"him" = "他", "her" = "她", "them" = "他们",
+		"his" = "他的", "hers" = "她的", "its" = "它的", "their" = "他们的", "theirs" = "他们的",
+		"himself" = "他自己", "herself" = "她自己", "itself" = "它自己", "themselves" = "他们自己",
+		"is" = "是", "are" = "是", "has" = "有", "have" = "有", "was" = "是", "were" = "是",
+	)
+	return pmap[LOWER_TEXT(word)] || word

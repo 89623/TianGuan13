@@ -50,6 +50,10 @@ locale 解析：
 
 ### TG Proc/File Changes:
 
+- **身体部位名 / 代词 / 自我体检（`runtime.dm` 加 `lang_zone`/`lang_pronoun` **专用映射**，零全局碰撞）**：
+  - **部位名**（chest/head…）：`lang_zone(text)` 硬编码 zh 专用表——避开「chest=胸部 vs 储物箱」单词全局碰撞（只在部位语境调用）。`parse_zone`（mobs.dm，改 `. =` 后 `return lang_zone(.)`）+ `check_for_injuries`/embed 的 `plaintext_zone`（_bodyparts.dm）显示处包裹。
+  - **代词**（He/is/him…）：`lang_pronoun(word)` 硬编码 zh 专用表（he→他、is→是、himself→他自己；does/do/s/es 等语法后缀保持英文）——不走全局反查（it/is/his 是常见短词会误伤动态数据）。在高价值模板实参处包裹：atom examine 描述符（`p_They()`/`p_are()`，atom_examine.dm）、自我检查（`p_them()`，human_defense.dm）。**模板译文里占位符就位即成中文**（如 atom.0e340ddb 译为「这是一个{2}…」）。
+  - **自我体检累加器**：`is_examine_accumulator` 增 `combined_msg`/`check_list`（extract.rs）→ 「You check yourself for injuries.」「Your {0} looks {1}.」等进 LANG（重写 14 处/4 文件）。残留：状态词 OK/no damage 与 has/looks 连接词是实参短词、仍英文（伤情词表是更深一层 vocab）。
 - **方法调用形式的汇聚点接入（重大覆盖修复，`tools/i18n/src/extract.rs` + `rewrite.rs`）**：此前抽取/改写只检测**裸调用** `Term::Call`（`visible_message(...)`、隐式 src），**完全漏掉方法调用** `X.visible_message(...)`/`src.say(...)`/`M.balloon_alert(...)`（AST 里是 `Follow::Call`，在 follow 链上）——而战斗/交互的可见消息绝大多数是这种形式。修复：两个 `recurse_follow` 对 `Follow::Call(_, name, args)` 也查 `sink_message_args(name)`；rewrite 用 follow 自身的 `Spanned` Location 定位，并让 `find_open_paren` 跳过方法调用的前导属性访问标点（`.`/`:`/`?.`）。一次重抽 **+6375 条**、重写 **7560 处 / 1504 文件**（如 `user.visible_message(span_danger("[user] fires [src]!"))` → `LANG`）。DM 全量编译 0 errors、tg/nova grep 通过。
 
 - `code/modules/tgui/tgui.dm`: `/datum/tgui/proc/get_payload` —— ① 在 config 负载注入 `"locale"`（供 TGUI 读 `config.locale`）；② 全服 locale≠en 时对 `ui_data`/`ui_static_data` 跑 `lang_reverse_tree`，把负载里**含空白的多词字符串**反查为译文（接入非 atom datum 的 name/desc/说明等动态内容）。均 NOVA EDIT ADDITION。

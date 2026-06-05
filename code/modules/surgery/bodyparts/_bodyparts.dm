@@ -408,7 +408,7 @@
 		else
 			is_disabled += " and"
 
-	check_list += "<span class='[no_damage ? "notice" : "warning"]'>Your [plaintext_zone][is_disabled][self_aware ? " has " : " looks "][status].</span>"
+	check_list += LANG("obj.be1c3f59", list(no_damage ? "notice" : "warning", lang_zone(plaintext_zone), is_disabled, self_aware ? " has " : " looks ", status)) // NOVA EDIT - i18n: 部位名专用反查（chest/head 等单词不碰储物箱）
 
 	var/adept_organ_feeler = owner == examiner && HAS_TRAIT(examiner, TRAIT_SELF_AWARE)
 	for(var/obj/item/organ/organ in src)
@@ -425,14 +425,14 @@
 
 	var/surgery_check = get_surgery_self_check()
 	if(surgery_check)
-		check_list += "\t[surgery_check]"
+		check_list += LANG("obj.294efb1f", list(surgery_check))
 
 	for(var/obj/item/embedded_thing as anything in embedded_objects)
 		if(embedded_thing.get_embed().stealthy_embed)
 			continue
 		var/harmless = embedded_thing.get_embed().is_harmless()
 		var/stuck_wordage = harmless ? "stuck to" : "embedded in"
-		var/embed_text = "\t<a href='byond://?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]'>There is [icon2html(embedded_thing, examiner)] \a [embedded_thing] [stuck_wordage] your [plaintext_zone]!</a>"
+		var/embed_text = "\t<a href='byond://?src=[REF(examiner)];embedded_object=[REF(embedded_thing)];embedded_limb=[REF(src)]'>There is [icon2html(embedded_thing, examiner)] \a [embedded_thing] [stuck_wordage] your [lang_zone(plaintext_zone)]!</a>" // NOVA EDIT - i18n: 部位名专用反查
 		if (harmless)
 			check_list += span_italics(span_notice(embed_text))
 		else
@@ -471,8 +471,8 @@
 				bleed_text = span_warning("It's bleeding profusely!")
 
 		if(bleed_text)
-			check_list += "\t[span_tooltip("You are loosing blood. You should wrap your limb in gauze \
-				or apply pressure to it by grabbing yourself (while targeting the limb) to stem the flow.", bleed_text)]"
+			check_list += LANG("obj.294efb1f", list(span_tooltip("You are loosing blood. You should wrap your limb in gauze \
+				or apply pressure to it by grabbing yourself (while targeting the limb) to stem the flow.", bleed_text)))
 
 	return jointext(check_list, "<br>")
 

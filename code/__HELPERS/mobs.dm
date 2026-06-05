@@ -636,31 +636,33 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 
 ///Return a string for the specified body zone. Should be used for parsing non-instantiated bodyparts, otherwise use [/obj/item/bodypart/var/plaintext_zone]
 /proc/parse_zone(zone)
+	// NOVA EDIT - i18n: 改用 `. =` 暂存再统一过 lang_zone（部位名专用反查，chest=胸部 不碰储物箱单词）。ORIGINAL 各分支为 `return "…"`。
 	switch(zone)
 		if(BODY_ZONE_CHEST)
-			return "chest"
+			. = "chest"
 		if(BODY_ZONE_HEAD)
-			return "head"
+			. = "head"
 		if(BODY_ZONE_PRECISE_R_HAND)
-			return "right hand"
+			. = "right hand"
 		if(BODY_ZONE_PRECISE_L_HAND)
-			return "left hand"
+			. = "left hand"
 		if(BODY_ZONE_L_ARM)
-			return "left arm"
+			. = "left arm"
 		if(BODY_ZONE_R_ARM)
-			return "right arm"
+			. = "right arm"
 		if(BODY_ZONE_L_LEG)
-			return "left leg"
+			. = "left leg"
 		if(BODY_ZONE_R_LEG)
-			return "right leg"
+			. = "right leg"
 		if(BODY_ZONE_PRECISE_L_FOOT)
-			return "left foot"
+			. = "left foot"
 		if(BODY_ZONE_PRECISE_R_FOOT)
-			return "right foot"
+			. = "right foot"
 		if(BODY_ZONE_PRECISE_GROIN)
-			return "groin"
+			. = "groin"
 		else
-			return zone
+			. = zone
+	return lang_zone(.) // NOVA EDIT - i18n: 全服中文时反查部位名
 
 ///Takes a zone and returns its "parent" zone, if it has one.
 /proc/deprecise_zone(precise_zone)

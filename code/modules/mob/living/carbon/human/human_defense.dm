@@ -552,9 +552,9 @@
 		return
 	var/list/combined_msg = list()
 
-	visible_message(span_notice(LANG("mob.ad166e55", list(src, p_them()))))
+	visible_message(span_notice(LANG("mob.ad166e55", list(src, lang_pronoun(p_them()))))) // NOVA EDIT - i18n: 代词专用反查(him→他)
 
-	combined_msg += span_notice("<b>You check yourself for injuries.</b>")
+	combined_msg += span_notice(LANG("mob.0ef72352", null))
 
 
 	for(var/part_zone, body_part_untyped in get_bodyparts_by_zones())
@@ -572,27 +572,27 @@
 	var/tox = get_tox_loss() + (disgust / 5) + (HAS_TRAIT(src, TRAIT_SELF_AWARE) ? 0 : (rand(-3, 0) * 5))
 	switch(tox)
 		if(10 to 20)
-			combined_msg += span_danger("You feel sick.")
+			combined_msg += span_danger(LANG("mob.468b0782", null))
 		if(20 to 40)
-			combined_msg += span_danger("You feel nauseated.")
+			combined_msg += span_danger(LANG("mob.ad0716cc", null))
 		if(40 to INFINITY)
-			combined_msg += span_danger("You feel very unwell!")
+			combined_msg += span_danger(LANG("mob.66ab081a", null))
 
 	var/cached_blood_volume = HAS_TRAIT(src, TRAIT_NOBLOOD) ? BLOOD_VOLUME_NORMAL : get_blood_volume(apply_modifiers = TRUE)
 	var/oxy = get_oxy_loss() + (losebreath * 4) + (cached_blood_volume < BLOOD_VOLUME_NORMAL ? ((BLOOD_VOLUME_NORMAL - cached_blood_volume) * 0.1) : 0) + (HAS_TRAIT(src, TRAIT_SELF_AWARE) ? 0 : (rand(-3, 0) * 5))
 	switch(oxy)
 		if(10 to 20)
-			combined_msg += span_danger("You feel lightheaded.")
+			combined_msg += span_danger(LANG("mob.7c2d5dc8", null))
 		if(20 to 40)
 			combined_msg += losebreath ? span_danger("You're choking!") : span_danger("Your thinking is clouded and distant.")
 		if(40 to INFINITY)
-			combined_msg += span_danger("You feel like you're about to pass out!")
+			combined_msg += span_danger(LANG("mob.5e935710", null))
 
 	if(get_stamina_loss())
 		if(get_stamina_loss() > 30)
-			combined_msg += span_info("You're completely exhausted.")
+			combined_msg += span_info(LANG("mob.ba172c1a", null))
 		else
-			combined_msg += span_info("You feel fatigued.")
+			combined_msg += span_info(LANG("mob.21471f3e", null))
 
 	to_chat(src, boxed_message(combined_msg.Join("<br>")))
 

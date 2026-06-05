@@ -29,7 +29,7 @@
 			tag_string += (isnull(tags_list[atom_tag]) ? lang_reverse_text(atom_tag) : span_tooltip(tags_list[atom_tag], lang_reverse_text(atom_tag)))
 		// some regex to ensure that we don't add another "and" if the final element's main text (not tooltip) has one
 		tag_string = english_list(tag_string, and_text = (findtext(tag_string[length(tag_string)], regex(@">.*?and .*?<"))) ? " " : " and ")
-		. += LANG("atom.0e340ddb", list(p_They(), p_are(), tag_string, lang_reverse_text(examine_descriptor(user)), post_desc_string)) // NOVA EDIT - i18n: 反查描述词(machine/structure/item…)，词进 ui.json
+		. += LANG("atom.0e340ddb", list(lang_pronoun(p_They()), lang_pronoun(p_are()), tag_string, lang_reverse_text(examine_descriptor(user)), post_desc_string)) // NOVA EDIT - i18n: 反查描述词(machine/structure/item…)+代词专用反查(He/is→他/是)，模板译文里占位符就位即成中文
 	else if(post_desc_string)
 		. += LANG("atom.82f39ea0", list(p_They(), p_are(), lang_reverse_text(examine_descriptor(user)), post_desc_string)) // NOVA EDIT - i18n: 反查描述词(machine/structure/item…)，词进 ui.json
 
