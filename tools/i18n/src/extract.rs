@@ -48,6 +48,9 @@ const SINK_VARS: &[&str] = &[
     // /datum/disease 玩家可见字段（医疗/疫病 UI）。
     "cure_text",
     "spread_text",
+    // 书本初始标题/正文（/obj/item/book/manual 等；运行时在 book.dm Initialize 整串反查落地）。
+    "starting_title",
+    "starting_content",
     // /datum/emote 表情模板变体。
     "message_mime",
     "message_alien",

@@ -80,7 +80,9 @@ it will be sent to all connected chats.
 	world.TgsTargetedChatBroadcast(new /datum/tgs_message_content("[category] | [message]"), TRUE)
 
 /// Handles text formatting for item use hints in examine text
-#define EXAMINE_HINT(text) ("<b>" + text + "</b>")
+// NOVA EDIT CHANGE - i18n - 反查提示词（welded/screwed/pried/wrenched/anchored…，词进 strings/i18n/en/ui.json）。
+// lang_reverse_text 整串精确匹配（非子串），locale==en 时原样返回；动态/未登记的 text 安全 no-op。
+#define EXAMINE_HINT(text) ("<b>" + lang_reverse_text(text) + "</b>") // ORIGINAL: #define EXAMINE_HINT(text) ("<b>" + text + "</b>")
 
 /// Sends a message to all dead and observing players, if a source is provided a follow link will be attached.
 /proc/send_to_observers(message, source, message_type = null)

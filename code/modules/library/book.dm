@@ -35,7 +35,10 @@
 
 /obj/item/book/Initialize(mapload)
 	. = ..()
-	book_data = new(starting_title, starting_author, starting_content)
+	// NOVA EDIT CHANGE - i18n - 全服中文时构建译文 book_info（标题/正文整串反查；author 是人名不译）。
+	// 不动 starting_* 实例变量（read-tracking 仍用英文 starting_title 作键，跨 locale 一致）。
+	// lang_reverse_text 在 locale==en 时原样返回，零行为变化。
+	book_data = new(lang_reverse_text(starting_title), starting_author, lang_reverse_text(starting_content)) // ORIGINAL: book_data = new(starting_title, starting_author, starting_content)
 
 	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
 	AddElement(/datum/element/burn_on_item_ignition)

@@ -195,6 +195,18 @@ GLOBAL_LIST_INIT(i18n_tgui_strings, build_tgui_string_set())
 		return text
 	return lang_reverse_phrase(text)
 
+/// TGUI 负载里**既是显示又是 act() 回传标识符**的列表键——这些 list 的字符串元素会原样回传给
+/// 服务端做相等校验（tgui_alert 的 buttons 经 `act('choose',{choice:button})` 校验 `in buttons`；
+/// tgui_input_list 的 items 经 `act('choose',{entry})` 校验 `in items`）。若 P1 把它们译成中文，
+/// 前端回传中文、服务端用英文校验 → tgui_alert 直接 CRASH「non-existent button choice」、list 静默失败。
+/// 故 lang_reverse_tree 必须**跳过这些键的值**（保持英文标识符）；显示交给 TS 端 auto-localize 翻
+/// （`{button}` 文本节点过前端目录），值不动。新增同类回传列表键时在此登记即可。
+GLOBAL_LIST_INIT(i18n_payload_skip_keys, list(\
+	"buttons" = TRUE,\
+	"items" = TRUE,\
+	"init_value" = TRUE,\
+))
+
 /// 递归把一个 list（含嵌套 list / 关联 list）里的字符串「值」按多词门槛反查为全服 locale 译文。
 /// 用于 TGUI 的 ui_data/ui_static_data 负载：把非 atom datum 的 name/desc/说明等动态内容本地化。
 /// key 不动（程序用的标识）；就地改写并返回。幂等（已译的中文不会再匹配英文 key）。
@@ -205,6 +217,10 @@ GLOBAL_LIST_INIT(i18n_tgui_strings, build_tgui_string_set())
 		var/key = data[i]
 		var/value = (istext(key) || ispath(key)) ? data[key] : null
 		if(!isnull(value))
+			// act 标识符回传列表（buttons/items/…）：保持英文，否则破坏回传校验（见 i18n_payload_skip_keys）。
+			// islist 守卫：早期 load_strings_file→lang_reverse_tree 调用时该 GLOBAL_LIST_INIT 可能未就绪。
+			if(istext(key) && islist(GLOB.i18n_payload_skip_keys) && GLOB.i18n_payload_skip_keys[key])
+				continue
 			// 关联项：key -> value，只本地化 value
 			if(islist(value))
 				lang_reverse_tree(value)
