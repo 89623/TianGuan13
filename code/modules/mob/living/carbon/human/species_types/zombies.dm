@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/species/zombie
 	// 1spooky
 	name = "High-Functioning Zombie"
@@ -82,11 +83,8 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "thermometer-half",
-		SPECIES_PERK_NAME = "No Body Temperature",
-		SPECIES_PERK_DESC = "Having long since departed, Zombies do not have anything \
-			regulating their body temperature anymore. This means that \
-			the environment decides their body temperature - which they don't mind at \
-			all, until it gets a bit too hot.",
+		SPECIES_PERK_NAME = LANG("datum.1b9c1f74", null),
+		SPECIES_PERK_DESC = LANG("datum.9f895369", null),
 	))
 
 	return to_add

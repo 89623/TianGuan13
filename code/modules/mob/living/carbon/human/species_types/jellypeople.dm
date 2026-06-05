@@ -129,9 +129,8 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "tint",
-		SPECIES_PERK_NAME = "Jelly Blood",
-		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic [initial(blood_type.reagent_type.name)]! \
-			Jelly is extremely important, as losing it will cause you to lose limbs. Having low jelly will make medical treatment very difficult.",
+		SPECIES_PERK_NAME = LANG("datum.0a45e45b", null),
+		SPECIES_PERK_DESC = LANG("datum.23ede26d", list(plural_form, initial(blood_type.reagent_type.name))),
 	))
 
 	return to_add

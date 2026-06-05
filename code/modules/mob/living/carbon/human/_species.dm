@@ -1675,16 +1675,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "band-aid",
-			SPECIES_PERK_NAME = "Brutal Weakness",
-			SPECIES_PERK_DESC = "[plural_form] are weak to brute damage.",
+			SPECIES_PERK_NAME = LANG("datum.0c3f230d", null),
+			SPECIES_PERK_DESC = LANG("datum.c39c1696", list(plural_form)),
 		))
 
 	if(initial(fake_chest.brute_modifier) < 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
-			SPECIES_PERK_NAME = "Brutal Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to brute damage.",
+			SPECIES_PERK_NAME = LANG("datum.6b8dd08d", null),
+			SPECIES_PERK_DESC = LANG("datum.53e1f075", list(plural_form)),
 		))
 
 	// Burn related
@@ -1692,16 +1692,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "burn",
-			SPECIES_PERK_NAME = "Burn Weakness",
-			SPECIES_PERK_DESC = "[plural_form] are weak to burn damage.",
+			SPECIES_PERK_NAME = LANG("datum.3c7f7a6c", null),
+			SPECIES_PERK_DESC = LANG("datum.12554927", list(plural_form)),
 		))
 
 	if(initial(fake_chest.burn_modifier) < 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
-			SPECIES_PERK_NAME = "Burn Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to burn damage.",
+			SPECIES_PERK_NAME = LANG("datum.8f9a1294", null),
+			SPECIES_PERK_DESC = LANG("datum.eb0ddcb2", list(plural_form)),
 		))
 
 	// Shock damage
@@ -1709,24 +1709,24 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "bolt",
-			SPECIES_PERK_NAME = "Shock Vulnerability",
-			SPECIES_PERK_DESC = "[plural_form] are vulnerable to being shocked.",
+			SPECIES_PERK_NAME = LANG("datum.deebd9bd", null),
+			SPECIES_PERK_DESC = LANG("datum.a1110d7c", list(plural_form)),
 		))
 
 	if(siemens_coeff < 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
-			SPECIES_PERK_NAME = "Shock Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to being shocked.",
+			SPECIES_PERK_NAME = LANG("datum.fa00d085", null),
+			SPECIES_PERK_DESC = LANG("datum.96efdefa", list(plural_form)),
 		))
 
 	if(inherent_biotypes & (MOB_ROBOTIC|MOB_MINERAL))
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = FA_ICON_HAMMER,
-			SPECIES_PERK_NAME = "Tough Frame",
-			SPECIES_PERK_DESC = "[plural_form] are more resistant to slashing and stabbing, but more vulnerable to impacts.",
+			SPECIES_PERK_NAME = LANG("datum.a87ad65d", null),
+			SPECIES_PERK_DESC = LANG("datum.c41fad73", list(plural_form)),
 		))
 
 	return to_add
@@ -1744,16 +1744,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "temperature-high",
-			SPECIES_PERK_NAME = "Heat Vulnerability",
-			SPECIES_PERK_DESC = "[plural_form] are vulnerable to high temperatures.",
+			SPECIES_PERK_NAME = LANG("datum.bff4c19c", null),
+			SPECIES_PERK_DESC = LANG("datum.cd5454f1", list(plural_form)),
 		))
 
 	if(heatmod < 1 || bodytemp_heat_damage_limit > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "thermometer-empty",
-			SPECIES_PERK_NAME = "Heat Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to hotter environments.",
+			SPECIES_PERK_NAME = LANG("datum.7e9e1fbe", null),
+			SPECIES_PERK_DESC = LANG("datum.aa138558", list(plural_form)),
 		))
 
 	// Cold temperature tolerance
@@ -1761,16 +1761,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "temperature-low",
-			SPECIES_PERK_NAME = "Cold Vulnerability",
-			SPECIES_PERK_DESC = "[plural_form] are vulnerable to cold temperatures.",
+			SPECIES_PERK_NAME = LANG("datum.026c1657", null),
+			SPECIES_PERK_DESC = LANG("datum.bbabcb1b", list(plural_form)),
 		))
 
 	if(coldmod < 1 || bodytemp_cold_damage_limit < BODYTEMP_COLD_DAMAGE_LIMIT)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "thermometer-empty",
-			SPECIES_PERK_NAME = "Cold Resilience",
-			SPECIES_PERK_DESC = "[plural_form] are resilient to colder environments.",
+			SPECIES_PERK_NAME = LANG("datum.881c4d85", null),
+			SPECIES_PERK_DESC = LANG("datum.8a10dcf0", list(plural_form)),
 		))
 
 	return to_add
@@ -1789,8 +1789,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "tint-slash",
-			SPECIES_PERK_NAME = "Bloodletted",
-			SPECIES_PERK_DESC = "[plural_form] do not have blood.",
+			SPECIES_PERK_NAME = LANG("datum.a4ced63b", null),
+			SPECIES_PERK_DESC = LANG("datum.16ce7764", list(plural_form)),
 		))
 
 	// Otherwise, check if their exotic blood is a valid typepath
@@ -1799,7 +1799,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
 			SPECIES_PERK_NAME = initial(blood_type.reagent_type.name),
-			SPECIES_PERK_DESC = "[name] blood is [initial(blood_type.reagent_type.name)], which can make receiving medical treatment harder.",
+			SPECIES_PERK_DESC = LANG("datum.207d7e80", list(name, initial(blood_type.reagent_type.name))),
 		))
 
 	// Otherwise otherwise, see if they have an exotic bloodtype set
@@ -1807,8 +1807,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
-			SPECIES_PERK_NAME = "Exotic Blood",
-			SPECIES_PERK_DESC = "[plural_form] have \"[exotic_bloodtype]\" type blood, which can make receiving medical treatment harder.",
+			SPECIES_PERK_NAME = LANG("datum.5868edde", null),
+			SPECIES_PERK_DESC = LANG("datum.be7f199d", list(plural_form, exotic_bloodtype)),
 		))
 
 	return to_add
@@ -1825,50 +1825,48 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "user-plus",
-			SPECIES_PERK_NAME = "Limbs Easily Reattached",
-			SPECIES_PERK_DESC = "[plural_form] limbs are easily readded, and as such do not \
-				require surgery to restore. Simply pick it up and pop it back in, champ!",
+			SPECIES_PERK_NAME = LANG("datum.a84b26ef", null),
+			SPECIES_PERK_DESC = LANG("datum.4c2f84f2", list(plural_form)),
 		))
 
 	if(TRAIT_EASYDISMEMBER in inherent_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "user-times",
-			SPECIES_PERK_NAME = "Limbs Easily Dismembered",
-			SPECIES_PERK_DESC = "[plural_form] limbs are not secured well, and as such they are easily dismembered.",
+			SPECIES_PERK_NAME = LANG("datum.dcd7af13", null),
+			SPECIES_PERK_DESC = LANG("datum.3e6d2c31", list(plural_form)),
 		))
 
 	if(TRAIT_EASILY_WOUNDED in inherent_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "user-times",
-			SPECIES_PERK_NAME = "Easily Wounded",
-			SPECIES_PERK_DESC = "[plural_form] skin is very weak and fragile. They are much easier to apply serious wounds to.",
+			SPECIES_PERK_NAME = LANG("datum.2ee374c0", null),
+			SPECIES_PERK_DESC = LANG("datum.6a7ea703", list(plural_form)),
 		))
 
 	if(TRAIT_TOXINLOVER in inherent_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "syringe",
-			SPECIES_PERK_NAME = "Toxins Lover",
-			SPECIES_PERK_DESC = "Toxins damage dealt to [plural_form] are reversed - healing toxins will instead cause harm, and \
-				causing toxins will instead cause healing. Be careful around purging chemicals!",
+			SPECIES_PERK_NAME = LANG("datum.658c485b", null),
+			SPECIES_PERK_DESC = LANG("datum.69ff4aed", list(plural_form)),
 		))
 
 	if (TRAIT_GENELESS in inherent_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "dna",
-			SPECIES_PERK_NAME = "No Genes",
-			SPECIES_PERK_DESC = "[plural_form] have no genes, making genetic scrambling a useless weapon, but also locking them out from getting genetic powers.",
+			SPECIES_PERK_NAME = LANG("datum.15dd96e0", null),
+			SPECIES_PERK_DESC = LANG("datum.e9c069ef", list(plural_form)),
 		))
 
 	if (TRAIT_NOBREATH in inherent_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "No Respiration",
-			SPECIES_PERK_DESC = "[plural_form] have no need to breathe!",
+			SPECIES_PERK_NAME = LANG("datum.dd93dc57", null),
+			SPECIES_PERK_DESC = LANG("datum.12e9e22c", list(plural_form)),
 		))
 
 	return to_add
@@ -1885,9 +1883,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "skull",
-			SPECIES_PERK_NAME = "Undead",
-			SPECIES_PERK_DESC = "[plural_form] are of the undead! The undead do not have the need to eat or breathe, and \
-				most viruses will not be able to infect a walking corpse. Their worries mostly stop at remaining in one piece, really.",
+			SPECIES_PERK_NAME = LANG("datum.6ecd33b3", null),
+			SPECIES_PERK_DESC = LANG("datum.3aae23e6", list(plural_form)),
 		))
 
 	return to_add
@@ -1931,7 +1928,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = perk_type,
 			SPECIES_PERK_ICON = "wine-glass",
 			SPECIES_PERK_NAME = perk_name,
-			SPECIES_PERK_DESC = "[name] livers are [more_or_less] susceptable to alcohol than human livers, by about [percent_difference]%."
+			SPECIES_PERK_DESC = LANG("datum.59646578", list(name, more_or_less, percent_difference))
 		))
 
 	var/tox_shrugging = initial(mutantliver.toxTolerance)
@@ -1946,7 +1943,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = perk_type,
 			SPECIES_PERK_ICON = "biohazard",
 			SPECIES_PERK_NAME = perk_name,
-			SPECIES_PERK_DESC = "[name] livers are capable of rapidly shrugging off [tox_shrugging]u of toxins, which is [more_or_less] than humans."
+			SPECIES_PERK_DESC = LANG("datum.8a807677", list(name, tox_shrugging, more_or_less))
 		))
 
 	return to_add
@@ -1963,8 +1960,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "[capitalize(breathid)] Breathing",
-			SPECIES_PERK_DESC = "[plural_form] must breathe [breathid] to survive. You receive a tank when you arrive.",
+			SPECIES_PERK_NAME = LANG("datum.06a739e4", list(capitalize(breathid))),
+			SPECIES_PERK_DESC = LANG("datum.7adf0992", list(plural_form, breathid)),
 		))
 
 	return to_add
@@ -1996,11 +1993,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "comment",
-			SPECIES_PERK_NAME = "Native Speaker",
+			SPECIES_PERK_NAME = LANG("datum.2c6ae453", null),
 			/* NOVA EDIT - Digitigrade customization - ORIGINAL:
 			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], [plural_form] gain the ability to speak [english_list(bonus_languages)].",
 			*/ // ORIGINAL END - NOVA EDIT START:
-			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], [plural_form] commonly speak [english_list(bonus_languages)].",
+			SPECIES_PERK_DESC = LANG("datum.fa2f48f7", list(initial(common_language.name), plural_form, english_list(bonus_languages))),
 			// NOVA EDIT END
 		))
 
@@ -2008,8 +2005,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "comment",
-			SPECIES_PERK_NAME = "Foreign Speaker",
-			SPECIES_PERK_DESC = "[plural_form] may not speak [initial(common_language.name)], but they can speak [english_list(bonus_languages)].",
+			SPECIES_PERK_NAME = LANG("datum.86354365", null),
+			SPECIES_PERK_DESC = LANG("datum.73588689", list(plural_form, initial(common_language.name), english_list(bonus_languages))),
 		))
 
 	return to_add

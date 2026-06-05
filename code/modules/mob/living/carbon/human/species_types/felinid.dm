@@ -170,35 +170,32 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "grin-tongue",
-			SPECIES_PERK_NAME = "Grooming",
-			SPECIES_PERK_DESC = "Felinids can lick wounds to reduce bleeding.",
+			SPECIES_PERK_NAME = LANG("datum.62de8b3c", null),
+			SPECIES_PERK_DESC = LANG("datum.cff916c1", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
-			SPECIES_PERK_NAME = "Catlike Grace",
-			SPECIES_PERK_DESC = "Felinids have catlike instincts allowing them to land upright on their feet.  \
-				Instead of being knocked down from falling, you only receive a short slowdown. \
-				However, they do not have catlike legs, and the fall will deal additional damage.",
+			SPECIES_PERK_NAME = LANG("datum.1f38b723", null),
+			SPECIES_PERK_DESC = LANG("datum.07ab212c", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "assistive-listening-systems",
-			SPECIES_PERK_NAME = "Sensitive Hearing",
-			SPECIES_PERK_DESC = "Felinids are more sensitive to loud sounds, such as flashbangs.",
+			SPECIES_PERK_NAME = LANG("datum.bb136bbd", null),
+			SPECIES_PERK_DESC = LANG("datum.c9ae9ae8", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "shower",
-			SPECIES_PERK_NAME = "Hydrophobia",
-			SPECIES_PERK_DESC = "Felinids don't like getting soaked with water.",
+			SPECIES_PERK_NAME = LANG("datum.5a8385f8", null),
+			SPECIES_PERK_DESC = LANG("datum.f79e4d83", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_ANGRY,
-			SPECIES_PERK_NAME = "'Fight or Flight' Defense Response",
-			SPECIES_PERK_DESC = "Felinids who become mentally unstable (and deprived of food) exhibit an \
-				extreme 'fight or flight' response against aggressors. They sometimes bite people. Violently.",
+			SPECIES_PERK_NAME = LANG("datum.f0feccbc", null),
+			SPECIES_PERK_DESC = LANG("datum.a9f0d4a9", null),
 		),
 	)
 	return to_add

@@ -157,16 +157,14 @@
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_SHIELD_ALT,
-		SPECIES_PERK_NAME = "Android Aptitude",
-		SPECIES_PERK_DESC = "As a synthetic lifeform, they are immune to many forms of damage humans are susceptible to. \
-			Fire, cold, heat, pressure, radiation, and toxins are all ineffective against them. \
-			They also can't overdose on drugs, don't need to breathe or eat, can't catch on fire, and are immune to being pierced.",
+		SPECIES_PERK_NAME = LANG("datum.995ce0a7", null),
+		SPECIES_PERK_DESC = LANG("datum.86238fd4", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_DNA,
-		SPECIES_PERK_NAME = "Not Human After All",
-		SPECIES_PERK_DESC = "There is no humanity behind the eyes of the synthetic, and as such, they have no DNA to genetically alter.",
+		SPECIES_PERK_NAME = LANG("datum.0b61862b", null),
+		SPECIES_PERK_DESC = LANG("datum.d8f03424", null),
 	))
 	return perks
 
@@ -175,27 +173,26 @@
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = FA_ICON_SHIELD_HEART,
-		SPECIES_PERK_NAME = "Some Components Optional",
-		SPECIES_PERK_DESC = "Synthetics have very few internal organs. While they can survive without many of them, \
-			they don't have any benefits from them either.",
+		SPECIES_PERK_NAME = LANG("datum.69ebc08c", null),
+		SPECIES_PERK_DESC = LANG("datum.5b4cde53", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_ROBOT,
-		SPECIES_PERK_NAME = "Synthetic",
-		SPECIES_PERK_DESC = "Being synthetic, they are vulnernable to EMPs.",
+		SPECIES_PERK_NAME = LANG("datum.a7e78ae8", null),
+		SPECIES_PERK_DESC = LANG("datum.348ae7c2", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_MAGNIFYING_GLASS,
-		SPECIES_PERK_NAME = "Translucency",
-		SPECIES_PERK_DESC = "Holosynths can pass through glass, though you'll leave any physical items behind.",
+		SPECIES_PERK_NAME = LANG("datum.04ca8b6b", null),
+		SPECIES_PERK_DESC = LANG("datum.a2ce5c04", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_NOTES_MEDICAL,
-		SPECIES_PERK_NAME = "Regenerator",
-		SPECIES_PERK_DESC = "Being made of light, your projector and controller will mend tears in your form.",
+		SPECIES_PERK_NAME = LANG("datum.a911d5ba", null),
+		SPECIES_PERK_DESC = LANG("datum.01044cc5", null),
 	))
 	return perks
 

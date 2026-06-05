@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/species/moth
 	name = "\improper Mothman"
 	plural_form = "Mothmen"
@@ -122,28 +123,26 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "feather-alt",
-			SPECIES_PERK_NAME = "Precious Wings",
-			SPECIES_PERK_DESC = "Moths can fly in pressurized, zero-g environments and safely land short falls using their wings.",
+			SPECIES_PERK_NAME = LANG("datum.2ac52c3d", null),
+			SPECIES_PERK_DESC = LANG("datum.7a81da30", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "tshirt",
-			SPECIES_PERK_NAME = "Meal Plan",
-			SPECIES_PERK_DESC = "Moths can eat clothes for nourishment.",
+			SPECIES_PERK_NAME = LANG("datum.19b1f8f6", null),
+			SPECIES_PERK_DESC = LANG("datum.2cb44ed4", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "fire",
-			SPECIES_PERK_NAME = "Ablazed Wings",
-			SPECIES_PERK_DESC = "Moth wings are fragile, and can be easily burnt off.",
+			SPECIES_PERK_NAME = LANG("datum.0fa5396c", null),
+			SPECIES_PERK_DESC = LANG("datum.506026bb", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "sun",
-			SPECIES_PERK_NAME = "Bright Lights",
-			SPECIES_PERK_DESC = "Moths need an extra layer of flash protection to protect \
-				themselves, such as against security officers or when welding. Welding \
-				masks will work.",
+			SPECIES_PERK_NAME = LANG("datum.da9dee50", null),
+			SPECIES_PERK_DESC = LANG("datum.405d5fce", null),
 		),
 	)
 

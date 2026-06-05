@@ -5,7 +5,7 @@
 
 	if(incapacitated)
 		return
-	switch(alert(LANG("mob.8efa8a6a", null),, LANG(LANG(LANG(LANG(LANG(LANG("mob.20d783b8", null), null), null), null), null), null), "No."))
+	switch(alert(LANG("mob.8efa8a6a", null),, LANG(LANG(LANG(LANG(LANG(LANG(LANG("mob.20d783b8", null), null), null), null), null), null), null), "No."))
 		if("Yes.")
 			src.ghostize(FALSE)
 			minor_announce("Station AI has disconnected from system networks and moved to remote storage. Preparing for new AI personality upload.", "Station AI")

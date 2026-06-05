@@ -269,33 +269,29 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "user-shield",
-		SPECIES_PERK_NAME = "Lithoid",
-		SPECIES_PERK_DESC = "Lithoids are creatures made out of minerals instead of \
-			blood and flesh. They are strong and immune to many environmental and personal dangers \
-			such as fire, radiation, lack of air, lava, viruses, and dismemberment.",
+		SPECIES_PERK_NAME = LANG("datum.39f6bbbd", null),
+		SPECIES_PERK_DESC = LANG("datum.58ea2eb2", null),
 	))
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "gem",
-		SPECIES_PERK_NAME = "Metamorphic Rock",
-		SPECIES_PERK_DESC = "Consuming minerals can grant Lithoids temporary benefits based on the type consumed.",
+		SPECIES_PERK_NAME = LANG("datum.a01e575c", null),
+		SPECIES_PERK_DESC = LANG("datum.28e6fa6a", null),
 	))
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "tools",
-		SPECIES_PERK_NAME = "Natural Miners",
-		SPECIES_PERK_DESC = "Golems can see dimly in the dark, sense minerals, break boulders, and mine stone with their bare hands. \
-			They can even smelt ores in an internal furnace, if their surrounding environment is hot enough.",
+		SPECIES_PERK_NAME = LANG("datum.bb4be199", null),
+		SPECIES_PERK_DESC = LANG("datum.c8228c6a", null),
 	))
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "bolt",
-		SPECIES_PERK_NAME = "Anima",
-		SPECIES_PERK_DESC = "Maintaining the force animating stone is taxing. Lithoids must eat frequently \
-			in order to avoid returning to inanimate statues, and only derive nutrition from eating minerals.",
+		SPECIES_PERK_NAME = LANG("datum.ce6c815d", null),
+		SPECIES_PERK_DESC = LANG("datum.75555c87", null),
 	))
 
 	return to_add

@@ -62,15 +62,15 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "biohazard",
-		SPECIES_PERK_NAME = "Xenomorphic Biology",
-		SPECIES_PERK_DESC = "Xeno-hybrids inherit organs from their primal ascendants."
+		SPECIES_PERK_NAME = LANG("datum.cc3e21ac", null),
+		SPECIES_PERK_DESC = LANG("datum.e8561c70", null)
 	))
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "fire",
-		SPECIES_PERK_NAME = "High Temperature Weakness",
-		SPECIES_PERK_DESC = "A partial silicone structure and acid blood make the xeno-hybrid species extremely weak to heat."
+		SPECIES_PERK_NAME = LANG("datum.336a8700", null),
+		SPECIES_PERK_DESC = LANG("datum.8c7d3bc0", null)
 	))
 
 	return to_add

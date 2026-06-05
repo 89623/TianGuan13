@@ -77,22 +77,20 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "moon",
-			SPECIES_PERK_NAME = "Shadowborn",
-			SPECIES_PERK_DESC = "Their skin blooms in the darkness. All kinds of damage, \
-				no matter how extreme, will heal over time as long as there is no light.",
+			SPECIES_PERK_NAME = LANG("datum.65a823f4", null),
+			SPECIES_PERK_DESC = LANG("datum.b172651a", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "eye",
-			SPECIES_PERK_NAME = "Nightvision",
-			SPECIES_PERK_DESC = "Their eyes are adapted to the night, and can see in the dark with no problems.",
+			SPECIES_PERK_NAME = LANG("datum.ac6f015f", null),
+			SPECIES_PERK_DESC = LANG("datum.110ab3d4", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "sun",
-			SPECIES_PERK_NAME = "Lightburn",
-			SPECIES_PERK_DESC = "Their flesh withers in the light. Any exposure to light is \
-				incredibly painful for the shadowperson, charring their skin.",
+			SPECIES_PERK_NAME = LANG("datum.d4804e7a", null),
+			SPECIES_PERK_DESC = LANG("datum.dbdfb2a8", null),
 		),
 	)
 

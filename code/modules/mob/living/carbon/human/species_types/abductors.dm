@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/species/abductor
 	name = "Abductor"
 	id = SPECIES_ABDUCTOR
@@ -49,15 +50,14 @@
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_WIND,
-		SPECIES_PERK_NAME = "Lungs Optional",
-		SPECIES_PERK_DESC = "Abductors don't need to breathe, though exposure to a vacuum is still a hazard.",
+		SPECIES_PERK_NAME = LANG("datum.24c42856", null),
+		SPECIES_PERK_DESC = LANG("datum.aa1a9072", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_SHIELD,
-		SPECIES_PERK_NAME = "Resilient Skin",
-		SPECIES_PERK_DESC = "The grey (or gray) skin of an Abductor is tough and resistant. \
-			They cannot be wounded or dismembered by conventional means.",
+		SPECIES_PERK_NAME = LANG("datum.1953a9bf", null),
+		SPECIES_PERK_DESC = LANG("datum.81731725", null),
 	))
 	return perks
 
@@ -66,28 +66,25 @@
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_SYRINGE,
-		SPECIES_PERK_NAME = "Disease Immunity",
-		SPECIES_PERK_DESC = "Abductors are immune to all viral infections found naturally on the station.",
+		SPECIES_PERK_NAME = LANG("datum.7ecf78de", null),
+		SPECIES_PERK_DESC = LANG("datum.89c7d694", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK, // It may be a stretch to call nohunger a neutral perk but the Abductor's tongue describes it as much, so.
 		SPECIES_PERK_ICON = FA_ICON_UTENSILS,
-		SPECIES_PERK_NAME = "Hungry for Knowledge",
-		SPECIES_PERK_DESC = "Abductors have a greater hunger for knowledge than food, and as such don't need to eat. \
-			Which is fortunate, as their speech matrix prevents them from consuming food.",
+		SPECIES_PERK_NAME = LANG("datum.d3fc8b6e", null),
+		SPECIES_PERK_DESC = LANG("datum.05c4d82c", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = FA_ICON_VOLUME_XMARK,
-		SPECIES_PERK_NAME = "Superlingual Matrix",
-		SPECIES_PERK_DESC = "Abductors cannot physically speak with their natural tongue. \
-			They intead naturally communicate telepathically to other Abductors, a process which all other species cannot hear. \
-			Great for secret conversations, not so great for ordering something from the bar.",
+		SPECIES_PERK_NAME = LANG("datum.f5c46b2b", null),
+		SPECIES_PERK_DESC = LANG("datum.27c90331", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_HANDSHAKE_SLASH,
-		SPECIES_PERK_NAME = "Tridactyl Hands",
-		SPECIES_PERK_DESC = "Abductor hands are not designed for human equipment. Utilizing the station's equipment is difficult for them.",
+		SPECIES_PERK_NAME = LANG("datum.ff4e849e", null),
+		SPECIES_PERK_DESC = LANG("datum.b83b8b34", null),
 	))
 	return perks

@@ -47,15 +47,15 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "lightbulb",
-		SPECIES_PERK_NAME = "Dark Regeneration",
-		SPECIES_PERK_DESC = "Shadekins regenerate their physical wounds while in the darkness.",
+		SPECIES_PERK_NAME = LANG("datum.000169c9", null),
+		SPECIES_PERK_DESC = LANG("datum.88206ebc", null),
 	))
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "crutch",
-		SPECIES_PERK_NAME = "Light Averse",
-		SPECIES_PERK_DESC = "Shadekins move slightly slower while in the light.",
+		SPECIES_PERK_NAME = LANG("datum.5bd04994", null),
+		SPECIES_PERK_DESC = LANG("datum.41b571aa", null),
 	))
 
 	return to_add

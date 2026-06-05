@@ -82,10 +82,8 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "thermometer-empty",
-		SPECIES_PERK_NAME = "Cold-blooded",
-		SPECIES_PERK_DESC = "Kobolds have higher tolerance for hot temperatures, but lower \
-			tolerance for cold temperatures. Additionally, they cannot self-regulate their body temperature - \
-			they are as cold or as warm as the environment around them is. Stay warm!",
+		SPECIES_PERK_NAME = LANG("datum.968c00ce", null),
+		SPECIES_PERK_DESC = LANG("datum.b6f8dc93", null),
 	))
 
 	return to_add
@@ -97,9 +95,8 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "spider",
-			SPECIES_PERK_NAME = "Vent Crawling",
-			SPECIES_PERK_DESC = "Kobolds can crawl through the vent and scrubber networks while wearing no clothing. \
-				Stay out of the kitchen!",
+			SPECIES_PERK_NAME = LANG("datum.241fd17d", null),
+			SPECIES_PERK_DESC = LANG("datum.14f6b582", null),
 		),
 	)
 
@@ -109,8 +106,8 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "comment",
-		SPECIES_PERK_NAME = "Primitive Tongue",
-		SPECIES_PERK_DESC = "You are able to understand [/datum/language/kobold::name].",
+		SPECIES_PERK_NAME = LANG("datum.131712b3", null),
+		SPECIES_PERK_DESC = LANG("datum.813605cf", list(/datum/language/kobold::name)),
 	))
 
 	return to_add

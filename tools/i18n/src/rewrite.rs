@@ -102,6 +102,11 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
                     rw.visit_block(block, &ns);
+                    // 物种特征(perk) proc：额外把 list 里 SPECIES_PERK_NAME/DESC 的字符串值改写为 LANG，
+                    // 让插值描述（[name] livers are…[pct]%）的模板可译（占位符运行时填值；与抽取同名门槛）。
+                    if proc_name.contains("perk") {
+                        rw.rewrite_perk_block(block, &ns);
+                    }
                 }
             }
         }
@@ -447,6 +452,133 @@ impl<'a> Rewriter<'a> {
                 end: qend,
                 replacement,
             });
+    }
+
+    /// 物种特征(perk)：走 list 字面量，把 key 为 name/description（SPECIES_PERK_NAME/DESC 宏）的
+    /// 字符串值改写为 LANG。穿过嵌套 list / `+=` / 赋值。仅改**单一字符串字面量**值
+    /// （collect_text_nodes==1）；变量/拼接名（如 `perk_name` 变量、`"A " + b`）安全跳过。
+    fn rewrite_perk_block(&mut self, block: &[Spanned<Statement>], ns: &str) {
+        for stmt in block.iter() {
+            match &stmt.elem {
+                Statement::Expr(e) | Statement::Return(Some(e)) => self.rewrite_perk_expr(e, ns),
+                Statement::Var(v) => {
+                    if let Some(e) = &v.value {
+                        self.rewrite_perk_expr(e, ns);
+                    }
+                }
+                Statement::Vars(vs) => {
+                    for v in vs.iter() {
+                        if let Some(e) = &v.value {
+                            self.rewrite_perk_expr(e, ns);
+                        }
+                    }
+                }
+                Statement::If { arms, else_arm } => {
+                    for (_c, blk) in arms.iter() {
+                        self.rewrite_perk_block(blk, ns);
+                    }
+                    if let Some(blk) = else_arm {
+                        self.rewrite_perk_block(blk, ns);
+                    }
+                }
+                Statement::Switch { cases, default, .. } => {
+                    for (_c, blk) in cases.iter() {
+                        self.rewrite_perk_block(blk, ns);
+                    }
+                    if let Some(blk) = default {
+                        self.rewrite_perk_block(blk, ns);
+                    }
+                }
+                Statement::While { block, .. }
+                | Statement::ForInfinite { block }
+                | Statement::ForLoop { block, .. }
+                | Statement::Spawn { block, .. } => self.rewrite_perk_block(block, ns),
+                _ => {}
+            }
+        }
+    }
+
+    fn rewrite_perk_expr(&mut self, expr: &Expression, ns: &str) {
+        match expr {
+            Expression::Base { term, follow } if follow.is_empty() => {
+                let args = match &term.elem {
+                    Term::List(args) => args,
+                    Term::Call(name, args) if name == "list" => args,
+                    _ => return,
+                };
+                for arg in args.iter() {
+                    if let Expression::AssignOp { lhs, rhs, .. } = arg {
+                        if matches!(build_template(lhs).as_deref(), Some("name") | Some("description")) {
+                            self.try_rewrite_perk(rhs, ns);
+                        }
+                        self.rewrite_perk_expr(rhs, ns);
+                    } else {
+                        self.rewrite_perk_expr(arg, ns);
+                    }
+                }
+            }
+            Expression::AssignOp { rhs, .. } => self.rewrite_perk_expr(rhs, ns),
+            Expression::BinaryOp { lhs, rhs, .. } => {
+                self.rewrite_perk_expr(lhs, ns);
+                self.rewrite_perk_expr(rhs, ns);
+            }
+            _ => {}
+        }
+    }
+
+    /// 用 rhs 字符串字面量自身的 Location 定位、改写为 LANG（perk 值非 sink 调用、key 又是宏，
+    /// 不能用 call/anchor 定位）。仅当 rhs 恰好一个文本节点（裸串/插值串）时改。
+    fn try_rewrite_perk(&mut self, rhs: &Expression, ns: &str) {
+        let mut nodes: Vec<&Spanned<Term>> = Vec::new();
+        collect_text_nodes(rhs, &mut nodes);
+        if nodes.len() != 1 {
+            return;
+        }
+        let Some(template) = build_template(rhs) else {
+            return;
+        };
+        let key = make_key(ns, &template);
+        let placeholders = placeholder_count(&template);
+        let loc = match rhs {
+            Expression::Base { term, follow } if follow.is_empty() => term.location,
+            _ => return,
+        };
+        let path = self.context.file_path(loc.file).to_path_buf();
+        if let Some(filter) = self.filter {
+            if !path.to_string_lossy().contains(filter) {
+                return;
+            }
+        }
+        let Some(src) = self.source(&path) else { return };
+        let Some(start) = line_col_to_byte(src, loc.line, loc.column) else {
+            return;
+        };
+        // 从 rhs 起点起、本逻辑行内找第一个字符串字面量的开引号。
+        let line_end = logical_line_end(src, start);
+        let bytes = src.as_bytes();
+        let mut i = start;
+        while i < line_end && bytes[i] != b'"' {
+            i += 1;
+        }
+        if i >= line_end {
+            return;
+        }
+        let Some((qpos, qend, interp_args)) = scan_dm_string(src, i) else {
+            return;
+        };
+        if interp_args.len() != placeholders || in_preprocessor_directive(src, qpos) {
+            return;
+        }
+        let replacement = if interp_args.is_empty() {
+            format!("LANG(\"{key}\", null)")
+        } else {
+            format!("LANG(\"{key}\", list({}))", interp_args.join(", "))
+        };
+        self.edits.entry(path).or_default().push(Edit {
+            start: qpos,
+            end: qend,
+            replacement,
+        });
     }
 
     fn recurse_term(&mut self, term: &Term, ns: &str) {

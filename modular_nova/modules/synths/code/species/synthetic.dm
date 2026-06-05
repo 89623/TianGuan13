@@ -228,32 +228,29 @@
 	perk_descriptions += list(list( //tryin to keep traits minimal since synths will get a lot of traits when my upstream traits pr is merged
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "robot",
-		SPECIES_PERK_NAME = "Synthetic Benefits",
-		SPECIES_PERK_DESC = "Unlike organics, you DON'T explode when faced with a vacuum! Additionally, your chassis is built with such strength as to \
-		grant you immunity to OVERpressure! Just make sure that the extreme cold or heat doesn't fry your circuitry."
+		SPECIES_PERK_NAME = LANG("datum.961b3412", null),
+		SPECIES_PERK_DESC = LANG("datum.bbf8c074", null)
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "star-of-life",
-		SPECIES_PERK_NAME = "Unhuskable",
-		SPECIES_PERK_DESC = "[plural_form] can't be husked, disappointing changelings galaxy-wide.",
+		SPECIES_PERK_NAME = LANG("datum.8d371daf", null),
+		SPECIES_PERK_DESC = LANG("datum.c271e17d", list(plural_form)),
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "music",
-		SPECIES_PERK_NAME = "Tone Synthesizer",
-		SPECIES_PERK_DESC = "[plural_form] can sing musical tones using an internal synthesizer.",
+		SPECIES_PERK_NAME = LANG("datum.0029bd24", null),
+		SPECIES_PERK_DESC = LANG("datum.cc772e06", list(plural_form)),
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "robot",
-		SPECIES_PERK_NAME = "Synthetic Oddities",
-		SPECIES_PERK_DESC = "[plural_form] are unable to gain nutrition from traditional foods. Instead, you must either consume welding fuel or extend a \
-		wire from your arm to draw power from an APC. In addition to this, welders and wires are your sutures and mesh and only specific chemicals even metabolize inside \
-		of you. This ranges from whiskey, to synthanol, to various obscure medicines. Finally, you suffer from a set of wounds exclusive to synthetics."
+		SPECIES_PERK_NAME = LANG("datum.45e4f320", null),
+		SPECIES_PERK_DESC = LANG("datum.e5d203a3", list(plural_form))
 	))
 
 	return perk_descriptions

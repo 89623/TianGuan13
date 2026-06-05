@@ -65,9 +65,8 @@
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_WIND,
-		SPECIES_PERK_NAME = "Lungs Optional",
-		SPECIES_PERK_DESC = "Rogues don't need to breathe, though exposure to a vacuum is still a hazard. \
-			Some Rogues elect to have new lungs placed inside them, usually for some degree of expression, more rarely for experimentation.",
+		SPECIES_PERK_NAME = LANG("datum.24c42856", null),
+		SPECIES_PERK_DESC = LANG("datum.984719c4", null),
 	))
 	return perks
 
@@ -76,25 +75,20 @@
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK, // It may be a stretch to call nohunger a neutral perk but the Abductor's tongue describes it as much, so.
 		SPECIES_PERK_ICON = FA_ICON_UTENSILS,
-		SPECIES_PERK_NAME = "Hungry for Knowledge",
-		SPECIES_PERK_DESC = "Rogues have a greater hunger for knowledge and expression than food, and as such don't need to eat. \
-			Which is fortunate, as their natural speech matrix prevents them from consuming food.",
+		SPECIES_PERK_NAME = LANG("datum.d3fc8b6e", null),
+		SPECIES_PERK_DESC = LANG("datum.7d4de5b7", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = FA_ICON_VOLUME_XMARK,
-		SPECIES_PERK_NAME = "Superlingual Matrix",
-		SPECIES_PERK_DESC = "Rogues cannot physically speak with their natural tongue. \
-			They instead naturally communicate telepathically to other Rogues, a process which all other species cannot hear. \
-			Great for secret conversations, not so great for ordering something from the bar. \
-			Many Rogues who plan to leave their homes or join another species usually replace their matrix with a cybernetic or replacement voice box.",
+		SPECIES_PERK_NAME = LANG("datum.f5c46b2b", null),
+		SPECIES_PERK_DESC = LANG("datum.a4795aec", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_HANDSHAKE_SLASH,
-		SPECIES_PERK_NAME = "Tridactyl Hands",
-		SPECIES_PERK_DESC = "Rogue hands are not designed for human equipment. Utilizing the station's equipment is difficult for them.\
-		Some Rogues often replace their natural hands with cybernetic hands, or genetically augment themselves and change their hands to something else.",
+		SPECIES_PERK_NAME = LANG("datum.ff4e849e", null),
+		SPECIES_PERK_DESC = LANG("datum.c882e42f", null),
 	))
 	return perks
 
