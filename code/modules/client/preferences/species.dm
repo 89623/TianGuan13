@@ -58,7 +58,7 @@
 		data[species_id]["use_skintones"] = (TRAIT_USES_SKINTONES in species.inherent_traits)
 		data[species_id]["sexes"] = species.sexes
 		data[species_id]["enabled_features"] = species.get_features()
-		data[species_id]["perks"] = lang_reverse_perks(species.get_species_perks()) // NOVA EDIT - i18n: 反查特征 name/description（静态串命中目录即译）。ORIGINAL: data[species_id]["perks"] = species.get_species_perks()
+		data[species_id]["perks"] = lang_reverse_perks(species.get_species_perks(), species) // NOVA EDIT - i18n: 反查特征 name/description + 物种名整词替换。ORIGINAL: data[species_id]["perks"] = species.get_species_perks()
 		data[species_id]["diet"] =  species.get_species_diet()
 		data[species_id]["nova_stars_only"] = species.nova_stars_only // NOVA EDIT ADDITION - Veteran races
 

@@ -343,10 +343,21 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 	return strings
 
 /// 反查物种特征(perk)结构里的 name/description（结构：assoc[perk_type] = list of perk(assoc)）。
-/// 静态 perk 串命中目录即译；插值 perk（运行时已填值）反查不命中、保持英文。就地改写并返回。
-/proc/lang_reverse_perks(list/perks)
+/// 静态 perk 串命中目录即译；perk 描述经 rewrite 已 LANG 化（模板可译），但插值实参里的**物种名**
+/// （[name]/[plural_form]）运行时填的是英文 → 此处按物种名整词替换为中文译名（物种名在目录已译）。
+/// 传入 species 以取其 name/plural_form。就地改写并返回。
+/proc/lang_reverse_perks(list/perks, datum/species/species)
 	if(!islist(perks) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
 		return perks
+	// 预编译「英文物种名 -> 中文译名」的整词正则（`\b` 词界防 Human→Humanoid 这类子串误伤）。
+	var/list/name_subs = list() // regex -> 中文
+	if(istype(species))
+		for(var/en_name in list(species.name, species.plural_form))
+			if(!istext(en_name) || !length(en_name))
+				continue
+			var/zh = lang_reverse_text(en_name)
+			if(zh != en_name && !(en_name in name_subs)) // 已译且未登记
+				name_subs[regex("\\b[en_name]\\b")] = zh
 	for(var/perk_type in perks)
 		var/list/perk_list = perks[perk_type]
 		if(!islist(perk_list))
@@ -354,8 +365,15 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 		for(var/list/perk in perk_list)
 			if(!islist(perk))
 				continue
-			if(istext(perk[SPECIES_PERK_NAME]))
-				perk[SPECIES_PERK_NAME] = lang_reverse_text(perk[SPECIES_PERK_NAME])
-			if(istext(perk[SPECIES_PERK_DESC]))
-				perk[SPECIES_PERK_DESC] = lang_reverse_text(perk[SPECIES_PERK_DESC])
+			perk[SPECIES_PERK_NAME] = lang_localize_perk_text(perk[SPECIES_PERK_NAME], name_subs)
+			perk[SPECIES_PERK_DESC] = lang_localize_perk_text(perk[SPECIES_PERK_DESC], name_subs)
 	return perks
+
+/// 单条 perk 文本本地化：先整串反查（兼容未 LANG 化的静态 perk），再按预编译正则替换物种名。
+/proc/lang_localize_perk_text(text, list/name_subs)
+	if(!istext(text))
+		return text
+	text = lang_reverse_text(text)
+	for(var/regex/word_re in name_subs)
+		text = word_re.Replace(text, name_subs[word_re])
+	return text
