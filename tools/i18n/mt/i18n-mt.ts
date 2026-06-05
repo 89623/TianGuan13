@@ -528,9 +528,10 @@ function stripNoise(s: string): string {
   return t;
 }
 
-/** 是否含「应被翻译的英文词」：小写字母 3+（大写缩写如 APC/RCD 通常保留，不算）。 */
+/** 是否含「应被翻译的英文词」：连续小写字母 2+（短词如 New/Bug/Map 也算）。
+ * 全大写缩写（APC/RCD）零小写、代码/路径经 stripNoise 抹掉 → 仍排除；故降到 2 只多收真短词、不收代码。 */
 function hasEnglishWord(s: string): boolean {
-  return /[a-z]{3,}/.test(stripNoise(s));
+  return /[a-z]{2,}/.test(stripNoise(s));
 }
 
 /**
