@@ -334,3 +334,21 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 		if(istext(strings[i]))
 			strings[i] = lang_reverse_text(strings[i])
 	return strings
+
+/// 反查物种特征(perk)结构里的 name/description（结构：assoc[perk_type] = list of perk(assoc)）。
+/// 静态 perk 串命中目录即译；插值 perk（运行时已填值）反查不命中、保持英文。就地改写并返回。
+/proc/lang_reverse_perks(list/perks)
+	if(!islist(perks) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return perks
+	for(var/perk_type in perks)
+		var/list/perk_list = perks[perk_type]
+		if(!islist(perk_list))
+			continue
+		for(var/list/perk in perk_list)
+			if(!islist(perk))
+				continue
+			if(istext(perk[SPECIES_PERK_NAME]))
+				perk[SPECIES_PERK_NAME] = lang_reverse_text(perk[SPECIES_PERK_NAME])
+			if(istext(perk[SPECIES_PERK_DESC]))
+				perk[SPECIES_PERK_DESC] = lang_reverse_text(perk[SPECIES_PERK_DESC])
+	return perks

@@ -177,6 +177,81 @@ fn emit_list_strings(expr: &Expression, ns: &str, catalog: &mut Catalog) {
     }
 }
 
+/// 抽取「物种特征(perk)」list 字面量里的 name/description 关联值（SPECIES_PERK_NAME/DESC 宏=这两键）。
+/// 递归穿过嵌套 list / `+=` 拼接 / 赋值。静态串进目录；插值串（如 `[plural_form] are…`）抽成模板，
+/// 运行时值已填占位符 → 反查不命中、无害（保持英文）。
+fn emit_perk_strings(expr: &Expression, ns: &str, catalog: &mut Catalog) {
+    match expr {
+        Expression::Base { term, follow } if follow.is_empty() => {
+            let args = match &term.elem {
+                Term::List(args) => args,
+                Term::Call(name, args) if name == "list" => args,
+                _ => return,
+            };
+            for arg in args.iter() {
+                if let Expression::AssignOp { lhs, rhs, .. } = arg {
+                    if matches!(build_template(lhs).as_deref(), Some("name") | Some("description")) {
+                        if let Some(t) = build_template(rhs) {
+                            emit(catalog, ns, &t);
+                        }
+                    }
+                    emit_perk_strings(rhs, ns, catalog);
+                } else {
+                    emit_perk_strings(arg, ns, catalog);
+                }
+            }
+        }
+        Expression::AssignOp { rhs, .. } => emit_perk_strings(rhs, ns, catalog),
+        Expression::BinaryOp { lhs, rhs, .. } => {
+            emit_perk_strings(lhs, ns, catalog);
+            emit_perk_strings(rhs, ns, catalog);
+        }
+        _ => {}
+    }
+}
+
+/// 走 perk proc 体（名含 "perk"），对各语句的表达式应用 emit_perk_strings。
+fn walk_perk_block(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &mut Catalog) {
+    for stmt in block.iter() {
+        match &stmt.elem {
+            Statement::Expr(e) | Statement::Return(Some(e)) => emit_perk_strings(e, ns, catalog),
+            Statement::Var(v) => {
+                if let Some(e) = &v.value {
+                    emit_perk_strings(e, ns, catalog);
+                }
+            }
+            Statement::Vars(vs) => {
+                for v in vs.iter() {
+                    if let Some(e) = &v.value {
+                        emit_perk_strings(e, ns, catalog);
+                    }
+                }
+            }
+            Statement::If { arms, else_arm } => {
+                for (_c, blk) in arms.iter() {
+                    walk_perk_block(blk, ns, catalog);
+                }
+                if let Some(blk) = else_arm {
+                    walk_perk_block(blk, ns, catalog);
+                }
+            }
+            Statement::Switch { cases, default, .. } => {
+                for (_c, blk) in cases.iter() {
+                    walk_perk_block(blk, ns, catalog);
+                }
+                if let Some(blk) = default {
+                    walk_perk_block(blk, ns, catalog);
+                }
+            }
+            Statement::While { block, .. }
+            | Statement::ForInfinite { block }
+            | Statement::ForLoop { block, .. }
+            | Statement::Spawn { block, .. } => walk_perk_block(block, ns, catalog),
+            _ => {}
+        }
+    }
+}
+
 /// 汇聚点 proc 名 -> 其消息参数下标。
 fn sink_message_args(name: &str) -> Option<&'static [usize]> {
     match name {
@@ -286,6 +361,8 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                                 emit_list_strings(r, &namespace, &mut catalog);
                             }
                         }
+                        // 物种特征(perk)：create_pref_*_perks / get_species_perks 等，抽 list 里 name/description。
+                        n if n.contains("perk") => walk_perk_block(block, &namespace, &mut catalog),
                         _ => {}
                     }
                 }
