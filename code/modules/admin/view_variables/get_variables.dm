@@ -299,7 +299,7 @@
 			.["type"] = /list
 			var/list/value = list()
 
-			var/expectation = alert(LANG("client.71c7f840", null), LANG("client.63eaf03d", null), LANG("client.41ba0ff5", null), "No")
+			var/expectation = alert(LANG("client.71c7f840", null), LANG("client.63eaf03d", null), "Yes", "No")
 			if(!expectation || expectation == "No")
 				.["value"] = value
 				return .

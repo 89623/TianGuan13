@@ -46,8 +46,10 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         // 提示/对话框（玩家可见）。只取消息+标题；按钮/选项列表/返回值不动，
         // 以免破坏 `if(alert(...) == "Yes")` 之类的比较。alert 取 [0,1,2] 同时覆盖
         // `alert("msg")` 与 `alert(user, msg, title)` 两种写法（非字符串实参会被安全跳过）。
-        "alert" => Some(&[0, 1, 2]),
-        "input" => Some(&[0, 1, 2]),
+        // 原生 alert/input 的按钮/默认值是位置实参（无 usr 时 [2]=按钮），故只取 [0,1]=消息+标题
+        // （含 usr 写法 alert(usr,msg,..) 则 [1]=消息；标题在 [2] 会漏译，但绝不误改按钮）。
+        "alert" => Some(&[0, 1]),
+        "input" => Some(&[0, 1]),
         "tgui_alert" => Some(&[1, 2]),
         "tgui_input_list" => Some(&[1, 2]),
         "tgui_input_text" => Some(&[1, 2]),
@@ -360,14 +362,10 @@ impl<'a> Rewriter<'a> {
         };
         let Some(lparen) = find_open_paren(src, name_start) else { return };
         let Some(arg_ranges) = split_call_args(src, lparen) else { return };
-        // 空实参对齐：dreammaker 的 AST **丢弃** `f(a,,b)` 里的空实参，但按源码逗号切分会**保留**空范围
+        // 空实参守卫：dreammaker 的 AST **丢弃** `f(a,,b)` 里的空实参，但按源码逗号切分会**保留**空范围
         // → AST 下标与源码范围下标错位，目标会套用到相邻的错误实参（典型：alert 空标题 `,,` 致按钮被当
-        // 消息改写，重跑还会再套一层 LANG）。故先滤掉空白范围使与 AST 对齐；若滤后数量仍不符则整调用放弃。
-        let arg_ranges: Vec<(usize, usize)> = arg_ranges
-            .into_iter()
-            .filter(|&(s, e)| !src[s..e].trim().is_empty())
-            .collect();
-        if arg_ranges.len() != args.len() {
+        // 消息改写，重跑还层层套 LANG）。有空实参即整调用跳过——宁可不译也不改坏（这类多为 admin alert）。
+        if arg_ranges.iter().any(|&(s, e)| src[s..e].trim().is_empty()) {
             return;
         }
 
@@ -683,14 +681,13 @@ impl<'a> Rewriter<'a> {
 }
 
 /// 收集消息参数里的「可翻译文本节点」（String / InterpString，过滤纯标签），降序穿过 `+` 拼接。
-/// 常见对话框按钮/比较值字面量——绝不改写为 LANG（否则破坏 `if(alert(...)=="Yes")` 之类比较，
-/// 且 alert 空标题 `,,` 时按钮易被错位套用）。仅匹配整串恰好等于这些词的实参。
+/// 无歧义的对话框按钮/比较值字面量——绝不改写为 LANG（否则破坏 `if(alert(...)=="Yes")` 之类比较，
+/// 且无 usr 的 alert `alert(msg,title,"Yes")` 的 [2] 按钮易被当标题改写）。仅取**几乎只做按钮**的词；
+/// 像 Confirm/Apply/Save 等常作标题/表头，**不**列入（应可译）。仅匹配整串恰好等于这些词的实参。
 fn is_dialog_button(template: &str) -> bool {
     matches!(
         template.trim(),
-        "Yes" | "No" | "Cancel" | "Ok" | "OK" | "Okay" | "Confirm" | "Deny" | "Accept"
-            | "Decline" | "Done" | "Continue" | "Back" | "Abort" | "Retry" | "Ignore"
-            | "Submit" | "Apply" | "Reset" | "Close" | "Save" | "Discard" | "Yes!" | "Nope"
+        "Yes" | "No" | "Cancel" | "Ok" | "OK" | "Okay" | "Yes!" | "Nope" | "No!"
     )
 }
 

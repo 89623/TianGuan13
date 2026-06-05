@@ -76,7 +76,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 			show_panel(usr.client)
 
 			if (!is_banned_from(ckey2, "Server"))
-				var/ban_choice = alert(LANG("datum.e4a5868a", list(ckey2)),,LANG(LANG(LANG(LANG("datum.08be49ad", null), null), null), null), "No")
+				var/ban_choice = alert(LANG("datum.e4a5868a", list(ckey2)),,"Yes", "No")
 				if (ban_choice == "Yes")
 					holder.ban_panel(ckey2, role = "Server", duration = BAN_PANEL_PERMANENT)
 		if ("delete")
@@ -104,7 +104,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 			var/list/result = query_known_alt_info.item
 			QDEL_NULL(query_known_alt_info)
 
-			if (alert(LANG("datum.d0569c0e", list(result[1], result[2])),,LANG(LANG(LANG(LANG("datum.08be49ad", null), null), null), null), "No") != "Yes")
+			if (alert(LANG("datum.d0569c0e", list(result[1], result[2])),,"Yes", "No") != "Yes")
 				return
 
 			var/datum/db_query/query_delete_known_alt = SSdbcore.NewQuery({"
