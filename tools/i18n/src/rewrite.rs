@@ -336,6 +336,11 @@ impl<'a> Rewriter<'a> {
             let Some(template) = build_template(arg) else {
                 continue;
             };
+            // 对话框按钮（Yes/No/Cancel…）绝不改写——它们是 `if(alert(...)=="Yes")` 的比较值，
+            // 改成 LANG 会破坏比较逻辑（且 alert 空标题时按钮易被错位套用，见下方空实参对齐）。
+            if is_dialog_button(&template) {
+                continue;
+            }
             targets.push((i, make_key(ns, &template), placeholder_count(&template)));
         }
         if targets.is_empty() {
@@ -355,6 +360,16 @@ impl<'a> Rewriter<'a> {
         };
         let Some(lparen) = find_open_paren(src, name_start) else { return };
         let Some(arg_ranges) = split_call_args(src, lparen) else { return };
+        // 空实参对齐：dreammaker 的 AST **丢弃** `f(a,,b)` 里的空实参，但按源码逗号切分会**保留**空范围
+        // → AST 下标与源码范围下标错位，目标会套用到相邻的错误实参（典型：alert 空标题 `,,` 致按钮被当
+        // 消息改写，重跑还会再套一层 LANG）。故先滤掉空白范围使与 AST 对齐；若滤后数量仍不符则整调用放弃。
+        let arg_ranges: Vec<(usize, usize)> = arg_ranges
+            .into_iter()
+            .filter(|&(s, e)| !src[s..e].trim().is_empty())
+            .collect();
+        if arg_ranges.len() != args.len() {
+            return;
+        }
 
         // 3) 对每个目标实参，找到其中唯一的字符串字面量并替换。
         let mut new_edits: Vec<Edit> = Vec::new();
@@ -668,6 +683,17 @@ impl<'a> Rewriter<'a> {
 }
 
 /// 收集消息参数里的「可翻译文本节点」（String / InterpString，过滤纯标签），降序穿过 `+` 拼接。
+/// 常见对话框按钮/比较值字面量——绝不改写为 LANG（否则破坏 `if(alert(...)=="Yes")` 之类比较，
+/// 且 alert 空标题 `,,` 时按钮易被错位套用）。仅匹配整串恰好等于这些词的实参。
+fn is_dialog_button(template: &str) -> bool {
+    matches!(
+        template.trim(),
+        "Yes" | "No" | "Cancel" | "Ok" | "OK" | "Okay" | "Confirm" | "Deny" | "Accept"
+            | "Decline" | "Done" | "Continue" | "Back" | "Abort" | "Retry" | "Ignore"
+            | "Submit" | "Apply" | "Reset" | "Close" | "Save" | "Discard" | "Yes!" | "Nope"
+    )
+}
+
 fn collect_text_nodes<'b>(expr: &'b Expression, out: &mut Vec<&'b Spanned<Term>>) {
     match expr {
         Expression::Base { term, follow } if follow.is_empty() => match &term.elem {
