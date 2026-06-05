@@ -18,6 +18,7 @@
 // 配置：tools/i18n/mt/.env 启动时自动加载（KEY=VALUE；shell 显式变量优先）。见 .env.example。
 //   I18N_LOCALE(zh-Hans) / I18N_CHUNK(openai 400, agent 200) / I18N_CONCURRENCY(openai 4, agent 1)
 //   I18N_NO_REUSE=1(关跨命名空间复用) / I18N_MAX_CODEX_CALLS / I18N_CONTINUE_ON_FAIL / I18N_FULL_GLOSSARY
+//   I18N_MISSING_ONLY=1(只翻目标 locale 里缺失/空值的 key；已有译文一律不动、不重判中英混杂)
 // agent 输出默认写入 tools/i18n/mt/.pending/*.codex.log，终端只显示批次进度。
 
 import { spawn } from 'node:child_process';
@@ -87,6 +88,9 @@ const MAX_CODEX_CALLS = envInt(
 const CODEX_DELAY_MS = envInt('I18N_CODEX_DELAY_MS', 0);
 const CONTINUE_ON_FAIL = envFlag('I18N_CONTINUE_ON_FAIL');
 const FULL_GLOSSARY = envFlag('I18N_FULL_GLOSSARY');
+// 只补缺失：已整体翻译过一遍后，只翻「目标 locale 里不存在/空值的 key」，
+// 对任何已有译文（含与英文相同、中英混杂）一律不动、不重判。增量补新抽取的 key 时用。
+const MISSING_ONLY = envFlag('I18N_MISSING_ONLY');
 const CODEX_OUTPUT_POLL_MS = envInt('I18N_CODEX_OUTPUT_POLL_MS', 2000);
 const CODEX_OUTPUT_KILL_MS = envInt('I18N_CODEX_OUTPUT_KILL_MS', 5000);
 
@@ -545,7 +549,8 @@ function hasStrayEnglishInTranslation(zh: string): boolean {
 
 /** 该 key 是否需要（重新）翻译。 */
 function needsTranslation(enVal: string, zhVal: string | undefined): boolean {
-  if (zhVal == null || zhVal === '') return hasEnglishWord(enVal); // 缺失
+  if (zhVal == null || zhVal === '') return hasEnglishWord(enVal); // 缺失（key 不存在或空值）
+  if (MISSING_ONLY) return false; // 只补缺失：已有任何译文（含与英文相同/中英混杂）都不动
   if (zhVal === enVal) return hasEnglishWord(enVal); // 与英文相同 = 未译（纯代码/符号除外）
   const stray = hasEnglishWord(zhVal);
   if (!CJK.test(zhVal) && stray) return true; // 无中文却有英文词 → 未译
