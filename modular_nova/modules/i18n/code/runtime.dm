@@ -324,3 +324,13 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 		"is" = "是", "are" = "是", "has" = "有", "have" = "有", "was" = "是", "were" = "是",
 	)
 	return pmap[LOWER_TEXT(word)] || word
+
+/// 反查一个字符串列表的每个元素（用于物种 lore：list("段1", "段2", …) 逐段整串反查）。
+/// 全服中文时就地改写并返回；locale==en 原样返回。
+/proc/lang_reverse_string_list(list/strings)
+	if(!islist(strings) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return strings
+	for(var/i in 1 to length(strings))
+		if(istext(strings[i]))
+			strings[i] = lang_reverse_text(strings[i])
+	return strings

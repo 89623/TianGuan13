@@ -122,6 +122,61 @@ fn emit_message_list(expr: &Expression, ns: &str, catalog: &mut Catalog) {
     }
 }
 
+/// 递归收集 proc 体里所有 `return <expr>` 的表达式（用于按 proc 名抽返回文本，如物种描述/背景）。
+fn collect_returns<'a>(block: &'a [dm::ast::Spanned<Statement>], out: &mut Vec<&'a Expression>) {
+    for stmt in block.iter() {
+        match &stmt.elem {
+            Statement::Return(Some(e)) => out.push(e),
+            Statement::If { arms, else_arm } => {
+                for (_cond, blk) in arms.iter() {
+                    collect_returns(blk, out);
+                }
+                if let Some(blk) = else_arm {
+                    collect_returns(blk, out);
+                }
+            }
+            Statement::Switch { cases, default, .. } => {
+                for (_c, blk) in cases.iter() {
+                    collect_returns(blk, out);
+                }
+                if let Some(blk) = default {
+                    collect_returns(blk, out);
+                }
+            }
+            Statement::While { block, .. }
+            | Statement::ForInfinite { block }
+            | Statement::ForLoop { block, .. }
+            | Statement::Spawn { block, .. } => collect_returns(block, out),
+            _ => {}
+        }
+    }
+}
+
+/// 抽取 list 字面量里的全部字符串元素（物种 lore：`return list("段1", "段2", …)`，每段一条）。
+fn emit_list_strings(expr: &Expression, ns: &str, catalog: &mut Catalog) {
+    let Expression::Base { term, follow } = expr else {
+        return;
+    };
+    if !follow.is_empty() {
+        return;
+    }
+    let args = match &term.elem {
+        Term::List(args) => args,
+        Term::Call(name, args) if name == "list" => args,
+        _ => return,
+    };
+    for arg in args.iter() {
+        let val = if let Expression::AssignOp { rhs, .. } = arg {
+            rhs.as_ref()
+        } else {
+            arg
+        };
+        if let Some(t) = build_template(val) {
+            emit(catalog, ns, &t);
+        }
+    }
+}
+
 /// 汇聚点 proc 名 -> 其消息参数下标。
 fn sink_message_args(name: &str) -> Option<&'static [usize]> {
     match name {
@@ -211,6 +266,28 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
                     visit_block(block, &namespace, &mut catalog);
+                    // 物种「描述」与「背景设定」：经偏好物种常量 asset 展示的玩家可见文本，
+                    // 但来源是 proc **返回值**（各物种覆盖 get_species_description/lore），非 sink/SINK_VARS。
+                    // 运行时在 species.dm 的 compile_constant_data 反查落地。
+                    match proc_name.as_str() {
+                        "get_species_description" => {
+                            let mut rets = Vec::new();
+                            collect_returns(block, &mut rets);
+                            for r in rets {
+                                if let Some(t) = build_template(r) {
+                                    emit(&mut catalog, &namespace, &t);
+                                }
+                            }
+                        }
+                        "get_species_lore" => {
+                            let mut rets = Vec::new();
+                            collect_returns(block, &mut rets);
+                            for r in rets {
+                                emit_list_strings(r, &namespace, &mut catalog);
+                            }
+                        }
+                        _ => {}
+                    }
                 }
             }
         }
