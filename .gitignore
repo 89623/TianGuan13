@@ -273,3 +273,6 @@ rust_g64.dll
 /tools/i18n/target/
 # i18n 翻译临时批次目录（i18n-mt.ts 用）
 /tools/i18n/mt/.pending/
+# 自托管 Tolgee 残留 docker 卷（已弃用；root 所有，git 无法读取会报权限警告）
+/modular_nova/tools/i18n/tolgee-data/
+/modular_nova/tools/i18n/tolgee-db/
