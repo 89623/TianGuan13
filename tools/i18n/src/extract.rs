@@ -51,6 +51,14 @@ const SINK_VARS: &[&str] = &[
     // 书本初始标题/正文（/obj/item/book/manual 等；运行时在 book.dm Initialize 整串反查落地）。
     "starting_title",
     "starting_content",
+    // 说话动词（says/asks/exclaims/whispers/sings/yells 及各 mob 变体如 beeps/signs/hisses；
+    // 运行时在 say.dm 的 say_quote 整串反查落地）。
+    "verb_say",
+    "verb_ask",
+    "verb_exclaim",
+    "verb_whisper",
+    "verb_sing",
+    "verb_yell",
     // /datum/emote 表情模板变体。
     "message_mime",
     "message_alien",

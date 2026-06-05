@@ -60,5 +60,12 @@
   "ui.tag_size_normal": "normal-sized",
   "ui.tag_size_small": "small",
   "ui.tag_size_tiny": "tiny",
-  "ui.tip_of_the_round": "Tip of the round"
+  "ui.tip_of_the_round": "Tip of the round",
+  "ui.verb_asks": "asks",
+  "ui.verb_beeps": "beeps",
+  "ui.verb_exclaims": "exclaims",
+  "ui.verb_says": "says",
+  "ui.verb_sings": "sings",
+  "ui.verb_whispers": "whispers",
+  "ui.verb_yells": "yells"
 }
