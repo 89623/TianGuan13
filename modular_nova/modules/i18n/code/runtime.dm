@@ -187,7 +187,11 @@ GLOBAL_LIST_INIT(i18n_tgui_strings, build_tgui_string_set())
 /// TGUI 负载专用反查：若该串属于 TGUI 前端目录（TS 端会翻显示），P1 跳过不动数据（保住标识符）；
 /// 否则走多词反查（datum 描述等不在前端目录的长文本）。
 /proc/lang_reverse_phrase_tgui(text)
-	if(istext(text) && GLOB.i18n_tgui_strings[text])
+	// islist 守卫：i18n_tgui_strings 是 GLOBAL_LIST_INIT，极早期（如 construct_phobia_regex 等全局变量
+	// 初始化期）调用 load_strings_file→lang_reverse_tree 时它可能尚未就绪，直接索引会 bad index 崩溃，
+	// 进而把加载的串写成 null、破坏 phobia 等早期数据。未就绪时跳过跳过集判断，走多词反查
+	// （lang_build_reverse 已加固：cache 未就绪返回空表、原样返回，不崩不污染）。
+	if(istext(text) && islist(GLOB.i18n_tgui_strings) && GLOB.i18n_tgui_strings[text])
 		return text
 	return lang_reverse_phrase(text)
 
