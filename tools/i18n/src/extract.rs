@@ -14,10 +14,11 @@ use anyhow::{Context as _, Result};
 use std::collections::HashSet;
 use std::path::Path;
 
-use dm::ast::{AssignOp, BinaryOp, Expression, Follow, Statement, Term};
+use dm::ast::{AssignOp, Expression, Follow, Statement, Term};
 
 use crate::catalog::Catalog;
 use crate::keys::{make_key, namespace_for};
+use crate::template::build_template;
 
 /// 视为玩家可见的变量名。
 /// message_* 系列是 /datum/emote 的各形态表情模板（人形/默剧/外星/AI/机器人等），玩家在聊天
@@ -374,7 +375,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
     //    使其与 sink/SINK_VARS 走同一翻译界面（运行时在 load 处反查落地，见 _string_lists.dm /
     //    type2type.dm）。strings 根目录由 out（.../strings/i18n/en）回推两级得到。
     if let Some(strings_root) = out.parent().and_then(|p| p.parent()) {
-        extract_flavor(strings_root, &mut catalog);
+        crate::flavor::extract_flavor(strings_root, &mut catalog);
     }
 
     eprintln!(
@@ -402,98 +403,12 @@ fn block_is_pure(block: &[dm::ast::Spanned<Statement>]) -> bool {
     })
 }
 
-fn emit(catalog: &mut Catalog, namespace: &str, template: &str) {
+pub(crate) fn emit(catalog: &mut Catalog, namespace: &str, template: &str) {
     if !template.chars().any(|c| c.is_alphabetic()) {
         return;
     }
     let key = make_key(namespace, template);
     catalog.insert(namespace, &key, template);
-}
-
-// ---- strings/ flavor 数据文件抽取 ----
-//
-// 只纳入**展示型 flavor**（整句/整段，玩家直接看到）。**不纳入**关键词表 / 文本变换表 /
-// 名字生成器（如 phobia 触发词、heckacious 替换表、pirates/exodrone/arcade 名字片段、口音表、
-// names/、词频表）——它们要么是功能性匹配会被翻译破坏，要么是会因语序错乱的生成器片段。
-// 运行时**不需要白名单**：load 处对所有 strings 文件跑反查，但只有这里抽进目录的串才会命中改写，
-// 其余天然 no-op（再加多词门槛防单词误伤）。逐字保留（含前导 @/% 与 @pick(...) 宏、HTML），
-// 与运行时 file2list/json_load 拿到的串一致，反查才命中；译者须保留这些 token。
-const FLAVOR_FILES: &[&str] = &[
-    "tips.txt",
-    "sillytips.txt",
-    "chemistrytips.txt",
-    "fishing_tips.txt",
-    "junkmail.txt",
-    "abductee_objectives.txt",
-    "bane.json",
-    "boomer.json",
-    "eigenstasium.json",
-    "mother.json",
-    "ninja.json",
-    "flavor_reports.json",
-    "memories.json",
-];
-
-/// 递归纳入其下所有 .json 的 flavor 子目录。
-const FLAVOR_DIRS: &[&str] = &["antagonist_flavor", "wounds"];
-
-fn extract_flavor(strings_root: &Path, catalog: &mut Catalog) {
-    for name in FLAVOR_FILES {
-        extract_flavor_file(&strings_root.join(name), catalog);
-    }
-    for dir in FLAVOR_DIRS {
-        if let Ok(entries) = std::fs::read_dir(strings_root.join(dir)) {
-            for entry in entries.flatten() {
-                extract_flavor_file(&entry.path(), catalog);
-            }
-        }
-    }
-}
-
-fn extract_flavor_file(path: &Path, catalog: &mut Catalog) {
-    let Ok(text) = std::fs::read_to_string(path) else {
-        return;
-    };
-    match path.extension().and_then(|s| s.to_str()) {
-        Some("txt") => {
-            // 逐非空行（trim，与 file2list 默认 trim=TRUE 一致）。
-            for line in text.lines() {
-                let line = line.trim();
-                if !line.is_empty() {
-                    emit(catalog, "strings", line);
-                }
-            }
-        }
-        Some("json") => {
-            if let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) {
-                collect_json_strings(&value, catalog);
-            }
-        }
-        _ => {}
-    }
-}
-
-/// 递归取 JSON 的字符串叶子（数组元素 / 关联值）；key 不取（程序标识）。
-fn collect_json_strings(value: &serde_json::Value, catalog: &mut Catalog) {
-    match value {
-        serde_json::Value::String(s) => {
-            let s = s.trim();
-            if !s.is_empty() {
-                emit(catalog, "strings", s);
-            }
-        }
-        serde_json::Value::Array(arr) => {
-            for v in arr {
-                collect_json_strings(v, catalog);
-            }
-        }
-        serde_json::Value::Object(map) => {
-            for v in map.values() {
-                collect_json_strings(v, catalog);
-            }
-        }
-        _ => {}
-    }
 }
 
 // ---- 语句/表达式遍历：找到汇聚点调用 ----
@@ -734,102 +649,4 @@ fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog) {
         }
         _ => {}
     }
-}
-
-// ---- 占位符模板构建 ----
-
-/// 把一个表达式（字符串/内插串/字符串拼接）转为带 {0}/{1} 占位符的模板。
-/// 非文本（纯变量/调用）返回 None。整体无字母（纯标签/标点）也返回 None。
-///
-/// 注意：本函数是「抽取 key」与「改写 key」的**唯一真相来源**（rewrite.rs 也调用它），
-/// 二者必须用同一函数算 key 才能保证目录命中。
-pub(crate) fn build_template(expr: &Expression) -> Option<String> {
-    let mut out = String::new();
-    let mut idx = 0usize;
-    let is_text = render(expr, &mut out, &mut idx);
-    // 整体去标签后需含字母，避免把纯标签/纯占位符当作可翻译文本。
-    if is_text && strip_tags(&out).chars().any(|c| c.is_alphabetic()) {
-        Some(out)
-    } else {
-        None
-    }
-}
-
-/// 模板里的占位符个数（{0}/{1}… 顺序生成，这里数 `{` 紧跟数字的出现次数）。
-pub(crate) fn placeholder_count(template: &str) -> usize {
-    let b = template.as_bytes();
-    let mut n = 0usize;
-    let mut i = 0usize;
-    while i + 1 < b.len() {
-        if b[i] == b'{' && b[i + 1].is_ascii_digit() {
-            n += 1;
-        }
-        i += 1;
-    }
-    n
-}
-
-/// 返回该表达式是否为「文本节点」（字符串/内插/字符串相加，含括号包裹）。
-/// - 独立字符串字面量：纯标签/纯标点（去标签后无字母）丢弃（如 span 包裹），否则原样写入；
-/// - 内插串：lead 与各段字面量**原样**写入（保留 "!" 等标点），内插表达式写成 {N}；
-/// - 其余（变量、调用、带 follow 取值等）：在拼接语境里写成 {N} 占位符并返回 false。
-fn render(expr: &Expression, out: &mut String, idx: &mut usize) -> bool {
-    match expr {
-        Expression::Base { term, follow } if follow.is_empty() => match &term.elem {
-            Term::String(s) => {
-                // 独立字符串：仅当去标签后含字母才保留（丢弃 span 包裹、纯标点独立串）。
-                if strip_tags(s).chars().any(|c| c.is_alphabetic()) {
-                    out.push_str(s);
-                }
-                true
-            }
-            Term::InterpString(lead, parts) => {
-                out.push_str(lead.as_str());
-                for (opt, lit) in parts.iter() {
-                    if opt.is_some() {
-                        out.push_str(&format!("{{{}}}", *idx));
-                        *idx += 1;
-                    }
-                    out.push_str(lit);
-                }
-                true
-            }
-            // 括号包裹（如 span_* 宏展开为 ("<span>" + str + "</span>")）：穿透进去。
-            Term::Expr(inner) => render(inner, out, idx),
-            _ => {
-                out.push_str(&format!("{{{}}}", *idx));
-                *idx += 1;
-                false
-            }
-        },
-        Expression::BinaryOp {
-            op: BinaryOp::Add,
-            lhs,
-            rhs,
-        } => {
-            let l = render(lhs, out, idx);
-            let r = render(rhs, out, idx);
-            l || r
-        }
-        _ => {
-            out.push_str(&format!("{{{}}}", *idx));
-            *idx += 1;
-            false
-        }
-    }
-}
-
-/// 去掉 `<...>` 标签后的文本（用于判断片段是否只是标签）。
-pub(crate) fn strip_tags(s: &str) -> String {
-    let mut result = String::new();
-    let mut in_tag = false;
-    for c in s.chars() {
-        match c {
-            '<' => in_tag = true,
-            '>' => in_tag = false,
-            _ if !in_tag => result.push(c),
-            _ => {}
-        }
-    }
-    result
 }

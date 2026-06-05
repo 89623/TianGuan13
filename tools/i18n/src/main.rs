@@ -6,7 +6,10 @@
 //! 并把内插字符串转换为 {0}/{1} 占位符模板、改写调用点为 LANG/LANGU。
 
 mod catalog;
+mod dm_string;
+mod template;
 mod extract;
+mod flavor;
 mod keys;
 mod rewrite;
 
