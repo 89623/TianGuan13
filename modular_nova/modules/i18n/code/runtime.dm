@@ -338,6 +338,56 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 	)
 	return zmap[zone_text] || zone_text
 
+/// 材料名的**专用**反查（gold/glass/iron… → 中文）。不走全局反查——单词类材料名与日常词碰撞
+/// （gold=黄金/金色、glass=玻璃/杯，MT 全局已按错义译），专用映射只在「确知是材料」的显示处调用
+/// （examine 的「由…制成」），零碰撞、按材料义翻。未来加 locale 时在此分支扩展。
+/proc/lang_material(material_name)
+	if(!istext(material_name) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return material_name
+	var/static/list/mmap = list(
+		"adamantine" = "精金",
+		"alien alloy" = "异星合金",
+		"alloy" = "合金",
+		"bamboo" = "竹",
+		"bananium" = "香蕉合金",
+		"biomass" = "生物质",
+		"bluespace crystal" = "蓝空间晶体",
+		"bone" = "骨",
+		"bronze" = "青铜",
+		"cardboard" = "瓦楞纸板",
+		"diamond" = "钻石",
+		"glass" = "玻璃",
+		"gold" = "黄金",
+		"hauntium" = "怨灵金属",
+		"hot ice" = "热冰",
+		"iron" = "铁",
+		"meat" = "肉",
+		"Metal Hydrogen" = "金属氢",
+		"mythril" = "秘银",
+		"paper" = "纸",
+		"pizza" = "披萨",
+		"plasma" = "等离子体",
+		"plasmaglass" = "等离子玻璃",
+		"plasteel" = "塑钢",
+		"plastic" = "塑料",
+		"plastitanium" = "塑钛",
+		"plastitanium glass" = "塑钛玻璃",
+		"rock" = "岩石",
+		"runed metal" = "符文金属",
+		"runite" = "符文矿",
+		"sand" = "沙子",
+		"sandstone" = "砂岩",
+		"silver" = "白银",
+		"snow" = "雪",
+		"telecrystal" = "电讯水晶",
+		"titanium" = "钛",
+		"titanium glass" = "钛玻璃",
+		"uranium" = "铀",
+		"wood" = "木材",
+		"zaukerite" = "扎克石",
+	)
+	return mmap[material_name] || material_name
+
 /// 代词的**专用**反查（he/she/it/is/his/him… → 中文）。不走全局反查——it/is/his 等是极常见短词，
 /// 全局整串反查会误伤正好等于这些词的动态数据；专用映射只在代词 proc / 模板代词实参处调用，零碰撞。
 /// 只覆盖可干净映射的代词与系动词（is/are→是、has/have→有）；语法后缀（does/do/s/es）保持英文。
