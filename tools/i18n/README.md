@@ -227,40 +227,34 @@ Codex 翻译时可以把本批新发现的固定专名写入 `.pending/*.glossar
 
 ### 同步上游
 
-本地当前仓库默认只有 `origin`。第一次同步上游前先配置 upstream：
+本仓库的 `master` 在 GitHub 上自动跟随上游 NovaSector，所以本地**只需合并 `origin/master`**，
+不必再配 `upstream` 远端。日常一条命令搞定（脏树检查会放过 `.vscode`/`zh-Hans` 等私有产物）：
 
 ```sh
-git remote -v
-git remote add upstream https://github.com/NovaSector/NovaSector.git
-git fetch upstream
+bash tools/i18n/sync-upstream.sh        # SYNC_BUILD=0 可跳过末尾编译
 ```
 
-之后每次同步：
+它依次做：`git fetch` → 把 `origin/master` 合进当前 i18n 分支 → `resync.sh`（重抽取英文目录 +
+幂等改写新字符串）→ `tools/build/build.sh` 编译验证。
 
-```sh
-# 确认工作区干净，或者先 commit/stash
-git status --short
+**用 merge 不用 rebase**：本分支提交多、改了大量 NOVA EDIT 核心文件，rebase 会强推 + 把每个上游冲突
+在所有提交上反复重放；merge 每次只解一次，且 `resync.sh` 的重收敛策略就是为 merge 设计的。
 
-# 取上游最新 master
-git fetch upstream
+**冲突分辨**（脚本撞冲突会停下并列出冲突文件，按这条手动解）：
 
-# 在你的工作分支上合并或 rebase 上游
-git switch feat/i18n-localization
-git rebase upstream/master
-# 如果你更习惯 merge，也可以用：
-# git merge upstream/master
+| 冲突 hunk 里是什么 | 怎么办 |
+| --- | --- |
+| codemod 行 `LANG("ns.hash", …)`，或你没改过的上游逻辑 | **取上游**：`git checkout --theirs <文件> && git add <文件>`。LANG 行交给 resync 重新加回，上游逻辑本就该采纳。 |
+| 你手写的 i18n 逻辑（`lang_reverse_*()` 包裹、手加的 NOVA EDIT） | **留自己的**（或两边都留）。这些 resync **不会**重新生成，盲取 theirs 会永久丢掉。常见于 `code/` 下 `book.dm` / `say.dm` / `chat.dm` / `atom_examine.dm` / `_bodyparts.dm` / `preferences/species.dm`。 |
 
-# 解决冲突后，重同步 i18n 目录与 LANG/LANGU 改写
-bash tools/i18n/resync.sh
+解决后 `git commit`，再次运行 `bash tools/i18n/sync-upstream.sh`（检测到已无未合提交，直接续跑 resync + 编译）。
 
-# 重跑翻译检查 / TGUI 同步 / 构建
-bun tools/i18n/mt/i18n-mt.ts pending
-node tools/i18n/tgui-catalog.mjs sync
-tools/build/build.sh tgui
-tools/build/build.sh
-```
+> 别完全信 IDE 的一键「接受当前/传入」：它可能保留你旧行又取上游行，把上游真重构丢掉。冲突涉及非 LANG 的逻辑
+> 改动时，先看两边再定：`git show :2:<文件>`（ours/你的）对比 `git show :3:<文件>`（theirs/上游）。
 
-如果冲突发生在 i18n 改写行，通常先保留上游英文原文，再跑 `bash tools/i18n/resync.sh` 让工具重新抽取并改写。
+提交只放 `code/**`、`modular_nova/**`、`tools/i18n/**`、`strings/i18n/en/**`；**排除**私有产物
+`strings/i18n/zh-Hans/*`、`tgui/packages/tgui/i18n/*`、`glossary.zh-Hans.json`、`.vscode/settings.json`。
+最后跑 `bun tools/i18n/mt/i18n-mt.ts` 补译本次新增条目。
 
 ### 统计和排查
 
