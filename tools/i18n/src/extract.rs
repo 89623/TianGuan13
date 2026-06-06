@@ -253,6 +253,48 @@ fn walk_perk_block(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &mu
     }
 }
 
+/// 走 examine_tags proc 体，抽 `.["tag"] = "悬浮提示文本"` 的字符串值。examine 标签的 hover
+/// tooltip（玩家可见），是 IndexAssign 到返回列表 `.`（非 sink/累加器，常规 visit 漏掉）。递归穿控制流。
+fn walk_examine_tags(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &mut Catalog) {
+    for stmt in block.iter() {
+        match &stmt.elem {
+            Statement::Expr(Expression::AssignOp { lhs, rhs, .. }) => {
+                if let Expression::Base { term, follow } = lhs.as_ref() {
+                    let is_dot_index = matches!(&term.elem, Term::Ident(id) if id == ".")
+                        && follow.len() == 1
+                        && matches!(&follow[0].elem, Follow::Index(..));
+                    if is_dot_index {
+                        if let Some(t) = build_template(rhs) {
+                            emit(catalog, ns, &t);
+                        }
+                    }
+                }
+            }
+            Statement::If { arms, else_arm } => {
+                for (_c, blk) in arms.iter() {
+                    walk_examine_tags(blk, ns, catalog);
+                }
+                if let Some(blk) = else_arm {
+                    walk_examine_tags(blk, ns, catalog);
+                }
+            }
+            Statement::Switch { cases, default, .. } => {
+                for (_c, blk) in cases.iter() {
+                    walk_examine_tags(blk, ns, catalog);
+                }
+                if let Some(blk) = default {
+                    walk_examine_tags(blk, ns, catalog);
+                }
+            }
+            Statement::While { block, .. }
+            | Statement::ForInfinite { block }
+            | Statement::ForLoop { block, .. }
+            | Statement::Spawn { block, .. } => walk_examine_tags(block, ns, catalog),
+            _ => {}
+        }
+    }
+}
+
 /// 汇聚点 proc 名 -> 其消息参数下标。
 fn sink_message_args(name: &str) -> Option<&'static [usize]> {
     match name {
@@ -378,6 +420,8 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                         }
                         // 物种特征(perk)：create_pref_*_perks / get_species_perks 等，抽 list 里 name/description。
                         n if n.contains("perk") => walk_perk_block(block, &namespace, &mut catalog),
+                        // examine 标签的 hover tooltip：`.["tag"] = "提示"`（运行时 atom_examine 反查显示）。
+                        "examine_tags" => walk_examine_tags(block, &namespace, &mut catalog),
                         _ => {}
                     }
                 }
