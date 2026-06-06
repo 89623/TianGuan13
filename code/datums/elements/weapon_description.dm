@@ -80,12 +80,12 @@
 			readout += LANG("datum.3bda1472", null)
 		// Make sure not to divide by 0 on accident
 		if(source.force > 0)
-			readout += LANG("datum.c8794cb5", list(span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")))
+			readout += LANG("datum.8e4fe8d1", list(span_warning("[HITS_TO_CRIT(source.force)]")))
 		else
 			readout += LANG("datum.9d8c7289", null)
 
 		if(source.throwforce > 0)
-			readout += LANG("datum.c8794cb5", list(span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")))
+			readout += LANG("datum.ef1d05fa", list(span_warning("[HITS_TO_CRIT(source.throwforce)]")))
 		else
 			readout += LANG("datum.37914c10", null)
 		if(source.armour_penetration > 0 || source.block_chance > 0)

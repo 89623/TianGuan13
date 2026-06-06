@@ -86,7 +86,7 @@
 		return "Our legal team has determined these [span_warning(caliber)] plasma pulses to be non-lethal."
 
 	readout += LANG("obj.fcbecdeb", list(span_warning(caliber), span_warning("[total_damage] damage"), span_warning("[initial_brute * proj_damage_mult] brute"), span_warning("[initial_burn * proj_damage_mult] burn")))
-	readout += LANG("obj.7ca2df92", list(span_warning("[HITS_TO_CRIT(total_damage)] pulse\s")))
+	readout += LANG("obj.4efaa689", list(span_warning("[HITS_TO_CRIT(total_damage)]")))
 
 	return readout.Join("\n")
 

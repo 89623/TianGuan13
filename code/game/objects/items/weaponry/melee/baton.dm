@@ -94,7 +94,7 @@
 		readout += LANG("obj.dec156bb", list(span_warning("completely unable to perform a stunning strike"), span_warning("attacks via some unusual method")))
 		return readout.Join("\n")
 
-	readout += LANG("obj.2ec1c2d9", list(span_warning("[HITS_TO_CRIT(stamina_damage)] strike\s")))
+	readout += LANG("obj.02026481", list(span_warning("[HITS_TO_CRIT(stamina_damage)]")))
 
 	readout += LANG("obj.c99df77a", list(span_warning("[armour_type_against_stun]")))
 
