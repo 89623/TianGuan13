@@ -87,7 +87,8 @@ bash tools/i18n/resync.sh
 
 verb 的 `set name = "X"`（命令面板 / 右键菜单显示名）是 BYOND **编译期元数据**，无法像其它文本那样
 运行时按 locale 切换——这是唯一不能 locale 门控的类别。方案：编译期把核心里**安全显示名**的 `set name`
-原地改成中文（加 `// NOVA EDIT CHANGE - ORIGINAL: …` 标记）。
+字面量原地换成中文（含 ADMIN_VERB 宏的 verb_name 实参）。**只换字面量、不加行内 `//` 注释**（verb 名常是
+宏实参/行中 token，行内注释会注释掉其后实参 → 编译失败）；NOVA 标记靠文件级 CORE_MARKER（与 LANG codemod 一致）。
 
 ```sh
 # 1) 抽取已自动包含安全 verb 名：首字母大写的显示名（命令面板/右键可见、按名调用自洽）。

@@ -151,9 +151,11 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
     Ok(())
 }
 
-/// verb 命令面板显示名的**编译期**译文注入：把直接 verb 的 `set name = "English"` 原地改为
-/// `set name = "译文" // NOVA EDIT CHANGE - ORIGINAL: "English"`。verb 名是 BYOND 编译期元数据、
-/// 无法像其它文本那样运行时按 locale 切换，故此为唯一可行方案（不可 locale 门控）。
+/// verb 命令面板显示名的**编译期**译文注入：把核心安全 verb 的 `set name = "English"` 字面量原地换成
+/// `"译文"`（含 ADMIN_VERB 宏的 verb_name 实参）。verb 名是 BYOND 编译期元数据、无法像其它文本那样
+/// 运行时按 locale 切换，故此为唯一可行方案（不可 locale 门控）。**只换字面量、不加行内 `//` 注释**
+/// （verb 名常是宏实参/行中 token，行内注释会注释掉其后实参/代码 → 致命）；NOVA 标记靠文件级 CORE_MARKER
+/// （与 LANG codemod 一致），原文可由 git 历史 / en 目录恢复。
 ///
 /// 仅注入：① is_safe_verb_name 放行的安全显示名（排除 .click/body-chest 等 keybind 按名调用标识符，
 /// 改名会断快捷键/宏）；② 目录里已有译文且 zh != en 的项。译文取自 strings/i18n/<locale>/*.json
@@ -262,8 +264,10 @@ pub fn run_verbs(dme: &Path, locale: &str, dry_run: bool) -> Result<()> {
                         continue;
                     }
                     let zh_esc = zh.replace('\\', "\\\\").replace('"', "\\\"");
-                    let replacement =
-                        format!("\"{zh_esc}\" // NOVA EDIT CHANGE - ORIGINAL: \"{en}\"");
+                    // 只替换字面量本身、不加行内 `//` 注释：verb 名可能是宏实参（ADMIN_VERB 的
+                    // verb_name）或行中 token，行内 `//` 会注释掉其后的实参/代码（致命）。NOVA 标记
+                    // 靠文件级 CORE_MARKER（与 LANG codemod 一致）；原文可由 git 历史 / en 目录恢复。
+                    let replacement = format!("\"{zh_esc}\"");
                     edits.entry(path).or_default().push(Edit {
                         start: qpos,
                         end: qend,
