@@ -13,5 +13,10 @@
 	"Round Timer": "回合计时",
 	"Time Dilation": "时间膨胀",
 	"Server Time": "服务器时间",
-	"(Feedback)": "(反馈)"
+	"(Feedback)": "(反馈)",
+	"Forces a minimum of Yes - Kill antag opt-in.": "强制反派自愿加入的最低等级为 Yes - Kill。",
+	"Programmed Laws:": "已编程法则:",
+	"Programmed Law:": "已编程法则:",
+	"Obey these laws:": "遵守以下法则:",
+	"See combat information.": "查看战斗信息。"
 }

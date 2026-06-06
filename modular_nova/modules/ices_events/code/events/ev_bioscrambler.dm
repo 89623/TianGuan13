@@ -17,7 +17,7 @@
 /datum/round_event/anomaly/anomaly_bioscrambler/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.find_bioscrambler_area()
-	priority_announce("Biologic limb swapping agent detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name]. Engineers are advised to set up containment fields to prevent movement. Wear biosuits or other protective gear to counter the effects. Calculated half-life of %9£$T$%F3 years.", "Anomaly Alert", ANNOUNCER_ANOMALIES)
+	priority_announce(LANG("datum.23757fbf", list(ANOMALY_ANNOUNCE_MEDIUM_TEXT, impact_area.name)), "Anomaly Alert", ANNOUNCER_ANOMALIES)
 
 /**
  * Returns an area which is safe to place a bioscrambler anomaly.

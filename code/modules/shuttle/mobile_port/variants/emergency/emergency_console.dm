@@ -198,8 +198,7 @@
 		// shuttle timers use 1/10th seconds internally
 		SSshuttle.emergency.setTimer(ENGINE_START_TIME)
 		var/system_error = obj_flags & EMAGGED ? "SYSTEM ERROR:" : null
-		minor_announce("The emergency shuttle will launch in \
-			[TIME_LEFT] seconds", system_error, alert=TRUE)
+		minor_announce(LANG("obj.115fe2d4", list(TIME_LEFT)), system_error, alert=TRUE)
 		. = TRUE
 
 /obj/machinery/computer/emergency_shuttle/proc/increase_hijack_stage()

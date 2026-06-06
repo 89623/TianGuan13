@@ -24,7 +24,7 @@
 	require_hearing = TRUE
 
 /datum/hallucination/station_message/blob_alert/do_fake_alert()
-	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", \
+	priority_announce(LANG("datum.4bada0d0", list(station_name())), \
 		"Biohazard Alert", ANNOUNCER_OUTBREAK5, players = list(hallucinator))
 
 /datum/hallucination/station_message/shuttle_dock

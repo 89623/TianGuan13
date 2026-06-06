@@ -424,7 +424,7 @@
 		winning = WINNING_JACKPOT
 		var/prize = money + PRIZE_JACKPOT
 		say(LANG("obj.86070d49", list(prize, MONEY_NAME)))
-		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
+		priority_announce(LANG("obj.62ddf924", list(user ? user.real_name : usrname, get_area(src))))
 		user.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/win/jackpot)
 		add_memory_in_range(user, 7, /datum/memory/won_jackpot, protagonist = user, deuteragonist = src)
 		jackpots += 1

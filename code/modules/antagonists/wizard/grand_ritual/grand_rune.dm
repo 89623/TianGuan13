@@ -86,10 +86,10 @@
 /obj/effect/grand_rune/proc/announce_rune()
 	var/area/created_area = get_area(src)
 	if (potency >= GRAND_RITUAL_IMMINENT_FINALE_POTENCY)
-		priority_announce("Major anomalous fluctuations to local spacetime detected in: [created_area.name].", "Anomaly Alert")
+		priority_announce(LANG("obj.5f70b8ba", list(created_area.name)), "Anomaly Alert")
 		return
 	if (potency >= GRAND_RITUAL_RUNES_WARNING_POTENCY)
-		priority_announce("Unusual anomalous energy fluctuations detected in: [created_area.name].", "Anomaly Alert")
+		priority_announce(LANG("obj.0bb18e8e", list(created_area.name)), "Anomaly Alert")
 		return
 
 /obj/effect/grand_rune/examine(mob/user)

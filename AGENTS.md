@@ -131,3 +131,11 @@ All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no
 - 仍未接入：纸张/签名等玩家书写内容（本就不该翻）；verb 的 **keybind/标识符**子集（`.click`/`body-chest`/`quick-equip` 等，按名被快捷键/宏调用，改名会断，故只译首字母大写显示名）；极少数动态拼接残留（靠聊天 AC 兜底）。
 - 实际中文覆盖仍需人工校对；TGUI 当前已抽取约 4,904 条，前端运行时子集只打包已译/语义 key。
 - **TGUI 自动本地化注意**：按英文原文查表，运行时无法区分「字面量文案」与「正好等于常见词的动态数据」；个别误翻把英文原文加进 `tgui/packages/tgui/i18n/localize.ts` 的 `NO_AUTO_TRANSLATE` 即全局豁免。
+
+**i18n 排查规律 / 已知陷阱（每次定位到新规律就追加到这里）**：
+- **【源码外文本不在目录】**抽取器只扫**源码**（`.dm`/`.tsx`）。凡运行时从源码外读入的玩家可见文本——**config 文件（`config/*.txt`）、管理员/玩家输入、DB、运行时下载/生成**——都不在目录里，反查（整串精确）与 AC（整串）都 miss，**只有恰好已进 AC 字典的子短语被替换** → 典型表现「**整句英文夹个别中文词**」（如安全等级公告：`...hostile activity 在站上。... all 通信控制台s`——`on the station`/`communications console` 是目录里的多词短语被 AC 换了，整句没换）。
+  - **尤其坑（config_entry 覆盖）**：`/datum/config_entry/string/...` 的 `default = "..."` **会**被抽取进目录、可翻；**但服务器 `config/*.txt` 一旦设了同名键，运行时用的是 config 文件的值**（文案常与 default 不同）→ 把 default 译了 N 遍也不显示（运行时压根没用 default）。例：`alert_blue_upto` 的 default 在 `datum.json` 已译，但 `config/game_options.txt` 的 `ALERT_BLUE_UPTO` 才是实际公告文本。
+  - **判别**：某条「明明译了却不显示」时，去 `config/` 和运行时数据里 grep 该英文；若 config 里有、而 `strings/i18n/en/` 里**没有**（或只有**不同文案**的 default）→ 即此类。
+  - **修法**：config 文本**直接在 config 文件里译**（它就是运行时值、服务器专属、不归 i18n 流水线）——`config/*.txt` 被 git 跟踪，可提交；或把该 config 值并入抽取（需给抽取器加 config 源）。`priority_announce`/`minor_announce` 已有 `lang_reverse_text`+AC 钩子，故 config 值只要进了目录/`_fallback` 即整句翻。
+- **【公告：插值 vs 非插值走不同路径】**`priority_announce`/`minor_announce`/`print_command_report` **非插值**（纯字面量）靠 `priority_announce.dm` 运行时**整串反查**显示（不 LANG 改写、零 churn）；**插值**（`"[X]…suffix"`）则反查（需精确整串，插值后 miss）和 AC（排除占位符）**都够不着** → 必须 LANG 改写。rewrite.rs 已对公告 sink 启用 **`interp_only` 门控**（只改插值公告）。表现：插值公告未译时整句英文夹个别中文词（同上）。
+  - **【多行 `\` 续行串 codemod 漏改】**个别**跨行 `"…\<换行>…"`** 字符串 codemod 切片够不着 → 仍是字面量、不被 LANG 改写（即便已加进 sink 表）。判别：`grep` 到该 sink 调用源码跨行、以 `\` 续行。修法：源码并成**单行**让 codemod 接手；或**手接 `LANG("既有key", list(插值…))`**（key 用 `strings/i18n/en/` 里抽取已生成的那个，**勿新造**——内容哈希一致才命中）。例：安全等级公告 `code/datums/communications.dm` 的 `[等级文案]\n\nA summary…`。

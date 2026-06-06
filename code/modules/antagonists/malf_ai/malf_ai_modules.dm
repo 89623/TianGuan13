@@ -361,7 +361,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_cinematic), /datum/cinematic/malf, world, CALLBACK(src, PROC_REF(trigger_doomsday))), 10 SECONDS)
 
 	else if(world.time >= next_announce)
-		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
+		minor_announce(LANG("obj.f20fe588", list(sec_left)), "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
 /obj/machinery/doomsday_device/proc/trigger_doomsday()

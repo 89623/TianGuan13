@@ -329,9 +329,10 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         "tgui_input_list" => Some(&[1, 2]),
         "tgui_input_text" => Some(&[1, 2]),
         "tgui_input_number" => Some(&[1, 2]),
-        // 中央指挥部/站内公告（玩家可见正文+标题）。[0]=正文 [1]=标题。仅**抽取**进目录——
-        // 显示由运行时 priority_announce/minor_announce 的整串反查 + AC 兜底负责（rewrite.rs 有独立
-        // sink 表、不含这些，故**不改写**遍布各处的公告调用点，零 codemod churn）。
+        // 中央指挥部/站内公告（玩家可见正文+标题）。[0]=正文 [1]=标题。**非插值**公告仅抽取、显示靠
+        // priority_announce.dm 的运行时整串反查 + AC（零 churn）；但 rewrite.rs 对**带 [插值] 的**公告会
+        // 改写为 LANG（反查需精确整串、AC 排除占位符，二者都够不着插值公告——典型：安全等级公告
+        // `[等级文案]\n\nA summary has been copied…`，文案插值后整串反查 miss、suffix 含 {0} 不进 AC）。
         "priority_announce" => Some(&[0, 1]),
         "minor_announce" => Some(&[0, 1]),
         "print_command_report" => Some(&[0, 1]),

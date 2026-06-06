@@ -266,7 +266,7 @@
 	message_admins("[capitalize(ertemplate.polldesc)] has spawned with the mission: [ertemplate.mission]")
 	// NOVA EDIT ADDITION BEGIN
 	if(ertemplate.notify_players)
-		priority_announce("Central command has responded to your request for a CODE [uppertext(ertemplate.code)] Emergency Response Team and have confirmed one to be enroute.", "ERT Request", ANNOUNCER_ERTYES)
+		priority_announce(LANG("datum.e6117052", list(uppertext(ertemplate.code))), "ERT Request", ANNOUNCER_ERTYES)
 	// NOVA EDIT END
 	return TRUE
 

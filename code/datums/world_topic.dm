@@ -160,7 +160,7 @@
 
 	LAZYREMOVE(timers, timer_id)
 
-	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
+	minor_announce(input["message"], LANG("datum.18f3f0f2", list(input["message_sender"])))
 	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
 	for(var/obj/machinery/computer/communications/communications_console in GLOB.shuttle_caller_list)
 		communications_console.override_cooldown()
@@ -170,7 +170,7 @@
 
 /datum/world_topic/news_report/Run(list/input)
 
-	priority_announce(input["message"], "Breaking Update From [input["message_sender"]]") //NOVA EDIT CHANGE
+	priority_announce(input["message"], LANG("datum.01758d2b", list(input["message_sender"]))) //NOVA EDIT CHANGE
 
 /datum/world_topic/adminmsg
 	keyword = "adminmsg"

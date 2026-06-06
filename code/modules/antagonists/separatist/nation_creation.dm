@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * ### create_separatist_nation()
@@ -72,4 +73,4 @@
 		var/announce_text = "The new independent state of [nation.name] has formed from the ashes of the [department.department_name] department!"
 		if(istype(department, /datum/job_department/assistant)) //the text didn't really work otherwise
 			announce_text = "The assistants of the station have risen to form the new independent state of [nation.name]!"
-		priority_announce(announce_text, "Secession from [GLOB.station_name]",  has_important_message = TRUE)
+		priority_announce(announce_text, LANG("_root.09f362a1", list(GLOB.station_name)),  has_important_message = TRUE)

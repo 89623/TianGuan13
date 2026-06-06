@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/station_trait/carp_infestation
 	name = "Carp infestation"
 	trait_type = STATION_TRAIT_NEGATIVE
@@ -675,10 +676,7 @@
 			var/obj/machinery/nebula_shielding/emergency/rad_shield = /obj/machinery/nebula_shielding/emergency/radiation
 
 			priority_announce(
-				{"Is everything okay there? We're getting high radiation readings from inside the station. \
-				We're sending an emergency shielding unit for now, it will last [initial(rad_shield.detonate_in) / (1 MINUTES)] minutes. \n\n\
-				Set up the nebula shielding. You can order construction kits at cargo if yours have been lost.
-				"}
+				LANG("datum.d8cfd5e6", list(initial(rad_shield.detonate_in) / (1 MINUTES)))
 			)
 
 			addtimer(CALLBACK(src, PROC_REF(send_care_package)), 10 SECONDS)

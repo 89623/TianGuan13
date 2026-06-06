@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/anomaly/anomaly_grav
 	name = "Anomaly: Gravitational"
 	typepath = /datum/round_event/anomaly/anomaly_grav
@@ -29,4 +30,4 @@
 /datum/round_event/anomaly/anomaly_grav/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Gravitational anomaly detected on [ANOMALY_ANNOUNCE_HARMFUL_TEXT] [impact_area.name].", "Anomaly Alert" , ANNOUNCER_GRAVANOMALIES) //NOVA EDIT CHANGE - ORIGINAL: priority_announce("Gravitational anomaly detected on [ANOMALY_ANNOUNCE_HARMFUL_TEXT] [impact_area.name].", "Anomaly Alert" , ANNOUNCER_GRANOMALIES)
+	priority_announce(LANG("datum.acad88d8", list(ANOMALY_ANNOUNCE_HARMFUL_TEXT, impact_area.name)), "Anomaly Alert" , ANNOUNCER_GRAVANOMALIES) //NOVA EDIT CHANGE - ORIGINAL: priority_announce("Gravitational anomaly detected on [ANOMALY_ANNOUNCE_HARMFUL_TEXT] [impact_area.name].", "Anomaly Alert" , ANNOUNCER_GRANOMALIES)

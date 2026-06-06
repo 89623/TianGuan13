@@ -161,7 +161,7 @@ ADMIN_VERB(create_command_report, R_ADMIN, "创建指挥报告", "Create a comma
 		priority_announce(command_report_content, subheader == ""? null : subheader, report_sound, has_important_message = TRUE, color_override = chosen_color)
 
 	if(!announce_contents || print_report)
-		print_command_report(command_report_content, "[announce_contents ? "" : "Classified "][command_name] Update", !announce_contents, contains_advanced_html = TRUE)
+		print_command_report(command_report_content, LANG("datum.fb6958b6", list(announce_contents ? "" : "Classified ", command_name)), !announce_contents, contains_advanced_html = TRUE)
 
 	change_command_name(original_command_name)
 

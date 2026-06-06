@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/anomaly/anomaly_flux
 	name = "Anomaly: Hyper-Energetic Flux"
 	typepath = /datum/round_event/anomaly/anomaly_flux
@@ -17,4 +18,4 @@
 /datum/round_event/anomaly/anomaly_flux/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Hyper-energetic flux wave detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert", ANNOUNCER_FLUXANOMALIES) //NOVA EDIT CHANGE - ORIGINAL: priority_announce("Hyper-energetic flux wave detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert")
+	priority_announce(LANG("datum.6e92d4eb", list(ANOMALY_ANNOUNCE_DANGEROUS_TEXT, impact_area.name)), "Anomaly Alert", ANNOUNCER_FLUXANOMALIES) //NOVA EDIT CHANGE - ORIGINAL: priority_announce("Hyper-energetic flux wave detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert")

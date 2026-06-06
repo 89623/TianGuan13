@@ -139,7 +139,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 		caller_card.use_charge(user)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(summon_battlecruiser), caller_card.team), rand(20 SECONDS, 1 MINUTES))
 		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
-		priority_announce("Attention crew: deep-space sensors detect a Syndicate battlecruiser-class signature subspace rift forming near your station. Estimated time until arrival: three to five minutes.", "[command_name()] High-Priority Update") //NOVA EDIT ADDITION: announcement on battlecruiser call
+		priority_announce("Attention crew: deep-space sensors detect a Syndicate battlecruiser-class signature subspace rift forming near your station. Estimated time until arrival: three to five minutes.", LANG("obj.34bd7ec6", list(command_name()))) //NOVA EDIT ADDITION: announcement on battlecruiser call
 		return TRUE
 
 	if(obj_flags & EMAGGED)
@@ -291,7 +291,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			bank_account.adjust_money(-shuttle.credit_cost)
 
 			var/purchaser_name = (obj_flags & EMAGGED) ? scramble_message_replace_chars("AUTHENTICATION FAILURE: CVE-2018-17107", 60) : user.real_name
-			minor_announce("[purchaser_name] has purchased [shuttle.name] for [shuttle.credit_cost] [MONEY_NAME].[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
+			minor_announce(LANG("obj.3f5ebe7e", list(purchaser_name, shuttle.name, shuttle.credit_cost, MONEY_NAME, shuttle.extra_desc ? " [shuttle.extra_desc]" : "")) , "Shuttle Purchase")
 
 			message_admins("[ADMIN_LOOKUPFLW(user)] purchased [shuttle.name].")
 			log_shuttle("[key_name(user)] has purchased [shuttle.name].")
@@ -311,7 +311,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			nuke_request(reason, user)
 			to_chat(user, span_notice(LANG("obj.264742bb", null)))
 			user.log_message("has requested the nuclear codes from CentCom with reason \"[reason]\"", LOG_SAY)
-			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [user]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", SSstation.announcer.get_rand_report_sound())
+			priority_announce(LANG("obj.bf978e4d", list(user)), "Nuclear Self-Destruct Codes Requested", SSstation.announcer.get_rand_report_sound())
 			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("restoreBackupRoutingData")
@@ -460,7 +460,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			SSjob.safe_code_request_loc = pod_location
 			SSjob.safe_code_requested = TRUE
 			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, send_spare_id_safe_code), pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
-			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
+			minor_announce(LANG("obj.837938f1", list(get_area(pod_location))))
 		// NOVA EDIT ADDITION START
 		if ("messagethefeds")
 			if(!message_federation(usr))

@@ -44,7 +44,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(html_decode(input),"[user.name] announces:", players = players)
+		minor_announce(html_decode(input),LANG("datum.c7600a37", list(user.name)), players = players)
 		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
 		var/list/message_data = user.treat_message(input)
@@ -138,7 +138,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 		. += "<hr><h4>Additional Notes: </h4>" + footnote_pile
 
 #ifndef MAP_TEST
-	print_command_report(., "[command_name()] Status Summary", announce = FALSE, contains_advanced_html = TRUE)
+	print_command_report(., LANG("datum.1aee94d7", list(command_name())), announce = FALSE, contains_advanced_html = TRUE)
 	if(greenshift)
 		priority_announce(
 			"Thanks to the tireless efforts of our security and intelligence divisions, \
@@ -152,8 +152,8 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 		if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_BLUE)
 			SSsecurity_level.set_level(SEC_LEVEL_BLUE, announce = FALSE)
 		priority_announce(
-			"[SSsecurity_level.current_security_level.elevating_to_announcement]\n\n\
-				A summary has been copied and printed to all communications consoles.",
+			// NOVA EDIT - i18n: 多行 \ 续行串 codemod 切片够不着，手接 LANG（key 同抽取 build_template）
+			LANG("datum.63d767af", list(SSsecurity_level.current_security_level.elevating_to_announcement)),
 			"Security level elevated.",
 			ANNOUNCER_INTERCEPT,
 			color_override = SSsecurity_level.current_security_level.announcement_color,

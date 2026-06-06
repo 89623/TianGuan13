@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/station_goal
 	var/name = "Generic Goal"
 	var/weight = 1 //In case of multiple goals later.
@@ -7,8 +8,8 @@
 	var/report_message = "Complete this goal."
 
 /datum/station_goal/proc/send_report()
-	priority_announce("Priority Nanotrasen directive received. Project \"[name]\" details inbound.", "Incoming Priority Message", SSstation.announcer.get_rand_report_sound())
-	print_command_report(get_report(),"Nanotrasen Directive [pick(GLOB.phonetic_alphabet)] \Roman[rand(1,50)]", announce=FALSE)
+	priority_announce(LANG("datum.289d9d43", list(name)), "Incoming Priority Message", SSstation.announcer.get_rand_report_sound())
+	print_command_report(get_report(),LANG("datum.f2e3ad50", list(pick(GLOB.phonetic_alphabet), rand(1,50))), announce=FALSE)
 	on_report()
 
 /datum/station_goal/proc/on_report()

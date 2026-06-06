@@ -54,7 +54,7 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_spiders)), rand(375, 600) SECONDS)
 
 /datum/dynamic_ruleset/midround/spiders/proc/announce_spiders()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce(LANG("datum.9d5038a3", list(station_name())), "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/dynamic_ruleset/midround/spiders/false_alarm()
 	announce_spiders()
@@ -406,7 +406,7 @@
 	return pick(GLOB.blobstart)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/false_alarm()
-	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+	priority_announce(LANG("datum.4bada0d0", list(station_name())), "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 
 	// Set status displays to biohazard alert even for false alarm
 	send_status_display_biohazard_alert()
@@ -443,7 +443,7 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_xenos)), rand(375, 600) SECONDS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/proc/announce_xenos()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce(LANG("datum.9d5038a3", list(station_name())), "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/false_alarm()
 	announce_xenos()
@@ -496,7 +496,7 @@
 	candidate.current.move_into_vent(vent)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blood_worms/proc/announce_worms()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce(LANG("datum.9d5038a3", list(station_name())), "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blood_worms/false_alarm()
 	announce_worms()
@@ -557,7 +557,7 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_space_dragon)), rand(5, 10) SECONDS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/proc/announce_space_dragon()
-	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
+	priority_announce(LANG("datum.3c3f0633", list(station_name())), "Lifesign Alert")
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/false_alarm()
 	announce_space_dragon()

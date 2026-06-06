@@ -40,7 +40,7 @@
 
 /datum/round_event/vent_clog/announce(fake)
 	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(vent)
-	priority_announce("Minor biological obstruction detected in the ventilation network. Blockage is believed to be in the [event_area].", "Custodial Notification")
+	priority_announce(LANG("datum.35f17a5a", list(event_area)), "Custodial Notification")
 
 /datum/round_event/vent_clog/setup()
 	vent = get_vent()
@@ -134,7 +134,7 @@
 	clog_vent()
 
 	announce_to_ghosts(vent)
-	priority_announce("Lifesign readings have moved to a new location in the ventilation network. New Location: [prob(50) ? "Unknown.":"[get_area_name(vent)]."]", "Lifesign Notification")
+	priority_announce(LANG("datum.0fe704ab", list(prob(50) ? "Unknown.":"[get_area_name(vent)].")), "Lifesign Notification")
 
 /**
  * Handles the production of our mob and adds it to our living_mobs list
@@ -235,7 +235,7 @@
 
 /datum/round_event/vent_clog/major/announce(fake)
 	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(vent)
-	priority_announce("Major biological obstruction detected in the ventilation network. Blockage is believed to be in the [event_area] area.", "Infestation Alert")
+	priority_announce(LANG("datum.0505b6c5", list(event_area)), "Infestation Alert")
 
 /datum/round_event_control/vent_clog/critical
 	name = "Ventilation Clog: Critical"
@@ -259,7 +259,7 @@
 
 /datum/round_event/vent_clog/critical/announce(fake)
 	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(vent)
-	priority_announce("Potentially hazardous lifesigns detected in the [event_area] ventilation network.", "Security Alert")
+	priority_announce(LANG("datum.eb1fa81d", list(event_area)), "Security Alert")
 
 /datum/round_event/vent_clog/critical/get_mob()
 	var/static/list/mob_list = list(
@@ -292,7 +292,7 @@
 
 /datum/round_event/vent_clog/strange/announce(fake)
 	var/area/event_area = fake ? pick(GLOB.teleportlocs) : get_area_name(vent)
-	priority_announce("Unusual lifesign readings detected in the [event_area] ventilation network.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce(LANG("datum.b85526ea", list(event_area)), "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/round_event/vent_clog/strange/get_mob()
 	var/static/list/mob_list = list(

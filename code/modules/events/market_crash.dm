@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * An event which decreases the station target temporarily, causing the inflation var to increase heavily.
  *
@@ -33,7 +34,7 @@
 		"uhh, bad luck, we guess"
 	)
 	var/reason = pick(poss_reasons)
-	priority_announce("Due to [reason], prices for on-station vendors will be increased for a short period.", "Nanotrasen Accounting Division")
+	priority_announce(LANG("datum.c6ab74b9", list(reason)), "Nanotrasen Accounting Division")
 
 /datum/round_event/market_crash/start()
 	. = ..()

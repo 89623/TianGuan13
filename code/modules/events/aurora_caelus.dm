@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/aurora_caelus
 	name = "Aurora Caelus"
 	typepath = /datum/round_event/aurora_caelus
@@ -18,7 +19,7 @@
 	end_when = 80
 
 /datum/round_event/aurora_caelus/announce(fake)
-	priority_announce("[station_name()]: A harmless cloud of ions is approaching your station, and will exhaust their energy battering the hull. Nanotrasen has approved a short break for all employees to relax and observe this very rare event. During this time, starlight will be bright but gentle, shifting between quiet green and blue colors. Any staff who would like to view these lights for themselves may proceed to the area nearest to them with viewing ports to open space. We hope you enjoy the lights.",
+	priority_announce(LANG("datum.7b032584", list(station_name())),
 	sound = 'sound/announcer/notice/notice2.ogg',
 	sender_override = "Nanotrasen Meteorology Division")
 	if (fake)
@@ -66,7 +67,7 @@
 /datum/round_event/aurora_caelus/end()
 	fade_space()
 	fade_kitchen()
-	priority_announce("The aurora caelus event is now ending. Starlight conditions will slowly return to normal. When this has concluded, please return to your workplace and continue work as normal. Have a pleasant shift, [station_name()], and thank you for watching with us.",
+	priority_announce(LANG("datum.a351f720", list(station_name())),
 	sound = 'sound/announcer/notice/notice2.ogg',
 	sender_override = "Nanotrasen Meteorology Division")
 

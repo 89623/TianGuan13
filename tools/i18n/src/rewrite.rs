@@ -54,8 +54,22 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         "tgui_input_list" => Some(&[1, 2]),
         "tgui_input_text" => Some(&[1, 2]),
         "tgui_input_number" => Some(&[1, 2]),
+        // 公告：[0]=正文 [1]=标题。**仅在插值时**改写（见 is_announce_sink + try_rewrite_call 的 interp_only
+        // 门控）：非插值公告靠 priority_announce.dm 的运行时整串反查翻译（零 codemod churn）；但**带 [插值] 的
+        // 公告**反查（需精确整串）和 AC（排除占位符）都够不着 → 必须 LANG 改写。与 extract.rs 同表。
+        "priority_announce" => Some(&[0, 1]),
+        "minor_announce" => Some(&[0, 1]),
+        "print_command_report" => Some(&[0, 1]),
         _ => None,
     }
+}
+
+/// 公告类 sink：只在**插值**消息上改写（非插值留给运行时反查，避免改写遍布各处的公告调用点）。
+fn is_announce_sink(name: &str) -> bool {
+    matches!(
+        name,
+        "priority_announce" | "minor_announce" | "print_command_report"
+    )
 }
 
 struct Edit {
@@ -416,14 +430,14 @@ impl<'a> Rewriter<'a> {
         if let Expression::Base { term, follow } = expr {
             if let Term::Call(name, args) = &term.elem {
                 if let Some(indices) = sink_message_args(name.as_str()) {
-                    self.try_rewrite_call(term.location, args, indices, ns);
+                    self.try_rewrite_call(term.location, args, indices, ns, is_announce_sink(name.as_str()));
                 }
             }
             // input() 是 dreammaker 的专用 Term::Input（因 `as type in list` 语法），不是 Call。
             // 复用同一套实参定位（term.location 指向 input 关键字，find_open_paren 找其 `(`）。
             if let Term::Input { args, .. } = &term.elem {
                 if let Some(indices) = sink_message_args("input") {
-                    self.try_rewrite_call(term.location, args, indices, ns);
+                    self.try_rewrite_call(term.location, args, indices, ns, false);
                 }
             }
             self.recurse_term(&term.elem, ns);
@@ -432,7 +446,7 @@ impl<'a> Rewriter<'a> {
                 // 改写消息参数。裸调用走上面的 Term::Call 分支；方法调用是 Follow::Call，此前完全漏改。
                 if let Follow::Call(_, name, fargs) = &f.elem {
                     if let Some(indices) = sink_message_args(name.as_str()) {
-                        self.try_rewrite_call(f.location, fargs, indices, ns);
+                        self.try_rewrite_call(f.location, fargs, indices, ns, is_announce_sink(name.as_str()));
                     }
                 }
                 self.recurse_follow(&f.elem, ns);
@@ -483,6 +497,7 @@ impl<'a> Rewriter<'a> {
         args: &[Expression],
         indices: &[usize],
         ns: &str,
+        interp_only: bool,
     ) {
         // 1) 用 AST 判定每个消息参数是否「恰好一个可翻译文本节点」，并取其模板/占位符数/key。
         let mut targets: Vec<(usize, String, usize)> = Vec::new();
@@ -503,7 +518,12 @@ impl<'a> Rewriter<'a> {
             if is_dialog_button(&template) {
                 continue;
             }
-            targets.push((i, make_key(ns, &template), placeholder_count(&template)));
+            let ph = placeholder_count(&template);
+            // 公告类：非插值（ph==0）留给运行时整串反查，不改写（零额外 churn）；只改插值公告（反查/AC 够不着）。
+            if interp_only && ph == 0 {
+                continue;
+            }
+            targets.push((i, make_key(ns, &template), ph));
         }
         if targets.is_empty() {
             return;

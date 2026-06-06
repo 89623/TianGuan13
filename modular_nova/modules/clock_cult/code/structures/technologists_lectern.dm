@@ -368,7 +368,7 @@
 
 	research_sigil.finish_research()
 
-	priority_announce("An outburst of anomalous energy has been detected at [get_area(src)]. Please ensure the safety of any nearby crew.")
+	priority_announce(LANG("obj.ebe59e50", list(get_area(src))))
 
 	addtimer(CALLBACK(src, PROC_REF(side_effect)), 10 SECONDS)
 
@@ -451,7 +451,7 @@
 
 
 		if(31 to 40) // Fuck up the power, but in the other way instead
-			priority_announce("An extreme power surge has been detected in on-board APCs. Surge will subside in [rand(3, 8)] minutes.") // Not always accurate, are we?
+			priority_announce(LANG("obj.9b9780ef", list(rand(3, 8)))) // Not always accurate, are we?
 
 			force_apc_arcing(TRUE)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(force_apc_arcing), FALSE), 4 MINUTES)

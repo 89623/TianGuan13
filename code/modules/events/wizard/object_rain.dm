@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define RAIN_TARGET_DEPARTMENTS list(\
 	"Cargo Bay" = /area/station/cargo, \
 	"Engineering Division" = /area/station/engineering, \
@@ -81,7 +82,7 @@
 		"effectQuiet" = TRUE,))
 
 /datum/round_event/wizard/object_rain/announce(fake)
-	priority_announce("Anomalous weather patterns forecast in the [target_region].", "Janitorial alert")
+	priority_announce(LANG("datum.02861ba3", list(target_region)), "Janitorial alert")
 
 /// Return whatever it is you want to rain from the sky here.
 /datum/round_event/wizard/object_rain/proc/get_item()

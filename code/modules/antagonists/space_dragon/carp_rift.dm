@@ -45,7 +45,7 @@
 	dragon.rift_list += new_rift
 	// NOVA EDIT ADDITION START, announce on first rift - reset stats if dragon manages to retry
 	if(!dragon.announced)
-		priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
+		priority_announce(LANG("datum.3c3f0633", list(station_name())), "Lifesign Alert")
 		dragon.announced = TRUE
 	if(HAS_TRAIT(owner, TRAIT_RIFT_FAILURE))
 		REMOVE_TRAIT(owner, TRAIT_RIFT_FAILURE, REF(dragon))
@@ -265,7 +265,7 @@
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
 		var/area/location = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(location.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
+		priority_announce(LANG("obj.dbb195b4", list(initial(location.name))), LANG("obj.9ecd04f6", list(command_name())), has_important_message = TRUE)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -290,7 +290,7 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "[command_name()] Wildlife Observations", ANNOUNCER_SPANOMALIES)
+		priority_announce(LANG("obj.ee23861c", list(initial(A.name))), LANG("obj.9ecd04f6", list(command_name())), ANNOUNCER_SPANOMALIES)
 
 /**
  * Used to create carp controlled by ghosts when the option is available.

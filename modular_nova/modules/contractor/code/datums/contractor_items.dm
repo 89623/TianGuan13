@@ -105,7 +105,7 @@
 	if(!.)
 		return
 	power_fail(35, 50)
-	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", ANNOUNCER_POWEROFF)
+	priority_announce(LANG("datum.be6cda49", list(station_name())), "Critical Power Failure", ANNOUNCER_POWEROFF)
 
 /datum/contractor_item/comms_blackout
 	name = "Comms Outage"

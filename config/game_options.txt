@@ -76,12 +76,12 @@ ROUNDSTART_LOGOUT_REPORT_TIME_AVERAGE 6000
 
 
 ## ALERT LEVELS ###
-ALERT_GREEN All threats to the station have passed. Security personnel may only conduct searches with a search warrant.
-ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security personnel may conduct field searches with probable cause or a search warrant.
-ALERT_BLUE_DOWNTO The immediate threat has passed. Random searches are no longer permitted, and Security must have probable cause for a field search or a search warrant.
-ALERT_RED_UPTO There is an immediate serious threat to the station. Random searches are allowed and advised. Crew militia is now active and lethal limits are temporarily revoked. Additionally, access requirements on some doors have been lifted.
-ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Random searches are allowed and advised.
-ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+ALERT_GREEN 对空间站的所有威胁均已解除。安保人员只能凭搜查令进行搜查。
+ALERT_BLUE_UPTO 空间站已收到关于站内可能存在敌对活动的可靠情报。安保人员可凭合理依据或搜查令进行现场搜查。
+ALERT_BLUE_DOWNTO 即时威胁已解除。不再允许随机搜查，安保进行现场搜查须有合理依据或搜查令。
+ALERT_RED_UPTO 空间站面临即时严重威胁。允许并建议进行随机搜查。船员民兵现已启用，致命武力限制临时撤销。此外，部分门禁的权限要求已解除。
+ALERT_RED_DOWNTO 空间站的毁灭已被避免，但站点仍面临即时严重威胁。允许并建议进行随机搜查。
+ALERT_DELTA 空间站即将被摧毁。全体船员须服从各部门主管下达的一切指令。任何违抗均可处以死刑。这不是演习。
 
 ## The total weight of station goals possible for a round (allows multiple goals)
 STATION_GOAL_BUDGET 1
