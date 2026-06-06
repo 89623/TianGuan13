@@ -31,7 +31,9 @@ nix develop
 ### 构建、检查、启动
 
 ```sh
-# 构建 TGUI + DM。构建 TGUI 时会自动同步 tgui/packages/tgui/i18n/*.json
+# 构建 TGUI + DM。构建 TGUI（tgui:build）会先跑 tgui-catalog.mjs extract（抽取新 JSX/DM 标签 +
+# 复用译文 + 同步前端子集 tgui/packages/tgui/i18n/*.json），再 rspack 打包 —— 一条命令即含抽取+同步+编译。
+# 注：extract 幂等；Juke 只在 tgui 输入（catalog/译文/.tsx/配置）变化时重跑该步，无变化的增量构建零额外开销。
 tools/build/build.sh
 
 # 只构建 TGUI
