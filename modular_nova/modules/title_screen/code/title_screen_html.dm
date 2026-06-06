@@ -178,4 +178,29 @@ GLOBAL_LIST_EMPTY(startup_messages)
 
 	dat += "</body></html>"
 
+	// NOVA EDIT - i18n: 标题界面经 raw browse()（绕过 browser.dm 的 AC 钩子），在此专项本地化菜单文案
+	// （JOIN GAME/CREW MANIFEST/… 含 JS 切换数组里的 BE ANTAGONIST）。用带 HTML 边界的整词替换、不走全局 AC，
+	// 避免单词(OBSERVE/READY)被 AC 子串误嵌进 OBSERVER/ALREADY。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		dat = lang_localize_title_html(dat)
+
 	return dat
+
+/// 标题界面 HTML 的菜单文案本地化（zh-Hans；全服中文时由 get_title_html 调用）。多词整词替换，
+/// 单词项带 `>…<` / ` …<` HTML 边界以防嵌进其它词。未来加 locale 时在此分支扩展。
+/proc/lang_localize_title_html(html)
+	if(!istext(html))
+		return html
+	// 多词菜单项（不会嵌进别的词）。"BE ANTAGONIST" 同时覆盖链接与 JS 切换数组两处。
+	html = replacetext(html, "JOIN GAME", "加入游戏")
+	html = replacetext(html, "CREW MANIFEST", "船员名册")
+	html = replacetext(html, "CHARACTER DIRECTORY", "角色目录")
+	html = replacetext(html, "SETUP CHARACTER", "角色设置")
+	html = replacetext(html, "GAME OPTIONS", "游戏选项")
+	html = replacetext(html, "BE ANTAGONIST", "扮演反派")
+	html = replacetext(html, "LATEJOIN QUEUE", "补位队列")
+	html = replacetext(html, "SWAP SERVERS", "切换服务器")
+	// 单词项：带 HTML 边界，避免 AC/整串误伤（OBSERVE→OBSERVER、READY→ALREADY）。
+	html = replacetext(html, ">OBSERVE<", ">旁观<")
+	html = replacetext(html, " READY<", " 准备就绪<")
+	return html
