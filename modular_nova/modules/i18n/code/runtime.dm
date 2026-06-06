@@ -266,7 +266,13 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 		if(islist(value))
 			lang_reverse_pref_descriptions(value)
 		else if(istext(value) && GLOB.i18n_pref_desc_keys[key])
-			data[key] = lang_reverse_text(value)
+			var/translated = lang_reverse_text(value)
+			// 整串无精确匹配时退到 AC 子串层：job 描述在运行期是「基础句 + antag 后缀」拼接
+			//（command/sec 职业的 " Targetable by contractors." 等），整串不是目录键，
+			// 但基础句与各后缀短语都在目录里 → 逐段子串命中翻译。
+			if(translated == value)
+				translated = lang_fallback_apply(value)
+			data[key] = translated
 	return data
 
 /// 中文时长格式（无英文复数 / 无 " and " 连接词）。core 的 DisplayTimeText 在全服中文时改调此处。

@@ -560,6 +560,13 @@ const DM_LABEL_SOURCES = [
   ['modular_nova/master_files/code/modules/client/preferences/footstep_sound.dm', false, /"([A-Z][a-z]+)"/g],
   // 渗透点显示名(UPLINK_* = "PDA"/"Radio"/...)。
   ['code/modules/client/preferences/uplink_location.dm', false, /=\s*"([A-Z][^"]*)"/g],
+  // 强化+(Augments) 身体部位/植入物下拉**选项名**(/datum/augment_item 子类型的 `name="…"`，
+  // 如 "Prosthetic left arm")。这页经 get_constant_data 走常量资源、绕过 P1；前端 LimbsPage 用
+  // Dropdown displayText={aug.name}，act 用 option.path → name 仅显示=安全，渲染期 JSX localize 翻显示。
+  ['modular_nova/modules/customization/modules/client/augment', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  // 强化+ 槽位**标题**(AUGMENT_SLOT_* 定义值，如 "Left Arm"/"Chest")。slot 同时是前端 augments[slot]
+  // 的 Record 键(标识符)，但渲染期只翻 <Section title={limb.slot}> 显示、底层数据不变 → 键安全。
+  ['code/__DEFINES/~nova_defines/augment.dm', false, /#define\s+AUGMENT_SLOT_\w+\s+"([^"]+)"/g],
   // 待接：反派名散在 code/modules/antagonists 各处，整目录抽会混入目标/技能等海量非偏好名，需专门源。
 ];
 
