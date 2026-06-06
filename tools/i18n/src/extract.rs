@@ -323,12 +323,20 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             // aas_config_entry 的公告模板（list，含 %VAR 占位符的玩家可见公告）。
             let is_aas_template = var_name == "announcement_lines_map"
                 && ty.path.starts_with("/datum/aas_config_entry");
-            if !is_sink && !is_config_default && !is_aas_template {
+            // AI 法则集（/datum/ai_laws 的 inherent = list("法则1", …)）：lawset 静态法则文本，
+            // 玩家可见（AI/赛博格法则面板、show_laws、法则模块），运行时 get_law_list 反查显示。
+            // ion/hacked/supplied/zeroth 是离子/黑入/玩家填写的动态法则，不在此静态抽取。
+            let is_law_list = var_name == "inherent" && ty.path.starts_with("/datum/ai_laws");
+            if !is_sink && !is_config_default && !is_aas_template && !is_law_list {
                 continue;
             }
             if let Some(expr) = &type_var.value.expression {
                 if is_aas_template {
                     emit_message_list(expr, &namespace, &mut catalog);
+                    continue;
+                }
+                if is_law_list {
+                    emit_list_strings(expr, &namespace, &mut catalog);
                     continue;
                 }
                 if let Some(template) = build_template(expr) {
