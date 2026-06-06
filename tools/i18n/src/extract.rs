@@ -424,6 +424,17 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                         n if n.contains("perk") => walk_perk_block(block, &namespace, &mut catalog),
                         // examine 标签的 hover tooltip：`.["tag"] = "提示"`（运行时 atom_examine 反查显示）。
                         "examine_tags" => walk_examine_tags(block, &namespace, &mut catalog),
+                        // 重量等级 tooltip：examine_tags 里 `.[…] = weight_class_to_tooltip(w_class)`，值是 proc
+                        // **返回**的字面量（"This item can fit into pockets…"），非 sink/index-assign → 抽返回值。
+                        "weight_class_to_tooltip" => {
+                            let mut rets = Vec::new();
+                            collect_returns(block, &mut rets);
+                            for r in rets {
+                                if let Some(t) = build_template(r) {
+                                    emit(&mut catalog, &namespace, &t);
+                                }
+                            }
+                        }
                         _ => {}
                     }
                 }

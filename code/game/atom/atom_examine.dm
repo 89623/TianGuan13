@@ -146,7 +146,7 @@
 	for(var/custom_material in custom_materials)
 		var/datum/material/current_material = SSmaterials.get_material(custom_material)
 		var/mat_name = lang_material(current_material.name) // NOVA EDIT - i18n: 材料名专用反查（零碰撞，按材料义翻；单词材料全局会按错义译）
-		mats_list += span_tooltip("It is made out of [mat_name].", mat_name)
+		mats_list += span_tooltip(LANG("atom.made_out_of_tooltip", list(mat_name)), mat_name) // NOVA EDIT - i18n: tooltip 文本本地化。ORIGINAL: span_tooltip("It is made out of [mat_name].", mat_name)
 	. += LANG("atom.18275935", list(english_list(mats_list)))
 
 /**
