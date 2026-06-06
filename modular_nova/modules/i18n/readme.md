@@ -33,14 +33,17 @@ locale 解析：
 - `strings/i18n/<locale>/*.json` —— 游戏端译文目录。DM 运行时从 `STRING_DIRECTORY("strings")/i18n/` 加载（见 `code/__DEFINES/text.dm` + `~nova_defines/i18n.dm`）。
 - `tgui/packages/tgui/i18n/` —— TGUI 前端运行时：`catalog.ts`/`localize.ts`/`jsx-runtime.ts`/`jsx-dev-runtime.ts` + 打包子集 `<locale>.json`。打包器靠 `tgui/i18n` 别名 + SWC `importSource` 解析，必须在 tgui 包内。
 - `code/__DEFINES/~nova_defines/i18n.dm` —— `LANG`/`LANGU` 宏与 locale 常量（fork 规定 defines 进 `~nova_defines`）。
-- `modular_nova/master_files/code/...` —— core override（必须镜像 core 路径）：`game/atoms.dm`（name/desc 反查）、`controllers/configuration/entries/config_entries.dm`（`I18N_SERVER_LOCALE`）。core NOVA EDIT：`code/modules/tgui/tgui.dm`（注入 `config.locale`）。
+- `modular_nova/master_files/code/...` —— core override（必须镜像 core 路径）：`game/atoms.dm`（name/desc 反查）、`controllers/configuration/entries/config_entries.dm`（`I18N_SERVER_LOCALE` + `I18N_CHAT_FALLBACK`）、`_onclick/hud/screen_objects/new_player.dm`（默认 HUD 大厅按钮全服中文换中文重绘 .dmi）。core NOVA EDIT：`code/modules/tgui/tgui.dm`（注入 `config.locale`）。
+- `modular_nova/modules/i18n/icons/lobby/*.dmi` —— 默认 HUD 大厅按钮中文重绘精灵（join/observe/ready/character_setup）；由 `tools/i18n/lobby-buttons/` 用 Fusion Pixel 字体逐帧生成。
+- `modular_nova/modules/title_screen/code/title_screen_html.dm` —— `lang_localize_title_html`：title_screen 模块 HTML 菜单（raw browse 绕过 AC 钩子）的菜单文案专项本地化。
 - `.github/workflows/i18n.yml`、`config/game_options.txt`（`I18N_SERVER_LOCALE`）—— CI / 配置，位置固定。
 
 **本模块（DM 运行时实现）：**
 - `modular_nova/modules/i18n/code/{runtime,fallback}.dm` —— 查表 / 占位符格式化 / name-desc 反查表 + AC 兜底。
 
 **构建 / 翻译工具——都在 `tools/i18n/`（**未移动**：移动需改 ~71 处构建/CI/脚本引用，风险高）：**
-- `tools/i18n/src/*.rs` —— Rust 抽取（`extract`）/ 改写（`rewrite`），基于 SpacemanDMM 的 dreammaker。
+- `tools/i18n/src/*.rs` —— Rust 抽取（`extract`，含通用 proc-return 句子 + 安全 verb 名）/ 改写（`rewrite`）/ verb 编译期注入（`verbs`），基于 SpacemanDMM 的 dreammaker。
+- `tools/i18n/lobby-buttons/` —— 默认 HUD 大厅按钮中文重绘脚本（`gen_dmi.py`）+ 字体/重生成说明。
 - `tools/i18n/tgui-catalog.mjs` —— TGUI 静态文本抽取 + 同步前端子集（`tgui:build` 会自动 `sync`）。
 - `tools/i18n/resync.sh` —— 合并上游后一键重同步（extract + rewrite + tgui 同步）。
 - `tools/i18n/mt/` —— 机翻（`i18n-mt.ts`，后端 codex/claude/openai）+ 术语表 `glossary.zh-Hans.json` + 候选发现 `glossary-sync.ts suggest`。

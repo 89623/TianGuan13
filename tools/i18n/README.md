@@ -78,6 +78,49 @@ bash tools/i18n/resync.sh
 
 游戏端运行时直接读取 `strings/i18n/<locale>/*.json`，所以游戏翻译本身不需要额外“生成前端包”。翻译更新后重新构建 / 重启服务即可生效。
 
+> `extract` 除 name/desc 类 SINK_VARS + sink 消息外，还会抽：① **任意 proc 的「句子型」`return` 字面量**
+> （多词 + 首字母大写 + 无占位符——覆盖「proc 返回玩家可见整句、经 to_chat/alert 变量参数发出、rewrite
+> 够不着」的长尾，如穿梭机/天气/投票提示；靠聊天 AC 子串层显示，需 `I18N_CHAT_FALLBACK TRUE`）；
+> ② **安全 verb 命令面板名**（见下「verb」）；③ 白名单 `strings/` flavor 数据文件。
+
+### verb 命令面板名（编译期注入，特殊）
+
+verb 的 `set name = "X"`（命令面板 / 右键菜单显示名）是 BYOND **编译期元数据**，无法像其它文本那样
+运行时按 locale 切换——这是唯一不能 locale 门控的类别。方案：编译期把核心里**安全显示名**的 `set name`
+原地改成中文（加 `// NOVA EDIT CHANGE - ORIGINAL: …` 标记）。
+
+```sh
+# 1) 抽取已自动包含安全 verb 名：首字母大写的显示名（命令面板/右键可见、按名调用自洽）。
+#    自动排除 .click / body-chest / quick-equip 等 keybind/宏按名调用的标识符 verb——改名会断快捷键/宏。
+#    即上面的 extract / resync 就会把安全 verb 名抽进 en 目录。
+# 2) 翻译 verb 名（同普通流程）
+bun tools/i18n/mt/i18n-mt.ts
+# 3) 把译文注入核心 set name：读 strings/i18n/<locale>/*.json，仅注入「已译且安全」项；
+#    内容守卫=源码原文须严格 == en（防错位/宏误改）；幂等（已注入的中文名不再处理）。
+cargo run --release --manifest-path tools/i18n/Cargo.toml -- verbs --locale zh-Hans
+#    先看会改多少处：加 --dry-run
+# 4) 编译
+tools/build/build.sh
+```
+
+⚠️ 注入产物是**编译期硬写中文进核心 `.dm`**（不可 locale 门控，专属中文服；英文构建需 `git checkout` 还原）。
+这些核心改动是**可提交的源码**（由你提交），不属私有译文。`verbs` **不在 `resync.sh` 里**（需先有译文、
+又会改核心），每次 verb 名翻译更新后手动跑一次。
+
+### 烤进资源 / HTML 的玩家文本：大厅按钮、标题界面、maptext、旧 browse
+
+少数玩家可见文本不在「sink/目录反查」的常规路径上，单独处理：
+
+- **大厅按钮**（默认 HUD）：文字**烤进** `icons/hud/lobby/*.dmi` 精灵，反查够不着。全服中文时由
+  `modular_nova/master_files/code/_onclick/hud/screen_objects/new_player.dm` 的 `SlowInit` 换成中文重绘版
+  （核心 .dmi 不动，上游友好）。重绘 / 新增按钮见 **`tools/i18n/lobby-buttons/readme.md`**。
+- **标题界面**（`modular_nova/modules/title_screen` 的 HTML 菜单，raw `browse()` 绕过 `/datum/browser`
+  的 AC 钩子）：`get_title_html` 返回前调 `lang_localize_title_html` 专项翻译菜单（加入游戏/旁观/准备就绪…）。
+  改字样直接编辑该 proc。
+- **maptext**（不过 AC）：少数 `MAPTEXT("…")` 标签全服中文时 gated 直给中文。
+- **旧 `browse()` 弹窗**：`/datum/browser` 包装器本就已 AC 覆盖；raw `browse()` 里的玩家可见 prose
+  复用同 proc 现成 LANG key 拼装。玩家书写内容（纸张/相机标签/照片）、内部数据（资产 JSON）不译。
+
 ### 游戏文本：Codex 批量翻译
 
 ```sh
