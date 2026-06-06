@@ -57,4 +57,13 @@ GLOBAL_LIST_EMPTY(i18n_fallback_state)
 		return text
 	if(!lang_fallback_setup(locale))
 		return text
+	// 剥掉 BYOND 文本宏 \improper / \proper（0xFF 起头的控制字节）：rustg_acreplace 按 UTF-8
+	// 处理字符串，这些非 UTF-8 字节会被替换成 U+FFFD（显示为 ��，如「那是 ��space」）。中文无
+	// 大小写，这两个宏（控制后随单词首字母大小写）本就无意义 → 直接剥除。findtext 门控让无宏的
+	// 热路径（绝大多数聊天行）零额外开销。
+	if(findtext(text, "\improper") || findtext(text, "\proper"))
+		text = replacetext(text, "\improper ", "")
+		text = replacetext(text, "\proper ", "")
+		text = replacetext(text, "\improper", "")
+		text = replacetext(text, "\proper", "")
 	return rustg_acreplace("i18n_[locale]", text)
