@@ -608,6 +608,22 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog) {
                     }
                 }
             }
+            // 屏幕提示(screentip)：`context[SCREENTIP_CONTEXT_*] = "文本"`（悬停顶部「眩扰/攻击/上楼」等）。
+            // 具名 context list 的 index-assign，遍布 add_context/add_item_context/on_requesting_context 等
+            // 260+ 文件、非单一 proc → 按 var 名「context」在通用 AssignOp 处抽（运行时 build_context 反查显示）。
+            else if matches!(op, AssignOp::Assign) {
+                if let Expression::Base { term, follow } = lhs.as_ref() {
+                    let is_context_index =
+                        matches!(&term.elem, Term::Ident(id) if id == "context")
+                            && follow.len() == 1
+                            && matches!(&follow[0].elem, Follow::Index(..));
+                    if is_context_index {
+                        if let Some(template) = build_template(rhs) {
+                            emit(catalog, ns, &template);
+                        }
+                    }
+                }
+            }
             visit_expr(lhs, ns, catalog);
             visit_expr(rhs, ns, catalog);
         }
