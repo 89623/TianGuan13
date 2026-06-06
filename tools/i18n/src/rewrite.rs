@@ -151,6 +151,162 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
     Ok(())
 }
 
+/// verb 命令面板显示名的**编译期**译文注入：把直接 verb 的 `set name = "English"` 原地改为
+/// `set name = "译文" // NOVA EDIT CHANGE - ORIGINAL: "English"`。verb 名是 BYOND 编译期元数据、
+/// 无法像其它文本那样运行时按 locale 切换，故此为唯一可行方案（不可 locale 门控）。
+///
+/// 仅注入：① is_safe_verb_name 放行的安全显示名（排除 .click/body-chest 等 keybind 按名调用标识符，
+/// 改名会断快捷键/宏）；② 目录里已有译文且 zh != en 的项。译文取自 strings/i18n/<locale>/*.json
+/// （抽取阶段建 key、MT 翻译）。内容守卫：定位到的源码原文须严格等于 en，防错位/宏展开误改。
+pub fn run_verbs(dme: &Path, locale: &str, dry_run: bool) -> Result<()> {
+    // 载入译文目录（key -> 译文）。
+    let locale_dir = dme
+        .parent()
+        .unwrap_or_else(|| Path::new("."))
+        .join("strings/i18n")
+        .join(locale);
+    let mut translations: HashMap<String, String> = HashMap::new();
+    if let Ok(rd) = std::fs::read_dir(&locale_dir) {
+        for ent in rd.flatten() {
+            let p = ent.path();
+            if p.extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            if let Ok(content) = std::fs::read_to_string(&p) {
+                if let Ok(map) = serde_json::from_str::<HashMap<String, String>>(&content) {
+                    translations.extend(map);
+                }
+            }
+        }
+    }
+    if translations.is_empty() {
+        anyhow::bail!(
+            "译文目录为空或不存在: {}（先 extract 抽出 verb 名再翻译）",
+            locale_dir.display()
+        );
+    }
+
+    let mut context = dm::Context::default();
+    context.set_print_severity(Some(dm::Severity::Error));
+    let pp = dm::preprocessor::Preprocessor::new(&context, dme.to_path_buf())
+        .with_context(|| format!("无法打开 .dme: {}", dme.display()))?;
+    let indents = dm::indents::IndentProcessor::new(&context, pp);
+    let mut parser = dm::parser::Parser::new(&context, indents);
+    parser.enable_procs();
+    let (fatal, tree) = parser.parse_object_tree_2();
+    if fatal {
+        anyhow::bail!("DM 解析出现致命错误");
+    }
+
+    let mut edits: HashMap<PathBuf, Vec<Edit>> = HashMap::new();
+    let mut sources: HashMap<PathBuf, Option<String>> = HashMap::new();
+
+    for ty in tree.iter_types() {
+        let ns = namespace_for(&ty.path);
+        for (_proc_name, type_proc) in ty.procs.iter() {
+            for proc_value in type_proc.value.iter() {
+                let Some(block) = &proc_value.code else {
+                    continue;
+                };
+                for stmt in block.iter() {
+                    let Statement::Setting { name, value, .. } = &stmt.elem else {
+                        continue;
+                    };
+                    if name.as_str() != "name" {
+                        continue;
+                    }
+                    let Some(en) = build_template(value) else {
+                        continue;
+                    };
+                    if !crate::extract::is_safe_verb_name(&en) {
+                        continue;
+                    }
+                    let key = make_key(&ns, &en);
+                    let Some(zh) = translations.get(&key) else {
+                        continue;
+                    };
+                    if zh == &en || zh.is_empty() {
+                        continue;
+                    }
+                    let loc = match value {
+                        Expression::Base { term, follow } if follow.is_empty() => term.location,
+                        _ => continue,
+                    };
+                    let path = context.file_path(loc.file).to_path_buf();
+                    let src = sources
+                        .entry(path.clone())
+                        .or_insert_with(|| std::fs::read_to_string(&path).ok());
+                    let Some(src) = src.as_deref() else {
+                        continue;
+                    };
+                    let Some(start) = line_col_to_byte(src, loc.line, loc.column) else {
+                        continue;
+                    };
+                    let line_end = logical_line_end(src, start);
+                    let bytes = src.as_bytes();
+                    let mut i = start;
+                    while i < line_end && bytes[i] != b'"' {
+                        i += 1;
+                    }
+                    if i >= line_end {
+                        continue;
+                    }
+                    let Some((qpos, qend, interp)) = scan_dm_string(src, i) else {
+                        continue;
+                    };
+                    if !interp.is_empty() || in_preprocessor_directive(src, qpos) {
+                        continue;
+                    }
+                    // 内容守卫：源码原文须严格等于 en，否则跳过（防错位/宏）。
+                    if qend < qpos + 2 || src[qpos + 1..qend - 1] != *en {
+                        continue;
+                    }
+                    let zh_esc = zh.replace('\\', "\\\\").replace('"', "\\\"");
+                    let replacement =
+                        format!("\"{zh_esc}\" // NOVA EDIT CHANGE - ORIGINAL: \"{en}\"");
+                    edits.entry(path).or_default().push(Edit {
+                        start: qpos,
+                        end: qend,
+                        replacement,
+                    });
+                }
+            }
+        }
+    }
+
+    let mut total = 0usize;
+    let mut files = 0usize;
+    for (path, mut es) in edits {
+        if es.is_empty() {
+            continue;
+        }
+        es.sort_by(|a, b| b.start.cmp(&a.start));
+        es.dedup_by(|a, b| a.start == b.start && a.end == b.end);
+        files += 1;
+        total += es.len();
+        if dry_run {
+            continue;
+        }
+        let Some(Some(mut src)) = sources.remove(&path) else {
+            continue;
+        };
+        for e in &es {
+            src.replace_range(e.start..e.end, &e.replacement);
+        }
+        let is_core = !path.to_string_lossy().replace('\\', "/").contains("modular_nova/");
+        if is_core && !src.starts_with(CORE_MARKER) {
+            src.insert_str(0, &format!("{CORE_MARKER}\n"));
+        }
+        std::fs::write(&path, src).with_context(|| format!("写回失败: {}", path.display()))?;
+    }
+
+    eprintln!(
+        "verb 注入 {total} 处，{files} 个文件{}",
+        if dry_run { "（dry-run，未落盘）" } else { "" }
+    );
+    Ok(())
+}
+
 /// 该 proc 是否标了 `set SpacemanDMM_should_be_pure`（纯函数，读全局会被 DreamChecker 判为破坏纯度）。
 fn block_is_pure(block: &[Spanned<Statement>]) -> bool {
     block.iter().any(|s| {

@@ -95,6 +95,20 @@ fn is_sentence_like(s: &str) -> bool {
         && s.chars().any(|c| c.is_ascii_lowercase())
 }
 
+/// 「安全可改名」的 verb 命令面板显示名启发式（verb 的 `set name = "X"`）。
+/// verb 名是 BYOND 编译期元数据、无法运行时按 locale 切换，只能编译期注入译文（见 rewrite::run_verbs）。
+/// 仅放行**首字母大写**的显示名（命令面板/右键菜单可见，由面板按名调用，改名自洽）；
+/// 排除 keybind/宏按名调用的标识符 verb（以 `.` 开头如 .click、纯小写、小写连字符如 body-chest/
+/// quick-equip——被外部按名引用，改名会断快捷键/宏），以及数字前缀 debug 名与含占位符的。
+pub(crate) fn is_safe_verb_name(s: &str) -> bool {
+    let s = s.trim();
+    !s.is_empty()
+        && !s.contains('{')
+        && !s.starts_with('.')
+        && s.chars().next().is_some_and(|c| c.is_ascii_uppercase())
+        && s.chars().any(|c| c.is_alphabetic())
+}
+
 /// 从 list 字面量里抽「多词字符串值」（用于 /datum/aas_config_entry 的 announcement_lines_map
 /// 公告模板：`list("Message" = "%PERSON has signed up as %RANK")`）。取 assoc 的**值**(键如
 /// "Message"/"RETA Granted" 不抽)；模板用 %VAR 占位符（含空格、无 {），运行时在 compile_announce
@@ -400,6 +414,20 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
                     visit_block(block, &namespace, &mut catalog);
+                    // verb 命令面板显示名：`set name = "X"`（Statement::Setting）。非 sink、非类型变量，
+                    // 单独抽。仅安全显示名（is_safe_verb_name 排除 .click/body-chest 等 keybind 标识符）。
+                    // 编译期由 rewrite::run_verbs 注入译文（verb 名无法运行时本地化）。
+                    for stmt in block.iter() {
+                        if let Statement::Setting { name, value, .. } = &stmt.elem {
+                            if name.as_str() == "name" {
+                                if let Some(t) = build_template(value) {
+                                    if is_safe_verb_name(&t) {
+                                        emit(&mut catalog, &namespace, &t);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     // 物种「描述」与「背景设定」：经偏好物种常量 asset 展示的玩家可见文本，
                     // 但来源是 proc **返回值**（各物种覆盖 get_species_description/lore），非 sink/SINK_VARS。
                     // 运行时在 species.dm 的 compile_constant_data 反查落地。

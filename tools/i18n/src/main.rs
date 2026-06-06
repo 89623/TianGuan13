@@ -50,6 +50,18 @@ enum Cmd {
         #[arg(long)]
         dry_run: bool,
     },
+    /// verb 命令面板名编译期注入译文（verb 名无法运行时本地化）。需先 extract + 翻译 verb 名。
+    Verbs {
+        /// 项目入口 .dme。
+        #[arg(long, default_value = "tgstation.dme")]
+        dme: PathBuf,
+        /// 译文 locale（读 strings/i18n/<locale>/*.json 取译文）。
+        #[arg(long, default_value = "zh-Hans")]
+        locale: String,
+        /// 只统计、不落盘。
+        #[arg(long)]
+        dry_run: bool,
+    },
 }
 
 fn main() -> Result<()> {
@@ -61,5 +73,6 @@ fn main() -> Result<()> {
             filter,
             dry_run,
         } => rewrite::run(&dme, filter.as_deref(), dry_run),
+        Cmd::Verbs { dme, locale, dry_run } => rewrite::run_verbs(&dme, &locale, dry_run),
     }
 }
