@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CREDIT_ROLL_SPEED (12.5 SECONDS)
 #define CREDIT_SPAWN_SPEED (1 SECONDS)
 #define CREDIT_ANIMATE_HEIGHT (14 * ICON_SIZE_Y)
@@ -25,7 +26,7 @@
 	qdel(credits_icon)
 
 /client/proc/ClearCredits()
-	set name = "Hide Credits"
+	set name = "隐藏鸣谢"
 	set category = "OOC"
 	remove_verb(src, /client/proc/ClearCredits)
 	QDEL_LIST(credits)

@@ -1,5 +1,5 @@
 /// Lets an admin activate the delam suppression system
-ADMIN_VERB(try_stop_delam, R_ADMIN, "Delam Emergency Stop", "Activate the delam suppression system.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(try_stop_delam, R_ADMIN, "分层紧急停止", "Activate the delam suppression system.", ADMIN_CATEGORY_EVENTS)
 	var/obj/machinery/atmospherics/components/unary/delam_scram/suppression_system = null
 
 	suppression_system = validate_suppression_status()
@@ -28,7 +28,7 @@ ADMIN_VERB(try_stop_delam, R_ADMIN, "Delam Emergency Stop", "Activate the delam 
 		INVOKE_ASYNC(escape_route, TYPE_PROC_REF(/obj/machinery/door/airlock, temp_emergency_exit), 45 SECONDS)
 
 /// Lets admins disable/enable the delam suppression system
-ADMIN_VERB(toggle_delam_suppression, R_FUN, "Delam Suppression Toggle", "Disable/enable the delam suppression system.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(toggle_delam_suppression, R_FUN, "分层抑制开关", "Disable/enable the delam suppression system.", ADMIN_CATEGORY_EVENTS)
 	user.mob.client?.toggle_delam_suppression()
 
 /client/proc/toggle_delam_suppression()

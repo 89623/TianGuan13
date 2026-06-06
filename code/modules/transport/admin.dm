@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(reset_tram, R_DEBUG|R_ADMIN, "Reset Tram", "Reset a tram controller or its contents.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(reset_tram, R_DEBUG|R_ADMIN, "重置电车", "Reset a tram controller or its contents.", ADMIN_CATEGORY_DEBUG)
 	var/static/list/debug_tram_list = list(
 		TRAMSTATION_LINE_1,
 		BIRDSHOT_LINE_1,

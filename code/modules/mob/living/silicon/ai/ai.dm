@@ -227,7 +227,7 @@
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
-	set name = "Set AI Core Display"
+	set name = "设置AI核心显示"
 	set desc = "Choose what appears on your AI core display"
 
 	if(incapacitated)
@@ -244,7 +244,7 @@
 
 /mob/living/silicon/ai/verb/pick_status_display()
 	set category = "AI Commands"
-	set name = "Set AI Status Display"
+	set name = "设置AI状态显示"
 	set desc = "Choose what appears on status displays around the station"
 
 	if(incapacitated)
@@ -358,7 +358,7 @@
 
 /mob/living/silicon/ai/verb/toggle_anchor()
 	set category = "AI Commands"
-	set name = "Toggle Floor Bolts"
+	set name = "切换地板螺栓"
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
 	if(stat == DEAD)
@@ -521,7 +521,7 @@
 
 /mob/living/silicon/ai/proc/botcall()
 	set category = "AI Commands"
-	set name = "Access Robot Control"
+	set name = "访问机器人控制"
 	set desc = "Wirelessly control various automatic robots."
 
 	if(!robot_control)
@@ -583,7 +583,7 @@
 //Addition by Mord_Sith to define AI's network change ability
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
-	set name = "Jump To Network"
+	set name = "跳转到网络"
 	ai_tracking_tool.reset_tracking()
 	var/cameralist[0]
 
@@ -625,7 +625,7 @@
 
 //I am the icon meister. Bow fefore me. //>fefore
 /mob/living/silicon/ai/proc/ai_hologram_change()
-	set name = "Change Hologram"
+	set name = "更换全息图"
 	set desc = "Change the default hologram available to AI to something else."
 	set category = "AI Commands"
 
@@ -770,7 +770,7 @@
 		lit_cameras |= C
 
 /mob/living/silicon/ai/proc/control_integrated_radio()
-	set name = "Transceiver Settings"
+	set name = "收发器设置"
 	set desc = "Allows you to change settings of your radio."
 	set category = "AI Commands"
 
@@ -786,7 +786,7 @@
 		radio.make_syndie()
 
 /mob/living/silicon/ai/proc/set_automatic_say_channel()
-	set name = "Set Auto Announce Mode"
+	set name = "设置自动公告模式"
 	set desc = "Modify the default radio setting for your automatic announcements."
 	set category = "AI Commands"
 
@@ -990,7 +990,7 @@
 /mob/living/silicon/ai/verb/deploy_to_shell()
 	set category = "AI Commands"
 	set desc = "Transfer to an available remote body."
-	set name = "Deploy to Shell"
+	set name = "部署到躯壳"
 
 	select_shell()
 

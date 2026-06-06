@@ -1,6 +1,6 @@
 GLOBAL_VAR_INIT(dchat_allowed, TRUE)
 
-ADMIN_VERB(toggledchat, R_ADMIN, "Toggle Dead Chat", "Toggle dis bitch.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggledchat, R_ADMIN, "切换死亡聊天", "Toggle dis bitch.", ADMIN_CATEGORY_SERVER)
 	toggle_dchat()
 	log_admin("[key_name(usr)] toggled dead chat.")
 	message_admins("[key_name_admin(usr)] toggled dead chat.")

@@ -7,7 +7,7 @@
 	splitter = ","
 
 /client/verb/connect_to_relay()
-	set name = "Connect to Relay"
+	set name = "连接到中继"
 	set hidden = TRUE
 
 	if(!CONFIG_GET(flag/enable_relays))

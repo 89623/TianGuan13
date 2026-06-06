@@ -47,7 +47,7 @@
 	magpulse_fishing_modifier = fishing_modifier
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
-	set name = "Toggle Magboots"
+	set name = "切换磁力靴"
 	set src in usr
 
 	if(!can_use(usr))

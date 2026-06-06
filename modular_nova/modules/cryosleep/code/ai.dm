@@ -1,5 +1,5 @@
 /mob/living/silicon/ai/verb/ai_cryo()
-	set name = "AI Cryogenic Stasis"
+	set name = "AI低温休眠"
 	set desc = "Puts the current AI personality into cryogenic stasis, freeing the space for another."
 	set category = "AI Commands"
 

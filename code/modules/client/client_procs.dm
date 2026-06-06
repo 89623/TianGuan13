@@ -1214,7 +1214,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	observer.ManualFollow(target)
 
 /client/verb/stop_client_sounds()
-	set name = "Stop Sounds"
+	set name = "停止声音"
 	set category = "OOC"
 	set desc = "Stop Current Sounds"
 	SEND_SOUND(usr, sound(null))
@@ -1222,7 +1222,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
 /client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
+	set name = "切换全屏"
 	set category = "OOC"
 
 	var/is_on = prefs.read_preference(/datum/preference/toggle/fullscreen_mode)

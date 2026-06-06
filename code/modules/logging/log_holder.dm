@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_REAL(logger, /datum/log_holder)
 /**
  * Main datum to manage logging actions
@@ -32,7 +33,7 @@ GLOBAL_REAL(logger, /datum/log_holder)
 
 GENERAL_PROTECT_DATUM(/datum/log_holder)
 
-ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(log_viewer_new, R_ADMIN, "查看回合日志", "View the rounds logs.", ADMIN_CATEGORY_MAIN)
 	logger.ui_interact(user.mob)
 
 /datum/log_holder/ui_interact(mob/user, datum/tgui/ui)

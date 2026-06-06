@@ -309,7 +309,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 */
 /mob/living/verb/ghost()
 	set category = "OOC"
-	set name = "Ghost"
+	set name = "幽灵"
 	set desc = "Relinquish your life and enter the land of the dead."
 
 	if(stat != CONSCIOUS && stat != DEAD)
@@ -331,7 +331,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/eye/verb/ghost()
 	set category = "OOC"
-	set name = "Ghost"
+	set name = "幽灵"
 	set desc = "Relinquish your life and enter the land of the dead."
 
 	var/response = tgui_alert(usr, LANG("mob.6b44eb18", null), LANG("mob.34dcf73a", null), list("Ghost", "Stay in Body"))
@@ -375,7 +375,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		update_ambience_area(new_area)
 
 /mob/dead/observer/verb/reenter_corpse()
-	set name = "Re-enter Corpse"
+	set name = "重新进入尸体"
 
 	if(!client)
 		return
@@ -397,7 +397,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return TRUE
 
 /mob/dead/observer/verb/do_not_resuscitate()
-	set name = "Do Not Resuscitate"
+	set name = "拒绝复苏"
 
 	if(!can_reenter_corpse)
 		to_chat(usr, span_warning(LANG("mob.855d6efc", null)))
@@ -461,7 +461,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		SEND_SOUND(src, sound(sound))
 
 /mob/dead/observer/verb/dead_tele()
-	set name = "Teleport"
+	set name = "传送"
 
 	if(!isobserver(usr))
 		to_chat(usr, span_warning(LANG("mob.51e9f3c5", null)))
@@ -489,12 +489,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	usr.abstract_move(pick(L))
 
 /mob/dead/observer/verb/follow()
-	set name = "Orbit"
+	set name = "环绕"
 
 	GLOB.orbit_menu.show(src)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
-	set name = "Jump to Mob"
+	set name = "跳转到生物"
 
 	if(!isobserver(usr)) //Make sure they're an observer!
 		return
@@ -523,7 +523,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(source_mob, span_danger(LANG("mob.20231aec", null)))
 
 /mob/dead/observer/verb/change_view_range()
-	set name = "View Range"
+	set name = "视野范围"
 
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice(LANG("mob.a5704d22", null)))
@@ -541,14 +541,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		client.view_size.resetToDefault()
 
 /mob/dead/observer/verb/toggle_ghostsee()
-	set name = "Toggle Ghost Vision"
+	set name = "切换幽灵视觉"
 
 	toggle_ghost_hud_flag(GHOST_VISION)
 	update_sight()
 	to_chat(usr, span_boldnotice(LANG("mob.10328c5a", list((ghost_hud_flags & GHOST_VISION) ? "now" : "no longer"))))
 
 /mob/dead/observer/verb/toggle_darkness()
-	set name = "Toggle Darkness"
+	set name = "切换黑暗"
 
 	switch(lighting_cutoff)
 		if (LIGHTING_CUTOFF_VISIBLE)
@@ -563,12 +563,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_sight()
 
 /mob/dead/observer/verb/view_manifest()
-	set name = "View Crew Manifest"
+	set name = "查看船员名单"
 
 	GLOB.manifest.ui_interact(src)
 
 /mob/dead/observer/verb/observe()
-	set name = "Observe"
+	set name = "观察"
 
 	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
 		return
@@ -598,7 +598,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	do_observe(chosen_target)
 
 /mob/dead/observer/verb/tray_view()
-	set name = "T-ray scan"
+	set name = "T射线扫描"
 
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice(LANG("mob.a5704d22", null)))
@@ -607,7 +607,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	t_ray_scan(src)
 
 /mob/dead/observer/verb/toggle_data_huds()
-	set name = "Toggle Sec/Med/Diag HUD"
+	set name = "切换安全/医疗/诊断HUD"
 
 	toggle_ghost_hud_flag(GHOST_DATA_HUDS)
 	if(ghost_hud_flags & GHOST_DATA_HUDS)
@@ -616,7 +616,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_notice(LANG("mob.dd6914ad", null)))
 
 /mob/dead/observer/verb/toggle_health_scan()
-	set name = "Toggle Health Scan"
+	set name = "切换健康扫描"
 
 	toggle_ghost_hud_flag(GHOST_HEALTH)
 	if(ghost_hud_flags & GHOST_HEALTH)
@@ -625,7 +625,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_notice(LANG("mob.17620b99", null)))
 
 /mob/dead/observer/verb/toggle_chem_scan()
-	set name = "Toggle Chem Scan"
+	set name = "切换化学扫描"
 
 	toggle_ghost_hud_flag(GHOST_CHEM)
 	if(ghost_hud_flags & GHOST_CHEM)
@@ -634,7 +634,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_notice(LANG("mob.60a443e3", null)))
 
 /mob/dead/observer/verb/toggle_gas_scan()
-	set name = "Toggle Gas Scan"
+	set name = "切换气体扫描"
 
 	toggle_ghost_hud_flag(GHOST_GAS)
 	if(ghost_hud_flags & GHOST_GAS)
@@ -643,7 +643,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_notice(LANG("mob.d05b2747", null)))
 
 /mob/dead/observer/verb/restore_ghost_appearance()
-	set name = "Restore Ghost Character"
+	set name = "恢复幽灵角色"
 
 	set_ghost_appearance()
 	if(client?.prefs)
@@ -704,7 +704,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		reset_perspective(null)
 
 /mob/dead/observer/verb/add_view_range(input as num)
-	set name = "Add View Range"
+	set name = "增加视野范围"
 	set hidden = TRUE
 
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
@@ -1005,14 +1005,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	GLOB.observer_default_invisibility = amount
 
 /mob/dead/observer/proc/open_spawners_menu()
-	set name = "Spawners Menu"
+	set name = "生成器菜单"
 	if(!spawners_menu)
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
 
 /mob/dead/observer/proc/open_minigames_menu()
-	set name = "Minigames Menu"
+	set name = "小游戏菜单"
 	if(!client)
 		return
 	if(!isobserver(src))

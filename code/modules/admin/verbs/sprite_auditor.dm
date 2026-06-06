@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_DATUM_INIT(sprite_auditor, /datum/sprite_auditor, new)
 
 /// A global singleton providing a convenient UI for quickly viewing sprites created by players
@@ -35,5 +36,5 @@ GLOBAL_DATUM_INIT(sprite_auditor, /datum/sprite_auditor, new)
 		if("playerPanel")
 			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, get_mob_by_ckey(params["ckey"]))
 
-ADMIN_VERB(sprite_auditor, R_ADMIN, "Audit Player-made Sprites", "View sprites created by players this round.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(sprite_auditor, R_ADMIN, "审核玩家制作的精灵图", "View sprites created by players this round.", ADMIN_CATEGORY_MAIN)
 	GLOB.sprite_auditor.ui_interact(user.mob)

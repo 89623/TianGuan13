@@ -67,7 +67,7 @@
 #define VOX_DELAY 300 // NOVA EDIT CHANGE - ORIGINAL: 600
 /mob/living/silicon/ai/verb/announcement_help()
 
-	set name = "Announcement Help"
+	set name = "公告帮助"
 	set desc = "Display a list of vocal words to announce to the crew."
 	set category = "AI Commands"
 

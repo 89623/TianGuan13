@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/getrev
 	var/commit  // git rev-parse HEAD
 	var/date
@@ -73,7 +74,7 @@
 
 /client/verb/showrevinfo()
 	set category = "OOC"
-	set name = "Show Server Revision"
+	set name = "显示服务器版本"
 	set desc = "Check the current server code revision"
 
 	var/list/msg = list()

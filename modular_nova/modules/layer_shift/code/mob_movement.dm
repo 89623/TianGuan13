@@ -7,7 +7,7 @@
 #define MOB_LAYER_SHIFT_MAX 4.05
 
 /mob/living/verb/shift_layer_up()
-	set name = "Shift Layer Upwards"
+	set name = "上移图层"
 	set category = "IC"
 
 	if(incapacitated)
@@ -26,7 +26,7 @@
 
 
 /mob/living/verb/shift_layer_down()
-	set name = "Shift Layer Downwards"
+	set name = "下移图层"
 	set category = "IC"
 
 	if(incapacitated)

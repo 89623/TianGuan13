@@ -147,7 +147,7 @@
 	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
 /obj/machinery/gibber/verb/eject()
-	set name = "Empty gibber"
+	set name = "清空绞肉机"
 	set src in oview(1)
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return

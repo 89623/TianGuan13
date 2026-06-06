@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Datum that handles
 /datum/achievement_data
 	///Ckey of this achievement data's owner
@@ -131,7 +132,7 @@
 
 /client/verb/checkachievements()
 	set category = "OOC"
-	set name = "Check achievements"
+	set name = "检查成就"
 	set desc = "See all of your achievements!"
 
 	persistent_client.achievements.ui_interact(usr)

@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(admin_change_map, R_SERVER, "更换地图", "Set the next map.", ADMIN_CATEGORY_SERVER)
 	var/list/maprotatechoices = list()
 	for (var/map in config.maplist)
 		var/datum/map_config/virtual_map = config.maplist[map]
@@ -116,5 +116,5 @@ ADMIN_VERB(admin_change_map, R_SERVER, "Change Map", "Set the next map.", ADMIN_
 			message_admins("[key_name_admin(user)] has changed the map to [virtual_map.map_name]")
 			SSmap_vote.admin_override = TRUE
 
-ADMIN_VERB(admin_revert_map, R_SERVER, "Revert Map Vote", "Revert the map vote, allowing a new vote.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(admin_revert_map, R_SERVER, "撤销地图投票", "Revert the map vote, allowing a new vote.", ADMIN_CATEGORY_SERVER)
 	SSmap_vote.revert_next_map(user)

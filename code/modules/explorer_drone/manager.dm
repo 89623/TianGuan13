@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Admin adventure manager
 /datum/adventure_browser
 	var/datum/adventure/temp_adventure
@@ -83,6 +84,6 @@
 	. = ..()
 	QDEL_NULL(temp_adventure)
 
-ADMIN_VERB(adventure_manager, R_DEBUG, "Adventure Manager", "View and edit adventures.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(adventure_manager, R_DEBUG, "冒险管理员", "View and edit adventures.", ADMIN_CATEGORY_DEBUG)
 	var/datum/adventure_browser/browser = new()
 	browser.ui_interact(user.mob)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/beaker_panel
 
 /datum/beaker_panel/ui_state(mob/user)
@@ -88,6 +89,6 @@
 
 	return grenade
 
-ADMIN_VERB(beaker_panel, R_SPAWN, "Spawn Reagent Container", "Spawn a reagent container.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(beaker_panel, R_SPAWN, "生成试剂容器", "Spawn a reagent container.", ADMIN_CATEGORY_EVENTS)
 	var/datum/beaker_panel/panel = new
 	panel.ui_interact(user.mob)

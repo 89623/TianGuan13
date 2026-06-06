@@ -1,6 +1,7 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// Verb to open the create command report window and send command reports.
-ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(dynamic_tester, R_DEBUG, "动态测试器", "See dynamic probabilities.", ADMIN_CATEGORY_DEBUG)
 	BLACKBOX_LOG_ADMIN_VERB("Dynamic Tester")
 	var/datum/dynamic_tester/tgui = new()
 	tgui.ui_interact(user.mob)

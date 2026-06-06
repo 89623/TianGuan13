@@ -10,7 +10,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 */
 /client/proc/anon_names()
 	set category = "Admin.Events"
-	set name = "Setup Anonymous Names"
+	set name = "设置匿名名称"
 
 	if(GLOB.current_anonymous_theme)
 		var/response = tgui_alert(usr, LANG("client.17d87780", null), LANG("client.d4252aef", null), list("Disable Anon Names", "Keep it Enabled"))

@@ -19,7 +19,7 @@
 
 // Tries to put searcher in hand
 /obj/item/xenoarch/wave_scanner_backpack/verb/toggle_searcher()
-	set name = "Toggle Searcher"
+	set name = "切换搜索器"
 	set category = "Object"
 
 	if(!usr)

@@ -1,7 +1,7 @@
 #define EXME_MAX_LOC_RECURSION 10 //no infinite loops
 
 /mob/living/verb/container_emote()
-	set name = "Emote Using Vehicle/Container"
+	set name = "使用载具/容器做表情"
 	set category = "IC"
 
 	if (isturf(src.loc))

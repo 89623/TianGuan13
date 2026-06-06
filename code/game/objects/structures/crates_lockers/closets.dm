@@ -1027,7 +1027,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return ITEM_INTERACT_BLOCKING
 
 /obj/structure/closet/verb/verb_toggleopen()
-	set name = "Toggle Open"
+	set name = "切换打开"
 	set src in view(1)
 
 	if(!usr.can_perform_action(src) || !isturf(loc))

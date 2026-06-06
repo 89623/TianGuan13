@@ -327,7 +327,7 @@
 	return ..()
 
 /obj/item/paper/verb/rename()
-	set name = "Rename paper"
+	set name = "重命名纸张"
 	set src in usr
 
 	if(!usr.can_read(src) || usr.is_blind() || INCAPACITATED_IGNORING(usr, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))

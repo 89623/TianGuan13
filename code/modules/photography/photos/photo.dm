@@ -116,7 +116,7 @@
 	onclose(user, "[name]")
 
 /obj/item/photo/verb/rename()
-	set name = "Rename photo"
+	set name = "重命名照片"
 	set src in usr
 
 	var/n_name = tgui_input_text(usr, LANG("obj.ab5cb1c6", null), LANG("obj.a9ed249c", null), max_length = MAX_NAME_LEN)

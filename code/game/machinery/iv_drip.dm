@@ -325,7 +325,7 @@
 	return use_internal_storage ? reagents : reagent_container?.reagents
 
 /obj/machinery/iv_drip/verb/eject_beaker()
-	set name = "Remove IV Container"
+	set name = "移除静脉注射容器"
 	set src in view(1)
 
 	if(!isliving(usr))
@@ -344,7 +344,7 @@
 		update_appearance(UPDATE_ICON)
 
 /obj/machinery/iv_drip/verb/toggle_mode()
-	set name = "Toggle Mode"
+	set name = "切换模式"
 	set src in view(1)
 
 	if(!isliving(usr))

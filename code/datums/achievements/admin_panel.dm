@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Panel for achievement management
 /datum/achievement_admin_panel
 	var/list/orphaned_keys
@@ -67,7 +68,7 @@
 		SSdbcore.NewQuery("UPDATE [format_table_name("achievement_metadata")] SET achievement_version = :version WHERE achievement_key = :key", list("key" = achievement_key, "version" = ACHIEVEMENT_ARCHIVED_VERSION)),
 	), warn = TRUE, qdel = TRUE)
 
-ADMIN_VERB(achievements_cleanup, R_ADMIN, "Achievements Admin Panel", "View achievements management panel.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(achievements_cleanup, R_ADMIN, "成就管理面板", "View achievements management panel.", ADMIN_CATEGORY_MAIN)
 	var/datum/achievement_admin_panel/panel = new /datum/achievement_admin_panel()
 	panel.reload_data()
 	panel.ui_interact(user.mob)

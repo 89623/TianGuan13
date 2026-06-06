@@ -427,7 +427,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 	observer.join_soulcatcher()
 
 /mob/dead/observer/verb/join_soulcatcher()
-	set name = "Enter Soulcatcher"
+	set name = "进入灵魂捕手"
 
 	var/list/joinable_soulcatchers = list()
 	for(var/datum/component/soulcatcher/soulcatcher in GLOB.soulcatchers)

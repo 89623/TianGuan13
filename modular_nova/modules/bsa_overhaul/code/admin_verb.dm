@@ -1,4 +1,4 @@
-ADMIN_VERB(toggle_bsa, R_ADMIN, "Toggle BSA Control", "Toggles the BSA control lock on and off.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(toggle_bsa, R_ADMIN, "切换 BSA 控制", "Toggles the BSA control lock on and off.", ADMIN_CATEGORY_FUN)
 	GLOB.bsa_unlock = !GLOB.bsa_unlock
 	minor_announce("Bluespace Artillery firing protocols have been [GLOB.bsa_unlock? "unlocked" : "locked"]", "Weapons Systems Update:")
 

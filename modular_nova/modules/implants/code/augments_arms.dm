@@ -273,7 +273,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/pickaxe/drill/implant/verb/spin()
-	set name = "Spin Drillbit"
+	set name = "旋转钻头"
 	set category = "Object"
 	set desc = "Click to spin your drill's head. It won't do practically anything, but it's pretty cool anyway."
 
