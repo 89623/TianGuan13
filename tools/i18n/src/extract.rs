@@ -435,7 +435,22 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                                 }
                             }
                         }
-                        _ => {}
+                        // 通用兜底：任何 proc 的 `return "<整句>"`，若是句子型玩家可见文案（多词 + 首字母大写
+                        // + 含小写 + 无占位符），抽进目录靠聊天 AC 子串层翻译。覆盖 weight_class_to_tooltip 同类
+                        // 的「proc 返回字面量、字面量不在 sink 调用处（经 to_chat/alert 的变量参数发出），rewrite
+                        // 够不着」长尾：can_*() 的错误原因、穿梭机/天气/投票/实验提示等。含 [插值]→{0} 的返回被
+                        // is_sentence_like 排除（那类 AC 也翻不了，需 LANG 改写，已在 sink 处单独处理）。
+                        _ => {
+                            let mut rets = Vec::new();
+                            collect_returns(block, &mut rets);
+                            for r in rets {
+                                if let Some(t) = build_template(r) {
+                                    if is_sentence_like(&t) {
+                                        emit(&mut catalog, &namespace, &t);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
