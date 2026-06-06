@@ -429,8 +429,8 @@
 			if(flags_cover & PEPPERPROOF)
 				things_blocked += "pepperspray"
 			if(length(things_blocked))
-				readout += "<b><u>COVERAGE</u></b>"
-				readout += "It will block [english_list(things_blocked)]."
+				readout += LANG("obj.e49fd311", null)
+				readout += LANG("obj.eb3ca618", list(english_list(things_blocked)))
 
 		if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 			var/list/parts_covered = list()
@@ -446,7 +446,7 @@
 			if(body_parts_covered & (LEGS|FEET))
 				parts_covered += "legs"
 			if(length(parts_covered))
-				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
+				readout += LANG("obj.3ed0e019", list(output_string, english_list(parts_covered), span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")))
 
 		var/heat_prot
 		switch (max_heat_protection_temperature)
@@ -460,10 +460,10 @@
 			. += LANG("obj.5a1b8f0e", list(src, heat_protection, max_heat_protection_temperature))
 
 		if(min_cold_protection_temperature)
-			readout += "It will insulate the wearer from [min_cold_protection_temperature <= SPACE_SUIT_MIN_TEMP_PROTECT ? span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space, down to [min_cold_protection_temperature] kelvin") : "cold, down to [min_cold_protection_temperature] kelvin"]."
+			readout += LANG("obj.5300c278", list(min_cold_protection_temperature <= SPACE_SUIT_MIN_TEMP_PROTECT ? span_tooltip("While not as dangerous as the lack of pressure, the extremely low temperature of space is also a hazard.", "the cold of space, down to [min_cold_protection_temperature] kelvin") : "cold, down to [min_cold_protection_temperature] kelvin"))
 
 		if(!length(readout))
-			readout += "No armor or durability information available."
+			readout += LANG("obj.baca72d2", null)
 
 		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
 		to_chat(usr, boxed_message(formatted_readout))

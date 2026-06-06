@@ -86,13 +86,12 @@
 	var/list/readout = list()
 
 	if(caliber && max_ammo) // Text references a 'magazine' as only magazines generally have the caliber variable initialized
-		readout += "Up to [span_warning("[max_ammo] [caliber] [casing_phrasing]s")] can be found within this magazine. \
-		\nAccidentally discharging any of these projectiles may void your insurance contract."
+		readout += LANG("obj.3aa21da7", list(span_warning("[max_ammo] [caliber] [casing_phrasing]s")))
 
 	var/obj/item/ammo_casing/mag_ammo = get_and_shuffle_round()
 
 	if(istype(mag_ammo))
-		readout += "\n[mag_ammo.add_notes_ammo()]"
+		readout += LANG("obj.65aac1b5", list(mag_ammo.add_notes_ammo()))
 
 	return readout.Join("\n")
 

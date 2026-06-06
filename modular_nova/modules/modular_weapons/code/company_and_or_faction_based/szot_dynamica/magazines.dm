@@ -176,13 +176,13 @@
 	var/obj/item/ammo_casing/pulse/sample_casing = ammo_type
 
 	// Display magazine capacity info
-	readout += "This [span_warning(magazine_designation)] magazine holds up to [span_warning("[max_ammo] plasma plugs")], with each plug capable of [span_warning("[initial(sample_casing.max_uses)] pulses")]."
-	readout += "Total capacity: [span_warning("[max_ammo * initial(sample_casing.max_uses)] pulses")] when fully loaded."
+	readout += LANG("obj.1f5c34bf", list(span_warning(magazine_designation), span_warning("[max_ammo] plasma plugs"), span_warning("[initial(sample_casing.max_uses)] pulses")))
+	readout += LANG("obj.b982c996", list(span_warning("[max_ammo * initial(sample_casing.max_uses)] pulses")))
 
 	// Get actual round info if available
 	var/obj/item/ammo_casing/mag_ammo = get_and_shuffle_round()
 	if(istype(mag_ammo))
-		readout += "\n[mag_ammo.add_notes_ammo()]"
+		readout += LANG("obj.65aac1b5", list(mag_ammo.add_notes_ammo()))
 
 	return readout.Join("\n")
 

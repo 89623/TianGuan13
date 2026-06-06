@@ -105,9 +105,9 @@
 		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric."
 	// No dividing by 0
 	if(initial_damage)
-		readout += "Most monkeys our legal team subjected to these [span_warning(caliber)] rounds succumbed to their wounds after [span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * proj_damage_mult) * pellets)] shot\s")] at point-blank, taking [span_warning("[pellets] shot\s")] per round."
+		readout += LANG("obj.2f3bec6e", list(span_warning(caliber), span_warning("[HITS_TO_CRIT((initial(exam_proj.damage) * proj_damage_mult) * pellets)] shot\s"), span_warning("[pellets] shot\s")))
 	if(initial_stamina)
-		readout += "[!readout.len ? "Most monkeys" : "More fortunate monkeys"] collapsed from exhaustion after [span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * proj_damage_mult) * pellets)] impact\s")] of these [span_warning("[caliber]")] rounds."
+		readout += LANG("obj.67914d2b", list(!readout.len ? "Most monkeys" : "More fortunate monkeys", span_warning("[HITS_TO_CRIT((initial(exam_proj.stamina) * proj_damage_mult) * pellets)] impact\s"), span_warning("[caliber]")))
 	return readout.Join("\n") // Sending over a single string, rather than the whole list
 
 /obj/item/ammo_casing/update_icon_state()

@@ -128,10 +128,10 @@
 	if(!ammo_type.len)
 		return
 	var/obj/projectile/exam_proj
-	readout += "\nStandard models of this projectile weapon have [span_warning("[ammo_type.len] mode\s")]."
-	readout += "Our heroic interns have shown that one can theoretically stay standing after..."
+	readout += LANG("obj.a08b819f", list(span_warning("[ammo_type.len] mode\s")))
+	readout += LANG("obj.7f45e9a3", null)
 	if(projectile_damage_multiplier <= 0)
-		readout += "a theoretically infinite number of shots on [span_warning("every")] mode due to esoteric or nonexistent offensive potential."
+		readout += LANG("obj.f4491d5a", list(span_warning("every")))
 		return readout.Join("\n") // Sending over the singular string, rather than the whole list
 	for(var/obj/item/ammo_casing/energy/for_ammo as anything in ammo_type)
 		exam_proj = for_ammo.projectile_type

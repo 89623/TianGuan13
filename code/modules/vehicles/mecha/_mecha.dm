@@ -591,9 +591,9 @@
 				added_durability_header = TRUE
 			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
-		readout += "It can withstand temperatures up to [max_temperature]K."
+		readout += LANG("obj.9b3244c7", list(max_temperature))
 		if(mecha_flags & IS_ENCLOSED)
-			readout += "It fully encloses its occupants, protecting them from the atmosphere or lack thereof."
+			readout += LANG("obj.10ef5a67", null)
 
 		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
 		to_chat(usr, boxed_message(formatted_readout))

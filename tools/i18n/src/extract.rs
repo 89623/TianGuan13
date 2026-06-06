@@ -81,7 +81,9 @@ pub fn is_examine_accumulator(id: &str) -> bool {
         id,
         // examine 信号处理器累加器 + 自我检查/体检累加器（combined_msg=自我检查、check_list=肢体伤情，
         // 均 `+= span_*("…")` 拼成 to_chat 的玩家可见体检报告）。
-        "examine_list" | "examine_text" | "examine_strings" | "combined_msg" | "check_list"
+        // readout=武器战斗信息标签（weapon_description/baton 等 11 文件，`readout += "…"` 拼成 to_chat 的
+        // 「See combat information」面板，含「约需 {0} 击倒敌人」等插值行 → 改 LANG 才能翻插值结构）。
+        "examine_list" | "examine_text" | "examine_strings" | "combined_msg" | "check_list" | "readout"
     )
 }
 

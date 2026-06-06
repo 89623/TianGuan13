@@ -86,19 +86,19 @@
 	var/list/readout = list()
 
 	if(affect_cyborg)
-		readout += "It can stun cyborgs for [round((stun_time_cyborg/10), 1)] seconds."
+		readout += LANG("obj.d47818f9", list(round((stun_time_cyborg/10), 1)))
 
-	readout += "\n[active ? "It is currently [span_warning("[activated_word]")], and capable of stunning." : "It is [span_warning("not [activated_word]")], and not capable of stunning."]"
+	readout += LANG("obj.65aac1b5", list(active ? "It is currently [span_warning("[activated_word]")], and capable of stunning." : "It is [span_warning("not [activated_word]")], and not capable of stunning."))
 
 	if(stamina_damage <= 0) // The advanced baton actually does have 0 stamina damage so...yeah.
-		readout += "Either it is [span_warning("completely unable to perform a stunning strike")], or it [span_warning("attacks via some unusual method")]."
+		readout += LANG("obj.dec156bb", list(span_warning("completely unable to perform a stunning strike"), span_warning("attacks via some unusual method")))
 		return readout.Join("\n")
 
-	readout += "It takes [span_warning("[HITS_TO_CRIT(stamina_damage)] strike\s")] to stun an enemy."
+	readout += LANG("obj.2ec1c2d9", list(span_warning("[HITS_TO_CRIT(stamina_damage)] strike\s")))
 
-	readout += "\nThe effects of each strike can be mitigated by utilizing [span_warning("[armour_type_against_stun]")] armor."
+	readout += LANG("obj.c99df77a", list(span_warning("[armour_type_against_stun]")))
 
-	readout += "\nIt has a stun armor-piercing capability of [span_warning("[stun_armour_penetration]%")]."
+	readout += LANG("obj.9cfaa578", list(span_warning("[stun_armour_penetration]%")))
 	return readout.Join("\n")
 
 /obj/item/melee/baton/proc/add_deep_lore()
