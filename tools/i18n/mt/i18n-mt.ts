@@ -18,7 +18,8 @@
 // 配置：tools/i18n/mt/.env 启动时自动加载（KEY=VALUE；shell 显式变量优先）。见 .env.example。
 //   I18N_LOCALE(zh-Hans) / I18N_CHUNK(openai 400, agent 200) / I18N_CONCURRENCY(openai 4, agent 1)
 //   I18N_NO_REUSE=1(关跨命名空间复用) / I18N_MAX_CODEX_CALLS / I18N_CONTINUE_ON_FAIL / I18N_FULL_GLOSSARY
-//   I18N_MISSING_ONLY(默认开=只翻缺失/空值 key、已有译文不动；=0 恢复全量重判中英混杂/未译)
+//   I18N_MISSING_ONLY(默认开=补「缺失/空值」+「与英文逐字相同的占位译文」，但不动已有≠英文的真译文；
+//                      =0 额外重判中英混杂/残留英文，首次翻新 locale 或想全量复查时用)
 // agent 输出默认写入 tools/i18n/mt/.pending/*.codex.log，终端只显示批次进度。
 
 import { spawn } from 'node:child_process';
@@ -535,6 +536,16 @@ function hasEnglishWord(s: string): boolean {
 }
 
 /**
+ * 内部代码标识符（无空格的单 token 含下划线，如 spawn_menu_atom_data / plane_masters_colorblind /
+ * {0}_light4）——是被抽取器误收的程序内部串，不是玩家可见文案。占位（zh==en）补译时排除它们，
+ * 免得把代码 key 送去机翻（既浪费、又可能产出错译造成 bug）。真实 UI 文案用空格分词（"Left Hand"）
+ * 或是无下划线的单词（"Chest"），不会被误伤。
+ */
+function looksLikeCodeIdentifier(s: string): boolean {
+  return !/\s/.test(s) && /_/.test(s);
+}
+
+/**
  * 「已含中文的译文里是否还残留*该补译*的英文」——比 hasEnglishWord 多剥一层有意保留的专名/代码：
  * CamelCase 标识符（NIFSoft/MULEbot/Ckey）、首字母大写专名（Katsuobushi/Sidecar/Godfather）、
  * 斜杠代码串（obj/turf/mob）。这些在中文串里几乎都是刻意保留的术语，不该触发「中英混杂→重译」
@@ -553,8 +564,11 @@ function hasStrayEnglishInTranslation(zh: string): boolean {
 /** 该 key 是否需要（重新）翻译。 */
 function needsTranslation(enVal: string, zhVal: string | undefined): boolean {
   if (zhVal == null || zhVal === '') return hasEnglishWord(enVal); // 缺失（key 不存在或空值）
-  if (MISSING_ONLY) return false; // 只补缺失：已有任何译文（含与英文相同/中英混杂）都不动
-  if (zhVal === enVal) return hasEnglishWord(enVal); // 与英文相同 = 未译（纯代码/符号除外）
+  // 与英文逐字相同 = 没翻成功的「占位译文」，语义上等同未译 → 始终补译（即使 missing-only）。
+  // 这是「整体翻译一遍后仍有 key 显示英文」（如 "Chest":"Chest"）的根因：旧逻辑里 missing-only
+  // 把「有任何值」都当已译跳过，占位英文永远不会被重试。纯代码/符号（hasEnglishWord=false）不补。
+  if (zhVal === enVal) return hasEnglishWord(enVal) && !looksLikeCodeIdentifier(enVal);
+  if (MISSING_ONLY) return false; // 只补缺失/失败：已有「≠英文」的真译文都不动（不重判刻意保留的中英混杂）
   const stray = hasEnglishWord(zhVal);
   if (!CJK.test(zhVal) && stray) return true; // 无中文却有英文词 → 未译
   if (CJK.test(zhVal) && stray && hasStrayEnglishInTranslation(zhVal))
