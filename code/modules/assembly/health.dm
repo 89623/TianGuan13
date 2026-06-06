@@ -86,7 +86,7 @@
 
 /obj/item/assembly/health/proc/on_health_changed(mob/living/source)
 	SIGNAL_HANDLER
-	maptext = MAPTEXT("HP: [round((source.health / source.maxHealth) * 100)]%")
+	maptext = MAPTEXT("[GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "生命" : "HP"]: [round((source.health / source.maxHealth) * 100)]%") // NOVA EDIT - i18n: maptext 不过 AC，全服中文给中文前缀
 
 /obj/item/assembly/health/ui_status(mob/user, datum/ui_state/state)
 	return is_secured(user) ? ..() : UI_CLOSE

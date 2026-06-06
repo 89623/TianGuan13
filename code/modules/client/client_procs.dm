@@ -472,11 +472,12 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			return
 	else if (byond_version < warn_version || (byond_version == warn_version && byond_build < warn_build)) //We have words for this client.
 		if(CONFIG_GET(flag/client_warn_popup))
-			var/msg = "<b>Your version of byond may be getting out of date:</b><br>"
+			// NOVA EDIT - i18n: 旧 browse 弹窗 raw browse 不过 /datum/browser 的 AC 钩子，直接复用下方 else 分支同款 LANG key 拼装（精确、含占位符/链接）
+			var/msg = "[LANG("client.832182db", null)]<br>"
 			msg += CONFIG_GET(string/client_warn_message) + "<br><br>"
-			msg += "Your version: [byond_version].[byond_build]<br>"
-			msg += "Required version to remove this message: [warn_version].[warn_build] or later<br>"
-			msg += "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.<br>"
+			msg += "[LANG("client.2becbdd0", list(byond_version, byond_build))]<br>"
+			msg += "[LANG("client.7dad8d5b", list(warn_version, warn_build))]<br>"
+			msg += "[LANG("client.b16bec0e", null)]<br>"
 			src << browse(HTML_SKELETON(msg), "window=warning_popup")
 		else
 			to_chat(src, span_danger(LANG("client.832182db", null)))
