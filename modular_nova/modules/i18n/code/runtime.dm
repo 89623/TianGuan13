@@ -150,6 +150,16 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 	return reverse
 
 /// 把一段英文整串反查为全服 locale 的译文；查不到/缺省 locale 时原样返回。
+/// 把连续空格/制表符折叠成单空格，对齐抽取器对 DM "\" 续行的归一：源码里
+/// `"… foo \`<换行><制表符>`bar …"` 在 DM 运行时会把续行的前导制表符并入字符串
+/// （变成 "foo \t\tbar"），而抽取器把它归一成单空格（"foo bar"）→ 整串反查不命中。
+/// 只折叠空格/制表符，保留换行（有意的多段 \n 不动）。
+/proc/lang_collapse_ws(text)
+	if(!istext(text))
+		return text
+	var/static/regex/ws_run = regex(@"[ \t]+", "g")
+	return ws_run.Replace(text, " ")
+
 /proc/lang_reverse_text(text)
 	if(!text)
 		return text
@@ -163,6 +173,11 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 	// 未直接命中：若含文法宏标记字节，剥宏后再查一次（对齐目录里的剥宏形态键）。
 	if(findtext(text, "\improper") || findtext(text, "\proper"))
 		. = reverse[lang_strip_grammar_macros(text)]
+		if(!isnull(.))
+			return .
+	// 仍未命中：DM 把 "\" 续行的前导制表符并入字符串、抽取器却归一成单空格 → 折叠后再查一次。
+	if(findtext(text, "\t"))
+		. = reverse[lang_collapse_ws(text)]
 		if(!isnull(.))
 			return .
 	return text
@@ -266,12 +281,13 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 		if(islist(value))
 			lang_reverse_pref_descriptions(value)
 		else if(istext(value) && GLOB.i18n_pref_desc_keys[key])
-			var/translated = lang_reverse_text(value)
-			// 整串无精确匹配时退到 AC 子串层：job 描述在运行期是「基础句 + antag 后缀」拼接
-			//（command/sec 职业的 " Targetable by contractors." 等），整串不是目录键，
-			// 但基础句与各后缀短语都在目录里 → 逐段子串命中翻译。
-			if(translated == value)
-				translated = lang_fallback_apply(value)
+			// 先折叠续行制表符对齐目录键（job 描述常用 "\" 续行，运行期带制表符 → 否则连基础句都不命中）。
+			var/collapsed = lang_collapse_ws(value)
+			var/translated = lang_reverse_text(collapsed)
+			// 整串无精确匹配时退到 AC 子串层：command/sec 职业描述在运行期是「基础句 + antag 后缀」拼接
+			//（" Targetable by contractors." 等），整串不是目录键，但基础句与各后缀短语都在目录里 → 逐段子串命中。
+			if(translated == collapsed)
+				translated = lang_fallback_apply(collapsed)
 			data[key] = translated
 	return data
 
