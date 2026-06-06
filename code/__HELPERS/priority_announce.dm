@@ -41,7 +41,19 @@
 	if(!text)
 		return
 
+	// NOVA EDIT ADDITION START - i18n: 公告非 sink，正文/标题靠运行时反查翻译。
+	// 在 html_encode 之前做（目录键是未转义英文）：整串命中→译文；否则 AC 子串尽力翻动态正文。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(istext(title) && length(title) > 0)
+			var/translated_title = lang_reverse_text(title)
+			title = (translated_title != title) ? translated_title : lang_fallback_apply(title)
+		if(istext(text))
+			var/translated_text = lang_reverse_text(text)
+			text = (translated_text != text) ? translated_text : lang_fallback_apply(text)
+	// NOVA EDIT ADDITION END
+
 	if(encode_title && title && length(title) > 0)
+		title = html_encode(title)
 		title = html_encode(title)
 	if(encode_text)
 		text = html_encode(text)
@@ -139,6 +151,16 @@
 /proc/minor_announce(message, title = "Attention:", alert = FALSE, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, color_override)
 	if(!message)
 		return
+
+	// NOVA EDIT ADDITION START - i18n: 同 priority_announce，html_encode 前反查正文/标题。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(istext(title) && length(title) > 0)
+			var/translated_title = lang_reverse_text(title)
+			title = (translated_title != title) ? translated_title : lang_fallback_apply(title)
+		if(istext(message))
+			var/translated_message = lang_reverse_text(message)
+			message = (translated_message != message) ? translated_message : lang_fallback_apply(message)
+	// NOVA EDIT ADDITION END
 
 	if (html_encode)
 		title = html_encode(title)
