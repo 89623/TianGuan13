@@ -72,10 +72,15 @@ const HoverText = (props: { text: string; children: any }) => {
 
 // The dropdown components with fancy HoverText
 
+// 对象选项 {value, displayText}：value 保持英文标识符(回传/匹配用)，displayText 可被 i18n 翻显示。
+// 裸字符串选项不再被 auto-localize 翻译(见 i18n/localize.ts)，故需要中文显示又要正确回传的下拉
+// (强化/植入,选项名已进翻译目录)必须用对象选项；纯标识/禁用占位项仍可用裸字符串。
+type LabeledDropdownOption = string | { value: string; displayText: string };
+
 const LabeledDropdown = (
   props: {
     label: string;
-    options: string[];
+    options: LabeledDropdownOption[];
     selected: string | undefined;
     onSelected: (value: string) => void;
   } & Partial<{
@@ -271,7 +276,10 @@ const Markings = (props: {
               <Stack.Item grow style={{ minWidth: 0, overflow: 'hidden' }}>
                 <Dropdown
                   width="100%"
-                  options={marking_choices}
+                  options={marking_choices.map((name) => ({
+                    value: name,
+                    displayText: name,
+                  }))}
                   selected={marking.name}
                   displayText={marking.name}
                   //maxItems={7}
@@ -395,9 +403,12 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
           ) : (
             <LabeledDropdown
               label="Augmentation:"
-              options={aug_options.map((aug) => displayName(aug))}
+              options={aug_options.map((aug) => ({
+                value: aug.path ?? '',
+                displayText: displayName(aug),
+              }))}
               selected={
-                limb.selectedAug ? displayName(limb.selectedAug) : undefined
+                limb.selectedAug ? (limb.selectedAug.path ?? '') : undefined
               }
               displayText={
                 limb.selectedAug ? displayName(limb.selectedAug) : undefined
@@ -405,9 +416,9 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
               tooltip={limb.selectedAug?.extra_info}
               //searchInput
               //maxItems={7}
-              onSelected={(name) => {
+              onSelected={(value) => {
                 const option = aug_options.find(
-                  (aug) => displayName(aug) === name,
+                  (aug) => (aug.path ?? '') === value,
                 );
                 if (option?.path === limb.selectedAug?.path) return;
                 if (
@@ -441,7 +452,10 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
             ) : (
               <LabeledDropdown
                 label="Style:"
-                options={available_styles.map((style) => style.name)}
+                options={available_styles.map((style) => ({
+                  value: style.name,
+                  displayText: style.name,
+                }))}
                 selected={limb.chosen_style?.name ?? 'None'}
                 displayText={limb.chosen_style?.name ?? 'None'}
                 searchInput
@@ -458,10 +472,13 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
             (limb.has_implant ? (
               <LabeledDropdown
                 label="Implant slot:"
-                options={implant_options.map((aug) => displayName(aug))}
+                options={implant_options.map((aug) => ({
+                  value: aug.path ?? '',
+                  displayText: displayName(aug),
+                }))}
                 selected={
                   limb.selectedImplant
-                    ? displayName(limb.selectedImplant)
+                    ? (limb.selectedImplant.path ?? '')
                     : undefined
                 }
                 displayText={
@@ -472,9 +489,9 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
                 //searchInput
                 //maxItems={7}
                 tooltip={limb.selectedImplant?.extra_info}
-                onSelected={(name) => {
+                onSelected={(value) => {
                   const option = implant_options.find(
-                    (aug) => displayName(aug) === name,
+                    (aug) => (aug.path ?? '') === value,
                   );
                   if (
                     showCost &&
@@ -531,10 +548,13 @@ const InternalImplantSection = (props: { internal_implant: AugmentData }) => {
       >
         <LabeledDropdown
           label="Implant:"
-          options={aug_options.map(displayName)}
+          options={aug_options.map((aug) => ({
+            value: aug.path ?? '',
+            displayText: displayName(aug),
+          }))}
           selected={
             internal_implant.selectedAug
-              ? displayName(internal_implant.selectedAug)
+              ? (internal_implant.selectedAug.path ?? '')
               : undefined
           }
           displayText={
@@ -544,8 +564,10 @@ const InternalImplantSection = (props: { internal_implant: AugmentData }) => {
           }
           //searchInput
           //maxItems={7}
-          onSelected={(name) => {
-            const option = aug_options.find((aug) => displayName(aug) === name);
+          onSelected={(value) => {
+            const option = aug_options.find(
+              (aug) => (aug.path ?? '') === value,
+            );
             if (
               showCost &&
               balance -

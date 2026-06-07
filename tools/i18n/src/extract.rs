@@ -49,6 +49,12 @@ const SINK_VARS: &[&str] = &[
     // /datum/disease 玩家可见字段（医疗/疫病 UI）。
     "cure_text",
     "spread_text",
+    // 物种「占位」描述/背景（大多数未撰写 lore 的物种用 /datum/species 上这两个公共字面量；
+    // get_species_description/lore 各自 `return placeholder_description` / `return list(placeholder_lore)`
+    // —— 返回的是**变量引用**，proc-return 抽取（build_template/emit_list_strings）解析不出字面量值，
+    // 故必须在此按类型变量抽其初始值。运行时 species.dm compile_constant_data 反查落地）。
+    "placeholder_description",
+    "placeholder_lore",
     // 书本初始标题/正文（/obj/item/book/manual 等；运行时在 book.dm Initialize 整串反查落地）。
     "starting_title",
     "starting_content",
@@ -437,8 +443,13 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                             let mut rets = Vec::new();
                             collect_returns(block, &mut rets);
                             for r in rets {
+                                // 返回可能是裸字符串（多数物种）或 list("段1","段2")（shadekin 等多段描述）。
+                                // 裸串走 build_template；list 走 emit_list_strings（与 get_species_lore 一致，
+                                // 否则 list 形态的描述完全漏抽——shadekin「描述」即此故仍英文）。
                                 if let Some(t) = build_template(r) {
                                     emit(&mut catalog, &namespace, &t);
+                                } else {
+                                    emit_list_strings(r, &namespace, &mut catalog);
                                 }
                             }
                         }

@@ -560,6 +560,22 @@ const DM_LABEL_SOURCES = [
   ['modular_nova/master_files/code/modules/client/preferences/footstep_sound.dm', false, /"([A-Z][a-z]+)"/g],
   // 渗透点显示名(UPLINK_* = "PDA"/"Radio"/...)。
   ['code/modules/client/preferences/uplink_location.dm', false, /=\s*"([A-Z][^"]*)"/g],
+  // 体型(body_type)下拉的 "Use gender" 选项(#define USE_GENDER)。另两项 MALE/FEMALE 是 define("male"/
+  // "female")，前端 capitalizeFirst→"Male"/"Female"，由下面 display_gender 的同名字面量覆盖。
+  ['code/modules/client/preferences/body_type.dm', false, /#define\s+USE_GENDER\s+"([^"]+)"/g],
+  // 角色档案下拉:角色性别(display_gender)+角色吸引力(attraction)的 init_possible_values 字面量选项
+  // ("Unset"/"Check OOC"/"Male"/"Nonbinary"/"Genderfluid"/"Straight"/"Bisexual"…)。choiced 选项是
+  // {displayText,value}: value 回传给 act 保持英文=安全，仅 displayText 走前端目录翻显示。整行只是
+  // 一个首字母大写引号串(选项列表项)才取，避开 `savefile_key="…"`(行内有 `key=`、且小写)。
+  ['modular_nova/modules/character_directory/code/character_directory.dm', false, /^\s*"([A-Z][^"]*)",?\s*$/gm],
+  // ERP 偏好下拉(角色 setup,同上 choiced 机制):erp_status/erp_status_nc/_v/_mechanics/_hypno/
+  // erp_sexuality 的字面量选项("No"/"Ask (L)OOC"/"Yes - Dom"/"Roleplay only"/"Gay"…)。
+  ['modular_nova/master_files/code/modules/client/preferences/erp_preferences.dm', false, /^\s*"([A-Z][^"]*)"\s*,?\s*$/gm],
+  // 角色预览背景(background_state)下拉选项("Black"/"White Tiles"/"Reinforced Floor"…,角色 setup 可见)。
+  ['modular_nova/modules/character_preview_background/code/character_preview_background.dm', false, /^\s*"([A-Z][^"]*)"\s*,?\s*$/gm],
+  // entombed 任务者套装外观/硬光主题下拉(entombed_skin/entombed_hardlight_theme 的 init_possible_values
+  // 字面量选项,如 "Standard"/"Corpsman"/"Standard Blue"/"Alert Amber";quirk 锁定,value==display=安全)。
+  ['modular_nova/master_files/code/modules/entombed_quirk/code/entombed.dm', false, /^\s*"([A-Z][^"]*)"\s*,?\s*$/gm],
   // 强化+(Augments) 身体部位/植入物下拉**选项名**(/datum/augment_item 子类型的 `name="…"`，
   // 如 "Prosthetic left arm")。这页经 get_constant_data 走常量资源、绕过 P1；前端 LimbsPage 用
   // Dropdown displayText={aug.name}，act 用 option.path → name 仅显示=安全，渲染期 JSX localize 翻显示。

@@ -23,7 +23,10 @@ const OPTION_TEXT_PROPS = new Set(['displayText', 'label', 'text', 'title']);
 // 动态数据」。绝大多数命中都是期望的（On→开启、None→无…），但偶尔会把本该保持英文的专有
 // 名词 / 代码标识符也翻了（典型：admin VV 里显示的变量名 "Type"、ckey 等）。
 // 默认空——只在你确实看到某条被误翻时，把它的英文原文加进来即可全局豁免。
-const NO_AUTO_TRANSLATE = new Set<string>([]);
+const NO_AUTO_TRANSLATE = new Set<string>([
+  // 代码 token，en 目录里本就是 identity("const":"const")；MT 跨命名空间复用误译成"常量"。
+  'const',
+]);
 
 function translateText(text: string): string {
   const match = text.match(/^(\s*)([\s\S]*\S)(\s*)$/);
@@ -59,6 +62,15 @@ export function localizeNode(value: unknown): unknown {
 }
 
 function localizeOption(option: unknown): unknown {
+  // 裸字符串选项**一律不翻**：在 tgui-core Dropdown 里「字符串选项的值===显示文本」(m(o)=o)，
+  // onSelected 回传的就是这个字符串。若翻成中文，回传中文、而调用方几乎都按英文原文匹配
+  // (`aug_options.find(a => displayName(a) === 回传)`、`value === style.name`、或把回传直接当
+  // `style_name`/标识符发回服务端) → 匹配失败、选择静默失效（「强化+ 身体部位下拉点了没反应」即此）。
+  // 字符串选项的「值」本身就是标识符,不可改。需要既翻显示又能正确回传的下拉,应改用**对象选项**
+  // `{value, displayText}`：value 保持英文标识符(下面只翻 displayText)——见 LimbsPage 强化/植入下拉。
+  if (typeof option === 'string') {
+    return option;
+  }
   if (!option || typeof option !== 'object' || Array.isArray(option)) {
     return localizeNode(option);
   }

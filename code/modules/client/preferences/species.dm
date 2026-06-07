@@ -51,7 +51,7 @@
 		data[species_id] = list()
 		data[species_id]["name"] = species.name
 		// NOVA EDIT START - i18n - 物种描述/背景反查（常量 asset 绕过 P1，在此整串/逐段反查；译文进目录即生效）
-		data[species_id]["desc"] = lang_reverse_text(species.get_species_description()) // ORIGINAL: data[species_id]["desc"] = species.get_species_description()
+		data[species_id]["desc"] = lang_reverse_text_or_list(species.get_species_description()) // ORIGINAL: data[species_id]["desc"] = species.get_species_description()
 		data[species_id]["lore"] = lang_reverse_string_list(species.get_species_lore()) // ORIGINAL: data[species_id]["lore"] = species.get_species_lore()
 		// NOVA EDIT END
 		data[species_id]["icon"] = sanitize_css_class_name(species.name)

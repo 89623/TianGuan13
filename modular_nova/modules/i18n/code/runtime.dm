@@ -404,6 +404,14 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 	)
 	return pmap[LOWER_TEXT(word)] || word
 
+/// 物种「描述」可能是字符串（多数物种 `return placeholder_description` / 单段裸串）或字符串列表
+/// （shadekin 等多段 `return list("段1","段2")`）——按类型分派反查。get_species_description 两种返回
+/// 都有，单用 lang_reverse_text 会漏掉 list 形态（且对 list 反查无意义）。
+/proc/lang_reverse_text_or_list(value)
+	if(islist(value))
+		return lang_reverse_string_list(value)
+	return lang_reverse_text(value)
+
 /// 反查一个字符串列表的每个元素（用于物种 lore：list("段1", "段2", …) 逐段整串反查）。
 /// 全服中文时就地改写并返回；locale==en 原样返回。
 /proc/lang_reverse_string_list(list/strings)
