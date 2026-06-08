@@ -291,6 +291,27 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 			data[key] = translated
 	return data
 
+/// 职业描述本地化（偏好菜单职业 tab 的 tooltip）。antag_opt_in 模块把「opt-in 后缀句」拼到
+/// description 末尾（`description = initial(description) + suffix`，见 antag_opt_in/code/job.dm），
+/// 于是运行期整串 = 基础句 + 后缀，**整串非目录键** → lang_reverse_pref_descriptions 的整串精确
+/// 反查必然 miss，AC 子串对长基础句也不稳。这里用 initial() 取回**基础句**单独精确反查（基础句是
+/// 目录键，折叠续行制表符后命中），后缀短语各自在目录里 → 走 AC；拼回。无后缀的职业直接整串反查。
+/// 全服 locale==en 时原样返回（零行为变化）。供 middleware/jobs.dm 调用。
+/proc/lang_localize_job_description(datum/job/job)
+	var/desc = job.description
+	if(!istext(desc) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return desc
+	var/base = initial(job.description)
+	var/base_collapsed = lang_collapse_ws(base)
+	var/base_zh = lang_reverse_text(base_collapsed)
+	if(base_zh == base_collapsed) // 精确未命中 → 退 AC 子串
+		base_zh = lang_fallback_apply(base_collapsed)
+	if(desc == base) // 无 opt-in 后缀
+		return base_zh
+	// desc = base + suffix：后缀短语（" Targetable by contractors." 等）各自在目录 → AC。
+	var/suffix = copytext(desc, length(base) + 1)
+	return base_zh + lang_fallback_apply(lang_collapse_ws(suffix))
+
 /// 中文时长格式（无英文复数 / 无 " and " 连接词）。core 的 DisplayTimeText 在全服中文时改调此处。
 /// 当前为 zh-Hans 用词（天/小时/分钟/秒）——这是唯一非英文 locale；未来加 locale 时在此分支即可。
 /// 与 core DisplayTimeText 的分段逻辑一一对应，只换用词与拼接（中文直接连写）。

@@ -576,6 +576,14 @@ const DM_LABEL_SOURCES = [
   // entombed 任务者套装外观/硬光主题下拉(entombed_skin/entombed_hardlight_theme 的 init_possible_values
   // 字面量选项,如 "Standard"/"Corpsman"/"Standard Blue"/"Alert Amber";quirk 锁定,value==display=安全)。
   ['modular_nova/master_files/code/modules/entombed_quirk/code/entombed.dm', false, /^\s*"([A-Z][^"]*)"\s*,?\s*$/gm],
+  // 偏好下拉选项中**用 #define 定义值**的(init_possible_values 返回 DEFINE，name="..." 正则与字面量
+  // 选项正则都够不着，字面量在 #define 里)：预览视图(PREVIEW_PREF_* = "Job"/"Naked - Aroused"…)、
+  // 硅基/合成脑类型(ORGAN_PREF_* = "Positronic Brain"/"Man-Machine Interface"…)、语音类型(VOICE_TYPE_*)。
+  // 只抽首字母大写的字符串 define 值(排除数字/小写标识 define)。value 仍是英文 define=act 安全。
+  ['code/__DEFINES/~nova_defines/preferences.dm', false, /#define\s+\w+\s+"([A-Z][^"]*)"/g],
+  // 怪癖名用 #define 定义的(如 DEATH_CONSEQUENCES_QUIRK_NAME = "Death Degradation Disorder")，
+  // 怪癖目录的 name="..." 正则够不着 → 专抽 *QUIRK_NAME* 字符串 define(name 仅显示=安全)。
+  ['code/__DEFINES/~nova_defines/quirks.dm', false, /#define\s+\w*QUIRK_NAME\w*\s+"([^"]+)"/g],
   // 强化+(Augments) 身体部位/植入物下拉**选项名**(/datum/augment_item 子类型的 `name="…"`，
   // 如 "Prosthetic left arm")。这页经 get_constant_data 走常量资源、绕过 P1；前端 LimbsPage 用
   // Dropdown displayText={aug.name}，act 用 option.path → name 仅显示=安全，渲染期 JSX localize 翻显示。
