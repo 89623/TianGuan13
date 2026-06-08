@@ -41,8 +41,21 @@ function translateText(text: string): string {
     return text;
   }
   const translated = translateCurrent(lookup);
-  // 未命中时 translateCurrent 原样返回 lookup —— 此时保留原始 body（含原排版），不改动。
-  return `${leading}${translated === lookup ? body : translated}${trailing}`;
+  if (translated !== lookup) {
+    return `${leading}${translated}${trailing}`;
+  }
+  // 未命中:精灵配件「备用版」名(生殖器/发型/尾巴/胸罩…)运行期由 `parent_type::name + " (Alt)"`
+  // 编译期拼成("Human (Alt)"/"Pair (Alt)"/"Knotted (Alt)"…)，整串永不是字面量、无法抽取(抽出的是
+  // 含占位符的模板 "{0} (Alt)"、反查跳过) → 译**基础名**、保留 " (Alt)" 后缀标记。
+  const altMatch = lookup.match(/^(.+) \(Alt\)$/);
+  if (altMatch) {
+    const baseTranslated = translateCurrent(altMatch[1]);
+    if (baseTranslated !== altMatch[1]) {
+      return `${leading}${baseTranslated} (Alt)${trailing}`;
+    }
+  }
+  // 未命中时保留原始 body（含原排版），不改动。
+  return `${leading}${body}${trailing}`;
 }
 
 export function localizeNode(value: unknown): unknown {

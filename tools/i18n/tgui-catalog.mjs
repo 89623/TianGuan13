@@ -584,6 +584,14 @@ const DM_LABEL_SOURCES = [
   // 怪癖名用 #define 定义的(如 DEATH_CONSEQUENCES_QUIRK_NAME = "Death Degradation Disorder")，
   // 怪癖目录的 name="..." 正则够不着 → 专抽 *QUIRK_NAME* 字符串 define(name 仅显示=安全)。
   ['code/__DEFINES/~nova_defines/quirks.dm', false, /#define\s+\w*QUIRK_NAME\w*\s+"([^"]+)"/g],
+  // 笑声/尖叫声下拉选项(choiced laugh/scream pref，选项来自 /datum/laugh_type、/datum/scream_type
+  // 的 name="…"；选中值经 P1 已翻、但选项列表走常量资源+前端目录 miss → 全英文)。
+  ['modular_nova/modules/emotes/code/laugh_datums.dm', false, /^\s*name\s*=\s*"([^"]+)"/gm],
+  ['modular_nova/modules/emotes/code/scream_datums.dm', false, /^\s*name\s*=\s*"([^"]+)"/gm],
+  // 腿型下拉(Normal Legs/Digitigrade Legs，#define 定义)。
+  ['code/__DEFINES/mobs.dm', false, /#define\s+\w*LEGS\s+"([^"]+)"/g],
+  // 装备物品偏好下拉(LOADOUT_OVERRIDE_* = "Delete job items"/"Move job to backpack"/"Place all in case")。
+  ['code/__DEFINES/~nova_defines/loadouts.dm', false, /#define\s+LOADOUT_OVERRIDE_\w+\s+"([^"]+)"/g],
   // 强化+(Augments) 身体部位/植入物下拉**选项名**(/datum/augment_item 子类型的 `name="…"`，
   // 如 "Prosthetic left arm")。这页经 get_constant_data 走常量资源、绕过 P1；前端 LimbsPage 用
   // Dropdown displayText={aug.name}，act 用 option.path → name 仅显示=安全，渲染期 JSX localize 翻显示。
