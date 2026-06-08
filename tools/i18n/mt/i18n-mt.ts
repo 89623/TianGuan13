@@ -636,9 +636,17 @@ function computePending(file: string): Catalog {
 }
 
 function writeSorted(file: string, catalog: Catalog): void {
+  const isTguiCatalog = path.basename(file) === 'tgui.json';
   const sorted: Catalog = {};
-  for (const key of Object.keys(catalog).sort()) sorted[key] = catalog[key];
-  fs.writeFileSync(file, `${JSON.stringify(sorted, null, 2)}\n`);
+  const keys = Object.keys(catalog);
+  keys.sort(isTguiCatalog ? (a, b) => a.localeCompare(b) : undefined);
+  for (const key of keys) {
+    sorted[key] = catalog[key];
+  }
+  fs.writeFileSync(
+    file,
+    `${JSON.stringify(sorted, null, isTguiCatalog ? '\t' : 2)}\n`,
+  );
 }
 
 /// 跨命名空间「英文原文 -> 已有合格译文」全局表（仅取已译、非中英混杂的条目）。
