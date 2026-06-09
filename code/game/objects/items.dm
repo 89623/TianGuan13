@@ -1176,10 +1176,12 @@
 /obj/item/proc/openTip(location, control, params, user)
 	if(last_force_string_check != force && !(item_flags & FORCE_STRING_OVERRIDE))
 		set_force_string()
+	// NOVA EDIT CHANGE - i18n: 反查 "Force" 标签与力量描述词(very low/robust… 进目录；locale==en 为 no-op）
 	if(!(item_flags & FORCE_STRING_OVERRIDE))
-		openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
+		openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>[lang_reverse_text("Force")]:</b> [lang_reverse_text(force_string)]" : ""]",theme = "")
 	else
-		openToolTip(user,src,params,title = name,content = "[desc]<br><b>Force:</b> [force_string]",theme = "")
+		openToolTip(user,src,params,title = name,content = "[desc]<br><b>[lang_reverse_text("Force")]:</b> [lang_reverse_text(force_string)]",theme = "")
+	// NOVA EDIT CHANGE END - ORIGINAL: content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]" / content = "[desc]<br><b>Force:</b> [force_string]"
 
 /obj/item/MouseEntered(location, control, params)
 	. = ..()

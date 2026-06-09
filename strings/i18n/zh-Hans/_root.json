@@ -219,5 +219,15 @@
   "_root.98013e2c": "{0} 要求你的角色填写背景描述。",
   "_root.8d4ed28c": "由于你所选的身体强化，{0} 被限制。",
   "_root.4d3e09db": "{0} 与分配给你的某个反派角色不兼容。",
-  "_root.5d71d9b3": "你的角色年龄不足以担任 {0}。"
+  "_root.5d71d9b3": "你的角色年龄不足以担任 {0}。",
+  "_root.fs_force_label": "力量",
+  "_root.fs_verylow": "非常低",
+  "_root.fs_low": "低",
+  "_root.fs_medium": "中等",
+  "_root.fs_high": "高",
+  "_root.fs_robust": "强劲",
+  "_root.fs_veryrobust": "非常强劲",
+  "_root.fs_exrobust": "极其强劲",
+  "_root.fs_infinite": "无限",
+  "_root.fs_germs": "对细菌很强劲……"
 }
