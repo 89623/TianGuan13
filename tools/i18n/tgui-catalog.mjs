@@ -595,6 +595,13 @@ const DM_LABEL_SOURCES = [
   // 硅基性别(代词)下拉(SILICON_* #define = "He/Him"/"She/Her"/"They/Them"/"It/Its" + use_character_gender
   // 变量 = "Use character gender")。文件内大写引号串恰好就这 5 个选项,整体抽。
   ['code/modules/client/preferences/silicon_gender.dm', false, /"([A-Z][^"]*)"/g],
+  // 备用名称面板各字段**标签**(/datum/preference/name 的 `explanation = "…"`：Backup human name/
+  // Hacker alias/Clown name/Mime name/Bible name/Deity name/Religion name/AI name/Cyborg name/
+  // Operative Alias 等)。经 get_constant_data 发送、绕过 P1;names.tsx 用 `<LabeledList.Item
+  // label={name.explanation}>` 渲染,label 在 TRANSLATABLE_PROPS → 进前端目录即翻。explanation 是
+  // 纯标签(名字的值是另一字段),翻显示安全。
+  ['code/modules/client/preferences/names.dm', false, /\bexplanation\s*=\s*"([^"]+)"/g],
+  ['modular_nova/modules/drones/drone_naming.dm', false, /\bexplanation\s*=\s*"([^"]+)"/g],
   // 强化+(Augments) 身体部位/植入物下拉**选项名**(/datum/augment_item 子类型的 `name="…"`，
   // 如 "Prosthetic left arm")。这页经 get_constant_data 走常量资源、绕过 P1；前端 LimbsPage 用
   // Dropdown displayText={aug.name}，act 用 option.path → name 仅显示=安全，渲染期 JSX localize 翻显示。
