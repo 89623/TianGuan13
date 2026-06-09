@@ -116,7 +116,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 			var/list/job_data = list(
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
-				"description" = job_datum.description,
+				"description" = lang_localize_job_description(job_datum), // NOVA EDIT - i18n: 拆基础句+opt-in 后缀分别反查（ORIGINAL: "description" = job_datum.description,）
 			)
 
 			department_jobs[job_datum.title] = job_data

@@ -602,6 +602,10 @@ const DM_LABEL_SOURCES = [
   // 纯标签(名字的值是另一字段),翻显示安全。
   ['code/modules/client/preferences/names.dm', false, /\bexplanation\s*=\s*"([^"]+)"/g],
   ['modular_nova/modules/drones/drone_naming.dm', false, /\bexplanation\s*=\s*"([^"]+)"/g],
+  // 加入菜单(latejoin) tgui 窗口标题：`new(user, src, "JobSelection", "Latejoin Menu")` 的第 4 个
+  // 实参。窗口标题经 Window 的 title prop(在 TRANSLATABLE_PROPS)渲染、能 auto-localize,但标题是
+  // DM 字面量、JSX 抽取够不着 → 专抽该 new() 调用的标题串。
+  ['code/modules/mob/dead/new_player/latejoin_menu.dm', false, /"JobSelection"\s*,\s*"([^"]+)"/g],
   // 强化+(Augments) 身体部位/植入物下拉**选项名**(/datum/augment_item 子类型的 `name="…"`，
   // 如 "Prosthetic left arm")。这页经 get_constant_data 走常量资源、绕过 P1；前端 LimbsPage 用
   // Dropdown displayText={aug.name}，act 用 option.path → name 仅显示=安全，渲染期 JSX localize 翻显示。
