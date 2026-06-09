@@ -460,6 +460,19 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                                 emit_list_strings(r, &namespace, &mut catalog);
                             }
                         }
+                        // 职业不可用原因（加入菜单 tooltip / tgui_alert）：`get_job_unavailable_error_message`
+                        // 的各 `return "[jobtitle] is already filled to capacity."` 是**插值**模板（含 [jobtitle]），
+                        // 通用 proc-return 捕获被 is_sentence_like 的「无 {」排除 → 漏抽。专项按模板抽（含占位符），
+                        // 由该 proc 手接 LANG（jobtitle 走 lang_reverse_text 整词反查）。
+                        "get_job_unavailable_error_message" => {
+                            let mut rets = Vec::new();
+                            collect_returns(block, &mut rets);
+                            for r in rets {
+                                if let Some(t) = build_template(r) {
+                                    emit(&mut catalog, &namespace, &t);
+                                }
+                            }
+                        }
                         // 物种特征(perk)：create_pref_*_perks / get_species_perks 等，抽 list 里 name/description。
                         n if n.contains("perk") => walk_perk_block(block, &namespace, &mut catalog),
                         // examine 标签的 hover tooltip：`.["tag"] = "提示"`（运行时 atom_examine 反查显示）。
