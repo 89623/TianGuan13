@@ -390,6 +390,9 @@ function JoblessRoleDropdown(props) {
       <Dropdown
         width="100%"
         selected={selection}
+        // displayText 才在 i18n TRANSLATABLE_PROPS 里(selected 不在)——折叠显示的选中项经此翻译，
+        // 否则展开选项是中文、收起后却显英文。
+        displayText={selection}
         onSelected={createSetPreference(act, 'joblessrole')}
         options={options}
       />
