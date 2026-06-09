@@ -592,6 +592,9 @@ const DM_LABEL_SOURCES = [
   ['code/__DEFINES/mobs.dm', false, /#define\s+\w*LEGS\s+"([^"]+)"/g],
   // 装备物品偏好下拉(LOADOUT_OVERRIDE_* = "Delete job items"/"Move job to backpack"/"Place all in case")。
   ['code/__DEFINES/~nova_defines/loadouts.dm', false, /#define\s+LOADOUT_OVERRIDE_\w+\s+"([^"]+)"/g],
+  // 硅基性别(代词)下拉(SILICON_* #define = "He/Him"/"She/Her"/"They/Them"/"It/Its" + use_character_gender
+  // 变量 = "Use character gender")。文件内大写引号串恰好就这 5 个选项,整体抽。
+  ['code/modules/client/preferences/silicon_gender.dm', false, /"([A-Z][^"]*)"/g],
   // 强化+(Augments) 身体部位/植入物下拉**选项名**(/datum/augment_item 子类型的 `name="…"`，
   // 如 "Prosthetic left arm")。这页经 get_constant_data 走常量资源、绕过 P1；前端 LimbsPage 用
   // Dropdown displayText={aug.name}，act 用 option.path → name 仅显示=安全，渲染期 JSX localize 翻显示。
