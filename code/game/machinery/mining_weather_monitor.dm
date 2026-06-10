@@ -303,7 +303,7 @@ GLOBAL_LIST_EMPTY(weather_towers)
 		COOLDOWN_START(src, summon_weather_cd, 8 MINUTES)
 		COOLDOWN_START(src, clear_weather_cd, 4 MINUTES)
 		if(is_station)
-			notify_ghosts("Someone summoned weather on the station!", src)
+			notify_ghosts(LANG("obj.829904bc", null), src)
 			log_game("[user ? key_name(user) : "Unknown"] summoned [weather.name] weather on the station using [src] [AREACOORD(src)].")
 			message_admins("[user ? ADMIN_LOOKUPFLW(user) : "Unknown"] summoned [weather.name] weather on the station using [src] [ADMIN_COORDJMP(src)].")
 		else

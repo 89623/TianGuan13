@@ -614,5 +614,6 @@
   "turf.ff0f6921": "You need one rod to build a lattice.",
   "turf.ff2b2ad3": "smooth plated catwalk floor",
   "turf.ff5c14ca": "orange ungenerated turf",
-  "turf.ff9d66d1": "There's a <b>small crack</b> on the edge of it."
+  "turf.ff9d66d1": "There's a <b>small crack</b> on the edge of it.",
+  "turf.1165d1e0": "A new crack has been spawned in {0}."
 }

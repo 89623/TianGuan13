@@ -147,7 +147,13 @@
 		var/datum/material/current_material = SSmaterials.get_material(custom_material)
 		var/mat_name = lang_material(current_material.name) // NOVA EDIT - i18n: 材料名专用反查（零碰撞，按材料义翻；单词材料全局会按错义译）
 		mats_list += span_tooltip(LANG("atom.made_out_of_tooltip", list(mat_name)), mat_name) // NOVA EDIT - i18n: tooltip 文本本地化。ORIGINAL: span_tooltip("It is made out of [mat_name].", mat_name)
-	. += LANG("atom.18275935", list(english_list(mats_list)))
+	// NOVA EDIT CHANGE - i18n: 材料列表连接词中文用顿号（"铁 and 玻璃" → "铁、玻璃"）。ORIGINAL: . += LANG("atom.18275935", list(english_list(mats_list)))
+	var/mat_and = " and "
+	var/mat_comma = ", "
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		mat_and = "、"
+		mat_comma = "、"
+	. += LANG("atom.18275935", list(english_list(mats_list, and_text = mat_and, comma_text = mat_comma)))
 
 /**
  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_WINDOW (default 1 second)

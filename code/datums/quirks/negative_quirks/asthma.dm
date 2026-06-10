@@ -130,7 +130,7 @@
 	RegisterSignal(current_attack, COMSIG_QDELETING, PROC_REF(attack_deleting))
 
 	if (current_attack.alert_ghosts)
-		notify_ghosts("[quirk_holder] is having an asthma attack: [current_attack.name]!", source = quirk_holder, notify_flags = NOTIFY_CATEGORY_NOFLASH, header = "Asthma attack!")
+		notify_ghosts(LANG("datum.8b546d23", list(quirk_holder, current_attack.name)), source = quirk_holder, notify_flags = NOTIFY_CATEGORY_NOFLASH, header = "Asthma attack!")
 
 /// Setter proc for [inflammation]. Adjusts the amount by lung health, adjusts pressure mult, gives feedback messages if silent is FALSE.
 /datum/quirk/item_quirk/asthma/proc/adjust_inflammation(amount, silent = FALSE)

@@ -3410,5 +3410,8 @@
   "mob.ffe63cbe": "{0}-hatch",
   "mob.ffeb5bef": "{0} is restrained, you cannot push past.",
   "mob.exm_nothing": "<i>You examine {0} closer, but find nothing of interest...</i>",
-  "mob.exm_closer": "<i>You can <a href=byond://?src={0};run_examinate={1}>examine</a> {2} closer...</i>"
+  "mob.exm_closer": "<i>You can <a href=byond://?src={0};run_examinate={1}>examine</a> {2} closer...</i>",
+  "mob.3803618b": "All rise for {0}, ascendant to the throne in \\the {1}.",
+  "mob.74ac00af": "{0} was startled by the supermatter!",
+  "mob.b8d62116": "{0} has shortcircuited {1} to explode in 60 seconds!"
 }

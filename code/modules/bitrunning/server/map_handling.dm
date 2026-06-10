@@ -119,7 +119,7 @@
 				LAZYADD(lucky_ghosts, pick_n_take(candidates))
 
 		if(length(lucky_ghosts) < generated_domain.mission_min_candidates)
-			notify_ghosts("Not enough candidates for [generated_domain.spawner_role]! Aborting mission!")
+			notify_ghosts(LANG("obj.a4f80f40", list(generated_domain.spawner_role)))
 			playsound(src, "sound/machines/buzz-[pick("sigh", "two")].ogg", 50, TRUE)
 			say(LANG("obj.703af0a6", null))
 			COOLDOWN_START(src, polling_cooldown, POLLING_COOLDOWN_TIME)

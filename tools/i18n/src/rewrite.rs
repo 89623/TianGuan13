@@ -62,6 +62,9 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         "print_command_report" => Some(&[0, 1]),
         // 银行卡/账户消息（发薪、转账、错误，玩家可见）：bank_card_talk(message, force)。与 extract.rs 同表。
         "bank_card_talk" => Some(&[0]),
+        // 幽灵招募/事件通知（"An X is ready to hatch in …" 等，72+ 处）：notify_ghosts(message, source, …)。
+        // 只改位置实参 [0]=消息字面量（header 是关键字实参、改写器够不着，作残留）。与 extract.rs 同表。
+        "notify_ghosts" => Some(&[0]),
         _ => None,
     }
 }

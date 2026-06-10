@@ -240,7 +240,14 @@ Behavior that's still missing from this component that original food items had t
 		return
 	if(foodtypes)
 		var/list/types = bitfield_to_list(foodtypes, FOOD_FLAGS)
-		examine_list += span_notice(LANG("datum.62eee539", list(LOWER_TEXT(english_list(types)))))
+		// NOVA EDIT CHANGE - i18n: 食物类别名逐个反查 + 中文用顿号连接。ORIGINAL: examine_list += span_notice(LANG("datum.62eee539", list(LOWER_TEXT(english_list(types)))))
+		if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+			var/list/translated_types = list()
+			for(var/food_type in types)
+				translated_types += lang_reverse_text(LOWER_TEXT(food_type))
+			examine_list += span_notice(LANG("datum.62eee539", list(english_list(translated_types, and_text = "、", comma_text = "、"))))
+		else
+			examine_list += span_notice(LANG("datum.62eee539", list(LOWER_TEXT(english_list(types)))))
 
 	var/quality = get_perceived_food_quality(user)
 	if(quality > 0)

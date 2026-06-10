@@ -261,7 +261,7 @@
 	src.forceMove(eggshell)
 	if(spawner_area)
 		notify_ghosts(
-			"An ash walker egg is ready to hatch in \the [spawner_area.name].",
+			LANG("obj.5c7e8a8b", list(spawner_area.name)), // NOVA EDIT - i18n: 多行 notify_ghosts 改写器漏改,手接既有 key
 			source = src,
 			header = "Ash Walker Egg",
 			click_interact = TRUE,
