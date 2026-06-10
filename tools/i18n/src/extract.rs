@@ -61,6 +61,10 @@ const SINK_VARS: &[&str] = &[
     // /obj 的操作说明（examine 里 `. += span_notice(desc_controls)`，如「Left click to stun, …」；
     // 运行时在 objs.dm examine 处 lang_reverse_text 反查）。
     "desc_controls",
+    // 自定义 examine 文本变量：运行时被赋给 desc（在 examine 显示点 lang_reverse_text(desc) 反查落地）。
+    // 这类「type 变量持有 examine 文本、运行期 desc=该变量」漏抽长尾——dry_desc（血迹/痕迹变干后的描述）等。
+    "dry_desc",
+    "extended_desc",
     // 售货机出货答谢语（vend_reply，单句，say 出 → 聊天 AC 翻译）。
     "vend_reply",
     // 说话动词（says/asks/exclaims/whispers/sings/yells 及各 mob 变体如 beeps/signs/hisses；

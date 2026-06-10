@@ -17,7 +17,10 @@
 	. = list()
 	. += get_name_chaser(user)
 	if(desc)
-		. += "<i>[desc]</i>"
+		// NOVA EDIT CHANGE - i18n: 在显示点反查 desc,覆盖**运行时动态赋值/重置**的 desc(血迹变干 desc=dry_desc、
+		// desc=initial(desc) 还原成编译期英文等)——Initialize 的反查只作用于初始值,运行时改写后会丢。
+		// gated locale≠en、已是中文则查不中原样返回(幂等)。ORIGINAL: . += "<i>[desc]</i>"
+		. += "<i>[lang_reverse_text(desc)]</i>"
 
 	var/list/tags_list = examine_tags(user)
 	var/list/post_descriptor = examine_post_descriptor(user)

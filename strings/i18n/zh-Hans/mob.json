@@ -3385,5 +3385,8 @@
   "mob.ffe63cbe": "{0}-舱门",
   "mob.ffeb5bef": "{0} 被束缚住了，你无法挤过去。",
   "mob.exm_nothing": "<i>你仔细查看{0}，但没发现什么值得注意的……</i>",
-  "mob.exm_closer": "<i>你可以<a href=byond://?src={0};run_examinate={1}>仔细查看</a>{2}……</i>"
+  "mob.exm_closer": "<i>你可以<a href=byond://?src={0};run_examinate={1}>仔细查看</a>{2}……</i>",
+  "mob.3803618b": "全体起立，恭迎{0}在\\the {1}登基为王！",
+  "mob.74ac00af": "{0}被超物质吓了一跳！",
+  "mob.b8d62116": "{0}短路了{1}，将在60秒后爆炸！"
 }
