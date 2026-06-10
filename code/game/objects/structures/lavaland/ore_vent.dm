@@ -504,7 +504,7 @@
 			return
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
-			user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
+			user_id_card.registered_account.bank_card_talk(LANG("obj.c8ab03df", list(MINER_POINT_MULTIPLIER)))
 		return
 
 	if(!pre_wave_defense(user, spawn_drone_on_tap, mech_scan))

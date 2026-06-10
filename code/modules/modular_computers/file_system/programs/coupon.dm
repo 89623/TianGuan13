@@ -57,13 +57,13 @@
 				return TRUE
 			var/datum/coupon_code/coupon = SSmodular_computers.discount_coupons[code]
 			if(isnull(coupon))
-				user_id.registered_account.bank_card_talk("Invalid coupon code.", TRUE)
+				user_id.registered_account.bank_card_talk(LANG("datum.30855aa6", null), TRUE)
 				return TRUE
 			if(coupon.expires_in && coupon.expires_in < world.time)
-				user_id.registered_account.bank_card_talk("Expired coupon code.", TRUE)
+				user_id.registered_account.bank_card_talk(LANG("datum.1fc97fa2", null), TRUE)
 				return TRUE
 			if(coupon in user_id.registered_account.redeemed_coupons)
-				user_id.registered_account.bank_card_talk("Coupon [code] already redeemed.", TRUE)
+				user_id.registered_account.bank_card_talk(LANG("datum.afff93be", list(code)), TRUE)
 				return TRUE
 			coupon.copy(user_id.registered_account)
 			var/static/list/goodbye = list(
@@ -74,7 +74,7 @@
 				"Congratulations!",
 				"Bye Bye~.",
 			)
-			user_id.registered_account.bank_card_talk("Coupon [code] redeemed. [pick(goodbye)]", TRUE)
+			user_id.registered_account.bank_card_talk(LANG("datum.6f511e74", list(code, pick(goodbye))), TRUE)
 			//Well, guess you're redeeming something else too.
 			if(prob(40) && computer.used_capacity < computer.max_capacity)
 				var/datum/computer_file/warez = new()

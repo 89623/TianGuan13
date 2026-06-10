@@ -342,6 +342,8 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         "priority_announce" => Some(&[0, 1]),
         "minor_announce" => Some(&[0, 1]),
         "print_command_report" => Some(&[0, 1]),
+        // 银行卡/账户消息（发薪、转账、错误提示等，玩家可见）：bank_card_talk(message, force)。
+        "bank_card_talk" => Some(&[0]),
         _ => None,
     }
 }

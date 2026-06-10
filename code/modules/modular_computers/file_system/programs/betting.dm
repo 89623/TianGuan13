@@ -281,7 +281,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 		return
 	total_amount_bet += money_betting
 	options[option_betting] += list(list(better, "[money_betting]"))
-	better.bank_card_talk("Deducted [money_betting][MONEY_SYMBOL] for your bet on [name].")
+	better.bank_card_talk(LANG("datum.0fc60a8d", list(money_betting, MONEY_SYMBOL, name)))
 
 ///Cancels your bet, removing your bet and refunding your money.
 /datum/active_bet/proc/cancel_bet(datum/bank_account/better)

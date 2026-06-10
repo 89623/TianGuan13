@@ -299,7 +299,7 @@
 	/// Pay the owner
 	linked_card.registered_account.adjust_money(amount, "Holopay: [name]")
 	/// Make alerts
-	linked_card.registered_account.bank_card_talk("[payee] has deposited [amount] [MONEY_SYMBOL] at your holographic pay stand.")
+	linked_card.registered_account.bank_card_talk(LANG("obj.0e5a56ec", list(payee, amount, MONEY_SYMBOL)))
 	say(LANG("obj.71a910e0", list(payee)))
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 	/// Log the event

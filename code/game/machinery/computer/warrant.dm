@@ -111,7 +111,7 @@
 		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 100, TRUE)
 		return FALSE
 
-	account.bank_card_talk("You have paid [amount][MONEY_SYMBOL] towards [target.name]'s fine of [warrant.fine][MONEY_SYMBOL].")
+	account.bank_card_talk(LANG("obj.0cb1439c", list(amount, MONEY_SYMBOL, target.name, warrant.fine, MONEY_SYMBOL)))
 	log_econ("[amount][MONEY_SYMBOL] was transferred from [user]'s transaction to [target.name]'s [warrant.fine][MONEY_SYMBOL] fine")
 	SSblackbox.record_feedback("amount", "credits_transferred", amount)
 	warrant.pay_fine(amount)

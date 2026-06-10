@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Bounties that require you to perform documentation and inspection of your department to send to centcom.
 /datum/bounty/patrol
 	name = "Patrol Station"
@@ -108,30 +109,28 @@
 	var/progress = get_progress()
 	if(alerted == 0)
 		alerted = 1
-		id_card.registered_account.bank_card_talk("Patrol started. \
-			Travel [needed_coverage] meters in the area to complete your patrol.", force = TRUE)
+		id_card.registered_account.bank_card_talk(LANG("datum.d9b3a39d", list(needed_coverage)), force = TRUE)
 		return
 
 	var/progress_percent = progress / needed_coverage
 	if(progress_percent >= 0.25 && alerted < 2)
 		alerted = 2
-		id_card.registered_account.bank_card_talk("Patrol 25% complete.", force = TRUE)
+		id_card.registered_account.bank_card_talk(LANG("datum.ebc0e5da", null), force = TRUE)
 		return
 
 	if(progress_percent >= 0.5 && alerted < 3)
 		alerted = 3
-		id_card.registered_account.bank_card_talk("Patrol 50% complete.", force = TRUE)
+		id_card.registered_account.bank_card_talk(LANG("datum.1d4c03de", null), force = TRUE)
 		return
 
 	if(progress_percent >= 0.75 && alerted < 4)
 		alerted = 4
-		id_card.registered_account.bank_card_talk("Patrol 75% complete.", force = TRUE)
+		id_card.registered_account.bank_card_talk(LANG("datum.04eb70c2", null), force = TRUE)
 		return
 
 	if(progress >= needed_coverage && alerted < 5)
 		alerted = 5
-		id_card.registered_account.bank_card_talk("Patrol complete. \
-			Return to the bounty terminal to claim your reward.", force = TRUE)
+		id_card.registered_account.bank_card_talk(LANG("datum.7dcceece", null), force = TRUE)
 		stop_tracking(id_card) // don't need this anymore
 		return
 

@@ -826,7 +826,7 @@
 	if(!alt_click_can_use_id(user))
 		return NONE
 	if (LAZYLEN(registered_account.being_dumped))
-		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
+		registered_account.bank_card_talk(span_warning(LANG("obj.9dff87ac", null)), TRUE)
 		return CLICK_ACTION_SUCCESS
 	if(registered_account.account_debt)
 		var/choice = tgui_alert(user, LANG("obj.2264b9a7", null), LANG("obj.02d6f4c5", null), list("Withdraw", "Pay Debt"))
@@ -852,7 +852,7 @@
 		return CLICK_ACTION_BLOCKING
 	if(!registered_account.adjust_money(-amount_to_remove, "System: Withdrawal"))
 		var/difference = amount_to_remove - registered_account.account_balance
-		registered_account.bank_card_talk(span_warning("ERROR: The linked account requires [difference] more [MONEY_NAME_AUTOPURAL(difference)] to perform that withdrawal."), TRUE)
+		registered_account.bank_card_talk(span_warning(LANG("obj.4473ab22", list(difference, MONEY_NAME_AUTOPURAL(difference)))), TRUE)
 		return CLICK_ACTION_BLOCKING
 	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 	user.put_in_hands(holochip)
@@ -1162,7 +1162,7 @@
 	icon_state = "car_budget" //saving up for a new tesla
 
 /obj/item/card/id/departmental_budget/click_alt(mob/living/user)
-	registered_account.bank_card_talk(span_warning("Withdrawing is not compatible with this card design."), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
+	registered_account.bank_card_talk(span_warning(LANG("obj.fb3b9182", null)), TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates
 	return CLICK_ACTION_BLOCKING
 
 /obj/item/card/id/advanced
@@ -1522,7 +1522,7 @@
 /obj/item/card/id/advanced/debug/alt_click_can_use_id(mob/living/user)
 	. = ..()
 	if(!. || isnull(user.client?.holder)) // admins only as a safety so people don't steal all the dollars. spawn in a holochip if you want them to get some dosh
-		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
+		registered_account.bank_card_talk(span_warning(LANG("obj.b62133d1", null)), force = TRUE)
 		return FALSE
 
 	return TRUE
@@ -1530,7 +1530,7 @@
 /obj/item/card/id/advanced/debug/can_be_used_in_payment(mob/living/user)
 	. = ..()
 	if(!. || isnull(user.client?.holder))
-		registered_account.bank_card_talk(span_warning("Only authorized representatives of Nanotrasen may use this card."), force = TRUE)
+		registered_account.bank_card_talk(span_warning(LANG("obj.b62133d1", null)), force = TRUE)
 		return FALSE
 
 	return TRUE

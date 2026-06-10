@@ -24,9 +24,9 @@
 		return
 	if(new_cost < 0)
 		card.registered_account.adjust_money(new_cost, "Central Command: Pay Bonus")
-		card.registered_account.bank_card_talk("[new_cost] [MONEY_NAME] added to your account based on performance review by Central Command.", force = TRUE)
+		card.registered_account.bank_card_talk(LANG("datum.39c1757a", list(new_cost, MONEY_NAME)), force = TRUE)
 	else
 		SSeconomy.add_audit_entry(card.registered_account, new_cost, "Central Command")
 		card.registered_account.adjust_money(-new_cost, "Central Command: Pay Cut")
-		card.registered_account.bank_card_talk("[new_cost] [MONEY_NAME] deducted from your account based on performance review by Central Command.", force = TRUE)
+		card.registered_account.bank_card_talk(LANG("datum.8777ee25", list(new_cost, MONEY_NAME)), force = TRUE)
 	SEND_SOUND(target, 'sound/machines/buzz/buzz-sigh.ogg')
