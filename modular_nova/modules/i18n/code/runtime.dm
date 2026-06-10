@@ -44,13 +44,42 @@ GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 	return catalog?[key]
 
 /// 把模板里的 {0}/{1}… 用 args 依次替换（args 为 /list，元素按位置对应）。
+/// **状态词反查**：海量 LANG 调用把 `panel_open ? "open" : "closed"` 这类**开关/状态词**当原始 arg 传入
+/// （on/off、enabled/disabled、locked/unlocked、open/closed、unlock、screwed in place… 数百处），模板译了、
+/// 状态词却是英文。逐个改调用点不现实 → 在此对**恰好等于状态词表条目**的 arg 做精确替换（`_state_words.json`，
+/// 全服 locale≠en 时加载；非状态词的 arg——名字/数字/span 串——查不到、原样保留，零误伤）。
 /proc/lang_interpolate(template, list/args)
 	if(!length(args))
 		return template
+	var/list/state_words = lang_state_words()
+	var/has_states = length(state_words)
 	var/result = template
 	for(var/i in 1 to length(args))
-		result = replacetext(result, "{[i - 1]}", "[args[i]]")
+		var/arg = args[i]
+		if(has_states && istext(arg))
+			var/translated = state_words[arg]
+			if(translated)
+				arg = translated
+		result = replacetext(result, "{[i - 1]}", "[arg]")
 	return result
+
+/// 惰性加载「状态词 → 译文」表（全服 locale≠en 时读 strings/i18n/<locale>/_state_words.json；en 为空）。
+/// 惰性而非 GLOBAL_LIST_INIT：避免在 i18n_server_locale 设置前被钉死成空表。
+GLOBAL_LIST_EMPTY(i18n_state_words)
+GLOBAL_VAR_INIT(i18n_state_words_loaded, FALSE)
+/proc/lang_state_words()
+	if(GLOB.i18n_state_words_loaded)
+		return GLOB.i18n_state_words
+	var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+	if(locale != DEFAULT_UI_LOCALE)
+		var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/[locale]/_state_words.json"
+		if(fexists(path))
+			var/list/decoded = json_decode(file2text(path))
+			if(islist(decoded))
+				for(var/word in decoded)
+					GLOB.i18n_state_words[word] = decoded[word]
+	GLOB.i18n_state_words_loaded = TRUE
+	return GLOB.i18n_state_words
 
 /// BYOND 文法宏（\the \a \improper 等，无参、由引擎按名词上下文在**编译期/输出期**处理）。模板从 JSON
 /// 加载后引擎不再处理 → 会字面显示。中文无冠词/复数、且上下文已丢失，直接剥掉。`\b` 防 \theory 等误伤；
