@@ -182,7 +182,7 @@
 /obj/item/gun/ballistic/revolver/chaplain/suicide_act(mob/living/user)
 	. = ..()
 	name = "Habemus Papam"
-	desc = "I announce to you a great joy."
+	desc = LANG("obj.7737800c", null)
 
 /obj/item/gun/ballistic/revolver/chaplain/attack_self(mob/living/user)
 	pray_refill(user)

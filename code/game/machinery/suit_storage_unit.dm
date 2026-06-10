@@ -671,10 +671,10 @@
 			if("Personal") // only the player who swiped their id has access
 				id_card = WEAKREF(id)
 				name = "[id.registered_name] suit storage unit"
-				desc = "Owned by [id.registered_name]. [initial(desc)]"
+				desc = LANG("obj.e9e3d95b", list(id.registered_name, initial(desc)))
 			if("Departmental") // anyone who has the same access permissions as this id has access
 				name = "[id.assignment] suit storage unit"
-				desc = "Its a [id.assignment] suit storage unit. [initial(desc)]"
+				desc = LANG("obj.8ada1b32", list(id.assignment, initial(desc)))
 				set_access(id.GetAccess())
 			if("None") // free for all
 				name = initial(name)

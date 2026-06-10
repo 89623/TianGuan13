@@ -13,14 +13,14 @@
 	if(obj_flags & EMAGGED || . & EMP_PROTECT_SELF)
 		return
 	obj_flags |= EMAGGED
-	desc = "[desc] The display is flickering slightly."
+	desc = LANG("obj.74b3f8d1", list(desc))
 
 /obj/item/clothing/glasses/hud/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
 	balloon_alert(user, LANG("obj.818a8b78", null))
-	desc = "[desc] The display is flickering slightly."
+	desc = LANG("obj.74b3f8d1", list(desc))
 	return TRUE
 
 /obj/item/clothing/glasses/hud/suicide_act(mob/living/user)

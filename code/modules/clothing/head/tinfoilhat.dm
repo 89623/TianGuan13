@@ -65,7 +65,7 @@
 
 /obj/item/clothing/head/costume/foilhat/proc/warp_up()
 	name = "scorched tinfoil hat"
-	desc = "A badly warped up hat. Quite unlikely this will still work against any of the fictional or real dangers it used to."
+	desc = LANG("obj.57315a13", null)
 	warped = TRUE
 	clothing_flags &= ~ANTI_TINFOIL_MANEUVER
 	if(!isliving(loc) || !paranoia)

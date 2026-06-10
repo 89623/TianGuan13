@@ -44,7 +44,7 @@
 	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
 	resolved_singularity.chance_to_move_to_target += DARK_MATTER_SUPERMATTER_CHANCE_BONUS
 	name = "Dark Lord Singuloth"
-	desc = "You managed to make a singularity from dark matter, which makes no sense at all, and then you threw a supermatter into it? Are you fucking insane? Fuck it, praise Lord Singuloth."
+	desc = LANG("obj.262052f4", null)
 	consumed_supermatter = TRUE
 
 ///For 20 seconds, the singularity has buffed tracking to ensure it actually makes its way to the station, normalizes after 20 seconds

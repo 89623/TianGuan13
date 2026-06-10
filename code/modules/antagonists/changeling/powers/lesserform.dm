@@ -74,7 +74,7 @@
 /datum/action/changeling/lesserform/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	if (ismonkey(owner))
 		name = "Human Form"
-		desc = "We change back into a human. Costs 5 chemicals."
+		desc = LANG("datum.77ec45d2", null)
 	else
 		name = initial(name)
 		desc = initial(desc)

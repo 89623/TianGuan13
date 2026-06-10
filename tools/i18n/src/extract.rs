@@ -733,6 +733,20 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog) {
                             emit(catalog, ns, &template);
                         }
                     }
+                    // proc 内运行期 `desc = "<字面量>"` 赋值（含插值）：examine 显示点反查只救非插值串,
+                    // 插值 desc（"A [dried?…]trail of [X]."）整串非目录键 → 在此抽模板、由 rewrite 改 LANG。
+                    // 仅 desc（display-only,安全）；不动 name（常被 `if(name=="…")` 比较,LANG 化会破坏比较）。
+                    else if follow.is_empty() {
+                        if let Term::Ident(id) = &term.elem {
+                            if id == "desc" {
+                                if let Some(template) = build_template(rhs) {
+                                    if !template.trim().is_empty() {
+                                        emit(catalog, ns, &template);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             visit_expr(lhs, ns, catalog);

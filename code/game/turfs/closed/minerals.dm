@@ -1100,7 +1100,7 @@
 	activated_overlay.pixel_y = 2
 	add_overlay(activated_overlay)
 	name = "gibtonite deposit"
-	desc = "An active gibtonite reserve. Run!"
+	desc = LANG("turf.314518f1", null)
 	stage = GIBTONITE_ACTIVE
 	visible_message(span_danger(LANG("turf.e580b6e4", null)))
 
@@ -1135,7 +1135,7 @@
 	cut_overlay(activated_overlay)
 	activated_overlay.icon_state = "rock_Gibtonite_inactive"
 	add_overlay(activated_overlay)
-	desc = "An inactive gibtonite reserve. The ore can be extracted."
+	desc = LANG("turf.7ae029ab", null)
 	stage = GIBTONITE_STABLE
 	if(det_time < 0)
 		det_time = 0

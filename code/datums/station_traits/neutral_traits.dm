@@ -265,7 +265,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/birthday_invite/proc/setup_card(birthday_name)
-	desc = "A card stating that its [birthday_name]'s birthday today."
+	desc = LANG("obj.de1e13b6", list(birthday_name))
 	icon_state = "paperslip_words"
 	icon = 'icons/obj/service/bureaucracy.dmi'
 

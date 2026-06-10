@@ -324,14 +324,14 @@
 
 /obj/singularity/proc/supermatter_upgrade()
 	name = "supermatter-charged [initial(name)]"
-	desc = "[initial(desc)] It glows fiercely with inner fire."
+	desc = LANG("obj.7d72a847", list(initial(desc)))
 	consumed_supermatter = TRUE
 	set_light(10)
 
 /obj/singularity/proc/consume_boh(obj/boh)
 	collapsing = TRUE
 	name = "unstable [initial(name)]"
-	desc = "[initial(desc)] It seems to be collapsing in on itself."
+	desc = LANG("obj.089b3021", list(initial(desc)))
 	visible_message(
 		message = span_danger("As [src] consumes [boh], it begins to collapse in on itself!"),
 		blind_message = span_hear("You hear aggressive crackling!"),

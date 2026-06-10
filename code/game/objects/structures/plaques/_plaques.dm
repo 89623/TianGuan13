@@ -102,7 +102,7 @@
 		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
-		desc = "The plaque reads: '[descriptionchoice]'"
+		desc = LANG("obj.c063b6b9", list(descriptionchoice))
 		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
 		user.visible_message(span_notice(LANG("obj.17007a0b", list(user, src))), \
 			span_notice(LANG("obj.fb0654f4", list(src))))
@@ -175,7 +175,7 @@
 		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
-		desc = "The plaque reads: '[descriptionchoice]'"
+		desc = LANG("obj.c063b6b9", list(descriptionchoice))
 		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
 		user.visible_message(span_notice(LANG("obj.17007a0b", list(user, src))), \
 			span_notice(LANG("obj.fb0654f4", list(src))))

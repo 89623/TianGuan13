@@ -48,9 +48,9 @@
 	. = ..()
 	switch(state)
 		if(INFLATED)
-			desc = "It's a blown up latex glove on a string."
+			desc = LANG("obj.1452ff3a", null)
 		if(POPPED)
-			desc = "The remains of a latex glove."
+			desc = LANG("obj.0dfc7147", null)
 
 /obj/item/latexballoon/proc/blow(obj/item/tank/tank, mob/user)
 	if(state == POPPED)

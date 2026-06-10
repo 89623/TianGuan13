@@ -68,7 +68,7 @@
 	var/list/available_languages = length(GLOB.uncommon_roundstart_languages) ? GLOB.uncommon_roundstart_languages : list(/datum/language/common)
 	language = pick(available_languages)
 	name = "[initial(language.name)] manual"
-	desc = "The book's cover reads: \"[initial(language.name)] for Xenos - Learn common galactic tongues in seconds.\""
+	desc = LANG("obj.09c2ca37", list(initial(language.name)))
 	flavour_text = "you feel empowered with a mastery over [initial(language.name)]"
 
 /obj/item/language_manual/roundstart_species/unlimited

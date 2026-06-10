@@ -158,7 +158,7 @@
 		// clears check hands and check conscious
 		check_flags = NONE
 	name = "Activate [capitalize(linked_module.name)]"
-	desc = "Quickly activate [linked_module]."
+	desc = LANG("datum.577f2905", list(linked_module))
 	RegisterSignals(linked_module, list(
 		COMSIG_MODULE_ACTIVATED,
 		COMSIG_MODULE_DEACTIVATED,

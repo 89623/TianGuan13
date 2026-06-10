@@ -269,7 +269,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/silicon/pai/update_desc(updates)
-	desc = "A hard-light holographic avatar representing a pAI. This one appears in the form of a [chassis]."
+	desc = LANG("mob.56c97f66", list(chassis))
 	return ..()
 
 /mob/living/silicon/pai/update_icon_state()

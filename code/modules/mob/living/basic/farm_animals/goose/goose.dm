@@ -103,7 +103,7 @@
 	// 5% chance every round to have anarchy mode deadchat control on birdboat.
 	if (!prob(5))
 		return
-	desc = "[initial(desc)] It's waddling more than usual. It seems to be possessed."
+	desc = LANG("mob.cd2783df", list(initial(desc)))
 	deadchat_plays()
 
 /mob/living/basic/goose/vomit/Destroy()

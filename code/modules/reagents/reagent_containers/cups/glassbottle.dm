@@ -250,7 +250,7 @@
 	icon_state = to_mimic.icon_state
 	var/icon/drink_icon = new(to_mimic.icon, icon_state)
 	if(break_top) //if the bottle breaks its top off instead of the bottom
-		desc = "A bottle with its neck smashed off."
+		desc = LANG("obj.f9321147", null)
 		drink_icon.Blend(flipped_broken_outline, ICON_OVERLAY, rand(5), 0)
 	else
 		drink_icon.Blend(broken_outline, ICON_OVERLAY, rand(5), 1)
@@ -260,7 +260,7 @@
 	if(istype(to_mimic, /obj/item/reagent_containers/cup/glass/bottle/juice))
 		force = 0
 		throwforce = 0
-		desc = "A carton with the bottom half burst open. Might give you a papercut."
+		desc = LANG("obj.abc0de43", null)
 	else
 		if(prob(33))
 			new /obj/item/shard(to_mimic.drop_location())
@@ -523,7 +523,7 @@
 
 	// Actually finally setting the new name and desc
 	name = "[shortname] [name]"
-	desc = "[desc] [fullname] Inc."
+	desc = LANG("obj.af4db4eb", list(desc, fullname))
 
 
 /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium
@@ -1026,7 +1026,7 @@
 	else
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 50)
 	name = "bag of pruno"
-	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
+	desc = LANG("obj.70701d1f", null)
 	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		if(HAS_TRAIT(M, TRAIT_ANOSMIA))

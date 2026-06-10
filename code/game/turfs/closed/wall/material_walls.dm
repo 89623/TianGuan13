@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /turf/closed/wall/material
 	name = "wall"
 	desc = "A huge chunk of material used to separate rooms."
@@ -24,5 +25,5 @@
 
 /turf/closed/wall/material/finalize_material_effects(list/materials)
 	. = ..()
-	desc = "A huge chunk of [get_material_english_list(materials)] used to separate rooms."
+	desc = LANG("turf.2d73a0c8", list(get_material_english_list(materials)))
 

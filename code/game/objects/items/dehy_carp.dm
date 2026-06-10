@@ -25,7 +25,7 @@
 	if(swelling)
 		return
 	swelling = TRUE
-	desc = "It's growing!"
+	desc = LANG("obj.c0c04da7", null)
 	visible_message(span_notice(LANG("obj.74d46365", list(src))))
 
 	//Animation

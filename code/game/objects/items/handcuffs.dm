@@ -357,7 +357,7 @@
 
 /obj/item/restraints/handcuffs/cable/zipties/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
-	desc = "A pair of broken zipties."
+	desc = LANG("obj.d7aec9af", null)
 	icon_state = "cuff_used"
 	used = TRUE
 

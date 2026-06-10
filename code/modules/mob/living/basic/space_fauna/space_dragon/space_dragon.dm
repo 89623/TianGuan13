@@ -120,7 +120,7 @@
 	base_pixel_z -= 3
 	do_jitter_animation(150)
 	shark_form = TRUE
-	desc = "A piscine mutation of the fearsome leviathan whose flight defies modern physics. Said to be the other ultimate stage in the life cycle of the Space Carp."
+	desc = LANG("mob.6f278c03", null)
 	icon_state = icon_state == icon_living ? "sharkdragon" : "sharkdragon_dead"
 	icon_living = "sharkdragon"
 	icon_dead = "sharkdragon_dead"

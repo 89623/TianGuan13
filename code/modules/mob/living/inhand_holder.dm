@@ -125,7 +125,7 @@
 		qdel(src)
 		return
 	name = "drone (hiding)"
-	desc = "This drone is scared and has curled up into a ball!"
+	desc = LANG("obj.3f16f27c", null)
 
 /obj/item/mob_holder/drone/update_visuals(mob/living/contained)
 	var/mob/living/basic/drone/drone = contained

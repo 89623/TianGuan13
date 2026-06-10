@@ -105,13 +105,13 @@
 		if(0)
 			desc = initial(desc)
 		if(1 to 2)
-			desc = "A stack of fluffy pancakes."
+			desc = LANG("obj.fd8d7811", null)
 		if(3 to 6)
-			desc = "A fat stack of fluffy pancakes!"
+			desc = LANG("obj.8c4e6273", null)
 		if(7 to 9)
-			desc = "A grand tower of fluffy, delicious pancakes!"
+			desc = LANG("obj.5130d994", null)
 		if(PANCAKE_MAX_STACK to INFINITY)
-			desc = "A massive towering spire of fluffy, delicious pancakes. It looks like it could tumble over!"
+			desc = LANG("obj.26b2bb44", null)
 	. = ..()
 	if (pancakeCount)
 		for(var/obj/item/food/pancakes/ING in contents)

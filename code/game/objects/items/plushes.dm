@@ -693,9 +693,9 @@
 	user.visible_message(span_suicide(LANG("obj.4cd5d9a1", list(user, src, user.p_them(), user.p_theyre()))))
 	suicide_count++
 	if(suicide_count < 3)
-		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
+		desc = LANG("obj.81580134", list(suicide_count, suicide_count == 1 ? "person" : "people"))
 	else
-		desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
+		desc = LANG("obj.5584554e", list(suicide_count))
 		divine = TRUE
 		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	playsound(src, 'sound/effects/hallucinations/wail.ogg', 50, TRUE, -1)
@@ -816,7 +816,7 @@
 		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 	else if(istype(nana, /obj/item/food/grown/banana/mime) && !french)
 		name = "peluche de singe"
-		desc = "L'étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec 'Maintenant en TAILLE JUMBO!' sur l'autre face."
+		desc = LANG("obj.10eff559", null)
 		french = TRUE
 	// throw the peel at a random mob, or a random turf if there are none
 	var/obj/item/grown/bananapeel/peel = new nana.trash_type(get_turf(src))

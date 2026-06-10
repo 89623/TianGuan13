@@ -283,7 +283,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		icon_state = "advanced_tumor"
 		boosted = TRUE
 		set_light_range(6)
-		desc = "[desc]  This one seems to glow with a strong intensity."
+		desc = LANG("obj.a3f1d5f9", list(desc))
 		qdel(core)
 		return ITEM_INTERACT_SUCCESS
 

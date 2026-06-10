@@ -244,7 +244,7 @@
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
-	desc = "It's building \a [D.name]."
+	desc = LANG("obj.66c201a5", list(D.name))
 
 	return TRUE
 
@@ -292,7 +292,7 @@
 	var/turf/exit = get_step(src, drop_direction)
 	if(exit.density)
 		say(LANG("obj.1fd98c63", null))
-		desc = "It's trying to dispense the fabricated [dispensed_design.name], but the part outlet is obstructed."
+		desc = LANG("obj.4ffe1f70", list(dispensed_design.name))
 		stored_part = built_part
 		return FALSE
 

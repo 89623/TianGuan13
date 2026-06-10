@@ -111,7 +111,7 @@
 				blind_message = span_hear("You hear ping."),
 			)
 			icon_state = "autocloner_on"
-			desc = "It's full of a bubbling viscous liquid, and is lit by a mysterious glow."
+			desc = LANG("obj.236b9e99", null)
 			if(spawn_type)
 				new spawn_type(get_turf(src))
 
@@ -119,11 +119,11 @@
 		if(time_spent_spawning / time_per_spawn > 0.75)
 			update_use_power(ACTIVE_POWER_USE)
 			icon_state = "autocloner_process"
-			desc = "It's full of a bubbling viscous liquid, and is lit by a mysterious glow. A dark shape appears to be forming inside..."
+			desc = LANG("obj.302be775", null)
 		else
 			update_use_power(IDLE_POWER_USE)
 			icon_state = "autocloner_on"
-			desc = "It's full of a bubbling viscous liquid, and is lit by a mysterious glow."
+			desc = LANG("obj.236b9e99", null)
 
 		time_spent_spawning = time_spent_spawning + world.time - last_process
 	else

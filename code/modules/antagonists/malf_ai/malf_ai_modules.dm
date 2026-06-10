@@ -453,7 +453,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/override_machine/New()
 	. = ..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/override_machine/do_ability(mob/living/clicker, atom/clicked_on)
 	if(clicker.incapacitated)
@@ -480,7 +480,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	adjust_uses(-1) //adjust after we unset the active ability since we may run out of charges, thus deleting the ability
 
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 	return TRUE
 
@@ -541,7 +541,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/overload_machine/New()
 	..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(mob/living/clicker, obj/machinery/to_explode)
 	if(QDELETED(to_explode))
@@ -574,7 +574,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	clicker.playsound_local(clicker, SFX_SPARKS, 50, 0)
 	adjust_uses(-1)
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 
 	clicked_machine.audible_message(span_userdanger(LANG("datum.4aa7a19c", list(clicked_machine))))
@@ -600,7 +600,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/blackout/New()
 	..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/blackout/Activate()
 	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
@@ -617,7 +617,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	adjust_uses(-1)
 	if(QDELETED(src) || uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return
-	desc = "[initial(desc)] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 	build_all_button_icons()
 
 /// HIGH IMPACT HONKING
@@ -837,7 +837,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/reactivate_cameras/New()
 	..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
@@ -854,7 +854,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	adjust_uses(0, TRUE) //Checks the uses remaining
 	if(QDELETED(src) || !uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return
-	desc = "[initial(desc)] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 	build_all_button_icons()
 
 /// Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.
@@ -1102,7 +1102,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/emag/New()
 	. = ..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/emag/do_ability(mob/living/clicker, atom/clicked_on)
 
@@ -1165,7 +1165,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 	adjust_uses(-1)
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 	else
 		unset_ranged_ability(ai_clicker, span_warning("Out of uses!"))
@@ -1199,7 +1199,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/core_tilt/New()
 	. = ..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/core_tilt/do_ability(mob/living/clicker, atom/clicked_on)
 
@@ -1233,7 +1233,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 	adjust_uses(-1)
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 
 	COOLDOWN_START(src, time_til_next_tilt, roll_over_cooldown)
@@ -1292,7 +1292,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt/New()
 	. = ..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt/do_ability(mob/living/clicker, atom/clicked_on)
 
@@ -1339,7 +1339,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 	adjust_uses(-1)
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 
 	unset_ranged_ability(clicker, span_danger("Tilting..."))

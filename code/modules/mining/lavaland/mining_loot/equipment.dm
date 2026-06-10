@@ -198,7 +198,7 @@
 /obj/effect/immortality_talisman/proc/vanish(mob/user)
 	user.visible_message(span_danger(LANG("obj.d02f1d62", list(user, vanish_description, user.p_their()))))
 
-	desc = "It's shaped an awful lot like [user.name]."
+	desc = LANG("obj.9ba600b9", list(user.name))
 	setDir(user.dir)
 
 	user.forceMove(src)

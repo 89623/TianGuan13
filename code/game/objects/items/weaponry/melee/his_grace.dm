@@ -41,7 +41,7 @@
 			if(awakened)
 				name = "Her Grace"
 			else if (!ascended)
-				desc = "A toolbox painted bright pink. Looking at it makes you feel uneasy."
+				desc = LANG("obj.36a54b3f", null)
 			icon_state = "pink"
 			inhand_icon_state = "toolbox_pink"
 			T.visible_message(span_boldwarning(LANG("obj.24ae95a0", list(src))))
@@ -50,7 +50,7 @@
 			if(awakened)
 				name = "His Grace"
 			else if (!ascended)
-				desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
+				desc = LANG("obj.1968daf1", null)
 			icon_state = "green"
 			inhand_icon_state = "toolbox_green"
 			T.visible_message(span_boldwarning(LANG("obj.c61f1291", list(src))))
@@ -193,7 +193,7 @@
 	awakened = TRUE
 	user.visible_message(span_boldwarning(LANG("obj.9d5533d9", list(src, p_They()))), span_his_grace(LANG("obj.86ae4a09", list(src))))
 	name = p_Their() + " Grace"
-	desc = "A bloodthirsty artifact created by a profane rite."
+	desc = LANG("obj.c46609ef", null)
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	notify_ghosts(
@@ -221,9 +221,9 @@
 	playsound(loc, 'sound/items/weapons/batonextend.ogg', 100, TRUE)
 	name = initial(name)
 	if(gender == MALE)
-		desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
+		desc = LANG("obj.1968daf1", null)
 	else if (gender == FEMALE)
-		desc = "A toolbox painted bright pink. Looking at it makes you feel uneasy."
+		desc = LANG("obj.36a54b3f", null)
 	animate(src, transform=matrix())
 	force = initial(force)
 	force_bonus = initial(force_bonus)
@@ -303,7 +303,7 @@
 		return
 	var/mob/living/carbon/human/master = loc
 	force_bonus += ascend_bonus
-	desc = "A legendary toolbox and a distant artifact from The Age of Three Powers. On its three latches engraved are the words \"The Sun\", \"The Moon\", and \"The Stars\". The entire toolbox has the words \"The World\" engraved into its sides."
+	desc = LANG("obj.19ac9e28", null)
 	ascended = TRUE
 	update_appearance()
 	playsound(src, 'sound/effects/his_grace/his_grace_ascend.ogg', 100)

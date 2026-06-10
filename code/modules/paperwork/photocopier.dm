@@ -633,7 +633,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks_nova()) // NOVA EDIT CHANGE - O
 	if(isnull(temp_img))
 		return null
 	var/obj/item/photo/copied_ass = new /obj/item/photo(src)
-	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = "You see [ass]'s ass on the photo.", image = temp_img)
+	var/datum/picture/toEmbed = new(name = "[ass]'s Ass", desc = LANG("obj.cd745ebf", list(ass)), image = temp_img)
 	toEmbed.psize_x = 128
 	toEmbed.psize_y = 128
 	copied_ass.set_picture(toEmbed, TRUE, TRUE)

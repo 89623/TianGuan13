@@ -116,7 +116,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		var/datum/card/template = extract_datum()
 		desc = "<i>[template.desc]</i>"
 	else
-		desc = "It's the back of a trading card... no peeking!"
+		desc = LANG("obj.729d8435", null)
 
 /obj/item/tcgcard/update_icon_state()
 	if(flipped)
@@ -169,7 +169,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	to_chat(user, span_notice(LANG("obj.3e45ade6", null)))
 	if(!flipped)
 		name = "Trading Card"
-		desc = "It's the back of a trading card... no peeking!"
+		desc = LANG("obj.729d8435", null)
 		icon_state = "cardback"
 	else
 		var/datum/card/template = extract_datum()

@@ -81,9 +81,7 @@
 /obj/item/soulstone/update_desc(updates)
 	. = ..()
 	if(spent)
-		desc = "A fragment of the legendary treasure known simply as \
-			the 'Soul Stone'. The shard lies still, dull and lifeless; \
-			whatever spark it once held long extinguished."
+		desc = LANG("obj.d4c1a629", null)
 
 ///signal called whenever a soulstone is smacked by a bible
 /obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, ...)
@@ -637,7 +635,7 @@
 	. = ..()
 	name = "[GLOB.deity]'s punishment"
 	base_name = name
-	desc = "A prison for those who lost [GLOB.deity]'s game."
+	desc = LANG("obj.f9a21314", list(GLOB.deity))
 
 /obj/item/soulstone/anybody/mining
 	grab_sleeping = FALSE

@@ -192,7 +192,7 @@
 			if(!msg)
 				return
 			name = msg
-			desc = "Owned by [player_card.registered_account.account_holder], draws directly from [user.p_their()] account."
+			desc = LANG("obj.0f7b350a", list(player_card.registered_account.account_holder, user.p_their()))
 			my_card = player_card
 			RegisterSignal(my_card, COMSIG_QDELETING, PROC_REF(on_my_card_deleted))
 			to_chat(user, span_notice(LANG("obj.b54268ef", null)))

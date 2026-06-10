@@ -405,7 +405,7 @@
 
 /obj/item/paper/paperslip/corporate/fluff/delam_procedure/Initialize(mapload)
 	name = "NT-approved delam emergency procedure"
-	desc = "Now you're a REAL engineer!"
+	desc = LANG("obj.60b9a6b0", null)
 	return ..()
 
 /obj/item/paper/paperslip/corporate/fluff/delam_procedure/examine(mob/user)

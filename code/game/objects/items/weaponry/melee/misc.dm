@@ -262,7 +262,7 @@
 	. = ..()
 	var/datum/material/material = get_material_from_slot(/datum/material_slot/handle)
 	if (material)
-		desc = "[initial(desc)] Its handle is made of [material.name]."
+		desc = LANG("obj.9d63d6ed", list(initial(desc), material.name))
 
 /obj/item/melee/cleric_mace/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	// Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace.

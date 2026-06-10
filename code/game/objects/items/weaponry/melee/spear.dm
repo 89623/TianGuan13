@@ -329,7 +329,7 @@
 		QDEL_NULL(explosive)
 	G.forceMove(src)
 	explosive = G
-	desc = "A makeshift spear with [G] attached to it"
+	desc = LANG("obj.57ea6a30", list(G))
 
 /obj/item/spear/explosive/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	var/obj/item/grenade/nade = locate() in components

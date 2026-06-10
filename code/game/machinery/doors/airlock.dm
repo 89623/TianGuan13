@@ -2502,7 +2502,7 @@
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	name = "Airlock"
-	desc = "It opens and closes."
+	desc = LANG("obj.6ef01583", null)
 	stealthy = TRUE
 	update_appearance()
 

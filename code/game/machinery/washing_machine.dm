@@ -285,7 +285,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	inhand_x_dimension = initial(target_type.inhand_x_dimension)
 	inhand_y_dimension = initial(target_type.inhand_y_dimension)
 	name = initial(target_type.name)
-	desc = "[initial(target_type.desc)] The colors look a little dodgy."
+	desc = LANG("obj.e748a00f", list(initial(target_type.desc)))
 	return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
 
 //what happens to this object when washed inside a washing machine

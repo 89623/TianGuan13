@@ -771,7 +771,7 @@
 	SIGNAL_HANDLER
 	if(amount < SANITY_UNSTABLE)
 		icon_state = "salesman_fzz"
-		desc = "A pair of glasses, the lenses are full of TV static. They've certainly seen better days..."
+		desc = LANG("obj.3eb10867", null)
 		bigshot.update_worn_glasses()
 	else
 		icon_state = initial(icon_state)

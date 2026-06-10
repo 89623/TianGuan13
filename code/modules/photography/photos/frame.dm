@@ -202,19 +202,18 @@
 		if(1) // Deempisi
 			name = "\improper Mr. Deempisi portrait"
 			icon_state = "frame-monkey"
-			desc = "Under the portrait a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
+			desc = LANG("obj.75ed8625", null)
 		if(2) // A fruit
 			name = "picture of a fruit"
 			icon_state = "frame-fruit"
-			desc = "<i>Ceci n'est pas une orange.</i>"
+			desc = LANG("obj.1873ff7d", null)
 		if(3) // Rat
 			name = "\improper Tom portrait"
-			desc = "Jerry the cat is still not amused."
+			desc = LANG("obj.51f014ad", null)
 			icon_state = "frame-rat"
 		if(4) // Ratvar
 			name = "portrait of the imprisoned god"
-			desc = "Under the portrait a plaque reads: 'In loving memory of Ratvar, ancient powerful entity and rival of Nar'Sie, \
-				ultimately struck down by NT bluespace artillery at the hands of Outpost 17 crew. Rust in peace.'" // common core lore.
+			desc = LANG("obj.f357aef6", null) // common core lore.
 			icon_state = "frame-ratvar"
 	portrait_name = name
 	portrait_state = icon_state
@@ -237,7 +236,7 @@
 /obj/structure/sign/picture_frame/portrait/update_desc(updates)
 	. = ..()
 	if(framed)
-		desc = "Every time you look it makes you laugh."
+		desc = LANG("obj.3917ebcf", null)
 	else
 		desc = portrait_desc
 

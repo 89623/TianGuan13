@@ -577,10 +577,10 @@
 	var/datum/species/jelly/luminescent/species = target
 	if(!istype(species) || !species.current_extract)
 		name = "Integrate Extract"
-		desc = "Eat a slime extract to use its properties."
+		desc = LANG("datum.afe54029", null)
 	else
 		name = "Eject Extract"
-		desc = "Eject your current slime extract."
+		desc = LANG("datum.5daacb39", null)
 
 	return ..()
 

@@ -86,9 +86,9 @@
 /obj/item/grenade/chem_grenade/update_desc(updates)
 	switch (stage)
 		if (GRENADE_EMPTY)
-			desc = "A do it yourself [initial(name)]! [initial(casedesc)]"
+			desc = LANG("obj.a9fb4d33", list(initial(name), initial(casedesc)))
 		if (GRENADE_WIRED)
-			desc = "An unsecured [initial(name)] assembly."
+			desc = LANG("obj.e2c4a99c", list(initial(name)))
 		if (GRENADE_READY)
 			desc = initial(desc)
 	return ..()

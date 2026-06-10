@@ -127,7 +127,7 @@ GLOBAL_DATUM(mech_drop_alert_handler, /datum/mech_drop_alert_handler)
 		icon_state = "mech_beacon_on"
 		activated = TRUE
 		activation_time = world.time
-		desc = "[desc]\nThis one is active, a blue light beams up from its top."
+		desc = LANG("obj.c0fed000", list(desc))
 		say(pick(
 			"Orbital drop beacon activated. Recommend throwing unless you enjoy being crushed.",
 			"Deployment sequence initiated. Toss me unless you're feeling brave.",

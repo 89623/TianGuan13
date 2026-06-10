@@ -154,17 +154,17 @@
 	icon = modular_additions_icon
 	switch(design_choice)
 		if("Grey")
-			desc = "A grey sack neatly crafted out of paper."
+			desc = LANG("obj.af880cc2", null)
 		if("Black")
-			desc = "A black sack neatly crafted out of paper."
+			desc = LANG("obj.197f7bc5", null)
 		if("Sec")
-			desc = "A sturdy paper sack ideal to carry lunch on those lonely long patrols."
+			desc = LANG("obj.baa4b39c", null)
 		if("Medical")
-			desc = "A Nitrile lined sack useful to carry sanitized snacks for both patients and medical staff alike."
+			desc = LANG("obj.830e4508", null)
 		if("Fox")
-			desc = "A paper sack with a prowling fox etched onto the side."
+			desc = LANG("obj.3a6ae854", null)
 		if("Bunny")
-			desc = "A paper sack with a hopping bunny etched onto the side."
+			desc = LANG("obj.226066a5", null)
 		else
 			icon = initial(icon)
 	return ..()

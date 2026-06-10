@@ -203,7 +203,7 @@
  */
 /obj/structure/holopay/proc/assign_card(turf/target, obj/item/card/id/card)
 	linked_card = card
-	desc = "Pays directly into [card.registered_account.account_holder]'s bank account."
+	desc = LANG("obj.af649a63", list(card.registered_account.account_holder))
 	force_fee = card.holopay_fee
 	shop_logo = card.holopay_logo
 	name = card.holopay_name

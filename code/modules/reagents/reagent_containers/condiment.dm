@@ -154,7 +154,7 @@
 	name = "[user.name]"
 	user.name = newname
 	user.real_name = newname
-	desc = "Salt. From dead crew, presumably."
+	desc = LANG("obj.f61ade7a", null)
 	return TOXLOSS
 
 /obj/item/reagent_containers/condiment/saltshaker/interact_with_atom(atom/target, mob/living/user, list/modifiers)
@@ -486,7 +486,7 @@
 
 	if(!reagents.total_volume)
 		icon_state = "condi_empty"
-		desc = "A small condiment pack. It is empty."
+		desc = LANG("obj.f99f1771", null)
 		return
 	var/datum/reagent/main_reagent = reagents.get_master_reagent()
 
@@ -496,7 +496,7 @@
 		desc = temp_list[3]
 	else
 		icon_state = "condi_mixed"
-		desc = "A small condiment pack. The label says it contains [originalname]"
+		desc = LANG("obj.142cb6df", list(originalname))
 
 //Ketchup
 /obj/item/reagent_containers/condiment/pack/ketchup

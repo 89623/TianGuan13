@@ -11,7 +11,7 @@
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
-	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanotrasen is still using REST APIs. How grim."
+	desc = LANG("obj.985051d0", list(CURRENT_STATION_YEAR))
 
 /obj/machinery/computer/quantum_console/post_machine_initialize()
 	. = ..()

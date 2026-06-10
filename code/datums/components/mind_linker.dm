@@ -264,7 +264,7 @@
 
 	var/datum/component/mind_linker/linker = Target
 	name = "[linker.network_name] Speech"
-	desc = "Send a psychic message to everyone connected to your [linker.network_name]."
+	desc = LANG("datum.d19b7b5d", list(linker.network_name))
 	button_icon = linker.speech_action_icon
 	button_icon_state = linker.speech_action_icon_state
 	background_icon_state = linker.speech_action_background_icon_state

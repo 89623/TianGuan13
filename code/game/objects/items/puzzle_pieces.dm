@@ -635,7 +635,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	icon_state = pick(pass_character)
 	if(!text2num(icon_state))
 		name = "letter"
-		desc = "A letter vandalizing the station."
+		desc = LANG("obj.ebcf6b81", null)
 	return TRUE
 
 /obj/effect/decal/cleanable/crayon/puzzle/pin

@@ -36,7 +36,7 @@
 	. = ..()
 	if(prob(reference_chance))
 		name = "Solemn Vow"
-		desc = "Art lovers will cherish the bust of Hippocrates, commemorating a time when medics still thought doing no harm was a good idea."
+		desc = LANG("obj.b0a9ca1b", null)
 		attack_speed = CLICK_CD_SLOW
 		reference = TRUE
 

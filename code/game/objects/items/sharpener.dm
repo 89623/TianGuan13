@@ -58,7 +58,7 @@
 		I.sharpness = SHARP_EDGED //When you whetstone something, it becomes an edged weapon, even if it was previously dull or pointy
 	I.throwforce = clamp(I.throwforce + increment, 0, max)
 	I.name = "[prefix] [I.name]" //This adds a prefix and a space to the item's name regardless of what the prefix is
-	desc = "[desc] At least, it used to."
+	desc = LANG("obj.a7042ee2", list(desc))
 	uses-- //this doesn't cause issues because we check if uses == 0 earlier in this proc
 	if(uses == 0)
 		name = "worn out [name]" //whetstone becomes used whetstone

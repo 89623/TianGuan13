@@ -539,7 +539,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	if(novariants)
 		return
 	. = ..()
-	desc = "A [(amount < 3) ? "piece" : "coil"] of insulated power cable."
+	desc = LANG("obj.a89449cb", list((amount < 3) ? "piece" : "coil"))
 
 /obj/item/stack/cable_coil/proc/set_cable_color(new_color)
 	color = GLOB.cable_colors[new_color]
@@ -611,7 +611,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 			target_layer = CABLE_LAYER_3
 		if("Multilayer cable hub")
 			name = "multilayer cable hub"
-			desc = "A multilayer cable hub."
+			desc = LANG("obj.700bc0b5", null)
 			icon = 'icons/obj/pipes_n_cables/structures.dmi'
 			icon_state = "cable_bridge"
 			novariants = TRUE
@@ -620,7 +620,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 			target_layer = CABLE_LAYER_2
 		if("Multi Z layer cable hub")
 			name = "multi z layer cable hub"
-			desc = "A multi-z layer cable hub."
+			desc = LANG("obj.d52d2ab4", null)
 			icon = 'icons/obj/pipes_n_cables/structures.dmi'
 			icon_state = "cablerelay-broken-cable"
 			novariants = TRUE

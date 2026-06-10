@@ -257,11 +257,11 @@
 	. = ..()
 	if(prob(50))
 		name = "Acidic buffer bottle"
-		desc = "A small bottle of acidic buffer."
+		desc = LANG("obj.ce30039a", null)
 		reagents.add_reagent(/datum/reagent/reaction_agent/acidic_buffer, 30)
 	else
 		name = "Basic buffer bottle"
-		desc = "A small bottle of basic buffer."
+		desc = LANG("obj.0a25d5cd", null)
 		reagents.add_reagent(/datum/reagent/reaction_agent/basic_buffer, 30)
 
 /obj/item/reagent_containers/cup/bottle/acidic_buffer

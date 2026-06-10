@@ -246,7 +246,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /datum/barsign/New()
 	if(!desc)
-		desc = "It displays \"[name]\"."
+		desc = LANG("datum.3e634863", list(name))
 
 // Specific bar signs.
 

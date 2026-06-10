@@ -3413,5 +3413,12 @@
   "mob.exm_closer": "<i>You can <a href=byond://?src={0};run_examinate={1}>examine</a> {2} closer...</i>",
   "mob.3803618b": "All rise for {0}, ascendant to the throne in \\the {1}.",
   "mob.74ac00af": "{0} was startled by the supermatter!",
-  "mob.b8d62116": "{0} has shortcircuited {1} to explode in 60 seconds!"
+  "mob.b8d62116": "{0} has shortcircuited {1} to explode in 60 seconds!",
+  "mob.4fc73b31": "At a ripe old age of {0}, Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi.",
+  "mob.56c97f66": "A hard-light holographic avatar representing a pAI. This one appears in the form of a {0}.",
+  "mob.6f278c03": "A piscine mutation of the fearsome leviathan whose flight defies modern physics. Said to be the other ultimate stage in the life cycle of the Space Carp.",
+  "mob.7c771812": "A deceased primitive. Upon closer inspection, it was suffering from severe cellular degeneration and its garments are machine made...",
+  "mob.a5108206": "Will this grow into something useful?",
+  "mob.b70bb106": "A young raptor that can grow into a robust, trusty steed. Rather naive at such an age, it shouldn't be too hard to tame.",
+  "mob.cd2783df": "{0} It's waddling more than usual. It seems to be possessed."
 }

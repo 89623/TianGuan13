@@ -148,7 +148,7 @@
 		else
 			colour = COLOR_BLACK
 	to_chat(user, span_notice(LANG("obj.f4e5e48c", list(src, chosen_color))))
-	desc = "It's a fancy four-color ink pen, set to [chosen_color]."
+	desc = LANG("obj.e07620c0", list(chosen_color))
 	balloon_alert(user, LANG("obj.23429591", null))
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE, -3)
 

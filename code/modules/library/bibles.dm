@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	var/obj/structure/fluff/paper/stack/pages = new(get_turf(src))
 	pages.setDir(pick(GLOB.alldirs))
 	name = "punctured bible"
-	desc = "A memento of good luck, or perhaps divine intervention?"
+	desc = LANG("obj.45ac214f", null)
 	icon_state = "shot"
 	if (!GLOB.bible_icon_state)
 		GLOB.bible_icon_state = "shot" // New symbol of your religion if you hadn't picked one

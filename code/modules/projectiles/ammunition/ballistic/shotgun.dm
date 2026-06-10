@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Shotgun
 
 /obj/item/ammo_casing/shotgun
@@ -176,7 +177,7 @@
 	if(isnull(loaded_projectile) || !prob(40/severity))
 		return
 	name = "malfunctioning laser shell"
-	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package. The capacitor powering this assembly appears to be smoking."
+	desc = LANG("obj.aaf03b23", null)
 	projectile_type = /obj/projectile/beam/scatter/pathetic
 	loaded_projectile = new projectile_type(src)
 

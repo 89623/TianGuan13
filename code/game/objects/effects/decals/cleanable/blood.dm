@@ -483,7 +483,7 @@
 
 /obj/effect/decal/cleanable/blood/trail/update_desc(updates)
 	. = ..()
-	desc = "A [dried ? "dried " : ""]trail of [get_blood_string()]."
+	desc = LANG("obj.13163bec", list(dried ? "dried " : "", get_blood_string()))
 
 /obj/effect/decal/cleanable/blood/trail/lazy_init_reagents()
 	if(!istype(loc, /obj/effect/decal/cleanable/blood/trail_holder))

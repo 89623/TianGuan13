@@ -332,7 +332,7 @@
 		desc = initial(desc)
 	else
 		name = "Clear the Blood Mark"
-		desc = "Remove the Blood Mark you previously set."
+		desc = LANG("datum.cbe05017", null)
 
 	return ..()
 

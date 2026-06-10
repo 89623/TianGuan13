@@ -50,8 +50,7 @@
 /obj/item/surgery_tray/update_desc()
 	. = ..()
 	if(is_portable)
-		desc = "The wheels and bottom storage of this medical cart have been stowed away, \
-			leaving a cumbersome tray in its place."
+		desc = LANG("obj.54360783", null)
 	else
 		desc = initial(desc)
 

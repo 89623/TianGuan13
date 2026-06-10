@@ -1146,7 +1146,7 @@
 	if(department_account)
 		set_account(department_account)
 		name = "departmental card ([department_name])"
-		desc = "Provides access to the [department_name]."
+		desc = LANG("obj.be0c5ba8", list(department_name))
 	SSeconomy.dep_cards += src
 
 /obj/item/card/id/departmental_budget/Destroy()

@@ -444,7 +444,7 @@
 /obj/structure/table/greyscale/finalize_material_effects(list/materials)
 	. = ..()
 	var/english_list = get_material_english_list(materials)
-	desc = "A square [(length(materials) > 1) ? "amalgamation" : "piece"] of [english_list] on four legs. It can not move."
+	desc = LANG("obj.0b06f230", list((length(materials) > 1) ? "amalgamation" : "piece", english_list))
 
 ///Table on wheels
 /obj/structure/table/rolling

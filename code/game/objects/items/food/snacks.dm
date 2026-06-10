@@ -54,7 +54,7 @@
 		. += span_notice(LANG("obj.f7594144", null))
 
 		name = "\improper South Bronx Parasite bar"
-		desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
+		desc = LANG("obj.5f3a39ab", null)
 		revelation = TRUE
 
 /obj/item/food/sosjerky

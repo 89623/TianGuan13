@@ -21,7 +21,7 @@
 		"EVERY TIME YOU DREAM OF CIRCULAR CUISINE!",
 		"WE ALWAYS DELIVER! WE ALWAYS DELIVER! WE ALWAYS DELIVER!",
 		)
-	desc = "A pocket-sized plastic slip with a button in the middle. \"[pick(descstrings)]\" is written on the back."
+	desc = LANG("obj.4dd0bfdc", list(pick(descstrings)))
 
 /obj/item/pizzavoucher/attack_self(mob/user)
 	. = ..()

@@ -40,7 +40,7 @@
 /obj/machinery/power/emitter/energycannon/magical/Initialize(mapload)
 	. = ..()
 	if(prob(50))
-		desc = "Oh no, not again."
+		desc = LANG("obj.e385799a", null)
 	update_appearance()
 
 /obj/machinery/power/emitter/energycannon/magical/update_icon_state()

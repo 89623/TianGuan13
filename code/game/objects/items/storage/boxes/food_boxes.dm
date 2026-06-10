@@ -89,15 +89,15 @@
 /obj/item/storage/box/papersack/update_desc(updates)
 	switch(design_choice)
 		if("None")
-			desc = "A sack neatly crafted out of paper."
+			desc = LANG("obj.5d892fde", null)
 		if("NanotrasenStandard")
-			desc = "A standard Nanotrasen paper lunch sack for loyal employees on the go."
+			desc = LANG("obj.4cf6d997", null)
 		if("SyndiSnacks")
-			desc = "The design on this paper sack is a remnant of the notorious 'SyndieSnacks' program."
+			desc = LANG("obj.8dc7b5be", null)
 		if("Heart")
-			desc = "A paper sack with a heart etched onto the side."
+			desc = LANG("obj.55d3535e", null)
 		if("SmileyFace")
-			desc = "A paper sack with a crude smile etched onto the side."
+			desc = LANG("obj.e344dccd", null)
 	return ..()
 
 /obj/item/storage/box/papersack/tool_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -165,7 +165,7 @@
 	. = ..()
 	if(theme_name)
 		name = "[name] ([theme_name])"
-		desc = "A box containing supplementary ingredients for the aspiring chef. The box's theme is '[theme_name]'."
+		desc = LANG("obj.9ac3110c", list(theme_name))
 		inhand_icon_state = "syringe_kit"
 
 /obj/item/storage/box/ingredients/wildcard

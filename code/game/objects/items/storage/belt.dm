@@ -363,7 +363,7 @@
 /obj/item/storage/belt/military/snack/Initialize(mapload)
 	. = ..()
 	var/sponsor = pick("Donk Co.", "Waffle Corp.", "Roffle Co.", "Gorlex Marauders", "Tiger Cooperative")
-	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
+	desc = LANG("obj.b8c69bca", list(sponsor))
 
 /obj/item/storage/belt/military/snack/full/Initialize(mapload)
 	. = ..()

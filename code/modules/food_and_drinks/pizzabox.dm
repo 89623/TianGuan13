@@ -71,19 +71,19 @@
 		boxtag_set = TRUE
 	if(open)
 		if(pizza)
-			desc = "[desc] It appears to have \a [pizza] inside[pizza.sliced ? ". It is sliced" : ""]. Use your other hand to take it out."
+			desc = LANG("obj.a50048f4", list(desc, pizza, pizza.sliced ? ". It is sliced" : ""))
 		if(bomb)
-			desc = "[desc] Wait, what?! It has \a [bomb] inside!"
+			desc = LANG("obj.50e207f3", list(desc, bomb))
 			if(bomb_defused)
-				desc = "[desc] The bomb seems inert. Use your other hand to activate it."
+				desc = LANG("obj.11d93e52", list(desc))
 			if(bomb_active)
-				desc = "[desc] It looks like it's about to go off!"
+				desc = LANG("obj.e761e95b", list(desc))
 	else
 		var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
 		if(length(boxes))
-			desc = "A pile of boxes suited for pizzas. There appear to be [length(boxes) + 1] boxes in the pile."
+			desc = LANG("obj.041754f2", list(length(boxes) + 1))
 		if(box.boxtag != "")
-			desc = "[desc] The [length(boxes) ? "top box" : "box"]'s tag reads: [box.boxtag]."
+			desc = LANG("obj.a7fc18c2", list(desc, length(boxes) ? "top box" : "box", box.boxtag))
 
 /obj/item/pizzabox/update_icon_state()
 	if(!open)

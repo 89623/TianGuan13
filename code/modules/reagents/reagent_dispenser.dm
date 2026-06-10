@@ -371,7 +371,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 /obj/structure/reagent_dispensers/wall/peppertank/Initialize(mapload)
 	. = ..()
 	if(prob(1))
-		desc = "IT'S PEPPER TIME, BITCH!"
+		desc = LANG("obj.5ea2883c", null)
 	if(mapload)
 		find_and_mount_on_atom()
 

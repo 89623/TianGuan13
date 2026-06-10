@@ -48,7 +48,7 @@
 	if(uses != INFINITY)
 		uses--
 	if(!uses)
-		desc = "[initial(desc)] Looks like it's been used up."
+		desc = LANG("obj.8c69c278", list(initial(desc)))
 
 /obj/item/autosurgeon/bodypart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, bodypart_type))
@@ -82,5 +82,5 @@
 		if(uses != INFINITY)
 			uses--
 		if(!uses)
-			desc = "[initial(desc)] Looks like it's been used up."
+			desc = LANG("obj.8c69c278", list(initial(desc)))
 	return TRUE

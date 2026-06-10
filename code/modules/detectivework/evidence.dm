@@ -32,7 +32,7 @@
 		desc = src::desc
 		return
 	var/obj/item/inserted = locate(/obj/item) in atom_storage.real_location
-	desc = "An evidence bag containing [inserted]. [inserted.desc]"
+	desc = LANG("obj.99ac7dc4", list(inserted, inserted.desc))
 
 /obj/item/evidencebag/update_icon_state()
 	. = ..()

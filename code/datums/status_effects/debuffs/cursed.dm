@@ -188,10 +188,10 @@
 	var/curses = linked_effect?.curse_count
 	switch(curses)
 		if(2)
-			desc = "Your greed is catching up to you..."
+			desc = LANG("atom.8d9ae20d", null)
 		if(3)
-			desc = "You really don't feel good right now... But why stop now?"
+			desc = LANG("atom.59269b5c", null)
 		if(4 to INFINITY)
-			desc = "Real winners quit before they reach the ultimate prize."
+			desc = LANG("atom.e9733500", null)
 
 #undef DEFAULT_MAX_CURSE_COUNT

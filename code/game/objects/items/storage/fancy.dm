@@ -225,7 +225,7 @@
 	attached_coupon = null
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
-	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
+	desc = LANG("obj.fbd1771d", null)
 	atom_storage.max_slots = 0
 
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)

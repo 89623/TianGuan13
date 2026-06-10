@@ -60,11 +60,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/match/update_desc(updates)
 	. = ..()
 	if(lit)
-		desc = "[initial(desc)] This one is lit."
+		desc = LANG("obj.68d3ee3f", list(initial(desc)))
 	else if(burnt)
-		desc = "[initial(desc)] This one has seen better days."
+		desc = LANG("obj.f95d29a4", list(initial(desc)))
 	else if(broken)
-		desc = "[initial(desc)] This one is broken."
+		desc = LANG("obj.2df33494", list(initial(desc)))
 	else
 		desc = initial(desc)
 

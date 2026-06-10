@@ -236,7 +236,7 @@
 /obj/item/sign/proc/set_sign_type(obj/structure/sign/fake_type)
 	name = initial(fake_type.name)
 	if(fake_type != /obj/structure/sign/blank)
-		desc = "[initial(fake_type.desc)] It can be placed on a wall."
+		desc = LANG("obj.fee310c5", list(initial(fake_type.desc)))
 	else
 		desc = initial(desc)
 	icon_state = initial(fake_type.icon_state)

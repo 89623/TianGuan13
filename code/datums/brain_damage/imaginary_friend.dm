@@ -474,11 +474,11 @@
 	var/mob/eye/imaginary_friend/I = owner
 	if(I.hidden)
 		name = "Show"
-		desc = "Become visible to your owner."
+		desc = LANG("datum.bda118fc", null)
 		button_icon_state = "unhide"
 	else
 		name = "Hide"
-		desc = "Hide yourself from your owner's sight."
+		desc = LANG("datum.dd11caf1", null)
 		button_icon_state = "hide"
 	build_all_button_icons()
 
@@ -492,10 +492,10 @@
 	var/mob/eye/imaginary_friend/fake_friend = owner
 	if(fake_friend.hidden)
 		name = "Show"
-		desc = "Become visible to your owner."
+		desc = LANG("datum.bda118fc", null)
 	else
 		name = "Hide"
-		desc = "Hide yourself from your owner's sight."
+		desc = LANG("datum.dd11caf1", null)
 	return ..()
 
 /datum/action/innate/imaginary_hide/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force = FALSE)

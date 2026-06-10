@@ -473,6 +473,20 @@ impl<'a> Rewriter<'a> {
                         }
                     }
                 }
+                // proc 内运行期 `desc = "<字面量>"`：插值 desc 在 examine 显示点反查够不着（整串非目录键）→
+                // 改 LANG（与 extract 同条件）。复用 examine 改写器：anchor="desc",找其后唯一字符串字面量。
+                // 仅 desc（display-only）；不动 name（避免破坏 `if(name=="…")` 比较）。
+                else if matches!(op, AssignOp::Assign) {
+                    if let Expression::Base { term, follow } = lhs.as_ref() {
+                        if follow.is_empty() {
+                            if let Term::Ident(id) = &term.elem {
+                                if id == "desc" {
+                                    self.try_rewrite_examine(term.location, id, rhs, ns);
+                                }
+                            }
+                        }
+                    }
+                }
                 self.visit_expr(lhs, ns);
                 self.visit_expr(rhs, ns);
             }

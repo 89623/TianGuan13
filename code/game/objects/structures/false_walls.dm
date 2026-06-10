@@ -401,7 +401,7 @@
 
 /obj/structure/falsewall/material/finalize_material_effects(list/materials)
 	. = ..()
-	desc = "A huge chunk of [get_material_english_list(materials)] used to separate rooms."
+	desc = LANG("obj.2d73a0c8", list(get_material_english_list(materials)))
 
 /obj/structure/falsewall/material/toggle_open()
 	if(!QDELETED(src))

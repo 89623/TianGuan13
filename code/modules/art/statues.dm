@@ -68,7 +68,7 @@
 	. = ..()
 	if (prob(25))
 		icon_state = "drake_headless"
-		desc = "Statue of a lesser drake. Time has not been kind."
+		desc = LANG("obj.513400b4", null)
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/statue/drake/update_overlays()

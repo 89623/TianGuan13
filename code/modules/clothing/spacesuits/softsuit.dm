@@ -95,7 +95,7 @@
 		to_chat(owner, span_warning(LANG("obj.8f7fe4f1", list(src))))
 		clothing_flags &= ~STOPSPRESSUREDAMAGE
 		name = "torn [src]."
-		desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
+		desc = LANG("obj.35d05cba", null)
 		torn = TRUE
 		playsound(loc, 'sound/items/weapons/slashmiss.ogg', 50, TRUE)
 		playsound(loc, 'sound/effects/refill.ogg', 50, TRUE)

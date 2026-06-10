@@ -127,7 +127,7 @@
 			user.balloon_alert(user, LANG("obj.47c456e1", null))
 			rune.set_stage(RUNE_STAGE_COMPLETE)
 			expended = TRUE
-			desc = "A suspicious looking spraycan, it's all out of paint."
+			desc = LANG("obj.726a6251", null)
 			SEND_SIGNAL(src, COMSIG_TRAITOR_GRAFFITI_DRAWN, rune)
 
 		if (RUNE_STAGE_COMPLETE, RUNE_STAGE_REMOVABLE)
@@ -214,16 +214,16 @@
 	switch(drawn_stage)
 		if (RUNE_STAGE_OUTLINE)
 			icon_state = "traitor_rune_outline"
-			desc = "It looks like it's going to be... the Syndicate logo?"
+			desc = LANG("obj.853deadf", null)
 
 		if (RUNE_STAGE_COLOURED, RUNE_STAGE_REMOVABLE)
 			icon_state = "traitor_rune_done"
-			desc = "A large depiction of the Syndicate logo."
+			desc = LANG("obj.34d1aab5", null)
 			clean_proof = FALSE
 
 		if (RUNE_STAGE_COMPLETE)
 			icon_state = "traitor_rune_sheen"
-			desc = "A large depiction of the Syndicate logo. It looks slippery."
+			desc = LANG("obj.c999c8e0", null)
 			var/datum/demoralise_moods/graffiti/mood_category = new()
 			demoraliser = new(src, 7, TRUE, mood_category)
 			clean_proof = TRUE

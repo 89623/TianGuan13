@@ -65,7 +65,7 @@
 
 /obj/item/cardboard_cutout/proc/push_over()
 	appearance = initial(appearance)
-	desc = "[initial(desc)] It's been pushed over."
+	desc = LANG("obj.3688fcce", list(initial(desc)))
 	icon_state = "cutout_pushed_over"
 	remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	pushed_over = TRUE

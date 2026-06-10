@@ -525,7 +525,7 @@
 		playsound(proto_emitter,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 		proto_emitter.manual = FALSE
 		name = "Switch to Manual Firing"
-		desc = "The emitter will only fire on your command and at your designated target"
+		desc = LANG("datum.06164a54", null)
 		button_icon_state = "mech_zoom_on"
 		for(var/obj/item/item in buckled_mob.held_items)
 			if(istype(item, /obj/item/turret_control))
@@ -534,7 +534,7 @@
 		return
 	playsound(proto_emitter,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	name = "Switch to Automatic Firing"
-	desc = "Emitters will switch to periodic firing at your last target"
+	desc = LANG("datum.f2dbcbf7", null)
 	button_icon_state = "mech_zoom_off"
 	proto_emitter.manual = TRUE
 	for(var/things in buckled_mob.held_items)

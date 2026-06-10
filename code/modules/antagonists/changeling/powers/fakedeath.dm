@@ -164,10 +164,10 @@
 /datum/action/changeling/fakedeath/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	if(revive_ready)
 		name = "Revive"
-		desc = "We arise once more."
+		desc = LANG("datum.e91c0a3e", null)
 	else
 		name = "Reviving Stasis"
-		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
+		desc = LANG("datum.f87402fd", null)
 	return ..()
 
 /datum/action/changeling/fakedeath/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)

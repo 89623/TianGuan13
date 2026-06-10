@@ -165,7 +165,7 @@
 	START_PROCESSING(SSobj, src)
 	burning_loop.start()
 	lit = TRUE
-	desc = "A large stone brick fireplace, warm and cozy."
+	desc = LANG("obj.273d939d", null)
 	flame_expiry_timer = world.time + fuel_added
 	fuel_added = 0
 	update_appearance()

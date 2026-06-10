@@ -653,7 +653,7 @@
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	if ((wound_flags & ACCEPTS_GAUZE) && current_gauze)
 		var/sling_condition = get_gauze_condition()
-		desc = "[victim.p_Their()] [limb.plaintext_zone] is [sling_condition]fastened in a sling of [current_gauze.name]"
+		desc = LANG("datum.81f1bbc0", list(victim.p_Their(), limb.plaintext_zone, sling_condition, current_gauze.name))
 	else
 		desc = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
 

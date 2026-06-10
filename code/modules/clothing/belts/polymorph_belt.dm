@@ -177,7 +177,7 @@
 	shapeshift_type = transform_type
 	possible_shapes = list(transform_type)
 	var/mob/living/will_become = transform_type
-	desc = "Assume your [initial(will_become.name)] form!"
+	desc = LANG("datum.d1cb37bc", list(initial(will_become.name)))
 	build_all_button_icons(update_flags = UPDATE_BUTTON_NAME)
 
 /// Subtype of the polymorph status effect which tracks arbitrary mob transformation

@@ -31,7 +31,7 @@
 
 /obj/item/ammo_casing/foam_dart/update_desc()
 	. = ..()
-	desc = "It's Donk or Don't! [modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."]"
+	desc = LANG("obj.14918714", list(modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."))
 
 /obj/item/ammo_casing/foam_dart/examine_more(mob/user)
 	. = ..()

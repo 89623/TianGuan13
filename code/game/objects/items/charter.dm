@@ -84,8 +84,7 @@
 	log_game("[ukey] has renamed the station as [station_name()].")
 
 	name = "station charter for [station_name()]"
-	desc = "An official document entrusting the governance of \
-		[station_name()] and surrounding space to Captain [uname]."
+	desc = LANG("obj.518d60ac", list(station_name(), uname))
 	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
@@ -112,7 +111,7 @@
 	minor_announce(LANG("obj.5802b2ea", list(ureal_name, name_type, html_decode(station_name()))), "Captain's Banner") //decode station_name to avoid minor_announce double encode
 	log_game("[ukey] has renamed the [name_type] as [station_name()].")
 	name = "banner of [station_name()]"
-	desc = "The banner bears the official coat of arms of Nanotrasen, signifying that [station_name()] has been claimed by Captain [uname] in the name of the company."
+	desc = LANG("obj.319f1819", list(station_name(), uname))
 	SSblackbox.record_feedback("text", "station_renames", 1, "[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE

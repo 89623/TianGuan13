@@ -615,5 +615,8 @@
   "turf.ff2b2ad3": "smooth plated catwalk floor",
   "turf.ff5c14ca": "orange ungenerated turf",
   "turf.ff9d66d1": "There's a <b>small crack</b> on the edge of it.",
-  "turf.1165d1e0": "A new crack has been spawned in {0}."
+  "turf.1165d1e0": "A new crack has been spawned in {0}.",
+  "turf.2d73a0c8": "A huge chunk of {0} used to separate rooms.",
+  "turf.314518f1": "An active gibtonite reserve. Run!",
+  "turf.7ae029ab": "An inactive gibtonite reserve. The ore can be extracted."
 }

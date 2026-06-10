@@ -65,9 +65,7 @@
 
 	if(tumor.is_dormant)
 		name = "Exit Dormant State"
-		desc = "Causes the pitch-black mass living inside of you to awaken, allowing your circulation to return and blood to pump freely once again. It fills your legs to let you run again, \
-			and longs for the darkness as it did before. You start to feel strength rather than the weakness you felt before. However, the tumor giving you life is not on a switch, and it will take \
-			some time to subdue it again."
+		desc = LANG("datum.2f896c32", null)
 	else
 		name = initial(name)
 		desc = initial(desc)

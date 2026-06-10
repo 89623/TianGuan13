@@ -540,7 +540,7 @@
 
 	to_chat(user, span_hierophant(LANG("datum.9260ae25", list(KNOWLEDGE_RITUAL_POINTS))))
 
-	desc = "Allows you to transmute [english_list(requirements_string)] for [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points. This can only be completed once."
+	desc = LANG("datum.40cb93a1", list(english_list(requirements_string), KNOWLEDGE_RITUAL_POINTS))
 
 /datum/heretic_knowledge/knowledge_ritual/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !was_completed

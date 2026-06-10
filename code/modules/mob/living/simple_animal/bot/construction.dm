@@ -229,7 +229,7 @@
 	. = ..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			desc = "It's a toolbox with a giant monitor sticking out!."
+			desc = LANG("obj.b4e61cb5", null)
 		else
 			desc = initial(desc)
 
@@ -543,7 +543,7 @@
 				return ITEM_INTERACT_BLOCKING
 			to_chat(user,span_notice(LANG("obj.7f8b5b85", list(tool, src))))
 			icon_state = "firebot_helmet"
-			desc = "An incomplete firebot assembly with a fire helmet."
+			desc = LANG("obj.f1bb56c1", null)
 			qdel(tool)
 			build_step++
 			return ITEM_INTERACT_SUCCESS
@@ -650,7 +650,7 @@
 				return ITEM_INTERACT_BLOCKING
 			balloon_alert(user, LANG("obj.be522028", null))
 			icon_state = "vim_1"
-			desc = "Some kind of incomplete mechanism. It seems to be missing the headlights."
+			desc = LANG("obj.ecbd4795", null)
 			qdel(tool)
 			build_step++
 			return ITEM_INTERACT_SUCCESS
@@ -662,7 +662,7 @@
 				return ITEM_INTERACT_SUCCESS
 			balloon_alert(user, LANG("obj.c272f53e", null))
 			icon_state = "vim_2"
-			desc = "Some kind of incomplete mechanism. The flashlight is added, but not secured."
+			desc = LANG("obj.0024d586", null)
 			qdel(tool)
 			build_step++
 			return ITEM_INTERACT_SUCCESS
@@ -675,7 +675,7 @@
 				return ITEM_INTERACT_BLOCKING
 			balloon_alert(user, LANG("obj.63dd6cad", null))
 			icon_state = "vim_3"
-			desc = "Some kind of incomplete mechanism. It seems nearly completed, and just needs a voice assembly."
+			desc = LANG("obj.2c86b2fb", null)
 			build_step++
 			return ITEM_INTERACT_SUCCESS
 

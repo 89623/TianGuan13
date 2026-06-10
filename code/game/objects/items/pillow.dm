@@ -126,11 +126,11 @@
 /obj/item/pillow/update_appearance(updates)
 	. = ..()
 	if(!pillow_trophy)
-		desc = "A soft and fluffy pillow. You can smack someone with this! [tag_desc]"
+		desc = LANG("obj.6d8c9b43", list(tag_desc))
 		icon_state = "pillow_[variation]"
 		inhand_icon_state = "pillow_no_t"
 	else
-		desc = "A soft and fluffy pillow. You can smack someone with this!"
+		desc = LANG("obj.ee635fb5", null)
 		icon_state = "pillow_[variation]_t"
 		inhand_icon_state = "pillow_t"
 

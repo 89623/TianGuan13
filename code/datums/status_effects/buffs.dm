@@ -35,7 +35,7 @@
 	var/His = HG.word
 	var/Him = HG.word2
 	name = "[His] Grace"
-	desc = "[His] Grace hungers, and you must feed [Him]."
+	desc = LANG("atom.518df7e8", list(His, Him))
 	icon_state = "[LOWER_TEXT(His)]_grace"
 	desc += "<br><font size=3><b>Current Bloodthirst: [HG.bloodlust]</b></font>\
 	<br>Becomes undroppable at <b>[HIS_GRACE_FAMISHED]</b>\

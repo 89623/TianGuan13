@@ -110,11 +110,11 @@
 	. = ..()
 	switch(status)
 		if(LIGHT_OK)
-			desc = "A replacement [name]."
+			desc = LANG("obj.4d3eacbb", list(name))
 		if(LIGHT_BURNED)
-			desc = "A burnt-out [name]."
+			desc = LANG("obj.e272c824", list(name))
 		if(LIGHT_BROKEN)
-			desc = "A broken [name]."
+			desc = LANG("obj.0c66c17a", list(name))
 
 /obj/item/light/proc/on_entered(datum/source, atom/movable/moving_atom)
 	SIGNAL_HANDLER

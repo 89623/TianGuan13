@@ -14,7 +14,7 @@
 /obj/vehicle/ridden/bicycle/zap_act(power, zap_flags) // :::^^^)))
 	//This didn't work for 3 years because none ever tested it I hate life
 	name = "fried bicycle"
-	desc = "Well spent."
+	desc = LANG("obj.ae9ba061", null)
 	color = rgb(63, 23, 4)
 	can_buckle = FALSE
 	fried = TRUE

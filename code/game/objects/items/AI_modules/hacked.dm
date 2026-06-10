@@ -74,7 +74,7 @@
 
 	functional = FALSE
 	name = "Broken AI Module"
-	desc = "A law upload module, it is broken and non-functional."
+	desc = LANG("obj.de08e708", null)
 
 /obj/item/ai_module/malf/display_laws()
 	return

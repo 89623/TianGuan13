@@ -76,7 +76,7 @@
 		return
 
 	name = "coupon - fuck you"
-	desc = "The small text reads, 'You will be slaughtered'... That doesn't sound right, does it?"
+	desc = LANG("obj.0786ad86", null)
 
 	var/mob/cursed = user || loc
 	if(!ismob(cursed))

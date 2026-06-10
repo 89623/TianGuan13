@@ -389,11 +389,11 @@
 /obj/structure/blob/normal/update_desc()
 	. = ..()
 	if(atom_integrity <= 15)
-		desc = "A thin lattice of slightly twitching tendrils."
+		desc = LANG("obj.e9aa5d2f", null)
 	else if(overmind)
-		desc = "A thick wall of writhing tendrils."
+		desc = LANG("obj.db032807", null)
 	else
-		desc = "A thick wall of lifeless tendrils."
+		desc = LANG("obj.8e91bf24", null)
 
 /obj/structure/blob/normal/update_icon_state()
 	icon_state = "blob[(atom_integrity <= 15) ? "_damaged" : null]"

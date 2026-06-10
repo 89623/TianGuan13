@@ -74,7 +74,7 @@
 	else
 		interacting_with.reagents.trans_to(src, 10, transferred_by = user)
 		to_chat(user, span_notice(LANG("obj.d9e89dd7", list(interacting_with))))
-		desc = "A translucent balloon with some form of liquid sloshing around in it."
+		desc = LANG("obj.cb10be7f", null)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
@@ -87,7 +87,7 @@
 			else if(reagents.total_volume >= 10)
 				to_chat(user, span_warning(LANG("obj.8e2d390c", list(src))))
 			else
-				desc = "A translucent balloon with some form of liquid sloshing around in it."
+				desc = LANG("obj.cb10be7f", null)
 				to_chat(user, span_notice(LANG("obj.d9e89dd7", list(I))))
 				I.reagents.trans_to(src, 10, transferred_by = user)
 				update_appearance()
@@ -1211,7 +1211,7 @@
 
 /obj/item/toy/figure/Initialize(mapload)
 	. = ..()
-	desc = "A \"Space Life\" brand [src]."
+	desc = LANG("obj.f642224b", list(src))
 	AddElement(/datum/element/toy_talk)
 
 /obj/item/toy/figure/attack_self(mob/user as mob)

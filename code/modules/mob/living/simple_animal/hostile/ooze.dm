@@ -281,10 +281,10 @@
 /datum/action/consume/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	if(vored_mob)
 		name = "Eject Mob"
-		desc = "Eject the mob you're currently consuming."
+		desc = LANG("datum.31ae7483", null)
 	else
 		name = "Consume"
-		desc = "Consume a mob that you are dragging to gain nutrition from them."
+		desc = LANG("datum.47e4d323", null)
 	return ..()
 
 /datum/action/consume/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)

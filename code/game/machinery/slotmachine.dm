@@ -208,7 +208,7 @@
 			name = msg
 
 		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50, TRUE)
-		desc = "Owned by [id_bank_account.account_holder], draws directly from [user.p_their()] account."
+		desc = LANG("obj.0f7b350a", list(id_bank_account.account_holder, user.p_their()))
 		house_bank_account = id_bank_account
 		to_chat(user, span_notice(LANG("obj.7a3c236e", list(id_bank_account.account_holder))))
 		return ITEM_INTERACT_SUCCESS

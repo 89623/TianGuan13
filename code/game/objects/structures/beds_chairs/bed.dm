@@ -360,7 +360,7 @@
 
 	owned = TRUE
 	name = "[furball]'s bed"
-	desc = "[furball]'s bed! Looks comfy."
+	desc = LANG("obj.d3c4e4f9", list(furball))
 	return TRUE // Let any callers know that this bed is ours now
 
 /obj/structure/bed/dogbed/buckle_mob(mob/living/furball, force, check_loc)

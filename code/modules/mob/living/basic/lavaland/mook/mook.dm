@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Fragile but highly aggressive wanderers that pose a large threat in numbers.
 //They'll attempt to leap at their target from afar using their hatchets.
 /mob/living/basic/mining/mook
@@ -180,7 +181,7 @@
 	return COMSIG_KB_ACTIVATED
 
 /mob/living/basic/mining/mook/death()
-	desc = "A deceased primitive. Upon closer inspection, it was suffering from severe cellular degeneration and its garments are machine made..." //Can you guess the twist
+	desc = LANG("mob.7c771812", null) //Can you guess the twist
 	return ..()
 
 /mob/living/basic/mining/mook/proc/attack_intruder(mob/living/intruder)

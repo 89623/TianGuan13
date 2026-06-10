@@ -690,7 +690,7 @@
 /obj/item/radio/proc/make_silly()
 	name = "\improper Little-Crew: Assistant's First Radio"
 	icon_state = "walkieian"
-	desc = "A Little-Crew branded toy radio in the shape of a lovable pet. After Little-Crew HQ was hit with a Donksoft Nuke, these have become collector's items!"
+	desc = LANG("obj.0a5eb76e", null)
 	overlay_speaker_idle = null
 	overlay_speaker_active = null
 	overlay_mic_idle = null

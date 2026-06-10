@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	if(flags_inv == initial(flags_inv))
 		flags_inv = HIDEFACIALHAIR
 	name = "[animal_type] face"
-	desc = "It looks like a [animal_type] mask, but closer inspection reveals it's melded onto this person's face!"
+	desc = LANG("obj.113ded71", list(animal_type))
 	if(curse_spawn_sound)
 		playsound(src, curse_spawn_sound, 50, TRUE)
 	var/update_speech_mod = !modifies_speech && LAZYLEN(animal_sounds)

@@ -113,7 +113,7 @@
 		desc = initial(desc)
 	else
 		name = "Mermaid Transform"
-		desc = "Return to your mermaid form."
+		desc = LANG("datum.45e09b35", null)
 	return ..()
 
 /datum/action/cooldown/spell/mermaid_toggle/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force = FALSE)

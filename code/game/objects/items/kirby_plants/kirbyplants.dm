@@ -121,7 +121,7 @@
 
 /obj/item/kirbyplants/random/dead/update_desc(updates)
 	. = ..()
-	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"[dead ? "\nIt doesn't look very healthy...":null]"
+	desc = LANG("obj.05cae887", list(dead ? "\nIt doesn't look very healthy...":null))
 
 /obj/item/kirbyplants/random/fullysynthetic
 	name = "plastic potted plant"

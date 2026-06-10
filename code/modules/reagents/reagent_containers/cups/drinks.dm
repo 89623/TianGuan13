@@ -407,7 +407,7 @@
 		return
 	icon_state = "colocup[rand(0, 6)]"
 	if(icon_state == "colocup6")
-		desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
+		desc = LANG("obj.995ac8a8", null)
 
 /obj/item/reagent_containers/cup/glass/colocup/lean
 	name = "lean"

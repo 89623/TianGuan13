@@ -105,7 +105,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		var/clowntype = pick("grock", "grimaldi", "rainbow", "chaos", "joker", "sexy", "standard", "bobble",
 			"krusty", "bozo", "pennywise", "ronald", "jacobs", "kelly", "popov", "cluwne")
 		icon_state = "egg-clown-[clowntype]"
-		desc = "An egg that has been decorated with the grotesque, robustable likeness of a clown's face. "
+		desc = LANG("obj.b47f13f9", null)
 		to_chat(usr, span_notice(LANG("obj.9cd73011", list(src, item))))
 
 	else if(is_reagent_container(item))

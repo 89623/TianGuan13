@@ -62,16 +62,16 @@
 	switch(artifact_type_id)
 		if(ARTIFACT_COMPUTER)
 			name = "alien computer"
-			desc = "It is covered in strange markings."
+			desc = LANG("obj.75e99dcf", null)
 		if(ARTIFACT_PILLAR)
 			name = "alien device"
-			desc = "A large pillar, made of strange shiny metal."
+			desc = LANG("obj.2ba1245b", null)
 		if(ARTIFACT_VENTS)
 			name = "alien device"
-			desc = "A large alien device, there appear to be some kind of vents in the side."
+			desc = LANG("obj.7d1aaf3e", null)
 		if(ARTIFACT_FLOATING)
 			name = "strange metal object"
-			desc = "A large object made of tough green-shaded alien metal."
+			desc = LANG("obj.7d20d7ca", null)
 		if(ARTIFACT_CRYSTAL_GREEN)
 			artifact_type_id = pick(ARTIFACT_CRYSTAL_GREEN, ARTIFACT_CRYSTAL_PURPLE, ARTIFACT_CRYSTAL_BLUE) // now we pick a color
 			name = "large crystal"

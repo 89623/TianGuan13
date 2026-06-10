@@ -193,7 +193,7 @@
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump pie"
-		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
+		desc = LANG("obj.6a1722c6", null)
 		food_reagents = list(
 			/datum/reagent/consumable/nutriment = 11,
 			/datum/reagent/medicine/omnizine = 5,

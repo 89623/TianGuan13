@@ -243,9 +243,9 @@
 /obj/item/fish/fryish/fritterish/update_desc()
 	switch(variant)
 		if(FISH_BERNARD)
-			desc = "A <u>deliciously</u> extremophile alien fish shaped like a dinosaur. Children love it."
+			desc = LANG("obj.df0d1383", null)
 		if(FISH_MATTHEW)
-			desc = "A <u>deliciously</u> extremophile alien fish shaped like a pterodactyl. Children love it."
+			desc = LANG("obj.9a347857", null)
 	return ..()
 
 #undef FISH_FRITTERISH

@@ -98,9 +98,9 @@
 		return
 	. = ..()
 	if(length(reagents.reagent_list))
-		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
+		desc = LANG("obj.b049848e", null)
 	else
-		desc = "A shot glass - the universal symbol for bad decisions."
+		desc = LANG("obj.517c0088", null)
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled
 	base_container_type = /obj/item/reagent_containers/cup/glass/drinkingglass

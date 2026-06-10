@@ -145,7 +145,7 @@
 		if(scanmode)
 			out_message += "<b>Analysis:</b> [reagent.description]\n"
 	to_chat(user, boxed_message(span_notice("[out_message.Join()]")))
-	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays detected vol: [round(cont.volume, 0.01)] detected pH:[round(cont.reagents.ph, 0.1)]."
+	desc = LANG("obj.79df1a96", list(round(cont.volume, 0.01), round(cont.reagents.ph, 0.1)))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/burner

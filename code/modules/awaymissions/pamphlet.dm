@@ -63,7 +63,7 @@
 
 /obj/item/paper/pamphlet/cybernetics/update_desc(updates)
 	. = ..()
-	desc = "A pamphlet encouraging the reader to implant themselves.[sample ? " Has an attached \"sample\"..." : ""]"
+	desc = LANG("obj.627f53bc", list(sample ? " Has an attached \"sample\"..." : ""))
 
 /obj/item/paper/pamphlet/cybernetics/Destroy()
 	QDEL_NULL(sample)

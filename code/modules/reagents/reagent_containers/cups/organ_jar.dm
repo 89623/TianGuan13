@@ -56,7 +56,7 @@
 	balloon_alert(user, LANG("obj.94d2a5ff", list(tool)))
 	held_organ = tool
 	name = "[tool.name] in a jar"
-	desc = "A jar with \the [tool] inside it."
+	desc = LANG("obj.75a92945", list(tool))
 	check_organ_freeze()
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -139,7 +139,7 @@
 	held_organ = scarred_brain // Put the brain inside the jar
 	reagents.add_reagent(/datum/reagent/toxin/formaldehyde, reagents.maximum_volume) // Fill the jar with formaldehyde
 	name = "brain in a jar" // Set a custom name&description
-	desc = "A brain in a jar. You can see it twitching..."
+	desc = LANG("obj.615e8ff1", null)
 	update_appearance()
 
 // All this does is add a random special brain trauma + add recovered crew antag datum for logging

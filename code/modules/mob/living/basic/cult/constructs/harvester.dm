@@ -114,7 +114,7 @@
 	var/mob/living/basic/construct/harvester/the_construct = owner
 
 	if(the_construct.seeking)
-		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
+		desc = LANG("datum.82148b4c", null)
 		button_icon_state = "cult_mark"
 		the_construct.seeking = FALSE
 		to_chat(the_construct, span_cult_italic(LANG("datum.970d2bf4", null)))
@@ -127,7 +127,7 @@
 	the_construct.construct_master = pick(GLOB.cult_narsie.souls_needed)
 	var/mob/living/real_target = the_construct.construct_master //We can typecast this way because Narsie only allows /mob/living into the souls list
 	to_chat(the_construct, span_cult_italic(LANG("datum.1a80032c", list(real_target.real_name, real_target.p_them()))))
-	desc = "Activate to track Nar'Sie!"
+	desc = LANG("datum.dcc1b228", null)
 	button_icon_state = "sintouch"
 	the_construct.seeking = TRUE
 

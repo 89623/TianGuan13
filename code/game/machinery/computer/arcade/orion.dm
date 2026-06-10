@@ -364,7 +364,7 @@
 		gamer.log_message("lost a Realism Mode Orion Trail game, changing the machine back to normal.", LOG_GAME)
 		gameStatus = ORION_STATUS_START
 		name = "The Orion Trail"
-		desc = "Learn how our ancestors got to Orion, and have fun in the process!"
+		desc = LANG("obj.1ff4d29a", null)
 
 	gamer?.mind?.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
 	return reason
@@ -481,7 +481,7 @@
 		return FALSE
 
 	name = "The Orion Trail: Realism Edition"
-	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
+	desc = LANG("obj.2f56e501", null)
 	obj_flags |= EMAGGED
 
 	if (!user)

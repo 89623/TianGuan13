@@ -114,7 +114,7 @@
 
 	uses--
 	if(uses <= 0)
-		desc = "[initial(desc)] Looks like it's been used up."
+		desc = LANG("obj.8c69c278", list(initial(desc)))
 
 /obj/item/autosurgeon/attack_self(mob/user)//when the object it used...
 	use_autosurgeon(user, user)
@@ -144,7 +144,7 @@
 		screwtool.play_tool_sound(src)
 		uses--
 		if(uses <= 0)
-			desc = "[initial(desc)] Looks like it's been used up."
+			desc = LANG("obj.8c69c278", list(initial(desc)))
 		update_appearance(UPDATE_ICON)
 	return TRUE
 
