@@ -45,5 +45,16 @@
 	"online": "在线",
 	"offline": "离线",
 	"empty": "空的",
-	"full": "满的"
+	"full": "满的",
+	"welded": "已焊接",
+	"unwelded": "未焊接",
+	"bolted": "已栓接",
+	"unbolted": "未栓接",
+	"anchored": "已固定",
+	"unanchored": "未固定",
+	"secured": "已固定",
+	"unsecured": "未固定",
+	"wrenched": "已扳紧",
+	"unwrenched": "已扳松",
+	"pried": "已撬开"
 }
