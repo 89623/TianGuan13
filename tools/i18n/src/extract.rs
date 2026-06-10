@@ -282,7 +282,9 @@ fn walk_examine_tags(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &
         match &stmt.elem {
             Statement::Expr(Expression::AssignOp { lhs, rhs, .. }) => {
                 if let Expression::Base { term, follow } = lhs.as_ref() {
-                    let is_dot_index = matches!(&term.elem, Term::Ident(id) if id == ".")
+                    // `.[...] = "…"`（examine 返回列表）或 `examine_list[...] = "…"`（签名带 examine_list 的
+                    // examine 信号处理器，如 slapcrafting 的 get_examine_info）。
+                    let is_dot_index = matches!(&term.elem, Term::Ident(id) if id == "." || id == "examine_list")
                         && follow.len() == 1
                         && matches!(&follow[0].elem, Follow::Index(..));
                     if is_dot_index {
@@ -478,7 +480,9 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                         // 物种特征(perk)：create_pref_*_perks / get_species_perks 等，抽 list 里 name/description。
                         n if n.contains("perk") => walk_perk_block(block, &namespace, &mut catalog),
                         // examine 标签的 hover tooltip：`.["tag"] = "提示"`（运行时 atom_examine 反查显示）。
-                        "examine_tags" => walk_examine_tags(block, &namespace, &mut catalog),
+                        // get_examine_info：slapcrafting 的 `examine_list["crafting component"] = "You think…"`
+                        // tooltip（插值模板，手接 LANG）。
+                        "examine_tags" | "get_examine_info" => walk_examine_tags(block, &namespace, &mut catalog),
                         // 重量等级 tooltip：examine_tags 里 `.[…] = weight_class_to_tooltip(w_class)`，值是 proc
                         // **返回**的字面量（"This item can fit into pockets…"），非 sink/index-assign → 抽返回值。
                         "weight_class_to_tooltip" => {

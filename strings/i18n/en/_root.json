@@ -248,5 +248,6 @@
   "_root.fs_veryrobust": "very robust",
   "_root.fs_exrobust": "exceptionally robust",
   "_root.fs_infinite": "INFINITE",
-  "_root.fs_germs": "robust... against germs"
+  "_root.fs_germs": "robust... against germs",
+  "_root.tag_crafting_component": "crafting component"
 }

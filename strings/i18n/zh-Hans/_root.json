@@ -229,5 +229,6 @@
   "_root.fs_veryrobust": "非常强劲",
   "_root.fs_exrobust": "极其强劲",
   "_root.fs_infinite": "无限",
-  "_root.fs_germs": "对细菌很强劲……"
+  "_root.fs_germs": "对细菌很强劲……",
+  "_root.tag_crafting_component": "合成材料"
 }
