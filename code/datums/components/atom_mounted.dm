@@ -41,7 +41,7 @@
 	SIGNAL_HANDLER
 
 	if(parent in view(user.client?.view || world.view, user))
-		examine_list += span_notice(LANG("datum.334bd33d", list(hanging_support_atom, span_bold("\the [parent]"), span_bold("fall to the ground"))))
+		examine_list += span_notice(LANG("datum.334bd33d", list(hanging_support_atom, span_bold("\the [parent]"), span_bold(lang_reverse_text("fall to the ground"))))) // NOVA EDIT - i18n: 反查「fall to the ground」短语
 
 /// When the type of turf changes, if it is changing into a floor we should drop our contents
 /datum/component/atom_mounted/proc/on_turf_changing(turf/source, path, new_baseturfs, flags, post_change_callbacks)

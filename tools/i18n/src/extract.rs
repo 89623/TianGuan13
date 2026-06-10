@@ -502,7 +502,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                         // examine 标签的 hover tooltip：`.["tag"] = "提示"`（运行时 atom_examine 反查显示）。
                         // get_examine_info：slapcrafting 的 `examine_list["crafting component"] = "You think…"`
                         // tooltip（插值模板，手接 LANG）。
-                        "examine_tags" | "get_examine_info" => walk_examine_tags(block, &namespace, &mut catalog),
+                        "examine_tags" | "get_examine_info" | "get_examine_tags" => walk_examine_tags(block, &namespace, &mut catalog),
                         // 重量等级 tooltip：examine_tags 里 `.[…] = weight_class_to_tooltip(w_class)`，值是 proc
                         // **返回**的字面量（"This item can fit into pockets…"），非 sink/index-assign → 抽返回值。
                         "weight_class_to_tooltip" => {

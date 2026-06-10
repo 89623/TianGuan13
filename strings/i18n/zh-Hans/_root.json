@@ -245,5 +245,7 @@
   "_root.budget_8": "服务部预算",
   "_root.budget_9": "货运部预算",
   "_root.budget_10": "安保部预算",
-  "_root.budget_def": "安保部预算"
+  "_root.budget_def": "安保部预算",
+  "_root.tag_climbable": "可攀爬",
+  "_root.fall_ground": "坠落到地面"
 }

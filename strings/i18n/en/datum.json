@@ -33091,5 +33091,18 @@
   "datum.fff17a5c": "{0} begins hastily applying {1} to {2}'s' {3}...",
   "datum.fff6b55e": "There are positronic personalities available.",
   "datum.fffb5226": "Janicart Upgrade",
-  "datum.fffb5e3c": "Allows you to transmute wirecutters, a pool of vomit, and a heart to cast a curse of sickness on a crew member. While cursed, the victim will repeatedly vomit while their organs will take constant damage. You can additionally supply an item that a victim has touched or is covered in the victim's blood to make the curse last longer."
+  "datum.fffb5e3c": "Allows you to transmute wirecutters, a pool of vomit, and a heart to cast a curse of sickness on a crew member. While cursed, the victim will repeatedly vomit while their organs will take constant damage. You can additionally supply an item that a victim has touched or is covered in the victim's blood to make the curse last longer.",
+  "datum.0d38f419": "{0} protects {1} wiring and contents from electromagnetic pulses.",
+  "datum.0eb68c8c": "This item can be placed directly on the floor.",
+  "datum.36fdd6c3": "It protects the ears from flashbangs and other loud noises.",
+  "datum.57f1cb26": "{0} protects {1} contents from electromagnetic pulses.",
+  "datum.6c1c0f0b": "It provides {0} protection against flashbangs and other loud noises.",
+  "datum.7729fe97": "{0} protects {1} wiring from electromagnetic pulses.",
+  "datum.7ba263f4": "It possesses a general resistance to regular spells and magic.",
+  "datum.85d34631": "It is thoroughly shielded against all known forms of magic.",
+  "datum.97dde017": "{0} {1} unaffected by electromagnetic pulses.",
+  "datum.bd76b2fa": "It appears to be insulated against telepathic or mental influence.",
+  "datum.cae3a6e1": "It looks like it can be climbed on.",
+  "datum.cc47ed88": "{0} {1} unaffected by electromagnetic pulses, and shields {2} contents and wiring from them.",
+  "datum.e513b78e": "It is protected by a divine shield against unholy and dark forms of magic."
 }

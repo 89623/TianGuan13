@@ -3383,5 +3383,7 @@
   "mob.ffcaa5c0": "掉落帽子",
   "mob.ffd321c9": "这是一头北极熊，在太空里，但其实不在太空里。",
   "mob.ffe63cbe": "{0}-舱门",
-  "mob.ffeb5bef": "{0} 被束缚住了，你无法挤过去。"
+  "mob.ffeb5bef": "{0} 被束缚住了，你无法挤过去。",
+  "mob.exm_nothing": "<i>你仔细查看{0}，但没发现什么值得注意的……</i>",
+  "mob.exm_closer": "<i>你可以<a href=byond://?src={0};run_examinate={1}>仔细查看</a>{2}……</i>"
 }

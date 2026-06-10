@@ -264,5 +264,7 @@
   "_root.budget_8": "Service Budget",
   "_root.budget_9": "Cargo Budget",
   "_root.budget_10": "Security Budget",
-  "_root.budget_def": "Defense Budget"
+  "_root.budget_def": "Defense Budget",
+  "_root.tag_climbable": "climbable",
+  "_root.fall_ground": "fall to the ground"
 }
