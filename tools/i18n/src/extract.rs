@@ -61,6 +61,8 @@ const SINK_VARS: &[&str] = &[
     // /obj 的操作说明（examine 里 `. += span_notice(desc_controls)`，如「Left click to stun, …」；
     // 运行时在 objs.dm examine 处 lang_reverse_text 反查）。
     "desc_controls",
+    // 售货机出货答谢语（vend_reply，单句，say 出 → 聊天 AC 翻译）。
+    "vend_reply",
     // 说话动词（says/asks/exclaims/whispers/sings/yells 及各 mob 变体如 beeps/signs/hisses；
     // 运行时在 say.dm 的 say_quote 整串反查落地）。
     "verb_say",
@@ -399,7 +401,10 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             // 玩家可见（AI/赛博格法则面板、show_laws、法则模块），运行时 get_law_list 反查显示。
             // ion/hacked/supplied/zeroth 是离子/黑入/玩家填写的动态法则，不在此静态抽取。
             let is_law_list = var_name == "inherent" && ty.path.starts_with("/datum/ai_laws");
-            if !is_sink && !is_config_default && !is_aas_template && !is_law_list {
+            // 售货机口号/广告：`product_slogans = "口号1;口号2;…"`（分号拼接，Initialize 里 splittext 拆开、
+            // say(pick(slogan_list)) 喊出）。整串非单句 → 按 `;` 拆成逐条抽取，靠聊天 AC 子串层翻译。
+            let is_slogan = var_name == "product_slogans" || var_name == "product_ads";
+            if !is_sink && !is_config_default && !is_aas_template && !is_law_list && !is_slogan {
                 continue;
             }
             if let Some(expr) = &type_var.value.expression {
@@ -409,6 +414,18 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                 }
                 if is_law_list {
                     emit_list_strings(expr, &namespace, &mut catalog);
+                    continue;
+                }
+                if is_slogan {
+                    // 整串 "口号1;口号2" → 按 `;` 拆，逐条抽（去首尾空白，跳过含占位符/空条）。
+                    if let Some(template) = build_template(expr) {
+                        for part in template.split(';') {
+                            let s = part.trim();
+                            if !s.is_empty() && !s.contains('{') {
+                                emit(&mut catalog, &namespace, s);
+                            }
+                        }
+                    }
                     continue;
                 }
                 if let Some(template) = build_template(expr) {
