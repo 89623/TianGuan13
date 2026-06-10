@@ -889,7 +889,7 @@
 		. += LANG("obj.64d20363", list(registered_account.account_holder, registered_account.account_balance, MONEY_SYMBOL))
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
-			. += LANG("obj.736a52f8", list(linked_dept.account_holder, linked_dept.account_balance, MONEY_SYMBOL))
+			. += LANG("obj.736a52f8", list(lang_reverse_text(linked_dept.account_holder), linked_dept.account_balance, MONEY_SYMBOL)) // NOVA EDIT - i18n: 反查部门预算账户名(Command Budget 等)
 	else
 		. += span_notice(LANG("obj.ff0f1597", null))
 
@@ -935,7 +935,7 @@
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				. += LANG("obj.d59824b6", list(D.account_holder, D.account_balance, MONEY_SYMBOL))
+				. += LANG("obj.d59824b6", list(lang_reverse_text(D.account_holder), D.account_balance, MONEY_SYMBOL)) // NOVA EDIT - i18n: 反查部门预算账户名
 		. += span_info(LANG("obj.268a971c", null))
 		. += span_info(LANG("obj.581073e9", list(MONEY_NAME)))
 		if(registered_account.replaceable)

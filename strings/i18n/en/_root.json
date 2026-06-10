@@ -249,5 +249,20 @@
   "_root.fs_exrobust": "exceptionally robust",
   "_root.fs_infinite": "INFINITE",
   "_root.fs_germs": "robust... against germs",
-  "_root.tag_crafting_component": "crafting component"
+  "_root.tag_crafting_component": "crafting component",
+  "_root.aw_activated": "activated",
+  "_root.aw_extended": "extended",
+  "_root.aw_ready": "ready",
+  "_root.budget_0": "Command Budget",
+  "_root.budget_1": "Syndicate Budget",
+  "_root.budget_2": "Interdyne Pharmaceuticals Budget",
+  "_root.budget_3": "Tarkon Industries Budget",
+  "_root.budget_4": "Civil Budget",
+  "_root.budget_5": "Engineering Budget",
+  "_root.budget_6": "Scientific Budget",
+  "_root.budget_7": "Medical Budget",
+  "_root.budget_8": "Service Budget",
+  "_root.budget_9": "Cargo Budget",
+  "_root.budget_10": "Security Budget",
+  "_root.budget_def": "Defense Budget"
 }

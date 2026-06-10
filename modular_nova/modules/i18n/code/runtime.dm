@@ -58,13 +58,17 @@ GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 GLOBAL_VAR_INIT(i18n_text_macro_regex, regex(@"\\(improper|proper|themselves|theirs|himself|herself|itself|their|them|they|roman|Roman|the|The|hers|she|She|her|his|him|its|it|It|he|He|an|An|a|A)\b", "g"))
 
 /// 处理从 JSON 模板带出的 BYOND 转义/文法宏（rewrite 把编译期字面量改成 LANG 后，这些转义不再被引擎
-/// 处理）：① 剥文法宏；② 还原转义引号 \" → "。仅在串含反斜杠时调用。
+/// 处理）：① 剥文法宏；② 还原转义引号 \" → "；③ 还原 \n → 换行、\t → 制表符。
+/// 源码里 `"\n"` 是 DM 编译期换行转义；抽取器把它当**字面 2 字符** `\n` 存进 JSON（`"\\n"`），LANG 从
+/// JSON 取回后引擎不再解释 → 会字面显示 `\n`（如警棍 examine「\n它当前为…」）。在此还原。仅在串含反斜杠时调用。
 /proc/lang_process_text_escapes(text)
 	if(!istext(text))
 		return text
 	var/regex/macro_re = GLOB.i18n_text_macro_regex
 	text = macro_re.Replace(text, "")
 	text = replacetext(text, "\\\"", "\"") // \" → "
+	text = replacetext(text, "\\n", "\n") // 字面 \n → 换行
+	text = replacetext(text, "\\t", "\t") // 字面 \t → 制表符
 	return text
 
 /// 核心（纯函数）：按 locale 查模板（缺则回退英文，再缺则返回 key），最后做占位符替换。

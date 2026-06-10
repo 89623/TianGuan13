@@ -88,7 +88,13 @@
 	if(affect_cyborg)
 		readout += LANG("obj.d47818f9", list(round((stun_time_cyborg/10), 1)))
 
-	readout += LANG("obj.65aac1b5", list(active ? "It is currently [span_warning("[activated_word]")], and capable of stunning." : "It is [span_warning("not [activated_word]")], and not capable of stunning."))
+	// NOVA EDIT - i18n: 原 codemod 把整个三元当 {0} 包了、分支英文没翻；拆成 if/else 字面量供抽取+LANG，
+	// activated_word(ready/extended/activated)整词反查
+	var/aw = span_warning("[lang_reverse_text(activated_word)]")
+	if(active)
+		readout += LANG("obj.146f180f", list(aw)) // ORIGINAL: readout += "It is currently [aw], and capable of stunning."
+	else
+		readout += LANG("obj.a9b04bbd", list(aw)) // ORIGINAL: readout += "It is not [aw], and not capable of stunning."
 
 	if(stamina_damage <= 0) // The advanced baton actually does have 0 stamina damage so...yeah.
 		readout += LANG("obj.dec156bb", list(span_warning("completely unable to perform a stunning strike"), span_warning("attacks via some unusual method")))

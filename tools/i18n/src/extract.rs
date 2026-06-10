@@ -58,6 +58,9 @@ const SINK_VARS: &[&str] = &[
     // 书本初始标题/正文（/obj/item/book/manual 等；运行时在 book.dm Initialize 整串反查落地）。
     "starting_title",
     "starting_content",
+    // /obj 的操作说明（examine 里 `. += span_notice(desc_controls)`，如「Left click to stun, …」；
+    // 运行时在 objs.dm examine 处 lang_reverse_text 反查）。
+    "desc_controls",
     // 说话动词（says/asks/exclaims/whispers/sings/yells 及各 mob 变体如 beeps/signs/hisses；
     // 运行时在 say.dm 的 say_quote 整串反查落地）。
     "verb_say",

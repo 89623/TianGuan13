@@ -230,5 +230,20 @@
   "_root.fs_exrobust": "极其强劲",
   "_root.fs_infinite": "无限",
   "_root.fs_germs": "对细菌很强劲……",
-  "_root.tag_crafting_component": "合成材料"
+  "_root.tag_crafting_component": "合成材料",
+  "_root.aw_ready": "就绪",
+  "_root.aw_extended": "伸出",
+  "_root.aw_activated": "激活",
+  "_root.budget_0": "指挥部预算",
+  "_root.budget_1": "辛迪加预算",
+  "_root.budget_2": "英特戴恩制药预算",
+  "_root.budget_3": "塔尔孔工业预算",
+  "_root.budget_4": "民政预算",
+  "_root.budget_5": "工程部预算",
+  "_root.budget_6": "科学部预算",
+  "_root.budget_7": "医疗部预算",
+  "_root.budget_8": "服务部预算",
+  "_root.budget_9": "货运部预算",
+  "_root.budget_10": "安保部预算",
+  "_root.budget_def": "安保部预算"
 }

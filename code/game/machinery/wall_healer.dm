@@ -119,7 +119,13 @@
 /obj/machinery/wall_healer/examine(mob/user)
 	. = ..()
 	var/total_bandages = num_bandages + LAZYLEN(stocked_bandages)
-	. += span_notice(LANG("obj.6a8eb00c", list(total_bandages, total_bandages ? " [is_free(user) ? "Purchase" : "Retrieve"] a bandage with [EXAMINE_HINT("right-click")]." : "")))
+	// NOVA EDIT - i18n: 原 codemod 把取绷带提示当 {1} 字符串包了、没翻；拆成独立 examine 行供抽取+LANG
+	. += span_notice(LANG("obj.66594895", list(total_bandages)))
+	if(total_bandages)
+		if(is_free(user))
+			. += span_notice(LANG("obj.40104971", list(EXAMINE_HINT("right-click"))))
+		else
+			. += span_notice(LANG("obj.172bbbc9", list(EXAMINE_HINT("right-click"))))
 	if(current_user)
 		. += span_notice(LANG("obj.01867178", list(current_user, current_hand ? "has [current_user.p_their()] [current_hand.plaintext_zone] in" : "is using")))
 
