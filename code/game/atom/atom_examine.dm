@@ -193,6 +193,14 @@
 	var/list/override = list(article, null, "<em>[get_visible_name()]</em>")
 	SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override)
 
+	// NOVA EDIT ADDITION START - i18n: 中文无冠词。丢弃 article 槽与 \a 前缀，只留 before + 名字
+	// （examine 名里的「a/an/the」是 \a 宏由引擎渲染、非 LANG 模板，故在此源头去掉；名字本身另由反查翻译）。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		override[EXAMINE_POSITION_ARTICLE] = null
+		override -= null
+		return jointext(override, " ")
+	// NOVA EDIT ADDITION END
+
 	if(!isnull(override[EXAMINE_POSITION_ARTICLE]))
 		override -= null // IF there is no "before", don't try to join it
 		return jointext(override, " ")
