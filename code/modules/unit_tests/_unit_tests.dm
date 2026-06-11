@@ -356,6 +356,7 @@
 // NOVA EDIT START
 #include "~nova\augment_items.dm"
 #include "~nova\automapper.dm"
+#include "~nova\i18n_template.dm"
 #include "~nova\digi_underclothes.dm"
 #include "~nova\liver_nova.dm"
 #include "~nova\neuroware_chips.dm"

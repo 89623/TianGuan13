@@ -66,4 +66,7 @@ GLOBAL_LIST_EMPTY(i18n_fallback_state)
 		text = replacetext(text, "\proper ", "")
 		text = replacetext(text, "\improper", "")
 		text = replacetext(text, "\proper", "")
+	// 先过模板逆匹配（插值句：目录里已译的 {0} 模板按字面段在原文上命中、捕获实参反查后按
+	// zh 模板重排填充，见 template_match.dm），再过字面 AC 收剩余短语。
+	text = lang_template_apply(text, locale)
 	return rustg_acreplace("i18n_[locale]", text)

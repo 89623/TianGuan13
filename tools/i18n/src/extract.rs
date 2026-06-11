@@ -110,6 +110,72 @@ fn is_sentence_like(s: &str) -> bool {
         && s.chars().any(|c| c.is_ascii_lowercase())
 }
 
+/// 去掉模板里的 {N} 占位符（保留其余字面，含非占位符花括号）。
+fn strip_placeholders(t: &str) -> String {
+    let mut out = String::new();
+    let mut chars = t.chars().peekable();
+    while let Some(c) = chars.next() {
+        if c == '{' {
+            let mut probe = chars.clone();
+            let mut had_digit = false;
+            while probe.peek().is_some_and(|d| d.is_ascii_digit()) {
+                probe.next();
+                had_digit = true;
+            }
+            if had_digit && probe.peek() == Some(&'}') {
+                probe.next();
+                chars = probe;
+                continue;
+            }
+        }
+        out.push(c);
+    }
+    out
+}
+
+/// 激进 pass 的「句子型」判定（**允许占位符**，与 is_sentence_like 不同）：玩家可见整句的形态
+/// 特征——多词、含小写、句末标点收尾、首字母大写或以占位符开头（"[user] does X."）。
+/// **句末标点要求是安全闸门**：act 标识符/枚举名/路径/SQL/keybind 名都不带句末标点 → 不会进
+/// 目录 → 不会经反查表/边界引擎被误翻（「标识符耦合显示名」类回归的防线）。
+/// 抽进目录后纯串走反查表+字面 AC、插值模板走边界模板逆匹配引擎（template_match.dm）显示，
+/// 无需改写调用点——这是 ②类「拼进变量再输出」的系统性出口。
+fn is_loose_sentence(template: &str) -> bool {
+    let lit_raw = strip_placeholders(template);
+    let lit_stripped = crate::template::strip_tags(&lit_raw);
+    let lit = lit_stripped.trim();
+    if lit.len() < 10 || !lit.contains(' ') {
+        return false;
+    }
+    if !lit.chars().any(|c| c.is_ascii_lowercase()) {
+        return false;
+    }
+    let end = lit.trim_end_matches(['"', '\'', ')', ']', '*']);
+    if !(end.ends_with(['.', '!', '?', '…']) || end.ends_with("...")) {
+        return false;
+    }
+    let first = lit.chars().next().unwrap();
+    first.is_ascii_uppercase() || template.trim_start().starts_with('{')
+}
+
+/// 非玩家可见的汇聚点（日志/调试/管理员后台/外部 relay）：其实参不进激进抽取——
+/// 写文件的日志必须保持英文，且省 MT。仅抑制激进 pass，不影响既有 sink/累加器抽取路径。
+fn is_non_player_sink(name: &str) -> bool {
+    name.starts_with("log_")
+        || matches!(
+            name,
+            "stack_trace"
+                | "investigate_log"
+                | "record_feedback"
+                | "message_admins"
+                | "send2adminchat"
+                | "send2chat"
+                | "send2tgs"
+                | "testing"
+                | "warning"
+                | "add_memory_in_range" // 日志型记忆键
+        )
+}
+
 /// 「安全可改名」的 verb 命令面板显示名启发式（verb 的 `set name = "X"`）。
 /// verb 名是 BYOND 编译期元数据、无法运行时按 locale 切换，只能编译期注入译文（见 rewrite::run_verbs）。
 /// 仅放行**首字母大写**的显示名（命令面板/右键菜单可见，由面板按名调用，改名自洽）；
@@ -392,6 +458,9 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
     let mut catalog = Catalog::new();
     for ty in tree.iter_types() {
         let namespace = namespace_for(&ty.path);
+        // 单元测试类型只在 UNIT_TESTS 编译期存在，断言消息玩家永不可见 → 不进激进抽取
+        // （既有 sink 路径不变，避免目录 churn）。
+        let suppress_aggressive = ty.path.starts_with("/datum/unit_test");
 
         // 1) 变量初始化（name/desc 等）。
         for (var_name, type_var) in ty.vars.iter() {
@@ -410,6 +479,12 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             // 售货机口号/广告：`product_slogans = "口号1;口号2;…"`（分号拼接，Initialize 里 splittext 拆开、
             // say(pick(slogan_list)) 喊出）。整串非单句 → 按 `;` 拆成逐条抽取，靠聊天 AC 子串层翻译。
             let is_slogan = var_name == "product_slogans" || var_name == "product_ads";
+            // 激进 pass：任何类型变量初值里的「句子型」字面量（含 list 元素与插值模板）。
+            // 自定义 examine 文本变量（dry_desc 类）、pick 表、未列入 SINK_VARS 的长尾自动入目录
+            // （句末标点闸门挡住标识符/枚举名）；显示靠反查表/字面 AC/模板逆匹配引擎。
+            if let Some(expr) = &type_var.value.expression {
+                visit_expr(expr, &namespace, &mut catalog, suppress_aggressive);
+            }
             if !is_sink && !is_config_default && !is_aas_template && !is_law_list && !is_slogan {
                 continue;
             }
@@ -450,7 +525,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             }
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
-                    visit_block(block, &namespace, &mut catalog);
+                    visit_block(block, &namespace, &mut catalog, suppress_aggressive);
                     // verb 命令面板显示名：`set name = "X"`（Statement::Setting）。非 sink、非类型变量，
                     // 单独抽。仅安全显示名（is_safe_verb_name 排除 .click/body-chest 等 keybind 标识符）。
                     // 编译期由 rewrite::run_verbs 注入译文（verb 名无法运行时本地化）。
@@ -584,30 +659,30 @@ pub(crate) fn emit(catalog: &mut Catalog, namespace: &str, template: &str) {
 
 // ---- 语句/表达式遍历：找到汇聚点调用 ----
 
-fn visit_block(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &mut Catalog) {
+fn visit_block(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &mut Catalog, suppress: bool) {
     for stmt in block.iter() {
-        visit_stmt(&stmt.elem, ns, catalog);
+        visit_stmt(&stmt.elem, ns, catalog, suppress);
     }
 }
 
-fn visit_stmt(stmt: &Statement, ns: &str, catalog: &mut Catalog) {
+fn visit_stmt(stmt: &Statement, ns: &str, catalog: &mut Catalog, suppress: bool) {
     match stmt {
-        Statement::Expr(e) => visit_expr(e, ns, catalog),
-        Statement::Return(Some(e)) => visit_expr(e, ns, catalog),
+        Statement::Expr(e) => visit_expr(e, ns, catalog, suppress),
+        Statement::Return(Some(e)) => visit_expr(e, ns, catalog, suppress),
         Statement::While { condition, block } => {
-            visit_expr(condition, ns, catalog);
-            visit_block(block, ns, catalog);
+            visit_expr(condition, ns, catalog, suppress);
+            visit_block(block, ns, catalog, suppress);
         }
         Statement::If { arms, else_arm } => {
             for (cond, blk) in arms.iter() {
-                visit_expr(&cond.elem, ns, catalog);
-                visit_block(blk, ns, catalog);
+                visit_expr(&cond.elem, ns, catalog, suppress);
+                visit_block(blk, ns, catalog, suppress);
             }
             if let Some(blk) = else_arm {
-                visit_block(blk, ns, catalog);
+                visit_block(blk, ns, catalog, suppress);
             }
         }
-        Statement::ForInfinite { block } => visit_block(block, ns, catalog),
+        Statement::ForInfinite { block } => visit_block(block, ns, catalog, suppress),
         Statement::ForLoop {
             init,
             test,
@@ -615,56 +690,68 @@ fn visit_stmt(stmt: &Statement, ns: &str, catalog: &mut Catalog) {
             block,
         } => {
             if let Some(s) = init {
-                visit_stmt(s, ns, catalog);
+                visit_stmt(s, ns, catalog, suppress);
             }
             if let Some(e) = test {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
             if let Some(s) = inc {
-                visit_stmt(s, ns, catalog);
+                visit_stmt(s, ns, catalog, suppress);
             }
-            visit_block(block, ns, catalog);
+            visit_block(block, ns, catalog, suppress);
         }
         Statement::Switch {
             input,
             cases,
             default,
         } => {
-            visit_expr(input, ns, catalog);
+            visit_expr(input, ns, catalog, suppress);
             // 修复：之前 `..` 漏掉了 cases —— switch 各 case 分支体里的语句全部没被抽取。
             for (_case_conditions, blk) in cases.iter() {
-                visit_block(blk, ns, catalog);
+                visit_block(blk, ns, catalog, suppress);
             }
             if let Some(blk) = default {
-                visit_block(blk, ns, catalog);
+                visit_block(blk, ns, catalog, suppress);
             }
         }
         Statement::Spawn { delay, block } => {
             if let Some(e) = delay {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
-            visit_block(block, ns, catalog);
+            visit_block(block, ns, catalog, suppress);
         }
         Statement::Var(v) => {
             if let Some(e) = &v.value {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
         }
         Statement::Vars(vs) => {
             for v in vs.iter() {
                 if let Some(e) = &v.value {
-                    visit_expr(e, ns, catalog);
+                    visit_expr(e, ns, catalog, suppress);
                 }
             }
         }
-        Statement::Setting { value, .. } => visit_expr(value, ns, catalog),
+        Statement::Setting { value, .. } => visit_expr(value, ns, catalog, suppress),
         _ => {}
     }
 }
 
-fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog) {
+fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool) {
     match expr {
         Expression::Base { term, follow } => {
+            // 激进 pass：独立字符串/插值串字面量，句子型即入目录（含 {N} 模板）。
+            // 显示路径：纯串→反查表/字面 AC；插值模板→边界模板逆匹配引擎（template_match.dm）。
+            if !suppress
+                && follow.is_empty()
+                && matches!(&term.elem, Term::String(_) | Term::InterpString(..))
+            {
+                if let Some(template) = build_template(expr) {
+                    if is_loose_sentence(&template) {
+                        emit(catalog, ns, &template);
+                    }
+                }
+            }
             // 汇聚点调用检测。
             if let Term::Call(name, args) = &term.elem {
                 if let Some(indices) = sink_message_args(name.as_str()) {
@@ -689,14 +776,28 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog) {
                     }
                 }
             }
-            recurse_term(&term.elem, ns, catalog);
+            // 日志/调试/管理员后台调用的实参不进激进抽取（其余抽取路径不受影响）。
+            let term_suppress = suppress
+                || matches!(&term.elem, Term::Call(name, _) if is_non_player_sink(name.as_str()));
+            recurse_term(&term.elem, ns, catalog, term_suppress);
             for f in follow.iter() {
-                recurse_follow(&f.elem, ns, catalog);
+                recurse_follow(&f.elem, ns, catalog, suppress);
             }
         }
-        Expression::BinaryOp { lhs, rhs, .. } => {
-            visit_expr(lhs, ns, catalog);
-            visit_expr(rhs, ns, catalog);
+        Expression::BinaryOp { op, lhs, rhs } => {
+            // 字符串 `+` 拼接：整体先按一条模板抽（"A " + x + " B." → "A {0} B."，与 span_* 宏
+            // 展开形态一致）；成功后抑制内部碎片（半句单独入目录无意义）。
+            let mut child_suppress = suppress;
+            if !suppress && matches!(op, dm::ast::BinaryOp::Add) {
+                if let Some(template) = build_template(expr) {
+                    if is_loose_sentence(&template) {
+                        emit(catalog, ns, &template);
+                        child_suppress = true;
+                    }
+                }
+            }
+            visit_expr(lhs, ns, catalog, child_suppress);
+            visit_expr(rhs, ns, catalog, child_suppress);
         }
         Expression::AssignOp { op, lhs, rhs } => {
             // examine / 消息累加：`. += <text>`（裸 `.`）原样抽；具名累加器（combined_msg += span_*("…")
@@ -749,26 +850,26 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog) {
                     }
                 }
             }
-            visit_expr(lhs, ns, catalog);
-            visit_expr(rhs, ns, catalog);
+            visit_expr(lhs, ns, catalog, suppress);
+            visit_expr(rhs, ns, catalog, suppress);
         }
         Expression::TernaryOp {
             cond, if_, else_, ..
         } => {
-            visit_expr(cond, ns, catalog);
-            visit_expr(if_, ns, catalog);
-            visit_expr(else_, ns, catalog);
+            visit_expr(cond, ns, catalog, suppress);
+            visit_expr(if_, ns, catalog, suppress);
+            visit_expr(else_, ns, catalog, suppress);
         }
     }
 }
 
-fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog) {
+fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog, suppress: bool) {
     match term {
-        Term::Expr(e) => visit_expr(e, ns, catalog),
+        Term::Expr(e) => visit_expr(e, ns, catalog, suppress),
         Term::InterpString(_, parts) => {
             for (opt, _) in parts.iter() {
                 if let Some(e) = opt {
-                    visit_expr(e, ns, catalog);
+                    visit_expr(e, ns, catalog, suppress);
                 }
             }
         }
@@ -778,38 +879,38 @@ fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog) {
         | Term::List(args)
         | Term::GlobalCall(_, args) => {
             for a in args.iter() {
-                visit_expr(a, ns, catalog);
+                visit_expr(a, ns, catalog, suppress);
             }
         }
         Term::DynamicCall(a, b) => {
             for e in a.iter() {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
             for e in b.iter() {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
         }
         Term::NewImplicit { args } | Term::NewPrefab { args, .. } | Term::NewMiniExpr { args, .. } => {
             if let Some(args) = args {
                 for e in args.iter() {
-                    visit_expr(e, ns, catalog);
+                    visit_expr(e, ns, catalog, suppress);
                 }
             }
         }
         Term::Input { args, in_list, .. } => {
             for e in args.iter() {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
             if let Some(e) = in_list {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
         }
         Term::Locate { args, in_list } => {
             for e in args.iter() {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
             if let Some(e) = in_list {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
         }
         Term::ExternalCall {
@@ -818,20 +919,20 @@ fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog) {
             args,
         } => {
             if let Some(e) = library {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
-            visit_expr(function, ns, catalog);
+            visit_expr(function, ns, catalog, suppress);
             for e in args.iter() {
-                visit_expr(e, ns, catalog);
+                visit_expr(e, ns, catalog, suppress);
             }
         }
         _ => {}
     }
 }
 
-fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog) {
+fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog, suppress: bool) {
     match follow {
-        Follow::Index(_, e) => visit_expr(e, ns, catalog),
+        Follow::Index(_, e) => visit_expr(e, ns, catalog, suppress),
         Follow::Call(_, name, args) => {
             // 方法调用形式的汇聚点（`user.visible_message(...)`/`src.say(...)`/`M.balloon_alert(...)` 等）。
             // 此前只检测裸调用 `Term::Call`，漏掉了大量 `X.sink(...)` 形式（战斗/交互可见消息多为此形）。
@@ -844,8 +945,10 @@ fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog) {
                     }
                 }
             }
+            // 方法形式的日志/后台调用同样抑制激进抽取（如 SSblackbox.record_feedback）。
+            let call_suppress = suppress || is_non_player_sink(name.as_str());
             for a in args.iter() {
-                visit_expr(a, ns, catalog);
+                visit_expr(a, ns, catalog, call_suppress);
             }
         }
         _ => {}

@@ -40,6 +40,7 @@ locale 解析：
 
 **本模块（DM 运行时实现）：**
 - `modular_nova/modules/i18n/code/{runtime,fallback}.dm` —— 查表 / 占位符格式化 / name-desc 反查表 + AC 兜底。
+- `modular_nova/modules/i18n/code/template_match.dm` —— **边界模板逆匹配引擎**：目录里已翻译的插值模板（`{0}` 句式）在输出边界整句命中（AC 锚检测 → 逐字面段验证 → 捕获实参反查 → 按 zh 模板重排填充），挂在 `lang_fallback_apply` 内、字面 AC 之前；聊天/browse/状态栏/公告/maptext 全部边界共享。运行期拼接/插值的英文句子（②③类长尾）由此系统性覆盖，无需逐点改写。回归测试：`code/modules/unit_tests/~nova/i18n_template.dm`。
 
 **构建 / 翻译工具——都在 `tools/i18n/`（**未移动**：移动需改 ~71 处构建/CI/脚本引用，风险高）：**
 - `tools/i18n/src/*.rs` —— Rust 抽取（`extract`，含通用 proc-return 句子 + 安全 verb 名）/ 改写（`rewrite`）/ verb 编译期注入（`verbs`），基于 SpacemanDMM 的 dreammaker。
