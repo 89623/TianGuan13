@@ -332,17 +332,14 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 		break
 	return len - i
 
-/// 捕获实参本地化：整串反查 → 状态词 → 多词字面 AC。查不到原样保留（数字/已中文/玩家名）。
+/// 捕获实参本地化：统一链（状态词→代词→整串反查→冠词剥离，见 runtime.dm 的 lang_localize_arg）
+/// → 多词捕获再退字面 AC。查不到原样保留（数字/已中文/玩家名）。
 /proc/lang_tpl_localize_arg(capture, locale)
 	if(!istext(capture) || !length(capture))
 		return capture
-	var/zh = lang_reverse_text(capture)
+	var/zh = lang_localize_arg(capture)
 	if(zh != capture)
 		return zh
-	var/list/state_words = lang_state_words()
-	var/sw = state_words[capture]
-	if(sw)
-		return sw
 	if(findtext(capture, " ") && lang_fallback_setup(locale))
 		return rustg_acreplace("i18n_[locale]", capture)
 	return capture

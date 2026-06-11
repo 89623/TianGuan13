@@ -71,5 +71,22 @@
   "ui.verb_says": "说道",
   "ui.verb_sings": "唱道",
   "ui.verb_whispers": "低声说",
-  "ui.verb_yells": "喊道"
+  "ui.verb_yells": "喊道",
+  "ui.hud_medsec_title": "医疗与安保分析",
+  "ui.hud_med_title": "医疗分析",
+  "ui.hud_sec_title": "安保分析",
+  "ui.rec_active": "健康",
+  "ui.rec_debilitated": "衰弱",
+  "ui.rec_unconscious": "昏迷",
+  "ui.rec_deceased": "死亡",
+  "ui.rec_stable": "稳定",
+  "ui.rec_watch": "需观察",
+  "ui.rec_unstable": "不稳定",
+  "ui.rec_insane": "精神失常",
+  "ui.rec_arrest": "通缉逮捕",
+  "ui.rec_discharged": "已释放",
+  "ui.rec_parole": "假释",
+  "ui.rec_incarcerated": "在押",
+  "ui.rec_suspected": "嫌疑",
+  "ui.rec_note_none": "无。"
 }

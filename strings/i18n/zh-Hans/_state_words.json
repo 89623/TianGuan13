@@ -58,5 +58,9 @@
 	"unwrenched": "已扳松",
 	"pried": "已撬开",
 	"dried ": "干涸的",
-	"dried": "干涸的"
+	"dried": "干涸的",
+	"lit": "已点亮",
+	"unlit": "未点亮",
+	"Automatic Detection": "自动探测",
+	"Manual Trigger": "手动触发"
 }

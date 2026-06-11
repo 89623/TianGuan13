@@ -71,5 +71,22 @@
   "ui.verb_says": "says",
   "ui.verb_sings": "sings",
   "ui.verb_whispers": "whispers",
-  "ui.verb_yells": "yells"
+  "ui.verb_yells": "yells",
+  "ui.hud_medsec_title": "Medical & Security Analysis",
+  "ui.hud_med_title": "Medical Analysis",
+  "ui.hud_sec_title": "Security Analysis",
+  "ui.rec_active": "Active",
+  "ui.rec_debilitated": "Debilitated",
+  "ui.rec_unconscious": "Unconscious",
+  "ui.rec_deceased": "Deceased",
+  "ui.rec_stable": "Stable",
+  "ui.rec_watch": "Watch",
+  "ui.rec_unstable": "Unstable",
+  "ui.rec_insane": "Insane",
+  "ui.rec_arrest": "Arrest",
+  "ui.rec_discharged": "Discharged",
+  "ui.rec_parole": "Parole",
+  "ui.rec_incarcerated": "Incarcerated",
+  "ui.rec_suspected": "Suspected",
+  "ui.rec_note_none": "None."
 }

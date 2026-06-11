@@ -44,24 +44,60 @@ GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 	return catalog?[key]
 
 /// 把模板里的 {0}/{1}… 用 args 依次替换（args 为 /list，元素按位置对应）。
-/// **状态词反查**：海量 LANG 调用把 `panel_open ? "open" : "closed"` 这类**开关/状态词**当原始 arg 传入
-/// （on/off、enabled/disabled、locked/unlocked、open/closed、unlock、screwed in place… 数百处），模板译了、
-/// 状态词却是英文。逐个改调用点不现实 → 在此对**恰好等于状态词表条目**的 arg 做精确替换（`_state_words.json`，
-/// 全服 locale≠en 时加载；非状态词的 arg——名字/数字/span 串——查不到、原样保留，零误伤）。
+/// 文本实参经 lang_localize_arg 本地化链（仅全服 locale≠en；en 零额外开销）。
 /proc/lang_interpolate(template, list/args)
 	if(!length(args))
 		return template
-	var/list/state_words = lang_state_words()
-	var/has_states = length(state_words)
+	var/localize = GLOB.i18n_server_locale != DEFAULT_UI_LOCALE
 	var/result = template
 	for(var/i in 1 to length(args))
 		var/arg = args[i]
-		if(has_states && istext(arg))
-			var/translated = state_words[arg]
-			if(translated)
-				arg = translated
+		if(localize && istext(arg))
+			arg = lang_localize_arg(arg)
 		result = replacetext(result, "{[i - 1]}", "[arg]")
 	return result
+
+/// LANG 实参/引擎捕获的统一本地化链：状态词 → 代词/系动词 → 整串反查 → 冠词剥离反查。
+/// 解决「模板译了、运行期填进来的实参却是英文」的四类：
+///   ① 开关/状态词（open/closed/lit…，`_state_words.json` 精确表）；
+///   ② 代词与系动词（p_They()/p_are() 的 They/are → 他们/是，lang_pronoun 专用小表）；
+///   ③ 目录里有的整串（安全等级 "green"→绿色、"None"→无——按值精确反查）；
+///   ④ 带英文冠词的名字（"\the [src]"/"\a [x]" 渲染出的 "The wall"/"a Monkey"——剥冠词反查
+///      余下部分（再试小写），命中则丢冠词：中文无冠词）。
+/// 全部是精确匹配，查不到原样保留（玩家名/数字/已中文串零误伤）。
+/proc/lang_localize_arg(arg)
+	if(!length(arg))
+		return arg
+	var/list/state_words = lang_state_words()
+	var/translated = state_words[arg]
+	if(translated)
+		return translated
+	translated = lang_pronoun(arg)
+	if(translated != arg)
+		return translated
+	translated = lang_reverse_text(arg)
+	if(translated != arg)
+		return translated
+	var/stripped = lang_strip_article(arg)
+	if(stripped)
+		translated = lang_reverse_text(stripped)
+		if(translated != stripped)
+			return translated
+		var/lowered = LOWER_TEXT(stripped)
+		if(lowered != stripped)
+			translated = lang_reverse_text(lowered)
+			if(translated != lowered)
+				return translated
+	return arg
+
+/// 若文本以英文冠词开头（the/a/an，含大写），返回去冠词后的余部；否则 null。
+/proc/lang_strip_article(text)
+	var/static/list/articles = list("the ", "The ", "a ", "an ", "A ", "An ")
+	for(var/article in articles)
+		var/alen = length(article)
+		if(length(text) > alen && findtextEx(text, article, 1, alen + 1))
+			return copytext(text, alen + 1)
+	return null
 
 /// 惰性加载「状态词 → 译文」表（全服 locale≠en 时读 strings/i18n/<locale>/_state_words.json；en 为空）。
 /// 惰性而非 GLOBAL_LIST_INIT：避免在 i18n_server_locale 设置前被钉死成空表。

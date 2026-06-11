@@ -574,16 +574,16 @@
 			. += LANG("mob.63d84f9d", list(target_record.rank))
 			. += LANG("mob.4b800153", list(REF(src), world.time, REF(src), world.time))
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD) && HAS_TRAIT(user, TRAIT_SECURITY_HUD))
-			title = separator_hr("Medical & Security Analysis")
+			title = separator_hr(lang_reverse_text("Medical & Security Analysis")) // NOVA EDIT CHANGE - i18n - ORIGINAL: title = separator_hr("Medical & Security Analysis")
 			. += get_medhud_examine_info(user, target_record)
 			. += get_sechud_examine_info(user, target_record)
 
 		else if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
-			title = separator_hr("Medical Analysis")
+			title = separator_hr(lang_reverse_text("Medical Analysis")) // NOVA EDIT CHANGE - i18n - ORIGINAL: title = separator_hr("Medical Analysis")
 			. += get_medhud_examine_info(user, target_record)
 
 		else if(HAS_TRAIT(user, TRAIT_SECURITY_HUD))
-			title = separator_hr("Security Analysis")
+			title = separator_hr(lang_reverse_text("Security Analysis")) // NOVA EDIT CHANGE - i18n - ORIGINAL: title = separator_hr("Security Analysis")
 			. += get_sechud_examine_info(user, target_record)
 		// NOVA EDIT ADDITION START - EXAMINE RECORDS
 		if(target_record && length(target_record.past_general_records) > RECORDS_INVISIBLE_THRESHOLD)
@@ -607,8 +607,10 @@
 		. += LANG("mob.6cde43c8", null)
 		. += "<span class='notice ml-2'>[english_list(cybers, and_text = ", and")]</span>"
 	if(target_record)
-		. += "<a href='byond://?src=[REF(src)];hud=m;physical_status=1;examine_time=[world.time]'>\[[target_record.physical_status]\]</a>"
-		. += "<a href='byond://?src=[REF(src)];hud=m;mental_status=1;examine_time=[world.time]'>\[[target_record.mental_status]\]</a>"
+		// NOVA EDIT CHANGE START - i18n - 体征/精神状态枚举值（Active/Stable…）反查显示，href 参数不动
+		. += "<a href='byond://?src=[REF(src)];hud=m;physical_status=1;examine_time=[world.time]'>\[[lang_reverse_text(target_record.physical_status)]\]</a>"
+		. += "<a href='byond://?src=[REF(src)];hud=m;mental_status=1;examine_time=[world.time]'>\[[lang_reverse_text(target_record.mental_status)]\]</a>"
+		// NOVA EDIT CHANGE END
 	else
 		. += LANG("mob.c448069e", null)
 		. += LANG("mob.c448069e", null)
