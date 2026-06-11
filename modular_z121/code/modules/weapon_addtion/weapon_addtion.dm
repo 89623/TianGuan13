@@ -583,6 +583,50 @@
 /obj/item/ammo_box/magazine/dex4/starts_empty
 	start_empty = TRUE
 
+// solstice狙击枪
+/obj/item/gun/ballistic/rifle/solstice
+	name = "Solstice 重型狙击枪"
+	desc = "退役下来的军用级狙击枪，原本口径并不是.310 Strilka，而是更大的.60 Strela。\
+	枪栓是为了承受反器材口径而设计的，这套设计用在小一号口径的，发射时初速居然出奇的高"
+	icon = 'modular_z121/icons/obj/guns/weapon_addtion/guns48x.dmi'
+	icon_state = "solstice"
+	lefthand_file = 'modular_z121/icons/mob/guns/weapon_addtion/guns_lefthand.dmi'
+	righthand_file = 'modular_z121/icons/mob/guns/weapon_addtion/guns_righthand.dmi'
+	inhand_icon_state = "solstice"
+	fire_sound = 'modular_nova/modules/aesthetics/guns/sound/sniperrifle.ogg'
+	fire_sound_volume = 80
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	bolt_drop_sound = 'sound/machines/eject.ogg'
+	SET_BASE_PIXEL(-8, 0)
+	rack_delay = 1 SECONDS
+	fire_delay = 1 SECONDS
+	accepted_magazine_type = /obj/item/ammo_box/magazine/lanca
+	mag_display = TRUE
+	tac_reloads = TRUE
+	internal_magazine = FALSE
+	can_be_sawn_off = FALSE
+	w_class = WEIGHT_CLASS_HUGE
+	weapon_weight = WEAPON_HEAVY
+
+	projectile_speed_multiplier = 2
+	recoil = 3
+
+/obj/item/gun/ballistic/rifle/solstice/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 2)
+
+/obj/item/gun/ballistic/rifle/solstice/drop_bolt(mob/user = null)
+	if (!magazine?.ammo_count())
+		balloon_alert(user, "stuck!")
+		playsound(user,'sound/items/weapons/jammed.ogg', 75, TRUE)
+		return FALSE
+
+	return ..()
+
+/obj/item/gun/ballistic/rifle/solstice/empty
+	spawn_magazine_type = /obj/item/ammo_box/magazine/lanca/spawns_empty
+
 //光子
 /obj/item/gun/energy/photon_sniper
 	name = "光子狙击步枪"
