@@ -6206,6 +6206,7 @@
 	"Piratespeak": "海盗语",
 	"Pixel Enhanced Transforming": "像素增强变换",
 	"Pixel Scaling": "像素缩放",
+	"pixel_location = position + (velocity * ticks_elapsed) +(0.5 * (average_drift_during_ticks + gravity - (velocity * friction": "像素位置 = 位置 + (速度 * 流逝帧数) + (0.5 * (帧间平均漂移 + 重力 - (速度 * 摩擦力",
 	"Pixie Cut": "精灵短发",
 	"Pizza Voucher": "披萨兑换券",
 	"PJs (Blue)": "PJs (蓝色)",
