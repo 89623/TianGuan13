@@ -4,8 +4,8 @@
 # 流程：fetch → 把 origin/master（已被 GitHub 自动追上游）merge 进当前 i18n 分支
 #       → 跑 resync.sh（重抽取英文目录 + 幂等改写新字符串）→ 编译验证。
 #
-# 不自动 commit：合并 + 重同步产物由你 review 后再提交（且**勿提交** zh-Hans 译文等
-# 私有产物，清单见脚本末尾提示）。
+# 不自动 commit：合并 + 重同步产物由你 review 后再提交。
+# 翻译源目录、术语表和 TGUI 同步出的运行时目录都属于可提交产物。
 #
 # 用法：
 #   bash tools/i18n/sync-upstream.sh          # 全流程（含编译）
@@ -29,20 +29,16 @@ if [[ -e .git/MERGE_HEAD ]]; then
 	echo "!! 有未完成的合并。先解决冲突并 'git commit'（或 'git merge --abort'）后再跑。" >&2
 	exit 1
 fi
-# 这些是你的私有产物（从不提交），始终处于「脏」态属正常，不应阻塞同步。
+# 这些是机器本地文件，不属于同步提交，始终处于「脏」态属正常，不应阻塞同步。
 # 同时用 --untracked-files=no 跳过未跟踪扫描：既不被本脚本自身/新建文件绊住，
 # 也顺带跳过 root 所有的 tolgee-* 残留目录（自托管 Tolgee 已弃用），免去权限警告。
-ARTIFACT_EXCLUDES=(
+LOCAL_EXCLUDES=(
 	':!.vscode/settings.json'
 	':!config/admins.txt'
-	':!tools/i18n/mt/glossary.zh-Hans.json'
-	':!strings/i18n/zh-Hans/**'
-	':!tgui/packages/tgui/i18n/en.json'
-	':!tgui/packages/tgui/i18n/zh-Hans.json'
 )
-dirty="$(git status --porcelain --untracked-files=no -- "${ARTIFACT_EXCLUDES[@]}")"
+dirty="$(git status --porcelain --untracked-files=no -- "${LOCAL_EXCLUDES[@]}")"
 if [[ -n "$dirty" ]]; then
-	echo "!! 工作区有未提交改动（已忽略私有产物）。先 commit 或 stash，避免和合并/重同步混在一起：" >&2
+	echo "!! 工作区有未提交改动（已忽略机器本地文件）。先 commit 或 stash，避免和合并/重同步混在一起：" >&2
 	echo "$dirty" >&2
 	exit 1
 fi
@@ -93,14 +89,14 @@ cat <<'EOF'
 
 下一步：
   1. review 上面的 diff（合并 commit + resync 产生的英文目录刷新/新 LANG 改写）。
-  2. 提交时务必【排除】这些私有产物（不要 push）：
+  2. i18n 产物均可提交，包括：
+       strings/i18n/en/*.json
        strings/i18n/zh-Hans/*.json
        tools/i18n/mt/glossary.zh-Hans.json
-       tgui/packages/tgui/i18n/en.json
-       tgui/packages/tgui/i18n/zh-Hans.json
+       tgui/packages/tgui/i18n/*.json
+     只排除这些机器本地文件：
        .vscode/settings.json
        config/admins.txt
-     可提交：code/**、modular_nova/**、tools/i18n/**、strings/i18n/en/**
   3. 翻译新增英文条目： bun tools/i18n/mt/i18n-mt.ts   （默认只补缺失）
   4. 重新构建起服。
 EOF

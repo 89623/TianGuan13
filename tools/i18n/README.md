@@ -274,7 +274,8 @@ Codex 翻译时可以把本批新发现的固定专名写入 `.pending/*.glossar
 ### 同步上游
 
 本仓库的 `master` 在 GitHub 上自动跟随上游 NovaSector，所以本地**只需合并 `origin/master`**，
-不必再配 `upstream` 远端。日常一条命令搞定（脏树检查会放过 `.vscode`/`zh-Hans` 等私有产物）：
+不必再配 `upstream` 远端。日常一条命令搞定（脏树检查只放过 `.vscode/settings.json`、`config/admins.txt`
+这类机器本地文件）：
 
 ```sh
 bash tools/i18n/sync-upstream.sh        # SYNC_BUILD=0 可跳过末尾编译
@@ -298,9 +299,11 @@ bash tools/i18n/sync-upstream.sh        # SYNC_BUILD=0 可跳过末尾编译
 > 别完全信 IDE 的一键「接受当前/传入」：它可能保留你旧行又取上游行，把上游真重构丢掉。冲突涉及非 LANG 的逻辑
 > 改动时，先看两边再定：`git show :2:<文件>`（ours/你的）对比 `git show :3:<文件>`（theirs/上游）。
 
-提交只放 `code/**`、`modular_nova/**`、`tools/i18n/**`、`strings/i18n/en/**`；**排除**私有产物
-`strings/i18n/zh-Hans/*`、`tgui/packages/tgui/i18n/*`、`glossary.zh-Hans.json`、`.vscode/settings.json`。
-最后跑 `bun tools/i18n/mt/i18n-mt.ts` 补译本次新增条目。
+所有 i18n 产物都可提交：`strings/i18n/en/**`、`strings/i18n/zh-Hans/**`、术语表
+`tools/i18n/mt/glossary.zh-Hans.json`，以及同步出的 `tgui/packages/tgui/i18n/*.json`。只排除机器本地文件
+`.vscode/settings.json`、`config/admins.txt`。`tgui-catalog.mjs extract` 会把新英文键以 `zh == en` 写入
+中文源目录作为待译占位值；玩家可见文案需要翻译，路径、代码 token、专名等可审核后保持英文。处理后运行
+`node tools/i18n/tgui-catalog.mjs sync`，并把中文源目录与前端运行时目录一起提交。
 
 ### 统计和排查
 
