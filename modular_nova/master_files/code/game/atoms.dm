@@ -19,9 +19,11 @@
 // i18n: 在 Initialize 期把静态 name/desc 整串反查为全服 locale 的译文。
 // 仅当全服 locale 非缺省（en）时生效；查不到的（玩家自定义名、运行时拼接名）原样保留。
 // 这一层让「变量类」文本（物品名/描述）能显示中文——它们无法直接改写成 LANG()。
+// 排除 /obj/effect/landmark：地标 name 是**匹配标识符**（SSjob 按 name == job.title 找职业
+// 出生点 start landmark），翻译会让出生点匹配失败、职业出生错位；地标不可见，玩家永远看不到其名。
 /atom/Initialize(mapload, ...)
 	. = ..()
-	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE && !istype(src, /obj/effect/landmark))
 		if(name)
 			name = lang_reverse_text(name)
 		if(desc)
