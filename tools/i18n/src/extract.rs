@@ -210,6 +210,13 @@ pub(crate) fn is_safe_verb_name(s: &str) -> bool {
         && !s.starts_with('.')
         && s.chars().next().is_some_and(|c| c.is_ascii_uppercase())
         && s.chars().any(|c| c.is_alphabetic())
+        // skin.dmf 宏按「连字符化 verb 名」调用（command = "open-escape-menu" 等）——这些 verb
+        // 改名即断 ESC/全屏/状态栏快捷键（实测：注入中文后 ESC 菜单失灵）。与 interface/skin.dmf
+        // 的 command 列表对应，新增宏 verb 在此登记。
+        && !matches!(
+            s,
+            "Open Escape Menu" | "Toggle Stat Panel" | "Fullscreen" | "Connect to Relay"
+        )
 }
 
 /// 从 list 字面量里抽「多词字符串值」（用于 /datum/aas_config_entry 的 announcement_lines_map
