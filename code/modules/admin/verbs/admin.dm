@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(show_tip, R_ADMIN, "显示提示", "Sends a tip to all players.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(show_tip, R_ADMIN, "Show Tip", "Sends a tip to all players.", ADMIN_CATEGORY_MAIN)
 	var/input = input(user, LANG("datum.766cc272", null), LANG("datum.56212106", null), "") as message|null
 	if(!input)
 		return
@@ -17,7 +17,7 @@ ADMIN_VERB(show_tip, R_ADMIN, "显示提示", "Sends a tip to all players.", ADM
 	log_admin("[key_name(user)] sent \"[input]\" as the Tip of the Round.")
 	BLACKBOX_LOG_ADMIN_VERB("Show Tip")
 
-ADMIN_VERB(announce, R_ADMIN, "公告", "Announce your desires to the world.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(announce, R_ADMIN, "Announce", "Announce your desires to the world.", ADMIN_CATEGORY_MAIN)
 	var/message = input(user, LANG("datum.5d9a880a", null), LANG("datum.80d9e104", null))  as message|null
 	if(!message)
 		return
@@ -28,7 +28,7 @@ ADMIN_VERB(announce, R_ADMIN, "公告", "Announce your desires to the world.", A
 	log_admin("Announce: [key_name(user)] : [message]")
 	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
-ADMIN_VERB(unprison, R_ADMIN, "解除监禁", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/prisoner in GLOB.mob_list)
+ADMIN_VERB(unprison, R_ADMIN, "UnPrison", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/prisoner in GLOB.mob_list)
 	if(!is_centcom_level(prisoner.z))
 		tgui_alert(user, LANG("datum.dc88f6bd", list(prisoner.name)))
 		return
@@ -38,7 +38,7 @@ ADMIN_VERB(unprison, R_ADMIN, "解除监禁", ADMIN_VERB_NO_DESCRIPTION, ADMIN_C
 	log_admin("[key_name(user)] has unprisoned [key_name(prisoner)]")
 	BLACKBOX_LOG_ADMIN_VERB("Unprison")
 
-ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "玩家游玩时长", "View player playtime.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player playtime.", ADMIN_CATEGORY_MAIN)
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		to_chat(user, span_warning(LANG("datum.360c803a", null)), confidential = TRUE)
 		return
@@ -150,7 +150,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "玩家游玩时长", "View play
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-ADMIN_VERB(drop_everything, R_ADMIN, "丢下一切", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/dropee in GLOB.mob_list)
+ADMIN_VERB(drop_everything, R_ADMIN, "Drop Everything", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/dropee in GLOB.mob_list)
 	var/confirm = tgui_alert(user, LANG("datum.0ca8446b", list(dropee)), LANG("datum.affb7d7e", null), list("Yes", "No"))
 	if(confirm != "Yes")
 		return

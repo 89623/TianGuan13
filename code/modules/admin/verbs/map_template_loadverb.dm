@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(map_template_load, R_DEBUG, "地图模板 - 放置", "Place a map template at your current location.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(map_template_load, R_DEBUG, "Map Template - Place", "Place a map template at your current location.", ADMIN_CATEGORY_DEBUG)
 	var/datum/map_template/template
 	var/map = tgui_input_list(user, LANG("datum.df722bd1", null),LANG("datum.de09f2bc", null), sort_list(SSmapping.map_templates))
 	if(!map)
@@ -39,7 +39,7 @@ ADMIN_VERB(map_template_load, R_DEBUG, "地图模板 - 放置", "Place a map tem
 			to_chat(user, LANG("datum.88d8e3ef", null), confidential = TRUE)
 	user.images -= preview
 
-ADMIN_VERB(map_template_upload, R_DEBUG, "地图模板 - 上传", "Upload a map template to the server.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(map_template_upload, R_DEBUG, "Map Template - Upload", "Upload a map template to the server.", ADMIN_CATEGORY_DEBUG)
 	var/map = input(user, LANG("datum.b3f7e640", null),LANG("datum.588f2e44", null)) as null|file
 	if(!map)
 		return

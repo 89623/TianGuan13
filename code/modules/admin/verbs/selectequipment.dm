@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "选择装备", mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/target in world)
 	// NOVA EDIT ADDITION START
 	if(tgui_alert(user, LANG("datum.8c3faf38", null), LANG("datum.2e0117dd", null), list("No", "Yes", "Sorry")) != "Yes")
 		return

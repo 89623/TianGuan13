@@ -2,7 +2,7 @@
 // Verb to toggle restart notifications
 /client/verb/notify_restart()
 	set category = "OOC"
-	set name = "通知重启"
+	set name = "Notify Restart"
 	set desc = "Notifies you on Discord when the server restarts."
 
 	// Safety checks

@@ -6,7 +6,7 @@
 	looc_message(msg)
 
 /client/verb/looc_wallpierce(msg as text)
-	set name = "LOOC (穿墙)"
+	set name = "LOOC (Wallpierce)"
 	set desc = "Local OOC, seen by anyone within 7 tiles of you."
 	set category = "OOC"
 

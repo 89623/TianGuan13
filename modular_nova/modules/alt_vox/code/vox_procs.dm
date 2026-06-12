@@ -23,7 +23,7 @@
 	return GLOB.vox_sounds
 
 /mob/living/silicon/ai/verb/switch_vox()
-	set name = "切换沃克斯语音"
+	set name = "Switch Vox Voice"
 	set desc = "Switch your VOX announcement voice!"
 	set category = "AI Commands"
 
@@ -38,7 +38,7 @@
 
 
 /mob/living/silicon/ai/verb/display_word_string()
-	set name = "显示文字串"
+	set name = "Display Word String"
 	set desc = "Display the list of recently pressed vox lines."
 	set category = "AI Commands"
 
@@ -48,7 +48,7 @@
 	to_chat(src, vox_word_string)
 
 /mob/living/silicon/ai/verb/clear_word_string()
-	set name = "清除文字串"
+	set name = "Clear Word String"
 	set desc = "Clear recent vox words."
 	set category = "AI Commands"
 

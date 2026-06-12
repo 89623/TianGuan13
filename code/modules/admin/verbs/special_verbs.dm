@@ -2,7 +2,7 @@
 // Admin Verbs in this file are special and cannot use the AVD system for some reason or another.
 
 /client/proc/show_verbs()
-	set name = "管理员动词 - 显示"
+	set name = "Adminverbs - Show"
 	set category = ADMIN_CATEGORY_MAIN
 
 	remove_verb(src, /client/proc/show_verbs)
@@ -12,7 +12,7 @@
 	BLACKBOX_LOG_ADMIN_VERB("Show Adminverbs")
 
 /client/proc/readmin()
-	set name = "重新成为管理员"
+	set name = "Readmin"
 	set category = "Admin"
 	set desc = "Regain your admin powers."
 
@@ -37,7 +37,7 @@
 	BLACKBOX_LOG_ADMIN_VERB("Readmin")
 
 /client/proc/admin_2fa_verify()
-	set name = "验证管理员"
+	set name = "Verify Admin"
 	set category = "Admin"
 
 	var/datum/admins/admin = GLOB.admin_datums[ckey]

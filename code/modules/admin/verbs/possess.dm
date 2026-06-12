@@ -1,6 +1,6 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
-ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, "附身物体", "Possess an object.", ADMIN_CATEGORY_FUN, obj/target in world)
+ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_FUN, obj/target in world)
 	var/result = user.mob.AddComponent(/datum/component/object_possession, target)
 
 	if(isnull(result)) // trigger a safety movement just in case we yonk
@@ -14,7 +14,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, "附身物体", "Possess an obje
 
 	BLACKBOX_LOG_ADMIN_VERB("Possess Object")
 
-ADMIN_VERB(release, R_POSSESS, "释放物体", "Stop possessing an object.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(release, R_POSSESS, "Release Object", "Stop possessing an object.", ADMIN_CATEGORY_FUN)
 	var/possess_component = user.mob.GetComponent(/datum/component/object_possession)
 	if(!isnull(possess_component))
 		qdel(possess_component)

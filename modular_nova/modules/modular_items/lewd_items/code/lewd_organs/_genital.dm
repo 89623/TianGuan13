@@ -219,7 +219,7 @@
 
 /mob/living/carbon/human/verb/toggle_genitals()
 	set category = "IC"
-	set name = "显示/隐藏生殖器"
+	set name = "Expose/Hide genitals"
 	set desc = "Allows you to toggle which genitals should show through clothes or not."
 
 	if(stat != CONSCIOUS)
@@ -264,7 +264,7 @@
 
 /mob/living/carbon/human/verb/toggle_arousal()
 	set category = "IC"
-	set name = "切换性唤起"
+	set name = "Toggle Arousal"
 	set desc = "Allows you to toggle how aroused your private parts are."
 
 	if(stat != CONSCIOUS)

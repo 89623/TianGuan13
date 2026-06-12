@@ -444,7 +444,7 @@ SUBSYSTEM_DEF(vote)
 /// Mob level verb that allows players to vote on the current vote.
 /mob/verb/vote()
 	set category = "OOC"
-	set name = "投票"
+	set name = "Vote"
 
 	if(!SSvote.initialized)
 		to_chat(usr, span_notice(LANG("mob.cb7a09b7", null)))

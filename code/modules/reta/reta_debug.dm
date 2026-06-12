@@ -4,7 +4,7 @@
  */
 
 /// Admin command to manually trigger RETA access grant for admins
-ADMIN_VERB(reta_manual_trigger, R_ADMIN, "RETA 门禁权限", "Manually trigger RETA access for testing", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(reta_manual_trigger, R_ADMIN, "RETA Door Access", "Manually trigger RETA access for testing", ADMIN_CATEGORY_EVENTS)
 
 	var/calling_dept = tgui_input_list(user, LANG("datum.5f6a3c68", null), LANG("datum.57dd1cc5", null), list("Security", "Engineering", "Medical", "Science", "Service", "Command", "Cargo", "Mining"))
 	if(!calling_dept)

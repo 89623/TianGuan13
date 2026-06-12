@@ -179,32 +179,58 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
 /// 仅注入：① is_safe_verb_name 放行的安全显示名（排除 .click/body-chest 等 keybind 按名调用标识符，
 /// 改名会断快捷键/宏）；② 目录里已有译文且 zh != en 的项。译文取自 strings/i18n/<locale>/*.json
 /// （抽取阶段建 key、MT 翻译）。内容守卫：定位到的源码原文须严格等于 en，防错位/宏展开误改。
-pub fn run_verbs(dme: &Path, locale: &str, dry_run: bool) -> Result<()> {
+pub fn run_verbs(dme: &Path, locale: &str, revert: bool, dry_run: bool) -> Result<()> {
     // 载入译文目录（key -> 译文）。
-    let locale_dir = dme
+    let strings_root = dme
         .parent()
         .unwrap_or_else(|| Path::new("."))
-        .join("strings/i18n")
-        .join(locale);
-    let mut translations: HashMap<String, String> = HashMap::new();
-    if let Ok(rd) = std::fs::read_dir(&locale_dir) {
-        for ent in rd.flatten() {
-            let p = ent.path();
-            if p.extension().and_then(|e| e.to_str()) != Some("json") {
-                continue;
-            }
-            if let Ok(content) = std::fs::read_to_string(&p) {
-                if let Ok(map) = serde_json::from_str::<HashMap<String, String>>(&content) {
-                    translations.extend(map);
+        .join("strings/i18n");
+    let load_dir = |dir: &Path| -> HashMap<String, String> {
+        let mut out = HashMap::new();
+        if let Ok(rd) = std::fs::read_dir(dir) {
+            for ent in rd.flatten() {
+                let p = ent.path();
+                if p.extension().and_then(|e| e.to_str()) != Some("json") {
+                    continue;
+                }
+                if let Ok(content) = std::fs::read_to_string(&p) {
+                    if let Ok(map) = serde_json::from_str::<HashMap<String, String>>(&content) {
+                        out.extend(map);
+                    }
                 }
             }
         }
-    }
+        out
+    };
+    let translations = load_dir(&strings_root.join(locale));
     if translations.is_empty() {
         anyhow::bail!(
             "译文目录为空或不存在: {}（先 extract 抽出 verb 名再翻译）",
-            locale_dir.display()
+            strings_root.join(locale).display()
         );
+    }
+    // --revert：建「译文 -> 候选英文原文」映射（仅安全 verb 名）。同一译文对应多个英文时
+    // （Ghost/Ghosts、T-ray Scan/T-ray scan…）在改写点按命名空间逐点消歧：候选的
+    // make_key(ns, en) 必须存在于 en 目录且其译文 == 当前字面量；唯一命中才还原。
+    let mut zh2en: HashMap<String, Vec<String>> = HashMap::new();
+    let mut english: HashMap<String, String> = HashMap::new();
+    if revert {
+        english = load_dir(&strings_root.join("en"));
+        for (key, en) in &english {
+            if !crate::extract::is_safe_verb_name(en) {
+                continue;
+            }
+            let Some(zh) = translations.get(key) else {
+                continue;
+            };
+            if zh == en || zh.is_empty() {
+                continue;
+            }
+            let slot = zh2en.entry(zh.clone()).or_default();
+            if !slot.contains(en) {
+                slot.push(en.clone());
+            }
+        }
     }
 
     let mut context = dm::Context::default();
@@ -236,19 +262,45 @@ pub fn run_verbs(dme: &Path, locale: &str, dry_run: bool) -> Result<()> {
                     if name.as_str() != "name" {
                         continue;
                     }
-                    let Some(en) = build_template(value) else {
+                    let Some(lit) = build_template(value) else {
                         continue;
                     };
-                    if !crate::extract::is_safe_verb_name(&en) {
-                        continue;
-                    }
-                    let key = make_key(&ns, &en);
-                    let Some(zh) = translations.get(&key) else {
-                        continue;
+                    // lit = 源码当前字面量。正向：lit 是英文原文，查 key 取译文；
+                    // 反向（--revert）：lit 是已注入的译文，查 zh→en 映射还原英文。
+                    let target = if revert {
+                        let Some(candidates) = zh2en.get(&lit) else {
+                            continue;
+                        };
+                        // 逐点消歧：候选英文按本命名空间算 key，须在 en 目录存在且译文 == 当前字面量。
+                        let resolved: Vec<&String> = candidates
+                            .iter()
+                            .filter(|en| {
+                                let key = make_key(&ns, en);
+                                english.get(&key).map(String::as_str) == Some(en.as_str())
+                                    && translations.get(&key) == Some(&lit)
+                            })
+                            .collect();
+                        match resolved.as_slice() {
+                            [only] => (*only).clone(),
+                            [] => continue,
+                            many => {
+                                eprintln!(
+                                    "歧义跳过（{}）: {:?} -> {:?}",
+                                    ns, lit, many
+                                );
+                                continue;
+                            }
+                        }
+                    } else {
+                        if !crate::extract::is_safe_verb_name(&lit) {
+                            continue;
+                        }
+                        let key = make_key(&ns, &lit);
+                        match translations.get(&key) {
+                            Some(zh) if zh != &lit && !zh.is_empty() => zh.clone(),
+                            _ => continue,
+                        }
                     };
-                    if zh == &en || zh.is_empty() {
-                        continue;
-                    }
                     let loc = match value {
                         Expression::Base { term, follow } if follow.is_empty() => term.location,
                         _ => continue,
@@ -278,15 +330,15 @@ pub fn run_verbs(dme: &Path, locale: &str, dry_run: bool) -> Result<()> {
                     if !interp.is_empty() || in_preprocessor_directive(src, qpos) {
                         continue;
                     }
-                    // 内容守卫：源码原文须严格等于 en，否则跳过（防错位/宏）。
-                    if qend < qpos + 2 || src[qpos + 1..qend - 1] != *en {
+                    // 内容守卫：源码原文须严格等于当前字面量，否则跳过（防错位/宏）。
+                    if qend < qpos + 2 || src[qpos + 1..qend - 1] != *lit {
                         continue;
                     }
-                    let zh_esc = zh.replace('\\', "\\\\").replace('"', "\\\"");
+                    let target_esc = target.replace('\\', "\\\\").replace('"', "\\\"");
                     // 只替换字面量本身、不加行内 `//` 注释：verb 名可能是宏实参（ADMIN_VERB 的
                     // verb_name）或行中 token，行内 `//` 会注释掉其后的实参/代码（致命）。NOVA 标记
                     // 靠文件级 CORE_MARKER（与 LANG codemod 一致）；原文可由 git 历史 / en 目录恢复。
-                    let replacement = format!("\"{zh_esc}\"");
+                    let replacement = format!("\"{target_esc}\"");
                     edits.entry(path).or_default().push(Edit {
                         start: qpos,
                         end: qend,

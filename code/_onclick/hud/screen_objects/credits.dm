@@ -26,7 +26,7 @@
 	qdel(credits_icon)
 
 /client/proc/ClearCredits()
-	set name = "隐藏鸣谢"
+	set name = "Hide Credits"
 	set category = "OOC"
 	remove_verb(src, /client/proc/ClearCredits)
 	QDEL_LIST(credits)

@@ -203,7 +203,7 @@
 			. += image('modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "[barricade_type]_closed_wire")
 
 /obj/structure/deployable_barricade/verb/rotate()
-	set name = "逆时针旋转路障 <"
+	set name = "Rotate barricade counterclockwise <"
 	set category = "Object"
 	set src in oview(1)
 
@@ -214,7 +214,7 @@
 	setDir(turn(dir, 90))
 
 /obj/structure/deployable_barricade/verb/revrotate()
-	set name = "顺时针旋转路障 >"
+	set name = "Rotate barricade clockwise >"
 	set category = "Object"
 	set src in oview(1)
 

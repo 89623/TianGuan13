@@ -1,5 +1,5 @@
 /mob/living/carbon/human/verb/climax_verb()
-	set name = "高潮"
+	set name = "Climax"
 	set category = "IC"
 
 	if(!has_status_effect(/datum/status_effect/climax_cooldown))
@@ -13,7 +13,7 @@
 		to_chat(src, span_warning(LANG("mob.b4242208", null)))
 
 /mob/living/verb/reflexes_verb()
-	set name = "切换反射"
+	set name = "Toggle Reflexes"
 	set category = "IC"
 	if(!HAS_TRAIT_FROM(src, TRAIT_QUICKREFLEXES, REF(src)))
 		ADD_TRAIT(src, TRAIT_QUICKREFLEXES, REF(src))
@@ -35,7 +35,7 @@
 	return "Our systems will allow platonic contact."
 
 /mob/living/carbon/human/verb/safeword()
-	set name = "移除不雅物品"
+	set name = "Remove Lewd Items"
 	set category = "OOC"
 	set desc = "Removes any and all lewd items from you."
 

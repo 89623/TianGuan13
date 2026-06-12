@@ -137,7 +137,7 @@
 // HERE BE DEBUG DRAGONS //
 ///////////////////////////
 
-ADMIN_VERB(debug_nature_map_generator, R_DEBUG, "测试自然地图生成器", "Test the nature map generator", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(debug_nature_map_generator, R_DEBUG, "Test Nature Map Generator", "Test the nature map generator", ADMIN_CATEGORY_DEBUG)
 	var/datum/map_generator/nature/N = new()
 	var/startInput = input(user, LANG("datum.1ff2d245", null), LANG("datum.892abeeb", null), "1;1;1") as text|null
 

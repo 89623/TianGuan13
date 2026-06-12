@@ -10,7 +10,7 @@
 	var/list/navigation_images = list()
 
 /mob/living/verb/navigate()
-	set name = "导航"
+	set name = "Navigate"
 	set hidden = TRUE
 
 	if(incapacitated)

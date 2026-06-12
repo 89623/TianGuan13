@@ -90,7 +90,7 @@
 
 /// Checks if the mob wants to leave the soulcatcher. If they do and are able to leave, they are booted out.
 /mob/living/soulcatcher_soul/verb/leave_soulcatcher()
-	set name = "离开灵魂捕捉器"
+	set name = "Leave Soulcatcher"
 	set category = "IC"
 
 	if(!able_to_leave)

@@ -127,7 +127,7 @@
 
 
 /obj/item/taperecorder/verb/ejectverb()
-	set name = "弹出磁带"
+	set name = "Eject Tape"
 
 	if(!can_use(usr))
 		balloon_alert(usr, LANG("obj.3d241116", null))
@@ -162,7 +162,7 @@
 
 
 /obj/item/taperecorder/verb/record()
-	set name = "开始录制"
+	set name = "Start Recording"
 
 	if(!can_use(usr))
 		balloon_alert(usr, LANG("obj.3d241116", null))
@@ -204,7 +204,7 @@
 
 
 /obj/item/taperecorder/verb/stop()
-	set name = "停止"
+	set name = "Stop"
 
 	if(!can_use(usr))
 		balloon_alert(usr, LANG("obj.3d241116", null))
@@ -224,7 +224,7 @@
 	update_sound()
 
 /obj/item/taperecorder/verb/play()
-	set name = "播放磁带"
+	set name = "Play Tape"
 
 	if(!can_use(usr))
 		balloon_alert(usr, LANG("obj.3d241116", null))
@@ -296,7 +296,7 @@
 				eject(user)
 
 /obj/item/taperecorder/verb/print_transcript()
-	set name = "打印转录稿"
+	set name = "Print Transcript"
 
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))

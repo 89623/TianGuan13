@@ -1,5 +1,5 @@
 /mob/living/carbon/verb/army_crawl()
-	set name = "匍匐前进"
+	set name = "Army Crawl"
 	set category = "IC"
 
 	var/mob/living/carbon/crawler = src

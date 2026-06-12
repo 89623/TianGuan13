@@ -7,7 +7,7 @@ If you make a derivative work from this code, you must include this notification
 */
 
 /mob/living/proc/wrestling_help()
-	set name = "回想教导"
+	set name = "Recall Teachings"
 	set desc = "Remember how to wrestle."
 	set category = "Wrestling"
 

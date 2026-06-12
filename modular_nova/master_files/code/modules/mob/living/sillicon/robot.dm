@@ -55,7 +55,7 @@
 	listener.allowed_z_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 
 /mob/living/silicon/robot/proc/toggle_smoke()
-	set name = "切换烟雾"
+	set name = "Toggle smoke"
 	set category = "AI Commands"
 
 	if(particles)

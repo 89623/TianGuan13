@@ -1,5 +1,5 @@
 ///Allows an admin to open the panel
-ADMIN_VERB(intensity_credits_panel, R_FUN, "ICES 事件面板", "Opens up the ICES panel.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(intensity_credits_panel, R_FUN, "ICES Events Panel", "Opens up the ICES panel.", ADMIN_CATEGORY_EVENTS)
 	user.holder?.intensity_credits_panel()
 
 ///Opens up the ICES panel

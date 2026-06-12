@@ -22,7 +22,7 @@
 	..()
 
 /obj/item/clothing/head/soft/verb/flipcap()
-	set name = "翻转盖子"
+	set name = "Flip cap"
 
 	flip(usr)
 

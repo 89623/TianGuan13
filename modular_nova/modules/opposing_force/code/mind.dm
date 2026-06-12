@@ -6,7 +6,7 @@
 	return ..()
 
 /mob/verb/opposing_force()
-	set name = "敌对部队"
+	set name = "Opposing Force"
 	set category = "OOC"
 	set desc = "View your opposing force panel, or request one."
 	// Mind checks

@@ -93,7 +93,7 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 	usr = lastusr
 	handler.remove_caller(user)
 
-ADMIN_VERB(advanced_proc_call, R_DEBUG, "高级 ProcCall", "Call a proc on any datum in the server.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(advanced_proc_call, R_DEBUG, "Advanced ProcCall", "Call a proc on any datum in the server.", ADMIN_CATEGORY_DEBUG)
 	user.callproc_blocking()
 
 /client/proc/callproc_blocking(list/get_retval)
@@ -231,7 +231,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	return (GLOB.AdminProcCaller && GLOB.AdminProcCaller == usr?.client?.ckey) || (GLOB.AdminProcCallHandler && usr == GLOB.AdminProcCallHandler)
 #endif
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "原子 ProcCall", datum/thing as null|area|mob|obj|turf)
+ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "Atom ProcCall", datum/thing as null|area|mob|obj|turf)
 	var/procname = input(user, LANG("datum.5a6a7f47", null),LANG("datum.a03a6d4f", null), null) as text|null
 	if(!procname)
 		return

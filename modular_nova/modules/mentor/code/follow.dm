@@ -16,7 +16,7 @@
 
 /client/proc/mentor_unfollow()
 	set category = "Mentor"
-	set name = "停止跟随"
+	set name = "Stop Following"
 	set desc = "Stop following the followed."
 
 	if(!is_mentor())

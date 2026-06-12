@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(explosions)
 	throwturf -= T
 	held_throwturf -= T
 
-ADMIN_VERB(check_bomb_impacts, R_DEBUG, "检查炸弹冲击", "See what the effect of a bomb would be.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effect of a bomb would be.", ADMIN_CATEGORY_DEBUG)
 	var/newmode = tgui_alert(user, LANG("datum.c76f8f6d", null),LANG("datum.256bcbfe", null), list("Yes", "No"))
 	var/turf/epicenter = get_turf(user.mob)
 	if(!epicenter)

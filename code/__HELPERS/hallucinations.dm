@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT_TYPED(random_hallucination_weighted_list, /list, generate_hallu
 	to_chat(usr, span_boldnotice(LANG("_root.e3533dc4", list(total_weight))))
 	return total_weight
 
-ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "显示幻觉权重", "View the weight of each hallucination subtype in the random weighted list.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(debug_hallucination_weighted_list_per_type, R_DEBUG, "Show Hallucination Weights", "View the weight of each hallucination subtype in the random weighted list.", ADMIN_CATEGORY_DEBUG)
 	var/header = "<tr><th>Type</th> <th>Weight</th> <th>Tier</th> <th>Percent</th>"
 
 	var/total_weight = debug_hallucination_weighted_list()

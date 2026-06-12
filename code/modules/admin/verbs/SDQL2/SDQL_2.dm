@@ -196,7 +196,7 @@
 		state = SDQL2_STATE_ERROR;\
 		CRASH("SDQL2 fatal error");};
 
-ADMIN_VERB(sdql2_query, R_DEBUG, "SDQL2 查询", "Run a SDQL2 query.", ADMIN_CATEGORY_DEBUG, query_text as message)
+ADMIN_VERB(sdql2_query, R_DEBUG, "SDQL2 Query", "Run a SDQL2 query.", ADMIN_CATEGORY_DEBUG, query_text as message)
 	var/prompt = tgui_alert(user, LANG("datum.11f27815", null), LANG("datum.99b41112", null), list("Yes", "Cancel"))
 	if (prompt != "Yes")
 		return

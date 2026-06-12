@@ -261,7 +261,7 @@
 	return brainmob.name
 
 /obj/item/mmi/verb/Toggle_Listening()
-	set name = "切换监听"
+	set name = "Toggle Listening"
 	set desc = "Toggle listening channel on or off."
 	set category = "MMI"
 	set src = usr.loc

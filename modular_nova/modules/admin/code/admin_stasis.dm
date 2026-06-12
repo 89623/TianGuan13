@@ -1,4 +1,4 @@
-ADMIN_VERB_AND_CONTEXT_MENU(admin_stasis, R_ADMIN|R_FUN, "切换管理员停滞", "Toggle admin stasis for a living mob.", ADMIN_CATEGORY_FUN, mob/living/target in world)
+ADMIN_VERB_AND_CONTEXT_MENU(admin_stasis, R_ADMIN|R_FUN, "Toggle Admin Stasis", "Toggle admin stasis for a living mob.", ADMIN_CATEGORY_FUN, mob/living/target in world)
 	var/has_effect = !isnull(target.has_status_effect_from_source(/datum/status_effect/grouped/stasis, STASIS_ADMIN))
 	if(has_effect)
 		target.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_ADMIN)

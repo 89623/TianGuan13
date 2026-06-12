@@ -34,7 +34,7 @@
 
 ///A right-click verb, for those not using hotkey mode.
 /obj/item/borg/apparatus/verb/verb_dropHeld()
-	set name = "丢下"
+	set name = "Drop"
 
 	if(usr != loc || !stored)
 		return

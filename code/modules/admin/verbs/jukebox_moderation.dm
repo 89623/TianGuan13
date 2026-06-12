@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(upload_jukebox_music, R_SERVER, "点唱机上传音乐", "Upload a valid .ogg file to be accessed via the jukebox.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(upload_jukebox_music, R_SERVER, "Jukebox Upload Music", "Upload a valid .ogg file to be accessed via the jukebox.", ADMIN_CATEGORY_SERVER)
 	var/file = input(user, LANG("datum.756b08bf", null)) as sound|null
 	if(!file)
 		return
@@ -27,7 +27,7 @@ ADMIN_VERB(upload_jukebox_music, R_SERVER, "点唱机上传音乐", "Upload a va
 	message_admins("[key_name_admin(user)] uploaded [clean_name] to the jukebox!")
 	to_chat(user, span_notice(LANG("datum.323743c2", list(clean_name))))
 
-ADMIN_VERB(browse_jukebox_music, R_SERVER, "点唱机浏览音乐", "Browse music files for moderation.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(browse_jukebox_music, R_SERVER, "Jukebox Browse Music", "Browse music files for moderation.", ADMIN_CATEGORY_SERVER)
 	var/list/files = flist(CONFIG_JUKEBOX_SOUNDS)
 	// Filter out things that are not sound files, like the exclude
 	for(var/thing in files)

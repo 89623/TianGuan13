@@ -74,7 +74,7 @@
 
 /client/verb/showrevinfo()
 	set category = "OOC"
-	set name = "显示服务器版本"
+	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
 	var/list/msg = list()

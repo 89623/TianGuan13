@@ -215,7 +215,7 @@
 	return subtle(message)
 
 /mob/living/verb/subtle()
-	set name = "微妙"
+	set name = "Subtle"
 	set category = "IC"
 	if(GLOB.say_disabled)	// This is here to try to identify lag problems
 		to_chat(usr, span_danger(LANG("mob.b79ad8a3", null)))
@@ -227,7 +227,7 @@
 */
 
 /mob/living/verb/subtler()
-	set name = "隐蔽反鬼"
+	set name = "Subtler Anti-Ghost"
 	set category = "IC"
 	if(GLOB.say_disabled)	// This is here to try to identify lag problems
 		to_chat(usr, span_danger(LANG("mob.b79ad8a3", null)))

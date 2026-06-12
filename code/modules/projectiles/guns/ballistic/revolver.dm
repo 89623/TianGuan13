@@ -59,7 +59,7 @@
 			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
 
 /obj/item/gun/ballistic/revolver/verb/spin()
-	set name = "旋转腔室"
+	set name = "Spin Chamber"
 	var/mob/user = usr
 
 	if(user.stat || !in_range(user, src))

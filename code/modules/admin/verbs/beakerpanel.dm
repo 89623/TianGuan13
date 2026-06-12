@@ -89,6 +89,6 @@
 
 	return grenade
 
-ADMIN_VERB(beaker_panel, R_SPAWN, "生成试剂容器", "Spawn a reagent container.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(beaker_panel, R_SPAWN, "Spawn Reagent Container", "Spawn a reagent container.", ADMIN_CATEGORY_EVENTS)
 	var/datum/beaker_panel/panel = new
 	panel.ui_interact(user.mob)

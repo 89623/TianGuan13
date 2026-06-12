@@ -551,7 +551,7 @@
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
 /mob/living/verb/pulled(atom/movable/thing_pulled as mob|obj in oview(1))
-	set name = "拉取"
+	set name = "Pull"
 
 	if(istype(thing_pulled) && Adjacent(thing_pulled))
 		start_pulling(thing_pulled)

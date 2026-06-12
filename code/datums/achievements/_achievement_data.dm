@@ -132,7 +132,7 @@
 
 /client/verb/checkachievements()
 	set category = "OOC"
-	set name = "检查成就"
+	set name = "Check achievements"
 	set desc = "See all of your achievements!"
 
 	persistent_client.achievements.ui_interact(usr)

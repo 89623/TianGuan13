@@ -1,4 +1,4 @@
-ADMIN_VERB(request_more_opfor, R_FUN, "请求 OPFOR", "Request players sign up for opfor if they have antag on.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(request_more_opfor, R_FUN, "Request OPFOR", "Request players sign up for opfor if they have antag on.", ADMIN_CATEGORY_FUN)
 	var/asked = 0
 	for(var/mob/living/carbon/human/human in GLOB.alive_player_list)
 		if(human.client?.prefs?.read_preference(/datum/preference/toggle/be_antag))
@@ -6,7 +6,7 @@ ADMIN_VERB(request_more_opfor, R_FUN, "请求 OPFOR", "Request players sign up f
 			asked++
 	message_admins("[ADMIN_LOOKUP(user)] has requested more OPFOR players! (Asked: [asked] players)")
 
-ADMIN_VERB(view_opfors, R_ADMIN, "查看 OPFORs", "View OPFORs.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(view_opfors, R_ADMIN, "View OPFORs", "View OPFORs.", ADMIN_CATEGORY_GAME)
 	user.mob.client?.view_opfors()
 
 /client/proc/view_opfors()

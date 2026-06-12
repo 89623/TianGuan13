@@ -458,7 +458,7 @@
 	return all_accessories
 
 /obj/item/clothing/under/verb/toggle()
-	set name = "调整套装传感器"
+	set name = "Adjust Suit Sensors"
 	set src in usr
 	var/mob/user_mob = usr
 	if(!can_toggle_sensors(user_mob))
@@ -528,7 +528,7 @@
 	pop_accessory(user)
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()
-	set name = "调整连体服样式"
+	set name = "Adjust Jumpsuit Style"
 	set category = null
 	set src in usr
 

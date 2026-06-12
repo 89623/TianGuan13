@@ -219,7 +219,7 @@ Buildable meters
 		resistance_flags |= FIRE_PROOF | LAVA_PROOF
 
 /obj/item/pipe/verb/flip()
-	set name = "反转管道"
+	set name = "Invert Pipe"
 	set src in view(1)
 
 	if ( usr.incapacitated )

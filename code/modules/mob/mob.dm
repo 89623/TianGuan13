@@ -559,7 +559,7 @@
  * for why this isn't atom/verb/examine()
  */
 /mob/verb/examinate(atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
-	set name = "检查"
+	set name = "Examine"
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
@@ -824,7 +824,7 @@
  * Only works if flag/allow_respawn is allowed in config
  */
 /mob/verb/abandon_mob()
-	set name = "重生"
+	set name = "Respawn"
 	set category = "OOC"
 
 	switch(CONFIG_GET(flag/allow_respawn))
@@ -911,7 +911,7 @@
  * Sometimes helps if the user is stuck in another perspective or camera
  */
 /mob/verb/cancel_camera()
-	set name = "取消摄像头视图"
+	set name = "Cancel Camera View"
 	set category = "OOC"
 	reset_perspective(null)
 
@@ -920,7 +920,7 @@
  * preventing them from moving the UPLINK window.
  */
 /mob/verb/reset_ui_positions_for_mob()
-	set name = "重置UI位置"
+	set name = "Reset UI Positions"
 	set category = "OOC"
 	SStgui.reset_ui_position(src)
 

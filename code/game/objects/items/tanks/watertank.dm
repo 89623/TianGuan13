@@ -61,7 +61,7 @@
 		remove_noz()
 
 /obj/item/watertank/verb/toggle_mister_verb()
-	set name = "切换喷雾器"
+	set name = "Toggle Mister"
 	toggle_mister(usr)
 
 /obj/item/watertank/proc/make_noz()

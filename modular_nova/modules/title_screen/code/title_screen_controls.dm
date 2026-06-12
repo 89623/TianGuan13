@@ -2,7 +2,7 @@
 /**
  * Enables an admin to upload a new titlescreen image.
  */
-ADMIN_VERB(admin_change_title_screen, R_FUN, "标题画面：更改", "Upload a new titlescreen image.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(admin_change_title_screen, R_FUN, "Title Screen: Change", "Upload a new titlescreen image.", ADMIN_CATEGORY_FUN)
 	log_admin("[key_name(user)] is changing the title screen.")
 	message_admins("[key_name_admin(user)] is changing the title screen.")
 
@@ -20,7 +20,7 @@ ADMIN_VERB(admin_change_title_screen, R_FUN, "标题画面：更改", "Upload a 
 /**
  * Sets a titlescreen notice, a big red text on the main screen.
  */
-ADMIN_VERB(change_title_screen_notice, R_FUN, "标题画面：设置公告", "Sets a titlescreen notice, a big red text on the main screen.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(change_title_screen_notice, R_FUN, "Title Screen: Set Notice", "Sets a titlescreen notice, a big red text on the main screen.", ADMIN_CATEGORY_FUN)
 	log_admin("[key_name(usr)] is setting the title screen notice.")
 	message_admins("[key_name_admin(usr)] is setting the title screen notice.")
 
@@ -35,7 +35,7 @@ ADMIN_VERB(change_title_screen_notice, R_FUN, "标题画面：设置公告", "Se
 /**
  * Reloads the titlescreen if it is bugged for someone.
  */
-ADMIN_VERB(fix_title_screen, R_ADMIN, "修复大厅屏幕", "Lobbyscreen broke? Press this.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(fix_title_screen, R_ADMIN, "Fix Lobby Screen", "Lobbyscreen broke? Press this.", ADMIN_CATEGORY_MAIN)
 	if(istype(user.mob, /mob/dead/new_player))
 		var/mob/dead/new_player/new_player = user.mob
 		new_player.show_title_screen()
@@ -46,7 +46,7 @@ ADMIN_VERB(fix_title_screen, R_ADMIN, "修复大厅屏幕", "Lobbyscreen broke? 
 /**
  * An admin debug command that enables you to change the HTML on the go.
  */
-ADMIN_VERB(change_title_screen_html, R_DEBUG, "标题屏幕：设置 HTML", "Change lobby screen HTML on the go.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(change_title_screen_html, R_DEBUG, "Title Screen: Set HTML", "Change lobby screen HTML on the go.", ADMIN_CATEGORY_FUN)
 	log_admin("[key_name(user)] is setting the title screen HTML.")
 	message_admins("[key_name_admin(user)] is setting the title screen HTML.")
 

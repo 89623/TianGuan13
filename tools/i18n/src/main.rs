@@ -58,6 +58,9 @@ enum Cmd {
         /// 译文 locale（读 strings/i18n/<locale>/*.json 取译文）。
         #[arg(long, default_value = "zh-Hans")]
         locale: String,
+        /// 反向还原：把已注入的「译文」verb 名换回英文原文（按 zh→en 映射，歧义跳过）。
+        #[arg(long)]
+        revert: bool,
         /// 只统计、不落盘。
         #[arg(long)]
         dry_run: bool,
@@ -73,6 +76,6 @@ fn main() -> Result<()> {
             filter,
             dry_run,
         } => rewrite::run(&dme, filter.as_deref(), dry_run),
-        Cmd::Verbs { dme, locale, dry_run } => rewrite::run_verbs(&dme, &locale, dry_run),
+        Cmd::Verbs { dme, locale, revert, dry_run } => rewrite::run_verbs(&dme, &locale, revert, dry_run),
     }
 }

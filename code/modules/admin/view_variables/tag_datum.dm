@@ -13,5 +13,5 @@
 	else
 		holder.add_tagged_datum(target_datum)
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(tag_datum, R_NONE, "标记基准", datum/target_datum as mob|obj|turf|area in view())
+ADMIN_VERB_ONLY_CONTEXT_MENU(tag_datum, R_NONE, "Tag Datum", datum/target_datum as mob|obj|turf|area in view())
 	user.tag_datum(target_datum)

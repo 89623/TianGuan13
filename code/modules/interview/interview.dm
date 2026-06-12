@@ -93,7 +93,7 @@
  * Verb for opening the existing interview, or if relevant creating a new interview if possible.
  */
 /mob/dead/new_player/proc/open_interview()
-	set name = "开启采访"
+	set name = "Open Interview"
 	set category = "Interview"
 	var/mob/dead/new_player/M = usr
 	if (M?.client?.interviewee)

@@ -48,7 +48,7 @@
 		maptext_height = 48 //Offset value of tallborgs
 
 /mob/living/silicon/robot/proc/rest_style()
-	set name = "切换休息姿势"
+	set name = "Switch Rest Style"
 	set category = "AI Commands"
 	set desc = "Select your resting pose."
 	if(!can_rest())
@@ -77,7 +77,7 @@
 	update_icons()
 
 /mob/living/silicon/robot/proc/robot_lay_down()
-	set name = "躺下"
+	set name = "Lay down"
 	set category = "AI Commands"
 	if(!can_rest())
 		to_chat(src, span_warning(LANG("mob.56e41a3d", null)))

@@ -172,7 +172,7 @@
 	return TRUE // no doing underlying actions
 
 /proc/togglebuildmode(mob/M as mob in GLOB.player_list)
-	set name = "切换建造模式"
+	set name = "Toggle Build Mode"
 	set category = "Event"
 
 	if(M.client)

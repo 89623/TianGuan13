@@ -169,7 +169,7 @@
 
 /mob/eye/imaginary_friend/dream_projection/verb/stop_projection()
 	set category = "IC"
-	set name = "停止投影"
+	set name = "Stop Projection"
 	set desc = "Stop astrally projecting and return to your body."
 
 	qdel(src)

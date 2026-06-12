@@ -2,7 +2,7 @@
 
 /mob/living/silicon/ai/proc/show_laws_verb()
 	set category = "AI Commands"
-	set name = "显示法律"
+	set name = "Show Laws"
 	set desc = "Check what your laws are privately. \
 		Also ensures all synced cyborgs are up to date with your laws, reminds them of your laws."
 	if(usr.stat == DEAD)

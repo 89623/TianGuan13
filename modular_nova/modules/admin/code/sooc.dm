@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(ckey_to_sooc_name)
 		var/client/iterated_client = iterated_listener
 		to_chat(iterated_client, span_oocplain("<b>The SOOC channel has been globally [GLOB.sooc_allowed ? "enabled" : "disabled"].</b>"))
 
-ADMIN_VERB(togglesooc, R_ADMIN, "切换安保 OOC", "Toggles Security OOC.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(togglesooc, R_ADMIN, "Toggle Security OOC", "Toggles Security OOC.", ADMIN_CATEGORY_SERVER)
 	toggle_sooc()
 	log_admin("[key_name(usr)] toggled Security OOC.")
 	message_admins("[key_name_admin(usr)] toggled Security OOC.")

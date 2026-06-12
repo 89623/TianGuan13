@@ -214,7 +214,7 @@
 
 /mob/living/silicon/ai/verb/toggle_acceleration()
 	set category = "AI Commands"
-	set name = "切换摄像头加速"
+	set name = "Toggle Camera Acceleration"
 
 	if(incapacitated)
 		return

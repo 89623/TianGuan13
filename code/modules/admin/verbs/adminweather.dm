@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run 天气", "Triggers specific weather on the z-level you choose.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run Weather", "Triggers specific weather on the z-level you choose.", ADMIN_CATEGORY_EVENTS)
 
 	var/list/weather_choices = list()
 	if(!length(weather_choices))
@@ -85,7 +85,7 @@ ADMIN_VERB(run_weather, R_ADMIN|R_FUN, "Run 天气", "Triggers specific weather 
 	log_admin("[key_name(user)] started weather of type [weather_choice] on the z-level [z_level].")
 	BLACKBOX_LOG_ADMIN_VERB("Run Weather")
 
-ADMIN_VERB(stop_weather, R_ADMIN|R_DEBUG, "停止所有活动天气", "Stop all currently active weather.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(stop_weather, R_ADMIN|R_DEBUG, "Stop All Active Weather", "Stop all currently active weather.", ADMIN_CATEGORY_EVENTS)
 	log_admin("[key_name(user)] stopped all currently active weather.")
 	message_admins("[key_name_admin(user)] stopped all currently active weather.")
 	for(var/datum/weather/current_weather as anything in SSweather.processing)
