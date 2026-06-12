@@ -33,29 +33,13 @@
 	// 实参用目录里不存在的无意义 token（Zxqv 等），断言与服务器 locale/真实目录解耦
 	// （真实捕获会过整串反查→状态词→字面 AC 链，如 Captain→舰长——那是预期行为）。
 	// 中间占位符 + span 包裹。
-	TEST_ASSERT_EQUAL(
-		lang_template_apply(probe, I18N_TEST_LOCALE),
-		"<span class='warning'>测试Zxqv满员。</span>",
-		"中间占位符模板应在 span 包裹内命中并填充",
-	)
+	TEST_ASSERT_EQUAL(lang_template_apply(probe, I18N_TEST_LOCALE), "<span class='warning'>测试Zxqv满员。</span>", "中间占位符模板应在 span 包裹内命中并填充")
 	// 前导占位符：打头的完整标签留在替换区外，名字（含其闭合标签）作为捕获。
-	TEST_ASSERT_EQUAL(
-		lang_template_apply("<b>Zxqv</b> slams the vault door shut!", I18N_TEST_LOCALE),
-		"<b>Zxqv</b>砰地关上了金库门！",
-		"前导占位符应从句界/标签边界捕获实参",
-	)
+	TEST_ASSERT_EQUAL(lang_template_apply("<b>Zxqv</b> slams the vault door shut!", I18N_TEST_LOCALE), "<b>Zxqv</b>砰地关上了金库门！", "前导占位符应从句界/标签边界捕获实参")
 	// 占位符按 zh 语序重排。
-	TEST_ASSERT_EQUAL(
-		lang_template_apply("You smack Aaqz around with Bbqz.", I18N_TEST_LOCALE),
-		"你用Bbqz抽打Aaqz。",
-		"zh 模板应能重排 {0}/{1}",
-	)
+	TEST_ASSERT_EQUAL(lang_template_apply("You smack Aaqz around with Bbqz.", I18N_TEST_LOCALE), "你用Bbqz抽打Aaqz。", "zh 模板应能重排 {0}/{1}")
 	// 不完整匹配（缺后续字面段）不得替换。
-	TEST_ASSERT_EQUAL(
-		lang_template_apply("You smack the wall.", I18N_TEST_LOCALE),
-		"You smack the wall.",
-		"字面段不全时不得误替换",
-	)
+	TEST_ASSERT_EQUAL(lang_template_apply("You smack the wall.", I18N_TEST_LOCALE), "You smack the wall.", "字面段不全时不得误替换")
 	// 幂等：已替换的中文输出再过引擎不变。
 	var/once = lang_template_apply("The Zxqv is already filled to capacity.", I18N_TEST_LOCALE)
 	TEST_ASSERT_EQUAL(lang_template_apply(once, I18N_TEST_LOCALE), once, "引擎应幂等")

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Performs the enrage behavior when health is below given threshold, and calm down behavior if above that value afterwards
 /datum/ai_planning_subtree/enrage
 	var/health_threshold = 0.5
@@ -38,7 +39,7 @@
 
 	if(controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
 		var/current_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-		controller.pawn.visible_message(span_danger("\The [controller.pawn] gets an enraged look at [current_target]!"))
+		controller.pawn.visible_message(span_danger(LANG("datum.d0016a6e", list(controller.pawn, current_target))))
 	else
-		controller.pawn.visible_message(span_danger("\The [controller.pawn] gets an enraged look!"))
+		controller.pawn.visible_message(span_danger(LANG("datum.db98787e", list(controller.pawn))))
 	return AI_BEHAVIOR_SUCCEEDED

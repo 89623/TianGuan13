@@ -1320,11 +1320,11 @@
 	if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
 		name = "Hydroponics Tray [name_extension]"
 		build_path = /obj/machinery/hydroponics/constructable
-		balloon_alert(user, "defaulting indicator location")
+		balloon_alert(user, LANG("obj.c8948408", null))
 	else
 		name = "Hydroponics Tray (Alt) [name_extension]"
 		build_path = /obj/machinery/hydroponics/constructable/oldstyle
-		balloon_alert(user, "moved indicators location")
+		balloon_alert(user, LANG("obj.2f35e8fe", null))
 
 /obj/item/circuitboard/machine/hydroponics/item_interaction(mob/living/user, obj/item/I, list/modifiers)
 	if(istype(I, /obj/item/plant_analyzer))

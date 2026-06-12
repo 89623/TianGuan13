@@ -157,7 +157,7 @@
 		bitrunners_alive++
 		timeout *= 5
 	if(bitrunners_alive)
-		to_chat(antag, span_warning("[bitrunners_alive] criminals still remain here, pilfering your domain. It will be more difficult to leave until they are handled."))
+		to_chat(antag, span_warning(LANG("obj.d276702a", list(bitrunners_alive))))
 
 	if(!do_after(antag, timeout) || QDELETED(chosen_forge) || QDELETED(antag) || QDELETED(src) || !is_ready || !is_operational)
 		chosen_forge.setup_particles()

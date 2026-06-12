@@ -329,9 +329,9 @@
 	//Temporary flavor text addition:
 	if(temporary_flavor_text)
 		if(length_char(temporary_flavor_text) < TEMPORARY_FLAVOR_PREVIEW_LIMIT)
-			. += span_revennotice("<br>[t_He] look[p_s()] different than usual: [temporary_flavor_text]")
+			. += span_revennotice(LANG("mob.f34e8ab7", list(t_He, p_s(), temporary_flavor_text)))
 		else
-			. += span_revennotice("<br>[t_He] look[p_s()] look different than usual: [copytext_char(temporary_flavor_text, 1, TEMPORARY_FLAVOR_PREVIEW_LIMIT)]... <a href='byond://?src=[REF(src)];temporary_flavor=1'>More...</a>")
+			. += span_revennotice(LANG("mob.829d4709", list(t_He, p_s(), copytext_char(temporary_flavor_text, 1, TEMPORARY_FLAVOR_PREVIEW_LIMIT), REF(src))))
 
 	. += EXAMINE_SECTION_BREAK
 

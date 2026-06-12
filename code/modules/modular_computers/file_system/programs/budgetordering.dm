@@ -300,11 +300,11 @@
 				SO.generateRequisition(T)
 				computer.stored_paper -= 1
 				if(computer.stored_paper <= 4)
-					computer.say("Paper's storage has only [computer.stored_paper] papers. Refill please!")
+					computer.say(LANG("datum.4fa8c372", list(computer.stored_paper)))
 					if(computer.stored_paper <= 1)
-						computer.say("Only 1 paper has left, refill please!")
+						computer.say(LANG("datum.61d6b734", null))
 			else
-				computer.say("Requisition cannot be printed, paper storage is empty. Please insert more paper!")
+				computer.say(LANG("datum.65148df3", null))
 			if((requestonly && !self_paid) || !(computer.stored_id?.GetID()))
 				SSshuttle.request_list += SO
 			else

@@ -41,11 +41,11 @@
 		"EVERY TIME YOU DREAM OF CIRCULAR CUISINE!",
 		"WE ALWAYS DELIVER! WE ALWAYS DELIVER! WE ALWAYS DELIVER!",
 		)
-	desc = "A pocket-sized plastic slip with a button in the middle. \"[pick(descstrings)]\" is written on the back."
+	desc = LANG("obj.4dd0bfdc", list(pick(descstrings)))
 
 /obj/item/pizzavoucher/attack_self(mob/user)
 	. = ..()
-	user.visible_message(span_notice("[user] presses a button on [src]!"))
+	user.visible_message(span_notice(LANG("obj.69f56e26", list(user, src))))
 
 	// Build radial menu from all the pizzalikes
 	var/list/pizza_choices = list()
@@ -74,16 +74,16 @@
 			"style" = /datum/pod_style/seethrough,
 			"spawn" = our_box,
 		))
-		to_chat(user, span_warning("[src] self-immolates into a pile of ash!"))
+		to_chat(user, span_warning(LANG("obj.00eece82", list(src))))
 		new /obj/effect/decal/cleanable/ash(get_turf(src))
 		qdel(src)
 
 /obj/item/pizzavoucher/emag_act(mob/user)
 	if(special_delivery)
-		balloon_alert(user, "already special!")
+		balloon_alert(user, LANG("obj.80f9a9f8", null))
 		return FALSE
-	to_chat(user, span_warning("You override [src]'s delivery protocols. The next pizza will be a <b>special delivery</b>!"))
-	balloon_alert(user, "mamma mia!")
+	to_chat(user, span_warning(LANG("obj.e97766b1", list(src))))
+	balloon_alert(user, LANG("obj.ff3943f2", null))
 	special_delivery = TRUE
 	return TRUE
 

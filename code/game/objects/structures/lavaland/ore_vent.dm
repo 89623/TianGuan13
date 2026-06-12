@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ARTIFACT_ROLL_CHANCE 7
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
@@ -126,9 +127,9 @@
 	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		return
 	if(!discovered)
-		to_chat(user, span_notice("You can't quite find the weakpoint of [src]... Perhaps it needs to be scanned first?"))
+		to_chat(user, span_notice(LANG("obj.dab21379", list(src))))
 		return
-	to_chat(user, span_notice("You start striking [src] with your golem's fist, attempting to dredge up a boulder..."))
+	to_chat(user, span_notice(LANG("obj.531862fe", list(src))))
 	for(var/i in 1 to 3)
 		/* // NOVA EDIT REMOVAL START - ORIGINAL:
 		if(do_after(user, boulder_size * 1 SECONDS, src))
@@ -144,7 +145,7 @@
 		playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 		// NOVA EDIT ADDITION END
 	produce_boulder(TRUE)
-	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
+	visible_message(span_notice(LANG("obj.24a0e503", null)))
 
 /obj/structure/ore_vent/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
@@ -164,15 +165,15 @@
 	if(discovered)
 		switch(boulder_size)
 			if(BOULDER_SIZE_SMALL)
-				. += span_notice("This vent produces [span_bold("small")] boulders containing [ore_string]")
+				. += span_notice(LANG("obj.e76905f2", list(span_bold("small"), ore_string)))
 			if(BOULDER_SIZE_MEDIUM)
-				. += span_notice("This vent produces [span_bold("medium")] boulders containing [ore_string]")
+				. += span_notice(LANG("obj.e76905f2", list(span_bold("medium"), ore_string)))
 			if(BOULDER_SIZE_LARGE)
-				. += span_notice("This vent produces [span_bold("large")] boulders containing [ore_string]")
+				. += span_notice(LANG("obj.e76905f2", list(span_bold("large"), ore_string)))
 	else
-		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
+		. += span_notice(LANG("obj.93755b0f", list(span_bold("Mining Scanner"))))
 	if(artifact_chance)
-		. += span_notice("This vent has a low chance to produce an [span_bold("artifact boulder.")] These may contain rare minerals or strange artifacts.")
+		. += span_notice(LANG("obj.986e8ed5", list(span_bold("artifact boulder."))))
 
 /obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(is_type_in_list(held_item, scanning_equipment))
@@ -241,7 +242,7 @@
  * This confirms that the user wants to start the wave defense event, and that they can start it.
  */
 /obj/structure/ore_vent/proc/pre_wave_defense(mob/user, spawn_drone = TRUE, mech_scan = FALSE)
-	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, excavation_warning, LANG("obj.b7a016b4", null), list("Yes", "No")) != "Yes")
 		return FALSE
 	if(!can_interact(user) && !mech_scan)
 		return FALSE
@@ -489,15 +490,15 @@
 		return
 	if(!discovered)
 		if(DOING_INTERACTION_WITH_TARGET(user, src))
-			balloon_alert(user, "already scanning!")
+			balloon_alert(user, LANG("obj.ca13ca70", null))
 			return
-		balloon_alert(user, "scanning...")
+		balloon_alert(user, LANG("obj.9ef11a33", null))
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
 		if(!do_after(user, 4 SECONDS, src))
 			return
 
 		discovered = TRUE
-		balloon_alert(user, "vent scanned!")
+		balloon_alert(user, LANG("obj.eec90e8d", null))
 		generate_description(user)
 		AddComponent(/datum/component/gps, name)
 		var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
@@ -505,7 +506,7 @@
 			return
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
-			user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
+			user_id_card.registered_account.bank_card_talk(LANG("obj.c8ab03df", list(MINER_POINT_MULTIPLIER)))
 		return
 
 	if(!pre_wave_defense(user, spawn_drone_on_tap, mech_scan))
@@ -754,7 +755,7 @@
 			boss_string = "A bloody drillmark"
 		if(/mob/living/simple_animal/hostile/megafauna/wendigo/noportal)
 			boss_string = "A chilling skull"
-	. += span_notice("[boss_string] is etched onto the side of the vent.")
+	. += span_notice(LANG("obj.3984b488", list(boss_string)))
 
 /obj/structure/ore_vent/boss/start_wave_defense()
 	if(!COOLDOWN_FINISHED(src, wave_cooldown))
@@ -795,7 +796,7 @@
 
 /obj/structure/ore_vent/debug/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	var/datum/material/choice = tgui_input_list(user, "Choose a material to add/remove.", "New material", subtypesof(/datum/material))
+	var/datum/material/choice = tgui_input_list(user, LANG("obj.cefe22c2", null), LANG("obj.faf8cd1e", null), subtypesof(/datum/material))
 	if(!choice)
 		return
 	if(mineral_breakdown[choice])
@@ -804,14 +805,14 @@
 		return
 	mineral_breakdown += choice
 	balloon_alert_to_viewers("added [choice::name]")
-	var/value = tgui_input_number(user, "What weight should it have?", "ore pickweight", 1, 100, 1)
+	var/value = tgui_input_number(user, LANG("obj.1e9ff560", null), LANG("obj.db0a4d77", null), 1, 100, 1)
 	mineral_breakdown[choice] = value
 	balloon_alert_to_viewers("weighting of [value] added")
 	generate_description()
 
 /obj/structure/ore_vent/debug/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	var/choice = tgui_input_list(user, "Choose a vent size.", "New size", list(SMALL_VENT_TYPE, MEDIUM_VENT_TYPE, LARGE_VENT_TYPE))
+	var/choice = tgui_input_list(user, LANG("obj.abcee23a", null), LANG("obj.1ca125c4", null), list(SMALL_VENT_TYPE, MEDIUM_VENT_TYPE, LARGE_VENT_TYPE))
 	if(!choice)
 		return
 	vent_size_setup(random = FALSE, force_size = choice, map_loading = FALSE)
