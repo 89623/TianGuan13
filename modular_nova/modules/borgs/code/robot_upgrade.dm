@@ -583,3 +583,4 @@
 		. += LANG("obj.929ca228", list(stored))
 	. += span_notice(LANG("obj.47397b29", null))
 
+#undef ENGINEERING_CYBORG_CHARGE_PER_STACK

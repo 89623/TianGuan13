@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // teleatom: atom to teleport
 // destination: destination to teleport to
 // precision: teleport precision (0 is most precise, the default)
@@ -29,21 +28,15 @@
 
 	switch(channel)
 		if(TELEPORT_CHANNEL_BLUESPACE)
-			if(istype(teleatom, /obj/item/storage/backpack/holding))
-				precision = rand(1,100)
-
-			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding, /obj/item/mod/control, /obj/item/mod/module/storage)
-			var/list/bagholding = typecache_filter_list(teleatom.get_all_contents(), bag_cache)
-			for(var/obj/item/mod/modsuit_or_module in bagholding)
-				var/datum/storage/storage = modsuit_or_module.atom_storage
-				if(istype(storage, /datum/storage/bag_of_holding) && storage.real_location == storage.parent)
-					continue
-				bagholding -= modsuit_or_module
-			if(bagholding.len)
-				precision = max(rand(1,100)*bagholding.len,100)
+			var/interference = 0
+			for(var/obj/item/check as anything in teleatom.get_all_contents_type(/obj/item))
+				if(check.item_flags & BLUESPACE_INTERFERENCE)
+					interference += 1
+			if(interference)
+				precision = max(rand(1,100)*interference,100)
 				if(isliving(teleatom))
 					var/mob/living/MM = teleatom
-					to_chat(MM, span_warning(LANG("_root.7393b481", null)))
+					to_chat(MM, span_warning("The clashing pulls of bluespace interfere with your teleport!"))
 
 			// if effects are not specified and not explicitly disabled, sparks
 			if((!effectin || !effectout) && !no_effects)
@@ -71,7 +64,7 @@
 	if(!forced)
 		if(!check_teleport_valid(teleatom, destturf, channel, original_destination = destination))
 			if(ismob(teleatom))
-				teleatom.balloon_alert(teleatom, LANG("_root.e69c953f", null))
+				teleatom.balloon_alert(teleatom, "something holds you back!")
 			return FALSE
 
 	if(SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTING, destination, channel))

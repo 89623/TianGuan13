@@ -240,3 +240,5 @@
 		defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 		to_chat(attacker, span_danger(LANG("datum.fde652f7", list(defender))))
 		log_combat(attacker, defender, "staggered (boxing) ")
+
+#undef MARTIALART_STREET_BOXING

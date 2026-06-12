@@ -27,8 +27,6 @@
 	baton_type = /obj/item/bikehorn/airhorn
 	cuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake
 
-
-
 /mob/living/basic/bot/secbot/honkbot/Initialize(mapload)
 	. = ..()
 	var/static/list/clown_friends = typecacheof(list(
@@ -122,3 +120,6 @@
 	honkbot_assembly.created_name = name
 	new /obj/item/assembly/prox_sensor(drop_location)
 	drop_part(baton_type, drop_location)
+
+/mob/living/basic/bot/secbot/honkbot/nopatrol
+	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_AUTOPATROL

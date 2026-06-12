@@ -35,3 +35,35 @@
   - rscadd: Chav, Medieval and Cough were added to Genetic Freak.
   - spellcheck: Genetic Freak Quirk is now alphabetically sorted.
   - rscadd: Bunch of cigarette packs are in the loadout now!
+2026-06-05:
+  Happyowl93:
+  - balance: The captain's antique laser gun is so old it uses a fixed firing pin
+      system, replacing it is impossible.
+  - bugfix: All bunnysuits should have digi sprites now
+  Macaroni:
+  - rscadd: Two thigh highs now have grayscale options.
+  Stalkeros:
+  - rscadd: There are certain rumors of certain rumors of rumors about pizza vouchers,
+      slips of plastic with an RF-transmitting button? You can do something to them,
+      something electromagnetically cryptographic and sometimes explosive.
+  - qol: Pizza vouchers now let you select the pizza that you want to get, instead
+      of making you rely on sheer luck alone.
+  theselfish:
+  - spellcheck: The Command Outfitting Station is now a drobe, same as every other
+      clothing vendor.
+  - qol: Looping alarm sounds are sadly not gone, but they are a pref!!
+2026-06-07:
+  Absolucy:
+  - bugfix: The examine line indicating temporary flavor text now actually uses the
+      examinee's pronouns, instead of always using "they".
+  Happyowl93:
+  - balance: Advanced Energy Gun's recharge rate is set to the recharge rate of the
+      captain's antique.
+  Iajret:
+  - bugfix: fixed DO showing maptext (runechat) only to DOer for every mob in their
+      view range
+  YuiY1997:
+  - rscadd: Adds more sexual roles in ERP preferences and new self-identifying descriptors
+      for the character directory
+  theselfish:
+  - rscdel: TG Maps have their unique shuttles back.

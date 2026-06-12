@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 // Drill, Diamond drill, Mining scanner
 
@@ -97,7 +96,7 @@
 			var/turf/closed/mineral/gibtonite/giberal_turf = target
 			if(giberal_turf.stage != GIBTONITE_UNSTRUCK)
 				playsound(chassis, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-				to_chat(source, span_warning(LANG("obj.0b1b3180", list(icon2html(src, source)))))
+				to_chat(source, span_warning("[icon2html(src, source)] Active gibtonite ore deposit detected! Safety protocols preventing continued drilling."))
 				return
 
 	else
@@ -120,9 +119,9 @@
 	if(DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
 		return
 
-	target.visible_message(span_warning(LANG("obj.fbfd70ea", list(chassis, target))), \
-				span_userdanger(LANG("obj.570c5829", list(chassis, target))), \
-				span_hear(LANG("obj.059c723d", null)))
+	target.visible_message(span_warning("[chassis] starts to drill [target]."), \
+				span_userdanger("[chassis] starts to drill you!"), \
+				span_hear("You hear drilling."))
 
 	log_message("Started drilling [target]", LOG_MECHA)
 
@@ -188,8 +187,8 @@
 	chassis.collect_ore()
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
-	target.visible_message(span_danger(LANG("obj.ac1c47d1", list(chassis, target, src))), \
-						span_userdanger(LANG("obj.cd795524", list(chassis, src))))
+	target.visible_message(span_danger("[chassis] is drilling [target] with [src]!"), \
+						span_userdanger("[chassis] is drilling you with [src]!"))
 	log_combat(user, target, "drilled", "[name]", "Combat mode: [user.combat_mode ? "On" : "Off"])(DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD && target.get_brute_loss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
@@ -201,17 +200,19 @@
 		return
 
 	//drill makes a hole
-	var/def_zone = target.get_random_valid_zone(BODY_ZONE_CHEST)
-	var/obj/item/bodypart/target_part = target.get_bodypart(def_zone)
-	var/blocked = target.run_armor_check(def_zone, MELEE)
-	target.apply_damage(10, BRUTE, def_zone, blocked)
+	var/def_zone = target.get_random_valid_zone(user.zone_selected)
+	target.apply_damage(
+		10,
+		BRUTE,
+		def_zone,
+		blocked = target.run_armor_check(def_zone, MELEE),
+		wound_bonus = 30,
+		exposed_wound_bonus = 50,
+		sharpness = SHARP_POINTY
+	)
 
 	//blood splatters
 	target.create_splatter(get_dir(chassis, target))
-
-	//organs go everywhere
-	if(target_part && blocked < 100 && prob(10 * drill_level))
-		target_part.dismember(BRUTE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	name = "diamond-tipped exosuit drill"

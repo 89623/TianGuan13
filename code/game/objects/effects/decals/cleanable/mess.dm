@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/decal/cleanable/generic
 	name = "clutter"
 	desc = "Someone should clean that up."
@@ -200,7 +199,7 @@
 	if(!istype(user_tongue, /obj/item/organ/tongue/fly))
 		return
 	playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
-	as_human.visible_message(span_alert(LANG("obj.5bfdb828", list(as_human))))
+	as_human.visible_message(span_alert("[as_human] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))
 	lazy_init_reagents()?.trans_to(as_human, reagents.total_volume, transferred_by = user, methods = INGEST)
 	qdel(src)
 
@@ -291,7 +290,7 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
 	if(!isnull(oldname))
-		desc = LANG("obj.a2822776", list(oldname))
+		desc = "The sad remains of what used to be \a [oldname]."
 	. = ..()
 
 /obj/effect/decal/cleanable/glitter

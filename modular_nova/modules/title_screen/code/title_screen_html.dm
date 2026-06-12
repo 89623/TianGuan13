@@ -204,3 +204,5 @@ GLOBAL_LIST_EMPTY(startup_messages)
 	html = replacetext(html, ">OBSERVE<", ">旁观<")
 	html = replacetext(html, " READY<", " 准备就绪<")
 	return html
+
+#undef MAX_STARTUP_MESSAGES

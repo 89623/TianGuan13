@@ -1,6 +1,6 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/sting//parent path, not meant for users afaik
-	name = "Tiny Prick" //cellularemporium uses `nameToIconState` to button icon state must match this, on top of matching the hud below.
+	name = "Tiny Prick"
 	desc = "Stabby stabby"
 	category = "stings"
 	button_icon_state = "sting_null" //This must be equal to the icon state for `/atom/movable/screen/ling/sting`

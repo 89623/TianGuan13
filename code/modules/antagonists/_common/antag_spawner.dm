@@ -64,7 +64,7 @@
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
 	balloon_alert(teacher, LANG("obj.5ba716f9", null))
 	polling = TRUE
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[teacher]'s")] [span_notice("[apprentice_school] apprentice")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[teacher]'s")] [span_notice("[apprentice_school] apprentice")]?", check_jobban = ROLE_WIZARD_MIDROUND, role = ROLE_WIZARD_MIDROUND, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
 	polling = FALSE
 	if(isnull(chosen_one))
 		to_chat(teacher, span_warning(LANG("obj.0196ebbd", null)))
@@ -186,8 +186,8 @@
 
 /obj/item/antag_spawner/nuke_ops/overwatch/Initialize(mapload)
 	. = ..()
-	if(length(GLOB.nukeop_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
-		spawn_location = pick(GLOB.nukeop_overwatch_start)
+	if(length(GLOB.nukeop_base_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
+		spawn_location = pick(GLOB.nukeop_base_overwatch_start)
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown

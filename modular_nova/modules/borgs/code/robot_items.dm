@@ -788,3 +788,7 @@
 	if(!. && user)
 		balloon_alert(user, LANG("obj.206fba9f", null))
 	return .
+
+#undef CYBORG_FONT
+#undef MAX_PAPER_INTEGRATED_CLIPBOARD
+#undef BASE_NINJA_REAGENTS
