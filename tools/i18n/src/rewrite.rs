@@ -101,6 +101,7 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
         filter,
         edits: HashMap::new(),
         cache: HashMap::new(),
+        ident_proc: false,
     };
 
     // pass 1：收集所有「纯函数」proc 名（SpacemanDMM_should_be_pure）。纯度沿继承传播，
@@ -126,6 +127,7 @@ pub fn run(dme: &Path, filter: Option<&str>, dry_run: bool) -> Result<()> {
             }
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
+                    rw.ident_proc = crate::extract::is_identifier_dot_proc(proc_name);
                     rw.visit_block(block, &ns);
                     // 物种特征(perk) proc：额外把 list 里 SPECIES_PERK_NAME/DESC 的字符串值改写为 LANG，
                     // 让插值描述（[name] livers are…[pct]%）的模板可译（占位符运行时填值；与抽取同名门槛）。
@@ -394,6 +396,9 @@ struct Rewriter<'a> {
     filter: Option<&'a str>,
     edits: HashMap<PathBuf, Vec<Edit>>,
     cache: HashMap<PathBuf, Option<String>>,
+    /// 当前 proc 是否为「标识符构建 proc」（update_overlays 等，见 extract::is_identifier_dot_proc）：
+    /// 其 bare-`.` 累加是 icon_state/日志串而非玩家文本，禁止改写为 LANG。
+    ident_proc: bool,
 }
 
 impl<'a> Rewriter<'a> {
@@ -518,7 +523,7 @@ impl<'a> Rewriter<'a> {
                     if let Expression::Base { term, follow } = lhs.as_ref() {
                         if follow.is_empty() {
                             if let Term::Ident(id) = &term.elem {
-                                if id == "." || crate::extract::is_examine_accumulator(id) {
+                                if (id == "." && !self.ident_proc) || crate::extract::is_examine_accumulator(id) {
                                     self.try_rewrite_examine(term.location, id, rhs, ns);
                                 }
                             }

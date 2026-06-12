@@ -41,12 +41,12 @@
 /obj/structure/closet/crate/critter/update_overlays()
 	. = ..()
 	if(opened)
-		. += LANG("obj.bba2684b", null)
+		. += "crittercrate_door_open"
 		return
 
-	. += LANG("obj.f72ae490", null)
+	. += "crittercrate_door"
 	if(manifest)
-		. += LANG("obj.0d197521", null)
+		. += "manifest"
 
 /obj/structure/closet/crate/critter/return_air()
 	if(tank)

@@ -104,7 +104,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 /obj/structure/noticeboard/update_overlays()
 	. = ..()
 	if(notices)
-		. += LANG("obj.ec949744", list(notices))
+		. += "notices_[notices]"
 
 /**
  * Removes an item from the notice board

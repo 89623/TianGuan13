@@ -47,13 +47,13 @@
 /obj/item/supplypod_beacon/update_overlays()
 	. = ..()
 	if(launched)
-		. += LANG("obj.6a424bf9", null)
+		. += "sp_green"
 		return
 	if(ready)
-		. += LANG("obj.7c0b0ead", null)
+		. += "sp_yellow"
 		return
 	if(linked)
-		. += LANG("obj.5aa7b8c1", null)
+		. += "sp_orange"
 		return
 
 /obj/item/supplypod_beacon/proc/end_launch()

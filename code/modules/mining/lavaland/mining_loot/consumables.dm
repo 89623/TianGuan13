@@ -175,7 +175,7 @@
 /obj/item/reagent_containers/cup/bottle/potion/update_overlays()
 	. = ..()
 	if(reagents?.total_volume)
-		. += LANG("obj.91cec37c", null)
+		. += "potionflask_cap"
 
 /obj/item/reagent_containers/cup/bottle/potion/flight
 	name = "strange elixir"

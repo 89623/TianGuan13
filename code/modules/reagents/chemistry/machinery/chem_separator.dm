@@ -160,7 +160,7 @@
 
 	//distilation beaker overlays
 	if(!QDELETED(distilled_container))
-		. += LANG("obj.437be6bd", null)
+		. += "separator_beaker"
 		var/mutable_appearance/overlay = reagent_threshold_overlay(distilled_container.reagents, 'icons/obj/medical/reagent_fillings.dmi', "separator_b_", fill_icon_thresholds)
 		if(!isnull(overlay))
 			. += overlay

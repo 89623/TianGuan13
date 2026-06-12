@@ -69,7 +69,7 @@
 /obj/item/rna_extractor/update_overlays()
 	. = ..()
 	if(loaded_vial)
-		. += LANG("obj.ec8aa408", null)
+		. += "extractor_load"
 
 /obj/item/rna_extractor/examine(mob/user)
 	. = ..()
@@ -101,7 +101,7 @@
 /obj/item/rna_vial/update_overlays(updates)
 	. = ..()
 	if(contains_rna)
-		. += LANG("obj.bfb2fb9d", null)
+		. += "rnavial_load"
 
 /obj/item/rna_vial/examine(mob/user)
 	. = ..()
@@ -320,7 +320,7 @@
 /obj/machinery/rnd/rna_recombinator/update_overlays()
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN|MAINT) || !loaded_item)
-		. += LANG("obj.54d6b40e", null)
+		. += "lathe_empty"
 
 #undef STATUS_IDLE
 #undef STATUS_RECOMBINATING_CURE

@@ -118,7 +118,7 @@
 /obj/machinery/power/rbmk2/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += LANG("obj.9f4a9e69", null)
+		. += "platform_panel"
 
 	if(stored_rod)
 

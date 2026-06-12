@@ -277,7 +277,7 @@
 /obj/structure/closet/crate/mail/update_overlays()
 	. = ..()
 	if(postmarked)
-		. += LANG("obj.eb3e0e6d", null)
+		. += "mail_nt"
 
 /// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
 /obj/structure/closet/crate/mail/proc/populate(amount)

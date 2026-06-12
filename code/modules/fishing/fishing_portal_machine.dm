@@ -171,10 +171,10 @@
 /obj/machinery/fishing_portal_generator/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += LANG("obj.fa761432", null)
+		. += "portal_open"
 	if(!active)
 		return
-	. += LANG("obj.35764c3d", null)
+	. += "portal_on"
 	var/datum/fish_source/portal = active.fish_source
 	. += portal.overlay_state
 	. += emissive_appearance(icon, "portal_emissive", src)

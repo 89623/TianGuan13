@@ -40,7 +40,7 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(length(alert_control?.listener.alarms)) /// NOVA EDIT - Fixing master - Original: if(length(alert_control.listener.alarms))
-		. += LANG("obj.6603b89b", null)
+		. += "alert:2"
 
 /**
  * Signal handler for calling an icon update in case an alarm is added or cleared

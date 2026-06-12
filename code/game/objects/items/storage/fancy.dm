@@ -495,7 +495,7 @@
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
 	if(!contents.len)
-		. += LANG("obj.e046f1aa", list(base_icon_state))
+		. += "[base_icon_state]_empty"
 
 /obj/item/storage/fancy/rollingpapers/empty
 	spawn_count = 0
@@ -709,13 +709,13 @@
 			has_chocolate = TRUE
 
 	if (has_sugar)
-		. += LANG("obj.292fb400", null)
+		. += "condi_display_sugar"
 	if (has_sweetener)
-		. += LANG("obj.5ccbfc62", null)
+		. += "condi_display_sweetener"
 	if (has_creamer)
-		. += LANG("obj.2b59d9e1", null)
+		. += "condi_display_creamer"
 	if (has_chocolate)
-		. += LANG("obj.2673868a", null)
+		. += "condi_display_chocolate"
 
 /obj/item/storage/fancy/coffee_condi_display/PopulateContents()
 	for(var/i in 1 to 4)

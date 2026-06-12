@@ -245,9 +245,9 @@
 /obj/item/gun/ballistic/shotgun/bulldog/update_overlays()
 	. = ..()
 	if(secondary_magazine)
-		. += LANG("obj.fe6b50a0", list(icon_state, initial(secondary_magazine.icon_state)))
+		. += "[icon_state]_secondary_mag_[initial(secondary_magazine.icon_state)]"
 		if(!secondary_magazine.ammo_count())
-			. += LANG("obj.35ba2705", list(icon_state))
+			. += "[icon_state]_secondary_mag_empty"
 
 /obj/item/gun/ballistic/shotgun/bulldog/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!secondary_magazine)

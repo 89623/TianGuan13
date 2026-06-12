@@ -346,11 +346,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 /obj/machinery/camera/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += LANG("obj.be400d5d", list(base_icon_state))
+		. += "[base_icon_state]_panel"
 
 	var/xray_module = isXRay(TRUE) ? "xray" : ""
 	if(machine_stat & EMPED)
-		. += LANG("obj.b122ffec", list(xray_module, base_icon_state))
+		. += "[xray_module][base_icon_state]_emp"
 		. += emissive_appearance(icon, "[xray_module][base_icon_state]_emp", src, alpha = src.alpha)
 		return
 	if(camera_enabled)

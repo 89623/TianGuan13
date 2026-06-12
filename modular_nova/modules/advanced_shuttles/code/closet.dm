@@ -6,7 +6,7 @@
 			. += door_overlay
 			door_overlay.overlays += emissive_blocker(door_overlay.icon, door_overlay.icon_state, src, alpha = door_overlay.alpha) // If we don't do this the door doesn't block emissives and it looks weird.
 		else if(has_closed_overlay)
-			. += LANG("obj.37b1331d", list(icon_door || icon_state))
+			. += "[icon_door || icon_state]_door"
 //TG won't ever really need this because their lockers with non-matching fronts dont have non-matching backs; so I simply re-define the proc for our shuttleclosets
 
 /obj/structure/closet/shuttle

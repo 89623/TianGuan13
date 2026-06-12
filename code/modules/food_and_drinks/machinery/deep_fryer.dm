@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/update_overlays()
 	. = ..()
 	if(grease_level >= 1)
-		. += LANG("obj.9afc72ad", null)
+		. += "fryer_greasy"
 
 /obj/machinery/deepfryer/examine(mob/user)
 	. = ..()

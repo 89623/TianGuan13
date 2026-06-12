@@ -47,9 +47,9 @@
 	if(!use_overlays)
 		return
 	if(holding)
-		. += LANG("obj.2f008b0c", null)
+		. += "scrubber-open"
 	if(connected_port)
-		. += LANG("obj.0fecea81", null)
+		. += "scrubber-connector"
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	if(take_atmos_damage())

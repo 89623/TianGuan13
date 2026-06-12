@@ -32,11 +32,11 @@
 		return
 	switch(sensor_mode)
 		if(SENSOR_LIVING)
-			. += LANG("obj.5aab175d", null)
+			. += "suit_sensor_binary"
 		if(SENSOR_VITALS)
-			. += LANG("obj.f7766590", null)
+			. += "suit_sensor_vitals"
 		if(SENSOR_COORDS)
-			. += LANG("obj.5c288e7c", null)
+			. += "suit_sensor_tracking"
 
 /obj/item/suit_sensor/proc/set_mode(new_mode)
 	if(sensor_mode == new_mode)

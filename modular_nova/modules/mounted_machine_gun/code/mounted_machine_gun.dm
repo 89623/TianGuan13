@@ -79,13 +79,13 @@
 /obj/machinery/mounted_machine_gun/update_overlays()
 	. = ..()
 	if(ammo_box)
-		. += LANG("obj.8e9727ca", null)
+		. += "ammo_box"
 
 	switch(barrel_heat)
 		if(BARREL_HEAT_THRESHOLD_LOW to BARREL_HEAT_THRESHOLD_HIGH)
-			. += LANG("obj.47344d1b", list(base_icon_state))
+			. += "[base_icon_state]_barrel_hot"
 		if(BARREL_HEAT_THRESHOLD_HIGH to INFINITY)
-			. += LANG("obj.a67af16c", list(base_icon_state))
+			. += "[base_icon_state]_barrel_overheat"
 
 /obj/machinery/mounted_machine_gun/examine(mob/user)
 	. = ..()

@@ -71,12 +71,12 @@
 	if(!active)
 		return
 	if(!target)
-		. += LANG("obj.08d79a62", list(alert ? "alert" : "", icon_suffix))
+		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
 		return
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
 	if(!here || !there || here.z != there.z)
-		. += LANG("obj.08d79a62", list(alert ? "alert" : "", icon_suffix))
+		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
 		return
 	. += get_direction_icon(here, there)
 

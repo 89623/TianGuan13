@@ -62,10 +62,10 @@
 /obj/machinery/power/portagrav/update_overlays()
 	. = ..()
 	if(anchored)
-		. += LANG("obj.c9ca3209", null)
+		. += "portagrav_anchors"
 	if(on)
-		. += LANG("obj.5cf26434", null)
-		. += LANG("obj.bcf4b118", null)
+		. += "portagrav_lights"
+		. += "activated"
 
 /obj/machinery/power/portagrav/examine(mob/user)
 	. = ..()

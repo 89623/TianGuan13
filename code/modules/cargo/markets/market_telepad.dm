@@ -108,7 +108,7 @@
 /obj/machinery/ltsrbt/update_overlays()
 	. = ..()
 	if(!state_open)
-		. += LANG("obj.b0e8ca9b", list(base_icon_state))
+		. += "[base_icon_state]_closed"
 	else
 		var/mutable_appearance/overlay = mutable_appearance(icon, "[base_icon_state]_open")
 		overlay.pixel_w -= 2

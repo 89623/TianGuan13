@@ -103,9 +103,9 @@
 /obj/item/hierophant_club/update_overlays()
 	. = ..()
 	if (QDELETED(beacon))
-		. += LANG("obj.544fb8d0", null)
+		. += "hierophant_beacon"
 	if (blink?.current_charges)
-		. += LANG("obj.3f2cc3a8", null)
+		. += "hierophant_ready"
 
 /obj/item/hierophant_club/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()

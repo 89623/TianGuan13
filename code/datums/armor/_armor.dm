@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 /proc/armor_to_protection_class(armor_value)
 	if (armor_value < 0)
 		. = "-"
-	. += LANG("_root.24882ded", list(round(abs(armor_value), 10) / 10))
+	. += "\Roman[round(abs(armor_value), 10) / 10]"
 	return .
 
 /**

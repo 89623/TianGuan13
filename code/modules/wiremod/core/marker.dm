@@ -102,7 +102,7 @@
 	. = ..()
 	cut_overlays()
 	if(marked_atom)
-		. += LANG("obj.847e2ce5", null)
+		. += "marked_overlay"
 
 /// Clears the current marked atom
 /obj/item/multitool/circuit/proc/clear_marked_atom()

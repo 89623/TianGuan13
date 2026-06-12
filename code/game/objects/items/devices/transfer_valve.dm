@@ -249,12 +249,12 @@
 	if(!attached_device)
 		return
 
-	. += LANG("obj.65d1eaff", null)
+	. += "device"
 	if(!istype(attached_device, /obj/item/assembly/infra))
 		return
 	var/obj/item/assembly/infra/sensor = attached_device
 	if(sensor.on && sensor.visible)
-		. += LANG("obj.73b1ea69", null)
+		. += "proxy_beam"
 
 
 /// Merge both gases into a single tank. Combine the volume by default. If target tank isn't specified default to tank_two

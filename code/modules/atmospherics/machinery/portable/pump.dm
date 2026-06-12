@@ -25,9 +25,9 @@
 /obj/machinery/portable_atmospherics/pump/update_overlays()
 	. = ..()
 	if(holding)
-		. += LANG("obj.a47c8831", null)
+		. += "siphon-open"
 	if(connected_port)
-		. += LANG("obj.af95ff65", null)
+		. += "siphon-connector"
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	if(take_atmos_damage())

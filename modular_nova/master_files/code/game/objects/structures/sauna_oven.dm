@@ -45,7 +45,7 @@
 /obj/structure/sauna_oven/update_overlays()
 	. = ..()
 	if(lit)
-		. += LANG("obj.a4493810", null)
+		. += "sauna_oven_on_overlay"
 
 /obj/structure/sauna_oven/update_icon()
 	..()

@@ -352,14 +352,14 @@
 	if(mybag)
 		. += istype(mybag, /obj/item/storage/bag/trash/bluespace) ? "cart_bluespace_garbage" : "cart_garbage"
 	if(mymop)
-		. += LANG("obj.d23585e5", null)
+		. += "cart_mop"
 	if(mybroom)
-		. += LANG("obj.ee4d4e33", null)
+		. += "cart_broom"
 	if(myspray)
-		. += LANG("obj.a38add5f", null)
+		. += "cart_spray"
 	if(myreplacer)
-		. += LANG("obj.08591f52", null)
+		. += "cart_replacer"
 	if(held_signs.len)
-		. += LANG("obj.e0366b01", list(min(held_signs.len, 4)))
+		. += "cart_sign[min(held_signs.len, 4)]"
 
 #undef CART_HAS_MINIMUM_REAGENT_VOLUME

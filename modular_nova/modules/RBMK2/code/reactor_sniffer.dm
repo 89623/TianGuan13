@@ -88,7 +88,7 @@
 /obj/machinery/rbmk2_sniffer/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += LANG("obj.d91c8b9d", null)
+		. += "reactor_sniffer_panel"
 
 /obj/machinery/rbmk2_sniffer/Destroy()
 	for(var/obj/machinery/power/rbmk2/reactor as anything in linked_reactors)

@@ -477,7 +477,7 @@
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
 	if (armor_value < 0)
 		. = "-"
-	. += LANG("obj.24882ded", list(round(abs(armor_value), 10) / 10))
+	. += "\Roman[round(abs(armor_value), 10) / 10]"
 	return .
 
 /obj/item/clothing/atom_break(damage_flag)

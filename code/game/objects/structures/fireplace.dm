@@ -99,16 +99,16 @@
 
 	switch(burn_time_remaining())
 		if(0 to 19999) //NOVA EDIT original: if(0 to 500)
-			. += LANG("obj.a8c79233", null)
+			. += "fireplace_fire0"
 		if(20000 to 39999) //NOVA EDIT original: if(500 to 1000)
-			. += LANG("obj.d7f78933", null)
+			. += "fireplace_fire1"
 		if(40000 to 59999) //NOVA EDIT original: if(1000 to 1500)
-			. += LANG("obj.32ecbb65", null)
+			. += "fireplace_fire2"
 		if(60000 to 79999) //NOVA EDIT original: if(1500 to 2000)
-			. += LANG("obj.aa633203", null)
+			. += "fireplace_fire3"
 		if(80000 to MAXIMUM_BURN_TIMER) //NOVA EDIT original: if(2000 to MAXIMUM_BURN_TIMER)
-			. += LANG("obj.8bbb47c0", null)
-	. += LANG("obj.13e7b66b", null)
+			. += "fireplace_fire4"
+	. += "fireplace_glow"
 
 /obj/structure/fireplace/proc/adjust_light()
 	if(!lit)

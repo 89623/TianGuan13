@@ -83,17 +83,17 @@
 /obj/item/robot_suit/update_overlays()
 	. = ..()
 	if(l_arm)
-		. += LANG("obj.a359a023", list(initial(l_arm.icon_state)))
+		. += "[initial(l_arm.icon_state)]+o"
 	if(r_arm)
-		. += LANG("obj.a359a023", list(initial(r_arm.icon_state)))
+		. += "[initial(r_arm.icon_state)]+o"
 	if(chest)
-		. += LANG("obj.a359a023", list(initial(chest.icon_state)))
+		. += "[initial(chest.icon_state)]+o"
 	if(l_leg)
-		. += LANG("obj.a359a023", list(initial(l_leg.icon_state)))
+		. += "[initial(l_leg.icon_state)]+o"
 	if(r_leg)
-		. += LANG("obj.a359a023", list(initial(r_leg.icon_state)))
+		. += "[initial(r_leg.icon_state)]+o"
 	if(head)
-		. += LANG("obj.a359a023", list(initial(head.icon_state)))
+		. += "[initial(head.icon_state)]+o"
 
 /obj/item/robot_suit/proc/check_completion()
 	if(l_arm && r_arm && l_leg && r_leg && head && head.flash1 && head.flash2 && chest && chest.wired && chest.cell)

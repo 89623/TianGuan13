@@ -731,9 +731,9 @@
 /obj/item/toy/windup_toolbox/update_overlays()
 	. = ..()
 	if(active)
-		. += LANG("obj.df9c250f", null)
+		. += "single_latch_open"
 	else
-		. += LANG("obj.7ab897b2", null)
+		. += "single_latch"
 
 /obj/item/toy/windup_toolbox/attack_self(mob/user)
 	if(!active)

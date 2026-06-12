@@ -201,16 +201,16 @@
 /obj/item/gun/energy/e_gun/nuclear/update_overlays()
 	. = ..()
 	if(reactor_overloaded)
-		. += LANG("obj.aab395ce", list(icon_state))
+		. += "[icon_state]_fail_3"
 		return
 
 	switch(fail_tick)
 		if(0)
-			. += LANG("obj.789b47b6", list(icon_state))
+			. += "[icon_state]_fail_0"
 		if(1 to 150)
-			. += LANG("obj.697651e7", list(icon_state))
+			. += "[icon_state]_fail_1"
 		if(151 to INFINITY)
-			. += LANG("obj.36b04b89", list(icon_state))
+			. += "[icon_state]_fail_2"
 
 /obj/item/gun/energy/e_gun/lethal
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)

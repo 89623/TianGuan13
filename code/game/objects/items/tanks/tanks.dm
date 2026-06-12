@@ -145,7 +145,7 @@
 	if(tank_assembly)
 		. += tank_assembly.icon_state
 		. += tank_assembly.overlays
-		. += LANG("obj.2dbe6d74", null)
+		. += "bomb_assembly"
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src

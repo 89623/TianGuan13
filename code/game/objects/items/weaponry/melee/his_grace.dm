@@ -87,11 +87,11 @@
 /obj/item/his_grace/update_overlays()
 	. = ..()
 	if(ascended)
-		. += LANG("obj.10c5ad6f", null)
+		. += "triple_latch"
 	else if(awakened)
-		. += LANG("obj.df9c250f", null)
+		. += "single_latch_open"
 	else
-		. += LANG("obj.7ab897b2", null)
+		. += "single_latch"
 
 /obj/item/his_grace/attack_self(mob/living/user)
 	if(!awakened)

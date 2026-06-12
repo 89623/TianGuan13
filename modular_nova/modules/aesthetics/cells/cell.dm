@@ -56,7 +56,7 @@
 
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		var/newlevel = round(charging.percent() * 4 / 100)
-		. += LANG("obj.700371e7", list(newlevel))
+		. += "ccharger-o[newlevel]"
 	if(!charging.charging_icon)
 		. += image(charging.icon, charging.icon_state)
 	else

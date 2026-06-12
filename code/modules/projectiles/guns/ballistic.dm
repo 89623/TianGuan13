@@ -223,15 +223,15 @@
 
 	if(selector_switch_icon)
 		if(burst_fire_selection)
-			. += LANG("obj.3daf344d", list(initial(icon_state)))
+			. += "[initial(icon_state)]_burst"
 		else
-			. += LANG("obj.904cf98e", list(initial(icon_state)))
+			. += "[initial(icon_state)]_semi"
 
 	if(show_bolt_icon)
 		if (bolt_type == BOLT_TYPE_LOCKING)
-			. += LANG("obj.04da947e", list(icon_state, bolt_locked ? "_locked" : ""))
+			. += "[icon_state]_bolt[bolt_locked ? "_locked" : ""]"
 		if (bolt_type == BOLT_TYPE_OPEN && bolt_locked)
-			. += LANG("obj.08f47aa7", list(icon_state))
+			. += "[icon_state]_bolt"
 
 	if(suppressed && can_unsuppress) // if it can't be unsuppressed, we assume the suppressor is integrated into the gun itself and don't generate an overlay
 		var/mutable_appearance/MA = mutable_appearance(icon, "[icon_state]_suppressor")
@@ -242,22 +242,22 @@
 		. += MA
 
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
-		. += LANG("obj.e046f1aa", list(icon_state))
+		. += "[icon_state]_empty"
 
 	if(gun_flags & TOY_FIREARM_OVERLAY)
-		. += LANG("obj.fd235a3f", list(icon_state))
+		. += "[icon_state]_toy"
 
 
 	if(!magazine || internal_magazine || !mag_display)
 		return
 
 	if(special_mags)
-		. += LANG("obj.7bce84ec", list(icon_state, initial(magazine.icon_state)))
+		. += "[icon_state]_mag_[initial(magazine.icon_state)]"
 		if(mag_display_ammo && !magazine.ammo_count())
-			. += LANG("obj.8fab0e3b", list(icon_state))
+			. += "[icon_state]_mag_empty"
 		return
 
-	. += LANG("obj.6e399cb5", list(icon_state))
+	. += "[icon_state]_mag"
 	if(!mag_display_ammo)
 		return
 
@@ -274,7 +274,7 @@
 		if(0.2 to 0.4)
 			capacity_number = 20
 	if(capacity_number)
-		. += LANG("obj.7bce84ec", list(icon_state, capacity_number))
+		. += "[icon_state]_mag_[capacity_number]"
 
 /obj/item/gun/ballistic/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_firemode))

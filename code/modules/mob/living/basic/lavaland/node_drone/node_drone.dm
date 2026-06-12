@@ -92,15 +92,15 @@
 				wave_timers = WAVE_DURATION_LARGE
 		var/remaining_fraction = (time_remaining / wave_timers)
 		if(remaining_fraction <= 0.3)
-			. += LANG("mob.e0c4bbc7", null)
+			. += "node_progress_4"
 			return
 		if(remaining_fraction <= 0.55)
-			. += LANG("mob.ca2418a0", null)
+			. += "node_progress_3"
 			return
 		if(remaining_fraction <= 0.80)
-			. += LANG("mob.08c34b37", null)
+			. += "node_progress_2"
 			return
-		. += LANG("mob.818ee7dc", null)
+		. += "node_progress_1"
 		return
 
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)

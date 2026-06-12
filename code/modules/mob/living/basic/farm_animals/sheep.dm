@@ -51,7 +51,7 @@
 	if(stat == DEAD)
 		return
 	if(cult_converted)
-		. += LANG("mob.3e35135b", null)
+		. += "hat"
 
 /// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to have special interaction with sacrificing a lamb
 /mob/living/basic/sheep/proc/on_sacrificed(datum/source, list/invokers)

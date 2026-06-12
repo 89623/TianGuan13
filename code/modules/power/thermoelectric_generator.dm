@@ -55,7 +55,7 @@
 	if(level)
 		. += mutable_appearance('icons/obj/machines/engine/other.dmi', "[base_icon_state]-op[level]")
 	if(hot_circ && cold_circ)
-		. += LANG("obj.04e30c98", list(base_icon_state, last_pressure_overlay))
+		. += "[base_icon_state]-oc[last_pressure_overlay]"
 
 /obj/machinery/power/thermoelectric_generator/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open)

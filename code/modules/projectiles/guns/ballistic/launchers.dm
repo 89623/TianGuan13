@@ -131,7 +131,7 @@
 /obj/item/gun/ballistic/rocketlauncher/update_overlays()
 	. = ..()
 	if(get_ammo())
-		. += LANG("obj.5411e728", null)
+		. += "rocketlauncher_loaded"
 
 /obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)
 	user.visible_message(span_warning(LANG("obj.29be0133", list(user, src, user.p_theyre()))), \

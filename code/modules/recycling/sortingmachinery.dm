@@ -99,11 +99,11 @@
 /obj/item/delivery/update_overlays()
 	. = ..()
 	if(sort_tag)
-		. += LANG("obj.8def5901", list(base_icon_state))
+		. += "[base_icon_state]_sort"
 	if(note)
-		. += LANG("obj.9838267e", list(base_icon_state))
+		. += "[base_icon_state]_note"
 	if(sticker)
-		. += LANG("obj.897cab1c", list(base_icon_state))
+		. += "[base_icon_state]_barcode"
 
 /obj/item/delivery/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/dest_tagger))

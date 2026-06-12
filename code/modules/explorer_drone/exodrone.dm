@@ -403,11 +403,11 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	if(fuel_canister && fuel_canister.uses > 0)
 		switch(fuel_canister.fuel_type)
 			if(FUEL_BASIC)
-				. += LANG("obj.371a085b", null)
+				. += "launchpad_fuel_basic"
 			if(FUEL_ADVANCED)
-				. += LANG("obj.a507b5cf", null)
+				. += "launchpad_fuel_advanced"
 			if(FUEL_EXOTIC)
-				. += LANG("obj.82f49891", null)
+				. += "launchpad_fuel_exotic"
 
 /*
  * Gets the fuel travel coefficient for what type of fuel is within the launcher.

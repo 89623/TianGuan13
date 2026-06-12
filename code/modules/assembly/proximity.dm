@@ -129,10 +129,10 @@
 	. = ..()
 	attached_overlays = list()
 	if(timing)
-		. += LANG("obj.4fa48918", null)
+		. += "prox_timing"
 		attached_overlays += "prox_timing"
 	if(scanning)
-		. += LANG("obj.58860815", null)
+		. += "prox_scanning"
 		attached_overlays += "prox_scanning"
 
 /obj/item/assembly/prox_sensor/ui_status(mob/user, datum/ui_state/state)

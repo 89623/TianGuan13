@@ -29,12 +29,12 @@
 		return
 
 	if(inputting)
-		. += LANG("obj.16985561", null)
+		. += "bp-c"
 	else
 		if(total_charge() > 0)
-			. += LANG("obj.65e4563d", null)
+			. += "bp-o"
 		else
-			. += LANG("obj.49d17031", null)
+			. += "bp-d"
 
 /obj/machinery/power/smes/connector/RefreshParts()
 	. = ..()
@@ -194,11 +194,11 @@
 		return
 
 	if(connected_port)
-		. += LANG("obj.23dd6dcd", list(connected_port.outputting ? 1 : 0))
-		. += LANG("obj.b4af861a", list(connected_port.inputting ? 1 : 0))
+		. += "smes-op[connected_port.outputting ? 1 : 0]"
+		. += "smes-oc[connected_port.inputting ? 1 : 0]"
 		var/clevel = connected_port.chargedisplay()
 		if(clevel > 0)
-			. += LANG("obj.1ed3ee6e", list(clevel))
+			. += "smes-og[clevel]"
 
 /obj/machinery/smesbank/interact(mob/user)
 	. = ..()

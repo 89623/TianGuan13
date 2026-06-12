@@ -261,7 +261,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 							. += job.title //Returns a job.
 						else
 							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
-							. += LANG("_root.2571b1a5", null)
+							. += "Bug"
 				safety -= 1
 			if(2)
 				switch(rand(1,3))//Food, drinks, or places. Only selectable once.

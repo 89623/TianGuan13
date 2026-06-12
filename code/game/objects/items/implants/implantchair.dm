@@ -112,7 +112,7 @@
 /obj/machinery/implantchair/update_overlays()
 	. = ..()
 	if(ready)
-		. += LANG("obj.4b65ad37", null)
+		. += "ready"
 
 /obj/machinery/implantchair/proc/replenish()
 	if(ready_implants < max_implants)

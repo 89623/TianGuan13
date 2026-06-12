@@ -120,7 +120,7 @@
 /obj/machinery/computer/pandemic/update_overlays()
 	. = ..()
 	if(wait)
-		. += LANG("obj.1ab9daa6", null)
+		. += "waitlight"
 
 /obj/machinery/computer/pandemic/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

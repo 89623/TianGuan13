@@ -241,18 +241,18 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 		if(C?.holder && C.holder.fakekey && !include_name)
 			if(include_link)
 				. += "<a href='byond://?priv_msg=[C.getStealthKey()]'>"
-			. += LANG("_root.db98d93d", null)
+			. += "Administrator"
 		else
 			if(include_link)
 				. += "<a href='byond://?priv_msg=[ckey]'>"
 			. += key
 		if(!C)
-			. += LANG("_root.5c257869", null)
+			. += "\[DC\]"
 
 		if(include_link)
 			. += "</a>"
 	else
-		. += LANG("_root.fe59ada0", null)
+		. += "*no key*"
 
 	if(include_name)
 		if(M)

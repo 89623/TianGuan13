@@ -223,7 +223,7 @@
 /mob/living/simple_animal/bot/mulebot/update_overlays()
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_MAINTS_OPEN)
-		. += LANG("mob.ffe63cbe", list(base_icon))
+		. += "[base_icon]-hatch"
 	if(!load || ismob(load)) //mob offsets and such are handled by the riding component / buckling
 		return
 	var/mutable_appearance/load_overlay = mutable_appearance(load.icon, load.icon_state, layer + 0.01)

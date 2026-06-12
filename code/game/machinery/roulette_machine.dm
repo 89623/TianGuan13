@@ -388,7 +388,7 @@
 		return
 
 	if(playing)
-		. += LANG("obj.04277e44", null)
+		. += "random_numbers"
 
 /obj/machinery/roulette/update_icon(updates=ALL, payout, color, rolled_number, is_winner = FALSE)
 	. = ..()

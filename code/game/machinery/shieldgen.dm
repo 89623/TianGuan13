@@ -347,7 +347,7 @@
 	. = ..()
 	if(!panel_open)
 		return
-	. += LANG("obj.f2362d59", null)
+	. += "shieldgen_wires"
 
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)

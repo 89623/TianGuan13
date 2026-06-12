@@ -46,7 +46,7 @@
 	. = ..()
 	// safety indicator
 	var/datum/component/gun_safety/our_safety = GetComponent(/datum/component/gun_safety)
-	. += LANG("obj.278eabd1", list(icon_state, our_safety.safety_currently_on ? "1" : "0"))
+	. += "[icon_state]_sf[our_safety.safety_currently_on ? "1" : "0"]"
 	// snowflaked indicator
 	if(magazine)
 		var/capacity_number
@@ -58,11 +58,11 @@
 			if(0 to 0.1)
 				capacity_number = 0
 		if(capacity_number != 0)
-			. += LANG("obj.7bce84ec", list(icon_state, capacity_number))
+			. += "[icon_state]_mag_[capacity_number]"
 		else
-			. += LANG("obj.e046f1aa", list(icon_state))
+			. += "[icon_state]_empty"
 	else
-		. += LANG("obj.e046f1aa", list(icon_state))
+		. += "[icon_state]_empty"
 
 /obj/item/storage/toolbox/guncase/traitor/enforcer
 	name = "enforcer gun case"

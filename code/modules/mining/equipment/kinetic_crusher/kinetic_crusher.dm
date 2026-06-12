@@ -312,9 +312,9 @@
 /obj/item/kinetic_crusher/update_overlays()
 	. = ..()
 	if(!charged)
-		. += LANG("obj.2b0f97f1", list(icon_state))
+		. += "[icon_state]_uncharged"
 	if(light_on)
-		. += LANG("obj.12c386e9", list(icon_state))
+		. += "[icon_state]_lit"
 
 /obj/item/kinetic_crusher/compact //for admins
 	name = "compact kinetic crusher"

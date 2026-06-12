@@ -100,7 +100,7 @@
 /obj/machinery/photobooth/update_overlays()
 	. = ..()
 	if((machine_stat & MAINT) || panel_open)
-		. += LANG("obj.be400d5d", list(base_icon_state))
+		. += "[base_icon_state]_panel"
 
 /obj/machinery/photobooth/screwdriver_act(mob/living/user, obj/item/tool)
 	return has_buckled_mobs() ? NONE : default_deconstruction_screwdriver(user, tool)

@@ -431,7 +431,7 @@
 /obj/machinery/ammo_workbench/update_overlays()
 	. = ..()
 	if(loaded_magazine)
-		. += LANG("obj.7f4b9a14", null)
+		. += "ammobench_loaded"
 
 /obj/machinery/ammo_workbench/Destroy()
 	if(timer_id)

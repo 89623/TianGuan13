@@ -116,13 +116,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(75 to 100)
 			return
 		if(50 to 75)
-			. += LANG("obj.4abafffc", null)
+			. += "crack1"
 			. += emissive_blocker(icon, "crack1", src, alpha = src.alpha)
 		if(25 to 50)
-			. += LANG("obj.6f402691", null)
+			. += "crack2"
 			. += emissive_blocker(icon, "crack2", src, alpha = src.alpha)
 		else
-			. += LANG("obj.48ab67bb", null)
+			. += "crack3"
 			. += emissive_blocker(icon, "crack3", src, alpha = src.alpha)
 
 /obj/machinery/newscaster/ui_interact(mob/user, datum/tgui/ui)

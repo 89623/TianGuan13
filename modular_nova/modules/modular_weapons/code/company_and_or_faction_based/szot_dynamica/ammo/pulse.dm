@@ -107,16 +107,16 @@
 /obj/item/ammo_casing/pulse/update_overlays()
 	. = ..()
 	if(remaining_uses <= 0)
-		. += LANG("obj.f906a5be", null)
+		. += "zaibas_bullet_0"
 		return
 	var/use_percent = remaining_uses / max_uses
 	switch(use_percent)
 		if(0.7 to 1)
-			. += LANG("obj.756eb315", null)
+			. += "zaibas_bullet_3"
 		if(0.3 to 0.7)
-			. += LANG("obj.14e9fb58", null)
+			. += "zaibas_bullet_2"
 		if(0.1 to 0.3)
-			. += LANG("obj.7599f217", null)
+			. += "zaibas_bullet_1"
 
 /obj/projectile/bullet/pulse
 	name = "pulse energy"

@@ -153,11 +153,11 @@
 	. = list()
 	if(coffeepot)
 		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
-			. += LANG("obj.78d45b91", null)
+			. += "coffeemaker_pot_bluespace"
 		else
-			. += LANG("obj.6953012b", list(coffeepot.reagents.total_volume ? "full" : "empty"))
+			. += "coffeemaker_pot_[coffeepot.reagents.total_volume ? "full" : "empty"]"
 	if(cartridge)
-		. += LANG("obj.2983f5e6", null)
+		. += "coffeemaker_cartidge"
 	return .
 
 /obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/cup/coffeepot/new_coffeepot)
@@ -554,28 +554,28 @@
 	. = list()
 	if(coffeepot)
 		if(istype(coffeepot, /obj/item/reagent_containers/cup/coffeepot/bluespace))
-			. += LANG("obj.a31233d4", null)
+			. += "pot_bluespace"
 		else
-			. += LANG("obj.46c995c7", list(coffeepot.reagents.total_volume ? "full" : "empty"))
+			. += "pot_[coffeepot.reagents.total_volume ? "full" : "empty"]"
 	if(coffee_cups > 0)
 		if(coffee_cups >= max_coffee_cups/3)
 			if(coffee_cups > max_coffee_cups/1.5)
-				. += LANG("obj.113ba961", null)
+				. += "cups_3"
 			else
-				. += LANG("obj.9fb217c4", null)
+				. += "cups_2"
 		else
-			. += LANG("obj.740513d9", null)
+			. += "cups_1"
 	if(sugar_packs)
-		. += LANG("obj.fa6da58c", null)
+		. += "extras_1"
 	if(creamer_packs)
-		. += LANG("obj.d9533d39", null)
+		. += "extras_2"
 	if(sweetener_packs)
-		. += LANG("obj.638479fb", null)
+		. += "extras_3"
 	if(coffee_amount)
 		if(coffee_amount < 0.7*BEAN_CAPACITY)
-			. += LANG("obj.5efd0066", null)
+			. += "grinder_half"
 		else
-			. += LANG("obj.d6145bb6", null)
+			. += "grinder_full"
 	return .
 
 /obj/machinery/coffeemaker/impressa/Exited(atom/movable/gone, direction)

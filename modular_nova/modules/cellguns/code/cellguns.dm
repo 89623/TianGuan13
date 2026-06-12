@@ -57,7 +57,7 @@
 	ratio = get_charge_ratio()
 
 	if(!ratio && display_empty)
-		. += LANG("obj.e046f1aa", list(icon_state))
+		. += "[icon_state]_empty"
 		return
 
 	var/mutable_appearance/charge_overlay = mutable_appearance(icon, overlay_icon_state)

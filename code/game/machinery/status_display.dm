@@ -1195,9 +1195,9 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 /obj/machinery/greenscreen_camera/update_overlays()
 	. = ..()
 	if(isnull(display))
-		. += LANG("obj.cfdd17c6", null)
+		. += "camera_off"
 	else
-		. += LANG("obj.72b50fc4", null)
+		. += "camera_on"
 		. += emissive_appearance(icon, "camera_emissive", src, alpha = src.alpha)
 
 /// Send an emergency alert signal to all status displays

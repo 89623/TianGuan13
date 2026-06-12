@@ -55,12 +55,12 @@
 /obj/machinery/trash_compactor/update_overlays()
 	. = ..()
 	if(machine_stat & MAINT)
-		. += LANG("obj.1866d0d1", null)
+		. += "trash_compactor_maintenance"
 	if((machine_stat & BROKEN || machine_stat & NOPOWER))
 		return
 	. += emissive_appearance(icon, "trash_compactor_glow", src, alpha = src.alpha)
 	if(!isnull(inserted_card))
-		. += LANG("obj.73e5f220", null)
+		. += "trash_compactor_gap"
 		. += emissive_appearance(icon, "trash_compactor_gap_glow", src, alpha = src.alpha)
 
 /obj/machinery/trash_compactor/examine(mob/living/user)

@@ -123,7 +123,7 @@
 	if(on)
 		. += emissive_appearance(icon, "[emissive_state ? emissive_state : base_icon_state + "-" + mode]-emissive", src, alpha = src.alpha)
 	if(panel_open)
-		. += LANG("obj.2410b1d7", list(base_icon_state))
+		. += "[base_icon_state]-open"
 		. += emissive_blocker(icon, "[base_icon_state]-open", src, alpha = src.alpha)
 
 /obj/machinery/space_heater/on_set_panel_open()
@@ -502,8 +502,8 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/update_overlays()
 	. += ..()
-	. += LANG("obj.6963f5ec", list(icon_state))
-	. += LANG("obj.6017b09d", list(base_icon_state))
+	. += "[icon_state]-beaker"
+	. += "[base_icon_state]-rigged"
 	. += emissive_blocker(icon, "[base_icon_state]-rigged", src, alpha = src.alpha)
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()

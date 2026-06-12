@@ -180,7 +180,7 @@
 	if(has_ammobar)
 		var/ratio = ceil((matter / max_matter) * ammo_sections)
 		if(ratio > 0)
-			. += LANG("obj.c9f2648e", list(icon_state, ratio))
+			. += "[icon_state]_charge[ratio]"
 
 /**
  * Uses resource to do some action. Returns amount of resource used or TRUE/FALSE if only an dry run is required

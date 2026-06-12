@@ -41,7 +41,7 @@
 		return
 
 	if(stored_pda || stored_id_card)
-		. += LANG("obj.22376ae9", list(initial(icon_state)))
+		. += "[initial(icon_state)]-closed"
 
 /obj/machinery/pdapainter/Initialize(mapload)
 	. = ..()

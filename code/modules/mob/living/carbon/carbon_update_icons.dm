@@ -574,10 +574,10 @@
 		. += limb_gender
 	. += limb_id
 	. += husk_type
-	. += LANG("obj.4c75537f", null)
+	. += "husk"
 	. += body_zone
 	if(is_invisible)
-		. += LANG("obj.5f8ad21e", null)
+		. += "invisible"
 	. += "[LAZYLEN(blood_dna_info) ? get_color_from_blood_list(blood_dna_info) : BLOOD_COLOR_RED]"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, TRUE))

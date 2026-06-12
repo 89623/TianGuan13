@@ -90,7 +90,7 @@
 		ratio = ceil(ratio*4) * 25
 		. += "[initial(icon_state)][ratio]"
 	if(welding)
-		. += LANG("obj.d872f05f", list(initial(icon_state)))
+		. += "[initial(icon_state)]-on"
 
 
 /obj/item/weldingtool/process(seconds_per_tick)

@@ -31,8 +31,8 @@
 
 /obj/structure/showcase/fakesec/update_overlays()
 	. = ..()
-	. += LANG("obj.0051dfa7", null)
-	. += LANG("obj.dd35ddce", null)
+	. += "security"
+	. += "security_key"
 
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"

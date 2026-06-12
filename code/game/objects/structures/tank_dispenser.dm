@@ -27,14 +27,14 @@
 	. = ..()
 	switch(oxygentanks)
 		if(1 to 3)
-			. += LANG("obj.e52b9946", list(oxygentanks))
+			. += "oxygen-[oxygentanks]"
 		if(4 to TANK_DISPENSER_CAPACITY)
-			. += LANG("obj.4aa82890", null)
+			. += "oxygen-4"
 	switch(plasmatanks)
 		if(1 to 4)
-			. += LANG("obj.5f8bd29d", list(plasmatanks))
+			. += "plasma-[plasmatanks]"
 		if(5 to TANK_DISPENSER_CAPACITY)
-			. += LANG("obj.66206974", null)
+			. += "plasma-5"
 
 /obj/structure/tank_dispenser/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

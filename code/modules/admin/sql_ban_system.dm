@@ -1042,11 +1042,11 @@
 		if(player_ip)
 			. += player_ip
 		else
-			. += LANG("datum.223e364f", null)
+			. += "NULL"
 		if(player_cid)
 			. += player_cid
 		else
-			. += LANG("datum.223e364f", null)
+			. += "NULL"
 	. = jointext(., "/")
 
 /**

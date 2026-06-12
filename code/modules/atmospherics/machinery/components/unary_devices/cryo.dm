@@ -223,7 +223,7 @@
 /obj/machinery/cryo_cell/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += LANG("obj.74a536df", null)
+		. += "pod-panel"
 	if(state_open)
 		return
 	. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-[on && is_operational ? "on" : "off"]", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)

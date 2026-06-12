@@ -85,7 +85,7 @@
 /obj/machinery/electrolyzer/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += LANG("obj.955b8669", null)
+		. += "electrolyzer-open"
 
 /obj/machinery/electrolyzer/process_atmos()
 

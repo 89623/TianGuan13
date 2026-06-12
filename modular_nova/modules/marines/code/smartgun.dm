@@ -79,7 +79,7 @@
 
 /obj/item/gun/ballistic/automatic/smart_machine_gun/update_overlays()
 	. = ..()
-	. += LANG("obj.aa834301", list(base_icon_state))
+	. += "[base_icon_state]_door_open"
 
 /obj/item/gun/ballistic/automatic/smart_machine_gun/unrestricted
 	pin = /obj/item/firing_pin

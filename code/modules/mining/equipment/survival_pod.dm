@@ -214,7 +214,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 /obj/machinery/sleeper/survival_pod/update_overlays()
 	. = ..()
 	if(!state_open)
-		. += LANG("obj.ac6abc68", null)
+		. += "sleeper_cover"
 
 //Lifeform Stasis Unit
 /obj/machinery/stasis/survival_pod

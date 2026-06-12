@@ -91,7 +91,7 @@
 	. = ..()
 	if(!opened)
 		return
-	. += LANG("obj.d187e7d0", list(!QDELETED(powerdevice) ? "bat" : "nobat"))
+	. += "inducer-[!QDELETED(powerdevice) ? "bat" : "nobat"]"
 
 /obj/item/inducer/get_cell()
 	return powerdevice

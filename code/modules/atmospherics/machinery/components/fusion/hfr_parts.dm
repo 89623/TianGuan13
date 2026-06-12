@@ -64,7 +64,7 @@
 	if(cracked)
 		. += image(icon, "crack", dir = src.dir)
 	if(active)
-		. += LANG("obj.2a7abbe5", list(base_icon_state))
+		. += "[base_icon_state]_active"
 		. += emissive_appearance(icon, "[base_icon_state]_active", src, alpha = src.alpha)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_layer()
@@ -132,7 +132,7 @@
 /obj/machinery/hypertorus/update_overlays()
 	. = ..()
 	if(active)
-		. += LANG("obj.2a7abbe5", list(base_icon_state))
+		. += "[base_icon_state]_active"
 		. += emissive_appearance(icon, "[base_icon_state]_active", src, alpha = src.alpha)
 
 /obj/machinery/hypertorus/interface

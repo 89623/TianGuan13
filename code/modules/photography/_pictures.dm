@@ -160,14 +160,14 @@
 			var/month = copytext_char(timestamp, 5, 7)
 			var/day = copytext_char(timestamp, 7, 9)
 			var/round = data[4]
-			. += LANG("_root.f21668cf", list(year, month, day, round))
+			. += "[year]/[month]/[day]/round-[round]"
 		if("O")
 			var/list/path = data.Copy(2, data.len)
 			. += path.Join("")
 		else
 			return null
 	var/n = data[data.len]
-	. += LANG("_root.2f4a5024", list(n))
+	. += "/[n].png"
 
 //BE VERY CAREFUL WITH THIS PROC, TO AVOID DUPLICATION.
 /datum/picture/proc/log_to_file()

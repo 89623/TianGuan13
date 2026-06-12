@@ -165,4 +165,4 @@ SUBSYSTEM_DEF(verb_manager)
 /datum/controller/subsystem/verb_manager/stat_entry(msg)
 	. = ..()
 	if(use_default_stats)
-		. += LANG("datum.31a051d0", list(round(verbs_executed_per_second, 0.01)))
+		. += "V/S: [round(verbs_executed_per_second, 0.01)]"

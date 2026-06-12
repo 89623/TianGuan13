@@ -42,7 +42,7 @@ This is a Blueshield weapon. It's for the Blueshield. If this ends up in Cargo I
 /obj/item/gun/ballistic/automatic/nt20/update_overlays()
 	. = ..()
 	if(!chambered && empty_indicator) //this is duplicated due to a layering issue with the select fire icon.
-		. += LANG("obj.e046f1aa", list(icon_state))
+		. += "[icon_state]_empty"
 
 /obj/item/gun/ballistic/automatic/nt20/Initialize(mapload)
 	. = ..()

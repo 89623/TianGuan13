@@ -86,9 +86,9 @@
 	. = ..()
 	if(trash_bag)
 		if(istype(trash_bag, /obj/item/storage/bag/trash/bluespace))
-			. += LANG("obj.56dca20d", null)
+			. += "cart_bluespace_garbage"
 		else
-			. += LANG("obj.d6add812", null)
+			. += "cart_garbage"
 	if(installed_upgrade)
 		var/mutable_appearance/overlay = new(SSgreyscale.GetColoredIconByType(installed_upgrade.overlay_greyscale_config, installed_upgrade.greyscale_colors))
 		overlay.icon_state = "janicart_upgrade"

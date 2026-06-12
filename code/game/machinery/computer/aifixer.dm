@@ -95,16 +95,16 @@
 		return
 
 	if(restoring)
-		. += LANG("obj.29fcc53f", null)
+		. += "ai-fixer-on"
 
 	if(!occupier)
-		. += LANG("obj.07bfdb9f", null)
+		. += "ai-fixer-empty"
 		return
 	switch(occupier.stat)
 		if(CONSCIOUS)
-			. += LANG("obj.fbc47030", null)
+			. += "ai-fixer-full"
 		if(UNCONSCIOUS, HARD_CRIT)
-			. += LANG("obj.633a18ba", null)
+			. += "ai-fixer-404"
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())

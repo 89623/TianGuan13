@@ -86,7 +86,7 @@
 		wheel_overlay = color_atom_overlay(wheel_overlay)
 		. += wheel_overlay
 	if(bell_attached)
-		. += LANG("obj.2cedc77c", null)
+		. += "wheelchair_bell"
 	if(bomb_attached)
 		. += mutable_appearance(icon, "[ttv_icon][bomb_attached.tank_two ? "l" : ""][bomb_attached.tank_one ? "r" : ""]", ABOVE_MOB_LAYER)
 

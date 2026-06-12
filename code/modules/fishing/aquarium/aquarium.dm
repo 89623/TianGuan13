@@ -191,7 +191,7 @@
 
 /obj/item/fish_tank/update_overlays()
 	. = ..()
-	. += LANG("obj.1621bdaa", list(base_icon_state, HAS_TRAIT(src, TRAIT_AQUARIUM_PANEL_OPEN) ? "_open" : ""))
+	. += "[base_icon_state]_panel[HAS_TRAIT(src, TRAIT_AQUARIUM_PANEL_OPEN) ? "_open" : ""]"
 	. += mutable_appearance(icon, "[base_icon_state]_[fluid_type == AQUARIUM_FLUID_AIR ? "air" : "water"]", layer = layer + AQUARIUM_GLASS_LAYER)
 	. += mutable_appearance(icon, "[base_icon_state]_borders", layer = layer + AQUARIUM_BORDERS_LAYER)
 

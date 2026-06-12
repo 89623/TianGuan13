@@ -78,7 +78,7 @@
 				. += "<a href='byond://?_src_=mentor;mentor_msg=[ckey];[MentorHrefToken(TRUE)]'>"
 
 		if(target_client && target_client?.holder && target_client?.holder.fakekey)
-			. += LANG("_root.db98d93d", null)
+			. += "Administrator"
 		else if (char_name_only && CONFIG_GET(flag/mentors_mobname_only))
 			if(istype(target_client?.mob,/mob/dead/new_player) || istype(target_client?.mob, /mob/dead/observer)) //If they're in the lobby or observing, display their ckey
 				. += key
@@ -89,14 +89,14 @@
 		else
 			. += key
 		if(!target_client)
-			. += LANG("_root.5c257869", null)
+			. += "\[DC\]"
 
 		if(include_link)
 			. += "</a>"
 	else
-		. += LANG("_root.fe59ada0", null)
+		. += "*no key*"
 
 	if(include_follow)
-		. += LANG("_root.4c0e2c4a", list(REF(target_mob), MentorHrefToken(TRUE)))
+		. += " (<a href='byond://?_src_=mentor;mentor_follow=[REF(target_mob)];[MentorHrefToken(TRUE)]'>F</a>)"
 
 	return .

@@ -98,9 +98,9 @@
 /obj/item/papercutter/update_overlays()
 	. = ..()
 	if(!isnull(stored_paper))
-		. += LANG("obj.a02e55ed", null)
+		. += "paper"
 	if(!isnull(stored_blade))
-		. += LANG("obj.b3f1a5c8", null)
+		. += "cutter_overlay"
 
 /obj/item/papercutter/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!stored_blade && !blade_secured)

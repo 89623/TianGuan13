@@ -231,4 +231,4 @@
 
 /obj/machinery/griddle/stand/update_overlays()
 	. = ..()
-	. += LANG("obj.f2edee07", null)
+	. += "front_bar"

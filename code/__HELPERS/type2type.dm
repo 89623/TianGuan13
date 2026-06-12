@@ -153,35 +153,35 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 /proc/rights2text(rights, seperator="", prefix = "+")
 	seperator += prefix
 	if(rights & R_BUILD)
-		. += LANG("_root.02250d71", list(seperator))
+		. += "[seperator]BUILDMODE"
 	if(rights & R_ADMIN)
-		. += LANG("_root.a3aaf018", list(seperator))
+		. += "[seperator]ADMIN"
 	if(rights & R_BAN)
-		. += LANG("_root.cf921ae3", list(seperator))
+		. += "[seperator]BAN"
 	if(rights & R_FUN)
-		. += LANG("_root.955189e8", list(seperator))
+		. += "[seperator]FUN"
 	if(rights & R_SERVER)
-		. += LANG("_root.3b5db820", list(seperator))
+		. += "[seperator]SERVER"
 	if(rights & R_DEBUG)
-		. += LANG("_root.4b8c901e", list(seperator))
+		. += "[seperator]DEBUG"
 	if(rights & R_POSSESS)
-		. += LANG("_root.35e678bb", list(seperator))
+		. += "[seperator]POSSESS"
 	if(rights & R_PERMISSIONS)
-		. += LANG("_root.baa45262", list(seperator))
+		. += "[seperator]PERMISSIONS"
 	if(rights & R_STEALTH)
-		. += LANG("_root.15c7c4f0", list(seperator))
+		. += "[seperator]STEALTH"
 	if(rights & R_POLL)
-		. += LANG("_root.f15dca4a", list(seperator))
+		. += "[seperator]POLL"
 	if(rights & R_VAREDIT)
-		. += LANG("_root.8808eb83", list(seperator))
+		. += "[seperator]VAREDIT"
 	if(rights & R_SOUND)
-		. += LANG("_root.ea37d4e8", list(seperator))
+		. += "[seperator]SOUND"
 	if(rights & R_SPAWN)
-		. += LANG("_root.67f2ce0e", list(seperator))
+		. += "[seperator]SPAWN"
 	if(rights & R_AUTOADMIN)
-		. += LANG("_root.bfb348b9", list(seperator))
+		. += "[seperator]AUTOLOGIN"
 	if(rights & R_DBRANKS)
-		. += LANG("_root.655ffc19", list(seperator))
+		. += "[seperator]DBRANKS"
 	if(!.)
 		. = "NONE"
 	return .

@@ -115,15 +115,15 @@
 		return
 
 	if(!QDELETED(beaker1))
-		. += LANG("obj.9d165c32", null)
+		. += "HPLC_beaker1"
 	if(!QDELETED(beaker2))
-		. += LANG("obj.3d936c32", null)
+		. += "HPLC_beaker2"
 
 	if(is_operational && !panel_open && anchored && !(machine_stat & (BROKEN | NOPOWER)))
 		if(processing_reagents)
-			. += LANG("obj.6e5f9fc8", null)
+			. += "HPLC_graph_active"
 		else if (length(beaker1?.reagents.reagent_list))
-			. += LANG("obj.a09e4ae2", null)
+			. += "HPLC_graph_idle"
 
 /obj/machinery/chem_mass_spec/update_icon_state()
 	if(is_operational && !panel_open && anchored && !(machine_stat & (BROKEN | NOPOWER)))

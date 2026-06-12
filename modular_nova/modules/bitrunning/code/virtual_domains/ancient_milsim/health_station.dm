@@ -58,13 +58,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/health_station, 32)
 	if(charge_amount >= 0)
 		switch(charge_amount)
 			if(60 to 100)
-				. += LANG("obj.eb52df0e", list(base_icon_state))
+				. += "[base_icon_state]_light1"
 			if(30 to 60)
-				. += LANG("obj.0f2527b9", list(base_icon_state))
+				. += "[base_icon_state]_light2"
 			if(15 to 30)
-				. += LANG("obj.379b8b45", list(base_icon_state))
+				. += "[base_icon_state]_light3"
 			else
-				. += LANG("obj.009de9a1", list(base_icon_state))
+				. += "[base_icon_state]_light4"
 
 /obj/machinery/health_station/examine(mob/living/carbon/user)
 	. = ..()

@@ -597,7 +597,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 	//flush handle
 	if(flush)
-		. += LANG("obj.3648722c", null)
+		. += "dispover-handle"
 
 	if(mounted_tagger)
 		. += mutable_appearance('icons/obj/pipes_n_cables/disposal.dmi', "tagger_mount") //NOVA EDIT: Overriding Icon file. += "tagger_mount"
@@ -608,15 +608,15 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
-		. += LANG("obj.3a6f31b9", null)
+		. += "dispover-full"
 		. += emissive_appearance(icon, "dispover-full", src, alpha = src.alpha)
 
 	//charging and ready light
 	if(pressure_charging)
-		. += LANG("obj.631cb09c", null)
+		. += "dispover-charge"
 		. += emissive_appearance(icon, "dispover-charge-glow", src, alpha = src.alpha)
 	else if(full_pressure)
-		. += LANG("obj.0fac71f3", null)
+		. += "dispover-ready"
 		. += emissive_appearance(icon, "dispover-ready-glow", src, alpha = src.alpha)
 
 /// Create a random animal to be infesting this disposals bin

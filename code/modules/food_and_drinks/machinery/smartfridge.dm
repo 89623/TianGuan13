@@ -223,7 +223,7 @@
 	. = ..()
 
 	if(panel_open)
-		. += LANG("obj.121bf34f", list(base_icon_state))
+		. += "[base_icon_state]-panel"
 
 	var/shown_contents_length = visible_items()
 	if(visible_contents && shown_contents_length)
@@ -585,9 +585,9 @@
 /obj/machinery/smartfridge/drying/rack/update_overlays()
 	. = ..()
 	if(drying)
-		. += LANG("obj.826e46be", list(base_icon_state))
+		. += "[base_icon_state]-drying"
 	if(contents.len)
-		. += LANG("obj.7c211fb2", list(base_icon_state))
+		. += "[base_icon_state]-filled"
 
 // ----------------------------
 //  Bar drink smartfridge

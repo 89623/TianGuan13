@@ -94,10 +94,10 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(priority_alarms.len)
-		. += LANG("obj.6603b89b", null)
+		. += "alert:2"
 		return
 	if(minor_alarms.len)
-		. += LANG("obj.8e61dcae", null)
+		. += "alert:1"
 
 // Subtype with the board pre-set to check only station areas and the mining station
 /obj/machinery/computer/atmos_alert/station_only

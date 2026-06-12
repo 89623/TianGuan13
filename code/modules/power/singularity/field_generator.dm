@@ -67,11 +67,11 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/update_overlays()
 	. = ..()
 	if(warming_up)
-		. += LANG("obj.d77e96e6", list(warming_up))
+		. += "+a[warming_up]"
 	if(LAZYLEN(fields))
-		. += LANG("obj.8686ab88", null)
+		. += "+on"
 	if(power_level)
-		. += LANG("obj.c81c570a", list(power_level))
+		. += "+p[power_level]"
 
 
 /obj/machinery/field/generator/Initialize(mapload)

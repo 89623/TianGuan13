@@ -41,9 +41,9 @@
 /obj/item/storage/briefcase/secure/update_overlays()
 	. = ..()
 	if(atom_storage?.locked)
-		. += LANG("obj.3cd748fa", null)
+		. += "briefcase_locked"
 	else
-		. += LANG("obj.6b6de8ec", null)
+		. += "briefcase_open"
 
 /obj/item/storage/briefcase/secure/update_icon_state()
 	. = ..()

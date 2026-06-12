@@ -164,32 +164,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 	if(open)
 		if(broken)
-			. += LANG("obj.94a79480", null)
+			. += "glass4_raised"
 			return
 
 		switch(hp_percent)
 			if(-INFINITY to 40)
-				. += LANG("obj.28618c1e", null)
+				. += "glass3_raised"
 			if(40 to 60)
-				. += LANG("obj.c881e2ad", null)
+				. += "glass2_raised"
 			if(60 to 80)
-				. += LANG("obj.22043063", null)
+				. += "glass1_raised"
 			if(80 to INFINITY)
-				. += LANG("obj.fa6322b5", null)
+				. += "glass_raised"
 		return
 
 	if(broken)
-		. += LANG("obj.7a053f51", null)
+		. += "glass4"
 	else
 		switch(hp_percent)
 			if(-INFINITY to 40)
-				. += LANG("obj.84e9c415", null)
+				. += "glass3"
 			if(40 to 60)
-				. += LANG("obj.99156b9b", null)
+				. += "glass2"
 			if(60 to 80)
-				. += LANG("obj.a7398e3b", null)
+				. += "glass1"
 			if(80 to INFINITY)
-				. += LANG("obj.fb41c3ef", null)
+				. += "glass"
 
 	. += locked ? "locked" : "unlocked"
 

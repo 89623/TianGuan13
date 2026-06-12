@@ -177,4 +177,4 @@
 		return
 	if(recharging_mech.cell.charge >= recharging_mech.cell.maxcharge)
 		return
-	. += LANG("obj.aff73a2f", null)
+	. += "recharge_comp_on"
