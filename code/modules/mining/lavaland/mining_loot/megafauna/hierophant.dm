@@ -110,7 +110,7 @@
 /obj/item/hierophant_club/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if (blink?.current_charges)
-		. += LANG("obj.3f2cc3a8", null)
+		. += "hierophant_ready"
 
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)

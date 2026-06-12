@@ -53,11 +53,11 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(jumpsuit.has_sensor == HAS_SENSORS)
-		. += LANG("datum.e9d7f9a1", null)
+		. += "adjust_sensor"
 	if(jumpsuit.can_adjust)
-		. += LANG("datum.0c5400d9", null)
+		. += "adjust_jumpsuit"
 	if(length(jumpsuit.attached_accessories))
-		. += LANG("datum.d895fa37", null)
+		. += "strip_accessory"
 
 /datum/strippable_item/mob_item_slot/jumpsuit/perform_alternate_action(atom/source, mob/user, action_key, obj/item/item)
 	if (!..())
@@ -182,11 +182,11 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 	switch (shoes.tied)
 		if (SHOES_UNTIED)
-			. += LANG("datum.9afc35d5", null)
+			. += "knot"
 		if (SHOES_TIED)
-			. += LANG("datum.09e67054", null)
+			. += "untie"
 		if (SHOES_KNOTTED)
-			. += LANG("datum.b63605a8", null)
+			. += "unknot"
 
 /datum/strippable_item/mob_item_slot/feet/perform_alternate_action(atom/source, mob/user, action_key, obj/item/item)
 	if(!..())

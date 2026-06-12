@@ -549,7 +549,7 @@
 	if(should_draw_greyscale && draw_color)
 		. += draw_color
 	if(is_invisible)
-		. += LANG("obj.5f8ad21e", null)
+		. += "invisible"
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner, is_husked))
 			continue

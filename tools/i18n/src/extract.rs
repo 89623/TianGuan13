@@ -158,6 +158,12 @@ pub fn is_identifier_dot_proc(name: &str) -> bool {
             | "stat_entry"
             | "armor_to_protection_class"
             | "generate_code_phrase"
+            // StripMenu 的备用操作键（knot/adjust_jumpsuit…）：前端 ALTERNATE_ACTIONS[key].text 查表
+            // + perform_alternate_action 的 if("key") 比较——翻译即蓝屏（用户实测 TypeError .text）。
+            | "get_alternate_actions"
+            // worn_overlays/generate_icon_key：icon_state 串与图标缓存键。
+            | "worn_overlays"
+            | "generate_icon_key"
     ) || name.ends_with("_update_overlays")
 }
 
