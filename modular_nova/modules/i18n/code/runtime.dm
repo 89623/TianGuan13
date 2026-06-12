@@ -90,6 +90,31 @@ GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 				return translated
 	return arg
 
+/// **逆向**反查：把「已被反查成译文」的显示串还原回英文原文。用于 act 回传/按英文建键的查表
+/// 场景——UI 把翻译过的 name 回传给英文键表（如 GLOB.name2reagent 用 initial(name) 建键，而
+/// 实例 name 已被 New() 反查成中文 → 直接查必 miss）。惰性从反查表倒置构建（一对多取首个）；
+/// locale==en 或查不到原样返回。**消费侧惯用法**：`map[x] || map[lang_unreverse_text(x)]`
+/// （先原样查保英文路径零变化）。
+GLOBAL_LIST_EMPTY(i18n_unreverse)
+/proc/lang_unreverse_text(text)
+	if(!istext(text) || !length(text))
+		return text
+	var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+	if(locale == DEFAULT_UI_LOCALE)
+		return text
+	var/list/unrev = GLOB.i18n_unreverse[locale]
+	if(!unrev)
+		var/list/reverse = lang_build_reverse(locale)
+		if(!length(reverse))
+			return text // 反查表未就绪：原样返回且不缓存（同 lang_build_reverse 加固）
+		unrev = list()
+		for(var/en in reverse)
+			var/translated = reverse[en]
+			if(!unrev[translated])
+				unrev[translated] = en
+		GLOB.i18n_unreverse[locale] = unrev
+	return unrev[text] || text
+
 /// 若文本以英文冠词开头（the/a/an，含大写），返回去冠词后的余部；否则 null。
 /proc/lang_strip_article(text)
 	var/static/list/articles = list("the ", "The ", "a ", "an ", "A ", "An ")
@@ -296,6 +321,7 @@ GLOBAL_LIST_INIT(i18n_payload_skip_keys, list(\
 	"buttons" = TRUE,\
 	"items" = TRUE,\
 	"init_value" = TRUE,\
+	"id" = TRUE,\
 ))
 
 /// 递归把一个 list（含嵌套 list / 关联 list）里的字符串「值」按多词门槛反查为全服 locale 译文。
