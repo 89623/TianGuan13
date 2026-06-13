@@ -36,6 +36,10 @@ const SINK_VARS: &[&str] = &[
     "wiki_desc",        // wiki 界面描述。
     "war_declaration",  // 核弹战争宣言（全员公告）。
     "explanation_text", // /datum/objective 反派目标文本（反派面板 + 授予时聊天）。
+    // /datum/job 的「上级」短语（"Nanotrasen officials and Space Law"/"the Captain"…）：spawn 介绍
+    // 「你直接听命于 [supervisors]」行的插值值。模板已译、边界引擎捕获 [supervisors] 为 {N} 后经
+    // lang_localize_arg→lang_reverse_text 翻译 → 必须入目录。短语无句末标点，激进 pass 抽不到，故列此。
+    "supervisors",
     // /datum/personality 玩法效果行（特质与个性→人格 tab 卡片里的 ±/+/- 描述；经偏好常量 asset 渲染，
     // 由 master_files/code/modules/client/preferences/assets.dm 的 lang_reverse_pref_descriptions 反查）。
     "pos_gameplay_desc",
@@ -605,12 +609,25 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                         // 的各 `return "[jobtitle] is already filled to capacity."` 是**插值**模板（含 [jobtitle]），
                         // 通用 proc-return 捕获被 is_sentence_like 的「无 {」排除 → 漏抽。专项按模板抽（含占位符），
                         // 由该 proc 手接 LANG（jobtitle 走 lang_reverse_text 整词反查）。
-                        "get_job_unavailable_error_message" => {
+                        // get_captaincy_announcement：`return "Captain [real_name] on deck!"` 同属插值 proc-return
+                        // （舰长/代理舰长上岗公告，经 priority_announce 喊出）→ 抽模板，边界引擎在公告输出整句命中。
+                        "get_job_unavailable_error_message" | "get_captaincy_announcement" => {
                             let mut rets = Vec::new();
                             collect_returns(block, &mut rets);
                             for r in rets {
                                 if let Some(t) = build_template(r) {
                                     emit(&mut catalog, &namespace, &t);
+                                }
+                            }
+                        }
+                        // antag opt-in 等级显示串（GLOBAL_LIST_INIT(antag_opt_in_strings) → InitGlobal* proc
+                        // 体内 `antag_opt_in_strings = list("2"="Yes - Kill",…)`，值是 #define 展开的显示短语）：
+                        // spawn 介绍「强制最低 opt-in 设置为 [值]」行的插值值，模板已译、边界引擎捕获该值为 {N}
+                        // 后经 lang_reverse_text 翻译 → 抽其 assoc 值入目录（键 "0".."3" 无字母、emit 自动过滤）。
+                        "InitGlobalantag_opt_in_strings" => {
+                            for stmt in block.iter() {
+                                if let Statement::Expr(Expression::AssignOp { rhs, .. }) = &stmt.elem {
+                                    emit_list_strings(rhs, &namespace, &mut catalog);
                                 }
                             }
                         }

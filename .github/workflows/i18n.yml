@@ -41,6 +41,21 @@ jobs:
           else
             echo "英文主目录已同步。"
           fi
+      # 门禁：目录卫生（占位符 parity / 控制字符）+ 标识符碰撞静态分析（基线增量）。
+      # 把 AGENTS.md「排查规律」里反复出现的两类 bug（标识符被反查误翻 → StripMenu 蓝屏/出生点错位/
+      # 查表失败；译文多出占位符 → 显示生 {N}）从「玩家踩到才发现」变成编译期挡住。
+      # 注意：跑 lint 前用「PR 自己的目录」重新生成基线对照 —— drift 已在上一步报告，这里用 HEAD 的
+      # en 目录与提交的基线判定**新增**碰撞。
+      - name: i18n lint gate（目录卫生 + 标识符碰撞）
+        run: |
+          git checkout -- strings/i18n/en  # 丢弃 drift 步骤的临时再生成，用 PR 提交的目录判定
+          ./tools/i18n/target/release/nova-i18n lint \
+            --dme tgstation.dme \
+            --catalog strings/i18n \
+            --locale zh-Hans \
+            --baseline tools/i18n/identifier-baseline.txt
+      - name: 伪 locale 生成 smoke（确保 pseudo 子命令可用，供本地/手动跑测）
+        run: ./tools/i18n/target/release/nova-i18n pseudo --catalog strings/i18n --locale qps-ploc
       - name: Report pending rewrites
         run: ./tools/i18n/target/release/nova-i18n rewrite --dme tgstation.dme --dry-run
 

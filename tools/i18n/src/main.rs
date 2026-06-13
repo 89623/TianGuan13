@@ -11,6 +11,9 @@ mod template;
 mod extract;
 mod flavor;
 mod keys;
+mod labels;
+mod lint;
+mod pseudo;
 mod rewrite;
 
 use anyhow::Result;
@@ -65,6 +68,47 @@ enum Cmd {
         #[arg(long)]
         dry_run: bool,
     },
+    /// i18n 门禁：目录卫生（占位符/标识符形/控制字符）+ 标识符碰撞静态分析（基线增量）。
+    Lint {
+        /// 项目入口 .dme（标识符碰撞 AST 扫描用）。
+        #[arg(long, default_value = "tgstation.dme")]
+        dme: PathBuf,
+        /// 目录根（含 en/ 与各 locale 子目录）。
+        #[arg(long, default_value = "strings/i18n")]
+        catalog: PathBuf,
+        /// 与英文做占位符/卫生比对的 locale。
+        #[arg(long, default_value = "zh-Hans")]
+        locale: String,
+        /// 标识符碰撞基线文件（只对不在基线里的新碰撞失败）。
+        #[arg(long, default_value = "tools/i18n/identifier-baseline.txt")]
+        baseline: PathBuf,
+        /// 用当前全部碰撞重写基线（首次采纳 / 修复后刷新）。
+        #[arg(long)]
+        update_baseline: bool,
+        /// 跳过 AST 标识符扫描（只跑目录卫生，纯目录 PR 更快）。
+        #[arg(long)]
+        no_ast: bool,
+    },
+    /// 生成伪 locale 目录（从 en/ 包裹每个值，保留占位符/标签）。用于运行时爬取未接通路径 +
+    /// 在 CI 单元测试里捕获「标识符被反查表变异」的 gameplay 回归（无需任何真实译文）。
+    Pseudo {
+        /// 目录根（含 en/）。
+        #[arg(long, default_value = "strings/i18n")]
+        catalog: PathBuf,
+        /// 伪 locale 名（写到 <catalog>/<locale>/）。
+        #[arg(long, default_value = "qps-ploc")]
+        locale: String,
+    },
+    /// 抽「标识符耦合的 DM 显示名」（name/title/category_name/explanation/choiced 选项）到 flat JSON，
+    /// 供 tgui-catalog.mjs 读入前端 tgui 目录。按类型路径/proc 语义定位（AST），取代正则 DM_LABEL_SOURCES。
+    Labels {
+        /// 项目入口 .dme。
+        #[arg(long, default_value = "tgstation.dme")]
+        dme: PathBuf,
+        /// 输出 flat JSON 路径（committed；tgui-catalog.mjs 读它合并进前端目录）。
+        #[arg(long, default_value = "tools/i18n/dm_labels.json")]
+        out: PathBuf,
+    },
 }
 
 fn main() -> Result<()> {
@@ -77,5 +121,15 @@ fn main() -> Result<()> {
             dry_run,
         } => rewrite::run(&dme, filter.as_deref(), dry_run),
         Cmd::Verbs { dme, locale, revert, dry_run } => rewrite::run_verbs(&dme, &locale, revert, dry_run),
+        Cmd::Lint {
+            dme,
+            catalog,
+            locale,
+            baseline,
+            update_baseline,
+            no_ast,
+        } => lint::run(&dme, &catalog, &locale, Some(baseline), update_baseline, no_ast),
+        Cmd::Pseudo { catalog, locale } => pseudo::run(&catalog, &locale),
+        Cmd::Labels { dme, out } => labels::run(&dme, &out),
     }
 }

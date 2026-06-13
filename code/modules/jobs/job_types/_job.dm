@@ -327,12 +327,14 @@
 	if(radio_info)
 		info += radio_info
 	if(req_admin_notify)
-		info += "<b>You are playing a job that is important for Game Progression. \
-			If you have to disconnect, please notify the admins via adminhelp.</b>"
+		// NOVA EDIT CHANGE - I18N - ORIGINAL: 多行 "\" 续行 → 运行时带前导制表符，反查/边界引擎键不匹配；并单行使键对齐。
+		info += "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(CONFIG_GET(number/minimal_access_threshold))
-		info += span_boldnotice("As this station was initially staffed with a \
-			[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
-			have been added to your ID card.")
+		// NOVA EDIT CHANGE - I18N - ORIGINAL: span_boldnotice 里三元拼接「片段」无法翻译（片段不成句、不入目录）；拆成两条完整句，各自整句可译。
+		if(CONFIG_GET(flag/jobs_have_minimal_access))
+			info += span_boldnotice("As this station was initially staffed with a full crew, only your job's necessities have been added to your ID card.")
+		else
+			info += span_boldnotice("As this station was initially staffed with a skeleton crew, additional access may have been added to your ID card.")
 	//NOVA EDIT ADDITION BEGIN - ANTAG OPT IN
 	if (!CONFIG_GET(flag/disable_antag_opt_in_preferences))
 		if (isnum(minimum_opt_in_level) && minimum_opt_in_level > OPT_IN_NOT_TARGET)

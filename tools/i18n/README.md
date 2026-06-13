@@ -194,8 +194,22 @@ I18N_CODEX_STDIO=inherit
 
 ### TGUI 文本：抽取 / 翻译 / 同步前端
 
+「标识符耦合的 DM 显示名」（职业/怪癖/精灵配件/choiced 下拉选项…，**既是显示又是 act() 标识符**）
+经两层进入前端 tgui 目录、由 TS runtime **只翻显示**（act 用原英文值，安全）：
+
+- **AST 层（`nova-i18n labels`，推荐主力）**：按**类型路径 / proc 语义**抽取，产物 `tools/i18n/dm_labels.json`
+  由 `tgui-catalog.mjs extract` 合并进 tgui 目录。优势——`init_possible_values()` 返回值经预处理器展开
+  → **自动覆盖所有 choiced 下拉（含 #define 定义的选项）**，新增下拉**不必再加规则**；类型作用域的
+  name/title 对上游移动文件免疫。`resync.sh` 会刷新它。
+- **正则层（`tgui-catalog.mjs` 的 `DM_LABEL_SOURCES`，残留/兜底）**：覆盖 AST 够不着的路径作用域数据
+  （配装/服装 obj 名按目录界定）与无法枚举的宏（DefineMap 无公开迭代器 → JOB_*/AUGMENT_SLOT_* 等
+  #define 值仍走正则文件扫描）。两层 **addText 合并去重**，正则保证零回归。
+
 ```sh
-# 抽取 TGUI 静态 JSX 文本到 strings/i18n/en/tgui.json，
+# 刷新 AST 显示标签（resync.sh 已含；单独跑）
+cargo run --release --manifest-path tools/i18n/Cargo.toml -- labels --dme tgstation.dme
+
+# 抽取 TGUI 静态 JSX 文本到 strings/i18n/en/tgui.json（合并上面的 AST 标签 + JSX 文本），
 # 复用已有中文译文/术语，并同步 tgui/packages/tgui/i18n/*.json
 node tools/i18n/tgui-catalog.mjs extract
 
@@ -330,6 +344,80 @@ jq empty strings/i18n/en/*.json strings/i18n/zh-Hans/*.json
 ./node_modules/.bin/biome check tgui/packages/tgui/i18n tools/i18n/tgui-catalog.mjs
 cd tgui && ./node_modules/.bin/tsc && ./node_modules/.bin/rspack build
 ```
+
+## 门禁与回归检测（lint / 伪 locale）—— 把「玩家踩到才发现」变成「编译期/CI 挡住」
+
+`AGENTS.md` 的「i18n 排查规律」清单长期只增不减，根因有二：① **值匹配反查的本质歧义**（一个串
+是显示文本还是标识符，反查机制无法从值本身区分 → 误翻 act 键/枚举 → StripMenu 蓝屏、出生点错位、
+查表静默失效）；② **译文多出占位符**（运行时无实参 → 显示生 `{N}`）。这两类以前全靠玩家上报。
+现在有两道系统性防线：
+
+### `nova-i18n lint` —— 编译期门禁（CI 已接，见 `.github/workflows/i18n.yml`）
+
+```sh
+# 目录卫生 + 标识符碰撞静态分析（基线增量；新增高置信碰撞→非零退出）
+cargo run --release --manifest-path tools/i18n/Cargo.toml -- lint \
+  --dme tgstation.dme --catalog strings/i18n --locale zh-Hans \
+  --baseline tools/i18n/identifier-baseline.txt
+
+# 只跑目录卫生（不解析 DM，秒级；纯目录 PR 用）
+… -- lint --catalog strings/i18n --locale zh-Hans --no-ast
+
+# 首次采纳 / 修复碰撞后刷新基线
+… -- lint --update-baseline
+```
+
+两类检查：
+
+- **目录卫生**（零误报，硬错误）：
+  - **占位符 parity**：locale 译文不得含 en 没有的 `{N}`（那个占位符永远没实参填充 → 显示生串）。
+    locale **少**用占位符是合法的（中文省代词/语序重排，那次 `replacetext` 只是 no-op）——只查「多出」。
+  - **裸控制字符**：locale 侧报错（译文是我们写的）；en 侧仅告警（多来自上游原文，extract 会重生）。
+  - 手写 locale-only 文件（`_state_words.json` / `_fallback.json`）不参与 parity（它们本无英文源串）。
+- **标识符碰撞**（AST 静态分析，根因①的系统性出口）：扫全树收集**标识符位置**的字符串字面量
+  （`==`/`!=` 比较、`switch` case、`list` 下标键），与 en 目录的**可翻译值**取交集。命中 = 该串
+  既被当标识符用、又会被反查表变异成译文 → 运行期比较/查表必然 miss。
+  - **基线增量**（`identifier-baseline.txt`，~870 条）：冻结当前已知碰撞，CI 只对**新增**失败。
+  - **置信分级**：含下划线/全大写的（`icon_state`/`render_target`/`HUMANS_ONLY`/`toggle_safety`）
+    是无歧义代码 token → **新增即报错**；单词类（`acid`/`amber`，多为「被比较变量从不经翻译」的
+    误报）→ **新增仅告警**。
+  - 新碰撞的三条修法：① 把供给该串的变量排除出抽取（句末标点闸门 / SINK_VARS 黑名单）；
+    ② 消费侧用 `lang_unreverse_text` 兜（见 chem dispenser 解药）；③ 确认安全后收进基线。
+
+### 伪 locale（`qps-ploc`）—— 运行时动态检测（捕获静态分析够不着的路径）
+
+```sh
+# 1) 从 en/ 生成伪目录（每个值包成 ⟦原文⟧，保留占位符/标签；不入库，已 gitignore）
+cargo run --release --manifest-path tools/i18n/Cargo.toml -- pseudo \
+  --catalog strings/i18n --locale qps-ploc
+
+# 2) config/game_options.txt 设 I18N_SERVER_LOCALE qps-ploc，跑一圈游戏 / 单元测试
+
+# 3) 把聊天日志 / UI dump / 状态栏导出喂给爬取分析器：剥掉 ⟦⟧ 内已翻内容，
+#    残留英文 = 没接进任何翻译通道的输出（漏接路径）
+node tools/i18n/pseudo-scan.mjs data/logs/<round>/chat.log
+some_command_that_dumps_ui | node tools/i18n/pseudo-scan.mjs --min 5
+```
+
+伪 locale 的独特价值（**无需任何真实译文**，纯靠 en 目录）：
+
+- **抓「标识符被反查变异」的 gameplay 回归**：伪 locale 下任何被反查/P1/边界引擎处理的串都变成
+  `⟦…⟧`。若某处把 `name`/枚举当标识符比较，变异后比较 miss → 现有单元测试 / 启动流程直接挂 →
+  与 `lint` 的**静态**扫描互补（lint 挡新增、伪 locale 抓运行期实际变异）。
+- **查漏未接通路径**：`pseudo-scan.mjs` 把「selected 中文/选项英文」「漏接的 raw browse」从
+  「玩家截图上报」变成「grep 出来按频次排序」。合理噪音（ckey/缩写/代号/标识符）天然混入，先看高频。
+
+### 运行时回归测试
+
+- `TEST_FOCUS(/datum/unit_test/i18n_template_match)` —— 边界模板逆匹配引擎。
+- `TEST_FOCUS(/datum/unit_test/i18n_unreverse)` —— `lang_reverse_text ↔ lang_unreverse_text` 往返
+  不变量（守护 chem dispenser 等「UI 回传译名查英文键表」解药；回归即「中文名按了没反应」）。
+
+> **早期初始化时序**（母版试剂表 / `meta_gas_info` 等 GLOBAL_LIST_INIT 早于 `i18n_cache`）：
+> 既有方案是 `lang_build_reverse` 的「cache 未就绪返回空表且不缓存」加固 + **逐家族 SS Init 反查
+> pass**（`SSair`/`SSmaterials`/`SSreagents` 等，幂等、locale==en 零开销）。这是规范模式：**新出现
+> 一个早期 datum 家族就在其 SS Init 加一遍反查**（一行），不引入运行期 pending-replay 框架（会给
+> 热路径 Initialize/New 加成本、且现有家族已覆盖）。
 
 ## 路线图（对应已批准计划的阶段）
 

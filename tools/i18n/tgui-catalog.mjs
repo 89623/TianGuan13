@@ -663,6 +663,25 @@ function extractDmLabels(catalog) {
       }
     }
   }
+
+  // AST 语义抽取层（nova-i18n labels）：与上面的正则**合并**（addText 去重 + 规整）。AST 按**类型路径 /
+  // proc 语义**定位（而非文件路径正则），系统性补强：① `init_possible_values()` 返回值经预处理器展开
+  // → 自动覆盖**所有 choiced 下拉**（含 #define 定义的选项），新增下拉不必再往 DM_LABEL_SOURCES 加行；
+  // ② 类型作用域的 name/title（职业/怪癖/精灵配件…）对上游移动文件免疫；③ 实测比正则多覆盖约 280 条
+  // 正则漏掉的真标签（反派/职业角色名、血型等）。产物 tools/i18n/dm_labels.json 由 `nova-i18n labels`
+  // 生成（resync.sh 会刷新并提交）；缺失时静默跳过（CI/纯前端构建仍有正则兜底，零回归）。
+  try {
+    const astLabels = JSON.parse(
+      fs.readFileSync(path.join(ROOT, 'tools/i18n/dm_labels.json'), 'utf8'),
+    );
+    if (Array.isArray(astLabels)) {
+      for (const label of astLabels) {
+        addText(catalog, label);
+      }
+    }
+  } catch {
+    // 没有 dm_labels.json（未生成）：跳过，正则层仍提供完整覆盖。
+  }
 }
 
 // 反派偏好（反派 tab）：定义在 TS 里（`key` 是 act 标识符，`name`/`description` 仅显示=安全；

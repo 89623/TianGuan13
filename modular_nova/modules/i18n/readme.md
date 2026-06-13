@@ -43,9 +43,13 @@ locale 解析：
 - `modular_nova/modules/i18n/code/template_match.dm` —— **边界模板逆匹配引擎**：目录里已翻译的插值模板（`{0}` 句式）在输出边界整句命中（AC 锚检测 → 逐字面段验证 → 捕获实参反查 → 按 zh 模板重排填充），挂在 `lang_fallback_apply` 内、字面 AC 之前；聊天/browse/状态栏/公告/maptext 全部边界共享。运行期拼接/插值的英文句子（②③类长尾）由此系统性覆盖，无需逐点改写。回归测试：`code/modules/unit_tests/~nova/i18n_template.dm`。
 
 **构建 / 翻译工具——都在 `tools/i18n/`（**未移动**：移动需改 ~71 处构建/CI/脚本引用，风险高）：**
-- `tools/i18n/src/*.rs` —— Rust 抽取（`extract`，含通用 proc-return 句子 + 安全 verb 名）/ 改写（`rewrite`）/ verb 编译期注入（`verbs`），基于 SpacemanDMM 的 dreammaker。
+- `tools/i18n/src/*.rs` —— Rust 抽取（`extract`，含通用 proc-return 句子 + 安全 verb 名）/ 改写（`rewrite`）/ verb 编译期注入（`verbs`）/ 门禁（`lint`）/ 伪 locale（`pseudo`），基于 SpacemanDMM 的 dreammaker。
+- `tools/i18n/src/lint.rs` + `tools/i18n/identifier-baseline.txt` —— **编译期门禁**：目录卫生（占位符 parity / 控制字符）+ 标识符碰撞静态分析（`==`/`switch`/下标 ∩ en 目录可翻译值，基线增量，新增高置信即报错）。CI（`.github/workflows/i18n.yml`）已接。详见 `tools/i18n/README.md`「门禁与回归检测」。
+- `tools/i18n/src/pseudo.rs` + `tools/i18n/pseudo-scan.mjs` —— **伪 locale**：`pseudo` 从 en/ 生成 `qps-ploc`（值包 `⟦原文⟧`，不入库），`I18N_SERVER_LOCALE qps-ploc` 跑一圈后用 `pseudo-scan.mjs` 找 ⟦⟧ 外残留英文 = 未接通翻译通道的路径。
+- `code/modules/unit_tests/~nova/i18n_unreverse.dm` —— `lang_reverse_text ↔ lang_unreverse_text` 往返不变量测试（守护 chem dispenser 等「UI 回传译名查英文键表」解药）。
 - `tools/i18n/lobby-buttons/` —— 默认 HUD 大厅按钮中文重绘脚本（`gen_dmi.py`）+ 字体/重生成说明。
-- `tools/i18n/tgui-catalog.mjs` —— TGUI 静态文本抽取 + 同步前端子集（`tgui:build` 会自动 `sync`）。
+- `tools/i18n/tgui-catalog.mjs` —— TGUI 静态文本抽取 + 同步前端子集（`tgui:build` 会自动 `sync`）。合并两层 DM 显示标签：AST（下方 dm_labels.json）+ 残留正则 `DM_LABEL_SOURCES`。
+- `tools/i18n/src/labels.rs` + `tools/i18n/dm_labels.json` —— **AST 显示标签抽取**（`nova-i18n labels`）：按类型路径/proc 语义抽 name/title/category_name/explanation/`init_possible_values()` 选项/全局 list，产物 JSON 由 tgui-catalog 合并进前端目录。`init_possible_values` 经预处理器展开 → 自动覆盖所有 choiced 下拉（含 #define 选项），新增下拉无需再加规则。`resync.sh` 刷新。
 - `tools/i18n/resync.sh` —— 合并上游后一键重同步（extract + rewrite + tgui 同步）。
 - `tools/i18n/mt/` —— 机翻（`i18n-mt.ts`，后端 codex/claude/openai）+ 术语表 `glossary.zh-Hans.json` + 候选发现 `glossary-sync.ts suggest`。
 - `tools/i18n/README.md` —— 命令速查。
