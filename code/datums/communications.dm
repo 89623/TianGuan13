@@ -100,7 +100,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 			greenshift = SSdynamic.current_tier.tier == 0 && dynamic_report == /datum/dynamic_tier/greenshift::advisory_report
 
 		. += LANG("datum.f0c94775", null)
-		. += dynamic_report
+		. += lang_reverse_text(dynamic_report) // NOVA EDIT CHANGE - I18N - ORIGINAL: . += dynamic_report （威胁等级公告整块是非插值目录条目；拼进报告后整串 reverse 够不着、AC 会蚕食成中英混排，故在拼接前整块反查）
 
 	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
 

@@ -311,7 +311,13 @@
 /// Gets the message that shows up when spawning as this job
 /datum/job/proc/get_spawn_message(alt_title) // NOVA EDIT CHANGE - ALTERNATIVE_JOB_TITLES - ORIGINAL: /datum/job/proc/get_spawn_message()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	return boxed_message(span_infoplain(jointext(get_spawn_message_information(alt_title), "\n&bull; "))) // NOVA EDIT CHANGE - ALTERNATIVE_JOB_TITLED - ORIGINAL: return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
+	var/list/spawn_info = get_spawn_message_information(alt_title) // NOVA EDIT CHANGE - I18N - ORIGINAL: return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
+	// NOVA EDIT ADDITION START - I18N - 逐条完整句反查（整盒 to_chat 只走 AC 子串=最短匹配，长句会被
+	// 拆成已译子短语+中间留英文，如 skeleton crew 那句）。插值行整串 miss、留待 to_chat 模板引擎。
+	for(var/idx in 1 to length(spawn_info))
+		spawn_info[idx] = lang_localize_chat_sentence(spawn_info[idx])
+	// NOVA EDIT ADDITION END
+	return boxed_message(span_infoplain(jointext(spawn_info, "\n&bull; "))) // NOVA EDIT CHANGE - ALTERNATIVE_JOB_TITLED
 
 /// Returns a list of strings that correspond to chat messages sent to this mob when they join the round.
 /datum/job/proc/get_spawn_message_information(alt_title = title) // NOVA EDIT CHANGE - ALTERNATIVE_JOB_TITLES - ORIGINAL: /datum/job/proc/get_spawn_message_information()

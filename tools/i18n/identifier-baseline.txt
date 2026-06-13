@@ -330,6 +330,7 @@ blessed
 block_movement
 blood
 blue
+bluespace-active
 bolt
 bolts
 bomb
@@ -412,6 +413,7 @@ flask
 flee
 flipped
 floor
+floor placeable
 fluff
 fluid
 food
@@ -484,6 +486,8 @@ machine
 machinery
 mafia
 magic
+magic-proof
+magical
 mail
 marked
 mask
@@ -522,6 +526,7 @@ parent
 partially insulated
 pen
 penis
+pepper-proof
 photo
 pickup
 pills
@@ -531,6 +536,7 @@ plane_masters_game
 plasma
 plating
 polaroid
+pressure-proof
 pro-skub
 projectile
 prone
@@ -548,6 +554,7 @@ repair
 requests console
 research
 reset
+reskinnable
 retractor
 rigged
 right
@@ -561,6 +568,7 @@ science
 screen
 screwdriver
 screwed
+secure
 security
 seeds
 selected
@@ -580,6 +588,7 @@ small
 smoke
 snout
 snow
+sound-proof
 space
 space dust
 species
@@ -590,13 +599,16 @@ start
 states
 status
 steps
+sterile
 stomach
 storage
 string
 subtle
 success
 suit
+surgical
 syndicate
+tactile
 tail
 tamed
 tank
@@ -607,9 +619,12 @@ tdome1
 tdome2
 tdomeadmin
 tdomeobserve
+telepathy-proof
 teleport
 testicles
 tgui
+thermally insulated
+thick
 threatening
 throw
 timer
@@ -636,6 +651,7 @@ violet
 virology
 virus
 wait
+warded
 water
 weapons
 web

@@ -88,6 +88,10 @@ const SINK_VARS: &[&str] = &[
     "message_monkey",
     "message_animal_or_basic",
     "message_param",
+    // /obj/item/stack 的单数名（"cable piece"/"metal"/"glass"…）：堆叠数量行 LANG 模板的 {1} 实参
+    // （"There are [n] [singular_name]\s in the stack."），经 lang_localize_arg→lang_reverse_text 翻；
+    // 之前未抽 → 数量行里物品名残留英文（如「30 cable piece」）。
+    "singular_name",
 ];
 
 /// 「句子型」玩家可见文案启发式：多词自然语句（含空格 + 首字母大写 + 含小写字母 + 无占位符）。

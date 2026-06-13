@@ -145,7 +145,9 @@ GLOBAL_VAR_INIT(i18n_state_words_loaded, FALSE)
 /// BYOND 文法宏（\the \a \improper 等，无参、由引擎按名词上下文在**编译期/输出期**处理）。模板从 JSON
 /// 加载后引擎不再处理 → 会字面显示。中文无冠词/复数、且上下文已丢失，直接剥掉。`\b` 防 \theory 等误伤；
 /// 已转义的反斜杠（\\）开头不会被这里的单反斜杠模式吃掉。只列已知文法宏，不碰 \n \t \" 等真转义。
-GLOBAL_VAR_INIT(i18n_text_macro_regex, regex(@"\\(improper|proper|themselves|theirs|himself|herself|itself|their|them|they|roman|Roman|the|The|hers|she|She|her|his|him|its|it|It|he|He|an|An|a|A)\b", "g"))
+// 末尾的 es|s 是 BYOND 复数后缀宏 \s/\es（"[n] apple\s" → 引擎按数量补 "s"）：runtime 构建的 LANG
+// 串不被引擎处理 → 字面 \s 漏出（如「30 cable piece\s」）。中文无复数，直接剥除（与冠词/代词宏同处理）。
+GLOBAL_VAR_INIT(i18n_text_macro_regex, regex(@"\\(improper|proper|themselves|theirs|himself|herself|itself|their|them|they|roman|Roman|the|The|hers|she|She|her|his|him|its|it|It|he|He|an|An|a|A|es|s)\b", "g"))
 
 /// 处理从 JSON 模板带出的 BYOND 转义/文法宏（rewrite 把编译期字面量改成 LANG 后，这些转义不再被引擎
 /// 处理）：① 剥文法宏；② 还原转义引号 \" → "；③ 还原 \n → 换行、\t → 制表符。
@@ -276,6 +278,30 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 			return .
 	return text
 
+/// 完整句聊天行反查：用于「先 `list += span_*("整句")` 累加、再 jointext 进一个 boxed_message
+/// 经 to_chat 输出」的场景（如职业出生提示 get_spawn_message）。整盒在 to_chat 只走 AC 子串，而
+/// rustg AC 是**最短匹配**：当完整句与其子短语都在目录时，长句会被拆成「已译子短语 + 中间留英文」
+/// （典型：skeleton crew 那句）。在落地前对**每条完整行**整串反查目录译文，AC 便不再蚕食。
+/// 处理 `<span class='x'>整句</span>` 包裹：剥壳反查内层再回包。插值行整串 miss、原样返回，
+/// 留待 to_chat 的模板逆匹配引擎（lang_template_apply）处理。locale==en 时直接返回（零开销）。
+/proc/lang_localize_chat_sentence(line)
+	if(!istext(line))
+		return line
+	if((GLOB.i18n_server_locale || DEFAULT_UI_LOCALE) == DEFAULT_UI_LOCALE)
+		return line
+	// 无 span 包裹的纯句：直接整串反查。
+	var/hit = lang_reverse_text(line)
+	if(hit != line)
+		return hit
+	// 形如 <span class='x'>INNER</span>：剥单层 span 反查内层，命中则回包。
+	var/static/regex/span_re = regex("^(<span class='\[^']*'>)(.*)(</span>)$")
+	if(span_re.Find(line))
+		var/inner = span_re.group[2]
+		var/inner_hit = lang_reverse_text(inner)
+		if(inner_hit != inner)
+			return span_re.group[1] + inner_hit + span_re.group[3]
+	return line
+
 /// 「多词」门槛的反查：仅含空白（多词/短语）的串才查表，避免把 On/None/枚举值/ckey 这类
 /// 单词误翻（动态数据常正好等于某常见词）。短语类（datum 的 desc、多词 name）才反查。
 /proc/lang_reverse_phrase(text)
@@ -309,7 +335,13 @@ GLOBAL_LIST_INIT(i18n_tgui_strings, build_tgui_string_set())
 	// （lang_build_reverse 已加固：cache 未就绪返回空表、原样返回，不崩不污染）。
 	if(istext(text) && islist(GLOB.i18n_tgui_strings) && GLOB.i18n_tgui_strings[text])
 		return text
-	return lang_reverse_phrase(text)
+	. = lang_reverse_phrase(text)
+	// 整串精确反查未命中的多词串：很多是**运行期拼接/插值后才成形**的句子（Orion 事件 text、研究要求
+	// "Scan unique individuals with [desc]." 等经 ui_data 下发的动态串）——exact 反查够不着。补一道边界
+	// 模板逆匹配引擎：目录里已译的 {0} 模板按字面段在原串上命中、捕获实参反查后按 zh 模板填充。这样
+	// TGUI 负载里的拼接句与聊天/browse 共享同一引擎。en locale / 无锚命中时引擎走快路径原样返回（零开销）。
+	if(. == text && istext(text) && findtext(text, " "))
+		. = lang_template_apply(text, GLOB.i18n_server_locale)
 
 /// TGUI 负载里**既是显示又是 act() 回传标识符**的列表键——这些 list 的字符串元素会原样回传给
 /// 服务端做相等校验（tgui_alert 的 buttons 经 `act('choose',{choice:button})` 校验 `in buttons`；
