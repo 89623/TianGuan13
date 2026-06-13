@@ -77,7 +77,7 @@
 	src.state = ui_state
 	var/list/repeat_items = list()
 	// Gets rid of illegal characters
-	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\uffff]+)"})
+	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
 	for(var/i in items)
 		if(!i)
 			continue
