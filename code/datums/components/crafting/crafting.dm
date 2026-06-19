@@ -551,7 +551,10 @@
 		var/atom_id = atoms.Find(atom)
 
 		data["atom_data"] += list(list(
-			"name" = initial(atom.name),
+			// NOVA EDIT - I18N: ingredient names are single-word atom names (carrot/bowl) that P1's multi-word
+			// gate skips; reverse explicitly (full match, translations already exist). Display-only (the menu
+			// matches ingredients by atom_id, not name), so localizing is safe.
+			"name" = (GLOB.i18n_server_locale != DEFAULT_UI_LOCALE) ? lang_reverse_text(initial(atom.name)) : initial(atom.name),
 			"is_reagent" = ispath(atom, /datum/reagent/),
 		))
 
