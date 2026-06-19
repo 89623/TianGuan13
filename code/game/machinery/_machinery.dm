@@ -1161,7 +1161,7 @@
 					physical_part = primary_part_base
 
 				replacer_tool.atom_storage.attempt_insert(physical_part, user, TRUE, force = STORAGE_SOFT_LOCKED)
-				to_chat(user, span_notice("[capitalize(physical_part.name)] replaced with [secondary_part_name]."))
+				to_chat(user, span_notice(LANG("_machine.part_replaced", list(capitalize(physical_part.name), secondary_part_name)))) // NOVA EDIT - I18N: codemod missed this to_chat (capitalize() in lead slot)
 				shouldplaysound = TRUE //Only play the sound when parts are actually replaced!
 				break
 
@@ -1206,7 +1206,7 @@
 				part_count[component] = board.req_components[component]
 
 
-	var/text = span_notice("It contains the following parts:")
+	var/text = span_notice(LANG("_machine.contains_parts", null)) // NOVA EDIT - I18N: header (colon-ended, not caught by extraction)
 	for(var/component_part in part_count)
 		var/part_name
 		var/icon/html_icon
@@ -1223,7 +1223,13 @@
 			html_icon = part.icon
 			icon_state = part.icon_state
 		//merge icon & name into text
-		text += span_notice("[icon2html(html_icon, user, icon_state)] [part_count[component_part]] [part_name]\s.")
+		// NOVA EDIT START - I18N: reverse part name; drop \s plural suffix once localized (中文无复数; avoids "物质箱s")
+		var/disp_name = lang_reverse_text(part_name)
+		if(disp_name == part_name)
+			text += span_notice("[icon2html(html_icon, user, icon_state)] [part_count[component_part]] [part_name]\s.")
+		else
+			text += span_notice("[icon2html(html_icon, user, icon_state)] [part_count[component_part]] [disp_name].")
+		// NOVA EDIT END
 
 	return text
 
