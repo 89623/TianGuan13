@@ -65,6 +65,18 @@
 /datum/supply_pack/companies/mags_and_ammo/intern_project
 	cost = PAYCHECK_CREW
 
+/datum/supply_pack/companies/mags_and_ammo/intern_project/c20nuoli
+	contains = list(/obj/item/ammo_box/c20nuoli)
+	cost = PAYCHECK_CREW * 2
+
+/datum/supply_pack/companies/mags_and_ammo/intern_project/c20nuoli_smart
+	contains = list(/obj/item/ammo_box/c20nuoli/smart)
+	cost = PAYCHECK_CREW * 2
+
+/datum/supply_pack/companies/mags_and_ammo/intern_project/c20nuoli_breacher
+	contains = list(/obj/item/ammo_box/c20nuoli/breacher)
+	cost = PAYCHECK_CREW * 2
+
 /datum/supply_pack/companies/mags_and_ammo/intern_project/bolt
 	contains = list(/obj/item/ammo_casing/rebar/bolt)
 
