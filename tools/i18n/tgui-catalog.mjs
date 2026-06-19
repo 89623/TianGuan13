@@ -613,6 +613,14 @@ const DM_LABEL_SOURCES = [
   // 强化+ 槽位**标题**(AUGMENT_SLOT_* 定义值，如 "Left Arm"/"Chest")。slot 同时是前端 augments[slot]
   // 的 Record 键(标识符)，但渲染期只翻 <Section title={limb.slot}> 显示、底层数据不变 → 键安全。
   ['code/__DEFINES/~nova_defines/augment.dm', false, /#define\s+AUGMENT_SLOT_\w+\s+"([^"]+)"/g],
+  // NtOS 软件商店（NT Software Hub）程序名（`filedesc = "Chat Client"` 等）：下载用 `filename`
+  // 标识符、不用 filedesc，故 filedesc 仅显示=安全；NtosNetDownloader.tsx 渲染 {program.filedesc}
+  // 文本节点 → 前端 auto-localize 翻显示。filedesc 是程序专有变量，全 modular_nova 扫亦低误抽。
+  ['code/modules/modular_computers/file_system/programs', true, /\bfiledesc\s*=\s*"([^"]+)"/g],
+  ['modular_nova', true, /\bfiledesc\s*=\s*"([^"]+)"/g],
+  // NtOS 程序分类（PROGRAM_CATEGORY_* 定义值，如 "Device Tools"/"Games"/"Security & Records"）：
+  // 前端按 prop 值（英文）过滤、仅渲染 {category} 文本节点翻显示 → 译之安全（含单词类 Games）。
+  ['code/__DEFINES/modular_computer.dm', false, /#define\s+PROGRAM_CATEGORY_\w+\s+"([^"]+)"/g],
   // 待接：反派名散在 code/modules/antagonists 各处，整目录抽会混入目标/技能等海量非偏好名，需专门源。
 ];
 

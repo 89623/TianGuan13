@@ -251,7 +251,7 @@
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[design.id] = list(
-			"name" = design.name,
+			"name" = lang_reverse_text(design.name), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = design.name, （设计名仅显示、构建走 id=安全；全量反查含单词类如 Boxcutter）
 			"desc" = design.get_description(),
 			"cost" = cost,
 			"id" = design.id,
