@@ -621,6 +621,10 @@ const DM_LABEL_SOURCES = [
   // NtOS 程序分类（PROGRAM_CATEGORY_* 定义值，如 "Device Tools"/"Games"/"Security & Records"）：
   // 前端按 prop 值（英文）过滤、仅渲染 {category} 文本节点翻显示 → 译之安全（含单词类 Games）。
   ['code/__DEFINES/modular_computer.dm', false, /#define\s+PROGRAM_CATEGORY_\w+\s+"([^"]+)"/g],
+  // 制作菜单分类（CAT_* 定义值，如 "Chemistry"/"Atmospherics"/"Robotics"/"Weapons Ranged"）：
+  // 经 ui_static_data 的 data["categories"] 发送，但单词类分类被 P1 多词门槛跳过 → 前端按英文值过滤、
+  // 仅渲染 {category} 文本节点翻显示（act 用配方 ref/index 不用分类）→ 译之安全（含单词类）。
+  ['code/__DEFINES/crafting.dm', false, /#define\s+CAT_\w+\s+"([^"]+)"/g],
   // 待接：反派名散在 code/modules/antagonists 各处，整目录抽会混入目标/技能等海量非偏好名，需专门源。
 ];
 
