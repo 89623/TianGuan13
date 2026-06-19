@@ -554,7 +554,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
 		. += span_notice(LANG("obj.c3aed59e", list(p_theyre(TRUE), size)))
-		. += span_notice(LANG("obj.009b4b7e", list(p_they(TRUE), weight, span_tooltip("the standard unit of measurement for space age fish", "kiloclam"))))
+		. += span_notice(LANG("obj.009b4b7e", list(p_they(TRUE), weight, span_tooltip(lang_reverse_text("the standard unit of measurement for space age fish"), lang_reverse_text("kiloclam"))))) // NOVA EDIT - I18N: span 包裹的单位词反查（"kiloclam"→千蛤币 在目录，但 span 壳让整 arg 反查 miss，故在此显式反查内层）
 
 		if(HAS_TRAIT(src, TRAIT_FISH_GENEGUNNED))
 			. += span_warning(LANG("obj.326136be", list(p_theyve(TRUE), p_they(TRUE))))

@@ -549,6 +549,13 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
 		"his" = "他的", "hers" = "她的", "its" = "它的", "their" = "他们的", "theirs" = "他们的",
 		"himself" = "他自己", "herself" = "她自己", "itself" = "它自己", "themselves" = "他们自己",
 		"is" = "是", "are" = "是", "has" = "有", "have" = "有", "was" = "是", "were" = "是",
+		// 代词缩写（p_theyre()/p_theyve()/p_theyll() 等输出 "it's"/"they're"/"he's"/"they've"…）：
+		// 中文模板已含系动词/无需，统一映到**裸代词**（"It's 45cm long" → "它长45厘米"）。
+		"it's" = "它", "he's" = "他", "she's" = "她", "they're" = "他们",
+		"i'm" = "我", "we're" = "我们", "you're" = "你",
+		"they've" = "他们", "i've" = "我", "we've" = "我们", "you've" = "你",
+		"it'll" = "它", "they'll" = "他们", "he'll" = "他", "she'll" = "她",
+		"it'd" = "它", "they'd" = "他们", "he'd" = "他", "she'd" = "她",
 	)
 	return pmap[LOWER_TEXT(word)] || word
 
