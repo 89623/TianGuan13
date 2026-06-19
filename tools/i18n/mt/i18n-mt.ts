@@ -54,6 +54,10 @@ const EN_DIR = path.join(ROOT, 'strings/i18n/en');
 const DST_DIR = path.join(ROOT, `strings/i18n/${LOCALE}`);
 const GLOSSARY_PATH = path.join(import.meta.dir, `glossary.${LOCALE}.json`);
 const PENDING_DIR = path.join(import.meta.dir, '.pending');
+// 「故意保持英文」白名单：模型/人工判定某 key 应保持英文（专名/cult 咒语/程序名/base64/字体名…）。
+// 这类 key 的 zh==en，旧逻辑把 zh==en 一律当「失败占位」无限重送模型（浪费且每轮都报「待译」）。
+// 登记后 zh==en 且命中白名单即跳过；英文原文一并记下，原文一旦改动则自动失效、重新进入翻译。
+const KEEP_EN_PATH = path.join(import.meta.dir, `keep-english.${LOCALE}.json`);
 const CODEX_REASONING = process.env.I18N_CODEX_REASONING ?? 'low';
 const CODEX_MODEL = process.env.I18N_CODEX_MODEL;
 const CODEX_STDIO = process.env.I18N_CODEX_STDIO ?? 'log';
@@ -561,13 +565,53 @@ function hasStrayEnglishInTranslation(zh: string): boolean {
   return /[a-z]{3,}/.test(t);
 }
 
+// ——「故意保持英文」白名单：惰性加载，登记时记下英文原文，flush 时排序落盘。——
+let keepEnglishCache: Catalog | null = null;
+let keepEnglishDirty = false;
+function keepEnglishMap(): Catalog {
+  if (keepEnglishCache == null) {
+    keepEnglishCache = fs.existsSync(KEEP_EN_PATH)
+      ? (JSON.parse(fs.readFileSync(KEEP_EN_PATH, 'utf8')) as Catalog)
+      : {};
+  }
+  return keepEnglishCache;
+}
+/** 该 key 是否已登记「保持英文」且英文原文未变（原文变了则失效、重新翻译）。 */
+function isKeepEnglish(key: string, enVal: string): boolean {
+  return keepEnglishMap()[key] === enVal;
+}
+/** 登记某 key 为「保持英文」（英文原文一并记下）。 */
+function markKeepEnglish(key: string, enVal: string): void {
+  const m = keepEnglishMap();
+  if (m[key] !== enVal) {
+    m[key] = enVal;
+    keepEnglishDirty = true;
+  }
+}
+function flushKeepEnglish(): void {
+  if (!keepEnglishDirty || keepEnglishCache == null) return;
+  const sorted: Catalog = {};
+  for (const k of Object.keys(keepEnglishCache).sort())
+    sorted[k] = keepEnglishCache[k];
+  fs.writeFileSync(KEEP_EN_PATH, `${JSON.stringify(sorted, null, 2)}\n`);
+  keepEnglishDirty = false;
+}
+
 /** 该 key 是否需要（重新）翻译。 */
-function needsTranslation(enVal: string, zhVal: string | undefined): boolean {
+function needsTranslation(
+  enVal: string,
+  zhVal: string | undefined,
+  key?: string,
+): boolean {
   if (zhVal == null || zhVal === '') return hasEnglishWord(enVal); // 缺失（key 不存在或空值）
   // 与英文逐字相同 = 没翻成功的「占位译文」，语义上等同未译 → 始终补译（即使 missing-only）。
   // 这是「整体翻译一遍后仍有 key 显示英文」（如 "Chest":"Chest"）的根因：旧逻辑里 missing-only
   // 把「有任何值」都当已译跳过，占位英文永远不会被重试。纯代码/符号（hasEnglishWord=false）不补。
-  if (zhVal === enVal) return hasEnglishWord(enVal) && !looksLikeCodeIdentifier(enVal);
+  // 例外：已登记「保持英文」（专名/cult 咒语/程序名/base64…）的 key 不再重送模型。
+  if (zhVal === enVal) {
+    if (key != null && isKeepEnglish(key, enVal)) return false;
+    return hasEnglishWord(enVal) && !looksLikeCodeIdentifier(enVal);
+  }
   if (MISSING_ONLY) return false; // 只补缺失/失败：已有「≠英文」的真译文都不动（不重判刻意保留的中英混杂）
   const stray = hasEnglishWord(zhVal);
   if (!CJK.test(zhVal) && stray) return true; // 无中文却有英文词 → 未译
@@ -630,7 +674,7 @@ function computePending(file: string): Catalog {
   const zh = readCatalog(path.join(DST_DIR, file));
   const pending: Catalog = {};
   for (const key of Object.keys(en)) {
-    if (needsTranslation(en[key], zh[key])) pending[key] = en[key];
+    if (needsTranslation(en[key], zh[key], key)) pending[key] = en[key];
   }
   return pending;
 }
@@ -1458,9 +1502,13 @@ async function cmdTranslate(
             merged[key] = translatedBatch.catalog[key];
             applied++;
             if (REUSE) globalReverse.set(item.batch[key], translatedBatch.catalog[key]);
+            // 模型选择保持英文（返回值==英文原文）→ 登记白名单，下轮不再重送（专名/cult/程序名…）。
+            if (translatedBatch.catalog[key] === item.batch[key])
+              markKeepEnglish(key, item.batch[key]);
           }
         }
         writeSorted(dstFile, merged);
+        flushKeepEnglish();
         finishProgress(
           timer,
           file,
@@ -1519,6 +1567,35 @@ function cmdPruneGlossary(args: string[]): void {
   );
 }
 
+/// 把当前所有「zh==en 且会被判待译」的 key 登记进 keep-english 白名单（专名/cult 咒语/程序名/
+/// base64/字体名等故意保持英文的条目）。一次性种子：跑过后这些 key 不再每轮被当待译重送模型。
+/// 白名单文件可人工编辑——若某条其实想译，删掉它即恢复重译。
+function cmdMarkEnglish(args: string[]): void {
+  let total = 0;
+  for (const file of namespaceFiles(args)) {
+    const en = readCatalog(path.join(EN_DIR, file));
+    const zh = readCatalog(path.join(DST_DIR, file));
+    let n = 0;
+    for (const key of Object.keys(en)) {
+      if (
+        zh[key] === en[key] &&
+        hasEnglishWord(en[key]) &&
+        !looksLikeCodeIdentifier(en[key]) &&
+        !isKeepEnglish(key, en[key])
+      ) {
+        markKeepEnglish(key, en[key]);
+        n++;
+      }
+    }
+    if (n) console.log(`${file}: 登记保持英文 ${n}`);
+    total += n;
+  }
+  flushKeepEnglish();
+  console.log(
+    `完成。共登记 ${total} 条到 ${path.relative(ROOT, KEEP_EN_PATH)}（可人工编辑；删除某条即恢复重译）。`,
+  );
+}
+
 const SUBCOMMANDS = new Set([
   'pending',
   'terms',
@@ -1527,6 +1604,7 @@ const SUBCOMMANDS = new Set([
   'translate-terms',
   'repair-terms',
   'prune-glossary',
+  'mark-english',
 ]);
 const argv = process.argv.slice(2);
 const isCmd = argv.length > 0 && SUBCOMMANDS.has(argv[0]);
@@ -1534,6 +1612,7 @@ const cmd = isCmd ? argv[0] : 'translate';
 const rest = isCmd ? argv.slice(1) : argv;
 
 if (cmd === 'pending') cmdPending(rest);
+else if (cmd === 'mark-english') cmdMarkEnglish(rest);
 else if (cmd === 'terms' || cmd === 'term-pending') cmdTerms(rest);
 else if (cmd === 'prune-glossary') cmdPruneGlossary(rest);
 else if (cmd === 'translate-terms' || cmd === 'repair-terms') {
