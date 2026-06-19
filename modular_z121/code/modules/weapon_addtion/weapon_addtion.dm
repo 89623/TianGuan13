@@ -246,10 +246,10 @@
 /obj/item/ammo_box/magazine/evo_c9mm/starts_empty
 	start_empty = TRUE
 
-//	europa
+//	europa机枪
 /obj/item/gun/ballistic/automatic/europa
-	name = "\improper europa轻机枪"
-	desc = "一把沉重的.40Sol long口径机枪，自带两根用于稳定射击的脚架，只使用特制的50发大弹盒"
+	name = "\improper europa通用机枪"
+	desc = "一款笨重的军队退役机枪，使用.20 Nuoli口径。不过在一些饱受生物入侵的地区，你依旧可以看见它的身影"
 
 	icon = 'modular_z121/icons/obj/guns/weapon_addtion/guns48x.dmi'
 	icon_state = "europa"
@@ -263,13 +263,16 @@
 
 	fire_sound = 'modular_z121/sound/guns/europa/europa_fire.ogg'
 
+	armor_type = /datum/armor/europa_mg
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
 	mag_display = TRUE  // 显示弹匣
 	mag_display_ammo = TRUE  // 显示剩余弹药
-	empty_indicator = TRUE
+
+	bolt_type = BOLT_TYPE_OPEN
 
 	w_class = WEIGHT_CLASS_HUGE
 	weapon_weight = WEAPON_HEAVY
-	slot_flags = ITEM_SLOT_BACK
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/europa
 
@@ -278,65 +281,81 @@
 
 	burst_size = 1
 	fire_delay = 0.2 SECONDS
-	recoil = 1
-	spread = 25
+	recoil = 2
+	spread = 30
 
 	actions_types = list()
 
-	projectile_damage_multiplier = 0.75
-
 	force = 15 //你也可以用这枪砸人，也挺疼的
+	drag_slowdown = 2
 
-	var/bipod_open = FALSE //脚架的部署状态
+	var/cover_open = FALSE //防尘盖状态
+
+/datum/armor/europa_mg
+	fire = 100
+	acid = 100
 
 /obj/item/gun/ballistic/automatic/europa/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/gun/ballistic/automatic/europa/examine(mob/user)
 	. = ..()
-	. += "<b>alt + click</b> 把脚架 [bipod_open ? "收起" : "放下"]"
-	. += "脚架放下并趴下射击弹道会更加稳定"
+	. += "<b>alt + click</b>[cover_open ? "打开" : "盖上"]防尘盖"
+	if(cover_open && magazine)
+		. += span_notice("看起来你可以用<b>空手</b>取出弹盒")
+	. += span_notice("脚架放下并趴下射击弹道会更加稳定")
 
 /obj/item/gun/ballistic/automatic/europa/click_alt(mob/user)
-	bipod_open = !bipod_open
-	balloon_alert(user, "脚架 [bipod_open ? "放下" : "收起"]")
+	cover_open = !cover_open
+	balloon_alert(user, "防尘盖[cover_open ? "打开" : "盖上"]")
 	playsound(src, 'sound/items/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/automatic/europa/update_overlays()
 	. = ..()
-	. += "europa_bipod_[bipod_open ? "open" : "closed"]"
-
+	. += "europa_door_[cover_open ? "open" : "closed"]"
 
 /obj/item/gun/ballistic/automatic/europa/process_fire(atom/target, mob/living/user, message, params, zone_override)
-	if(bipod_open && user.body_position == LYING_DOWN && user.has_gravity())
-		recoil = 0.25
-		spread = 7.5
+	if(cover_open)
+		balloon_alert(user, "盖上盖子！")
+		return
+
+	if(user.body_position == LYING_DOWN && user.has_gravity())
+		recoil = 0
+		spread = 5
 	else
 		recoil = initial(recoil)
 		spread = initial(spread)
 
 	. = ..()
-	if(.)
-		update_appearance()
-	return .
+
+/obj/item/gun/ballistic/automatic/europa/insert_magazine(mob/user, obj/item/ammo_box/magazine/mag, display_message = TRUE)
+	if(!cover_open && istype(mag, accepted_magazine_type))
+		balloon_alert(user, "打开盖子！")
+		return
+	..()
+
+/obj/item/gun/ballistic/automatic/europa/eject_magazine(mob/user, display_message = TRUE, obj/item/ammo_box/magazine/tac_load = null)
+	if (!cover_open)
+		balloon_alert(user, "打开盖子！")
+		return
+	..()
 
 /obj/item/gun/ballistic/automatic/europa/no_mag
 	spawnwithmagazine = FALSE
 
 /obj/item/ammo_box/magazine/europa
 	name = "europa弹盒"
-	desc = "可以容纳50发.40Sol long的弹盒，体积很大"
+	desc = "可以容纳50发.20 Nuoli的弹盒，体积很大"
 	icon = 'modular_z121/icons/obj/guns/weapon_addtion/ammo.dmi'
 	icon_state = "europa"
 
 	w_class = WEIGHT_CLASS_NORMAL
 
-	ammo_type = /obj/item/ammo_casing/c40sol
-	caliber = CALIBER_SOL40LONG
+	ammo_type = /obj/item/ammo_casing/c20nuoli
+	caliber = CALIBER_20NUOLI
 	max_ammo = 50
 
 /obj/item/ammo_box/magazine/europa/update_icon_state()
@@ -769,22 +788,3 @@
 	draw_time = 2 SECONDS
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/crossbow
-
-/obj/projectile/bullet/rebar/bolt
-	name = "钢制弩箭"
-
-	icon = 'modular_z121/icons/obj/guns/projectiles.dmi'
-	icon_state = "steel_bolt"
-
-	//  买的东西还有概率断肢显得太弱智了
-	dismemberment = 0
-
-/obj/item/ammo_casing/rebar/bolt
-	name = "钢制弩箭"
-	desc = "由碳钢铸造的弩箭，可以重复使用。适用于隐蔽作战，在太空内也能保持有效杀伤。"
-
-	icon = 'modular_z121/icons/obj/guns/ammo.dmi'
-	icon_state = "steel_bolt"
-	base_icon_state = "steel_bolt"
-
-	projectile_type = /obj/projectile/bullet/rebar/bolt
