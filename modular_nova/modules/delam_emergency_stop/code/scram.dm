@@ -134,7 +134,7 @@
 	if(admin_disabled)
 		investigate_log("Delam SCRAM tried to activate but an admin disabled it", INVESTIGATE_ATMOS)
 		playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 100, FALSE, MACHINE_SOUND_RANGE, ignore_walls = TRUE, use_reverb = TRUE, falloff_distance = MACHINE_SOUND_FALLOFF_DISTANCE)
-		radio.talk_into(src, "System fault! Unable to trigger.", warning_channel)
+		radio.talk_into(src, LANG("_radio.delam_fault", null), warning_channel) // NOVA EDIT - I18N: talk_into is not a codemod sink
 		audible_message(span_danger(LANG("obj.bb645b94", list(src))))
 		return FALSE
 
@@ -175,7 +175,7 @@
 			notify_volume = 75,
 		)
 
-	radio.talk_into(src, "DELAMINATION SUPPRESSION SYSTEM FIRING. EVACUATE THE SUPERMATTER ENGINE ROOM!", emergency_channel)
+	radio.talk_into(src, LANG("_radio.delam_firing", null), emergency_channel) // NOVA EDIT - I18N: talk_into is not a codemod sink
 
 	// fight power with power
 	addtimer(CALLBACK(src, PROC_REF(put_on_a_show)), EVAC_WARNING_TIMER)
