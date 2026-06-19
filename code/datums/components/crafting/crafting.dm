@@ -642,7 +642,9 @@
 	data["category"] = recipe.category
 
 	// Name, Description
-	data["name"] = recipe.name
+	// NOVA EDIT - I18N: reverse recipe name (full match, single-word too) so the menu name matches the
+	// crafted item; craft acts on data["ref"] (REF(recipe)), not the name, so localizing display is safe.
+	data["name"] = (GLOB.i18n_server_locale != DEFAULT_UI_LOCALE) ? lang_reverse_text(recipe.name) : recipe.name
 
 	if(ispath(recipe.result, /datum/reagent))
 		var/datum/reagent/reagent = recipe.result
