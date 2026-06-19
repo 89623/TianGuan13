@@ -956,6 +956,16 @@
 				if(extra_lines)
 					extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
 
+	// NOVA EDIT ADDITION START - I18N: the hover screentip uses the raw atom.name, which for stacks/airlocks
+	// is rewritten at runtime by update_name (overriding the Initialize reverse) — so the floating name stayed
+	// English (e.g. "cable coil") even though examine showed 线圈. Reverse it here (display-only, exact match;
+	// locale==en no-op). maptext does not pass through the AC layer, so this is the localization point.
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		var/localized_name = lang_reverse_text(used_name) // exact: stacks ("cable coil"->线圈) + single-word names
+		if(localized_name == used_name) // exact miss -> AC substring for composite names (e.g. "Drone Bay Maintenance")
+			localized_name = lang_fallback_apply(used_name)
+		used_name = localized_name
+	// NOVA EDIT ADDITION END
 	var/new_maptext
 	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 		new_maptext = ""
