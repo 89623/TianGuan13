@@ -53,11 +53,11 @@
 	return ..()
 
 /obj/item/mod/control/pre_equipped/protean/wrench_act(mob/living/user, obj/item/wrench)
-	to_chat(user, span_warning("The core is integrated and cannot be removed from the [src]."))
+	to_chat(user, span_warning(LANG("obj.8c354e86", list(src))))
 	return FALSE
 
 /obj/item/mod/control/pre_equipped/protean/emag_act(mob/user, obj/item/card/emag/emag_card)
-	to_chat(user, span_warning("The [src] does not respond to the [emag_card]."))
+	to_chat(user, span_warning(LANG("obj.ed6f4f21", list(src, emag_card))))
 	return FALSE
 
 /obj/item/mod/control/pre_equipped/protean/canStrip(mob/who)
@@ -70,12 +70,12 @@
 	var/obj/item/mod/module/storage/inventory = locate() in src.modules
 	if(!isnull(inventory))
 		src.atom_storage.remove_all()
-		to_chat(stripper, span_notice("You empty out all the items from the Protean's internal storage module!"))
-		stripper.balloon_alert(stripper, "emptied storage")
+		to_chat(stripper, span_notice(LANG("obj.1db650e9", null)))
+		stripper.balloon_alert(stripper, LANG("obj.12f3de48", null))
 		return TRUE
 
-	to_chat(stripper, span_warning("This suit seems to be a part of them. You can't remove it!"))
-	stripper.balloon_alert(stripper, "can't strip a protean's suit!")
+	to_chat(stripper, span_warning(LANG("obj.f60764d2", null)))
+	stripper.balloon_alert(stripper, LANG("obj.9744cd83", null))
 	return ..()
 
 /obj/item/mod/control/pre_equipped/protean/proc/drop_suit()
@@ -103,33 +103,33 @@
 	if(slot == ITEM_SLOT_BACK && user)
 		if(modlocked)
 			ADD_TRAIT(src, TRAIT_NODROP, "protean")
-			to_chat(user, span_warning("The suit does not seem to be able to come off..."))
+			to_chat(user, span_warning(LANG("obj.d5636231", null)))
 
 /obj/item/mod/control/pre_equipped/protean/choose_deploy(mob/user)
 	if(!isprotean(user) && modlocked && active)
-		balloon_alert(user, "refuses to listen!")
+		balloon_alert(user, LANG("obj.3eff7f79", null))
 		return FALSE
 	return ..()
 
 /obj/item/mod/control/pre_equipped/protean/toggle_activate(mob/user, force_deactivate)
 	if(!force_deactivate && modlocked && !isprotean(user) && active)
-		balloon_alert(user, "doesn't turn off!")
+		balloon_alert(user, LANG("obj.8c6a7ea2", null))
 		return FALSE
 	if(!active && user.has_status_effect(/datum/status_effect/protean_low_power_mode))
-		balloon_alert(user, "low power")
+		balloon_alert(user, LANG("obj.06b54e8f", null))
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	return ..()
 
 /obj/item/mod/control/pre_equipped/protean/quick_deploy(mob/user)
 	if(!isprotean(user) && modlocked && active)
-		balloon_alert(user, "won't undeploy!")
+		balloon_alert(user, LANG("obj.86c3d0c6", null))
 		return FALSE
 	return ..()
 
 /obj/item/mod/control/pre_equipped/protean/retract(mob/user, obj/item/part, instant)
 	if(!isprotean(user) && modlocked && active && !instant)
-		balloon_alert(user, "button is unresponsive!")
+		balloon_alert(user, LANG("obj.cf859776", null))
 		return FALSE
 	return ..()
 
@@ -146,13 +146,13 @@
 
 	if(brain?.dead && open && istype(tool, /obj/item/organ/stomach/protean) && !refactory)
 		if(HAS_TRAIT(protean_in_suit, TRAIT_DNR) || HAS_TRAIT(protean_in_suit, TRAIT_SUICIDED))
-			balloon_alert(user, "no response — refuses repair")
+			balloon_alert(user, LANG("obj.7f56981e", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!do_after(user, 10 SECONDS))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/organ/stomach = tool
 		stomach.Insert(protean_in_suit, TRUE, DELETE_IF_REPLACED)
-		balloon_alert(user, "inserted!")
+		balloon_alert(user, LANG("obj.863baa0b", null))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 		brain.revive_timer()
 		return ITEM_INTERACT_SUCCESS
@@ -161,15 +161,15 @@
 		var/obj/item/mod/construction/plating/plates = tool
 		var/datum/mod_theme/candidate_theme = GLOB.mod_themes[plates.theme]
 		if(!(candidate_theme?.slot_flags & ITEM_SLOT_BACK))
-			balloon_alert(user, "incompatible!")
+			balloon_alert(user, LANG("obj.fbc9e3cd", null))
 			return ITEM_INTERACT_BLOCKING
 		if(stored_modsuit)
-			balloon_alert(user, "remove assimilated suit!")
+			balloon_alert(user, LANG("obj.62599c85", null))
 			return ITEM_INTERACT_BLOCKING
 		if(active)
-			balloon_alert(user, "turn it off!")
+			balloon_alert(user, LANG("obj.837cbcec", null))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You begin to copy [tool], destroying it in the process!"))
+		to_chat(user, span_notice(LANG("obj.1134c6ab", list(tool))))
 		if(!do_after(user, 4 SECONDS))
 			return ITEM_INTERACT_BLOCKING
 		assimilate_theme(user, tool)
@@ -179,14 +179,14 @@
 
 	if(istype(tool, /obj/item/mod/control))
 		if(active)
-			balloon_alert(user, "turn it off!")
+			balloon_alert(user, LANG("obj.837cbcec", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(istype(tool, /obj/item/mod/control/pre_equipped/protean) || !(tool.slot_flags & ITEM_SLOT_BACK))
-			balloon_alert(user, "incompatible!")
+			balloon_alert(user, LANG("obj.fbc9e3cd", null))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("The suit begins to slowly absorb [tool]!"))
+		to_chat(user, span_notice(LANG("obj.09af2cc2", list(tool))))
 		if(!do_after(user, 4 SECONDS))
 			return ITEM_INTERACT_BLOCKING
 		assimilate_modsuit(user, tool)
@@ -225,10 +225,10 @@
 
 /obj/item/mod/control/pre_equipped/protean/proc/unassimilate_theme()
 	if(stored_modsuit)
-		balloon_alert(wearer, "remove assimilated suit first")
+		balloon_alert(wearer, LANG("obj.760a846d", null))
 		return
 	if(active)
-		balloon_alert(wearer, "deactivate first")
+		balloon_alert(wearer, LANG("obj.84931377", null))
 		return
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc == src)
@@ -241,17 +241,17 @@
 	desc = initial(desc)
 	enforce_complexity_limit(wearer)
 	update_static_data_for_all_viewers()
-	balloon_alert(wearer, "plating removed")
+	balloon_alert(wearer, LANG("obj.2c490ed9", null))
 
 /obj/item/mod/control/pre_equipped/protean/proc/assimilate_modsuit(mob/user, modsuit, forced)
 	var/obj/item/mod/control/to_assimilate = modsuit
 	if(stored_modsuit)
-		to_chat(user, span_warning("Can't absorb two modsuits!"))
+		to_chat(user, span_warning(LANG("obj.23e91920", null)))
 		if(forced)
 			stack_trace("assimilate_modsuit: Tried to assimilate modsuit while there's already a stored modsuit. stored_modsuit: [stored_modsuit], new_modsuit: [to_assimilate]")
 		return
 	if(!user?.transferItemToLoc(to_assimilate, src, forced))
-		balloon_alert(user, "stuck!")
+		balloon_alert(user, LANG("obj.bf05b7e9", null))
 		return
 	if(!forced)
 		for(var/obj/item/part as anything in get_parts())
@@ -333,17 +333,17 @@
 
 /obj/item/mod/control/pre_equipped/protean/proc/unassimilate_modsuit(mob/living/user, forced = FALSE)
 	if(!stored_modsuit)
-		to_chat(user, span_warning("There is no assimilated suit."))
+		to_chat(user, span_warning(LANG("obj.5c82e355", null)))
 		return
 	if(active && !forced)
-		balloon_alert(user, "deactivate modsuit")
+		balloon_alert(user, LANG("obj.b90af0ff", null))
 		return
 	if(!(user?.has_active_hand()) && !forced)
-		balloon_alert(user, "need active hand")
+		balloon_alert(user, LANG("obj.7cd067c5", null))
 		return
 
 	if(!forced)
-		to_chat(user, span_notice("You begin to pry the assimilated modsuit away."))
+		to_chat(user, span_notice(LANG("obj.8668d1e6", null)))
 		if(!do_after(user, 4 SECONDS))
 			return
 
@@ -407,18 +407,18 @@
 	var/t_has = protean_in_suit.p_have()
 	var/t_is = protean_in_suit.p_are()
 	if(!isnull(brain) || istype(brain))
-		. += span_notice("<b>Control Shift Click</b> to open Protean strip menu.")
+		. += span_notice(LANG("obj.4f1eaa5d", null))
 		if(brain.dead)
 			if(!open)
 				. += isnull(refactory) ? span_warning("This Protean requires critical repairs! <b>Screwdriver them open.</b>") : span_notice("<b>Repairing systems...</b>")
 			else
 				. += isnull(refactory) ? span_warning("<b>Insert a new refactory</b>") : span_notice("<b>Refactory Installed! Repairing systems...</b>")
 		if(protean_in_suit.key && !protean_in_suit.client)
-			. += span_deadsay("[t_He] [t_has] entered stasis and [t_has] been completely unresponsive to anything for [round(((world.time - protean_in_suit.lastclienttime) / (1 MINUTES)),1)] minutes. [t_He] may snap out of it soon.")
+			. += span_deadsay(LANG("obj.d46d2e4d", list(t_He, t_has, t_has, round(((world.time - protean_in_suit.lastclienttime) / (1 MINUTES)),1), t_He)))
 		else if(!protean_in_suit.key && protean_in_suit.mind && !HAS_TRAIT(protean_in_suit, TRAIT_DNR) && !HAS_TRAIT(protean_in_suit, TRAIT_SUICIDED))
-			. += span_deadsay("[t_He] [t_is] adrift, but still tethered. A repair may yet draw [t_him] back.")
+			. += span_deadsay(LANG("obj.ca39ea56", list(t_He, t_is, t_him)))
 		else if(!protean_in_suit.key)
-			. += span_deadsay("[t_He] [t_is] totally listless. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.")
+			. += span_deadsay(LANG("obj.cb9d4758", list(t_He, t_is, t_him)))
 
 /**
  * Protean stripping while they're in the suit.
@@ -450,7 +450,7 @@
 	if(!isnull(should_strip_proc_path) && !call(protean_mob, should_strip_proc_path)(user))
 		return
 	suit.balloon_alert_to_viewers("stripping")
-	user.visible_message(span_warning("[user] begins to dump the contents of [source]!"))
+	user.visible_message(span_warning(LANG("datum.55f50183", list(user, source))))
 	ASYNC
 		var/datum/strip_menu/protean/strip_menu = LAZYACCESS(strip_menus, protean_mob)
 		if(isnull(strip_menu))

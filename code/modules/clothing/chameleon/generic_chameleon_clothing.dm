@@ -205,7 +205,7 @@ do { \
 		detach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
 	else
 		if(SStts.tts_enabled)
-			var/popup_input = tgui_input_list(user, "Choose Action", "Chameleon Mask", list("Spoof Crew Manifest Voice", "Spoof Any Voice", "Cancel"))
+			var/popup_input = tgui_input_list(user, LANG("obj.dbbefb2b", null), LANG("obj.4ddbcb68", null), list("Spoof Crew Manifest Voice", "Spoof Any Voice", "Cancel"))
 			if(!popup_input || !after_input_check(user))
 				return
 			switch(popup_input)
@@ -215,9 +215,9 @@ do { \
 						if(target.voice && (target.voice in SStts.available_speakers))
 							possible_voices += target.name
 						CHECK_TICK
-					var/voice_choice = tgui_input_list(user, "Choose what voice to use as a disguise", "Voice Selection", possible_voices)
+					var/voice_choice = tgui_input_list(user, LANG("obj.9eb194af", null), LANG("obj.7b081612", null), possible_voices)
 					if(isnull(voice_choice) || !after_input_check(user))
-						to_chat(user, span_warning("No choice selected, audible voice changing disabled."))
+						to_chat(user, span_warning(LANG("obj.32f2190d", null)))
 						voice_override = null
 						return
 					var/datum/record/crew/crew_record = find_record(voice_choice)
@@ -225,12 +225,12 @@ do { \
 						voice_override = voice_choice
 						return
 					else
-						to_chat(user, span_warning("Crewmember's record's voice has been changed, please select another."))
+						to_chat(user, span_warning(LANG("obj.dc03d751", null)))
 						return
 				if("Spoof Any Voice")
-					var/voice_choice = tgui_input_list(user, "Choose what voice to use as a disguise", "Voice Selection", SStts.available_speakers)
+					var/voice_choice = tgui_input_list(user, LANG("obj.9eb194af", null), LANG("obj.7b081612", null), SStts.available_speakers)
 					if(isnull(voice_choice) || !after_input_check(user))
-						to_chat(user, span_warning("No choice selected, audible voice changing disabled."))
+						to_chat(user, span_warning(LANG("obj.32f2190d", null)))
 						voice_override = null
 						return
 					voice_override = voice_choice

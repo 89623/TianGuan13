@@ -1948,27 +1948,27 @@
 /obj/item/circuitboard/machine/wall_healer/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += span_warning("The safety chip looks fried.")
+		. += span_warning(LANG("obj.9c0336bf", null))
 
 /obj/item/circuitboard/machine/wall_healer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
 
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	visible_message(span_warning("Sparks fly out of [src]!"))
-	balloon_alert(user, "safeties disabled")
+	visible_message(span_warning(LANG("obj.b7523a48", list(src))))
+	balloon_alert(user, LANG("obj.42074643", null))
 	obj_flags |= EMAGGED
 	return TRUE
 
 // Someone please add generic support for constructing wall mounted objects thanks
 /obj/item/circuitboard/machine/wall_healer/completion_requirements(obj/structure/frame/install_frame, mob/living/user)
 	if(locate(/obj/machinery/wall_healer) in install_frame.loc) // for subtypes support
-		install_frame.balloon_alert(user, "identical machine present!")
+		install_frame.balloon_alert(user, LANG("obj.513bd59d", null))
 		return FALSE
 
 	var/turf/facing_wall = get_step(install_frame, user.dir)
 	if(!is_mountable_turf(facing_wall))
-		install_frame.balloon_alert(user, "no wall to install on!")
+		install_frame.balloon_alert(user, LANG("obj.21417537", null))
 		return FALSE
 
 	return TRUE

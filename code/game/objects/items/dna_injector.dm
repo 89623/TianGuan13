@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/dnainjector
 	name = "\improper DNA injector"
 	desc = "A cheap single use autoinjector that injects the user with DNA."
@@ -60,7 +61,7 @@
 	if(!target.can_mutate())
 		return FALSE
 	if(target.stat == DEAD) //prevents dead people from having their DNA changed
-		to_chat(user, span_notice("You can't modify [target]'s DNA while [target.p_theyre()] dead."))
+		to_chat(user, span_notice(LANG("obj.054bc038", list(target, target.p_theyre()))))
 		return FALSE
 	for(var/removed_mutation in remove_mutations)
 		target.dna.remove_mutation(removed_mutation, GLOB.standard_mutation_sources)
@@ -83,10 +84,10 @@
 
 /obj/item/dnainjector/attack(mob/target, mob/user)
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, span_warning(LANG("obj.e8ba50af", null)))
 		return
 	if(used)
-		to_chat(user, span_warning("This injector is used up!"))
+		to_chat(user, span_warning(LANG("obj.0908413d", null)))
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
@@ -95,20 +96,20 @@
 	log_combat(user, target, "attempted to inject", src)
 
 	if(target != user)
-		target.visible_message(span_danger("[user] is trying to inject [target] with [src]!"), \
-			span_userdanger("[user] is trying to inject you with [src]!"))
+		target.visible_message(span_danger(LANG("obj.acdf6580", list(user, target, src))), \
+			span_userdanger(LANG("obj.8938b767", list(user, src))))
 		if(!do_after(user, 3 SECONDS, target) || used)
 			return
-		target.visible_message(span_danger("[user] injects [target] with the syringe with [src]!"), \
-						span_userdanger("[user] injects you with the syringe with [src]!"))
+		target.visible_message(span_danger(LANG("obj.0fc297a4", list(user, target, src))), \
+						span_userdanger(LANG("obj.72963ac3", list(user, src))))
 
 	else
-		to_chat(user, span_notice("You inject yourself with [src]."))
+		to_chat(user, span_notice(LANG("obj.56f3e92c", list(src))))
 
 	log_combat(user, target, "injected", src)
 
 	if(!inject(target, user)) //Now we actually do the heavy lifting.
-		to_chat(user, span_notice("It appears that [target] does not have compatible DNA."))
+		to_chat(user, span_notice(LANG("obj.9aff5ae3", list(target))))
 		return
 
 	used = TRUE

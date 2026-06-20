@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/griddle
 	name = "griddle"
 	desc = "Because using pans is for pansies."
@@ -63,13 +64,13 @@
 		AddToGrill(new_pancake)
 		if(griddled_objects.len >= max_items)
 			break
-	visible_message(span_notice("[exposing_reagent] begins to cook on [src]."))
+	visible_message(span_notice(LANG("obj.890a692d", list(exposing_reagent, src))))
 	return NONE
 
 /obj/machinery/griddle/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(griddled_objects.len >= max_items)
-		to_chat(user, span_notice("[src] can't fit more items!"))
+		to_chat(user, span_notice(LANG("obj.d55d248d", list(src))))
 		return
 	//Center the icon where the user clicked.
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
@@ -78,7 +79,7 @@
 		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
 		I.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
 		I.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
-		to_chat(user, span_notice("You place [I] on [src]."))
+		to_chat(user, span_notice(LANG("obj.7a67ae81", list(I, src))))
 		AddToGrill(I, user)
 	else
 		return ..()
@@ -96,12 +97,12 @@
 		return NONE
 
 	if(length(griddled_objects) >= max_items)
-		balloon_alert(user, "it's full!")
+		balloon_alert(user, LANG("obj.2cb7d354", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(item, /obj/item/storage/bag/tray))
 		// Non-tray dumping requires a do_after
-		to_chat(user, span_notice("You start dumping out the contents of [item] into [src]..."))
+		to_chat(user, span_notice(LANG("obj.66f69281", list(item, src))))
 		if(!do_after(user, 2 SECONDS, target = item))
 			return ITEM_INTERACT_BLOCKING
 
@@ -115,7 +116,7 @@
 			loaded++
 			AddToGrill(tray_item, user)
 	if(loaded)
-		to_chat(user, span_notice("You insert [loaded] item\s into [src]."))
+		to_chat(user, span_notice(LANG("obj.6732f6a8", list(loaded, src))))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
@@ -202,7 +203,7 @@
 		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
 		AddToGrill(to_dump, user)
 
-	to_chat(user, span_notice("You dump out [storage.parent] onto [src]."))
+	to_chat(user, span_notice(LANG("obj.7a8d83d9", list(storage.parent, src))))
 	return STORAGE_DUMP_HANDLED
 
 /obj/machinery/griddle/process(seconds_per_tick)

@@ -238,7 +238,7 @@
 
 		//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benefit from it
 		if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.4 * initial(active_power_usage))))
-			say("No power to dispense sheets")
+			say(LANG("obj.c98ac214", null))
 			return
 
 		materials.retrieve_stack(amount, material)

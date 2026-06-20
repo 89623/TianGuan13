@@ -139,7 +139,7 @@
 /datum/species/protean/proc/assimilate_organ(mob/living/source, obj/item/organ/organ, special)
 	qdel(organ)
 	if(!special)
-		to_chat(source, span_notice("Your nanomass assimilates the foreign organ."))
+		to_chat(source, span_notice(LANG("datum.d4b6b921", null)))
 		source.balloon_alert_to_viewers("assimilated!", vision_distance = 1)
 	replace_incompatible_organs(source, special)
 
@@ -216,29 +216,29 @@
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "robot",
-		SPECIES_PERK_NAME = "Nanomachine Swarm",
-		SPECIES_PERK_DESC = "Proteans are immortal nanomachine swarms. When critically damaged, they retreat into their modsuit core rather than dying.",
+		SPECIES_PERK_NAME = LANG("datum.7e8e38d5", null),
+		SPECIES_PERK_DESC = LANG("datum.a3e35900", null),
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "shield-halved",
-		SPECIES_PERK_NAME = "Modsuit Assimilation",
-		SPECIES_PERK_DESC = "Proteans can absorb other modsuits into their own, gaining their appearance and modules.",
+		SPECIES_PERK_NAME = LANG("datum.d70a139c", null),
+		SPECIES_PERK_DESC = LANG("datum.75382ccb", null),
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "cube",
-		SPECIES_PERK_NAME = "Metal Metabolism",
-		SPECIES_PERK_DESC = "Proteans cannot eat normal food. They sustain themselves by consuming metal sheets, processed by their refactory organ.",
+		SPECIES_PERK_NAME = LANG("datum.5a4f2ab1", null),
+		SPECIES_PERK_DESC = LANG("datum.6de75752", null),
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "bolt",
-		SPECIES_PERK_NAME = "Fragile Construction",
-		SPECIES_PERK_DESC = "Proteans take extra electrical damage and are easily dismembered.",
+		SPECIES_PERK_NAME = LANG("datum.5f9da63c", null),
+		SPECIES_PERK_DESC = LANG("datum.af269036", null),
 	))
 
 	return perk_descriptions

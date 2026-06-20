@@ -1,8 +1,8 @@
 {
-  "suit_no_sensors_hint": "You can always get new suit sensors to install from a lathe.",
-  "suit_no_sensors_text": "It isn't equipped with medical sensors.",
-  "papers_word": "papers",
-  "one_paper": "one paper",
+  "gene_essential": "Essential",
   "gene_immutable": "Immutable",
-  "gene_essential": "Essential"
+  "one_paper": "one paper",
+  "papers_word": "papers",
+  "suit_no_sensors_hint": "You can always get new suit sensors to install from a lathe.",
+  "suit_no_sensors_text": "It isn't equipped with medical sensors."
 }

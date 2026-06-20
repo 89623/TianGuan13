@@ -1,4 +1,4 @@
 {
-  "_radio.delam_firing": "DELAMINATION SUPPRESSION SYSTEM FIRING. EVACUATE THE SUPERMATTER ENGINE ROOM!",
-  "_radio.delam_fault": "System fault! Unable to trigger."
+  "_radio.delam_fault": "System fault! Unable to trigger.",
+  "_radio.delam_firing": "DELAMINATION SUPPRESSION SYSTEM FIRING. EVACUATE THE SUPERMATTER ENGINE ROOM!"
 }

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -58,18 +59,18 @@
 		if("destination")
 			var/new_dest
 			if(pda)
-				new_dest = tgui_input_list(user, "Enter Destination", "Mulebot Settings", GLOB.deliverybeacontags, ai_controller.blackboard[BB_MULEBOT_DESTINATION_BEACON])
+				new_dest = tgui_input_list(user, LANG("mob.c6744401", null), LANG("mob.031a4a1d", null), GLOB.deliverybeacontags, ai_controller.blackboard[BB_MULEBOT_DESTINATION_BEACON])
 			else
 				new_dest = params["value"]
 			if(new_dest)
 				set_destination(new_dest)
 		if("setid")
-			var/new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, max_length = MAX_NAME_LEN)
+			var/new_id = tgui_input_text(user, LANG("mob.a3c6bc88", null), LANG("mob.89704444", null), id, max_length = MAX_NAME_LEN)
 			if(new_id)
 				set_id(new_id)
 				name = "\improper MULEbot [new_id]"
 		if("sethome")
-			var/new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, ai_controller.blackboard[BB_MULEBOT_HOME_BEACON])
+			var/new_home = tgui_input_list(user, LANG("mob.ae7a26e6", null), LANG("mob.031a4a1d", null), GLOB.deliverybeacontags, ai_controller.blackboard[BB_MULEBOT_HOME_BEACON])
 			if(new_home)
 				ai_controller.set_blackboard_key(BB_MULEBOT_HOME_BEACON, new_home)
 		if("unload")

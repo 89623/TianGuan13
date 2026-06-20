@@ -2893,6 +2893,7 @@
 	"Eject PAi": "弹出 PAi",
 	"Eject PAI": "弹出 PAI",
 	"Eject Toner": "弹出墨粉",
+	"Eject:": "弹出：",
 	"Ejects currently inserted rod. NOTE: We haven't been able to consistently recreate this in testing, but this button can (rarely) unjam the rod. It's better to use a crowbar.": "弹出当前插入的棒。注意：我们一直没能在测试中稳定复现这一点，但这个按钮偶尔可以解除棒卡住。最好还是使用撬棍。",
 	"Ejects the current PAI.": "弹出当前 PAI。",
 	"Ejects the item currently inside the machine.": "弹出当前在机器内部的物品。",

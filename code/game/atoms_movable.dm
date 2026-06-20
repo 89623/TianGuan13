@@ -1810,7 +1810,7 @@
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))
 
 	if(href_list[VV_HK_SET_TTS_VOICE])
-		var/chosen_voice = tgui_input_list(usr, "Choose a voice to use.", "Choose a voice.", SStts.available_speakers)
+		var/chosen_voice = tgui_input_list(usr, LANG("atom.4cfe3617", null), LANG("atom.a1cc028f", null), SStts.available_speakers)
 		if(!chosen_voice)
 			return
 		voice = chosen_voice

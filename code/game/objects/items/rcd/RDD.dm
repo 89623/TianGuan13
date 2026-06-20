@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //RAPID DECORATION DEVICE
 
 /// Multiplier applied to cost when using RDD — each decoration costs this many matter units
@@ -190,7 +191,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 
 /obj/item/construction/rdd/examine(mob/user)
 	. = ..()
-	. += span_info("Currently set to produce: [span_bold(initial(selected_decoration.name))].")
+	. += span_info(LANG("obj.6cbdd8dd", list(span_bold(initial(selected_decoration.name)))))
 
 /obj/item/construction/rdd/attack_self(mob/user)
 	. = ..()
@@ -262,7 +263,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 		return ITEM_INTERACT_BLOCKING
 
 	if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
-		balloon_alert(user, "tile is blocked!")
+		balloon_alert(user, LANG("obj.fa928166", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/decoration_count = 0
@@ -328,10 +329,10 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 	if(!iscyborg(borgy))
 		return FALSE
 	if(!borgy.cell)
-		balloon_alert(user, "no cell found!")
+		balloon_alert(user, LANG("obj.ba8f2f7d", null))
 		return FALSE
 	if(borgy.cell.charge < amount * energyfactor)
-		balloon_alert(user, "insufficient charge!")
+		balloon_alert(user, LANG("obj.206fba9f", null))
 		return FALSE
 	if(!dry_run)
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)

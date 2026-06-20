@@ -337,14 +337,14 @@
 	var/mob/living/simple_animal/hostile/ooze/oozy_owner = owner
 	if(istype(oozy_owner))
 		if(oozy_owner.ooze_nutrition < 5)
-			to_chat(oozy_owner, span_warning("You need at least 5 nutrition to launch a mending globule."))
+			to_chat(oozy_owner, span_warning(LANG("datum.3de6887c", null)))
 			return
 	. = ..()
 	if(!.)
 		return
 
 	oozy_owner.adjust_ooze_nutrition(-5)
-	to_chat(on_who, span_notice("You prepare to launch a mending globule. <B>Left-click to fire at a target!</B>"))
+	to_chat(on_who, span_notice(LANG("datum.d02e73c8", null)))
 
 /datum/action/cooldown/globules/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
@@ -354,7 +354,7 @@
 	if(refund_cooldown)
 		var/mob/living/simple_animal/hostile/ooze/oozy_owner = owner
 		oozy_owner.adjust_ooze_nutrition(5)
-		to_chat(on_who, span_notice("You stop preparing your mending globules."))
+		to_chat(on_who, span_notice(LANG("datum.39f31c9e", null)))
 
 /datum/action/cooldown/globules/InterceptClickOn(mob/living/clicker, params, atom/target)
 	. = ..()

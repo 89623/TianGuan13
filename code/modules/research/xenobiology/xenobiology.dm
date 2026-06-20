@@ -1047,7 +1047,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 	if(living_mob.mind)
 		if (!do_after(user, delay = 5 SECONDS, target = living_mob))
-			balloon_alert(user, "interrupted!")
+			balloon_alert(user, LANG("obj.c67b5d27", null))
 			return ITEM_INTERACT_BLOCKING
 
 	if(living_mob.gender == MALE)

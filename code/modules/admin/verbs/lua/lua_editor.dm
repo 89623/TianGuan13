@@ -288,5 +288,5 @@ ADMIN_VERB(lua_editor, R_DEBUG, "Open Lua Editor", "Its codin' time.", ADMIN_CAT
 	var/datum/lua_editor/editor = new
 	editor.ui_interact(user.mob)
 #else
-	to_chat(user, span_warning("Lua support has been disabled at compile-time."), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE) // doing this instead of just disabling the verb entirely so it's clear WHY it doesn't work.
+	to_chat(user, span_warning(LANG("datum.dbad1e88", null)), type = MESSAGE_TYPE_ADMINLOG, confidential = TRUE) // doing this instead of just disabling the verb entirely so it's clear WHY it doesn't work.
 #endif
