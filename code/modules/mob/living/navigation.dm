@@ -38,9 +38,9 @@
 	var/can_go_down = SSmapping.level_trait(z, ZTRAIT_DOWN)
 	var/can_go_up = SSmapping.level_trait(z, ZTRAIT_UP)
 	if(can_go_down)
-		destination_list["Nearest Way Down"] = DOWN
+		destination_list[lang_reverse_text("Nearest Way Down")] = DOWN // NOVA EDIT - I18N
 	if(can_go_up)
-		destination_list["Nearest Way Up"] = UP
+		destination_list[lang_reverse_text("Nearest Way Up")] = UP // NOVA EDIT - I18N
 
 	if(!length(destination_list))
 		balloon_alert(src, LANG("mob.f7ee8e03", null))
