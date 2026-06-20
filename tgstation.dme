@@ -8634,6 +8634,7 @@
 #include "modular_nova\modules\inflatables\code\inflatable.dm"
 #include "modular_nova\modules\interaction_menu\code\interaction_component.dm"
 #include "modular_nova\modules\i18n\code\fallback.dm"
+#include "modular_nova\modules\i18n\code\fonts.dm"
 #include "modular_nova\modules\i18n\code\runtime.dm"
 #include "modular_nova\modules\i18n\code\template_match.dm"
 #include "modular_nova\modules\interaction_menu\code\interaction_datum.dm"

@@ -40,6 +40,7 @@ locale 解析：
 
 **本模块（DM 运行时实现）：**
 - `modular_nova/modules/i18n/code/{runtime,fallback}.dm` —— 查表 / 占位符格式化 / name-desc 反查表 + AC 兜底。
+- `modular_nova/modules/i18n/code/fonts.dm` + `modular_nova/modules/i18n/fonts/fusion_pixel_8px_zh_hans.ttf`（OFL-1.1，`OFL.txt`）—— **maptext 中文像素字体**：核心 maptext 字体（Grand9K Pixel 等）只含拉丁字形，汉字回退到系统字体微缩 → 模糊。`/datum/font/fusion_pixel_8px` 注册该 .ttf（产生资源引用使 BYOND 打包发给客户端），`interface/skin.dmf` 的 `.maptext`/`.context`/`.subcontext`/`.small`/`.italics` 字体族**追加它为回退**——BYOND 按字形回退：拉丁字仍走原像素字体、汉字落到它（8px=6pt 锐利，整数倍 12/18pt 仍锐利）。无需 locale 门控（英文服永不请求汉字字形=零视觉变化，仅多打包 3.4MB）。
 - `modular_nova/modules/i18n/code/template_match.dm` —— **边界模板逆匹配引擎**：目录里已翻译的插值模板（`{0}` 句式）在输出边界整句命中（AC 锚检测 → 逐字面段验证 → 捕获实参反查 → 按 zh 模板重排填充），挂在 `lang_fallback_apply` 内、字面 AC 之前；聊天/browse/状态栏/公告/maptext 全部边界共享。运行期拼接/插值的英文句子（②③类长尾）由此系统性覆盖，无需逐点改写。回归测试：`code/modules/unit_tests/~nova/i18n_template.dm`。
 
 **构建 / 翻译工具——都在 `tools/i18n/`（**未移动**：移动需改 ~71 处构建/CI/脚本引用，风险高）：**

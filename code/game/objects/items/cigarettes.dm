@@ -762,6 +762,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	choke_time_max = 40 SECONDS
 
 /obj/item/cigarette/rollie/Initialize(mapload)
+	// NOVA EDIT ADDITION START - I18N: rollie names are random slang. Many ("bun"/"bone"/"joint"/"bird"…)
+	// collide with common food/item names, so we CANNOT route them through the global reverse table
+	// (it would mistranslate those real items). Instead pick from a localized list inline when the
+	// server is non-English; the /atom/Initialize reverse hook then no-ops on the already-localized name.
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		name = pick(list(
+			"大麻卷", "大麻烟", "烟卷", "钝头卷", "粗卷", "大炮", "烟枪", "炸弹卷", "骨头卷",
+			"烟棒", "闷烟", "草烟", "草卷", "大麻烟", "荷兰卷", "胖卷", "大烟卷", "喇叭烟", "小喇叭",
+			"麻烟", "吉米卷", "大麻烟卷", "巫毒烟", "抖抖烟", "烟号", "猫头鹰卷", "肥卷", "喷烟卷",
+			"礁石卷", "大麻烟", "手卷烟", "飞天烟", "短卷", "精卷", "混合卷", "抽口烟", "鱼雷卷",
+			"祖特烟", "大祖特"))
+		. = ..()
+		pixel_x = rand(-5, 5)
+		pixel_y = rand(-5, 5)
+		return
+	// NOVA EDIT ADDITION END
 	name = pick(list(
 		"bifta",
 		"bifter",

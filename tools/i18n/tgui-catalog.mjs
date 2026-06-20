@@ -625,6 +625,11 @@ const DM_LABEL_SOURCES = [
   // 经 ui_static_data 的 data["categories"] 发送，但单词类分类被 P1 多词门槛跳过 → 前端按英文值过滤、
   // 仅渲染 {category} 文本节点翻显示（act 用配方 ref/index 不用分类）→ 译之安全（含单词类）。
   ['code/__DEFINES/crafting.dm', false, /#define\s+CAT_\w+\s+"([^"]+)"/g],
+  // 烹饪菜单子分类（CUISINE_*/DISH_*/MEAL_* 定义值，如 "Italian"/"Bread"/"Cake"/"Appetizer"）：
+  // food crafting_ui_data 发 cuisine_category/dish_category/meal_category，PersonalCrafting/index.tsx 渲染
+  // {cuisine}/{dish}/{meal} 文本节点；前端按英文值过滤（activeFoodCuisine.includes(recipe.cuisine_category)）
+  // → 仅翻显示文本节点（act/filter 用英文原值）→ 译之安全（含单词类）。
+  ['code/__DEFINES/crafting.dm', false, /#define\s+(?:CUISINE|DISH|MEAL)_\w+\s+"([^"]+)"/g],
   // 待接：反派名散在 code/modules/antagonists 各处，整目录抽会混入目标/技能等海量非偏好名，需专门源。
 ];
 
