@@ -136,11 +136,16 @@
 
 /datum/plant_gene/trait/get_name() // Used for manipulator display and gene disk name.
 	var/formatted_name
+	var/prefix
 	if(!(mutability_flags & PLANT_GENE_REMOVABLE))
-		if(!(mutability_flags & PLANT_GENE_GRAFTABLE))
-			formatted_name += "Immutable "
-		else
-			formatted_name += "Essential "
+		prefix = (mutability_flags & PLANT_GENE_GRAFTABLE) ? "Essential " : "Immutable "
+	// NOVA EDIT START - I18N: the composed "Immutable <name>" misses P1's exact reverse (only base name is in
+	// the catalog); reverse the prefix word + base name separately. locale==en keeps original behavior.
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		var/local_name = lang_reverse_text(name)
+		return prefix ? "[lang_reverse_text(trim(prefix))][local_name]" : local_name
+	// NOVA EDIT END
+	formatted_name += prefix
 	formatted_name += name
 	return formatted_name
 

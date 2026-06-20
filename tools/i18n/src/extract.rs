@@ -92,6 +92,9 @@ const SINK_VARS: &[&str] = &[
     // （"There are [n] [singular_name]\s in the stack."），经 lang_localize_arg→lang_reverse_text 翻；
     // 之前未抽 → 数量行里物品名残留英文（如「30 cable piece」）。
     "singular_name",
+    // /obj/item/seeds 的 plantname（"Apple Tree"/"Sugarcane"/"Potato Plants"…）：植物分析仪/托盘显示的
+    // 植物名，非 name（name 是种子包名）→ 之前漏抽。落地点（plant_analyzer ui_data）也 lang_reverse_text。
+    "plantname",
 ];
 
 /// 「句子型」玩家可见文案启发式：多词自然语句（含空格 + 首字母大写 + 含小写字母 + 无占位符）。

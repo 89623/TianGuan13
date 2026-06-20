@@ -285,7 +285,9 @@
 
 /obj/item/plant_analyzer/proc/make_seed_data(obj/item/seeds/seed)
 	var/list/seed_data = list(
-		"name" = seed.plantname,
+		// NOVA EDIT - I18N: reverse plant name (single-word names like Sugarcane/Bamboo are skipped by P1's
+		// multi-word gate); display-only (analyzer keys off seed type, not name).
+		"name" = (GLOB.i18n_server_locale != DEFAULT_UI_LOCALE) ? lang_reverse_text(seed.plantname) : seed.plantname,
 		"icon" = seed.growing_icon,
 		"icon_state" = seed.icon_harvest,
 		"product" = seed.product?.name,
