@@ -55,7 +55,16 @@
 	. = ..()
 	if(drink_type)
 		var/list/types = bitfield_to_list(drink_type, FOOD_FLAGS)
-		. += span_notice(LANG("obj.5d48423d", list(LOWER_TEXT(english_list(types)))))
+		// NOVA EDIT START - I18N: reverse each food type + 顿号 connector (same as edible.dm; types are raw
+		// bitflag names lowercased -> reverse via tgui.json food-type entries). ORIGINAL below in else.
+		if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+			var/list/translated_types = list()
+			for(var/food_type in types)
+				translated_types += lang_reverse_text(LOWER_TEXT(food_type))
+			. += span_notice(LANG("obj.5d48423d", list(english_list(translated_types, and_text = "、", comma_text = "、"))))
+		else
+			. += span_notice(LANG("obj.5d48423d", list(LOWER_TEXT(english_list(types)))))
+		// NOVA EDIT END
 	if(can_lid)
 		if(has_lid)
 			. += span_notice(LANG("obj.07366373", list(!isnull(lid_assembly) ? "with an assembly attached ontop of it" : "")))

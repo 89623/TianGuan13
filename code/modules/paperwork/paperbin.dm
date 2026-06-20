@@ -153,7 +153,8 @@
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
 	if(total_paper)
-		. += LANG("obj.1a9d7988", list(total_paper > 1 ? "[total_paper] papers" : "one paper"))
+		// NOVA EDIT - I18N: arg has a number prefix (not reversible whole) -> reverse just the paper noun
+		. += LANG("obj.1a9d7988", list(total_paper > 1 ? "[total_paper] [lang_reverse_text("papers")]" : lang_reverse_text("one paper")))
 	else
 		. += LANG("obj.fbbb0e83", null)
 
