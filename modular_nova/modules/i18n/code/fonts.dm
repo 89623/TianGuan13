@@ -24,3 +24,11 @@
 /datum/font/fusion_pixel_12px
 	name = "Fusion Pixel 12px Mono zh_hans"
 	font_family = 'modular_nova/modules/i18n/fonts/fusion_pixel_12px_zh_hans.ttf'
+
+// Smaller 8px variant (design 8px → crisp at 6pt = 8px em). Used for the "small" maptext
+// classes (.maptext runechat/balloon speech, .subcontext screentip action-hints, .small,
+// .italics) so they're genuinely smaller than the 12px screentip name (.context). 8px CJK
+// has fewer pixels (rougher) but reads as small secondary text. Crisp ONLY at 6pt/12pt/18pt.
+/datum/font/fusion_pixel_8px
+	name = "Fusion Pixel 8px Mono zh_hans"
+	font_family = 'modular_nova/modules/i18n/fonts/fusion_pixel_8px_zh_hans.ttf'
