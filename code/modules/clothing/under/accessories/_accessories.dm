@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Clothing accessories.
  *
@@ -43,17 +42,17 @@
 
 	if(atom_storage && attach_to.atom_storage)
 		if(user)
-			attach_to.balloon_alert(user, LANG("obj.2972456b", null))
+			attach_to.balloon_alert(user, "isn't compatible!")
 		return FALSE
 
 	if(attachment_slot && !(attach_to.body_parts_covered & attachment_slot))
 		if(user)
-			attach_to.balloon_alert(user, LANG("obj.957513f2", null))
+			attach_to.balloon_alert(user, "can't attach there!")
 		return FALSE
 
 	if(length(attach_to.attached_accessories) >= attach_to.max_number_of_accessories)
 		if(user)
-			attach_to.balloon_alert(user, LANG("obj.12b04990", null))
+			attach_to.balloon_alert(user, "too many accessories!")
 		return FALSE
 
 	return TRUE
@@ -75,11 +74,11 @@
 	attached_to.update_accessory_overlay()
 
 /**
- * Actually attach this accessory to the passed clothing article.
+ * Try to attach this accessory to the passed clothing article.
  *
  * The accessory is not yet within the clothing's loc at this point, this hapens after success.
  */
-/obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/proc/try_attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(atom_storage)
@@ -104,9 +103,12 @@
 
 	return TRUE
 
-/// Called after attach is completely successful and the accessory is in the clothing's loc
-/obj/item/clothing/accessory/proc/successful_attach(obj/item/clothing/under/attached_to)
+/// Called after try_attach returns TRUE and thus the accessory can be finally be moved into its target
+/obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/attached_to)
 	SHOULD_CALL_PARENT(TRUE)
+
+	LAZYADD(attached_to.attached_accessories, src)
+	forceMove(attached_to)
 
 	if(!attached_to.accessory_overlay)
 		attached_to.accessory_overlay = mutable_appearance()
@@ -180,12 +182,14 @@
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
+	for(var/trait in clothing_traits) // Accessory don't have slot flags by def, but they still apply clothing traits when the suit is equipped in the right slot.
+		ADD_CLOTHING_TRAIT(user, trait)
 	user.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped
 /obj/item/clothing/accessory/proc/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
-	dropped(user)
+	dropped(user) //This handles removing clothing traits from the user by default everytime.
 	return
 
 /// Signal proc for [COMSIG_CLOTHING_UNDER_ADJUSTED] on the uniform we're pinned to
@@ -196,9 +200,8 @@
 	if(can_attach_accessory(source))
 		return
 
-	source.remove_accessory(src)
-	forceMove(source.drop_location())
-	source.visible_message(span_warning(LANG("obj.73a87d59", list(src, source))))
+	forceMove(source.drop_location()) //This calls remove_accessory()
+	source.visible_message(span_warning("[src] falls off of [source]!"))
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] on the uniform we're pinned to to add our overlays to the inventory icon
 /obj/item/clothing/accessory/proc/on_uniform_update(obj/item/source, list/overlays)
@@ -212,13 +215,13 @@
 		return
 	if(user.can_perform_action(src, NEED_DEXTERITY))
 		above_suit = !above_suit
-		balloon_alert(user, LANG("obj.d521fa2f", list(above_suit ? "above" : "below")))
+		balloon_alert(user, "wearing [above_suit ? "above" : "below"] suits")
 		return TRUE
 
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()
-	. += LANG("obj.4361f54c", null)
-	. += LANG("obj.a0af4e47", null)
+	. += "It can be attached to a uniform."
+	. += "It can be worn above or below your suit. Right-click to toggle."
 
 /obj/item/clothing/accessory/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

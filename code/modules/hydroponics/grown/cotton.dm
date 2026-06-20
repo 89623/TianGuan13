@@ -1,7 +1,7 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/seeds/cotton
 	name = "cotton seed pack"
-	desc = "A pack of seeds that'll grow into a cotton plant. Assistants make good free labor if neccesary."
+	desc = "A pack of seeds that'll grow into a cotton plant."
 	icon_state = "seed-cotton"
 	species = "cotton"
 	plantname = "Cotton"

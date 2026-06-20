@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun/energy/recharge/kinetic_accelerator
 	name = "proto-kinetic accelerator"
 	desc = "A self recharging, ranged mining tool that does increased damage in low pressure."
@@ -70,20 +69,21 @@
 /obj/item/gun/energy/recharge/kinetic_accelerator/examine(mob/user)
 	. = ..()
 	if(max_mod_capacity)
-		. += LANG("obj.15082120", list(get_remaining_mod_capacity()))
-		. += span_info(LANG("obj.2abed7d3", null))
+		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
+		. += span_info("You can use a <b>crowbar</b> to remove all modules or <b>right-click</b> with an empty hand to remove a specific one.")
 		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
 			. += span_notice("There is \a [modkit_upgrade] installed, using <b>[modkit_upgrade.cost]%</b> capacity.")
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
 	if(modkits.len)
-		to_chat(user, span_notice(LANG("obj.4e48f31f", null)))
+		to_chat(user, span_notice("You pry all the modifications out."))
 		I.play_tool_sound(src, 100)
 		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
-			modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
+			if (modkit_upgrade.removable)
+				modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
 	else
-		to_chat(user, span_notice(LANG("obj.f52d8357", null)))
+		to_chat(user, span_notice("There are no modifications currently installed."))
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/try_fire_gun(atom/target, mob/living/user, params)
 	return fire_gun(target, user, user.Adjacent(target) && !isturf(target), params)
@@ -99,7 +99,9 @@
 	var/list/display_names = list()
 	var/list/items = list()
 	for(var/modkits_length in 1 to length(modkits))
-		var/obj/item/thing = modkits[modkits_length]
+		var/obj/item/borg/upgrade/modkit/thing = modkits[modkits_length]
+		if (!thing.removable)
+			continue
 		display_names["[thing.name] ([modkits_length])"] = REF(thing)
 		var/image/item_image = image(icon = thing.icon, icon_state = thing.icon_state)
 		if(length(thing.overlays))
@@ -156,6 +158,16 @@
 	kinetic_projectile.kinetic_gun = src //do something special on-hit, easy!
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
 		modkit_upgrade.modify_projectile(kinetic_projectile)
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/bdm
+	name = "infernal proto-kinetic accelerator"
+	icon_state = "kineticgun_evil"
+	inhand_icon_state = "kineticgun_evil"
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/bdm/Initialize(mapload)
+	. = ..()
+	var/obj/item/borg/upgrade/modkit/cooldown/repeater/bdm/repeater_mod = new()
+	repeater_mod.install(src)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg
 	icon_state = "kineticgun_b"
@@ -300,10 +312,12 @@
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 	var/minebot_upgrade = TRUE
 	var/minebot_exclusive = FALSE
+	/// Can it be removed?
+	var/removable = TRUE
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
 	. = ..()
-	. += span_notice(LANG("obj.e294c885", list(cost)))
+	. += span_notice("Occupies <b>[cost]%</b> of mod capacity.")
 
 /obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/gun/energy/recharge/kinetic_accelerator) && !issilicon(user))
@@ -321,10 +335,12 @@
 	. = TRUE
 	if(minebot_upgrade)
 		if(minebot_exclusive && !istype(KA.loc, /mob/living/basic/mining_drone))
-			to_chat(user, span_notice(LANG("obj.82d49a6e", null)))
+			if (user)
+				to_chat(user, span_notice("The modkit you're trying to install is only rated for minebot use."))
 			return FALSE
 	else if(istype(KA.loc, /mob/living/basic/mining_drone))
-		to_chat(user, span_notice(LANG("obj.5abda105", null)))
+		if (user)
+			to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
 		return FALSE
 
 	var/type_to_limit = denied_type
@@ -338,21 +354,24 @@
 			if(istype(modkit_upgrade, type_to_limit))
 				number_of_denied++
 			if(maximum_of_type && number_of_denied >= maximum_of_type || !maximum_of_type && number_of_denied) //if we denied a type, or we have a maximum to reach, break
-				. = FALSE
-				break
+				if (user)
+					to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))
+				return FALSE
 
-	if(KA.get_remaining_mod_capacity() >= cost)
-		if(.)
-			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
-				return
-			to_chat(user, span_notice(LANG("obj.9c6d753c", null)))
-			playsound(loc, 'sound/items/tools/screwdriver.ogg', 100, TRUE)
-			KA.modkits |= src
-		else
-			to_chat(user, span_notice(LANG("obj.b2eb340e", null)))
-	else
-		to_chat(user, span_notice(LANG("obj.010f1840", list(KA.get_remaining_mod_capacity(), cost))))
-		. = FALSE
+	if(KA.get_remaining_mod_capacity() < cost)
+		to_chat(user, span_notice("You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar or right click with an empty hand to remove existing modkits."))
+		return FALSE
+
+	if(transfer_to_loc)
+		if (user && !user.transferItemToLoc(src, KA))
+			return FALSE
+		else if (!user)
+			forceMove(KA)
+
+	if (user)
+		to_chat(user, span_notice("You install the modkit."))
+		playsound(loc, 'sound/items/tools/screwdriver.ogg', 100, TRUE)
+	KA.modkits |= src
 
 /obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -554,6 +573,12 @@
 	if(valid_repeat)
 		KA.cell.use(KA.cell.charge)
 		KA.attempt_reload(KA.recharge_time * 0.25) //If you hit, the cooldown drops to 0.75 seconds.
+
+/obj/item/borg/upgrade/modkit/cooldown/repeater/bdm
+	name = "infernal repeater"
+	removable = FALSE
+	cost = 30
+	modifier = -10
 
 /obj/item/borg/upgrade/modkit/lifesteal
 	name = "lifesteal crystal"

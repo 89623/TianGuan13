@@ -11218,7 +11218,7 @@
 	location = "QM #1"
 	},
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/basic/bot/mulebot{
 	home_destination = "QM #1";
 	suffix = "#1"
 	},
@@ -11666,7 +11666,7 @@
 	location = "QM #3"
 	},
 /obj/effect/turf_decal/bot,
-/mob/living/simple_animal/bot/mulebot{
+/mob/living/basic/bot/mulebot{
 	home_destination = "QM #2";
 	suffix = "#2"
 	},
@@ -34707,6 +34707,14 @@
 /obj/item/paper_bin/carbon,
 /obj/item/coin/silver,
 /obj/item/stamp/head/qm,
+/obj/item/stamp/denied{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/stamp/granted{
+	pixel_y = 6;
+	pixel_x = 9
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "iBk" = (
@@ -47823,6 +47831,14 @@
 "rSR" = (
 /obj/item/universal_scanner,
 /obj/structure/table/reinforced,
+/obj/item/stamp/granted{
+	pixel_y = 5;
+	pixel_x = 9
+	},
+/obj/item/stamp/denied{
+	pixel_y = 6;
+	pixel_x = -5
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "rTb" = (

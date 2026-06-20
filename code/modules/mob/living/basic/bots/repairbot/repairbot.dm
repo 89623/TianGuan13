@@ -251,7 +251,7 @@
 		var/obj/item/stack/rods/new_rods = new()
 		new_rods.forceMove(src)
 
-/mob/living/basic/bot/repairbot/turn_on()
+/mob/living/basic/bot/repairbot/turn_on(mob/user)
 	. = ..()
 	if(!.)
 		return

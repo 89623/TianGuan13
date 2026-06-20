@@ -1,5 +1,6 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/assembly/control/transport
+	voice_filter = "highpass=f=300,lowpass=f=3500,aecho=0.8:0.9:70|140:0.3|0.15,alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
 	/// Options to be passed with the requests to the transport subsystem
@@ -48,7 +49,8 @@
 	SIGNAL_HANDLER
 	if(!LAZYFIND(relevant, src))
 		return
-
+	if(SStts.tts_enabled)
+		voice = SStts.tram_voice
 	switch(response_code)
 		if(REQUEST_SUCCESS)
 			say(LANG("obj.29253678", null))

@@ -33426,6 +33426,7 @@
 	pixel_x = 4
 	},
 /obj/structure/sign/calendar/directional/south,
+/obj/item/pneumatic_cannon/pie,
 /turf/open/floor/carpet/donk,
 /area/station/service/greenroom)
 "iSR" = (
@@ -36814,6 +36815,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/item/megaphone/clown,
 /turf/open/floor/carpet/donk,
 /area/station/service/greenroom)
 "jMt" = (
@@ -55874,7 +55876,7 @@
 	pixel_x = -2;
 	pixel_y = -4
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_y = 11;
 	pixel_x = 9
 	},
@@ -78114,6 +78116,13 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stamp/denied{
+	pixel_y = 12
+	},
+/obj/item/stamp/granted{
+	pixel_y = 5;
+	pixel_x = 9
+	},
 /turf/open/floor/wood/tile,
 /area/station/command/heads_quarters/qm)
 "uUV" = (

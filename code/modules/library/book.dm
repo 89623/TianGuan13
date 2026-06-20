@@ -128,6 +128,7 @@
 	if(!can_read_book(user))
 		return
 
+	playsound(user, 'sound/items/handling/paper_pickup.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	user.visible_message(span_notice(LANG("obj.2b946d12", list(user, book_data.title))))
 	credit_book_to_reader(user)
 	display_content(user)

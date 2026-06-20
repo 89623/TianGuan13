@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	abstract_type = /obj/item/melee/energy
@@ -76,7 +75,7 @@
 /obj/item/melee/energy/suicide_act(mob/living/user)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		attack_self(user)
-	user.visible_message(span_suicide(LANG("obj.57e0562e", list(user, pick("slitting [user.p_their()] stomach open with", "falling on"), src, user.p_theyre()))))
+	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/melee/energy/process(seconds_per_tick)
@@ -174,7 +173,7 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/energy/axe/suicide_act(mob/living/user)
-	user.visible_message(span_suicide(LANG("obj.564e0568", list(user, src, user.p_their(), user.p_theyre()))))
+	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS|FIRELOSS)
 
 /// Energy swords.
@@ -222,48 +221,6 @@
 		final_block_chance -= 25 //OH GOD GET IT OFF ME
 
 	return ..()
-
-/obj/item/melee/energy/sword/cyborg
-	name = "cyborg energy sword"
-	sword_color_icon = "red"
-	/// The cell cost of hitting something.
-	var/hitcost = 0.05 * STANDARD_CELL_CHARGE
-
-/obj/item/melee/energy/sword/cyborg/attack(mob/target, mob/living/silicon/robot/user)
-	if(!user.cell)
-		return
-
-	var/obj/item/stock_parts/power_store/our_cell = user.cell
-	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && !(our_cell.use(hitcost)))
-		attack_self(user)
-		to_chat(user, span_notice(LANG("obj.c57f8413", null)))
-		return
-	return ..()
-
-/obj/item/melee/energy/sword/cyborg/cyborg_unequip(mob/user)
-	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		return
-	attack_self(user)
-
-/obj/item/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
-	name = "energy saw"
-	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
-	icon = 'icons/obj/medical/surgery_tools.dmi'
-	icon_state = "esaw"
-	hitsound = 'sound/items/weapons/circsawhit.ogg'
-	force = 18
-	hitcost = 0.075 * STANDARD_CELL_CHARGE // Costs more than a standard cyborg esword.
-	w_class = WEIGHT_CLASS_NORMAL
-	sharpness = SHARP_EDGED
-	light_color = LIGHT_COLOR_LIGHT_CYAN
-	tool_behaviour = TOOL_SAW
-	toolspeed = 0.7 // Faster than a normal saw.
-
-	active_force = 30
-	sword_color_icon = null // Stops icon from breaking when turned on.
-
-/obj/item/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	return FALSE
 
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber
@@ -319,12 +276,57 @@
 
 /obj/item/melee/energy/sword/saber/multitool_act(mob/living/user, obj/item/tool)
 	if(hacked)
-		to_chat(user, span_warning(LANG("obj.82f87bea", null)))
+		to_chat(user, span_warning("It's already fabulous!"))
 		return
 	hacked = TRUE
 	sword_color_icon = "rainbow"
-	to_chat(user, span_warning(LANG("obj.6710b2e4", null)))
+	to_chat(user, span_warning("RNBW_ENGAGE"))
 	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/melee/energy/sword/saber/cyborg
+	name = "cyborg energy sword"
+	hacked = TRUE
+	sword_color_icon = "rainbow"
+	/// The cell cost of hitting something.
+	var/hitcost = 0.05 * STANDARD_CELL_CHARGE
+
+/obj/item/melee/energy/sword/saber/cyborg/Initialize(mapload)
+	. = ..()
+	set_light_range(5) //Cyborgs don't have inhand sprites, so we compensate by making it glow brightly.
+
+/obj/item/melee/energy/sword/saber/cyborg/attack(mob/target, mob/living/silicon/robot/user)
+	if(!user.cell)
+		return
+
+	var/obj/item/stock_parts/power_store/our_cell = user.cell
+	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && !(our_cell.use(hitcost)))
+		attack_self(user)
+		to_chat(user, span_notice("It's out of charge!"))
+		return
+	return ..()
+
+/obj/item/melee/energy/sword/saber/cyborg/cyborg_unequip(mob/user)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return
+	attack_self(user)
+
+/obj/item/melee/energy/sword/saber/cyborg/saw //Used by medical Syndicate cyborgs
+	name = "energy saw"
+	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
+	icon = 'icons/obj/medical/surgery_tools.dmi'
+	icon_state = "esaw"
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	force = 18
+	hitcost = 0.075 * STANDARD_CELL_CHARGE // Costs more than a standard cyborg esword.
+	w_class = WEIGHT_CLASS_NORMAL
+	sharpness = SHARP_EDGED
+	light_color = LIGHT_COLOR_LIGHT_CYAN
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.7 // Faster than a normal saw.
+	hacked = FALSE
+	active_force = 30
+	block_chance = 0 //Unlike assault cyborgs, syndicate medical cyborgs don't get any blocking capabilities
+	sword_color_icon = null // Stops icon from breaking when turned on.
 
 /obj/item/melee/energy/sword/pirate
 	name = "energy cutlass"
@@ -436,11 +438,11 @@
 /obj/item/melee/energy/sword/surplus/examine(mob/user)
 	. = ..()
 	if(charge)
-		. += span_notice(LANG("obj.62e156af", list(src, charge)))
+		. += span_notice("[src] has [charge] hits left before it must be recharged.")
 	else
-		. += span_warning(LANG("obj.8f7b4028", list(src)))
+		. += span_warning("[src] needs to be recharged.")
 
-	. += span_info(LANG("obj.8d5f8fc0", null))
+	. += span_info("You get the sense that this weapon isn't very effective unless you hit someone while they are exposed in some way, like attacking from behind or while they're staggered.")
 
 /obj/item/melee/energy/sword/surplus/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -488,16 +490,16 @@
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	if(DOING_INTERACTION(user, DOAFTER_SOURCE_CHARGING_ESWORD))
-		user.balloon_alert(user, LANG("obj.8df72942", null))
+		user.balloon_alert(user, "busy!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(charge <= max_charge)
-		user.balloon_alert(user, LANG("obj.fe4c2687", null))
+		user.balloon_alert(user, "attempting recharge...")
 		if(!do_after(user, charge_time, target = src, extra_checks = CALLBACK(src, PROC_REF(do_jiggle), user), interaction_key = DOAFTER_SOURCE_CHARGING_ESWORD, iconstate = "beat_the_heat"))
-			user.balloon_alert(user, LANG("obj.c67b5d27", null))
+			user.balloon_alert(user, "interrupted!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	charge = max_charge
-	user.balloon_alert(user, LANG("obj.b1075549", null))
+	user.balloon_alert(user, "recharge successful")
 	playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -527,14 +529,14 @@
 
 	charge--
 	if(charge <= 0)
-		user.balloon_alert(user, LANG("obj.6428cbcd", null))
+		user.balloon_alert(user, "out of charge!")
 		attack_self(user)
 
 /obj/item/melee/energy/sword/surplus/proc/check_power(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 
 	if(charge <= 0 && !HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		balloon_alert(user, LANG("obj.c0d39a14", null))
+		balloon_alert(user, "no charge!")
 		return COMPONENT_BLOCK_TRANSFORM
 
 /obj/item/melee/energy/sword/surplus/proc/do_jiggle(mob/user)
