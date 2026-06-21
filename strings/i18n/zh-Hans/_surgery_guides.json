@@ -40,5 +40,6 @@
 	"surgery_req_cedeb28b": "患者必须有钝器伤害或烧伤",
 	"surgery_req_dd550a99": "肢体必须有皮肤",
 	"surgery_req_ec24aaec": "患者不得为干尸状态",
-	"surgery_req_denting": "患者必须有凹陷或热损伤"
+	"surgery_req_denting": "患者必须有凹陷或热损伤",
+	"surgery_once_per_organ": "此手术每个器官只能进行一次。"
 }
