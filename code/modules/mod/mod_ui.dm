@@ -34,7 +34,7 @@
 	// User information
 	var/user_status = list(
 		"user_name" = wearer ? (wearer.get_authentification_name("Unknown") || "Unknown") : "",
-		"user_assignment" = wearer ? wearer.get_assignment("Unknown", "Unknown", FALSE) : "",
+		"user_assignment" = wearer ? lang_reverse_text(wearer.get_assignment("Unknown", "Unknown", FALSE)) : "", // NOVA EDIT - I18N: ID assignment/job title (display-only)
 	)
 	data["user_status"] = user_status
 	// Module information

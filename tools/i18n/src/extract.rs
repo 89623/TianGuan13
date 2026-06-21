@@ -75,6 +75,9 @@ const SINK_VARS: &[&str] = &[
     // 落地点反查（display-only；搜索/置顶用同一展示名、无英文常量比较=安全）。
     "rnd_name",
     "rnd_desc",
+    // ID 卡职务（/datum/id_trim、卡片等的 assignment；HUD/检视/模块服「分配」显示）。多为职业名、
+    // 但 Nova 专属职务（"Bluespace Technician" 等）非 job datum → 漏抽。display-only（显示在 ID/HUD）。
+    "assignment",
     // 售货机出货答谢语（vend_reply，单句，say 出 → 聊天 AC 翻译）。
     "vend_reply",
     // 说话动词（says/asks/exclaims/whispers/sings/yells 及各 mob 变体如 beeps/signs/hisses；
