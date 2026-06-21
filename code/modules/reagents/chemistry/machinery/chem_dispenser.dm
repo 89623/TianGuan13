@@ -625,8 +625,9 @@
 
 			var/index = result_datum.name
 			var/list/new_info = get_reaction_info(reaction)
-			new_info["description"] = result_datum.description
+			new_info["description"] = lang_reverse_text(result_datum.description) // NOVA EDIT - I18N
 			new_info["color"] = result_datum.color
+			new_info["display_name"] = lang_reverse_text(result_datum.name) // NOVA EDIT - I18N: translated display; the record key (index) stays english for pin/search/dispense-match
 
 			var/num_alts = 0
 			while(new_reaction_list[index])
@@ -655,6 +656,7 @@
 	for(var/datum/reagent/reagent_typepath as anything in reagent_list)
 		info += list(list(
 			"name" = reagent_typepath::name,
+			"display_name" = lang_reverse_text(reagent_typepath::name), // NOVA EDIT - I18N: translated display; "name" stays english for dispense/recipe matching
 			"amount" = reagent_list[reagent_typepath],
 			"typepath" = reagent_typepath,
 		))
