@@ -161,6 +161,10 @@ GLOBAL_VAR_INIT(i18n_text_macro_regex, regex(@"\\(improper|proper|themselves|the
 	text = replacetext(text, "\\\"", "\"") // \" → "
 	text = replacetext(text, "\\n", "\n") // 字面 \n → 换行
 	text = replacetext(text, "\\t", "\t") // 字面 \t → 制表符
+	// BYOND 的 `\[` / `\]` 是「字面方括号」转义（防被当插值），只在编译期字面量生效；LANG 运行期取回
+	// 后引擎不再处理 → 字面显示反斜杠（记录面板「\[查看怪癖\]」即此）。在此还原为 [ ]。
+	text = replacetext(text, "\\[", "[") // \[ → [
+	text = replacetext(text, "\\]", "]") // \] → ]
 	return text
 
 /// 核心（纯函数）：按 locale 查模板（缺则回退英文，再缺则返回 key），最后做占位符替换。
