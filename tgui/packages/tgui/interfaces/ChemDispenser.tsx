@@ -23,6 +23,7 @@ import { bitflagInfo } from './Reagents/types';
 
 type DispensableReagent = {
   title: string;
+  display_title?: string; // NOVA EDIT - I18N: translated display; `title` stays english for matching
   id: string;
   pH: number;
   color: string;
@@ -499,7 +500,8 @@ const ReagentDispenseButton = (props: ReagentDispenseButtonProps) => {
         }}
       >
         {prefix}
-        {chemical.title}
+        {/* NOVA EDIT - I18N: show translated title, keep chemical.title for matching */}
+        {chemical.display_title || chemical.title}
       </span>
     </Button>
   );

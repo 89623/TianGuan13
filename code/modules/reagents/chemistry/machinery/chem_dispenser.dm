@@ -290,7 +290,7 @@
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
 				chemcolor = random_colour()
-			chemicals += list(list("title" = chemname, "id" = temp.name, "pH" = temp.ph, "color" = chemcolor, "pHCol" = convert_ph_to_readable_color(temp.ph)))
+			chemicals += list(list("title" = chemname, "display_title" = lang_reverse_text(chemname), "id" = temp.name, "pH" = temp.ph, "color" = chemcolor, "pHCol" = convert_ph_to_readable_color(temp.ph))) // NOVA EDIT - I18N: display_title is translated; title stays english for chem.title===reagentComponent.name matching
 	.["chemicals"] = chemicals
 	.["recipes"] = saved_recipes
 
