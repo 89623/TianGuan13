@@ -649,24 +649,26 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
 // if lower and upper are <300, return "cool to between X and Y degrees"
 // if lower is <300 and upper is >300, return "keep between X and Y degrees"
 function getTemperatureMessage(lower: number, upper: number): string {
+  // NOVA EDIT - I18N: localize the static phrase (numbers stay); phrases added to tgui.json
   if (lower === upper) {
-    return `Forms at ${lower}°K`;
+    return `${translateCurrent('Forms at')} ${lower}°K`;
   } else if (lower > 300 && upper > 300) {
-    return `Heat between ${lower}°K-${upper}°K`;
+    return `${translateCurrent('Heat between')} ${lower}°K-${upper}°K`;
   } else if (lower < 300 && upper < 300) {
-    return `Cool between ${Math.min(upper, lower)}°K-${Math.max(upper, lower)}°K`;
+    return `${translateCurrent('Cool between')} ${Math.min(upper, lower)}°K-${Math.max(upper, lower)}°K`;
   } else {
-    return `Keep between ${lower}°K-${upper}°K`;
+    return `${translateCurrent('Keep between')} ${lower}°K-${upper}°K`;
   }
 }
 
 // if lower and upper are the same, return "keep at pH X"
 // else return "keep between pH X and Y"
 function getPHMessage(lower: number, upper: number): string {
+  // NOVA EDIT - I18N
   if (lower === upper) {
-    return `Keep at pH ${lower}`;
+    return `${translateCurrent('Keep at pH')} ${lower}`;
   } else {
-    return `Keep between pH ${lower}-${upper}`;
+    return `${translateCurrent('Keep between pH')} ${lower}-${upper}`;
   }
 }
 
@@ -753,7 +755,11 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
   // otherwise, just display the name
   return (
     <Button fluid ellipsis disabled icon="question">
-      {formatReagentName(reagentComponent.amount, reagentComponent.name)}
+      {/* NOVA EDIT - I18N: display translated name (this is the path Ice/Water/Menthol take) */}
+      {formatReagentName(
+        reagentComponent.amount,
+        reagentComponent.display_name || reagentComponent.name,
+      )}
     </Button>
   );
 };
