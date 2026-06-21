@@ -701,6 +701,69 @@ function extractDmLabels(catalog) {
   }
 }
 
+// 交互菜单（modular_nova/modules/interaction_menu）的 name/description 来自 config/nova/interactions/
+// 下的 JSON 数据文件（源码外 config 数据，DM/TS 抽取器都够不着）。规律：interaction.name 同时是
+// **按钮显示**（InteractionsTab.tsx 的 `{interaction}` 文本节点）**和 act 标识符**（onClick 回传英文
+// JS 变量 `interaction:`，再 `GLOB.interaction_instances[name]` 查表）——所以只能翻**显示**、不能翻
+// 标识符。前端 auto-localize 按英文查 tgui.json 只改渲染文本（onClick 仍发英文变量）→ 安全；这同
+// category（已走 title prop）一致。description 是 tooltip（TRANSLATABLE_PROP）同理。此处把它们抽进
+// tgui.json，运行时 P1 也会跳过出现在 tgui 目录里的串（不动 DM ui_data 的 name=保住标识符）。
+// 单文件 = 单个交互对象；`*.master.json` = 以交互名为键、值为交互对象的字典。category=="hide" 的
+// 占位/示例交互跳过。
+const INTERACTION_JSON_DIR = path.join(ROOT, 'config/nova/interactions');
+
+function jsonFilesUnder(absPath, out = []) {
+  let entries;
+  try {
+    entries = fs.readdirSync(absPath, { withFileTypes: true });
+  } catch {
+    return out;
+  }
+  for (const entry of entries) {
+    const entryPath = path.join(absPath, entry.name);
+    if (entry.isDirectory()) {
+      jsonFilesUnder(entryPath, out);
+    } else if (entry.name.endsWith('.json')) {
+      out.push(entryPath);
+    }
+  }
+  return out;
+}
+
+function extractInteractionLabels(catalog) {
+  const collect = (obj) => {
+    if (!obj || typeof obj !== 'object') {
+      return;
+    }
+    if (Array.isArray(obj)) {
+      for (const el of obj) {
+        collect(el);
+      }
+      return;
+    }
+    // 一个交互对象：有 name 字段且非 hide 分类。message 数组等是字符串/数组，collect 自然跳过
+    // （非 object）；嵌套对象（master json 的值）继续递归。
+    if (typeof obj.name === 'string' && obj.category !== 'hide') {
+      addText(catalog, obj.name);
+      if (typeof obj.description === 'string') {
+        addText(catalog, obj.description);
+      }
+    }
+    for (const value of Object.values(obj)) {
+      if (value && typeof value === 'object') {
+        collect(value);
+      }
+    }
+  };
+  for (const file of jsonFilesUnder(INTERACTION_JSON_DIR)) {
+    try {
+      collect(JSON.parse(fs.readFileSync(file, 'utf8')));
+    } catch {
+      // 坏 JSON：跳过，不崩。
+    }
+  }
+}
+
 // 反派偏好（反派 tab）：定义在 TS 里（`key` 是 act 标识符，`name`/`description` 仅显示=安全；
 // 且 TS 端 bundle、不经 DM ui_data，P1 无关）。定义文件多为 .ts，walk() 只扫 .tsx/.jsx 故漏掉。
 // 这里专门抽 antag 定义的 name + description（内联模板字符串数组 + 同目录的共享 description 常量）。
@@ -773,6 +836,7 @@ function extractCatalog() {
   const catalog = {};
   extractDmLabels(catalog);
   extractAntagonistLabels(catalog);
+  extractInteractionLabels(catalog);
   for (const filePath of walk(TGUI_SOURCE_DIR)) {
     const source = fs.readFileSync(filePath, 'utf8');
     const sourceFile = ts.createSourceFile(

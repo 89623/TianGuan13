@@ -44,6 +44,63 @@ pub(crate) fn extract_flavor(strings_root: &Path, catalog: &mut Catalog) {
     }
 }
 
+/// 复印机/打印机表单（paper blanks）：`config/blanks.json`（TG）+ `config/nova/blanks.json`（Nova
+/// 覆盖）。源码外 config 数据（运行期 json_decode 读入 GLOB.paper_blanks），抽取器原本够不着 →
+/// 表单标题/字段标签/正文整段全英文。每个 blank = {code, category, name, info:[HTML 行]}。把
+/// `name`/`category` 与**含可翻散文的 `info` 行**逐条抽进 `blanks` 命名空间；运行时在 init_paper_blanks
+/// 落地点对 GLOB.paper_blanks 整串反查（display-only：act 用 code，反查名/分类/正文不破标识符）。
+/// info 行是 HTML，**逐行整串**入目录（译者保留 HTML 标签与 `[___]` 占位、只译可见文本，反查整串命中）。
+/// 纯占位行（`<p>[___]</p>`）/ 分隔线（`<hr />`）剥标签后无文本 → 跳过（不译）。
+pub(crate) fn extract_blanks(repo_root: &Path, catalog: &mut Catalog) {
+    for rel in ["config/blanks.json", "config/nova/blanks.json"] {
+        let Ok(text) = std::fs::read_to_string(repo_root.join(rel)) else {
+            continue;
+        };
+        let Ok(serde_json::Value::Array(blanks)) =
+            serde_json::from_str::<serde_json::Value>(&text)
+        else {
+            continue;
+        };
+        for blank in &blanks {
+            let serde_json::Value::Object(map) = blank else {
+                continue;
+            };
+            for field in ["name", "category"] {
+                if let Some(serde_json::Value::String(s)) = map.get(field) {
+                    let s = s.trim();
+                    if !s.is_empty() {
+                        emit(catalog, "blanks", s);
+                    }
+                }
+            }
+            if let Some(serde_json::Value::Array(info)) = map.get("info") {
+                for line in info {
+                    if let serde_json::Value::String(line) = line {
+                        let line = line.trim();
+                        if !line.is_empty() && html_has_translatable_text(line) {
+                            emit(catalog, "blanks", line);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/// 剥去 `<...>` 标签与 `[_ ]`（下划线/空格/方括号）占位后是否还剩字母 → 该 HTML 行是否含可翻文本。
+fn html_has_translatable_text(line: &str) -> bool {
+    let mut in_tag = false;
+    for ch in line.chars() {
+        match ch {
+            '<' => in_tag = true,
+            '>' => in_tag = false,
+            c if !in_tag && c.is_alphabetic() => return true,
+            _ => {}
+        }
+    }
+    false
+}
+
 fn extract_flavor_file(path: &Path, catalog: &mut Catalog) {
     let Ok(text) = std::fs::read_to_string(path) else {
         return;

@@ -278,6 +278,17 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 			return .
 	return text
 
+/// 显示用「物件名」本地化：先整串精确反查（命中堆叠/单词名/已译名幂等），miss 再走 AC 子串兜
+/// 复合名（如 "Robotics Lab APC" → 区域名子串 "Robotics Lab" 被换）。与 screentip（_atom.dm）同款
+/// 两步，抽成共用 proc 供「绕过 examine/AC 路径、只发 atom.name 的 UI」复用（如 LootPanel）。
+/// 仅用于**纯显示**的名字（act/回传用 ref/path、不用 name 处），翻名不破标识符。locale==en no-op。
+/proc/lang_localize_display_name(text)
+	if(!istext(text) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return text
+	. = lang_reverse_text(text)
+	if(. == text) // 精确 miss → 复合名走 AC 子串
+		. = lang_fallback_apply(text)
+
 /// 完整句聊天行反查：用于「先 `list += span_*("整句")` 累加、再 jointext 进一个 boxed_message
 /// 经 to_chat 输出」的场景（如职业出生提示 get_spawn_message）。整盒在 to_chat 只走 AC 子串，而
 /// rustg AC 是**最短匹配**：当完整句与其子短语都在目录时，长句会被拆成「已译子短语 + 中间留英文」

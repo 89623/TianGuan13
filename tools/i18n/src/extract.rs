@@ -682,6 +682,10 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
     //    type2type.dm）。strings 根目录由 out（.../strings/i18n/en）回推两级得到。
     if let Some(strings_root) = out.parent().and_then(|p| p.parent()) {
         crate::flavor::extract_flavor(strings_root, &mut catalog);
+        // 复印机表单（config/blanks.json + config/nova/blanks.json）：repo 根 = strings_root 的父级。
+        if let Some(repo_root) = strings_root.parent() {
+            crate::flavor::extract_blanks(repo_root, &mut catalog);
+        }
     }
 
     eprintln!(

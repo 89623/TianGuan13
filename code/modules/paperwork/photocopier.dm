@@ -217,12 +217,18 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks_nova()) // NOVA EDIT CHANGE - O
 	if(GLOB.paper_blanks)
 		for(var/blank_id in GLOB.paper_blanks)
 			var/list/paper_blank = GLOB.paper_blanks[blank_id]
+			// NOVA EDIT START - I18N: blank name/category come from config/blanks.json (extracted to `blanks`
+			// namespace). ui_static_data is constant data (bypasses P1), so reverse here. act uses `code`
+			// (display-only, safe); category reversed consistently for both entry + filter list.
+			// ORIGINAL: name = paper_blank["name"], category = paper_blank["category"],
+			var/blank_category = lang_reverse_text(paper_blank["category"])
 			blank_infos += list(list(
-				name = paper_blank["name"],
-				category = paper_blank["category"],
+				name = lang_reverse_text(paper_blank["name"]),
+				category = blank_category,
 				code = blank_id,
 			))
-			category_names |= paper_blank["category"]
+			category_names |= blank_category
+			// NOVA EDIT END
 
 	static_data["blanks"] = blank_infos
 	static_data["categories"] = category_names
@@ -609,10 +615,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks_nova()) // NOVA EDIT CHANGE - O
 	var/copy_colour = get_toner_color()
 	var/obj/item/paper/printblank = get_empty_paper(created_paper)
 
-	var/printname = blank["name"]
+	var/printname = lang_reverse_text(blank["name"]) // NOVA EDIT - I18N: form title from config/blanks.json (`blanks` namespace), exact reverse (display-only). ORIGINAL: var/printname = blank["name"]
 	var/list/printinfo
 	for(var/infoline in blank["info"])
-		printinfo += infoline
+		printinfo += lang_reverse_text(infoline) // NOVA EDIT - I18N: form body HTML lines reversed per-line (whole-line exact match, locale==en no-op). ORIGINAL: printinfo += infoline
 
 	printblank.name = "paper - '[printname]'"
 	printblank.add_raw_text(printinfo, color = copy_colour)
