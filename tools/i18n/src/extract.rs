@@ -69,6 +69,12 @@ const SINK_VARS: &[&str] = &[
     // 这类「type 变量持有 examine 文本、运行期 desc=该变量」漏抽长尾——dry_desc（血迹/痕迹变干后的描述）等。
     "dry_desc",
     "extended_desc",
+    // 手术操作（/datum/surgery_operation）的**展示**名/描述：手术计算机发 `rnd_name || name` /
+    // `rnd_desc || desc`，rnd_name 含手术类别（"Lobectomy (Lung Surgery)"），rnd_desc 是机械版描述。
+    // 这两个不是 name/desc → 之前漏抽 → 手术目录里操作名/描述整片英文。运行时在 operating_computer.dm
+    // 落地点反查（display-only；搜索/置顶用同一展示名、无英文常量比较=安全）。
+    "rnd_name",
+    "rnd_desc",
     // 售货机出货答谢语（vend_reply，单句，say 出 → 聊天 AC 翻译）。
     "vend_reply",
     // 说话动词（says/asks/exclaims/whispers/sings/yells 及各 mob 变体如 beeps/signs/hisses；
