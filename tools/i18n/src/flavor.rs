@@ -87,6 +87,58 @@ pub(crate) fn extract_blanks(repo_root: &Path, catalog: &mut Catalog) {
     }
 }
 
+/// 交互菜单（interaction_menu）的**聊天消息模板**：`config/nova/interactions/*.json` 里每个交互的
+/// `message`/`user_messages`/`target_messages` 数组（玩家执行交互时经 manual_emote/to_chat 发出的句子，
+/// 如 `"%USER% beckons %TARGET% over to them."`）。源码外 config 数据 → 抽取器够不着 → 聊天里整句英文。
+/// 抽进 `interactions` 命名空间，运行时在 `act()` 落地点（替换 %TOKEN% **之前**）对原始模板整串反查。
+/// 含 `%USER%`/`%TARGET%`/`%..._PRONOUN_..%` 标记，逐字入目录（译者保留两侧 %，反查整串命中、再 replacetext）。
+/// 注：交互 name/desc 走 TGUI 目录（tgui-catalog.mjs 的 extractInteractionLabels），与此**聊天消息**分属两路。
+pub(crate) fn extract_interactions(repo_root: &Path, catalog: &mut Catalog) {
+    let dir = repo_root.join("config/nova/interactions");
+    let Ok(entries) = std::fs::read_dir(&dir) else {
+        return;
+    };
+    for entry in entries.flatten() {
+        let Ok(text) = std::fs::read_to_string(entry.path()) else {
+            continue;
+        };
+        let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else {
+            continue;
+        };
+        collect_interaction_messages(&value, catalog);
+    }
+}
+
+/// 递归找含 message/user_messages/target_messages 的交互对象（兼容单文件与 .master.json 字典形态）。
+fn collect_interaction_messages(value: &serde_json::Value, catalog: &mut Catalog) {
+    let serde_json::Value::Object(map) = value else {
+        return;
+    };
+    // 占位/示例交互（category=="hide"，如 example_interaction.json 的 "message"/"message2"）不入目录。
+    let is_hide = matches!(map.get("category"), Some(serde_json::Value::String(c)) if c == "hide");
+    if !is_hide {
+        for field in ["message", "user_messages", "target_messages"] {
+        if let Some(serde_json::Value::Array(msgs)) = map.get(field) {
+            for m in msgs {
+                if let serde_json::Value::String(m) = m {
+                    let m = m.trim();
+                    // "json error" 占位与空串跳过；其余整句模板入目录。
+                    if !m.is_empty() && m != "json error" {
+                        emit(catalog, "interactions", m);
+                    }
+                }
+            }
+        }
+        }
+    }
+    // master json：值为交互对象，递归。
+    for v in map.values() {
+        if v.is_object() {
+            collect_interaction_messages(v, catalog);
+        }
+    }
+}
+
 /// 剥去 `<...>` 标签与 `[_ ]`（下划线/空格/方括号）占位后是否还剩字母 → 该 HTML 行是否含可翻文本。
 fn html_has_translatable_text(line: &str) -> bool {
     let mut in_tag = false;

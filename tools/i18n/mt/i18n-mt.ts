@@ -1076,7 +1076,8 @@ async function runOpenAI(
   const system =
     `你是 Space Station 13 游戏文本的专业本地化译者，目标语言：${LOCALE}。${task}` +
     `输入是紧凑 JSON：键 -> 唯一英文源。规则：` +
-    `(1) 键完全不变；(2) 逐字保留 {0}/{1}… 占位符、HTML 标签、DM 文本宏（如 \\improper、\\the）；` +
+    `(1) 键完全不变；(2) 逐字保留 {0}/{1}… 占位符、HTML 标签、DM 文本宏（如 \\improper、\\the）、` +
+    `以及 %XXX% 形式的整段标记（如 %USER%/%TARGET%/%TARGET_PRONOUN_THEIR%，连同两侧 % 一字不改）；` +
     `(3) 严格遵循术语表（value===key 的词保持英文不翻，其余英文务必译为中文，不要中英混杂）；` +
     `(4) 大写缩写（APC/RCD/AI 等）保留英文。` +
     `只返回一个 JSON 对象：{"translations": {键 -> 译文，键与输入完全一致}, ` +
@@ -1310,7 +1311,7 @@ async function translateBatch(
     `你是 Space Station 13 游戏文本的专业本地化译者，目标语言：${LOCALE}。${task}` +
     `读取 ${path.relative(ROOT, inPath)}（紧凑 JSON：临时数字 ID -> 唯一英文源；数字 ID 不是目录 key，可能映射到多个真实 key），把每个值翻译为目标语言，写入 ` +
     `${path.relative(ROOT, outPath)}：` +
-    `(1) 临时数字 ID 完全不变，不要输出真实目录 key；(2) 逐字保留 {0}/{1}… 占位符、HTML 标签、DM 文本宏（如 \\improper、\\the）；` +
+    `(1) 临时数字 ID 完全不变，不要输出真实目录 key；(2) 逐字保留 {0}/{1}… 占位符、HTML 标签、DM 文本宏（如 \\improper、\\the）、以及 %XXX% 形式整段标记（如 %USER%/%TARGET%，连同两侧 % 一字不改）；` +
     `(3) 严格遵循术语表（保持英文的词不要翻译，其余英文务必译为中文，不要中英混杂）；` +
     `(4) 大写缩写（APC/RCD/AI 等）保留英文；(5) 只输出/写入紧凑合法 JSON，键序与输入一致，不要 Markdown。` +
     `(6) 凡是术语表里没有的「固定专名/术语」才追加到 ${path.relative(ROOT, addPath)}：` +

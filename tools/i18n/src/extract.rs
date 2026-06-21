@@ -685,6 +685,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
         // 复印机表单（config/blanks.json + config/nova/blanks.json）：repo 根 = strings_root 的父级。
         if let Some(repo_root) = strings_root.parent() {
             crate::flavor::extract_blanks(repo_root, &mut catalog);
+            crate::flavor::extract_interactions(repo_root, &mut catalog);
         }
     }
 

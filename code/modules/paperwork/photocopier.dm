@@ -620,7 +620,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks_nova()) // NOVA EDIT CHANGE - O
 	for(var/infoline in blank["info"])
 		printinfo += lang_reverse_text(infoline) // NOVA EDIT - I18N: form body HTML lines reversed per-line (whole-line exact match, locale==en no-op). ORIGINAL: printinfo += infoline
 
-	printblank.name = "paper - '[printname]'"
+	printblank.name = "[lang_reverse_text("paper")] - '[printname]'" // NOVA EDIT - I18N: localize the "paper" prefix word (exact reverse, locale==en no-op). ORIGINAL: printblank.name = "paper - '[printname]'"
 	printblank.add_raw_text(printinfo, color = copy_colour)
 	printblank.update_appearance()
 	use_toner(PAPER_TONER_USE)
