@@ -489,6 +489,40 @@ function literalText(node) {
   return null;
 }
 
+// 「显示位置」的字符串字面量抽取（含三元两支与 ||/&&/?? 的字面量操作数）。仅用于**已知是 UI 显示**
+// 的上下文（可翻 prop 的值、JSX 子表达式）→ 无需句末标点启发式（位置已保证是给玩家看的文案）。
+// 系统性覆盖一大类「抽取器够不着」的 TGUI 静态文案：`content={x ? 'Retract' : 'Deploy'}`、
+// `{ai_name || 'No AI Detected'}`、`{cond ? 'Unable to Interact' : 'Able to Interact'}`、`{'Search...'}`。
+// 运行时 auto-localize 按英文原文查 tgui.json 翻这些渲染出的串；这里只负责把它们抽进目录。
+function addDisplayExpr(catalog, node) {
+  if (!node) {
+    return;
+  }
+  if (ts.isJsxExpression(node) || ts.isParenthesizedExpression(node)) {
+    return addDisplayExpr(catalog, node.expression);
+  }
+  if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
+    addText(catalog, node.text);
+    return;
+  }
+  if (ts.isConditionalExpression(node)) {
+    addDisplayExpr(catalog, node.whenTrue);
+    addDisplayExpr(catalog, node.whenFalse);
+    return;
+  }
+  if (ts.isBinaryExpression(node)) {
+    const op = node.operatorToken.kind;
+    if (
+      op === ts.SyntaxKind.BarBarToken ||
+      op === ts.SyntaxKind.AmpersandAmpersandToken ||
+      op === ts.SyntaxKind.QuestionQuestionToken
+    ) {
+      addDisplayExpr(catalog, node.left);
+      addDisplayExpr(catalog, node.right);
+    }
+  }
+}
+
 /// 剥离 DM 语法宏（\improper/\proper），使抽出的串与运行时 TGUI 收到的（宏已解析）对齐。
 function stripGrammarMacros(text) {
   return typeof text === 'string' ? text.replace(/\\(improper|proper)\s*/g, '') : text;
@@ -855,7 +889,7 @@ function extractCatalog() {
       } else if (ts.isJsxAttribute(node)) {
         const name = node.name.getText(sourceFile);
         if (TRANSLATABLE_PROPS.has(name)) {
-          addText(catalog, literalText(node.initializer));
+          addDisplayExpr(catalog, node.initializer); // 含三元/|| 两支（content={x?'Retract':'Deploy'}）
         }
       } else if (ts.isPropertyAssignment(node)) {
         const name = propertyName(node.name);
@@ -864,8 +898,16 @@ function extractCatalog() {
           OPTION_TEXT_PROPS.has(name) ||
           (isFeatureDef && FEATURE_LABEL_PROPS.has(name))
         ) {
-          addText(catalog, literalText(node.initializer));
+          addDisplayExpr(catalog, node.initializer);
         }
+      } else if (
+        ts.isJsxExpression(node) &&
+        node.parent &&
+        !ts.isJsxAttribute(node.parent)
+      ) {
+        // JSX 子表达式（非属性值）：`{cond ? 'A' : 'B'}` / `{x || 'No AI Detected'}` / `{'Search…'}`
+        // —— 渲染为可见文本节点，是 UI 文案。三元/||/字面量经 addDisplayExpr 抽取（bare 标识符 no-op）。
+        addDisplayExpr(catalog, node.expression);
       } else if (
         ts.isStringLiteral(node) ||
         ts.isNoSubstitutionTemplateLiteral(node)
