@@ -109,6 +109,31 @@ pub(crate) fn extract_interactions(repo_root: &Path, catalog: &mut Catalog) {
     }
 }
 
+/// 新闻播报机 lorecaster 的 flavor 新闻：`config/nova/news_stories.json`（字典：story_id -> {title,text,...}）。
+/// 源码外 config 数据 → 抽取器够不着 → 新闻整篇英文。抽 title + text 进 `news` 命名空间，运行时在
+/// lorecaster fire() 落地点整串反查（display-only）。
+pub(crate) fn extract_news_stories(repo_root: &Path, catalog: &mut Catalog) {
+    let Ok(text) = std::fs::read_to_string(repo_root.join("config/nova/news_stories.json")) else {
+        return;
+    };
+    let Ok(serde_json::Value::Object(stories)) = serde_json::from_str::<serde_json::Value>(&text)
+    else {
+        return;
+    };
+    for story in stories.values() {
+        if let serde_json::Value::Object(map) = story {
+            for field in ["title", "text"] {
+                if let Some(serde_json::Value::String(s)) = map.get(field) {
+                    let s = s.trim();
+                    if !s.is_empty() {
+                        emit(catalog, "news", s);
+                    }
+                }
+            }
+        }
+    }
+}
+
 /// 递归找含 message/user_messages/target_messages 的交互对象（兼容单文件与 .master.json 字典形态）。
 fn collect_interaction_messages(value: &serde_json::Value, catalog: &mut Catalog) {
     let serde_json::Value::Object(map) = value else {

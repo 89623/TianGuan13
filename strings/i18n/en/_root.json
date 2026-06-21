@@ -352,6 +352,9 @@
   "_root.fs_robust": "robust",
   "_root.fs_verylow": "very low",
   "_root.fs_veryrobust": "very robust",
+  "_root.news_default_title": "Nanotrasen News Broadcast",
+  "_root.news_empty_article": "Someone forgot to fill out the article!",
+  "_root.news_published_on": "Originally published on: {0}/{1}/{2}",
   "_root.tag_climbable": "climbable",
   "_root.tag_crafting_component": "crafting component"
 }

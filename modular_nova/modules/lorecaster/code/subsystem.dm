@@ -20,8 +20,9 @@ SUBSYSTEM_DEF(lorecaster)
 		return // But skip the cycle this time
 
 	var/picked_story = pick(stories)
-	var/text = stories[picked_story]["text"]
-	var/title = stories[picked_story]["title"]
-	text += "\n\nOriginally published on: [stories[picked_story]["month"]]/[stories[picked_story]["day"]]/[stories[picked_story]["year"]]"
-	GLOB.news_network.submit_article(text || "Someone forgot to fill out the article!", title || "Nanotrasen News Broadcast", "Nanotrasen News Network", null)
+	// I18N: story title/text from config/nova/news_stories.json (`news` namespace) → reverse整串; date label LANG.
+	var/text = lang_reverse_text(stories[picked_story]["text"])
+	var/title = lang_reverse_text(stories[picked_story]["title"])
+	text += "\n\n[LANG("_root.news_published_on", list(stories[picked_story]["month"], stories[picked_story]["day"], stories[picked_story]["year"]))]"
+	GLOB.news_network.submit_article(text || LANG("_root.news_empty_article", null), title || LANG("_root.news_default_title", null), "Nanotrasen News Network", null)
 	stories -= picked_story

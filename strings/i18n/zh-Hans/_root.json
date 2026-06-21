@@ -334,5 +334,8 @@
 	"_root.economy_main": "<b>扇区经济报告</b><br><br> 当前扇区售货机价格为 <b>{0}%</b>{1}<br><br> 空间站当前消费能力为 <b>{2} {3}</b>，船员目标津贴为 <b>{4} {5}</b>。<br><br>{6}",
 	"_root.economy_moneybags": "我们的 GMM 聚光灯想提醒你：<b>{0}</b> 是空间站最富有的船员！他们已攒下 {1} {2}，赚得盆满钵满。",
 	"_root.economy_closing": "以上来自<i>纳米传讯经济学部</i>。",
-	"_root.economy_title": "空间站收益报告"
+	"_root.economy_title": "空间站收益报告",
+	"_root.news_published_on": "最初发布于：{0}/{1}/{2}",
+	"_root.news_empty_article": "有人忘了填写这篇报道！",
+	"_root.news_default_title": "纳米传讯新闻播报"
 }

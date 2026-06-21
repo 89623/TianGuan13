@@ -700,6 +700,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
         if let Some(repo_root) = strings_root.parent() {
             crate::flavor::extract_blanks(repo_root, &mut catalog);
             crate::flavor::extract_interactions(repo_root, &mut catalog);
+            crate::flavor::extract_news_stories(repo_root, &mut catalog);
         }
     }
 
