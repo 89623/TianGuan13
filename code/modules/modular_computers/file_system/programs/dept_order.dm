@@ -89,16 +89,16 @@ GLOBAL_VAR(department_cd_override)
 			continue
 
 		UNTYPED_LIST_ADD(supply_data[pack.group], list(
-			"name" = pack.name,
+			"name" = lang_reverse_text(pack.name), // NOVA EDIT - I18N: NtOS dept-order app (separate from orderconsole.dm); reverse name/desc at this落地点 (act uses "id", display-only safe). ORIGINAL: "name" = pack.name,
 			"cost" = pack.get_cost(),
 			"id" = pack.id,
-			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"desc" = lang_reverse_text(pack.desc || pack.name), // NOVA EDIT - I18N: full desc (incl. baked "Requires X access") is an exact catalog key → exact reverse. ORIGINAL: "desc" = pack.desc || pack.name,
 		))
 
 	var/list/supply_data_flattened = list()
 	for(var/group in supply_data)
 		UNTYPED_LIST_ADD(supply_data_flattened, list(
-			"name" = group,
+			"name" = lang_reverse_text(group), // NOVA EDIT - I18N: group/category display name (grouping uses english pack.group key; display-only). ORIGINAL: "name" = group,
 			"packs" = supply_data[group],
 		))
 
