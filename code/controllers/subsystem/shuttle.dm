@@ -176,15 +176,26 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 
 		//Adds access requirements to the end of each description.
+		// NOVA EDIT START - I18N: this mutates pack.desc by appending the access suffix → runtime desc =
+		// "base catalog key + suffix", so a UI 落地点 exact-reverse misses (货物名翻了、描述不翻即此).
+		// i18n_cache 是 GLOBAL_LIST_INIT、早于 SS Initialize 已就绪 → 在此反查 base desc + 用「模板按值
+		// 反查再填充」本地化后缀（access 区域名也反查）。locale==en 时 lang_reverse_text 原样返回 = 零行为变化。
+		pack.desc = lang_reverse_text(pack.desc)
 		if(pack.access && pack.access_view)
+			var/access_name = lang_reverse_text(SSid_access.get_access_desc(pack.access))
 			if(pack.access == pack.access_view)
-				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open or purchase."
+				// ORIGINAL: pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open or purchase."
+				pack.desc += replacetext(lang_reverse_text(" Requires {0} access to open or purchase."), "{0}", access_name)
 			else
-				pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open, or [SSid_access.get_access_desc(pack.access_view)] access to purchase."
+				// ORIGINAL: pack.desc += " Requires [...] access to open, or [...] access to purchase."
+				pack.desc += replacetext(replacetext(lang_reverse_text(" Requires {0} access to open, or {1} access to purchase."), "{0}", access_name), "{1}", lang_reverse_text(SSid_access.get_access_desc(pack.access_view)))
 		else if(pack.access)
-			pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open."
+			// ORIGINAL: pack.desc += " Requires [SSid_access.get_access_desc(pack.access)] access to open."
+			pack.desc += replacetext(lang_reverse_text(" Requires {0} access to open."), "{0}", lang_reverse_text(SSid_access.get_access_desc(pack.access)))
 		else if(pack.access_view)
-			pack.desc += " Requires [SSid_access.get_access_desc(pack.access_view)] access to purchase."
+			// ORIGINAL: pack.desc += " Requires [SSid_access.get_access_desc(pack.access_view)] access to purchase."
+			pack.desc += replacetext(lang_reverse_text(" Requires {0} access to purchase."), "{0}", lang_reverse_text(SSid_access.get_access_desc(pack.access_view)))
+		// NOVA EDIT END
 
 		supply_packs[pack.id] = pack
 
