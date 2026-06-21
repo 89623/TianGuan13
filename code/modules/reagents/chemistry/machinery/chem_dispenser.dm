@@ -285,12 +285,20 @@
 	for(var/re in dispensable_reagents)
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
-			var/chemname = temp.name
+			// NOVA EDIT START - I18N: temp.name is the RUNTIME name (translated to Chinese by SSreagents.Init).
+			// title/id MUST be the english name: title is matched against reagentComponent.name (english) for
+			// recipe base-reagent linking, and id is sent to the "dispense" act → GLOB.name2reagent[id] (english
+			// keys). Using the Chinese runtime name broke recipe matching + dispensing (cola/orange "点了不出货").
+			// display_title carries the translated name for showing. ORIGINAL: chemname=temp.name; "title"=chemname, "id"=temp.name
+			var/english_name = initial(temp.name)
+			var/display_name = temp.name
 			var/chemcolor = temp.color
 			if(is_hallucinating && prob(5))
-				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
+				english_name = "[pick_list_replacements("hallucination.json", "chemicals")]"
+				display_name = english_name
 				chemcolor = random_colour()
-			chemicals += list(list("title" = chemname, "display_title" = lang_reverse_text(chemname), "id" = temp.name, "pH" = temp.ph, "color" = chemcolor, "pHCol" = convert_ph_to_readable_color(temp.ph))) // NOVA EDIT - I18N: display_title is translated; title stays english for chem.title===reagentComponent.name matching
+			chemicals += list(list("title" = english_name, "display_title" = display_name, "id" = english_name, "pH" = temp.ph, "color" = chemcolor, "pHCol" = convert_ph_to_readable_color(temp.ph)))
+			// NOVA EDIT END
 	.["chemicals"] = chemicals
 	.["recipes"] = saved_recipes
 
