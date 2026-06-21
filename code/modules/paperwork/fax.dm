@@ -258,7 +258,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		if(FAX.fax_id == fax_id) //skip yourself
 			continue
 		var/list/fax_data = list()
-		fax_data["fax_name"] = FAX.fax_name
+		fax_data["fax_name"] = lang_localize_display_name(FAX.fax_name) // NOVA EDIT - I18N - 显示名反查（act 用 fax_id，译名安全）
 		fax_data["fax_id"] = FAX.fax_id
 		fax_data["visible"] = FAX.visible_to_network
 		fax_data["has_paper"] = !!FAX.loaded_item_ref?.resolve()
@@ -268,7 +268,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 
 	// Own data
 	data["fax_id"] = fax_id
-	data["fax_name"] = fax_name
+	data["fax_name"] = lang_localize_display_name(fax_name) // NOVA EDIT - I18N - 显示名反查
 	data["visible"] = visible_to_network
 	// In this case, we don't care if the fax is hacked or in the syndicate's network. The main thing is to check the visibility of other faxes.
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
@@ -278,7 +278,12 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	for(var/key in special_networks)
 		if(special_networks[key]["fax_id"] == fax_id)
 			continue
-		special_networks_data += list(special_networks[key])
+		// NOVA EDIT START - I18N - Copy + 显示名反查（payload 与持久 special_networks 共享引用，
+		// 直接改会被 P1 连带污染原表；故复制内层 dict 再反查 fax_name 显示名，act 用 fax_id 不受影响）
+		var/list/net = special_networks[key].Copy()
+		net["fax_name"] = lang_localize_display_name(net["fax_name"])
+		special_networks_data += list(net)
+		// NOVA EDIT END
 	data["special_faxes"] = special_networks_data
 	return data
 

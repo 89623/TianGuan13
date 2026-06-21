@@ -566,6 +566,12 @@ const DM_LABEL_SOURCES = [
   ['modular_nova/modules/loadouts', true, /\bcategory_name\s*=\s*"([^"]+)"/g],
   // loadouts（复数）模块里的配装**物品名**（Bouquet - Rose 等；按 item_path 选=显示安全）。
   ['modular_nova/modules/loadouts', true, /^\s*name\s*=\s*"([^"]+)"/gm],
+  // 售货机分类 Tab 名（Vending.tsx 底部分类：Head/Accessories/Under/Suits & Skirts/Premium…）。
+  // build_inventory 的分类 dict 用引号键 `"name" = "..."`（与机器自身 `name = ` 裸键不同正则，
+  // 故不会误抽机器名）；前端按英文分类值过滤（product.category===categoryName）、仅渲染 {name}
+  // 文本节点翻显示 → 译之安全（含单词类 Under/Toys/Premium）。
+  ['code/modules/vending', true, /"name"\s*=\s*"([^"]+)"/g],
+  ['modular_nova/modules/modular_vending', true, /"name"\s*=\s*"([^"]+)"/g],
   // 精灵配件名（发型/胡须/纹身/渐变样式…，角色设置下拉，按名选择=标识符）。
   ['code/datums/sprite_accessories.dm', false, /^\s*name\s*=\s*"([^"]+)"/gm],
   ['modular_nova/master_files/code/datums/sprite_accessories', true, /^\s*name\s*=\s*"([^"]+)"/gm],

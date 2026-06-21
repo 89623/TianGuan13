@@ -393,6 +393,9 @@ GLOBAL_LIST_INIT(i18n_payload_skip_keys, list(\
 	"items" = TRUE,\
 	"init_value" = TRUE,\
 	"id" = TRUE,\
+	"assistance_consoles" = TRUE,\
+	"supply_consoles" = TRUE,\
+	"information_consoles" = TRUE,\
 ))
 
 /// 递归把一个 list（含嵌套 list / 关联 list）里的字符串「值」按多词门槛反查为全服 locale 译文。
