@@ -291,6 +291,28 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 	if(. == text) // 精确 miss → 复合名走 AC 子串
 		. = lang_fallback_apply(text)
 
+/// 已知会被运行期 `desc +=` 追加的固定后缀（trim 形态）。base + 后缀都是各自独立的目录键，但拼接后
+/// 整串非目录键 → exact 反查 miss。这些追加发生在 New()/早期（i18n_cache 未就绪、原地反查会空转），
+/// 故在**使用点**（如手术计算机）用 lang_reverse_suffixed 拆开 base + 后缀分别精确反查（避免 AC 蚕食）。
+GLOBAL_LIST_INIT(i18n_appended_suffixes, list(
+	"This procedure can only be performed once per organ.",
+))
+
+/// 反查「base + 已知追加后缀」型字符串：先整串精确（rnd_desc 等无后缀的直接命中）；miss 时若以某
+/// 已知后缀结尾，拆成 base + 后缀各自精确反查再拼回（均为目录键 → 干净、不经 AC）。locale==en no-op。
+/proc/lang_reverse_suffixed(text)
+	if(!istext(text) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return text
+	. = lang_reverse_text(text)
+	if(. != text)
+		return . // 整串精确命中
+	for(var/suffix in GLOB.i18n_appended_suffixes)
+		var/appended = " [suffix]" // 追加时带前导空格
+		var/alen = length(appended)
+		if(length(text) > alen && copytext(text, length(text) - alen + 1) == appended)
+			return "[lang_reverse_text(copytext(text, 1, length(text) - alen + 1))] [lang_reverse_text(suffix)]"
+	return .
+
 /// 完整句聊天行反查：用于「先 `list += span_*("整句")` 累加、再 jointext 进一个 boxed_message
 /// 经 to_chat 输出」的场景（如职业出生提示 get_spawn_message）。整盒在 to_chat 只走 AC 子串，而
 /// rustg AC 是**最短匹配**：当完整句与其子短语都在目录时，长句会被拆成「已译子短语 + 中间留英文」

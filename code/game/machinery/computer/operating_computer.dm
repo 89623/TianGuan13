@@ -231,7 +231,8 @@
 			// rnd_desc now in SINK_VARS). Search/pin use the same display name, no english-constant compare = safe.
 			// ORIGINAL: "name" = operation.rnd_name || operation.name, "desc" = operation.rnd_desc || operation.desc, "tool_rec" = operation.get_recommended_tool() || "error",
 			"name" = lang_localize_display_name(operation.rnd_name || operation.name),
-			"desc" = lang_reverse_text(operation.rnd_desc || operation.desc),
+			"desc" = lang_reverse_suffixed(operation.rnd_desc || operation.desc), // NOVA EDIT - I18N: organ-repair desc has " This procedure...once per organ." appended at New() (breaks exact); split base+suffix here.
+
 			"tool_rec" = lang_reverse_text(operation.get_recommended_tool() || "error"),
 			// NOVA EDIT END
 			"requirements" = operation.get_requirements(),

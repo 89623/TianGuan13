@@ -39,7 +39,7 @@
 	"surgery_req_a2f597b5": "the debris has been cleared from the cranial fissure",
 	"surgery_req_cedeb28b": "the patient must have brute or burn damage",
 	"surgery_req_dd550a99": "the limb must have skin",
-	"surgery_req_denting": "The patient must have denting or heat damage",
 	"surgery_req_ec24aaec": "the patient must not be husked",
-	"surgery_once_per_organ": "This procedure can only be performed once per organ."
+	"surgery_once_per_organ": "This procedure can only be performed once per organ.",
+	"surgery_req_denting_lc": "the patient must have denting or heat damage"
 }

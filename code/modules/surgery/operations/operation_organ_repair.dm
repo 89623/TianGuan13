@@ -20,9 +20,7 @@
 	if(operation_flags & OPERATION_LOOPING)
 		repeatable = TRUE // if it's looping it would necessitate being repeatable
 	if(!repeatable)
-		// NOVA EDIT - I18N: appending a suffix breaks the desc's exact catalog match → reverse base +
-		// translated suffix here (lang_reverse_text internally gated; en = original behavior). ORIGINAL: desc += " This procedure can only be performed once per organ."
-		desc = lang_reverse_text(desc) + " " + lang_reverse_text("This procedure can only be performed once per organ.")
+		desc += " This procedure can only be performed once per organ." // NOVA EDIT NOTE - I18N: this suffix breaks exact reverse; localized at the operating_computer 落地点 via lang_reverse_suffixed (New() runs before i18n_cache, can't reverse here).
 
 /datum/surgery_operation/organ/repair/state_check(obj/item/organ/organ)
 	if(organ.damage < (organ.maxHealth * heal_to_percent) || (!repeatable && HAS_TRAIT(organ, TRAIT_ORGAN_OPERATED_ON)))
