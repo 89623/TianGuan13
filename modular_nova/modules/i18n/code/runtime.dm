@@ -271,9 +271,11 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 		. = reverse[lang_strip_grammar_macros(text)]
 		if(!isnull(.))
 			return .
-	// 仍未命中：DM 把 "\" 续行的前导制表符并入字符串、抽取器却归一成单空格 → 折叠后再查一次。
-	if(findtext(text, "\t"))
-		. = reverse[lang_collapse_ws(text)]
+	// 仍未命中：DM 把 "\" 续行的前导制表符/空格并入字符串、抽取器却归一成单空格 → **总是**折叠后
+	// 再查一次（不止 \t：多空格续行也会漏；findtext("\t") 条件曾漏掉这类 → 多行 desc 整段不翻）。
+	var/collapsed = lang_collapse_ws(text)
+	if(collapsed != text)
+		. = reverse[collapsed]
 		if(!isnull(.))
 			return .
 	return text

@@ -18,5 +18,6 @@
 	"surgery_guide_16": "the prosthetic must be unsecured",
 	"surgery_guide_17": "the prosthetic must not be unsecured",
 	"surgery_guide_18": "the chest cavity must be opened wide",
-	"surgery_guide_19": "the chest cavity must not be opened wide"
+	"surgery_guide_19": "the chest cavity must not be opened wide",
+	"surgery_guide_complex_anatomy": "The patient must not have complex anatomy"
 }

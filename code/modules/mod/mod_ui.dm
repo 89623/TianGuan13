@@ -9,7 +9,7 @@
 	var/data = list()
 	// Suit information
 	var/suit_status = list(
-		"core_name" = core?.name,
+		"core_name" = lang_localize_display_name(core?.name), // NOVA EDIT - I18N: composed atom name ("MOD Infinite Core") — exact reverse + AC for substrings. display-only (act uses ref).
 		"charge_current" = get_charge(),
 		"charge_max" = get_max_charge(),
 		"chargebar_color" = get_chargebar_color(),
@@ -65,7 +65,7 @@
 	for(var/obj/item/part as anything in get_parts())
 		part_info += list(list(
 			"slot" = english_list(parse_slot_flags(part.slot_flags)),
-			"name" = part.name,
+			"name" = lang_localize_display_name(part.name), // NOVA EDIT - I18N: composed part name ("Administrative MOD helmet") — exact reverse + AC. display-only (act uses ref).
 			"deployed" = part.loc != src,
 			"ref" = REF(part),
 		))

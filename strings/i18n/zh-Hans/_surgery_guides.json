@@ -18,5 +18,6 @@
 	"surgery_guide_16": "义体必须未固定",
 	"surgery_guide_17": "义体不得未固定",
 	"surgery_guide_18": "胸腔必须被大幅打开",
-	"surgery_guide_19": "胸腔不得被大幅打开"
+	"surgery_guide_19": "胸腔不得被大幅打开",
+	"surgery_guide_complex_anatomy": "患者不得具有复杂解剖结构"
 }
