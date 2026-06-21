@@ -1,0 +1,22 @@
+{
+	"surgery_guide_00": "the skin must be cut",
+	"surgery_guide_01": "the skin must not be cut",
+	"surgery_guide_02": "the skin must be open",
+	"surgery_guide_03": "the skin must not be open",
+	"surgery_guide_04": "the blood vessels must be unclamped",
+	"surgery_guide_05": "the blood vessels must not be unclamped",
+	"surgery_guide_06": "the blood vessels must be clamped",
+	"surgery_guide_07": "the blood vessels must not be clamped",
+	"surgery_guide_08": "the organs must be cut",
+	"surgery_guide_09": "the organs must not be cut",
+	"surgery_guide_10": "the bone must be drilled",
+	"surgery_guide_11": "the bone must not be drilled",
+	"surgery_guide_12": "the bone must be sawed",
+	"surgery_guide_13": "the bone must not be sawed",
+	"surgery_guide_14": "plastic must be applied",
+	"surgery_guide_15": "plastic must not be applied",
+	"surgery_guide_16": "the prosthetic must be unsecured",
+	"surgery_guide_17": "the prosthetic must not be unsecured",
+	"surgery_guide_18": "the chest cavity must be opened wide",
+	"surgery_guide_19": "the chest cavity must not be opened wide"
+}

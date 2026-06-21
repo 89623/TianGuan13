@@ -618,12 +618,20 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/get_requirements()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	return list(
+	. = list(
 		all_required_strings(),
 		any_required_strings(),
 		any_optional_strings(),
 		all_blocked_strings(),
 	)
+	// NOVA EDIT ADDITION START - I18N: SURGERY_STATE_GUIDES strings come from bitfield_to_list as raw
+	// English ("the skin must be open"…), not LANG'd → reverse here so the surgery panel shows them in
+	// the server locale. Already-LANG'd elements are Chinese = reverse no-op. locale==en no-op.
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		for(var/list/group in .)
+			for(var/idx in 1 to length(group))
+				group[idx] = lang_reverse_text(group[idx])
+	// NOVA EDIT ADDITION END
 
 /// Returns a list of strings indicating requirements for this operation
 /// "All requirements" are formatted as "All of the following must be true:"

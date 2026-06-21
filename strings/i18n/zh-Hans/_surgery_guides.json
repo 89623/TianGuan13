@@ -1,0 +1,22 @@
+{
+	"surgery_guide_00": "皮肤必须被切开",
+	"surgery_guide_01": "皮肤不得被切开",
+	"surgery_guide_02": "皮肤必须被打开",
+	"surgery_guide_03": "皮肤不得被打开",
+	"surgery_guide_04": "血管必须未被夹住",
+	"surgery_guide_05": "血管不得未被夹住",
+	"surgery_guide_06": "血管必须被夹住",
+	"surgery_guide_07": "血管不得被夹住",
+	"surgery_guide_08": "器官必须被切开",
+	"surgery_guide_09": "器官不得被切开",
+	"surgery_guide_10": "骨骼必须被钻开",
+	"surgery_guide_11": "骨骼不得被钻开",
+	"surgery_guide_12": "骨骼必须被锯开",
+	"surgery_guide_13": "骨骼不得被锯开",
+	"surgery_guide_14": "必须已敷上塑料",
+	"surgery_guide_15": "不得敷上塑料",
+	"surgery_guide_16": "义体必须未固定",
+	"surgery_guide_17": "义体不得未固定",
+	"surgery_guide_18": "胸腔必须被大幅打开",
+	"surgery_guide_19": "胸腔不得被大幅打开"
+}
