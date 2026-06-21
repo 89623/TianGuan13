@@ -62,7 +62,9 @@
 /datum/stock_market_event/proc/create_news()
 	var/temp_company = pick(company_name)
 	var/temp_circumstance = pick(circumstance)
-	SSstock_market.news_string += "<b>[name] [temp_company]</b> [temp_circumstance]<b>[mat.name].</b><br>"
+	// NOVA EDIT - I18N: reverse each composed part (name/company/circumstance/material) so the newscaster
+	// economy report's stock lines aren't english. circumstance/company_name now in SINK_VARS.
+	SSstock_market.news_string += "<b>[lang_reverse_text(name)] [lang_reverse_text(temp_company)]</b> [lang_reverse_text(temp_circumstance)]<b>[lang_reverse_text(mat.name)].</b><br>"
 
 
 /datum/stock_market_event/market_reset

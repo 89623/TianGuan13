@@ -78,6 +78,11 @@ const SINK_VARS: &[&str] = &[
     // ID 卡职务（/datum/id_trim、卡片等的 assignment；HUD/检视/模块服「分配」显示）。多为职业名、
     // 但 Nova 专属职务（"Bluespace Technician" 等）非 job datum → 漏抽。display-only（显示在 ID/HUD）。
     "assignment",
+    // 股市事件新闻（/datum/stock_market_event）：经济报告里拼接的 "公司 情况描述 材料" 串。
+    // company_name（公司名 list）/ circumstance（情况短语 list）非 name/desc → 漏抽 → 新闻整段英文。
+    // 运行时在 create_news 落地点逐成分反查。
+    "company_name",
+    "circumstance",
     // 售货机出货答谢语（vend_reply，单句，say 出 → 聊天 AC 翻译）。
     "vend_reply",
     // 说话动词（says/asks/exclaims/whispers/sings/yells 及各 mob 变体如 beeps/signs/hisses；
