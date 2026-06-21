@@ -514,7 +514,7 @@
 			var/datum/design/design = item
 			cat["items"] += list(list(
 				"id" = design.id,
-				"name" = design.name,
+				"name" = lang_reverse_text(design.name), // NOVA EDIT - I18N: ui_static_data (constant data, bypasses P1); product name in datum.json but front-end auto-localizes vs tgui.json → reverse here (act uses id, safe). ORIGINAL: "name" = design.name,
 				"is_reagent" = design.make_reagent != null,
 				"cost" = design.materials[SSmaterials.get_material(/datum/material/biomass)] / efficiency,
 			))
