@@ -587,10 +587,36 @@
 /obj/item/surgical_processor/surgical_drapes/admin
 	name = "\improper 科技手术铺巾"
 	desc = "纳米传讯牌电子手术铺巾,铺巾本身可以通过显影指导手术步骤,这张铺巾已经下载了所有已知最先进的手术."
+
 /obj/item/surgical_processor/surgical_drapes/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator)
+	AddElement(/datum/element/surgery_aid, name)
 
+/obj/item/surgical_processor/surgical_drapes/admin
+	loaded_surgeries = list(
+		/datum/surgery_operation/basic/tend_wounds/combo/upgraded/master,
+		/datum/surgery_operation/limb/bioware/cortex_folding,
+		/datum/surgery_operation/limb/bioware/cortex_folding/mechanic,
+		/datum/surgery_operation/limb/bioware/cortex_imprint,
+		/datum/surgery_operation/limb/bioware/cortex_imprint/mechanic,
+		/datum/surgery_operation/limb/bioware/ligament_hook,
+		/datum/surgery_operation/limb/bioware/ligament_hook/mechanic,
+		/datum/surgery_operation/limb/bioware/ligament_reinforcement,
+		/datum/surgery_operation/limb/bioware/ligament_reinforcement/mechanic,
+		/datum/surgery_operation/limb/bioware/muscled_veins,
+		/datum/surgery_operation/limb/bioware/muscled_veins/mechanic,
+		/datum/surgery_operation/limb/bioware/nerve_grounding,
+		/datum/surgery_operation/limb/bioware/nerve_grounding/mechanic,
+		/datum/surgery_operation/limb/bioware/nerve_splicing,
+		/datum/surgery_operation/limb/bioware/nerve_splicing/mechanic,
+		/datum/surgery_operation/limb/bioware/vein_threading,
+		/datum/surgery_operation/limb/bioware/vein_threading/mechanic,
+		/datum/surgery_operation/organ/brainwash,
+		/datum/surgery_operation/organ/brainwash/mechanic,
+		/datum/surgery_operation/organ/pacify,
+		/datum/surgery_operation/organ/pacify/mechanic,
+	)
+/*
 /obj/item/surgical_processor/surgical_drapes/admin/Initialize(mapload)
 	. = ..()
 	loaded_surgeries = list()
@@ -598,7 +624,7 @@
 	for(var/datum/surgery/beep as anything in req_tech_surgeries)
 		if(initial(beep.requires_tech))
 			loaded_surgeries += beep
-
+*/
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg/unicorn
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg/unicorn/give_gun_safeties()
@@ -743,3 +769,20 @@
 	icon_state = "soapomega"
 	worn_icon_state = "soapomega"
 	cleanspeed = 0.3 SECONDS //Only the truest of mind soul and body get one of these
+
+/obj/item/borg/cookbook/vi
+	var/datum/component/personal_crafting/crafting
+
+/obj/item/borg/cookbook/vi/Initialize(mapload)
+	. = ..()
+	crafting = AddComponent(/datum/component/personal_crafting)
+	crafting.forced_mode = FALSE
+	crafting.mode = FALSE
+
+/obj/item/borg/cookbook/vi/attack_self(mob/user, modifiers)
+	. = ..()
+	crafting.ui_interact(user)
+
+/obj/item/borg/cookbook/vi/dropped(mob/user, silent)
+	SStgui.close_uis(crafting)
+	return ..()

@@ -11,7 +11,6 @@
 	access = FALSE
 	access_view = FALSE
 	express_lock = FALSE
-	departamental_goody = TRUE
 
 /datum/supply_pack/companies/ballistics/intern_project/sidearm/bfr500
 	contains = list(/obj/item/gun/ballistic/revolver/single)
@@ -19,7 +18,6 @@
 	access = FALSE
 	access_view = FALSE
 	express_lock = FALSE
-	departamental_goody = TRUE
 
 //	大型枪械
 /datum/supply_pack/companies/ballistics/intern_project/primary
@@ -30,7 +28,6 @@
 	access = FALSE
 	access_view = FALSE
 	express_lock = FALSE
-	departamental_goody = TRUE
 
 /datum/supply_pack/companies/ballistics/intern_project/primary/aa12
 	contains = list(/obj/item/gun/ballistic/shotgun/aa12)
