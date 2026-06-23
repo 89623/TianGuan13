@@ -100,7 +100,7 @@ All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no
 - `nova-i18n extract` 还**通用抽任意 proc 的句子型 `return` 字面量**（多词 + 首字母大写 + 无占位符；覆盖「proc 返回玩家可见整句、字面量不在 sink 调用处（经 to_chat/alert 变量参数发出）、rewrite 够不着」长尾——穿梭机/天气/投票/实验提示等；靠聊天 AC 子串层显示）；以及**安全 verb 命令面板名**（首字母大写显示名，自动排除 `.click`/`body-chest`/`quick-equip` 等 keybind/宏按名调用标识符——改名会断快捷键）。
 - `nova-i18n verbs --locale zh-Hans` —— **编译期**把核心安全 verb 的 `set name = "X"` 字面量原地换成译文（含 ADMIN_VERB 宏的 verb_name 实参）。**只换字面量、不加行内 `//` 注释**（verb 名常是宏实参/行中 token，行内 `//` 会注释掉其后实参 → 编译失败）；NOVA 标记靠文件级 CORE_MARKER。verb 名是 BYOND 编译期元数据、**唯一不能 locale 门控**的类别；内容守卫=源码原文须严格 == en（防错位/宏误改）、幂等。需先 extract + 翻译；**不在 `resync.sh` 里**。**仓库源码保持英文（默认态，2026-06-12 起注入产物不再入库）**：要中文命令面板用 `bash tools/i18n/build-verbs-zh.sh`（注入 → 编译 → `--revert` 还原源码，失败也还原；产物 .dmb 带中文 verb 名、git 无痕）。`--revert` 按 zh→en 映射还原，歧义候选（Ghost/Ghosts 等）按命名空间逐点消歧、仍歧义则报告跳过。这是**唯一**不受 config `I18N_SERVER_LOCALE` 控制的类别——其它一切翻译层在 locale=en（默认）时全部 no-op。
 - `node tools/i18n/tgui-catalog.mjs extract` —— 抽取 TGUI 静态 JSX 文本到 `strings/i18n/en/tgui.json`，复用现有中文译文/术语并同步前端目录。
-- 重同步（合并上游后）：`bash tools/i18n/resync.sh`。CI：`.github/workflows/i18n.yml`。
+- 重同步（合并上游后）：`bash tools/i18n/resync.sh`（本地手动跑；**无 CI**——原 `.github/workflows/i18n.yml` 已删）。
 
 **关键规则**：
 - **不要手改 `LANG("key", …)` 里的 key**——key 由内容哈希生成，由工具维护（改 key 会丢翻译）。
@@ -136,7 +136,7 @@ All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no
 
 **i18n 排查规律 / 已知陷阱（每次定位到新规律就追加到这里）**：
 - **【先跑系统性检测器，再读这张清单】**下面两类 bug 现在有**自动门禁/检测**，定位时先用工具、别凭经验逐条翻：
-  - **「标识符被反查误翻」类**（StripMenu 蓝屏 / 出生点错位 / 查表「按了没反应」/ icon_state 变中文）：跑 `nova-i18n lint --dme tgstation.dme --catalog strings/i18n --locale zh-Hans --baseline tools/i18n/identifier-baseline.txt`。它扫全树「`==`/`switch`/下标」位置的字符串字面量与 en 目录可翻译值取交集，**新增高置信碰撞（含下划线/全大写的代码 token）即报错**。CI（`.github/workflows/i18n.yml`）已接为门禁；上游合并后 `resync.sh` 也会建议性跑一遍。修法见 `tools/i18n/README.md`「门禁与回归检测」。**新发现一个此类 bug → 不光修，先确认 lint 能否捕获；不能就想想哪种标识符位置没扫到（去 lint.rs 的 `IdentCollector` 加）。**
+  - **「标识符被反查误翻」类**（StripMenu 蓝屏 / 出生点错位 / 查表「按了没反应」/ icon_state 变中文）：跑 `nova-i18n lint --dme tgstation.dme --catalog strings/i18n --locale zh-Hans --baseline tools/i18n/identifier-baseline.txt`。它扫全树「`==`/`switch`/下标」位置的字符串字面量与 en 目录可翻译值取交集，**新增高置信碰撞（含下划线/全大写的代码 token）即报错**。**本地手动跑**（无 CI——i18n.yml 已删）；上游合并后 `resync.sh` 也会建议性跑一遍。修法见 `tools/i18n/README.md`「门禁与回归检测」。**新发现一个此类 bug → 不光修，先确认 lint 能否捕获；不能就想想哪种标识符位置没扫到（去 lint.rs 的 `IdentCollector` 加）。**
   - **「译文多出占位符 → 显示生 `{N}`」类**：同上 lint 的目录卫生检查（`--no-ast` 秒级）即报错（只查 locale 比 en **多出**的占位符；少用合法）。
   - **「某路径根本没接通翻译」类**（selected 中文/选项英文、漏接 raw browse/maptext、新 sink）：用**伪 locale** 动态查——`nova-i18n pseudo` 生成 `qps-ploc`（每个值包 `⟦原文⟧`），`I18N_SERVER_LOCALE qps-ploc` 跑一圈，输出喂 `node tools/i18n/pseudo-scan.mjs`，**⟦⟧ 包裹外的残留英文 = 未接通路径**。比逐条加陷阱条目高效。
   - 这三道防线是为「清单只增不减」设计的系统性出口；**新规律若能被某检测器覆盖，优先扩检测器（lint.rs / SINK_VARS / DM_LABEL_SOURCES），而不是只加一条人肉排查规律。**

@@ -36,7 +36,7 @@ locale 解析：
 - `modular_nova/master_files/code/...` —— core override（必须镜像 core 路径）：`game/atoms.dm`（name/desc 反查）、`controllers/configuration/entries/config_entries.dm`（`I18N_SERVER_LOCALE` + `I18N_CHAT_FALLBACK`）、`_onclick/hud/screen_objects/new_player.dm`（默认 HUD 大厅按钮全服中文换中文重绘 .dmi）。core NOVA EDIT：`code/modules/tgui/tgui.dm`（注入 `config.locale`）。
 - `modular_nova/modules/i18n/icons/lobby/*.dmi` —— 默认 HUD 大厅按钮中文重绘精灵（join/observe/ready/character_setup）；由 `tools/i18n/lobby-buttons/` 用 Fusion Pixel 字体逐帧生成。
 - `modular_nova/modules/title_screen/code/title_screen_html.dm` —— `lang_localize_title_html`：title_screen 模块 HTML 菜单（raw browse 绕过 AC 钩子）的菜单文案专项本地化。
-- `.github/workflows/i18n.yml`、`config/game_options.txt`（`I18N_SERVER_LOCALE`）—— CI / 配置，位置固定。
+- `config/game_options.txt`（`I18N_SERVER_LOCALE`）—— 配置，位置固定。（**无 CI workflow**：原 `.github/workflows/i18n.yml` 已删，lint/重同步改本地手动跑。）
 
 **本模块（DM 运行时实现）：**
 - `modular_nova/modules/i18n/code/{runtime,fallback}.dm` —— 查表 / 占位符格式化 / name-desc 反查表 + AC 兜底。
@@ -45,7 +45,7 @@ locale 解析：
 
 **构建 / 翻译工具——都在 `tools/i18n/`（**未移动**：移动需改 ~71 处构建/CI/脚本引用，风险高）：**
 - `tools/i18n/src/*.rs` —— Rust 抽取（`extract`，含通用 proc-return 句子 + 安全 verb 名）/ 改写（`rewrite`）/ verb 编译期注入（`verbs`）/ 门禁（`lint`）/ 伪 locale（`pseudo`），基于 SpacemanDMM 的 dreammaker。
-- `tools/i18n/src/lint.rs` + `tools/i18n/identifier-baseline.txt` —— **编译期门禁**：目录卫生（占位符 parity / 控制字符）+ 标识符碰撞静态分析（`==`/`switch`/下标 ∩ en 目录可翻译值，基线增量，新增高置信即报错）。CI（`.github/workflows/i18n.yml`）已接。详见 `tools/i18n/README.md`「门禁与回归检测」。
+- `tools/i18n/src/lint.rs` + `tools/i18n/identifier-baseline.txt` —— **编译期门禁**：目录卫生（占位符 parity / 控制字符）+ 标识符碰撞静态分析（`==`/`switch`/下标 ∩ en 目录可翻译值，基线增量，新增高置信即报错）。**本地手动跑**（无 CI workflow）。详见 `tools/i18n/README.md`「门禁与回归检测」。
 - `tools/i18n/src/pseudo.rs` + `tools/i18n/pseudo-scan.mjs` —— **伪 locale**：`pseudo` 从 en/ 生成 `qps-ploc`（值包 `⟦原文⟧`，不入库），`I18N_SERVER_LOCALE qps-ploc` 跑一圈后用 `pseudo-scan.mjs` 找 ⟦⟧ 外残留英文 = 未接通翻译通道的路径。
 - `code/modules/unit_tests/~nova/i18n_unreverse.dm` —— `lang_reverse_text ↔ lang_unreverse_text` 往返不变量测试（守护 chem dispenser 等「UI 回传译名查英文键表」解药）。
 - `tools/i18n/lobby-buttons/` —— 默认 HUD 大厅按钮中文重绘脚本（`gen_dmi.py`）+ 字体/重生成说明。

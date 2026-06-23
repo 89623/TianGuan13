@@ -345,14 +345,14 @@ jq empty strings/i18n/en/*.json strings/i18n/zh-Hans/*.json
 cd tgui && ./node_modules/.bin/tsc && ./node_modules/.bin/rspack build
 ```
 
-## 门禁与回归检测（lint / 伪 locale）—— 把「玩家踩到才发现」变成「编译期/CI 挡住」
+## 门禁与回归检测（lint / 伪 locale）—— 把「玩家踩到才发现」变成「编译期/本地挡住」
 
 `AGENTS.md` 的「i18n 排查规律」清单长期只增不减，根因有二：① **值匹配反查的本质歧义**（一个串
 是显示文本还是标识符，反查机制无法从值本身区分 → 误翻 act 键/枚举 → StripMenu 蓝屏、出生点错位、
 查表静默失效）；② **译文多出占位符**（运行时无实参 → 显示生 `{N}`）。这两类以前全靠玩家上报。
 现在有两道系统性防线：
 
-### `nova-i18n lint` —— 编译期门禁（CI 已接，见 `.github/workflows/i18n.yml`）
+### `nova-i18n lint` —— 编译期门禁（本地手动跑；无 CI workflow，i18n.yml 已删）
 
 ```sh
 # 目录卫生 + 标识符碰撞静态分析（基线增量；新增高置信碰撞→非零退出）
