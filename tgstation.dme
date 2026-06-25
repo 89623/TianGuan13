@@ -9849,4 +9849,5 @@
 #include "modular_nova\modules\xenoarchartifacts\obj\wave_scanner.dm"
 #include "modular_nova\modules\xenomorph\alien.dm"
 #include "modular_nova\modules\xenomorph\queen.dm"
+#include "modular_tianguan\code\projectiles\projectiles.dm"
 // END_INCLUDE
