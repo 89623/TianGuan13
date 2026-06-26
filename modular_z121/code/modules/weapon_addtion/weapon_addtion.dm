@@ -268,6 +268,7 @@
 
 	mag_display = TRUE  // 显示弹匣
 	mag_display_ammo = TRUE  // 显示剩余弹药
+	tac_reloads = FALSE
 
 	bolt_type = BOLT_TYPE_OPEN
 
