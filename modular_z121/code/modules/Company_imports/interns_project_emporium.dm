@@ -96,7 +96,7 @@
 
 /datum/supply_pack/companies/mags_and_ammo/intern_project/europa_mag
 	contains = list(/obj/item/ammo_box/magazine/europa/starts_empty)
-	cost = PAYCHECK_CREW * 4
+	cost = PAYCHECK_CREW
 
 /datum/supply_pack/companies/mags_and_ammo/intern_project/dex4_mag
 	contains = list(/obj/item/ammo_box/magazine/dex4/starts_empty)
