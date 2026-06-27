@@ -254,6 +254,10 @@
 
 /obj/machinery/oven/range/Initialize(mapload)
 	. = ..()
+	// NOVA EDIT ADDITION START - I18N - "range" is a common word; the global reverse renders it as 范围 (the math sense). Pick the appliance term locally instead of polluting the shared catalog entry.
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		name = "灶台"
+	// NOVA EDIT ADDITION END
 	var/obj/item/reagent_containers/cup/soup_pot/mapload_container
 	if(mapload)
 		mapload_container = new(loc)

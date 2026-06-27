@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		if(!(item.category_index in order_categories))
 			continue
 		data["item_amts"] += list(list(
-			"name" = item.name,
+			"name" = lang_reverse_text(LOWER_TEXT(item.name)), // NOVA EDIT CHANGE - I18N - localize name (orders match by ref); lowercase to hit lowercase catalog keys; must mirror order_datums name so findAmount() still matches - ORIGINAL: "name" = item.name,
 			"amt" = grocery_list[item],
 		))
 	if(isliving(user))
@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			continue
 
 		data["order_datums"] += list(list(
-			"name" = item.name,
+			"name" = lang_reverse_text(LOWER_TEXT(item.name)), // NOVA EDIT CHANGE - I18N - localize display name (orders match by ref); lowercase to hit lowercase catalog keys; mirror item_amts name for findAmount() - ORIGINAL: "name" = item.name,
 			"desc" = item.desc,
 			"cat" = item.category_index,
 			"ref" = REF(item),
