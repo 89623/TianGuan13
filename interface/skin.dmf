@@ -72,7 +72,7 @@ window "mapwindow"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = "Fusion Pixel 12px Mono zh_hans"
-		font-size = 9
+		font-size = 10
 		is-default = true
 		right-click = true
 		saved-params = "zoom;letterbox;zoom-mode"
