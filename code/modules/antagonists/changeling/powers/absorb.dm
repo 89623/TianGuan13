@@ -103,7 +103,7 @@
 		for(var/datum/objective/objective as anything in all_objectives)
 			if(!objective) //nulls? in my objective list? it's more likely than you think.
 				continue
-			changeling.antag_memory += " Objective #[obj_count++]: [objective.explanation_text]."
+			changeling.antag_memory += " Objective #[obj_count++]: [lang_reverse_text(objective.explanation_text)]." // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones miss and still hit the to_chat boundary engine)
 			var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
 			if(!other_owners.len)
 				continue

@@ -270,7 +270,7 @@
 		for(var/datum/objective/objective in objectives)
 			if(!objective.check_completion())
 				traitor_won = FALSE
-			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+			objectives_text += "<br><B>Objective #[count]</B>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones hit the to_chat boundary engine)
 			count++
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"

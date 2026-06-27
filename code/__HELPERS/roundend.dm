@@ -754,7 +754,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/list/objective_parts = list()
 	var/count = 1
 	for(var/datum/objective/objective in objectives)
-		objective_parts += "<b>[objective.objective_name] #[count]</b>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+		objective_parts += "<b>[objective.objective_name] #[count]</b>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones hit the to_chat boundary engine)
 		count++
 	return objective_parts.Join("<br>")
 
