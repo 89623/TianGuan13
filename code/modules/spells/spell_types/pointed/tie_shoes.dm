@@ -61,7 +61,7 @@
 		addtimer(CALLBACK(cast_on, TYPE_PROC_REF(/mob/living, remove_movespeed_modifier), /datum/movespeed_modifier/magic_ties), 3 SECONDS * spell_level, TIMER_UNIQUE|TIMER_OVERRIDE)
 		to_chat(owner, span_warning(LANG("datum.0c2eac92", list(cast_on))))
 		if(invocation_type != INVOCATION_NONE) // extra feedback since it's weird for them
-			cast_on.balloon_alert_to_viewers("magically tied!")
+			cast_on.balloon_alert_to_viewers(LANG("datum.5deb4c26", null))
 		else
 			cast_on.balloon_alert(owner, LANG("datum.5deb4c26", null))
 		playsound(cast_on, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)

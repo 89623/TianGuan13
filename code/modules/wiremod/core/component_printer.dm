@@ -164,7 +164,7 @@
 				say(LANG("obj.8080461f", null))
 				return TRUE
 
-			balloon_alert_to_viewers("printed [design.name]")
+			balloon_alert_to_viewers(LANG("obj.618eac2a", list(design.name)))
 
 			materials.use_materials(design.materials, efficiency_coeff, 1, "processed", "[design.name]", user_data)
 			var/atom/printed_design = design.create_result(drop_location())
@@ -318,7 +318,7 @@
 			if (!design)
 				return TRUE
 
-			balloon_alert_to_viewers("printed [design["name"]]")
+			balloon_alert_to_viewers(LANG("obj.618eac2a", list(design["name"])))
 			var/atom/printed_design = new build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
@@ -422,7 +422,7 @@
 
 			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"], user_data = user_data)
 			print_module(design)
-			balloon_alert_to_viewers("printed [design["name"]]")
+			balloon_alert_to_viewers(LANG("obj.618eac2a", list(design["name"])))
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])

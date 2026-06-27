@@ -57,7 +57,7 @@
 /// Validates that the user can use the cursed slot machine. User is the person using the slot machine. Returns TRUE if we can, FALSE otherwise.
 /obj/structure/cursed_slot_machine/proc/check_and_set_usage(mob/living/carbon/human/user)
 	if(in_use)
-		balloon_alert_to_viewers("already spinning!")
+		balloon_alert_to_viewers(LANG("obj.50cdaf38", null))
 		return FALSE
 
 	var/signal_value = SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_USE, max_curse_amount)
@@ -86,7 +86,7 @@
 
 		SEND_SIGNAL(user, COMSIG_CURSED_SLOT_MACHINE_LOST)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
-		balloon_alert_to_viewers("you lost!")
+		balloon_alert_to_viewers(LANG("obj.0a26d47c", null))
 		return
 
 	playsound(src, 'sound/machines/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)

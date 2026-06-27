@@ -58,7 +58,7 @@
 	var/turf/player_turf = get_turf(user)
 	if(player_turf?.is_blocked_turf(TRUE))
 		return FALSE
-	balloon_alert_to_viewers("setting up pinata...")
+	balloon_alert_to_viewers(LANG("obj.8b383ad8", null))
 	if(!do_after(user, 4 SECONDS, target = get_turf(user), progress = TRUE))
 		balloon_alert(user, LANG("obj.bcb4be71", null))
 	new pinata_type(get_turf(user))

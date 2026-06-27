@@ -713,7 +713,7 @@
 	var/mob/living/living_parent = parent
 	if(lavaland_equipment_pressure_check(get_turf(living_parent)) || !length(living_parent.buckled_mobs))
 		return
-	living_parent.balloon_alert_to_viewers("freaks out!")
+	living_parent.balloon_alert_to_viewers(LANG("datum.5d5be395", null))
 	living_parent.spin(spintime = 2 SECONDS, speed = 1)
 	for(var/mob/living/buckled_mob in living_parent.buckled_mobs)
 		force_dismount(buckled_mob, throw_range = 2, gentle = TRUE)

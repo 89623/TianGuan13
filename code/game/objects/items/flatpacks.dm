@@ -67,7 +67,7 @@
 	else if(location.is_blocked_turf(source_atom = src))
 		balloon_alert(user, LANG("obj.46ff061e", null))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert_to_viewers("deploying!")
+	balloon_alert_to_viewers(LANG("obj.9b6b3a3b", null))
 	if(!do_after(user, 1 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 

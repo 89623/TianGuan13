@@ -57,9 +57,9 @@
 	var/turf/spider_turf = get_turf(owner)
 	var/obj/structure/spider/stickyweb/web = locate() in spider_turf
 	if(web)
-		owner.balloon_alert_to_viewers("sealing web...")
+		owner.balloon_alert_to_viewers(LANG("datum.c1bc0b96", null))
 	else
-		owner.balloon_alert_to_viewers("spinning web...")
+		owner.balloon_alert_to_viewers(LANG("datum.9b40a9f8", null))
 	ADD_TRAIT(spider_turf, TRAIT_SPINNING_WEB_TURF, REF(src))
 	if(do_after(owner, webbing_time, target = spider_turf, interaction_key = DOAFTER_SOURCE_SPIDER) && owner.loc == spider_turf)
 		plant_web(spider_turf, web)

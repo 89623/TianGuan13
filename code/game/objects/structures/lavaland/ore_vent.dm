@@ -115,7 +115,7 @@
 	if(!is_type_in_list(attacking_item, scanning_equipment))
 		return TRUE
 	if(tapped)
-		balloon_alert_to_viewers("vent tapped!")
+		balloon_alert_to_viewers(LANG("obj.632e0d0a", null))
 		return TRUE
 	scan_and_confirm(user)
 	return TRUE
@@ -356,7 +356,7 @@
 	if(!forced)
 		log_game("Ore vent [key_name_and_tag(src)] was tapped")
 		SSblackbox.record_feedback("tally", "ore_vent_completed", 1, type)
-		balloon_alert_to_viewers("vent tapped!")
+		balloon_alert_to_viewers(LANG("obj.632e0d0a", null))
 
 	update_appearance(UPDATE_ICON_STATE)
 	add_tapped_visual()
@@ -483,10 +483,10 @@
  */
 /obj/structure/ore_vent/proc/scan_and_confirm(mob/living/user, mech_scan = FALSE)
 	if(tapped)
-		balloon_alert_to_viewers("vent tapped!")
+		balloon_alert_to_viewers(LANG("obj.632e0d0a", null))
 		return
 	if(!COOLDOWN_FINISHED(src, wave_cooldown) || node) //We're already defending the vent, so don't scan it again.
-		balloon_alert_to_viewers("protect the node drone!")
+		balloon_alert_to_viewers(LANG("obj.2b34c514", null))
 		return
 	if(!discovered)
 		if(DOING_INTERACTION_WITH_TARGET(user, src))
@@ -801,13 +801,13 @@
 		return
 	if(mineral_breakdown[choice])
 		mineral_breakdown -= choice
-		balloon_alert_to_viewers("removed [choice::name]")
+		balloon_alert_to_viewers(LANG("obj.c6b4aa68", list(choice::name)))
 		return
 	mineral_breakdown += choice
-	balloon_alert_to_viewers("added [choice::name]")
+	balloon_alert_to_viewers(LANG("obj.84f4a0c3", list(choice::name)))
 	var/value = tgui_input_number(user, LANG("obj.1e9ff560", null), LANG("obj.db0a4d77", null), 1, 100, 1)
 	mineral_breakdown[choice] = value
-	balloon_alert_to_viewers("weighting of [value] added")
+	balloon_alert_to_viewers(LANG("obj.15a6cbba", list(value)))
 	generate_description()
 
 /obj/structure/ore_vent/debug/attack_hand_secondary(mob/user, list/modifiers)

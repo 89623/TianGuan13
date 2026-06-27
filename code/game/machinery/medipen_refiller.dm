@@ -158,10 +158,10 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
-	user.balloon_alert_to_viewers("furiously plunging...", "plunging medipen refiller...")
+	user.balloon_alert_to_viewers(LANG("obj.6051e050", null), LANG("obj.f38cfc48", null))
 	if(!do_after(user, 3 SECONDS, target = src))
 		return TRUE
-	user.balloon_alert_to_viewers("finished plunging")
+	user.balloon_alert_to_viewers(LANG("obj.670c9c2c", null))
 	reagents.expose(get_turf(src), TOUCH)
 	reagents.clear_reagents()
 	return TRUE

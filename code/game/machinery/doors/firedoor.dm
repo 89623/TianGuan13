@@ -556,7 +556,7 @@
 
 	if(density)
 		being_held_open = TRUE
-		crowbar_owner.balloon_alert_to_viewers("holding firelock open", "holding firelock open")
+		crowbar_owner.balloon_alert_to_viewers(LANG("obj.c7bd5534", null), LANG("obj.c7bd5534", null))
 		COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
 		open()
 		if(QDELETED(crowbar_owner))
@@ -597,7 +597,7 @@
 	UnregisterSignal(crowbar_owner, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(crowbar_owner, COMSIG_QDELETING)
 	if(crowbar_owner)
-		crowbar_owner.balloon_alert_to_viewers("released firelock", "released firelock")
+		crowbar_owner.balloon_alert_to_viewers(LANG("obj.f8aa5aa6", null), LANG("obj.f8aa5aa6", null))
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)

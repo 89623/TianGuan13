@@ -586,16 +586,16 @@
 
 /obj/machinery/coffeemaker/impressa/try_brew()
 	if(coffee_amount <= 0)
-		balloon_alert_to_viewers("no coffee beans added!")
+		balloon_alert_to_viewers(LANG("obj.02281c52", null))
 		return FALSE
 	if(!coffeepot)
-		balloon_alert_to_viewers("no coffeepot inside!")
+		balloon_alert_to_viewers(LANG("obj.f04241c8", null))
 		return FALSE
 	if(machine_stat & (NOPOWER|BROKEN) )
-		balloon_alert_to_viewers("machine unpowered!")
+		balloon_alert_to_viewers(LANG("obj.888dbfdc", null))
 		return FALSE
 	if(coffeepot.reagents.total_volume >= coffeepot.reagents.maximum_volume)
-		balloon_alert_to_viewers("the coffeepot is already full!")
+		balloon_alert_to_viewers(LANG("obj.a42c1686", null))
 		return FALSE
 	return TRUE
 
@@ -654,7 +654,7 @@
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
 		balloon_alert(user, LANG("obj.581dd0c5", null))
 		return
-	balloon_alert_to_viewers("took cup")
+	balloon_alert_to_viewers(LANG("obj.ffe9b5bd", null))
 	var/obj/item/reagent_containers/cup/glass/coffee/no_lid/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	coffee_cups--

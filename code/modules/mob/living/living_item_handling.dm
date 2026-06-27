@@ -179,7 +179,7 @@
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
 
-	balloon_alert_to_viewers("offers something")
+	balloon_alert_to_viewers(LANG("mob.a639a5ec", null))
 	visible_message(span_notice(LANG("mob.54e59a38", list(src, offered ? "[offered] " : "", offered_item))), \
 					span_notice(LANG("mob.00e399b7", list(offered ? "[offered] " : "", offered_item))), null, 2)
 

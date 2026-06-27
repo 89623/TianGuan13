@@ -135,7 +135,7 @@
 	return ..()
 
 /datum/action/item_action/activate_pill/do_effect(trigger_flags)
-	owner.balloon_alert_to_viewers("[owner] grinds their teeth!", "you grit your teeth")
+	owner.balloon_alert_to_viewers(LANG("datum.6de05d2d", list(owner)), LANG("datum.b311df92", null))
 	if(!do_after(owner, owner.stat * (2.5 SECONDS), owner,  IGNORE_USER_LOC_CHANGE | IGNORE_INCAPACITATED))
 		return FALSE
 	var/obj/item/pill = target

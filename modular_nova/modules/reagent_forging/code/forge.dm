@@ -478,7 +478,7 @@
 /// Take the given tray and place it inside the forge, updating everything relevant to that
 /obj/structure/reagent_forge/proc/add_tray_to_forge(mob/living/user, obj/item/plate/oven_tray/tray)
 	if(used_tray) // This shouldn't be able to happen but just to be safe
-		balloon_alert_to_viewers("already has tray")
+		balloon_alert_to_viewers(LANG("obj.666f207c", null))
 		return
 
 	if(!user.transferItemToLoc(tray, src, silent = FALSE))
@@ -488,7 +488,7 @@
 	for(var/obj/item/baked_item in tray.contents)
 		SEND_SIGNAL(baked_item, COMSIG_ITEM_OVEN_PLACED_IN, src, user)
 
-	balloon_alert_to_viewers("put [tray] in [src]")
+	balloon_alert_to_viewers(LANG("obj.5c2ac820", list(tray, src)))
 	used_tray = tray
 	in_use = TRUE // You can't use the forge if there's a tray sitting in it
 	update_appearance()
@@ -497,12 +497,12 @@
 /obj/structure/reagent_forge/proc/remove_tray_from_forge(mob/living/carbon/user)
 	if(!used_tray)
 		if(user)
-			balloon_alert_to_viewers("no tray")
+			balloon_alert_to_viewers(LANG("obj.22bb5c6a", null))
 		return
 
 	if(user)
 		user.put_in_hands(used_tray)
-		balloon_alert_to_viewers("removed [used_tray]")
+		balloon_alert_to_viewers(LANG("obj.c6b4aa68", list(used_tray)))
 	else
 		used_tray.forceMove(get_turf(src))
 	used_tray = null
@@ -520,7 +520,7 @@
 		fail_message(user, "[src] is full on wood")
 		return
 
-	balloon_alert_to_viewers("refueling...")
+	balloon_alert_to_viewers(LANG("obj.0fa3cf7c", null))
 
 	var/obj/item/stack/sheet/stack_sheet = refueling_stack
 	if(!do_after(user, 3 SECONDS, target = src) || !stack_sheet.use(1))
@@ -553,7 +553,7 @@
 		fail_message(user, "cannot smelt [ore_item]")
 		return
 
-	balloon_alert_to_viewers("smelting...")
+	balloon_alert_to_viewers(LANG("obj.35f17b71", null))
 
 	if(!do_after(user, skill_modifier * 3 SECONDS, target = src))
 		fail_message(user, "stopped smelting [ore_item]")
@@ -583,7 +583,7 @@
 		return
 
 	in_use = TRUE
-	balloon_alert_to_viewers("imbuing...")
+	balloon_alert_to_viewers(LANG("obj.d7ed8584", null))
 
 	var/obj/item/attacking_weapon = attacking_item
 
@@ -614,7 +614,7 @@
 		attacking_weapon.name = "[weapon_reagent.name] [attacking_weapon.name]"
 
 	attacking_weapon.color = mix_color_from_reagents(attacking_weapon.reagents.reagent_list)
-	balloon_alert_to_viewers("imbued [attacking_weapon]")
+	balloon_alert_to_viewers(LANG("obj.c808bc39", list(attacking_weapon)))
 	user.mind.adjust_experience(/datum/skill/smithing, 60)
 	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	in_use = FALSE
@@ -633,7 +633,7 @@
 		return
 
 	in_use = TRUE
-	balloon_alert_to_viewers("imbuing...")
+	balloon_alert_to_viewers(LANG("obj.d7ed8584", null))
 
 	var/obj/item/attacking_clothing = attacking_item
 
@@ -664,7 +664,7 @@
 		attacking_clothing.name = "[clothing_reagent.name] [attacking_clothing.name]"
 
 	attacking_clothing.color = mix_color_from_reagents(attacking_clothing.reagents.reagent_list)
-	balloon_alert_to_viewers("imbued [attacking_clothing]")
+	balloon_alert_to_viewers(LANG("obj.c808bc39", list(attacking_clothing)))
 	user.mind.adjust_experience(/datum/skill/smithing, 60)
 	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	in_use = FALSE
@@ -685,7 +685,7 @@
 		fail_message(user, "cannot set [ceramic_item]")
 		return
 
-	balloon_alert_to_viewers("setting [ceramic_item]")
+	balloon_alert_to_viewers(LANG("obj.9c64b67d", list(ceramic_item)))
 
 	if(!do_after(user, ceramic_speed, target = src))
 		fail_message(user, "stopped setting [ceramic_item]")
@@ -710,7 +710,7 @@
 	var/glassblowing_speed = user.mind.get_skill_modifier(/datum/skill/production, SKILL_SPEED_MODIFIER) * BASELINE_ACTION_TIME
 	var/glassblowing_amount = BASELINE_HEATING_DURATION / user.mind.get_skill_modifier(/datum/skill/production, SKILL_SPEED_MODIFIER)
 
-	balloon_alert_to_viewers("heating...")
+	balloon_alert_to_viewers(LANG("obj.0dbdb456", null))
 
 	if(!do_after(user, glassblowing_speed, target = src) || !glass_item.use(1))
 		fail_message(user, "stopped heating [glass_item]")
@@ -738,7 +738,7 @@
 		fail_message(user, "[metal_item] has no sand")
 		return
 
-	balloon_alert_to_viewers("heating...")
+	balloon_alert_to_viewers(LANG("obj.0dbdb456", null))
 
 	if(!do_after(user, glassblowing_speed, target = src))
 		fail_message(user, "stopped heating [metal_item]")
@@ -770,7 +770,7 @@
 		fail_message(user, "too few iron rods to smelt")
 		return
 
-	balloon_alert_to_viewers("smelting...")
+	balloon_alert_to_viewers(LANG("obj.35f17b71", null))
 
 	if(!do_after(user, skill_modifier * 3 SECONDS, target = src))
 		fail_message(user, "stopped smelting [rod_item]")
@@ -785,7 +785,7 @@
 	rod_item.use(used_rods)
 	new /obj/item/stack/sheet/iron(drop_location(), rods_to_sheet_amount)
 
-	balloon_alert_to_viewers("finished smelting!")
+	balloon_alert_to_viewers(LANG("obj.7a348fcc", null))
 
 /obj/structure/reagent_forge/billow_act(mob/living/user, obj/item/tool)
 	if(in_use) // Preventing billow use if the forge is in use to prevent spam
@@ -803,12 +803,12 @@
 		fail_message(user, "[src] cannot heat further")
 		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert_to_viewers("billowing...")
+	balloon_alert_to_viewers(LANG("obj.d7981a43", null))
 
 	in_use = TRUE
 	while(forge_temperature < 91)
 		if(!do_after(user, (skill_modifier * forge_item.toolspeed) SECONDS, target = src))
-			balloon_alert_to_viewers("stopped billowing")
+			balloon_alert_to_viewers(LANG("obj.5db316f5", null))
 			in_use = FALSE
 			return ITEM_INTERACT_SUCCESS
 
@@ -843,10 +843,10 @@
 			forge_item.in_use = FALSE
 			return ITEM_INTERACT_SUCCESS
 
-		balloon_alert_to_viewers("heating [search_incomplete]")
+		balloon_alert_to_viewers(LANG("obj.d0bc5f44", list(search_incomplete)))
 
 		if(!do_after(user, skill_modifier * forge_item.toolspeed, target = src))
-			balloon_alert_to_viewers("stopped heating [search_incomplete]")
+			balloon_alert_to_viewers(LANG("obj.34c2f70d", list(search_incomplete)))
 			forge_item.in_use = FALSE
 			return ITEM_INTERACT_SUCCESS
 
@@ -882,10 +882,10 @@
 			forge_item.in_use = FALSE
 			return ITEM_INTERACT_SUCCESS
 
-		balloon_alert_to_viewers("heating [search_stack]")
+		balloon_alert_to_viewers(LANG("obj.d0bc5f44", list(search_stack)))
 
 		if(!do_after(user, skill_modifier * forge_item.toolspeed, target = src))
-			balloon_alert_to_viewers("stopped heating [search_stack]")
+			balloon_alert_to_viewers(LANG("obj.34c2f70d", list(search_stack)))
 			forge_item.in_use = FALSE
 			return ITEM_INTERACT_SUCCESS
 
@@ -947,7 +947,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_forge/wrench_act(mob/living/user, obj/item/tool)
-	user.balloon_alert_to_viewers("disassembling...")
+	user.balloon_alert_to_viewers(LANG("obj.b5ba9871", null))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
 		return
 	deconstruct(TRUE)

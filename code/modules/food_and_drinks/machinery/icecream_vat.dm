@@ -253,7 +253,7 @@
 
 	for(var/reagents_used in ingredients)
 		reagents.remove_reagent(reagents_used, CONE_REAGENT_NEEDED)
-	balloon_alert_to_viewers("cooks up [cone.name]", "cooks up [cone.name]")
+	balloon_alert_to_viewers(LANG("obj.5ba3f0cf", list(cone.name)), LANG("obj.5ba3f0cf", list(cone.name)))
 	try_put_in_hand(cone, user)
 
 ///Makes ice cream if it can, then puts it in the ice cream cone we're being attacked with.
@@ -271,7 +271,7 @@
 	if(flavor.add_flavour(source, should_use_custom_ingredients ? custom_ice_cream_beaker.reagents : null))
 		for(var/reagents_used in flavor.ingredients)
 			reagents.remove_reagent(reagents_used, CONE_REAGENT_NEEDED)
-		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
+		balloon_alert_to_viewers(LANG("obj.3088bf92", list(selected_flavour)), LANG("obj.3088bf92", list(selected_flavour)))
 
 	if(istype(cone))
 		if(isnull(cone.crafted_food_buff))

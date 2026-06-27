@@ -272,7 +272,7 @@
 /// The message shown when the player starts climbing the ladder
 /obj/structure/ladder/proc/show_initial_fluff_message(mob/user, going_up)
 	var/up_down = going_up ? "up" : "down"
-	user.balloon_alert_to_viewers("climbing [up_down]...")
+	user.balloon_alert_to_viewers(LANG("obj.04800674", list(up_down)))
 
 /obj/structure/ladder/proc/travel(mob/user, going_up = TRUE, is_ghost = FALSE, grant_exp = FALSE)
 	var/obj/structure/ladder/ladder = going_up ? up : down
@@ -306,7 +306,7 @@
 	//POV of players around the source
 	visible_message(span_notice(LANG("obj.82a31b4f", list(user, up_down, src))))
 	//POV of players around the destination
-	user.balloon_alert_to_viewers("climbed [up_down]")
+	user.balloon_alert_to_viewers(LANG("obj.cbf8223a", list(up_down)))
 
 /// Shows a radial menu that players can use to climb up and down a stair.
 /obj/structure/ladder/proc/show_options(mob/user, is_ghost = FALSE)

@@ -28,7 +28,7 @@
 	carbon_target.notify_revival("You are being brought back to life!")
 	carbon_target.grab_ghost()
 
-	user.balloon_alert_to_viewers("trying to revive [carbon_target]")
+	user.balloon_alert_to_viewers(LANG("obj.fce22e56", list(carbon_target)))
 
 	if(!do_after(user, 3 SECONDS, carbon_target))
 		user.balloon_alert(user, LANG("obj.09a569c9", list(carbon_target)))

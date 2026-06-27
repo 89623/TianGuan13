@@ -129,7 +129,7 @@
 
 	if(selected_recipe)
 		clear_recipe()
-		balloon_alert_to_viewers("recipe cleared")
+		balloon_alert_to_viewers(LANG("obj.43606738", null))
 		update_appearance()
 		return
 
@@ -161,7 +161,7 @@
 			return TRUE
 
 		attacking_item.forceMove(src)
-		balloon_alert_to_viewers("placed [attacking_item]")
+		balloon_alert_to_viewers(LANG("obj.56f6de96", list(attacking_item)))
 		update_appearance()
 		return TRUE
 
@@ -172,7 +172,7 @@
 		balloon_alert(user, LANG("obj.80cb9d94", null))
 		return
 
-	user.balloon_alert_to_viewers("disassembling...")
+	user.balloon_alert_to_viewers(LANG("obj.b5ba9871", null))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
 		return
 
@@ -215,7 +215,7 @@
 
 		playsound(src, 'modular_nova/modules/reagent_forging/sound/forge.ogg', 50, TRUE)
 
-		balloon_alert_to_viewers("[thing_just_made] created")
+		balloon_alert_to_viewers(LANG("obj.3291f812", list(thing_just_made)))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 

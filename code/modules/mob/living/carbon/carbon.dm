@@ -119,13 +119,13 @@
 		var/obj/item/tourniquet = LAZYACCESS(limb?.applied_items, LIMB_ITEM_TOURNIQUET)
 		if(QDELETED(limb) || QDELETED(patient) || QDELETED(tourniquet))
 			return
-		balloon_alert_to_viewers("removing tourniquet...")
+		balloon_alert_to_viewers(LANG("mob.61fe49cc", null))
 		if(!do_after(usr, 4 SECONDS, target = src))
 			return
 		if(QDELETED(limb) || QDELETED(patient) || QDELETED(tourniquet) || limb.owner != patient || tourniquet.loc != limb)
 			return
 
-		balloon_alert_to_viewers("tourniquet removed")
+		balloon_alert_to_viewers(LANG("mob.639db33c", null))
 		usr.put_in_hands(tourniquet)
 		return
 	// NOVA EDIT ADDITION START - Copy above tourniquet code for gauze
@@ -135,13 +135,13 @@
 		var/obj/item/stack/medical/wrap/gauze = LAZYACCESS(limb?.applied_items, LIMB_ITEM_GAUZE)
 		if(QDELETED(limb) || QDELETED(patient) || QDELETED(gauze))
 			return
-		balloon_alert_to_viewers("removing [gauze]...")
+		balloon_alert_to_viewers(LANG("mob.e2c8ef0a", list(gauze)))
 		if(!do_after(usr, 4 SECONDS, target = src))
 			return
 		if(QDELETED(limb) || QDELETED(patient) || QDELETED(gauze) || limb.owner != patient || gauze.loc != limb)
 			return
 
-		balloon_alert_to_viewers("[gauze] removed")
+		balloon_alert_to_viewers(LANG("mob.2a4235b4", list(gauze)))
 		var/obj/item/stack/medical/wrap/gotten = gauze.rip_off()
 		if(gotten && !usr.put_in_hands(gotten))
 			gotten.forceMove(get_turf(usr))

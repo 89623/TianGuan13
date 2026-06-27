@@ -43,7 +43,7 @@
 /obj/effect/weakpoint/ex_act(severity, target)
 	. = ..()
 	if(severity < required_strength)
-		balloon_alert_to_hearers("*crack*")
+		balloon_alert_to_hearers(LANG("obj.8149d1d9", null))
 		playsound(source = src, soundin = SFX_HULL_CREAKING, vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
 		return //return ominous sounds when we're under the threshold.
 

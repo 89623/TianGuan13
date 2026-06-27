@@ -18,7 +18,7 @@
 		var/list/filter_result = is_ic_filtered(message)
 
 		if(filter_result)
-			to_chat(usr, span_warning("That emote contained a word prohibited in IC emotes! Consider reviewing the server rules.\n\"[message]\""))
+			to_chat(usr, span_warning(LANG("mob.b210d3c9", list(message))))
 			REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
 			log_filter("IC Emote", message, filter_result)
 			SSblackbox.record_feedback("tally", "ic_blocked_words", 1, LOWER_TEXT(config.ic_filter_regex.match))
@@ -27,7 +27,7 @@
 		filter_result = is_soft_ic_filtered(message)
 
 		if(filter_result)
-			if(tgui_alert(usr, "Your emote contains \"[filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to emote it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			if(tgui_alert(usr, LANG("mob.ac82e7e2", list(filter_result[CHAT_FILTER_INDEX_WORD], filter_result[CHAT_FILTER_INDEX_REASON])), LANG("mob.b0fe106c", null), list("Yes", "No")) != "Yes")
 				SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, LOWER_TEXT(config.soft_ic_filter_regex.match))
 				log_filter("Soft IC Emote", message, filter_result)
 				return FALSE
@@ -38,7 +38,7 @@
 			log_filter("Soft IC Emote (Passed)", message, filter_result)
 
 	if(usr.client?.prefs?.muted & MUTE_IC)
-		to_chat(usr, span_boldwarning("You cannot send IC messages (muted)."))
+		to_chat(usr, span_boldwarning(LANG("mob.edad7622", null)))
 		return
 
 	var/name_stub = " (<b>[usr]</b>)"

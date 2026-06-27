@@ -61,7 +61,7 @@
 
 /obj/item/gun/ballistic/automatic/smart_machine_gun/can_shoot()
 	if(cover_open)
-		balloon_alert_to_viewers("cover open!")
+		balloon_alert_to_viewers(LANG("obj.b726018f", null))
 		return FALSE
 	return chambered
 

@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/clothing/neck/stethoscope))
 		return NONE
-	user.balloon_alert_to_viewers("checking pulse")
+	user.balloon_alert_to_viewers(LANG("obj.7b75ec5a", null))
 	if(!do_after(user, 2.5 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
 	// Sir... I'm afraid your fish is dying.
@@ -1105,7 +1105,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(reagents[revival] >= 2 * w_class && revival.pre_rez_check(src))
 		set_status(FISH_ALIVE)
 	else
-		balloon_alert_to_viewers("twitches for a moment!")
+		balloon_alert_to_viewers(LANG("obj.b19d1ace", null))
 		animate(src, pixel_x = 1, time = 0.1 SECONDS, loop = 2, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 		animate(pixel_x = -1, flags = ANIMATION_RELATIVE)
 

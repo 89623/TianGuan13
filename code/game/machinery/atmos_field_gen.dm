@@ -220,7 +220,7 @@
 	if(!on)
 		return
 	if(power_failure)
-		balloon_alert_to_viewers("no power!")
+		balloon_alert_to_viewers(LANG("obj.b3e1b703", null))
 		playsound(src, 'sound/machines/cryo_warning.ogg', 65)
 	on = power_failure ? GENERATOR_WANTPOWER : GENERATOR_INACTIVE
 	master?.turn_off(power_failure)

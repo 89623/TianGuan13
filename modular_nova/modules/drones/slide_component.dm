@@ -53,7 +53,7 @@
 		source_atom.balloon_alert(user, LANG("datum.a7d57b22", null))
 		return
 
-	source_atom.balloon_alert_to_viewers("something squeezes through!")
+	source_atom.balloon_alert_to_viewers(LANG("datum.6d03cee8", null))
 
 /datum/element/sliding_under/proc/attempt_slide(atom/source_atom, mob/user)
 	var/turf/destination = get_turf(source_atom)

@@ -1690,7 +1690,7 @@
 	if(!disaster_zone)
 		return
 	if(prob(10))
-		disaster_zone.balloon_alert_to_viewers("hissssssss!")
+		disaster_zone.balloon_alert_to_viewers(LANG("datum.e51d7bf6", null))
 	spew_waste(5) //You can't just dump the industrial waste down the kitchen sink. High range to disincentivize using the chem disposaler.
 
 /**

@@ -101,7 +101,7 @@
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
 			return ..()
 
-		user.balloon_alert_to_viewers("attaching rig...")
+		user.balloon_alert_to_viewers(LANG("obj.f28fe90a", null))
 		add_fingerprint(user)
 		if(!do_after(user, 2 SECONDS, target = src) || !user.transferItemToLoc(holder, src))
 			return
@@ -115,7 +115,7 @@
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(rig_boom))
 		log_bomber(user, "attached [holder.name] to ", src)
 		last_rigger = user
-		user.balloon_alert_to_viewers("attached rig")
+		user.balloon_alert_to_viewers(LANG("obj.9fd1e502", null))
 		return
 
 	if(istype(attacking_item, /obj/item/stack/sheet/iron) && can_be_tanked)
@@ -146,10 +146,10 @@
 	rig.on_found()
 	if(QDELETED(src))
 		return
-	user.balloon_alert_to_viewers("detaching rig...")
+	user.balloon_alert_to_viewers(LANG("obj.c303998a", null))
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
-	user.balloon_alert_to_viewers("detached rig")
+	user.balloon_alert_to_viewers(LANG("obj.1f75f20a", null))
 	user.log_message("detached [rig] from [src].", LOG_GAME)
 	if(!user.put_in_hands(rig))
 		rig.forceMove(get_turf(user))

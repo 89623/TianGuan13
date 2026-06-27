@@ -209,7 +209,7 @@
 			user.regenerate_icons()
 			if(length(boxes) >= 5)
 				if(prob(10 * length(boxes)))
-					user.balloon_alert_to_viewers("oops!")
+					user.balloon_alert_to_viewers(LANG("obj.60df3574", null))
 					disperse_pizzas()
 				else
 					balloon_alert(user, LANG("obj.a2a2410e", null))

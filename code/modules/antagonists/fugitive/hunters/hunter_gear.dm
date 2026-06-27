@@ -184,7 +184,7 @@
 
 /obj/machinery/fugitive_locator/interact(mob/user)
 	if(!COOLDOWN_FINISHED(src, locate_cooldown))
-		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
+		balloon_alert_to_viewers(LANG("obj.1ab78062", null), vision_distance = 3)
 		return
 	var/mob/living/bounty = locate_fugitive()
 	if(!bounty)

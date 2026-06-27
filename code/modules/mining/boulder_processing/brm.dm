@@ -303,7 +303,7 @@
 	if(!SSore_generation.available_boulders.len)
 		if(feedback)
 			playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
-			balloon_alert_to_viewers("no boulders to collect!")
+			balloon_alert_to_viewers(LANG("obj.2386da35", null))
 		batch_processing = FALSE
 		return FALSE
 
@@ -315,7 +315,7 @@
 	random_boulder.forceMove(drop_location())
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
-	balloon_alert_to_viewers("boulder appears!")
+	balloon_alert_to_viewers(LANG("obj.cb9cbebc", null))
 	use_energy(active_power_usage)
 
 	//try again if we have more boulders to work with

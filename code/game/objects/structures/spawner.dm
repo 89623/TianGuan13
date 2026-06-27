@@ -291,7 +291,7 @@
 	proteon.add_filter("awoken_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2))
 	visible_message(span_cult_bold(LANG("obj.a3455471", list(proteon))))
 	playsound(proteon, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
-	proteon.balloon_alert_to_viewers("awoken!")
+	proteon.balloon_alert_to_viewers(LANG("obj.5f8822ca", null))
 	addtimer(CALLBACK(src, PROC_REF(remove_wake_outline), proteon), 8 SECONDS)
 
 /obj/structure/spawner/sentient/proteon_spawner/proc/remove_wake_outline(mob/proteon)

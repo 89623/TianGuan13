@@ -130,7 +130,7 @@
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown) && !on_slash)
 		return
 	if(fire_charges)
-		balloon_alert_to_viewers("charges lost!")
+		balloon_alert_to_viewers(LANG("obj.63a6c45b", null))
 	fire_charges = 0
 	update_icon(UPDATE_OVERLAYS|UPDATE_ICON_STATE)
 

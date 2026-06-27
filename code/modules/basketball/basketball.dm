@@ -120,20 +120,20 @@
 
 	switch(blocking_dir_bonus)
 		if(FACING_EACHOTHER)
-			stealer.balloon_alert_to_viewers("steals the ball")
+			stealer.balloon_alert_to_viewers(LANG("obj.091af933", null))
 			INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src)
 		if(FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR)
 			if(prob(50))
 				if(!baller.dropItemToGround(src))
 					return
-				stealer.balloon_alert_to_viewers("bats the ball")
+				stealer.balloon_alert_to_viewers(LANG("obj.8e4dfd7b", null))
 			else
-				stealer.balloon_alert_to_viewers("steals the ball")
+				stealer.balloon_alert_to_viewers(LANG("obj.091af933", null))
 				INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src)
 		if(FACING_SAME_DIR)
 			if(!baller.dropItemToGround(src))
 				return
-			stealer.balloon_alert_to_viewers("bats the ball")
+			stealer.balloon_alert_to_viewers(LANG("obj.8e4dfd7b", null))
 
 /obj/item/toy/basketball/proc/on_equipped_mob_knockdown(mob/living/user, amount)
 	SIGNAL_HANDLER
@@ -148,7 +148,7 @@
 	if(!user.dropItemToGround(src))
 		return
 
-	user.balloon_alert_to_viewers("fumbles the ball")
+	user.balloon_alert_to_viewers(LANG("obj.e8cd5212", null))
 
 /obj/item/toy/basketball/attack(mob/living/carbon/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!iscarbon(target) || user.combat_mode)

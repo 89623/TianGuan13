@@ -76,7 +76,7 @@
 	Remove(body)
 	forceMove(get_turf(body))
 	to_chat(body, span_danger(LANG("obj.a849b3b9", null)))
-	balloon_alert_to_viewers("rejected!", vision_distance = 1)
+	balloon_alert_to_viewers(LANG("obj.c10edb67", null), vision_distance = 1)
 
 /// Visual vars to cache and restore when regrowing limbs.
 /obj/item/organ/brain/protean/var/static/list/cached_visual_vars = list(
@@ -355,7 +355,7 @@
 
 /// Starts the revive countdown timer, shorter for changelings.
 /obj/item/organ/brain/protean/proc/revive_timer()
-	balloon_alert_to_viewers("repairing")
+	balloon_alert_to_viewers(LANG("obj.f2b23f18", null))
 	if(IS_CHANGELING(owner))
 		revive_timer_id = addtimer(CALLBACK(src, PROC_REF(revive)), 40 SECONDS, TIMER_STOPPABLE)
 	else

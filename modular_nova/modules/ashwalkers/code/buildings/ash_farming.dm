@@ -36,7 +36,7 @@
 		var/obj/structure/simple_tree/locate_tree = locate() in get_turf(atom_parent)
 
 		if(one_per_turf && (locate_farm || locate_tree))
-			atom_parent.balloon_alert_to_viewers("cannot plant more things here!")
+			atom_parent.balloon_alert_to_viewers(LANG("datum.13ab81b6", null))
 			return
 
 		locate_tree = new(get_turf(atom_parent), atom_parent)
@@ -44,7 +44,7 @@
 		locate_tree.pixel_y = (pixel_shift[2] - 8)
 		locate_tree.layer = atom_parent.layer + 0.01
 		attacking_item.forceMove(locate_tree)
-		atom_parent.balloon_alert_to_viewers("tree has been planted!")
+		atom_parent.balloon_alert_to_viewers(LANG("datum.b0cd4a3a", null))
 
 	//if its a seed, lets try to plant
 	if(istype(attacking_item, /obj/item/seeds))
@@ -52,7 +52,7 @@
 		var/obj/structure/simple_tree/locate_tree = locate() in get_turf(atom_parent)
 
 		if(one_per_turf && (locate_farm || locate_tree))
-			atom_parent.balloon_alert_to_viewers("cannot plant more things here!")
+			atom_parent.balloon_alert_to_viewers(LANG("datum.13ab81b6", null))
 			return
 
 		locate_farm = new(get_turf(atom_parent), atom_parent)
@@ -62,7 +62,7 @@
 		locate_farm.layer = atom_parent.layer + 0.1
 		attacking_item.forceMove(locate_farm)
 		locate_farm.planted_seed = attacking_item
-		atom_parent.balloon_alert_to_viewers("seed has been planted!")
+		atom_parent.balloon_alert_to_viewers(LANG("datum.ff8ef9aa", null))
 		locate_farm.update_appearance()
 
 /**
@@ -176,7 +176,7 @@
 	//if its a shovel or knife, dismantle
 	if(tool.tool_behaviour == TOOL_SHOVEL || tool.tool_behaviour == TOOL_KNIFE)
 		var/turf/src_turf = get_turf(src)
-		src_turf.balloon_alert_to_viewers("the plant crumbles!")
+		src_turf.balloon_alert_to_viewers(LANG("obj.f0b57d5d", null))
 		qdel(src)
 		return ITEM_INTERACT_BLOCKING
 
@@ -238,7 +238,7 @@
 	max_harvest++
 
 	if(!silent)
-		balloon_alert_to_viewers("plant will have increased yield")
+		balloon_alert_to_viewers(LANG("obj.6063173b", null))
 
 	return TRUE
 
@@ -257,7 +257,7 @@
 	COOLDOWN_START(src, harvest_timer, harvest_cooldown * timeleft_percent)
 
 	if(!silent)
-		balloon_alert_to_viewers("plant will grow faster")
+		balloon_alert_to_viewers(LANG("obj.fd7da781", null))
 
 	return TRUE
 

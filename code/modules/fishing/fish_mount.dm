@@ -65,7 +65,7 @@
 	if(!item.use_tool(src, user, 3 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	balloon_alert_to_viewers("fish mount removed")
+	balloon_alert_to_viewers(LANG("obj.61513170", null))
 	deconstruct()
 	return ITEM_INTERACT_SUCCESS
 
@@ -100,7 +100,7 @@
 	if(!do_after(user, 3 SECONDS, src) || mounted_fish)
 		return ITEM_INTERACT_BLOCKING
 	add_fish(item, catcher = user.name)
-	balloon_alert_to_viewers("fish mounted")
+	balloon_alert_to_viewers(LANG("obj.fbd13b1e", null))
 	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
@@ -174,7 +174,7 @@
 		visible_message(LANG("obj.48f06f70", list(fish_reference, fish_reference.p_theyre(), src)))
 	else
 		user.put_in_hands(mounted_fish)
-	balloon_alert_to_viewers("fish removed")
+	balloon_alert_to_viewers(LANG("obj.6c127de0", null))
 
 /obj/structure/fish_mount/Exited(atom/movable/gone)
 	if(gone != mounted_fish)

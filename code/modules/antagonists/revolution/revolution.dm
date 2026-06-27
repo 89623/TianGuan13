@@ -295,7 +295,7 @@
 /datum/antagonist/rev/farewell()
 	if(!owner.current)
 		return
-	owner.current.balloon_alert_to_viewers("deconverted!")
+	owner.current.balloon_alert_to_viewers(LANG("datum.fad85a2a", null))
 	if(ishuman(owner.current))
 		owner.current.visible_message(span_deconversion_message(LANG("datum.5cad8cb4", list(owner.current, owner.current.p_theyve(), owner.current.p_their()))), null, null, null, owner.current)
 		to_chat(owner, LANG("datum.ab565df1", null))
@@ -306,7 +306,7 @@
 /datum/antagonist/rev/head/farewell()
 	if (deconversion_source == DECONVERTER_STATION_WIN || !owner.current)
 		return
-	owner.current.balloon_alert_to_viewers("deconverted!")
+	owner.current.balloon_alert_to_viewers(LANG("datum.fad85a2a", null))
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
 			owner.current.visible_message(span_deconversion_message(LANG("datum.5cad8cb4", list(owner.current, owner.current.p_theyve(), owner.current.p_their()))), null, null, null, owner.current)

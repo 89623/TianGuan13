@@ -158,7 +158,7 @@
 	icon_state = "anomaly_crystal_charging"
 	active = TRUE
 	set_anchored(TRUE)
-	balloon_alert_to_viewers("charging...")
+	balloon_alert_to_viewers(LANG("obj.b766a769", null))
 	playsound(src, 'sound/effects/magic/disable_tech.ogg', 50, TRUE)
 	sleep(use_time)
 	icon_state = initial(icon_state)

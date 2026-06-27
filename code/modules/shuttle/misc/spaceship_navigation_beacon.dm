@@ -62,7 +62,7 @@
 	var/new_name = "[initial(src.name)] [chosen_tag]"
 	if(new_name && Adjacent(user))
 		name = new_name
-		balloon_alert_to_viewers("beacon renamed")
+		balloon_alert_to_viewers(LANG("obj.ca23ac38", null))
 
 	return TRUE
 

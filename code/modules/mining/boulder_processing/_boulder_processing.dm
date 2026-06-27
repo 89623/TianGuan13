@@ -276,14 +276,14 @@
 	if(istype(tool, /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = tool
 		if(!accept_boulder(my_boulder))
-			balloon_alert_to_viewers("cannot accept!")
+			balloon_alert_to_viewers(LANG("obj.8c149ce2", null))
 			return ITEM_INTERACT_BLOCKING
-		balloon_alert_to_viewers("accepted")
+		balloon_alert_to_viewers(LANG("obj.1a493871", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/card/id))
 		if(points_held <= 0)
-			balloon_alert_to_viewers("no points to claim!")
+			balloon_alert_to_viewers(LANG("obj.1f7e9c7a", null))
 			if(!COOLDOWN_FINISHED(src, sound_cooldown))
 				return ITEM_INTERACT_BLOCKING
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
@@ -332,10 +332,10 @@
 
 	var/obj/item/boulder/boulder = locate(/obj/item/boulder) in src
 	if(!boulder)
-		balloon_alert_to_viewers("no boulders to remove!")
+		balloon_alert_to_viewers(LANG("obj.fb9ba53a", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!remove_boulder(boulder))
-		balloon_alert_to_viewers("no space to remove!")
+		balloon_alert_to_viewers(LANG("obj.649310e4", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

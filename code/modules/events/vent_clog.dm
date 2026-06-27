@@ -182,9 +182,9 @@
 		to_chat(user, span_notice(LANG("datum.70661c4a", list(vent))))
 		return
 
-	user.balloon_alert_to_viewers("plunging vent...", "plunging clogged vent...")
+	user.balloon_alert_to_viewers(LANG("datum.a9f46f51", null), LANG("datum.540bc5d9", null))
 	if(do_after(user, 6 SECONDS, target = vent))
-		user.balloon_alert_to_viewers("finished plunging")
+		user.balloon_alert_to_viewers(LANG("datum.670c9c2c", null))
 		clear_signals()
 		kill()
 

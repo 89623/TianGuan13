@@ -155,7 +155,7 @@
 		var/obj/item/toy/cards/deck/dealer_deck = tool
 		if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // recycle card into deck (if unwielded)
 			if(dealer_deck.insert(src))
-				user.balloon_alert_to_viewers("puts card in deck")
+				user.balloon_alert_to_viewers(LANG("obj.f9852041", null))
 				return ITEM_INTERACT_SUCCESS
 
 			to_chat(user, span_warning(LANG("obj.64e89a57", list(dealer_deck))))
@@ -172,7 +172,7 @@
 
 		if(istype(tool, /obj/item/toy/cards/deck))
 			// only decks cause a balloon alert
-			user.balloon_alert_to_viewers("deals a card")
+			user.balloon_alert_to_viewers(LANG("obj.fdb6d5a2", null))
 
 		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location())
 		new_cardhand.pixel_x = pixel_x
@@ -226,7 +226,7 @@
 
 	Flip()
 	if(isturf(src.loc)) // only display this message when flipping in a visible spot like on a table
-		user.balloon_alert_to_viewers("flips a card")
+		user.balloon_alert_to_viewers(LANG("obj.9d29a000", null))
 
 /obj/item/toy/singlecard/click_alt(mob/living/carbon/human/user)
 	transform = turn(transform, 90)

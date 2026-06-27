@@ -221,7 +221,7 @@
 
 	ore_chance += list(/obj/item/stack/sheet/mineral/bananium = 1)
 	obj_flags |= EMAGGED
-	balloon_alert_to_viewers("fizzles!")
+	balloon_alert_to_viewers(LANG("obj.5eb4084b", null))
 	return TRUE
 
 /obj/item/circuitboard/machine/bluespace_miner

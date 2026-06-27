@@ -72,7 +72,7 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, LANG("obj.20fd4e5f", null))
 		return TRUE
-	user.balloon_alert_to_viewers("repairing display...", "repairing...")
+	user.balloon_alert_to_viewers(LANG("obj.2666c57c", null), LANG("obj.b52342a8", null))
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
 		return TRUE
 	balloon_alert(user, LANG("obj.65ced1e8", null))
@@ -1056,7 +1056,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 		activate_feed()
 		if(isnull(display))
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 33, TRUE, frequency = 0.5)
-			balloon_alert_to_viewers("no backdrop, can't broadcast!")
+			balloon_alert_to_viewers(LANG("obj.3f375123", null))
 			return
 		playsound(src, 'sound/machines/terminal/terminal_on.ogg', 33, FALSE)
 		use_power = ACTIVE_POWER_USE
@@ -1064,7 +1064,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 		deactivate_feed()
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 33, FALSE)
 		use_power = IDLE_POWER_USE
-	balloon_alert_to_viewers("feed [isnull(display) ? "de" : ""]activated")
+	balloon_alert_to_viewers(LANG("obj.4e40ec03", list(isnull(display) ? "de" : "")))
 
 /obj/machinery/greenscreen_camera/proc/activate_feed()
 	greenscreen_turf = find_displayed_turf()

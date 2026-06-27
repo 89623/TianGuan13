@@ -35,7 +35,7 @@
 	if(!user.transferItemToLoc(new_id, src))
 		return
 	contained_id = new_id
-	balloon_alert_to_viewers("id inserted")
+	balloon_alert_to_viewers(LANG("obj.441aa028", null))
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 /obj/machinery/computer/prisoner/proc/id_eject(mob/user)
@@ -48,7 +48,7 @@
 	else
 		contained_id.forceMove(drop_location())
 
-	balloon_alert_to_viewers("id ejected")
+	balloon_alert_to_viewers(LANG("obj.179d4b52", null))
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 /obj/machinery/computer/prisoner/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)

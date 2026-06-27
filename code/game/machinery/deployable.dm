@@ -40,7 +40,7 @@
 		balloon_alert(user, LANG("obj.48da8c36", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.balloon_alert_to_viewers("repairing [src]...", "repairing...")
+	user.balloon_alert_to_viewers(LANG("obj.dba42904", list(src)), LANG("obj.b52342a8", null))
 
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 10, volume=50))
 		return ITEM_INTERACT_BLOCKING

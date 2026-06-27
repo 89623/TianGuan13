@@ -368,14 +368,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(igniter_prime))
 		log_bomber(user, "attached [holder] to ", src)
 		attacher = key_name(user)
-		user.balloon_alert_to_viewers("attached rig")
+		user.balloon_alert_to_viewers(LANG("obj.9fd1e502", null))
 		return
 
 	if(I.tool_behaviour == TOOL_WRENCH && rig)
 		rig.on_found()
 		if(QDELETED(src))
 			return
-		user.balloon_alert_to_viewers("detached rig")
+		user.balloon_alert_to_viewers(LANG("obj.1f75f20a", null))
 		user.log_message("detached [rig] from [src].", LOG_GAME)
 		user.put_in_hands(rig)
 		return

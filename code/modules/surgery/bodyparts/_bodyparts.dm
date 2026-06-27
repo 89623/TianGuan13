@@ -376,22 +376,37 @@
 			status = "[shown_brute] brute damage and [shown_burn] burn damage"
 
 	else
+		// NOVA EDIT CHANGE START - I18N - 原逐段拼接成 brute+" and "+burn；整串非状态词键、lang_localize_arg miss（双重伤情残留英文）。
+		// 改为分别取 brute/burn 段，locale≠en 时各自经 _state_words 本地化再用中文「，」连接（en 路径与原逻辑等价）。
+		var/brute_part = ""
 		if(shown_brute > (max_damage * 0.8))
-			status += heavy_brute_msg
+			brute_part = heavy_brute_msg
 		else if(shown_brute > (max_damage * 0.4))
-			status += medium_brute_msg
+			brute_part = medium_brute_msg
 		else if(shown_brute > DAMAGE_PRECISION)
-			status += light_brute_msg
+			brute_part = light_brute_msg
 
-		if(shown_brute > DAMAGE_PRECISION && shown_burn > DAMAGE_PRECISION)
-			status += " and "
-
+		var/burn_part = ""
 		if(shown_burn > (max_damage * 0.8))
-			status += heavy_burn_msg
+			burn_part = heavy_burn_msg
 		else if(shown_burn > (max_damage * 0.2))
-			status += medium_burn_msg
+			burn_part = medium_burn_msg
 		else if(shown_burn > DAMAGE_PRECISION)
-			status += light_burn_msg
+			burn_part = light_burn_msg
+
+		if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+			if(brute_part && burn_part)
+				status = "[lang_localize_arg(brute_part)]，[lang_localize_arg(burn_part)]"
+			else if(brute_part)
+				status = lang_localize_arg(brute_part)
+			else if(burn_part)
+				status = lang_localize_arg(burn_part)
+		else
+			status += brute_part
+			if(brute_part && burn_part)
+				status += " and "
+			status += burn_part
+		// NOVA EDIT CHANGE END - ORIGINAL: 见上方说明（status += heavy/medium/light brute_msg / " and " / burn_msg）
 
 		if(status == "")
 			status = "OK"

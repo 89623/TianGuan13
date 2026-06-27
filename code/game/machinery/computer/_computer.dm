@@ -128,7 +128,7 @@
 		board.AddComponent(/datum/component/gps, "[gps_tag]")
 		set_tracker = TRUE
 	if (set_tracker)
-		balloon_alert_to_viewers("board tracker enabled", vision_distance = 1)
+		balloon_alert_to_viewers(LANG("obj.a464e5c7", null), vision_distance = 1)
 
 /obj/machinery/computer/emp_act(severity)
 	. = ..()

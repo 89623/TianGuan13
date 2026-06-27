@@ -112,7 +112,7 @@
 		return FALSE
 
 	if (!IN_GIVEN_RANGE(attached_circuit, src, USB_CABLE_MAX_RANGE))
-		balloon_alert_to_viewers("detached, too far away")
+		balloon_alert_to_viewers(LANG("obj.92779467", null))
 		attached_circuit = null
 		return FALSE
 

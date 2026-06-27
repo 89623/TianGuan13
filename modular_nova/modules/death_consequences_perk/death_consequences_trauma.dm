@@ -413,7 +413,7 @@
 
 	owner.investigate_log(log_message)
 	owner.visible_message(visible_message, ignored_mobs = self_message_target) // finally, send it
-	owner.balloon_alert_to_viewers("something terrible has happened...")
+	owner.balloon_alert_to_viewers(LANG("datum.ed315fcd", null))
 	to_chat(self_message_target, self_message)
 
 /// Returns a short-ish string containing an href to [get_specific_data].

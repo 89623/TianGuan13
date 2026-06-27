@@ -147,11 +147,11 @@
 					return TRUE
 		if("view_blueprints")
 			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)
-			user.balloon_alert_to_viewers("flips blueprints over")
+			user.balloon_alert_to_viewers(LANG("obj.1326d3da", null))
 			set_viewer(user)
 		if("hide_blueprints")
 			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)
-			user.balloon_alert_to_viewers("flips blueprints over")
+			user.balloon_alert_to_viewers(LANG("obj.1326d3da", null))
 			clear_viewer()
 		if("refresh")
 			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)

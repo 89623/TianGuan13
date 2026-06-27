@@ -48,12 +48,12 @@
 	var/turf/user_turf = get_turf(user)
 	var/atom/movable/dragged = user.pulling
 	user.forceMove(destination_turf)
-	user_turf.balloon_alert_to_hearers("*pop*")
+	user_turf.balloon_alert_to_hearers(LANG("datum.b320c5f9", null))
 	if(dragged)
 		var/turf/dragged_turf = get_turf(dragged)
 		dragged.forceMove(destination_turf)
 		user.start_pulling(dragged, force = TRUE)
-		dragged_turf.balloon_alert_to_hearers("*pop*")
+		dragged_turf.balloon_alert_to_hearers(LANG("datum.b320c5f9", null))
 
 	to_chat(list(user, dragged), span_notice(LANG("datum.2c46523b", list(get_area_name(destination_turf)))))
 	user.emote("blink")

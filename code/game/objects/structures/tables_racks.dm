@@ -289,13 +289,13 @@
 	var/interaction_key = "table_flip_[REF(src)]"
 	if(!is_flipped)
 		if(!LAZYACCESS(user.do_afters, interaction_key)) // To avoid balloon alert spam
-			user.balloon_alert_to_viewers("flipping table...")
+			user.balloon_alert_to_viewers(LANG("obj.31844d17", null))
 		if(do_after(user, max_integrity * 0.25, src, interaction_key = interaction_key))
 			flip_table(get_dir(user, src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!LAZYACCESS(user.do_afters, interaction_key)) // To avoid balloon alert spam
-		user.balloon_alert_to_viewers("flipping table upright...")
+		user.balloon_alert_to_viewers(LANG("obj.512be0e0", null))
 	if(do_after(user, max_integrity * 0.25, src, interaction_key = interaction_key))
 		unflip_table()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -133,7 +133,7 @@
 	add_fingerprint(user)
 	activator.activate()
 	update_icon(UPDATE_ICON_STATE)
-	user.balloon_alert_to_viewers("arming!")
+	user.balloon_alert_to_viewers(LANG("obj.781196e4", null))
 	COOLDOWN_START(src, spam_cd, 1 SECONDS)
 
 /obj/item/grenade/iedcasing/detonate(mob/living/lanced_by) //Blowing that can up

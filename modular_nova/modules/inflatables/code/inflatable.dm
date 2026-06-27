@@ -106,7 +106,7 @@
 	has_been_deflated = TRUE
 	if(manually)
 		playsound(src, 'sound/machines/hiss.ogg', 50)
-		balloon_alert_to_viewers("slowly deflates!")
+		balloon_alert_to_viewers(LANG("obj.51e200d1", null))
 		addtimer(CALLBACK(src, PROC_REF(slow_deflate_finish)), manual_deflation_time)
 		return
 	if(torn_type)

@@ -89,7 +89,7 @@
 		var/obj/item/toy/cards/deck/dealer_deck = tool
 		if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // recycle cardhand into deck (if unwielded)
 			if(dealer_deck.insert(src))
-				user.balloon_alert_to_viewers("puts card in deck")
+				user.balloon_alert_to_viewers(LANG("obj.f9852041", null))
 				return ITEM_INTERACT_SUCCESS
 
 			to_chat(user, span_warning(LANG("obj.64e89a57", list(dealer_deck))))

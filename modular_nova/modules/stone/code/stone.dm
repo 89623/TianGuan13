@@ -71,9 +71,9 @@ GLOBAL_LIST_INIT(stone_recipes, list (
 	if((attacking_item.tool_behaviour != TOOL_MINING) && !(istype(attacking_item, /obj/item/chisel)))
 		return ..()
 	playsound(src,  'sound/effects/pickaxe/picaxe1.ogg', 50, TRUE)
-	balloon_alert_to_viewers("cutting...")
+	balloon_alert_to_viewers(LANG("obj.33079829", null))
 	if(!do_after(user, 5 SECONDS, target = src))
-		balloon_alert_to_viewers("stopped cutting")
+		balloon_alert_to_viewers(LANG("obj.21e88fc0", null))
 		return FALSE
 	new /obj/item/stack/sheet/mineral/stone(get_turf(src), amount)
 	qdel(src)
@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(stone_recipes, list (
 	if(!item_used.tool_start_check(user, amount = 0))
 		return FALSE
 
-	balloon_alert_to_viewers("breaking down...")
+	balloon_alert_to_viewers(LANG("turf.0aee0066", null))
 
 	if(!item_used.use_tool(src, user, 5 SECONDS))
 		return FALSE

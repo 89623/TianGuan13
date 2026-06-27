@@ -59,7 +59,7 @@
 	return ..()
 
 /obj/structure/reagent_water_basin/wrench_act(mob/living/user, obj/item/tool)
-	user.balloon_alert_to_viewers("disassembling...")
+	user.balloon_alert_to_viewers(LANG("obj.b5ba9871", null))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
 		return
 

@@ -129,7 +129,7 @@
 			reset_vent(TRUE)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		else
-			balloon_alert_to_viewers("ore gouger still recharging!")
+			balloon_alert_to_viewers(LANG("obj.5690d9c2", null))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/ore_vent/ghost_mining/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)

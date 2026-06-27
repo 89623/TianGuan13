@@ -1228,7 +1228,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/turf/temp_target = get_step(ai_clicker, picked_dir) // we can move during the timer so we cant just pass the ref
 
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(temp_target, roll_over_time)
-	ai_clicker.balloon_alert_to_viewers("rolling...")
+	ai_clicker.balloon_alert_to_viewers(LANG("datum.19161138", null))
 	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_clicker, picked_dir), roll_over_time)
 
 	adjust_uses(-1)
@@ -1334,7 +1334,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, time_to_tilt)
 	clicked_vendor.visible_message(span_warning(LANG("datum.4abd7a5b", list(clicked_vendor))))
-	clicked_vendor.balloon_alert_to_viewers("falling over...")
+	clicked_vendor.balloon_alert_to_viewers(LANG("datum.acff9b34", null))
 	addtimer(CALLBACK(src, PROC_REF(do_vendor_tilt), clicked_vendor, target), time_to_tilt)
 
 	adjust_uses(-1)

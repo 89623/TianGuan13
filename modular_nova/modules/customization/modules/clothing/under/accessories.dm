@@ -323,7 +323,7 @@
 	var/list/victims = get_hearers_in_view(4, tile)
 	if(istype(tile))
 		tile.atmos_spawn_air("[GAS_WATER_VAPOR]=50;[TURF_TEMPERATURE(1000)]")
-	tile.balloon_alert_to_viewers("overloaded!")
+	tile.balloon_alert_to_viewers(LANG("obj.13bc0f79", null))
 	tile.visible_message(LANG("obj.fa5bca17", list(src)))
 	playsound(tile, 'sound/effects/spray.ogg', 80)
 	for(var/mob/living/collateral in victims)

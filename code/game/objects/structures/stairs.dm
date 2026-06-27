@@ -398,7 +398,7 @@
 		. += span_notice(LANG("obj.e4b40668", null))
 
 /obj/structure/stairs_frame/wrench_act(mob/living/user, obj/item/used_tool)
-	user.balloon_alert_to_viewers("securing stairs frame", "securing frame")
+	user.balloon_alert_to_viewers(LANG("obj.bc099e69", null), LANG("obj.880c9b6b", null))
 	used_tool.play_tool_sound(src)
 	if(!used_tool.use_tool(src, user, 3 SECONDS))
 		return TRUE

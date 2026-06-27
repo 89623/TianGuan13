@@ -4,10 +4,10 @@
 		if(CAMERA_STATE_WRENCHED, CAMERA_STATE_WELDED)
 			if(!tool.tool_start_check(user, amount = 1))
 				return ITEM_INTERACT_BLOCKING
-			user.balloon_alert_to_viewers("[camera_construction_state == CAMERA_STATE_WELDED ? "un" : null]welding...")
+			user.balloon_alert_to_viewers(LANG("obj.a38258a9", list(camera_construction_state == CAMERA_STATE_WELDED ? "un" : null)))
 			audible_message(span_hear(LANG("obj.1aa82fa3", null)))
 			if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
-				user.balloon_alert_to_viewers("stopped [camera_construction_state == CAMERA_STATE_WELDED ? "un" : null]welding!")
+				user.balloon_alert_to_viewers(LANG("obj.b650eb95", list(camera_construction_state == CAMERA_STATE_WELDED ? "un" : null)))
 				return
 			camera_construction_state = ((camera_construction_state == CAMERA_STATE_WELDED) ? CAMERA_STATE_WRENCHED : CAMERA_STATE_WELDED)
 			set_anchored(camera_construction_state == CAMERA_STATE_WELDED)

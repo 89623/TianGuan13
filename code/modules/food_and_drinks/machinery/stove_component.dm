@@ -124,13 +124,13 @@
 		turn_off()
 
 	else if(real_parent.machine_stat & (BROKEN|NOPOWER))
-		real_parent.balloon_alert_to_viewers("no power!")
+		real_parent.balloon_alert_to_viewers(LANG("datum.b3e1b703", null))
 		return
 
 	else
 		turn_on()
 
-	real_parent.balloon_alert_to_viewers("burners [on ? "on" : "off"]")
+	real_parent.balloon_alert_to_viewers(LANG("datum.832b8b7b", list(on ? "on" : "off")))
 	playsound(real_parent, 'sound/machines/click.ogg', 30, TRUE)
 	playsound(real_parent, on ? 'sound/items/tools/welderactivate.ogg' : 'sound/items/tools/welderdeactivate.ogg', 15, TRUE)
 

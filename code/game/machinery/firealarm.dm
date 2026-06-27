@@ -365,7 +365,7 @@
 		return NONE
 	toggle_panel_open()
 	tool.play_tool_sound(src)
-	balloon_alert_to_viewers("wires [panel_open ? "exposed" : "unexposed"]")
+	balloon_alert_to_viewers(LANG("obj.ac8966cf", list(panel_open ? "exposed" : "unexposed")))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -380,11 +380,11 @@
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = 1))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert_to_viewers("repairing...")
+	balloon_alert_to_viewers(LANG("obj.b52342a8", null))
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 1, volume = 50, extra_checks = CALLBACK(src, PROC_REF(state_callback), null, TRUE)))
 		return ITEM_INTERACT_BLOCKING
 	repair_damage(INFINITY)
-	balloon_alert_to_viewers("repaired")
+	balloon_alert_to_viewers(LANG("obj.65ced1e8", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/firealarm/wirecutter_act_secondary(mob/living/user, obj/item/tool)
@@ -396,7 +396,7 @@
 
 	tool.play_tool_sound(src)
 	new /obj/item/stack/cable_coil(user.loc, 5)
-	balloon_alert_to_viewers("wires removed")
+	balloon_alert_to_viewers(LANG("obj.5191243c", null))
 	buildstage = FIRE_ALARM_BUILD_NO_WIRES
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -407,14 +407,14 @@
 	if(buildstage != FIRE_ALARM_BUILD_NO_WIRES)
 		return NONE
 
-	loc.balloon_alert_to_viewers("removing circuit...")
+	loc.balloon_alert_to_viewers(LANG("obj.c213b154", null))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(state_callback), FIRE_ALARM_BUILD_NO_WIRES, TRUE)))
 		return ITEM_INTERACT_BLOCKING
 	if(machine_stat & BROKEN)
-		balloon_alert_to_viewers("broken circuit removed")
+		balloon_alert_to_viewers(LANG("obj.abf8870d", null))
 		set_machine_stat(machine_stat & ~BROKEN)
 	else
-		balloon_alert_to_viewers("circuit removed")
+		balloon_alert_to_viewers(LANG("obj.6bf68b48", null))
 		new /obj/item/electronics/firealarm(user.drop_location())
 	buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 	update_appearance()
@@ -430,7 +430,7 @@
 		balloon_alert(user, LANG("obj.34f3b9b2", list(buildstage == FIRE_ALARM_BUILD_SECURED ? "wires" : "circuit")))
 		return ITEM_INTERACT_BLOCKING
 
-	loc.balloon_alert_to_viewers("[/obj/item/wallframe/firealarm::name] removed")
+	loc.balloon_alert_to_viewers(LANG("obj.2a4235b4", list(/obj/item/wallframe/firealarm::name)))
 	new /obj/item/wallframe/firealarm(user.drop_location())
 	tool.play_tool_sound(loc)
 	qdel(src)
@@ -458,7 +458,7 @@
 		balloon_alert(user, LANG("obj.bb6f7f63", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert_to_viewers("wires installed")
+	balloon_alert_to_viewers(LANG("obj.7eb1b623", null))
 	buildstage = FIRE_ALARM_BUILD_SECURED
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -470,7 +470,7 @@
 		balloon_alert(user, LANG("obj.ea00f01a", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert_to_viewers("circuit installed")
+	balloon_alert_to_viewers(LANG("obj.3bf49b8d", null))
 	qdel(circuit)
 	buildstage = FIRE_ALARM_BUILD_NO_WIRES
 	update_appearance()
@@ -482,7 +482,7 @@
 	if(!pseudocircuit.adapt_circuit(user, circuit_cost = 0.015 * STANDARD_CELL_CHARGE))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert_to_viewers("circuit installed")
+	balloon_alert_to_viewers(LANG("obj.3bf49b8d", null))
 	buildstage = FIRE_ALARM_BUILD_NO_WIRES
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -514,7 +514,7 @@
 /obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_WALLFRAME)
-			balloon_alert_to_viewers("circuit installed")
+			balloon_alert_to_viewers(LANG("obj.3bf49b8d", null))
 			buildstage = FIRE_ALARM_BUILD_NO_WIRES
 			update_appearance()
 			return TRUE

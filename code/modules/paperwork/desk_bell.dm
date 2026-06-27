@@ -73,7 +73,7 @@
 		balloon_alert(user, LANG("obj.b52342a8", null))
 		tool.play_tool_sound(src)
 		if(tool.use_tool(src, user, 5 SECONDS))
-			balloon_alert_to_viewers("repaired")
+			balloon_alert_to_viewers(LANG("obj.65ced1e8", null))
 			playsound(user, 'sound/items/tools/change_drill.ogg', 50, vary = TRUE)
 			broken_ringer = FALSE
 			times_rang = 0

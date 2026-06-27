@@ -101,7 +101,7 @@
 
 	set_light_on(TRUE)
 	playsound(source = src, soundin = 'sound/machines/terminal/terminal_processing.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
-	balloon_alert_to_viewers("live!")
+	balloon_alert_to_viewers(LANG("obj.5834efd6", null))
 
 /// When deactivating the camera
 /obj/item/broadcast_camera/proc/on_deactivating()
@@ -114,7 +114,7 @@
 
 	set_light_on(FALSE)
 	playsound(source = src, soundin = 'sound/machines/terminal/terminal_prompt_deny.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
-	balloon_alert_to_viewers("offline")
+	balloon_alert_to_viewers(LANG("obj.eba14af0", null))
 
 /obj/item/broadcast_camera/click_alt(mob/user)
 	active_microphone = !active_microphone

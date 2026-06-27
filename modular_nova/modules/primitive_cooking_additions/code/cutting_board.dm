@@ -121,9 +121,9 @@
 			return
 
 		playsound(src, 'sound/effects/butcher.ogg', 50, TRUE)
-		balloon_alert_to_viewers("cutting...")
+		balloon_alert_to_viewers(LANG("obj.33079829", null))
 		if(!do_after(user, 3 SECONDS, target = src))
-			balloon_alert_to_viewers("stopped cutting")
+			balloon_alert_to_viewers(LANG("obj.21e88fc0", null))
 			return
 
 		process_food(item_process_recipe, contents[1])

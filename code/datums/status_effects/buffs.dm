@@ -527,7 +527,7 @@
 	. = ..()
 	var/health_increase = round(max(fragile_mob_health_buff, historic_max_health * health_buff_modifier))
 	owner.maxHealth += health_increase
-	owner.balloon_alert_to_viewers("health buffed")
+	owner.balloon_alert_to_viewers(LANG("datum.9c1d706a", null))
 	to_chat(owner, span_nicegreen(LANG("datum.0fc9c5d1", null)))
 
 	if(isanimal(owner))	//dumb animals have their own proc for healing.

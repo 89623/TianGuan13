@@ -54,7 +54,7 @@
 	if (!can_coil_target(living_target))
 		return TRUE
 
-	clicker.balloon_alert_to_viewers("starts coiling tail")
+	clicker.balloon_alert_to_viewers(LANG("datum.3cd5e4f2", null))
 	clicker.visible_message(span_warning(LANG("datum.ba46c9c3", list(clicker, clicker.p_their(), living_target))), span_notice(LANG("datum.1f2e00ac", list(living_target))), ignored_mobs = list(living_target))
 	to_chat(living_target, span_userdanger(LANG("datum.025dfc45", list(clicker, clicker.p_their()))))
 
@@ -484,7 +484,7 @@
 	currently_crushing = TRUE
 	START_PROCESSING(SSobj, src)
 
-	owner.balloon_alert_to_viewers("starts crushing")
+	owner.balloon_alert_to_viewers(LANG("obj.f516fe4f", null))
 	owner.visible_message(span_boldwarning(LANG("obj.4d869e31", list(owner, constricted, owner.p_their()))), span_warning(LANG("obj.1229b6f5", list(constricted))), ignored_mobs = list(constricted))
 	to_chat(constricted, span_userdanger(LANG("obj.10fae112", list(owner, owner.p_their()))))
 	return TRUE
@@ -494,7 +494,7 @@
 	if (!currently_crushing)
 		return FALSE
 
-	owner.balloon_alert_to_viewers("stops crushing")
+	owner.balloon_alert_to_viewers(LANG("obj.81c5d81e", null))
 	owner.visible_message(span_warning(LANG("obj.b7eda0d1", list(owner, constricted, owner.p_their()))), span_notice(LANG("obj.a2a1f972", list(constricted))), ignored_mobs = list(constricted))
 	to_chat(constricted, span_boldwarning(LANG("obj.35b211a1", list(owner, owner.p_their()))))
 

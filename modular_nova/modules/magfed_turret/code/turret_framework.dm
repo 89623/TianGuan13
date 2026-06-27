@@ -179,7 +179,7 @@
 /obj/item/storage/toolbox/emergency/turret/mag_fed/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(quick_deployable)
-		balloon_alert_to_viewers("deploying...")
+		balloon_alert_to_viewers(LANG("obj.617d0336", null))
 		addtimer(CALLBACK(src, PROC_REF(deploy_turret), throwingdatum.thrower?.resolve()), quick_deploy_timer, TIMER_STOPPABLE)
 
 ////// Targeting Device handling //////
@@ -530,7 +530,7 @@
 		return
 	if (mag.ammo_count())
 		if(!claptrap_moment)
-			balloon_alert_to_viewers("loading cartridge...")
+			balloon_alert_to_viewers(LANG("obj.331be1b0", null))
 		chambered = WEAKREF(mag.get_round())
 		var/obj/item/ammo_casing/casing = chambered?.resolve()
 		if(isnull(casing))
@@ -561,7 +561,7 @@
 /obj/machinery/porta_turret/syndicate/toolbox/mag_fed/proc/load_mag()
 	var/obj/item/storage/toolbox/emergency/turret/mag_fed/auto_loader = mag_box?.resolve()
 	if(!auto_loader.get_mag())
-		balloon_alert_to_viewers("magazine well empty!") // hey, this is actually important info to convey.
+		balloon_alert_to_viewers(LANG("obj.859e7193", null)) // hey, this is actually important info to convey.
 		toggle_on(FALSE) // I know i added the shupt-up toggle after adding this, This is just to prevent rapid proccing
 		return
 	magazine_ref = WEAKREF(auto_loader.get_mag(FALSE))
@@ -570,7 +570,7 @@
 		magazine_ref = null
 	get_that_mag.forceMove(src)
 	if(!claptrap_moment)
-		balloon_alert_to_viewers("loading magazine...")
+		balloon_alert_to_viewers(LANG("obj.2bc942a4", null))
 	return
 
 /// ejects cartridge and calls if issues arrive.
@@ -581,7 +581,7 @@
 	if(istype(casing)) //there's a chambered round
 		if(casing_ejector) //To handle casing ejection (Previous version didn't account for caseless ammo and threw runtimes with new system)
 			if(!claptrap_moment)
-				balloon_alert_to_viewers("ejecting cartridge") // will proc even on caseless cartridges, but it's a debug message.
+				balloon_alert_to_viewers(LANG("obj.695e564e", null)) // will proc even on caseless cartridges, but it's a debug message.
 			casing.forceMove(drop_location()) //Eject casing onto ground.
 			chambered = null
 			casing.bounce_away(TRUE)
@@ -678,11 +678,11 @@
 /// toggles between whether things are inside the ally system
 /obj/machinery/porta_turret/syndicate/toolbox/mag_fed/proc/toggle_ally(mob/living/target) //leave these since it's kinda important to know which is being done.
 	if(remove_ally(target))
-		balloon_alert_to_viewers("ally removed!")
+		balloon_alert_to_viewers(LANG("obj.b421ea7b", null))
 		return
 	else
 		if(add_ally(target))
-			balloon_alert_to_viewers("ally designated!")
+			balloon_alert_to_viewers(LANG("obj.f0698dc8", null))
 		return
 
 /obj/machinery/porta_turret/syndicate/toolbox/mag_fed/target(atom/movable/target)
@@ -715,7 +715,7 @@
 	if(!target)
 		return
 	target_override = WEAKREF(target)
-	balloon_alert_to_viewers("target acquired!") // So you know whats causing it to fire
+	balloon_alert_to_viewers(LANG("obj.9364ba44", null)) // So you know whats causing it to fire
 	shot_delay = (initial(shot_delay) / 2) //No need to scan for targets so faster work
 	burst_delay = (initial(burst_delay) / 2)
 

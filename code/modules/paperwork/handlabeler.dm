@@ -74,7 +74,7 @@
 
 	var/cursor_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/cursor_y = text2num(LAZYACCESS(modifiers, ICON_Y))
-	interacting_with.balloon_alert_to_viewers("labelled")
+	interacting_with.balloon_alert_to_viewers(LANG("obj.0cf93754", null))
 	user.visible_message(
 		span_notice(LANG("obj.2f36fc62", list(user, interacting_with, label))),
 		span_notice(LANG("obj.7ecf5901", list(interacting_with, label))),

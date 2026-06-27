@@ -63,7 +63,7 @@
 
 	owner.visible_message(span_warning(LANG("datum.b7dd8aa6", list(owner, target_atom))), span_warning(LANG("datum.3f396cf8", list(target_atom))), ignored_mobs = target_atom)
 	to_chat(target_atom, span_userdanger(LANG("datum.e8886eaa", list(owner))))
-	owner.balloon_alert_to_viewers("biting...")
+	owner.balloon_alert_to_viewers(LANG("datum.1d0e07be", null))
 	var/result = do_after(owner, 0.5 SECONDS, target_atom, IGNORE_HELD_ITEM)
 	if (!result)
 		return FALSE

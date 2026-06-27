@@ -109,11 +109,11 @@
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, LANG("obj.20fd4e5f", null))
 		return TRUE
-	balloon_alert_to_viewers("repairing...")
+	balloon_alert_to_viewers(LANG("obj.b52342a8", null))
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = REPAIR_WELDER_COST, volume = 100))
 		return TRUE
 	update_integrity(max_integrity)
-	balloon_alert_to_viewers("repaired!")
+	balloon_alert_to_viewers(LANG("obj.ac33e326", null))
 
 /// Undeploying, for when you want to move your big dakka around
 /obj/machinery/mounted_machine_gun/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
@@ -124,10 +124,10 @@
 	if(!ishuman(user))
 		return TRUE
 	if(ammo_box)
-		balloon_alert_to_viewers("remove ammo box!")
+		balloon_alert_to_viewers(LANG("obj.bd9a7a4f", null))
 		return TRUE
 	used_wrench.play_tool_sound(user)
-	balloon_alert_to_viewers("undeploying...")
+	balloon_alert_to_viewers(LANG("obj.d8917abe", null))
 	if(!do_after(user, undeploy_time))
 		return TRUE
 	new undeployed_type(get_turf(src))
@@ -352,10 +352,10 @@
 		drop_bolt()
 		fire_result = FALSE
 	if(cover_open)
-		balloon_alert_to_viewers("cover open!")
+		balloon_alert_to_viewers(LANG("obj.b726018f", null))
 		fire_result = FALSE
 	if(overheated)
-		balloon_alert_to_viewers("barrel heatlocked!")
+		balloon_alert_to_viewers(LANG("obj.9edb09f5", null))
 		fire_result = FALSE
 	if(!fire_result)
 		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 50, TRUE)
@@ -468,7 +468,7 @@
 		browning.reset_overheat()
 		browning.barrel_heat -= clamp(browning.barrel_heat, 0, browning.barrel_heat_per_shot * 7)
 		playsound(browning, 'sound/effects/wounds/sizzle2.ogg', 100)
-		browning.balloon_alert_to_viewers("water cooled!")
+		browning.balloon_alert_to_viewers(LANG("datum.320d47de", null))
 
 #undef BARREL_HEAT_THRESHOLD_LOW
 #undef BARREL_HEAT_THRESHOLD_HIGH

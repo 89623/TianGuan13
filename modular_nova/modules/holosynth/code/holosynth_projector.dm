@@ -305,7 +305,7 @@
 		return
 	if(!isnull(should_strip_proc_path) && !call(linked_mob, should_strip_proc_path)(user))
 		return
-	pen.balloon_alert_to_viewers("stripping")
+	pen.balloon_alert_to_viewers(LANG("datum.6fa30044", null))
 	user.visible_message(span_warning(LANG("datum.55f50183", list(user, pen))))
 	INVOKE_ASYNC(src, PROC_REF(open_strip_menu), linked_mob, user)
 

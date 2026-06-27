@@ -182,7 +182,7 @@
 
 /datum/status_effect/dodgeroll_iframes/proc/whiff()
 	SIGNAL_HANDLER
-	owner.balloon_alert_to_viewers("MISS!")
+	owner.balloon_alert_to_viewers(LANG("datum.d7cdacf6", null))
 	playsound(src, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return SUCCESSFUL_BLOCK
 

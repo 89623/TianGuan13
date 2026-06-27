@@ -69,7 +69,7 @@
 		return
 	if(!HAS_TRAIT(user, TRAIT_WEB_WEAVER))
 		return
-	loc.balloon_alert_to_viewers("weaving...")
+	loc.balloon_alert_to_viewers(LANG("obj.6802656f", null))
 	if(!do_after(user, 2 SECONDS))
 		loc.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return

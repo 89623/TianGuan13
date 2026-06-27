@@ -44,7 +44,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/power/manufacturing/lathe/click_ctrl_shift(mob/living/user)
-	balloon_alert_to_viewers("materials dumped")
+	balloon_alert_to_viewers(LANG("obj.1c4fca6a", null))
 	materials.retrieve_all()
 
 /obj/machinery/power/manufacturing/lathe/RefreshParts()

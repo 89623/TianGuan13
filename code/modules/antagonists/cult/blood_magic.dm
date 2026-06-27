@@ -474,7 +474,7 @@
 
 		to_chat(user, span_warning(LANG("obj.e63c139b", list(target))))
 		to_chat(target, span_warning(LANG("obj.fd5d1c3c", list(user))))
-		target.balloon_alert_to_viewers("absorbed!")
+		target.balloon_alert_to_viewers(LANG("obj.6e603691", null))
 		return ..()
 	// NOVA EDIT ADDITION START
 	else if(IS_CLOCK(target))

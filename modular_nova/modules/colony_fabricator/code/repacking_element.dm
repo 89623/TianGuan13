@@ -45,7 +45,7 @@
 
 /// Removes the element target and spawns a new one of whatever item_to_pack_into is
 /datum/element/repackable/proc/repack(atom/source, mob/user)
-	source.balloon_alert_to_viewers("repacking...")
+	source.balloon_alert_to_viewers(LANG("datum.afdeea76", null))
 	if(!do_after(user, 3 SECONDS, target = source))
 		return
 

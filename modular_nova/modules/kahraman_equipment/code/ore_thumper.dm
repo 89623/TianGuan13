@@ -105,13 +105,13 @@
 		connect_to_network()
 	if(thumping)
 		if(!see_if_we_can_work(our_turf))
-			balloon_alert_to_viewers("invalid location!")
+			balloon_alert_to_viewers(LANG("obj.5a6389ed", null))
 			cut_that_out()
 			return
 		if(avail(energy_needed))
 			add_load(energy_needed)
 		else
-			balloon_alert_to_viewers("not enough power!")
+			balloon_alert_to_viewers(LANG("obj.7005f2d2", null))
 			cut_that_out()
 
 
@@ -182,7 +182,7 @@
 		return
 	var/turf/our_turf = get_turf(src)
 	if(!see_if_we_can_work(our_turf))
-		balloon_alert_to_viewers("invalid location!")
+		balloon_alert_to_viewers(LANG("obj.5a6389ed", null))
 		cut_that_out()
 		return
 	// Down we go
@@ -214,13 +214,13 @@
 				break
 
 	if(nearby_ore > nearby_ore_limit)
-		balloon_alert_to_viewers("nearby ore too saturated")
+		balloon_alert_to_viewers(LANG("obj.4e16b700", null))
 		// Makes the thumper rumble around when something's wrong
 		Shake(2, 2, 2 SECONDS)
 		return
 
 	if(is_there_a_thumper_too)
-		balloon_alert_to_viewers("too close to another thumper")
+		balloon_alert_to_viewers(LANG("obj.a87b018a", null))
 		// Makes the thumper rumble around when something's wrong
 		Shake(2, 2, 2 SECONDS)
 		return

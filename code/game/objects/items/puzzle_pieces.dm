@@ -381,7 +381,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 		return
 	var/obj/item/keycard/key = attacking_item
 	var/correct_card = key.puzzle_id == id
-	balloon_alert_to_viewers("[correct_card ? "correct" : "incorrect"] card swiped[correct_card ? "" : "!"]")
+	balloon_alert_to_viewers(LANG("obj.c2395146", list(correct_card ? "correct" : "incorrect", correct_card ? "" : "!")))
 	playsound(src, 'sound/machines/card_slide.ogg', 45, TRUE)
 	if(!correct_card)
 		return
@@ -418,7 +418,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	if(isnull(pass_input) || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
 	var/correct = pass_input == password
-	balloon_alert_to_viewers("[correct ? "correct" : "wrong"] password[correct ? "" : "!"]")
+	balloon_alert_to_viewers(LANG("obj.e07b9ffb", list(correct ? "correct" : "wrong", correct ? "" : "!")))
 	if(!correct)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 45, TRUE)
 		return

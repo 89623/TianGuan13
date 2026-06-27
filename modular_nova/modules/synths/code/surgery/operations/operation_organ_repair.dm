@@ -314,7 +314,7 @@
 	display_pain(organ.owner, "The fragmentation errors start clearing.")
 	// Remove all neuroware
 	if(!isnull(organ.owner.has_status_effect(/datum/status_effect/neuroware)))
-		organ.owner.balloon_alert_to_viewers("neuroware reset")
+		organ.owner.balloon_alert_to_viewers(LANG("datum.6e3bb276", null))
 		for(var/datum/reagent/reagent as anything in organ.owner.reagents.reagent_list)
 			if(reagent.chemical_flags & REAGENT_NEUROWARE)
 				organ.owner.reagents.del_reagent(reagent.type)

@@ -140,7 +140,7 @@
 	qdel(organ)
 	if(!special)
 		to_chat(source, span_notice(LANG("datum.d4b6b921", null)))
-		source.balloon_alert_to_viewers("assimilated!", vision_distance = 1)
+		source.balloon_alert_to_viewers(LANG("datum.a7478a8e", null), vision_distance = 1)
 	replace_incompatible_organs(source, special)
 
 /// Adds the protean limb component to any new limb attached to a protean.

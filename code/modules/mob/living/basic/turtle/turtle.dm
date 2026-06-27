@@ -250,7 +250,7 @@
 		var/atom/movable/movable_food = potential_food
 		movable_food.forceMove(drop_location())
 
-	balloon_alert_to_viewers("spits out some food")
+	balloon_alert_to_viewers(LANG("mob.29920c3b", null))
 
 /mob/living/basic/turtle/death(gibbed)
 	. = ..()

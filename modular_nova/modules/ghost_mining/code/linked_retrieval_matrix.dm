@@ -113,18 +113,18 @@
 /obj/machinery/lrm/multitool_act(mob/living/user, obj/item/multitool/buffer_holder)
 	. = ..()
 	if(!buffer_holder.buffer)
-		balloon_alert_to_viewers("no connectable device detected!")
+		balloon_alert_to_viewers(LANG("obj.a0c02ef3", null))
 		return ITEM_INTERACT_SUCCESS
 	if(!istype(buffer_holder.buffer, /obj/structure/ore_box/boulder_collector))
-		balloon_alert_to_viewers("detected device is not connectable!")
+		balloon_alert_to_viewers(LANG("obj.1bf038fc", null))
 		return ITEM_INTERACT_SUCCESS
 	if(buffer_holder.buffer in linked_bscs)
-		balloon_alert_to_viewers("machine already linked!")
+		balloon_alert_to_viewers(LANG("obj.9ddd4804", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(buffer_holder.buffer, /obj/structure/ore_box/boulder_collector))
 		linked_bscs += WEAKREF(buffer_holder.buffer)
-		balloon_alert_to_viewers("collector connected to matrix!")
+		balloon_alert_to_viewers(LANG("obj.d710365c", null))
 		return ITEM_INTERACT_SUCCESS
 
 
@@ -344,14 +344,14 @@
 	if(isnull(chosen_rock) || chosen_rock.brm_stable)
 
 		batch_processing = FALSE
-		balloon_alert_to_viewers("Boulder outside parameters!")
+		balloon_alert_to_viewers(LANG("obj.c8f4763c", null))
 		return LRM_UNSTABLE_BOULDER
 
 	chosen_rock.forceMove(drop_location())
 	chosen_rock.pixel_x = rand(-2, 2)
 	chosen_rock.pixel_y = rand(-2, 2)
 	LAZYREMOVE(collector.available_boulders, chosen_rock_ref)
-	balloon_alert_to_viewers("boulder appears!")
+	balloon_alert_to_viewers(LANG("obj.cb9cbebc", null))
 	use_energy(active_power_usage)
 
 	//try again if we have more boulders to work with

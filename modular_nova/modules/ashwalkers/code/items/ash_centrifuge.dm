@@ -20,10 +20,10 @@
 		balloon_alert(user, LANG("obj.72281623", null))
 		return CLICK_ACTION_BLOCKING
 
-	user.balloon_alert_to_viewers("spinning [src]...")
+	user.balloon_alert_to_viewers(LANG("obj.8f40aab1", list(src)))
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, 5 SECONDS * skill_modifier, target = src))
-		user.balloon_alert_to_viewers("stopped spinning [src]")
+		user.balloon_alert_to_viewers(LANG("obj.0b54d29b", list(src)))
 		return CLICK_ACTION_BLOCKING
 
 	reagents.del_reagent(user_input.type)
@@ -41,10 +41,10 @@
 		balloon_alert(user, LANG("obj.72281623", null))
 		return
 
-	user.balloon_alert_to_viewers("spinning [src]...")
+	user.balloon_alert_to_viewers(LANG("obj.8f40aab1", list(src)))
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, 5 SECONDS * skill_modifier, target = src))
-		user.balloon_alert_to_viewers("stopped spinning [src]")
+		user.balloon_alert_to_viewers(LANG("obj.0b54d29b", list(src)))
 		return
 
 	for(var/datum/reagent/remove_reagent in reagents.reagent_list)

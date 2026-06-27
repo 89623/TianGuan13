@@ -514,12 +514,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return
 	if(!tool.tool_start_check(user, amount=1))
 		return
-	user.balloon_alert_to_viewers("started welding...", "started repairing...")
+	user.balloon_alert_to_viewers(LANG("obj.42428533", null), LANG("obj.db5a7ed6", null))
 	audible_message(span_hear(LANG("obj.1aa82fa3", null)))
 	if(!tool.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, PROC_REF(needs_repair))))
-		user.balloon_alert_to_viewers("stopped welding!", "interrupted the repair!")
+		user.balloon_alert_to_viewers(LANG("obj.4540ccf0", null), LANG("obj.87135ad0", null))
 		return
-	user.balloon_alert_to_viewers("repaired [src]")
+	user.balloon_alert_to_viewers(LANG("obj.3f1130f3", list(src)))
 	atom_integrity = max_integrity
 	set_machine_stat(machine_stat & ~BROKEN)
 
@@ -617,7 +617,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/print_paper(mob/user)
 	if(paper_remaining <= 0)
-		balloon_alert_to_viewers("out of paper!")
+		balloon_alert_to_viewers(LANG("obj.99641765", null))
 		return TRUE
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
 	var/obj/item/newspaper/new_newspaper = new(loc)

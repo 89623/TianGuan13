@@ -167,7 +167,7 @@
 		if(target.is_blind())
 			to_chat(target, span_userdanger(LANG("obj.e2972de4", list(slot_name))))
 		if(external_delay > 0)
-			user.balloon_alert_to_viewers("inserting chip...")
+			user.balloon_alert_to_viewers(LANG("obj.44d8e422", null))
 			if(!do_after(user, 5 SECONDS, target))
 				return
 		target.visible_message(

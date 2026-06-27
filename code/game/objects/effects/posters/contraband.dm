@@ -678,7 +678,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/roroco, 32)
 	if(QDELETED(src) || !isturf(loc))
 		return
 	var/turf/our_wall = get_turf_pixel(src)
-	our_wall.balloon_alert_to_viewers("it was a ruse!")
+	our_wall.balloon_alert_to_viewers(LANG("obj.7d945692", null))
 	roll_and_drop(loc)
 	playsound(loc, 'sound/items/handling/paper_drop.ogg', 50, TRUE)
 

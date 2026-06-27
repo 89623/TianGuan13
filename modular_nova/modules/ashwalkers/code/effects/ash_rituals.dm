@@ -28,7 +28,7 @@
 		return
 	in_use = TRUE
 
-	rune.balloon_alert_to_viewers("ritual has begun...")
+	rune.balloon_alert_to_viewers(LANG("datum.a1cab080", null))
 	new ritual_effect(rune.loc)
 
 	// it is entirely possible to have your own effects here... this is just a suggestion
@@ -75,14 +75,14 @@
 
 /datum/ash_ritual/proc/ritual_fail(obj/effect/ash_rune/failed_rune)
 	new ritual_effect(failed_rune.loc)
-	failed_rune.balloon_alert_to_viewers("ritual has failed...")
+	failed_rune.balloon_alert_to_viewers(LANG("datum.13a3a8c1", null))
 	failed_rune.current_ritual = null
 	in_use = FALSE
 	return
 
 /datum/ash_ritual/proc/ritual_success(obj/effect/ash_rune/success_rune)
 	new ritual_effect(success_rune.loc)
-	success_rune.balloon_alert_to_viewers("ritual has been successful...")
+	success_rune.balloon_alert_to_viewers(LANG("datum.1e6cd11d", null))
 	log_game("[name] ritual has been successfully activated.")
 
 	var/turf/rune_turf = get_turf(success_rune)
@@ -408,7 +408,7 @@
 	var/list/yes_voters = SSpolling.poll_candidates("Do you wish to banish [find_banished]?", poll_time = 10 SECONDS, group = asked_voters)
 
 	if(length(yes_voters) < max(1, ceil(length(asked_voters) / 2 + 0.01))) // you need a simple majority (ex: 10 people vote, need 6)
-		find_banished.balloon_alert_to_viewers("banishment failed!")
+		find_banished.balloon_alert_to_viewers(LANG("datum.5681f8ee", null))
 		return
 
 	var/turf/teleport_turf = locate(rand(1,255), rand(1,255), success_rune.z)

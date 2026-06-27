@@ -444,7 +444,7 @@
 		return
 	if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
-	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
+	user.balloon_alert_to_viewers(LANG("obj.2ca5dd80", list(src)), LANG("obj.ecacaee5", list(src)))
 	audible_message(span_hear(LANG("obj.1aa82fa3", null)))
 	var/did_the_thing
 	while(atom_integrity < max_integrity)
@@ -455,9 +455,9 @@
 		else
 			break
 	if(did_the_thing)
-		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
+		user.balloon_alert_to_viewers(LANG("obj.e3cfcef3", list((atom_integrity >= max_integrity) ? "fully" : "partially", src)))
 	else
-		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
+		user.balloon_alert_to_viewers(LANG("obj.1324f892", list(src)), LANG("obj.87135ad0", null))
 
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)

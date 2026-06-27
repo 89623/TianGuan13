@@ -293,9 +293,9 @@
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/aquarium/proc/do_plunging(atom/movable/source, mob/living/user)
-	user.balloon_alert_to_viewers("plunging...")
+	user.balloon_alert_to_viewers(LANG("datum.137d3098", null))
 	if(do_after(user, 3 SECONDS, target = source))
-		user.balloon_alert_to_viewers("finished plunging")
+		user.balloon_alert_to_viewers(LANG("datum.670c9c2c", null))
 		source.reagents.expose(get_turf(source), TOUCH) //splash on the floor
 		source.reagents.clear_reagents()
 

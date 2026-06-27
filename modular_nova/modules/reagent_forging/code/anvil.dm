@@ -44,10 +44,10 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/reagent_anvil/wrench_act(mob/living/user, obj/item/tool)
-	balloon_alert_to_viewers("deconstructing...")
+	balloon_alert_to_viewers(LANG("obj.44f0e678", null))
 
 	if(!do_after(user, 2 SECONDS, src))
-		balloon_alert_to_viewers("stopped deconstructing")
+		balloon_alert_to_viewers(LANG("obj.0fe37512", null))
 		return TRUE
 
 	tool.play_tool_sound(src)
@@ -128,7 +128,7 @@
 			balloon_alert(user, LANG("obj.72023a5e", null))
 			locate_incomplete.times_hit -= 3
 			if(locate_incomplete.times_hit <= -locate_incomplete.average_hits)
-				balloon_alert_to_viewers("workpiece breaks!")
+				balloon_alert_to_viewers(LANG("obj.6e19732b", null))
 				qdel(locate_incomplete)
 				update_appearance()
 			return ITEM_INTERACT_SUCCESS

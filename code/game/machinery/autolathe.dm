@@ -178,7 +178,7 @@
 		//create & send ui data
 		var/icon_size = spritesheet.icon_size_id(design.id)
 		var/list/design_data = list(
-			"name" = design.name,
+			"name" = lang_reverse_text(design.name), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = design.name, （设计名仅显示、构建走 id=安全；全量反查含单词类如 Spoon/Wrench，P1 多词门槛漏掉的）
 			"desc" = design.get_description(),
 			"cost" = cost,
 			"id" = design.id,

@@ -207,7 +207,7 @@
 	if (remove_hat(user))
 		movable_parent.balloon_alert(user, LANG("datum.9254066e", null))
 	else
-		movable_parent.balloon_alert_to_viewers("the hat falls to the floor!")
+		movable_parent.balloon_alert_to_viewers(LANG("datum.5032c8f6", null))
 
 /datum/component/hat_stabilizer/proc/on_retraction()
 
@@ -224,7 +224,7 @@
 	if(!isnull(user))
 		. = user.put_in_active_hand(attached_hat)
 	else
-		movable_parent.balloon_alert_to_viewers("the hat falls to the floor!")
+		movable_parent.balloon_alert_to_viewers(LANG("datum.5032c8f6", null))
 
 	if (!isclothing(parent))
 		attached_hat = null

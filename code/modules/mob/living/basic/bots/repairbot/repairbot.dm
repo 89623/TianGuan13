@@ -390,7 +390,7 @@
 /obj/item/carried_repairbot/proc/release_bot(bypass_delete = FALSE)
 	if(!isnull(our_bot))
 		our_bot.forceMove(drop_location())
-		our_bot.balloon_alert_to_viewers("plops down")
+		our_bot.balloon_alert_to_viewers(LANG("obj.92212a11", null))
 	if(!bypass_delete)
 		qdel(src)
 

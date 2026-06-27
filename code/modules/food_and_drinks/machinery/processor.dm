@@ -272,7 +272,7 @@
 
 	if(processed_slime.stat != DEAD)
 		processed_slime.forceMove(drop_location())
-		processed_slime.balloon_alert_to_viewers("crawls free")
+		processed_slime.balloon_alert_to_viewers(LANG("obj.bc0c8b35", null))
 		return
 
 	var/core_count = processed_slime.cores

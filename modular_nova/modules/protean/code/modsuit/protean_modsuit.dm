@@ -449,7 +449,7 @@
 		return
 	if(!isnull(should_strip_proc_path) && !call(protean_mob, should_strip_proc_path)(user))
 		return
-	suit.balloon_alert_to_viewers("stripping")
+	suit.balloon_alert_to_viewers(LANG("datum.6fa30044", null))
 	user.visible_message(span_warning(LANG("datum.55f50183", list(user, source))))
 	ASYNC
 		var/datum/strip_menu/protean/strip_menu = LAZYACCESS(strip_menus, protean_mob)

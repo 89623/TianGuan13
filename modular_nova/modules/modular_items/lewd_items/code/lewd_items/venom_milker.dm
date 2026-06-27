@@ -25,7 +25,7 @@
 		return FALSE
 
 	playsound(user, 'sound/effects/compressed_air/tank_insert_clunky.ogg', 50)
-	user.balloon_alert_to_viewers("siphoning...")
+	user.balloon_alert_to_viewers(LANG("obj.d7fe959d", null))
 
 	var/text = span_purple("[user] starts hooking up [src] to [target_mob]'s fangs...")
 	var/self_text = span_purple("You start hooking up [src] to [target_mob]'s fangs...")
@@ -95,7 +95,7 @@
 	bite.add_reagents(reagents, TRUE)
 
 	if (!isnull(user))
-		user.balloon_alert_to_viewers("siphoned")
+		user.balloon_alert_to_viewers(LANG("obj.f084c51c", null))
 		var/text = span_purple("[user] siphons venom from [target]'s fangs with [src]!")
 		var/self_text = span_purple("You siphon venom from [target]'s fangs with [src]!")
 		var/victim_text = span_purple("[user] siphons venom from your fangs with [src]!")

@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(thing.move_resist > max_force_fulton)
 		balloon_alert(user, LANG("obj.5e148cfa", null))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert_to_viewers("attaching...")
+	balloon_alert_to_viewers(LANG("obj.41dea7e7", null))
 	playsound(thing, 'sound/items/zip/zip.ogg', vol = 50, vary = TRUE)
 	if(isliving(thing))
 		var/mob/living/creature = thing
@@ -101,7 +101,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		balloon_alert(user, LANG("obj.f4aa3550", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert_to_viewers("extracting!")
+	balloon_alert_to_viewers(LANG("obj.4d30849c", null))
 	if(loc == user && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)
@@ -228,7 +228,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/structure/extraction_point/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	balloon_alert_to_viewers("undeploying...")
+	balloon_alert_to_viewers(LANG("obj.d8917abe", null))
 	if(!do_after(user, 1.5 SECONDS, src))
 		return
 	new /obj/item/fulton_core(drop_location())

@@ -7,12 +7,12 @@
 		return
 
 	if(!length(avatar_connection_refs))
-		balloon_alert_to_viewers("powering down domain...")
+		balloon_alert_to_viewers(LANG("obj.b015a834", null))
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 40, vary = TRUE)
 		reset()
 		return
 
-	balloon_alert_to_viewers("notifying clients...")
+	balloon_alert_to_viewers(LANG("obj.47ed17ba", null))
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 100, vary = TRUE)
 	user.visible_message(
 		span_danger(LANG("obj.4273d21e", list(user))),
@@ -34,15 +34,15 @@
 		return FALSE
 
 	if(isnull(map_key))
-		balloon_alert_to_viewers("no domain specified!")
+		balloon_alert_to_viewers(LANG("obj.c7fc5176", null))
 		return FALSE
 
 	if(generated_domain)
-		balloon_alert_to_viewers("stop the current domain first!")
+		balloon_alert_to_viewers(LANG("obj.2daf155d", null))
 		return FALSE
 
 	if(length(avatar_connection_refs))
-		balloon_alert_to_viewers("all clients must disconnect!")
+		balloon_alert_to_viewers(LANG("obj.706e5aea", null))
 		return FALSE
 
 	is_ready = FALSE
@@ -50,7 +50,7 @@
 
 	/// If any one of these fail, it reverts the entire process
 	if(!load_domain(map_key) || !load_map_items() || !load_mob_segments())
-		balloon_alert_to_viewers("initialization failed!")
+		balloon_alert_to_viewers(LANG("obj.8608c642", null))
 		scrub_vdom()
 		is_ready = TRUE
 		return FALSE
@@ -76,7 +76,7 @@
 		setup_glitch()
 
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 30, vary = TRUE)
-	balloon_alert_to_viewers("domain loaded.")
+	balloon_alert_to_viewers(LANG("obj.e73fc37d", null))
 	generated_domain.start_time = world.time
 	points -= generated_domain.cost
 	update_use_power(ACTIVE_POWER_USE)

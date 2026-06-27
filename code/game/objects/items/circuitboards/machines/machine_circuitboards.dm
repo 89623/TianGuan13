@@ -45,7 +45,7 @@
 			new /obj/effect/temp_visual/point(potential_turf)
 			blocked = TRUE
 	if(blocked)
-		balloon_alert_to_viewers("no room! (3x3)")
+		balloon_alert_to_viewers(LANG("obj.a7e45501", null))
 		return FALSE
 	return TRUE
 

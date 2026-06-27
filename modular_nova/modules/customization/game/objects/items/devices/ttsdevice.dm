@@ -9,13 +9,13 @@
 	obj_flags = UNIQUE_RENAME
 
 /obj/item/ttsdevice/attack_self(mob/user)
-	user.balloon_alert_to_viewers("typing...", "started typing...")
+	user.balloon_alert_to_viewers(LANG("obj.2f404e61", null), LANG("obj.a81fce7c", null))
 	playsound(src, 'modular_nova/master_files/sound/items/tts/started_type.ogg', 50, TRUE)
 	var/str = tgui_input_text(user, LANG("obj.d06b5e31", null), LANG("obj.31c9ab2a", null), "", max_length = MAX_MESSAGE_LEN, encode = FALSE)
 	if(QDELETED(src) || !user.can_perform_action(src))
 		return
 	if(!str)
-		user.balloon_alert_to_viewers("stops typing", "stopped typing")
+		user.balloon_alert_to_viewers(LANG("obj.0e9e16b2", null), LANG("obj.6d199a77", null))
 		playsound(src, 'modular_nova/master_files/sound/items/tts/stopped_type.ogg', 50, TRUE)
 		return
 

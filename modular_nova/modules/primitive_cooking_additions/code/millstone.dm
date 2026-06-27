@@ -85,7 +85,7 @@
 
 /obj/structure/millstone/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	balloon_alert_to_viewers("disassembling...")
+	balloon_alert_to_viewers(LANG("obj.b5ba9871", null))
 	if(!do_after(user, 2 SECONDS, src))
 		return
 
@@ -140,7 +140,7 @@
 	if(!length(contents) || !in_range(src, user))
 		return
 
-	balloon_alert_to_viewers("grinding...")
+	balloon_alert_to_viewers(LANG("obj.c87262cc", null))
 
 	flick("millstone_spin", src)
 	playsound(src, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
@@ -149,13 +149,13 @@
 
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, 5 SECONDS * skill_modifier, target = src))
-		balloon_alert_to_viewers("stopped grinding")
+		balloon_alert_to_viewers(LANG("obj.2e115f54", null))
 		return
 
 	for(var/target_item in contents)
 		seedify(target_item, t_max = 1)
 
-	balloon_alert_to_viewers("finished grinding")
+	balloon_alert_to_viewers(LANG("obj.b03db55e", null))
 	user.mind?.adjust_experience(/datum/skill/primitive, 5)
 
 #undef MILLSTONE_STAMINA_MINIMUM

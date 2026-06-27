@@ -59,7 +59,7 @@
 
 /// Leash removal
 /obj/item/clothing/erp_leash/proc/remove_leash(mob/free_bird)
-	free_bird?.balloon_alert_to_viewers("unhooked")
+	free_bird?.balloon_alert_to_viewers(LANG("obj.78b1b041", null))
 	qdel(our_leash_component.resolve())
 
 /*
@@ -116,7 +116,7 @@
 
 	if(istype(parent, /mob))
 		var/mob/our_parent = parent
-		our_parent.balloon_alert_to_viewers("unhooked")
+		our_parent.balloon_alert_to_viewers(LANG("datum.78b1b041", null))
 	qdel(src)
 
 /datum/component/leash/erp/proc/on_parent_resist(datum/source, mob/user)

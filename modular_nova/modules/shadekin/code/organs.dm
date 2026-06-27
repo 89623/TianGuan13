@@ -112,7 +112,7 @@
 	var/mood_color = "#5ec7e4"
 	var/obj/item/organ/ears/shadekin/user_ears = user.get_organ_slot(ORGAN_SLOT_EARS)
 	var/mode = istype(user_ears)
-	user.balloon_alert_to_viewers("[mode ? "ears vibrate" : "shivers"]", "projecting thoughts...")
+	user.balloon_alert_to_viewers("[mode ? "ears vibrate" : "shivers"]", LANG("obj.366ccd6e", null))
 
 	switch(shadekin_mood)
 		if(SANITY_LEVEL_GREAT)

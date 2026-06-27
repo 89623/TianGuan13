@@ -133,7 +133,7 @@
 	baller.stop_pulling()
 
 /obj/structure/hoop/click_ctrl(mob/user)
-	user.balloon_alert_to_viewers("resetting score...")
+	user.balloon_alert_to_viewers(LANG("obj.70e572ae", null))
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	if(do_after(user, 5 SECONDS, target = src))
 		total_score = 0
@@ -187,7 +187,7 @@
 /obj/structure/hoop/minigame/score(obj/item/toy/basketball/ball, mob/living/baller, points)
 	var/is_team_hoop = !(baller.ckey in team_ckeys)
 	if(is_team_hoop)
-		baller.balloon_alert_to_viewers("cant score own hoop!")
+		baller.balloon_alert_to_viewers(LANG("obj.e7445772", null))
 		return
 
 	if(..())

@@ -120,11 +120,11 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/ladder/unbreakable/rune/show_initial_fluff_message(mob/user, going_up)
-	user.balloon_alert_to_viewers("activating...")
+	user.balloon_alert_to_viewers(LANG("obj.90eb3e61", null))
 
 /obj/structure/ladder/unbreakable/rune/show_final_fluff_message(mob/user, going_up)
 	visible_message(span_notice(LANG("obj.7b8abe5c", list(user, src))))
-	user.balloon_alert_to_viewers("warped in")
+	user.balloon_alert_to_viewers(LANG("obj.e6a67d9c", null))
 
 /obj/structure/ladder/unbreakable/rune/use(mob/user, going_up = TRUE)
 	if(!IS_WIZARD(user))

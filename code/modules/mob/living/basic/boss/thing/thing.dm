@@ -107,7 +107,7 @@
 		return_to_spawnloc()
 		return
 	add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
-	balloon_alert_to_viewers("invulnerable! overload the machines!")
+	balloon_alert_to_viewers(LANG("mob.027cd1d2", null))
 	visible_message(span_danger(LANG("mob.3b7d6495", list(src))))
 	phase_invulnerability_timer = addtimer(CALLBACK(src, PROC_REF(phase_too_slow)), phase_invul_time, TIMER_STOPPABLE|TIMER_UNIQUE)
 	add_filter(PHASEREGEN_FILTER, 2, list("type" = "outline", "color" = COLOR_PALE_GREEN, "alpha" = 0, "size" = 1))
@@ -167,7 +167,7 @@
 /mob/living/basic/boss/thing/proc/phase_too_slow()
 	phase_invulnerability_timer = null
 	remove_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
-	balloon_alert_to_viewers("recovers!")
+	balloon_alert_to_viewers(LANG("mob.ec6aa788", null))
 	visible_message(span_danger(LANG("mob.9efb24cd", list(src))))
 	adjust_health(-(maxHealth/3) * 0.5) //half of a phase (which is a third of maxhealth)
 	var/filter = get_filter(PHASEREGEN_FILTER)
@@ -271,7 +271,7 @@
 		return
 	if(!user.can_perform_action(src) || !user.can_interact_with(src))
 		return
-	balloon_alert_to_viewers("overloading...")
+	balloon_alert_to_viewers(LANG("obj.e40cb529", null))
 	icon_state = "thingdepleter_overriding"
 	if(!do_after(user, 1 SECONDS, target = src))
 		if(density)

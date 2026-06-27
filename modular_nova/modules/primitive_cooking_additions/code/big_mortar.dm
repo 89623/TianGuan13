@@ -141,7 +141,7 @@
 		balloon_alert_to_viewers("[act_verb_ing]...")
 		var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 		if(!do_after(user, 5 SECONDS * skill_modifier, target = src))
-			balloon_alert_to_viewers("stopped [act_verb_ing]")
+			balloon_alert_to_viewers(LANG("obj.a2a87f6e", list(act_verb_ing)))
 			return ITEM_INTERACT_BLOCKING
 
 		user.adjust_stamina_loss(LARGE_MORTAR_STAMINA_USE) //This is a bit more tiring than a normal sized mortar and pestle

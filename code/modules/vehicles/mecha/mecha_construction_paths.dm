@@ -74,7 +74,7 @@
 	. = user.transferItemToLoc(I, parent)
 	if(.)
 		var/atom/parent_atom = parent
-		user.balloon_alert_to_viewers("connected [I]")
+		user.balloon_alert_to_viewers(LANG("datum.567e760d", list(I)))
 		parent_atom.add_overlay(I.icon_state+"+o")
 		qdel(I)
 
@@ -616,7 +616,7 @@
 /datum/component/construction/mecha/honker/custom_action(obj/item/I, mob/living/user, diff)
 	if(istype(I, /obj/item/bikehorn))
 		playsound(parent, 'sound/items/bikehorn.ogg', 50, TRUE)
-		user.balloon_alert_to_hearers("*HONK*")
+		user.balloon_alert_to_hearers(LANG("datum.c7832879", null))
 		return TRUE
 
 	return ..()

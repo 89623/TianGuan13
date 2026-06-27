@@ -440,7 +440,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 		playsound(user, 'sound/items/weapons/gun/tesla/squeak_latch.ogg', 100)
 
 	update_appearance()
-	balloon_alert_to_viewers("[ready_to_fire ? "unfolded" : "folded"] stock")
+	balloon_alert_to_viewers(LANG("obj.0e0b09bd", list(ready_to_fire ? "unfolded" : "folded")))
 
 /obj/item/gun/energy/marksman_revolver
 	name = "marksman revolver"

@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(ash_rituals)
 	if(!current_ritual)
 		return
 	current_ritual = GLOB.ash_rituals[current_ritual]
-	balloon_alert_to_viewers("ritual has been chosen-- examine the central rune for more information.")
+	balloon_alert_to_viewers(LANG("obj.f00ebe1b", null))
 
 // this is solely for aesthetics... though the central rune will check the directions, of which this is on
 /obj/effect/side_rune

@@ -459,6 +459,10 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
     match name {
         "to_chat" => Some(&[1]),
         "balloon_alert" => Some(&[1]),
+        // 群发气泡警告：balloon_alert_to_viewers(message, self_message, …) / _to_hearers 同签名。
+        // [0]=观众消息 [1]=自身消息，均玩家可见（如阀门 "valve opened"）。与 rewrite.rs 同表。
+        "balloon_alert_to_viewers" => Some(&[0, 1]),
+        "balloon_alert_to_hearers" => Some(&[0, 1]),
         "visible_message" => Some(&[0, 1, 2]), // [2]=blind_message（盲人可见）。
         "audible_message" => Some(&[0, 1, 3]),
         "say" => Some(&[0]),

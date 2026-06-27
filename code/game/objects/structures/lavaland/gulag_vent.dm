@@ -30,7 +30,7 @@
 		return
 	var/mob/living/living_user = user
 	occupied = TRUE
-	living_user.balloon_alert_to_viewers("hauling...")
+	living_user.balloon_alert_to_viewers(LANG("obj.39a2d5e6", null))
 
 	var/boulder_lift_speed = 8 SECONDS
 

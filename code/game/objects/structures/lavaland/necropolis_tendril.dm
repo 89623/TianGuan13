@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	. = ..()
 	emitted_light = new(loc)
 	visible_message(span_bolddanger(LANG("obj.5abfde61", null)))
-	balloon_alert_to_viewers("interact to grab loot before collapse!", vision_distance = 7)
+	balloon_alert_to_viewers(LANG("obj.9dedb491", null), vision_distance = 7)
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(collapse)), 5 SECONDS)
 

@@ -33,7 +33,7 @@
 	. = ..()
 	var/turf/src_turf = get_turf(src)
 	if(!src_turf.GetComponent(/datum/component/simple_farm))
-		src_turf.balloon_alert_to_viewers("must be on farmable surface")
+		src_turf.balloon_alert_to_viewers(LANG("obj.18694f10", null))
 		return INITIALIZE_HINT_QDEL
 
 	for(var/obj/structure/antfarm/found_farm in range(2, get_turf(src)))
@@ -59,7 +59,7 @@
 
 	if(!has_ants)
 		if(prob(ant_chance))
-			balloon_alert_to_viewers("ants have appeared!")
+			balloon_alert_to_viewers(LANG("obj.38cb8d43", null))
 			has_ants = TRUE
 
 		return

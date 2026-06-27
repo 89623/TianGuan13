@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/lazy_template/virtual_domain/heretic_hunt
 	name = "Heretical Hunt"
 	cost = BITRUNNER_COST_LOW
@@ -53,9 +54,9 @@
 
 	// mimic a ritual effect
 	if(locate(/obj/structure/closet/crate/secure/bitrunning/encrypted) in range(1, rune))
-		rune.balloon_alert_to_viewers("ritual completed")
+		rune.balloon_alert_to_viewers(LANG("datum.04638766", null))
 	else
-		rune.balloon_alert_to_viewers("sacrifice accepted")
+		rune.balloon_alert_to_viewers(LANG("datum.00e741d9", null))
 	flick("[rune.icon_state]_active", rune)
 	playsound(rune, 'sound/effects/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
 

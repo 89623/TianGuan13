@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 It's like a regular ol' straight pipe, but you can turn it on and off.
 */
@@ -43,11 +44,11 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		var/datum/pipeline/parent1 = parents[1]
 		parent1.reconcile_air()
 		investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
-		balloon_alert_to_viewers("valve opened")
+		balloon_alert_to_viewers(LANG("obj.23cdfa65", null))
 		vent_movement |= VENTCRAWL_ALLOWED
 	else
 		investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
-		balloon_alert_to_viewers("valve closed")
+		balloon_alert_to_viewers(LANG("obj.786f3089", null))
 		vent_movement &= ~VENTCRAWL_ALLOWED
 
 

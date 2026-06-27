@@ -61,7 +61,7 @@
 
 		to_chat(caster, span_warning(LANG("datum.47b37f3e", list(carbon_hit))))
 		to_chat(carbon_hit, span_warning(LANG("datum.7869aeb1", list(caster))))
-		carbon_hit.balloon_alert_to_viewers("absorbed!")
+		carbon_hit.balloon_alert_to_viewers(LANG("datum.6e603691", null))
 		return TRUE
 
 	carbon_hit.adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/slurring/heretic)

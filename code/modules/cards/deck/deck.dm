@@ -109,7 +109,7 @@
 	COOLDOWN_START(src, shuffle_cooldown, shuffle_time)
 	shuffle_inplace(fetch_card_atoms())
 	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
-	user.balloon_alert_to_viewers("shuffles the deck")
+	user.balloon_alert_to_viewers(LANG("obj.6f2833b7", null))
 	addtimer(CALLBACK(src, PROC_REF(CardgameEvent), user), 60 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /**
@@ -155,7 +155,7 @@
 		card.Flip()
 	card.pickup(user)
 	user.put_in_hands(card)
-	user.balloon_alert_to_viewers("draws a card")
+	user.balloon_alert_to_viewers(LANG("obj.b2fdfc7e", null))
 
 /obj/item/toy/cards/deck/attack_hand_secondary(mob/living/user, list/modifiers)
 	attack_hand(user, modifiers, flip_card = TRUE)
@@ -199,7 +199,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/card_grammar = istype(tool, /obj/item/toy/singlecard) ? "card" : "cards"
-	user.balloon_alert_to_viewers("puts [card_grammar] in deck")
+	user.balloon_alert_to_viewers(LANG("obj.172d66d1", list(card_grammar)))
 	return ITEM_INTERACT_SUCCESS
 
 /// This is how we play 52 card pickup

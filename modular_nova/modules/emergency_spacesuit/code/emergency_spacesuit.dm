@@ -35,7 +35,7 @@
 /obj/item/clothing/suit/space/emergency/proc/user_damaged(datum/source, damage, damagetype, def_zone)
 	SIGNAL_HANDLER
 	if(damage && !torn && prob(50))
-		balloon_alert_to_viewers("[src] tears!")
+		balloon_alert_to_viewers(LANG("obj.18b80090", list(src)))
 		clothing_flags &= ~STOPSPRESSUREDAMAGE
 		torn = TRUE
 		playsound(src, 'sound/items/weapons/slashmiss.ogg', 50, TRUE)
