@@ -93,6 +93,11 @@ const SINK_VARS: &[&str] = &[
     "verb_whisper",
     "verb_sing",
     "verb_yell",
+    // 攻击动词（每物品/生物：punches/slashes/bites… 连续式 与 punch/slash/bite 简单式）：近战/投掷消息模板
+    // 里以 `[user.attack_verb_continuous]` 插值 → LANG 模板的 {N} 实参，经 lang_localize_arg→lang_reverse_text 翻；
+    // 之前未抽 → 战斗消息里动词残留英文（「军团 bites 了你！」）。display-only（仅消息显示，非比较/标识符）。
+    "attack_verb_continuous",
+    "attack_verb_simple",
     // /datum/emote 表情模板变体。
     "message_mime",
     "message_alien",
