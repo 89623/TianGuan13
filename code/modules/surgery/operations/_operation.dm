@@ -599,13 +599,18 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return null
 	var/recommendation = implements[1]
 	if(istext(recommendation))
-		return recommendation // handles tools or IMPLEMENT_HAND
-	if(recommendation == /obj/item)
-		return get_any_tool()
-	if(ispath(recommendation, /obj/item))
+		. = recommendation // handles tools or IMPLEMENT_HAND
+	else if(recommendation == /obj/item)
+		. = get_any_tool()
+	else if(ispath(recommendation, /obj/item))
 		var/obj/item/tool = recommendation
-		return tool::name
-	return null
+		. = tool::name
+	else
+		return null
+	// NOVA EDIT ADDITION - I18N - 推荐工具名（手术径向菜单/面板显示，display-only）反查；工具名在 obj 目录，"Any item" 在 _surgery.json
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE && istext(.))
+		. = lang_reverse_text(.)
+	// NOVA EDIT ADDITION END
 
 /**
  * For surgery operations that can be performed with any item, this explains what kind of item is needed

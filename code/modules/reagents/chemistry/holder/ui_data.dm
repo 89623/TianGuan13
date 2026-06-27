@@ -201,7 +201,7 @@
 		for(var/datum/reagent/reagent as anything in reaction.results)
 			if(has_reagent(reagent))
 				has_reagent = "green"
-			data["reagent_mode_recipe"]["products"] += list(list("name" = lang_reverse_text(reagent::name), // NOVA EDIT - I18N - 试剂名仅显示（act 走 id/type=安全）；全量反查含单词类（Sodium/Phenol/Carbon，P1 多词门槛漏） "id" = reagent, "ratio" = reaction.results[reagent], "hasReagentCol" = has_reagent))
+			data["reagent_mode_recipe"]["products"] += list(list("name" = lang_reverse_text(reagent::name), "id" = reagent, "ratio" = reaction.results[reagent], "hasReagentCol" = has_reagent))
 
 		//Reactant sweep
 		for(var/datum/reagent/reagent as anything in reaction.required_reagents)
@@ -225,7 +225,7 @@
 				for(var/datum/reagent/sub_reagent as anything in sub_reaction.required_reagents)
 					tooltip += "[sub_reaction.required_reagents[sub_reagent]]u [lang_reverse_text(sub_reagent::name)]\n"
 					tooltip_bool = TRUE
-			data["reagent_mode_recipe"]["reactants"] += list(list("name" = lang_reverse_text(reagent::name), // NOVA EDIT - I18N - 试剂名仅显示（act 走 id/type=安全）；全量反查含单词类（Sodium/Phenol/Carbon，P1 多词门槛漏） "id" = reagent, "ratio" = reaction.required_reagents[reagent], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
+			data["reagent_mode_recipe"]["reactants"] += list(list("name" = lang_reverse_text(reagent::name), "id" = reagent, "ratio" = reaction.required_reagents[reagent], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
 
 		//Catalyst sweep
 		for(var/datum/reagent/reagent as anything in reaction.required_catalysts)
@@ -241,7 +241,7 @@
 				for(var/datum/reagent/sub_reagent as anything in sub_reaction.required_reagents)
 					tooltip += "[sub_reaction.required_reagents[sub_reagent]]u [lang_reverse_text(sub_reagent::name)]\n"
 					tooltip_bool = TRUE
-			data["reagent_mode_recipe"]["catalysts"] += list(list("name" = lang_reverse_text(reagent::name), // NOVA EDIT - I18N - 试剂名仅显示（act 走 id/type=安全）；全量反查含单词类（Sodium/Phenol/Carbon，P1 多词门槛漏） "id" = reagent, "ratio" = reaction.required_catalysts[reagent], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
+			data["reagent_mode_recipe"]["catalysts"] += list(list("name" = lang_reverse_text(reagent::name), "id" = reagent, "ratio" = reaction.required_catalysts[reagent], "color" = color_r, "tooltipBool" = tooltip_bool, "tooltip" = tooltip))
 		data["reagent_mode_recipe"]["isColdRecipe"] = reaction.is_cold_recipe
 	else
 		data["reagent_mode_recipe"] = null

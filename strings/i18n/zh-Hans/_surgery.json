@@ -1,0 +1,18 @@
+{
+	"if operating on the brain or any chest organs, the bone MUST be sawed": "若对脑部或任何胸腔器官进行手术，则必须锯开骨骼",
+	"if operating on the brain or any chest organs EXCLUDING the heart, the bone MUST be sawed": "若对脑部或除心脏外的任何胸腔器官进行手术，则必须锯开骨骼",
+	"otherwise, the state of the bone doesn't matter": "否则，骨骼的状态无关紧要",
+	"organ": "器官",
+	"limb": "肢体",
+	"Any item": "任意物品",
+	"crowbar": "撬棍",
+	"scalpel": "手术刀",
+	"retractor": "牵开器",
+	"cautery": "烧灼器",
+	"saw": "锯",
+	"drill": "钻",
+	"bonesetter": "接骨器",
+	"screwdriver": "螺丝刀",
+	"wirecutters": "剪线钳",
+	"multitool": "多用工具"
+}
