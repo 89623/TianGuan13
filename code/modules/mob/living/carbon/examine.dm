@@ -318,9 +318,9 @@
 	var/face_obscured = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	if (!(face_obscured))
-		flavor_text_link = span_notice("[preview_text]... <a href='byond://?src=[REF(src)];lookup_info=open_examine_panel'>\[Look closer?\]</a>")
+		flavor_text_link = span_notice("[preview_text]... <a href='byond://?src=[REF(src)];lookup_info=open_examine_panel'>\[[lang_reverse_text("Look closer?")]\]</a>") // NOVA EDIT - I18N - 链接文本（raw browse href，经 . += 变量，codemod 够不着）就地反查，_examine_ui.json
 	else
-		flavor_text_link = span_notice("<a href='byond://?src=[REF(src)];lookup_info=open_examine_panel'>\[Examine closely...\]</a>")
+		flavor_text_link = span_notice("<a href='byond://?src=[REF(src)];lookup_info=open_examine_panel'>\[[lang_reverse_text("Examine closely...")]\]</a>") // NOVA EDIT - I18N - 同上
 	if (flavor_text_link)
 		. += flavor_text_link
 	if (!face_obscured && !HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE) && client?.prefs.read_preference(/datum/preference/text/character_ad))
