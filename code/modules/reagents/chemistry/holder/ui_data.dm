@@ -289,9 +289,18 @@
 			ui_reaction_id = text2path(params["id"])
 			return TRUE
 		if("search_reagents")
-			var/input_reagent = tgui_input_list(usr, LANG("datum.b9a56639", null), LANG("datum.c5160de6", null), GLOB.name2reagent)
-			input_reagent = get_reagent_type_from_product_string(input_reagent) //from string to type
-			var/datum/reagent/reagent = GLOB.chemical_reagents_list[input_reagent]
+			// NOVA EDIT ADDITION START - I18N - show localized reagent names in the picker; the chosen display name maps straight back to its type
+			var/list/reagent_choices = GLOB.name2reagent
+			if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+				reagent_choices = list()
+				for(var/reagent_name in GLOB.name2reagent)
+					reagent_choices[lang_reverse_text(reagent_name)] = GLOB.name2reagent[reagent_name]
+			var/input_reagent = tgui_input_list(usr, LANG("datum.b9a56639", null), LANG("datum.c5160de6", null), reagent_choices)
+			if(isnull(input_reagent))
+				return FALSE
+			var/input_type = reagent_choices[input_reagent] || get_reagent_type_from_product_string(input_reagent) //from string to type
+			var/datum/reagent/reagent = GLOB.chemical_reagents_list[input_type]
+			// NOVA EDIT ADDITION END
 			if(!reagent)
 				to_chat(usr, LANG("datum.b70f4a0c", null))
 				return FALSE
