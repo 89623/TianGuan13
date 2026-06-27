@@ -730,7 +730,7 @@
   "atom.d57a4e44": "该标签包含了一个在 IC 聊天中禁止的词语！请检查服务器规则。\\n<span replaceRegex='show_filtered_ic_chat'>\\\"{0}\\\"</span>",
   "atom.d5b20130": "你用力推向 {0}！",
   "atom.d68f6377": "废墟目标",
-  "atom.d6c09bd2": "{0}本轮绝不",
+  "atom.d6c09bd2": "{0}本回合不再询问",
   "atom.d6e02fd4": "缺失核心",
   "atom.d702b2fb": "突然之间，一切似乎都值得一场热烈辩论。",
   "atom.d72cd56a": "{0}（{1}）调用了 LateInitialize，但上面什么都没有！",
