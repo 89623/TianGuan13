@@ -431,7 +431,7 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Appears at start of roundend_catagory section.
  */
 /datum/antagonist/proc/roundend_report_header()
-	return span_header("The [roundend_category] were:<br>")
+	return span_header("[lang_reverse_text("The [roundend_category] were:")]<br>") // NOVA EDIT - I18N - reverse the full "The X were:" header (non-interpolated; the to_chat AC only does substrings)
 
 /**
  * Proc that sends string data for the round-end report.
