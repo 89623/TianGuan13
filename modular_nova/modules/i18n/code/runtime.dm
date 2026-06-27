@@ -12,6 +12,21 @@ GLOBAL_VAR_INIT(i18n_server_locale, DEFAULT_UI_LOCALE)
 /// 是否启用聊天层 AC 子串兜底（默认关）。config I18N_CHAT_FALLBACK 控制（见 config_entries.dm + fallback.dm）。
 GLOBAL_VAR_INIT(i18n_chat_fallback, FALSE)
 
+/// 玩家/管理员**自己输入**的聊天类型——这些是用户原话，聊天 AC 兜底必须跳过（否则把玩家说的英文短语误翻，
+/// 如说 "the bridge" 被换成「舰桥」）。本地 say/电台是 null 类型、不走这里，由 to_chat 的 skip_i18n_fallback 参数
+/// （经 show_message 从 /mob/living/Hear 传入）豁免。
+GLOBAL_LIST_INIT(i18n_player_chat_types, list(
+	MESSAGE_TYPE_LOCALCHAT = TRUE,
+	MESSAGE_TYPE_RADIO = TRUE,
+	MESSAGE_TYPE_OOC = TRUE,
+	MESSAGE_TYPE_DEADCHAT = TRUE,
+	MESSAGE_TYPE_ADMINPM = TRUE,
+	MESSAGE_TYPE_ADMINCHAT = TRUE,
+	MESSAGE_TYPE_MODCHAT = TRUE,
+	MESSAGE_TYPE_MENTOR = TRUE,
+	MESSAGE_TYPE_PRAYER = TRUE,
+))
+
 /// locale -> (key -> 模板)。启动时加载，运行期只读。
 GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 

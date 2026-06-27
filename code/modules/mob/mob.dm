@@ -227,7 +227,7 @@
 /**
  * Show a message to this mob (visual or audible)
  */
-/mob/proc/show_message(msg, type, alt_msg, alt_type, avoid_highlighting = FALSE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt_msg, alt_type, avoid_highlighting = FALSE, skip_i18n_fallback = FALSE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2). NOVA EDIT: skip_i18n_fallback opts player speech out of the chat AC fallback.
 	if(!client)
 		return FALSE
 
@@ -258,7 +258,7 @@
 		if(type & MSG_AUDIBLE) //audio
 			to_chat(src, LANG("mob.2919bfef", null))
 		return FALSE
-	to_chat(src, msg, avoid_highlighting = avoid_highlighting)
+	to_chat(src, msg, avoid_highlighting = avoid_highlighting, skip_i18n_fallback = (skip_i18n_fallback && .)) // NOVA EDIT - i18n - only skip the AC for the original (player-speech) msg, not the deaf/blind alt fallback (. is FALSE when we swapped to alt_msg)
 	return .
 
 /**
