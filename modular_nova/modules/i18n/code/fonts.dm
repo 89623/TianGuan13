@@ -32,3 +32,11 @@
 /datum/font/fusion_pixel_8px
 	name = "Fusion Pixel 8px Mono zh_hans"
 	font_family = 'modular_nova/modules/i18n/fonts/fusion_pixel_8px_zh_hans.ttf'
+
+// 10px variant (design 10px → crisp at 7.5pt = 10px em, and at 15pt = 20px). Used for the
+// small maptext that was previously 8px@6pt (balloon alerts .maptext, screentip action-hints
+// .subcontext) to make them a bit larger / clearer than the 8px glyphs, while still smaller
+// than the 12px screentip name (.context @ 9pt). Crisp ONLY at 7.5pt / 15pt.
+/datum/font/fusion_pixel_10px
+	name = "Fusion Pixel 10px Mono zh_hans"
+	font_family = 'modular_nova/modules/i18n/fonts/fusion_pixel_10px_zh_hans.ttf'
