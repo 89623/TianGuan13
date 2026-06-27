@@ -507,13 +507,13 @@
 		message_verb_simple = weapon.attack_verb_simple[picked_index]
 
 	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [weapon]!"
-	var/attack_message_victim = "Something [message_verb_continuous] you[message_hit_area] with [weapon]!"
-	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [weapon]!"
+	var/attack_message_victim = LANG("mob.960cd478", list(message_verb_continuous, message_hit_area, weapon)) // NOVA EDIT CHANGE - I18N - built as a local (codemod can't reach it), no boundary anchor - ORIGINAL: var/attack_message_victim = "Something [message_verb_continuous] you[message_hit_area] with [weapon]!"
+	var/attack_message_attacker = LANG("mob.b3c305c9", list(message_verb_simple, src, message_hit_area, weapon)) // NOVA EDIT CHANGE - I18N - ORIGINAL: var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [weapon]!"
 	if(user in viewers(src, null))
 		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [weapon]!"
-		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [weapon]!"
+		attack_message_victim = LANG("mob.fa99147f", list(user, message_verb_continuous, message_hit_area, weapon)) // NOVA EDIT CHANGE - I18N - ORIGINAL: attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [weapon]!"
 	if(user == src)
-		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [weapon]."
+		attack_message_victim = LANG("mob.143cf833", list(message_verb_simple, message_hit_area, weapon)) // NOVA EDIT CHANGE - I18N - ORIGINAL: attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [weapon]."
 	visible_message(span_danger("[attack_message_spectator]"),\
 		span_userdanger("[attack_message_victim]"), null, COMBAT_MESSAGE_RANGE, user)
 	if(is_blind())
@@ -524,6 +524,8 @@
 /// Overridable proc so subtypes can have unique targetted strike zone messages, return a string.
 /mob/living/proc/get_hit_area_message(input_area)
 	if(input_area)
+		if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE) // NOVA EDIT - I18N - localize the connector + zone so the {hit_area} slot in the attack templates reads naturally
+			return "的[lang_reverse_text(input_area)]"
 		return " in the [input_area]"
 
 	return ""
