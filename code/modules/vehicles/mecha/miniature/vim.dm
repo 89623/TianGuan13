@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## VIM!!!!!!!
  *
@@ -60,12 +61,12 @@
 
 /obj/vehicle/sealed/mecha/vim/mob_try_enter(mob/entering)
 	if(issilicon(entering))
-		entering.balloon_alert(entering, "can't fit inside!")
+		entering.balloon_alert(entering, LANG("obj.968bae1c", null))
 		return FALSE
 
 	var/mob/living/animal_or_basic = entering
 	if(animal_or_basic.mob_size > maximum_mob_size)
-		entering.balloon_alert(entering, "can't fit inside!")
+		entering.balloon_alert(entering, LANG("obj.968bae1c", null))
 		return FALSE
 
 	mob_enter(entering)

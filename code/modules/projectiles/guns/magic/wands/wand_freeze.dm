@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Freezing wand places you in an ice cube and creates ice turfs
  */
@@ -13,7 +14,7 @@
 
 /obj/item/gun/magic/wand/freeze/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()
-	to_chat(user, span_warning("You freeze yourself in a block of ice!"))
+	to_chat(user, span_warning(LANG("obj.def483cf", null)))
 	var/obj/projectile/magic/freeze/ice = new(user.drop_location())
 	ice.firer = user
 	user.projectile_hit(ice, BODY_ZONE_CHEST)

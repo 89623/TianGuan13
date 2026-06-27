@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/item_action/organ_action
 	name = "Organ Action"
 	check_flags = AB_CHECK_CONSCIOUS
@@ -40,10 +41,10 @@
 	if(!cat_tongue.feral_mode)
 		background_icon_state = "bg_default"
 		button_icon_state = "feral_mode_off"
-		to_chat(cat_tongue.owner, span_notice("You will make unarmed attacks normally."))
+		to_chat(cat_tongue.owner, span_notice(LANG("datum.d8ec2d0d", null)))
 	else
 		background_icon_state = "bg_default_on"
 		button_icon_state = "feral_mode_on"
-		to_chat(cat_tongue.owner, span_notice("You will bite when making an unarmed attack."))
+		to_chat(cat_tongue.owner, span_notice(LANG("datum.600b107e", null)))
 	build_all_button_icons()
 	return TRUE

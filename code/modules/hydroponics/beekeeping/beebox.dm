@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 #define BEEBOX_MAX_FRAMES 3 //Max frames per box
 #define BEES_RATIO 0.5 //Multiplied by the max number of honeycombs to find the max number of bees
@@ -124,22 +125,22 @@
 	. = ..()
 
 	if(!queen_bee)
-		. += span_warning("There is no queen bee! There won't bee any honeycomb without a queen!")
+		. += span_warning(LANG("obj.69c43591", null))
 
 	var/half_bee = get_max_bees()*0.5
 	if(half_bee && (bees.len >= half_bee))
-		. += span_notice("This place is aBUZZ with activity... there are lots of bees!")
+		. += span_notice(LANG("obj.0d525bea", null))
 
-	. += span_notice("[bee_resources]/100 resource supply.")
-	. += span_notice("[bee_resources]% towards a new honeycomb.")
-	. += span_notice("[bee_resources*2]% towards a new bee.")
+	. += span_notice(LANG("obj.91479fcf", list(bee_resources)))
+	. += span_notice(LANG("obj.b7980fd8", list(bee_resources)))
+	. += span_notice(LANG("obj.cf0470d3", list(bee_resources*2)))
 
 	if(honeycombs.len)
 		var/plural = honeycombs.len > 1
-		. += span_notice("There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.")
+		. += span_notice(LANG("obj.fa09448f", list(plural? "are" : "is", honeycombs.len, plural ? "s":"")))
 
 	if(honeycombs.len >= get_max_honeycomb())
-		. += span_warning("There's no room for more honeycomb!")
+		. += span_warning(LANG("obj.5a6b6f26", null))
 
 /obj/structure/beebox/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -150,17 +151,17 @@
 	if(istype(item, /obj/item/honey_frame))
 		var/obj/item/honey_frame/frame = item
 		if(honey_frames.len < BEEBOX_MAX_FRAMES)
-			visible_message(span_notice("[user] adds a frame to the apiary."))
+			visible_message(span_notice(LANG("obj.c68c197f", list(user))))
 			if(!user.transferItemToLoc(frame, src))
 				return
 			honey_frames += frame
 		else
-			to_chat(user, span_warning("There's no room for any more frames in the apiary!"))
+			to_chat(user, span_warning(LANG("obj.d4ac7949", null)))
 		return
 
 	if(istype(item, /obj/item/queen_bee))
 		if(queen_bee)
-			to_chat(user, span_warning("This hive already has a queen!"))
+			to_chat(user, span_warning(LANG("obj.769d7d0e", null)))
 			return
 
 		var/obj/item/queen_bee/new_queen = item
@@ -172,7 +173,7 @@
 		new_queen.queen.forceMove(src)
 
 		if(queen_bee)
-			visible_message(span_notice("[user] sets [queen_bee] down inside the apiary, making it their new home."))
+			visible_message(span_notice(LANG("obj.abcedef0", list(user, queen_bee))))
 			var/relocated = 0
 			for(var/mob/living/basic/bee/relocating_bee as anything in bees)
 				if(relocating_bee.reagent_incompatible(queen_bee))
@@ -182,10 +183,10 @@
 						relocating_bee.forceMove(drop_location())
 					relocated++
 			if(relocated)
-				to_chat(user, span_warning("This queen has a different reagent to some of the bees who live here, those bees will not return to this apiary!"))
+				to_chat(user, span_warning(LANG("obj.b6d682fc", null)))
 
 		else
-			to_chat(user, span_warning("The queen bee disappeared! Disappearing bees have been in the news lately..."))
+			to_chat(user, span_warning(LANG("obj.86fde01f", null)))
 
 		return
 
@@ -203,24 +204,24 @@
 				worker.forceMove(drop_location())
 			bees_attack = TRUE
 		if(bees_attack)
-			visible_message(span_danger("[user] disturbs the bees!"))
+			visible_message(span_danger(LANG("obj.ad42e0a1", list(user))))
 		else
-			visible_message(span_danger("[user] disturbs \the [src] to no effect!"))
+			visible_message(span_danger(LANG("obj.da54237f", list(user, src))))
 	else
-		var/option = tgui_alert(user, "Which piece do you wish to remove?", "Apiary Adjustment", list("Honey Frame", "Queen Bee"))
+		var/option = tgui_alert(user, LANG("obj.b323dbb5", null), LANG("obj.de401597", null), list("Honey Frame", "Queen Bee"))
 		if(!option || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
 		switch(option)
 			if("Honey Frame")
 				if(!honey_frames.len)
-					to_chat(user, span_warning("There are no honey frames to remove!"))
+					to_chat(user, span_warning(LANG("obj.2e96e245", null)))
 					return
 
 				var/obj/item/honey_frame/frame = pick_n_take(honey_frames)
 				if(frame)
 					if(!user.put_in_active_hand(frame))
 						frame.forceMove(drop_location())
-					visible_message(span_notice("[user] removes a frame from the apiary."))
+					visible_message(span_notice(LANG("obj.9e192168", list(user))))
 
 					var/amtH = frame.honeycomb_capacity
 					var/fallen = 0
@@ -232,11 +233,11 @@
 							fallen++
 					if(fallen)
 						var/multiple = fallen > 1
-						visible_message(span_notice("[user] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame."))
+						visible_message(span_notice(LANG("obj.adab4c28", list(user, multiple ? "[fallen]" : "a", multiple ? "s" : ""))))
 
 			if("Queen Bee")
 				if(!queen_bee || queen_bee.loc != src)
-					to_chat(user, span_warning("There is no queen bee to remove!"))
+					to_chat(user, span_warning(LANG("obj.44f6a5e1", null)))
 					return
 				var/obj/item/queen_bee/queen = new()
 				queen_bee.forceMove(queen)
@@ -245,7 +246,7 @@
 				queen.name = queen_bee.name
 				if(!user.put_in_active_hand(queen))
 					queen.forceMove(drop_location())
-				visible_message(span_notice("[user] removes the queen from the apiary."))
+				visible_message(span_notice(LANG("obj.fb00e3ff", list(user))))
 				queen_bee = null
 
 /obj/structure/beebox/atom_deconstruct(disassembled = TRUE)

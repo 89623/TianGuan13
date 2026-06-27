@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/limb/lipoplasty
 	name = "excise excess fat"
 	rnd_name = "Lipoplasty (Excise Fat)"
@@ -30,9 +31,9 @@
 
 /datum/surgery_operation/limb/lipoplasty/all_required_strings()
 	. = list()
-	. += "operate on chest (target chest)"
+	. += LANG("datum.38e769ea", null)
 	. += ..()
-	. += "the patient must have excess fat to remove"
+	. += LANG("datum.33b3373c", null)
 
 /datum/surgery_operation/limb/lipoplasty/tool_check(obj/item/tool)
 	// Require edged sharpness OR a tool behavior match

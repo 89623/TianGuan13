@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/reagent_containers/blood
 	name = "blood pack"
 	desc = "Contains blood used for transfusion. Must be attached to an IV drip."
@@ -62,14 +63,14 @@
 
 /obj/item/reagent_containers/blood/snail/examine()
 	. = ..()
-	. += span_notice("It's a bit slimy... The label indicates that this is meant for snails.")
+	. += span_notice(LANG("obj.9ac7b3d9", null))
 
 /obj/item/reagent_containers/blood/podperson
 	blood_type = BLOOD_TYPE_H2O
 
 /obj/item/reagent_containers/blood/podperson/examine()
 	. = ..()
-	. += span_notice("This appears to be some very overpriced water.")
+	. += span_notice(LANG("obj.e82072b2", null))
 
 // for slimepeople
 /obj/item/reagent_containers/blood/toxin
@@ -77,7 +78,7 @@
 
 /obj/item/reagent_containers/blood/toxin/examine()
 	. = ..()
-	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
+	. += span_notice(LANG("obj.c52db507", null))
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = BLOOD_TYPE_UNIVERSAL

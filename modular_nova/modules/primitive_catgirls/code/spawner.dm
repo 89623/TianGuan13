@@ -50,12 +50,12 @@
 	. = ..()
 
 	if(uses)
-		. += span_notice("You can see <b>[uses]</b> figures sound asleep down there.")
+		. += span_notice(LANG("obj.9ae8a28d", list(uses)))
 	else
-		. += span_notice("It looks pretty empty.")
+		. += span_notice(LANG("obj.8e9d619b", null))
 
 	if(isprimitivedemihuman(user) || isobserver(user))
-		. += span_notice("<i>You could examine it more thoroughly...</i>")
+		. += span_notice(LANG("obj.e0861086", null))
 
 	return .
 
@@ -105,7 +105,7 @@
 	if(!(user.ckey in team.players_spawned)) // One spawn per person
 		return TRUE
 	if(!silent)
-		to_chat(user, span_warning("It'd be weird if there were multiple of you in that cave, wouldn't it?"))
+		to_chat(user, span_warning(LANG("obj.3adad72e", null)))
 	return FALSE
 
 
@@ -133,47 +133,47 @@
 		return
 
 	if(target.stat == DEAD)
-		to_chat(user, span_danger("Dead kin cannot be put back to sleep."))
+		to_chat(user, span_danger(LANG("obj.fe0345fb", null)))
 		return
 
 	if(target.ckey && target != user)
 		if(!target.get_organ_by_type(/obj/item/organ/brain) || (target.mind && !target.ssd_indicator))
-			to_chat(user, span_danger("Awake kin cannot be put back to sleep against their will."))
+			to_chat(user, span_danger(LANG("obj.cdb6921c", null)))
 			return
 
 		if(target.lastclienttime + ssd_time >= world.time)
-			to_chat(user, span_userdanger("You can't put [target] into [src] for another <b>[round(((ssd_time - (world.time - target.lastclienttime)) / (1 MINUTES)), 1)]</b> minutes."))
+			to_chat(user, span_userdanger(LANG("obj.1c34ad73", list(target, src, round(((ssd_time - (world.time - target.lastclienttime)) / (1 MINUTES)), 1)))))
 			log_admin("[key_name(user)] has attempted to put [key_name(target)] back into [src], but they were only disconnected for [round(((world.time - target.lastclienttime) / (1 MINUTES)), 1)] minutes.")
 			message_admins("[key_name(user)] has attempted to put [key_name(target)] back into [src]. [ADMIN_JMP(src)]")
 			return
 
-		else if(tgui_alert(user, "Would you like to place [target] into [src]?", "Put back to sleep?", list("Yes", "No")) == "Yes")
+		else if(tgui_alert(user, LANG("obj.4de87da9", list(target, src)), LANG("obj.ce673bcd", null), list("Yes", "No")) == "Yes")
 
-			visible_message(span_infoplain("[user] starts putting [target] into [src]..."))
+			visible_message(span_infoplain(LANG("obj.2462b77d", list(user, target, src))))
 
 			if(!do_after(user, 3 SECONDS, target))
-				balloon_alert(user, "cancelled transfer!")
+				balloon_alert(user, LANG("obj.0765bfde", null))
 				return
 
-			to_chat(user, span_danger("You put [target] into [src]."))
+			to_chat(user, span_danger(LANG("obj.6635fb59", list(target, src))))
 			log_admin("[key_name(user)] has put [key_name(target)] back into [src].")
 			message_admins("[key_name(user)] has put [key_name(target)] back into [src]. [ADMIN_JMP(src)]")
 
 	if(target == user)
-		if(tgui_alert(target, "Would you like to go back to sleep?", "Go back to sleep?", list("Yes", "No")) != "Yes")
+		if(tgui_alert(target, LANG("obj.641d1330", null), LANG("obj.c8f6a36c", null), list("Yes", "No")) != "Yes")
 			return
 
-		visible_message(span_infoplain("[user] starts climbing down into [src]..."))
+		visible_message(span_infoplain(LANG("obj.d1cc4edc", list(user, src))))
 
 		if(!do_after(user, 3 SECONDS, target))
-			balloon_alert(user, "cancelled transfer!")
+			balloon_alert(user, LANG("obj.0765bfde", null))
 			return
 
 	if(LAZYLEN(target.buckled_mobs) > 0)
 		if(target == user)
-			to_chat(user, span_danger("You can't fit into [src] while someone is buckled to you."))
+			to_chat(user, span_danger(LANG("obj.23870eb4", list(src))))
 		else
-			to_chat(user, span_danger("You can't fit [target] into [src] while someone is buckled to them."))
+			to_chat(user, span_danger(LANG("obj.86bf64e2", list(target, src))))
 
 		return
 
@@ -182,9 +182,9 @@
 		return
 
 	if(target == user)
-		visible_message(span_infoplain("[user] climbs down into [src]."))
+		visible_message(span_infoplain(LANG("obj.e45d2fe9", list(user, src))))
 	else
-		visible_message(span_infoplain("[user] puts [target] into [src]."))
+		visible_message(span_infoplain(LANG("obj.cc53e273", list(user, target, src))))
 
 	log_admin("[key_name(target)] returned to [src].")
 	message_admins("[key_name_admin(target)] returned to [src]. [ADMIN_JMP(src)]")

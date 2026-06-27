@@ -96,9 +96,9 @@
 
 /obj/item/clothing/mask/gas/bdsm_mask/proc/try_unequip(mob/user)
 	if(!do_after(user, 60 SECONDS, target = user))
-		to_chat(user, span_warning("You fail to remove the gas mask!"))
+		to_chat(user, span_warning(LANG("obj.391abce4", null)))
 		return FALSE
-	to_chat(user, span_notice("You remove the gas mask."))
+	to_chat(user, span_notice(LANG("obj.c015dc6b", null)))
 	return TRUE
 /obj/item/clothing/mask/gas/bdsm_mask/attack_hand_secondary(mob/user, list/modifiers)
 
@@ -110,7 +110,7 @@
 	if(try_unequip(user))
 		. = ..()
 	if(.)
-		to_chat(user, span_notice("You remove the gas mask."))
+		to_chat(user, span_notice(LANG("obj.c015dc6b", null)))
 
 // To make in unremovable without helping when mask is on (for MouseDrop)
 /datum/storage/pockets/small/bdsm_mask/on_mousedrop_onto(datum/source, atom/over_object, mob/user)
@@ -129,21 +129,21 @@
 		return
 	if(!try_unequip(user) || !user.putItemFromInventoryInHandIfPossible(src, hand.held_index))
 		return
-	to_chat(user, span_notice("You remove the gas mask."))
+	to_chat(user, span_notice(LANG("obj.c015dc6b", null)))
 	add_fingerprint(user)
 
 /datum/storage/pockets/small/bdsm_mask/remove_single(mob/removing, obj/item/thing, atom/remove_to_loc, silent)
 	var/obj/item/clothing/mask/gas/bdsm_mask/mask = parent
 	if(!istype(mask) || !mask.is_locked(removing))
 		return ..()
-	to_chat(removing, span_warning("You can't detach the filter while the mask is locked!"))
+	to_chat(removing, span_warning(LANG("datum.cf1cc7f6", null)))
 	return FALSE
 
 /datum/storage/pockets/small/bdsm_mask/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	var/obj/item/clothing/mask/gas/bdsm_mask/mask = parent
 	if(!istype(mask) || !mask.is_locked(user))
 		return ..()
-	to_chat(user, span_warning("You can't attach a filter while the mask is locked!"))
+	to_chat(user, span_warning(LANG("datum.2cd55d72", null)))
 	return FALSE
 
 // Breathing valve control button
@@ -215,7 +215,7 @@
 				time_to_choke_left = time_to_choke
 				breath_status = TRUE
 				affected_human.try_lewd_autoemote("inhale")
-			to_chat(affected_human, span_purple("You suddenly find it much harder to breathe!."))
+			to_chat(affected_human, span_purple(LANG("obj.c5183d2e", null)))
 			START_PROCESSING(SSobj, src)
 			time_to_choke_left = time_to_choke
 
@@ -229,14 +229,14 @@
 // To check if player already have this mask on and trying to change mode
 /obj/item/clothing/mask/gas/bdsm_mask/proc/check(mob/living/carbon/user)
 	if(!istype(user) || src == user.wear_mask)
-		to_chat(user, span_notice("You can't reach the air filter switch!"))
+		to_chat(user, span_notice(LANG("obj.aad0e516", null)))
 		return
 	toggle(user)
 
 // Switch the mask valve to the opposite state
 /obj/item/clothing/mask/gas/bdsm_mask/proc/toggle(mob/living/carbon/user)
 	mask_on = !mask_on
-	to_chat(user, span_notice("You turn the air filter [mask_on ? "on. Use with caution!" : "off. Now it's safe to wear."]"))
+	to_chat(user, span_notice(LANG("obj.4ecbc46e", list(mask_on ? "on. Use with caution!" : "off. Now it's safe to wear."))))
 	playsound_if_pref(user, mask_on ? 'sound/items/weapons/magin.ogg' : 'sound/items/weapons/magout.ogg', 40, TRUE)
 	update_mob_action_buttonss()
 	update_icon()
@@ -250,13 +250,13 @@
 /obj/item/clothing/mask/gas/bdsm_mask/proc/check_gag(user)
 	var/mob/living/carbon/affected_carbon = user
 	if(src == affected_carbon.wear_mask)
-		to_chat(user, span_notice("You can't reach the gag switch!"))
+		to_chat(user, span_notice(LANG("obj.9fb25ba4", null)))
 	else
 		toggle_gag(affected_carbon)
 
 /obj/item/clothing/mask/gas/bdsm_mask/proc/toggle_gag(user)
 	speech_disabled = !speech_disabled
-	to_chat(user, span_notice("You [speech_disabled ? "disable" : "enable"] the gag on the mask."))
+	to_chat(user, span_notice(LANG("obj.9b97e54b", list(speech_disabled ? "disable" : "enable"))))
 	update_mob_action_buttonss()
 	update_icon()
 
@@ -351,5 +351,5 @@
 	var/obj/item/clothing/mask/gas/bdsm_mask/mask = loc
 	if(!istype(mask) || !mask.is_locked(user))
 		return ..()
-	to_chat(user, span_warning("You can't change the flow rate of the valve while the mask is on!"))
+	to_chat(user, span_warning(LANG("obj.92abc837", null)))
 	return CLICK_ACTION_BLOCKING

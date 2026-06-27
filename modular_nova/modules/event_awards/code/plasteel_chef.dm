@@ -16,7 +16,7 @@
 // Prevents unworthy from picking up the item
 /obj/item/knife/kitchen/plasteel_chef/attack_hand(mob/living/user, list/modifiers)
 	if(!(user.ckey in allowed_ckeys))
-		balloon_alert(user, "only a worthy chef may wield [src]!")
+		balloon_alert(user, LANG("obj.f5356f54", list(src)))
 		return
 	return ..()
 // Mood define
@@ -28,7 +28,7 @@
 /obj/item/knife/kitchen/plasteel_chef/equipped(mob/living/user, slot)
 	. = ..()
 	if(!(user.ckey in allowed_ckeys))
-		balloon_alert(user, "only a worthy chef may wield [src]!")
+		balloon_alert(user, LANG("obj.f5356f54", list(src)))
 		user.dropItemToGround(src)
 		return
 	if(slot_flags & slot)

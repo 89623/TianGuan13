@@ -33,9 +33,9 @@
 /obj/item/cortical_cage/attack_self(mob/user, modifiers)
 	opened = !opened
 	if(opened)
-		user.visible_message("[user] opens [src].", "You open [src].", "You hear a metallic thunk.")
+		user.visible_message(LANG("obj.81f3dbc4", list(user, src)), LANG("obj.89d38f23", list(src)), LANG("obj.8ec9d77f", null))
 	else
-		user.visible_message("[user] closes [src].", "You close [src].", "You hear a metallic thunk.")
+		user.visible_message(LANG("obj.e668eb94", list(user, src)), LANG("obj.e65ef900", list(src)), LANG("obj.8ec9d77f", null))
 	playsound(src, 'sound/machines/airlock/boltsup.ogg', 30, TRUE)
 	update_appearance()
 
@@ -43,7 +43,7 @@
 	if(istype(attacking_item, /obj/item/radio))
 		internal_radio = attacking_item
 		internal_radio.forceMove(src)
-		visible_message("[internal_radio] attaches to [src] with a click.", "You attach [internal_radio] to the [src].", "You hear a clicking sound.")
+		visible_message(LANG("obj.0799ae70", list(internal_radio, src)), LANG("obj.eeaf6739", list(internal_radio, src)), LANG("obj.5584e97e", null))
 		update_appearance()
 		return
 	return ..()
@@ -52,7 +52,7 @@
 	. = ..()
 	if(internal_radio)
 		internal_radio.forceMove(get_turf(src))
-		user.visible_message("[internal_radio] pops off [src].", "You pop off [internal_radio] from [src].", "You hear a clicking sound then a loud metallic thunk.")
+		user.visible_message(LANG("obj.b621a998", list(internal_radio, src)), LANG("obj.5ca6d565", list(internal_radio, src)), LANG("obj.61e32594", null))
 		internal_radio = null
 		update_appearance()
 		return
@@ -63,7 +63,7 @@
 	if(!iscorticalborer(AM) || !opened)
 		return
 	trapped_borer = AM
-	trapped_borer.visible_message("[trapped_borer] gets sucked into [src]!", "You get sucked into [src]!", "You hear a vacuuming sound.")
+	trapped_borer.visible_message(LANG("obj.763f67a5", list(trapped_borer, src)), LANG("obj.ffeb126e", list(src)), LANG("obj.b22b680b", null))
 	trapped_borer.forceMove(src)
 	opened = FALSE
 	if(internal_radio)
@@ -78,8 +78,8 @@
 		update_appearance()
 		return
 	if(opened)
-		loc.visible_message(span_notice("[user] climbs out of [src]!"), \
-		span_warning("[user] jumps out of [src]!"))
+		loc.visible_message(span_notice(LANG("obj.dc5ea840", list(user, src))), \
+		span_warning(LANG("obj.76224ddb", list(user, src))))
 		opened = FALSE
 		trapped_borer.forceMove(get_turf(src))
 		trapped_borer = null
@@ -91,12 +91,12 @@
 /obj/item/cortical_cage/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, span_notice("You begin squeezing through the bars in an attempt to escape! (This will take time.)"))
-	to_chat(loc, span_warning("You see [user] begin trying to squeeze through the bars!"))
+	to_chat(user, span_notice(LANG("obj.a8805b26", null)))
+	to_chat(loc, span_warning(LANG("obj.c2863497", list(user))))
 	if(!do_after(user, rand(30 SECONDS, 40 SECONDS), target = user) || opened || !(user in contents))
 		return
-	loc.visible_message(span_warning("[user] squeezes through [src]'s handles!"), null, null, null, user)
-	to_chat(user, span_boldannounce("Bingo, you squeeze through!"))
+	loc.visible_message(span_warning(LANG("obj.2dcb5725", list(user, src))), null, null, null, user)
+	to_chat(user, span_boldannounce(LANG("obj.54f55369", null)))
 	opened = FALSE
 	trapped_borer.forceMove(get_turf(src))
 	trapped_borer = null

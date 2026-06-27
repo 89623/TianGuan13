@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Dog specific idle behavior.
 /datum/idle_behavior/idle_dog/perform_idle_behavior(seconds_per_tick, datum/ai_controller/basic_controller/dog/controller)
 	. = ..()
@@ -8,7 +9,7 @@
 	var/obj/item/carry_item = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
 	// if we're just ditzing around carrying something, occasionally print a message so people know we have something
 	if(carry_item && SPT_PROB(5, seconds_per_tick))
-		living_pawn.visible_message(span_notice("[living_pawn] gently teethes on \the [carry_item] in [living_pawn.p_their()] mouth."), vision_distance=COMBAT_MESSAGE_RANGE)
+		living_pawn.visible_message(span_notice(LANG("datum.bb3ac531", list(living_pawn, carry_item, living_pawn.p_their()))), vision_distance=COMBAT_MESSAGE_RANGE)
 
 	// Custom movement rate, for old corgis, etc.
 	var/move_chance = controller.blackboard[BB_DOG_IS_SLOW] ? 2.5 : 5

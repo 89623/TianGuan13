@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The controller for the ui in charge of all runtime greyscale configuration/debug.
 /// If `Unlock()` is not called the menu is safe for players to use.
 /datum/greyscale_modify_menu
@@ -128,8 +129,8 @@
 		if("select_config")
 			var/datum/greyscale_config/new_config = input(
 				usr,
-				"Choose a new greyscale configuration to use",
-				"Greyscale Modification Menu",
+				LANG("datum.d83b9063", null),
+				LANG("datum.c79b1ba0", null),
 				"[config.type]"
 			) as anything in allowed_configs
 			new_config = allowed_configs[new_config]
@@ -202,9 +203,8 @@
 			if(length(GLOB.player_list) > 1)
 				var/check = alert(
 					user,
-{"Other players are connected to the server, are you sure you want to refresh all greyscale configurations?\n
-This is highly likely to cause a lag spike for a few seconds."},
-					"Refresh Greyscale Configurations",
+LANG("datum.dd33abcb", null),
+					LANG("datum.da9f59f2", null),
 					"Yes",
 					"Cancel"
 				)
@@ -230,9 +230,8 @@ This is highly likely to cause a lag spike for a few seconds."},
 			if(length(GLOB.player_list) > 1)
 				var/check = alert(
 					user,
-{"Other players are connected to the server, are you sure you want to automatically refresh all greyscale configurations?\n
-This is highly likely to cause massive amounts of lag as every object in the game will be iterated over every few seconds."},
-					"Auto-Refresh Greyscale Configurations",
+LANG("datum.ccfbba89", null),
+					LANG("datum.aa93ae7c", null),
 					"Yes",
 					"Cancel"
 				)

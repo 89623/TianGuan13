@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // For any mob that can be ridden
 
 /datum/component/riding/creature
@@ -75,8 +76,8 @@
 	if(. || !consequences)
 		return
 
-	rider.visible_message(span_warning("[rider] falls off of [living_parent]!"), \
-					span_warning("You fall off of [living_parent]!"))
+	rider.visible_message(span_warning(LANG("datum.73a87d59", list(rider, living_parent))), \
+					span_warning(LANG("datum.fc7fb0d4", list(living_parent))))
 	rider.Paralyze(1 SECONDS)
 	rider.Knockdown(4 SECONDS)
 	living_parent.unbuckle_mob(rider)
@@ -115,7 +116,7 @@
 	if(!keycheck(user))
 		if(ispath(keytype, /obj/item))
 			var/obj/item/key = keytype
-			to_chat(user, span_warning("You need a [initial(key.name)] to ride [movable_parent]!"))
+			to_chat(user, span_warning(LANG("datum.3371d40c", list(initial(key.name), movable_parent))))
 		return COMPONENT_DRIVER_BLOCK_MOVE
 	var/mob/living/living_parent = parent
 	step(living_parent, direction)
@@ -158,8 +159,8 @@
 	if(!iscyborg(movable_parent) && !isanimal_or_basicmob(movable_parent))
 		return
 	var/turf/target = get_edge_target_turf(movable_parent, movable_parent.dir)
-	rider.visible_message(span_warning("[rider] is thrown clear of [movable_parent]!"), \
-	span_warning("You're thrown clear of [movable_parent]!"))
+	rider.visible_message(span_warning(LANG("datum.65b13390", list(rider, movable_parent))), \
+	span_warning(LANG("datum.11241ed0", list(movable_parent))))
 	rider.throw_at(target, throw_range, throw_speed, movable_parent, gentle = gentle)
 
 /// If we're a cyborg or animal and we spin, we yeet whoever's on us off us
@@ -204,11 +205,11 @@
 		return COMPONENT_RIDDEN_ALLOW_Z_MOVE
 	if(!can_be_driven)
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, span_warning("[movable_parent] cannot be driven around. Unbuckle from [movable_parent.p_them()] first."))
+			to_chat(rider, span_warning(LANG("datum.19aabd87", list(movable_parent, movable_parent.p_them()))))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	if(!ride_check(rider, FALSE))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, span_warning("You're unable to ride [movable_parent] right now!"))
+			to_chat(rider, span_warning(LANG("datum.c94e664c", list(movable_parent))))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
 
@@ -241,7 +242,7 @@
 		return
 	ridden.Shake(pixelshiftx = 1, pixelshifty = 0, duration = 1 SECONDS)
 	ridden.spin(spintime = 1 SECONDS, speed = 1)
-	ridden.balloon_alert(rider, "tries to shake you off!")
+	ridden.balloon_alert(rider, LANG("datum.2725ca5e", null))
 	new /datum/riding_minigame(ridden, rider)
 
 /datum/component/riding/creature/human/RegisterWithParent()
@@ -357,8 +358,8 @@
 	rider.Paralyze(1 SECONDS)
 	rider.Knockdown(4 SECONDS)
 	rider.visible_message(
-		span_warning("[seat] pushes [rider] off of [seat.p_them()]!"),
-		span_warning("[seat] pushes you off of [seat.p_them()]!"),
+		span_warning(LANG("datum.e1b18424", list(seat, rider, seat.p_them()))),
+		span_warning(LANG("datum.02caf09e", list(seat, seat.p_them()))),
 	)
 
 
@@ -373,7 +374,7 @@
 	. = user.usable_hands
 	if(!. && consequences)
 		Unbuckle(user)
-		to_chat(user, span_warning("You can't grab onto [robot_parent] with no hands!"))
+		to_chat(user, span_warning(LANG("datum.b0b6e463", list(robot_parent))))
 
 /datum/component/riding/creature/cyborg/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	var/mob/living/silicon/robot/robot_parent = parent
@@ -763,7 +764,7 @@
 	var/mob/living/living_parent = parent
 	if(lavaland_equipment_pressure_check(get_turf(living_parent)) || !length(living_parent.buckled_mobs))
 		return
-	living_parent.balloon_alert_to_viewers("freaks out!")
+	living_parent.balloon_alert_to_viewers(LANG("datum.5d5be395", null))
 	living_parent.spin(spintime = 2 SECONDS, speed = 1)
 	for(var/mob/living/buckled_mob in living_parent.buckled_mobs)
 		force_dismount(buckled_mob, throw_range = 2, gentle = TRUE)

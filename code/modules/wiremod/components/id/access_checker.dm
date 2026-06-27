@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/circuit_component/compare/access
 	display_name = "Access Checker"
 	desc = "Performs a basic comparison between two lists of strings, with additional functions that help in using it to check access on IDs."
@@ -58,7 +59,7 @@
 
 /obj/item/circuit_component/compare/access/ui_perform_action(mob/user, action)
 	if(LAZYLEN(required_accesses.connected_ports))
-		balloon_alert(user, "disconnect port before manually configuring!")
+		balloon_alert(user, LANG("obj.e46cede6", null))
 		return
 	interact(user)
 

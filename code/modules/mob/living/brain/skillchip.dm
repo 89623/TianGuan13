@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Attempts to remove target skillchip from the brain.
  *
@@ -151,7 +152,7 @@
 			chip_tally++
 
 	if(chip_tally)
-		to_chat(owner, span_warning("Unusual brain biology detected. Failsafe procedure engaged. [chip_tally] skillchip[chip_tally == 1 ? " has" : "s have"] been deactivated."))
+		to_chat(owner, span_warning(LANG("obj.0ad975da", list(chip_tally, chip_tally == 1 ? " has" : "s have"))))
 
 /// Disables or re-enables any extra skillchips after skillchip limit changes.
 /obj/item/organ/brain/proc/update_skillchips()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/reagent/toxin/acid/bio_acid
 	name = "adaptive bio-acid"
 	description = "An immensely strong, acidic substance of seemingly biological origin. It is teeming with microscopic\
@@ -11,7 +12,7 @@
 
 /datum/reagent/toxin/acid/bio_acid/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection)
 	if(IS_CHANGELING(exposed_mob))
-		to_chat(exposed_mob, span_changeling("We excrete a bio-agent to neutralize the bio-acid. It is routine and reflexive to do so."))
+		to_chat(exposed_mob, span_changeling(LANG("datum.261281e1", null)))
 		volume = min(0.1, volume)
 		holder.update_total()
 		return

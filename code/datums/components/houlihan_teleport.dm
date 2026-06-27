@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Teleports interactors onto a safe turf randomly picked from a list of z-levels.
 /datum/component/houlihan_teleport
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
@@ -40,21 +41,21 @@
 
 	var/turf/destination_turf = zlevels ? find_safe_turf(zlevels) : get_safe_random_station_turf_equal_weight()
 	if(!destination_turf)
-		source.balloon_alert(user, "uh oh...")
-		to_chat(user, span_warning("Nothing happens. You feel like this is a bad sign."))
+		source.balloon_alert(user, LANG("datum.0a498e6e", null))
+		to_chat(user, span_warning(LANG("datum.f70ce44a", null)))
 		return
 
 	var/turf/user_turf = get_turf(user)
 	var/atom/movable/dragged = user.pulling
 	user.forceMove(destination_turf)
-	user_turf.balloon_alert_to_hearers("*pop*")
+	user_turf.balloon_alert_to_hearers(LANG("datum.b320c5f9", null))
 	if(dragged)
 		var/turf/dragged_turf = get_turf(dragged)
 		dragged.forceMove(destination_turf)
 		user.start_pulling(dragged, force = TRUE)
-		dragged_turf.balloon_alert_to_hearers("*pop*")
+		dragged_turf.balloon_alert_to_hearers(LANG("datum.b320c5f9", null))
 
-	to_chat(list(user, dragged), span_notice("You blink and find yourself in <b>[get_area_name(destination_turf)]</b>."))
+	to_chat(list(user, dragged), span_notice(LANG("datum.2c46523b", list(get_area_name(destination_turf)))))
 	user.emote("blink")
 	astype(dragged, /mob)?.emote("blink") // shhhhh just let it happen
 

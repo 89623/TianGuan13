@@ -11,7 +11,7 @@
 //Code that handles the base interactions involving smartdarts
 /obj/item/reagent_containers/syringe/smartdart/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(target.reagents)
-		to_chat(user, span_warning("The [src] is unable to manually inject chemicals."))
+		to_chat(user, span_warning(LANG("obj.2ec07bb2", list(src))))
 	return NONE
 //A majority of this code is from the original syringes.dm file.
 /obj/item/reagent_containers/syringe/smartdart/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
@@ -19,23 +19,23 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(reagents.total_volume >= reagents.maximum_volume)
-		to_chat(user, span_notice("[src] is full."))
+		to_chat(user, span_notice(LANG("obj.8e2d390c", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(isliving(target))
-		to_chat(user, span_warning("The [src] is unable to take blood."))
+		to_chat(user, span_warning(LANG("obj.719f56cf", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!target.reagents.total_volume)
-		to_chat(user, span_warning("[target] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(target))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!target.is_drawable(user))
-		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
+		to_chat(user, span_warning(LANG("obj.09f81901", list(target))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user) // transfer from, transfer to - who cares?
-	to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
+	to_chat(user, span_notice(LANG("obj.24df3147", list(src, trans, reagents.total_volume))))
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -59,7 +59,7 @@
 /obj/item/gun/syringe/smartdart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/reagent_containers/syringe/smartdart))
 		return ..()
-	to_chat(user, span_notice("The [tool] is unable to fit inside of the [src]! Try using a <b>SmartDart</b> instead."))
+	to_chat(user, span_notice(LANG("obj.02db237e", list(tool, src))))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/gun/syringe/smartdart/examine(mob/user)
@@ -102,8 +102,8 @@
 	if(!injectee.can_inject(target_zone = def_zone, injection_flags = inject_flags)) // if the syringe is blocked
 		blocked = 100
 	if(blocked == 100)
-		target.visible_message(span_danger("\The [src] is deflected!"),
-							span_userdanger("You are protected against \the [src]!"))
+		target.visible_message(span_danger(LANG("obj.a02a8043", list(src))),
+							span_userdanger(LANG("obj.5d4d8bcd", list(src))))
 		return
 
 	//Checks for allergies, and saves allergies to a list if they are present
@@ -148,9 +148,9 @@
 		else
 			injectee.reagents.add_reagent(meds.type, inject_amount, null, chemical_temp, meds.purity)
 
-	injectee.visible_message(span_notice("[src] embeds itself into [injectee]"), span_notice("You feel a small prick as [src] embeds itself into you."))
+	injectee.visible_message(span_notice(LANG("obj.3d1ae2b5", list(src, injectee))), span_notice(LANG("obj.bc971e59", list(src))))
 	if(prevention_used) //Used to signal that allergens were not injected into the target mob.
-		injectee.visible_message(span_notice("[src] lets out a short beep."), span_notice("You hear a short beep from [src]."))
+		injectee.visible_message(span_notice(LANG("obj.70ed195a", list(src))), span_notice(LANG("obj.5c77481e", list(src))))
 		playsound(loc, 'sound/machines/ping.ogg', 50, 1, -1)
 	return BULLET_ACT_HIT
 

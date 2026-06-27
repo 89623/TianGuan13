@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/suit/costume/wellworn_shirt
 	name = "well-worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt. You wouldn't go so far as to say it feels like being hugged when you wear it, but it's pretty close. Good for sleeping in."
@@ -17,10 +18,10 @@
 	. = ..()
 	if(wash_count <= 5)
 		transform *= TRANSFORM_USING_VARIABLE(0.8, 1)
-		washer.visible_message("[src] appears to have shrunken after being washed.")
+		washer.visible_message(LANG("obj.49ca493f", list(src)))
 		wash_count += 1
 	else
-		washer.visible_message("[src] implodes due to repeated washing.")
+		washer.visible_message(LANG("obj.5d0711a6", list(src)))
 		qdel(src)
 
 /obj/item/clothing/suit/costume/wellworn_shirt/skub

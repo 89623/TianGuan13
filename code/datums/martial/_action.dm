@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/swap_arts
 	name = "Remember the Basics" //this is dynamic, uses `update_button_name`
 	desc = "LMB: See your movelist. RMB: Swap artstyle, if you have more than one."
@@ -32,7 +33,7 @@
 		return TRUE
 	var/help_information = current_used_art.get_style_help()
 	if(isnull(help_information))
-		to_chat(clicker, span_notice("[current_used_art.name] doesn't have any combat information!"))
+		to_chat(clicker, span_notice(LANG("datum.0f903854", list(current_used_art.name))))
 		return TRUE
 	for(var/info in help_information)
 		to_chat(clicker, info)

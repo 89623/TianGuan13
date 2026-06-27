@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
@@ -81,7 +82,7 @@
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
 			configure_jetpack(!stabilize, user)
-			to_chat(user, span_notice("You turn the jetpack stabilization [stabilize ? "on" : "off"]."))
+			to_chat(user, span_notice(LANG("obj.dd46bf26", list(stabilize ? "on" : "off"))))
 	else
 		toggle_internals(user)
 
@@ -91,13 +92,13 @@
 
 	if(!on)
 		if(turn_on(user))
-			to_chat(user, span_notice("You turn the jetpack on."))
+			to_chat(user, span_notice(LANG("obj.9b733081", null)))
 		else
-			to_chat(user, span_notice("You fail to turn the jetpack on."))
+			to_chat(user, span_notice(LANG("obj.a1ea18f3", null)))
 			return
 	else
 		turn_off(user)
-		to_chat(user, span_notice("You turn the jetpack off."))
+		to_chat(user, span_notice(LANG("obj.750f6d9a", null)))
 
 	update_item_action_buttons()
 
@@ -152,8 +153,8 @@
 	if (!ishuman(user))
 		return
 	var/mob/living/carbon/human/suffocater = user
-	suffocater.say("WHAT THE FUCK IS CARBON DIOXIDE?")
-	suffocater.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
+	suffocater.say(LANG("obj.ea4679ae", null))
+	suffocater.visible_message(span_suicide(LANG("obj.7338d70e", list(user, user.p_them(), src, user.p_they()))))
 	return OXYLOSS
 
 /obj/item/tank/jetpack/emp_act(severity)
@@ -192,7 +193,7 @@
 
 	var/mob/user = loc
 	if(rand(0,250) == 0)
-		to_chat(user, span_notice("You feel your jetpack's engines cut out."))
+		to_chat(user, span_notice(LANG("obj.6db92729", null)))
 		turn_off(user)
 		return
 	return ..()

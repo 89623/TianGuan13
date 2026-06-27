@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Requests from prayers
 #define REQUEST_PRAYER "request_prayer"
 /// Requests for Centcom
@@ -151,7 +152,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 	// Only admins should be sending actions
 	if (!check_rights(R_ADMIN))
-		to_chat(usr, "You do not have permission to do this, you require +ADMIN", confidential = TRUE)
+		to_chat(usr, LANG("datum.8fda4fd5", null), confidential = TRUE)
 		return
 
 	if (action == "toggleprint")
@@ -161,7 +162,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	// Get the request this relates to
 	var/id = params["id"] != null ? text2num(params["id"]) : null
 	if (!id)
-		to_chat(usr, "Failed to find a request ID in your action, please report this", confidential = TRUE)
+		to_chat(usr, LANG("datum.9ece0b61", null), confidential = TRUE)
 		CRASH("Received an action without a request ID, this shouldn't happen!")
 	var/datum/request/request = !id ? null : requests_by_id[id]
 
@@ -185,13 +186,13 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			return TRUE
 		if ("tp")
 			if(!SSticker.HasRoundStarted())
-				tgui_alert(usr,"The game hasn't started yet!")
+				tgui_alert(usr,LANG("datum.8a212f07", null))
 				return TRUE
 			var/mob/M = request.owner?.mob
 			if(!ismob(M))
 				var/datum/mind/D = M
 				if(!istype(D))
-					to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+					to_chat(usr, LANG("datum.0c07ee28", null), confidential = TRUE)
 					return TRUE
 				else
 					D.traitor_panel()
@@ -203,7 +204,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 		if ("logs")
 			var/mob/M = request.owner?.mob
 			if(!ismob(M))
-				to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
+				to_chat(usr, LANG("datum.7ba1e557", null), confidential = TRUE)
 				return TRUE
 			show_individual_logging_panel(M, null, null)
 			return TRUE
@@ -214,14 +215,14 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 		if ("rply")
 			if (request.req_type == REQUEST_PRAYER)
-				to_chat(usr, "Cannot reply to a prayer", confidential = TRUE)
+				to_chat(usr, LANG("datum.d8362be1", null), confidential = TRUE)
 				return TRUE
 			var/mob/M = request.owner?.mob
 			usr.client.admin_headset_message(M, request.req_type == REQUEST_SYNDICATE ? RADIO_CHANNEL_SYNDICATE : RADIO_CHANNEL_CENTCOM)
 			return TRUE
 		if ("setcode")
 			if (request.req_type != REQUEST_NUKE)
-				to_chat(usr, "You cannot set the nuke code for a non-nuke-code-request request!", confidential = TRUE)
+				to_chat(usr, LANG("datum.e6bed7bd", null), confidential = TRUE)
 				return TRUE
 			var/code = random_nukecode()
 			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/selfdestruct))
@@ -230,14 +231,14 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			return TRUE
 		if ("show")
 			if(request.req_type != REQUEST_FAX)
-				to_chat(usr, "Request doesn't have a paper to read.", confidential = TRUE)
+				to_chat(usr, LANG("datum.e3621219", null), confidential = TRUE)
 				return TRUE
 			var/obj/item/paper/request_message = request.additional_information["paper"]
 			request_message.ui_interact(usr)
 			return TRUE
 		if ("print")
 			if (request.req_type != REQUEST_FAX)
-				to_chat(usr, "Request doesn't have a paper to print.", confidential = TRUE)
+				to_chat(usr, LANG("datum.71232f90", null), confidential = TRUE)
 				return TRUE
 			for(var/obj/machinery/fax/admin/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax/admin))
 				if(FAX.fax_id != request.additional_information["destination_id"])
@@ -248,10 +249,10 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				return TRUE
 		if ("play")
 			if(request.req_type != REQUEST_INTERNET_SOUND)
-				to_chat(usr, "Request doesn't have a sound to play.", confidential = TRUE)
+				to_chat(usr, LANG("datum.e34e9ac9", null), confidential = TRUE)
 				return TRUE
 			if(findtext(request.message, ":") && !findtext(request.message, GLOB.is_http_protocol))
-				to_chat(usr, "Request is not a valid URL.", confidential = TRUE)
+				to_chat(usr, LANG("datum.1bd3b71d", null), confidential = TRUE)
 				return TRUE
 
 			web_sound(usr, request.message)

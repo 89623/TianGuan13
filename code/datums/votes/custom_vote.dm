@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The max amount of options someone can have in a custom vote.
 #define MAX_CUSTOM_VOTE_OPTIONS 10
 
@@ -43,7 +44,7 @@
 			return FALSE
 		else
 			stack_trace("Got '[custom_count_method]' in create_vote() for custom voting.")
-			to_chat(vote_creator, span_boldwarning("Unknown choice method. Contact a coder."))
+			to_chat(vote_creator, span_boldwarning(LANG("datum.af397410", null)))
 			return FALSE
 
 	var/custom_win_method = tgui_input_list(
@@ -64,13 +65,13 @@
 			return FALSE
 		else
 			stack_trace("Got '[custom_win_method]' in create_vote() for custom voting.")
-			to_chat(vote_creator, span_boldwarning("Unknown winner method. Contact a coder."))
+			to_chat(vote_creator, span_boldwarning(LANG("datum.52bffd7f", null)))
 			return FALSE
 
 	var/display_stats = tgui_alert(
 		vote_creator,
-		"Should voting statistics be public?",
-		"Show voting stats?",
+		LANG("datum.7998d1d2", null),
+		LANG("datum.8c4cf8fe", null),
 		list("Yes", "No"),
 	)
 
@@ -78,7 +79,7 @@
 		return FALSE
 	display_statistics = display_stats == "Yes"
 
-	override_question = tgui_input_text(vote_creator, "What is the vote for?", "Custom Vote")
+	override_question = tgui_input_text(vote_creator, LANG("datum.499af380", null), LANG("datum.43aff5cd", null))
 	if(!override_question)
 		return FALSE
 
@@ -102,6 +103,6 @@
 
 /datum/vote/custom_vote/initiate_vote(initiator, duration)
 	. = ..()
-	. += "\n[override_question]"
+	. += LANG("datum.65aac1b5", list(override_question))
 
 #undef MAX_CUSTOM_VOTE_OPTIONS

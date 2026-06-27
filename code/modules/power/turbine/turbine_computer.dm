@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/turbine_computer
 	name = "gas turbine control computer"
 	desc = "A computer to remotely control a gas turbine."
@@ -23,16 +24,16 @@
 /obj/machinery/computer/turbine_computer/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = ITEM_INTERACT_FAILURE
 	if(!istype(multitool.buffer, /obj/machinery/power/turbine/core_rotor))
-		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
+		to_chat(user, span_notice(LANG("obj.50e9b09d", list(multitool))))
 		return
 	if(turbine_core)
-		to_chat(user, span_notice("Changing [src] bluespace network..."))
+		to_chat(user, span_notice(LANG("obj.1959cf80", list(src))))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
 
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
 	register_machine(multitool.buffer)
-	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
+	to_chat(user, span_notice(LANG("obj.f4834a8b", list(src, multitool))))
 	return ITEM_INTERACT_SUCCESS
 
 /**

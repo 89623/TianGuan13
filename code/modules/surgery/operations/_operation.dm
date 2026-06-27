@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Attempts to perform a surgery with whatever tool is passed
  *
@@ -10,7 +11,7 @@
  */
 /mob/living/proc/perform_surgery(atom/movable/operating_on, potential_tool = IMPLEMENT_HAND, intentionally_fail = FALSE, operating_zone = zone_selected)
 	if(DOING_INTERACTION(src, (HAS_TRAIT(src, TRAIT_HIPPOCRATIC_OATH) ? operating_on : DOAFTER_SOURCE_SURGERY)))
-		operating_on.balloon_alert(src, "already performing surgery!")
+		operating_on.balloon_alert(src, LANG("mob.5f075094", null))
 		return ITEM_INTERACT_BLOCKING
 
 	// allow cyborgs to use "hands"
@@ -45,13 +46,13 @@
 		if (isliving(operating_on))
 			var/mob/living/patient = operating_on
 			if(!patient.is_location_accessible(operating_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
-				patient.balloon_alert(src, "operation site is obstructed!")
+				patient.balloon_alert(src, LANG("mob.7b13392f", null))
 			else if(!IS_LYING_OR_CANNOT_LIE(patient))
-				patient.balloon_alert(src, "not lying down!")
+				patient.balloon_alert(src, LANG("mob.29fa9b01", null))
 			else
-				patient.balloon_alert(src, "nothing to do with [realtool.name]!")
+				patient.balloon_alert(src, LANG("mob.d8ddcec8", list(realtool.name)))
 		else
-			operating.balloon_alert(src, "nothing to do with [realtool.name]!")
+			operating.balloon_alert(src, LANG("mob.d8ddcec8", list(realtool.name)))
 		//  ...then, block attacking. prevents the surgeon from viciously stabbing the patient on a mistake
 		return ITEM_INTERACT_BLOCKING
 
@@ -140,9 +141,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	visible_message(
-		span_notice("[src] attempts to close [p_their()] own [limb.plaintext_zone] with [tool]..."),
-		span_notice("You attempt to close your own [limb.plaintext_zone] with [tool]..."),
-		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
+		span_notice(LANG("mob.7fd065ca", list(src, p_their(), limb.plaintext_zone, tool))),
+		span_notice(LANG("mob.68ad7539", list(limb.plaintext_zone, tool))),
+		span_hear(LANG("mob.233eec79", list(tool?.get_temperature() ? "singeing" : "stitching"))),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
@@ -156,9 +157,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	visible_message(
-		span_notice("[src] closes [p_their()] own [limb.plaintext_zone] with [tool]."),
-		span_notice("You close your own [limb.plaintext_zone] with [tool]."),
-		span_hear("You hear [tool?.get_temperature() ? "singeing" : "stitching"] sounds."),
+		span_notice(LANG("mob.da168bca", list(src, p_their(), limb.plaintext_zone, tool))),
+		span_notice(LANG("mob.6c63ce71", list(limb.plaintext_zone, tool))),
+		span_hear(LANG("mob.233eec79", list(tool?.get_temperature() ? "singeing" : "stitching"))),
 		vision_distance = 5,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
@@ -213,7 +214,7 @@
 
 	var/list/operations = surgeon.get_available_operations(src, surgeon.get_active_held_item())
 	if(!length(operations))
-		to_chat(surgeon, boxed_message(span_info("No available surgeries.")))
+		to_chat(surgeon, boxed_message(span_info(LANG("mob.bb8c3a94", null))))
 		return
 
 	var/list/operations_info = list()
@@ -222,7 +223,7 @@
 		var/atom/movable/operating_on = operations[radial_slice][2]
 		operations_info += "[radial_slice]: [operation.name] on [operating_on]"
 
-	to_chat(surgeon, boxed_message(span_info("Available surgeries:<br><hr>[jointext(operations_info, "<br>")]")))
+	to_chat(surgeon, boxed_message(span_info(LANG("mob.b49be1e8", list(jointext(operations_info, "<br>"))))))
 
 /// Takes a target zone and returns a list of readable surgery states for that zone.
 /// Example output may be list("Skin is cut", "Blood vessels are unclamped", "Bone is sawed")
@@ -598,13 +599,18 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return null
 	var/recommendation = implements[1]
 	if(istext(recommendation))
-		return recommendation // handles tools or IMPLEMENT_HAND
-	if(recommendation == /obj/item)
-		return get_any_tool()
-	if(ispath(recommendation, /obj/item))
+		. = recommendation // handles tools or IMPLEMENT_HAND
+	else if(recommendation == /obj/item)
+		. = get_any_tool()
+	else if(ispath(recommendation, /obj/item))
 		var/obj/item/tool = recommendation
-		return tool::name
-	return null
+		. = tool::name
+	else
+		return null
+	// NOVA EDIT ADDITION - I18N - 推荐工具名（手术径向菜单/面板显示，display-only）反查；工具名在 obj 目录，"Any item" 在 _surgery.json
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE && istext(.))
+		. = lang_reverse_text(.)
+	// NOVA EDIT ADDITION END
 
 /**
  * For surgery operations that can be performed with any item, this explains what kind of item is needed
@@ -617,12 +623,20 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/get_requirements()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	return list(
+	. = list(
 		all_required_strings(),
 		any_required_strings(),
 		any_optional_strings(),
 		all_blocked_strings(),
 	)
+	// NOVA EDIT ADDITION START - I18N: SURGERY_STATE_GUIDES strings come from bitfield_to_list as raw
+	// English ("the skin must be open"…), not LANG'd → reverse here so the surgery panel shows them in
+	// the server locale. Already-LANG'd elements are Chinese = reverse no-op. locale==en no-op.
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		for(var/list/group in .)
+			for(var/idx in 1 to length(group))
+				group[idx] = lang_reverse_text(group[idx])
+	// NOVA EDIT ADDITION END
 
 /// Returns a list of strings indicating requirements for this operation
 /// "All requirements" are formatted as "All of the following must be true:"
@@ -630,7 +644,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	SHOULD_CALL_PARENT(TRUE)
 	. = bitfield_to_list(all_surgery_states_required, SURGERY_STATE_GUIDES("must"))
 	if(!(operation_flags & OPERATION_STANDING_ALLOWED))
-		. += "the patient must be lying down"
+		. += LANG("datum.36e2c473", null)
 
 /// Returns a list of strings indicating any of the requirements for this operation
 /// "Any requirements" are formatted as "At least one of the following must be true:"
@@ -641,13 +655,13 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/parsed_any_flags = any_surgery_states_required
 	if((parsed_any_flags & ALL_SURGERY_BONE_STATES) == ALL_SURGERY_BONE_STATES)
 		parsed_any_flags &= ~ALL_SURGERY_BONE_STATES
-		. += "the bone must be sawed or drilled"
+		. += LANG("datum.b0b90f7a", null)
 	if((parsed_any_flags & ALL_SURGERY_SKIN_STATES) == ALL_SURGERY_SKIN_STATES)
 		parsed_any_flags &= ~ALL_SURGERY_SKIN_STATES
-		. += "the skin must be cut or opened"
+		. += LANG("datum.6169e351", null)
 	if((parsed_any_flags & ALL_SURGERY_VESSEL_STATES) == ALL_SURGERY_VESSEL_STATES)
 		parsed_any_flags &= ~ALL_SURGERY_VESSEL_STATES
-		. += "the blood vessels must be clamped or unclamped" // weird phrasing but whatever
+		. += LANG("datum.58749902", null) // weird phrasing but whatever
 
 	. += bitfield_to_list(parsed_any_flags, SURGERY_STATE_GUIDES("must"))
 
@@ -657,7 +671,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	if(operation_flags & OPERATION_SELF_OPERABLE)
-		. += "a surgeon may perform this on themselves"
+		. += LANG("datum.23c47d06", null)
 
 /// Returns a list of strings indicating blocked states for this operation
 /// "Blocked requirements" are formatted as "However, none of the following may be true:"
@@ -668,17 +682,17 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/parsed_blocked_flags = any_surgery_states_blocked
 	if((parsed_blocked_flags & ALL_SURGERY_BONE_STATES) == ALL_SURGERY_BONE_STATES)
 		parsed_blocked_flags &= ~ALL_SURGERY_BONE_STATES
-		. += "the bone must be intact"
+		. += LANG("datum.48ffc383", null)
 	if((parsed_blocked_flags & ALL_SURGERY_SKIN_STATES) == ALL_SURGERY_SKIN_STATES)
 		parsed_blocked_flags &= ~ALL_SURGERY_SKIN_STATES
-		. += "the skin must be intact"
+		. += LANG("datum.549976a6", null)
 	if((parsed_blocked_flags & ALL_SURGERY_VESSEL_STATES) == ALL_SURGERY_VESSEL_STATES)
 		parsed_blocked_flags &= ~ALL_SURGERY_VESSEL_STATES
-		. += "the blood vessels must be intact"
+		. += LANG("datum.9c2bbe98", null)
 
 	. += bitfield_to_list(parsed_blocked_flags, SURGERY_STATE_GUIDES("must not"))
 	if(!(operation_flags & OPERATION_IGNORE_CLOTHES))
-		. += "the operation site must not be obstructed by clothing"
+		. += LANG("datum.8fef5297", null)
 
 /**
  * Returns what icon this surgery uses by default on the radial wheel if it does not implement its own radial options
@@ -761,7 +775,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		basemod *= 0.8
 	if(HAS_TRAIT(patient, TRAIT_ANALGESIA))
 		basemod *= 0.8
-		to_chat(surgeon, span_notice("You are able to work faster due to the patient's calm attitude!")) // NOVA EDIT ADDITION - Better feedback for the use of analgesia
+		to_chat(surgeon, span_notice(LANG("datum.e1b80536", null))) // NOVA EDIT ADDITION - Better feedback for the use of analgesia
 	return basemod
 
 /// Returns a time modifier based on the surgeon's status
@@ -787,7 +801,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			break
 	if(quiet_environment)
 		basemod *= 0.8
-		to_chat(surgeon, span_notice("You are able to work faster due to the quiet environment!"))
+		to_chat(surgeon, span_notice(LANG("datum.258917b6", null)))
 	// NOVA EDIT ADDITION END
 
 	return basemod
@@ -852,7 +866,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(patient.buckled)
 		var/obj/machinery/stasis/stasis_bed = patient.buckled
 		if(istype(stasis_bed) && stasis_bed.stasis_enabled)
-			to_chat(surgeon, span_warning("[patient] cannot be operated in the [patient.buckled] while it is turned on!"))
+			to_chat(surgeon, span_warning(LANG("datum.ced54c12", list(patient, patient.buckled))))
 			return ITEM_INTERACT_BLOCKING
 	// NOVA EDIT ADDITION END
 	if(isitem(tool))
@@ -1039,7 +1053,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(target.stat >= UNCONSCIOUS || HAS_TRAIT(target, TRAIT_KNOCKEDOUT))
 		return
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && prob(drunken_ignorance_probability))
-		to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
+		to_chat(target, span_notice(LANG("datum.a557a7fa", null)))
 		return
 	to_chat(target, span_userdanger(pain_message))
 	if(prob(30) && !mechanical_surgery)
@@ -1259,17 +1273,17 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/basic/all_required_strings()
 	. = list()
 	if(required_biotype)
-		. += "operate on [target_zone ? "[parse_zone(target_zone)] (target [parse_zone(target_zone)])" : "patient"]"
+		. += LANG("datum.0738e641", list(target_zone ? "[parse_zone(target_zone)] (target [parse_zone(target_zone)])" : "patient"))
 	else if(target_zone)
-		. += "operate on [parse_zone(target_zone)] (target [parse_zone(target_zone)])"
+		. += LANG("datum.dbd0e04f", list(parse_zone(target_zone), parse_zone(target_zone)))
 	. += ..()
 
 /datum/surgery_operation/basic/all_blocked_strings()
 	. = ..()
 	if(required_biotype & MOB_ROBOTIC)
-		. += "the patient must not be organic"
+		. += LANG("datum.b2e7d352", null)
 	else if(required_biotype)
-		. += "the patient must not be robotic"
+		. += LANG("datum.5f2a4254", null)
 
 /datum/surgery_operation/basic/is_available(mob/living/patient, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -1331,9 +1345,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/limb/all_blocked_strings()
 	. = ..()
 	if(required_bodytype & BODYTYPE_ROBOTIC)
-		. += "the limb must not be organic"
+		. += LANG("datum.9d38377e", null)
 	else if(required_bodytype & BODYTYPE_ORGANIC)
-		. += "the limb must not be cybernetic"
+		. += LANG("datum.93920bb7", null)
 
 /datum/surgery_operation/limb/get_operation_target(atom/movable/operating_on, body_zone)
 	if (isliving(operating_on))
@@ -1389,9 +1403,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/organ/all_blocked_strings()
 	. = ..()
 	if(required_organ_flag & BODYTYPE_ROBOTIC)
-		. += "the organ must not be organic"
+		. += LANG("datum.bfdf82a8", null)
 	else if(required_organ_flag & ORGAN_TYPE_FLAGS)
-		. += "the organ must not be cybernetic"
+		. += LANG("datum.b72fb0a2", null)
 
 /datum/surgery_operation/organ/get_default_radial_image()
 	return get_generic_limb_radial_image(target_type::zone)

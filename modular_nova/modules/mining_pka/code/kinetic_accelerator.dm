@@ -12,19 +12,19 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/variant/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/borg/upgrade/modkit/chassis_mod))
-		to_chat(user, span_notice("This weapon doesn't have variant appearances."))
+		to_chat(user, span_notice(LANG("obj.b46cd165", null)))
 	else
 		return ..()
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/variant/nomod/crowbar_act(mob/living/user, obj/item/I)
-	to_chat(user, span_notice("This weapon cannot have its modifications removed."))
+	to_chat(user, span_notice(LANG("obj.20cb4580", null)))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/variant/nomod/
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/variant/nomod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/borg/upgrade/modkit))
-		to_chat(user, span_notice("This weapon cannot have modifications applied."))
+		to_chat(user, span_notice(LANG("obj.ca399589", null)))
 	else
 		return ..()
 

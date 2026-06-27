@@ -30,7 +30,7 @@ GLOBAL_DATUM_INIT(combat_indicator_vis, /obj/effect/overlay/indicator/combat, ne
 			vehicle_next_combat_popup = world.time + COMBAT_NOTICE_COOLDOWN
 			playsound(src, 'sound/machines/chime.ogg', vol = 10, vary = FALSE, extrarange = -6, falloff_exponent = 4, frequency = null, channel = 0, pressure_affected = FALSE, ignore_walls = FALSE, falloff_distance = 1)
 			flick_emote_popup_on_obj("combat", 2 SECONDS)
-			visible_message(span_boldwarning("[src] prepares for combat!"))
+			visible_message(span_boldwarning(LANG("obj.6ec65a2e", list(src))))
 		combat_indicator_vehicle = TRUE
 		vis_contents |= GLOB.combat_indicator_vis
 	else
@@ -96,18 +96,18 @@ GLOBAL_DATUM_INIT(combat_indicator_vis, /obj/effect/overlay/indicator/combat, ne
 		if(get_active_held_item())
 			ciweapon = get_active_held_item()
 			if(istype(ciweapon, /obj/item/gun))
-				visible_message(span_boldwarning("[src] raises \the [ciweapon] with [p_their()] finger on the trigger, ready for combat!"))
+				visible_message(span_boldwarning(LANG("mob.5fe473cc", list(src, ciweapon, p_their()))))
 			else
-				visible_message(span_boldwarning("[src] readies \the [ciweapon] with a tightened grip and offensive stance, ready for combat!"))
+				visible_message(span_boldwarning(LANG("mob.a5772160", list(src, ciweapon))))
 		else
 			if(issilicon(src))
-				visible_message(span_boldwarning("<b>[src] shifts its armour plating into a defensive stance, ready for combat!"))
+				visible_message(span_boldwarning(LANG("mob.63cb5445", list(src))))
 			if(ishuman(src))
-				visible_message(span_boldwarning("[src] raises [p_their()] fists in an offensive stance, ready for combat!"))
+				visible_message(span_boldwarning(LANG("mob.e1bed157", list(src, p_their()))))
 			if(isalien(src))
-				visible_message(span_boldwarning("[src] hisses in a terrifying stance, claws raised and ready for combat!"))
+				visible_message(span_boldwarning(LANG("mob.9c4fa99d", list(src))))
 			else
-				visible_message(span_boldwarning("[src] gets ready for combat!"))
+				visible_message(span_boldwarning(LANG("mob.3c764503", list(src))))
 	combat_indicator = TRUE
 	apply_status_effect(/datum/status_effect/grouped/surrender, src)
 	log_message("<font color='red'>[src] has turned ON the combat indicator!</font>", LOG_ATTACK)

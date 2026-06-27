@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //CORGIS!
 
 /mob/living/basic/pet/dog/corgi
@@ -87,7 +88,7 @@
 /mob/living/basic/pet/dog/corgi/examine(mob/user)
 	. = ..()
 	if(access_card)
-		. += "There appears to be [icon2html(access_card, user)] \a [access_card] pinned to [p_them()]."
+		. += LANG("mob.b3e288b8", list(icon2html(access_card, user), access_card, p_them()))
 
 /**
  * Corgis get full protection from their equipped fashion items if attacked in a way that passes def_zone,
@@ -115,14 +116,14 @@
 /mob/living/basic/pet/dog/corgi/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/razor))
 		if(shaved)
-			to_chat(user, span_warning("You can't shave this corgi, [p_they()] has already been shaved!"))
+			to_chat(user, span_warning(LANG("mob.05a2e3bb", list(p_they()))))
 			return
 		if(!can_be_shaved)
-			to_chat(user, span_warning("You can't shave this corgi, [p_they()] [p_do()]n't have a fur coat!"))
+			to_chat(user, span_warning(LANG("mob.b6c70b82", list(p_they(), p_do()))))
 			return
-		user.visible_message(span_notice("[user] starts to shave [src] using \the [attacking_item]."), span_notice("You start to shave [src] using \the [attacking_item]..."))
+		user.visible_message(span_notice(LANG("mob.215295a5", list(user, src, attacking_item))), span_notice(LANG("mob.490e22db", list(src, attacking_item))))
 		if(do_after(user, 5 SECONDS, target = src))
-			user.visible_message(span_notice("[user] shaves [src]'s hair using \the [attacking_item]."))
+			user.visible_message(span_notice(LANG("mob.3ca61c66", list(user, src, attacking_item))))
 			playsound(get_turf(src), 'sound/items/hair-clippers.ogg', 20, TRUE)
 			shaved = TRUE
 			icon_living = "[icon_living]_shaved"
@@ -213,24 +214,24 @@
 /mob/living/basic/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/living/user)
 	if(inventory_head)
 		if(user)
-			balloon_alert(user, "already wearing a hat!")
+			balloon_alert(user, LANG("mob.877a0958", null))
 		return FALSE
 
 	if(isnull(item_to_add))
 		if (!isnull(user))
-			user.visible_message(span_notice("[user] pets [src]."), span_notice("You rest your hand on [src]'s head for a moment."))
+			user.visible_message(span_notice(LANG("mob.d1411f1b", list(user, src))), span_notice(LANG("mob.98fc1a7b", list(src))))
 			if(flags_1 & HOLOGRAM_1)
 				return
 			user.add_mood_event(REF(src), /datum/mood_event/pet_animal, src)
 		return FALSE
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
-		to_chat(user, span_warning("\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!"))
+		to_chat(user, span_warning(LANG("mob.c73ad1c5", list(item_to_add, src))))
 		return FALSE
 
 	//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a hat is removed.
 	if(!ispath(item_to_add.dog_fashion, /datum/dog_fashion/head))
-		to_chat(user, span_warning("You set [item_to_add] on [src]'s head, but it falls off!"))
+		to_chat(user, span_warning(LANG("mob.b7bcb772", list(item_to_add, src))))
 		item_to_add.forceMove(drop_location())
 		if(prob(25))
 			step_rand(item_to_add)
@@ -239,11 +240,11 @@
 
 	if (user)
 		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
-			to_chat(user, span_notice("There is merely a dull, lifeless look in [real_name]'s eyes as you put \the [item_to_add] on [p_them()]."))
+			to_chat(user, span_notice(LANG("mob.65cc710d", list(real_name, item_to_add, p_them()))))
 		else
-			user.visible_message(span_notice("[user] puts [item_to_add] on [real_name]'s head. [src] looks at [user] and barks once."),
-				span_notice("You put [item_to_add] on [real_name]'s head. [src] gives you a peculiar look, then wags [p_their()] tail once and barks."),
-				span_hear("You hear a friendly-sounding bark."))
+			user.visible_message(span_notice(LANG("mob.62d82673", list(user, item_to_add, real_name, src, user))),
+				span_notice(LANG("mob.5447687d", list(item_to_add, real_name, src, p_their()))),
+				span_hear(LANG("mob.2f0583aa", null)))
 	item_to_add.forceMove(src)
 	inventory_head = item_to_add
 	update_corgi_fluff()
@@ -301,13 +302,13 @@
 		inventory_head.forceMove(drop_location())
 		inventory_head = null
 	place_on_head(pick(possible_headwear))
-	visible_message(span_notice("[src] puts [inventory_head] on [p_their()] own head, somehow."))
+	visible_message(span_notice(LANG("mob.2cc063a8", list(src, inventory_head, p_their()))))
 
 ///Deadchat plays command that drops the current hat off Ian.
 /mob/living/basic/pet/dog/corgi/proc/drop_hat()
 	if(!inventory_head)
 		return
-	visible_message(span_notice("[src] vigorously shakes [p_their()] head, dropping [inventory_head] to the ground."))
+	visible_message(span_notice(LANG("mob.2ab41de4", list(src, p_their(), inventory_head))))
 	inventory_head.forceMove(drop_location())
 	inventory_head = null
 	update_corgi_fluff()
@@ -379,7 +380,7 @@
 		icon_living = "old_corgi"
 		held_state = "old_corgi"
 		icon_dead = "old_corgi_dead"
-		desc = "At a ripe old age of [record_age], Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
+		desc = LANG("mob.4fc73b31", list(record_age)) //RIP
 		ai_controller?.set_blackboard_key(BB_DOG_IS_SLOW, TRUE)
 		is_slow = TRUE
 		speed = 2
@@ -492,8 +493,8 @@
 	SIGNAL_HANDLER
 	if (!is_type_in_list(prey, edible_types) || istype(prey, type))
 		return
-	visible_message(span_warning("Dark magic resonating from [src] devours [prey]!"), \
-		"<span class='cult big bold'>DELICIOUS SOULS</span>")
+	visible_message(span_warning(LANG("mob.183c666d", list(src, prey))), \
+		LANG("mob.5a4e3cb0", null))
 	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
 	new /obj/effect/temp_visual/cult/sac(get_turf(prey))
 	narsie_act()
@@ -515,8 +516,8 @@
 
 /mob/living/basic/pet/dog/corgi/narsie/narsie_act()
 	if(stat == DEAD) //Nar'Sie loves her doggy
-		visible_message(span_warning("[src] arises again, revived by the dark magicks!"), \
-		span_cult_large("RISE"))
+		visible_message(span_warning(LANG("mob.7b09edc5", list(src))), \
+		span_cult_large(LANG("mob.f19db68b", null)))
 		revive(ADMIN_HEAL_ALL) //also means that a dead Nars-Ian can consume a pet and revive
 	adjust_brute_loss(-maxHealth)
 

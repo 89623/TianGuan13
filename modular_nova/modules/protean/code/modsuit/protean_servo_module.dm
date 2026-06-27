@@ -26,15 +26,15 @@
 		return
 
 	if(protean_in_suit == mod.wearer)
-		to_chat(mod.wearer, span_warning("[src] needs someone else as the wearer, it can't be used on a protean."))
+		to_chat(mod.wearer, span_warning(LANG("obj.c9cea655", list(src))))
 		deactivate()
 		return
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	servo_movement.Grant(protean_in_suit)
 	servo_medical.Grant(protean_in_suit)
 	servo_engineering.Grant(protean_in_suit)
-	to_chat(protean_in_suit, span_notice("Servo subroutines activated. Enhancement modes are now available."))
-	to_chat(mod.wearer, span_notice("You feel the suit's servos	whir to life."))
+	to_chat(protean_in_suit, span_notice(LANG("obj.e224c9e0", null)))
+	to_chat(mod.wearer, span_notice(LANG("obj.738e3a0c", null)))
 
 /obj/item/mod/module/protean_servo/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -51,8 +51,8 @@
 
 	if(display_message)
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(protean_in_suit, span_notice("Servo subroutines deactivated."))
-		to_chat(mod.wearer, span_notice("The suit's servos wind down."))
+		to_chat(protean_in_suit, span_notice(LANG("obj.ca8b1c20", null)))
+		to_chat(mod.wearer, span_notice(LANG("obj.13395a22", null)))
 
 //// Protean servo module: Abilities ////
 
@@ -77,7 +77,7 @@
 	var/mob/living/carbon/wearer = suit.wearer
 
 	wearer.apply_status_effect(/datum/status_effect/protean_servo_movement)
-	wearer.visible_message(span_warning("[protean] speeds up [wearer]'s movement!"))
+	wearer.visible_message(span_warning(LANG("datum.f2c146f7", list(protean, wearer))))
 	StartCooldown()
 
 /datum/action/cooldown/protean_servo/medical
@@ -94,7 +94,7 @@
 	var/mob/living/carbon/wearer = suit.wearer
 
 	wearer.apply_status_effect(/datum/status_effect/protean_servo_medical)
-	wearer.visible_message(span_warning("[protean] assists in [wearer]'s medical actions!"))
+	wearer.visible_message(span_warning(LANG("datum.23365365", list(protean, wearer))))
 	StartCooldown()
 
 /datum/action/cooldown/protean_servo/engineering
@@ -111,7 +111,7 @@
 	var/mob/living/carbon/wearer = suit.wearer
 
 	wearer.apply_status_effect(/datum/status_effect/protean_servo_engineer)
-	wearer.visible_message(span_warning("[protean] assists in [wearer]'s construction tasks!"))
+	wearer.visible_message(span_warning(LANG("datum.29ae8aae", list(protean, wearer))))
 	StartCooldown()
 
 //// Protean servo module: Status Effects ////
@@ -141,7 +141,7 @@
 	owner.remove_traits(list(TRAIT_RESTRAINED), PROTEAN_SERVO_TRAIT)
 	for(var/obj/item/thing in owner.held_items)
 		clear_servo_trait(thing)
-	owner.visible_message(span_warning("[owner]'s movement return to normal as protean module runs out of power"))
+	owner.visible_message(span_warning(LANG("datum.6cbb92d1", list(owner))))
 
 /datum/status_effect/protean_servo_movement/proc/clear_servo_trait(obj/item/thing, ...)
 	SIGNAL_HANDLER
@@ -173,7 +173,7 @@
 	. = ..()
 	LAZYREMOVE(owner.mob_surgery_speed_mods, "protean_servo_medical")
 	owner.remove_traits(list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED), PROTEAN_SERVO_TRAIT)
-	owner.visible_message(span_warning("[owner]'s movement return to normal as protean module runs out of power"))
+	owner.visible_message(span_warning(LANG("datum.6cbb92d1", list(owner))))
 
 // Engineering option
 /atom/movable/screen/alert/status_effect/protean_servo_engineer
@@ -196,7 +196,7 @@
 	. = ..()
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/protean_servo_engineer)
 	owner.remove_traits(list(TRAIT_QUICK_BUILD), PROTEAN_SERVO_TRAIT)
-	owner.visible_message(span_warning("[owner]'s movement return to normal as protean module runs out of power"))
+	owner.visible_message(span_warning(LANG("datum.6cbb92d1", list(owner))))
 
 /datum/actionspeed_modifier/protean_servo_engineer
 	multiplicative_slowdown = -0.35

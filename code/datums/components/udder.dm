@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Udder component; for farm animals to generate milk.
  *
@@ -37,11 +38,11 @@
 	var/udder_filled_percentage = PERCENT(udder.reagents.total_volume / udder.reagents.maximum_volume)
 	switch(udder_filled_percentage)
 		if(0 to 10)
-			examine_list += span_notice("[parent]'s [udder.name] is dry.")
+			examine_list += span_notice(LANG("datum.cc9a42a5", list(parent, udder.name)))
 		if(11 to 99)
-			examine_list += span_notice("[parent]'s [udder.name] can be milked if you have something to contain it.")
+			examine_list += span_notice(LANG("datum.e3879d4f", list(parent, udder.name)))
 		if(100)
-			examine_list += span_notice("[parent]'s [udder.name] is round and full, and can be milked if you have something to contain it.")
+			examine_list += span_notice(LANG("datum.97baf9c1", list(parent, udder.name)))
 
 
 ///signal called on parent being attacked with an item
@@ -112,10 +113,10 @@
 /obj/item/udder/proc/handle_consumption(atom/movable/food, mob/user)
 	if(locate(food.type) in src)
 		if(user)
-			user.balloon_alert(user, "already full!")
+			user.balloon_alert(user, LANG("obj.e28c7f55", null))
 		return
 	playsound(udder_mob.loc,'sound/items/eatfood.ogg', 50, TRUE)
-	udder_mob.visible_message(span_notice("[udder_mob] gobbles up [food]!"), span_notice("You gobble up [food]!"))
+	udder_mob.visible_message(span_notice(LANG("obj.3c5ffc7a", list(udder_mob, food))), span_notice(LANG("obj.be370773", list(food))))
 	var/atom/movable/final_food = food
 	if(isstack(food)) //if stack, only consume 1
 		var/obj/item/stack/food_stack = food
@@ -177,13 +178,13 @@
  */
 /obj/item/udder/proc/milk(obj/item/reagent_containers/cup/milk_holder, mob/user)
 	if(milk_holder.reagents.total_volume >= milk_holder.volume)
-		to_chat(user, span_warning("[milk_holder] is full."))
+		to_chat(user, span_warning(LANG("obj.8e2d390c", list(milk_holder))))
 		return
 	var/transferred = reagents.trans_to(milk_holder, rand(5,10))
 	if(transferred)
-		user.visible_message(span_notice("[user] milks [udder_mob] using \the [milk_holder]."), span_notice("You milk [udder_mob] using \the [milk_holder]."))
+		user.visible_message(span_notice(LANG("obj.46321624", list(user, udder_mob, milk_holder))), span_notice(LANG("obj.4221b7a1", list(udder_mob, milk_holder))))
 	else
-		to_chat(user, span_warning("The udder is dry. Wait a bit longer..."))
+		to_chat(user, span_warning(LANG("obj.514cc82b", null)))
 
 /**
  * # gutlunch udder subtype

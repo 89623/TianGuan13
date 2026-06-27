@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PURGING_REAGENTS list( \
 	/datum/reagent/medicine/c2/multiver, \
 	/datum/reagent/medicine/pen_acid, \
@@ -401,7 +402,7 @@
 		return
 	var/mob/living/carbon/victim = holder.my_atom
 	if (victim.stat != DEAD)
-		victim.visible_message(span_warning("[victim] starts violently coughing up smoke!"))
+		victim.visible_message(span_warning(LANG("datum.03e2da71", list(victim))))
 	victim.adjust_organ_loss(ORGAN_SLOT_LUNGS, created_volume / 5)
 
 /datum/chemical_reaction/smoke_powder_smoke
@@ -423,7 +424,7 @@
 		return
 	var/mob/living/carbon/victim = holder.my_atom
 	if (victim.stat != DEAD)
-		victim.visible_message(span_warning("[victim] starts violently coughing up smoke!"))
+		victim.visible_message(span_warning(LANG("datum.03e2da71", list(victim))))
 	victim.adjust_organ_loss(ORGAN_SLOT_LUNGS, created_volume / 10)
 
 /datum/chemical_reaction/sonic_powder
@@ -522,7 +523,7 @@
 		return ..()
 	var/turf/local_turf = get_turf(holder.my_atom)
 	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg', 50, 1)
-	local_turf.visible_message("The reaction frosts over, releasing its chilly contents!")
+	local_turf.visible_message(LANG("datum.a128d236", null))
 	freeze_radius(holder, null, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS, 2)
 	clear_reactants(holder, 15)
 	holder.chem_temp += 100
@@ -532,7 +533,7 @@
 	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
 	var/turf/local_turf = get_turf(holder.my_atom)
 	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg', 50, 1)
-	local_turf.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of \the [holder.my_atom]!")
+	local_turf.visible_message(LANG("datum.c3200050", list(holder.my_atom)))
 	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS, 5)
 	new /obj/structure/statue/snow/snowman(local_turf)
 	clear_reactants(holder)

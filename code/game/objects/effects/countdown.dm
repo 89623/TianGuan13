@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/countdown
 	name = "countdown"
 	desc = "We're leaving together\n\
@@ -20,7 +21,7 @@
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	. += "This countdown is displaying: [displayed_text]."
+	. += LANG("obj.72b7a056", list(displayed_text))
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A

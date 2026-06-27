@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BOOM_DEVASTATION "devastation"
 #define BOOM_HEAVY "heavy"
 #define BOOM_LIGHT "light"
@@ -17,9 +18,7 @@
 
 /datum/buildmode_mode/boom/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Set explosion destructiveness")] -> Right Mouse Button on buildmode button\n\
-		[span_bold("Kaboom")] -> Mouse Button on obj\n\n\
-		[span_warning("NOTE:")] Using the \"Config/Launch Supplypod\" verb allows you to do this in an IC way (i.e., making a cruise missile come down from the sky and explode wherever you click!)"))
+		LANG("datum.1774e165", list(span_bold("Set explosion destructiveness"), span_bold("Kaboom"), span_warning("NOTE:")))))
 	)
 
 /datum/buildmode_mode/boom/change_settings(client/c)

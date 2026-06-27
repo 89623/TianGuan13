@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Disposal pipes
 
 /obj/structure/disposalpipe
@@ -159,10 +160,10 @@
 	if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return TRUE
 
-	to_chat(user, span_notice("You start slicing [src]..."))
+	to_chat(user, span_notice(LANG("obj.438e4eb2", list(src))))
 	if(I.use_tool(src, user, 30, volume=50))
 		deconstruct()
-		to_chat(user, span_notice("You slice [src]."))
+		to_chat(user, span_notice(LANG("obj.5fe2f60c", list(src))))
 	return TRUE
 
 //checks if something is blocking the deconstruction (e.g. trunk with a bin still linked to it)
@@ -282,7 +283,7 @@
 
 /obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)
 	if(linked)
-		to_chat(user, span_warning("You need to deconstruct disposal machinery above this pipe!"))
+		to_chat(user, span_warning(LANG("obj.34472367", null)))
 		return FALSE
 	return TRUE
 

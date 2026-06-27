@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A single reagent
 /datum/reagent
 	abstract_type = /datum/reagent
@@ -110,6 +111,12 @@
 		AddElement(/datum/element/venue_price, glass_price)
 	if(!mass)
 		mass = rand(10, 800)
+	// NOVA EDIT ADDITION START - i18n - 全服中文时反查试剂 name/description/taste（覆盖聊天 [试剂] 等单词类插值；P1 的 TGUI 多词门槛漏掉的单词名靠这里）
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		name = lang_reverse_text(name)
+		description = lang_reverse_text(description)
+		taste_description = lang_reverse_text(taste_description)
+	// NOVA EDIT ADDITION END
 
 /// This should only be called by the holder, so it's already handled clearing its references
 /datum/reagent/Destroy()
@@ -279,7 +286,7 @@
 
 /// Called when an overdose starts. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/overdose_start(mob/living/affected_mob, metabolization_ratio)
-	to_chat(affected_mob, span_userdanger("You feel like you took too much of [name]!"))
+	to_chat(affected_mob, span_userdanger(LANG("datum.e71854ea", list(name))))
 	affected_mob.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
 	return
 

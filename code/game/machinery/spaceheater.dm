@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define HEATER_MODE_STANDBY "standby"
 #define HEATER_MODE_HEAT "heat"
 #define HEATER_MODE_COOL "cool"
@@ -96,14 +97,14 @@
 
 /obj/machinery/space_heater/examine(mob/user)
 	. = ..()
-	. += "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
+	. += LANG("obj.85c15b93", list(src, on ? "on" : "off", panel_open ? "open" : "closed"))
 	if(cell)
-		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
+		. += LANG("obj.00f8f6f7", list(cell ? round(cell.percent(), 1) : 0))
 	else
-		. += span_warning("There is no power cell installed.")
+		. += span_warning(LANG("obj.b21d2f5d", null))
 	if(in_range(user, src) || isobserver(user))
 		. += heating_examine()
-		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
+		. += span_notice(LANG("obj.a322e9c4", list(on ? "off" : "on")))
 
 ///Returns the heating power of this machine as an examine
 /obj/machinery/space_heater/proc/heating_examine()
@@ -208,8 +209,8 @@
 /obj/machinery/space_heater/screwdriver_act(mob/living/user, obj/item/tool)
 	. = default_deconstruction_screwdriver(user, tool)
 	user.visible_message(
-		span_notice("[user] [panel_open ? "opens" : "closes"] the hatch on [src]."),
-		span_notice("You [panel_open ? "open" : "close"] the hatch on [src]."),
+		span_notice(LANG("obj.e2fd01b7", list(user, panel_open ? "opens" : "closes", src))),
+		span_notice(LANG("obj.8e621188", list(panel_open ? "open" : "close", src))),
 	)
 	return .
 
@@ -220,18 +221,18 @@
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		add_fingerprint(user)
 		if(!panel_open)
-			to_chat(user, span_warning("The hatch must be open to insert a power cell!"))
+			to_chat(user, span_warning(LANG("obj.3e6ca1e0", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
+			to_chat(user, span_warning(LANG("obj.3606d540", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		cell = tool
 		tool.add_fingerprint(usr)
 		user.visible_message(
-			span_notice("[user] inserts [tool] into [src]."),
-			span_notice("You insert [tool] into [src]."),
+			span_notice(LANG("obj.05c6f8ca", list(user, tool, src))),
+			span_notice(LANG("obj.8ce99939", list(tool, src))),
 		)
 		SStgui.update_uis(src)
 		return ITEM_INTERACT_SUCCESS
@@ -309,13 +310,13 @@
 	mode = HEATER_MODE_STANDBY
 	if(!isnull(user))
 		if(QDELETED(cell))
-			balloon_alert(user, "no cell!")
+			balloon_alert(user, LANG("obj.0210855e", null))
 		else if(!cell.charge())
-			balloon_alert(user, "no charge!")
+			balloon_alert(user, LANG("obj.c0d39a14", null))
 		else if(!is_operational)
-			balloon_alert(user, "not operational!")
+			balloon_alert(user, LANG("obj.1dd04a29", null))
 		else
-			balloon_alert(user, "turned [on ? "on" : "off"]")
+			balloon_alert(user, LANG("obj.8fcfde3c", list(on ? "on" : "off")))
 	update_appearance()
 	if(on)
 		SSair.start_processing_machine(src)
@@ -362,7 +363,7 @@
 	// Conducted energy per joule of thermal energy difference in a tick.
 	var/conduction_energy = beaker_conduction_power * (set_mode == HEATER_MODE_AUTO ? 0.5 : 1) * our_subsystem.wait / (1 SECONDS)
 	// This accounts for the timestep inaccuracy.
-	. += span_notice("Reagent conduction power: <b>[conduction_energy < 1 ? display_power(-log(1 - conduction_energy) SECONDS / our_subsystem.wait, convert = FALSE) : "∞W"]/J</b>")
+	. += span_notice(LANG("obj.53ab7728", list(conduction_energy < 1 ? display_power(-log(1 - conduction_energy) SECONDS / our_subsystem.wait, convert = FALSE) : "∞W")))
 
 /obj/machinery/space_heater/improvised_chem_heater/toggle_power(user)
 	. = ..()
@@ -427,14 +428,14 @@
 		return
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
+			to_chat(user, span_warning(LANG("obj.3606d540", null)))
 			return
 		else if(!user.transferItemToLoc(item, src))
 			return
 		cell = item
 		item.add_fingerprint(usr)
 
-		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
+		user.visible_message(span_notice(LANG("obj.e75ad685", list(user, src))), span_notice(LANG("obj.416c5a90", list(src))))
 		SStgui.update_uis(src)
 	//reagent containers
 	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
@@ -443,7 +444,7 @@
 		if(!user.transferItemToLoc(container, src))
 			return
 		replace_beaker(user, container)
-		to_chat(user, span_notice("You add [container] to [src]'s water bath."))
+		to_chat(user, span_notice(LANG("obj.d3cc5907", list(container, src))))
 		ui_interact(user)
 		return
 	//Dropper tools

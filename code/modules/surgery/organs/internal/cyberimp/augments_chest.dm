@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/cyberimp/chest
 	name = "cybernetic torso implant"
 	desc = "Implants for the organs in your torso."
@@ -22,7 +23,7 @@
 
 	if(owner.nutrition <= hunger_threshold)
 		synthesizing = TRUE
-		to_chat(owner, span_notice("You feel less hungry..."))
+		to_chat(owner, span_notice(LANG("obj.ece92a0a", null)))
 		owner.adjust_nutrition(25 * seconds_per_tick)
 		addtimer(CALLBACK(src, PROC_REF(synth_cool)), 5 SECONDS)
 
@@ -34,7 +35,7 @@
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
 	owner.reagents.add_reagent(/datum/reagent/toxin/bad_food, poison_amount / severity)
-	to_chat(owner, span_warning("You feel like your insides are burning."))
+	to_chat(owner, span_warning(LANG("obj.010ce142", null)))
 
 
 /obj/item/organ/cyberimp/chest/nutriment/plus
@@ -72,7 +73,7 @@
 		if(owner.stat == CONSCIOUS)
 			COOLDOWN_START(src, reviver_cooldown, revive_cost)
 			reviving = FALSE
-			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
+			to_chat(owner, span_notice(LANG("obj.97761cfa", list(DisplayTimeText(revive_cost)))))
 		else
 			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
 		return
@@ -83,7 +84,7 @@
 	if(owner.stat != CONSCIOUS)
 		revive_cost = 0
 		reviving = TRUE
-		to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
+		to_chat(owner, span_notice(LANG("obj.daa5b1fa", null)))
 		COOLDOWN_START(src, defib_cooldown, 8 SECONDS) // 5 seconds after heal proc delay
 
 
@@ -112,7 +113,7 @@
 		owner.updatehealth()
 
 	if(body_damage_patched && prob(35)) // healing is called every few seconds, not every tick
-		owner.visible_message(span_warning("[owner]'s body twitches a bit."), span_notice("You feel like something is patching your injured body."))
+		owner.visible_message(span_warning(LANG("obj.ecbf70f4", list(owner))), span_notice(LANG("obj.8e85683a", null)))
 
 
 /obj/item/organ/cyberimp/chest/reviver/proc/revive_dead()
@@ -124,7 +125,7 @@
 
 	defib_cooldown += 16 SECONDS // delay so it doesn't spam
 
-	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
+	owner.visible_message(span_warning(LANG("obj.4bf6b286", list(owner))))
 	playsound(owner, SFX_BODYFALL, 50, TRUE)
 	playsound(owner, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
 	owner.set_heartattack(FALSE)
@@ -149,7 +150,7 @@
 		var/mob/living/carbon/human/human_owner = owner
 		if(human_owner.stat != DEAD && prob(50 / severity) && human_owner.can_heartattack())
 			human_owner.set_heartattack(TRUE)
-			to_chat(human_owner, span_userdanger("You feel a horrible agony in your chest!"))
+			to_chat(human_owner, span_userdanger(LANG("obj.21af2a52", null)))
 			addtimer(CALLBACK(src, PROC_REF(undo_heart_attack)), 600 / severity)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
@@ -158,7 +159,7 @@
 		return
 	human_owner.set_heartattack(FALSE)
 	if(human_owner.stat == CONSCIOUS)
-		to_chat(human_owner, span_notice("You feel your heart beating again!"))
+		to_chat(human_owner, span_notice(LANG("obj.a18e05ec", null)))
 
 
 /obj/item/organ/cyberimp/chest/thrusters
@@ -207,7 +208,7 @@
 		return
 	if(organ_flags & ORGAN_FAILING)
 		if(!silent)
-			to_chat(owner, span_warning("Your thrusters set seems to be broken!"))
+			to_chat(owner, span_warning(LANG("obj.abc59e02", null)))
 		return
 	if(SEND_SIGNAL(src, COMSIG_THRUSTER_ACTIVATED, owner) & THRUSTER_ACTIVATION_FAILED)
 		return
@@ -215,7 +216,7 @@
 	on = TRUE
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 	if(!silent)
-		to_chat(owner, span_notice("You turn your thrusters set on."))
+		to_chat(owner, span_notice(LANG("obj.9535104b", null)))
 	update_appearance()
 	owner.update_body_parts()
 
@@ -225,7 +226,7 @@
 	SEND_SIGNAL(src, COMSIG_THRUSTER_DEACTIVATED, owner)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/cybernetic)
 	if(!silent)
-		to_chat(owner, span_notice("You turn your thrusters set off."))
+		to_chat(owner, span_notice(LANG("obj.e8fa29b3", null)))
 	on = FALSE
 	update_appearance()
 	owner.update_body_parts()
@@ -300,7 +301,7 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	to_chat(owner, span_warning("You feel shearing pain as your body is crushed like a soda can!"))
+	to_chat(owner, span_warning(LANG("obj.2f5b166a", null)))
 	owner.apply_damage(20/severity, BRUTE, def_zone = BODY_ZONE_CHEST)
 
 /obj/item/organ/cyberimp/chest/spine/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
@@ -327,10 +328,10 @@
 		return NONE
 
 	if(core_applied)
-		user.balloon_alert(user, "core already installed!")
+		user.balloon_alert(user, LANG("obj.084484e9", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.balloon_alert(user, "core installed")
+	user.balloon_alert(user, LANG("obj.1a2673f9", null))
 	name = /obj/item/organ/cyberimp/chest/spine/atlas::name
 	desc = /obj/item/organ/cyberimp/chest/spine/atlas::desc
 	athletics_boost_multiplier = /obj/item/organ/cyberimp/chest/spine/atlas::athletics_boost_multiplier

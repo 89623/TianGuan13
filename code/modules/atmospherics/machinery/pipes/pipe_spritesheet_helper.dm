@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(generate_pipe_spritesheet, R_DEBUG, "Generate Pipe Spritesheet", "Generates the pipe spritesheets.", ADMIN_CATEGORY_DEBUG)
 	var/datum/pipe_icon_generator/generator = new
 	generator.Start()

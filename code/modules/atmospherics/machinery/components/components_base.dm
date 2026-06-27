@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // So much of atmospherics.dm was used solely by components, so separating this makes things all a lot cleaner.
 // On top of that, now people can add component-speciic procs/vars if they want!
 
@@ -240,7 +241,7 @@
 /obj/machinery/atmospherics/components/ui_status(mob/user, datum/ui_state/state)
 	if(allowed(user))
 		return ..()
-	to_chat(user, span_danger("Access denied."))
+	to_chat(user, span_danger(LANG("obj.077f9b52", null)))
 	return UI_CLOSE
 
 // Tool acts
@@ -253,7 +254,7 @@
  */
 /obj/machinery/atmospherics/components/proc/crowbar_deconstruction_act(mob/living/user, obj/item/tool, internal_pressure = 0)
 	if(!panel_open)
-		balloon_alert(user, "open panel!")
+		balloon_alert(user, LANG("obj.de78deee", null))
 		return ITEM_INTERACT_SUCCESS
 
 	var/unsafe_wrenching = FALSE
@@ -270,12 +271,12 @@
 	if(!filled_pipe)
 		return default_deconstruction_crowbar(user, tool)
 
-	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+	to_chat(user, span_notice(LANG("obj.84b25bb7", list(src))))
 
 	internal_pressure -= environment_air.return_pressure()
 
 	if(internal_pressure > 2 * ONE_ATMOSPHERE)
-		to_chat(user, span_warning("As you begin deconstructing \the [src] a gush of air blows in your face... maybe you should reconsider?"))
+		to_chat(user, span_warning(LANG("obj.85919bd0", list(src))))
 		unsafe_wrenching = TRUE
 
 	if(!do_after(user, 2 SECONDS, src))

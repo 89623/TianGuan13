@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/action/item_action/cult_dagger
 	name = "Draw Blood Rune"
@@ -18,7 +19,7 @@
 
 /datum/action/item_action/cult_dagger/do_effect(trigger_flags)
 	if(!isliving(owner))
-		to_chat(owner, span_warning("You lack the necessary living force for this action."))
+		to_chat(owner, span_warning(LANG("datum.2b7541c8", null)))
 		return FALSE
 
 	var/obj/item/target_item = target
@@ -34,7 +35,7 @@
 		return TRUE
 
 	if (living_owner.usable_hands <= 0)
-		to_chat(living_owner, span_warning("You don't have any usable hands!"))
+		to_chat(living_owner, span_warning(LANG("datum.4d70522f", null)))
 	else
-		to_chat(living_owner, span_warning("Your hands are full!"))
+		to_chat(living_owner, span_warning(LANG("datum.86b9ca92", null)))
 	return FALSE

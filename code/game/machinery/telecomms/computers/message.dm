@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 	The monitoring computer for the messaging server.
 	Lets you read PDA and request console messages.
@@ -59,7 +60,7 @@
 /obj/machinery/computer/message_monitor/screwdriver_act(mob/living/user, obj/item/I)
 	if(obj_flags & EMAGGED)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
-		to_chat(user, span_warning("It is too hot to mess with!"))
+		to_chat(user, span_warning(LANG("obj.b0e05ae9", null)))
 		return TRUE
 	return ..()
 
@@ -67,7 +68,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	if(isnull(linked_server))
-		to_chat(user, span_notice("A no server error appears on the screen."))
+		to_chat(user, span_notice(LANG("obj.d4bbcb1f", null)))
 		return FALSE
 
 	obj_flags |= EMAGGED
@@ -150,7 +151,7 @@
 				message_servers += message_server
 
 			if(length(message_servers) > 1)
-				set_linked_server(tgui_input_list(usr, "Please select a server", "Server Selection", message_servers))
+				set_linked_server(tgui_input_list(usr, LANG("obj.2868d9de", null), LANG("obj.ee71c6fc", null), message_servers))
 				if(linked_server)
 					notice_message = "NOTICE: Server selected."
 			else if(length(message_servers) == 1)
@@ -182,10 +183,10 @@
 			notice_message = "NOTICE: Logs cleared."
 			return TRUE
 		if("set_key")
-			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption", max_length = 16)
+			var/dkey = tgui_input_text(usr, LANG("obj.221a73c1", null), LANG("obj.5c4315f4", null), max_length = 16)
 			if(dkey && dkey != "")
 				if(linked_server.decryptkey == dkey)
-					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key", max_length = 16)
+					var/newkey = tgui_input_text(usr, LANG("obj.0182de4a", null), LANG("obj.5e440d3f", null), max_length = 16)
 					if(length(newkey) <= 3)
 						notice_message = "NOTICE: Decryption key too short!"
 					else if(newkey && newkey != "")
@@ -213,8 +214,8 @@
 				break
 			return TRUE
 		if("send_fake_message")
-			var/sender = tgui_input_text(usr, "What is the sender's name?", "Sender", max_length = MAX_NAME_LEN)
-			var/job = tgui_input_text(usr, "What is the sender's job?", "Job", max_length = 60)
+			var/sender = tgui_input_text(usr, LANG("obj.0f703c1b", null), LANG("obj.2bc502a9", null), max_length = MAX_NAME_LEN)
+			var/job = tgui_input_text(usr, LANG("obj.395d91a2", null), LANG("obj.b62160f3", null), max_length = 60)
 
 			var/recipient
 			var/list/tablet_to_messenger = list()
@@ -228,11 +229,11 @@
 				viewable_tablets += message_app.computer
 				tablet_to_messenger[message_app.computer] = message_app
 			if(length(viewable_tablets) > 0)
-				recipient = tgui_input_list(usr, "Select a tablet from the list", "Tablet Selection", viewable_tablets)
+				recipient = tgui_input_list(usr, LANG("obj.bc7f670a", null), LANG("obj.4b4318ed", null), viewable_tablets)
 			else
 				recipient = null
 
-			var/message = tgui_input_text(usr, "Please enter your message", "Message", max_length = MAX_MESSAGE_LEN)
+			var/message = tgui_input_text(usr, LANG("obj.212cc1ac", null), LANG("obj.affb7d7e", null), max_length = MAX_MESSAGE_LEN)
 			if(isnull(sender) || sender == "")
 				sender = "UNKNOWN"
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/bodypart/head
 	name = BODY_ZONE_HEAD
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
@@ -124,29 +125,29 @@
 	var/shown_name = get_face_name()
 	var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in src
 	if(!brain)
-		. += span_info("The brain has been removed from [src].")
+		. += span_info(LANG("obj.0aa19236", list(src)))
 	else if(brain.suicided || (brain.brainmob && HAS_TRAIT(brain.brainmob, TRAIT_SUICIDED)))
-		. += span_info("There's a miserable expression on [shown_name]'s face; they must have really hated life. There's no hope of recovery.")
+		. += span_info(LANG("obj.cc4b9630", list(shown_name)))
 	else if(brain.brainmob)
 		if(brain.brainmob?.health <= HEALTH_THRESHOLD_DEAD)
-			. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
+			. += span_info(LANG("obj.eabd7fc2", null))
 		if(brain.brainmob.key || brain.brainmob.get_ghost(FALSE, TRUE))
-			. += span_info("Its muscles are twitching slightly... It seems to have some life still in it.")
+			. += span_info(LANG("obj.97411915", null))
 		else
-			. += span_info("It's completely lifeless. Perhaps there'll be a chance for them later.")
+			. += span_info(LANG("obj.05dc92dc", null))
 	else if(brain?.decoy_override)
-		. += span_info("It's completely lifeless. Perhaps there'll be a chance for them later.")
+		. += span_info(LANG("obj.05dc92dc", null))
 	else
-		. += span_info("It's completely lifeless.")
+		. += span_info(LANG("obj.6072472a", null))
 
 	if(!(locate(/obj/item/organ/eyes) in src))
-		. += span_info("[shown_name]'s eyes have been removed.")
+		. += span_info(LANG("obj.bb710eab", list(shown_name)))
 
 	if(!(locate(/obj/item/organ/ears) in src))
-		. += span_info("[shown_name]'s ears have been removed.")
+		. += span_info(LANG("obj.a7327ecc", list(shown_name)))
 
 	if(!(locate(/obj/item/organ/tongue) in src))
-		. += span_info("[shown_name]'s tongue has been removed.")
+		. += span_info(LANG("obj.31b0f39d", list(shown_name)))
 
 /obj/item/bodypart/head/proc/get_face_name()
 	if (HAS_TRAIT(src, TRAIT_DISFIGURED))
@@ -164,10 +165,10 @@
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
 	if(user)
-		user.visible_message(span_warning("[user] saws [src] open and pulls out a brain!"), span_notice("You saw [src] open and pull out a brain."))
+		user.visible_message(span_warning(LANG("obj.f297a76c", list(user, src))), span_notice(LANG("obj.6c7d5582", list(src))))
 	var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in src
 	if(brain && violent_removal && prob(90)) //ghetto surgery can damage the brain.
-		to_chat(user, span_warning("[brain] was damaged in the process!"))
+		to_chat(user, span_warning(LANG("obj.b4847c81", list(brain))))
 		brain.set_organ_damage(brain.maxHealth)
 	return ..()
 

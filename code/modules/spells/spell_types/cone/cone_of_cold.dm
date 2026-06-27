@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/cone/staggered/cone_of_cold
 	name = "Cone of Cold"
 	desc = "Shoots out a freezing cone in front of you."
@@ -55,7 +56,7 @@
 	if(on_freeze_brute_damage || on_freeze_burn_damage)
 		target_mob.take_overall_damage(on_freeze_brute_damage, on_freeze_burn_damage)
 
-	to_chat(target_mob, span_userdanger("You feel a bitter cold!"))
+	to_chat(target_mob, span_userdanger(LANG("datum.428253b5", null)))
 
 /datum/action/cooldown/spell/cone/staggered/cone_of_cold/do_obj_cone_effect(obj/target_obj, atom/caster, level)
 	if(unfreeze_object_duration <= 0 SECONDS) // 0 duration = don't apply a freeze

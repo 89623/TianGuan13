@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ROACH_ORGAN_COLOR "#7c4200"
 // Yeah i'm lazy and we don't use any of the other color slots
 #define ROACH_COLORS ROACH_ORGAN_COLOR + ROACH_ORGAN_COLOR + ROACH_ORGAN_COLOR
@@ -121,7 +122,7 @@
 		return
 
 	if(COOLDOWN_FINISHED(src, harden_effect_cd))
-		source.visible_message(span_warning("[source]'s back hardens against the blow!"))
+		source.visible_message(span_warning(LANG("obj.c6313bf9", list(source))))
 		playsound(source, 'sound/effects/constructform.ogg', 25, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
 	COOLDOWN_START(src, harden_effect_cd, 5 SECONDS) // Cooldown resets EVERY time we get hit

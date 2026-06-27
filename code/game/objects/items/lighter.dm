@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/lighter
 	name = "\improper Zippo lighter"
 	desc = "The zippo."
@@ -71,9 +72,9 @@
 /obj/item/lighter/examine(mob/user)
 	. = ..()
 	if(get_fuel() <= 0)
-		. += span_warning("It is out of lighter fluid! Refill it with welder fuel.")
+		. += span_warning(LANG("obj.6b58542f", null))
 	else
-		. += span_notice("It contains [get_fuel()] units of fuel out of [maximum_fuel].")
+		. += span_notice(LANG("obj.f88f2881", list(get_fuel(), maximum_fuel)))
 
 /obj/item/lighter/proc/light_updated(datum/source)
 	SIGNAL_HANDLER
@@ -81,7 +82,7 @@
 
 /// Destroy the lighter when it's shot by a bullet
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
-	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
+	victim.visible_message(span_warning(LANG("obj.c449404a", list(bullet, victim))))
 	playsound(victim, SFX_RICOCHET, 100, TRUE)
 	new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 	do_sparks(1, TRUE, src)
@@ -95,11 +96,11 @@
 
 /obj/item/lighter/suicide_act(mob/living/carbon/user)
 	if (lit)
-		user.visible_message(span_suicide("[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.eb8d55fc", list(user, src, user.p_their(), user.p_theyre()))))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		return FIRELOSS
 	else
-		user.visible_message(span_suicide("[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.670b53fb", list(user, user.p_them(), src, user.p_theyre()))))
 		return BRUTELOSS
 
 /obj/item/lighter/update_icon_state()
@@ -164,13 +165,13 @@
 		set_lit(FALSE)
 		if(fancy)
 			user.visible_message(
-				span_notice("You hear a quiet click, as [user] shuts off [src] without even looking at what [user.p_theyre()] doing. Wow."),
-				span_notice("You quietly shut off [src] without even looking at what you're doing. Wow.")
+				span_notice(LANG("obj.75aa0d4d", list(user, src, user.p_theyre()))),
+				span_notice(LANG("obj.d5fe5829", list(src)))
 			)
 		else
 			user.visible_message(
-				span_notice("[user] quietly shuts off [src]."),
-				span_notice("You quietly shut off [src].")
+				span_notice(LANG("obj.50bfc32f", list(user, src))),
+				span_notice(LANG("obj.35578345", list(src)))
 			)
 		return
 
@@ -181,8 +182,8 @@
 
 	if(fancy)
 		user.visible_message(
-			span_notice("Without even breaking stride, [user] flips open and lights [src] in one smooth movement."),
-			span_notice("Without even breaking stride, you flip open and light [src] in one smooth movement.")
+			span_notice(LANG("obj.f830b519", list(user, src))),
+			span_notice(LANG("obj.1c089d29", list(src)))
 		)
 		return
 
@@ -199,16 +200,16 @@
 
 	if(hand_protected || prob(75))
 		user.visible_message(
-			span_notice("After a few attempts, [user] manages to light [src]."),
-			span_notice("After a few attempts, you manage to light [src].")
+			span_notice(LANG("obj.dccc6c71", list(user, src))),
+			span_notice(LANG("obj.223eb862", list(src)))
 		)
 		return
 
 	var/hitzone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
 	user.apply_damage(5, BURN, hitzone)
 	user.visible_message(
-		span_warning("After a few attempts, [user] manages to light [src] - however, [user.p_they()] burn[user.p_s()] [user.p_their()] finger in the process."),
-		span_warning("You burn yourself while lighting the lighter!")
+		span_warning(LANG("obj.107582e4", list(user, src, user.p_they(), user.p_s(), user.p_their()))),
+		span_warning(LANG("obj.5196a9d7", null))
 	)
 	user.add_mood_event("burnt_thumb", /datum/mood_event/burnt_thumb)
 
@@ -223,7 +224,7 @@
 		return ..()
 
 	if(cig.lit)
-		to_chat(user, span_warning("\The [cig] is already lit!"))
+		to_chat(user, span_warning(LANG("obj.79fd2c4b", list(cig))))
 	if(target_mob == user)
 		cig.attackby(src, user)
 		return
@@ -236,10 +237,10 @@
 ///Checks if the lighter is able to perform a welding task.
 /obj/item/lighter/tool_use_check(mob/living/user, amount, heat_required)
 	if(!lit)
-		to_chat(user, span_warning("[src] has to be on to complete this task!"))
+		to_chat(user, span_warning(LANG("obj.5f9e6829", list(src))))
 		return FALSE
 	if(get_fuel() < amount)
-		to_chat(user, span_warning("You need more welding fuel to complete this task!"))
+		to_chat(user, span_warning(LANG("obj.ff6b84ef", null)))
 		return FALSE
 	if(heat < heat_required)
 		return FALSE

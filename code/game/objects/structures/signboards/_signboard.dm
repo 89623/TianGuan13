@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define INVESTIGATE_SIGNBOARD "signboard"
 #define SIGNBOARD_WIDTH (ICON_SIZE_X * 3.5)
 #define SIGNBOARD_HEIGHT (ICON_SIZE_Y * 2.5)
@@ -54,16 +55,16 @@
 /obj/structure/signboard/examine(mob/user)
 	. = ..()
 	if(!edit_by_hand)
-		. += span_notice("You can write on the sign with a <b>pen.</b>")
+		. += span_notice(LANG("obj.4ef44e90", null))
 	if(anchored)
-		. += span_notice("It's secured to the floor, you could use a <b>wrench</b> to unsecure and move it.")
+		. += span_notice(LANG("obj.2a200668", null))
 	else
-		. += span_notice("It's unsecured, you could use a <b>wrench</b> to secure it in place.")
+		. += span_notice(LANG("obj.56abb01a", null))
 	if(sign_text)
-		. += span_boldnotice("\nIt currently displays the following:")
+		. += span_boldnotice(LANG("obj.c14a8915", null))
 		. += span_info(html_encode(sign_text))
 	else
-		. += span_notice("\nIt's blank.")
+		. += span_notice(LANG("obj.a6e0fef8", null))
 
 /obj/structure/signboard/update_icon_state()
 	. = ..()
@@ -88,7 +89,7 @@
 	if(.)
 		return
 	if(!edit_by_hand && !user.is_holding_item_of_type(/obj/item/pen))
-		balloon_alert(user, "need a pen!")
+		balloon_alert(user, LANG("obj.0b2656c3", null))
 		return TRUE
 	if(try_set_text(user))
 		return TRUE
@@ -116,12 +117,12 @@
 		return FALSE
 	var/list/soft_filter_result = CAN_BYPASS_FILTER(user) ? null : is_soft_ic_filtered(new_text)
 	if(soft_filter_result)
-		if(tgui_alert(user, "Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, LANG("obj.6308a68e", list(soft_filter_result[CHAT_FILTER_INDEX_WORD], soft_filter_result[CHAT_FILTER_INDEX_REASON])), LANG("obj.b0fe106c", null), list("Yes", "No")) != "Yes")
 			return FALSE
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" when writing to the sign at [ADMIN_VERBOSEJMP(src)], they may be using a disallowed term. Sign text: \"[html_encode(new_text)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" when writing to the sign at [loc_name(src)], they may be using a disallowed term. Sign text: \"[new_text]\"")
 	if(set_text(new_text))
-		balloon_alert(user, "set text")
+		balloon_alert(user, LANG("obj.9ec616fe", null))
 		investigate_log("([key_name(user)]) set text to \"[sign_text || "(none)"]\"", INVESTIGATE_SIGNBOARD)
 		return TRUE
 
@@ -130,12 +131,12 @@
 	if(!sign_text || !can_interact(user) || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	if(!edit_by_hand && !user.is_holding_item_of_type(/obj/item/pen))
-		balloon_alert(user, "need a pen!")
+		balloon_alert(user, LANG("obj.0b2656c3", null))
 		return
 	if(check_locked(user))
 		return
 	if(set_text(null))
-		balloon_alert(user, "cleared text")
+		balloon_alert(user, LANG("obj.3d7a9b0e", null))
 		investigate_log("([key_name(user)]) cleared the text", INVESTIGATE_SIGNBOARD)
 
 /obj/structure/signboard/wrench_act(mob/living/user, obj/item/tool)
@@ -161,7 +162,7 @@
 /obj/structure/signboard/proc/check_locked(mob/user, silent = FALSE)
 	. = is_locked(user)
 	if(. && !silent)
-		balloon_alert(user, "locked!")
+		balloon_alert(user, LANG("obj.5d71bae2", null))
 
 /obj/structure/signboard/proc/should_display_text()
 	if(QDELETED(src) || !isturf(loc) || !sign_text)

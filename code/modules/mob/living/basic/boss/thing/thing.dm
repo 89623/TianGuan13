@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PHASEREGEN_FILTER "healing_glow"
 #define RUIN_QUEUE "the_thing_depleter"
 /mob/living/basic/boss/thing
@@ -106,8 +107,8 @@
 		return_to_spawnloc()
 		return
 	add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
-	balloon_alert_to_viewers("invulnerable! overload the machines!")
-	visible_message(span_danger("[src] drops to the ground staggered, unable to keep up with injuries!"))
+	balloon_alert_to_viewers(LANG("mob.027cd1d2", null))
+	visible_message(span_danger(LANG("mob.3b7d6495", list(src))))
 	phase_invulnerability_timer = addtimer(CALLBACK(src, PROC_REF(phase_too_slow)), phase_invul_time, TIMER_STOPPABLE|TIMER_UNIQUE)
 	add_filter(PHASEREGEN_FILTER, 2, list("type" = "outline", "color" = COLOR_PALE_GREEN, "alpha" = 0, "size" = 1))
 	var/filter = get_filter(PHASEREGEN_FILTER)
@@ -142,7 +143,7 @@
 	for(var/turf/open/target in RANGE_TURFS(1, loc))
 		new /obj/effect/temp_visual/mook_dust(target)
 	playsound(loc, 'sound/effects/meteorimpact.ogg', 40, TRUE)
-	visible_message(span_danger("[src] retreats through the ground back to where it came from!"))
+	visible_message(span_danger(LANG("mob.dbad92f9", list(src))))
 	forceMove(spawn_loc)
 
 /// The Thing is successfully hit by incendiary fire while downed by damage (alternatively takes too much damage if not ruin spawned)
@@ -166,8 +167,8 @@
 /mob/living/basic/boss/thing/proc/phase_too_slow()
 	phase_invulnerability_timer = null
 	remove_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED), MEGAFAUNA_TRAIT)
-	balloon_alert_to_viewers("recovers!")
-	visible_message(span_danger("[src] recovers from the damage! Too slow!"))
+	balloon_alert_to_viewers(LANG("mob.ec6aa788", null))
+	visible_message(span_danger(LANG("mob.9efb24cd", list(src))))
 	adjust_health(-(maxHealth/3) * 0.5) //half of a phase (which is a third of maxhealth)
 	var/filter = get_filter(PHASEREGEN_FILTER)
 	if(!isnull(filter))
@@ -270,7 +271,7 @@
 		return
 	if(!user.can_perform_action(src) || !user.can_interact_with(src))
 		return
-	balloon_alert_to_viewers("overloading...")
+	balloon_alert_to_viewers(LANG("obj.e40cb529", null))
 	icon_state = "thingdepleter_overriding"
 	if(!do_after(user, 1 SECONDS, target = src))
 		if(density)

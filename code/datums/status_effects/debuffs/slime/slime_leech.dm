@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /atom/movable/screen/alert/status_effect/slime_leech
 	name = "Covered in Slime"
 	desc = "A slime is draining your very lifeforce! Remove it by hand, by hitting it, or by water."
@@ -50,7 +51,7 @@
 
 	if(owner.stat == DEAD) // our victim died
 		if(our_slime.client)
-			to_chat(our_slime, span_info("This subject does not have a strong enough life energy anymore..."))
+			to_chat(our_slime, span_info(LANG("datum.480ab74c", null)))
 
 		SEND_SIGNAL(owner, COMSIG_SLIME_DRAINED, our_slime)
 
@@ -75,7 +76,7 @@
 			owner.updatehealth()
 
 	if(totaldamage >= 0) // adjust_brute_loss() returns a negative value on successful damage adjustment
-		our_slime.balloon_alert(our_slime, "not food!")
+		our_slime.balloon_alert(our_slime, LANG("datum.fb932b9b", null))
 		our_slime.stop_feeding()
 		return
 

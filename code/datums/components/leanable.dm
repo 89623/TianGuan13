@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Things with this component can be leaned onto
 /datum/component/leanable
 	/// How much will mobs that lean onto this object be offset
@@ -96,8 +97,8 @@
 	add_offsets(LEANING_TRAIT, x_add = new_x, y_add = new_y)
 	add_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
 	visible_message(
-		span_notice("[src] leans against [lean_target]."),
-		span_notice("You lean against [lean_target]."),
+		span_notice(LANG("mob.9e729369", list(src, lean_target))),
+		span_notice(LANG("mob.85647b7e", list(lean_target))),
 	)
 	RegisterSignals(src, list(
 		COMSIG_MOB_CLIENT_PRE_MOVE,
@@ -116,7 +117,7 @@
 	// Make sure we unregister signal handlers and reset animation
 	stop_leaning()
 	// -1000 aura
-	visible_message(span_notice("[src] falls flat on [p_their()] face from losing [p_their()] balance!"), span_warning("You fall suddenly as the object you were leaning on vanishes from contact with you!"))
+	visible_message(span_notice(LANG("mob.3b8bce5e", list(src, p_their(), p_their()))), span_warning(LANG("mob.37932786", null)))
 	Knockdown(3 SECONDS)
 
 /mob/living/proc/stop_leaning()

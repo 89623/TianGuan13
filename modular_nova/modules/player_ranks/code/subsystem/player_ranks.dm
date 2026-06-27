@@ -285,7 +285,7 @@ SUBSYSTEM_DEF(player_ranks)
 
 	if(!admin_holder.check_for_rights(R_PERMISSIONS))
 		if(is_admin_client)
-			to_chat(admin, span_warning("You do not possess the permissions to do this."))
+			to_chat(admin, span_warning(LANG("datum.8063b60d", null)))
 
 		return FALSE
 
@@ -304,7 +304,7 @@ SUBSYSTEM_DEF(player_ranks)
 
 	if(already_in_config[ckey])
 		if(is_admin_client)
-			to_chat(admin, span_warning("\"[ckey]\" is already a [rank_title]!"))
+			to_chat(admin, span_warning(LANG("datum.d962eb81", list(ckey, rank_title))))
 
 		return FALSE
 
@@ -376,7 +376,7 @@ SUBSYSTEM_DEF(player_ranks)
 
 	if(!admin_holder.check_for_rights(R_PERMISSIONS))
 		if(is_admin_client)
-			to_chat(admin, span_warning("You do not possess the permissions to do this."))
+			to_chat(admin, span_warning(LANG("datum.8063b60d", null)))
 
 		return FALSE
 
@@ -440,7 +440,7 @@ SUBSYSTEM_DEF(player_ranks)
 		return
 
 	if(!check_rights_for(admin, R_PERMISSIONS | R_DEBUG | R_SERVER))
-		to_chat(admin, span_warning("You do not possess the permissions to do this."))
+		to_chat(admin, span_warning(LANG("datum.8063b60d", null)))
 		return
 
 	var/datum/player_rank_controller/controller = get_controller_for_group(rank_title)

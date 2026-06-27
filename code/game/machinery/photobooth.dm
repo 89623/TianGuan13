@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Photobooth
  * A machine used to change occupant's security record photos, working similarly to a
@@ -47,7 +48,7 @@
 /obj/machinery/photobooth/interact(mob/living/user, list/modifiers)
 	. = ..()
 	if(taking_pictures)
-		balloon_alert(user, "machine busy!")
+		balloon_alert(user, LANG("obj.60e90068", null))
 		return
 	if(state_open)
 		close_machine()
@@ -56,13 +57,13 @@
 
 /obj/machinery/photobooth/attack_hand_secondary(mob/user, list/modifiers)
 	if(taking_pictures)
-		balloon_alert(user, "machine busy!")
+		balloon_alert(user, LANG("obj.60e90068", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(occupant)
 		if(allowed(user))
 			start_taking_pictures()
 		else
-			balloon_alert(user, "access denied!")
+			balloon_alert(user, LANG("obj.1bd3ceeb", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
@@ -78,7 +79,7 @@
 
 /obj/machinery/photobooth/close_machine(mob/user, density_to_set = TRUE)
 	if(panel_open)
-		balloon_alert(user, "close panel first!")
+		balloon_alert(user, LANG("obj.5ddfc4f0", null))
 		return
 	playsound(src, 'sound/effects/curtain.ogg', 50, TRUE)
 	return ..()
@@ -112,7 +113,7 @@
 		return FALSE
 	req_access = list() //in case someone sets this to something
 	req_one_access = list()
-	balloon_alert(user, "beeps softly")
+	balloon_alert(user, LANG("obj.7c449727", null))
 	obj_flags |= EMAGGED
 	return TRUE
 
@@ -152,9 +153,9 @@
 /obj/machinery/photobooth/proc/finish_taking_pictures()
 	taking_pictures = FALSE
 	if(!GLOB.manifest.change_pictures(occupant.name, occupant, add_height_chart = add_height_chart))
-		balloon_alert(occupant, "record not found!")
+		balloon_alert(occupant, LANG("obj.36ff85d9", null))
 		return
-	balloon_alert(occupant, "records updated")
+	balloon_alert(occupant, LANG("obj.868fc296", null))
 	open_machine()
 
 ///Mimicing the camera, gives a flash effect by turning the light on and calling flash_end.
@@ -188,7 +189,7 @@
 	controller.booth_machine_ref = WEAKREF(tool.buffer)
 	id = null
 	controller.id = null
-	balloon_alert(user, "linked to [tool.buffer]")
+	balloon_alert(user, LANG("obj.ab0bd2ad", list(tool.buffer)))
 
 /obj/item/assembly/control/photobooth_control
 	name = "photobooth controller"
@@ -219,6 +220,6 @@
 	if(!machine)
 		return
 	if(machine.taking_pictures)
-		balloon_alert(activator, "machine busy!")
+		balloon_alert(activator, LANG("obj.60e90068", null))
 		return
 	machine.start_taking_pictures()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/disk/surgery
 	name = "surgery procedure disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
@@ -28,10 +29,8 @@
 
 /obj/item/disk/surgery/advanced_plastic_surgery/examine(mob/user)
 	. = ..()
-	. += span_info("Unlocks the <b>[/datum/surgery_operation/limb/add_plastic::name]</b> surgical operation.")
-	. += span_info("Performing this before a <i>[/datum/surgery_operation/limb/plastic_surgery::name]</i> upgrades the operation, \
-		allowing you to copy the appearance of any individual - \
-		provided you have a photo of them in your offhand during the surgery.")
+	. += span_info(LANG("obj.372641a2", list(/datum/surgery_operation/limb/add_plastic::name)))
+	. += span_info(LANG("obj.f9b0b03c", list(/datum/surgery_operation/limb/plastic_surgery::name)))
 
 /obj/item/disk/surgery/advanced_plastic_surgery/Initialize(mapload)
 	. = ..()

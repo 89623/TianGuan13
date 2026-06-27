@@ -1,10 +1,11 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // VENTCRAWLING
 
 /mob/living/proc/notify_ventcrawler_on_login()
 	var/ventcrawler = HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE)
 	if(!ventcrawler)
 		return
-	to_chat(src, span_notice("You can ventcrawl! Use alt+click on vents to quickly travel about the station."))
+	to_chat(src, span_notice(LANG("mob.87c6f8a0", null)))
 
 /mob/living/carbon/human/notify_ventcrawler_on_login()
 	if(!ismonkey(src))
@@ -27,40 +28,40 @@
 		return
 	if(stat)
 		if(provide_feedback)
-			to_chat(src, span_warning("You must be conscious to do this!"))
+			to_chat(src, span_warning(LANG("mob.ca01b830", null)))
 		return
 	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 		if(provide_feedback)
-			to_chat(src, span_warning("You currently can't move into the vent!"))
+			to_chat(src, span_warning(LANG("mob.25117c9f", null)))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		if(provide_feedback)
-			to_chat(src, span_warning("You need to be able to use your hands to ventcrawl!"))
+			to_chat(src, span_warning(LANG("mob.de958561", null)))
 		return
 	if(has_buckled_mobs())
 		if(provide_feedback)
-			to_chat(src, span_warning("You can't vent crawl with other creatures on you!"))
+			to_chat(src, span_warning(LANG("mob.bdd08cd2", null)))
 		return
 	if(buckled)
 		if(provide_feedback)
-			to_chat(src, span_warning("You can't vent crawl while buckled!"))
+			to_chat(src, span_warning(LANG("mob.aae96c56", null)))
 		return
 	if(iscarbon(src) && required_nudity)
 		if(length(get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD)))
 			if(provide_feedback)
-				to_chat(src, span_warning("You can't crawl around in the ventilation ducts with items!"))
+				to_chat(src, span_warning(LANG("mob.1448da7b", null)))
 			return
 	if(ventcrawl_target.welded)
 		if(provide_feedback)
 			// Add cooldown to prevent welded vent message spam during movement
 			if(COOLDOWN_FINISHED(src, welded_vent_message_cd))
-				to_chat(src, span_warning("You can't crawl around a welded vent!"))
+				to_chat(src, span_warning(LANG("mob.54b27703", null)))
 				COOLDOWN_START(src, welded_vent_message_cd, 2 SECONDS)
 		return
 
 	if(!(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED))
 		if(provide_feedback)
-			to_chat(src, span_warning("You can't enter this vent!"))
+			to_chat(src, span_warning(LANG("mob.7e4f0f20", null)))
 		return
 
 	return TRUE
@@ -74,15 +75,15 @@
 
 	//Handle the exit here
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
-		to_chat(src, span_notice("You begin climbing out from the ventilation system..."))
+		to_chat(src, span_notice(LANG("mob.a95a2409", null)))
 		if(has_client && isnull(client))
 			return
 		if(!do_after(src, 1 SECONDS, target = ventcrawl_target))
 			return
 		if(ventcrawl_target.welded) // in case it got welded during our sleep
-			to_chat(src, span_warning("You can't crawl around a welded vent!"))
+			to_chat(src, span_warning(LANG("mob.54b27703", null)))
 			return
-		visible_message(span_notice("[src] scrambles out from the ventilation ducts!"), span_notice("You scramble out from the ventilation ducts."))
+		visible_message(span_notice(LANG("mob.621d41a9", list(src))), span_notice(LANG("mob.e27f2acf", null)))
 		forceMove(ventcrawl_target.loc)
 		REMOVE_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 		update_pipe_vision()
@@ -92,24 +93,24 @@
 		var/datum/pipeline/vent_parent = ventcrawl_target.parents[1]
 		if(vent_parent && (vent_parent.members.len || vent_parent.other_atmos_machines))
 			ventcrawl_target.flick_overlay_static(image('icons/effects/vent_indicator.dmi', "arrow", ABOVE_MOB_LAYER, dir = get_dir(src.loc, ventcrawl_target.loc)), 2 SECONDS)
-			visible_message(span_notice("[src] begins climbing into the ventilation system...") ,span_notice("You begin climbing into the ventilation system..."))
+			visible_message(span_notice(LANG("mob.e94e3d01", list(src))) ,span_notice(LANG("mob.0628261f", null)))
 			if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target, extra_checks = CALLBACK(src, PROC_REF(can_enter_vent), ventcrawl_target)))
 				return
 			if(has_client && isnull(client))
 				return
 			if(ventcrawl_target.welded) // in case it got welded during our sleep
-				to_chat(src, span_warning("You can't crawl around a welded vent!"))
+				to_chat(src, span_warning(LANG("mob.54b27703", null)))
 				return
 			ventcrawl_target.flick_overlay_static(image('icons/effects/vent_indicator.dmi', "insert", ABOVE_MOB_LAYER), 1 SECONDS)
-			visible_message(span_notice("[src] scrambles into the ventilation ducts!"), span_notice("You climb into the ventilation ducts."))
+			visible_message(span_notice(LANG("mob.77cf54fb", list(src))), span_notice(LANG("mob.d9bded7a", null)))
 			move_into_vent(ventcrawl_target)
 		else
-			to_chat(src, span_warning("This ventilation duct is not connected to anything!"))
+			to_chat(src, span_warning(LANG("mob.0e2c3d35", null)))
 
 /mob/living/basic/slime/can_enter_vent(obj/machinery/atmospherics/components/ventcrawl_target, provide_feedback = TRUE)
 	if(buckled)
 		if(provide_feedback)
-			to_chat(src, span_warning("You can't vent crawl while feeding!"))
+			to_chat(src, span_warning(LANG("mob.8a7eb26e", null)))
 		return
 	return ..()
 

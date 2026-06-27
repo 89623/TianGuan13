@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Maximum amount of items a conveyor can move at once.
 #define MAX_CONVEYOR_ITEMS_MOVE 30
 /// Conveyor is currently off.
@@ -73,13 +74,13 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/examine(mob/user)
 	. = ..()
 	if(inverted)
-		. += span_notice("It is currently set to go in reverse.")
-	. += "\nLeft-click with a <b>wrench</b> to rotate clockwise."
-	. += "Right-click with a <b>wrench</b> to rotate counterclockwise."
-	. += "Left-click with a <b>screwdriver</b> to invert its direction."
-	. += "Right-click with a <b>screwdriver</b> to flip its belt around."
-	. += "Left-click with a <b>multitool</b> to toggle whether this conveyor receives power via cable. Toggling connects and disconnects."
-	. += "Using another <b>conveyor belt assembly</b> on this will place a <b>new conveyor belt<b> in the direction this one is pointing."
+		. += span_notice(LANG("obj.45908b93", null))
+	. += LANG("obj.abecaddd", null)
+	. += LANG("obj.66a80030", null)
+	. += LANG("obj.1d6b1b93", null)
+	. += LANG("obj.63e02c7c", null)
+	. += LANG("obj.367cae54", null)
+	. += LANG("obj.9e0dbde3", null)
 
 /obj/machinery/conveyor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -295,8 +296,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
-		user.visible_message(span_notice("[user] struggles to pry up [src] with [attacking_item]."), \
-		span_notice("You struggle to pry up [src] with [attacking_item]."))
+		user.visible_message(span_notice(LANG("obj.dbc1657a", list(user, src, attacking_item))), \
+		span_notice(LANG("obj.687670b4", list(src, attacking_item))))
 
 		if(!attacking_item.use_tool(src, user, 4 SECONDS, volume = 40))
 			return
@@ -305,19 +306,19 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		if(!QDELETED(belt_item)) //God I hate stacks
 			transfer_fingerprints_to(belt_item)
 
-		to_chat(user, span_notice("You remove [src]."))
+		to_chat(user, span_notice(LANG("obj.1973523e", list(src))))
 		qdel(src)
 
 	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		attacking_item.play_tool_sound(src)
 		setDir(turn(dir, -45))
-		to_chat(user, span_notice("You rotate [src]."))
+		to_chat(user, span_notice(LANG("obj.21b2b6d1", list(src))))
 
 	else if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		attacking_item.play_tool_sound(src)
 		inverted = !inverted
 		update_move_direction()
-		to_chat(user, span_notice("You set [src]'s direction [inverted ? "backwards" : "back to default"]."))
+		to_chat(user, span_notice(LANG("obj.e0daf2ad", list(src, inverted ? "backwards" : "back to default"))))
 	else if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
 		attacking_item.play_tool_sound(src)
 		wire_mode = !wire_mode
@@ -327,7 +328,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			START_PROCESSING(SSmachines, src)
 		else
 			STOP_PROCESSING(SSmachines, src)
-		to_chat(user, span_notice("You set [src]'s wire mode [wire_mode ? "on" : "off"]."))
+		to_chat(user, span_notice(LANG("obj.a8e10186", list(src, wire_mode ? "on" : "off"))))
 	else if(istype(attacking_item, /obj/item/stack/conveyor))
 		// We should place a new conveyor belt machine on the output turf the conveyor is pointing to.
 		var/turf/target_turf = get_step(get_turf(src), forwards)
@@ -351,12 +352,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		attacking_item.play_tool_sound(src)
 		flipped = !flipped
 		update_move_direction()
-		to_chat(user, span_notice("You flip [src]'s belt [flipped ? "around" : "back to normal"]."))
+		to_chat(user, span_notice(LANG("obj.1de269a8", list(src, flipped ? "around" : "back to normal"))))
 
 	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		attacking_item.play_tool_sound(src)
 		setDir(turn(dir, 45))
-		to_chat(user, span_notice("You rotate [src]."))
+		to_chat(user, span_notice(LANG("obj.21b2b6d1", list(src))))
 
 	else if(!user.combat_mode)
 		user.transferItemToLoc(attacking_item, drop_location())
@@ -554,11 +555,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return TRUE
 
 /obj/machinery/conveyor_switch/multitool_act(mob/living/user, obj/item/I)
-	var/input_speed = tgui_input_number(user, "Set the speed of the conveyor belts in seconds", "Speed", conveyor_speed, 20, 0.2, round_value = FALSE)
+	var/input_speed = tgui_input_number(user, LANG("obj.5151cbea", null), LANG("obj.3e88e97b", null), conveyor_speed, 20, 0.2, round_value = FALSE)
 	if(!input_speed || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	conveyor_speed = input_speed
-	to_chat(user, span_notice("You change the time between moves to [input_speed] seconds."))
+	to_chat(user, span_notice(LANG("obj.35326132", list(input_speed))))
 	update_linked_conveyors()
 	return TRUE
 
@@ -567,28 +568,28 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/obj/item/conveyor_switch_construct/switch_construct = new/obj/item/conveyor_switch_construct(src.loc)
 	switch_construct.id = id
 	transfer_fingerprints_to(switch_construct)
-	to_chat(user, span_notice("You detach [src]."))
+	to_chat(user, span_notice(LANG("obj.622ea388", list(src))))
 	qdel(src)
 	return TRUE
 
 /obj/machinery/conveyor_switch/screwdriver_act(mob/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
 	oneway = !oneway
-	to_chat(user, span_notice("You set [src] to [oneway ? "one way" : "default"] configuration."))
+	to_chat(user, span_notice(LANG("obj.27da8dc9", list(src, oneway ? "one way" : "default"))))
 	return TRUE
 
 /obj/machinery/conveyor_switch/wrench_act(mob/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
 	invert_icon = !invert_icon
 	update_appearance()
-	to_chat(user, span_notice("You set [src] to [invert_icon ? "inverted": "normal"] position."))
+	to_chat(user, span_notice(LANG("obj.02b15ed8", list(src, invert_icon ? "inverted": "normal"))))
 	return TRUE
 
 /obj/machinery/conveyor_switch/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] is set to [oneway ? "one way" : "default"] configuration. It can be changed with a <b>screwdriver</b>.")
-	. += span_notice("[src] is set to [invert_icon ? "inverted": "normal"] position. It can be rotated with a <b>wrench</b>.")
-	. += span_notice("[src] is set to move [conveyor_speed] seconds per belt. It can be changed with a <b>multitool</b>.")
+	. += span_notice(LANG("obj.b83b1035", list(src, oneway ? "one way" : "default")))
+	. += span_notice(LANG("obj.02fb7998", list(src, invert_icon ? "inverted": "normal")))
+	. += span_notice(LANG("obj.d76e7e17", list(src, conveyor_speed)))
 
 /obj/machinery/conveyor_switch/oneway
 	icon_state = "conveyor_switch_oneway"
@@ -616,7 +617,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/conveyor_switch_construct/attack_self(mob/user)
 	for(var/obj/item/stack/conveyor/belt in view())
 		belt.id = id
-	to_chat(user, span_notice("You have linked all nearby conveyor belt assemblies to this switch."))
+	to_chat(user, span_notice(LANG("obj.23b38a8e", null)))
 
 /obj/item/conveyor_switch_construct/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isfloorturf(interacting_with))
@@ -628,7 +629,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			found = TRUE
 			break
 	if(!found)
-		to_chat(user, "[icon2html(src, user)]" + span_notice("The conveyor switch did not detect any linked conveyor belts in range."))
+		to_chat(user, LANG("obj.6e17bbe8", list(icon2html(src, user))) + span_notice("The conveyor switch did not detect any linked conveyor belts in range."))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/machinery/conveyor_switch/built_switch = new/obj/machinery/conveyor_switch(interacting_with, id)
 	transfer_fingerprints_to(built_switch)
@@ -656,7 +657,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return NONE
 	var/belt_dir = get_dir(interacting_with, user)
 	if(interacting_with == user.loc)
-		to_chat(user, span_warning("You cannot place a conveyor belt under yourself!"))
+		to_chat(user, span_warning(LANG("obj.15ce6bf7", null)))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/machinery/conveyor/belt = new/obj/machinery/conveyor(interacting_with, belt_dir, id)
 	transfer_fingerprints_to(belt)
@@ -666,7 +667,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/stack/conveyor/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	if(istype(item_used, /obj/item/conveyor_switch_construct))
-		to_chat(user, span_notice("You link the switch to the conveyor belt assembly."))
+		to_chat(user, span_notice(LANG("obj.f8cd47e9", null)))
 		var/obj/item/conveyor_switch_construct/switch_construct = item_used
 		id = switch_construct.id
 
@@ -675,7 +676,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/stack/conveyor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a conveyor switch assembly on this before placing to connect to a lever.")
+	. += span_notice(LANG("obj.93f96690", null))
 
 /obj/item/stack/conveyor/use(used, transfer, check)
 	. = ..()

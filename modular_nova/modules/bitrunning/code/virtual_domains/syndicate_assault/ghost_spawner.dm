@@ -47,8 +47,8 @@
 /datum/action/cooldown/spell/home_network/cast(mob/living/cast_on)
 	. = ..()
 	cast_on.visible_message(
-		span_warning("Numerous loading bars and nano-scale hexagonal energy shields briefly cover [cast_on]!"),
-		span_notice("You protect yourself from foreign intrusion!"),
+		span_warning(LANG("datum.1ca36740", list(cast_on))),
+		span_notice(LANG("datum.6c75bf49", null)),
 	)
 	ADD_TRAIT(cast_on, TRAIT_ANTIMAGIC, REF(src))
 	Remove(cast_on)

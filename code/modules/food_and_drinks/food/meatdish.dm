@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Not only meat, actually, but also snacks that are almost meat, such as fish meat or tofu
 
 
@@ -806,7 +807,7 @@
 /obj/item/food/nugget/Initialize(mapload)
 	. = ..()
 	var/shape = pick("lump", "star", "lizard", "corgi")
-	desc = "A [meat_source] nugget vaguely shaped like a [shape]."
+	desc = LANG("obj.b431662c", list(meat_source, shape))
 	icon_state = "nugget_[shape]"
 
 ///subtype harvested from fish caught from, you guess it, the deepfryer

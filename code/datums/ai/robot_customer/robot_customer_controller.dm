@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/ai_controller/robot_customer
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.8 SECONDS
@@ -43,7 +44,7 @@
 	SIGNAL_HANDLER
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	if(attending_venue.is_correct_order(I, blackboard[BB_CUSTOMER_CURRENT_ORDER]))
-		to_chat(user, span_notice("You hand [I] to [pawn]."))
+		to_chat(user, span_notice(LANG("datum.9692f0ea", list(I, pawn))))
 		eat_order(I, attending_venue)
 		return COMPONENT_NO_AFTERATTACK
 	else if(!I.force)

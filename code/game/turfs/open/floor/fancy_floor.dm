@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* In this file:
  * Wood floor
  * Bamboo floor
@@ -24,7 +25,7 @@
 
 /turf/open/floor/wood/examine(mob/user)
 	. = ..()
-	. += span_notice("There's a few <b>screws</b> and a <b>small crack</b> visible.")
+	. += span_notice(LANG("turf.a7c285e4", null))
 
 /turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
@@ -53,15 +54,15 @@
 		broken = FALSE
 		burnt = FALSE
 		if(user && !silent)
-			to_chat(user, span_notice("You remove the broken planks."))
+			to_chat(user, span_notice(LANG("turf.42453c0c", null)))
 	else
 		if(make_tile)
 			if(user && !silent)
-				to_chat(user, span_notice("You unscrew the planks."))
+				to_chat(user, span_notice(LANG("turf.34469d3f", null)))
 			spawn_tile()
 		else
 			if(user && !silent)
-				to_chat(user, span_notice("You forcefully pry off the planks, destroying them in the process."))
+				to_chat(user, span_notice(LANG("turf.404b553d", null)))
 	return make_plating(force_plating)
 
 /turf/open/floor/wood/cold
@@ -288,7 +289,7 @@
 
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()
-	. += span_notice("There's a <b>small crack</b> on the edge of it.")
+	. += span_notice(LANG("turf.ff9d66d1", null))
 
 /turf/open/floor/carpet/Initialize(mapload)
 	. = ..()

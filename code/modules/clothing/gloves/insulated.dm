@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/gloves/color
 	abstract_type = /obj/item/clothing/gloves/color
 	dying_key = DYE_REGISTRY_GLOVES
@@ -54,11 +55,11 @@
 	var/success = C.equip_to_slot_if_possible(new /obj/item/clothing/gloves/color/yellow/sprayon, ITEM_SLOT_GLOVES, qdel_on_fail = TRUE, disable_warning = TRUE)
 	if(success)
 		if(C == user)
-			C.visible_message(span_notice("[U] sprays their hands with glittery rubber!"))
+			C.visible_message(span_notice(LANG("obj.f9b914b5", list(U))))
 		else
-			C.visible_message(span_warning("[U] sprays glittery rubber on the hands of [C]!"))
+			C.visible_message(span_warning(LANG("obj.3bdd69fd", list(U, C))))
 	else
-		C.visible_message(span_warning("The rubber fails to stick to [C]'s hands!"))
+		C.visible_message(span_warning(LANG("obj.1f212ea2", list(C))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/gloves/color/yellow/sprayon
@@ -89,7 +90,7 @@
 	charges_remaining--
 	if(charges_remaining <= 0)
 		var/turf/location = get_turf(src)
-		location.visible_message(span_warning("[src] crumble[p_s()] away into nothing.")) // just like my dreams after working with .dm
+		location.visible_message(span_warning(LANG("obj.da384fef", list(src, p_s())))) // just like my dreams after working with .dm
 		qdel(src)
 
 	. |= COMPONENT_CLEANED

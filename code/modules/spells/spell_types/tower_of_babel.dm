@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 
 /datum/tower_of_babel
@@ -50,7 +51,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 		return
 
 	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND) || HAS_MIND_TRAIT(to_curse, TRAIT_TOWER_OF_BABEL))
-		to_chat(to_curse, span_notice("You have a strange feeling for a moment, but then it passes."))
+		to_chat(to_curse, span_notice(LANG("_root.ee899aba", null)))
 		return
 
 	to_curse.apply_status_effect(/datum/status_effect/tower_of_babel/magical, INFINITY)
@@ -71,7 +72,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 
 /client/proc/tower_of_babel()
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr,"The game hasn't started yet!")
+		tgui_alert(usr,LANG("client.8a212f07", null))
 		return
 
 	GLOB.tower_of_babel = new /datum/tower_of_babel(usr)

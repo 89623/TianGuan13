@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/skub
 	desc = "It's skub."
 	name = "skub"
@@ -12,7 +13,7 @@
 	AddComponent(/datum/component/container_item/tank_holder, "holder_skub", FALSE)
 
 /obj/item/skub/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] has declared themself as anti-skub! The skub tears them apart!"))
+	user.visible_message(span_suicide(LANG("obj.72897749", list(user))))
 	user.gib(DROP_ALL_REMAINS)
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE, -1)
 	return MANUAL_SUICIDE

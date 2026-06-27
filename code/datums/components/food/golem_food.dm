@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Component which allows something to be eaten by a golem
 /datum/component/golem_food
 	/// Whether to destroy our item when we eat it
@@ -41,10 +42,10 @@
 	if (user.combat_mode || !HAS_TRAIT(target, TRAIT_ROCK_EATER))
 		return
 	if (extra_validation && !extra_validation.Invoke())
-		source.balloon_alert(user, "not edible!")
+		source.balloon_alert(user, LANG("datum.746c4913", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if (!snack_type.can_consume(target))
-		source.balloon_alert(user, "can't consume!")
+		source.balloon_alert(user, LANG("datum.de10b913", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if (isnull(golem_snack))
 		create_golem_snack(source)

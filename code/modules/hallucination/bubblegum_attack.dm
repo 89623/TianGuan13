@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Sends a fake bubblegum charging through a nearby wall to our target.
 /datum/hallucination/oh_yeah
 	random_hallucination_weight = 1
@@ -86,8 +87,8 @@
 		step_away(hallucinator, fake_bubbles)
 		shake_camera(hallucinator, 4, 3)
 		hallucinator.visible_message(
-			span_warning("[hallucinator] jumps backwards, falling on the ground!"),
-			span_userdanger("[fake_bubbles] slams into you!"),
+			span_warning(LANG("datum.bfb3faee", list(hallucinator))),
+			span_userdanger(LANG("datum.95075ba0", list(fake_bubbles))),
 		)
 		QDEL_IN(src, 3 SECONDS)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define REGENERATION_FILTER "healing_glow"
 
 /**
@@ -87,7 +88,7 @@
 	if (!should_be_regenning(parent))
 		return
 	var/mob/living/living_parent = parent
-	living_parent.visible_message(span_notice("[living_parent]'s wounds begin to knit closed!"))
+	living_parent.visible_message(span_notice(LANG("datum.e5c2127f", list(living_parent))))
 	START_PROCESSING(SSobj, src)
 	regeneration_start_timer = null
 	if (!outline_colour)

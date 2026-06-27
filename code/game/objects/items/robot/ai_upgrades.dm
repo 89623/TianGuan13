@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///AI Upgrades
 /obj/item/aiupgrade
 	name = "ai upgrade disk"
@@ -19,7 +20,7 @@
 			var/datum/action/gifted_action = new ability
 			gifted_action.Grant(AI)
 		else if(gifted_ability.one_purchase)
-			to_chat(user, "[AI] already has \a [src] installed!")
+			to_chat(user, LANG("obj.b6b27d9f", list(AI, src)))
 			return
 		else
 			action.uses += initial(action.uses)
@@ -33,8 +34,8 @@
 			if(gifted_ability.unlock_sound)
 				AI.playsound_local(AI, gifted_ability.unlock_sound, 50, 0)
 		update_static_data(AI)
-	to_chat(user, span_notice("You install [src], upgrading [AI]."))
-	to_chat(AI, span_userdanger("[user] has upgraded you with [src]!"))
+	to_chat(user, span_notice(LANG("obj.6e7b7e33", list(src, AI))))
+	to_chat(AI, span_userdanger(LANG("obj.4e408555", list(user, src))))
 	user.log_message("has upgraded [key_name(AI)] with a [src].", LOG_GAME)
 	qdel(src)
 	return TRUE
@@ -57,15 +58,15 @@
 	var/mob/living/silicon/ai/AI = A
 	if(AI.malf_picker)
 		AI.malf_picker.processing_time += 50
-		to_chat(AI, span_userdanger("[user] has attempted to upgrade you with combat software that you already possess. You gain 50 points to spend on Malfunction Modules instead."))
+		to_chat(AI, span_userdanger(LANG("obj.6bdff5a2", list(user))))
 	else
-		to_chat(AI, span_userdanger("[user] has upgraded you with combat software!"))
-		to_chat(AI, span_userdanger("Your current laws and objectives remain unchanged.")) //this unlocks malf powers, but does not give the license to plasma flood
+		to_chat(AI, span_userdanger(LANG("obj.cee23e03", list(user))))
+		to_chat(AI, span_userdanger(LANG("obj.b94f62ed", null))) //this unlocks malf powers, but does not give the license to plasma flood
 		AI.add_malf_picker()
 		AI.hack_software = TRUE
 		log_silicon("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
 		message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
-	to_chat(user, span_notice("You install [src], upgrading [AI]."))
+	to_chat(user, span_notice(LANG("obj.6e7b7e33", list(src, AI))))
 	qdel(src)
 	return TRUE
 

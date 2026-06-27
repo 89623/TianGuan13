@@ -22,7 +22,7 @@
 /// Returns TRUE if the beacon can be used, FALSE otherwise
 /obj/item/antag_spawner/bitrunning_help/proc/check_usability(mob/user)
 	if(user.mind.has_antag_datum(/datum/antagonist/domain_ghost_actor, TRUE) || user.mind.has_antag_datum(/datum/antagonist/bitrunning_glitch, TRUE))
-		to_chat(user, span_danger("Listen here hacker. Your interest will be terminated. Bitrunner will be retained."))
+		to_chat(user, span_danger(LANG("obj.8020e778", null)))
 		if(isliving(user))
 			var/mob/living/intruder = user
 			intruder.electrocute_act(15, user, 1, SHOCK_NOGLOVES|SHOCK_NOSTUN)
@@ -44,16 +44,16 @@
 		return
 
 	if(polling)
-		balloon_alert(user, "already in use!")
+		balloon_alert(user, LANG("obj.38f46f8c", null))
 		return
 
-	balloon_alert(user, "[src] activated!")
+	balloon_alert(user, LANG("obj.c3ca892d", list(src)))
 	polling = TRUE
 
 	// Find an available quantum server
 	var/obj/machinery/quantum_server/server = get_available_server()
 	if(!server)
-		balloon_alert(user, "bandwidth limit reached!")
+		balloon_alert(user, LANG("obj.399ab61a", null))
 		polling = FALSE
 		return
 
@@ -89,7 +89,7 @@
 		qdel(src)
 	else
 		polling = FALSE
-		to_chat(user, span_warning("Unable to detect spooling quantum servers. Please wait and try again later."))
+		to_chat(user, span_warning(LANG("obj.fa4afa9c", null)))
 
 /// Finds an available quantum server
 /// Iterates through all quantum servers to find one that has available retries or doesn't require retries to be spent.

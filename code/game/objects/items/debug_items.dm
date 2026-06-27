@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* This file contains standalone items for debug purposes. */
 /obj/item/debug
 	abstract_type = /obj/item/debug
@@ -27,7 +28,7 @@
 
 /obj/item/debug/human_spawner/attack_self(mob/user)
 	..()
-	var/choice = input("Select a species", "Human Spawner", null) in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
+	var/choice = input(LANG("obj.2dc4c8fd", null), LANG("obj.1df368e5", null), null) in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
 	selected_species = GLOB.species_list[choice]
 
 /obj/item/debug/omnitool
@@ -44,7 +45,7 @@
 
 /obj/item/debug/omnitool/examine()
 	. = ..()
-	. += " The mode is: [tool_behaviour]"
+	. += LANG("obj.ddeb8de7", list(tool_behaviour))
 
 /obj/item/debug/omnitool/proc/check_menu(mob/user)
 	if(!istype(user))
@@ -71,24 +72,24 @@
 /obj/item/debug/omnitool/item_spawner/attack_self(mob/user)
 	if(!user || !user.client)
 		return
-	var/path = text2path(tgui_input_text(user, "Insert an item typepath to spawn", "ADMINS ONLY. FUCK AROUND AND FIND OUT."))
+	var/path = text2path(tgui_input_text(user, LANG("obj.9bed81f6", null), LANG("obj.14b0d4d3", null)))
 	if(!path)
 		return
-	var/choice = tgui_alert(user, "Subtypes only?",, list("Yes", "No"))
+	var/choice = tgui_alert(user, LANG("obj.8fd665a9", null),, list("Yes", "No"))
 	if(!choice)
 		return
 	if(!user.client.holder)
 		if(!isliving(user))
 			return
 		var/mob/living/living_user = user
-		to_chat(user, span_warning("As you try to use [src], you hear strange tearing sounds, as if the coder gods were attempting to reach out and choke you themselves."))
+		to_chat(user, span_warning(LANG("obj.241e9faf", list(src))))
 		playsound(src, 'sound/effects/dimensional_rend.ogg')
 		sleep(4 SECONDS)
-		var/confirmation = tgui_alert(user, "Are you certain you want to do that?", "Admins Only. Last Chance.", list("Yes", "No"))
+		var/confirmation = tgui_alert(user, LANG("obj.436da715", null), LANG("obj.be528354", null), list("Yes", "No"))
 		if(!confirmation || confirmation == ("No"))
 			return
 		if(!user.client.holder) //safety if the admin readmined to save their ass lol.
-			to_chat(user, span_reallybig("You shouldn't have done that..."))
+			to_chat(user, span_reallybig(LANG("obj.df7c67c6", null)))
 			playsound(src, 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg')
 			sleep(3 SECONDS)
 			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)

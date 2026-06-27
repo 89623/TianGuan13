@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt
 	name = "Ethereal Jaunt"
 	desc = "This spell turns your form ethereal, temporarily making you invisible and able to pass through walls."
@@ -86,7 +87,7 @@
 	if(!found_exit)
 		// It's possible no exit was found, because we literally didn't even move
 		if(get_turf(cast_on) != start_point)
-			to_chat(cast_on, span_danger("Unable to find an unobstructed space, you find yourself ripped back to where you started."))
+			to_chat(cast_on, span_danger(LANG("datum.2726f851", null)))
 		// Either way, default to where we started
 		found_exit = start_point
 
@@ -221,7 +222,7 @@
 	if(!.)
 		return
 	if (locate(/obj/effect/blessing) in .)
-		to_chat(user, span_warning("Holy energies block your path!"))
+		to_chat(user, span_warning(LANG("obj.1fa44391", null)))
 		return null
 
 /// Red coloured variant

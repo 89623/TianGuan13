@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * Upon completion of a civilian bounty, one of these is created.
@@ -40,9 +41,9 @@
 /obj/item/bounty_cube/examine()
 	. = ..()
 	if(speed_bonus)
-		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE)]</b> remains until <b>[bounty_value * speed_bonus]</b> [MONEY_NAME_SINGULAR] speedy delivery bonus lost.")
+		. += span_notice(LANG("obj.7f8e9f17", list(time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE), bounty_value * speed_bonus, MONEY_NAME_SINGULAR)))
 	if(handler_tip && !bounty_handler_account)
-		. += span_notice("Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> [MONEY_NAME_SINGULAR] handling tip.")
+		. += span_notice(LANG("obj.84f301c1", list(bounty_value * handler_tip, MONEY_NAME_SINGULAR)))
 
 /obj/item/bounty_cube/process(seconds_per_tick)
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
@@ -105,7 +106,7 @@
 
 /obj/item/bounty_cube/debug_cube/attack_self(mob/user)
 	if(!isliving(user))
-		to_chat(user, span_warning("You aren't eligible to use this!"))
+		to_chat(user, span_warning(LANG("obj.ac470b2d", null)))
 		return ..()
 
 	if(!set_up)
@@ -114,7 +115,7 @@
 			set_up(random_bounty(), squeezer.get_idcard())
 			set_up = TRUE
 			return ..()
-		to_chat(user, span_notice("It can't detect your bank account."))
+		to_chat(user, span_notice(LANG("obj.eae3ace2", null)))
 
 	return ..()
 

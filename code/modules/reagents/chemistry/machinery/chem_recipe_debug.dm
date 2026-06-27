@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 * A debug chem tester that will process through all recipies automatically and try to react them.
 * Highlights low purity reactions and and reactions that don't happen
@@ -104,9 +105,9 @@
 /obj/machinery/chem_recipe_debug/examine(mob/user)
 	. = ..()
 	if(!QDELETED(container))
-		. += span_notice("A container of [container.reagents.maximum_volume]u capacity is inside.")
+		. += span_notice(LANG("obj.0fcf6a97", list(container.reagents.maximum_volume)))
 	else
-		. += span_notice("No container is present. A new will be created when ejecting.")
+		. += span_notice(LANG("obj.6ae316d7", null))
 
 /obj/machinery/chem_recipe_debug/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -449,7 +450,7 @@
 			return TRUE
 
 		if("pick_reaction")
-			var/mode = tgui_alert(usr, "Play all or a specific reaction?","Select Reaction", list("All", "Specific"))
+			var/mode = tgui_alert(usr, LANG("obj.668d4f56", null),LANG("obj.97786cdb", null), list("All", "Specific"))
 			if(mode == "All")
 				reactions_to_test.Cut()
 				for(var/reaction in all_reaction_list)
@@ -457,7 +458,7 @@
 				current_reaction_index = 0
 				return TRUE
 
-			var/selected_reaction = tgui_input_list(ui.user, "Select Reaction", "Reaction", all_reaction_list)
+			var/selected_reaction = tgui_input_list(ui.user, LANG("obj.97786cdb", null), LANG("obj.e870de92", null), all_reaction_list)
 			if(!selected_reaction)
 				return
 
@@ -504,7 +505,7 @@
 						if(!reaction_names.len)
 							return
 
-						var/selected_reaction = tgui_input_list(ui.user, "Select Reaction", "Reaction", reaction_names)
+						var/selected_reaction = tgui_input_list(ui.user, LANG("obj.97786cdb", null), LANG("obj.e870de92", null), reaction_names)
 						if(!selected_reaction)
 							return
 						for(var/i = 1; i <= reaction_names.len; i++)
@@ -571,7 +572,7 @@
 			return TRUE
 
 		if("edit_reaction")
-			var/selected_reaction = tgui_input_list(ui.user, "Select Reaction", "Reaction", all_reaction_list)
+			var/selected_reaction = tgui_input_list(ui.user, LANG("obj.97786cdb", null), LANG("obj.e870de92", null), all_reaction_list)
 			if(!selected_reaction)
 				return
 
@@ -661,7 +662,7 @@
 
 			var/dest = "[GLOB.log_directory]/chem_parse.txt"
 			text2file(export, dest)
-			tgui_alert(ui.user, "Saved to [dest]")
+			tgui_alert(ui.user, LANG("obj.f38a9f88", list(dest)))
 
 		if("eject")
 			//initialize a new container for us

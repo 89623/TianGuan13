@@ -10,7 +10,7 @@
 
 /datum/antagonist/ship_crew/greet()
 	. = ..()
-	to_chat(owner, "<B>You are part of a ship crew. Follow your captain's orders and complete your mission.</B>")
+	to_chat(owner, LANG("datum.f3e5d435", null))
 	owner.announce_objectives()
 
 /datum/antagonist/ship_crew/get_team()

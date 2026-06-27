@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
 	if(!istype(malf) || !malf.malf_picker)
 		return APC_AI_NO_MALF
@@ -15,9 +16,9 @@
 	if(get_malf_status(malf) != APC_AI_NO_HACK)
 		return
 	if(malf.malfhacking)
-		to_chat(malf, span_warning("You are already hacking an APC!"))
+		to_chat(malf, span_warning(LANG("obj.232dbf06", null)))
 		return
-	to_chat(malf, span_notice("Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."))
+	to_chat(malf, span_notice(LANG("obj.c369e869", null)))
 	malf.malfhack = src
 	malf.malfhacking = addtimer(CALLBACK(malf, TYPE_PROC_REF(/mob/living/silicon/ai/, malfhacked), src), 30 SECONDS + 10*malf.hacked_apcs.len SECONDS, TIMER_STOPPABLE)
 
@@ -29,17 +30,17 @@
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
-		to_chat(malf, span_warning("You must evacuate your current APC first!"))
+		to_chat(malf, span_warning(LANG("obj.968d31e4", null)))
 		return
 	if(!malf.can_shunt)
-		to_chat(malf, span_warning("You cannot shunt!"))
+		to_chat(malf, span_warning(LANG("obj.2200459d", null)))
 		return
 	if(!is_station_level(z))
 		return
 	INVOKE_ASYNC(src, PROC_REF(malfshunt), malf)
 
 /obj/machinery/power/apc/proc/malfshunt(mob/living/silicon/ai/malf)
-	var/confirm = tgui_alert(malf, "Are you sure that you want to shunt? This will take you out of your core!", "Shunt to [name]?", list("Yes", "No"))
+	var/confirm = tgui_alert(malf, LANG("obj.04af11f3", null), LANG("obj.5a3041d8", list(name)), list("Yes", "No"))
 	if(confirm != "Yes")
 		return
 	malf.ShutOffDoomsdayDevice()
@@ -88,19 +89,19 @@
 	if(!.)
 		return
 	if(card.AI)
-		to_chat(user, span_warning("[card] is already occupied!"))
+		to_chat(user, span_warning(LANG("obj.e96f2bf3", list(card))))
 		return FALSE
 	if(!occupier)
-		to_chat(user, span_warning("There's nothing in [src] to transfer!"))
+		to_chat(user, span_warning(LANG("obj.ce3dc006", list(src))))
 		return FALSE
 	if(!occupier.mind || !occupier.client)
-		to_chat(user, span_warning("[occupier] is either inactive or destroyed!"))
+		to_chat(user, span_warning(LANG("obj.87a3b3da", list(occupier))))
 		return FALSE
 	if(occupier.linked_core) //if they have an active linked_core, they can't be transferred from an APC
-		to_chat(user, span_warning("[occupier] is refusing all attempts at transfer!") )
+		to_chat(user, span_warning(LANG("obj.0196183b", list(occupier))) )
 		return FALSE
 	if(transfer_in_progress)
-		to_chat(user, span_warning("There's already a transfer in progress!"))
+		to_chat(user, span_warning(LANG("obj.4d3b28cf", null)))
 		return FALSE
 	if(interaction != AI_TRANS_TO_CARD || occupier.stat)
 		return FALSE
@@ -108,30 +109,30 @@
 	if(!user_turf)
 		return FALSE
 	transfer_in_progress = TRUE
-	user.visible_message(span_notice("[user] slots [card] into [src]..."), span_notice("Transfer process initiated. Sending request for AI approval..."))
+	user.visible_message(span_notice(LANG("obj.936825ea", list(user, card, src))), span_notice(LANG("obj.91fafcee", null)))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	SEND_SOUND(occupier, sound('sound/announcer/notice/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
-	if(tgui_alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
-		to_chat(user, span_danger("AI denied transfer request. Process terminated."))
+	if(tgui_alert(occupier, LANG("obj.cb27ec1c", list(user, card.name)), LANG("obj.401c4350", null), list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
+		to_chat(user, span_danger(LANG("obj.019aacdb", null)))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		transfer_in_progress = FALSE
 		return FALSE
 	if(user.loc != user_turf)
-		to_chat(user, span_danger("Location changed. Process terminated."))
-		to_chat(occupier, span_warning("[user] moved away! Transfer canceled."))
+		to_chat(user, span_danger(LANG("obj.4c511b4e", null)))
+		to_chat(occupier, span_warning(LANG("obj.80ed7eae", list(user))))
 		transfer_in_progress = FALSE
 		return FALSE
-	to_chat(user, span_notice("AI accepted request. Transferring stored intelligence to [card]..."))
-	to_chat(occupier, span_notice("Transfer starting. You will be moved to [card] shortly."))
+	to_chat(user, span_notice(LANG("obj.c78b1142", list(card))))
+	to_chat(occupier, span_notice(LANG("obj.a1b9ce6c", list(card))))
 	if(!do_after(user, 5 SECONDS, target = src))
-		to_chat(occupier, span_warning("[user] was interrupted! Transfer canceled."))
+		to_chat(occupier, span_warning(LANG("obj.3ec24835", list(user))))
 		transfer_in_progress = FALSE
 		return FALSE
 	if(!occupier || !card)
 		transfer_in_progress = FALSE
 		return FALSE
-	user.visible_message(span_notice("[user] transfers [occupier] to [card]!"), span_notice("Transfer complete! [occupier] is now stored in [card]."))
-	to_chat(occupier, span_notice("Transfer complete! You've been stored in [user]'s [card.name]."))
+	user.visible_message(span_notice(LANG("obj.e626614c", list(user, occupier, card))), span_notice(LANG("obj.7a313b00", list(occupier, card))))
+	to_chat(occupier, span_notice(LANG("obj.7a3cd229", list(user, card.name))))
 	occupier.forceMove(card)
 	card.AI = occupier
 	occupier.shunted = FALSE

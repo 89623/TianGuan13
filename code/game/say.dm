@@ -254,6 +254,10 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/processed_input = apply_message_emphasis(input) //This MUST be done first so that we don't get clipped by spans
 	processed_input = attach_spans(processed_input, spans)
 
+	// NOVA EDIT ADDITION - i18n - 全服中文时整串反查说话动词（says/whispers/beeps…；词由 verb_* 经 SINK_VARS 抽取）。
+	// 自定义 say emote（MODE_CUSTOM_SAY_EMOTE 整条消息）不在目录里 → lang_reverse_text 安全原样返回。
+	say_mod = lang_reverse_text(say_mod)
+	// NOVA EDIT ADDITION END
 	var/processed_say_mod = apply_message_emphasis(say_mod)
 
 	return "[processed_say_mod], \"[processed_input]\""

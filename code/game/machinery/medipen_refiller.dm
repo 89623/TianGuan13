@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/medipen_refiller
 	name = "Medipen Refiller"
 	desc = "A machine that refills used medipens with chemicals."
@@ -89,31 +90,31 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if(DOING_INTERACTION(user, src))
-		balloon_alert(user, "already interacting!")
+		balloon_alert(user, LANG("obj.cedfc661", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(is_reagent_container(tool) && tool.is_open_container())
 		var/obj/item/reagent_containers/reagent_container = tool
 		if(!length(reagent_container.reagents.reagent_list))
-			balloon_alert(user, "nothing to transfer!")
+			balloon_alert(user, LANG("obj.7e39eb37", null))
 			return ITEM_INTERACT_BLOCKING
 
 		var/units = reagent_container.reagents.trans_to(src, reagent_container.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
-			balloon_alert(user, "[units] units transferred")
+			balloon_alert(user, LANG("obj.a06f3e18", list(units)))
 			return ITEM_INTERACT_SUCCESS
 		else
-			balloon_alert(user, "reagent storage full!")
+			balloon_alert(user, LANG("obj.a3b1781d", null))
 			return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/reagent_containers/hypospray/medipen))
 		var/obj/item/reagent_containers/hypospray/medipen/medipen = tool
 		if(!(LAZYFIND(allowed_pens, medipen.type)))
-			balloon_alert(user, "medipen incompatible!")
+			balloon_alert(user, LANG("obj.90406cd7", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(medipen.reagents?.reagent_list.len)
-			balloon_alert(user, "medipen full!")
+			balloon_alert(user, LANG("obj.d76f6bf0", null))
 			return ITEM_INTERACT_BLOCKING
 
 		//if(!reagents.has_reagent(allowed_pens[medipen.type], 10)) // NOVA EDIT REMOVAL
@@ -121,17 +122,17 @@
 		var/list/datum/reagent/compatible_universal_reagents
 		if(istype(medipen, /obj/item/reagent_containers/hypospray/medipen/universal))
 			if(!reagents.total_volume)
-				balloon_alert(user, "not enough reagents!")
+				balloon_alert(user, LANG("obj.85ad348c", null))
 				return
 			// Ignore reagents which aren't the blacklist or whitelist
 			compatible_universal_reagents = typecache_filter_multi_list_exclusion(reagents.reagent_list, medipen_reagent_whitelist, medipen_reagent_blacklist)
 			// Ensure there is enough of the whitelisted reagents
 			if(!length(compatible_universal_reagents))
-				balloon_alert(user, "reagents incompatible!")
+				balloon_alert(user, LANG("obj.5b8dcadf", null))
 				return
 		else if(!reagents.has_reagent(allowed_pens[medipen.type], medipen.volume))
 		// NOVA EDIT ADDITION END
-			balloon_alert(user, "not enough reagents!")
+			balloon_alert(user, LANG("obj.85ad348c", null))
 			return ITEM_INTERACT_BLOCKING
 
 		add_overlay("active")
@@ -151,16 +152,16 @@
 			medipen.used_up = FALSE
 			//medipen.add_initial_reagents() // NOVA EDIT REMOVAL - Handled above
 			//reagents.remove_reagent(allowed_pens[medipen.type], 10) // NOVA EDIT REMOVAL - Handled above
-			balloon_alert(user, "refilled")
+			balloon_alert(user, LANG("obj.3a19f881", null))
 			use_energy(active_power_usage)
 		cut_overlays()
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
-	user.balloon_alert_to_viewers("furiously plunging...", "plunging medipen refiller...")
+	user.balloon_alert_to_viewers(LANG("obj.6051e050", null), LANG("obj.f38cfc48", null))
 	if(!do_after(user, 3 SECONDS, target = src))
 		return TRUE
-	user.balloon_alert_to_viewers("finished plunging")
+	user.balloon_alert_to_viewers(LANG("obj.670c9c2c", null))
 	reagents.expose(get_turf(src), TOUCH)
 	reagents.clear_reagents()
 	return TRUE

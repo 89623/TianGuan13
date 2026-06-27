@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 The gulag teleporter teleports a prisoner to the gulag outpost.
 It automatically strips the prisoner and equips a prisoner ID, prisoner jumpsuit and oranges sneakers.
@@ -49,7 +50,7 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
 	if(locked)
-		to_chat(user, span_warning("[src] is locked!"))
+		to_chat(user, span_warning(LANG("obj.9d5df8ce", list(src))))
 		return
 	toggle_open()
 
@@ -84,7 +85,7 @@ The console is located at computer/gulag_teleporter.dm
 	if(locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, span_warning("[src]'s door won't budge!"))
+			to_chat(user, span_warning(LANG("obj.c4e897cb", list(src))))
 		return
 	open_machine()
 
@@ -99,17 +100,17 @@ The console is located at computer/gulag_teleporter.dm
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(
-		span_notice("You see [user] kicking against the door of [src]!"),
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(resist_time)].)"),
-		span_hear("You hear a metallic creaking from [src]."),
+		span_notice(LANG("obj.485787b2", list(user, src))),
+		span_notice(LANG("obj.43ad33b1", list(src, DisplayTimeText(resist_time)))),
+		span_hear(LANG("obj.a1d9c573", list(src))),
 	)
 
 	if(do_after(user, resist_time, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 		locked = FALSE
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
+		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
+			span_notice(LANG("obj.81c31f6b", list(src))))
 		open_machine()
 
 /obj/machinery/gulag_teleporter/proc/locate_reclaimer()
@@ -119,7 +120,7 @@ The console is located at computer/gulag_teleporter.dm
 
 /obj/machinery/gulag_teleporter/proc/toggle_open()
 	if(panel_open)
-		to_chat(usr, span_notice("Close the maintenance panel first."))
+		to_chat(usr, span_notice(LANG("obj.0358adf3", null)))
 		return
 
 	if(state_open)

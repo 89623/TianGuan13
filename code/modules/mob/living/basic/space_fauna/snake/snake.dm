@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /mob/living/basic/snake
 	name = "snake"
@@ -70,7 +71,7 @@
 	. = ..()
 	if(!.)
 		return
-	visible_message("[src] hisses happily as it seems to bond with [new_friend].")
+	visible_message(LANG("mob.bbc9e4e9", list(src, new_friend)))
 
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them
 /datum/ai_controller/basic_controller/snake

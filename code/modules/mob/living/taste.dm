@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DEFAULT_TASTE_SENSITIVITY 15
 
 /mob/living
@@ -76,7 +77,7 @@
 	if(tastes_text == last_taste_text && last_taste_time + 100 >= world.time)
 		return
 
-	to_chat(src, span_notice("You can taste [tastes_text]."))
+	to_chat(src, span_notice(LANG("mob.c5883c1f", list(tastes_text))))
 	// "something indescribable" -> too many tastes, not enough flavor.
 
 	last_taste_time = world.time
@@ -154,7 +155,7 @@
 	if(!prob(chance))
 		return FALSE
 	if(ForceContractDisease(new /datum/disease/anaphylaxis(), make_copy = FALSE, del_on_fail = TRUE))
-		to_chat(src, span_warning("You feel your throat start to itch."))
+		to_chat(src, span_warning(LANG("mob.a77b5a1d", null)))
 		add_mood_event("allergic_food", /datum/mood_event/allergic_food)
 	else if(histamine_add)
 		reagents.add_reagent(/datum/reagent/toxin/histamine, histamine_add)

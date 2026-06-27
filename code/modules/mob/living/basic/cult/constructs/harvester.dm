@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
@@ -52,9 +53,9 @@
 		return ..() //if any arms or legs exist, attack
 
 	carbon_target.Paralyze(6 SECONDS)
-	visible_message(span_danger("[src] knocks [carbon_target] down!"))
+	visible_message(span_danger(LANG("mob.b28257ff", list(src, carbon_target))))
 	if(theme == THEME_CULT)
-		to_chat(src, span_cult_large("\"Bring [carbon_target.p_them()] to me.\""))
+		to_chat(src, span_cult_large(LANG("mob.0242a2de", list(carbon_target.p_them()))))
 
 /datum/action/innate/seek_master
 	name = "Seek your Master"
@@ -84,18 +85,18 @@
 		the_construct.construct_master = cult_status.cult_team.blood_target
 
 	if(!the_construct.construct_master)
-		to_chat(the_construct, span_cult_italic("You have no master to seek!"))
+		to_chat(the_construct, span_cult_italic(LANG("datum.594ffa72", null)))
 		the_construct.seeking = FALSE
 		return
 	if(tracking)
 		tracking = FALSE
 		the_construct.seeking = FALSE
-		to_chat(the_construct, span_cult_italic("You are no longer tracking your master."))
+		to_chat(the_construct, span_cult_italic(LANG("datum.47f9afa7", null)))
 		return
 	else
 		tracking = TRUE
 		the_construct.seeking = TRUE
-		to_chat(the_construct, span_cult_italic("You are now tracking your master."))
+		to_chat(the_construct, span_cult_italic(LANG("datum.1c4b546d", null)))
 
 /datum/action/innate/seek_prey
 	name = "Seek the Harvest"
@@ -113,20 +114,20 @@
 	var/mob/living/basic/construct/harvester/the_construct = owner
 
 	if(the_construct.seeking)
-		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
+		desc = LANG("datum.82148b4c", null)
 		button_icon_state = "cult_mark"
 		the_construct.seeking = FALSE
-		to_chat(the_construct, span_cult_italic("You are now tracking Nar'Sie, return to reap the harvest!"))
+		to_chat(the_construct, span_cult_italic(LANG("datum.970d2bf4", null)))
 		return
 
 	if(!LAZYLEN(GLOB.cult_narsie.souls_needed))
-		to_chat(the_construct, span_cult_italic("Nar'Sie has completed her harvest!"))
+		to_chat(the_construct, span_cult_italic(LANG("datum.fcb6dc1a", null)))
 		return
 
 	the_construct.construct_master = pick(GLOB.cult_narsie.souls_needed)
 	var/mob/living/real_target = the_construct.construct_master //We can typecast this way because Narsie only allows /mob/living into the souls list
-	to_chat(the_construct, span_cult_italic("You are now tracking your prey, [real_target.real_name] - harvest [real_target.p_them()]!"))
-	desc = "Activate to track Nar'Sie!"
+	to_chat(the_construct, span_cult_italic(LANG("datum.1a80032c", list(real_target.real_name, real_target.p_them()))))
+	desc = LANG("datum.dcc1b228", null)
 	button_icon_state = "sintouch"
 	the_construct.seeking = TRUE
 
@@ -168,8 +169,8 @@
 
 /mob/living/basic/construct/harvester/heretic/proc/on_master_death(mob/self, mob/master)
 	SIGNAL_HANDLER
-	to_chat(src, span_userdanger("Your link to the mansus suddenly snaps as your master [construct_master] perishes! Without [construct_master.p_their()] support, your body crumbles..."))
-	visible_message(span_alert("[src] suddenly crumbles to dust!"))
+	to_chat(src, span_userdanger(LANG("mob.22ab4fdc", list(construct_master, construct_master.p_their()))))
+	visible_message(span_alert(LANG("mob.6b3d6252", list(src))))
 	death()
 
 /mob/living/basic/construct/harvester/heretic/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -220,7 +221,7 @@
 	do_rust_heretic_act(land)
 
 	if(prob(7))
-		to_chat(src, span_notice("Eldritch energies emanate from your body."))
+		to_chat(src, span_notice(LANG("mob.cef8e740", null)))
 
 /mob/living/basic/construct/harvester/heretic/proc/is_cultist_handler(mob/victim)
 	return IS_CULTIST(victim)

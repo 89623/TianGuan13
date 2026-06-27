@@ -97,7 +97,7 @@
 	if(!ishuman(attacked))
 		return
 	if(!attacked.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("Looks like [attacked] doesn't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.f3f1a07e", list(attacked))))
 		return
 
 	switch(user.zone_selected)
@@ -126,13 +126,13 @@
 		handle_fullbody_tying(them, user)
 		return
 	if(them.w_uniform)
-		to_chat(user, span_warning("They're already wearing something on this slot!"))
+		to_chat(user, span_warning(LANG("obj.04028a8f", null)))
 		return
 
 	them.visible_message(
-		span_warning("[user] starts tying [them]'s groin!"),
-		span_userdanger("You start tying your groin!"),
-		span_hear("You hear ropes being tightened.")
+		span_warning(LANG("obj.ff6149d4", list(user, them))),
+		span_userdanger(LANG("obj.be52dc80", null)),
+		span_hear(LANG("obj.7323275e", null))
 	)
 	if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 2 SECONDS : 6 SECONDS, them))
 		return
@@ -146,7 +146,7 @@
 		split_rope = split_stack(1)
 
 	if(!split_rope)
-		to_chat(user, span_warning("You don't have enough ropes!"))
+		to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 		return
 
 	var/obj/item/clothing/under/shibari/groin/shibari_groin = new(get_turf(src))
@@ -160,9 +160,9 @@
 
 	shibari_groin.tightness = tightness
 	them.visible_message(
-		span_warning("[user] has tied [them]'s groin!"),
-		span_userdanger("You've tied your groin!"),
-		span_hear("You hear ropes being completely tightened.")
+		span_warning(LANG("obj.d7b2a678", list(user, them))),
+		span_userdanger(LANG("obj.0b82cd67", null)),
+		span_hear(LANG("obj.89f7878b", null))
 	)
 	split_rope.forceMove(shibari_groin)
 
@@ -172,20 +172,20 @@
 		handle_fullbody_tying(them, user)
 		return
 	if(them.w_uniform)
-		to_chat(user, span_warning("They're already wearing something on this slot!"))
+		to_chat(user, span_warning(LANG("obj.04028a8f", null)))
 		return
 
 	them.visible_message(
-		span_warning("[user] starts tying [them]'s chest!"),
-		span_userdanger("You start tying your chest!"),
-		span_hear("You hear ropes being tightened.")
+		span_warning(LANG("obj.5a14de1f", list(user, them))),
+		span_userdanger(LANG("obj.ac91788e", null)),
+		span_hear(LANG("obj.7323275e", null))
 	)
 	if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 2 SECONDS : 6 SECONDS, them))
 		return
 
 	var/obj/item/stack/shibari_rope/split_rope = split_stack(1)
 	if(!split_rope)
-		to_chat(user, span_warning("You don't have enough ropes!"))
+		to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 		return
 
 	var/obj/item/clothing/under/shibari/torso/shibari_body = new(get_turf(src))
@@ -198,29 +198,29 @@
 
 	shibari_body.tightness = tightness
 	them.visible_message(
-		span_warning("[user] has tied [them]'s chest!"),
-		span_userdanger("You've tied your chest!"),
-		span_hear("You hear ropes being completely tightened.")
+		span_warning(LANG("obj.d1b2faba", list(user, them))),
+		span_userdanger(LANG("obj.2415f9ec", null)),
+		span_hear(LANG("obj.89f7878b", null))
 	)
 	split_rope.forceMove(shibari_body)
 
 /// Try to tie the arms
 /obj/item/stack/shibari_rope/proc/handle_arm_tying(mob/living/carbon/human/them, mob/living/user)
 	if(them.gloves)
-		to_chat(user, span_warning("They're already wearing something on this slot!"))
+		to_chat(user, span_warning(LANG("obj.04028a8f", null)))
 		return
 
 	them.visible_message(
-		span_warning("[user] starts tying [them]'s hands!"),
-		span_userdanger("You start tying your hands!"),
-		span_hear("You hear ropes being tightened.")
+		span_warning(LANG("obj.41cea815", list(user, them))),
+		span_userdanger(LANG("obj.41e3d269", null)),
+		span_hear(LANG("obj.7323275e", null))
 	)
 	if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 2 SECONDS : 6 SECONDS, them))
 		return
 
 	var/obj/item/stack/shibari_rope/split_rope = split_stack(1)
 	if(!split_rope)
-		to_chat(user, span_warning("You don't have enough ropes!"))
+		to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 		return
 
 	var/obj/item/clothing/gloves/shibari_hands/shibari_hands = new(get_turf(src))
@@ -232,32 +232,32 @@
 		return
 
 	them.visible_message(
-		span_warning("[user] hastied [them]'s hands!"),
-		span_userdanger("You've tied your hands!"),
-		span_hear("You hear ropes being completely tightened.")
+		span_warning(LANG("obj.e83a50c7", list(user, them))),
+		span_userdanger(LANG("obj.338ad0ee", null)),
+		span_hear(LANG("obj.89f7878b", null))
 	)
 	split_rope.forceMove(shibari_hands)
 
 /// Try to tie the legs
 /obj/item/stack/shibari_rope/proc/handle_leg_tying(mob/living/carbon/human/them, mob/living/user)
 	if(them.shoes)
-		to_chat(user, span_warning("They're already wearing something on this slot!"))
+		to_chat(user, span_warning(LANG("obj.04028a8f", null)))
 		return
 	if(them.bodyshape & BODYSHAPE_TAUR)
-		to_chat(user, span_warning("You can't tie their feet, they're a taur!"))
+		to_chat(user, span_warning(LANG("obj.c27a125b", null)))
 		return
 
 	them.visible_message(
-		span_warning("[user] starts tying [them]'s feet!"),
-		span_userdanger("You start tying your feet!"),
-		span_hear("You hear ropes being tightened.")
+		span_warning(LANG("obj.47a8ad37", list(user, them))),
+		span_userdanger(LANG("obj.ddd45cb1", null)),
+		span_hear(LANG("obj.7323275e", null))
 	)
 	if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 2 SECONDS : 6 SECONDS, them))
 		return
 
 	var/obj/item/stack/shibari_rope/split_rope = split_stack(1)
 	if(!split_rope)
-		to_chat(user, span_warning("You don't have enough ropes!"))
+		to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 		return
 
 	var/obj/item/clothing/shoes/shibari_legs/shibari_legs = new(get_turf(src))
@@ -269,9 +269,9 @@
 		return
 
 	them.visible_message(
-		span_warning("[user] has tied [them]'s feet!"),
-		span_userdanger("You've tied your feet!"),
-		span_hear("You hear ropes being completely tightened.")
+		span_warning(LANG("obj.46ba813e", list(user, them))),
+		span_userdanger(LANG("obj.5231ca2d", null)),
+		span_hear(LANG("obj.89f7878b", null))
 	)
 	split_rope.forceMove(shibari_legs)
 
@@ -280,9 +280,9 @@
 	switch(user.zone_selected)
 		if(BODY_ZONE_CHEST)
 			them.visible_message(
-				span_warning("[user] starts tying [them]'s chest!"),
-				span_userdanger("You start tying your chest!"),
-				span_hear("You hear ropes being tightened.")
+				span_warning(LANG("obj.5a14de1f", list(user, them))),
+				span_userdanger(LANG("obj.ac91788e", null)),
+				span_hear(LANG("obj.7323275e", null))
 			)
 			if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 2 SECONDS : 6 SECONDS, them))
 				return
@@ -293,12 +293,12 @@
 
 			var/obj/item/stack/shibari_rope/split_rope = split_stack(1)
 			if(!split_rope)
-				to_chat(user, span_warning("You don't have enough ropes!"))
+				to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 				return
 
 			var/obj/item/clothing/under/shibari/body_rope = them.w_uniform
 			if(body_rope.glow != split_rope.glow)
-				to_chat(user, span_warning("You can't mix these types of ropes!"))
+				to_chat(user, span_warning(LANG("obj.44de1419", null)))
 				split_rope.forceMove(get_turf(them))
 				return
 
@@ -320,18 +320,18 @@
 
 			shibari_fullbody.tightness = tightness
 			them.visible_message(
-				span_warning("[user] has tied [them]'s chest!"),
-				span_userdanger("You've tied your chest!"),
-				span_hear("You hear ropes being completely tightened.")
+				span_warning(LANG("obj.d1b2faba", list(user, them))),
+				span_userdanger(LANG("obj.2415f9ec", null)),
+				span_hear(LANG("obj.89f7878b", null))
 			)
 			for(var/obj/item/stack/shibari_rope/rope_piece as anything in previous_rope_pieces + split_rope)
 				rope_piece.forceMove(shibari_fullbody)
 
 		if(BODY_ZONE_PRECISE_GROIN)
 			them.visible_message(
-				span_warning("[user] starts tying [them]'s groin!"),
-				span_userdanger("You start tying your groin!"),
-				span_hear("You hear ropes being tightened.")
+				span_warning(LANG("obj.ff6149d4", list(user, them))),
+				span_userdanger(LANG("obj.be52dc80", null)),
+				span_hear(LANG("obj.7323275e", null))
 			)
 			if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 2 SECONDS : 6 SECONDS, them))
 				return
@@ -345,12 +345,12 @@
 				split_rope = split_stack(1)
 
 			if(!split_rope)
-				to_chat(user, span_warning("You don't have enough ropes!"))
+				to_chat(user, span_warning(LANG("obj.ef109b4d", null)))
 				return
 
 			var/obj/item/clothing/under/shibari/body_rope = them.w_uniform
 			if(body_rope.glow != split_rope.glow)
-				to_chat(user, span_warning("You can't mix these type of ropes!"))
+				to_chat(user, span_warning(LANG("obj.0b5f985d", null)))
 				split_rope.forceMove(get_turf(them))
 				return
 
@@ -372,9 +372,9 @@
 
 			shibari_fullbody.tightness = tightness
 			them.visible_message(
-				span_warning("[user] has tied [them]'s groin!"),
-				span_userdanger("You've tied your groin!"),
-				span_hear("You hear ropes being completely tightened.")
+				span_warning(LANG("obj.d7b2a678", list(user, them))),
+				span_userdanger(LANG("obj.0b82cd67", null)),
+				span_hear(LANG("obj.89f7878b", null))
 			)
 			for(var/obj/item/stack/shibari_rope/rope_piece as anything in previous_rope_pieces + split_rope)
 				rope_piece.forceMove(shibari_fullbody)
@@ -386,12 +386,12 @@
 		if(SHIBARI_TIGHTNESS_HIGH)
 			tightness = SHIBARI_TIGHTNESS_LOW
 			playsound_if_pref(loc, 'modular_nova/modules/modular_items/lewd_items/sounds/latex.ogg', 25)
-			balloon_alert(user, "slightly tightened the ropes")
+			balloon_alert(user, LANG("obj.6408b0b7", null))
 		if(SHIBARI_TIGHTNESS_LOW)
 			tightness = SHIBARI_TIGHTNESS_MED
 			playsound_if_pref(loc, 'modular_nova/modules/modular_items/lewd_items/sounds/latex.ogg', 50)
-			balloon_alert(user, "moderately tightened the ropes")
+			balloon_alert(user, LANG("obj.9f200dd9", null))
 		if(SHIBARI_TIGHTNESS_MED)
 			tightness = SHIBARI_TIGHTNESS_HIGH
 			playsound_if_pref(loc, 'modular_nova/modules/modular_items/lewd_items/sounds/latex.ogg', 75)
-			balloon_alert(user, "strongly tightened the ropes")
+			balloon_alert(user, LANG("obj.520d1b38", null))

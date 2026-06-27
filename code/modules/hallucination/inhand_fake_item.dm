@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Hallucinates a fake item in our hands, pockets, or belt or whatever.
 /datum/hallucination/fake_item
 	abstract_hallucination_parent = /datum/hallucination/fake_item
@@ -114,7 +115,7 @@
 		// Yes this can break if someone changse grenade icon stuff
 		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_active"
 		hallucinator.playsound_local(get_turf(hallucinator), 'sound/items/weapons/armbomb.ogg', 60, TRUE)
-		to_chat(hallucinator, span_warning("You prime [hallucinated_item]! 5 seconds!"))
+		to_chat(hallucinator, span_warning(LANG("datum.35c64332", list(hallucinated_item))))
 
 	return hallucinated_item
 

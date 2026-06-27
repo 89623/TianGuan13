@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// multiplier to decide how much fuel we add to a smoker
 #define WEED_WINE_MULTIPLIER 0.2
 
@@ -34,7 +35,7 @@
 	if(.)
 		return TRUE
 	if(!activated && current_herb_fuel <= 0)
-		user.balloon_alert(user, "no fuel!")
+		user.balloon_alert(user, LANG("obj.1b220a79", null))
 		return TRUE
 	alter_state()
 	user.balloon_alert(user, "[activated ? "activated" : "deactivated"]")
@@ -46,11 +47,11 @@
 
 	. = ITEM_INTERACT_BLOCKING
 	if(!activated)
-		user.balloon_alert(user, "not activated!")
+		user.balloon_alert(user, LANG("obj.e39a8bf8", null))
 		return .
 
 	if(current_herb_fuel < single_use_cost)
-		user.balloon_alert(user, "not enough fuel!")
+		user.balloon_alert(user, LANG("obj.161985b7", null))
 		return .
 
 	current_herb_fuel -= single_use_cost
@@ -85,11 +86,11 @@
 	if(isnull(weed.wine_power))
 		return TRUE
 	if(current_herb_fuel == max_herb_fuel)
-		user.balloon_alert(user, "already at maximum fuel!")
+		user.balloon_alert(user, LANG("obj.e33858ec", null))
 		return TRUE
 	var/fuel_worth = weed.wine_power * WEED_WINE_MULTIPLIER
 	current_herb_fuel = (current_herb_fuel + fuel_worth > max_herb_fuel) ? max_herb_fuel : current_herb_fuel + fuel_worth
-	user.balloon_alert(user, "fuel added")
+	user.balloon_alert(user, LANG("obj.1aa3aa21", null))
 	qdel(weed)
 	return TRUE
 

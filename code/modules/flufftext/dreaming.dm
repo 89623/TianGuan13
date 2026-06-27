@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DREAMING_SOURCE "dreaming_source"
 
 /**
@@ -114,7 +115,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	var/fragment = ""
 
 	. = list()
-	. += "you see"
+	. += LANG("datum.efaeefa5", null)
 
 	//Subject
 	if(custom_dream_nouns.len && prob(90))
@@ -175,7 +176,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	. = ..()
 	. += pick("you wind up a toy", "you hear something strange", "you pick out a record to play", "you hit shuffle on your music player")
 	. += CALLBACK(src, PROC_REF(PlayRandomSound))
-	. += "it reminds you of something"
+	. += LANG("datum.5e68fd6d", null)
 
 /datum/dream/hear_something/OnDreamEnd(mob/living/carbon/dreamer)
 	. = ..()

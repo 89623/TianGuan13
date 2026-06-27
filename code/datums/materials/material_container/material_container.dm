@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*!
 	This datum should be used for handling mineral contents of machines and whatever else is supposed to hold minerals and make use of them.
 
@@ -323,7 +324,7 @@
 			//duffle bags needs to be unzipped
 			if(target_item.atom_storage?.locked)
 				if(!(mat_container_flags & MATCONTAINER_SILENT))
-					to_chat(user, span_warning("[target_item] has its storage locked"))
+					to_chat(user, span_warning(LANG("datum.bd01ee28", list(target_item))))
 				return
 
 			//anything that isn't a stack cannot be split so find out if we have enough space, we don't want to consume half the contents of an object & leave it in a broken state
@@ -334,7 +335,7 @@
 					total_amount += get_item_material_amount(weapon)
 				if(!has_space(total_amount))
 					if(!(mat_container_flags & MATCONTAINER_SILENT))
-						to_chat(user, span_warning("[parent] does not have enough space for [target_item]!"))
+						to_chat(user, span_warning(LANG("datum.106a78ac", list(parent, target_item))))
 					return
 
 			first_checks = FALSE
@@ -344,7 +345,7 @@
 		if(isstack(target_item) && precise_insertion)
 			var/atom/current_parent = parent
 			item_stack = target_item
-			var/requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
+			var/requested_amount = tgui_input_number(user, LANG("datum.f4a4771f", null), LANG("datum.0622685d", list(item_stack.singular_name)), item_stack.amount, item_stack.amount)
 			if(!requested_amount || QDELETED(target_item) || QDELETED(user) || QDELETED(src))
 				continue
 			if(parent != current_parent || user.get_active_held_item() != active_held)
@@ -758,6 +759,10 @@
 
 		data += list(list(
 			"name" = material.name,
+			// NOVA EDIT ADDITION - I18N: 前端 MATERIAL_ICONS/MATERIAL_RARITY 按**英文材料名**查表（铁/玻璃单词被
+			// P1 多词门槛跳过=英文、能命中；"bluespace crystal" 多词会被 P1 译成中文 → 查表 miss → 显示「?」图标）。
+			// 故另发英文 id（"id" 是 i18n_payload_skip_keys 成员、P1 永不翻），前端图标/稀有度按 id 查；name 仍可译做显示。
+			"id" = lang_unreverse_text(material.name),
 			"ref" = REF(material),
 			"amount" = amount,
 			"color" = material.greyscale_color || material.color

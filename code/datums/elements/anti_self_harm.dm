@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Prevents a basic mob from hitting themselves by accident.
 // This is useful if you don't want self-harm as a balancing factor.
 // There are a lot of basic mobs that never benefit from hitting themselves.
@@ -23,5 +24,5 @@
 		return
 
 	// A balloon alert would be too distracting mid-combat.
-	to_chat(parent_mob, span_warning("You decide against attacking yourself. <b>You can still do so with right-click.</b>"))
+	to_chat(parent_mob, span_warning(LANG("datum.656951a6", null)))
 	return COMPONENT_HOSTILE_NO_ATTACK

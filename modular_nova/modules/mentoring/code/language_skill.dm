@@ -26,7 +26,7 @@
 
 		learned_string = "[learned_string][separator][index > 1 ? " " : ""][initial(language.name)]"
 
-	to_chat(mind.current, span_nicegreen("I feel like my understanding of [learned_string] became a lot better!"))
+	to_chat(mind.current, span_nicegreen(LANG("datum.b6764a12", list(learned_string))))
 
 /obj/item/clothing/accessory/language
 	name = "language master badge"

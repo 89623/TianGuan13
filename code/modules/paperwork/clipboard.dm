@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Clipboard skins
 /datum/atom_skin/clipboard
 	abstract_type = /datum/atom_skin/clipboard
@@ -45,7 +46,7 @@
 	var/obj/item/paper/top_paper
 
 /obj/item/clipboard/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins putting [user.p_their()] head into the clip of \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.d944a01b", list(user, user.p_their(), src, user.p_theyre()))))
 	return BRUTELOSS //The clipboard's clip is very strong. Industrial duty. Can kill a man easily.
 
 /obj/item/clipboard/Initialize(mapload)
@@ -62,9 +63,9 @@
 /obj/item/clipboard/examine()
 	. = ..()
 	if(!integrated_pen && pen)
-		. += span_notice("Right-click to remove [pen].")
+		. += span_notice(LANG("obj.cf363a97", list(pen)))
 	else if(top_paper)
-		. += span_notice("Right-click to remove [top_paper].")
+		. += span_notice(LANG("obj.cf363a97", list(top_paper)))
 
 /// Take out the topmost paper
 /obj/item/clipboard/proc/remove_paper(obj/item/paper/paper, mob/user)
@@ -72,13 +73,13 @@
 		return
 	paper.forceMove(user.loc)
 	user.put_in_hands(paper)
-	to_chat(user, span_notice("You remove [paper] from [src]."))
+	to_chat(user, span_notice(LANG("obj.cbed3266", list(paper, src))))
 
 /obj/item/clipboard/proc/remove_pen(mob/user)
 	var/obj/item/pen/pen = src.pen
 	pen.forceMove(user.loc)
 	user.put_in_hands(pen)
-	to_chat(user, span_notice("You remove [pen] from [src]."))
+	to_chat(user, span_notice(LANG("obj.cbed3266", list(pen, src))))
 
 /obj/item/clipboard/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -130,13 +131,13 @@
 			UnregisterSignal(top_paper, COMSIG_ATOM_UPDATED_ICON)
 		RegisterSignal(weapon, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_top_paper_change))
 		top_paper = weapon
-		to_chat(user, span_notice("You clip [weapon] onto [src]."))
+		to_chat(user, span_notice(LANG("obj.5d5208ad", list(weapon, src))))
 	else if(istype(weapon, /obj/item/pen) && !pen)
 		//Add a pen into the clipboard, attack (write) if there is already one
 		if(!usr.transferItemToLoc(weapon, src))
 			return
 		pen = weapon
-		to_chat(usr, span_notice("You slot [weapon] into [src]."))
+		to_chat(usr, span_notice(LANG("obj.ed1a28f3", list(weapon, src))))
 	else if(top_paper)
 		top_paper.attackby(user.get_active_held_item(), user)
 	update_appearance()
@@ -186,7 +187,7 @@
 				if(!integrated_pen)
 					remove_pen(usr)
 				else
-					to_chat(usr, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
+					to_chat(usr, span_warning(LANG("obj.6babffe5", list(src, pen))))
 				. = TRUE
 		// Take paper out
 		if("remove_paper")
@@ -206,7 +207,7 @@
 			var/obj/item/paper/paper = locate(params["ref"]) in src
 			if(istype(paper))
 				top_paper = paper
-				to_chat(usr, span_notice("You move [paper] to the top."))
+				to_chat(usr, span_notice(LANG("obj.24e3e6b1", list(paper))))
 				update_icon()
 				. = TRUE
 		// Rename the paper (it's a verb)

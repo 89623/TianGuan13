@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Recharge subtype - used by stuff like protokinetic accelerators and ebows, one shot at a time, recharges.
 /obj/item/gun/energy/recharge
 	icon_state = "kineticgun"
@@ -84,7 +85,7 @@
 	if(!suppressed && recharge_sound)
 		playsound(src.loc, recharge_sound, 60, TRUE)
 	else
-		to_chat(loc, span_warning("[src] silently charges up."))
+		to_chat(loc, span_warning(LANG("obj.3ece4ebf", list(src))))
 	update_appearance()
 
 /obj/item/gun/energy/recharge/update_overlays()

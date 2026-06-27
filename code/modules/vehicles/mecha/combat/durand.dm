@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/sealed/mecha/durand
 	desc = "An aging combat exosuit utilized by the Nanotrasen corporation. Originally developed to combat hostile alien lifeforms."
 	name = "\improper Durand"
@@ -218,12 +219,12 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	if(switching && !signal_args[1])
 		return
 	if(!chassis.defense_mode && (!chassis.cell || chassis.cell.charge < 100)) //If it's off, and we have less than 100 units of power
-		chassis.balloon_alert(owner, "insufficient power")
+		chassis.balloon_alert(owner, LANG("obj.847c6ee4", null))
 		return
 	switching = TRUE
 	chassis.defense_mode = !chassis.defense_mode
 	if(!signal_args[1])
-		chassis.balloon_alert(owner, "shield [chassis.defense_mode?"enabled":"disabled"]")
+		chassis.balloon_alert(owner, LANG("obj.ac69276f", list(chassis.defense_mode?"enabled":"disabled")))
 		chassis.log_message("User has toggled defense mode -- now [chassis.defense_mode?"enabled":"disabled"].", LOG_MECHA)
 	else
 		chassis.log_message("defense mode state changed -- now [chassis.defense_mode?"enabled":"disabled"].", LOG_MECHA)

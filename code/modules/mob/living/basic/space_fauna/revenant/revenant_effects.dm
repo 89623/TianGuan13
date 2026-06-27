@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Parent type for all unique revenant status effects
 /datum/status_effect/revenant
 	id = STATUS_EFFECT_ID_ABSTRACT
@@ -44,13 +45,13 @@
 	ADD_TRAIT(owner, TRAIT_REVENANT_INHIBITED, TRAIT_STATUS_EFFECT(id))
 	owner.update_appearance(UPDATE_ICON)
 
-	owner.balloon_alert(owner, "inhibited!")
+	owner.balloon_alert(owner, LANG("datum.427546a3", null))
 
 /datum/status_effect/revenant/inhibited/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_REVENANT_INHIBITED, TRAIT_STATUS_EFFECT(id))
 	owner.update_appearance(UPDATE_ICON)
 
-	owner.balloon_alert(owner, "uninhibited")
+	owner.balloon_alert(owner, LANG("datum.976d8a02", null))
 	return ..()
 
 /datum/status_effect/incapacitating/paralyzed/revenant
@@ -63,13 +64,13 @@
 	owner.orbiting?.end_orbit(src)
 
 	ADD_TRAIT(owner, TRAIT_NO_TRANSFORM, TRAIT_STATUS_EFFECT(id))
-	owner.balloon_alert(owner, "can't move!")
+	owner.balloon_alert(owner, LANG("datum.b5c8ce04", null))
 	owner.update_mob_action_buttons()
 	owner.update_appearance(UPDATE_ICON)
 
 /datum/status_effect/incapacitating/paralyzed/revenant/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_NO_TRANSFORM, TRAIT_STATUS_EFFECT(id))
 	owner.update_mob_action_buttons()
-	owner.balloon_alert(owner, "can move again")
+	owner.balloon_alert(owner, LANG("datum.5c6dddd7", null))
 
 	return ..()

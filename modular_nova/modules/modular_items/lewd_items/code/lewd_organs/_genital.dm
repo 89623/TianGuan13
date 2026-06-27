@@ -223,7 +223,7 @@
 	set desc = "Allows you to toggle which genitals should show through clothes or not."
 
 	if(stat != CONSCIOUS)
-		to_chat(usr, span_warning("You can't toggle genitals visibility right now..."))
+		to_chat(usr, span_warning(LANG("mob.9d652d0e", null)))
 		return
 
 	var/list/genital_list = list()
@@ -234,7 +234,7 @@
 	if(!genital_list.len) //There is nothing to expose
 		return
 
-	var/obj/item/organ/genital/picked_organ = tgui_input_list(src, "Choose which genitalia to expose/hide", "Expose/Hide genitals", genital_list)
+	var/obj/item/organ/genital/picked_organ = tgui_input_list(src, LANG("mob.1291c087", null), LANG("mob.dfba591a", null), genital_list)
 
 	if(!picked_organ || !(picked_organ in organs))
 		return
@@ -247,19 +247,19 @@
 		"Layer Above Clothes" = GENITAL_LAYER_HIGH,
 	)
 
-	var/picked_visibility = tgui_input_list(src, "Choose visibility setting", "Expose/Hide genitals", gen_vis_trans)
+	var/picked_visibility = tgui_input_list(src, LANG("mob.8c64f99e", null), LANG("mob.dfba591a", null), gen_vis_trans)
 
 	if(!picked_visibility || !picked_organ || !(picked_organ in organs))
 		return
 
 	if(gen_vis_trans[picked_visibility] == GENITAL_LAYER_NORMAL || gen_vis_trans[picked_visibility] == GENITAL_LAYER_HIGH)
 		picked_organ.layer_mode = gen_vis_trans[picked_visibility]
-		balloon_alert(src, "set layering to [LOWER_TEXT(picked_visibility)]")
+		balloon_alert(src, LANG("mob.8e992c0f", list(LOWER_TEXT(picked_visibility))))
 		update_body()
 		return
 
 	picked_organ.visibility_preference = gen_vis_trans[picked_visibility]
-	balloon_alert(src, "set to [LOWER_TEXT(picked_visibility)]")
+	balloon_alert(src, LANG("mob.28f94138", list(LOWER_TEXT(picked_visibility))))
 	update_body()
 
 /mob/living/carbon/human/verb/toggle_arousal()
@@ -268,7 +268,7 @@
 	set desc = "Allows you to toggle how aroused your private parts are."
 
 	if(stat != CONSCIOUS)
-		to_chat(usr, span_warning("You can't toggle arousal right now..."))
+		to_chat(usr, span_warning(LANG("mob.320c55f3", null)))
 		return
 
 	var/list/genital_list = list()
@@ -279,7 +279,7 @@
 	if(!genital_list.len) //There is nothing to modify.
 		return
 
-	var/obj/item/organ/genital/picked_organ = tgui_input_list(src, "Choose which genitalia to the change arousal of", "Expose/Hide genitals", genital_list)
+	var/obj/item/organ/genital/picked_organ = tgui_input_list(src, LANG("mob.0bd22500", null), LANG("mob.dfba591a", null), genital_list)
 
 	if(!picked_organ || !(picked_organ in organs))
 		return
@@ -290,12 +290,12 @@
 		"Very aroused" = AROUSAL_FULL,
 	)
 
-	var/picked_arousal = tgui_input_list(src, "Choose arousal", "Toggle Arousal", gen_arous_trans)
+	var/picked_arousal = tgui_input_list(src, LANG("mob.f7ed617f", null), LANG("mob.963596b1", null), gen_arous_trans)
 
 	if(!picked_arousal || !picked_organ || !(picked_organ in organs))
 		return
 
 	picked_organ.aroused = gen_arous_trans[picked_arousal]
 	picked_organ.update_sprite_suffix()
-	balloon_alert(src, "set to [LOWER_TEXT(picked_arousal)]")
+	balloon_alert(src, LANG("mob.28f94138", list(LOWER_TEXT(picked_arousal))))
 	update_body()

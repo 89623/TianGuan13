@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // The organ jar - a 120u beaker that can hold a single organ
 /obj/item/reagent_containers/cup/beaker/organ_jar
 	name = "organ jar"
@@ -20,9 +21,9 @@
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/examine(mob/user)
 	. = ..()
-	. += span_info("Any organ inside the jar will be preserved if it is entirely filled with formaldehyde.")
+	. += span_info(LANG("obj.7b02a777", null))
 	if(held_organ && held_organ.GetComponent(/datum/component/ghostrole_on_revive))
-		. += span_smallnoticeital("The brain is twitching...") // Guaranteed to be a brain if it has that component
+		. += span_smallnoticeital(LANG("obj.e1147132", null)) // Guaranteed to be a brain if it has that component
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/Destroy(force)
 	. = ..()
@@ -31,7 +32,7 @@
 // Alt click lets you take the organ out, if it's present
 /obj/item/reagent_containers/cup/beaker/organ_jar/click_alt(mob/user)
 	if(held_organ)
-		balloon_alert(user, "removed [held_organ]")
+		balloon_alert(user, LANG("obj.c6b4aa68", list(held_organ)))
 		user.put_in_hands(held_organ)
 		held_organ.organ_flags &= ~ORGAN_FROZEN
 		held_organ = null
@@ -47,15 +48,15 @@
 	if(!istype(tool, /obj/item/organ))
 		return ..()
 	if(held_organ)
-		balloon_alert(user, "the jar already contains [held_organ]")
+		balloon_alert(user, LANG("obj.df3afad5", list(held_organ)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "inserted [tool]")
+	balloon_alert(user, LANG("obj.94d2a5ff", list(tool)))
 	held_organ = tool
 	name = "[tool.name] in a jar"
-	desc = "A jar with \the [tool] inside it."
+	desc = LANG("obj.75a92945", list(tool))
 	check_organ_freeze()
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -109,24 +110,20 @@
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/brain_in_a_jar/examine(mob/user)
 	. = ..()
-	. += span_notice("<i>You can see a note attached to the bottom..</i>")
+	. += span_notice(LANG("obj.501c2297", null))
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/brain_in_a_jar/examine_more(mob/user)
 	. = ..()
 	// Flavor for why the brain is scarred
 	switch(note_type)
 		if(NOTE_STUCK_IN_MAIL)
-			. += span_notice("According to the note, this jar must've been stuck in the mail for at least 50 years...")
+			. += span_notice(LANG("obj.3bae428a", null))
 		if(NOTE_MORBID_GIFT)
-			. += span_notice("It reads...")
-			. += span_notice("Greetings, XXX. I stumbled upon a hermit in my travels, \
-			whose quirks immediately piqued my interest. I'm sure his brain will be as useful to your research \
-			as it has been to mine. Signed, YYY.")
+			. += span_notice(LANG("obj.c0451ef0", null))
+			. += span_notice(LANG("obj.b06cbbb9", null))
 		if(NOTE_DISCARDED_LOST_CREW)
-			. += span_notice("It reads...")
-			. += span_notice("Hey, XXX. Management wanted me to discard this poor schmuck's brain, \
-			claiming it's 'too damaged to viably recover', so I figured I might as well throw you a bone. \
-			I know you like these sorts of things. Signed, ZZZ.")
+			. += span_notice(LANG("obj.c0451ef0", null))
+			. += span_notice(LANG("obj.c7fa32e3", null))
 
 
 /obj/item/reagent_containers/cup/beaker/organ_jar/brain_in_a_jar/Initialize(mapload)
@@ -142,7 +139,7 @@
 	held_organ = scarred_brain // Put the brain inside the jar
 	reagents.add_reagent(/datum/reagent/toxin/formaldehyde, reagents.maximum_volume) // Fill the jar with formaldehyde
 	name = "brain in a jar" // Set a custom name&description
-	desc = "A brain in a jar. You can see it twitching..."
+	desc = LANG("obj.615e8ff1", null)
 	update_appearance()
 
 // All this does is add a random special brain trauma + add recovered crew antag datum for logging

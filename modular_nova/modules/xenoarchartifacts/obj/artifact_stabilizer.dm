@@ -23,7 +23,7 @@
 	var/stabilizing_speed = 5 SECONDS
 
 /obj/item/xenoarch/anomaly_stabilizer/attack_self(mob/user)
-	var/target_path = input(user, "Choose a field") as null|anything in fields
+	var/target_path = input(user, LANG("obj.2f6ddbd3", null)) as null|anything in fields
 	if (!target_path)
 		return
 	else
@@ -39,14 +39,14 @@
 			return
 
 		user.visible_message(
-			span_notice("[user] begins to stabilize [current] using [src]."),
-			span_notice("You begin to stabilize [current] using [src]."),
+			span_notice(LANG("obj.b1fd8b0c", list(user, current, src))),
+			span_notice(LANG("obj.feb5fc7e", list(current, src))),
 			blind_message = span_hear("You hear buzzing nearby."),
 		)
 		if(!do_after(user, stabilizing_speed * skill_modifier, target = current))
 			user.visible_message(
-				span_notice("[user] messes up and damages [current]!"),
-				span_notice("You interrupt your stabilizing, damaging the boulder in the process!"),
+				span_notice(LANG("obj.19c6e6e8", list(user, current))),
+				span_notice(LANG("obj.3ed07c7b", null)),
 				blind_message = span_hear("You hear rock crumbling nearby."),
 			)
 			current.excavation_level += rand(10,50)
@@ -59,8 +59,8 @@
 			current.stabilised = FALSE // Yep, you can change the perfectly stabilized boulder wrong
 
 		user.visible_message(
-			span_notice("[user] finish applying the stabilizing field to the [current]."),
-			span_notice("You finish applying the stabilizing field to the [current]."),
+			span_notice(LANG("obj.0973cb66", list(user, current))),
+			span_notice(LANG("obj.8c44f842", list(current))),
 		)
 		user.mind?.adjust_experience(/datum/skill/archeology, 10)
 		return

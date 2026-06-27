@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/limb/autopsy
 	name = "autopsy"
 	rnd_name = "Androtomy (Dissection and Autopsy)"
@@ -14,10 +15,10 @@
 
 /datum/surgery_operation/limb/autopsy/all_required_strings()
 	. = list()
-	. += "operate on chest (target chest)"
+	. += LANG("datum.38e769ea", null)
 	. += ..()
-	. += "the patient must be deceased"
-	. += "the patient must not have been autopsied prior"
+	. += LANG("datum.75e2af90", null)
+	. += LANG("datum.f8b7fe6e", null)
 
 /datum/surgery_operation/limb/autopsy/state_check(obj/item/bodypart/limb)
 	if(limb.body_zone != BODY_ZONE_CHEST)

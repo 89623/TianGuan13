@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/blood_siphon
 	name = "Blood Siphon"
 	desc = "A targeted spell that heals your wounds while damaging the enemy. \
@@ -27,16 +28,16 @@
 	. = ..()
 	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
 	if(cast_on.can_block_magic())
-		owner.balloon_alert(owner, "spell blocked!")
+		owner.balloon_alert(owner, LANG("datum.589cf3eb", null))
 		cast_on.visible_message(
-			span_danger("The spell bounces off of [cast_on]!"),
-			span_danger("The spell bounces off of you!"),
+			span_danger(LANG("datum.44d911f3", list(cast_on))),
+			span_danger(LANG("datum.f092e989", null)),
 		)
 		return FALSE
 
 	cast_on.visible_message(
-		span_danger("[cast_on] turns pale as a red glow envelops [cast_on.p_them()]!"),
-		span_danger("You pale as a red glow enevelops you!"),
+		span_danger(LANG("datum.883ecb1d", list(cast_on, cast_on.p_them()))),
+		span_danger(LANG("datum.89b8fe70", null)),
 	)
 
 	var/mob/living/living_owner = owner

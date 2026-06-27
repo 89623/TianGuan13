@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/camera_advanced/abductor
 	name = "Human Observation Console"
 	var/team_number = 0
@@ -55,7 +56,7 @@
 	if(!target || !iscarbon(owner))
 		return
 	if(world.time < use_delay)
-		to_chat(owner, span_warning("You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!"))
+		to_chat(owner, span_warning(LANG("datum.437630d8", list(DisplayTimeText(use_delay - world.time), target))))
 		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/eye/camera/remote/remote_eye = C.remote_control
@@ -63,11 +64,11 @@
 
 	var/area/target_area = get_area(remote_eye)
 	if((target_area.area_flags & NOTELEPORT) && !istype(target_area, /area/centcom/abductor_ship))
-		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
+		to_chat(owner, span_warning(LANG("datum.ee429b36", null)))
 		return
 
 	if(target_area.motion_monitored)
-		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
+		to_chat(owner, span_warning(LANG("datum.ee429b36", null)))
 		return
 
 	use_delay = (world.time + abductor_pad_cooldown)
@@ -99,7 +100,7 @@
 	if(!target || !iscarbon(owner))
 		return
 	if(world.time < use_delay)
-		to_chat(owner, span_warning("You can only teleport to one place at a time!"))
+		to_chat(owner, span_warning(LANG("datum.212bc590", null)))
 		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/eye/camera/remote/remote_eye = C.remote_control
@@ -107,11 +108,11 @@
 
 	var/area/target_area = get_area(remote_eye)
 	if((target_area.area_flags & NOTELEPORT) && !istype(target_area, /area/centcom/abductor_ship))
-		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
+		to_chat(owner, span_warning(LANG("datum.ee429b36", null)))
 		return
 
 	if(target_area.motion_monitored)
-		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
+		to_chat(owner, span_warning(LANG("datum.ee429b36", null)))
 		return
 
 	use_delay = (world.time + teleport_self_cooldown)

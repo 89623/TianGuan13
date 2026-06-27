@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/abductor
 	icon = 'icons/obj/antags/abductor.dmi'
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
@@ -8,7 +9,7 @@
 	if (HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
 
-	balloon_alert(user, "no idea how this works!")
+	balloon_alert(user, LANG("obj.69415cb4", null))
 	return FALSE
 
 /obj/item/abductor/proc/ScientistCheck(mob/user)
@@ -16,10 +17,10 @@
 	var/sci_training = HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
 
 	if(training && !sci_training)
-		to_chat(user, span_warning("You're not trained to use this!"))
+		to_chat(user, span_warning(LANG("obj.6b52fb7b", null)))
 		. = FALSE
 	else if(!training && !sci_training)
-		to_chat(user, span_warning("You can't figure how this works!"))
+		to_chat(user, span_warning(LANG("obj.5a67c777", null)))
 		. = FALSE
 	else
 		. = TRUE
@@ -38,7 +39,7 @@
 	if(!ScientistCheck(user))
 		return
 	if(!console)
-		to_chat(user, span_warning("The device is not linked to console!"))
+		to_chat(user, span_warning(LANG("obj.3d99acab", null)))
 		return
 
 	if(mode == GIZMO_SCAN)
@@ -47,13 +48,13 @@
 	else
 		mode = GIZMO_SCAN
 		icon_state = "gizmo_scan"
-	to_chat(user, span_notice("You switch the device to [mode == GIZMO_SCAN? "SCAN": "MARK"] MODE"))
+	to_chat(user, span_notice(LANG("obj.6cf824a8", list(mode == GIZMO_SCAN? "SCAN": "MARK"))))
 
 /obj/item/abductor/gizmo/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ScientistCheck(user))
 		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 	if(!console)
-		to_chat(user, span_warning("The device is not linked to console!"))
+		to_chat(user, span_warning(LANG("obj.3d99acab", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	switch(mode)
@@ -72,27 +73,27 @@
 /obj/item/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
 		console.AddSnapshot(target)
-		to_chat(user, span_notice("You scan [target] and add [target.p_them()] to the database."))
+		to_chat(user, span_notice(LANG("obj.f405226c", list(target, target.p_them()))))
 
 /obj/item/abductor/gizmo/proc/mark(atom/target, mob/living/user)
 	var/mob/living/marked = marked_target_weakref?.resolve()
 	if(marked == target)
-		to_chat(user, span_warning("This specimen is already marked!"))
+		to_chat(user, span_warning(LANG("obj.972f9b4d", null)))
 		return
 	if(isabductor(target) || iscow(target))
 		marked_target_weakref = WEAKREF(target)
-		to_chat(user, span_notice("You mark [target] for future retrieval."))
+		to_chat(user, span_notice(LANG("obj.197c9883", list(target))))
 	else
 		prepare(target,user)
 
 /obj/item/abductor/gizmo/proc/prepare(atom/target, mob/living/user)
 	if(get_dist(target,user)>1)
-		to_chat(user, span_warning("You need to be next to the specimen to prepare it for transport!"))
+		to_chat(user, span_warning(LANG("obj.1003447e", null)))
 		return
-	to_chat(user, span_notice("You begin preparing [target] for transport..."))
+	to_chat(user, span_notice(LANG("obj.af7c8b56", list(target))))
 	if(do_after(user, 10 SECONDS, target = target))
 		marked_target_weakref = WEAKREF(target)
-		to_chat(user, span_notice("You finish preparing [target] for transport."))
+		to_chat(user, span_notice(LANG("obj.df9a1b4c", list(target))))
 
 /obj/item/abductor/gizmo/Destroy()
 	if(console)
@@ -160,7 +161,7 @@
 	else
 		mode = MIND_DEVICE_MESSAGE
 		icon_state = "mind_device_message"
-	to_chat(user, span_notice("You switch the device to [mode == MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"] MODE"))
+	to_chat(user, span_notice(LANG("obj.6cf824a8", list(mode == MIND_DEVICE_MESSAGE? "TRANSMISSION": "COMMAND"))))
 
 /obj/item/abductor/mind_device/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ismob(interacting_with))
@@ -183,19 +184,19 @@
 		var/mob/living/carbon/carbon_target = target
 		var/obj/item/organ/heart/gland/target_gland = carbon_target.get_organ_slot("heart")
 		if(!istype(target_gland))
-			to_chat(user, span_warning("Your target does not have an experimental gland!"))
+			to_chat(user, span_warning(LANG("obj.e91170ad", null)))
 			return
 		if(!target_gland.mind_control_uses)
-			to_chat(user, span_warning("Your target's gland is spent!"))
+			to_chat(user, span_warning(LANG("obj.d22d3907", null)))
 			return
 		if(target_gland.active_mind_control)
-			to_chat(user, span_warning("Your target is already under a mind-controlling influence!"))
+			to_chat(user, span_warning(LANG("obj.01917812", null)))
 			return
 
 		var/command = tgui_input_text(
 			user,
-			"Enter the command for your target to follow. Uses Left: [target_gland.mind_control_uses], Duration: [DisplayTimeText(target_gland.mind_control_duration)]",
-			"Enter command",
+			LANG("obj.a7ed86f2", list(target_gland.mind_control_uses, DisplayTimeText(target_gland.mind_control_duration))),
+			LANG("obj.d9e1fd5c", null),
 			max_length = MAX_MESSAGE_LEN,
 			)
 
@@ -209,28 +210,28 @@
 			return
 
 		if(carbon_target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-			user.balloon_alert(user, "foiled!")
-			to_chat(user, span_warning("Your target seems to have some sort of mental blockage, preventing the message from being sent! It seems you've been foiled."))
+			user.balloon_alert(user, LANG("obj.6bcfcd23", null))
+			to_chat(user, span_warning(LANG("obj.ba8de394", null)))
 			return
 
 		target_gland.mind_control(command, user)
-		to_chat(user, span_notice("You send the command to your target."))
+		to_chat(user, span_notice(LANG("obj.3f23e3f7", null)))
 
 /obj/item/abductor/mind_device/proc/mind_message(atom/target, mob/living/user)
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.stat == DEAD)
-			to_chat(user, span_warning("Your target is dead!"))
+			to_chat(user, span_warning(LANG("obj.d82b30a4", null)))
 			return
-		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message", max_length = MAX_MESSAGE_LEN)
+		var/message = tgui_input_text(user, LANG("obj.c07f4e25", null), LANG("obj.91737b81", null), max_length = MAX_MESSAGE_LEN)
 		if(!message)
 			return
 		if(QDELETED(living_target) || living_target.stat == DEAD)
 			return
 
-		living_target.balloon_alert(living_target, "you hear a voice")
-		to_chat(living_target, span_hear("You hear a voice in your head saying: [span_abductor(message)]"))
-		to_chat(user, span_notice("You send the message to your target."))
+		living_target.balloon_alert(living_target, LANG("obj.d955e950", null))
+		to_chat(living_target, span_hear(LANG("obj.787f9bf0", list(span_abductor(message)))))
+		to_chat(user, span_notice(LANG("obj.3f465623", null)))
 		log_directed_talk(user, living_target, message, LOG_SAY, "abductor whisper")
 
 
@@ -267,7 +268,7 @@
 
 /obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
 	. = ..()
-	user.visible_message(span_suicide("[user] points [src] at [user.p_their()] head, it looks like [user.p_theyre()] going to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.9ce58cfb", list(user, src, user.p_their(), user.p_theyre()))))
 	// we want an animation, so lets manually handle suicide.
 	addtimer(CALLBACK(src, PROC_REF(shrink_death), user), 0)
 	return MANUAL_SUICIDE
@@ -371,7 +372,7 @@ Return to step 11 of normal process."}
 	log_stun_attack = is_stun_mode // other modes have their own log entries.
 	on_stun_sound = is_stun_or_sleep ? 'sound/items/weapons/egloves.ogg' : null
 
-	to_chat(usr, span_notice("You switch the baton to [txt] mode."))
+	to_chat(usr, span_notice(LANG("obj.d8370760", list(txt))))
 	update_appearance()
 
 /obj/item/melee/baton/abductor/update_icon_state()
@@ -396,8 +397,8 @@ Return to step 11 of normal process."}
 /obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override, clumsy)
 	switch (mode)
 		if(BATON_STUN)
-			target.visible_message(span_danger("[user] stuns [target] with [src]!"),
-				span_userdanger("[user] stuns you with [src]!"), visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
+			target.visible_message(span_danger(LANG("obj.9f93a4c5", list(user, target, src))),
+				span_userdanger(LANG("obj.c45c640e", list(user, src))), visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
 			target.set_jitter_if_lower(40 SECONDS)
 			target.set_confusion_if_lower(10 SECONDS)
 			target.set_stutter_if_lower(16 SECONDS)
@@ -424,25 +425,25 @@ Return to step 11 of normal process."}
 	playsound(src, on_stun_sound, 50, TRUE, -1)
 	if(INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB))
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
-			to_chat(user, span_warning("The specimen has some kind of mental protection that is interfering with the sleep inducement! It seems you've been foiled."))
-			target.visible_message(span_danger("[user] tried to induced sleep in [target] with [src], but is unsuccessful!"), \
-			span_userdanger("You feel a strange wave of heavy drowsiness wash over you!"))
+			to_chat(user, span_warning(LANG("obj.f6dc0984", null)))
+			target.visible_message(span_danger(LANG("obj.db6d6583", list(user, target, src))), \
+			span_userdanger(LANG("obj.9dd4e9f1", null)))
 			target.adjust_drowsiness(4 SECONDS)
 			return
-		target.visible_message(span_danger("[user] induces sleep in [target] with [src]!"), \
-		span_userdanger("You suddenly feel very drowsy!"))
+		target.visible_message(span_danger(LANG("obj.4bc74d37", list(user, target, src))), \
+		span_userdanger(LANG("obj.234f547d", null)))
 		target.Sleeping(sleep_time)
 		log_combat(user, target, "put to sleep")
 	else
 		if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-			to_chat(user, span_warning("The specimen has some kind of mental protection that is completely blocking our sleep inducement methods! It seems you've been foiled."))
-			target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src], but is unsuccessful!"), \
-			span_userdanger("Any sense of drowsiness is quickly diminished!"))
+			to_chat(user, span_warning(LANG("obj.059a4a43", null)))
+			target.visible_message(span_danger(LANG("obj.e82842a8", list(user, target, src))), \
+			span_userdanger(LANG("obj.b838be03", null)))
 			return
 		target.adjust_drowsiness(2 SECONDS)
-		to_chat(user, span_warning("Sleep inducement works fully only on stunned specimens! "))
-		target.visible_message(span_danger("[user] tried to induce sleep in [target] with [src]!"), \
-							span_userdanger("You suddenly feel drowsy!"))
+		to_chat(user, span_warning(LANG("obj.2060e78a", null)))
+		target.visible_message(span_danger(LANG("obj.9882cdc9", list(user, target, src))), \
+							span_userdanger(LANG("obj.d7416311", null)))
 
 /obj/item/melee/baton/abductor/proc/CuffAttack(mob/living/victim, mob/living/user)
 	if(!iscarbon(victim))
@@ -451,21 +452,21 @@ Return to step 11 of normal process."}
 	if(!carbon_victim.handcuffed)
 		if(carbon_victim.canBeHandcuffed())
 			playsound(src, 'sound/items/weapons/cablecuff.ogg', 30, TRUE, -2)
-			carbon_victim.visible_message(span_danger("[user] begins restraining [carbon_victim] with [src]!"), \
-									span_userdanger("[user] begins shaping an energy field around your hands!"))
+			carbon_victim.visible_message(span_danger(LANG("obj.a46fbd1b", list(user, carbon_victim, src))), \
+									span_userdanger(LANG("obj.3fbf6d4c", list(user))))
 			if(do_after(user, time_to_cuff, carbon_victim) && carbon_victim.canBeHandcuffed())
 				if(!carbon_victim.handcuffed)
 					carbon_victim.set_handcuffed(new /obj/item/restraints/handcuffs/energy(carbon_victim))
-					to_chat(user, span_notice("You restrain [carbon_victim]."))
+					to_chat(user, span_notice(LANG("obj.1defe352", list(carbon_victim))))
 					log_combat(user, carbon_victim, "handcuffed")
 			else
-				to_chat(user, span_warning("You fail to restrain [carbon_victim]."))
+				to_chat(user, span_warning(LANG("obj.1cbb5ba9", list(carbon_victim))))
 		else
-			to_chat(user, span_warning("[carbon_victim] doesn't have two hands..."))
+			to_chat(user, span_warning(LANG("obj.14f2fed3", list(carbon_victim))))
 
 /obj/item/melee/baton/abductor/proc/ProbeAttack(mob/living/victim, mob/living/user)
-	victim.visible_message(span_danger("[user] probes [victim] with [src]!"), \
-						span_userdanger("[user] probes you!"))
+	victim.visible_message(span_danger(LANG("obj.2b2a81d0", list(user, victim, src))), \
+						span_userdanger(LANG("obj.9467f752", list(user))))
 
 	var/species = span_warning("Unknown species")
 	var/helptext = span_warning("Species unsuitable for experiments.")
@@ -496,7 +497,7 @@ Return to step 11 of normal process."}
 
 /obj/item/restraints/handcuffs/energy/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
-	wearer.visible_message(span_danger("[wearer]'s [name] breaks in a discharge of energy!"), span_userdanger("[wearer]'s [name] breaks in a discharge of energy!"))
+	wearer.visible_message(span_danger(LANG("obj.f045755b", list(wearer, name))), span_userdanger(LANG("obj.f045755b", list(wearer, name))))
 	do_sparks(4, FALSE, wearer.loc)
 	qdel(src)
 
@@ -505,13 +506,13 @@ Return to step 11 of normal process."}
 	if(AbductorCheck(user))
 		switch(mode)
 			if(BATON_STUN)
-				. += span_warning("The baton is in stun mode.")
+				. += span_warning(LANG("obj.77bd5034", null))
 			if(BATON_SLEEP)
-				. += span_warning("The baton is in sleep inducement mode.")
+				. += span_warning(LANG("obj.e662057d", null))
 			if(BATON_CUFF)
-				. += span_warning("The baton is in restraining mode.")
+				. += span_warning(LANG("obj.fbaded58", null))
 			if(BATON_PROBE)
-				. += span_warning("The baton is in probing mode.")
+				. += span_warning(LANG("obj.a99d040b", null))
 
 /obj/item/radio/headset/abductor
 	name = "alien headset"
@@ -539,7 +540,7 @@ Return to step 11 of normal process."}
 
 /obj/item/abductor_machine_beacon/attack_self(mob/user)
 	..()
-	user.visible_message(span_notice("[user] places down [src] and activates it."), span_notice("You place down [src] and activate it."))
+	user.visible_message(span_notice(LANG("obj.2008627f", list(user, src))), span_notice(LANG("obj.b34214b7", list(src))))
 	user.dropItemToGround(src)
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50)
 	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 3 SECONDS)
@@ -555,7 +556,7 @@ Return to step 11 of normal process."}
 	if(viable)
 		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
 		var/new_machine = new spawned_machine(loc)
-		visible_message(span_notice("[new_machine] warps on top of the beacon!"))
+		visible_message(span_notice(LANG("obj.c7e75785", list(new_machine))))
 		qdel(src)
 	else
 		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50)
@@ -678,7 +679,7 @@ Return to step 11 of normal process."}
 
 /obj/item/abductor/alien_omnitool/examine()
 	. = ..()
-	. += " The mode is: [tool_behaviour]"
+	. += LANG("obj.ddeb8de7", list(tool_behaviour))
 
 /obj/item/abductor/alien_omnitool/attack_self(mob/user)
 	if(!user)
@@ -745,7 +746,7 @@ Return to step 11 of normal process."}
 		)
 		active_toolset = TOOLSET_HACKING
 		if(user)
-			balloon_alert(user, "hacking toolset selected")
+			balloon_alert(user, LANG("obj.d9653249", null))
 	else
 		tool_list = list(
 			"Retractor" = image(icon = 'icons/obj/antags/abductor.dmi', icon_state = "retractor"),
@@ -759,4 +760,4 @@ Return to step 11 of normal process."}
 		)
 		active_toolset = TOOLSET_MEDICAL
 		if(user)
-			balloon_alert(user, "medical toolset selected")
+			balloon_alert(user, LANG("obj.10edfb47", null))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Mounted guns are basically a smaller equivalent to cannons, designed to use pre-existing ammo rather than cannonballs.
 //Due to using pre-existing ammo, they dont require to be loaded with gunpowder or an equivalent.
 
@@ -86,16 +87,16 @@
 		return NONE
 
 	if(is_firing)
-		balloon_alert(user, "gun firing!")
+		balloon_alert(user, LANG("obj.f6aac220", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/fully_loaded = shots_in_gun >= max_shots_per_fire
 	if(fully_loaded)
-		balloon_alert(user, "already loaded!")
+		balloon_alert(user, LANG("obj.e79a422e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if (load_delay > 0)
-		user.visible_message(span_warning("[user] starts loading [src]."))
+		user.visible_message(span_warning(LANG("obj.3283f36d", list(user, src))))
 		if(!do_after(user, load_delay, target = src))
 			return ITEM_INTERACT_BLOCKING
 
@@ -109,7 +110,7 @@
 	if (.)
 		return
 	if (is_firing)
-		balloon_alert(user, "gun firing!")
+		balloon_alert(user, LANG("obj.f6aac220", null))
 		return
 	try_firing(user)
 
@@ -121,7 +122,7 @@
 /// Loop firing until we are done
 /obj/structure/mounted_gun/proc/fire_sequence(mob/living/user)
 	if (!shots_in_gun)
-		balloon_alert(user, "not loaded!")
+		balloon_alert(user, LANG("obj.654000ba", null))
 		return
 
 	is_firing = TRUE
@@ -220,13 +221,13 @@
 
 /obj/structure/mounted_gun/organ_gun/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<b><i>Looking down at \the [src], you recall a tale told to you in some distant memory...</i></b>")
+	. += span_notice(LANG("obj.78caf5a0", list(src)))
 
-	. += span_info("To commit an act of vengeance is not unlike to enter a blood pact with a devil, ending the life of another, at the cost of your own.")
-	. += span_info("When humanity first spilled the blood of its own kind, with likely nothing more than a rock, the seal was broken. Vengeance was borne unto the world.")
-	. += span_info("However, vengeance alone is not enough to carry through the grim deed of murder. One must gain an advantage over their adversary.")
-	. += span_info("As such, the man who ended another's life with a stone, was in turn smote himself by another wielding a spear. After spears, bows. Swords. Guns. Tanks. Missiles. And on and on Vengeance fed. Growing stronger. Growing Worse.")
-	. += span_info("Vengeance persists to this day. It sometimes may slumber, seemingly content with having gorged itself, but in the end, its ceaseless hunger can be neither numbed nor sated.")
+	. += span_info(LANG("obj.641b55a4", null))
+	. += span_info(LANG("obj.68407052", null))
+	. += span_info(LANG("obj.0618f793", null))
+	. += span_info(LANG("obj.6ff34045", null))
+	. += span_info(LANG("obj.3748abf4", null))
 
 /obj/structure/mounted_gun/organ_gun/get_fired_projectile()
 	var/random_type = pick_weight(list_of_projectiles)
@@ -315,7 +316,7 @@
 		return ..()
 
 	if (load_delay > 0)
-		user.visible_message(span_warning("[user] starts winding [src]."))
+		user.visible_message(span_warning(LANG("obj.8ec866ed", list(user, src))))
 		if(!do_after(user, load_delay, target = src))
 			return
 
@@ -373,16 +374,16 @@
 		return NONE
 
 	if(is_firing)
-		balloon_alert(user, "gun firing!")
+		balloon_alert(user, LANG("obj.f6aac220", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(loaded_spear)
-		balloon_alert(user, "already loaded!")
+		balloon_alert(user, LANG("obj.e79a422e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)
 	if (load_delay > 0)
-		user.visible_message(span_warning("[user] starts loading [src]."))
+		user.visible_message(span_warning(LANG("obj.3283f36d", list(user, src))))
 		if (!do_after(user, load_delay, target = src))
 			return ITEM_INTERACT_BLOCKING
 

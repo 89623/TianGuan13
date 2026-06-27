@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BOOK_ADMIN_DELETE "deleted"
 #define BOOK_ADMIN_RESTORE "undeleted"
 #define BOOK_ADMIN_REPORT "reported"
@@ -206,7 +207,7 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/hide_book(id, reason, client/admin)
 	if(!SSdbcore.Connect())
 		can_connect = FALSE
-		to_chat(admin, span_danger("Failed to establish database connection."))
+		to_chat(admin, span_danger(LANG("obj.cfa9a578", null)))
 		return
 	if(!check_rights_for(admin, R_BAN))
 		log_admin_private("[admin.ckey] tried to hide a book without the required perms")
@@ -241,7 +242,7 @@
 /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/proc/unhide_book(id, reason, client/admin)
 	if(!SSdbcore.Connect())
 		can_connect = FALSE
-		to_chat(admin, span_danger("Failed to establish database connection."))
+		to_chat(admin, span_danger(LANG("obj.cfa9a578", null)))
 		return
 	if(!check_rights_for(admin, R_BAN))
 		log_admin_private("[admin.ckey] tried to unhide a book without the required perms")

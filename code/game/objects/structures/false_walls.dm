@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * False Walls
  */
@@ -96,21 +97,21 @@
 /obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!opening || !tool.tool_behaviour)
 		return ..()
-	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
+	to_chat(user, span_warning(LANG("obj.79d73a2a", null)))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/falsewall/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!density)
-		to_chat(user, span_warning("You can't reach, close it first!"))
+		to_chat(user, span_warning(LANG("obj.bd26aaca", null)))
 		return
 	var/turf/loc_turf = get_turf(src)
 	if(loc_turf.density)
-		to_chat(user, span_warning("[src] is blocked!"))
+		to_chat(user, span_warning(LANG("obj.1596b690", list(src))))
 		return ITEM_INTERACT_SUCCESS
 	if(!isfloorturf(loc_turf))
-		to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
+		to_chat(user, span_warning(LANG("obj.de34c64e", list(src))))
 		return ITEM_INTERACT_SUCCESS
-	user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
+	user.visible_message(span_notice(LANG("obj.7015292b", list(user))), span_notice(LANG("obj.6bcc8576", null)))
 	ChangeToWall()
 	return ITEM_INTERACT_SUCCESS
 
@@ -124,11 +125,11 @@
 /obj/structure/falsewall/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(!opening)
 		return ..()
-	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
+	to_chat(user, span_warning(LANG("obj.79d73a2a", null)))
 	return
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
-	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))
+	user.visible_message(span_notice(LANG("obj.53c21018", list(user))), span_notice(LANG("obj.f2e26fd8", null)))
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else
@@ -146,7 +147,7 @@
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
-	to_chat(user, span_notice("The outer plating is <b>welded</b> firmly in place."))
+	to_chat(user, span_notice(LANG("obj.68a4d749", null)))
 	return null
 
 /obj/structure/falsewall/mouse_drop_receive(mob/living/dropping, mob/user, params)
@@ -168,7 +169,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
-	to_chat(user, span_notice("The outer <b>grille</b> is fully intact."))
+	to_chat(user, span_notice(LANG("obj.30f739bc", null)))
 	return null
 
 /obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
@@ -400,7 +401,7 @@
 
 /obj/structure/falsewall/material/finalize_material_effects(list/materials)
 	. = ..()
-	desc = "A huge chunk of [get_material_english_list(materials)] used to separate rooms."
+	desc = LANG("obj.2d73a0c8", list(get_material_english_list(materials)))
 
 /obj/structure/falsewall/material/toggle_open()
 	if(!QDELETED(src))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * Photo
  */
@@ -69,7 +70,7 @@
 	return ..()
 
 /obj/item/photo/suicide_act(mob/living/carbon/human/user)
-	user.visible_message(span_suicide("[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!"))//when you wanna look at photo of waifu one last time before you die...
+	user.visible_message(span_suicide(LANG("obj.e6ae375c", list(user, src, user.p_theyre()))))//when you wanna look at photo of waifu one last time before you die...
 	if (!ishuman(user) || user.physique == MALE)
 		playsound(user, 'sound/mobs/humanoids/human/laugh/manlaugh1.ogg', 50, TRUE)//EVERY TIME I DO IT MAKES ME LAUGH
 	else
@@ -83,7 +84,7 @@
 	if(IS_WRITING_UTENSIL(P))
 		if(!user.can_write(P))
 			return
-		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
+		var/txt = tgui_input_text(user, LANG("obj.e7b47880", null), LANG("obj.c5ae4096", null), max_length = 128)
 		if(txt && user.can_perform_action(src))
 			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			scribble = txt
@@ -96,11 +97,11 @@
 	if(in_range(src, user) || isobserver(user))
 		show(user)
 	else
-		. += span_warning("You need to get closer to get a good look at this photo!")
+		. += span_warning(LANG("obj.47d659b3", null))
 
 /obj/item/photo/proc/show(mob/user)
 	if(!istype(picture) || !picture.picture_image)
-		to_chat(user, span_warning("[src] seems to be blank..."))
+		to_chat(user, span_warning(LANG("obj.28872318", list(src))))
 		return
 	var/width_height = "width"
 	if(picture.psize_y > picture.psize_x)
@@ -118,7 +119,7 @@
 	set name = "Rename photo"
 	set src in usr
 
-	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)
+	var/n_name = tgui_input_text(usr, LANG("obj.ab5cb1c6", null), LANG("obj.a9ed249c", null), max_length = MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
 	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated)
 		name = "photo[(n_name ? "- '[n_name]'" : null)]"

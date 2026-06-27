@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Stabilized extracts:
 	Provides a passive buff to the holder.
@@ -143,7 +144,7 @@ Stabilized extracts:
 	generate_mobtype()
 
 /obj/item/slimecross/stabilized/gold/attack_self(mob/user)
-	var/choice = tgui_input_list(user, "Which do you want to reset?", "Familiar Adjustment", sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name")))
+	var/choice = tgui_input_list(user, LANG("obj.60072d1f", null), LANG("obj.9561baf1", null), sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name")))
 	if(isnull(choice))
 		return
 	if(!user.can_perform_action(src))
@@ -153,21 +154,21 @@ Stabilized extracts:
 		if(L.has_status_effect(/datum/status_effect/stabilized/gold))
 			L.remove_status_effect(/datum/status_effect/stabilized/gold)
 	if(choice == "Familiar Location")
-		to_chat(user, span_notice("You prod [src], and it shudders slightly."))
+		to_chat(user, span_notice(LANG("obj.4812e982", list(src))))
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Species")
-		to_chat(user, span_notice("You squeeze [src], and a shape seems to shift around inside."))
+		to_chat(user, span_notice(LANG("obj.bff171fd", list(src))))
 		generate_mobtype()
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Sentience")
-		to_chat(user, span_notice("You poke [src], and it lets out a glowing pulse."))
+		to_chat(user, span_notice(LANG("obj.6be07765", list(src))))
 		saved_mind = null
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Name")
-		var/newname = sanitize_name(tgui_input_text(user, "Would you like to change the name of [mob_name]", "Name change", mob_name, MAX_NAME_LEN))
+		var/newname = sanitize_name(tgui_input_text(user, LANG("obj.ebe3820a", list(mob_name)), LANG("obj.b4bf4c54", null), mob_name, MAX_NAME_LEN))
 		if(newname)
 			mob_name = newname
-		to_chat(user, span_notice("You speak softly into [src], and it shakes slightly in response."))
+		to_chat(user, span_notice(LANG("obj.94cb2bcd", list(src))))
 		START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/stabilized/oil
@@ -197,10 +198,10 @@ Stabilized extracts:
 		return NONE
 
 	if(regencore)
-		to_chat(user, span_warning("[src] already has a regenerative crossbreed stored in it!"))
+		to_chat(user, span_warning(LANG("obj.2bf3b32a", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You place [tool] in [src], prepping the extract for automatic application!"))
+	to_chat(user, span_notice(LANG("obj.2197cf84", list(tool, src))))
 	regencore = tool
 	tool.forceMove(src)
 	return ITEM_INTERACT_SUCCESS

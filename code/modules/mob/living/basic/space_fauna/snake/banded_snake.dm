@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/snake/banded
 	name = "banded snake"
 	desc = "A colourful stripy snake. It's either a harmless asteroid kingsnake or a highly venomous and aggressive nebula viper. There's a mnemonic to tell them apart, you just need to look at the colours and examine them closely..."
@@ -32,13 +33,13 @@
 
 /mob/living/basic/snake/banded/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>You examine the bands on the snake very closely...</i>")
+	. += span_notice(LANG("mob.678e1643", null))
 	if(src.poison_reagent == (/datum/reagent/consumable/milk))
 		. += span_info("[pick(src.rhymes_harmless)]")
-		. += span_notice("This snake is not dangerous!")
+		. += span_notice(LANG("mob.df5f19ba", null))
 	else
 		. += span_info("[pick(src.rhymes_dangerous)]")
-		. += span_notice("This snake is dangerous!")
+		. += span_notice(LANG("mob.664d5bb0", null))
 	return .
 
 /datum/ai_controller/basic_controller/snake/banded

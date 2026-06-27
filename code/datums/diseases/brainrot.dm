@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/brainrot
 	name = "Brainrot"
 	max_stages = 4
@@ -25,7 +26,7 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				affected_mob.emote("yawn")
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You don't feel like yourself."))
+				to_chat(affected_mob, span_danger(LANG("datum.f77ef877", null)))
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1, 170)
 		if(3)
@@ -36,7 +37,7 @@
 			if(SPT_PROB(5, seconds_per_tick))
 				affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2, 170)
 				if(prob(2))
-					to_chat(affected_mob, span_danger("Your try to remember something important...but can't."))
+					to_chat(affected_mob, span_danger(LANG("datum.3a088b6a", null)))
 
 		if(4)
 			if(SPT_PROB(1, seconds_per_tick))
@@ -46,11 +47,11 @@
 			if(SPT_PROB(7.5, seconds_per_tick))
 				affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3, 170)
 				if(prob(2))
-					to_chat(affected_mob, span_danger("Strange buzzing fills your head, removing all thoughts."))
+					to_chat(affected_mob, span_danger(LANG("datum.04e355dc", null)))
 			if(SPT_PROB(1.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You lose consciousness..."))
-				affected_mob.visible_message(span_warning("[affected_mob] suddenly collapses!"), \
-											span_userdanger("You suddenly collapse!"))
+				to_chat(affected_mob, span_danger(LANG("datum.d2188718", null)))
+				affected_mob.visible_message(span_warning(LANG("datum.696fd78e", list(affected_mob))), \
+											span_userdanger(LANG("datum.ed060d17", null)))
 				affected_mob.Unconscious(rand(100, 200))
 				if(prob(1))
 					affected_mob.emote("snore")

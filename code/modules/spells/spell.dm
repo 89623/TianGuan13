@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # The spell action
  *
@@ -161,7 +162,7 @@
 	// Spells which require being on the station
 	if((spell_requirements & SPELL_REQUIRES_STATION) && !is_station_level(caster_turf.z))
 		if(feedback)
-			to_chat(owner, span_warning("You can't cast [src] here!"))
+			to_chat(owner, span_warning(LANG("datum.415e2e46", list(src))))
 		return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_MIND) && !owner.mind)
@@ -171,14 +172,14 @@
 	if((spell_requirements & SPELL_REQUIRES_MIME_VOW) && !HAS_MIND_TRAIT(owner, TRAIT_MIMING))
 		// In the future this can be moved out of spell checks exactly
 		if(feedback)
-			to_chat(owner, span_warning("You must dedicate yourself to silence first!"))
+			to_chat(owner, span_warning(LANG("datum.f5671870", null)))
 		return FALSE
 
 	// If the spell requires the user has no antimagic equipped, and they're holding antimagic
 	// that corresponds with the spell's antimagic, then they can't actually cast the spell
 	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && !owner.can_cast_magic(antimagic_flags))
 		if(feedback)
-			to_chat(owner, span_warning("Some form of antimagic is preventing you from casting [src]!"))
+			to_chat(owner, span_warning(LANG("datum.7aaae621", list(src))))
 		return FALSE
 
 	if(!try_invoke(owner, feedback = feedback))
@@ -189,18 +190,18 @@
 			var/mob/living/carbon/human/human_owner = owner
 			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES) && !ismonkey(human_owner)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
 				if(feedback)
-					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
+					to_chat(owner, span_warning(LANG("datum.439f20b0", null)))
 				return FALSE
 			if(!(astype(human_owner.head, /obj/item/clothing)?.clothing_flags & CASTING_CLOTHES) && !(human_owner.glasses?.clothing_flags & CASTING_CLOTHES))
 				if(feedback)
-					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+					to_chat(owner, span_warning(LANG("datum.d63fe64f", null)))
 				return FALSE
 
 	else
 		// If you strictly need to be a human, well, goodbye.
 		if(spell_requirements & SPELL_REQUIRES_HUMAN)
 			if(feedback)
-				to_chat(owner, span_warning("[src] can only be cast by humans!"))
+				to_chat(owner, span_warning(LANG("datum.1cc3dce8", list(src))))
 			return FALSE
 
 		// Otherwise, we can check for contents if they have wizardly apparel. This isn't *quite* perfect, but it'll do, especially since many of the edge cases (gorilla holding a wizard hat) still more or less make sense.
@@ -213,12 +214,12 @@
 
 			if(!any_casting)
 				if(feedback)
-					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+					to_chat(owner, span_warning(LANG("datum.d63fe64f", null)))
 				return FALSE
 
 		if(!(spell_requirements & SPELL_CASTABLE_AS_BRAIN) && isbrain(owner))
 			if(feedback)
-				to_chat(owner, span_warning("[src] can't be cast in this state!"))
+				to_chat(owner, span_warning(LANG("datum.7332ed57", list(src))))
 			return FALSE
 
 	return TRUE
@@ -312,7 +313,7 @@
 			if(INVOCATION_WHISPER, INVOCATION_SHOUT)
 				if(!caster.get_organ_slot(ORGAN_SLOT_TONGUE))
 					invocation(caster)
-					to_chat(caster, span_warning("Your lack of tongue is making it difficult to say the correct words to cast [src]..."))
+					to_chat(caster, span_warning(LANG("datum.d539a462", list(src))))
 					if(caster.click_intercept == src)
 						unset_click_ability(caster, refund_cooldown = TRUE)
 					StartCooldown(2 SECONDS)
@@ -322,10 +323,10 @@
 				if(caster.usable_hands <= 0)
 					var/arm_describer = (caster.num_hands >= 2 ? "arms limply" : (caster.num_hands == 1 ? "arm wildly" : "arm stumps"))
 					caster.visible_message(
-						span_warning("[caster] wiggles around [caster.p_their()] [arm_describer]."),
+						span_warning(LANG("datum.9b8ccbcd", list(caster, caster.p_their(), arm_describer))),
 						ignored_mobs = caster,
 					)
-					to_chat(caster, span_warning("You can't position your hands correctly to invoke [src][caster.num_hands > 0 ? "" : ", as you have none"]..."))
+					to_chat(caster, span_warning(LANG("datum.f99e6898", list(src, caster.num_hands > 0 ? "" : ", as you have none"))))
 					if(caster.click_intercept == src)
 						unset_click_ability(caster, refund_cooldown = TRUE)
 					StartCooldown(2 SECONDS)
@@ -425,7 +426,7 @@
 	// If you want a spell usable by ghosts for some reason, it must be INVOCATION_NONE
 	if(!istype(invoker))
 		if(feedback)
-			to_chat(invoker, span_warning("You need to be living to invoke [src]!"))
+			to_chat(invoker, span_warning(LANG("datum.c0f30073", list(src))))
 		return FALSE
 
 	var/invoke_sig_return = SEND_SIGNAL(invoker, COMSIG_MOB_TRY_INVOKE_SPELL, src, feedback)
@@ -436,12 +437,12 @@
 
 	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(invoker, TRAIT_EMOTEMUTE))
 		if(feedback)
-			to_chat(invoker, span_warning("You can't position your hands correctly to invoke [src]!"))
+			to_chat(invoker, span_warning(LANG("datum.1e600b4c", list(src))))
 		return FALSE
 
 	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !invoker.can_speak())
 		if(feedback)
-			to_chat(invoker, span_warning("You can't get the words out to invoke [src]!"))
+			to_chat(invoker, span_warning(LANG("datum.61088cd5", list(src))))
 		return FALSE
 
 	return TRUE

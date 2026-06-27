@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Self-sustaining extracts:
 	Produces 4 extracts that do not need reagents.
@@ -17,7 +18,7 @@ Self-sustaining extracts:
 //Just divides into the actual item.
 /obj/item/slimecross/selfsustaining/Initialize(mapload)
 	..()
-	visible_message(span_warning("The [src] shudders, and splits into four smaller extracts."))
+	visible_message(span_warning(LANG("obj.fb55d86f", list(src))))
 	for(var/i in 1 to 4)
 		var/obj/item/autoslime/A = new /obj/item/autoslime(src.loc)
 		var/obj/item/slime_extract/X = new extract_type(A)
@@ -44,7 +45,7 @@ Self-sustaining extracts:
 		var/choice = english_list(req_chem_names, and_text = ", ")
 		choices[choice] = recipe
 
-	var/selectName = tgui_input_list(user, "Reagent(s) the extract will produce.", "Self-sustaining Reaction", choices)
+	var/selectName = tgui_input_list(user, LANG("obj.bf57772f", null), LANG("obj.8456440b", null), choices)
 	if(isnull(selectName))
 		return
 

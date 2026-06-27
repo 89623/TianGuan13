@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Adds pheromones to a mob. If the target slime drains the mob to death, they might befriend the user
 /datum/status_effect/slime_food
 	id = "slime_food"
@@ -42,9 +43,9 @@
 	if(get_dist(user, owner) > 1 && !astype(user, /mob/living/carbon)?.dna.get_mutation(/datum/mutation/olfaction))
 		return
 	if(user == feeder)
-		examine_list += span_boldnotice("Their smell reminds you of serenity and yourself.")
+		examine_list += span_boldnotice(LANG("datum.f37025d9", null))
 	else
-		examine_list += span_boldnotice("Their smell reminds you of serenity and [feeder].")
+		examine_list += span_boldnotice(LANG("datum.624afaec", list(feeder)))
 
 ///Handles a slime completely draining someone
 /datum/status_effect/slime_food/proc/on_drained(datum/source, mob/living/basic/slime/draining_slime)

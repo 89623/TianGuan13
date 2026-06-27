@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/manual_breathing
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -20,12 +21,12 @@
 	if(L)
 		START_PROCESSING(SSdcs, src)
 		last_breath = world.time
-		to_chat(C, span_notice("You suddenly realize you're breathing manually."))
+		to_chat(C, span_notice(LANG("datum.619bc66d", null)))
 
 /datum/component/manual_breathing/Destroy(force)
 	L = null
 	STOP_PROCESSING(SSdcs, src)
-	to_chat(parent, span_notice("You revert back to automatic breathing."))
+	to_chat(parent, span_notice(LANG("datum.5f73670a", null)))
 	return ..()
 
 /datum/component/manual_breathing/RegisterWithParent()
@@ -58,14 +59,14 @@
 	var/next_text = initial(next_breath_type.key)
 	if(world.time > (last_breath + check_every + grace_period))
 		if(!warn_dying)
-			to_chat(C, span_userdanger("You begin to suffocate, you need to [next_text]!"))
+			to_chat(C, span_userdanger(LANG("datum.1acf8651", list(next_text))))
 			warn_dying = TRUE
 
 		L.apply_organ_damage(damage_rate)
 		C.losebreath += 0.8
 	else if(world.time > (last_breath + check_every))
 		if(!warn_grace)
-			to_chat(C, span_danger("You feel a need to [next_text]!"))
+			to_chat(C, span_danger(LANG("datum.f372ea4a", list(next_text))))
 			warn_grace = TRUE
 
 /datum/component/manual_breathing/proc/check_added_organ(mob/who_cares, obj/item/organ/O)

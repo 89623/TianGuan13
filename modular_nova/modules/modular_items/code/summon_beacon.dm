@@ -33,8 +33,8 @@
 
 /obj/item/summon_beacon/examine()
 	. = ..()
-	. += span_warning("Caution: Only works in [area_string].")
-	. += span_notice("Currently selected: [selected_atom ? initial(selected_atom.name) : "None"].")
+	. += span_warning(LANG("obj.006565ab", list(area_string)))
+	. += span_notice(LANG("obj.e7fa7fe1", list(selected_atom ? initial(selected_atom.name) : "None")))
 
 /obj/item/summon_beacon/attack_self(mob/user)
 	if(!can_use_beacon(user))
@@ -95,15 +95,15 @@
 
 /obj/item/summon_beacon/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!selected_atom)
-		balloon_alert(user, "no choice selected!")
+		balloon_alert(user, LANG("obj.fc601c42", null))
 		return NONE
 	var/turf/target_turf = get_turf(interacting_with)
 	var/area/target_area = get_area(interacting_with)
 	if(!area_check(target_area, target_turf))
-		balloon_alert(user, "can't call here!")
+		balloon_alert(user, LANG("obj.df944ab2", null))
 		return NONE
 
-	var/confirmed = tgui_alert(user, "Are you sure you want to call [initial(selected_atom.name)] here?", "Confirmation", list("Yes", "No"))
+	var/confirmed = tgui_alert(user, LANG("obj.e9453223", list(initial(selected_atom.name))), LANG("obj.15bc27b6", null), list("Yes", "No"))
 	if(confirmed != "Yes")
 		return ITEM_INTERACT_BLOCKING
 
@@ -111,7 +111,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	uses -= 1
-	balloon_alert(user, "[uses] use[uses == 1 ? "" : "s"] left!")
+	balloon_alert(user, LANG("obj.de782adb", list(uses, uses == 1 ? "" : "s")))
 
 	podspawn(list(
 		"target" = target_turf,
@@ -123,10 +123,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(istype(human_user.ears, /obj/item/radio/headset))
-			to_chat(user, span_notice("You hear something crackle in your ears for a moment before a voice speaks. \
-				\"Please stand by for a message from Central Command.  Message as follows: \
-				[span_bold("Request received. Pod inbound, please stand back from the landing site.")] \
-				Message ends.\""))
+			to_chat(user, span_notice(LANG("obj.9248b3c7", list(span_bold("Request received. Pod inbound, please stand back from the landing site.")))))
 
 	if(!uses)
 		qdel(src)

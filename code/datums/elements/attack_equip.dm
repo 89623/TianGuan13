@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Attached to an item, when the item is used to attack a human, and the attacker isn't in combat mode, attempts to equip the item to the target after the normal delay.
  *
@@ -35,7 +36,7 @@
 /datum/element/attack_equip/proc/equip(obj/item/attire, mob/living/carbon/human/sharp_dresser, mob/living/user)
 
 	if(HAS_TRAIT(attire, TRAIT_NODROP))
-		to_chat(user, span_warning("You can't put [attire] on [sharp_dresser], it's stuck to your hand!"))
+		to_chat(user, span_warning(LANG("datum.73a8373f", list(attire, sharp_dresser))))
 		return
 	var/equip_time = attire.equip_delay_other
 

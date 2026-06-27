@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/religion_rites
 	/// name of the religious rite
 	var/name = "religious rite"
@@ -28,7 +29,7 @@
 
 /datum/religion_rites/proc/can_afford(mob/living/user)
 	if(GLOB.religious_sect?.favor < favor_cost)
-		to_chat(user, span_warning("This rite requires more favor!"))
+		to_chat(user, span_warning(LANG("datum.da23d4c5", null)))
 		return FALSE
 	return TRUE
 
@@ -36,7 +37,7 @@
 /datum/religion_rites/proc/perform_rite(mob/living/user, atom/religious_tool)
 	if(!can_afford(user))
 		return FALSE
-	to_chat(user, span_notice("You begin to perform the rite of [name]..."))
+	to_chat(user, span_notice(LANG("datum.f24dd583", list(name))))
 	if(!ritual_invocations)
 		if(do_after(user, ritual_length))
 			return TRUE
@@ -89,21 +90,21 @@
 
 /datum/religion_rites/synthconversion/perform_rite(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
-		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
+		to_chat(user, span_warning(LANG("datum.3ebb81f1", null)))
 		return FALSE
 	var/atom/movable/movable_reltool = religious_tool
 	if(!movable_reltool)
 		return FALSE
 	if(LAZYLEN(movable_reltool.buckled_mobs))
-		to_chat(user, span_warning("You're going to convert the one buckled on [movable_reltool]."))
+		to_chat(user, span_warning(LANG("datum.f12b65c7", list(movable_reltool))))
 	else
 		if(!movable_reltool.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
-			to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
+			to_chat(user, span_warning(LANG("datum.3ebb81f1", null)))
 			return FALSE
 		if(isandroid(user))
-			to_chat(user, span_warning("You've already converted yourself. To convert others, they must be buckled to [movable_reltool]."))
+			to_chat(user, span_warning(LANG("datum.0f04672b", list(movable_reltool))))
 			return FALSE
-		to_chat(user, span_warning("You're going to convert yourself with this ritual."))
+		to_chat(user, span_warning(LANG("datum.64afac39", null)))
 	return ..()
 
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
@@ -122,7 +123,7 @@
 	if(!rite_target)
 		return FALSE
 	rite_target.set_species(/datum/species/android)
-	rite_target.visible_message(span_notice("[rite_target] has been converted by the rite of [name]!"))
+	rite_target.visible_message(span_notice(LANG("datum.22f6e658", list(rite_target, name))))
 	return TRUE
 
 
@@ -186,17 +187,17 @@
 /datum/religion_rites/greed/can_afford(mob/living/user)
 	var/datum/bank_account/account = user.get_bank_account()
 	if(!account)
-		to_chat(user, span_warning("You need a way to pay for the rite!"))
+		to_chat(user, span_warning(LANG("datum.822e86d7", null)))
 		return FALSE
 	if(account.account_balance < money_cost)
-		to_chat(user, span_warning("This rite requires more money!"))
+		to_chat(user, span_warning(LANG("datum.ff1fd927", null)))
 		return FALSE
 	return TRUE
 
 /datum/religion_rites/greed/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	var/datum/bank_account/account = user.get_bank_account()
 	if(!account || account.account_balance < money_cost)
-		to_chat(user, span_warning("This rite requires more money!"))
+		to_chat(user, span_warning(LANG("datum.ff1fd927", null)))
 		return FALSE
 	account.adjust_money(-money_cost, "Church Donation: Rite")
 	. = ..()
@@ -244,13 +245,13 @@
 		return FALSE
 	//uses HAS_TRAIT_FROM because junkies are also hopelessly addicted
 	if(HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
-		to_chat(user, span_warning("You've already adapted."))
+		to_chat(user, span_warning(LANG("datum.1dc578a3", null)))
 		return FALSE
 	return ..()
 
 /datum/religion_rites/maint_adaptation/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
-	to_chat(user, span_warning("You feel your genes rattled and reshaped. <b>You're becoming something new.</b>"))
+	to_chat(user, span_warning(LANG("datum.acbe4692", null)))
 	user.emote("laugh")
 	ADD_TRAIT(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation")
 	//addiction sends some nasty mood effects but we want the maint adaption to be enjoyed like a fine wine
@@ -274,18 +275,18 @@
 	if(!ishuman(user))
 		return FALSE
 	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
-		to_chat(user, span_warning("You need to adapt to maintenance first."))
+		to_chat(user, span_warning(LANG("datum.ed92d0ba", null)))
 		return FALSE
 	var/obj/item/organ/eyes/night_vision/maintenance_adapted/adapted = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(adapted && istype(adapted))
-		to_chat(user, span_warning("Your eyes are already adapted!"))
+		to_chat(user, span_warning(LANG("datum.81dc0d69", null)))
 		return FALSE
 	return ..()
 
 /datum/religion_rites/adapted_eyes/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
 	var/obj/item/organ/eyes/oldeyes = user.get_organ_slot(ORGAN_SLOT_EYES)
-	to_chat(user, span_warning("You feel your eyes adapt to the darkness!"))
+	to_chat(user, span_warning(LANG("datum.b050c61e", null)))
 	if(oldeyes)
 		oldeyes.Remove(user, special = TRUE)
 		qdel(oldeyes)//eh
@@ -307,7 +308,7 @@
 			continue
 		mold_target = could_mold //moldify this o great one
 		return ..()
-	to_chat(user, span_warning("You need to place food on [religious_tool] to do this!"))
+	to_chat(user, span_warning(LANG("datum.2689e212", list(religious_tool))))
 	return FALSE
 
 /datum/religion_rites/adapted_food/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -315,9 +316,9 @@
 	var/obj/item/food/moldify = mold_target
 	mold_target = null
 	if(QDELETED(moldify) || !(get_turf(religious_tool) == moldify.loc)) //check if the same food is still there
-		to_chat(user, span_warning("Your target left the altar!"))
+		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
-	to_chat(user, span_warning("[moldify] becomes rancid!"))
+	to_chat(user, span_warning(LANG("datum.d83d0290", list(moldify))))
 	user.emote("laugh")
 	new /obj/item/food/badrecipe/moldy(get_turf(religious_tool))
 	qdel(moldify)
@@ -335,7 +336,7 @@
 	for(var/obj/item/stack/sheet/mineral/wood/could_totem in get_turf(religious_tool))
 		converted = could_totem //totemify this o great one
 		return ..()
-	to_chat(user, span_warning("You need a piece of wood to do this!"))
+	to_chat(user, span_warning(LANG("datum.d53026d3", null)))
 	return FALSE
 
 /datum/religion_rites/ritual_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -344,9 +345,9 @@
 	var/obj/item/stack/sheet/mineral/wood/padala = converted
 	converted = null
 	if(QDELETED(padala) || !(get_turf(religious_tool) == padala.loc)) //check if the same food is still there
-		to_chat(user, span_warning("Your target left the altar!"))
+		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
-	to_chat(user, span_warning("[padala] reshapes into a totem!"))
+	to_chat(user, span_warning(LANG("datum.2938cb17", list(padala))))
 	if(!padala.use(1))//use one wood
 		return
 	user.emote("laugh")
@@ -368,7 +369,7 @@
 			continue
 		contract_target = could_contract
 		return ..()
-	to_chat(user, span_warning("You need to place blank paper on [religious_tool] to do this!"))
+	to_chat(user, span_warning(LANG("datum.24468dd5", list(religious_tool))))
 	return FALSE
 
 /datum/religion_rites/sparring_contract/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -377,13 +378,13 @@
 	var/turf/tool_turf = get_turf(religious_tool)
 	contract_target = null
 	if(QDELETED(blank_paper) || !(tool_turf == blank_paper.loc)) //check if the same paper is still there
-		to_chat(user, span_warning("Your target left the altar!"))
+		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
-	blank_paper.visible_message(span_notice("words magically form on [blank_paper]!"))
+	blank_paper.visible_message(span_notice(LANG("datum.116a8c91", list(blank_paper))))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 	if(sect.existing_contract)
-		sect.existing_contract.visible_message(span_warning("[src] fizzles into nothing!"))
+		sect.existing_contract.visible_message(span_warning(LANG("datum.b8e21fc6", list(src))))
 		qdel(sect.existing_contract)
 	sect.existing_contract = new /obj/item/sparring_contract(tool_turf)
 	qdel(blank_paper)
@@ -405,7 +406,7 @@
 			continue
 		if(!(unfiltered_area.area_flags & HIDDEN_AREA))
 			filtered += unfiltered_area
-	area_instance = tgui_input_list(user, "Choose an area to mark as an arena!", "Arena Declaration", filtered)
+	area_instance = tgui_input_list(user, LANG("datum.2d87232f", null), LANG("datum.fe2c6b9e", null), filtered)
 	if(isnull(area_instance))
 		return FALSE
 	. = ..()
@@ -414,7 +415,7 @@
 	. = ..()
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 	sect.arenas[area_instance.name] = area_instance.type
-	to_chat(user, span_warning("[area_instance] is a now an option to select on sparring contracts."))
+	to_chat(user, span_warning(LANG("datum.9de7bc97", list(area_instance))))
 
 /datum/religion_rites/ceremonial_weapon
 	name = "Forge Ceremonial Gear"
@@ -441,9 +442,9 @@
 		return ..()
 	// We've found a material but it wasn't solid enough.
 	if(not_rigid)
-		to_chat(user, span_warning("[not_rigid] is not suitable for being made into gear!"))
+		to_chat(user, span_warning(LANG("datum.a70e585a", list(not_rigid))))
 	else
-		to_chat(user, span_warning("You need at least five sheets of a rigid material to make gear!"))
+		to_chat(user, span_warning(LANG("datum.13afa05c", null)))
 	return FALSE
 
 /datum/religion_rites/ceremonial_weapon/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -452,10 +453,10 @@
 	var/obj/item/stack/sheet/used_for_blade = converted
 	converted = null
 	if(QDELETED(used_for_blade) || !(get_turf(religious_tool) == used_for_blade.loc) || used_for_blade.amount < 5) //check if the same food is still there
-		to_chat(user, span_warning("Your target left the altar!"))
+		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
 	var/material_used = used_for_blade.material_type
-	to_chat(user, span_warning("[used_for_blade] reshapes into a ceremonial blade!"))
+	to_chat(user, span_warning(LANG("datum.b4a433ea", list(used_for_blade))))
 	if(!used_for_blade.use(5))//use 5 of the material
 		return
 	var/obj/item/ceremonial_blade/blade = new(altar_turf)
@@ -473,13 +474,13 @@
 	if(!ishuman(user))
 		return FALSE
 	if(HAS_TRAIT_FROM(user, TRAIT_UNBREAKABLE, INNATE_TRAIT))
-		to_chat(user, span_warning("Your spirit is already unbreakable!"))
+		to_chat(user, span_warning(LANG("datum.58ba9c8b", null)))
 		return FALSE
 	return ..()
 
 /datum/religion_rites/unbreakable/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
-	to_chat(user, span_nicegreen("You feel [GLOB.deity]'s will to keep fighting pouring into you!"))
+	to_chat(user, span_nicegreen(LANG("datum.4d0c0eb3", list(GLOB.deity))))
 	user.AddComponent(/datum/component/unbreakable)
 
 /datum/religion_rites/tenacious
@@ -493,11 +494,11 @@
 	if(!ishuman(user))
 		return FALSE
 	if(HAS_TRAIT_FROM(user, TRAIT_TENACIOUS, INNATE_TRAIT))
-		to_chat(user, span_warning("Your spirit is already tenacious!"))
+		to_chat(user, span_warning(LANG("datum.7c814fcc", null)))
 		return FALSE
 	return ..()
 
 /datum/religion_rites/tenacious/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
-	to_chat(user, span_nicegreen("You feel [GLOB.deity]'s tenacity pouring into you!"))
+	to_chat(user, span_nicegreen(LANG("datum.4eeffa1f", list(GLOB.deity))))
 	user.AddElement(/datum/element/tenacious)

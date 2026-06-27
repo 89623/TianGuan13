@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease
 	//Flags
 	var/visibility_flags = NONE
@@ -57,6 +58,16 @@
 	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
+
+/datum/disease/New()
+	. = ..()
+	// NOVA EDIT ADDITION START - i18n - 疾病名/描述/治疗/传播文本创建时整串反查（全服中文时；按感染实例化，gated 后开销小）
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		name = lang_reverse_text(name)
+		desc = lang_reverse_text(desc)
+		cure_text = lang_reverse_text(cure_text)
+		spread_text = lang_reverse_text(spread_text)
+	// NOVA EDIT ADDITION END
 
 /datum/disease/Destroy()
 	. = ..()
@@ -139,7 +150,7 @@
 			cure_mod = cure_mod * 2 * cure_status // Advanced diseases can be cured up to 2x as fast if all symptoms are remedied
 		if(disease_flags & CHRONIC && SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(1)
-			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
+			to_chat(affected_mob, span_notice(LANG("datum.51cb531f", null)))
 			return
 		if(disease_flags & CURABLE && SPT_PROB(cure_mod, seconds_per_tick))
 			if(disease_flags & INCREMENTAL_CURE)

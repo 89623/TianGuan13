@@ -104,7 +104,7 @@
 
 /obj/item/nullrod/cultdagger/attack_self(mob/user)
 	if(!narsian && user.mind && (user.mind.holy_role))
-		to_chat(user, span_cult_large("\"Partake in the language of blood..\""))
+		to_chat(user, span_cult_large(LANG("obj.1bd79e12", null)))
 		user.grant_language(/datum/language/narsie, source = LANGUAGE_MIND)
 		special_desc_requirement = NONE // No point in keeping something that can't no longer be used
 		narsian = TRUE
@@ -117,7 +117,7 @@
 
 /obj/item/nullrod/claymore/darkblade/attack_self(mob/user)
 	if(!narsian && user.mind && (user.mind.holy_role))
-		to_chat(user, span_cult_large("\"Partake in the language of blood..\""))
+		to_chat(user, span_cult_large(LANG("obj.1bd79e12", null)))
 		user.grant_language(/datum/language/narsie, source = LANGUAGE_MIND)
 		special_desc_requirement = NONE // No point in keeping something that can't no longer be used
 		narsian = TRUE
@@ -132,7 +132,7 @@
 	if(ratvarian)
 		return ..()
 	else if(user.mind?.holy_role)
-		to_chat(user, span_bigbrass("The sound of cogs permeates your head..."))
+		to_chat(user, span_bigbrass(LANG("obj.37f309fc", null)))
 		user.grant_language(/datum/language/ratvar, source = LANGUAGE_MIND)
 		special_desc_requirement = NONE // No point in keeping something that can't no longer be used
 		ratvarian = TRUE
@@ -158,21 +158,21 @@
 
 /obj/item/nullrod/rosary/attack(mob/living/target, mob/living/user, params)
 	if(!user.mind || !user.mind.holy_role)
-		balloon_alert(user, "not holy enough!")
+		balloon_alert(user, LANG("obj.1882d9f3", null))
 		return
 	if(user.combat_mode)
 		return ..()
 	if(praying)
-		balloon_alert(user, "already in use!")
+		balloon_alert(user, LANG("obj.38f46f8c", null))
 		return
 
-	user.visible_message(span_info("[user] kneels[target == user ? null : " next to [target]"] and begins to utter a prayer to [deity_name]."), \
-		span_info("You kneel[target == user ? null : " next to [target]"] and begin a prayer to [deity_name]."))
+	user.visible_message(span_info(LANG("obj.e873321a", list(user, target == user ? null : " next to [target]", deity_name))), \
+		span_info(LANG("obj.e64d95df", list(target == user ? null : " next to [target]", deity_name))))
 
 	praying = TRUE
 	if(do_after(user, 5 SECONDS, target = target))
 		target.reagents?.add_reagent(/datum/reagent/water/holywater, 5)
-		to_chat(target, span_notice("[user]'s prayer to [deity_name] has eased your pain!"))
+		to_chat(target, span_notice(LANG("obj.dab6c0d9", list(user, deity_name))))
 		var/need_mob_update
 		need_mob_update += target.adjust_tox_loss(-5, updating_health = FALSE, forced = TRUE)
 		need_mob_update += target.adjust_oxy_loss(-5, updating_health = FALSE)
@@ -182,7 +182,7 @@
 			target.updatehealth()
 		praying = FALSE
 	else
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		praying = FALSE
 
 /obj/item/nullrod/scythe/sickle

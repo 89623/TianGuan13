@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Component applying shared behaviour by cursed organs granted when sacrificed by a heretic
 /// Mostly just does something spooky when it is removed
 /datum/element/corrupted_organ
@@ -44,7 +45,7 @@
 	var/turf/origin_turf = get_turf(organ)
 	playsound(organ, 'sound/effects/magic/forcewall.ogg', vol = 100)
 	new /obj/effect/temp_visual/curse_blast(origin_turf)
-	organ.visible_message(span_revenwarning("[organ] explodes in a burst of dark energy!"))
+	organ.visible_message(span_revenwarning(LANG("datum.2bd3ee8a", list(organ))))
 	for(var/mob/living/target in range(1, origin_turf))
 		var/armor = target.run_armor_check(attack_flag = BOMB)
 		target.apply_damage(30, damagetype = BURN, blocked = armor, spread_damage = TRUE)

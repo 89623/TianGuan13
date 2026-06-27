@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Unique broadcast camera given to the first Curator
 // Only one should exist ideally, if other types are created they must have different camera_networks
 // Broadcasts its surroundings to entertainment monitors and its audio to entertainment radio channel
@@ -63,8 +64,8 @@
 
 /obj/item/broadcast_camera/examine(mob/user)
 	. = ..()
-	. += span_notice("Broadcast name is <b>[broadcast_name]</b>")
-	. += span_notice("The microphone is <b>[active_microphone ? "On" : "Off"]</b>")
+	. += span_notice(LANG("obj.4625f45c", list(broadcast_name)))
+	. += span_notice(LANG("obj.b64a0d65", list(active_microphone ? "On" : "Off")))
 
 /obj/item/broadcast_camera/on_enter_storage(datum/storage/master_storage)
 	. = ..()
@@ -100,7 +101,7 @@
 
 	set_light_on(TRUE)
 	playsound(source = src, soundin = 'sound/machines/terminal/terminal_processing.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
-	balloon_alert_to_viewers("live!")
+	balloon_alert_to_viewers(LANG("obj.5834efd6", null))
 
 /// When deactivating the camera
 /obj/item/broadcast_camera/proc/on_deactivating()
@@ -113,13 +114,13 @@
 
 	set_light_on(FALSE)
 	playsound(source = src, soundin = 'sound/machines/terminal/terminal_prompt_deny.ogg', vol = 20, vary = FALSE, ignore_walls = FALSE)
-	balloon_alert_to_viewers("offline")
+	balloon_alert_to_viewers(LANG("obj.eba14af0", null))
 
 /obj/item/broadcast_camera/click_alt(mob/user)
 	active_microphone = !active_microphone
 
 	/// Text popup for letting the user know that the microphone has changed state
-	balloon_alert(user, "microphone [active_microphone ? "" : "de"]activated")
+	balloon_alert(user, LANG("obj.3e20605b", list(active_microphone ? "" : "de")))
 
 	///If the radio exists as an object, set its state accordingly
 	if(active)

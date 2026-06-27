@@ -31,12 +31,12 @@
 	for(var/datum/weakref/num_collector in available_boulders)
 		rock_count++
 
-	. += span_notice("There are [span_boldnotice("[rock_count] boulders")] available to teleport inside.")
-	. += span_notice("The boulder collector can be linked to a <b>linked retrieval matrix</b> using a <b>multitool</b>.")
+	. += span_notice(LANG("obj.8838bfac", list(span_boldnotice("[rock_count] boulders"))))
+	. += span_notice(LANG("obj.0754b076", null))
 
 /obj/structure/ore_box/boulder_collector/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	multi_tool.set_buffer(src)
-	balloon_alert(user, "saved to multitool buffer")
+	balloon_alert(user, LANG("obj.84afb909", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ore_box/boulder_collector/dump_box_contents()
@@ -82,7 +82,7 @@
 
 /obj/structure/ore_box/boulder_collector/click_alt(mob/living/user)
 	input_dir = turn(input_dir, -90)
-	to_chat(user, span_notice("You change [src]'s I/O settings, setting the input to [dir2text(input_dir)]."))
+	to_chat(user, span_notice(LANG("obj.a70aec62", list(src, dir2text(input_dir)))))
 	unregister_input_turf() // someone just rotated the input directions, unregister the old turf
 	register_input_turf() // register the new one
 	update_appearance(UPDATE_OVERLAYS)
@@ -119,7 +119,7 @@
 
 /obj/structure/ore_box/boulder_collector/can_be_unfasten_wrench(mob/user, silent)
 	if(!(isfloorturf(loc) || isindestructiblefloor(loc) || ismiscturf(loc)) && !anchored)
-		to_chat(user, span_warning("[src] needs to be on the ground to be secured!"))
+		to_chat(user, span_warning(LANG("obj.4f3a8a21", list(src))))
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 

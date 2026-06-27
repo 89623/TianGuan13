@@ -122,10 +122,10 @@
 /mob/living/simple_animal/hostile/megafauna/gladiator/examine()
 	if(stat >= DEAD)
 		. = ..()
-		. += span_boldwarning("Unearthly energies bind the body to its place of defeat. You cannot move it.")
+		. += span_boldwarning(LANG("mob.cf29e043", null))
 	else
 		. = ..()
-		. += span_boldwarning("They are currently in Phase [phase].")
+		. += span_boldwarning(LANG("mob.045dd466", list(phase)))
 
 /// Gets him mad at you if you're a species he's not racist towards, and provides the 50% to block attacks in the first and fourth phases
 /mob/living/simple_animal/hostile/megafauna/gladiator/adjustHealth(amount, updating_health, forced)
@@ -195,11 +195,11 @@
 	if(isliving(A))
 		var/mob/living/living_atom = A
 		forceMove(get_turf(living_atom))
-		visible_message(span_danger("[src] knocks [living_atom] down!"))
+		visible_message(span_danger(LANG("mob.b28257ff", list(src, living_atom))))
 		living_atom.Paralyze(20)
 		discharge()
 	else if(istype(A, /turf/closed))
-		visible_message(span_danger("[src] crashes headfirst into [A]!"))
+		visible_message(span_danger(LANG("mob.fecb5e36", list(src, A))))
 		discharge(1.5)
 
 /// Makes the Marked One unhappy and more befitting of his "hostile" subtype status.

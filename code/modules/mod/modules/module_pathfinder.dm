@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PATHFINDER_PRE_ANIMATE_TIME (2 SECONDS)
 
 ///Pathfinder - Can fly the suit from a long distance to an implant installed in someone.
@@ -53,23 +54,23 @@
 /obj/item/mod/module/pathfinder/examine(mob/user)
 	. = ..()
 	if(implant_inside)
-		. += span_notice("Use it on a human to implant them.")
+		. += span_notice(LANG("obj.5a96e3c6", null))
 	else
-		. += span_warning("The implant is missing.")
+		. += span_warning(LANG("obj.057204e0", null))
 
 /obj/item/mod/module/pathfinder/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!ishuman(target) || !implant_inside) // Not human, or no implant in module
 		return
 	if(!do_after(user, 1.5 SECONDS, target = target))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
 	if(!implant.implant(target, user)) // If implant fails
-		balloon_alert(user, "can't implant!")
+		balloon_alert(user, LANG("obj.1df495ba", null))
 		return
 	if(target == user)
-		to_chat(user, span_notice("You implant yourself with [implant]."))
+		to_chat(user, span_notice(LANG("obj.00233369", list(implant))))
 	else
-		target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you with [implant]."))
+		target.visible_message(span_notice(LANG("obj.218aaa2d", list(user, target))), span_notice(LANG("obj.af336e9c", list(user, implant))))
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 
 /obj/item/mod/module/pathfinder/on_use(mob/activator)
@@ -78,7 +79,7 @@
 		try_implant(activator)
 		return
 	if(mod.wearer)
-		balloon_alert(activator, "suit already worn!")
+		balloon_alert(activator, LANG("obj.f85f8674", null))
 	else
 		recall(activator)
 
@@ -88,11 +89,11 @@
 	if(!ishuman(mod.wearer)) // Wearer isn't human
 		return
 	if(!implant.implant(mod.wearer, mod.wearer))
-		balloon_alert(activator, "can't implant!")
+		balloon_alert(activator, LANG("obj.1df495ba", null))
 		return
-	balloon_alert(activator, "implanted")
+	balloon_alert(activator, LANG("obj.5d667473", null))
 	if(!(activator == mod.wearer)) // someone else implanted you
-		balloon_alert(mod.wearer, "tracker implanted!")
+		balloon_alert(mod.wearer, LANG("obj.f327664c", null))
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 
 /obj/item/mod/module/pathfinder/proc/attach(mob/living/user)
@@ -110,23 +111,23 @@
 
 /obj/item/mod/module/pathfinder/proc/recall(mob/recaller)
 	if(!implant)
-		balloon_alert(recaller, "no implant!")
+		balloon_alert(recaller, LANG("obj.3bb66434", null))
 		return FALSE
 	if(recaller != implant.imp_in && !allow_suit_activation) // No pAI recalling
-		balloon_alert(recaller, "invalid user!")
+		balloon_alert(recaller, LANG("obj.5bfa117e", null))
 		return FALSE
 	if(mod.open)
-		balloon_alert(recaller, "cover open!")
+		balloon_alert(recaller, LANG("obj.b726018f", null))
 		return FALSE
 	if(in_transit)
-		balloon_alert(recaller, "suit in transit!")
+		balloon_alert(recaller, LANG("obj.46654a5a", null))
 		return FALSE
 	var/atom_on_turf = get_atom_on_turf(mod)
 	if(ismob(atom_on_turf))
 		if(atom_on_turf == recaller)
-			balloon_alert(recaller, "already worn!")
+			balloon_alert(recaller, LANG("obj.cb0eb67c", null))
 		else
-			recaller.balloon_alert(recaller, "suit is worn by somebody else!")
+			recaller.balloon_alert(recaller, LANG("obj.a5428869", null))
 		return FALSE
 
 	in_transit = TRUE
@@ -134,16 +135,16 @@
 	mod.Shake(pixelshiftx = 1, pixelshifty = 1, duration = PATHFINDER_PRE_ANIMATE_TIME)
 	addtimer(CALLBACK(src, PROC_REF(do_recall), recaller), PATHFINDER_PRE_ANIMATE_TIME, TIMER_DELETE_ME)
 
-	balloon_alert(recaller, "suit recalled")
+	balloon_alert(recaller, LANG("obj.6f45889b", null))
 	if(!(recaller == mod.wearer))
-		balloon_alert(mod.wearer, "suit recalled")
+		balloon_alert(mod.wearer, LANG("obj.6f45889b", null))
 	return TRUE
 
 /// Pod-transport the suit to its owner
 /obj/item/mod/module/pathfinder/proc/do_recall(mob/recaller)
 	var/container = get_atom_on_turf(mod)
 	if(ismob(container))
-		balloon_alert(recaller, "launch interrupted!")
+		balloon_alert(recaller, LANG("obj.a9ed3844", null))
 		in_transit = FALSE
 		return
 
@@ -234,10 +235,10 @@
 /datum/action/item_action/mod_recall/do_effect(trigger_flags)
 	var/obj/item/implant/mod/implant = target
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
-		implant.balloon_alert(owner, "on cooldown!")
+		implant.balloon_alert(owner, LANG("datum.d4ae5d4d", null))
 		return
 	if(implant.module.recall(owner))
-		implant.balloon_alert(owner, "suit incoming...")
+		implant.balloon_alert(owner, LANG("datum.cfbd2b82", null))
 		COOLDOWN_START(src, recall_cooldown, 5 SECONDS)
 
 /// Special pod subtype we use just to make insertion check easy

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/wizard/greentext //Gotta have it!
 	name = "Greentext"
 	weight = 4
@@ -19,7 +20,7 @@
 
 	var/mob/living/carbon/human/H = pick(holder_canadates)
 	new /obj/item/greentext(H.loc)
-	to_chat(H, "<font color='green'>The mythical greentext appear at your feet! Pick it up if you dare...</font>")
+	to_chat(H, LANG("datum.01666cf2", null))
 
 
 /obj/item/greentext
@@ -49,9 +50,9 @@
 
 /obj/item/greentext/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	to_chat(user, span_green("So long as you leave this place with greentext in hand you know will be happy..."))
+	to_chat(user, span_green(LANG("obj.8edbd17e", null)))
 	if(user.mind && length(user.mind.get_all_objectives()) > 0)
-		to_chat(user, span_warning("... so long as you still perform your other objectives that is!"))
+		to_chat(user, span_warning(LANG("obj.747f5931", null)))
 	holder = user
 	if(!HAS_TRAIT(user, TRAIT_GREENTEXT_CURSED))
 		LAZYOR(color_altered_mobs, WEAKREF(user))
@@ -60,7 +61,7 @@
 
 /obj/item/greentext/dropped(mob/user, silent = FALSE)
 	if(HAS_TRAIT(user, TRAIT_GREENTEXT_CURSED))
-		to_chat(user, span_warning("A sudden wave of failure washes over you..."))
+		to_chat(user, span_warning(LANG("obj.25e2162d", null)))
 		user.add_atom_colour("#ff0000", ADMIN_COLOUR_PRIORITY) //ya blew it
 	holder = null
 	return ..()
@@ -100,7 +101,7 @@
 
 	REMOVE_TRAIT(holder, TRAIT_GREENTEXT_CURSED, REF(src))
 	release_victims()
-	to_chat(holder, span_green("At last it feels like victory is assured!"))
+	to_chat(holder, span_green(LANG("obj.43f7e334", null)))
 	holder.mind.add_antag_datum(/datum/antagonist/greentext)
 	holder.log_message("won with greentext!!!", LOG_ATTACK, color = "green")
 	resistance_flags |= ON_FIRE

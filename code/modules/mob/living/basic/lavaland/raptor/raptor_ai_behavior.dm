@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/ai_behavior/hunt_target/interact_with_target/heal_raptor
 	always_reset_target = TRUE
 
@@ -16,7 +17,7 @@
 /datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off/care_for_young
 
 /datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off/care_for_young/target_caught(mob/living/hunter, atom/hunted)
-	hunter.manual_emote("grooms [hunted]!")
+	hunter.manual_emote(LANG("datum.ba93db6b", list(hunted)))
 	return ..()
 
 /datum/ai_behavior/find_hunt_target/raptor_trough

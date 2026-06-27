@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/door_buttons
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
@@ -28,7 +29,7 @@
 	req_access = list()
 	req_one_access = list()
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	balloon_alert(user, "access controller shorted")
+	balloon_alert(user, LANG("obj.72faa602", null))
 	return TRUE
 
 /obj/machinery/door_buttons/access_button
@@ -58,7 +59,7 @@
 	if(busy)
 		return
 	if(!allowed(user))
-		to_chat(user, span_warning("Access denied."))
+		to_chat(user, span_warning(LANG("obj.077f9b52", null)))
 		return
 	if(controller && !controller.busy && door)
 		if(controller.machine_stat & NOPOWER)

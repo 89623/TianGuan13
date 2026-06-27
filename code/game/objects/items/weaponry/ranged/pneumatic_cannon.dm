@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// Fire all loaded contents at once.
 #define PCANNON_FIREALL 1
@@ -115,7 +116,7 @@
 	if(tank)
 		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it. It could be removed with a <b>screwdriver</b>.")
 	if(needs_air == TRUE)
-		. += span_notice("Use a <b>wrench</b> to change the pressure level. Current output level is <b>[pressure_setting_to_text(pressure_setting)]</b>.")
+		. += span_notice(LANG("obj.e5993bcb", list(pressure_setting_to_text(pressure_setting))))
 	. += out.Join("\n")
 
 /obj/item/pneumatic_cannon/screwdriver_act(mob/living/user, obj/item/tool)
@@ -129,7 +130,7 @@
 		return
 	playsound(src, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 	pressure_setting = pressure_setting >= HIGH_PRESSURE ? LOW_PRESSURE : pressure_setting + 1
-	balloon_alert(user, "output level set to [pressure_setting_to_text(pressure_setting)]")
+	balloon_alert(user, LANG("obj.e44914ad", list(pressure_setting_to_text(pressure_setting))))
 	return TRUE
 
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -141,13 +142,13 @@
 		if(!tank)
 			var/obj/item/tank/internals/IT = W
 			if(IT.volume <= 3)
-				to_chat(user, span_warning("\The [IT] is too small for \the [src]."))
+				to_chat(user, span_warning(LANG("obj.a09c5951", list(IT, src))))
 				return
 			updateTank(W, 0, user)
 	else if(W.type == type)
-		to_chat(user, span_warning("You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption."))
+		to_chat(user, span_warning(LANG("obj.942f48b2", null)))
 	else if(loadedWeightClass >= maxWeightClass)
-		to_chat(user, span_warning("\The [src] can't hold any more items!"))
+		to_chat(user, span_warning(LANG("obj.9eeb865e", list(src))))
 	else if(isitem(W))
 		var/obj/item/IW = W
 		load_item(IW, user)
@@ -157,15 +158,15 @@
 		return TRUE
 	if(allowed_typecache && !is_type_in_typecache(I, allowed_typecache))
 		if(user)
-			to_chat(user, span_warning("[I] won't fit into [src]!"))
+			to_chat(user, span_warning(LANG("obj.1754ab5d", list(I, src))))
 		return
 	if((loadedWeightClass + I.w_class) > maxWeightClass) //Only make messages if there's a user
 		if(user)
-			to_chat(user, span_warning("\The [I] won't fit into \the [src]!"))
+			to_chat(user, span_warning(LANG("obj.38c7e0e0", list(I, src))))
 		return FALSE
 	if(I.w_class > w_class)
 		if(user)
-			to_chat(user, span_warning("\The [I] is too large to fit into \the [src]!"))
+			to_chat(user, span_warning(LANG("obj.906e5504", list(I, src))))
 		return FALSE
 	return TRUE
 
@@ -175,7 +176,7 @@
 	if(user) //Only use transfer proc if there's a user, otherwise just set loc.
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
-		to_chat(user, span_notice("You load \the [I] into \the [src]."))
+		to_chat(user, span_notice(LANG("obj.c585d252", list(I, src))))
 	else
 		I.forceMove(src)
 	loadedItems += I
@@ -213,20 +214,20 @@
 	if(!can_trigger_gun(user))
 		return
 	if(!loadedItems || !loadedWeightClass)
-		to_chat(user, span_warning("\The [src] has nothing loaded."))
+		to_chat(user, span_warning(LANG("obj.ffe6ee14", list(src))))
 		return
 	if(!tank && needs_air)
-		to_chat(user, span_warning("\The [src] can't fire without a source of gas."))
+		to_chat(user, span_warning(LANG("obj.402336f9", list(src))))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You can't bring yourself to fire \the [src]! You don't want to risk harming anyone...") )
+		to_chat(user, span_warning(LANG("obj.9c99e5d8", list(src))) )
 		return
 	if(tank && !tank.remove_air(gasPerThrow * pressure_setting))
-		to_chat(user, span_warning("\The [src] lets out a weak hiss and doesn't react!"))
+		to_chat(user, span_warning(LANG("obj.44e13a4e", list(src))))
 		return
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.visible_message(span_warning("[C] loses [C.p_their()] grip on [src], causing it to go off!"), span_userdanger("[src] slips out of your hands and goes off!"))
+		C.visible_message(span_warning(LANG("obj.a25a0b73", list(C, C.p_their(), src))), span_userdanger(LANG("obj.d11ee206", list(src))))
 		C.dropItemToGround(src, TRUE)
 		if(prob(10))
 			target = get_turf(user)
@@ -235,15 +236,15 @@
 			target = pick(possible_targets)
 		discharge = 1
 	if(!discharge)
-		user.visible_message(span_danger("[user] fires \the [src]!"), \
-				    		 span_danger("You fire \the [src]!"))
+		user.visible_message(span_danger(LANG("obj.c9fb73f0", list(user, src))), \
+				    		 span_danger(LANG("obj.ef04ddfa", list(src))))
 	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
 	playsound(src, fire_sound, 50, TRUE)
 	fire_items(T, user)
 	if(pressure_setting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.visible_message(span_warning("[C] is thrown down by the force of the cannon!"), span_userdanger("[src] slams into your shoulder, knocking you down!"))
+		C.visible_message(span_warning(LANG("obj.8ffe4af2", list(C))), span_userdanger(LANG("obj.f177fce5", list(src))))
 		C.Paralyze(60)
 
 /obj/item/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
@@ -309,17 +310,17 @@
 	if(removing)
 		if(!tank)
 			return
-		to_chat(user, span_notice("You detach \the [thetank] from \the [src]."))
+		to_chat(user, span_notice(LANG("obj.870413e7", list(thetank, src))))
 		tank.forceMove(user.drop_location())
 		user.put_in_hands(tank)
 		tank = null
 	if(!removing)
 		if(tank)
-			to_chat(user, span_warning("\The [src] already has a tank."))
+			to_chat(user, span_warning(LANG("obj.a5a5404f", list(src))))
 			return
 		if(!user.transferItemToLoc(thetank, src))
 			return
-		to_chat(user, span_notice("You hook \the [thetank] up to \the [src]."))
+		to_chat(user, span_notice(LANG("obj.08206c7e", list(thetank, src))))
 		tank = thetank
 	update_appearance()
 

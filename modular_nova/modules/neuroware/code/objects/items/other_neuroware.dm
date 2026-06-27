@@ -13,12 +13,12 @@
 	var/datum/action/sing_tones/sing_action = locate(/datum/action/sing_tones) in target.actions
 	// Mob has robotic brain, but isn't synthetic humanoid species
 	if(isnull(sing_action))
-		balloon_alert(user, "chip incompatible!")
+		balloon_alert(user, LANG("obj.577c577c", null))
 		return FALSE
 	var/datum/song/song = sing_action.song
 	// Prevent installing multiple times
 	if(song.allowed_instrument_ids.Find(add_instrument_ids[1]))
-		balloon_alert(user, "already installed!")
+		balloon_alert(user, LANG("obj.1519de2c", null))
 		return FALSE
 	// Add the new instrments
 	song.allowed_instrument_ids += add_instrument_ids

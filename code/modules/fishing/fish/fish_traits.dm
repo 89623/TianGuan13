@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///A global list of singleton fish traits by their paths
 GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list()))
 
@@ -861,7 +862,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 			memory_type = /datum/memory/witnessed_inking, \
 			mood_event_type = /datum/mood_event/inked, \
 		)
-	target.visible_message(span_warning("[target] is inked by [source]!"), span_userdanger("You've been inked by [source]!"))
+	target.visible_message(span_warning(LANG("datum.435f3e65", list(target, source))), span_userdanger(LANG("datum.3659c69f", list(source))))
 	playsound(target, SFX_DESECRATION, 50, TRUE)
 	ADD_TRAIT(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_TRAIT_DATUM)
 	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_FISH_INK_ON_COOLDOWN, FISH_TRAIT_DATUM), 9 SECONDS)

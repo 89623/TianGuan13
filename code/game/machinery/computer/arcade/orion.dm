@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ORION_TRAIL_WINTURN 9
 
 /obj/machinery/computer/arcade/orion_trail
@@ -107,7 +108,7 @@
 		return // enough harassing them
 
 	if(gamers[gamer] == ORION_GAMER_PAMPHLET)
-		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
+		say(LANG("obj.ad9b2814", null))
 		new /obj/item/paper/pamphlet/violent_video_games(drop_location())
 		gamers[gamer]--
 		return
@@ -347,23 +348,23 @@
 			reason = "You ran out of food and starved."
 			if(obj_flags & EMAGGED)
 				gamer.set_nutrition(0) //yeah you pretty hongry
-				to_chat(gamer, span_userdanger("Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor."))
+				to_chat(gamer, span_userdanger(LANG("obj.a282d43a", null)))
 		if(fuel <= 0)
 			reason = "You ran out of fuel, and drift, slowly, into a star."
 			if(obj_flags & EMAGGED)
 				gamer.adjust_fire_stacks(5)
 				gamer.ignite_mob() //flew into a star, so you're on fire
-				to_chat(gamer, span_userdanger("You feel an immense wave of heat emanate from the arcade machine. Your skin bursts into flames."))
+				to_chat(gamer, span_userdanger(LANG("obj.1b848599", null)))
 
 	if(obj_flags & EMAGGED)
-		to_chat(gamer, span_userdanger("You're never going to make it to Orion..."))
+		to_chat(gamer, span_userdanger(LANG("obj.2bd838a4", null)))
 		gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 		gamer.death()
 		obj_flags &= ~EMAGGED //removes the emagged status after you lose
 		gamer.log_message("lost a Realism Mode Orion Trail game, changing the machine back to normal.", LOG_GAME)
 		gameStatus = ORION_STATUS_START
 		name = "The Orion Trail"
-		desc = "Learn how our ancestors got to Orion, and have fun in the process!"
+		desc = LANG("obj.1ff4d29a", null)
 
 	gamer?.mind?.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
 	return reason
@@ -418,7 +419,7 @@
 		killed_crew += 1 //if there was no suspected lings, this is just plain murder
 	playsound(loc,'sound/items/weapons/gun/pistol/shot.ogg', 100, TRUE)
 	if(!settlers.len || !alive)
-		say("The last crewmember [sheriff], shot themselves, GAME OVER!")
+		say(LANG("obj.447e3e9e", list(sheriff)))
 		if(obj_flags & EMAGGED)
 			gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 			gamer.death()
@@ -428,7 +429,7 @@
 			report_player(gamer)
 	else if(obj_flags & EMAGGED)
 		if(findtext(gamer.name, sheriff))
-			say("The crew of the ship chose to kill [gamer]!")
+			say(LANG("obj.4e456d50", list(gamer)))
 			gamer.investigate_log("has been killed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 			gamer.death()
 
@@ -464,7 +465,7 @@
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/living/user)
 	user.won_game()
 	gameStatus = ORION_STATUS_START
-	say("Congratulations, you made it to Orion!")
+	say(LANG("obj.5036d8fe", null))
 	if(obj_flags & EMAGGED)
 		new /obj/item/orion_ship(loc)
 		message_admins("[ADMIN_LOOKUPFLW(user)] made it to Orion on an emagged machine and got an explosive toy ship.")
@@ -480,15 +481,15 @@
 		return FALSE
 
 	name = "The Orion Trail: Realism Edition"
-	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
+	desc = LANG("obj.2f56e501", null)
 	obj_flags |= EMAGGED
 
 	if (!user)
 		return TRUE
 
 	user.log_message("emagged [src], activating Realism Mode.", LOG_GAME)
-	balloon_alert(user, "realism mode enabled")
-	to_chat(user, span_notice("You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode."))
+	balloon_alert(user, LANG("obj.aa98dce1", null))
+	to_chat(user, span_notice(LANG("obj.6978fe19", list(rand(1, 50)))))
 	newgame(user)
 	return TRUE
 
@@ -507,16 +508,16 @@
 	if(!(in_range(user, src)))
 		return
 	if(active)
-		. += span_notice("There's a little switch on the bottom. It's flipped up.")
+		. += span_notice(LANG("obj.2222c3c7", null))
 		return
-	. += span_notice("There's a little switch on the bottom. It's flipped down.")
+	. += span_notice(LANG("obj.d4658a89", null))
 
 /obj/item/orion_ship/attack_self(mob/user)
 	if(active)
 		return
 
 	log_bomber(user, "primed an explosive", src, "for detonation")
-	to_chat(user, span_warning("You flip the switch on the underside of [src]."))
+	to_chat(user, span_warning(LANG("obj.b5003286", list(src))))
 	active = TRUE
 	addtimer(CALLBACK(src, PROC_REF(commit_explosion)), 1 SECONDS)
 
@@ -525,17 +526,17 @@
 	var/time_for_next_level
 	switch(dialogue_level)
 		if(0)
-			say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
+			say(LANG("obj.b055e13d", list(rand(1,1000))))
 			time_for_next_level = 2 SECONDS
 		if(1)
-			say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")
+			say(LANG("obj.9aca0637", null))
 			time_for_next_level = 3 SECONDS
 		if(2)
-			say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
+			say(LANG("obj.c539ee8d", null))
 			playsound(loc, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 			time_for_next_level = 0.36 SECONDS
 		if(3 to INFINITY)
-			visible_message(span_userdanger("[src] explodes!"))
+			visible_message(span_userdanger(LANG("obj.e64b7ad7", list(src))))
 			explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 8, flame_range = 16)
 			qdel(src)
 			return

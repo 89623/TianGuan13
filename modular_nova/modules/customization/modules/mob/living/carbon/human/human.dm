@@ -97,7 +97,7 @@
 	set desc = "Allows you to toggle which underwear should show or be hidden. Underwear will obscure genitals."
 
 	if(stat != CONSCIOUS)
-		to_chat(usr, span_warning("You can't toggle underwear visibility right now..."))
+		to_chat(usr, span_warning(LANG("mob.f9be4f77", null)))
 		return
 
 	var/underwear_button = underwear_visibility & UNDERWEAR_HIDE_UNDIES ? "Show underwear" : "Hide underwear"
@@ -113,7 +113,7 @@
 	if(underwear_visibility != UNDERWEAR_HIDE_ALL)
 		choice_list += list("Hide all" = "hide")
 
-	var/picked_visibility = tgui_input_list(src, "Choose visibility setting", "Show/Hide underwear", choice_list)
+	var/picked_visibility = tgui_input_list(src, LANG("mob.8c64f99e", null), LANG("mob.4522a2a8", null), choice_list)
 
 	if(!picked_visibility)
 		return
@@ -166,7 +166,7 @@
 
 	// Stat check
 	if(stat != CONSCIOUS)
-		to_chat(usr, span_warning("You can't do this right now..."))
+		to_chat(usr, span_warning(LANG("mob.2ac07e40", null)))
 		return
 
 	// Only show the 'reveal all' button if we are already hiding something
@@ -236,15 +236,15 @@
 
 	// Choice to action
 	if(pick == "reveal all")
-		to_chat(usr, span_notice("You are no longer trying to hide your mutant parts."))
+		to_chat(usr, span_notice(LANG("mob.7838d2eb", null)))
 		LAZYNULL(try_hide_mutant_parts)
 		update_body_parts()
 		return
 
 	else if(LAZYLEN(try_hide_mutant_parts) && try_hide_mutant_parts.Remove(pick))
-		to_chat(usr, span_notice("You are no longer trying to hide your [pick]."))
+		to_chat(usr, span_notice(LANG("mob.c7aa196d", list(pick))))
 	else
-		to_chat(usr, span_notice("You are now trying to hide your [pick]."))
+		to_chat(usr, span_notice(LANG("mob.b9b0d5b7", list(pick))))
 		LAZYSET(try_hide_mutant_parts, pick, TRUE)
 	update_body_parts()
 	// automatically re-do the menu after making a selection
@@ -260,15 +260,15 @@
 	set desc = "Pretend to be impaired for a defined duration."
 
 	if(stat != CONSCIOUS)
-		to_chat(usr, span_warning("You can't do this right now..."))
+		to_chat(usr, span_warning(LANG("mob.2ac07e40", null)))
 		return
 
 	var/static/list/choices = list("drunkenness", "jittering")
-	var/impairment = tgui_input_list(src, "Select an impairment to perform:", "Impairments", choices)
+	var/impairment = tgui_input_list(src, LANG("mob.bb8313b7", null), LANG("mob.7fb01f5b", null), choices)
 	if(!impairment)
 		return
 
-	var/duration = tgui_input_number(src, "How long would you like to feign [impairment] for?", "Duration in seconds", DEFAULT_TIME, MAX_TIME)
+	var/duration = tgui_input_number(src, LANG("mob.75c5068d", list(impairment)), LANG("mob.7840540c", null), DEFAULT_TIME, MAX_TIME)
 	switch(impairment)
 		if("drunkenness")
 			var/mob/living/living_user = usr
@@ -280,7 +280,7 @@
 
 	if(duration)
 		addtimer(CALLBACK(src, PROC_REF(acting_expiry), impairment), duration SECONDS)
-		to_chat(src, "You are now feigning [impairment].")
+		to_chat(src, LANG("mob.cd620af2", list(impairment)))
 
 /mob/living/carbon/human/proc/acting_expiry(impairment)
 	if(impairment)
@@ -290,7 +290,7 @@
 			if(istype(living_user))
 				living_user.clear_mood_event("drunk")
 		// Notify the user
-		to_chat(src, "You are no longer feigning [impairment].")
+		to_chat(src, LANG("mob.616e1bed", list(impairment)))
 
 #undef DEFAULT_TIME
 #undef MAX_TIME

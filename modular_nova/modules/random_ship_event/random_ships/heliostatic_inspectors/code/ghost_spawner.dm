@@ -35,10 +35,7 @@
 	// if this is the first officer, keep a reference to them
 	if(!first_officer)
 		first_officer = REF(spawned_mob)
-		to_chat(spawned_mob, span_bold("You are the Patrol Leader (Actual). You hold ultimate authority and responsibility for this mission. \
-			Your directives are to: Ensure the safety of your personnel and vessel. Conduct a thorough inspection for contraband and violations per \
-			SOP Section V. Project Coalition authority and assess the facility's compliance. Declare Alert Status changes based on observed threats. \
-			Your discretion in the field is final. Consult your Field Guide and SOP documents." \
+		to_chat(spawned_mob, span_bold(LANG("obj.cb61ec08", null) \
 		))
 
 	to_chat(spawned_mob, "[span_boldnotice("Your primary duty is to the Heliostatic Coalition. \

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Hierophant club
 
 /obj/item/hierophant_club
@@ -44,9 +45,9 @@
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()
 	if (beacon)
-		. += span_hierophant_warning("The beacon is currently detached.")
+		. += span_hierophant_warning(LANG("obj.12fb2a0b", null))
 	else
-		. += span_hierophant_warning("There is a beacon attached at the back end of the handle.")
+		. += span_hierophant_warning(LANG("obj.2ffa72ef", null))
 
 /obj/item/hierophant_club/equipped(mob/user)
 	. = ..()
@@ -59,11 +60,11 @@
 	user.update_icons()
 
 /obj/item/hierophant_club/suicide_act(mob/living/user)
-	say("Xverwpsgexmrk...", forced = "hierophant club suicide")
-	user.visible_message(span_suicide("[user] holds [src] into the air! It looks like [user.p_theyre()] trying to commit suicide!"))
+	say(LANG("obj.2171e629", null), forced = "hierophant club suicide")
+	user.visible_message(span_suicide(LANG("obj.f07c4e57", list(user, src, user.p_theyre()))))
 	new/obj/effect/temp_visual/hierophant/telegraph(get_turf(user))
 	playsound(user,'sound/machines/airlock/airlockopen.ogg', 75, TRUE)
-	user.visible_message(span_hierophant_warning("[user] fades out, leaving [user.p_their()] belongings behind!"))
+	user.visible_message(span_hierophant_warning(LANG("obj.d8fbae0a", list(user, user.p_their()))))
 	for (var/obj/item/user_item as anything in user.get_all_gear(FALSE, FALSE))
 		user.dropItemToGround(user_item)
 	for (var/turf/blast_turf as anything in RANGE_TURFS(1, user))
@@ -74,7 +75,7 @@
 /obj/item/hierophant_club/attack_self(mob/user)
 	. = ..()
 	blink_activated = !blink_activated
-	balloon_alert(user, "blinking [blink_activated ? "enabled" : "disabled"]")
+	balloon_alert(user, LANG("obj.8bf8601d", list(blink_activated ? "enabled" : "disabled")))
 
 /obj/item/hierophant_club/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// If our target is the beacon and the hierostaff is next to the beacon, we're trying to pick it up.
@@ -114,11 +115,11 @@
 
 /obj/item/hierophant_club/ui_action_click(mob/user, action)
 	if (teleporting)
-		balloon_alert(user, "already in use!")
+		balloon_alert(user, LANG("obj.38f46f8c", null))
 		return
 
 	if (!user.is_holding(src))
-		to_chat(user, span_warning("You need to hold the club in your hands to [beacon ? "teleport with it" : "detach the beacon"]!"))
+		to_chat(user, span_warning(LANG("obj.27974dde", list(beacon ? "teleport with it" : "detach the beacon"))))
 		return
 
 	if (!beacon)
@@ -126,40 +127,40 @@
 		return
 
 	if (get_dist(user, beacon) <= 2)
-		balloon_alert(user, "too close to the beacon!")
+		balloon_alert(user, LANG("obj.46642402", null))
 		return
 
 	var/turf/beacon_turf = get_turf(beacon)
 	if (!beacon_turf || beacon_turf.is_blocked_turf(TRUE))
-		balloon_alert(user, "the beacon is blocked!")
+		balloon_alert(user, LANG("obj.0073d886", null))
 		return
 
 	if (!isturf(user.loc))
-		balloon_alert(user, "not enough room to teleport!")
+		balloon_alert(user, LANG("obj.1b17b31b", null))
 		return
 
 	var/turf/user_turf = get_turf(user)
 	teleporting = TRUE
 	user.update_mob_action_buttons()
-	user.visible_message(span_hierophant_warning("[user] starts to glow faintly..."), span_hierophant_warning("You begin channeling [src]'s power..."))
+	user.visible_message(span_hierophant_warning(LANG("obj.45261f82", list(user))), span_hierophant_warning(LANG("obj.9bc97ff8", list(src))))
 	beacon.icon_state = "hierophant_tele_on"
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/user_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(user_turf)
 	var/obj/effect/temp_visual/hierophant/telegraph/edge/beacon_telegraph = new /obj/effect/temp_visual/hierophant/telegraph/edge(beacon_turf)
 	if (!do_after(user, 4 SECONDS, user))
 		if (user)
-			balloon_alert(user, "interrupted!")
+			balloon_alert(user, LANG("obj.c67b5d27", null))
 		stop_teleport(user)
 		qdel(user_telegraph)
 		qdel(beacon_telegraph)
 		return
 
 	if (!beacon)
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		stop_teleport(user)
 		return
 
 	if (beacon_turf.is_blocked_turf(TRUE))
-		balloon_alert(user, "the beacon is blocked!")
+		balloon_alert(user, LANG("obj.0073d886", null))
 		stop_teleport(user)
 		return
 
@@ -197,23 +198,23 @@
 		return
 	animate(victim, alpha = 0, time = 0.2 SECONDS, easing = SINE_EASING|EASE_OUT)
 	sleep(0.2 SECONDS)
-	victim.visible_message(span_hierophant_warning("[victim] fades out!"))
+	victim.visible_message(span_hierophant_warning(LANG("obj.4bb7a725", list(victim))))
 	var/success = do_teleport(victim, target_turf, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	animate(victim, alpha = 255, time = 0.2 SECONDS, SINE_EASING|EASE_OUT)
-	victim.visible_message(span_hierophant_warning("[victim] fades in!"))
+	victim.visible_message(span_hierophant_warning(LANG("obj.61581aad", list(victim))))
 	if (user != victim && success)
 		log_combat(user, victim, "teleported", null, "from [AREACOORD(user_turf)]")
 
 /// Attempts to place a return beacon at user's feet
 /obj/item/hierophant_club/proc/deploy_beacon(mob/user)
 	if (!isopenturf(user.loc) && !isopenspaceturf(user.loc))
-		to_chat(user, span_warning("You need to be on solid ground to detach the beacon!"))
+		to_chat(user, span_warning(LANG("obj.464f3814", null)))
 		return
 
-	user.visible_message(span_hierophant_warning("[user] starts fiddling with [src]'s pommel..."), span_notice("You start detaching the hierophant beacon..."))
-	balloon_alert(user, "detaching the beacon...")
+	user.visible_message(span_hierophant_warning(LANG("obj.cb6fbf09", list(user, src))), span_notice(LANG("obj.937ca6cf", null)))
+	balloon_alert(user, LANG("obj.906583db", null))
 	if (!do_after(user, 5 SECONDS, user))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
 
 	// Already dropped one
@@ -227,17 +228,17 @@
 	RegisterSignal(beacon, COMSIG_QDELETING, PROC_REF(beacon_destroyed))
 
 	user.update_mob_action_buttons()
-	user.visible_message(span_hierophant_warning("[user] places a strange machine beneath [user.p_their()] feet!"), span_hierophant("You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!"))
-	to_chat(user, span_hierophant("You can remove the beacon to place it again by striking it with the club."))
+	user.visible_message(span_hierophant_warning(LANG("obj.75b5b16e", list(user, user.p_their()))), span_hierophant(LANG("obj.b6bf25cb", null)))
+	to_chat(user, span_hierophant(LANG("obj.5e2546c5", null)))
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/hierophant_club/proc/beacon_destroyed(datum/source)
 	SIGNAL_HANDLER
 	beacon = null
 	if (ismob(loc))
-		to_chat(loc, span_hierophant("With a loud snap, a new beacon appears at [src]'s pommel."))
+		to_chat(loc, span_hierophant(LANG("obj.4cbb06f8", list(src))))
 	else
-		visible_message(span_hierophant("With a loud snap, a new beacon appears at [src]'s pommel."))
+		visible_message(span_hierophant(LANG("obj.4cbb06f8", list(src))))
 	playsound(src, 'sound/effects/magic/blind.ogg', 50, TRUE, -4)
 	update_appearance(UPDATE_OVERLAYS)
 
@@ -257,7 +258,7 @@
 /datum/action/innate/dash/hierophant/teleport(mob/user, atom/target)
 	var/dist = get_dist(user, target)
 	if(dist > HIEROPHANT_BLINK_RANGE)
-		user.balloon_alert(user, "too far!")
+		user.balloon_alert(user, LANG("datum.f5e75781", null))
 		return FALSE
 
 	return ..()

@@ -51,11 +51,11 @@
 /// This makes it so you have to extend it.
 /obj/item/hairbrush/switchblade/attack(mob/target, mob/user)
 	if(!extended)
-		to_chat(user, span_warning("Try extending the blade first, silly!"))
+		to_chat(user, span_warning(LANG("obj.d8e59ffa", null)))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(target.stat == DEAD)
-		to_chat(user, span_warning("There isn't much point brushing someone who can't appreciate it!"))
+		to_chat(user, span_warning(LANG("obj.227e6d84", null)))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	brush(target, user)
@@ -115,8 +115,8 @@
 	switch(current_state)
 		if(TURN_DIAL)
 			user.visible_message(
-				"[icon2html(src, oviewers(2, user))] As [user] turns the red dial on the side of \the [src], it spits out some encrypted static and warbles before silencing itself.",
-				"[icon2html(src, user)] As you turn the red dial on the side of the device, it spits out some encrypted static and warbles before silencing itself.",
+				LANG("obj.df800fbb", list(icon2html(src, oviewers(2, user)), user, src)),
+				LANG("obj.fcc5b6b1", list(icon2html(src, user))),
 				vision_distance=2)
 			playsound(user, 'modular_nova/master_files/sound/effects/bab1.ogg', 100, TRUE)
 			sparks.start()
@@ -125,8 +125,8 @@
 			return
 		if(TAP_SCREEN)
 			user.visible_message(
-				"[icon2html(src, oviewers(2, user))] [user] taps the screen of \the [src], making it light up and starting the boot sequence. \the [src] displays an error message and shuts off.",
-				"[icon2html(src, user)] You tap the device's screen, making it light up and starting the boot sequence. The device displays an error message and shuts off.",
+				LANG("obj.2599decf", list(icon2html(src, oviewers(2, user)), user, src, src)),
+				LANG("obj.b948dcdf", list(icon2html(src, user))),
 				vision_distance=2)
 			playsound(user, 'modular_nova/master_files/sound/effects/platform_call.ogg', 100, TRUE)
 			current_state = PRESS_KEYS
@@ -134,8 +134,8 @@
 			return
 		if(PRESS_KEYS)
 			user.visible_message(
-				"[icon2html(src, oviewers(2, user))] [user] presses some keys, producing some promising beeps, before a harsh buzz returns [src] to silence again.",
-				"[icon2html(src, user)] You press some keys, producing some promising beeps, before a harsh buzz returns the device to silence again.",
+				LANG("obj.90d39fd7", list(icon2html(src, oviewers(2, user)), user, src)),
+				LANG("obj.f2fa258d", list(icon2html(src, user))),
 				vision_distance=2)
 			sparks.start()
 			playsound(user, 'modular_nova/master_files/sound/effects/gmalfunction.ogg', 100, TRUE)
@@ -144,16 +144,16 @@
 			return
 		if(EXTEND_ANTENNA)
 			user.visible_message(
-				"[icon2html(src, oviewers(2, user))] [user] extends the antennae on \the [src], yielding a progress bar, but no amount of adjusting gets it to 100%. [user] returns them to normal.",
-				"[icon2html(src, user)] You extend the antennae, yielding a progress bar, but no amount of adjusting gets it to 100%. You return them to normal.",
+				LANG("obj.78ddd562", list(icon2html(src, oviewers(2, user)), user, src, user)),
+				LANG("obj.64bbfa60", list(icon2html(src, user))),
 				vision_distance=2)
 			current_state = SLAP_SIDE
 			next_activate = world.time + 20
 			return
 		if(SLAP_SIDE)
 			user.visible_message(
-				"[icon2html(src, oviewers(2, user))] [user] slaps the side of \the [src] and it whirrs into life, before thunking and remains still.",
-				"[icon2html(src, user)] You slap the side of the device and it whirrs into life, before thunking and remaining still.",
+				LANG("obj.6088244a", list(icon2html(src, oviewers(2, user)), user, src)),
+				LANG("obj.19033de2", list(icon2html(src, user))),
 				vision_distance=2)
 			playsound(user, 'modular_nova/master_files/sound/effects/hacked.ogg', 100, TRUE)
 			sparks.start()
@@ -209,7 +209,7 @@
 /obj/vehicle/ridden/wheelchair/hardlight/post_unbuckle_mob()
 	. = ..()
 
-	visible_message(span_notice("[src] flickers and disappears as the hardlight emitters disengage."))
+	visible_message(span_notice(LANG("obj.b9697850", list(src))))
 	qdel(src)
 
 
@@ -238,13 +238,13 @@
 
 /obj/item/holosign_creator/hardlight_wheelchair/examine(mob/user)
 	. = ..()
-	. += span_tinynoticeital("\n<i>There's something etched on the underside of the handle, you can look again to take a closer look...</i>")
+	. += span_tinynoticeital(LANG("obj.ce98fc58", null))
 
 
 /obj/item/holosign_creator/hardlight_wheelchair/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>Etched underneath the handle is the following message:</i>\n")
-	. += span_smallnoticeital("\"I told you I would find a way to make it all easier.\" - A.H.")
+	. += span_notice(LANG("obj.777cba0e", null))
+	. += span_smallnoticeital(LANG("obj.1c4d1f45", null))
 
 
 /datum/action/innate/nanite_leg_reinforcement
@@ -281,11 +281,11 @@
 	. = ..()
 	var/mob/living/living_user = user
 	if(!istype(user) || !living_user.has_quirk(/datum/quirk/paraplegic))
-		to_chat(user, "You feel like [src] wouldn't be very helpful to you.")
+		to_chat(user, LANG("obj.ff4002fa", list(src)))
 		return
 	var/datum/action/action = new action_to_grant(user)
 	action.Grant(user)
-	to_chat(user, "[src] vanishes in a puff of smoke!")
+	to_chat(user, LANG("obj.3ee05b0b", list(src)))
 	qdel(src)
 
 /obj/item/lipstick/quantum/sqn

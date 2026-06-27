@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Drone
  *
@@ -25,11 +26,11 @@
 	. = ..()
 	if(health < maxHealth)
 		if(health > maxHealth/3)
-			. += "[src]'s parts look loose."
+			. += LANG("mob.784637f2", list(src))
 		else
-			. += "[src]'s parts look very loose!"
+			. += LANG("mob.b53e8b04", list(src))
 	else
-		. += "[src] is in pristine condition."
+		. += LANG("mob.20cc3650", list(src))
 
 /mob/living/circuit_drone/updatehealth()
 	. = ..()
@@ -39,7 +40,7 @@
 /mob/living/circuit_drone/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(health == maxHealth)
-		balloon_alert(user, "already at maximum integrity!")
+		balloon_alert(user, LANG("mob.e7aad96b", null))
 		return TRUE
 	if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 		heal_overall_damage(50, 50)

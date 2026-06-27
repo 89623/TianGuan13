@@ -8,7 +8,7 @@
 /obj/item/assembly/control/polarizer/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Use it <b>in your hand</b> or with a <b>multitool</b> to change its channel ID.")
+	. += span_notice(LANG("obj.9d1d6031", null))
 
 
 /obj/item/assembly/control/polarizer/multitool_act(mob/living/user)
@@ -16,13 +16,13 @@
 
 
 /obj/item/assembly/control/polarizer/attack_self(mob/living/user)
-	var/change_id = tgui_input_number(user, "Set [src]'s ID", "Polarization ID", text2num(id), 1000)
+	var/change_id = tgui_input_number(user, LANG("obj.9369c29f", list(src)), LANG("obj.48940215", null), text2num(id), 1000)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	id = "[change_id]"
-	balloon_alert(user, "id changed")
-	to_chat(user, span_notice("You change the ID to [id]."))
+	balloon_alert(user, LANG("obj.3852daee", null))
+	to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 
 
 /obj/item/assembly/control/polarizer/activate()

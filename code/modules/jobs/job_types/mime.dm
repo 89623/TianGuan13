@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/job/mime
 	title = JOB_MIME
 	description = "..."
@@ -105,14 +106,14 @@
 		vow.Grant(user)
 	var/datum/action/new_action = new granted_action(user.mind || user)
 	new_action.Grant(user)
-	to_chat(user, span_warning("The book disappears into thin air."))
+	to_chat(user, span_warning(LANG("obj.07e24125", null)))
 	qdel(src)
 
 /obj/item/book/granter/action/spell/mime/mimery/can_learn(mob/living/user)
 	for(var/type in list(/datum/action/cooldown/spell/conjure/invisible_wall, /datum/action/cooldown/spell/conjure/invisible_chair, /datum/action/cooldown/spell/conjure_item/invisible_box, /datum/action/cooldown/spell/touch/mime_grayscale)) // NOVA CHANGE - Mime Monochrome - Adds '/datum/action/cooldown/spell/touch/mime_grayscale' - ORIGINAL: for(var/type in list(/datum/action/cooldown/spell/conjure/invisible_wall, /datum/action/cooldown/spell/conjure/invisible_chair, /datum/action/cooldown/spell/conjure_item/invisible_box))
 		if(!(locate(type) in user.actions))
 			return TRUE
-	to_chat(user, span_warning("You already know the secrets of mimery!"))
+	to_chat(user, span_warning(LANG("obj.3aa57b79", null)))
 	return FALSE
 
 /**

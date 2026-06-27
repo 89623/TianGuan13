@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ##lockable_storage
  * Adds a UI to the object that triggers when you use it in hand (if item) or attack (everything else).
@@ -104,7 +105,7 @@
 /datum/component/lockable_storage/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(can_hack_open)
-		examine_list += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
+		examine_list += LANG("datum.12cbbf44", list(panel_open ? "unscrewed" : "screwed shut"))
 
 /**
  * Called when a screwdriver is used on the parent, if it's hackable.
@@ -116,7 +117,7 @@
 
 	panel_open = !panel_open
 	tool.play_tool_sound(source)
-	source.balloon_alert(user, "panel [panel_open ? "opened" : "closed"]")
+	source.balloon_alert(user, LANG("datum.a741c12e", list(panel_open ? "opened" : "closed")))
 	return ITEM_INTERACT_SUCCESS
 
 /**
@@ -128,9 +129,9 @@
 	if(!can_hack_open || !source.atom_storage.locked)
 		return NONE
 	if(!panel_open)
-		source.balloon_alert(user, "panel closed!")
+		source.balloon_alert(user, LANG("datum.3feda34e", null))
 		return ITEM_INTERACT_BLOCKING
-	source.balloon_alert(user, "hacking...")
+	source.balloon_alert(user, LANG("datum.fcd3ebd1", null))
 	INVOKE_ASYNC(src, PROC_REF(hack_open), source, user, tool)
 	return ITEM_INTERACT_SUCCESS
 
@@ -138,7 +139,7 @@
 /datum/component/lockable_storage/proc/hack_open(atom/source, mob/user, obj/item/tool)
 	if(!tool.use_tool(parent, user, 40 SECONDS, volume = 50))
 		return
-	source.balloon_alert(user, "hacked")
+	source.balloon_alert(user, LANG("datum.ae6d6bce", null))
 	set_lock_code(null)
 
 /datum/component/lockable_storage/proc/break_lock()
@@ -160,8 +161,8 @@
 	if(source.obj_flags & EMAGGED)
 		return FALSE
 
-	source.visible_message(span_warning("Sparks fly from [source]!"), blind_message = span_hear("You hear a faint electrical spark."))
-	source.balloon_alert(user, "lock destroyed")
+	source.visible_message(span_warning(LANG("datum.4ebe3de5", list(source))), blind_message = span_hear("You hear a faint electrical spark."))
+	source.balloon_alert(user, LANG("datum.c20bce4a", null))
 	playsound(source, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	break_lock()
 	return ITEM_INTERACT_SUCCESS
@@ -185,7 +186,7 @@
 	source.update_appearance()
 
 	if(istype(user) && new_code)
-		to_chat(user, span_notice("You set the [source] pincode to [lock_code]."))
+		to_chat(user, span_notice(LANG("datum.227ba271", list(source, lock_code))))
 
 	return TRUE
 

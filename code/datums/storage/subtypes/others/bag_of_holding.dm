@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/storage/bag_of_holding
 	max_specific_storage = WEIGHT_CLASS_GIGANTIC
 	max_total_storage = 35
@@ -26,7 +27,7 @@
 
 /datum/storage/bag_of_holding/proc/confirm_recursive_insertion(obj/item/to_insert, mob/living/user)
 	var/area/bag_area = get_area(user)
-	var/safety = tgui_alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [to_insert.name]?", list("Proceed", "Abort"))
+	var/safety = tgui_alert(user, LANG("datum.9c2eeaed", null), LANG("datum.003e605c", list(to_insert.name)), list("Proceed", "Abort"))
 	return safety == "Proceed" \
 		&& !QDELETED(to_insert) \
 		&& !QDELETED(parent) \
@@ -39,8 +40,8 @@
 /datum/storage/bag_of_holding/proc/create_rift(obj/item/inserted, mob/living/user)
 	var/turf/rift_loc = get_turf(parent)
 	user.visible_message(
-		span_userdanger("The Bluespace interfaces of the two devices catastrophically malfunction!"),
-		span_danger("The Bluespace interfaces of the two devices catastrophically malfunction!"),
+		span_userdanger(LANG("datum.e4acc002", null)),
+		span_danger(LANG("datum.e4acc002", null)),
 	)
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(rift_loc)].")

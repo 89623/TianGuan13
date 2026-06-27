@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Dextrous guardians have some of the most powerful abilities of all: hands and pockets
 /mob/living/basic/guardian/dextrous
 	guardian_type = GUARDIAN_DEXTROUS
@@ -41,7 +42,7 @@
 	. = ..()
 	if(isnull(internal_storage) || (internal_storage.item_flags & ABSTRACT))
 		return
-	. += span_info("It is holding [internal_storage.examine_title(user)] in its internal storage.")
+	. += span_info(LANG("mob.30690125", list(internal_storage.examine_title(user))))
 
 /mob/living/basic/guardian/dextrous/manifest_effects()
 	. = ..()
@@ -81,7 +82,7 @@
 
 /mob/living/basic/guardian/dextrous/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	if (slot != ITEM_SLOT_DEX_STORAGE)
-		to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
+		to_chat(src, span_danger(LANG("mob.d90ac502", null)))
 		return FALSE
 
 	var/index = get_held_index_of_item(equipping)

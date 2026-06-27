@@ -23,12 +23,12 @@
 /obj/machinery/dish_drive/bullet/do_the_dishes(manual)
 	if(!LAZYLEN(dish_drive_contents))
 		if(manual)
-			visible_message(span_notice("[src] is empty!"))
+			visible_message(span_notice(LANG("obj.02d482cc", list(src))))
 		return
 	var/obj/machinery/disposal/bin/bin = locate() in view(binrange, src) //NOVA EDIT CHANGE
 	if(!bin)
 		if(manual)
-			visible_message(span_warning("[src] buzzes. There are no disposal bins in range!"))
+			visible_message(span_warning(LANG("obj.40c14145", list(src))))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		return
 	var/disposed = 0
@@ -39,12 +39,12 @@
 			use_energy(active_power_usage)
 			disposed++
 	if(disposed)
-		visible_message(span_notice("[src] [pick("whooshes", "bwooms", "fwooms", "pshooms")] and demoleculizes [disposed] stored item\s into the nearby void."))
+		visible_message(span_notice(LANG("obj.5cba38c2", list(src, pick("whooshes", "bwooms", "fwooms", "pshooms"), disposed))))
 		playsound(src, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 		playsound(bin, 'sound/items/pshoom/pshoom.ogg', 50, TRUE)
 		flick("synthesizer_beam", src)
 	else
-		visible_message(span_notice("There are no disposable items in [src]!"))
+		visible_message(span_notice(LANG("obj.359381c8", list(src))))
 	time_since_dishes = world.time + 600
 
 /obj/machinery/dish_drive/bullet/process()

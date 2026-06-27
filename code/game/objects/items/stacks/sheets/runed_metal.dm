@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Note, the order these in are deliberate, as it affects
 // the order they are shown via radial.
 GLOBAL_LIST_INIT(runed_metal_recipes, list( \
@@ -85,7 +86,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 
 /obj/item/stack/sheet/runed_metal/interact(mob/user)
 	if(!IS_CULTIST(user))
-		to_chat(user, span_warning("Only one with forbidden knowledge could hope to work this metal..."))
+		to_chat(user, span_warning(LANG("obj.e57292e1", null)))
 		return FALSE
 
 	var/turf/user_turf = get_turf(user)
@@ -95,7 +96,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 	var/is_valid_area = user_area && (user_area.area_flags & CULT_PERMITTED)
 
 	if(!is_valid_turf || !is_valid_area)
-		to_chat(user, span_warning("The veil is not weak enough here."))
+		to_chat(user, span_warning(LANG("obj.44b6eb55", null)))
 		return FALSE
 
 	return ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // If an item has the dunkable element, it's able to be dunked into reagent containers like beakers and glasses.
 // Dunking the item into a container will transfer reagents from the container to the item.
 /datum/element/dunkable
@@ -22,13 +23,13 @@
 	if(!target.is_dunkable()) // container should be a valid target for dunking
 		return NONE
 	if(!target.is_drainable())
-		to_chat(user, span_warning("[target] is unable to be dunked in!"))
+		to_chat(user, span_warning(LANG("datum.f566fb67", list(target))))
 		return ITEM_INTERACT_BLOCKING
 	if(target.reagents.trans_to(source, dunk_amount, transferred_by = user)) //if reagents were transferred, show the message
-		to_chat(user, span_notice("You dunk \the [target] into \the [target]."))
+		to_chat(user, span_notice(LANG("datum.237a256a", list(target, target))))
 		return ITEM_INTERACT_SUCCESS
 	if(!target.reagents.total_volume)
-		to_chat(user, span_warning("[target] is empty!"))
+		to_chat(user, span_warning(LANG("datum.02d482cc", list(target))))
 	else
-		to_chat(user, span_warning("[source] is full!"))
+		to_chat(user, span_warning(LANG("datum.21d5a38a", list(source))))
 	return ITEM_INTERACT_BLOCKING

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/skillchip/acrobatics
 	name = "old F058UR7 skillchip"
 	desc = "A formerly cutting-edge skillchip that granted the user an advanced, Olympian-level degree of kinesthesics for flipping, spinning, and absolutely nothing else. \
@@ -57,7 +58,7 @@
 	switch(rand(mintegrity, get_integrity())) // 1 to 100 but gets worse every time
 		// CRIT FAIL
 		if(1)
-			bozo.visible_message(span_userdanger("[bozo]'s head suddenly explodes outwards!"))
+			bozo.visible_message(span_userdanger(LANG("obj.7a0381eb", list(bozo))))
 
 			explosion(bozo, light_impact_range = 2, adminlog = TRUE, explosion_cause = src)
 			// WITNESS THE GORE
@@ -92,8 +93,8 @@
 		// last chance to stop
 		if(7 to 9)
 			bozo.visible_message(
-				span_danger("[bozo] seems to short circuit!"),
-				span_userdanger("Your brain short circuits!"),
+				span_danger(LANG("obj.b2d69510", list(bozo))),
+				span_userdanger(LANG("obj.1c756058", null)),
 			)
 			// if they're susceptible to electrocution, confuse them
 			if(bozo.electrocute_act(15, bozo, 1, SHOCK_NOGLOVES|SHOCK_NOSTUN))
@@ -112,8 +113,8 @@
 				bozo.adjust_fire_stacks(11 - get_integrity())
 				bozo.ignite_mob()
 				bozo.visible_message(
-					span_danger("[bozo]'s head lights up!"),
-					span_userdanger("Your head hurts so much, it feels like it's on fire!"),
+					span_danger(LANG("obj.f0fde2f8", list(bozo))),
+					span_userdanger(LANG("obj.dbd401cd", null)),
 				)
 				ASYNC
 					bozo.emote("scream")
@@ -122,8 +123,8 @@
 				particle_path = /particles/smoke/steam/bad
 			else
 				bozo.visible_message(
-					span_danger("[bozo]'s head starts smoking!"),
-					span_userdanger("Your brain feels like it's on fire!"),
+					span_danger(LANG("obj.71f3e5d8", list(bozo))),
+					span_userdanger(LANG("obj.a0d626a6", null)),
 				)
 
 				// increase smokiness if already smoking
@@ -147,7 +148,7 @@
 		// hey, something isn't right...
 		if(16 to 50)
 			bozo.visible_message(
-				span_warning("[bozo]'s head sparks."),
+				span_warning(LANG("obj.6062c366", list(bozo))),
 			)
 
 			sparks.amount = rand(1, 2)

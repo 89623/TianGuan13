@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Allows mobs with this element attached to just simply tear down any poster they desire to.
 /datum/element/poster_tearer
 	element_flags = ELEMENT_BESPOKE
@@ -28,7 +29,7 @@
 		return NONE // don't care we move on
 
 	if(DOING_INTERACTION_WITH_TARGET(user, target) || (!isnull(interaction_key) && DOING_INTERACTION(user, interaction_key)))
-		user.balloon_alert(target, "busy!")
+		user.balloon_alert(target, LANG("datum.8df72942", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, PROC_REF(tear_it_down), user, target)
@@ -39,7 +40,7 @@
 	if(!target.check_tearability(user)) // this proc will handle user feedback
 		return
 
-	target.balloon_alert(user, "tearing down the poster...")
+	target.balloon_alert(user, LANG("datum.3a722360", null))
 	if(!do_after(user, tear_time, target, interaction_key = interaction_key)) // just in case the user actually enjoys art
 		return
 	target.tear_poster(user)

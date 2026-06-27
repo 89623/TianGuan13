@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/mod/construction
 	desc = "A part used in MOD construction."
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
@@ -9,7 +10,7 @@
 
 /obj/item/mod/construction/helmet/examine(mob/user)
 	. = ..()
-	. += span_notice("You could insert it into a <b>MOD shell</b>...")
+	. += span_notice(LANG("obj.2167c56c", null))
 
 /obj/item/mod/construction/chestplate
 	name = "MOD chestplate"
@@ -17,7 +18,7 @@
 
 /obj/item/mod/construction/chestplate/examine(mob/user)
 	. = ..()
-	. += span_notice("You could insert it into a <b>MOD shell</b>...")
+	. += span_notice(LANG("obj.2167c56c", null))
 
 /obj/item/mod/construction/gauntlets
 	name = "MOD gauntlets"
@@ -25,7 +26,7 @@
 
 /obj/item/mod/construction/gauntlets/examine(mob/user)
 	. = ..()
-	. += span_notice("You could insert these into a <b>MOD shell</b>...")
+	. += span_notice(LANG("obj.9db100df", null))
 
 /obj/item/mod/construction/boots
 	name = "MOD boots"
@@ -33,7 +34,7 @@
 
 /obj/item/mod/construction/boots/examine(mob/user)
 	. = ..()
-	. += span_notice("You could insert these into a <b>MOD shell</b>...")
+	. += span_notice(LANG("obj.9db100df", null))
 
 /obj/item/mod/construction/broken_core
 	name = "broken MOD core"
@@ -42,13 +43,13 @@
 
 /obj/item/mod/construction/broken_core/examine(mob/user)
 	. = ..()
-	. += span_notice("You could repair it with a <b>screwdriver</b>...")
+	. += span_notice(LANG("obj.f81088c7", null))
 
 /obj/item/mod/construction/broken_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	balloon_alert(user, "repairing...")
+	balloon_alert(user, LANG("obj.b52342a8", null))
 	if(!tool.use_tool(src, user, 5 SECONDS, volume = 30))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
 	new /obj/item/mod/core/standard(drop_location())
 	qdel(src)
@@ -65,16 +66,16 @@
 
 /obj/item/mod/construction/lavalandcore/examine(mob/user)
 	. = ..()
-	. += span_notice("You could probably attach some <b>wires</b> to it...")
+	. += span_notice(LANG("obj.558de421", null))
 
 /obj/item/mod/construction/lavalandcore/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(weapon, /obj/item/stack/cable_coil))
 		return ..()
 	if(!weapon.tool_start_check(user, amount=2))
 		return
-	balloon_alert(user, "installing wires...")
+	balloon_alert(user, LANG("obj.f547a475", null))
 	if(!weapon.use_tool(src, user, 5 SECONDS, amount = 2, volume = 30))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
 	new /obj/item/mod/core/plasma/lavaland(drop_location())
 	qdel(src)
@@ -165,115 +166,115 @@
 			if(!istype(part, /obj/item/mod/core))
 				return
 			if(!user.transferItemToLoc(part, src))
-				balloon_alert(user, "it's stuck!")
+				balloon_alert(user, LANG("obj.ee463177", null))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			balloon_alert(user, "core inserted")
+			balloon_alert(user, LANG("obj.de575d7b", null))
 			core = part
 			step = CORE_STEP
 		if(CORE_STEP)
 			if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, "core screwed")
+					balloon_alert(user, LANG("obj.a5967dfa", null))
 				step = SCREWED_CORE_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
 					core.forceMove(drop_location())
-					balloon_alert(user, "core taken out")
+					balloon_alert(user, LANG("obj.17bf120a", null))
 				step = START_STEP
 		if(SCREWED_CORE_STEP)
 			if(istype(part, /obj/item/mod/construction/helmet)) //Construct
 				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, "it's stuck!")
+					balloon_alert(user, LANG("obj.ee463177", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "helmet added")
+				balloon_alert(user, LANG("obj.95fcc204", null))
 				helmet = part
 				step = HELMET_STEP
 			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, "core unscrewed")
+					balloon_alert(user, LANG("obj.4e25acf7", null))
 					step = CORE_STEP
 		if(HELMET_STEP)
 			if(istype(part, /obj/item/mod/construction/chestplate)) //Construct
 				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, "it's stuck!")
+					balloon_alert(user, LANG("obj.ee463177", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "chestplate added")
+				balloon_alert(user, LANG("obj.6f263f01", null))
 				chestplate = part
 				step = CHESTPLATE_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
 					helmet.forceMove(drop_location())
-					balloon_alert(user, "helmet removed")
+					balloon_alert(user, LANG("obj.b42b2433", null))
 					helmet = null
 					step = SCREWED_CORE_STEP
 		if(CHESTPLATE_STEP)
 			if(istype(part, /obj/item/mod/construction/gauntlets)) //Construct
 				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, "it's stuck!")
+					balloon_alert(user, LANG("obj.ee463177", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "gauntlets added")
+				balloon_alert(user, LANG("obj.9df0f806", null))
 				gauntlets = part
 				step = GAUNTLETS_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
 					chestplate.forceMove(drop_location())
-					balloon_alert(user, "chestplate removed")
+					balloon_alert(user, LANG("obj.1d2b3d3b", null))
 					chestplate = null
 					step = HELMET_STEP
 		if(GAUNTLETS_STEP)
 			if(istype(part, /obj/item/mod/construction/boots)) //Construct
 				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, "it's stuck!")
+					balloon_alert(user, LANG("obj.ee463177", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "boots added")
+				balloon_alert(user, LANG("obj.61bb5191", null))
 				boots = part
 				step = BOOTS_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
 					gauntlets.forceMove(drop_location())
-					balloon_alert(user, "gauntlets removed")
+					balloon_alert(user, LANG("obj.cb7f46ae", null))
 					gauntlets = null
 					step = CHESTPLATE_STEP
 		if(BOOTS_STEP)
 			if(part.tool_behaviour == TOOL_WRENCH) //Construct
 				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, "assembly secured")
+					balloon_alert(user, LANG("obj.40e42e49", null))
 					step = WRENCHED_ASSEMBLY_STEP
 			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
 					boots.forceMove(drop_location())
-					balloon_alert(user, "boots removed")
+					balloon_alert(user, LANG("obj.1bbfd35b", null))
 					boots = null
 					step = GAUNTLETS_STEP
 		if(WRENCHED_ASSEMBLY_STEP)
 			if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, "assembly screwed")
+					balloon_alert(user, LANG("obj.8284d713", null))
 					step = SCREWED_ASSEMBLY_STEP
 			else if(part.tool_behaviour == TOOL_WRENCH) //Deconstruct
 				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, "assembly unsecured")
+					balloon_alert(user, LANG("obj.213e899a", null))
 					step = BOOTS_STEP
 		if(SCREWED_ASSEMBLY_STEP)
 			if(istype(part, /obj/item/mod/construction/plating)) //Construct
 				var/obj/item/mod/construction/plating/external_plating = part
 				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, "it's stuck!")
+					balloon_alert(user, LANG("obj.ee463177", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_plating.theme, null, core)
 				core = null
 				qdel(src)
 				user.put_in_hands(mod)
-				mod.balloon_alert(user, "unit finished")
+				mod.balloon_alert(user, LANG("obj.33113ef2", null))
 			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, "assembly unscrewed")
+					balloon_alert(user, LANG("obj.b5142f35", null))
 					step = SCREWED_ASSEMBLY_STEP
 	update_icon_state()
 

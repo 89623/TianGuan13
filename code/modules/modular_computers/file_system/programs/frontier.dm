@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/scipaper_program
 	filename = "ntfrontier"
 	filedesc = "NT Frontier"
@@ -32,7 +33,7 @@
 	if(QDELETED(used_multitool.buffer) || !istype(used_multitool.buffer, /datum/techweb))
 		return ITEM_INTERACT_BLOCKING
 	linked_techweb = used_multitool.buffer
-	computer.balloon_alert(user, "buffer linked!")
+	computer.balloon_alert(user, LANG("datum.0624d195", null))
 	return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/scipaper_program/proc/recheck_file_presence()
@@ -221,7 +222,7 @@
 			if(partner && node)
 				var/possible_boost = partner.purchase_boost(linked_techweb, node)
 				if(possible_boost)
-					computer.say("Purchase successful[possible_boost == SCIPAPER_ALREADY_BOUGHT ? ", refunding [partner.boostable_nodes[params["purchased_boost"]]] points" : ""].")
+					computer.say(LANG("datum.2525303a", list(possible_boost == SCIPAPER_ALREADY_BOUGHT ? ", refunding [partner.boostable_nodes[params["purchased_boost"]]] points" : "")))
 					playsound(computer, 'sound/machines/ping.ogg', 25)
 					return TRUE
 			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25)
@@ -230,7 +231,7 @@
 /// Publication and adding points.
 /datum/computer_file/program/scipaper_program/proc/publish()
 	if(linked_techweb.add_scientific_paper(paper_to_be))
-		computer.say("\"[paper_to_be.title]\" has been published!")
+		computer.say(LANG("datum.e5096fa9", list(paper_to_be.title)))
 		paper_to_be = new
 		UnregisterSignal(selected_file, COMSIG_COMPUTER_FILE_DELETE)
 		selected_file = null

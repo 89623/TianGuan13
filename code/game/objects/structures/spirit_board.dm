@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/spirit_board
 	name = "spirit board"
 	desc = "A wooden board with letters etched into it, used in seances."
@@ -32,9 +33,9 @@
 /obj/structure/spirit_board/examine()
 	. = ..()
 	if(planchette)
-		. += span_notice("The planchette is currently at the letter \"[planchette]\".")
+		. += span_notice(LANG("obj.21f0ad13", list(planchette)))
 	else
-		. += span_notice("The planchette is in the middle of the board on no particular letter.")
+		. += span_notice(LANG("obj.ed5269ff", null))
 
 /obj/structure/spirit_board/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -62,7 +63,7 @@
 			header = "Spirit board",
 		)
 
-	var/new_planchette = tgui_input_list(ghost, "Choose the letter.", "Seance!", ghosty_options)
+	var/new_planchette = tgui_input_list(ghost, LANG("obj.46360ed7", null), LANG("obj.fc8dad6f", null), ghosty_options)
 	if(isnull(new_planchette))
 		return
 	if(!Adjacent(ghost) || !COOLDOWN_FINISHED(src, next_use))
@@ -89,7 +90,7 @@
 
 	var/turf/play_turf = get_turf(src)
 	if(play_turf?.get_lumcount() > 0.2)
-		to_chat(ghost, span_warning("It's too bright here to use [src]!"))
+		to_chat(ghost, span_warning(LANG("obj.80b7b758", list(src))))
 		return FALSE
 
 	if(required_user_count > 0)
@@ -105,7 +106,7 @@
 			users_in_range++
 
 		if(users_in_range < required_user_count)
-			to_chat(ghost, span_warning("There aren't enough people around to use [src]!"))
+			to_chat(ghost, span_warning(LANG("obj.d2b6eb75", list(src))))
 			return FALSE
 
 	return TRUE

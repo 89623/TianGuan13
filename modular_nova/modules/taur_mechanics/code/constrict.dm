@@ -32,7 +32,7 @@
 	if (trigger_flags & TRIGGER_SECONDARY_ACTION)
 		unset_ranged_ability(owner)
 		if (isnull(tail))
-			owner.balloon_alert(owner, "coil tail first!")
+			owner.balloon_alert(owner, LANG("datum.c9c0b3b9", null))
 			return FALSE
 		tail.toggle_crushing()
 		return FALSE
@@ -54,9 +54,9 @@
 	if (!can_coil_target(living_target))
 		return TRUE
 
-	clicker.balloon_alert_to_viewers("starts coiling tail")
-	clicker.visible_message(span_warning("[clicker] starts coiling [clicker.p_their()] tail around [living_target]..."), span_notice("You start coiling your tail around [living_target]..."), ignored_mobs = list(living_target))
-	to_chat(living_target, span_userdanger("[clicker] starts coiling [clicker.p_their()] tail around you!"))
+	clicker.balloon_alert_to_viewers(LANG("datum.3cd5e4f2", null))
+	clicker.visible_message(span_warning(LANG("datum.ba46c9c3", list(clicker, clicker.p_their(), living_target))), span_notice(LANG("datum.1f2e00ac", list(living_target))), ignored_mobs = list(living_target))
+	to_chat(living_target, span_userdanger(LANG("datum.025dfc45", list(clicker, clicker.p_their()))))
 
 	owner.changeNext_move(base_coil_delay) // prevent interaction during this
 	unset_ranged_ability(owner) // because we sleep
@@ -70,8 +70,8 @@
 
 /// Actually constricts the mob, by setting constricted to this mob and spawning a tail if needed.
 /datum/action/innate/constrict/proc/do_constriction(mob/living/living_target)
-	owner.visible_message(span_boldwarning("[owner] coils [owner.p_their()] tail around [living_target]!"), span_notice("You coil your tail around [living_target]!"), ignored_mobs = list(living_target))
-	to_chat(living_target, span_userdanger("[owner] coils [owner.p_their()] tail around you!"))
+	owner.visible_message(span_boldwarning(LANG("datum.b7a26c10", list(owner, owner.p_their(), living_target))), span_notice(LANG("datum.32240ee9", list(living_target))), ignored_mobs = list(living_target))
+	to_chat(living_target, span_userdanger(LANG("datum.7fd78d9d", list(owner, owner.p_their()))))
 	create_tail()
 	tail.set_constricted(living_target)
 	return TRUE
@@ -80,17 +80,17 @@
 /datum/action/innate/constrict/proc/can_coil_target(mob/living/target, silent = FALSE)
 	if (!owner.Adjacent(target))
 		if (!silent)
-			owner.balloon_alert(owner, "too far!")
+			owner.balloon_alert(owner, LANG("datum.f5e75781", null))
 		return FALSE
 
 	if (target.buckled)
 		if (!silent)
-			owner.balloon_alert(owner, "unbuckle [target.p_them()] first!")
+			owner.balloon_alert(owner, LANG("datum.a2f6ed39", list(target.p_them())))
 		return FALSE
 
 	if (owner.buckled)
 		if (!silent)
-			owner.balloon_alert(owner, "unbuckle yourself first!")
+			owner.balloon_alert(owner, LANG("datum.e1cf60b1", null))
 		return FALSE
 
 	return TRUE
@@ -329,8 +329,8 @@
 		var/mob/living/carbon/carbon_target = constricted
 		def_zone = pick(carbon_target.bodyparts)
 	constricted.apply_damage(stored_damage, BRUTE, def_zone = def_zone, blocked = armor, wound_bonus = wound_bonus)
-	owner.visible_message(span_warning("[owner] squeezes [constricted] with [owner.p_their()] tail!"), span_danger("You squeeze [constricted] with your tail!"), ignored_mobs = list(constricted))
-	to_chat(constricted, span_warning("[owner] squeezes you with [owner.p_their()] tail!"))
+	owner.visible_message(span_warning(LANG("obj.49333f40", list(owner, constricted, owner.p_their()))), span_danger(LANG("obj.91c9939d", list(constricted))), ignored_mobs = list(constricted))
+	to_chat(constricted, span_warning(LANG("obj.394e3acd", list(owner, owner.p_their()))))
 	return TRUE
 
 #undef CONSTRICTED_FORCE_WOUND_BONUS_MIN
@@ -366,7 +366,7 @@
 	if (!def_zone)
 		def_zone = owner.get_bodypart(BODY_ZONE_CHEST)
 
-	to_chat(owner, span_userdanger("You recall your tail as a sharp pain shoots through it!"))
+	to_chat(owner, span_userdanger(LANG("obj.03f8c807", null)))
 	owner.apply_damage(SERPENTINE_TAIL_DESTRUCTION_OWNER_BRUTE_DAMAGE, damage_type, def_zone)
 
 	return ..()
@@ -466,7 +466,7 @@
 /// Toggle proc for crushing. See stop_crushing and start_crushing.
 /obj/structure/serpentine_tail/proc/toggle_crushing()
 	if (!constricted)
-		owner.balloon_alert(owner, "not constricting anything!")
+		owner.balloon_alert(owner, LANG("obj.5f64751d", null))
 		return FALSE
 
 	if (currently_crushing)
@@ -484,9 +484,9 @@
 	currently_crushing = TRUE
 	START_PROCESSING(SSobj, src)
 
-	owner.balloon_alert_to_viewers("starts crushing")
-	owner.visible_message(span_boldwarning("[owner] starts crushing [constricted] with [owner.p_their()] tail!"), span_warning("You start crushing [constricted] with your tail!"), ignored_mobs = list(constricted))
-	to_chat(constricted, span_userdanger("[owner] starts crushing you with [owner.p_their()] tail!"))
+	owner.balloon_alert_to_viewers(LANG("obj.f516fe4f", null))
+	owner.visible_message(span_boldwarning(LANG("obj.4d869e31", list(owner, constricted, owner.p_their()))), span_warning(LANG("obj.1229b6f5", list(constricted))), ignored_mobs = list(constricted))
+	to_chat(constricted, span_userdanger(LANG("obj.10fae112", list(owner, owner.p_their()))))
 	return TRUE
 
 /// Setter proc for currently_crushing that handles processing and warnings.
@@ -494,9 +494,9 @@
 	if (!currently_crushing)
 		return FALSE
 
-	owner.balloon_alert_to_viewers("stops crushing")
-	owner.visible_message(span_warning("[owner] stops crushing [constricted] with [owner.p_their()] tail."), span_notice("You stop crushing [constricted] with your tail."), ignored_mobs = list(constricted))
-	to_chat(constricted, span_boldwarning("[owner] stops crushing you with [owner.p_their()] tail."))
+	owner.balloon_alert_to_viewers(LANG("obj.81c5d81e", null))
+	owner.visible_message(span_warning(LANG("obj.b7eda0d1", list(owner, constricted, owner.p_their()))), span_notice(LANG("obj.a2a1f972", list(constricted))), ignored_mobs = list(constricted))
+	to_chat(constricted, span_boldwarning(LANG("obj.35b211a1", list(owner, owner.p_their()))))
 
 	currently_crushing = FALSE
 	STOP_PROCESSING(SSobj, src)
@@ -539,7 +539,7 @@
 		return ..()
 
 	if (!COOLDOWN_FINISHED(src, escape_cooldown))
-		to_chat(user, span_warning("You're still recovering from your last escape attempt!")) // prevent escape spam
+		to_chat(user, span_warning(LANG("obj.8dca9f4e", null))) // prevent escape spam
 		return FALSE
 
 	var/escape_chance = CONSTRICT_ESCAPE_CHANCE
@@ -547,13 +547,13 @@
 		escape_chance += AKULA_GRAB_RESIST_BONUS
 
 	if (!prob(escape_chance))
-		user.visible_message(span_warning("[user] squirms as they fail to escape from [owner]'s tail!"), span_warning("You squirm as you fail to escape from [owner]'s tail!"), ignored_mobs = owner)
-		to_chat(owner, span_warning("[user] squirms as they fail to escape from the grip of your tail!"))
+		user.visible_message(span_warning(LANG("obj.ba067f2e", list(user, owner))), span_warning(LANG("obj.78bc9b16", list(owner))), ignored_mobs = owner)
+		to_chat(owner, span_warning(LANG("obj.d77114da", list(user))))
 		COOLDOWN_START(src, escape_cooldown, SERPENTINE_TAIL_UNBUCKLE_TIME)
 		return FALSE
 
-	user.visible_message(span_warning("[user] breaks free from [owner]'s tail!"), span_warning("You break free from [owner]'s tail!"), ignored_mobs = owner)
-	to_chat(owner, span_boldwarning("[user] breaks free from the grip of your tail!"))
+	user.visible_message(span_warning(LANG("obj.d418de53", list(user, owner))), span_warning(LANG("obj.86d6213b", list(owner))), ignored_mobs = owner)
+	to_chat(owner, span_boldwarning(LANG("obj.b48f69f6", list(user))))
 	return ..()
 
 #undef SERPENTINE_TAIL_UNBUCKLE_TIME
@@ -603,7 +603,7 @@
 	SIGNAL_HANDLER
 
 	if (currently_crushing)
-		examine_text += span_boldwarning("[owner] is crushing [constricted.p_them()] with [owner.p_their()] tail!")
+		examine_text += span_boldwarning(LANG("obj.0659e3b0", list(owner, constricted.p_them(), owner.p_their())))
 
 /// Signal proc for constricted qdeleting. Sets constricted to null.
 /obj/structure/serpentine_tail/proc/constricted_qdeleting(datum/signal_source)
@@ -616,7 +616,7 @@
 	SIGNAL_HANDLER
 
 	if (!allowing_grab_on_constricted && thing == constricted)
-		owner.balloon_alert(owner, "can't grab constricted!")
+		owner.balloon_alert(owner, LANG("obj.6908f9d1", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Signal proc for owner grabbing someone, separate from pulling. Forbids them from upgrading grabs on constricted.
@@ -624,7 +624,7 @@
 	SIGNAL_HANDLER
 
 	if (!allowing_grab_on_constricted && grabbing == constricted)
-		owner.balloon_alert(owner, "can't grab constricted!")
+		owner.balloon_alert(owner, LANG("obj.6908f9d1", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Signal proc that prevents constricted from grabbing owner.
@@ -632,7 +632,7 @@
 	SIGNAL_HANDLER
 
 	if (thing == owner)
-		constricted.balloon_alert(constricted, "can't grab constrictor!")
+		constricted.balloon_alert(constricted, LANG("obj.86570985", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/status_effect/constricted

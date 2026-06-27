@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define STATUE_FILTER "statue_filter"
 #define FILTER_COLOR "#34b347"
 #define RECALL_DURATION 3 SECONDS
@@ -21,12 +22,12 @@
 		return TRUE
 
 	if(!COOLDOWN_FINISHED(src, summon_cooldown))
-		user.balloon_alert(user, "recharging!")
+		user.balloon_alert(user, LANG("obj.ba1fd79a", null))
 		return TRUE
 
 	COOLDOWN_START(src, summon_cooldown, 30 SECONDS)
 	if(isnull(contained_frog))
-		user.balloon_alert(user, "no frog linked!")
+		user.balloon_alert(user, LANG("obj.53b06fe4", null))
 		return TRUE
 	if(contained_frog.loc == src)
 		release_frog(user)
@@ -39,9 +40,9 @@
 	if(!IS_WIZARD(user))
 		return
 	if(isnull(contained_frog))
-		. += span_notice("There are currently no frogs linked to this statue!")
+		. += span_notice(LANG("obj.184af30c", null))
 	else
-		. += span_notice("Using it will [(contained_frog in src) ? "release" : "recall"] the beast!")
+		. += span_notice(LANG("obj.5263b709", list((contained_frog in src) ? "release" : "recall")))
 
 ///resummon the frog into its home
 /obj/item/frog_statue/proc/recall_frog(mob/user)
@@ -138,9 +139,9 @@
 
 
 /obj/item/frog_contract/proc/select_frog_name(mob/user, mob/new_frog)
-	var/frog_name = sanitize_name(tgui_input_text(user, "Choose your frog's name!", "Name pet toad", "leaper", MAX_NAME_LEN), allow_numbers = TRUE)
+	var/frog_name = sanitize_name(tgui_input_text(user, LANG("obj.739143e5", null), LANG("obj.b5420f9c", null), "leaper", MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!frog_name)
-		to_chat(user, span_warning("Please enter a valid name."))
+		to_chat(user, span_warning(LANG("obj.cf7854ad", null)))
 		select_frog_name(user, new_frog)
 		return
 	new_frog.name = frog_name
@@ -148,12 +149,12 @@
 /obj/item/frog_contract/proc/select_frog_color(mob/user, mob/living/basic/leaper/new_frog)
 	var/frog_color = tgui_color_picker(user, "Select your frog's color!" , "Pet toad color", COLOR_GREEN)
 	if(isnull(frog_color))
-		to_chat(user, span_warning("Please choose a valid color."))
+		to_chat(user, span_warning(LANG("obj.7a1f0f3e", null)))
 		select_frog_color(user, new_frog)
 		return
 	var/list/hsv_frog = rgb2hsv(frog_color)
 	if(hsv_frog[3] < MINIMUM_COLOR_VALUE)
-		to_chat(user, span_danger("This color is too dark!"))
+		to_chat(user, span_danger(LANG("obj.e02e28ce", null)))
 		select_frog_color(user, new_frog)
 		return
 	new_frog.set_color_overlay(frog_color)

@@ -21,12 +21,12 @@
 /obj/structure/millstone/examine(mob/user)
 	. = ..()
 
-	. += span_notice("It currently contains <b>[length(contents)]/[maximum_contained_items]</b> items.")
-	. += span_notice("You can process [src]'s contents with <b>Right Click</b>")
-	. += span_notice("You can empty all of the items out of it with <b>Alt Click</b>")
+	. += span_notice(LANG("obj.fdec676b", list(length(contents), maximum_contained_items)))
+	. += span_notice(LANG("obj.a0cbffb8", list(src)))
+	. += span_notice(LANG("obj.71ecf662", null))
 
 	if(length(contents))
-		. += span_notice("Inside, you can see:")
+		. += span_notice(LANG("obj.0cd99d60", null))
 		var/list/stuff_inside = list()
 		for(var/obj/thing as anything in contents)
 			stuff_inside[thing.type] += 1
@@ -34,13 +34,13 @@
 		for(var/obj/thing as anything in stuff_inside)
 			. += span_notice("&bull; [stuff_inside[thing]] [initial(thing.name)]\s")
 
-		. += span_notice("And it can fit <b>[maximum_contained_items - length(contents)]</b> more items in it.")
+		. += span_notice(LANG("obj.507ea0f0", list(maximum_contained_items - length(contents))))
 
 	else
-		. += span_notice("It can hold <b>[maximum_contained_items]</b> items, and there is nothing in it presently.")
+		. += span_notice(LANG("obj.7b62c90e", list(maximum_contained_items)))
 
-	. += span_notice("You can [anchored ? "un" : ""]secure [src] with <b>CTRL-Shift-Click</b>.")
-	. += span_notice("With a <b>prying tool</b> of some sort, you could take [src] apart.")
+	. += span_notice(LANG("obj.191eddbb", list(anchored ? "un" : "", src)))
+	. += span_notice(LANG("obj.0f938112", list(src)))
 
 /obj/structure/millstone/Destroy()
 	drop_everything_contained()
@@ -53,11 +53,11 @@
 
 /obj/structure/millstone/click_alt(mob/user)
 	if(!length(contents))
-		balloon_alert(user, "nothing inside!")
+		balloon_alert(user, LANG("obj.c2ebeaa8", null))
 		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
-	balloon_alert(user, "removed all items")
+	balloon_alert(user, LANG("obj.35edb25f", null))
 	return CLICK_ACTION_SUCCESS
 
 /obj/structure/millstone/click_ctrl_shift(mob/user)
@@ -85,7 +85,7 @@
 
 /obj/structure/millstone/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	balloon_alert_to_viewers("disassembling...")
+	balloon_alert_to_viewers(LANG("obj.b5ba9871", null))
 	if(!do_after(user, 2 SECONDS, src))
 		return
 
@@ -94,11 +94,11 @@
 /obj/structure/millstone/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/storage/bag))
 		if(length(contents) >= maximum_contained_items)
-			balloon_alert(user, "already full")
+			balloon_alert(user, LANG("obj.e3949c3a", null))
 			return TRUE
 
 		if(!length(attacking_item.contents))
-			balloon_alert(user, "nothing to transfer!")
+			balloon_alert(user, LANG("obj.7e39eb37", null))
 			return TRUE
 
 		for(var/obj/item/food/grown/target_item in attacking_item.contents)
@@ -108,39 +108,39 @@
 			target_item.forceMove(src)
 
 		if (length(contents) >= maximum_contained_items)
-			balloon_alert(user, "filled!")
+			balloon_alert(user, LANG("obj.f5ddc80d", null))
 
 		else
-			balloon_alert(user, "transferred")
+			balloon_alert(user, LANG("obj.1ce4361d", null))
 
 		return TRUE
 
 	if(!(istype(attacking_item, /obj/item/food/grown) || istype(attacking_item, /obj/item/grown)))
-		balloon_alert(user, "can only mill plants")
+		balloon_alert(user, LANG("obj.24f71cd2", null))
 		return ..()
 
 	if(length(contents) >= maximum_contained_items)
-		balloon_alert(user, "already full")
+		balloon_alert(user, LANG("obj.e3949c3a", null))
 		return
 
 	attacking_item.forceMove(src)
-	balloon_alert(user, "transferred [attacking_item]")
+	balloon_alert(user, LANG("obj.5567b4ed", list(attacking_item)))
 	return TRUE
 
 /// Takes the content's seeds and spits them out on the turf, as well as grinding whatever the contents may be
 /obj/structure/millstone/proc/mill_it_up(mob/living/carbon/human/user)
 	if(!length(contents))
-		balloon_alert(user, "nothing to mill")
+		balloon_alert(user, LANG("obj.13bdb106", null))
 		return
 
 	if(user.get_stamina_loss() > MILLSTONE_STAMINA_MINIMUM)
-		balloon_alert(user, "too tired")
+		balloon_alert(user, LANG("obj.1401aa77", null))
 		return
 
 	if(!length(contents) || !in_range(src, user))
 		return
 
-	balloon_alert_to_viewers("grinding...")
+	balloon_alert_to_viewers(LANG("obj.c87262cc", null))
 
 	flick("millstone_spin", src)
 	playsound(src, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
@@ -149,13 +149,13 @@
 
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, 5 SECONDS * skill_modifier, target = src))
-		balloon_alert_to_viewers("stopped grinding")
+		balloon_alert_to_viewers(LANG("obj.2e115f54", null))
 		return
 
 	for(var/target_item in contents)
 		seedify(target_item, t_max = 1)
 
-	balloon_alert_to_viewers("finished grinding")
+	balloon_alert_to_viewers(LANG("obj.b03db55e", null))
 	user.mind?.adjust_experience(/datum/skill/primitive, 5)
 
 #undef MILLSTONE_STAMINA_MINIMUM

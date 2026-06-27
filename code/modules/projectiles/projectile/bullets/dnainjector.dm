@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/projectile/bullet/dnainjector
 	name = "\improper DNA injector"
 	icon_state = "syringeproj"
@@ -17,8 +18,8 @@
 					return BULLET_ACT_HIT
 			else
 				blocked = 100
-				target.visible_message(span_danger("\The [src] is deflected!"), \
-									   span_userdanger("You are protected against \the [src]!"))
+				target.visible_message(span_danger(LANG("obj.a02a8043", list(src))), \
+									   span_userdanger(LANG("obj.5d4d8bcd", list(src))))
 	return ..()
 
 /obj/projectile/bullet/dnainjector/Destroy()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/item/clothing/gloves/cargo_gauntlet
 	name = "\improper H.A.U.L. gauntlets"
@@ -28,7 +29,7 @@
 		stack_trace("Gloves already have a pull component associated with \[[pull_component.parent]\] when \[[equipper]\] is trying to equip them.")
 		QDEL_NULL(pull_component_weakref)
 
-	to_chat(equipper, span_notice("You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!"))
+	to_chat(equipper, span_notice(LANG("obj.27bfcc15", null)))
 
 	pull_component_weakref = WEAKREF(equipper.AddComponent(/datum/component/strong_pull))
 
@@ -46,7 +47,7 @@
 	if(!pull_component)
 		return
 
-	to_chat(pull_component.parent, span_warning("You have lost the grip power of [src]!"))
+	to_chat(pull_component.parent, span_warning(LANG("obj.44833f45", list(src))))
 
 	QDEL_NULL(pull_component_weakref)
 

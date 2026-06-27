@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/displaycase/freezeray
 	start_showpiece_type = /obj/item/freeze_cube
 	alert = FALSE
@@ -16,7 +17,7 @@
 
 /obj/item/freeze_cube/examine(mob/user)
 	. = ..()
-	. += span_notice("Throw this at objects or creatures to freeze them, it will boomerang back so be cautious!")
+	. += span_notice(LANG("obj.951e8427", null))
 
 /obj/item/freeze_cube/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	. = ..()
@@ -41,7 +42,7 @@
 		var/obj/hit_object = hit_atom
 		var/success = hit_object.freeze()
 		if(!success && hit_object.resistance_flags & FREEZE_PROOF)
-			hit_object.visible_message(span_warning("[hit_object] is freeze-proof!"))
+			hit_object.visible_message(span_warning(LANG("obj.67339001", list(hit_object))))
 
 	else if(isliving(hit_atom))
 		var/mob/living/hit_mob = hit_atom

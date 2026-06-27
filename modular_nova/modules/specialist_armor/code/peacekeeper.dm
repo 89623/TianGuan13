@@ -24,13 +24,7 @@
 /obj/item/clothing/suit/armor/sf_peacekeeper/examine_more(mob/user)
 	. = ..()
 
-	. += "A common SolFed designed armor vest for a common cause, not having your innards become outards. \
-		While heavier armors certainly exist, the 'Touvou' is relatively cheap for the protection you do get, \
-		and many soldiers and officers around the galaxy will tell you the convenience of a mostly soft body armor. \
-		Not for any of the protection, but for the relative comfort, especially in areas where you don't need to care \
-		much if you're able to stop an anti materiel round with your chest. Likely due to all those factors, \
-		it is a common sight on SolFed peacekeepers around the galaxy, alongside other misfits and corporate baddies \
-		across the galaxy."
+	. += LANG("obj.ff790ba9", null)
 
 	return .
 
@@ -57,15 +51,7 @@
 /obj/item/clothing/head/helmet/sf_peacekeeper/examine_more(mob/user)
 	. = ..()
 
-	. += "A common SolFed designed ballistic helmet for a common cause, keeping your brain inside your head. \
-		While heavier helmets certainly exist, the 'Kastrol' is relatively cheap for the protection you do get, \
-		and many soldiers don't mind it much due to its large over-head size bypassing a lot of the fitting issues \
-		some more advanced or more protective helmets might have. \
-		Especially in areas where you don't need to care \
-		much if you're able to stop an anti materiel round with your forehead, it does the job just fine. \
-		Likely due to all those factors, \
-		it is a common sight on SolFed peacekeepers around the galaxy, alongside other misfits and corporate baddies \
-		across the galaxy."
+	. += LANG("obj.9c96c294", null)
 
 	return .
 

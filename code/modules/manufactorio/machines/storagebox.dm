@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/manufacturing/storagebox
 	name = "manufacturing storage unit"
 	desc = "Its basically a box. Receives resources (if anchored). Needs a machine to take stuff out of without dumping everything out."
@@ -26,7 +27,7 @@
 
 /obj/machinery/power/manufacturing/storagebox/screwdriver_act(mob/living/user, obj/item/tool)
 	. = NONE
-	balloon_alert(user, "disassembling...")
+	balloon_alert(user, LANG("obj.b5ba9871", null))
 	if(!do_after(user, 5 SECONDS, src))
 		return ITEM_INTERACT_FAILURE
 	atom_destruction()
@@ -41,7 +42,7 @@
 	. = ..()
 	if(user.combat_mode)
 		return
-	balloon_alert(user, "dumping..")
+	balloon_alert(user, LANG("obj.eb396448", null))
 	if(!do_after(user, 1.25 SECONDS, src))
 		return
 	dump_inventory_contents()

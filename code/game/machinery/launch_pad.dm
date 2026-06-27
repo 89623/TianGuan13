@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BEAM_FADE_TIME (1 SECONDS)
 
 /obj/machinery/launchpad
@@ -63,7 +64,7 @@
 /obj/machinery/launchpad/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Maximum range: <b>[range]</b> units.")
+		. += span_notice(LANG("obj.1215ce83", list(range)))
 
 /obj/machinery/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
@@ -71,7 +72,7 @@
 		return
 
 	multi.set_buffer(src)
-	balloon_alert(user, "saved to buffer")
+	balloon_alert(user, LANG("obj.bb9065b6", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/launchpad/screwdriver_act(mob/living/user, obj/item/tool)
@@ -313,7 +314,7 @@
 	if(over_object == user)
 		if(!briefcase)
 			return
-		user.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
+		user.visible_message(span_notice(LANG("obj.1fae3a21", list(usr, src))), span_notice(LANG("obj.a080d046", list(src))))
 		if(do_after(user, 3 SECONDS, target = user))
 			user.put_in_hands(briefcase)
 			moveToNullspace() //hides it from suitcase contents
@@ -326,7 +327,7 @@
 		if(IS_WEAKREF_OF(src, launch.pad)) //do not attempt to link when already linked
 			return ..()
 		launch.pad = WEAKREF(src)
-		to_chat(user, span_notice("You link [src] to [launch]."))
+		to_chat(user, span_notice(LANG("obj.8d7c3dc4", list(src, launch))))
 	else
 		return ..()
 
@@ -347,7 +348,7 @@
 /obj/item/launchpad_remote/attack_self(mob/user)
 	. = ..()
 	ui_interact(user)
-	to_chat(user, span_notice("[src] projects a display onto your retina."))
+	to_chat(user, span_notice(LANG("obj.dc25f3fd", list(src))))
 
 
 /obj/item/launchpad_remote/ui_state(mob/user)
@@ -377,7 +378,7 @@
 
 /obj/item/launchpad_remote/proc/teleport(mob/user, obj/machinery/launchpad/pad)
 	if(QDELETED(pad))
-		to_chat(user, span_warning("ERROR: Launchpad not responding. Check launchpad integrity."))
+		to_chat(user, span_warning(LANG("obj.7445563a", null)))
 		return
 	var/error_reason = pad.teleport_checks()
 	if(error_reason)
@@ -425,7 +426,7 @@
 			our_pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(tgui_alert(user, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) == "I'm Sure")
+			if(tgui_alert(user, LANG("obj.77344162", null), LANG("obj.04b76580", null), list("I'm Sure", "Abort")) == "I'm Sure")
 				pad = null
 		if("launch")
 			sending = TRUE

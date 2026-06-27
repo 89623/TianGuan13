@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Boat
 /obj/vehicle/ridden/lavaboat
 	name = "lava boat"
@@ -18,9 +19,9 @@
 	if(!key_type || is_key(inserted_key) || !is_key(tool))
 		return NONE
 	if(!user.transferItemToLoc(tool, src))
-		to_chat(user, span_warning("[tool] seems to be stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.dc050dd7", list(tool))))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You attach \the [tool] to \the [src]."))
+	to_chat(user, span_notice(LANG("obj.5dacccb1", list(tool, src))))
 	if(inserted_key) //just in case there's an invalid key
 		inserted_key.forceMove(drop_location())
 	inserted_key = tool
@@ -84,7 +85,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/ship_in_a_bottle/attack_self(mob/user)
-	to_chat(user, span_notice("You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out."))
+	to_chat(user, span_notice(LANG("obj.d29104a4", null)))
 	create_boat(get_turf(src))
 
 /obj/item/ship_in_a_bottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -110,13 +111,13 @@
 
 /obj/vehicle/ridden/lavaboat/dragon/examine(mob/user)
 	. = ..()
-	. += span_notice("You can reform [src] into its bottled shape by rubbing the dragon's nose with [EXAMINE_HINT("Alt-Click")].")
+	. += span_notice(LANG("obj.56e2c0f6", list(src, EXAMINE_HINT("Alt-Click"))))
 
 /obj/vehicle/ridden/lavaboat/dragon/click_alt(mob/user)
-	balloon_alert(user, "bottling the boat...")
+	balloon_alert(user, LANG("obj.7d370441", null))
 	if (!do_after(user, 2 SECONDS, src))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "bottled the boat!")
+	balloon_alert(user, LANG("obj.0a8980c1", null))
 	var/obj/item/ship_in_a_bottle/bottled_ship = new(user.drop_location())
 	user.put_in_hands(bottled_ship)
 	qdel(src)

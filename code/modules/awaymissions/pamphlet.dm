@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/paper/pamphlet
 	name = "pamphlet"
 	icon_state = "pamphlet"
@@ -62,7 +63,7 @@
 
 /obj/item/paper/pamphlet/cybernetics/update_desc(updates)
 	. = ..()
-	desc = "A pamphlet encouraging the reader to implant themselves.[sample ? " Has an attached \"sample\"..." : ""]"
+	desc = LANG("obj.627f53bc", list(sample ? " Has an attached \"sample\"..." : ""))
 
 /obj/item/paper/pamphlet/cybernetics/Destroy()
 	QDEL_NULL(sample)
@@ -76,6 +77,6 @@
 
 /obj/item/paper/pamphlet/cybernetics/attack_self(mob/user, modifiers)
 	. = ..()
-	to_chat(user, span_notice("As you read the pamphlet, a free sample falls out!"))
+	to_chat(user, span_notice(LANG("obj.618a9a92", null)))
 	sample.forceMove(drop_location())
 	playsound(sample, 'sound/misc/splort.ogg', 50, vary = TRUE)

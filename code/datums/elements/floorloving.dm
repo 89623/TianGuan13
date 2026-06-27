@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Prevents a movable atom from moving to somewhere which isn't an open turf with floor on it
 /datum/element/floor_loving
 
@@ -18,4 +19,4 @@
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
-		living_parent.balloon_alert(living_parent, "can't move there!")
+		living_parent.balloon_alert(living_parent, LANG("datum.e277db5c", null))

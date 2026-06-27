@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Default wait until doors autoclose
 // #define DOOR_CLOSE_WAIT 60 // NOVA EDIT REMOVAL - Default wait until doors autoclose - moved to code/__DEFINES/~nova_defines/airlock.dm
 /// Trait for checking if a mob is currently activating an unrestricted airlock open and thus has pressure pushes blocked
@@ -146,11 +147,11 @@
 	. = ..()
 	if(red_alert_access)
 		if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
-			. += span_notice("Due to a security threat, its access requirements have been lifted!")
+			. += span_notice(LANG("obj.02db312d", null))
 		else
-			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
+			. += span_notice(LANG("obj.eb61cba6", null))
 	if(has_access_panel)
-		. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
+		. += span_notice(LANG("obj.e3a48223", list(panel_open ? "open" : "<b>screwed</b> in place")))
 
 /obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -234,7 +235,7 @@
 		return
 	if(!red_alert_access)
 		return
-	audible_message(span_notice("[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!"))
+	audible_message(span_notice(LANG("obj.21f4e26c", list(src, p_s(), p_they(), p_s()))))
 	playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, TRUE)
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
@@ -379,7 +380,7 @@
 	addtimer(CALLBACK(src, PROC_REF(deregister_pressure_push_signal), opener), do_after_time + 0.5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) // extra half-second to be safe, else this is just a guarantee we remove the signal.
 
 	SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open attempt ([type])") // statcollecting on how often people try to use this.
-	balloon_alert(opener, "activating unrestricted latch...")
+	balloon_alert(opener, LANG("obj.ce83cde0", null))
 
 	if(istype(get_area(src), /area/station/maintenance))
 		playsound(get_turf(src), 'sound/machines/airlock/airlock_latch_hiss.ogg', 45, vary = TRUE, falloff_exponent = (SOUND_FALLOFF_EXPONENT * 2)) // sound travels further in maintenance muahaha
@@ -404,8 +405,8 @@
 		return COMSIG_ATOM_BLOCKS_PRESSURE
 
 	// have both since this is a newer mechanic and i want it to be a bit more obvious why for the time being
-	balloon_alert(source, "resisting pressure!")
-	to_chat(source, span_warning("You're holding onto the unrestricted latch, preventing pressure from pushing you away!"))
+	balloon_alert(source, LANG("obj.db212ba6", null))
+	to_chat(source, span_warning(LANG("obj.57ee6596", null)))
 	COOLDOWN_START(src, pressure_push_cooldown, 5 SECONDS)
 	return COMSIG_ATOM_BLOCKS_PRESSURE
 

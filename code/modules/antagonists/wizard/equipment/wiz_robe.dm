@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/head/wizard
 	name = "wizard hat"
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
@@ -288,14 +289,14 @@
 		return
 
 	if(!COOLDOWN_FINISHED(src, summoning_cooldown))
-		user.balloon_alert(user, "robe recharging!")
+		user.balloon_alert(user, LANG("obj.fef72ec7", null))
 		return
 
 	conjure_stickmen(user)
 
 /obj/item/clothing/suit/wizrobe/paper/proc/conjure_stickmen(mob/living/carbon/human/summoner)
 	summoner.force_say()
-	summoner.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
+	summoner.say(LANG("obj.eca10f14", null), forced = "stickman summoning")
 	playsound(src, 'sound/effects/magic/summon_magic.ogg', 50, TRUE, TRUE)
 
 	var/mob/living/stickman = new /mob/living/basic/stickman/lesser(get_turf(summoner))

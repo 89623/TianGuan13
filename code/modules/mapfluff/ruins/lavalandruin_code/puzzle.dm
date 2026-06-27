@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/sliding_puzzle
 	name = "Sliding puzzle generator"
 	icon = 'icons/obj/toys/balloons.dmi' //mapping
@@ -287,7 +288,7 @@
 
 /obj/effect/sliding_puzzle/prison/Destroy()
 	if(prisoner)
-		to_chat(prisoner,span_userdanger("With the cube broken by force, you can feel your body falling apart."))
+		to_chat(prisoner,span_userdanger(LANG("obj.f7b19df1", null)))
 		prisoner.investigate_log("has died from their prison puzzle being destroyed.", INVESTIGATE_DEATHS)
 		prisoner.death()
 		qdel(prisoner)
@@ -329,13 +330,13 @@
 	if(istype(carbon_victim) && (carbon_victim.handcuffed || carbon_victim.stat != CONSCIOUS))
 		user.do_attack_animation(carbon_victim)
 		if(!puzzle_imprison(carbon_victim))
-			to_chat(user, span_warning("[src] does nothing."))
+			to_chat(user, span_warning(LANG("obj.c98a68e3", list(src))))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_warning("You trap [carbon_victim] in the prison cube!"))
+		to_chat(user, span_warning(LANG("obj.26239c21", list(carbon_victim))))
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_notice("[src] only accepts restrained or unconscious prisoners."))
+	to_chat(user, span_notice(LANG("obj.ae6c8c0c", list(src))))
 	return ITEM_INTERACT_BLOCKING
 
 /proc/puzzle_imprison(mob/living/prisoner)
@@ -348,7 +349,7 @@
 	//First grab the prisoner and move them temporarily into the generator so they won't get thrown around.
 	ADD_TRAIT(prisoner, TRAIT_NO_TRANSFORM, cube.element_type)
 	prisoner.forceMove(cube)
-	to_chat(prisoner,span_userdanger("You're trapped by the prison cube! You will remain trapped until someone solves it."))
+	to_chat(prisoner,span_userdanger(LANG("_root.bee2fca4", null)))
 
 	//Clear the area from objects (and cube user)
 	var/list/things_to_throw = list()

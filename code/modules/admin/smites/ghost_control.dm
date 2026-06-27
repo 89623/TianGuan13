@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/smite/ghost_control
 	name = "Ghost Control"
 
@@ -20,7 +21,7 @@
 		"walk" = CALLBACK(src, PROC_REF(ghost_speed), target, MOVE_INTENT_WALK),
 		), 7 SECONDS)
 
-	to_chat(target, span_revenwarning("You feel a ghastly presence!!!"))
+	to_chat(target, span_revenwarning(LANG("datum.5f5f9228", null)))
 
 
 /datum/smite/ghost_control/proc/ghost_shove(mob/living/carbon/target)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Caltrop element; for hurting people when they walk over this.
  *
@@ -114,8 +115,8 @@
 	if(!(flags & CALTROP_SILENT) && !digitigrade_fan.has_status_effect(/datum/status_effect/caltropped))
 		digitigrade_fan.apply_status_effect(/datum/status_effect/caltropped)
 		digitigrade_fan.visible_message(
-			span_danger("[digitigrade_fan] steps on [parent]."),
-			span_userdanger("You step on [parent]!")
+			span_danger(LANG("datum.bc14edea", list(digitigrade_fan, parent))),
+			span_userdanger(LANG("datum.d71853c3", list(parent)))
 		)
 
 	digitigrade_fan.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND, attacking_item = parent)

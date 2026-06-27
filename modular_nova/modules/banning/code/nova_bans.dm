@@ -8,7 +8,7 @@
 	. = ..()
 	if(ckey)
 		if(is_banned_from(ckey, BAN_DONOTREVIVE))
-			to_chat(src, span_notice("As you are revival banned, you cannot reenter your body."))
+			to_chat(src, span_notice(LANG("mob.24feb8f4", null)))
 			can_reenter_corpse = FALSE
 
 /proc/process_eorg_bans()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /turf/open/misc/ice
 	name = "ice sheet"
 	desc = "A sheet of solid ice. Looks slippery."
@@ -40,7 +41,7 @@
 /turf/open/misc/ice/examine(mob/user)
 	. = ..()
 	if(can_make_hole)
-		. += span_info("You could use a [EXAMINE_HINT("shovel")] or a [EXAMINE_HINT("pick")] to dig a fishing hole here.")
+		. += span_info(LANG("turf.9746b9b2", list(EXAMINE_HINT("shovel"), EXAMINE_HINT("pick"))))
 
 /turf/open/misc/ice/attack_animal(mob/living/animal, list/modifiers)
 	. = ..()
@@ -55,11 +56,11 @@
 /turf/open/misc/ice/proc/dig_hole(mob/living/user)
 	if(!can_make_hole)
 		return FALSE
-	balloon_alert(user, "digging...")
+	balloon_alert(user, LANG("turf.a8f0e832", null))
 	playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
 	if(!do_after(user, 5 SECONDS, src))
 		return FALSE
-	balloon_alert(user, "dug hole")
+	balloon_alert(user, LANG("turf.8ec53194", null))
 	spawn_hole()
 	return TRUE
 

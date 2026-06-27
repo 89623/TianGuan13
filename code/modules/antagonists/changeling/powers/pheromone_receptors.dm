@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CHANGELING_PHEROMONE_MIN_DISTANCE 10 //More generous than the agent pinpointer because you don't know who you're looking for.
 #define CHANGELING_PHEROMONE_MAX_DISTANCE 25 //They can smell your fear a mile away.  Well, 50 meters.
 #define CHANGELING_PHEROMONE_PING_TIME 20 //2s update time.
@@ -24,14 +25,14 @@
 	..()
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	if(HAS_TRAIT(user, TRAIT_ANOSMIA)) //Anosmia quirk holders can't smell anything
-		to_chat(user, span_warning("We can't smell!"))
+		to_chat(user, span_warning(LANG("datum.058fd65a", null)))
 		return
 	if(!receptors_active)
-		to_chat(user, span_warning("We search for the scent of any nearby changelings."))
+		to_chat(user, span_warning(LANG("datum.5cf93f10", null)))
 		changeling.chem_recharge_slowdown += 0.25
 		user.apply_status_effect(/datum/status_effect/agent_pinpointer/changeling)
 	else
-		to_chat(user, span_notice("We stop searching for now."))
+		to_chat(user, span_notice(LANG("datum.ae3d68ff", null)))
 		changeling.chem_recharge_slowdown -= 0.25
 		user.remove_status_effect(/datum/status_effect/agent_pinpointer/changeling)
 

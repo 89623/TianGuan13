@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Anomalies, used for anomaly events. Anomalies cause adverse effects on their surroundings and can be mitigated by signalling their respective frequency.
 /obj/effect/anomaly
 	name = "anomaly"
@@ -116,7 +117,7 @@
 			anomaly_core.forceMove(drop_location())
 			anomaly_core = null
 		else // You exceeded the cap sorry
-			visible_message(span_warning("[anomaly_core] loses its lustre as it falls to the ground, there is too little ambient energy to support another core of this type."))
+			visible_message(span_warning(LANG("obj.dc6d431a", list(anomaly_core))))
 			new /obj/item/inert_anomaly(drop_location())
 
 	// else, anomaly core gets deleted by qdel(src).
@@ -125,9 +126,9 @@
 
 /obj/effect/anomaly/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(!isnull(anomaly_core))
-		to_chat(user, span_notice("Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(anomaly_core.frequency)], code [anomaly_core.code]."))
+		to_chat(user, span_notice(LANG("obj.cb5485bc", list(src, format_frequency(anomaly_core.frequency), anomaly_core.code))))
 		return ITEM_INTERACT_SUCCESS
-	to_chat(user, span_notice("Analyzing... [src]'s unstable field is not fluctuating along a stable frequency."))
+	to_chat(user, span_notice(LANG("obj.c2f96d17", list(src))))
 	return ITEM_INTERACT_BLOCKING
 
 ///Stabilize an anomaly, letting it stay around forever or untill destabilizes by a player. An anomaly without a core can't be signalled, but can be destabilized

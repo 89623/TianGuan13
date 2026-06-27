@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/lattice
 	name = "lattice"
 	desc = "A lightweight support lattice. These hold our station together."
@@ -70,7 +71,7 @@
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	if(C.tool_behaviour == TOOL_WIRECUTTER)
-		to_chat(user, span_notice("Slicing [name] joints ..."))
+		to_chat(user, span_notice(LANG("obj.fb439332", list(name))))
 		deconstruct()
 	else
 		var/turf/T = get_turf(src)
@@ -187,9 +188,9 @@
 		return
 	var/obj/item/stack/tile/iron/attacking_tiles = attacking_item
 	if(!attacking_tiles.use(1))
-		to_chat(user, span_warning("You need one floor tile to build atop [src]."))
+		to_chat(user, span_warning(LANG("obj.d712a62a", list(src))))
 		return
-	to_chat(user, span_notice("You construct new plating with [src] as support."))
+	to_chat(user, span_notice(LANG("obj.abc628e1", list(src))))
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 
 	var/turf/turf_we_place_on = get_turf(src)
@@ -216,7 +217,7 @@
 
 /obj/structure/lattice/catwalk/boulder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(ismetaltile(attacking_item))
-		balloon_alert(user, "too unstable!")
+		balloon_alert(user, LANG("obj.8bf071ce", null))
 		return FALSE
 	return ..()
 
@@ -237,7 +238,7 @@
  * Handles platforms deleting themselves with a visual effect and message.
  */
 /obj/structure/lattice/catwalk/boulder/proc/self_destruct()
-	visible_message(span_notice("\The [src] sinks and dissapears!"))
+	visible_message(span_notice(LANG("obj.26edfdec", list(src))))
 	playsound(src, 'sound/effects/gas_hissing.ogg', 20)
 	remove_shared_particles(warning_particle)
 	deconstruct()

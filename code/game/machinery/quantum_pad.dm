@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/quantumpad
 	name = "quantum pad"
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
@@ -32,11 +33,11 @@
 
 /obj/machinery/quantumpad/examine(mob/user)
 	. = ..()
-	. += span_notice("It is [ linked_pad ? "currently" : "not"] linked to another pad.")
+	. += span_notice(LANG("obj.1c245d72", list(linked_pad ? "currently" : "not")))
 	if(!panel_open)
-		. += span_notice("The panel is <i>screwed</i> in, obstructing the linking device.")
+		. += span_notice(LANG("obj.e4beb9ee", null))
 	else
-		. += span_notice("The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.")
+		. += span_notice(LANG("obj.3fc748b5", null))
 
 /obj/machinery/quantumpad/RefreshParts()
 	. = ..()
@@ -55,19 +56,19 @@
 /obj/machinery/quantumpad/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	if(panel_open)
 		multi_tool.set_buffer(src)
-		balloon_alert(user, "saved to multitool buffer")
-		to_chat(user, span_notice("You save the data in [multi_tool] buffer. It can now be saved to pads with closed panels."))
+		balloon_alert(user, LANG("obj.84afb909", null))
+		to_chat(user, span_notice(LANG("obj.6b5564ef", list(multi_tool))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(multi_tool.buffer, /obj/machinery/quantumpad))
 		if(multi_tool.buffer == src)
-			balloon_alert(user, "cannot link to self!")
+			balloon_alert(user, LANG("obj.67e011aa", null))
 			return ITEM_INTERACT_BLOCKING
 		linked_pad = multi_tool.buffer
-		balloon_alert(user, "data uploaded from buffer")
+		balloon_alert(user, LANG("obj.38965918", null))
 		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "no quantum pad data found!")
+	balloon_alert(user, LANG("obj.f1ae255d", null))
 	return NONE
 
 /obj/machinery/quantumpad/screwdriver_act(mob/living/user, obj/item/tool)
@@ -80,13 +81,13 @@
 	if(istype(tool, /obj/item/quantum_keycard))
 		var/obj/item/quantum_keycard/card = tool
 		if(card.qpad)
-			to_chat(user, span_notice("You insert [card] into [src]'s card slot, activating it."))
+			to_chat(user, span_notice(LANG("obj.1f48689a", list(card, src))))
 			interact(user, card.qpad)
 			return ITEM_INTERACT_SUCCESS
-		to_chat(user, span_notice("You insert [card] into [src]'s card slot, initiating the link procedure."))
+		to_chat(user, span_notice(LANG("obj.dbcf3ee7", list(card, src))))
 		if(!do_after(user, 4 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You complete the link between [card] and [src]."))
+		to_chat(user, span_notice(LANG("obj.1d03ea67", list(card, src))))
 		card.set_pad(src)
 		return ITEM_INTERACT_SUCCESS
 
@@ -104,29 +105,29 @@
 		if(map_pad_link_id && initMappedLink())
 			target_pad = linked_pad
 		else
-			to_chat(user, span_warning("Target pad not found!"))
+			to_chat(user, span_warning(LANG("obj.3eec8037", null)))
 			return
 	//NOVA EDIT ADDITION
 	var/turf/my_turf = get_turf(src)
 	if(is_away_level(my_turf.z))
-		to_chat(user, "<span class='warning'>[src] cannot be used here!</span>")
+		to_chat(user, LANG("obj.cd44f8b6", list(src)))
 		return
 	//NOVA EDIT END
 
 	if(world.time < last_teleport + teleport_cooldown)
-		to_chat(user, span_warning("[src] is recharging power. Please wait [DisplayTimeText(last_teleport + teleport_cooldown - world.time)]."))
+		to_chat(user, span_warning(LANG("obj.d5739086", list(src, DisplayTimeText(last_teleport + teleport_cooldown - world.time)))))
 		return
 
 	if(teleporting)
-		to_chat(user, span_warning("[src] is charging up. Please wait."))
+		to_chat(user, span_warning(LANG("obj.f02db920", list(src))))
 		return
 
 	if(target_pad.teleporting)
-		to_chat(user, span_warning("Target pad is busy. Please wait."))
+		to_chat(user, span_warning(LANG("obj.69237bf8", null)))
 		return
 
 	if(target_pad.machine_stat & NOPOWER)
-		to_chat(user, span_warning("Target pad is not responding to ping."))
+		to_chat(user, span_warning(LANG("obj.c88e863b", null)))
 		return
 	add_fingerprint(user)
 	doteleport(user, target_pad)
@@ -155,11 +156,11 @@
 	teleporting = FALSE
 	if(machine_stat & NOPOWER)
 		if(user)
-			to_chat(user, span_warning("[src] is unpowered!"))
+			to_chat(user, span_warning(LANG("obj.5c3745ea", list(src))))
 		return
 	if(QDELETED(target_pad) || target_pad.machine_stat & NOPOWER)
 		if(user)
-			to_chat(user, span_warning("Linked pad is not responding to ping. Teleport aborted."))
+			to_chat(user, span_warning(LANG("obj.246e956b", null)))
 		return
 
 	last_teleport = world.time

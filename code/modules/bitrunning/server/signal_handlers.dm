@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// If broken via signal, disconnects all users
 /obj/machinery/quantum_server/proc/on_broken(datum/source)
 	SIGNAL_HANDLER
@@ -59,8 +60,8 @@
 /obj/machinery/quantum_server/proc/on_goal_turf_examined(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_info("Beneath your gaze, the floor pulses subtly with streams of encoded data.")
-	examine_text += span_info("It seems to be part of the location designated for retrieving encrypted payloads.")
+	examine_text += span_info(LANG("obj.3104c7e4", null))
+	examine_text += span_info(LANG("obj.fb01129b", null))
 
 
 /// Scans over the inbound created_atoms from lazy templates

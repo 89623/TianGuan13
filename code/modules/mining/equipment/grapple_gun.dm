@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DAMAGE_ON_IMPACT 20
 
 /obj/item/grapple_gun
@@ -42,10 +43,10 @@
 		return NONE
 
 	if(!lavaland_equipment_pressure_check(get_turf(user)) && !(obj_flags & EMAGGED))
-		user.balloon_alert(user, "gun mechanism won't work here!")
+		user.balloon_alert(user, LANG("obj.cc2994cc", null))
 		return ITEM_INTERACT_BLOCKING
 	if(get_dist(user, target) > 9)
-		user.balloon_alert(user, "too far away!")
+		user.balloon_alert(user, LANG("obj.a462ee7c", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/attacked_atom = get_turf(target)
@@ -77,7 +78,7 @@
 	. = ..()
 	if(obj_flags & EMAGGED)
 		return FALSE
-	balloon_alert(user, "pressure settings overloaded")
+	balloon_alert(user, LANG("obj.c8b5acab", null))
 	obj_flags |= EMAGGED
 	return TRUE
 

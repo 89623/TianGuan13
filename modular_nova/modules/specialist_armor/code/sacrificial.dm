@@ -35,11 +35,7 @@
 /obj/item/clothing/suit/armor/sf_sacrificial/examine_more(mob/user)
 	. = ..()
 
-	. += "An extreme solution to an extreme problem. While many galactic armors have some semblance of self-repairing tech \
-		in them to prevent the armor becoming useless after being shot enough, it does have its limits. Those limits tend to be \
-		that the self-repairing, while handy, take the place of what could have simply been more armor. For a small market, \
-		one that doesn't care if their armor lasts more than one gunfight, there exists a niche for armors such as the 'Val'. \
-		Passing up self-repair for nigh-immunity to bullets, the right tool for a certain job, if you can find whatever that job may be."
+	. += LANG("obj.fde05f38", null)
 
 	return .
 
@@ -136,20 +132,16 @@
 /obj/item/clothing/head/helmet/sf_sacrificial/examine(mob/user)
 	. = ..()
 	if(face_shield)
-		. += span_notice("The <b>face shield</b> can be removed with <b>Right-Click</b>.")
+		. += span_notice(LANG("obj.b1f23bfe", null))
 	else
-		. += span_notice("A <b>face shield</b> can be attached to it.")
+		. += span_notice(LANG("obj.f4850f5b", null))
 
 	return .
 
 /obj/item/clothing/head/helmet/sf_sacrificial/examine_more(mob/user)
 	. = ..()
 
-	. += "An extreme solution to an extreme problem. While many galactic armors have some semblance of self-repairing tech \
-		in them to prevent the armor becoming useless after being shot enough, it does have its limits. Those limits tend to be \
-		that the self-repairing, while handy, take the place of what could have simply been more armor. For a small market, \
-		one that doesn't care if their armor lasts more than one gunfight, there exists a niche for armors such as the 'Val'. \
-		Passing up self-repair for nigh-immunity to bullets, the right tool for a certain job, if you can find whatever that job may be."
+	. += LANG("obj.fde05f38", null)
 
 	return .
 

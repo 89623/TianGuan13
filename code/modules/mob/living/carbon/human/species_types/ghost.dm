@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Spirit mob that lacks legs but still roams the station as part of the unliving.
 /datum/species/spirit
 	name = "Spirit"
@@ -65,15 +66,15 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "body",
-		SPECIES_PERK_NAME = "Leg-less",
-		SPECIES_PERK_DESC = "Ghosts lack legs and float, preventing you from falling into holes in the ground.",
+		SPECIES_PERK_NAME = LANG("datum.193940a6", null),
+		SPECIES_PERK_DESC = LANG("datum.76c735b2", null),
 	))
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "shoe-prints",
-		SPECIES_PERK_NAME = "No Feet",
-		SPECIES_PERK_DESC = "You lack feet, therefore the ability to wear any shoes!",
+		SPECIES_PERK_NAME = LANG("datum.94f47af6", null),
+		SPECIES_PERK_DESC = LANG("datum.8e899734", null),
 	))
 
 	return to_add
@@ -147,9 +148,8 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "ghost",
-		SPECIES_PERK_NAME = "Incorporeal",
-		SPECIES_PERK_DESC = "Ghost are able to control their body to the extent where you can willingly make yourself able \
-			to phase through anything, including your own equipment.",
+		SPECIES_PERK_NAME = LANG("datum.8d80101d", null),
+		SPECIES_PERK_DESC = LANG("datum.d6540131", null),
 	))
 
 	return to_add
@@ -252,5 +252,5 @@
 /datum/action/innate/toggle_passthrough/proc/attempt_move(mob/source, new_loc, direct)
 	SIGNAL_HANDLER
 	if(locate(/obj/effect/blessing) in new_loc)
-		to_chat(source, span_warning("Holy energies block your path!"))
+		to_chat(source, span_warning(LANG("datum.1fa44391", null)))
 		return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE

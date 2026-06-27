@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # laser pointer Component
  *
@@ -57,7 +58,7 @@
 		var/mob/living/silicon/silicon = target
 		log_combat(shell, silicon, "shone in the sensors", src)
 		silicon.flash_act(affect_silicon = TRUE) /// no stunning, just a blind
-		to_chat(silicon, span_danger("Your sensors were overloaded by a weakened laser shone by [shell]!"))
+		to_chat(silicon, span_danger(LANG("obj.e0c6adb4", list(shell))))
 
 	var/mutable_appearance/laser_location = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "[pointer_icon_state]_laser")
 

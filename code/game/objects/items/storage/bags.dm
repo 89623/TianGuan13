@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ORE_BAG_BALOON_COOLDOWN (2 SECONDS)
 
 /*
@@ -52,13 +53,13 @@
 	// Otherwise, we're gonna dump into the dest object
 	var/turf/dump_onto = get_turf(dest_object)
 	user.visible_message(
-		span_notice("[user] dumps the contents of [src] all out on \the [dump_onto]"),
-		span_notice("The remaining trash in \the [src] falls out onto \the [dump_onto]"),
+		span_notice(LANG("obj.fbc39129", list(user, src, dump_onto))),
+		span_notice(LANG("obj.d6ee8a96", list(src, dump_onto))),
 	)
 	source.remove_all(dump_onto)
 
 /obj/item/storage/bag/trash/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!"))
+	user.visible_message(span_suicide(LANG("obj.f192243d", list(user, src, user.p_their()))))
 	playsound(loc, 'sound/items/eatfood.ogg', 50, TRUE, -1)
 	return TOXLOSS
 
@@ -141,8 +142,7 @@
 
 /obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/boulder))
-		to_chat(user, span_warning("You can't fit [tool] into [src]. \
-			Perhaps you should break it down first, or find an ore box."))
+		to_chat(user, span_warning(LANG("obj.8598f5cb", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 
@@ -187,16 +187,16 @@
 	COOLDOWN_START(src, ore_bag_balloon_cooldown, ORE_BAG_BALOON_COOLDOWN)
 
 	if (box)
-		balloon_alert(user, "scoops ore into box")
+		balloon_alert(user, LANG("obj.5501bc4d", null))
 		user.visible_message(
-			span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."),
+			span_notice(LANG("obj.e7ed5204", list(user, user.p_them(), box))),
 			ignored_mobs = user
 		)
 		return
 
-	balloon_alert(user, "scoops ore into bag")
+	balloon_alert(user, LANG("obj.07acec60", null))
 	user.visible_message(
-		span_notice("[user] scoops up the ores beneath [user.p_them()]."),
+		span_notice(LANG("obj.b9b15899", list(user, user.p_them()))),
 		ignored_mobs = user
 	)
 
@@ -221,7 +221,7 @@
 		return TRUE
 
 	if (!spam_protection)
-		balloon_alert(user, "bag full!")
+		balloon_alert(user, LANG("obj.4ca77cfc", null))
 		spam_protection = TRUE
 	return FALSE
 
@@ -273,7 +273,7 @@
 
 /obj/item/storage/bag/plants/portaseeder/examine(mob/user)
 	. = ..()
-	. += span_notice("Ctrl-click to activate seed extraction.")
+	. += span_notice(LANG("obj.e83b8901", null))
 
 /obj/item/storage/bag/plants/portaseeder/item_ctrl_click(mob/user)
 	for(var/obj/item/plant in contents)
@@ -556,15 +556,15 @@
 
 /obj/item/storage/bag/rebar_quiver/syndicate/proc/reload_held_rebar(mob/user)
 	if(!contents.len)
-		user.balloon_alert(user, "no bolts left!")
+		user.balloon_alert(user, LANG("obj.fe835843", null))
 		return
 	var/obj/held_item = user.get_active_held_item()
 	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
-		user.balloon_alert(user, "no held crossbow!")
+		user.balloon_alert(user, LANG("obj.ad7bdfe1", null))
 		return
 	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
 	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
-		user.balloon_alert(user, "no more room!")
+		user.balloon_alert(user, LANG("obj.0e074d75", null))
 		return
 	if(!do_after(user, 1.2 SECONDS, user))
 		return

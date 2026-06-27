@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/circuit_component/wire_bundle
 	display_name = "Wire Bundle"
 	desc = "A bundle of exposed wires that assemblies can be attached to. Ports will only show up once the circuit is inserted into a shell."
@@ -107,7 +108,7 @@
 		return
 	var/datum/component/shell/shell_comp = source.GetComponent(/datum/component/shell)
 	if(shell_comp.locked)
-		source.balloon_alert(user, "locked!")
+		source.balloon_alert(user, LANG("obj.5d71bae2", null))
 		return ITEM_INTERACT_FAILURE
 	if(source.attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK)
 		return ITEM_INTERACT_BLOCKING

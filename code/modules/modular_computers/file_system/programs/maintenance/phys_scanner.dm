@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/maintenance/phys_scanner
 	filename = "phys_scanner"
 	filedesc = "Physical Scanner"
@@ -16,7 +17,7 @@
 	if(!iscarbon(tapped_atom))
 		return
 	var/mob/living/carbon/carbon = tapped_atom
-	carbon.visible_message(span_notice("[user] analyzes [tapped_atom]'s vitals."))
+	carbon.visible_message(span_notice(LANG("datum.e9abb56d", list(user, tapped_atom))))
 	last_record = healthscan(user, carbon, 1, tochat = FALSE)
 	var/datum/tgui/active_ui = SStgui.get_open_ui(user, computer)
 	if(active_ui)

@@ -32,9 +32,9 @@
 	if(item)
 		var/atom/item_to_create = new item(get_turf(user))
 		if(user.put_in_hands(item_to_create))
-			to_chat(user, span_notice("Your purchase materializes into your hands!"))
+			to_chat(user, span_notice(LANG("datum.25367579", null)))
 		else
-			to_chat(user, span_notice("Your purchase materializes onto the floor."))
+			to_chat(user, span_notice(LANG("datum.2e0caff6", null)))
 
 	return TRUE
 
@@ -105,7 +105,7 @@
 	if(!.)
 		return
 	power_fail(35, 50)
-	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", ANNOUNCER_POWEROFF)
+	priority_announce(LANG("datum.be6cda49", list(station_name())), "Critical Power Failure", ANNOUNCER_POWEROFF)
 
 /datum/contractor_item/comms_blackout
 	name = "Comms Outage"

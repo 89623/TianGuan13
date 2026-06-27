@@ -60,5 +60,5 @@
 	if(!user_mind.has_antag_datum_in_list(restricted_from))
 		return FALSE
 
-	objective.balloon_alert(user, "can't interact with objectives!")
+	objective.balloon_alert(user, LANG("datum.87a2c690", null))
 	return TRUE

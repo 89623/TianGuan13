@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/pressure_plate
 	name = "pressure plate"
 	desc = "An electronic device that triggers when stepped on."
@@ -53,7 +54,7 @@
 		return
 	if(trigger_mob && isliving(AM))
 		var/mob/living/L = AM
-		to_chat(L, span_warning("You feel something click beneath you!"))
+		to_chat(L, span_warning(LANG("obj.a954aa27", null)))
 	else if(!trigger_item)
 		return
 	can_trigger = FALSE
@@ -68,17 +69,17 @@
 	if(isassembly(item) && !istype(assembly) && removable_assembly)
 		var/obj/item/assembly/new_assembly = item
 		if(!(new_assembly.assembly_behavior & ASSEMBLY_FUNCTIONAL_OUTPUT))
-			to_chat(L, span_warning("\The [item] doesn't seem like it would do much of anything inside of [src]..."))
+			to_chat(L, span_warning(LANG("obj.8bb2af2c", list(item, src))))
 			return
 		if(L.transferItemToLoc(item, src))
 			assembly = item
 			SEND_SIGNAL(item, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE, src, L)
-		to_chat(L, span_notice("You attach [item] to [src]!"))
+		to_chat(L, span_notice(LANG("obj.93310752", list(item, src))))
 	return ..()
 
 /obj/item/pressure_plate/attack_self(mob/living/L)
 	if(removable_assembly && istype(assembly))
-		to_chat(L, span_notice("You remove [assembly] from [src]."))
+		to_chat(L, span_notice(LANG("obj.cbed3266", list(assembly, src))))
 		SEND_SIGNAL(assembly, COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE, src, L)
 		if(!L.put_in_hands(assembly))
 			assembly.forceMove(get_turf(src))
@@ -87,13 +88,13 @@
 
 /obj/item/pressure_plate/item_ctrl_click(mob/user)
 	if(protected)
-		to_chat(user, span_warning("You can't quite seem to turn this pressure plate off..."))
+		to_chat(user, span_warning(LANG("obj.0a605f9c", null)))
 		return CLICK_ACTION_BLOCKING
 	active = !active
 	if (active)
-		to_chat(user, span_notice("You turn [src] on."))
+		to_chat(user, span_notice(LANG("obj.303771eb", list(src))))
 	else
-		to_chat(user, span_notice("You turn [src] off."))
+		to_chat(user, span_notice(LANG("obj.b0e072ec", list(src))))
 	return CLICK_ACTION_SUCCESS
 
 ///Called from COMSIG_OBJ_HIDE to toggle the active part, because yeah im not making a special exception on the element to support it

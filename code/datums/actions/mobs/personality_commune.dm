@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // This can probably be changed to use mind linker at some point
 /datum/action/personality_commune
 	name = "Personality Commune"
@@ -31,7 +32,7 @@
 	var/mob/living/split_personality/non_controller = usr
 	var/client/non_controller_client = non_controller.client
 
-	var/to_send = tgui_input_text(non_controller, "What would you like to tell your other self?", "Commune", max_length = MAX_MESSAGE_LEN)
+	var/to_send = tgui_input_text(non_controller, LANG("datum.803ef7b1", null), LANG("datum.28ccfab6", null), max_length = MAX_MESSAGE_LEN)
 	if(QDELETED(src) || QDELETED(trauma) || !to_send)
 		return FALSE
 
@@ -44,7 +45,7 @@
 
 	to_chat(non_controller, "[user_message] [user_message_body]")
 
-	personality_body.balloon_alert(personality_body, "you hear a voice")
+	personality_body.balloon_alert(personality_body, LANG("datum.d955e950", null))
 	to_chat(personality_body, "[fluff_text] [user_message_body]")
 
 	log_directed_talk(non_controller, personality_body, to_send, LOG_SAY, "[name]")

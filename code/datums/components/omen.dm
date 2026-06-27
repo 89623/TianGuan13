@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * omen.dm: For when you want someone to have a really bad day
  *
@@ -53,10 +54,10 @@
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
 	REMOVE_TRAIT(person, TRAIT_CURSED, SMITE_TRAIT)
-	to_chat(person, span_nicegreen("You feel a horrible omen lifted off your shoulders!"))
+	to_chat(person, span_nicegreen(LANG("datum.43738be8", null)))
 
 	if(vessel)
-		vessel.visible_message(span_warning("[vessel] burns up in a sinister flash, taking an evil energy with it..."))
+		vessel.visible_message(span_warning(LANG("datum.0b1457c3", list(vessel))))
 		UnregisterSignal(vessel, COMSIG_QDELETING)
 		vessel.burn()
 		vessel = null
@@ -92,7 +93,7 @@
 	var/mob/living/living_guy = our_guy
 
 	if(prob(0.001) && (living_guy.stat != DEAD)) // You hit the lottery! Kinda.
-		living_guy.visible_message(span_danger("[living_guy] suddenly bursts into flames!"), span_danger("You suddenly burst into flames!"))
+		living_guy.visible_message(span_danger(LANG("datum.d795ed13", list(living_guy))), span_danger(LANG("datum.6ba34e89", null)))
 		INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
 		living_guy.adjust_fire_stacks(20)
 		living_guy.ignite_mob(silent = TRUE)
@@ -207,11 +208,11 @@
 
 	if(prob(30)) // AAAA
 		INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
-		to_chat(our_guy, span_warning("What a horrible night... To have a curse!"))
+		to_chat(our_guy, span_warning(LANG("datum.89afa55a", null)))
 
 	if(prob(30 * luck_mod) && our_guy.get_bodypart(BODY_ZONE_HEAD)) /// Bonk!
 		playsound(our_guy, 'sound/effects/tableheadsmash.ogg', 90, TRUE)
-		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
+		our_guy.visible_message(span_danger(LANG("datum.2ffb47ee", list(our_guy, our_guy.p_their()))), span_userdanger(LANG("datum.56c37791", null)))
 		our_guy.apply_damage(75 * damage_mod, BRUTE, BODY_ZONE_HEAD, attacking_item = "slipping")
 		our_guy.apply_damage(100 * damage_mod, BRAIN)
 		consume_omen()
@@ -226,7 +227,7 @@
 		return
 
 	playsound(our_guy, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
-	to_chat(our_guy, span_green("You feel fantastic!"))
+	to_chat(our_guy, span_green(LANG("datum.2338ad4e", null)))
 	qdel(src)
 
 /// Severe deaths. Normally lifts the curse.

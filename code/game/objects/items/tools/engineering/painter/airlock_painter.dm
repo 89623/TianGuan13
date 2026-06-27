@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/airlock_painter
 	name = "airlock painter"
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob."
@@ -62,10 +63,10 @@
 //because you're expecting user input.
 /obj/item/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		balloon_alert(user, "no cartridge!")
+		balloon_alert(user, LANG("obj.4573cb69", null))
 		return FALSE
 	else if(ink.charges < 1)
-		balloon_alert(user, "out of ink!")
+		balloon_alert(user, LANG("obj.d1b66dcc", null))
 		return FALSE
 	else
 		return TRUE
@@ -74,7 +75,7 @@
 	var/obj/item/organ/lungs/L = user.get_organ_slot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)
-		user.visible_message(span_suicide("[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.83d1bfb4", list(user, src, user.p_theyre()))))
 		use(user)
 
 		// Once you've inhaled the toner, you throw up your lungs
@@ -100,27 +101,27 @@
 
 		// TODO maybe add some colorful vomit?
 
-		user.visible_message(span_suicide("[user] vomits out [user.p_their()] [L]!"))
+		user.visible_message(span_suicide(LANG("obj.2d82743b", list(user, user.p_their(), L))))
 		playsound(user.loc, 'sound/effects/splat.ogg', 50, TRUE)
 
 		L.forceMove(T)
 
 		return (TOXLOSS|OXYLOSS)
 	else if(can_use(user) && !L)
-		user.visible_message(span_suicide("[user] is spraying toner on [user.p_them()]self from [src]! It looks like [user.p_theyre()] trying to commit suicide."))
+		user.visible_message(span_suicide(LANG("obj.11b575a9", list(user, user.p_them(), src, user.p_theyre()))))
 		user.reagents.add_reagent(/datum/reagent/colorful_reagent, 1)
 		user.reagents.expose(user, TOUCH, 1)
 		return TOXLOSS
 
 	else
-		user.visible_message(span_suicide("[user] is trying to inhale toner from [src]! It might be a suicide attempt if [src] had any toner."))
+		user.visible_message(span_suicide(LANG("obj.04fd1357", list(user, src, src))))
 		return SHAME
 
 
 /obj/item/airlock_painter/examine(mob/user)
 	. = ..()
 	if(!ink)
-		. += span_notice("It doesn't have a toner cartridge installed.")
+		. += span_notice(LANG("obj.e432382e", null))
 		return
 	var/ink_level = "high"
 	if(ink.charges < 1)
@@ -129,16 +130,16 @@
 		ink_level = "low"
 	else if((ink.charges/ink.max_charges) > 1) //Over 100% (admin var edit)
 		ink_level = "dangerously high"
-	. += span_notice("Its ink levels look [ink_level].")
+	. += span_notice(LANG("obj.15ef2d83", list(ink_level)))
 
 /obj/item/airlock_painter/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/toner))
 		if(ink)
-			to_chat(user, span_warning("[src] already contains \a [ink]!"))
+			to_chat(user, span_warning(LANG("obj.ea4e2654", list(src, ink))))
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
-		to_chat(user, span_notice("You install [W] into [src]."))
+		to_chat(user, span_notice(LANG("obj.a0a1d9da", list(W, src))))
 		ink = W
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	else
@@ -151,6 +152,6 @@
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	ink.forceMove(user.drop_location())
 	user.put_in_hands(ink)
-	to_chat(user, span_notice("You remove [ink] from [src]."))
+	to_chat(user, span_notice(LANG("obj.cbed3266", list(ink, src))))
 	ink = null
 	return CLICK_ACTION_SUCCESS

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /*eigenstate themed Chem
  *Teleports you to the creation location on consumption and back when the reagent is removed from you
@@ -69,7 +70,7 @@
 	eigenstate = make_appearance(living_mob, living_mob.loc)
 
 	location_return = get_turf(living_mob)	//sets up return point
-	to_chat(living_mob, span_userdanger("You feel like part of yourself has split off!"))
+	to_chat(living_mob, span_userdanger(LANG("datum.ff5b0b27", null)))
 
 	//Teleports you home if it's pure enough
 	if(creation_purity > 0.9 && location_created && data["ingested"])
@@ -84,7 +85,7 @@
 
 /datum/reagent/eigenstate/on_mob_delete(mob/living/living_mob) //returns back to original location
 	. = ..()
-	to_chat(living_mob, span_userdanger("You feel strangely whole again."))
+	to_chat(living_mob, span_userdanger(LANG("datum.a88e326c", null)))
 	if(living_mob.reagents.has_reagent(/datum/reagent/stabilizing_agent))
 		var/obj/effect/overlay/holo_pad_hologram/remaining_spirit = make_appearance(living_mob, eigenstate.loc)
 		var/spirit_duration = max(5 MINUTES - (current_cycle * 5 SECONDS), 10 SECONDS)
@@ -96,7 +97,7 @@
 
 /datum/reagent/eigenstate/overdose_start(mob/living/living_mob, metabolization_ratio) //Overdose, makes you teleport randomly
 	. = ..()
-	to_chat(living_mob, span_userdanger("You feel like your perspective is being ripped apart as you begin flitting in and out of reality!"))
+	to_chat(living_mob, span_userdanger(LANG("datum.f4e82b85", null)))
 	living_mob.set_jitter_if_lower(40 SECONDS)
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
 	if(iscarbon(living_mob))

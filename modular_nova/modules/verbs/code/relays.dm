@@ -11,7 +11,7 @@
 	set hidden = TRUE
 
 	if(!CONFIG_GET(flag/enable_relays))
-		to_chat(src, span_danger("Relays are currently disabled!"))
+		to_chat(src, span_danger(LANG("client.e735287b", null)))
 		return
 
 	var/static/list/available_relays
@@ -19,10 +19,10 @@
 		available_relays = CONFIG_GET(keyed_list/relay_option)
 
 	if(!length(available_relays))
-		to_chat(src, span_danger("No relays are available to connect to!"))
+		to_chat(src, span_danger(LANG("client.dd83f55e", null)))
 		return
 
-	var/choice = tgui_input_list(usr, "Which relay do you wish to use?", "Relay choice", available_relays)
+	var/choice = tgui_input_list(usr, LANG("client.ad08a62a", null), LANG("client.a135c8d5", null), available_relays)
 	if(isnull(choice))
 		return
 	var/address = available_relays[choice]

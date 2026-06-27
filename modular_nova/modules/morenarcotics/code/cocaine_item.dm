@@ -50,14 +50,14 @@
 	else if(user.is_mouth_covered(ITEM_SLOT_MASK))
 		covered = "mask"
 	if(covered)
-		to_chat(user, span_warning("You have to remove your [covered] first!"))
+		to_chat(user, span_warning(LANG("obj.9f5fad6f", list(covered))))
 	var/obj/item/organ/lungs/lungs = user.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(isnull(lungs) || istype(lungs, /obj/item/organ/lungs/synth))
-		to_chat(user, span_warning("You have to be able to breathe to snort the cocaine!"))
+		to_chat(user, span_warning(LANG("obj.ffe7fde3", null)))
 		return
-	user.visible_message(span_notice("[user] starts snorting the [src]."))
+	user.visible_message(span_notice(LANG("obj.3a5b305f", list(user, src))))
 	if(do_after(user, 30))
-		to_chat(user, span_notice("You finish snorting the [src]."))
+		to_chat(user, span_notice(LANG("obj.88742f46", list(src))))
 		if(reagents.total_volume)
 			reagents.trans_to(user, reagents.total_volume, transferred_by = user, methods = INGEST)
 		qdel(src)
@@ -90,9 +90,9 @@
 
 
 /obj/item/reagent_containers/cocainebrick/attack_self(mob/user)
-	user.visible_message(span_notice("[user] starts breaking up the [src]."))
+	user.visible_message(span_notice(LANG("obj.2c94b9ca", list(user, src))))
 	if(do_after(user,10))
-		to_chat(user, span_notice("You finish breaking up the [src]."))
+		to_chat(user, span_notice(LANG("obj.eb1bbccb", list(src))))
 		for(var/i = 1 to 5)
 			new /obj/item/reagent_containers/cocaine(user.loc)
 		qdel(src)

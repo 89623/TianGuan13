@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Module Component
  *
@@ -49,7 +50,7 @@
 
 /obj/item/integrated_circuit/module/add_component(obj/item/circuit_component/to_add, mob/living/user)
 	if(to_add.circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
-		balloon_alert(user, "doesn't fit into module!")
+		balloon_alert(user, LANG("obj.a393dd16", null))
 		return
 	. = ..()
 	if(attached_module)

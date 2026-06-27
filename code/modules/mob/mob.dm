@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Delete a mob
  *
@@ -255,7 +256,7 @@
 	// voice muffling
 	if(stat == UNCONSCIOUS || stat == HARD_CRIT)
 		if(type & MSG_AUDIBLE) //audio
-			to_chat(src, "<I>... You can almost hear something ...</I>")
+			to_chat(src, LANG("mob.2919bfef", null))
 		return FALSE
 	to_chat(src, msg, avoid_highlighting = avoid_highlighting)
 	return .
@@ -589,7 +590,7 @@
 		if(force_examinate_more || (examine_time && (world.time - examine_time < EXAMINE_MORE_WINDOW) && !removes_double_click))
 			var/list/result = examinify.examine_more(src)
 			if(!length(result))
-				result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
+				result += span_notice(LANG("mob.exm_nothing", list(examinify))) // NOVA EDIT - i18n - ORIGINAL: result += span_notice("<i>You examine [examinify] closer, but find nothing of interest...</i>")
 			result_combined = boxed_message(jointext(result, "<br>"))
 			result_combined = replacetext(result_combined, "<hr><br>", "<hr>") // NOVA EDIT ADDITION - bit of a hack here to make sure we don't get linebreaks coming after headers
 
@@ -607,7 +608,7 @@
 		if (length(overrides))
 			result = overrides[max(overrides)]
 		if(removes_double_click)
-			result += span_notice("<i>You can <a href=byond://?src=[REF(src)];run_examinate=[REF(examinify)]>examine</a> [examinify] closer...</i>")
+			result += span_notice(LANG("mob.exm_closer", list(REF(src), REF(examinify), examinify))) // NOVA EDIT - i18n - ORIGINAL: result += span_notice("<i>You can <a href=byond://?src=[REF(src)];run_examinate=[REF(examinify)]>examine</a> [examinify] closer...</i>")
 		result_combined = (atom_title ? fieldset_block("[atom_title][ismob(examinify) ? "!" :"."]", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>"))) // NOVA EDIT CHANGE - ORIGINAL: result_combined = (atom_title ? fieldset_block("[atom_title].", jointext(result, "<br>"), "boxed_message") : boxed_message(jointext(result, "<br>")))
 		result_combined = replacetext(result_combined, "<hr><br>", "<hr>") // NOVA EDIT ADDITION - bit of a hack here to make sure we don't get linebreaks coming after headers
 
@@ -636,7 +637,7 @@
 /mob/living/blind_examine_check(atom/examined_thing)
 	//need to be next to something and awake
 	if(!Adjacent(examined_thing) || incapacitated)
-		to_chat(src, span_warning("Something is there, but you can't see it!"))
+		to_chat(src, span_warning(LANG("mob.c0ccefad", null)))
 		return FALSE
 
 	//you can examine things you're holding directly, but you can't examine other things if your hands are full
@@ -647,22 +648,22 @@
 		if(HAS_TRAIT(active_item, TRAIT_BLIND_TOOL))
 			boosted = TRUE
 		else if(active_item != examined_thing)
-			to_chat(src, span_warning("Your hands are too full to examine this!"))
+			to_chat(src, span_warning(LANG("mob.7419666c", null)))
 			return FALSE
 
 	//you can only initiate exaimines if you have a hand, it's not disabled, and only as many examines as you have hands
 	/// our active hand, to check if it's disabled/detached
 	var/obj/item/bodypart/active_hand = has_active_hand()? get_active_hand() : null
 	if(!active_hand || active_hand.bodypart_disabled || do_after_count() >= usable_hands)
-		to_chat(src, span_warning("You don't have a free hand to examine this!"))
+		to_chat(src, span_warning(LANG("mob.8897d08f", null)))
 		return FALSE
 
 	//you can only queue up one examine on something at a time
 	if(DOING_INTERACTION_WITH_TARGET(src, examined_thing))
 		return FALSE
 
-	to_chat(src, span_notice("You start feeling around for something..."))
-	visible_message(span_notice(" [name] begins feeling around for \the [examined_thing.name]..."))
+	to_chat(src, span_notice(LANG("mob.f6b10602", null)))
+	visible_message(span_notice(LANG("mob.d05e9db9", list(name, examined_thing.name))))
 
 	/// how long it takes for the blind person to find the thing they're examining
 	var/examine_delay_length = rand(1 SECONDS, 2 SECONDS)
@@ -676,7 +677,7 @@
 		examine_delay_length *= 2
 
 	if(examine_delay_length > 0 && !do_after(src, examine_delay_length, target = examined_thing))
-		to_chat(src, span_notice("You can't get a good feel for what is there."))
+		to_chat(src, span_notice(LANG("mob.93ed1824", null)))
 		return FALSE
 
 	//now we touch the thing we're examining
@@ -828,7 +829,7 @@
 
 	switch(CONFIG_GET(flag/allow_respawn))
 		if(RESPAWN_FLAG_NEW_CHARACTER)
-			if(tgui_alert(usr, "Note, respawning is only allowed as another character. If you don't have another free slot you may not be able to respawn.", "Respawn", list("Ok", "Nevermind")) != "Ok")
+			if(tgui_alert(usr, LANG("mob.d9177f13", null), LANG("mob.7625587d", null), list("Ok", "Nevermind")) != "Ok")
 				return
 
 		if(RESPAWN_FLAG_FREE)
@@ -836,13 +837,13 @@
 
 		if(RESPAWN_FLAG_DISABLED)
 			if (!check_rights_for(usr.client, R_ADMIN))
-				to_chat(usr, span_boldnotice("Respawning is not enabled!"))
+				to_chat(usr, span_boldnotice(LANG("mob.cbff20c4", null)))
 				return
-			if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+			if (tgui_alert(usr, LANG("mob.ea1bb66a", null), LANG("mob.7625587d", null), list("Yes", "No")) != "Yes")
 				return
 
 	if (stat != DEAD)
-		to_chat(usr, span_boldnotice("You must be dead to use this!"))
+		to_chat(usr, span_boldnotice(LANG("mob.e1359dbe", null)))
 		return
 
 	if(!check_respawn_delay())
@@ -851,25 +852,25 @@
 	//NOVA EDIT ADDITION START
 	if(ckey)
 		if(is_banned_from(ckey, BAN_RESPAWN))
-			to_chat(usr, "<span class='boldnotice'>You are respawn banned, you can't respawn!</span>")
+			to_chat(usr, LANG("mob.1de184f7", null))
 			return
 
 	//DNR TRAIT
 	if(!istype(src, /mob/dead/observer)) //Quick check to make sure they Ghosted first (so we can use stay_dead())
-		to_chat(usr, span_boldnotice("You must be Ghosted to use this!"))
+		to_chat(usr, span_boldnotice(LANG("mob.b02a8a58", null)))
 		return
 	var/mob/dead/observer/user_ghost = src //We already know they're a ghost from the above
 	//Check if the ghost is tied to a body; if so, after confirming they want to abandon it, set the body DNR
 	//(Respawn already detaches them from the body permanently... just doesn't actually make the body itself unrevivable)
 	if(user_ghost.can_reenter_corpse)
-		if(tgui_alert(usr, "Are you sure you want to Respawn? Your old body will become unrevivable!", "Respawn", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("mob.5d242575", null), LANG("mob.7625587d", null), list("Yes", "No")) != "Yes")
 			return
 		user_ghost.stay_dead()
 	//NOVA EDIT ADDITION END
 
 	usr.log_message("used the respawn button.", LOG_GAME)
 
-	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
+	to_chat(usr, span_boldnotice(LANG("mob.6cdd4f80", null)))
 
 	if(!client)
 		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
@@ -899,10 +900,10 @@
 
 	if(death_time < required_delay)
 		if(!check_rights_for(usr.client, R_ADMIN))
-			to_chat(usr, "You have been dead for [DisplayTimeText(death_time, 1)].")
-			to_chat(usr, span_warning("You must wait [DisplayTimeText(required_delay, 1)] to respawn!"))
+			to_chat(usr, LANG("mob.dbe71e92", list(DisplayTimeText(death_time, 1))))
+			to_chat(usr, span_warning(LANG("mob.1c8a18b8", list(DisplayTimeText(required_delay, 1)))))
 			return FALSE
-		if(tgui_alert(usr, "You have been dead for [DisplayTimeText(death_time, 1)] out of required [DisplayTimeText(required_delay, 1)]. Do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, LANG("mob.92dfb30e", list(DisplayTimeText(death_time, 1), DisplayTimeText(required_delay, 1))), LANG("mob.7625587d", null), list("Yes", "No")) != "Yes")
 			return FALSE
 	return TRUE
 
@@ -949,7 +950,7 @@
 	var/obj/item/held_item = get_active_held_item()
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
 		if (!silent)
-			to_chat(src, span_warning("Your other hand is too busy holding [held_item]."))
+			to_chat(src, span_warning(LANG("mob.d060ffb3", list(held_item))))
 		return FALSE
 
 	var/result = perform_hand_swap(held_index)
@@ -1075,8 +1076,8 @@
 
 	if(magic_flags & MAGIC_RESISTANCE)
 		visible_message(
-			span_warning("[src] pulses red as [ismob(antimagic_source) ? p_they() : antimagic_source] absorbs magic energy!"),
-			span_userdanger("An intense magical aura pulses around [ismob(antimagic_source) ? "you" : antimagic_source] as it dissipates into the air!"),
+			span_warning(LANG("mob.f97030cf", list(src, ismob(antimagic_source) ? p_they() : antimagic_source))),
+			span_userdanger(LANG("mob.6fbd53ce", list(ismob(antimagic_source) ? "you" : antimagic_source))),
 		)
 		antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
@@ -1084,8 +1085,8 @@
 
 	else if(magic_flags & MAGIC_RESISTANCE_HOLY)
 		visible_message(
-			span_warning("[src] starts to glow as [ismob(antimagic_source) ? p_they() : antimagic_source] emits a halo of light!"),
-			span_userdanger("A feeling of warmth washes over [ismob(antimagic_source) ? "you" : antimagic_source] as rays of light surround your body and protect you!"),
+			span_warning(LANG("mob.99326fe1", list(src, ismob(antimagic_source) ? p_they() : antimagic_source))),
+			span_userdanger(LANG("mob.0d3e2a29", list(ismob(antimagic_source) ? "you" : antimagic_source))),
 		)
 		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 		antimagic_color = LIGHT_COLOR_HOLY_MAGIC
@@ -1093,8 +1094,8 @@
 
 	else if(magic_flags & MAGIC_RESISTANCE_MIND)
 		visible_message(
-			span_warning("[src] forehead shines as [ismob(antimagic_source) ? p_they() : antimagic_source] repulses magic from their mind!"),
-			span_userdanger("A feeling of cold splashes on [ismob(antimagic_source) ? "you" : antimagic_source] as your forehead reflects magic usering your mind!"),
+			span_warning(LANG("mob.16521a8e", list(src, ismob(antimagic_source) ? p_they() : antimagic_source))),
+			span_userdanger(LANG("mob.1ef155d3", list(ismob(antimagic_source) ? "you" : antimagic_source))),
 		)
 		antimagic_effect = mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 		antimagic_color = LIGHT_COLOR_DARK_BLUE
@@ -1331,15 +1332,15 @@
 
 	if(!IS_WRITING_UTENSIL(writing_instrument))
 		if(!silent_if_not_writing_tool)
-			to_chat(src, span_warning("You can't write with \the [writing_instrument]!"))
+			to_chat(src, span_warning(LANG("mob.3bf5639d", list(writing_instrument))))
 		return FALSE
 
 	if(!is_literate())
-		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
+		to_chat(src, span_warning(LANG("mob.2007d97f", null)))
 		return FALSE
 
 	if(!has_light_nearby() && !has_nightvision())
-		to_chat(src, span_warning("It's too dark in here to write anything!"))
+		to_chat(src, span_warning(LANG("mob.d1afb06e", null)))
 		return FALSE
 
 	if(has_gravity())
@@ -1348,7 +1349,7 @@
 	var/obj/item/pen/pen = writing_instrument
 
 	if(istype(pen) && pen.requires_gravity)
-		to_chat(src, span_warning("You try to write, but \the [writing_instrument] doesn't work in zero gravity!"))
+		to_chat(src, span_warning(LANG("mob.77177cef", list(writing_instrument))))
 		return FALSE
 
 	return TRUE
@@ -1376,12 +1377,12 @@
 /mob/proc/can_read(atom/viewed_atom, reading_check_flags = (READING_CHECK_LITERACY|READING_CHECK_LIGHT), silent = FALSE)
 	if((reading_check_flags & READING_CHECK_LITERACY) && !is_literate())
 		if(!silent)
-			to_chat(src, span_warning("You try to read [viewed_atom], but can't comprehend any of it."))
+			to_chat(src, span_warning(LANG("mob.98f97dd6", list(viewed_atom))))
 		return FALSE
 
 	if((reading_check_flags & READING_CHECK_LIGHT) && !has_light_nearby() && !has_nightvision())
 		if(!silent)
-			to_chat(src, span_warning("It's too dark in here to read!"))
+			to_chat(src, span_warning(LANG("mob.d5533a31", null)))
 		return FALSE
 
 	return TRUE
@@ -1481,7 +1482,7 @@
 
 	if(href_list[VV_HK_GIVE_ACCESS])
 		AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
-		to_chat(usr, span_notice("Access granted."))
+		to_chat(usr, span_notice(LANG("mob.8fe4cb35", null)))
 /**
  * extra var handling for the logging var
  */

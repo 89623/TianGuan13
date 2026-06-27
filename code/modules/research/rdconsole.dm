@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define RND_TECH_DISK	"tech"
 #define RND_DESIGN_DISK	"design"
 
@@ -76,31 +77,31 @@ Nothing else in the console has ID requirements.
 
 	if(istype(tool, /obj/item/disk/tech_disk))
 		if(t_disk)
-			to_chat(user, span_warning("A technology disk is already loaded!"))
+			to_chat(user, span_warning(LANG("obj.4c379a83", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.1dbf8014", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 
 		t_disk = tool
-		to_chat(user, span_notice("You insert [tool] into \the [src]!"))
+		to_chat(user, span_notice(LANG("obj.76db938f", list(tool, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if (!istype(tool, /obj/item/disk/design_disk))
-		to_chat(user, span_warning("Machine cannot accept disks in that format."))
+		to_chat(user, span_warning(LANG("obj.b0cc5fbc", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(d_disk)
-		to_chat(user, span_warning("A design disk is already loaded!"))
+		to_chat(user, span_warning(LANG("obj.2c8f972c", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
-		to_chat(user, span_warning("[tool] is stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.1dbf8014", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 
 	d_disk = tool
-	to_chat(user, span_notice("You insert [tool] into \the [src]!"))
+	to_chat(user, span_notice(LANG("obj.76db938f", list(tool, src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/rdconsole/multitool_act(mob/living/user, obj/item/multitool/tool)
@@ -111,25 +112,25 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/enqueue_node(id, mob/user)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
-		say("Node enqueue failed: Either no techweb is found, node is already researched or is not available!")
+		say(LANG("obj.d0d6c45f", null))
 		return FALSE
 	stored_research.enqueue_node(id, user)
 	return TRUE
 
 /obj/machinery/computer/rdconsole/proc/dequeue_node(id, mob/user)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
-		say("Node dequeue failed: Either no techweb is found, node is already researched or is not available!")
+		say(LANG("obj.a58ea08a", null))
 		return FALSE
 	stored_research.dequeue_node(id, user)
 	return TRUE
 
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
-		say("Node unlock failed: Either no techweb is found, node is already researched or is not available!")
+		say(LANG("obj.c8163dbe", null))
 		return FALSE
 	var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
 	if(!istype(TN))
-		say("Node unlock failed: Unknown error.")
+		say(LANG("obj.82fe29cd", null))
 		return FALSE
 	var/list/price = TN.get_price(stored_research)
 	if(stored_research.can_afford(price))
@@ -137,7 +138,7 @@ Nothing else in the console has ID requirements.
 		if(istype(stored_research, /datum/techweb/science))
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = ISOtime()))
 		if(stored_research.research_node_id(id, research_source = src))
-			say("Successfully researched [TN.display_name].")
+			say(LANG("obj.9d1c2f30", list(TN.display_name)))
 			var/logname = "Unknown"
 			if(HAS_AI_ACCESS(user))
 				logname = "AI [user.name]"
@@ -162,16 +163,16 @@ Nothing else in the console has ID requirements.
 			))
 			return TRUE
 		else
-			say("Failed to research node: Internal database error!")
+			say(LANG("obj.4e8cca8a", null))
 			return FALSE
-	say("Not enough research points...")
+	say(LANG("obj.8a4d3feb", null))
 	return FALSE
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if (obj_flags & EMAGGED)
 		return
-	balloon_alert(user, "security protocols disabled")
+	balloon_alert(user, LANG("obj.2d8166d5", null))
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	obj_flags |= EMAGGED
 	var/obj/item/circuitboard/computer/rdconsole/board = circuit
@@ -367,18 +368,18 @@ Nothing else in the console has ID requirements.
 
 	// Check if the console is locked to block any actions occuring
 	if (board.locked && action != "toggleLock")
-		say("Console is locked, cannot perform further actions.")
+		say(LANG("obj.647b971b", null))
 		return TRUE
 
 	switch (action)
 		if ("toggleLock")
 			if(obj_flags & EMAGGED)
-				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
+				to_chat(usr, span_boldwarning(LANG("obj.45bb9000", null)))
 				return TRUE
 			if(allowed(usr))
 				board.locked = !board.locked
 			else
-				to_chat(usr, span_boldwarning("Unauthorized Access."))
+				to_chat(usr, span_boldwarning(LANG("obj.96cdd2af", null)))
 			return TRUE
 
 		if ("researchNode")
@@ -400,36 +401,36 @@ Nothing else in the console has ID requirements.
 		if ("uploadDisk")
 			if (params["type"] == RND_DESIGN_DISK)
 				if(QDELETED(d_disk))
-					say("No design disk inserted!")
+					say(LANG("obj.94315700", null))
 					return TRUE
 				for(var/D in d_disk.blueprints)
 					if(D)
 						stored_research.add_design(D, TRUE)
-				say("Uploading blueprints from disk.")
+				say(LANG("obj.e8f0d152", null))
 				d_disk.on_upload(stored_research, src)
 				return TRUE
 			if (params["type"] == RND_TECH_DISK)
 				if(!COOLDOWN_FINISHED(src, cooldowncopy)) // prevents MC hang
-					say("Servers busy!")
+					say(LANG("obj.d8db2984", null))
 					return
 				if (QDELETED(t_disk))
-					say("No tech disk inserted!")
+					say(LANG("obj.2dbab853", null))
 					return TRUE
 				COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
-				say("Uploading technology disk.")
+				say(LANG("obj.d2991b26", null))
 				t_disk.stored_research.copy_research_to(stored_research)
 			return TRUE
 
 		//Tech disk-only action.
 		if ("loadTech")
 			if(!COOLDOWN_FINISHED(src, cooldowncopy)) // prevents MC hang
-				say("Servers busy!")
+				say(LANG("obj.d8db2984", null))
 				return
 			if(QDELETED(t_disk))
-				say("No tech disk inserted!")
+				say(LANG("obj.2dbab853", null))
 				return
 			COOLDOWN_START(src, cooldowncopy, 5 SECONDS)
-			say("Downloading to technology disk.")
+			say(LANG("obj.de2b87b4", null))
 			stored_research.copy_research_to(t_disk.stored_research)
 			return TRUE
 

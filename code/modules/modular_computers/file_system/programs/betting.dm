@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 
 ///Max amount of characters you can have in an active bet's title
@@ -64,7 +65,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	. = ..()
 	var/mob/user = ui.user
 	if(isnull(computer.stored_id))
-		to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
+		to_chat(user, span_danger(LANG("datum.88d28099", list(computer))))
 		return
 	switch(action)
 		if("create_bet")
@@ -81,7 +82,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 				options += option
 				option = reject_bad_name(option, allow_numbers = TRUE, max_length = MAX_LENGTH_TITLE, cap_after_symbols = FALSE)
 			if(length(options) < 2)
-				to_chat(user, span_danger("2 options minimum required to start a bet."))
+				to_chat(user, span_danger(LANG("datum.3a96fc6d", null)))
 				return
 			created_bet = new(user, title, description, options)
 			return TRUE
@@ -94,7 +95,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 			if(isnull(bet_placed_on))
 				return
 			if(bet_placed_on == created_bet)
-				to_chat(user, span_danger("You can't bet on your own poll!"))
+				to_chat(user, span_danger(LANG("datum.86658971", null)))
 				return
 			var/money_betting = params["money_betting"]
 			if(!isnum(money_betting))
@@ -280,7 +281,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 		return
 	total_amount_bet += money_betting
 	options[option_betting] += list(list(better, "[money_betting]"))
-	better.bank_card_talk("Deducted [money_betting][MONEY_SYMBOL] for your bet on [name].")
+	better.bank_card_talk(LANG("datum.0fc60a8d", list(money_betting, MONEY_SYMBOL, name)))
 
 ///Cancels your bet, removing your bet and refunding your money.
 /datum/active_bet/proc/cancel_bet(datum/bank_account/better)

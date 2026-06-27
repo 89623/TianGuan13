@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/storage/storage.dmi'
@@ -115,4 +116,4 @@
 	if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, qdel_on_fail = FALSE, disable_warning = TRUE))
 		finger.forceMove(user)
 		return
-	balloon_alert(user, "mouth is covered!")
+	balloon_alert(user, LANG("obj.290d96e8", null))

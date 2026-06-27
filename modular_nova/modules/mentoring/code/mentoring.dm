@@ -99,21 +99,21 @@
 				level_name = "master"
 
 	if(taught_skill)
-		. += span_notice("This book can teach you to become \a [level_name] [initial(taught_skill.title)].")
+		. += span_notice(LANG("obj.0a71d1b1", list(level_name, initial(taught_skill.title))))
 
 	if(taught_language)
-		. += span_notice("This book can teach you to become fluent in [initial(taught_language.name)].")
+		. += span_notice(LANG("obj.f08a24f2", list(initial(taught_language.name))))
 
 	if(teach_sign)
-		. += span_notice("This book can teach you sign language.")
+		. += span_notice(LANG("obj.6a19dc2e", null))
 
 	if(!(taught_skill || taught_language || teach_sign))
-		. += span_notice("The pages are blank.")
+		. += span_notice(LANG("obj.c58727ca", null))
 
-	. += span_notice("Using a pen will allow you to impart your knowledge about language or skills to the book!")
+	. += span_notice(LANG("obj.bfc52419", null))
 
 	if(limit_uses)
-		. += span_warning("This book can only be used [allowed_uses] more time\s!")
+		. += span_warning(LANG("obj.72d85492", list(allowed_uses)))
 
 /// will lower the use by one (if allowed) and check if it should be destroyed
 /obj/item/mentoring_book/proc/check_limit(mob/user)
@@ -122,10 +122,10 @@
 
 	allowed_uses -= 1
 	if(allowed_uses > 0)
-		to_chat(user, span_notice("[src] looks a little more damaged..."))
+		to_chat(user, span_notice(LANG("obj.682f98ff", list(src))))
 		return
 
-	to_chat(user, span_warning("[src] tears and breaks!"))
+	to_chat(user, span_warning(LANG("obj.08d8dd59", list(src))))
 	qdel(src)
 
 /// when given a message and an amount of time, requires the user to stand still while receiving the message
@@ -133,7 +133,7 @@
 	to_chat(user, span_notice(sent_message))
 	playsound(src, SFX_PAGE_TURN, 30, TRUE)
 	if(!do_after(user, time_amount, target = src))
-		to_chat(user, span_notice("You put the book down..."))
+		to_chat(user, span_notice(LANG("obj.f8122217", null)))
 		return FALSE
 
 	return TRUE
@@ -168,13 +168,13 @@
 
 /obj/item/mentoring_book/attack_self(mob/user, modifiers)
 	if(isnull(taught_skill) && isnull(taught_language) && !teach_sign)
-		to_chat(user, span_notice("The pages are blank. Use a pen to write knowledge into the book first."))
+		to_chat(user, span_notice(LANG("obj.ff4a5334", null)))
 		return
 
 	if(taught_skill)
 		var/user_level = user.mind?.get_skill_level(taught_skill)
 		if(user_level >= author_level)
-			to_chat(user, span_notice("You already know all that is in this book."))
+			to_chat(user, span_notice(LANG("obj.6cbe3c0c", null)))
 			return
 
 		var/user_key = user.ckey || REF(user)
@@ -183,7 +183,7 @@
 		var/current_iteration = starting_iteration
 
 		if(starting_iteration > 0)
-			to_chat(user, span_notice("You resume reading from where you left off..."))
+			to_chat(user, span_notice(LANG("obj.32808dda", null)))
 
 		while(user_level < author_level)
 			if(!timed_sentence(user, pick(learning_sentences), 60 SECONDS))
@@ -197,13 +197,13 @@
 			current_iteration++
 
 		LAZYREMOVE(reading_progress, user_key) // Clear progress on completion
-		to_chat(user, span_notice("You have learned all you can learn from [src]."))
+		to_chat(user, span_notice(LANG("obj.4c442a94", list(src))))
 		check_limit(user)
 		return
 
 	if(taught_language)
 		if(user.has_language(taught_language))
-			to_chat(user, span_notice("You already know [initial(taught_language.name)]."))
+			to_chat(user, span_notice(LANG("obj.dabc1c94", list(initial(taught_language.name)))))
 			return
 
 		if(!do_progress_loop(user, reading_progress, learning_sentences, 5, 60 SECONDS, "You resume reading from where you left off..."))
@@ -211,7 +211,7 @@
 
 		user.remove_blocked_language(taught_language, source = LANGUAGE_BABEL)
 		user.grant_language(taught_language, source = LANGUAGE_BABEL)
-		to_chat(user, span_notice("You have fully learned [initial(taught_language.name)]"))
+		to_chat(user, span_notice(LANG("obj.dc1c2fb8", list(initial(taught_language.name)))))
 		check_limit(user)
 		return
 
@@ -219,27 +219,27 @@
 		if(isliving(user))
 			var/mob/living/living_user = user
 			if(living_user.has_quirk(/datum/quirk/item_quirk/signer))
-				to_chat(living_user, span_warning("You already know all about sign language!"))
+				to_chat(living_user, span_warning(LANG("obj.cc0fbef0", null)))
 				return
 
 			if(!do_progress_loop(living_user, reading_progress, learning_sentences, 5, 60 SECONDS, "You resume reading from where you left off..."))
 				return
 
 			living_user.add_quirk(/datum/quirk/item_quirk/signer)
-			to_chat(living_user, span_notice("You have fully learned sign language!"))
+			to_chat(living_user, span_notice(LANG("obj.1f3a4cc4", null)))
 			check_limit(user)
 			return
 
 		else
 			if(user.GetComponent(/datum/component/sign_language))
-				to_chat(user, span_warning("You already know all about sign language!"))
+				to_chat(user, span_warning(LANG("obj.cc0fbef0", null)))
 				return
 
 			if(!do_progress_loop(user, reading_progress, learning_sentences, 5, 60 SECONDS, "You resume reading from where you left off..."))
 				return
 
 			user.AddComponent(/datum/component/sign_language)
-			to_chat(user, span_notice("You have fully learned sign language!"))
+			to_chat(user, span_notice(LANG("obj.1f3a4cc4", null)))
 			check_limit(user)
 			return
 
@@ -248,20 +248,20 @@
 /obj/item/mentoring_book/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/pen))
 		if(taught_skill || taught_language)
-			to_chat(user, span_warning("There is already some knowledge stored inside this book-- would you like erase it?"))
-			var/erase_choice = tgui_input_list(user, "Erase Knowledge?", "Book Choice", list("Yes", "No"))
+			to_chat(user, span_warning(LANG("obj.5fac06e5", null)))
+			var/erase_choice = tgui_input_list(user, LANG("obj.e4fd7f70", null), LANG("obj.1abeb53a", null), list("Yes", "No"))
 			if(isnull(erase_choice))
 				return ITEM_INTERACT_BLOCKING
 
 			if(erase_choice != "Yes")
 				return ITEM_INTERACT_BLOCKING
 
-			to_chat(user, span_warning("You begin to erase the knowledge from [src]!"))
+			to_chat(user, span_warning(LANG("obj.30284df9", list(src))))
 			if(!do_after(user, 10 SECONDS, target = src))
-				to_chat(user, span_notice("You decide against erasing the knowledge..."))
+				to_chat(user, span_notice(LANG("obj.596906e5", null)))
 				return ITEM_INTERACT_BLOCKING
 
-			to_chat(user, span_warning("You erased the knowledge!"))
+			to_chat(user, span_warning(LANG("obj.915e5519", null)))
 			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			taught_skill = null
 			author_level = null
@@ -269,7 +269,7 @@
 			teach_sign = FALSE
 			return ITEM_INTERACT_SUCCESS
 
-		var/writing_choice = tgui_input_list(user, "What would you like to write in the book?", "Book Choice", list("Languages", "Skills"))
+		var/writing_choice = tgui_input_list(user, LANG("obj.fcaa3f7e", null), LANG("obj.1abeb53a", null), list("Languages", "Skills"))
 		if(isnull(writing_choice))
 			return ITEM_INTERACT_BLOCKING
 
@@ -285,18 +285,18 @@
 					language_list += list("Galactic Standard Sign Language")
 
 				if(length(language_list) < 1 || current_lang < SKILL_LEVEL_MASTER)
-					to_chat(user, span_warning("You are not a master at languages, and therefore cannot write books teaching languages."))
+					to_chat(user, span_warning(LANG("obj.f27dc797", null)))
 					return ITEM_INTERACT_BLOCKING
 
-				var/language_choice = tgui_input_list(user, "Which language would you like to write about?", "Language Selection", language_list)
+				var/language_choice = tgui_input_list(user, LANG("obj.8d3f892a", null), LANG("obj.2d244b3b", null), language_list)
 				if(isnull(language_choice))
-					to_chat(user, span_notice("You decide against writing."))
+					to_chat(user, span_notice(LANG("obj.5e71fe34", null)))
 					return ITEM_INTERACT_BLOCKING
 
 				if(!do_progress_loop(user, writing_progress, writing_sentences, 5, 60 SECONDS, "You resume writing from where you left off..."))
 					return ITEM_INTERACT_BLOCKING
 
-				to_chat(user, span_notice("You finish writing inside the book about your language."))
+				to_chat(user, span_notice(LANG("obj.ab6055be", null)))
 				playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 				if(language_choice == "Galactic Standard Sign Language")
 					teach_sign = TRUE
@@ -316,23 +316,23 @@
 					our_skills[initial(skill.name)] = skill
 
 				if(!length(our_skills))
-					to_chat(user, span_warning("You don't know any skills to write about!"))
+					to_chat(user, span_warning(LANG("obj.fa4788c3", null)))
 					return ITEM_INTERACT_BLOCKING
 
-				var/skill_choice = tgui_input_list(user, "Which skill would you like to write about?", "Skill Selection", our_skills)
+				var/skill_choice = tgui_input_list(user, LANG("obj.83a599b3", null), LANG("obj.5b84b37a", null), our_skills)
 				if(isnull(skill_choice))
-					to_chat(user, span_notice("You decide against writing."))
+					to_chat(user, span_notice(LANG("obj.5e71fe34", null)))
 					return ITEM_INTERACT_BLOCKING
 
 				var/skill_level = user.mind?.get_skill_level(our_skills[skill_choice])
 				if(skill_level < SKILL_LEVEL_APPRENTICE)
-					to_chat(user, span_warning("You are not skilled enough to write about this skill!"))
+					to_chat(user, span_warning(LANG("obj.32b3e64c", null)))
 					return ITEM_INTERACT_BLOCKING
 
 				if(!do_progress_loop(user, writing_progress, writing_sentences, 5, 60 SECONDS, "You resume writing from where you left off..."))
 					return ITEM_INTERACT_BLOCKING
 
-				to_chat(user, span_notice("You finish writing inside the book about your skill."))
+				to_chat(user, span_notice(LANG("obj.900f31cf", null)))
 				playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 				taught_skill = our_skills[skill_choice]
 				author_level = skill_level - 1
@@ -340,19 +340,19 @@
 
 	if(istype(tool, /obj/item/stack/ore/bluespace_crystal))
 		if(user.mind.get_skill_level(/datum/skill/language) < SKILL_LEVEL_JOURNEYMAN)
-			to_chat(user, span_warning("You feel that you aren't ready to use [tool] on [src]... perhaps more studying!"))
+			to_chat(user, span_warning(LANG("obj.94429422", list(tool, src))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/skill_modifier = user.mind.get_skill_modifier(/datum/skill/language, SKILL_SPEED_MODIFIER)
-		to_chat(user, span_warning("You begin using [tool] on [src]!"))
+		to_chat(user, span_warning(LANG("obj.cb53c6f5", list(tool, src))))
 		if(!do_after(user, 5 SECONDS * skill_modifier, target = src))
-			to_chat(user, span_notice("You put [src] down."))
+			to_chat(user, span_notice(LANG("obj.9807adb9", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		new /obj/item/book/random(get_turf(user))
 		give_experience(user)
 		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-		to_chat(user, span_notice("A quick, blue lightning escapes from [tool], wrapping around [src], causing it to flicker out of existence... another book has replaced it!"))
+		to_chat(user, span_notice(LANG("obj.a78d0aab", list(tool, src))))
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
 

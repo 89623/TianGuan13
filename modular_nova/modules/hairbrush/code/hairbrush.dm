@@ -13,7 +13,7 @@
 
 /obj/item/hairbrush/attack(mob/target, mob/user)
 	if(target.stat == DEAD)
-		to_chat(user, span_warning("There isn't much point brushing someone who can't appreciate it!"))
+		to_chat(user, span_warning(LANG("obj.227e6d84", null)))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	brush(target, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -27,15 +27,15 @@
 		var/location = user.zone_selected
 
 		if(!(location in list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_GROIN)))
-			to_chat(user, span_warning("You stop, look down at what you're currently holding and ponder to yourself, \"This is probably to be used on their hair.\""))
+			to_chat(user, span_warning(LANG("obj.d67fde78", null)))
 			return
 
 		if(location == BODY_ZONE_HEAD)
 			if(!head)
-				to_chat(user, span_warning("[human_target] has no head!"))
+				to_chat(user, span_warning(LANG("obj.14898dbc", list(human_target))))
 				return
 			if(human_target.is_mouth_covered(ITEM_SLOT_HEAD))
-				to_chat(user, span_warning("You can't brush [human_target]'s hair while [human_target.p_their()] head is covered!"))
+				to_chat(user, span_warning(LANG("obj.4d58e6cb", list(human_target, human_target.p_their()))))
 				return
 			if(human_target.hairstyle == "Bald" || human_target.hairstyle == "Skinhead")
 				brush_target = "head"
@@ -43,7 +43,7 @@
 				brush_target = "hair"
 		else if(location == BODY_ZONE_PRECISE_MOUTH)
 			if(human_target.is_mouth_covered())
-				to_chat(user, span_warning("You can't brush [human_target]'s facial hair while [human_target.p_their()] mouth is covered!"))
+				to_chat(user, span_warning(LANG("obj.c30a802f", list(human_target, human_target.p_their()))))
 				return
 			if(human_target.facial_hairstyle != "Shaved")
 				brush_target = "beard"
@@ -61,7 +61,7 @@
 
 		// Combat mode gives one brute damage.
 		if(user.combat_mode && human_target != user)
-			user.visible_message(span_warning("[user] scrapes the bristles uncomfortably over [human_target]'s [brush_target]."), span_warning("You scrape the bristles uncomfortably over [human_target]'s [brush_target]."), ignored_mobs=list(human_target))
+			user.visible_message(span_warning(LANG("obj.2e871356", list(user, human_target, brush_target))), span_warning(LANG("obj.44dd25c5", list(human_target, brush_target))), ignored_mobs=list(human_target))
 			human_target.show_message(span_warning("[user] scrapes the bristles uncomfortably over your [brush_target]!"))
 			if(brush_target != "tail")
 				head.receive_damage(1)
@@ -75,18 +75,18 @@
 		// Self brushing
 		if(human_target == user)
 			if(HAS_TRAIT(user, TRAIT_SELF_AWARE) || HAS_TRAIT(user, TRAIT_HAIR_EXPERT)) // Do they have self awareness or the hair expert trait? If so, give them the better moodlet.
-				human_target.visible_message(span_notice("[user] masterfully brushes [user.p_their()] [brush_target]!"), span_notice("You masterfully brush your [brush_target]."))
+				human_target.visible_message(span_notice(LANG("obj.882b9bd5", list(user, user.p_their(), brush_target))), span_notice(LANG("obj.8a9119eb", list(brush_target))))
 				human_target.add_mood_event("brushed", /datum/mood_event/brushed/self/expert, brush_target)
 			else
-				human_target.visible_message(span_notice("[user] brushes [user.p_their()] [brush_target]!"), span_notice("You brush your [brush_target]."))
+				human_target.visible_message(span_notice(LANG("obj.1fb5e2b7", list(user, user.p_their(), brush_target))), span_notice(LANG("obj.a6eb0794", list(brush_target))))
 				human_target.add_mood_event("brushed", /datum/mood_event/brushed/self, brush_target)
 		else // Brushing others
 			if(HAS_TRAIT(user, TRAIT_HAIR_EXPERT)) // Do they have the hair expert trait? If so, give them the better moodlet.
-				user.visible_message(span_notice("[user] masterfully brushes [human_target]'s [brush_target]!"), span_notice("You masterfully brush [human_target]'s [brush_target]."), ignored_mobs=list(human_target))
+				user.visible_message(span_notice(LANG("obj.307ab497", list(user, human_target, brush_target))), span_notice(LANG("obj.9d70f0ad", list(human_target, brush_target))), ignored_mobs=list(human_target))
 				human_target.show_message(span_notice("[user] masterfully brushes your [brush_target]!"), MSG_VISUAL)
 				human_target.add_mood_event("brushed", /datum/mood_event/brushed/expert, user, brush_target)
 			else
-				user.visible_message(span_notice("[user] brushes [human_target]'s [brush_target]!"), span_notice("You brush [human_target]'s [brush_target]."), ignored_mobs=list(human_target))
+				user.visible_message(span_notice(LANG("obj.c233cbf6", list(user, human_target, brush_target))), span_notice(LANG("obj.8ce39d25", list(human_target, brush_target))), ignored_mobs=list(human_target))
 				human_target.show_message(span_notice("[user] brushes your [brush_target]!"), MSG_VISUAL)
 				human_target.add_mood_event("brushed", /datum/mood_event/brushed, user, brush_target)
 		playsound(human_target, 'modular_nova/modules/hairbrush/sounds/brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)
@@ -94,7 +94,7 @@
 	else if(istype(target, /mob/living/basic/pet))
 		if(!do_after(user, brush_speed, target))
 			return
-		to_chat(user, span_notice("[target] closes [target.p_their()] eyes as you brush [target.p_them()]!"))
+		to_chat(user, span_notice(LANG("obj.35c16eeb", list(target, target.p_their(), target.p_them()))))
 		playsound(target, 'modular_nova/modules/hairbrush/sounds/brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)
 		var/mob/living/living_user = user
 		if(istype(living_user))

@@ -43,15 +43,15 @@
 /obj/machinery/transformer_rp/examine(mob/user)
 	. = ..()
 	if(issilicon(user) || isobserver(user))
-		. += "<br>It has [stored_cyborgs] cyborgs stored."
+		. += LANG("obj.95da987e", list(stored_cyborgs))
 		if(!is_operational)
-			. += span_warning("It has no power!")
+			. += span_warning(LANG("obj.6408baad", null))
 			return
 		if(cooldown && cooldown_timer)
-			. += "<br>It will be ready to deploy a stored cyborg in [DisplayTimeText(max(0, cooldown_timer))]."
+			. += LANG("obj.69106e85", list(DisplayTimeText(max(0, cooldown_timer))))
 		if(stored_cyborgs >= max_stored_cyborgs)
 			return
-		. += "<br>It will store a new cyborg in [DisplayTimeText(max(0, stored_timer))]."
+		. += LANG("obj.8d4a5eb3", list(DisplayTimeText(max(0, stored_timer))))
 
 /obj/machinery/transformer_rp/Destroy()
 	QDEL_NULL(countdown)
@@ -97,7 +97,7 @@
 	if(cooldown)
 		return
 
-	var/cyborg_ask = tgui_alert(target_ghost, "Become a cyborg?", "Are you a terminator?", list("Yes", "No"))
+	var/cyborg_ask = tgui_alert(target_ghost, LANG("obj.67280640", null), LANG("obj.1a69af28", null), list("Yes", "No"))
 	if(cyborg_ask == "No" || !src || QDELETED(src))
 		return FALSE
 

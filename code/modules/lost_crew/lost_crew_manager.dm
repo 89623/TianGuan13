@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Manager for the lost crew bodies, for spawning and granting rewards
 GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
@@ -144,7 +145,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	if (user.mind == mind)
 		return TRUE
 	if (!silent)
-		balloon_alert(user, "access denied!")
+		balloon_alert(user, LANG("obj.1bd3ceeb", null))
 	return FALSE
 
 /obj/item/storage/lockbox/mind/toggle_locked(mob/living/user)
@@ -152,7 +153,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 		return
 
 	atom_storage.set_locked(STORAGE_NOT_LOCKED)
-	balloon_alert(user, "unlocked")
+	balloon_alert(user, LANG("obj.6a4e03ca", null))
 
 /obj/item/storage/lockbox/mind/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(broken || user.mind != mind)

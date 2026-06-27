@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Holds the puzzle sequences, receives the pulses, decides if theyre correct, and gives feedback and calls the right callbacks when it does
 /datum/gizmo_puzzle
 	/// The wires we need to pulse for cracking the code
@@ -81,13 +82,13 @@
 
 	switch(solved_type)
 		if(GIZMO_PUZZLE_WRONG)
-			holder.balloon_alert(user, "buzz")
+			holder.balloon_alert(user, LANG("datum.98f1a8f1", null))
 			playsound(holder, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
 		if(GIZMO_PUZZLE_CORRECT)
-			holder.balloon_alert(user, "ping")
+			holder.balloon_alert(user, LANG("datum.5fea9116", null))
 			playsound(holder, 'sound/machines/ping.ogg', 30, FALSE)
 		if(GIZMO_PUZZLE_SOLVED)
-			holder.balloon_alert(user, "creak")
+			holder.balloon_alert(user, LANG("datum.edc67b7d", null))
 			playsound(holder, 'sound/machines/creak.ogg', 30, FALSE)
 
 /// Sequences can be a bit shorter since you have to constantly type and scream them

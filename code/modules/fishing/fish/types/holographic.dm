@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/item/fish/holo
 	name = "holographic goldfish"
@@ -37,7 +38,7 @@
 		QDEL_IN(src, 3 SECONDS)
 
 /obj/item/fish/holo/suicide_act(mob/living/user)
-	visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to derez [user.p_them()]selves!"))
+	visible_message(span_suicide(LANG("obj.76d04c00", list(user, src, user.p_theyre(), user.p_them()))))
 	var/area/station/holodeck/holo_area = get_area(src)
 	if(!istype(holo_area))
 		user.dust(just_ash = TRUE, drop_items = TRUE)

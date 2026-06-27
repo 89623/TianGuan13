@@ -56,7 +56,8 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
   return (
     <Flex wrap>
       {sortBy(availableMaterials, [
-        (m: Material) => MATERIAL_RARITY[m.name],
+        // NOVA EDIT CHANGE - I18N - ORIGINAL: (m: Material) => MATERIAL_RARITY[m.name],
+        (m: Material) => MATERIAL_RARITY[m.id ?? m.name],
       ]).map((material) => (
         <Flex.Item grow basis={4.5} key={material.name}>
           <MaterialCounter
@@ -103,7 +104,11 @@ const MaterialCounter = (props: MaterialCounterProps) => {
           className="MaterialDock__Label"
         >
           <Flex.Item>
-            <MaterialIcon materialName={material.name} sheets={sheets} />
+            {/* NOVA EDIT CHANGE - I18N - ORIGINAL: materialName={material.name} */}
+            <MaterialIcon
+              materialName={material.id ?? material.name}
+              sheets={sheets}
+            />
           </Flex.Item>
           <Flex.Item>
             <AnimatedNumber value={sheets} format={LABEL_FORMAT} />

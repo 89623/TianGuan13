@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DRONE_PRODUCTION "production"
 #define DRONE_RECHARGING "recharging"
 #define DRONE_READY "ready"
@@ -257,27 +258,27 @@
 /obj/machinery/drone_dispenser/crowbar_act(mob/living/user, obj/item/tool)
 	materials.retrieve_all()
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You retrieve the materials from [src]."))
+	to_chat(user, span_notice(LANG("obj.a914fe5b", list(src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/drone_dispenser/welder_act(mob/living/user, obj/item/tool)
 	if(!(machine_stat & BROKEN))
-		to_chat(user, span_warning("[src] doesn't need repairs."))
+		to_chat(user, span_warning(LANG("obj.5eef566d", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount=1))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user] begins patching up [src] with [tool]."),
-		span_notice("You begin restoring the damage to [src]..."))
+		span_notice(LANG("obj.afa10dcf", list(user, src, tool))),
+		span_notice(LANG("obj.73be3293", list(src))))
 
 	if(!tool.use_tool(src, user, 40, volume=50))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user] fixes [src]!"),
-		span_notice("You restore [src] to operation."))
+		span_notice(LANG("obj.6fab948a", list(user, src))),
+		span_notice(LANG("obj.83a8b8a7", list(src))))
 
 	set_machine_stat(machine_stat & ~BROKEN)
 	atom_integrity = max_integrity

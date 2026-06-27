@@ -285,6 +285,9 @@
 			"name" = "[user]",
 			"observer" = isobserver(user),
 		),
+		// NOVA EDIT ADDITION START - i18n - 注入全服界面语言供 TGUI 本地化 (config.locale)
+		"locale" = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE,
+		// NOVA EDIT ADDITION END
 	)
 	var/data = custom_data || with_data && src_object.ui_data(user)
 	SEND_SIGNAL(src_object, COMSIG_UI_DATA, user, data)
@@ -293,6 +296,14 @@
 	var/static_data = with_static_data && src_object.ui_static_data(user)
 	if(static_data)
 		json_data["static_data"] = static_data
+	// NOVA EDIT ADDITION START - i18n - 全服中文时把 ui_data/ui_static_data 里的多词字符串反查为译文
+	// （非 atom datum 的 name/desc/说明等动态内容；只反查含空白的多词串，避免单词碰撞）。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(islist(json_data["data"]))
+			lang_reverse_tree(json_data["data"])
+		if(islist(json_data["static_data"]))
+			lang_reverse_tree(json_data["static_data"])
+	// NOVA EDIT ADDITION END
 	if(src_object.tgui_shared_states)
 		json_data["shared"] = src_object.tgui_shared_states
 	return json_data

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //I'm pretty sure that this is a recursive [s]descent[/s] ascent parser.
 
 
@@ -82,7 +83,7 @@
 
 /datum/sdql_parser/proc/parse_error(error_message)
 	error = 1
-	to_chat(usr, span_warning("SDQL2 Parsing Error: [error_message]"), confidential = TRUE)
+	to_chat(usr, span_warning(LANG("datum.ad989edf", list(error_message))), confidential = TRUE)
 	return query.len + 1
 
 /datum/sdql_parser/proc/parse()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/ai_controller/basic_controller/snail
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
@@ -39,7 +40,7 @@
 	always_reset_target = TRUE
 
 /datum/ai_behavior/hunt_target/snail_people/target_caught(mob/living/hunter, atom/hunted)
-	hunter.manual_emote("Celebrates around [hunted]!")
+	hunter.manual_emote(LANG("datum.4db43eb4", list(hunted)))
 	hunter.SpinAnimation(speed = 1, loops = 3)
 
 /datum/ai_planning_subtree/use_mob_ability/snail_retreat

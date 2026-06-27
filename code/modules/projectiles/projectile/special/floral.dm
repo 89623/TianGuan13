@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/projectile/energy/flora
 	damage = 0
 	damage_type = TOX
@@ -35,9 +36,9 @@
 	hit_plant.adjust_tox_loss(rand(3, 6))
 	hit_plant.Paralyze(10 SECONDS)
 	hit_plant.visible_message(
-		span_warning("[hit_plant] writhes in pain as [hit_plant.p_their()] vacuoles boil."),
-		span_userdanger("You writhe in pain as your vacuoles boil!"),
-		span_hear("You hear the crunching of leaves."),
+		span_warning(LANG("obj.9a2daf76", list(hit_plant, hit_plant.p_their()))),
+		span_userdanger(LANG("obj.0e35dfbb", null)),
+		span_hear(LANG("obj.444c8b17", null)),
 	)
 	if(iscarbon(hit_plant) && hit_plant.has_dna())
 		var/mob/living/carbon/carbon_plant = hit_plant

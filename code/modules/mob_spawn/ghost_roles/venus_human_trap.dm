@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Handles logic for ghost spawning code, visible object in game is handled by /obj/structure/alien/resin/flower_bud
 /obj/effect/mob_spawn/ghost_role/venus_human_trap
 	name = "flower bud"
@@ -52,6 +53,6 @@
 		return FALSE
 	if(!ready)
 		if(!silent)
-			to_chat(user, span_warning("\The [src] has not borne fruit yet!"))
+			to_chat(user, span_warning(LANG("obj.64e8db3d", list(src))))
 		return FALSE
 	return TRUE

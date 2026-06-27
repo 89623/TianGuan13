@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Emote
  *
@@ -88,6 +89,20 @@
 
 	if(!name)
 		name = key
+
+	// NOVA EDIT ADDITION START - i18n - 表情模板/名称创建时整串反查译文（全服中文时；emote 每类型仅 New 一次）
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		name = lang_reverse_text(name)
+		message = lang_reverse_text(message)
+		message_mime = lang_reverse_text(message_mime)
+		message_alien = lang_reverse_text(message_alien)
+		message_larva = lang_reverse_text(message_larva)
+		message_robot = lang_reverse_text(message_robot)
+		message_AI = lang_reverse_text(message_AI)
+		message_monkey = lang_reverse_text(message_monkey)
+		message_animal_or_basic = lang_reverse_text(message_animal_or_basic)
+		message_param = lang_reverse_text(message_param) // 译文须保留 %t
+	// NOVA EDIT ADDITION END
 
 /**
  * Handles the modifications and execution of emotes.
@@ -303,7 +318,7 @@
 	if(user.nextsoundemote > world.time) // NOVA EDIT CHANGE - ORIGINAL: if(user.emotes_used && user.emotes_used[src] + cooldown > world.time)
 		var/datum/emote/default_emote = /datum/emote
 		if(cooldown > initial(default_emote.cooldown)) // only worry about longer-than-normal emotes
-			to_chat(user, span_danger("You must wait another [DisplayTimeText(user.nextsoundemote - world.time)] before using that emote."))
+			to_chat(user, span_danger(LANG("datum.ec9895bb", list(DisplayTimeText(user.nextsoundemote - world.time)))))
 		return FALSE
 	//if(!user.emotes_used)
 	//	user.emotes_used = list()
@@ -425,16 +440,16 @@
 				return FALSE
 			switch(user.stat)
 				if(SOFT_CRIT)
-					to_chat(user, span_warning("You cannot [key] while in a critical condition!"))
+					to_chat(user, span_warning(LANG("datum.06026301", list(key))))
 				if(UNCONSCIOUS, HARD_CRIT)
-					to_chat(user, span_warning("You cannot [key] while unconscious!"))
+					to_chat(user, span_warning(LANG("datum.b0df7fb7", list(key))))
 				if(DEAD)
-					to_chat(user, span_warning("You cannot [key] while dead!"))
+					to_chat(user, span_warning(LANG("datum.9cfbc2db", list(key))))
 			return FALSE
 		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 			if(!intentional)
 				return FALSE
-			to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
+			to_chat(user, span_warning(LANG("datum.a6c43807", list(key))))
 			return FALSE
 
 	if(HAS_TRAIT(user, TRAIT_EMOTEMUTE))

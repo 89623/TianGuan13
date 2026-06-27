@@ -41,7 +41,19 @@
 	if(!text)
 		return
 
+	// NOVA EDIT ADDITION START - i18n: 公告非 sink，正文/标题靠运行时反查翻译。
+	// 在 html_encode 之前做（目录键是未转义英文）：整串命中→译文；否则 AC 子串尽力翻动态正文。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(istext(title) && length(title) > 0)
+			var/translated_title = lang_reverse_text(title)
+			title = (translated_title != title) ? translated_title : lang_fallback_apply(title)
+		if(istext(text))
+			var/translated_text = lang_reverse_text(text)
+			text = (translated_text != text) ? translated_text : lang_fallback_apply(text)
+	// NOVA EDIT ADDITION END
+
 	if(encode_title && title && length(title) > 0)
+		title = html_encode(title)
 		title = html_encode(title)
 	if(encode_text)
 		text = html_encode(text)
@@ -58,14 +70,14 @@
 	var/header
 	switch(type)
 		if(ANNOUNCEMENT_TYPE_PRIORITY)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Priority Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE(lang_reverse_text("Priority Announcement")) // NOVA EDIT - i18n: 反查公告标题（词进 ui.json）
 			if(length(title) > 0)
 				header += SUBHEADER_ANNOUNCEMENT_TITLE(title)
 		if(ANNOUNCEMENT_TYPE_CAPTAIN)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Captain's Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE(lang_reverse_text("Captain's Announcement")) // NOVA EDIT - i18n: 反查公告标题
 			GLOB.news_network.submit_article(text, "Captain's Announcement", NEWSCASTER_STATION_ANNOUNCEMENTS, null)
 		if(ANNOUNCEMENT_TYPE_SYNDICATE)
-			header = MAJOR_ANNOUNCEMENT_TITLE("Syndicate Captain's Announcement")
+			header = MAJOR_ANNOUNCEMENT_TITLE(lang_reverse_text("Syndicate Captain's Announcement")) // NOVA EDIT - i18n: 反查公告标题
 		else
 			header += generate_unique_announcement_header(title, sender_override)
 
@@ -116,6 +128,12 @@
 			has_important_message = TRUE,
 		)
 
+	// NOVA EDIT ADDITION START - I18N - 指挥报告（生成纸张/发到通讯台）正文是多段运行期拼接（威胁等级公告、
+	// 特别订单 station_goal.get_report()、station_trait.get_report() 报告、各 LANG 段），整串 reverse 够不着。
+	// 过边界模板引擎（插值段 {0} 模板整句命中）+ 字面 AC（多词短语兜底）；威胁公告整块已在 communications.dm
+	// 拼接前整串反查为中文，此处不再被 AC 蚕食。locale==en 时 lang_fallback_apply 原样返回（零开销）。
+	text = lang_fallback_apply(text)
+	// NOVA EDIT ADDITION END
 	var/datum/comm_message/message = new
 	message.title = title
 	message.content = text
@@ -139,6 +157,16 @@
 /proc/minor_announce(message, title = "Attention:", alert = FALSE, html_encode = TRUE, list/players, sound_override, should_play_sound = TRUE, color_override)
 	if(!message)
 		return
+
+	// NOVA EDIT ADDITION START - i18n: 同 priority_announce，html_encode 前反查正文/标题。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(istext(title) && length(title) > 0)
+			var/translated_title = lang_reverse_text(title)
+			title = (translated_title != title) ? translated_title : lang_fallback_apply(title)
+		if(istext(message))
+			var/translated_message = lang_reverse_text(message)
+			message = (translated_message != message) ? translated_message : lang_fallback_apply(message)
+	// NOVA EDIT ADDITION END
 
 	if (html_encode)
 		title = html_encode(title)
@@ -188,7 +216,7 @@
 /proc/generate_unique_announcement_header(title, sender_override)
 	var/list/returnable_strings = list()
 	if(isnull(sender_override))
-		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] Update")
+		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE("[command_name()] [lang_reverse_text("Update")]") // NOVA EDIT - i18n: 反查 "Update" 后缀（command_name 经聊天 AC 反查）
 	else
 		returnable_strings += MAJOR_ANNOUNCEMENT_TITLE(sender_override)
 

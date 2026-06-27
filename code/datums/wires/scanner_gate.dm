@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/wires/scanner_gate
 	holder_type = /obj/machinery/scanner_gate
 	proper_name = "Scanner Gate"
@@ -18,6 +19,6 @@
 /datum/wires/scanner_gate/get_status()
 	var/obj/machinery/scanner_gate/scanner = holder
 	. = list()
-	. += "The Green light is [scanner.light_pass ? "on" : "off"]."
-	. += "The Red light is [scanner.light_fail ? "on" : "off"]."
-	. += "The Purple light is [scanner.ignore_signals ? "on" : "off"]."
+	. += LANG("datum.11db0ccf", list(scanner.light_pass ? "on" : "off"))
+	. += LANG("datum.a2999979", list(scanner.light_fail ? "on" : "off"))
+	. += LANG("datum.643df2a9", list(scanner.ignore_signals ? "on" : "off"))

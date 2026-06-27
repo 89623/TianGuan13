@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Custom Atom Component
  *
@@ -100,9 +101,9 @@
 
 	var/atom/atom_parent = parent
 
-	examine_list += "It [LAZYLEN(ingredient_names) \
+	examine_list += LANG("datum.0b108aff", list(LAZYLEN(ingredient_names) \
 		? "contains [english_list(ingredient_names)] making a [custom_adjective()]-sized [initial(atom_parent.name)]" \
-		: "does not contain any ingredients"]."
+		: "does not contain any ingredients"))
 
 //// Proc that checks if an ingredient is valid or not, returning false if it isnt and true if it is.
 /datum/component/ingredients_holder/proc/valid_ingredient(obj/ingredient)
@@ -123,13 +124,13 @@
 
 	if (!valid_ingredient(ingredient))
 		if (ingredient.is_drainable()) // For stuff like adding flour from a flour sack into a bowl, we handle the transfer of the reagent elsewhere, but we shouldn't regard it beyond some user feedback.
-			attacker.balloon_alert(attacker, "transferring...")
+			attacker.balloon_alert(attacker, LANG("datum.70f7f430", null))
 			return
-		attacker.balloon_alert(attacker, "doesn't go on that!")
+		attacker.balloon_alert(attacker, LANG("datum.2d41d158", null))
 		return
 
 	if (LAZYLEN(ingredient_names) >= max_ingredients)
-		attacker.balloon_alert(attacker, "too full!")
+		attacker.balloon_alert(attacker, LANG("datum.e4a4403c", null))
 		return COMPONENT_NO_AFTERATTACK
 
 	if(!attacker.transferItemToLoc(ingredient, parent))

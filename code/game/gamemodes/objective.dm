@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 GLOBAL_LIST_EMPTY(objectives) //NOVA EDIT ADDITION
 
@@ -50,7 +51,7 @@ GLOBAL_LIST_EMPTY(objectives) //NOVA EDIT ADDITION
 	if(target?.current)
 		def_value = target.current
 
-	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in possible_targets
+	var/mob/new_target = input(admin,LANG("datum.ec552696", null), LANG("datum.83e3a58e", null), def_value) as null|anything in possible_targets
 	if (!new_target)
 		return
 
@@ -674,12 +675,12 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal/admin_edit(mob/admin)
 	var/list/possible_items_all = GLOB.possible_items
-	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in sort_names(possible_items_all)+"custom"
+	var/new_target = input(admin,LANG("datum.ec552696", null), LANG("datum.83e3a58e", null), steal_target) as null|anything in sort_names(possible_items_all)+"custom"
 	if (!new_target)
 		return
 
 	if (new_target == "custom") //Can set custom items.
-		var/custom_path = input(admin,"Search for target item type:","Type") as null|text
+		var/custom_path = input(admin,LANG("datum.33335c92", null),LANG("datum.18446660", null)) as null|text
 		if (!custom_path)
 			return
 		var/obj/item/custom_target = pick_closest_path(custom_path, make_types_fancy(subtypesof(/obj/item)))
@@ -761,7 +762,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	return captured_amount >= target_amount
 
 /datum/objective/capture/admin_edit(mob/admin)
-	var/count = input(admin,"How many mobs to capture ?","capture",target_amount) as num|null
+	var/count = input(admin,LANG("datum.4653ba77", null),LANG("datum.6883a5a2", null),target_amount) as num|null
 	if(count)
 		target_amount = count
 	update_explanation_text()
@@ -818,7 +819,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	explanation_text = "Extract [target_amount] compatible genome\s."
 
 /datum/objective/absorb/admin_edit(mob/admin)
-	var/count = input(admin,"How many people to absorb?","absorb",target_amount) as num|null
+	var/count = input(admin,LANG("datum.dc90ede2", null),LANG("datum.e7d38b6b", null),target_amount) as num|null
 	if(count)
 		target_amount = count
 	update_explanation_text()
@@ -913,10 +914,10 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/destroy/admin_edit(mob/admin)
 	var/list/possible_targets = active_ais(1)
 	if(possible_targets.len)
-		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sort_names(possible_targets)
+		var/mob/new_target = input(admin,LANG("datum.ec552696", null), LANG("datum.83e3a58e", null)) as null|anything in sort_names(possible_targets)
 		target = new_target.mind
 	else
-		to_chat(admin, span_boldwarning("No active AIs with minds."))
+		to_chat(admin, span_boldwarning(LANG("datum.78a01c03", null)))
 	update_explanation_text()
 
 /datum/objective/steal_n_of_type

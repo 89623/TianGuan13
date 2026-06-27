@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/shipping
 	filename = "shipping"
 	filedesc = "GrandArk Exporter"
@@ -43,17 +44,17 @@
 		if("resetid")
 			payments_acc = null
 		if("setsplit")
-			var/potential_cut = input("How much would you like to pay out to the registered card?","Percentage Profit ([round(cut_min*100)]% - [round(cut_max*100)]%)") as num|null
+			var/potential_cut = input(LANG("datum.64a2bf7c", null),LANG("datum.9464744c", list(round(cut_min*100), round(cut_max*100)))) as num|null
 			cut_multiplier = potential_cut ? clamp(round(potential_cut/100, cut_min), cut_min, cut_max) : initial(cut_multiplier)
 		if("print")
 			if(computer.stored_paper <= 0)
-				to_chat(usr, span_notice("Printer is out of paper."))
+				to_chat(usr, span_notice(LANG("datum.8f26e725", null)))
 				return TRUE
 			if(!payments_acc)
-				to_chat(usr, span_notice("Software error: Please set a current user first."))
+				to_chat(usr, span_notice(LANG("datum.aaf33d07", null)))
 				return TRUE
 			var/obj/item/barcode/barcode = new /obj/item/barcode(get_turf(computer.ui_host()))
 			barcode.payments_acc = payments_acc
 			barcode.cut_multiplier = cut_multiplier
 			computer.stored_paper--
-			to_chat(usr, span_notice("The computer prints out a barcode."))
+			to_chat(usr, span_notice(LANG("datum.280b8c1a", null)))

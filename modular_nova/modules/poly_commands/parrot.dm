@@ -41,12 +41,12 @@
 	if(LAZYLEN(human_target.buckled_mobs) >= human_target.max_buckled_mobs)
 		return
 	if(buckled_to_human)
-		manual_emote("gives [human_target] a confused look, squawking softly.")
+		manual_emote(LANG("mob.7703f326", list(human_target)))
 		return
 	if(get_dist(src, human_target) > 1 || buckled) // Only adjacent
-		manual_emote("tilts their head at [human_target], before bawking loudly and staying put.")
+		manual_emote(LANG("mob.fd42f95b", list(human_target)))
 		return
-	manual_emote("obediently hops up onto [human_target]'s shoulder, spreading their wings for a moment before settling down.")
+	manual_emote(LANG("mob.04128cec", list(human_target)))
 	if(start_perching(human_target))
 		buckled_to_human = TRUE
 
@@ -54,11 +54,11 @@
 	if(!buckled)
 		buckled_to_human = FALSE
 	if(!buckled_to_human || !buckled)
-		manual_emote("gives [human_target] a confused look, squawking softly.")
+		manual_emote(LANG("mob.7703f326", list(human_target)))
 		return
 
 	if(buckled)
-		to_chat(src, span_notice("You are no longer sitting on [human_target]."))
+		to_chat(src, span_notice(LANG("mob.aee2b02f", list(human_target))))
 		buckled.unbuckle_mob(src, TRUE)
-		manual_emote("squawks and hops off of [human_target], flying away.")
+		manual_emote(LANG("mob.637df698", list(human_target)))
 

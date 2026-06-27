@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Pastry is a food that is made from dough which is made from wheat or rye flour.
 //This file contains pastries that don't fit any existing categories.
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
@@ -57,9 +58,9 @@
 		return
 	var/mob/living/moffin_observer = user
 	if(moffin_observer.get_liked_foodtypes() & CLOTH)
-		. += span_nicegreen("Ooh! It's even got bits of clothes on it! Yummy!")
+		. += span_nicegreen(LANG("obj.63ed6739", null))
 	else
-		. += span_warning("You're not too sure what's on top though...")
+		. += span_warning(LANG("obj.c05117f1", null))
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
@@ -195,7 +196,7 @@
 	. = ..()
 	if(seasonal_changes && check_holidays(FESTIVE_SEASON))
 		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
-		desc = "A sugar cookie in the shape of a [shape]. I hope Santa likes it!"
+		desc = LANG("obj.6f8387a4", list(shape))
 		icon_state = "sugarcookie_[shape]"
 
 /obj/item/food/chococornet
@@ -267,7 +268,7 @@
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump helmet biscuit"
-		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
+		desc = LANG("obj.7c36b87e", null)
 		food_reagents = list(
 			/datum/reagent/medicine/omnizine = 5,
 			/datum/reagent/consumable/nutriment = 1,

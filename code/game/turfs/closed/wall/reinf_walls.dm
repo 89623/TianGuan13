@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /turf/closed/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms."
@@ -55,138 +56,138 @@
 				W.play_tool_sound(src, 100)
 				d_state = SUPPORT_LINES
 				update_appearance()
-				to_chat(user, span_notice("You cut the outer grille."))
+				to_chat(user, span_notice(LANG("turf.2db4e4b4", null)))
 				return TRUE
 
 		if(SUPPORT_LINES)
 			if(W.tool_behaviour == TOOL_SCREWDRIVER)
-				to_chat(user, span_notice("You begin unsecuring the support lines..."))
+				to_chat(user, span_notice(LANG("turf.ced2cc5e", null)))
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_LINES)
 						return TRUE
 					d_state = COVER
 					update_appearance()
-					to_chat(user, span_notice("You unsecure the support lines."))
+					to_chat(user, span_notice(LANG("turf.044271e7", null)))
 				return TRUE
 
 			else if(W.tool_behaviour == TOOL_WIRECUTTER)
 				W.play_tool_sound(src, 100)
 				d_state = INTACT
 				update_appearance()
-				to_chat(user, span_notice("You repair the outer grille."))
+				to_chat(user, span_notice(LANG("turf.c2013483", null)))
 				return TRUE
 
 		if(COVER)
 			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
-				to_chat(user, span_notice("You begin slicing through the metal cover..."))
+				to_chat(user, span_notice(LANG("turf.d609b468", null)))
 				if(W.use_tool(src, user, 60, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != COVER)
 						return TRUE
 					d_state = CUT_COVER
 					update_appearance()
-					to_chat(user, span_notice("You press firmly on the cover, dislodging it."))
+					to_chat(user, span_notice(LANG("turf.13a3384c", null)))
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_SCREWDRIVER)
-				to_chat(user, span_notice("You begin securing the support lines..."))
+				to_chat(user, span_notice(LANG("turf.2c269478", null)))
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != COVER)
 						return TRUE
 					d_state = SUPPORT_LINES
 					update_appearance()
-					to_chat(user, span_notice("The support lines have been secured."))
+					to_chat(user, span_notice(LANG("turf.344640c2", null)))
 				return TRUE
 
 		if(CUT_COVER)
 			if(W.tool_behaviour == TOOL_CROWBAR)
-				to_chat(user, span_notice("You struggle to pry off the cover..."))
+				to_chat(user, span_notice(LANG("turf.07626d8f", null)))
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
 						return TRUE
 					d_state = ANCHOR_BOLTS
 					update_appearance()
-					to_chat(user, span_notice("You pry off the cover."))
+					to_chat(user, span_notice(LANG("turf.3cb3a5f9", null)))
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
-				to_chat(user, span_notice("You begin welding the metal cover back to the frame..."))
+				to_chat(user, span_notice(LANG("turf.cabf836e", null)))
 				if(W.use_tool(src, user, 60, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
 						return TRUE
 					d_state = COVER
 					update_appearance()
-					to_chat(user, span_notice("The metal cover has been welded securely to the frame."))
+					to_chat(user, span_notice(LANG("turf.3a2b5796", null)))
 				return TRUE
 
 		if(ANCHOR_BOLTS)
 			if(W.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, span_notice("You start loosening the anchoring bolts which secure the support rods to their frame..."))
+				to_chat(user, span_notice(LANG("turf.b3d323d1", null)))
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
 						return TRUE
 					d_state = SUPPORT_RODS
 					update_appearance()
-					to_chat(user, span_notice("You remove the bolts anchoring the support rods."))
+					to_chat(user, span_notice(LANG("turf.946d094a", null)))
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_CROWBAR)
-				to_chat(user, span_notice("You start to pry the cover back into place..."))
+				to_chat(user, span_notice(LANG("turf.5f8f8cac", null)))
 				if(W.use_tool(src, user, 20, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
 						return TRUE
 					d_state = CUT_COVER
 					update_appearance()
-					to_chat(user, span_notice("The metal cover has been pried back into place."))
+					to_chat(user, span_notice(LANG("turf.85bd236a", null)))
 				return TRUE
 
 		if(SUPPORT_RODS)
 			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
-				to_chat(user, span_notice("You begin slicing through the support rods..."))
+				to_chat(user, span_notice(LANG("turf.d5829270", null)))
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
 						return TRUE
 					d_state = SHEATH
 					update_appearance()
-					to_chat(user, span_notice("You slice through the support rods."))
+					to_chat(user, span_notice(LANG("turf.43e315af", null)))
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WRENCH)
-				to_chat(user, span_notice("You start tightening the bolts which secure the support rods to their frame..."))
+				to_chat(user, span_notice(LANG("turf.6dc263b6", null)))
 				W.play_tool_sound(src, 100)
 				if(W.use_tool(src, user, 40))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
 						return TRUE
 					d_state = ANCHOR_BOLTS
 					update_appearance()
-					to_chat(user, span_notice("You tighten the bolts anchoring the support rods."))
+					to_chat(user, span_notice(LANG("turf.df3b1ea5", null)))
 				return TRUE
 
 		if(SHEATH)
 			if(W.tool_behaviour == TOOL_CROWBAR)
-				to_chat(user, span_notice("You struggle to pry off the outer sheath..."))
+				to_chat(user, span_notice(LANG("turf.79850687", null)))
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SHEATH)
 						return TRUE
-					to_chat(user, span_notice("You pry off the outer sheath."))
+					to_chat(user, span_notice(LANG("turf.1e18af62", null)))
 					dismantle_wall()
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
-				to_chat(user, span_notice("You begin welding the support rods back together..."))
+				to_chat(user, span_notice(LANG("turf.98374a92", null)))
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SHEATH)
 						return TRUE
 					d_state = SUPPORT_RODS
 					update_appearance()
-					to_chat(user, span_notice("You weld the support rods back together."))
+					to_chat(user, span_notice(LANG("turf.a69d2767", null)))
 				return TRUE
 	return FALSE
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // This hallucinations makes us suddenly think we died, stopping us / changing our hud / sending a fake deadchat message.
 /datum/hallucination/death
 	random_hallucination_weight = 1
@@ -26,7 +27,7 @@
 	hallucinator.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, REF(src))
 	hallucinator.add_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), REF(src))
 
-	to_chat(hallucinator, span_deadsay("<b>[hallucinator.real_name]</b> has died at <b>[get_area_name(hallucinator)]</b>."))
+	to_chat(hallucinator, span_deadsay(LANG("datum.3799d9e7", list(hallucinator.real_name, get_area_name(hallucinator)))))
 
 	var/delay = 0
 

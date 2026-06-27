@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The most random things a goose can have inside of it
 #define GOOSE_SATIATED 50
 
@@ -67,7 +68,7 @@
 	if (!food.has_material_type(/datum/material/plastic))
 		return NONE
 
-	visible_message(span_boldwarning("[src] is choking on \the [food]!"))
+	visible_message(span_boldwarning(LANG("mob.c5952ed1", list(src, food))))
 	food.forceMove(src)
 	choke(food)
 
@@ -102,7 +103,7 @@
 	// 5% chance every round to have anarchy mode deadchat control on birdboat.
 	if (!prob(5))
 		return
-	desc = "[initial(desc)] It's waddling more than usual. It seems to be possessed."
+	desc = LANG("mob.cd2783df", list(initial(desc)))
 	deadchat_plays()
 
 /mob/living/basic/goose/vomit/Destroy()
@@ -117,13 +118,13 @@
 
 /mob/living/basic/goose/vomit/examine(mob/user)
 	. = ..()
-	. += span_notice("Somehow, it still looks hungry.")
+	. += span_notice(LANG("mob.5fbbe0ae", null))
 
 /mob/living/basic/goose/vomit/on_gobbled(atom/source, obj/item/food, mob/feeder)
 	if (length(contents) > GOOSE_SATIATED)
 		if (COOLDOWN_FINISHED(src, eat_fail_feedback_cooldown))
 			if (feeder)
-				visible_message(span_notice("[src] looks too full to eat \the [food]!"))
+				visible_message(span_notice(LANG("mob.3345e698", list(src, food))))
 			COOLDOWN_START(src, eat_fail_feedback_cooldown, 5 SECONDS)
 		return COMSIG_MOB_TERMINATE_EAT
 
@@ -142,8 +143,8 @@
 /mob/living/basic/goose/vomit/choke(obj/item/not_food_after_all)
 	if (prob(75))
 		return ..()
-	visible_message(span_warning("[src] is gagging on \the [not_food_after_all]!"))
-	manual_emote("gags!")
+	visible_message(span_warning(LANG("mob.71058a1c", list(src, not_food_after_all))))
+	manual_emote(LANG("mob.14f3b89b", null))
 	addtimer(CALLBACK(src, PROC_REF(vomit)), 5 SECONDS)
 
 /// Start making a mess

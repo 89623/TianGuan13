@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/ghostliness
 	name = "Forsake Body"
 	desc = "A spell that severs your soul from your body, loosely binding it to the material plane."
@@ -19,7 +20,7 @@
 
 	if(!is_valid_target(owner))
 		if(feedback)
-			owner.balloon_alert(owner, "no soul!")
+			owner.balloon_alert(owner, LANG("datum.f686d151", null))
 		return FALSE
 
 	return TRUE
@@ -31,20 +32,19 @@
 	. = ..()
 
 	if(isspirit(cast_on))
-		to_chat(cast_on, span_green("You begin to focus on loosening the bonds holding you to the material plane."))
+		to_chat(cast_on, span_green(LANG("datum.7d9286bd", null)))
 	else
-		to_chat(cast_on, span_green("You begin to focus on your very being, drawing it out of its corporeal vessel..."))
+		to_chat(cast_on, span_green(LANG("datum.f918b45f", null)))
 	if(!do_after(cast_on, 5 SECONDS))
 		if(isspirit(cast_on))
-			to_chat(cast_on, span_warning("Your focus is broken, and you feel your material bindings snap tight once more."))
+			to_chat(cast_on, span_warning(LANG("datum.7df38b8b", null)))
 		else
-			to_chat(cast_on, span_warning("Your focus is broken, and your soul snaps back into place."))
+			to_chat(cast_on, span_warning(LANG("datum.b3b88428", null)))
 		return
 	if(isspirit(cast_on))
-		to_chat(cast_on, span_green("You successfully loosen your bonds to the material plane, and can now slip partially out of it."))
+		to_chat(cast_on, span_green(LANG("datum.ae7b212d", null)))
 	else
-		to_chat(cast_on, span_danger("As the last trailing filament of your essence ceases intersection with your body, \
-		your perspective abruptly snaps to your new, ghostly figure! Your former vessel falls to the ground, vacant and devoid of volition!"))
+		to_chat(cast_on, span_danger(LANG("datum.61c28d4b", null)))
 		var/mob/living/carbon/human/soulless_husk = new(cast_on.drop_location())
 		soulless_husk.setDir(cast_on.dir)
 		cast_on.dna.copy_dna(soulless_husk.dna, ALL)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/head/costume/pirate
 	name = "pirate hat"
 	desc = "Yarr."
@@ -14,14 +15,14 @@
 	if(!(slot_flags & slot) || isdrone(user))
 		return
 	user.grant_language(/datum/language/piratespeak, source = LANGUAGE_HAT)
-	to_chat(user, span_boldnotice("You suddenly know how to speak like a pirate!"))
+	to_chat(user, span_boldnotice(LANG("obj.b2022b83", null)))
 
 /obj/item/clothing/head/costume/pirate/dropped(mob/user)
 	. = ..()
 	if(QDELETED(src)) //This can be called as a part of destroy
 		return
 	user.remove_language(/datum/language/piratespeak, source = LANGUAGE_HAT)
-	to_chat(user, span_boldnotice("You can no longer speak like a pirate."))
+	to_chat(user, span_boldnotice(LANG("obj.dc548805", null)))
 
 /obj/item/clothing/head/costume/pirate/armored
 	armor_type = /datum/armor/pirate_armored

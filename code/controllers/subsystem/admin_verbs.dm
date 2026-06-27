@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GENERAL_PROTECT_DATUM(/datum/controller/subsystem/admin_verbs)
 
 SUBSYSTEM_DEF(admin_verbs)
@@ -108,7 +109,7 @@ SUBSYSTEM_DEF(admin_verbs)
 		CRASH("Attempted to dynamically invoke admin verb '[verb_type]' that doesn't exist.")
 
 	if(!admin.holder.check_for_rights(verb_singleton.permissions))
-		to_chat(admin, span_adminnotice("You lack the permissions to do this."))
+		to_chat(admin, span_adminnotice(LANG("datum.f47a71b7", null)))
 		return
 
 	var/old_usr = usr
@@ -126,7 +127,7 @@ SUBSYSTEM_DEF(admin_verbs)
 		return
 
 	if(!isnull(admins_pending_subsytem_init)) // if the list exists we are still initializing
-		to_chat(admin, span_big(span_green("Admin Verbs are still initializing. Please wait and you will be automatically assigned your verbs when it is complete.")))
+		to_chat(admin, span_big(span_green(LANG("datum.e947e781", null))))
 		admins_pending_subsytem_init |= list(admin.ckey)
 		return
 

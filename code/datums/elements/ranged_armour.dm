@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Reduces or nullifies damage from ranged weaponry with force below a certain value
 /datum/element/ranged_armour
 	element_flags = ELEMENT_BESPOKE
@@ -45,10 +46,10 @@
 	if (bullet.damage >= minimum_projectile_force || (bullet.damage_type in vulnerable_projectile_types))
 		return
 	if (below_projectile_multiplier == 0)
-		parent.visible_message(span_danger("[parent] seems unharmed by [bullet]!"))
+		parent.visible_message(span_danger(LANG("datum.6d06cf56", list(parent, bullet))))
 		return PROJECTILE_INTERRUPT_HIT
 	bullet.damage *= below_projectile_multiplier
-	parent.visible_message(span_danger("[parent] seems resistant to [bullet]!"))
+	parent.visible_message(span_danger(LANG("datum.aaa802d1", list(parent, bullet))))
 
 /// Ignore thrown damage based on projectile properties. There's no elegant way to multiply the damage because throwforce is persistent.
 /datum/element/ranged_armour/proc/pre_thrown_impact(atom/parent, obj/item/hit_atom, datum/thrownthing/throwingdatum)

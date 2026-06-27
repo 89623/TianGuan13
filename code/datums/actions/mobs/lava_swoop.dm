@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SWOOP_HEIGHT 270 //how high up swoops go, in pixels
 #define SWOOP_DIRECTION_CHANGE_RANGE 5 //the range our x has to be within to not change the direction we slam from
 
@@ -40,7 +41,7 @@
 	// stop swooped target movement
 	swooping = TRUE
 	owner.add_traits(list(TRAIT_GODMODE, TRAIT_UNDENSE), SWOOPING_TRAIT)
-	owner.visible_message(span_boldwarning("[owner] swoops up high!"))
+	owner.visible_message(span_boldwarning(LANG("datum.66278ae1", list(owner))))
 
 	var/negative
 	var/initial_x = owner.x
@@ -120,7 +121,7 @@
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/lava_pools(atom/target, amount = 30, delay = 0.8)
 	if(!target)
 		return
-	target.visible_message(span_boldwarning("Lava starts to pool up around you!"))
+	target.visible_message(span_boldwarning(LANG("datum.5dc7cc38", null)))
 
 	while(amount > 0)
 		if(QDELETED(target))
@@ -136,7 +137,7 @@
 	var/turf/target_turf = get_turf(target)
 	if(QDELETED(target) || !isliving(target) || target_turf.z != owner.z)
 		return
-	target.visible_message(span_boldwarning("[owner] encases you in an arena of fire!"))
+	target.visible_message(span_boldwarning(LANG("datum.66e56326", list(owner))))
 	var/amount = 3
 	var/turf/center = get_turf(owner)
 	var/list/walled = RANGE_TURFS(3, center) - RANGE_TURFS(2, center)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * A skillchip that gives the user bigger arrows when pointing at things (like some id trims do).
  * As a bonus, they can costumize the color of the arrow/pointer too.
@@ -61,14 +62,14 @@
 	if(!arrow_color)
 		pick_color(user)
 		return
-	var/choice = tgui_alert(owner, "Reset or update pointer color?","Pointer Color", list("Reset","Update"))
+	var/choice = tgui_alert(owner, LANG("datum.16eaf835", null),LANG("datum.254993df", null), list("Reset","Update"))
 	if(user != owner || !choice || !IsAvailable(feedback = TRUE))
 		return
 	if(choice == "Update")
 		pick_color(user)
 	else
 		arrow_color = null
-		owner.balloon_alert(owner, "pointer reset")
+		owner.balloon_alert(owner, LANG("datum.3c26934e", null))
 		build_all_button_icons(update_flags = UPDATE_BUTTON_ICON, force = TRUE)
 
 /datum/action/change_pointer_color/proc/pick_color(mob/user)
@@ -76,7 +77,7 @@
 	if(user != owner || !IsAvailable(feedback = TRUE))
 		return
 	arrow_color = ncolor
-	owner.balloon_alert(owner, "pointer updated")
+	owner.balloon_alert(owner, LANG("datum.37ec70c9", null))
 	build_all_button_icons(update_flags = UPDATE_BUTTON_ICON, force = TRUE)
 
 /datum/action/change_pointer_color/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force = FALSE)

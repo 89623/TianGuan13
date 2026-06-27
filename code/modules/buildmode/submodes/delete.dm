@@ -1,10 +1,10 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/delete
 	key = "delete"
 
 /datum/buildmode_mode/delete/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Delete an object")] -> Left Mouse Button on obj/turf/mob\n\
-		[span_bold("Delete all objects of a type")] -> Right Mouse Button on obj/turf/mob"))
+		LANG("datum.787f353b", list(span_bold("Delete an object"), span_bold("Delete all objects of a type")))))
 	)
 
 /datum/buildmode_mode/delete/handle_click(client/c, params, object)
@@ -26,14 +26,14 @@
 			if(isturf(object))
 				return
 			var/atom/deleting = object
-			var/action_type = tgui_alert(usr,"Strict type ([deleting.type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))
+			var/action_type = tgui_alert(usr,LANG("datum.68e254d3", list(deleting.type)),,list("Strict type","Type and subtypes","Cancel"))
 			if(action_type == "Cancel" || !action_type)
 				return
 
-			if(tgui_alert(usr,"Are you really sure you want to delete all instances of type [deleting.type]?",,list("Yes","No")) != "Yes")
+			if(tgui_alert(usr,LANG("datum.8a97a2c8", list(deleting.type)),,list("Yes","No")) != "Yes")
 				return
 
-			if(tgui_alert(usr,"Second confirmation required. Delete?",,list("Yes","No")) != "Yes")
+			if(tgui_alert(usr,LANG("datum.bd025aa5", null),,list("Yes","No")) != "Yes")
 				return
 
 			var/O_type = deleting.type
@@ -46,7 +46,7 @@
 							qdel(Obj)
 						CHECK_TICK
 					if(!i)
-						to_chat(usr, "No instances of this type exist")
+						to_chat(usr, LANG("datum.bbf7720b", null))
 						return
 					log_admin("[key_name(usr)] deleted all instances of type [O_type] ([i] instances deleted) ")
 					message_admins(span_notice("[key_name(usr)] deleted all instances of type [O_type] ([i] instances deleted) "))
@@ -58,7 +58,7 @@
 							qdel(Obj)
 						CHECK_TICK
 					if(!i)
-						to_chat(usr, "No instances of this type exist")
+						to_chat(usr, LANG("datum.bbf7720b", null))
 						return
 					log_admin("[key_name(usr)] deleted all instances of type or subtype of [O_type] ([i] instances deleted) ")
 					message_admins(span_notice("[key_name(usr)] deleted all instances of type or subtype of [O_type] ([i] instances deleted) "))

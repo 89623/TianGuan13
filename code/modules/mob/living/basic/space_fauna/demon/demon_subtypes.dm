@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The famous blood-crawling slaughter demons of wizardry fame.
 /mob/living/basic/demon/slaughter
 	name = "slaughter demon"
@@ -70,11 +71,11 @@
 		return
 
 	if(!Adjacent(attack_target))
-		to_chat(src, span_warning("You are too far away to use your slam attack on [attack_target]!"))
+		to_chat(src, span_warning(LANG("mob.82030ef1", list(attack_target))))
 		return
 
 	if(!COOLDOWN_FINISHED(src, slam_cooldown))
-		to_chat(src, span_warning("Your slam ability is still on cooldown!"))
+		to_chat(src, span_warning(LANG("mob.b46fc824", null)))
 		return
 
 	face_atom(attack_target)
@@ -83,11 +84,11 @@
 	victim.take_bodypart_damage(brute = 20, wound_bonus = wound_bonus) // don't worry, there's more punishment when they hit something
 
 	visible_message(
-		span_danger("[src] slams into [victim] with monstrous strength!"),
-		span_danger("You slam into [victim] with monstrous strength!"),
+		span_danger(LANG("mob.7218ea34", list(src, victim))),
+		span_danger(LANG("mob.18afa105", list(victim))),
 		ignored_mobs = victim,
 	)
-	to_chat(victim, span_userdanger("[src] slams into you with monstrous strength, sending you flying like a ragdoll!"))
+	to_chat(victim, span_userdanger(LANG("mob.a6fc435b", list(src))))
 
 	var/turf/yeet_target = get_edge_target_turf(victim, dir)
 	victim.throw_at(yeet_target, 10, 5, src)

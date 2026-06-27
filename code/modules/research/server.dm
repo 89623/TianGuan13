@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Default master server machine state. Use a special screwdriver to get to the next state.
 #define HDD_PANEL_CLOSED 0
 /// Front master server HDD panel has been removed. Use a special crowbar to get to the next state.
@@ -111,7 +112,7 @@
 	if(!stored_research)
 		return
 	tool.set_buffer(stored_research)
-	balloon_alert(user, "saved to multitool buffer")
+	balloon_alert(user, LANG("obj.84afb909", null))
 	return TRUE
 
 /// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
@@ -146,15 +147,15 @@
 
 	switch(deconstruction_state)
 		if(HDD_PANEL_CLOSED)
-			. += "The front panel is closed. You can see some recesses which may have <b>screws</b>."
+			. += LANG("obj.3d193e85", null)
 		if(HDD_PANEL_OPEN)
-			. += "The front panel is dangling open. The HDD is in a secure housing. Looks like you'll have to <b>pry</b> it loose."
+			. += LANG("obj.6fd85e29", null)
 		if(HDD_PRIED)
-			. += "The front panel is dangling open. The HDD has been pried from its housing. It is still connected by <b>wires</b>."
+			. += LANG("obj.96d69275", null)
 		if(HDD_CUT_LOOSE)
-			. += "The front panel is dangling open. All you can see inside are cut wires and mangled metal."
+			. += LANG("obj.241a3dea", null)
 		if(HDD_OVERLOADED)
-			. += "The front panel is dangling open. The HDD inside is destroyed and the wires are all burned."
+			. += LANG("obj.60d7daf0", null)
 
 /obj/machinery/rnd/server/master/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!tool.tool_behaviour)
@@ -163,7 +164,7 @@
 	if(!user.is_antag())
 		if(user.combat_mode)
 			return ITEM_INTERACT_SKIP_TO_ATTACK
-		balloon_alert(user, "you can't find an obvious maintenance hatch!")
+		balloon_alert(user, LANG("obj.1e52c3a6", null))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
@@ -172,29 +173,29 @@
 		return NONE
 	switch(deconstruction_state)
 		if(HDD_PANEL_CLOSED)
-			balloon_alert(user, "you can't find a place to insert it!")
+			balloon_alert(user, LANG("obj.a25d70e1", null))
 		if(HDD_PANEL_OPEN)
-			balloon_alert(user, "you weren't trained to install this!")
+			balloon_alert(user, LANG("obj.7af774c3", null))
 		if(HDD_PRIED)
-			balloon_alert(user, "the HDD housing is completely broken, it won't fit!")
+			balloon_alert(user, LANG("obj.2f71f57c", null))
 		if(HDD_CUT_LOOSE)
-			balloon_alert(user, "the HDD housing is completely broken and all the wires are cut!")
+			balloon_alert(user, LANG("obj.92f20bf3", null))
 		if(HDD_OVERLOADED)
-			balloon_alert(user, "the inside is scorched and all the wires are burned!")
+			balloon_alert(user, LANG("obj.a226ff1b", null))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/rnd/server/master/screwdriver_act(mob/living/user, obj/item/tool)
 	if(deconstruction_state != HDD_PANEL_CLOSED || user.combat_mode)
 		return NONE
 
-	to_chat(user, span_notice("You can see [front_panel_screws] screw\s. You start unscrewing [front_panel_screws == 1 ? "it" : "them"]..."))
+	to_chat(user, span_notice(LANG("obj.da387278", list(front_panel_screws, front_panel_screws == 1 ? "it" : "them"))))
 	while(tool.use_tool(src, user, 7.5 SECONDS, volume=100))
 		front_panel_screws--
 		if(front_panel_screws > 0)
-			to_chat(user, span_notice("The screw breaks as you remove it. Only [front_panel_screws] left..."))
+			to_chat(user, span_notice(LANG("obj.fec45e7e", list(front_panel_screws))))
 			continue
 		deconstruction_state = HDD_PANEL_OPEN
-		to_chat(user, span_notice("You remove the last screw from [src]'s front panel."))
+		to_chat(user, span_notice(LANG("obj.78caab63", list(src))))
 		add_overlay("RD-server-hdd-panel-open")
 		break
 	return ITEM_INTERACT_SUCCESS
@@ -203,9 +204,9 @@
 	if(deconstruction_state != HDD_PANEL_OPEN || user.combat_mode)
 		return FALSE
 
-	to_chat(user, span_notice("You can see [source_code_hdd] in a secure housing behind the front panel. You begin to pry it loose..."))
+	to_chat(user, span_notice(LANG("obj.bf1d9f3e", list(source_code_hdd))))
 	if(tool.use_tool(src, user, 15 SECONDS, volume=100))
-		to_chat(user, span_notice("You destroy the housing, prying [source_code_hdd] free."))
+		to_chat(user, span_notice(LANG("obj.9142def4", list(source_code_hdd))))
 		deconstruction_state = HDD_PRIED
 	return TRUE
 
@@ -213,18 +214,18 @@
 	if(deconstruction_state != HDD_PRIED || user.combat_mode)
 		return FALSE
 
-	to_chat(user, span_notice("There are [hdd_wires] wire\s connected to [source_code_hdd]. You start cutting [hdd_wires == 1 ? "it" : "them"]..."))
+	to_chat(user, span_notice(LANG("obj.6bb43787", list(hdd_wires, source_code_hdd, hdd_wires == 1 ? "it" : "them"))))
 	while(tool.use_tool(src, user, 7.5 SECONDS, volume=100))
 		hdd_wires--
 
 		if(hdd_wires <= 0)
 			deconstruction_state = HDD_CUT_LOOSE
-			to_chat(user, span_notice("You cut the final wire and remove [source_code_hdd]."))
+			to_chat(user, span_notice(LANG("obj.8abb8524", list(source_code_hdd))))
 			try_put_in_hand(source_code_hdd, user)
 			source_code_hdd = null
 			stored_research.income_modifier *= 0.5
 			return TRUE
-		to_chat(user, span_notice("You delicately cut the wire. [hdd_wires] wire\s left..."))
+		to_chat(user, span_notice(LANG("obj.03bcb324", list(hdd_wires))))
 	return TRUE
 
 /obj/machinery/rnd/server/master/on_deconstruction(disassembled)

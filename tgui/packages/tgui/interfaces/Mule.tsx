@@ -24,7 +24,8 @@ type Data = {
   autoPickup: BooleanLike;
   reportDelivery: BooleanLike;
   destination: string | null;
-  destinationsList: string[];
+  // NOVA EDIT CHANGE - I18N - 中文 locale 下后端发对象选项 {value:英文 tag, displayText:译名}；onSelected 回传 value（英文）保证寻路匹配。ORIGINAL: destinationsList: string[];
+  destinationsList: (string | { value: string; displayText: string })[];
   homeDestination: string | null;
   botId: string;
   allowPossession: BooleanLike;

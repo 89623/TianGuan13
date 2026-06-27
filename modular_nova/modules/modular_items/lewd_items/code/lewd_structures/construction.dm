@@ -18,15 +18,15 @@
 
 /obj/item/construction_kit/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be assembled by using <b>Ctrl+Shift+Click</b> while [src] is on the floor.")
+	. += span_purple(LANG("obj.57b5b96e", list(src, src)))
 
 /obj/item/construction_kit/click_ctrl_shift(mob/user)
 	if((item_flags & IN_INVENTORY) || (item_flags & IN_STORAGE))
 		return
 
-	to_chat(user, span_notice("You begin to assemble [src]..."))
+	to_chat(user, span_notice(LANG("obj.88170fd3", list(src))))
 	if(!do_after(user, construction_time, src))
-		to_chat(user, span_warning("You fail to assemble [src]!"))
+		to_chat(user, span_warning(LANG("obj.80cbaadd", list(src))))
 		return
 
 	var/obj/structure/chair/final_structure = new resulting_structure (get_turf(user))
@@ -44,7 +44,7 @@
 		stand.set_greyscale(greyscale_colors)
 
 	qdel(src)
-	to_chat(user, span_notice("You assemble [src]."))
+	to_chat(user, span_notice(LANG("obj.8abb2b26", list(src))))
 
 // MILKER
 
@@ -98,7 +98,7 @@
 
 /obj/item/construction_kit/bdsm/shibari/examine(mob/user)
 	.=..()
-	. += span_purple("[src]'s color can be customized with <b>Ctrl+Click</b>.")
+	. += span_purple(LANG("obj.f826f980", list(src)))
 
 //to change model
 /obj/item/construction_kit/bdsm/shibari/item_ctrl_click(mob/user)
@@ -115,5 +115,5 @@
 		starting_colors = greyscale_colors
 	)
 	menu.ui_interact(usr)
-	to_chat(user, span_notice("You switch the frame's plastic fittings color."))
+	to_chat(user, span_notice(LANG("obj.4e7ad089", null)))
 	return CLICK_ACTION_SUCCESS

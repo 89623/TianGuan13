@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/decloning
 	form = "Virus"
 	name = "Cellular Degeneration"
@@ -41,7 +42,7 @@
 			if(SPT_PROB(1.5, seconds_per_tick))
 				affected_mob.apply_status_effect(/datum/status_effect/decloning)
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your skin feels strange."))
+				to_chat(affected_mob, span_danger(LANG("datum.365be897", null)))
 		if(4)
 			if(SPT_PROB(1, seconds_per_tick))
 				affected_mob.emote("itch")
@@ -58,7 +59,7 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				affected_mob.emote("drool")
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your skin starts degrading!"))
+				to_chat(affected_mob, span_danger(LANG("datum.c41e291f", null)))
 			if(SPT_PROB(5, seconds_per_tick))
 				affected_mob.apply_status_effect(/datum/status_effect/decloning)
 				affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2, 170)

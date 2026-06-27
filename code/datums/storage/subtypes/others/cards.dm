@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  *A storage component to be used on card piles, for use as hands/decks/discard piles. Don't use on something that's not a card pile!
  */
@@ -24,8 +25,8 @@
 		return .
 	if(!was_already_seeing)
 		to_show.visible_message(
-			span_notice("[to_show] starts to look through the contents of [parent]!"),
-			span_notice("You begin looking into the contents of [parent]."),
+			span_notice(LANG("datum.b5f0f232", list(to_show, parent))),
+			span_notice(LANG("datum.17b2f525", list(parent))),
 		)
 	return .
 
@@ -38,6 +39,6 @@
 	if(QDELING(src))
 		return .
 	if(was_actually_seeing)
-		real_location.visible_message(span_notice("[parent] is shuffled after looking through it."))
+		real_location.visible_message(span_notice(LANG("datum.bf797acc", list(parent))))
 		real_location.contents = shuffle(real_location.contents)
 	return .

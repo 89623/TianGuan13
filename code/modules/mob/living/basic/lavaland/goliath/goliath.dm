@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Slow moving mob which attempts to immobilise its target
 /mob/living/basic/mining/goliath
 	name = "goliath"
@@ -90,7 +91,7 @@
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()
 	if (saddled)
-		. += span_info("Someone appears to have attached a saddle to this one.")
+		. += span_info(LANG("mob.5688319e", null))
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
 /mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
@@ -104,18 +105,18 @@
 	if (!istype(attacking_item, /obj/item/goliath_saddle))
 		return ..()
 	if (!tameable)
-		balloon_alert(user, "doesn't fit!")
+		balloon_alert(user, LANG("mob.7f1af016", null))
 		return
 	if (saddled)
-		balloon_alert(user, "already saddled!")
+		balloon_alert(user, LANG("mob.264c9319", null))
 		return
 	if (!HAS_TRAIT(src, TRAIT_TAMED))
-		balloon_alert(user, "too rowdy!")
+		balloon_alert(user, LANG("mob.59d44c49", null))
 		return
-	balloon_alert(user, "affixing saddle...")
+	balloon_alert(user, LANG("mob.2a19bc39", null))
 	if (!do_after(user, delay = 5.5 SECONDS, target = src))
 		return
-	balloon_alert(user, "ready to ride")
+	balloon_alert(user, LANG("mob.6c3e5e51", null))
 	qdel(attacking_item)
 	make_rideable()
 

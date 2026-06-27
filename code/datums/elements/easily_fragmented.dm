@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * An element for making tools fragile, giving them a chance of
  * "snapping into tiny pieces" after they've been used.
@@ -33,5 +34,5 @@
 
 /datum/element/easily_fragmented/proc/try_break(obj/item/source, mob/user)
 	if(prob(break_chance))
-		user.visible_message(span_danger("[user]'s [source.name] snap[source.p_s()] into tiny pieces in [user.p_their()] hand."))
+		user.visible_message(span_danger(LANG("datum.e1e17f77", list(user, source.name, source.p_s(), user.p_their()))))
 		source.deconstruct(disassembled = FALSE)

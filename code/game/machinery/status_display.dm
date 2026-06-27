@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Status display
 
 #define MAX_STATIC_WIDTH 22
@@ -57,11 +58,11 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 
 /obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
-	balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	balloon_alert(user, LANG("obj.e4901a5f", list(anchored ? "un" : "")))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		balloon_alert(user, "[anchored ? "un" : ""]secured")
+		balloon_alert(user, LANG("obj.97c34052", list(anchored ? "un" : "")))
 		deconstruct()
 		return TRUE
 
@@ -69,12 +70,12 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	if(user.combat_mode)
 		return
 	if(atom_integrity >= max_integrity)
-		balloon_alert(user, "it doesn't need repairs!")
+		balloon_alert(user, LANG("obj.20fd4e5f", null))
 		return TRUE
-	user.balloon_alert_to_viewers("repairing display...", "repairing...")
+	user.balloon_alert_to_viewers(LANG("obj.2666c57c", null), LANG("obj.b52342a8", null))
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
 		return TRUE
-	balloon_alert(user, "repaired")
+	balloon_alert(user, LANG("obj.65ced1e8", null))
 	atom_integrity = max_integrity
 	set_machine_stat(machine_stat & ~BROKEN)
 	update_appearance()
@@ -253,23 +254,23 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(active_displays))
-		. += span_notice("<hr>It's currently broadcasting. You can see...")
+		. += span_notice(LANG("obj.a56bbf1b", null))
 		var/has_any = FALSE
 		for(var/obj/effect/abstract/greenscreen_display/display as anything in active_displays)
 			for(var/atom/movable/thing as anything in display.displaying)
 				. += span_notice("&bull; \A [thing.name]")
 				has_any = TRUE
 		if(!has_any)
-			. += span_notice("&bull; Nothing.")
+			. += span_notice(LANG("obj.66b0cd25", null))
 
 	var/obj/effect/overlay/status_display_text/message1_overlay = get_status_text(message_key_1)
 	var/obj/effect/overlay/status_display_text/message2_overlay = get_status_text(message_key_2)
 	if (message1_overlay || message2_overlay)
-		. += "<hr>The display says:"
+		. += LANG("obj.005a8a9c", null)
 		if (message1_overlay.message)
-			. += "\t<tt>[html_encode(message1_overlay.message)]</tt>"
+			. += LANG("obj.60707fd0", list(html_encode(message1_overlay.message)))
 		if (message2_overlay.message)
-			. += "\t<tt>[html_encode(message2_overlay.message)]</tt>"
+			. += LANG("obj.60707fd0", list(html_encode(message2_overlay.message)))
 
 // Helper procs for child display types.
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)
@@ -1038,7 +1039,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 
 /obj/machinery/greenscreen_camera/examine(mob/user)
 	. = ..()
-	. += span_notice("It's currently [isnull(display) ? "not " : ""]broadcasting. <i>Click it to change that.</i>")
+	. += span_notice(LANG("obj.804d9a29", list(isnull(display) ? "not " : "")))
 
 /obj/machinery/greenscreen_camera/interact(mob/user)
 	. = ..()
@@ -1055,7 +1056,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 		activate_feed()
 		if(isnull(display))
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 33, TRUE, frequency = 0.5)
-			balloon_alert_to_viewers("no backdrop, can't broadcast!")
+			balloon_alert_to_viewers(LANG("obj.3f375123", null))
 			return
 		playsound(src, 'sound/machines/terminal/terminal_on.ogg', 33, FALSE)
 		use_power = ACTIVE_POWER_USE
@@ -1063,7 +1064,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 		deactivate_feed()
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 33, FALSE)
 		use_power = IDLE_POWER_USE
-	balloon_alert_to_viewers("feed [isnull(display) ? "de" : ""]activated")
+	balloon_alert_to_viewers(LANG("obj.4e40ec03", list(isnull(display) ? "de" : "")))
 
 /obj/machinery/greenscreen_camera/proc/activate_feed()
 	greenscreen_turf = find_displayed_turf()

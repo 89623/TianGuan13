@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/fake_gbs
 	name = "GBS"
 	desc = "An extremely rare and dangerous disease that has been researched little due to its potentially apocalyptic nature."
@@ -26,7 +27,7 @@
 			else if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("gasp")
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You're starting to feel very weak..."))
+				to_chat(affected_mob, span_danger(LANG("datum.b11cdaa2", null)))
 		if(4)
 			if(SPT_PROB(5, seconds_per_tick))
 				affected_mob.emote("cough")

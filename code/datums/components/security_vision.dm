@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// This component allows you to judge someone's level of criminal activity by examining them
 /datum/component/security_vision
 	/// Bitfield containing what things we want to judge based upon
@@ -29,10 +30,10 @@
 	var/threat_level = perp.assess_threat(judgement_criteria)
 	switch(threat_level)
 		if (THREAT_ASSESS_MAXIMUM to INFINITY)
-			examine_strings += span_boldwarning("Assessed threat level of [threat_level]! Extreme danger of criminal activity!")
+			examine_strings += span_boldwarning(LANG("datum.c69a29d7", list(threat_level)))
 		if (THREAT_ASSESS_DANGEROUS to THREAT_ASSESS_MAXIMUM)
-			examine_strings += span_warning("Assessed threat level of [threat_level]. Criminal scum detected!")
+			examine_strings += span_warning(LANG("datum.1f380981", list(threat_level)))
 		if (1 to THREAT_ASSESS_DANGEROUS)
-			examine_strings += span_notice("Assessed threat level of [threat_level]. Probably not dangerous... yet.")
+			examine_strings += span_notice(LANG("datum.8dfb2f75", list(threat_level)))
 		else
-			examine_strings += span_notice("Seems to be a trustworthy individual.")
+			examine_strings += span_notice(LANG("datum.8779a8db", null))

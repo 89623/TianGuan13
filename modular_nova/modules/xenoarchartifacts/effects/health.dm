@@ -21,7 +21,7 @@
 	. = ..()
 	if(!.)
 		return
-	to_chat(user, span_notice("A soothing energy invigorate you."))
+	to_chat(user, span_notice(LANG("datum.5e73b13a", null)))
 	heal_target(user, 25)
 
 /datum/artifact_effect/heal/do_effect_aura(seconds_per_tick)
@@ -72,7 +72,7 @@
 		return
 	if(!issilicon(user))
 		return
-	to_chat(user, span_notice("Your systems report damaged components mending by themselves!"))
+	to_chat(user, span_notice(LANG("datum.0ceedd17", null)))
 	heal_target(user, 25)
 
 /datum/artifact_effect/roboheal/do_effect_aura(seconds_per_tick)
@@ -122,7 +122,7 @@
 	. = ..()
 	if(!.)
 		return
-	to_chat(user, span_warning("A painful discharge of energy strikes you!"))
+	to_chat(user, span_warning(LANG("datum.c3c154f8", null)))
 	deal_damage(user, 10)
 	return TRUE
 
@@ -174,7 +174,7 @@
 		return
 	if(!issilicon(user))
 		return
-	to_chat(user, span_warning("Your systems report severe damage has been inflicted!"))
+	to_chat(user, span_warning(LANG("datum.e2ebcb42", null)))
 	deal_damage(user, 10)
 
 /datum/artifact_effect/robohurt/do_effect_aura(seconds_per_tick)

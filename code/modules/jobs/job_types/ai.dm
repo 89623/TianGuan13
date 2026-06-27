@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/job/ai
 	title = JOB_AI
 	description = "Assist the crew, follow your laws, coordinate your cyborgs."
@@ -102,7 +103,7 @@
 /datum/job/ai/announce_job(mob/living/joining_mob)
 	. = ..()
 	if(SSticker.HasRoundStarted())
-		minor_announce("[joining_mob] has been downloaded to an empty bluespace-networked AI core at [AREACOORD(joining_mob)].")
+		minor_announce(LANG("datum.ee3a7574", list(joining_mob, AREACOORD(joining_mob))))
 
 
 /datum/job/ai/config_check()

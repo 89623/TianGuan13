@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
@@ -63,7 +64,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if (user.get_inactive_held_item())
-		user.balloon_alert(user, "hands busy!")
+		user.balloon_alert(user, LANG("obj.07680e10", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/list/item_radial = list()
@@ -120,7 +121,7 @@
 		. += latches
 
 /obj/item/storage/toolbox/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.91988728", list(user, user.p_them(), src, user.p_theyre()))))
 	return BRUTELOSS
 
 //repairbot assembly
@@ -139,7 +140,7 @@
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
 		return ITEM_INTERACT_BLOCKING
 	if(contents.len >= 1)
-		balloon_alert(user, "not empty!")
+		balloon_alert(user, LANG("obj.27d657cd", null))
 		return ITEM_INTERACT_BLOCKING
 	var/static/list/toolbox_colors = list(
 		/obj/item/storage/toolbox = "#445eb3",
@@ -154,7 +155,7 @@
 	var/new_color = toolbox_colors[type] || "#445eb3"
 	repair.set_color(new_color)
 	repair.update_appearance()
-	repair.balloon_alert(user, "sensor added!")
+	repair.balloon_alert(user, LANG("obj.2a581104", null))
 	qdel(tool)
 	var/held_index = user.is_holding(src)
 	qdel(src)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Syndicate troopers
 /mob/living/basic/trooper/syndicate
 	name = "Syndicate Operative"
@@ -39,7 +40,7 @@
 
 /mob/living/basic/trooper/syndicate/melee/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	if(prob(projectile_deflect_chance))
-		visible_message(span_danger("[src] blocks [hitting_projectile] with its shield!"))
+		visible_message(span_danger(LANG("mob.4153262f", list(src, hitting_projectile))))
 		return BULLET_ACT_BLOCK
 	return ..()
 

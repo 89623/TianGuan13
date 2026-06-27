@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/basic/viral_bonding
 	name = "viral bonding"
 	rnd_name = "Viroplasty (Viral Bonding)"
@@ -25,7 +26,7 @@
 
 /datum/surgery_operation/basic/viral_bonding/all_required_strings()
 	. = ..()
-	. += "the patient must have a virus to bond"
+	. += LANG("datum.ed18c39b", null)
 	for(var/datum/reagent/chem as anything in required_chems)
 		. += "the patient must be dosed with >=1u [chem::name]"
 

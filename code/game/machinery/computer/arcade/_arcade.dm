@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/arcade
 	name = "\proper the arcade cabinet which shouldn't exist"
 	desc = "This arcade cabinet has no games installed, and in fact, should not exist. \
@@ -17,11 +18,11 @@
 	if(istype(tool, /obj/item/stack/arcadeticket))
 		var/obj/item/stack/arcadeticket/tickets = tool
 		if(!tickets.use(2))
-			balloon_alert(user, "need 2 tickets!")
+			balloon_alert(user, LANG("obj.fb76c074", null))
 			return ITEM_INTERACT_BLOCKING
 
 		prizevend(user)
-		balloon_alert(user, "prize claimed")
+		balloon_alert(user, LANG("obj.c094c9cc", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/key/displaycase) || istype(tool, /obj/item/access_key))
@@ -37,7 +38,7 @@
 		playsound(loc, 'sound/items/rattling_keys.ogg', 25, TRUE)
 		if(!do_after(user, 10 SECONDS, src))
 			return ITEM_INTERACT_BLOCKING
-		balloon_alert(user, "cabinet reset")
+		balloon_alert(user, LANG("obj.3d7e753e", null))
 		reset_cabinet(user)
 		return ITEM_INTERACT_SUCCESS
 
@@ -78,9 +79,9 @@
 ///Dispenses the proper prizes and gives them a positive mood event. If valid, has a small chance to give a pulse rifle.
 /obj/machinery/computer/arcade/proc/prizevend(mob/living/user, prizes = 1)
 	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
-		visible_message(span_notice("[user] inputs an intense cheat code!"),\
-		span_notice("You hear a flurry of buttons being pressed."))
-		say("CODE ACTIVATED: EXTRA PRIZES.")
+		visible_message(span_notice(LANG("obj.d54eab6a", list(user))),\
+		span_notice(LANG("obj.3afc82a9", null)))
+		say(LANG("obj.f8d027e5", null))
 		prizes *= 2
 	for(var/i in 1 to prizes)
 		user.add_mood_event("arcade", /datum/mood_event/arcade)
@@ -101,7 +102,7 @@
 
 /obj/machinery/computer/arcade/proc/victory_tickets(tickets, sound = TRUE)
 	SEND_SIGNAL(src, COMSIG_ARCADE_VICTORY)
-	visible_message(span_notice("[src] dispenses [tickets] ticket\s!"))
+	visible_message(span_notice(LANG("obj.2ab2b1c1", list(src, tickets))))
 	new /obj/item/stack/arcadeticket((get_turf(src)), tickets)
 	if(sound)
 		playsound(loc, 'sound/machines/arcade/win.ogg', 40)

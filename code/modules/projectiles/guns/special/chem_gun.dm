@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //his isn't a subtype of the syringe gun because the syringegun subtype is made to hold syringes
 //this is meant to hold reagents/obj/item/gun/syringe
 /obj/item/gun/chem
@@ -51,7 +52,7 @@
 		return
 	if(world.time < last_synth+time_per_syringe)
 		return
-	to_chat(loc, span_warning("You hear a click as [src] synthesizes a new dart."))
+	to_chat(loc, span_warning(LANG("obj.e55b3473", list(src))))
 	syringes_left++
 	if(chambered && !chambered.loaded_projectile)
 		chambered.newshot()

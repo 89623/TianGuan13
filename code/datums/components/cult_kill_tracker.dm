@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Component to handle the behavior of a nullrod keeping track of cultists it has crit or killed, and converting the item into a cult weapon when sacrificed
 /datum/component/cult_kill_tracker
 	/// Lazylist, tracks weakrefs()s to all cultists which have been crit or killed by this nullrod.
@@ -51,8 +52,7 @@
 		return
 
 	var/num_slain = LAZYLEN(cultists_slain)
-	examine_list += span_cult_italic("It has the blood of [num_slain] fallen cultist[num_slain == 1 ? "" : "s"] on it. \
-		<b>Offering</b> it to Nar'sie will transform it into a [num_slain >= 3 ? "powerful" : "standard"] cult weapon.")
+	examine_list += span_cult_italic(LANG("datum.f499ab5c", list(num_slain, num_slain == 1 ? "" : "s", num_slain >= 3 ? "powerful" : "standard")))
 
 /datum/component/cult_kill_tracker/proc/on_sacrificed(obj/item/source, obj/effect/rune/convert/rune)
 	SIGNAL_HANDLER

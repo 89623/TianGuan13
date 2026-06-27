@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/toy/cards/cardhand
 	name = "hand of cards"
 	desc = "A number of cards not in a deck, customarily held in ones hand."
@@ -13,13 +14,13 @@
 	update_appearance()
 
 /obj/item/toy/cards/cardhand/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!"))
+	user.visible_message(span_suicide(LANG("obj.022391dc", list(user, user.p_their(), src, user.p_they(), user.p_have()))))
 	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 	return BRUTELOSS
 
 /obj/item/toy/cards/cardhand/examine(mob/user)
 	. = ..()
-	. += span_notice("There are [count_cards()] cards.")
+	. += span_notice(LANG("obj.1b30acc7", list(count_cards())))
 	var/broadcast_check = FALSE
 	for(var/obj/item/toy/singlecard/card in fetch_card_atoms())
 		if(user.is_holding(src) || card.flipped)
@@ -32,7 +33,7 @@
 		if(marked_color)
 			. += span_notice("There is a [marked_color] mark on the corner of a card in the cardhand!")
 	if(broadcast_check)
-		user.visible_message(span_notice("[user] checks [user.p_their()] cards."))
+		user.visible_message(span_notice(LANG("obj.dcbb3edd", list(user, user.p_their()))))
 
 
 /obj/item/toy/cards/cardhand/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -88,10 +89,10 @@
 		var/obj/item/toy/cards/deck/dealer_deck = tool
 		if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // recycle cardhand into deck (if unwielded)
 			if(dealer_deck.insert(src))
-				user.balloon_alert_to_viewers("puts card in deck")
+				user.balloon_alert_to_viewers(LANG("obj.f9852041", null))
 				return ITEM_INTERACT_SUCCESS
 
-			to_chat(user, span_warning("\The [dealer_deck] is stacked too high!"))
+			to_chat(user, span_warning(LANG("obj.64e89a57", list(dealer_deck))))
 			return ITEM_INTERACT_BLOCKING
 
 		card = dealer_deck.get_top_card(user)
@@ -108,7 +109,7 @@
 			dealer_deck.draw(user)
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_warning("You can't hold any more cards in your hand!"))
+	to_chat(user, span_warning(LANG("obj.e887fcf8", null)))
 	return ITEM_INTERACT_BLOCKING
 
 #define CARDS_MAX_DISPLAY_LIMIT 5 // the amount of cards that are displayed in a hand

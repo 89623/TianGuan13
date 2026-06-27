@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Traverse to a target with the intention of picking it up.
  * If we can't do that, add it to a list of ignored items.
@@ -68,10 +69,10 @@
 	var/mob/pawn = controller.pawn
 	var/obj/item/carried_item = controller.blackboard[storage_key]
 	if(QDELETED(carried_item) || carried_item.loc != pawn)
-		pawn.visible_message(span_notice("[pawn] looks around as if [pawn.p_they()] [pawn.p_have()] lost something."))
+		pawn.visible_message(span_notice(LANG("datum.be662e40", list(pawn, pawn.p_they(), pawn.p_have()))))
 		return FALSE
 
-	pawn.visible_message(span_notice("[pawn] delivers [carried_item] to [return_target]."))
+	pawn.visible_message(span_notice(LANG("datum.e55ffe23", list(pawn, carried_item, return_target))))
 	carried_item.forceMove(get_turf(return_target))
 	controller.clear_blackboard_key(storage_key)
 	return TRUE
@@ -103,7 +104,7 @@
 	var/mob/living/basic/basic_pawn = controller.pawn
 	if(is_living_loc)
 		if(SPT_PROB(10, seconds_per_tick))
-			basic_pawn.manual_emote("Stares at [snack.loc]'s [snack.name] intently.")
+			basic_pawn.manual_emote(LANG("datum.49c216ba", list(snack.loc, snack.name)))
 		return AI_BEHAVIOR_DELAY
 
 	if(!basic_pawn.Adjacent(snack))

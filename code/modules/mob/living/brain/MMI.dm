@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
@@ -54,18 +55,18 @@
 	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		var/obj/item/organ/brain/newbrain = O
 		if(brain)
-			to_chat(user, span_warning("There's already a brain in the MMI!"))
+			to_chat(user, span_warning(LANG("obj.195201fc", null)))
 			return
 		if(newbrain.suicided)
-			to_chat(user, span_warning("[newbrain] is completely useless."))
+			to_chat(user, span_warning(LANG("obj.4843ca8b", list(newbrain))))
 			return
 		if(!newbrain.brainmob)
-			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
+			var/install = tgui_alert(user, LANG("obj.f1f04b31", list(newbrain)), LANG("obj.a84be5c1", null), list("Yes", "No"))
 			if(install != "Yes")
 				return
 			if(!user.transferItemToLoc(newbrain, src))
 				return
-			user.visible_message(span_notice("[user] sticks [newbrain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [newbrain]. Its brainwave activity alarm buzzes."))
+			user.visible_message(span_notice(LANG("obj.48eff2d6", list(user, newbrain, src))), span_notice(LANG("obj.c1b7c3b5", list(src, newbrain))))
 			brain = newbrain
 			brain.organ_flags |= ORGAN_FROZEN
 			name = "[initial(name)]: [copytext(newbrain.name, 1, -8)]"
@@ -77,7 +78,7 @@
 		var/mob/living/brain/B = newbrain.brainmob
 		if(!B.key && !newbrain.decoy_override)
 			B.notify_revival("Someone has put your brain in a MMI!", source = src)
-		user.visible_message(span_notice("[user] sticks \a [newbrain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [newbrain]."))
+		user.visible_message(span_notice(LANG("obj.610649c4", list(user, newbrain, src))), span_notice(LANG("obj.ce2edecd", list(src, newbrain))))
 
 		set_brainmob(newbrain.brainmob)
 		newbrain.brainmob = null
@@ -87,10 +88,10 @@
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
-			to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage."))
+			to_chat(user, span_warning(LANG("obj.fecaffbf", list(src, newbrain))))
 			playsound(src, 'sound/machines/synth/synth_no.ogg', 5, TRUE)
 		else
-			to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [newbrain] again."))
+			to_chat(user, span_warning(LANG("obj.ed38038b", list(src, newbrain))))
 			playsound(src, 'sound/machines/beep/triple_beep.ogg', 5, TRUE)
 
 		brainmob.reset_perspective()
@@ -172,12 +173,12 @@
 /obj/item/mmi/attack_self(mob/user)
 	if(!brain)
 		radio.set_on(!radio.is_on())
-		to_chat(user, span_notice("You toggle [src]'s radio system [radio.is_on() == TRUE ? "on" : "off"]."))
+		to_chat(user, span_notice(LANG("obj.39ef622c", list(src, radio.is_on() == TRUE ? "on" : "off"))))
 	else
 		eject_brain(user)
 		update_appearance()
 		name = initial(name)
-		to_chat(user, span_notice("You unlock and upend [src], spilling the brain onto the floor."))
+		to_chat(user, span_notice(LANG("obj.4f2c1468", list(src))))
 
 /obj/item/mmi/proc/eject_brain(mob/user)
 	if(brainmob)
@@ -267,13 +268,13 @@
 	set popup_menu = FALSE
 
 	if(brainmob.stat)
-		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))
+		to_chat(brainmob, span_warning(LANG("obj.d9c9989b", null)))
 	if(!radio.is_on())
-		to_chat(brainmob, span_warning("Your radio is disabled!"))
+		to_chat(brainmob, span_warning(LANG("obj.f8885d6e", null)))
 		return
 
 	radio.set_listening(!radio.get_listening())
-	to_chat(brainmob, span_notice("Radio is [radio.get_listening() ? "now" : "no longer"] receiving broadcast."))
+	to_chat(brainmob, span_notice(LANG("obj.a68b1527", list(radio.get_listening() ? "now" : "no longer"))))
 
 /obj/item/mmi/emp_act(severity)
 	. = ..()
@@ -299,24 +300,24 @@
 /obj/item/mmi/examine(mob/user)
 	. = ..()
 	if(radio)
-		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
+		. += span_notice(LANG("obj.139453cd", list(radio.is_on() ? "off" : "on", brain ? " It is currently being covered by [brain]." : null)))
 
 	if(!isnull(brain))
 		// It's dead, show it as much
 		if((brain.organ_flags & ORGAN_FAILING) || brainmob?.stat == DEAD)
 			if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
-				. += span_warning("[src] indicator light is red.")
+				. += span_warning(LANG("obj.b32d0034", list(src)))
 			else
-				. += span_warning("[src] indicator light is yellow - perhaps you should check the brain for damage.")
+				. += span_warning(LANG("obj.80139015", list(src)))
 		// If we have a client, OR it's a decoy brain, show as active
 		else if(brain.decoy_override || brainmob?.client)
-			. += span_notice("[src] indicates that the brain is active.")
+			. += span_notice(LANG("obj.6ac5f1cc", list(src)))
 		// If we have a brainmob and it has a mind, it may just be DC'd
 		else if(brainmob?.mind)
-			. += span_warning("[src] indicates that the brain is currently inactive; it might change.")
+			. += span_warning(LANG("obj.38b984f0", list(src)))
 		// No brainmob, no mind, and not a decoy, it's a dead brain
 		else
-			. += span_warning("[src] indicates that the brain is completely unresponsive.")
+			. += span_warning(LANG("obj.32d34791", list(src)))
 
 /obj/item/mmi/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
@@ -325,31 +326,31 @@
 	var/mob/living/brain/B = brainmob
 	if(!B)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
+			to_chat(user, span_warning(LANG("obj.e3dc450c", list(src))))
 		return FALSE
 	if(brain?.decoy_override)
 		if(user)
-			to_chat(user, span_warning("This [name] does not seem to fit!"))
+			to_chat(user, span_warning(LANG("obj.d8b1bd52", list(name))))
 		return FALSE
 	if(!B.key || !B.mind)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))
+			to_chat(user, span_warning(LANG("obj.762ac644", list(src))))
 		return FALSE
 	if(!B.client)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
+			to_chat(user, span_warning(LANG("obj.6b5776b1", list(src))))
 		return FALSE
 	if(HAS_TRAIT(B, TRAIT_SUICIDED) || brain?.suicided)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
+			to_chat(user, span_warning(LANG("obj.3471de9c", list(src))))
 		return FALSE
 	if(B.stat == DEAD)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that the brain is dead!"))
+			to_chat(user, span_warning(LANG("obj.82c24640", list(src))))
 		return FALSE
 	if(brain?.organ_flags & ORGAN_FAILING)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that the brain is damaged!"))
+			to_chat(user, span_warning(LANG("obj.02667ee3", list(src))))
 		return FALSE
 	return TRUE
 

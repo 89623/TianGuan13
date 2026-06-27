@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Basic machine used to paint PDAs and re-trim ID cards.
 /obj/machinery/pdapainter
 	name = "\improper Tablet & ID Painter"
@@ -137,10 +138,10 @@
 
 /obj/machinery/pdapainter/welder_act(mob/living/user, obj/item/tool)
 	if(!(machine_stat & BROKEN) && (atom_integrity >= max_integrity))
-		balloon_alert(user, "isn't broken!")
+		balloon_alert(user, LANG("obj.202cf30a", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = 1))
-		balloon_alert(user, "not enough fuel!")
+		balloon_alert(user, LANG("obj.161985b7", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.use_tool(src, user, 40, volume = 50))
@@ -148,7 +149,7 @@
 
 	set_machine_stat(machine_stat & ~BROKEN)
 	atom_integrity = max_integrity
-	balloon_alert(user, "repaired")
+	balloon_alert(user, LANG("obj.65ced1e8", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/pdapainter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -185,7 +186,7 @@
 
 	if(stored_pda)
 		eject_pda(user)
-		balloon_alert(user, "swapped")
+		balloon_alert(user, LANG("obj.c58bb764", null))
 
 	stored_pda = new_pda
 	new_pda.add_fingerprint(user)
@@ -218,9 +219,9 @@
  */
 /obj/machinery/pdapainter/proc/insert_id_card(obj/item/card/id/new_id_card, mob/living/user)
 	if(!new_id_card.trim_changeable)
-		balloon_alert(user, "rejected!")
+		balloon_alert(user, LANG("obj.c10edb67", null))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
-		to_chat(user, span_warning("This ID card does not appear to be compatible with the ID Painter."))
+		to_chat(user, span_warning(LANG("obj.afdaa584", null)))
 		return FALSE
 
 	if(user && !user.transferItemToLoc(new_id_card, src, silent = FALSE))
@@ -230,7 +231,7 @@
 
 	if(stored_id_card)
 		eject_id_card(user)
-		balloon_alert(user, "swapped")
+		balloon_alert(user, LANG("obj.c58bb764", null))
 
 	stored_id_card = new_id_card
 	new_id_card.add_fingerprint(user)

@@ -284,7 +284,15 @@ function JobRow(props: JobRowProps) {
               ) : (
                 <Dropdown
                   width="100%"
-                  options={job.alt_titles}
+                  // NOVA EDIT CHANGE START - ORIGINAL: options={job.alt_titles}
+                  // i18n: 拆成 {value, displayText} 让 auto-localize 只翻 displayText、value(act 标识符)保持英文；
+                  // 折叠按钮显示走 displayText prop(同样可翻)，否则按钮只显示 selected 原值(英文)。
+                  options={job.alt_titles.map((title) => ({
+                    value: title,
+                    displayText: title,
+                  }))}
+                  displayText={alt_title_selected}
+                  // NOVA EDIT CHANGE END
                   selected={alt_title_selected}
                   onSelected={(value) =>
                     act('set_job_title', { job: name, new_title: value })
@@ -382,6 +390,9 @@ function JoblessRoleDropdown(props) {
       <Dropdown
         width="100%"
         selected={selection}
+        // displayText 才在 i18n TRANSLATABLE_PROPS 里(selected 不在)——折叠显示的选中项经此翻译，
+        // 否则展开选项是中文、收起后却显英文。
+        displayText={selection}
         onSelected={createSetPreference(act, 'joblessrole')}
         options={options}
       />

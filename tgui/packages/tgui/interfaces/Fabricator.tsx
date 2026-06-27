@@ -23,7 +23,8 @@ export const Fabricator = (props) => {
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
 
-  for (const material of data.materials) {
+  for (const material of data.materials ?? []) {
+    // NOVA EDIT CHANGE - I18N - ORIGINAL: for (const material of data.materials) {
     availableMaterials[material.name] = material.amount;
   }
 
@@ -34,7 +35,7 @@ export const Fabricator = (props) => {
           <Stack.Item grow>
             <DesignBrowser
               busy={!!busy}
-              designs={Object.values(designs)}
+              designs={Object.values(designs ?? {})} // NOVA EDIT CHANGE - I18N - ORIGINAL: designs={Object.values(designs)}
               availableMaterials={availableMaterials}
               buildRecipeElement={(design, availableMaterials) => (
                 <Recipe

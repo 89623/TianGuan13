@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE 25
 
 /datum/species/monkey
@@ -102,16 +103,14 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "spider",
-			SPECIES_PERK_NAME = "Vent Crawling",
-			SPECIES_PERK_DESC = "Monkeys can crawl through the vent and scrubber networks while wearing no clothing. \
-				Stay out of the kitchen!",
+			SPECIES_PERK_NAME = LANG("datum.241fd17d", null),
+			SPECIES_PERK_DESC = LANG("datum.a1729cc1", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "paw",
-			SPECIES_PERK_NAME = "Primal Primate",
-			SPECIES_PERK_DESC = "Monkeys are primitive humans, and can't do most things a human can do. Computers are impossible, \
-				complex machines are right out, and most clothes don't fit your smaller form.",
+			SPECIES_PERK_NAME = LANG("datum.5deb47b0", null),
+			SPECIES_PERK_DESC = LANG("datum.e0c28328", null),
 		),
 	)
 
@@ -126,9 +125,8 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "comment",
-		SPECIES_PERK_NAME = "Primitive Tongue",
-		SPECIES_PERK_DESC = "You may be able to understand [initial(common_language.name)], but you can't speak it. \
-			You can only speak [initial(monkey_language.name)].",
+		SPECIES_PERK_NAME = LANG("datum.131712b3", null),
+		SPECIES_PERK_DESC = LANG("datum.ddfe8592", list(initial(common_language.name), initial(monkey_language.name))),
 	))
 
 	return to_add
@@ -153,11 +151,11 @@
 	if(monkey_brain.tripping)
 		monkey_brain.tripping = FALSE
 		background_icon_state = "bg_default"
-		to_chat(monkey_brain.owner, span_notice("You will now avoid stumbling while colliding with people who are in combat mode."))
+		to_chat(monkey_brain.owner, span_notice(LANG("datum.29e2efd3", null)))
 	else
 		monkey_brain.tripping = TRUE
 		background_icon_state = "bg_default_on"
-		to_chat(monkey_brain.owner, span_notice("You will now stumble while colliding with people who are in combat mode."))
+		to_chat(monkey_brain.owner, span_notice(LANG("datum.32e05283", null)))
 	build_all_button_icons()
 	return TRUE
 

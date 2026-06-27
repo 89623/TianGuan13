@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Prank wand knocks you over as if pied and surrounds you with space lube
  */
@@ -20,7 +21,7 @@
 /obj/item/gun/magic/wand/prank/do_suicide(mob/living/user)
 	charges--
 	playsound(user, fire_sound, 50, TRUE)
-	user.visible_message("[user] covers [user.p_themselves()] with magical lube!")
+	user.visible_message(LANG("obj.65a670a8", list(user, user.p_themselves())))
 	var/datum/reagents/lube = new /datum/reagents(40)
 	lube.add_reagent(/datum/reagent/lube, 40)
 	lube.my_atom = get_turf(user)

@@ -55,14 +55,14 @@
 /obj/machinery/cauldron/examine(mob/user)
 	. = ..()
 
-	. += span_notice("It can be taken apart with a <b>crowbar</b>.")
+	. += span_notice(LANG("obj.01fa2e71", null))
 
 	if(!in_range(user, src) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents!")
+		. += span_warning(LANG("obj.9b3e6cc5", list(src)))
 		return
 
 	if(length(ingredients))
-		. += span_notice("\The [src] contains:")
+		. += span_notice(LANG("obj.43cd9c42", list(src)))
 		var/list/items_counts = new
 		for(var/i in ingredients)
 			if(isstack(i))
@@ -77,7 +77,7 @@
 			. += span_notice("- [items_counts[item]]x [item].")
 
 	else
-		. += span_notice("\The [src] is empty.")
+		. += span_notice(LANG("obj.c8ad1ee9", list(src)))
 
 /obj/machinery/cauldron/Exited(atom/movable/gone, direction)
 	if(gone in ingredients)
@@ -176,7 +176,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cauldron/crowbar_act(mob/living/user, obj/item/tool)
-	user.balloon_alert_to_viewers("disassembling...")
+	user.balloon_alert_to_viewers(LANG("obj.b5ba9871", null))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
 		return
 
@@ -190,7 +190,7 @@
 
 	if(!anchored)
 		if(IS_EDIBLE(tool))
-			balloon_alert(user, "not secured!")
+			balloon_alert(user, LANG("obj.801f0be9", null))
 			return TRUE
 		return ITEM_INTERACT_SUCCESS
 
@@ -200,7 +200,7 @@
 
 		if(!istype(tool, /obj/item/storage/bag/tray))
 			// Non-tray dumping requires a do_after
-			to_chat(user, span_notice("You start dumping out the contents of [tool] into [src]..."))
+			to_chat(user, span_notice(LANG("obj.66f69281", list(tool, src))))
 			var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 			if(!do_after(user, 2 SECONDS * skill_modifier, target = tray))
 				return ITEM_INTERACT_BLOCKING
@@ -219,7 +219,7 @@
 
 		if(loaded)
 			open()
-			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+			to_chat(user, span_notice(LANG("obj.1de8bb22", list(loaded, src))))
 			user.mind?.adjust_experience(/datum/skill/primitive, 2)
 			update_appearance()
 
@@ -227,16 +227,16 @@
 
 	if(tool.w_class <= WEIGHT_CLASS_NORMAL && !istype(tool, /obj/item/storage) && !user.combat_mode)
 		if(ingredients.len >= max_n_of_items)
-			balloon_alert(user, "it's full!")
+			balloon_alert(user, LANG("obj.2cb7d354", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src))
-			balloon_alert(user, "it's stuck to your hand!")
+			balloon_alert(user, LANG("obj.f84f0f5d", null))
 			return ITEM_INTERACT_BLOCKING
 
 		ingredients += tool
 		open()
-		user.visible_message(span_notice("[user] adds \a [tool] to \the [src]."), span_notice("You add [tool] to \the [src]."))
+		user.visible_message(span_notice(LANG("obj.6776a8ee", list(user, tool, src))), span_notice(LANG("obj.dc741820", list(tool, src))))
 		user.mind?.adjust_experience(/datum/skill/primitive, 2)
 		update_appearance()
 		return ITEM_INTERACT_BLOCKING
@@ -246,7 +246,7 @@
 /obj/machinery/cauldron/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.can_perform_action(src))
 		if(!length(ingredients))
-			balloon_alert(user, "it's empty!")
+			balloon_alert(user, LANG("obj.76a90f7c", null))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		cook(user)
@@ -257,7 +257,7 @@
 	. = ..()
 
 	if(!anchored)
-		balloon_alert(user, "not secured!")
+		balloon_alert(user, LANG("obj.801f0be9", null))
 		return
 
 	if(operating || !user.can_perform_action(src))
@@ -268,7 +268,7 @@
 			examine(user)
 
 		else
-			balloon_alert(user, "it's empty!")
+			balloon_alert(user, LANG("obj.76a90f7c", null))
 
 		return
 
@@ -276,7 +276,7 @@
 
 	// post choice verification
 	if(!anchored)
-		balloon_alert(user, "not secured!")
+		balloon_alert(user, LANG("obj.801f0be9", null))
 		return
 
 	if(operating || !user.can_perform_action(src))
@@ -320,7 +320,7 @@
  * * cooker - The mob that initiated the cook cycle
  */
 /obj/machinery/cauldron/proc/start(mob/cooker)
-	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear bubbling as the cauldron ignites."))
+	visible_message(span_notice(LANG("obj.2769877b", list(src))), null, span_hear(LANG("obj.b05372a3", null)))
 	operating = TRUE
 	update_appearance()
 	cook_loop(cycles = 10, cooker = cooker)

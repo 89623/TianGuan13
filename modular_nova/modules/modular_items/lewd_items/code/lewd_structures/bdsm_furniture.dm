@@ -24,12 +24,12 @@
 	if((item_flags & IN_INVENTORY) || (item_flags & IN_STORAGE))
 		return
 
-	to_chat(user, span_notice("You fasten the frame to the floor and begin to inflate the latex pillows..."))
+	to_chat(user, span_notice(LANG("obj.b6068d4a", null)))
 	if(!do_after(user, 8 SECONDS, src))
-		to_chat(user, span_warning("You fail to assemble [src]."))
+		to_chat(user, span_warning(LANG("obj.cf42f374", list(src))))
 		return
 
-	to_chat(user, span_notice("You assemble [src]."))
+	to_chat(user, span_notice(LANG("obj.8abb2b26", list(src))))
 	var/obj/structure/bed/bdsm_bed/assembled_bed = new
 	assembled_bed.forceMove(loc)
 	qdel(src)
@@ -37,7 +37,7 @@
 
 /obj/item/bdsm_bed_kit/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be assembled by using Ctrl+Shift+Click while [src] is on the floor.")
+	. += span_purple(LANG("obj.aa88977b", list(src, src)))
 
 /obj/structure/bed/bdsm_bed/post_buckle_mob(mob/living/affected_mob)
 	density = TRUE
@@ -51,12 +51,12 @@
 
 /obj/structure/bed/bdsm_bed/click_ctrl_shift(mob/user)
 	add_fingerprint(user)
-	to_chat(user, span_notice("You begin unfastening the frame of [src] and deflating the latex pillows..."))
+	to_chat(user, span_notice(LANG("obj.a6fe25de", list(src))))
 	if(!do_after(user, 8 SECONDS, src))
-		to_chat(user, span_warning("You fail to disassemble [src]."))
+		to_chat(user, span_warning(LANG("obj.ff0e3819", list(src))))
 		return
 
-	to_chat(user, span_notice("You disassemble [src]."))
+	to_chat(user, span_notice(LANG("obj.fd5c1c1d", list(src))))
 	var/obj/item/construction_kit/bdsm/bed/created_kit = new
 	created_kit.forceMove(loc)
 	qdel(src)
@@ -68,7 +68,7 @@
 
 /obj/structure/bed/bdsm_bed/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be disassembled by using Ctrl+Shift+Click")
+	. += span_purple(LANG("obj.c1a93939", list(src)))
 
 /*
 *	X-STAND
@@ -143,20 +143,20 @@
 
 	if(buckled_mob != user)
 		if(!do_after(user, 5 SECONDS, buckled_mob)) // Timer for unbuckling one mob with another mob
-			to_chat(user, span_warning("You fail to unbuckle [buckled_mob] from [src]."))
+			to_chat(user, span_warning(LANG("obj.da90255e", list(buckled_mob, src))))
 			return FALSE
 
-		buckled_mob.visible_message(span_notice("[user] unbuckles [buckled_mob] from [src]."),\
-			span_notice("[user] unbuckles you from [src]."),\
-			span_hear("You hear metal clanking."))
+		buckled_mob.visible_message(span_notice(LANG("obj.c58c7a9a", list(user, buckled_mob, src))),\
+			span_notice(LANG("obj.8a13b258", list(user, src))),\
+			span_hear(LANG("obj.4ea246f9", null)))
 
 	else
 		if(!do_after(user, 10 SECONDS, buckled_mob)) // Timer for unbuckling one mob with another mob
-			to_chat(user, span_warning("You fail to unbuckle yourself from [src]."))
+			to_chat(user, span_warning(LANG("obj.f7cd4294", list(src))))
 			return FALSE
 
-		user.visible_message(span_notice("You unbuckle yourself from [src]."),\
-			span_hear("You hear metal clanking."))
+		user.visible_message(span_notice(LANG("obj.bd5bbd6c", list(src))),\
+			span_hear(LANG("obj.4ea246f9", null)))
 
 	unbuckle_mob(buckled_mob)
 
@@ -181,41 +181,41 @@
 
 	if(affected_mob == user)
 		if(!do_after(user, 10 SECONDS, affected_mob)) // Timer to buckle the mob itself
-			to_chat(user, span_warning("You fail to buckle yourself to [src]!"))
+			to_chat(user, span_warning(LANG("obj.47a77d50", list(src))))
 			return FALSE
 
 		if(!is_user_buckle_possible(affected_mob, user, check_loc))
-			to_chat(user, span_warning("You are unable to buckle yourself to [src]!"))
+			to_chat(user, span_warning(LANG("obj.38c69261", list(src))))
 			return FALSE
 
 		if(buckle_mob(affected_mob, check_loc = check_loc))
-			user.visible_message(span_warning("You buckle yourself to [src]!"),\
-				span_hear("You hear metal clanking."))
+			user.visible_message(span_warning(LANG("obj.98755165", list(src))),\
+				span_hear(LANG("obj.4ea246f9", null)))
 
 		toggle_mode(user)
 		return TRUE
 
-	affected_mob.visible_message(span_warning("[user] starts buckling [affected_mob] to [src]!"),\
-		span_userdanger("[user] starts buckling you to [src]!"),\
-		span_hear("You hear metal clanking."))
+	affected_mob.visible_message(span_warning(LANG("obj.fd9e0033", list(user, affected_mob, src))),\
+		span_userdanger(LANG("obj.1b8e86bd", list(user, src))),\
+		span_hear(LANG("obj.4ea246f9", null)))
 
 	if(!do_after(user, 5 SECONDS, affected_mob)) // Timer to buckle one mob by another
-		to_chat(user, span_warning("You fail to buckle [affected_mob] to [src]!"))
+		to_chat(user, span_warning(LANG("obj.17254991", list(affected_mob, src))))
 		return FALSE
 
 	// Sanity check before we attempt to buckle. Is everything still in a kosher state for buckling after the 3 seconds have elapsed?
 	// Covers situations where, for example, the chair was moved or there's some other issue.
 	if(!is_user_buckle_possible(affected_mob, user, check_loc))
-		to_chat(user, span_warning("You are unable to buckle [affected_mob] to [src]!"))
+		to_chat(user, span_warning(LANG("obj.788b1731", list(affected_mob, src))))
 		return FALSE
 
 	// Place to insert a description of a successful attempt for a user mob
 	if(!buckle_mob(affected_mob, check_loc = check_loc))
 		return FALSE
 
-	affected_mob.visible_message(span_warning("[user] buckled [affected_mob] to [src]!"),\
-		span_userdanger("[user] buckled you to [src]!"),\
-		span_hear("You hear metal clanking."))
+	affected_mob.visible_message(span_warning(LANG("obj.399356cf", list(user, affected_mob, src))),\
+		span_userdanger(LANG("obj.6436c125", list(user, src))),\
+		span_hear(LANG("obj.4ea246f9", null)))
 
 	toggle_mode(user)
 	return TRUE
@@ -275,18 +275,18 @@
 
 /obj/structure/chair/x_stand/click_ctrl_shift(mob/user)
 	add_fingerprint(user)
-	to_chat(user, span_notice("You begin unfastening the frame of [src]..."))
+	to_chat(user, span_notice(LANG("obj.54379957", list(src))))
 	if(!do_after(user, 8 SECONDS, src))
 		return
 
-	to_chat(user, span_notice("You disassemble [src]."))
+	to_chat(user, span_notice(LANG("obj.fd5c1c1d", list(src))))
 	new /obj/item/construction_kit/bdsm/x_stand(loc)
 	unbuckle_all_mobs()
 	qdel(src)
 
 /obj/structure/chair/x_stand/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be disassembled by using Ctrl+Shift+Click")
+	. += span_purple(LANG("obj.c1a93939", list(src)))
 
 #undef X_STAND_CLOSED_STATE
 #undef X_STAND_OPEN_STATE

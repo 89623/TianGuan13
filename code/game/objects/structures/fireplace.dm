@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define LOG_BURN_TIMER 5000 //NOVA EDIT original: #define LOG_BURN_TIMER 150
 #define PAPER_BURN_TIMER 5
 #define MAXIMUM_BURN_TIMER 100000 //NOVA EDIT original: #define MAXIMUM_BURN_TIMER 3000
@@ -47,10 +48,10 @@
 
 /obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
 	if(lit)
-		to_chat(user, span_warning("It's already lit!"))
+		to_chat(user, span_warning(LANG("obj.392aae9f", null)))
 		return FALSE
 	if(!fuel_added)
-		to_chat(user, span_warning("[src] needs some fuel to burn!"))
+		to_chat(user, span_warning(LANG("obj.015d7870", list(src))))
 		return FALSE
 	var/msg = O.ignition_effect(src, user)
 	if(msg)
@@ -64,24 +65,24 @@
 		var/space_remaining = MAXIMUM_BURN_TIMER - burn_time_remaining()
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
 		if(space_for_logs < 1)
-			to_chat(user, span_warning("You can't fit any more of [tool] in [src]!"))
+			to_chat(user, span_warning(LANG("obj.d56a17a7", list(tool, src))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)
 		adjust_fuel_timer(LOG_BURN_TIMER * logs_used)
-		user.visible_message(span_notice("[user] tosses some wood into [src]."), span_notice("You add some fuel to [src]."))
+		user.visible_message(span_notice(LANG("obj.2dc25b27", list(user, src))), span_notice(LANG("obj.bd3682ed", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper_bin))
 		var/obj/item/paper_bin/paper_bin = tool
-		user.visible_message(span_notice("[user] throws [tool] into [src]."), span_notice("You add [tool] to [src]."))
+		user.visible_message(span_notice(LANG("obj.8938881b", list(user, tool, src))), span_notice(LANG("obj.0c27fe26", list(tool, src))))
 		adjust_fuel_timer(PAPER_BURN_TIMER * paper_bin.total_paper)
 		qdel(paper_bin)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper))
-		user.visible_message(span_notice("[user] throws [tool] into [src]."), span_notice("You throw [tool] into [src]."))
+		user.visible_message(span_notice(LANG("obj.8938881b", list(user, tool, src))), span_notice(LANG("obj.9a474d8d", list(tool, src))))
 		adjust_fuel_timer(PAPER_BURN_TIMER)
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
@@ -164,7 +165,7 @@
 	START_PROCESSING(SSobj, src)
 	burning_loop.start()
 	lit = TRUE
-	desc = "A large stone brick fireplace, warm and cozy."
+	desc = LANG("obj.273d939d", null)
 	flame_expiry_timer = world.time + fuel_added
 	fuel_added = 0
 	update_appearance()

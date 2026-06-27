@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Holds a biological sample which can then be put into the growing vat
 /obj/item/petri_dish
 	name = "petri dish"
@@ -21,7 +22,7 @@
 	. = ..()
 	if(!sample)
 		return
-	. += span_notice("You can see the following micro-organisms:")
+	. += span_notice(LANG("obj.61f23338", null))
 	for(var/i in sample.micro_organisms)
 		var/datum/micro_organism/MO = i
 		. += MO.get_details()
@@ -44,7 +45,7 @@
 
 /obj/item/petri_dish/proc/deposit_sample(user, datum/biological_sample/deposited_sample)
 	sample = deposited_sample
-	to_chat(user, span_notice("You deposit a sample into [src]."))
+	to_chat(user, span_notice(LANG("obj.63e44201", list(src))))
 	update_appearance()
 
 /// Petri dish with random sample already in it.

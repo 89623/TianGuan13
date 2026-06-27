@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/assembly/control
 	name = "controller assembly"
 	desc = "An assembly that controls something. It's so vaguely designed that it probably shouldn't exist."
@@ -21,7 +22,7 @@
 /obj/item/assembly/control/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
 	if(istype(held_item, type) && copyable)
-		context[SCREENTIP_CONTEXT_LMB] = "Copy ID"
+		context[SCREENTIP_CONTEXT_LMB] = LANG("obj.ec7f1e18", null)
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/assembly/control/examine(mob/user)
@@ -30,13 +31,13 @@
 		. += span_notice("You can use a [EXAMINE_HINT("multitool")] to adjust its ID.")
 
 	if(copyable)
-		. += span_notice("You can interact with another controller to copy its ID.")
+		. += span_notice(LANG("obj.86bc9aae", null))
 
 	if(!id)
 		return
 
 	if(id != -1)
-		. += span_notice("Its channel ID is '[id]'.")
+		. += span_notice(LANG("obj.7150d501", list(id)))
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
 	if(!generically_adjustable)
@@ -46,7 +47,7 @@
 	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
-	to_chat(user, span_notice("You change the ID to [id]."))
+	to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 
 /obj/item/assembly/control/interact_with_atom(obj/item/assembly/control/interacting_with, mob/living/user, list/modifiers)
 	. = NONE
@@ -55,7 +56,7 @@
 
 	if(istype(interacting_with))
 		id = interacting_with.id
-		balloon_alert(user, "id changed")
+		balloon_alert(user, LANG("obj.3852daee", null))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/control/blast_door
@@ -80,7 +81,7 @@
 		var/area/door_area = get_area(M)
 		display_ids += "[door_area.name]([M.id])"
 
-	var/change_id = tgui_input_list(user, "Set Controller ID", "Controller ID", display_ids)
+	var/change_id = tgui_input_list(user, LANG("obj.c920a899", null), LANG("obj.21b9fbfd", null), display_ids)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
@@ -93,11 +94,11 @@
 			id = "[change_id[start]]"
 		else
 			id = copytext(change_id, start, end)
-	balloon_alert(user, "id changed")
+	balloon_alert(user, LANG("obj.3852daee", null))
 	if(id != -1)
-		to_chat(user, span_notice("You change the ID to [id]."))
+		to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 	else
-		to_chat(user, span_notice("You now must interact with a pod door to generate a unique ID."))
+		to_chat(user, span_notice(LANG("obj.59a589e8", null)))
 
 /obj/item/assembly/control/blast_door/activate()
 	var/openclose

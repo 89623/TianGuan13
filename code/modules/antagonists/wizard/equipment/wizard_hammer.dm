@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /////////////////////////////////////////Singularity Hammer///////////////////
 /obj/item/singularityhammer
 	name = "singularity hammer"
@@ -107,9 +108,9 @@
 	target.Knockdown(10 SECONDS)
 	var/datum/effect_system/basic/lightning_spread/lightning = new(target.loc, 5, TRUE)
 	lightning.start()
-	target.visible_message(span_danger("[target.name] is shocked by [src]!"), \
-		span_userdanger("You feel a powerful shock course through your body sending you flying!"), \
-		span_hear("You hear a heavy electrical crack!"))
+	target.visible_message(span_danger(LANG("obj.7cd4e95e", list(target.name, src))), \
+		span_userdanger(LANG("obj.50a8dcc6", null)), \
+		span_hear(LANG("obj.ce87fd71", null)))
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 

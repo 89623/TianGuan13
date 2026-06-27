@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/frame/machine
 	name = "machine frame"
 	desc = "The standard frame for most station appliances. Its appearance and function is controlled by the inserted board."
@@ -81,19 +82,19 @@
 /obj/structure/frame/machine/examine(user)
 	. = ..()
 	if(!circuit?.needs_anchored)
-		. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose." : "into place."]")
+		. += span_notice(LANG("obj.9315b531", list(EXAMINE_HINT("anchored"), anchored ? "loose." : "into place.")))
 	if(state == FRAME_STATE_EMPTY)
 		if(!anchored)
-			. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
-		. += span_info("It should be [EXAMINE_HINT("wired")] with 5 cables.")
+			. += span_notice(LANG("obj.a8e6c385", list(EXAMINE_HINT("welded"), EXAMINE_HINT("screwed"))))
+		. += span_info(LANG("obj.1e675669", list(EXAMINE_HINT("wired"))))
 		return
 	if(state == FRAME_STATE_WIRED)
-		. += span_notice("Its wires can be [EXAMINE_HINT("cut")].")
+		. += span_notice(LANG("obj.fccc9815", list(EXAMINE_HINT("cut"))))
 	if(state != FRAME_STATE_BOARD_INSTALLED)
-		. += span_warning("It's missing a circuit board!")
+		. += span_warning(LANG("obj.5cbee47b", null))
 		return
 	if(!length(req_components))
-		. += span_info("It requires no components.")
+		. += span_info(LANG("obj.8f611717", null))
 		return
 
 	var/list/nice_list = list()
@@ -101,11 +102,11 @@
 		if(!req_components[component])
 			continue
 		nice_list += list("[req_components[component]] [req_component_names[component]]\s")
-	. += span_info("It requires [english_list(nice_list, "no more components")].")
+	. += span_info(LANG("obj.e8c2a536", list(english_list(nice_list, "no more components"))))
 
-	. += span_notice("All the components can be [EXAMINE_HINT("pried")] out.")
+	. += span_notice(LANG("obj.3259bd49", list(EXAMINE_HINT("pried"))))
 	if(!length(nice_list))
-		. += span_info("The frame should be [EXAMINE_HINT("screwed")] to complete it.")
+		. += span_info(LANG("obj.3ba6d562", list(EXAMINE_HINT("screwed"))))
 
 /obj/structure/frame/machine/dump_contents()
 	var/atom/drop_loc = drop_location()
@@ -139,13 +140,13 @@
 
 /obj/structure/frame/machine/install_board(mob/living/user, obj/item/circuitboard/machine/board, by_hand = TRUE)
 	if(state == FRAME_STATE_EMPTY)
-		balloon_alert(user, "needs wiring!")
+		balloon_alert(user, LANG("obj.51b5c229", null))
 		return FALSE
 	if(state == FRAME_STATE_BOARD_INSTALLED)
-		balloon_alert(user, "circuit already installed!")
+		balloon_alert(user, LANG("obj.67103b9e", null))
 		return FALSE
 	if(!anchored && istype(board) && board.needs_anchored)
-		balloon_alert(user, "frame must be anchored!")
+		balloon_alert(user, LANG("obj.6b9690c5", null))
 		return FALSE
 
 	return ..()
@@ -268,7 +269,7 @@
 		return .
 
 	if(circuit?.needs_anchored)
-		balloon_alert(user, "frame must be anchored!")
+		balloon_alert(user, LANG("obj.6b9690c5", null))
 		return FAILED_UNFASTEN
 
 	return .
@@ -290,7 +291,7 @@
 	if(state != FRAME_STATE_WIRED)
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "removing cables...")
+	balloon_alert(user, LANG("obj.9c35a1ea", null))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50) || state != FRAME_STATE_WIRED)
 		return ITEM_INTERACT_BLOCKING
 
@@ -308,7 +309,7 @@
 	tool.play_tool_sound(src)
 	var/list/leftover_components = components.Copy() - circuit
 	dump_contents()
-	balloon_alert(user, "circuit board[length(leftover_components) ? " and components" : ""] removed")
+	balloon_alert(user, LANG("obj.c15c5631", list(length(leftover_components) ? " and components" : "")))
 	// Circuit exited handles updating state
 	return ITEM_INTERACT_SUCCESS
 
@@ -384,7 +385,7 @@
 		req_components[stock_part_base]--
 		return TRUE
 
-	balloon_alert(user, "can't add that!")
+	balloon_alert(user, LANG("obj.bb344f8f", null))
 	return FALSE
 
 /obj/structure/frame/machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -398,7 +399,7 @@
 				if(!tool.tool_start_check(user, amount = 5))
 					return ITEM_INTERACT_BLOCKING
 
-				balloon_alert(user, "adding cables...")
+				balloon_alert(user, LANG("obj.a59792f9", null))
 				if(!tool.use_tool(src, user, 2 SECONDS, volume = 50, amount = 5) || state != FRAME_STATE_EMPTY)
 					return ITEM_INTERACT_BLOCKING
 
@@ -438,7 +439,7 @@
  */
 /obj/structure/frame/machine/finalize_construction(mob/living/user, obj/item/tool)
 	if(locate(circuit.build_path) in loc)
-		balloon_alert(user, "identical machine present!")
+		balloon_alert(user, LANG("obj.513bd59d", null))
 		return FALSE
 	for(var/component in req_components)
 		if(req_components[component] > 0)

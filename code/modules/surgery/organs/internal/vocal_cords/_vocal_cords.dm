@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
 	name = "vocal cords"
 	icon_state = "appendix"
@@ -32,12 +33,12 @@
 	icon_state = "adamantine_cords"
 
 /datum/action/item_action/organ_action/use/adamantine_vocal_cords/do_effect(trigger_flags)
-	var/message = tgui_input_text(owner, "Resonate a message to all nearby golems", "Resonate", max_length = MAX_MESSAGE_LEN)
+	var/message = tgui_input_text(owner, LANG("datum.35f4bb68", null), LANG("datum.11e7eabd", null), max_length = MAX_MESSAGE_LEN)
 	if(!message)
 		return FALSE
 	if(QDELETED(src) || QDELETED(owner))
 		return FALSE
-	owner.say(".x[message]")
+	owner.say(LANG("datum.4744c02d", list(message)))
 	return TRUE
 
 /obj/item/organ/vocal_cords/adamantine/handle_speech(message)

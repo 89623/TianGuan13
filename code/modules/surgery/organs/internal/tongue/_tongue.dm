@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/tongue
 	name = "tongue"
 	desc = "A fleshy muscle mostly used for lying."
@@ -63,11 +64,11 @@
 	. = ..()
 	if(HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER)|| isobserver(user))
 		if(liked_foodtypes)
-			. += span_info("This tongue has an affinity for the taste of [english_list(bitfield_to_list(liked_foodtypes, FOOD_FLAGS_IC))].")
+			. += span_info(LANG("obj.bb4a08db", list(english_list(bitfield_to_list(liked_foodtypes, FOOD_FLAGS_IC)))))
 		if(disliked_foodtypes)
-			. += span_info("This tongue has an aversion for the taste of [english_list(bitfield_to_list(disliked_foodtypes, FOOD_FLAGS_IC))].")
+			. += span_info(LANG("obj.7dd0e374", list(english_list(bitfield_to_list(disliked_foodtypes, FOOD_FLAGS_IC)))))
 		if(toxic_foodtypes)
-			. += span_info("This tongue's physiology makes [english_list(bitfield_to_list(toxic_foodtypes, FOOD_FLAGS_IC))] toxic.")
+			. += span_info(LANG("obj.8f7b6387", list(english_list(bitfield_to_list(toxic_foodtypes, FOOD_FLAGS_IC)))))
 
 /**
  * Used in setting up the "languages possible" list.
@@ -258,11 +259,11 @@
 
 	if(isnull(statue))
 		if(feedback)
-			owner.balloon_alert(owner, "you can't seem to statue-ize!")
+			owner.balloon_alert(owner, LANG("datum.1db49ae6", null))
 		return FALSE // permanently bricked
 	if(owner.stat != CONSCIOUS)
 		if(feedback)
-			owner.balloon_alert(owner, "you're too weak!")
+			owner.balloon_alert(owner, LANG("datum.65a3f894", null))
 		return FALSE
 
 	return TRUE
@@ -273,13 +274,13 @@
 	var/is_statue = owner.loc == statue
 	if(!is_statue)
 		owner.visible_message(
-			span_notice("[owner] strikes a glorious pose."),
-			span_notice("You strike a glorious pose as you become a statue!"),
+			span_notice(LANG("datum.f310af96", list(owner))),
+			span_notice(LANG("datum.dd675abf", null)),
 		)
 
 	owner.balloon_alert(owner, is_statue ? "breaking free..." : "striking a pose...")
 	if(!do_after(owner, (is_statue ? 0.5 SECONDS : 3 SECONDS), target = get_turf(owner)))
-		owner.balloon_alert(owner, "interrupted!")
+		owner.balloon_alert(owner, LANG("datum.c67b5d27", null))
 		return
 
 	StartCooldown()
@@ -288,15 +289,15 @@
 	statue.desc = "statue depicting [owner.real_name]"
 
 	if(is_statue)
-		statue.visible_message(span_danger("[statue] becomes animated!"))
+		statue.visible_message(span_danger(LANG("datum.9c94ee86", list(statue))))
 		owner.forceMove(get_turf(statue))
 		statue.moveToNullspace()
 		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 	else
 		owner.visible_message(
-			span_notice("[owner] hardens into a silver statue."),
-			span_notice("You have become a silver statue!"),
+			span_notice(LANG("datum.aa360fa0", list(owner))),
+			span_notice(LANG("datum.b366833e", null)),
 		)
 		statue.set_visuals(owner.appearance)
 		statue.forceMove(get_turf(owner))
@@ -323,7 +324,7 @@
 	var/mob/living/carbon/carbon_owner = owner
 	UnregisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED)
 
-	to_chat(carbon_owner, span_userdanger("Your existence as a living creature snaps as your statue form crumbles!"))
+	to_chat(carbon_owner, span_userdanger(LANG("datum.fdc91240", null)))
 	carbon_owner.forceMove(get_turf(statue))
 	carbon_owner.dust(just_ash = TRUE, drop_items = TRUE)
 	carbon_owner.investigate_log("has been dusted from having their Silverscale Statue deconstructed / destroyed.", INVESTIGATE_DEATHS)
@@ -390,21 +391,21 @@
 		return
 
 	if(tongue.mothership == mothership)
-		to_chat(tongue_holder, span_notice("[src] is already attuned to the same channel as your own."))
+		to_chat(tongue_holder, span_notice(LANG("obj.927b529d", list(src))))
 
-	tongue_holder.visible_message(span_notice("[tongue_holder] holds [src] in their hands, and concentrates for a moment."), span_notice("You attempt to modify the attenuation of [src]."))
+	tongue_holder.visible_message(span_notice(LANG("obj.4cf26e6b", list(tongue_holder, src))), span_notice(LANG("obj.f5ce4436", list(src))))
 	if(do_after(tongue_holder, delay=15, target=src))
-		to_chat(tongue_holder, span_notice("You attune [src] to your own channel."))
+		to_chat(tongue_holder, span_notice(LANG("obj.58fe1589", list(src))))
 		mothership = tongue.mothership
 
 /obj/item/organ/tongue/abductor/examine(mob/examining_mob)
 	. = ..()
 	if(HAS_MIND_TRAIT(examining_mob, TRAIT_ABDUCTOR_TRAINING) || isobserver(examining_mob))
-		. += span_notice("It can be attuned to a different channel by using it inhand.")
+		. += span_notice(LANG("obj.583cd70c", null))
 		if(!mothership)
-			. += span_notice("It is not attuned to a specific mothership.")
+			. += span_notice(LANG("obj.6305d16c", null))
 		else
-			. += span_notice("It is attuned to [mothership].")
+			. += span_notice(LANG("obj.1790fafa", list(mothership)))
 
 /obj/item/organ/tongue/abductor/modify_speech(datum/source, list/speech_args)
 	//Hacks
@@ -594,14 +595,14 @@
 /obj/item/organ/tongue/robot/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	receiver.grant_language(/datum/language/machine, source = LANGUAGE_TONGUE)
-	to_chat(receiver, span_boldnotice("You gain a new understanding of [/datum/language/machine::name]."))
+	to_chat(receiver, span_boldnotice(LANG("obj.7ce36525", list(/datum/language/machine::name))))
 
 /obj/item/organ/tongue/robot/on_mob_remove(mob/living/carbon/owner)
 	. = ..()
 	if(QDELING(owner))
 		return
 	owner.remove_language(/datum/language/machine, source = LANGUAGE_TONGUE)
-	to_chat(owner, span_boldnotice("You're not really sure what beeps and boops mean anymore."))
+	to_chat(owner, span_boldnotice(LANG("obj.314e1cd9", null)))
 
 /obj/item/organ/tongue/snail
 	name = "radula"

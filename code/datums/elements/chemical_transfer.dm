@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //the default chemical transfer messages if they aren't set
 #define DEFAULT_ATTACKER_MESSAGE span_notice("You transfer your chemicals to %VICTIM.")
 #define DEFAULT_VICTIM_MESSAGE span_userdanger("Chemicals have been transferred into you from %ATTACKER!")
@@ -48,7 +49,7 @@
 			probability_description = "often"
 		if(100)
 			probability_description = "always"
-	examine_list += span_notice("Attacking with [target] will [probability_description] transfer reagents inside of you to your victim.")
+	examine_list += span_notice(LANG("datum.817d46e7", list(target, probability_description)))
 
 ///signal called on parent being used to attack a victim
 /datum/element/chemical_transfer/proc/on_attack(datum/target, mob/living/transfer_victim, mob/living/transfer_attacker)

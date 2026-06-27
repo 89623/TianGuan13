@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Beacon to launch a new mining setup when activated. For testing and speed!
 /obj/item/boulder_beacon
 	name = "boulder beacon"
@@ -8,7 +9,7 @@
 	var/uses = 3
 
 /obj/item/boulder_beacon/attack_self()
-	visible_message(span_warning("\The [src] begins to beep loudly!"))
+	visible_message(span_warning(LANG("obj.41be4252", list(src))))
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
 
 /**

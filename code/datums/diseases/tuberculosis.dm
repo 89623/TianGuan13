@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/tuberculosis
 	form = "Fungus"
 	name = "Fungal Tuberculosis"
@@ -22,25 +23,25 @@
 
 	if(SPT_PROB(stage * 2, seconds_per_tick))
 		affected_mob.emote("cough")
-		to_chat(affected_mob, span_danger("Your chest hurts."))
+		to_chat(affected_mob, span_danger(LANG("datum.500c1472", null)))
 
 	switch(stage)
 		if(2)
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your stomach violently rumbles!"))
+				to_chat(affected_mob, span_danger(LANG("datum.279d9ec8", null)))
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel a cold sweat form."))
+				to_chat(affected_mob, span_danger(LANG("datum.be804c2b", null)))
 		if(4)
 			var/need_mob_update = FALSE
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_userdanger("You see four of everything!"))
+				to_chat(affected_mob, span_userdanger(LANG("datum.7685f01d", null)))
 				affected_mob.set_dizzy_if_lower(10 SECONDS)
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel a sharp pain from your lower chest!"))
+				to_chat(affected_mob, span_danger(LANG("datum.4709a97c", null)))
 				need_mob_update += affected_mob.adjust_oxy_loss(5, updating_health = FALSE)
 				affected_mob.emote("gasp")
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel air escape from your lungs painfully."))
+				to_chat(affected_mob, span_danger(LANG("datum.27bba40e", null)))
 				need_mob_update += affected_mob.adjust_oxy_loss(25, updating_health = FALSE)
 				affected_mob.emote("gasp")
 			if(need_mob_update)
@@ -52,10 +53,10 @@
 				need_mob_update += affected_mob.adjust_stamina_loss(70, updating_stamina = FALSE)
 			if(SPT_PROB(5, seconds_per_tick))
 				need_mob_update += affected_mob.adjust_stamina_loss(100, updating_stamina = FALSE)
-				affected_mob.visible_message(span_warning("[affected_mob] faints!"), span_userdanger("You surrender yourself and feel at peace..."))
+				affected_mob.visible_message(span_warning(LANG("datum.3f2076ad", list(affected_mob))), span_userdanger(LANG("datum.f1a296da", null)))
 				affected_mob.AdjustSleeping(10 SECONDS)
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_userdanger("You feel your mind relax and your thoughts drift!"))
+				to_chat(affected_mob, span_userdanger(LANG("datum.8b1cef57", null)))
 				affected_mob.adjust_confusion_up_to(8 SECONDS, 100 SECONDS)
 			if(SPT_PROB(5, seconds_per_tick))
 				affected_mob.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 20)
@@ -68,7 +69,7 @@
 					var/mob/living/carbon/human/human_victim = affected_mob
 					to_chat(human_victim, span_danger("[human_victim.w_uniform? pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit...", "You feel like taking off some clothes...") : "You feel uncomfortably hot..."]"))
 				else
-					to_chat(affected_mob, span_danger("You feel uncomfortably hot..."))
+					to_chat(affected_mob, span_danger(LANG("datum.f283b9b8", null)))
 				affected_mob.adjust_bodytemperature(40)
 			if(need_mob_update)
 				affected_mob.updatehealth()

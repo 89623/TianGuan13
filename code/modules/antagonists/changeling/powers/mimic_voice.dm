@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/mimicvoice
 	name = "Mimic Voice"
 	desc = "We shape our vocal glands to sound like a desired voice. Maintaining this power slows chemical production."
@@ -14,17 +15,17 @@
 	if(user.override_voice)
 		changeling.chem_recharge_slowdown -= 0.25
 		user.override_voice = ""
-		to_chat(user, span_notice("We return our vocal glands to their original position."))
+		to_chat(user, span_notice(LANG("datum.67a9ab0b", null)))
 		return
 
-	var/mimic_voice = sanitize_name(tgui_input_text(user, "Enter a name to mimic", "Mimic Voice", max_length = MAX_NAME_LEN))
+	var/mimic_voice = sanitize_name(tgui_input_text(user, LANG("datum.8ab945b2", null), LANG("datum.6bc9723c", null), max_length = MAX_NAME_LEN))
 	if(!mimic_voice)
 		return
 	..()
 	changeling.chem_recharge_slowdown += 0.25
 	user.override_voice = mimic_voice
-	to_chat(user, span_notice("We shape our glands to take the voice of <b>[mimic_voice]</b>, this will slow down regenerating chemicals while active."))
-	to_chat(user, span_notice("Use this power again to return to our original voice and return chemical production to normal levels."))
+	to_chat(user, span_notice(LANG("datum.f298c79e", list(mimic_voice))))
+	to_chat(user, span_notice(LANG("datum.fdb6871d", null)))
 	return TRUE
 
 /datum/action/changeling/mimicvoice/Remove(mob/living/carbon/human/user)
@@ -32,5 +33,5 @@
 	if(user.override_voice)
 		changeling?.chem_recharge_slowdown = max(0, changeling.chem_recharge_slowdown - 0.25)
 		user.override_voice = ""
-		to_chat(user, span_notice("Our vocal glands return to their original position."))
+		to_chat(user, span_notice(LANG("datum.ff065c2d", null)))
 	. = ..()

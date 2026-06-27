@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Max number of unanchored items that will be moved from a tile when attempting to add a window to a grille.
 #define CLEAR_TILE_MOVE_LIMIT 20
 
@@ -60,9 +61,9 @@
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	if(anchored)
-		. += span_notice("It's secured in place with [EXAMINE_HINT("screws")]. The rods look like they could be [EXAMINE_HINT("cut")] through.")
+		. += span_notice(LANG("obj.2e0de192", list(EXAMINE_HINT("screws"), EXAMINE_HINT("cut"))))
 	else
-		. += span_notice("The anchoring screws are [EXAMINE_HINT("unscrewed")]. The rods look like they could be [EXAMINE_HINT("cut")] through.")
+		. += span_notice(LANG("obj.3119bad7", list(EXAMINE_HINT("unscrewed"), EXAMINE_HINT("cut"))))
 
 /obj/structure/grille/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -114,7 +115,7 @@
 			var/turf/T = loc
 
 			if(repair_grille())
-				balloon_alert(user, "grille rebuilt")
+				balloon_alert(user, LANG("obj.5d0d7ecc", null))
 			if(!clear_tile(user))
 				return FALSE
 
@@ -125,7 +126,7 @@
 			//checks if its a valid build direction
 			if(!initial(window_path.fulltile))
 				if(!valid_build_direction(loc, user.dir, is_fulltile = FALSE))
-					balloon_alert(user, "window already here!")
+					balloon_alert(user, LANG("obj.6cae9ae5", null))
 					return FALSE
 
 			var/obj/structure/window/WD = new window_path(T, user.dir)
@@ -148,10 +149,10 @@
 	if(!unanchored_items_on_tile)
 		return TRUE
 
-	to_chat(user, span_notice("You move [unanchored_items_on_tile == 1 ? "[last_item_moved]" : "some things"] out of the way."))
+	to_chat(user, span_notice(LANG("obj.6f96b2a3", list(unanchored_items_on_tile == 1 ? "[last_item_moved]" : "some things"))))
 
 	if(unanchored_items_on_tile - CLEAR_TILE_MOVE_LIMIT > 0)
-		to_chat(user, span_warning("There's still too much stuff in the way!"))
+		to_chat(user, span_warning(LANG("obj.5466fff0", null)))
 		return FALSE
 
 	return TRUE
@@ -186,7 +187,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
-	user.visible_message(span_warning("[user] hits [src]."), null, null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_warning(LANG("obj.9180d57a", list(user, src))), null, null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "hit")
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, MELEE, 1)
@@ -194,7 +195,7 @@
 /obj/structure/grille/attack_alien(mob/living/user, list/modifiers)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message(span_warning("[user] mangles [src]."), null, null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_warning(LANG("obj.1bffef78", list(user, src))), null, null, COMBAT_MESSAGE_RANGE)
 	if(!shock(user, 70))
 		take_damage(20, BRUTE, MELEE, 1)
 
@@ -228,7 +229,7 @@
 		return FALSE
 	set_anchored(!anchored)
 	user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
-		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
+		span_notice(LANG("obj.1175c81a", list(anchored ? "fasten [src] to" : "unfasten [src] from"))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
@@ -237,8 +238,8 @@
 		if(shock(user, 90))
 			return
 		var/obj/item/stack/rods/R = W
-		user.visible_message(span_notice("[user] rebuilds the broken grille."), \
-			span_notice("You rebuild the broken grille."))
+		user.visible_message(span_notice(LANG("obj.21144cca", list(user))), \
+			span_notice(LANG("obj.90815e95", null)))
 		repair_grille()
 		R.use(1)
 		return TRUE
@@ -248,18 +249,18 @@
 		if (!broken)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
-				to_chat(user, span_warning("You need at least two sheets of glass for that!"))
+				to_chat(user, span_warning(LANG("obj.0f46f4af", null)))
 				return
 			var/dir_to_set = SOUTHWEST
 			if(!anchored)
-				to_chat(user, span_warning("[src] needs to be fastened to the floor first!"))
+				to_chat(user, span_warning(LANG("obj.79102fe3", list(src))))
 				return
 			for(var/obj/structure/window/WINDOW in loc)
 				to_chat(user, span_warning("There is already a window there!"))
 				return
 			if(!clear_tile(user))
 				return
-			to_chat(user, span_notice("You start placing the window..."))
+			to_chat(user, span_notice(LANG("obj.1c659472", null)))
 			if(do_after(user,20, target = src))
 				if(!src.loc || !anchored) //Grille broken or unanchored while waiting
 					return
@@ -290,7 +291,7 @@
 				WD.set_anchored(FALSE)
 				WD.state = 0
 				ST.use(2)
-				to_chat(user, span_notice("You place [WD] on [src]."))
+				to_chat(user, span_notice(LANG("obj.7a67ae81", list(WD, src))))
 			return
 //window placing end
 

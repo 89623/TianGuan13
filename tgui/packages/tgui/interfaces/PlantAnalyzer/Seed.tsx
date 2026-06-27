@@ -16,6 +16,7 @@ import {
 import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
+import { translateCurrent } from '../../i18n/catalog'; // NOVA EDIT - i18n: localize duration unit words
 import { Fallback } from './Fallback';
 import type { PlantAnalyzerData, ReagentData, SeedData } from './types';
 
@@ -500,25 +501,37 @@ function expectedReagentVolume(
   return Math.round(reagent.rate * baseVolume * (seed_data.potency / 100)) || 0;
 }
 
+// NOVA EDIT ADDITION START - i18n: localize "minute(s)"/"second(s)" unit words.
+// Chinese has no plural, so when the unit word is translated (non-en locale) we emit
+// "<n> <译词>" and drop the English plural 's'; on en it pluralizes as before.
+function formatDurationUnit(n: number, singular: 'minute' | 'second'): string {
+  const translated = translateCurrent(singular);
+  if (translated !== singular) {
+    return `${n} ${translated}`;
+  }
+  return `${n} ${singular}${n > 1 ? 's' : ''}`;
+}
+// NOVA EDIT ADDITION END
+
 function formatPerSecond(
   value: number,
   cycle_seconds: number,
   simplify: boolean = true,
 ) {
   if (!simplify) {
-    return `${value * cycle_seconds} second${value * cycle_seconds > 1 ? 's' : ''}`;
+    return formatDurationUnit(value * cycle_seconds, 'second'); // NOVA EDIT - i18n: was inline `${...} second(s)`
   }
   const seconds = Math.round(value * cycle_seconds);
   if (seconds < 60) {
-    return `${seconds} second${seconds > 1 ? 's' : ''}`;
+    return formatDurationUnit(seconds, 'second'); // NOVA EDIT - i18n: was inline `${seconds} second(s)`
   }
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
-  return `${minutes} minute${minutes > 1 ? 's' : ''}${
-    remainingSeconds > 0
-      ? `, ${remainingSeconds} second${remainingSeconds > 1 ? 's' : ''}`
-      : ''
+  // NOVA EDIT CHANGE - ORIGINAL: return `${minutes} minute${minutes > 1 ? 's' : ''}${remainingSeconds > 0 ? `, ${remainingSeconds} second${remainingSeconds > 1 ? 's' : ''}` : ''}`;
+  return `${formatDurationUnit(minutes, 'minute')}${
+    remainingSeconds > 0 ? `, ${formatDurationUnit(remainingSeconds, 'second')}` : ''
   }`;
+  // NOVA EDIT CHANGE END
 }
 
 function getTraitInfo(trait: string, trait_db: PlantAnalyzerData['trait_db']) {

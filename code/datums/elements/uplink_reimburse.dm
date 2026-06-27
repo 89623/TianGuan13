@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Uplink Reimburse element.
  * When element is applied onto items, it allows them to be reimbursed if an user pokes an item with a uplink component with them.
@@ -34,10 +35,10 @@
 	SIGNAL_HANDLER
 
 	if(!IS_TRAITOR(user) && !IS_NUKE_OP(user))
-		examine_list += span_warning("There's a label on the side, but it's written in indecipherable gibberish. You have no idea what it means!")
+		examine_list += span_warning(LANG("datum.cea30691", null))
 		return
 
-	examine_list += span_notice("There's a label written in codespeak on the side, saying that this item can be refunded for [refundable_tc] by applying it onto an uplink.")
+	examine_list += span_notice(LANG("datum.ca11e097", list(refundable_tc)))
 
 /datum/element/uplink_reimburse/proc/reimburse(obj/item/refund_item, mob/user, datum/component/uplink/uplink_comp)
 	SIGNAL_HANDLER
@@ -45,7 +46,7 @@
 	if(!uplink_comp)
 		CRASH("No uplink component in arguments detected")
 
-	to_chat(user, span_notice("You tap [uplink_comp.parent] with [refund_item], and a moment after [refund_item] disappears in a puff of red smoke!"))
+	to_chat(user, span_notice(LANG("datum.e883569b", list(uplink_comp.parent, refund_item, refund_item))))
 	do_sparks(2, source = uplink_comp.parent)
 	uplink_comp.uplink_handler.add_telecrystals(refundable_tc)
 	SEND_SIGNAL(refund_item, COMSIG_ITEM_TC_REIMBURSED)

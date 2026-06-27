@@ -29,6 +29,12 @@
 	if(target == world)
 		target = GLOB.clients
 
+	// NOVA EDIT ADDITION START - i18n - 聊天层 AC 子串兜底（默认关，config I18N_CHAT_FALLBACK 开；英文服/未开启 no-op）
+	if(GLOB.i18n_chat_fallback && GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(html) html = lang_fallback_apply(html)
+		if(text) text = lang_fallback_apply(text)
+	// NOVA EDIT ADDITION END
+
 	// Build a message
 	var/message = list()
 	if(type) message["type"] = type
@@ -74,6 +80,12 @@
 		CRASH("Empty or null string in to_chat proc call.")
 	if(target == world)
 		target = GLOB.clients
+
+	// NOVA EDIT ADDITION START - i18n - 聊天层 AC 子串兜底（默认关，config I18N_CHAT_FALLBACK 开；英文服/未开启 no-op）
+	if(GLOB.i18n_chat_fallback && GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(html) html = lang_fallback_apply(html)
+		if(text) text = lang_fallback_apply(text)
+	// NOVA EDIT ADDITION END
 
 	// Build a message
 	var/message = list()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * This section contain all procs that helps building, destroy and control the hfr
  */
@@ -85,9 +86,9 @@
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/activate(mob/living/user)
 	if(active)
-		to_chat(user, span_notice("You already activated the machine."))
+		to_chat(user, span_notice(LANG("obj.6dda691a", null)))
 		return
-	to_chat(user, span_notice("You link all parts toghether."))
+	to_chat(user, span_notice(LANG("obj.771c266f", null)))
 	active = TRUE
 	update_appearance(UPDATE_ICON)
 	linked_interface.active = TRUE

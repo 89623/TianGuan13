@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/hallucination/blood_flow
 	random_hallucination_weight = 3
 	hallucination_tier = HALLUCINATION_TIER_COMMON
@@ -31,7 +32,7 @@
 	RegisterSignals(bleeding_bodypart, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED), PROC_REF(stop_bleeding))
 	RegisterSignal(hallucinator, COMSIG_LIVING_UPDATE_BLOOD_STATUS, PROC_REF(stop_bleeding))
 
-	to_chat(hallucinator, span_warning("Your [bleeding_bodypart.plaintext_zone] looses a spray of blood!"))
+	to_chat(hallucinator, span_warning(LANG("datum.a00c1e95", list(bleeding_bodypart.plaintext_zone))))
 	var/bleed_duration = rand(16 SECONDS, 40 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(stop_bleeding)), bleed_duration)
 	if(prob(25))
@@ -57,7 +58,7 @@
 	if(QDELETED(src) || QDELETED(hallucinator) || QDELETED(bleeding_bodypart))
 		return
 
-	to_chat(hallucinator, span_warning("The blood doesn't stop flowing, yet [bleeding_bodypart.plaintext_zone] doesn't seem to hurt..."))
+	to_chat(hallucinator, span_warning(LANG("datum.662a3d81", list(bleeding_bodypart.plaintext_zone))))
 
 /datum/hallucination/blood_flow/proc/on_update_blood_status(datum/source, had_blood, has_blood, old_blood_volume, new_blood_volume)
 	SIGNAL_HANDLER
@@ -69,7 +70,7 @@
 	UnregisterSignal(bleeding_bodypart, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED))
 	UnregisterSignal(hallucinator, COMSIG_LIVING_UPDATE_BLOOD_STATUS)
 	if(!QDELETED(bleeding_bodypart))
-		to_chat(hallucinator, span_warning("Your [bleeding_bodypart.plaintext_zone] stops bleeding."))
+		to_chat(hallucinator, span_warning(LANG("datum.b0f9ae8f", list(bleeding_bodypart.plaintext_zone))))
 	if(!QDELETED(src))
 		qdel(src)
 

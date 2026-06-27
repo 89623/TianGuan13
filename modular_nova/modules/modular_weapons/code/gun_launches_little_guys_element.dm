@@ -28,7 +28,7 @@
 /datum/element/gun_launches_little_guys/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("It has some serious kick to it, smaller users should take caution while firing.")
+	examine_list += span_notice(LANG("datum.6c02df00", null))
 
 /// Checks if the shooter is just a little guy. If so? Throw it back.
 /datum/element/gun_launches_little_guys/proc/throw_it_back(obj/item/gun/weapon, mob/living/carbon/user, atom/target, params, zone_override)
@@ -42,5 +42,5 @@
 	user.Knockdown(1 SECONDS)
 	user.throw_at(throw_target, throwing_range, throwing_force)
 
-	user.visible_message(span_warning("[weapon] sends [user] flying back as it fires!"), \
-		span_warning("[weapon] sends you flying back as it fires!"))
+	user.visible_message(span_warning(LANG("datum.9c25e0ba", list(weapon, user))), \
+		span_warning(LANG("datum.fd2a9cb9", list(weapon))))

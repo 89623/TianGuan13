@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/autosurgeon
 	name = "autosurgeon"
 	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
@@ -37,11 +38,11 @@
 /obj/item/autosurgeon/proc/load_organ(obj/item/organ/loaded_organ, mob/living/user)
 	if(user)
 		if(stored_organ)
-			to_chat(user, span_alert("[src] already has an implant stored."))
+			to_chat(user, span_alert(LANG("obj.e7325773", list(src))))
 			return
 
 		if(uses <= 0)
-			to_chat(user, span_alert("[src] is used up and cannot be loaded with more implants."))
+			to_chat(user, span_alert(LANG("obj.5aa6b652", list(src))))
 			return
 
 		if(organ_whitelist.len)
@@ -51,11 +52,11 @@
 					organ_whitelisted = TRUE
 					break
 			if(!organ_whitelisted)
-				to_chat(user, span_alert("[src] is not compatible with [loaded_organ]."))
+				to_chat(user, span_alert(LANG("obj.fbb43e6b", list(src, loaded_organ))))
 				return
 
 		if(!user.transferItemToLoc(loaded_organ, src))
-			to_chat(user, span_alert("[loaded_organ] is stuck to your hand!"))
+			to_chat(user, span_alert(LANG("obj.1dbf8014", list(loaded_organ))))
 			return
 
 	stored_organ = loaded_organ
@@ -66,28 +67,28 @@
 
 /obj/item/autosurgeon/proc/use_autosurgeon(mob/living/target, mob/living/user, implant_time)
 	if(!stored_organ)
-		to_chat(user, span_alert("[src] currently has no implant stored."))
+		to_chat(user, span_alert(LANG("obj.7c5b6298", list(src))))
 		return
 
 	if(uses <= 0)
-		to_chat(user, span_alert("[src] has already been used. The tools are dull and won't reactivate."))
+		to_chat(user, span_alert(LANG("obj.8104ad50", list(src))))
 		return
 
 	if(implant_time)
 		user.visible_message(
-			span_notice("[user] prepares to use [src] on [target]."),
-			span_notice("You prepare to use [src] on [target]."),
+			span_notice(LANG("obj.4e79cbb5", list(user, src, target))),
+			span_notice(LANG("obj.a3bf96f5", list(src, target))),
 		)
 		if(!do_after(user, (implant_time * surgery_speed), target))
 			return
 
 	if(target != user)
 		log_combat(user, target, "autosurgeon implanted [stored_organ] into", "[src]", "in [AREACOORD(target)]")
-		user.visible_message(span_notice("[user] presses a button on [src] as it plunges into [target]'s body."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
+		user.visible_message(span_notice(LANG("obj.9cb3659c", list(user, src, target))), span_notice(LANG("obj.8bbf310a", list(src, target))))
 	else
 		user.visible_message(
-			span_notice("[user] presses a button on [src] as it plunges into [user.p_their()] body."),
-			span_notice("You press a button on [src] as it plunges into your body."),
+			span_notice(LANG("obj.474deacb", list(user, src, user.p_their()))),
+			span_notice(LANG("obj.ceb24710", list(src))),
 		)
 
 	if (stored_organ.valid_zones && user.get_held_index_of_item(src))
@@ -103,7 +104,7 @@
 				break
 
 	if (!stored_organ.Insert(target)) // insert stored organ into the user
-		balloon_alert(user, "insertion failed!")
+		balloon_alert(user, LANG("obj.2c800922", null))
 		return
 
 	stored_organ = null
@@ -113,7 +114,7 @@
 
 	uses--
 	if(uses <= 0)
-		desc = "[initial(desc)] Looks like it's been used up."
+		desc = LANG("obj.8c69c278", list(initial(desc)))
 
 /obj/item/autosurgeon/attack_self(mob/user)//when the object it used...
 	use_autosurgeon(user, user)
@@ -132,7 +133,7 @@
 	if(..())
 		return TRUE
 	if(!stored_organ)
-		to_chat(user, span_warning("There's no implant in [src] for you to remove!"))
+		to_chat(user, span_warning(LANG("obj.215a92c5", list(src))))
 	else
 		var/atom/drop_loc = user.drop_location()
 		for(var/atom/movable/stored_implant as anything in src)
@@ -143,7 +144,7 @@
 		screwtool.play_tool_sound(src)
 		uses--
 		if(uses <= 0)
-			desc = "[initial(desc)] Looks like it's been used up."
+			desc = LANG("obj.8c69c278", list(initial(desc)))
 		update_appearance(UPDATE_ICON)
 	return TRUE
 

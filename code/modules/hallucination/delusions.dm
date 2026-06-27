@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A hallucination that makes us and (possibly) other people look like something else.
 /datum/hallucination/delusion
 	abstract_hallucination_parent = /datum/hallucination/delusion
@@ -102,7 +103,7 @@
 		hallucinator.client.images |= funny_image
 
 	if(play_wabbajack)
-		to_chat(hallucinator, span_hear("...wabbajack...wabbajack..."))
+		to_chat(hallucinator, span_hear(LANG("datum.f507a8a3", null)))
 		hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/magic/staff_change.ogg', 50, TRUE)
 
 	if(duration > 0)

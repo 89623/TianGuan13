@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/multitool/circuit
 	name = "circuit multitool"
 	desc = "A circuit multitool. Used to mark entities which can then be uploaded to components by pressing the upload button on a port. \
@@ -14,7 +15,7 @@
 
 /obj/item/multitool/circuit/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [marked_atom? "a" : "no"] marked entity registered.")
+	. += span_notice(LANG("obj.e73ac622", list(marked_atom? "a" : "no")))
 
 /obj/item/multitool/circuit/attack_self(mob/user, modifiers)
 	. = ..()
@@ -23,7 +24,7 @@
 	if(!marked_atom)
 		return
 
-	say("Cleared marked targets.")
+	say(LANG("obj.fe4a3e26", null))
 	clear_marked_atom()
 	return TRUE
 
@@ -40,7 +41,7 @@
 	mark_target(target)
 
 /obj/item/multitool/circuit/proc/mark_target(atom/target)
-	say("Marked [target].")
+	say(LANG("obj.8d86a517", list(target)))
 	marked_atom = target
 	RegisterSignal(marked_atom, COMSIG_QDELETING, PROC_REF(cleanup_marked_atom))
 	update_icon()
@@ -92,7 +93,7 @@
 	if(chosen == target || (chosen in (carbon_target ? carbon_target.get_visible_items() : target.get_equipped_items(INCLUDE_HELD))))
 		mark_target(chosen)
 	else
-		balloon_alert(user, "cannot mark entity")
+		balloon_alert(user, LANG("obj.d5e9ce56", null))
 
 /obj/item/multitool/circuit/proc/check_menu(mob/user, mob/living/target)
 	return !marked_atom && user.is_holding(src) && user.Adjacent(target)

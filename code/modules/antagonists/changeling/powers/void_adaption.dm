@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/void_adaption
 	name = "Void Adaption"
 	desc = "We prepare our cells to resist the hostile environment outside of the station. We may freely travel wherever we wish."
@@ -58,7 +59,7 @@
 		on_removed_adaption(void_adapted, "Our cells relax in safer air.")
 		return
 	var/datum/antagonist/changeling/changeling_data = IS_CHANGELING(void_adapted)
-	to_chat(void_adapted, span_changeling("Our cells harden themselves against the [pick(active_reasons)]."))
+	to_chat(void_adapted, span_changeling(LANG("datum.b2c0f5ba", list(pick(active_reasons)))))
 	changeling_data?.chem_recharge_slowdown -= recharge_slowdown
 	currently_active = TRUE
 

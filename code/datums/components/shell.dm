@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Makes an atom a shell that is able to take in an attached circuit.
 /datum/component/shell
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -132,21 +133,21 @@
 		return
 
 	if(!attached_circuit)
-		examine_text += span_notice("There is no integrated circuit attached.")
+		examine_text += span_notice(LANG("datum.75523855", null))
 		return
 
-	examine_text += span_notice("There is an integrated circuit attached. Use a multitool to access the wiring. Use a screwdriver to remove it from [source].")
-	examine_text += span_notice("The cover panel to the integrated circuit is [locked? "locked" : "unlocked"].")
+	examine_text += span_notice(LANG("datum.446e065d", list(source)))
+	examine_text += span_notice(LANG("datum.5baa16e7", list(locked? "locked" : "unlocked")))
 	var/obj/item/stock_parts/power_store/cell = attached_circuit.cell
-	examine_text += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
+	examine_text += span_notice(LANG("datum.00f8f6f7", list(cell ? round(cell.percent(), 1) : 0)))
 
 	if (shell_flags & SHELL_FLAG_USB_PORT)
-		examine_text += span_notice("There is a <b>USB port</b> on the front.")
+		examine_text += span_notice(LANG("datum.673807e0", null))
 
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		examine_text += span_notice("The shell does not require a battery to function and will draw from the area's APC whenever possible.")
+		examine_text += span_notice(LANG("datum.c8bf911d", null))
 		if(!source.anchored)
-			examine_text += span_danger("<b>The integrated circuit is non-functional whilst the shell is unanchored.</b>")
+			examine_text += span_danger(LANG("datum.4cb38fcd", null))
 
 
 /**
@@ -168,7 +169,7 @@
 		return
 
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
-		source.balloon_alert(user, "can't put cell in directly!")
+		source.balloon_alert(user, LANG("datum.c74c44c3", null))
 		return
 
 	if(istype(item, /obj/item/inducer))
@@ -183,7 +184,7 @@
 			return ITEM_INTERACT_SUCCESS
 
 		if(!attached_circuit.owner_id && isidcard(item))
-			source.balloon_alert(user, "owner id set for [item]")
+			source.balloon_alert(user, LANG("datum.40c92cc8", list(item)))
 			attached_circuit.owner_id = WEAKREF(item)
 			return ITEM_INTERACT_SUCCESS
 
@@ -200,11 +201,11 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(attached_circuit)
-		source.balloon_alert(user, "there is already a circuitboard inside!")
+		source.balloon_alert(user, LANG("datum.0d1ffa78", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(logic_board.current_size > capacity)
-		source.balloon_alert(user, "this is too large to fit into [parent]!")
+		source.balloon_alert(user, LANG("datum.b3250e5c", list(parent)))
 		return ITEM_INTERACT_BLOCKING
 
 	logic_board.inserter_mind = WEAKREF(user.mind)
@@ -228,7 +229,7 @@
 	if(locked)
 		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
 			return
-		source.balloon_alert(user, "it's locked!")
+		source.balloon_alert(user, LANG("datum.2ffcba26", null))
 		return ITEM_INTERACT_BLOCKING
 
 	attached_circuit.interact(user)
@@ -248,11 +249,11 @@
 	if(locked)
 		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
 			return
-		source.balloon_alert(user, "it's locked!")
+		source.balloon_alert(user, LANG("datum.2ffcba26", null))
 		return ITEM_INTERACT_BLOCKING
 
 	tool.play_tool_sound(parent)
-	source.balloon_alert(user, "you unscrew [attached_circuit] from [parent].")
+	source.balloon_alert(user, LANG("datum.efcab462", list(attached_circuit, parent)))
 	remove_circuit()
 	return ITEM_INTERACT_BLOCKING
 
@@ -274,11 +275,11 @@
 /datum/component/shell/proc/on_circuit_add_component_manually(atom/source, obj/item/circuit_component/added_comp, mob/living/user)
 	SIGNAL_HANDLER
 	if(locked)
-		source.balloon_alert(user, "it's locked!")
+		source.balloon_alert(user, LANG("datum.2ffcba26", null))
 		return COMPONENT_CANCEL_ADD_COMPONENT
 
 	if(attached_circuit.current_size + added_comp.circuit_size > capacity)
-		source.balloon_alert(user, "it won't fit!")
+		source.balloon_alert(user, LANG("datum.8b8513b0", null))
 		return COMPONENT_CANCEL_ADD_COMPONENT
 
 /datum/component/shell/proc/override_power_usage(datum/source, power_to_use)
@@ -367,15 +368,15 @@
 		return
 
 	if (!(shell_flags & SHELL_FLAG_USB_PORT))
-		source.balloon_alert(user, "this shell has no usb ports")
+		source.balloon_alert(user, LANG("datum.c7aa7856", null))
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	if (isnull(attached_circuit))
-		source.balloon_alert(user, "no circuit inside")
+		source.balloon_alert(user, LANG("datum.2c275e5e", null))
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	if(attached_circuit.locked)
-		source.balloon_alert(user, "circuit is locked!")
+		source.balloon_alert(user, LANG("datum.15ea22f4", null))
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	usb_cable.attached_circuit = attached_circuit

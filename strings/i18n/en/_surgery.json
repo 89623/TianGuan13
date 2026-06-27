@@ -1,0 +1,18 @@
+{
+	"if operating on the brain or any chest organs, the bone MUST be sawed": "if operating on the brain or any chest organs, the bone MUST be sawed",
+	"if operating on the brain or any chest organs EXCLUDING the heart, the bone MUST be sawed": "if operating on the brain or any chest organs EXCLUDING the heart, the bone MUST be sawed",
+	"otherwise, the state of the bone doesn't matter": "otherwise, the state of the bone doesn't matter",
+	"organ": "organ",
+	"limb": "limb",
+	"Any item": "Any item",
+	"crowbar": "crowbar",
+	"scalpel": "scalpel",
+	"retractor": "retractor",
+	"cautery": "cautery",
+	"saw": "saw",
+	"drill": "drill",
+	"bonesetter": "bonesetter",
+	"screwdriver": "screwdriver",
+	"wirecutters": "wirecutters",
+	"multitool": "multitool"
+}

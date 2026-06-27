@@ -5,7 +5,7 @@
 
 /obj/item/paper/crumpled/bloody/fluff/stations/lavaland/frozenwake/ui_status(mob/user, datum/ui_state/state)
 	if(!user.has_language(/datum/language/primitive_catgirl))
-		to_chat(user, span_warning("This seems to be in a language you do not understand!"))
+		to_chat(user, span_warning(LANG("obj.d785ed85", null)))
 		return UI_CLOSE
 	. = ..()
 
@@ -172,9 +172,9 @@
 	var/area/ruin/unpowered/frozenwake/puzzle_area = get_frozenwake_puzzle_area(src)
 	if (puzzle_area)
 		puzzle_area.frozenwake_puzzle_controller.register_click(puzzle_id, puzzle_area)
-		to_chat(user, "You touch the statue. The stone hums softly.")
+		to_chat(user, LANG("obj.ad8e49ed", null))
 	else
-		to_chat(user, "DEBUG: Statue outside of puzzle area.")
+		to_chat(user, LANG("obj.51656ba4", null))
 
 
 //Initializing the glow for the steles.

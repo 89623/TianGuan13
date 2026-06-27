@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/cockroach
 	name = "cockroach"
 	desc = "This station is just crawling with bugs."
@@ -151,9 +152,9 @@
 	if(!istype(living_target))
 		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
 	if(!HAS_TRAIT(living_target, TRAIT_PIERCEIMMUNE))
-		living_target.visible_message(span_danger("[living_target] steps onto [cockroach]'s spike!"), span_userdanger("You step onto [cockroach]'s spike!"))
+		living_target.visible_message(span_danger(LANG("mob.4666febc", list(living_target, cockroach))), span_userdanger(LANG("mob.8ffa26f5", list(cockroach))))
 		return TRUE
-	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
+	living_target.visible_message(span_notice(LANG("mob.f408d01f", list(living_target, cockroach))), span_notice(LANG("mob.53c98c41", list(cockroach))))
 	return FALSE
 
 /// Regal rat royal escort

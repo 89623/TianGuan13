@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/item/melee/sickly_blade
 	name = "\improper sickly blade"
@@ -35,7 +36,7 @@
 	if(!check_usability(user))
 		return
 
-	. += span_notice("You can shatter the blade to teleport to a random, (mostly) safe location by <b>activating it in-hand</b>.")
+	. += span_notice(LANG("obj.fe6cdb72", null))
 
 /// Checks if the passed mob can use this blade without being stunned
 /obj/item/melee/sickly_blade/proc/check_usability(mob/living/user)
@@ -46,7 +47,7 @@
 	if(.)
 		return .
 	if(!check_usability(user))
-		to_chat(user, span_danger("You feel a pulse of alien intellect lash out at your mind!"))
+		to_chat(user, span_danger(LANG("obj.b9d5f153", null)))
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
 		return TRUE
@@ -58,9 +59,9 @@
 	if(heretic_datum?.unlimited_blades)
 		return
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
-		user.balloon_alert(user, "can't escape!")
+		user.balloon_alert(user, LANG("obj.49a104d1", null))
 		if(escape_attempts > 2)
-			to_chat(user, span_hypnophrase(span_big("Cowardly sheep will be slaughtered!")))
+			to_chat(user, span_hypnophrase(span_big(LANG("obj.d3652838", null))))
 			playsound(src, SFX_SHATTER, 70, TRUE)
 			var/obj/item/bodypart/to_remove = user.get_active_hand()
 			to_remove.dismember()
@@ -71,7 +72,7 @@
 		escape_timer = addtimer(CALLBACK(src, PROC_REF(reset_attempts)), 2 SECONDS, TIMER_STOPPABLE)
 		return
 	if(HAS_TRAIT(user, TRAIT_NO_TELEPORT))
-		user.balloon_alert(user, "can't break!")
+		user.balloon_alert(user, LANG("obj.1af06ff6", null))
 		return
 	seek_safety(user)
 
@@ -84,11 +85,11 @@
 	var/turf/safe_turf = find_safe_turf(z, extended_safety_checks = TRUE)
 	if(check_usability(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
-			to_chat(user, span_warning("As you shatter [src], you feel a gust of energy flow through your body. [after_use_message]"))
+			to_chat(user, span_warning(LANG("obj.5d413488", list(src, after_use_message))))
 		else
-			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
+			to_chat(user, span_warning(LANG("obj.c616d778", list(src))))
 	else
-		to_chat(user,span_warning("You shatter [src]."))
+		to_chat(user,span_warning(LANG("obj.67b21342", list(src))))
 	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
@@ -187,7 +188,7 @@
 	// We're officially behind them, apply effects
 	living_target.AdjustParalyzed(1.5 SECONDS)
 	living_target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
-	living_target.balloon_alert(user, "backstab!")
+	living_target.balloon_alert(user, LANG("obj.69d80133", null))
 	playsound(living_target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
 
 /obj/item/melee/sickly_blade/dark/dropped(mob/user, silent)
@@ -275,10 +276,10 @@
 		to_chat(user, span_cult_large(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
 		user.apply_damage(5, BURN, user.get_active_hand())
 		playsound(src, SFX_SEAR, 25, TRUE)
-		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
+		to_chat(user, span_danger(LANG("obj.1b557bff", null))) // Nar nar might not care but their essence still doesn't like you
 	else if(prob(15))
-		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))
-		to_chat(user, span_danger("Horrible, unintelligible utterances flood your mind!"))
+		to_chat(user, span_big(span_hypnophrase(LANG("obj.f8b8d55c", null))))
+		to_chat(user, span_danger(LANG("obj.4fad2b9a", null)))
 		user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15) // This can kill you if you ignore it
 	return TRUE
 

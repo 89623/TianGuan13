@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/igniter
 	name = "igniter"
 	desc = "It's useful for igniting plasma."
@@ -38,21 +39,21 @@
 
 /obj/machinery/igniter/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a [EXAMINE_HINT("multitool")] to set its ID to match your ignition controller's ID.")
-	. += span_notice("It could be [EXAMINE_HINT("welded")] apart.")
+	. += span_notice(LANG("obj.3cf9245e", list(EXAMINE_HINT("multitool"))))
+	. += span_notice(LANG("obj.5f2a74d5", list(EXAMINE_HINT("welded"))))
 
 /obj/machinery/igniter/welder_act(mob/living/user, obj/item/tool)
 	if(on)
 		return
 
 	if(!tool.tool_start_check(user, amount = 2))
-		balloon_alert(user, "not enough fuel!")
+		balloon_alert(user, LANG("obj.161985b7", null))
 		return
 
-	loc.balloon_alert(user, "dismantling [src]")
+	loc.balloon_alert(user, LANG("obj.4dc14b15", list(src)))
 	if(!tool.use_tool(src, user, delay = 2.5 SECONDS, amount = 2, volume = 50))
 		return
-	loc.balloon_alert(user, "[src] dismantled")
+	loc.balloon_alert(user, LANG("obj.b6cf49cc", list(src)))
 
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -62,12 +63,12 @@
 	new /obj/item/assembly/igniter(loc)
 
 /obj/machinery/igniter/multitool_act(mob/living/user, obj/item/tool)
-	var/change_id = tgui_input_number(user, "Set the igniter controller's ID", "Igniter ID", id, 100)
+	var/change_id = tgui_input_number(user, LANG("obj.042c4d04", null), LANG("obj.d7898442", null), id, 100)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
-	balloon_alert(user, "id set to [id]")
-	to_chat(user, span_notice("You change the ID to [id]."))
+	balloon_alert(user, LANG("obj.9bbb21f5", list(id)))
+	to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/igniter/incinerator_ordmix
@@ -186,18 +187,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
 /obj/machinery/sparker/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a [EXAMINE_HINT("multitool")] to set its ID to match your ignition controller's ID.")
-	. += span_notice("It could be [EXAMINE_HINT("welded")] apart.")
+	. += span_notice(LANG("obj.3cf9245e", list(EXAMINE_HINT("multitool"))))
+	. += span_notice(LANG("obj.5f2a74d5", list(EXAMINE_HINT("welded"))))
 
 /obj/machinery/sparker/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 1))
-		balloon_alert(user, "not enough fuel!")
+		balloon_alert(user, LANG("obj.161985b7", null))
 		return TRUE
 
-	loc.balloon_alert(user, "dismantling [src]")
+	loc.balloon_alert(user, LANG("obj.4dc14b15", list(src)))
 	if(!tool.use_tool(src, user, delay = 1.5 SECONDS, amount = 1, volume = 50))
 		return
-	loc.balloon_alert(user, "[src] dismantled")
+	loc.balloon_alert(user, LANG("obj.b6cf49cc", list(src)))
 
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -206,12 +207,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	new /obj/item/wallframe/sparker(loc)
 
 /obj/machinery/sparker/multitool_act(mob/living/user, obj/item/tool)
-	var/change_id = tgui_input_number(user, "Set the sparker controller's ID", "Sparker ID", id, 100)
+	var/change_id = tgui_input_number(user, LANG("obj.fa08ed98", null), LANG("obj.8961924c", null), id, 100)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
-	balloon_alert(user, "id set to [id]")
-	to_chat(user, span_notice("You change the ID to [id]."))
+	balloon_alert(user, LANG("obj.9bbb21f5", list(id)))
+	to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sparker/update_icon_state()
@@ -231,9 +232,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	tool.play_tool_sound(src, 50)
 	disable = !disable
 	if (disable)
-		user.visible_message(span_notice("[user] disables \the [src]!"), span_notice("You disable the connection to \the [src]."))
+		user.visible_message(span_notice(LANG("obj.bc94fd37", list(user, src))), span_notice(LANG("obj.02bb1fc0", list(src))))
 	if (!disable)
-		user.visible_message(span_notice("[user] reconnects \the [src]!"), span_notice("You fix the connection to \the [src]."))
+		user.visible_message(span_notice(LANG("obj.f9458d6d", list(user, src))), span_notice(LANG("obj.166ce20b", list(src))))
 	update_appearance()
 	return TRUE
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Kneecapping element replaces the item's secondary attack with an aimed attack at the kneecaps under certain circumstances.
  *
@@ -75,13 +76,13 @@
 	if(LAZYACCESS(attacker.do_afters, weapon))
 		return
 
-	attacker.visible_message(span_warning("[attacker] carefully aims [attacker.p_their()] [weapon] for a swing at [target]'s kneecaps!"), span_danger("You carefully aim \the [weapon] for a swing at [target]'s kneecaps!"))
+	attacker.visible_message(span_warning(LANG("datum.18371113", list(attacker, attacker.p_their(), weapon, target))), span_danger(LANG("datum.4f78cc8c", list(weapon, target))))
 	log_combat(attacker, target, "started aiming a swing to break the kneecaps of", weapon)
 
 	if(!do_after(attacker, 3 SECONDS, target, interaction_key = weapon))
 		return
 
-	attacker.visible_message(span_warning("[attacker] swings [attacker.p_their()] [weapon] at [target]'s kneecaps!"), span_danger("You swing \the [weapon] at [target]'s kneecaps!"))
+	attacker.visible_message(span_warning(LANG("datum.dde6189e", list(attacker, attacker.p_their(), weapon, target))), span_danger(LANG("datum.10db0b6e", list(weapon, target))))
 
 	var/min_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_SEVERE, return_value_if_no_wound = 30, wound_source = weapon)
 	var/max_wound = leg.get_wound_threshold_of_wound_type(WOUND_BLUNT, WOUND_SEVERITY_CRITICAL, return_value_if_no_wound = 50, wound_source = weapon)

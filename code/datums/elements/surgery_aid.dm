@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Item can be applied to mobs to prepare them for surgery (allowing people to operate on them)
 /datum/element/surgery_aid
 	element_flags = ELEMENT_BESPOKE
@@ -51,10 +52,10 @@
 	var/datum/status_effect/surgery_prepped/prep = target_mob.has_status_effect(__IMPLIED_TYPE__)
 	if(isnull(prep) || !(body_zone in prep.zones))
 		target_mob.apply_status_effect(/datum/status_effect/surgery_prepped, body_zone, aid_name)
-		target_mob.balloon_alert(surgeon, "[parse_zone(body_zone)] surgery prepared")
+		target_mob.balloon_alert(surgeon, LANG("datum.4c13084a", list(parse_zone(body_zone))))
 		return
 	prep.untrack_surgery(body_zone)
-	target_mob.balloon_alert(surgeon, "surgery cleared")
+	target_mob.balloon_alert(surgeon, LANG("datum.0e520abb", null))
 
 /// Tracks which body zones have been prepped for surgery
 /datum/status_effect/surgery_prepped
@@ -114,7 +115,7 @@
 	if(movement_counter < 4)
 		return
 	// "The surgical drapes and bedsheets adorning John fall off!"
-	owner.visible_message(span_warning("The [english_list(surgical_aids)] adorning [owner] fall off!"))
+	owner.visible_message(span_warning(LANG("datum.74f68f41", list(english_list(surgical_aids), owner))))
 	qdel(src)
 
 /datum/status_effect/surgery_prepped/proc/on_attach_limb(datum/source, obj/item/bodypart/limb)

@@ -76,10 +76,10 @@
 	if(!istype(carbon_owner))
 		return
 	if((owner.get_brute_loss() + carbon_owner.get_fire_loss()) >= DAMAGE_LIMIT_HEMOKINETIC_REGEN)
-		to_chat(carbon_owner, span_warning("Your body is too damaged to be healed with hemokinesis!"))
+		to_chat(carbon_owner, span_warning(LANG("datum.be0033f3", null)))
 		return
 
-	carbon_owner.balloon_alert(carbon_owner, "hemokinetic regen activated!")
+	carbon_owner.balloon_alert(carbon_owner, LANG("datum.8c1dcd4c", null))
 	return ..()
 
 
@@ -89,7 +89,7 @@
 		return
 
 	if((carbon_owner.get_brute_loss() + carbon_owner.get_fire_loss()) >= DAMAGE_LIMIT_HEMOKINETIC_REGEN)
-		to_chat(carbon_owner, span_warning("Your body is too damaged to be healed with hemokinesis!"))
+		to_chat(carbon_owner, span_warning(LANG("datum.be0033f3", null)))
 		qdel(src)
 
 	var/amount_healed = 0
@@ -182,7 +182,7 @@
 
 	var/mob/living/carbon/carbon_owner = owner
 	oxyloss_to_heal = carbon_owner.get_oxy_loss()
-	to_chat(carbon_owner, "You feel a sense of relief as you embrace the tumor once more...")
+	to_chat(carbon_owner, LANG("datum.c40fb6c3", null))
 
 
 /datum/status_effect/slave_to_the_tumor/on_remove()

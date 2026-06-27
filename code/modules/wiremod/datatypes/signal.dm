@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/circuit_datatype/signal
 	datatype = PORT_TYPE_SIGNAL
 	color = "teal"
@@ -13,7 +14,7 @@
 /datum/circuit_datatype/signal/handle_manual_input(datum/port/input/port, mob/user, user_input)
 	var/atom/parent = port.connected_component
 	if(parent)
-		parent.balloon_alert(user, "triggered [port.name]")
+		parent.balloon_alert(user, LANG("datum.1580fc33", list(port.name)))
 	return COMPONENT_SIGNAL
 
 /datum/circuit_datatype/signal/instant_signal

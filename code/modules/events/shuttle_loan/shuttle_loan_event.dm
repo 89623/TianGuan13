@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Gives the choice to "loan" the shuttle to central command, giving a big delay on its return to the station in exchange for money and loot/threats in the cargo hold. Only one can be available at a time.
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
@@ -47,13 +48,13 @@
 		situation = new fake_situation
 	else
 		SSshuttle.shuttle_loan = src
-	priority_announce("Cargo: [situation.announcement_text]", situation.sender)
+	priority_announce(LANG("datum.287a9bc7", list(situation.announcement_text)), situation.sender)
 	if(fake)
 		qdel(situation)
 
 ///Triggered when accepting the shuttle loan. Gives payment and delays shuttle. Ensures the event won't be deleted from event controller until after the cargo arrives at the station.
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
-	priority_announce(situation.thanks_msg, "Cargo shuttle commandeered by [command_name()].")
+	priority_announce(situation.thanks_msg, LANG("datum.d8c83f20", list(command_name())))
 
 	dispatched = TRUE
 	var/datum/bank_account/dep_account = SSeconomy.get_dep_account(ACCOUNT_CAR)

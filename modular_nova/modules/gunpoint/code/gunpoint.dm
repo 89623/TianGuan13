@@ -41,14 +41,14 @@
 /mob/living/proc/CanGunpointAt(mob/living/L, notice = FALSE)
 	if(resting)
 		if(notice)
-			to_chat(src, span_warning("You need to be standing to get a good aim!"))
+			to_chat(src, span_warning(LANG("mob.5eac763c", null)))
 		return FALSE
 	if(!(L in viewers(8, src)))
 		if(notice)
-			to_chat(src, span_warning("Your target is out of your view!"))
+			to_chat(src, span_warning(LANG("mob.58ffbee8", null)))
 		return FALSE
 	if(L.alpha < 70)
 		if(notice)
-			to_chat(src, span_warning("You can't quite make out your target!"))
+			to_chat(src, span_warning(LANG("mob.2734c4e7", null)))
 		return FALSE
 	return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/market
 	/// Name for the market.
 	var/name = "huh?"
@@ -56,13 +57,13 @@
 	var/price = item.price + shipment_fee
 
 	if(!uplink.current_user)///There is no ID card on the user, or the ID card has no account
-		to_chat(user, span_warning("The uplink sparks, as it can't identify an ID card with a bank account on you."))
+		to_chat(user, span_warning(LANG("datum.f96fad92", null)))
 		return FALSE
 	var/balance = uplink?.current_user.account_balance
 
 	// I can't get the price of the item and shipping in a clean way to the UI, so I have to do this.
 	if(balance < price)
-		to_chat(user, span_warning("You don't have enough [MONEY_NAME] in [uplink] for [item] with [method] shipping."))
+		to_chat(user, span_warning(LANG("datum.eb7b9c26", list(MONEY_NAME, uplink, item, method))))
 		return FALSE
 
 	if(item.buy(uplink, user, method, legal_status))

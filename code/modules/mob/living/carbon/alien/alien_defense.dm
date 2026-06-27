@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /mob/living/carbon/alien/get_eye_protection()
 	return ..() + FLASH_PROTECTION_WELDER //potential cyber implants + natural eye protection
@@ -24,17 +25,17 @@ In all, this is a lot like the monkey code. /N
 		AdjustParalyzed(-6 SECONDS)
 		AdjustUnconscious(-6 SECONDS)
 		AdjustSleeping(-10 SECONDS)
-		visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
+		visible_message(span_notice(LANG("mob.a355d084", list(user.name, src, p_them()))))
 	else if(health > 0)
 		user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
-		visible_message(span_danger("[user.name] bites [src]!"), \
-						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You bite [src]!"))
+		visible_message(span_danger(LANG("mob.4f554285", list(user.name, src))), \
+						span_userdanger(LANG("mob.a597d194", list(user.name))), span_hear(LANG("mob.a88c3258", null)), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger(LANG("mob.bcc2c3f4", list(src))))
 		adjust_brute_loss(1)
 		log_combat(user, src, "attacked")
 	else
-		to_chat(user, span_warning("[name] is too injured for that."))
+		to_chat(user, span_warning(LANG("mob.e612b65a", list(name))))
 
 
 /mob/living/carbon/alien/attack_larva(mob/living/carbon/alien/larva/L, list/modifiers)

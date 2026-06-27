@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Scan the turf where the computer is on.
 #define ATMOZPHERE_SCAN_ENV "env"
 /// Scan the objects that the tablet clicks.
@@ -76,7 +77,7 @@
 				UnregisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 				return TRUE
 			if(!(computer.hardware_flag & PROGRAM_PDA))
-				computer.say("Device incompatible for scanning objects!")
+				computer.say(LANG("datum.bb3e3139", null))
 				return FALSE
 			atmozphere_mode = ATMOZPHERE_SCAN_CLICK
 			RegisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(turf_analyze))

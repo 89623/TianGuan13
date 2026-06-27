@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///divide the power in the cable net under parent by this to determine the shock damage
 #define ELECTRIC_BUCKLE_SHOCK_STRENGTH_DIVISOR 5000
 ///it will not shock the mob buckled to parent if its required to use a cable to shock and the cable has less than this power availaible
@@ -193,7 +194,7 @@
 	do_electrocution()
 
 	if (print_message)
-		parent_as_movable.visible_message(span_danger("[parent_as_movable] delivers a powerful shock!"), span_hear("You hear a deep sharp shock!"))
+		parent_as_movable.visible_message(span_danger(LANG("datum.10488955", list(parent_as_movable))), span_hear(LANG("datum.c81dbe96", null)))
 
 /// Zap whoever is buckled to us
 /datum/component/electrified_buckle/proc/do_electrocution()
@@ -235,11 +236,11 @@
 	if(shock_on_loop)
 		shock_on_loop = FALSE
 		STOP_PROCESSING(SSprocessing, src)
-		parent_as_movable.visible_message(span_notice("\The [parent_as_movable] emits a snap as its circuit opens, making it safe for now."))
+		parent_as_movable.visible_message(span_notice(LANG("datum.3299d393", list(parent_as_movable))))
 	else
 		shock_on_loop = TRUE
 		START_PROCESSING(SSprocessing, src)
-		parent_as_movable.visible_message(span_notice("You hear the sound of an electric circuit closing coming from \the [parent_as_movable]!"))
+		parent_as_movable.visible_message(span_notice(LANG("datum.f9e9930f", list(parent_as_movable))))
 
 #undef ELECTRIC_BUCKLE_SHOCK_STRENGTH_DIVISOR
 #undef ELECTRIC_BUCKLE_MINUMUM_POWERNET_STRENGTH

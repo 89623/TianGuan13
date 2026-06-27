@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Ignites matches swiped over it.
 /datum/element/ignites_matches
 
@@ -19,21 +20,21 @@
 	var/over_what_fp = source.loc == user ? "your [source.name]" : source
 	if(prob(10))
 		user.visible_message(
-			span_warning("[user] swipes [match] over [over_what_tp], but nothing happens."),
-			span_warning("You swipe [match] over [over_what_fp], but it fails to ignite."),
+			span_warning(LANG("datum.dde3c58c", list(user, match, over_what_tp))),
+			span_warning(LANG("datum.9e98a47f", list(match, over_what_fp))),
 		)
 		return ITEM_INTERACT_SUCCESS
 	if(prob((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_HULK)) ? 33 : 2))
 		user.visible_message(
-			span_warning("[user] swipes [match] over [over_what_tp], accidentally snapping it."),
-			span_warning("You swipe [match] over [over_what_fp] too fast, snapping it in half."),
+			span_warning(LANG("datum.1224197f", list(user, match, over_what_tp))),
+			span_warning(LANG("datum.4d629683", list(match, over_what_fp))),
 		)
 		match.snap()
 		return ITEM_INTERACT_SUCCESS
 
 	user.visible_message(
-		span_rose("[user] swipes [match] over [over_what_tp], igniting it."),
-		span_rose("You swipe [match] over [over_what_fp], igniting it."),
+		span_rose(LANG("datum.92661cb0", list(user, match, over_what_tp))),
+		span_rose(LANG("datum.8a18a4e7", list(match, over_what_fp))),
 	)
 	match.matchignite()
 	return ITEM_INTERACT_SUCCESS

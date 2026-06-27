@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
@@ -39,7 +40,7 @@
 /obj/item/spellbook/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/spell, mob/living/caster)
 	SIGNAL_HANDLER
 
-	to_chat(caster, span_warning("Glowing red letters appear on the front cover..."))
+	to_chat(caster, span_warning(LANG("obj.4a1a4281", null)))
 	to_chat(caster, span_red(pick(
 		"NICE TRY BUT NO!",
 		"CLEVER BUT NOT CLEVER ENOUGH!",
@@ -53,23 +54,23 @@
 /obj/item/spellbook/examine(mob/user)
 	. = ..()
 	if(owner)
-		. += "There is a small signature on the front cover: \"[owner]\"."
+		. += LANG("obj.9cdd04e8", list(owner))
 	else
-		. += "It appears to have no author."
+		. += LANG("obj.ddaae055", null)
 
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)
 		if(!user.mind)
 			return
-		to_chat(user, span_notice("You bind [src] to yourself."))
+		to_chat(user, span_notice(LANG("obj.de6bffcd", list(src))))
 		owner = user.mind
 		return
 
 	if(user.mind != owner)
 		if(IS_WIZARD_APPRENTICE(user))
-			to_chat(user, span_warning("If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."))
+			to_chat(user, span_warning(LANG("obj.703c024c", null)))
 		else
-			to_chat(user, span_warning("[src] does not recognize you as its owner and refuses to open!"))
+			to_chat(user, span_warning(LANG("obj.aa4173ac", list(src))))
 		return
 
 	return ..()
@@ -79,17 +80,17 @@
 	if(istype(O, /obj/item/antag_spawner/contract))
 		var/datum/spellbook_entry/item/contract/contract_entry = locate() in entries
 		if(!istype(contract_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
+			to_chat(user, span_warning(LANG("obj.34e9a265", list(src, O))))
 			return
 		if(!contract_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [src]."))
+			to_chat(user, span_warning(LANG("obj.3639a6ab", list(src))))
 			return
 		var/obj/item/antag_spawner/contract/contract = O
 		if(contract.used)
-			to_chat(user, span_warning("The contract has been used, you can't get your points back now!"))
+			to_chat(user, span_warning(LANG("obj.1e561a6d", null)))
 			return
 
-		to_chat(user, span_notice("You feed the contract back into the spellbook, refunding your points."))
+		to_chat(user, span_notice(LANG("obj.d4e8b5b1", null)))
 		uses += contract_entry.cost
 		contract_entry.times--
 		qdel(O)
@@ -97,13 +98,13 @@
 	else if(istype(O, /obj/item/antag_spawner/slaughter_demon/laughter))
 		var/datum/spellbook_entry/item/hugbottle/demon_entry = locate() in entries
 		if(!istype(demon_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
+			to_chat(user, span_warning(LANG("obj.34e9a265", list(src, O))))
 			return
 		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [O]."))
+			to_chat(user, span_warning(LANG("obj.3639a6ab", list(O))))
 			return
 
-		to_chat(user, span_notice("On second thought, maybe summoning a demon isn't a funny idea. You refund your points."))
+		to_chat(user, span_notice(LANG("obj.0a7df287", null)))
 		uses += demon_entry.cost
 		demon_entry.times--
 		qdel(O)
@@ -111,13 +112,13 @@
 	else if(istype(O, /obj/item/antag_spawner/slaughter_demon))
 		var/datum/spellbook_entry/item/bloodbottle/demon_entry = locate() in entries
 		if(!istype(demon_entry))
-			to_chat(user, span_warning("[src] doesn't seem to want to refund [O]."))
+			to_chat(user, span_warning(LANG("obj.34e9a265", list(src, O))))
 			return
 		if(!demon_entry.can_refund(user, src))
-			to_chat(user, span_warning("You can't refund [O]."))
+			to_chat(user, span_warning(LANG("obj.3639a6ab", list(O))))
 			return
 
-		to_chat(user, span_notice("On second thought, maybe summoning a demon is a bad idea. You refund your points."))
+		to_chat(user, span_notice(LANG("obj.cc473e8b", null)))
 		uses += demon_entry.cost
 		demon_entry.times--
 		qdel(O)
@@ -178,7 +179,7 @@
 		return
 	var/mob/living/carbon/human/wizard = usr
 	if(!istype(wizard))
-		to_chat(wizard, span_warning("The book doesn't seem to listen to lower life forms."))
+		to_chat(wizard, span_warning(LANG("obj.e4f34863", null)))
 		return FALSE
 
 	// Actions that are always available
@@ -202,7 +203,7 @@
 			return TRUE
 
 	if(uses < initial(uses))
-		to_chat(wizard, span_warning("You need to have all your spell points to do this!"))
+		to_chat(wizard, span_warning(LANG("obj.0f07e876", null)))
 		return FALSE
 
 	// Actions that are only available if you have full spell points
@@ -231,7 +232,7 @@
 	to_buy.times++
 	if(HAS_TRAIT(user, TRAIT_SPELLS_LOTTERY))
 		if(prob(50 / to_buy.cost))
-			to_chat(user, span_notice("This spell was given to you for free!"))
+			to_chat(user, span_notice(LANG("obj.fa8b89dd", null)))
 			return TRUE
 	uses -= to_buy.cost
 	return TRUE

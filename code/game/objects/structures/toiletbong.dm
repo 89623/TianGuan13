@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/toiletbong
 	name = "toilet bong"
 	desc = "A repurposed toilet with re-arranged piping and an attached flamethrower. Why would anyone build this?"
@@ -28,8 +29,8 @@
 		forceMove(toilet.loc)
 
 	crafter.visible_message(
-		span_notice("[crafter] attaches the flamethrower to the repurposed toilet."),
-		span_notice("You attach the flamethrower to the repurposed toilet."),
+		span_notice(LANG("obj.ab5097c7", list(crafter))),
+		span_notice(LANG("obj.2764ac65", null)),
 	)
 	return ..()
 
@@ -41,12 +42,12 @@
 /obj/structure/toiletbong/attack_hand(mob/living/carbon/user)
 	. = ..()
 	if (!anchored)
-		user.balloon_alert(user, "secure it first!")
+		user.balloon_alert(user, LANG("obj.e30cef1e", null))
 		return
 	if (!LAZYLEN(contents))
-		user.balloon_alert(user, "it's empty!")
+		user.balloon_alert(user, LANG("obj.76a90f7c", null))
 		return
-	user.visible_message(span_boldnotice("[user] takes a huge drag on the [src]."))
+	user.visible_message(span_boldnotice(LANG("obj.9912c477", list(user, src))))
 	if (!do_after(user, 2 SECONDS, target = src))
 		return
 	var/turf/toiletbong_location = loc
@@ -90,7 +91,7 @@
 	if(anchored)
 		return FALSE
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You begin taking apart the [src]."))
+	to_chat(user, span_notice(LANG("obj.6cb50b2d", list(src))))
 	if (!do_after(user, 10 SECONDS, target = src))
 		return FALSE
 	new /obj/item/flamethrower(get_turf(src))
@@ -106,9 +107,9 @@
 	obj_flags |= EMAGGED
 	smokeradius = 2
 	playsound(src, 'sound/effects/fish_splash.ogg', 50)
-	balloon_alert(user, "toilet broke")
+	balloon_alert(user, LANG("obj.8e94d908", null))
 	if (emag_card)
-		to_chat(user, span_boldwarning("The [emag_card] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
+		to_chat(user, span_boldwarning(LANG("obj.08a10670", list(emag_card))))
 	return TRUE
 
 /obj/structure/toiletbong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)

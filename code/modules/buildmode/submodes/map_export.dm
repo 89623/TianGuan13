@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/map_export
 	key = "mapexport"
 	use_corner_selection = TRUE
@@ -16,16 +17,15 @@
 		"Object Property Saving" = SAVE_OBJECT_PROPERTIES,
 		"Atmos Saving" = SAVE_ATMOS,
 	)
-	var/what_to_change = tgui_input_list(builder, "What export setting would you like to toggle?", "Map Exporter", options)
+	var/what_to_change = tgui_input_list(builder, LANG("datum.aee19dd7", null), LANG("datum.859277a9", null), options)
 	if (!what_to_change)
 		return
 	save_flag ^= options[what_to_change]
-	to_chat(builder, span_notice("[what_to_change] is now [save_flag & options[what_to_change] ? "ENABLED" : "DISABLED"]."))
+	to_chat(builder, span_notice(LANG("datum.7051ec5e", list(what_to_change, save_flag & options[what_to_change] ? "ENABLED" : "DISABLED"))))
 
 /datum/buildmode_mode/map_export/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Select corner")] -> Left Mouse Button on obj/turf/mob\n\
-		[span_bold("Set export options")] -> Right Mouse Button on buildmode button"))
+		LANG("datum.0b580236", list(span_bold("Select corner"), span_bold("Set export options")))))
 	)
 
 /datum/buildmode_mode/map_export/handle_selected_area(client/builder, params)
@@ -34,17 +34,17 @@
 
 	//Ensure the selection is actually done
 	if(!left_click)
-		to_chat(builder, span_warning("Invalid selection."))
+		to_chat(builder, span_warning(LANG("datum.2dd7e2bf", null)))
 		return
 
 	//If someone somehow gets build mode, stop them from using this.
 	if(!check_rights(R_DEBUG))
 		message_admins("[ckey(builder)] tried to run the map save generator but was rejected due to insufficient perms.")
-		to_chat(builder, span_warning("You must have +ADMIN rights to use this."))
+		to_chat(builder, span_warning(LANG("datum.8503dad0", null)))
 		return
 	//Emergency check
 	if(get_dist(cornerA, cornerB) > 60 || cornerA.z != cornerB.z)
-		var/confirm = tgui_alert(builder, "Are you sure about this? Exporting large maps may take quite a while.", "Map Exporter", list("Yes", "No"))
+		var/confirm = tgui_alert(builder, LANG("datum.561bb3d9", null), LANG("datum.859277a9", null), list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 
@@ -59,13 +59,13 @@ GLOBAL_VAR_INIT(map_writing_running, FALSE)
 /proc/_save_map(turf/cornerA, turf/cornerB, save_flag, shuttle_flag)
 	if(!check_rights(R_DEBUG))
 		message_admins("[ckey(usr)] tried to run the map save generator but was rejected due to insufficient perms.")
-		to_chat(usr, span_warning("You must have +ADMIN rights to use this."))
+		to_chat(usr, span_warning(LANG("_root.8503dad0", null)))
 		return
 	if(GLOB.map_writing_running)
-		to_chat(usr, span_warning("Someone is already running the generator! Try again in a little bit."))
+		to_chat(usr, span_warning(LANG("_root.ae5f71a9", null)))
 		return
 
-	to_chat(usr, span_warning("Saving, please wait..."))
+	to_chat(usr, span_warning(LANG("_root.45a8e4e5", null)))
 	GLOB.map_writing_running = TRUE
 
 	//I put this before the actual saving of the map because it likely won't log if it crashes the fucking server
@@ -86,7 +86,7 @@ GLOBAL_VAR_INIT(map_writing_running, FALSE)
 
 	//Step 2: Write the data to a file and give map to client
 	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss", TIMEZONE_UTC)
-	var/file_name = sanitize_filename(tgui_input_text(usr, "Filename?", "Map Exporter", "exported_map_[date]"))
+	var/file_name = sanitize_filename(tgui_input_text(usr, LANG("_root.3a4b5379", null), LANG("_root.859277a9", null), "exported_map_[date]"))
 	send_exported_map(usr, file_name, dat)
-	to_chat(usr, span_green("The map was successfully saved!"))
+	to_chat(usr, span_green(LANG("_root.7ee62fb6", null)))
 	GLOB.map_writing_running = FALSE

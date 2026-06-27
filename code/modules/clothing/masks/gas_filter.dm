@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Filtering ratio for high amounts of gas
 #define HIGH_FILTERING_RATIO 0.01
 ///Filtering ratio for min amount of gas
@@ -53,7 +54,7 @@
 
 /obj/item/gas_filter/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] is at <b>[filter_status]%</b> durability.")
+	. += span_notice(LANG("obj.63dd8db8", list(src, filter_status)))
 
 /**
  * called by the gas mask where the filter is installed, lower the filter_status depending on the breath gas composition and by the strength of the filter

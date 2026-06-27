@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// List of all teleport runes
 GLOBAL_LIST(teleport_runes)
@@ -91,7 +92,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		"<b>Effects:</b> [capitalize(cultist_desc)]\n"+\
 		"<b>Required Acolytes:</b> [req_cultists_text ? "[req_cultists_text]":"[req_cultists]"]"
 		if(req_keyword && keyword)
-			. += "<b>Keyword:</b> [keyword]"
+			. += LANG("obj.d19aed4d", list(keyword))
 
 /obj/effect/rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -101,35 +102,35 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 	if(.)
 		return
 	if(!IS_CULTIST_OR_CULTIST_MOB(user))
-		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
+		to_chat(user, span_warning(LANG("obj.7a29fc21", list(src))))
 		return
 	var/list/invokers = can_invoke(user)
 	if(length(invokers) >= req_cultists)
 		invoke(invokers)
 		SSblackbox.record_feedback("tally", "cult_rune_invoke", 1, "[name]")
 	else
-		to_chat(user, span_danger("You need [req_cultists - length(invokers)] more adjacent cultists to use this rune in such a manner."))
+		to_chat(user, span_danger(LANG("obj.d0b20db0", list(req_cultists - length(invokers)))))
 		fail_invoke()
 
 /obj/effect/rune/attack_animal(mob/living/user, list/modifiers)
 	if(!isshade(user) && !isconstruct(user))
 		return
 	if(HAS_TRAIT(user, TRAIT_ANGELIC))
-		to_chat(user, span_warning("You purge the rune!"))
+		to_chat(user, span_warning(LANG("obj.ea066313", null)))
 		qdel(src)
 	else if(construct_invoke || !IS_CULTIST(user)) //if you're not a cult construct we want the normal fail message
 		attack_hand(user)
 	else
-		to_chat(user, span_warning("You are unable to invoke the rune!"))
+		to_chat(user, span_warning(LANG("obj.e5eae545", null)))
 
 /obj/effect/rune/proc/conceal() //for talisman of revealing/hiding
-	visible_message(span_danger("[src] fades away."))
+	visible_message(span_danger(LANG("obj.87c5cc60", list(src))))
 	SetInvisibility(INVISIBILITY_OBSERVER, id=type)
 	alpha = 100 //To help ghosts distinguish hidden runes
 
 /obj/effect/rune/proc/reveal() //for talisman of revealing/hiding
 	RemoveInvisibility(type)
-	visible_message(span_danger("[src] suddenly appears!"))
+	visible_message(span_danger(LANG("obj.4e88a79e", list(src))))
 	alpha = initial(alpha)
 
 /*
@@ -189,7 +190,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
-	visible_message(span_warning("The markings pulse with a small flash of red light, then fall dark."))
+	visible_message(span_warning(LANG("obj.7c69ca8e", null)))
 	var/oldcolor = color
 	color = rgb(255, 0, 0)
 	animate(src, color = oldcolor, time = 5)
@@ -247,7 +248,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 
 	rune_in_use = TRUE
-	visible_message(span_warning("[src] pulses blood red!"))
+	visible_message(span_warning(LANG("obj.2b682a0f", list(src))))
 	color = RUNE_COLOR_DARKRED
 
 	if(length(myriad_targets))
@@ -297,10 +298,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 		convertee.adjust_fire_loss(-(burndamage * 0.75))
 
 	convertee.visible_message(
-		span_warning("[convertee] writhes in pain [(brutedamage || burndamage) \
+		span_warning(LANG("obj.0999e9fb", list(convertee, (brutedamage || burndamage) \
 			? "even as [convertee.p_their()] wounds heal and close" \
-			: "as the markings below [convertee.p_them()] glow a bloody red"]!"),
-		span_cult_large("<i>AAAAAAAAAAAAAA-</i>"),
+			: "as the markings below [convertee.p_them()] glow a bloody red"))),
+		span_cult_large(LANG("obj.58d6acb0", null)),
 	)
 
 	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
@@ -314,7 +315,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
-		convertee.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+		convertee.say(LANG("obj.111ff1ea", null), forced = "That son of a bitch! They're in. (April Fools)")
 
 	else
 		convertee.Unconscious(10 SECONDS)
@@ -322,11 +323,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
 	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
 
-	to_chat(convertee, span_cult_bold_italic("Your blood pulses. Your head throbs. The world goes red. \
-		All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-		and something evil takes root."))
-	to_chat(convertee, span_cult_bold_italic("Assist your new compatriots in their dark dealings. \
-		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back."))
+	to_chat(convertee, span_cult_bold_italic(LANG("obj.08a2a261", null)))
+	to_chat(convertee, span_cult_bold_italic(LANG("obj.d09adf65", null)))
 
 	if(isshade(convertee))
 		convertee.icon_state = "shade_cult"
@@ -482,19 +480,19 @@ structure_check() searches for nearby cultist structures required for the invoca
 			potential_runes[avoid_assoc_duplicate_keys(teleport_rune.listkey, teleportnames)] = teleport_rune
 
 	if(!length(potential_runes))
-		to_chat(user, span_warning("There are no valid runes to teleport to!"))
+		to_chat(user, span_warning(LANG("obj.644b0ca1", null)))
 		log_game("Teleport rune activated by [user] at [COORD(src)] failed - no other teleport runes.")
 		fail_invoke()
 		return
 
 	var/turf/T = get_turf(src)
 	if(is_away_level(T.z))
-		to_chat(user, span_cult_italic("You are not in the right dimension!"))
+		to_chat(user, span_cult_italic(LANG("obj.285c37e2", null)))
 		log_game("Teleport rune activated by [user] at [COORD(src)] failed - [user] is in away mission.")
 		fail_invoke()
 		return
 
-	var/input_rune_key = tgui_input_list(user, "Rune to teleport to", "Teleportation Target", potential_runes) //we know what key they picked
+	var/input_rune_key = tgui_input_list(user, LANG("obj.544bd69a", null), LANG("obj.0e23a8a3", null), potential_runes) //we know what key they picked
 	if(isnull(input_rune_key))
 		return
 	if(isnull(potential_runes[input_rune_key]))
@@ -507,7 +505,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	var/turf/target = get_turf(actual_selected_rune)
 	if(target.is_blocked_turf(TRUE))
-		to_chat(user, span_warning("The target rune is blocked. Attempting to teleport to it would be massively unwise."))
+		to_chat(user, span_warning(LANG("obj.bf84acb8", null)))
 		log_game("Teleport rune activated by [user] at [COORD(src)] failed - destination blocked.")
 		fail_invoke()
 		return
@@ -539,10 +537,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
 		if(movesuccess)
-			visible_message(span_warning("There is a sharp crack of inrushing air, and everything above the rune disappears!"), null, "<i>You hear a sharp crack.</i>")
-			to_chat(user, span_cult("You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"]."))
+			visible_message(span_warning(LANG("obj.92d5c56f", null)), null, LANG("obj.0d2ac336", null))
+			to_chat(user, span_cult(LANG("obj.555fd372", list(moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"))))
 		else
-			to_chat(user, span_cult("You[moveuserlater ? "r vision blurs briefly, but nothing happens":" try send everything above the rune away, but the teleportation fails"]."))
+			to_chat(user, span_cult(LANG("obj.555fd372", list(moveuserlater ? "r vision blurs briefly, but nothing happens":" try send everything above the rune away, but the teleportation fails"))))
 		if(is_mining_level(z) && !is_mining_level(target.z)) //No effect if you stay on lavaland
 			actual_selected_rune.handle_portal("lava")
 		else
@@ -550,7 +548,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(initial(A.name) == "Space")
 				actual_selected_rune.handle_portal("space", T)
 		if(movesuccess)
-			target.visible_message(span_warning("There is a boom of outrushing air as something appears above the rune!"), null, "<i>You hear a boom.</i>")
+			target.visible_message(span_warning(LANG("obj.a9354b8e", null)), null, LANG("obj.87dafc92", null))
 	else
 		fail_invoke()
 
@@ -667,7 +665,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	var/area/place = get_area(src)
 	if(!(place in summon_objective.summon_spots))
-		to_chat(user, span_cult_large("The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!"))
+		to_chat(user, span_cult_large(LANG("obj.d5e6b585", list(english_list(summon_objective.summon_spots)))))
 		return
 	if(locate(/obj/narsie) in SSpoints_of_interest.narsies)
 		for(var/invoker in invokers)
@@ -707,7 +705,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 /obj/effect/rune/raise_dead/examine(mob/user)
 	. = ..()
 	if(IS_CULTIST(user) || user.stat == DEAD)
-		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - GLOB.sacrifices_used]"
+		. += LANG("obj.dbeff3d1", list(LAZYLEN(GLOB.sacrificed) - GLOB.sacrifices_used))
 
 /obj/effect/rune/raise_dead/invoke(list/invokers)
 	if(rune_in_use)
@@ -722,13 +720,13 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			potential_revive_mobs += target
 
 	if(!length(potential_revive_mobs))
-		to_chat(user, span_cult_italic("There are no dead cultists on the rune!"))
+		to_chat(user, span_cult_italic(LANG("obj.4a563331", null)))
 		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - no cultists to revive.")
 		fail_invoke()
 		return
 
 	if(length(potential_revive_mobs) > 1 && user.mind)
-		mob_to_revive = tgui_input_list(user, "Cultist to revive", "Revive Cultist", potential_revive_mobs)
+		mob_to_revive = tgui_input_list(user, LANG("obj.798038d4", null), LANG("obj.80e8f0b2", null), potential_revive_mobs)
 		if(isnull(mob_to_revive))
 			return
 	else
@@ -743,7 +741,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	if(mob_to_revive.stat == DEAD)
 		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - GLOB.sacrifices_used
 		if(diff < 0)
-			to_chat(user, span_warning("Your cult must carry out [abs(diff)] more sacrifice\s before it can revive another cultist!"))
+			to_chat(user, span_warning(LANG("obj.a85bb2d4", list(abs(diff)))))
 			fail_invoke()
 			return
 		GLOB.sacrifices_used += SOULS_TO_REVIVE
@@ -753,7 +751,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		set waitfor = FALSE
 		var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger(mob_to_revive.real_name)], an [span_notice("inactive blood cultist")]?", check_jobban = ROLE_CULTIST, role = ROLE_CULTIST, poll_time = 5 SECONDS, checked_target = mob_to_revive, alert_pic = mob_to_revive, role_name_text = "inactive cultist")
 		if(chosen_one)
-			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
+			to_chat(mob_to_revive.mind, LANG("obj.83f92388", null))
 			message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(FALSE)
 			mob_to_revive.PossessByPlayer(chosen_one.key)
@@ -761,9 +759,9 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			fail_invoke()
 			return
 	SEND_SOUND(mob_to_revive, 'sound/music/antag/bloodcult/bloodcult_gain.ogg')
-	to_chat(mob_to_revive, span_cult_large("\"PASNAR SAVRAE YAM'TOTH. Arise.\""))
-	mob_to_revive.visible_message(span_warning("[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes."), \
-		span_cult_large("You awaken suddenly from the void. You're alive!"))
+	to_chat(mob_to_revive, span_cult_large(LANG("obj.4fef73d1", null)))
+	mob_to_revive.visible_message(span_warning(LANG("obj.02fa3ddf", list(mob_to_revive, mob_to_revive.p_their()))), \
+		span_cult_large(LANG("obj.7aa19f94", null)))
 	rune_in_use = FALSE
 	return ..()
 
@@ -775,7 +773,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	if(QDELETED(target_mob))
 		return FALSE
 	if(!(target_mob in loc))
-		to_chat(user, span_cult_italic("The cultist to revive has been moved!"))
+		to_chat(user, span_cult_italic(LANG("obj.702a8f64", null)))
 		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - revival target moved.")
 		return FALSE
 	return TRUE
@@ -832,50 +830,50 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
 			cultists |= M.current
 	if(length(cultists) <= 1)
-		to_chat(user, span_warning("There are no cultists to summon!"))
+		to_chat(user, span_warning(LANG("obj.663fc422", null)))
 		fail_invoke()
 		return
-	var/mob/living/cultist_to_summon = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", cultists)
+	var/mob/living/cultist_to_summon = tgui_input_list(user, LANG("obj.af9bc35c", list(src)), LANG("obj.de6752c5", null), cultists)
 	var/fail_logmsg = "Summon Cultist rune activated by [user] at [COORD(src)] failed - "
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated)
 		return
 	if(isnull(cultist_to_summon))
-		to_chat(user, span_cult_italic("You require a summoning target!"))
+		to_chat(user, span_cult_italic(LANG("obj.257cb281", null)))
 		fail_logmsg += "no target."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
 	if(cultist_to_summon.stat == DEAD)
-		to_chat(user, span_cult_italic("[cultist_to_summon] has died!"))
+		to_chat(user, span_cult_italic(LANG("obj.75c8f3a8", list(cultist_to_summon))))
 		fail_logmsg += "target died."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
 	if(cultist_to_summon.pulledby || cultist_to_summon.buckled)
-		to_chat(user, span_cult_italic("[cultist_to_summon] is being held in place!"))
+		to_chat(user, span_cult_italic(LANG("obj.be23286c", list(cultist_to_summon))))
 		fail_logmsg += "target restrained."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
 	if(!IS_CULTIST(cultist_to_summon))
-		to_chat(user, span_cult_italic("[cultist_to_summon] is not a follower of the Geometer!"))
+		to_chat(user, span_cult_italic(LANG("obj.df839c6b", list(cultist_to_summon))))
 		fail_logmsg += "target deconverted."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
 	if(is_away_level(cultist_to_summon.z))
-		to_chat(user, span_cult_italic("[cultist_to_summon] is not in our dimension!"))
+		to_chat(user, span_cult_italic(LANG("obj.09f5b1d6", list(cultist_to_summon))))
 		fail_logmsg += "target is in away mission."
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
-	cultist_to_summon.visible_message(span_warning("[cultist_to_summon] suddenly disappears in a flash of red light!"), \
-									  span_cult_italic("<b>Overwhelming vertigo consumes you as you are hurled through the air!</b>"))
+	cultist_to_summon.visible_message(span_warning(LANG("obj.2ea9ca50", list(cultist_to_summon))), \
+									  span_cult_italic(LANG("obj.9e33ff99", null)))
 	..()
-	visible_message(span_warning("A foggy shape materializes atop [src] and solidifies into [cultist_to_summon]!"))
+	visible_message(span_warning(LANG("obj.ba7e9eb3", list(src, cultist_to_summon))))
 	var/turf/old_turf = get_turf(cultist_to_summon)
 	if(!do_teleport(cultist_to_summon, get_turf(src)))
-		to_chat(user, span_warning("The summoning has completely failed for [cultist_to_summon]!"))
+		to_chat(user, span_warning(LANG("obj.f49c509a", list(cultist_to_summon))))
 		fail_logmsg += "target failed criteria to teleport." //catch-all term, just means they failed do_teleport somehow. The most common reasons why someone should fail to be summoned already have verbose messages.
 		log_game(fail_logmsg)
 		fail_invoke()
@@ -907,7 +905,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	..()
 	rune_in_use = TRUE
 	var/turf/T = get_turf(src)
-	visible_message(span_warning("[src] turns a bright, glowing orange!"))
+	visible_message(span_warning(LANG("obj.538bee89", list(src))))
 	color = "#FC9B54"
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
@@ -956,12 +954,12 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))
-		to_chat(user, span_cult_italic("You must be standing on [src]!"))
+		to_chat(user, span_cult_italic(LANG("obj.7e2dabc1", list(src))))
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
 		return list()
 	if(user.has_status_effect(/datum/status_effect/cultghost))
-		to_chat(user, span_cult_italic("Ghosts can't summon more ghosts!"))
+		to_chat(user, span_cult_italic(LANG("obj.e0338b97", null)))
 		fail_invoke()
 		log_game("Manifest rune failed - user is a ghost")
 		return list()
@@ -971,13 +969,13 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	. = ..()
 	var/mob/living/user = invokers[1]
 	var/turf/T = get_turf(src)
-	var/choice = tgui_alert(user, "You tear open a connection to the spirit realm...", "Spirit Realm", list("Summon a Cult Ghost", "Ascend as a Dark Spirit"))
+	var/choice = tgui_alert(user, LANG("obj.30b71847", null), LANG("obj.471d5175", null), list("Summon a Cult Ghost", "Ascend as a Dark Spirit"))
 	if(choice == "Summon a Cult Ghost")
 		if(!is_station_level(T.z))
-			to_chat(user, span_cult_italic("<b>The veil is not weak enough here to manifest spirits, you must be on station!</b>"))
+			to_chat(user, span_cult_italic(LANG("obj.885ee24f", null)))
 			return
 		if(ghosts >= ghost_limit)
-			to_chat(user, span_cult_italic("You are sustaining too many ghosts to summon more!"))
+			to_chat(user, span_cult_italic(LANG("obj.01a18684", null)))
 			fail_invoke()
 			log_game("Manifest rune failed - too many summoned ghosts")
 			return list()
@@ -992,7 +990,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !(isAdminObserver(O) && (O.client.prefs.toggles & ADMIN_IGNORE_CULT_GHOST)) && !QDELETED(O))
 				ghosts_on_rune += O
 		if(!length(ghosts_on_rune))
-			to_chat(user, span_cult_italic("There are no spirits near [src]!"))
+			to_chat(user, span_cult_italic(LANG("obj.afe15b1d", list(src))))
 			fail_invoke()
 			log_game("Manifest rune failed - no nearby ghosts")
 			return list()
@@ -1009,8 +1007,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		new_human.add_traits(list(TRAIT_NOBREATH, TRAIT_SPAWNED_MOB, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT) // permanently mortal can be removed once this is a bespoke kind of mob
 		ghosts++
 		playsound(src, 'sound/effects/magic/exit_blood.ogg', 50, TRUE)
-		visible_message(span_warning("A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man."))
-		to_chat(user, span_cult_italic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
+		visible_message(span_warning(LANG("obj.ebce76f0", list(src, new_human.gender == FEMALE ? "wo":""))))
+		to_chat(user, span_cult_italic(LANG("obj.ac5fd618", list(src))))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
 		if(ghost_to_spawn.mind && ghost_to_spawn.mind)
 			new_human.AddComponent( \
@@ -1020,7 +1018,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		new_human.PossessByPlayer(ghost_to_spawn.key)
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
 		created_cultist?.silent = TRUE
-		to_chat(new_human, span_cult_italic("<b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b>"))
+		to_chat(new_human, span_cult_italic(LANG("obj.18ea0773", null)))
 
 		while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
 			if(user.stat != CONSCIOUS || HAS_TRAIT(new_human, TRAIT_CRITICAL_CONDITION))
@@ -1031,8 +1029,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		qdel(N)
 		ghosts--
 		if(new_human)
-			new_human.visible_message(span_warning("[new_human] suddenly dissolves into bones and ashes."), \
-					span_cult_large("Your link to the world fades. Your form breaks apart."))
+			new_human.visible_message(span_warning(LANG("obj.cd910468", list(new_human))), \
+					span_cult_large(LANG("obj.19ca3642", null)))
 			for(var/obj/I in new_human)
 				new_human.dropItemToGround(I, TRUE)
 			new_human.mind?.remove_antag_datum(/datum/antagonist/cult)
@@ -1041,8 +1039,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	else if(choice == "Ascend as a Dark Spirit")
 		affecting = user
 		affecting.add_atom_colour(RUNE_COLOR_DARKRED, ADMIN_COLOUR_PRIORITY)
-		affecting.visible_message(span_warning("[affecting] freezes statue-still, glowing an unearthly red."), \
-						span_cult("You see what lies beyond. All is revealed. In this form you find that your voice booms louder and you can mark targets for the entire cult"))
+		affecting.visible_message(span_warning(LANG("obj.aea82b2b", list(affecting))), \
+						span_cult(LANG("obj.891e3a6e", null)))
 		var/mob/dead/observer/G = affecting.ghostize(TRUE)
 		ADD_TRAIT(G, TRAIT_NO_OBSERVE, CULT_TRAIT)
 		var/datum/action/innate/cult/comm/spirit/CM = new
@@ -1053,16 +1051,16 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		GM.Grant(G)
 		while(!QDELETED(affecting))
 			if(!(affecting in T))
-				user.visible_message(span_warning("A spectral tendril wraps around [affecting] and pulls [affecting.p_them()] back to the rune!"))
+				user.visible_message(span_warning(LANG("obj.335f7c24", list(affecting, affecting.p_them()))))
 				Beam(affecting, icon_state="drainbeam", time = 2)
 				affecting.forceMove(get_turf(src)) //NO ESCAPE :^)
 			if(affecting.key)
-				affecting.visible_message(span_warning("[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming."), \
-					span_danger("You are re-united with your physical form. [src] releases its hold over you."))
+				affecting.visible_message(span_warning(LANG("obj.6762d988", list(affecting, affecting.p_them()))), \
+					span_danger(LANG("obj.75adab30", list(src))))
 				affecting.Paralyze(40)
 				break
 			if(affecting.health <= 10)
-				to_chat(G, span_cult_italic("Your body can no longer sustain the connection!"))
+				to_chat(G, span_cult_italic(LANG("obj.2e977070", null)))
 				break
 			sleep(0.5 SECONDS)
 		CM.Remove(G)
@@ -1105,10 +1103,10 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	if(length(summon_objective.summon_spots) <= 1)
-		to_chat(user, span_cult_large("Only one ritual site remains - it must be reserved for the final summoning!"))
+		to_chat(user, span_cult_large(LANG("obj.a35e36c7", null)))
 		return
 	if(!(place in summon_objective.summon_spots))
-		to_chat(user, span_cult_large("The Apocalypse rune will remove a ritual site, where Nar'Sie can be summoned, it can only be scribed in [english_list(summon_objective.summon_spots)]!"))
+		to_chat(user, span_cult_large(LANG("obj.2b640a60", list(english_list(summon_objective.summon_spots)))))
 		return
 
 	summon_objective.summon_spots -= place
@@ -1124,7 +1122,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	var/duration = intensity*10
 
 	playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, TRUE)
-	visible_message(span_warning("A colossal shockwave of energy bursts from the rune, disintegrating it in the process!"))
+	visible_message(span_warning(LANG("obj.2784d69b", null)))
 
 	for(var/mob/living/target in range(src, 3))
 		target.Paralyze(30)

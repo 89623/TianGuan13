@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define LIGHTFLOOR_FINE 0
 #define LIGHTFLOOR_FLICKER 1
 #define LIGHTFLOOR_BREAKING 2
@@ -30,11 +31,11 @@
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()
-	. += span_notice("There's a <b>small crack</b> on the edge of it.")
-	. += span_notice("Use a multitool on it to change colors.")
-	. += span_notice("Use a screwdriver to turn it off or on.")
+	. += span_notice(LANG("turf.ff9d66d1", null))
+	. += span_notice(LANG("turf.320ce4fe", null))
+	. += span_notice(LANG("turf.b04ce71e", null))
 	if(state) ///check if broken
-		. += span_danger("The light bulb seems fried!")
+		. += span_danger(LANG("turf.cacf0934", null))
 
 ///create radial menu
 /turf/open/floor/light/proc/populate_lighttile_designs()
@@ -135,15 +136,15 @@
 	if(istype(C, /obj/item/light/bulb)) //only for light tiles
 		var/obj/item/light/bulb/B = C
 		if(B.status)/// check if broken
-			to_chat(user, span_danger("The light bulb is broken!"))
+			to_chat(user, span_danger(LANG("turf.e8716b7e", null)))
 			return
 		if(state && user.temporarilyRemoveItemFromInventory(C))
 			qdel(C)
 			state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
 			update_appearance()
-			to_chat(user, span_notice("You replace the light bulb."))
+			to_chat(user, span_notice(LANG("turf.03f007a9", null)))
 		else
-			to_chat(user, span_notice("The light bulb seems fine, no need to replace it."))
+			to_chat(user, span_notice(LANG("turf.5cea176f", null)))
 
 /turf/open/floor/light/emp_act(severity)
 	. = ..()

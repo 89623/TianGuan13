@@ -116,7 +116,7 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 
 	if(. || !check_rights_for(adminClient, R_ADMIN))
 		message_admins(span_adminhelp("WARNING: NON-ADMIN [ADMIN_LOOKUPFLW(adminMob)] ATTEMPTED TO ACCESS ADMIN PANEL. NOTIFY Casper3044."))
-		to_chat(adminClient, "Error: you are not an admin!")
+		to_chat(adminClient, LANG("datum.27e7aa03", null))
 		return
 
 	switch(action)
@@ -130,13 +130,13 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 			var/mob/latestMob = get_mob_by_ckey(ckey)
 
 			if(!latestMob)
-				to_chat(adminClient, span_warning("That ckey is not controlling a mob."))
+				to_chat(adminClient, span_warning(LANG("datum.8c9dadd8", null)))
 				return
 
 			if(targetMob == latestMob)
 				return
 
-			to_chat(adminClient, span_notice("New mob found for player: [targetMob.ckey] ([latestMob])."))
+			to_chat(adminClient, span_notice(LANG("datum.cb4b21bb", list(targetMob.ckey, latestMob))))
 			SSadmin_verbs.dynamic_invoke_verb(adminClient, /datum/admin_verb/show_player_panel, latestMob)
 
 		/// Edits player Rank
@@ -171,28 +171,28 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 		/// Subtly messages selected mob (requires target to have a headset)
 		if ("subtle_message")
 			var/list/subtle_message_options = list("Voice in head", RADIO_CHANNEL_CENTCOM, RADIO_CHANNEL_SYNDICATE)
-			var/sender = tgui_input_list(adminClient, "Choose the method of subtle messaging", "Subtle Message", subtle_message_options)
+			var/sender = tgui_input_list(adminClient, LANG("datum.93bde4ea", null), LANG("datum.41a5cc12", null), subtle_message_options)
 			if (!sender)
 				return
 
-			var/msg = input("Contents of the message", text("Subtle PM to [targetMob.key]")) as text
+			var/msg = input(LANG("datum.233aeb20", null), text("Subtle PM to [targetMob.key]")) as text
 			if (!msg)
 				return
 
 			if (sender == "Voice in head")
-				to_chat(targetMob, "<i>You hear a voice in your head... <b>[msg]</i></b>")
+				to_chat(targetMob, LANG("datum.5ea2cf68", list(msg)))
 			else
 				var/mob/living/carbon/human/selected_mob = targetMob
 
 				if(!istype(selected_mob))
-					to_chat(adminClient, "The person you are trying to contact is not human. Unsent message: [msg]")
+					to_chat(adminClient, LANG("datum.9d4305f1", list(msg)))
 					return
 
 				if(!istype(selected_mob.ears, /obj/item/radio/headset))
-					to_chat(adminClient, "The person you are trying to contact is not wearing a headset. Unsent message: [msg]")
+					to_chat(adminClient, LANG("datum.964130bc", list(msg)))
 					return
 
-				to_chat(selected_mob, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from [sender == RADIO_CHANNEL_SYNDICATE ? "your benefactor" : "Central Command"].  Message as follows[sender == RADIO_CHANNEL_SYNDICATE ? ", agent." : ":"] <span class='bold'>[msg].</span> Message ends.\"")
+				to_chat(selected_mob, LANG("datum.5b33f044", list(sender == RADIO_CHANNEL_SYNDICATE ? "your benefactor" : "Central Command", sender == RADIO_CHANNEL_SYNDICATE ? ", agent." : ":", msg)))
 
 
 			log_admin("SubtlePM ([sender]): [key_name(adminClient)] -> [key_name(targetMob)] : [msg]")
@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 			if(targetMob.client)
 				log_admin("[key_name(adminClient)] ejected [key_name(targetMob)] from their body.")
 				message_admins("[key_name_admin(adminClient)] ejected [key_name_admin(targetMob)] from their body.")
-				to_chat(targetMob, span_danger("An admin has ejected you from your body."))
+				to_chat(targetMob, span_danger(LANG("datum.4d829d44", null)))
 				targetMob.ghostize(FALSE)
 
 		/// offers control to ghosts for selected mob/body
@@ -271,11 +271,11 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 		/// Yeets target client to the lobby (only works on ghosts)
 		if ("lobby")
 			if(!isobserver(targetMob))
-				to_chat(adminClient, span_notice("You can only send ghost players back to the Lobby."))
+				to_chat(adminClient, span_notice(LANG("datum.0120740c", null)))
 				return
 
 			if(!targetMob.client)
-				to_chat(adminClient, span_warning("[targetMob] doesn't seem to have an active client."))
+				to_chat(adminClient, span_warning(LANG("datum.b00938b9", list(targetMob))))
 				return
 
 			log_admin("[key_name(adminClient)] has sent [key_name(targetMob)] back to the Lobby.")
@@ -310,11 +310,11 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 		/// Sends the offender to SUPERJAIL known as SPACE PRISON (admin prison)
 		if ("prison")
 			if(isAI(targetMob))
-				to_chat(adminClient, "This cannot be used on instances of type /mob/living/silicon/ai.")
+				to_chat(adminClient, LANG("datum.f61bfd33", null))
 				return
 
 			targetMob.forceMove(pick(GLOB.prisonwarp))
-			to_chat(targetMob, span_userdanger("You have been sent to Prison!"))
+			to_chat(targetMob, span_userdanger(LANG("datum.9675fbbc", null)))
 
 			log_admin("[key_name(adminClient)] has sent [key_name(targetMob)] to Prison!")
 			message_admins("[key_name_admin(adminClient)] has sent [key_name_admin(targetMob)] to Prison!")
@@ -322,17 +322,17 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 		/// Boots the offending client from the server
 		if ("kick")
 			if(!check_if_greater_rights_than(targetClient))
-				to_chat(adminClient, span_danger("Error: They have more rights than you do."), confidential = TRUE)
+				to_chat(adminClient, span_danger(LANG("datum.3b765e14", null)), confidential = TRUE)
 				return
-			if(tgui_alert(adminMob, "Kick [key_name(targetMob)]?", "Confirm", list("Yes", "No")) != "Yes")
+			if(tgui_alert(adminMob, LANG("datum.2495f3bd", list(key_name(targetMob))), LANG("datum.3c1da715", null), list("Yes", "No")) != "Yes")
 				return
 			if(!targetMob)
-				to_chat(adminClient, span_danger("Error: [targetMob] no longer exists!"), confidential = TRUE)
+				to_chat(adminClient, span_danger(LANG("datum.bd46e6a6", list(targetMob))), confidential = TRUE)
 				return
 			if(!targetClient)
-				to_chat(adminClient, span_danger("Error: [targetMob] no longer has a client!"), confidential = TRUE)
+				to_chat(adminClient, span_danger(LANG("datum.605d44e3", list(targetMob))), confidential = TRUE)
 				return
-			to_chat(targetMob, span_danger("You have been kicked from the server by [adminClient.holder.fakekey ? "an Administrator" : "[adminClient.key]"]."), confidential = TRUE)
+			to_chat(targetMob, span_danger(LANG("datum.c7289045", list(adminClient.holder.fakekey ? "an Administrator" : "[adminClient.key]"))), confidential = TRUE)
 			log_admin("[key_name(adminClient)] kicked [key_name(targetMob)].")
 			message_admins(span_adminnotice("[key_name_admin(adminClient)] kicked [key_name_admin(targetMob)]."))
 			qdel(targetClient)
@@ -408,7 +408,7 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 		if ("transform")
 			var/choice = params["newType"]
 			if (choice == "/mob/living")
-				choice = tgui_input_list(adminClient, "What should this mob transform into", "Mob Transform", subtypesof(choice))
+				choice = tgui_input_list(adminClient, LANG("datum.b5711cc5", null), LANG("datum.a70f2f38", null), subtypesof(choice))
 				if (!choice)
 					return
 
@@ -510,10 +510,10 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 		/// Forces a commendation to selected client/player
 		if ("commend")
 			if(!targetMob.ckey)
-				to_chat(adminClient, span_warning("This mob either no longer exists or no longer is being controlled by someone!"))
+				to_chat(adminClient, span_warning(LANG("datum.091cead0", null)))
 				return
 
-			switch(tgui_alert(adminMob, "Would you like the effects to apply immediately or at the end of the round? Applying them now will make it clear it was an admin commendation.", "<3?", list("Apply now", "Apply at round end", "Cancel")))
+			switch(tgui_alert(adminMob, LANG("datum.b8eae451", null), "<3?", list("Apply now", "Apply at round end", "Cancel")))
 				if("Apply now")
 					targetMob.receive_heart(adminMob, instant = TRUE)
 				if("Apply at round end")
@@ -521,7 +521,7 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 
 		/// Plays a selected sound to target client
 		if ("play_sound_to")
-			var/soundFile = input("", "Select a sound file",) as null|sound
+			var/soundFile = input("", LANG("datum.9ffc2daa", null),) as null|sound
 
 			if(soundFile && targetMob)
 				SSadmin_verbs.dynamic_invoke_verb(adminClient, /datum/admin_verb/play_direct_mob_sound, soundFile, targetMob)
@@ -530,10 +530,10 @@ GLOBAL_LIST_INIT(pp_limbs, list(
 		if ("apply_client_quirks")
 			var/mob/living/carbon/human/specified_humanoid = targetMob
 			if(!istype(specified_humanoid))
-				to_chat(adminClient, "this can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
+				to_chat(adminClient, LANG("datum.54430006", null), confidential = TRUE)
 				return
 			if(!specified_humanoid.client)
-				to_chat(adminClient, "[specified_humanoid] has no client!", confidential = TRUE)
+				to_chat(adminClient, LANG("datum.a07249cc", list(specified_humanoid)), confidential = TRUE)
 				return
 			SSquirks.AssignQuirks(specified_humanoid, specified_humanoid.client)
 			log_admin("[key_name(adminClient)] applied client quirks to [key_name(specified_humanoid)].")

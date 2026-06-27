@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/mapgen
 	key = "mapgen"
 
@@ -6,8 +7,7 @@
 
 /datum/buildmode_mode/mapgen/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Select corner")] -> Left Mouse Button on turf/obj/mob\n\
-		[span_bold("Select generator")] -> Right Mouse Button on buildmode button"))
+		LANG("datum.fb94bdf2", list(span_bold("Select corner"), span_bold("Select generator")))))
 	)
 
 /datum/buildmode_mode/mapgen/change_settings(client/c)
@@ -16,7 +16,7 @@
 	for(var/path in gen_paths)
 		var/datum/map_generator/MP = path
 		options[initial(MP.buildmode_name)] = path
-	var/type = input(c,"Select Generator Type","Type") as null|anything in options
+	var/type = input(c,LANG("datum.3a64eda6", null),LANG("datum.18446660", null)) as null|anything in options
 	if(!type)
 		return
 
@@ -25,7 +25,7 @@
 
 /datum/buildmode_mode/mapgen/handle_click(client/c, params, obj/object)
 	if(isnull(generator_path))
-		to_chat(c, span_warning("Select generator type first."))
+		to_chat(c, span_warning(LANG("datum.5dddd369", null)))
 		deselect_region()
 		return
 	..()
@@ -37,12 +37,12 @@
 		var/datum/map_generator/G = new generator_path
 		if(istype(G, /datum/map_generator/repair/reload_station_map))
 			if(GLOB.reloading_map)
-				to_chat(c, span_boldwarning("You are already reloading an area! Please wait for it to fully finish loading before trying to load another!"))
+				to_chat(c, span_boldwarning(LANG("datum.02a33b5d", null)))
 				deselect_region()
 				return
 		G.defineRegion(cornerA, cornerB, 1)
 		highlight_region(G.map)
-		var/confirm = tgui_alert(usr,"Are you sure you want to run the map generator?", "Run generator", list("Yes", "No"))
+		var/confirm = tgui_alert(usr,LANG("datum.5693cea0", null), LANG("datum.5b8b484c", null), list("Yes", "No"))
 		if(confirm == "Yes")
 			G.generate()
 		log_admin("Build Mode: [key_name(c)] ran the map generator '[G.buildmode_name]' in the region from [AREACOORD(cornerA)] to [AREACOORD(cornerB)]")

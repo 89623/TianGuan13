@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Creates a TGUI window with a text input. Returns the user's response.
  *
@@ -143,7 +144,7 @@
 				if(length_char(params["entry"]) > max_length)
 					CRASH("[usr] typed a text string longer than the max length")
 				if(encode && (length_char(html_encode(params["entry"])) > max_length))
-					to_chat(usr, span_notice("Your message was clipped due to special character usage."))
+					to_chat(usr, span_notice(LANG("datum.9d12f9ff", null)))
 			set_entry(params["entry"])
 			closed = TRUE
 			SStgui.close_uis(src)

@@ -45,7 +45,7 @@
 				valid_targets += thing
 
 	if (!length(valid_targets))
-		to_chat(source, span_warning("No valid targets in range."))
+		to_chat(source, span_warning(LANG("obj.41d96bee", null)))
 		return FALSE
 
 	var/rocket_count = 12

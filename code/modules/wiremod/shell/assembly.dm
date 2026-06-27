@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Assembly Shell
  *
@@ -85,7 +86,7 @@
 
 /obj/item/assembly/wiremod/examine(mob/user)
 	. = ..()
-	. += span_notice("You can also [secured && "un"]secure [src] by right-clicking it with a screwdriver, even if an integrated circuit is attached.")
+	. += span_notice(LANG("obj.873c7d4a", list(secured && "un", src)))
 
 // This is to bypass removing the circuit with a screwdriver left-click
 /obj/item/assembly/wiremod/screwdriver_act_secondary(mob/living/user, obj/item/tool)

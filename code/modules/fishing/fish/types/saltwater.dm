@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/fish/clownfish
 	name = "clownfish"
 	fish_id = "clownfish"
@@ -33,7 +34,7 @@
 
 // become lubeman. but you suicide
 /obj/item/fish/clownfish/lube/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] covers themselves in [src]'s residue, then swallows it whole! It looks like [user.p_theyre()] trying to commit lubide!"))
+	user.visible_message(span_suicide(LANG("obj.2aa7ceb7", list(user, src, user.p_theyre()))))
 	user.AddComponent(/datum/component/slippery, 8 SECONDS, SLIDE|GALOSHES_DONT_HELP)
 	user.AddElement(/datum/element/lube_walking)
 	qdel(src)
@@ -104,7 +105,7 @@
 	beauty = FISH_BEAUTY_GOOD
 
 /obj/item/fish/pufferfish/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] bites into [src] and starts sucking on it! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.3edca752", list(user, src, user.p_theyre()))))
 	return TOXLOSS
 
 /obj/item/fish/lanternfish
@@ -253,16 +254,16 @@
 	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/ink, /datum/fish_trait/camouflage, /datum/fish_trait/wary)
 
 /obj/item/fish/squid/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] points [src]'s ink glands at their face and presses INCREDIBLY hard! It looks like [user.p_theyre()] trying to commit squidcide!"))
+	user.visible_message(span_suicide(LANG("obj.4c4de3b0", list(user, src, user.p_theyre()))))
 
 	// No head? Bozo.
 	var/obj/item/bodypart/head = user.get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head))
-		user.visible_message(span_suicide("[user] has no head! The ink goes flying by!"))
+		user.visible_message(span_suicide(LANG("obj.35909165", list(user))))
 		return SHAME
 
 	// get inked.
-	user.visible_message(span_warning("[user] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
+	user.visible_message(span_warning(LANG("obj.435f3e65", list(user, src))), span_userdanger(LANG("obj.3659c69f", list(src))))
 	user.AddComponent(/datum/component/face_decal/splat, \
 		color = COLOR_NEARLY_ALL_BLACK, \
 		memory_type = /datum/memory/witnessed_inking, \
@@ -274,7 +275,7 @@
 		return OXYLOSS
 
 	head.dismember(silent = FALSE)
-	user.visible_message(span_suicide("[user]'s head goes FLYING OFF from the overpressurized ink jet!"))
+	user.visible_message(span_suicide(LANG("obj.406570cc", list(user))))
 	return MANUAL_SUICIDE
 
 /obj/item/fish/squid/get_fish_taste()

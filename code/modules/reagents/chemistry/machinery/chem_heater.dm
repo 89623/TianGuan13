@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/chem_heater
 	name = "reaction chamber" //Maybe this name is more accurate?
 	density = TRUE
@@ -65,19 +66,19 @@
 /obj/machinery/chem_heater/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
+		. += span_notice(LANG("obj.827df9e9", list(heater_coefficient * 1000)))
 		if(!QDELETED(beaker))
-			. += span_notice("It has a beaker of [beaker.reagents.total_volume] units capacity.")
+			. += span_notice(LANG("obj.26796692", list(beaker.reagents.total_volume)))
 			if(beaker.reagents.is_reacting)
-				. += span_notice("Its contents are currently reacting.")
+				. += span_notice(LANG("obj.92d004e1", null))
 		else
-			. += span_warning("There is no beaker inserted.")
-		. += span_notice("Its heating is turned [on ? "On" : "Off"].")
-		. += span_notice("The status display reads: Heating reagents at <b>[heater_coefficient * 1000]%</b> speed.")
+			. += span_warning(LANG("obj.801e6422", null))
+		. += span_notice(LANG("obj.b913d455", list(on ? "On" : "Off")))
+		. += span_notice(LANG("obj.827df9e9", list(heater_coefficient * 1000)))
 		if(panel_open)
-			. += span_notice("Its panel is open and can now be [EXAMINE_HINT("pried")] apart.")
+			. += span_notice(LANG("obj.7d0f2c58", list(EXAMINE_HINT("pried"))))
 		else
-			. += span_notice("Its panel can be [EXAMINE_HINT("pried")] open")
+			. += span_notice(LANG("obj.c87fbeb5", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/chem_heater/update_icon_state()
 	icon_state = "[base_icon_state][(beaker && !panel_open) ? 1 : 0]b"
@@ -103,7 +104,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	ui_interact(user)
-	balloon_alert(user, "beaker added")
+	balloon_alert(user, LANG("obj.254f5a24", null))
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -361,14 +362,14 @@
 
 	//no beaker
 	if(QDELETED(beaker))
-		say("No beaker found!")
+		say(LANG("obj.ce184d8a", null))
 		return FALSE
 
 	//trying to absorb buffer from currently inserted beaker
 	if(volume < 0)
 		if(!beaker.reagents.has_reagent(buffer_type))
 			var/name = initial(buffer_type.name)
-			say("Unable to find [name] in beaker to draw from! Please insert a beaker containing [name].")
+			say(LANG("obj.7f146f64", list(name, name)))
 			return FALSE
 		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - reagents.get_reagent_amount(buffer_type), target_id = buffer_type)
 		return TRUE

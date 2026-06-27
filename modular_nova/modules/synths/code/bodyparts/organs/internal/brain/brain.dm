@@ -47,7 +47,7 @@
 			to_chat(owner, span_warning("01001001 00100111 01101101 00100000 01100110 01110101 01100011 01101011 01100101 01100100 00101110"))
 			apply_organ_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organ_flag = ORGAN_ROBOTIC)
 		if(EMP_LIGHT)
-			to_chat(owner, span_warning("Alert: Electromagnetic damage taken in central processing unit. Error Code: 401-YT"))
+			to_chat(owner, span_warning(LANG("obj.3af1a266", null)))
 			apply_organ_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM, required_organ_flag = ORGAN_ROBOTIC)
 
 /obj/item/organ/brain/synth/apply_organ_damage(damage_amount, maximum, required_organ_flag)
@@ -57,11 +57,11 @@
 		last_message_time = world.time
 
 		if(damage > BRAIN_DAMAGE_SEVERE)
-			to_chat(owner, span_warning("Alre: re oumtnin ilir tocorr:pa ni ne:cnrrpiioruloomatt cessingode: P1_1-H"))
+			to_chat(owner, span_warning(LANG("obj.e81066eb", null)))
 			return
 
 		if(damage > BRAIN_DAMAGE_MILD)
-			to_chat(owner, span_warning("Alert: Minor corruption in central processing unit. Error Code: 001-HP"))
+			to_chat(owner, span_warning(LANG("obj.30eb8b4b", null)))
 
 /obj/item/organ/brain/synth/Destroy()
 	QDEL_NULL(internal_computer)
@@ -131,8 +131,8 @@
 
 /datum/design/synth_posi/proc/on_successful_revive(obj/item/organ/brain/synth/our_posi)
 	var/mob/living/carbon/human/owner = our_posi.owner
-	var/inputed_name = tgui_input_text(owner, "Enter your new name", "Your name", owner.real_name, max_length = MAX_NAME_LEN)
-	var/pronouns = tgui_input_list(owner, "Select your pronouns", "Your pronouns", list(MALE, FEMALE, PLURAL, NEUTER), NEUTER)
+	var/inputed_name = tgui_input_text(owner, LANG("datum.c39c4020", null), LANG("datum.e810a59f", null), owner.real_name, max_length = MAX_NAME_LEN)
+	var/pronouns = tgui_input_list(owner, LANG("datum.4a93d89b", null), LANG("datum.5019ec94", null), list(MALE, FEMALE, PLURAL, NEUTER), NEUTER)
 	if(!isnull(inputed_name))
 		owner.fully_replace_character_name(newname = inputed_name)
 	if(!isnull(pronouns))

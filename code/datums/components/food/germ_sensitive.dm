@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Don't eat off the floor or hold parent object with dirty hands, you'll get sick
 
 /// Time needed for bacteria to infect the parent object
@@ -102,7 +103,7 @@ GLOBAL_LIST_INIT(floor_diseases, list(
 /datum/component/germ_sensitive/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(infective)
-		examine_list += span_warning("[parent] looks dirty and not safe to consume.")
+		examine_list += span_warning(LANG("datum.ba5697a7", list(parent)))
 
 /datum/component/germ_sensitive/proc/expose_to_germs()
 	// Admin spawned items are never exposed

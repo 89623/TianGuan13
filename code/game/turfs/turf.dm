@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Any floor or wall. What makes up the station and the rest of the map.
@@ -137,6 +138,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	// NOVA EDIT ADDITION START - I18N - turf 不走 /atom/Initialize（SHOULD_CALL_PARENT(FALSE)），
+	// master_files/code/game/atoms.dm 的 name/desc 反查永远碰不到 turf（墙/地板 examine 显英文即此）→ 在此单独接。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(name)
+			name = lang_reverse_text(name)
+		if(desc)
+			desc = lang_reverse_text(desc)
+	// NOVA EDIT ADDITION END
 
 	/// We do NOT use the shortcut here, because this is faster
 	if(SSmapping.max_plane_offset)
@@ -856,7 +866,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return
 	if(!GLOB.preset_fish_sources[fish_source].has_known_fishes(src))
 		return
-	. += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
+	. += span_tinynoticeital(LANG("turf.4d4c2b22", null))
 
 /turf/examine_more(mob/user)
 	. = ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SPIDER_WEB_TINT	"web_colour_tint"
 
 /obj/structure/spider
@@ -68,9 +69,9 @@
 		return
 	if(!HAS_TRAIT(user, TRAIT_WEB_WEAVER))
 		return
-	loc.balloon_alert_to_viewers("weaving...")
+	loc.balloon_alert_to_viewers(LANG("obj.6802656f", null))
 	if(!do_after(user, 2 SECONDS))
-		loc.balloon_alert(user, "interrupted!")
+		loc.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
 	qdel(src)
 	var/obj/item/stack/sheet/cloth/woven_cloth = new /obj/item/stack/sheet/cloth
@@ -101,13 +102,13 @@
 /obj/structure/spider/stickyweb/proc/stuck_react(mob/living/victim)
 	if(victim.get_stamina_loss() > 90)
 		if(victim.body_position != LYING_DOWN)
-			to_chat(victim, span_warning("You trip over \the [src] due to exhaustion!"))
+			to_chat(victim, span_warning(LANG("obj.346b9026", list(src))))
 
 		victim.SetKnockdown(3 SECONDS)
 		return
 
 	if(prob(25))
-		loc.balloon_alert(victim, "stuck in web!")
+		loc.balloon_alert(victim, LANG("obj.00433e54", null))
 		victim.Shake(duration = 0.2 SECONDS)
 
 	victim.adjust_stamina_loss(rand(10, 15))
@@ -234,8 +235,8 @@
 	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, span_notice("You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)"))
-	visible_message(span_notice("You see something struggling and writhing in \the [src]!"))
+	to_chat(user, span_notice(LANG("obj.50b9f9a4", list(DisplayTimeText(breakout_time)))))
+	visible_message(span_notice(LANG("obj.4cc8e807", list(src))))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return
@@ -243,7 +244,7 @@
 
 /obj/structure/spider/cocoon/Destroy()
 	var/turf/T = get_turf(src)
-	src.visible_message(span_warning("\The [src] splits open."))
+	src.visible_message(span_warning(LANG("obj.ed49dd86", list(src))))
 	for(var/atom/movable/A in contents)
 		A.forceMove(T)
 	return ..()

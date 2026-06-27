@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define POLLING_COOLDOWN_TIME 2 MINUTES
 
 /// Gives all current occupants a notification that the server is going down
@@ -6,17 +7,17 @@
 		return
 
 	if(!length(avatar_connection_refs))
-		balloon_alert_to_viewers("powering down domain...")
+		balloon_alert_to_viewers(LANG("obj.b015a834", null))
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 40, vary = TRUE)
 		reset()
 		return
 
-	balloon_alert_to_viewers("notifying clients...")
+	balloon_alert_to_viewers(LANG("obj.47ed17ba", null))
 	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 100, vary = TRUE)
 	user.visible_message(
-		span_danger("[user] begins depowering the server!"),
-		span_notice("You start disconnecting clients..."),
-		span_danger("You hear frantic keying on a keyboard."),
+		span_danger(LANG("obj.4273d21e", list(user))),
+		span_notice(LANG("obj.40edcdde", null)),
+		span_danger(LANG("obj.b2e34517", null)),
 	)
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_SHUTDOWN_ALERT, user)
@@ -33,15 +34,15 @@
 		return FALSE
 
 	if(isnull(map_key))
-		balloon_alert_to_viewers("no domain specified!")
+		balloon_alert_to_viewers(LANG("obj.c7fc5176", null))
 		return FALSE
 
 	if(generated_domain)
-		balloon_alert_to_viewers("stop the current domain first!")
+		balloon_alert_to_viewers(LANG("obj.2daf155d", null))
 		return FALSE
 
 	if(length(avatar_connection_refs))
-		balloon_alert_to_viewers("all clients must disconnect!")
+		balloon_alert_to_viewers(LANG("obj.706e5aea", null))
 		return FALSE
 
 	is_ready = FALSE
@@ -49,7 +50,7 @@
 
 	/// If any one of these fail, it reverts the entire process
 	if(!load_domain(map_key) || !load_map_items() || !load_mob_segments())
-		balloon_alert_to_viewers("initialization failed!")
+		balloon_alert_to_viewers(LANG("obj.8608c642", null))
 		scrub_vdom()
 		is_ready = TRUE
 		return FALSE
@@ -75,7 +76,7 @@
 		setup_glitch()
 
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 30, vary = TRUE)
-	balloon_alert_to_viewers("domain loaded.")
+	balloon_alert_to_viewers(LANG("obj.e73fc37d", null))
 	generated_domain.start_time = world.time
 	points -= generated_domain.cost
 	update_use_power(ACTIVE_POWER_USE)
@@ -104,28 +105,28 @@
 		return FALSE
 
 	if(generated_domain.mission_min_candidates && (!COOLDOWN_FINISHED(src, polling_cooldown)))
-		say("Advanced NPC algorithms resetting, please wait [DisplayTimeText(polling_cooldown)] or load a different domain.")
+		say(LANG("obj.12caee26", list(DisplayTimeText(polling_cooldown))))
 		playsound(src, "sound/machines/buzz-[pick("sigh", "two")].ogg", 50, TRUE)
 		return FALSE
 
 	var/list/mob/lucky_ghosts
 	if(generated_domain.mission_min_candidates)
 		playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
-		say("Loading advanced NPCs...")
+		say(LANG("obj.fd3a5e1c", null))
 		var/list/mob/candidates = SSpolling.poll_ghost_candidates("Do you want to play as a virtual [generated_domain.spawner_role] in a bitrunner domain?", ROLE_GHOST_ROLE, ROLE_GHOST_ROLE, 15 SECONDS, POLL_IGNORE_SHUTTLE_DENIZENS, TRUE)
 		for(var/amount in 1 to generated_domain.mission_max_candidates)
 			if(length(candidates)) // If no candidates, fails in code below anyways
 				LAZYADD(lucky_ghosts, pick_n_take(candidates))
 
 		if(length(lucky_ghosts) < generated_domain.mission_min_candidates)
-			notify_ghosts("Not enough candidates for [generated_domain.spawner_role]! Aborting mission!")
+			notify_ghosts(LANG("obj.a4f80f40", list(generated_domain.spawner_role)))
 			playsound(src, "sound/machines/buzz-[pick("sigh", "two")].ogg", 50, TRUE)
-			say("Error! Unable to load advanced NPCs. Please try again or select different domain.")
+			say(LANG("obj.703af0a6", null))
 			COOLDOWN_START(src, polling_cooldown, POLLING_COOLDOWN_TIME)
 			return FALSE
 
 		playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
-		say("Success!")
+		say(LANG("obj.07d3d8bd", null))
 
 	generated_domain.load_advanced_npcs(lucky_ghosts)
 	RegisterSignal(generated_domain, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(on_template_loaded))

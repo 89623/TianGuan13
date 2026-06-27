@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun/syringe
 	name = "medical syringe gun"
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
@@ -70,16 +71,16 @@
 
 /obj/item/gun/syringe/examine(mob/user)
 	. = ..()
-	. += span_notice("Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining.")
+	. += span_notice(LANG("obj.9b2ea8fa", list(max_syringes, syringes.len)))
 	if (low_power)
-		. += span_notice("Its pressure regulator is set to low power mode, making sure that syringes shot will embed and slowly bleed their reagents into their target.")
+		. += span_notice(LANG("obj.abb8b5a1", null))
 	else
-		. += span_notice("Its pressure regulator is cranked to the max, instantly injecting the reagents at the cost of breaking the syringes fired.")
-	. += span_notice("Right-click [src] in-hand to switch it to [low_power ? "full" : "low"] power.")
+		. += span_notice(LANG("obj.9ff3aed5", null))
+	. += span_notice(LANG("obj.69d550e8", list(src, low_power ? "full" : "low")))
 
 /obj/item/gun/syringe/attack_self(mob/living/user, list/modifiers)
 	if (!syringes.len)
-		balloon_alert(user, "it's empty!")
+		balloon_alert(user, LANG("obj.76a90f7c", null))
 		return FALSE
 
 	var/obj/item/reagent_containers/syringe/syringe = syringes[syringes.len]
@@ -89,7 +90,7 @@
 	user.put_in_hands(syringe)
 
 	syringes.Remove(syringe)
-	balloon_alert(user, "[syringe.name] unloaded")
+	balloon_alert(user, LANG("obj.faef9ffa", list(syringe.name)))
 	update_appearance()
 	return TRUE
 
@@ -100,30 +101,30 @@
 
 	low_power = !low_power
 	if (low_power)
-		balloon_alert(user, "enabled low power mode")
-		to_chat(user, span_notice("You carefully lower the pressure regulator setting, ensuring that fired syringes embed in your target."))
+		balloon_alert(user, LANG("obj.42b3f13b", null))
+		to_chat(user, span_notice(LANG("obj.f9691945", null)))
 	else
-		balloon_alert(user, "enabled high power mode")
-		to_chat(user, span_notice("You crank the pressure regulator to the max, making sure that fired syringes inject their contents instantly."))
+		balloon_alert(user, LANG("obj.f5989967", null))
+		to_chat(user, span_notice(LANG("obj.8301cdc3", null)))
 	playsound(user, 'sound/machines/click.ogg', 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/syringe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/reagent_containers/syringe/bluespace))
-		balloon_alert(user, "[tool.name] is too big!")
+		balloon_alert(user, LANG("obj.b86c0ffd", list(tool.name)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(tool, /obj/item/reagent_containers/syringe))
 		return NONE
 
 	if(syringes.len >= max_syringes)
-		balloon_alert(user, "it's full!")
+		balloon_alert(user, LANG("obj.2cb7d354", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "[tool.name] loaded")
+	balloon_alert(user, LANG("obj.8255044f", list(tool.name)))
 	syringes += tool
 	recharge_newshot()
 	update_appearance()
@@ -197,18 +198,18 @@
 	if(istype(tool, /obj/item/dnainjector))
 		var/obj/item/dnainjector/D = tool
 		if(D.used)
-			balloon_alert(user, "[D.name] is used up!")
+			balloon_alert(user, LANG("obj.9505d6ea", list(D.name)))
 			return ITEM_INTERACT_BLOCKING
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(D, src))
 				return ITEM_INTERACT_BLOCKING
-			balloon_alert(user, "[D.name] loaded")
+			balloon_alert(user, LANG("obj.8255044f", list(D.name)))
 			syringes += D
 			recharge_newshot()
 			update_appearance()
 			playsound(loc, load_sound, 40)
 			return ITEM_INTERACT_SUCCESS
-		balloon_alert(user, "it's already full!")
+		balloon_alert(user, LANG("obj.53488f9b", null))
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 
@@ -238,6 +239,6 @@
 	. = ..()
 	if(!.)
 		return
-	visible_message(span_danger("[user] shoots the blowgun!"))
+	visible_message(span_danger(LANG("obj.7477a69b", list(user))))
 	user.adjust_stamina_loss(20, updating_stamina = FALSE)
 	user.adjust_oxy_loss(20)

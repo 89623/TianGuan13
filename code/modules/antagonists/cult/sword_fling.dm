@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/action/cooldown/spell/pointed/sword_fling
 	name = "Sword Fling"
@@ -65,7 +66,7 @@
 
 		if(prob(resist_chance))
 			flinged_sword.forceMove(get_turf(loccer))
-			flinged_sword.visible_message(span_alert("\the [flinged_sword] yanks itself out of [loccer]'s grip!"))
+			flinged_sword.visible_message(span_alert(LANG("datum.cbac0d83", list(flinged_sword, loccer))))
 			// flung by later code
 		else
 			to_chat(owner, span_warning(fail_text))
@@ -73,14 +74,14 @@
 
 	if(isitem(sword_loc))
 		flinged_sword.forceMove(get_turf(sword_loc))
-		flinged_sword.visible_message(span_alert("\the [flinged_sword] yanks itself out of [sword_loc]!"))
+		flinged_sword.visible_message(span_alert(LANG("datum.52875c6b", list(flinged_sword, sword_loc))))
 		// flung by later code
 
 	if(iscloset(sword_loc))
 		var/obj/structure/closet/sword_closet = sword_loc
 		if(!(sword_closet.open(owner, force = prob(5), special_effects = TRUE)))
 			sword_closet.container_resist_act(owner, loc_required = FALSE)
-		flinged_sword.visible_message(span_alert("\the [flinged_sword] yanks itself out of [sword_closet]!"))
+		flinged_sword.visible_message(span_alert(LANG("datum.52875c6b", list(flinged_sword, sword_closet))))
 
 	// no general struct/machinery check. imagine if someone put the sword in a vendor
 
@@ -88,7 +89,7 @@
 		new /obj/effect/temp_visual/sword_sparks(sword_loc)
 		flinged_sword.throw_at(cast_on, cast_range, flinged_sword.throw_speed, owner)
 		flinged_sword.visible_message(\
-			span_warning("\the [flinged_sword] lunges at \the [cast_on]!"))
+			span_warning(LANG("datum.61ded04f", list(flinged_sword, cast_on))))
 		playsound(flinged_sword, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
 		flinged_sword.add_filter("cool_glow", 2, list("type" = "outline", "color" = COLOR_HERETIC_GREEN, "size" = 0.7))
 		addtimer(CALLBACK(flinged_sword, TYPE_PROC_REF(/datum, remove_filter), "cool_glow"), 0.7 SECONDS)

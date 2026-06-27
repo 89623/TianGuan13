@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //RAPID HANDHELD DEVICE. the base for all rapid devices
 
 #define SILO_USE_AMOUNT (SHEET_MATERIAL_AMOUNT / 4)
@@ -85,12 +86,12 @@
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
-	. += "It currently holds [get_matter(user)]/[max_matter] matter-units."
+	. += LANG("obj.8f831dd1", list(get_matter(user), max_matter))
 	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
-		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
+		. += LANG("obj.d0a7ad91", list(silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"))
 		var/iron = get_silo_iron()
 		if(iron)
-			. += "Remote connection has iron in equivalent to [iron] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
+			. += LANG("obj.66136bac", list(iron)) //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -120,10 +121,10 @@
 /// Installs an upgrade into the RCD checking if it is already installed, or if it is a banned upgrade
 /obj/item/construction/proc/install_upgrade(obj/item/rcd_upgrade/design_disk, mob/user)
 	if(design_disk.upgrade & construction_upgrades)
-		balloon_alert(user, "already installed!")
+		balloon_alert(user, LANG("obj.1519de2c", null))
 		return FALSE
 	if(design_disk.upgrade & banned_upgrades)
-		balloon_alert(user, "cannot install upgrade!")
+		balloon_alert(user, LANG("obj.133726c6", null))
 		return FALSE
 	construction_upgrades |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
@@ -143,7 +144,7 @@
 		var/obj/item/rcd_ammo/ammo = item
 		var/load = min(ammo.ammoamt, max_matter - matter)
 		if(load <= 0)
-			balloon_alert(user, "storage full!")
+			balloon_alert(user, LANG("obj.1205d2c0", null))
 			return FALSE
 		ammo.ammoamt -= load
 		if(ammo.ammoamt <= 0)
@@ -159,7 +160,7 @@
 
 /obj/item/construction/proc/loadwithsheets(obj/item/stack/the_stack, mob/user)
 	if(the_stack.matter_amount <= 0)
-		balloon_alert(user, "invalid sheets!")
+		balloon_alert(user, LANG("obj.1a31eef4", null))
 		return FALSE
 	var/maxsheets = round((max_matter-matter) / the_stack.matter_amount) //calculate the max number of sheets that will fit in RCD
 	if(maxsheets > 0)
@@ -168,7 +169,7 @@
 		matter += the_stack.matter_amount * amount_to_use
 		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 		return TRUE
-	balloon_alert(user, "storage full!")
+	balloon_alert(user, LANG("obj.1205d2c0", null))
 	return FALSE
 
 /obj/item/construction/attack_self(mob/user)
@@ -197,7 +198,7 @@
 			if(has_ammobar)
 				flick("[charge_icon_state || icon_state]_empty", src)
 			if(user)
-				balloon_alert(user, "not enough matter!")
+				balloon_alert(user, LANG("obj.5f5aa01b", null))
 			return FALSE
 		if(!dry_run)
 			matter -= amount
@@ -206,11 +207,11 @@
 	else
 		if(!silo_mats.can_use_resource(user_data = ID_DATA(user)))
 			if(user)
-				balloon_alert(user, "permission denied!")
+				balloon_alert(user, LANG("obj.770bbf90", null))
 			return FALSE
 		if(!silo_mats.mat_container.has_enough_of_material(/datum/material/iron, amount * SILO_USE_AMOUNT))
 			if(user)
-				balloon_alert(user, "not enough silo material!")
+				balloon_alert(user, LANG("obj.fca8ccb9", null))
 			return FALSE
 		if(!dry_run)
 			amount = silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
@@ -238,15 +239,15 @@
 
 /obj/item/construction/proc/toggle_silo(mob/user)
 	if(!silo_mats)
-		to_chat(user, span_warning("no remote storage connection."))
+		to_chat(user, span_warning(LANG("obj.0cab7bd5", null)))
 		return FALSE
 
 	if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link.
-		to_chat(user, span_warning("no silo link detected."))
+		to_chat(user, span_warning(LANG("obj.96443029", null)))
 		return FALSE
 
 	silo_link = !silo_link
-	to_chat(user, span_notice("silo link state: [silo_link ? "on" : "off"]"))
+	to_chat(user, span_notice(LANG("obj.cacf5a30", list(silo_link ? "on" : "off"))))
 	return TRUE
 
 ///shared action for toggling silo link rcd,rld & plumbing
@@ -272,7 +273,7 @@
 	if(target.z != user.z)
 		return
 	if(!(target in dview(7, get_turf(user))))
-		balloon_alert(user, "out of range!")
+		balloon_alert(user, LANG("obj.2201997f", null))
 		flick("[icon_state]_empty", src)
 		return FALSE
 	else

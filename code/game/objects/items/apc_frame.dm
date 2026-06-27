@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // APC HULL
 /obj/item/wallframe/apc
 	name = "\improper APC frame"
@@ -9,10 +10,10 @@
 	var/turf/T = get_turf(on_wall) //the user is not where it needs to be.
 	var/area/A = get_area(user)
 	if(A.apc)
-		to_chat(user, span_warning("This area already has an APC!"))
+		to_chat(user, span_warning(LANG("obj.4cc02e8a", null)))
 		return FALSE //only one APC per area
 	if(!A.requires_power || A.always_unpowered)
-		to_chat(user, span_warning("You cannot place [src] in this area!"))
+		to_chat(user, span_warning(LANG("obj.020656f6", list(src))))
 		return FALSE //can't place apcs in areas with no power requirement
 	for(var/obj/machinery/power/terminal/E in T)
 		if(E.master)

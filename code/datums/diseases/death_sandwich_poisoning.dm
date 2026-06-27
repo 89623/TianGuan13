@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/death_sandwich_poisoning
 	name = "Death Sandwich Poisoning"
 	desc = "If left untreated the subject will ultimately perish."
@@ -35,7 +36,7 @@
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("gag")
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your body feels hot!"))
+				to_chat(affected_mob, span_danger(LANG("datum.a2d85863", null)))
 				if(prob(20))
 					affected_mob.take_bodypart_damage(burn = 1)
 			if(SPT_PROB(3, seconds_per_tick))
@@ -49,11 +50,11 @@
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your body feels hot!"))
+				to_chat(affected_mob, span_danger(LANG("datum.a2d85863", null)))
 				if(prob(60))
 					affected_mob.take_bodypart_damage(burn = 2)
 			if(SPT_PROB(6, seconds_per_tick))
 				affected_mob.adjust_tox_loss(15)
 			if(SPT_PROB(1.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You try to scream, but nothing comes out!"))
+				to_chat(affected_mob, span_danger(LANG("datum.0f63b3b2", null)))
 				affected_mob.set_silence_if_lower(5 SECONDS)

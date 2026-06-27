@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/sequence_scanner
 	name = "genetic sequence scanner"
 	icon = 'icons/obj/devices/scanner.dmi'
@@ -28,18 +29,18 @@
 
 /obj/item/sequence_scanner/examine(mob/user)
 	. = ..()
-	. += span_notice("Use primary attack to scan mutations, Secondary attack to scan genetic makeup")
+	. += span_notice(LANG("obj.1d555183", null))
 	if(LAZYLEN(genetic_makeup_buffer) > 0)
-		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
+		. += span_notice(LANG("obj.c2e66c2e", list(genetic_makeup_buffer["name"])))
 
 /obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/machinery/computer/dna_console))
 		var/obj/machinery/computer/dna_console/console = interacting_with
 		if(console.stored_research)
-			to_chat(user, span_notice("[name] linked to central research database."))
+			to_chat(user, span_notice(LANG("obj.ed9ebf67", list(name))))
 			discovered = console.stored_research.discovered_mutations
 		else
-			to_chat(user,span_warning("No database to update from."))
+			to_chat(user,span_warning(LANG("obj.f8027cc1", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!isliving(interacting_with))
@@ -49,19 +50,19 @@
 
 	//no scanning if its a husk or DNA-less Species
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA))
-		user.visible_message(span_notice("[user] analyzes [interacting_with]'s genetic sequence."))
-		balloon_alert(user, "sequence analyzed")
+		user.visible_message(span_notice(LANG("obj.6529f0ce", list(user, interacting_with))))
+		balloon_alert(user, LANG("obj.6cece6aa", null))
 		playsound(user, 'sound/items/healthanalyzer.ogg', 50) // close enough
 		gene_scan(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
 
-	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic sequence."), span_warning("[interacting_with] has no readable genetic sequence!"))
+	user.visible_message(span_notice(LANG("obj.484b8766", list(user, interacting_with))), span_warning(LANG("obj.1b5e0706", list(interacting_with))))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/machinery/computer/dna_console))
 		var/obj/machinery/computer/dna_console/console = interacting_with
-		var/buffer_index = tgui_input_number(user, "Slot:", "Which slot to export:", 1, LAZYLEN(console.genetic_makeup_buffer), 1)
+		var/buffer_index = tgui_input_number(user, LANG("obj.2df829ee", null), LANG("obj.a60f6161", null), 1, LAZYLEN(console.genetic_makeup_buffer), 1)
 		console.genetic_makeup_buffer[buffer_index] = genetic_makeup_buffer
 		return ITEM_INTERACT_SUCCESS
 
@@ -72,16 +73,16 @@
 
 	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA) && !HAS_TRAIT(interacting_with, TRAIT_NO_DNA_COPY))
-		user.visible_message(span_warning("[user] is scanning [interacting_with]'s genetic makeup."))
+		user.visible_message(span_warning(LANG("obj.9e20c061", list(user, interacting_with))))
 		if(!do_after(user, 3 SECONDS, interacting_with))
-			balloon_alert(user, "scan failed!")
-			user.visible_message(span_warning("[user] fails to scan [interacting_with]'s genetic makeup."))
+			balloon_alert(user, LANG("obj.afa319fc", null))
+			user.visible_message(span_warning(LANG("obj.7e55a88c", list(user, interacting_with))))
 			return ITEM_INTERACT_BLOCKING
 		makeup_scan(interacting_with, user)
-		balloon_alert(user, "makeup scanned")
+		balloon_alert(user, LANG("obj.2c8f5042", null))
 		return ITEM_INTERACT_SUCCESS
 
-	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic makeup."), span_warning("[interacting_with] has no readable genetic makeup!"))
+	user.visible_message(span_notice(LANG("obj.a321b282", list(user, interacting_with))), span_warning(LANG("obj.9be3dc87", list(interacting_with))))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/attack_self(mob/user)
@@ -103,14 +104,14 @@
 		LAZYSET(buffer, mutation.type, GET_SEQUENCE(mutation.type))
 		active_mutations.Add(mutation.type)
 
-	to_chat(user, span_notice("Subject [target.name]'s DNA sequence has been saved to buffer."))
+	to_chat(user, span_notice(LANG("obj.b89de626", list(target.name))))
 	for(var/mutation in buffer)
 		//highlight activated mutations
 		if(LAZYFIND(active_mutations, mutation))
 			to_chat(user, span_boldnotice("[get_display_name(mutation)]"))
 		else
 			to_chat(user, span_notice("[get_display_name(mutation)]"))
-	to_chat(user, span_notice("<span class='info ml-1'>Genetic Stability: [target.dna.stability]%.</span><br>")) // NOVA EDIT ADDITION - Adds stability indication.
+	to_chat(user, span_notice(LANG("obj.1e9bd33c", list(target.dna.stability)))) // NOVA EDIT ADDITION - Adds stability indication.
 
 ///proc for scanning someone's genetic makeup
 /obj/item/sequence_scanner/proc/makeup_scan(mob/living/carbon/target, mob/living/user)
@@ -132,7 +133,7 @@
 	for(var/mutation in buffer)
 		options += get_display_name(mutation)
 
-	var/answer = tgui_input_list(user, "Analyze Potential", "Sequence Analyzer", sort_list(options))
+	var/answer = tgui_input_list(user, LANG("obj.245ba491", null), LANG("obj.5722bb55", null), sort_list(options))
 	if(isnull(answer))
 		return
 	if(!ready || !user.can_perform_action(src, NEED_LITERACY|NEED_LIGHT|FORBID_TELEKINESIS_REACH))

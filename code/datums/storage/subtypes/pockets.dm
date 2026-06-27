@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Regular pockets
 /datum/storage/pockets
 	max_slots = 2
@@ -14,9 +15,9 @@
 		return
 
 	if(quickdraw)
-		to_chat(user, span_notice("You discreetly slip [to_insert] into [parent]. Right-click to remove it."))
+		to_chat(user, span_notice(LANG("datum.31b84461", list(to_insert, parent))))
 	else
-		to_chat(user, span_notice("You discreetly slip [to_insert] into [parent]."))
+		to_chat(user, span_notice(LANG("datum.13b96f71", list(to_insert, parent))))
 
 ///Small pockets
 /datum/storage/pockets/small

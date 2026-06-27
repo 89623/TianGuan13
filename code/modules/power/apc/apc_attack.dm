@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Ethereals:
 /// How long it takes an ethereal to drain or charge APCs. Also used as a spam limiter.
 #define ETHEREAL_APC_DRAIN_TIME (3 SECONDS)
@@ -43,25 +44,25 @@
 	// Ethereals can't drain APCs under half charge, so that they are forced to look to alternative power sources if the station is running low
 	if(cell.charge() < half_max_charge)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "safeties prevent draining!"), ETHEREAL_APC_ALERT_DELAY)
-		user.visible_message(span_notice("[src] displays a red X, sealing ports as 'safeties enabled' flashes across the screen!")) // NOVA EDIT ADDITION
+		user.visible_message(span_notice(LANG("obj.cfb96552", list(src)))) // NOVA EDIT ADDITION
 		return
 
 	var/obj/item/stock_parts/power_store/stomach_cell = used_stomach.cell
 	used_stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "draining power..."), ETHEREAL_APC_ALERT_DELAY)
 	//NOVA EDIT CHANGE BEGIN - Ethereal Rework 2024
-	user.visible_message(span_notice("[user] presses their fingers into [src]'s screen, static jumping up [user.p_their()] arm as they drain it!"))
-	to_chat(user, span_purple("You try to drain some of [src]'s energy into yourself..."))
+	user.visible_message(span_notice(LANG("obj.274ca5fa", list(user, src, user.p_their()))))
+	to_chat(user, span_purple(LANG("obj.8b3bee53", list(src))))
 	//NOVA EDIT CHANGE END - Ethereal Rework 2024
 	while(do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 		if(isnull(used_stomach) || (used_stomach != user.get_organ_slot(ORGAN_SLOT_STOMACH)))
-			balloon_alert(user, "stomach removed!?")
+			balloon_alert(user, LANG("obj.102b018f", null))
 			return
 		if(isnull(cell))
-			balloon_alert(user, "cell removed!")
+			balloon_alert(user, LANG("obj.a47322cd", null))
 			return
 		if(cell.charge() < half_max_charge)
-			balloon_alert(user, "safeties kicked in!")
+			balloon_alert(user, LANG("obj.03fc1b06", null))
 			return
 
 		var/our_available_charge = cell.charge() - half_max_charge
@@ -72,11 +73,11 @@
 		used_stomach.adjust_charge(energy_drained)
 
 		if(stomach_cell.used_charge() <= 0)
-			balloon_alert(user, "your charge is full!")
-			user.visible_message(span_notice("[user] drops [user.p_their()] hand from [src], glowing at [user.p_their()] zenith!")) // NOVA EDIT ADDITION
+			balloon_alert(user, LANG("obj.5e4dbacc", null))
+			user.visible_message(span_notice(LANG("obj.c04592c8", list(user, user.p_their(), src, user.p_their())))) // NOVA EDIT ADDITION
 			return
 		if(cell.charge() <= 0)
-			balloon_alert(user, "apc is empty!")
+			balloon_alert(user, LANG("obj.1328a0e7", null))
 			return
 
 /// Handles charging our internal cell from an ethereal and their stomach
@@ -92,16 +93,16 @@
 	used_stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "transferring power..."), ETHEREAL_APC_ALERT_DELAY)
 	// NOVA EDIT ADDITION BEGIN - Ethereal Rework 2024
-	user.visible_message(span_notice("[user] presses [user.p_their()] fingers into [src]'s screen, [user.p_their()] arm alight with static as [user.p_they()] charge it!"))
-	to_chat(user, span_purple("You try to shunt some of your energy into [src]..."))
+	user.visible_message(span_notice(LANG("obj.122e4d53", list(user, user.p_their(), src, user.p_their(), user.p_they()))))
+	to_chat(user, span_purple(LANG("obj.609a84d2", list(src))))
 	// NOVA EDIT ADDITION END - Ethereal Rework 2024
 	if(!do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 		return
 	if(isnull(used_stomach) || (used_stomach != user.get_organ_slot(ORGAN_SLOT_STOMACH)))
-		balloon_alert(user, "stomach removed!?")
+		balloon_alert(user, LANG("obj.102b018f", null))
 		return
 	if(isnull(cell))
-		balloon_alert(user, "cell removed!")
+		balloon_alert(user, LANG("obj.a47322cd", null))
 		return
 
 	var/stomach_charge = stomach_cell.charge()
@@ -112,11 +113,11 @@
 	cell.give(-energy_drained)
 
 	if(cell.used_charge() <= 0)
-		balloon_alert(user, "apc is full!")
-		user.visible_message(span_notice("[src] displays a red X across the screen, sealing ports and rejecting [user]'s charge!")) // NOVA EDIT ADDITION - Ethereal Rework 2024
+		balloon_alert(user, LANG("obj.cbf89b69", null))
+		user.visible_message(span_notice(LANG("obj.d410508a", list(src, user)))) // NOVA EDIT ADDITION - Ethereal Rework 2024
 		return
 	if(stomach_cell.charge() <= 0)
-		balloon_alert(user, "out of charge!")
+		balloon_alert(user, LANG("obj.6428cbcd", null))
 		return
 
 
@@ -128,8 +129,8 @@
 
 	if(opened && (!issilicon(user)))
 		if(cell)
-			user.visible_message(span_notice("[user] removes \the [cell] from [src]!"))
-			balloon_alert(user, "cell removed")
+			user.visible_message(span_notice(LANG("obj.ea367116", list(user, cell, src))))
+			balloon_alert(user, LANG("obj.0dfdca6e", null))
 			user.put_in_hands(cell)
 		return
 	if((machine_stat & MAINT) && !opened) //no board; no interface
@@ -163,7 +164,7 @@
 		else if(istype(malfai) && !(malfai == user || (user in malfai.connected_robots)))
 			. = FALSE
 	if (!. && !loud)
-		balloon_alert(user, "it's disabled!")
+		balloon_alert(user, LANG("obj.487c33b3", null))
 	return .
 
 /obj/machinery/power/apc/shock(mob/living/shocking, chance, shock_source, siemens_coeff)

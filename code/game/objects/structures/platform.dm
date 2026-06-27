@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PLATFORM_BASE_MATERIAL_AMOUNT (2 * SHEET_MATERIAL_AMOUNT)
 
 /// A raised platform you can stand on top of
@@ -68,13 +69,13 @@
 	return . || NONE
 
 /obj/structure/platform/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("You start disassembling [src]..."))
+	to_chat(user, span_notice(LANG("obj.f0ab830f", list(src))))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/platform/wrench_act_secondary(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("You start deconstructing [src]..."))
+	to_chat(user, span_notice(LANG("obj.08e1925c", list(src))))
 	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE)

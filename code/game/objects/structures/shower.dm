@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SHOWER_FREEZING "freezing"
 #define SHOWER_FREEZING_TEMP 100
 #define SHOWER_NORMAL "normal"
@@ -96,11 +97,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
-	. += span_notice("It looks like the thermostat has an adjustment screw.")
+	. += span_notice(LANG("obj.bcd47e6b", null))
 	if(has_water_reclaimer)
-		. += span_notice("A water recycler is installed. It looks like you could pry it out.")
-	. += span_notice("The auto shut-off is programmed to [GLOB.shower_mode_descriptions["[mode]"]].")
-	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
+		. += span_notice(LANG("obj.6a25c0f2", null))
+	. += span_notice(LANG("obj.f3fe27e6", list(GLOB.shower_mode_descriptions["[mode]"])))
+	. += span_notice(LANG("obj.31941555", list(reagents.total_volume, reagents.maximum_volume)))
 
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
@@ -114,10 +115,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	intended_on = !intended_on
 	if(!update_actually_on(intended_on))
-		balloon_alert(user, "[src] is dry!")
+		balloon_alert(user, LANG("obj.76cfe055", list(src)))
 		return FALSE
 
-	balloon_alert(user, "turned [intended_on ? "on" : "off"]")
+	balloon_alert(user, LANG("obj.8fcfde3c", list(intended_on ? "on" : "off")))
 
 	return TRUE
 
@@ -125,14 +126,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	. = ..()
 
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("The water temperature seems to be [current_temperature]."))
+	to_chat(user, span_notice(LANG("obj.7bb305ef", list(current_temperature))))
 	return TRUE
 
 /obj/machinery/shower/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
-	user.balloon_alert_to_viewers("furiously plunging...", "plunging shower...")
+	user.balloon_alert_to_viewers(LANG("obj.6051e050", null), LANG("obj.36422741", null))
 	if(!do_after(user, 3 SECONDS, target = src))
 		return TRUE
-	user.balloon_alert_to_viewers("finished plunging")
+	user.balloon_alert_to_viewers(LANG("obj.670c9c2c", null))
 	reagents.expose(get_turf(src), TOUCH) //splash on the floor
 	reagents.clear_reagents()
 	begin_processing()
@@ -141,7 +142,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 /obj/machinery/shower/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		if(has_water_reclaimer)
-			to_chat(user, span_warning("There is already has a water recycler installed."))
+			to_chat(user, span_warning(LANG("obj.54d98562", null)))
 			return
 
 		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
@@ -159,7 +160,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	tool.play_tool_sound(src)
 	mode = (mode + 1) % SHOWER_MODE_COUNT
 	begin_processing()
-	to_chat(user, span_notice("You change the shower's auto shut-off mode to [GLOB.shower_mode_descriptions["[mode]"]]."))
+	to_chat(user, span_notice(LANG("obj.c10c041d", list(GLOB.shower_mode_descriptions["[mode]"]))))
 	return TRUE
 
 /obj/machinery/shower/crowbar_act(mob/living/user, obj/item/tool)
@@ -167,18 +168,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	if(.)
 		return
 	if(!has_water_reclaimer)
-		to_chat(user, span_warning("There isn't a water recycler to remove."))
+		to_chat(user, span_warning(LANG("obj.fe8e1f6a", null)))
 		return
 
 	tool.play_tool_sound(src)
 	has_water_reclaimer = FALSE
 	new/obj/item/stock_parts/water_recycler(get_turf(loc))
-	to_chat(user, span_notice("You remove the water reclaimer from [src]"))
+	to_chat(user, span_notice(LANG("obj.c5f01fc6", list(src))))
 	return TRUE
 
 /obj/machinery/shower/screwdriver_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, span_notice("You begin to adjust the temperature valve with \the [I]..."))
+	to_chat(user, span_notice(LANG("obj.aedba1a4", list(I))))
 	if(I.use_tool(src, user, 50))
 		switch(current_temperature)
 			if(SHOWER_NORMAL)
@@ -187,7 +188,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 				current_temperature = SHOWER_BOILING
 			if(SHOWER_BOILING)
 				current_temperature = SHOWER_NORMAL
-		user.visible_message(span_notice("[user] adjusts the shower with \the [I]."), span_notice("You adjust the shower with \the [I] to [current_temperature] temperature."))
+		user.visible_message(span_notice(LANG("obj.01c5ddbf", list(user, I))), span_notice(LANG("obj.98909d4e", list(I, current_temperature))))
 		user.log_message("has wrenched a shower to [current_temperature].", LOG_ATTACK)
 		add_hiddenprint(user)
 	handle_mist()
@@ -371,11 +372,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 	if(current_temperature == SHOWER_FREEZING)
 		living.adjust_bodytemperature(-80, 80)
-		to_chat(living, span_warning("[src] is freezing!"))
+		to_chat(living, span_warning(LANG("obj.c7c6f3ac", list(src))))
 	else if(current_temperature == SHOWER_BOILING)
 		living.adjust_bodytemperature(35, 0, 500)
 		living.adjust_fire_loss(5)
-		to_chat(living, span_danger("[src] is searing!"))
+		to_chat(living, span_danger(LANG("obj.f336012d", list(src))))
 
 
 /obj/structure/showerframe

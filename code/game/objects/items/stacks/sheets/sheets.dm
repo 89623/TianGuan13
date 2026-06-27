@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/stack/sheet
 	name = "sheet"
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
@@ -43,7 +44,7 @@
 /obj/item/stack/sheet/examine(mob/user)
 	. = ..()
 	if (manufactured && gulag_valid)
-		. += span_notice("It has been embossed with a manufacturer's mark of guaranteed quality.")
+		. += span_notice(LANG("obj.dcb373c1", null))
 
 	var/datum/material/material = get_master_material()
 	if (!HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || !material)
@@ -61,7 +62,7 @@
 			material_string += span_tooltip("[property]: [tooltip_hint]", descriptor)
 
 	if (length(material_string))
-		. += span_info("[capitalize(material.name)] is [english_list(material_string)].")
+		. += span_info(LANG("obj.120458d2", list(capitalize(material.name), english_list(material_string))))
 
 /obj/item/stack/sheet/add(_amount)
 	. = ..()
@@ -107,7 +108,7 @@
 		var/obj/item/new_shard = new shard_to_create(target)
 		new_shard.add_fingerprint(user)
 		shards_created += "[new_shard.name]"
-	user.visible_message(span_notice("[user] shatters the sheet of [name] on [target], leaving [english_list(shards_created)]."), \
-		span_notice("You shatter the sheet of [name] on [target], leaving [english_list(shards_created)]."))
+	user.visible_message(span_notice(LANG("obj.87bfd4aa", list(user, name, target, english_list(shards_created)))), \
+		span_notice(LANG("obj.fdeba7b4", list(name, target, english_list(shards_created)))))
 	return TRUE
 

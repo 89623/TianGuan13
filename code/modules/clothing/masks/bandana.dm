@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/mask/bandana
 	name = "bandana"
 	desc = "A fine bandana with nanotech lining."
@@ -26,20 +27,20 @@
 /obj/item/clothing/mask/bandana/examine(mob/user)
 	. = ..()
 	if(up)
-		. += "Use in-hand to untie it to wear as a mask!"
+		. += LANG("obj.e6aed8fe", null)
 		return
 	if(slot_flags & ITEM_SLOT_NECK)
-		. += "Alt-click to untie it to wear as a mask!"
+		. += LANG("obj.a2c77b37", null)
 	else
-		. += "Use in-hand to tie it up to wear as a hat!"
-		. += "Alt-click to tie it up to wear on your neck!"
+		. += LANG("obj.4c797f6d", null)
+		. += LANG("obj.cc9dd2b8", null)
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjust_visor(user)
 
 /obj/item/clothing/mask/bandana/adjust_visor(mob/living/user)
 	if(slot_flags & ITEM_SLOT_NECK)
-		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
+		to_chat(user, span_warning(LANG("obj.1b2f4ba1", list(src))))
 		return FALSE
 	//NOVA EDIT ADDITION START: BANDANA HATS FOR MUTANTS
 	if(slot_flags & ITEM_SLOT_HEAD)
@@ -63,13 +64,13 @@
 	var/mob/living/carbon/char = user
 	var/matrix/widen = matrix()
 	if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_MASK) == src) || (char.get_item_by_slot(ITEM_SLOT_HEAD) == src))
-		to_chat(user, span_warning("You can't tie [src] while wearing it!"))
+		to_chat(user, span_warning(LANG("obj.6e0a2619", list(src))))
 		return CLICK_ACTION_BLOCKING
 	else if(slot_flags & ITEM_SLOT_HEAD)
-		to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
+		to_chat(user, span_warning(LANG("obj.2fde84cb", list(src))))
 		return CLICK_ACTION_BLOCKING
 	else if(!user.is_holding(src))
-		to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
+		to_chat(user, span_warning(LANG("obj.a6c980e9", list(src))))
 		return CLICK_ACTION_BLOCKING
 
 	if(slot_flags & ITEM_SLOT_MASK)
@@ -78,7 +79,7 @@
 		worn_y_offset = -3
 		widen.Scale(1.25, 1)
 		transform = widen
-		user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
+		user.visible_message(span_notice(LANG("obj.484fb830", list(user, src))), span_notice(LANG("obj.53176fbf", list(src))))
 		flags_inv = NONE
 		flags_cover = NONE
 		return CLICK_ACTION_SUCCESS
@@ -87,7 +88,7 @@
 	slot_flags = initial(slot_flags)
 	worn_y_offset = initial(worn_y_offset)
 	transform = initial(transform)
-	user.visible_message(span_notice("[user] unties the neckercheif."), span_notice("You untie the neckercheif."))
+	user.visible_message(span_notice(LANG("obj.c5114452", list(user))), span_notice(LANG("obj.f86fb0d3", null)))
 	flags_inv = initial(flags_inv)
 	flags_cover = initial(flags_cover)
 	return CLICK_ACTION_SUCCESS
@@ -270,4 +271,4 @@
 
 /obj/item/clothing/mask/facescarf/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to adjust it.")
+	. += span_notice(LANG("obj.10c89ab8", list(src)))

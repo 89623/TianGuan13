@@ -15,27 +15,27 @@
 	if(istype(attacking_item, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/ore_item = attacking_item
 		if(ore_item.points == 0)
-			user.balloon_alert(user, "[ore_item] is worthless!")
+			user.balloon_alert(user, LANG("obj.80034cf0", list(ore_item)))
 			return
 
 		while(ore_item.amount >= 5)
 			var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 			if(!do_after(user, 2 SECONDS * skill_modifier, src))
-				user.balloon_alert(user, "have to stand still!")
+				user.balloon_alert(user, LANG("obj.e11afae0", null))
 				return
 
 			if(!ore_item.use(5))
-				user.balloon_alert(user, "unable to use five of [ore_item]!")
+				user.balloon_alert(user, LANG("obj.04cf9a5e", list(ore_item)))
 				return
 
 			if(prob(80 * skill_modifier)) //start at 80, go down to 40 at legendary skill
-				user.balloon_alert(user, "[ore_item] reveals nothing!")
+				user.balloon_alert(user, LANG("obj.a6d35222", list(ore_item)))
 				user.mind?.adjust_experience(/datum/skill/primitive, 2)
 				continue
 
 			var/spawn_seed = pick(subtypesof(/obj/item/seeds) - seeds_blacklist)
 			new spawn_seed(get_turf(src))
 			user.mind?.adjust_experience(/datum/skill/primitive, 2)
-			user.balloon_alert(user, "[ore_item] revealed something!")
+			user.balloon_alert(user, LANG("obj.c977610f", list(ore_item)))
 
 	return ..()

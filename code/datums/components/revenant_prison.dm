@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/revenant_prison
 	// Whether a revenant should be created upon release
 	var/create_on_release = FALSE
@@ -26,7 +27,7 @@
 
 /datum/component/revenant_prison/proc/on_parent_break(obj/source, damage_flags)
 	SIGNAL_HANDLER
-	source.visible_message(span_revenwarning("The revenant cackles as it escapes from [source]!"))
+	source.visible_message(span_revenwarning(LANG("datum.dd62bcf1", list(source))))
 	playsound(source.loc, 'sound/effects/chemistry/ahaha.ogg', 100, TRUE)
 	release_revenant(source, cause = "[parent] breaking")
 
@@ -49,7 +50,7 @@
 
 /datum/component/revenant_prison/proc/on_parent_examine(datum/source, mob/user, list/examine_list)
 	if(istype(parent, /obj/structure/mirror))
-		examine_list += span_revenwarning("The reflection is shifting and distorted.")
+		examine_list += span_revenwarning(LANG("datum.5b74bb15", null))
 
 /datum/component/revenant_prison/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_parent_examine))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/eyes/robotic
 	name = "robotic eyes"
 	desc = "Your vision is augmented."
@@ -13,7 +14,7 @@
 		return
 	if(prob(10 * severity))
 		return
-	to_chat(owner, span_warning("Static obfuscates your vision!"))
+	to_chat(owner, span_warning(LANG("obj.f5f60c63", null)))
 	owner.flash_act(visual = 1)
 
 /obj/item/organ/eyes/robotic/basic
@@ -32,7 +33,7 @@
 		return
 	if(prob(10 * severity))
 		apply_organ_damage(20 * severity)
-		to_chat(owner, span_warning("Your eyes start to fizzle in their sockets!"))
+		to_chat(owner, span_warning(LANG("obj.cfeef29f", null)))
 		do_sparks(2, TRUE, owner)
 		owner.emote("scream")
 
@@ -473,13 +474,13 @@
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/penlight_examine(mob/living/viewer, obj/item/examtool)
 	if(!owner.is_blind())
-		to_chat(owner, span_danger("Your eyes sizzle agonizingly as light is shone on them!"))
+		to_chat(owner, span_danger(LANG("obj.6bc9e530", null)))
 		apply_organ_damage(20 * examtool.light_power) //that's 0.5 lightpower for a penlight, so one penlight shining is equivalent to two seconds in a lit area
 	return span_danger("[owner.p_Their()] eyes [penlight_message]")
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/on_life(seconds_per_tick)
 	if(owner.get_eye_protection() <= FLASH_PROTECTION_SENSITIVE && !owner.is_blind() && isturf(owner.loc) && owner.has_light_nearby(light_amount=0.5)) //we allow a little more than usual so we can produce light from the adapted eyes
-		to_chat(owner, span_danger("Your eyes! They burn in the light!"))
+		to_chat(owner, span_danger(LANG("obj.72bcfe06", null)))
 		apply_organ_damage(10) //blind quickly
 		playsound(owner, 'sound/machines/grill/grillsizzle.ogg', 50)
 	else
@@ -583,7 +584,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "perceptual scanners overriden")
+	balloon_alert(user, LANG("obj.607cca26", null))
 	return TRUE
 
 /obj/item/organ/eyes/robotic/tacvisor/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
@@ -866,7 +867,7 @@
 
 /obj/item/organ/eyes/robotic/tacvisor/screwdriver_act(mob/living/user, obj/item/tool)
 	user_controls = !user_controls
-	balloon_alert(user, "user controls [user_controls ? "enabled" : "disabled"]")
+	balloon_alert(user, LANG("obj.099da056", list(user_controls ? "enabled" : "disabled")))
 	if (user_controls)
 		add_item_action(/datum/action/item_action/organ_action/use)
 	else
@@ -876,8 +877,8 @@
 
 /obj/item/organ/eyes/robotic/tacvisor/examine(mob/user)
 	. = ..()
-	. += span_notice("Its settings can be changed with a [EXAMINE_HINT("multitool")].")
-	. += span_notice("User configuration switch is currently in the [user_controls ? "on" : "off"] position, and could be flipped wtih a [EXAMINE_HINT("screwdriver")].")
+	. += span_notice(LANG("obj.2760a9aa", list(EXAMINE_HINT("multitool"))))
+	. += span_notice(LANG("obj.9a382023", list(user_controls ? "on" : "off", EXAMINE_HINT("screwdriver"))))
 
 /obj/item/organ/eyes/robotic/tacvisor/proc/on_entered(mob/living/source)
 	if (source in direct_view_tracking)

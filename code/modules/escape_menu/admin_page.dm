@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/escape_menu/proc/show_admin_page()
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/lobby_button/small(
@@ -77,7 +78,7 @@
 
 /datum/escape_menu/proc/see_notes()
 	if(!CONFIG_GET(flag/see_own_notes))
-		to_chat(client.mob, span_notice("Seeing notes has been disabled on this server."))
+		to_chat(client.mob, span_notice(LANG("datum.89cbf921", null)))
 		return
 	browse_messages(null, client.ckey, null, TRUE)
 	qdel(src)

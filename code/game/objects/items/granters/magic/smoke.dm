@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/book/granter/action/spell/smoke
 	granted_action = /datum/action/cooldown/spell/smoke
 	action_name = "smoke"
@@ -15,7 +16,7 @@
 
 /obj/item/book/granter/action/spell/smoke/recoil(mob/living/user)
 	. = ..()
-	to_chat(user,span_warning("Your stomach rumbles..."))
+	to_chat(user,span_warning(LANG("obj.b801e197", null)))
 	if(user.nutrition)
 		user.set_nutrition(200)
 		if(user.nutrition <= 0)

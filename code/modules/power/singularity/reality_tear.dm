@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Tear in the Fabric of Reality ///
 // Typically spawned by placing two bags of holding into one another, collapsing into a wandering singularity after a brief period as a stationary singularity.
 
@@ -57,7 +58,7 @@
 	if(!isliving(user))
 		return
 	var/mob/living/jedi = user
-	to_chat(jedi, span_userdanger("You don't feel like you are real anymore."))
+	to_chat(jedi, span_userdanger(LANG("obj.12e78c0f", null)))
 	jedi.dust(just_ash = TRUE)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

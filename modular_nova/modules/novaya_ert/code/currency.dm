@@ -123,7 +123,6 @@
 
 /obj/item/coin/mark/forge_mark/attack_self(mob/user)
 	if(length(sideslist) >= 1)
-		to_chat(user, span_warning("You heave [src] a bit, intending to flip it, before realizing that tossing a clumsy \
-		quarter-kilogram ingot of tungsten carbide into the air is somewhat ill-advised!") )
+		to_chat(user, span_warning(LANG("obj.a93ce2b5", list(src))) )
 		return FALSE
 	return ..()

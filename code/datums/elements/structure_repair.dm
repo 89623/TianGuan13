@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Intercepts attacks from mobs with this component to instead repair specified structures.
 /datum/element/structure_repair
 	element_flags = ELEMENT_BESPOKE
@@ -32,14 +33,14 @@
 		return NONE
 
 	if (target.get_integrity() >= target.max_integrity)
-		target.balloon_alert(fixer, "not damaged!")
+		target.balloon_alert(fixer, LANG("datum.200cc1db", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	target.repair_damage(heal_amount)
 	fixer.Beam(target, icon_state = "sendbeam", time = 0.4 SECONDS)
 	fixer.visible_message(
-		span_danger("[fixer] repairs [target]."),
-		span_danger("You repair [target], leaving it at <b>[round(target.get_integrity() * 100 / target.max_integrity)]%</b> stability."),
+		span_danger(LANG("datum.639f2d4f", list(fixer, target))),
+		span_danger(LANG("datum.dc4682b1", list(target, round(target.get_integrity() * 100 / target.max_integrity)))),
 	)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN

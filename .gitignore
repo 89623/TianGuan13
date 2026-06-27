@@ -15,6 +15,7 @@
 
 #Ignore IDE files we don't need in the repo.
 /.vs/**/*
+.vscode/settings.json
 /tgstation/FileContentIndex/**/*
 /FileContentIndex/**/*
 /v17/**/*
@@ -262,3 +263,18 @@ define_sanity_output.txt
 # Running OpenDream locally
 tgstation.json
 rust_g64.dll
+
+# Nix (flake dev environment, see flake.nix / nix/)
+/result
+/result-*
+.direnv/
+
+# i18n Rust extraction tool build artifacts
+/tools/i18n/target/
+# i18n 翻译临时批次目录（i18n-mt.ts 用）
+/tools/i18n/mt/.pending/
+# i18n 伪 locale 目录（nova-i18n pseudo 生成、由 en/ 派生；仅本地/CI 测试用，不入库）
+/strings/i18n/qps-ploc/
+# 自托管 Tolgee 残留 docker 卷（已弃用；root 所有，git 无法读取会报权限警告）
+/modular_nova/tools/i18n/tolgee-data/
+/modular_nova/tools/i18n/tolgee-db/

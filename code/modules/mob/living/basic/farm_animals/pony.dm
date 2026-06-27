@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/pony
 	name = "pony"
 	desc = "Look at my horse, my horse is amazing!"
@@ -63,7 +64,7 @@
 	. = ..()
 	playsound(src, 'sound/mobs/non-humanoids/pony/snort.ogg', 50)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/pony)
-	visible_message(span_notice("[src] snorts happily."))
+	visible_message(span_notice(LANG("mob.8285ee71", list(src))))
 	new /obj/effect/temp_visual/heart(loc)
 
 	ai_controller.replace_planning_subtrees(list(
@@ -97,7 +98,7 @@
 	set_greyscale(colors = ponycolors)
 
 /mob/living/basic/pony/proc/whinny_angrily()
-	manual_emote("whinnies ANGRILY!")
+	manual_emote(LANG("mob.50fd58a2", null))
 
 	playsound(src, pick(list(
 		'sound/mobs/non-humanoids/pony/whinny01.ogg',

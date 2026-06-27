@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/ed209_charge
 	name = "Bot Tackle"
 	desc = "Not even God's mightiest Quarterback can withstand this."
@@ -13,7 +14,7 @@
 /datum/action/cooldown/mob_cooldown/ed209_charge/Activate(atom/target)
 	var/turf/target_turf = get_turf(target)
 	if(isclosedturf(target_turf) || isspaceturf(target_turf))
-		owner.balloon_alert(owner, "base not suitable!")
+		owner.balloon_alert(owner, LANG("datum.dc0a2636", null))
 		return FALSE
 	addtimer(CALLBACK(src, PROC_REF(commence_launch), target), telegraph_duration)
 	owner.Shake(duration = telegraph_duration)

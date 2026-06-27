@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/storage/extract_inventory
 	max_total_storage = WEIGHT_CLASS_TINY * 3
 	max_slots = 3
@@ -36,6 +37,6 @@
 	var/cores = rand(1,4)
 	playsound(parentSlimeExtract, 'sound/effects/splat.ogg', 40, TRUE)
 	parentSlimeExtract.last_produce = world.time
-	to_chat(user, span_notice("[parentSlimeExtract] briefly swells to a massive size, and expels [cores] extract[cores > 1 ? "s":""]!"))
+	to_chat(user, span_notice(LANG("datum.f7687f43", list(parentSlimeExtract, cores, cores > 1 ? "s":""))))
 	for(var/i in 1 to cores)
 		new parentSlimeExtract.extract_type(parentSlimeExtract.drop_location())

@@ -99,8 +99,8 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
-		SPECIES_PERK_NAME = "Soft Landing",
-		SPECIES_PERK_DESC = "Tajarans are unhurt by high falls, and land on their feet.",
+		SPECIES_PERK_NAME = LANG("datum.ac7ca645", null),
+		SPECIES_PERK_DESC = LANG("datum.d3ff89ca", null),
 	))
 
 	return to_add

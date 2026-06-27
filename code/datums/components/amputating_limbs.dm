@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// This component will intercept bare-handed attacks by the owner on sufficiently injured carbons and amputate random limbs instead
 /datum/component/amputating_limbs
 	/// How long does it take?
@@ -51,7 +52,7 @@
 		return
 
 	if (DOING_INTERACTION_WITH_TARGET(surgeon, victim))
-		surgeon.balloon_alert(surgeon, "already busy!")
+		surgeon.balloon_alert(surgeon, LANG("datum.adac0bea", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(pre_hit_callback && !pre_hit_callback.Invoke(victim))
@@ -74,7 +75,7 @@
 /// Chop one off
 /datum/component/amputating_limbs/proc/amputate(mob/living/surgeon, mob/living/carbon/victim, obj/item/bodypart/to_remove)
 	if(surgery_time > 0 SECONDS)
-		surgeon.visible_message(span_warning("[surgeon] is [surgery_verb] the [to_remove] off of [victim]!"))
+		surgeon.visible_message(span_warning(LANG("datum.4799e8a3", list(surgeon, surgery_verb, to_remove, victim))))
 	if (surgery_time > 0 && !do_after(surgeon, delay = surgery_time, target = victim))
 		return
 	to_remove.dismember()

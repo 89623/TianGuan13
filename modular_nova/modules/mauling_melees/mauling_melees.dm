@@ -94,7 +94,7 @@
 /obj/item/storage/belt/machete/examine(mob/user)
 	. = ..()
 	if(length(contents))
-		. += span_notice("Alt-click it to quickly draw the blade.")
+		. += span_notice(LANG("obj.ebf3b6e0", null))
 
 /obj/item/storage/belt/machete/click_alt(mob/user)
 	for(var/obj/item/machete/machete in contents)
@@ -103,7 +103,7 @@
 		user.put_in_hands(machete)
 		update_appearance()
 		return CLICK_ACTION_SUCCESS
-	balloon_alert(user, "it's empty!")
+	balloon_alert(user, LANG("obj.76a90f7c", null))
 
 /obj/item/storage/belt/machete/update_icon_state()
 	icon_state = initial(icon_state)
@@ -125,13 +125,13 @@
 	switch(worn_variant)
 		if (MACHETE_BACK)
 			worn_variant = MACHETE_WAIST
-			to_chat(user, "You adjust [src] to hang sideways behind your back.")
+			to_chat(user, LANG("obj.9e4c3905", list(src)))
 		if (MACHETE_WAIST)
 			worn_variant = MACHETE_LEG
-			to_chat(user, "You adjust [src] to hang down your leg.")
+			to_chat(user, LANG("obj.cbf5e8fa", list(src)))
 		if (MACHETE_LEG)
 			worn_variant = MACHETE_BACK
-			to_chat(user, "You adjust [src] to hang across your back.")
+			to_chat(user, LANG("obj.e9bfd247", list(src)))
 	update_appearance()
 
 #undef MACHETE_BACK

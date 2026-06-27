@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //works similar to the experiment machine (experiment.dm) except it just holds more and more prisoners
 
 /obj/machinery/fugitive_capture
@@ -11,7 +12,7 @@
 
 /obj/machinery/fugitive_capture/examine(mob/user)
 	. = ..()
-	. += span_notice("Add a prisoner by dragging them into the machine.")
+	. += span_notice(LANG("obj.6e0cf53d", null))
 
 /obj/machinery/fugitive_capture/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/fugitive_hunter = user
@@ -20,7 +21,7 @@
 	var/mob/living/carbon/human/fugitive = target
 	var/datum/antagonist/fugitive/fug_antag = fugitive.mind.has_antag_datum(/datum/antagonist/fugitive)
 	if(!fug_antag)
-		to_chat(fugitive_hunter, span_warning("This is not a wanted fugitive!"))
+		to_chat(fugitive_hunter, span_warning(LANG("obj.3f67b38a", null)))
 		return
 	if(do_after(fugitive_hunter, 5 SECONDS, target = fugitive))
 		add_prisoner(fugitive, fug_antag)
@@ -28,7 +29,7 @@
 /obj/machinery/fugitive_capture/proc/add_prisoner(mob/living/carbon/human/fugitive, datum/antagonist/fugitive/antag)
 	fugitive.forceMove(src)
 	antag.is_captured = TRUE
-	to_chat(fugitive, span_userdanger("You are thrown into a vast void of bluespace, and as you fall further into oblivion the comparatively small entrance to reality gets smaller and smaller until you cannot see it anymore. You have failed to avoid capture."))
+	to_chat(fugitive, span_userdanger(LANG("obj.625c7a87", null)))
 	fugitive.ghostize(TRUE) //so they cannot suicide, round end stuff.
 	use_energy(active_power_usage)
 
@@ -110,7 +111,7 @@
 	return ..()
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], psykerboosting [owner]'s mental powers!"))
+	owner.visible_message(span_danger(LANG("obj.b00b8045", list(src, attack_text, owner))))
 	for(var/datum/action/cooldown/spell/psychic_ability in owner.actions)
 		if(psychic_ability.school == SCHOOL_PSYCHIC)
 			psychic_ability.reset_spell_cooldown()
@@ -118,7 +119,7 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], draining [owner]'s mental powers!"))
+	owner.visible_message(span_danger(LANG("obj.96775297", list(src, attack_text, owner))))
 	for(var/datum/action/cooldown/spell/psychic_ability in owner.actions)
 		if(psychic_ability.school == SCHOOL_PSYCHIC)
 			psychic_ability.StartCooldown()
@@ -183,13 +184,13 @@
 
 /obj/machinery/fugitive_locator/interact(mob/user)
 	if(!COOLDOWN_FINISHED(src, locate_cooldown))
-		balloon_alert_to_viewers("locator recharging!", vision_distance = 3)
+		balloon_alert_to_viewers(LANG("obj.1ab78062", null), vision_distance = 3)
 		return
 	var/mob/living/bounty = locate_fugitive()
 	if(!bounty)
-		say("No bounty targets detected.")
+		say(LANG("obj.3abfa17d", null))
 	else
-		say("Bounty Target Located. Bounty ID: [bounty.real_name]. Location: [get_area_name(bounty)]")
+		say(LANG("obj.a1404649", list(bounty.real_name, get_area_name(bounty))))
 
 	COOLDOWN_START(src, locate_cooldown, 40 SECONDS)
 

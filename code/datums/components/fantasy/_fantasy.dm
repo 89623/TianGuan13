@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/fantasy
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
@@ -120,7 +121,7 @@
 
 	if(canFail && prob((quality - 9)*10))
 		var/turf/place = get_turf(parent)
-		place.visible_message(span_danger("[parent] [span_blue("violently glows blue")] for a while, then evaporates."))
+		place.visible_message(span_danger(LANG("datum.37604e99", list(parent, span_blue("violently glows blue")))))
 		master.burn()
 		return
 
@@ -150,4 +151,4 @@
 		span = "<span class='danger'>"
 		effect_description = span_bold("mottled black glow")
 
-	location.visible_message("[span]The [originalName] is covered by a [effect_description] and then transforms into [parent]!</span>")
+	location.visible_message(LANG("datum.6f2e1a10", list(span, originalName, effect_description, parent)))

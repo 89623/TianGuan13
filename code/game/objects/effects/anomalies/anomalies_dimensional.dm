@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/effect/anomaly/dimensional
 	name = "dimensional anomaly"
@@ -88,7 +89,7 @@
 	var/area/new_area = placer.findValidArea()
 	var/turf/new_turf = placer.findValidTurf(new_area)
 
-	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
+	priority_announce(LANG("obj.691d7668", list(new_area.name)), "Anomaly Alert")
 	src.forceMove(new_turf)
 	prepare_area()
 

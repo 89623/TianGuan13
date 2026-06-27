@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 	The hud datum
 	Used to show and hide huds for all the different mob types,
@@ -498,9 +499,9 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
-		to_chat(usr, span_info("Switched HUD mode. Press F12 to toggle."))
+		to_chat(usr, span_info(LANG("mob.d15c1157", null)))
 	else
-		to_chat(usr, span_warning("This mob type does not use a HUD."))
+		to_chat(usr, span_warning(LANG("mob.0fbbd22a", null)))
 
 /// Rebuilds our mob's hand slot screen elements
 /datum/hud/proc/build_hand_slots(update_hud = FALSE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //node2, air2, network2 correspond to input
 //node1, air1, network1 correspond to output
 
@@ -81,7 +82,7 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)
-		balloon_alert(user, "open the panel!")
+		balloon_alert(user, LANG("obj.0592e3eb", null))
 		return
 	set_anchored(!anchored)
 	I.play_tool_sound(src)
@@ -140,16 +141,16 @@
 	if(generator)
 		disconnectFromGenerator()
 	mode = !mode
-	balloon_alert(user, "set to [mode ? "cold" : "hot"]")
+	balloon_alert(user, LANG("obj.28f94138", list(mode ? "cold" : "hot")))
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/screwdriver_act(mob/user, obj/item/I)
 	if(!anchored)
-		balloon_alert(user, "anchor it down!")
+		balloon_alert(user, LANG("obj.b74e8050", null))
 		return
 	toggle_panel_open()
 	I.play_tool_sound(src)
-	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
+	balloon_alert(user, LANG("obj.a741c12e", list(panel_open ? "open" : "closed")))
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/crowbar_act(mob/user, obj/item/I)

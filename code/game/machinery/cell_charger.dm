@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/cell_charger
 	name = "cell charger"
 	desc = "It charges power cells."
@@ -29,11 +30,11 @@ NOVA EDIT END */
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()
-	. += "There's [charging ? "\a [charging]" : "no cell"] in the charger."
+	. += LANG("obj.f2da67ae", list(charging ? "\a [charging]" : "no cell"))
 	if(charging)
-		. += "Current charge: [round(charging.percent(), 1)]%."
+		. += LANG("obj.d4f7effc", list(round(charging.percent(), 1)))
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Charging power: <b>[display_power(charge_rate, convert = FALSE)]</b>.")
+		. += span_notice(LANG("obj.4cd8967d", list(display_power(charge_rate, convert = FALSE))))
 
 /obj/machinery/cell_charger/wrench_act(mob/living/user, obj/item/tool)
 	if(charging)
@@ -56,18 +57,18 @@ NOVA EDIT END */
 		return NONE
 
 	if(machine_stat & BROKEN)
-		to_chat(user, span_warning("[src] is broken!"))
+		to_chat(user, span_warning(LANG("obj.e2c73115", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!anchored)
-		to_chat(user, span_warning("[src] isn't attached to the ground!"))
+		to_chat(user, span_warning(LANG("obj.f467682f", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(charging)
-		to_chat(user, span_warning("There is already a cell in the charger!"))
+		to_chat(user, span_warning(LANG("obj.19b677e5", null)))
 		return ITEM_INTERACT_BLOCKING
 	// NOVA EDIT ADDITION START
 	var/obj/item/stock_parts/power_store/cell/inserting_cell = tool
 	if(inserting_cell.chargerate <= 0)
-		to_chat(user, span_warning("[inserting_cell] cannot be recharged!"))
+		to_chat(user, span_warning(LANG("obj.d4b2e04f", list(inserting_cell))))
 		return
 	// NOVA EDIT ADDITION END
 
@@ -75,15 +76,15 @@ NOVA EDIT END */
 	if(!isarea(charge_area))
 		return ITEM_INTERACT_BLOCKING
 	if(!charge_area.power_equip) // There's no APC in this area, don't try to cheat power!
-		to_chat(user, span_warning("[src] blinks red as you try to insert the cell!"))
+		to_chat(user, span_warning(LANG("obj.ebb2a520", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 
 	charging = tool
 	user.visible_message(
-		span_notice("[user] inserts a cell into [src]."),
-		span_notice("You insert a cell into [src]."),
+		span_notice(LANG("obj.c4a3d920", list(user, src))),
+		span_notice(LANG("obj.0e4e6b90", list(src))),
 	)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -113,14 +114,14 @@ NOVA EDIT END */
 		return
 
 	charging.add_fingerprint(user)
-	user.visible_message(span_notice("[user] removes [charging] from [src]."), span_notice("You remove [charging] from [src]."))
+	user.visible_message(span_notice(LANG("obj.4a2c1fdd", list(user, charging, src))), span_notice(LANG("obj.cbed3266", list(charging, src))))
 	user.put_in_hands(removecell(drop_location()))
 
 /obj/machinery/cell_charger/attack_tk(mob/user)
 	if(!charging)
 		return
 
-	to_chat(user, span_notice("You telekinetically remove [charging] from [src]."))
+	to_chat(user, span_notice(LANG("obj.2e70f313", list(charging, src))))
 	removecell(drop_location())
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

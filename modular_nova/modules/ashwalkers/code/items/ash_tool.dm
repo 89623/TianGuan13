@@ -113,7 +113,7 @@
 
 /obj/item/cursed_dagger/examine(mob/user)
 	. = ..()
-	. += span_notice("To be used on tendrils. It will visually change the tendril to indicate whether it has been cursed or not.")
+	. += span_notice(LANG("obj.c42c8b07", null))
 
 /obj/item/ash_seed
 	icon = 'modular_nova/modules/ashwalkers/icons/ashwalker_tools.dmi'
@@ -123,13 +123,13 @@
 
 /obj/item/ash_seed/examine(mob/user)
 	. = ..()
-	. += span_notice("In order to be planted, it is required to be on the mining level as well as on basalt.")
+	. += span_notice(LANG("obj.08e47705", null))
 
 /obj/item/ash_seed/proc/harm_user(mob/living/user, sent_message, damage_amount)
 	to_chat(user, span_warning(sent_message))
 	user.adjust_brute_loss(damage_amount)
 	if(!do_after(user, 4 SECONDS, target = src))
-		to_chat(user, span_warning("You stop the process of planting [src]!"))
+		to_chat(user, span_warning(LANG("obj.c6a599a2", list(src))))
 		return FALSE
 
 	return TRUE
@@ -156,7 +156,7 @@
 	if(!harm_user(user, "[src] wraps around your chest and begins to tighten, causing an odd needling sensation...", 20))
 		return
 
-	to_chat(living_user, span_warning("[src] leaps from you satisfied and begins to grossly assemble itself!"))
+	to_chat(living_user, span_warning(LANG("obj.223994ce", list(src))))
 	var/type = pick(spawn_list)
 	new type(user.loc)
 	playsound(get_turf(src), 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)

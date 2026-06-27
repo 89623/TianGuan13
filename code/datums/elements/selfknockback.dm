@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/element/selfknockback
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
@@ -45,7 +46,7 @@ clamping the Knockback_Force value below. */
 	var/target_angle = get_angle(attacktarget, usertarget)
 	var/move_target = get_ranged_target_turf(usertarget, angle2dir(target_angle), knockback_force)
 	usertarget.throw_at(move_target, knockback_force, knockback_speed)
-	usertarget.visible_message(span_warning("[usertarget] gets thrown back by the force of \the [I] impacting \the [attacktarget]!"), span_warning("The force of \the [I] impacting \the [attacktarget] sends you flying!"))
+	usertarget.visible_message(span_warning(LANG("datum.f38273a1", list(usertarget, I, attacktarget))), span_warning(LANG("datum.7a528096", list(I, attacktarget))))
 
 /datum/element/selfknockback/proc/Projectile_SelfKnockback(obj/projectile/proj)
 	SIGNAL_HANDLER

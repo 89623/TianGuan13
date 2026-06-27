@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/element/art
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	argument_hash_start_idx = 2
@@ -32,8 +33,8 @@
 			user.add_mood_event("artbad", /datum/mood_event/artbad)
 			msg = "Wow, [source.p_they()] sucks."
 
-	user.visible_message(span_notice("[user] stops and looks intently at [source]."), \
-		span_notice("You appraise [source]... [msg]"))
+	user.visible_message(span_notice(LANG("datum.73935422", list(user, source))), \
+		span_notice(LANG("datum.1183c7b0", list(source, msg))))
 
 /datum/element/art/proc/on_examine(atom/source, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
@@ -43,7 +44,7 @@
 		INVOKE_ASYNC(src, PROC_REF(appraise), source, user) //Do not sleep the proc.
 
 /datum/element/art/proc/appraise(atom/source, mob/user)
-	to_chat(user, span_notice("You start appraising [source]..."))
+	to_chat(user, span_notice(LANG("datum.b4636bdf", list(source))))
 	if(!do_after(user, 2 SECONDS, target = source))
 		return
 	var/mult = 1
@@ -62,8 +63,8 @@
 		user.add_mood_event("artbad", /datum/mood_event/artbad)
 		msg = "Wow, [source.p_they()] sucks."
 
-	user.visible_message(span_notice("[user] stops to inspect [source]."), \
-		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))
+	user.visible_message(span_notice(LANG("datum.31cf3ad1", list(user, source))), \
+		span_notice(LANG("datum.eaeec52b", list(source, msg))))
 
 /datum/element/art/commoner
 
@@ -86,5 +87,5 @@
 		user.add_mood_event("artbad", /datum/mood_event/artbad)
 		msg = "Wow, [source.p_they()] sucks."
 
-	user.visible_message(span_notice("[user] stops to inspect [source]."), \
-		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))
+	user.visible_message(span_notice(LANG("datum.31cf3ad1", list(user, source))), \
+		span_notice(LANG("datum.eaeec52b", list(source, msg))))

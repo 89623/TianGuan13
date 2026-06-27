@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Cardboard cutouts! They're man-shaped and can be colored with a crayon to look like a human in a certain outfit, although it's limited, discolored, and obvious to more than a cursory glance.
 /obj/item/cardboard_cutout
 	name = "cardboard cutout"
@@ -49,7 +50,7 @@
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)
 	if(!user.combat_mode || pushed_over || !isturf(loc))
 		return ..()
-	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
+	user.visible_message(span_warning(LANG("obj.1715c5fe", list(user, src))), span_danger(LANG("obj.52f6060f", list(src))))
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
@@ -64,7 +65,7 @@
 
 /obj/item/cardboard_cutout/proc/push_over()
 	appearance = initial(appearance)
-	desc = "[initial(desc)] It's been pushed over."
+	desc = LANG("obj.3688fcce", list(initial(desc)))
 	icon_state = "cutout_pushed_over"
 	remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	pushed_over = TRUE
@@ -73,7 +74,7 @@
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
 		return
-	to_chat(user, span_notice("You right [src]."))
+	to_chat(user, span_notice(LANG("obj.692d18ff", list(src))))
 	desc = initial(desc)
 	icon = initial(icon)
 	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
@@ -129,7 +130,7 @@
 		return FALSE
 	if(!check_menu(user, crayon))
 		return FALSE
-	user.visible_message(span_notice("[user] gives [src] a new look."), span_notice("Voila! You give [src] a new look."))
+	user.visible_message(span_notice(LANG("obj.acff05e0", list(user, src))), span_notice(LANG("obj.b26f51bd", list(src))))
 	crayon.use_charges(1)
 	crayon.check_empty(user)
 	alpha = 255
@@ -153,14 +154,14 @@
 	if(user.incapacitated)
 		return FALSE
 	if(pushed_over)
-		to_chat(user, span_warning("Right [src] first!"))
+		to_chat(user, span_warning(LANG("obj.717b589f", list(src))))
 		return FALSE
 	if(!crayon || !user.is_holding(crayon))
 		return FALSE
 	if(crayon.check_empty(user))
 		return FALSE
 	if(crayon.is_capped)
-		to_chat(user, span_warning("Take the cap off first!"))
+		to_chat(user, span_warning(LANG("obj.71461396", null)))
 		return FALSE
 	return TRUE
 

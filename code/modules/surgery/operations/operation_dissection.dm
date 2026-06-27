@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/basic/dissection
 	name = "experimental dissection"
 	rnd_name = "Experimental Androtomy (Experimental Dissection and Autopsy)"
@@ -19,8 +20,8 @@
 
 /datum/surgery_operation/basic/dissection/all_required_strings()
 	. += ..()
-	. += "the patient must be deceased"
-	. += "the patient must not have been dissected prior"
+	. += LANG("datum.75e2af90", null)
+	. += LANG("datum.34910bb1", null)
 
 /datum/surgery_operation/basic/dissection/state_check(mob/living/patient)
 	return !HAS_TRAIT_FROM(patient, TRAIT_DISSECTED, EXPERIMENTAL_SURGERY_TRAIT) && patient.stat == DEAD
@@ -113,7 +114,7 @@
 
 /obj/item/research_notes/examine(mob/user)
 	. = ..()
-	. += span_notice("It is worth [value] research points.")
+	. += span_notice(LANG("obj.ddfaef18", list(value)))
 
 /obj/item/research_notes/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/research_notes))

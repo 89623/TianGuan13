@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A tentacle which grabs you if you don't get away from it
 /obj/effect/goliath_tentacle
 	name = "goliath tentacle"
@@ -195,7 +196,7 @@
 		return
 
 	if (!user.can_perform_action(nearest_turf))
-		nearest_turf.balloon_alert(user, "cannot reach!")
+		nearest_turf.balloon_alert(user, LANG("obj.05f392ea", null))
 		return
 
 	held_thing.melee_attack_chain(user, src, params2list(params))

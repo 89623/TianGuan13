@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/stack/light_w
 	name = "wired glass tile"
 	singular_name = "wired glass floor tile"
@@ -19,19 +20,19 @@
 
 /obj/item/stack/light_w/examine(mob/user)
 	. = ..()
-	. += span_warning("\The [src] looks unfinished, add <b>iron</b> to complete it.")
+	. += span_warning(LANG("obj.6b366c3f", list(src)))
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/M = O
 		if (M.use(1))
 			var/obj/item/L = new /obj/item/stack/tile/light(user.drop_location())
-			to_chat(user, span_notice("You make a light tile."))
+			to_chat(user, span_notice(LANG("obj.d856f148", null)))
 			if (!QDELETED(L))
 				L.add_fingerprint(user)
 			use(1)
 		else
-			to_chat(user, span_warning("You need one iron sheet to finish the light tile!"))
+			to_chat(user, span_warning(LANG("obj.f75625c3", null)))
 	else
 		return ..()
 

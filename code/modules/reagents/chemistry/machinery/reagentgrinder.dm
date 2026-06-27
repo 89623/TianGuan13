@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/machinery/reagentgrinder
 	name = "all-in-one grinder"
@@ -81,7 +82,7 @@
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents and display!")
+		. += span_warning(LANG("obj.7f267c32", list(src)))
 		return
 
 	var/total_weight = 0
@@ -96,30 +97,30 @@
 		to_process["[target.name]"] += amount
 		total_weight += target.w_class
 	if(to_process.len)
-		. += span_notice("Currently holding:")
+		. += span_notice(LANG("obj.97fdf783", null))
 		for(var/target_name in to_process)
 			. += span_notice("[to_process[target_name]] [target_name]")
-		. += span_notice("Filled to <b>[round((total_weight / maximum_weight) * 100)]%</b> capacity.")
+		. += span_notice(LANG("obj.d9cecb0b", list(round((total_weight / maximum_weight) * 100))))
 
 	if(!QDELETED(beaker))
-		. += span_notice("A beaker of <b>[beaker.reagents.maximum_volume]u</b> capacity is present. Contains:")
+		. += span_notice(LANG("obj.18a7d35a", list(beaker.reagents.maximum_volume)))
 		if(beaker.reagents.total_volume)
 			for(var/datum/reagent/reg as anything in beaker.reagents.reagent_list)
 				. += span_notice("[round(reg.volume, CHEMICAL_VOLUME_ROUNDING)]u of [reg.name]")
 		else
-			. += span_notice("Nothing.")
-		. += span_notice("[EXAMINE_HINT("Right click")] with empty hand to remove beaker.")
+			. += span_notice(LANG("obj.aa75d156", null))
+		. += span_notice(LANG("obj.fb87c264", list(EXAMINE_HINT("Right click"))))
 	else
-		. += span_warning("It's missing a beaker.")
+		. += span_warning(LANG("obj.bdc656a8", null))
 
-	. += span_notice("You can drag a storage item to dump its contents in the grinder.")
+	. += span_notice(LANG("obj.8e9dfe40", null))
 	if(anchored)
-		. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
+		. += span_notice(LANG("obj.ea58af41", list(EXAMINE_HINT("wrenched"))))
 	else
-		. += span_warning("Needs to be [EXAMINE_HINT("wrenched")] in place to work.")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+		. += span_warning(LANG("obj.603b2ade", list(EXAMINE_HINT("wrenched"))))
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/reagentgrinder/update_overlays()
 	. = ..()
@@ -226,7 +227,7 @@
 	//add the beaker
 	if (is_reagent_container(tool) && tool.is_open_container())
 		replace_beaker(user, tool)
-		to_chat(user, span_notice("You add [tool] to [src]."))
+		to_chat(user, span_notice(LANG("obj.0c27fe26", list(tool, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	//add items from bag
@@ -248,33 +249,33 @@
 		//add the items
 		var/items_added = load_items(user, to_add)
 		if(!items_added)
-			to_chat(user, span_warning("No items were added."))
+			to_chat(user, span_warning(LANG("obj.ef709a23", null)))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("[items_added] items were added from [tool] to [src]."))
+		to_chat(user, span_notice(LANG("obj.52cb6082", list(items_added, tool, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	//add item directly
 	else if(length(tool.grind_results()) || tool.reagents?.total_volume)
 		if(tool.atom_storage && length(tool.contents)) //anything that has internal storage would be too much recursion for us to handle
-			to_chat(user, span_notice("Drag this item onto [src] to dump its contents, or empty it to grind the container."))
+			to_chat(user, span_notice(LANG("obj.0a0857f0", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		//add the items
 		if(!load_items(user, list(tool)))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("[tool] was added to [src]."))
+		to_chat(user, span_notice(LANG("obj.38ef5bc7", list(tool, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	//ask player to drag stuff into grinder
 	else if(tool.atom_storage)
-		to_chat(user, span_warning("You must drag & dump contents of [tool] into [src]."))
+		to_chat(user, span_warning(LANG("obj.8890b22b", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 
 	return NONE
 
 /obj/machinery/reagentgrinder/wrench_act(mob/living/user, obj/item/tool)
 	if(operating)
-		balloon_alert(user, "still operating!")
+		balloon_alert(user, LANG("obj.4e8eee93", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
@@ -285,14 +286,14 @@
 
 /obj/machinery/reagentgrinder/screwdriver_act(mob/living/user, obj/item/tool)
 	if(operating)
-		balloon_alert(user, "still operating!")
+		balloon_alert(user, LANG("obj.4e8eee93", null))
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/reagentgrinder/crowbar_act(mob/living/user, obj/item/tool)
 	if(operating)
-		balloon_alert(user, "still operating!")
+		balloon_alert(user, LANG("obj.4e8eee93", null))
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_crowbar(user, tool)
@@ -306,7 +307,7 @@
 			continue
 		contents_to_dump += to_dump
 
-	to_chat(user, span_notice("You dumped [load_items(user, contents_to_dump)] items from [storage.parent] into [src]."))
+	to_chat(user, span_notice(LANG("obj.9bb2b7ac", list(load_items(user, contents_to_dump), storage.parent, src))))
 
 	return STORAGE_DUMP_HANDLED
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * The 'fancy' path is for objects like donut boxes that show how many items are in the storage item on the sprite itself
  * .. Sorry for the shitty path name, I couldnt think of a better one.
@@ -47,9 +48,9 @@
 	if(!open_status)
 		return
 	if(length(contents) == 1)
-		. += "There is one [contents_tag] left."
+		. += LANG("obj.5886344e", list(contents_tag))
 	else
-		. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] [contents_tag]s left."
+		. += LANG("obj.b0d8d1e6", list(contents.len <= 0 ? "no" : "[contents.len]", contents_tag))
 
 /obj/item/storage/fancy/attack_self(mob/user)
 	if(open_status == FANCY_CONTAINER_CLOSED)
@@ -64,7 +65,7 @@
 	if(!foldable_result || (flags_1 & HOLOGRAM_1))
 		return
 	var/obj/item/result = new foldable_result(user.drop_location())
-	balloon_alert(user, "folded")
+	balloon_alert(user, LANG("obj.02a8ddc2", null))
 	// Gotta delete first, so then the cardboard appears in the same hand
 	qdel(src)
 	user.put_in_hands(result)
@@ -217,14 +218,14 @@
 
 	playsound(src, storage_type.rustle_sound, 50, TRUE)
 
-	balloon_alert(user, "ooh, free coupon")
+	balloon_alert(user, LANG("obj.18d1acd9", null))
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
 	attached_coupon.generate(rigged_omen ? COUPON_OMEN : null, null, user)
 	attached_coupon = null
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
-	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
+	desc = LANG("obj.fbd1771d", null)
 	atom_storage.max_slots = 0
 
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)
@@ -264,7 +265,7 @@
 	. = ..()
 
 	if(spawn_coupon)
-		. += span_notice("There's a coupon on the back of the pack! You can tear it off once it's empty.")
+		. += span_notice(LANG("obj.3dc3b3ee", null))
 
 /obj/item/storage/fancy/cigarettes/update_icon_state()
 	. = ..()

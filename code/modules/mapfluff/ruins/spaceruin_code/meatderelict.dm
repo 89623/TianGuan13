@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/keycard/meatderelict/director
 	name = "directors keycard"
 	desc = "A fancy keycard. Likely unlocks the directors office. The name tag is all smudged."
@@ -84,7 +85,7 @@
 /obj/machinery/puzzle/button/meatderelict/on_puzzle_complete()
 	. = ..()
 	playsound(src, 'sound/effects/alert.ogg', 100, TRUE)
-	visible_message(span_warning("[src] lets out an alarm as the lockdown is lifted!"))
+	visible_message(span_warning(LANG("obj.ae5aa886", list(src))))
 
 /obj/structure/puzzle_blockade/meat
 	name = "mass of meat and teeth"

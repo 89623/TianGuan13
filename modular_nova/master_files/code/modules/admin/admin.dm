@@ -14,7 +14,7 @@ ADMIN_VERB(toggledchat, R_ADMIN, "Toggle Dead Chat", "Toggle dis bitch.", ADMIN_
 			return
 	else // otherwise just toggle it
 		GLOB.dchat_allowed = !GLOB.dchat_allowed
-	to_chat(world, span_oocplain("<B>The dead chat channel has been globally [GLOB.dchat_allowed ? "enabled" : "disabled"].</B>"))
+	to_chat(world, span_oocplain(LANG("_root.82b48831", list(GLOB.dchat_allowed ? "enabled" : "disabled"))))
 
 /datum/admin_help
 	/// Have we requested this ticket to stop being part of the Ticket Ping subsystem?
@@ -28,9 +28,9 @@ ADMIN_VERB(toggledchat, R_ADMIN, "Toggle Dead Chat", "Toggle dis bitch.", ADMIN_
 
 /datum/admin_help/ClosureLinks(ref_src)
 	. = ..()
-	. += " (<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=handle_issue'>HANDLE</A>)" //NOVA EDIT ADDITION
-	. += " (<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=pingmute'>PING MUTE</A>)" //NOVA EDIT ADDITION
-	. += " (<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];ahelp=[ref_src];ahelp_action=convert'>MHELP</A>)"
+	. += LANG("datum.ffa9aa98", list(HrefToken(forceGlobal = TRUE), ref_src)) //NOVA EDIT ADDITION
+	. += LANG("datum.743deb12", list(HrefToken(forceGlobal = TRUE), ref_src)) //NOVA EDIT ADDITION
+	. += LANG("datum.db284256", list(HrefToken(forceGlobal = TRUE), ref_src))
 
 //Let the initiator know their ahelp is being handled
 /datum/admin_help/proc/handle_issue(key_name = key_name_admin(usr))
@@ -41,7 +41,7 @@ ADMIN_VERB(toggledchat, R_ADMIN, "Toggle Dead Chat", "Toggle dis bitch.", ADMIN_
 		return TRUE
 
 	if(handler && handler != usr.ckey)
-		var/response = tgui_alert(usr, "This ticket is already being handled by [handler]. Do you want to continue?", "Ticket already assigned", list("Yes", "No"))
+		var/response = tgui_alert(usr, LANG("datum.38e616ab", list(handler)), LANG("datum.9783196e", null), list("Yes", "No"))
 		if(!response || response == "No")
 			return FALSE
 
@@ -65,13 +65,13 @@ ADMIN_VERB(toggledchat, R_ADMIN, "Toggle Dead Chat", "Toggle dis bitch.", ADMIN_
 		return FALSE
 
 	if(handler && handler != usr.ckey)
-		var/response = tgui_alert(usr, "This ticket is already being handled by [handler]. Do you want to continue?", "Ticket already assigned", list("Yes", "No"))
+		var/response = tgui_alert(usr, LANG("datum.38e616ab", list(handler)), LANG("datum.9783196e", null), list("Yes", "No"))
 		if(!response || response == "No")
 			return FALSE
 
 	add_verb(initiator, /client/verb/mentorhelp) // Way to override mentorhelp cooldown.
 
-	to_chat(initiator, span_adminhelp("Your ticket was converted to Mentorhelp"))
+	to_chat(initiator, span_adminhelp(LANG("datum.75d05deb", null)))
 	initiator.mentorhelp(full_text)
 	initiator.giveadminhelpverb()
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/chameleon_outfit
 	name = "Select Chameleon Outfit"
 	desc = "LMB: Select a job to update all of your chameleon items to.<br>\
@@ -57,7 +58,7 @@
 
 /datum/action/chameleon_outfit/proc/save_outfit(mob/user, list/saved_paths)
 	if(!length(saved_paths))
-		owner.balloon_alert(user, "no outfit saved!")
+		owner.balloon_alert(user, LANG("datum.9c2f5c3e", null))
 		return
 
 	for(var/existing_outfit in custom_outfits)
@@ -69,7 +70,7 @@
 		next_custom_outfit = 1
 
 	LAZYSET(custom_outfits, "Custom Outfit #[next_custom_outfit]", saved_paths)
-	owner.balloon_alert(user, "outfit saved in slot [next_custom_outfit]")
+	owner.balloon_alert(user, LANG("datum.d0a305b7", list(next_custom_outfit)))
 	next_custom_outfit += 1
 
 /datum/action/chameleon_outfit/proc/select_outfit(mob/user)
@@ -80,7 +81,7 @@
 	all_options += "--- Job outfits ---"
 	all_options += outfit_options
 
-	var/selected = tgui_input_list(user, "Select outfit to change into", "Chameleon Outfit", all_options)
+	var/selected = tgui_input_list(user, LANG("datum.abef9c9e", null), LANG("datum.688d644a", null), all_options)
 	if(isnull(selected) || QDELETED(src) || QDELETED(user) || QDELETED(owner) || !IsAvailable(feedback = TRUE))
 		return FALSE
 

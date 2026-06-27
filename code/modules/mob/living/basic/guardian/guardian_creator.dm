@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 
 /proc/setup_guardian_radial()
@@ -68,11 +69,11 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 
 /obj/item/guardian_creator/attack_self(mob/living/user)
 	if(isguardian(user) && !allow_guardian)
-		balloon_alert(user, "can't do that!")
+		balloon_alert(user, LANG("obj.c3d89266", null))
 		return
 	var/list/guardians = user.get_all_linked_holoparasites()
 	if(length(guardians) && !allow_multiple)
-		balloon_alert(user, "already have one!")
+		balloon_alert(user, LANG("obj.87da24b2", null))
 		return
 	if(IS_CHANGELING(user) && !allow_changeling)
 		to_chat(user, ling_failure)
@@ -134,7 +135,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		return
 	var/list/guardians = user.get_all_linked_holoparasites()
 	if(length(guardians) && !allow_multiple)
-		balloon_alert(user, "already got one!")
+		balloon_alert(user, LANG("obj.1edc51df", null))
 		used = FALSE
 		return
 	var/datum/guardian_fluff/guardian_theme = GLOB.guardian_themes[theme]

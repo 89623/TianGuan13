@@ -134,7 +134,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_torch, 28)
 
 /obj/structure/wall_torch/wrench_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You detach [src] from its place."))
+	to_chat(user, span_notice(LANG("obj.9f8f2e9c", list(src))))
 
 	remove_torch(user)
 
@@ -188,18 +188,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_torch/spawns_lit, 28)
 
 /obj/item/wallframe/torch_mount/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user) > 1)
-		balloon_alert(user, "you are too far!")
+		balloon_alert(user, LANG("obj.72b79433", null))
 		return
 
 	var/floor_to_wall = get_dir(user, on_wall)
 	if(!(floor_to_wall in GLOB.cardinals))
-		balloon_alert(user, "stand in line with wall!")
+		balloon_alert(user, LANG("obj.66fb33f1", null))
 		return
 
 	var/turf/user_turf = get_turf(user)
 
 	if(check_wall_item(user_turf, floor_to_wall, wall_external))
-		balloon_alert(user, "already something here!")
+		balloon_alert(user, LANG("obj.599bb150", null))
 		return
 
 	return TRUE

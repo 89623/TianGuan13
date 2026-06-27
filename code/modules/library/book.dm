@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/book
 	name = "book"
 	desc = "Crack it open, inhale the musk of its pages, and learn something new."
@@ -34,7 +35,10 @@
 
 /obj/item/book/Initialize(mapload)
 	. = ..()
-	book_data = new(starting_title, starting_author, starting_content)
+	// NOVA EDIT CHANGE - i18n - 全服中文时构建译文 book_info（标题/正文整串反查；author 是人名不译）。
+	// 不动 starting_* 实例变量（read-tracking 仍用英文 starting_title 作键，跨 locale 一致）。
+	// lang_reverse_text 在 locale==en 时原样返回，零行为变化。
+	book_data = new(lang_reverse_text(starting_title), starting_author, lang_reverse_text(starting_content)) // ORIGINAL: book_data = new(starting_title, starting_author, starting_content)
 
 	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
 	AddElement(/datum/element/burn_on_item_ignition)
@@ -43,7 +47,7 @@
 /obj/item/book/examine(mob/user)
 	. = ..()
 	if(carved)
-		. += span_notice("[src] has been hollowed out.")
+		. += span_notice(LANG("obj.0ae8f20c", list(src)))
 
 /obj/item/book/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -91,18 +95,18 @@
 /// Proc that checks if the user is capable of reading the book, for UI interactions and otherwise. Returns TRUE if they can, FALSE if they can't.
 /obj/item/book/proc/can_read_book(mob/living/user)
 	if(user.is_blind())
-		to_chat(user, span_warning("You are blind and can't read anything!"))
+		to_chat(user, span_warning(LANG("obj.2977ae45", null)))
 		return FALSE
 
 	if(!user.can_read(src))
 		return FALSE
 
 	if(carved)
-		balloon_alert(user, "book is carved out!")
+		balloon_alert(user, LANG("obj.79dfd6e2", null))
 		return FALSE
 
 	if(!length(book_data.get_content()))
-		balloon_alert(user, "book is blank!")
+		balloon_alert(user, LANG("obj.836188c7", null))
 		return FALSE
 
 	return TRUE
@@ -125,7 +129,7 @@
 		return
 
 	playsound(user, 'sound/items/handling/paper_pickup.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
+	user.visible_message(span_notice(LANG("obj.2b946d12", list(user, book_data.title))))
 	credit_book_to_reader(user)
 	display_content(user)
 
@@ -143,13 +147,13 @@
 	if(!user.can_perform_action(src) || !user.can_write(tool, TRUE))
 		return FALSE
 	if(user.is_blind())
-		to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))
+		to_chat(user, span_warning(LANG("obj.c3dd3b4e", null)))
 		return FALSE
 	if(unique)
-		to_chat(user, span_warning("These pages don't seem to take the ink well! Looks like you can't modify it."))
+		to_chat(user, span_warning(LANG("obj.4a457f29", null)))
 		return FALSE
 	if(carved)
-		to_chat(user, span_warning("The book has been carved out! There is nothing to be vandalized."))
+		to_chat(user, span_warning(LANG("obj.b1239b36", null)))
 		return FALSE
 	return TRUE
 
@@ -177,7 +181,7 @@
 	if(!can_vandalize(user, tool))
 		return ITEM_INTERACT_BLOCKING
 
-	var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
+	var/choice = tgui_input_list(usr, LANG("obj.50eb78d2", null), LANG("obj.ced429a6", null), list("Title", "Contents", "Author", "Cancel"))
 	if(isnull(choice))
 		return ITEM_INTERACT_BLOCKING
 	if(!can_vandalize(user, tool))
@@ -194,12 +198,12 @@
 	return NONE
 
 /obj/item/book/proc/vandalize_title(mob/living/user, obj/item/tool)
-	var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
+	var/newtitle = reject_bad_text(tgui_input_text(user, LANG("obj.14cba6fc", null), LANG("obj.7e7c2662", null), max_length = 30))
 	if(!newtitle)
-		balloon_alert(user, "invalid input!")
+		balloon_alert(user, LANG("obj.4b1a454f", null))
 		return ITEM_INTERACT_BLOCKING
 	if(length_char(newtitle) > 30)
-		balloon_alert(user, "too long!")
+		balloon_alert(user, LANG("obj.4087dcfc", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!can_vandalize(user, tool))
 		return ITEM_INTERACT_BLOCKING
@@ -210,9 +214,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/book/proc/vandalize_contents(mob/living/user, obj/item/tool)
-	var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", max_length = MAX_PAPER_LENGTH, multiline = TRUE)
+	var/content = tgui_input_text(user, LANG("obj.8d3c150b", null), LANG("obj.2512f076", null), max_length = MAX_PAPER_LENGTH, multiline = TRUE)
 	if(!content)
-		balloon_alert(user, "invalid input!")
+		balloon_alert(user, LANG("obj.4b1a454f", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!can_vandalize(user, tool))
 		return ITEM_INTERACT_BLOCKING
@@ -222,9 +226,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/book/proc/vandalize_author(mob/living/user, obj/item/tool)
-	var/author = tgui_input_text(user, "Write the author's name", "Author Name", max_length = MAX_NAME_LEN)
+	var/author = tgui_input_text(user, LANG("obj.6007aef5", null), LANG("obj.6ab6907e", null), max_length = MAX_NAME_LEN)
 	if(!author)
-		balloon_alert(user, "invalid input!")
+		balloon_alert(user, LANG("obj.4b1a454f", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!can_vandalize(user, tool))
 		return ITEM_INTERACT_BLOCKING
@@ -236,15 +240,15 @@
 /// Called when user clicks on the book with a carving utensil. Attempts to carve the book.
 /obj/item/book/proc/carving_act(mob/living/user, obj/item/tool)
 	if(carved)
-		balloon_alert(user, "already carved!")
+		balloon_alert(user, LANG("obj.1b3e3695", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "carving out...")
+	balloon_alert(user, LANG("obj.ccb5d51d", null))
 	if(!do_after(user, 3 SECONDS, target = src))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "carved out")
+	balloon_alert(user, LANG("obj.abd0ce9c", null))
 	playsound(src, 'sound/effects/cloth_rip.ogg', vol = 75, vary = TRUE)
 	carve_out()
 	return ITEM_INTERACT_SUCCESS

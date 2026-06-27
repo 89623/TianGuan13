@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/brain/cybernetic
 	name = "cybernetic brain"
 	desc = "A mechanical brain found inside of androids. Not to be confused with a positronic brain."
@@ -22,14 +23,14 @@
 /obj/item/organ/brain/cybernetic/check_for_repair(obj/item/item, mob/user)
 	if (item.tool_behaviour == TOOL_MULTITOOL) //attempt to repair the brain
 		if (brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
-			to_chat(user, span_warning("[src] is far too damaged, there's nothing else we can do for it!"))
+			to_chat(user, span_warning(LANG("obj.57f2d422", list(src))))
 			return TRUE
 
 		if (DOING_INTERACTION(user, src))
-			to_chat(user, span_warning("you're already repairing [src]!"))
+			to_chat(user, span_warning(LANG("obj.7ca3d4a6", list(src))))
 			return TRUE
 
-		user.visible_message(span_notice("[user] slowly starts to repair [src] with [item]."), span_notice("You slowly start to repair [src] with [item]."))
+		user.visible_message(span_notice(LANG("obj.30049e42", list(user, src, item))), span_notice(LANG("obj.6f08d6eb", list(src, item))))
 		var/did_repair = FALSE
 		while(damage > 0)
 			if(item.use_tool(src, user, 3 SECONDS, volume = 50))
@@ -40,11 +41,11 @@
 
 		if (did_repair)
 			if (damage > 0)
-				user.visible_message(span_notice("[user] partially repairs [src] with [item]."), span_notice("You partially repair [src] with [item]."))
+				user.visible_message(span_notice(LANG("obj.6500d6a2", list(user, src, item))), span_notice(LANG("obj.e25e65d9", list(src, item))))
 			else
-				user.visible_message(span_notice("[user] fully repairs [src] with [item], causing its warning light to stop flashing."), span_notice("You fully repair [src] with [item], causing its warning light to stop flashing."))
+				user.visible_message(span_notice(LANG("obj.c7f2f527", list(user, src, item))), span_notice(LANG("obj.90b5d6b8", list(src, item))))
 		else
-			to_chat(user, span_warning("You failed to repair [src] with [item]!"))
+			to_chat(user, span_warning(LANG("obj.8a2acaec", list(src, item))))
 
 		return TRUE
 	return FALSE
@@ -57,12 +58,12 @@
 		if (EMP_HEAVY)
 			//apply_organ_damage(20, BRAIN_DAMAGE_SEVERE) // NOVA EDIT REMOVAL
 			// NOVA EDIT ADDITION START
-			to_chat(owner, span_boldwarning("You feel [pick("like your brain is being fried", "a sharp pain in your head")]!")) //default alert text for emps
+			to_chat(owner, span_boldwarning(LANG("obj.a2506f01", list(pick("like your brain is being fried", "a sharp pain in your head"))))) //default alert text for emps
 			apply_organ_damage((20*emp_dmg_mult), emp_dmg_max) //implement cap
 			// NOVA EDIT ADDITION END
 		if (EMP_LIGHT)
 			//apply_organ_damage(10, BRAIN_DAMAGE_MILD) // NOVA EDIT REMOVAL
 			// NOVA EDIT ADDITION START
-			to_chat(owner, span_warning("You feel [pick("disoriented", "confused", "dizzy")].")) //default alert text for emps
+			to_chat(owner, span_warning(LANG("obj.20f1ebe8", list(pick("disoriented", "confused", "dizzy"))))) //default alert text for emps
 			apply_organ_damage((10*emp_dmg_mult), emp_dmg_max) //implement cap
 			// NOVA EDIT ADDITION END

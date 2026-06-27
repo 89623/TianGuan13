@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/shuttle_remote
 	name = "shuttle remote"
 	desc = "A remote to send away or call a shuttle."
@@ -26,7 +27,7 @@
 	. = ..()
 	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	if(may_change_docks && our_computer)
-		. += span_notice("You can change where the [get_area_name(SSshuttle.getShuttle(our_computer.shuttleId))] docks using [EXAMINE_HINT("alt-right-click")].")
+		. += span_notice(LANG("obj.62b34b41", list(get_area_name(SSshuttle.getShuttle(our_computer.shuttleId)), EXAMINE_HINT("alt-right-click"))))
 
 /obj/item/shuttle_remote/Initialize(mapload)
 	. = ..()
@@ -43,17 +44,17 @@
 	if(!istype(interacting_with, /obj/machinery/computer/shuttle))
 		return NONE
 	if(our_computer || our_port)
-		balloon_alert(user, "already linked!")
+		balloon_alert(user, LANG("obj.cc32a1c7", null))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/machinery/computer/shuttle/new_computer = interacting_with
 	if(new_computer.remote_ref || !new_computer.may_be_remote_controlled)
-		balloon_alert(user, "occupied signal!")
+		balloon_alert(user, LANG("obj.b75a8681", null))
 		return ITEM_INTERACT_BLOCKING
 	new_computer.remote_ref = WEAKREF(src)
 	computer_ref = WEAKREF(new_computer)
 	our_port = SSshuttle.getShuttle(new_computer.shuttleId)
 	playsound(src, 'sound/machines/beep/beep.ogg', 30)
-	balloon_alert(user, "linked")
+	balloon_alert(user, LANG("obj.c85b9128", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shuttle_remote/attack_self(mob/user)
@@ -72,7 +73,7 @@
 	var/destination = null
 
 	if(home == dock || ("[our_computer.shuttleId]_custom" == dock.shuttle_id))
-		switch(tgui_alert(user, send_off_text, "Send Off Shuttle?", send_off_options))
+		switch(tgui_alert(user, send_off_text, LANG("obj.15e88805", null), send_off_options))
 			if("Yes")
 				destination = away.shuttle_id
 	else if(away == dock)
@@ -82,7 +83,7 @@
 				send_off_text += "\n\nCustom location loaded, try to dock?"
 				send_off_options += "Send to custom"
 				break
-		switch(tgui_alert(user, send_off_text, "Call Shuttle?", send_off_options))
+		switch(tgui_alert(user, send_off_text, LANG("obj.219ef204", null), send_off_options))
 			if("Yes")
 				destination = home.shuttle_id
 			if("Send to custom")
@@ -91,7 +92,7 @@
 	if(!destination || !can_use(user))
 		return
 	if(!our_port.canDock(SSshuttle.getDock(destination)))
-		balloon_alert(user, "destination occupied!")
+		balloon_alert(user, LANG("obj.74ac4242", null))
 		return
 	transit_shuttle(user, destination)
 
@@ -110,10 +111,10 @@
 		LAZYADD(destination_names, destination_data["name"])
 		LAZYADDASSOC(destination_ids, destination_data["name"], destination_data["id"])
 	if(destination_names.len < 1)
-		balloon_alert(user, "no valid destinations!")
+		balloon_alert(user, LANG("obj.94391c75", null))
 		return NONE
-	var/picked_home = tgui_input_list(user, "choose which dock to designate as the shuttle's home point...", "Choose Home Dock", destination_names)
-	var/picked_away = tgui_input_list(user, "choose which dock to designate as the shuttle's away point...", "Choose Away Dock", destination_names)
+	var/picked_home = tgui_input_list(user, LANG("obj.30e731ac", null), LANG("obj.0492c512", null), destination_names)
+	var/picked_away = tgui_input_list(user, LANG("obj.78e7ffe7", null), LANG("obj.1c4d3f0b", null), destination_names)
 	if(picked_home && can_use(user))
 		shuttle_home_id = LAZYACCESS(destination_ids, picked_home)
 	if(picked_away && can_use(user))
@@ -125,22 +126,22 @@
 	if(!user.can_perform_action(src))
 		return FALSE
 	if(is_reserved_level(loc.z))
-		balloon_alert(user, "can't use here!")
+		balloon_alert(user, LANG("obj.906d6de7", null))
 		return FALSE
 	if(!our_computer)
-		balloon_alert(user, "no nav computer!")
+		balloon_alert(user, LANG("obj.101bedc6", null))
 		return FALSE
 	if(our_computer.locked)
-		balloon_alert(user, "nav computer locked!")
+		balloon_alert(user, LANG("obj.be7a2f0e", null))
 		return FALSE
 	if(our_port.mode != SHUTTLE_IDLE)
-		balloon_alert(user, "engines recharging!")
+		balloon_alert(user, LANG("obj.0c3bee77", null))
 		return FALSE
 	if(!our_port.canDock(SSshuttle.getDock(shuttle_home_id)))
-		balloon_alert(user, "home dock occupied!")
+		balloon_alert(user, LANG("obj.cb25fc74", null))
 		return FALSE
 	if(!our_port.canDock(SSshuttle.getDock(shuttle_away_id)))
-		balloon_alert(user, "away dock occupied!")
+		balloon_alert(user, LANG("obj.ebfebe34", null))
 		return FALSE
 	return TRUE
 

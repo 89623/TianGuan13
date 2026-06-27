@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/limb/filter_blood
 	name = "blood filtration"
 	rnd_name = "Hemodialysis (Blood Filtration)"
@@ -12,9 +13,9 @@
 
 /datum/surgery_operation/limb/filter_blood/all_required_strings()
 	. = list()
-	. += "operate on chest (target chest)"
+	. += LANG("datum.38e769ea", null)
 	. += ..()
-	. += "the patient must not be husked"
+	. += LANG("datum.544633d4", null)
 
 /datum/surgery_operation/limb/filter_blood/get_default_radial_image()
 	return image(/obj/item/blood_filter)
@@ -63,7 +64,7 @@
 
 /datum/surgery_operation/limb/filter_blood/proc/has_filterable_chems(mob/living/carbon/target, obj/item/blood_filter/bloodfilter)
 	if(!length(target.reagents?.reagent_list))
-		bloodfilter.audible_message(span_notice("[bloodfilter] pings as it reports no chemicals detected in [target]'s blood."))
+		bloodfilter.audible_message(span_notice(LANG("datum.5e1aad9b", list(bloodfilter, target))))
 		playsound(target, 'sound/machines/ping.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 		return FALSE
 
@@ -82,7 +83,7 @@
 
 	// NOVA EDIT ADDITION BEGIN - Neuroware
 	if(!found_reagents)
-		bloodfilter.audible_message(span_notice("[bloodfilter] pings as it reports no chemicals detected in [target]'s blood."))
+		bloodfilter.audible_message(span_notice(LANG("datum.5e1aad9b", list(bloodfilter, target))))
 		playsound(get_turf(target), 'sound/machines/ping.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 	// NOVA EDIT ADDITION END
 	return FALSE

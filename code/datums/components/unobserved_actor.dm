@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ### Unobserved Actor
  *
@@ -83,7 +84,7 @@
 /datum/component/unobserved_actor/proc/check_if_seen(mob/living/source)
 	var/observed = can_be_seen(source)
 	if (observed && COOLDOWN_FINISHED(src, message_cooldown))
-		source.balloon_alert(source, "something can see you!")
+		source.balloon_alert(source, LANG("datum.9b46c42a", null))
 		COOLDOWN_START(src, message_cooldown, 1 SECONDS)
 	return observed
 

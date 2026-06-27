@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*!
  * Contains the "Void Chill" status effect. Harmful debuff which freezes and slows down non-heretics
  * Cannot affect silicons (How are you gonna freeze a robot?)
@@ -115,4 +116,4 @@
 		return
 	var/datum/status_effect/void_chill/chill_effect = attached_effect
 	if(chill_effect.stacks >= 5)
-		desc = "You had your chance to run, now it's too late. You may never feel warmth again..."
+		desc = LANG("atom.af402c97", null)

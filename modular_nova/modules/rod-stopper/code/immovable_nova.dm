@@ -4,9 +4,9 @@
 		should_self_destroy = TRUE
 	. = ..()
 	if(should_self_destroy)
-		visible_message(span_boldwarning("The rod tears into the rodstopper with a reality-rending screech!"))
+		visible_message(span_boldwarning(LANG("obj.cfc5fc1d", null)))
 		playsound(src.loc,'sound/effects/supermatter.ogg', 200, TRUE)
-		visible_message(span_boldwarning("You have five seconds to move away before the localized reality-collapse!"))
+		visible_message(span_boldwarning(LANG("obj.f51ced3a", null)))
 		var/obj/reality_tear/tear = new(src.loc)
 		tear.start_disaster()
 		qdel(src)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Empath quirk component, it's a component because it can be applied in ways that don't give you the quirk. (For health analyzer purposes)
 
 /datum/component/empathy
@@ -45,7 +46,7 @@
 		return
 	if(HAS_TRAIT(target, TRAIT_FAKEDEATH))
 		if(sense_dead)
-			examine_list += "Something about this dead body doesn't look right..."
+			examine_list += LANG("datum.004e9948", null)
 		else
 			return
 	var/mob/living/living_parent = parent
@@ -56,25 +57,25 @@
 	var/t_Their = target.p_Their()
 	var/t_are = target.p_are()
 	if((visible_info & EMPATH_SEE_COMBAT) && target.combat_mode)
-		examine_list += "[t_They] seem[p_s()] to be on guard."
+		examine_list += LANG("datum.1ebfccf6", list(t_They, p_s()))
 	if((visible_info & EMPATH_SEE_OXY) && target.get_oxy_loss() >= 10)
-		examine_list += "[t_They] seem[p_s()] winded."
+		examine_list += LANG("datum.9039e75c", list(t_They, p_s()))
 	if((visible_info & EMPATH_SEE_TOX) && target.get_tox_loss() >= 10)
-		examine_list += "[t_They] seem[p_s()] sickly."
+		examine_list += LANG("datum.f33c8219", list(t_They, p_s()))
 	if((visible_info & EMPATH_SEE_SANITY) && target.mob_mood.sanity <= SANITY_DISTURBED)
-		examine_list += "[t_They] seem[p_s()] distressed."
+		examine_list += LANG("datum.1ad973e7", list(t_They, p_s()))
 	if((visible_info & EMPATH_SEE_BLIND) && target.is_blind())
-		examine_list += "[t_They] appear[p_s()] to be staring off into space."
+		examine_list += LANG("datum.5b01add5", list(t_They, p_s()))
 	if((visible_info & EMPATH_SEE_DEAF) && HAS_TRAIT(target, TRAIT_DEAF))
-		examine_list += "[t_They] appear[p_s()] to not be responding to noises."
+		examine_list += LANG("datum.015f7b5e", list(t_They, p_s()))
 	if((visible_info & EMPATH_SEE_HOT) && target.bodytemperature > target.get_body_temp_heat_damage_limit())
-		examine_list += "[t_They] [t_are] flushed and wheezing."
+		examine_list += LANG("datum.381b7987", list(t_They, t_are))
 	if((visible_info & EMPATH_SEE_COLD) && target.bodytemperature < target.get_body_temp_cold_damage_limit())
-		examine_list += "[t_They] [t_are] shivering."
+		examine_list += LANG("datum.da6043cc", list(t_They, t_are))
 	if((visible_info & EMPATH_SEE_EVIL) && HAS_TRAIT(target, TRAIT_EVIL))
-		examine_list += "[t_Their] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_their] soul."
+		examine_list += LANG("datum.4a9cfe71", list(t_Their, t_their))
 		if(living_parent.mind?.holy_role >= HOLY_ROLE_PRIEST)
-			examine_list += span_warning("PERFECT FOR SMITING!!")
+			examine_list += span_warning(LANG("datum.1148672e", null))
 		else if(!seen_it)
 			seen_it = TRUE
 			living_parent.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)

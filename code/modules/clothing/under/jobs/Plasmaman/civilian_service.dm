@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Basically the assistant suit
 /obj/item/clothing/under/plasmaman
 	name = "plasma envirosuit"
@@ -23,7 +24,7 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
-	. += span_notice("There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charges left in this suit.")
+	. += span_notice(LANG("obj.8d253863", list(extinguishes_left == 1 ? "is" : "are", extinguishes_left)))
 
 /obj/item/clothing/under/plasmaman/equipped(mob/living/user, slot)
 	. = ..()
@@ -54,7 +55,7 @@
 	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
 	// Check if our (possibly other) wearer is on fire once the cooldown ends
 	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
-	owner.visible_message(span_warning("[owner]'s suit automatically extinguishes [owner.p_them()]!"), span_warning("Your suit automatically extinguishes you."))
+	owner.visible_message(span_warning(LANG("obj.1259449b", list(owner, owner.p_them()))), span_warning(LANG("obj.7fd1fcff", null)))
 	owner.extinguish_mob()
 	new /obj/effect/particle_effect/water(get_turf(owner))
 
@@ -63,11 +64,11 @@
 		return ..()
 
 	if (extinguishes_left == 5)
-		to_chat(user, span_notice("The inbuilt extinguisher is full."))
+		to_chat(user, span_notice(LANG("obj.ef12437e", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	extinguishes_left = 5
-	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
+	to_chat(user, span_notice(LANG("obj.161539ff", null)))
 	check_fire_state()
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
@@ -174,6 +175,6 @@
 	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
 	// Check if our (possibly other) wearer is on fire once the cooldown ends
 	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
-	owner.visible_message(span_warning("[owner]'s suit spews space lube everywhere!"), span_warning("Your suit spews space lube everywhere!"))
+	owner.visible_message(span_warning(LANG("obj.49863cca", list(owner))), span_warning(LANG("obj.668f25fa", null)))
 	owner.extinguish_mob()
 	do_foam(4, src, get_turf(owner), /datum/reagent/lube, 15)

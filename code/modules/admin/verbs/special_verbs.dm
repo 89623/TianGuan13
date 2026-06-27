@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Admin Verbs in this file are special and cannot use the AVD system for some reason or another.
 
 /client/proc/show_verbs()
@@ -7,7 +8,7 @@
 	remove_verb(src, /client/proc/show_verbs)
 	add_admin_verbs()
 
-	to_chat(src, span_interface("All of your adminverbs are now visible."), confidential = TRUE)
+	to_chat(src, span_interface(LANG("client.11524bf0", null)), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Adminverbs")
 
 /client/proc/readmin()
@@ -30,7 +31,7 @@
 	if (!holder)
 		return //This can happen if an admin attempts to vv themself into somebody elses's deadmin datum by getting ref via brute force
 
-	to_chat(src, span_interface("You are now an admin."), confidential = TRUE)
+	to_chat(src, span_interface(LANG("client.04bfdba7", null)), confidential = TRUE)
 	message_admins("[src] re-adminned themselves.")
 	log_admin("[src] re-adminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Readmin")

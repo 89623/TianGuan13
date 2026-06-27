@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/bot/secbot
 	name = "\improper Securitron"
 	desc = "A little security robot. He looks less than thrilled."
@@ -98,7 +99,7 @@
 	speed += 3
 	addtimer(VARSET_CALLBACK(src, speed, speed - 3), 6 SECONDS)
 	playsound(src, 'sound/machines/defib/defib_zap.ogg', 50)
-	visible_message(span_warning("[src] shakes and speeds up!"))
+	visible_message(span_warning(LANG("mob.563c8dcb", list(src))))
 
 /mob/living/basic/bot/secbot/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -146,8 +147,8 @@
 
 	// Turns an oversight into a feature. Beepsky will now announce when pacifists taunt him over sec comms.
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		user.visible_message(span_notice("[user] taunts [src], daring [p_them()] to give chase!"), \
-			span_notice("You taunt [src], daring [p_them()] to chase you!"), span_hear("You hear someone shout a daring taunt!"), DEFAULT_MESSAGE_RANGE, user)
+		user.visible_message(span_notice(LANG("mob.b90dd7e1", list(user, src, p_them()))), \
+			span_notice(LANG("mob.cfaad9c8", list(src, p_them()))), span_hear(LANG("mob.cf9e616d", null)), DEFAULT_MESSAGE_RANGE, user)
 		speak("Taunted by pacifist scumbag [RUNECHAT_BOLD("[user]")] in [get_area(src)].", radio_channel)
 
 		// Interrupt the attack chain. We've already handled this scenario for pacifists.
@@ -156,14 +157,14 @@
 	return ..()
 
 /mob/living/basic/bot/secbot/proc/retrieve_emag_message()
-	audible_message(span_danger("[src] buzzes oddly!"))
+	audible_message(span_danger(LANG("mob.1798b7cd", list(src))))
 
 /mob/living/basic/bot/secbot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(!(bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	if(user)
-		balloon_alert(user, "target assessment circuits shorted")
+		balloon_alert(user, LANG("mob.ac6a1d0d", null))
 
 	retrieve_emag_message()
 	security_mode_flags &= ~SECBOT_DECLARE_ARRESTS
@@ -214,18 +215,18 @@
 		return FALSE
 	var/obj/item/card/id/target_id = human_target.get_idcard()
 	if(!target_id)
-		say("Unable to pay fine: No ID card found.")
+		say(LANG("mob.0f42df65", null))
 		return TRUE
 	var/datum/bank_account/insurance = target_id.registered_account
 	if(!insurance)
-		say("Unable to pay fine: No bank account found.")
+		say(LANG("mob.9d50e71d", null))
 		return TRUE
 	if(!insurance.adjust_money(-fair_market_price, "Securitron fine"))
-		say("Unable to pay fine: Not enough funds in account.")
+		say(LANG("mob.f488ec3b", null))
 		return TRUE
 
 	SSeconomy.get_dep_account(payment_department)?.adjust_money(fair_market_price)
-	say("Fine paid: Thank you for your compliance. Your account been charged [fair_market_price] [MONEY_NAME].")
+	say(LANG("mob.c363e471", list(fair_market_price, MONEY_NAME)))
 	return FALSE
 
 /mob/living/basic/bot/secbot/generate_speak_list()

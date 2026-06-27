@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Main proc for primary alt click
 /mob/proc/AltClickOn(atom/target)
 	base_click_alt(target)
@@ -128,7 +129,7 @@
 
 	/// No loot panel if it's on our person
 	if(isobj(target) && (target in get_all_gear(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT|INCLUDE_ACCESSORIES)))
-		to_chat(src, span_warning("You can't search for this item, it's already in your inventory![!HAS_TRAIT(target, TRAIT_NODROP) ? " Take it off first." : ""]"))
+		to_chat(src, span_warning(LANG("mob.7571a0bf", list(!HAS_TRAIT(target, TRAIT_NODROP) ? " Take it off first." : ""))))
 		return FALSE
 
 	client.loot_panel.open(get_turf(target))

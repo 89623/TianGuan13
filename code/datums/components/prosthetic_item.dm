@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * This makes an arbitrary item into a "prosthetic limb"
  */
@@ -124,8 +125,8 @@
 
 	var/obj/item/bodypart/bodyparent = parent
 	source.visible_message(
-		span_warning("As [source] attempts to swing with [source.p_their()] [bodyparent.name], it falls right off!"),
-		span_warning("As you attempt to swing with [source.p_their()] [bodyparent.name], it falls right off!"),
+		span_warning(LANG("datum.323c5101", list(source, source.p_their(), bodyparent.name))),
+		span_warning(LANG("datum.6926d0f2", list(source.p_their(), bodyparent.name))),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	bodyparent.dismember(silent = TRUE) // which removes the limb, which qdels us (which nulls all the references and signals)

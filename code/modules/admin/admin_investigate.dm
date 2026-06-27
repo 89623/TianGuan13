@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /atom/proc/investigate_log(message, subject)
 	if(!message)
 		return
@@ -45,7 +46,7 @@ ADMIN_VERB(investigate_show, R_NONE, "Investigate", "Browse various detailed log
 
 	var/list/combined = sort_list(logs_present) + sort_list(logs_missing)
 
-	var/selected = tgui_input_list(user, "Investigate what?", "Investigation", combined)
+	var/selected = tgui_input_list(user, LANG("datum.54a28c48", null), LANG("datum.544bcdeb", null), combined)
 	if(isnull(selected))
 		return
 	if(!(selected in combined) || selected == "---")
@@ -59,7 +60,7 @@ ADMIN_VERB(investigate_show, R_NONE, "Investigate", "Browse various detailed log
 
 	var/F = file("[GLOB.log_directory]/[selected].html")
 	if(!fexists(F))
-		to_chat(user, span_danger("No [selected] logfile was found."), confidential = TRUE)
+		to_chat(user, span_danger(LANG("datum.1b7e7c4f", list(selected))), confidential = TRUE)
 		return
 
 	var/datum/browser/browser = new(user, "investigate[selected]", "Investigation of [selected]", 800, 300)

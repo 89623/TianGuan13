@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //behavior to find mineable mineral walls
 
 /datum/ai_planning_subtree/mine_walls
@@ -28,7 +29,7 @@
 	if(!controller.ai_interact(target = target))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	if(is_gibtonite_turf)
-		living_pawn.manual_emote("sighs...") //accept whats about to happen to us
+		living_pawn.manual_emote(LANG("datum.141bbf32", null)) //accept whats about to happen to us
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

@@ -204,7 +204,7 @@
 	if(!istype(attacking_item, /obj/item/lustwish_discount))
 		return ..()
 
-	user.visible_message(span_boldnotice("Something changes in [src] with a loud clunk."))
+	user.visible_message(span_boldnotice(LANG("obj.81cfa1f1", list(src))))
 	card_used = !card_used
 
 	if(card_used)

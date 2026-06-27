@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/abductor/experiment
 	name = "experimentation machine"
 	desc = "A large man-sized tube sporting a complex array of surgical machinery."
@@ -44,19 +45,19 @@
 		return
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
-		to_chat(user, span_warning("[src]'s door won't budge!"))
+		to_chat(user, span_warning(LANG("obj.c4e897cb", list(src))))
 
 /obj/machinery/abductor/experiment/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
-		span_hear("You hear a metallic creaking from [src]."))
+	user.visible_message(span_notice(LANG("obj.485787b2", list(user, src))), \
+		span_notice(LANG("obj.43ad33b1", list(src, DisplayTimeText(breakout_time)))), \
+		span_hear(LANG("obj.a1d9c573", list(src))))
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
+		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
+			span_notice(LANG("obj.81c31f6b", list(src))))
 		open_machine()
 
 /obj/machinery/abductor/experiment/ui_status(mob/user, datum/ui_state/state)
@@ -135,25 +136,25 @@
 	if(occupant in history)
 		return "Specimen already in database."
 	if(occupant.stat == DEAD)
-		say("Specimen deceased - please provide fresh sample.")
+		say(LANG("obj.57471c89", null))
 		return "Specimen deceased."
 	var/obj/item/organ/heart/gland/GlandTest = locate() in occupant.organs
 	if(!GlandTest)
-		say("Experimental dissection not detected!")
+		say(LANG("obj.fa2d31bc", null))
 		return "No glands detected!"
 	if(occupant.mind != null && occupant.ckey != null)
 		LAZYINITLIST(abductee_minds)
 		LAZYADD(history, occupant)
 		LAZYADD(abductee_minds, occupant.mind)
-		say("Processing specimen...")
+		say(LANG("obj.e681e6c1", null))
 		sleep(0.5 SECONDS)
 		switch(text2num(type))
 			if(1)
-				to_chat(occupant, span_warning("You feel violated."))
+				to_chat(occupant, span_warning(LANG("obj.267bcdc1", null)))
 			if(2)
-				to_chat(occupant, span_warning("You feel yourself being sliced apart and put back together."))
+				to_chat(occupant, span_warning(LANG("obj.554bbee3", null)))
 			if(3)
-				to_chat(occupant, span_warning("You feel intensely watched."))
+				to_chat(occupant, span_warning(LANG("obj.812af9a5", null)))
 		sleep(0.5 SECONDS)
 		user_abductor.team.abductees += occupant.mind
 		occupant.mind.add_antag_datum(/datum/antagonist/abductee)
@@ -172,7 +173,7 @@
 			playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 			return "Experiment failed! No replacement organ detected."
 	else
-		say("Brain activity nonexistent - disposing sample...")
+		say(LANG("obj.e3f681f6", null))
 		open_machine()
 		send_back(occupant)
 		return "Specimen braindead - disposed."

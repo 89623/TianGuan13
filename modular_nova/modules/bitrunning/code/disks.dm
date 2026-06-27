@@ -37,8 +37,8 @@
 	. = ..()
 	if(!isnull(loaded_preference))
 		var/name = loaded_preference.read_preference(/datum/preference/name/real_name)
-		. += "It currently has the character [name] loaded, with loadouts [(include_loadout ? "enabled" : "disabled")]"
-		. += span_notice("Alt-Click to change loadout loading")
+		. += LANG("obj.27bbe64d", list(name, (include_loadout ? "enabled" : "disabled")))
+		. += span_notice(LANG("obj.49759603", null))
 
 /obj/item/disk/bitrunning/prefs/click_alt(mob/user)
 	if(isnull(loaded_preference))
@@ -64,8 +64,8 @@
 	loaded_preference = new(user.client)
 	loaded_preference.load_character(prefdata_names.Find(choice))
 
-	balloon_alert(user, "character set!")
-	to_chat(user, span_notice("Character set to [choice] sucessfully!"))
+	balloon_alert(user, LANG("obj.0a6e4860", null))
+	to_chat(user, span_notice(LANG("obj.49b76751", list(choice))))
 
 /datum/orderable_item/bitrunning_tech/ability_tier0
 	cost_per_order = 350

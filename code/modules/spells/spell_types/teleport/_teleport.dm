@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * ## Teleport Spell
@@ -117,7 +118,7 @@
 	if(randomise_selection)
 		target_area = pick(GLOB.teleportlocs)
 	else
-		target_area = tgui_input_list(cast_on, "Chose an area to teleport to.", "Teleport", GLOB.teleportlocs)
+		target_area = tgui_input_list(cast_on, LANG("datum.be53e1a1", null), LANG("datum.d225289a", null), GLOB.teleportlocs)
 
 	if(QDELETED(src) || QDELETED(cast_on) || (owner && !can_cast_spell()))
 		return . | SPELL_CANCEL_CAST

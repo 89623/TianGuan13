@@ -59,7 +59,7 @@
 	var/mob/living/carbon/patient = amputee
 
 	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
-		to_chat(user, span_warning("The patient's limbs look too sturdy to amputate."))
+		to_chat(user, span_warning(LANG("obj.e283c18e", null)))
 		return
 
 	var/candidate_name
@@ -69,20 +69,20 @@
 	if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
 		tail_snip_candidate = patient.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(!tail_snip_candidate)
-			to_chat(user, span_warning("[patient] does not have a tail."))
+			to_chat(user, span_warning(LANG("obj.15298a7a", list(patient))))
 			return
 		candidate_name = tail_snip_candidate.name
 
 	else
 		limb_snip_candidate = patient.get_bodypart(check_zone(user.zone_selected))
 		if(!limb_snip_candidate)
-			to_chat(user, span_warning("[patient] is already missing that limb, what more do you want?"))
+			to_chat(user, span_warning(LANG("obj.d05f3e3d", list(patient))))
 			return
 		candidate_name = limb_snip_candidate.name
 
 	var/amputation_speed_mod = 1
 
-	patient.visible_message(span_danger("[user] begins sawing off [patient]'s [candidate_name] with [src]!"), span_userdanger("[user] begins sawing off your [candidate_name] with [src]!"))
+	patient.visible_message(span_danger(LANG("obj.04a5321f", list(user, patient, candidate_name, src))), span_userdanger(LANG("obj.625330a1", list(user, candidate_name, src))))
 	playsound(get_turf(patient), 'sound/items/weapons/bladeslice.ogg', 250, TRUE)
 	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
 		amputation_speed_mod *= 0.5
@@ -98,7 +98,7 @@
 			tail_snip_candidate.forceMove(get_turf(patient))
 		else
 			limb_snip_candidate.dismember()
-		user.visible_message(span_danger("[src] violently cuts through, amputating [patient]'s [candidate_name]."), span_notice("You amputate [patient]'s [candidate_name] with [src]."))
+		user.visible_message(span_danger(LANG("obj.b88fbdf3", list(src, patient, candidate_name))), span_notice(LANG("obj.13362e3a", list(patient, candidate_name, src))))
 		user.log_message("[user] has amputated [patient]'s [candidate_name] with [src]", LOG_GAME)
 		patient.log_message("[patient]'s [candidate_name] has been amputated by [user] with [src]", LOG_GAME)
 
@@ -106,7 +106,7 @@
 		user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
 /obj/item/circular_saw/field_medic/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is cutting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.a796b200", list(user, user.p_them(), src, user.p_theyre()))))
 	var/timer = 1 SECONDS
 	for(var/obj/item/bodypart/thing in user.bodyparts)
 		if(thing.body_part == CHEST)

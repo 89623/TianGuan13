@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Organ color - Sclera color - Pupil color
 #define STOAT_COLORS COLOR_BROWNER_BROWN + COLOR_BLACK + COLOR_BLACK
 
@@ -47,8 +48,8 @@
 
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "spin")
 	owner.visible_message(
-		span_warning("[owner] instinctively dodges [the_attack] from [hit_by]!"),
-		span_warning("You instinctively dodge out of the way of [the_attack] from [hit_by]!"),
+		span_warning(LANG("datum.1e5d89c2", list(owner, the_attack, hit_by))),
+		span_warning(LANG("datum.0067a46b", list(the_attack, hit_by))),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/stoat_dodge)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // see _DEFINES/is_helpers.dm for mob type checks
 
 ///Find the mob at the bottom of a buckle chain
@@ -368,10 +369,10 @@
  */
 /proc/offer_control(mob/M)
 	if(isdead(M))
-		to_chat(usr, "You can't give ghosts control of a ghost. They're already ghosts.")
+		to_chat(usr, LANG("_root.874b77af", null))
 		return FALSE
 
-	to_chat(M, "Control of your mob has been offered to dead players.")
+	to_chat(M, LANG("_root.e9faa125", null))
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
@@ -383,14 +384,14 @@
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [whomst]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
 
 	if(chosen_one)
-		to_chat(M, "Your mob has been taken over by a ghost!")
+		to_chat(M, LANG("_root.5d33e7c4", null))
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
 		M.PossessByPlayer(chosen_one.key)
 		M.client?.init_verbs()
 		return TRUE
 	else
-		to_chat(M, "There were no ghosts willing to take control.")
+		to_chat(M, LANG("_root.cb900832", null))
 		message_admins("No ghosts were willing to take control of [ADMIN_LOOKUPFLW(M)])")
 		return FALSE
 

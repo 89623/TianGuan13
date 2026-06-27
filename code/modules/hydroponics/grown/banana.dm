@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Banana
 /obj/item/seeds/banana
 	name = "banana seed pack"
@@ -46,16 +47,16 @@
 		return FOOD_LIKED
 
 /obj/item/food/grown/banana/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.8ac228b0", list(user, src, user.p_them(), user.p_theyre()))))
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
 	sleep(2.5 SECONDS)
 	if(!user)
 		return OXYLOSS
-	user.say("BANG!", forced = /datum/reagent/consumable/banana)
+	user.say(LANG("obj.73acc9bb", null), forced = /datum/reagent/consumable/banana)
 	sleep(2.5 SECONDS)
 	if(!user)
 		return OXYLOSS
-	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
+	user.visible_message(LANG("obj.5ca9a09d", list(user)))
 	return OXYLOSS
 
 //Banana Peel
@@ -84,7 +85,7 @@
 	return list(/datum/reagent/medicine/coagulant/banana_peel = seed.potency * 0.2)
 
 /obj/item/grown/bananapeel/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.d0455b8b", list(user, src, user.p_theyre()))))
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
@@ -197,13 +198,13 @@
 /obj/item/food/grown/banana/bunch/monkeybomb/examine(mob/user)
 	. = ..()
 	if(!is_simian(user))
-		. += span_notice("There's a banana label on one of the 'nanas you can't quite make out the details of.")
+		. += span_notice(LANG("obj.adde103d", null))
 		return
-	. += span_notice("The banana label on this bunch indicates that monkeys can use this as a sonic grenade with a 3 second timer!")
+	. += span_notice(LANG("obj.88963e52", null))
 
 /obj/item/food/grown/banana/bunch/monkeybomb/attack_self(mob/user, modifiers)
 	if(!is_simian(user))
-		return to_chat(user, span_notice("You don't really know what to do with this."))
+		return to_chat(user, span_notice(LANG("obj.4613b0b1", null)))
 	else start_ripening()
 
 /// Used for april fools mail

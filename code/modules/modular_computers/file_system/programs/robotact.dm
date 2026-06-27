@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/robotact
 	filename = "robotact"
 	filedesc = "RoboTact"
@@ -14,7 +15,7 @@
 
 /datum/computer_file/program/robotact/on_start(mob/living/user)
 	if(!istype(computer, /obj/item/modular_computer/pda/silicon))
-		to_chat(user, span_warning("A warning flashes across \the [computer]: Device Incompatible."))
+		to_chat(user, span_warning(LANG("datum.020eb627", list(computer))))
 		return FALSE
 	. = ..()
 	if(.)
@@ -153,8 +154,8 @@
 		if("alertPower")
 			if(cyborg.stat == CONSCIOUS)
 				if(!cyborg.cell || !cyborg.cell.charge)
-					cyborg.visible_message(span_notice("The power warning light on [span_name("[cyborg]")] flashes urgently."), \
-						"You announce you are operating in low power mode.")
+					cyborg.visible_message(span_notice(LANG("datum.1e4dd381", list(span_name("[cyborg]")))), \
+						LANG("datum.3e1fe44a", null))
 					playsound(cyborg, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
 
 		if("toggleSensors")
@@ -185,7 +186,7 @@
 	//NOVA EDIT ADDITION BEGIN - Adds in a Toggle for the Camera, blocking the AI from doing so
 		if("cameraToggle")
 			if(istype(cyborg, /mob/living/silicon/robot/shell))
-				to_chat(cyborg, span_warning("Disabling your own camera seems like a bad idea."))
+				to_chat(cyborg, span_warning(LANG("datum.448eeaf5", null)))
 				return
 			else
 				cyborg.builtInCamera.toggle_cam()

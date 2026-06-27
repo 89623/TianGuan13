@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * THIS IS THE ROOT OF ALL EVIL (I mean the root of all item-on-atom interactions)
  *
@@ -236,7 +237,7 @@
 
 	var/final_force = CALCULATE_FORCE(src, attack_modifiers)
 	if(damtype != STAMINA && final_force && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		to_chat(user, span_warning(LANG("obj.c2a13fcc", null)))
 		return FALSE
 
 	if(!LAZYACCESS(attack_modifiers, SILENCE_HITSOUND))
@@ -307,8 +308,8 @@
 
 	var/damage = take_damage(final_force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
 	//only witnesses close by and the victim see a hit message.
-	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
-		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger(LANG("atom.5050bf45", list(user, src, attacking_item, damage ? "." : ", without leaving a mark!"))), \
+		span_danger(LANG("atom.e7f90c29", list(src, attacking_item, damage ? "." : ", without leaving a mark!"))), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
 	return damage
 
@@ -430,8 +431,8 @@
 					adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 					if(stat == CONSCIOUS)
 						visible_message(
-							span_danger("[src] is knocked senseless!"),
-							span_userdanger("You're knocked senseless!"),
+							span_danger(LANG("mob.33da1965", list(src))),
+							span_userdanger(LANG("mob.ac602fc8", null)),
 						)
 						set_confusion_if_lower(20 SECONDS)
 						adjust_eye_blur(20 SECONDS)
@@ -453,8 +454,8 @@
 			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
 					visible_message(
-						span_danger("[src] is knocked down!"),
-						span_userdanger("You're knocked down!"),
+						span_danger(LANG("mob.4d0a47f7", list(src))),
+						span_userdanger(LANG("mob.dc89d29f", null)),
 					)
 					apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 
@@ -516,7 +517,7 @@
 	visible_message(span_danger("[attack_message_spectator]"),\
 		span_userdanger("[attack_message_victim]"), null, COMBAT_MESSAGE_RANGE, user)
 	if(is_blind())
-		to_chat(src, span_danger("Someone hits you[message_hit_area]!"))
+		to_chat(src, span_danger(LANG("mob.b795ea36", list(message_hit_area))))
 	to_chat(user, span_danger("[attack_message_attacker]"))
 	return 1
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Picture in picture
 
 /atom/movable/screen/movable/pic_in_pic/ai
@@ -210,13 +211,13 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 /mob/living/silicon/ai/proc/drop_new_multicam(silent = FALSE)
 	if(!CONFIG_GET(flag/allow_ai_multicam))
 		if(!silent)
-			to_chat(src, span_warning("This action is currently disabled. Contact an administrator to enable this feature."))
+			to_chat(src, span_warning(LANG("mob.8fafa74b", null)))
 		return
 	if(!eyeobj)
 		return
 	if(multicam_screens.len >= max_multicams)
 		if(!silent)
-			to_chat(src, span_warning("Cannot place more than [max_multicams] multicamera windows."))
+			to_chat(src, span_warning(LANG("mob.e4cf8b98", list(max_multicams))))
 		return
 	var/atom/movable/screen/movable/pic_in_pic/ai/C = new /atom/movable/screen/movable/pic_in_pic/ai()
 	C.set_view_size(3, 3, FALSE)
@@ -224,12 +225,12 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	C.set_ai(src)
 	C.aiEye.name = "[name] (Secondary AI Eye)"
 	if(!silent)
-		to_chat(src, span_notice("Added new multicamera window."))
+		to_chat(src, span_notice(LANG("mob.234dbf2b", null)))
 	return C
 
 /mob/living/silicon/ai/proc/toggle_multicam()
 	if(!CONFIG_GET(flag/allow_ai_multicam))
-		to_chat(src, span_warning("This action is currently disabled. Contact an administrator to enable this feature."))
+		to_chat(src, span_warning(LANG("mob.8fafa74b", null)))
 		return
 	if(multicam_on)
 		end_multicam()
@@ -240,11 +241,11 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	if(multicam_on || aiRestorePowerRoutine || !isturf(loc))
 		return
 	if(!GLOB.ai_camera_room_landmark)
-		to_chat(src, span_warning("This function is not available at this time."))
+		to_chat(src, span_warning(LANG("mob.53982052", null)))
 		return
 	multicam_on = TRUE
 	refresh_multicam()
-	to_chat(src, span_notice("Multiple-camera viewing mode activated."))
+	to_chat(src, span_notice(LANG("mob.5545a2f9", null)))
 
 /mob/living/silicon/ai/proc/refresh_multicam()
 	reset_perspective(GLOB.ai_camera_room_landmark)
@@ -263,7 +264,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 			var/atom/movable/screen/movable/pic_in_pic/P = V
 			P.unshow_to(client)
 	reset_perspective()
-	to_chat(src, span_notice("Multiple-camera viewing mode deactivated."))
+	to_chat(src, span_notice(LANG("mob.1eb5e260", null)))
 
 
 /mob/living/silicon/ai/proc/select_main_multicam_window(atom/movable/screen/movable/pic_in_pic/ai/P)

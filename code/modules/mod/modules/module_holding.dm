@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define HOLDING_MODULE_PREVENT_DUPLICATE_CHECK 1
 #define HOLDING_MODULE_CHECK_CONFIRMED 2
 
@@ -70,7 +71,7 @@
 	if(possible_bag_bombs[suit] == HOLDING_MODULE_PREVENT_DUPLICATE_CHECK)
 		return MOD_ABORT_INSTALL
 	if(!anomalock.core)
-		balloon_alert(user, "no core!")
+		balloon_alert(user, LANG("obj.9c969525", null))
 		playsound(suit, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return MOD_ABORT_INSTALL
 	var/datum/storage/bag_of_holding/other_bag

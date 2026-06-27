@@ -47,8 +47,8 @@
 		return FALSE
 
 	if(target_human.check_if_off_duty(list(/datum/job_department/security)))
-		to_chat(user, span_notice("[target_human] is off-duty!"))
+		to_chat(user, span_notice(LANG("obj.657e887f", list(target_human))))
 		return TRUE
 
-	to_chat(user, span_notice("[target_human] is not off-duty!"))
+	to_chat(user, span_notice(LANG("obj.990e7bca", list(target_human))))
 	return FALSE

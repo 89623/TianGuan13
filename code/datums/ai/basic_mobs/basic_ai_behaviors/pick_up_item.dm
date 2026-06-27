@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Simple behaviour for picking up an item we are already in range of.
  * The blackboard storage key isn't very safe because it doesn't make sense to register signals in here.
@@ -26,7 +27,7 @@
 /datum/ai_behavior/pick_up_item/proc/pickup_item(datum/ai_controller/controller, obj/item/target, storage_key)
 	var/atom/pawn = controller.pawn
 	drop_existing_item(controller, storage_key)
-	pawn.visible_message(span_notice("[pawn] picks up [target]."))
+	pawn.visible_message(span_notice(LANG("datum.6147eb56", list(pawn, target))))
 	target.forceMove(pawn)
 	controller.set_blackboard_key(storage_key, target)
 	return TRUE
@@ -39,6 +40,6 @@
 	var/atom/pawn = controller.pawn
 	if(carried_item.loc != pawn)
 		return
-	pawn.visible_message(span_notice("[pawn] drops [carried_item]."))
+	pawn.visible_message(span_notice(LANG("datum.2ee8f499", list(pawn, carried_item))))
 	carried_item.forceMove(get_turf(pawn))
 	return TRUE

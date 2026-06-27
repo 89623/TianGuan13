@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Maximum amount of times a clock can be repaired until it's destroyed beyond repair.
 #define MAX_CLOCK_REPAIRS 2
 
@@ -29,11 +30,11 @@
 /obj/item/table_clock/examine(mob/user)
 	. = ..()
 	if(broken)
-		. += span_info("It appears to be currently broken. You can use it in-hand to repair it.")
+		. += span_info(LANG("obj.8887d34c", null))
 	else
-		. += span_info("The current NST (local) time is: [server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour))].")
+		. += span_info(LANG("obj.e61b3194", list(server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour)))))
 		if(user.is_literate())
-			. += span_info("That means it is currently [round_timestamp()] into the shift.")
+			. += span_info(LANG("obj.f5c79a87", list(round_timestamp())))
 
 /obj/item/table_clock/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
@@ -41,9 +42,9 @@
 		return
 	if(break_clock(break_sound = 'sound/effects/magic/clockwork/ark_activation.ogg'))
 		user.visible_message(
-			span_warning("[user] smashes \the [src] so hard it stops breaking!"),
-			span_bolddanger("I can't stand this stupid machine anymore! Shut up already!"),
-			span_notice("You hear repeated smashing!"),
+			span_warning(LANG("obj.9269ffbf", list(user, src))),
+			span_bolddanger(LANG("obj.d00b3664", null)),
+			span_notice(LANG("obj.ed8c165e", null)),
 		)
 
 /obj/item/table_clock/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first, datum/callback/callback, force, gentle, quickstart, throw_type_path = /datum/thrownthing)
@@ -55,15 +56,15 @@
 /obj/item/table_clock/interact(mob/user)
 	. = ..()
 	if(!broken)
-		to_chat(user, span_warning("Touch the clock? And risk breaking it? Are you crazy??"))
+		to_chat(user, span_warning(LANG("obj.d7466fc2", null)))
 		return
 	if(times_broken > MAX_CLOCK_REPAIRS)
-		user.balloon_alert(user, "clock unrepairable!")
+		user.balloon_alert(user, LANG("obj.414324aa", null))
 		return
-	user.balloon_alert(user, "fixing clock...")
+	user.balloon_alert(user, LANG("obj.6007692b", null))
 	if(!do_after(user, 10 SECONDS, src))
 		return
-	user.balloon_alert(user, "clock repaired!")
+	user.balloon_alert(user, LANG("obj.c296b9e5", null))
 	broken = FALSE
 	soundloop.start()
 	update_appearance(UPDATE_ICON)

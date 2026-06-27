@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/prisoner
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 	/// ID card currently inserted into the computer.
@@ -19,7 +20,7 @@
 /obj/machinery/computer/prisoner/examine(mob/user)
 	. = ..()
 	if(contained_id)
-		. += span_notice("<b>Alt-click</b> to eject the ID card.")
+		. += span_notice(LANG("obj.91ac6969", null))
 
 /obj/machinery/computer/prisoner/click_alt(mob/user)
 	id_eject(user)
@@ -29,17 +30,17 @@
 	if(!istype(new_id))
 		return
 	if(!isnull(contained_id))
-		balloon_alert(user, "no empty slot!")
+		balloon_alert(user, LANG("obj.012de839", null))
 		return
 	if(!user.transferItemToLoc(new_id, src))
 		return
 	contained_id = new_id
-	balloon_alert_to_viewers("id inserted")
+	balloon_alert_to_viewers(LANG("obj.441aa028", null))
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 /obj/machinery/computer/prisoner/proc/id_eject(mob/user)
 	if(isnull(contained_id))
-		balloon_alert(user, "no id!")
+		balloon_alert(user, LANG("obj.94788ab7", null))
 		return
 
 	if(!issilicon(user) && Adjacent(user))
@@ -47,7 +48,7 @@
 	else
 		contained_id.forceMove(drop_location())
 
-	balloon_alert_to_viewers("id ejected")
+	balloon_alert_to_viewers(LANG("obj.179d4b52", null))
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
 /obj/machinery/computer/prisoner/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)

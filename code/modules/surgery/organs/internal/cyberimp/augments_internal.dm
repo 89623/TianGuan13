@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
@@ -103,7 +104,7 @@
 		owner.Immobilize(emp_immobilize_duration / severity)
 	if(emp_stun_duration > 0)
 		owner.Stun(emp_stun_duration / severity)
-		to_chat(owner, span_warning("Your body seizes up!"))
+		to_chat(owner, span_warning(LANG("obj.4a51aedf", null)))
 
 /obj/item/organ/cyberimp/brain/anti_drop
 	name = "anti-drop implant"
@@ -119,7 +120,7 @@
 	if(active)
 		var/list/hold_list = owner.get_empty_held_indexes()
 		if(LAZYLEN(hold_list) == owner.held_items.len)
-			to_chat(owner, span_notice("You are not holding any items, your hands relax..."))
+			to_chat(owner, span_notice(LANG("obj.0c936321", null)))
 			active = FALSE
 			return
 		for(var/obj/item/held_item as anything in owner.held_items)
@@ -131,7 +132,7 @@
 			RegisterSignal(held_item, COMSIG_ITEM_DROPPED, PROC_REF(on_held_item_dropped))
 	else
 		release_items()
-		to_chat(owner, span_notice("Your hands relax..."))
+		to_chat(owner, span_notice(LANG("obj.2b06be1b", null)))
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
@@ -227,7 +228,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/implant_ready()
 	if(owner)
-		to_chat(owner, span_purple("Your rebooter implant is ready."))
+		to_chat(owner, span_purple(LANG("obj.e1222d0d", null)))
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/give_stun_buffs(mob/living/give_to = owner)
 	give_to.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_BATON_RESISTANCE), REF(src))
@@ -257,17 +258,17 @@
 
 /obj/item/organ/cyberimp/brain/connector/ui_action_click()
 
-	to_chat(owner, span_warning("You start fiddling around with [src]..."))
+	to_chat(owner, span_warning(LANG("obj.0b0ac49a", list(src))))
 	playsound(owner, 'sound/items/taperecorder/tape_flip.ogg', 20, vary = TRUE) // asmr
 
 	if(!do_after(owner, 1.5 SECONDS, owner)) // othwerwise it doesnt appear
-		to_chat(owner, span_warning("You were interrupted!"))
+		to_chat(owner, span_warning(LANG("obj.0360a261", null)))
 		return
 
 	if(organ_flags & ORGAN_FAILING)
 		var/holy_shit_my_brain = remove_brain(owner.get_organ_by_type(ORGAN_SLOT_BRAIN))
 		if(holy_shit_my_brain)
-			to_chat(owner, span_warning("You take [holy_shit_my_brain] out of [src]. You stare at it for a moment in confusion."))
+			to_chat(owner, span_warning(LANG("obj.1e077260", list(holy_shit_my_brain, src))))
 		return
 
 	var/obj/item/skillchip/skillchip = owner.get_active_held_item()
@@ -275,7 +276,7 @@
 		if(istype(skillchip, /obj/item/skillchip))
 			insert_skillchip(skillchip)
 		else
-			to_chat(owner, span_warning("You try to insert [owner.get_active_held_item()] into [src], but it won't fit!")) // make it kill you if you shove a crayon inside or something
+			to_chat(owner, span_warning(LANG("obj.43090057", list(owner.get_active_held_item(), src)))) // make it kill you if you shove a crayon inside or something
 	else // no inhand item, assume removal
 		var/obj/item/organ/brain/chippy_brain = owner.get_organ_by_type(/obj/item/organ/brain)
 		if(!chippy_brain)
@@ -305,10 +306,10 @@
 		skillchip.forceMove(owner.drop_location())
 		owner.put_in_hands(skillchip, del_on_fail = FALSE)
 		playsound(owner, 'sound/machines/click.ogg', 10, vary = TRUE)
-		to_chat(owner, span_warning("You take [skillchip] out of [src]."))
+		to_chat(owner, span_warning(LANG("obj.604c7b94", list(skillchip, src))))
 		return
 
-	to_chat(owner, span_warning("Your brain is empty!")) // heh
+	to_chat(owner, span_warning(LANG("obj.288a05f9", null))) // heh
 
 /obj/item/organ/cyberimp/brain/connector/emp_act(severity)
 	. = ..()
@@ -367,7 +368,7 @@
 /obj/item/organ/cyberimp/brain/surgical_processor/examine(mob/user)
 	. = ..()
 	if(length(loaded_surgeries))
-		. += span_info("Load surgeries from an operating compuer or a disk containing surgery data. Loaded surgeries:")
+		. += span_info(LANG("obj.76560367", null))
 		for(var/datum/surgery_operation/downloaded_surgery as anything in GLOB.operations.get_instances_from(loaded_surgeries))
 			if(!(downloaded_surgery.operation_flags & OPERATION_LOCKED))
 				continue
@@ -377,11 +378,11 @@
 			. += span_info("&bull; [capitalize(downloaded_surgery.rnd_name || downloaded_surgery.name)]")
 
 	else
-		. += span_info("Load surgeries from an operating compuer or a disk containing surgery data.")
-		. += span_info("No surgeries loaded. Surgeries must be loaded <i>before</i> installation.")
+		. += span_info(LANG("obj.54cc383c", null))
+		. += span_info(LANG("obj.0502643a", null))
 
 /obj/item/organ/cyberimp/brain/surgical_processor/proc/load_surgeries(mob/living/user, obj/design_holder)
-	balloon_alert(user, "copying designs...")
+	balloon_alert(user, LANG("obj.2842c08c", null))
 	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, TRUE)
 	if(do_after(user, 1 SECONDS, target = design_holder))
 		if(istype(design_holder, /obj/item/disk/surgery))
@@ -440,7 +441,7 @@
 
 	// causes the surgeon to go crazy and start stabbing people
 	owner.apply_status_effect(/datum/status_effect/forced_combat, duration, (rand(8, 16) / severity))
-	to_chat(owner, span_boldwarning("Your surgical processor malfunctions, giving you an overwhelming urge to incise, saw, and stitch!"))
+	to_chat(owner, span_boldwarning(LANG("obj.1309f61c", null)))
 
 /datum/mood_event/surgery_emp_active
 	description = "THE PATIENT WILL NOT SURVIVE UNLESS THE OPERATION IS COMPLETE!"
@@ -494,5 +495,5 @@
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
 	if(prob(60/severity))
-		to_chat(owner, span_warning("Your breathing tube suddenly closes!"))
+		to_chat(owner, span_warning(LANG("obj.1ddc6c12", null)))
 		owner.losebreath += 2

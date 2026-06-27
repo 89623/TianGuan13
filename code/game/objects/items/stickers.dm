@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAX_STICKER_COUNT 15
 
 /**
@@ -43,7 +44,7 @@
 
 /obj/item/sticker/Bump(atom/bumped_atom)
 	if(prob(50) && attempt_attach(bumped_atom))
-		bumped_atom.balloon_alert_to_viewers("sticker landed on sticky side!")
+		bumped_atom.balloon_alert_to_viewers(LANG("obj.1ccd8363", null))
 
 /obj/item/sticker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isatom(interacting_with))
@@ -67,7 +68,7 @@
  */
 /obj/item/sticker/proc/attempt_attach(atom/target, mob/user, px, py)
 	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= MAX_STICKER_COUNT)
-		balloon_alert_to_viewers("sticker won't stick!")
+		balloon_alert_to_viewers(LANG("obj.9d5e0a0d", null))
 		return FALSE
 
 	if(isnull(px) || isnull(py))
@@ -81,7 +82,7 @@
 
 	if(!isnull(user))
 		user.do_attack_animation(target, used_item = src)
-		target.balloon_alert(user, "sticker sticked")
+		target.balloon_alert(user, LANG("obj.544a7c90", null))
 		var/mob/living/victim = target
 		if(istype(victim) && !isnull(victim.client))
 			user.log_message("stuck [src] to [key_name(victim)]", LOG_ATTACK)

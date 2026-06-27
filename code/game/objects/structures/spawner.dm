@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/spawner
 	name = "monster nest"
 	icon = 'icons/mob/simple/animal.dmi'
@@ -35,9 +36,9 @@
 	if(!scanner_taggable)
 		return
 	if(gps_tagged)
-		. += span_notice("A holotag's been attached, projecting \"<b>[assigned_tag]</b>\".")
+		. += span_notice(LANG("obj.87719a64", list(assigned_tag)))
 	else
-		. += span_notice("It looks like you could probably scan and tag it with a <b>[scanner_descriptor]</b>.")
+		. += span_notice(LANG("obj.16d820bf", list(scanner_descriptor)))
 
 /obj/structure/spawner/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
@@ -50,9 +51,9 @@
 /// Tag the spawner, prefixing its GPS entry with an identifier - or giving it one, if nonexistent.
 /obj/structure/spawner/proc/gps_tag(mob/user)
 	if(gps_tagged)
-		to_chat(user, span_warning("[src] already has a holotag attached!"))
+		to_chat(user, span_warning(LANG("obj.d71d9076", list(src))))
 		return
-	to_chat(user, span_notice("You affix a holotag to [src]."))
+	to_chat(user, span_notice(LANG("obj.1fe95f8d", list(src))))
 	playsound(src, 'sound/machines/beep/twobeep.ogg', 100)
 	gps_tagged = TRUE
 	assigned_tag = "\[[mob_gps_id]-[rand(100,999)]\] " + spawner_gps_id
@@ -205,17 +206,17 @@
 /obj/structure/spawner/nether/examine(mob/user)
 	. = ..()
 	if(isskeleton(user) || iszombie(user))
-		. += "A direct link to another dimension full of creatures very happy to see you. [span_nicegreen("You can see your house from here!")]"
+		. += LANG("obj.b9b2140e", list(span_nicegreen("You can see your house from here!")))
 	else
-		. += "A direct link to another dimension full of creatures not very happy to see you. [span_warning("Entering the link would be a very bad idea.")]"
+		. += LANG("obj.98bc5219", list(span_warning("Entering the link would be a very bad idea.")))
 
 /obj/structure/spawner/nether/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(isskeleton(user) || iszombie(user))
-		to_chat(user, span_notice("You don't feel like going home yet..."))
+		to_chat(user, span_notice(LANG("obj.4ef15054", null)))
 	else
-		user.visible_message(span_warning("[user] is violently pulled into the link!"), \
-							span_userdanger("Touching the portal, you are quickly pulled through into a world of unimaginable horror!"))
+		user.visible_message(span_warning(LANG("obj.0a35c4b6", list(user))), \
+							span_userdanger(LANG("obj.0293a5ce", null)))
 		contents.Add(user)
 
 /obj/structure/spawner/nether/process(seconds_per_tick)
@@ -281,16 +282,16 @@
 	if(!IS_CULTIST(user) && isliving(user))
 		var/mob/living/living_user = user
 		living_user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15)
-		. += span_danger("The voices of the damned echo relentlessly in your mind, continously rebounding on the walls of your self the more you focus on [src]. Your head pounds, better keep away...")
+		. += span_danger(LANG("obj.158eacb2", list(src)))
 	else
-		. += span_cult("The gateway will create one weak proteon construct every [spawn_time * 0.1] seconds, up to a total of [max_mobs], that may be controlled by the spirits of the dead.")
+		. += span_cult(LANG("obj.caf4e47b", list(spawn_time * 0.1, max_mobs)))
 
 /obj/structure/spawner/sentient/proteon_spawner/became_player_controlled(mob/living/basic/construct/proteon/proteon)
 	proteon.mind.add_antag_datum(/datum/antagonist/cult)
 	proteon.add_filter("awoken_proteon", 3, list("type" = "outline", "color" = COLOR_CULT_RED, "size" = 2))
-	visible_message(span_cult_bold("[proteon] awakens, glowing an eerie red as it stirs from its stupor!"))
+	visible_message(span_cult_bold(LANG("obj.a3455471", list(proteon))))
 	playsound(proteon, 'sound/items/haunted/ghostitemattack.ogg', 100, TRUE)
-	proteon.balloon_alert_to_viewers("awoken!")
+	proteon.balloon_alert_to_viewers(LANG("obj.5f8822ca", null))
 	addtimer(CALLBACK(src, PROC_REF(remove_wake_outline), proteon), 8 SECONDS)
 
 /obj/structure/spawner/sentient/proteon_spawner/proc/remove_wake_outline(mob/proteon)
@@ -299,4 +300,4 @@
 
 /obj/structure/spawner/sentient/proteon_spawner/handle_deconstruct(disassembled)
 	playsound(src, 'sound/effects/hallucinations/veryfar_noise.ogg', 75)
-	visible_message(span_cult_bold("[src] completely falls apart, the screams of the damned reaching a feverous pitch before slowly fading away into nothing."))
+	visible_message(span_cult_bold(LANG("obj.1fc8b953", list(src))))

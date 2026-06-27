@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Hydroponics tank and base code
 /obj/item/watertank
 	name = "backpack water tank"
@@ -42,7 +43,7 @@
 	if(!istype(user))
 		return
 	if(user.get_item_by_slot(user.getBackSlot()) != src)
-		to_chat(user, span_warning("The watertank must be worn properly to use!"))
+		to_chat(user, span_warning(LANG("obj.000f49d3", null)))
 		return
 	if(user.incapacitated)
 		return
@@ -53,7 +54,7 @@
 	if(noz in src)
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
-			to_chat(user, span_warning("You need a free hand to hold the mister!"))
+			to_chat(user, span_warning(LANG("obj.b184f525", null)))
 			return
 	else
 		//Remove from their hands and put back "into" the tank
@@ -69,7 +70,7 @@
 /obj/item/watertank/proc/noz_move(atom/movable/mover, atom/oldloc, direction)
 	if(mover.loc == src || mover.loc == loc)
 		return
-	balloon_alert(loc, "nozzle snaps back")
+	balloon_alert(loc, LANG("obj.4521d163", null))
 	mover.forceMove(src)
 
 /obj/item/watertank/equipped(mob/user, slot)
@@ -160,7 +161,7 @@
 	return new /obj/item/reagent_containers/spray/mister/janitor(src)
 
 /obj/item/reagent_containers/spray/mister/janitor/mode_change_message(mob/user)
-	to_chat(user, span_notice("You [amount_per_transfer_from_this == 10 ? "remove" : "affix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray."))
+	to_chat(user, span_notice(LANG("obj.96db0e0e", list(amount_per_transfer_from_this == 10 ? "remove" : "affix", amount_per_transfer_from_this))))
 
 //Security tank
 /obj/item/watertank/pepperspray
@@ -192,7 +193,7 @@
 	return new /obj/item/reagent_containers/spray/mister/pepperspray(src)
 
 /obj/item/reagent_containers/spray/mister/pepperspray/mode_change_message(mob/user)
-	to_chat(user, span_notice("You [amount_per_transfer_from_this == 10 ? "remove" : "affix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray."))
+	to_chat(user, span_notice(LANG("obj.96db0e0e", list(amount_per_transfer_from_this == 10 ? "remove" : "affix", amount_per_transfer_from_this))))
 
 //ATMOS FIRE FIGHTING BACKPACK
 /obj/item/watertank/atmos
@@ -261,19 +262,19 @@
 			nozzle_mode = RESIN_LAUNCHER
 			if(uses_pack)
 				tank.icon_state = "waterbackpackatmos_1"
-			balloon_alert(user, "switched to resin launcher")
+			balloon_alert(user, LANG("obj.567793aa", null))
 			return
 		if(RESIN_LAUNCHER)
 			nozzle_mode = RESIN_FOAM
 			if(uses_pack)
 				tank.icon_state = "waterbackpackatmos_2"
-			balloon_alert(user, "switched to resin foam")
+			balloon_alert(user, LANG("obj.9138c32b", null))
 			return
 		if(RESIN_FOAM)
 			nozzle_mode = EXTINGUISHER
 			if(uses_pack)
 				tank.icon_state = "waterbackpackatmos_0"
-			balloon_alert(user, "switched to fire extinguisher")
+			balloon_alert(user, LANG("obj.b0638d2a", null))
 			return
 	return
 
@@ -292,10 +293,10 @@
 			return ITEM_INTERACT_SKIP_TO_ATTACK
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
-			balloon_alert(user, "not enough water!")
+			balloon_alert(user, LANG("obj.fbe12ace", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!COOLDOWN_FINISHED(src, resin_cooldown))
-			balloon_alert(user, "still recharging!")
+			balloon_alert(user, LANG("obj.26defd6f", null))
 			return ITEM_INTERACT_BLOCKING
 		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
 		R.remove_all(100)
@@ -312,7 +313,7 @@
 		if(!isturf(interacting_with))
 			return NONE
 		if(!Adj)
-			balloon_alert(user, "too far!")
+			balloon_alert(user, LANG("obj.f5e75781", null))
 			return ITEM_INTERACT_BLOCKING
 		for(var/thing in interacting_with)
 			if(istype(thing, /obj/effect/particle_effect/fluid/foam/metal/resin) || istype(thing, /obj/structure/foamedmetal/resin))
@@ -325,7 +326,7 @@
 			addtimer(CALLBACK(src, PROC_REF(reduce_metal_synth_cooldown)), 10 SECONDS)
 			return ITEM_INTERACT_SUCCESS
 
-		balloon_alert(user, "still being synthesized!")
+		balloon_alert(user, LANG("obj.39a3bafc", null))
 		return ITEM_INTERACT_BLOCKING
 
 	return NONE
@@ -401,7 +402,7 @@
 	if(!istype(user))
 		return
 	if (user.get_item_by_slot(ITEM_SLOT_BACK) != src)
-		to_chat(user, span_warning("The chemtank needs to be on your back before you can activate it!"))
+		to_chat(user, span_warning(LANG("obj.53570848", null)))
 		return
 	if(on)
 		turn_off()
@@ -432,13 +433,13 @@
 	on = TRUE
 	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
-		to_chat(loc, span_notice("[src] turns on."))
+		to_chat(loc, span_notice(LANG("obj.7b8f853d", list(src))))
 
 /obj/item/reagent_containers/chemtank/proc/turn_off()
 	on = FALSE
 	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
-		to_chat(loc, span_notice("[src] turns off."))
+		to_chat(loc, span_notice(LANG("obj.743eda64", list(src))))
 
 /obj/item/reagent_containers/chemtank/process(seconds_per_tick)
 	if(!ishuman(loc))

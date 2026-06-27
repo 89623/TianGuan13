@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/rust_construction
 	name = "Rust Formation"
 	desc = "Transforms a rusted floor into a full wall of rust. Creating a wall underneath a mob will harm it."
@@ -30,12 +31,12 @@
 
 /datum/action/cooldown/spell/pointed/rust_construction/is_valid_target(atom/cast_on)
 	if(!isturf(cast_on))
-		cast_on.balloon_alert(owner, "not a wall or floor!")
+		cast_on.balloon_alert(owner, LANG("datum.ad6a4546", null))
 		return FALSE
 
 	if(!HAS_TRAIT(cast_on, TRAIT_RUSTY))
 		if(owner)
-			cast_on.balloon_alert(owner, "not rusted!")
+			cast_on.balloon_alert(owner, LANG("datum.485da0fb", null))
 		return FALSE
 
 	return TRUE
@@ -55,7 +56,7 @@
 
 	// If we casted at a wall we'll try to rust it. In the case of an enchanted wall it'll deconstruct it
 	if(isclosedturf(cast_on))
-		cast_on.visible_message(span_warning("\The [cast_on] quakes as the rust causes it to crumble!"))
+		cast_on.visible_message(span_warning(LANG("datum.d79451d6", list(cast_on))))
 		var/mob/living/living_owner = owner
 		living_owner?.do_rust_heretic_act(cast_on)
 		// ref transfers to floor
@@ -118,7 +119,7 @@
 		living_mob.throw_at(pick(turfs_by_us), 1, 3, thrower = owner, spin = FALSE)
 
 	if(!message_shown)
-		new_wall.visible_message(span_warning("\A [new_wall] [rises_message]!"))
+		new_wall.visible_message(span_warning(LANG("datum.76f3f903", list(new_wall, rises_message))))
 
 /datum/action/cooldown/spell/pointed/rust_construction/proc/fade_wall_filter(turf/closed/wall)
 	if(QDELETED(wall))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * This file contain the eight parts surrounding the main core, those are: fuel input, moderator input, waste output, interface and the corners
  * The file also contain the guicode of the machine
@@ -29,7 +30,7 @@
 
 /obj/machinery/atmospherics/components/unary/hypertorus/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
+	. += span_notice(LANG("obj.f6d67ef1", list(src)))
 
 /obj/machinery/atmospherics/components/unary/hypertorus/screwdriver_act(mob/living/user, obj/item/tool)
 	return fusion_started ? NONE : default_deconstruction_screwdriver(user, tool)
@@ -42,9 +43,9 @@
 		return FALSE
 	if(user.combat_mode)
 		return FALSE
-	balloon_alert(user, "repairing...")
+	balloon_alert(user, LANG("obj.b52342a8", null))
 	if(tool.use_tool(src, user, 10 SECONDS, volume=30))
-		balloon_alert(user, "repaired")
+		balloon_alert(user, LANG("obj.65ced1e8", null))
 		cracked = FALSE
 		update_appearance(UPDATE_ICON)
 
@@ -110,7 +111,7 @@
 
 /obj/machinery/hypertorus/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
+	. += span_notice(LANG("obj.f6d67ef1", list(src)))
 
 /obj/machinery/hypertorus/screwdriver_act(mob/living/user, obj/item/tool)
 	return fusion_started ? NONE : default_deconstruction_screwdriver(user, tool)
@@ -156,7 +157,7 @@
 	var/obj/machinery/atmospherics/components/unary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
-		to_chat(user, span_notice("Check all parts and then try again."))
+		to_chat(user, span_notice(LANG("obj.6548039c", null)))
 		return TRUE
 
 	connected_core = centre
@@ -174,7 +175,7 @@
 			ui = new(user, src, "Hypertorus", name)
 			ui.open()
 	else
-		to_chat(user, span_notice("Activate the machine first by using a multitool on the interface."))
+		to_chat(user, span_notice(LANG("obj.8876470c", null)))
 		ui.close()
 
 /obj/machinery/hypertorus/interface/proc/gas_list_to_gasid_list(list/gas_list)

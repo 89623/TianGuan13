@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/implant/spell
 	name = "spell implant"
 	desc = "Allows you to cast a spell as if you were a wizard."
@@ -56,7 +57,7 @@
 	if(spell_to_give)
 		spell_to_give.Remove(source)
 		if(source.stat != DEAD && !silent)
-			to_chat(source, span_boldnotice("The knowledge of how to cast [spell_to_give] slips out from your mind."))
+			to_chat(source, span_boldnotice(LANG("obj.72e32b1f", list(spell_to_give))))
 	return TRUE
 
 /obj/item/implanter/spell
