@@ -152,10 +152,13 @@
 
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		var/list/available_packs = get_packs_data(pack.group)
+		if(!length(available_packs)) //No available packs, hide category
+			continue
 		if(!data["supplies"][pack.group])
 			data["supplies"][pack.group] = list(
 				"name" = lang_reverse_text(pack.group), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = pack.group, （分类名仅前端状态键，整串译显示=安全；单词类如 Armory 也覆盖）
-				"packs" = get_packs_data(pack.group),
+				"packs" = available_packs,
 			)
 
 	data["displayed_currency_full_name"] = " [MONEY_NAME]"

@@ -238,22 +238,17 @@
 	if(tram)
 		if(SStts.tts_enabled)
 			tram.nav_beacon.voice = SStts.tram_voice
-		switch(response_code)
-			if(REQUEST_SUCCESS)
-				tram.nav_beacon.say(LANG("obj.022750f7", list(response_info)))
+		if(response_code == REQUEST_FAIL)
+			if(!LAZYFIND(relevant, src))
+				return
 
-			if(REQUEST_FAIL)
-				if(!LAZYFIND(relevant, src))
+			switch(response_info)
+				if(NOT_IN_SERVICE)
+					tram.nav_beacon.say(LANG("obj.62001e6e", null))
+				if(INVALID_PLATFORM)
+					tram.nav_beacon.say(LANG("obj.7de17690", null))
+				if(INTERNAL_ERROR)
+					tram.nav_beacon.say(LANG("obj.335c006a", null))
+				else
 					return
-
-				switch(response_info)
-					if(NOT_IN_SERVICE)
-						tram.nav_beacon.say(LANG("obj.62001e6e", null))
-					if(INVALID_PLATFORM)
-						tram.nav_beacon.say(LANG("obj.7de17690", null))
-					if(INTERNAL_ERROR)
-						tram.nav_beacon.say(LANG("obj.335c006a", null))
-					else
-						return
-
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)

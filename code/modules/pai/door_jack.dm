@@ -115,6 +115,8 @@
 		balloon_alert(src, LANG("mob.e3cf22b4", null))
 		QDEL_NULL(hacking_cable)
 		return FALSE
+	if(!hacking_cable?.hacking_machine)
+		return FALSE
 	var/obj/machinery/door/door = hacking_cable.hacking_machine
 	balloon_alert(src, LANG("mob.75090415", null))
 	door.open()

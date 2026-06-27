@@ -314,6 +314,8 @@
 				if(!caster.get_organ_slot(ORGAN_SLOT_TONGUE))
 					invocation(caster)
 					to_chat(caster, span_warning(LANG("datum.d539a462", list(src))))
+					if(caster.click_intercept == src)
+						unset_click_ability(caster, refund_cooldown = TRUE)
 					StartCooldown(2 SECONDS)
 					return SPELL_CANCEL_CAST
 
@@ -325,6 +327,8 @@
 						ignored_mobs = caster,
 					)
 					to_chat(caster, span_warning(LANG("datum.f99e6898", list(src, caster.num_hands > 0 ? "" : ", as you have none"))))
+					if(caster.click_intercept == src)
+						unset_click_ability(caster, refund_cooldown = TRUE)
 					StartCooldown(2 SECONDS)
 					return SPELL_CANCEL_CAST
 

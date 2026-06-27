@@ -371,24 +371,28 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	to_chat(user, span_warning(LANG("obj.3f07fa75", list(src))))
 	jab.apply_damage(force * 0.5, BRUTE, user.get_active_hand(), attacking_item = src)
 
-/obj/item/shard/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/lightreplacer = item
+/obj/item/shard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/lightreplacer = tool
 		lightreplacer.attackby(src, user)
-	else if(istype(item, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/cloth = item
-		to_chat(user, span_notice(LANG("obj.1a83cfff", list(cloth, src))))
-		if(do_after(user, craft_time, target = src))
-			var/obj/item/knife/shiv/shiv = new shiv_type
-			shiv.set_custom_materials(custom_materials)
-			cloth.use(1)
-			to_chat(user, span_notice(LANG("obj.6cba4e9e", list(cloth, src))))
-			remove_item_from_storage(src, user)
-			qdel(src)
-			user.put_in_hands(shiv)
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	if(!istype(tool, /obj/item/stack/sheet/cloth))
+		return NONE
+
+	var/obj/item/stack/sheet/cloth/cloth = tool
+	to_chat(user, span_notice(LANG("obj.1a83cfff", list(cloth, src))))
+	if(!do_after(user, craft_time, target = src))
+		return ITEM_INTERACT_FAILURE
+
+	var/obj/item/knife/shiv/shiv = new shiv_type
+	shiv.set_custom_materials(custom_materials)
+	cloth.use(1)
+	to_chat(user, span_notice(LANG("obj.6cba4e9e", list(cloth, src))))
+	remove_item_from_storage(src, user)
+	qdel(src)
+	user.put_in_hands(shiv)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shard/welder_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 0, volume=50))
