@@ -281,7 +281,7 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 	var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
 	if(locale == DEFAULT_UI_LOCALE)
 		return text
-	var/list/reverse = lang_build_reverse(locale)
+	var/list/reverse = GLOB.i18n_reverse[locale] || lang_build_reverse(locale) // PERF: read the cached table directly; only call the builder before it's ready — saves a proc call per atom name/desc reverse at init (~550k calls)
 	. = reverse[text]
 	if(!isnull(.))
 		return .
@@ -290,13 +290,16 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 		. = reverse[lang_strip_grammar_macros(text)]
 		if(!isnull(.))
 			return .
-	// 仍未命中：DM 把 "\" 续行的前导制表符/空格并入字符串、抽取器却归一成单空格 → **总是**折叠后
-	// 再查一次（不止 \t：多空格续行也会漏；findtext("\t") 条件曾漏掉这类 → 多行 desc 整段不翻）。
-	var/collapsed = lang_collapse_ws(text)
-	if(collapsed != text)
-		. = reverse[collapsed]
-		if(!isnull(.))
-			return .
+	// 仍未命中：DM 把 "\" 续行的前导制表符/空格并入字符串、抽取器却归一成单空格 → 折叠后再查一次
+	// （不止 \t：多空格续行也会漏）。PERF：collapse_ws 正则只在含 \t 或连续 2+ 空格时才改动文本，
+	// 而它是每次反查 miss 都跑的热点（启动期每个 atom name/desc 都过这里）——先用廉价 findtext 守卫，
+	// 简单单行名（绝大多数 atom）直接跳过正则。行为等价：守卫覆盖了 collapse_ws 会改动的全部情形。
+	if(findtext(text, "\t") || findtext(text, "  "))
+		var/collapsed = lang_collapse_ws(text)
+		if(collapsed != text)
+			. = reverse[collapsed]
+			if(!isnull(.))
+				return .
 	return text
 
 /// 显示用「物件名」本地化：先整串精确反查（命中堆叠/单词名/已译名幂等），miss 再走 AC 子串兜
