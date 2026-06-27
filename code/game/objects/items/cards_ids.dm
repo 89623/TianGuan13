@@ -999,7 +999,12 @@
 	else
 		assignment_string = assignment
 
-	name = "[name_string] ([assignment_string])"
+	// NOVA EDIT ADDITION START - I18N - reverse the assignment to its full catalog translation (avoid AC substring mangling of the composed name)
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		name = "[name_string] ([lang_reverse_text(assignment_string)])"
+	else
+		name = "[name_string] ([assignment_string])"
+	// NOVA EDIT ADDITION END
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/human = loc

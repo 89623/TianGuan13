@@ -446,7 +446,8 @@
 				players[params["player"]]["loadout"] = pick(loadouts)
 				return TRUE
 			for (var/datum/outfit/deathmatch_loadout/possible_loadout as anything in loadouts)
-				if (params["loadout"] != initial(possible_loadout.display_name))
+				var/loadout_name = initial(possible_loadout.display_name) // NOVA EDIT - I18N - tolerate translated dropdown value
+				if (params["loadout"] != loadout_name && lang_unreverse_text(params["loadout"]) != loadout_name) // NOVA EDIT - I18N
 					continue
 				players[params["player"]]["loadout"] = possible_loadout
 				break
@@ -500,9 +501,12 @@
 						add_player(umob, loadouts[1], host == uckey)
 					return TRUE
 				if ("change_map")
-					if (!(params["map"] in GLOB.deathmatch_game.maps))
+					var/map_key = params["map"] // NOVA EDIT - I18N - tolerate translated dropdown value
+					if (!(map_key in GLOB.deathmatch_game.maps))
+						map_key = lang_unreverse_text(map_key) // NOVA EDIT - I18N
+					if (!(map_key in GLOB.deathmatch_game.maps))
 						return FALSE
-					change_map(params["map"])
+					change_map(map_key)
 					return TRUE
 
 		if("open_mod_menu")
