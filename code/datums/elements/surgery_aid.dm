@@ -104,6 +104,17 @@
 	for(var/aid in surgical_aids)
 		aid_readable += copytext_char(aid, -1) == "s" ? aid : "\a [aid]"
 
+	// NOVA EDIT ADDITION START - I18N - boundary engine can't anchor the single-word "adorning" literal; build via LANG with per-element reverse
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		var/list/zh_aids = list()
+		for(var/aid in surgical_aids)
+			zh_aids += lang_reverse_text(aid)
+		var/list/zh_zones = list()
+		for(var/zone in GLOB.all_body_zones & zones)
+			zh_zones += lang_reverse_text(parse_zone(zone))
+		return LANG("datum.6fb48e00", list(owner.p_They(), owner.p_have(), english_list(zh_aids, and_text = "、", comma_text = "、"), owner.p_their(), english_list(zh_zones, and_text = "、", comma_text = "、")))
+	// NOVA EDIT ADDITION END
+
 	// "They have surgial drapes and a bedsheet adorning their chest, arms, and legs."
 	return "[owner.p_They()] [owner.p_have()] [english_list(aid_readable)] adorning [owner.p_their()] [english_list(zones_readable)]."
 

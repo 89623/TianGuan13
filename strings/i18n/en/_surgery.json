@@ -14,5 +14,20 @@
 	"bonesetter": "bonesetter",
 	"screwdriver": "screwdriver",
 	"wirecutters": "wirecutters",
-	"multitool": "multitool"
+	"multitool": "multitool",
+	"skin has been incised": "skin has been incised",
+	"skin is opened": "skin is opened",
+	"blood vessels are unclamped and bleeding": "blood vessels are unclamped and bleeding",
+	"blood vessels are unclamped": "blood vessels are unclamped",
+	"blood vessels are clamped shut": "blood vessels are clamped shut",
+	"organs have been incised": "organs have been incised",
+	"the organs within have been incised": "the organs within have been incised",
+	"bones have been sawed apart": "bones have been sawed apart",
+	"the bones within have been sawed apart": "the bones within have been sawed apart",
+	"bones have been drilled through": "bones have been drilled through",
+	"the bones within have been drilled through": "the bones within have been drilled through",
+	"prosthetic item is unsecured": "prosthetic item is unsecured",
+	"got a layer of plastic applied to it": "got a layer of plastic applied to it",
+	"chest cavity is wide open": "chest cavity is wide open",
+	"the chest cavity is wide open": "the chest cavity is wide open"
 }
