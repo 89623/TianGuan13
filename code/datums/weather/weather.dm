@@ -389,7 +389,7 @@
 			if(!can_get_alert(player))
 				continue
 			if(alert_msg)
-				to_chat(player, alert_msg)
+				to_chat(player, lang_localize_chat_sentence(alert_msg)) // NOVA EDIT - I18N - integral reverse (strips span) of weather telegraph/weather/end messages; covers all weather types - ORIGINAL: to_chat(player, alert_msg)
 			if(alert_sfx)
 				player.stop_sound_channel(CHANNEL_WEATHER)
 				SEND_SOUND(player, sound(alert_sfx, channel = CHANNEL_WEATHER, volume = alert_sfx_vol))

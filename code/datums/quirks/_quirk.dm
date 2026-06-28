@@ -105,7 +105,7 @@
 
 	if(!quirk_transfer)
 		if(gain_text && announce)
-			to_chat(quirk_holder, gain_text)
+			to_chat(quirk_holder, lang_localize_chat_sentence(gain_text)) // NOVA EDIT - I18N - integral reverse the whole gain message (catalog has it) instead of letting chat AC fragment it - ORIGINAL: to_chat(quirk_holder, gain_text)
 		if (unique)
 			add_unique(client_source)
 
