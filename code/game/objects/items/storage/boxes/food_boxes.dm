@@ -164,7 +164,8 @@
 /obj/item/storage/box/ingredients/Initialize(mapload)
 	. = ..()
 	if(theme_name)
-		name = "[name] ([theme_name])"
+		var/disp_theme = (GLOB.i18n_server_locale != DEFAULT_UI_LOCALE) ? lang_reverse_text(theme_name) : theme_name // NOVA EDIT - I18N - localize the cuisine theme in the box name
+		name = "[name] ([disp_theme])" // NOVA EDIT - I18N - ORIGINAL: name = "[name] ([theme_name])"
 		desc = LANG("obj.9ac3110c", list(theme_name))
 		inhand_icon_state = "syringe_kit"
 

@@ -418,11 +418,11 @@ Behavior that's still missing from this component that original food items had t
 			return
 		else if(fullness > (600 * (1 + eater.overeatduration / (4000 SECONDS)))) // The more you eat - the more you can eat
 			if(HAS_TRAIT(eater, TRAIT_VORACIOUS) || HAS_TRAIT(eater, TRAIT_GLUTTON))
-				message_to_nearby_audience = span_notice("[eater] voraciously forces \the [parent] down [eater.p_their()] throat.")
-				message_to_consumer = span_notice("You voraciously force \the [parent] down your throat.")
+				message_to_nearby_audience = span_notice(LANG("datum.1b18ce0b", list(eater, parent, eater.p_their())))
+				message_to_consumer = span_notice(LANG("datum.3ec26017", list(parent)))
 			else
-				message_to_nearby_audience = span_warning("[eater] cannot force any more of \the [parent] to go down [eater.p_their()] throat!")
-				message_to_consumer = span_warning("You cannot force any more of \the [parent] to go down your throat!")
+				message_to_nearby_audience = span_warning(LANG("datum.b0d93505", list(eater, parent, eater.p_their())))
+				message_to_consumer = span_warning(LANG("datum.b103b002", list(parent)))
 				message_to_blind_consumer = message_to_consumer
 				eater.show_message(message_to_consumer, MSG_VISUAL, message_to_blind_consumer)
 				eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
@@ -430,20 +430,20 @@ Behavior that's still missing from this component that original food items had t
 				return
 		else if(fullness > 500)
 			if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
-				message_to_nearby_audience = span_notice("[eater] [eatverb]s \the [parent].")
-				message_to_consumer = span_notice("You [eatverb] \the [parent].")
+				message_to_nearby_audience = span_notice(LANG("datum.e0b20a00", list(eater, eatverb, parent)))
+				message_to_consumer = span_notice(LANG("datum.767bf180", list(eatverb, parent)))
 			else
-				message_to_nearby_audience = span_notice("[eater] unwillingly [eatverb]s a bit of \the [parent].")
-				message_to_consumer = span_notice("You unwillingly [eatverb] a bit of \the [parent].")
+				message_to_nearby_audience = span_notice(LANG("datum.6d9f895f", list(eater, eatverb, parent)))
+				message_to_consumer = span_notice(LANG("datum.d76f0215", list(eatverb, parent)))
 		else if(fullness > 150)
-			message_to_nearby_audience = span_notice("[eater] [eatverb]s \the [parent].")
-			message_to_consumer = span_notice("You [eatverb] \the [parent].")
+			message_to_nearby_audience = span_notice(LANG("datum.e0b20a00", list(eater, eatverb, parent)))
+			message_to_consumer = span_notice(LANG("datum.767bf180", list(eatverb, parent)))
 		else if(fullness > 50)
-			message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent].")
-			message_to_consumer = span_notice("You hungrily [eatverb] \the [parent].")
+			message_to_nearby_audience = span_notice(LANG("datum.cf353468", list(eater, eatverb, parent)))
+			message_to_consumer = span_notice(LANG("datum.54d72dc9", list(eatverb, parent)))
 		else
-			message_to_nearby_audience = span_notice("[eater] hungrily [eatverb]s \the [parent], gobbling it down!")
-			message_to_consumer = span_notice("You hungrily [eatverb] \the [parent], gobbling it down!")
+			message_to_nearby_audience = span_notice(LANG("datum.38eca4eb", list(eater, eatverb, parent)))
+			message_to_consumer = span_notice(LANG("datum.01926ba0", list(eatverb, parent)))
 
 		//if we're blind, we want to feel how hungrily we ate that food
 		message_to_blind_consumer = message_to_consumer

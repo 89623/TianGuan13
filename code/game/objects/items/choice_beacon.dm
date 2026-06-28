@@ -39,13 +39,20 @@
 	var/list/display_names = generate_display_names()
 	if(!length(display_names))
 		return
-	var/choice = tgui_input_list(user, LANG("obj.61abbbd2", null), LANG("obj.71faa22a", null), display_names)
-	if(isnull(choice) || isnull(display_names[choice]))
+	// NOVA EDIT ADDITION START - I18N - localize option labels for display while keeping the type lookup intact (en: no-op)
+	var/list/menu = display_names
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		menu = list()
+		for(var/option_name in display_names)
+			menu[lang_reverse_text(option_name)] = display_names[option_name]
+	// NOVA EDIT ADDITION END
+	var/choice = tgui_input_list(user, LANG("obj.61abbbd2", null), LANG("obj.71faa22a", null), menu) // NOVA EDIT - I18N - ORIGINAL: display_names
+	if(isnull(choice) || isnull(menu[choice])) // NOVA EDIT - I18N - ORIGINAL: display_names[choice]
 		return
 	if(!can_use_beacon(user))
 		return
 
-	consume_use(display_names[choice], user)
+	consume_use(menu[choice], user) // NOVA EDIT - I18N - ORIGINAL: display_names[choice]
 
 /// Consumes a use of the beacon, sending the user a message and creating their item in the process
 /obj/item/choice_beacon/proc/consume_use(obj/choice_path, mob/living/user)
