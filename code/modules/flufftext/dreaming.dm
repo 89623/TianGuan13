@@ -59,6 +59,8 @@
 		var/datum/callback/something_happens = next_message
 		next_message = something_happens.InvokeAsync(src)
 
+	if(istext(next_message)) // NOVA EDIT - I18N - reverse the dream fragment (single-word adjective/verb/noun words skip the file2list multi-word threshold and AC; exact reverse catches the catalog entries)
+		next_message = lang_localize_display_name(next_message)
 	to_chat(src, span_notice("<i>... [next_message] ...</i>"))
 
 	if(LAZYLEN(dream_fragments))
