@@ -47,5 +47,8 @@
   "died": "died",
   "survived": "survived",
   "while fleeing the station": "while fleeing the station",
-  "had their body destroyed": "had their body destroyed"
+  "had their body destroyed": "had their body destroyed",
+  "Objective": "Objective",
+  "Success!": "Success!",
+  "Fail.": "Fail."
 }

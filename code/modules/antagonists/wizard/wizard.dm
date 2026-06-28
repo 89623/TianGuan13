@@ -415,7 +415,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	for(var/datum/objective/objective in objectives)
 		if(!objective.check_completion())
 			wizardwin = FALSE
-		parts += "<B>Objective #[count]</B>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives
+		parts += "<B>[lang_reverse_text("Objective")] #[count]</B>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives
 		count++
 
 	if(wizardwin)

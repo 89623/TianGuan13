@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 		for(var/datum/objective/objective as anything in objectives)
 			if(!objective.check_completion())
 				win = FALSE
-			report += "<B>Objective #[objective_count]</B>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones miss and still hit the to_chat boundary engine)
+			report += "<B>[lang_reverse_text("Objective")] #[objective_count]</B>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones miss and still hit the to_chat boundary engine)
 			objective_count++
 		if(win)
 			report += span_greentext("The [name] was successful!")
