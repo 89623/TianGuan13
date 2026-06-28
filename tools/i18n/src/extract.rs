@@ -114,6 +114,14 @@ const SINK_VARS: &[&str] = &[
     // /obj/item/seeds 的 plantname（"Apple Tree"/"Sugarcane"/"Potato Plants"…）：植物分析仪/托盘显示的
     // 植物名，非 name（name 是种子包名）→ 之前漏抽。落地点（plant_analyzer ui_data）也 lang_reverse_text。
     "plantname",
+    // /datum/wound 的玩家可见文本（受伤/检视/治疗）：战斗里高频显示（"X's chest is cut open, slowly
+    // leaking blood!" 等）。occur_text=受伤时整句、examine_desc=检视伤口、*treat_text=治疗说明。非
+    // name/desc → 之前漏抽 → 战斗伤口描述整片英文。多词整句，运行时经 to_chat 聊天 AC 子串层翻译。
+    "occur_text",
+    "examine_desc",
+    "treat_text",
+    "simple_treat_text",
+    "homemade_treat_text",
 ];
 
 /// 「句子型」玩家可见文案启发式：多词自然语句（含空格 + 首字母大写 + 含小写字母 + 无占位符）。

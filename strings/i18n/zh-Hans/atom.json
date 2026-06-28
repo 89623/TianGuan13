@@ -881,5 +881,7 @@
   "atom.ffc0c749": "你正在被复活！",
   "atom.ffcd28f6": "切换摄像头灯光",
   "atom.fff81a5e": "AI 控制器",
-  "atom.made_out_of_tooltip": "由{0}制成。"
+  "atom.made_out_of_tooltip": "由{0}制成。",
+	"atom.b9609168": "粒子天气容纳板",
+	"atom.cd417d07": "自发光粒子天气容纳板"
 }
