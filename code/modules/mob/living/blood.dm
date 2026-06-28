@@ -355,7 +355,9 @@
 				if(BLOOD_FLOW_DECREASING) // this only matters if none of the wounds fit the above two cases, included here for completeness
 					continue
 
-	to_chat(src, span_warning("[bleeding_severity][rate_of_change]"))
+	// NOVA EDIT ADDITION - I18N - reverse each concatenated bleeding fragment (literals not caught by codemod/boundary; en: no-op) - see strings/i18n/*/_bodyfeel.json
+	to_chat(src, span_warning("[lang_reverse_text(bleeding_severity)][lang_reverse_text(rate_of_change)]"))
+	// NOVA EDIT - I18N - ORIGINAL: to_chat(src, span_warning("[bleeding_severity][rate_of_change]"))
 	COOLDOWN_START(src, bleeding_message_cd, next_cooldown)
 
 /mob/living/proc/restore_blood()
