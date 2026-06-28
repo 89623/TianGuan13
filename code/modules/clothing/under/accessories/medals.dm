@@ -36,7 +36,11 @@
 	add_memory_in_range(distinguished, 7, /datum/memory/received_medal, protagonist = distinguished, deuteragonist = attacher, medal_type = src, medal_text = commendation_message)
 	distinguished.log_message("was given the following commendation by <b>[key_name(attacher)]</b>: [commendation_message]", LOG_GAME, color = "green")
 	message_admins("<b>[key_name_admin(distinguished)]</b> was given the following commendation by <b>[key_name_admin(attacher)]</b>: [commendation_message]")
-	GLOB.commendations += "[awarder] awarded <b>[awarded_to]</b> the <span class='medaltext'>[name]</span>! \n- [commendation_message]"
+	// NOVA EDIT CHANGE - I18N - gate the english "awarded ... the ..." structure for zh and reverse the medal name (awarder/awardee are player names; message is translated via to_chat) - ORIGINAL: GLOB.commendations += "[awarder] awarded <b>[awarded_to]</b> the <span class='medaltext'>[name]</span>! \n- [commendation_message]"
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		GLOB.commendations += "[awarder] 授予 <b>[awarded_to]</b> <span class='medaltext'>[lang_reverse_text(name)]</span>！\n- [commendation_message]"
+	else
+		GLOB.commendations += "[awarder] awarded <b>[awarded_to]</b> the <span class='medaltext'>[name]</span>! \n- [commendation_message]"
 	SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[awarder]", "commendee" = "[awarded_to]", "medal" = "[src]", "reason" = commendation_message))
 
 	return ..()
