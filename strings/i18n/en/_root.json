@@ -357,5 +357,7 @@
   "_root.news_empty_article": "Someone forgot to fill out the article!",
   "_root.news_published_on": "Originally published on: {0}/{1}/{2}",
   "_root.tag_climbable": "climbable",
-  "_root.tag_crafting_component": "crafting component"
+  "_root.tag_crafting_component": "crafting component",
+  "_root.econ_venue": "The {0} served {1} customers and made {2} {3}.",
+  "_root.econ_total": "In total, they earned {0} {1}{2}"
 }

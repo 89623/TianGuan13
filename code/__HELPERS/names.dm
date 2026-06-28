@@ -278,6 +278,17 @@ GLOBAL_VAR(command_name)
 			else
 				. += ", "
 
+	// NOVA EDIT ADDITION START - I18N - localize code words at generation so the displayed phrase, the codeword_hearing regex, and what players say stay consistent (regex is a plain (a|b) alternation with ig flags, no \b, so CJK matches). capitalize fallback covers the lowercased area/flavor words vs the capitalized catalog keys; crew names / untranslated words stay english.
+	if(return_list && GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		var/list/localized = list()
+		for(var/word in .)
+			var/rev = lang_reverse_text(word)
+			if(rev == word)
+				rev = lang_reverse_text(capitalize(word))
+			localized += rev
+		. = localized
+	// NOVA EDIT ADDITION END
+
 /proc/odd_organ_name()
 	return "[pick(GLOB.gross_adjectives)], [pick(GLOB.gross_adjectives)] organ"
 

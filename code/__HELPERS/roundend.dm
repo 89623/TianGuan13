@@ -548,8 +548,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	for(var/venue_path in SSrestaurant.all_venues)
 		var/datum/venue/venue = SSrestaurant.all_venues[venue_path]
 		tourist_income += venue.total_income
-		parts += "The [venue] served [venue.customers_served] customer\s and made [venue.total_income] [MONEY_NAME].<br>"
-	parts += "In total, they earned [tourist_income] [MONEY_NAME][tourist_income ? "!" : "..."]<br>"
+		parts += LANG("_root.econ_venue", list("[venue]", venue.customers_served, venue.total_income, MONEY_NAME)) + "<br>" // NOVA EDIT - I18N - interpolated, not extractable; manual LANG key ("[venue]" as text so its name reverses)
+	parts += LANG("_root.econ_total", list(tourist_income, MONEY_NAME, tourist_income ? "!" : "...")) + "<br>" // NOVA EDIT - I18N
 	log_econ("Roundend service income: [tourist_income] [MONEY_NAME].")
 
 	// Award service achievements based on tourist income
