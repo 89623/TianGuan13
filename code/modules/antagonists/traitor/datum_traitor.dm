@@ -276,7 +276,7 @@
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 
 	if(uplink_owned)
-		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
+		var/uplink_text = GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "（使用了 [used_telecrystals] TC）[purchases]" : "(used [used_telecrystals] TC) [purchases]" // NOVA EDIT - I18N
 		if((used_telecrystals == 0) && traitor_won)
 			var/static/icon/badass = icon('icons/ui/antags/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"

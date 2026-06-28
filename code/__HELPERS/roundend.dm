@@ -358,7 +358,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='byond://?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
-	parts += "[FOURSPACES]Map: [SSmapping.current_map?.return_map_name()]"
+	parts += "[FOURSPACES][GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "地图" : "Map"]: [SSmapping.current_map?.return_map_name()]" // NOVA EDIT - I18N - single-word label, gate inline (AC skips single words; keep "Map"/"Round" out of the global reverse table)
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
 
-	parts += "[FOURSPACES]Round: [SSdynamic.current_tier.name]"
+	parts += "[FOURSPACES][GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "回合" : "Round"]: [SSdynamic.current_tier.name]" // NOVA EDIT - I18N - single-word label gated inline
 	for(var/datum/dynamic_ruleset/rule as anything in SSdynamic.executed_rulesets - SSdynamic.unreported_rulesets)
 		parts += "[FOURSPACES][FOURSPACES]- <b>[rule.name]</b> ([rule.config_tag])"
 
@@ -716,26 +716,28 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 
 /proc/printplayer(datum/mind/ply, fleecheck)
+	var/localized = GLOB.i18n_server_locale != DEFAULT_UI_LOCALE // NOVA EDIT - I18N
 	var/jobtext = ""
 	if(!is_unassigned_job(ply.assigned_role))
-		jobtext = " the <b>[ply.assigned_role.title]</b>"
+		// NOVA EDIT CHANGE - I18N - reverse the job title and drop the english " the " connector for zh - ORIGINAL: jobtext = " the <b>[ply.assigned_role.title]</b>"
+		jobtext = localized ? "，<b>[lang_reverse_text(ply.assigned_role.title)]</b>" : " the <b>[ply.assigned_role.title]</b>"
 		//NOVA EDIT CHANGE BEGIN - ROUNDEND
 	//var/text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and" - NOVA EDIT - ORIGINAL
 	var/text = "<b>[ply.name]</b>[jobtext]"
 	//NOVA EDIT CHANGE END
 	if(ply.current)
 		if(ply.current.stat == DEAD)
-			text += " [span_redtext("died")]"
+			text += " [span_redtext(lang_reverse_text("died"))]" // NOVA EDIT - I18N
 		else
-			text += " [span_greentext("survived")]"
+			text += " [span_greentext(lang_reverse_text("survived"))]" // NOVA EDIT - I18N
 		if(fleecheck)
 			var/turf/T = get_turf(ply.current)
 			if(!T || !is_station_level(T.z))
-				text += " while [span_redtext("fleeing the station")]"
+				text += localized ? " [span_redtext(lang_reverse_text("while fleeing the station"))]" : " while [span_redtext("fleeing the station")]" // NOVA EDIT - I18N
 		if(ply.current.real_name != ply.name)
-			text += " as <b>[ply.current.real_name]</b>"
+			text += localized ? "（化名 <b>[ply.current.real_name]</b>）" : " as <b>[ply.current.real_name]</b>" // NOVA EDIT - I18N
 	else
-		text += " [span_redtext("had their body destroyed")]"
+		text += " [span_redtext(lang_reverse_text("had their body destroyed"))]" // NOVA EDIT - I18N
 	return text
 
 /proc/printplayerlist(list/players,fleecheck)
