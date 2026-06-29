@@ -5438,5 +5438,13 @@
   "Escape Pod 1 Dock": "Escape Pod 1 Dock",
   "Escape Pod 2 Dock": "Escape Pod 2 Dock",
   "Escape Pod 3 Dock": "Escape Pod 3 Dock",
-  "Escape Pod 4 Dock": "Escape Pod 4 Dock"
+  "Escape Pod 4 Dock": "Escape Pod 4 Dock",
+  "AI MiniSat Access": "AI MiniSat Access",
+  "AI and Telecomms MiniSat Access": "AI and Telecomms MiniSat Access",
+  "Chapel and Library MiniSat Access": "Chapel and Library MiniSat Access",
+  "Telecomms MiniSat Access": "Telecomms MiniSat Access",
+  "Cargo": "Cargo",
+  "Lawyer's Office": "Lawyer's Office",
+  "Technical Storage": "Technical Storage",
+  "Tool Storage": "Tool Storage"
 }

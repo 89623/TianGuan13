@@ -5392,5 +5392,13 @@
   "Escape Pod 1 Dock": "逃生舱 1 停靠点",
   "Escape Pod 2 Dock": "逃生舱 2 停靠点",
   "Escape Pod 3 Dock": "逃生舱 3 停靠点",
-  "Escape Pod 4 Dock": "逃生舱 4 停靠点"
+  "Escape Pod 4 Dock": "逃生舱 4 停靠点",
+  "AI MiniSat Access": "AI 微型卫星通道",
+  "AI and Telecomms MiniSat Access": "AI 与通讯微型卫星通道",
+  "Chapel and Library MiniSat Access": "礼拜堂与图书馆微型卫星通道",
+  "Telecomms MiniSat Access": "通讯微型卫星通道",
+  "Cargo": "货运部",
+  "Lawyer's Office": "律师办公室",
+  "Technical Storage": "技术仓库",
+  "Tool Storage": "工具仓库"
 }

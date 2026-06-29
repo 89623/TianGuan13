@@ -11379,5 +11379,18 @@
 	"Zoom In (Shift + Scroll Up)": "放大（Shift + 向上滚轮）",
 	"Zoom Out (Shift + Scroll Down)": "缩小（Shift + 向下滚轮）",
 	"Zoom:": "缩放：",
-	"Zorgoia tail": "佐尔戈亚尾巴"
+	"Zorgoia tail": "佐尔戈亚尾巴",
+	"General Health Scan": "全面健康扫描",
+	"Neurological/Radiological Scan": "神经/放射扫描",
+	"Chemical and Psychoactive Scan": "化学与精神药物扫描",
+	"Blood Levels": "血量",
+	"Blood Information": "血液信息",
+	"Alive.": "存活。",
+	"Dead.": "死亡。",
+	"Gravely Injured": "重伤",
+	"Warning: Patient is harboring some form of viral disease. Seek further medical attention.": "警告：患者携带某种病毒性疾病。请寻求进一步治疗。",
+	" Patient is currently bleeding!": " 患者正在出血！",
+	"Patient is free of unique brain trauma.": "患者没有特殊的脑创伤。",
+	"Brain patterns normal.": "脑波模式正常。",
+	"Patient is not hallucinating.": "患者没有出现幻觉。"
 }

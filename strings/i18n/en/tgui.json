@@ -11379,5 +11379,18 @@
 	"Zoom In (Shift + Scroll Up)": "Zoom In (Shift + Scroll Up)",
 	"Zoom Out (Shift + Scroll Down)": "Zoom Out (Shift + Scroll Down)",
 	"Zoom:": "Zoom:",
-	"Zorgoia tail": "Zorgoia tail"
+	"Zorgoia tail": "Zorgoia tail",
+	"General Health Scan": "General Health Scan",
+	"Neurological/Radiological Scan": "Neurological/Radiological Scan",
+	"Chemical and Psychoactive Scan": "Chemical and Psychoactive Scan",
+	"Blood Levels": "Blood Levels",
+	"Blood Information": "Blood Information",
+	"Alive.": "Alive.",
+	"Dead.": "Dead.",
+	"Gravely Injured": "Gravely Injured",
+	"Warning: Patient is harboring some form of viral disease. Seek further medical attention.": "Warning: Patient is harboring some form of viral disease. Seek further medical attention.",
+	" Patient is currently bleeding!": " Patient is currently bleeding!",
+	"Patient is free of unique brain trauma.": "Patient is free of unique brain trauma.",
+	"Brain patterns normal.": "Brain patterns normal.",
+	"Patient is not hallucinating.": "Patient is not hallucinating."
 }
