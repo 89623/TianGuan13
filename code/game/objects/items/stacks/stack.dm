@@ -262,10 +262,10 @@
 	for(var/recipe in recipe_to_iterate)
 		if(istype(recipe, /datum/stack_recipe_list))
 			var/datum/stack_recipe_list/R = recipe
-			L["[R.title]"] = recursively_build_recipes(R.recipes)
+			L["[lang_reverse_text("[R.title]")]"] = recursively_build_recipes(R.recipes) // NOVA EDIT CHANGE - i18n: title is the display KEY (P1 skips keys); reverse it so the menu localizes. make() acts on data["ref"], not the title. - ORIGINAL: L["[R.title]"] = recursively_build_recipes(R.recipes)
 		if(istype(recipe, /datum/stack_recipe))
 			var/datum/stack_recipe/R = recipe
-			L["[R.title]"] = build_recipe(R)
+			L["[lang_reverse_text("[R.title]")]"] = build_recipe(R) // NOVA EDIT CHANGE - i18n: reverse display-key title (see above) - ORIGINAL: L["[R.title]"] = build_recipe(R)
 	return L
 
 /**
