@@ -406,13 +406,88 @@ GLOBAL_LIST_INIT(i18n_health_scan_labels, list(
 	">type: " = ">类型: ",
 ))
 
-/// 见 i18n_health_scan_labels：报告整体拼好后一次性本地化结构性 label。healthscan() 落地点调用。
-/proc/lang_localize_health_scan(text)
+/// 验尸报告（autopsy_scanner）另起一份**自建**报告：格式不同（`<b>标签:</b>`、无颜色）、且印在
+/// 纸上（不经 to_chat 的 AC）→ 需独立锚点表。部位单元格用 `<b>名:</b>`（limb.name/parse_zone）。
+GLOBAL_LIST_INIT(i18n_autopsy_labels, list(
+	// 标题/元信息
+	"Autopsy report</br>" = "验尸报告</br>",
+	"Time of Autopsy: " = "验尸时间: ",
+	"Autopsy Coroner - " = "验尸法医 - ",
+	"Analyzing results for " = "正在分析 ",
+	"Time of Death - " = "死亡时间 - ",
+	"Subject has been dead for " = "对象死亡已持续 ",
+	// 身体数据表
+	"<u><b>Body Data:</b></u>" = "<u><b>身体数据:</b></u>",
+	"<b>Damage:</b>" = "<b>损伤:</b>",
+	"<b>Overall:</b>" = "<b>总计:</b>",
+	// 列头 / 合计行（合计行带前导空格，独立不冲突）
+	"<b>Suffocation</b>" = "<b>窒息</b>",
+	"<b>Brute</b>" = "<b>钝击</b>",
+	"<b>Burn</b>" = "<b>灼烧</b>",
+	"<b>Toxin</b>" = "<b>毒素</b>",
+	" Suffocation</b>" = " 窒息</b>",
+	" Brute</b>" = " 钝击</b>",
+	" Burn</b>" = " 灼烧</b>",
+	" Toxin</b>" = " 毒素</b>",
+	// 部位单元格
+	"<b>Head:</b>" = "<b>头部:</b>",
+	"<b>Chest:</b>" = "<b>胸部:</b>",
+	"<b>Left arm:</b>" = "<b>左臂:</b>",
+	"<b>Right arm:</b>" = "<b>右臂:</b>",
+	"<b>Left leg:</b>" = "<b>左腿:</b>",
+	"<b>Right leg:</b>" = "<b>右腿:</b>",
+	"Physical trauma: " = "外伤: ",
+	"<u>Dismembered</u>" = "<u>已断肢</u>",
+	"Foreign object(s): " = "异物: ",
+	" - Caused by <u>" = " - 造成者 <u>",
+	// 器官数据表
+	"<u><b>Organ Data:</b></u>" = "<u><b>器官数据:</b></u>",
+	"<b>Organ:</b>" = "<b>器官:</b>",
+	"<b>Dmg</b>" = "<b>损伤</b>",
+	"<b>Status</b>" = "<b>状态</b>",
+	"<u>Missing</u>" = "<u>缺失</u>",
+	"<td>OK</td>" = "<td>正常</td>",
+	"Detected cybernetic modifications:" = "检测到的义体改造:",
+	// 基因/物种/体温
+	"Genetic Stability:" = "基因稳定性:",
+	"<b>Species:</b>" = "<b>物种:</b>",
+	"Core temperature:" = "核心体温:",
+	"Body temperature:" = "体温:",
+	// 枯尸原因
+	"Subject is husked by: " = "对象被枯尸化，原因: ",
+	"Desiccation, commonly caused by Changelings." = "干尸化，常由拟态怪引起。",
+	"Stripped flesh." = "皮肉剥离。",
+	"Unknown causes." = "未知原因。",
+	"Severe burns." = "严重烧伤。",
+	// 血液
+	"Blood level:" = "血液水平:",
+	", type: " = ", 类型: ",
+	" alcohol content:" = " 酒精含量:",
+	// 化学/疾病数据
+	"<u>Chemical Data:</u>" = "<u>化学数据:</u>",
+	" in bloodstream." = " 存在于血液中。",
+	"<u>Disease Data:</u>" = "<u>疾病数据:</u>",
+	"<b>Disease Name:</b> " = "<b>疾病名称:</b> ",
+	"<b>Transmission Type:</b> " = "<b>传播类型:</b> ",
+	"<b>Symptoms:</b>" = "<b>症状:</b>",
+	"<b>Coroner's Notes:</b>" = "<b>法医备注:</b>",
+))
+
+/// 对整份拼好的报告按 label_map 做带 HTML 锚点、大小写敏感的整体替换。locale==en no-op。
+/proc/lang_apply_label_map(text, list/label_map)
 	if(!istext(text) || (GLOB.i18n_server_locale || DEFAULT_UI_LOCALE) == DEFAULT_UI_LOCALE)
 		return text
-	for(var/needle in GLOB.i18n_health_scan_labels)
-		text = replacetextEx(text, needle, GLOB.i18n_health_scan_labels[needle])
+	for(var/needle in label_map)
+		text = replacetextEx(text, needle, label_map[needle])
 	return text
+
+/// 见 i18n_health_scan_labels：报告整体拼好后一次性本地化结构性 label。healthscan() 落地点调用。
+/proc/lang_localize_health_scan(text)
+	return lang_apply_label_map(text, GLOB.i18n_health_scan_labels)
+
+/// 见 i18n_autopsy_labels：验尸报告拼好后本地化。autopsy_scanner 的 jointext 落地点调用。
+/proc/lang_localize_autopsy(text)
+	return lang_apply_label_map(text, GLOB.i18n_autopsy_labels)
 
 /// 「多词」门槛的反查：仅含空白（多词/短语）的串才查表，避免把 On/None/枚举值/ckey 这类
 /// 单词误翻（动态数据常正好等于某常见词）。短语类（datum 的 desc、多词 name）才反查。
