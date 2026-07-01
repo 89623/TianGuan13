@@ -32,7 +32,7 @@
 		// NOVA EDIT CHANGE - I18N - full reverse here: P1 (lang_reverse_phrase_tgui) skips any name in the tgui-catalog set, which wrongly leaves common area names (Bar/Kitchen/Chapel...) english even though they ARE in _map_names. Key the list by the localized name so the tgui_input_list display/return round-trips. - ORIGINAL: var/destination_name = GLOB.navigate_destinations[destination]
 		var/destination_name = lang_reverse_text(GLOB.navigate_destinations[destination])
 		if(destination.z != z && is_multi_z_level(z)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
-			destination_name += ((get_dir_multiz(src, destination) & UP) ? " (Above)" : " (Below)")
+			destination_name += " " + lang_reverse_text((get_dir_multiz(src, destination) & UP) ? "(Above)" : "(Below)") // NOVA EDIT CHANGE - I18N: localize the z-level suffix (was hardcoded English, appended after the name reverse) - ORIGINAL: destination_name += ((get_dir_multiz(src, destination) & UP) ? " (Above)" : " (Below)")
 
 		destination_list[destination_name] = destination
 
