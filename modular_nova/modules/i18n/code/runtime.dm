@@ -359,6 +359,61 @@ GLOBAL_LIST_INIT(i18n_appended_suffixes, list(
 			return span_re.group[1] + inner_hit + span_re.group[3]
 	return line
 
+/// 健康分析仪/医疗终端的扫描报告是运行期把大量硬编码英文 HTML 片段 jointext 成一坨、再经
+/// to_chat 输出的「绕过 sink/P1」结构：这些结构性 label 无句末标点→抽取器没收，且列头/状态词是
+/// 单词→to_chat 的 AC 兜底天然跳过（防碰撞）。故在落地点（jointext 之后）对这份**稳定小集合**
+/// 的 label 做带 HTML 锚点的精确替换。用 replacetextEx（大小写敏感）避免误伤 "Burn"↔"burn"、
+/// "type:"↔"Type:"。病名/伤名/husk 整句等（有句末标点、已进目录）仍交给 to_chat 的 AC。locale==en no-op。
+GLOBAL_LIST_INIT(i18n_health_scan_labels, list(
+	// 段落/区段标题（长串在前）
+	"Subject Major Disabilities: " = "对象重大残疾: ",
+	"Subject Minor Disabilities: " = "对象次要残疾: ",
+	"Detected cybernetic modifications:" = "检测到的义体改造:",
+	"Analyzing results for " = "正在分析 ",
+	"Overall status: " = "总体状态: ",
+	"Genetic Stability: " = "基因稳定性: ",
+	"Core temperature: " = "核心体温: ",
+	"Body temperature: " = "体温: ",
+	"Body status:" = "身体状态:",
+	"Organ status:" = "器官状态:",
+	"Time of Death: " = "死亡时间: ",
+	"Fatigue level: " = "疲劳程度: ",
+	"Blood level:" = "血液水平:",
+	" alcohol content:" = " 酒精含量:",
+	"Species: " = "物种: ",
+	// 表格列头
+	"<b>Damage:</b>" = "<b>损伤:</b>",
+	"<b>Suffocation</b>" = "<b>窒息</b>",
+	"<b>Overall:</b>" = "<b>总计:</b>",
+	"<b>Organ:</b>" = "<b>器官:</b>",
+	"<b>Status</b>" = "<b>状态</b>",
+	"<b>Brute</b>" = "<b>钝击</b>",
+	"<b>Burn</b>" = "<b>灼烧</b>",
+	"<b>Toxin</b>" = "<b>毒素</b>",
+	"<b>Dmg</b>" = "<b>损伤</b>",
+	// 部位单元格（>名:</font> 锚点，颜色在 > 之前不受影响）
+	">Head:</font>" = ">头部:</font>",
+	">Chest:</font>" = ">胸部:</font>",
+	">Left arm:</font>" = ">左臂:</font>",
+	">Right arm:</font>" = ">右臂:</font>",
+	">Left leg:</font>" = ">左腿:</font>",
+	">Right leg:</font>" = ">右腿:</font>",
+	// 器官/整体状态词（带标签锚点）
+	">Missing</font>" = ">缺失</font>",
+	">OK</font>" = ">正常</font>",
+	"<b>Deceased</b>" = "<b>已死亡</b>",
+	"% healthy</b>" = "% 健康</b>",
+	">type: " = ">类型: ",
+))
+
+/// 见 i18n_health_scan_labels：报告整体拼好后一次性本地化结构性 label。healthscan() 落地点调用。
+/proc/lang_localize_health_scan(text)
+	if(!istext(text) || (GLOB.i18n_server_locale || DEFAULT_UI_LOCALE) == DEFAULT_UI_LOCALE)
+		return text
+	for(var/needle in GLOB.i18n_health_scan_labels)
+		text = replacetextEx(text, needle, GLOB.i18n_health_scan_labels[needle])
+	return text
+
 /// 「多词」门槛的反查：仅含空白（多词/短语）的串才查表，避免把 On/None/枚举值/ckey 这类
 /// 单词误翻（动态数据常正好等于某常见词）。短语类（datum 的 desc、多词 name）才反查。
 /proc/lang_reverse_phrase(text)

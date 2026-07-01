@@ -364,7 +364,7 @@
 		var/disguised = !ishumanbasic(humantarget) && istype(humantarget.head, /obj/item/clothing/head/hooded/human_head) && istype(humantarget.wear_suit, /obj/item/clothing/suit/hooded/bloated_human)
 		var/species_name = "[disguised ? "\"[/datum/species/human::name]\"" : targetspecies.name][mutant ? "-derived mutant" : ""]"
 
-		render_list += "<span class='info ml-1'>Species: [species_name]</span><br>"
+		render_list += "<span class='info ml-1'>Species: [lang_reverse_text(species_name)]</span><br>" // NOVA EDIT CHANGE - i18n: reverse-localize species name (exact; label handled by lang_localize_health_scan) - ORIGINAL: render_list += "<span class='info ml-1'>Species: [species_name]</span><br>"
 		var/core_temperature_message = "Core temperature: [round(humantarget.coretemperature-T0C, 0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)"
 		if(humantarget.coretemperature >= humantarget.get_body_temp_heat_damage_limit())
 			render_list += "<span class='alert ml-1'>☼ [core_temperature_message] ☼</span><br>"
@@ -475,7 +475,7 @@
 		render_list += "<span class='info ml-1'>Time of Death: [target.station_timestamp_timeofdeath]</span><br>"
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(round(world.time - target.timeofdeath))] ago.</b></span><br>"
 
-	. = jointext(render_list, "")
+	. = lang_localize_health_scan(jointext(render_list, "")) // NOVA EDIT CHANGE - i18n: localize composed scan-report structural labels (bypasses sink/P1) - ORIGINAL: . = jointext(render_list, "")
 	if(tochat)
 		to_chat(user, custom_boxed_message("blue_box", .), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 	return .
