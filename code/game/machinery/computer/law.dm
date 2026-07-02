@@ -30,7 +30,7 @@
 	circuit.req_one_access = null
 
 	if(user)
-		balloon_alert(user, "access restrictions removed!")
+		balloon_alert(user, LANG("obj.4b26d84a", null))
 	return TRUE
 
 /obj/machinery/computer/upload/proc/should_have_lock()
@@ -54,10 +54,10 @@
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(circuit.obj_flags & EMAGGED)
-			balloon_alert(user, "access locks fried!")
+			balloon_alert(user, LANG("obj.0f1a88d0", null))
 			return
 		if(!circuit.check_access(O))
-			balloon_alert(user, "access denied!")
+			balloon_alert(user, LANG("obj.1bd3ceeb", null))
 			return
 
 		set_locked(!locked, user)
@@ -75,8 +75,8 @@
 		if(machine_stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(locked && !module.bypass_access_check)
-			to_chat(user, span_alert("Console is locked! Swipe an ID card with proper access on the console to unlock it!"))
-			balloon_alert(user, "console locked!")
+			to_chat(user, span_alert(LANG("obj.3af50529", null)))
+			balloon_alert(user, LANG("obj.554f7402", null))
 			return
 		if(!current)
 			to_chat(user, span_alert(LANG("obj.0c5e775e", null)))

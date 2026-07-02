@@ -216,7 +216,7 @@
 /obj/machinery/smartfridge/proc/status_examine()
 	. = list()
 
-	. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
+	. += span_notice(LANG("obj.509249ef", list(max_n_of_items)))
 
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
@@ -275,12 +275,12 @@
 		return NONE
 	if(machine_stat)
 		if(machine_stat & NOPOWER)
-			to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
+			to_chat(user, span_warning(LANG("obj.640c5ae2", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/loaded_count = visible_items()
 	if(loaded_count >= max_n_of_items)
-		balloon_alert(user, "no space!")
+		balloon_alert(user, LANG("obj.a5ca1017", null))
 		return ITEM_INTERACT_BLOCKING
 
 	// Loading a single item
@@ -310,7 +310,7 @@
 		SStgui.update_uis(src)
 
 		if(!loaded)
-			to_chat(user, span_warning("There is nothing in [tool] to put in [src]!"))
+			to_chat(user, span_warning(LANG("obj.fb117832", list(tool, src))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/filled = loaded_count >= max_n_of_items
@@ -319,12 +319,12 @@
 			span_notice("You [filled ? "fill" : "load"] \the [src] with \the [tool]."),
 		)
 		if(length(tool.contents))
-			to_chat(user, span_warning("Some items are refused."))
+			to_chat(user, span_warning(LANG("obj.94d8d593", null)))
 		if(visible_contents)
 			update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_warning("\The [src] smartly refuses [tool]."))
+	to_chat(user, span_warning(LANG("obj.720d2303", list(src, tool))))
 	return ITEM_INTERACT_BLOCKING
 
 /**
@@ -590,7 +590,7 @@
 
 /obj/machinery/smartfridge/drying/rack/status_examine()
 	. = list()
-	. += span_notice("It looks like this unit can hold a maximum of <b>[max_n_of_items]</b> items.")
+	. += span_notice(LANG("obj.647e1303", list(max_n_of_items)))
 
 /obj/machinery/smartfridge/drying/rack/structure_examine()
 	. = ..()

@@ -28,7 +28,7 @@
 /obj/item/assembly/control/examine(mob/user)
 	. = ..()
 	if(generically_adjustable)
-		. += span_notice("You can use a [EXAMINE_HINT("multitool")] to adjust its ID.")
+		. += span_notice(LANG("obj.d3b2155b", list(EXAMINE_HINT("multitool"))))
 
 	if(copyable)
 		. += span_notice(LANG("obj.86bc9aae", null))
@@ -43,7 +43,7 @@
 	if(!generically_adjustable)
 		return
 
-	var/change_id = tgui_input_number(user, "Set the [name]'s ID", "Controller ID", id, 100)
+	var/change_id = tgui_input_number(user, LANG("obj.77cab741", list(name)), LANG("obj.21b9fbfd", null), id, 100)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	id = change_id
@@ -67,7 +67,7 @@
 /obj/item/assembly/control/blast_door/examine(mob/user)
 	. = ..()
 	if(id && id == -1)
-		. += span_notice("Interact with a blast door or shutter to generate a new ID")
+		. += span_notice(LANG("obj.a67ca672", null))
 
 /obj/item/assembly/control/blast_door/multitool_act(mob/living/user)
 	var/list/door_ids = list()

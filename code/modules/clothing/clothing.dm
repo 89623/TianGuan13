@@ -361,7 +361,7 @@
 		. += span_notice("OOC: Click <a href='byond://?src=[REF(src)];list_armor=1'>here</a> to see its protection classes.") // NOVA EDIT CHANGE - ORIGINAL: += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 	if(is_laundered)
-		. += "[src] looks crisp and pristine."
+		. += LANG("obj.8cfbdf82", list(src))
 
 /obj/item/clothing/examine_tags(mob/user)
 	. = ..()

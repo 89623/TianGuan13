@@ -227,7 +227,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		return ITEM_INTERACT_SUCCESS
 	if(can_load_item(tool))
 		if(loaded_item_ref?.resolve())
-			balloon_alert(user, "item already loaded!")
+			balloon_alert(user, LANG("obj.2bbb23a6", null))
 			return ITEM_INTERACT_BLOCKING
 		loaded_item_ref = WEAKREF(tool)
 		tool.forceMove(src)

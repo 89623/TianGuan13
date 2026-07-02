@@ -87,9 +87,9 @@
 	else
 		injectamount = cause
 	reagents.trans_to(victim, injectamount, methods = INJECT)
-	to_chat(victim, span_hear("You hear a faint beep."))
+	to_chat(victim, span_hear(LANG("obj.53477a1b", null)))
 	if(!reagents.total_volume)
-		to_chat(victim, span_hear("You hear a faint click from your chest."))
+		to_chat(victim, span_hear(LANG("obj.9018a492", null)))
 		qdel(src)
 
 /obj/item/implant/chem/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

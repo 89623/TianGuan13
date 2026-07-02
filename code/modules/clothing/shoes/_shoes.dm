@@ -40,7 +40,7 @@
 	alternate_worn_layer = (alternate_worn_layer == UNDER_UNIFORM_LAYER) ? NONE : UNDER_UNIFORM_LAYER
 
 	update_slot_icon()
-	balloon_alert(user, "wearing [alternate_worn_layer == UNDER_UNIFORM_LAYER ? "under" : "over"] uniforms")
+	balloon_alert(user, LANG("obj.7343a42f", list(alternate_worn_layer == UNDER_UNIFORM_LAYER ? "under" : "over")))
 	return CLICK_ACTION_SUCCESS
 
 /datum/armor/clothing_shoes

@@ -1313,6 +1313,7 @@
   "strings.fc662f0b": "You have connections to the black market for the deeds. Knock off a few loose weights, and your climb will be so much smoother.",
   "strings.fce4df67": "Avoid killing innocent personnel at all costs. You are not here to mindlessly kill people, as that would attract too much attention and is not our goal. Avoid detection at all costs.",
   "strings.fcfc04c3": "As an Abductor Agent, the combat mode vest has much higher resistance to every kind of weapon, and your helmet prevents the AI from tracking you.",
+  "strings.fd50a683": "@You can <i>italicize</i>, <b>embolden</b>, <small>shrink</small>, or <u>underline</u> portions of your messages by enclosing them with |, +, ^, or _ respectively. You can also avoid this by adding backslashes (they won't show in the message) before these characters.",
   "strings.fd6e6e03": "As the Chief Engineer, you can spy on and even forge PDA communications with the message monitor console! The key is in your office.",
   "strings.fd858c5d": "Purity isn't that scary, I promise!",
   "strings.fd9ecdc7": "has a large series of attachment scars at the articulation points",
