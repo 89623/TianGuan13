@@ -926,16 +926,18 @@ async function sleep(ms: number): Promise<void> {
 /// 构造 agent CLI 命令（codex / claude；两者都能读写工作区文件，复用「agent 写 outPath + 轮询」流程）。
 function agentCommand(prompt: string): [string, string[]] {
   if (BACKEND === 'claude') {
+    // prompt 必须紧跟 -p 作为其定位参数：新版 claude CLI 的 --allowedTools 是变参
+    // （可吞掉后续 token），若把 prompt 放在 --allowedTools 之后会被当成额外的工具名吃掉。
     return [
       'claude',
       [
         '-p',
+        prompt,
         '--permission-mode',
         'acceptEdits',
         '--allowedTools',
         'Read,Write,Edit',
         ...(CLAUDE_MODEL ? ['--model', CLAUDE_MODEL] : []),
-        prompt,
       ],
     ];
   }
