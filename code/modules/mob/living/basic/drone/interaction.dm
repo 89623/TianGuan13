@@ -123,7 +123,7 @@
 
 /// Returns a multiplier for any head armor you wear as a drone.
 /mob/living/basic/drone/proc/get_armor_effectiveness()
-	return 0
+	return 0.8
 
 /**
  * Hack or unhack a drone
