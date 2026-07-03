@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/unit_test/emoting
 	var/emotes_used = 0
 
@@ -7,7 +6,7 @@
 	human.key = "EmoteTestKey"
 	RegisterSignal(human, COMSIG_MOB_EMOTE, PROC_REF(on_emote_used))
 
-	human.say(LANG("datum.0b0458de", null))
+	human.say("*shrug")
 	TEST_ASSERT_EQUAL(emotes_used, 1, "Human did not shrug")
 
 	//NOVA EDIT REMOVAL BEGIN - Following check does not affect us
@@ -21,7 +20,7 @@
 
 	TEST_ASSERT(human.stat != CONSCIOUS, "Human is somehow conscious after receiving suffocation damage")
 
-	human.say(LANG("datum.0b0458de", null))
+	human.say("*shrug")
 	TEST_ASSERT_EQUAL(emotes_used, 1, "Human shrugged while unconscious")
 
 	//NOVA EDIT REMOVAL BEGIN - Following check fails due to global cooldown from the above test step (.8s)
