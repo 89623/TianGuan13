@@ -431,7 +431,7 @@
 
 /obj/item/ammo_box/magazine/aa12/drum
 	name = "AA12 弹鼓"
-	desc = "可容纳15发霰弹的弹鼓，容量大的惊人，体积也大的惊人"
+	desc = "可容纳20发霰弹的弹鼓，容量大的惊人，体积也大的惊人"
 
 	icon = 'modular_z121/icons/obj/guns/weapon_addtion/ammo.dmi'
 	icon_state = "aa12_drum"
