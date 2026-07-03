@@ -101,6 +101,22 @@ const MISSING_ONLY =
 const CODEX_OUTPUT_POLL_MS = envInt('I18N_CODEX_OUTPUT_POLL_MS', 2000);
 const CODEX_OUTPUT_KILL_MS = envInt('I18N_CODEX_OUTPUT_KILL_MS', 5000);
 
+// 优先待译清单（I18N_ONLY_KEYS=<json>）：{"obj.json": ["obj.xxxx", ...], ...}。
+// 由 `node tools/i18n/miss-scan.mjs --emit-pending` 从生产服漏翻日志生成——只翻
+// 「玩家实际看到的」那批 key，把 MT 额度花在刀刃上。仍过 needsTranslation 判定
+// （已译条目不会被强制重译；要重判混杂配合 I18N_MISSING_ONLY=0）。
+const ONLY_KEYS: Record<string, Set<string>> | null = (() => {
+  const file = process.env.I18N_ONLY_KEYS;
+  if (!file) return null;
+  const resolved = path.isAbsolute(file) ? file : path.join(ROOT, file);
+  const raw = JSON.parse(fs.readFileSync(resolved, 'utf8'));
+  const result: Record<string, Set<string>> = {};
+  for (const [ns, keys] of Object.entries(raw)) {
+    if (Array.isArray(keys)) result[ns] = new Set(keys as string[]);
+  }
+  return result;
+})();
+
 type Catalog = Record<string, string>;
 type WorkMode = 'pending' | 'terms';
 type TranslatedBatch = {
@@ -540,6 +556,20 @@ function hasEnglishWord(s: string): boolean {
 }
 
 /**
+ * 「该译的英文」判定（缺失/占位分支用）：hasEnglishWord 只认小写（把 HUD/EMP 类缩写当
+ * 标识符排除），但**多词全大写句**（离子法则模板/池、横幅标题 "INSULT THE CLOWN"）没有小写
+ * 字母 → 曾被整类跳过（实测 734 条从未进过待译队列）。多词 + 各词 ≥2 个大写字母 = 大写散文，
+ * 该译；单个全大写词仍视为缩写不译。
+ */
+function hasTranslatableEnglish(s: string): boolean {
+  if (hasEnglishWord(s)) return true;
+  const words = stripNoise(s)
+    .split(/\s+/)
+    .filter((w) => /[A-Z]{2,}/.test(w));
+  return words.length >= 2;
+}
+
+/**
  * 内部代码标识符（无空格的单 token 含下划线，如 spawn_menu_atom_data / plane_masters_colorblind /
  * {0}_light4）——是被抽取器误收的程序内部串，不是玩家可见文案。占位（zh==en）补译时排除它们，
  * 免得把代码 key 送去机翻（既浪费、又可能产出错译造成 bug）。真实 UI 文案用空格分词（"Left Hand"）
@@ -603,16 +633,19 @@ function needsTranslation(
   zhVal: string | undefined,
   key?: string,
 ): boolean {
-  if (zhVal == null || zhVal === '') return hasEnglishWord(enVal); // 缺失（key 不存在或空值）
+  if (zhVal == null || zhVal === '') return hasTranslatableEnglish(enVal); // 缺失（key 不存在或空值）
   // 与英文逐字相同 = 没翻成功的「占位译文」，语义上等同未译 → 始终补译（即使 missing-only）。
   // 这是「整体翻译一遍后仍有 key 显示英文」（如 "Chest":"Chest"）的根因：旧逻辑里 missing-only
   // 把「有任何值」都当已译跳过，占位英文永远不会被重试。纯代码/符号（hasEnglishWord=false）不补。
   // 例外：已登记「保持英文」（专名/cult 咒语/程序名/base64…）的 key 不再重送模型。
   if (zhVal === enVal) {
     if (key != null && isKeepEnglish(key, enVal)) return false;
-    return hasEnglishWord(enVal) && !looksLikeCodeIdentifier(enVal);
+    return hasTranslatableEnglish(enVal) && !looksLikeCodeIdentifier(enVal);
   }
   if (MISSING_ONLY) return false; // 只补缺失/失败：已有「≠英文」的真译文都不动（不重判刻意保留的中英混杂）
+  // 已登记保持英文的 key：混杂英文是有意的（拉丁彩蛋/@pick 模板/术语），深度复查也不重翻。
+  // 登记途径：`accept-mixed`（批量接受现状）或手编 keep-english.<locale>.json。
+  if (key != null && isKeepEnglish(key, enVal)) return false;
   const stray = hasEnglishWord(zhVal);
   if (!CJK.test(zhVal) && stray) return true; // 无中文却有英文词 → 未译
   if (CJK.test(zhVal) && stray && hasStrayEnglishInTranslation(zhVal))
@@ -670,10 +703,12 @@ function namespaceFiles(args: string[]): string[] {
 
 /** 计算某命名空间的待译集合（key -> 英文源）。 */
 function computePending(file: string): Catalog {
+  const allow = ONLY_KEYS ? (ONLY_KEYS[file] ?? new Set()) : null;
   const en = readCatalog(path.join(EN_DIR, file));
   const zh = readCatalog(path.join(DST_DIR, file));
   const pending: Catalog = {};
   for (const key of Object.keys(en)) {
+    if (allow && !allow.has(key)) continue;
     if (needsTranslation(en[key], zh[key], key)) pending[key] = en[key];
   }
   return pending;
@@ -1613,6 +1648,41 @@ function cmdMarkEnglish(args: string[]): void {
   );
 }
 
+/**
+ * 把「深度复查（I18N_MISSING_ONLY=0）会反复标记的中英混杂条目」批量登记为保持英文：
+ * 这些条目往往已被模型翻过一轮、输出仍保留英文（拉丁彩蛋、@pick 模板语法、动态拼接 key、
+ * 专名密集句）——模型自己的判断就是「英文该留」，反复重翻只烧额度不收敛。登记后
+ * needsTranslation 的混杂分支直接放行；后续人工在在线平台改译文不受影响，删除
+ * keep-english 里对应条目即恢复机器重译。
+ */
+function cmdAcceptMixed(args: string[]): void {
+  let total = 0;
+  for (const file of namespaceFiles(args)) {
+    const en = readCatalog(path.join(EN_DIR, file));
+    const zh = readCatalog(path.join(DST_DIR, file));
+    let n = 0;
+    for (const key of Object.keys(en)) {
+      const zhVal = zh[key];
+      if (zhVal == null || zhVal === '' || zhVal === en[key]) continue; // 未译/占位交给 mark-english
+      if (isKeepEnglish(key, en[key])) continue;
+      const stray = hasEnglishWord(zhVal);
+      const flagged =
+        (!CJK.test(zhVal) && stray) ||
+        (CJK.test(zhVal) && stray && hasStrayEnglishInTranslation(zhVal));
+      if (flagged) {
+        markKeepEnglish(key, en[key]);
+        n++;
+      }
+    }
+    if (n) console.log(`${file}: 接受混杂现状 ${n}`);
+    total += n;
+  }
+  flushKeepEnglish();
+  console.log(
+    `完成。共登记 ${total} 条到 ${path.relative(ROOT, KEEP_EN_PATH)}（删除某条即恢复重译）。`,
+  );
+}
+
 const SUBCOMMANDS = new Set([
   'pending',
   'terms',
@@ -1622,6 +1692,7 @@ const SUBCOMMANDS = new Set([
   'repair-terms',
   'prune-glossary',
   'mark-english',
+  'accept-mixed',
 ]);
 const argv = process.argv.slice(2);
 const isCmd = argv.length > 0 && SUBCOMMANDS.has(argv[0]);
@@ -1630,6 +1701,7 @@ const rest = isCmd ? argv.slice(1) : argv;
 
 if (cmd === 'pending') cmdPending(rest);
 else if (cmd === 'mark-english') cmdMarkEnglish(rest);
+else if (cmd === 'accept-mixed') cmdAcceptMixed(rest);
 else if (cmd === 'terms' || cmd === 'term-pending') cmdTerms(rest);
 else if (cmd === 'prune-glossary') cmdPruneGlossary(rest);
 else if (cmd === 'translate-terms' || cmd === 'repair-terms') {

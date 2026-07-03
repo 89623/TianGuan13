@@ -64,6 +64,9 @@ I18N_SERVER_LOCALE zh-Hans
 
 ```sh
 # 只刷新英文目录 strings/i18n/en/*.json
+# 自带「译文迁移」（migrate.rs）：上游改文案导致 key 变化时，把各 locale 的孤儿译文接到
+# 新 key——同值精确继承（含跨命名空间）自动完成；近似迁移（词级 Dice ≥0.8、占位符一致）
+# 会写报告 tools/i18n/mt/.pending/migrate-report.<locale>.json 供人工复核。
 cargo run --release --manifest-path tools/i18n/Cargo.toml -- \
   extract --dme tgstation.dme --out strings/i18n/en
 
@@ -145,6 +148,11 @@ bun tools/i18n/mt/i18n-mt.ts translate-terms obj.json
 
 # 翻译后再检查剩余待译
 bun tools/i18n/mt/i18n-mt.ts pending obj.json
+
+# 深度复查（重判中英混杂）后，把「模型翻过仍保留英文」的条目批量登记保持英文——
+# 拉丁彩蛋/@pick 模板/专名密集句反复重翻不收敛，登记后深度复查也放行；
+# 删除 keep-english.<locale>.json 里对应条目即恢复重译
+bun tools/i18n/mt/i18n-mt.ts accept-mixed
 ```
 
 翻译脚本按批次顺序启动 Codex 调用，不做并行：一批结束并合并后，才会启动下一批。默认
@@ -383,6 +391,43 @@ cargo run --release --manifest-path tools/i18n/Cargo.toml -- lint \
     误报）→ **新增仅告警**。
   - 新碰撞的三条修法：① 把供给该串的变量排除出抽取（句末标点闸门 / SINK_VARS 黑名单）；
     ② 消费侧用 `lang_unreverse_text` 兜（见 chem dispenser 解药）；③ 确认安全后收进基线。
+
+### 生产服漏翻采集（`I18N_LOG_MISSES`）—— 真实流量收割「汉化不完」
+
+伪 locale 需要专人跑测试局；漏翻采集直接把**正式服玩家流量**变成探测器。config 开
+`I18N_LOG_MISSES TRUE`（默认关）后，运行时在 `lang_fallback_apply` 出口与 TGUI 负载反查
+miss 分支记录「经过所有翻译层后仍是英文」的多词串（≥3 词，或 2 词含小写开头——挡人名），
+去重计数写 `data/logs/<round>/i18n_misses.log`。玩家自己输入的聊天不过这些层，不会被记录。
+
+```sh
+# 单回合或跨多回合聚合，按频次排序并自动归类到修复路径
+node tools/i18n/miss-scan.mjs 'data/logs/<round>/i18n_misses.log' [更多日志...]
+node tools/i18n/miss-scan.mjs --min 3 <logs>   # 只看总次数 ≥3（滤一次性噪音）
+node tools/i18n/miss-scan.mjs --json <logs>    # 机器可读
+```
+
+四个分类桶直接对应 `AGENTS.md` 排查规律的处理动作：
+**已译未接通**（在目录且 zh 已译 → 显示路径绕过翻译层，落地点补反查/接 sink）、
+**在目录未译**（zh==en → 跑 MT 或确认 keep-english 白名单）、
+**目录片段**（是某目录值的子串 → AC 最短匹配拆碎，落地点先整串反查）、
+**没进目录**（抽取器漏抽 → 扩抽取源或手维护 `_<feature>.json`）。
+实现：`modular_nova/modules/i18n/code/miss_log.dm`；run 提取门槛单测
+`TEST_FOCUS(/datum/unit_test/i18n_miss_log)`。
+
+### 伪 locale 单测门禁（`pseudo-test.sh`）—— 一键跑全量单测抓变异回归
+
+```sh
+# qps-ploc 下全量单测：任何「标识符被反查变异 → 功能破坏」直接挂测试
+nix develop -c bash tools/i18n/pseudo-test.sh
+# 可选：指定 locale 跑基线，区分「伪 locale 特有失败」vs「本机既有失败」
+nix develop -c bash tools/i18n/pseudo-test.sh zh-Hans
+```
+
+上游合并（`resync.sh`）后手动跑一次。脚本自理：生成伪目录、临时切 config、临时禁用
+`USE_RUSTG_ICONFORGE_GAGS`（本机 32 位 rust_g 在 UNIT_TESTS 构建下 iconforge GAGS 异步加载
+必 SIGABRT，非 i18n 问题）、直调 DreamMaker/DreamDaemon（不经 juke）、结束自动还原。
+判定放行已知基建噪音（DM 回退生成的地图预览图标与已提交版本像素有差的 runtime）。
+**勿用 `build.sh dm-test`**（走 GAGS 异步路径，本机必崩）。
 
 ### 伪 locale（`qps-ploc`）—— 运行时动态检测（捕获静态分析够不着的路径）
 
