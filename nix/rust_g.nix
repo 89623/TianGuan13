@@ -15,11 +15,11 @@
 
 pkgsi686Linux.stdenv.mkDerivation {
   pname = "rust-g";
-  version = "4.2.0";
+  version = "6.2.0";
 
   src = fetchurl {
-    url = "https://github.com/tgstation/rust-g/releases/download/4.2.0/librust_g.so";
-    hash = "sha256-cswOy82w7xIIMhNIlDH/AaF5Zd+UYZfUrh4m3EYdVYI=";
+    url = "https://github.com/tgstation/rust-g/releases/download/6.2.0/librust_g.so";
+    hash = "sha256-oNVIgIr9McbvO1PAGzJn4UCG8CYmER3ovSuXRoK7Mls=";
   };
 
   dontUnpack = true;

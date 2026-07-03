@@ -85,7 +85,15 @@ symlinkJoin {
       # 生成精灵图集，峰值内存会撑爆 32 位地址空间 → Rust OOM abort（核心转储，表现为
       # 客户端一进大厅服务端就崩、停在按钮界面不刷日志）。限制 rayon 线程数压低峰值内存。
       # 实测 2 即可稳定；可在外部用 `RAYON_NUM_THREADS=N DreamDaemon …` 覆盖。
-      extraEnv = ''export RAYON_NUM_THREADS="''${RAYON_NUM_THREADS:-2}"'';
+      #
+      # 另：SSgreyscale 会把数百个 GAGS 配置一次性 async 派发，rust_g 每 job 一条线程、
+      # 默认 8MB 栈虚拟地址 → 数 GB 栈预留直接打穿 32 位地址空间，线程创建 EAGAIN →
+      # 非 unwinding panic abort（典型于 world **reboot** 时：旧世界内存未释放叠加重新
+      # 全量派发）。RUST_MIN_STACK 控制 Rust std 线程默认栈，压到 1MB 即可容纳。
+      extraEnv = ''
+        export RAYON_NUM_THREADS="''${RAYON_NUM_THREADS:-2}"
+        export RUST_MIN_STACK="''${RUST_MIN_STACK:-1048576}"
+      '';
     })
   ];
   passthru = {
