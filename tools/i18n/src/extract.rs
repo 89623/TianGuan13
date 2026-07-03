@@ -181,28 +181,51 @@ fn strip_placeholders(t: &str) -> String {
 /// （update_overlays 的 overlay icon_state、key_name 的 ckey 日志串、rights2text 的权限旗标…），
 /// 抽取/LANG 化会直接破坏图像与日志（实测：`{0}_mag` 被 MT 翻成 `{0}_弹匣` → 弹匣 overlay 消失）。
 /// 整 proc 排除 bare-`.`/累加器抽取与改写（其余 sink 不受影响）。
+/// 清单来自三端策略单一来源 strings/i18n/policy.json 的 `identifier_dot_procs` /
+/// `identifier_dot_proc_suffixes`（历史沿革与实例见 policy.json 注释字段：StripMenu 键被译即蓝屏、
+/// `{0}_mag` 被译弹匣 overlay 消失）。新增登记只改 policy.json。
 pub fn is_identifier_dot_proc(name: &str) -> bool {
-    matches!(
-        name,
-        "update_overlays"
-            | "overlay_checks"
-            | "add_mmi_overlay"
-            | "generate_husk_key"
-            | "log_path_from_picture_ID"
-            | "key_name"
-            | "key_name_mentor"
-            | "ban_target_string"
-            | "rights2text"
-            | "stat_entry"
-            | "armor_to_protection_class"
-            | "generate_code_phrase"
-            // StripMenu 的备用操作键（knot/adjust_jumpsuit…）：前端 ALTERNATE_ACTIONS[key].text 查表
-            // + perform_alternate_action 的 if("key") 比较——翻译即蓝屏（用户实测 TypeError .text）。
-            | "get_alternate_actions"
-            // worn_overlays/generate_icon_key：icon_state 串与图标缓存键。
-            | "worn_overlays"
-            | "generate_icon_key"
-    ) || name.ends_with("_update_overlays")
+    let policy = identifier_policy();
+    policy.names.contains(name) || policy.suffixes.iter().any(|s| name.ends_with(s.as_str()))
+}
+
+struct IdentifierPolicy {
+    names: std::collections::HashSet<String>,
+    suffixes: Vec<String>,
+}
+
+fn identifier_policy() -> &'static IdentifierPolicy {
+    static POLICY: std::sync::OnceLock<IdentifierPolicy> = std::sync::OnceLock::new();
+    POLICY.get_or_init(|| {
+        // 从仓库根或 tools/i18n（cargo test 的 CWD）都能找到。
+        for candidate in ["strings/i18n/policy.json", "../../strings/i18n/policy.json"] {
+            let Ok(text) = std::fs::read_to_string(candidate) else {
+                continue;
+            };
+            let Ok(json) = serde_json::from_str::<serde_json::Value>(&text) else {
+                continue;
+            };
+            let read_list = |field: &str| -> Vec<String> {
+                json[field]
+                    .as_array()
+                    .map(|a| {
+                        a.iter()
+                            .filter_map(|v| v.as_str().map(str::to_string))
+                            .collect()
+                    })
+                    .unwrap_or_default()
+            };
+            return IdentifierPolicy {
+                names: read_list("identifier_dot_procs").into_iter().collect(),
+                suffixes: read_list("identifier_dot_proc_suffixes"),
+            };
+        }
+        eprintln!("警告: 找不到 strings/i18n/policy.json —— identifier_dot_procs 黑名单为空，抽取/改写可能误收 icon_state 串");
+        IdentifierPolicy {
+            names: Default::default(),
+            suffixes: Default::default(),
+        }
+    })
 }
 
 fn is_loose_sentence(template: &str) -> bool {
@@ -418,6 +441,51 @@ fn walk_perk_block(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &mu
             | Statement::ForInfinite { block }
             | Statement::ForLoop { block, .. }
             | Statement::Spawn { block, .. } => walk_perk_block(block, ns, catalog),
+            _ => {}
+        }
+    }
+}
+
+/// 走 generate_ion_law proc 体，抽全部赋值 RHS 的字符串模板（含插值 → {N}）。
+/// 离子法则由 166 条 ALLCAPS 模板句 + strings/ion_laws.json 碎片池运行期拼装：模板无句末
+/// 标点（激进 pass 的安全闸挡掉）、也不在 sink 里 → 专项全量抽。显示端由边界模板逆匹配
+/// 引擎收口（TGUI 法则面板 exact miss → 模板命中 → 捕获碎片实参反查），碎片池另经
+/// flavor 白名单入目录、strings 加载处反查。
+fn walk_ion_templates(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &mut Catalog) {
+    for stmt in block.iter() {
+        match &stmt.elem {
+            Statement::Expr(Expression::AssignOp { rhs, .. }) => {
+                if let Some(t) = build_template(rhs) {
+                    emit(catalog, ns, &t);
+                }
+            }
+            Statement::Var(v) => {
+                if let Some(e) = &v.value {
+                    if let Some(t) = build_template(e) {
+                        emit(catalog, ns, &t);
+                    }
+                }
+            }
+            Statement::If { arms, else_arm } => {
+                for (_c, blk) in arms.iter() {
+                    walk_ion_templates(blk, ns, catalog);
+                }
+                if let Some(blk) = else_arm {
+                    walk_ion_templates(blk, ns, catalog);
+                }
+            }
+            Statement::Switch { cases, default, .. } => {
+                for (_c, blk) in cases.iter() {
+                    walk_ion_templates(blk, ns, catalog);
+                }
+                if let Some(blk) = default {
+                    walk_ion_templates(blk, ns, catalog);
+                }
+            }
+            Statement::While { block, .. }
+            | Statement::ForInfinite { block }
+            | Statement::ForLoop { block, .. }
+            | Statement::Spawn { block, .. } => walk_ion_templates(block, ns, catalog),
             _ => {}
         }
     }
@@ -669,6 +737,8 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                                 }
                             }
                         }
+                        // 离子法则模板（ALLCAPS 拼装句，无句末标点 → 激进 pass 抽不到）。
+                        "generate_ion_law" => walk_ion_templates(block, &namespace, &mut catalog),
                         // 物种特征(perk)：create_pref_*_perks / get_species_perks 等，抽 list 里 name/description。
                         n if n.contains("perk") => walk_perk_block(block, &namespace, &mut catalog),
                         // examine 标签的 hover tooltip：`.["tag"] = "提示"`（运行时 atom_examine 反查显示）。
@@ -727,6 +797,10 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
         catalog.namespace_count()
     );
     if !dry_run {
+        // 译文迁移：趁旧 en 目录还在盘上，把孤儿译文接到新 key（精确继承 + 近似迁移，见 migrate.rs）。
+        if let Err(err) = crate::migrate::run(&catalog, out) {
+            eprintln!("译文迁移失败（不影响抽取）: {err}");
+        }
         // 合并已存在目录：保留已被 rewrite 改写（源码里已不是字面量）的 key（重同步必需）。
         catalog.load_dir(out);
         catalog.write(out)?;

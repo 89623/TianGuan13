@@ -407,6 +407,11 @@ struct Rewriter<'a> {
 
 impl<'a> Rewriter<'a> {
     fn source(&mut self, path: &Path) -> Option<&str> {
+        // 单测文件永不改写：断言依赖英文字面量语义（如 say("*shrug") 的 emote 调用），
+        // 改成 LANG 会在 locale≠en 下破坏测试甚至改变被测行为。extract 侧同有抑制。
+        if path.to_string_lossy().contains("modules/unit_tests") {
+            return None;
+        }
         let entry = self
             .cache
             .entry(path.to_path_buf())
@@ -596,6 +601,11 @@ impl<'a> Rewriter<'a> {
             // 对话框按钮（Yes/No/Cancel…）绝不改写——它们是 `if(alert(...)=="Yes")` 的比较值，
             // 改成 LANG 会破坏比较逻辑（且 alert 空标题时按钮易被错位套用，见下方空实参对齐）。
             if is_dialog_button(&template) {
+                continue;
+            }
+            // `*` 开头是 emote 调用语法（say("*shrug") 触发表情而非说话）——改写成 LANG 后
+            // locale≠en 返回译文，emote 解析必失败。此类串留给运行时反查翻显示。
+            if template.starts_with('*') {
                 continue;
             }
             let ph = placeholder_count(&template);

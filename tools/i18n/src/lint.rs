@@ -125,6 +125,46 @@ fn has_bad_control_char(s: &str) -> bool {
 // A. 目录卫生
 // ---------------------------------------------------------------------------
 
+/// 校验三端策略单一来源 strings/i18n/policy.json：必须存在、可解析、
+/// 各策略字段为字符串数组且无重复（三端消费者对坏 JSON 都是静默降级 → 必须在门禁挡住）。
+fn lint_policy(catalog_root: &Path, report: &mut Report) {
+    const FIELDS: [&str; 5] = [
+        "payload_skip_keys",
+        "pref_desc_keys",
+        "no_auto_translate",
+        "identifier_dot_procs",
+        "identifier_dot_proc_suffixes",
+    ];
+    let path = catalog_root.join("policy.json");
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        report.error(format!("[policy] 缺少 {}（三端标识符策略单一来源）", path.display()));
+        return;
+    };
+    let json: serde_json::Value = match serde_json::from_str(&text) {
+        Ok(v) => v,
+        Err(err) => {
+            report.error(format!("[policy] {} 解析失败：{err}", path.display()));
+            return;
+        }
+    };
+    for field in FIELDS {
+        let Some(arr) = json[field].as_array() else {
+            report.error(format!("[policy] 字段 {field} 缺失或不是数组"));
+            continue;
+        };
+        let mut seen = std::collections::HashSet::new();
+        for v in arr {
+            let Some(s) = v.as_str() else {
+                report.error(format!("[policy] {field} 含非字符串元素：{v}"));
+                continue;
+            };
+            if !seen.insert(s) {
+                report.error(format!("[policy] {field} 有重复项：{s}"));
+            }
+        }
+    }
+}
+
 fn lint_catalog(catalog_root: &Path, locale: &str, report: &mut Report) -> Result<()> {
     let en_dir = catalog_root.join("en");
     let loc_dir = catalog_root.join(locale);
@@ -581,6 +621,7 @@ pub fn run(
     let mut report = Report::default();
 
     lint_catalog(catalog_root, locale, &mut report)?;
+    lint_policy(catalog_root, &mut report);
     if !skip_ast {
         lint_identifier_collisions(
             dme,

@@ -13,6 +13,7 @@ mod flavor;
 mod keys;
 mod labels;
 mod lint;
+mod migrate;
 mod pseudo;
 mod rewrite;
 
