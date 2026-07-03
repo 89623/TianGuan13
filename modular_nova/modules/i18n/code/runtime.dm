@@ -529,23 +529,34 @@ GLOBAL_LIST_INIT(i18n_tgui_strings, build_tgui_string_set())
 	// TGUI 负载里的拼接句与聊天/browse 共享同一引擎。en locale / 无锚命中时引擎走快路径原样返回（零开销）。
 	if(. == text && istext(text) && findtext(text, " "))
 		. = lang_template_apply(text, GLOB.i18n_server_locale)
+		// 漏翻采集：反查 + 模板引擎都没命中的多词 TGUI 负载值（config I18N_LOG_MISSES 门控，见 miss_log.dm）。
+		if(GLOB.i18n_log_misses && . == text && GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+			lang_log_miss_scan(text, "tgui")
 
 /// TGUI 负载里**既是显示又是 act() 回传标识符**的列表键——这些 list 的字符串元素会原样回传给
 /// 服务端做相等校验（tgui_alert 的 buttons 经 `act('choose',{choice:button})` 校验 `in buttons`；
 /// tgui_input_list 的 items 经 `act('choose',{entry})` 校验 `in items`）。若 P1 把它们译成中文，
 /// 前端回传中文、服务端用英文校验 → tgui_alert 直接 CRASH「non-existent button choice」、list 静默失败。
 /// 故 lang_reverse_tree 必须**跳过这些键的值**（保持英文标识符）；显示交给 TS 端 auto-localize 翻
-/// （`{button}` 文本节点过前端目录），值不动。新增同类回传列表键时在此登记即可。
-GLOBAL_LIST_INIT(i18n_payload_skip_keys, list(\
-	"buttons" = TRUE,\
-	"items" = TRUE,\
-	"init_value" = TRUE,\
-	"id" = TRUE,\
-	"assistance_consoles" = TRUE,\
-	"supply_consoles" = TRUE,\
-	"information_consoles" = TRUE,\
-	"destinationsList" = TRUE,\
-))
+/// （`{button}` 文本节点过前端目录），值不动。新增同类回传列表键：改 strings/i18n/policy.json 的
+/// `payload_skip_keys`（三端策略单一来源），不要改这里。
+GLOBAL_LIST_INIT(i18n_payload_skip_keys, build_i18n_policy_set("payload_skip_keys"))
+
+/// 从策略单一来源 strings/i18n/policy.json 读一个字符串数组字段，转关联 set（值=TRUE）。
+/// 三端（DM/TS/Rust）共读同一份 policy —— 新增登记只改 policy.json（见其 _comment）。
+/proc/build_i18n_policy_set(field)
+	var/list/result = list()
+	var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/policy.json"
+	if(!fexists(path))
+		return result
+	var/list/decoded = json_decode(file2text(path))
+	if(!islist(decoded))
+		return result
+	var/list/values = decoded[field]
+	if(islist(values))
+		for(var/value in values)
+			result[value] = TRUE
+	return result
 
 /// 递归把一个 list（含嵌套 list / 关联 list）里的字符串「值」按多词门槛反查为全服 locale 译文。
 /// 用于 TGUI 的 ui_data/ui_static_data 负载：把非 atom datum 的 name/desc/说明等动态内容本地化。
@@ -579,12 +590,8 @@ GLOBAL_LIST_INIT(i18n_payload_skip_keys, list(\
 /// **纯显示字段**（各种 description）——这些绝非 act() 标识符，可安全整串替换（用 lang_reverse_text
 /// 全量匹配，无多词门槛，短描述也能命中）；name/title/choices/department 等是标识符，一律不动。
 /// 递归走嵌套 list。全服 locale==en 时 lang_reverse_text 直接原样返回（零行为变化）。
-GLOBAL_LIST_INIT(i18n_pref_desc_keys, list(\
-	"description" = TRUE,\
-	"pos_gameplay_description" = TRUE,\
-	"neg_gameplay_description" = TRUE,\
-	"neut_gameplay_description" = TRUE,\
-))
+/// 新增纯显示字段：改 strings/i18n/policy.json 的 `pref_desc_keys`（三端策略单一来源）。
+GLOBAL_LIST_INIT(i18n_pref_desc_keys, build_i18n_policy_set("pref_desc_keys"))
 
 /proc/lang_reverse_pref_descriptions(list/data)
 	if(!islist(data))

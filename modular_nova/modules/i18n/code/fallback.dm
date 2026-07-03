@@ -69,4 +69,8 @@ GLOBAL_LIST_EMPTY(i18n_fallback_state)
 	// 先过模板逆匹配（插值句：目录里已译的 {0} 模板按字面段在原文上命中、捕获实参反查后按
 	// zh 模板重排填充，见 template_match.dm），再过字面 AC 收剩余短语。
 	text = lang_template_apply(text, locale)
-	return rustg_acreplace("i18n_[locale]", text)
+	text = rustg_acreplace("i18n_[locale]", text)
+	// 漏翻采集：所有层过完仍残留的多词英文 run（config I18N_LOG_MISSES 门控，见 miss_log.dm）。
+	if(GLOB.i18n_log_misses)
+		lang_log_miss_scan(text, "fallback")
+	return text

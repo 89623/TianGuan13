@@ -1027,6 +1027,12 @@ function sync() {
 
     writeJson(fallbackPath, runtimeCatalog);
   }
+  // 三端策略单一来源 → 前端打包副本（localize.ts 静态 import，两份都提交）。
+  const policySource = path.join(STRINGS_I18N_DIR, 'policy.json');
+  const policyTarget = path.join(TGUI_PACKAGE_I18N_DIR, 'policy.json');
+  if (fs.existsSync(policySource)) {
+    fs.copyFileSync(policySource, policyTarget);
+  }
 }
 
 const command = process.argv[2] ?? 'sync';

@@ -22,6 +22,17 @@
 	if(.)
 		GLOB.i18n_chat_fallback = config_entry_value
 
+// i18n: 是否启用「运行期漏翻采集」（默认关）。全服 locale≠en 时把经过所有翻译层后仍是英文的
+// 多词串去重记入 [log_directory]/i18n_misses.log，离线聚合归类见 tools/i18n/miss-scan.mjs。
+// 在 config 文件里写一行：I18N_LOG_MISSES TRUE
+/datum/config_entry/flag/i18n_log_misses
+	default = FALSE
+
+/datum/config_entry/flag/i18n_log_misses/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		GLOB.i18n_log_misses = config_entry_value
+
 /datum/config_entry/flag/russian_text_formation
 
 // DISCORD GAME ALERT CONFIGS

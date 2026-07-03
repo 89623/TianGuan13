@@ -2,6 +2,7 @@
 // Shared helpers for automatic TGUI JSX localization.
 
 import { translateCurrent } from './catalog';
+import policy from './policy.json';
 
 const TRANSLATABLE_PROPS = new Set([
   'aria-label',
@@ -22,11 +23,9 @@ const OPTION_TEXT_PROPS = new Set(['displayText', 'label', 'text', 'title']);
 // 自动本地化按「英文原文」查表，无法在运行时区分「字面量 UI 文案」与「正好等于某常见词的
 // 动态数据」。绝大多数命中都是期望的（On→开启、None→无…），但偶尔会把本该保持英文的专有
 // 名词 / 代码标识符也翻了（典型：admin VV 里显示的变量名 "Type"、ckey 等）。
-// 默认空——只在你确实看到某条被误翻时，把它的英文原文加进来即可全局豁免。
-const NO_AUTO_TRANSLATE = new Set<string>([
-  // 代码 token，en 目录里本就是 identity("const":"const")；MT 跨命名空间复用误译成"常量"。
-  'const',
-]);
+// 清单来自三端策略单一来源 strings/i18n/policy.json 的 `no_auto_translate`
+// （`tgui-catalog.mjs sync` 复制到本目录供打包）。新增豁免改 policy.json 后跑 sync。
+const NO_AUTO_TRANSLATE = new Set<string>(policy.no_auto_translate);
 
 function translateText(text: string): string {
   const match = text.match(/^(\s*)([\s\S]*\S)(\s*)$/);
