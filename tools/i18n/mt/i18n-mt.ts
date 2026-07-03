@@ -679,6 +679,20 @@ function computePending(file: string): Catalog {
   return pending;
 }
 
+// 探测目标目录文件已有的缩进（tab 或 N 空格），写回时沿用它——否则每次翻译都会把
+// 整份目录按固定缩进重排，制造巨量无关 diff / 合并冲突（曾把 tab 的 datum/obj.json
+// 整体翻成 2 空格，撞上上游同步合并）。找不到已有文件时取默认：tgui 目录用 tab（前端
+// 约定），其余用 2 空格（与 Rust 抽取器 serde to_string_pretty 的输出一致）。
+function detectIndent(file: string, isTguiCatalog: boolean): string | number {
+  try {
+    const match = fs.readFileSync(file, 'utf8').match(/\n([ \t]+)"/);
+    if (match) return match[1][0] === '\t' ? '\t' : match[1].length;
+  } catch {
+    // 文件不存在，落到默认缩进
+  }
+  return isTguiCatalog ? '\t' : 2;
+}
+
 function writeSorted(file: string, catalog: Catalog): void {
   const isTguiCatalog = path.basename(file) === 'tgui.json';
   const sorted: Catalog = {};
@@ -689,7 +703,7 @@ function writeSorted(file: string, catalog: Catalog): void {
   }
   fs.writeFileSync(
     file,
-    `${JSON.stringify(sorted, null, isTguiCatalog ? '\t' : 2)}\n`,
+    `${JSON.stringify(sorted, null, detectIndent(file, isTguiCatalog))}\n`,
   );
 }
 
