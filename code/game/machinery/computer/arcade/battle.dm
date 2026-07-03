@@ -173,6 +173,11 @@
 		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective")
 		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy")
 
+	// NOVA EDIT ADDITION START - I18N - 全服中文时按目录反查碎片（lang_reverse_text 无词数门槛，
+	// 兜住 load 反查漏掉的单词形容词），中文名省 The 冠词直拼
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		return "[lang_reverse_text(boss_adjective)][lang_reverse_text(boss_name)]"
+	// NOVA EDIT ADDITION END
 	return "The [boss_adjective] [boss_name]"
 
 ///Sets up a new opponent depending on what stage they are at.

@@ -10,17 +10,17 @@
   "world.5d29e872": "发现不受支持的 Interop API 版本：{0}。若该版本有效，请报告此情况，反向移植按需进行。",
   "world.5f205b9e": "你将在连接后因匹配到粘性封禁而断开连接。如果这是封禁规避检测系统误判，我们会自动检测并撤销这些匹配。如果你认为属于这种情况，请精确等待 6 秒，然后通过文件 -> 重新连接来重新连接，查看该匹配是否已被自动撤销。",
   "world.74b4ed87": "无效的列表索引：{0}",
-  "world.83c3d906": "无效指针: {0} - 空值或非datum",
+  "world.83c3d906": "无效指针：{0} - 空或非datum",
   "world.84bb0999": "缺少 GLOB.log_directory！",
   "world.a7bf07b5": "无效的 minimum_required_security_level：{0}！",
-  "world.a9c0b1ad": "不允许访问 World 变量。请使用 global。",
+  "world.a9c0b1ad": "世界变量不允许被访问。请使用global。",
   "world.aff1aad4": "激活 API 失败！",
   "world.b55811e3": "检测到未知的 Interop API 版本！将默认使用最新版本。更新 DMAPI 以修复此问题。",
-  "world.c2a78712": "API datum 已经设置 (\\ref{0} ({1}))！是否多次调用了 TgsNew()？",
+  "world.c2a78712": "API datum已设置 (\\ref{0} ({1}))! 是否多次调用了TgsNew()？",
   "world.c3b680c2": "验证 DMAPI 版本参数失败：{0}！",
   "world.c7d007e4": "/tg/ Station 13",
   "world.c9b8a9e4": "检测到 V3 API，但 TGS_V3_API 未定义！",
   "world.e9eb8abb": "SDQL 查询完成：路径选择了 {0} 个对象，经过 WHERE 过滤/MAP 映射（若适用）后对 {1} 个对象执行了操作。",
   "world.f9ab1113": "指针 {0} 无法被标记",
-  "world.ff78af8e": "错误：无法检查封禁状态，请重试。错误信息：您的计算机在连接时向服务器提供了无效或为空的信息（byond 用户名、IP 和计算机 ID）。所提供的参考信息：用户名：'{0}' IP：'{1}' 计算机 ID：'{2}'。（如果仍然出现此错误，请重启 byond 或联系 byond 支持。）"
+  "world.ff78af8e": "错误：无法检查封禁状态，请重试。错误信息：您的计算机在连接时向服务器提供了无效或空白的信息（byond用户名、IP和计算机ID）。提供的参考信息：用户名：'{0}' IP：'{1}' 计算机ID：'{2}'。（如果您持续收到此错误，请重启byond或联系byond支持。）"
 }
