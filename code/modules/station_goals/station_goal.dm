@@ -24,9 +24,9 @@
 
 /datum/station_goal/proc/get_result()
 	if(check_completion())
-		return "<li>[name] : [span_greentext("Completed!")]</li>"
+		return LANG("datum.fe15b6c1", list(name))
 	else
-		return "<li>[name] : [span_redtext("Failed!")]</li>"
+		return LANG("datum.959dd257", list(name))
 
 /datum/station_goal/Topic(href, href_list)
 	..()

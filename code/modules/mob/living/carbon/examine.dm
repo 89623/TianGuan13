@@ -442,12 +442,12 @@
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
-		. += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
+		. += LANG("mob.01050c26", list(t_He, t_is, held_thing.examine_title(user), t_his, lang_zone(get_held_index_name(get_held_index_of_item(held_thing)))))
 	for(var/obj/item/bodypart/arm/part in get_bodyparts())
 		if(!(part.bodypart_flags & BODYPART_PSEUDOPART))
 			continue
 		var/obj/item/corresponding_item = get_item_for_held_index(part.held_index) || part
-		. += "[t_He] [t_has] a [corresponding_item.examine_title(user)] in place of [t_his] [initial(part.plaintext_zone)]."
+		. += LANG("mob.e3f54875", list(t_He, t_has, corresponding_item.examine_title(user), t_his, lang_zone(initial(part.plaintext_zone))))
 	//gloves
 	if(gloves && !(obscured_slots & HIDEGLOVES) && !HAS_TRAIT(gloves, TRAIT_EXAMINE_SKIP))
 		. += LANG("mob.b09af672", list(t_He, t_has, gloves.examine_title(user), t_his))
@@ -461,7 +461,7 @@
 	//handcuffed?
 	if(handcuffed)
 		var/cables_or_cuffs = istype(handcuffed, /obj/item/restraints/handcuffs/cable) ? "restrained with cable" : "handcuffed"
-		. += span_warning("[t_He] [t_is] [icon2html(handcuffed, user)] [cables_or_cuffs]!")
+		. += span_warning(LANG("mob.a7782b6e", list(t_He, t_is, icon2html(handcuffed, user), cables_or_cuffs)))
 	//shoes
 	if(shoes && !(obscured_slots & HIDESHOES)  && !HAS_TRAIT(shoes, TRAIT_EXAMINE_SKIP))
 		. += LANG("mob.9a62d1c3", list(t_He, t_is, shoes.examine_title(user), t_his))
@@ -544,7 +544,7 @@
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
-		. += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
+		. += LANG("mob.01050c26", list(t_He, t_is, held_thing.examine_title(user), t_his, lang_zone(get_held_index_name(get_held_index_of_item(held_thing)))))
 	for(var/obj/item/bodypart/arm/part in get_bodyparts())
 		if(!(part.bodypart_flags & BODYPART_PSEUDOPART))
 			continue
@@ -559,7 +559,7 @@
 	//handcuffed?
 	if(handcuffed)
 		var/cables_or_cuffs = istype(handcuffed, /obj/item/restraints/handcuffs/cable) ? "restrained with cable" : "handcuffed"
-		. += span_warning("[t_He] [t_is] [icon2html(handcuffed, user)] [cables_or_cuffs]!")
+		. += span_warning(LANG("mob.a7782b6e", list(t_He, t_is, icon2html(handcuffed, user), cables_or_cuffs)))
 	//belt
 	if(belt && !(obscured_slots & HIDEBELT) && !HAS_TRAIT(belt, TRAIT_EXAMINE_SKIP))
 		. += LANG("mob.e82d58d3", list(t_He, t_has, belt.examine_title(user), t_his))

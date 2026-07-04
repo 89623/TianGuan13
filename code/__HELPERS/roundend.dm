@@ -366,15 +366,14 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		parts+= "[FOURSPACES]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
 			parts += "<BR>[FOURSPACES]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
-			parts += "[FOURSPACES](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
+			parts += "[FOURSPACES]([GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "乘紧急穿梭机" : "on emergency shuttle"]): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>" // NOVA EDIT CHANGE - I18N - label gated inline（同文件既有样式）
 		parts += "[FOURSPACES]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
 		if(SSblackbox.first_death)
 			var/list/ded = SSblackbox.first_death
 			if(ded.len)
-				parts += "[FOURSPACES]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
-			//ignore this comment, it fixes the broken sytax parsing caused by the " above
+				parts += "[FOURSPACES][LANG("datum.fdc519ac", list(ded["name"], ded["role"], ded["area"], ded["damage"], ded["last_words"] ? LANG("datum.eb109e14", list(ded["last_words"])) : ""))]"
 			else
-				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
+				parts += "[FOURSPACES][LANG("datum.3ad62a83", null)]"
 
 	parts += "[FOURSPACES][GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "回合" : "Round"]: [SSdynamic.current_tier.name]" // NOVA EDIT - I18N - single-word label gated inline
 	for(var/datum/dynamic_ruleset/rule as anything in SSdynamic.executed_rulesets - SSdynamic.unreported_rulesets)
@@ -484,7 +483,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 		if (aiPlayer.connected_robots.len)
 			var/borg_num = aiPlayer.connected_robots.len
-			parts += "<br><b>[aiPlayer.real_name]</b>'s minions were:"
+			parts += LANG("datum.007e216c", list(aiPlayer.real_name))
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				borg_num--
 				if(robo.mind)
@@ -499,7 +498,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		if (!robo.connected_ai && robo.mind)
 			//NOVA EDIT CHANGE BEGIN - ROUNDEND
 			//parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>) [(robo.stat != DEAD)? "[span_greentext("survived")] as an AI-less borg!" : "was [span_redtext("unable to survive")] the rigors of being a cyborg without an AI."] Its laws were:"
-			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> [(robo.stat != DEAD)? "[span_greentext("survived")] as an AI-less borg!" : "was [span_redtext("unable to survive")] the rigors of being a cyborg without an AI."] Its laws were:"
+			parts += "[borg_spacer?"<br>":""][robo.stat != DEAD ? LANG("datum.ca3200c9", list(robo.name)) : LANG("datum.563f3781", list(robo.name))]"
 			//NOVA EDIT CHANGE END
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
@@ -756,7 +755,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/list/objective_parts = list()
 	var/count = 1
 	for(var/datum/objective/objective in objectives)
-		objective_parts += "<b>[objective.objective_name] #[count]</b>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones hit the to_chat boundary engine)
+		objective_parts += "<b>[lang_reverse_text(objective.objective_name)] #[count]</b>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones hit the to_chat boundary engine); objective_name 同样反查（"Objective"→目标）
 		count++
 	return objective_parts.Join("<br>")
 
@@ -768,7 +767,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		parts += "<span class='infoplain'>Total Achievements Earned: <B>[length(GLOB.achievements_unlocked)]!</B></span><BR>"
 		parts += "<ul class='playerlist'>"
 		for(var/datum/achievement_report/cheevo_report in GLOB.achievements_unlocked)
-			parts += "<b>[cheevo_report.winner]</b> earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>" // NOVA EDIT - No ckeys in the round end report - ORIGINAL: parts += "<BR>[cheevo_report.winner_key] was <b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
+			parts += LANG("datum.eacda27e", list(cheevo_report.winner, cheevo_report.cheevo, cheevo_report.award_location)) // NOVA EDIT - No ckeys in the round end report - ORIGINAL: parts += "<BR>[cheevo_report.winner_key] was <b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
 		parts += "</ul>"
 		return "<div class='panel greenborder'><ul>[parts.Join()]</ul></div>"
 

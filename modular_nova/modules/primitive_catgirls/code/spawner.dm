@@ -265,9 +265,9 @@
 /datum/team/primitive_catgirls/roundend_report()
 	var/list/report = list()
 
-	report += span_header("An Ice Walker Tribe inhabited the wastes...</span><br>")
+	report += span_header(LANG("datum.8c133ae7", null))
 	if(length(members))
-		report += "The [member_name]s were:"
+		report += LANG("datum.f3efa5d0", list(member_name))
 		report += printplayerlist(members)
 	else
 		report += "<b>But none of its members woke up!</b>"

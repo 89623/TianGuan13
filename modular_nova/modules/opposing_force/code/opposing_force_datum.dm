@@ -863,20 +863,20 @@
 	report += span_greentext(mind_reference.current?.real_name)
 
 	if(set_backstory)
-		report += "<b>Had an approved OPFOR application with the following backstory:</b><br>"
+		report += LANG("datum.73f23651", null)
 		report += "[set_backstory]<br>"
 
 	if(objectives.len)
-		report += "<b>And with the following objectives:</b><br>"
+		report += LANG("datum.69f00916", null)
 		for(var/datum/opposing_force_objective/opfor_objective in objectives)
 			if(opfor_objective.status != OPFOR_OBJECTIVE_STATUS_APPROVED)
 				continue
-			report += "<b>Title:</b> [opfor_objective.title]<br>"
-			report += "<b>Description:</b> [opfor_objective.description]<br>"
+			report += LANG("datum.8ff39033", list(opfor_objective.title))
+			report += LANG("datum.31dcde53", list(opfor_objective.description))
 			report += "<br>"
 
 	if(selected_equipment.len)
-		report += "<b>And had the following approved equipment:</b><br>"
+		report += LANG("datum.180ddcfe", null)
 		for(var/datum/opposing_force_selected_equipment/opfor_equipment in selected_equipment)
 			if(opfor_equipment.status != OPFOR_EQUIPMENT_STATUS_APPROVED)
 				continue

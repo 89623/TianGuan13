@@ -416,9 +416,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 				break
 
 	if(objectives.len == 0 || objectives_complete)
-		report += "<span class='greentext big'>The [name] was successful!</span>"
+		report += "<span class='greentext big'>[LANG("datum.edebafa5", list(name))]</span>"
 	else
-		report += "<span class='redtext big'>The [name] has failed!</span>"
+		report += "<span class='redtext big'>[LANG("datum.cd8dd865", list(name))]</span>"
 
 	return report.Join("<br>")
 
@@ -428,7 +428,7 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Appears at start of roundend_catagory section.
  */
 /datum/antagonist/proc/roundend_report_header()
-	return span_header("[lang_reverse_text("The [roundend_category] were:")]<br>") // NOVA EDIT - I18N - reverse the full "The X were:" header (non-interpolated; the to_chat AC only does substrings)
+	return span_header("[LANG("datum.6935f01c", list(roundend_category))]<br>") // NOVA EDIT - I18N - LANG 模板（原整串反查只救目录里恰好有的组合，"The Aliens were:" 等组合命不中）
 
 /**
  * Proc that sends string data for the round-end report.

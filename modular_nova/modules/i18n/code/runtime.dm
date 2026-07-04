@@ -103,6 +103,13 @@ GLOBAL_LIST_INIT(i18n_cache, build_i18n_cache())
 			translated = lang_reverse_text(lowered)
 			if(translated != lowered)
 				return translated
+	// 小写形实参（"The [special_role_text] has failed!" 的 LOWER_TEXT 角色名等）：目录按原始
+	// 大写形收录（"Traitor"）→ 首字母大写后再试一次。
+	var/capped = capitalize(arg)
+	if(capped != arg)
+		translated = lang_reverse_text(capped)
+		if(translated != capped)
+			return translated
 	return arg
 
 /// **逆向**反查：把「已被反查成译文」的显示串还原回英文原文。用于 act 回传/按英文建键的查表
