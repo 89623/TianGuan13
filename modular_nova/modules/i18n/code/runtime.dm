@@ -300,6 +300,22 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 			. = reverse[collapsed]
 			if(!isnull(.))
 				return .
+	// 仍未命中：strings/ 数据文件的值偶带首尾空白（如 ion_laws.json 的 "BILLION … SHAB-AB-DOOD-ILLION "），
+	// 抽取器入目录时按 trim 形态存 → 运行时原样值精确反查失手（strings 加载处反查/模板实参反查都路过这里）。
+	// trim 后再查一次，命中则把原首尾空白拼回（离子法则等下游拼接依赖这些空格）。
+	// 廉价守卫：首/尾字节是空白才走（513+ 文本 proc 按字节偏移，空白必为 ASCII，UTF-8 续字节 >127 不误伤）。
+	var/textlen = length(text)
+	if(text2ascii(text, 1) <= 32 || text2ascii(text, textlen) <= 32)
+		var/start = 1
+		while(start <= textlen && text2ascii(text, start) <= 32)
+			start++
+		var/end = textlen
+		while(end >= start && text2ascii(text, end) <= 32)
+			end--
+		if(end >= start)
+			. = reverse[copytext(text, start, end + 1)]
+			if(!isnull(.))
+				return copytext(text, 1, start) + . + copytext(text, end + 1)
 	return text
 
 /// 显示用「物件名」本地化：先整串精确反查（命中堆叠/单词名/已译名幂等），miss 再走 AC 子串兜
