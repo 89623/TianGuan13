@@ -221,6 +221,7 @@ export const DmTarget = new Juke.Target({
     'sound/**',
     'tgui/public/tgui.html',
     "modular_nova/**", ///NOVA EDIT ADDITION - Making the CBT work
+    "modular_z121/**",
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
@@ -449,6 +450,7 @@ export const AllTarget = new Juke.Target({
 
 export const TguiCleanTarget = new Juke.Target({
   executes: async () => {
+    Juke.rm('node_modules', { recursive: true });
     Juke.rm('tgui/public/.tmp', { recursive: true });
     Juke.rm('tgui/public/*.map');
     Juke.rm('tgui/public/*.{chunk,bundle,hot-update}.*');
