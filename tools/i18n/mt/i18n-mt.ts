@@ -709,6 +709,13 @@ function computePending(file: string): Catalog {
   const pending: Catalog = {};
   for (const key of Object.keys(en)) {
     if (allow && !allow.has(key)) continue;
+    // 显式清单（ONLY_KEYS）里的缺失/占位条目跳过可译性启发式（hasTranslatableEnglish 会把
+    // 单个全大写词判成标识符——但人工点名的词池条目如 ion 暗号池 "PRETZELS" 就是要翻）。
+    if (allow && (zh[key] == null || zh[key] === '' || zh[key] === en[key])) {
+      if (key != null && isKeepEnglish(key, en[key])) continue;
+      pending[key] = en[key];
+      continue;
+    }
     if (needsTranslation(en[key], zh[key], key)) pending[key] = en[key];
   }
   return pending;

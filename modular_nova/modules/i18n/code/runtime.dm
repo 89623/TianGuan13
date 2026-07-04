@@ -323,6 +323,13 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 			. = reverse[copytext(text, start, end + 1)]
 			if(!isnull(.))
 				return copytext(text, 1, start) + . + copytext(text, end + 1)
+	// 仍未命中：strings/ 数据值偶带**成对单引号**（ion_laws.json 词池 "'PRETZELS'"），抽取器
+	// 入目录存去引号形 → 原样精确失手（暗号生成、离子法则实参都路过）。剥引号再查，命中直接
+	// 返回译文（zh 不需要英文式引号强调；与 'Clown'→小丑 的既有目录行为一致）。
+	if(textlen > 2 && text2ascii(text, 1) == 39 && text2ascii(text, textlen) == 39)
+		. = reverse[copytext(text, 2, textlen)]
+		if(!isnull(.))
+			return .
 	return text
 
 /// 显示用「物件名」本地化：先整串精确反查（命中堆叠/单词名/已译名幂等），miss 再走 AC 子串兜
@@ -511,6 +518,12 @@ GLOBAL_LIST_INIT(i18n_autopsy_labels, list(
 /// 见 i18n_autopsy_labels：验尸报告拼好后本地化。autopsy_scanner 的 jointext 落地点调用。
 /proc/lang_localize_autopsy(text)
 	return lang_apply_label_map(text, GLOB.i18n_autopsy_labels)
+
+/// 消息是否以「双感叹」结尾（大喊）。全角 ！ 与半角 ! 等价（含混排 !！/！!）——
+/// 中文输入法默认全角标点，原判定只认半角导致中文玩家喊不出来。say_mod/say_quote/runechat 共用。
+/proc/lang_yell_ending(text)
+	var/last_two = copytext_char(text, -2)
+	return last_two == "!!" || last_two == "！！" || last_two == "!！" || last_two == "！!"
 
 /// 「多词」门槛的反查：仅含空白（多词/短语）的串才查表，避免把 On/None/枚举值/ckey 这类
 /// 单词误翻（动态数据常正好等于某常见词）。短语类（datum 的 desc、多词 name）才反查。

@@ -155,6 +155,11 @@ bun tools/i18n/mt/i18n-mt.ts translate-terms obj.json
 # 翻译后再检查剩余待译
 bun tools/i18n/mt/i18n-mt.ts pending obj.json
 
+# 显式清单翻译（I18N_ONLY_KEYS=<json>，格式 {"<ns>.json":[key...]}）：只翻清单内条目，
+# 且清单内「缺失/占位」条目**绕过可译性启发式**（hasTranslatableEnglish 把单个全大写词判成
+# 标识符跳过——但人工点名的词池条目如 ion 暗号池 "PRETZELS" 就是要翻；keep-english 仍豁免）
+I18N_ONLY_KEYS=tools/i18n/mt/.pending/miss-priority.json bun tools/i18n/mt/i18n-mt.ts
+
 # 深度复查（重判中英混杂）后，把「模型翻过仍保留英文」的条目批量登记保持英文——
 # 拉丁彩蛋/@pick 模板/专名密集句反复重翻不收敛，登记后深度复查也放行；
 # 删除 keep-english.<locale>.json 里对应条目即恢复重译

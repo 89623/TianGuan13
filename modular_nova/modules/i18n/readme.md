@@ -67,6 +67,11 @@ locale 解析：
   - **自我体检累加器**：`is_examine_accumulator` 增 `combined_msg`/`check_list`（extract.rs）→ 「You check yourself for injuries.」「Your {0} looks {1}.」等进 LANG（重写 14 处/4 文件）。残留：状态词 OK/no damage 与 has/looks 连接词是实参短词、仍英文（伤情词表是更深一层 vocab）。
 - **方法调用形式的汇聚点接入（重大覆盖修复，`tools/i18n/src/extract.rs` + `rewrite.rs`）**：此前抽取/改写只检测**裸调用** `Term::Call`（`visible_message(...)`、隐式 src），**完全漏掉方法调用** `X.visible_message(...)`/`src.say(...)`/`M.balloon_alert(...)`（AST 里是 `Follow::Call`，在 follow 链上）——而战斗/交互的可见消息绝大多数是这种形式。修复：两个 `recurse_follow` 对 `Follow::Call(_, name, args)` 也查 `sink_message_args(name)`；rewrite 用 follow 自身的 `Spanned` Location 定位，并让 `find_open_paren` 跳过方法调用的前导属性访问标点（`.`/`:`/`?.`）。一次重抽 **+6375 条**、重写 **7560 处 / 1504 文件**（如 `user.visible_message(span_danger("[user] fires [src]!"))` → `LANG`）。DM 全量编译 0 errors、tg/nova grep 通过。
 
+- **叛徒暗号全中文**（显示/说出/聊天高亮三处同源一份值，正则是纯 alternation 无 \b → 中文不破功能）：
+  - 生成器 `code/__HELPERS/names.dm`：职业分支 `lang_reverse_text(job.title)`；地点分支中文时反查区域原名（跳过 LOWER_TEXT——小写形对不上目录键）；ion 词池分支靠 strings 加载反查天然中文。
+  - `lang_reverse_text` 新增**成对单引号剥离重试**（ion 词池值 "'PRETZELS'" vs 目录去引号形——与 trim 兜底同款 miss-path 修复）。
+  - ion 词池 450 个全大写单词此前被 MT 标识符启发式跳过 → `I18N_ONLY_KEYS` 显式清单现在**绕过可译性闸门**（人工点名即翻），已全部补译。
+- **全角标点触发喊话/疑问**（中文输入法默认全角，原判定只认半角）：`lang_yell_ending`（！！/!!/混排）接入 `say.dm` 的 `say_mod`+`say_quote`、`chatmessage.dm`（runechat 大字）；`？`/`！` 单结尾等价接入 `say_mod`/`say_test`。均 NOVA EDIT CHANGE。
 - **回合结束报告收口（同 examine：browse 大块 HTML，模板引擎无法整句命中 → 拼接行 LANG 化；玩家回合报告截图实证）**：
   - `code/__HELPERS/roundend.dm`：首位死亡行（含遗言嵌套模板）/无人死亡行/AI 下属单位头/无 AI 赛博格存亡行/成就行（成就名经 LANG 实参链整串反查——坏译已修 datum.83529008）/`printobjectives` 的 `objective_name` 补反查/「乘紧急穿梭机」标签 inline gate。
   - `carbon/examine.dm` 补收三处裸拼接：手持物行（`{0} {1} holding {2} in {3} {4}.`，手名 `lang_zone`）/义肢行/被铐行（handcuffed/restrained with cable 进 `_state_words`）。

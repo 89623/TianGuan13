@@ -256,7 +256,7 @@ GLOBAL_VAR(command_name)
 					if(2)
 						var/datum/job/job = pick(SSjob.joinable_occupations)
 						if(job)
-							. += job.title //Returns a job.
+							. += lang_reverse_text(job.title) //Returns a job. // NOVA EDIT CHANGE - I18N - 职业名反查（暗号显示/说出/高亮同源，全中文一致）。ORIGINAL: . += job.title
 						else
 							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
 							. += "Bug"
@@ -268,7 +268,11 @@ GLOBAL_VAR(command_name)
 					if(2)
 						. += LOWER_TEXT(pick(foods))
 					if(3)
-						. += LOWER_TEXT(pick(locations))
+						// NOVA EDIT CHANGE START - I18N - 中文时反查区域原名（LOWER_TEXT 小写形对不上目录大小写键；
+						// 暗号的显示/说出/聊天高亮正则同源一份值，翻了不破功能）。ORIGINAL: . += LOWER_TEXT(pick(locations))
+						var/location_pick = pick(locations)
+						. += GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? LOWER_TEXT(location_pick) : lang_reverse_text(location_pick)
+						// NOVA EDIT CHANGE END
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.

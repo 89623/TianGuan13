@@ -142,7 +142,7 @@
 		extra_classes |= "small"
 
 	// Why are you yelling?
-	if(copytext_char(text, -2) == "!!")
+	if(lang_yell_ending(text)) // NOVA EDIT CHANGE - I18N - 全角！！等价。ORIGINAL: if(copytext_char(text, -2) == "!!")
 		extra_classes |= SPAN_YELL
 
 	var/list/prefixes
