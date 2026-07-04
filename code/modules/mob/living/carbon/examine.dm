@@ -97,14 +97,14 @@
 			damage_text = "limp and lifeless"
 		else
 			damage_text = (body_part.brute_dam >= body_part.burn_dam) ? body_part.heavy_brute_msg : body_part.heavy_burn_msg
-		. += span_boldwarning("[capitalize(t_his)] [body_part.plaintext_zone] looks [damage_text]!")
+		. += span_boldwarning(LANG("mob.3a6ab594", list(capitalize(t_his), lang_zone(body_part.plaintext_zone), damage_text)))
 
 	//stores missing limbs
 	var/l_limbs_missing = 0
 	var/r_limbs_missing = 0
 	for(var/missing_limb in get_missing_limbs())
 		if(missing_limb == BODY_ZONE_HEAD)
-			. += span_deadsay("<B>[t_His] [parse_zone(missing_limb)] is missing!</B>")
+			. += span_deadsay(LANG("mob.ff5e16b5", list(t_His, parse_zone(missing_limb))))
 			continue
 		if(missing_limb == BODY_ZONE_L_ARM || missing_limb == BODY_ZONE_L_LEG)
 			l_limbs_missing++
@@ -186,22 +186,29 @@
 				grasped_limbs += body_part.plaintext_zone
 
 		if(LAZYLEN(bleeding_limbs))
+			// NOVA EDIT ADDITION START - I18N - 部位列表逐词反查 + 顿号连接（en 路径与原 english_list 等价）
+			var/zones_text
+			if(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+				zones_text = english_list(bleeding_limbs, and_text = " and ")
+			else
+				var/list/zones_local = list()
+				for(var/zone in bleeding_limbs)
+					zones_local += lang_zone(zone)
+				zones_text = jointext(zones_local, "、")
+			// NOVA EDIT ADDITION END
 			var/bleed_text = "<b>"
+			// NOVA EDIT CHANGE START - I18N - 原三段拼接（前缀 + english_list + 条件后缀）改为整句 LANG 模板：
+			// examine 是多行大块文本，边界模板引擎无法整句命中，拼接句永远残留英文；en 输出与原拼接逐字一致。
 			if(appears_dead)
 				bleed_text += "<span class='deadsay'>"
-				bleed_text += "Blood is visible in [t_his] open "
+				bleed_text += LANG("mob.7b996261", list(t_his, zones_text))
 			else
 				bleed_text += "<span class='warning'>"
-				bleed_text += "[t_He] [t_is] bleeding from [t_his] "
-
-			bleed_text += english_list(bleeding_limbs, and_text = " and ")
-
-			if(appears_dead)
-				bleed_text += ", but it has pooled and is not flowing."
-			else
 				if(HAS_TRAIT(src, TRAIT_BLOOD_FOUNTAIN))
-					bleed_text += " incredibly quickly"
-				bleed_text += "!"
+					bleed_text += LANG("mob.366794fc", list(t_He, t_is, t_his, zones_text))
+				else
+					bleed_text += LANG("mob.42c4b423", list(t_He, t_is, t_his, zones_text))
+			// NOVA EDIT CHANGE END
 
 			if(appears_dead)
 				bleed_text += "<span class='deadsay'>"
@@ -212,7 +219,7 @@
 			. += bleed_text
 			if(LAZYLEN(grasped_limbs))
 				for(var/grasped_part in grasped_limbs)
-					. += "[t_He] [t_is] holding [t_his] [grasped_part] to slow the bleeding!"
+					. += LANG("mob.f89190fe", list(t_He, t_is, t_his, lang_zone(grasped_part)))
 
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		. += span_smallnoticeital(LANG("mob.aa008903", list(t_He, t_is))) // this should be signalized
@@ -388,13 +395,13 @@
 	//This checks to see if the body is revivable
 	var/obj/item/organ/brain = get_organ_by_type(/obj/item/organ/brain)
 	if((brain && HAS_TRAIT(brain, TRAIT_GHOSTROLE_ON_REVIVE)) || HAS_TRAIT(src, TRAIT_GHOSTROLE_ON_REVIVE))
-		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life, but another soul may take [t_his] place...")
+		return span_deadsay(LANG("mob.eb764b26", list(t_He, t_is, t_his)))
 	var/client_like = client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE)
 	var/valid_ghost = ghost?.can_reenter_corpse && ghost?.client
 	var/valid_soul = brain || !HAS_TRAIT(src, TRAIT_FAKE_SOULLESS)
 	if((brain && client_like) || (valid_ghost && valid_soul))
-		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
-	return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
+		return span_deadsay(LANG("mob.30af32e7", list(t_He, t_is)))
+	return span_deadsay(LANG("mob.807d7bcc", list(t_He, t_is, t_his)))
 
 /// Returns a list of "damtype" => damage description based off of which bodypart description is most common
 /mob/living/carbon/proc/get_majority_bodypart_damage_desc()

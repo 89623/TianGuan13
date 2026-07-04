@@ -653,9 +653,9 @@
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	if ((wound_flags & ACCEPTS_GAUZE) && current_gauze)
 		var/sling_condition = get_gauze_condition()
-		desc = LANG("datum.81f1bbc0", list(victim.p_Their(), limb.plaintext_zone, sling_condition, current_gauze.name))
+		desc = LANG("datum.81f1bbc0", list(victim.p_Their(), lang_zone(limb.plaintext_zone), sling_condition, current_gauze.name))
 	else
-		desc = "[victim.p_Their()] [limb.plaintext_zone] [examine_desc]"
+		desc = LANG("datum.e4bf1a90", list(victim.p_Their(), lang_zone(limb.plaintext_zone), examine_desc))
 
 	desc = modify_desc_before_span(desc, user)
 
