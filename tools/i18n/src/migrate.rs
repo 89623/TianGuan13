@@ -17,7 +17,10 @@ use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::Path;
 
 const FUZZY_MIN_TOKENS: usize = 3;
-const FUZZY_MIN_DICE: f64 = 0.8;
+// 实测 0.8~0.89 仍大量接错（"SOOC channel"←"dead chat channel"、主宾对调句、"improving"←"affecting"）：
+// token 相似度对「换一个实体词/一处措辞」不敏感，而那恰是译文必须跟着变的地方。0.95 = 只放行
+// 「标点/大小写/一两个虚词」级别的差异，其余留给 MT 重翻（接错比漏译贵——漏译还会被 MT 补上）。
+const FUZZY_MIN_DICE: f64 = 0.95;
 
 pub fn run(fresh: &Catalog, en_dir: &Path) -> Result<()> {
     let Some(locales_root) = en_dir.parent() else {
@@ -185,6 +188,14 @@ fn best_orphan(
         if content.intersection(&other_content).count() < 2 {
             continue;
         }
+        // 极性词出现集不一致直接否决：否定/反转（"now"↔"no longer"）语义相反，
+        // token 相似度看不出来（实测 Dice 0.84 仍接错）。
+        let polarity_of = |set: &HashSet<String>| -> Vec<&'static str> {
+            POLARITY.iter().copied().filter(|p| set.contains(*p)).collect()
+        };
+        if polarity_of(tokens) != polarity_of(other) {
+            continue;
+        }
         if placeholders(orphans[i].1) != ph {
             continue; // 占位符集不一致：迁移会产生孤立 {N} 或丢参
         }
@@ -201,6 +212,9 @@ const STOPWORDS: [&str; 16] = [
     "the", "a", "an", "is", "are", "was", "you", "your", "now", "of", "to", "in", "and", "or",
     "on", "it",
 ];
+
+/// 否定/反转极性词（tokenize 后形态）：两侧出现集不一致时禁止近似迁移（见 best_orphan）。
+const POLARITY: [&str; 6] = ["no", "not", "never", "longer", "cannot", "already"];
 
 fn tokenize(s: &str) -> HashSet<String> {
     s.split(|c: char| !c.is_alphanumeric())

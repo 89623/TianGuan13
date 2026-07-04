@@ -123,6 +123,8 @@ const SINK_VARS: &[&str] = &[
     "simple_treat_text",
     "homemade_treat_text",
 ];
+// 注：基础 mob 闲聊池 speak/emote_hear/emote_see 不在 SINK_VARS——它们是 list 初值，
+// 走专门的 is_speech_pool 分支（emit_list_strings 逐元素抽），见变量抽取处。
 
 /// 「句子型」玩家可见文案启发式：多词自然语句（含空格 + 首字母大写 + 含小写字母 + 无占位符）。
 /// 用于把「不在 sink 调用处」的玩家可见静态串（config_entry 公告默认值、具名累加器 examine 句）
@@ -225,6 +227,32 @@ fn identifier_policy() -> &'static IdentifierPolicy {
             names: Default::default(),
             suffixes: Default::default(),
         }
+    })
+}
+
+/// 选项/按钮列表累加器（`send_off_options += "Send to custom"` 等）：元素是 tgui_alert/
+/// tgui_input_list 的 act 回传标识符，进目录会被 lint 判碰撞（is_sentence_like 无句末标点闸，
+/// "Send to custom" 这类短语能穿过）。按变量名后缀排除。
+fn is_option_accumulator(id: &str) -> bool {
+    id.ends_with("options") || id.ends_with("choices") || id.ends_with("buttons")
+        || id.ends_with("items")
+}
+
+/// 实参是否为 perform_emote / perform_speech 类 AI 行为类型路径（任一路径段命中即可，
+/// 兼容子类型如 /datum/ai_behavior/perform_speech/xxx）。供 queue_behavior 专项抽取判别。
+fn is_speech_behavior_path(expr: &Expression) -> bool {
+    let Expression::Base { term, follow } = expr else {
+        return false;
+    };
+    if !follow.is_empty() {
+        return false;
+    }
+    let Term::Prefab(prefab) = &term.elem else {
+        return false;
+    };
+    prefab.path.iter().any(|(_, seg)| {
+        let seg = seg.as_str();
+        seg.starts_with("perform_emote") || seg.starts_with("perform_speech")
     })
 }
 
@@ -624,13 +652,19 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             // 售货机口号/广告：`product_slogans = "口号1;口号2;…"`（分号拼接，Initialize 里 splittext 拆开、
             // say(pick(slogan_list)) 喊出）。整串非单句 → 按 `;` 拆成逐条抽取，靠聊天 AC 子串层翻译。
             let is_slogan = var_name == "product_slogans" || var_name == "product_ads";
+            // 基础 mob 闲聊池：`speak/emote_hear/emote_see = list("…")`（~120 处）。表情行小写动词
+            // 开头（"jumps in a circle."）→ 激进 pass 首字母大写闸挡掉，且 list 初值走 build_template
+            // 返回 None → 必须逐元素抽。显示经 say/manual_emote → 聊天 AC 兜底翻。
+            let is_speech_pool = matches!(var_name.as_str(), "speak" | "emote_hear" | "emote_see");
             // 激进 pass：任何类型变量初值里的「句子型」字面量（含 list 元素与插值模板）。
             // 自定义 examine 文本变量（dry_desc 类）、pick 表、未列入 SINK_VARS 的长尾自动入目录
             // （句末标点闸门挡住标识符/枚举名）；显示靠反查表/字面 AC/模板逆匹配引擎。
             if let Some(expr) = &type_var.value.expression {
                 visit_expr(expr, &namespace, &mut catalog, suppress_aggressive, false);
             }
-            if !is_sink && !is_config_default && !is_aas_template && !is_law_list && !is_slogan {
+            if !is_sink && !is_config_default && !is_aas_template && !is_law_list && !is_slogan
+                && !is_speech_pool
+            {
                 continue;
             }
             if let Some(expr) = &type_var.value.expression {
@@ -638,9 +672,13 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                     emit_message_list(expr, &namespace, &mut catalog);
                     continue;
                 }
-                if is_law_list {
+                if is_law_list || is_speech_pool {
                     emit_list_strings(expr, &namespace, &mut catalog);
-                    continue;
+                    if is_law_list {
+                        continue;
+                    }
+                    // speech pool 偶见纯串形式（speak = "Polly wants a cracker!"）→ 继续走下面的
+                    // build_template 抽整串（list 形式 build_template 返回 None，无重复）。
                 }
                 if is_slogan {
                     // 整串 "口号1;口号2" → 按 `;` 拆，逐条抽（去首尾空白，跳过含占位符/空条）。
@@ -904,6 +942,43 @@ fn visit_stmt(stmt: &Statement, ns: &str, catalog: &mut Catalog, suppress: bool,
             }
         }
         Statement::Setting { value, .. } => visit_expr(value, ns, catalog, suppress, ident_proc),
+        // for-in / for-range / do-while / try-catch / label 体：此前全部落进 `_ => {}` ——
+        // **所有 for(x in list) 循环体内的字符串（sink 实参 + 激进 pass）都没被抽取**
+        // （实测：bitrunning get_available_domains 的 "Limited scanning capabilities…" 漏抽）。
+        // lint.rs / labels.rs 早已覆盖这些变体，唯 extract 漏；rewrite.rs 同样缺失（见 README 已知事项）。
+        Statement::DoWhile { block, condition } => {
+            visit_block(block, ns, catalog, suppress, ident_proc);
+            visit_expr(&condition.elem, ns, catalog, suppress, ident_proc);
+        }
+        Statement::ForList(f) => {
+            if let Some(e) = &f.in_list {
+                visit_expr(e, ns, catalog, suppress, ident_proc);
+            }
+            visit_block(&f.block, ns, catalog, suppress, ident_proc);
+        }
+        Statement::ForKeyValue(f) => {
+            if let Some(e) = &f.in_list {
+                visit_expr(e, ns, catalog, suppress, ident_proc);
+            }
+            visit_block(&f.block, ns, catalog, suppress, ident_proc);
+        }
+        Statement::ForRange(f) => {
+            visit_expr(&f.start, ns, catalog, suppress, ident_proc);
+            visit_expr(&f.end, ns, catalog, suppress, ident_proc);
+            if let Some(e) = &f.step {
+                visit_expr(e, ns, catalog, suppress, ident_proc);
+            }
+            visit_block(&f.block, ns, catalog, suppress, ident_proc);
+        }
+        Statement::TryCatch {
+            try_block,
+            catch_block,
+            ..
+        } => {
+            visit_block(try_block, ns, catalog, suppress, ident_proc);
+            visit_block(catch_block, ns, catalog, suppress, ident_proc);
+        }
+        Statement::Label { block, .. } => visit_block(block, ns, catalog, suppress, ident_proc),
         _ => {}
     }
 }
@@ -984,7 +1059,9 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool
                                 // ident_proc（update_overlays 等）：bare-`.` 是 icon_state/标识符，不抽。
                                 if (id == "." && !ident_proc) || is_examine_accumulator(id) {
                                     emit(catalog, ns, &template);
-                                } else if is_sentence_like(&template) {
+                                } else if is_sentence_like(&template)
+                                    && !is_option_accumulator(id)
+                                {
                                     emit(catalog, ns, &template);
                                 }
                             }
@@ -1114,6 +1191,17 @@ fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog, suppress: bo
                         if let Some(template) = build_template(arg) {
                             emit(catalog, ns, &template);
                         }
+                    }
+                }
+            }
+            // AI 行为队列的说话/表情字面量：`controller.queue_behavior(/datum/ai_behavior/perform_emote,
+            // "splashes water all around!")`。消息小写动词开头 → 激进 pass 的首字母大写闸挡掉；
+            // queue_behavior 又不能整体当 sink（其它行为的实参是黑板键标识符）→ 只在第一实参是
+            // perform_emote/perform_speech 类型路径时抽第二实参。
+            if name.as_str() == "queue_behavior" && args.len() >= 2 {
+                if is_speech_behavior_path(&args[0]) {
+                    if let Some(template) = build_template(&args[1]) {
+                        emit(catalog, ns, &template);
                     }
                 }
             }

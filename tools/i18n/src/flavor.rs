@@ -33,7 +33,19 @@ const FLAVOR_FILES: &[&str] = &[
     // 离子法则碎片池（ALLCAPS 名词/动词短语）。模板句由 extract 的 generate_ion_law 专项抽；
     // 碎片在 strings 加载处反查成中文、显示端模板逆匹配引擎整句收口。
     "ion_laws.json",
+    // 情人节：搭讪语（valentines，卡片纸整段文本）+ 糖果心（candyhearts，条目本身就是完整句
+    // "A heart-shaped candy that reads: X"，vday.dm 直接整串赋 desc → 加载处反查整串命中）。
+    "valentines.json",
 ];
+
+/// 只收**部分 section** 的 strings JSON：同文件其余 section 是 `@pick(...)` 生成器子池 /
+/// 字母变换表（如 traumas.json 的 y_replacements=["y","i","e"]、semicolon=[";"]），整文件收会
+/// 往目录塞单字符噪音、翻译还会破坏生成逻辑。句子 section 里的 `@pick(x)` 宏逐字保留（译者同）。
+const FLAVOR_JSON_SECTIONS: &[(&str, &[&str])] = &[(
+    // 脑创伤呓语（brain_damage：胡话整句）+ 神明幻觉 ALLCAPS 台词（god_*）。
+    "traumas.json",
+    &["brain_damage", "god_foe", "god_aggressive", "god_neutral", "god_unstun", "god_heal"],
+)];
 
 /// 递归纳入其下所有 .json 的 flavor 子目录。
 const FLAVOR_DIRS: &[&str] = &["antagonist_flavor", "wounds"];
@@ -41,6 +53,20 @@ const FLAVOR_DIRS: &[&str] = &["antagonist_flavor", "wounds"];
 pub(crate) fn extract_flavor(strings_root: &Path, catalog: &mut Catalog) {
     for name in FLAVOR_FILES {
         extract_flavor_file(&strings_root.join(name), catalog);
+    }
+    for (name, sections) in FLAVOR_JSON_SECTIONS {
+        let Ok(text) = std::fs::read_to_string(strings_root.join(name)) else {
+            continue;
+        };
+        let Ok(serde_json::Value::Object(map)) = serde_json::from_str::<serde_json::Value>(&text)
+        else {
+            continue;
+        };
+        for section in *sections {
+            if let Some(value) = map.get(*section) {
+                collect_json_strings(value, catalog);
+            }
+        }
     }
     for dir in FLAVOR_DIRS {
         if let Ok(entries) = std::fs::read_dir(strings_root.join(dir)) {
