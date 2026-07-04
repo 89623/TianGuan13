@@ -110,6 +110,14 @@ enum Cmd {
         #[arg(long, default_value = "tools/i18n/dm_labels.json")]
         out: PathBuf,
     },
+    /// 计算英文模板的稳定目录 key（`<ns>.<blake3 前 8 位>`）。手工 LANG 化裸拼接行时用：
+    /// 取 key → 模板手工写进 en 目录（zh 同 key 填译文）→ 源码写 LANG("<key>", args)。
+    Key {
+        /// 命名空间（obj/mob/datum/…，通常=类型路径首段）。
+        namespace: String,
+        /// 英文模板（含 {0}/{1} 占位符，与 en 目录值逐字一致）。
+        template: String,
+    },
 }
 
 fn main() -> Result<()> {
@@ -132,5 +140,12 @@ fn main() -> Result<()> {
         } => lint::run(&dme, &catalog, &locale, Some(baseline), update_baseline, no_ast),
         Cmd::Pseudo { catalog, locale } => pseudo::run(&catalog, &locale),
         Cmd::Labels { dme, out } => labels::run(&dme, &out),
+        Cmd::Key {
+            namespace,
+            template,
+        } => {
+            println!("{}", keys::make_key(&namespace, &template));
+            Ok(())
+        }
     }
 }
