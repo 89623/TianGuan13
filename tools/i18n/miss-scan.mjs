@@ -93,12 +93,29 @@ for (const file of fs.readdirSync(enDir).filter((f) => f.endsWith('.json'))) {
 // 片段检索用大 haystack（\x00 分隔防跨值误命中）
 const haystack = fragmentsHaystack.join('\x00');
 
+// ---- 口音替换词池（有意保英文，不进目录）----
+// strings/*_replacement.json 是逐词/短语替换表（ork/鱼语/意式口音…），翻译会破坏替换机制，
+// 按既定方针保持英文。它们每局都会刷 miss 日志 → 单独分桶降噪，别混进「没进目录」。
+const poolWords = new Set();
+const stringsDir = path.join(repoRoot, 'strings');
+for (const file of fs.readdirSync(stringsDir).filter((f) => f.endsWith('_replacement.json'))) {
+  const collect = (value) => {
+    if (typeof value === 'string') {
+      const s = value.trim().toLowerCase();
+      if (s) poolWords.add(s);
+    } else if (Array.isArray(value)) value.forEach(collect);
+    else if (value && typeof value === 'object') Object.values(value).forEach(collect);
+  };
+  collect(JSON.parse(fs.readFileSync(path.join(stringsDir, file), 'utf8')));
+}
+
 // ---- 归类 ----
 const buckets = {
   已译未接通: [], // 在目录且已译 → 路径绕过，落地点补反查
   在目录未译: [], // 在目录但 zh==en → MT/白名单判断
   目录片段: [], // 是某目录值的子串 → AC 拆碎，整串反查
   没进目录: [], // 抽取器漏抽 → 补抽取源/手维护文件
+  词池保英文: [], // 口音替换词池 → 有意不译，纯降噪展示
 };
 for (const [text, { count, sources }] of misses) {
   if (count < minCount) continue;
@@ -107,6 +124,8 @@ for (const [text, { count, sources }] of misses) {
   if (hit) {
     row.catalog = `${hit.ns}#${hit.key}`;
     buckets[hit.translated ? '已译未接通' : '在目录未译'].push(row);
+  } else if (poolWords.has(text.toLowerCase())) {
+    buckets['词池保英文'].push(row);
   } else if (text.length >= 8 && haystack.includes(text)) {
     buckets['目录片段'].push(row);
   } else {
@@ -143,6 +162,7 @@ const HINTS = {
   在目录未译: '在 en 目录但 zh 未译 → bun tools/i18n/mt/i18n-mt.ts 跑 MT，或确认属 keep-english 白名单',
   目录片段: '是某条目录值的子串（AC 最短匹配拆碎/部分替换）→ 该文本落地点先整串反查再进 fallback',
   没进目录: '抽取器没抽到（config 数据/new 构造参数/#define/运行期插值）→ 扩抽取源或手维护 _<feature>.json',
+  词池保英文: '口音替换词池（strings/*_replacement.json），有意保英文 → 无需处理',
 };
 for (const [name, rows] of Object.entries(buckets)) {
   if (!rows.length) continue;
