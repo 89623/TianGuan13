@@ -14,7 +14,7 @@
 	speed = 2.4
 
 /obj/projectile/bullet
-	speed = 2
+	speed - 2
 
 /obj/projectile/bullet/incendiary/fire
 	speed = 1.6
