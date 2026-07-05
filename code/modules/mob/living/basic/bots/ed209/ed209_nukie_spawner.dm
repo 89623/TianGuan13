@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/antag_spawner/nuke_ops/ed209_nukie
 	name = "Syndicate ED209 Robot"
 	desc = "A single-use beacon designed to quickly launch reinforcement operatives into the field."
@@ -7,7 +8,7 @@
 	if(!(check_usability(user)))
 		return
 
-	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
+	to_chat(user, span_notice(LANG("obj.74fad6c7", list(src))))
 	drop_bot()
 	do_sparks(4, TRUE, src)
 	qdel(src)

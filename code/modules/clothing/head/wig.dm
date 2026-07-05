@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
@@ -50,13 +51,13 @@
 	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, src, alpha = hair_overlay.alpha)
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
-	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", SSaccessories.hairstyles_list - "Bald")
+	var/new_style = tgui_input_list(user, LANG("obj.f24e1bc1", null), LANG("obj.ae48f8cf", null), SSaccessories.hairstyles_list - "Bald")
 	var/newcolor = adjustablecolor ? tgui_color_picker(usr,"","Choose Color",color) : null
 	if(!user.can_perform_action(src))
 		return
 	if(new_style && new_style != hairstyle)
 		hairstyle = new_style
-		user.visible_message(span_notice("[user] changes \the [src]'s hairstyle to [new_style]."), span_notice("You change \the [src]'s hairstyle to [new_style]."))
+		user.visible_message(span_notice(LANG("obj.87f22090", list(user, src, new_style))), span_notice(LANG("obj.f0b7fea5", list(src, new_style))))
 	if(newcolor && newcolor != color) // only update if necessary
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	update_appearance()
@@ -71,11 +72,11 @@
 	if(target.head)
 		var/obj/item/clothing/head = target.head
 		if((head.flags_inv & HIDEHAIR) && !istype(head, /obj/item/clothing/head/wig))
-			to_chat(user, span_warning("You can't get a good look at [target.p_their()] hair!"))
+			to_chat(user, span_warning(LANG("obj.296db55e", list(target.p_their()))))
 			return ITEM_INTERACT_BLOCKING
 	var/obj/item/bodypart/head/noggin = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!noggin)
-		to_chat(user, span_warning("[target.p_They()] have no head!"))
+		to_chat(user, span_warning(LANG("obj.749ab9d5", list(target.p_They()))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/selected_hairstyle = null
@@ -89,7 +90,7 @@
 		selected_hairstyle_color = "[target.hair_color]"
 
 	if(selected_hairstyle)
-		to_chat(user, span_notice("You adjust the [src] to look just like [target.name]'s [selected_hairstyle]."))
+		to_chat(user, span_notice(LANG("obj.581c05e0", list(src, target.name, selected_hairstyle))))
 		add_atom_colour(selected_hairstyle_color, FIXED_COLOUR_PRIORITY)
 		hairstyle = selected_hairstyle
 		update_appearance()

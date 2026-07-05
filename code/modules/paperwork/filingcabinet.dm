@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Filing cabinets!
  * Contains:
  * Filing Cabinets
@@ -45,19 +46,19 @@
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(P.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
-		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
+		to_chat(user, span_notice(LANG("obj.8b820c98", list(anchored ? "unwrench" : "wrench", src))))
 		if(P.use_tool(src, user, 20, volume=50))
-			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
+			to_chat(user, span_notice(LANG("obj.5e680a27", list(anchored ? "unwrench" : "wrench", src))))
 			set_anchored(!anchored)
 	else if(P.w_class < WEIGHT_CLASS_NORMAL)
 		if(!user.transferItemToLoc(P, src))
 			return
-		to_chat(user, span_notice("You put [P] in [src]."))
+		to_chat(user, span_notice(LANG("obj.de7df645", list(P, src))))
 		icon_state = "[initial(icon_state)]-open"
 		sleep(0.5 SECONDS)
 		icon_state = initial(icon_state)
 	else if(!user.combat_mode || (P.item_flags & NOBLUDGEON))
-		to_chat(user, span_warning("You can't put [P] in [src]!"))
+		to_chat(user, span_warning(LANG("obj.b6416b46", list(P, src))))
 	else
 		return ..()
 
@@ -111,9 +112,9 @@
 			I.forceMove(loc)
 			if(prob(25))
 				step_rand(I)
-			to_chat(user, span_notice("You pull \a [I] out of [src] at random."))
+			to_chat(user, span_notice(LANG("obj.4e67db9d", list(I, src))))
 			return
-	to_chat(user, span_notice("You find nothing in [src]."))
+	to_chat(user, span_notice(LANG("obj.cd651240", list(src))))
 
 /*
  * Security Record Cabinets

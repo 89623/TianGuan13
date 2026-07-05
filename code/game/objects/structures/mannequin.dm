@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MANNEQUIN_WOOD "wood"
 #define MANNEQUIN_PLASTIC "plastic"
 #define MANNEQUIN_SKELETON "skeleton"
@@ -128,25 +129,25 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	var/choice = tgui_input_list(user, "Underwear, Bra, Undershirt, or Socks?", "Changing", list("Underwear", "Bra", "Undershirt","Socks")) //NOVA EDIT ADDITION - Underwear and Bra split
+	var/choice = tgui_input_list(user, LANG("obj.e9f42888", null), LANG("obj.e27ef6c6", null), list("Underwear", "Bra", "Undershirt","Socks")) //NOVA EDIT ADDITION - Underwear and Bra split
 	if(!Adjacent(user))
 		return
 	switch(choice)
 		if("Underwear")
-			var/new_undies = tgui_input_list(user, "Select the mannequin's underwear", "Changing", SSaccessories.underwear_list)
+			var/new_undies = tgui_input_list(user, LANG("obj.b034ba46", null), LANG("obj.e27ef6c6", null), SSaccessories.underwear_list)
 			if(new_undies)
 				underwear_name = new_undies
 		if("Undershirt")
-			var/new_undershirt = tgui_input_list(user, "Select the mannequin's undershirt", "Changing", SSaccessories.undershirt_list)
+			var/new_undershirt = tgui_input_list(user, LANG("obj.8349214a", null), LANG("obj.e27ef6c6", null), SSaccessories.undershirt_list)
 			if(new_undershirt)
 				undershirt_name = new_undershirt
 		if("Socks")
-			var/new_socks = tgui_input_list(user, "Select the mannequin's socks", "Changing", SSaccessories.socks_list)
+			var/new_socks = tgui_input_list(user, LANG("obj.3481a4f6", null), LANG("obj.e27ef6c6", null), SSaccessories.socks_list)
 			if(new_socks)
 				socks_name = new_socks
 		//NOVA EDIT ADDITION BEGIN - Underwear and Bra split
 		if("Bra")
-			var/new_bra = tgui_input_list(user, "Select the mannequin's bra", "Changing", SSaccessories.bra_list)
+			var/new_bra = tgui_input_list(user, LANG("obj.73ee763e", null), LANG("obj.e27ef6c6", null), SSaccessories.bra_list)
 			if(new_bra)
 				bra_name = new_bra
 		//NOVA EDIT END
@@ -198,7 +199,7 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 	if(!.)
 		return FALSE
 	if(!(equipping.slot_flags & item_slot))
-		to_chat(user, span_warning("[equipping] won't fit!"))
+		to_chat(user, span_warning(LANG("datum.adfcc7ca", list(equipping))))
 		return FALSE
 	return TRUE
 

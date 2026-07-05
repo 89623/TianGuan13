@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*Narcolepsy
  * Slight reduction to stealth
  * Reduces resistance
@@ -45,22 +46,22 @@
 	switch(A.stage)
 		if(1)
 			if(prob(50))
-				to_chat(M, span_warning("You feel tired."))
+				to_chat(M, span_warning(LANG("datum.3c3a63b3", null)))
 		if(2)
 			if(prob(50))
-				to_chat(M, span_warning("You feel very tired."))
+				to_chat(M, span_warning(LANG("datum.3fe833b4", null)))
 		if(3)
 			if(prob(50))
-				to_chat(M, span_warning("You try to focus on staying awake."))
+				to_chat(M, span_warning(LANG("datum.b0b16b42", null)))
 
 			M.adjust_drowsiness_up_to(10 SECONDS, 140 SECONDS)
 
 		if(4)
 			if(prob(50))
 				if(yawning)
-					to_chat(M, span_warning("You try and fail to suppress a yawn."))
+					to_chat(M, span_warning(LANG("datum.92009a1c", null)))
 				else
-					to_chat(M, span_warning("You nod off for a moment.")) //you can't really yawn while nodding off, can you?
+					to_chat(M, span_warning(LANG("datum.c4783223", null))) //you can't really yawn while nodding off, can you?
 
 			M.adjust_drowsiness_up_to(20 SECONDS, 140 SECONDS)
 

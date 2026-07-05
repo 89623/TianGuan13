@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Cult buildings!
 /obj/structure/destructible/cult
 	icon = 'icons/obj/antags/cult/structures.dmi'
@@ -46,12 +47,12 @@
 
 /obj/structure/destructible/cult/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] is [anchored ? "secured to":"unsecured from"] the floor.")
+	. += span_notice(LANG("obj.e8ed8cae", list(src, anchored ? "secured to":"unsecured from")))
 	if(is_cultist_check(user) || isobserver(user))
 		if(cult_examine_tip)
 			. += span_cult(cult_examine_tip)
 		if(!COOLDOWN_FINISHED(src, use_cooldown_duration))
-			. += span_cult_italic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown_duration))]</b>.")
+			. += span_cult_italic(LANG("obj.e22cbd81", list(src, DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown_duration)))))
 
 /obj/structure/destructible/cult/set_anchored(anchorvalue)
 	. = ..()
@@ -68,7 +69,7 @@
  */
 /obj/structure/destructible/cult/proc/conceal()
 	set_density(FALSE)
-	visible_message(span_danger("[src] fades away."))
+	visible_message(span_danger(LANG("obj.87c5cc60", list(src))))
 	SetInvisibility(INVISIBILITY_OBSERVER, id=type)
 	alpha = 100
 	set_light_power(0)
@@ -81,7 +82,7 @@
 /obj/structure/destructible/cult/proc/reveal()
 	set_density(initial(density))
 	RemoveInvisibility(type)
-	visible_message(span_danger("[src] suddenly appears!"))
+	visible_message(span_danger(LANG("obj.4e88a79e", list(src))))
 	alpha = initial(alpha)
 	set_light_range(initial(light_range))
 	set_light_power(initial(light_power))
@@ -99,7 +100,7 @@
 	setup_options()
 
 /obj/structure/destructible/cult/item_dispenser/rust_heretic_act()
-	visible_message(span_notice("[src] crumbles to dust. In its midst, you spot \a [initial(mansus_conversion_path.name)]."))
+	visible_message(span_notice(LANG("obj.b9ccb7bd", list(src, initial(mansus_conversion_path.name)))))
 	var/turf/turfy = get_turf(src)
 	new mansus_conversion_path(turfy)
 	turfy.rust_heretic_act()
@@ -110,13 +111,13 @@
 	if(.)
 		return
 	if(!isliving(user) || !is_cultist_check(user))
-		to_chat(user, span_warning("You're pretty sure you know exactly what this is used for and you can't seem to touch it."))
+		to_chat(user, span_warning(LANG("obj.30ea8cbb", null)))
 		return
 	if(!anchored)
-		to_chat(user, span_cult_italic("You need to anchor [src] to the floor first."))
+		to_chat(user, span_cult_italic(LANG("obj.a1121f7c", list(src))))
 		return
 	if(!COOLDOWN_FINISHED(src, use_cooldown))
-		to_chat(user, span_cult_italic("The magic in [src] is too weak, it will be ready to use again in <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]</b>."))
+		to_chat(user, span_cult_italic(LANG("obj.e22cbd81", list(src, DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))))))
 		return
 
 	setup_options()
@@ -197,7 +198,7 @@
  * Override for unique feedback messages on item spawn.
  */
 /obj/structure/destructible/cult/item_dispenser/proc/succcess_message(mob/living/user, obj/item/spawned_item)
-	to_chat(user, span_cult_italic("[src] produces a [spawned_item.name]."))
+	to_chat(user, span_cult_italic(LANG("obj.1b7a7f8a", list(src, spawned_item.name))))
 
 /*
  * Simple proc intended for use in callbacks to determine if [user] can continue to use a radial menu.

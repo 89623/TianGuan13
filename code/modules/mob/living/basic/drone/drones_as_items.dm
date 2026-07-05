@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /** Drone Shell: Ghost role item for drones
  *
  * A simple mob spawner item that transforms into a maintenance drone
@@ -53,6 +54,6 @@
 		var/minutes_left = required_playtime - current_playtime
 		var/playtime_left = DisplayTimeText(minutes_left * (1 MINUTES))
 		if(!silent)
-			to_chat(user, span_danger("You need to play [playtime_left] more as [required_role] to spawn as a Maintenance Drone!"))
+			to_chat(user, span_danger(LANG("obj.367c6ce5", list(playtime_left, required_role))))
 		return FALSE
 	return ..()

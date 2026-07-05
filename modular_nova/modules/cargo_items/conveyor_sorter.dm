@@ -21,14 +21,14 @@
 
 /obj/item/conveyor_sorter/examine(mob/user)
 	. = ..()
-	. += span_notice("Use it to place down a conveyor sorter, up to a limit of <b>[max_sorters]</b>.")
-	. += span_notice("This sorter can sort up to <b>[max_items]</b> Items.")
-	. += span_notice("Use Alt-Click to reset the sorting list.")
-	. += span_notice("Attack things to attempt to add to the sorting list.")
+	. += span_notice(LANG("obj.12799f69", list(max_sorters)))
+	. += span_notice(LANG("obj.bce6a8f7", list(max_items)))
+	. += span_notice(LANG("obj.4a4635d4", null))
+	. += span_notice(LANG("obj.2e88eeab", null))
 
 /obj/item/conveyor_sorter/attack_self(mob/user, modifiers)
 	if(length(spawned_sorters) >= max_sorters)
-		to_chat(user, span_warning("You may only have [max_sorters] spawned conveyor sorters!"))
+		to_chat(user, span_warning(LANG("obj.1f501a4a", list(max_sorters))))
 		return
 	var/obj/effect/decal/conveyor_sorter/new_cs = new conveyor_type(get_turf(src))
 	new_cs.parent_item = src
@@ -41,17 +41,17 @@
 	if(istype(interacting_with, /obj/effect/decal/conveyor_sorter))
 		return NONE
 	if(is_type_in_list(interacting_with, current_sort))
-		to_chat(user, span_warning("[interacting_with] is already in [src]'s sorting list!"))
+		to_chat(user, span_warning(LANG("obj.c72dca91", list(interacting_with, src))))
 		return ITEM_INTERACT_BLOCKING
 	if(length(current_sort) >= max_items)
-		to_chat(user, span_warning("[src] already has [max_items] things within the sorting list!"))
+		to_chat(user, span_warning(LANG("obj.fcac1b6d", list(src, max_items))))
 		return ITEM_INTERACT_BLOCKING
 	current_sort += interacting_with.type
-	to_chat(user, span_notice("[interacting_with] has been added to [src]'s sorting list."))
+	to_chat(user, span_notice(LANG("obj.76d0b398", list(interacting_with, src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/conveyor_sorter/click_alt(mob/user)
-	visible_message("[src] pings, resetting its sorting list!")
+	visible_message(LANG("obj.ccff4e81", list(src)))
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	current_sort = list()
 	return CLICK_ACTION_SUCCESS
@@ -91,13 +91,13 @@
 
 /obj/effect/decal/conveyor_sorter/examine(mob/user)
 	. = ..()
-	. += span_notice("Attack with conveyor sorter lister to set the sorting list.")
-	. += span_notice("Slap with empty hands to change the sorting direction.")
-	. += span_notice("Alt-Click to reset the sorting list.")
-	. += span_notice("Ctrl-Click to remove.")
+	. += span_notice(LANG("obj.731f1dfd", null))
+	. += span_notice(LANG("obj.015554c2", null))
+	. += span_notice(LANG("obj.b23d38f0", null))
+	. += span_notice(LANG("obj.fbae40a6", null))
 
 /obj/effect/decal/conveyor_sorter/attack_hand(mob/living/user, list/modifiers)
-	var/user_choice = tgui_input_list(user, "Choose which direction to sort to!", "Direction choice", directions) // this would be cooler as a radial
+	var/user_choice = tgui_input_list(user, LANG("obj.d72879d2", null), LANG("obj.f366a6b9", null), directions) // this would be cooler as a radial
 	if(!user_choice)
 		return ..()
 
@@ -107,27 +107,27 @@
 
 	setDir(dir)
 
-	visible_message("[src] pings, updating its sorting direction!")
+	visible_message(LANG("obj.d447c9d8", list(src)))
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
 /obj/effect/decal/conveyor_sorter/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/conveyor_sorter))
 		var/obj/item/conveyor_sorter/cs_item = attacking_item
 		sorting_list = cs_item.current_sort
-		visible_message("[src] pings, updating its sorting list!")
+		visible_message(LANG("obj.2c0baf57", list(src)))
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 		return
 	else
 		return ..()
 
 /obj/effect/decal/conveyor_sorter/click_alt(mob/user)
-	visible_message("[src] pings, resetting its sorting list!")
+	visible_message(LANG("obj.ccff4e81", list(src)))
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	sorting_list = list()
 	return CLICK_ACTION_SUCCESS
 
 /obj/effect/decal/conveyor_sorter/click_ctrl(mob/user)
-	visible_message("[src] begins to ping violently!")
+	visible_message(LANG("obj.3ad05a72", list(src)))
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	qdel(src)
 	return CLICK_ACTION_SUCCESS

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Causes a fake "zap" to the hallucinator.
 /datum/hallucination/shock
 	random_hallucination_weight = 1 // really low weight, as it also has a snowflake check to trigger when bumping airlocks
@@ -37,8 +38,8 @@
 	SET_PLANE_EXPLICIT(shock_image, ABOVE_GAME_PLANE, hallucinator)
 	SET_PLANE_EXPLICIT(electrocution_skeleton_anim, ABOVE_GAME_PLANE, hallucinator)
 
-	to_chat(hallucinator, span_userdanger("You feel a powerful shock course through your body!"))
-	hallucinator.visible_message(span_warning("[hallucinator] falls to the ground, shaking!"), ignored_mobs = hallucinator)
+	to_chat(hallucinator, span_userdanger(LANG("datum.ee423401", null)))
+	hallucinator.visible_message(span_warning(LANG("datum.b9883f93", list(hallucinator))), ignored_mobs = hallucinator)
 	hallucinator.client?.images |= shock_image
 	hallucinator.client?.images |= electrocution_skeleton_anim
 

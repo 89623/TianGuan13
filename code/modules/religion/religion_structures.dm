@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/altar
 	name = "\improper Altar"
 	desc = "A religious structure. You could lie on it if you wanted to."
@@ -35,9 +36,9 @@
 		return ..()
 	var/mob/living/pushed_mob = user.pulling
 	if(pushed_mob.buckled)
-		to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
+		to_chat(user, span_warning(LANG("obj.9a1c1261", list(pushed_mob, pushed_mob.buckled))))
 		return ..()
-	to_chat(user, span_notice("You try to coax [pushed_mob] onto [src]..."))
+	to_chat(user, span_notice(LANG("obj.160cc378", list(pushed_mob, src))))
 	if(!do_after(user,(5 SECONDS),target = pushed_mob))
 		return ..()
 	pushed_mob.forceMove(loc)
@@ -124,7 +125,7 @@
 
 /// When the ritual totem is depleted of antimagic
 /obj/item/ritual_totem/proc/expire(mob/user)
-	to_chat(user, span_warning("[src] consumes the magic within itself and quickly decays into rot!"))
+	to_chat(user, span_warning(LANG("obj.1468ea0c", list(src))))
 	new /obj/effect/decal/cleanable/ash(drop_location())
 	qdel(src)
 
@@ -136,18 +137,18 @@
 	. = ..()
 	var/is_holy = user.mind?.holy_role
 	if(is_holy)
-		. += span_notice("[src] can only be moved by important followers of [GLOB.deity].")
+		. += span_notice(LANG("obj.667b74f1", list(src, GLOB.deity)))
 
 /obj/item/ritual_totem/pickup(mob/taker)
 	var/initial_loc = loc
 	var/holiness = taker.mind?.holy_role
 	var/no_take = FALSE
 	if(holiness == NONE)
-		to_chat(taker, span_warning("Try as you may, you're seemingly unable to pick [src] up!"))
+		to_chat(taker, span_warning(LANG("obj.7a5de8ac", list(src))))
 		no_take = TRUE
 	else if(holiness == HOLY_ROLE_DEACON) //deacons cannot pick them up either
 		no_take = TRUE
-		to_chat(taker, span_warning("You cannot pick [src] up. It seems you aren't important enough to [GLOB.deity] to do that."))
+		to_chat(taker, span_warning(LANG("obj.5cb271db", list(src, GLOB.deity))))
 	..()
 	if(no_take)
 		taker.dropItemToGround(src)

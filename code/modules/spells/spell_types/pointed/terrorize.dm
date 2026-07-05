@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/terrorize
 	name = "Terrorize"
 	desc = "Project yourself into a victim's mind, inflicting them with terror buildup. \
@@ -16,7 +17,7 @@
 /datum/action/cooldown/spell/pointed/terrorize/is_valid_target(atom/cast_on)
 	. = ..()
 	if(!ishuman(cast_on))
-		cast_on.balloon_alert(owner, "cannot be terrorized!")
+		cast_on.balloon_alert(owner, LANG("datum.20561697", null))
 		return FALSE
 
 	var/lit_tiles = 0
@@ -30,7 +31,7 @@
 			unlit_tiles++
 
 	if(lit_tiles > unlit_tiles)
-		cast_on.balloon_alert(owner, "must be in the dark!")
+		cast_on.balloon_alert(owner, LANG("datum.0c150f4d", null))
 		return FALSE //Having a light on you will usually block this, meaning you'll probably need to get an initial hit on the victim with the light eater
 
 /datum/action/cooldown/spell/pointed/terrorize/cast(mob/living/carbon/human/cast_on)

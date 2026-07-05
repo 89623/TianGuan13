@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Add an auto attack on bump behaviour to item
  * valid_inventory_slot: the inventory slot the item could be held in while still bumpattacking with it
@@ -67,6 +68,6 @@
 	if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_BUMP_ATTACK))
 		TIMER_COOLDOWN_START(src, COOLDOWN_BUMP_ATTACK, attack_cooldown)
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attackby), our_weapon, bumper)
-		bumper.visible_message(span_danger("[bumper] charges into [target], attacking with [our_weapon]!"), span_danger("You charge into [target], attacking with [our_weapon]!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		bumper.visible_message(span_danger(LANG("datum.a0b8bc10", list(bumper, target, our_weapon))), span_danger(LANG("datum.ab37bd7e", list(target, our_weapon))), vision_distance = COMBAT_MESSAGE_RANGE)
 
 #undef COOLDOWN_BUMP_ATTACK

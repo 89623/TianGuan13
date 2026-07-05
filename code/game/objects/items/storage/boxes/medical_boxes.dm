@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // This file contains all boxes used by the Medical department, or otherwise associated with the task of mob interactions.
 
 /obj/item/storage/box/syringes
@@ -232,23 +233,23 @@
 	. = ..()
 	switch(severity)
 		if(SEVERITY_DEAD)
-			. += span_notice("This card indicates that the patient is deceased or is not expected to survive.")
+			. += span_notice(LANG("obj.718ef421", null))
 		if(SEVERITY_IMMEDIATE)
-			. += span_notice("This card indicates that the patient is in a critical condition and requires immediate attention.")
+			. += span_notice(LANG("obj.f5eb8b0f", null))
 		if(SEVERITY_DELAYED)
-			. += span_notice("This card indicates that the patient is seriously injured, but not in immediate danger.")
+			. += span_notice(LANG("obj.9af4f4ad", null))
 		if(SEVERITY_MINIMAL)
-			. += span_notice("This card indicates that the patient is only slightly injured.")
+			. += span_notice(LANG("obj.e156d0b3", null))
 
-	. += span_smallnoticeital("There is a guide to triage on the back of the card, if you <i>look closer</i>.")
+	. += span_smallnoticeital(LANG("obj.a60bfbb2", null))
 
 /obj/item/paper/triage/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>The back of [src] has a guide to performing triage:</i>")
-	. += "&bull; \"Is the victim walking and can respond to simple orders?\" If so, mark as <b>minimal</b>."
-	. += "&bull; \"Has the victim stopped breathing entirely (without even gasping for air)?\" If so, mark as <b>expectant / deceased</b>."
-	. += "&bull; \"Is the victim bleeding, failing to follow simple commands, lacking a pulse, having difficulties breathing?\" If so, mark as <b>immediate</b>."
-	. += "&bull; Otherwise, mark as <b>delayed</b>."
+	. += span_notice(LANG("obj.539e9730", list(src)))
+	. += LANG("obj.6149c195", null)
+	. += LANG("obj.56835557", null)
+	. += LANG("obj.e73c9af8", null)
+	. += LANG("obj.f61ee04c", null)
 
 /obj/item/paper/triage/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -261,7 +262,7 @@
 		return NONE
 
 	user.do_attack_animation(interacting_with, used_item = src)
-	interacting_with.balloon_alert(user, "card attached")
+	interacting_with.balloon_alert(user, LANG("obj.e1777d83", null))
 	interacting_with.AddComponent(/datum/component/sticker, src, get_dir(interacting_with, src), px, py)
 	return ITEM_INTERACT_SUCCESS
 

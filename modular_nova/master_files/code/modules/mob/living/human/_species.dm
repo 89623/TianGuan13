@@ -47,8 +47,8 @@
 		. += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_FISH,
-			SPECIES_PERK_NAME = "Waterbreathing",
-			SPECIES_PERK_DESC = "[plural_form] can breathe in water, making pools a lot safer to be in!",
+			SPECIES_PERK_NAME = LANG("datum.809c7733", null),
+			SPECIES_PERK_DESC = LANG("datum.ad0e0701", list(plural_form)),
 		))
 
 /// Applies any after effects to the preview icon (such as opacity, color multiplication, etc)

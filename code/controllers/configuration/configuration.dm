@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/controller/configuration
 	name = "Configuration"
 
@@ -77,7 +78,7 @@
 
 /datum/controller/configuration/proc/PreConfigReload()
 	if(reload_in_progress)
-		to_chat(usr, span_warning("Another user is already reloading the config!"))
+		to_chat(usr, span_warning(LANG("datum.8a35f165", null)))
 		return FALSE
 
 	reload_in_progress = TRUE

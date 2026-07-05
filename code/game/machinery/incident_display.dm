@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * List of incident displays on the map
  * Required as persistence subsystem loads after the ones present at mapload, and to reset to 0 upon explosion.
@@ -147,14 +148,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		return FALSE
 
 	if(atom_integrity >= max_integrity && !(machine_stat & BROKEN))
-		balloon_alert(user, "it doesn't need repairs!")
+		balloon_alert(user, LANG("obj.20fd4e5f", null))
 		return TRUE
 
-	balloon_alert(user, "repairing display...")
+	balloon_alert(user, LANG("obj.2666c57c", null))
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume = 50))
 		return TRUE
 
-	balloon_alert(user, "repaired")
+	balloon_alert(user, LANG("obj.65ced1e8", null))
 	atom_integrity = max_integrity
 	set_machine_stat(machine_stat & ~BROKEN)
 	update_appearance()
@@ -167,7 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 
 	if(sign_features == DISPLAY_TRAM)
 		tool.play_tool_sound(src)
-		balloon_alert(user, "set to delam")
+		balloon_alert(user, LANG("obj.7e8fc231", null))
 		name = NAME_DELAM
 		desc = DESC_DELAM
 		sign_features = DISPLAY_DELAM
@@ -176,7 +177,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 		return TRUE
 	else
 		tool.play_tool_sound(src)
-		balloon_alert(user, "set to tram")
+		balloon_alert(user, LANG("obj.867ffe2b", null))
 		name = NAME_TRAM
 		desc = DESC_TRAM
 		sign_features = DISPLAY_TRAM
@@ -368,42 +369,42 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 /obj/machinery/incident_display/examine(mob/user)
 	. = ..()
 	if(atom_integrity < max_integrity)
-		. += span_notice("It can be repaired with a [EXAMINE_HINT("welder")].")
+		. += span_notice(LANG("obj.e221d4e0", list(EXAMINE_HINT("welder"))))
 
 	if(sign_features & DISPLAY_DELAM)
-		. += span_notice("It can be changed to display tram hits with a [EXAMINE_HINT("multitool")].")
+		. += span_notice(LANG("obj.31e2d6dc", list(EXAMINE_HINT("multitool"))))
 		if(last_delam >= 0)
-			. += span_info("It has been [last_delam] shift\s since the last delamination event at this Nanotrasen facility.")
+			. += span_info(LANG("obj.45fdedcb", list(last_delam)))
 			switch(last_delam)
 				if(0)
-					. += span_info("Let's do better today.<br/>")
+					. += span_info(LANG("obj.76d3f946", null))
 				if(1 to 5)
-					. += span_info("There's room for improvement.<br/>")
+					. += span_info(LANG("obj.811c121c", null))
 				if(6 to 10)
-					. += span_info("Good work!<br/>")
+					. += span_info(LANG("obj.8caefd42", null))
 				if(69)
-					. += span_info("Nice.<br/>")
+					. += span_info(LANG("obj.1a92346f", null))
 				else
-					. += span_info("Incredible!<br/>")
+					. += span_info(LANG("obj.9d999ff8", null))
 		else
-			. += span_info("The supermatter crystal has delaminated, in case you didn't notice.")
+			. += span_info(LANG("obj.e09f758a", null))
 
 	if(sign_features & DISPLAY_TRAM)
-		. += span_notice("It can be changed to display delam-free shifts with a [EXAMINE_HINT("multitool")].")
-		. += span_info("The station has had [hit_count] tram incident\s this shift.")
+		. += span_notice(LANG("obj.dfe4ef73", list(EXAMINE_HINT("multitool"))))
+		. += span_info(LANG("obj.6712bdbe", list(hit_count)))
 		switch(hit_count)
 			if(0)
-				. += span_info("Fantastic! Champions of safety.<br/>")
+				. += span_info(LANG("obj.e636e0e6", null))
 			if(1)
-				. += span_info("Let's do better tomorrow.<br/>")
+				. += span_info(LANG("obj.5ebbea4e", null))
 			if(2 to 5)
-				. += span_info("There's room for improvement.<br/>")
+				. += span_info(LANG("obj.811c121c", null))
 			if(6 to 10)
-				. += span_info("Good work! Nanotrasen's finest!<br/>")
+				. += span_info(LANG("obj.c6f41d81", null))
 			if(69)
-				. += span_info("Nice.<br/>")
+				. += span_info(LANG("obj.1a92346f", null))
 			else
-				. += span_info("Incredible! You're probably reading this from medbay.<br/>")
+				. += span_info(LANG("obj.4813e378", null))
 
 #undef DISPLAY_DELAM
 #undef DISPLAY_TRAM

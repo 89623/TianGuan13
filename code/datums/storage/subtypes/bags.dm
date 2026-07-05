@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Normal bag
 /datum/storage/bag
 	allow_quick_gather = TRUE
@@ -17,8 +18,8 @@
 
 /datum/storage/bag/trash/remove_single(mob/removing, obj/item/thing, atom/remove_to_loc, silent)
 	real_location.visible_message(
-		span_notice("[removing] starts fishing around inside [parent]."),
-		span_notice("You start digging around in [parent] to try and pull something out."),
+		span_notice(LANG("datum.ca2b142b", list(removing, parent))),
+		span_notice(LANG("datum.2af9202a", list(parent))),
 	)
 	if(!do_after(removing, 1.5 SECONDS, parent))
 		return FALSE
@@ -288,7 +289,7 @@
 
 	if(istype(to_insert, /obj/item/storage/backpack) && length(to_insert.contents))
 		if(messages && user)
-			parent.balloon_alert(user, "can't store filled backpacks!")
+			parent.balloon_alert(user, LANG("datum.9d66f65b", null))
 		return FALSE
 
 	return TRUE
@@ -313,7 +314,7 @@
 	SIGNAL_HANDLER
 
 	if(user && messages)
-		parent.balloon_alert(user, "garment bag is in the way!")
+		parent.balloon_alert(user, LANG("datum.81291e43", null))
 	return BLOCK_STORAGE_INSERT
 
 ///Quiver bag

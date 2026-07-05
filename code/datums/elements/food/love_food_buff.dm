@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Changes a food item's food buff to something else when it has "love" reagent within
 /datum/element/love_food_buff
 	element_flags = ELEMENT_BESPOKE
@@ -36,4 +37,4 @@
 /datum/element/love_food_buff/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("Delivering a chef's kiss to [source] will alter [source.p_their()] effects.")
+	examine_list += span_notice(LANG("datum.c2e4acff", list(source, source.p_their())))

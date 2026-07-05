@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
 	icon_state = "siphon"
@@ -179,7 +180,7 @@
 	//25% chance to occur
 	if(prob(25))
 		name = "Liler' Pump"
-		desc = "When a Lil' Pump and a portable air pump love each other very much."
+		desc = LANG("obj.74f88de7", null)
 		var/matrix/lil_pump = matrix()
 		lil_pump.Scale(0.8)
 		src.transform = lil_pump

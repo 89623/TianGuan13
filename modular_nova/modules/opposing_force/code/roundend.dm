@@ -1,10 +1,10 @@
 /datum/controller/subsystem/ticker/proc/opfor_report()
 	var/list/result = list()
 
-	result += "<span class='header'>Opposing Force Report:</span><br>"
+	result += LANG("datum.1f1da9ef", null)
 
 	if(!SSopposing_force.approved_applications.len)
-		result += span_red("No applications were approved.")
+		result += span_red(LANG("datum.a51e5a33", null))
 	else
 		for(var/datum/opposing_force/opfor in SSopposing_force.approved_applications)
 			result += opfor.roundend_report()

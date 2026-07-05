@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/suspiciousphone
 	name = "suspicious phone"
 	desc = "This device raises pink levels to unknown highs."
@@ -11,12 +12,12 @@
 
 /obj/item/suspiciousphone/attack_self(mob/living/user)
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("This device is too advanced for you!"))
+		to_chat(user, span_warning(LANG("obj.8bead461", null)))
 		return
 	if(dumped)
-		to_chat(user, span_warning("You already activated Protocol CRAB-17."))
+		to_chat(user, span_warning(LANG("obj.6644dda3", null)))
 		return FALSE
-	if(tgui_alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", list("Yes", "No")) == "Yes")
+	if(tgui_alert(user, LANG("obj.915f079d", null), LANG("obj.5cb2cca8", null), list("Yes", "No")) == "Yes")
 		if(dumped || QDELETED(src)) //Prevents fuckers from cheesing alert
 			return FALSE
 		var/turf/targetturf = get_safe_random_station_turf_equal_weight()
@@ -31,7 +32,7 @@
 		for(var/datum/bank_account/B as anything in accounts_to_rob)
 			B.dumpeet(dump_machine.dump)
 
-		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
+		to_chat(user, span_notice(LANG("obj.14d9517e", null)))
 		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
 
 		dumped = TRUE
@@ -59,7 +60,7 @@
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
-	. += span_info("It has a flashing <b>ID card reader</b> for convenient cashing out.")
+	. += span_info(LANG("obj.c4f9b0d3", null))
 
 /**
  * Check whether any accounts in the accounts_to_rob list are still being drained.
@@ -73,7 +74,7 @@
 
 /obj/structure/checkoutmachine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!canwalk)
-		balloon_alert(user, "not ready to accept transactions!")
+		balloon_alert(user, LANG("obj.6597e34d", null))
 		return
 
 	if(check_if_finished())
@@ -82,7 +83,7 @@
 
 	var/obj/item/card/id/card = attacking_item.GetID()
 	if(!card)
-		balloon_alert(user, "your [attacking_item.name] gets repelled by the id card reader")
+		balloon_alert(user, LANG("obj.656166c5", list(attacking_item.name)))
 
 		var/throwtarget = get_step(user, get_dir(src, user))
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
@@ -91,14 +92,14 @@
 		return
 
 	if(!card.registered_account)
-		balloon_alert(user, "card has no registered account!")
+		balloon_alert(user, LANG("obj.2d056b63", null))
 		return
 
 	if(!LAZYFIND(card.registered_account.being_dumped, src))
-		balloon_alert(user, "funds are already safe!")
+		balloon_alert(user, LANG("obj.e8afc149", null))
 		return
 
-	to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
+	to_chat(user, span_warning(LANG("obj.10340b2d", null))) // This is a reference and not a typo
 	accounts_to_rob -= card.registered_account
 	card.registered_account.stop_dump(src)
 
@@ -190,7 +191,7 @@
 /obj/structure/checkoutmachine/Destroy()
 	stop_dumping()
 	STOP_PROCESSING(SSfastprocess, src)
-	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
+	priority_announce(LANG("obj.1c6c07dd", list(get_area(src))), sender_override = "CRAB-17 Protocol")
 	if(internal_account.account_balance)
 		expel_cash()
 	QDEL_NULL(internal_account)
@@ -287,7 +288,7 @@
 /obj/effect/dumpeet_target/proc/startLaunch()
 	DF = new /obj/effect/dumpeet_fall(drop_location())
 	dump.setup_siphoning()
-	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
+	priority_announce(LANG("obj.c35b67f6", list(get_area(src))), sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
 	playsound(src,  'sound/items/weapons/mortar_whistle.ogg', 70, TRUE, 6)
 	addtimer(CALLBACK(src, PROC_REF(end_launch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation

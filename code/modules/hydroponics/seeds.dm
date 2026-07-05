@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // ********************************************************
 // Here's all the seeds (plants) that can be used in hydro
 // ********************************************************
@@ -114,9 +115,9 @@
 
 /obj/item/seeds/examine(mob/user)
 	. = ..()
-	. += span_notice("Use a pen on it to rename it or change its description.")
+	. += span_notice(LANG("obj.0c5d3a1f", null))
 	if(reagents_add && user.can_see_reagents())
-		. += span_notice("- Plant Reagents -")
+		. += span_notice(LANG("obj.29a5ea7d", null))
 		for(var/datum/plant_gene/reagent/reagent_gene in genes)
 			. += span_notice("- [reagent_gene.get_name()] -")
 
@@ -304,14 +305,14 @@
 
 		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with cooling.
 		if(get_gene(/datum/plant_gene/trait/chem_heating))
-			T.visible_message(span_notice("[T] releases freezing air, consuming its nutriments to heat its contents."))
+			T.visible_message(span_notice(LANG("obj.5e6389f1", list(T))))
 			T.reagents.remove_reagent(/datum/reagent/consumable/nutriment, num_nutriment)
 			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 25))
 			T.reagents.handle_reactions()
 			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 5)
 		// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
 		else if(get_gene(/datum/plant_gene/trait/chem_cooling))
-			T.visible_message(span_notice("[T] releases a blast of hot air, consuming its nutriments to cool its contents."))
+			T.visible_message(span_notice(LANG("obj.bff687f3", list(T))))
 			T.reagents.remove_reagent(/datum/reagent/consumable/nutriment, num_nutriment)
 			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -5))
 			T.reagents.handle_reactions()
@@ -484,7 +485,7 @@
 	. = input
 	if(product && !productdesc)
 		productdesc = initial(product.desc)
-	var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, max_length = MAX_DESC_LEN)
+	var/newproductdesc = tgui_input_text(user, LANG("obj.155c5d0f", null), LANG("obj.f4707d09", null), productdesc, max_length = MAX_DESC_LEN)
 	if(isnull(newproductdesc))
 		return
 	if(!user.can_perform_action(src))

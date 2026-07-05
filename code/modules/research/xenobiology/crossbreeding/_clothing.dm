@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 Slimecrossing Armor
 	Armor added by the slimecrossing system.
@@ -63,7 +64,7 @@ Slimecrossing Armor
 	set_light(5)
 
 /obj/structure/light_prism/attack_hand(mob/user, list/modifiers)
-	to_chat(user, span_notice("You dispel [src]."))
+	to_chat(user, span_notice(LANG("obj.28e17679", list(src))))
 	qdel(src)
 
 /datum/action/item_action/change_prism_colour
@@ -88,13 +89,13 @@ Slimecrossing Armor
 /datum/action/item_action/place_light_prism/do_effect(trigger_flags)
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	if(locate(/obj/structure/light_prism) in get_turf(owner))
-		to_chat(owner, span_warning("There isn't enough ambient energy to fabricate another light prism here."))
+		to_chat(owner, span_warning(LANG("datum.1da35808", null)))
 		return
 	if(istype(glasses))
 		if(!glasses.glasses_color)
-			to_chat(owner, span_warning("The lens is oddly opaque..."))
+			to_chat(owner, span_warning(LANG("datum.70a472aa", null)))
 			return
-		to_chat(owner, span_notice("You channel nearby light into a glowing, ethereal prism."))
+		to_chat(owner, span_notice(LANG("datum.e30cd320", null)))
 		new /obj/structure/light_prism(get_turf(owner), glasses.glasses_color)
 
 /obj/item/clothing/head/peaceflower
@@ -115,7 +116,7 @@ Slimecrossing Armor
 
 /obj/item/clothing/head/peaceflower/can_mob_unequip(mob/user)
 	if(user.get_item_by_slot(slot_flags) == src)
-		to_chat(user, span_warning("You feel at peace. <b style='color:pink'>Why would you want anything else?</b>"))
+		to_chat(user, span_warning(LANG("obj.446449b8", null)))
 		return FALSE
 	return ..()
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/camera_advanced
 	name = "advanced camera console"
 	desc = "Used to access the various cameras on the station."
@@ -159,7 +160,7 @@
 	if(isnull(user.client))
 		return
 	if(!QDELETED(current_user))
-		to_chat(user, span_warning("The console is already in use!"))
+		to_chat(user, span_warning(LANG("obj.2d515444", null)))
 		return
 
 	if(eyeobj)
@@ -169,7 +170,7 @@
 	/* We're attempting to initialize the eye past this point */
 
 	if(!CreateEye())
-		to_chat(user, span_warning("\The [src] flashes a bunch of never-ending errors on the display. Something is really wrong."))
+		to_chat(user, span_warning(LANG("obj.3ab9b129", list(src))))
 		return
 
 	SEND_SIGNAL(src, COMSIG_ADVANCED_CAMERA_EYE_CREATED, eyeobj)
@@ -233,7 +234,7 @@
 	var/list/cameras_by_tag = SScameras.get_available_camera_by_tag_list(origin.networks, origin.z_lock)
 
 	playsound(origin, 'sound/machines/terminal/terminal_prompt.ogg', 25, FALSE)
-	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", cameras_by_tag)
+	var/camera = tgui_input_list(usr, LANG("datum.f2e8bac6", null), LANG("datum.65c72ac4", null), cameras_by_tag)
 	if(isnull(camera))
 		return
 
@@ -259,9 +260,9 @@
 		return
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
 	if(remote_eye.zMove(UP))
-		to_chat(owner, span_notice("You move upwards."))
+		to_chat(owner, span_notice(LANG("datum.42490421", null)))
 	else
-		to_chat(owner, span_notice("You can't move upwards!"))
+		to_chat(owner, span_notice(LANG("datum.d5b76daa", null)))
 
 /datum/action/innate/camera_multiz_down
 	name = "Move down a floor"
@@ -273,12 +274,12 @@
 		return
 	var/mob/eye/camera/remote/remote_eye = owner.remote_control
 	if(remote_eye.zMove(DOWN))
-		to_chat(owner, span_notice("You move downwards."))
+		to_chat(owner, span_notice(LANG("datum.86deeb2e", null)))
 	else
-		to_chat(owner, span_notice("You can't move downwards!"))
+		to_chat(owner, span_notice(LANG("datum.fad086fd", null)))
 
 /obj/machinery/computer/camera_advanced/human_ai/screwdriver_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "repackaging...")
+	balloon_alert(user, LANG("obj.d75b9c7f", null))
 	if(!do_after(user, 5 SECONDS, src))
 		return ITEM_INTERACT_BLOCKING
 	tool.play_tool_sound(src, 40)

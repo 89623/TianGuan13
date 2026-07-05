@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/eye/camera/remote/holo/setLoc(turf/destination, force_update = FALSE)
 	// If we're moving outside the space of our projector, then just... don't
 	var/obj/machinery/holopad/H = origin_ref?.resolve()
@@ -58,7 +59,7 @@
 			connected_holopad.set_holocall(src)
 
 	if(!dialed_holopads.len)
-		calling_pad.say("Connection failure.")
+		calling_pad.say(LANG("datum.28e0851e", null))
 		qdel(src)
 		return
 
@@ -102,9 +103,9 @@
 	testing("Holocall disconnect")
 	if(H == connected_holopad)
 		var/area/A = get_area(connected_holopad)
-		calling_holopad.say("[A] holopad disconnected.")
+		calling_holopad.say(LANG("datum.e117d5a8", list(A)))
 	else if(H == calling_holopad && connected_holopad)
-		connected_holopad.say("[user] disconnected.")
+		connected_holopad.say(LANG("datum.d413f00d", list(user)))
 
 	ConnectionFailure(H, TRUE)
 
@@ -113,7 +114,7 @@
 	testing("Holocall connection failure: graceful [graceful]")
 	if(disconnected_holopad == connected_holopad || disconnected_holopad == calling_holopad)
 		if(!graceful && disconnected_holopad != calling_holopad)
-			calling_holopad.say("Connection failure.")
+			calling_holopad.say(LANG("datum.28e0851e", null))
 		qdel(src)
 		return
 
@@ -122,7 +123,7 @@
 	dialed_holopads -= disconnected_holopad
 	if(!dialed_holopads.len)
 		if(graceful)
-			calling_holopad.say("Call rejected.")
+			calling_holopad.say(LANG("datum.8914269d", null))
 		testing("No recipients, terminating")
 		qdel(src)
 
@@ -162,7 +163,7 @@
 	hangup = new(eye, src)
 	hangup.Grant(user)
 	playsound(answering_holopad, 'sound/machines/ping.ogg', 100)
-	answering_holopad.say("Connection established.")
+	answering_holopad.say(LANG("datum.a7ac031a", null))
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
@@ -179,7 +180,7 @@
 		if(!connected_holopad)
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
-				calling_holopad.say("No answer received.")
+				calling_holopad.say(LANG("datum.4b504e05", null))
 
 	if(!.)
 		testing("Holocall Check fail")
@@ -239,7 +240,7 @@
 	var/obj/item/disk/holodisk/holodisk_original = tool
 
 	if (!holodisk_original.record)
-		to_chat(user, span_warning("[holodisk_original] has no record on it!"))
+		to_chat(user, span_warning(LANG("obj.2a9511f3", list(holodisk_original))))
 		return ITEM_INTERACT_BLOCKING
 
 	if (!record)
@@ -249,7 +250,7 @@
 	record.caller_image = holodisk_original.record.caller_image
 	record.entries = holodisk_original.record.entries.Copy()
 	record.language = holodisk_original.record.language
-	to_chat(user, span_notice("You copy the record from [holodisk_original] to [src] by connecting the ports!"))
+	to_chat(user, span_notice(LANG("obj.3154be97", list(holodisk_original, src))))
 	name = holodisk_original.name
 
 	return ITEM_INTERACT_SUCCESS

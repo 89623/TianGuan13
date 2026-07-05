@@ -1,31 +1,32 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/silicon/ai/examine(mob/user)
 	. = list()
 	if(stat == DEAD)
-		. += span_warning("[p_They()] appear[p_s()] to be non functional.")
-	. += span_notice("[p_Their()] floor <b>bolts</b> are [is_anchored ? "tightened" : "loose"].")
+		. += span_warning(LANG("mob.8ca0f7fc", list(p_They(), p_s())))
+	. += span_notice(LANG("mob.2e9e1c08", list(p_Their(), is_anchored ? "tightened" : "loose")))
 	if(is_anchored)
 		if(!opened)
 			if(!emagged)
-				. += span_notice("[p_Their()] access panel is [stat == DEAD ? "damaged" : "closed and locked"], but could be <b>pried</b> open.")
+				. += span_notice(LANG("mob.2299454b", list(p_Their(), stat == DEAD ? "damaged" : "closed and locked")))
 			else
-				. += span_warning("[p_Their()] access panel lock is sparking, the cover can be <b>pried</b> open.")
+				. += span_warning(LANG("mob.2a26588f", list(p_Their())))
 		else
-			. += span_notice("[p_Their()] neural network connection could be <b>cut</b>, the access panel cover can be <b>pried</b> back into place.")
+			. += span_notice(LANG("mob.b0adf1fe", list(p_Their())))
 	if(stat != DEAD)
 		if (get_brute_loss())
 			if (get_brute_loss() < 30)
-				. += span_warning("[p_They()] look[p_s()] slightly dented.")
+				. += span_warning(LANG("mob.c487477b", list(p_They(), p_s())))
 			else
-				. += span_warning("<B>[p_They()] look[p_s()] severely dented!</B>")
+				. += span_warning(LANG("mob.5f081d0a", list(p_They(), p_s())))
 		if (get_fire_loss())
 			if (get_fire_loss() < 30)
-				. += span_warning("[p_They()] look[p_s()] slightly charred.")
+				. += span_warning(LANG("mob.822ee814", list(p_They(), p_s())))
 			else
-				. += span_warning("<B>[p_Their()] casing is melted and heat-warped!</B>")
+				. += span_warning(LANG("mob.40f30327", list(p_Their())))
 		if(deployed_shell)
-			. += "The wireless networking light is blinking."
+			. += LANG("mob.c0556282", null)
 		else if (!shunted && !client)
-			. += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem..."
+			. += LANG("mob.dbbd0a60", list(src))
 	//NOVA EDIT ADDITION BEGIN - CUSTOMIZATION
 	. += get_silicon_flavortext(user)
 	//NOVA EDIT ADDITION END

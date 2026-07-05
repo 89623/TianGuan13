@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //RAPID PIPE CLEANER
 
 /obj/item/rcl
@@ -43,7 +44,7 @@
 		return FALSE
 	. = TRUE
 	if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
-		to_chat(user, span_warning("You attempt to loosen the securing screws on the side, but it falls apart!"))
+		to_chat(user, span_warning(LANG("obj.7856c70a", null)))
 		while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 			var/diff = loaded.amount % 30
 			if(diff)
@@ -56,7 +57,7 @@
 		return
 
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You loosen the securing screws on the side, allowing you to lower the guiding edge and retrieve the wires."))
+	to_chat(user, span_notice(LANG("obj.0aa5abaa", null)))
 	while(loaded.amount > 30) //There are only two kinds of situations: "nodiff" (60,90), or "diff" (31-59, 61-89)
 		var/diff = loaded.amount % 30
 		if(diff)
@@ -78,7 +79,7 @@
 
 		if(!loaded)
 			if(!user.transferItemToLoc(W, src))
-				to_chat(user, span_warning("[src] is stuck to your hand!"))
+				to_chat(user, span_warning(LANG("obj.1dbf8014", list(src))))
 				return
 			else
 				loaded = W //W.loc is src at this point.
@@ -93,14 +94,14 @@
 		else
 			return
 		update_appearance()
-		to_chat(user, span_notice("You add the pipe cleaners to [src]. It now contains [loaded.amount]."))
+		to_chat(user, span_notice(LANG("obj.627e44f8", list(src, loaded.amount))))
 	else
 		..()
 
 /obj/item/rcl/examine(mob/user)
 	. = ..()
 	if(loaded)
-		. += span_info("It contains [loaded.amount]/[max_amount] pipe cleaners.")
+		. += span_info(LANG("obj.085e0c5a", list(loaded.amount, max_amount)))
 
 /obj/item/rcl/Destroy()
 	QDEL_NULL(loaded)
@@ -133,7 +134,7 @@
 	update_appearance()
 	if(!loaded || !loaded.amount)
 		if(loud)
-			to_chat(user, span_notice("The last of the pipe cleaners unreel from [src]."))
+			to_chat(user, span_notice(LANG("obj.1501ce08", list(src))))
 		if(loaded)
 			QDEL_NULL(loaded)
 			loaded = null
@@ -185,11 +186,11 @@
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
-		balloon_alert(user, "its empty!")
+		balloon_alert(user, LANG("obj.54e0bf49", null))
 		return
 
 	if(prob(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
-		balloon_alert(user, "wires jam!")
+		balloon_alert(user, LANG("obj.e8443221", null))
 		active = FALSE
 		return
 	else
@@ -272,7 +273,7 @@
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
-		to_chat(user, span_warning("\The [src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.9104a6b2", list(src))))
 		return
 
 	var/turf/T = get_turf(user)
@@ -308,7 +309,7 @@
 		if (current_color_index > colors.len)
 			current_color_index = 1
 		var/cwname = colors[current_color_index]
-		to_chat(user, "Color changed to [cwname]!")
+		to_chat(user, LANG("obj.691aed39", list(cwname)))
 		if(loaded)
 			loaded.set_pipecleaner_color(colors[current_color_index])
 		if(wiring_gui_menu)

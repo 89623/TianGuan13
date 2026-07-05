@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/lesserform
 	name = "Lesser Form"
 	desc = "We debase ourselves and become lesser. We become a monkey. Costs 5 chemicals."
@@ -29,13 +30,13 @@
 /// Stop being a monkey
 /datum/action/changeling/lesserform/proc/unmonkey(mob/living/carbon/human/user)
 	if(user.movement_type & VENTCRAWLING)
-		user.balloon_alert(user, "can't transform in pipes!")
+		user.balloon_alert(user, LANG("datum.ae935305", null))
 		return FALSE
 	var/datum/antagonist/changeling/changeling = IS_CHANGELING(user)
 	var/datum/changeling_profile/chosen_form = changeling?.current_profile // NOVA EDIT CHANGE - ORIGINAL: var/datum/changeling_profile/chosen_form = select_form(changeling, user)
 	if(!chosen_form)
 		return FALSE
-	to_chat(user, span_notice("We transform our appearance."))
+	to_chat(user, span_notice(LANG("datum.9408a619", null)))
 	var/datum/dna/chosen_dna = chosen_form.dna
 	var/datum/species/chosen_species = chosen_dna.species
 	user.humanize(species = chosen_species, instant = transform_instantly)
@@ -53,7 +54,7 @@
 
 /// Become a monkey
 /datum/action/changeling/lesserform/proc/become_monkey(mob/living/carbon/human/user)
-	to_chat(user, span_warning("Our genes cry out!"))
+	to_chat(user, span_warning(LANG("datum.2912e919", null)))
 	// NOVA EDIT ADDITION START - Clean up organs from previous transformation so they don't persist into monkey form
 	for(var/obj/item/organ/old_organ as anything in user.organs)
 		if(old_organ.bodypart_overlay)
@@ -73,7 +74,7 @@
 /datum/action/changeling/lesserform/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	if (ismonkey(owner))
 		name = "Human Form"
-		desc = "We change back into a human. Costs 5 chemicals."
+		desc = LANG("datum.77ec45d2", null)
 	else
 		name = initial(name)
 		desc = initial(desc)

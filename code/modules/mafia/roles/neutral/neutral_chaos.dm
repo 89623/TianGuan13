@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mafia_role/obsessed
 	name = "Obsessed"
 	desc = "Lynch your obsession before you get killed at all costs!"
@@ -49,7 +50,7 @@
 		game.award_role(winner_award, src)
 		reveal_role(game, FALSE)
 	else
-		to_chat(body, span_userdanger("You have failed your objective to lynch [obsession.body.real_name]!"))
+		to_chat(body, span_userdanger(LANG("datum.9bb8636c", list(obsession.body.real_name))))
 
 /datum/mafia_role/clown
 	name = "Clown"

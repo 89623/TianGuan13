@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // How much "space" we give the edge of the map
 GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "awaymissionconfig.txt"))
 GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generate_map_list_from_directory(directory = "[global.config.directory]/away_missions/"))
@@ -9,10 +10,10 @@ GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generate_map_list_from_directory(
 	else if(GLOB.potentialRandomZlevels?.len)
 		map = pick_n_take(GLOB.potentialRandomZlevels)
 	else
-		return to_chat(world, span_boldannounce("No valid away mission files, loading aborted."))
-	to_chat(world, span_boldannounce("Loading away mission..."))
+		return to_chat(world, span_boldannounce(LANG("_root.c98e0263", null)))
+	to_chat(world, span_boldannounce(LANG("_root.d6bdcee6", null)))
 	var/loaded = load_new_z_level(map, "Away Mission", config_gateway)
-	to_chat(world, span_boldannounce("Away mission [loaded ? "loaded" : "aborted due to errors"]."))
+	to_chat(world, span_boldannounce(LANG("_root.227d9313", list(loaded ? "loaded" : "aborted due to errors"))))
 	if(!loaded)
 		message_admins("Away mission [map] loading failed due to errors.")
 		log_admin("Away mission [map] loading failed due to errors.")

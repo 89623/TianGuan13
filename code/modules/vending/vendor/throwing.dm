@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * Throw an item from our internal inventory out in front of us
@@ -27,7 +28,7 @@
 	pre_throw(thrown_item)
 
 	thrown_item.throw_at(target, 16, 3)
-	visible_message(span_danger("[src] launches [thrown_item] at [target]!"))
+	visible_message(span_danger(LANG("obj.78331797", list(src, thrown_item, target))))
 	return TRUE
 
 /**

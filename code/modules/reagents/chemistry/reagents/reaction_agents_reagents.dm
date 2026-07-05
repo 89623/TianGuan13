@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/reagent/reaction_agent
 	abstract_type = /datum/reagent/reaction_agent
 	name = "Reaction Agent"
@@ -108,10 +109,10 @@
 		if(reagent.purity <= reagent.inverse_chem_val)
 			is_inverse = TRUE
 	if(is_inverse)
-		target.my_atom.audible_message(span_warning("The beaker bubbles violently as the reagent is added!"))
+		target.my_atom.audible_message(span_warning(LANG("datum.0a47f0e8", null)))
 		playsound(target.my_atom, 'sound/effects/chemistry/bufferadd.ogg', 50, TRUE)
 	else
-		target.my_atom.audible_message(span_warning("The added reagent doesn't seem to do much."))
+		target.my_atom.audible_message(span_warning(LANG("datum.aa49175c", null)))
 	if(!copy_only)
 		volume -= amount
 		holder.update_total()
@@ -176,10 +177,10 @@
 
 	//audible feedback
 	if(conversion_buffer < amount * 10)
-		target.my_atom.audible_message(span_warning("The beaker goes into a rolling boil as the contents begin inversing!"))
+		target.my_atom.audible_message(span_warning(LANG("datum.42eb62df", null)))
 		playsound(target.my_atom, 'sound/effects/chemistry/catalyst.ogg', 50, TRUE)
 	else
-		target.my_atom.audible_message(span_warning("The buffer fizzles with no effect."))
+		target.my_atom.audible_message(span_warning(LANG("datum.be894d1e", null)))
 
 	//remove inversening reagent based on total buffer removed
 	var/volume_to_transfer = amount - (amount * (1 - (conversion_buffer / (amount * 10))))

@@ -9,12 +9,11 @@ ADMIN_VERB(try_stop_delam, R_ADMIN, "Delam Emergency Stop", "Activate the delam 
 
 	// Warn them if they're intervening in the work of God
 	if(world.time - SSticker.round_start_time < 30 MINUTES)
-		var/go_early = tgui_alert(user, "The [suppression_system.name] is set to automatically start at the programmed time. \
-			Are you sure you want to override this and fire it early? It's less scary that way.", "Suffering premature delamination?", list("No", "Yes"))
+		var/go_early = tgui_alert(user, LANG("datum.9bde39b3", list(suppression_system.name)), LANG("datum.aef636e4", null), list("No", "Yes"))
 		if(go_early != "Yes")
 			return FALSE
 
-	var/double_check = tgui_alert(user, "You really sure that you want to push this?", "Reticulating Splines", list("No", "Yes"))
+	var/double_check = tgui_alert(user, LANG("datum.48e0376c", null), LANG("datum.9ede65d3", null), list("No", "Yes"))
 	if(double_check != "Yes")
 		return FALSE
 

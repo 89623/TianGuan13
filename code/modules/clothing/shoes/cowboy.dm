@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/shoes/cowboy
 	name = "cowboy boots"
 	desc = "A small sticker lets you know they've been inspected for snakes, It is unclear how long ago the inspection took place..."
@@ -55,11 +56,11 @@
 	if(!(user.mobility_flags & MOBILITY_USE) || !isliving(target))
 		return
 	if(contents.len >= max_occupants)
-		to_chat(user, span_warning("[src] are full!"))
+		to_chat(user, span_warning(LANG("obj.bbd337c4", list(src))))
 		return
 	if(istype(target, /mob/living/basic/snake) || istype(target, /mob/living/basic/headslug) || islarva(target))
 		target.forceMove(src)
-		to_chat(user, span_notice("[target] slithers into [src]."))
+		to_chat(user, span_notice(LANG("obj.9ed210e5", list(target, src))))
 
 /obj/item/clothing/shoes/cowboy/container_resist_act(mob/living/user)
 	if(!do_after(user, 1 SECONDS, target = user))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 	AI ClickOn()
 
@@ -222,7 +223,7 @@
 	if (user)
 		add_hiddenprint(user)
 		var/enabled_or_disabled = environ ? "enabled" : "disabled"
-		balloon_alert(user, "environment power [enabled_or_disabled]")
+		balloon_alert(user, LANG("obj.c7397cc8", list(enabled_or_disabled)))
 		user.log_message("[enabled_or_disabled] the [src] environment settings", LOG_GAME)
 	update_appearance()
 	update()
@@ -239,7 +240,7 @@
 	if (user)
 		var/enabled_or_disabled = lighting ? "enabled" : "disabled"
 		add_hiddenprint(user)
-		balloon_alert(user, "lighting power toggled [enabled_or_disabled]")
+		balloon_alert(user, LANG("obj.d72e70d2", list(enabled_or_disabled)))
 		user.log_message("turned [enabled_or_disabled] the [src] lighting settings", LOG_GAME)
 	update_appearance()
 	update()
@@ -256,7 +257,7 @@
 	equipment = equipment ? APC_CHANNEL_OFF : APC_CHANNEL_ON
 	if (user)
 		var/enabled_or_disabled = equipment ? "enabled" : "disabled"
-		balloon_alert(user, "equipment power toggled [enabled_or_disabled]")
+		balloon_alert(user, LANG("obj.8489f9de", list(enabled_or_disabled)))
 		add_hiddenprint(user)
 		user.log_message("turned [enabled_or_disabled] the [src] equipment settings", LOG_GAME)
 	update_appearance()
@@ -283,7 +284,7 @@
 /* Holopads */
 /obj/machinery/holopad/ai_click_alt(mob/living/silicon/ai/user)
 	if (user)
-		balloon_alert(user, "disrupted all active calls")
+		balloon_alert(user, LANG("obj.79e3b2c0", null))
 		add_hiddenprint(user)
 	hangup_all_calls()
 	return CLICK_ACTION_SUCCESS

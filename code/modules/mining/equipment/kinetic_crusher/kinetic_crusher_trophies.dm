@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*!
  * Contains the baseline of kinetic crusher trophies.
  */
@@ -18,7 +19,7 @@
 
 /obj/item/crusher_trophy/examine(mob/living/user)
 	. = ..()
-	. += span_notice("Causes [effect_desc()] when attached to a kinetic crusher.")
+	. += span_notice(LANG("obj.8efd7f37", list(effect_desc())))
 
 /// Returns a string to get added to the examine
 /obj/item/crusher_trophy/proc/effect_desc()
@@ -34,7 +35,7 @@
 	if(!user.transferItemToLoc(src, crusher))
 		return
 	crusher.trophies += src
-	to_chat(user, span_notice("You attach [src] to [crusher]."))
+	to_chat(user, span_notice(LANG("obj.c1fbc99d", list(src, crusher))))
 	return TRUE
 
 /// Removes the trophy from our crusher

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Corner A area section for buildmode
 #define AREASELECT_CORNERA "corner A"
 /// Corner B area selection for buildmode
@@ -38,7 +39,7 @@
 	CRASH("No help defined, yell at a coder")
 
 /datum/buildmode_mode/proc/change_settings(client/c)
-	to_chat(c, span_warning("There is no configuration available for this mode"))
+	to_chat(c, span_warning(LANG("datum.97d59d08", null)))
 	return
 
 /datum/buildmode_mode/proc/Reset()
@@ -82,12 +83,12 @@
 				return
 			if(cornerA && !cornerB)
 				cornerB = select_tile(get_turf(object), AREASELECT_CORNERB)
-				to_chat(c, span_boldwarning("Region selected, if you're happy with your selection left click again, otherwise right click."))
+				to_chat(c, span_boldwarning(LANG("datum.24fa4cce", null)))
 				return
 			handle_selected_area(c, params)
 			deselect_region()
 		else
-			to_chat(c, span_notice("Region selection canceled!"))
+			to_chat(c, span_notice(LANG("datum.9b9431f4", null)))
 			deselect_region()
 	return
 

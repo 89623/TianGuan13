@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Short stairs you can use to climb tables quickly
 /obj/structure/steps
 	name = "steps"
@@ -38,7 +39,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/steps/screwdriver_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("You start disassembling [src]..."))
+	to_chat(user, span_notice(LANG("obj.f0ab830f", list(src))))
 	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -54,6 +55,6 @@
 	var/entered_dir = get_dir(our_turf, old_loc)
 	if (entered_dir == dir)
 		arrived.Knockdown(1 SECONDS)
-		to_chat(arrived, span_warning("You tripped over \the [src]!"))
+		to_chat(arrived, span_warning(LANG("obj.0a5635b8", list(src))))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/steps, 0)

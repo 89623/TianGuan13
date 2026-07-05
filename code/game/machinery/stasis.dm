@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define STASIS_TOGGLE_COOLDOWN 50
 /obj/machinery/stasis
 	name = "lifeform stasis unit"
@@ -44,7 +45,7 @@
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
+	. += span_notice(LANG("obj.da3c2068", list(stasis_enabled ? "turn off" : "turn on")))
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
@@ -62,9 +63,9 @@
 	stasis_enabled = !stasis_enabled
 	stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
-	user.visible_message(span_notice("\The [src] [stasis_enabled ? "powers on" : "shuts down"]."), \
-				span_notice("You [stasis_enabled ? "power on" : "shut down"] \the [src]."), \
-				span_hear("You hear a nearby machine [stasis_enabled ? "power on" : "shut down"]."))
+	user.visible_message(span_notice(LANG("obj.6516aa25", list(src, stasis_enabled ? "powers on" : "shuts down"))), \
+				span_notice(LANG("obj.767bf180", list(stasis_enabled ? "power on" : "shut down", src))), \
+				span_hear(LANG("obj.5e28d30e", list(stasis_enabled ? "power on" : "shut down"))))
 	play_power_sound()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS

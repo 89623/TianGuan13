@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Lavaproof, fireproof, fast mech with low armor and higher energy consumption and has an internal ore box.
 /obj/vehicle/sealed/mecha/clarke
 	desc = "Combining man and machine for a better, stronger miner. Can even resist lava! Due to its tracks it cannot strafe."
@@ -147,7 +148,7 @@
 	if(!chassis || !(owner in chassis.occupants))
 		return
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
-		chassis.balloon_alert(owner, "on cooldown!")
+		chassis.balloon_alert(owner, LANG("datum.d4ae5d4d", null))
 		return
 	if(!isliving(owner))
 		return
@@ -164,12 +165,12 @@
 		if(!pinpointed_ruin || get_dist(ruin_landmark, chassis) < get_dist(pinpointed_ruin, chassis))
 			pinpointed_ruin = ruin_landmark
 	if(!pinpointed_ruin)
-		chassis.balloon_alert(living_owner, "no ruins!")
+		chassis.balloon_alert(living_owner, LANG("datum.51aa3f3f", null))
 		return
 	var/datum/status_effect/agent_pinpointer/ruin_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/ruin)
 	ruin_pinpointer.RegisterSignal(living_owner, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/status_effect/agent_pinpointer/ruin, cancel_self))
 	ruin_pinpointer.scan_target = pinpointed_ruin
-	chassis.balloon_alert(living_owner, "pinpointing nearest ruin")
+	chassis.balloon_alert(living_owner, LANG("datum.7df7ed5a", null))
 
 /datum/status_effect/agent_pinpointer/ruin
 	duration = SEARCH_COOLDOWN * 0.5

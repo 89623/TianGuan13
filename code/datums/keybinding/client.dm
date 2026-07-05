@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/keybinding/client
 	category = CATEGORY_CLIENT
 	weight = WEIGHT_HIGHEST
@@ -30,7 +31,7 @@
 	. = ..()
 	if(.)
 		return
-	to_chat(user, span_notice("Screenshot saved in 'BYOND/screenshots' folder."))
+	to_chat(user, span_notice(LANG("datum.c059a5b6", null)))
 	//This is dealt by BYOND. Keeping this here in case that ever changes, though this command doesn't actually work when manually called.
 	//winset(user, null, "command=.screenshot auto")
 	return TRUE

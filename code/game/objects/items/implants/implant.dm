@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Parent class for all implants
  */
@@ -214,13 +215,13 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(params["implant_action"] == "self_destruct")
-		var/warning = tgui_alert(user, "Activation will harmlessly self-destruct this implant. Proceed?", "You sure?", list("Yes", "No"))
+		var/warning = tgui_alert(user, LANG("obj.a926878c", null), LANG("obj.be968efe", null), list("Yes", "No"))
 		if(warning != "Yes" || QDELETED(src) || QDELETED(user) || QDELETED(console) || isnull(imp_in))
 			return TRUE
 		if(!console.is_operational || !user.can_perform_action(console, NEED_DEXTERITY|ALLOW_SILICON_REACH))
 			return TRUE
 
-		to_chat(imp_in, span_hear("You feel a tiny jolt from inside of you as one of your implants fizzles out."))
+		to_chat(imp_in, span_hear(LANG("obj.2c2b66fe", null)))
 		do_sparks(number = 2, cardinal_only = FALSE, source = imp_in)
 		deconstruct()
 		return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mutation/shock
 	name = "Shock Touch"
 	desc = "The affected can channel excess electricity through their hands without shocking themselves, allowing them to shock others. Mostly harmless! Mostly... "
@@ -54,8 +55,8 @@
 			carbon_victim.dropItemToGround(carbon_victim.get_inactive_held_item())
 			carbon_victim.adjust_confusion(15 SECONDS)
 			carbon_victim.visible_message(
-				span_danger("[caster] electrocutes [victim]!"),
-				span_userdanger("[caster] electrocutes you!"),
+				span_danger(LANG("datum.4b9025b0", list(caster, victim))),
+				span_userdanger(LANG("datum.c4de0b12", list(caster))),
 			)
 			if(stagger)
 				carbon_victim.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
@@ -65,14 +66,14 @@
 		var/mob/living/living_victim = victim
 		if(living_victim.electrocute_act(15, caster, 1, SHOCK_NOSTUN)) //We do damage here because non-carbon mobs typically ignore stamina damage.
 			living_victim.visible_message(
-				span_danger("[caster] electrocutes [victim]!"),
-				span_userdanger("[caster] electrocutes you!"),
+				span_danger(LANG("datum.4b9025b0", list(caster, victim))),
+				span_userdanger(LANG("datum.c4de0b12", list(caster))),
 			)
 			if(stagger)
 				living_victim.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 			return TRUE
 
-	to_chat(caster, span_warning("The electricity doesn't seem to affect [victim]..."))
+	to_chat(caster, span_warning(LANG("datum.241db94c", list(victim))))
 	return TRUE
 
 /obj/item/melee/touch_attack/shock
@@ -141,7 +142,7 @@
 		return .
 	var/obj/item/bodypart/transfer_limb = cast_on.get_active_hand()
 	if(!IS_ORGANIC_LIMB(transfer_limb))
-		to_chat(cast_on, span_notice("You fail to channel your mending powers through your inorganic hand."))
+		to_chat(cast_on, span_notice(LANG("datum.a7698fa5", null)))
 		return FALSE
 
 	return TRUE
@@ -161,7 +162,7 @@
 	var/hurt_this_guy = determine_if_this_hurts_instead(mendicant, hurtguy)
 
 	if (hurt_this_guy && (HAS_TRAIT(mendicant, TRAIT_PACIFISM) || !mendicant.combat_mode)) //Returns if we're a pacifist and we'd hurt them, or we're not in combat mode and we'll hurt them
-		mendicant.balloon_alert(mendicant, "[hurtguy] would be hurt!")
+		mendicant.balloon_alert(mendicant, LANG("datum.8286f7ca", list(hurtguy)))
 		return FALSE
 
 	if(hurt_this_guy)
@@ -210,8 +211,8 @@
 	hurtguy.update_damage_overlays()
 	mendicant.update_damage_overlays()
 
-	hurtguy.visible_message(span_notice("[mendicant] lays hands on [hurtguy]!"))
-	to_chat(hurtguy, span_boldnotice("[mendicant] lays hands on you, healing you!"))
+	hurtguy.visible_message(span_notice(LANG("datum.6d46bef6", list(mendicant, hurtguy))))
+	to_chat(hurtguy, span_boldnotice(LANG("datum.530dd52a", list(mendicant))))
 	new /obj/effect/temp_visual/heal(get_turf(hurtguy), COLOR_VERY_PALE_LIME_GREEN)
 	return success
 
@@ -231,7 +232,7 @@
 			mendicant_organic_limbs += possible_limb
 	// None? Gtfo
 	if(!length(mendicant_organic_limbs))
-		mendicant.balloon_alert(mendicant, "no organic limbs!")
+		mendicant.balloon_alert(mendicant, LANG("datum.d60d95b5", null))
 		return .
 
 	// Try to use our active hand, otherwise pick at random
@@ -249,7 +250,7 @@
 		. = TRUE
 
 	if(!.)
-		hurtguy.balloon_alert(mendicant, "unhurt!")
+		hurtguy.balloon_alert(mendicant, LANG("datum.9f563b04", null))
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/do_complicated_heal(mob/living/carbon/mendicant, mob/living/carbon/hurtguy, heal_multiplier, pain_multiplier)
 
@@ -326,14 +327,14 @@
 		if(!blood_transferred)
 			return
 
-		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
+		to_chat(mendicant, span_notice(LANG("datum.bac9a504", null)))
 		. = TRUE
 		// Because we do our own spin on it!
 		if(hurtguy.get_blood_compatibility(mendicant) == FALSE)
 			hurtguy.adjust_tox_loss((blood_transferred * 0.1) * pain_multiplier) // 1 dmg per 10 blood
-			to_chat(hurtguy, span_notice("Your veins feel thicker, but they itch a bit."))
+			to_chat(hurtguy, span_notice(LANG("datum.dabf8c6a", null)))
 		else
-			to_chat(hurtguy, span_notice("Your veins feel thicker!"))
+			to_chat(hurtguy, span_notice(LANG("datum.01fb81ab", null)))
 		return
 
 	if(hurtguy_blood < BLOOD_VOLUME_MAXIMUM)
@@ -346,16 +347,16 @@
 	if(!blood_received)
 		return
 
-	to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
+	to_chat(hurtguy, span_notice(LANG("datum.86c975b7", null)))
 	. = TRUE
 	// Because we do our own spin on it!
 	if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
 		mendicant.adjust_tox_loss((blood_received * 0.1) * pain_multiplier) // 1 dmg per 10 blood
-		to_chat(mendicant, span_notice("Your veins swell and itch!"))
+		to_chat(mendicant, span_notice(LANG("datum.c3882566", null)))
 	else
-		to_chat(mendicant, span_notice("Your veins swell!"))
+		to_chat(mendicant, span_notice(LANG("datum.ba324022", null)))
 	if(!.)
-		mendicant.balloon_alert(hurtguy, "no damaged organic limbs!")
+		mendicant.balloon_alert(hurtguy, LANG("datum.4a94f48d", null))
 
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)
@@ -401,26 +402,26 @@
 		if(ishuman(human_smiter))
 			human_smiter.force_say()
 			if(evil_smite)
-				human_smiter.say("in [possible_deity]'s dark name, I COMMAND YOU TO PERISH!!!", forced = "compelled by the power of their deity")
+				human_smiter.say(LANG("datum.f0cdeb38", list(possible_deity)), forced = "compelled by the power of their deity")
 			else
-				human_smiter.say("By [possible_deity]'s might, I SMITE YOU!!!", forced = "compelled by the power of their deity")
+				human_smiter.say(LANG("datum.fc6f08c1", list(possible_deity)), forced = "compelled by the power of their deity")
 		our_smite_multiplier *= divine_champion ? 5 : 1 //good luck surviving this if they're a chap
 
 	if(evil_smite)
-		motherfucker_to_hurt.visible_message(span_warning("[smiter] snaps [smiter.p_their()] fingers in front of [motherfucker_to_hurt]'s face, and [motherfucker_to_hurt]'s body twists violently from an unseen force!"))
+		motherfucker_to_hurt.visible_message(span_warning(LANG("datum.b4e43cd2", list(smiter, smiter.p_their(), motherfucker_to_hurt, motherfucker_to_hurt))))
 		motherfucker_to_hurt.apply_damage(10 * our_smite_multiplier, BRUTE, spread_damage = TRUE, wound_bonus = 5 * our_smite_multiplier)
 		motherfucker_to_hurt.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * our_smite_multiplier, 25 SECONDS)
 		smiter.emote("snap")
 		smite_text_to_target = "crushes you psychically with a snap of [smiter.p_their()] fingers"
 	else
-		motherfucker_to_hurt.visible_message(span_warning("[smiter] lays hands on [motherfucker_to_hurt], but it shears [motherfucker_to_hurt.p_them()] with a brilliant energy!"))
+		motherfucker_to_hurt.visible_message(span_warning(LANG("datum.d2e8edf5", list(smiter, motherfucker_to_hurt, motherfucker_to_hurt.p_them()))))
 		motherfucker_to_hurt.apply_damage(10 * our_smite_multiplier, BURN, spread_damage = TRUE, wound_bonus = 5 * our_smite_multiplier)
 		motherfucker_to_hurt.adjust_fire_stacks(3 * our_smite_multiplier)
 		motherfucker_to_hurt.ignite_mob()
 
 	motherfucker_to_hurt.update_damage_overlays()
 
-	to_chat(motherfucker_to_hurt, span_bolddanger("[smiter] [smite_text_to_target], hurting you!"))
+	to_chat(motherfucker_to_hurt, span_bolddanger(LANG("datum.60faab55", list(smiter, smite_text_to_target))))
 	motherfucker_to_hurt.emote("scream")
 	new /obj/effect/temp_visual/explosion(get_turf(motherfucker_to_hurt), evil_smite ? LIGHT_COLOR_BLOOD_MAGIC : LIGHT_COLOR_HOLY_MAGIC)
 	. = TRUE

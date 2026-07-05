@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * Simple component for something that is able to destroy
  * certain effects (such as cult runes) in one attack.
@@ -67,7 +68,7 @@
 		return NONE
 
 	if(HAS_TRAIT(target, TRAIT_ILLUSORY_EFFECT))
-		to_chat(user, span_notice("You pass [parent] through the [target], but nothing seems to happen. Is it really even there?"))
+		to_chat(user, span_notice(LANG("datum.4a7f955b", list(parent, target))))
 		return NONE
 
 	if(is_type_in_typecache(target, effects_we_clear)) // Make sure we get all subtypes and everything

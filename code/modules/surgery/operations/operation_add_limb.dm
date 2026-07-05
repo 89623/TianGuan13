@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define OPERATION_REJECTION_DAMAGE "tox_damage"
 
 // This surgery is so snowflake that it doesn't use any of the operation subtypes, it forges its own path
@@ -30,7 +31,7 @@
 
 /datum/surgery_operation/limb/prosthetic_replacement/all_required_strings()
 	. = ..()
-	. += "the limb must be missing / a stump"
+	. += LANG("datum.0f48e50a", null)
 
 /datum/surgery_operation/limb/prosthetic_replacement/any_required_strings()
 	return list("arms may receive any suitable item in lieu of a replacement limb") + ..()

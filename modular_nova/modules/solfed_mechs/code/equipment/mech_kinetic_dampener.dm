@@ -52,7 +52,7 @@
 		return
 	var/obj/item/mecha_parts/mecha_equipment/kinetic_dampener/dampener = locate(/obj/item/mecha_parts/mecha_equipment/kinetic_dampener) in chassis.contents
 	if(!dampener)
-		to_chat(clicker, span_warning("No dampener module found."))
+		to_chat(clicker, span_warning(LANG("datum.e908be21", null)))
 		return FALSE
 
 	var/desired_state = !dampener.active
@@ -61,7 +61,7 @@
 	if(success)
 		button_icon_state = dampener.active ? "mech_defense_mode_on" : "mech_defense_mode_off"
 		build_all_button_icons()
-		to_chat(clicker, span_notice("You toggle the projectile dampener [dampener.active ? "on" : "off"]."))
+		to_chat(clicker, span_notice(LANG("datum.5393ccc1", list(dampener.active ? "on" : "off"))))
 	else
 		// set_active() already printed the “no power” message
 		return FALSE

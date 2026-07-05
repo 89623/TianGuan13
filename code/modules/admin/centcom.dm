@@ -1,10 +1,11 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Gets the centcom bans of the given ckey.
 /datum/admins/proc/open_centcom_bans(ckey)
 	if(!check_rights(R_ADMIN))
 		return
 
 	if(!CONFIG_GET(string/centcom_ban_db))
-		to_chat(usr, span_warning("Centcom Galactic Ban DB is disabled!"))
+		to_chat(usr, span_warning(LANG("datum.c6c3ded5", null)))
 		return
 
 	// Make the request
@@ -68,7 +69,7 @@
 		return
 
 	if(!CONFIG_GET(string/centcom_ban_db))
-		to_chat(usr, span_warning("Centcom Galactic Ban DB is disabled!"))
+		to_chat(usr, span_warning(LANG("datum.c6c3ded5", null)))
 		return
 
 	// Make the request

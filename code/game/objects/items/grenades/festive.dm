@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //~*~*~*~*SPARKLER*~*~*~*~*~*~
 
 /obj/item/sparkler
@@ -91,19 +92,19 @@
 		return
 	if(det_time)
 		det_time -= 10
-		to_chat(user, span_notice("You shorten the fuse of [src] with [item]."))
+		to_chat(user, span_notice(LANG("obj.2afd1550", list(src, item))))
 		playsound(src, 'sound/items/tools/wirecutter.ogg', 20, TRUE)
 		icon_state = initial(icon_state) + "_[det_time]"
 		update_appearance()
 	else
-		to_chat(user, span_danger("You've already removed all of the fuse!"))
+		to_chat(user, span_danger(LANG("obj.99361751", null)))
 
 /obj/item/grenade/firecracker/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 80)
 	log_grenade(user)
 	if(user)
 		add_fingerprint(user)
 		if(msg)
-			to_chat(user, span_warning("You prime [src]! [capitalize(DisplayTimeText(det_time))]!"))
+			to_chat(user, span_warning(LANG("obj.cfa52eca", list(src, capitalize(DisplayTimeText(det_time))))))
 	playsound(src, 'sound/effects/fuse.ogg', volume, TRUE)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"

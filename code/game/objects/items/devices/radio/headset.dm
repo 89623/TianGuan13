@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Used for translating channels to tokens on examination
 GLOBAL_LIST_INIT(channel_tokens, list(
 	RADIO_CHANNEL_COMMON = RADIO_KEY_COMMON,
@@ -49,14 +50,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	overlay_mic_active = null
 
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
+	user.visible_message(span_suicide(LANG("obj.cdecc22b", list(user, src, user.p_their(), user.p_theyre(), user.p_them()))))
 	return TOXLOSS
 
 /obj/item/radio/headset/examine(mob/user)
 	. = ..()
 
 	if(!(item_flags & IN_INVENTORY) || loc != user)
-		. += span_notice("A small screen on the headset flashes, it's too small to read without holding or wearing the headset.")
+		. += span_notice(LANG("obj.84be8147", null))
 		return
 
 	// construction of frequency description
@@ -75,11 +76,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		else
 			available_channels += "<li><b>[span_class(channel_span_class, channel_token)]</b> for <b>[span_class(channel_span_class, channel_name)]</b></li>"
 
-	. += span_notice("A small screen on the headset displays the following available frequencies:")
+	. += span_notice(LANG("obj.8aedb50d", null))
 	. += span_notice("<ul style='display:inline-block; margin: 0; list-style: square;'>[available_channels.Join()]</ul>")
 
 	if(command)
-		. += span_info("<b>Alt-click</b> to toggle the high-volume mode.")
+		. += span_info(LANG("obj.0c4ce9ab", null))
 
 /obj/item/radio/headset/Initialize(mapload)
 	. = ..()
@@ -459,17 +460,17 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		return ..()
 
 	if(keyslot2)
-		loc.balloon_alert(user, "cannot hold a third key!")
+		loc.balloon_alert(user, LANG("obj.45c882b7", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(key, src))
-		loc.balloon_alert(user, "cannot install!")
+		loc.balloon_alert(user, LANG("obj.b3c67530", null))
 		return ITEM_INTERACT_BLOCKING
 
 	keyslot2 = key
 	recalculateChannels()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	loc.balloon_alert(user, "encryption key installed")
+	loc.balloon_alert(user, LANG("obj.40711314", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/radio/headset/recalculateChannels()
@@ -494,5 +495,5 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	if(!istype(user) || !command)
 		return CLICK_ACTION_BLOCKING
 	use_command = !use_command
-	to_chat(user, span_notice("You toggle high-volume mode [use_command ? "on" : "off"]."))
+	to_chat(user, span_notice(LANG("obj.775ef501", list(use_command ? "on" : "off"))))
 	return CLICK_ACTION_SUCCESS

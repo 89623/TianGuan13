@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Multiplier applied on construction & deconstruction time when building multiple structures
 #define FREQUENT_USE_DEBUFF_MULTIPLIER 3
 
@@ -79,7 +80,7 @@
 /obj/item/construction/rcd/examine(mob/user)
 	. = ..()
 	if(construction_upgrades)
-		. += "It has the following upgrades installed:"
+		. += LANG("obj.00a804a0", null)
 		if(construction_upgrades & RCD_UPGRADE_FRAMES)
 			. += /obj/item/rcd_upgrade/frames::name
 		if(construction_upgrades & RCD_UPGRADE_SIMPLE_CIRCUITS)
@@ -100,7 +101,7 @@
 
 /obj/item/construction/rcd/ui_action_click(mob/user, actiontype)
 	if (!COOLDOWN_FINISHED(src, destructive_scan_cooldown))
-		to_chat(user, span_warning("[src] lets out a low buzz."))
+		to_chat(user, span_warning(LANG("obj.cdab7dec", list(src))))
 		return
 
 	COOLDOWN_START(src, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
@@ -110,11 +111,11 @@
 	var/turf/T = get_turf(user)
 
 	if(!isopenturf(T)) // Oh fuck
-		user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.7fa5d3e5", list(user, user.p_them(), src, user.p_theyre()))))
 		return BRUTELOSS
 
 	mode = RCD_TURF
-	user.visible_message(span_suicide("[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.ff34aeae", list(user, user.p_their(), user.p_theyre()))))
 	if(useResource(16, user)) // It takes 16 resources to construct a wall
 		var/success = T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
 		T = get_turf(user)
@@ -126,7 +127,7 @@
 		user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
 
-	user.visible_message(span_suicide("[user] pulls the trigger... But there is not enough ammo!"))
+	user.visible_message(span_suicide(LANG("obj.ab7f036d", list(user))))
 	return SHAME
 
 /**
@@ -164,7 +165,7 @@
 			//check if we can build our window on the grill
 			if(target_turf.is_blocked_turf(exclude_mobs = !is_full_tile, source_atom = null, ignore_atoms = structures_to_ignore, type_list = TRUE))
 				playsound(user, SFX_TOOL_SWITCH, 20, TRUE)
-				balloon_alert(user, "tile is blocked!")
+				balloon_alert(user, LANG("obj.fa928166", null))
 				return FALSE
 
 		/**
@@ -184,7 +185,7 @@
 
 			if(ignore_types && target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = ignore_types, type_list = TRUE))
 				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
-				balloon_alert(user, "something is on the girder!")
+				balloon_alert(user, LANG("obj.c5d5633d", null))
 				return FALSE
 
 		//check if turf is blocked in for dense structures
@@ -219,7 +220,7 @@
 			//check if the structure can fit on this turf
 			if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_types, type_list = TRUE))
 				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
-				balloon_alert(user, "something is on the tile!")
+				balloon_alert(user, LANG("obj.08a96e4b", null))
 				return FALSE
 
 	return TRUE
@@ -254,7 +255,7 @@
 
 	//straight up can't touch this
 	if(mode == RCD_DECONSTRUCT && (target.resistance_flags & INDESTRUCTIBLE))
-		balloon_alert(user, "too durable!")
+		balloon_alert(user, LANG("obj.09c08211", null))
 		return ITEM_INTERACT_BLOCKING
 
 	rcd_results[RCD_DESIGN_MODE] = mode
@@ -466,8 +467,8 @@
 	interact_with_atom(target, user, modifiers)
 
 /obj/item/construction/rcd/proc/detonate_pulse()
-	audible_message(span_danger("<b>[src] begins to vibrate and buzz loudly!</b>"), \
-	span_danger("<b>[src] begins vibrating violently!</b>"))
+	audible_message(span_danger(LANG("obj.36ccbfb7", list(src))), \
+	span_danger(LANG("obj.8e10116f", list(src))))
 	// 5 seconds to get rid of it
 	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 5 SECONDS)
 
@@ -495,10 +496,10 @@
 	if(!iscyborg(borgy))
 		return FALSE
 	if(!borgy.cell)
-		balloon_alert(user, "no cell found!")
+		balloon_alert(user, LANG("obj.ba8f2f7d", null))
 		return FALSE
 	if(borgy.cell.charge < (amount * energyfactor))
-		balloon_alert(user, "insufficient charge!")
+		balloon_alert(user, LANG("obj.206fba9f", null))
 		return FALSE
 	if(!dry_run)
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -603,7 +604,7 @@
 		return FALSE
 	var/obj/vehicle/sealed/mecha/gundam = owner
 	if(!gundam.has_charge(amount * MASS_TO_ENERGY))
-		gundam.balloon_alert(user, "insufficient charge!")
+		gundam.balloon_alert(user, LANG("obj.206fba9f", null))
 		return FALSE
 	if(!dry_run)
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -614,8 +615,8 @@
 	var/obj/item/mecha_parts/mecha_equipment/rcd/ourshell = loc
 	if(!istype(ourshell))
 		return
-	ourshell.audible_message(span_danger("<b>[ourshell] begins to vibrate and buzz loudly!</b>"), \
-	span_danger("<b>[ourshell] begins vibrating violently!</b>"))
+	ourshell.audible_message(span_danger(LANG("obj.36ccbfb7", list(ourshell))), \
+	span_danger(LANG("obj.8e10116f", list(ourshell))))
 	// 5 seconds to get rid of it
 	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 5 SECONDS)
 

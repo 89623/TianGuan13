@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/experimentor_result_handler
 	/// The name as seen in the UI
 	var/name
@@ -53,18 +54,18 @@
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
-		machine.visible_message(span_danger("[machine] malfunctions and destroys [exp_on], lashing its arms out at nearby people!"))
+		machine.visible_message(span_danger(LANG("datum.c4d5d9bc", list(machine, exp_on))))
 		for(var/mob/living/nearby_mob in oview(1, machine))
 			nearby_mob.apply_damage(15, BRUTE, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
 			machine.investigate_log("Experimentor dealt minor brute to [nearby_mob].", INVESTIGATE_EXPERIMENTOR)
 		QDEL_NULL(machine.loaded_item)
 
 	else if(prob(EFFECT_PROB_LOW * malf_chance))
-		machine.visible_message(span_warning("[machine] malfunctions!"))
+		machine.visible_message(span_warning(LANG("datum.66befcf6", list(machine))))
 		machine.run_experiment(SCANTYPE_OBLITERATE)
 
 	else if(prob(EFFECT_PROB_MEDIUM * malf_chance))
-		machine.visible_message(span_danger("[machine] malfunctions, throwing the [exp_on]!"))
+		machine.visible_message(span_danger(LANG("datum.3ae06d66", list(machine, exp_on))))
 		var/mob/living/target = locate(/mob/living) in oview(7, machine)
 		if(target)
 			var/obj/item/throwing = machine.loaded_item
@@ -92,13 +93,13 @@
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
-		machine.visible_message(span_danger("[machine] malfunctions, melting [exp_on] and leaking radiation!"))
+		machine.visible_message(span_danger(LANG("datum.38e61385", list(machine, exp_on))))
 		playsound(machine, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
 		radiation_pulse(machine, max_range = 6, threshold = 0.3)
 		QDEL_NULL(machine.loaded_item)
 
 	else if(prob(EFFECT_PROB_LOW * malf_chance))
-		machine.visible_message(span_warning("[machine] malfunctions, spewing toxic waste!"))
+		machine.visible_message(span_warning(LANG("datum.f525cc30", list(machine))))
 		for(var/turf/T in oview(1, machine))
 			if(!T.density && prob(EFFECT_PROB_VERYHIGH) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 				new /obj/effect/decal/cleanable/greenglow/filled(T)
@@ -109,7 +110,7 @@
 		QDEL_NULL(machine.loaded_item)
 		var/newPath = text2path(pick_weight(machine.valid_items))
 		machine.loaded_item = new newPath(machine)
-		machine.visible_message(span_warning("[machine] malfunctions, transforming [savedName] into [machine.loaded_item]!"))
+		machine.visible_message(span_warning(LANG("datum.623e8f86", list(machine, savedName, machine.loaded_item))))
 		machine.investigate_log("Experimentor has transformed [savedName] into [machine.loaded_item]", INVESTIGATE_EXPERIMENTOR)
 
 		if(istype(machine.loaded_item, /obj/item/grenade/chem_grenade))
@@ -137,7 +138,7 @@
 	var/chosenchem
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
-		machine.visible_message(span_danger("[machine] destroys [exp_on], leaking dangerous gas!"))
+		machine.visible_message(span_danger(LANG("datum.22aaeb88", list(machine, exp_on))))
 		chosenchem = pick(
 			/datum/reagent/carbon,
 			/datum/reagent/uranium/radium,
@@ -154,7 +155,7 @@
 		QDEL_NULL(machine.loaded_item)
 
 	else if(prob(EFFECT_PROB_VERYLOW * malf_chance))
-		machine.visible_message(span_danger("[machine]'s chemical chamber has sprung a leak!"))
+		machine.visible_message(span_danger(LANG("datum.c650e32a", list(machine))))
 		chosenchem = pick(
 			/datum/reagent/mutationtoxin/classic,
 			/datum/reagent/cyborg_mutation_nanomachines,
@@ -167,11 +168,11 @@
 		machine.investigate_log("Experimentor has released <font color='red'>[chosenchem]</font> smoke!", INVESTIGATE_EXPERIMENTOR)
 
 	else if(prob(EFFECT_PROB_LOW * malf_chance))
-		machine.visible_message(span_warning("[machine] malfunctions, spewing harmless gas."))
+		machine.visible_message(span_warning(LANG("datum.241d462d", list(machine))))
 		do_smoke(1, machine, machine.loc)
 
 	else if(prob(EFFECT_PROB_MEDIUM * malf_chance))
-		machine.visible_message(span_warning("[machine] melts [exp_on], ionizing the air around it!"))
+		machine.visible_message(span_warning(LANG("datum.713683e7", list(machine, exp_on))))
 		empulse(machine.loc, 4, 6, emp_source = machine)
 		machine.investigate_log("Experimentor has generated an Electromagnetic Pulse.", INVESTIGATE_EXPERIMENTOR)
 		QDEL_NULL(machine.loaded_item)
@@ -211,20 +212,20 @@
 		var/turf/target_turf = get_turf(target_mob)
 
 		if(target_turf)
-			machine.visible_message(span_danger("[machine] dangerously overheats, launching a flaming fuel orb!"))
+			machine.visible_message(span_danger(LANG("datum.665c4ed9", list(machine))))
 			machine.investigate_log("Experimentor has launched a <font color='red'>fireball</font> at [target_mob]!", INVESTIGATE_EXPERIMENTOR)
 			var/obj/projectile/magic/fireball/FB = new /obj/projectile/magic/fireball(start)
 			FB.aim_projectile(target_turf, start)
 			FB.fire()
 
 	else if(prob(EFFECT_PROB_LOW * malf_chance))
-		machine.visible_message(span_danger("[machine] malfunctions, melting [exp_on] and releasing a burst of flame!"))
+		machine.visible_message(span_danger(LANG("datum.f1e947e2", list(machine, exp_on))))
 		explosion(machine, devastation_range = -1, flame_range = 2, adminlog = FALSE)
 		machine.investigate_log("Experimentor started a fire.", INVESTIGATE_EXPERIMENTOR)
 		QDEL_NULL(machine.loaded_item)
 
 	else if(prob(EFFECT_PROB_MEDIUM * malf_chance))
-		machine.visible_message(span_warning("[machine] malfunctions, melting [exp_on] and leaking hot air!"))
+		machine.visible_message(span_warning(LANG("datum.1c90bf40", list(machine, exp_on))))
 		var/datum/gas_mixture/env = machine.loc.return_air()
 		if(env)
 			var/heat_capacity = max(env.heat_capacity(), 1)
@@ -234,7 +235,7 @@
 		QDEL_NULL(machine.loaded_item)
 
 	else if(prob(EFFECT_PROB_MEDIUM * malf_chance))
-		machine.visible_message(span_warning("[machine] malfunctions, activating its emergency coolant systems!"))
+		machine.visible_message(span_warning(LANG("datum.54410977", list(machine))))
 		do_smoke(1, machine, machine.loc)
 		for(var/mob/living/nearby_mob in oview(1, machine))
 			nearby_mob.apply_damage(5, BURN, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST))
@@ -271,14 +272,14 @@
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
-		machine.visible_message(span_danger("[machine] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!"))
+		machine.visible_message(span_danger(LANG("datum.dac2a77a", list(machine, exp_on))))
 		do_chem_smoke(0, machine, machine.loc, /datum/reagent/consumable/frostoil, 50)
 		machine.investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
 		playsound(machine, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 		QDEL_NULL(machine.loaded_item)
 
 	else if(prob(EFFECT_PROB_LOW * malf_chance))
-		machine.visible_message(span_warning("[machine] malfunctions, shattering [exp_on] and leaking cold air!"))
+		machine.visible_message(span_warning(LANG("datum.c13b6320", list(machine, exp_on))))
 		var/datum/gas_mixture/env = machine.loc.return_air()
 		if(env)
 			var/heat_capacity = max(env.heat_capacity(), 1)
@@ -288,7 +289,7 @@
 		QDEL_NULL(machine.loaded_item)
 
 	else if(prob(EFFECT_PROB_MEDIUM * malf_chance))
-		machine.visible_message(span_warning("[machine] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!"))
+		machine.visible_message(span_warning(LANG("datum.e7d74b42", list(machine, exp_on))))
 		do_smoke(1, machine, machine.loc)
 		machine.item_eject()
 
@@ -310,7 +311,7 @@
 	var/malf_chance = machine.get_malfunction_chance()
 
 	if(prob(EFFECT_PROB_VERYLOW * malf_chance))
-		machine.visible_message(span_danger("[machine]'s crusher goes way too many levels too high, crushing right through space-time!"))
+		machine.visible_message(span_danger(LANG("datum.b34266fd", list(machine))))
 		playsound(machine, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
 		machine.investigate_log("Experimentor has triggered the 'throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 
@@ -319,7 +320,7 @@
 				AM.throw_at(machine, 10, 1)
 
 	else if(prob(EFFECT_PROB_LOW * malf_chance))
-		machine.visible_message(span_danger("[machine]'s crusher goes one level too high, crushing right into space-time!"))
+		machine.visible_message(span_danger(LANG("datum.971bc9c1", list(machine))))
 		playsound(machine, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
 		machine.investigate_log("Experimentor has triggered the 'minor throw things' reaction.", INVESTIGATE_EXPERIMENTOR)
 
@@ -360,4 +361,4 @@
 /datum/experimentor_result_handler/fail/execute(obj/machinery/rnd/experimentor/machine, obj/item/exp_on)
 	var/a = pick("rumbles", "shakes", "vibrates", "shudders", "honks")
 	var/b = pick("crushes", "spins", "viscerates", "smashes", "insults")
-	machine.visible_message(span_warning("[exp_on] [a], and [b], the experiment was a failure."))
+	machine.visible_message(span_warning(LANG("datum.48522ec9", list(exp_on, a, b))))

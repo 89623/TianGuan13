@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Augmented Eyesight: Gives you X-ray vision or protection from flashes. Also, high DNA cost because of how powerful it is.
 //Possible todo: make a custom message for directing a penlight/flashlight at the eyes - not sure what would display though.
 
@@ -22,7 +23,7 @@
 	RegisterSignal(user, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(eye_removed))
 	if(!isnull(ling_eyes))
 		ling_eyes.flash_protect = FLASH_PROTECTION_WELDER //Adjust the user's eyes' flash protection
-		to_chat(user, span_changeling("We adjust our eyes to protect them from bright lights."))
+		to_chat(user, span_changeling(LANG("datum.89f1d597", null)))
 
 /datum/action/changeling/augmented_eyesight/sting_action(mob/living/carbon/user)
 	if(!istype(user))
@@ -30,7 +31,7 @@
 
 	var/obj/item/organ/eyes/ling_eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(isnull(ling_eyes))
-		user.balloon_alert(user, "no eyes!")
+		user.balloon_alert(user, LANG("datum.ac2c42c3", null))
 		return FALSE
 
 	..()
@@ -39,13 +40,13 @@
 		active = FALSE
 		REMOVE_TRAIT(user, TRAIT_XRAY_VISION, REF(src))
 		ling_eyes.flash_protect = max(ling_eyes.flash_protect += 3, FLASH_PROTECTION_WELDER)
-		to_chat(user, span_changeling("We adjust our eyes to protect them from bright lights."))
+		to_chat(user, span_changeling(LANG("datum.89f1d597", null)))
 
 	else
 		active = TRUE
 		ADD_TRAIT(user, TRAIT_XRAY_VISION, REF(src))
 		ling_eyes.flash_protect = max(ling_eyes.flash_protect += -3, FLASH_PROTECTION_HYPER_SENSITIVE)
-		to_chat(user, span_changeling("We adjust our eyes to sense prey through walls."))
+		to_chat(user, span_changeling(LANG("datum.7759e84a", null)))
 
 	user.update_sight()
 	return TRUE

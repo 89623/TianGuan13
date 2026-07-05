@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // float bobbing
 #define WAIT_PHASE 1
 // Click now to start tgui part
@@ -239,7 +240,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	user.add_mood_event("fishing", /datum/mood_event/fishing)
 	RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(handle_click))
 	start_baiting_phase()
-	to_chat(user, span_notice("You start fishing..."))
+	to_chat(user, span_notice(LANG("datum.63a4dd90", null)))
 	playsound(location, 'sound/effects/splash.ogg', 100)
 
 ///Set the timers for lure that need to be spun at intervals.
@@ -283,21 +284,21 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	SIGNAL_HANDLER
 
 	if(!location.IsReachableBy(user))
-		user.balloon_alert(user, "too far!")
+		user.balloon_alert(user, LANG("datum.f5e75781", null))
 		interrupt()
 
 /datum/fishing_challenge/proc/on_hands_blocked(datum/source)
 	SIGNAL_HANDLER
 	if(completed) //the rod was dropped and therefore challenge already completed.
 		return
-	user.balloon_alert(user, "hands blocked!")
+	user.balloon_alert(user, LANG("datum.d1507825", null))
 	interrupt()
 
 /datum/fishing_challenge/proc/no_longer_fishing(datum/source)
 	SIGNAL_HANDLER
 	if(completed) //we already won/lost
 		return
-	user.balloon_alert(user, "interrupted!")
+	user.balloon_alert(user, LANG("datum.c67b5d27", null))
 	interrupt()
 
 /datum/fishing_challenge/proc/handle_click(mob/living/source, atom/target, modifiers)
@@ -785,7 +786,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	else
 		completion -= completion_loss * seconds_per_tick
 		if(completion <= 0 && !(special_effects & FISHING_MINIGAME_RULE_NO_ESCAPE))
-			user.balloon_alert(user, "it got away!")
+			user.balloon_alert(user, LANG("datum.96842792", null))
 			complete(FALSE)
 
 	completion = clamp(completion, 0, 100)

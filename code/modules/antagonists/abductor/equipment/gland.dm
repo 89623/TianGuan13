@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/heart/gland
 	name = "fleshy mass"
 	desc = "A nausea-inducing hunk of twisting flesh and metal."
@@ -30,7 +31,7 @@
 /obj/item/organ/heart/gland/examine(mob/user)
 	. = ..()
 	if(HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || isobserver(user))
-		. += span_notice("It is \a [abductor_hint]")
+		. += span_notice(LANG("obj.3ef89a46", list(abductor_hint)))
 
 /obj/item/organ/heart/gland/Stop()
 	return FALSE
@@ -60,8 +61,8 @@
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
 		return FALSE
 	mind_control_uses--
-	owner.balloon_alert(owner, "new compulsion")
-	to_chat(owner, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
+	owner.balloon_alert(owner, LANG("obj.9f944227", null))
+	to_chat(owner, span_userdanger(LANG("obj.221865e7", null)))
 	to_chat(owner, span_mind_control("[command]"))
 	active_mind_control = TRUE
 	message_admins("[key_name(user)] sent an abductor mind control message to [key_name(owner)]: [command]")
@@ -75,8 +76,8 @@
 /obj/item/organ/heart/gland/proc/clear_mind_control()
 	if(!ownerCheck() || !active_mind_control)
 		return FALSE
-	owner.balloon_alert(owner, "compulsion forgotten")
-	to_chat(owner, span_userdanger("You feel the compulsion fade, and you <i>completely forget</i> about your previous orders."))
+	owner.balloon_alert(owner, LANG("obj.95e6670c", null))
+	to_chat(owner, span_userdanger(LANG("obj.e8ceee66", null)))
 	owner.clear_alert(ALERT_MIND_CONTROL)
 	active_mind_control = FALSE
 	return TRUE

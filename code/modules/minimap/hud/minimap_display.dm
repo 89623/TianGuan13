@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MINIMAP_LABEL_REMOVE_PIXEL_RANGE 5
 
 /// Screen object that renders a [/datum/minimap] base map icon on the HUD.
@@ -443,7 +444,7 @@
 		return
 	drawing.clear_canvas(minimap?.base_map)
 	log_minimap_drawing("[key_name(user)] cleared the minimap canvas on z-level [minimap?.z]")
-	to_chat(user, span_warning("Cleared all minimap drawings."))
+	to_chat(user, span_warning(LANG("atom.7becdbb8", null)))
 
 /atom/movable/screen/minimap_display/proc/clear_all_annotations(mob/user, annotation_type = /atom/movable/screen/minimap_element/label, annotation_type_name = "label")
 	var/alist/annotation_store = GLOB.minimap_annotations[annotation_share_tag]
@@ -459,7 +460,7 @@
 	refresh_visible_annotations()
 	sync_visible_objects(current_z)
 	var/user_name = user ? key_name(user) : "System"
-	to_chat(user, span_warning("Cleared all [annotation_type_name] annotations on z-level [current_z]."))
+	to_chat(user, span_warning(LANG("atom.98913969", list(annotation_type_name, current_z))))
 	log_minimap_drawing("[user_name] has cleared all [annotation_type_name] annotations on z-level [current_z]")
 
 /atom/movable/screen/minimap_display/proc/async_place_label(mob/user, icon_x, icon_y)
@@ -470,12 +471,12 @@
 		var/turf/hovered_loc = locate(x, y, minimap.z)
 		area_name = "[hovered_loc?.loc?.name]"
 		minimap.map_position_to_name["[x]:[y]"] = area_name
-	var/label_text = tgui_input_text(user, "What would you like the label at [area_name] to say?", "Add Label", max_length = 25)
+	var/label_text = tgui_input_text(user, LANG("atom.b77df78e", list(area_name)), LANG("atom.a7353e9c", null), max_length = 25)
 	if(!label_text || QDELETED(src))
 		return
 	var/list/filter_result = is_ic_filtered(label_text)
 	if(filter_result)
-		to_chat(user, span_warning("That label contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[label_text]\"</span>"))
+		to_chat(user, span_warning(LANG("atom.d57a4e44", list(label_text))))
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, LOWER_TEXT(config.ic_filter_regex.match))
 		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
 		log_filter("IC", label_text, filter_result)

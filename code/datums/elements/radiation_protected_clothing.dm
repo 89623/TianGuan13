@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Marks the item as being radiation protected.
 /// Adds the TRAIT_RADIATION_PROTECTED_CLOTHING trait, as well as adding an
 /// extra bit to the examine descrpition.
@@ -21,4 +22,4 @@
 /datum/element/radiation_protected_clothing/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_notice("A patch with a hazmat sign on the side suggests it would <b>protect you from radiation</b>.")
+	examine_text += span_notice(LANG("datum.c10a7c1e", null))

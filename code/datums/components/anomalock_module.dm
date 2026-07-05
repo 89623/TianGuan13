@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/anomaly_locked_module
 	var/obj/item/assembly/signaler/anomaly/core
 	/// Accepted types of anomaly cores.
@@ -48,7 +49,7 @@
 /datum/component/anomaly_locked_module/proc/on_module_triggered(obj/item/mod/module/source, mob/living/wearer)
 	SIGNAL_HANDLER
 	if(!core)
-		source.balloon_alert(wearer, "no core!")
+		source.balloon_alert(wearer, LANG("datum.9c969525", null))
 		return MOD_ABORT_USE
 
 /datum/component/anomaly_locked_module/proc/on_item_interact(obj/item/mod/module/source, mob/living/user, obj/item/tool, list/modifiers)
@@ -56,7 +57,7 @@
 	if(!is_type_in_typecache(tool, accepted_anomalies))
 		return 0
 	if(core)
-		source.balloon_alert(user, "already has core!")
+		source.balloon_alert(user, LANG("datum.00b328e3", null))
 		return ITEM_INTERACT_FAILURE
 	if(pre_insert_callback)
 		var/callback_return
@@ -73,7 +74,7 @@
 	if(!user.transferItemToLoc(tool, source))
 		return ITEM_INTERACT_FAILURE
 	core = tool
-	source.balloon_alert(user, "core inserted")
+	source.balloon_alert(user, LANG("datum.de575d7b", null))
 	playsound(source, 'sound/machines/click.ogg', 30, TRUE)
 	source.update_appearance(UPDATE_ICON_STATE)
 	if(core_insert_callback)
@@ -87,18 +88,18 @@
 /datum/component/anomaly_locked_module/proc/on_screwdriver_act(obj/item/mod/module/source, mob/living/user, obj/item/tool)
 	SIGNAL_HANDLER
 	if(!core)
-		source.balloon_alert(user, "no core!")
+		source.balloon_alert(user, LANG("datum.9c969525", null))
 		return ITEM_INTERACT_FAILURE
 	if(!core_removable)
-		source.balloon_alert(user, "cannot remove core!")
+		source.balloon_alert(user, LANG("datum.34c3361c", null))
 	INVOKE_ASYNC(src, PROC_REF(try_remove_core), source, user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /datum/component/anomaly_locked_module/proc/try_remove_core(obj/item/mod/module/source, mob/living/user, obj/item/tool)
 	if(!do_after(user, 3 SECONDS, source))
-		source.balloon_alert(user, "interrupted!")
+		source.balloon_alert(user, LANG("datum.c67b5d27", null))
 		return
-	source.balloon_alert(user, "core removed")
+	source.balloon_alert(user, LANG("datum.8b10ca6a", null))
 	core.forceMove(source.drop_location())
 	if(source.Adjacent(user) && !issilicon(user))
 		user.put_in_hands(core)
@@ -116,14 +117,14 @@
 	if(!length(accepted_anomalies))
 		return
 	if(core)
-		examine_list += span_notice("There is a [core.name] installed in it. [core_removable ? "You could remove it with a <b>screwdriver</b>..." : "Unfortunately, due to a design quirk, it's unremovable."]")
+		examine_list += span_notice(LANG("datum.38c48b00", list(core.name, core_removable ? "You could remove it with a <b>screwdriver</b>..." : "Unfortunately, due to a design quirk, it's unremovable.")))
 		return
 	var/list/core_list = list()
 	for(var/atom/core_path as anything in accepted_anomalies)
 		core_list += initial(core_path.name)
-	examine_list += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
+	examine_list += span_notice(LANG("datum.1d9be268", list(english_list(core_list, and_text = " or "))))
 	if(!core_removable)
-		examine_list += span_notice("Due to some design quirk, once a core is inserted, it won't be removable.")
+		examine_list += span_notice(LANG("datum.8a5d1e4d", null))
 
 /datum/component/anomaly_locked_module/proc/on_update_icon_state(obj/item/mod/module/source)
 	SIGNAL_HANDLER

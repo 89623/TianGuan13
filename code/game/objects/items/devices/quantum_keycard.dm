@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/quantum_keycard
 	name = "quantum keycard"
 	desc = "A keycard able to link to a quantum pad's particle signature, allowing other quantum pads to travel there instead of their linked pad."
@@ -33,21 +34,21 @@
 /obj/item/quantum_keycard/examine(mob/user)
 	. = ..()
 	if(qpad)
-		. += "It's currently linked to a quantum pad."
+		. += LANG("obj.c70bbc2b", null)
 
 		var/area_name = get_area_name(qpad)
 		if(area_name)
-			. += span_notice("The pad is located in \the [area_name]")
+			. += span_notice(LANG("obj.d36dbc28", list(area_name)))
 
-		. += span_notice("Alt-click to unlink the keycard.")
+		. += span_notice(LANG("obj.dab672c0", null))
 	else
-		. += span_notice("Insert [src] into an active quantum pad to link it.")
+		. += span_notice(LANG("obj.1efd1379", list(src)))
 
 /obj/item/quantum_keycard/click_alt(mob/living/user)
-	to_chat(user, span_notice("You start pressing [src]'s unlink button..."))
+	to_chat(user, span_notice(LANG("obj.a24b4962", list(src))))
 	if(!do_after(user, 4 SECONDS, target = src))
 		return CLICK_ACTION_BLOCKING
-	to_chat(user, span_notice("The keycard beeps twice and disconnects the quantum link."))
+	to_chat(user, span_notice(LANG("obj.6db9b013", null)))
 	set_pad()
 	return CLICK_ACTION_SUCCESS
 

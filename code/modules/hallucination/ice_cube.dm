@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Causes the hallucinator to believe themselves frozen in ice. Man am I glad he's frozen in there etc etc
 /datum/hallucination/ice
 	random_hallucination_weight = 3
@@ -24,7 +25,7 @@
 	SET_PLANE_EXPLICIT(ice_overlay, ABOVE_GAME_PLANE, hallucinator)
 	hallucinator.client?.images |= ice_overlay
 	ADD_TRAIT(hallucinator, TRAIT_IMMOBILIZED, HALLUCINATION_TRAIT)
-	to_chat(hallucinator, span_userdanger("You become frozen in a cube!"))
+	to_chat(hallucinator, span_userdanger(LANG("datum.f018dcbb", null)))
 	hallucinator.cause_hallucination(/datum/hallucination/fake_alert/cold, "ice hallucination", duration = (ice_duration + 6 SECONDS))
 	if(play_ice_sound)
 		hallucinator.cause_hallucination(/datum/hallucination/fake_sound/weird/ice_crack, "ice hallucination")

@@ -63,7 +63,7 @@
 		return
 
 	if(!check_access(user))
-		to_chat(user, span_warning("You don't have the required access!"))
+		to_chat(user, span_warning(LANG("datum.f0e0e1fc", null)))
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
@@ -146,11 +146,11 @@
 	if(!armament_entry.magazine)
 		return
 	if(!inserted_card)
-		to_chat(user, span_warning("No card inserted!"))
+		to_chat(user, span_warning(LANG("datum.b964964e", null)))
 		return
 	var/quantity_cost = armament_entry.magazine_cost * quantity
 	if(!inserted_card.use_points(quantity_cost))
-		to_chat(user, span_warning("Not enough points!"))
+		to_chat(user, span_warning(LANG("datum.65e72927", null)))
 		return
 	for(var/i in 1 to quantity)
 		new armament_entry.magazine(parent_atom.drop_location())
@@ -172,28 +172,28 @@
 
 /datum/component/armament/proc/eject_card(mob/user)
 	if(!inserted_card)
-		to_chat(user, span_warning("No card inserted!"))
+		to_chat(user, span_warning(LANG("datum.b964964e", null)))
 		return
 	inserted_card.forceMove(parent_atom.drop_location())
 	user.put_in_hands(inserted_card)
 	inserted_card = null
-	to_chat(user, span_notice("Card ejected!"))
+	to_chat(user, span_notice(LANG("datum.6f694f10", null)))
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 70)
 
 /datum/component/armament/proc/select_armament(mob/user, datum/armament_entry/armament_entry)
 	if(!inserted_card)
-		to_chat(user, span_warning("No card inserted!"))
+		to_chat(user, span_warning(LANG("datum.b964964e", null)))
 		return
 	if(used_categories[armament_entry.category] >= SSarmaments.entries[armament_entry.category][CATEGORY_LIMIT])
-		to_chat(user, span_warning("Category limit reached!"))
+		to_chat(user, span_warning(LANG("datum.cabc70bb", null)))
 		return
 	if(purchased_items[armament_entry] >= armament_entry.max_purchase)
-		to_chat(user, span_warning("Item limit reached!"))
+		to_chat(user, span_warning(LANG("datum.1d00ac56", null)))
 		return
 	if(!ishuman(user))
 		return
 	if(!inserted_card.use_points(armament_entry.cost))
-		to_chat(user, span_warning("Not enough points!"))
+		to_chat(user, span_warning(LANG("datum.65e72927", null)))
 		return
 
 	var/mob/living/carbon/human/human_to_equip = user
@@ -206,7 +206,7 @@
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 
 	if(armament_entry.equip_to_human(human_to_equip, new_item))
-		to_chat(user, span_notice("Equipped directly to your person."))
+		to_chat(user, span_notice(LANG("datum.780666ca", null)))
 		playsound(src, 'sound/items/equip/toolbelt_equip.ogg', 100)
 	armament_entry.after_equip(parent_atom.drop_location(), new_item)
 

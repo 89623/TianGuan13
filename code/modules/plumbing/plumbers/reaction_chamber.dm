@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
 
 /// coefficient to convert temperature to joules. same lvl as acclimator
@@ -101,7 +102,7 @@
 
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.name2reagent)
+			var/selected_reagent = tgui_input_list(ui.user, LANG("obj.b9a56639", null), LANG("obj.c5160de6", null), GLOB.name2reagent)
 			if(!selected_reagent)
 				return FALSE
 			if(QDELETED(ui) || ui.status != UI_INTERACTIVE)

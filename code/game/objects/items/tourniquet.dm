@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/tourniquet
 	name = "tourniquet"
 	desc = "A medical device used to stop severe bleeding from a limb."
@@ -26,7 +27,7 @@
 	return ..()
 
 /obj/item/tourniquet/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins to wrap [src] around [p_their()] neck too tight! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.c5e90941", list(user, src, p_their(), user.p_theyre()))))
 	if(!do_after(user, 5 SECONDS, user))
 		return SHAME
 	var/obj/item/bodypart/head = user.get_bodypart(BODY_ZONE_HEAD)
@@ -97,8 +98,8 @@
 
 	if(limb.body_zone == BODY_ZONE_HEAD)
 		user.visible_message(
-			span_warning("[user] begins applying [src] to [user == patient ? p_their() : "[patient]'s"] neck..."),
-			span_userdanger("You begin applying [src] to [user == patient ? "your" : "[patient]'s"] neck, though you begin wonder if this is a good idea...?"),
+			span_warning(LANG("obj.8fe7aa06", list(user, src, user == patient ? p_their() : "[patient]'s"))),
+			span_userdanger(LANG("obj.d14d994b", list(src, user == patient ? "your" : "[patient]'s"))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			ignored_mobs = patient,
 		)
@@ -111,8 +112,8 @@
 
 	else if(speed_boosted)
 		user.visible_message(
-			span_notice("[user] begins expertly applying [src] to [user == patient ? p_their() : "[patient]'s"] own [limb.plaintext_zone]..."),
-			span_notice("You begin expertly applying [src] to [user == patient ? "your" : "[patient]'s"] own [limb.plaintext_zone], keeping the holo-image indications in mind..."),
+			span_notice(LANG("obj.d62df602", list(user, src, user == patient ? p_their() : "[patient]'s", limb.plaintext_zone))),
+			span_notice(LANG("obj.8781c6f9", list(src, user == patient ? "your" : "[patient]'s", limb.plaintext_zone))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			ignored_mobs = patient,
 		)
@@ -125,8 +126,8 @@
 
 	else
 		user.visible_message(
-			span_warning("[user] begins applying [src] to [user == patient ? p_their() : "[patient]'s"] [limb.plaintext_zone]..."),
-			span_warning("You begin applying [src] to [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone]..."),
+			span_warning(LANG("obj.66e1656a", list(user, src, user == patient ? p_their() : "[patient]'s", limb.plaintext_zone))),
+			span_warning(LANG("obj.9f7afe85", list(src, user == patient ? "your" : "[patient]'s", limb.plaintext_zone))),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			ignored_mobs = patient,
 		)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Proximity monitor applies forced gravity to all turfs in range.
 /datum/proximity_monitor/advanced/gravity
 	edge_is_a_field = TRUE
@@ -57,7 +58,7 @@
 	if(mob_ref_key in recently_warned)
 		return
 
-	location.balloon_alert(to_warn, "gravity [(location in modified_turfs) ? "shifts!" : "reverts..."]")
+	location.balloon_alert(to_warn, LANG("datum.c4683891", list((location in modified_turfs) ? "shifts!" : "reverts...")))
 	LAZYADD(recently_warned, mob_ref_key)
 	addtimer(CALLBACK(src, PROC_REF(clear_recent_warning), mob_ref_key), 3 SECONDS)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/wires/robot
 	holder_type = /mob/living/silicon/robot
 	proper_name = "Cyborg"
@@ -52,11 +53,11 @@
 		if(WIRE_CAMERA) // Pulse to disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.toggle_cam(usr, FALSE)
-				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
+				R.visible_message(span_notice(LANG("datum.eccef773", list(R))), span_notice(LANG("datum.4fddc8eb", null)))
 				log_silicon("[key_name(usr)] toggled [key_name(R)]'s camera to [R.builtInCamera.camera_enabled ? "on" : "off"] via pulse")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
-				R.visible_message(span_notice("[R] gently chimes."), span_notice("LawSync protocol engaged."))
+				R.visible_message(span_notice(LANG("datum.b033815b", list(R))), span_notice(LANG("datum.cd29dfbf", null)))
 				log_silicon("[key_name(usr)] forcibly synced [key_name(R)]'s laws via pulse")
 				// TODO, log the laws they gained here
 				R.lawsync()
@@ -67,7 +68,7 @@
 
 		if(WIRE_RESET_MODEL)
 			if(R.has_model())
-				R.visible_message(span_notice("[R]'s model servos twitch."), span_notice("Your model display flickers."))
+				R.visible_message(span_notice(LANG("datum.33b603fb", list(R))), span_notice(LANG("datum.75348900", null)))
 
 /datum/wires/robot/on_cut(wire, mend, source)
 	var/mob/living/silicon/robot/R = holder
@@ -94,7 +95,7 @@
 				var/fixing_camera = !mend
 				R.builtInCamera.camera_enabled = fixing_camera
 				R.builtInCamera.toggle_cam(usr, 0)
-				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
+				R.visible_message(span_notice(LANG("datum.eccef773", list(R))), span_notice(LANG("datum.4fddc8eb", null)))
 				R.logevent("Camera Module fault [fixing_camera ? "cleared" : "detected"]")
 				log_silicon("[key_name(usr)] [fixing_camera ? "enabled" : "disabled"] [key_name(R)]'s camera via wire")
 		if(WIRE_LOCKDOWN) // Simple lockdown.

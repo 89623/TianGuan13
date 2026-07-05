@@ -43,6 +43,27 @@
 		SStraitor.uplink_items += item
 		SStraitor.uplink_items_by_type[item_path] = item
 
+	// NOVA EDIT ADDITION START - I18N: the uplink item catalog is a static JSON asset (generated once at
+	// startup), so it bypasses get_payload/lang_reverse_tree — every name/desc/category stayed English.
+	// Reverse the player-visible display fields here. buy() keys off item.type/ref (not these), and the TS
+	// client filters by category on BOTH the item.category and the categories list (no server round-trip),
+	// so translating both sides consistently keeps filtering intact. lang_reverse_text = exact full-string
+	// (no multi-word gate) like the preferences-asset pass; locale==en returns input unchanged (no-op).
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		for(var/list/entry as anything in items)
+			if(istext(entry["name"]))
+				entry["name"] = lang_reverse_text(entry["name"])
+			if(istext(entry["desc"]))
+				entry["desc"] = lang_reverse_text(entry["desc"])
+			if(istext(entry["category"]))
+				entry["category"] = lang_reverse_text(entry["category"])
+			if(istext(entry["cost_override_string"]))
+				entry["cost_override_string"] = lang_reverse_text(entry["cost_override_string"])
+		var/list/localized_categories = list()
+		for(var/cat in categories)
+			localized_categories += istext(cat) ? lang_reverse_text(cat) : cat
+		categories = localized_categories
+	// NOVA EDIT ADDITION END
 	data["items"] = items
 	data["categories"] = categories
 	return data

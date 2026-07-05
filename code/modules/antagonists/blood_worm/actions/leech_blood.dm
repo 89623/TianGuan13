@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/blood_worm/leech
 	name = "Leech Blood"
 	desc = "Aggressively grab a target with your teeth and leech off of their blood. Also works on reagent containers like blood packs. Leeching will be canceled if you do any other actions."
@@ -41,10 +42,10 @@
 	if (!ismovable(target))
 		return FALSE
 	if (!owner.Adjacent(target))
-		target.balloon_alert(owner, "too far away!")
+		target.balloon_alert(owner, LANG("datum.a462ee7c", null))
 		return FALSE
 	if (!target.IsReachableBy(owner))
-		target.balloon_alert(owner, "can't reach!")
+		target.balloon_alert(owner, LANG("datum.fba9228d", null))
 		return FALSE
 
 	// If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
@@ -55,7 +56,7 @@
 	else if (is_reagent_container(target))
 		leech_container(owner, target)
 	else
-		target.balloon_alert(owner, "can't leech from this!")
+		target.balloon_alert(owner, LANG("datum.174b24d6", null))
 
 	return TRUE // Prevents biting.
 
@@ -80,7 +81,7 @@
 		return
 
 	if (leech.pulling != target && leech.grab(target) != GRAB_SUCCESS)
-		target.balloon_alert(leech, "unable to grab!")
+		target.balloon_alert(leech, LANG("datum.ce104f91", null))
 		return
 
 	if (leech.grab_state < GRAB_AGGRESSIVE)
@@ -117,9 +118,9 @@
 
 	var/synth_content = target.get_blood_synth_content()
 	if (synth_content >= 1)
-		target.balloon_alert(leech, "fully synthetic")
+		target.balloon_alert(leech, LANG("datum.3327c50a", null))
 	else if (synth_content > 0)
-		target.balloon_alert(leech, "[ceil(synth_content * 100)]% synthetic")
+		target.balloon_alert(leech, LANG("datum.67c8a58a", list(ceil(synth_content * 100))))
 
 	// Because of DO_AFTER_CHECK_NEXT_MOVE
 	leech.next_move = 0
@@ -143,22 +144,22 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_start_check(mob/living/basic/blood_worm/leech, mob/living/target)
 	if (target.get_blood_volume() <= 0)
-		target.balloon_alert(leech, "no blood!")
+		target.balloon_alert(leech, LANG("datum.ce2814af", null))
 		return FALSE
 	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))
-		target.balloon_alert(leech, "occupied by our kin!")
+		target.balloon_alert(leech, LANG("datum.ead10a81", null))
 		return FALSE
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_active_check(mob/living/basic/blood_worm/leech, mob/living/target)
 	if (target.get_blood_volume() <= 0)
-		target.balloon_alert(leech, "no more blood!")
+		target.balloon_alert(leech, LANG("datum.7c88e6d2", null))
 		return FALSE
 	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))
-		target.balloon_alert(leech, "occupied by our kin!")
+		target.balloon_alert(leech, LANG("datum.ead10a81", null))
 		return FALSE
 	if (!leech.Adjacent(target) || leech.pulling != target || leech.grab_state < GRAB_AGGRESSIVE)
-		target.balloon_alert(leech, "grab lost!")
+		target.balloon_alert(leech, LANG("datum.4e2f7ccf", null))
 		return FALSE
 	return TRUE
 
@@ -228,20 +229,20 @@
 	synth_content /= total_volume
 
 	if (synth_content >= 1)
-		target.balloon_alert(leech, "fully synthetic")
+		target.balloon_alert(leech, LANG("datum.3327c50a", null))
 	else if (synth_content > 0)
-		target.balloon_alert(leech, "[ceil(synth_content * 100)]% synthetic")
+		target.balloon_alert(leech, LANG("datum.67c8a58a", list(ceil(synth_content * 100))))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_start_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target, feedback = FALSE)
 	if (!length(get_blood_in_container(target)))
 		if (feedback)
-			target.balloon_alert(leech, "no blood!")
+			target.balloon_alert(leech, LANG("datum.ce2814af", null))
 		return FALSE
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_active_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target)
 	if (!length(get_blood_in_container(target)))
-		target.balloon_alert(leech, "no more blood!")
+		target.balloon_alert(leech, LANG("datum.7c88e6d2", null))
 		return FALSE
 	return TRUE
 

@@ -21,11 +21,11 @@
 	switch(severity)
 		if(EMP_HEAVY)
 			owner.sound_damage(SYNTH_ORGAN_HEAVY_EMP_DAMAGE, SYNTH_DEAF_STACKS)
-			to_chat(owner, span_warning("Alert: Null feedback from auditory sensors detected, seek maintenance immediately. Error Code: AS-105"))
+			to_chat(owner, span_warning(LANG("obj.5d616e37", null)))
 
 		if(EMP_LIGHT)
 			owner.sound_damage(SYNTH_ORGAN_LIGHT_EMP_DAMAGE, SYNTH_DEAF_STACKS)
-			to_chat(owner, span_warning("Alert: Anomalous feedback from auditory sensors detected. Error Code: AS-50"))
+			to_chat(owner, span_warning(LANG("obj.2849d453", null)))
 
 /datum/design/synth_ears
 	name = "Auditory Sensors"

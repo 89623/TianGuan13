@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/wound_pregen_data/cranial_fissure
 	wound_path_to_generate = /datum/wound/cranial_fissure
 	required_limb_biostate = BIO_BONE
@@ -79,8 +80,8 @@
 	brain.throw_at(get_step(source_turf, source.dir), 1, 1)
 
 	source.visible_message(
-		span_boldwarning("[source]'s brain spills right out of [source.p_their()] head!"),
-		span_userdanger("Your brain spills right out of your head!"),
+		span_boldwarning(LANG("datum.ee78498f", list(source, source.p_their()))),
+		span_userdanger(LANG("datum.f74d0ee1", null)),
 	)
 
 /datum/wound/cranial_fissure/try_handling(mob/living/user)
@@ -95,13 +96,13 @@
 
 	var/obj/item/organ/eyes/eyes = victim.get_organ_by_type(/obj/item/organ/eyes)
 	if (isnull(eyes))
-		victim.balloon_alert(user, "no eyes to take!")
+		victim.balloon_alert(user, LANG("datum.66ea5238", null))
 		return TRUE
 
 	playsound(victim, 'sound/items/handling/surgery/organ2.ogg', 50, TRUE)
-	victim.balloon_alert(user, "pulling out eyes...")
+	victim.balloon_alert(user, LANG("datum.21e124e5", null))
 	user.visible_message(
-		span_boldwarning("[user] reaches inside [victim]'s skull..."),
+		span_boldwarning(LANG("datum.41a72eca", list(user, victim))),
 		ignored_mobs = user
 	)
 	victim.show_message(
@@ -120,8 +121,8 @@
 
 	playsound(victim, 'sound/items/handling/surgery/organ1.ogg', 75, TRUE)
 	user.visible_message(
-		span_boldwarning("[user] rips out [victim]'s eyes!"),
-		span_boldwarning("You rip out [victim]'s eyes!"),
+		span_boldwarning(LANG("datum.639786a8", list(user, victim))),
+		span_boldwarning(LANG("datum.256b862f", list(victim))),
 		ignored_mobs = victim,
 	)
 

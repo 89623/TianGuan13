@@ -17,7 +17,7 @@
 		return FALSE
 
 	if(locate(/obj/structure/destructible/clockwork/gear_base/powered/prosperity_prism) in range(3)) // No stacking heals for you
-		user.balloon_alert(user, "too close to another prism!")
+		user.balloon_alert(user, LANG("datum.c1020d03", null))
 		return FALSE
 
 	return TRUE

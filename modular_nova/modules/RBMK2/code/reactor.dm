@@ -203,7 +203,7 @@
 
 /obj/machinery/power/rbmk2/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
 	if(active)
-		balloon_alert(user, "turn off before upgrading!")
+		balloon_alert(user, LANG("obj.81f59132", null))
 		return FALSE
 
 	. = ..()
@@ -216,12 +216,12 @@
 	if(!jammed)
 		return FALSE
 	if(atom_integrity <= damage_to_deal)
-		balloon_alert(user, "too damaged!")
+		balloon_alert(user, LANG("obj.ea198d83", null))
 		return FALSE
 	if(attacking_item.use_tool(src, user, 4 SECONDS, volume = 50) && jam(user, FALSE))
 		take_damage(damage_to_deal, armour_penetration = 100)
 		src.Shake(duration = 0.5 SECONDS)
-		balloon_alert(user, "unjammed!")
+		balloon_alert(user, LANG("obj.a1f4b10e", null))
 		return TRUE
 	return FALSE
 
@@ -231,7 +231,7 @@
 		src.add_fingerprint(user)
 		stored_rod.add_fingerprint(user)
 		if(remove_rod(user))
-			balloon_alert(user, "rod removed!")
+			balloon_alert(user, LANG("obj.ef4127ab", null))
 		return TRUE
 
 /obj/machinery/power/rbmk2/proc/remove_rod(mob/living/user, do_throw = FALSE)
@@ -385,7 +385,7 @@
 
 	if(venting) //Can't change when they're already on.
 		if(user)
-			balloon_alert(user, "turn vents off first")
+			balloon_alert(user, LANG("obj.05f7fc92", null))
 		return FALSE
 
 	vent_reverse_direction = desired_state
@@ -393,7 +393,7 @@
 	if(user)
 		user.log_message("had vents set to [vent_reverse_direction ? "reverse" : "normal"] by [src]", LOG_GAME)
 		investigate_log("had vents set to [vent_reverse_direction ? "reverse" : "normal"] by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
-		balloon_alert(user, "vents switched to [vent_reverse_direction ? "pulling" : "pushing"]")
+		balloon_alert(user, LANG("obj.fe3b480c", list(vent_reverse_direction ? "pulling" : "pushing")))
 	else
 		var/turf/our_turf = get_turf(src)
 		log_game("[src] had vents set to [vent_reverse_direction ? "reverse" : "normal"] at [AREACOORD(our_turf)]")
@@ -500,7 +500,7 @@
 
 			safety = !safety
 
-			balloon_alert(user, "safeties are [safety ? "on" : "off"]")
+			balloon_alert(user, LANG("obj.2ca76580", list(safety ? "on" : "off")))
 			. = TRUE
 			if(isliving(user))
 				user.log_message("turned the safety [safety ? "on" : "off"] of [src]", LOG_GAME)
@@ -513,7 +513,7 @@
 
 			overclocked = !overclocked
 
-			balloon_alert(user, "overclocking is [overclocked ? "on" : "off"]")
+			balloon_alert(user, LANG("obj.0b854533", list(overclocked ? "on" : "off")))
 			. = TRUE
 			if(isliving(user))
 				user.log_message("turned the overclock [overclocked ? "on" : "off"] of [src]", LOG_GAME)
@@ -526,36 +526,36 @@
 /obj/machinery/power/rbmk2/examine(mob/user)
 	. = ..()
 
-	. += span_notice("A digital display on the side side says <b>MAX SAFE POWER: [display_power(safeties_max_power_generation)], WARRANTY VOID IF EXCEEDED</b>.")
+	. += span_notice(LANG("obj.df8ff394", list(display_power(safeties_max_power_generation))))
 
-	. += "It is linked to [length(linked_sniffers)] sniffer(s)."
+	. += LANG("obj.bbb00e7d", list(length(linked_sniffers)))
 
-	. += "It is[!active?"n't":""] running."
+	. += LANG("obj.e87ba4d7", list(!active?"n't":""))
 
 	if(!power || !powernet)
-		. += span_warning("It is not connected to a power cable.")
+		. += span_warning(LANG("obj.5a2cca64", null))
 
 	if(!venting)
-		. += span_warning("The vents are closed.")
+		. += span_warning(LANG("obj.7206c8ab", null))
 	else if(vent_reverse_direction)
-		. += "Its vents are running in reverse."
+		. += LANG("obj.4ad27eca", null)
 	if(!stored_rod)
-		. += span_warning("It it is missing a RB-MK2 reactor rod.")
+		. += span_warning(LANG("obj.ae3829d7", null))
 	else if(jammed)
-		. += span_danger("The reactor rod is jammed! <b>Pry</b> the rod back in to unjam in!")
+		. += span_danger(LANG("obj.ca628566", null))
 	else if(meltdown)
-		. += span_danger("The reactor rod is leaping erractically!")
+		. += span_danger(LANG("obj.92cc2aff", null))
 	else
-		. += span_notice("There is an RB-MK2 reactor rod installed. <b>Wrench</b> it down to activate, or remove it with ALT+CLICK.")
+		. += span_notice(LANG("obj.9fb43c12", null))
 
 	if(active)
-		. += span_notice("It is currently consuming [last_tritium_consumption] moles of tritium per cycle, producing [display_power(last_power_generation)].")
+		. += span_notice(LANG("obj.943a8299", list(last_tritium_consumption, display_power(last_power_generation))))
 
 /obj/machinery/power/rbmk2/examine_more(mob/user)
 	. = ..()
-	. += "It is running at <b>[power_efficiency*100]%</b> power efficiency."
-	. += "It can output in environments up to <b>[vent_pressure]kPa</b>."
-	. += "It can handle an estimated power load of <b>[display_power(max_power_generation)]</b> before going critical."
+	. += LANG("obj.f26dad54", list(power_efficiency*100))
+	. += LANG("obj.86da2e45", list(vent_pressure))
+	. += LANG("obj.ce3eec20", list(display_power(max_power_generation)))
 
 /obj/machinery/power/rbmk2/proc/transfer_rod_temperature(datum/gas_mixture/gas_source, allow_cooling_limiter = TRUE, multiplier = 1)
 	var/datum/gas_mixture/rod_mix = stored_rod.air_contents

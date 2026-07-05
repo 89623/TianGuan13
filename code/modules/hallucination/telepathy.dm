@@ -1,14 +1,12 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/hallucination/telepathy
 	random_hallucination_weight = 4
 	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 /datum/hallucination/telepathy/start()
 	var/datum/action/cooldown/spell/list_target/telepathy/mimiced_type = pick(typesof(/datum/action/cooldown/spell/list_target/telepathy))
-	hallucinator.balloon_alert(hallucinator, "you hear a voice")
-	to_chat(hallucinator, "\
-		<span class='[initial(mimiced_type.bold_telepathy_span)]'>You hear a voice in your head...</span>\
-		<span class='[initial(mimiced_type.telepathy_span)]'> [get_telepath_message()]</span>\
-	")
+	hallucinator.balloon_alert(hallucinator, LANG("datum.d955e950", null))
+	to_chat(hallucinator, LANG("datum.ff930a65", list(initial(mimiced_type.bold_telepathy_span), initial(mimiced_type.telepathy_span), get_telepath_message())))
 	return TRUE
 
 /datum/hallucination/telepathy/proc/get_telepath_message()

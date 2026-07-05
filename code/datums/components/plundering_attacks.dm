@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Component that makes basic mobs' melee attacks steal money from the target's ID card.
  * Plundered money is stored and dropped on death or removal of the component.
@@ -44,7 +45,7 @@
 		amount_to_steal = account_to_rob.account_balance
 	plunder_stored += amount_to_steal
 	account_to_rob.adjust_money(-amount_to_steal)
-	account_to_rob.bank_card_talk("Transaction confirmed! Transferred [amount_to_steal] [MONEY_NAME] to \<NULL_ACCOUNT\>!")
+	account_to_rob.bank_card_talk(LANG("datum.b7433aa9", list(amount_to_steal, MONEY_NAME)))
 
 /datum/component/plundering_attacks/proc/drop_plunder()
 	SIGNAL_HANDLER

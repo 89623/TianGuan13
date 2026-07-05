@@ -24,16 +24,16 @@
 		mobs_with_special_messages += buckling
 		delay *= SADDLE_MOUNTING_OTHER_MULT
 
-	user.visible_message(span_warning("[user] starts to mount[ridee_string] [src]..."), span_notice("You start to mount[ridee_string] [src]..."), ignored_mobs = mobs_with_special_messages)
-	to_chat(src, span_warning("[user] starts to mount[ridee_string] you!"))
+	user.visible_message(span_warning(LANG("mob.a2389259", list(user, ridee_string, src))), span_notice(LANG("mob.dbeecf1f", list(ridee_string, src))), ignored_mobs = mobs_with_special_messages)
+	to_chat(src, span_warning(LANG("mob.04d6903a", list(user, ridee_string))))
 	if (buckling != user)
-		to_chat(buckling, span_boldwarning("[user] starts to mount you onto [src]!"))
+		to_chat(buckling, span_boldwarning(LANG("mob.92ad98ea", list(user, src))))
 
 	if (!do_after(user, SADDLE_MOUNTING_TIME, target = src))
-		user.visible_message(span_warning("[user] fails to mount[ridee_string] [src]!"), span_warning("You fail to mount[ridee_string] [src]!"), ignored_mobs = mobs_with_special_messages)
-		to_chat(src, span_warning("[user] fails to mount[ridee_string] you!"))
+		user.visible_message(span_warning(LANG("mob.f803a36a", list(user, ridee_string, src))), span_warning(LANG("mob.192ea1c6", list(ridee_string, src))), ignored_mobs = mobs_with_special_messages)
+		to_chat(src, span_warning(LANG("mob.b76eae35", list(user, ridee_string))))
 		if (buckling != user)
-			to_chat(buckling, span_warning("[user] fails to mount you onto [src]!"))
+			to_chat(buckling, span_warning(LANG("mob.5ef57986", list(user, src))))
 		return FALSE
 
 	if (!can_be_ridden_by(buckling, user)) // because we slept

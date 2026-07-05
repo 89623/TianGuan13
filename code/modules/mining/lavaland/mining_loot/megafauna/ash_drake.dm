@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Ash drake suit
 
 /obj/item/drake_remains
@@ -108,11 +109,11 @@
 
 /obj/item/melee/ghost_sword/attack_self(mob/user)
 	if(!COOLDOWN_FINISHED(src, summon_cooldown))
-		to_chat(user, span_warning("You just recently called out for aid. You don't want to annoy the spirits!"))
+		to_chat(user, span_warning(LANG("obj.6c5d71bc", null)))
 		return
 
 	COOLDOWN_START(src, summon_cooldown, 60 SECONDS)
-	to_chat(user, span_notice("You call out for aid, attempting to summon spirits to your side."))
+	to_chat(user, span_notice(LANG("obj.7d5120b1", null)))
 	notify_ghosts(
 		"[user.real_name] is raising [user.p_their()] [name], calling for your help!",
 		source = user,
@@ -145,13 +146,13 @@
 
 /obj/item/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)
 	var/ghost_counter = ghost_check()
-	user.visible_message(span_danger("[user] strikes with the force of [ghost_counter] vengeful spirits!"))
+	user.visible_message(span_danger(LANG("obj.76b2aca0", list(user, ghost_counter))))
 	. = ..()
 
 /obj/item/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	var/ghost_counter = ghost_check()
 	final_block_chance += clamp((ghost_counter * 5), 0, 75)
-	owner.visible_message(span_danger("[owner] is protected by a ring of [ghost_counter] ghosts!"))
+	owner.visible_message(span_danger(LANG("obj.34f9fd20", list(owner, ghost_counter))))
 	return ..()
 
 // Dragon's blood
@@ -171,7 +172,7 @@
 
 	switch(random)
 		if(1)
-			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak with just a fragment of their abilities."))
+			to_chat(user, span_danger(LANG("obj.26637981", null)))
 			consumer.dna.features = list(
 				FEATURE_MUTANT_COLOR = "#A02720",
 				FEATURE_TAIL_LIZARD = "Dark Tiger",
@@ -192,14 +193,14 @@
 			wings.Insert(consumer)
 
 		if(2)
-			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
+			to_chat(user, span_danger(LANG("obj.106940f4", null)))
 			consumer.set_species(/datum/species/skeleton)
 		if(3)
-			to_chat(user, span_danger("Power courses through you! You can now shift your form at will."))
+			to_chat(user, span_danger(LANG("obj.93c9b102", null)))
 			var/datum/action/cooldown/spell/shapeshift/dragon/dragon_shapeshift = new(user.mind || user)
 			dragon_shapeshift.Grant(user)
 		if(4)
-			to_chat(user, span_danger("You feel like you could walk straight through lava now."))
+			to_chat(user, span_danger(LANG("obj.92793011", null)))
 			ADD_TRAIT(user, TRAIT_LAVA_IMMUNE, type)
 
 	playsound(user,'sound/items/drink.ogg', 30, TRUE)
@@ -260,18 +261,18 @@
 			return ITEM_INTERACT_FAILURE
 
 		COOLDOWN_START(src, use_cooldown, reset_cooldown)
-		user.visible_message(span_danger("[user] turns \the [old_name] into [reset_string]!"))
+		user.visible_message(span_danger(LANG("obj.9dd77252", list(user, old_name, reset_string))))
 		playsound(target_turf,'sound/effects/magic/fireball.ogg', 200, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/effect/temp_visual/lavastaff/lava_visual = new /obj/effect/temp_visual/lavastaff(target_turf)
 	lava_visual.alpha = 0
 	animate(lava_visual, alpha = 255, time = create_delay)
-	user.visible_message(span_danger("[user] points [src] at [target_turf]!"))
+	user.visible_message(span_danger(LANG("obj.59c3217a", list(user, src, target_turf))))
 	COOLDOWN_START(src, use_cooldown, create_delay + 1)
 
 	if(!do_after(user, create_delay, target_turf))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		COOLDOWN_RESET(src, use_cooldown)
 		qdel(lava_visual)
 		return ITEM_INTERACT_FAILURE
@@ -281,7 +282,7 @@
 		qdel(lava_visual)
 		return ITEM_INTERACT_FAILURE
 
-	user.visible_message(span_danger("[user] turns \the [old_name] into [transform_string]!"))
+	user.visible_message(span_danger(LANG("obj.9dd77252", list(user, old_name, transform_string))))
 	message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(target_turf)]")
 	user.log_message("fired the lava staff at [AREACOORD(target_turf)].", LOG_ATTACK)
 	COOLDOWN_START(src, use_cooldown, create_cooldown)

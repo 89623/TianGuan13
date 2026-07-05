@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Checks for RIGHT_CLICK in modifiers and runs resolve_right_click_attack if so. Returns TRUE if normal chain blocked.
 /mob/living/proc/right_click_attack_chain(atom/target, list/modifiers)
 	if (!LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -25,10 +26,10 @@
 	if(!has_active_hand()) //can't attack without a hand.
 		var/obj/item/bodypart/check_arm = get_active_hand()
 		if(check_arm?.bodypart_disabled)
-			to_chat(src, span_warning("Your [check_arm.name] is in no condition to be used."))
+			to_chat(src, span_warning(LANG("mob.5e212088", list(check_arm.name))))
 			return FALSE
 
-		to_chat(src, span_notice("You look at your arm and sigh."))
+		to_chat(src, span_notice(LANG("mob.394b6f1b", null)))
 		return FALSE
 
 	return TRUE
@@ -104,7 +105,7 @@
 	if(!user.can_interact_with(src, interaction_flags_atom & INTERACT_ATOM_ALLOW_USER_LOCATION))
 		return FALSE
 	if((interaction_flags_atom & INTERACT_ATOM_REQUIRES_DEXTERITY) && !ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, span_warning(LANG("atom.e8ba50af", null)))
 		return FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED))
 		var/ignore_flags = NONE

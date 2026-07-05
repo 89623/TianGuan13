@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// An element that adds a client colour to the wearer when equipped to the right slot, under the right conditions.
 /datum/element/wearable_client_colour
 	element_flags = ELEMENT_BESPOKE
@@ -113,10 +114,10 @@
 		return
 	if(HAS_TRAIT(clicker, TRAIT_SEE_WORN_COLOURS))
 		REMOVE_TRAIT(clicker, TRAIT_SEE_WORN_COLOURS, CLOTHING_TRAIT)
-		clicker.balloon_alert(clicker, "glasses colors disabled")
+		clicker.balloon_alert(clicker, LANG("datum.a2f5fae0", null))
 	else
 		ADD_TRAIT(clicker, TRAIT_SEE_WORN_COLOURS, CLOTHING_TRAIT)
-		clicker.balloon_alert(clicker, "glasses colors enabled")
+		clicker.balloon_alert(clicker, LANG("datum.52a260cc", null))
 	return CLICK_ACTION_SUCCESS
 
 /datum/element/wearable_client_colour/proc/on_examine(obj/item/source, mob/user, list/examine_texts)

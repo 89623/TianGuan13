@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define LOG_ERROR(list, error) if(list) { list.Add(error) }
 
 // Determines if a port can have a predefined input value if it is of this type.
@@ -223,13 +224,13 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 ADMIN_VERB(load_circuit, R_VAREDIT, "Load Circuit", "Loads a circuit from a file or direct input.", ADMIN_CATEGORY_FUN)
 	var/list/errors = list()
 
-	var/option = alert(user, "Load by file or direct input?", "Load by file or string", "File", "Direct Input")
+	var/option = alert(user, LANG("datum.27977cb6", null), LANG("datum.abc5936e", null), "File", "Direct Input")
 	var/txt
 	switch(option)
 		if("File")
-			txt = file2text(input(user, "Input File") as null|file)
+			txt = file2text(input(user, LANG("datum.02b08ff6", null)) as null|file)
 		if("Direct Input")
-			txt = input(user, "Input JSON", "Input JSON") as text|null
+			txt = input(user, LANG("datum.4a49cfa7", null), LANG("datum.4a49cfa7", null)) as text|null
 
 	if(!txt)
 		return
@@ -238,6 +239,6 @@ ADMIN_VERB(load_circuit, R_VAREDIT, "Load Circuit", "Loads a circuit from a file
 	circuit.load_circuit_data(txt, errors)
 
 	if(length(errors))
-		to_chat(user, span_warning("The following errors were found whilst compiling the circuit data:"))
+		to_chat(user, span_warning(LANG("datum.0eee8784", null)))
 		for(var/error in errors)
 			to_chat(user, span_warning(error))

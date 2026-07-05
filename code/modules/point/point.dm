@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define POINT_TIME (2.5 SECONDS)
 
 /**
@@ -125,7 +126,7 @@
 				//cooldown handled in the emote.
 				our_carbon.emote("point [pointing_at]")
 			else
-				to_chat(src, span_warning("You need to wait before pointing again!"))
+				to_chat(src, span_warning(LANG("mob.0407d64b", null)))
 				return FALSE
 	point_at(pointing_at, TRUE)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SPELLBOOK_CATEGORY_ASSISTANCE "Assistance"
 // Wizard spells that assist the caster in some way
 /datum/spellbook_entry/summonitem
@@ -43,7 +44,7 @@
 
 /datum/spellbook_entry/item/soulstones/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
 	var/was_equipped = user.equip_to_slot_if_possible(to_equip, ITEM_SLOT_BELT, disable_warning = TRUE)
-	to_chat(user, span_notice("\A [to_equip.name] has been summoned [was_equipped ? "on your waist" : "at your feet"]."))
+	to_chat(user, span_notice(LANG("datum.60fa0327", list(to_equip.name, was_equipped ? "on your waist" : "at your feet"))))
 
 /datum/spellbook_entry/item/soulstones/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	. =..()

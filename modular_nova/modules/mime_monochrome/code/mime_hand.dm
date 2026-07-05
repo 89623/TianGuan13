@@ -25,8 +25,8 @@
 /datum/action/cooldown/spell/touch/mime_grayscale/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	victim.add_atom_colour(color_transition_filter(COLOR_WHITE, SATURATION_MULTIPLY), WASHABLE_COLOUR_PRIORITY)
 	caster.visible_message(
-		span_danger("[caster.name] reaches out and drains the color from [victim.name], turning it monochrome!"),
-		span_danger("You unleash the power of silence upon [victim.name]!")
+		span_danger(LANG("datum.13ef63af", list(caster.name, victim.name))),
+		span_danger(LANG("datum.16374e06", list(victim.name)))
 	)
 	if(isitem(victim) && isliving(victim.loc))
 		var/obj/item/target_item = victim

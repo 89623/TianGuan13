@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Base timeout for creating mutation activators
 #define MIN_ACTIVATOR_TIMEOUT 5 SECONDS
 /// Base cooldown multiplier for activator upgrades
@@ -186,7 +187,7 @@
 	if (istype(item, /obj/item/chromosome))
 		item.forceMove(src)
 		stored_chromosomes += item
-		to_chat(user, span_notice("You insert [item]."))
+		to_chat(user, span_notice(LANG("obj.a134b5ec", list(item))))
 		return
 
 	// Insert data disk if console disk slot is empty
@@ -200,7 +201,7 @@
 			eject_disk(user)
 		// Set the new diskette.
 		diskette = item
-		to_chat(user, span_notice("You insert [item]."))
+		to_chat(user, span_notice(LANG("obj.a134b5ec", list(item))))
 		return
 
 	// Recycle non-activator used injectors
@@ -213,19 +214,19 @@
 					var/c_typepath = generate_chromosome()
 					var/obj/item/chromosome/CM = new c_typepath (src)
 					stored_chromosomes += CM
-					to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
+					to_chat(user,span_notice(LANG("obj.d60767ae", list(capitalize(CM.name)))))
 				else
-					to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
+					to_chat(user, span_notice(LANG("obj.36574246", null)))
 			if(activator.crispr_charge)
 				crispr_charges++
-				to_chat(user, span_notice("CRISPR charge added."))
+				to_chat(user, span_notice(LANG("obj.3f7aa53d", null)))
 			qdel(item)
-			to_chat(user,span_notice("Recycled [item]."))
+			to_chat(user,span_notice(LANG("obj.460a6614", list(item))))
 			return
 		else
 			//recycle unused activators
 			qdel(item)
-			to_chat(user, span_notice("Recycled unused [item]."))
+			to_chat(user, span_notice(LANG("obj.00d93286", list(item))))
 			return
 	return ..()
 
@@ -466,7 +467,7 @@
 			scanner_occupant.dna.remove_all_mutations()
 			scanner_occupant.dna.generate_dna_blocks()
 			scramble_ready = world.time + SCRAMBLE_TIMEOUT
-			to_chat(usr,span_notice("DNA scrambled."))
+			to_chat(usr,span_notice(LANG("obj.748e12c4", null)))
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2))
 			if(connected_scanner)
 				connected_scanner.use_energy(connected_scanner.active_power_usage)
@@ -544,7 +545,7 @@
 			// GUARD CHECK - Is the occupant currently undergoing some form of
 			//  transformation? If so, we don't want to be pulsing genes.
 			if(scanner_occupant.transformation_timer)
-				to_chat(usr,span_warning("Gene pulse failed: The scanner occupant undergoing a transformation."))
+				to_chat(usr,span_warning(LANG("obj.69124fd3", null)))
 				return
 
 			// Resolve mutation's BYOND path from the alias
@@ -703,7 +704,7 @@
 			var/datum/mutation/target_mutation = get_mut_by_ref(bref, search_flags)
 
 			// Prompt for modifier string
-			var/new_sequence_input = tgui_input_text(usr, "Enter a replacement sequence", "Inherent Gene Replacement", max_length = 32, encode = FALSE)
+			var/new_sequence_input = tgui_input_text(usr, LANG("obj.c9291618", null), LANG("obj.ccf09eee", null), max_length = 32, encode = FALSE)
 			// Drop out if the string is the wrong length
 			if(length(new_sequence_input) != 32)
 				return
@@ -914,12 +915,12 @@
 
 			// Saving temporary or unobtainable mutations leads to gratuitous abuse
 			if(length(mutation.sources) && get_mutation_class(mutation) == SCANNER_MUTATION_CLASS_OTHER)
-				say("ERROR: This mutation is anomalous, and cannot be saved.")
+				say(LANG("obj.0c0011c7", null))
 				return
 
 			var/datum/mutation/stored = mutation.make_copy()
 			stored_mutations += stored
-			to_chat(usr,span_notice("Mutation successfully stored."))
+			to_chat(usr,span_notice(LANG("obj.9205a22d", null)))
 			return
 
 		// Save a mutation to the diskette's storage buffer.
@@ -937,13 +938,13 @@
 
 			// GUARD CHECK - Make sure the disk is not full
 			if(LAZYLEN(diskette.mutations) >= diskette.max_mutations)
-				to_chat(usr,span_warning("Disk storage is full."))
+				to_chat(usr,span_warning(LANG("obj.cb24f0e0", null)))
 				return
 
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write to it
 			if(diskette.read_only)
-				to_chat(usr,span_warning("Disk is set to read only mode."))
+				to_chat(usr,span_warning(LANG("obj.78441c5b", null)))
 				return
 
 			var/search_flags = 0
@@ -967,7 +968,7 @@
 				return
 
 			diskette.mutations += original.make_copy()
-			to_chat(usr,span_notice("Mutation successfully stored to disk."))
+			to_chat(usr,span_notice(LANG("obj.bb04c200", null)))
 			return
 
 		// Completely removes a MUTATION_SOURCE_MUTATOR mutation or mutation with corrupt gene
@@ -1025,7 +1026,7 @@
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write to it (via deletion)
 			if(diskette.read_only)
-				to_chat(usr,span_warning("Disk is set to read only mode."))
+				to_chat(usr,span_warning(LANG("obj.78441c5b", null)))
 				return
 
 			var/bref = params["mutref"]
@@ -1085,7 +1086,7 @@
 
 			// If we got a new type, add it to our storage
 			stored_mutations += new result_path()
-			to_chat(usr, span_boldnotice("Success! New mutation has been added to console storage."))
+			to_chat(usr, span_boldnotice(LANG("obj.9a6e6727", null)))
 
 			// If it's already discovered, end here. Otherwise, add it to the list of
 			//  discovered mutations.
@@ -1095,7 +1096,7 @@
 
 			var/datum/mutation/HM = GET_INITIALIZED_MUTATION(result_path)
 			stored_research.discovered_mutations += result_path
-			say("Successfully mutated [HM.name].")
+			say(LANG("obj.3657edd6", list(HM.name)))
 			if(connected_scanner)
 				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
@@ -1115,13 +1116,13 @@
 
 			// GUARD CHECK - Make sure the disk is not full.
 			if(LAZYLEN(diskette.mutations) >= diskette.max_mutations)
-				to_chat(usr,span_warning("Disk storage is full."))
+				to_chat(usr,span_warning(LANG("obj.cb24f0e0", null)))
 				return
 
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write to it
 			if(diskette.read_only)
-				to_chat(usr,span_warning("Disk is set to read only mode."))
+				to_chat(usr,span_warning(LANG("obj.78441c5b", null)))
 				return
 
 			// GUARD CHECK - We're running a research-type operation. If, for some
@@ -1151,7 +1152,7 @@
 
 			// If we got a new type, add it to our storage
 			diskette.mutations += new result_path()
-			to_chat(usr, span_boldnotice("Success! New mutation has been added to the disk."))
+			to_chat(usr, span_boldnotice(LANG("obj.e9e9cd2c", null)))
 
 			// If it's already discovered, end here. Otherwise, add it to the list of
 			//  discovered mutations
@@ -1161,7 +1162,7 @@
 
 			var/datum/mutation/HM = GET_INITIALIZED_MUTATION(result_path)
 			stored_research.discovered_mutations += result_path
-			say("Successfully mutated [HM.name].")
+			say(LANG("obj.3657edd6", list(HM.name)))
 			if(connected_scanner)
 				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
@@ -1199,7 +1200,7 @@
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write to it
 			if(diskette.read_only)
-				to_chat(usr,span_warning("Disk is set to read only mode."))
+				to_chat(usr,span_warning(LANG("obj.78441c5b", null)))
 				return
 
 			// Convert the index to a number and clamp within the array range
@@ -1248,7 +1249,7 @@
 			// GUARD CHECK - Make sure the disk isn't set to read only, as we're
 			//  attempting to write (via deletion) to it
 			if(diskette.read_only)
-				to_chat(usr,span_warning("Disk is set to read only mode."))
+				to_chat(usr,span_warning(LANG("obj.78441c5b", null)))
 				return
 
 			diskette.genetic_makeup_buffer.Cut()
@@ -1324,7 +1325,7 @@
 			// Convert the index to a number and clamp within the array range, then copy the data from the disk to that buffer
 			var/buffer_index = clamp(text2num(params["index"]), 1, NUMBER_OF_BUFFERS)
 			if(!make_cosmetic_dna_injector(dna_injector_type_to_flag(params["type"]), genetic_makeup_buffer[buffer_index]))
-				to_chat(usr, span_warning("Genetic data corrupted, unable to create injector."))
+				to_chat(usr, span_warning(LANG("obj.9512c781", null)))
 				return
 			injector_ready = world.time + MISC_INJECTOR_TIMEOUT
 			if(connected_scanner)
@@ -1556,7 +1557,7 @@
 
 			// GUARD CHECK - Make sure we limit the number of mutations appropriately
 			if(LAZYLEN(injector_selection[adv_inj]) >= max_injector_mutations)
-				to_chat(usr,span_warning("Advanced injector mutation storage is full."))
+				to_chat(usr,span_warning(LANG("obj.aaeeecf4", null)))
 				return
 
 			var/mut_source = params["source"]
@@ -1596,13 +1597,13 @@
 
 			// If this would take us over the max instability, we inform the user.
 			if(instability_total > max_injector_instability)
-				to_chat(usr,span_warning("Extra mutation would make the advanced injector too instable."))
+				to_chat(usr,span_warning(LANG("obj.8e9f8f1f", null)))
 				return
 
 			// If we've got here, all our checks are passed and we can successfully
 			// add the mutation to the advanced injector.
 			injector_selection[adv_inj] += original.make_copy()
-			to_chat(usr,span_notice("Mutation successfully added to advanced injector."))
+			to_chat(usr,span_notice(LANG("obj.8d0546a6", null)))
 			if(connected_scanner)
 				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
@@ -1666,7 +1667,7 @@
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
 			if(!buffer_slot["UI"])
-				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
+				to_chat(usr,span_warning(LANG("obj.6b05f38b", null)))
 				return FALSE
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_identity = buffer_slot["UI"]
@@ -1679,7 +1680,7 @@
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
 			if(!buffer_slot["UF"])
-				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
+				to_chat(usr,span_warning(LANG("obj.6b05f38b", null)))
 				return FALSE
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_features = buffer_slot["UF"]
@@ -1692,7 +1693,7 @@
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
 			if(!buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
-				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
+				to_chat(usr,span_warning(LANG("obj.6b05f38b", null)))
 				return FALSE
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.real_name = buffer_slot["name"]
@@ -1707,7 +1708,7 @@
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
 			if(!buffer_slot["UI"] || !buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["UF"] || !buffer_slot["blood_type"])
-				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
+				to_chat(usr,span_warning(LANG("obj.6b05f38b", null)))
 				return FALSE
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_identity = buffer_slot["UI"]
@@ -1887,7 +1888,7 @@
 		var/type = delayed_action["type"]
 		var/buffer_slot = delayed_action["buffer_slot"]
 		if(apply_genetic_makeup(type, buffer_slot))
-			to_chat(connected_scanner.occupant, span_notice("[src] activates!"))
+			to_chat(connected_scanner.occupant, span_notice(LANG("obj.f40f5858", list(src))))
 		delayed_action = null
 
 /**
@@ -2199,7 +2200,7 @@
 	if(stored_research && !(path in stored_research.discovered_mutations))
 		var/datum/mutation/HM = GET_INITIALIZED_MUTATION(path)
 		stored_research.discovered_mutations += path
-		say("Successfully discovered [HM.name].")
+		say(LANG("obj.5efd3742", list(HM.name)))
 		return TRUE
 
 	return FALSE
@@ -2344,7 +2345,7 @@
 	if(!diskette)
 		return
 
-	to_chat(user, span_notice("You eject [diskette] from [src]."))
+	to_chat(user, span_notice(LANG("obj.daa0023e", list(diskette, src))))
 
 	// Reset the state to console storage.
 	tgui_view_state["storageMode"] = "console"

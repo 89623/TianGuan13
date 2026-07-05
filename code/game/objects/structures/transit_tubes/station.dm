@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define OPEN_DURATION 6
 #define CLOSE_DURATION 6
 
@@ -51,7 +52,7 @@
 	R.transfer_fingerprints_to(TP)
 	TP.add_fingerprint(user)
 	TP.setDir(turn(src.dir, -90))
-	user.visible_message(span_notice("[user] inserts [R]."), span_notice("You insert [R]."))
+	user.visible_message(span_notice(LANG("obj.055270ea", list(user, R))), span_notice(LANG("obj.a134b5ec", list(R))))
 	qdel(R)
 
 
@@ -65,7 +66,7 @@
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
 					if(GM.buckled || GM.has_buckled_mobs())
-						to_chat(user, span_warning("[GM] is attached to something!"))
+						to_chat(user, span_warning(LANG("obj.2ea65959", list(GM))))
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
 						pod.visible_message(span_warning("[user] starts putting [GM] into the [pod]!"))
@@ -246,7 +247,7 @@
 
 /obj/structure/transit_tube/station/dispenser/examine(mob/user)
 	. = ..()
-	. += span_notice("This station will create a pod for you to ride, no need to wait for one.")
+	. += span_notice(LANG("obj.d9d4cc3e", null))
 
 /obj/structure/transit_tube/station/dispenser/Bumped(atom/movable/AM)
 	if(!(istype(AM) && AM.dir == boarding_dir) || AM.anchored)
@@ -254,13 +255,13 @@
 	if(!isliving(AM))
 		if(!COOLDOWN_FINISHED(src, freight_output))
 			if(COOLDOWN_FINISHED(src, freight_message))
-				AM.visible_message(span_notice("Freight pod dispenser is recharging. Please wait."))
+				AM.visible_message(span_notice(LANG("obj.2c094d95", null)))
 				COOLDOWN_START(src, freight_message, 10 SECONDS)
 			return
 		COOLDOWN_START(src, freight_output, 2 SECONDS)
 
 	var/obj/structure/transit_tube_pod/dispensed/pod = new(loc)
-	AM.visible_message(span_notice("[pod] forms around [AM]."), span_notice("[pod] materializes around you."))
+	AM.visible_message(span_notice(LANG("obj.45e00279", list(pod, AM))), span_notice(LANG("obj.7ee5397c", list(pod))))
 	playsound(src, 'sound/items/weapons/emitter2.ogg', 50, TRUE)
 	pod.setDir(turn(src.dir, -90))
 	AM.forceMove(pod)

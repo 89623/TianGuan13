@@ -25,7 +25,7 @@
 			SEND_SOUND(mentor_client, 'sound/items/bikehorn.ogg')
 			to_chat(mentor_client, mentor_msg)
 
-	to_chat(src, span_mentor("PM to-<b>Mentors</b>: [msg]"))
+	to_chat(src, span_mentor(LANG("client.25d147d7", list(msg))))
 	return
 
 /proc/get_mentor_counts()

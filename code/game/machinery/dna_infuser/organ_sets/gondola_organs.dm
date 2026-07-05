@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define GONDOLA_ORGAN_COLOR "#7a503d"
 #define GONDOLA_SCLERA_COLOR COLOR_BLACK
 #define GONDOLA_PUPIL_COLOR COLOR_BLACK
@@ -94,12 +95,12 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	var/has_left = liver_owner.has_left_hand(check_disabled = FALSE)
 	var/has_right = liver_owner.has_right_hand(check_disabled = FALSE)
 	if(has_left && has_right)
-		to_chat(liver_owner, span_warning("Your arms grow terribly weak as small, needle-like pricks grow all over them!"))
+		to_chat(liver_owner, span_warning(LANG("obj.55ccb91d", null)))
 	else if(has_left || has_right)
-		to_chat(liver_owner, span_warning("Your arm grows terribly weak as small, needle-like pricks grow all over it!"))
+		to_chat(liver_owner, span_warning(LANG("obj.194709e1", null)))
 	else
-		to_chat(liver_owner, span_warning("You feel like something would be happening to your arms right now... if you still had them."))
-	to_chat(liver_owner, span_notice("Hugging a target will pacify them, but you won't be able to carry much of anything anymore."))
+		to_chat(liver_owner, span_warning(LANG("obj.ce2e82b8", null)))
+	to_chat(liver_owner, span_notice(LANG("obj.186dad35", null)))
 	RegisterSignal(liver_owner, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_owner_equipping_item))
 	RegisterSignal(liver_owner, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
 	RegisterSignal(liver_owner, COMSIG_CARBON_HELPED, PROC_REF(on_hug))
@@ -112,7 +113,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/liver/gondola/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/equip_target, slot)
 	SIGNAL_HANDLER
 	if(equip_target.w_class > WEIGHT_CLASS_TINY)
-		equip_target.balloon_alert(owner, "too weak to hold this!")
+		equip_target.balloon_alert(owner, LANG("obj.bb75f798", null))
 		return COMPONENT_BLOCK_EQUIP
 
 /// signal sent when owner tries to pull an item
@@ -121,12 +122,12 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.mob_size > MOB_SIZE_TINY)
-			living_target.balloon_alert(owner, "too weak to pull this!")
+			living_target.balloon_alert(owner, LANG("obj.8fad75e5", null))
 			return COMSIG_LIVING_CANCEL_PULL
 	if(isitem(target))
 		var/obj/item/item_target = target
 		if(item_target.w_class > WEIGHT_CLASS_TINY)
-			item_target.balloon_alert(owner, "too weak to pull this!")
+			item_target.balloon_alert(owner, LANG("obj.8fad75e5", null))
 			return COMSIG_LIVING_CANCEL_PULL
 
 /obj/item/organ/liver/gondola/proc/on_hug(mob/living/carbon/human/source, mob/living/carbon/hugged)
@@ -139,7 +140,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	if(BODY_ZONE_R_ARM in covered_body_zones)
 		pax_injected -= 2
 	if(pax_injected > 0 && hugged.reagents?.add_reagent(/datum/reagent/pax, pax_injected))
-		to_chat(hugged, span_warning("You feel a tiny prick!"))
+		to_chat(hugged, span_warning(LANG("obj.d366f84f", null)))
 
 #undef GONDOLA_ORGAN_COLOR
 #undef GONDOLA_SCLERA_COLOR

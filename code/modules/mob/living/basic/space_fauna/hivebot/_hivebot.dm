@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/hivebot
 	name = "hivebot"
 	desc = "A small robot."
@@ -112,26 +113,26 @@
 
 /mob/living/basic/hivebot/mechanic/proc/repair_machine(obj/machinery/fixable)
 	if(fixable.get_integrity() >= fixable.max_integrity)
-		to_chat(src, span_warning("Diagnostics indicate that this machine is at peak integrity."))
+		to_chat(src, span_warning(LANG("mob.a826384c", null)))
 		return
 	if(!COOLDOWN_FINISHED(src, repair_cooldown))
-		balloon_alert(src, "recharging!")
+		balloon_alert(src, LANG("mob.ba1fd79a", null))
 		return
 	fixable.repair_damage(fixable.max_integrity - fixable.get_integrity())
 	do_sparks(number = 3, cardinal_only = TRUE, source = fixable)
-	to_chat(src, span_warning("Repairs complete!"))
+	to_chat(src, span_warning(LANG("mob.94bfb26d", null)))
 	COOLDOWN_START(src, repair_cooldown, 50 SECONDS)
 
 /mob/living/basic/hivebot/mechanic/proc/repair_hivebot(mob/living/basic/bot_target)
 	if(bot_target.health >= bot_target.maxHealth)
-		to_chat(src, span_warning("Diagnostics indicate that this unit is at peak integrity."))
+		to_chat(src, span_warning(LANG("mob.53696491", null)))
 		return
 	if(!COOLDOWN_FINISHED(src, repair_cooldown))
-		balloon_alert(src, "recharging!")
+		balloon_alert(src, LANG("mob.ba1fd79a", null))
 		return
 	bot_target.revive(HEAL_ALL)
 	do_sparks(number = 3, cardinal_only = TRUE, source = bot_target)
-	to_chat(src, span_warning("Repairs complete!"))
+	to_chat(src, span_warning(LANG("mob.94bfb26d", null)))
 	COOLDOWN_START(src, repair_cooldown, 50 SECONDS)
 
 /obj/item/ammo_casing/hivebot

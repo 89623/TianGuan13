@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/stomach/ethereal
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
@@ -48,7 +49,7 @@
 		return
 	adjust_charge(shock_damage * siemens_coeff * 2)
 	. = ethereal_shock_absorb(source, shock_damage, shock_source, siemens_coeff = 1, flags = NONE) //NOVA EDIT CHANGE - Ethereal Rework 2024 - This prevents the damage from the shocks.
-	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
+	to_chat(owner, span_notice(LANG("obj.6bb7b1c6", null)))
 
 /**Changes the energy of the crystal stomach.
 * Args:
@@ -90,7 +91,7 @@
 			// NOVA EDIT ADDITION BEGIN
 			if (SPT_PROB(10, seconds_per_tick))
 				do_sparks(5, TRUE, carbon)
-				carbon.visible_message(span_danger("[carbon] sparks, [carbon.p_their()] body aglow with excess energy!"), span_warning("Your body ejects voltage as sparks, you should discharge some electricity!"))
+				carbon.visible_message(span_danger(LANG("obj.e3816704", list(carbon, carbon.p_their()))), span_warning(LANG("obj.2eb5dc8c", null)))
 			// NOVA EDIT ADDITION END
 		else
 			owner.clear_mood_event("charge")
@@ -98,8 +99,8 @@
 			carbon.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 
 /obj/item/organ/stomach/ethereal/proc/discharge_process(mob/living/carbon/carbon)
-	to_chat(carbon, span_warning("You begin to lose control over your charge!"))
-	carbon.visible_message(span_danger("[carbon] begins to spark violently!"))
+	to_chat(carbon, span_warning(LANG("obj.8b69f76e", null)))
+	carbon.visible_message(span_danger(LANG("obj.f82cf63f", list(carbon))))
 
 	var/static/mutable_appearance/overcharge //shameless copycode from lightning spell
 	overcharge = overcharge || mutable_appearance('icons/effects/effects.dmi', "electricity", EFFECTS_LAYER)
@@ -117,11 +118,11 @@
 		// Only a small amount of the energy gets discharged as the zap. The rest dissipates as heat. Keeps the damage and energy from the zap the same regardless of what STANDARD_CELL_CHARGE is.
 		var/discharged_energy = -adjust_charge(ETHEREAL_CHARGE_FULL - cell.charge()) * min(7500 / STANDARD_CELL_CHARGE, 1)
 		tesla_zap(source = carbon, zap_range = 2, power = discharged_energy, cutoff = 1 KILO JOULES, zap_flags = ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES)
-		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))
+		carbon.visible_message(span_danger(LANG("obj.2d05d578", list(carbon))), span_warning(LANG("obj.c985786a", null)))
 
 		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
 			carbon.apply_status_effect(/datum/status_effect/heart_attack)
-			to_chat(carbon, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
+			to_chat(carbon, span_userdanger(LANG("obj.1b0d43d4", null)))
 			carbon.playsound_local(carbon, 'sound/effects/singlebeat.ogg', 100, 0)
 
 		carbon.Paralyze(100)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Touch Spell
  *
@@ -83,9 +84,9 @@
 	if(!cast_on.put_in_hands(new_hand, del_on_fail = TRUE))
 		reset_spell_cooldown()
 		if (cast_on.usable_hands == 0)
-			to_chat(cast_on, span_warning("You dont have any usable hands!"))
+			to_chat(cast_on, span_warning(LANG("datum.6c8cc72b", null)))
 		else
-			to_chat(cast_on, span_warning("Your hands are full!"))
+			to_chat(cast_on, span_warning(LANG("datum.86b9ca92", null)))
 		return FALSE
 
 	attached_hand = new_hand
@@ -193,7 +194,7 @@
 	if(!can_cast_spell(feedback = TRUE))
 		return FALSE
 	if(!(caster.mobility_flags & MOBILITY_USE))
-		caster.balloon_alert(caster, "can't reach out!")
+		caster.balloon_alert(caster, LANG("datum.a069b7a4", null))
 		return FALSE
 
 	return TRUE

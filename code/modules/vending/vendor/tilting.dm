@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Can this atom be curshed by the vending machine
  * Arguments
@@ -102,11 +103,11 @@
 		animate(src, transform = to_turn, 0.2 SECONDS)
 		playsound(src, 'sound/effects/bang.ogg', 40)
 
-		visible_message(span_danger("[src] tips over, slamming hard onto [target]!"))
+		visible_message(span_danger(LANG("atom.ad54badf", list(src, target))))
 		flags_to_return |= SUCCESSFULLY_FELL_OVER
 		post_tilt()
 	else
-		visible_message(span_danger("[src] rebounds comically as it fails to slam onto [target]!"))
+		visible_message(span_danger(LANG("atom.3f562ad0", list(src, target))))
 
 	Move(target, crush_dir) // we still TRY to move onto it for shit like teleporters
 	return flags_to_return
@@ -166,14 +167,14 @@
 			if(right_leg)
 				right_leg.receive_damage(brute = 200)
 			if(left_leg || right_leg)
-				carbon_target.visible_message(span_danger("[carbon_target]'s legs shatter with a sickening crunch!"), span_userdanger("Your legs shatter with a sickening crunch!"))
+				carbon_target.visible_message(span_danger(LANG("atom.b893d94b", list(carbon_target))), span_userdanger(LANG("atom.b637cf3e", null)))
 			return TRUE
 		if(CRUSH_CRIT_PARAPLEGIC) // paralyze this binch
 			// the new paraplegic gets like 4 lines of losing their legs so skip them
 			if (!iscarbon(atom_target))
 				return FALSE
 			var/mob/living/carbon/carbon_target = atom_target
-			visible_message(span_danger("[carbon_target]'s spinal cord is obliterated with a sickening crunch!"), ignored_mobs = list(carbon_target))
+			visible_message(span_danger(LANG("atom.2ab608ee", list(carbon_target))), ignored_mobs = list(carbon_target))
 			carbon_target.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
 			return TRUE
 		if(CRUSH_CRIT_SQUISH_LIMB) // limb squish!
@@ -184,7 +185,7 @@
 				var/severity = pick(WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, WOUND_SEVERITY_CRITICAL)
 				if (!carbon_target.cause_wound_of_type_and_severity(WOUND_BLUNT, squish_part, severity, wound_source = "crushed by [src]"))
 					squish_part.receive_damage(brute = 30)
-			carbon_target.visible_message(span_danger("[carbon_target]'s body is maimed underneath the mass of [src]!"), span_userdanger("Your body is maimed underneath the mass of [src]!"))
+			carbon_target.visible_message(span_danger(LANG("atom.934c2e20", list(carbon_target, src))), span_userdanger(LANG("atom.54fb8d8d", list(src))))
 			return TRUE
 		if(CRUSH_CRIT_HEADGIB) // skull squish!
 			if (!iscarbon(atom_target))
@@ -193,7 +194,7 @@
 			var/obj/item/bodypart/head/carbon_head = carbon_target.get_bodypart(BODY_ZONE_HEAD)
 			if(carbon_head)
 				if(carbon_head.dismember())
-					carbon_target.visible_message(span_danger("[carbon_head] explodes in a shower of gore beneath [src]!"),	span_userdanger("Oh f-"))
+					carbon_target.visible_message(span_danger(LANG("atom.787a4bb9", list(carbon_head, src))),	span_userdanger(LANG("atom.c544cc33", null)))
 					carbon_head.drop_organs()
 					qdel(carbon_head)
 					new /obj/effect/gibspawner/human/bodypartless(get_turf(carbon_target), carbon_target)
@@ -220,7 +221,7 @@
 		. = fall_and_crush(get_turf(fatty), squish_damage, local_crit_chance, forced_crit, 6 SECONDS, rotation = picked_rotation)
 
 		if (. & SUCCESSFULLY_FELL_OVER)
-			visible_message(span_danger("[src] tips over!"))
+			visible_message(span_danger(LANG("obj.869eb854", list(src))))
 			tilted = TRUE
 			tilted_rotation = picked_rotation
 			layer = ABOVE_MOB_LAYER
@@ -287,7 +288,7 @@
 			var/mob/living/living_target = atom_target
 			forceMove(get_turf(living_target))
 			buckle_mob(living_target, force=TRUE)
-			living_target.visible_message(span_danger("[living_target] is pinned underneath [src]!"), span_userdanger("You are pinned down by [src]!"))
+			living_target.visible_message(span_danger(LANG("obj.63a35059", list(living_target, src))), span_userdanger(LANG("obj.40706729", list(src))))
 			return TRUE
 
 	return FALSE
@@ -299,8 +300,8 @@
  */
 /obj/machinery/vending/proc/untilt(mob/user)
 	if(user)
-		user.visible_message(span_notice("[user] rights [src]."), \
-			span_notice("You right [src]."))
+		user.visible_message(span_notice(LANG("obj.94a4bfcc", list(user, src))), \
+			span_notice(LANG("obj.692d18ff", list(src))))
 
 	unbuckle_all_mobs(TRUE)
 

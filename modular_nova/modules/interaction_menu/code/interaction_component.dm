@@ -239,9 +239,9 @@
 				if(!not_interested.client?.prefs?.read_preference(/datum/preference/toggle/erp))
 					ignoring_mobs += not_interested
 			if(existing_item)
-				source.visible_message(span_purple("[source.name] starts trying to remove something from [target.name]'s [item_index]."), span_purple("You start to remove [existing_item.name] from [target.name]'s [item_index]."), span_purple("You hear someone trying to remove something from someone nearby."), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs + list(target))
+				source.visible_message(span_purple(LANG("datum.90f2bb3e", list(source.name, target.name, item_index))), span_purple(LANG("datum.f31c3cd7", list(existing_item.name, target.name, item_index))), span_purple(LANG("datum.f1924f1e", null)), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs + list(target))
 			else if (new_item)
-				source.visible_message(span_purple("[source.name] starts trying to [insert_or_attach] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."), span_purple("You start to [insert_or_attach] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."), span_purple("You hear someone trying to [insert_or_attach] something [into_or_onto] someone nearby."), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs + list(target))
+				source.visible_message(span_purple(LANG("datum.e0b9f395", list(source.name, insert_or_attach, new_item.name, into_or_onto, target.name, item_index))), span_purple(LANG("datum.9dda7397", list(insert_or_attach, new_item.name, into_or_onto, target.name, item_index))), span_purple(LANG("datum.7828ee06", list(insert_or_attach, into_or_onto))), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs + list(target))
 			if (source != target)
 				target.show_message(span_warning("[source.name] is trying to [existing_item ? "remove the [existing_item.name] [internal ? "in" : "on"]" : new_item ? "is trying to [insert_or_attach] the [new_item.name] [into_or_onto]" : span_alert("What the fuck, impossible condition? interaction_component.dm!")] your [item_index]!"))
 			if(do_after(
@@ -252,11 +252,11 @@
 				) && can_lewd_strip(source, target, item_index))
 
 				if(existing_item)
-					source.visible_message(span_purple("[source.name] removes [existing_item.name] from [target.name]'s [item_index]."), span_purple("You remove [existing_item.name] from [target.name]'s [item_index]."), span_purple("You hear someone remove something from someone nearby."), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs)
+					source.visible_message(span_purple(LANG("datum.54c0cd29", list(source.name, existing_item.name, target.name, item_index))), span_purple(LANG("datum.516b4b7f", list(existing_item.name, target.name, item_index))), span_purple(LANG("datum.4179ae5f", null)), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs)
 					target.dropItemToGround(existing_item, force = TRUE) // Force is true, cause nodrop shouldn't affect lewd items.
 					target.vars[item_index] = null
 				else if (new_item)
-					source.visible_message(span_purple("[source.name] [internal ? "inserts" : "attaches"] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."), span_purple("You [insert_or_attach] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."), span_purple("You hear someone [insert_or_attach] something [into_or_onto] someone nearby."), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs)
+					source.visible_message(span_purple(LANG("datum.d81eaeca", list(source.name, internal ? "inserts" : "attaches", new_item.name, into_or_onto, target.name, item_index))), span_purple(LANG("datum.2bd2933e", list(insert_or_attach, new_item.name, into_or_onto, target.name, item_index))), span_purple(LANG("datum.4075d972", list(insert_or_attach, into_or_onto))), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs)
 					target.vars[item_index] = new_item
 					new_item.forceMove(target)
 					new_item.lewd_equipped(target, item_index)

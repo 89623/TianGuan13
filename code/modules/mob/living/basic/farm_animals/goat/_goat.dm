@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The Greatest (animal) Of All Time. Cud chewing, shin-kicking, kitchen-dwelling nuisance.
 /mob/living/basic/goat
 	name = "goat"
@@ -83,8 +84,8 @@
 		edible_bodypart.dismember()
 
 	living_target.visible_message(
-		span_warning("[src] takes a big chomp out of [living_target]!"),
-		span_userdanger("[src] takes a big chomp out of your [edible_bodypart || "body"]!"),
+		span_warning(LANG("mob.097c1377", list(src, living_target))),
+		span_userdanger(LANG("mob.5e8b5fb9", list(src, edible_bodypart || "body"))),
 	)
 
 	return COMPONENT_HOSTILE_NO_ATTACK
@@ -94,7 +95,7 @@
 	if (!COOLDOWN_FINISHED(src, gleam_cooldown))
 		return
 	visible_message(
-		span_danger("[src] gets an evil-looking gleam in [p_their()] eye."),
+		span_danger(LANG("mob.84468ce4", list(src, p_their()))),
 	)
 	COOLDOWN_START(src, gleam_cooldown, gleam_delay)
 
@@ -136,5 +137,5 @@
 			eaten = TRUE
 
 	if(eaten && prob(10))
-		say("Nom") // bon appetit
+		say(LANG("mob.306ecd7c", null)) // bon appetit
 		playsound(src, 'sound/items/eatfood.ogg', rand(30, 50), TRUE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/action/minimap
 	name = "Toggle Minimap"
@@ -28,7 +29,7 @@
 	// Toggle off if already visible.
 	if(has_minimap_huds(hud))
 		remove_huds(hud)
-		to_chat(clicker, span_notice("Minimap hidden."))
+		to_chat(clicker, span_notice(LANG("datum.4722e230", null)))
 		return
 
 	if(SEND_SIGNAL(clicker, COMSIG_MINIMAP_ACTION_TRIGGER) & COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL)
@@ -36,17 +37,17 @@
 
 	var/anchor_z = get_anchor_z_level(clicker?.z)
 	if(is_forbidden_minimap_z(anchor_z))
-		to_chat(clicker, span_warning("The minimap cannot be used on this z-level."))
-		clicker.balloon_alert(clicker, "invalid z-level!")
+		to_chat(clicker, span_warning(LANG("datum.d55f8dc5", null)))
+		clicker.balloon_alert(clicker, LANG("datum.01b86f2b", null))
 		return
 	var/display_z = get_opening_display_z_level(anchor_z, clicker?.z)
 
 	var/datum/minimap/minimap = get_minimap_for_z(display_z)
 	if(isnull(minimap))
-		clicker.balloon_alert(clicker, "no minimap generated")
+		clicker.balloon_alert(clicker, LANG("datum.12a3c0ba", null))
 		return
 	add_huds(hud, minimap, isnull(fixed_z_level) ? null : display_z)
-	to_chat(clicker, span_notice("Minimap shown."))
+	to_chat(clicker, span_notice(LANG("datum.21f826cd", null)))
 
 /datum/action/minimap/Grant(mob/grant_to)
 	. = ..()
@@ -109,7 +110,7 @@
 	var/anchor_z = get_anchor_z_level(new_z_level)
 	if(is_forbidden_minimap_z(anchor_z))
 		remove_huds(owner_hud)
-		to_chat(owner_mob, span_warning("The minimap closes on this z-level."))
+		to_chat(owner_mob, span_warning(LANG("datum.4b70fd9c", null)))
 		return
 	if(isnull(fixed_z_level))
 		return

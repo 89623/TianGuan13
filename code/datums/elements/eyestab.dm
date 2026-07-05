@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// What's the probability a clumsy person stabs themselves in the eyes?
 #define CLUMSY_ATTACK_SELF_CHANCE 50
 /// The damage threshold (of the victim's eyes) after which they start taking more serious effects
@@ -60,13 +61,13 @@
 	user.do_attack_animation(target)
 	if (target == user)
 		user.visible_message(
-			span_danger("[user] stabs [user.p_them()]self in the eye with [item]!"),
-			span_userdanger("You stab yourself in the eye with [item]!"),
+			span_danger(LANG("datum.bcc197c3", list(user, user.p_them(), item))),
+			span_userdanger(LANG("datum.ce50bb17", list(item))),
 		)
 	else
 		target.visible_message(
-			span_danger("[user] stabs [target] in the eye with [item]!"),
-			span_userdanger("[user] stabs you in the eye with [item]!"),
+			span_danger(LANG("datum.df8f2c80", list(user, target, item))),
+			span_userdanger(LANG("datum.bb4281c5", list(user, item))),
 		)
 
 	if (target_limb)
@@ -90,7 +91,7 @@
 	// At over 10 damage we apply a lot of eye blur
 	target.adjust_eye_blur_up_to(30 SECONDS, EYESTAB_MAX_BLUR)
 	if (target.stat != DEAD && started_bleeding)
-		to_chat(target, span_danger("Your eyes start to bleed profusely!"))
+		to_chat(target, span_danger(LANG("datum.5a468d0a", null)))
 
 	// At over 10 damage, we cause at least enough eye damage to force nearsightedness
 	if (!target.is_nearsighted_from(EYE_DAMAGE) && eyes.damage <= eyes.low_threshold)
@@ -100,7 +101,7 @@
 	if (prob(50) && target.stat != DEAD)
 		var/list/dropped = target.drop_all_held_items()
 		if(length(dropped))
-			to_chat(target, span_danger("You drop what you're holding and clutch at your eyes!"))
+			to_chat(target, span_danger(LANG("datum.f40070b8", null)))
 		target.adjust_eye_blur_up_to(20 SECONDS, EYESTAB_MAX_BLUR)
 		target.Unconscious(2 SECONDS)
 		target.Paralyze(4 SECONDS)
@@ -114,7 +115,7 @@
 			valid_sides += LEFT_EYE_SCAR
 		if (length(valid_sides))
 			var/picked_side = pick(valid_sides)
-			to_chat(target, span_userdanger("You feel searing pain shoot though your [picked_side == RIGHT_EYE_SCAR ? "right" : "left"] eye!"))
+			to_chat(target, span_userdanger(LANG("datum.77df50be", list(picked_side == RIGHT_EYE_SCAR ? "right" : "left"))))
 			// oof ouch my eyes
 			var/datum/wound/pierce/bleed/severe/eye/eye_puncture = new
 			eye_puncture.apply_wound(eyes.bodypart_owner, wound_source = "eye stab", right_side = picked_side)

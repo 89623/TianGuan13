@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Sign language book adds the sign language component to the reading Human.
 /// Grants reader the ability to toggle sign language using a HUD button.
 /obj/item/book/granter/sign_language
@@ -16,12 +17,12 @@
 	if (!iscarbon(user))
 		return
 	if (user.GetComponent(/datum/component/sign_language))
-		to_chat(user, span_warning("You already know all about sign language!"))
+		to_chat(user, span_warning(LANG("obj.cc0fbef0", null)))
 		return
 	return TRUE
 
 /obj/item/book/granter/sign_language/recoil(mob/living/user)
-	to_chat(user, span_warning("You can't read it, the pages are too faded and smudged!"))
+	to_chat(user, span_warning(LANG("obj.200a54f4", null)))
 
 /// Called when the reading is completely finished. This is where the actual granting should happen.
 /obj/item/book/granter/sign_language/on_reading_finished(mob/living/user)

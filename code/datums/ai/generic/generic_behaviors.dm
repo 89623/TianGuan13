@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/ai_behavior/resist/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
@@ -47,7 +48,7 @@
 	big_guy.start_pulling(batman)
 	big_guy.face_atom(batman)
 
-	batman.visible_message(span_warning("[batman] gets a slightly too tight hug from [big_guy]!"), span_userdanger("You feel your body break as [big_guy] embraces you!"))
+	batman.visible_message(span_warning(LANG("datum.cda80619", list(batman, big_guy))), span_userdanger(LANG("datum.3aca6d23", list(big_guy))))
 
 	for(var/zone in GLOB.all_body_zones - BODY_ZONE_HEAD)
 		batman.apply_damage(15, BRUTE, zone, wound_bonus = 35)
@@ -127,8 +128,8 @@
 		return perform_flags
 	controller.PauseAi(1.5 SECONDS)
 	living_target.visible_message(
-		span_info("[pawn] starts trying to give [held_item] to [living_target]!"),
-		span_warning("[pawn] tries to give you [held_item]!")
+		span_info(LANG("datum.41a1e794", list(pawn, held_item, living_target))),
+		span_warning(LANG("datum.8d1d6d8b", list(pawn, held_item)))
 	)
 	if(!do_after(pawn, 1 SECONDS, living_target))
 		return AI_BEHAVIOR_DELAY | perform_flags

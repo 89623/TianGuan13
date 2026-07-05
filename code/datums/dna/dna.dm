@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * A list of numbers that keeps track of where ui blocks start in the unique_identity string variable of the dna datum.
  * Commonly used by the datum/dna/set_uni_identity_block and datum/dna/get_uni_identity_block procs.
@@ -754,5 +755,5 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			return
 		eyes.Remove(src)
 		qdel(eyes)
-		visible_message(span_notice("[src] looks up and their eyes melt away!"), span_userdanger("I understand now."))
+		visible_message(span_notice(LANG("mob.dfdd3227", list(src))), span_userdanger(LANG("mob.2a8c53b6", null)))
 		addtimer(CALLBACK(src, PROC_REF(adjust_organ_loss), ORGAN_SLOT_BRAIN, 200), 2 SECONDS)

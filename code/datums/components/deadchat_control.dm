@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Deadchat Plays Things - The Componenting
  *
@@ -76,17 +77,17 @@
 			return
 		var/cooldown = ckey_to_cooldown[source.ckey] - world.time
 		if(cooldown > 0)
-			to_chat(source, span_warning("Your deadchat control inputs are still on cooldown for another [CEILING(cooldown * 0.1, 1)] second\s."))
+			to_chat(source, span_warning(LANG("datum.6d2a628e", list(CEILING(cooldown * 0.1, 1)))))
 			return MOB_DEADSAY_SIGNAL_INTERCEPT
 		ckey_to_cooldown[source.ckey] = world.time + input_cooldown
 		addtimer(CALLBACK(src, PROC_REF(end_cooldown), source.ckey), input_cooldown)
 		inputs[message].Invoke()
-		to_chat(source, span_notice("\"[message]\" input accepted. You are now on cooldown for [input_cooldown * 0.1] second\s."))
+		to_chat(source, span_notice(LANG("datum.64a8e1f4", list(message, input_cooldown * 0.1))))
 		return MOB_DEADSAY_SIGNAL_INTERCEPT
 
 	if(deadchat_mode & DEMOCRACY_MODE)
 		ckey_to_cooldown[source.ckey] = message
-		to_chat(source, span_notice("You have voted for \"[message]\"."))
+		to_chat(source, span_notice(LANG("datum.bf9b152b", list(message))))
 		return MOB_DEADSAY_SIGNAL_INTERCEPT
 
 /datum/component/deadchat_control/proc/democracy_loop()
@@ -182,12 +183,12 @@
 
 /// Async proc handling the alert input and associated logic for an admin removing this component via the VV dropdown.
 /datum/component/deadchat_control/proc/async_handle_vv_topic(mob/user, list/href_list)
-	if(tgui_alert(user, "Remove deadchat control from [parent]?", "Deadchat Plays [parent]", list("Remove", "Cancel")) == "Remove")
+	if(tgui_alert(user, LANG("datum.ba1ecec0", list(parent)), LANG("datum.6203ef2d", list(parent)), list("Remove", "Cancel")) == "Remove")
 		// Quick sanity check as this is an async call.
 		if(QDELETED(src))
 			return
 
-		to_chat(user, span_notice("Deadchat can no longer control [parent]."))
+		to_chat(user, span_notice(LANG("datum.5ca39375", list(parent))))
 		log_admin("[key_name(user)] has removed deadchat control from [parent]")
 		message_admins(span_notice("[key_name(user)] has removed deadchat control from [parent]"))
 
@@ -200,12 +201,12 @@
 	if(!isobserver(user))
 		return
 
-	examine_list += span_notice("[A.p_Theyre()] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
+	examine_list += span_notice(LANG("datum.0366779e", list(A.p_Theyre(), (deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy")))
 
 	if(deadchat_mode & DEMOCRACY_MODE)
-		examine_list += span_notice("Type a command into chat to vote on an action. This happens once every [input_cooldown * 0.1] second\s.")
+		examine_list += span_notice(LANG("datum.283d4fe2", list(input_cooldown * 0.1)))
 	else if(deadchat_mode & ANARCHY_MODE)
-		examine_list += span_notice("Type a command into chat to perform. You may do this once every [input_cooldown * 0.1] second\s.")
+		examine_list += span_notice(LANG("datum.28be2737", list(input_cooldown * 0.1)))
 
 	var/extended_examine = "<span class='notice'>Command list:"
 
@@ -222,7 +223,7 @@
 	var/mob/ghost = get_mob_by_ckey(ghost_ckey)
 	if(!ghost || isliving(ghost))
 		return
-	to_chat(ghost, "[FOLLOW_LINK(ghost, parent)] <span class='nicegreen'>Your deadchat control inputs for [parent] are no longer on cooldown.</span>")
+	to_chat(ghost, LANG("datum.03a79835", list(FOLLOW_LINK(ghost, parent), parent)))
 
 /**
  * Deadchat Moves Things

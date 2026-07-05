@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/mine_bot_upgrade
 	name = "minebot melee upgrade"
 	desc = "A minebot upgrade."
@@ -13,11 +14,11 @@
 
 /obj/item/mine_bot_upgrade/proc/upgrade_bot(mob/living/basic/mining_drone/minebot, mob/user)
 	if(minebot.melee_damage_upper != initial(minebot.melee_damage_upper))
-		user.balloon_alert(user, "already has armor!")
+		user.balloon_alert(user, LANG("obj.f3026bc8", null))
 		return
 	minebot.melee_damage_lower += 7
 	minebot.melee_damage_upper += 7
-	to_chat(user, span_notice("You increase the close-quarter combat abilities of [minebot]."))
+	to_chat(user, span_notice(LANG("obj.5fe21fc6", list(minebot))))
 	qdel(src)
 
 //Health
@@ -27,11 +28,11 @@
 
 /obj/item/mine_bot_upgrade/health/upgrade_bot(mob/living/basic/mining_drone/minebot, mob/user)
 	if(minebot.maxHealth != initial(minebot.maxHealth))
-		to_chat(user, span_warning("[minebot] already has reinforced armor!"))
+		to_chat(user, span_warning(LANG("obj.4ad84a23", list(minebot))))
 		return
 	minebot.maxHealth += 45
 	minebot.updatehealth()
-	to_chat(user, span_notice("You reinforce the armor of [minebot]."))
+	to_chat(user, span_notice(LANG("obj.ae9b87b3", list(minebot))))
 	qdel(src)
 
 //AI
@@ -66,7 +67,7 @@
 
 /obj/item/mine_bot_upgrade/regnerative_shield/upgrade_bot(mob/living/basic/mining_drone/minebot, mob/user)
 	if(HAS_TRAIT(minebot, TRAIT_REGEN_SHIELD))
-		user.balloon_alert(minebot, "already has it!")
+		user.balloon_alert(minebot, LANG("obj.c25ab3eb", null))
 		return
 	var/static/list/shield_layers = list(
 		/obj/effect/overlay/minebot_top_shield,

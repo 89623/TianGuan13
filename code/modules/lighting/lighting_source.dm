@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Cached global list of generated lighting sheets. See: datum/light_source/proc/get_sheet()
 GLOBAL_LIST_EMPTY(lighting_sheets)
 
@@ -312,7 +313,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 				print_column += round(row, 0.1)
 			output += print_column.Join(", ")
 		output += column_seperator
-	to_chat(usr, "\n[output.Join("\n")]")
+	to_chat(usr, LANG("datum.65aac1b5", list(output.Join("\n"))))
 
 /// Debug proc, for when lighting sheets fuck up
 /// Accepts the sheet (2 or 3 (multiz) dimensional list of lighting values at some offset)

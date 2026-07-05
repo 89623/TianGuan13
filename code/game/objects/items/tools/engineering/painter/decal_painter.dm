@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/airlock_painter/decal
 	name = "decal painter"
 	desc = "An airlock painter, reprogrammed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
@@ -154,7 +155,7 @@
 	if(cyborg.cell && cyborg.cell.charge > 0)
 		cyborg.cell.use(0.025 * STANDARD_CELL_CHARGE)
 	else if(cyborg.cell.charge <= 0)
-		balloon_alert(user, "not enough energy!")
+		balloon_alert(user, LANG("obj.204cf586", null))
 		return
 
 /obj/item/airlock_painter/decal/cyborg/click_alt(mob/user)

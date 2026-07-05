@@ -123,7 +123,7 @@
 
 /obj/machinery/vending/imported/yangyu/examine_more(mob/user)
 	. = ..()
-	. += span_notice("Someone appears to have written <i>\"Don't trust the sushi!\"</i> in marker on the side of the vendor.")
+	. += span_notice(LANG("obj.c9c5e613", null))
 	return .
 
 /obj/item/vending_refill/snack/imported/yangyu

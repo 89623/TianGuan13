@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/plumbing
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///Index with "1" = /datum/ductnet/theductpointingnorth etc. "1" being the num2text from NORTH define
@@ -135,7 +136,7 @@
 	if(!active())
 		var/datum/overlap = ducting_layer_check(parent_obj, -ducting_layer)
 		if(!isnull(overlap))
-			parent_obj.balloon_alert(user, "overlapping [istype(overlap, /obj/machinery/duct) ? "duct" : "machine"] detected!")
+			parent_obj.balloon_alert(user, LANG("datum.bda81211", list(istype(overlap, /obj/machinery/duct) ? "duct" : "machine")))
 			return ITEM_INTERACT_FAILURE
 
 /datum/component/plumbing/proc/toggle_active(obj/parent_obj, new_state)
@@ -252,7 +253,7 @@
 	SIGNAL_HANDLER
 
 	if(distinct_reagent_cap != INFINITY)
-		examine_list += span_notice("This plumbing component will only accept up to [distinct_reagent_cap] distinct reagents at once.")
+		examine_list += span_notice(LANG("datum.bb11a474", list(distinct_reagent_cap)))
 
 ///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
 /datum/component/plumbing/proc/send_request(dir)

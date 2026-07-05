@@ -1,8 +1,9 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Admin Tab - Event Verbs
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
 	message_admins("[key_name_admin(user)] has started answering [ADMIN_LOOKUPFLW(target)]'s prayer.")
-	var/msg = input(user, "Message:", "Subtle PM to [target.key]") as text|null
+	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.03de8cc3", list(target.key))) as text|null
 
 	if(!msg)
 		message_admins("[key_name_admin(user)] decided not to answer [ADMIN_LOOKUPFLW(target)]'s prayer")
@@ -10,8 +11,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message",
 
 	msg = user.reformat_narration(msg)
 
-	target.balloon_alert(target, "you hear a voice")
-	to_chat(target, "<i>You hear a voice in your head... <b>[msg]</i></b>", confidential = TRUE)
+	target.balloon_alert(target, LANG("datum.d955e950", null))
+	to_chat(target, LANG("datum.5ea2cf68", list(msg)), confidential = TRUE)
 
 	log_admin("SubtlePM: [key_name(user)] -> [key_name(target)] : [msg]")
 	msg = span_adminnotice("<b> SubtleMessage: [key_name_admin(user)] -> [key_name_admin(target)] :</b> [msg]")
@@ -33,24 +34,24 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 	if(ishuman(target))
 		human_recipient = target
 		if(!istype(human_recipient.ears, /obj/item/radio/headset))
-			to_chat(usr, "The person you are trying to contact is not wearing a headset.", confidential = TRUE)
+			to_chat(usr, LANG("client.eab59e40", null), confidential = TRUE)
 			return
 	else if(issilicon(target))
 		silicon_recipient = target
 		if(!istype(silicon_recipient.radio, /obj/item/radio))
-			to_chat(usr, "The silicon you are trying to contact does not have a radio installed.", confidential = TRUE)
+			to_chat(usr, LANG("client.eda1e55f", null), confidential = TRUE)
 			return
 	else
-		to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human or /mob/living/silicon", confidential = TRUE)
+		to_chat(usr, LANG("client.fde4ec38", null), confidential = TRUE)
 		return
 
 	if (!sender)
-		sender = input("Who is the message from?", "Sender") as null|anything in list(RADIO_CHANNEL_CENTCOM,RADIO_CHANNEL_SYNDICATE)
+		sender = input(LANG("client.25741089", null), LANG("client.2bc502a9", null)) as null|anything in list(RADIO_CHANNEL_CENTCOM,RADIO_CHANNEL_SYNDICATE)
 		if(!sender)
 			return
 
 	message_admins("[key_name_admin(src)] has started answering [key_name_admin(target)]'s [sender] request.")
-	var/input = input("Please enter a message to reply to [key_name(target)] via their headset.","Outgoing message from [sender]", "") as text|null
+	var/input = input(LANG("client.deaf7443", list(key_name(target))),LANG("client.3bc3c9ab", list(sender)), "") as text|null
 	if(!input)
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(target)]'s [sender] request.")
 		return
@@ -59,13 +60,13 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 
 	log_directed_talk(mob, target, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(target)]'s [sender] message with: \"[input]\"")
-	target.balloon_alert(target, "you hear a voice")
-	to_chat(target, span_hear("You hear something crackle in your [human_recipient ? "ears" : "radio receiver"] for a moment before a voice speaks. \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"]. Message as follows[sender == "Syndicate" ? ", agent." : ":"] <b>[input].</b> Message ends.\""), confidential = TRUE)
+	target.balloon_alert(target, LANG("client.d955e950", null))
+	to_chat(target, span_hear(LANG("client.06743bb0", list(human_recipient ? "ears" : "radio receiver", sender == "Syndicate" ? "your benefactor" : "Central Command", sender == "Syndicate" ? ", agent." : ":", input))), confidential = TRUE)
 
 	BLACKBOX_LOG_ADMIN_VERB("Headset Message")
 
 ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "Global Narrate", "Send a direct narration to all connected players.", ADMIN_CATEGORY_EVENTS)
-	var/msg = input(user, "Message:", "Enter the text you wish to appear to everyone:") as text|null
+	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.7c26d5bd", null)) as text|null
 	if (!msg)
 		return
 	msg = user.reformat_narration(msg)
@@ -75,10 +76,10 @@ ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "Global Narrate", "Send a direct na
 	BLACKBOX_LOG_ADMIN_VERB("Global Narrate")
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "Local Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/locale in world)
-	var/range = input(user, "Range:", "Narrate to mobs within how many tiles:", 7) as num|null
+	var/range = input(user, LANG("datum.c5d1936b", null), LANG("datum.520ed99b", null), 7) as num|null
 	if(!range)
 		return
-	var/msg = input(user, "Message:", "Enter the text you wish to appear to everyone within view:") as text|null
+	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.4d8da095", null)) as text|null
 	if (!msg)
 		return
 	msg = user.reformat_narration(msg)
@@ -90,7 +91,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "Local Narrate", A
 	BLACKBOX_LOG_ADMIN_VERB("Local Narrate")
 
 ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
-	var/msg = input(user, "Message:", "Enter the text you wish to appear to your target:") as text|null
+	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.5d97ad04", null)) as text|null
 
 	if( !msg )
 		return
@@ -105,14 +106,14 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate",
 	BLACKBOX_LOG_ADMIN_VERB("Direct Narrate")
 
 ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a custom law to the Silicons.", ADMIN_CATEGORY_EVENTS)
-	var/input = input(user, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
+	var/input = input(user, LANG("datum.d01816bc", null), LANG("datum.29297405", null), "") as text|null
 	if(!input)
 		return
 
 	log_admin("Admin [key_name(user)] has added a new AI law - [input]")
 	message_admins("Admin [key_name_admin(user)] has added a new AI law - [input]")
 
-	var/show_log = tgui_alert(user, "Show ion message?", "Message", list("Yes", "No"))
+	var/show_log = tgui_alert(user, LANG("datum.5d9fa149", null), LANG("datum.affb7d7e", null), list("Yes", "No"))
 	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new
@@ -125,11 +126,11 @@ ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.",
 	var/list/nukes = list()
 	for (var/obj/machinery/nuclearbomb/bomb in world)
 		nukes += bomb
-	var/obj/machinery/nuclearbomb/nuke = tgui_input_list(user, "", "Toggle Nuke", nukes)
+	var/obj/machinery/nuclearbomb/nuke = tgui_input_list(user, "", LANG("datum.dc37cb91", null), nukes)
 	if (isnull(nuke))
 		return
 	if(!nuke.timing)
-		var/newtime = tgui_input_number(user, "Set activation timer.", "Activate Nuke", nuke.timer_set)
+		var/newtime = tgui_input_number(user, LANG("datum.fe354fbd", null), LANG("datum.f03e09c8", null), nuke.timer_set)
 		if(!newtime)
 			return
 		nuke.timer_set = newtime
@@ -141,7 +142,7 @@ ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.",
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[nuke.timing]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
 ADMIN_VERB(change_sec_level, R_ADMIN, "Set Security Level", "Changes the security level. Announcement effects only.", ADMIN_CATEGORY_EVENTS)
-	var/level = tgui_input_list(user, "Select Security Level:", "Set Security Level", SSsecurity_level.available_levels)
+	var/level = tgui_input_list(user, LANG("datum.2b07c557", null), LANG("datum.867fbc31", null), SSsecurity_level.available_levels)
 
 	if(!level)
 		return
@@ -158,8 +159,8 @@ ADMIN_VERB(command_report_footnote, R_FUN, "Command Report Footnote", "Adds a fo
 
 	command_report_footnote.message = tgui_input_text(
 		user,
-		"This message will be attached to the bottom of the roundstart threat report.",
-		"P.S.",
+		LANG("datum.0c3ef29f", null),
+		LANG("datum.394670e9", null),
 	)
 	if(!command_report_footnote.message)
 		GLOB.communications_controller.block_command_report -= 1
@@ -168,8 +169,8 @@ ADMIN_VERB(command_report_footnote, R_FUN, "Command Report Footnote", "Adds a fo
 
 	command_report_footnote.signature = tgui_input_text(
 		user,
-		"Whose signature will appear on this footnote?",
-		"Also sign here, here, aaand here.",
+		LANG("datum.a004306f", null),
+		LANG("datum.6221e12f", null),
 	)
 
 	if(!command_report_footnote.signature)
@@ -188,8 +189,8 @@ ADMIN_VERB(command_report_content, R_FUN, "Command Report Content", "Sets the ma
 	GLOB.communications_controller.block_command_report += 1
 	GLOB.communications_controller.command_report_main_content = tgui_input_text(
 		user,
-		"This message will be the main content of the roundstart command report, above the threat report (if enabled).",
-		"To Whom It May Concern",
+		LANG("datum.f7b6bce3", null),
+		LANG("datum.57bd42d3", null),
 	)
 	GLOB.communications_controller.block_command_report -= 1
 	message_admins("[key_name_admin(user)] has [GLOB.communications_controller.command_report_main_content ? "set" : "cleared"] the main content of the roundstart command report.")
@@ -200,8 +201,8 @@ ADMIN_VERB(delay_command_report, R_FUN, "Delay Command Report", "Prevents the ro
 
 ///Reformats a narration message. First provides a prompt asking if the user wants to reformat their message, then allows them to pick from a list of spans to use.
 /client/proc/reformat_narration(input)
-	if(tgui_alert(mob, "Set a custom text format?", "Make it snazzy!", list("Yes", "No")) == "Yes")
-		var/text_span = tgui_input_list(mob, "Select a span!", "Immersion! Yeah!", GLOB.spanname_to_formatting)
+	if(tgui_alert(mob, LANG("client.827ba886", null), LANG("client.7bdd69db", null), list("Yes", "No")) == "Yes")
+		var/text_span = tgui_input_list(mob, LANG("client.ec1363e7", null), LANG("client.d6101a86", null), GLOB.spanname_to_formatting)
 		if(isnull(text_span)) //In case the user just quit the prompt.
 			return text_span
 		text_span = GLOB.spanname_to_formatting[text_span]

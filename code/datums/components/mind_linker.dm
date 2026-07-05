@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Mind Linker
  *
@@ -163,7 +164,7 @@
 
 	if(isliving(source))
 		var/mob/living/owner = source
-		to_chat(owner, span_boldwarning("Your [network_name] breaks!"))
+		to_chat(owner, span_boldwarning(LANG("datum.91126adc", list(network_name))))
 
 	qdel(src)
 
@@ -210,7 +211,7 @@
 	else
 		stack_trace("[type] was created without a valid linker_action_path. No one will be able to link to it.")
 
-	to_chat(owner, span_boldnotice("You establish a [network_name], allowing you to link minds to communicate telepathically."))
+	to_chat(owner, span_boldnotice(LANG("datum.dc0aa7c1", list(network_name))))
 
 /datum/component/mind_linker/active_linking/Destroy()
 	QDEL_NULL(linker_action)
@@ -229,7 +230,7 @@
 	RegisterSignal(to_link, COMSIG_MINDSHIELD_IMPLANTED, PROC_REF(sig_unlink_mob))
 	var/mob/living/owner = parent
 	to_chat(to_link, span_notice(link_message))
-	to_chat(owner, span_notice("You connect [to_link]'s mind to your [network_name]."))
+	to_chat(owner, span_notice(LANG("datum.1e4f0052", list(to_link, network_name))))
 	for(var/mob/living/other_link as anything in linked_mobs)
 		to_chat(other_link, span_notice("You feel a new presence within [owner.real_name]'s [network_name]."))
 
@@ -241,7 +242,7 @@
 	UnregisterSignal(to_unlink, COMSIG_MINDSHIELD_IMPLANTED)
 	var/mob/living/owner = parent
 	to_chat(to_unlink, span_warning(unlink_message))
-	to_chat(owner, span_warning("You feel someone disconnect from your [network_name]."))
+	to_chat(owner, span_warning(LANG("datum.402cb6b6", list(network_name))))
 	for(var/mob/living/other_link as anything in linked_mobs)
 		to_chat(other_link, span_warning("You feel a pressence disappear from [owner.real_name]'s [network_name]."))
 
@@ -263,7 +264,7 @@
 
 	var/datum/component/mind_linker/linker = Target
 	name = "[linker.network_name] Speech"
-	desc = "Send a psychic message to everyone connected to your [linker.network_name]."
+	desc = LANG("datum.d19b7b5d", list(linker.network_name))
 	button_icon = linker.speech_action_icon
 	button_icon_state = linker.speech_action_icon_state
 	background_icon_state = linker.speech_action_background_icon_state
@@ -275,12 +276,12 @@
 	var/datum/component/mind_linker/linker = target
 	var/mob/living/linker_parent = linker.parent
 
-	var/message = tgui_input_text(owner, "Enter a message to transmit.", "[linker.network_name] Telepathy", max_length = MAX_MESSAGE_LEN)
+	var/message = tgui_input_text(owner, LANG("datum.3006d3ea", null), LANG("datum.df0464a5", list(linker.network_name)), max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(src) || QDELETED(owner) || owner.stat == DEAD)
 		return
 
 	if(QDELETED(linker))
-		to_chat(owner, span_warning("The link seems to have been severed."))
+		to_chat(owner, span_warning(LANG("datum.446f0cd7", null)))
 		return
 
 	var/formatted_message = "<i><font color=[linker.chat_color]>\[[linker_parent.real_name]'s [linker.network_name]\] <b>[owner]:</b> [message]</font></i>"

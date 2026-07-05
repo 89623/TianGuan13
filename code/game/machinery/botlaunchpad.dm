@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/botpad
 	name = "Bot pad"
 	desc = "A lighter version of the orbital mech pad modified to launch bots. Requires linking to a remote to function."
@@ -32,7 +33,7 @@
 		return NONE
 	var/obj/item/multitool/multitool = tool
 	multitool.set_buffer(src)
-	balloon_alert(user, "saved to multitool buffer")
+	balloon_alert(user, LANG("obj.84afb909", null))
 	return ITEM_INTERACT_SUCCESS
 
 // Checks the turf for a bot and launches it if it's the only mob on the pad.
@@ -49,7 +50,7 @@
 		possible_bot = robot  // We don't change the launched_bot var here because we are not sure if there is another bot on the pad.
 
 	if(!use_energy(active_power_usage, force = FALSE))
-		balloon_alert(user, "not enough energy!")
+		balloon_alert(user, LANG("obj.204cf586", null))
 		return
 	launched_bot = WEAKREF(possible_bot)
 	podspawn(list(
@@ -62,9 +63,9 @@
 /obj/machinery/botpad/proc/recall(mob/living/user)
 	var/atom/our_bot = launched_bot?.resolve()
 	if(isnull(our_bot))
-		user.balloon_alert(user, "no bots sent from the pad!")
+		user.balloon_alert(user, LANG("obj.81676f69", null))
 		return
-	user.balloon_alert(user, "bot sent back to pad")
+	user.balloon_alert(user, LANG("obj.342d35a1", null))
 	var/mob/living/basic/bot/basic_bot = our_bot
 	basic_bot.summon_bot(src)
 

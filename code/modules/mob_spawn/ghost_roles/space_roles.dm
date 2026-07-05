@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //Ancient cryogenic sleepers. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
 /obj/effect/mob_spawn/ghost_role/human/oldstation
@@ -116,7 +117,7 @@
 	if(!(user.ckey in antag_team.players_spawned))
 		return TRUE
 	if(!silent)
-		to_chat(user, span_boldwarning("You have already used up your chance to roll as Battlecruiser."))
+		to_chat(user, span_boldwarning(LANG("obj.3cd11f75", null)))
 	return FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/special(mob/living/spawned_mob, mob/possesser)

@@ -1,14 +1,10 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/basic
 	key = "basic"
 
 /datum/buildmode_mode/basic/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Construct / Upgrade")] -> Left Mouse Button\n\
-		[span_bold("Deconstruct / Delete / Downgrade")] -> Right Mouse Button\n\
-		[span_bold("R-Window")] -> Left Mouse Button + Ctrl\n\
-		[span_bold("Airlock")] -> Left Mouse Button + Alt \n\
-		\n\
-		Use the button in the upper left corner to change the direction of built objects."))
+		LANG("datum.66c5e0c1", list(span_bold("Construct / Upgrade"), span_bold("Deconstruct / Delete / Downgrade"), span_bold("R-Window"), span_bold("Airlock")))))
 	)
 
 /datum/buildmode_mode/basic/handle_click(client/c, params, obj/object)

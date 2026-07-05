@@ -36,7 +36,7 @@
 /datum/embedding/tether_projectile/anti_teleport/proc/on_teleport(mob/living/teleportee, atom/destination, channel)
 	SIGNAL_HANDLER
 
-	to_chat(teleportee, span_holoparasite("You feel yourself teleporting, but are suddenly flung back to where you just were!"))
+	to_chat(teleportee, span_holoparasite(LANG("datum.e8d0980b", null)))
 	penalize(teleportee)
 
 	return TRUE
@@ -45,7 +45,7 @@
 /datum/embedding/tether_projectile/anti_teleport/proc/on_jaunt(mob/living/jaunter)
 	SIGNAL_HANDLER
 
-	to_chat(jaunter, span_holoparasite("As you attempt to jaunt, you slam directly into the barrier between realities and are sent crashing back into corporeality!"))
+	to_chat(jaunter, span_holoparasite(LANG("datum.d9efb15c", null)))
 	penalize(jaunter)
 
 	return COMPONENT_BLOCK_JAUNT

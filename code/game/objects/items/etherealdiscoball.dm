@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/etherealballdeployer
 	name = "portable ethereal disco ball"
 	desc = "Press the button for a deployment of slightly-unethical PARTY!"
@@ -6,7 +7,7 @@
 
 /obj/item/etherealballdeployer/attack_self(mob/living/carbon/user)
 	.=..()
-	to_chat(user, span_notice("You deploy the Ethereal Disco Ball."))
+	to_chat(user, span_notice(LANG("obj.9d2da1d5", null)))
 	new /obj/structure/etherealball(user.loc)
 	qdel(src)
 
@@ -36,14 +37,14 @@
 
 	if(TurnedOn)
 		TurnOff()
-		to_chat(user, span_notice("You turn the disco ball off!"))
+		to_chat(user, span_notice(LANG("obj.13efec90", null)))
 	else
 		TurnOn()
-		to_chat(user, span_notice("You turn the disco ball on!"))
+		to_chat(user, span_notice(LANG("obj.d74bd321", null)))
 
 /obj/structure/etherealball/click_alt(mob/living/carbon/human/user)
 	set_anchored(!anchored)
-	to_chat(user, span_notice("You [anchored ? null : "un"]lock the disco ball."))
+	to_chat(user, span_notice(LANG("obj.6a7c1775", list(anchored ? null : "un"))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/structure/etherealball/proc/TurnOn()

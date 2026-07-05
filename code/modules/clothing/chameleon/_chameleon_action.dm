@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Default duration of an EMP randomisation on a chameleon item
 #define EMP_RANDOMISE_TIME 30 SECONDS
 
@@ -117,7 +118,7 @@
 	chameleon_typecache |= new_items
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
-	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon Settings", sort_list(chameleon_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	var/picked_name = tgui_input_list(user, LANG("datum.908d4ff2", list(chameleon_name)), LANG("datum.e9bc5fb4", null), sort_list(chameleon_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(picked_name) || isnull(chameleon_list[picked_name]) || QDELETED(src) || QDELETED(user) || QDELETED(owner) || !IsAvailable(feedback = TRUE))
 		return
 	var/obj/item/picked_item = chameleon_list[picked_name]

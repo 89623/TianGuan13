@@ -20,10 +20,10 @@
 /obj/structure/reagent_water_basin/examine(mob/user)
 	. = ..()
 	if(!fishable)
-		. += span_notice("[src] can be upgraded through a bluespace crystal or a journeyman smithy!")
+		. += span_notice(LANG("obj.1ddb0241", list(src)))
 
 	else
-		. += span_notice("[src] looks to be a bottomless basin of water... You can even see fish swimming around down there!")
+		. += span_notice(LANG("obj.80806872", list(src)))
 
 /obj/structure/reagent_water_basin/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -31,7 +31,7 @@
 	if(smithing_skill < SKILL_LEVEL_JOURNEYMAN || fishable)
 		return
 
-	balloon_alert(user, "the water deepens!")
+	balloon_alert(user, LANG("obj.2a3714e6", null))
 	fishable = AddComponent(/datum/component/fishing_spot, /datum/fish_source/water_basin)
 
 /obj/structure/reagent_water_basin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -52,14 +52,14 @@
 		if(!bs_crystal.use(1))
 			return
 
-		balloon_alert(user, "the water deepens!")
+		balloon_alert(user, LANG("obj.2a3714e6", null))
 		fishable = AddComponent(/datum/component/fishing_spot, /datum/fish_source/water_basin)
 		return
 
 	return ..()
 
 /obj/structure/reagent_water_basin/wrench_act(mob/living/user, obj/item/tool)
-	user.balloon_alert_to_viewers("disassembling...")
+	user.balloon_alert_to_viewers(LANG("obj.b5ba9871", null))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 100))
 		return
 
@@ -77,12 +77,12 @@
 	playsound(src, 'modular_nova/modules/reagent_forging/sound/hot_hiss.ogg', 50, TRUE)
 
 	if(search_incomplete?.times_hit < search_incomplete.average_hits)
-		to_chat(user, span_warning("You cool down [search_incomplete], but it wasn't ready yet."))
+		to_chat(user, span_warning(LANG("obj.c15b6122", list(search_incomplete))))
 		COOLDOWN_RESET(search_incomplete, heating_remainder)
 		return ITEM_INTERACT_SUCCESS
 
 	if(search_incomplete?.times_hit >= search_incomplete.average_hits)
-		to_chat(user, span_notice("You cool down [search_incomplete] and it's ready."))
+		to_chat(user, span_notice(LANG("obj.28a458bf", list(search_incomplete))))
 		user.mind.adjust_experience(/datum/skill/smithing, 10) //using the water basin on a ready item gives decent experience.
 
 		var/obj/spawned_obj = new search_incomplete.spawn_item(get_turf(src))

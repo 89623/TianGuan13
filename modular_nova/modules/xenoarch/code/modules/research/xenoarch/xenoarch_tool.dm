@@ -18,17 +18,17 @@
 /obj/item/xenoarch/hammer/examine(mob/user)
 	. = ..()
 	if(advanced)
-		. += span_notice("This is an advanced hammer. It can change its digging depth from 1 to 30. Click to change depth.")
+		. += span_notice(LANG("obj.87ab7ab3", null))
 
-	. += span_notice("Current Digging Depth: [dig_amount]cm")
+	. += span_notice(LANG("obj.b4c9ca45", list(dig_amount)))
 
 /obj/item/xenoarch/hammer/attack_self(mob/user, modifiers)
 	. = ..()
 	if(!advanced)
-		to_chat(user, span_warning("This is not an advanced hammer, it cannot change its digging depth."))
+		to_chat(user, span_warning(LANG("obj.dba114b6", null)))
 		return
 
-	var/user_choice = input(user, "Choose the digging depth. 1 to 30", "Digging Depth Selection") as null|num
+	var/user_choice = input(user, LANG("obj.b490defd", null), LANG("obj.187c7b42", null)) as null|num
 	if(!user_choice)
 		dig_amount = 1
 		dig_speed = 1
@@ -47,7 +47,7 @@
 
 	dig_amount = round_dig
 	dig_speed = round_dig * 0.5
-	to_chat(user, span_notice("You change the hammer's digging depth to [round_dig]cm."))
+	to_chat(user, span_notice(LANG("obj.16295f5e", list(round_dig))))
 
 /obj/item/xenoarch/hammer/cm2
 	name = "hammer (2cm)"
@@ -175,9 +175,9 @@
 
 /obj/item/xenoarch/handheld_radar/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click the [src] to start the scan.")
-	. += span_notice("Use the [src] on the ground to dig the rocks.")
-	. += span_notice("Use the [src] on your hand or right click to pinpoint the digsite.")
+	. += span_notice(LANG("obj.3dadc2c5", list(src)))
+	. += span_notice(LANG("obj.5004f077", list(src)))
+	. += span_notice(LANG("obj.5b0a7dab", list(src)))
 
 /obj/item/xenoarch/handheld_radar/pre_attack(atom/target, mob/user)
 	if(isturf(target))
@@ -245,37 +245,37 @@
 	COOLDOWN_START(src, tool_scan, 2 SECONDS)
 
 	if(!(is_mining_level(user.z)))
-		user.balloon_alert(user, "error!")
-		to_chat(user, span_warning("You aren't in a sector where the radar can be used! try moving to a mining sector."))
+		user.balloon_alert(user, LANG("obj.bf18be82", null))
+		to_chat(user, span_warning(LANG("obj.58c396db", null)))
 		return FALSE
 
 	var/user_area = get_area(user)
 	if (!is_type_in_typecache(user_area, allowed_areas) || is_type_in_typecache(user_area, disallowed_areas))
-		user.balloon_alert(user, "error!")
-		to_chat(user, span_warning("You aren't standing in a natural area, try moving to one before trying again."))
+		user.balloon_alert(user, LANG("obj.bf18be82", null))
+		to_chat(user, span_warning(LANG("obj.4cec1c8b", null)))
 		return FALSE
 
 	var/datum/scavenge_profile/profile = get_profile(user)
 
-	user.visible_message(span_notice("[user] triggers a pulse from their handheld radar, scanning the surrounding area."), \
-	span_notice("You trigger a pulse from the handheld radar, scanning for potential dig sites."))
-	user.balloon_alert(user, "scanning signal..!")
+	user.visible_message(span_notice(LANG("obj.a2b7c8bc", list(user))), \
+	span_notice(LANG("obj.3e2f8e9a", null)))
+	user.balloon_alert(user, LANG("obj.295da20a", null))
 	if(!do_after(user, scanner_speed))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
-	user.balloon_alert(user, "triangulating signal..!")
+	user.balloon_alert(user, LANG("obj.b1893328", null))
 	if(!do_after(user, scanner_speed))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
-	user.balloon_alert(user, "locking signal..!")
+	user.balloon_alert(user, LANG("obj.e180bcdd", null))
 	if(!do_after(user, scanner_speed))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
 	var/candidate_turf = pick_valid_turf_in_range(user)
 
 	if(!candidate_turf)
-		user.balloon_alert(user, "not found!")
-		to_chat(user, span_warning("The radar couldn't find a suitable digging site."))
+		user.balloon_alert(user, LANG("obj.dfecbd69", null))
+		to_chat(user, span_warning(LANG("obj.fb3e8f74", null)))
 		return FALSE
 
 	profile.site = candidate_turf
@@ -283,8 +283,8 @@
 	var/chance = user.mind?.get_skill_modifier(/datum/skill/archeology, SKILL_PROBS_MODIFIER) || 0
 	if(prob(clamp(chance - 40, 0, 100)))
 		profile.site_radius++
-		to_chat(user, span_notice("Your knowledge of archeology helps you interpret the radar signals more accurately, giving you a bit of extra leeway."))
-	user.balloon_alert(user, "site located!")
+		to_chat(user, span_notice(LANG("obj.26a88fa9", null)))
+	user.balloon_alert(user, LANG("obj.bef97ab6", null))
 	playsound(src, 'sound/machines/compiler/compiler-stage1.ogg', 75)
 	return TRUE
 
@@ -298,11 +298,11 @@
 	if(!profile.site)
 		return FALSE
 
-	user.visible_message(span_notice("[user] methodically scans the ground and digs through the sediment of [dig_turf]."), \
-	span_notice("You carefully scan and dig through the sediment of [dig_turf], searching for anything unusual."))
+	user.visible_message(span_notice(LANG("obj.a6135a4a", list(user, dig_turf))), \
+	span_notice(LANG("obj.ca1dccc5", list(dig_turf))))
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/archeology, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, digging_speed * skill_modifier, target = dig_turf))
-		user.balloon_alert(user, "interrupted!")
+		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
 
 	var/turf/site_turf = profile.site
@@ -313,23 +313,23 @@
 	var/dif_z = dig_turf.z - site_turf.z
 
 	if(dif_x > radius || dif_y > radius || dif_z != 0)
-		user.visible_message(span_notice("[user] scans and digs through [dig_turf], but doesn't seem to find anything of interest."), \
-		span_notice("You carefully dig through [dig_turf], but the scanner doesn't indicate anything useful here."))
+		user.visible_message(span_notice(LANG("obj.4805bbfb", list(user, dig_turf))), \
+		span_notice(LANG("obj.23574d45", list(dig_turf))))
 		return FALSE
 
 	profile.site = null
 
 	var/rocks_amount = 1
-	to_chat(user, span_notice("You sift through the sediment and recover some rock fragments."))
+	to_chat(user, span_notice(LANG("obj.b18a7cc3", null)))
 	if(prob(user.mind?.get_skill_modifier(/datum/skill/archeology, SKILL_PROBS_MODIFIER)))
 		rocks_amount++
-		to_chat(user, span_notice("With practiced skill, you spot and extract an extra rock!"))
+		to_chat(user, span_notice(LANG("obj.6c0655c9", null)))
 	if(prob(50))
 		rocks_amount++
-		to_chat(user, span_notice("You get lucky and uncover an extra rock while digging!"))
+		to_chat(user, span_notice(LANG("obj.0c848c48", null)))
 	if (SSmapping.level_trait(dig_turf.z, ZTRAIT_LAVA_RUINS)) // review when Lavaland 2.0 comes out. - logic here is that lavaland is more dangerous than snow, thus, extra rock.
 		rocks_amount++
-		to_chat(user, span_notice("The necropolis is rich with buried remnants. You uncover an extra rock while digging."))
+		to_chat(user, span_notice(LANG("obj.e92ddf53", null)))
 	for(var/i in 1 to rocks_amount)
 		new /obj/item/xenoarch/strange_rock(dig_turf)
 	user.mind?.adjust_experience(/datum/skill/archeology, rocks_amount*25)
@@ -343,14 +343,14 @@
 	COOLDOWN_START(src, tool_scan, 2 SECONDS)
 	var/datum/scavenge_profile/profile = get_profile(user)
 	if(!profile.site)
-		user.balloon_alert(user, "error!")
-		to_chat(user, span_warning("You don't have a site locked in! You need to do a long range scan first."))
+		user.balloon_alert(user, LANG("obj.bf18be82", null))
+		to_chat(user, span_warning(LANG("obj.a63d607f", null)))
 		return
 
 	var/turf/candidate_turf = profile.site
 	if(profile.site.z != user.z)
-		user.balloon_alert(user, "error!")
-		to_chat(user, span_warning("You are not in the same sector as the scanned site."))
+		user.balloon_alert(user, LANG("obj.bf18be82", null))
+		to_chat(user, span_warning(LANG("obj.cd9674d7", null)))
 		return
 
 	// We get the distance and direction from the user/tool to the turf we are heading towards.
@@ -361,7 +361,7 @@
 	// We pick the color (or break early) based on the distance we got.
 	switch(dist)
 		if (0 to 4)
-			user.balloon_alert(user, "site close!")
+			user.balloon_alert(user, LANG("obj.79e02d14", null))
 			return
 		if(5 to 10)
 			user.balloon_alert(user, "! ! ! !")
@@ -407,7 +407,7 @@
 	if(istype(interacting_with, /obj/item/xenoarch/broken_item))
 		var/obj/item/xenoarch/broken_item/brushed_item = interacting_with
 		if (!brushed_item.loot)
-			to_chat(user, span_notice("The item has no loot, if this item wasn't produced by an admin, speak to a coder."))
+			to_chat(user, span_notice(LANG("obj.2cd78820", null)))
 			return NONE
 		var/turf/src_turf = get_turf(brushed_item)
 		var/recovered_loot = brushed_item.loot
@@ -528,8 +528,8 @@
 					continue
 	if(show_message)
 		playsound(user, storage_type.rustle_sound, 50, TRUE)
-		user.visible_message(span_notice("[user] scoops up the rocks beneath [user.p_them()]."), \
-			span_notice("You scoop up the rocks beneath you with your [name]."))
+		user.visible_message(span_notice(LANG("obj.c22a23fc", list(user, user.p_them()))), \
+			span_notice(LANG("obj.8e0efbb8", list(name))))
 	spam_protection = FALSE
 
 /obj/item/storage/bag/xenoarch/adv

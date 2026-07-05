@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Supply modules for MODsuits
 
 ///Internal GPS - Extends a GPS you can use.
@@ -66,13 +67,13 @@
 			return
 		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, load_time, target = target))
-			balloon_alert(mod.wearer, "interrupted!")
+			balloon_alert(mod.wearer, LANG("obj.c67b5d27", null))
 			return
 		if(!check_crate_pickup(picked_crate))
 			return
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
-		balloon_alert(mod.wearer, "picked up crate")
+		balloon_alert(mod.wearer, LANG("obj.abe86afa", null))
 		drain_power(use_energy_cost)
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
@@ -80,16 +81,16 @@
 			return
 		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, load_time, target = target))
-			balloon_alert(mod.wearer, "interrupted!")
+			balloon_alert(mod.wearer, LANG("obj.c67b5d27", null))
 			return
 		if(target_turf.is_blocked_turf())
 			return
 		var/atom/movable/dropped_crate = pop(stored_crates)
 		dropped_crate.forceMove(target_turf)
-		balloon_alert(mod.wearer, "dropped [dropped_crate]")
+		balloon_alert(mod.wearer, LANG("obj.8dcc0c81", list(dropped_crate)))
 		drain_power(use_energy_cost)
 	else
-		balloon_alert(mod.wearer, "invalid target!")
+		balloon_alert(mod.wearer, LANG("obj.5c77b90d", null))
 
 /obj/item/mod/module/clamp/on_part_deactivation(deleting = FALSE)
 	if(deleting)
@@ -100,7 +101,7 @@
 
 /obj/item/mod/module/clamp/proc/check_crate_pickup(atom/movable/target)
 	if(length(stored_crates) >= max_crates)
-		balloon_alert(mod.wearer, "too many crates!")
+		balloon_alert(mod.wearer, LANG("obj.5c6e040e", null))
 		return FALSE
 	for(var/mob/living/mob in target.get_all_contents())
 		if(mob.mob_size <= max_mob_size)
@@ -202,7 +203,7 @@
 
 	COOLDOWN_START(src, gibtonite_warning_cd, 3 SECONDS)
 	playsound(bumper, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-	to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected!"))
+	to_chat(bumper, span_warning(LANG("obj.8bd2a3ba", list(icon2html(src, bumper)))))
 
 /obj/item/mod/module/drill/proc/mine_rock(turf/closed/mineral/rock, mob/living/carbon/human/bumper)
 	// Even faster if it has ore!
@@ -336,12 +337,12 @@
 	render_matrix.Scale(1.25, 1.25)
 	animate(game_renderer, launch_time, transform = render_matrix)
 	var/current_time = world.time
-	mod.wearer.visible_message(span_warning("[mod.wearer] starts whirring!"), \
+	mod.wearer.visible_message(span_warning(LANG("obj.21b8d8e3", list(mod.wearer))), \
 		blind_message = span_hear("You hear a whirring sound."))
 	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
 	lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", layer = LOW_MOB_LAYER)
 	mod.wearer.add_overlay(lightning)
-	balloon_alert(mod.wearer, "you start charging...")
+	balloon_alert(mod.wearer, LANG("obj.9dc8c02a", null))
 	var/power = launch_time
 	if(!do_after(mod.wearer, launch_time, target = mod))
 		power = world.time - current_time
@@ -423,11 +424,11 @@
 		locker.throw_at(target, range = 7, speed = 4, thrower = mod.wearer)
 		return
 	if(!istype(target, /obj/structure/closet) || !(target in view(mod.wearer)))
-		balloon_alert(mod.wearer, "invalid target!")
+		balloon_alert(mod.wearer, LANG("obj.5c77b90d", null))
 		return
 	var/obj/structure/closet/locker = target
 	if(locker.anchored || locker.move_resist >= MOVE_FORCE_OVERPOWERING)
-		balloon_alert(mod.wearer, "target anchored!")
+		balloon_alert(mod.wearer, LANG("obj.be2630e2", null))
 		return
 	new /obj/effect/temp_visual/mook_dust(get_turf(locker))
 	playsound(locker, 'sound/effects/gravhit.ogg', 75, TRUE)
@@ -547,7 +548,7 @@
 		if(traveled_tiles < max_traveled_tiles)
 			return
 
-		balloon_alert(mod.wearer, "fully ash covered")
+		balloon_alert(mod.wearer, LANG("obj.8c128c76", null))
 		var/cur_color = mod.wearer.color
 		mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) // Make them super light
 		animate(mod.wearer, 1 SECONDS, color = cur_color, flags = ANIMATION_PARALLEL)
@@ -572,7 +573,7 @@
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
 
 	if(traveled_tiles <= 0)
-		balloon_alert(mod.wearer, "ran out of ash!")
+		balloon_alert(mod.wearer, LANG("obj.39d504b4", null))
 
 /obj/item/mod/module/sphere_transform
 	name = "MOD sphere transform module"
@@ -622,18 +623,18 @@
 		return NONE
 
 	if (hide_upgrade)
-		to_chat(user, span_warning("[mod] is already reinforced with bileworm skin!"))
+		to_chat(user, span_warning(LANG("obj.9334cb79", list(mod))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/stack/sheet/animalhide/bileworm/hide = item
 	if (!hide.use(hide_amount))
-		to_chat(user, span_warning("You need more hide to fully reinforce [mod]!"))
+		to_chat(user, span_warning(LANG("obj.62481a9c", list(mod))))
 		return ITEM_INTERACT_BLOCKING
 
 	hide_upgrade = TRUE
 	overlay_state_inactive = "module_bileworm_bracing"
 	user_traits += TRAIT_LAVA_IMMUNE
-	mod.balloon_alert(user, "plating reinforced!")
+	mod.balloon_alert(user, LANG("obj.d8e7ebf6", null))
 	if (active)
 		ADD_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, REF(src))
 	update_clothing_slots()
@@ -641,7 +642,7 @@
 
 /obj/item/mod/module/sphere_transform/activate(mob/activator)
 	if(!mod.wearer.has_gravity())
-		balloon_alert(activator, "no gravity!")
+		balloon_alert(activator, LANG("obj.3d6f9ea5", null))
 		return FALSE
 	return ..()
 
@@ -693,7 +694,7 @@
 
 /obj/item/mod/module/sphere_transform/used(mob/activator)
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
-		balloon_alert(activator, "too much pressure!")
+		balloon_alert(activator, LANG("obj.37dd9e37", null))
 		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
 		return FALSE
 	return ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/ai_slipper
 	name = "foam dispenser"
 	desc = "A remotely-activatable dispenser for crowd-controlling foam."
@@ -24,7 +25,7 @@
 
 /obj/machinery/ai_slipper/examine(mob/user)
 	. = ..()
-	. += span_notice("It has <b>[uses]</b> uses of foam remaining.")
+	. += span_notice(LANG("obj.b4a1789b", list(uses)))
 
 /obj/machinery/ai_slipper/update_icon_state()
 	if(machine_stat & BROKEN)
@@ -37,18 +38,18 @@
 
 /obj/machinery/ai_slipper/interact(mob/user)
 	if(!allowed(user))
-		to_chat(user, span_danger("Access denied."))
+		to_chat(user, span_danger(LANG("obj.077f9b52", null)))
 		return
 	if(!uses)
-		to_chat(user, span_warning("[src] is out of foam and cannot be activated!"))
+		to_chat(user, span_warning(LANG("obj.d6cf99bf", list(src))))
 		return
 	if(!COOLDOWN_FINISHED(src, foam_cooldown))
-		to_chat(user, span_warning("[src] cannot be activated for <b>[DisplayTimeText(COOLDOWN_TIMELEFT(src, foam_cooldown))]</b>!"))
+		to_chat(user, span_warning(LANG("obj.d182e117", list(src, DisplayTimeText(COOLDOWN_TIMELEFT(src, foam_cooldown))))))
 		return
 	var/datum/effect_system/fluid_spread/foam/foam = new(loc, 4, holder = src)
 	foam.start()
 	uses--
-	to_chat(user, span_notice("You activate [src]. It now has <b>[uses]</b> uses of foam remaining."))
+	to_chat(user, span_notice(LANG("obj.ba741647", list(src, uses))))
 	COOLDOWN_START(src, foam_cooldown,cooldown_time)
 	power_change()
 	addtimer(CALLBACK(src, PROC_REF(power_change)), cooldown_time)

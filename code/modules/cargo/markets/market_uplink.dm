@@ -77,10 +77,10 @@
 				var/datum/market_item/item = market_category[id]
 				data["items"] += list(list(
 					"id" = id,
-					"name" = item.name,
+					"name" = lang_reverse_text(item.name), // NOVA EDIT - I18N - full reverse (covers single-word names P1's multi-word threshold skips, e.g. Binoculars); act uses "id" so name is display-only. locale==en / miss = no-op
 					"cost" = item.price,
 					"amount" = item.stock,
-					"desc" = item.desc || item.name,
+					"desc" = lang_reverse_text(item.desc || item.name), // NOVA EDIT - I18N - full reverse the flavor desc
 					"html_icon" = item.html_icon,
 				))
 	return data

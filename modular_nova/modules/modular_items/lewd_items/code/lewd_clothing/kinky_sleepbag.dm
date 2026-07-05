@@ -52,7 +52,7 @@
 /obj/item/clothing/suit/straight_jacket/kinky_sleepbag/click_alt(mob/user)
 	var/mob/living/carbon/human/clicking_human = user
 	if(istype(clicking_human.wear_suit, /obj/item/clothing/suit/straight_jacket/kinky_sleepbag))
-		to_chat(user, span_warning("Your hands are stuck, you can't do this!"))
+		to_chat(user, span_warning(LANG("obj.f3025ad2", null)))
 		return CLICK_ACTION_BLOCKING
 	switch(color_changed)
 		if(FALSE)
@@ -68,12 +68,12 @@
 		if(TRUE)
 			if(bag_state == "deflated")
 				fold(user)
-				to_chat(user, span_notice("The sleeping bag now is [bag_fold? "folded." : "unfolded."]"))
+				to_chat(user, span_notice(LANG("obj.6eecdfc7", list(bag_fold? "folded." : "unfolded."))))
 				update_icon()
 				update_icon_state()
 				return CLICK_ACTION_SUCCESS
 			else
-				to_chat(user, span_notice("You can't fold the bag while it's inflated!"))
+				to_chat(user, span_notice(LANG("obj.d39ad658", null)))
 				return CLICK_ACTION_BLOCKING
 
 /obj/item/clothing/suit/straight_jacket/kinky_sleepbag/proc/check_menu(mob/living/user)
@@ -113,11 +113,11 @@
 		time_to_sound_left = time_to_sound
 
 		if(bag_state == "inflated")
-			to_chat(affected_human, span_purple("You realize that you can't move even an inch. The inflated sleeping bag squeezes you from all sides!"))
+			to_chat(affected_human, span_purple(LANG("obj.df9b2aeb", null)))
 			affected_human.cut_overlay(affected_human.overlays_standing[HEAD_LAYER])
 			affected_human.cut_overlay(affected_human.overlays_standing[HAIR_LAYER])
 		if(bag_state == "deflated")
-			to_chat(affected_human, span_purple("You realize that moving now is much harder. You're fully restrained, any struggling is useless!"))
+			to_chat(affected_human, span_purple(LANG("obj.9762d8dd", null)))
 	. = ..()
 
 //to inflate/deflate that thing
@@ -125,11 +125,11 @@
 	var/mob/living/carbon/human/affected_human = user
 	if(bag_fold == FALSE)
 		toggle_mode()
-		to_chat(affected_human, span_notice("The sleeping bag now is [bag_state? "inflated." : "deflated."]"))
+		to_chat(affected_human, span_notice(LANG("obj.6eecdfc7", list(bag_state? "inflated." : "deflated."))))
 		update_icon()
 		update_icon_state()
 	else
-		to_chat(affected_human, span_notice("You need to unfold the bag before inflating it!"))
+		to_chat(affected_human, span_notice(LANG("obj.2c191d13", null)))
 
 /obj/item/clothing/suit/straight_jacket/kinky_sleepbag/proc/fold(mob/user)
 	bag_fold = !bag_fold
@@ -162,7 +162,7 @@
 	if(ishuman(user))
 		if(src == affected_human.wear_suit)
 			REMOVE_TRAIT(user, TRAIT_FLOORED, CLOTHING_TRAIT)
-			to_chat(user, span_purple("You are finally free! The bag is no longer constricting your movements."))
+			to_chat(user, span_purple(LANG("obj.3af9afd8", null)))
 
 			affected_human.add_overlay(affected_human.overlays_standing[SHOES_LAYER])
 			affected_human.update_worn_shoes()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/lock_tear
 	name = "???"
 	desc = "It stares back. There's no reason to remain. Run."
@@ -48,7 +49,7 @@
 	SIGNAL_HANDLER
 	var/turf/our_turf = get_turf(src)
 	playsound(our_turf, 'sound/effects/magic/castsummon.ogg', vol = 100, vary = TRUE)
-	visible_message(span_boldwarning("The rip in space spasms and disappears!"))
+	visible_message(span_boldwarning(LANG("obj.01e67b05", null)))
 	UnregisterSignal(former_master, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING)) // Just in case they die THEN delete
 	new /obj/effect/temp_visual/destabilising_tear(our_turf)
 	qdel(src)
@@ -63,12 +64,12 @@
 	. = ..()
 	if (!isobserver(user) || gathering_candidates)
 		return
-	. += span_notice("You can use this to enter the world as a foul monster.")
+	. += span_notice(LANG("obj.56a1d6d5", null))
 
 /// Turn a ghost into an 'orrible beast
 /obj/structure/lock_tear/proc/ghost_to_monster(mob/dead/observer/user, should_ask = TRUE)
 	if(should_ask)
-		var/ask = tgui_alert(user, "Become a monster?", "Ascended Rift", list("Yes", "No"))
+		var/ask = tgui_alert(user, LANG("obj.aeb57de1", null), LANG("obj.b0439e09", null), list("Yes", "No"))
 		if(ask != "Yes" || QDELETED(src) || QDELETED(user))
 			return FALSE
 	var/monster_type = pick(monster_types)

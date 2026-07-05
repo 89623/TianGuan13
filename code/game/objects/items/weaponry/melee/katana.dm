@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."
@@ -40,7 +41,7 @@
 	acid = 50
 
 /obj/item/katana/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!"))
+	user.visible_message(span_suicide(LANG("obj.437cc7c7", list(user, user.p_their(), src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/katana/cursed //used by wizard events, see the tendril_loot.dm file for the miner one

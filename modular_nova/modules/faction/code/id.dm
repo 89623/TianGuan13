@@ -25,7 +25,7 @@
 	if(extra_access)
 		for(var/acs in extra_access)
 			id.access |= acs
-	to_chat(user, span_notice("You upgrade [id] with extra access."))
+	to_chat(user, span_notice(LANG("obj.ab394a13", list(id))))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 

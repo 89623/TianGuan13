@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/arcade
 	filename = "dsarcade"
 	filedesc = "Donksoft Micro Arcade"
@@ -163,17 +164,17 @@
 			return TRUE
 		if("Dispense_Tickets")
 			if(computer.stored_paper <= 0)
-				to_chat(gamer, span_notice("Printer is out of paper."))
+				to_chat(gamer, span_notice(LANG("datum.8f26e725", null)))
 				return
 			else
-				computer.visible_message(span_notice("\The [computer] prints out paper."))
+				computer.visible_message(span_notice(LANG("datum.a6e88e99", list(computer))))
 				if(ticket_count >= 1)
 					new /obj/item/stack/arcadeticket((get_turf(computer)))
-					to_chat(gamer, span_notice("[computer] dispenses a ticket!"))
+					to_chat(gamer, span_notice(LANG("datum.a21fb8ef", list(computer))))
 					ticket_count -= 1
 					computer.stored_paper -= 1
 				else
-					to_chat(gamer, span_notice("You don't have any stored tickets!"))
+					to_chat(gamer, span_notice(LANG("datum.445c950a", null)))
 				return TRUE
 		if("Start_Game")
 			game_active = TRUE

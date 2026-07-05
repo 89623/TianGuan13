@@ -10,10 +10,7 @@
 /obj/structure/sign/poster/official/trappiste_suppressor/examine_more(mob/user)
 	. = ..()
 
-	. += "<i>It was hard to notice before, but now that you really look at it... \
-		This thing is completely covered in micro scale text telling you in just about \
-		every human language and then some that Trappiste isn't liable for ear damage \
-		caused by their weapons, suppressed or not.</i>"
+	. += LANG("obj.d0576451", null)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/trappiste_suppressor, 32)
 
@@ -29,9 +26,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/trappiste_suppre
 /obj/structure/sign/poster/official/trappiste_ammunition/examine_more(mob/user)
 	. = ..()
 
-	. += "<i>Small text details that this information may also be transferrable \
-		to other types of SolFed ammunition, but that you should check the box \
-		the bullets come in just to be sure. Trappiste is, of course, \
-		not liable for excess harm caused by misreading color identification systems.</i>"
+	. += LANG("obj.fb70897e", null)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/trappiste_ammunition, 32)

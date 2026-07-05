@@ -71,7 +71,7 @@
 		return
 	else if(. && !QDELETED(src))
 		visible_message(
-			span_notice("[src] sparks and explodes! You hear a faint, buzzy scream..."),
+			span_notice(LANG("obj.b09f8b0f", list(src))),
 			blind_message = span_hear("You hear a loud pop, followed by a faint, buzzy scream."),
 		)
 		playsound(src.loc, 'modular_nova/modules/mapping/sounds/MachineDeath.ogg', 75, TRUE)	//Credit to @yungfunnyman#3798 on the SR Discord

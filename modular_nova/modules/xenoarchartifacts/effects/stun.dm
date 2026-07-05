@@ -10,7 +10,7 @@
 	if(!.)
 		return
 	if(apply_stun(user, 200, 2)) // Instant stun
-		to_chat(user, span_warning("A powerful force overwhelms your consciousness."))
+		to_chat(user, span_warning(LANG("datum.cf928195", null)))
 
 /datum/artifact_effect/stun/do_effect_aura(seconds_per_tick)
 	. = ..()

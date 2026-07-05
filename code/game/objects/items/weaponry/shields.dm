@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define WEAPON_BASH_COOLDOWN (3 SECONDS)
 
 /obj/item/shield
@@ -65,11 +66,11 @@
 	var/healthpercent = round((atom_integrity/max_integrity) * 100, 1)
 	switch(healthpercent)
 		if(50 to 99)
-			. += span_info("It looks slightly damaged.")
+			. += span_info(LANG("obj.bc3c8a23", null))
 		if(25 to 50)
-			. += span_info("It appears heavily damaged.")
+			. += span_info(LANG("obj.27d47c4b", null))
 		if(0 to 25)
-			. += span_warning("It's falling apart!")
+			. += span_warning(LANG("obj.ad6c0cee", null))
 
 /obj/item/shield/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
@@ -80,7 +81,7 @@
 	if(!COOLDOWN_FINISHED(src, weapon_bash))
 		return ITEM_INTERACT_BLOCKING
 	playsound(src, shield_bash_sound, 50, TRUE)
-	user.manual_emote("bashes [src] with [tool]!")
+	user.manual_emote(LANG("obj.9dfb0b18", list(src, tool)))
 	COOLDOWN_START(src, weapon_bash, WEAPON_BASH_COOLDOWN)
 	user.Shake(3, 3, 0.5 SECONDS)
 	return ITEM_INTERACT_SUCCESS
@@ -109,7 +110,7 @@
 	playsound(src, shield_break_sound, 50)
 	new shield_break_leftover(get_turf(src))
 	if(isliving(loc))
-		loc.balloon_alert(loc, "shield broken!")
+		loc.balloon_alert(loc, LANG("obj.3da6fb1b", null))
 	return ..()
 
 /obj/item/shield/buckler
@@ -189,12 +190,12 @@
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
 		if (atom_integrity >= max_integrity)
-			to_chat(user, span_warning("[src] is already in perfect condition."))
+			to_chat(user, span_warning(LANG("obj.d7117bd3", list(src))))
 			return
 		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
 		titanium_sheet.use(1)
 		atom_integrity = max_integrity
-		to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
+		to_chat(user, span_notice(LANG("obj.168974ac", list(src, titanium_sheet))))
 		return
 	return ..()
 
@@ -266,10 +267,10 @@
 	if(istype(attackby_item, /obj/item/assembly/flash/handheld))
 		var/obj/item/assembly/flash/handheld/flash = attackby_item
 		if(flash.burnt_out)
-			to_chat(user, span_warning("No sense replacing it with a broken bulb!"))
+			to_chat(user, span_warning(LANG("obj.441ca988", null)))
 			return
 		else
-			to_chat(user, span_notice("You begin to replace the bulb..."))
+			to_chat(user, span_notice(LANG("obj.0d6c3f52", null)))
 			if(do_after(user, 2 SECONDS, target = user))
 				if(QDELETED(flash) || flash.burnt_out)
 					return
@@ -299,7 +300,7 @@
 /obj/item/shield/riot/flash/examine(mob/user)
 	. = ..()
 	if (embedded_flash?.burnt_out)
-		. += span_info("The mounted bulb has burnt out. You can try replacing it with a new <b>flash</b>.")
+		. += span_info(LANG("obj.ad41d255", null))
 
 /obj/item/shield/energy
 	name = "combat energy shield"
@@ -376,7 +377,7 @@
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		if(send_message)
-			balloon_alert(user, "activate it first!")
+			balloon_alert(user, LANG("obj.e6dca2bb", null))
 		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
 
 /obj/item/shield/energy/advanced
@@ -440,7 +441,7 @@
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		if(send_message)
-			balloon_alert(user, "extend it first!")
+			balloon_alert(user, LANG("obj.49db6390", null))
 		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
 
 /datum/armor/item_shield/ballistic
@@ -462,12 +463,12 @@
 /obj/item/shield/ballistic/attackby(obj/item/attackby_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
 		if (atom_integrity >= max_integrity)
-			to_chat(user, span_warning("[src] is already in perfect condition."))
+			to_chat(user, span_warning(LANG("obj.d7117bd3", list(src))))
 			return
 		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
 		titanium_sheet.use(1)
 		atom_integrity = max_integrity
-		to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
+		to_chat(user, span_notice(LANG("obj.168974ac", list(src, titanium_sheet))))
 		return
 	return ..()
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///The maximum number of settings on a burner knob
 #define MAX_BURNER_KNOB_SETTINGS 10
 
@@ -102,36 +103,36 @@
 	. = ..()
 
 	if(reagents.total_volume)
-		. += span_notice("The distilation flask reads <b>[reagents.total_volume]/[reagents.maximum_volume]u</b>.")
+		. += span_notice(LANG("obj.d81f57f4", list(reagents.total_volume, reagents.maximum_volume)))
 	if(!QDELETED(distilled_container))
-		. += span_notice("The distilation beaker reads <b>[distilled_container.reagents.total_volume]/[distilled_container.reagents.maximum_volume]u</b>.")
-		. += span_notice("Remove beaker with [EXAMINE_HINT("LMB")].")
+		. += span_notice(LANG("obj.f5e64af6", list(distilled_container.reagents.total_volume, distilled_container.reagents.maximum_volume)))
+		. += span_notice(LANG("obj.484022b9", list(EXAMINE_HINT("LMB"))))
 	else
-		. += span_warning("Its missing a distilation container, insert with [EXAMINE_HINT("LMB")]")
+		. += span_warning(LANG("obj.657f461c", list(EXAMINE_HINT("LMB"))))
 	if(!QDELETED(fuel_container))
-		. += span_notice("The burner fuel container reads <b>[fuel_container.reagents.total_volume]/[fuel_container.reagents.maximum_volume]u</b>.")
-		. += span_notice("Remove fuel with [EXAMINE_HINT("RMB")].")
+		. += span_notice(LANG("obj.897ba950", list(fuel_container.reagents.total_volume, fuel_container.reagents.maximum_volume)))
+		. += span_notice(LANG("obj.240bf5f8", list(EXAMINE_HINT("RMB"))))
 	else
-		. += span_warning("Its missing a beaker containing fuel for the burner, insert with [EXAMINE_HINT("RMB")]")
+		. += span_warning(LANG("obj.f433c52d", list(EXAMINE_HINT("RMB"))))
 	if(burner_on)
-		. += span_notice("Off burner with [EXAMINE_HINT("ALT LMB")].")
+		. += span_notice(LANG("obj.3495d341", list(EXAMINE_HINT("ALT LMB"))))
 	else
-		. += span_notice("You can start a flame with a combustible device.")
+		. += span_notice(LANG("obj.a82d9118", null))
 
 	if(condenser_installed)
-		. += span_notice("The in-built condenser can facilitate faster cooling but consumes fuel.")
+		. += span_notice(LANG("obj.40b95e5f", null))
 	else
-		. += span_notice("You could install a [EXAMINE_HINT("condenser")] for faster cooling.")
+		. += span_notice(LANG("obj.f8654b5e", list(EXAMINE_HINT("condenser"))))
 
-	. += span_notice("You can [EXAMINE_HINT("examine more")] to see reagent boiling points & fuel properties.")
-	. += span_notice("The whole aparatus can be [EXAMINE_HINT("pried")] apart.")
+	. += span_notice(LANG("obj.417312ee", list(EXAMINE_HINT("examine more"))))
+	. += span_notice(LANG("obj.322a7e32", list(EXAMINE_HINT("pried"))))
 
 /obj/structure/chem_separator/examine_more(mob/user)
 	. = ..()
 
-	. += span_notice("For burner fuel Plasma > Oil > Welding Fuel = Oxygen > Ethanol > Monkey Energy")
+	. += span_notice(LANG("obj.2476d457", null))
 
-	. += span_notice("Upon cross examining the flasks reagents contents with its chart you see the boiling points of each reagent present.")
+	. += span_notice(LANG("obj.c0ca331e", null))
 	for(var/datum/reagent/reg as anything in reagents.reagent_list)
 		. += span_notice("[reg.name] [get_boiling_point(reg)]K")
 
@@ -269,24 +270,24 @@
 
 		//add new container
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck in your hand."))
+			to_chat(user, span_warning(LANG("obj.5dda4c2f", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		distilled_container = tool
 
 		START_PROCESSING(SSobj, src)
-		balloon_alert(user, "distillation container added.")
+		balloon_alert(user, LANG("obj.58592943", null))
 
 		ui_interact(user)
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 	else if(istype(tool, /obj/item/assembly/igniter/condenser))
 		if(!user.temporarilyRemoveItemFromInventory(tool))
-			to_chat(user, span_warning("[tool] is stuck in your hand."))
+			to_chat(user, span_warning(LANG("obj.5dda4c2f", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		condenser_installed = TRUE
 		update_static_data_for_all_viewers()
 		qdel(tool)
-		balloon_alert(user, "condenser installed.")
+		balloon_alert(user, LANG("obj.7bcd6205", null))
 		return ITEM_INTERACT_SUCCESS
 
 	///Try & ignite the bunset burner with this item
@@ -308,7 +309,7 @@
 			return TRUE
 
 		if(user.put_in_hands(distilled_container))
-			to_chat(user, span_notice("you take out the output flask."))
+			to_chat(user, span_notice(LANG("obj.77798b17", null)))
 			update_appearance(UPDATE_OVERLAYS)
 		return TRUE
 
@@ -326,10 +327,10 @@
 
 		//add new container
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck in your hand."))
+			to_chat(user, span_warning(LANG("obj.5dda4c2f", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		fuel_container = tool
-		balloon_alert(user, "fuel container added.")
+		balloon_alert(user, LANG("obj.263dc0b7", null))
 
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
@@ -341,7 +342,7 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		if(user.put_in_hands(fuel_container))
-			to_chat(user, span_notice("you take out the burner fuel container"))
+			to_chat(user, span_notice(LANG("obj.7f28075d", null)))
 			toggle_burner(FALSE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

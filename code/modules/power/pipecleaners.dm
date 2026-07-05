@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //This is the old cable code, but minus any actual powernet logic
 //Wireart is fun
 
@@ -139,14 +140,14 @@ By design, d1 is the smallest direction and d2 is the highest
 	else if(istype(W, /obj/item/stack/pipe_cleaner_coil))
 		var/obj/item/stack/pipe_cleaner_coil/coil = W
 		if (coil.get_amount() < 1)
-			to_chat(user, span_warning("Not enough pipe cleaner!"))
+			to_chat(user, span_warning(LANG("obj.b55ad191", null)))
 			return
 		coil.pipe_cleaner_join(src, user)
 
 	add_fingerprint(user)
 
 /obj/structure/pipe_cleaner/proc/cut_pipe_cleaner(mob/user)
-	user.visible_message(span_notice("[user] pulls up the pipe cleaner."), span_notice("You pull up the pipe cleaner."))
+	user.visible_message(span_notice(LANG("obj.1cedba92", list(user))), span_notice(LANG("obj.26a00abf", null)))
 	stored.add_fingerprint(user)
 	investigate_log("was pulled up by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
 	deconstruct()
@@ -246,9 +247,9 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/pipe_cleaner_coil/suicide_act(mob/living/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
-		user.visible_message(span_suicide("[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.a4a763c0", list(user, src, user.p_theyre()))))
 	else
-		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.2a557471", list(user, user.p_them(), src, user.p_theyre()))))
 	return OXYLOSS
 
 /obj/item/stack/pipe_cleaner_coil/Initialize(mapload, new_amount = null, list/mat_override=null, mat_amt=1, param_color = null)
@@ -312,15 +313,15 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	if(!isturf(T) || !T.can_have_cabling())
-		to_chat(user, span_warning("You can only lay pipe cleaners on a solid floor!"))
+		to_chat(user, span_warning(LANG("obj.f96f6eb7", null)))
 		return
 
 	if(get_amount() < 1) // Out of pipe_cleaner
-		to_chat(user, span_warning("There is no pipe cleaner left!"))
+		to_chat(user, span_warning(LANG("obj.e795dcdc", null)))
 		return
 
 	if(get_dist(T,user) > 1) // Too far
-		to_chat(user, span_warning("You can't lay pipe cleaner at a place that far away!"))
+		to_chat(user, span_warning(LANG("obj.691faab3", null)))
 		return
 
 	var/dirn
@@ -362,7 +363,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	if(get_dist(C, user) > 1) // make sure it's close enough
-		to_chat(user, span_warning("You can't lay pipe cleaner at a place that far away!"))
+		to_chat(user, span_warning(LANG("obj.691faab3", null)))
 		return
 
 
@@ -378,7 +379,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if((C.d1 == dirn || C.d2 == dirn) && !forceddir)
 		if(!U.can_have_cabling()) //checking if it's a plating or catwalk
 			if (showerror)
-				to_chat(user, span_warning("You can only lay pipe cleaners on catwalks and plating!"))
+				to_chat(user, span_warning(LANG("obj.90f4e79d", null)))
 			return
 		else
 			// pipe_cleaner is pointing at us, we're standing on an open tile

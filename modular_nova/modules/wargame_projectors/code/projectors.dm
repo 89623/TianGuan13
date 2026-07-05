@@ -58,10 +58,10 @@
 /obj/item/wargame_projector/examine(mob/user)
 	. = ..()
 	if(projections)
-		. += span_notice("It is currently maintaining <b>[projections.len]/[max_signs]</b> projections.")
-	. += span_notice("Use the projector <b>in hand</b> to change what type of hologram it creates.")
-	. += span_notice("<b>Alt clicking</b> the projector will let you change the color of the next hologram it makes.")
-	. += span_warning("<b>Control clicking</b> the projector will allow you to clear all active holograms.")
+		. += span_notice(LANG("obj.515b5713", list(projections.len, max_signs)))
+	. += span_notice(LANG("obj.242b97d3", null))
+	. += span_notice(LANG("obj.f03395f5", null))
+	. += span_warning(LANG("obj.1444bda5", null))
 
 /obj/item/wargame_projector/proc/populate_radial_choice_lists()
 	if(!length(radial_choices) || !length(projection_names_to_path))
@@ -88,18 +88,18 @@
 	select_hologram(user)
 
 /obj/item/wargame_projector/click_alt(mob/user)
-	var/selected_color = tgui_input_list(user, "Select a color", "Color Selection", color_options)
+	var/selected_color = tgui_input_list(user, LANG("obj.c374a224", null), LANG("obj.503c427e", null), color_options)
 	if(isnull(selected_color))
-		balloon_alert(user, "no color change")
+		balloon_alert(user, LANG("obj.4435cb6b", null))
 		return
 	var/color_to_set_to = color_options[selected_color]
 	holosign_color = color_to_set_to
-	balloon_alert(user, "color changed")
+	balloon_alert(user, LANG("obj.7210b7e8", null))
 	set_greyscale(holosign_color)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/wargame_projector/item_ctrl_click(mob/user)
-	if(tgui_alert(usr,"Clear all currently active holograms?", "Hologram Removal", list("Yes", "No")) == "Yes")
+	if(tgui_alert(usr,LANG("obj.da18bc63", null), LANG("obj.f2e2c746", null), list("Yes", "No")) == "Yes")
 		for(var/hologram in projections)
 			qdel(hologram)
 	return CLICK_ACTION_SUCCESS
@@ -112,7 +112,7 @@
 	if(target_turf.is_blocked_turf(TRUE))
 		return FALSE
 	if(LAZYLEN(projections) >= max_signs)
-		balloon_alert(user, "max capacity!")
+		balloon_alert(user, LANG("obj.b672f626", null))
 		return FALSE
 	return TRUE
 

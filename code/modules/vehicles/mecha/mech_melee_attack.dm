@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Mech melee attack
  * Called when a mech melees a target with fists
@@ -26,7 +27,7 @@
 			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("turf.930925c9", list(mecha_attacker, src))), span_danger(LANG("turf.b9c76307", list(src))), null, COMBAT_MESSAGE_RANGE)
 	if(prob(hardness + mecha_attacker.force) && mecha_attacker.force > 20)
 		dismantle_wall(1)
 		playsound(src, mecha_attacker.destroy_wall_sound, 100, TRUE)
@@ -47,7 +48,7 @@
 			playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("obj.930925c9", list(mecha_attacker, src))), span_danger(LANG("obj.b9c76307", list(src))), null, COMBAT_MESSAGE_RANGE)
 	..()
 	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
@@ -63,7 +64,7 @@
 			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("obj.930925c9", list(mecha_attacker, src))), span_danger(LANG("obj.b9c76307", list(src))), null, COMBAT_MESSAGE_RANGE)
 	..()
 	return take_damage(mecha_attacker.force * 3, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
@@ -81,7 +82,7 @@
 			playsound(src, mecha_attacker.burn_attack_sound, 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] smashes [src]!"), span_danger("You smash [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("obj.7a108798", list(mecha_attacker, src))), span_danger(LANG("obj.0bb07f95", list(src))), null, COMBAT_MESSAGE_RANGE)
 	// Additionally destroy any grilles
 	for(var/obj/structure/grille/grille in src.loc)
 		if(istype(grille))
@@ -101,7 +102,7 @@
 			playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		else
 			return
-	mecha_attacker.visible_message(span_danger("[mecha_attacker] hits [src]!"), span_danger("You hit [src]!"), null, COMBAT_MESSAGE_RANGE)
+	mecha_attacker.visible_message(span_danger(LANG("obj.930925c9", list(mecha_attacker, src))), span_danger(LANG("obj.b9c76307", list(src))), null, COMBAT_MESSAGE_RANGE)
 	..()
 	return take_damage(mecha_attacker.force, mecha_attacker.damtype, "melee", FALSE, get_dir(src, mecha_attacker))
 
@@ -109,13 +110,13 @@
 	if(istype(user) && !user.combat_mode)
 		step_away(src, mecha_attacker)
 		log_combat(user, src, "pushed", mecha_attacker)
-		visible_message(span_warning("[mecha_attacker] pushes [src] out of the way."), \
-						span_warning("[mecha_attacker] pushes you out of the way."), span_hear("You hear aggressive shuffling!"), 5, list(mecha_attacker))
-		to_chat(mecha_attacker, span_danger("You push [src] out of the way."))
+		visible_message(span_warning(LANG("mob.c106d8a6", list(mecha_attacker, src))), \
+						span_warning(LANG("mob.9078dd7a", list(mecha_attacker))), span_hear(LANG("mob.7314bbd1", null)), 5, list(mecha_attacker))
+		to_chat(mecha_attacker, span_danger(LANG("mob.31202482", list(src))))
 		return
 
 	if(!isnull(user) && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm other living beings!"))
+		to_chat(user, span_warning(LANG("mob.c2a13fcc", null)))
 		return
 
 	mecha_attacker.do_attack_animation(src)
@@ -156,7 +157,7 @@
 		))
 
 	visible_message(span_danger("[mecha_attacker.name] [mecha_attacker.attack_verbs[1]] [src]!"), \
-		span_userdanger("[mecha_attacker.name] [mecha_attacker.attack_verbs[2]] you!"), span_hear("You hear a sickening sound of flesh [mecha_attacker.attack_verbs[3]] flesh!"), COMBAT_MESSAGE_RANGE, list(mecha_attacker))
-	to_chat(mecha_attacker, span_danger("You [mecha_attacker.attack_verbs[1]] [src]!"))
+		span_userdanger(LANG("mob.9ab70b39", list(mecha_attacker.name, mecha_attacker.attack_verbs[2]))), span_hear(LANG("mob.1b6c62e7", list(mecha_attacker.attack_verbs[3]))), COMBAT_MESSAGE_RANGE, list(mecha_attacker))
+	to_chat(mecha_attacker, span_danger(LANG("mob.22d557f3", list(mecha_attacker.attack_verbs[1], src))))
 	..()
 	return damage

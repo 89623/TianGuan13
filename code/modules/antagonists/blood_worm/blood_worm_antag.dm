@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/antagonist/blood_worm
 	name = "\improper Blood Worm"
 	roundend_category = "blood worms"
@@ -19,11 +20,8 @@
 /datum/antagonist/blood_worm/greet()
 	. = ..()
 
-	to_chat(owner, span_bold("A species of space-faring leech, massive in size and ferocious in hunting. \
-							Your origins are unknown to most, but to some, you are among their greatest creations. \
-							A failed Syndicate bioweapons project, snuffed out by benefactors after a \"lack of results\", and yet... \
-							here you find yourself. On a Nanotrasen space station. What a fitting habitat for you, isn't it?"))
-	to_chat(owner, span_bolddanger("KILL, CONSUME, MULTIPLY, CONQUER."))
+	to_chat(owner, span_bold(LANG("datum.e03a574f", null)))
+	to_chat(owner, span_bolddanger(LANG("datum.f553dad6", null)))
 
 	owner.announce_objectives()
 

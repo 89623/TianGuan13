@@ -35,7 +35,7 @@
 
 /obj/item/electropack/shockcollar/can_mob_unequip(mob/user)
 	if(user.get_item_by_slot(slot_flags) == src)
-		to_chat(user, span_warning("The collar is fastened tight! You'll need help if you want to take it off!"))
+		to_chat(user, span_warning(LANG("obj.af72e6ec", null)))
 		return FALSE
 	return ..()
 
@@ -53,7 +53,7 @@
 		addtimer(VARSET_CALLBACK(src, shock_cooldown, FALSE), 100)
 		step(affected_mob, pick(GLOB.cardinals))
 
-		to_chat(affected_mob, span_danger("You feel a sharp shock from the collar!"))
+		to_chat(affected_mob, span_danger(LANG("obj.2c2ccf81", null)))
 		do_sparks(3, TRUE, affected_mob)
 
 		affected_mob.Paralyze(30)

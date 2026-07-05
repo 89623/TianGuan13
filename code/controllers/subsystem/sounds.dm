@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DATUMLESS "NO_DATUM"
 
 SUBSYSTEM_DEF(sounds)
@@ -84,7 +85,7 @@ SUBSYSTEM_DEF(sounds)
 	init_sound_keys()
 
 	if(!(RUST_G))
-		to_chat(world, span_boldnotice("Sounds subsystem: No rust_g detected."))
+		to_chat(world, span_boldnotice(LANG("datum.76b77fc3", null)))
 		return ..()
 
 	// Precache ambience sounds

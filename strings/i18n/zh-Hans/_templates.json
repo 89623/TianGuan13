@@ -1,0 +1,10 @@
+{
+	"The DNA Vault needs to contain samples of:": "DNA保险库需要收录以下样本：",
+	"* {0} unique animal data": "* {0} 份独特动物数据",
+	"* {0} unique non-standard plant data": "* {0} 份独特非标准植物数据",
+	"* {0} unique sapient humanoid DNA data": "* {0} 份独特智慧类人DNA数据",
+	"{0} (Machine Board)": "{0}（机器电路板）",
+	"{0} (Computer Board)": "{0}（电脑电路板）",
+	"{0} (Abductor Machine Board)": "{0}（绑架者机器电路板）",
+	"Crystalline hyperstructure returning to safe operating parameters. Integrity: {0}%": "晶体超结构正在恢复安全运行参数。完整性：{0}%"
+}

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/sortrouter_filter
 	/// name of the filter shown in UI
 	var/name
@@ -28,7 +29,7 @@
 	return name
 
 /datum/sortrouter_filter/proc/edit(mob/user)
-	to_chat(user, "This filter is not editable.")
+	to_chat(user, LANG("datum.5b104feb", null))
 
 /datum/sortrouter_filter/proc/meets_conditions(atom/checking)
 
@@ -54,7 +55,7 @@
 	name = "input is tagged X"
 
 /datum/sortrouter_filter/is_tagged/edit(mob/user)
-	var/target = tgui_input_list(user, "Select a tag", "Tag", sort_list(GLOB.TAGGERLOCATIONS))
+	var/target = tgui_input_list(user, LANG("datum.643f4765", null), LANG("datum.a01fc126", null), sort_list(GLOB.TAGGERLOCATIONS))
 	if(isnull(target) || !user.can_perform_action(sorter, ALLOW_SILICON_REACH))
 		return
 	value = GLOB.TAGGERLOCATIONS.Find(target)
@@ -74,7 +75,7 @@
 	name = "input's name contains"
 
 /datum/sortrouter_filter/name_contains/edit(mob/user)
-	var/target = tgui_input_text(user, "What should it contain?", "Name", value, 12)
+	var/target = tgui_input_text(user, LANG("datum.8354c9b9", null), LANG("datum.e81360ea", null), value, 12)
 	if(isnull(target)|| !user.can_perform_action(sorter, ALLOW_SILICON_REACH))
 		return
 	value = target
@@ -94,8 +95,8 @@
 	name = initial(name)
 	if(!currently_listening)
 		name = "awaiting item"
-		to_chat(user, "Hit the sorter with the item of choice to set the filter.")
-		sorter.balloon_alert(user, "awaiting item!")
+		to_chat(user, LANG("datum.7c6059c8", null))
+		sorter.balloon_alert(user, LANG("datum.2a0be425", null))
 		currently_listening = TRUE
 		RegisterSignal(sorter, COMSIG_ATOM_ATTACKBY, PROC_REF(sorter_hit))
 	else
@@ -106,7 +107,7 @@
 	currently_listening = FALSE
 	value = attacking_item.type
 	name = attacking_item.name
-	sorter.balloon_alert(user, "filter set")
+	sorter.balloon_alert(user, LANG("datum.caeb546f", null))
 	UnregisterSignal(sorter, COMSIG_ATOM_ATTACKBY)
 	return COMPONENT_NO_AFTERATTACK
 

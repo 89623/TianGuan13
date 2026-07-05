@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Allows ghosts to eat this by orbiting it
  * They do this by consuming the reagents in the object, so if it doesn't have any then it won't work
@@ -58,7 +59,7 @@
 	playsound(atom_parent.loc,'sound/items/eatfood.ogg', vol = rand(10,50), vary = TRUE)
 	atom_parent.reagents.remove_all(bite_consumption)
 	if (atom_parent.reagents.total_volume <= 0)
-		atom_parent.visible_message(span_notice("[atom_parent] disappears completely!"))
+		atom_parent.visible_message(span_notice(LANG("datum.93b1abe8", list(atom_parent))))
 		new /obj/item/ectoplasm(atom_parent.loc)
 		qdel(parent)
 		return

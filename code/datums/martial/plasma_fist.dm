@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TORNADO_COMBO "HHD"
 #define THROWBACK_COMBO "DHD"
 #define PLASMA_COMBO "HDDDH"
@@ -40,7 +41,7 @@
 	return FALSE
 
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/attacker, mob/living/defender)
-	attacker.say("TORNADO SWEEP!", forced="plasma fist")
+	attacker.say(LANG("datum.0aaa5721", null), forced="plasma fist")
 	dance_rotate(attacker, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), attacker, 'sound/items/weapons/punch1.ogg', 15, TRUE, -1))
 	tornado_spell.cast(attacker)
 	log_combat(attacker, defender, "tornado sweeped (Plasma Fist)")
@@ -48,17 +49,17 @@
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/attacker, mob/living/defender)
 	defender.visible_message(
-		span_danger("[attacker] hits [defender] with Plasma Punch!"),
-		span_userdanger("You're hit with a Plasma Punch by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("datum.22cc8208", list(attacker, defender))),
+		span_userdanger(LANG("datum.e8048de5", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You hit [defender] with Plasma Punch!"))
+	to_chat(attacker, span_danger(LANG("datum.db4e604e", list(defender))))
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(defender, get_dir(defender, get_step_away(defender, attacker)))
 	defender.throw_at(throw_target, 200, 4,attacker)
-	attacker.say("HYAH!", forced="plasma fist")
+	attacker.say(LANG("datum.2f5253bc", null), forced="plasma fist")
 	log_combat(attacker, defender, "threw back (Plasma Fist)")
 	return TRUE
 
@@ -67,15 +68,15 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
-	attacker.say("PLASMA FIST!", forced="plasma fist")
+	attacker.say(LANG("datum.b5ef43e2", null), forced="plasma fist")
 	defender.visible_message(
-		span_danger("[attacker] hits [defender] with THE PLASMA FIST TECHNIQUE!"),
-		span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("datum.dfeead67", list(attacker, defender))),
+		span_userdanger(LANG("datum.a1b7ac84", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You hit [defender] with THE PLASMA FIST TECHNIQUE!"))
+	to_chat(attacker, span_danger(LANG("datum.98ecabe3", list(defender))))
 	log_combat(attacker, defender, "gibbed (Plasma Fist)")
 	var/turf/Dturf = get_turf(defender)
 	defender.investigate_log("has been gibbed by plasma fist.", INVESTIGATE_DEATHS)
@@ -84,16 +85,16 @@
 		return
 
 	if(!hasclient)
-		to_chat(attacker, span_warning("Taking this plasma energy for your </span>[span_notice("Apotheosis")]<span class='warning'> would bring dishonor to the clan!"))
+		to_chat(attacker, span_warning(LANG("datum.da4c55f6", list(span_notice("Apotheosis")))))
 		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and poofs.
 
 	else if(plasma_power >= plasma_cap)
-		to_chat(attacker, span_warning("You cannot power up your </span>[span_notice("Apotheosis")]<span class='warning'> any more!"))
+		to_chat(attacker, span_warning(LANG("datum.fb539793", list(span_notice("Apotheosis")))))
 		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and poofs.
 
 	else
 		plasma_power += plasma_increment
-		to_chat(attacker, span_nicegreen("Power increasing! Your </span>[span_notice("Apotheosis")]<span class='nicegreen'> is now at power level [plasma_power]!"))
+		to_chat(attacker, span_nicegreen(LANG("datum.c722f4f4", list(span_notice("Apotheosis"), plasma_power))))
 		new /obj/effect/temp_visual/plasma_soul(Dturf, attacker)
 		var/oldcolor = attacker.color
 		attacker.color = "#9C00FF"
@@ -103,7 +104,7 @@
 	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target)
-	user.say("APOTHEOSIS!!", forced="plasma fist")
+	user.say(LANG("datum.6b008f49", null), forced="plasma fist")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
@@ -120,7 +121,7 @@
 	log_combat(user, user, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
 	message_admins("[key_name_admin(user)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
 
-	to_chat(user, span_userdanger("The explosion knocks your soul out of your body!"))
+	to_chat(user, span_userdanger(LANG("datum.a5381ed2", null)))
 	user.ghostize(FALSE) //prevents... horrible memes just believe me
 
 	user.apply_damage(rand(50, 70), BRUTE, wound_bonus = CANT_WOUND)
@@ -152,7 +153,7 @@
 	if(check_streak(attacker, defender))
 		return MARTIAL_ATTACK_SUCCESS
 	if(attacker == defender)//there is no disarming yourself, so we need to let plasma fist user know
-		to_chat(attacker, span_notice("You have added a disarm to your streak."))
+		to_chat(attacker, span_notice(LANG("datum.12457fbf", null)))
 		return MARTIAL_ATTACK_FAIL
 	return MARTIAL_ATTACK_INVALID
 
@@ -167,12 +168,12 @@
 	. = list()
 
 	var/datum/martial_art/plasma_fist/martial = GET_ACTIVE_MARTIAL_ART(holder)
-	. += "<b><i>You clench your fists and have a flashback of knowledge...</i></b>"
-	. += "[span_notice("Tornado Sweep")]: Punch Punch Shove. Repulses opponent and everyone back."
-	. += "[span_notice("Throwback")]: Shove Punch Shove. Throws the opponent and an item at them."
-	. += "[span_notice("The Plasma Fist")]: Punch Shove Shove Shove Punch. Instantly gibs an opponent.[martial.nobomb ? "" : " Each kill with this grows your [span_notice("Apotheosis")] explosion size."]"
+	. += LANG("datum.b438a230", null)
+	. += LANG("datum.7b044891", list(span_notice("Tornado Sweep")))
+	. += LANG("datum.519e0700", list(span_notice("Throwback")))
+	. += LANG("datum.ff9d3099", list(span_notice("The Plasma Fist"), martial.nobomb ? "" : " Each kill with this grows your [span_notice("Apotheosis")] explosion size."))
 	if(!martial.nobomb)
-		. += "[span_notice("Apotheosis")]: Use [span_notice("The Plasma Fist")] on yourself. Sends you away in a glorious explosion."
+		. += LANG("datum.6824d3fb", list(span_notice("Apotheosis"), span_notice("The Plasma Fist")))
 	return .
 
 
@@ -194,7 +195,7 @@
 
 /obj/effect/temp_visual/plasma_soul/Destroy()
 	if(!beam_target)
-		visible_message(span_notice("[src] fades away..."))
+		visible_message(span_notice(LANG("obj.32e65462", list(src))))
 	. = ..()
 
 /obj/effect/ebeam/plasma_fist

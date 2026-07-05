@@ -345,4 +345,4 @@
 		message = html_encode(message)
 	else
 		message = copytext(message, 2)
-	to_chat(target, custom_boxed_message("purple_box", span_purple("<b>[source]: </b>[message]")), type = MESSAGE_TYPE_INFO)
+	to_chat(target, custom_boxed_message("purple_box", span_purple("<b>[lang_reverse_text(source)]: </b>[message]")), type = MESSAGE_TYPE_INFO) // NOVA EDIT - i18n: 反查提示前缀（"Tip of the round"→ui.json）

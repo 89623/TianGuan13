@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ATMOS_PIPEDISPENSER 0
 #define DISPOSAL_PIPEDISPENSER 1
 #define TRANSIT_PIPEDISPENSER 2
@@ -107,7 +108,7 @@
 
 						var/obj/structure/disposalconstruct/disposal_out = new (loc, p_type)
 						if(!disposal_out.can_place())
-							to_chat(usr, span_warning("There's not enough room to build that here!"))
+							to_chat(usr, span_warning(LANG("obj.661530b5", null)))
 							qdel(disposal_out)
 							return
 
@@ -138,7 +139,7 @@
 			if (ISNOTSTUB(target_dir))
 				p_init_dir = target_dir
 			else
-				to_chat(usr, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				to_chat(usr, span_warning(LANG("obj.0c06b2dc", list(src))))
 
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
@@ -154,7 +155,7 @@
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		to_chat(usr, span_notice("You put [W] back into [src]."))
+		to_chat(usr, span_notice(LANG("obj.99c70bb4", list(W, src))))
 		qdel(W)
 		return
 	else

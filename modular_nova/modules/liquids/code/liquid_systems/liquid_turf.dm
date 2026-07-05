@@ -357,18 +357,18 @@
 	if(mob_turf.turf_height - turf_height <= -TURF_HEIGHT_BLOCK_THRESHOLD)
 		//Climb up
 		if(user == dropped_mob)
-			user.balloon_alert_to_viewers("climbing...")
+			user.balloon_alert_to_viewers(LANG("turf.a83a369a", null))
 		else
-			dropped_mob.balloon_alert_to_viewers("being pulled up...")
+			dropped_mob.balloon_alert_to_viewers(LANG("turf.bfd586fb", null))
 		if(do_after(user, 2 SECONDS, dropped_mob))
 			dropped_mob.forceMove(src)
 		return
 	if(turf_height - mob_turf.turf_height <= -TURF_HEIGHT_BLOCK_THRESHOLD)
 		//Climb down
 		if(user == dropped_mob)
-			user.balloon_alert_to_viewers("climbing down...")
+			user.balloon_alert_to_viewers(LANG("turf.3c17a2a7", null))
 		else
-			dropped_mob.balloon_alert_to_viewers("being lowered...")
+			dropped_mob.balloon_alert_to_viewers(LANG("turf.a4c386bd", null))
 		if(do_after(user, 2 SECONDS, dropped_mob))
 			dropped_mob.forceMove(src)
 		return

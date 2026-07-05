@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/transport
 	armor_type = /datum/armor/transport_machinery
 	max_integrity = 400
@@ -103,7 +104,7 @@
 		for(var/tool_method in methods_to_fix)
 			. += span_warning("It needs someone to [EXAMINE_HINT(tool_method)].")
 	if(panel_open)
-		. += span_notice("It can be deconstructed with a [EXAMINE_HINT("crowbar.")]")
+		. += span_notice(LANG("obj.d8fd396d", list(EXAMINE_HINT("crowbar."))))
 
 /**
  * Signal proc for [COMSIG_ATOM_TOOL_ACT], from a variety of signals, registered on the machinery.
@@ -120,13 +121,13 @@
 /obj/machinery/transport/proc/try_fix_machine(obj/machinery/transport/machine, mob/living/user, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 
-	machine.balloon_alert(user, "percussive maintenance...")
+	machine.balloon_alert(user, LANG("obj.9dc90226", null))
 	if(!tool.use_tool(machine, user, 7 SECONDS, volume = 50))
-		machine.balloon_alert(user, "interrupted!")
+		machine.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return FALSE
 
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 75, use_reverb = TRUE)
-	machine.balloon_alert(user, "success!")
+	machine.balloon_alert(user, LANG("obj.61c91505", null))
 	UnregisterSignal(src, repair_signals)
 	LAZYNULL(repair_signals)
 	methods_to_fix = list()
@@ -140,12 +141,12 @@
 	if(user.combat_mode)
 		return
 	if(atom_integrity >= max_integrity)
-		balloon_alert(user, "it doesn't need repairs!")
+		balloon_alert(user, LANG("obj.20fd4e5f", null))
 		return TRUE
-	balloon_alert(user, "repairing...")
+	balloon_alert(user, LANG("obj.b52342a8", null))
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
 		return TRUE
-	balloon_alert(user, "repaired")
+	balloon_alert(user, LANG("obj.65ced1e8", null))
 	atom_integrity = max_integrity
 	set_machine_stat(machine_stat & ~BROKEN)
 	update_appearance()

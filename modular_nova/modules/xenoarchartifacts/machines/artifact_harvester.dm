@@ -47,8 +47,8 @@
 
 	if(!inserted_battery && user.transferItemToLoc(tool, src))
 		user.visible_message(
-			span_notice("[user] inserts [tool] into [src]."),
-			span_notice("You insert [tool] into [src]."),
+			span_notice(LANG("obj.05c6f8ca", list(user, tool, src))),
+			span_notice(LANG("obj.8ce99939", list(tool, src))),
 			blind_message = span_hear("You hear click."),
 		)
 		playsound(src, 'sound/machines/crate/crate_open.ogg', 30, 10)
@@ -57,7 +57,7 @@
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 	else
-		to_chat(user, span_warning("There is already a battery in [src]."))
+		to_chat(user, span_warning(LANG("obj.561f3062", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/artifact_harvester/ui_interact(mob/user)
@@ -105,7 +105,7 @@
 			current_artifact.anchored = FALSE
 			current_artifact.being_used = FALSE
 			current_artifact = null
-			say("Battery is full.")
+			say(LANG("obj.c0b69460", null))
 			playsound(src, 'sound/machines/beep/beep.ogg', 50, FALSE)
 			icon_state = "harvester_battery"
 			owned_scanner.icon_state = "xenoarch_scanner"
@@ -126,7 +126,7 @@
 			draining = FALSE
 			inserted_battery.battery_effect = null
 			QDEL_NULL(inserted_battery.battery_effect)
-			say("Battery dump completed.")
+			say(LANG("obj.3d8c5302", null))
 			icon_state = "harvester_battery"
 
 /obj/machinery/artifact_harvester/Topic(href, href_list)
@@ -145,13 +145,13 @@
 		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 
 		if(!inserted_battery)
-			say("Cannot harvest. No battery inserted.")
+			say(LANG("obj.e293f6fc", null))
 			return
 		if(inserted_battery.stored_charge >= inserted_battery.capacity)
-			say("Cannot harvest. Battery is full.")
+			say(LANG("obj.b2fddfab", null))
 			return
 		if(!owned_scanner)
-			say("Cannot harvest. Scanner not connected.")
+			say(LANG("obj.55abe5f8", null))
 			return
 
 		// Find artifact on scanner turf (prefer artifacts)
@@ -169,7 +169,7 @@
 		current_artifact = analysed
 		if(!current_artifact)
 			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, 10)
-			say("Cannot harvest. No noteworthy energy signature isolated.")
+			say(LANG("obj.8b248fdb", null))
 			return
 
 		// If it's actually an artifact, enforce usage gating
@@ -180,7 +180,7 @@
 		if(istype(scanned_artifact))
 			if(scanned_artifact.being_used)
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, 10)
-				say("Cannot harvest. Source already being harvested.")
+				say(LANG("obj.21d0f4fc", null))
 				return
 
 			first_effect = scanned_artifact.first_effect
@@ -189,7 +189,7 @@
 		// Conflicting (both active) = fail
 		if((first_effect && first_effect.activated) && (second_effect && second_effect.activated))
 			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, 10)
-			say("Cannot harvest. Source is emitting conflicting energy signatures.")
+			say(LANG("obj.6a065fd3", null))
 			return
 
 		// Choose the active one
@@ -201,12 +201,12 @@
 
 		if(!harvested_effect)
 			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, 10)
-			say("Cannot harvest. No energy emitting from source.")
+			say(LANG("obj.4ac383d5", null))
 			return
 
 		// Battery signature lock: if battery has charge, it must match the same effect instance
 		if(inserted_battery.stored_charge && inserted_battery.battery_effect && inserted_battery.battery_effect != harvested_effect)
-			say("Cannot harvest. Battery is charged with a different energy signature.")
+			say(LANG("obj.5974d6e0", null))
 			return
 
 		// Begin harvesting
@@ -219,7 +219,7 @@
 		icon_state = "harvester_on"
 		if(owned_scanner)
 			owned_scanner.icon_state = "xenoarch_scanner_scanning"
-		say("Beginning energy harvesting")
+		say(LANG("obj.5c18ffe3", null))
 
 		inserted_battery.battery_effect = null
 		// Duplicate the battery's effect datum
@@ -254,7 +254,7 @@
 			current_artifact.being_used = FALSE
 
 		current_artifact = null
-		say("Energy harvesting interrupted.")
+		say(LANG("obj.9558bb7e", null))
 		icon_state = "harvester_battery"
 		if(owned_scanner)
 			owned_scanner.icon_state = "xenoarch_scanner"
@@ -265,7 +265,7 @@
 	// --- EJECT BATTERY ---
 	else if(href_list["ejectbattery"])
 		if(harvesting || draining)
-			say("Battery is busy.")
+			say(LANG("obj.bca7fa89", null))
 			return
 
 		playsound(src, 'sound/machines/crate/crate_open.ogg', 30, 10)
@@ -284,17 +284,17 @@
 	// --- DRAIN BATTERY ---
 	else if(href_list["drainbattery"])
 		if(!inserted_battery)
-			say("Cannot dump energy. No battery inserted.")
+			say(LANG("obj.8a355e87", null))
 			return
 		if(harvesting)
-			say("Cannot dump energy. Energy harvesting is initiated.")
+			say(LANG("obj.11d2cf30", null))
 			return
 		if(!inserted_battery.stored_charge)
-			say("Cannot dump energy. Battery is drained of charge already.")
+			say(LANG("obj.bc0391a2", null))
 			return
 		if(!inserted_battery.battery_effect)
 			return
-		if(tgui_alert(usr, "This action will dump all charge, safety gear is recommended before proceeding", "Warning", list("Continue", "Cancel")) != "Continue")
+		if(tgui_alert(usr, LANG("obj.35ecb97c", null), LANG("obj.acf3640b", null), list("Continue", "Cancel")) != "Continue")
 			return
 
 		if(!inserted_battery.battery_effect.activated)
@@ -305,7 +305,7 @@
 		icon_state = "harvester_on"
 		if(owned_scanner)
 			owned_scanner.icon_state = "xenoarch_scanner"
-		say("Warning, battery charge dump commencing.")
+		say(LANG("obj.15987c14", null))
 
 		needs_refresh = TRUE
 

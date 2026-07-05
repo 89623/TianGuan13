@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * spirit holding component; for items to have spirits inside of them for "advice"
  *
@@ -41,9 +42,9 @@
 /datum/component/spirit_holding/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(!bound_spirit)
-		examine_list += span_notice("[parent] sleeps.[allow_channeling ? " Use [parent] in your hands to attempt to awaken it." : ""]")
+		examine_list += span_notice(LANG("datum.6468dd8f", list(parent, allow_channeling ? " Use [parent] in your hands to attempt to awaken it." : "")))
 		return
-	examine_list += span_notice("[parent] is alive.")
+	examine_list += span_notice(LANG("datum.31f81a0f", list(parent)))
 
 ///signal fired on self attacking parent
 /datum/component/spirit_holding/proc/on_attack_self(datum/source, mob/user)
@@ -53,17 +54,17 @@
 /datum/component/spirit_holding/proc/get_ghost(mob/user)
 	var/atom/thing = parent
 	if(attempting_awakening)
-		thing.balloon_alert(user, "already channeling!")
+		thing.balloon_alert(user, LANG("datum.df509fcf", null))
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		thing.balloon_alert(user, "spirits are unwilling!")
-		to_chat(user, span_warning("Anomalous otherworldly energies block you from awakening [parent]!"))
+		thing.balloon_alert(user, LANG("datum.0d954cc7", null))
+		to_chat(user, span_warning(LANG("datum.6cce3f8d", list(parent))))
 		return
 	if(!allow_channeling && bound_spirit)
-		to_chat(user, span_warning("Try as you might, the spirit within slumbers."))
+		to_chat(user, span_warning(LANG("datum.1157919c", null)))
 		return
 	attempting_awakening = TRUE
-	thing.balloon_alert(user, "channeling...")
+	thing.balloon_alert(user, LANG("datum.7d95211b", null))
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = "Do you want to play as [span_notice("Spirit of [span_danger("[user.real_name]'s")] blade")]?",
 		check_jobban = ROLE_PAI,
@@ -82,14 +83,14 @@
 	var/atom/thing = parent
 
 	if(isnull(ghost))
-		thing.balloon_alert(awakener, "silence...")
+		thing.balloon_alert(awakener, LANG("datum.10cf62f1", null))
 		attempting_awakening = FALSE
 		return
 
 	// Immediately unregister to prevent making a new spirit
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	if(QDELETED(parent)) //if the thing that we're conjuring a spirit in has been destroyed, don't create a spirit
-		to_chat(ghost, span_userdanger("The new vessel for your spirit has been destroyed! You remain an unbound ghost."))
+		to_chat(ghost, span_userdanger(LANG("datum.44b7e05f", null)))
 		return
 
 	bind_the_soule(ghost.mind, awakener)
@@ -122,9 +123,9 @@
 /datum/component/spirit_holding/proc/custom_name(mob/awakener, iteration = 1)
 	if(iteration > 5)
 		return "indecision" // The spirit of indecision
-	var/chosen_name = sanitize_name(tgui_input_text(bound_spirit, "What are you named?", "Spectral Nomenclature", max_length = MAX_NAME_LEN))
+	var/chosen_name = sanitize_name(tgui_input_text(bound_spirit, LANG("datum.56d23a21", null), LANG("datum.bc37260b", null), max_length = MAX_NAME_LEN))
 	if(!chosen_name) // with the way that sanitize_name works, it'll actually send the error message to the awakener as well.
-		to_chat(awakener, span_warning("Your blade did not select a valid name! Please wait as they try again.")) // more verbose than what sanitize_name might pass in it's error message
+		to_chat(awakener, span_warning(LANG("datum.dff1f7d1", null))) // more verbose than what sanitize_name might pass in it's error message
 		return custom_name(awakener, iteration++)
 	return chosen_name
 
@@ -148,22 +149,22 @@
 	if(!allow_exorcism)
 		return // just in case
 	var/atom/movable/exorcised_movable = parent
-	to_chat(exorcist, span_notice("You begin to exorcise [parent]..."))
+	to_chat(exorcist, span_notice(LANG("datum.3287eea6", list(parent))))
 	playsound(parent, 'sound/effects/hallucinations/veryfar_noise.ogg',40,TRUE)
 	if(!do_after(exorcist, 4 SECONDS, target = exorcised_movable))
 		return
 	playsound(parent, 'sound/effects/pray_chaplain.ogg',60,TRUE)
 	UnregisterSignal(exorcised_movable, list(COMSIG_ATOM_RELAYMOVE, COMSIG_BIBLE_SMACKED))
 	RegisterSignal(exorcised_movable, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
-	to_chat(bound_spirit, span_userdanger("You were exorcised!"))
+	to_chat(bound_spirit, span_userdanger(LANG("datum.34b4685d", null)))
 	QDEL_NULL(bound_spirit)
 	exorcised_movable.name = initial(exorcised_movable.name)
-	exorcist.visible_message(span_notice("[exorcist] exorcises [exorcised_movable]!"), \
-						span_notice("You successfully exorcise [exorcised_movable]!"))
+	exorcist.visible_message(span_notice(LANG("datum.c1631d36", list(exorcist, exorcised_movable))), \
+						span_notice(LANG("datum.ed46d17d", list(exorcised_movable))))
 	return COMSIG_END_BIBLE_CHAIN
 
 ///signal fired from parent being destroyed
 /datum/component/spirit_holding/proc/on_destroy(datum/source)
 	SIGNAL_HANDLER
-	to_chat(bound_spirit, span_userdanger("You were destroyed!"))
+	to_chat(bound_spirit, span_userdanger(LANG("datum.40b52d20", null)))
 	QDEL_NULL(bound_spirit)

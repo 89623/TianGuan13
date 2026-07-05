@@ -123,7 +123,10 @@
 		parts += mod_part
 
 	for(var/obj/item/part as anything in parts)
-		part.name = "[name] [part.name]"
+		// NOVA EDIT - I18N: reverse the theme adjective ("administrative"→行政) so the composed part name
+		// ("administrative MOD helmet") isn't half-english; base part.name reversed at atom Initialize.
+		// ORIGINAL: part.name = "[name] [part.name]"
+		part.name = "[lang_reverse_text(name)] [part.name]"
 		part.desc = "[part.desc] [desc]"
 		part.set_armor(armor_type)
 		part.resistance_flags = resistance_flags

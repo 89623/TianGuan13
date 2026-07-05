@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**Dizziness
  * Increases stealth
  * Lowers resistance
@@ -46,7 +47,7 @@
 			if(prob(base_message_chance) && !suppress_warning)
 				to_chat(M, span_warning("[pick("You feel dizzy.", "Your head spins.")]"))
 		else
-			to_chat(M, span_userdanger("A wave of dizziness washes over you!"))
+			to_chat(M, span_userdanger(LANG("datum.151eedce", null)))
 			M.adjust_dizzy_up_to(1 MINUTES, 140 SECONDS)
 			if(power >= 2)
 				M.set_drugginess(80 SECONDS)

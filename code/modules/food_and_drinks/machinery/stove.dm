@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/stove
 	name = "stove"
 	desc = "You'd think this thing would be more useful in here."
@@ -67,8 +68,7 @@
 
 /obj/item/reagent_containers/cup/soup_pot/examine(mob/user)
 	. = ..()
-	. += span_notice("There's room for <b>[max_ingredients - LAZYLEN(added_ingredients)]</b> more ingredients \
-		or <b>[reagents.maximum_volume - reagents.total_volume]</b> more units of reagents in there.")
+	. += span_notice(LANG("obj.e9eeaca4", list(max_ingredients - LAZYLEN(added_ingredients), reagents.maximum_volume - reagents.total_volume)))
 
 /**
  * Override standard reagent examine with something a bit more sensible for the soup pot,
@@ -77,7 +77,7 @@
 /obj/item/reagent_containers/cup/soup_pot/proc/reagent_special_examine(datum/source, mob/user, list/examine_list, can_see_insides = FALSE)
 	SIGNAL_HANDLER
 
-	examine_list += "Inside, you can see:"
+	examine_list += LANG("obj.0cd99d60", null)
 
 	if(LAZYLEN(added_ingredients) || reagents.total_volume > 0)
 		var/list/ingredient_amounts = list()
@@ -98,19 +98,19 @@
 				unknown_volume += current_reagent.volume
 
 		if(unknown_volume > 0)
-			examine_list += "&bull; [round(unknown_volume, 0.01)] units of unknown reagents"
+			examine_list += LANG("obj.d7680a11", list(round(unknown_volume, 0.01)))
 
 		if(reagents.total_volume > 0)
 			if(can_see_insides)
-				examine_list += span_notice("The contents of [src] have a temperature of [reagents.chem_temp]K.")
+				examine_list += span_notice(LANG("obj.fd836d89", list(src, reagents.chem_temp)))
 			else if(reagents.chem_temp > WATER_BOILING_POINT) // boiling point
-				examine_list += span_notice("The contents of [src] are boiling.")
+				examine_list += span_notice(LANG("obj.54f7ce2f", list(src)))
 
 	else
-		examine_list += "Nothing."
+		examine_list += LANG("obj.aa75d156", null)
 
 	if(reagents.is_reacting)
-		examine_list += span_warning("It is currently mixing!")
+		examine_list += span_warning(LANG("obj.5648f7f5", null))
 
 	return STOP_GENERIC_REAGENT_EXAMINE
 
@@ -142,7 +142,7 @@
 			loaded++
 			LAZYADD(added_ingredients, tray_item)
 	if(loaded)
-		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		to_chat(user, span_notice(LANG("obj.1de8bb22", list(loaded, src))))
 		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
@@ -159,15 +159,15 @@
 
 	// Too many ingredients
 	if(LAZYLEN(added_ingredients) >= max_ingredients)
-		balloon_alert(user, "too many ingredients!")
+		balloon_alert(user, LANG("obj.a9945a6c", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, src))
-		balloon_alert(user, "can't add that!")
+		balloon_alert(user, LANG("obj.bb344f8f", null))
 		return ITEM_INTERACT_BLOCKING
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
 	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
-	balloon_loc.balloon_alert(user, "ingredient added")
+	balloon_loc.balloon_alert(user, LANG("obj.c7d35a0f", null))
 	user.face_atom(balloon_loc)
 
 	LAZYADD(added_ingredients, item)
@@ -187,7 +187,7 @@
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
 	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
-	balloon_loc.balloon_alert(user, "ingredient removed")
+	balloon_loc.balloon_alert(user, LANG("obj.b7deabfd", null))
 	user.face_atom(balloon_loc)
 
 	update_appearance(UPDATE_OVERLAYS)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 /obj/machinery/field/containment
@@ -72,7 +73,7 @@
 		qdel(src)
 		return
 	if(ismegafauna(user))
-		user.visible_message(span_warning("[user] glows fiercely as the containment field flickers out!"))
+		user.visible_message(span_warning(LANG("obj.262802d4", list(user))))
 		field_gen_1.calc_power(INFINITY) //rip that 'containment' field
 		user.adjustHealth(-user.obj_damage)
 	else
@@ -145,9 +146,9 @@
 		if(prob(20))
 			user.Stun(40)
 		user.take_overall_damage(burn = shock_damage)
-		user.visible_message(span_danger("[user.name] is shocked by \the [src]!"), \
-		span_userdanger("Energy pulse detected, system damaged!"), \
-		span_hear("You hear an electrical crack."))
+		user.visible_message(span_danger(LANG("obj.6713b058", list(user.name, src))), \
+		span_userdanger(LANG("obj.36ebf90d", null)), \
+		span_hear(LANG("obj.9b7c4eb3", null)))
 
 	user.updatehealth()
 	bump_field(user)
@@ -162,7 +163,7 @@
 	do_sparks(5, TRUE, considered_atom.loc)
 	var/atom/target = get_edge_target_turf(considered_atom, get_dir(src, get_step_away(considered_atom, src)))
 	if(isliving(considered_atom))
-		to_chat(considered_atom, span_userdanger("The field repels you with tremendous force!"))
+		to_chat(considered_atom, span_userdanger(LANG("obj.46ec87b6", null)))
 	playsound(src, 'sound/effects/gravhit.ogg', 50, TRUE)
 	considered_atom.throw_at(target, 200, 4)
 	addtimer(CALLBACK(src, PROC_REF(clear_shock)), 0.5 SECONDS)

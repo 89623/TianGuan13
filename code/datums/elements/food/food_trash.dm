@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // If an item has the food_trash element it will drop an item when it is consumed.
 /datum/element/food_trash
 	element_flags = ELEMENT_BESPOKE
@@ -80,7 +81,7 @@
 
 	playsound(source, 'sound/effects/chipbagpop.ogg', 100)
 
-	popper.visible_message(span_danger("[popper] steps on \the [source], popping the bag!"), span_danger("You step on \the [source], popping the bag!"), span_danger("You hear a sharp crack!"), COMBAT_MESSAGE_RANGE)
+	popper.visible_message(span_danger(LANG("datum.1ae974c2", list(popper, source))), span_danger(LANG("datum.58599103", list(source))), span_danger(LANG("datum.8f332c66", null)), COMBAT_MESSAGE_RANGE)
 	INVOKE_ASYNC(src, PROC_REF(async_generate_trash), source)
 	qdel(source)
 
@@ -88,7 +89,7 @@
 /datum/element/food_trash/proc/open_trash(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	to_chat(user, span_notice("You open \the [source], revealing \a [initial(trash.name)]."))
+	to_chat(user, span_notice(LANG("datum.16be886a", list(source, initial(trash.name)))))
 
 	INVOKE_ASYNC(src, PROC_REF(async_generate_trash), source)
 	qdel(source)

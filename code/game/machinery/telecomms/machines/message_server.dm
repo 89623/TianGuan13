@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // A decorational representation of SSblackbox, usually placed alongside the message server. Also contains a traitor theft item.
 /obj/machinery/blackbox_recorder
 	name = "Blackbox Recorder"
@@ -27,20 +28,20 @@
 		if(Adjacent(user))
 			user.put_in_hands(stored)
 		stored = null
-		to_chat(user, span_notice("You remove the blackbox from [src]. The tapes stop spinning."))
+		to_chat(user, span_notice(LANG("obj.1642d706", list(src))))
 		update_appearance()
 		return
 	else
-		to_chat(user, span_warning("It seems that the blackbox is missing..."))
+		to_chat(user, span_warning(LANG("obj.c1fc1225", null)))
 		return
 
 /obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/blackbox))
 		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.1dbf8014", list(attacking_item))))
 			return
-		user.visible_message(span_notice("[user] clicks [attacking_item] into [src]!"), \
-		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
+		user.visible_message(span_notice(LANG("obj.f418bf1c", list(user, attacking_item, src))), \
+		span_notice(LANG("obj.359c76df", list(src))))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		stored = attacking_item
 		update_appearance()
@@ -104,7 +105,7 @@
 	. = ..()
 	if (calibrating)
 		calibrating += world.time
-		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
+		say(LANG("obj.e1d55988", list(rand(3, 9))))
 		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", "This is an automated message. System calibration started at [server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()]).")
 	else
 		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
@@ -118,7 +119,7 @@
 /obj/machinery/telecomms/message_server/examine(mob/user)
 	. = ..()
 	if(calibrating)
-		. += span_warning("It's still calibrating.")
+		. += span_warning(LANG("obj.5466ddde", null))
 
 /obj/machinery/telecomms/message_server/process()
 	. = ..()

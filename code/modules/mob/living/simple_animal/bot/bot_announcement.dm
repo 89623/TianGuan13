@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Say something and play a corresponding sound effect
 /datum/action/cooldown/bot_announcement
 	name = "Make automated announcement"
@@ -25,11 +26,11 @@
 		return
 	if (!isbot(owner))
 		if (feedback)
-			owner.balloon_alert(owner, "no announcement system!")
+			owner.balloon_alert(owner, LANG("datum.26edc649", null))
 		return FALSE
 	if (!length(automated_announcements))
 		if (feedback)
-			owner.balloon_alert(owner, "no valid announcements!")
+			owner.balloon_alert(owner, LANG("datum.951e9d32", null))
 		return FALSE
 	return TRUE
 

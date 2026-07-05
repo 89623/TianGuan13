@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/cyberimp/eyes
 	name = "cybernetic eye implant"
 	desc = "Implants for your eyes."
@@ -29,14 +30,14 @@
 		toggled_on = FALSE
 		for(var/hud_trait in HUD_traits)
 			remove_organ_trait(hud_trait)
-		balloon_alert(eye_owner, "hud disabled")
+		balloon_alert(eye_owner, LANG("obj.8f3da789", null))
 		if(hud_color)
 			eye_owner.remove_eye_color(EYE_COLOR_HUD_PRIORITY)
 		return
 	toggled_on = TRUE
 	for(var/hud_trait in HUD_traits)
 		add_organ_trait(hud_trait)
-	balloon_alert(eye_owner, "hud enabled")
+	balloon_alert(eye_owner, LANG("obj.435a2369", null))
 	if(hud_color)
 		eye_owner.add_eye_color_right(hud_color, EYE_COLOR_HUD_PRIORITY)
 

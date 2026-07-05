@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Bureaucracy machine!
 //Simply set this up in the hopline and you can serve people based on ticket numbers
 
@@ -47,18 +48,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
 /obj/machinery/ticket_machine/examine(mob/user)
 	. = ..()
-	. += span_notice("The ticket machine shows that ticket #[current_number] is currently being served.")
-	. += span_notice("You can take a ticket out with <b>Left-Click</b> to be number [ticket_number + 1] in queue.")
+	. += span_notice(LANG("obj.bd1810c9", list(current_number)))
+	. += span_notice(LANG("obj.39cf1660", list(ticket_number + 1)))
 
 /obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/multitool/M)
 	M.set_buffer(src)
-	balloon_alert(user, "saved to multitool buffer")
+	balloon_alert(user, LANG("obj.84afb909", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ticket_machine/emag_act(mob/user, obj/item/card/emag/emag_card) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.
 	if(obj_flags & EMAGGED)
 		return FALSE
-	balloon_alert(user, "bureaucratic nightmare engaged")
+	balloon_alert(user, LANG("obj.fc03f4dc", null))
 	ticket_number = rand(0,max_number)
 	current_number = ticket_number
 	obj_flags |= EMAGGED
@@ -82,16 +83,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 ///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable
 /obj/machinery/ticket_machine/proc/increment()
 	if(!(obj_flags & EMAGGED) && current_ticket)
-		current_ticket.audible_message(span_notice("\the [current_ticket] disperses!"), hearing_distance = SAMETILE_MESSAGE_RANGE)
+		current_ticket.audible_message(span_notice(LANG("obj.ddf7f2a2", list(current_ticket))), hearing_distance = SAMETILE_MESSAGE_RANGE)
 		tickets.Cut(1,2)
 		QDEL_NULL(current_ticket)
 	if(LAZYLEN(tickets))
 		current_ticket = tickets[1]
 		current_number++ //Increment the one we're serving.
 		playsound(src, 'sound/announcer/announcement/announce_dig.ogg', 50, FALSE)
-		say("Now serving [current_ticket]!")
+		say(LANG("obj.9685e9bf", list(current_ticket)))
 		if(!(obj_flags & EMAGGED))
-			current_ticket.audible_message(span_notice("\the [current_ticket] vibrates!"), hearing_distance = SAMETILE_MESSAGE_RANGE)
+			current_ticket.audible_message(span_notice(LANG("obj.64512809", list(current_ticket))), hearing_distance = SAMETILE_MESSAGE_RANGE)
 		update_appearance() //Update our icon here rather than when they take a ticket to show the current ticket number being served
 
 /obj/machinery/button/ticket_machine
@@ -117,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		controller.ticket_machine_ref = WEAKREF(M.buffer)
 		id = null
 		controller.id = null
-		to_chat(user, span_warning("You've linked [src] to [M.buffer]."))
+		to_chat(user, span_warning(LANG("obj.63a857ba", list(src, M.buffer))))
 
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
@@ -153,7 +154,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	cooldown = TRUE
 	machine.increment()
 	if(isnull(machine.current_ticket))
-		to_chat(activator, span_notice("The button light indicates that there are no more tickets to be processed."))
+		to_chat(activator, span_notice(LANG("obj.9dc53eb1", null)))
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
 /obj/machinery/ticket_machine/update_icon()
@@ -182,11 +183,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		if(!(ticket_number >= max_number))
-			to_chat(user, span_notice("[src] refuses [I]! There [max_number - ticket_number == 1 ? "is" : "are"] still [max_number - ticket_number] ticket\s left!"))
+			to_chat(user, span_notice(LANG("obj.37037682", list(src, I, max_number - ticket_number == 1 ? "is" : "are", max_number - ticket_number))))
 			return
-		to_chat(user, span_notice("You start to refill [src]'s ticket holder (doing this will reset its ticket count!)."))
+		to_chat(user, span_notice(LANG("obj.03f4d613", list(src))))
 		if(do_after(user, 3 SECONDS, target = src))
-			to_chat(user, span_notice("You insert [I] into [src] as it whirs nondescriptly."))
+			to_chat(user, span_notice(LANG("obj.73575a68", list(I, src))))
 			qdel(I)
 			ticket_number = 0
 			current_number = 0
@@ -205,18 +206,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/machinery/ticket_machine/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
 	if(!ready)
-		to_chat(user,span_warning("You press the button, but nothing happens..."))
+		to_chat(user,span_warning(LANG("obj.504246a0", null)))
 		return
 	if(ticket_number >= max_number)
-		to_chat(user,span_warning("Ticket supply depleted, please refill this unit with a hand labeller refill cartridge!"))
+		to_chat(user,span_warning(LANG("obj.7f06ee9b", null)))
 		return
 	var/user_ref = REF(user)
 	if((user_ref in ticket_holders) && !(obj_flags & EMAGGED))
-		to_chat(user, span_warning("You already have a ticket!"))
+		to_chat(user, span_warning(LANG("obj.cef31766", null)))
 		return
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 100, FALSE)
 	ticket_number++
-	to_chat(user, span_notice("You take a ticket from [src], looks like you're number [ticket_number] in queue..."))
+	to_chat(user, span_notice(LANG("obj.b0306eff", list(src, ticket_number))))
 	var/obj/item/ticket_machine_ticket/theirticket = new (get_turf(src), ticket_number)
 	theirticket.source = src
 	theirticket.owner_ref = user_ref
@@ -259,9 +260,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/ticket_machine_ticket/examine(mob/user)
 	. = ..()
 	if(!isnull(number))
-		. += span_notice("The ticket reads shimmering text that tells you that you are number [number] in queue.")
+		. += span_notice(LANG("obj.aa42415d", list(number)))
 		if(source)
-			. += span_notice("Below that, you can see that you are [number - source.current_number] spot\s away from being served.")
+			. += span_notice(LANG("obj.4ec5eec9", list(number - source.current_number)))
 
 /obj/item/ticket_machine_ticket/attack_hand(mob/user, list/modifiers)
 	. = ..()

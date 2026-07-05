@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /mob/living/basic/bot/repairbot
 	name = "\improper Repairbot"
@@ -208,7 +209,7 @@
 
 /mob/living/basic/bot/repairbot/proc/attempt_use_stack(obj/item/stack_to_use, atom/target)
 	if(!isdatum(stack_to_use))
-		to_chat(src, span_warning("You do not have anymore [stack_to_use]!"))
+		to_chat(src, span_warning(LANG("mob.7f54dec1", list(stack_to_use))))
 		return
 	stack_to_use.melee_attack_chain(src, target)
 
@@ -357,7 +358,7 @@
 	carried.set_bot(src)
 	if(carried.icon_state == "toolbox_default")
 		carried.add_atom_colour(toolbox_color, FIXED_COLOUR_PRIORITY)
-	user.visible_message(span_warning("[user] scoops up [src]!"))
+	user.visible_message(span_warning(LANG("mob.20aafc4f", list(user, src))))
 	user.put_in_hands(carried)
 
 /obj/item/carried_repairbot
@@ -389,7 +390,7 @@
 /obj/item/carried_repairbot/proc/release_bot(bypass_delete = FALSE)
 	if(!isnull(our_bot))
 		our_bot.forceMove(drop_location())
-		our_bot.balloon_alert_to_viewers("plops down")
+		our_bot.balloon_alert_to_viewers(LANG("obj.92212a11", null))
 	if(!bypass_delete)
 		qdel(src)
 

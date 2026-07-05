@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///This component indicates this object can be baked in an oven.
 /datum/component/bakeable
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // So you can change bake results with various cookstuffs
@@ -114,14 +115,14 @@
 
 	if(positive_result)
 		used_oven.visible_message(
-			span_notice("You smell something great coming from [used_oven]."),
+			span_notice(LANG("datum.b7d9eb79", list(used_oven))),
 			blind_message = span_notice("You smell something great..."),
 			ignored_mobs = asomnia_hadders,
 		)
 		BLACKBOX_LOG_FOOD_MADE(baked_result.type)
 	else
 		used_oven.visible_message(
-			span_warning("You smell a burnt smell coming from [used_oven]."),
+			span_warning(LANG("datum.2ecfbade", list(used_oven))),
 			blind_message = span_warning("You smell a burnt smell..."),
 			ignored_mobs = asomnia_hadders,
 		)
@@ -136,15 +137,15 @@
 	if(!current_bake_time) //Not baked yet
 		if(positive_result)
 			if(initial(bake_result.gender) == PLURAL)
-				examine_list += span_notice("[parent] can be [span_bold("baked")] into some [initial(bake_result.name)].")
+				examine_list += span_notice(LANG("datum.224db634", list(parent, span_bold("baked"), initial(bake_result.name))))
 			else
-				examine_list += span_notice("[parent] can be [span_bold("baked")] into \a [initial(bake_result.name)].")
+				examine_list += span_notice(LANG("datum.73ea291d", list(parent, span_bold("baked"), initial(bake_result.name))))
 		return
 
 	if(positive_result)
 		if(current_bake_time <= required_bake_time * 0.75)
-			examine_list += span_notice("[parent] probably needs to be baked a bit longer!")
+			examine_list += span_notice(LANG("datum.d207b90c", list(parent)))
 		else if(current_bake_time <= required_bake_time)
-			examine_list += span_notice("[parent] seems to be almost finished baking!")
+			examine_list += span_notice(LANG("datum.994874ca", list(parent)))
 	else
-		examine_list += span_danger("[parent] should probably not be put in the oven.")
+		examine_list += span_danger(LANG("datum.f53e1e76", list(parent)))

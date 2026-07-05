@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Fans
 /obj/structure/fans
 	icon = 'icons/obj/mining_zones/survival_pod.dmi'
@@ -15,8 +16,8 @@
 		new buildstacktype(loc,buildstackamount)
 
 /obj/structure/fans/wrench_act(mob/living/user, obj/item/I)
-	user.visible_message(span_warning("[user] disassembles [src]."),
-		span_notice("You start to disassemble [src]..."), span_hear("You hear clanking and banging noises."))
+	user.visible_message(span_warning(LANG("obj.64d85c99", list(user, src))),
+		span_notice(LANG("obj.c234e380", list(src))), span_hear(LANG("obj.f070a678", null)))
 	if(I.use_tool(src, user, 20, volume=50))
 		deconstruct(TRUE)
 	return TRUE

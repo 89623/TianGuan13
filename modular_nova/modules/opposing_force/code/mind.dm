@@ -18,11 +18,11 @@
 		return
 
 	if(is_banned_from(ckey, BAN_ANTAGONIST))
-		to_chat(src, span_warning("You are antagonist banned!"))
+		to_chat(src, span_warning(LANG("mob.e652f911", null)))
 		return
 
 	if(is_banned_from(ckey, BAN_OPFOR))
-		to_chat(src, span_warning("You are OPFOR banned!"))
+		to_chat(src, span_warning(LANG("mob.e0c3bbd2", null)))
 		return
 
 	if(!mind.opposing_force)

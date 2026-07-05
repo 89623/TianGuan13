@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			return
 
 		color = crayon_item.paint_color
-		to_chat(user, span_notice("You color [src] with [crayon_item]..."))
+		to_chat(user, span_notice(LANG("obj.e3dba932", list(src, crayon_item))))
 		return
 
 	return ..()
@@ -170,33 +170,33 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	if(istype(tool, /obj/item/stack/ore/glass))
 		var/obj/item/stack/use_stack = tool
 		if(has_sand)
-			to_chat(user, span_warning("There is already sand in the pot!"))
+			to_chat(user, span_warning(LANG("obj.a7cdf44e", null)))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You begin to fill [src] with some sand..."))
+		to_chat(user, span_notice(LANG("obj.514b928f", list(src))))
 		if(!do_after(user, 3 SECONDS, target = src))
-			to_chat(user, span_notice("You decide against filling the pot with sand."))
+			to_chat(user, span_notice(LANG("obj.1e820c75", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!use_stack.use(1))
-			to_chat(user, span_warning("You find yourself unable to part with [use_stack]!"))
+			to_chat(user, span_warning(LANG("obj.bbebfd04", list(use_stack))))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You fill [src] with some sand."))
+		to_chat(user, span_notice(LANG("obj.520caecf", list(src))))
 		has_sand = TRUE
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/seeds))
 		if(!has_sand)
-			to_chat(user, span_warning("Sand is absolutely required to start planting!"))
+			to_chat(user, span_warning(LANG("obj.03a90f74", null)))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You begin to plant a seed inside [src]..."))
+		to_chat(user, span_notice(LANG("obj.edc2e7e5", list(src))))
 		if(!do_after(user, 3 SECONDS, target = src))
-			to_chat(user, span_notice("You decide against planting the seed."))
+			to_chat(user, span_notice(LANG("obj.2ae20980", null)))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You plant [tool] into the pot."))
+		to_chat(user, span_notice(LANG("obj.7e1cdfe0", list(tool))))
 		qdel(tool)
 		new /obj/item/kirbyplants(drop_location(src))
 		qdel(src)
@@ -341,16 +341,16 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 	in_use = TRUE
 	var/spinning_speed = user.mind.get_skill_modifier(/datum/skill/production, SKILL_SPEED_MODIFIER) * DEFAULT_SPIN
 	if(!has_clay)
-		balloon_alert(user, "there is no clay!")
+		balloon_alert(user, LANG("obj.73adc92f", null))
 		return
 
-	var/user_input = tgui_alert(user, "What would you like to do?", "Choice Selection", list("Create", "Remove"))
+	var/user_input = tgui_alert(user, LANG("obj.ab3c2f64", null), LANG("obj.bb0ac569", null), list("Create", "Remove"))
 	if(!user_input)
 		return
 
 	switch(user_input)
 		if("Create")
-			var/creation_choice = tgui_input_list(user, "What you like to create?", "Creation Choice", production_list)
+			var/creation_choice = tgui_input_list(user, LANG("obj.9de6cd19", null), LANG("obj.8b4b963a", null), production_list)
 			if(isnull(creation_choice))
 				return
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
 	desc = "Manages access to research databases and consoles."
@@ -17,7 +18,7 @@
 /obj/machinery/computer/rdservercontrol/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
 		stored_research = tool.buffer
-		balloon_alert(user, "techweb connected")
+		balloon_alert(user, LANG("obj.793f2d81", null))
 	return TRUE
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -25,7 +26,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	balloon_alert(user, "console emagged")
+	balloon_alert(user, LANG("obj.3aea0dc2", null))
 	return TRUE
 
 /obj/machinery/computer/rdservercontrol/ui_interact(mob/user, datum/tgui/ui)
@@ -67,7 +68,7 @@
 	if(.)
 		return TRUE
 	if(!allowed(usr) && !(obj_flags & EMAGGED))
-		balloon_alert(usr, "access denied!")
+		balloon_alert(usr, LANG("obj.1bd3ceeb", null))
 		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 		return TRUE
 

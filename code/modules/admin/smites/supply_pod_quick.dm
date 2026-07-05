@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SUPPLY_POD_QUICK_DAMAGE 40
 #define SUPPLY_POD_QUICK_FIRE_RANGE 2
 
@@ -11,8 +12,8 @@
 /datum/smite/supply_pod_quick/configure(client/user)
 	var/attempted_target_path = input(
 		user,
-		"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):",
-		"Typepath",
+		LANG("datum.325b0384", null),
+		LANG("datum.1a01b0f5", null),
 		"/obj/item/food/grown/harebell",
 	) as null|text
 
@@ -28,7 +29,7 @@
 	if(!ispath(delivery))
 		delivery = pick_closest_path(attempted_target_path)
 		if(!delivery)
-			tgui_alert(user, "ERROR: Incorrect / improper path given.")
+			tgui_alert(user, LANG("datum.c57fb711", null))
 			return FALSE
 	target_path = delivery
 

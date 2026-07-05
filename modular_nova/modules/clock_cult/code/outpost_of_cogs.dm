@@ -67,14 +67,14 @@
 	if(!atom_area)
 		atom_area = get_area(portal)
 
-	priority_announce("An anomalous reading has been picked up at [atom_area], please ensure the safety of the crew in the vicinity.")
+	priority_announce(LANG("_root.4acfc2b5", list(atom_area)))
 
 	for(var/obj/effect/landmark/late_cog_portals/late_portal in GLOB.landmarks_list)
 		var/obj/effect/landmark/portal_exit/new_exit = new(get_turf(late_portal))
 		new_exit.id = "reebe_entry"
 		qdel(late_portal)
 
-	portal.visible_message("[portal] lets out a hiss of steam as it becomes a more blue color. You feel like it's safer to enter, now.")
+	portal.visible_message(LANG("_root.90b375b6", list(portal)))
 	portal.desc += " It feels easier to enter, now."
 	new /obj/effect/temp_visual/steam_release(get_turf(portal))
 	animate(portal, 3 SECONDS, color = "#326de3")

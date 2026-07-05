@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///////////////Donk Exenteration Drone - DED////////////
 //A patrolling bot that cuts you up if you get close. Use ranged weapons or avoid it.
 
@@ -102,7 +103,7 @@
 	if(!COOLDOWN_FINISHED(src, cooldown_time))
 		return FALSE
 	caster.Shake(1.4, 0.8, 0.3 SECONDS)
-	caster.visible_message(span_danger("[caster] shakes violently!"))
+	caster.visible_message(span_danger(LANG("datum.2a04cd41", list(caster))))
 	playsound(caster, 'sound/items/weapons/drill.ogg', 120 , TRUE)
 	slash_em(caster)
 	StartCooldown(cooldown_time)

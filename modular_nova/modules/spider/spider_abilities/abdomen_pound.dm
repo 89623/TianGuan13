@@ -59,7 +59,7 @@
 /datum/action/cooldown/mob_cooldown/abdomen_pound/proc/begin_sequence()
 	owner.add_traits(applied_traits, REF(src)) // No moving till we're done
 	owner.update_appearance(UPDATE_ICON)
-	owner.balloon_alert(owner, "you raise your abdomen high up into the air.")
+	owner.balloon_alert(owner, LANG("datum.340d5d28", null))
 	animate(owner, pixel_y = 10, time = windup_time)
 	active_timer = addtimer(CALLBACK(src, PROC_REF(ground_pound)), windup_time, TIMER_DELETE_ME | TIMER_STOPPABLE)
 	for (var/mob/living/candidate in view(pound_distance, owner))

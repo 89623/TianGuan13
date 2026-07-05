@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DEFAULT_DOOMSDAY_TIMER 4500
 #define DOOMSDAY_ANNOUNCE_INTERVAL 600
 
@@ -95,10 +96,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/action/innate/ai/proc/adjust_uses(amt, silent)
 	uses += amt
 	if(!silent && uses)
-		to_chat(owner, span_notice("[name] now has <b>[uses]</b> use[uses > 1 ? "s" : ""] remaining."))
+		to_chat(owner, span_notice(LANG("datum.98a02c13", list(name, uses, uses > 1 ? "s" : ""))))
 	if(uses <= 0)
 		if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
-			to_chat(owner, span_warning("[name] has run out of uses!"))
+			to_chat(owner, span_warning(LANG("datum.7dc93a2e", list(name))))
 		qdel(src)
 
 /// Framework for ranged abilities that can have different effects by left-clicking stuff.
@@ -110,10 +111,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/action/innate/ai/ranged/adjust_uses(amt, silent)
 	uses += amt
 	if(!silent && uses)
-		to_chat(owner, span_notice("[name] now has <b>[uses]</b> use\s remaining."))
+		to_chat(owner, span_notice(LANG("datum.d91b3643", list(name, uses))))
 	if(!uses)
 		if(initial(uses) > 1) //no need to tell 'em if it was one-use anyway!
-			to_chat(owner, span_warning("[name] has run out of uses!"))
+			to_chat(owner, span_warning(LANG("datum.7dc93a2e", list(name))))
 		Remove(owner)
 		QDEL_IN(src, 10 SECONDS) //let any active timers on us finish up
 
@@ -184,9 +185,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/action/innate/ai/nuke_station/Activate()
 	var/turf/T = get_turf(owner)
 	if(!istype(T) || !is_station_level(T.z))
-		to_chat(owner, span_warning("You cannot activate the doomsday device while off-station!"))
+		to_chat(owner, span_warning(LANG("datum.c52eee3b", null)))
 		return
-	if(tgui_alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", list("confirm = TRUE;", "confirm = FALSE;")) != "confirm = TRUE;")
+	if(tgui_alert(owner, LANG("datum.1a2c29a7", null), LANG("datum.568017da", null), list("confirm = TRUE;", "confirm = FALSE;")) != "confirm = TRUE;")
 		return
 	if (active || owner_AI.stat == DEAD)
 		return //prevent the AI from activating an already active doomsday or while they are dead
@@ -200,19 +201,19 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	set waitfor = FALSE
 	message_admins("[key_name_admin(owner)][ADMIN_FLW(owner)] has activated AI Doomsday.")
 	var/pass = prob(10) ? "******" : "hunter2"
-	to_chat(owner, "<span class='small bolddanger'>run -o -a 'selfdestruct'</span>")
+	to_chat(owner, LANG("datum.6a1d278f", null))
 	sleep(0.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small bolddanger'>Running executable 'selfdestruct'...</span>")
+	to_chat(owner, LANG("datum.a0c12450", null))
 	sleep(rand(10, 30))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	owner.playsound_local(owner, 'sound/announcer/alarm/bloblarm.ogg', 50, 0, use_reverb = FALSE)
-	to_chat(owner, span_userdanger("!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!"))
-	to_chat(owner, span_bolddanger("This is a class-3 security violation. This incident will be reported to Central Command."))
+	to_chat(owner, span_userdanger(LANG("datum.cd45e3ec", null)))
+	to_chat(owner, span_bolddanger(LANG("datum.1a6cdced", null)))
 	for(var/i in 1 to 3)
 		sleep(2 SECONDS)
 		if(QDELETED(owner) || !isturf(owner_AI.loc))
@@ -223,41 +224,41 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small bolddanger'>auth 'akjv9c88asdf12nb' [pass]</span>")
+	to_chat(owner, LANG("datum.a25cd580", list(pass)))
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0, use_reverb = FALSE)
 	sleep(3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Credentials accepted. Welcome, akjv9c88asdf12nb."))
+	to_chat(owner, span_boldnotice(LANG("datum.59dd68ab", null)))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(0.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Arm self-destruct device? (Y/N)"))
+	to_chat(owner, span_boldnotice(LANG("datum.79676224", null)))
 	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage1.ogg', 50, 0, use_reverb = FALSE)
 	sleep(2 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small bolddanger'>Y</span>")
+	to_chat(owner, LANG("datum.ba4da7bc", null))
 	sleep(1.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Confirm arming of self-destruct device? (Y/N)"))
+	to_chat(owner, span_boldnotice(LANG("datum.03e74a65", null)))
 	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(1 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, "<span class='small bolddanger'>Y</span>")
+	to_chat(owner, LANG("datum.ba4da7bc", null))
 	sleep(rand(15, 25))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Please repeat password to confirm."))
+	to_chat(owner, span_boldnotice(LANG("datum.96e4fadb", null)))
 	owner.playsound_local(owner, 'sound/machines/compiler/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(1.4 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
@@ -268,7 +269,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
-	to_chat(owner, span_boldnotice("Credentials accepted. Transmitting arming signal..."))
+	to_chat(owner, span_boldnotice(LANG("datum.eaeb52ac", null)))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
@@ -363,19 +364,19 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_cinematic), /datum/cinematic/malf, world, CALLBACK(src, PROC_REF(trigger_doomsday))), 10 SECONDS)
 
 	else if(world.time >= next_announce)
-		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
+		minor_announce(LANG("obj.f20fe588", list(sec_left)), "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
 /obj/machinery/doomsday_device/proc/trigger_doomsday()
 	callback_on_everyone_on_z(SSmapping.levels_by_trait(ZTRAIT_STATION), CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(bring_doomsday)), src)
-	to_chat(world, span_bold("The AI cleansed the station of life with [src]!"))
+	to_chat(world, span_bold(LANG("obj.0151ae4a", list(src))))
 	SSticker.force_ending = FORCE_END_ROUND
 
 /proc/bring_doomsday(mob/living/victim, atom/source)
 	if(issilicon(victim))
 		return FALSE
 
-	to_chat(victim, span_userdanger("The blast wave from [source] tears you atom from atom!"))
+	to_chat(victim, span_userdanger(LANG("_root.7f89dfff", list(source))))
 	victim.investigate_log("has been dusted by a doomsday device.", INVESTIGATE_DEATHS)
 	victim.dust()
 	return TRUE
@@ -418,7 +419,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	send_status_display_lockdown_alert()
 
 	minor_announce("Hostile runtime detected in door controllers. Isolation lockdown protocols are now in effect. Please remain calm.", "Network Alert:", TRUE)
-	to_chat(owner, span_danger("Lockdown initiated. Network reset in 90 seconds."))
+	to_chat(owner, span_danger(LANG("datum.da48c250", null)))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce),
 		"Automatic system reboot complete. Have a secure day.",
 		"Network reset:"), 90 SECONDS)
@@ -455,14 +456,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/override_machine/New()
 	. = ..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/override_machine/do_ability(mob/living/clicker, atom/clicked_on)
 	if(clicker.incapacitated)
 		unset_ranged_ability(clicker)
 		return FALSE
 	if(!ismachinery(clicked_on))
-		to_chat(clicker, span_warning("You can only animate machines!"))
+		to_chat(clicker, span_warning(LANG("datum.79c6a90e", null)))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
 
@@ -471,18 +472,18 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		clicked_machine = clicked_turret.parent_turret
 
 	if((clicked_machine.resistance_flags & INDESTRUCTIBLE) || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
-		to_chat(clicker, span_warning("That machine can't be overridden!"))
+		to_chat(clicker, span_warning(LANG("datum.8d0bc409", null)))
 		return FALSE
 
 	clicker.playsound_local(clicker, 'sound/misc/interference.ogg', 50, FALSE, use_reverb = FALSE)
 
-	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
+	clicked_machine.audible_message(span_userdanger(LANG("datum.4aa7a19c", list(clicked_machine))))
 	addtimer(CALLBACK(src, PROC_REF(animate_machine), clicker, clicked_machine), 5 SECONDS) //kabeep!
 	unset_ranged_ability(clicker, span_danger("Sending override signal..."))
 	adjust_uses(-1) //adjust after we unset the active ability since we may run out of charges, thus deleting the ability
 
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 	return TRUE
 
@@ -520,7 +521,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			continue
 		var/obj/item/construction/rcd/definite_rcd = potential_rcd
 		definite_rcd.detonate_pulse()
-	to_chat(owner, span_danger("RCD detonation pulse emitted."))
+	to_chat(owner, span_danger(LANG("datum.34b09efc", null)))
 	owner.playsound_local(owner, 'sound/machines/beep/twobeep.ogg', 50, 0)
 
 /// Overload Machine: Allows the AI to overload a machine, detonating it after a delay. Two uses per purchase.
@@ -543,7 +544,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/overload_machine/New()
 	..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(mob/living/clicker, obj/machinery/to_explode)
 	if(QDELETED(to_explode))
@@ -561,7 +562,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		unset_ranged_ability(clicker)
 		return FALSE
 	if(!ismachinery(clicked_on))
-		to_chat(clicker, span_warning("You can only overload machines!"))
+		to_chat(clicker, span_warning(LANG("datum.8b54f8a3", null)))
 		return FALSE
 	var/obj/machinery/clicked_machine = clicked_on
 
@@ -570,16 +571,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		clicked_machine = clicked_turret.parent_turret
 
 	if((clicked_machine.resistance_flags & INDESTRUCTIBLE) || is_type_in_typecache(clicked_machine, GLOB.blacklisted_malf_machines))
-		to_chat(clicker, span_warning("You cannot overload that device!"))
+		to_chat(clicker, span_warning(LANG("datum.4d194e2a", null)))
 		return FALSE
 
 	clicker.playsound_local(clicker, SFX_SPARKS, 50, 0)
 	adjust_uses(-1)
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 
-	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
+	clicked_machine.audible_message(span_userdanger(LANG("datum.4aa7a19c", list(clicked_machine))))
 	addtimer(CALLBACK(src, PROC_REF(detonate_machine), clicker, clicked_machine), 5 SECONDS) //kaboom!
 	unset_ranged_ability(clicker, span_danger("Overcharging machine..."))
 	return TRUE
@@ -602,7 +603,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/blackout/New()
 	..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/blackout/Activate()
 	for(var/obj/machinery/power/apc/apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
@@ -614,12 +615,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			apc.overload_lighting()
 		else
 			apc.overload++
-	to_chat(owner, span_notice("Overcurrent applied to the powernet."))
+	to_chat(owner, span_notice(LANG("datum.f791de54", null)))
 	owner.playsound_local(owner, SFX_SPARKS, 50, 0)
 	adjust_uses(-1)
 	if(QDELETED(src) || uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return
-	desc = "[initial(desc)] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 	build_all_button_icons()
 
 /// HIGH IMPACT HONKING
@@ -639,7 +640,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	uses = 2
 
 /datum/action/innate/ai/honk/Activate()
-	to_chat(owner, span_clown("The intercom system plays your prepared file as commanded."))
+	to_chat(owner, span_clown(LANG("datum.dce3b0eb", null)))
 	for(var/obj/item/radio/intercom/found_intercom as anything in GLOB.intercoms_list)
 		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
 			continue
@@ -687,7 +688,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(!owner_AI.can_place_transformer(src))
 		return
 	active = TRUE
-	if(tgui_alert(owner, "Are you sure you want to place the machine here?", "Are you sure?", list("Yes", "No")) == "No")
+	if(tgui_alert(owner, LANG("datum.10de3b95", null), LANG("datum.77344162", null), list("Yes", "No")) == "No")
 		active = FALSE
 		return
 	if(!owner_AI.can_place_transformer(src))
@@ -699,7 +700,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
 	if(owner_AI.can_shunt) //prevent repeated messages
 		owner_AI.can_shunt = FALSE
-		to_chat(owner, span_warning("You are no longer able to shunt your core to APCs."))
+		to_chat(owner, span_warning(LANG("datum.6a97f71d", null)))
 	adjust_uses(-1)
 	active = FALSE
 
@@ -757,7 +758,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		if(!is_station_level(AA.z))
 			continue
 		AA.obj_flags |= EMAGGED
-	to_chat(owner, span_notice("All air alarm safeties on the station have been overridden. Air alarms may now use extremely dangerous environmental modes."))
+	to_chat(owner, span_notice(LANG("datum.b2714a5e", null)))
 	owner.playsound_local(owner, 'sound/machines/terminal/terminal_off.ogg', 50, 0)
 
 /// Thermal Sensor Override: Unlocks the ability to disable all fire alarms from doing their job.
@@ -788,7 +789,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		if(!is_station_level(firelock.z))
 			continue
 		firelock.emag_act(owner_AI, src)
-	to_chat(owner, span_notice("All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized."))
+	to_chat(owner, span_notice(LANG("datum.0b670a8b", null)))
 	owner.playsound_local(owner, 'sound/machines/terminal/terminal_off.ogg', 50, 0)
 
 /// Disable Emergency Lights
@@ -815,7 +816,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			L.no_low_power = TRUE
 			INVOKE_ASYNC(L, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
 		CHECK_TICK
-	to_chat(owner, span_notice("Emergency light connections severed."))
+	to_chat(owner, span_notice(LANG("datum.c6462c8e", null)))
 	owner.playsound_local(owner, 'sound/effects/light_flicker.ogg', 50, FALSE)
 
 /// Reactivate Camera Network: Reactivates up to 30 cameras across the station.
@@ -839,7 +840,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/reactivate_cameras/New()
 	..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
@@ -851,12 +852,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			C.view_range = initial(C.view_range)
 			fixed_cameras++
 			uses-- //Not adjust_uses() so it doesn't automatically delete or show a message
-	to_chat(owner, span_notice("Diagnostic complete! Cameras reactivated: <b>[fixed_cameras]</b>. Reactivations remaining: <b>[uses]</b>."))
+	to_chat(owner, span_notice(LANG("datum.50f0f4d1", list(fixed_cameras, uses))))
 	owner.playsound_local(owner, 'sound/items/tools/wirecutter.ogg', 50, 0)
 	adjust_uses(0, TRUE) //Checks the uses remaining
 	if(QDELETED(src) || !uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return
-	desc = "[initial(desc)] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 	build_all_button_icons()
 
 /// Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.
@@ -1066,9 +1067,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 				return FALSE
 
 			var/found = FALSE
+			var/unreversed_selection = lang_unreverse_text(selection) // NOVA EDIT - I18N - tolerate translated dropdown value
 			for(var/option in voice_options)
-				if(option == selection)
+				if(option == selection || option == unreversed_selection) // NOVA EDIT - I18N
 					found = TRUE
+					selection = option // NOVA EDIT - I18N - use canonical english value
 					break
 			if(!found)
 				stack_trace("User attempted to select an unavailable voice option")
@@ -1077,7 +1080,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			say_span = selection
 			if(changing_voice)
 				owner.speech_span = say_span
-			to_chat(usr, span_notice("Voice set to [selection]."))
+			to_chat(usr, span_notice(LANG("obj.fb642bd5", list(selection))))
 		if("verb")
 			say_verb = strip_html(params["verb"], MAX_NAME_LEN)
 			if(changing_voice)
@@ -1112,7 +1115,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/emag/New()
 	. = ..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/emag/do_ability(mob/living/clicker, atom/clicked_on)
 
@@ -1136,46 +1139,46 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 
 	if (!ai_clicker.can_see(clicked_on))
-		clicked_on.balloon_alert(ai_clicker, "can't see!")
+		clicked_on.balloon_alert(ai_clicker, LANG("datum.99dc0bd6", null))
 		return FALSE
 
 	if (ismachinery(clicked_on))
 		var/obj/machinery/clicked_machine = clicked_on
 		if (!clicked_machine.is_operational)
-			clicked_machine.balloon_alert(ai_clicker, "not operational!")
+			clicked_machine.balloon_alert(ai_clicker, LANG("datum.1dd04a29", null))
 			return FALSE
 
 	if (!(is_type_in_list(clicked_on, compatable_typepaths)))
-		clicked_on.balloon_alert(ai_clicker, "incompatable!")
+		clicked_on.balloon_alert(ai_clicker, LANG("datum.4b0e2a28", null))
 		return FALSE
 
 	if (istype(clicked_on, /obj/machinery/door/airlock)) // I HATE THIS CODE SO MUCHHH
 		var/obj/machinery/door/airlock/clicked_airlock = clicked_on
 		if (!clicked_airlock.canAIControl(ai_clicker))
-			clicked_airlock.balloon_alert(ai_clicker, "unable to interface!")
+			clicked_airlock.balloon_alert(ai_clicker, LANG("datum.0685f876", null))
 			return FALSE
 
 	if (istype(clicked_on, /obj/machinery/airalarm))
 		var/obj/machinery/airalarm/alarm = clicked_on
 		if (alarm.aidisabled)
-			alarm.balloon_alert(ai_clicker, "unable to interface!")
+			alarm.balloon_alert(ai_clicker, LANG("datum.0685f876", null))
 			return FALSE
 
 	if (istype(clicked_on, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/clicked_apc = clicked_on
 		if (clicked_apc.aidisabled)
-			clicked_apc.balloon_alert(ai_clicker, "unable to interface!")
+			clicked_apc.balloon_alert(ai_clicker, LANG("datum.0685f876", null))
 			return FALSE
 
 	if (!clicked_on.emag_act(ai_clicker))
-		to_chat(ai_clicker, span_warning("Hostile software insertion failed!")) // lets not overlap balloon alerts
+		to_chat(ai_clicker, span_warning(LANG("datum.b1e97bb6", null))) // lets not overlap balloon alerts
 		return FALSE
 
-	to_chat(ai_clicker, span_notice("Software package successfully injected."))
+	to_chat(ai_clicker, span_notice(LANG("datum.5dfdfa51", null)))
 
 	adjust_uses(-1)
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 	else
 		unset_ranged_ability(ai_clicker, span_warning("Out of uses!"))
@@ -1209,12 +1212,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/core_tilt/New()
 	. = ..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/core_tilt/do_ability(mob/living/clicker, atom/clicked_on)
 
 	if (!COOLDOWN_FINISHED(src, time_til_next_tilt))
-		clicker.balloon_alert(clicker, "on cooldown!")
+		clicker.balloon_alert(clicker, LANG("datum.d4ae5d4d", null))
 		return FALSE
 
 	if (!isAI(clicker))
@@ -1229,7 +1232,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 
 	if (target == ai_clicker.loc)
-		target.balloon_alert(ai_clicker, "can't roll on yourself!")
+		target.balloon_alert(ai_clicker, LANG("datum.a61264ee", null))
 		return FALSE
 
 	var/picked_dir = get_dir(ai_clicker, target)
@@ -1238,12 +1241,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/turf/temp_target = get_step(ai_clicker, picked_dir) // we can move during the timer so we cant just pass the ref
 
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(temp_target, roll_over_time)
-	ai_clicker.balloon_alert_to_viewers("rolling...")
+	ai_clicker.balloon_alert_to_viewers(LANG("datum.19161138", null))
 	addtimer(CALLBACK(src, PROC_REF(do_roll_over), ai_clicker, picked_dir), roll_over_time)
 
 	adjust_uses(-1)
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 
 	COOLDOWN_START(src, time_til_next_tilt, roll_over_cooldown)
@@ -1302,7 +1305,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt/New()
 	. = ..()
-	desc = "[desc] It has [uses] use\s remaining."
+	desc = LANG("datum.f7cf37a2", list(desc, uses))
 
 /datum/action/innate/ai/ranged/remote_vendor_tilt/do_ability(mob/living/clicker, atom/clicked_on)
 
@@ -1315,21 +1318,21 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 
 	if(!isvendor(clicked_on))
-		clicked_on.balloon_alert(ai_clicker, "not a vendor!")
+		clicked_on.balloon_alert(ai_clicker, LANG("datum.a582c424", null))
 		return FALSE
 
 	var/obj/machinery/vending/clicked_vendor = clicked_on
 
 	if (clicked_vendor.tilted)
-		clicked_vendor.balloon_alert(ai_clicker, "already tilted!")
+		clicked_vendor.balloon_alert(ai_clicker, LANG("datum.4fe53e58", null))
 		return FALSE
 
 	if (!clicked_vendor.tiltable)
-		clicked_vendor.balloon_alert(ai_clicker, "cannot be tilted!")
+		clicked_vendor.balloon_alert(ai_clicker, LANG("datum.c2ad8271", null))
 		return FALSE
 
 	if (!clicked_vendor.is_operational)
-		clicked_vendor.balloon_alert(ai_clicker, "inoperable!")
+		clicked_vendor.balloon_alert(ai_clicker, LANG("datum.5cc584d9", null))
 		return FALSE
 
 	var/picked_dir_string = show_radial_menu(ai_clicker, clicked_vendor, GLOB.all_radial_directions, custom_check = CALLBACK(src, PROC_REF(radial_check), clicker, clicked_vendor))
@@ -1339,17 +1342,17 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 	var/turf/target = get_step(clicked_vendor, picked_dir)
 	if (!ai_clicker.can_see(target))
-		to_chat(ai_clicker, span_warning("You can't see the target tile!"))
+		to_chat(ai_clicker, span_warning(LANG("datum.76a64d71", null)))
 		return FALSE
 
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target, time_to_tilt)
-	clicked_vendor.visible_message(span_warning("[clicked_vendor] starts falling over..."))
-	clicked_vendor.balloon_alert_to_viewers("falling over...")
+	clicked_vendor.visible_message(span_warning(LANG("datum.4abd7a5b", list(clicked_vendor))))
+	clicked_vendor.balloon_alert_to_viewers(LANG("datum.acff9b34", null))
 	addtimer(CALLBACK(src, PROC_REF(do_vendor_tilt), clicked_vendor, target), time_to_tilt)
 
 	adjust_uses(-1)
 	if(uses)
-		desc = "[initial(desc)] It has [uses] use\s remaining."
+		desc = LANG("datum.f7cf37a2", list(initial(desc), uses))
 		build_all_button_icons()
 
 	unset_ranged_ability(clicker, span_danger("Tilting..."))
@@ -1376,7 +1379,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		return FALSE
 
 	if (!clicker.can_see(clicked_vendor))
-		to_chat(clicker, span_warning("Lost sight of [clicked_vendor]!"))
+		to_chat(clicker, span_warning(LANG("datum.b9f53add", list(clicked_vendor))))
 		return FALSE
 
 	return TRUE

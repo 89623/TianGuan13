@@ -58,7 +58,7 @@
 	. = ..()
 	var/obj/item/ammo_casing/pulse/casing = chambered
 	if(istype(casing))
-		. += span_notice("The chambered cell has [casing.remaining_uses] out of [casing.max_uses] shots remaining.")
+		. += span_notice(LANG("obj.a97452f3", list(casing.remaining_uses, casing.max_uses)))
 
 /obj/item/gun/ballistic/automatic/pulse_rifle/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	var/obj/item/ammo_casing/pulse/casing = chambered
@@ -124,7 +124,7 @@
 /obj/item/gun/ballistic/automatic/pulse_rifle/postfire_empty_checks(last_shot_succeeded)
 	var/obj/item/ammo_casing/pulse/casing = chambered
 	if(istype(casing) && casing.remaining_uses <= 0)
-		visible_message(span_warning("[src] emits a low power warning!"))
+		visible_message(span_warning(LANG("obj.15299bf7", list(src))))
 		playsound(src, 'sound/items/weapons/gun/general/empty_alarm.ogg', 40, TRUE)
 		return
 	..()

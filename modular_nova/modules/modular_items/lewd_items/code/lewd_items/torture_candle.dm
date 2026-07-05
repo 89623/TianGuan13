@@ -125,7 +125,7 @@
 	else
 		if(!put_out_candle())
 			return CLICK_ACTION_BLOCKING
-		user.visible_message(span_notice("[user] snuffs [src]."))
+		user.visible_message(span_notice(LANG("obj.cacf9c16", list(user, src))))
 		return CLICK_ACTION_SUCCESS
 
 /*
@@ -140,10 +140,10 @@
 	var/message = ""
 	var/targeted_somewhere
 	if(!lit)
-		to_chat(user, span_danger("[src] needs to be lit to produce wax!"))
+		to_chat(user, span_danger(LANG("obj.2b98273b", list(src))))
 		return
 	if(!attacked.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("It looks like [attacked] don't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.e1b7b039", list(attacked))))
 		return
 	switch(user.zone_selected) //to let code know what part of body we gonna wax
 		if(BODY_ZONE_PRECISE_GROIN)
@@ -176,7 +176,7 @@
 				attacked.adjust_pain(PAIN_DEFAULT)
 
 			else
-				to_chat(user, span_danger("Looks like [attacked]'s groin is covered!"))
+				to_chat(user, span_danger(LANG("obj.c5b0317d", list(attacked))))
 				return
 
 		if(BODY_ZONE_CHEST)
@@ -188,7 +188,7 @@
 				attacked.adjust_pain(PAIN_DEFAULT * 0.66)
 
 			else
-				to_chat(user, span_danger("Looks like [attacked]'s chest is covered!"))
+				to_chat(user, span_danger(LANG("obj.b0aede84", list(attacked))))
 				return
 
 	if(!targeted_somewhere)

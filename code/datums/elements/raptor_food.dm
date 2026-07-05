@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Element which influences raptor children upon owner's consumption as food
 /datum/element/raptor_food
 	element_flags = ELEMENT_BESPOKE
@@ -48,19 +49,19 @@
 
 	// Only personality or color probability effects, or just pure negatives
 	if (strognest_effect == 0)
-		examine_list += span_notice("You reckon this would have unique effects on your raptor's offspring if you fed it to them...")
+		examine_list += span_notice(LANG("datum.af0f81ed", null))
 		return
 
 	if (strognest_effect == attack_modifier)
-		examine_list += span_notice("You reckon this would have make your raptor's offspring stronger if you fed it to them...")
+		examine_list += span_notice(LANG("datum.f0e0e75c", null))
 	else if (strognest_effect == health_modifier)
-		examine_list += span_notice("You reckon this would have make your raptor's offspring tougher if you fed it to them...")
+		examine_list += span_notice(LANG("datum.5dfb4b9e", null))
 	else if (strognest_effect == speed_modifier)
-		examine_list += span_notice("You reckon this would have make your raptor's offspring faster if you fed it to them...")
+		examine_list += span_notice(LANG("datum.1f7a2a22", null))
 	else if (strognest_effect == ability_modifier)
-		examine_list += span_notice("You reckon this would have make your raptor's offspring more capable if you fed it to them...")
+		examine_list += span_notice(LANG("datum.0330ec84", null))
 	else if (strognest_effect == growth_modifier)
-		examine_list += span_notice("You reckon this would have make your raptor's offspring grow faster if you fed it to them...")
+		examine_list += span_notice(LANG("datum.74815756", null))
 
 /datum/element/raptor_food/proc/on_eaten(obj/item/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER

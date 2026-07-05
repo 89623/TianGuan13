@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SEEDLING_STATE_NEUTRAL 0
 #define SEEDLING_STATE_WARMUP 1
 #define SEEDLING_STATE_ACTIVE 2
@@ -104,12 +105,12 @@
 /mob/living/basic/seedling/proc/treat_hydro_tray(obj/machinery/hydroponics/hydro)
 
 	if(hydro.plant_status == HYDROTRAY_PLANT_DEAD)
-		balloon_alert(src, "dead plant removed")
+		balloon_alert(src, LANG("mob.781a4238", null))
 		hydro.set_seed(null)
 		return
 
 	if(hydro.weedlevel > 0)
-		balloon_alert(src, "weeds uprooted")
+		balloon_alert(src, LANG("mob.e8f1844a", null))
 		hydro.set_weedlevel(0)
 		return
 
@@ -251,7 +252,7 @@
 	var/mob/living/basic/seedling/seed_owner = owner
 	if(seed_owner.combatant_state != SEEDLING_STATE_NEUTRAL)
 		if(feedback)
-			seed_owner.balloon_alert(seed_owner, "charging!")
+			seed_owner.balloon_alert(seed_owner, LANG("datum.944c88c7", null))
 		return FALSE
 	return TRUE
 
@@ -299,7 +300,7 @@
 	var/mob/living/basic/seedling/seed_owner = owner
 	if(seed_owner.combatant_state != SEEDLING_STATE_NEUTRAL)
 		if(feedback)
-			seed_owner.balloon_alert(seed_owner, "charging!")
+			seed_owner.balloon_alert(seed_owner, LANG("datum.944c88c7", null))
 		return FALSE
 	return TRUE
 

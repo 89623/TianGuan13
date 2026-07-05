@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /****************Explorer's Suit and Mask****************/
 /obj/item/clothing/suit/hooded/explorer
 	name = "explorer suit"
@@ -95,7 +96,7 @@
 	. = ..()
 	if(up || w_class == WEIGHT_CLASS_SMALL)
 		return
-	. += span_notice("You could fit this into a box if you adjusted it.")
+	. += span_notice(LANG("obj.aaa9b3fd", null))
 
 /obj/item/clothing/mask/gas/explorer/folded
 	w_class = WEIGHT_CLASS_SMALL
@@ -142,23 +143,23 @@
 		return NONE
 	var/mob/living/carbon/char = user
 	if((char.get_item_by_slot(ITEM_SLOT_NECK) == src) || (char.get_item_by_slot(ITEM_SLOT_OCLOTHING) == src))
-		to_chat(user, span_warning("You can't adjust [src] while wearing it!"))
+		to_chat(user, span_warning(LANG("obj.3374cd4e", list(src))))
 		return CLICK_ACTION_BLOCKING
 	if(!user.is_holding(src))
-		to_chat(user, span_warning("You must be holding [src] in order to adjust it!"))
+		to_chat(user, span_warning(LANG("obj.d48ac390", list(src))))
 		return CLICK_ACTION_BLOCKING
 	if(slot_flags & ITEM_SLOT_OCLOTHING)
 		slot_flags = ITEM_SLOT_NECK
 		cold_protection = null
 		heat_protection = null
 		set_armor(/datum/armor/none)
-		user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use."))
+		user.visible_message(span_notice(LANG("obj.4aa7068c", list(user, src))), span_notice(LANG("obj.e2bd153e", list(src))))
 	else
 		slot_flags = initial(slot_flags)
 		cold_protection = initial(cold_protection)
 		heat_protection = initial(heat_protection)
 		set_armor(initial(armor_type))
-		user.visible_message(span_notice("[user] adjusts their [src] for defensive use."), span_notice("You adjust your [src] for defensive use."))
+		user.visible_message(span_notice(LANG("obj.76afedb8", list(user, src))), span_notice(LANG("obj.0b0b9063", list(src))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/hooded/cloakhood/goliath

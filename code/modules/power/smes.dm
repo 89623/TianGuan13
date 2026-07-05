@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // the SMES
 // stores power
 
@@ -125,16 +126,16 @@
 /obj/machinery/power/smes/examine(user)
 	. = ..()
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "opened"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "opened")))
 	if(panel_open)
 		if(!terminal)
-			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
-		. += span_notice("It can [EXAMINE_HINT("wrenched")] to rotate.")
+			. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
+		. += span_notice(LANG("obj.17d6a1b5", list(EXAMINE_HINT("wrenched"))))
 
 	if(!terminal)
-		. += span_warning("A terminal that requires [EXAMINE_HINT("10 cable pieces")] needs to be installed!.")
+		. += span_warning(LANG("obj.bac2224f", list(EXAMINE_HINT("10 cable pieces"))))
 	else if(panel_open)
-		. += span_notice("The terminal can be [EXAMINE_HINT("cut")] apart.")
+		. += span_notice(LANG("obj.05bc141a", list(EXAMINE_HINT("cut"))))
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()
@@ -222,19 +223,19 @@
 	var/turf/terminal_turf = get_turf(user)
 	if(!panel_open)
 		if(!silent && user)
-			balloon_alert(user, "open the maintenance panel!")
+			balloon_alert(user, LANG("obj.7d532317", null))
 		return FALSE
 	if(terminal_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		if(!silent && user)
-			balloon_alert(user, "remove the floor plating!")
+			balloon_alert(user, LANG("obj.0d1f39e9", null))
 		return FALSE
 	if(terminal)
 		if(!silent && user)
-			balloon_alert(user, "already wired!")
+			balloon_alert(user, LANG("obj.9a6e26bd", null))
 		return FALSE
 	if(installing_cable.get_amount() < 10)
 		if(!silent && user)
-			balloon_alert(user, "need ten lengths of cable!")
+			balloon_alert(user, LANG("obj.60843c8e", null))
 		return FALSE
 	return TRUE
 
@@ -249,7 +250,7 @@
 		//select cable layer
 		var/terminal_cable_layer = installing_cable.target_layer
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
-			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
+			var/choice = tgui_input_list(user, LANG("obj.4ece58d6", null), LANG("obj.3925bd26", null), GLOB.cable_name_to_layer)
 			if(isnull(choice) \
 				|| !user.is_holding(installing_cable) \
 				|| !user.Adjacent(src) \
@@ -258,8 +259,8 @@
 			)
 				return ITEM_INTERACT_BLOCKING
 			terminal_cable_layer = GLOB.cable_name_to_layer[choice]
-		user.visible_message(span_notice("[user.name] starts adding cables to [src]."))
-		balloon_alert(user, "adding cables...")
+		user.visible_message(span_notice(LANG("obj.0a08c985", list(user.name, src))))
+		balloon_alert(user, LANG("obj.a59792f9", null))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 		//use cable
@@ -274,8 +275,8 @@
 			do_sparks(5, TRUE, src)
 			return ITEM_INTERACT_BLOCKING
 		cable.use(10)
-		user.visible_message(span_notice("[user.name] adds cables to [src]."))
-		balloon_alert(user, "cables added")
+		user.visible_message(span_notice(LANG("obj.bd55397c", list(user.name, src))))
+		balloon_alert(user, LANG("obj.e501673b", null))
 
 		//build the terminal and link it to the network
 		terminal = new(turf)
@@ -301,7 +302,7 @@
 
 /obj/machinery/power/smes/crowbar_act(mob/living/user, obj/item/tool)
 	if(terminal)
-		balloon_alert(user, "remove the power terminal!")
+		balloon_alert(user, LANG("obj.f2afc8f6", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(default_deconstruction_crowbar(user, tool))
@@ -326,11 +327,11 @@
 				set_machine_stat(machine_stat & ~BROKEN)
 				update_appearance(UPDATE_OVERLAYS)
 				return ITEM_INTERACT_SUCCESS
-		to_chat(user, span_alert("No power terminal found."))
+		to_chat(user, span_alert(LANG("obj.41f75ba8", null)))
 
 /obj/machinery/power/smes/cable_layer_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		balloon_alert(user, "open panel first!")
+		balloon_alert(user, LANG("obj.a59b2c79", null))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 

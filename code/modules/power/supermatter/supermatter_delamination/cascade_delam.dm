@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/sm_delam/cascade
 
 /datum/sm_delam/cascade/can_select(obj/machinery/power/supermatter_crystal/sm)
@@ -87,8 +88,7 @@
 		return FALSE
 	if(!can_select(sm))
 		return FALSE
-	priority_announce("Attention: Long range anomaly scans indicate abnormal quantities of harmonic flux originating from \
-	a subject within [station_name()], a resonance collapse may occur.",
+	priority_announce(LANG("datum.3e55b37c", list(station_name())),
 	"Nanotrasen Star Observation Association", 'sound/announcer/alarm/airraid.ogg')
 	return TRUE
 

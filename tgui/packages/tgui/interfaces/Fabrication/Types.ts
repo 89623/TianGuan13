@@ -14,6 +14,11 @@ export type Material = {
    */
   name: string;
 
+  // NOVA EDIT ADDITION - I18N: English material name (P1 never translates the "id" key),
+  // used for MATERIAL_ICONS / MATERIAL_RARITY lookups so multi-word names (e.g. "bluespace
+  // crystal") still resolve their icon when `name` is localized. Falls back to `name`.
+  id?: string;
+
   /**
    * An internal reference to the material that the server can use to uniquely
    * identify the material.

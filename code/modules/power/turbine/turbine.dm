@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Minimum pressure of gases pumped through the turbine
 #define MINIMUM_TURBINE_PRESSURE 0.01
 ///Returns the minimum pressure if it falls below the value
@@ -90,16 +91,16 @@
 /obj/machinery/power/turbine/examine(mob/user)
 	. = ..()
 	if(installed_part)
-		. += span_notice("Currently at tier [installed_part.current_tier].")
+		. += span_notice(LANG("obj.6df13067", list(installed_part.current_tier)))
 		if(installed_part.current_tier + 1 < TURBINE_PART_TIER_FOUR)
-			. += span_notice("Can be upgraded by using a tier [installed_part.current_tier + 1] part.")
-		. += span_notice("\The [installed_part] can be [EXAMINE_HINT("pried")] out.")
+			. += span_notice(LANG("obj.bdc46d2e", list(installed_part.current_tier + 1)))
+		. += span_notice(LANG("obj.08c3e19a", list(installed_part, EXAMINE_HINT("pried"))))
 	else
-		. += span_warning("Is missing a [initial(part_path.name)].")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+		. += span_warning(LANG("obj.94e64e27", list(initial(part_path.name))))
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("It can rotated with a [EXAMINE_HINT("wrench")]")
-		. += span_notice("The full machine can be [EXAMINE_HINT("pried")] apart")
+		. += span_notice(LANG("obj.5bb9b460", list(EXAMINE_HINT("wrench"))))
+		. += span_notice(LANG("obj.553cbc20", list(EXAMINE_HINT("pried"))))
 
 ///Is this machine currently running
 /obj/machinery/power/turbine/proc/is_active()
@@ -167,10 +168,10 @@
 /obj/machinery/power/turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(is_active())
-		balloon_alert(user, "turn it off!")
+		balloon_alert(user, LANG("obj.837cbcec", null))
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor first!")
+		balloon_alert(user, LANG("obj.fc0b549c", null))
 		return
 
 	tool.play_tool_sound(src, 50)
@@ -194,13 +195,13 @@
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(!panel_open)
-		balloon_alert(user, "panel is closed!")
+		balloon_alert(user, LANG("obj.c6eae104", null))
 		return
 	if(!installed_part)
-		balloon_alert(user, "no rotor installed!")
+		balloon_alert(user, LANG("obj.9131c6de", null))
 		return
 	if(is_active())
-		balloon_alert(user, "[src] is on!")
+		balloon_alert(user, LANG("obj.65adde74", list(src)))
 		return
 
 	user.put_in_hands(installed_part)
@@ -253,10 +254,10 @@
 
 	//not in a state to accept the part. block so we don't bash the machine and damage it
 	if(is_active())
-		balloon_alert(user, "turn off the machine first!")
+		balloon_alert(user, LANG("obj.06695743", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!panel_open)
-		balloon_alert(user, "open the maintenance hatch first!")
+		balloon_alert(user, LANG("obj.fedd4878", null))
 		return ITEM_INTERACT_BLOCKING
 
 	//install the part
@@ -264,9 +265,9 @@
 		return ITEM_INTERACT_BLOCKING
 	if(installed_part)
 		user.put_in_hands(installed_part)
-		balloon_alert(user, "replaced part with the one in hand")
+		balloon_alert(user, LANG("obj.01cd256a", null))
 	else
-		balloon_alert(user, "installed new part")
+		balloon_alert(user, LANG("obj.1c600683", null))
 	user.transferItemToLoc(object, src)
 	installed_part = object
 	efficiency = installed_part.get_tier_value(TURBINE_MAX_EFFICIENCY)
@@ -434,9 +435,9 @@
 /obj/machinery/power/turbine/core_rotor/examine(mob/user)
 	. = ..()
 	if(!panel_open)
-		. += span_notice("[EXAMINE_HINT("screw")] open its panel to change cable layer.")
+		. += span_notice(LANG("obj.7962f52d", list(EXAMINE_HINT("screw"))))
 	if(!all_parts_connected)
-		. += span_warning("The parts need to be linked via a [EXAMINE_HINT("multitool")]")
+		. += span_warning(LANG("obj.581f93ed", list(EXAMINE_HINT("multitool"))))
 
 ///Adds overlays to this turbines appearance
 /obj/machinery/power/turbine/core_rotor/set_overlays(list/overlays)
@@ -449,7 +450,7 @@
 
 /obj/machinery/power/turbine/core_rotor/cable_layer_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		balloon_alert(user, "open panel first!")
+		balloon_alert(user, LANG("obj.a59b2c79", null))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
@@ -463,10 +464,10 @@
 		return ITEM_INTERACT_SUCCESS
 
 	//log rotor to link later to computer
-	balloon_alert(user, "all parts linked")
+	balloon_alert(user, LANG("obj.8a8fca14", null))
 	var/obj/item/multitool/multitool = tool
 	multitool.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
+	to_chat(user, span_notice(LANG("obj.cd58d744", list(tool))))
 
 	//success
 	return ITEM_INTERACT_SUCCESS

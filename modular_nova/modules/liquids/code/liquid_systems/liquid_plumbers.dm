@@ -34,8 +34,8 @@
 
 /obj/machinery/plumbing/floor_pump/examine(mob/user)
 	. = ..()
-	. += span_notice("It's currently turned [turned_on ? "ON" : "OFF"].")
-	. += span_notice("Its height regulator [height_regulator ? "points at [height_regulator]" : "is disabled"]. Click while unanchored to change.")
+	. += span_notice(LANG("obj.2d295bc8", list(turned_on ? "ON" : "OFF")))
+	. += span_notice(LANG("obj.0d6f5458", list(height_regulator ? "points at [height_regulator]" : "is disabled")))
 
 /obj/machinery/plumbing/floor_pump/update_appearance(updates)
 	. = ..()
@@ -63,7 +63,7 @@
 	if(!anchored)
 		set_regulator(user)
 		return
-	balloon_alert(user, "turned [turned_on ? "off" : "on"]")
+	balloon_alert(user, LANG("obj.8fcfde3c", list(turned_on ? "off" : "on")))
 	turned_on = !turned_on
 	update_icon_state()
 
@@ -74,7 +74,7 @@
 	if(!user.can_perform_action(src, NEED_DEXTERITY))
 		return
 	var/new_height = tgui_input_number(user,
-		"At what water level should the pump stop pumping from 0 to [LIQUID_HEIGHT_CONSIDER_FULL_TILE]? 0 disables.",
+		LANG("obj.b2112d21", list(LIQUID_HEIGHT_CONSIDER_FULL_TILE)),
 		"[src]",
 		default = height_regulator,
 		min_value = 0,
@@ -242,9 +242,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/plumbing/floor_pump/input/on/waste, 0
 /obj/machinery/plumbing/floor_pump/output/examine(mob/user)
 	. = ..()
 	if(over_pressure)
-		. += span_warning("The gas regulator light is blinking.")
+		. += span_warning(LANG("obj.cbaf667f", null))
 	if(over_volume)
-		. += span_warning("The liquid volume regulator light is blinking.")
+		. += span_warning(LANG("obj.ec547c97", null))
 
 /obj/machinery/plumbing/floor_pump/output/are_reagents_ready()
 	return reagents.total_volume > 0

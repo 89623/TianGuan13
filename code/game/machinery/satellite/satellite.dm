@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/satellite
 	name = "\improper Defunct Satellite"
 	desc = ""
@@ -43,10 +44,10 @@
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())
 		if(user)
-			to_chat(user, span_warning("You can only activate [src] in space."))
+			to_chat(user, span_warning(LANG("obj.08e90777", list(src))))
 		return FALSE
 	if(user)
-		to_chat(user, span_notice("You [active ? "deactivate": "activate"] [src]."))
+		to_chat(user, span_notice(LANG("obj.d6171b71", list(active ? "deactivate": "activate", src))))
 	set_anchored(!anchored)
 	return TRUE
 
@@ -56,5 +57,5 @@
 
 /obj/machinery/satellite/multitool_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, span_notice("// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]"))
+	to_chat(user, span_notice(LANG("obj.7d69322a", list(id, active ? "PRIMARY" : "STANDBY", (obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""))))
 	return TRUE

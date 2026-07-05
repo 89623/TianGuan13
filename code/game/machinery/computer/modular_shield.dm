@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/modular_shield
 	name = "modular shield control console"
 	desc = "Used to remotely monitor and toggle modular shield generators."
@@ -8,7 +9,7 @@
 
 //lets monkeys randomly mash buttons to toggle the generators
 /obj/machinery/computer/modular_shield/attack_paw(mob/user, list/modifiers)
-	balloon_alert(user, "mashing buttons")
+	balloon_alert(user, LANG("obj.c02803d2", null))
 	if(!do_after(user, 4 SECONDS, target = src))
 		return
 	for(var/obj/machinery/modular_shield_generator/generator as anything in generators)
@@ -23,7 +24,7 @@
 	generators |= tool.buffer
 	RegisterSignal(tool.buffer, COMSIG_QDELETING, PROC_REF(generator_deleted))
 	tool.set_buffer(null)
-	to_chat(user, span_notice("You upload the data from the [tool] buffer."))
+	to_chat(user, span_notice(LANG("obj.f0e56642", list(tool))))
 	return ITEM_INTERACT_SUCCESS
 
 ///checks if all connected generators exist

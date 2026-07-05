@@ -9,11 +9,11 @@
 
 /datum/scripture/integration_cog/invoke_success()
 	if(invoker.put_in_hands(new /obj/item/clockwork/integration_cog))
-		to_chat(invoker, span_brass("You summon an integration cog into your hands."))
+		to_chat(invoker, span_brass(LANG("datum.8f216948", null)))
 		playsound(src, 'sound/machines/click.ogg', 50)
 		return TRUE
 
 	else
-		to_chat(invoker, span_brass("You summon an integration cog on the floor."))
+		to_chat(invoker, span_brass(LANG("datum.2b41480c", null)))
 		playsound(src, 'sound/machines/click.ogg', 50)
 		return FALSE

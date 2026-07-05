@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A reasonably durable guardian linked to you by a chain of lightning, zapping people who get between you
 /mob/living/basic/guardian/lightning
 	guardian_type = GUARDIAN_LIGHTNING
@@ -83,9 +84,9 @@
 /mob/living/basic/guardian/lightning/proc/on_chain_zap(mob/living/target)
 	target.electrocute_act(shock_damage = 0, source = "lightning chain")
 	target.visible_message(
-		span_danger("[target] was shocked by the lightning chain!"),
-		span_userdanger("You are shocked by the lightning chain!"),
-		span_hear("You hear a heavy electrical crack."),
+		span_danger(LANG("mob.4f60d4f3", list(target))),
+		span_userdanger(LANG("mob.7777aa87", null)),
+		span_hear(LANG("mob.495976fb", null)),
 	)
 
 /// Beam definition for our lightning chain

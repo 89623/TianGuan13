@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/melee/supermatter_sword
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
@@ -23,7 +24,7 @@
 	qdel(shard.countdown)
 	shard.countdown = null
 	START_PROCESSING(SSobj, src)
-	visible_message(span_warning("[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all."))
+	visible_message(span_warning(LANG("obj.f121d87f", list(src))))
 	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(eat_bullets))
 
 /obj/item/melee/supermatter_sword/process()
@@ -66,15 +67,15 @@
 
 /obj/item/melee/supermatter_sword/ex_act(severity, target)
 	visible_message(
-		span_danger("The blast wave smacks into [src] and rapidly flashes to ash."),
-		span_hear("You hear a loud crack as you are washed with a wave of heat.")
+		span_danger(LANG("obj.cc3a4033", list(src))),
+		span_hear(LANG("obj.e2bdcbdd", null))
 	)
 	consume_everything()
 	return TRUE
 
 /obj/item/melee/supermatter_sword/acid_act()
-	visible_message(span_danger("The acid smacks into [src] and rapidly flashes to ash."),\
-	span_hear("You hear a loud crack as you are washed with a wave of heat."))
+	visible_message(span_danger(LANG("obj.e7626475", list(src))),\
+	span_hear(LANG("obj.e2bdcbdd", null)))
 	consume_everything()
 	return TRUE
 
@@ -82,15 +83,15 @@
 	SIGNAL_HANDLER
 
 	visible_message(
-		span_danger("[hitting_projectile] smacks into [source] and rapidly flashes to ash."),
+		span_danger(LANG("obj.784fc69f", list(hitting_projectile, source))),
 		null,
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		span_hear(LANG("obj.e2bdcbdd", null)),
 	)
 	consume_everything(hitting_projectile)
 	return COMPONENT_BULLET_BLOCKED
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!"))
+	user.visible_message(span_suicide(LANG("obj.dca60f36", list(user, src, user.p_theyre(), user.p_them()))))
 	user.dropItemToGround(src, TRUE)
 	shard.Bumped(user)
 
@@ -109,7 +110,7 @@
 		return
 	playsound(turf, 'sound/effects/supermatter.ogg', 50, TRUE)
 	turf.visible_message(
-		span_danger("[turf] smacks into [src] and rapidly flashes to ash."),
-		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		span_danger(LANG("obj.784fc69f", list(turf, src))),
+		span_hear(LANG("obj.e2bdcbdd", null)),
 	)
 	shard.Bump(turf)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // This file pretty much just handles all of the interactions between jobconfig.toml and the codebase. This is started by work originating in SSconfig, so I'm okay with it being here.
 
 /// Returns an associated list of all of the job config types that we have in the codebase.
@@ -55,19 +56,19 @@
 	config_documentation = initial(config_documentation) // Reset to default juuuuust in case.
 
 	if(fexists(file(toml_path)))
-		to_chat(user, span_notice("Generating new jobconfig.toml, pulling from the old config settings."))
+		to_chat(user, span_notice(LANG("datum.fdd64b3a", null)))
 		if(!regenerate_job_config(user))
 			return FALSE
 		return TRUE
 
 	if(fexists(file(jobstext))) // Generate the new TOML format, migrating from the text format.
-		to_chat(user, span_notice("Found jobs.txt in config directory! Generating jobconfig.toml from it."))
+		to_chat(user, span_notice(LANG("datum.3e40747d", null)))
 		if(!import_config_from_txt(user))
 			return FALSE
 		return TRUE
 
 	// Generate the new TOML format, using codebase defaults.
-	to_chat(user, span_notice("Generating new jobconfig.toml, using codebase defaults."))
+	to_chat(user, span_notice(LANG("datum.52af164f", null)))
 	var/list/file_data = list()
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		file_data[occupation.config_tag] = generate_blank_job_config(occupation)
@@ -113,7 +114,7 @@
 	var/list/file_data = list()
 
 	if(!fexists(file(toml_path))) // You need an existing (valid) TOML for this to work. Sanity check if someone calls this directly instead of through 'Generate Job Configuration' verb.
-		to_chat(user, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
+		to_chat(user, span_notice(LANG("datum.0dfc2f69", null)))
 		return FALSE
 
 	var/list/job_config = rustg_read_toml_file(toml_path)

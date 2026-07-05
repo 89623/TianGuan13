@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Abstract cheese class
  *
@@ -69,7 +70,7 @@
  * Used in wizard grand rituals' optional cheesy alternative.
  */
 /obj/item/food/cheese/wheel/proc/consume_cheese()
-	visible_message(span_revenwarning("...and is consumed in a vortex of chaos!"))
+	visible_message(span_revenwarning(LANG("obj.8bda7e35", null)))
 	do_sparks(number = 1, cardinal_only = TRUE, source = get_turf(src))
 	qdel(src)
 

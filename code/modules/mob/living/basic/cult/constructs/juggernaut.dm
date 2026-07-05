@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/construct/juggernaut
 	name = "Juggernaut"
 	real_name = "Juggernaut"
@@ -44,8 +45,8 @@
 
 	apply_damage(hitting_projectile.damage * 0.5, hitting_projectile.damage_type)
 	visible_message(
-		span_danger("\The [hitting_projectile] is reflected by [src]'s armored shell!"),
-		span_userdanger("\The [hitting_projectile] is reflected by your armored shell!"),
+		span_danger(LANG("mob.9d7df035", list(hitting_projectile, src))),
+		span_userdanger(LANG("mob.a09bc027", list(hitting_projectile))),
 	)
 
 	hitting_projectile.reflect(src)

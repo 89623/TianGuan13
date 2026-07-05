@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## DANGEROUS ORGAN REMOVAL ELEMENT
  *
@@ -34,10 +35,10 @@
 	if(surgical && source.organ_flags & (ORGAN_FAILING|ORGAN_EMP))
 		return
 	if(user?.Adjacent(source))
-		source.audible_message("[source] explodes on [user]'s face!")
+		source.audible_message(LANG("datum.00b4a71a", list(source, user)))
 		user.take_bodypart_damage(15)
 	else
-		source.audible_message("[source] explodes into tiny pieces!")
+		source.audible_message(LANG("datum.ea4b5b28", list(source)))
 
 	explosion(source, light_impact_range = 1, explosion_cause = source)
 	qdel(source)

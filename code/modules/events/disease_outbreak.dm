@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Advanced virus lower limit for symptoms
 #define ADV_MIN_SYMPTOMS 3
 /// Advanced virus upper limit for symptoms
@@ -124,7 +125,7 @@
 		)
 		var/datum/disease/fake_virus = pick(virus_candidates)
 		illness_type = initial(fake_virus.name)
-	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[illness_type] Alert", ANNOUNCER_OUTBREAK7)
+	priority_announce(LANG("datum.4256af4d", list(station_name())), LANG("datum.120d4f04", list(illness_type)), ANNOUNCER_OUTBREAK7)
 
 	// Set status displays to biohazard alert
 	send_status_display_biohazard_alert()
@@ -239,7 +240,7 @@
 	min_value = 1
 
 /datum/event_admin_setup/input_number/disease_outbreak_advanced/prompt_admins()
-	var/customize_number_of_symptoms = tgui_alert(usr, "Select number of symptoms?", event_control.name, list("Default", "Custom"))
+	var/customize_number_of_symptoms = tgui_alert(usr, LANG("datum.62573377", null), event_control.name, list("Default", "Custom"))
 	switch(customize_number_of_symptoms)
 		if("Custom")
 			return ..()

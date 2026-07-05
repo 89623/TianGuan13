@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Honker
 
 /obj/projectile/bullet/honker
@@ -138,7 +139,7 @@
 
 	used = TRUE
 	var/turf/cur_tur = get_turf(src)
-	cur_tur.visible_message(span_nicegreen("[incoming_shot] impacts [src] and splits!"))
+	cur_tur.visible_message(span_nicegreen(LANG("obj.b9e59501", list(incoming_shot, src))))
 	iterate_splitshots(shooter, incoming_shot)
 	QDEL_IN(src, 0.25 SECONDS) // may not be needed
 

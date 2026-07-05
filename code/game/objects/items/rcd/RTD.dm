@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //RAPID TILING DEVICE
 
 /// time taken to create tile
@@ -281,7 +282,7 @@
 					return ITEM_INTERACT_SUCCESS
 
 		//can't infer floor type!
-		balloon_alert(user, "design not supported!")
+		balloon_alert(user, LANG("obj.98abe25b", null))
 		return ITEM_INTERACT_BLOCKING
 
 	//resource sanity check before & after delay along with special effects
@@ -308,7 +309,7 @@
 	var/obj/item/stack/tile/final_tile = selected_design.new_tile(user.drop_location(), selected_direction)
 	if(QDELETED(final_tile)) //if you were standing on a stack of tiles this newly spawned tile could get merged with it cause its spawned on your location
 		qdel(rcd_effect)
-		balloon_alert(user, "tile got merged with the stack beneath you!")
+		balloon_alert(user, LANG("obj.16264005", null))
 		return ITEM_INTERACT_BLOCKING
 	//step 2 lay tile
 	var/turf/open/new_turf = final_tile.place_tile(floor, user)
@@ -331,7 +332,7 @@
 		return NONE
 
 	if(istype(floor, /turf/open/floor/plating)) //cant deconstruct normal plating thats the RCD's job
-		balloon_alert(user, "nothing to deconstruct!")
+		balloon_alert(user, LANG("obj.ba839479", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/floor_designs = GLOB.floor_designs
@@ -350,7 +351,7 @@
 					cost = design_info["tile_cost"]
 					break
 	if(!cost)
-		balloon_alert(user, "can't deconstruct this type!")
+		balloon_alert(user, LANG("obj.5fa3210e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	//resource sanity check before & after delay along with beam effects
@@ -414,10 +415,10 @@
 	if(!iscyborg(borgy))
 		return FALSE
 	if(!borgy.cell)
-		balloon_alert(user, "no cell found!")
+		balloon_alert(user, LANG("obj.ba8f2f7d", null))
 		return FALSE
 	if(borgy.cell.charge < (amount * RTD_BORG_ENERGY_FACTOR))
-		balloon_alert(user, "insufficient charge!")
+		balloon_alert(user, LANG("obj.206fba9f", null))
 		return FALSE
 	if(!dry_run)
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)

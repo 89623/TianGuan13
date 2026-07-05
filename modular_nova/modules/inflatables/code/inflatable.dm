@@ -81,14 +81,14 @@
 		atom_destruction(damage_flag)
 
 /obj/structure/inflatable/atom_destruction(damage_flag)
-	visible_message(span_warning("[src] pop\s!"))
+	visible_message(span_warning(LANG("obj.30f28b1c", list(src))))
 	deflate()
 	return ..()
 
 /obj/structure/inflatable/attacked_by(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(item.get_sharpness())
 		LAZYSET(attack_modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
-		visible_message(span_danger("<b>[user] pierces [src] with [item]!</b>"))
+		visible_message(span_danger(LANG("obj.c1dbe487", list(user, src, item))))
 		deflate()
 	return ..()
 
@@ -106,7 +106,7 @@
 	has_been_deflated = TRUE
 	if(manually)
 		playsound(src, 'sound/machines/hiss.ogg', 50)
-		balloon_alert_to_viewers("slowly deflates!")
+		balloon_alert_to_viewers(LANG("obj.51e200d1", null))
 		addtimer(CALLBACK(src, PROC_REF(slow_deflate_finish)), manual_deflation_time)
 		return
 	if(torn_type)
@@ -142,7 +142,7 @@
 	if(!user.can_interact_with(src))
 		return
 	toggle_door()
-	to_chat(user, span_notice("You [door_state ? "close" : "open"] [src]!"))
+	to_chat(user, span_notice(LANG("obj.22d557f3", list(door_state ? "close" : "open", src))))
 
 /obj/structure/inflatable/door/update_icon_state()
 	. = ..()
@@ -183,13 +183,13 @@
 /obj/item/inflatable/attack_self(mob/user)
 	. = ..()
 	if(torn)
-		to_chat(user, span_warning("[src] is too damaged to function!"))
+		to_chat(user, span_warning(LANG("obj.87b477bb", list(src))))
 		return
 	if(locate(structure_type) in get_turf(user))
-		to_chat(user, span_warning("There is already a wall here!"))
+		to_chat(user, span_warning(LANG("obj.bc8eb20a", null)))
 		return
 	playsound(loc, 'sound/items/zip/zip.ogg', 75, TRUE)
-	to_chat(user, span_notice("You inflate [src]."))
+	to_chat(user, span_notice(LANG("obj.d4212a0e", list(src))))
 	if(do_after(user, 1 SECONDS, src))
 		new structure_type(get_turf(user))
 		qdel(src)
@@ -198,16 +198,16 @@
 	if(!istype(attacking_item, /obj/item/stack/medical/wrap/sticky_tape))
 		return ..()
 	if(!torn)
-		to_chat(user, span_notice("[src] does not need repairing!"))
+		to_chat(user, span_notice(LANG("obj.01384bcb", list(src))))
 		return
 	var/obj/item/stack/medical/wrap/sticky_tape/attacking_tape = attacking_item
 	if(attacking_tape.use(TAPE_REQUIRED_TO_FIX, check = TRUE))
-		to_chat(user, span_danger("There is not enough of [attacking_tape]! You need at least [TAPE_REQUIRED_TO_FIX] pieces!"))
+		to_chat(user, span_danger(LANG("obj.c57a68dd", list(attacking_tape, TAPE_REQUIRED_TO_FIX))))
 		return
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	playsound(user, 'modular_nova/modules/inflatables/sound/ducttape1.ogg', 50, TRUE)
-	to_chat(user, span_notice("You fix [src] using [attacking_tape]!"))
+	to_chat(user, span_notice(LANG("obj.5cf3fab9", list(src, attacking_tape))))
 	attacking_tape.use(TAPE_REQUIRED_TO_FIX)
 	torn = FALSE
 	update_appearance()
@@ -219,10 +219,10 @@
 /obj/item/inflatable/examine(mob/user)
 	. = ..()
 	if(torn)
-		. += span_warning("It is badly torn, and cannot be used! The damage looks like it could be repaired with some <b>tape</b>.")
+		. += span_warning(LANG("obj.a579b615", null))
 
 /obj/item/inflatable/suicide_act(mob/living/user)
-	visible_message(user, span_danger("[user] starts shoving the [src] up [user.p_their()] ass! It looks like [user.p_their()] going to pull the cord, oh shit!"))
+	visible_message(user, span_danger(LANG("obj.bcaa34e6", list(user, src, user.p_their(), user.p_their()))))
 	playsound(user.loc, 'sound/machines/hiss.ogg', 75, TRUE)
 	new structure_type(user.loc)
 	user.gib()

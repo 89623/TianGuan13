@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/blood_drunk_miner
 	cooldown_time = 1.5 SECONDS
 	charge_delay = 0.1 SECONDS
@@ -60,7 +61,7 @@
 	var/reload_delay = 0.1 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/kinetic_accelerator/Activate(atom/target_atom)
-	owner.visible_message(span_danger("[owner] fires the proto-kinetic accelerator!"))
+	owner.visible_message(span_danger(LANG("datum.4915091d", list(owner))))
 	owner.face_atom(target_atom)
 	owner.do_alert_animation(alert_delay + (shot_count - 1) * shot_delay)
 	disable_cooldown_actions()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(department_radio_prefixes, list(":", "."))
 
 GLOBAL_LIST_INIT(department_radio_keys, list(
@@ -166,7 +167,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	if(client && SSlag_switch.measures[SLOWMODE_SAY] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES) && !forced && src == usr)
 		if(!COOLDOWN_FINISHED(client, say_slowmode))
-			to_chat(src, span_warning("Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\""))
+			to_chat(src, span_warning(LANG("mob.033682b4", list(SSlag_switch.slowmode_cooldown/10, message))))
 			return
 		COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
 
@@ -376,7 +377,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		message = deaf_message
 
-		var/show_message_success = show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+		var/show_message_success = show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight, skip_i18n_fallback = TRUE) // NOVA EDIT - i18n - player (signed) speech: don't auto-translate the player's own words
 		if(show_message_success && understood)
 			return HEAR_HEARD | HEAR_UNDERSTOOD
 		else if (show_message_success && !understood)
@@ -401,7 +402,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods)
-	var/show_message_success = show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight)
+	var/show_message_success = show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight, skip_i18n_fallback = TRUE) // NOVA EDIT - i18n - player speech: don't auto-translate the player's own words
 	if(show_message_success && understood)
 		return HEAR_HEARD | HEAR_UNDERSTOOD
 	else if (show_message_success && !understood)
@@ -529,7 +530,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)
 	//NOVA EDIT ADDITION BEGIN
 	if((message_mods[MODE_HEADSET] || message_mods[RADIO_EXTENSION]) && !(mobility_flags & MOBILITY_USE) && !isAI(src) && !ispAI(src) && !ismecha(loc)) // If can't use items, you can't press the button
-		to_chat(src, span_warning("You can't use the radio right now as you can't reach the button!"))
+		to_chat(src, span_warning(LANG("mob.46bbccc8", null)))
 		return ITALICS | REDUCE_RANGE
 	//NOVA EDIT END
 	var/obj/item/implant/radio/imp = locate() in src

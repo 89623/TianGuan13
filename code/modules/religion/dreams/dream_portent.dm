@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/religion_rites/dream_portent
 	name = "Dream Portent"
 	desc = "Immediately fall into a slumber and receive a portent of the future. \
@@ -18,16 +19,16 @@
 	if(!..())
 		return FALSE
 	if(!iscarbon(user))
-		to_chat(user, span_warning("You are not the sort of creature that can receive a portent."))
+		to_chat(user, span_warning(LANG("datum.c0c90737", null)))
 		return FALSE
 	return TRUE
 
 /datum/religion_rites/dream_portent/invoke_effect(mob/living/user, atom/religious_tool)
 	if(!user.SetSleeping(10 SECONDS))
-		to_chat(user, span_warning("You fail to fall asleep."))
+		to_chat(user, span_warning(LANG("datum.b6f72b4d", null)))
 		return FALSE
 
-	user.visible_message(span_notice("[user] suddenly falls into a deep slumber, [user.p_their()] eyes fluttering..."))
+	user.visible_message(span_notice(LANG("datum.4895edcf", list(user, user.p_their()))))
 	user.adjust_drowsiness(30 SECONDS)
 	return ..()
 
@@ -59,7 +60,7 @@
 	if(istype(current_dream, /datum/dream/specific_portent))
 		return
 
-	to_chat(dreamer, span_cyan("Your mind wanders, yet you receive no clear vision... You must try again later."))
+	to_chat(dreamer, span_cyan(LANG("datum.0b68ef8b", null)))
 	refund(0.8)
 	dreamer.adjust_drowsiness(10 SECONDS)
 	dreamer.add_mood_event("dream_failed", /datum/mood_event/dream_failed)
@@ -70,7 +71,7 @@
 	if(!prob(damage_amount * 10)) // higher damage = higher chance to interrupt
 		return
 
-	to_chat(dreamer, span_warning("Your dream is interrupted as you are harmed!"))
+	to_chat(dreamer, span_warning(LANG("datum.7ef09d3c", null)))
 	dreamer.SetSleeping(0)
 	dreamer.adjust_drowsiness(10 SECONDS)
 	dreamer.add_mood_event("dream_interrupted", /datum/mood_event/dream_interrupted)
@@ -96,7 +97,7 @@
 
 /datum/dream/specific_portent/GenerateDream(mob/living/carbon/dreamer)
 	. = list()
-	. += span_cyan("a portent of the future")
+	. += span_cyan(LANG("datum.c934c6d7", null))
 
 	var/list/portent_types = list(
 		"[GLOB.deity] greets you warmly" = "[GLOB.deity] bids you farewell, though you feel their presence watch over you",

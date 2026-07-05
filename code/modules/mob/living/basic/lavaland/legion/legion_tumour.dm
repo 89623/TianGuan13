@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Left behind when a legion infects you, for medical enrichment
 /obj/item/organ/legion_tumour
 	name = "legion tumour"
@@ -72,16 +73,16 @@
 		target.apply_status_effect(applied_status)
 
 		if (target != user)
-			target.visible_message(span_notice("[user] splatters [target] with [src]... Disgusting tendrils pull [target.p_their()] wounds shut!"))
+			target.visible_message(span_notice(LANG("obj.f7aabbe0", list(user, target, src, target.p_their()))))
 		else
-			to_chat(user, span_notice("You smear [src] on yourself. Disgusting tendrils pull your wounds closed."))
+			to_chat(user, span_notice(LANG("obj.4ad3be5c", list(src))))
 		return TRUE
 
 	if (!ishuman(target))
 		return FALSE
 
 	log_combat(user, target, "used a Legion Tumour on", src, "as they are in crit, this will turn them into a Legion.")
-	target.visible_message(span_boldwarning("[user] splatters [target] with [src]... and it springs into horrible life!"))
+	target.visible_message(span_boldwarning(LANG("obj.286b4571", list(user, target, src))))
 	var/mob/living/basic/mining/legion_brood/skull = new(target.loc)
 	skull.melee_attack(target)
 	return TRUE
@@ -93,7 +94,7 @@
 
 	if (stage >= 2)
 		if(SPT_PROB(stage / 5, seconds_per_tick))
-			to_chat(owner, span_notice("You feel a bit better."))
+			to_chat(owner, span_notice(LANG("obj.8b1f1c2f", null)))
 			owner.apply_status_effect(applied_status) // It's not all bad!
 		if(SPT_PROB(1, seconds_per_tick))
 			owner.emote("twitch")
@@ -101,16 +102,16 @@
 	switch(stage)
 		if(2, 3)
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(owner, span_danger("Your chest spasms!"))
+				to_chat(owner, span_danger(LANG("obj.f7db4a28", null)))
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(owner, span_danger("You feel weak."))
+				to_chat(owner, span_danger(LANG("obj.0809d49b", null)))
 			if(SPT_PROB(1, seconds_per_tick))
 				SEND_SOUND(owner, sound(pick(spooky_sounds)))
 			if(SPT_PROB(2, seconds_per_tick))
 				owner.vomit()
 		if(4, 5)
 			if(SPT_PROB(2, seconds_per_tick))
-				to_chat(owner, span_danger("Something flexes under your skin."))
+				to_chat(owner, span_danger(LANG("obj.3e189ce7", null)))
 			if(SPT_PROB(2, seconds_per_tick))
 				if (prob(40))
 					SEND_SOUND(owner, sound('sound/music/antag/bloodcult/ghost_whisper.ogg'))
@@ -125,7 +126,7 @@
 					child.assign_creator(owner, copy_full_faction = FALSE)
 
 			if(SPT_PROB(3, seconds_per_tick))
-				to_chat(owner, span_danger("Your muscles ache."))
+				to_chat(owner, span_danger(LANG("obj.e17753b8", null)))
 				owner.take_bodypart_damage(3)
 
 	if (stage == 5)
@@ -139,25 +140,25 @@
 	stage++
 	elapsed_time = 0
 	if (stage == 5)
-		to_chat(owner, span_bolddanger("Something is moving under your skin!"))
+		to_chat(owner, span_bolddanger(LANG("obj.242493a5", null)))
 
 /// Consume our host
 /obj/item/organ/legion_tumour/proc/infest()
 	if (QDELETED(src) || QDELETED(owner))
 		return
 	owner.log_message("has been turned into a Legion by their tumour.", LOG_VICTIM)
-	owner.visible_message(span_boldwarning("Black tendrils burst from [owner]'s flesh, covering them in amorphous flesh!"))
+	owner.visible_message(span_boldwarning(LANG("obj.cc95cfb2", list(owner))))
 	var/mob/living/basic/mining/legion/new_legion = new spawn_type(owner.loc)
 	new_legion.consume(owner)
 	qdel(src)
 
 /obj/item/organ/legion_tumour/on_find(mob/living/finder)
 	. = ..()
-	to_chat(finder, span_warning("There's an enormous tumour in [owner]'s [zone]!"))
+	to_chat(finder, span_warning(LANG("obj.2d0b690d", list(owner, zone))))
 	if(stage < 4)
-		to_chat(finder, span_notice("Its tendrils seem to twitch towards the light."))
+		to_chat(finder, span_notice(LANG("obj.191588e5", null)))
 		return
-	to_chat(finder, span_notice("Its pulsing tendrils reach all throughout the body."))
+	to_chat(finder, span_notice(LANG("obj.2a232f36", null)))
 	if(prob(stage * 2))
 		infest()
 

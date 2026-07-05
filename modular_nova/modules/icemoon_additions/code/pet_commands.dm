@@ -8,8 +8,8 @@
 
 /datum/component/obeys_commands/on_examine(mob/living/source, mob/user, list/examine_list)
 	. = ..()
-	examine_list += span_italics("You can alt+click [source.p_them()] when adjacent to see available commands.")
-	examine_list += span_italics("You can also examine [source.p_them()] closely to check on [source.p_their()] wounds. Many companions can be healed with sutures or creams!")
+	examine_list += span_italics(LANG("datum.32b38af5", list(source.p_them())))
+	examine_list += span_italics(LANG("datum.cd3277e6", list(source.p_them(), source.p_their())))
 
 /datum/component/obeys_commands/proc/on_examine_more(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -20,10 +20,10 @@
 		return
 
 	if (source.health < source.maxHealth*0.2)
-		examine_list += span_bolddanger("[source.p_They()] look[source.p_s()] severely injured.")
+		examine_list += span_bolddanger(LANG("datum.505c9252", list(source.p_They(), source.p_s())))
 	else if (source.health < source.maxHealth*0.5)
-		examine_list += span_danger("[source.p_They()] look[source.p_s()] moderately injured.")
+		examine_list += span_danger(LANG("datum.3c0c0ffc", list(source.p_They(), source.p_s())))
 	else if (source.health < source.maxHealth*0.8)
-		examine_list += span_warning("[source.p_They()] look[source.p_s()] slightly injured.")
+		examine_list += span_warning(LANG("datum.3a2cddb9", list(source.p_They(), source.p_s())))
 	else
-		examine_list += span_notice("[source.p_They()] look[source.p_s()] to be in good condition.")
+		examine_list += span_notice(LANG("datum.f1bd5dc8", list(source.p_They(), source.p_s())))

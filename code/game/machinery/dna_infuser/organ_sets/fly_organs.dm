@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define FLY_INFUSED_ORGAN_DESC "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
 #define FLY_INFUSED_ORGAN_ICON pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
@@ -29,7 +30,7 @@
 	// needs to be done before the species is set
 	UnregisterSignal(source, COMSIG_ORGAN_BODYPART_INSERTED)
 	// okay you NEED to be a fly
-	to_chat(new_fly, span_danger("Too much fly DNA! Your skin begins to discolor into a horrible black as you become more fly than person!"))
+	to_chat(new_fly, span_danger(LANG("datum.47394568", null)))
 	new_fly.set_species(/datum/species/fly)
 
 /obj/item/organ/eyes/fly
@@ -130,8 +131,8 @@
 	body.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE | MOB_VOMIT_HARM), lost_nutrition = 0, distance = 2, purge_ratio = 0.67)
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 	body.visible_message(
-		span_danger("[body] vomits on the floor!"),
-		span_userdanger("You throw up on the floor!"),
+		span_danger(LANG("obj.04e91940", list(body))),
+		span_userdanger(LANG("obj.6bcf6afe", null)),
 	)
 	return ..()
 

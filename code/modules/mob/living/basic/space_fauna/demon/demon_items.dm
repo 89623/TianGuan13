@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
 /obj/item/organ/heart/demon
 	name = "demon heart"
@@ -15,19 +16,19 @@
 		return ..()
 
 	user.visible_message(
-		span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
-		span_danger("An unnatural hunger consumes you. You raise [src] your mouth and devour it!"),
+		span_warning(LANG("obj.664a40e4", list(user, src, user.p_their(), user.p_their()))),
+		span_danger(LANG("obj.8b489642", list(src))),
 	)
 	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 
 	if(locate(/datum/action/cooldown/spell/jaunt/bloodcrawl) in user.actions)
-		to_chat(user, span_warning("...and you don't feel any different."))
+		to_chat(user, span_warning(LANG("obj.97b6dab6", null)))
 		qdel(src)
 		return
 
 	user.visible_message(
-		span_warning("[user]'s eyes flare a deep crimson!"),
-		span_userdanger("You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!"),
+		span_warning(LANG("obj.62b29bd2", list(user))),
+		span_userdanger(LANG("obj.ea9df6a6", null)),
 	)
 
 	user.temporarilyRemoveItemFromInventory(src, TRUE)

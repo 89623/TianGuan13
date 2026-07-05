@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/toy/eightball
 	name = "magic eightball"
 	desc = "A black ball with a stenciled number eight in white on the side. It seems full of dark liquid.\nThe instructions state that you should ask your question aloud, and then shake."
@@ -63,10 +64,10 @@
 		return
 
 	if(on_cooldown)
-		to_chat(user, span_warning("[src] was shaken recently, it needs time to settle."))
+		to_chat(user, span_warning(LANG("obj.7d63c9c3", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] starts shaking [src]."), span_notice("You start shaking [src]."), span_hear("You hear shaking and sloshing."))
+	user.visible_message(span_notice(LANG("obj.bc30abc3", list(user, src))), span_notice(LANG("obj.33c6ea09", list(src))), span_hear(LANG("obj.e1b985f1", null)))
 
 	shaking = TRUE
 
@@ -130,7 +131,7 @@
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)
 	if(!shaking)
-		to_chat(user, span_warning("[src] is not currently being shaken."))
+		to_chat(user, span_warning(LANG("obj.16e7ade7", list(src))))
 		return
 	interact(user)
 	return ..()
@@ -138,7 +139,7 @@
 /obj/item/toy/eightball/haunted/start_shaking(mob/user)
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
-	selected_message = tgui_input_text(user, "What is your question?", "Eightball", max_length = CHAT_MESSAGE_MAX_LENGTH) || initial(selected_message)
+	selected_message = tgui_input_text(user, LANG("obj.33897a80", null), LANG("obj.2a61f14f", null), max_length = CHAT_MESSAGE_MAX_LENGTH) || initial(selected_message)
 	if (!(src in user.held_items))
 		return FALSE
 	notify_ghosts(

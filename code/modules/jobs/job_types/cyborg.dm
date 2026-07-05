@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/job/cyborg
 	title = JOB_CYBORG
 	description = "Assist the crew, follow your laws, obey your AI."
@@ -49,7 +50,7 @@
 			robot_spawn.notify_ai(AI_NOTIFICATION_AI_SHELL)
 		else
 			robot_spawn.notify_ai(TRUE)
-		robot_spawn.visible_message(span_notice("[robot_spawn] gently chimes."), span_notice("LawSync protocol engaged."))
+		robot_spawn.visible_message(span_notice(LANG("datum.b033815b", list(robot_spawn))), span_notice(LANG("datum.cd29dfbf", null)))
 		robot_spawn.lawsync()
 		robot_spawn.lawupdate = TRUE
 		robot_spawn.show_laws()

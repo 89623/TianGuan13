@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/thermite
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Amount of thermite on parent
@@ -99,7 +100,7 @@
 /datum/component/thermite/proc/on_examine(turf/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_warning("[source.p_Theyre()] covered in thermite.")
+	examine_list += span_warning(LANG("datum.a5c2b2be", list(source.p_Theyre())))
 
 /// Used to maintain the thermite overlay on the parent [/turf].
 /datum/component/thermite/proc/on_update_overlays(turf/parent_turf, list/overlays)
@@ -182,7 +183,7 @@
 		return NONE
 
 	user.apply_damage(5, BURN, user.get_active_hand())
-	to_chat(user, span_userdanger("The ignited thermite on \the [source] burns your hand!"))
+	to_chat(user, span_userdanger(LANG("datum.9c01f728", list(source))))
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(source, SFX_SEAR, 50, TRUE)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

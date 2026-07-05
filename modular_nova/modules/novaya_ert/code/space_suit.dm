@@ -18,7 +18,7 @@
 //Maybe when Teshari aren't an ass to sprite for...
 /obj/item/clothing/suit/space/voskhod/mob_can_equip(mob/living/equipper, slot, disable_warning, bypass_equip_delay_self, ignore_equipped, indirect_action)
 	if(isteshari(equipper))
-		to_chat(equipper, span_warning("[src] is far too big for you!"))
+		to_chat(equipper, span_warning(LANG("obj.c9ddda16", list(src))))
 		return FALSE
 
 	return ..()
@@ -41,7 +41,7 @@
 //...I'll start asking for unique sprites for them.
 /obj/item/clothing/head/helmet/space/voskhod/mob_can_equip(mob/living/equipper, slot, disable_warning, bypass_equip_delay_self, ignore_equipped, indirect_action)
 	if(isteshari(equipper))
-		to_chat(equipper, span_warning("[src] is far too big for you!"))
+		to_chat(equipper, span_warning(LANG("obj.c9ddda16", list(src))))
 		return FALSE
 
 	return ..()
@@ -62,13 +62,4 @@
 
 /datum/component/dawn_branding/proc/on_examine_more(atom/source, mob/mob, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += "'Dawn', a brand name of the early colonisation-era civilian space suits which were among the first ones to become consumer-grade: \
-		comfortable, protective and, first of all, cheap to see themselves used en masse by the many people that were soon to turn their purpose around. <br>\
-		As the war broke out, and the requirement for the space-proof protection to secure one's sovereignity arose, many fitting ports of the industrial-grade models, \
-		then-modular to be clipped on with virtually anything, have been repurposed to get strapped with additional armor plating; \
-		and what served as a floodlight mount became the soldier's directionally-opaque face shield, sturdy enough to stop what could have resulted in a horrific accident. <br>\
-		These models were commonly fielded with a cutting-edge-for-its-era paramedical suite built into the suit, able to deal with most common ailments one would succumb to in space combat. <br>\
-		Some rumors, however, began to circulate as certain soldiers began to lose their senses, numbing the reactions from the sheer amounts of painkillers and medicine \
-		dumped into their bodies and fighting in an erratic, wild manner, similar to what one would compare to the 'undead' - an old hoax spread among the Solarian personnel \
-		fortunate enough to avoid direct confrontations with, -or not agile enough to catch-, 'Voskhods'; witnessing the limping opponents' attempts at a forceful retreat. <br>\
-		The dawn of human exploration has resulted in the rising of a new Coalition, and the means to secure it."
+	examine_list += LANG("datum.39a524e4", null)

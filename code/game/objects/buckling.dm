@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /atom/movable
 	/// Whether the atom allows mobs to be buckled to it. Can be ignored in [/atom/movable/proc/buckle_mob()] if force = TRUE
 	var/can_buckle = FALSE
@@ -23,7 +24,7 @@
 		return
 	if(can_buckle && has_buckled_mobs())
 		if(length(buckled_mobs) > 1)
-			var/mob/living/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			var/mob/living/unbuckled = tgui_input_list(user, LANG("atom.15d59dc6", null), LANG("atom.768fd2d4", null), sort_names(buckled_mobs))
 			if(isnull(unbuckled))
 				return
 			if(user_unbuckle_mob(unbuckled,user))
@@ -39,7 +40,7 @@
 		return
 	if(Adjacent(user) && can_buckle && has_buckled_mobs())
 		if(length(buckled_mobs) > 1)
-			var/mob/living/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			var/mob/living/unbuckled = tgui_input_list(user, LANG("atom.15d59dc6", null), LANG("atom.768fd2d4", null), sort_names(buckled_mobs))
 			if(isnull(unbuckled))
 				return
 			return user_unbuckle_mob(unbuckled,user)
@@ -320,9 +321,9 @@
 	// If the mob we're attempting to buckle is not stood on this atom's turf and it isn't the user buckling themselves,
 	// we'll try it with a 2 second do_after delay.
 	if(M != user && (get_turf(M) != get_turf(src)))
-		M.visible_message(span_warning("[user] starts buckling [M] to [src]!"),\
-			span_userdanger("[user] starts buckling you to [src]!"),\
-			span_hear("You hear metal clanking."))
+		M.visible_message(span_warning(LANG("atom.fd9e0033", list(user, M, src))),\
+			span_userdanger(LANG("atom.1b8e86bd", list(user, src))),\
+			span_hear(LANG("atom.4ea246f9", null)))
 		if(!do_after(user, buckle_delay, M))
 			return FALSE
 
@@ -339,15 +340,15 @@
 /atom/movable/proc/buckle_feedback(mob/living/being_buckled, mob/buckler)
 	if(being_buckled == buckler)
 		being_buckled.visible_message(
-			span_notice("[buckler] buckles [buckler.p_them()]self to [src]."),
-			span_notice("You buckle yourself to [src]."),
-			span_hear("You hear metal clanking."),
+			span_notice(LANG("atom.f1739c3c", list(buckler, buckler.p_them(), src))),
+			span_notice(LANG("atom.32a7c99f", list(src))),
+			span_hear(LANG("atom.4ea246f9", null)),
 		)
 	else
 		being_buckled.visible_message(
-			span_warning("[buckler] buckles [being_buckled] to [src]!"),
-			span_warning("[buckler] buckles you to [src]!"),
-			span_hear("You hear metal clanking."),
+			span_warning(LANG("atom.c98a73f6", list(buckler, being_buckled, src))),
+			span_warning(LANG("atom.a6670714", list(buckler, src))),
+			span_hear(LANG("atom.4ea246f9", null)),
 		)
 
 /**
@@ -375,13 +376,13 @@
 /atom/movable/proc/unbuckle_feedback(mob/living/unbuckled_mob, mob/unbuckler)
 	if(unbuckled_mob == unbuckler)
 		unbuckled_mob.visible_message(
-			span_notice("[unbuckler] unbuckles [unbuckler.p_them()]self from [src]."),
-			span_notice("You unbuckle yourself from [src]."),
-			span_hear("You hear metal clanking."),
+			span_notice(LANG("atom.4d9602b6", list(unbuckler, unbuckler.p_them(), src))),
+			span_notice(LANG("atom.bd5bbd6c", list(src))),
+			span_hear(LANG("atom.4ea246f9", null)),
 		)
 	else
 		unbuckled_mob.visible_message(
-			span_notice("[unbuckler] unbuckles [unbuckled_mob] from [src]."),
-			span_notice("[unbuckler] unbuckles you from [src]."),
-			span_hear("You hear metal clanking."),
+			span_notice(LANG("atom.c58c7a9a", list(unbuckler, unbuckled_mob, src))),
+			span_notice(LANG("atom.8a13b258", list(unbuckler, src))),
+			span_hear(LANG("atom.4ea246f9", null)),
 		)

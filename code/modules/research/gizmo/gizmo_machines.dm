@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Science object that behaves similairly to to strange objects/relics, but is activated by cracking wire sequences and other functions
 /obj/machinery/gizmo
 	name = "gizmo"
@@ -121,14 +122,14 @@
 
 	on_state = TRUE
 	update_appearance(UPDATE_ICON)
-	visible_message(span_smallnoticeital("[src] hums to life."))
+	visible_message(span_smallnoticeital(LANG("obj.d7b3eac1", list(src))))
 
 /obj/machinery/gizmo/toggle/proc/off_state(datum/source)
 	SIGNAL_HANDLER
 
 	on_state = FALSE
 	update_appearance(UPDATE_ICON)
-	visible_message(span_smallnoticeital("[src] powers down."))
+	visible_message(span_smallnoticeital(LANG("obj.fcb962ca", list(src))))
 
 /// A gizmo with a voice activated interface
 /obj/machinery/gizmo/voice

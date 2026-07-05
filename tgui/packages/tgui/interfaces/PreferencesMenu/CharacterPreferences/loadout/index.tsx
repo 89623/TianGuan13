@@ -487,7 +487,12 @@ function LoadoutPreviewSection() {
             <Stack.Item>
               <Dropdown
                 selected={data.preview_selection}
-                options={data.preview_options}
+                // 对象选项:value 保持英文(回传 update_preview),displayText 可被 i18n 翻显示。
+                // 裸字符串选项不再 auto-localize(见 i18n/localize.ts),故需转对象才能既翻又能选。
+                options={data.preview_options.map((opt) => ({
+                  value: opt,
+                  displayText: opt,
+                }))}
                 onSelected={(value) =>
                   act('update_preview', {
                     updated_preview: value,

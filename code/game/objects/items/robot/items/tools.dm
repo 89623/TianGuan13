@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
 #define POWER_RECHARGE_CYBORG_DRAIN_MULTIPLIER (0.0004 * STANDARD_CELL_RATE)
 
@@ -65,18 +66,18 @@
 
 /obj/item/borg/projectile_dampen/attack_self(mob/user)
 	if (!COOLDOWN_FINISHED(src, cycle_cooldown))
-		to_chat(user, span_boldwarning("[src] is still recycling its projectors!"))
+		to_chat(user, span_boldwarning(LANG("obj.1b981ae7", list(src))))
 		return
 	COOLDOWN_START(src, cycle_cooldown, PKBORG_DAMPEN_CYCLE_DELAY)
 	if(!active)
 		if(!user.has_buckled_mobs())
 			activate_field()
 		else
-			to_chat(user, span_warning("[src]'s safety cutoff prevents you from activating it due to living beings being ontop of you!"))
+			to_chat(user, span_warning(LANG("obj.7975915e", list(src))))
 	else
 		deactivate_field()
 	update_appearance()
-	to_chat(user, span_boldnotice("You [active ? "activate":"deactivate"] [src]."))
+	to_chat(user, span_boldnotice(LANG("obj.d6171b71", list(active ? "activate":"deactivate", src))))
 
 /obj/item/borg/projectile_dampen/update_icon_state()
 	icon_state = "[base_icon_state][active]"
@@ -94,7 +95,7 @@
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
-	visible_message(span_warning("\The [src] shuts off!"))
+	visible_message(span_warning(LANG("obj.5e249c74", list(src))))
 	tracked_bullet_cost.Cut()
 	active = FALSE
 
@@ -134,7 +135,7 @@
 	energy = clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
-		visible_message(span_warning("[src] blinks \"ENERGY DEPLETED\"."))
+		visible_message(span_warning(LANG("obj.3dda0bcd", list(src))))
 
 /obj/item/borg/projectile_dampen/proc/process_recharge(seconds_per_tick)
 	if(!istype(host))
@@ -328,7 +329,7 @@
 	if(tool_behaviour == TOOL_MULTITOOL)
 		var/obj/item/multitool/tool = atoms[/obj/item/multitool/cyborg]
 		if(tool?.buffer)
-			. += span_notice("Multitool buffer contains [tool.buffer].")
+			. += span_notice(LANG("obj.7e304987", list(tool.buffer)))
 
 /obj/item/borg/cyborg_omnitool/botany
 	name = "botanical omni-toolset"

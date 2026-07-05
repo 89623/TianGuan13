@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/accessory/medal
 	name = "bronze medal"
 	desc = "A bronze medal."
@@ -19,7 +20,7 @@
 
 /// Input a reason for the medal for the round end screen
 /obj/item/clothing/accessory/medal/proc/provide_reason(mob/living/carbon/human/distinguished, mob/user)
-	commendation_message = tgui_input_text(user, "Reason for this commendation? It will be recorded by Nanotrasen.", "Commendation", max_length = 140)
+	commendation_message = tgui_input_text(user, LANG("obj.64c0d70d", null), LANG("obj.f21c4046", null), max_length = 140)
 	return !!commendation_message
 
 /obj/item/clothing/accessory/medal/try_attach(obj/item/clothing/under/attach_to, mob/living/attacher)
@@ -35,7 +36,11 @@
 	add_memory_in_range(distinguished, 7, /datum/memory/received_medal, protagonist = distinguished, deuteragonist = attacher, medal_type = src, medal_text = commendation_message)
 	distinguished.log_message("was given the following commendation by <b>[key_name(attacher)]</b>: [commendation_message]", LOG_GAME, color = "green")
 	message_admins("<b>[key_name_admin(distinguished)]</b> was given the following commendation by <b>[key_name_admin(attacher)]</b>: [commendation_message]")
-	GLOB.commendations += "[awarder] awarded <b>[awarded_to]</b> the <span class='medaltext'>[name]</span>! \n- [commendation_message]"
+	// NOVA EDIT CHANGE - I18N - gate the english "awarded ... the ..." structure for zh and reverse the medal name (awarder/awardee are player names; message is translated via to_chat) - ORIGINAL: GLOB.commendations += "[awarder] awarded <b>[awarded_to]</b> the <span class='medaltext'>[name]</span>! \n- [commendation_message]"
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		GLOB.commendations += "[awarder] 授予 <b>[awarded_to]</b> <span class='medaltext'>[lang_reverse_text(name)]</span>！\n- [commendation_message]"
+	else
+		GLOB.commendations += "[awarder] awarded <b>[awarded_to]</b> the <span class='medaltext'>[name]</span>! \n- [commendation_message]"
 	SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[awarder]", "commendee" = "[awarded_to]", "medal" = "[src]", "reason" = commendation_message))
 
 	return ..()
@@ -128,7 +133,7 @@
 
 /obj/item/clothing/accessory/medal/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	atmos_spawn_air("[GAS_PLASMA]=20;[TURF_TEMPERATURE(exposed_temperature)]")
-	visible_message(span_danger("\The [src] bursts into flame!"), span_userdanger("Your [src] bursts into flame!"))
+	visible_message(span_danger(LANG("obj.7e9fd1a6", list(src))), span_userdanger(LANG("obj.da517669", list(src))))
 	qdel(src)
 
 /obj/item/clothing/accessory/medal/plasma/nobel_science

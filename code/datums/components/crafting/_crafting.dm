@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //list key declarations used in check_contents(), get_surroundings() and check_tools()
 #define CONTENTS_INSTANCES "instances"
 #define CONTENTS_MACHINERY "machinery"
@@ -550,7 +551,10 @@
 		var/atom_id = atoms.Find(atom)
 
 		data["atom_data"] += list(list(
-			"name" = initial(atom.name),
+			// NOVA EDIT - I18N: ingredient names are single-word atom names (carrot/bowl) that P1's multi-word
+			// gate skips; reverse explicitly (full match, translations already exist). Display-only (the menu
+			// matches ingredients by atom_id, not name), so localizing is safe.
+			"name" = (GLOB.i18n_server_locale != DEFAULT_UI_LOCALE) ? lang_reverse_text(initial(atom.name)) : initial(atom.name),
 			"is_reagent" = ispath(atom, /datum/reagent/),
 		))
 
@@ -573,14 +577,14 @@
 /datum/component/personal_crafting/proc/make_action(datum/crafting_recipe/recipe, mob/user)
 	var/atom/result = construct_item(user, recipe)
 	if(istext(result)) //We failed to make an item and got a fail message
-		to_chat(user, span_warning("Construction failed[result]"))
+		to_chat(user, span_warning(LANG("datum.1477fa8a", list(result))))
 		return FALSE
 	if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
 		user.put_in_hands(result)
 	else if(ismovable(result) && !istype(result, /obj/effect/spawner))
 		var/atom/movable/movable = result
 		movable.forceMove(user.drop_location())
-	to_chat(user, span_notice("[recipe.name] crafted."))
+	to_chat(user, span_notice(LANG("datum.1221b3fc", list(recipe.name))))
 	user.investigate_log("crafted [recipe]", INVESTIGATE_CRAFTING)
 	return TRUE
 
@@ -600,7 +604,7 @@
 				while(make_action(crafting_recipe, user))
 					crafted_items++
 				if(crafted_items)
-					to_chat(user, span_notice("You made [crafted_items] item\s."))
+					to_chat(user, span_notice(LANG("datum.50616c77", list(crafted_items))))
 			else
 				make_action(crafting_recipe, user)
 			busy = FALSE
@@ -641,7 +645,9 @@
 	data["category"] = recipe.category
 
 	// Name, Description
-	data["name"] = recipe.name
+	// NOVA EDIT - I18N: reverse recipe name (full match, single-word too) so the menu name matches the
+	// crafted item; craft acts on data["ref"] (REF(recipe)), not the name, so localizing display is safe.
+	data["name"] = (GLOB.i18n_server_locale != DEFAULT_UI_LOCALE) ? lang_reverse_text(recipe.name) : recipe.name
 
 	if(ispath(recipe.result, /datum/reagent))
 		var/datum/reagent/reagent = recipe.result

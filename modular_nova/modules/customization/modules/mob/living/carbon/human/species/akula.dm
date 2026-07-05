@@ -69,44 +69,44 @@
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_TOOTH,
-		SPECIES_PERK_NAME = "Big Bites",
-		SPECIES_PERK_DESC = "Instead of throwing punches, you use your sharp teeth to bite for more damage."
+		SPECIES_PERK_NAME = LANG("datum.b1efa87c", null),
+		SPECIES_PERK_DESC = LANG("datum.48dd7237", null)
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_PERSON_WALKING,
-		SPECIES_PERK_NAME = "Space Walking",
-		SPECIES_PERK_DESC = "You can move around in zero-gravity environments, just like your ancestors."
+		SPECIES_PERK_NAME = LANG("datum.302b4679", null),
+		SPECIES_PERK_DESC = LANG("datum.b8672f0d", null)
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_HAND,
-		SPECIES_PERK_NAME = "Slippery Skin",
-		SPECIES_PERK_DESC = "When sufficiently wet, you have a bonus chance to escape from grabs."
+		SPECIES_PERK_NAME = LANG("datum.d7260806", null),
+		SPECIES_PERK_DESC = LANG("datum.f87ff1ab", null)
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = FA_ICON_SHIRT,
-		SPECIES_PERK_NAME = "Wetsuits",
-		SPECIES_PERK_DESC = "You spawn with clothing that will keep you perpetually wet if not removed."
+		SPECIES_PERK_NAME = LANG("datum.3c506263", null),
+		SPECIES_PERK_DESC = LANG("datum.d2c9e0ed", null)
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_LUNGS,
-		SPECIES_PERK_NAME = "Gills",
-		SPECIES_PERK_DESC = "If you are not wet, you will not be able to breathe oxygen!",
+		SPECIES_PERK_NAME = LANG("datum.ebe41b3e", null),
+		SPECIES_PERK_DESC = LANG("datum.2e569b61", null),
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_ARROW_DOWN,
-		SPECIES_PERK_NAME = "Nomadic DNA",
-		SPECIES_PERK_DESC = "You never want to stay in one place."
+		SPECIES_PERK_NAME = LANG("datum.0dae605e", null),
+		SPECIES_PERK_DESC = LANG("datum.910679f0", null)
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
-		SPECIES_PERK_NAME = "Slippery Soles",
-		SPECIES_PERK_DESC = "When sufficiently wet, all slips will send you flying, even just a wet floor.",
+		SPECIES_PERK_NAME = LANG("datum.e6c90141", null),
+		SPECIES_PERK_DESC = LANG("datum.b357d61e", null),
 	))
 	return perks
 

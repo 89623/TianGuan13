@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/raptor_dex
 	name = "\improper RaptorDex"
 	desc = "A device used to analyze lavaland raptors!"
@@ -65,7 +66,7 @@
 			scan_data["inherited_traits"] += GLOB.raptor_inherit_traits[index]
 
 	playsound(src, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
-	my_raptor.balloon_alert(user, "scanned")
+	my_raptor.balloon_alert(user, LANG("obj.98f57ecb", null))
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
 

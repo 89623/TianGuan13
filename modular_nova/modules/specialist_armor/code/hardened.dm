@@ -51,14 +51,7 @@
 /obj/item/clothing/suit/armor/sf_hardened/examine_more(mob/user)
 	. = ..()
 
-	. += "What do you do in an age where armor penetration technology keeps getting better and better, \
-		and you're quite fond of not being a corpse? The 'Muur' type armor was a pretty successful attempt at an answer \
-		to the question. Using some advanced materials, micro-scale projectile dampener fields, and a whole \
-		host of other technologies that some poor SolFed procurement general had to talked to death about, \
-		it offers a unique advantage over many armor piercing bullets. Why stop the bullet from piercing the armor \
-		with more armor, when you could simply force the bullet to penetrate less and get away with less protection? \
-		Some people would rather the bullet just be stopped, of course, but when you have to make choices, many choose \
-		this one."
+	. += LANG("obj.cc793058", null)
 
 	return .
 
@@ -116,14 +109,7 @@
 /obj/item/clothing/head/helmet/toggleable/sf_hardened/examine_more(mob/user)
 	. = ..()
 
-	. += "What do you do in an age where armor penetration technology keeps getting better and better, \
-		and you're quite fond of not being a corpse? The 'Muur' type armor was a pretty successful attempt at an answer \
-		to the question. Using some advanced materials, micro-scale projectile dampener fields, and a whole \
-		host of other technologies that some poor SolFed procurement general had to talked to death about, \
-		it offers a unique advantage over many armor piercing bullets. Why stop the bullet from piercing the armor \
-		with more armor, when you could simply force the bullet to penetrate less and get away with less protection? \
-		Some people would rather the bullet just be stopped, of course, but when you have to make choices, many choose \
-		this one."
+	. += LANG("obj.cc793058", null)
 
 	return .
 

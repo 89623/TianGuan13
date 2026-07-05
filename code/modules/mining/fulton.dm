@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack
@@ -21,16 +22,16 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/examine()
 	. = ..()
-	. += span_infoplain("It has [uses_left] use\s remaining.")
+	. += span_infoplain(LANG("obj.4b3096b5", list(uses_left)))
 
 	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
 
 	if(isnull(beacon))
 		beacon_ref = null
-		. += span_infoplain("It is not linked to a beacon.")
+		. += span_infoplain(LANG("obj.1208c516", null))
 		return
 
-	. += span_infoplain("It is linked to [beacon.name].")
+	. += span_infoplain(LANG("obj.956250e4", list(beacon.name)))
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
@@ -43,15 +44,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			possible_beacons += extraction_point
 
 	if(!length(possible_beacons))
-		balloon_alert(user, "no beacons")
+		balloon_alert(user, LANG("obj.29e70654", null))
 		return
 
-	var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
+	var/chosen_beacon = tgui_input_list(user, LANG("obj.533cc7a1", null), LANG("obj.761ae691", null), sort_names(possible_beacons))
 	if(isnull(chosen_beacon))
 		return
 
 	beacon_ref = WEAKREF(chosen_beacon)
-	balloon_alert(user, "linked!")
+	balloon_alert(user, LANG("obj.f6c856f7", null))
 
 /obj/item/extraction_pack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ismovable(interacting_with))
@@ -64,43 +65,43 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
 	if(isnull(beacon))
-		balloon_alert(user, "not linked!")
+		balloon_alert(user, LANG("obj.59204d3b", null))
 		beacon_ref = null
 		return ITEM_INTERACT_BLOCKING
 	var/area/area = get_area(thing)
 	if(!can_use_indoors)
 		if(!area.outdoors)
-			balloon_alert(user, "not outdoors!")
+			balloon_alert(user, LANG("obj.b52dfbf9", null))
 			return ITEM_INTERACT_BLOCKING
 	if(area.area_flags & NOTELEPORT)
-		balloon_alert(user, "unable to activate!")
+		balloon_alert(user, LANG("obj.03bbb84b", null))
 		return ITEM_INTERACT_BLOCKING
 	var/area/target_area = get_area(beacon)
 	if(area != target_area && ((area.area_flags & LOCAL_TELEPORT) || (target_area.area_flags & LOCAL_TELEPORT)))
-		balloon_alert(user, "unable to activate!")
+		balloon_alert(user, LANG("obj.03bbb84b", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!safe_for_living_creatures && check_for_living_mobs(thing))
-		to_chat(user, span_warning("[src] is not safe for use with living creatures, they wouldn't survive the trip back!"))
-		balloon_alert(user, "not safe!")
+		to_chat(user, span_warning(LANG("obj.2a82b470", list(src))))
+		balloon_alert(user, LANG("obj.6c5fb3e2", null))
 		return ITEM_INTERACT_BLOCKING
 	if(thing.move_resist > max_force_fulton)
-		balloon_alert(user, "too heavy!")
+		balloon_alert(user, LANG("obj.5e148cfa", null))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert_to_viewers("attaching...")
+	balloon_alert_to_viewers(LANG("obj.41dea7e7", null))
 	playsound(thing, 'sound/items/zip/zip.ogg', vol = 50, vary = TRUE)
 	if(isliving(thing))
 		var/mob/living/creature = thing
 		if(creature.mind)
-			to_chat(thing, span_userdanger("You are being extracted! Stand still to proceed."))
+			to_chat(thing, span_userdanger(LANG("obj.3bbd7eff", null)))
 
 	if(!do_after(user, 5 SECONDS, target = thing))
 		return ITEM_INTERACT_BLOCKING
 
 	if(QDELETED(beacon))
-		balloon_alert(user, "beacon lost!")
+		balloon_alert(user, LANG("obj.f4aa3550", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert_to_viewers("extracting!")
+	balloon_alert_to_viewers(LANG("obj.4d30849c", null))
 	if(loc == user && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)
@@ -199,7 +200,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/item/fulton_core/attack_self(mob/user)
 	var/area/user_area = get_area(user)
 	if(user_area.area_flags & NOTELEPORT)
-		balloon_alert(user, "unable to deploy!")
+		balloon_alert(user, LANG("obj.f682dab4", null))
 		return
 
 	if(!do_after(user, 1.5 SECONDS, target = user) || QDELETED(src))
@@ -227,7 +228,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/structure/extraction_point/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	balloon_alert_to_viewers("undeploying...")
+	balloon_alert_to_viewers(LANG("obj.d8917abe", null))
 	if(!do_after(user, 1.5 SECONDS, src))
 		return
 	new /obj/item/fulton_core(drop_location())

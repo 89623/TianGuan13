@@ -20,11 +20,11 @@ GLOBAL_LIST_EMPTY(gangster_cell_phones)
 
 /obj/item/gangster_cellphone/attack_self(mob/user, modifiers)
 	if(!activated)
-		to_chat(user, "You turn on [src].")
+		to_chat(user, LANG("obj.11cd7563", list(src)))
 		icon_state = "phone_on"
 		activated = TRUE
 	else
-		to_chat(user, "You turn off [src].")
+		to_chat(user, LANG("obj.833a0800", list(src)))
 		icon_state = "phone_off"
 		activated = FALSE
 	return ..()

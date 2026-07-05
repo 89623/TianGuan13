@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Sets a directive to be given to all future spiders created by the user.
  * This will be overwritten if used again.
@@ -18,7 +19,7 @@
 	var/current_directive = ""
 
 /datum/action/cooldown/mob_cooldown/set_spider_directive/Activate(atom/target)
-	var/new_directive = tgui_input_text(owner, "Enter the new directive", "Create directive", "[current_directive]", max_length = MAX_MESSAGE_LEN)
+	var/new_directive = tgui_input_text(owner, LANG("datum.91de0540", null), LANG("datum.3a3b02de", null), "[current_directive]", max_length = MAX_MESSAGE_LEN)
 	if(isnull(new_directive) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE))
 		return
 
@@ -44,7 +45,7 @@
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/command_spiders/Activate(trigger_flags)
-	var/input = tgui_input_text(owner, "Input a command for your legions to follow.", "Command", max_length = MAX_MESSAGE_LEN)
+	var/input = tgui_input_text(owner, LANG("datum.98f36258", null), LANG("datum.a4e844da", null), max_length = MAX_MESSAGE_LEN)
 	if(!input || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE))
 		return
 	spider_command(owner, input)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/reagent_containers/chem_pack
 	name = "intravenous medicine bag"
 	desc = "A plastic pressure bag, or 'chem pack', for IV administration of drugs. It is fitted with a thermosealing strip."
@@ -13,21 +14,21 @@
 
 /obj/item/reagent_containers/chem_pack/click_alt(mob/living/user)
 	if(reagents.flags & SEALED_CONTAINER)
-		balloon_alert(user, "already sealed!")
+		balloon_alert(user, LANG("obj.7274a41d", null))
 		return CLICK_ACTION_BLOCKING
 
 	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
-		to_chat(user, span_warning("Uh... whoops! You accidentally spill the content of the bag onto yourself."))
+		to_chat(user, span_warning(LANG("obj.3c4214b4", null)))
 		splash_reagents(user, user, allow_closed_splash = TRUE)
 		return CLICK_ACTION_BLOCKING
 
 	update_container_flags(SEALED_CONTAINER | DRAWABLE | INJECTABLE)
-	balloon_alert(user, "sealed")
+	balloon_alert(user, LANG("obj.0d96a927", null))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/chem_pack/examine()
 	. = ..()
 	if(reagents.flags & SEALED_CONTAINER)
-		. += span_notice("The bag is sealed shut.")
+		. += span_notice(LANG("obj.3e382fa1", null))
 	else
-		. += span_notice("Alt-click to seal it.")
+		. += span_notice(LANG("obj.2ac1d1fb", null))

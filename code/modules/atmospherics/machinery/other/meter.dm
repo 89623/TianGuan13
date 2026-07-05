@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/meter
 	name = "gas flow meter"
 	desc = "It measures something."
@@ -136,12 +137,12 @@
 
 /obj/machinery/meter/wrench_act(mob/user, obj/item/wrench)
 	..()
-	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+	to_chat(user, span_notice(LANG("obj.84b25bb7", list(src))))
 	if (wrench.use_tool(src, user, 40, volume=50))
 		user.visible_message(
-			"[user] unfastens \the [src].",
-			span_notice("You unfasten \the [src]."),
-			span_hear("You hear ratchet."))
+			LANG("obj.cb7d97ff", list(user, src)),
+			span_notice(LANG("obj.5cb76786", list(src))),
+			span_hear(LANG("obj.12db39f3", null)))
 		deconstruct()
 	return TRUE
 

@@ -155,7 +155,7 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/misc/asteroid/basalt/smooth/shale/standard_air
-	
+
 /turf/open/misc/asteroid/basalt/smooth/siderite/standard_air
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = TRUE

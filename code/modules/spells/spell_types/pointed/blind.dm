@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/blind
 	name = "Blind"
 	desc = "This spell temporarily blinds a single target."
@@ -33,11 +34,11 @@
 /datum/action/cooldown/spell/pointed/blind/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
-		to_chat(cast_on, span_notice("Your eye itches, but it passes momentarily."))
-		to_chat(owner, span_warning("The spell had no effect!"))
+		to_chat(cast_on, span_notice(LANG("datum.b977530c", null)))
+		to_chat(owner, span_warning(LANG("datum.2ce7047e", null)))
 		return FALSE
 
-	to_chat(cast_on, span_warning("Your eyes cry out in pain!"))
+	to_chat(cast_on, span_warning(LANG("datum.ba5ddcea", null)))
 	cast_on.adjust_temp_blindness(eye_blind_duration)
 	cast_on.set_eye_blur_if_lower(eye_blur_duration)
 	return TRUE

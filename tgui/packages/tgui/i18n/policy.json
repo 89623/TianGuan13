@@ -1,0 +1,46 @@
+{
+	"_comment": "i18n 标识符策略单一来源（三端共读：DM runtime.dm / TS localize.ts / Rust extract.rs）。新增一类「值兼标识符」的登记只改这里。同步：tgui-catalog.mjs sync 会把本文件复制到 tgui/packages/tgui/i18n/policy.json（前端打包需要，两份都提交）。",
+	"_payload_skip_keys": "TGUI 负载里既是显示又是 act() 回传标识符的列表键：字符串元素会原样回传服务端做相等校验（tgui_alert buttons / tgui_input_list items…）。P1 译了它们 → 前端回传中文、服务端英文校验 miss → CRASH/静默失败。",
+	"payload_skip_keys": [
+		"buttons",
+		"items",
+		"init_value",
+		"id",
+		"assistance_consoles",
+		"supply_consoles",
+		"information_consoles",
+		"destinationsList"
+	],
+	"_pref_desc_keys": "偏好菜单常量 asset 里可安全整串反查的纯显示字段（绝非 act 标识符）；name/title/choices 等一律不进此表。",
+	"pref_desc_keys": [
+		"description",
+		"pos_gameplay_description",
+		"neg_gameplay_description",
+		"neut_gameplay_description"
+	],
+	"_no_auto_translate": "TGUI 前端 auto-localize 的豁免串：en 目录里 identity 存在、但 MT 跨命名空间复用会误译的代码 token。",
+	"no_auto_translate": [
+		"const"
+	],
+	"_identifier_dot_procs": "构建 icon_state/日志键/act 键的 proc：其内 bare-`.` 累加串不是玩家可见文本，抽取/改写会破坏图像与交互（{0}_mag 被译 → 弹匣 overlay 消失；StripMenu 键被译 → 蓝屏）。整 proc 排除抽取与改写。",
+	"identifier_dot_procs": [
+		"update_overlays",
+		"overlay_checks",
+		"add_mmi_overlay",
+		"generate_husk_key",
+		"log_path_from_picture_ID",
+		"key_name",
+		"key_name_mentor",
+		"ban_target_string",
+		"rights2text",
+		"stat_entry",
+		"armor_to_protection_class",
+		"generate_code_phrase",
+		"get_alternate_actions",
+		"worn_overlays",
+		"generate_icon_key"
+	],
+	"identifier_dot_proc_suffixes": [
+		"_update_overlays"
+	]
+}

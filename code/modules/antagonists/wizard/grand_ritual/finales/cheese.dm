@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Gives the wizard a defensive/mood buff and a Wabbajack, a juiced up chaos staff that will surely break something.
  * Everyone but the wizard goes crazy, suffers major brain damage, and is given a vendetta against the wizard.
@@ -10,7 +11,7 @@
 
 /datum/grand_finale/cheese/trigger(mob/living/invoker)
 	message_admins("[key_name(invoker)] has summoned forth The Wabbajack and cursed the crew with madness!")
-	priority_announce("Danger: Extremely potent reality altering object has been summoned on station. Immediate evacuation advised. Brace for impact.", "[command_name()] Higher Dimensional Affairs", 'sound/effects/glass/glassbr1.ogg')
+	priority_announce("Danger: Extremely potent reality altering object has been summoned on station. Immediate evacuation advised. Brace for impact.", LANG("datum.92d186ed", list(command_name())), 'sound/effects/glass/glassbr1.ogg')
 
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		if (isnull(crewmate.mind))
@@ -46,4 +47,4 @@
 	invoker.add_mood_event("wizard_ritual_finale", /datum/mood_event/madness_elation)
 	var/obj/item/gun/magic/staff/chaos/true_wabbajack/the_wabbajack = new
 	invoker.put_in_active_hand(the_wabbajack)
-	to_chat(invoker, span_mind_control("Your every single instinct and rational thought is screaming at you as [the_wabbajack] appears in your firm grip..."))
+	to_chat(invoker, span_mind_control(LANG("datum.d90f731c", list(the_wabbajack))))

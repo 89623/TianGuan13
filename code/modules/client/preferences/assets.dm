@@ -55,4 +55,11 @@
 		if (!isnull(data))
 			preference_data[preference_entry.savefile_key] = data
 
+	// NOVA EDIT ADDITION START - i18n - 此 asset 不经 get_payload，lang_reverse_tree 够不着；
+	// 全服中文时把偏好常量数据里的纯显示描述（job/quirk/personality 的 description 等）反查为译文。
+	// 只翻非标识符显示字段，name/choices/department 等保持英文（见 lang_reverse_pref_descriptions）。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		lang_reverse_pref_descriptions(preference_data)
+	// NOVA EDIT ADDITION END
+
 	return preference_data

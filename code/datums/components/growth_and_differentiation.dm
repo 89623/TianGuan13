@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ### Growth and Differentiation Component: Used to randomly "grow" a creature into a new entity over its lifespan.
  *
@@ -154,7 +155,7 @@
 	var/new_mob_name = initial(new_mob.name)
 
 	if(!silent)
-		old_mob.visible_message(span_warning("[old_mob] grows into \a [new_mob_name]!"))
+		old_mob.visible_message(span_warning(LANG("datum.b56bcdc6", list(old_mob, new_mob_name))))
 
 	var/mob/living/transformed_mob = old_mob.change_mob_type(growth_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
 	if(initial(new_mob.unique_name))

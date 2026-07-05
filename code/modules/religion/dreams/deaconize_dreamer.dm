@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/religion_rites/deaconize/dreamers
 	desc = "Converts someone to your sect. They must be willing, so the first invocation will only prompt them to join. \
 		They will gain the same holy abilities as you. You can deaconize up to three followers, so choose wisely!"
@@ -5,7 +6,7 @@
 
 /datum/religion_rites/deaconize/dreamers/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	if(isnightmare(potential_deacon))
-		to_chat(user, span_warning("[potential_deacon] is a nightmare, an affront to [GLOB.deity] and all they stand for!"))
+		to_chat(user, span_warning(LANG("datum.bb5ebc92", list(potential_deacon, GLOB.deity))))
 		return FALSE
 	return ..()
 

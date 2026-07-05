@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # High Fiver Element
  *
@@ -22,8 +23,8 @@
 	SIGNAL_HANDLER
 
 	offerer.visible_message(
-		span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"),
-		span_notice("You post up, looking for a high-five!"),
+		span_notice(LANG("datum.39652e34", list(offerer, offerer.p_their()))),
+		span_notice(LANG("datum.fa3158e2", null)),
 		vision_distance = 2,
 	)
 	offerer.apply_status_effect(/datum/status_effect/offering/no_item_received/high_five, source, /atom/movable/screen/alert/give/highfive)
@@ -50,7 +51,7 @@
 	var/descriptor = "high-[high_ten ? "ten" : "five"]"
 
 	if(open_hands_taker <= 0)
-		to_chat(taker, span_warning("You can't [descriptor] [offerer] with no open hands!"))
+		to_chat(taker, span_warning(LANG("datum.5a944a67", list(descriptor, offerer))))
 		taker.add_mood_event(descriptor, /datum/mood_event/high_five_full_hand) // not so successful now!
 		return COMPONENT_OFFER_INTERRUPT
 
@@ -59,22 +60,22 @@
 	taker.add_mob_memory(/datum/memory/high_five, deuteragonist = offerer, high_five_type = descriptor, high_ten = high_ten)
 
 	if(high_ten)
-		to_chat(taker, span_nicegreen("You give high-tenning [offerer] your all!"))
+		to_chat(taker, span_nicegreen(LANG("datum.5884409f", list(offerer))))
 		offerer.visible_message(
-			span_notice("[taker] enthusiastically high-tens [offerer]!"),
-			span_nicegreen("Wow! You're high-tenned [taker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			span_notice(LANG("datum.41681855", list(taker, offerer))),
+			span_nicegreen(LANG("datum.d0fce5f3", list(taker))),
+			span_hear(LANG("datum.6c7f8149", null)),
 			ignored_mobs = taker,
 		)
 
 		offerer.add_mood_event(descriptor, /datum/mood_event/high_ten)
 		taker.add_mood_event(descriptor, /datum/mood_event/high_ten)
 	else
-		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
+		to_chat(taker, span_nicegreen(LANG("datum.ab9cb292", list(offerer))))
 		offerer.visible_message(
-			span_notice("[taker] high-fives [offerer]!"),
-			span_nicegreen("All right! You're high-fived by [taker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			span_notice(LANG("datum.61c9a265", list(taker, offerer))),
+			span_nicegreen(LANG("datum.7b8be00d", list(taker))),
+			span_hear(LANG("datum.6c7f8149", null)),
 			ignored_mobs = taker,
 		)
 

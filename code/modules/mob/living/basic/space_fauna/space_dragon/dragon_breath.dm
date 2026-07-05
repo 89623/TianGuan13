@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A space dragon's fire breath, toasts lunch AND buffs your friends
 /datum/action/cooldown/mob_cooldown/fire_breath/carp
 	desc = "A Space Dragon's burning breath not only chars its foes, but invigorates Space Carp as well."
@@ -10,7 +11,7 @@
 /datum/action/cooldown/mob_cooldown/fire_breath/carp/on_burn_mob(mob/living/barbecued, mob/living/source)
 	if (!source.faction_check_atom(barbecued))
 		return ..()
-	to_chat(barbecued, span_notice("[source]'s fiery breath fills you with energy!"))
+	to_chat(barbecued, span_notice(LANG("datum.5735633a", list(source))))
 	barbecued.apply_status_effect(/datum/status_effect/carp_invigoration)
 
 /// Makes you run faster for the duration

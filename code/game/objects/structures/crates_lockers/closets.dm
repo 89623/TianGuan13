@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define LOCKER_FULL -1
 
 ///A comprehensive list of all closets (NOT CRATES) in the game world
@@ -374,31 +375,31 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/examine(mob/user)
 	. = ..()
 	if(id_card)
-		. += span_notice("It can be [EXAMINE_HINT("marked")] with a pen.")
+		. += span_notice(LANG("obj.09b72cd2", list(EXAMINE_HINT("marked"))))
 	if(can_weld_shut && !welded)
-		. += span_notice("It can be [EXAMINE_HINT("welded")] shut.")
+		. += span_notice(LANG("obj.b2566416", list(EXAMINE_HINT("welded"))))
 	if(welded)
-		. += span_notice("It's [EXAMINE_HINT("welded")] shut.")
+		. += span_notice(LANG("obj.bbe0f9d9", list(EXAMINE_HINT("welded"))))
 	if(anchorable && !anchored)
-		. += span_notice("It can be [EXAMINE_HINT("bolted")] to the ground.")
+		. += span_notice(LANG("obj.99546aad", list(EXAMINE_HINT("bolted"))))
 	if(anchored)
-		. += span_notice("It's [anchorable ? EXAMINE_HINT("bolted") : "attached firmly"] to the ground.")
+		. += span_notice(LANG("obj.4529b309", list(anchorable ? EXAMINE_HINT("bolted") : "attached firmly")))
 	if(length(paint_jobs))
-		. += span_notice("It can be [EXAMINE_HINT("painted")] with another texture.")
+		. += span_notice(LANG("obj.27d61532", list(EXAMINE_HINT("painted"))))
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
-		. += span_notice("If you bump into [p_them()] while running, you will jump inside.")
+		. += span_notice(LANG("obj.dd24dbab", list(p_them())))
 
 	if(can_install_electronics)
 		if(!secure)
-			. += span_notice("You can install airlock electronics for access control.")
+			. += span_notice(LANG("obj.0233b04f", null))
 		else
-			. += span_notice("Its airlock electronics are [EXAMINE_HINT("screwed")] in place.")
+			. += span_notice(LANG("obj.8d79d3dd", list(EXAMINE_HINT("screwed"))))
 		if(!card_reader_installed && length(access_choices))
-			. += span_notice("You can install a card reader for further access control.")
+			. += span_notice(LANG("obj.c33d80ee", null))
 		else if(card_reader_installed)
-			. += span_notice("The card reader could be [EXAMINE_HINT("pried")] out.")
-			. += span_notice("Swipe your PDA with an ID card/Just ID to change access levels.")
-			. += span_notice("Use multitool to [access_locked ? "unlock" : "lock"] the access panel.")
+			. += span_notice(LANG("obj.d046b52a", list(EXAMINE_HINT("pried"))))
+			. += span_notice(LANG("obj.7145b6bc", null))
+			. += span_notice(LANG("obj.28322d57", list(access_locked ? "unlock" : "lock")))
 
 /obj/structure/closet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -481,7 +482,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(!(user.mobility_flags & MOBILITY_USE))
 			return FALSE
 	if(pulledby && user && HAS_TRAIT(src, TRAIT_STRONGPULL) && user != pulledby)
-		to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
+		to_chat(user, span_danger(LANG("obj.34bf8fe8", list(pulledby, src))))
 		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
@@ -681,7 +682,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!secure || !card_reader_installed || broken || locked || opened)
 		return
 	access_locked = !access_locked
-	balloon_alert(user, "access panel [access_locked ? "locked" : "unlocked"]")
+	balloon_alert(user, LANG("obj.ee8de855", list(access_locked ? "locked" : "unlocked")))
 	return TRUE
 
 /// sets the access for the closets from the swiped ID card
@@ -712,11 +713,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return FALSE
 
 	if(broken)
-		balloon_alert(user, "its broken!")
+		balloon_alert(user, LANG("obj.e291b83c", null))
 		return FALSE
 
 	if(locked)
-		balloon_alert(user, "unlock first!")
+		balloon_alert(user, LANG("obj.08c1dea0", null))
 		return FALSE
 
 	return TRUE
@@ -726,10 +727,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!secure || opened)
 		return FALSE
 	if(card_reader_installed)
-		balloon_alert(user, "attached to reader!")
+		balloon_alert(user, LANG("obj.943bf9bc", null))
 		return FALSE
 	if(locked)
-		balloon_alert(user, "unlock first!")
+		balloon_alert(user, LANG("obj.08c1dea0", null))
 		return FALSE
 
 	return TRUE
@@ -740,15 +741,15 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return FALSE
 
 	if(broken)
-		balloon_alert(user, "its broken!")
+		balloon_alert(user, LANG("obj.e291b83c", null))
 		return FALSE
 
 	if(!secure)
-		balloon_alert(user, "no electronics inside!")
+		balloon_alert(user, LANG("obj.d118dfcf", null))
 		return FALSE
 
 	if(locked)
-		balloon_alert(user, "unlock first!")
+		balloon_alert(user, LANG("obj.08c1dea0", null))
 		return FALSE
 
 	return TRUE
@@ -759,7 +760,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return FALSE
 
 	if(locked)
-		balloon_alert(user, "unlock first!")
+		balloon_alert(user, LANG("obj.08c1dea0", null))
 		return FALSE
 
 	return TRUE
@@ -771,7 +772,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!opened && istype(weapon, /obj/item/airlock_painter))
 		if(!length(paint_jobs))
 			return
-		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", paint_jobs)
+		var/choice = tgui_input_list(user, LANG("obj.b1b228ff", null), LANG("obj.aa8f9e75", null), paint_jobs)
 		if(isnull(choice))
 			return
 
@@ -786,8 +787,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		update_appearance()
 
 	else if(istype(weapon, /obj/item/electronics/airlock) && can_install_airlock_electronics(user))
-		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
-			span_notice("You start to install electronics into the [src]..."))
+		user.visible_message(span_notice(LANG("obj.f57d6a02", list(user, src))),\
+			span_notice(LANG("obj.5a2c3e4f", list(src))))
 
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_airlock_electronics), user)))
 			return
@@ -797,13 +798,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		inherit_airlock_electronics_access(weapon)
 		qdel(weapon)
 		secure = TRUE
-		balloon_alert(user, "electronics installed")
+		balloon_alert(user, LANG("obj.4513d6bd", null))
 
 		update_appearance()
 
 	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER && can_unscrew_airlock_electronics(user))
-		user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
-			span_notice("You begin to remove the electronics from the [src]..."))
+		user.visible_message(span_notice(LANG("obj.229442c3", list(user, src))),\
+			span_notice(LANG("obj.108516da", list(src))))
 
 		if (!weapon.use_tool(src, user, 40, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
 			return
@@ -819,13 +820,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		req_one_access = null
 		id_card = null
 		secure = FALSE
-		balloon_alert(user, "electronics removed")
+		balloon_alert(user, LANG("obj.9c7d0598", null))
 
 		update_appearance()
 
 	else if(istype(weapon, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
-		user.visible_message(span_notice("[user] is installing a card reader."),
-					span_notice("You begin installing the card reader."))
+		user.visible_message(span_notice(LANG("obj.ff29669a", list(user))),
+					span_notice(LANG("obj.57521e91", null)))
 
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
 			return
@@ -833,11 +834,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		qdel(weapon)
 		card_reader_installed = TRUE
 
-		balloon_alert(user, "card reader installed")
+		balloon_alert(user, LANG("obj.49c02850", null))
 
 	else if(weapon.tool_behaviour == TOOL_CROWBAR && can_pryout_card_reader(user))
-		user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
-			span_notice("You begin to pry the card reader out from [src]..."))
+		user.visible_message(span_notice(LANG("obj.dd026037", list(user, src))),\
+			span_notice(LANG("obj.2fc1f6e6", list(src))))
 
 		if(!weapon.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
 			return
@@ -845,7 +846,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		new /obj/item/stock_parts/card_reader(drop_location())
 		card_reader_installed = FALSE
 
-		balloon_alert(user, "card reader removed")
+		balloon_alert(user, LANG("obj.8730b9d8", null))
 
 	else if(secure && !broken && card_reader_installed && !locked && !opened && !access_locked && !isnull((id = weapon.GetID())))
 		var/num_choices = length(access_choices)
@@ -856,7 +857,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(num_choices == 1)
 			choice = access_choices[1]
 		else
-			choice = tgui_input_list(user, "Set Access Type", "Access Type", access_choices)
+			choice = tgui_input_list(user, LANG("obj.369a15ea", null), LANG("obj.8cf8426e", null), access_choices)
 		if(isnull(choice))
 			return
 
@@ -878,9 +879,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				set_access(list())
 
 		if(!isnull(id_card))
-			balloon_alert(user, "now owned by [id.registered_name]")
+			balloon_alert(user, LANG("obj.02dad179", list(id.registered_name)))
 		else
-			balloon_alert(user, "set to [choice]")
+			balloon_alert(user, LANG("obj.28f94138", list(choice)))
 
 	else if(opened)
 		if(istype(weapon, cutting_tool))
@@ -888,18 +889,18 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				if(!weapon.tool_start_check(user, amount=1))
 					return
 
-				to_chat(user, span_notice("You begin cutting \the [src] apart..."))
+				to_chat(user, span_notice(LANG("obj.807d94b4", list(src))))
 				if(weapon.use_tool(src, user, 40, volume=50))
 					if(!opened)
 						return
-					user.visible_message(span_notice("[user] slices apart \the [src]."),
-									span_notice("You cut \the [src] apart with \the [weapon]."),
-									span_hear("You hear welding."))
+					user.visible_message(span_notice(LANG("obj.fe86d6ab", list(user, src))),
+									span_notice(LANG("obj.a44b2da5", list(src, weapon))),
+									span_hear(LANG("obj.1aa82fa3", null)))
 					deconstruct(TRUE)
 				return
 			else // for example cardboard box is cut with wirecutters
-				user.visible_message(span_notice("[user] cut apart \the [src]."), \
-									span_notice("You cut \the [src] apart with \the [weapon]."))
+				user.visible_message(span_notice(LANG("obj.fc66857a", list(user, src))), \
+									span_notice(LANG("obj.a44b2da5", list(src, weapon))))
 				deconstruct(TRUE)
 				return
 		if (user.combat_mode)
@@ -916,9 +917,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				return
 			welded = !welded
 			after_weld(welded)
-			user.visible_message(span_notice("[user] [welded ? "welds shut" : "unwelded"] \the [src]."),
-							span_notice("You [welded ? "weld" : "unwelded"] \the [src] with \the [weapon]."),
-							span_hear("You hear welding."))
+			user.visible_message(span_notice(LANG("obj.feb7fb3d", list(user, welded ? "welds shut" : "unwelded", src))),
+							span_notice(LANG("obj.4cf04b7a", list(welded ? "weld" : "unwelded", src, weapon))),
+							span_hear(LANG("obj.1aa82fa3", null)))
 			user.log_message("[welded ? "welded":"unwelded"] closet [src] with [weapon]", LOG_GAME)
 			update_appearance()
 
@@ -933,10 +934,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!anchorable)
-		balloon_alert(user, "no anchor bolts!")
+		balloon_alert(user, LANG("obj.1db79f2e", null))
 		return TRUE
 	if(isinspace() && !anchored) // We want to prevent anchoring a locker in space, but we should still be able to unanchor it there
-		balloon_alert(user, "nothing to anchor to!")
+		balloon_alert(user, LANG("obj.117d1d87", null))
 		return TRUE
 	set_anchored(!anchored)
 	tool.play_tool_sound(src, 75)
@@ -963,14 +964,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	var/turf/T = get_turf(src)
 	add_fingerprint(user)
-	user.visible_message(span_warning("[user] [actuallyismob ? "tries to ":""]stuff [O] into [src]."), \
-		span_warning("You [actuallyismob ? "try to ":""]stuff [O] into [src]."), \
-		span_hear("You hear clanging."))
+	user.visible_message(span_warning(LANG("obj.fad6e6cb", list(user, actuallyismob ? "tries to ":"", O, src))), \
+		span_warning(LANG("obj.83c84f47", list(actuallyismob ? "try to ":"", O, src))), \
+		span_hear(LANG("obj.53cc7254", null)))
 	if(actuallyismob)
 		if(do_after(user, 4 SECONDS, O))
-			user.visible_message(span_notice("[user] stuffs [O] into [src]."), \
-				span_notice("You stuff [O] into [src]."), \
-				span_hear("You hear a loud metal bang."))
+			user.visible_message(span_notice(LANG("obj.5235890c", list(user, O, src))), \
+				span_notice(LANG("obj.16ae1517", list(O, src))), \
+				span_hear(LANG("obj.fab8a7be", null)))
 			var/mob/living/L = O
 			if(!issilicon(L))
 				L.Paralyze(40)
@@ -989,7 +990,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
-			to_chat(user, span_warning("[src]'s door won't budge!"))
+			to_chat(user, span_warning(LANG("obj.c4e897cb", list(src))))
 		return
 	container_resist_act(user)
 
@@ -1035,7 +1036,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
 		return toggle(usr)
 	else
-		to_chat(usr, span_warning("This mob type can't use this verb."))
+		to_chat(usr, span_warning(LANG("obj.52b255a1", null)))
 
 // Objects that try to exit a locker by stepping were doing so successfully,
 // and due to an oversight in turf/Enter() were going through walls.  That
@@ -1064,9 +1065,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	//okay, so the closet is either welded or locked... resist!!!
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_warning("[src] begins to shake violently!"), \
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
-		span_hear("You hear banging from [src]."))
+	user.visible_message(span_warning(LANG("obj.912b79b5", list(src))), \
+		span_notice(LANG("obj.43ad33b1", list(src, DisplayTimeText(breakout_time)))), \
+		span_hear(LANG("obj.8df1b48f", list(src))))
 
 	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
 
@@ -1074,12 +1075,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(!user || user.stat != CONSCIOUS || (loc_required && (user.loc != src)) || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
-		user.visible_message(span_danger("[user] successfully broke out of [src]!"),
-							span_notice("You successfully break out of [src]!"))
+		user.visible_message(span_danger(LANG("obj.37696909", list(user, src))),
+							span_notice(LANG("obj.81c31f6b", list(src))))
 		bust_open()
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, span_warning("You fail to break out of [src]!"))
+			to_chat(user, span_warning(LANG("obj.384d6997", list(src))))
 
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
 	container_resist_act(user)
@@ -1160,7 +1161,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	play_closet_lock_sound()
 	user.visible_message(
 		span_notice("[user] [locked ? "locks" : "unlocks"] [src]."),
-		span_notice("You [locked ? "locked" : "unlocked"] [src]."),
+		span_notice(LANG("obj.d6171b71", list(locked ? "locked" : "unlocked", src))),
 	)
 	update_appearance()
 	return TRUE
@@ -1187,8 +1188,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(secure && !broken)
-		visible_message(span_warning("Sparks fly from [src]!"), blind_message = span_hear("You hear a faint electrical spark."))
-		balloon_alert(user, "lock broken open")
+		visible_message(span_warning(LANG("obj.4ebe3de5", list(src))), blind_message = span_hear("You hear a faint electrical spark."))
+		balloon_alert(user, LANG("obj.8808ba88", null))
 		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE
 		locked = FALSE
@@ -1252,10 +1253,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
-		span_userdanger("You're shoved into [src] by [shover.name]!"),
-		span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-	to_chat(src, span_danger("You shove [target.name] into [src]!"))
+	target.visible_message(span_danger(LANG("obj.9cd0941b", list(shover.name, target.name, src))),
+		span_userdanger(LANG("obj.9092b59a", list(src, shover.name))),
+		span_hear(LANG("obj.b75dfa76", null)), COMBAT_MESSAGE_RANGE, shover)
+	to_chat(src, span_danger(LANG("obj.d6cb368b", list(target.name, src))))
 	log_combat(shover, target, "shoved", "into [src] (locker/crate)[weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED
 
@@ -1276,11 +1277,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/rename_checks(mob/living/user)
 	. = TRUE
 	if(locked)
-		src.balloon_alert(user, "unlock first!")
+		src.balloon_alert(user, LANG("obj.08c1dea0", null))
 		return FALSE
 
 	if(isnull(id_card) && secure)
-		src.balloon_alert(user, "not yours to rename!")
+		src.balloon_alert(user, LANG("obj.691adc91", null))
 		return FALSE
 
 ///Spears deal bonus damages to lockers
@@ -1289,8 +1290,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		HIDE_ATTACK_MESSAGES(attack_modifiers)
 		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 2)
 		user.visible_message(
-			span_danger("[user] stabs with precision [src]'s electronics with [attacking_item]!"),
-			span_danger("You stab with precision [src]'s electronics with [attacking_item]!"),
+			span_danger(LANG("obj.7f82c43d", list(user, src, attacking_item))),
+			span_danger(LANG("obj.8b2dac21", list(src, attacking_item))),
 			null,
 			COMBAT_MESSAGE_RANGE,
 		)

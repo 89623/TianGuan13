@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Clown Items
  * Contains:
  * Soap
@@ -134,7 +135,7 @@
 	)
 
 /obj/item/soap/omega/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.08d6a587", list(user, src, user.p_theyre()))))
 	new /obj/structure/chrono_field(user.loc, user)
 	return MANUAL_SUICIDE
 
@@ -144,8 +145,8 @@
 	default_raw_text = "<h1><b>The Legend of the Omega Soap</b></h1><br><br>Essence of <b>potato</b>, juice, not grind.<br>A <b>lizard's</b> tail, turned into wine.<br><b>Powder of monkey</b>, to help the workload.<br>Some <b>Krokodil</b>, because meth would explode.<br><b>Nitric acid</b> and <b>Baldium</b>, for organic dissolving.<br>A cup full of <b>hooch</b>, for sins' absolving.<br>A dash of <b>bluespace dust</b>, for removal of stains.<br>A syringe of <b>Pump-Up</b>, Security's worst of pains.<br>A can of <b>Space Cola</b>, to watch the dirt fade.<br><b>Heat</b> as hot as possible, let the soap be your blade.<br>With <b>ten</b> units of each, the soap that topples all will be made."
 
 /obj/item/soap/suicide_act(mob/living/user)
-	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
-	user.visible_message(span_suicide("[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_They()]'ll never get that BB gun now!"))
+	user.say(LANG("obj.74fdfbd3", null), forced="soap suicide")
+	user.visible_message(span_suicide(LANG("obj.0f438b13", list(user, src, user.p_their(), user.p_They()))))
 	do_foam(1, src, get_turf(user))
 	return TOXLOSS
 
@@ -175,14 +176,14 @@
 		noUses(user)
 
 /obj/item/soap/proc/noUses(mob/user)
-	to_chat(user, span_warning("[src] crumbles into tiny bits!"))
+	to_chat(user, span_warning(LANG("obj.eed24fca", list(src))))
 	qdel(src)
 
 /obj/item/soap/nanotrasen/cyborg
 	name = "built-in soap"
 
 /obj/item/soap/nanotrasen/cyborg/noUses(mob/user)
-	to_chat(user, span_warning("[src] has ran out of chemicals! Head to a recharger to refill it."))
+	to_chat(user, span_warning(LANG("obj.f003a867", list(src))))
 
 /obj/item/soap/nanotrasen/cyborg/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	if(uses <= 0)
@@ -227,7 +228,7 @@
 	return ..()
 
 /obj/item/bikehorn/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] solemnly points [src] at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.3b969d0a", list(user, src, user.p_their(), user.p_theyre()))))
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 	return BRUTELOSS
 
@@ -324,7 +325,7 @@
 /obj/item/balloon_mallet/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user,TRAIT_BALLOON_SUTRA))
-		. += "A sacred weapon of the higher castes from the clown planet, used to strike fear into the hearts of their foes. Wield it with care."
+		. += LANG("obj.651e3ab8", null)
 
 /obj/item/balloon_mallet/attack(mob/living/target, mob/living/user)
 	playsound(loc, 'sound/mobs/non-humanoids/clown/hehe.ogg', 20)

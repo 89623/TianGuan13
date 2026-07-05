@@ -18,12 +18,12 @@
 		return FALSE
 
 	if(target_carbon.handcuffed)
-		target_carbon.balloon_alert(invoker, "already restrained!")
+		target_carbon.balloon_alert(invoker, LANG("datum.1f241543", null))
 		return FALSE
 
 	playsound(target_carbon, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -2)
-	target_carbon.visible_message(span_danger("[invoker] forms a well of energy around [target_carbon], brass appearing at their wrists!"),\
-						span_userdanger("[invoker] is trying to restrain you!"))
+	target_carbon.visible_message(span_danger(LANG("datum.ef41cf65", list(invoker, target_carbon))),\
+						span_userdanger(LANG("datum.61017d12", list(invoker))))
 
 	if(!do_after(invoker, 3 SECONDS, target = target_carbon))
 		return FALSE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/status_effect/speech
 	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
@@ -143,7 +144,7 @@
 	if(. == original_word || !should_stutter())
 		return
 	var/datum/brain_trauma/special/obsessed/obsession_trauma = get_obsession()
-	to_chat(owner, span_warning("Being near [obsession_trauma.obsession.real_name] makes you nervous and stutter..."))
+	to_chat(owner, span_warning(LANG("datum.4771a848", list(obsession_trauma.obsession.real_name))))
 	COOLDOWN_START(src, stutter_cooldown, rand(4, 8) SECONDS)
 
 /datum/status_effect/speech/stutter/obsession/proc/get_obsession()

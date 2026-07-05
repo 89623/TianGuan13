@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/bot
 	background_icon_state = "bg_tech_blue"
 	overlay_icon_state = "bg_tech_blue_border"
@@ -14,7 +15,7 @@
 	if((bot_owner.bot_mode_flags & BOT_MODE_ON))
 		return TRUE
 	if(feedback)
-		bot_owner.balloon_alert(bot_owner, "power off!")
+		bot_owner.balloon_alert(bot_owner, LANG("datum.f108efd4", null))
 	return FALSE
 
 /datum/action/cooldown/mob_cooldown/bot/foam
@@ -28,7 +29,7 @@
 	var/foam_range = 2
 
 /datum/action/cooldown/mob_cooldown/bot/foam/Activate(mob/living/firer, atom/target)
-	owner.visible_message(span_danger("[owner] whirs and bubbles violently, before releasing a plume of froth!"))
+	owner.visible_message(span_danger(LANG("datum.731d2b09", list(owner))))
 	do_foam(foam_range, owner, owner.loc)
 	StartCooldown()
 	return TRUE

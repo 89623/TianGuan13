@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/food/drug
 	name = "generic drug"
 	desc = "I am error"
@@ -133,9 +134,9 @@
 /obj/item/food/drug/opium/examine()
 	. = ..()
 	if(reagents.get_reagent_amount(/datum/reagent/medicine/morphine) >= 10)
-		. += span_notice("The opium is large and rich in fragrance; it needs no further refinement.")
+		. += span_notice(LANG("obj.12f0d77c", null))
 	else
-		. += span_notice("The opium is still small, and can be pressed together with more to increase its potency and richness.")
+		. += span_notice(LANG("obj.87c91503", null))
 
 /obj/item/food/drug/opium/Initialize(mapload) // For narcotics and black market purchases, pure and proper.
 	. = ..()
@@ -155,7 +156,7 @@
 
 		var/current = reagents.get_reagent_amount(/datum/reagent/medicine/morphine)
 		if(current >= 10)
-			to_chat(user, span_notice("This chunk can't hold any more."))
+			to_chat(user, span_notice(LANG("obj.1f23a423", null)))
 			return TRUE
 
 		var/capacity_left = 10 - current
@@ -166,11 +167,11 @@
 			if(overflow > 0)
 				reagents.trans_to(other, overflow)
 
-			to_chat(user, span_notice("You press the chunks of opium together, enriching them."))
+			to_chat(user, span_notice(LANG("obj.944fac53", null)))
 			if(!other.reagents.total_volume)
 				qdel(other)
 		else
-			to_chat(user, span_notice("The opium cannot be pressed together further."))
+			to_chat(user, span_notice(LANG("obj.f57fb28f", null)))
 
 		return TRUE
 

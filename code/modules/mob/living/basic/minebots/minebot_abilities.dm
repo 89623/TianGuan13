@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/action/cooldown/mob_cooldown/minedrone
 	button_icon = 'icons/mob/actions/actions_mecha.dmi'
@@ -11,7 +12,7 @@
 
 /datum/action/cooldown/mob_cooldown/minedrone/Activate()
 	owner.set_light_on(!owner.light_on)
-	owner.balloon_alert(owner, "lights [owner.light_on ? "on" : "off"]!")
+	owner.balloon_alert(owner, LANG("datum.cad5a2e5", list(owner.light_on ? "on" : "off")))
 
 /datum/action/cooldown/mob_cooldown/minedrone/dump_ore
 	name = "Dump Ore"
@@ -22,7 +23,7 @@
 		return TRUE
 
 	if(feedback)
-		owner.balloon_alert(owner, "no ore!")
+		owner.balloon_alert(owner, LANG("datum.522067e9", null))
 	return FALSE
 
 /datum/action/cooldown/mob_cooldown/minedrone/dump_ore/Activate()
@@ -47,7 +48,7 @@
 
 	owner.sync_lighting_plane_cutoff()
 
-	to_chat(owner, span_notice("You toggle your meson vision [(owner.sight & SEE_TURFS) ? "on" : "off"]."))
+	to_chat(owner, span_notice(LANG("datum.c6cd7787", list((owner.sight & SEE_TURFS) ? "on" : "off"))))
 
 /datum/action/cooldown/mob_cooldown/missile_launcher
 	name = "Launch Missile"
@@ -68,7 +69,7 @@
 	if(lavaland_equipment_pressure_check(get_turf(owner)))
 		return TRUE
 	if(feedback)
-		owner.balloon_alert(owner, "cant be used here!")
+		owner.balloon_alert(owner, LANG("datum.aba09546", null))
 	return FALSE
 
 /datum/action/cooldown/mob_cooldown/missile_launcher/Activate(atom/target)
@@ -108,7 +109,7 @@
 	if(lavaland_equipment_pressure_check(get_turf(owner)))
 		return TRUE
 	if(feedback)
-		owner.balloon_alert(owner, "cant be used here!")
+		owner.balloon_alert(owner, LANG("datum.aba09546", null))
 	return FALSE
 
 /datum/action/cooldown/mob_cooldown/drop_landmine/Activate(atom/target)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/hypnochair
 	name = "enhanced interrogation chamber"
 	desc = "A device used to perform \"enhanced interrogation\" through invasive mental conditioning."
@@ -95,7 +96,7 @@
 		return
 	victim = C
 	if(C.get_eye_protection() <= 0)
-		to_chat(C, span_warning("Strobing coloured lights assault you relentlessly! You're losing your ability to think straight!"))
+		to_chat(C, span_warning(LANG("obj.f8116b08", null)))
 		C.become_blind(HYPNOCHAIR_TRAIT)
 		ADD_TRAIT(C, TRAIT_DEAF, HYPNOCHAIR_TRAIT)
 	interrogating = TRUE
@@ -126,7 +127,7 @@
 	update_appearance()
 	var/temp_trigger = trigger_phrase
 	trigger_phrase = "" //Erase evidence, in case the subject is able to look at the panel afterwards
-	audible_message(span_notice("[src] pings!"))
+	audible_message(span_notice(LANG("obj.8978c8c2", list(src))))
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
 	if(QDELETED(victim) || victim != occupant)
@@ -181,20 +182,20 @@
 /obj/machinery/hypnochair/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
-		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(600)].)"), \
-		span_hear("You hear a metallic creaking from [src]."))
+	user.visible_message(span_notice(LANG("obj.485787b2", list(user, src))), \
+		span_notice(LANG("obj.43ad33b1", list(src, DisplayTimeText(600)))), \
+		span_hear(LANG("obj.a1d9c573", list(src))))
 	if(do_after(user,(600), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return
-		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
-			span_notice("You successfully break out of [src]!"))
+		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
+			span_notice(LANG("obj.81c31f6b", list(src))))
 		open_machine()
 
 /obj/machinery/hypnochair/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
-		to_chat(user, span_warning("[src]'s door won't budge!"))
+		to_chat(user, span_warning(LANG("obj.c4e897cb", list(src))))
 
 
 /obj/machinery/hypnochair/mouse_drop_receive(atom/target, mob/user, params)

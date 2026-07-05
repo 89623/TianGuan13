@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Return the markup to for the dropdown list for the VV panel for this atom
  *
@@ -9,7 +10,7 @@
 	if(!ismovable(src))
 		var/turf/curturf = get_turf(src)
 		if(curturf)
-			. += "<a href='byond://?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[curturf.x];Y=[curturf.y];Z=[curturf.z]' style='display:none;'>Jump To</a>"
+			. += LANG("atom.a98f9a3a", list(HrefToken(), curturf.x, curturf.y, curturf.z))
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRANSFORM, "Modify Transform")
 	VV_DROPDOWN_OPTION(VV_HK_DEBUG_APPEARANCE, "Debug Appearance")
 	VV_DROPDOWN_OPTION(VV_HK_DOWNLOAD_SPRITE, "Download Sprite")
@@ -35,7 +36,7 @@
 
 	if(href_list[VV_HK_ADD_REAGENT])
 		if(!reagents)
-			var/amount = tgui_input_number(usr, "Specify the reagent size of [src]", "Set Reagent Size", 50)
+			var/amount = tgui_input_number(usr, LANG("atom.5e9da115", list(src)), LANG("atom.79ad2c0f", null), 50)
 			if(!amount)
 				return
 			create_reagents(amount)
@@ -44,11 +45,11 @@
 			return
 
 		var/chosen_id
-		switch(tgui_alert(usr, "Choose a method.", "Add Reagents", list("Search", "Choose from a list", "I'm feeling lucky")))
+		switch(tgui_alert(usr, LANG("atom.dc95397f", null), LANG("atom.a21ddbb3", null), list("Search", "Choose from a list", "I'm feeling lucky")))
 			if("Search")
 				var/valid_id
 				while(!valid_id)
-					chosen_id = tgui_input_text(usr, "Enter the ID of the reagent you want to add.", "Search reagents")
+					chosen_id = tgui_input_text(usr, LANG("atom.d4cf7df6", null), LANG("atom.13046490", null))
 					if(isnull(chosen_id)) //Get me out of here!
 						break
 					if (!ispath(text2path(chosen_id)))
@@ -58,15 +59,15 @@
 					else
 						valid_id = TRUE
 					if(!valid_id)
-						to_chat(usr, span_warning("A reagent with that ID doesn't exist!"))
+						to_chat(usr, span_warning(LANG("atom.66e644d8", null)))
 			if("Choose from a list")
-				chosen_id = tgui_input_list(usr, "Choose a reagent to add.", "Choose a reagent.", sort_list(subtypesof(/datum/reagent), GLOBAL_PROC_REF(cmp_typepaths_asc)))
+				chosen_id = tgui_input_list(usr, LANG("atom.2aa83079", null), LANG("atom.a34b595f", null), sort_list(subtypesof(/datum/reagent), GLOBAL_PROC_REF(cmp_typepaths_asc)))
 			if("I'm feeling lucky")
 				chosen_id = pick(subtypesof(/datum/reagent))
 
 		if(!chosen_id)
 			return
-		var/amount = tgui_input_number(usr, "Choose the amount to add.", "Choose the amount.", reagents.maximum_volume - reagents.total_volume, reagents.maximum_volume)
+		var/amount = tgui_input_number(usr, LANG("atom.acdb4d7b", null), LANG("atom.3b3f4833", null), reagents.maximum_volume - reagents.total_volume, reagents.maximum_volume)
 		if(!amount)
 			return
 		reagents.add_reagent(chosen_id, amount)
@@ -111,53 +112,53 @@
 		message_admins(span_notice(message))
 
 	if(href_list[VV_HK_ADD_AI])
-		var/result = tgui_input_list(usr, "Choose the AI controller to apply to this atom WARNING: Not all AI works on all atoms.", "AI controller", sort_list(subtypesof(/datum/ai_controller), GLOBAL_PROC_REF(cmp_typepaths_asc)))
+		var/result = tgui_input_list(usr, LANG("atom.640de2a9", null), LANG("atom.fff81a5e", null), sort_list(subtypesof(/datum/ai_controller), GLOBAL_PROC_REF(cmp_typepaths_asc)))
 		if(result)
 			ai_controller = new result(src)
 
 	if(href_list[VV_HK_MODIFY_TRANSFORM])
-		var/result = input(usr, "Choose the transformation to apply","Transform Mod") as null|anything in list("Scale","Translate","Rotate","Shear")
+		var/result = input(usr, LANG("atom.87afafb8", null),LANG("atom.502f2082", null)) as null|anything in list("Scale","Translate","Rotate","Shear")
 		var/matrix/M = transform
 		if(!result)
 			return
 		switch(result)
 			if("Scale")
-				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				var/x = input(usr, LANG("atom.53fee51e", null),LANG("atom.502f2082", null)) as null|num
+				var/y = input(usr, LANG("atom.d8cf5989", null),LANG("atom.502f2082", null)) as null|num
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Scale(x,y)
 			if("Translate")
-				var/x = input(usr, "Choose x mod (negative = left, positive = right)","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod (negative = down, positive = up)","Transform Mod") as null|num
+				var/x = input(usr, LANG("atom.ef5f1db9", null),LANG("atom.502f2082", null)) as null|num
+				var/y = input(usr, LANG("atom.0163f037", null),LANG("atom.502f2082", null)) as null|num
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Translate(x,y)
 			if("Shear")
-				var/x = input(usr, "Choose x mod","Transform Mod") as null|num
-				var/y = input(usr, "Choose y mod","Transform Mod") as null|num
+				var/x = input(usr, LANG("atom.53fee51e", null),LANG("atom.502f2082", null)) as null|num
+				var/y = input(usr, LANG("atom.d8cf5989", null),LANG("atom.502f2082", null)) as null|num
 				if(isnull(x) || isnull(y))
 					return
 				transform = M.Shear(x,y)
 			if("Rotate")
-				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
+				var/angle = input(usr, LANG("atom.0b9647f1", null),LANG("atom.502f2082", null)) as null|num
 				if(isnull(angle))
 					return
 				transform = M.Turn(angle)
 		SEND_SIGNAL(src, COMSIG_ATOM_VV_MODIFY_TRANSFORM)
 
 	if(href_list[VV_HK_SPIN_ANIMATION])
-		var/num_spins = input(usr, "Do you want infinite spins?", "Spin Animation") in list("Yes", "No")
+		var/num_spins = input(usr, LANG("atom.548a341c", null), LANG("atom.4979cc62", null)) in list("Yes", "No")
 		if(num_spins == "No")
-			num_spins = input(usr, "How many spins?", "Spin Animation") as null|num
+			num_spins = input(usr, LANG("atom.7cdbbbf8", null), LANG("atom.4979cc62", null)) as null|num
 		else
 			num_spins = -1
 		if(!num_spins)
 			return
-		var/spins_per_sec = input(usr, "How many spins per second?", "Spin Animation") as null|num
+		var/spins_per_sec = input(usr, LANG("atom.7e3529c0", null), LANG("atom.4979cc62", null)) as null|num
 		if(!spins_per_sec)
 			return
-		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
+		var/direction = input(usr, LANG("atom.0b76de35", null), LANG("atom.4979cc62", null)) in list("Clockwise", "Counter-clockwise")
 		switch(direction)
 			if("Clockwise")
 				direction = 1
@@ -170,15 +171,15 @@
 	if(href_list[VV_HK_STOP_ALL_ANIMATIONS])
 		// Critical: Needs to be accessible in case of animation spam breaking shit
 		// Do not TGUIfy
-		var/result = input(usr, "Are you sure?", "Stop Animating") in list("Yes", "No")
+		var/result = input(usr, LANG("atom.77344162", null), LANG("atom.aa79af7e", null)) in list("Yes", "No")
 		if(result == "Yes")
 			animate(src, transform = null, flags = ANIMATION_END_NOW) // Literally just fucking stop animating entirely because admin said so
 		return
 
 	if(href_list[VV_HK_AUTO_RENAME])
-		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
+		var/newname = input(usr, LANG("atom.04b1bd5b", null), LANG("atom.19468889", null)) as null|text
 		// Check the new name against the chat filter. If it triggers the IC chat filter, give an option to confirm.
-		if(newname && !(is_ic_filtered(newname) || is_soft_ic_filtered(newname) && tgui_alert(usr, "Your selected name contains words restricted by IC chat filters. Confirm this new name?", "IC Chat Filter Conflict", list("Confirm", "Cancel")) != "Confirm"))
+		if(newname && !(is_ic_filtered(newname) || is_soft_ic_filtered(newname) && tgui_alert(usr, LANG("atom.9b4d40a4", null), LANG("atom.fc9f6a2c", null), list("Confirm", "Cancel")) != "Confirm"))
 			vv_auto_rename(newname)
 
 	if(href_list[VV_HK_EDIT_FILTERS])

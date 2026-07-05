@@ -31,20 +31,20 @@
 	var/treatment_delay = base_treat_time * self_penalty_mult * scanned_mult
 
 	if(victim == user)
-		victim.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] realigning [victim.p_their()] [limb.plaintext_zone] with [I]."), span_warning("You begin realigning your [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+		victim.visible_message(span_danger(LANG("datum.dd2df9c6", list(user, scanned ? "expertly" : "", victim.p_their(), limb.plaintext_zone, I))), span_warning(LANG("datum.8ef9e56e", list(limb.plaintext_zone, I, scanned ? ", keeping the holo-image's indications in mind" : ""))))
 	else
-		user.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] realigning [victim]'s [limb.plaintext_zone] with [I]."), span_notice("You begin realigning [victim]'s [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+		user.visible_message(span_danger(LANG("datum.aa37b89a", list(user, scanned ? "expertly" : "", victim, limb.plaintext_zone, I))), span_notice(LANG("datum.33481fc1", list(victim, limb.plaintext_zone, I, scanned ? ", keeping the holo-image's indications in mind" : ""))))
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	if(victim == user)
 		limb.receive_damage(brute=25, wound_bonus=CANT_WOUND)
-		victim.visible_message(span_danger("[user] finishes realigning [victim.p_their()] [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), span_userdanger("You reset your [limb.plaintext_zone] with a disturbing <b>crunch</b>!"))
+		victim.visible_message(span_danger(LANG("datum.c6239b02", list(user, victim.p_their(), limb.plaintext_zone))), span_userdanger(LANG("datum.88d9614c", list(limb.plaintext_zone))))
 	else
 		limb.receive_damage(brute=20, wound_bonus=CANT_WOUND)
-		user.visible_message(span_danger("[user] finishes realigning [victim]'s [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), span_nicegreen("You finish realigning [victim]'s [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] resets your [limb.plaintext_zone] with a disturbing <b>crunch</b>!"))
+		user.visible_message(span_danger(LANG("datum.8992cbd6", list(user, victim, limb.plaintext_zone))), span_nicegreen(LANG("datum.43a90c07", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
+		to_chat(victim, span_userdanger(LANG("datum.1374a635", list(user, limb.plaintext_zone))))
 
 	victim.emote("scream")
 	playsound(user, 'sound/effects/wounds/crack1.ogg', 70, TRUE)
@@ -63,20 +63,20 @@
 	var/treatment_delay = base_treat_time * self_penalty_mult * scanned_mult
 
 	if(victim == user)
-		victim.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] realigning [victim.p_their()] [limb.plaintext_zone] with [I]."), span_warning("You begin realigning your [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+		victim.visible_message(span_danger(LANG("datum.dd2df9c6", list(user, scanned ? "expertly" : "", victim.p_their(), limb.plaintext_zone, I))), span_warning(LANG("datum.8ef9e56e", list(limb.plaintext_zone, I, scanned ? ", keeping the holo-image's indications in mind" : ""))))
 	else
-		user.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] realigning [victim]'s [limb.plaintext_zone] with [I]."), span_notice("You begin realigning [victim]'s [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+		user.visible_message(span_danger(LANG("datum.aa37b89a", list(user, scanned ? "expertly" : "", victim, limb.plaintext_zone, I))), span_notice(LANG("datum.33481fc1", list(victim, limb.plaintext_zone, I, scanned ? ", keeping the holo-image's indications in mind" : ""))))
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	if(victim == user)
 		limb.receive_damage(brute=45, wound_bonus=CANT_WOUND)
-		victim.visible_message(span_danger("[user] finishes realigning [victim.p_their()] [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), span_userdanger("You reset your [limb.plaintext_zone] with a disturbing <b>crunch</b>!"))
+		victim.visible_message(span_danger(LANG("datum.c6239b02", list(user, victim.p_their(), limb.plaintext_zone))), span_userdanger(LANG("datum.88d9614c", list(limb.plaintext_zone))))
 	else
 		limb.receive_damage(brute=40, wound_bonus=CANT_WOUND)
-		user.visible_message(span_danger("[user] finishes realigning [victim]'s [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), span_nicegreen("You finish realigning [victim]'s [limb.plaintext_zone] with a disturbing <b>crunch</b>!"), ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] resets your [limb.plaintext_zone] with a disturbing <b>crunch</b>!"))
+		user.visible_message(span_danger(LANG("datum.8992cbd6", list(user, victim, limb.plaintext_zone))), span_nicegreen(LANG("datum.43a90c07", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
+		to_chat(victim, span_userdanger(LANG("datum.1374a635", list(user, limb.plaintext_zone))))
 
 	victim.emote("scream")
 	playsound(user, 'sound/effects/wounds/crack2.ogg', 70, TRUE)
@@ -169,13 +169,13 @@
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_BONESET : TOOL_BLOODFILTER)
-	balloon_alert(user, "tools set to [active ? "set bones" : "filter blood"]")
+	balloon_alert(user, LANG("obj.cc5a7618", list(active ? "set bones" : "filter blood")))
 	playsound(user ? user : src, 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/blood_filter/advanced/examine()
 	. = ..()
-	. += span_notice("It resembles a [tool_behaviour == TOOL_BLOODFILTER ? "blood filter" : "bonesetter"].")
+	. += span_notice(LANG("obj.be45e7c0", list(tool_behaviour == TOOL_BLOODFILTER ? "blood filter" : "bonesetter")))
 
 /datum/design/combitool
 	name = "Medical Combitool"

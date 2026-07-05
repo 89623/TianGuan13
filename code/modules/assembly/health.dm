@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/assembly/health
 	name = "health sensor"
 	desc = "Used for scanning and monitoring health."
@@ -62,7 +63,7 @@
 
 	//do the pulse & the scan
 	pulse()
-	audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
+	audible_message(span_infoplain(LANG("obj.a31e2378", list(icon2html(src, hearers(src))))))
 	playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	toggle_scan()
 
@@ -85,7 +86,7 @@
 
 /obj/item/assembly/health/proc/on_health_changed(mob/living/source)
 	SIGNAL_HANDLER
-	maptext = MAPTEXT("HP: [round((source.health / source.maxHealth) * 100)]%")
+	maptext = MAPTEXT("[GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "生命" : "HP"]: [round((source.health / source.maxHealth) * 100)]%") // NOVA EDIT - i18n: maptext 不过 AC，全服中文给中文前缀
 
 /obj/item/assembly/health/ui_status(mob/user, datum/ui_state/state)
 	return is_secured(user) ? ..() : UI_CLOSE

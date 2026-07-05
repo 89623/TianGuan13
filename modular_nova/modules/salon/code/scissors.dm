@@ -21,68 +21,68 @@
 
 	var/location = user.zone_selected
 	if(!(location in list(BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !user.combat_mode)
-		to_chat(user, span_warning("You stop, look down at what you're currently holding and ponder to yourself, \"This is probably to be used on their hair or their facial hair.\""))
+		to_chat(user, span_warning(LANG("obj.d6bb1707", null)))
 		return
 
 	if(target_human.hairstyle == "Bald" && target_human.facial_hairstyle == "Shaved")
-		balloon_alert(user, "no hair!")
+		balloon_alert(user, LANG("obj.6754061c", null))
 		return
 
 	if(user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
-	var/selected_part = tgui_alert(user, "Please select which part of [target_human] you would like to sculpt!", "It's sculpting time!", list("Hair", "Facial Hair", "Cancel"))
+	var/selected_part = tgui_alert(user, LANG("obj.0b4ef4b8", list(target_human)), LANG("obj.e455fc28", null), list("Hair", "Facial Hair", "Cancel"))
 
 	if(!selected_part || selected_part == "Cancel")
 		return
 
 	if(selected_part == "Hair")
 		if(!target_human.hairstyle == "Bald" && target_human.head)
-			balloon_alert(user, "no hair to cut!")
+			balloon_alert(user, LANG("obj.5df36852", null))
 			return
 
-		var/hair_id = tgui_input_list(user, "Please select what hairstyle you'd like to sculpt!", "Select masterpiece", SSaccessories.hairstyles_list)
+		var/hair_id = tgui_input_list(user, LANG("obj.b89bab7d", null), LANG("obj.f7de00bf", null), SSaccessories.hairstyles_list)
 		if(!hair_id)
 			return
 
 		if(hair_id == "Bald")
-			to_chat(target_human, span_danger("[user] seems to be cutting all your hair off!"))
+			to_chat(target_human, span_danger(LANG("obj.f8bef301", list(user))))
 
-		to_chat(user, span_notice("You begin to masterfully sculpt [target_human]'s hair!"))
+		to_chat(user, span_notice(LANG("obj.85380f50", list(target_human))))
 
 		playsound(target_human, 'modular_nova/modules/salon/sound/haircut.ogg', 100)
 
 		if(HAS_TRAIT(user, TRAIT_HAIR_EXPERT))
 			if(do_after(user, haircut_duration_expert, target_human))
 				target_human.set_hairstyle(hair_id, update = TRUE)
-				user.visible_message(span_notice("[user] expertly cuts [target_human]'s hair!"), span_notice("You expertly cut [target_human]'s hair!"))
+				user.visible_message(span_notice(LANG("obj.a69b67eb", list(user, target_human))), span_notice(LANG("obj.9e851773", list(target_human))))
 		else
 			if(do_after(user, haircut_duration, target_human))
 				target_human.set_hairstyle(hair_id, update = TRUE)
-				user.visible_message(span_notice("[user] successfully cuts [target_human]'s hair!"), span_notice("You successfully cut [target_human]'s hair!"))
+				user.visible_message(span_notice(LANG("obj.7e424815", list(user, target_human))), span_notice(LANG("obj.29a95f7f", list(target_human))))
 				new /obj/effect/decal/cleanable/hair(get_turf(src))
 	else
 		if(!target_human.facial_hairstyle == "Shaved" && target_human.wear_mask)
-			balloon_alert(user, "no hair to cut!")
+			balloon_alert(user, LANG("obj.5df36852", null))
 			return
 
-		var/facial_hair_id = tgui_input_list(user, "Please select what facial hairstyle you'd like to sculpt!", "Select masterpiece", SSaccessories.facial_hairstyles_list)
+		var/facial_hair_id = tgui_input_list(user, LANG("obj.c5cd9bad", null), LANG("obj.f7de00bf", null), SSaccessories.facial_hairstyles_list)
 		if(!facial_hair_id)
 			return
 
 		if(facial_hair_id == "Shaved")
-			to_chat(target_human, span_danger("[user] seems to be cutting all your facial hair off!"))
+			to_chat(target_human, span_danger(LANG("obj.77ac974b", list(user))))
 
-		to_chat(user, "You begin to masterfully sculpt [target_human]'s facial hair!")
+		to_chat(user, LANG("obj.3c55989d", list(target_human)))
 
 		playsound(target_human, 'modular_nova/modules/salon/sound/haircut.ogg', 100)
 
 		if(HAS_TRAIT(user, TRAIT_HAIR_EXPERT))
 			if(do_after(user, facial_haircut_duration_expert, target_human))
 				target_human.set_facial_hairstyle(facial_hair_id, update = TRUE)
-				user.visible_message(span_notice("[user] expertly cuts [target_human]'s facial hair!"), span_notice("You expertly cut [target_human]'s facial hair!"))
+				user.visible_message(span_notice(LANG("obj.a5f4bee3", list(user, target_human))), span_notice(LANG("obj.bbf70127", list(target_human))))
 		else
 			if(do_after(user, facial_haircut_duration, target_human))
 				target_human.set_facial_hairstyle(facial_hair_id, update = TRUE)
-				user.visible_message(span_notice("[user] successfully cuts [target_human]'s facial hair!"), span_notice("You successfully cut [target_human]'s facial hair!"))
+				user.visible_message(span_notice(LANG("obj.6d1cf732", list(user, target_human))), span_notice(LANG("obj.184b944a", list(target_human))))
 				new /obj/effect/decal/cleanable/hair(get_turf(src))

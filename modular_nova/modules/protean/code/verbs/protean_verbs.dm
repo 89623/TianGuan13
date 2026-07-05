@@ -22,7 +22,7 @@
 	if(isnull(suit))
 		return
 	if(incapacitated && loc != suit)
-		balloon_alert(src, "incapacitated!")
+		balloon_alert(src, LANG("mob.7ac2788b", null))
 		return
 
 	brain.replace_limbs()
@@ -37,7 +37,7 @@
 		return
 
 	suit.toggle_lock()
-	to_chat(src, span_notice("You [suit.modlocked ? "<b>lock</b>" : "<b>unlock</b>"] the suit [isprotean(suit.wearer) || loc == suit ? "" : "onto [suit.wearer]"]"))
+	to_chat(src, span_notice(LANG("mob.d31e1132", list(suit.modlocked ? "<b>lock</b>" : "<b>unlock</b>", isprotean(suit.wearer) || loc == suit ? "" : "onto [suit.wearer]"))))
 	playsound(src, 'sound/machines/click.ogg', 25)
 
 /mob/living/carbon/proc/suit_transformation()
@@ -57,7 +57,7 @@
 		if(!incapacitated)
 			brain.go_into_suit()
 		else
-			balloon_alert(src, "incapacitated!")
+			balloon_alert(src, LANG("mob.7ac2788b", null))
 
 /mob/living/carbon/proc/remove_assimilated_modsuit()
 	set name = "Remove Assimilated Modsuit"
@@ -89,13 +89,13 @@
 		return
 	var/obj/item/organ/stomach/protean/stomach = get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!istype(stomach))
-		to_chat(src, span_warning("You are missing a stomach and can't turn on low power mode"))
+		to_chat(src, span_warning(LANG("mob.f360a083", null)))
 		return
 	if(loc == suit)
-		to_chat(src, span_notice("You can't toggle low power when in a suit form!"))
+		to_chat(src, span_notice(LANG("mob.fd750461", null)))
 		return
 	if(!do_after(src, 2.5 SECONDS))
-		src.loc.balloon_alert(src, "toggle interrupted")
+		src.loc.balloon_alert(src, LANG("mob.08fef07e", null))
 		return
 	var/datum/status_effect/protean_low_power_mode/effect = /datum/status_effect/protean_low_power_mode/low_power
 	if(istype(has_status_effect(effect), effect))

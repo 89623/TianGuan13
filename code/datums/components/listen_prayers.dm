@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * A component that allows the attached mind to listen prayers from other mobs.
  * Unlike admins, they cannot smite the person for it, also the prayers are anonymous unless the person says who he's in the message.
@@ -82,11 +83,11 @@
 /datum/action/innate/listen_prayers/Activate()
 	active = TRUE
 	REMOVE_TRAIT(owner, TRAIT_DONT_HEAR_PRAYERS, ACTION_TRAIT)
-	to_chat(owner, span_green("You are ready to listen to prayers once again."))
+	to_chat(owner, span_green(LANG("datum.3a4b9081", null)))
 	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 /datum/action/innate/listen_prayers/Deactivate()
 	active = FALSE
 	ADD_TRAIT(owner, TRAIT_DONT_HEAR_PRAYERS, ACTION_TRAIT)
-	to_chat(owner, span_green("You stop listening to prayers."))
+	to_chat(owner, span_green(LANG("datum.101cc263", null)))
 	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/manufacturing/sorter
 	icon_state = "router"
 	name = "conveyor sort-router"
@@ -80,7 +81,7 @@
 				for(var/datum/sortrouter_filter/to_do as anything in subtypesof(/datum/sortrouter_filter))
 					filter_by_name[initial(to_do.name)] = to_do
 				filter_by_name = sort_list(filter_by_name)
-			var/target_type = tgui_input_list(usr, "Select a filter", "New Filter", filter_by_name)
+			var/target_type = tgui_input_list(usr, LANG("obj.1c55d561", null), LANG("obj.c4e67daa", null), filter_by_name)
 			if(isnull(target_type)|| !usr.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
 			target_type = filter_by_name[target_type]

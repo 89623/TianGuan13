@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A mini-tool used to apply label items onto something to modify its name.
 /obj/item/hand_labeler
 	name = "hand labeler"
@@ -20,7 +21,7 @@
 	VAR_FINAL/mode = FALSE
 
 /obj/item/hand_labeler/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is pointing [src] at [user.p_them()]self. [user.p_Theyre()] going to label [user.p_them()]self as a suicide!"))
+	user.visible_message(span_suicide(LANG("obj.6fdda4cb", list(user, src, user.p_them(), user.p_Theyre(), user.p_them()))))
 	labels_left = max(labels_left - 1, 0)
 
 	var/old_real_name = user.real_name
@@ -59,24 +60,24 @@
 
 /obj/item/hand_labeler/proc/apply_label(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!labels_left)
-		balloon_alert(user, "no labels left!")
+		balloon_alert(user, LANG("obj.e2cf51d4", null))
 		return FALSE
 	if(!length(label))
-		balloon_alert(user, "no text set!")
+		balloon_alert(user, LANG("obj.a4f400f4", null))
 		return FALSE
 	if(length(interacting_with.name) + length(label) > MAX_LABEL_LEN)
-		balloon_alert(user, "label too long!")
+		balloon_alert(user, LANG("obj.2d9360a1", null))
 		return FALSE
 	if(ismob(interacting_with))
-		interacting_with.balloon_alert(user, "can't label!")
+		interacting_with.balloon_alert(user, LANG("obj.5ff3c2ee", null))
 		return FALSE
 
 	var/cursor_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	var/cursor_y = text2num(LAZYACCESS(modifiers, ICON_Y))
-	interacting_with.balloon_alert_to_viewers("labelled")
+	interacting_with.balloon_alert_to_viewers(LANG("obj.0cf93754", null))
 	user.visible_message(
-		span_notice("[user] labels [interacting_with] with \"[label]\"."),
-		span_notice("You label [interacting_with] with \"[label]\"."),
+		span_notice(LANG("obj.2f36fc62", list(user, interacting_with, label))),
+		span_notice(LANG("obj.7ecf5901", list(interacting_with, label))),
 	)
 	var/obj/item/label/stick_label = new(null, label)
 	stick_label.stick_to_atom(interacting_with, cursor_x, cursor_y)
@@ -89,29 +90,29 @@
 	if(.)
 		return .
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to use [src]!"))
+		to_chat(user, span_warning(LANG("obj.41d5752e", list(src))))
 		return .
 
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
-		to_chat(user, span_notice("You turn on [src]."))
+		to_chat(user, span_notice(LANG("obj.11cd7563", list(src))))
 		//Now let them chose the text.
-		var/str = reject_bad_text(tgui_input_text(user, "Label text", "Set Label", label, MAX_NAME_LEN))
+		var/str = reject_bad_text(tgui_input_text(user, LANG("obj.2f79724a", null), LANG("obj.379a7e7e", null), label, MAX_NAME_LEN))
 		if(!str || QDELETED(src) || !user.is_holding(src))
-			to_chat(user, span_warning("Invalid text!"))
+			to_chat(user, span_warning(LANG("obj.7b1614ec", null)))
 			return
 		label = str
-		to_chat(user, span_notice("You set the text to '[str]'."))
+		to_chat(user, span_notice(LANG("obj.90f4c092", list(str))))
 	else
-		to_chat(user, span_notice("You turn off [src]."))
+		to_chat(user, span_notice(LANG("obj.833a0800", list(src))))
 	return TRUE
 
 /obj/item/hand_labeler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/hand_labeler_refill))
 		return NONE
 
-	balloon_alert(user, "refilled")
+	balloon_alert(user, LANG("obj.3a19f881", null))
 	qdel(tool)
 	labels_left = initial(labels_left) //Yes, it's capped at its initial value
 	return ITEM_INTERACT_SUCCESS
@@ -119,9 +120,9 @@
 /obj/item/hand_labeler/examine()
 	. = ..()
 	if(labels_left > 0)
-		. += span_notice("It looks like it could label [labels_left] more thing\s.")
+		. += span_notice(LANG("obj.18f42fc8", list(labels_left)))
 	else
-		. += span_notice("It's out of labels.")
+		. += span_notice(LANG("obj.365fe0cd", null))
 
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"
@@ -281,21 +282,21 @@
 
 	if(labeler.mode)
 		if(!length(labeler.label))
-			labeler.balloon_alert(user, "no text set!")
+			labeler.balloon_alert(user, LANG("obj.a4f400f4", null))
 			return ITEM_INTERACT_BLOCKING
 		if(labeler.label == label_name)
-			sticking_to.balloon_alert(user, "already labelled!")
+			sticking_to.balloon_alert(user, LANG("obj.0f280047", null))
 			return ITEM_INTERACT_BLOCKING
 		if(length(initial(sticking_to.name)) + length(labeler.label) > MAX_LABEL_LEN)
-			sticking_to.balloon_alert(user, "label too long!")
+			sticking_to.balloon_alert(user, LANG("obj.2d9360a1", null))
 			return ITEM_INTERACT_BLOCKING
 
 		update_label_name(labeler.label)
 		playsound(sticking_to, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
-		sticking_to.balloon_alert(user, "label renamed")
+		sticking_to.balloon_alert(user, LANG("obj.f4158377", null))
 	else
 		playsound(sticking_to, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
-		sticking_to.balloon_alert(user, "label removed")
+		sticking_to.balloon_alert(user, LANG("obj.0ec16bea", null))
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -311,7 +312,7 @@
 /obj/item/label/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("It has a label with some words written on it. Use a hand labeler to remove it.")
+	examine_list += span_notice(LANG("obj.2cbb0990", null))
 
 /// Applies a label to the name of what we're stuck to in the format of: "parent_name (label)"
 /obj/item/label/proc/apply_label()

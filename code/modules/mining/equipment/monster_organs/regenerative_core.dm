@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * On use in hand, heals you over time and removes injury movement debuffs. Also makes you a bit sad.
  * On use when implanted, fully heals. Automatically fully heals if you would enter crit.
@@ -38,10 +39,10 @@
 /obj/item/organ/monster_core/regenerative_core/apply_to(mob/living/target, mob/user)
 	target.add_mood_event("legion_core", /datum/mood_event/healsbadman)
 	if (target != user)
-		target.visible_message(span_notice("[user] forces [target] to apply [src]... Black tendrils entangle and reinforce [target.p_them()]!"))
+		target.visible_message(span_notice(LANG("obj.2b88b1d5", list(user, target, src, target.p_them()))))
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
 	else
-		to_chat(user, span_notice("You start to smear [src] on yourself. Disgusting tendrils hold you together and allow you to keep moving, but for how long?"))
+		to_chat(user, span_notice(LANG("obj.b351649b", list(src))))
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
 	return ..()
 

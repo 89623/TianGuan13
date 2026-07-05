@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * PLATINGS
  *
@@ -31,14 +32,14 @@
 /turf/open/floor/plating/examine(mob/user)
 	. = ..()
 	if(broken || burnt)
-		. += span_notice("It looks like the dents could be <i>welded</i> smooth.")
+		. += span_notice(LANG("turf.db10fb49", null))
 		return
 	if(attachment_holes)
-		. += span_notice("There are a few attachment holes for a new <i>tile</i> or reinforcement <i>rods</i>.")
+		. += span_notice(LANG("turf.b0723366", null))
 	else
-		. += span_notice("You might be able to build ontop of it with some <i>tiles</i>...")
+		. += span_notice(LANG("turf.3fbc0709", null))
 	if(upgradable)
-		. += span_notice("You could probably make this plating more resilient with some plasteel.")
+		. += span_notice(LANG("turf.340b3580", null))
 
 #define PLATE_REINFORCE_COST 2
 
@@ -48,22 +49,22 @@
 	if(istype(C, /obj/item/stack/rods) && attachment_holes)
 		if(broken || burnt)
 			if(!iscyborg(user))
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
+				to_chat(user, span_warning(LANG("turf.a536c411", null)))
 			else
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage.")) //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
+				to_chat(user, span_warning(LANG("turf.8197e5bf", null))) //we don't need to confuse humans by giving them a message about plating repair tools, since only janiborgs should have access to them outside of Christmas presents or admin intervention
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
-			to_chat(user, span_warning("You need two rods to make a reinforced floor!"))
+			to_chat(user, span_warning(LANG("turf.f6a65fbc", null)))
 			return
 		else
-			to_chat(user, span_notice("You begin reinforcing the floor..."))
+			to_chat(user, span_notice(LANG("turf.9be3abb7", null)))
 			if(do_after(user, 3 SECONDS, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					place_on_top(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 					playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 					R.use(2)
-					to_chat(user, span_notice("You reinforce the floor."))
+					to_chat(user, span_notice(LANG("turf.c70f4c00", null)))
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
@@ -75,12 +76,12 @@
 			tile.place_tile(src, user)
 		else
 			if(!iscyborg(user))
-				balloon_alert(user, "too damaged, use a welding tool!")
+				balloon_alert(user, LANG("turf.b4b46010", null))
 			else
-				balloon_alert(user, "too damaged, use a welding or plating repair tool!")
+				balloon_alert(user, LANG("turf.a9e3c8c0", null))
 	else if(istype(C, /obj/item/cautery/prt)) //plating repair tool
 		if((broken || burnt) && C.use_tool(src, user, 0, volume=80))
-			to_chat(user, span_danger("You fix some dents on the broken plating."))
+			to_chat(user, span_danger(LANG("turf.16c487d0", null)))
 			icon_state = base_icon_state
 			burnt = FALSE
 			broken = FALSE
@@ -90,7 +91,7 @@
 			var/obj/item/stack/sheet/sheets = C
 			if(sheets.get_amount() < PLATE_REINFORCE_COST)
 				return
-			balloon_alert(user, "reinforcing plating...")
+			balloon_alert(user, LANG("turf.b78e3218", null))
 			if(do_after(user, 12 SECONDS, target = src))
 				if(sheets.get_amount() < PLATE_REINFORCE_COST)
 					return
@@ -99,22 +100,22 @@
 				place_on_top(/turf/open/floor/plating/reinforced, CHANGETURF_INHERIT_AIR)
 		else
 			if(!iscyborg(user))
-				balloon_alert(user, "too damaged, use a welding tool!")
+				balloon_alert(user, LANG("turf.b4b46010", null))
 			else
-				balloon_alert(user, "too damaged, use a welding or plating repair tool!")
+				balloon_alert(user, LANG("turf.a9e3c8c0", null))
 	else if(istype(C, /obj/item/stack/sheet/mineral/plastitanium) && attachment_holes)
 		if(broken || burnt)
 			if(!iscyborg(user))
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
+				to_chat(user, span_warning(LANG("turf.a536c411", null)))
 			else
-				to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage."))
+				to_chat(user, span_warning(LANG("turf.8197e5bf", null)))
 			return
 		var/obj/item/stack/sheet/mineral/plastitanium/sheet = C
 		if (sheet.get_amount() < 1)
-			to_chat(user, span_warning("You are literally holding nothing."))
+			to_chat(user, span_warning(LANG("turf.82bf82a4", null)))
 			return
 		else
-			balloon_alert(user, "insulating flooring...")
+			balloon_alert(user, LANG("turf.1ad560a9", null))
 			if(!do_after(user, 1.5 SECONDS, target = src))
 				return
 			if(sheet.get_amount() < 1 || istype(src, /turf/open/floor/engine/insulation))
@@ -122,13 +123,13 @@
 			place_on_top(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
 			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 			sheet.use(1)
-			to_chat(user, span_notice("You insulate the floor."))
-			balloon_alert(user, "insulated!")
+			to_chat(user, span_notice(LANG("turf.9ccab036", null)))
+			balloon_alert(user, LANG("turf.a365642c", null))
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
 	..()
 	if((broken || burnt) && I.use_tool(src, user, 0, volume=80))
-		to_chat(user, span_danger("You fix some dents on the broken plating."))
+		to_chat(user, span_danger(LANG("turf.16c487d0", null)))
 		icon_state = base_icon_state
 		burnt = FALSE
 		broken = FALSE
@@ -170,7 +171,7 @@
 	var/obj/lattice = locate(/obj/structure/lattice) in src
 	if(lattice)
 		qdel(lattice)
-	to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
+	to_chat(user, span_notice(LANG("turf.e0a1d63a", null)))
 	playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
 	ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	return ITEM_INTERACT_SUCCESS
@@ -180,11 +181,11 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(prob(attacking_item.force * 20 - 25))
-		user.visible_message(span_danger("[user] smashes through [src]!"), \
-						span_danger("You smash through [src] with [attacking_item]!"))
+		user.visible_message(span_danger(LANG("turf.1a64b3af", list(user, src))), \
+						span_danger(LANG("turf.f750bfe3", list(src, attacking_item))))
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else
-		to_chat(user, span_danger("You hit [src], to no effect!"))
+		to_chat(user, span_danger(LANG("turf.d31ae83e", list(src))))
 
 /turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
@@ -242,7 +243,7 @@
 /turf/open/floor/plating/reinforced/attackby(obj/item/tool_used, mob/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, span_warning(LANG("turf.e8ba50af", null)))
 		return
 
 	//get the user's location
@@ -259,14 +260,14 @@
 	switch(deconstruction_state)
 		if(PLATE_INTACT)
 			if(tool_used.tool_behaviour == TOOL_WRENCH)
-				balloon_alert(user, "loosening bolts...")
+				balloon_alert(user, LANG("turf.67113ddb", null))
 				if(tool_used.use_tool(src, user, 10 SECONDS, volume=100))
 					if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_INTACT)
 						return TRUE
 					deconstruction_state = PLATE_BOLTS_LOOSENED
 					update_appearance(UPDATE_ICON)
 					drop_screws()
-					balloon_alert(user, "removed bolts")
+					balloon_alert(user, LANG("turf.704bde31", null))
 				return TRUE
 
 		if(PLATE_BOLTS_LOOSENED)
@@ -274,34 +275,34 @@
 				if(TOOL_WELDER)
 					if(!tool_used.tool_start_check(user, amount=3))
 						return
-					balloon_alert(user, "slicing...")
+					balloon_alert(user, LANG("turf.6e1259d1", null))
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
 						if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_BOLTS_LOOSENED)
 							return TRUE
 						deconstruction_state = PLATE_CUT
 						update_appearance(UPDATE_ICON)
-						balloon_alert(user, "sliced through")
+						balloon_alert(user, LANG("turf.e5000003", null))
 					return TRUE
 
 				if(TOOL_SCREWDRIVER)
-					balloon_alert(user, "securing bolts...")
+					balloon_alert(user, LANG("turf.6cbd8c3e", null))
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
 						if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_BOLTS_LOOSENED)
 							return TRUE
 						deconstruction_state = PLATE_INTACT
 						update_appearance(UPDATE_ICON)
-						balloon_alert(user, "secured")
+						balloon_alert(user, LANG("turf.065f7e36", null))
 					return TRUE
 			return FALSE
 
 		if(PLATE_CUT)
 			switch(tool_used.tool_behaviour)
 				if(TOOL_CROWBAR)
-					balloon_alert(user, "prying off...")
+					balloon_alert(user, LANG("turf.c52378ec", null))
 					if(tool_used.use_tool(src, user, 20 SECONDS, volume=100))
 						if(!istype(src,  /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_CUT)
 							return TRUE
-						balloon_alert(user, "pried off")
+						balloon_alert(user, LANG("turf.86726efa", null))
 						new /obj/item/stack/sheet/plasteel(src, 2)
 						ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 					return TRUE
@@ -309,13 +310,13 @@
 				if(TOOL_WELDER)
 					if(!tool_used.tool_start_check(user, amount=3))
 						return
-					balloon_alert(user, "welding back on...")
+					balloon_alert(user, LANG("turf.2fe0cb8f", null))
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
 						if(!istype(src,  /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_CUT)
 							return TRUE
 						deconstruction_state = PLATE_BOLTS_LOOSENED
 						update_appearance(UPDATE_ICON)
-						balloon_alert(user, "welded back on")
+						balloon_alert(user, LANG("turf.b054b8b5", null))
 					return TRUE
 			return FALSE
 	return FALSE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAXIMUM_GUTLUNCH_POP 20
 /datum/ai_controller/basic_controller/gutlunch
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -134,7 +135,7 @@
 
 /datum/pet_command/breed/gutlunch/set_command_target(mob/living/parent, atom/target)
 	if(GLOB.gutlunch_count >= MAXIMUM_GUTLUNCH_POP)
-		parent.balloon_alert_to_viewers("can't reproduce anymore!")
+		parent.balloon_alert_to_viewers(LANG("datum.157d30d4", null))
 		return FALSE
 	return ..()
 

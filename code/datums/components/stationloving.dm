@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Teleports the movable atom back to a safe turf on the station if it leaves the z-level or becomes inaccessible.
 /datum/component/stationloving
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
@@ -66,7 +67,7 @@
 
 	var/mob/holder = get(movable_parent, /mob)
 	if(holder)
-		to_chat(holder, span_danger("You can't help but feel that you just lost something back there..."))
+		to_chat(holder, span_danger(LANG("datum.6f639612", null)))
 		holder.temporarilyRemoveItemFromInventory(parent, TRUE) // prevents ghost diskie
 
 	movable_parent.forceMove(target_turf)

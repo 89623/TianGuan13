@@ -24,21 +24,21 @@
 
 	var/turf/target_turf = interacting_with
 	if(istype(interacting_with, /turf/open/misc/asteroid/basalt/lava_land_surface))
-		to_chat(user, span_warning("You begin to corrupt the land even further..."))
+		to_chat(user, span_warning(LANG("obj.5c54c889", null)))
 		if(!do_after(user, 4 SECONDS, target = target_turf))
-			to_chat(user, span_warning("[src] had their casting cut short!"))
+			to_chat(user, span_warning(LANG("obj.0e9ab24d", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		target_turf.ChangeTurf(/turf/open/lava/smooth/lava_land_surface)
-		to_chat(user, span_notice("[src] sparks, corrupting the area too far!"))
+		to_chat(user, span_notice(LANG("obj.db1dc57d", list(src))))
 		return
 
 	if(world.time > staff_time)
-		to_chat(user, span_warning("[src] has had its permission expire from the necropolis!"))
+		to_chat(user, span_warning(LANG("obj.bdb0e596", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!do_after(user, 2 SECONDS, target = target_turf))
-		to_chat(user, span_warning("[src] had their casting cut short!"))
+		to_chat(user, span_warning(LANG("obj.0e9ab24d", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	target_turf.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface)
@@ -49,7 +49,7 @@
 		var/obj/item/ash_staff/target_staff = attacking_item
 		target_staff.staff_time = world.time + 5 MINUTES
 		playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
-		to_chat(user, span_notice("The tendril permits you to have more time to corrupt the world with ashes."))
+		to_chat(user, span_notice(LANG("obj.6b2c6425", null)))
 		return
 
 	return ..()

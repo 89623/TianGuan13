@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 SUBSYSTEM_DEF(pai)
 	name = "pAI"
 	ss_flags = SS_NO_INIT|SS_NO_FIRE
@@ -43,11 +44,11 @@ SUBSYSTEM_DEF(pai)
 	var/mob/user = ui.user
 	var/datum/pai_candidate/candidate = candidates[user.ckey]
 	if(is_banned_from(user.ckey, ROLE_PAI))
-		to_chat(user, span_warning("You are banned from playing pAI!"))
+		to_chat(user, span_warning(LANG("datum.c2f3c23d", null)))
 		ui.close()
 		return FALSE
 	if(isnull(candidate))
-		to_chat(user, span_warning("There was an error. Please resubmit."))
+		to_chat(user, span_warning(LANG("datum.0c95533a", null)))
 		ui.close()
 		return FALSE
 	switch(action)
@@ -72,10 +73,10 @@ SUBSYSTEM_DEF(pai)
 			return TRUE
 		if("withdraw")
 			if(!candidate.ready)
-				to_chat(user, span_warning("You need to submit an application before you can withdraw one."))
+				to_chat(user, span_warning(LANG("datum.ab879adb", null)))
 				return FALSE
 			candidate.ready = FALSE
-			to_chat(user, span_notice("Your pAI candidacy has been withdrawn."))
+			to_chat(user, span_notice(LANG("datum.98d3bf02", null)))
 			return TRUE
 	return FALSE
 
@@ -99,12 +100,12 @@ SUBSYSTEM_DEF(pai)
  */
 /datum/controller/subsystem/pai/proc/submit_alert(mob/user)
 	if(submit_spam)
-		to_chat(user, span_warning("Your candidacy has been submitted, but pAI cards have been alerted too recently."))
+		to_chat(user, span_warning(LANG("datum.9fe7fcf2", null)))
 		return FALSE
 	submit_spam = TRUE
 	for(var/obj/item/pai_card/pai_card as anything in pai_card_list)
 		if(!pai_card.pai)
 			pai_card.alert_update()
-	to_chat(user, span_notice("Your pAI candidacy has been submitted!"))
+	to_chat(user, span_notice(LANG("datum.cced6a3c", null)))
 	addtimer(VARSET_CALLBACK(src, submit_spam, FALSE), PAI_SPAM_TIME, TIMER_UNIQUE|TIMER_DELETE_ME)
 	return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Renders you unable to see people who were heretics at the time that this organ is gained
 /obj/item/organ/eyes/corrupt
 	name = "corrupt orbs"
@@ -44,7 +45,7 @@
 /obj/item/organ/eyes/corrupt/penlight_examine(mob/living/viewer, obj/item/examtool)
 	viewer.playsound_local(src, 'sound/effects/magic/magic_block_mind.ogg', 75, FALSE)
 	if(!viewer.is_blind() && !IS_HERETIC_OR_MONSTER(viewer))
-		to_chat(viewer, span_danger("Your eyes sizzle in their sockets as eldritch energies assault them!"))
+		to_chat(viewer, span_danger(LANG("obj.0996a07c", null)))
 		viewer.emote("scream")
 		viewer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 		viewer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
@@ -123,7 +124,7 @@
 	extra_reagents.add_reagent(pick(extra_ingredients), amount_added)
 	extra_reagents.trans_to(human, amount_added, transferred_by = src, methods = INJECT)
 	if (prob(20))
-		to_chat(human, span_warning("As you take a sip, you feel something bubbling in your stomach..."))
+		to_chat(human, span_warning(LANG("obj.ce87b081", null)))
 
 
 /// Rapidly become hungry if you are not digesting blood
@@ -162,7 +163,7 @@
 		return
 
 	if (!thirst_satiated)
-		to_chat(source, span_cult_italic("The thirst is satisfied... for now."))
+		to_chat(source, span_cult_italic(LANG("obj.d12acdcf", null)))
 	thirst_satiated = TRUE
 	deltimer(thirst_timer)
 	thirst_timer = addtimer(VARSET_CALLBACK(src, thirst_satiated, FALSE), 3 MINUTES, TIMER_STOPPABLE | TIMER_DELETE_ME)

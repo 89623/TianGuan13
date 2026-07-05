@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define STARTING_ARROW_POSITION -50
 #define ENDING_ARROW_POSITION 20
 #define VERTICAL_ARROW_HEIGHT 13
@@ -226,7 +227,7 @@
 		living_host.spin(spintime = 2 SECONDS, speed = 1)
 		living_rider.Knockdown(4 SECONDS)
 		living_host.unbuckle_mob(living_rider)
-		living_host.balloon_alert(living_rider, "knocks you down!")
+		living_host.balloon_alert(living_rider, LANG("datum.05d865de", null))
 	qdel(src)
 
 /datum/riding_minigame/proc/win_minigame()
@@ -236,7 +237,7 @@
 		qdel(src)
 		return
 	living_host.befriend(living_rider)
-	living_host.balloon_alert(living_rider, "calms down...")
+	living_host.balloon_alert(living_rider, LANG("datum.21565d91", null))
 	qdel(src)
 
 /datum/riding_minigame/Destroy()

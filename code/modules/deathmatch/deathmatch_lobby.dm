@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/deathmatch_lobby
 	/// Ckey of the host
 	var/host
@@ -60,7 +61,7 @@
 	if (playing)
 		return
 	if(map.template_in_use)
-		to_chat(get_mob_by_ckey(host), span_warning("This map is currently loading for another lobby. Please wait until that other map finishes loading. It would be a disaster if these two mixed up."))
+		to_chat(get_mob_by_ckey(host), span_warning(LANG("datum.510622bc", null)))
 		return
 	playing = DEATHMATCH_PRE_PLAYING
 
@@ -68,7 +69,7 @@
 	RegisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(find_spawns_and_start_delay))
 	location = map.lazy_load()
 	if (!location)
-		to_chat(get_mob_by_ckey(host), span_warning("Couldn't reserve/load a map location (all locations used?), try again later, or contact a coder."))
+		to_chat(get_mob_by_ckey(host), span_warning(LANG("datum.7b00910e", null)))
 		playing = FALSE
 		map.template_in_use = FALSE
 		UnregisterSignal(map, COMSIG_LAZY_TEMPLATE_LOADED)
@@ -423,7 +424,7 @@
 			if (usr.ckey != host)
 				return FALSE
 			if (map.min_players > players.len)
-				to_chat(usr, span_warning("Not enough players to start yet."))
+				to_chat(usr, span_warning(LANG("datum.b09ae9ec", null)))
 				return FALSE
 			start_game()
 			return TRUE
@@ -445,7 +446,8 @@
 				players[params["player"]]["loadout"] = pick(loadouts)
 				return TRUE
 			for (var/datum/outfit/deathmatch_loadout/possible_loadout as anything in loadouts)
-				if (params["loadout"] != initial(possible_loadout.display_name))
+				var/loadout_name = initial(possible_loadout.display_name) // NOVA EDIT - I18N - tolerate translated dropdown value
+				if (params["loadout"] != loadout_name && lang_unreverse_text(params["loadout"]) != loadout_name) // NOVA EDIT - I18N
 					continue
 				players[params["player"]]["loadout"] = possible_loadout
 				break
@@ -499,9 +501,12 @@
 						add_player(umob, loadouts[1], host == uckey)
 					return TRUE
 				if ("change_map")
-					if (!(params["map"] in GLOB.deathmatch_game.maps))
+					var/map_key = params["map"] // NOVA EDIT - I18N - tolerate translated dropdown value
+					if (!(map_key in GLOB.deathmatch_game.maps))
+						map_key = lang_unreverse_text(map_key) // NOVA EDIT - I18N
+					if (!(map_key in GLOB.deathmatch_game.maps))
 						return FALSE
-					change_map(params["map"])
+					change_map(map_key)
 					return TRUE
 
 		if("open_mod_menu")

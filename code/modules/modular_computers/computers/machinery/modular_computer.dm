@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CPU_INTERACTABLE(user) (cpu && !HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)))
 
 // Modular Computer - A machinery that is mostly just a host to the Modular Computer item.
@@ -68,17 +69,17 @@
 		return
 	if(HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)))
 		REMOVE_TRAIT(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user))
-		balloon_alert(user, "now interacting with computer")
+		balloon_alert(user, LANG("obj.f9767d30", null))
 	else
 		ADD_TRAIT(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user))
-		balloon_alert(user, "now interacting with frame")
+		balloon_alert(user, LANG("obj.5fb84d60", null))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/modular_computer/examine(mob/user)
 	. = cpu?.examine(user) || ..()
-	. += span_info("You can toggle interaction between computer and its machinery frame with [EXAMINE_HINT("Right-Click")] while empty-handed.")
+	. += span_info(LANG("obj.51a141b3", list(EXAMINE_HINT("Right-Click"))))
 	var/frame_or_pc = HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)) ? "frame" : "computer"
-	. += span_info("Currently interacting with [EXAMINE_HINT(frame_or_pc)].")
+	. += span_info(LANG("obj.5137ae72", list(EXAMINE_HINT(frame_or_pc))))
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()
@@ -88,7 +89,7 @@
 
 /obj/machinery/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!cpu)
-		balloon_alert(user, "turn it on first!")
+		balloon_alert(user, LANG("obj.5aaff2c1", null))
 		return FALSE
 	return cpu.emag_act(user)
 

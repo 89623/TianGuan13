@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Controls how many buckets should be kept, each representing a tick. (1 minutes worth)
 #define BUCKET_LEN (world.fps*1*60)
 /// Helper for getting the correct bucket for a given timer
@@ -220,13 +221,13 @@ SUBSYSTEM_DEF(timer)
  */
 /datum/controller/subsystem/timer/proc/get_timer_debug_string(datum/timedevent/TE)
 	. = "Timer: [TE]"
-	. += "Prev: [TE.prev ? TE.prev : "NULL"], Next: [TE.next ? TE.next : "NULL"]"
+	. += LANG("datum.f9141531", list(TE.prev ? TE.prev : "NULL", TE.next ? TE.next : "NULL"))
 	if(TE.spent)
-		. += ", SPENT([TE.spent])"
+		. += LANG("datum.e4ccaf8a", list(TE.spent))
 	if(QDELETED(TE))
-		. += ", QDELETED"
+		. += LANG("datum.21b30b7f", null)
 	if(!TE.callBack)
-		. += ", NO CALLBACK"
+		. += LANG("datum.c8891f8c", null)
 
 /**
  * Destroys the existing buckets and creates new buckets from the existing timed events

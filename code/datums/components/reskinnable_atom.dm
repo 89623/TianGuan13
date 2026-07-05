@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ### Atom skin singleton datum
  *
@@ -267,7 +268,7 @@
 		return
 
 	set_skin_by_name(pick, user)
-	to_chat(user, span_info("[parent] is now skinned as '[pick].'"))
+	to_chat(user, span_info(LANG("datum.83aae89c", list(parent, pick))))
 
 	if(!infinite_reskin)
 		qdel(src)

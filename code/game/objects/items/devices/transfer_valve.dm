@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/transfer_valve
 	icon = 'icons/obj/devices/assemblies.dmi'
 	name = "tank transfer valve"
@@ -36,16 +37,16 @@
 /obj/item/transfer_valve/examine(mob/user)
 	. = ..()
 	if(tank_one)
-		. += span_notice("A [tank_one] is attached to the primary port.")
+		. += span_notice(LANG("obj.7880d7d8", list(tank_one)))
 	if(tank_two)
-		. += span_notice("A [tank_two] is attached to the secondary port.")
+		. += span_notice(LANG("obj.aab91071", list(tank_two)))
 	if(!tank_one || !tank_two)
-		. += span_notice("You could attach a gas tank onto the open port.")
+		. += span_notice(LANG("obj.332461ab", null))
 	if(attached_device)
-		. += span_notice("A [attached_device] is attached to the fuse input.")
+		. += span_notice(LANG("obj.43a2aa42", list(attached_device)))
 	if(wired)
-		. += span_notice("It looks like some nutjob added makeshift backpack straps with [EXAMINE_HINT("wires")]...")
-		. += span_notice("You could cut off the straps with [EXAMINE_HINT(TOOL_WIRECUTTER)].")
+		. += span_notice(LANG("obj.12e9796b", list(EXAMINE_HINT("wires"))))
+		. += span_notice(LANG("obj.493399c9", list(EXAMINE_HINT(TOOL_WIRECUTTER))))
 
 /obj/item/transfer_valve/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -97,9 +98,9 @@
 		var/obj/vehicle/ridden/wheelchair/chair = interacting_with
 
 		if (chair.bomb_attached)
-			user.balloon_alert(user, "already has a TTV!")
+			user.balloon_alert(user, LANG("obj.7ebb669f", null))
 			return ITEM_INTERACT_FAILURE
-		user.balloon_alert(user, "attaching TTV...")
+		user.balloon_alert(user, LANG("obj.3124768f", null))
 		if (!do_after(user, 0.5 SECONDS, chair))
 			return ITEM_INTERACT_FAILURE
 
@@ -127,17 +128,17 @@
 	else if(istype(item, /obj/item/stack/cable_coil) && !wired)
 		var/obj/item/stack/cable_coil/coil = item
 		if (coil.get_amount() < 15)
-			to_chat(user, span_warning("You need fifteen lengths of coil for this!"))
+			to_chat(user, span_warning(LANG("obj.1cc40c6b", null)))
 			return
 		coil.use(15)
-		to_chat(user, span_notice("You add some cables, not being really sure why. Looks like <i>backpack</i> straps."))
+		to_chat(user, span_notice(LANG("obj.9c4c0ec5", null)))
 		wired = TRUE
 		slot_flags |= ITEM_SLOT_BACK
 		update_appearance()
 
 	else if(item.tool_behaviour == TOOL_WIRECUTTER && wired)
 		item.play_tool_sound(src)
-		to_chat(user, span_notice("You remove the cables."))
+		to_chat(user, span_notice(LANG("obj.370ef466", null)))
 		wired = FALSE
 		slot_flags &= ~ITEM_SLOT_BACK
 		Move(drop_location())
@@ -151,14 +152,14 @@
 		if(!user.transferItemToLoc(new_tank, src))
 			return FALSE
 		tank_one = new_tank
-		to_chat(user, span_notice("You attach the [new_tank] to the transfer valve's primary port."))
+		to_chat(user, span_notice(LANG("obj.f4a2eb0a", list(new_tank))))
 	else if(!tank_two)
 		if(!user.transferItemToLoc(new_tank, src))
 			return FALSE
 		tank_two = new_tank
-		to_chat(user, span_notice("You attach the [new_tank] to the transfer valve's secondary port."))
+		to_chat(user, span_notice(LANG("obj.669ea8a3", list(new_tank))))
 	else
-		to_chat(user, span_warning("There are already two tanks attached, remove one first!"))
+		to_chat(user, span_warning(LANG("obj.dfe7aaa0", null)))
 		return FALSE
 
 	update_appearance()
@@ -166,15 +167,15 @@
 
 /obj/item/transfer_valve/proc/try_attach_assembly(obj/item/assembly/A, mob/user)
 	if(A.secured)
-		to_chat(user, span_notice("The [A] is secured; unsecure it first."))
+		to_chat(user, span_notice(LANG("obj.007eae2b", list(A))))
 		return FALSE
 	if(attached_device)
-		to_chat(user, span_warning("There is already a device attached to the valve, remove it first!"))
+		to_chat(user, span_warning(LANG("obj.f8d6a6b3", null)))
 		return FALSE
 	if(!user.transferItemToLoc(A, src))
 		return FALSE
 	attached_device = A
-	to_chat(user, span_notice("You attach the [A] to the valve controls and secure it."))
+	to_chat(user, span_notice(LANG("obj.59d5d14d", list(A))))
 	A.holder = src
 	A.on_attach()
 	A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).

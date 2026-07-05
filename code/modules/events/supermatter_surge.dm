@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SURGE_DURATION_MIN 240 EVENT_SECONDS
 #define SURGE_DURATION_MAX 270 EVENT_SECONDS
 #define SURGE_SEVERITY_MIN 1
@@ -92,7 +93,7 @@
 
 /datum/round_event/supermatter_surge/announce(fake)
 	var/class_to_announce = fake ? pick(1, 2, 3, 4) : surge_class
-	priority_announce("The Crystal Integrity Monitoring System has detected unusual atmospheric properties in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", "Class [class_to_announce] Supermatter Surge Alert", 'sound/machines/engine_alert/engine_alert3.ogg')
+	priority_announce("The Crystal Integrity Monitoring System has detected unusual atmospheric properties in the supermatter chamber, energy output from the supermatter crystal has increased significantly. Engineering intervention is required to stabilize the engine.", LANG("datum.98df1881", list(class_to_announce)), 'sound/machines/engine_alert/engine_alert3.ogg')
 
 /datum/round_event/supermatter_surge/start()
 	engine.bullet_energy = surge_class + SURGE_BULLET_ENERGY_ADDITION

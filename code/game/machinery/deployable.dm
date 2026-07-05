@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SINGLE "single"
 #define VERTICAL "vertical"
 #define HORIZONTAL "horizontal"
@@ -36,15 +37,15 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(atom_integrity >= max_integrity)
-		balloon_alert(user, "already full integrity!")
+		balloon_alert(user, LANG("obj.48da8c36", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.balloon_alert_to_viewers("repairing [src]...", "repairing...")
+	user.balloon_alert_to_viewers(LANG("obj.dba42904", list(src)), LANG("obj.b52342a8", null))
 
 	if(!tool.use_tool(src, user, 4 SECONDS, amount = 10, volume=50))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "repaired")
+	balloon_alert(user, LANG("obj.65ced1e8", null))
 	repair_damage(20)
 	return ITEM_INTERACT_SUCCESS
 
@@ -84,10 +85,10 @@
 	AddElement(/datum/element/uses_girder_wall_recipes)
 
 /obj/structure/barricade/wooden/crowbar_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "deconstructing barricade...")
+	balloon_alert(user, LANG("obj.247ce104", null))
 	if(!tool.use_tool(src, user, 2 SECONDS, volume=50))
 		return
-	loc.balloon_alert(user, "barricade deconstructed")
+	loc.balloon_alert(user, LANG("obj.4c490938", null))
 	tool.play_tool_sound(src)
 	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
 	qdel(src)
@@ -157,7 +158,7 @@
 
 /obj/item/grenade/barrier/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to toggle modes.")
+	. += span_notice(LANG("obj.70f0513d", null))
 
 /obj/item/grenade/barrier/click_alt(mob/living/carbon/user)
 	toggle_mode(user)
@@ -172,7 +173,7 @@
 		if(HORIZONTAL)
 			mode = SINGLE
 
-	to_chat(user, span_notice("[src] is now in [mode] mode."))
+	to_chat(user, span_notice(LANG("obj.959ebba6", list(src, mode))))
 
 /obj/item/grenade/barrier/detonate(mob/living/lanced_by)
 	. = ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Pedestrian crossing signal for tram
 /obj/machinery/transport/crossing_signal
 	name = "crossing signal"
@@ -137,29 +138,29 @@
 
 /obj/machinery/transport/crossing_signal/examine(mob/user)
 	. = ..()
-	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
+	. += span_notice(LANG("obj.a5319df9", list(panel_open ? "open" : "closed")))
 	if(panel_open)
-		. += span_notice("It can be flipped or rotated with a [EXAMINE_HINT("wrench.")]")
+		. += span_notice(LANG("obj.03cc0996", list(EXAMINE_HINT("wrench."))))
 	switch(operating_status)
 		if(TRANSPORT_REMOTE_WARNING)
-			. += span_notice("The orange [EXAMINE_HINT("remote warning")] light is on.")
-			. += span_notice("The status display reads: Check track sensor.")
+			. += span_notice(LANG("obj.ac94eff0", list(EXAMINE_HINT("remote warning"))))
+			. += span_notice(LANG("obj.2b683900", null))
 		if(TRANSPORT_REMOTE_FAULT)
-			. += span_notice("The blue [EXAMINE_HINT("telecoms failure")] light is on.")
-			. += span_notice("The status display reads: Check telecommunications network.")
+			. += span_notice(LANG("obj.0814e66c", list(EXAMINE_HINT("telecoms failure"))))
+			. += span_notice(LANG("obj.065f6a47", null))
 		if(TRANSPORT_LOCAL_FAULT)
-			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
-			. += span_notice("The status display reads: Repair required.")
+			. += span_notice(LANG("obj.c95233aa", list(EXAMINE_HINT("local fault"))))
+			. += span_notice(LANG("obj.07c6f86d", null))
 	switch(dir)
 		if(NORTH, SOUTH)
-			. += span_notice("The tram configuration display shows EAST/WEST.")
+			. += span_notice(LANG("obj.4d0cb9a3", null))
 		if(EAST, WEST)
-			. += span_notice("The tram configuration display shows NORTH/SOUTH.")
+			. += span_notice(LANG("obj.3d875294", null))
 
 /obj/machinery/transport/crossing_signal/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	balloon_alert(user, "disabled motion sensors")
+	balloon_alert(user, LANG("obj.53eb4acf", null))
 	operating_status = TRANSPORT_LOCAL_FAULT
 	obj_flags |= EMAGGED
 	return TRUE
@@ -171,7 +172,7 @@
 
 	tool.play_tool_sound(src, 50)
 	setDir(turn(dir,-90))
-	balloon_alert(user, "rotated")
+	balloon_alert(user, LANG("obj.025b0c2e", null))
 	find_uplink()
 	return CLICK_ACTION_SUCCESS
 
@@ -185,7 +186,7 @@
 			if(OUTBOUND)
 				sign_dir = INBOUND
 
-		to_chat(user, span_notice("You flip directions on [src]."))
+		to_chat(user, span_notice(LANG("obj.b61a0c66", list(src))))
 		update_appearance()
 
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -498,19 +499,19 @@
 
 /obj/machinery/transport/guideway_sensor/examine(mob/user)
 	. = ..()
-	. += span_notice("The maintenance panel is [panel_open ? "open" : "closed"].")
+	. += span_notice(LANG("obj.a5319df9", list(panel_open ? "open" : "closed")))
 	if(panel_open)
-		. += span_notice("It can be rotated with a [EXAMINE_HINT("wrench.")]")
+		. += span_notice(LANG("obj.ac3cf8bd", list(EXAMINE_HINT("wrench."))))
 	switch(operating_status)
 		if(TRANSPORT_REMOTE_WARNING)
-			. += span_notice("The orange [EXAMINE_HINT("remote warning")] light is on.")
-			. += span_notice("The status display reads: Check paired sensor.")
+			. += span_notice(LANG("obj.ac94eff0", list(EXAMINE_HINT("remote warning"))))
+			. += span_notice(LANG("obj.ba027247", null))
 		if(TRANSPORT_REMOTE_FAULT)
-			. += span_notice("The blue [EXAMINE_HINT("remote fault")] light is on.")
-			. += span_notice("The status display reads: Paired sensor not found.")
+			. += span_notice(LANG("obj.0814e66c", list(EXAMINE_HINT("remote fault"))))
+			. += span_notice(LANG("obj.544aa103", null))
 		if(TRANSPORT_LOCAL_FAULT)
-			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
-			. += span_notice("The status display reads: Repair required.")
+			. += span_notice(LANG("obj.c95233aa", list(EXAMINE_HINT("local fault"))))
+			. += span_notice(LANG("obj.07c6f86d", null))
 
 /obj/machinery/transport/guideway_sensor/screwdriver_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, tool)

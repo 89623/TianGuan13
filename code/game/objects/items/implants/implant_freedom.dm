@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/implant/freedom
 	name = "freedom implant"
 	desc = "Use this to escape from those evil Red Shirts."
@@ -19,7 +20,7 @@
 	if(!.)
 		return FALSE
 	if(!iscarbon(target)) //This is pretty much useless for anyone else since they can't be cuffed
-		balloon_alert(user, "that would be a waste!")
+		balloon_alert(user, LANG("obj.3f809a5b", null))
 		return FALSE
 	return TRUE
 
@@ -27,7 +28,7 @@
 	. = ..()
 	var/mob/living/carbon/carbon_imp_in = imp_in
 	if(!can_trigger(carbon_imp_in))
-		balloon_alert(carbon_imp_in, "no restraints!")
+		balloon_alert(carbon_imp_in, LANG("obj.b2b516c4", null))
 		return
 
 	uses--

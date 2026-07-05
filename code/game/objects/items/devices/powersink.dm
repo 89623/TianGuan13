@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DISCONNECTED 0
 #define CLAMPED_OFF 1
 #define OPERATING 2
@@ -37,9 +38,9 @@
 /obj/item/powersink/examine(mob/user)
 	. = ..()
 	if(mode)
-		. += "\The [src] is bolted to the floor."
+		. += LANG("obj.7aaa4180", list(src))
 	if((in_range(user, src) || isobserver(user)) && internal_heat > max_heat * 0.5)
-		. += span_danger("[src] is warping the air above it. It must be very hot.")
+		. += span_danger(LANG("obj.e7ed8747", list(src)))
 
 /obj/item/powersink/set_anchored(anchorvalue)
 	. = ..()
@@ -81,26 +82,26 @@
 		if(isturf(T) && T.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
 			attached = locate() in T
 			if(!attached)
-				to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
+				to_chat(user, span_warning(LANG("obj.2bd00208", list(src))))
 			else
 				set_mode(CLAMPED_OFF)
 				user.visible_message( \
-					"[user] attaches \the [src] to the cable.", \
-					span_notice("You bolt \the [src] into the floor and connect it to the cable."),
-					span_hear("You hear some wires being connected to something."))
+					LANG("obj.97570205", list(user, src)), \
+					span_notice(LANG("obj.b346b7fc", list(src))),
+					span_hear(LANG("obj.7d716371", null)))
 		else
-			to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
+			to_chat(user, span_warning(LANG("obj.2bd00208", list(src))))
 	else
 		set_mode(DISCONNECTED)
 		user.visible_message( \
-			"[user] detaches \the [src] from the cable.", \
-			span_notice("You unbolt \the [src] from the floor and detach it from the cable."),
-			span_hear("You hear some wires being disconnected from something."))
+			LANG("obj.f180bf4c", list(user, src)), \
+			span_notice(LANG("obj.020e329d", list(src))),
+			span_hear(LANG("obj.b8c00fb8", null)))
 
 /obj/item/powersink/screwdriver_act(mob/living/user, obj/item/tool)
 	user.visible_message( \
-		"[user] messes with \the [src] for a bit.", \
-		span_notice("You can't fit the screwdriver into \the [src]'s bolts! Try using a wrench."))
+		LANG("obj.a9dc0f20", list(user, src)), \
+		span_notice(LANG("obj.9a479330", list(src))))
 	return TRUE
 
 /obj/item/powersink/attack_paw(mob/user, list/modifiers)
@@ -119,9 +120,9 @@
 
 		if(CLAMPED_OFF)
 			user.visible_message( \
-				"[user] activates \the [src]!", \
-				span_notice("You activate \the [src]."),
-				span_hear("You hear a click."))
+				LANG("obj.c4887f35", list(user, src)), \
+				span_notice(LANG("obj.41ddd503", list(src))),
+				span_hear(LANG("obj.0f830183", null)))
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
 			user.log_message("activated a powersink", LOG_GAME)
 			notify_ghosts(
@@ -133,9 +134,9 @@
 
 		if(OPERATING)
 			user.visible_message( \
-				"[user] deactivates \the [src]!", \
-				span_notice("You deactivate \the [src]."),
-				span_hear("You hear a click."))
+				LANG("obj.072be970", list(user, src)), \
+				span_notice(LANG("obj.03d7907e", list(src))),
+				span_hear(LANG("obj.0f830183", null)))
 			user.log_message("deactivated the powersink", LOG_GAME)
 			set_mode(CLAMPED_OFF)
 

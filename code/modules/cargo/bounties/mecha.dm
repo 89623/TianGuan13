@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/bounty/item/mech
 	wanted_types = list(/obj/item/mecha_diagnostic = TRUE)
 	/// What mech do we need data of inside this mecha diagnostic?
@@ -13,7 +14,7 @@
 		return
 
 	if(istype(shipped, /obj/vehicle/sealed/mecha))
-		shipped.balloon_alert_to_viewers("make diagnostic from inside!")
+		shipped.balloon_alert_to_viewers(LANG("datum.6fb88fa2", null))
 
 	var/obj/item/mecha_diagnostic/diagnostic_sheet = shipped
 	if(!diagnostic_sheet.mech_data)

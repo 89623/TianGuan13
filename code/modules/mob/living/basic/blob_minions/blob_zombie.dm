@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A shambling mob made out of a crew member
 /mob/living/basic/blob_minion/zombie
 	name = "blob zombie"
@@ -82,7 +83,7 @@
 /// Dynamic changeling reentry
 /mob/living/basic/blob_minion/zombie/proc/on_corpse_revived()
 	SIGNAL_HANDLER
-	visible_message(span_boldwarning("[src] bursts from the inside!"))
+	visible_message(span_boldwarning(LANG("mob.be6ee9e2", list(src))))
 	death()
 
 /// Blob-created zombies will ping for player control when they make a zombie

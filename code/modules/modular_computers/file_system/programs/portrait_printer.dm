@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## the art gallery viewer/printer!
  *
@@ -67,7 +68,7 @@
 	if(!(computer.hardware_flag & PROGRAM_CONSOLE))
 		return
 	if(computer.stored_paper < CANVAS_PAPER_COST)
-		to_chat(usr, span_notice("Printing error: Your printer needs at least [CANVAS_PAPER_COST] paper to print a canvas."))
+		to_chat(usr, span_notice(LANG("datum.ca37f652", list(CANVAS_PAPER_COST))))
 		return
 
 	//canvas printing!
@@ -75,10 +76,10 @@
 
 	var/obj/item/canvas/new_canvas = chosen_portrait.spawn_canvas(get_turf(computer.physical))
 	if(!new_canvas)
-		to_chat(usr, span_notice("Printing error: An unknown error has occurred."))
+		to_chat(usr, span_notice(LANG("datum.0bd81edf", null)))
 		return
 	computer.stored_paper -= CANVAS_PAPER_COST
-	to_chat(usr, span_notice("You have printed [chosen_portrait.title] onto a new canvas."))
+	to_chat(usr, span_notice(LANG("datum.96956646", list(chosen_portrait.title))))
 	playsound(computer.physical, 'sound/machines/printer.ogg', 100, TRUE)
 
 /datum/computer_file/program/portrait_printer/proc/download_painting(selected_painting)
@@ -86,6 +87,6 @@
 	var/icon/portrait_icon = chosen_portrait.get_icon()
 	var/datum/computer_file/image/image_file = new(portrait_icon, display_name = chosen_portrait.title, source_photo_or_painting = chosen_portrait)
 	if(!computer.store_file(image_file, usr))
-		to_chat(usr, span_notice("Unable to download [chosen_portrait.title].[/datum/computer_file/image::filetype]."))
+		to_chat(usr, span_notice(LANG("datum.24d874c4", list(chosen_portrait.title, /datum/computer_file/image::filetype))))
 		return
-	to_chat(usr, span_notice("Downloaded [chosen_portrait.title].[/datum/computer_file/image::filetype]."))
+	to_chat(usr, span_notice(LANG("datum.78d6eda2", list(chosen_portrait.title, /datum/computer_file/image::filetype))))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun/energy/ionrifle //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
 	name = "ion rifle"
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
@@ -115,7 +116,7 @@
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += span_notice("[src] is [round(cell.percent())]% charged.")
+		. += span_notice(LANG("obj.26b13b03", list(src, round(cell.percent()))))
 
 /obj/item/gun/energy/plasmacutter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/charge_multiplier = 0
@@ -128,7 +129,7 @@
 		return NONE
 
 	if(cell.charge == cell.maxcharge)
-		balloon_alert(user, "already fully charged!")
+		balloon_alert(user, LANG("obj.9e79ba49", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/stack/sheet = tool
@@ -136,7 +137,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	cell.give(0.2 * STANDARD_CELL_CHARGE * charge_multiplier)
-	balloon_alert(user, "cell recharged")
+	balloon_alert(user, LANG("obj.aac7e166", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/plasmacutter/emp_act(severity)
@@ -148,7 +149,7 @@
 		return
 
 	var/mob/living/user = loc
-	user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
+	user.visible_message(span_danger(LANG("obj.60571bac", list(src, user))), span_userdanger(LANG("obj.f8e93394", list(src))))
 	user.adjust_fire_stacks(4)
 	user.ignite_mob()
 
@@ -156,16 +157,16 @@
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount, heat_required)
 	if(QDELETED(cell))
-		balloon_alert(user, "no cell inserted!")
+		balloon_alert(user, LANG("obj.30fa5482", null))
 		return FALSE
 	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25
 	// Then it'll drain 125 at first and 25 periodically, but fail if charge dips below 125 even though it still can finish action
 	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
 	if(amount ? cell.charge < PLASMA_CUTTER_CHARGE_WELD * amount : cell.charge < PLASMA_CUTTER_CHARGE_WELD)
-		balloon_alert(user, "not enough charge!")
+		balloon_alert(user, LANG("obj.07f43d6c", null))
 		return FALSE
 	if(heat < heat_required)
-		to_chat(user, span_warning("[src] is not hot enough to complete this task!"))
+		to_chat(user, span_warning(LANG("obj.fe7e2bc6", list(src))))
 		return FALSE
 
 	return TRUE
@@ -216,11 +217,11 @@
 
 /obj/item/gun/energy/wormhole_projector/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Left-click</b> to fire blue wormholes and <b><font color=orange>right-click</font></b> to fire orange wormholes.")
+	. += span_notice(LANG("obj.b0f738a0", null))
 
 /obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
-		to_chat(user, span_notice("You insert [C] into the wormhole projector and the weapon gently hums to life."))
+		to_chat(user, span_notice(LANG("obj.2025b3a6", list(C))))
 		firing_core = TRUE
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		qdel(C)
@@ -233,7 +234,7 @@
 
 /obj/item/gun/energy/wormhole_projector/shoot_with_empty_chamber(mob/living/user)
 	. = ..()
-	to_chat(user, span_danger("The display says, 'NO CORE INSTALLED'."))
+	to_chat(user, span_danger(LANG("obj.146a1c5b", null)))
 
 /obj/item/gun/energy/wormhole_projector/update_icon_state()
 	. = ..()
@@ -361,7 +362,7 @@
 
 /obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
-		to_chat(user, span_notice("You insert [C] into the gravitational manipulator and the weapon gently hums to life."))
+		to_chat(user, span_notice(LANG("obj.7d036008", list(C))))
 		firing_core = TRUE
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		qdel(C)
@@ -413,7 +414,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 		return ..()
 	//If we have charge, but the stock is folded, do sparks.
 	if(can_shoot())
-		balloon_alert(user, "electricity arcing to stock!")
+		balloon_alert(user, LANG("obj.cfac405b", null))
 
 		if(prob(75)) //fake sparks to cut on spark spam
 			playsound(user, 'sound/effects/sparks/sparks1.ogg', 50, TRUE)
@@ -439,7 +440,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 		playsound(user, 'sound/items/weapons/gun/tesla/squeak_latch.ogg', 100)
 
 	update_appearance()
-	balloon_alert_to_viewers("[ready_to_fire ? "unfolded" : "folded"] stock")
+	balloon_alert_to_viewers(LANG("obj.0e0b09bd", list(ready_to_fire ? "unfolded" : "folded")))
 
 /obj/item/gun/energy/marksman_revolver
 	name = "marksman revolver"
@@ -465,9 +466,9 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 /obj/item/gun/energy/marksman_revolver/examine(mob/user)
 	. = ..()
 	if(max_coins)
-		. += "It currently has [coin_count] out of [max_coins] coins, and takes [coin_regen_rate/10] seconds to recharge each one."
+		. += LANG("obj.feda2fd5", list(coin_count, max_coins, coin_regen_rate/10))
 	else
-		. += "It has infinite coins available for use."
+		. += LANG("obj.f0ee0dba", null)
 
 /obj/item/gun/energy/marksman_revolver/process(seconds_per_tick)
 	if(!max_coins || coin_count >= max_coins)
@@ -488,7 +489,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 		return ITEM_INTERACT_BLOCKING
 
 	if(max_coins && coin_count <= 0)
-		to_chat(user, span_warning("You don't have any coins right now!"))
+		to_chat(user, span_warning(LANG("obj.4a83cbcd", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(max_coins)
@@ -497,7 +498,7 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 
 	var/turf/target_turf = get_offset_target_turf(target, rand(-1, 1), rand(-1, 1)) // choose a random tile adjacent to the clicked one
 	playsound(user.loc, 'sound/effects/coin2.ogg', 50, TRUE)
-	user.visible_message(span_warning("[user] flips a coin towards [target]!"), span_danger("You flip a coin towards [target]!"))
+	user.visible_message(span_warning(LANG("obj.222a4eda", list(user, target))), span_danger(LANG("obj.a569d9e3", list(target))))
 	var/obj/projectile/bullet/coin/new_coin = new(get_turf(user), target_turf, user)
 	new_coin.aim_projectile(target_turf, user)
 	new_coin.fire()

@@ -41,7 +41,8 @@ export const SpawnersMenu = (props) => {
                       </Stack.Item>
                     ) : (
                       <Stack.Item fontSize="14px" color="green">
-                        {spawner.amount_left} left
+                        {/* NOVA EDIT - I18N - was "left"; means remaining count, not direction (avoids 左 mistranslation) */}
+                        {spawner.amount_left} remaining
                       </Stack.Item>
                     )}
                     <Stack.Item>

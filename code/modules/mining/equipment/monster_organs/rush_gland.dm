@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Health under which implanted gland will automatically activate
 #define HEALTH_DANGER_ZONE 30
 
@@ -63,7 +64,7 @@
 	ADD_TRAIT(owner, TRAIT_TENTACLE_IMMUNE, TRAIT_STATUS_EFFECT(id))
 	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lobster_rush)
-	to_chat(owner, span_notice("You feel your blood pumping!"))
+	to_chat(owner, span_notice(LANG("datum.ea5c3237", null)))
 
 /datum/status_effect/lobster_rush/on_remove()
 	. = ..()
@@ -71,7 +72,7 @@
 	REMOVE_TRAIT(owner, TRAIT_TENTACLE_IMMUNE, TRAIT_STATUS_EFFECT(id))
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/lobster_rush)
 	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
-	to_chat(owner, span_notice("Your pulse returns to normal."))
+	to_chat(owner, span_notice(LANG("datum.5aace815", null)))
 
 /// Spawn an afterimage every other step, because every step was too many
 /datum/status_effect/lobster_rush/proc/on_move(datum/source, atom/old_loc, dir)
@@ -89,7 +90,7 @@
 	if (lavaland_equipment_pressure_check(get_turf(source)))
 		return
 	smack_into(source)
-	source.visible_message(span_warning("[source] crashes into [target]!"))
+	source.visible_message(span_warning(LANG("datum.fcbe80cf", list(source, target))))
 	if (isliving(target))
 		smack_into(target)
 	qdel(src)

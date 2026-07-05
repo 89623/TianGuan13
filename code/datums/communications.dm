@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define COMMUNICATION_COOLDOWN (30 SECONDS)
 #define COMMUNICATION_COOLDOWN_AI (30 SECONDS)
 #define COMMUNICATION_COOLDOWN_MEETING (5 MINUTES)
@@ -43,7 +44,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(html_decode(input),"[user.name] announces:", players = players)
+		minor_announce(html_decode(input),LANG("datum.c7600a37", list(user.name)), players = players)
 		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
 		var/list/message_data = user.treat_message(input)
@@ -88,7 +89,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 
 	. = ""
 	. += "<center><img src='[SSassets.transport.get_asset_url("nanotrasen-logo")]' width='50%'></center><hr>"
-	. += "<center><h2>[command_name()], TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]</h2></center><hr>"
+	. += LANG("datum.40be71bf", list(command_name(), time2text(world.realtime, "DDD, MMM DD"), CURRENT_STATION_YEAR))
 	. += command_report_main_content || get_main_report_content()
 	if(CONFIG_GET(flag/no_dynamic_report))
 		if(isnull(greenshift))
@@ -98,8 +99,8 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 		if(isnull(greenshift)) // if we're not forced to be greenshift or not - check if we are an actual greenshift
 			greenshift = SSdynamic.current_tier.tier == 0 && dynamic_report == /datum/dynamic_tier/greenshift::advisory_report
 
-		. += "<hr><h3>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector:</h3>"
-		. += dynamic_report
+		. += LANG("datum.f0c94775", null)
+		. += lang_reverse_text(dynamic_report) // NOVA EDIT CHANGE - I18N - ORIGINAL: . += dynamic_report （威胁等级公告整块是非插值目录条目；拼进报告后整串 reverse 够不着、AC 会蚕食成中英混排，故在拼接前整块反查）
 
 	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
 
@@ -115,7 +116,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 			station_goal_strings += station_goal.get_report()
 
 	if(length(station_goal_strings) > 0) // if we have any special orders to report, add them in
-		. += "<hr><h4>Special Orders for [station_name()]:</h4>"
+		. += LANG("datum.97f23a71", list(station_name()))
 		. += station_goal_strings.Join("<hr>")
 
 	var/list/trait_list_strings = list()
@@ -137,7 +138,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 		. += "<hr><h4>Additional Notes: </h4>" + footnote_pile
 
 #ifndef MAP_TEST
-	print_command_report(., "[command_name()] Status Summary", announce = FALSE, contains_advanced_html = TRUE)
+	print_command_report(., LANG("datum.1aee94d7", list(command_name())), announce = FALSE, contains_advanced_html = TRUE)
 	if(greenshift)
 		priority_announce(
 			"Thanks to the tireless efforts of our security and intelligence divisions, \
@@ -151,8 +152,8 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 		if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_BLUE)
 			SSsecurity_level.set_level(SEC_LEVEL_BLUE, announce = FALSE)
 		priority_announce(
-			"[SSsecurity_level.current_security_level.elevating_to_announcement]\n\n\
-				A summary has been copied and printed to all communications consoles.",
+			// NOVA EDIT - i18n: 多行 \ 续行串 codemod 切片够不着，手接 LANG（key 同抽取 build_template）
+			LANG("datum.63d767af", list(SSsecurity_level.current_security_level.elevating_to_announcement)),
 			"Security level elevated.",
 			ANNOUNCER_INTERCEPT,
 			color_override = SSsecurity_level.current_security_level.announcement_color,

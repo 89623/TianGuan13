@@ -27,10 +27,9 @@
 /obj/machinery/quantum_server/examine(mob/user)
 	. = ..()
 	if(max_anchors >= 1)
-		. += span_infoplain("- Its domain vulnerability scanners permit for up to [max_anchors] domain anchors to be used.")
-	. += span_notice("Any preloaded SNPC patterns, 'ghastly Resonance apparitions', or connected bitrunners can leave a custom-written message on the quantum server, \
-	causing a small, audible blip and sending a department message, indicating their activity to on-station bitrunners.")
-	. += span_notice("Its <b>messaging protection</b> is currently: <b>[message_protected ? "enabled" : "disabled"]</b>")
+		. += span_infoplain(LANG("obj.bd2cad97", list(max_anchors)))
+	. += span_notice(LANG("obj.9c572844", null))
+	. += span_notice(LANG("obj.0903de93", list(message_protected ? "enabled" : "disabled")))
 
 /obj/machinery/quantum_server/RefreshParts()
 	. = ..()
@@ -48,7 +47,7 @@
 		return
 
 	if(message_protected)
-		balloon_alert(user, "message protected!")
+		balloon_alert(user, LANG("obj.51f2a1ea", null))
 		return
 
 	for(var/player_key in spam_queue)
@@ -63,17 +62,17 @@
 		return
 
 	message_protected = !message_protected
-	balloon_alert(user, "message protection [message_protected ? "enabled" : "disabled"]!")
+	balloon_alert(user, LANG("obj.c141f0fb", list(message_protected ? "enabled" : "disabled")))
 
 /// 'Marks' the server with the ghost's presence: their custom-written message, and the ckey added to the spam-prevention list.
 /obj/machinery/quantum_server/proc/ghost_mark(mob/activator)
 	if(message_protected)
-		balloon_alert(activator, "message protected!")
+		balloon_alert(activator, LANG("obj.51f2a1ea", null))
 		return
-	var/messenger = tgui_input_text(activator, "Set your username", "Holonet Gaming Network", max_length = MAX_NAME_LEN)
+	var/messenger = tgui_input_text(activator, LANG("obj.11375e02", null), LANG("obj.ce720437", null), max_length = MAX_NAME_LEN)
 	if(!messenger)
 		messenger = pick(GLOB.hacker_aliases)
-	var/message = tgui_input_text(activator, "Write your message", "Holonet Gaming Network", max_length = MAX_PLAQUE_LEN)
+	var/message = tgui_input_text(activator, LANG("obj.9f141b4e", null), LANG("obj.ce720437", null), max_length = MAX_PLAQUE_LEN)
 	if(!message)
 		return
 	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 75)
@@ -89,4 +88,4 @@
 	var/mob/ghost = get_mob_by_ckey(ghost_ckey)
 	if(!ghost || isliving(ghost))
 		return
-	to_chat(ghost, "[FOLLOW_LINK(ghost, src)] <span class='nicegreen'>The spam protection of [src] has deactivated.</span>")
+	to_chat(ghost, LANG("obj.b2f8d6fa", list(FOLLOW_LINK(ghost, src), src)))

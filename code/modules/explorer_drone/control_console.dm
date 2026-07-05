@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/exodrone_control_console
 	name = "exploration drone control console"
 	desc = "Control exploration drones from interstellar distances. Communication lag not included."
@@ -135,7 +136,7 @@
 					if(!target_site)
 						return TRUE
 					if(!controlled_drone.check_blacklist())
-						say("Error - An unauthorized object was found inside the cargo!")
+						say(LANG("obj.b9623c90", null))
 						return TRUE
 				controlled_drone.launch_for(target_site)
 			return TRUE

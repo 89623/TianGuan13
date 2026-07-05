@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // This is to replace the previous datum/disease/alien_embryo for slightly improved handling and maintainability
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
 /obj/item/organ/body_egg/alien_embryo
@@ -19,9 +20,9 @@
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
 	if(stage < 5)
-		to_chat(finder, span_notice("It's small and weak, barely the size of a foetus."))
+		to_chat(finder, span_notice(LANG("obj.17dad757", null)))
 	else
-		to_chat(finder, span_notice("It's grown quite large, and writhes slightly as you look at it."))
+		to_chat(finder, span_notice(LANG("obj.9084be1a", null)))
 		if(prob(10))
 			attempt_grow(gib_on_success = FALSE)
 
@@ -37,24 +38,24 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("cough")
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(owner, span_danger("Your throat feels sore."))
+				to_chat(owner, span_danger(LANG("obj.e46412a1", null)))
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(owner, span_danger("Mucous runs down the back of your throat."))
+				to_chat(owner, span_danger(LANG("obj.58ac69d5", null)))
 		if(5)
 			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("sneeze")
 			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("cough")
 			if(SPT_PROB(2, seconds_per_tick))
-				to_chat(owner, span_danger("Your muscles ache."))
+				to_chat(owner, span_danger(LANG("obj.e17753b8", null)))
 				if(prob(20))
 					owner.take_bodypart_damage(1)
 			if(SPT_PROB(2, seconds_per_tick))
-				to_chat(owner, span_danger("Your stomach hurts."))
+				to_chat(owner, span_danger(LANG("obj.6c562ebe", null)))
 				if(prob(20))
 					owner.adjust_tox_loss(1)
 		if(6)
-			to_chat(owner, span_danger("You feel something tearing its way out of your chest..."))
+			to_chat(owner, span_danger(LANG("obj.729ef8c4", null)))
 			owner.adjust_tox_loss(5 * seconds_per_tick) // Why is this [TOX]?
 
 /// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
@@ -131,7 +132,7 @@
 		new_xeno.RemoveInvisibility(type)
 
 	if(gib_on_success)
-		new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner] in a shower of gore!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))
+		new_xeno.visible_message(span_danger(LANG("obj.2a9112cf", list(new_xeno, owner))), span_userdanger(LANG("obj.38137873", list(owner))), span_hear(LANG("obj.581bebe7", null)))
 		//owner.investigate_log("has been gibbed by an alien larva.", INVESTIGATE_DEATHS) // NOVA EDIT REMOVAL - ALIEN QOL - don't ever gib host.
 		//owner.gib(DROP_ORGANS|DROP_BODYPARTS)
 		// NOVA EDIT ADDITION BEGIN - ALIEN QOL - You aren't getting gibbed but you aren't going to be having fun
@@ -141,7 +142,7 @@
 		owner.investigate_log("has been chestbursted.", INVESTIGATE_DEATHS)
 		// NOVA EDIT ADDITION END - ALIEN QOL
 	else
-		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
+		new_xeno.visible_message(span_danger(LANG("obj.6f7f1178", list(new_xeno, owner))), span_userdanger(LANG("obj.38137873", list(owner))))
 		owner.log_message("had an alien larva within them escape (without being gibbed).", LOG_ATTACK, log_globally = FALSE)
 		owner.adjust_brute_loss(40)
 		owner.cut_overlay(overlay)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/status_effect/fire_handler
 	duration = STATUS_EFFECT_PERMANENT
 	id = STATUS_EFFECT_ID_ABSTRACT
@@ -247,7 +248,7 @@
 
 	on_fire = TRUE
 	if(!silent)
-		owner.visible_message(span_warning("[owner] catches fire!"), span_userdanger("You're set on fire!"))
+		owner.visible_message(span_warning(LANG("datum.8f730aca", list(owner))), span_userdanger(LANG("datum.14b3c7da", null)))
 
 	if(moblight_type)
 		if(moblight)

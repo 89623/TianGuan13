@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/conjure
 	sound = 'sound/items/tools/welder.ogg'
 	school = SCHOOL_CONJURATION
@@ -24,7 +25,7 @@
 /datum/action/cooldown/spell/conjure/cast(atom/cast_on)
 	. = ..()
 	if(create_summon_timer && !do_after(owner, create_summon_timer, target = cast_on.loc))
-		owner?.balloon_alert(owner, "need to stay still!")
+		owner?.balloon_alert(owner, LANG("datum.3b4a18b9", null))
 		return
 	var/list/to_summon_in = list()
 	for(var/turf/summon_turf in range(summon_radius, cast_on))

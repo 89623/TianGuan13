@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Allows us to move through glass but not electrified glass. Can also do a little slowdown before passing through
 /datum/component/glass_passer
 	/// How long does it take us to move into glass?
@@ -35,7 +36,7 @@
 	if(istype(crosser, /obj/structure/grille))
 		var/obj/structure/grille/grillefriend = crosser
 		if(grillefriend.is_shocked()) //prevent passage of shocked
-			crosser.balloon_alert(passer, "is shocked!")
+			crosser.balloon_alert(passer, LANG("datum.b5c33e7b", null))
 			return COMPONENT_BLOCK_CROSS
 
 	return null

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 	Cyborg ClickOn()
 
@@ -65,7 +66,7 @@
 
 		//while buckled, you can still connect to and control things like doors, but you can't use your modules
 		if(buckled)
-			to_chat(src, span_warning("You can't use modules while buckled to [buckled]!"))
+			to_chat(src, span_warning(LANG("mob.1fb1526a", list(buckled))))
 			return
 
 		//if your "hands" are blocked you shouldn't be able to use modules

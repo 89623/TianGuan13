@@ -97,34 +97,20 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "moon",
-			SPECIES_PERK_NAME = "Darkness Affinity",
-			SPECIES_PERK_DESC = "A Hemophage is most at home in the darkness, as light artificial or \
-								otherwise irritates their bodies and the cancer keeping them alive. \
-								Modern \
-								Hemophages have been known to use lockers as a convenient \
-								source of darkness, while the extra protection they provide \
-								against background radiations allows their tumor to avoid \
-								having to expend any blood to maintain minimal bodily functions \
-								so long as their host remains stationary in said locker.",
+			SPECIES_PERK_NAME = LANG("datum.3c216cb8", null),
+			SPECIES_PERK_DESC = LANG("datum.735b18a4", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "biohazard",
-			SPECIES_PERK_NAME = "Viral Symbiosis",
-			SPECIES_PERK_DESC = "Hemophages, due to their condition, cannot get infected by \
-								other viruses and don't actually require an external source of oxygen \
-								to stay alive.",
+			SPECIES_PERK_NAME = LANG("datum.869839ca", null),
+			SPECIES_PERK_DESC = LANG("datum.5c3a27c9", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "tint",
-			SPECIES_PERK_NAME = "The Thirst",
-			SPECIES_PERK_DESC = "In place of eating, Hemophages suffer from the Thirst, caused by their tumor. \
-								Thirst of what? Blood! Their tongue allows them to grab people and drink \
-								their blood, and they will suffer severe consequences if they run out. As a note, \
-								it doesn't matter whose blood you drink, it will all be converted into your blood \
-								type when consumed. That being said, the blood of other sentient humanoids seems \
-								to quench their Thirst for longer than otherwise-acquired blood would.",
+			SPECIES_PERK_NAME = LANG("datum.046e1fdf", null),
+			SPECIES_PERK_DESC = LANG("datum.152ea922", null),
 		),
 	)
 
@@ -137,11 +123,8 @@
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "tint",
-		SPECIES_PERK_NAME = "Universal Blood",
-		SPECIES_PERK_DESC = "[plural_form] have blood that appears to be an amalgamation of all other \
-							blood types, made possible thanks to some special antigens produced by \
-							their tumor, making them able to receive blood of any other type, so \
-							long as it is still human-like blood.",
+		SPECIES_PERK_NAME = LANG("datum.5716883f", null),
+		SPECIES_PERK_DESC = LANG("datum.07fef1de", list(plural_form)),
 		),
 	)
 

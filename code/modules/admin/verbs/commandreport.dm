@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The default command report announcement sound.
 #define DEFAULT_ANNOUNCEMENT_SOUND "default_announcement"
 
@@ -9,7 +10,7 @@
 #define CUSTOM_SOUND_PRESET "Custom Sound"
 
 ADMIN_VERB(change_command_name, R_ADMIN, "Change Command Name", "Change the name of Central Command.", ADMIN_CATEGORY_EVENTS)
-	var/input = input(user, "Please input a new name for Central Command.", "What?", "") as text|null
+	var/input = input(user, LANG("datum.1162650f", null), LANG("datum.29297405", null), "") as text|null
 	if(!input)
 		return
 	change_command_name(input)
@@ -100,13 +101,13 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 		if("set_report_sound")
 			if(params["picked_sound"] == CUSTOM_SOUND_PRESET)
 				played_sound = DEFAULT_ANNOUNCEMENT_SOUND // fallback by default
-				var/sound_file = input(ui_user, "Select sound file", "Upload sound") as sound|null
+				var/sound_file = input(ui_user, LANG("datum.f011fe55", null), LANG("datum.fde59690", null)) as sound|null
 				if(!sound_file)
-					tgui_alert(ui_user, "The custom sound could not be loaded. The standard sound will be played.", "Loading error", list("Ok"))
+					tgui_alert(ui_user, LANG("datum.43d1d768", null), LANG("datum.e990db78", null), list("Ok"))
 					return
 
 				if(!IS_SOUND_FILE(sound_file))
-					tgui_alert(ui_user, "Invalid file type. Please select a sound file.", "Loading error", list("Ok"))
+					tgui_alert(ui_user, LANG("datum.b42cc5a2", null), LANG("datum.e990db78", null), list("Ok"))
 					return
 
 				played_sound = sound_file
@@ -125,10 +126,10 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 			subheader = params["new_subheader"]
 		if("submit_report")
 			if(!command_name)
-				to_chat(ui_user, span_danger("You can't send a report with no command name."))
+				to_chat(ui_user, span_danger(LANG("datum.5f2f2558", null)))
 				return
 			if(!params["report"])
-				to_chat(ui_user, span_danger("You can't send a report with no contents."))
+				to_chat(ui_user, span_danger(LANG("datum.5f7b3dac", null)))
 				return
 			command_report_content = params["report"]
 			send_announcement()
@@ -160,7 +161,7 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 		priority_announce(command_report_content, subheader == ""? null : subheader, report_sound, has_important_message = TRUE, color_override = chosen_color)
 
 	if(!announce_contents || print_report)
-		print_command_report(command_report_content, "[announce_contents ? "" : "Classified "][command_name] Update", !announce_contents, contains_advanced_html = TRUE)
+		print_command_report(command_report_content, LANG("datum.fb6958b6", list(announce_contents ? "" : "Classified ", command_name)), !announce_contents, contains_advanced_html = TRUE)
 
 	change_command_name(original_command_name)
 

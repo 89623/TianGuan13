@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/butterfly
 	name = "butterfly"
 	desc = "A colorful butterfly, how'd it get up here?"
@@ -94,4 +95,4 @@
 
 /mob/living/basic/butterfly/lavaland/temporary/examine(mob/user)
 	. = ..()
-	. += span_notice("Something about it seems unreal...")
+	. += span_notice(LANG("mob.16c696a0", null))

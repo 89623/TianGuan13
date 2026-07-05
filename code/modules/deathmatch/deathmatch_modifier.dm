@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Deathmatch modifiers are little options the host can choose to spice the match a bit.
 /datum/deathmatch_modifier
 	/// The name of the modifier
@@ -604,4 +605,4 @@
 
 	instantiated_art.teach(player)
 
-	to_chat(player, span_revenboldnotice("Your martial art is [uppertext(instantiated_art.name)]!"))
+	to_chat(player, span_revenboldnotice(LANG("datum.09396859", list(uppertext(instantiated_art.name)))))

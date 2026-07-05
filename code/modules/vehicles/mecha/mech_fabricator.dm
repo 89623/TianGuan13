@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/mecha_part_fabricator
 	icon = 'icons/obj/machines/robotics.dmi'
 	icon_state = "fab-idle"
@@ -136,20 +137,20 @@
 /obj/machinery/mecha_part_fabricator/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
-		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
+		. += span_notice(LANG("obj.bf97bd79", list(rmat.local_size, component_coeff*100, 100-time_coeff*100)))
+		. += span_notice(LANG("obj.f018ec80", list(dir2text(drop_direction))))
 
 /obj/machinery/mecha_part_fabricator/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
 	if(being_built)
-		balloon_alert(user, "printing started!")
+		balloon_alert(user, LANG("obj.45e44459", null))
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(user, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, LANG("obj.a778c49c", list(dir2text(drop_direction))))
 
 /**
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
@@ -167,7 +168,7 @@
 	var/design_delta = cached_designs.len - previous_design_count
 
 	if(design_delta > 0)
-		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
+		say(LANG("obj.b8003438", list(design_delta, design_delta == 1 ? "" : "s")))
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
@@ -230,20 +231,20 @@
 	var/datum/material_container/materials = rmat.mat_container
 	if (!materials)
 		if(verbose)
-			say("No access to material storage, please contact the quartermaster.")
+			say(LANG("obj.61413399", null))
 		return FALSE
 	if (!rmat.can_use_resource(user_data = user_data))
 		return FALSE
 	if(!materials.has_materials(D.materials, component_coeff))
 		if(verbose)
-			say("Not enough resources. Processing stopped.")
+			say(LANG("obj.c244ac5a", null))
 		return FALSE
 
 	rmat.use_materials(D.materials, component_coeff, 1, "processed", "[D.name]", user_data)
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
-	desc = "It's building \a [D.name]."
+	desc = LANG("obj.66c201a5", list(D.name))
 
 	return TRUE
 
@@ -254,7 +255,7 @@
 		if(exit.density)
 			return TRUE
 
-		say("Obstruction cleared. The fabrication of [stored_part] is now complete.")
+		say(LANG("obj.8a68c143", list(stored_part)))
 		stored_part.forceMove(exit)
 		stored_part = null
 
@@ -290,12 +291,12 @@
 
 	var/turf/exit = get_step(src, drop_direction)
 	if(exit.density)
-		say("Error! The part outlet is obstructed.")
-		desc = "It's trying to dispense the fabricated [dispensed_design.name], but the part outlet is obstructed."
+		say(LANG("obj.1fd98c63", null))
+		desc = LANG("obj.4ffe1f70", list(dispensed_design.name))
 		stored_part = built_part
 		return FALSE
 
-	say("The fabrication of [built_part] is now complete.")
+	say(LANG("obj.6f27a045", list(built_part)))
 	built_part.forceMove(exit)
 
 	top_job_id += 1
@@ -365,11 +366,11 @@
 		var/cost = list()
 		var/list/materials = design.materials
 		for(var/datum/material/mat in materials)
-			cost[mat.name] = OPTIMAL_COST(materials[mat] * component_coeff)
+			cost[lang_unreverse_text(mat.name)] = OPTIMAL_COST(materials[mat] * component_coeff) // NOVA EDIT CHANGE - I18N - key cost by the english material name so it matches the available map (P1 doesn't translate assoc keys) - ORIGINAL: cost[mat.name] = OPTIMAL_COST(materials[mat] * component_coeff)
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[design.id] = list(
-			"name" = design.name,
+			"name" = lang_reverse_text(design.name), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = design.name, （设计名仅显示、构建走 id=安全；全量反查含单词类如 Bonesetter/Cautery，P1 多词门槛漏掉的）
 			"desc" = design.get_description(),
 			"cost" = cost,
 			"id" = design.id,
@@ -505,14 +506,14 @@
 
 /obj/machinery/mecha_part_fabricator/screwdriver_act(mob/living/user, obj/item/I)
 	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		to_chat(user, span_warning(LANG("obj.8b2b5217", list(src))))
 		return NONE
 
 	return default_deconstruction_screwdriver(user, I)
 
 /obj/machinery/mecha_part_fabricator/crowbar_act(mob/living/user, obj/item/I)
 	if(being_built)
-		to_chat(user, span_warning("\The [src] is currently processing! Please wait until completion."))
+		to_chat(user, span_warning(LANG("obj.8b2b5217", list(src))))
 		return NONE
 
 	return default_deconstruction_crowbar(user, I)

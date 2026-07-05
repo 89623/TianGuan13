@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/tram_controls
 	name = "tram controls"
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
@@ -237,19 +238,17 @@
 	if(tram)
 		if(SStts.tts_enabled)
 			tram.nav_beacon.voice = SStts.tram_voice
-
 		if(response_code == REQUEST_FAIL)
 			if(!LAZYFIND(relevant, src))
 				return
 
 			switch(response_info)
 				if(NOT_IN_SERVICE)
-					tram.nav_beacon.say("The tram is not in service. Please contact the nearest engineer.")
+					tram.nav_beacon.say(LANG("obj.62001e6e", null))
 				if(INVALID_PLATFORM)
-					tram.nav_beacon.say("Configuration error. Please contact the nearest engineer.")
+					tram.nav_beacon.say(LANG("obj.7de17690", null))
 				if(INTERNAL_ERROR)
-					tram.nav_beacon.say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					tram.nav_beacon.say(LANG("obj.335c006a", null))
 				else
 					return
-
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)

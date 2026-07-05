@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 SUBSYSTEM_DEF(ipintel)
 	name = "XKeyScore"
 	ss_flags = SS_NO_INIT|SS_NO_FIRE
@@ -197,9 +198,9 @@ SUBSYSTEM_DEF(ipintel)
 
 ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to connect even if they are using a VPN.", ADMIN_CATEGORY_IPINTEL, ckey as text)
 	if (!SSipintel.is_enabled())
-		to_chat(user, "The ipintel system is not currently enabled but you can still edit the whitelists")
+		to_chat(user, LANG("datum.3dfb690a", null))
 	if(SSipintel.is_whitelisted(ckey))
-		to_chat(user, "Player is already whitelisted.")
+		to_chat(user, LANG("datum.0df4ee88", null))
 		return
 
 	var/datum/db_query/query = SSdbcore.NewQuery(
@@ -221,9 +222,9 @@ ADMIN_VERB(ipintel_allow, R_BAN, "Whitelist Player VPN", "Allow a player to conn
 
 ADMIN_VERB(ipintel_revoke, R_BAN, "Revoke Player VPN Whitelist", "Revoke a player's VPN whitelist.", ADMIN_CATEGORY_IPINTEL, ckey as text)
 	if (!SSipintel.is_enabled())
-		to_chat(user, "The ipintel system is not currently enabled but you can still edit the whitelists")
+		to_chat(user, LANG("datum.3dfb690a", null))
 	if(!SSipintel.is_whitelisted(ckey))
-		to_chat(user, "Player is not whitelisted.")
+		to_chat(user, LANG("datum.c83eaa7a", null))
 		return
 	var/datum/db_query/query = SSdbcore.NewQuery(
 		"DELETE FROM [format_table_name("ipintel_whitelist")] WHERE ckey = :ckey", list(

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/alien
 	name = "alien hunter"
 	desc = "Hiss!"
@@ -73,7 +74,7 @@
 		return
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
 		return
-	visible_message(span_alertalien("[src] plants some alien weeds!"))
+	visible_message(span_alertalien(LANG("mob.f4785f5c", list(src))))
 	new /obj/structure/alien/weeds/node(loc)
 
 ///Lays an egg on the turf the mob is currently standing on.
@@ -82,7 +83,7 @@
 		return
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		return
-	visible_message(span_alertalien("[src] lays an egg!"))
+	visible_message(span_alertalien(LANG("mob.e0a767fe", list(src))))
 	new /obj/structure/alien/egg(loc)
 
 /mob/living/basic/alien/get_bloodtype()

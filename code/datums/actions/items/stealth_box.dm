@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///MGS BOX!
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
@@ -23,7 +24,7 @@
 		return FALSE
 	//Box closing from here on out.
 	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
-		to_chat(owner, span_warning("You need more space to activate this implant!"))
+		to_chat(owner, span_warning(LANG("datum.94275088", null)))
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, box_cooldown))
 		return FALSE
@@ -51,7 +52,7 @@
 	var/obj/structure/closet/cardboard/agent/box = owner.loc
 	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 	box.open()
-	owner.visible_message(span_suicide("[owner] falls out of [box]! It looks like [owner.p_they()] committed suicide!"))
+	owner.visible_message(span_suicide(LANG("datum.1e51eba1", list(owner, box, owner.p_they()))))
 	owner.throw_at(get_turf(owner))
 	if(isliving(owner))
 		var/mob/living/suicider = owner

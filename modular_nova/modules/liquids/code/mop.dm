@@ -19,12 +19,12 @@
 
 	var/free_space = reagents.maximum_volume - reagents.total_volume
 	if(free_space <= 0)
-		to_chat(user, span_warning("Your [src] can't absorb any more liquid!"))
+		to_chat(user, span_warning(LANG("obj.5b8b31a2", list(src))))
 		return TRUE
 
 	var/datum/reagents/tempr = liquids.take_reagents_flat(free_space)
 	tempr.trans_to(reagents, tempr.total_volume)
-	to_chat(user, span_notice("You soak \the [src] with some liquids."))
+	to_chat(user, span_notice(LANG("obj.966933a8", list(src))))
 	qdel(tempr)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return TRUE

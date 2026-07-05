@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(jump_to_area, R_ADMIN, "Jump To Area", "Jumps to the specified area.", ADMIN_CATEGORY_GAME, area/target in get_sorted_areas())
 	var/turf/drop_location
 	top_level:
@@ -9,7 +10,7 @@ ADMIN_VERB(jump_to_area, R_ADMIN, "Jump To Area", "Jumps to the specified area."
 				break top_level
 
 	if(isnull(drop_location))
-		to_chat(user, span_warning("No valid drop location found in the area!"))
+		to_chat(user, span_warning(LANG("datum.0d94156d", null)))
 		return
 
 	user.mob.abstract_move(drop_location)
@@ -32,7 +33,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(jump_to_mob, R_ADMIN, "Jump To Mob", "Jump to any mo
 ADMIN_VERB(jump_to_coord, R_ADMIN, "Jump To Coordinate", "Jump to a specific coordinate in the game world.", ADMIN_CATEGORY_GAME, cx as num, cy as num, cz as num)
 	var/turf/where_we_droppin = locate(cx, cy, cz)
 	if(isnull(where_we_droppin))
-		to_chat(user, span_warning("Invalid coordinates."))
+		to_chat(user, span_warning(LANG("datum.7b57b728", null)))
 		return
 
 	user.mob.abstract_move(where_we_droppin)
@@ -46,9 +47,9 @@ ADMIN_VERB(jump_to_key, R_ADMIN, "Jump To Key", "Jump to a specific player.", AD
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/client/selection = input(user, "Please, select a player!", "Admin Jumping") as null|anything in sort_key(keys)
+	var/client/selection = input(user, LANG("datum.49fce9a4", null), LANG("datum.a34d9875", null)) as null|anything in sort_key(keys)
 	if(!selection)
-		to_chat(user, "No keys found.", confidential = TRUE)
+		to_chat(user, LANG("datum.aadcdcc6", null), confidential = TRUE)
 		return
 	var/mob/M = selection.mob
 	log_admin("[key_name(user)] jumped to [key_name(M)]")
@@ -62,7 +63,7 @@ ADMIN_VERB(jump_to_ghost, R_ADMIN, "Jump To Ghost", "Jump your body to your Agho
 		return
 	var/mob/living/body = ghost?.mind?.current
 	if(!body)
-		to_chat(user, "No valid body to bring to ghost.", confidential = TRUE)
+		to_chat(user, LANG("datum.9e71f104", null), confidential = TRUE)
 		return
 	log_admin("[key_name(user)] jumped to their Aghost at [AREACOORD(ghost.loc)]")
 	message_admins("[key_name_admin(user)] jumped to their Aghost [ADMIN_FLW(body)] at [AREACOORD(ghost.loc)]")
@@ -97,7 +98,7 @@ ADMIN_VERB(get_key, R_ADMIN, "Get Key", "Teleport the player with the provided k
 	var/list/keys = list()
 	for(var/mob/M in GLOB.player_list)
 		keys += M.client
-	var/client/selection = input(user, "Please, select a player!", "Admin Jumping") as null|anything in sort_key(keys)
+	var/client/selection = input(user, LANG("datum.49fce9a4", null), LANG("datum.a34d9875", null)) as null|anything in sort_key(keys)
 	if(!selection)
 		return
 	var/mob/M = selection.mob
@@ -115,9 +116,9 @@ ADMIN_VERB(get_key, R_ADMIN, "Get Key", "Teleport the player with the provided k
 ADMIN_VERB_AND_CONTEXT_MENU(send_mob, R_ADMIN, "Send Mob", "Teleport the specified mob to an area of your choosing.", ADMIN_CATEGORY_GAME, mob/jumper)
 	var/list/sorted_areas = get_sorted_areas()
 	if(!length(sorted_areas))
-		to_chat(user, "No areas found.", confidential = TRUE)
+		to_chat(user, LANG("datum.2a026971", null), confidential = TRUE)
 		return
-	var/area/target_area = tgui_input_list(user, "Pick an area", "Send Mob", sorted_areas)
+	var/area/target_area = tgui_input_list(user, LANG("datum.7a731178", null), LANG("datum.e6339034", null), sorted_areas)
 	if(isnull(target_area))
 		return
 	if(!istype(target_area))
@@ -129,5 +130,5 @@ ADMIN_VERB_AND_CONTEXT_MENU(send_mob, R_ADMIN, "Send Mob", "Teleport the specifi
 		message_admins(msg)
 		admin_ticket_log(jumper, msg)
 	else
-		to_chat(user, "Failed to move mob to a valid location.", confidential = TRUE)
+		to_chat(user, LANG("datum.9e904b59", null), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Send Mob")

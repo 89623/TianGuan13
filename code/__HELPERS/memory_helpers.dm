@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Adds a memory to all carbon mobs in a certain range of a certain atom.
  *
@@ -100,7 +101,7 @@
 			continue
 		choice_list[memory_iter.name] = memory_iter
 
-	var/choice = tgui_input_list(usr, "Select a memory to [verbage]", "Memory Selection?", choice_list)
+	var/choice = tgui_input_list(usr, LANG("datum.f8b43b55", list(verbage)), LANG("datum.740049d7", null), choice_list)
 	if(isnull(choice))
 		return FALSE
 	if(isnull(choice_list[choice]))

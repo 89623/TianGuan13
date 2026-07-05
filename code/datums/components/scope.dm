@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Used to allow reaching the maximum offset range without exiting the boundaries of the game screen.
 #define MOUSE_POINTER_OFFSET_MULT 1.1
 
@@ -116,9 +117,9 @@
 	var/scope = isgun(parent) ? "scope in" : "zoom out"
 	switch(zoom_method)
 		if(ZOOM_METHOD_RIGHT_CLICK)
-			examine_list += span_notice("You can [scope] with <b>right-click</b>.")
+			examine_list += span_notice(LANG("datum.80c831f8", list(scope)))
 		if(ZOOM_METHOD_WIELD)
-			examine_list += span_notice("You can [scope] by wielding it with both hands.")
+			examine_list += span_notice(LANG("datum.56bb0cc0", list(scope)))
 
 /**
  * We find and return the best target to hit on a given turf.
@@ -162,7 +163,7 @@
 	if(isnull(user.client))
 		return
 	if(HAS_TRAIT(user, TRAIT_USER_SCOPED))
-		user.balloon_alert(user, "already zoomed!")
+		user.balloon_alert(user, LANG("datum.0ca096fc", null))
 		return
 	user.playsound_local(parent, 'sound/items/weapons/scope.ogg', 75, TRUE)
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, isgun(parent))

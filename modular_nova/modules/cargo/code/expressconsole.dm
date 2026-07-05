@@ -28,13 +28,13 @@
 
 /obj/machinery/computer/cargo/express/ghost/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(user)
-		to_chat(user, span_notice("You try to change the routing protocols, but the [src.name] displays a runtime error and reboots!"))
+		to_chat(user, span_notice(LANG("obj.99f52d3c", list(src.name))))
 	return FALSE //never let this console be emagged
 
 /obj/machinery/computer/cargo/express/ghost/ui_act(action, params, datum/tgui/ui)
 	if(action == "add") // if we're generating a supply order
 		if (!beacon || !using_beacon ) // checks if using a beacon or not.
-			say("Error! Destination is not whitelisted, aborting.")
+			say(LANG("obj.736f31fb", null))
 			return
 	return ..()
 

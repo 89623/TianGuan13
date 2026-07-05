@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/head/hooded/ablative
 	name = "ablative hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
@@ -51,9 +52,9 @@
 /obj/item/clothing/suit/hooded/ablative/on_hood_up(obj/item/clothing/head/hooded/hood)
 	. = ..()
 	var/mob/living/carbon/user = loc
-	balloon_alert(user, "hud enabled")
+	balloon_alert(user, LANG("obj.435a2369", null))
 
 /obj/item/clothing/suit/hooded/ablative/on_hood_down(obj/item/clothing/head/hooded/hood)
 	var/mob/living/carbon/user = loc
-	balloon_alert(user, "hud disabled")
+	balloon_alert(user, LANG("obj.8f3da789", null))
 	return ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 System for drawing organs with overlays. These overlays are drawn directly on the bodypart, attached to a person or not
 Works in tandem with the /datum/sprite_accessory datum to generate sprites
@@ -262,7 +263,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	SIGNAL_HANDLER
 
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
-		to_chat(human, span_danger("Your precious antennae burn to a crisp!"))
+		to_chat(human, span_danger(LANG("obj.7034ce72", null)))
 
 		burn_antennae()
 		human.update_body_parts()

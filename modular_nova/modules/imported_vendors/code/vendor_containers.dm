@@ -77,7 +77,7 @@
 
 /obj/item/storage/box/foodpack/tizira/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<b>Now that you look at it, the origin stamp appears to be a poor imitation of the real thing!</b>")
+	. += span_notice(LANG("obj.1bf416e7", null))
 	return .
 
 /obj/item/storage/box/foodpack/tizira/roll

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///This element allows the item it's attached to be bound to oneself's arm with a pair of handcuffs (sold separately). Borgs need not to apply
 /datum/element/cuffable_item
 
@@ -20,7 +21,7 @@
 
 	if(length(user.held_items) < 0 || iscyborg(user) || source.anchored)
 		return
-	examine_list += span_smallnotice("You could bind [source.p_them()] to your wrist with a pair of handcuffs...")
+	examine_list += span_smallnotice(LANG("datum.aa33c124", list(source.p_them())))
 
 ///Give context to players holding a pair of handcuffs when hovering the item
 /datum/element/cuffable_item/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
@@ -56,7 +57,7 @@
 			return
 
 	if(!user.get_inactive_hand())
-		to_chat(user, span_warning("You don't have another hand to cuff [source] to!"))
+		to_chat(user, span_warning(LANG("datum.586de32e", list(source))))
 		return
 
 	if(cuffs.handcuffs_clumsiness_check(user))
@@ -65,7 +66,7 @@
 	if(SEND_SIGNAL(source, COMSIG_ITEM_PRE_CUFFED_TO_MOB, user, cuffs) & BLOCK_ITEM_CUFF)
 		return
 
-	source.balloon_alert(user, "cuffing item...")
+	source.balloon_alert(user, LANG("datum.0640e813", null))
 	playsound(source, cuffs.cuffsound, 30, TRUE, -2)
 	if(!do_after(user, cuffs.get_handcuff_time(user), source))
 		return
@@ -73,8 +74,8 @@
 	playsound(source, cuffs.cuffsuccesssound, 30, TRUE, -2)
 
 	if(user.apply_status_effect(/datum/status_effect/cuffed_item, source, cuffs))
-		source.balloon_alert(user, "item cuffed to wrist")
+		source.balloon_alert(user, LANG("datum.4e3e479a", null))
 		return
 
-	source.balloon_alert(user, "couldn't cuff to wrist!")
+	source.balloon_alert(user, LANG("datum.6eb87360", null))
 	return

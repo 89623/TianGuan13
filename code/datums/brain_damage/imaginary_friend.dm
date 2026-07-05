@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 #define IMAGINARY_FRIEND_RANGE 9
 #define IMAGINARY_FRIEND_SPEECH_RANGE IMAGINARY_FRIEND_RANGE
@@ -112,9 +113,9 @@
 	Show()
 
 /mob/eye/imaginary_friend/proc/greet()
-	to_chat(src, span_notice("<b>You are the imaginary friend of [owner]!</b>"))
-	to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
-	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
+	to_chat(src, span_notice(LANG("mob.0ad024b9", list(owner))))
+	to_chat(src, span_notice(LANG("mob.e85b40af", null)))
+	to_chat(src, span_notice(LANG("mob.41a64412", list(owner))))
 
 /**
  * Arguments:
@@ -364,15 +365,15 @@
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	if(is_banned_from(user.ckey, "Emote"))
-		to_chat(user, span_boldwarning("You cannot send custom emotes (banned)."))
+		to_chat(user, span_boldwarning(LANG("datum.1d03d61a", null)))
 		return FALSE
 	else if(QDELETED(user))
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
-		to_chat(user, span_boldwarning("You cannot send IC messages (muted)."))
+		to_chat(user, span_boldwarning(LANG("datum.edad7622", null)))
 		return FALSE
 	else if(!params)
-		message = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
+		message = copytext(sanitize(input(LANG("datum.b0c1d36d", null)) as text|null), 1, MAX_MESSAGE_LEN)
 	else
 		message = params
 	. = ..()
@@ -473,11 +474,11 @@
 	var/mob/eye/imaginary_friend/I = owner
 	if(I.hidden)
 		name = "Show"
-		desc = "Become visible to your owner."
+		desc = LANG("datum.bda118fc", null)
 		button_icon_state = "unhide"
 	else
 		name = "Hide"
-		desc = "Hide yourself from your owner's sight."
+		desc = LANG("datum.dd11caf1", null)
 		button_icon_state = "hide"
 	build_all_button_icons()
 
@@ -491,10 +492,10 @@
 	var/mob/eye/imaginary_friend/fake_friend = owner
 	if(fake_friend.hidden)
 		name = "Show"
-		desc = "Become visible to your owner."
+		desc = LANG("datum.bda118fc", null)
 	else
 		name = "Hide"
-		desc = "Hide yourself from your owner's sight."
+		desc = LANG("datum.dd11caf1", null)
 	return ..()
 
 /datum/action/innate/imaginary_hide/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
@@ -536,9 +537,9 @@
 	desc = "The previous host of this body."
 
 /mob/eye/imaginary_friend/trapped/greet()
-	to_chat(src, span_notice(span_bold("You have managed to hold on as a figment of the new host's imagination!")))
-	to_chat(src, span_notice("All hope is lost for you, but at least you may interact with your host. You do not have to be loyal to them."))
-	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what the host cannot."))
+	to_chat(src, span_notice(span_bold(LANG("mob.7b6a596f", null))))
+	to_chat(src, span_notice(LANG("mob.d3a3766e", null)))
+	to_chat(src, span_notice(LANG("mob.0aec38bb", null)))
 
 /mob/eye/imaginary_friend/trapped/setup_friend()
 	real_name = "[owner.real_name]?"

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Opens up a USB port that can be connected to by circuits, creating registerable circuit components
 /datum/component/usb_port
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -146,14 +147,14 @@
 	SIGNAL_HANDLER
 
 	if (isnull(attached_circuit))
-		examine_text += span_notice("There is a USB port on the front.")
+		examine_text += span_notice(LANG("datum.e31f4156", null))
 	else
-		examine_text += span_notice("[attached_circuit.shell || attached_circuit] is connected to [parent.p_them()] by a USB port.")
+		examine_text += span_notice(LANG("datum.958d6b39", list(attached_circuit.shell || attached_circuit, parent.p_them())))
 
 /datum/component/usb_port/proc/on_examine_shell(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_notice("[source.p_They()] [source.p_are()] attached to [parent] with a USB cable.")
+	examine_text += span_notice(LANG("datum.9c24ace9", list(source.p_They(), source.p_are(), parent)))
 
 /datum/component/usb_port/proc/on_atom_usb_cable_try_attach(datum/source, obj/item/usb_cable/connecting_cable, mob/user)
 	SIGNAL_HANDLER
@@ -165,21 +166,21 @@
 
 	if (!isnull(attached_circuit))
 		if(user)
-			atom_parent.balloon_alert(user, "usb already connected")
+			atom_parent.balloon_alert(user, LANG("datum.13a199a8", null))
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	if (isnull(connecting_cable.attached_circuit))
 		if(user)
-			connecting_cable.balloon_alert(user, "connect to a shell first")
+			connecting_cable.balloon_alert(user, LANG("datum.63c1b955", null))
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	if (!IN_GIVEN_RANGE(connecting_cable.attached_circuit, parent, USB_CABLE_MAX_RANGE))
 		if(user)
-			connecting_cable.balloon_alert(user, "too far away")
+			connecting_cable.balloon_alert(user, LANG("datum.b6ac6410", null))
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	if (connecting_cable.attached_circuit.locked)
-		connecting_cable.balloon_alert(user, "shell is locked!")
+		connecting_cable.balloon_alert(user, LANG("datum.c2964a05", null))
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
 	usb_cable_ref = WEAKREF(connecting_cable)
@@ -259,7 +260,7 @@
 
 	var/atom/atom_parent = parent
 	usb_cable.forceMove(atom_parent.drop_location())
-	usb_cable.balloon_alert_to_hearers("*snap*")
+	usb_cable.balloon_alert_to_hearers(LANG("datum.8b4256e9", null))
 
 	physical_object = null
 	attached_circuit = null

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Should be more than any minimum exposure time coming in
 #define TIME_UNTIL_DELETION (10 SECONDS)
 
@@ -20,7 +21,7 @@
 
 	time_added = world.time
 
-	to_chat(parent, span_userdanger("The air around you feels warm...perhaps you should go somewhere else."))
+	to_chat(parent, span_userdanger(LANG("datum.8830c9cb", null)))
 
 	start_deletion_timer()
 
@@ -29,7 +30,7 @@
 
 /datum/component/radiation_countdown/proc/remove_self()
 	if (!HAS_TRAIT(parent, TRAIT_IRRADIATED))
-		to_chat(parent, span_notice("The air here feels safer."))
+		to_chat(parent, span_notice(LANG("datum.52e5b155", null)))
 
 	qdel(src)
 

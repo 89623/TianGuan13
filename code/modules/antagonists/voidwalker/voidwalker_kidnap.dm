@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A global assoc list for the drop of point
 GLOBAL_LIST_EMPTY(voidwalker_void)
 
@@ -93,7 +94,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	. = ..()
 
 	gone.remove_traits(wisp_driver_traits, REF(src))
-	to_chat(gone, span_boldwarning("You feel watched."))
+	to_chat(gone, span_boldwarning(LANG("obj.0431240b", null)))
 	qdel(src)
 
 /// Loop us around, maybe, if we're going to bump into a wall

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/mind_transfer
 	name = "Mind Swap"
 	desc = "This spell allows the user to switch bodies with a target next to him."
@@ -44,7 +45,7 @@
 		return FALSE
 	if(HAS_TRAIT(owner, TRAIT_SUICIDED))
 		if(feedback)
-			to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
+			to_chat(owner, span_warning(LANG("datum.b30e3160", null)))
 		return FALSE
 	return TRUE
 
@@ -54,37 +55,36 @@
 		return FALSE
 
 	if(!isliving(cast_on))
-		to_chat(owner, span_warning("You can only swap minds with living beings!"))
+		to_chat(owner, span_warning(LANG("datum.f95fb47c", null)))
 		return FALSE
 
 	if(HAS_TRAIT(cast_on, TRAIT_MIND_TEMPORARILY_GONE))
-		to_chat(owner, span_warning("This creature's mind is somewhere else entirely!"))
+		to_chat(owner, span_warning(LANG("datum.0209e773", null)))
 		return FALSE
 
 	if(HAS_TRAIT(cast_on, TRAIT_NO_MINDSWAP))
-		to_chat(owner, span_warning("This type of magic can't operate on [cast_on.p_their()] mind!"))
+		to_chat(owner, span_warning(LANG("datum.6a516455", list(cast_on.p_their()))))
 		return FALSE
 
 	if(is_type_in_typecache(cast_on, blacklisted_mobs))
-		to_chat(owner, span_warning("This creature is too [pick("powerful", "strange", "arcane", "obscene")] to control!"))
+		to_chat(owner, span_warning(LANG("datum.2f5293ec", list(pick("powerful", "strange", "arcane", "obscene")))))
 		return FALSE
 
 	if(isguardian(cast_on))
 		var/mob/living/basic/guardian/stand = cast_on
 		if(stand.summoner && stand.summoner == owner)
-			to_chat(owner, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
+			to_chat(owner, span_warning(LANG("datum.5c1de4a3", null)))
 			return FALSE
 
 	var/mob/living/living_target = cast_on
 	if(living_target.stat == DEAD)
-		to_chat(owner, span_warning("You don't particularly want to be dead!"))
+		to_chat(owner, span_warning(LANG("datum.39e1cbff", null)))
 		return FALSE
 	if(!living_target.mind && target_requires_mind)
-		to_chat(owner, span_warning("[living_target.p_They()] [living_target.p_do()]n't appear to have a mind to swap into!"))
+		to_chat(owner, span_warning(LANG("datum.a2f9ce29", list(living_target.p_They(), living_target.p_do()))))
 		return FALSE
 	if(!living_target.key && target_requires_key)
-		to_chat(owner, span_warning("[living_target.p_They()] appear[living_target.p_s()] to be catatonic! \
-			Not even magic can affect [living_target.p_their()] vacant mind."))
+		to_chat(owner, span_warning(LANG("datum.43679342", list(living_target.p_They(), living_target.p_s(), living_target.p_their()))))
 		return FALSE
 
 	return TRUE
@@ -113,7 +113,7 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
 		|| IS_FAKE_KEY(mind_to_swap.key) \
 	)
-		to_chat(caster, span_warning("[to_swap.p_Their()] mind is resisting your spell!"))
+		to_chat(caster, span_warning(LANG("datum.a81ad667", list(to_swap.p_Their()))))
 		return FALSE
 
 	// MIND TRANSFER BEGIN

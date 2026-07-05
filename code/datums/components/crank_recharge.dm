@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Cranking feature on the laser musket and smoothbore disabler, could probably be used on more than guns
 /datum/component/crank_recharge
 	/// Our cell to charge
@@ -47,19 +48,19 @@
 
 /datum/component/crank_recharge/proc/crank(obj/source, mob/user)
 	if(charging_cell.charge >= charging_cell.maxcharge)
-		source.balloon_alert(user, "already charged!")
+		source.balloon_alert(user, LANG("datum.70b1edda", null))
 		return
 	if(is_charging)
 		return
 	if(spin_to_win && !HAS_TRAIT(user, TRAIT_GUNFLIP))
-		source.balloon_alert(user, "need holster to spin!")
+		source.balloon_alert(user, LANG("datum.3360985b", null))
 		return
 
 	is_charging = TRUE
 	if(COOLDOWN_FINISHED(src, charge_sound_cooldown))
 		COOLDOWN_START(src, charge_sound_cooldown, charge_sound_cooldown_time)
 		playsound(source, charge_sound, 40)
-	source.balloon_alert(user, "charging...")
+	source.balloon_alert(user, LANG("datum.b766a769", null))
 	if(!do_after(user, cooldown_time, source, interaction_key = DOAFTER_SOURCE_CHARGE_CRANKRECHARGE, timed_action_flags = charge_move))
 		is_charging = FALSE
 		return
@@ -69,4 +70,4 @@
 	is_charging = FALSE
 	if(spin_to_win)
 		source.SpinAnimation(4, 2) //What a badass
-	source.balloon_alert(user, "charged")
+	source.balloon_alert(user, LANG("datum.f0d483fe", null))

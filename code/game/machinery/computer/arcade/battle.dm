@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///How many enemies needs to be defeated until the 'Boss' of the stage appears.
 #define WORLD_ENEMY_BOSS 2
 ///The default amount of EXP you gain from killing an enemy, modifiers stacked on top of this.
@@ -124,8 +125,8 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "hard mode enabled")
-	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
+	balloon_alert(user, LANG("obj.a4c5f0f1", null))
+	to_chat(user, span_warning(LANG("obj.a9f0bf6d", null)))
 	setup_new_opponent(user)
 	feedback_message = "If you die in the game, you die for real!"
 	SStgui.update_uis(src)
@@ -172,6 +173,11 @@
 		boss_adjective ||= pick_list(ARCADE_FILE, "rpg_adjective")
 		boss_name ||= pick_list(ARCADE_FILE, "rpg_enemy")
 
+	// NOVA EDIT ADDITION START - I18N - 全服中文时按目录反查碎片（lang_reverse_text 无词数门槛，
+	// 兜住 load 反查漏掉的单词形容词），中文名省 The 冠词直拼
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		return "[lang_reverse_text(boss_adjective)][lang_reverse_text(boss_name)]"
+	// NOVA EDIT ADDITION END
 	return "The [boss_adjective] [boss_name]"
 
 ///Sets up a new opponent depending on what stage they are at.
@@ -222,7 +228,7 @@
 				var/current_world = all_worlds.Find(latest_unlocked_world)
 				latest_unlocked_world = all_worlds[current_world + 1]
 				ui_panel = UI_PANEL_WORLD_MAP
-				say("New world unlocked, [latest_unlocked_world]!")
+				say(LANG("obj.a5cdbf64", list(latest_unlocked_world)))
 		enemies_defeated++
 	if(obj_flags & EMAGGED)
 		obj_flags &= ~EMAGGED
@@ -262,7 +268,7 @@
 	if(player_current_hp <= 0)
 		ui_panel = UI_PANEL_GAMEOVER
 		feedback_message = "GAME OVER."
-		say("You have been crushed! GAME OVER.")
+		say(LANG("obj.f2b37538", null))
 		playsound(loc, 'sound/machines/arcade/lose.ogg', 40, TRUE)
 		lose_game(user)
 		return
@@ -449,7 +455,7 @@
 			switch(action)
 				if("sleep")
 					if(player_gold < DEFAULT_ITEM_PRICE / 2)
-						say("You don't have enough gold to rest!")
+						say(LANG("obj.553fb1a1", null))
 						return TRUE
 					player_gold -= DEFAULT_ITEM_PRICE / 2
 					playsound(loc, 'sound/vehicles/mecha/skyfall_power_up.ogg', 40)
@@ -459,10 +465,10 @@
 				if("buy_item")
 					var/datum/battle_arcade_gear/gear = battle_arcade_gear_list[params["purchasing_item"]]
 					if(latest_unlocked_world != gear.world_available || equipped_gear[gear.slot] == gear)
-						say("That item is not in stock.")
+						say(LANG("obj.bbce64d1", null))
 						return TRUE
 					if(player_gold < (DEFAULT_ITEM_PRICE * all_worlds[latest_unlocked_world]))
-						say("You don't have enough gold to buy that!")
+						say(LANG("obj.1dda4b33", null))
 						return TRUE
 					player_gold -= DEFAULT_ITEM_PRICE * all_worlds[latest_unlocked_world]
 					equipped_gear[gear.slot] = gear
@@ -476,7 +482,7 @@
 					var/world_travelling = all_worlds.Find(params["selected_arena"])
 					var/max_unlocked_worlds = all_worlds.Find(latest_unlocked_world)
 					if(world_travelling > max_unlocked_worlds)
-						say("That world is not unlocked yet!")
+						say(LANG("obj.2070d72c", null))
 						return TRUE
 					player_current_world = all_worlds[world_travelling]
 					setup_new_opponent(gamer)
@@ -520,7 +526,7 @@
 					return TRUE
 				if(BATTLE_ARCADE_PLAYER_HEAVY_ATTACK)
 					if(player_current_mp < SPELL_MP_COST)
-						say("You don't have enough MP to heavy attack!")
+						say(LANG("obj.dc280b1c", null))
 						player_turn = TRUE
 						return TRUE
 					player_current_mp -= SPELL_MP_COST
@@ -528,7 +534,7 @@
 					return TRUE
 				if(BATTLE_ARCADE_PLAYER_COUNTERATTACK)
 					if(player_current_mp < SPELL_MP_COST)
-						say("You don't have enough MP to counterattack!")
+						say(LANG("obj.75cafd82", null))
 						player_turn = TRUE
 						return TRUE
 					player_current_mp -= SPELL_MP_COST

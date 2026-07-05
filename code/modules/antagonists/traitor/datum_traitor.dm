@@ -270,13 +270,13 @@
 		for(var/datum/objective/objective in objectives)
 			if(!objective.check_completion())
 				traitor_won = FALSE
-			objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+			objectives_text += "<br><B>[lang_reverse_text("Objective")] #[count]</B>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones hit the to_chat boundary engine)
 			count++
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 
 	if(uplink_owned)
-		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
+		var/uplink_text = GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "（使用了 [used_telecrystals] TC）[purchases]" : "(used [used_telecrystals] TC) [purchases]" // NOVA EDIT - I18N
 		if((used_telecrystals == 0) && traitor_won)
 			var/static/icon/badass = icon('icons/ui/antags/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
@@ -290,9 +290,9 @@
 	var/special_role_text = LOWER_TEXT(name)
 
 	if(traitor_won)
-		result += span_greentext("The [special_role_text] was successful!")
+		result += span_greentext(LANG("datum.edebafa5", list(special_role_text)))
 	else
-		result += span_redtext("The [special_role_text] has failed!")
+		result += span_redtext(LANG("datum.cd8dd865", list(special_role_text)))
 		SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
 
 	return result.Join("<br>")
@@ -318,8 +318,7 @@
 	var/phrases = jointext(SStraitor.syndicate_code_phrase, ", ")
 	var/responses = jointext(SStraitor.syndicate_code_response, ", ")
 
-	var/message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
-					<b>The code responses were:</b> [span_redtext("[responses]")]<br>"
+	var/message = LANG("datum.19bf03f1", list(phrases, responses))
 
 	return message
 

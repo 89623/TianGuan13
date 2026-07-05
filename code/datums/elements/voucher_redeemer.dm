@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Accepts a [voucher_type] and a [set_type] and allows the user to redeem the voucher for items from a set.
  */
@@ -84,7 +85,7 @@
 	//NOVA ADDITION EDIT END
 	if(chosen_set.blackbox_key)
 		SSblackbox.record_feedback("tally", chosen_set.blackbox_key, 1, selection)
-	source.balloon_alert(redeemer, "redeemed [LOWER_TEXT(selection)]")
+	source.balloon_alert(redeemer, LANG("datum.21c0fbfe", list(LOWER_TEXT(selection))))
 	qdel(voucher)
 
 /datum/element/voucher_redeemer/proc/check_menu(obj/item/voucher, mob/living/redeemer)

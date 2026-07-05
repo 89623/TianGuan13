@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ENGINE_COOLDOWN 5 SECONDS
 #define SLASH_COOLDOWN 1.2 SECONDS
 #define SLASH_WINDUP 1 SECONDS
@@ -31,7 +32,7 @@
 		return
 	playsound(src, 'sound/items/car_engine_start.ogg', vol = 75, vary = FALSE, extrarange = 3)
 	Shake(duration = ENGINE_COOLDOWN)
-	to_chat(user, span_notice("Darn thing... it's too old to keep on without retrofitting it! Without modifications, it works like it's junk."))
+	to_chat(user, span_notice(LANG("obj.0fb4cd94", null)))
 	COOLDOWN_START(src, engine_sound_cooldown, ENGINE_COOLDOWN)
 
 /obj/item/v8_engine/examine_more(mob/user)
@@ -43,10 +44,10 @@
 		return
 	if(user.mind.has_crafting_recipe(user = user, potential_recipe = /datum/crafting_recipe/house_edge))
 		return
-	to_chat(user, span_notice("You peer at the label on the side, reading about some unique modifications that could be made to the engine..."))
+	to_chat(user, span_notice(LANG("obj.d3b825ae", null)))
 	if(do_after(user, 15 SECONDS, src))
 		user.mind.teach_crafting_recipe(/datum/crafting_recipe/house_edge)
-		to_chat(user, span_notice("You learned how to make the House Edge."))
+		to_chat(user, span_notice(LANG("obj.d72f162e", null)))
 
 /obj/item/house_edge
 	name = "House Edge"
@@ -94,9 +95,9 @@
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown))
 		return ITEM_INTERACT_BLOCKING
 	if(fire_charges <= 0)
-		balloon_alert(user, "no fire charges!")
+		balloon_alert(user, LANG("obj.3dc57258", null))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_boldnotice("You take aim at [interacting_with]..."))
+	to_chat(user, span_boldnotice(LANG("obj.bf02a783", list(interacting_with))))
 	user.add_shared_particles(/particles/bonfire)
 
 	if(!do_after(user, SLASH_WINDUP, target = src))
@@ -129,7 +130,7 @@
 	if(!COOLDOWN_FINISHED(src, fire_charge_cooldown) && !on_slash)
 		return
 	if(fire_charges)
-		balloon_alert_to_viewers("charges lost!")
+		balloon_alert_to_viewers(LANG("obj.63a6c45b", null))
 	fire_charges = 0
 	update_icon(UPDATE_OVERLAYS|UPDATE_ICON_STATE)
 
@@ -154,8 +155,8 @@
 		projectile.damage /= 2 // The damage is pretty solid normally, but with the explosion and all the RNG that comes with, it's nearly a 1-shot. This evens a playing field a bit.
 	projectile.fire(null, interacting_with)
 
-	user.visible_message(span_danger("[user] makes a[upgraded ? " devastating" : "" ] blazing slash at [interacting_with]!"),\
-		span_notice("You take a blazing swipe at [interacting_with]!"))
+	user.visible_message(span_danger(LANG("obj.3d1faf08", list(user, upgraded ? " devastating" : "", interacting_with))),\
+		span_notice(LANG("obj.de5635d5", list(interacting_with))))
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', vol = 75, vary = FALSE, extrarange = 3)
 	playsound(src, 'sound/items/weapons/slash.ogg', vol = 50, vary = FALSE, extrarange = 3)
 

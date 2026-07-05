@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The subsystem for controlling drastic performance enhancements aimed at reducing server load for a smoother albeit slightly duller gaming experience
 SUBSYSTEM_DEF(lag_switch)
 	name = "Lag Switch"
@@ -69,7 +70,7 @@ SUBSYSTEM_DEF(lag_switch)
 
 	slowmode_cooldown = length_secs
 	if(measures[SLOWMODE_SAY])
-		to_chat(world, span_boldannounce("Slowmode timer has been changed to [length] seconds by an admin."))
+		to_chat(world, span_boldannounce(LANG("datum.9e1b01b3", list(length))))
 	return TRUE
 
 /// Handle the state change for individual measures
@@ -106,32 +107,32 @@ SUBSYSTEM_DEF(lag_switch)
 						ghost.client.view_size.resetToDefault()
 		if(SLOWMODE_SAY)
 			if(state)
-				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been enabled with [slowmode_cooldown/10] seconds between messages."))
+				to_chat(world, span_boldannounce(LANG("datum.3eca8f54", list(slowmode_cooldown/10))))
 			else
 				for(var/client/C as anything in GLOB.clients)
 					COOLDOWN_RESET(C, say_slowmode)
-				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been disabled by an admin."))
+				to_chat(world, span_boldannounce(LANG("datum.cb1fed18", null)))
 		if(DISABLE_NON_OBSJOBS)
 			world.update_status()
 		if(DISABLE_PARALLAX)
 			if (state)
-				to_chat(world, span_boldannounce("Parallax has been disabled for performance concerns."))
+				to_chat(world, span_boldannounce(LANG("datum.ed39404a", null)))
 			else
-				to_chat(world, span_boldannounce("Parallax has been re-enabled."))
+				to_chat(world, span_boldannounce(LANG("datum.a556f670", null)))
 
 			for (var/mob/mob as anything in GLOB.mob_list)
 				mob.hud_used?.update_parallax_pref()
 		if (DISABLE_FOOTSTEPS)
 			if (state)
-				to_chat(world, span_boldannounce("Footstep sounds have been disabled for performance concerns."))
+				to_chat(world, span_boldannounce(LANG("datum.9e1fe7b3", null)))
 			else
-				to_chat(world, span_boldannounce("Footstep sounds have been re-enabled."))
+				to_chat(world, span_boldannounce(LANG("datum.c2320ea1", null)))
 		// NOVA EDIT ADDITION
 		if (DISABLE_CREATOR)
 			if (state)
-				to_chat(world, span_boldannounce("The character creator and preferences menu has been disabled for performance metrics."))
+				to_chat(world, span_boldannounce(LANG("datum.144751c6", null)))
 			else
-				to_chat(world, span_boldannounce("The character creator has been re-enabled."))
+				to_chat(world, span_boldannounce(LANG("datum.a1469f6b", null)))
 		// NOVA EDIT END
 
 	return TRUE

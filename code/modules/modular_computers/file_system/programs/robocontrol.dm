@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/computer_file/program/robocontrol
 	filename = "botkeeper"
@@ -125,13 +126,13 @@
 				playsound(get_turf(computer.ui_host()) , 'sound/machines/buzz/buzz-sigh.ogg', 25, FALSE)
 		if("changedroneaccess")
 			if(!computer || !computer.stored_id || !id_card)
-				to_chat(current_user, span_notice("No ID found, authorization failed."))
+				to_chat(current_user, span_notice(LANG("datum.aa5d37b0", null)))
 				return
 			if(isdrone(current_user))
-				to_chat(current_user, span_notice("You can't free yourself."))
+				to_chat(current_user, span_notice(LANG("datum.548aa39e", null)))
 				return
 			if(!(ACCESS_CE in id_card.access))
-				to_chat(current_user, span_notice("Required access not found on ID."))
+				to_chat(current_user, span_notice(LANG("datum.3a18cffe", null)))
 				return
 			GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
 		if("ping_drones")

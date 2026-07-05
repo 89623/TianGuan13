@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // .223 (M-90gl Carbine)
 
 /obj/projectile/bullet/a223
@@ -216,7 +217,7 @@
 
 /obj/projectile/bullet/rebar/supermatter/proc/dust_feedback(atom/target)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
-	visible_message(span_danger("[target] is hit by [src], turning [target.p_them()] to dust in a brilliant flash of light!"))
+	visible_message(span_danger(LANG("obj.f60decc2", list(target, src, target.p_them()))))
 
 /obj/projectile/bullet/paperball
 	desc = "Doink!"

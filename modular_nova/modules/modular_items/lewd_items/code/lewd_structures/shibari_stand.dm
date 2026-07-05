@@ -50,24 +50,24 @@
 /obj/structure/chair/shibari_stand/examine(mob/user)
 	. = ..()
 	if(!has_buckled_mobs() && can_buckle)
-		. += span_notice("They need to be wearing <b>full-body shibari</b>, and you need to be <b>holding ropes</b>!")
+		. += span_notice(LANG("obj.e272ea93", null))
 
 /obj/structure/chair/shibari_stand/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	var/mob/living/buckled = buckled_mob
 	if(buckled)
 		if(buckled != user)
-			buckled.visible_message(span_notice("[user] starts unbuckling [buckled] from [src]."),\
-				span_notice("[user] tries to unbuckle you from [src]."),\
-				span_hear("You hear loose ropes."))
+			buckled.visible_message(span_notice(LANG("obj.54090652", list(user, buckled, src))),\
+				span_notice(LANG("obj.7b1ccc3d", list(user, src))),\
+				span_hear(LANG("obj.aae6764c", null)))
 			if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 5 SECONDS : 10 SECONDS, buckled))
 				return FALSE
-			buckled.visible_message(span_notice("[user] unbuckles [buckled] from [src]."),\
-				span_notice("[user] unbuckles you from [src]."),\
-				span_hear("You hear loose ropes."))
+			buckled.visible_message(span_notice(LANG("obj.c58c7a9a", list(user, buckled, src))),\
+				span_notice(LANG("obj.8a13b258", list(user, src))),\
+				span_hear(LANG("obj.aae6764c", null)))
 		else
-			user.visible_message(span_notice("[user] starts unbuckling themselves from [src]."),\
-				span_notice("[user] unbuckles themselves from [src]."),\
-				span_hear("You hear loose ropes."))
+			user.visible_message(span_notice(LANG("obj.f2d47fc9", list(user, src))),\
+				span_notice(LANG("obj.75718bf6", list(user, src))),\
+				span_hear(LANG("obj.aae6764c", null)))
 		add_fingerprint(user)
 		if(isliving(buckled.pulledby))
 			var/mob/living/living_mob = buckled.pulledby
@@ -78,7 +78,7 @@
 /obj/structure/chair/shibari_stand/user_buckle_mob(mob/living/buckled, mob/user, check_loc = TRUE)
 
 	if(!buckled.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("Looks like [buckled] doesn't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.f3f1a07e", list(buckled))))
 		return FALSE
 
 	if(!is_user_buckle_possible(buckled, user, check_loc))
@@ -90,16 +90,16 @@
 
 	var/mob/living/carbon/human/hooman = buckled
 	if(!(istype(hooman.w_uniform, /obj/item/clothing/under/shibari/full)))
-		to_chat(user, span_warning("You'll need to completely tie their body!"))
+		to_chat(user, span_warning(LANG("obj.8ec1abee", null)))
 		return FALSE
 	if(!istype(user.get_active_held_item(), /obj/item/stack/shibari_rope))
-		to_chat(user, span_warning("You'll need to be holding shibari ropes to tie them to the stand!!"))
+		to_chat(user, span_warning(LANG("obj.25413933", null)))
 		return FALSE
 
 	if(buckled != user)
-		buckled.visible_message(span_warning("[user] starts tying [buckled] to \the [src]!"),\
-			span_userdanger("[user] starts tying you to \the [src]!"),\
-			span_hear("You hear ropes being tightened."))
+		buckled.visible_message(span_warning(LANG("obj.22b778bd", list(user, buckled, src))),\
+			span_userdanger(LANG("obj.c2c84af6", list(user, src))),\
+			span_hear(LANG("obj.7323275e", null)))
 		if(!do_after(user, HAS_TRAIT(user, TRAIT_RIGGER) ? 5 SECONDS : 10 SECONDS, buckled))
 			return FALSE
 
@@ -107,10 +107,10 @@
 			return FALSE
 
 		if(!(istype(hooman.w_uniform, /obj/item/clothing/under/shibari/full)))
-			to_chat(user, span_warning("You'll need to completely tie their body!"))
+			to_chat(user, span_warning(LANG("obj.8ec1abee", null)))
 			return FALSE
 		if(!istype(user.get_active_held_item(), /obj/item/stack/shibari_rope))
-			to_chat(user, span_warning("You'll need to be holding shibari ropes to tie them to the stand!"))
+			to_chat(user, span_warning(LANG("obj.a3ccb6be", null)))
 			return FALSE
 
 		if(buckle_mob(buckled, check_loc = check_loc))
@@ -120,14 +120,14 @@
 			rope.use(1)
 			add_overlay(shibari_shadow_overlay)
 			add_rope_overlays(ropee.greyscale_colors, hooman?.dna?.mutant_bodyparts[FEATURE_TAUR])
-			buckled.visible_message(span_warning("[user] tied [buckled] to \the [src]!"),\
-				span_userdanger("[user] tied you to \the [src]!"),\
-				span_hear("You hear ropes being completely tightened."))
+			buckled.visible_message(span_warning(LANG("obj.a4ccf06d", list(user, buckled, src))),\
+				span_userdanger(LANG("obj.bb32a33b", list(user, src))),\
+				span_hear(LANG("obj.89f7878b", null)))
 			return TRUE
 		else
 			return FALSE
 	else
-		to_chat(user, span_warning("You cannot buckle yourself to this stand, there is no way that level of self-bondage exists!"))
+		to_chat(user, span_warning(LANG("obj.dcc364c0", null)))
 		return FALSE
 
 /obj/structure/chair/shibari_stand/atom_deconstruct(disassembled)
@@ -189,12 +189,12 @@
 
 //Disassembling shibari stand
 /obj/structure/chair/shibari_stand/click_ctrl_shift(mob/user)
-	to_chat(user, span_notice("You begin unfastening the frame of \the [src]..."))
+	to_chat(user, span_notice(LANG("obj.58aebeb0", list(src))))
 	if(!do_after(user, 8 SECONDS, src))
-		to_chat(user, span_warning("You fail to disassemble \the [src]."))
+		to_chat(user, span_warning(LANG("obj.542e67b3", list(src))))
 		return FALSE
 
-	to_chat(user, span_notice("You disassemble \the [src]."))
+	to_chat(user, span_notice(LANG("obj.9dea2112", list(src))))
 	var/obj/item/construction_kit/bdsm/shibari/kit = new(get_turf(src))
 	kit.set_greyscale(greyscale_colors)
 	unbuckle_all_mobs()
@@ -212,10 +212,10 @@
 		starting_colors = greyscale_colors
 	)
 	menu.ui_interact(usr)
-	to_chat(user, span_notice("You switch the frame's plastic fittings color."))
+	to_chat(user, span_notice(LANG("obj.4e7ad089", null)))
 	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chair/shibari_stand/examine(mob/user)
 	. = ..()
-	. += span_purple("[src] can be disassembled by using <b>Ctrl+Shift+Click<b>")
-	. += span_purple("[src]'s color can be customized with <b>Ctrl+Click</b>.")
+	. += span_purple(LANG("obj.2749c62e", list(src)))
+	. += span_purple(LANG("obj.f826f980", list(src)))

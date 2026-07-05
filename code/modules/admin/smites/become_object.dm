@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define OBJECTIFY_TIME (5 SECONDS)
 
 /// Turns the target into an object (for instance bread)
@@ -9,8 +10,8 @@
 /datum/smite/objectify/configure(client/user)
 	var/attempted_target_path = input(
 		user,
-		"Enter typepath of an atom you'd like to turn your victim into.",
-		"Typepath",
+		LANG("datum.f5dd6594", null),
+		LANG("datum.1a01b0f5", null),
 		"[/obj/item/food/bread/plain]",
 	) as null|text
 
@@ -23,7 +24,7 @@
 	if(isnull(desired_object) || !ispath(desired_object))
 		return FALSE //The user pressed "Cancel"
 	if(!ispath(desired_object, /atom))
-		tgui_alert(user, "ERROR: Incorrect / improper path given.")
+		tgui_alert(user, LANG("datum.c57fb711", null))
 		return FALSE
 	transform_path = desired_object
 

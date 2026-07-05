@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 /datum/orbit_menu
@@ -30,7 +31,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			if((ismob(poi) && !SSpoints_of_interest.is_valid_poi(poi, CALLBACK(src, PROC_REF(validate_mob_poi)))) \
 				|| !SSpoints_of_interest.is_valid_poi(poi)
 			)
-				to_chat(usr, span_notice("That point of interest is no longer valid."))
+				to_chat(usr, span_notice(LANG("datum.cd4213d3", null)))
 				return TRUE
 
 			var/mob/dead/observer/user = usr

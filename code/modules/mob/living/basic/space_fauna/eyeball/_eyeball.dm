@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/eyeball
 	name = "eyeball"
 	desc = "An odd looking creature, it won't stop staring..."
@@ -73,7 +74,7 @@
 
 	if(istype(attack_target, /obj/item/food/grown/carrot))
 		adjust_brute_loss(-5)
-		to_chat(src, span_warning("You eat [attack_target]! It restores some health!"))
+		to_chat(src, span_warning(LANG("mob.7fc26a77", list(attack_target))))
 		qdel(attack_target)
 		return TRUE
 
@@ -110,7 +111,7 @@
 /mob/living/basic/eyeball/proc/heal_eye_damage(mob/living/target, obj/item/organ/eyes/eyes)
 	if(!COOLDOWN_FINISHED(src, eye_healing))
 		return
-	to_chat(target, span_warning("[src] seems to be healing your [eyes.zone]!"))
+	to_chat(target, span_warning(LANG("mob.ae9c549b", list(src, eyes.zone))))
 	eyes.apply_organ_damage(-1 * healing_factor)
 	new /obj/effect/temp_visual/heal(get_turf(target), COLOR_HEALING_CYAN)
 	befriend(target)

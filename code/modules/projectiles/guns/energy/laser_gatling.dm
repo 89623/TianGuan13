@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 //The ammo/gun is stored in a back slot item
@@ -45,12 +46,12 @@
 				armed = TRUE
 				if(!user.put_in_hands(gun))
 					armed = FALSE
-					to_chat(user, span_warning("You need a free hand to hold the gun!"))
+					to_chat(user, span_warning(LANG("obj.30e01171", null)))
 					return
 				update_appearance()
 				user.update_worn_back()
 		else
-			to_chat(user, span_warning("You are already holding the gun!"))
+			to_chat(user, span_warning(LANG("obj.4cddbf0e", null)))
 	else
 		..()
 
@@ -75,9 +76,9 @@
 	gun.forceMove(src)
 	armed = FALSE
 	if(user)
-		to_chat(user, span_notice("You attach \the [gun] to \the [src]."))
+		to_chat(user, span_notice(LANG("obj.5dacccb1", list(gun, src))))
 	else
-		src.visible_message(span_warning("\The [gun] snaps back onto \the [src]!"))
+		src.visible_message(span_warning(LANG("obj.88c24102", list(gun, src))))
 	update_appearance()
 	user.update_worn_back()
 
@@ -126,7 +127,7 @@
 
 /obj/item/gun/energy/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
-		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
+		to_chat(user, span_warning(LANG("obj.bce027d4", null)))
 		return
 	. = ..()
 	if(!.)
@@ -139,7 +140,7 @@
 
 /obj/item/gun/energy/minigun/try_fire_gun(atom/target, mob/living/user, params)
 	if(!ammo_pack || ammo_pack.loc != user)
-		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
+		to_chat(user, span_warning(LANG("obj.8816c13b", null)))
 		return FALSE
 	return ..()
 

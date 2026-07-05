@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/pod
 	name = "mass driver launch control"
 	desc = "A combined blastdoor and mass driver control unit."
@@ -37,7 +38,7 @@
 		return
 
 	if(!connected)
-		say("Cannot locate mass driver connector. Cancelling firing sequence!")
+		say(LANG("obj.26d14ec8", null))
 		return
 
 	for(var/obj/machinery/door/poddoor/M in range(range, src))
@@ -83,7 +84,7 @@
 	if(.)
 		return
 	if(!allowed(usr))
-		to_chat(usr, span_warning("Access denied."))
+		to_chat(usr, span_warning(LANG("obj.077f9b52", null)))
 		return
 
 	switch(action)

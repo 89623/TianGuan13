@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DISSOLVE_DURATION 45 SECONDS
 
 /obj/effect/decal/cleanable/greenglow/waste
@@ -35,7 +36,7 @@
  */
 /obj/effect/decal/cleanable/greenglow/waste/proc/pre_dissolve(display_message = TRUE, dissolve_clock = DISSOLVE_DURATION)
 	if(display_message)
-		visible_message(span_warning("\The [src] begins corroding \the [get_turf(src)]!"))
+		visible_message(span_warning(LANG("obj.b3afca60", list(src, get_turf(src)))))
 	color = "#ffffffff"
 
 	playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
@@ -53,7 +54,7 @@
 		return
 	var/turf/open/splash_floor = splashed_turf
 	splash_floor.ScrapeAway(flags = CHANGETURF_IGNORE_AIR) //Eat away the floor
-	visible_message(span_warning("The waste eats away at the floor, leaving \the [get_turf(src)] behind."))
+	visible_message(span_warning(LANG("obj.5ba3b23b", list(get_turf(src)))))
 	animate(src, time = 0.5 SECONDS, color = "#bebebe8e")
 	bubbling_audio?.stop()
 	QDEL_NULL(particles)

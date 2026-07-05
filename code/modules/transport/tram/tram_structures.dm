@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * the tram has a few objects mapped onto it at roundstart, by default many of those objects have unwanted properties
  * for example grilles and windows have the atmos_sensitive element applied to them, which makes them register to
@@ -82,11 +83,11 @@
 	. = ..()
 	switch(state)
 		if(TRAM_SCREWED_TO_FRAME)
-			. += span_notice("The panel is [EXAMINE_HINT("screwed")] to the frame. To dismantle use a [EXAMINE_HINT("screwdriver.")]")
+			. += span_notice(LANG("obj.e48e29d4", list(EXAMINE_HINT("screwed"), EXAMINE_HINT("screwdriver."))))
 		if(TRAM_IN_FRAME)
-			. += span_notice("The panel is [EXAMINE_HINT("unscrewed,")] but [EXAMINE_HINT("pried")] into the frame. To dismantle use a [EXAMINE_HINT("crowbar.")]")
+			. += span_notice(LANG("obj.2509026e", list(EXAMINE_HINT("unscrewed,"), EXAMINE_HINT("pried"), EXAMINE_HINT("crowbar."))))
 		if(TRAM_OUT_OF_FRAME)
-			. += span_notice("The panel is [EXAMINE_HINT("pried")] out of the frame, but still[EXAMINE_HINT("wired.")] To dismantle use [EXAMINE_HINT("wirecutters.")]")
+			. += span_notice(LANG("obj.0c375eb0", list(EXAMINE_HINT("pried"), EXAMINE_HINT("wired."), EXAMINE_HINT("wirecutters."))))
 
 /obj/structure/tram/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(held_item?.tool_behaviour == TOOL_WELDER && atom_integrity < max_integrity)
@@ -115,12 +116,12 @@
 	. = ..()
 
 	if(!user.combat_mode)
-		user.visible_message(span_notice("[user] knocks on [src]."), \
-			span_notice("You knock on [src]."))
+		user.visible_message(span_notice(LANG("obj.a41de491", list(user, src))), \
+			span_notice(LANG("obj.a57c3d4a", list(src))))
 		playsound(src, knock_sound, 50, TRUE)
 	else
-		user.visible_message(span_warning("[user] bashes [src]!"), \
-			span_warning("You bash [src]!"))
+		user.visible_message(span_warning(LANG("obj.6f19d1b0", list(user, src))), \
+			span_warning(LANG("obj.b771210b", list(src))))
 		playsound(src, bash_sound, 100, TRUE)
 
 /obj/structure/tram/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -152,14 +153,14 @@
 
 /obj/structure/tram/welder_act(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
-		to_chat(user, span_warning("[src] is already in good condition!"))
+		to_chat(user, span_warning(LANG("obj.7f6370b2", list(src))))
 		return ITEM_INTERACT_SUCCESS
 	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return FALSE
-	to_chat(user, span_notice("You begin repairing [src]..."))
+	to_chat(user, span_notice(LANG("obj.93449ef4", list(src))))
 	if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
 		atom_integrity = max_integrity
-		to_chat(user, span_notice("You repair [src]."))
+		to_chat(user, span_notice(LANG("obj.e94d13eb", list(src))))
 		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -167,47 +168,47 @@
 	switch(state)
 		if(TRAM_SCREWED_TO_FRAME)
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice("[user] begins to unscrew the tram panel from the frame..."),
-				span_notice("You begin to unscrew the tram panel from the frame..."))
+				user.visible_message(span_notice(LANG("obj.af481d02", list(user))),
+				span_notice(LANG("obj.0a11790d", null)))
 				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					state = TRAM_IN_FRAME
-					to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
+					to_chat(user, span_notice(LANG("obj.52e8eb7d", null)))
 					return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			if(tool.tool_behaviour)
-				to_chat(user, span_warning("The security screws need to be removed first!"))
+				to_chat(user, span_warning(LANG("obj.b436b070", null)))
 
 		if(TRAM_IN_FRAME)
 			if(tool.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice("[user] wedges \the [tool] into the tram panel's gap in the frame and starts prying..."),
-				span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
+				user.visible_message(span_notice(LANG("obj.bcaca1b6", list(user, tool))),
+				span_notice(LANG("obj.4906368b", list(tool))))
 				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 					state = TRAM_OUT_OF_FRAME
-					to_chat(user, span_notice("The panel pops out of the frame, exposing some cabling that look like they can be cut."))
+					to_chat(user, span_notice(LANG("obj.71715436", null)))
 					return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice("[user] resecures the tram panel to the frame..."),
-				span_notice("You resecure the tram panel to the frame..."))
+				user.visible_message(span_notice(LANG("obj.71337c68", list(user))),
+				span_notice(LANG("obj.40c6a64f", null)))
 				state = TRAM_SCREWED_TO_FRAME
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 		if(TRAM_OUT_OF_FRAME)
 			if(tool.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(span_notice("[user] starts cutting the connective cabling on \the [src]..."),
-				span_notice("You start cutting the connective cabling on \the [src]"))
+				user.visible_message(span_notice(LANG("obj.8a0b9559", list(user, src))),
+				span_notice(LANG("obj.de0b3ebb", list(src))))
 				if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
-					to_chat(user, span_notice("The panels falls out of the way exposing the frame backing."))
+					to_chat(user, span_notice(LANG("obj.d74adce8", null)))
 					deconstruct(disassembled = TRUE)
 
 			if(tool.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice("[user] snaps the tram panel into place."),
-				span_notice("You snap the tram panel into place..."))
+				user.visible_message(span_notice(LANG("obj.f35770e7", list(user))),
+				span_notice(LANG("obj.9eab20da", null)))
 				state = TRAM_IN_FRAME
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 			if(tool.tool_behaviour)
-				to_chat(user, span_warning("The cabling need to be cut first!"))
+				to_chat(user, span_warning(LANG("obj.037e6c30", null)))
 
 	return ..()
 
@@ -394,7 +395,7 @@
 	var/duration = ((4.8 SECONDS) / tool.force) * 2 //In seconds, for now.
 	if(istype(tool, /obj/item/hatchet) || istype(tool, /obj/item/fireaxe))
 		duration /= 4 //Much better with hatchets and axes.
-	to_chat(user, span_notice("You begin breaking down [src]."))
+	to_chat(user, span_notice(LANG("obj.0f48475b", list(src))))
 	if(!do_after(user, duration * (1 SECONDS), target=src)) //Into deciseconds.
 		return ITEM_INTERACT_BLOCKING
 	deconstruct(disassembled = FALSE)
@@ -484,12 +485,12 @@
 /obj/structure/tram/spoiler/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += span_warning("The electronics panel is sparking occasionally. It can be reset with a [EXAMINE_HINT("multitool.")]")
+		. += span_warning(LANG("obj.510cf7f3", list(EXAMINE_HINT("multitool."))))
 
 	if(locked)
-		. += span_warning("The spoiler is [EXAMINE_HINT("welded")] in place!")
+		. += span_warning(LANG("obj.4d443dd9", list(EXAMINE_HINT("welded"))))
 	else
-		. += span_notice("The spoiler can be locked in place with a [EXAMINE_HINT("welder.")]")
+		. += span_notice(LANG("obj.2e8466c7", list(EXAMINE_HINT("welder."))))
 
 /obj/structure/tram/spoiler/proc/set_spoiler(source, controller, controller_active, controller_status, travel_direction)
 	SIGNAL_HANDLER
@@ -499,7 +500,7 @@
 		if(!deployed)
 			// Bring out the blades
 			if(locked)
-				visible_message(span_danger("\the [src] locks up due to its servo overheating!"))
+				visible_message(span_danger(LANG("obj.f25b22db", list(src))))
 			do_sparks(3, cardinal_only = FALSE, source = src)
 			deploy_spoiler()
 		return
@@ -542,7 +543,7 @@
 /obj/structure/tram/spoiler/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, span_warning("You short-circuit the [src]'s servo to overheat!"), type = MESSAGE_TYPE_INFO)
+	to_chat(user, span_warning(LANG("obj.dd76b457", list(src))), type = MESSAGE_TYPE_INFO)
 	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(5, cardinal_only = FALSE, source = src)
 	obj_flags |= EMAGGED
@@ -552,7 +553,7 @@
 		return FALSE
 
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, "electronics reset!")
+		balloon_alert(user, LANG("obj.44266fcf", null))
 		obj_flags &= ~EMAGGED
 		return TRUE
 
@@ -563,12 +564,12 @@
 		return FALSE
 
 	if(atom_integrity >= max_integrity)
-		to_chat(user, span_warning("You begin to weld \the [src], [locked ? "repairing damage" : "preventing retraction"]."))
+		to_chat(user, span_warning(LANG("obj.1af9de62", list(src, locked ? "repairing damage" : "preventing retraction"))))
 		if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
 			return
 		locked = !locked
-		user.visible_message(span_warning("[user] [locked ? "welds \the [src] in place" : "repairs \the [src]"] with [tool]."), \
-			span_warning("You finish welding \the [src], [locked ? "locking it in place." : "it can move freely again!"]"), null, COMBAT_MESSAGE_RANGE)
+		user.visible_message(span_warning(LANG("obj.2d971cef", list(user, locked ? "welds \the [src] in place" : "repairs \the [src]", tool))), \
+			span_warning(LANG("obj.d0de5e68", list(src, locked ? "locking it in place." : "it can move freely again!"))), null, COMBAT_MESSAGE_RANGE)
 
 		if(locked)
 			deploy_spoiler()
@@ -576,11 +577,11 @@
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_notice("You begin repairing [src]..."))
+	to_chat(user, span_notice(LANG("obj.93449ef4", list(src))))
 	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
 		return
 	atom_integrity = max_integrity
-	to_chat(user, span_notice("You repair [src]."))
+	to_chat(user, span_notice(LANG("obj.e94d13eb", list(src))))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 

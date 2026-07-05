@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/maintenance/modsuit_control
 	filename = "modsuit_control"
 	filedesc = "MODsuit Control"
@@ -27,7 +28,7 @@
 		unsync_modsuit()
 	controlled_suit = new_modsuit
 	RegisterSignal(controlled_suit, COMSIG_QDELETING, PROC_REF(unsync_modsuit))
-	user?.balloon_alert(user, "suit updated")
+	user?.balloon_alert(user, LANG("datum.ad8d74a5", null))
 
 /datum/computer_file/program/maintenance/modsuit_control/proc/unsync_modsuit(atom/source)
 	SIGNAL_HANDLER

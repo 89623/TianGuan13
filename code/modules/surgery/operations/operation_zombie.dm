@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/limb/bionecrosis
 	name = "induce bionecrosis"
 	rnd_name = "Bionecroplasty (Necrotic Revival)"
@@ -21,7 +22,7 @@
 
 /datum/surgery_operation/limb/bionecrosis/all_required_strings()
 	. = ..()
-	. += "the limb must have a brain present"
+	. += LANG("datum.5816f2fb", null)
 
 /datum/surgery_operation/limb/bionecrosis/any_required_strings()
 	. = ..()
@@ -30,7 +31,7 @@
 
 /datum/surgery_operation/limb/bionecrosis/all_blocked_strings()
 	. = ..()
-	. += "the limb must not already have a Romerol tumor"
+	. += LANG("datum.e2a6f344", null)
 
 /datum/surgery_operation/limb/bionecrosis/state_check(obj/item/bodypart/limb)
 	if(locate(/obj/item/organ/zombie_infection) in limb)

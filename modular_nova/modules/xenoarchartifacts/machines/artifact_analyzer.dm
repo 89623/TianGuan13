@@ -99,7 +99,7 @@
 		else
 			results = get_scan_info(scanned_object)
 		owned_scanner.icon_state = "xenoarch_scanner"
-		say("Scanning complete.")
+		say(LANG("obj.89cc9b10", null))
 		var/obj/item/paper/artifact_info/artifact_report = new(get_turf(src))
 		artifact_report.name = "[src] report #[++report_num]"
 		artifact_report.add_raw_text("<b>[src] analysis report #[report_num]</b><br>")
@@ -140,7 +140,7 @@
 		if(!owned_scanner)
 			reconnect_scanner()
 		if(!owned_scanner)
-			say("Error communicating with scanner!")
+			say(LANG("obj.1995d690", null))
 			return
 
 		var/turf/scanner_turf = get_turf(owned_scanner)
@@ -159,17 +159,17 @@
 				break
 		var/obj/machinery/artifact/possible_artifact = scanned_object
 		if(!possible_artifact)
-			say("Unable to isolate scan target.")
+			say(LANG("obj.ae2bb84c", null))
 			return
 		if(possible_artifact.being_used)
-			say("Cannot scan. Too much interference.")
+			say(LANG("obj.7dbfa79a", null))
 			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 25, FALSE)
 			return
 
 		possible_artifact.being_used = TRUE
 		scan_in_progress = TRUE
 		scan_completion_time = world.time + scan_duration
-		say("Scanning begun.")
+		say(LANG("obj.53951422", null))
 		owned_scanner.icon_state = "xenoarch_scanner_scanning"
 		flick("xenoarch_console_working", src)
 		return
@@ -179,7 +179,7 @@
 		playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 		scan_in_progress = FALSE
 		owned_scanner.icon_state = "xenoarch_scanner"
-		say("Scanning halted.")
+		say(LANG("obj.6bc36b0e", null))
 		return
 
 	// Default: refresh UI only if needed

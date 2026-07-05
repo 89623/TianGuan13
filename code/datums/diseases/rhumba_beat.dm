@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/rhumba_beat
 	name = "The Rhumba Beat"
 	desc = "They call me Cuban Pete - I'm the king of the Rumba Beat - When I play the maracas I go chick-chicky-boom, chick-chicky-boom."
@@ -23,14 +24,14 @@
 			if(SPT_PROB(26, seconds_per_tick))
 				affected_mob.adjust_fire_loss(5)
 			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel strange..."))
+				to_chat(affected_mob, span_danger(LANG("datum.3b633447", null)))
 		if(3)
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel the urge to dance..."))
+				to_chat(affected_mob, span_danger(LANG("datum.0463c20c", null)))
 			else if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("gasp")
 			else if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You feel the need to chick chicky boom..."))
+				to_chat(affected_mob, span_danger(LANG("datum.4d5bd506", null)))
 		if(4)
 			if(SPT_PROB(10, seconds_per_tick))
 				if(prob(50))
@@ -38,8 +39,8 @@
 					affected_mob.ignite_mob()
 				else
 					affected_mob.emote("gasp")
-					to_chat(affected_mob, span_danger("You feel a burning beat inside..."))
+					to_chat(affected_mob, span_danger(LANG("datum.3e939a68", null)))
 		if(5)
-			to_chat(affected_mob, span_danger("Your body is unable to contain the Rhumba Beat..."))
+			to_chat(affected_mob, span_danger(LANG("datum.4bf5dc2b", null)))
 			if(SPT_PROB(29, seconds_per_tick))
 				explosion(affected_mob, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE, explosion_cause = src) // This is equivalent to a lvl 1 fireball

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
 /obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, sharpness=NONE, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
@@ -300,9 +301,9 @@
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
 	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
 		if (owner)
-			owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("\The [current_gauze] on your [plaintext_zone] falls away."))
+			owner.visible_message(span_notice(LANG("obj.3cbf90d7", list(current_gauze.name, owner, name))), span_notice(LANG("obj.3f50dfd2", list(current_gauze, plaintext_zone))))
 		else
-			visible_message(span_notice("\The [current_gauze.name] on [name] falls away."))
+			visible_message(span_notice(LANG("obj.350f5141", list(current_gauze.name, name))))
 		qdel(current_gauze)
 
 	wound_damage_multiplier = dam_mul

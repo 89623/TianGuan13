@@ -103,7 +103,7 @@
 			return FALSE
 		target.take_damage(force*breaching_multipler)
 		playsound(target, 'sound/items/weapons/sonic_jackhammer.ogg', 70)
-		visible_message("[user] smashes the [target] forcefully with the [src]")
+		visible_message(LANG("obj.e66e04b5", list(user, target, src)))
 		user.do_attack_animation(target, used_item = src)
 		breaching_loop(user, target)
 		return TRUE

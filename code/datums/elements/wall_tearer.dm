@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Returned if we can rip up this target
 #define WALL_TEAR_ALLOWED TRUE
 /// Returned if we can't rip up this target
@@ -38,7 +39,7 @@
 /datum/element/wall_tearer/proc/on_attacked_wall(mob/living/tearer, atom/target, proximity_flag)
 	SIGNAL_HANDLER
 	if (DOING_INTERACTION_WITH_TARGET(tearer, target) || (!isnull(do_after_key) && DOING_INTERACTION(tearer, do_after_key)))
-		tearer.balloon_alert(tearer, "busy!")
+		tearer.balloon_alert(tearer, LANG("datum.8df72942", null))
 		return COMPONENT_HOSTILE_NO_ATTACK
 	var/is_valid = validate_target(target, tearer)
 	if (is_valid != WALL_TEAR_ALLOWED)
@@ -50,11 +51,11 @@
 	// We need to do this three times to actually destroy it
 	var/rip_time = (istype(target, /turf/closed/wall/r_wall) ? tear_time * reinforced_multiplier : tear_time) / 3
 	if (rip_time > 0)
-		tearer.visible_message(span_warning("[tearer] begins tearing through [target]!"))
+		tearer.visible_message(span_warning(LANG("datum.e44b4269", list(tearer, target))))
 		playsound(tearer, 'sound/machines/airlock/airlock_alien_prying.ogg', vol = 100, vary = TRUE)
-		target.balloon_alert(tearer, "tearing...")
+		target.balloon_alert(tearer, LANG("datum.4fa54458", null))
 		if (!do_after(tearer, delay = rip_time, target = target, interaction_key = do_after_key))
-			tearer.balloon_alert(tearer, "interrupted!")
+			tearer.balloon_alert(tearer, LANG("datum.c67b5d27", null))
 			return
 	// Might have been replaced, removed, or reinforced during our do_after
 	var/is_valid = validate_target(target, tearer)
@@ -73,7 +74,7 @@
 
 	var/reinforced = istype(target, /turf/closed/wall/r_wall)
 	if (!allow_reinforced && reinforced)
-		target.balloon_alert(tearer, "it's too strong!")
+		target.balloon_alert(tearer, LANG("datum.b983f917", null))
 		return WALL_TEAR_FAIL_CANCEL_CHAIN
 	return WALL_TEAR_ALLOWED
 

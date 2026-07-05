@@ -77,7 +77,10 @@
 	src.state = ui_state
 	var/list/repeat_items = list()
 	// Gets rid of illegal characters
-	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
+	// NOVA EDIT CHANGE - I18N - ORIGINAL upper bound was \u8000, which stripped every CJK ideograph above it
+	// (舰 U+8230, 近 U+8FD1, 调 U+8C03 …; CJK Unified Ideographs span U+4E00-U+9FFF) -> every list-input option
+	// with such a char silently lost it ("最近的下行通道"->"最的下行通道"). Extend to \uffff to keep all BMP/CJK.
+	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\uffff]+)"})
 	for(var/i in items)
 		if(!i)
 			continue

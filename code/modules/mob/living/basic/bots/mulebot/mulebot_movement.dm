@@ -1,13 +1,14 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/bot/mulebot/MobBump(mob/bumped_mob) // called when the bot bumps into a mob
 	if(mind || !isliving(bumped_mob)) //if there's a sentience controlling the bot, they aren't allowed to harm folks.
 		return ..()
 	var/mob/living/bumped_living = bumped_mob
 	if(wires.is_cut(WIRE_AVOIDANCE)) // usually just bumps, but if the avoidance wire is cut, knocks them over.
 		if(iscyborg(bumped_living))
-			visible_message(span_danger("[src] bumps into [bumped_living]!"))
+			visible_message(span_danger(LANG("mob.483fdb41", list(src, bumped_living))))
 		else if(bumped_living.Knockdown(8 SECONDS))
 			log_combat(src, bumped_living, "knocked down")
-			visible_message(span_danger("[src] knocks over [bumped_living]!"))
+			visible_message(span_danger(LANG("mob.7a852f12", list(src, bumped_living))))
 	return ..()
 
 /mob/living/basic/bot/mulebot/on_bot_movement(atom/movable/source, atom/oldloc, dir, forced)
@@ -36,7 +37,7 @@
 /mob/living/basic/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
 	if (!(bot_access_flags & BOT_COVER_EMAGGED) && !wires.is_cut(WIRE_AVOIDANCE))
 		if (!has_status_effect(/datum/status_effect/careful_driving))
-			crushed.visible_message(span_notice("[src] slows down to avoid crushing [crushed]."))
+			crushed.visible_message(span_notice(LANG("mob.8fa70cd9", list(src, crushed))))
 		apply_status_effect(/datum/status_effect/careful_driving)
 		return // Player mules must be emagged before they can trample
 

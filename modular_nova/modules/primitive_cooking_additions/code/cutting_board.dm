@@ -48,11 +48,11 @@
 
 /obj/item/cutting_board/examine(mob/user)
 	. = ..()
-	. += span_notice("You can process food similar to a food processor by putting food on this and using a <b>knife</b> on it.")
-	. += span_notice("It can be (un)secured with <b>Right Click</b>")
-	. += span_notice("You can make it drop its item with <b>Alt Click</b>")
+	. += span_notice(LANG("obj.7b700ac9", null))
+	. += span_notice(LANG("obj.48a3e387", null))
+	. += span_notice(LANG("obj.b48618d7", null))
 	if(length(contents))
-		. += span_notice("It has [contents[1]] sitting on it.")
+		. += span_notice(LANG("obj.130b7d38", list(contents[1])))
 
 /obj/item/cutting_board/Destroy()
 	drop_everything_contained()
@@ -60,11 +60,11 @@
 
 /obj/item/cutting_board/click_alt(mob/user)
 	if(!length(contents))
-		balloon_alert(user, "nothing on board")
+		balloon_alert(user, LANG("obj.a0cf78a3", null))
 		return CLICK_ACTION_BLOCKING
 
 	drop_everything_contained()
-	balloon_alert(user, "cleared board")
+	balloon_alert(user, LANG("obj.875cc2b8", null))
 	return CLICK_ACTION_SUCCESS
 
 ///Drops all contents at the turf of the item
@@ -112,7 +112,7 @@
 
 	if(attacking_item.tool_behaviour == TOOL_KNIFE)
 		if(!length(contents))
-			balloon_alert(user, "nothing to process")
+			balloon_alert(user, LANG("obj.7499becf", null))
 			return
 
 		var/datum/food_processor_process/item_process_recipe = GET_RECIPE(contents[1])
@@ -121,9 +121,9 @@
 			return
 
 		playsound(src, 'sound/effects/butcher.ogg', 50, TRUE)
-		balloon_alert_to_viewers("cutting...")
+		balloon_alert_to_viewers(LANG("obj.33079829", null))
 		if(!do_after(user, 3 SECONDS, target = src))
-			balloon_alert_to_viewers("stopped cutting")
+			balloon_alert_to_viewers(LANG("obj.21e88fc0", null))
 			return
 
 		process_food(item_process_recipe, contents[1])
@@ -132,16 +132,16 @@
 	var/datum/food_processor_process/gotten_recipe = GET_RECIPE(attacking_item)
 	if(gotten_recipe)
 		if(length(contents))
-			balloon_alert(user, "board is full")
+			balloon_alert(user, LANG("obj.eaa67f28", null))
 			return
 
 		attacking_item.forceMove(src)
-		balloon_alert(user, "placed [attacking_item] on board")
+		balloon_alert(user, LANG("obj.7cf423a5", list(attacking_item)))
 		update_appearance()
 		return
 
 	if(IS_EDIBLE(attacking_item)) //We may have failed but the user wants some feedback on why they can't put x food item on the board
-		balloon_alert(user, "[attacking_item] can't be processed")
+		balloon_alert(user, LANG("obj.3c24e22a", list(attacking_item)))
 	return ..()
 
 #undef GET_RECIPE

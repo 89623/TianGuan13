@@ -41,7 +41,7 @@ GLOBAL_VAR_INIT(blooper_allowed, TRUE) // For administrators
 			return
 	else
 		GLOB.blooper_allowed = !GLOB.blooper_allowed
-	to_chat(world, span_oocplain("<B>Vocal barks have been globally [GLOB.blooper_allowed ? "enabled" : "disabled"].</B>"))
+	to_chat(world, span_oocplain(LANG("_root.1339902d", list(GLOB.blooper_allowed ? "enabled" : "disabled"))))
 
 /// It's was stoolen from Splurt build >:3 and from fluffySTG!! nyeehehehheee!~
 /datum/blooper

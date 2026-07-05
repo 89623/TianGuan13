@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/antagonist/heartbreaker
 	name = "\improper Heartbreaker"
 	roundend_category = "valentines"
@@ -16,5 +17,5 @@
 
 /datum/antagonist/heartbreaker/greet()
 	. = ..()
-	to_chat(owner, span_boldwarning("You didn't get a date! They're all having fun without you! You'll show them though..."))
+	to_chat(owner, span_boldwarning(LANG("datum.87144542", null)))
 	owner.announce_objectives()

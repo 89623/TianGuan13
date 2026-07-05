@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The maximum amount of turfs that can be processed in a single tick regardless of
 /// the number of turfs determined by turf_weather_chance and turf_thunder_chance
 /// increasing this too high can result in severe lag so please be careful
@@ -388,7 +389,7 @@
 			if(!can_get_alert(player))
 				continue
 			if(alert_msg)
-				to_chat(player, alert_msg)
+				to_chat(player, lang_localize_chat_sentence(alert_msg)) // NOVA EDIT - I18N - integral reverse (strips span) of weather telegraph/weather/end messages; covers all weather types - ORIGINAL: to_chat(player, alert_msg)
 			if(alert_sfx)
 				player.stop_sound_channel(CHANNEL_WEATHER)
 				SEND_SOUND(player, sound(alert_sfx, channel = CHANNEL_WEATHER, volume = alert_sfx_vol))
@@ -533,7 +534,7 @@
 		hit_ore.fire_act(30000)
 
 	playsound(weather_turf, 'sound/effects/magic/lightningbolt.ogg', 100, extrarange = 10, falloff_distance = 10)
-	weather_turf.visible_message(span_danger("A thunderbolt strikes [weather_turf]!"))
+	weather_turf.visible_message(span_danger(LANG("datum.5fc332ba", list(weather_turf))))
 	new /obj/effect/hotspot(weather_turf)
 
 /**

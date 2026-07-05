@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The limbgrower. Makes organd and limbs with synthflesh and chems.
 /// See [limbgrower_designs.dm] for everything we can make.
 /obj/machinery/limbgrower
@@ -61,7 +62,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	update_static_data(user)
-	balloon_alert(user, "illegal limb production enabled")
+	balloon_alert(user, LANG("obj.72323c87", null))
 	return TRUE
 
 /obj/machinery/limbgrower/ui_interact(mob/user, datum/tgui/ui)
@@ -150,9 +151,9 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/disk/design_disk/limbs))
-		user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
-			span_notice("You begin to load designs from \the [tool]..."),
-			span_hear("You hear the clatter of a floppy drive."))
+		user.visible_message(span_notice(LANG("obj.fdd3b03f", list(user, tool, src))),
+			span_notice(LANG("obj.d4607832", list(tool))),
+			span_hear(LANG("obj.37c3e9f9", null)))
 		busy = TRUE
 		var/obj/item/disk/design_disk/limbs/limb_design_disk = tool
 		if(do_after(user, 2 SECONDS, target = src))
@@ -309,7 +310,7 @@
 /obj/machinery/limbgrower/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of reagents.<br>Reagent consumption rate at <b>[production_coefficient * 100]%</b>.")
+		. += span_notice(LANG("obj.a459eca1", list(reagents.maximum_volume, production_coefficient * 100)))
 
 /**
  * Check if the limb grower is currently busy.
@@ -321,7 +322,7 @@
 /obj/machinery/limbgrower/proc/check_busy(mob/user)
 	. = busy
 	if(.)
-		to_chat(user, span_warning("The limb grower is busy. Please wait for completion of previous operation."))
+		to_chat(user, span_warning(LANG("obj.cc53b82d", null)))
 
 /*
  * Checks our reagent list to see if a design can be built.

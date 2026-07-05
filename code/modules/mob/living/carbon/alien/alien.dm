@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/carbon/alien
 	abstract_type = /mob/living/carbon/alien
 	name = "alien"
@@ -135,8 +136,8 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	visible_message(
-		span_alertalien("[src] begins to twist and contort!"),
-		span_noticealien("You begin to evolve!"),
+		span_alertalien(LANG("mob.266d235c", list(src))),
+		span_noticealien(LANG("mob.240e9dea", null)),
 	)
 
 	new_xeno.setDir(dir)

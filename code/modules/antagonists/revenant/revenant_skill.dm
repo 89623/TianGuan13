@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Attach to revenant spells to make them cost essence to cast
 /datum/component/revenant_ability
 	/// If it's locked, and needs to be unlocked before use
@@ -78,7 +79,7 @@
 		if(ghost.essence_excess >= unlock_amount)
 			return NONE
 		if(feedback)
-			to_chat(ghost, span_revenwarning("You don't have enough essence to unlock [initial(source.name)]!"))
+			to_chat(ghost, span_revenwarning(LANG("datum.2054040e", list(initial(source.name)))))
 		return SPELL_CANCEL_CAST
 
 	if(!ghost.cast_check(cast_amount, deduct_essence = FALSE, silent = !feedback))
@@ -95,11 +96,11 @@
 
 	if(locked)
 		if(ghost.unlock(unlock_amount))
-			to_chat(ghost, span_revennotice("You have unlocked [initial(source.name)]!"))
+			to_chat(ghost, span_revennotice(LANG("datum.4ac471c8", list(initial(source.name)))))
 			locked = FALSE
 			update_spell_name()
 		else
-			to_chat(ghost, span_revenwarning("You don't have enough essence to unlock [initial(source.name)]!"))
+			to_chat(ghost, span_revenwarning(LANG("datum.2054040e", list(initial(source.name)))))
 		return SPELL_CANCEL_CAST
 
 	if(!ghost.cast_check(cast_amount, deduct_essence = TRUE, silent = FALSE))

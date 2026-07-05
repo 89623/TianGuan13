@@ -75,7 +75,7 @@
 
 /obj/item/food/vendor_snacks/mochi_ice_cream/matcha/examine_more(mob/user)
 	. = ..()
-	. += span_notice("A small label on the container specifies that this icecream is made using only culinary grade matcha grown outside of the Sol system.")
+	. += span_notice(LANG("obj.f11a52b5", null))
 	return .
 
 /obj/item/trash/vendor_trash/mochi_ice_cream
@@ -193,7 +193,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/nova/lemonade/examine_more(mob/user)
 	. = ..()
-	. += span_notice("Markings on the can indicate this one was made on <i>factory ship 1023</i> of the Grand Nomad Fleet.")
+	. += span_notice(LANG("obj.6a538e3b", null))
 	return .
 
 /obj/item/reagent_containers/cup/soda_cans/nova/navy_rum
@@ -205,7 +205,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/nova/navy_rum/examine_more(mob/user)
 	. = ..()
-	. += span_notice("Markings on the can indicate this one was made on <i>factory ship 1506</i> of the Grand Nomad Fleet.")
+	. += span_notice(LANG("obj.0eaa5386", null))
 	return .
 
 /obj/item/reagent_containers/cup/soda_cans/nova/soda_water_moth
@@ -217,7 +217,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/nova/soda_water_moth/examine_more(mob/user)
 	. = ..()
-	. += span_notice("Markings on the can indicate this one was made on <i>factory ship 1023</i> of the Grand Nomad Fleet.")
+	. += span_notice(LANG("obj.6a538e3b", null))
 	return .
 
 /obj/item/reagent_containers/cup/soda_cans/nova/ginger_beer
@@ -229,7 +229,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/nova/ginger_beer/examine_more(mob/user)
 	. = ..()
-	. += span_notice("Markings on the can indicate this one was made on <i>factory ship 1023</i> of the Grand Nomad Fleet.")
+	. += span_notice(LANG("obj.6a538e3b", null))
 	return .
 
 /*

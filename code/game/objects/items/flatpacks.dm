@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/flatpack
 	name = "flatpack"
 	desc = "A box containing a compactly packed machine. Use multitool to deploy."
@@ -43,13 +44,13 @@
 		return
 
 	if(loc == user)
-		. += span_warning("You can't deploy while holding it in your hand.")
+		. += span_warning(LANG("obj.eb9843bd", null))
 	else if(isturf(loc))
 		var/turf/location = loc
 		if(!isopenturf(location))
-			. += span_warning("Can't deploy in this location")
+			. += span_warning(LANG("obj.23df1d7b", null))
 		else if(location.is_blocked_turf(source_atom = src))
-			. += span_warning("No space for deployment")
+			. += span_warning(LANG("obj.5296e4f7", null))
 
 /obj/item/flatpack/multitool_act(mob/living/user, obj/item/tool)
 	. = NONE
@@ -57,16 +58,16 @@
 	if(isnull(board))
 		return ITEM_INTERACT_BLOCKING
 	if(!isturf(loc))
-		balloon_alert(user, "must deploy on the floor")
+		balloon_alert(user, LANG("obj.4033ccdc", null))
 		return ITEM_INTERACT_BLOCKING
 	var/turf/location = loc
 	if(!isopenturf(location))
-		balloon_alert(user, "can't deploy here")
+		balloon_alert(user, LANG("obj.8523d735", null))
 		return ITEM_INTERACT_BLOCKING
 	else if(location.is_blocked_turf(source_atom = src))
-		balloon_alert(user, "no space for deployment")
+		balloon_alert(user, LANG("obj.46ff061e", null))
 		return ITEM_INTERACT_BLOCKING
-	balloon_alert_to_viewers("deploying!")
+	balloon_alert_to_viewers(LANG("obj.9b6b3a3b", null))
 	if(!do_after(user, 1 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 
@@ -88,7 +89,7 @@
 	board = null
 	var/obj/machinery/new_machine = new leaving_circuit.build_path(loc, board = leaving_circuit)
 	new_machine.on_construction(user)
-	loc.visible_message(span_warning("[src] deploys!"))
+	loc.visible_message(span_warning(LANG("obj.38927dda", list(src))))
 	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -130,7 +131,7 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += "From bottom to top, this cart contains:"
+	. += LANG("obj.60bee37d", null)
 	for(var/obj/item/flatpack as anything in contents)
 		. += flatpack.name
 
@@ -156,7 +157,7 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if (length(contents) >= MAX_FLAT_PACKS)
-		balloon_alert(user, "full!")
+		balloon_alert(user, LANG("obj.8abfbb3d", null))
 		return ITEM_INTERACT_BLOCKING
 	if (!user.transferItemToLoc(attacking_item, src))
 		return ITEM_INTERACT_BLOCKING

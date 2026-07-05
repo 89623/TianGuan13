@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Harvesting component. Useful if you want to be able to harvest items from living mobs.
  *
@@ -97,11 +98,11 @@
 	SIGNAL_HANDLER
 
 	if(amount_ready < 1)
-		examine_list += span_notice("[parent] seems like they could use a bit more time.")
+		examine_list += span_notice(LANG("datum.71160715", list(parent)))
 	if(amount_ready > 1)
-		examine_list += span_notice("[parent] looks like they can be harvested about [amount_ready] times.")
+		examine_list += span_notice(LANG("datum.ef467691", list(parent, amount_ready)))
 	if(amount_ready == 1)
-		examine_list += span_notice("[parent] looks ready to be harvested.")
+		examine_list += span_notice(LANG("datum.e68c2251", list(parent)))
 
 ///signal called on parent being attacked with an item
 /datum/component/mob_harvest/proc/on_attackby(datum/source, obj/item/used_item, mob/user)
@@ -138,10 +139,10 @@
  */
 /datum/component/mob_harvest/proc/remove_wait_time(mob/user)
 	if(amount_ready >= max_ready)
-		to_chat(user, span_warning("[parent] looks too full to keep feeding!"))
+		to_chat(user, span_warning(LANG("datum.964d3523", list(parent))))
 		return
 	item_generation_time -= item_reduction_time
-	to_chat(user, span_notice("You feed [parent]."))
+	to_chat(user, span_notice(LANG("datum.1d9ece2c", list(parent))))
 	return
 
 /**
@@ -152,12 +153,12 @@
  */
 /datum/component/mob_harvest/proc/harvest_item(mob/user)
 	if(amount_ready < 1)
-		to_chat(user, span_warning("[parent] doesn't seem to have enough [produced_item_desc] to harvest."))
+		to_chat(user, span_warning(LANG("datum.f212f42a", list(parent, produced_item_desc))))
 		return
-	to_chat(user, span_notice("You start to harvest [produced_item_desc] from [parent]..."))
+	to_chat(user, span_notice(LANG("datum.39a4ead7", list(produced_item_desc, parent))))
 	if(do_after(user, item_harvest_time, target = parent))
 		playsound(parent, item_harvest_sound, 20, TRUE)
-		to_chat(user, span_notice("You harvest some [produced_item_desc] from [parent]."))
+		to_chat(user, span_notice(LANG("datum.a9beab01", list(produced_item_desc, parent))))
 		amount_ready--
 		if(!iscarbon(parent))
 			var/mob/living/living_parent = parent

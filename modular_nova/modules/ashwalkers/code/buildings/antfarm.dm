@@ -33,7 +33,7 @@
 	. = ..()
 	var/turf/src_turf = get_turf(src)
 	if(!src_turf.GetComponent(/datum/component/simple_farm))
-		src_turf.balloon_alert_to_viewers("must be on farmable surface")
+		src_turf.balloon_alert_to_viewers(LANG("obj.18694f10", null))
 		return INITIALIZE_HINT_QDEL
 
 	for(var/obj/structure/antfarm/found_farm in range(2, get_turf(src)))
@@ -59,7 +59,7 @@
 
 	if(!has_ants)
 		if(prob(ant_chance))
-			balloon_alert_to_viewers("ants have appeared!")
+			balloon_alert_to_viewers(LANG("obj.38cb8d43", null))
 			has_ants = TRUE
 
 		return
@@ -69,18 +69,18 @@
 
 /obj/structure/antfarm/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>There are currently [has_ants ? "" : "no "]ants in the farm.")
+	. += span_notice(LANG("obj.d22d28bb", list(has_ants ? "" : "no ")))
 	if(!has_ants)
-		. += span_notice("To add ants, feed the farm some <b>food</b>.")
+		. += span_notice(LANG("obj.9a8a0c63", null))
 
 /obj/structure/antfarm/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/food))
 		if(has_ants)
-			balloon_alert(user, "ants block the way!")
+			balloon_alert(user, LANG("obj.5b35b262", null))
 			return ITEM_INTERACT_BLOCKING
 
 		qdel(tool)
-		balloon_alert(user, "food has been placed")
+		balloon_alert(user, LANG("obj.9bf1051b", null))
 		user.mind?.adjust_experience(/datum/skill/primitive, 2)
 		ant_chance++
 		if(prob(user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_PROBS_MODIFIER)))
@@ -89,10 +89,10 @@
 
 	if(istype(tool, /obj/item/storage/bag/plants))
 		if(has_ants)
-			balloon_alert(user, "ants block the way!")
+			balloon_alert(user, LANG("obj.5b35b262", null))
 			return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "feeding the ants")
+		balloon_alert(user, LANG("obj.585ba266", null))
 		for(var/obj/item/food/selected_food in tool.contents)
 			var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 			if(has_ants || !do_after(user, 1 SECONDS * skill_modifier, src))

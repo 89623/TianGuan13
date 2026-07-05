@@ -98,7 +98,7 @@
 /datum/storage/holster/can_insert(obj/item/to_insert, mob/user, messages, force)
 	. = ..()
 	if(is_type_in_list(to_insert, limited_hold_types) && (limited_held >= max_limited_store))
-		user.balloon_alert(user, "no suitable space!")
+		user.balloon_alert(user, LANG("datum.c253a52f", null))
 		return FALSE
 
 /datum/storage/holster/energy
@@ -157,7 +157,7 @@
 		return
 
 	if(!resolve_parent.IsReachableBy(to_show))
-		resolve_parent.balloon_alert(to_show, "can't reach!")
+		resolve_parent.balloon_alert(to_show, LANG("datum.fba9228d", null))
 		return FALSE
 
 	if(!isliving(to_show) || to_show.incapacitated)
@@ -168,7 +168,7 @@
 		return ..()
 	resolve_parent.add_fingerprint(to_show)
 	INVOKE_ASYNC(to_show, TYPE_PROC_REF(/mob, put_in_hands), gun_to_draw)
-	to_show.visible_message(span_warning("[to_show] draws [gun_to_draw] from [resolve_parent]!"), span_notice("You draw [gun_to_draw] from [resolve_parent]."))
+	to_show.visible_message(span_warning(LANG("datum.e20111a7", list(to_show, gun_to_draw, resolve_parent))), span_notice(LANG("datum.c1811110", list(gun_to_draw, resolve_parent))))
 
 /*
 * GLASSES

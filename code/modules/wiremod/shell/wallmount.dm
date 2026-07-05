@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/wallmount_circuit
 	name = "circuit box"
 	desc = "A wall-mounted box suitable for the installation of integrated circuits."
@@ -15,11 +16,11 @@
 /obj/structure/wallmount_circuit/wrench_act(mob/living/user, obj/item/tool)
 	var/datum/component/shell/shell_comp = GetComponent(/datum/component/shell)
 	if(shell_comp.locked)
-		balloon_alert(user, "locked!")
+		balloon_alert(user, LANG("obj.5d71bae2", null))
 		return ITEM_INTERACT_FAILURE
-	to_chat(user, span_notice("You start unsecuring the circuit box..."))
+	to_chat(user, span_notice(LANG("obj.3dbc9724", null)))
 	if(tool.use_tool(src, user, 40, volume=50))
-		to_chat(user, span_notice("You unsecure the circuit box."))
+		to_chat(user, span_notice(LANG("obj.b659bb13", null)))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS

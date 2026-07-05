@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Echoes drone laws to the user
  *
@@ -7,7 +8,7 @@
 	set category = "Drone"
 	set name = "Check Laws"
 
-	to_chat(src, "<b>Drone Laws</b>")
+	to_chat(src, LANG("mob.24a048ba", null))
 	to_chat(src, laws)
 
 /**
@@ -25,7 +26,7 @@
 	set category = "Drone"
 	set name = "Drone ping"
 
-	var/alert_s = input(src,"Alert severity level","Drone ping",null) as null|anything in list("Low","Medium","High","Critical")
+	var/alert_s = input(src,LANG("mob.5b32bc9b", null),LANG("mob.4a2934c5", null),null) as null|anything in list("Low","Medium","High","Critical")
 
 	var/area/A = get_area(loc)
 

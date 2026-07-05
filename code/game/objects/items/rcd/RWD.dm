@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/rwd
 	name = "rapid wiring device"
 	desc = "A device used to rapidly lay cable & pick up stray cable pieces laying around."
@@ -40,10 +41,10 @@
 
 /obj/item/rwd/examine(mob/user)
 	. = ..()
-	. += "Dual wield & walk over floors to lay cable."
-	. += "It has [current_amount] pieces remaining."
-	. += "Right click on it to dispense a custom amount of cable."
-	. += "Alt click to change cable layer."
+	. += LANG("obj.415f15b8", null)
+	. += LANG("obj.8dc63c9e", list(current_amount))
+	. += LANG("obj.e0ae16cf", null)
+	. += LANG("obj.dff365af", null)
 
 /obj/item/rwd/update_icon_state()
 	switch(current_amount)
@@ -63,7 +64,7 @@
 
 /obj/item/rwd/attack_self_secondary(mob/user, modifiers)
 	if(current_amount <= 0)
-		balloon_alert(user, "nothing to dispense!")
+		balloon_alert(user, LANG("obj.a0dddad1", null))
 		return
 
 	var/amount = tgui_input_number(user = user, message = "Enter amount to dispense", title = "Custom cable", default = 0, max_value = min(30, current_amount), min_value = min(1, current_amount), timeout = 0, round_value = TRUE)
@@ -89,7 +90,7 @@
 	//spawn the cable. if it merged with the stak below then you pick that up else put it in the user's hand
 	var/obj/item/stack/cable_coil/new_cable = new(user.drop_location(), amount)
 	if(QDELETED(new_cable))
-		balloon_alert(user, "merged with stack below!")
+		balloon_alert(user, LANG("obj.fa918011", null))
 	else
 		user.put_in_active_hand(modify_cable(new_cable))
 
@@ -150,7 +151,7 @@
 	if(!istype(user))
 		return FALSE
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, span_warning(LANG("obj.e8ba50af", null)))
 		return FALSE
 	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
@@ -159,7 +160,7 @@
 /// insert cable into the rwd
 /obj/item/rwd/proc/add_cable(mob/user, obj/item/stack/cable_coil/cable)
 	if(current_amount == max_amount)
-		balloon_alert(user, "device is full!")
+		balloon_alert(user, LANG("obj.e4b00025", null))
 		return
 
 	var/insert_amount = min(cable.amount, max_amount - current_amount)
@@ -168,7 +169,7 @@
 
 	delta_cable(insert_amount, decrement = FALSE)
 	update_appearance(UPDATE_ICON_STATE)
-	balloon_alert(user, "inserted [insert_amount] cable")
+	balloon_alert(user, LANG("obj.b4d110da", list(insert_amount)))
 
 /// modify cable properties according to its layer
 /obj/item/rwd/proc/modify_cable(obj/item/stack/cable_coil/target_cable)

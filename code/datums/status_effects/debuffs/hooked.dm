@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Status effect applied when casting a fishing rod at someone, provided the attached fishing hook allows it.
 /datum/status_effect/grouped/hooked
 	id = "hooked"
@@ -32,11 +33,11 @@
 		return
 	if(!owner.can_resist())
 		return
-	owner.balloon_alert(owner, "removing hook...")
+	owner.balloon_alert(owner, LANG("atom.3ae58ac5", null))
 	var/datum/status_effect/grouped/hooked/effect = owner.has_status_effect(attached_effect.type)
 	if(!effect.try_unhook())
 		return
-	owner.balloon_alert(owner, "hook removed")
+	owner.balloon_alert(owner, LANG("atom.b5eb7b3d", null))
 	var/datum/beam/fishing_line/rand_source = pick(effect.sources)
 	qdel(rand_source)
 

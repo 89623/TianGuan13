@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/sealed/mecha/marauder
 	desc = "Heavy-duty, combat exosuit, developed after the Durand model. Rarely found among civilian populations. Its bleeding edge armour ensures maximum usability and protection at the cost of some modularity."
 	name = "\improper Marauder"
@@ -82,7 +83,7 @@
 	chassis.zoom_mode = !chassis.zoom_mode
 	button_icon_state = "mech_zoom_[chassis.zoom_mode ? "on" : "off"]"
 	chassis.log_message("Toggled zoom mode.", LOG_MECHA)
-	to_chat(owner, "[icon2html(chassis, owner)]<font color='[chassis.zoom_mode?"blue":"red"]'>Zoom mode [chassis.zoom_mode?"en":"dis"]abled.</font>")
+	to_chat(owner, LANG("datum.1f8518f6", list(icon2html(chassis, owner), chassis.zoom_mode?"blue":"red", chassis.zoom_mode?"en":"dis")))
 	if(chassis.zoom_mode)
 		owner.client.view_size.setTo(4.5)
 		SEND_SOUND(owner, sound('sound/vehicles/mecha/imag_enh.ogg', volume=50))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/implant/circuit
 	name = "circuit implant"
 	actions_types = null
@@ -35,7 +36,7 @@
 	var/mob/living/user = arguments[2]
 	var/force = arguments[4]
 	if(!force)
-		source.balloon_alert(user, "duplicate implant present!")
+		source.balloon_alert(user, LANG("obj.562f3ecf", null))
 		return COMPONENT_STOP_IMPLANTING
 
 /obj/item/implant/circuit/ui_host(mob/user)
@@ -145,7 +146,7 @@
 	if (implant.imp_in.stat == DEAD)
 		return
 
-	to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("[html_encode(sent_message)]")]\"")
+	to_chat(implant.imp_in, LANG("obj.dabd65ca", list(span_robot("[html_encode(sent_message)]"))))
 
 /obj/item/circuit_component/implant_core/proc/on_borg_charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -165,13 +166,13 @@
 		return
 
 	parent.cell.give(shock_damage * 2)
-	to_chat(source, span_notice("You absorb some of the shock into your [parent.name]!"))
+	to_chat(source, span_notice(LANG("obj.a5584887", list(parent.name))))
 
 /obj/item/circuit_component/implant_core/proc/on_examine(datum/source, mob/mob, list/examine_text)
 	SIGNAL_HANDLER
 
 	if (isobserver(mob))
-		examine_text += span_notice("[source.p_They()] [source.p_have()] <a href='byond://?src=[REF(src)];open_implant=1'>\a [parent] implanted in [source.p_them()]</a>.")
+		examine_text += span_notice(LANG("obj.4930d946", list(source.p_They(), source.p_have(), REF(src), parent, source.p_them())))
 
 /obj/item/circuit_component/implant_core/Topic(href, list/href_list)
 	..()
@@ -219,10 +220,10 @@
 	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))
-		to_chat(owner, span_boldwarning("[circuit_component.parent] has no power cell."))
+		to_chat(owner, span_boldwarning(LANG("datum.2bd539cc", list(circuit_component.parent))))
 	else
-		to_chat(owner, span_info("[circuit_component.parent]'s [cell.name] has <b>[cell.percent()]%</b> charge left."))
-		to_chat(owner, span_info("You can recharge it by using a cyborg recharging station."))
+		to_chat(owner, span_info(LANG("datum.458a2f5f", list(circuit_component.parent, cell.name, cell.percent()))))
+		to_chat(owner, span_info(LANG("datum.d802482f", null)))
 
 /datum/action/innate/implant_charge_action/process(seconds_per_tick)
 	build_all_button_icons(UPDATE_BUTTON_STATUS)

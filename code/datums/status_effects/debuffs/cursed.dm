@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DEFAULT_MAX_CURSE_COUNT 5
 
 /// Status effect that gives the target miscellanous debuffs while throwing a status alert and causing them to smoke from the damage they're incurring.
@@ -42,7 +43,7 @@
 		return SLOT_MACHINE_USE_CANCEL
 
 	if(monologuing)
-		to_chat(owner, span_warning("Your arm is resisting your attempts to pull the lever!")) // listening to kitschy monologues to postpone your powergaming is the true curse here.
+		to_chat(owner, span_warning(LANG("datum.d74eefa7", null))) // listening to kitschy monologues to postpone your powergaming is the true curse here.
 		return SLOT_MACHINE_USE_POSTPONE
 
 /// Handles the debuffs of this status effect and incrementing the number of curses we have.
@@ -99,10 +100,10 @@
 
 		if(5 to INFINITY)
 			if(max_curse_count != DEFAULT_MAX_CURSE_COUNT) // this probably will only happen through admin schenanigans letting people stack up infinite curses or something
-				to_chat(owner, span_boldwarning("Do you <i>still</i> think you're in control?"))
+				to_chat(owner, span_boldwarning(LANG("datum.9264c01d", null)))
 				return
 
-			to_chat(owner, span_userdanger("Why couldn't I get one more try?!"))
+			to_chat(owner, span_userdanger(LANG("datum.986bd4a6", null)))
 			owner.investigate_log("has been gibbed by the cursed status effect after accumulating [curse_count] curses.", INVESTIGATE_DEATHS)
 			owner.gib(DROP_ALL_REMAINS)
 			qdel(src)
@@ -122,8 +123,8 @@
 		brand?.remove_wound()
 
 	owner.visible_message(
-		span_notice("The smoke slowly clears from [owner.name]..."),
-		span_notice("Your skin finally settles down and your throat no longer feels as dry... The brand disappearing confirms that the curse has been lifted."),
+		span_notice(LANG("datum.16931a8e", list(owner.name))),
+		span_notice(LANG("datum.4cfd38fd", null)),
 	)
 	qdel(src)
 
@@ -134,7 +135,7 @@
 		damage_chance = initial(damage_chance)
 		return
 
-	to_chat(owner, span_userdanger("As your body crumbles, you feel the curse of the slot machine surge through your body!"))
+	to_chat(owner, span_userdanger(LANG("datum.033aca9f", null)))
 	damage_chance += 75 //ruh roh raggy
 
 /// If our owner dies without getting gibbed (as in of other causes), stop smoking because we've "expended all the life energy".
@@ -187,10 +188,10 @@
 	var/curses = linked_effect?.curse_count
 	switch(curses)
 		if(2)
-			desc = "Your greed is catching up to you..."
+			desc = LANG("atom.8d9ae20d", null)
 		if(3)
-			desc = "You really don't feel good right now... But why stop now?"
+			desc = LANG("atom.59269b5c", null)
 		if(4 to INFINITY)
-			desc = "Real winners quit before they reach the ultimate prize."
+			desc = LANG("atom.e9733500", null)
 
 #undef DEFAULT_MAX_CURSE_COUNT

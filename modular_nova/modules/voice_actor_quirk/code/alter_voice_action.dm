@@ -103,11 +103,11 @@
 	active = !active
 	if(active)
 		set_secondary_voice()
-		to_chat(owner, span_green("You are now voice acting."))
+		to_chat(owner, span_green(LANG("datum.4981e644", null)))
 	else
 		set_primary_voice()
-		to_chat(owner, span_green("You have stopped voice acting."))
-	owner.balloon_alert(owner, "voice changed")
+		to_chat(owner, span_green(LANG("datum.0c37e040", null)))
+	owner.balloon_alert(owner, LANG("datum.658bbcbb", null))
 	build_all_button_icons(UPDATE_BUTTON_BACKGROUND)
 
 ///Swaps to the Voice Actor quirk's secondary chat color, TTS voice, and blooper

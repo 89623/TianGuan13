@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SLAM_COMBO "GH"
 #define KICK_COMBO "HH"
 #define RESTRAIN_COMBO "GG"
@@ -33,8 +34,8 @@
 	if(!can_use(cqc_user))
 		return
 	cqc_user.visible_message(
-		span_danger("[cqc_user] twists [attacker]'s arm, sending their [attack_weapon] back towards them!"),
-		span_userdanger("Making sure to avoid [attacker]'s [attack_weapon], you twist their arm to send it right back at them!"),
+		span_danger(LANG("datum.0d333f25", list(cqc_user, attacker, attack_weapon))),
+		span_userdanger(LANG("datum.3a51a38e", list(attacker, attack_weapon))),
 	)
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
 	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
@@ -66,14 +67,14 @@
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	if(istype(attacker) && cqc_user.Adjacent(attacker))
 		cqc_user.visible_message(
-			span_danger("[cqc_user] [blocking_text_s] [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
-			span_userdanger("You [blocking_text] [attack_text]!"),
+			span_danger(LANG("datum.1933f4ed", list(cqc_user, blocking_text_s, attack_text, attacker, attacker.p_their()))),
+			span_userdanger(LANG("datum.22d557f3", list(blocking_text, attack_text))),
 		)
 		attacker.Stun(4 SECONDS)
 	else
 		cqc_user.visible_message(
 			span_danger("[cqc_user] [blocking_text_s] [attack_text]!"),
-			span_userdanger("You [blocking_text] [attack_text]!"),
+			span_userdanger(LANG("datum.22d557f3", list(blocking_text, attack_text))),
 		)
 	return SUCCESSFUL_BLOCK
 
@@ -107,13 +108,13 @@
 
 	attacker.do_attack_animation(defender)
 	defender.visible_message(
-		span_danger("[attacker] slams [defender] into the ground!"),
-		span_userdanger("You're slammed into the ground by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("datum.28437593", list(attacker, defender))),
+		span_userdanger(LANG("datum.1baae841", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You slam [defender] into the ground!"))
+	to_chat(attacker, span_danger(LANG("datum.d04aff9c", list(defender))))
 	playsound(attacker, 'sound/items/weapons/slam.ogg', 50, TRUE, -1)
 	defender.apply_damage(10, BRUTE)
 	defender.Paralyze(12 SECONDS)
@@ -128,13 +129,13 @@
 	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && defender.get_stamina_loss() >= 100)
 		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
 		defender.visible_message(
-			span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"),
-			span_userdanger("You're knocked unconscious by [attacker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			span_danger(LANG("datum.d51c445c", list(attacker, defender, defender.p_them()))),
+			span_userdanger(LANG("datum.1ace6279", list(attacker))),
+			span_hear(LANG("datum.6c7f8149", null)),
 			null,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You kick [defender]'s head, knocking [defender.p_them()] out!"))
+		to_chat(attacker, span_danger(LANG("datum.8e839a68", list(defender, defender.p_them()))))
 		playsound(attacker, 'sound/items/weapons/genhit1.ogg', 50, TRUE, -1)
 
 		var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
@@ -144,13 +145,13 @@
 
 	else
 		defender.visible_message(
-			span_danger("[attacker] kicks [defender] back!"),
-			span_userdanger("You're kicked back by [attacker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			span_danger(LANG("datum.297558a6", list(attacker, defender))),
+			span_userdanger(LANG("datum.a73f7ca4", list(attacker))),
+			span_hear(LANG("datum.6c7f8149", null)),
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You kick [defender] back!"))
+		to_chat(attacker, span_danger(LANG("datum.efbba362", list(defender))))
 		playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
@@ -165,13 +166,13 @@
 	attacker.do_attack_animation(defender)
 	log_combat(attacker, defender, "pressured (CQC)")
 	defender.visible_message(
-		span_danger("[attacker] punches [defender]'s neck!"),
-		span_userdanger("Your neck is punched by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("datum.24d741e8", list(attacker, defender))),
+		span_userdanger(LANG("datum.ae2e7c73", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You punch [defender]'s neck!"))
+	to_chat(attacker, span_danger(LANG("datum.2d75ec00", list(defender))))
 	defender.adjust_stamina_loss(60)
 	playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
@@ -184,13 +185,13 @@
 
 	log_combat(attacker, defender, "restrained (CQC)")
 	defender.visible_message(
-		span_warning("[attacker] locks [defender] into a restraining position!"),
-		span_userdanger("You're locked into a restraining position by [attacker]!"),
-		span_hear("You hear shuffling and a muffled groan!"),
+		span_warning(LANG("datum.67396b64", list(attacker, defender))),
+		span_userdanger(LANG("datum.6d16cc5c", list(attacker))),
+		span_hear(LANG("datum.1e8332d6", null)),
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You lock [defender] into a restraining position!"))
+	to_chat(attacker, span_danger(LANG("datum.b7002ec5", list(defender))))
 	defender.adjust_stamina_loss(20)
 	defender.Stun(10 SECONDS)
 	restraining_mob = WEAKREF(defender)
@@ -204,13 +205,13 @@
 	attacker.do_attack_animation(defender)
 	log_combat(attacker, defender, "consecutive CQC'd (CQC)")
 	defender.visible_message(
-		span_danger("[attacker] strikes [defender]'s abdomen, neck and back consecutively"), \
-		span_userdanger("Your abdomen, neck and back are struck consecutively by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("datum.ea757b5d", list(attacker, defender))), \
+		span_userdanger(LANG("datum.2e8e51a7", list(attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You strike [defender]'s abdomen, neck and back consecutively!"))
+	to_chat(attacker, span_danger(LANG("datum.1fe9c4d6", list(defender))))
 	playsound(defender, 'sound/items/weapons/cqchit2.ogg', 50, TRUE, -1)
 	var/obj/item/held_item = defender.get_active_held_item()
 	if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
@@ -238,13 +239,13 @@
 		attacker.setGrabState(GRAB_AGGRESSIVE) //Instant aggressive grab if on grab intent
 		log_combat(attacker, defender, "grabbed", addition="aggressively")
 		defender.visible_message(
-			span_warning("[attacker] violently grabs [defender]!"),
-			span_userdanger("You're grabbed violently by [attacker]!"),
-			span_hear("You hear sounds of aggressive fondling!"),
+			span_warning(LANG("datum.c089d79c", list(attacker, defender))),
+			span_userdanger(LANG("datum.59d8575f", list(attacker))),
+			span_hear(LANG("datum.1af6c3cc", null)),
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You violently grab [defender]!"))
+		to_chat(attacker, span_danger(LANG("datum.a2ee96d0", list(defender))))
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/cqc/harm_act(mob/living/attacker, mob/living/defender)
@@ -257,12 +258,12 @@
 		if(!isnull(head))
 			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
 			defender.visible_message(
-				span_danger("[attacker] snaps the neck of [defender]!"),
-				span_userdanger("Your neck is snapped by [attacker]!"),
-				span_hear("You hear a sickening snap!"),
+				span_danger(LANG("datum.45b3e8b3", list(attacker, defender))),
+				span_userdanger(LANG("datum.810237f6", list(attacker))),
+				span_hear(LANG("datum.c20f8aa4", null)),
 				ignored_mobs = attacker
 			)
-			to_chat(attacker, span_danger("In a swift motion, you snap the neck of [defender]!"))
+			to_chat(attacker, span_danger(LANG("datum.bb7d46bd", list(defender))))
 			log_combat(attacker, defender, "snapped neck")
 			defender.apply_damage(100, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND)
 			if(!HAS_TRAIT(defender, TRAIT_NODEATH))
@@ -275,13 +276,13 @@
 
 	if(attacker.resting && defender.stat != DEAD && defender.body_position == STANDING_UP)
 		defender.visible_message(
-			span_danger("[attacker] leg sweeps [defender]!"),
-			span_userdanger("Your legs are sweeped by [attacker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			span_danger(LANG("datum.34d4fc2a", list(attacker, defender))),
+			span_userdanger(LANG("datum.9efb8512", list(attacker))),
+			span_hear(LANG("datum.6c7f8149", null)),
 			null,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You leg sweep [defender]!"))
+		to_chat(attacker, span_danger(LANG("datum.d15d9893", list(defender))))
 		playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 		attacker.do_attack_animation(defender)
 		defender.apply_damage(10, BRUTE)
@@ -304,13 +305,13 @@
 	playsound(defender, (picked_hit_type == "kick" || picked_hit_type == "stomp") ? 'sound/items/weapons/cqchit2.ogg' : 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 
 	defender.visible_message(
-		span_danger("[attacker] [picked_hit_type]ed [defender]!"),
-		span_userdanger("You're [picked_hit_type]ed by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("datum.5db40571", list(attacker, picked_hit_type, defender))),
+		span_userdanger(LANG("datum.074fb9e3", list(picked_hit_type, attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You [picked_hit_type] [defender]!"))
+	to_chat(attacker, span_danger(LANG("datum.22d557f3", list(picked_hit_type, defender))))
 	log_combat(attacker, defender, "attacked ([picked_hit_type]'d)(CQC)")
 	return MARTIAL_ATTACK_SUCCESS
 
@@ -325,13 +326,13 @@
 	if(IS_WEAKREF_OF(attacker.pulling, restraining_mob))
 		log_combat(attacker, defender, "disarmed (CQC)", addition = "knocked out (CQC Chokehold)")
 		defender.visible_message(
-			span_danger("[attacker] puts [defender] into a chokehold!"),
-			span_userdanger("You're put into a chokehold by [attacker]!"),
-			span_hear("You hear shuffling and a muffled groan!"),
+			span_danger(LANG("datum.dbfacfa8", list(attacker, defender))),
+			span_userdanger(LANG("datum.230e8f7f", list(attacker))),
+			span_hear(LANG("datum.1e8332d6", null)),
 			null,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You put [defender] into a chokehold!"))
+		to_chat(attacker, span_danger(LANG("datum.d8130ed6", list(defender))))
 		defender.SetSleeping(40 SECONDS)
 		restraining_mob = null
 		if(attacker.grab_state < GRAB_NECK && !HAS_TRAIT(attacker, TRAIT_PACIFISM))
@@ -351,13 +352,13 @@
 			disarmed_item = null
 
 		defender.visible_message(
-			span_danger("[attacker] strikes [defender]'s jaw with their hand[disarmed_item ? ", disarming [defender.p_them()] of [disarmed_item]" : ""]!"),
-			span_userdanger("[attacker] strikes your jaw,[disarmed_item ? " disarming you of [disarmed_item] and" : ""] leaving you disoriented!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			span_danger(LANG("datum.b3402f89", list(attacker, defender, disarmed_item ? ", disarming [defender.p_them()] of [disarmed_item]" : ""))),
+			span_userdanger(LANG("datum.ef36a349", list(attacker, disarmed_item ? " disarming you of [disarmed_item] and" : ""))),
+			span_hear(LANG("datum.6c7f8149", null)),
 			COMBAT_MESSAGE_RANGE,
 			attacker,
 		)
-		to_chat(attacker, span_danger("You strike [defender]'s jaw,[disarmed_item ? " disarming [defender.p_them()] of [disarmed_item] and" : ""] leaving [defender.p_them()] disoriented!"))
+		to_chat(attacker, span_danger(LANG("datum.7398bc20", list(defender, disarmed_item ? " disarming [defender.p_them()] of [disarmed_item] and" : "", defender.p_them()))))
 		playsound(defender, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		defender.set_jitter_if_lower(4 SECONDS)
 		defender.apply_damage(5, attacker.get_attack_type())
@@ -365,13 +366,13 @@
 		return MARTIAL_ATTACK_SUCCESS
 
 	defender.visible_message(
-		span_danger("[attacker] fails to disarm [defender]!"), \
-		span_userdanger("You're nearly disarmed by [attacker]!"),
-		span_hear("You hear a swoosh!"),
+		span_danger(LANG("datum.af2d6dcd", list(attacker, defender))), \
+		span_userdanger(LANG("datum.5ce50df8", list(attacker))),
+		span_hear(LANG("datum.b8189c1e", null)),
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	to_chat(attacker, span_warning("You fail to disarm [defender]!"))
+	to_chat(attacker, span_warning(LANG("datum.4c97e2d6", list(defender))))
 	playsound(defender, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "failed to disarm (CQC)")
 	return MARTIAL_ATTACK_FAIL
@@ -380,15 +381,15 @@
 /datum/martial_art/cqc/get_style_help()
 	. = list()
 
-	. += "<b><i>You try to remember some of the basics of CQC.</i></b>"
+	. += LANG("datum.5a0a1ff0", null)
 
-	. += "[span_notice("Slam")]: Grab Punch. Slam opponent into the ground, knocking them down."
-	. += "[span_notice("CQC Kick")]: Punch Punch. Knocks opponent away. Knocks out stunned opponents and does stamina damage."
-	. += "[span_notice("Restrain")]: Grab Grab. Locks opponents into a restraining position, disarm to knock them out with a chokehold."
-	. += "[span_notice("Pressure")]: Shove Grab. Decent stamina damage."
-	. += "[span_notice("Consecutive CQC")]: Shove Shove Punch. Mainly offensive move, huge damage and decent stamina damage."
+	. += LANG("datum.1c8561d8", list(span_notice("Slam")))
+	. += LANG("datum.d7f076cc", list(span_notice("CQC Kick")))
+	. += LANG("datum.7cc06215", list(span_notice("Restrain")))
+	. += LANG("datum.5fee4093", list(span_notice("Pressure")))
+	. += LANG("datum.674011eb", list(span_notice("Consecutive CQC")))
 
-	. += "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>"
+	. += LANG("datum.46c32390", null)
 	return .
 
 ///Subtype of CQC. Only used for the chef.

@@ -76,7 +76,7 @@
 /datum/action/cooldown/mob_cooldown/spider_leap/Activate(atom/target)
 	var/turf/target_turf = get_turf(target)
 	if(isclosedturf(target_turf) || isspaceturf(target_turf))
-		owner.balloon_alert(owner, "base not suitable!")
+		owner.balloon_alert(owner, LANG("datum.dc0a2636", null))
 		return FALSE
 	new /obj/effect/temp_visual/leaper_crush(target_turf)
 	owner.throw_at(target = target_turf, range = 7, speed = 1, spin = FALSE, callback = CALLBACK(src, PROC_REF(flop_on_turf), target_turf))
@@ -256,14 +256,14 @@
 /datum/action/cooldown/mob_cooldown/ceiling_walk/Activate(atom/target)
 	if(HAS_TRAIT(owner, TRAIT_SNEAK))
 
-		owner.balloon_alert(owner, "you flop down off the ceiling")
+		owner.balloon_alert(owner, LANG("datum.bdf22beb", null))
 		owner.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 		owner.density = TRUE
 		REMOVE_TRAIT(owner, TRAIT_SNEAK, ACTION_TRAIT)
 		animate(owner, alpha = initial(owner.alpha), time = animation_time, delay = animation_time, flags = ANIMATION_PARALLEL)
 
 	else
-		owner.balloon_alert(owner, "you skitter up the wall")
+		owner.balloon_alert(owner, LANG("datum.8a4c8de1", null))
 		owner.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 		owner.density = FALSE // if we're on the ceiling...
 		ADD_TRAIT(owner, TRAIT_SNEAK, ACTION_TRAIT)

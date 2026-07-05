@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Heirloom component. For use with the family heirloom quirk, tracks that an item is someone's family heirloom.
 /datum/component/heirloom
 	/// The mind that actually owns our heirloom.
@@ -29,12 +30,12 @@
 	var/datum/mind/examiner_mind = user.mind
 
 	if(examiner_mind == owner)
-		examine_list += span_notice("It is your precious [family_name] family heirloom. Keep it safe!")
+		examine_list += span_notice(LANG("datum.4b0a5416", list(family_name)))
 		return
 
 	var/datum/antagonist/obsessed/our_creeper = examiner_mind?.has_antag_datum(/datum/antagonist/obsessed)
 	if(our_creeper?.trauma.obsession == owner)
-		examine_list += span_nicegreen("This must be [owner]'s family heirloom! It smells just like them...")
+		examine_list += span_nicegreen(LANG("datum.0f41debb", list(owner)))
 		return
 
-	examine_list += span_notice("It is the [family_name] family heirloom, belonging to [owner].")
+	examine_list += span_notice(LANG("datum.536b6eac", list(family_name, owner)))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //reforming
 /obj/item/ectoplasm/revenant
 	name = "glimmering residue"
@@ -29,8 +30,8 @@
 	if(inert)
 		return ..()
 	user.visible_message(
-		span_notice("[user] scatters [src] in all directions."),
-		span_notice("You scatter [src] across the area."),
+		span_notice(LANG("obj.e9f6fbdf", list(user, src))),
+		span_notice(LANG("obj.1da11af3", list(src))),
 	)
 	var/obj/structure/mirror/nearby_mirror = check_for_mirrors(drop_location(), 5)
 	if(nearby_mirror)
@@ -44,7 +45,7 @@
 		return
 	var/obj/structure/mirror/nearby_mirror = check_for_mirrors(get_turf(hit_atom), 3)
 	if(!nearby_mirror)
-		visible_message(span_notice("[src] breaks into particles upon impact, which fade away to nothingness."))
+		visible_message(span_notice(LANG("obj.7b8abbca", list(src))))
 	else
 		transfer_to_mirror(nearby_mirror)
 	qdel(src)
@@ -52,19 +53,19 @@
 /obj/item/ectoplasm/revenant/proc/transfer_to_mirror(obj/structure/mirror/nearby_mirror)
 	PRIVATE_PROC(TRUE)
 	nearby_mirror.TakeComponent(GetComponent(/datum/component/revenant_prison))
-	nearby_mirror.visible_message(span_revenwarning("A dismal moan echoes as particles of [src] fall onto [nearby_mirror]!"))
+	nearby_mirror.visible_message(span_revenwarning(LANG("obj.ff5c4cbb", list(src, nearby_mirror))))
 	log_game("A revenant was trapped inside [nearby_mirror]")
 	message_admins("A revenant was trapped inside [nearby_mirror] [ADMIN_JMP(nearby_mirror)]")
 
 /obj/item/ectoplasm/revenant/examine(mob/user)
 	. = ..()
 	if(inert)
-		. += span_revennotice("It seems inert.")
+		. += span_revennotice(LANG("obj.2e85428a", null))
 	else
-		. += span_revenwarning("It is shifting and distorted. It would be wise to destroy this.")
+		. += span_revenwarning(LANG("obj.d2af643f", null))
 
 /obj/item/ectoplasm/revenant/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is inhaling [src]! It looks like [user.p_theyre()] trying to visit the shadow realm!"))
+	user.visible_message(span_suicide(LANG("obj.85ae4475", list(user, src, user.p_theyre()))))
 	qdel(src)
 	return OXYLOSS
 
@@ -76,5 +77,5 @@
 		return
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
 	SEND_SIGNAL(src, COMSIG_REVENANT_RELEASE, cause = "ectoplasm reforming")
-	visible_message(span_revenboldnotice("[src] suddenly rises into the air before fading away."))
+	visible_message(span_revenboldnotice(LANG("obj.b6ecdf19", list(src))))
 	qdel(src)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Inserts the target_datum into [/datum/admins/var/tagged_datums], for later reference.
  *
@@ -6,7 +7,7 @@
  */
 /datum/admins/proc/add_tagged_datum(datum/target_datum)
 	if(LAZYFIND(tagged_datums, target_datum))
-		to_chat(owner, span_warning("[target_datum] is already tagged!"))
+		to_chat(owner, span_warning(LANG("datum.f709d320", list(target_datum))))
 		return
 
 	if(!target_datum.allow_mark_datum())
@@ -14,14 +15,14 @@
 
 	LAZYADD(tagged_datums, target_datum)
 	RegisterSignal(target_datum, COMSIG_QDELETING, PROC_REF(handle_tagged_del), override = TRUE)
-	to_chat(owner, span_notice("[target_datum] has been tagged."))
+	to_chat(owner, span_notice(LANG("datum.3cd4d291", list(target_datum))))
 
 /// Get ahead of the curve with deleting
 /datum/admins/proc/handle_tagged_del(datum/source)
 	SIGNAL_HANDLER
 
 	if(owner)
-		to_chat(owner, span_boldnotice("Tagged datum [source] ([source.type]) has been deleted."))
+		to_chat(owner, span_boldnotice(LANG("datum.aa0ff653", list(source, source.type))))
 	remove_tagged_datum(source, silent = TRUE)
 
 /**
@@ -38,9 +39,9 @@
 	if(LAZYFIND(tagged_datums, target_datum))
 		LAZYREMOVE(tagged_datums, target_datum)
 		if(!silent)
-			to_chat(owner, span_notice("[target_datum] has been untagged."))
+			to_chat(owner, span_notice(LANG("datum.ec16f574", list(target_datum))))
 	else if(!silent)
-		to_chat(owner, span_warning("[target_datum] was not already tagged."))
+		to_chat(owner, span_warning(LANG("datum.b6f81a3a", list(target_datum))))
 
 /// Quick define for readability
 #define TAG_DEL(X) "<b>(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];del_tag=[REF(X)]'>UNTAG</a>)</b>"

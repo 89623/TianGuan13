@@ -311,7 +311,13 @@
 /// Gets the message that shows up when spawning as this job
 /datum/job/proc/get_spawn_message(alt_title) // NOVA EDIT CHANGE - ALTERNATIVE_JOB_TITLES - ORIGINAL: /datum/job/proc/get_spawn_message()
 	SHOULD_NOT_OVERRIDE(TRUE)
-	return boxed_message(span_infoplain(jointext(get_spawn_message_information(alt_title), "\n&bull; "))) // NOVA EDIT CHANGE - ALTERNATIVE_JOB_TITLED - ORIGINAL: return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
+	var/list/spawn_info = get_spawn_message_information(alt_title) // NOVA EDIT CHANGE - I18N - ORIGINAL: return boxed_message(span_infoplain(jointext(get_spawn_message_information(), "\n&bull; ")))
+	// NOVA EDIT ADDITION START - I18N - 逐条完整句反查（整盒 to_chat 只走 AC 子串=最短匹配，长句会被
+	// 拆成已译子短语+中间留英文，如 skeleton crew 那句）。插值行整串 miss、留待 to_chat 模板引擎。
+	for(var/idx in 1 to length(spawn_info))
+		spawn_info[idx] = lang_localize_chat_sentence(spawn_info[idx])
+	// NOVA EDIT ADDITION END
+	return boxed_message(span_infoplain(jointext(spawn_info, "\n&bull; "))) // NOVA EDIT CHANGE - ALTERNATIVE_JOB_TITLED
 
 /// Returns a list of strings that correspond to chat messages sent to this mob when they join the round.
 /datum/job/proc/get_spawn_message_information(alt_title = title) // NOVA EDIT CHANGE - ALTERNATIVE_JOB_TITLES - ORIGINAL: /datum/job/proc/get_spawn_message_information()
@@ -327,12 +333,14 @@
 	if(radio_info)
 		info += radio_info
 	if(req_admin_notify)
-		info += "<b>You are playing a job that is important for Game Progression. \
-			If you have to disconnect, please notify the admins via adminhelp.</b>"
+		// NOVA EDIT CHANGE - I18N - ORIGINAL: 多行 "\" 续行 → 运行时带前导制表符，反查/边界引擎键不匹配；并单行使键对齐。
+		info += "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(CONFIG_GET(number/minimal_access_threshold))
-		info += span_boldnotice("As this station was initially staffed with a \
-			[CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] \
-			have been added to your ID card.")
+		// NOVA EDIT CHANGE - I18N - ORIGINAL: span_boldnotice 里三元拼接「片段」无法翻译（片段不成句、不入目录）；拆成两条完整句，各自整句可译。
+		if(CONFIG_GET(flag/jobs_have_minimal_access))
+			info += span_boldnotice("As this station was initially staffed with a full crew, only your job's necessities have been added to your ID card.")
+		else
+			info += span_boldnotice("As this station was initially staffed with a skeleton crew, additional access may have been added to your ID card.")
 	//NOVA EDIT ADDITION BEGIN - ANTAG OPT IN
 	if (!CONFIG_GET(flag/disable_antag_opt_in_preferences))
 		if (isnum(minimum_opt_in_level) && minimum_opt_in_level > OPT_IN_NOT_TARGET)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Quick overview:
 //
 // Pipes combine to form pipelines
@@ -120,11 +121,11 @@
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] is on layer [piping_layer].")
+	. += span_notice(LANG("obj.fd03b0f2", list(src, piping_layer)))
 	if((vent_movement & VENTCRAWL_ENTRANCE_ALLOWED) && isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_VENTCRAWLER_NUDE) || HAS_TRAIT(L, TRAIT_VENTCRAWLER_ALWAYS))
-			. += span_notice("Alt-click to crawl through it.")
+			. += span_notice(LANG("obj.17169813", null))
 
 /**
  * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.
@@ -445,17 +446,17 @@
 		empty_pipe = TRUE
 
 	if(!empty_pipe)
-		to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+		to_chat(user, span_notice(LANG("obj.84b25bb7", list(src))))
 
 	if (internal_pressure > 2 * ONE_ATMOSPHERE)
-		to_chat(user, span_warning("As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?"))
+		to_chat(user, span_warning(LANG("obj.7f6505b5", list(src))))
 		unsafe_wrenching = TRUE //Oh dear oh dear
 
 	if(I.use_tool(src, user, empty_pipe ? 0 : 2 SECONDS, volume = 50))
 		user.visible_message( \
-			"[user] unfastens \the [src].", \
-			span_notice("You unfasten \the [src]."), \
-			span_hear("You hear ratchet."))
+			LANG("obj.cb7d97ff", list(user, src)), \
+			span_notice(LANG("obj.5cb76786", list(src))), \
+			span_hear(LANG("obj.12db39f3", null)))
 		investigate_log("was [span_warning("REMOVED")] by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
@@ -493,7 +494,7 @@
 		var/datum/gas_mixture/env_air = loc.return_air()
 		pressures = int_air.return_pressure() - env_air.return_pressure()
 
-	user.visible_message(span_danger("[user] is sent flying by pressure!"),span_userdanger("The pressure sends you flying!"))
+	user.visible_message(span_danger(LANG("obj.d3a68c85", list(user))),span_userdanger(LANG("obj.28cdac71", null)))
 
 	// if get_dir(src, user) is not 0, target is the edge_target_turf on that dir
 	// otherwise, edge_target_turf uses a random cardinal direction
@@ -551,7 +552,12 @@
 
 /obj/machinery/atmospherics/update_name()
 	if(!override_naming && !HAS_TRAIT(src, TRAIT_WAS_RENAMED))
-		name = "[GLOB.pipe_color_name[pipe_color]] [initial(name)]"
+		// NOVA EDIT CHANGE START - I18N - 运行期拼接的名字（[颜色] [基础名]）绕过 /atom/Initialize 反查；按 locale 用译名拼接（颜色名在 _state_words.json，基础名在 obj.json）
+		if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+			name = "[lang_localize_arg(GLOB.pipe_color_name[pipe_color])][lang_localize_arg(initial(name))]"
+		else
+			name = "[GLOB.pipe_color_name[pipe_color]] [initial(name)]"
+		// NOVA EDIT CHANGE END - ORIGINAL: name = "[GLOB.pipe_color_name[pipe_color]] [initial(name)]"
 	return ..()
 
 /obj/machinery/atmospherics/vv_edit_var(vname, vval)

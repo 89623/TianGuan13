@@ -28,5 +28,5 @@
 		return
 	if(last_warning + 3 SECONDS < world.time)
 		last_warning = world.time
-		to_chat(parent, span_warning("You can only traverse space or low-pressure outdoors areas while space crawling!"))
+		to_chat(parent, span_warning(LANG("obj.983cdbf2", null)))
 	return COMPONENT_BLOCK_PHASED_MOVE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/ammo_casing/foam_dart
 	name = "foam dart"
 	desc = "It's Donk or Don't! Ages 8 and up."
@@ -30,7 +31,7 @@
 
 /obj/item/ammo_casing/foam_dart/update_desc()
 	. = ..()
-	desc = "It's Donk or Don't! [modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."]"
+	desc = LANG("obj.14918714", list(modified ? "... Although, this one doesn't look too safe." : "Ages 8 and up."))
 
 /obj/item/ammo_casing/foam_dart/examine_more(mob/user)
 	. = ..()
@@ -39,8 +40,7 @@
 		for(var/type in insertable_items_hint)
 			var/obj/item/type_item = type
 			type_initial_names += "\a [initial(type_item.name)]"
-		. += span_notice("[modified ? "You can" : "If you removed the safety cap with a screwdriver, you could"] insert a small item\
-			[length(type_initial_names) ? ", such as [english_list(type_initial_names, and_text = "or ", final_comma_text = ", ")]" : ""].")
+		. += span_notice(LANG("obj.4a7ad516", list(modified ? "You can" : "If you removed the safety cap with a screwdriver, you could", length(type_initial_names) ? ", such as [english_list(type_initial_names, and_text = "or ", final_comma_text = ", ")]" : "")))
 
 
 /obj/item/ammo_casing/foam_dart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -52,7 +52,7 @@
 	dart.modified = TRUE
 	dart.damage_type = BRUTE
 	dart.set_embed(null) // Cap is what makes them sticky
-	to_chat(user, span_notice("You pop the safety cap off [src]."))
+	to_chat(user, span_notice(LANG("obj.013544a5", list(src))))
 	update_appearance()
 
 /obj/item/ammo_casing/foam_dart/riot

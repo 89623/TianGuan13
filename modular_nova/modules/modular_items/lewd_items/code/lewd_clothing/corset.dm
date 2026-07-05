@@ -19,7 +19,7 @@
 
 /obj/item/clothing/suit/corset/click_alt(mob/user)
 	laced_tight = !laced_tight
-	to_chat(user, span_notice("You [laced_tight ? "tighten" : "loosen"] the corset, making it far [laced_tight ? "harder" : "easier"] to breathe."))
+	to_chat(user, span_notice(LANG("obj.5b7244b5", list(laced_tight ? "tighten" : "loosen", laced_tight ? "harder" : "easier"))))
 	playsound_if_pref(user, laced_tight ? 'sound/items/handling/cloth/cloth_pickup1.ogg' : 'sound/items/handling/cloth/cloth_drop1.ogg', 40, TRUE)
 	. = CLICK_ACTION_SUCCESS
 	if(laced_tight)
@@ -30,11 +30,11 @@
 /obj/item/clothing/suit/corset/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(laced_tight && src == user.wear_suit)
-		to_chat(user, span_purple("The corset squeezes tightly against your ribs! Breathing suddenly feels much more difficult."))
+		to_chat(user, span_purple(LANG("obj.e070509b", null)))
 
 /obj/item/clothing/suit/corset/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(laced_tight && src == user.wear_suit)
-		to_chat(user, span_purple("Phew. Now you can breathe normally."))
+		to_chat(user, span_purple(LANG("obj.06264ba8", null)))
 
 #undef TIGHT_SLOWDOWN

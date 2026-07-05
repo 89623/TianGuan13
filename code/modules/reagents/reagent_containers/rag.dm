@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
@@ -23,21 +24,21 @@
 
 /obj/item/rag/examine(mob/user)
 	. = ..()
-	. += span_notice("Adding [/datum/reagent/water::name] or [/datum/reagent/space_cleaner::name] to it would make it a fair bit better at scrubbing.")
+	. += span_notice(LANG("obj.46126de1", list(/datum/reagent/water::name, /datum/reagent/space_cleaner::name)))
 	switch(blood_level)
 		if(1 to 4)
-			. += span_info("The [name] is a bit dirty, but it should still be good for cleaning.")
+			. += span_info(LANG("obj.df42394f", list(name)))
 		if(5 to 9)
-			. += span_warning("This [name] is dirty! But it still probably has a few wipes left in it.")
+			. += span_warning(LANG("obj.e2ec48ee", list(name)))
 		if(10 to INFINITY)
-			. += span_warning("This [name] is filthy! I couldn't clean a thing with it!")
+			. += span_warning(LANG("obj.497bc174", list(name)))
 
 /obj/item/rag/interact(mob/user)
 	. = ..()
 	if(loc != user || blood_level <= 4)
 		return
 
-	balloon_alert(user, "wringing out...")
+	balloon_alert(user, LANG("obj.16a2b57a", null))
 	if(!do_after(user, (wrings + 2) * 1 SECONDS, src))
 		return
 
@@ -52,15 +53,15 @@
 /obj/item/rag/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/reagent_containers/spray))
 		if(tool.reagents.total_volume <= 0)
-			balloon_alert(user, "spray is empty!")
+			balloon_alert(user, LANG("obj.dfbe2913", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(reagents.holder_full())
-			balloon_alert(user, "[name] is full!")
+			balloon_alert(user, LANG("obj.21d5a38a", list(name)))
 			return ITEM_INTERACT_BLOCKING
 
 		tool.reagents.trans_to(reagents, tool.reagents.total_volume, transferred_by = user)
-		balloon_alert(user, "[name] spritzed")
+		balloon_alert(user, LANG("obj.3e46140b", list(name)))
 		var/obj/item/reagent_containers/spray/spray = tool
 		playsound(src, spray.spray_sound, 33, TRUE, -6)
 		return ITEM_INTERACT_SUCCESS
@@ -75,7 +76,7 @@
 		holder.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 
 /obj/item/rag/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.6910a3fb", list(user, user.p_them(), src, user.p_theyre()))))
 	return OXYLOSS
 
 /obj/item/rag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -87,12 +88,12 @@
 	var/log_object = "containing [reagentlist]"
 	if(!carbon_target.is_mouth_covered())
 		reagents.trans_to(carbon_target, reagents.total_volume, transferred_by = user, methods = INGEST)
-		carbon_target.visible_message(span_danger("[user] smothers \the [carbon_target] with \the [src]!"), span_userdanger("[user] smothers you with \the [src]!"), span_hear("You hear some struggling and muffled cries of surprise."))
+		carbon_target.visible_message(span_danger(LANG("obj.08810758", list(user, carbon_target, src))), span_userdanger(LANG("obj.5c47cf82", list(user, src))), span_hear(LANG("obj.6f48c9d6", null)))
 		log_combat(user, carbon_target, "smothered", src, log_object)
 	else
 		reagents.expose(carbon_target, TOUCH)
 		reagents.clear_reagents()
-		carbon_target.visible_message(span_notice("[user] touches \the [carbon_target] with \the [src]."))
+		carbon_target.visible_message(span_notice(LANG("obj.47cfe6ef", list(user, carbon_target, src))))
 		log_combat(user, carbon_target, "touched", src, log_object)
 	return ITEM_INTERACT_SUCCESS
 
@@ -114,7 +115,7 @@
 		// snowflakeeeee check to make it a bit more intuitive when cleaning the rag.
 		if(istype(atom_to_clean, /obj/structure/sink))
 			return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
-		atom_to_clean.balloon_alert(cleaner, "[name] is too dirty!")
+		atom_to_clean.balloon_alert(cleaner, LANG("obj.7adea5a2", list(name)))
 		return CLEAN_BLOCKED
 	if(loc == cleaner)
 		return CLEAN_ALLOWED
@@ -150,7 +151,7 @@
 		add_blood_DNA(all_blood_dna)
 	update_appearance()
 	if(blood_level >= 10)
-		to_chat(cleaner, span_warning("[src] is too dirty to clean anything else! Wash it first!"))
+		to_chat(cleaner, span_warning(LANG("obj.1037fba7", list(src))))
 	if(prob(10 * blood_level))
 		bloody_holder(cleaner)
 

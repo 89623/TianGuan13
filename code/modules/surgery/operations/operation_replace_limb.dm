@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/limb/replace_limb
 	name = "augment limb"
 	rnd_name = "Augmentation"
@@ -54,7 +55,7 @@
 	if(!length(tool.contents))
 		return TRUE
 	// Prevents quickly filling someone with high-tier organs by augmenting them with a pre-stuffed limb
-	to_chat(surgeon, span_warning("[tool] needs to be empty in order to be attached!"))
+	to_chat(surgeon, span_warning(LANG("datum.078e1a30", list(tool))))
 	return FALSE
 
 /datum/surgery_operation/limb/replace_limb/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, list/operation_args)

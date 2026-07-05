@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //I wish we had interfaces sigh, and i'm not sure giving team and antag common root is a better solution here
 
 //Name shown on antag list
@@ -92,7 +93,7 @@
 
 /datum/admins/proc/check_antagonists()
 	if(!SSticker.HasRoundStarted())
-		tgui_alert(usr, "The game hasn't started yet!")
+		tgui_alert(usr, LANG("datum.8a212f07", null))
 		return
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Round Status</title></head><body><h1><B>Round Status</B></h1>")
 	dat += "<a href='byond://?_src_=holder;[HrefToken()];gamemode_panel=1'>Dynamic Panel</a><br>"

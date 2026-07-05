@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/setup_shop
 	name = "Setup shop"
 	desc = "Summons a wacky sales sign, and a comfy sitting spot to conduct your business from."
@@ -22,7 +23,7 @@
 		return FALSE
 	if(shop_spot_ref?.resolve())
 		if(feedback)
-			owner.balloon_alert(owner, "already set up!")
+			owner.balloon_alert(owner, LANG("datum.1b77637c", null))
 		return FALSE
 	return TRUE
 

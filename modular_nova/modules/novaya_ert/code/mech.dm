@@ -140,23 +140,23 @@
 
 /obj/item/mecha_parts/mecha_equipment/wardenupgrade/can_attach(obj/vehicle/sealed/mecha/warden/mecha, attach_right = FALSE, mob/user)
 	if(!istype(mecha, /obj/vehicle/sealed/mecha/warden))
-		to_chat(user, span_warning("This conversion kit can only be applied to M/TACS-1-LF \"Warden\" exosuits."))
+		to_chat(user, span_warning(LANG("obj.d2ed2504", null)))
 		return FALSE
 	if(istype(mecha, /obj/vehicle/sealed/mecha/warden/wunk))
-		to_chat(user, span_warning("[mecha] has already been upgraded with the WUNK package."))
+		to_chat(user, span_warning(LANG("obj.bafdeb3a", list(mecha))))
 		return FALSE
 	if(!(mecha.mecha_flags & PANEL_OPEN))
-		to_chat(user, span_warning("[mecha]'s maintenance panel must be open to install the WUNK package."))
+		to_chat(user, span_warning(LANG("obj.cb9de330", list(mecha))))
 		return FALSE
 	if(LAZYLEN(mecha.occupants))
-		to_chat(user, span_warning("[mecha] must be unoccupied during the WUNK conversion process."))
+		to_chat(user, span_warning(LANG("obj.4faa6e07", list(mecha))))
 		return FALSE
 	if(!mecha.cell)
-		to_chat(user, span_warning("The WUNK conversion requires a functional power cell installed."))
+		to_chat(user, span_warning(LANG("obj.08c02b9c", null)))
 		return FALSE
 	// Check if the mech has any equipment that conflicts with WUNK mounting points
 	if(mecha.equip_by_category[MECHA_ARMOR] && LAZYLEN(mecha.equip_by_category[MECHA_ARMOR]) > 1)
-		to_chat(user, span_warning("[mecha] has too many armor modules installed. Remove one before conversion."))
+		to_chat(user, span_warning(LANG("obj.6aeb0280", list(mecha))))
 		return FALSE
 	return TRUE
 

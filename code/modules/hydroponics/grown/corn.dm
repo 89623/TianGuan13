@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Corn
 /obj/item/seeds/corn
 	name = "corn seed pack"
@@ -55,7 +56,7 @@
 
 /obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.get_sharpness())
-		to_chat(user, span_notice("You use [W] to fashion a pipe out of the corn cob!"))
+		to_chat(user, span_notice(LANG("obj.5d3a4a5f", list(W))))
 		new /obj/item/cigarette/pipe/cobpipe (user.loc)
 		qdel(src)
 	else
@@ -90,7 +91,7 @@
 
 /obj/item/grown/snapcorn/attack_self(mob/user)
 	..()
-	to_chat(user, span_notice("You pick a snap pop from the cob."))
+	to_chat(user, span_notice(LANG("obj.92fcb708", null)))
 	var/obj/item/toy/snappop/S = new /obj/item/toy/snappop(user.loc)
 	if(ishuman(user))
 		user.put_in_hands(S)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
@@ -105,8 +106,8 @@
 
 /obj/item/construction/plumbing/examine(mob/user)
 	. = ..()
-	. += "You can scroll your mouse wheel to change the piping layer."
-	. += "You can right click a fluid duct to set the Plumbing RPD to its color and layer."
+	. += LANG("obj.2e9a54dc", null)
+	. += LANG("obj.d398c822", null)
 
 /obj/item/construction/plumbing/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -206,13 +207,13 @@
 	var/is_allowed = TRUE
 	if(!useResource(cost, user, TRUE) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
-			balloon_alert(user, "tile is blocked!")
+			balloon_alert(user, LANG("obj.fa928166", null))
 		return FALSE
 	if(!build_delay(user, cost, target = destination))
 		return FALSE
 	if(!useResource(cost, user, TRUE) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
-			balloon_alert(user, "tile is blocked!")
+			balloon_alert(user, LANG("obj.fa928166", null))
 		return FALSE
 
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -272,7 +273,7 @@
 	if(duct.duct_layer && duct.duct_color)
 		current_color = GLOB.pipe_color_name[duct.duct_color]
 		current_layer = GLOB.plumbing_layer_names["[duct.duct_layer]"]
-		balloon_alert(user, "using [current_color], layer [current_layer]")
+		balloon_alert(user, LANG("obj.33dd554f", list(current_color, current_layer)))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
@@ -297,7 +298,7 @@
 		if(current_loc < 1)
 			current_loc = GLOB.plumbing_layers.len
 		current_layer = GLOB.plumbing_layers[current_loc]
-	to_chat(source, span_notice("You set the layer to [current_layer]."))
+	to_chat(source, span_notice(LANG("obj.d6a04ad6", list(current_layer))))
 
 /obj/item/construction/plumbing/service
 	name = "service plumbing constructor"

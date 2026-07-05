@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and generate a text file for wikichem.", ADMIN_CATEGORY_DEBUG)
 	//If we're a reaction product
 	var/static/prefix_reaction = {"{| class=\"wikitable sortable\" style=\"width:100%; text-align:left; border: 3px solid #FFDD66; cellspacing=0; cellpadding=2; background-color:white;\"
@@ -11,12 +12,12 @@ ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and genera
 
 	var/input_text = tgui_input_text(
 		user,
-		"Input a name of a reagent, or a series of reagents split with a comma (no spaces) to get its wiki table entry",
-		"Recipe",
+		LANG("datum.102b8371", null),
+		LANG("datum.e1c04ddb", null),
 		max_length = MAX_MESSAGE_LEN,
 		) //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
 	if(!input_text)
-		to_chat(user, "Input was blank!")
+		to_chat(user, LANG("datum.eca3b274", null))
 		return
 	text2file(prefix_reaction, "[GLOB.log_directory]/chem_parse.txt")
 	var/list/names = splittext("[input_text]", ",")
@@ -39,7 +40,7 @@ ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and genera
 			var/single_parse = generate_chemwiki_line(reagent, reaction)
 			text2file(single_parse, "[GLOB.log_directory]/chem_parse.txt")
 	text2file("|}", "[GLOB.log_directory]/chem_parse.txt") //Cap off the table
-	to_chat(user, "Done! Saved file to (wherever your root folder is, i.e. where the DME is)/[GLOB.log_directory]/chem_parse.txt OR use the Get Current Logs verb under the Admin tab. (if you click Open, and it does nothing, that's because you've not set a .txt default program! Try downloading it instead, and use that file to set a default program! Have a nice day!")
+	to_chat(user, LANG("datum.da20b5ec", list(GLOB.log_directory)))
 
 /// Generate the big list of reagent based reactions.
 /proc/generate_chemwiki_line(datum/reagent/reagent, datum/chemical_reaction/reaction)
@@ -138,7 +139,7 @@ ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and genera
 				else if (sum_change < 0)
 					outstring += "\n<br>H+ producing"
 			else
-				to_chat(usr, "[reaction] doesn't have valid product and reagent volumes! Please tell Fermi.")
+				to_chat(usr, LANG("_root.78b7fa0b", list(reaction)))
 		else
 			if(reaction.H_ion_release > 0)
 				outstring += "\n<br>H+ consuming"

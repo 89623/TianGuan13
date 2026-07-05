@@ -77,7 +77,7 @@
 /obj/structure/destructible/clockwork/gear_base/technologists_lectern/examine(mob/user)
 	. = ..()
 	if(researching && IS_CLOCK(user))
-		. += span_brass("The researching of [selected_research.name] will take another [DisplayTimeText(timeleft(research_timer_id))].")
+		. += span_brass(LANG("obj.2add19a6", list(selected_research.name, DisplayTimeText(timeleft(research_timer_id)))))
 
 
 /obj/structure/destructible/clockwork/gear_base/technologists_lectern/process(seconds_per_tick)
@@ -109,7 +109,7 @@
 		return
 
 	if(!anchored)
-		balloon_alert(user, "not fastened!")
+		balloon_alert(user, LANG("obj.7c2f76c2", null))
 		return
 
 	ui_interact(user)
@@ -279,7 +279,7 @@
 		return
 
 	if(researching)
-		owner.balloon_alert(owner, "already researching!")
+		owner.balloon_alert(owner, LANG("obj.9da8b6db", null))
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(begin_research), owner, target_turf)
@@ -298,7 +298,7 @@
 	playsound(target_turf, 'sound/machines/clockcult/ark_deathrattle.ogg', 80, FALSE, pressure_affected = FALSE)
 	research_sigil = new(target_turf)
 	send_clock_message(null, "A research ritual has begun in [get_area(src)], ensure nobody stops it until it is completed in [DisplayTimeText(selected_research.time_to_research)]!", msg_ghosts = FALSE)
-	notify_ghosts("[owner.real_name] has begun a research ritual in [get_area(src)]",
+	notify_ghosts(LANG("obj.17a69d30", list(owner.real_name, get_area(src))),
 		source = src,
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		header = "Research ritual"
@@ -368,7 +368,7 @@
 
 	research_sigil.finish_research()
 
-	priority_announce("An outburst of anomalous energy has been detected at [get_area(src)]. Please ensure the safety of any nearby crew.")
+	priority_announce(LANG("obj.ebe59e50", list(get_area(src))))
 
 	addtimer(CALLBACK(src, PROC_REF(side_effect)), 10 SECONDS)
 
@@ -412,7 +412,7 @@
 					qdel(nearby_atom)
 
 		if(11 to 20) // Spawn 4 ai-controlled marauders to fuck shit up
-			visible_message(span_warning("A group of clockwork marauders appear, before being obscured by a cloud of smoke!"))
+			visible_message(span_warning(LANG("obj.fcdc92fa", null)))
 
 			for(var/direction in list(NORTH, SOUTH, EAST, WEST))
 				var/turf/tile = get_step(src, direction)
@@ -451,7 +451,7 @@
 
 
 		if(31 to 40) // Fuck up the power, but in the other way instead
-			priority_announce("An extreme power surge has been detected in on-board APCs. Surge will subside in [rand(3, 8)] minutes.") // Not always accurate, are we?
+			priority_announce(LANG("obj.9b9780ef", list(rand(3, 8)))) // Not always accurate, are we?
 
 			force_apc_arcing(TRUE)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(force_apc_arcing), FALSE), 4 MINUTES)

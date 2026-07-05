@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * A big final event to run when you complete seven rituals
  */
@@ -60,7 +61,7 @@
 	wizard_murder.explanation_text = "Kill [wizard.current.name], the one who did this."
 	antag_datum.objectives += wizard_murder
 
-	to_chat(aggrieved_crewmate.current, span_warning("No! This isn't right!"))
+	to_chat(aggrieved_crewmate.current, span_warning(LANG("datum.9736bd84", null)))
 	aggrieved_crewmate.announce_objectives()
 
 /**

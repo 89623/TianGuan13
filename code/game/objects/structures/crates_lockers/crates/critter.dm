@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/closet/crate/critter
 	name = "critter crate"
 	desc = "A crate designed for safe transport of animals. It has an oxygen tank for safe transport in space."
@@ -78,4 +79,4 @@
 		return
 	stasis_sealed = FALSE
 	do_sparks(3, FALSE, src)
-	to_chat(user, span_warning("[src] one-use stasis mechanism has been triggered! It will not work again."))
+	to_chat(user, span_warning(LANG("obj.387a2f20", list(src))))

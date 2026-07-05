@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/camera/siliconcam/pai_camera
 	name = "pAI photo camera"
 	light_color = COLOR_PAI_GREEN
@@ -7,7 +8,7 @@
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
 	playsound(src, SFX_POLAROID, 75, TRUE, -3)
-	balloon_alert(user, "image recorded")
+	balloon_alert(user, LANG("obj.3fb11283", null))
 
 /**
  * Handles selecting and printing stored images.
@@ -21,10 +22,10 @@
 	var/mob/living/silicon/pai/pai = loc
 	var/datum/picture/selection = selectpicture(user)
 	if(!istype(selection))
-		balloon_alert(user, "invalid image")
+		balloon_alert(user, LANG("obj.f76d9d32", null))
 		return FALSE
 	printpicture(user, selection)
-	user.visible_message(span_notice("A picture appears on top of the chassis of [pai.name]!"), span_notice("You print a photograph."))
+	user.visible_message(span_notice(LANG("obj.ddc57374", list(pai.name))), span_notice(LANG("obj.ea70dffc", null)))
 	return TRUE
 
 /**

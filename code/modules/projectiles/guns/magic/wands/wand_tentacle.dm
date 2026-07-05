@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define RETRACT_TIME (0.7 SECONDS)
 
 /**
@@ -60,8 +61,8 @@
 	flick("goliath_tentacle_spawn", src)
 
 	if (victim.stat != DEAD && !HAS_TRAIT(victim, TRAIT_TENTACLE_IMMUNE))
-		balloon_alert(victim, "grabbed")
-		visible_message(span_danger("[src] grabs hold of [victim]!"))
+		balloon_alert(victim, LANG("obj.bb1cd695", null))
+		visible_message(span_danger(LANG("obj.599446dc", list(src, victim))))
 		victim.apply_damage(15, BRUTE)
 		if (victim.apply_status_effect(status_applied, grab_time, src))
 			buckle_mob(victim, TRUE)
@@ -73,7 +74,7 @@
 
 /obj/effect/wizard_tentacle/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if (buckled_mob == user)
-		balloon_alert(user, "can't reach!")
+		balloon_alert(user, LANG("obj.fba9228d", null))
 		return
 	return ..()
 
@@ -124,9 +125,9 @@
 /datum/status_effect/incapacitating/immobilized/wizard_tentacle/proc/on_helped(mob/source, mob/helping)
 	SIGNAL_HANDLER
 	if (helping == owner)
-		owner.balloon_alert(owner, "can't reach!")
+		owner.balloon_alert(owner, LANG("datum.fba9228d", null))
 		return NONE
-	source.visible_message(span_notice("[helping] rips [source] from the tentacle's grasp!"))
+	source.visible_message(span_notice(LANG("datum.0e8b01a6", list(helping, source))))
 	release()
 	return COMPONENT_BLOCK_MISC_HELP
 
@@ -155,7 +156,7 @@
 	. = ..()
 	if (!owner || !had_tentacle)
 		return
-	owner.visible_message(span_suicide("The tentacle drags [owner] directly to hell!"))
+	owner.visible_message(span_suicide(LANG("datum.474e0e8f", list(owner))))
 	owner.unequip_everything()
 	animate(owner, transform = matrix() * 0, time = RETRACT_TIME)
 	animate(owner, pixel_y = -12, time = RETRACT_TIME, flags = ANIMATION_PARALLEL)

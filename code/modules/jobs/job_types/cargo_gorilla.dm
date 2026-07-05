@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/job/cargo_gorilla
 	title = JOB_CARGO_GORILLA
 	description = "Assist the supply department by moving freight and disposing of unwanted fruits."
@@ -44,6 +45,6 @@
 	bank_account.bank_cards += gorilla_id
 	spawned.put_in_hands(gorilla_id, del_on_fail = TRUE)
 
-	to_chat(spawned, span_boldnotice("You are Cargorilla, a pacifist friend of the station and carrier of freight."))
-	to_chat(spawned, span_notice("You can pick up crates by clicking on them, and drop them by clicking on the ground."))
+	to_chat(spawned, span_boldnotice(LANG("datum.e5a6f252", null)))
+	to_chat(spawned, span_notice(LANG("datum.285e387f", null)))
 	LAZYADD(spawned.mind.special_roles, "Cargorilla")

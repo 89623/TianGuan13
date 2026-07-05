@@ -48,19 +48,19 @@
 	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
 	if(isnull(limb))
 		if(!silent)
-			patient.balloon_alert(user, "no [parse_zone(healed_zone)]!")
+			patient.balloon_alert(user, LANG("obj.e9a0d247", list(parse_zone(healed_zone))))
 		return FALSE
 	if(!LAZYLEN(limb.wounds))
 		if(!silent)
-			patient.balloon_alert(user, "no wounds!") // good problem to have imo
+			patient.balloon_alert(user, LANG("obj.3ca838db", null)) // good problem to have imo
 		return FALSE
 	if(patient.has_status_effect(/datum/status_effect/vulnerable_to_damage))
 		if(!silent)
-			patient.balloon_alert(user, "still recovering from last use!")
+			patient.balloon_alert(user, LANG("obj.68176998", null))
 		return FALSE
 	if(!find_suitable_wound(limb))
 		if(!silent)
-			patient.balloon_alert(user, "can't heal those!")
+			patient.balloon_alert(user, LANG("obj.b74eca67", null))
 		return FALSE
 	return TRUE
 
@@ -74,21 +74,21 @@
 	if(HAS_TRAIT(woundies, TRAIT_WOUND_SCANNED))
 		treatment_delay *= 0.5
 		if(user == patient)
-			to_chat(user, span_notice("You keep in mind the indications from the holo-image about your injury, and expertly begin applying [src]."))
+			to_chat(user, span_notice(LANG("obj.34a070b8", list(src))))
 		else
-			user.visible_message(span_warning("[user] begins expertly treating the wounds on [patient]'s [limb.plaintext_zone] with [src]..."), span_warning("You begin quickly treating the wounds on [patient]'s [limb.plaintext_zone] with [src], keeping the holo-image indications in mind..."))
+			user.visible_message(span_warning(LANG("obj.32b346c6", list(user, patient, limb.plaintext_zone, src))), span_warning(LANG("obj.f4e0a87e", list(patient, limb.plaintext_zone, src))))
 	else
-		user.visible_message(span_warning("[user] begins treating the wounds on [patient]'s [limb.plaintext_zone] with [src]..."), span_warning("You begin treating the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone] with [src]..."))
+		user.visible_message(span_warning(LANG("obj.9e77d680", list(user, patient, limb.plaintext_zone, src))), span_warning(LANG("obj.b00fc612", list(user == patient ? "your" : "[patient]'s", limb.plaintext_zone, src))))
 
 	if(!do_after(user, treatment_delay, target = patient))
 		return
 
-	user.visible_message(span_green("[user] applies [src] to [patient]'s [limb.plaintext_zone]."), span_green("You treat the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone]."))
+	user.visible_message(span_green(LANG("obj.7032cacb", list(user, src, patient, limb.plaintext_zone))), span_green(LANG("obj.f8833985", list(user == patient ? "your" : "[patient]'s", limb.plaintext_zone))))
 	playsound(patient, treatment_sound, 50, TRUE)
 	woundies.remove_wound()
 	if(!HAS_TRAIT(patient, TRAIT_ANALGESIA) || !causes_pain)
 		patient.emote("scream")
-		to_chat(patient, span_userdanger("Your [limb.plaintext_zone] burns like hell as the wounds on it are rapidly healed, fuck!"))
+		to_chat(patient, span_userdanger(LANG("obj.eedd31bb", list(limb.plaintext_zone))))
 		patient.add_mood_event("severe_surgery", /datum/mood_event/rapid_wound_healing)
 	limb.receive_damage(brute = INSTANT_WOUND_HEAL_LIMB_DAMAGE, wound_bonus = CANT_WOUND)
 	patient.adjust_stamina_loss(INSTANT_WOUND_HEAL_STAMINA_DAMAGE)

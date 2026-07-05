@@ -115,7 +115,7 @@
 
 /obj/machinery/rbmk2_sniffer/proc/link_reactor(mob/user, obj/machinery/power/rbmk2/desired_reactor)
 	if(desired_reactor in linked_reactors)
-		balloon_alert(user, "already linked!")
+		balloon_alert(user, LANG("obj.cc32a1c7", null))
 		return FALSE
 
 	linked_reactors[desired_reactor] = TRUE
@@ -135,12 +135,12 @@
 /obj/machinery/rbmk2_sniffer/examine(mob/user)
 	. = ..()
 
-	. += "It is linked to [length(linked_reactors)] reactor(s)."
+	. += LANG("obj.69586ccd", list(length(linked_reactors)))
 
 	if(last_meltdown)
-		. += span_danger("It is flashing red!")
+		. += span_danger(LANG("obj.a7827843", null))
 	else
-		. += span_notice("It is glowing a steady green.")
+		. += span_notice(LANG("obj.75e23bb9", null))
 
 /obj/machinery/rbmk2_sniffer/proc/alert_radio(alert_text, bypass_cooldown = FALSE, alert_emergency_channel = FALSE, criticality = TRUE)
 	if(!radio_enabled || !alert_text)

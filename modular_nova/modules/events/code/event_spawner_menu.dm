@@ -245,11 +245,11 @@
 				ShowPanel(usr, null)
 				return
 			if("job_name")
-				var/msg = input(usr, "Set the job name of this spawner.", "Job name", ESI.job_name) as text|null
+				var/msg = input(usr, LANG("datum.32e8690c", null), LANG("datum.d559c01d", null), ESI.job_name) as text|null
 				if(msg)
 					ESI.job_name = msg
 			if("flavor_text")
-				var/msg = input(usr, "Set the flavor text of this spawner.", "Flavor Text", ESI.flavor_text) as message|null
+				var/msg = input(usr, LANG("datum.ac5e2e1d", null), LANG("datum.3313d694", null), ESI.flavor_text) as message|null
 				if(msg)
 					ESI.flavor_text = msg
 			if("used_outfit")
@@ -265,30 +265,30 @@
 			if("prompt_players")
 				ESI.prompt_players = !ESI.prompt_players
 			if("add_ckey")
-				var/msg = input(usr, "Add allowed CKEY to the spawner.", "Add CKEY", "") as text|null
+				var/msg = input(usr, LANG("datum.b427f368", null), LANG("datum.b52bec96", null), "") as text|null
 				if(msg)
 					ESI.ckey_whitelist += LOWER_TEXT(msg)
 			if("add_species")
-				var/result = input(usr, "Select a species", "Add species") as null|anything in GLOB.roundstart_races
+				var/result = input(usr, LANG("datum.2dc4c8fd", null), LANG("datum.562a036c", null)) as null|anything in GLOB.roundstart_races
 				if(result)
 					ESI.species_whitelist += result
 			if("add_gender")
-				var/result = input(usr, "Select a gender", "Add Gender") as null|anything in list("male", "female", "plural")
+				var/result = input(usr, LANG("datum.dfb3ebd7", null), LANG("datum.ee4959df", null)) as null|anything in list("male", "female", "plural")
 				if(result)
 					ESI.gender_whitelist += result
 			if("add_access")
-				var/msg = input(usr, "Add access type to the spawner(as number)", "Add Access", "") as num|null
+				var/msg = input(usr, LANG("datum.5a790b8b", null), LANG("datum.6c8c800a", null), "") as num|null
 				if(msg != null)
 					if(!(msg in ESI.access_override))
 						ESI.access_override += msg
 			if("add_equip")
-				var/msg = input(usr, "Add an equipment piece, as typed path (ex. /obj/item/gun/energy/e_gun).", "Add equipment", "") as text|null
+				var/msg = input(usr, LANG("datum.30b13b81", null), LANG("datum.71767a16", null), "") as text|null
 				if(!isnull(msg))
 					var/typed = text2path(msg)
 					if(!isnull(typed))
 						ESI.additional_equipment += typed
 			if("set_headset")
-				var/result = input(usr, "Select a headset", "Set Headset") as null|anything in radio_typecache
+				var/result = input(usr, LANG("datum.036fe67d", null), LANG("datum.8aec6eb8", null)) as null|anything in radio_typecache
 				if(result)
 					ESI.headset_override = result
 			if("remove_ckey")
@@ -317,19 +317,19 @@
 				usr << browse("<code>[output]</code>", "window=export_spawner;size=500x600;border=1;can_resize=1;can_close=1;can_minimize=1")
 				return
 			if("import")
-				var/input = input(usr, "Input the spawner savefile here.", "Import Spawner") as message|null
+				var/input = input(usr, LANG("datum.39766a5e", null), LANG("datum.e121863f", null)) as message|null
 				if(input)
 					ESI.DoImport(input)
 		ShowPanel(usr, numb)
 	if(href_list["pref"])
 		switch(href_list["pref"])
 			if("create_new_instance")
-				var/action = tgui_alert(usr, "Create a new instance, or import?", "", list("New", "Import"))
+				var/action = tgui_alert(usr, LANG("datum.789d42d1", null), "", list("New", "Import"))
 				if(!action)
 					return
 				var/import_input
 				if(action == "Import")
-					import_input = input(usr, "Input the spawner savefile here.", "Import Spawner") as message|null
+					import_input = input(usr, LANG("datum.39766a5e", null), LANG("datum.e121863f", null)) as message|null
 					if(!import_input)
 						return
 				next_id++

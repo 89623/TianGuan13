@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // This is synced up to the poster placing animation.
 #define PLACE_SPEED 37
 
@@ -54,20 +55,20 @@
 
 /obj/item/poster/examine(mob/user)
 	. = ..()
-	. += span_notice("You can booby-trap the poster by using a glass shard on it before you put it up.")
+	. += span_notice(LANG("obj.33c1f3b3", null))
 
 /obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/shard))
 		return ..()
 
 	if (locate(/obj/item/shard) in (poster_structure?.contents || contents))
-		balloon_alert(user, "already trapped!")
+		balloon_alert(user, LANG("obj.8cdee195", null))
 		return
 
 	if(!user.transferItemToLoc(I, src))
 		return
 
-	to_chat(user, span_notice("You conceal \the [I] inside the rolled up poster."))
+	to_chat(user, span_notice(LANG("obj.0a0c4fa1", list(I))))
 
 /obj/item/poster/interact_with_atom(turf/closed/wall_structure, mob/living/user, list/modifiers)
 	if(!isclosedturf(wall_structure))
@@ -76,7 +77,7 @@
 	var/turf/user_turf = get_turf(user)
 	var/dir = get_dir(user_turf, wall_structure)
 	if(!(dir in GLOB.cardinals))
-		balloon_alert(user, "stand in line with wall!")
+		balloon_alert(user, LANG("obj.66fb33f1", null))
 		return ITEM_INTERACT_BLOCKING
 
 	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
@@ -97,7 +98,7 @@
 			balloon_alert(user, "no room!")
 			return ITEM_INTERACT_FAILURE
 
-	balloon_alert(user, "hanging poster...")
+	balloon_alert(user, LANG("obj.2331daf5", null))
 	var/obj/structure/sign/poster/placed_poster = poster_structure || new poster_type(src)
 	placed_poster.forceMove(user_turf)
 	placed_poster.setDir(dir)
@@ -165,7 +166,7 @@
 	if(!ruined)
 		original_name = name // can't use initial because of random posters
 		name = "poster - [name]"
-		desc = "A large piece of space-resistant printed paper. [desc]"
+		desc = LANG("obj.0ac1f70f", list(desc))
 
 	AddElement(/datum/element/beauty, 300)
 
@@ -227,10 +228,10 @@
 /obj/structure/sign/poster/wirecutter_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 100)
 	if(ruined)
-		to_chat(user, span_notice("You remove the remnants of the poster."))
+		to_chat(user, span_notice(LANG("obj.9a17f314", null)))
 		qdel(src)
 	else
-		to_chat(user, span_notice("You carefully remove the poster from the wall."))
+		to_chat(user, span_notice(LANG("obj.db1bd806", null)))
 		roll_and_drop(Adjacent(user) ? get_turf(user) : loc, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -243,7 +244,7 @@
 /// Check to see if this poster is tearable and gives the user feedback if it is not.
 /obj/structure/sign/poster/proc/check_tearability(mob/user)
 	if(ruined)
-		balloon_alert(user, "already ruined!")
+		balloon_alert(user, LANG("obj.b2d81487", null))
 		return FALSE
 	return TRUE
 
@@ -253,9 +254,9 @@
 	if (!payload)
 		return
 
-	to_chat(user, span_warning("There's something sharp behind this! What the hell?"))
+	to_chat(user, span_warning(LANG("obj.f4130b39", null)))
 	if(!can_embed_trap(user) || !payload.force_embed(user, user.get_active_hand()))
-		visible_message(span_notice("A [payload.name] falls from behind the poster.") )
+		visible_message(span_notice(LANG("obj.a2f91e68", list(payload.name))) )
 		payload.forceMove(user.drop_location())
 
 /obj/structure/sign/poster/proc/can_embed_trap(mob/living/carbon/human/user)
@@ -282,10 +283,10 @@
 	return isclosedturf(hopefully_still_a_closed_turf)
 
 /obj/structure/sign/poster/proc/on_placed_poster(mob/user)
-	to_chat(user, span_notice("You place the poster!"))
+	to_chat(user, span_notice(LANG("obj.d0afdc37", null)))
 
 /obj/structure/sign/poster/proc/tear_poster(mob/user)
-	visible_message(span_notice("[user] rips [src] in a single, decisive motion!") )
+	visible_message(span_notice(LANG("obj.65c72020", list(user, src))) )
 	playsound(src.loc, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
 	spring_trap(user)
 

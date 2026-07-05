@@ -23,10 +23,10 @@
 	if(!istype(tool, /obj/item/gbp_puncher))
 		return NONE
 	if(!COOLDOWN_FINISHED(src, gbp_punch_cooldown))
-		balloon_alert(user, "cooldown! [DisplayTimeText(COOLDOWN_TIMELEFT(src, gbp_punch_cooldown))]")
+		balloon_alert(user, LANG("obj.ca72a73e", list(DisplayTimeText(COOLDOWN_TIMELEFT(src, gbp_punch_cooldown)))))
 		return ITEM_INTERACT_BLOCKING
 	if(punches >= max_punches)
-		balloon_alert(user, "no room!")
+		balloon_alert(user, LANG("obj.ad6c6384", null))
 		return ITEM_INTERACT_BLOCKING
 
 	punches++
@@ -36,7 +36,7 @@
 	playsound(tool, 'sound/items/boxcutter_activate.ogg', 100)
 	if(punches == max_punches)
 		playsound(src, 'sound/items/party_horn.ogg', 100)
-		say("Congratulations, you have finished your punchcard!")
+		say(LANG("obj.aa40e109", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gbp_puncher
@@ -76,7 +76,7 @@
 	var/amount_to_reward = punchcard.punches * GBP_PUNCH_REWARD
 	if(!punchcard.punches)
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100)
-		say("You can't redeem an unpunched card!")
+		say(LANG("obj.ff977126", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/card/id/card_used
@@ -88,16 +88,16 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(!COOLDOWN_FINISHED(card_used, gbp_redeem_cooldown))
-		balloon_alert(user, "cooldown! [DisplayTimeText(COOLDOWN_TIMELEFT(card_used, gbp_redeem_cooldown))]")
+		balloon_alert(user, LANG("obj.ca72a73e", list(DisplayTimeText(COOLDOWN_TIMELEFT(card_used, gbp_redeem_cooldown)))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!card_used.registered_account || !istype(card_used.registered_account.account_job, /datum/job/assistant))
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 100)
-		say("You cannot redeem a punchcard without a valid assistant bank account!")
+		say(LANG("obj.7c80db4e", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(punchcard.punches < punchcard.max_punches)
-		if(tgui_alert(user, "You haven't finished the punchcard! Are you sure you want to redeem, starting the 15 minute timer?", "A real goof effort right here", list("No", "Yes")) != "Yes")
+		if(tgui_alert(user, LANG("obj.13921cdc", null), LANG("obj.43fefaf3", null), list("No", "Yes")) != "Yes")
 			return
 
 	if(!punchcard.punches) // check to see if someone left the dialog open to redeem a card twice
@@ -108,7 +108,7 @@
 	playsound(src, 'sound/machines/printer.ogg', 100)
 	card_used.registered_account.adjust_money(amount_to_reward, "GAP: [validated_punches] punches")
 	log_econ("[amount_to_reward] credits were rewarded to [card_used.registered_account.account_holder]'s account for redeeming a GAP card.")
-	say("Rewarded [amount_to_reward] to your account, and dispensed a ration pack! Thank you for being a Good Assistant! Please take your new punchcard.")
+	say(LANG("obj.998ab81f", list(amount_to_reward)))
 	COOLDOWN_START(card_used, gbp_redeem_cooldown, 12 MINUTES)
 	user.temporarilyRemoveItemFromInventory(punchcard)
 	qdel(punchcard)

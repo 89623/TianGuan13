@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Type of status effect applied by music played by the festival sect. Stacks upon itself, and removes all other song subtypes other than itself.
 /datum/status_effect/song
 	id = "pleaseno"
@@ -5,14 +6,14 @@
 	var/aura_desc = "useless, buggy"
 
 /datum/status_effect/song/on_apply()
-	owner.visible_message(span_notice("[owner] is coated with a [aura_desc] aura!"))
+	owner.visible_message(span_notice(LANG("datum.284c6425", list(owner, aura_desc))))
 	//removes every other song subtype except itself
 	for(var/overridden_song_type in subtypesof(/datum/status_effect/song) - type)
 		owner.remove_status_effect(overridden_song_type)
 	return ..()
 
 /datum/status_effect/song/on_remove()
-	owner.visible_message(span_warning("[owner]'s [aura_desc] aura fades away..."))
+	owner.visible_message(span_warning(LANG("datum.f0b1536f", list(owner, aura_desc))))
 
 /datum/status_effect/song/refresh(effect)
 	duration += initial(duration) //slowly builds up, so the more times you get this status effect, the longer it lasts until it's gone.

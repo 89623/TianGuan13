@@ -24,7 +24,7 @@
 
 /obj/item/clothing/neck/security_cape/click_alt(mob/user)
 	swapped = !swapped
-	to_chat(user, span_notice("You swap which arm [src] will lay over."))
+	to_chat(user, span_notice(LANG("obj.44625d4d", list(src))))
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 

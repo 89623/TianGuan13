@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/inhaler
 	name = "inhaler"
 	desc = "A small device capable of administering short bursts of aerosolized chemicals. Requires a canister to function."
@@ -50,7 +51,7 @@
 	if (isnull(canister))
 		return
 
-	. += span_blue("It seems to have <b>[canister]</b> inserted.")
+	. += span_blue(LANG("obj.d961714a", list(canister)))
 	if (!show_puffs_left)
 		return
 
@@ -59,7 +60,7 @@
 		puffs_left = span_blue("[puffs_left]")
 	else
 		puffs_left = span_danger("[puffs_left]")
-	. += "Its rotary display shows its canister can be used [puffs_left] more times."
+	. += LANG("obj.42970442", list(puffs_left))
 
 /obj/item/inhaler/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -137,30 +138,30 @@
 /// Tries to remove the canister, if any is inserted.
 /obj/item/inhaler/proc/try_remove_canister(mob/living/user, modifiers)
 	if (isnull(canister))
-		balloon_alert(user, "no canister inserted!")
+		balloon_alert(user, LANG("obj.f51f2234", null))
 		return FALSE
 
 	if (canister.removal_time > 0)
-		balloon_alert(user, "removing canister...")
+		balloon_alert(user, LANG("obj.fd5d6c3b", null))
 		if (!do_after(user, canister.removal_time, src))
 			return FALSE
 
-	balloon_alert(user, "canister removed")
+	balloon_alert(user, LANG("obj.2962ecf1", null))
 	playsound(src, canister.post_insert_sound, canister.post_insert_volume)
 	set_canister(null, user)
 
 // Tries to insert a canister, if none is already inserted.
 /obj/item/inhaler/proc/try_insert_canister(obj/item/reagent_containers/inhaler_canister/new_canister, mob/living/user, params)
 	if (!isnull(canister))
-		balloon_alert(user, "remove the existing canister!")
+		balloon_alert(user, LANG("obj.d25f9c5e", null))
 		return FALSE
 
-	balloon_alert(user, "inserting canister...")
+	balloon_alert(user, LANG("obj.27e2ddbc", null))
 	playsound(src, new_canister.pre_insert_sound, new_canister.pre_insert_volume)
 	if (!do_after(user, new_canister.insertion_time, src))
 		return FALSE
 	playsound(src, new_canister.post_insert_sound, new_canister.post_insert_volume)
-	balloon_alert(user, "canister inserted")
+	balloon_alert(user, LANG("obj.78c3bc9a", null))
 	set_canister(new_canister, user)
 
 	return TRUE
@@ -182,29 +183,29 @@
 /obj/item/inhaler/proc/can_puff(mob/living/target_mob, mob/living/user, silent = FALSE)
 	if (isnull(canister))
 		if (!silent)
-			balloon_alert(user, "no canister!")
+			balloon_alert(user, LANG("obj.e2058036", null))
 		return FALSE
 	if (isnull(canister.reagents) || canister.reagents.total_volume <= 0)
 		if (!silent)
-			balloon_alert(user, "canister is empty!")
+			balloon_alert(user, LANG("obj.1bd706b2", null))
 		return FALSE
 	if (!iscarbon(target_mob)) // maybe mix this into a general has mouth check
 		if (!silent)
-			balloon_alert(user, "not breathing!")
+			balloon_alert(user, LANG("obj.5197b796", null))
 		return FALSE
 	var/mob/living/carbon/carbon_target = target_mob
 	if (carbon_target.is_mouth_covered())
 		if (!silent)
-			balloon_alert(user, "expose the mouth!")
+			balloon_alert(user, LANG("obj.d8e7ee37", null))
 		return FALSE
 	if (HAS_TRAIT(carbon_target, TRAIT_NOBREATH))
 		if (!silent)
-			balloon_alert(user, "not breathing!")
+			balloon_alert(user, LANG("obj.5197b796", null))
 		return FALSE
 	var/obj/item/organ/lungs/lungs = carbon_target.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if (isnull(lungs) || lungs.received_pressure_mult <= 0)
 		if (!silent)
-			balloon_alert(user, "not breathing!")
+			balloon_alert(user, LANG("obj.5197b796", null))
 		return FALSE
 
 	return TRUE
@@ -260,11 +261,11 @@
 
 /obj/item/reagent_containers/inhaler_canister/handle_deconstruct(disassembled)
 	if (!reagents?.total_volume)
-		visible_message(span_warning("[src] breaks open - but is empty!"))
+		visible_message(span_warning(LANG("obj.d563f573", list(src))))
 		return ..()
 
 	do_chem_smoke(1, src, get_turf(src), carry = reagents, log = TRUE)
-	visible_message(span_warning("[src] breaks open and sprays its aerosilized contents everywhere!"))
+	visible_message(span_warning(LANG("obj.3ba682cb", list(src))))
 	return ..()
 
 /obj/item/inhaler/medical

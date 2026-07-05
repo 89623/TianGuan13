@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TRAIT_HOOKED "hooked"
 #define IMMOBILIZATION_TIMER (0.25 SECONDS) //! How long we immobilize the firer after firing - we do cancel the immobilization early if nothing is hit.
 
@@ -21,7 +22,7 @@
 	can_muzzle_flash = FALSE
 
 /obj/item/gun/magic/hook/shoot_with_empty_chamber(mob/living/user)
-	balloon_alert(user, "not ready yet!")
+	balloon_alert(user, LANG("obj.7f0aa913", null))
 
 /obj/item/gun/magic/hook/can_trigger_gun(mob/living/user, akimbo_usage) // This isn't really a gun, so it shouldn't be checking for TRAIT_NOGUNS, a firing pin (pinless), or a trigger guard (guardless)
 	if(akimbo_usage)
@@ -33,11 +34,11 @@
 /obj/item/gun/magic/hook/suicide_act(mob/living/user)
 	var/obj/item/bodypart/head/removable = user.get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(removable))
-		user.visible_message(span_suicide("[user] stuffs the chain of the [src] down the hole where their head should be! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.1a53c776", list(user, src, user.p_theyre()))))
 		return OXYLOSS
 
 	playsound(get_turf(src), fire_sound, 50, TRUE, -1)
-	user.visible_message(span_suicide("[user] is using the [src] on their [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.970fa21e", list(user, src, user.p_their(), user.p_theyre()))))
 	playsound(get_turf(src), 'sound/items/weapons/bladeslice.ogg', 70)
 	removable.dismember(silent = FALSE)
 	return BRUTELOSS
@@ -82,7 +83,7 @@
 	if(victim.anchored || HAS_TRAIT_FROM(victim, TRAIT_HOOKED, REF(firer)))
 		return
 
-	victim.visible_message(span_danger("[victim] is snagged by [firer]'s hook!"))
+	victim.visible_message(span_danger(LANG("obj.a3c2269d", list(victim, firer))))
 
 	var/datum/hook_and_move/puller = new
 	puller.begin_pulling(firer, victim, get_turf(firer))

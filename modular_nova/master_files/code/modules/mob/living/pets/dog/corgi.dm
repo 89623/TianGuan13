@@ -190,7 +190,7 @@
 
 	add_fingerprint(user, TRUE)
 	investigate_log("has been gibbed due to being emagged by [user].", INVESTIGATE_DEATHS)
-	visible_message(span_boldwarning("[user] swipes a card through [target]!"), span_notice("You overload [target]s internal reactor..."))
+	visible_message(span_boldwarning(LANG("mob.aa4faa1b", list(user, target))), span_notice(LANG("mob.3ff70b47", list(target))))
 
 	notify_ghosts("[user.real_name] has shortcircuited [target] to explode in 60 seconds!",
 		source = target,
@@ -202,7 +202,7 @@
 	return TRUE
 
 /mob/living/basic/pet/dog/corgi/borgi/proc/explode_imminent()
-	visible_message(span_bolddanger("[src] makes an odd whining noise!"))
+	visible_message(span_bolddanger(LANG("mob.68305384", list(src))))
 	do_jitter_animation(30)
 
 	addtimer(CALLBACK(src, PROC_REF(explode)), 10 SECONDS)

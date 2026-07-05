@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  *
  * The purpose of this element is to widely provide the ability to examine an object and determine its stats, with the ability to add
@@ -74,21 +75,21 @@
 	// Doesn't show the base notes for items that have the override notes variable set to true
 	if(!source.override_notes)
 		if (source.get_sharpness() & SHARP_EDGED)
-			readout += "It's sharp and could cause bleeding wounds."
+			readout += LANG("datum.d7cd31f4", null)
 		if (source.get_sharpness() & SHARP_POINTY)
-			readout += "It's pointy and could cause piercing wounds."
+			readout += LANG("datum.3bda1472", null)
 		// Make sure not to divide by 0 on accident
 		if(source.force > 0)
-			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.force)] melee hit\s")] to take down an enemy."
+			readout += LANG("datum.8e4fe8d1", list(span_warning("[HITS_TO_CRIT(source.force)]")))
 		else
-			readout += "It does not deal noticeable melee damage."
+			readout += LANG("datum.9d8c7289", null)
 
 		if(source.throwforce > 0)
-			readout += "It takes about [span_warning("[HITS_TO_CRIT(source.throwforce)] throwing hit\s")] to take down an enemy."
+			readout += LANG("datum.ef1d05fa", list(span_warning("[HITS_TO_CRIT(source.throwforce)]")))
 		else
-			readout += "It does not deal noticeable throwing damage."
+			readout += LANG("datum.37914c10", null)
 		if(source.armour_penetration > 0 || source.block_chance > 0)
-			readout += "It has [span_warning("[weapon_tag_convert(source.armour_penetration)]")] armor-piercing capability and [span_warning("[weapon_tag_convert(source.block_chance)]")] blocking capability."
+			readout += LANG("datum.49e14a5d", list(span_warning("[weapon_tag_convert(source.armour_penetration)]"), span_warning("[weapon_tag_convert(source.block_chance)]")))
 	// Custom manual notes
 	if(source.offensive_notes)
 		readout += source.offensive_notes

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/skillchip/musical
 	name = "\improper Old Copy of \"Space Station 13: The Musical\""
 	desc = "An old copy of \"Space Station 13: The Musical\", \
@@ -70,7 +71,7 @@
 
 /obj/item/skillchip/musical/examine(mob/user)
 	. = ..()
-	. += span_tinynoticeital("Huh, looks like it'd fit in a skillchip adapter.")
+	. += span_tinynoticeital(LANG("obj.bc1546fb", null))
 
 /obj/item/skillchip/musical/examine_more(mob/user)
 	. = ..()
@@ -87,5 +88,5 @@
 	songs += "&bull; \"Send for the Shuttle\""
 	songs += "&bull;  And one song scratched out..."
 
-	. += span_notice("<i>On the back of the chip, you see a list of songs:</i>")
+	. += span_notice(LANG("obj.dd15f825", null))
 	. += span_smallnotice("<i>[jointext(songs, "<br>")]</i>")

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Adding this element to an atom will have it automatically render an overlay.
  * The overlay can be specified in new as the first paramter; if not set it defaults to rust_overlay's rust_default
@@ -36,7 +37,7 @@
 /datum/element/rust/proc/handle_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_notice("[source] is very rusty, you could probably <i>burn</i> or <i>scrape</i> it off, hell maybe even pour some <i>space cola</i> on it to remove the rust.")
+	examine_text += span_notice(LANG("datum.e04dd69f", list(source)))
 
 /datum/element/rust/proc/apply_rust_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
@@ -58,11 +59,11 @@
 			if(!item.tool_start_check(user, amount=1))
 				return
 
-			user.balloon_alert(user, "burning off rust...")
+			user.balloon_alert(user, LANG("datum.b78f59e6", null))
 
 			if(!item.use_tool(source, user, 5 SECONDS))
 				return
-			user.balloon_alert(user, "burned off rust")
+			user.balloon_alert(user, LANG("datum.dc2bae26", null))
 			Detach(source)
 			return
 
@@ -70,10 +71,10 @@
 		if(TOOL_RUSTSCRAPER)
 			if(!item.tool_start_check(user))
 				return
-			user.balloon_alert(user, "scraping off rust...")
+			user.balloon_alert(user, LANG("datum.6191683f", null))
 			if(!item.use_tool(source, user, 2 SECONDS))
 				return
-			user.balloon_alert(user, "scraped off rust")
+			user.balloon_alert(user, LANG("datum.1d4849bb", null))
 			Detach(source)
 			return
 
@@ -90,7 +91,7 @@
 /datum/element/rust/proc/on_interaction(datum/source, mob/user, obj/item/tool, modifiers)
 	SIGNAL_HANDLER
 	if(istype(tool, /obj/item/stack/tile) || istype(tool, /obj/item/stack/rods))
-		user.balloon_alert(user, "floor too rusted!")
+		user.balloon_alert(user, LANG("datum.6f21e441", null))
 		return ITEM_INTERACT_BLOCKING
 
 /// For rust applied by heretics

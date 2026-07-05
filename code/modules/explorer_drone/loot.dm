@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 
 /// Creates generator__id => type map.
@@ -134,10 +135,10 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /obj/item/trade_chip/proc/try_to_unlock_contract(mob/user)
 	var/datum/supply_pack/pack_singleton = SSshuttle.supply_packs[unlocked_pack_type]
 	if(!unlocked_pack_type || !pack_singleton || !(pack_singleton.order_flags & ORDER_SPECIAL))
-		to_chat(user,span_danger("This chip is invalid!"))
+		to_chat(user,span_danger(LANG("obj.3878d5e7", null)))
 		return
 	pack_singleton.order_flags |= ORDER_SPECIAL_ENABLED
-	to_chat(user,span_notice("Contract accepted into nanotrasen supply database."))
+	to_chat(user,span_notice(LANG("obj.b64b7494", null)))
 	qdel(src)
 
 
@@ -170,15 +171,15 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /obj/item/firelance/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ITEM_INTERACT_BLOCKING
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		to_chat(user, span_notice("You need to wield [src] in two hands before you can fire it."))
+		to_chat(user, span_notice(LANG("obj.b93651ae", list(src))))
 		return .
 	if(LAZYACCESS(user.do_afters, "firelance"))
 		return .
 	if(!cell.use(0.2 * STANDARD_CELL_CHARGE))
-		to_chat(user,span_warning("[src]'s battery ran dry!"))
+		to_chat(user,span_warning(LANG("obj.95efd638", list(src))))
 		return .
 	ADD_TRAIT(user, TRAIT_IMMOBILIZED, REF(src))
-	to_chat(user,span_notice("You begin to charge [src]..."))
+	to_chat(user,span_notice(LANG("obj.66e6c847", list(src))))
 	inhand_icon_state = "firelance_charging"
 	user.update_held_items()
 	if(do_after(user,windup_time,interaction_key="firelance",extra_checks = CALLBACK(src, PROC_REF(windup_checks))))

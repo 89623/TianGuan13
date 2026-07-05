@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*!
  * Contains the reroll targets knowledge perk
  */
@@ -24,7 +25,7 @@
 	// throw a fail to show the heretic that there's no point in rerolling
 	// if you don't have a heart to track the targets in the first place.
 	if(heretic_datum.has_living_heart() != HERETIC_HAS_LIVING_HEART)
-		loc.balloon_alert(user, "ritual failed, no living heart!")
+		loc.balloon_alert(user, LANG("datum.dfde0ee6", null))
 		return FALSE
 
 	return TRUE
@@ -39,7 +40,7 @@
 		CRASH("Heretic datum didn't have a hunt_and_sacrifice knowledge learned, what?")
 
 	if(!target_finder.obtain_targets(user, heretic_datum = heretic_datum))
-		loc.balloon_alert(user, "ritual failed, no targets found!")
+		loc.balloon_alert(user, LANG("datum.fb470477", null))
 		return FALSE
 
 	return TRUE

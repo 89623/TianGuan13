@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // ***********************************************************
 // Foods that are produced from hydroponics ~~~~~~~~~~
 // Data from the seeds carry over to these grown foods
@@ -110,7 +111,7 @@
 	if(!dry_grind || HAS_TRAIT(src, TRAIT_DRIED))
 		return TRUE
 	if (user)
-		to_chat(user, span_warning("[src] needs to be dry before it can be ground up!"))
+		to_chat(user, span_warning(LANG("obj.8656d0c0", list(src))))
 	return FALSE
 
 /// Turns the nutriments and vitamins into the distill reagent or fruit wine

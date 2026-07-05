@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 
@@ -42,11 +43,11 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("A [EXAMINE_HINT("multitool")] with techweb designs can be uploaded here.")
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.4871ccf5", list(EXAMINE_HINT("multitool"))))
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("Use a [EXAMINE_HINT("multitool")] or [EXAMINE_HINT("wirecutters")] to interact with wires.")
-		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.1db74e80", list(EXAMINE_HINT("multitool"), EXAMINE_HINT("wirecutters"))))
+		. += span_notice(LANG("obj.740bee8c", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/rnd/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -132,22 +133,22 @@
 //whether the machine can have an item inserted in its current state.
 /obj/machinery/rnd/proc/is_insertion_ready(mob/user)
 	if(panel_open)
-		balloon_alert(user, "panel open!")
+		balloon_alert(user, LANG("obj.2a428bad", null))
 		return FALSE
 	if(disabled)
-		balloon_alert(user, "belts disabled!")
+		balloon_alert(user, LANG("obj.22bb2296", null))
 		return FALSE
 	if(busy)
-		balloon_alert(user, "still busy!")
+		balloon_alert(user, LANG("obj.f55d4e72", null))
 		return FALSE
 	if(machine_stat & BROKEN)
-		balloon_alert(user, "machine broken!")
+		balloon_alert(user, LANG("obj.5f75e927", null))
 		return FALSE
 	if(machine_stat & NOPOWER)
-		balloon_alert(user, "no power!")
+		balloon_alert(user, LANG("obj.b3e1b703", null))
 		return FALSE
 	if(loaded_item)
-		balloon_alert(user, "item already loaded!")
+		balloon_alert(user, LANG("obj.2bbb23a6", null))
 		return FALSE
 	return TRUE
 

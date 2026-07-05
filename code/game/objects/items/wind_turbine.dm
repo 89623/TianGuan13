@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TURBINE_MAX_STORED_POWER (0.2 * STANDARD_CELL_CHARGE)
 #define TURBINE_ANIMATION_TICKS_PER_TILE (1)
 #define TURBINE_ANIMATION_TICKS (4)
@@ -177,7 +178,7 @@
 		return
 	user.Paralyze(5)
 	user.Knockdown(10)
-	user.visible_message(span_danger("[user] gets whacked in the head by the [src]'s spinning blades!"), span_userdanger("You get hit in the head by the [src] and fall over!"))
+	user.visible_message(span_danger(LANG("obj.d2b408f3", list(user, src))), span_userdanger(LANG("obj.eb29bec6", list(src))))
 	// imaginary friends call sleep in their emotes
 	// even though imaginary friends can't put on a wind turbine I still have to do this
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/, emote), "scream")
@@ -197,15 +198,15 @@
 	. = ..()
 
 	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
-		. += span_warning("You're too far away to examine [src]'s contents! You can still watch it spin so wonderfully though...")
+		. += span_warning(LANG("obj.cf4b272d", list(src)))
 		if (charging && istype(charging,/obj/item/melee/baton/security/))
-			. += span_info("You can see the [charging] hanging precariously off the charging port...")
+			. += span_info(LANG("obj.1c79926d", list(charging)))
 		return
 
 	if(cap)
-		. += span_info("Click it with a screwdriver to eject the [cap].")
-	. += span_info("Wrench it on a tile to anchor it and harness space wind.")
-	. += span_info("The wind turbine is currently storing [floor(available_power / 100) / 10]kJ.")
+		. += span_info(LANG("obj.e0505cec", list(cap)))
+	. += span_info(LANG("obj.bd3e2113", null))
+	. += span_info(LANG("obj.585092d5", list(floor(available_power / 100) / 10)))
 	if(charging)
 		. += {"[span_notice("\The [src] contains:")]
 		[span_notice("- \A [charging].")]"}
@@ -213,17 +214,17 @@
 /obj/item/portable_wind_turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(charging)
-		user.balloon_alert(user, "remove the [charging] first!")
+		user.balloon_alert(user, LANG("obj.a1771494", list(charging)))
 		return FALSE
 	if(cap)
 		tool.play_tool_sound(src, 50)
-		user.balloon_alert(user, "capacitor removed")
+		user.balloon_alert(user, LANG("obj.fdf8404a", null))
 		cap.forceMove(drop_location())
 		available_power = 0
 		cap = null
 		return TRUE
 	else
-		user.balloon_alert(user, "no capacitor!")
+		user.balloon_alert(user, LANG("obj.a525b367", null))
 		return FALSE
 
 /obj/item/portable_wind_turbine/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -246,24 +247,24 @@
 /obj/item/portable_wind_turbine/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/stock_parts/capacitor))
 		if (cap)
-			balloon_alert(user, "already has a capacitor!")
+			balloon_alert(user, LANG("obj.f5b1842a", null))
 			return TRUE
 		user.transferItemToLoc(attacking_item, src)
 		cap = attacking_item
-		balloon_alert(user, "inserted the [attacking_item]")
+		balloon_alert(user, LANG("obj.3c264ea5", list(attacking_item)))
 		return TRUE
 	if(!is_type_in_typecache(attacking_item, allowed_devices))
 		return ..()
 	if(isnull(cap))
-		balloon_alert(user, "no capacitor inserted!")
+		balloon_alert(user, LANG("obj.888798eb", null))
 		return TRUE
 	if(charging)
-		balloon_alert(user, "already charging something!")
+		balloon_alert(user, LANG("obj.f5acf363", null))
 		return TRUE
 	if(istype(attacking_item, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = attacking_item
 		if(!energy_gun.can_charge)
-			balloon_alert(user, "not rechargable!")
+			balloon_alert(user, LANG("obj.642754d6", null))
 			return TRUE
 	user.transferItemToLoc(attacking_item, src)
 	charging = attacking_item
@@ -317,7 +318,7 @@
 				available_power -= power_to_give
 				if(charging_cell.charge == charging_cell.maxcharge)
 					playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-					say("[charging] has finished recharging!")
+					say(LANG("obj.53fdf44c", list(charging)))
 				else
 					using_power = TRUE
 		update_appearance()

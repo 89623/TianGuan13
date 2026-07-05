@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SOLAR_GEN_RATE 2500
 #define PANEL_Z_OFFSET 13
 #define PANEL_EDGE_Z_OFFSET (PANEL_Z_OFFSET - 2)
@@ -102,7 +103,7 @@
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
 	if(I.use_tool(src, user, 0))
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		user.visible_message(span_notice("[user] takes the glass off [src]."), span_notice("You take the glass off [src]."))
+		user.visible_message(span_notice(LANG("obj.41d6fa40", list(user, src))), span_notice(LANG("obj.e83f2a0b", list(src))))
 		deconstruct(TRUE)
 	return TRUE
 
@@ -294,7 +295,7 @@
 
 	if(item_used.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(!solarturf.can_have_cabling()) //allows catwalks
-			balloon_alert(user, "can't secure in space!")
+			balloon_alert(user, LANG("obj.03dee60e", null))
 			return
 		for(var/obj/stuff_in_the_way in solarturf) //prevent anchoring on other machinery or solar assemblies
 			if(stuff_in_the_way == src)
@@ -307,8 +308,8 @@
 				return
 		set_anchored(!anchored)
 		user.visible_message(
-			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly[anchored ? " into place" : null]."),
-			span_notice("You [anchored ? null : "un"]wrench the solar assembly[anchored ? " into place" : null]."),
+			span_notice(LANG("obj.7f4a0e52", list(user, anchored ? null : "un", anchored ? " into place" : null))),
+			span_notice(LANG("obj.ddbfc3b2", list(anchored ? null : "un", anchored ? " into place" : null))),
 		)
 		item_used.play_tool_sound(src, 75)
 		return TRUE
@@ -318,22 +319,22 @@
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = FALSE
 			update_appearance()
-			user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), span_notice("You take out the electronics from the solar assembly."))
+			user.visible_message(span_notice(LANG("obj.7ea665eb", list(user))), span_notice(LANG("obj.48861cc1", null)))
 			return TRUE
 
 		//prevent construction if something dense's on our tile
 		if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-			balloon_alert(user, "something in the way!")
+			balloon_alert(user, LANG("obj.7dd60dd8", null))
 			return
 		if(!istype(item_used, /obj/item/stack/sheet/glass))
-			to_chat(user, span_warning("The tracker only accepts standard, un-reinforced glass."))
+			to_chat(user, span_warning(LANG("obj.0075492d", null)))
 			return
 		var/obj/item/stack/sheet/my_sheet = item_used
 		if(!my_sheet.use(2))
-			to_chat(user, span_warning("You don't have enough glass to complete the tracker."))
+			to_chat(user, span_warning(LANG("obj.b74f8f2c", null)))
 			return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		user.visible_message(span_notice("[user] places the glass on the solar assembly."),span_notice("You place the glass on the solar assembly."))
+		user.visible_message(span_notice(LANG("obj.0ea81752", list(user))),span_notice(LANG("obj.e92c0650", null)))
 		new /obj/machinery/power/tracker/(get_turf(src), src)
 		return TRUE
 
@@ -344,7 +345,7 @@
 			tracker = TRUE
 			update_appearance()
 			qdel(item_used)
-			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
+			user.visible_message(span_notice(LANG("obj.48ce76ed", list(user))), span_notice(LANG("obj.4d00b9e1", null)))
 			return TRUE
 
 	//make a list of all the glass
@@ -359,18 +360,18 @@
 		//items that arent used above, or arent usable glass will make it here.
 		//so we check if its reinfocred glass, or some other item
 		if(istype(item_used, /obj/item/stack/sheet/rglass) || istype(item_used, /obj/item/stack/sheet/plasmarglass))
-			to_chat(user, span_warning("The solar array will only accept glass or glass alloys that have not been reinforced."))
+			to_chat(user, span_warning(LANG("obj.632ae05a", null)))
 		//an else statement can be put here if you want something to happen to all the misc items that make it this far
 		return
 
 	//prevent construction if something dense's on our tile
 	if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-		balloon_alert(user, "something in the way!")
+		balloon_alert(user, LANG("obj.7dd60dd8", null))
 		return
 
 	if(is_glass_sheet(item_used))
 		if(!anchored)
-			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
+			to_chat(user, span_warning(LANG("obj.dddc80b6", null)))
 			return
 
 		var/list/glass_material_to_tier = list(
@@ -382,12 +383,12 @@
 
 		var/obj/item/stack/sheet/my_sheet = item_used
 		if(!my_sheet.use(2))
-			to_chat(user, span_warning("You need at least two sheets of glass to complete a solar panel!"))
+			to_chat(user, span_warning(LANG("obj.d3d37de3", null)))
 			return
 
 		var/datum/material/glass_material = my_sheet.material_type
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		user.visible_message(span_notice("[user] places the glass on the solar assembly."), span_notice("You place the glass on the solar assembly."))
+		user.visible_message(span_notice(LANG("obj.0ea81752", list(user))), span_notice(LANG("obj.e92c0650", null)))
 		var/obj/machinery/power/solar/mySolar = new /obj/machinery/power/solar(get_turf(src), src)
 		mySolar.power_tier = glass_material_to_tier[glass_material]
 		mySolar.material_type = glass_material
@@ -562,7 +563,7 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(I.use_tool(src, user, 20, volume=50))
 			if (src.machine_stat & BROKEN)
-				to_chat(user, span_notice("The broken glass falls out."))
+				to_chat(user, span_notice(LANG("obj.f8d51e40", null)))
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				new /obj/item/shard( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
@@ -574,7 +575,7 @@
 				A.set_anchored(TRUE)
 				qdel(src)
 			else
-				to_chat(user, span_notice("You disconnect the monitor."))
+				to_chat(user, span_notice(LANG("obj.a211ab7d", null)))
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				var/obj/item/circuitboard/computer/solar_control/M = new /obj/item/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)

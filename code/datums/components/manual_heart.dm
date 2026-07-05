@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// If a beat is missed, how long to give before the next is missed
 #define MANUAL_HEART_GRACE_PERIOD 2 SECONDS
 
@@ -60,12 +61,12 @@
 		START_PROCESSING(SSdcs, src)
 		COOLDOWN_START(src, heart_timer, pump_delay)
 
-	to_chat(parent, span_userdanger("Your heart no longer beats automatically! You have to pump it manually - otherwise you'll die!"))
+	to_chat(parent, span_userdanger(LANG("datum.fc97aac5", null)))
 
 /datum/component/manual_heart/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN, COMSIG_HEART_MANUAL_PULSE, COMSIG_LIVING_REVIVE, COMSIG_LIVING_DEATH, COMSIG_LIVING_UPDATE_BLOOD_STATUS))
 
-	to_chat(parent, span_userdanger("You feel your heart start beating normally again!"))
+	to_chat(parent, span_userdanger(LANG("datum.6ee11eb3", null)))
 	var/mob/living/carbon/carbon_parent = parent
 	if(istype(carbon_parent))
 		carbon_parent.remove_client_colour(REF(src))
@@ -115,7 +116,7 @@
 		return
 
 	carbon_parent.adjust_blood_volume(-blood_loss)
-	to_chat(carbon_parent, span_userdanger("You have to keep pumping your blood!"))
+	to_chat(carbon_parent, span_userdanger(LANG("datum.d4245d68", null)))
 	COOLDOWN_START(src, heart_timer, MANUAL_HEART_GRACE_PERIOD) //give two full seconds before losing more blood
 	if(add_colour)
 		carbon_parent.add_client_colour(/datum/client_colour/manual_heart_blood, REF(src))

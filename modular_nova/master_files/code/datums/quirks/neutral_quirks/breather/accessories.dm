@@ -8,7 +8,7 @@
 
 /obj/item/clothing/accessory/breathing/examine(mob/user)
 	. = ..()
-	. += "The dogtag reads: I breathe [breath_type]."
+	. += LANG("obj.d01780c9", list(breath_type))
 
 /obj/item/clothing/accessory/breathing/accessory_equipped(obj/item/clothing/under/uniform, user)
 	. = ..()
@@ -21,4 +21,4 @@
 /obj/item/clothing/accessory/breathing/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/accessory_wearer = user
-	examine_list += "[accessory_wearer.p_Their()] <b>[name]</b> reads: 'I breathe [breath_type]'."
+	examine_list += LANG("obj.f8e5d072", list(accessory_wearer.p_Their(), name, breath_type))

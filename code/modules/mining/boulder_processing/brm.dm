@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Sound played when boulders are teleported manually by hand
 #define MANUAL_TELEPORT_SOUND 'sound/machines/mining/manual_teleport.ogg'
 ///Sound played when boulders are teleported automatically in process()
@@ -65,19 +66,19 @@
 
 /obj/machinery/brm/examine(mob/user)
 	. = ..()
-	. += span_notice("The small screen reads there are [span_boldnotice("[SSore_generation.available_boulders.len] boulders")] available to teleport.")
-	. += span_notice("Can collect up to <b>[boulders_processing_max] boulders</b> at a time.")
-	. += span_notice("Automatic boulder retrieval can be toggled [EXAMINE_HINT("[toggled_on ? "Off" : "On"]")] with [EXAMINE_HINT("Right Click")].")
+	. += span_notice(LANG("obj.64f54f22", list(span_boldnotice("[SSore_generation.available_boulders.len] boulders"))))
+	. += span_notice(LANG("obj.42f554ba", list(boulders_processing_max)))
+	. += span_notice(LANG("obj.975cb95d", list(EXAMINE_HINT("[toggled_on ? "Off" : "On"]"), EXAMINE_HINT("Right Click"))))
 
 	if(anchored)
-		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice(LANG("obj.7641f909", list(EXAMINE_HINT("anchored"))))
 	else
-		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
+		. += span_warning(LANG("obj.cea02383", list(EXAMINE_HINT("anchored"))))
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 
 	if(panel_open)
-		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.3a115eca", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/brm/update_icon_state()
 	icon_state = base_icon_state
@@ -130,9 +131,9 @@
 
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
-		balloon_alert(user, "no space!")
+		balloon_alert(user, LANG("obj.a5ca1017", null))
 	else if(result)
-		balloon_alert(user, "teleporting...")
+		balloon_alert(user, LANG("obj.bda2b65d", null))
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
@@ -150,16 +151,16 @@
 	// NOVA EDIT ADDITION START
 	var/area/teleport_area = get_area(src)
 	if (!is_type_in_typecache(teleport_area, allowed_areas_to_work))
-		balloon_alert(user, "can't use this here!")
+		balloon_alert(user, LANG("obj.cfac9378", null))
 		return FALSE
 	// NOVA EDIT ADDITION END
 	if(!COOLDOWN_FINISHED(src, manual_teleport_cooldown))
 		return FALSE
 	if(panel_open)
-		balloon_alert(user, "close panel first!")
+		balloon_alert(user, LANG("obj.5ddfc4f0", null))
 		return FALSE
 	if(batch_processing)
-		balloon_alert(user, "batch still processing!")
+		balloon_alert(user, LANG("obj.ebb5e2ee", null))
 		return FALSE
 	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
@@ -173,9 +174,9 @@
 
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
-		balloon_alert(user, "no space!")
+		balloon_alert(user, LANG("obj.a5ca1017", null))
 	else if(result)
-		balloon_alert(user, "teleporting...")
+		balloon_alert(user, LANG("obj.bda2b65d", null))
 
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
@@ -190,9 +191,9 @@
 
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
-		balloon_alert(user, "no space!")
+		balloon_alert(user, LANG("obj.a5ca1017", null))
 	else if(result)
-		balloon_alert(user, "teleporting...")
+		balloon_alert(user, LANG("obj.bda2b65d", null))
 
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
@@ -203,7 +204,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor it first!")
+		balloon_alert(user, LANG("obj.c16d48e2", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	toggle_auto_on(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -221,14 +222,14 @@
 	// NOVA EDIT ADDITION START
 	var/area/teleport_area = get_area(src)
 	if (!is_type_in_typecache(teleport_area, allowed_areas_to_work))
-		balloon_alert(user, "can't use this here!")
+		balloon_alert(user, LANG("obj.cfac9378", null))
 		return FALSE
 	// NOVA EDIT ADDITION END
 	if(panel_open)
-		balloon_alert(user, "close panel first!")
+		balloon_alert(user, LANG("obj.5ddfc4f0", null))
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor it first!")
+		balloon_alert(user, LANG("obj.c16d48e2", null))
 		return
 	if(!is_operational || machine_stat & (BROKEN | NOPOWER))
 		return
@@ -245,7 +246,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "unanchored!")
+		balloon_alert(user, LANG("obj.d10c084a", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	toggle_auto_on(user)
@@ -258,7 +259,7 @@
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!anchored)
-		balloon_alert(user, "unanchored!")
+		balloon_alert(user, LANG("obj.d10c084a", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	toggle_auto_on(user)
@@ -302,7 +303,7 @@
 	if(!SSore_generation.available_boulders.len)
 		if(feedback)
 			playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
-			balloon_alert_to_viewers("no boulders to collect!")
+			balloon_alert_to_viewers(LANG("obj.2386da35", null))
 		batch_processing = FALSE
 		return FALSE
 
@@ -314,7 +315,7 @@
 	random_boulder.forceMove(drop_location())
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
-	balloon_alert_to_viewers("boulder appears!")
+	balloon_alert_to_viewers(LANG("obj.cb9cbebc", null))
 	use_energy(active_power_usage)
 
 	//try again if we have more boulders to work with

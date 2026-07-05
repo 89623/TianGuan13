@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/sealed/mecha/ui_close(mob/user)
 	. = ..()
 	ui_view.hide_from(user)
@@ -187,14 +188,14 @@
 			ui_selected_module_index = text2num(params["index"])
 			return TRUE
 		if("changename")
-			var/userinput = tgui_input_text(usr, "Choose a new exosuit name", "Rename exosuit", max_length = MAX_NAME_LEN, default = name)
+			var/userinput = tgui_input_text(usr, LANG("obj.d9b96db1", null), LANG("obj.9a8ade2e", null), max_length = MAX_NAME_LEN, default = name)
 			if(!userinput)
 				return
 			if(is_ic_filtered(userinput) || is_soft_ic_filtered(userinput))
-				tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
+				tgui_alert(usr, LANG("obj.bbfb9915", null))
 				return
 			if(userinput == format_text(name)) //default mecha names may have improper span artefacts in their name, so we format the name
-				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
+				to_chat(usr, span_notice(LANG("obj.486142c6", list(name, userinput))))
 				return
 			name = "\proper [userinput]"
 			chassis_camera?.update_c_tag(src)

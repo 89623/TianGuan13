@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/area_edit
 	key = "areaedit"
 	use_corner_selection = TRUE
@@ -10,10 +11,7 @@
 
 /datum/buildmode_mode/area_edit/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Select corner")] -> Left Mouse Button on obj/turf/mob\n\
-		[span_bold("Paint area")] -> Left Mouse Button + Alt on turf/obj/mob\n\
-		[span_bold("Select area to paint")] -> Right Mouse Button on obj/turf/mob\n\
-		[span_bold("Create new area")] -> Right Mouse Button on buildmode button"))
+		LANG("datum.0f192544", list(span_bold("Select corner"), span_bold("Paint area"), span_bold("Select area to paint"), span_bold("Create new area")))))
 	)
 
 /datum/buildmode_mode/area_edit/enter_mode(datum/buildmode/BM)
@@ -30,10 +28,10 @@
 	return ..()
 
 /datum/buildmode_mode/area_edit/change_settings(client/c)
-	var/target_path = input(c, "Enter typepath:", "Typepath", "/area")
+	var/target_path = input(c, LANG("datum.d60ae892", null), LANG("datum.1a01b0f5", null), "/area")
 	var/areatype = text2path(target_path)
 	if(ispath(areatype,/area))
-		var/areaname = input(c, "Enter area name:", "Area name", "Area")
+		var/areaname = input(c, LANG("datum.a7bfd1f1", null), LANG("datum.355bff78", null), "Area")
 		if(!areaname || !length(areaname))
 			return
 		storedarea = new areatype
@@ -49,7 +47,7 @@
 
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		if(!storedarea)
-			to_chat(c, span_warning("Configure or select the area you want to paint first!"))
+			to_chat(c, span_warning(LANG("datum.7b6c0cc2", null)))
 			return
 		if(LAZYACCESS(modifiers, ALT_CLICK))
 			var/turf/T = get_turf(object)
@@ -67,7 +65,7 @@
 	var/list/modifiers = params2list(params)
 
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
-		var/choice = alert("Are you sure you want to fill area?", "Area Fill Confirmation", "Yes", "No")
+		var/choice = alert(LANG("datum.9ecddd9e", null), LANG("datum.e681f2d9", null), "Yes", "No")
 		if(choice != "Yes")
 			return
 		for(var/turf/T in block(get_turf(cornerA),get_turf(cornerB)))

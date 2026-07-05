@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Generic system for picking up mobs.
 //Currently works for head and hands.
 /obj/item/mob_holder
@@ -61,7 +62,7 @@
 	if((item_flags & ABSTRACT) || HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_notice("You set [src] down gently on the ground."))
+		to_chat(user, span_notice(LANG("obj.3b0b0198", list(src))))
 		release()
 		return
 
@@ -83,13 +84,13 @@
 	if(isliving(loc))
 		var/mob/living/captor = loc
 		if(display_messages)
-			to_chat(captor, span_warning("[released_mob] wriggles free!"))
+			to_chat(captor, span_warning(LANG("obj.9eb18c65", list(released_mob))))
 		captor.dropItemToGround(src)
 	released_mob.forceMove(drop_location())
 	released_mob.reset_perspective()
 	released_mob.setDir(SOUTH)
 	if(display_messages)
-		released_mob.visible_message(span_warning("[released_mob] uncurls!"))
+		released_mob.visible_message(span_warning(LANG("obj.25d2d428", list(released_mob))))
 	if(!QDELETED(src))
 		qdel(src)
 	return TRUE
@@ -107,8 +108,8 @@
 
 /obj/item/mob_holder/on_found(mob/finder)
 	if(held_mob?.will_escape_storage())
-		to_chat(finder, span_warning("\A [held_mob.name] pops out! "))
-		finder.visible_message(span_warning("\A [held_mob.name] pops out of the container [finder] is opening!"), ignored_mobs = finder)
+		to_chat(finder, span_warning(LANG("obj.8d109f54", list(held_mob.name))))
+		finder.visible_message(span_warning(LANG("obj.fa0c4845", list(held_mob.name, finder))), ignored_mobs = finder)
 		release(display_messages = FALSE)
 		return
 
@@ -124,7 +125,7 @@
 		qdel(src)
 		return
 	name = "drone (hiding)"
-	desc = "This drone is scared and has curled up into a ball!"
+	desc = LANG("obj.3f16f27c", null)
 
 /obj/item/mob_holder/drone/update_visuals(mob/living/contained)
 	var/mob/living/basic/drone/drone = contained

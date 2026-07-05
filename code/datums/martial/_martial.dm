@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/martial_art
 	/// Player readable name of the martial art
 	var/name = "Martial Art"
@@ -428,11 +429,11 @@
 	var/datum/martial_art/next = GET_NEXT_MARTIAL_ART(src)
 
 	if(current.locked_to_use)
-		to_chat(src, span_warning("You can't stop practicing [current]! It's too ingrained in your muscle memory."))
+		to_chat(src, span_warning(LANG("mob.686ad0c8", list(current))))
 		return
 
 	switch_style(current, next)
-	to_chat(src, span_notice("You stop practicing [current] and start practicing [next]."))
+	to_chat(src, span_notice(LANG("mob.c1f344ba", list(current, next))))
 
 /// Deactivates the current martial art and activates the next one.
 /mob/living/proc/switch_style(datum/martial_art/current_martial, datum/martial_art/next_martial)

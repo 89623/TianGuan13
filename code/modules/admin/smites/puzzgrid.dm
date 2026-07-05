@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Turns the user into a puzzgrid
 /datum/smite/puzzgrid
 	name = "Puzzgrid"
@@ -6,11 +7,11 @@
 	var/gib_on_loss
 
 /datum/smite/puzzgrid/configure(client/user)
-	var/timer = input(user, "How long should other people have to solve the grid? 0 gives infinite time.", "Puzzgrid", 0) as num | null
+	var/timer = input(user, LANG("datum.6102fe88", null), LANG("datum.a87eab73", null), 0) as num | null
 	if (isnull(timer))
 		return FALSE
 
-	var/gib_on_loss = tgui_alert(user, "What should happen to them when they lose?", "Puzzgrid", list("Gib", "New puzzle")) == "Gib"
+	var/gib_on_loss = tgui_alert(user, LANG("datum.0d24710c", null), LANG("datum.a87eab73", null), list("Gib", "New puzzle")) == "Gib"
 
 	src.gib_on_loss = gib_on_loss
 	src.timer = timer == 0 ? null : (timer * 1 SECONDS)
@@ -22,12 +23,12 @@
 
 	var/datum/puzzgrid/puzzgrid = create_random_puzzgrid()
 	if (isnull(puzzgrid))
-		to_chat(user, span_warning("Couldn't create a puzzgrid! Maybe the config isn't setup?"))
+		to_chat(user, span_warning(LANG("datum.7882fed5", null)))
 		return
 
 	var/obj/structure/puzzgrid_effect/puzzgrid_effect = new(target.loc, target, puzzgrid, timer, gib_on_loss)
 	target.forceMove(puzzgrid_effect)
-	puzzgrid_effect.visible_message(span_warning("[target] has suddenly transformed into a fiendishly hard puzzle!"))
+	puzzgrid_effect.visible_message(span_warning(LANG("datum.9ac6a75b", list(target))))
 
 	playsound(puzzgrid_effect, 'sound/effects/magic.ogg', 70)
 
@@ -75,8 +76,8 @@
 	victim.forceMove(loc)
 	victim.Paralyze(5 SECONDS)
 	victim.visible_message(
-		span_notice("[victim] is unshackled from their fiendish prison!"),
-		span_notice("You are unshackled from your fiendish prison!"),
+		span_notice(LANG("obj.70442626", list(victim))),
+		span_notice(LANG("obj.ffcb9dac", null)),
 	)
 
 	victim.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
@@ -88,8 +89,8 @@
 /obj/structure/puzzgrid_effect/proc/loss_gib()
 	victim.forceMove(loc)
 	victim.visible_message(
-		span_bolddanger("You were unable to free [victim] from their fiendish prison, leaving them as nothing more than a smattering of mush!"),
-		span_bolddanger("Your compatriates were unable to free you from your fiendish prison, leaving you as nothing more than a smattering of mush!"),
+		span_bolddanger(LANG("obj.8dc329de", list(victim))),
+		span_bolddanger(LANG("obj.6b8258eb", null)),
 	)
 	victim.gib(DROP_ALL_REMAINS)
 	victim = null
@@ -101,13 +102,13 @@
 	if (isnull(puzzgrid))
 		victim.forceMove(loc)
 		victim.Paralyze(5 SECONDS)
-		victim.visible_message(span_bolddanger("Despite completely failing the puzzle, through unbelievable luck, [victim] manages to break out anyway!"))
+		victim.visible_message(span_bolddanger(LANG("obj.9ef614c1", list(victim))))
 		victim.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED), "[type]")
 		qdel(src)
 		victim = null
 		return
 
-	visible_message(span_danger("The fiendishly hard puzzle shapeshifts into a different, equally as challenging puzzle!"))
+	visible_message(span_danger(LANG("obj.ffa62dc6", null)))
 
 	// Defer until after the fail proc finishes, since that will qdel the component.
 	addtimer(CALLBACK(src, PROC_REF(add_puzzgrid_component), puzzgrid), 0)

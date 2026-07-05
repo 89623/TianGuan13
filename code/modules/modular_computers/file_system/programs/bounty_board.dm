@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/bounty_board
 	filename = "bountyboard"
 	filedesc = "Bounty Board Request Network"
@@ -89,7 +90,7 @@
 			return TRUE
 		if("apply")
 			if(!current_user)
-				computer.say("Please swipe a valid ID first.")
+				computer.say(LANG("datum.2d02fd03", null))
 				return TRUE
 			if(current_user.account_holder == active_request.owner)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
@@ -102,13 +103,13 @@
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 				return
 			request_target.transfer_money(current_user, active_request.value, "Bounties: Request Completed")
-			computer.say("Paid out [active_request.value] [MONEY_NAME].")
+			computer.say(LANG("datum.a408cc95", list(active_request.value, MONEY_NAME)))
 			GLOB.request_list.Remove(active_request)
 			return TRUE
 		if("clear")
 			if(current_user)
 				current_user = null
-				computer.say("Account Reset.")
+				computer.say(LANG("datum.c924fceb", null))
 				return TRUE
 		if("deleteRequest")
 			if(!current_user)
@@ -117,7 +118,7 @@
 			if(active_request.owner != current_user.account_holder)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
-			computer.say("Deleted current request.")
+			computer.say(LANG("datum.60a524e0", null))
 			GLOB.request_list.Remove(active_request)
 			return TRUE
 		if("bountyVal")

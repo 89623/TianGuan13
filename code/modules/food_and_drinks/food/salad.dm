@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //this category is very little but I think that it has great potential to grow
 ////////////////////////////////////////////SALAD////////////////////////////////////////////
 /obj/item/food/salad
@@ -235,10 +236,10 @@
 		// There was no soup in the pot, do normal examine
 		return
 
-	examine_list += "Inside, you can see:"
+	examine_list += LANG("obj.0cd99d60", null)
 	examine_list += soups_found
 	if(unknown_volume > 0)
-		examine_list += "&bull; [round(unknown_volume, 0.01)] units of unknown reagents"
+		examine_list += LANG("obj.d7680a11", list(round(unknown_volume, 0.01)))
 
 	return STOP_GENERIC_REAGENT_EXAMINE
 

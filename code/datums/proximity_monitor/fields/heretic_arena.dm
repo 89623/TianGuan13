@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(heretic_arenas)
 
 // Invisible effect that doesnt exist outside of containing the prox monitor
@@ -149,7 +150,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	var/mob/living/living_mob = bumped_atom
 	var/atom/target = get_edge_target_turf(living_mob, get_dir(src, get_step_away(living_mob, src)))
 	living_mob.throw_at(target, 4, 5)
-	to_chat(living_mob, span_userdanger("The wall repels you with tremendous force!"))
+	to_chat(living_mob, span_userdanger(LANG("turf.f67b58a5", null)))
 
 /// Called when you crit somebody to update your crown
 /datum/status_effect/arena_tracker/proc/on_crit_somebody()
@@ -177,9 +178,9 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	if(arena_victor) // No need to spam if we've already killed at least 1 person
 		return
 	if(IS_HERETIC(owner))
-		to_chat(owner, span_big(span_hypnophrase("The mansus is pleased with your performance, you may leave now.")))
+		to_chat(owner, span_big(span_hypnophrase(LANG("datum.71fe76a9", null))))
 	else
-		to_chat(owner, span_big(span_hypnophrase("You have done well, you may leave now.")))
+		to_chat(owner, span_big(span_hypnophrase(LANG("datum.a1f524a3", null))))
 	arena_victor = TRUE
 
 /**

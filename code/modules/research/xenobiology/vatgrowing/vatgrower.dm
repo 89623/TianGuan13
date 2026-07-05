@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Used to make mobs from microbiological samples. Grow grow grow.
 /obj/machinery/vatgrower
 	name = "growing vat"
@@ -76,7 +77,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	resampler_active = !resampler_active
-	balloon_alert(user, "resampler [resampler_active ? "activated" : "deactivated"]")
+	balloon_alert(user, LANG("obj.b020e233", list(resampler_active ? "activated" : "deactivated")))
 	update_appearance()
 
 /obj/machinery/vatgrower/attack_hand_secondary(mob/user, list/modifiers)
@@ -85,29 +86,29 @@
 		return
 	if(!anchored)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	var/warning = tgui_alert(user, "Are you sure you want to empty the soup container?","Flush soup container?", list("Flush", "Cancel"))
+	var/warning = tgui_alert(user, LANG("obj.cdffafe0", null),LANG("obj.6ea42650", null), list("Flush", "Cancel"))
 	if(warning == "Flush" && user.can_perform_action(src))
 		reagents.clear_reagents()
 		if(biological_sample)
 			QDEL_NULL(biological_sample)
-		balloon_alert(user, "container empty")
+		balloon_alert(user, LANG("obj.069f8809", null))
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 ///Creates a clone of the supplied sample and puts it in the vat
 /obj/machinery/vatgrower/proc/deposit_sample(mob/user, obj/item/petri_dish/petri)
 	if(!petri.sample)
-		balloon_alert(user, "dish empty")
+		balloon_alert(user, LANG("obj.d9ef7367", null))
 		return ITEM_INTERACT_FAILURE
 	if(biological_sample)
-		balloon_alert(user, "already has a sample")
+		balloon_alert(user, LANG("obj.a23bb1ea", null))
 		return ITEM_INTERACT_FAILURE
 	biological_sample = new
 	for(var/datum/micro_organism/m in petri.sample.micro_organisms)
 		biological_sample.micro_organisms += new m.type()
 	biological_sample.sample_layers = petri.sample.sample_layers
 	biological_sample.sample_color = petri.sample.sample_color
-	balloon_alert(user, "added sample")
+	balloon_alert(user, LANG("obj.ac035e15", null))
 	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 	update_appearance()
 	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, PROC_REF(on_sample_growth_completed))
@@ -118,7 +119,7 @@
 	. = ..()
 	if(!biological_sample)
 		return
-	. += span_notice("It seems to have a sample in it!")
+	. += span_notice(LANG("obj.b199c932", null))
 	for(var/i in biological_sample.micro_organisms)
 		var/datum/micro_organism/MO = i
 		. += MO.get_details(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
@@ -159,7 +160,7 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	balloon_alert(user, "resampling circuit overloaded")
+	balloon_alert(user, LANG("obj.02c2a98b", null))
 	flick("growing_vat_emagged", src)
 	return TRUE
 

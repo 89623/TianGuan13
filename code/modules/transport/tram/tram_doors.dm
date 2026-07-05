@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Amount of travel distance to force open tram doors while moving
 #define TRAM_DOOR_RELEASE_THRESHOLD 17
 
@@ -180,7 +181,7 @@
 		return
 
 	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-	say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
+	say(LANG("obj.fccc9b8d", null))
 	close(forced = BYPASS_DOOR_CHECKS)
 
 /**
@@ -211,7 +212,7 @@
  */
 /obj/machinery/door/airlock/tram/examine(mob/user)
 	. = ..()
-	. += span_notice("It has an emergency mechanism to open using [EXAMINE_HINT("just your hands")] in the event of an emergency.")
+	. += span_notice(LANG("obj.767a416d", list(EXAMINE_HINT("just your hands"))))
 
 /**
  * Tram doors can be opened with hands when unpowered
@@ -223,7 +224,7 @@
 	if(!hasPower()  && density)
 		COOLDOWN_START(src, release_cooldown, 1.2 SECONDS)
 		playsound(src, soundin = 'sound/machines/airlock/airlockforced.ogg', vol = 40, vary = FALSE)
-		balloon_alert_to_viewers("pulling emergency exit!", vision_distance = COMBAT_MESSAGE_RANGE)
+		balloon_alert_to_viewers(LANG("obj.0d9f9de7", null), vision_distance = COMBAT_MESSAGE_RANGE)
 		if(do_after(user, 1.2 SECONDS, target = src))
 			open(forced = BYPASS_DOOR_CHECKS)
 
@@ -249,7 +250,7 @@
 		return // we're already animating, don't reset that
 	COOLDOWN_START(src, release_cooldown, 1.2 SECONDS)
 	playsound(src, soundin = 'sound/machines/airlock/airlockforced.ogg', vol = 40, vary = FALSE)
-	balloon_alert_to_viewers("pulling emergency exit!", vision_distance = COMBAT_MESSAGE_RANGE)
+	balloon_alert_to_viewers(LANG("obj.0d9f9de7", null), vision_distance = COMBAT_MESSAGE_RANGE)
 	if(do_after(user, delay = 0.6 SECONDS, timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_SLOWDOWNS))
 		open(forced = BYPASS_DOOR_CHECKS)
 

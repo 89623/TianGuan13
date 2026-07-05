@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/blood_warp
 	name = "Blood Warp"
 	button_icon = 'icons/effects/blood.dmi'
@@ -57,11 +58,11 @@
 		shuffle_inplace(pools)
 		found_bloodpool = pick(pools)
 	if(found_bloodpool)
-		owner.visible_message(span_danger("[owner] sinks into the blood..."))
+		owner.visible_message(span_danger(LANG("datum.781433e8", list(owner))))
 		playsound(owner_turf, 'sound/effects/magic/enter_blood.ogg', 100, TRUE, -1)
 		owner.forceMove(get_turf(found_bloodpool))
 		playsound(get_turf(owner), 'sound/effects/magic/exit_blood.ogg', 100, TRUE, -1)
-		owner.visible_message(span_danger("And springs back out!"))
+		owner.visible_message(span_danger(LANG("datum.f4040cf3", null)))
 		SEND_SIGNAL(owner, COMSIG_BLOOD_WARP)
 		return TRUE
 	return FALSE

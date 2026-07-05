@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///A special category for goods stolen by spies for their bounties.
 /datum/market_item/stolen_good
 	category = "Fenced Goods"
@@ -10,5 +11,5 @@
 	..()
 	set_item(thing)
 	name = "Stolen [thing.name]"
-	desc = "A [thing.name], stolen from somewhere on the station. Whoever owned it probably wouldn't be happy to see it here."
+	desc = LANG("datum.62dd97f8", list(thing.name))
 	price = thing_price

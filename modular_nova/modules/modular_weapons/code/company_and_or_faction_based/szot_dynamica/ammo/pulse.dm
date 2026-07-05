@@ -48,7 +48,7 @@
 /obj/item/ammo_casing/pulse/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
 	if(remaining_uses <= 0)
 		if(!quiet)
-			to_chat(user, span_warning("[src] is depleted!"))
+			to_chat(user, span_warning(LANG("obj.30cd0685", list(src))))
 		return FALSE
 	// Reset suppress_use_consumption flag when used in a different weapon
 	if(fired_from && istype(fired_from, /obj/item/gun))
@@ -85,8 +85,8 @@
 	if(total_damage <= 0)
 		return "Our legal team has determined these [span_warning(caliber)] plasma pulses to be non-lethal."
 
-	readout += "These [span_warning(caliber)] pulses deliver a combined [span_warning("[total_damage] damage")] per shot ([span_warning("[initial_brute * proj_damage_mult] brute")] + [span_warning("[initial_burn * proj_damage_mult] burn")])."
-	readout += "Most test subjects succumbed to their wounds after [span_warning("[HITS_TO_CRIT(total_damage)] pulse\s")] at point-blank range."
+	readout += LANG("obj.fcbecdeb", list(span_warning(caliber), span_warning("[total_damage] damage"), span_warning("[initial_brute * proj_damage_mult] brute"), span_warning("[initial_burn * proj_damage_mult] burn")))
+	readout += LANG("obj.4efaa689", list(span_warning("[HITS_TO_CRIT(total_damage)]")))
 
 	return readout.Join("\n")
 

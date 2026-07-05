@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/broken_flooring
 	name = "broken tiling"
 	desc = "A segment of broken flooring."
@@ -28,7 +29,7 @@
 
 /obj/structure/broken_flooring/crowbar_act(mob/living/user, obj/item/I)
 	I.play_tool_sound(src, 80)
-	balloon_alert(user, "tile reclaimed")
+	balloon_alert(user, LANG("obj.45ea115f", null))
 	new /obj/item/stack/tile/iron(get_turf(src))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

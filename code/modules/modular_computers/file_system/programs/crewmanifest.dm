@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/crew_manifest
 	filename = "plexagoncrew"
 	filedesc = "Plexagon Crew List"
@@ -24,7 +25,7 @@
 								[GLOB.manifest ? GLOB.manifest.get_html(0) : ""]
 								"}
 				if(!computer.print_text(contents, "crew manifest ([round_timestamp()])"))
-					to_chat(usr, span_notice("Printer is out of paper."))
+					to_chat(usr, span_notice(LANG("datum.8f26e725", null)))
 					return
 				else
-					computer.visible_message(span_notice("\The [computer] prints out a paper."))
+					computer.visible_message(span_notice(LANG("datum.7a4642f7", list(computer))))

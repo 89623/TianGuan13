@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/suit/hooded/ethereal_raincoat
 	name = "ethereal raincoat"
 	desc = " A raincoat commonly worn by travelers or tourists not too fond of Sprout's rainy weather."
@@ -41,7 +42,7 @@
 	. = ..()
 	if(isethereal(user) && (slot & ITEM_SLOT_OCLOTHING))
 		var/mob/living/carbon/human/ethereal = user
-		to_chat(ethereal, span_notice("[src] gently quivers for a moment as you put it on."))
+		to_chat(ethereal, span_notice(LANG("obj.f7caee67", list(src))))
 		set_greyscale(ethereal.dna.species.fixed_mut_color)
 		ethereal.update_worn_oversuit()
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Handle any reactions possible in this holder
  * Also UPDATES the reaction list
@@ -259,7 +260,7 @@
 			var/obj/item/slime_extract/extract = my_atom
 			extract.extract_uses--
 			if(extract.extract_uses <= 0) // give the notification that the slime core is dead
-				my_atom.visible_message(span_notice("[iconhtml] \The [my_atom]'s power is consumed in the reaction."))
+				my_atom.visible_message(span_notice(LANG("datum.c6f000bb", list(iconhtml, my_atom))))
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 				extract.can_grind = FALSE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/big_manipulator
 	name = "big manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
@@ -63,7 +64,7 @@
 /// Attempts to create a new task and assign it to the list.
 /obj/machinery/big_manipulator/proc/create_new_task(mob/user, task_type, turf/new_turf)
 	if(length(tasks) >= interaction_point_limit)
-		balloon_alert(user, "task limit reached!")
+		balloon_alert(user, LANG("obj.b9fe7ac5", null))
 		return FALSE
 
 	var/datum/stock_part/servo/locate_servo = locate() in component_parts
@@ -161,7 +162,7 @@
 	. = ..()
 	var/mob/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
-		. += "You can see a poor [monkey_resolve.name] buckled to [src]. You wonder if it's getting paid enough."
+		. += LANG("obj.d0e14b2a", list(monkey_resolve.name, src))
 
 /obj/machinery/big_manipulator/attack_hand_secondary(mob/living/user, list/modifiers)
 	try_press_on(user)
@@ -239,7 +240,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 
-	balloon_alert(user, "overloaded")
+	balloon_alert(user, LANG("obj.d6f94232", null))
 	obj_flags |= EMAGGED
 
 	for(var/datum/manipulator_task/cargo/cargo_task in tasks)
@@ -254,7 +255,7 @@
 
 /obj/machinery/big_manipulator/can_be_unfasten_wrench(mob/user, silent)
 	if(on || stopping)
-		to_chat(user, span_warning("[src] is activated!"))
+		to_chat(user, span_warning(LANG("obj.a471ab80", list(src))))
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -276,7 +277,7 @@
 
 	if(istype(tool, /obj/item/disk/manipulator))
 		if(on || stopping)
-			balloon_alert(user, "turn it off first!")
+			balloon_alert(user, LANG("obj.b4476a5d", null))
 			return ITEM_INTERACT_BLOCKING
 		if(task_disk)
 			task_disk.forceMove(drop_location())
@@ -284,7 +285,7 @@
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		task_disk = tool
-		balloon_alert(user, "disk inserted")
+		balloon_alert(user, LANG("obj.0d53bd7c", null))
 		SStgui.update_uis(src)
 		return ITEM_INTERACT_SUCCESS
 
@@ -299,25 +300,25 @@
 
 /obj/machinery/big_manipulator/mouse_drop_dragged(atom/drop_point, mob/user, src_location, over_location, params)
 	if(on || stopping)
-		balloon_alert(user, "turn it off first!")
+		balloon_alert(user, LANG("obj.b4476a5d", null))
 		return
 
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker?.resolve()
 	if(!poor_monkey)
 		return
 
-	balloon_alert(user, "trying to unbuckle...")
+	balloon_alert(user, LANG("obj.dccf64e0", null))
 	if(!do_after(user, 3 SECONDS, src))
-		balloon_alert(user, "interrupted")
+		balloon_alert(user, LANG("obj.0c4ac08a", null))
 		return
 
-	balloon_alert(user, "unbuckled")
+	balloon_alert(user, LANG("obj.c6584fb2", null))
 	poor_monkey.drop_all_held_items()
 	poor_monkey.forceMove(drop_point)
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
 	if(on || stopping)
-		balloon_alert(user, "turn it off first!")
+		balloon_alert(user, LANG("obj.b4476a5d", null))
 		return
 
 	if(monkey_worker?.resolve())
@@ -328,15 +329,15 @@
 
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey
 	if(poor_monkey.mind)
-		balloon_alert(user, "too smart!")
+		balloon_alert(user, LANG("obj.0578d4f6", null))
 		return
 
-	poor_monkey.balloon_alert(user, "trying to buckle...")
+	poor_monkey.balloon_alert(user, LANG("obj.df34f844", null))
 	if(!do_after(user, 3 SECONDS, poor_monkey))
-		poor_monkey.balloon_alert(user, "interrupted")
+		poor_monkey.balloon_alert(user, LANG("obj.0c4ac08a", null))
 		return
 
-	balloon_alert(user, "buckled")
+	balloon_alert(user, LANG("obj.364fbfe2", null))
 	monkey_worker = WEAKREF(poor_monkey)
 	poor_monkey.drop_all_held_items()
 	poor_monkey.forceMove(src)
@@ -357,14 +358,14 @@
 
 	if(!id_lock)
 		id_lock = WEAKREF(clicked_by_this_id)
-		balloon_alert(user, "successfully locked")
+		balloon_alert(user, LANG("obj.006da009", null))
 		return
 	var/obj/item/card/id/resolve_id = id_lock.resolve()
 	if(clicked_by_this_id != resolve_id)
-		balloon_alert(user, "locked by another id")
+		balloon_alert(user, LANG("obj.58b9679e", null))
 		return
 	id_lock = null
-	balloon_alert(user, "successfully unlocked")
+	balloon_alert(user, LANG("obj.aa10fc9d", null))
 
 /// Attaching the arm effect to the core.
 /obj/machinery/big_manipulator/proc/create_manipulator_arm()
@@ -381,11 +382,11 @@
 
 	if(newly_on)
 		if(!powered())
-			balloon_alert(user, "no power!")
+			balloon_alert(user, LANG("obj.b3e1b703", null))
 			return
 
 		if(!anchored)
-			balloon_alert(user, "anchor first!")
+			balloon_alert(user, LANG("obj.fc0b549c", null))
 			return
 
 		validate_all_tasks()
@@ -417,26 +418,26 @@
 /// Attempts to press the power button.
 /obj/machinery/big_manipulator/proc/try_press_on(mob/living/carbon/human/user)
 	if(power_access_wire_cut)
-		balloon_alert(user, "unresponsive!")
+		balloon_alert(user, LANG("obj.4084453b", null))
 		return
 
 	if(stopping)
-		balloon_alert(user, "stopping in progress!")
+		balloon_alert(user, LANG("obj.ba2cc928", null))
 		return
 
 	toggle_power_state(user)
 	if(on)
-		balloon_alert(user, "activated")
+		balloon_alert(user, LANG("obj.bcf4b118", null))
 	else
-		balloon_alert(user, "deactivated")
+		balloon_alert(user, LANG("obj.73968d2f", null))
 
 /obj/machinery/big_manipulator/ui_interact(mob/user, datum/tgui/ui)
 	if(id_lock)
-		to_chat(user, span_warning("[src] is locked behind ID authentication!"))
+		to_chat(user, span_warning(LANG("obj.2ca11620", list(src))))
 		ui?.close()
 		return
 	if(!anchored)
-		to_chat(user, span_warning("[src] isn't attached to the ground!"))
+		to_chat(user, span_warning(LANG("obj.f467682f", list(src))))
 		ui?.close()
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -567,7 +568,7 @@
 
 		if("reset_tasking_index")
 			master_tasking.current_index = 1
-			balloon_alert(ui.user, "tasking index reset")
+			balloon_alert(ui.user, LANG("obj.2e7940d6", null))
 			maybe_wake()
 			return TRUE
 
@@ -617,42 +618,42 @@
 
 /obj/machinery/big_manipulator/proc/eject_task_disk(mob/user)
 	if(on || stopping)
-		balloon_alert(user, "turn it off first!")
+		balloon_alert(user, LANG("obj.b4476a5d", null))
 		return FALSE
 	if(!task_disk)
 		return FALSE
 	var/obj/item/disk/manipulator/ejectable_disk = task_disk
 	task_disk = null
 	if(istype(user) && user.put_in_hands(ejectable_disk))
-		balloon_alert(user, "disk ejected")
+		balloon_alert(user, LANG("obj.0e065a42", null))
 	else
 		ejectable_disk.forceMove(drop_location())
-		balloon_alert(user, "disk dropped")
+		balloon_alert(user, LANG("obj.936f90f7", null))
 	SStgui.update_uis(src)
 	return TRUE
 
 /obj/machinery/big_manipulator/proc/clear_disk_tasks(mob/user)
 	if(on || stopping)
-		balloon_alert(user, "turn it off first!")
+		balloon_alert(user, LANG("obj.b4476a5d", null))
 		return FALSE
 	if(!task_disk)
 		return FALSE
 	if(task_disk.read_only)
-		balloon_alert(user, "disk protected")
+		balloon_alert(user, LANG("obj.00a8efba", null))
 		return FALSE
 	task_disk.set_tasks(list())
-	balloon_alert(user, "cleared")
+	balloon_alert(user, LANG("obj.3478a3ac", null))
 	SStgui.update_uis(src)
 	return TRUE
 
 /obj/machinery/big_manipulator/proc/write_disk_tasks(mob/user)
 	if(on || stopping)
-		balloon_alert(user, "turn it off first!")
+		balloon_alert(user, LANG("obj.b4476a5d", null))
 		return FALSE
 	if(!task_disk)
 		return FALSE
 	if(task_disk.read_only)
-		balloon_alert(user, "disk protected")
+		balloon_alert(user, LANG("obj.00a8efba", null))
 		return FALSE
 
 	var/list/out = list()
@@ -660,13 +661,13 @@
 		out += list(task.serialize())
 
 	task_disk.set_tasks(out)
-	balloon_alert(user, "written")
+	balloon_alert(user, LANG("obj.08a3ce8a", null))
 	SStgui.update_uis(src)
 	return TRUE
 
 /obj/machinery/big_manipulator/proc/read_disk_tasks(mob/user)
 	if(on || stopping)
-		balloon_alert(user, "turn it off first!")
+		balloon_alert(user, LANG("obj.b4476a5d", null))
 		return FALSE
 	if(!task_disk)
 		return FALSE
@@ -718,7 +719,7 @@
 
 	process_upgrades()
 	validate_all_tasks()
-	balloon_alert(user, "loaded")
+	balloon_alert(user, LANG("obj.1797a40d", null))
 	SStgui.update_uis(src)
 	return TRUE
 

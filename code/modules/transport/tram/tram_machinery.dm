@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/assembly/control/transport
 	voice_filter = "highpass=f=300,lowpass=f=3500,aecho=0.8:0.9:70|140:0.3|0.15,alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 	/// The ID of the tram we're linked to
@@ -10,7 +11,7 @@
 	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/platform as anything in SStransport.nav_beacons[specific_transport_id])
 		LAZYADD(available_platforms, platform.name)
 
-	var/selected_platform = tgui_input_list(user, "Set the platform ID", "Platform", available_platforms)
+	var/selected_platform = tgui_input_list(user, LANG("obj.fddb791b", null), LANG("obj.47ba7975", null), available_platforms)
 	var/obj/effect/landmark/transport/nav_beacon/tram/platform/change_platform
 	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/destination as anything in SStransport.nav_beacons[specific_transport_id])
 		if(destination.name == selected_platform)
@@ -21,12 +22,12 @@
 		return
 
 	if(get_dist(change_platform, src) > 15)
-		balloon_alert(user, "out of range!")
+		balloon_alert(user, LANG("obj.2201997f", null))
 		return
 
 	id = change_platform.platform_code
-	balloon_alert(user, "platform changed")
-	to_chat(user, span_notice("You change the platform ID to [change_platform.name]."))
+	balloon_alert(user, LANG("obj.ed615b2a", null))
+	to_chat(user, span_notice(LANG("obj.60bd7fff", list(change_platform.name))))
 
 /obj/item/assembly/control/transport/call_button
 	name = "tram call button"
@@ -52,24 +53,24 @@
 		voice = SStts.tram_voice
 	switch(response_code)
 		if(REQUEST_SUCCESS)
-			say("The tram has been called to the platform.")
+			say(LANG("obj.29253678", null))
 
 		if(REQUEST_FAIL)
 			switch(response_info)
 				if(BROKEN_BEYOND_REPAIR)
-					say("The tram has suffered a catastrophic failure. Please seek alternate modes of travel.")
+					say(LANG("obj.aa703320", null))
 				if(NOT_IN_SERVICE) //tram has no power or other fault, but it's not broken forever
-					say("The tram is not in service due to loss of power or system problems. Please contact the nearest engineer to check power and controller.")
+					say(LANG("obj.5b62f6a7", null))
 				if(INVALID_PLATFORM) //engineer needs to fix button
-					say("Button configuration error. Please contact the nearest engineer.")
+					say(LANG("obj.7825f195", null))
 				if(TRANSPORT_IN_USE)
-					say("The tram is tramversing the station, please wait.")
+					say(LANG("obj.317f4589", null))
 				if(INTERNAL_ERROR)
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					say(LANG("obj.335c006a", null))
 				if(NO_CALL_REQUIRED) //already here
-					say("The tram is already here. Please board the tram and select a destination.")
+					say(LANG("obj.c7cb3b73", null))
 				else
-					say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
+					say(LANG("obj.335c006a", null))
 
 /obj/item/assembly/control/transport/call_button/activate()
 	if(cooldown)
@@ -102,7 +103,7 @@
 	if(in_range(user, src))
 		return attack_hand(user)
 	else
-		to_chat(user, span_warning("You are too far away to activate the button!"))
+		to_chat(user, span_warning(LANG("obj.cccb5c88", null)))
 
 /obj/machinery/button/transport/tram/setup_device()
 	. = ..()
@@ -112,7 +113,7 @@
 
 /obj/machinery/button/transport/tram/examine(mob/user)
 	. = ..()
-	. += span_notice("There's a small inscription on the button...")
-	. += span_notice("THIS CALLS THE TRAM! IT DOES NOT OPERATE IT! The console on the tram tells it where to go!")
+	. += span_notice(LANG("obj.55dc601c", null))
+	. += span_notice(LANG("obj.0865a712", null))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/transport/tram, 32)

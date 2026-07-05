@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///The area is a "Station" area, showing no special text.
 #define AREA_STATION 1
 ///The area is in outdoors (lavaland/icemoon/jungle/space), therefore unclaimed territories.
@@ -146,11 +147,11 @@
 					return TRUE
 		if("view_blueprints")
 			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)
-			user.balloon_alert_to_viewers("flips blueprints over")
+			user.balloon_alert_to_viewers(LANG("obj.1326d3da", null))
 			set_viewer(user)
 		if("hide_blueprints")
 			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)
-			user.balloon_alert_to_viewers("flips blueprints over")
+			user.balloon_alert_to_viewers(LANG("obj.1326d3da", null))
 			clear_viewer()
 		if("refresh")
 			playsound(src, 'sound/items/paper_flip.ogg', 40, TRUE)
@@ -214,12 +215,12 @@
 /obj/item/blueprints/proc/edit_area(mob/user)
 	var/area/area_editing = get_area(src)
 	var/prevname = "[area_editing.name]"
-	var/new_name = tgui_input_text(user, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
+	var/new_name = tgui_input_text(user, LANG("obj.e83e886e", null), LANG("obj.401a4485", null), max_length = MAX_NAME_LEN)
 	if(isnull(new_name) || !length(new_name) || new_name == prevname)
 		return
 
 	rename_area(area_editing, new_name)
-	user.balloon_alert(user, "area renamed to [new_name]")
+	user.balloon_alert(user, LANG("obj.fab4b1ba", list(new_name)))
 	user.log_message("has renamed [prevname] to [new_name]", LOG_GAME)
 	return TRUE
 

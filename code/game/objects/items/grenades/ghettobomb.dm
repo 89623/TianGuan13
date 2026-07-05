@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/grenade/iedcasing
 	name = "improvised explosive"
 	desc = "An improvised explosive device."
@@ -53,10 +54,10 @@
 
 /obj/item/grenade/iedcasing/examine(mob/user)
 	. = ..()
-	. += span_notice("Using it in-hand activates the assembly, which means timers start timing and so on.")
-	. += span_notice("Using it off-hand allows you to configure the assembly, if possible.")
+	. += span_notice(LANG("obj.6ac8a0ed", null))
+	. += span_notice(LANG("obj.ab7d1b5b", null))
 	if(contents.len > 1) // above 1, so more than just the activator
-		. += span_warning("It seems to have something stuffed in it.")
+		. += span_warning(LANG("obj.b9a2ca47", null))
 	if(isnull(activator))
 		return
 	. += activator.examine(user)
@@ -132,7 +133,7 @@
 	add_fingerprint(user)
 	activator.activate()
 	update_icon(UPDATE_ICON_STATE)
-	user.balloon_alert_to_viewers("arming!")
+	user.balloon_alert_to_viewers(LANG("obj.781196e4", null))
 	COOLDOWN_START(src, spam_cd, 1 SECONDS)
 
 /obj/item/grenade/iedcasing/detonate(mob/living/lanced_by) //Blowing that can up
@@ -213,16 +214,16 @@
 /obj/item/sliced_pipe/examine(mob/user)
 	. = ..()
 	if(!wires_are_in)
-		. += span_notice("You could stuff something in, or fill it with fuel or some other volatile chemical..")
-		. += span_notice("Afterwards, add some cable.")
+		. += span_notice(LANG("obj.49ef3fb9", null))
+		. += span_notice(LANG("obj.0532e684", null))
 	else
-		. += span_notice("The wires are just dangling from it, you need some sort of <i> activating assembly</i>.")
+		. += span_notice(LANG("obj.f721afd3", null))
 
 /obj/item/sliced_pipe/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!wires_are_in)
 		// here we can stuff in additional objects for a cooler effect
 		if(is_type_in_typecache(item, allowed) && contents.len < MAX_STUFFINGS)
-			balloon_alert(user, "stuffed in")
+			balloon_alert(user, LANG("obj.0d2c11af", null))
 			var/atom/movable/to_put = item
 			if(isstack(item))
 				var/obj/item/stack/as_stack = item
@@ -236,14 +237,14 @@
 		if(item.reagents)
 			return ..()
 		if(reagents.total_volume < 5)
-			balloon_alert(user, "add more fuel!")
+			balloon_alert(user, LANG("obj.54c02df4", null))
 			return
 
 		var/obj/item/stack/cable_coil/coil = item
 		if(!istype(coil))
 			return
 		if (coil.get_amount() < 15)
-			balloon_alert(user, "need 15 length!")
+			balloon_alert(user, LANG("obj.1643231e", null))
 			return
 		coil.use(15)
 
@@ -256,7 +257,7 @@
 		power *= cur_power
 		power -= contents.len / 2
 
-		balloon_alert(user, "wires attached")
+		balloon_alert(user, LANG("obj.a641ab5a", null))
 		icon_state = "[icon_state]-cable"
 		reagents.flags = SEALED_CONTAINER
 		wires_are_in = TRUE
@@ -265,11 +266,11 @@
 		if(!istype(assembly) || !(assembly.type in allowed_activators))
 			return
 		if(assembly.secured)
-			balloon_alert(user, "unsecure assembly first!")
+			balloon_alert(user, LANG("obj.80dcbc8c", null))
 			return
 		if(!user.transferItemToLoc(assembly, src))
 			return
-		user.balloon_alert(user, "attached")
+		user.balloon_alert(user, LANG("obj.b0ad167d", null))
 
 		var/obj/item/grenade/iedcasing/pipebomb = new(drop_location())
 		for(var/atom/movable/item_inside as anything in contents)

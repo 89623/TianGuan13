@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/mod_installer
 	name = "modular outerwear device installator"
 	desc = "An ancient machine that mounts a MOD unit onto the occupant."
@@ -111,6 +112,6 @@
 		close_machine()
 		return
 	else if(busy)
-		balloon_alert(user, "it's locked!")
+		balloon_alert(user, LANG("obj.2ffcba26", null))
 		return
 	open_machine()

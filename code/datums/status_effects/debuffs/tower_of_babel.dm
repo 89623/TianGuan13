@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/status_effect/tower_of_babel
 	id = "tower_of_babel"
 	status_type = STATUS_EFFECT_UNIQUE
@@ -44,14 +45,14 @@
 
 	owner.emote("mumble")
 	owner.playsound_local(get_turf(owner), 'sound/effects/magic/magic_block_mind.ogg', 75, vary = TRUE) // sound of creepy whispers
-	to_chat(owner, span_reallybig(span_hypnophrase("You feel a magical force affecting your speech patterns!")))
+	to_chat(owner, span_reallybig(span_hypnophrase(LANG("datum.8328498a", null))))
 
 /datum/status_effect/tower_of_babel/magical/on_remove()
 	. = ..()
 	if(!.)
 		return
 
-	to_chat(owner, span_reallybig(span_hypnophrase("You feel the magical force affecting your speech patterns fade away...")))
+	to_chat(owner, span_reallybig(span_hypnophrase(LANG("datum.22ee6cc8", null))))
 
 /atom/movable/screen/alert/status_effect/tower_of_babel
 	name = "Tower of babel"

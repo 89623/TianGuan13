@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define EXPLOSION_THROW_SPEED 4
 #define EXPLOSION_BLOCK_LIGHT 2.5
 #define EXPLOSION_BLOCK_HEAVY 1.5
@@ -87,7 +88,7 @@ SUBSYSTEM_DEF(explosions)
 	held_throwturf -= T
 
 ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effect of a bomb would be.", ADMIN_CATEGORY_DEBUG)
-	var/newmode = tgui_alert(user, "Use reactionary explosions?","Check Bomb Impact", list("Yes", "No"))
+	var/newmode = tgui_alert(user, LANG("datum.c76f8f6d", null),LANG("datum.256bcbfe", null), list("Yes", "No"))
 	var/turf/epicenter = get_turf(user.mob)
 	if(!epicenter)
 		return
@@ -96,7 +97,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 	var/heavy = 0
 	var/light = 0
 	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
-	var/choice = tgui_input_list(user, "Pick the bomb size", "Bomb Size?", choices)
+	var/choice = tgui_input_list(user, LANG("datum.f12899b8", null), LANG("datum.46f071bc", null), choices)
 	switch(choice)
 		if(null)
 			return 0
@@ -113,9 +114,9 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 			heavy = 5
 			light = 7
 		if("Custom Bomb")
-			dev = input(user, "Devastation range (Tiles):") as num
-			heavy = input(user, "Heavy impact range (Tiles):") as num
-			light = input(user, "Light impact range (Tiles):") as num
+			dev = input(user, LANG("datum.6b1cf2e6", null)) as num
+			heavy = input(user, LANG("datum.54a896b7", null)) as num
+			light = input(user, LANG("datum.923a0ff5", null)) as num
 
 	var/max_range = max(dev, heavy, light)
 	var/x0 = epicenter.x

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Puts the occupant in netpod stasis, basically short-circuiting environmental conditions
 /obj/machinery/netpod/proc/add_healing(mob/living/target)
 	if(target != occupant)
@@ -16,7 +17,7 @@
 
 	var/mob/player = occupant
 	player.playsound_local(src, 'sound/effects/splash.ogg', 60, TRUE)
-	to_chat(player, span_notice("The machine disconnects itself and begins to drain."))
+	to_chat(player, span_notice(LANG("obj.3be72ab3", null)))
 	open_machine()
 
 
@@ -49,7 +50,7 @@
 	mob_occupant.flash_act(override_blindness_check = TRUE, visual = TRUE)
 	mob_occupant.adjust_organ_loss(ORGAN_SLOT_BRAIN, disconnect_damage)
 	INVOKE_ASYNC(mob_occupant, TYPE_PROC_REF(/mob/living, emote), "scream")
-	to_chat(mob_occupant, span_danger("You've been forcefully disconnected from your avatar! Your thoughts feel scrambled!"))
+	to_chat(mob_occupant, span_danger(LANG("obj.2db21e2f", null)))
 
 
 /**
@@ -63,20 +64,20 @@
 /obj/machinery/netpod/proc/enter_matrix()
 	var/mob/living/carbon/human/neo = occupant
 	if(!ishuman(neo) || neo.stat == DEAD || isnull(neo.mind))
-		balloon_alert(neo, "invalid occupant.")
+		balloon_alert(neo, LANG("obj.1f7c73c3", null))
 		return
 
 	var/obj/machinery/quantum_server/server = find_server()
 	if(isnull(server))
-		balloon_alert(neo, "no server connected!")
+		balloon_alert(neo, LANG("obj.1e9f100a", null))
 		return
 
 	var/datum/lazy_template/virtual_domain/generated_domain = server.generated_domain
 	if(isnull(generated_domain) || !server.is_ready)
-		balloon_alert(neo, "nothing loaded!")
+		balloon_alert(neo, LANG("obj.9d45bb65", null))
 		return
 
-	balloon_alert(neo, "establishing connection...")
+	balloon_alert(neo, LANG("obj.93aae3db", null))
 
 	// Prevent hand interactions during loading to stop smuggling exploits into virtual domain
 	ADD_TRAIT(neo, TRAIT_HANDS_BLOCKED, TRAIT_GENERIC)
@@ -94,7 +95,7 @@
 	if(isnull(current_avatar) || current_avatar.stat != CONSCIOUS) // We need a viable avatar
 		current_avatar = server.start_new_connection(neo, netsuit)
 		if(isnull(current_avatar))
-			balloon_alert(neo, "out of bandwidth!")
+			balloon_alert(neo, LANG("obj.82ebf72d", null))
 			return
 
 	neo.set_static_vision(2 SECONDS)

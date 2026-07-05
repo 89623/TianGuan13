@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SPELLBOOK_CATEGORY_PERKS "Perks"
 
 /datum/spellbook_entry/perks
@@ -15,7 +16,7 @@
 	RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	if (user.hud_used)
 		on_hud_created()
-	to_chat(user, span_notice("You got a new perk: [src.name]."))
+	to_chat(user, span_notice(LANG("datum.ea53b339", list(src.name))))
 	log_purchase(user.key)
 	return TRUE
 
@@ -96,7 +97,7 @@
 		if(perks_allocated >= 2)
 			break
 	if(taking_perks.len < 1)
-		to_chat(user, span_warning("Gamble cannot give 2 perks, so points are returned"))
+		to_chat(user, span_warning(LANG("datum.1060f1d7", null)))
 		return FALSE
 	taking_perks = shuffle(taking_perks)
 	for(var/datum/spellbook_entry/perks/perks_ready in taking_perks)

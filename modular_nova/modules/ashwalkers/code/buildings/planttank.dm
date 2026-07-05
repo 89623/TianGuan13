@@ -22,11 +22,11 @@
 
 /obj/structure/plant_tank/examine(mob/user)
 	. = ..()
-	. += span_notice("<br>Use food or worm fertilizer to allow nitrogen production and carbon dioxide processing!")
-	. += span_notice("There are [operation_number] cycles left!")
+	. += span_notice(LANG("obj.7119a775", null))
+	. += span_notice(LANG("obj.17448eb1", list(operation_number)))
 	var/datum/component/simple_farm/find_farm = GetComponent(/datum/component/simple_farm)
 	if(!find_farm)
-		. += span_notice("<br>Use five sand to allow planting!")
+		. += span_notice(LANG("obj.884eae86", null))
 
 /obj/structure/plant_tank/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/food) || istype(tool, /obj/item/stack/worm_fertilizer))
@@ -40,7 +40,7 @@
 		else
 			qdel(tool)
 
-		balloon_alert(user, "[tool] placed inside")
+		balloon_alert(user, LANG("obj.b25cae35", list(tool)))
 		user.mind?.adjust_experience(/datum/skill/primitive, 2)
 		operation_number += 2
 		if(prob(user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_PROBS_MODIFIER)))
@@ -54,10 +54,10 @@
 			foods += food_item
 
 		if(!length(foods))
-			balloon_alert(user, "no food to dump inside")
+			balloon_alert(user, LANG("obj.e07b5a1b", null))
 			return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "dumped food inside!")
+		balloon_alert(user, LANG("obj.f3b2a498", null))
 
 		for(var/obj/item/food/food_item in foods)
 			qdel(food_item)
@@ -70,11 +70,11 @@
 
 	if(istype(tool, /obj/item/stack/ore/glass))
 		if(connected_farm)
-			balloon_alert(user, "no more [tool] required")
+			balloon_alert(user, LANG("obj.47cd9db7", list(tool)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!tool.use(5))
-			balloon_alert(user, "farms require five sand")
+			balloon_alert(user, LANG("obj.acbb2297", null))
 			return ITEM_INTERACT_BLOCKING
 
 		connected_farm = AddComponent(/datum/component/simple_farm, TRUE, TRUE, list(0, 12))
@@ -125,17 +125,17 @@
 	operation_number--
 
 /obj/structure/plant_tank/wrench_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "[anchored ? "un" : ""]bolting")
+	balloon_alert(user, LANG("obj.e8caa39b", list(anchored ? "un" : "")))
 	tool.play_tool_sound(src, 50)
 	if(!tool.use_tool(src, user, 2 SECONDS))
 		return TRUE
 
 	anchored = !anchored
-	balloon_alert(user, "[anchored ? "" : "un"]bolted")
+	balloon_alert(user, LANG("obj.1e8c7ea2", list(anchored ? "" : "un")))
 	return TRUE
 
 /obj/structure/plant_tank/screwdriver_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "deconstructing")
+	balloon_alert(user, LANG("obj.5a199e01", null))
 	tool.play_tool_sound(src, 50)
 	if(!tool.use_tool(src, user, 2 SECONDS))
 		return TRUE

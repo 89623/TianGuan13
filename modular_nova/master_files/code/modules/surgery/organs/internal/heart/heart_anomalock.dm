@@ -33,7 +33,7 @@
 	var/emp_resist = TRUE
 
 /datum/status_effect/voltaic_overdrive/on_remove()
-	to_chat(owner, span_userdanger("Your voltaic combat cyberheart putters weakly in your chest as it recharges; it won't protect you against EMPs until it recovers."))
+	to_chat(owner, span_userdanger(LANG("datum.7b2209fc", null)))
 	return ..()
 
 /obj/item/organ/heart/cybernetic/anomalock/weak

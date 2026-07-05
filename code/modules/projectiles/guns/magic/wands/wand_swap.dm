@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Swaps you with something you hit.
  */
@@ -13,14 +14,14 @@
 
 /obj/item/gun/magic/wand/swap/zap_self(mob/living/user, suicide = FALSE)
 	. = ..()
-	to_chat(user, span_notice("You swap places with yourself! Amazing!"))
+	to_chat(user, span_notice(LANG("obj.20db01d7", null)))
 	var/obj/effect/particle_effect/fluid/smoke/poof_in = new (get_turf(user))
 	poof_in.lifetime = 5 DECISECONDS
 	charges--
 
 /obj/item/gun/magic/wand/swap/do_suicide(mob/living/user)
 	. = ..()
-	user.visible_message(span_suicide("As the smoke clears, [user] is lying completely alive on [get_turf(user)]."))
+	user.visible_message(span_suicide(LANG("obj.4cfe1d9f", list(user, get_turf(user)))))
 	return SHAME
 
 /obj/item/ammo_casing/magic/swap

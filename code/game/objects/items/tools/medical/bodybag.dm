@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/item/bodybag
 	name = "body bag"
@@ -41,7 +42,7 @@
 
 /obj/item/bodybag/suicide_act(mob/living/user)
 	if(isopenturf(user.loc))
-		user.visible_message(span_suicide("[user] is crawling into [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.829d7767", list(user, src, user.p_theyre()))))
 		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
 		R.add_fingerprint(user)
 		qdel(src)
@@ -64,7 +65,7 @@
 	. = ..()
 	if(contents.len)
 		var/s = contents.len == 1 ? "" : "s"
-		. += span_notice("You can make out the shape[s] of [contents.len] object[s] through the fabric.")
+		. += span_notice(LANG("obj.9086899a", list(s, contents.len, s)))
 
 /obj/item/bodybag/bluespace/Destroy()
 	for(var/atom/movable/A in contents)
@@ -87,20 +88,20 @@
 
 /obj/item/bodybag/bluespace/container_resist_act(mob/living/user)
 	if(user.incapacitated)
-		to_chat(user, span_warning("You can't get out while you're restrained like this!"))
+		to_chat(user, span_warning(LANG("obj.074bdd5b", null)))
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	to_chat(user, span_notice("You claw at the fabric of [src], trying to tear it open..."))
-	to_chat(loc, span_warning("Someone starts trying to break free of [src]!"))
+	to_chat(user, span_notice(LANG("obj.bc439309", list(src))))
+	to_chat(loc, span_warning(LANG("obj.c3a12e6a", list(src))))
 	if(!do_after(user, 12 SECONDS, src, timed_action_flags = (IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM)))
 		return
 	// you are still in the bag? time to go unless you KO'd, honey!
 	// if they escape during this time and you rebag them the timer is still clocking down and does NOT reset so they can very easily get out.
 	if(user.incapacitated)
-		to_chat(loc, span_warning("The pressure subsides. It seems that they've stopped resisting..."))
+		to_chat(loc, span_warning(LANG("obj.6c8499ad", null)))
 		return
-	loc.visible_message(span_warning("[user] suddenly appears in front of [loc]!"), span_userdanger("[user] breaks free of [src]!"))
+	loc.visible_message(span_warning(LANG("obj.5c9f73f8", list(user, loc))), span_userdanger(LANG("obj.23a7afd1", list(user, src))))
 	qdel(src)
 
 /obj/item/bodybag/environmental

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// Base browse_rsc asset transport
 /datum/asset_transport
@@ -127,7 +128,7 @@
 
 	if (unreceived.len)
 		if (unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
-			to_chat(client, span_infoplain("Sending Resources..."))
+			to_chat(client, span_infoplain(LANG("datum.64de97c1", null)))
 
 		for (var/asset_name in unreceived)
 			var/new_asset_name = asset_name

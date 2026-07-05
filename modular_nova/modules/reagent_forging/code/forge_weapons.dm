@@ -22,8 +22,8 @@
 
 /obj/item/forging/reagent_weapon/examine(mob/user)
 	. = ..()
-	. += span_notice("Using a hammer on [src] will repair its damage!")
-	. += span_notice("This weapon seems twice as effective when used on beasts and monsters.")
+	. += span_notice(LANG("obj.d81d8f4a", list(src)))
+	. += span_notice(LANG("obj.446f7f21", null))
 
 /obj/item/forging/reagent_weapon/sword
 	name = "forged sword"
@@ -242,8 +242,8 @@
 
 /obj/item/shield/buckler/reagent_weapon/examine(mob/user)
 	. = ..()
-	. += span_notice("Using a hammer on [src] will repair its damage!")
-	. += span_notice("This weapon seems twice as effective when used on beasts and monsters.")
+	. += span_notice(LANG("obj.d81d8f4a", list(src)))
+	. += span_notice(LANG("obj.446f7f21", null))
 
 /obj/item/shield/buckler/reagent_weapon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(atom_integrity >= max_integrity)
@@ -257,7 +257,7 @@
 			var/fixing_amount = min(max_integrity - atom_integrity, 5)
 			atom_integrity += fixing_amount
 			user.mind.adjust_experience(/datum/skill/smithing, 5)
-			balloon_alert(user, "partially repaired!")
+			balloon_alert(user, LANG("obj.05360c87", null))
 		return
 	return ..()
 
@@ -377,7 +377,7 @@
 /obj/item/forging/reagent_weapon/bokken/attack(mob/living/carbon/target_mob, mob/living/user, params)
 	. = ..()
 	if(!iscarbon(target_mob))
-		user.visible_message(span_warning("The [src] seems to be ineffective against the [target_mob]!"))
+		user.visible_message(span_warning(LANG("obj.57bbc80b", list(src, target_mob))))
 		playsound(src, 'sound/items/weapons/genhit.ogg', 75, TRUE)
 		return
 	playsound(src, pick('sound/items/weapons/genhit1.ogg', 'sound/items/weapons/genhit2.ogg', 'sound/items/weapons/genhit3.ogg'), 100, TRUE)

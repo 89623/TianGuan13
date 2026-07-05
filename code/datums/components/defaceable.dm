@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Lets you graffiti on an object
 /datum/component/defaceable
 	/// Icon file from which to draw our overlay
@@ -100,4 +101,4 @@
 /// See it there
 /datum/component/defaceable/proc/on_examined(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("Someone has crudely drawn [drawing_of] on [source.p_them()].")
+	examine_list += span_notice(LANG("datum.0425cf1a", list(drawing_of, source.p_them())))

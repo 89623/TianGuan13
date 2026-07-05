@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/shuttle/custom_shuttle
 	desc = "A shuttle control computer."
 	shuttleId = ""
@@ -14,7 +15,7 @@
 /obj/machinery/computer/shuttle/custom_shuttle/proc/on_loc_added_to_shuttle(turf/source, obj/docking_port/mobile/custom/port)
 	SIGNAL_HANDLER
 	if(!istype(port))
-		say("Cannot link to this kind of shuttle!")
+		say(LANG("obj.70714a10", null))
 	else
 		if(connect_to_shuttle(TRUE, port))
 			RemoveElement(/datum/element/connect_loc, connections)
@@ -23,7 +24,7 @@
 	var/obj/docking_port/mobile/custom/custom_port = port
 	if(istype(custom_port))
 		if(custom_port.control_console?.resolve())
-			say("Control console already present!")
+			say(LANG("obj.92116f97", null))
 			return FALSE
 	. = ..()
 	if(!.)
@@ -56,7 +57,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/on_loc_added_to_shuttle(turf/source, obj/docking_port/mobile/custom/port)
 	SIGNAL_HANDLER
 	if(!istype(port))
-		say("Cannot link to this kind of shuttle!")
+		say(LANG("obj.70714a10", null))
 	else
 		if(connect_to_shuttle(TRUE, port))
 			RemoveElement(/datum/element/connect_loc, connections)
@@ -77,7 +78,7 @@
 	var/obj/docking_port/mobile/custom/custom_port = port
 	if(istype(custom_port))
 		if(custom_port.navigation_console?.resolve())
-			say("Navigation console already present!")
+			say(LANG("obj.629cee0c", null))
 			return FALSE
 	. = ..()
 	if(!.)
@@ -148,7 +149,7 @@
 		return	//Only way this would happen is if someone else delinks the console while in use somehow
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	if(M?.mode != SHUTTLE_IDLE)
-		to_chat(usr, "<span class='warning'>You cannot target locations while in transit.</span>")
+		to_chat(usr, LANG("obj.8f355a7a", null))
 		return
 	..()
 
@@ -165,7 +166,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/attack_hand(mob/user)
 	if(!shuttleId)
-		to_chat(user, "<span class='warning'>You must link the console to a shuttle first.</span>")
+		to_chat(user, LANG("obj.27ed08df", null))
 		return
 	return ..()
 

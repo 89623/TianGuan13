@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Actions that you can use to dash (teleport) to places in view.
 /datum/action/innate/dash
 	name = "Dash"
@@ -29,7 +30,7 @@
 		return FALSE
 	if (current_charges <= 0)
 		if (feedback)
-			owner.balloon_alert(owner, "no charges!")
+			owner.balloon_alert(owner, LANG("datum.cfa89008", null))
 		return FALSE
 	return TRUE
 
@@ -48,13 +49,13 @@
 	var/turf/current_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
 	if(!(target in view(user.client.view, user)))
-		user.balloon_alert(user, "out of view!")
+		user.balloon_alert(user, LANG("datum.1af28010", null))
 		return FALSE
 	if(target_turf.is_blocked_turf_ignore_climbable())
-		user.balloon_alert(user, "destination blocked!")
+		user.balloon_alert(user, LANG("datum.aacc1be3", null))
 		return FALSE
 	if(!do_teleport(user, target_turf, no_effects = TRUE))
-		user.balloon_alert(user, "dash blocked!")
+		user.balloon_alert(user, LANG("datum.2fe9fd19", null))
 		return FALSE
 
 	// Note: It's possible do_teleport, for whatever reason,
@@ -87,4 +88,4 @@
 	if(!owner)
 		return
 	owner.update_mob_action_buttons()
-	dashing_item.balloon_alert(owner, "[current_charges]/[max_charges] dash charges")
+	dashing_item.balloon_alert(owner, LANG("datum.74e0b142", list(current_charges, max_charges)))

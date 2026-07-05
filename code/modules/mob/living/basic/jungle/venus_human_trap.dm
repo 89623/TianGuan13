@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define FINAL_BUD_GROWTH_ICON 3
 /**
  * Kudzu Flower Bud
@@ -79,7 +80,7 @@
 
 /// Tells the spawner that the venus human trap is ready
 /obj/structure/alien/resin/flower_bud/proc/bear_fruit()
-	visible_message(span_danger("The plant has borne fruit!"))
+	visible_message(span_danger(LANG("obj.c138ef2f", null)))
 	if(spawner)
 		spawner.bear_fruit()
 
@@ -111,7 +112,7 @@
 		var/mob/living/L = AM
 		if(!isvineimmune(L))
 			L.adjust_brute_loss(5)
-			to_chat(L, span_alert("You cut yourself on the thorny vines."))
+			to_chat(L, span_alert(LANG("obj.4feffe03", null)))
 
 /**
  * Venus Human Trap
@@ -193,7 +194,7 @@
 	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
 	if(!vines_in_range && !alert_shown)
 		alert_shown = TRUE
-		balloon_alert(src, "do not leave vines!")
+		balloon_alert(src, LANG("mob.ea9ababd", null))
 	else if(vines_in_range)
 		alert_shown = FALSE
 
@@ -220,10 +221,10 @@
 	if(!ismovable(target_atom) || istype(target_atom, /obj/structure/spacevine))
 		return
 	if(target_atom.anchored)
-		owner.balloon_alert(owner, "can't pull!")
+		owner.balloon_alert(owner, LANG("datum.cf190290", null))
 		return
 	if(get_dist(owner, target_atom) > vine_grab_distance)
-		owner.balloon_alert(owner, "too far!")
+		owner.balloon_alert(owner, LANG("datum.f5e75781", null))
 		return
 	var/list/target_turfs = get_line(owner, target_atom) - list(get_turf(owner), get_turf(target_atom))
 	for(var/turf/blockage in target_turfs)

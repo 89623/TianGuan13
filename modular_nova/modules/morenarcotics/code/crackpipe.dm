@@ -14,7 +14,7 @@
 	if(smoketime <= 0)
 		if(ismob(loc))
 			var/mob/living/smoking_mob = loc
-			to_chat(smoking_mob, span_notice("Your [name] goes out."))
+			to_chat(smoking_mob, span_notice(LANG("obj.a821e0ac", list(name))))
 			lit = FALSE
 			icon_state = icon_off
 			inhand_icon_state = icon_off
@@ -30,7 +30,7 @@
 
 /obj/item/cigarette/pipe/crackpipe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_list(attacking_item, list(/obj/item/reagent_containers/crack,/obj/item/reagent_containers/blacktar)))
-		to_chat(user, span_notice("You stuff [attacking_item] into [src]."))
+		to_chat(user, span_notice(LANG("obj.16ae1517", list(attacking_item, src))))
 		smoketime = 2 * 60
 		name = "[attacking_item.name]-packed [initial(name)]"
 		if(attacking_item.reagents)
@@ -42,7 +42,7 @@
 			if(smoketime > 0)
 				light(lighting_text)
 			else
-				to_chat(user, span_warning("There is nothing to smoke!"))
+				to_chat(user, span_warning(LANG("obj.3556913a", null)))
 		else
 			return ..()
 

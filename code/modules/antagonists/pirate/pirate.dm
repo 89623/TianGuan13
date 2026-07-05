@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/antagonist/pirate
 	name = "\improper Space Pirate"
 	pref_flag = ROLE_TRAITOR
@@ -13,7 +14,7 @@
 
 /datum/antagonist/pirate/greet()
 	. = ..()
-	to_chat(owner, "<B>The station refused to pay for your protection. Protect the ship, siphon the [MONEY_NAME] from the station, and raid it for even more loot.</B>")
+	to_chat(owner, LANG("datum.56a844c9", list(MONEY_NAME)))
 	owner.announce_objectives()
 
 /datum/antagonist/pirate/get_team()
@@ -85,7 +86,7 @@
 /datum/objective/loot/proc/loot_listing()
 	//Lists notable loot.
 	if(!cargo_hold || !cargo_hold.total_report)
-		return "Nothing"
+		return GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? "Nothing" : "一无所获" // NOVA EDIT CHANGE - I18N - 显示用返回值，inline gate（"Nothing" 单词入全局反查表会误伤）。ORIGINAL: return "Nothing"
 	sortTim(cargo_hold.total_report.total_value, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	var/count = 0
 	var/list/loot_texts = list()
@@ -105,7 +106,7 @@
 /datum/team/pirate/roundend_report()
 	var/list/parts = list()
 
-	parts += span_header("Space Pirates were:")
+	parts += span_header(LANG("datum.9027b23a", null))
 
 	var/all_dead = TRUE
 	for(var/datum/mind/M in members)
@@ -116,7 +117,7 @@
 	parts += "Loot stolen: "
 	var/datum/objective/loot/L = locate() in objectives
 	parts += L.loot_listing()
-	parts += "Total loot value : [L.get_loot_value()]/[L.target_value] [MONEY_NAME]"
+	parts += LANG("datum.b7e5eef3", list(L.get_loot_value(), L.target_value, MONEY_NAME))
 
 	if(L.check_completion() && !all_dead)
 		parts += "<span class='greentext big'>The pirate crew was successful!</span>"

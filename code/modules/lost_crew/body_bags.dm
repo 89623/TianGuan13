@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/bodybag/lost_crew
 	name = "long-term body bag"
 	desc = "A folded bag designed for the long-term storage and transportation of cadavers."
@@ -19,7 +20,7 @@
 
 /obj/structure/closet/body_bag/lost_crew/with_body/attempt_fold(mob/living/carbon/human/the_folder)
 	if (!body_spawned)
-		to_chat(the_folder, span_warning("The body inside of [src] prevents you from folding it up!"))
+		to_chat(the_folder, span_warning(LANG("obj.10b16433", list(src))))
 		return FALSE
 	return ..()
 

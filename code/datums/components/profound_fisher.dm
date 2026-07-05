@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///component that allows player mobs to play the fishing minigame without a rod equipped, non-player mobs will "pretend" fish
 /datum/component/profound_fisher
 	///the fishing rod this mob will use
@@ -38,8 +39,8 @@
 
 /datum/component/profound_fisher/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_info("When [EXAMINE_HINT("held")] or [EXAMINE_HINT("equipped")], [EXAMINE_HINT("right-click")] with a empty hand to open the integrated fishing rod interface.")
-	examine_list += span_tinynoticeital("To fish, you need to turn combat mode off.")
+	examine_list += span_info(LANG("datum.598ac73a", list(EXAMINE_HINT("held"), EXAMINE_HINT("equipped"), EXAMINE_HINT("right-click"))))
+	examine_list += span_tinynoticeital(LANG("datum.98b042ee", null))
 
 ///Handles replacing the fishing rod if somehow removed from the parent movable if delete_rod_when_deleted is TRUE, otherwise delete the component.
 /datum/component/profound_fisher/proc/on_rod_moved(datum/source)
