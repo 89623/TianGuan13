@@ -7,7 +7,8 @@
 	)
 	result = /obj/item/food/cake/liquid_electric
 	added_foodtypes = TOXIC
-	category = CAT_CAKE
+	dish_category = DISH_CAKE
+	meal_category = MEAL_DESSERT
 
 /obj/item/food/cake/liquid_electric
 	name = "液电蛋糕"
