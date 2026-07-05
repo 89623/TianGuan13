@@ -9865,4 +9865,8 @@
 #include "modular_z121\code\modules\topics\base_communication.dm"
 #include "modular_z121\code\modules\topics\base_interactions.dm"
 #include "modular_z121\code\modules\topics\base_observe.dm"
+#include "modular_tianguan\code\projectiles\projectiles.dm"
+#include "modular_tianguan\code\security_officer.dm"
+#include "modular_tianguan\modules\emergency_shuttle_cc\code\emergency_shuttle_cc.dm"
+#include "modular_tianguan\modules\sop_book\code\sop_book.dm"
 // END_INCLUDE

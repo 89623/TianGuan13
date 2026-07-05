@@ -66,6 +66,26 @@
 	starting_title = "Central Command SOP"
 	direct_wiki_url = "https://tianguanstation.miraheze.org/wiki/%E4%B8%AD%E5%A4%AE%E6%8C%87%E6%8C%A5%E9%83%A8%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
 
+// 天关模块化改动：让 PTech cart 售货机出售除中央指挥部外的 SOP 手册。
+/obj/machinery/vending/cart
+	products = list(
+		/obj/item/disk/computer/medical = 10,
+		/obj/item/disk/computer/engineering = 10,
+		/obj/item/disk/computer/security = 10,
+		/obj/item/disk/computer/ordnance = 10,
+		/obj/item/disk/computer/quartermaster = 10,
+		/obj/item/disk/computer/command/captain = 3,
+		/obj/item/modular_computer/pda = 10,
+		/obj/item/book/manual/wiki/sop/general = 5,
+		/obj/item/book/manual/wiki/sop/command = 5,
+		/obj/item/book/manual/wiki/sop/security = 5,
+		/obj/item/book/manual/wiki/sop/medical = 5,
+		/obj/item/book/manual/wiki/sop/cargo = 5,
+		/obj/item/book/manual/wiki/sop/service = 5,
+		/obj/item/book/manual/wiki/sop/science = 5,
+		/obj/item/book/manual/wiki/sop/engineering = 5,
+	)
+
 /datum/outfit/job/proc/tianguan_get_sop_book_type(datum/job/equipped_job)
 	if(istype(equipped_job, /datum/job/nanotrasen_consultant) || istype(equipped_job, /datum/job/blueshield))
 		return /obj/item/book/manual/wiki/sop/central_command
