@@ -1,3 +1,6 @@
+#define SPECIES_MOORMAN "moorman"
+
+
 /datum/species/moorman
 	name = "\improper Moorman"
 	id = SPECIES_MOORMAN
