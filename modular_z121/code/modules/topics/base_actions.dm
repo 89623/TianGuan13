@@ -22,6 +22,8 @@
 	return (direct in GLOB.alldirs) ? direct : NONE
 
 /proc/ivanov_position(atom/movable/movable)
+	if(isnull(movable))
+		return null
 	return list(
 		"x" = movable.x,
 		"y" = movable.y,
