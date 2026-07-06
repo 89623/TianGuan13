@@ -364,7 +364,7 @@
 		payload.Add(list(list(
 			"color" = color,
 			"shownColor" = colorblind ? default_possible_colors[color] : color,
-			"wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? get_wire(color) : null),
+			"wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? lang_reverse_text(get_wire(color)) : null), // NOVA EDIT CHANGE - I18N - 电线名纯显示（act 用 color），整串反查走 _wires.json - ORIGINAL: "wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)
 		)))

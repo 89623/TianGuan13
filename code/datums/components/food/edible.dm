@@ -339,7 +339,7 @@ Behavior that's still missing from this component that original food items had t
 	original_atom.reagents.trans_to(this_food, original_atom.reagents.total_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], copy_only = TRUE)
 
 	if(!HAS_TRAIT(this_food, TRAIT_FOOD_DONT_INHERIT_NAME_FROM_PROCESSED) && original_atom.name != initial(original_atom.name))
-		this_food.name = "slice of [original_atom.name]"
+		this_food.name = LANG("datum.cfae57ed", list(original_atom.name)) // NOVA EDIT CHANGE - I18N - ORIGINAL: this_food.name = "slice of [original_atom.name]"
 		//It inherits the name of the original, which may already have a prefix
 		//So we need to make sure we don't double up on prefixes
 		//This is called before set_custom_materials() anyway

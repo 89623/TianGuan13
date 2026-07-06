@@ -488,7 +488,7 @@
 		create_modularInterface()
 	var/mob/living/silicon/robot/robo = modularInterface.silicon_owner
 	if(istype(robo))
-		modularInterface.borglog += "[round_timestamp()] - [string]"
+		modularInterface.borglog += "[round_timestamp()] - [lang_reverse_text(string)]" // NOVA EDIT CHANGE - I18N - 机体日志面板玩家可见，时间戳前缀使整行 exact miss → 先反查消息体 - ORIGINAL: modularInterface.borglog += "[round_timestamp()] - [string]"
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		var/datum/tgui/active_ui = SStgui.get_open_ui(src, program.computer)

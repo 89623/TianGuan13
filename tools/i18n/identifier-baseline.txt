@@ -4,12 +4,18 @@
 # 用 lang_unreverse_text）后，从此表删掉对应行。
 (new custom antag)
 AI
+AI Connection
+AI Law Synchronization
 Activate
 Active
 Admin
 Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to.
+Age Limit
 Airborne
 Akula
+Alarm
+Alarm Reset
+Alarm Trigger
 Alias
 All Antags!
 Amount
@@ -21,6 +27,10 @@ Asleep
 Atmospheric Technician
 Atoms
 Attack
+Automatic Detection
+Auxiliary Power 1
+Auxiliary Power 2
+Avoidance
 Away
 Babydoll
 Bald
@@ -31,7 +41,9 @@ Blood Cult
 Blood Filter
 Bluespace Tech
 Bluespace Tech (MODsuit)
+Bolts
 Bonesetter
+Boom Wire
 Bowl
 Bra
 Bunny
@@ -58,6 +70,7 @@ Color
 Command
 Confirm
 Connect me!
+Contraband
 Controller
 Cook
 Counterattack
@@ -83,6 +96,7 @@ Department Backpack
 Description
 Digitigrade Legs
 Disable
+Disarm
 Discharged
 Disease
 Do
@@ -91,14 +105,19 @@ Drop
 ERROR
 EVERYTHING
 East
+Eject
 Eject Disk
+Emergency Prize Vend
 Engineer
 Engineering
+Environment
+Equipment
 Error
 Examine
 Exit
 Eyes
 Failsafe
+Feedback
 File
 Fill reagent container
 Filter
@@ -118,6 +137,7 @@ Ghost
 Gib
 Glass
 Golem
+Hack
 Hacked
 Hardest Restart (No actions, just reboot)
 Harvester
@@ -126,13 +146,19 @@ Heart
 Hemostat
 Heretic
 High
+High Voltage Circuit
+High Voltage Circuit 1
+High Voltage Circuit 2
+High Voltage Ground
 Hypersensitive
 I need the power!
+ID Scan
 Icon
 Implants
 Incarcerated
 Infinite Transit
 Insane
+Interface
 Internal
 Internal GPS
 Into The Sunset (delete & greentext 'escape')
@@ -146,8 +172,16 @@ Korta Flour
 Kortara
 L
 LOOC
+Launch
+Lights
+Limiter
+Link
+Load Check
 Lockdown
+Loop mode
 Machines
+Main Power 1
+Main Power 2
 Maintenance Drone
 Man-Machine Interface
 Master
@@ -159,8 +193,11 @@ Mime
 Miner
 Mining
 Mobs
+Mode Select
 Modify
 Mop
+Motor 1
+Motor 2
 Move job to backpack
 Multitool
 N/A
@@ -185,6 +222,7 @@ Open
 Operative
 Other
 Out of resources!
+Overclock
 PDA
 Pair
 Panic Siphon
@@ -200,26 +238,35 @@ Power
 Pray
 Print Transcript
 Prisoner
+Proceed
 Queen Bee
 Radiation
 Radio
 Random
 Reagent
+Receive
 Release
 Rename
 Repair Electronics
+Replay mode
 Research
 Reset
+Reset Model
+Reset Owner
 Reskin
 Restart
 Restore Hull
 Retractor
 Rotate
 SDQL2
+Safeties
+Safety
 Saltwater
 Save
 Say
 Scalpel
+Scan Fail
+Scan Success
 Science
 Scientist
 Screwdriver
@@ -237,6 +284,7 @@ Shaved
 Shovel
 Shuffle
 Shuttle
+Signal
 Simple
 Skills
 Skinhead
@@ -246,6 +294,7 @@ Space
 Space Ninja
 Space Ruins
 SpaceBet
+Speaker
 Special
 Species
 Spell
@@ -264,24 +313,34 @@ Swap
 Syndicate
 Syndicate Assault Cyborg
 Syndicate Medical Cyborg
+Tamper
 Target
 Teleport
 Teleporter
+Test
 Text
 The Wizard
 Their sprites
+Throw
+Timing
 Title
 Toggle
 Traitor
 Transform to initial appearance.
+Transmit
 Type
 Typepath
 Unassigned
+Unbolt
 Unconscious
 Unknown
+Unlink
+Unrestricted Exit
 Update
 Uplink
 Used by antagonists. DO NOT PUT SEXUAL THINGS IN HERE. This is where you put flaws that can be exploited in any way. This will be viewable by antagonists if you modify this string, but only if there's anything at all in this box.
+Vent Direction
+Vent Power
 Vote Available
 Weighted Random
 Welding Tool
