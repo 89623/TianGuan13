@@ -109,6 +109,17 @@ for (const file of fs.readdirSync(stringsDir).filter((f) => f.endsWith('_replace
   collect(JSON.parse(fs.readFileSync(path.join(stringsDir, file), 'utf8')));
 }
 
+// ---- 噪音识别（不值得处理的行，单独分桶降噪）----
+// 1. CSS 声明：用户自定义 MOTD/公告 HTML 的内联样式经 fallback 层被逐行记录（"margin: 5px" 等）。
+// 2. 管理员日志印记：JMP/FLW/VV 链接括号、build mode、deadmin、GC 硬删除告警、爆炸/EMP 尺寸行——
+//    政策保英文（运行时已按 MESSAGE_TYPE_ADMINLOG/ATTACKLOG/DEBUG 跳过 fallback，旧日志仍会出现）。
+const CSS_PROP_RE =
+  /\b(px|rem|rgba?\(|linear-gradient|radial-gradient|font-(size|family|weight)|margin|padding|border|background|display|position|letter-spacing|text-align|box-shadow|align-items|justify-content|overflow|pointer-events|box-sizing|transition|text-shadow|background-(size|repeat|clip))\b/;
+const ADMIN_LOG_RE =
+  /\( ?(JMP|FLW|VV|SM|TP|LOGS|SMITE|PP) ?\)|has entered build mode|deadminned|deadmined|re-adminned|admin ghosted|took longer than .* seconds to delete|Explosion with size|EMP with size \(|- Playing as |is a (Game Admin|Host|Coder|Admin)\b|was selected\.$|reset the thunderdome/;
+const isNoise = (text) =>
+  (/[:;]/.test(text) && CSS_PROP_RE.test(text)) || ADMIN_LOG_RE.test(text);
+
 // ---- 归类 ----
 const buckets = {
   已译未接通: [], // 在目录且已译 → 路径绕过，落地点补反查
@@ -116,6 +127,7 @@ const buckets = {
   目录片段: [], // 是某目录值的子串 → AC 拆碎，整串反查
   没进目录: [], // 抽取器漏抽 → 补抽取源/手维护文件
   词池保英文: [], // 口音替换词池 → 有意不译，纯降噪展示
+  噪音: [], // CSS 声明/管理员日志印记 → 有意不译，纯降噪展示
 };
 for (const [text, { count, sources }] of misses) {
   if (count < minCount) continue;
@@ -126,6 +138,8 @@ for (const [text, { count, sources }] of misses) {
     buckets[hit.translated ? '已译未接通' : '在目录未译'].push(row);
   } else if (poolWords.has(text.toLowerCase())) {
     buckets['词池保英文'].push(row);
+  } else if (isNoise(text)) {
+    buckets['噪音'].push(row);
   } else if (text.length >= 8 && haystack.includes(text)) {
     buckets['目录片段'].push(row);
   } else {
@@ -163,6 +177,7 @@ const HINTS = {
   目录片段: '是某条目录值的子串（AC 最短匹配拆碎/部分替换）→ 该文本落地点先整串反查再进 fallback',
   没进目录: '抽取器没抽到（config 数据/new 构造参数/#define/运行期插值）→ 扩抽取源或手维护 _<feature>.json',
   词池保英文: '口音替换词池（strings/*_replacement.json），有意保英文 → 无需处理',
+  噪音: 'CSS 声明（自定义 MOTD 样式）/管理员日志印记，有意保英文 → 无需处理',
 };
 for (const [name, rows] of Object.entries(buckets)) {
   if (!rows.length) continue;

@@ -170,7 +170,7 @@
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
-	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
+	name = LANG("obj.f8df833d", list(initial(name), recipient.name, recipient.assigned_role.title)) // NOVA EDIT CHANGE - I18N - ORIGINAL: name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
 	recipient_ref = WEAKREF(recipient)
 
 	var/mob/living/body = recipient.current
@@ -226,15 +226,17 @@
 			/obj/effect/decal/cleanable/ash,
 		))
 
+	// NOVA EDIT CHANGE START - I18N - junk 邮件名与 important 前缀走 LANG 模板（动态拼接绕过所有翻译层）
 	var/list/junk_names = list(
-		/obj/item/paper/pamphlet/gateway = "[initial(name)] for [pick(GLOB.adjectives)] adventurers",
-		/obj/item/paper/pamphlet/violent_video_games = "[initial(name)] for the truth about the arcade centcom doesn't want to hear",
-		/obj/item/paper/fluff/junkmail_redpill = "[initial(name)] for those feeling [pick(GLOB.adjectives)] working at Nanotrasen",
-		/obj/effect/decal/cleanable/ash = "[initial(name)] with INCREDIBLY IMPORTANT ARTIFACT- DELIVER TO SCIENCE DIVISION. HANDLE WITH CARE.",
+		/obj/item/paper/pamphlet/gateway = LANG("obj.475d43c5", list(initial(name), pick(GLOB.adjectives))),
+		/obj/item/paper/pamphlet/violent_video_games = LANG("obj.624cd388", list(initial(name))),
+		/obj/item/paper/fluff/junkmail_redpill = LANG("obj.aeb10bfe", list(initial(name), pick(GLOB.adjectives))),
+		/obj/effect/decal/cleanable/ash = LANG("obj.d175bb60", list(initial(name))),
 	)
 
 	color = pick(department_colors) //eh, who gives a shit.
-	name = special_name ? junk_names[junk] : "important [initial(name)]"
+	name = special_name ? junk_names[junk] : LANG("obj.29ffcf7e", list(initial(name)))
+	// NOVA EDIT CHANGE END
 
 	junk = new junk(src)
 	return TRUE

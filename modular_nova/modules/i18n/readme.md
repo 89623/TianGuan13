@@ -113,6 +113,39 @@ locale 解析：
   并同步 `tgui/packages/tgui/i18n/*.json`（构建脚本会自动执行 sync）。
 - 大量 `code/**/*.dm`：由 `tools/i18n` 幂等改写工具批量将字符串字面量替换为 `LANG/LANGU`
   （分阶段进行，每个被改写文件顶部带统一标记注释）。
+- **miss 日志第 3 批收口（2026-07，生产服 5 局日志聚合）**：
+  - **emote 派发点整串反查**（NOVA EDIT ADDITION）：`code/datums/emotes.dm` `run_emote` 在日志之后、
+    组句之前对 `msg` 过 `lang_reverse_text`——emote 下游拼成「[user] [msg]」整句动态、目录无法整句命中，
+    这一处修好**全部无参 emote**（monkey 死亡喘息等）。带 %t 实参的仍靠 AC。
+  - **电线检修名**（NOVA EDIT CHANGE + 手维护表）：`code/datums/wires/_wires.dm` ui_data 的 `wire` 字段
+    反查（act 回传 color、名字纯显示）；词表 `strings/i18n/{en,zh-Hans}/_wires.json`（WIRE_* define 值，
+    ~69 条）。lint 对 `== WIRE_*` 的 59 条碰撞告警已确认安全收进基线（比较链全在服务端内部值上）。
+  - **门禁权限显示名**：抽取器新源 `setup_access_descriptions`（`desc_by_access[...] = "..."` 赋值，
+    ~200 条）+ `code/controllers/subsystem/networks/id_access.dm` `setup_tgui_lists` 构建静态表时反查
+    `desc`（act 走 `ref`）。原始权限 id 列表键 `accesses`（airlock_electronics/mecha 等）进
+    `policy.json payload_skip_keys`（多词 id "external airlocks" 防误翻）。
+  - **堆叠合成配方标题**：抽取器新源 `new /datum/stack_recipe*("标题",…)` 第 0 构造实参（+~640 条，
+    StackCrafting 菜单全英文的根因；显示端 stack.dm 反查已在前批接好）。
+  - **合成/烹饪步骤行**：`_crafting.dm` 三条运行期拼接步骤 LANG 化（容器名实参走反查）；
+    `/datum/crafting_recipe` 的 `steps` 列表进抽取。菜谱图标键列表 `icon_data` 进 payload_skip_keys。
+  - **邮件名**（NOVA EDIT CHANGE）：`code/game/objects/items/mail.dm` 收件人名/junk 名/important 前缀
+    LANG 模板化（运行期拼接，绕过所有层）。
+  - **警戒等级播报标题**（NOVA EDIT CHANGE）：`code/__HELPERS/priority_announce.dm` `level_announce`
+    两条 title LANG 化（等级名实参反查）。
+  - **死亡竞赛全套**（NOVA EDIT CHANGE）：`code/modules/deathmatch/` 开厅播报/GO!/修正条件/超时/AFK/
+    死亡/胜负/active_mods LANG 化（修正条件名反查、中文顿号连接）。
+  - **食物切片名**（NOVA EDIT CHANGE）：`edible.dm` `slice of [X]` → LANG 模板「{0}切片」。
+  - **冰淇淋名/描述**（NOVA EDIT CHANGE）：`ice_cream_holder.dm` 口味词+基名逐个反查、多口味描述 LANG。
+  - **猴子编号名**（NOVA EDIT CHANGE）：`code/modules/language/monkey.dm` `monkey ([N])` → LANG 模板
+    （「The monkey」千次级 miss 的根因：编号后缀使 atom Init 反查失手）。
+  - **机体日志**（NOVA EDIT CHANGE）：`code/modules/mob/living/silicon/silicon.dm` `logevent` 存入
+    borglog 前反查消息体（时间戳前缀使整行 miss）。
+  - **`lang_reverse_text` miss 链新增 span 剥壳重试**（runtime.dm）：`desc = span_alert("…")` 类编译期
+    包裹值剥单层 `<span>` 查内层、命中回包（"Keep out of reach of children." 类）。
+  - **聊天 AC 跳过 admin 消息类型**（runtime.dm）：`i18n_player_chat_types` 增列
+    ADMINLOG/ATTACKLOG/DEBUG——管理员日志按政策保英文，且不再污染 miss 采集。
+  - **13 条 keep-english 白名单改判**：菠萝油/猪血糕等罗马音菜名与酒名/装备名手工翻译并移出白名单
+    （遵循「应该都为中文」方向）。
 
 ### Defines:
 
