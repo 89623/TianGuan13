@@ -127,6 +127,8 @@
     shields = list()
     var/dir = mod.wearer.dir
     var/turf/origin = get_turf(mod.wearer)
+    if(!origin) // 穿戴者在 nullspace（柜子/载具/尸袋等）时没有脚下 turf
+        return
 
     for(var/i = -1; i <= 1; i++)
         var/turf/target = null
@@ -157,6 +159,8 @@
 
     var/dir = mod.wearer.dir
     var/turf/origin = get_turf(mod.wearer)
+    if(!origin) // 穿戴者在 nullspace 时 origin.x 会 runtime（Cannot read null.x）
+        return
     for(var/obj/structure/blueshield/B in shields)
         var/turf/target = null
         switch(dir)
