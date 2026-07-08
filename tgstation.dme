@@ -9864,6 +9864,7 @@
 #include "modular_tianguan\code\security_officer.dm"
 #include "modular_tianguan\modules\emergency_shuttle_cc\code\emergency_shuttle_cc.dm"
 #include "modular_tianguan\modules\sop_book\code\sop_book.dm"
+#include "modular_tianguan\modules\medical_blanks\code\init_medical_blanks.dm"
 
 
 
