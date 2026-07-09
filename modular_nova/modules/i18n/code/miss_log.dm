@@ -5,7 +5,7 @@
 //   1. lang_fallback_apply 出口（browse/状态栏/公告/maptext/聊天兜底）——模板引擎 + AC
 //      替换后残留的连续拉丁词 run；
 //   2. lang_reverse_phrase_tgui 的 miss 分支——整串反查 + 模板引擎都没命中的 TGUI 负载值。
-// 产出 [log_directory]/i18n_misses.log，去重计数（首次 + 10/100/1000 次时各写一行）。
+// 产出 [log_directory]/i18n_misses.log，去重计数（首次 + 10/100/1000 次时各写一行）；收满上限后停止扫描。
 // 离线聚合与归类（在目录=路径没接通 / 不在目录=没进抽取）见 tools/i18n/miss-scan.mjs。
 //
 // 噪音控制：run 需 ≥3 个拉丁词（或 2 词且含小写开头词——放行 "toggle safety" 类短语、
@@ -18,7 +18,7 @@ GLOBAL_VAR_INIT(i18n_log_misses, FALSE)
 /// 已记录串 -> 出现次数。运行期只增，round 结束随进程回收。
 GLOBAL_LIST_EMPTY(i18n_miss_counts)
 
-/// 唯一串数量上限：超过后不再收新串（防止长局内动态串把内存吃穿；已计数的串仍继续累加）。
+/// 唯一串数量上限：达到后停止整个扫描，避免继续为正则/分词分配临时 list。
 #define I18N_MISS_MAX_UNIQUE 4096
 /// 单条记录最大长度：更长的多为玩家书写/超长拼接，截断意义不大，直接跳过。
 #define I18N_MISS_MAX_LENGTH 240
@@ -118,6 +118,11 @@ GLOBAL_VAR_INIT(i18n_miss_tag_regex, regex(@"<[^>]*>|&[#A-Za-z0-9]+;", "g"))
 
 /// fallback 层出口扫描：对（已过模板引擎 + AC 的）文本提取残留英文 run 并记录。
 /proc/lang_log_miss_scan(text, source)
+	if(length(GLOB.i18n_miss_counts) >= I18N_MISS_MAX_UNIQUE)
+		return
+	// 有效 run 至少有两个词；无任何分隔符时避免 regex.Replace + splittext 分配。
+	if(!istext(text) || (!findtext(text, " ") && !findtext(text, "\t") && !findtext(text, "\n")))
+		return
 	for(var/run in lang_i18n_extract_runs(text))
 		lang_log_miss(run, source)
 
