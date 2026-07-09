@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * +++++++++++++++++++++++++++++++++++++++++ ABOUT THIS FILE +++++++++++++++++++++++++++++++++++++++++++++
  * Not everything here necessarily has the name pattern of [x]_act()
@@ -76,7 +77,7 @@
 		if(prob(75 / severity))
 			// avoid spamming messages for anything inside the holodeck directly
 			if(!istype(get_area(src), /area/station/holodeck))
-				visible_message(span_warning("[src] fades away!"))
+				visible_message(span_warning(LANG("atom.1b5ff63e", list(src))))
 			animate(alpha = 0, time = 1 SECONDS)
 			QDEL_IN(src, 1 SECONDS)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 ADMIN_VERB(message_pda, R_ADMIN, "PDA Message", "Send a message to a user's PDA.", ADMIN_CATEGORY_EVENTS)
 	user.holder.message_pda()
@@ -8,7 +9,7 @@ ADMIN_VERB(message_pda, R_ADMIN, "PDA Message", "Send a message to a user's PDA.
 		return
 
 	if(!length(GLOB.pda_messengers))
-		to_chat(usr, span_warning("ERROR: There are no users you can send a message to"))
+		to_chat(usr, span_warning(LANG("datum.63789103", null)))
 		return
 
 	var/datum/admin_pda_panel/ui = new(usr)
@@ -60,7 +61,7 @@ ADMIN_VERB(message_pda, R_ADMIN, "PDA Message", "Send a message to a user's PDA.
 					targets += messenger
 
 			if(!length(targets))
-				to_chat(usr, span_warning("ERROR: Target is unavailable."))
+				to_chat(usr, span_warning(LANG("datum.c5f6b9a2", null)))
 				return FALSE
 
 			var/datum/signal/subspace/messaging/tablet_message/signal = new(null, list(
@@ -81,7 +82,7 @@ ADMIN_VERB(message_pda, R_ADMIN, "PDA Message", "Send a message to a user's PDA.
 				signal.send_to_receivers()
 
 			if(!(force || signal.data["reject"]))
-				to_chat(usr, span_warning("ERROR: PDA message was rejected by the telecomms setup."))
+				to_chat(usr, span_warning(LANG("datum.9538ae0b", null)))
 				return FALSE
 
 			var/recipient = spam ? "everyone" : get_messenger_name(targets[1])

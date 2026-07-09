@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/shuttle/ferry
 	name = "transport ferry console"
 	desc = "A console that controls the transport ferry."
@@ -10,7 +11,7 @@
 
 /obj/machinery/computer/shuttle/ferry/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!allow_emag)
-		balloon_alert(user, "firewall too powerful!")
+		balloon_alert(user, LANG("obj.83cec077", null))
 		return FALSE
 	return ..()
 

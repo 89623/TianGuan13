@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Everything within this file is an edited form from this file, stripping it of some various components because they are not needed for the PDA app: code/game/machinery/civilian_bounties.dm
 
 ///Percentage of a civilian bounty the civilian will make.
@@ -58,10 +59,10 @@
 		return
 	if((id_account.civilian_bounty || id_account.bounties) && !COOLDOWN_FINISHED(id_account, bounty_timer))
 		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(id_account, bounty_timer), round_seconds_to = 1)
-		computer.balloon_alert(user, "try again in [time_left]!")
+		computer.balloon_alert(user, LANG("datum.22b3f375", list(time_left)))
 		return FALSE
 	if(!computer.stored_id.trim)
-		computer.say("Requesting ID card has no job assignment registered!")
+		computer.say(LANG("datum.898ed9d2", null))
 		return FALSE
 
 	var/list/datum/bounty/crumbs = computer.stored_id.trim.generate_bounty_list()

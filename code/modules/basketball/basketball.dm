@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MIN_DISARM_CHANCE 25
 #define MAX_DISARM_CHANCE 75
 
@@ -74,7 +75,7 @@
 		return
 
 	if((user.ckey in pickup_restriction_ckeys) && !COOLDOWN_FINISHED(src, pickup_cooldown))
-		user.balloon_alert(user, "cant pickup for [COOLDOWN_TIMELEFT(src, pickup_cooldown) *0.1] seconds!")
+		user.balloon_alert(user, LANG("obj.e3f32e15", list(COOLDOWN_TIMELEFT(src, pickup_cooldown) *0.1)))
 		return
 
 	reset_pickup_restriction()
@@ -119,20 +120,20 @@
 
 	switch(blocking_dir_bonus)
 		if(FACING_EACHOTHER)
-			stealer.balloon_alert_to_viewers("steals the ball")
+			stealer.balloon_alert_to_viewers(LANG("obj.091af933", null))
 			INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src)
 		if(FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR)
 			if(prob(50))
 				if(!baller.dropItemToGround(src))
 					return
-				stealer.balloon_alert_to_viewers("bats the ball")
+				stealer.balloon_alert_to_viewers(LANG("obj.8e4dfd7b", null))
 			else
-				stealer.balloon_alert_to_viewers("steals the ball")
+				stealer.balloon_alert_to_viewers(LANG("obj.091af933", null))
 				INVOKE_ASYNC(stealer, TYPE_PROC_REF(/mob, put_in_hands), src)
 		if(FACING_SAME_DIR)
 			if(!baller.dropItemToGround(src))
 				return
-			stealer.balloon_alert_to_viewers("bats the ball")
+			stealer.balloon_alert_to_viewers(LANG("obj.8e4dfd7b", null))
 
 /obj/item/toy/basketball/proc/on_equipped_mob_knockdown(mob/living/user, amount)
 	SIGNAL_HANDLER
@@ -147,7 +148,7 @@
 	if(!user.dropItemToGround(src))
 		return
 
-	user.balloon_alert_to_viewers("fumbles the ball")
+	user.balloon_alert_to_viewers(LANG("obj.e8cd5212", null))
 
 /obj/item/toy/basketball/attack(mob/living/carbon/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!iscarbon(target) || user.combat_mode)

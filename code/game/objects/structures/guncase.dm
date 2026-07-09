@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //GUNCASES//
 /obj/structure/guncase
 	name = "gun locker"
@@ -38,10 +39,10 @@
 		if(LAZYLEN(contents) < capacity)
 			if(!user.transferItemToLoc(I, src))
 				return
-			to_chat(user, span_notice("You place [I] in [src]."))
+			to_chat(user, span_notice(LANG("obj.484469c5", list(I, src))))
 			update_appearance()
 		else
-			to_chat(user, span_warning("[src] is full."))
+			to_chat(user, span_warning(LANG("obj.8e2d390c", list(src))))
 		return
 
 	else if(!user.combat_mode)

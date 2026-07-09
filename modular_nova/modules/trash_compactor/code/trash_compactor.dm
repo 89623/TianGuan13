@@ -68,7 +68,7 @@
 	if(!in_range(user, src))
 		return
 	if(inserted_card)
-		. += span_notice("There's a <b>GAP card</b> inserted in the machine. It'll <b>get stamped once</b> upon <b>hitting the quota</b>.")
+		. += span_notice(LANG("obj.9b2f9d64", null))
 	if(!istype(user)) // Only living mobs have bank accounts
 		return
 	// Get user's bank account
@@ -85,9 +85,9 @@
 	if(tracker_key && (tracker_key in trash_counts))
 		var/required = is_janitor(user) ? REQUIRED_TRASH_JANITOR : REQUIRED_TRASH_CREW
 		var/remaining = required - trash_counts[tracker_key]
-		. += span_notice("The status display reads: You have deposited <b>[trash_counts[tracker_key]]</b> pieces of trash. <b>[remaining]</b> more needed for [is_janitor(user) ? "a wage bonus" : "a ration ticket"].")
+		. += span_notice(LANG("obj.dfcbd6b1", list(trash_counts[tracker_key], remaining, is_janitor(user) ? "a wage bonus" : "a ration ticket")))
 	else
-		. += span_notice("The status display reads: Deposit [is_janitor(user) ? "[REQUIRED_TRASH_JANITOR]" : "[REQUIRED_TRASH_CREW]"] pieces of trash to receive [is_janitor(user) ? "a wage bonus" : "a ration ticket"].")
+		. += span_notice(LANG("obj.a1ed7c3a", list(is_janitor(user) ? "[REQUIRED_TRASH_JANITOR]" : "[REQUIRED_TRASH_CREW]", is_janitor(user) ? "a wage bonus" : "a ration ticket")))
 
 /obj/machinery/trash_compactor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = NONE
@@ -95,12 +95,12 @@
 	// Handle GAP card insertion
 	if(istype(tool, /obj/item/gbp_punchcard))
 		if(!isnull(inserted_card))
-			balloon_alert(user, "gap card already inserted!")
+			balloon_alert(user, LANG("obj.266b7db7", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		inserted_card = tool
-		balloon_alert(user, "inserted card")
+		balloon_alert(user, LANG("obj.2c14fdd7", null))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -119,7 +119,7 @@
 	if(!user.put_in_hands(inserted_card))
 		inserted_card.forceMove(drop_location())
 	inserted_card = null
-	balloon_alert(user, "removed card")
+	balloon_alert(user, LANG("obj.48d2142c", null))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -138,7 +138,7 @@
 /// Processes a trash item through the compactor, tracking user progress and dispensing rewards.
 /obj/machinery/trash_compactor/proc/process_trash(obj/item/trash_item, mob/living/carbon/user, bulk_processing = FALSE)
 	if(machine_stat & (NOPOWER|BROKEN))
-		balloon_alert(user, "no power!")
+		balloon_alert(user, LANG("obj.b3e1b703", null))
 		return FALSE
 
 	if(!is_type_in_list(trash_item, trash_items))
@@ -168,7 +168,7 @@
 		// Say random wisdom (only for single items, not bulk)
 		var/wisdom = pick(GLOB.wisdoms)
 		say(wisdom)
-		balloon_alert(user, "trash compacted")
+		balloon_alert(user, LANG("obj.09cc4e1f", null))
 		playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
 
 	// Check if we've reached required pieces of trash
@@ -191,10 +191,10 @@
 	if(is_janitor(user))
 		if(user_account)
 			user_account.adjust_money(JANITOR_WAGE_BONUS, "Trash Compactor: Wage Bonus")
-			say("[JANITOR_WAGE_BONUS] credits added to your bank account! Thank you for your service.")
+			say(LANG("obj.e3fa0fbb", list(JANITOR_WAGE_BONUS)))
 		else
 			new /obj/item/stack/spacecash/c100(drop_location())
-			say("[/obj/item/stack/spacecash/c100::value] credit bill dispensed! Please consider opening a bank account.")
+			say(LANG("obj.92095645", list(/obj/item/stack/spacecash/c100::value)))
 		playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
 		return
 
@@ -206,7 +206,7 @@
 		ticket_type = /obj/item/paper/paperslip/ration_ticket/luxury
 
 	new ticket_type(drop_location())
-	say("Ration ticket dispensed! Thank you for your contribution to recycling.")
+	say(LANG("obj.1d1d1eab", null))
 	playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
 
 	// Handle GAP card punching if inserted
@@ -216,15 +216,15 @@
 			inserted_card.icon_state = "punchcard_[inserted_card.punches]"
 		if(inserted_card.punches == inserted_card.max_punches)
 			playsound(src, 'sound/items/party_horn.ogg', 100)
-			say("Congratulations, you have finished your punchcard!")
+			say(LANG("obj.aa40e109", null))
 		else
 			playsound(src, 'sound/items/boxcutter_activate.ogg', 50)
-			say("GAP card punched!")
+			say(LANG("obj.3f69b44f", null))
 
 /// Processes-runs all valid trash items in a trash bag through the compactor.
 /obj/machinery/trash_compactor/proc/process_trash_bag(obj/item/storage/bag/trash/trash_bag, mob/living/carbon/user)
 	if(machine_stat & (NOPOWER|BROKEN))
-		balloon_alert(user, "no power!")
+		balloon_alert(user, LANG("obj.b3e1b703", null))
 		return FALSE
 
 	var/processed_count = 0
@@ -233,10 +233,10 @@
 			processed_count++
 
 	if(processed_count > 0)
-		balloon_alert(user, "processed [processed_count] items")
+		balloon_alert(user, LANG("obj.f7276e70", list(processed_count)))
 		playsound(src, 'sound/machines/ping.ogg', 60, TRUE)
 	else
-		balloon_alert(user, "bag empty!")
+		balloon_alert(user, LANG("obj.9e90d397", null))
 
 	return processed_count > 0
 

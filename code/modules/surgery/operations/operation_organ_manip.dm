@@ -34,6 +34,9 @@
 	implements = remove_implements + insert_implements
 
 /datum/surgery_operation/limb/organ_manipulation/get_recommended_tool()
+	// NOVA EDIT CHANGE - I18N - 工具名已由父过程反查；这里翻译 " / organ" 目标后缀（display-only）。ORIGINAL: return "[..()] / organ"
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		return "[..()] / [lang_reverse_text("organ")]"
 	return "[..()] / organ"
 
 /datum/surgery_operation/limb/organ_manipulation/get_default_radial_image()

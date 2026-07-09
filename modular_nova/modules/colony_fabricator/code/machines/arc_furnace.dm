@@ -43,7 +43,7 @@
 /obj/machinery/arc_furnace/examine(mob/user)
 	. = ..()
 	if(length(contents))
-		. += span_notice("It has <b>[contents[1]]</b> sitting in it.")
+		. += span_notice(LANG("obj.1b5808be", list(contents[1])))
 	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER)
 	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR)
 
@@ -64,16 +64,16 @@
 
 /obj/machinery/arc_furnace/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(operating)
-		balloon_alert(user, "furnace busy")
+		balloon_alert(user, LANG("obj.8de55ff8", null))
 		return TRUE
 
 	if(length(contents))
-		balloon_alert(user, "furnace full")
+		balloon_alert(user, LANG("obj.b8dcd0aa", null))
 		return TRUE
 
 	if(istype(attacking_item, /obj/item/stack/ore))
 		attacking_item.forceMove(src)
-		balloon_alert(user, "ore added")
+		balloon_alert(user, LANG("obj.73a2d20c", null))
 		update_appearance()
 		return TRUE
 
@@ -88,7 +88,7 @@
 		return
 
 	if(!length(contents))
-		balloon_alert(user, "it's empty!")
+		balloon_alert(user, LANG("obj.76a90f7c", null))
 		return
 
 	var/choice = show_radial_menu(user, src, radial_options, require_near = !issilicon(user))
@@ -122,15 +122,15 @@
 /// Starts the smelting process, checking if the machine has power or if it's broken at all
 /obj/machinery/arc_furnace/proc/smelt_it_up(mob/user)
 	if(machine_stat & (NOPOWER|BROKEN))
-		balloon_alert(user, "button doesn't respond")
+		balloon_alert(user, LANG("obj.6de0942f", null))
 		return
 	if(operating)
-		balloon_alert(user, "already smelting")
+		balloon_alert(user, LANG("obj.26f62a97", null))
 		return
 
 	var/obj/item/stack/ore/ore_to_smelt = contents[1]
 	if(!istype(ore_to_smelt))
-		balloon_alert(user, "nothing to smelt")
+		balloon_alert(user, LANG("obj.441869ff", null))
 
 	operating = TRUE
 	/// How long the smelting is going to take based off the stack size

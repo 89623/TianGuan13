@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // It is a gizmo that flashes a small area
 
 /obj/machinery/flasher
@@ -66,9 +67,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	add_fingerprint(user)
 	if (attacking_item.tool_behaviour == TOOL_WIRECUTTER)
 		if (bulb)
-			user.visible_message(span_notice("[user] begins to disconnect [src]'s flashbulb."), span_notice("You begin to disconnect [src]'s flashbulb..."))
+			user.visible_message(span_notice(LANG("obj.927df81d", list(user, src))), span_notice(LANG("obj.0620343f", list(src))))
 			if(attacking_item.use_tool(src, user, 30, volume=50) && bulb)
-				user.visible_message(span_notice("[user] disconnects [src]'s flashbulb!"), span_notice("You disconnect [src]'s flashbulb."))
+				user.visible_message(span_notice(LANG("obj.c7b7ccaf", list(user, src))), span_notice(LANG("obj.195778e3", list(src))))
 				bulb.forceMove(loc)
 				power_change()
 
@@ -76,19 +77,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		if (!bulb)
 			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			user.visible_message(span_notice("[user] installs [attacking_item] into [src]."), span_notice("You install [attacking_item] into [src]."))
+			user.visible_message(span_notice(LANG("obj.64a6a66a", list(user, attacking_item, src))), span_notice(LANG("obj.a0a1d9da", list(attacking_item, src))))
 			power_change()
 		else
-			to_chat(user, span_warning("A flashbulb is already installed in [src]!"))
+			to_chat(user, span_warning(LANG("obj.d9edcff9", list(src))))
 
 	else if (attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(!bulb)
-			to_chat(user, span_notice("You start unsecuring the flasher frame..."))
+			to_chat(user, span_notice(LANG("obj.ead0e0f7", null)))
 			if(attacking_item.use_tool(src, user, 40, volume=50))
-				to_chat(user, span_notice("You unsecure the flasher frame."))
+				to_chat(user, span_notice(LANG("obj.4b8870f0", null)))
 				deconstruct(TRUE)
 		else
-			to_chat(user, span_warning("Remove a flashbulb from [src] first!"))
+			to_chat(user, span_warning(LANG("obj.b06b8865", list(src))))
 	else
 		return ..()
 
@@ -194,13 +195,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		attacking_item.play_tool_sound(src, 100)
 
 		if (!anchored && !isinspace())
-			to_chat(user, span_notice("[src] is now secured."))
+			to_chat(user, span_notice(LANG("obj.99e806e9", list(src))))
 			add_overlay("[base_icon_state]-s")
 			set_anchored(TRUE)
 			power_change()
 			proximity_monitor.set_range(flash_range)
 		else
-			to_chat(user, span_notice("[src] can now be moved."))
+			to_chat(user, span_notice(LANG("obj.37738ee6", list(src))))
 			cut_overlays()
 			set_anchored(FALSE)
 			power_change()
@@ -220,7 +221,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	. = ..()
-	. += span_notice("Its channel ID is '[id]'.")
+	. += span_notice(LANG("obj.7150d501", list(id)))
 
 /obj/item/wallframe/flasher/after_attach(obj/attached_to)
 	..()

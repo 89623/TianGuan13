@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/transport/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
@@ -78,7 +79,7 @@
 	. = ..()
 
 	if(panel_open)
-		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
+		. += span_notice(LANG("obj.ce4b88dc", list(EXAMINE_HINT("bolts."))))
 
 /obj/machinery/transport/destination_sign/on_deconstruction(disassembled)
 	var/atom/drop = drop_location()
@@ -92,11 +93,11 @@
 
 /obj/machinery/transport/destination_sign/indicator/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
-	balloon_alert(user, "[anchored ? "un" : ""]securing...")
+	balloon_alert(user, LANG("obj.e4901a5f", list(anchored ? "un" : "")))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
-		balloon_alert(user, "[anchored ? "un" : ""]secured")
+		balloon_alert(user, LANG("obj.97c34052", list(anchored ? "un" : "")))
 		deconstruct()
 		return TRUE
 

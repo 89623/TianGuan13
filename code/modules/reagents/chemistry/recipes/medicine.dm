@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/chemical_reaction/medicine
 	required_reagents = null //Don't add this to master list
@@ -79,12 +80,12 @@
 
 ///Calls it over and over
 /datum/chemical_reaction/medicine/inacusiate/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
-	holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))]The [holder.my_atom] suddenly gives out a loud bang!"))
+	holder.my_atom.audible_message(span_notice(LANG("datum.b06c8ccf", list(icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src)), holder.my_atom))))
 	explode_deafen(holder, equilibrium, 0.5, 10, 3)
 
 /datum/chemical_reaction/medicine/inacusiate/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	var/power = equilibrium.reacted_vol/10
-	holder.my_atom.audible_message(span_notice("[icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src))]The [holder.my_atom] suddenly gives out an ear-crushingly loud bang!"))
+	holder.my_atom.audible_message(span_notice(LANG("datum.bfb2dc60", list(icon2html(holder.my_atom, viewers(DEFAULT_MESSAGE_RANGE, src)), holder.my_atom))))
 	explode_deafen(holder, equilibrium, power/2, power*2, max(power/2, 3))
 	clear_products(holder)
 
@@ -443,3 +444,9 @@
 	results = list(/datum/reagent/medicine/naloxone = 4)
 	required_reagents = list(/datum/reagent/medicine/morphine = 1, /datum/reagent/hydrogen_peroxide = 1, /datum/reagent/bromine = 1, /datum/reagent/consumable/ethanol = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/medicine/immunosilence
+	results = list(/datum/reagent/medicine/immunosilence = 1)
+	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/ammonia = 1)
+	reaction_tags = REACTION_TAG_EASY
+

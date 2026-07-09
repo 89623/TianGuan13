@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Telekinesis lets you interact with objects from range, and gives you a light blue halo around your head.
 /datum/mutation/telekinesis
 	name = "Telekinesis"
@@ -7,13 +8,9 @@
 	text_gain_indication = span_notice("You feel smarter!")
 	limb_req = BODY_ZONE_HEAD
 	instability = POSITIVE_INSTABILITY_MAJOR
+	mutation_icon_state = "telekinesishead"
 	///Typecache of atoms that TK shouldn't interact with
 	var/static/list/blacklisted_atoms = typecacheof(list(/atom/movable/screen))
-
-/datum/mutation/telekinesis/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('modular_nova/master_files/icons/effects/tele_effects.dmi', "telekinesishead", -MUTATIONS_LAYER)) //NOVA EDIT CHANGE - ORIGINAL: visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
 
 /datum/mutation/telekinesis/on_acquiring(mob/living/carbon/human/homan)
 	. = ..()
@@ -26,9 +23,6 @@
 	if(.)
 		return
 	UnregisterSignal(homan, COMSIG_MOB_ATTACK_RANGED)
-
-/datum/mutation/telekinesis/get_visual_indicator()
-	return visual_indicators[type][1]
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
 /datum/mutation/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
@@ -68,7 +62,7 @@
 /datum/mutation/elastic_arms/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/pick_item)
 	SIGNAL_HANDLER
 	if((pick_item.w_class > WEIGHT_CLASS_BULKY) && !(pick_item.item_flags & (ABSTRACT|HAND_ITEM))) // cant decide if i should limit to huge or bulky.
-		pick_item.balloon_alert(owner, "arms too floppy to wield!")
+		pick_item.balloon_alert(owner, LANG("datum.53b32a28", null))
 		return COMPONENT_LIVING_CANT_PUT_IN_HAND
 
 /// signal sent when owner tries to pull
@@ -77,10 +71,10 @@
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.mob_size > MOB_SIZE_HUMAN)
-			living_target.balloon_alert(owner, "arms too floppy to pull this!")
+			living_target.balloon_alert(owner, LANG("datum.098f7151", null))
 			return COMSIG_LIVING_CANCEL_PULL
 	if(isitem(target))
 		var/obj/item/item_target = target
 		if(item_target.w_class > WEIGHT_CLASS_BULKY)
-			item_target.balloon_alert(owner, "arms too floppy to pull this!")
+			item_target.balloon_alert(owner, LANG("datum.098f7151", null))
 			return COMSIG_LIVING_CANCEL_PULL

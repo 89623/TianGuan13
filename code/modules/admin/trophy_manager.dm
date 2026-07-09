@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(trophy_manager, R_ADMIN, "Trophy Manager", "View all trophies.", ADMIN_CATEGORY_MAIN)
 	var/static/datum/trophy_manager/ui = new
 	ui.ui_interact(user.mob)
@@ -39,7 +40,7 @@ ADMIN_VERB(trophy_manager, R_ADMIN, "Trophy Manager", "View all trophies.", ADMI
 			return TRUE
 		if("edit_message")
 			var/old_message = trophy.message
-			var/new_message = tgui_input_text(user, "New trophy message?", "Message Editing", trophy.message, max_length = MAX_PLAQUE_LEN)
+			var/new_message = tgui_input_text(user, LANG("datum.fd779f73", null), LANG("datum.8ad7af1b", null), trophy.message, max_length = MAX_PLAQUE_LEN)
 			if(!new_message)
 				return
 			trophy.message = new_message
@@ -47,11 +48,11 @@ ADMIN_VERB(trophy_manager, R_ADMIN, "Trophy Manager", "View all trophies.", ADMI
 			return TRUE
 		if("edit_path")
 			var/old_path = trophy.path
-			var/new_path = tgui_input_text(user, "New trophy path?", "Path Editing", trophy.path)
+			var/new_path = tgui_input_text(user, LANG("datum.faf74930", null), LANG("datum.7c303dfa", null), trophy.path)
 			if(!new_path)
 				return
 			if(!text2path(new_path))
-				to_chat(user, span_warning("Invalid path selected"))
+				to_chat(user, span_warning(LANG("datum.250a4695", null)))
 				return
 			trophy.path = new_path
 			log_admin("[key_name(user)] has edited the item path of trophy made by [trophy.placer_key] from \"[old_path]\" to \"[new_path]\".")

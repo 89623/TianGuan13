@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Strained Muscles: Temporary speed boost at the cost of rapid damage
 //Limited because of space suits and such; ideally, used for a quick getaway
 
@@ -18,12 +19,12 @@
 	..()
 	active = !active
 	if(active)
-		to_chat(user, span_notice("Our muscles tense and strengthen."))
+		to_chat(user, span_notice(LANG("datum.3f17efd8", null)))
 	else
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
-		to_chat(user, span_notice("Our muscles relax."))
+		to_chat(user, span_notice(LANG("datum.00429e8c", null)))
 		if(stacks >= 5) // NOVA EDIT CHANGE - 5, instead of 10, means it only lasts half as long (instead of like, 50 seconds straight) - ORIGINAL: if(stacks >= 10)
-			to_chat(user, span_danger("We collapse in exhaustion."))
+			to_chat(user, span_danger(LANG("datum.f920c28c", null)))
 			user.Paralyze(60)
 			user.emote("gasp")
 
@@ -43,7 +44,7 @@
 		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
-			to_chat(user, span_notice("Our muscles relax without the energy to strengthen them."))
+			to_chat(user, span_notice(LANG("datum.ff5e350b", null)))
 			user.Paralyze(40)
 			user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 			break
@@ -53,7 +54,7 @@
 		user.adjust_stamina_loss(stacks * 1.3) //At first the changeling may regenerate stamina fast enough to nullify fatigue, but it will stack
 
 		if(stacks == 11) //Warning message that the stacks are getting too high
-			to_chat(user, span_warning("Our legs are really starting to hurt..."))
+			to_chat(user, span_warning(LANG("datum.c19b98bc", null)))
 
 		sleep(4 SECONDS)
 

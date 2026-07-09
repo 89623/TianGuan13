@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling_expel_worm
 	name = "Expel Worm"
 	desc = "Forcefully expel the blood worm in your body."
@@ -23,7 +24,7 @@
 	if(!.)
 		return
 	var/mob/living/basic/blood_worm/invader = locate() in owner.loc
-	to_chat(owner, span_danger("You expel \the [invader] from your body!"))
-	to_chat(invader, span_userdanger("You are forcefully expelled by the body of \the [owner.loc]!"))
+	to_chat(owner, span_danger(LANG("datum.8c780588", list(invader))))
+	to_chat(invader, span_userdanger(LANG("datum.d803423a", list(owner.loc))))
 	invader.leave_host() // hasta la vista, worm
 	return TRUE

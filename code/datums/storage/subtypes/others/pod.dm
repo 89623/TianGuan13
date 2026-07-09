@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/storage/pod
 	max_slots = 14
 	max_total_storage = WEIGHT_CLASS_BULKY * 14
@@ -7,7 +8,7 @@
 
 /datum/storage/pod/open_storage(mob/to_show)
 	if(locked && isliving(to_show)) //Observers get to see anyway
-		to_chat(to_show, span_warning("The storage unit will only unlock during a Red or Delta security alert."))
+		to_chat(to_show, span_warning(LANG("datum.eeadf3c3", null)))
 		return FALSE
 	return ..()
 

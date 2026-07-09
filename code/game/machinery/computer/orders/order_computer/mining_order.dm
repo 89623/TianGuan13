@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 /obj/machinery/computer/order_console/mining
@@ -60,7 +61,7 @@
 		cost_type = credit_type,
 		can_be_cancelled = FALSE,
 	)
-	say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
+	say(LANG("obj.7e5306e0", null))
 	aas_config_announce(/datum/aas_config_entry/order_console, list(), src, list(radio_channel), capitalize(blackbox_key))
 	SSshuttle.shopping_list += new_order
 
@@ -100,17 +101,17 @@
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	. = ..()
-	. += span_notice("There's [points] point\s on the card.")
+	. += span_notice(LANG("obj.08f40b7f", list(points)))
 
 /obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isidcard(attacking_item))
 		return ..()
 	var/obj/item/card/id/attacking_id = attacking_item
-	balloon_alert(user, "starting transfer")
-	var/point_movement = tgui_alert(user, "To ID (from card) or to card (from ID)?", "Mining Points Transfer", list(TO_USER_ID, TO_POINT_CARD))
+	balloon_alert(user, LANG("obj.15ef6553", null))
+	var/point_movement = tgui_alert(user, LANG("obj.90fa83f2", null), LANG("obj.36c7058b", null), list(TO_USER_ID, TO_POINT_CARD))
 	if(!point_movement)
 		return
-	var/amount = tgui_input_number(user, "How much do you want to transfer? ID Balance: [attacking_id.registered_account.mining_points], Card Balance: [points]", "Transfer Points", min_value = 0, round_value = 1)
+	var/amount = tgui_input_number(user, LANG("obj.e9da4f50", list(attacking_id.registered_account.mining_points, points)), LANG("obj.bfebd140", null), min_value = 0, round_value = 1)
 	if(!amount)
 		return
 	switch(point_movement)
@@ -119,13 +120,13 @@
 				amount = points
 			attacking_id.registered_account.mining_points += amount
 			points -= amount
-			to_chat(user, span_notice("You transfer [amount] mining points from [src] to [attacking_id]."))
+			to_chat(user, span_notice(LANG("obj.2fb09f9c", list(amount, src, attacking_id))))
 		if(TO_POINT_CARD)
 			if(amount > attacking_id.registered_account.mining_points)
 				amount = attacking_id.registered_account.mining_points
 			attacking_id.registered_account.mining_points -= amount
 			points += amount
-			to_chat(user, span_notice("You transfer [amount] mining points from [attacking_id] to [src]."))
+			to_chat(user, span_notice(LANG("obj.2fb09f9c", list(amount, attacking_id, src))))
 
 #undef TO_POINT_CARD
 #undef TO_USER_ID

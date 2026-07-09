@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define NO_BOUND 3
 
 /obj/machinery/atmospherics/components/unary/vent_pump
@@ -83,15 +84,15 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	. = ..()
-	. += span_notice("You can link it with an air sensor using a multitool.")
+	. += span_notice(LANG("obj.7c45378c", null))
 
 	if(fan_overclocked)
-		. += span_warning("It is currently overclocked causing it to take damage over time.")
+		. += span_warning(LANG("obj.23c202f4", null))
 
 	if(get_integrity() > 0)
 		. += span_notice(examine_condition)
 	else
-		. += span_warning("The fan is broken.")
+		. += span_warning(LANG("obj.ff01afc0", null))
 
 /obj/machinery/atmospherics/components/unary/vent_pump/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
@@ -100,7 +101,7 @@
 		sensor.multitool_act(user, multi_tool)
 		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "vent saved in buffer")
+	balloon_alert(user, LANG("obj.a13d1d13", null))
 	multi_tool.set_buffer(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -109,13 +110,13 @@
 	if(!time_to_repair)
 		return FALSE
 
-	balloon_alert(user, "repairing vent...")
+	balloon_alert(user, LANG("obj.1d794945", null))
 	if(do_after(user, time_to_repair, src))
-		balloon_alert(user, "vent repaired")
+		balloon_alert(user, LANG("obj.602d2703", null))
 		repair_damage(max_integrity)
 
 	else
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atom_fix()
@@ -319,13 +320,13 @@
 	..()
 	if(!welder.tool_start_check(user, amount=1))
 		return TRUE
-	to_chat(user, span_notice("You begin welding the vent..."))
+	to_chat(user, span_notice(LANG("obj.df6124ff", null)))
 	if(welder.use_tool(src, user, 20, volume=50))
 		if(!welded)
-			user.visible_message(span_notice("[user] welds the vent shut."), span_notice("You weld the vent shut."), span_hear("You hear welding."))
+			user.visible_message(span_notice(LANG("obj.5119a0c2", list(user))), span_notice(LANG("obj.ff218103", null)), span_hear(LANG("obj.1aa82fa3", null)))
 			welded = TRUE
 		else
-			user.visible_message(span_notice("[user] unwelded the vent."), span_notice("You unweld the vent."), span_hear("You hear welding."))
+			user.visible_message(span_notice(LANG("obj.199af01d", list(user))), span_notice(LANG("obj.d53fb270", null)), span_hear(LANG("obj.1aa82fa3", null)))
 			welded = FALSE
 		update_appearance(UPDATE_ICON)
 		pipe_vision_img = image(src, loc, dir = dir)
@@ -337,13 +338,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
-		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
+		to_chat(user, span_warning(LANG("obj.a6e44f07", list(src))))
 		return FALSE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	. = ..()
 	if(welded)
-		. += "It seems welded shut."
+		. += LANG("obj.717685e0", null)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/power_change()
 	. = ..()
@@ -352,7 +353,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user, list/modifiers)
 	if(!welded || !(do_after(user, 2 SECONDS, target = src)))
 		return
-	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
+	user.visible_message(span_warning(LANG("obj.66d277ff", list(user, src))), span_notice(LANG("obj.488de2de", null)), span_hear(LANG("obj.94e00bf8", null)))
 	welded = FALSE
 	update_appearance(UPDATE_ICON)
 	pipe_vision_img = image(src, loc, dir = dir)

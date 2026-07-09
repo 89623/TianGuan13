@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/flu
 	name = "The Flu"
 	max_stages = 3
@@ -30,15 +31,15 @@
 			if(SPT_PROB(0.5, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your muscles ache."))
+				to_chat(affected_mob, span_danger(LANG("datum.e17753b8", null)))
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1, updating_health = FALSE)
 			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your stomach hurts."))
+				to_chat(affected_mob, span_danger(LANG("datum.6c562ebe", null)))
 				if(prob(20))
 					affected_mob.adjust_tox_loss(1, FALSE)
 			if(affected_mob.body_position == LYING_DOWN && SPT_PROB(10, seconds_per_tick))
-				to_chat(affected_mob, span_notice("You feel better."))
+				to_chat(affected_mob, span_notice(LANG("datum.9b8f156c", null)))
 				stage--
 				return
 
@@ -48,14 +49,14 @@
 			if(SPT_PROB(0.5, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your muscles ache."))
+				to_chat(affected_mob, span_danger(LANG("datum.e17753b8", null)))
 				if(prob(20))
 					affected_mob.take_bodypart_damage(1, updating_health = FALSE)
 			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("Your stomach hurts."))
+				to_chat(affected_mob, span_danger(LANG("datum.6c562ebe", null)))
 				if(prob(20))
 					affected_mob.adjust_tox_loss(1, FALSE)
 			if(affected_mob.body_position == LYING_DOWN && SPT_PROB(7.5, seconds_per_tick))
-				to_chat(affected_mob, span_notice("You feel better."))
+				to_chat(affected_mob, span_notice(LANG("datum.9b8f156c", null)))
 				stage--
 				return

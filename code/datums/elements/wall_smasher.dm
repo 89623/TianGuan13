@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Wall Smasher
  * An element you put on mobs to let their attacks break walls
@@ -63,7 +64,7 @@
 
 	if (istype(wall_turf, /turf/closed/wall/r_wall) && strength_flag != ENVIRONMENT_SMASH_RWALLS)
 		playsound(wall_turf, 'sound/effects/bang.ogg', 50, vary = TRUE)
-		wall_turf.balloon_alert(puncher, "too tough!")
+		wall_turf.balloon_alert(puncher, LANG("datum.14876b03", null))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
 	wall_turf.dismantle_wall(devastated = TRUE)

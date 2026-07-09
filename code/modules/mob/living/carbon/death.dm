@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/carbon/death(gibbed)
 	if(stat == DEAD)
 		return
@@ -105,6 +106,6 @@
 	if(!..())
 		return FALSE
 	if(!(mobility_flags & MOBILITY_USE)) //just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		to_chat(src, span_warning("You can't commit suicide whilst immobile! (You can type Ghost instead however)."))
+		to_chat(src, span_warning(LANG("mob.7e3cbb84", null)))
 		return FALSE
 	return TRUE

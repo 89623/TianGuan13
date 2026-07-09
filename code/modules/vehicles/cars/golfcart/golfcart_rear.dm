@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define GOLFCART_RIDING_SOURCE "riding_golfcart"
 #define HUMAN_LOWER_LAYER (MOB_LAYER)
 #define CARGO_HITBOX_LAYER (ABOVE_ALL_MOB_LAYER)
@@ -104,8 +105,8 @@
 
 /obj/golfcart_rear/proc/after_escape(obj/container, mob/living/user)
 	user?.visible_message(
-		span_danger("The [container] falls off of the [src]!"),
-		span_userdanger("You knock the crate off the [src]!")
+		span_danger(LANG("obj.bf116803", list(container, src))),
+		span_userdanger(LANG("obj.76dc73d5", list(src)))
 	)
 	container.SpinAnimation(5, 1)
 	if (user && istype(container, /obj/structure/closet))
@@ -132,8 +133,8 @@
 ///Called when someone resists inside of the cargo hitch.
 /obj/golfcart_rear/relay_container_resist_act(mob/living/user, obj/container)
 	user.visible_message(
-		span_danger("[user] tries to escape the [container]!"),
-		span_userdanger("You try to escape the [container]!"),
+		span_danger(LANG("obj.76c1c11d", list(user, container))),
+		span_userdanger(LANG("obj.64e34bab", list(container))),
 	)
 	if (parent.has_buckled_mobs())
 		for (var/mob/driver in parent.buckled_mobs)
@@ -172,7 +173,7 @@
 /obj/golfcart_rear/mouse_drop_receive(atom/dropped, mob/user, params)
 	if (!can_load(dropped))
 		if (!isliving(dropped) || (has_buckled_mobs() && buckled_mobs.len >= max_buckled_mobs))
-			balloon_alert_to_viewers("blocked!")
+			balloon_alert_to_viewers(LANG("obj.62d831a3", null))
 			return
 		//Allow either 2 standing mobs or 1 lying down mob
 		//If a mob is already lying down it's obviously blocked.
@@ -184,12 +185,12 @@
 		var/mob/living/dropped_liver = dropped
 		if (dropped_liver.has_buckled_mobs())
 			//This sucks
-			balloon_alert_to_viewers("blocked!")
+			balloon_alert_to_viewers(LANG("obj.62d831a3", null))
 			return
 		if (iscarbon(dropped_liver))
 			var/mob/living/carbon/dropped_carbon = dropped_liver
 			if (dropped_carbon.body_position == LYING_DOWN && has_buckled_mobs())
-				balloon_alert_to_viewers("stand up!")
+				balloon_alert_to_viewers(LANG("obj.18b66369", null))
 				return
 		return ..()
 	var/obj/dropped_obj = dropped
@@ -198,7 +199,7 @@
 /obj/golfcart_rear/examine(mob/user)
 	if (!parent)
 		. = ..()
-		. += span_warning("A lone golf cart bed must be a bad omen...")
+		. += span_warning(LANG("obj.d9869a41", null))
 		return
 	return parent.examine(user)
 
@@ -353,11 +354,11 @@
 /obj/golfcart_rear/is_buckle_possible(mob/living/target, force, check_loc)
 	// these are to_viewers because you can buckle someone on their behalf
 	if (cargo)
-		balloon_alert_to_viewers("blocked!")
+		balloon_alert_to_viewers(LANG("obj.62d831a3", null))
 		return FALSE
 	if (target.body_position != STANDING_UP)
 		if (has_buckled_mobs())
-			balloon_alert_to_viewers("stand up!")
+			balloon_alert_to_viewers(LANG("obj.18b66369", null))
 			return FALSE
 		return ..()
 	for (var/mob/blocker in buckled_mobs)

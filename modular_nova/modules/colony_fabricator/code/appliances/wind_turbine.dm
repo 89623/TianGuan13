@@ -35,9 +35,9 @@
 	. = ..()
 	var/area/turbine_area = get_area(src)
 	if(!turbine_area.outdoors)
-		. += span_notice("Its must be constructed <b>outdoors</b> to function.")
+		. += span_notice(LANG("obj.452ecee1", null))
 	if(pressure_too_low)
-		. += span_notice("There must be enough atmospheric <b>pressure</b> for the turbine to spin.")
+		. += span_notice(LANG("obj.760bf17f", null))
 
 
 /obj/machinery/power/colony_wind_turbine/process()

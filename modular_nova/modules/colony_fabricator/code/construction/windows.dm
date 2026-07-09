@@ -17,18 +17,18 @@
 		return
 	var/obj/item/stack/stack_in_question = attacking_item
 	if(stack_in_question.get_amount() < 1)
-		to_chat(user, span_warning("You need at least one plastic panel for that!"))
+		to_chat(user, span_warning(LANG("obj.9f79a16e", null)))
 		return
 	var/dir_to_set = SOUTHWEST
 	if(!anchored)
-		to_chat(user, span_warning("[src] needs to be fastened to the floor first!"))
+		to_chat(user, span_warning(LANG("obj.79102fe3", list(src))))
 		return
 	for(var/obj/structure/window/window_on_turf in loc)
 		to_chat(user, span_warning("There is already a window there!"))
 		return
 	if(!clear_tile(user))
 		return
-	to_chat(user, span_notice("You start placing the window..."))
+	to_chat(user, span_notice(LANG("obj.1c659472", null)))
 	if(!do_after(user, 1 SECONDS, target = src))
 		return
 	if(!src.loc || !anchored) //Grille broken or unanchored while waiting
@@ -41,4 +41,4 @@
 	new_window.setDir(dir_to_set)
 	new_window.state = 0
 	stack_in_question.use(1)
-	to_chat(user, span_notice("You place [new_window] on [src]."))
+	to_chat(user, span_notice(LANG("obj.7a67ae81", list(new_window, src))))

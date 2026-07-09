@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/apc/get_cell()
 	return cell
 
@@ -19,10 +20,10 @@
 
 /obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/user)
 	if(low_power_nightshift_lights)
-		balloon_alert(user, "power is too low!")
+		balloon_alert(user, LANG("obj.2b0b4f40", null))
 		return
 	if(last_nightshift_switch > world.time - 10 SECONDS) //~10 seconds between each toggle to prevent spamming
-		balloon_alert(user, "night breaker is cycling!")
+		balloon_alert(user, LANG("obj.d5a2480c", null))
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(!nightshift_lights)
@@ -46,7 +47,7 @@
 	operating = !operating
 	if (user)
 		var/enabled_or_disabled = operating ? "enabled" : "disabled"
-		balloon_alert(user, "power [enabled_or_disabled]")
+		balloon_alert(user, LANG("obj.6c1d0ff4", list(enabled_or_disabled)))
 		user.log_message("turned [enabled_or_disabled] the [src]", LOG_GAME)
 		add_hiddenprint(user)
 	update()

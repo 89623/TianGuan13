@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * A simple component that spawns a mob of the same type and transfers itself to it when parent dies.
  * For more complex behaviors, use the COMSIG_ON_MULTIPLE_LIVES_RESPAWN comsig.
@@ -46,7 +47,7 @@
 /datum/component/multiple_lives/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(isobserver(user) || source == user)
-		examine_list += "[source.p_They()] [source.p_have()] [lives_left] extra lives left."
+		examine_list += LANG("datum.80f0e14d", list(source.p_They(), source.p_have(), lives_left))
 
 /datum/component/multiple_lives/InheritComponent(datum/component/multiple_lives/new_comp , lives_left)
 	src.lives_left += new_comp ? new_comp.lives_left : lives_left

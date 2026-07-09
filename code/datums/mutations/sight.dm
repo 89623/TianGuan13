@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Nearsightedness restricts your vision by several tiles.
 /datum/mutation/nearsight
 	name = "Near Sightness"
@@ -94,7 +95,7 @@
 	. = ..()
 	ADD_TRAIT(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
 	cast_on.update_sight()
-	to_chat(cast_on, span_info("You focus your eyes intensely, as your vision becomes filled with heat signatures."))
+	to_chat(cast_on, span_info(LANG("datum.66884c62", null)))
 	addtimer(CALLBACK(src, PROC_REF(deactivate), cast_on), thermal_duration)
 
 /datum/action/cooldown/spell/thermal_vision/proc/deactivate(mob/living/cast_on)
@@ -103,7 +104,7 @@
 
 	REMOVE_TRAIT(cast_on, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
 	cast_on.update_sight()
-	to_chat(cast_on, span_info("You blink a few times, your vision returning to normal as a dull pain settles in your eyes."))
+	to_chat(cast_on, span_info(LANG("datum.6639bd38", null)))
 
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_cast_on = cast_on
@@ -141,11 +142,7 @@
 	text_gain_indication = span_notice("You feel pressure building up behind your eyes.")
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = BODY_ZONE_HEAD
-
-/datum/mutation/laser_eyes/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
+	mutation_icon_state = "lasereyes"
 
 /datum/mutation/laser_eyes/on_acquiring(mob/living/carbon/human/H)
 	. = ..()
@@ -159,16 +156,13 @@
 		return
 	UnregisterSignal(H, COMSIG_MOB_ATTACK_RANGED)
 
-/datum/mutation/laser_eyes/get_visual_indicator()
-	return visual_indicators[type][1]
-
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
 /datum/mutation/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)
 	SIGNAL_HANDLER
 
 	if(!source.combat_mode)
 		return
-	to_chat(source, span_warning("You shoot with your laser eyes!"))
+	to_chat(source, span_warning(LANG("datum.19999a9b", null)))
 	source.changeNext_move(CLICK_CD_RANGE)
 	source.newtonian_move(get_angle(source, target))
 	var/obj/projectile/beam/laser/laser_eyes/LE = new(source.loc)

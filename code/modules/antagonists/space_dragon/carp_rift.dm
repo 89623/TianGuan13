@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The carp rift is currently charging.
 #define CHARGE_ONGOING 0
 /// The carp rift is currently charging and has output a final warning.
@@ -25,14 +26,14 @@
 			return
 
 	if(!(rift_location in dragon.chosen_rift_areas))
-		owner.balloon_alert(owner, "can't summon a rift here! check your objectives!")
+		owner.balloon_alert(owner, LANG("datum.064e3674", null))
 		return
 
 	var/turf/rift_spawn_turf = get_turf(dragon)
 	if(isopenspaceturf(rift_spawn_turf))
-		owner.balloon_alert(dragon, "needs stable ground!")
+		owner.balloon_alert(dragon, LANG("datum.7593fbd1", null))
 		return
-	owner.balloon_alert(owner, "opening rift...")
+	owner.balloon_alert(owner, LANG("datum.0049dff2", null))
 	if(!do_after(owner, 10 SECONDS, target = owner))
 		return
 	if(locate(/obj/structure/carp_rift) in owner.loc)
@@ -44,13 +45,13 @@
 	dragon.rift_list += new_rift
 	// NOVA EDIT ADDITION START, announce on first rift - reset stats if dragon manages to retry
 	if(!dragon.announced)
-		priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
+		priority_announce(LANG("datum.3c3f0633", list(station_name())), "Lifesign Alert")
 		dragon.announced = TRUE
 	if(HAS_TRAIT(owner, TRAIT_RIFT_FAILURE))
 		REMOVE_TRAIT(owner, TRAIT_RIFT_FAILURE, REF(dragon))
 		owner.remove_movespeed_modifier(/datum/movespeed_modifier/dragon_depression)
 	// NOVA EDIT ADDITION END
-	to_chat(owner, span_boldwarning("The rift has been summoned. Prevent the crew from destroying it at all costs!"))
+	to_chat(owner, span_boldwarning(LANG("datum.4ad66ba5", null)))
 	notify_ghosts(
 		"The Space Dragon has opened a rift!",
 		source = new_rift,
@@ -75,14 +76,14 @@
 	if(!dragon_mob)
 		return
 	if(!is_station_level(dragon_mob.z))
-		dragon_mob.balloon_alert(dragon_mob, "too far offstation!")
+		dragon_mob.balloon_alert(dragon_mob, LANG("datum.4e357dbb", null))
 		return
 
-	var/area/chosen_area = tgui_input_list(owner, "Select the area you'd like to be pointed towards.", "Locate Rift", dragon_datum.chosen_rift_areas)
+	var/area/chosen_area = tgui_input_list(owner, LANG("datum.e0e9d885", null), LANG("datum.8c302f0d", null), dragon_datum.chosen_rift_areas)
 	if(!chosen_area)
 		return
 	if(chosen_area == get_area(dragon_mob))
-		dragon_mob.balloon_alert(dragon_mob, "already here!")
+		dragon_mob.balloon_alert(dragon_mob, LANG("datum.949c6edc", null))
 		return
 
 	var/turf/chosen_turf = pick(get_area_turfs(chosen_area))
@@ -191,12 +192,12 @@
 /obj/structure/carp_rift/examine(mob/user)
 	. = ..()
 	if(time_charged < max_charge)
-		. += span_notice("It seems to be [(time_charged / max_charge) * 100]% charged.")
+		. += span_notice(LANG("obj.eb794219", list((time_charged / max_charge) * 100)))
 	else
-		. += span_warning("This one is fully charged. In this state, it is poised to transport a much larger amount of carp than normal.")
+		. += span_warning(LANG("obj.b0b753cc", null))
 
 	if(isobserver(user))
-		. += span_notice("It has [carp_stored] carp available to spawn as.")
+		. += span_notice(LANG("obj.536c6445", list(carp_stored)))
 
 /obj/structure/carp_rift/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 50, TRUE)
@@ -205,7 +206,7 @@
 	STOP_PROCESSING(SSobj, src)
 	if(charge_state != CHARGE_COMPLETED)
 		if(dragon)
-			to_chat(dragon.owner.current, span_boldwarning("A rift has been destroyed! You have failed, and find yourself weakened."))
+			to_chat(dragon.owner.current, span_boldwarning(LANG("obj.e1368a6a", null)))
 			dragon.destroy_rifts()
 	dragon = null
 	return ..()
@@ -264,7 +265,7 @@
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
 		var/area/location = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(location.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
+		priority_announce(LANG("obj.dbb195b4", list(initial(location.name))), LANG("obj.9ecd04f6", list(command_name())), has_important_message = TRUE)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -289,7 +290,7 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "[command_name()] Wildlife Observations", ANNOUNCER_SPANOMALIES)
+		priority_announce(LANG("obj.ee23861c", list(initial(A.name))), LANG("obj.9ecd04f6", list(command_name())), ANNOUNCER_SPANOMALIES)
 
 /**
  * Used to create carp controlled by ghosts when the option is available.
@@ -306,14 +307,14 @@
 	var/is_listed = FALSE
 	if (user.ckey in ckey_list)
 		if(carp_stored == 1)
-			to_chat(user, span_warning("You've already become a carp using this rift! Either wait for a backlog of carp spawns or until the next rift!"))
+			to_chat(user, span_warning(LANG("obj.d8c34444", null)))
 			return FALSE
 		is_listed = TRUE
-	var/carp_ask = tgui_alert(user, "Become a carp?", "Carp Rift", list("Yes", "No"))
+	var/carp_ask = tgui_alert(user, LANG("obj.12be2aee", null), LANG("obj.0c1a6fb0", null), list("Yes", "No"))
 	if(carp_ask != "Yes" || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)
-		to_chat(user, span_warning("The rift already summoned enough carp!"))
+		to_chat(user, span_warning(LANG("obj.7186335a", null)))
 		return FALSE
 
 	if(isnull(dragon))
@@ -331,7 +332,7 @@
 	var/datum/antagonist/space_carp/carp_antag = new(src)
 	newcarp.mind.add_antag_datum(carp_antag)
 	dragon.carp += newcarp.mind
-	to_chat(newcarp, span_boldwarning("You have arrived in order to assist the space dragon with securing the rifts. Do not jeopardize the mission, and protect the rifts at all costs!"))
+	to_chat(newcarp, span_boldwarning(LANG("obj.2dd3928d", null)))
 	carp_stored--
 	if(carp_stored <= 0 && charge_state < CHARGE_COMPLETED)
 		icon_state = "carp_rift"
@@ -342,7 +343,7 @@
 /obj/structure/carp_rift/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(HAS_TRAIT(attacking_item, TRAIT_TELEKINESIS_CONTROLLED))
 		if(user)
-			to_chat(user, span_warning("The gravitational field of [src] interferes with the telekenetic control of [user], nullifying the hit!"))
+			to_chat(user, span_warning(LANG("obj.20c2064a", list(src, user))))
 		return FALSE
 	. = ..()
 
@@ -350,7 +351,7 @@
 	if(HAS_TRAIT(hit_by, TRAIT_TELEKINESIS_CONTROLLED))
 		var/mob/thrower = throwingdatum.thrower?.resolve()
 		if(thrower && ismob(thrower))
-			to_chat(thrower, span_warning("The gravitational field of [src] interferes with the telekenetic control of [hit_by], nullifying the hit!"))
+			to_chat(thrower, span_warning(LANG("obj.20c2064a", list(src, hit_by))))
 		return
 	. = ..()
 

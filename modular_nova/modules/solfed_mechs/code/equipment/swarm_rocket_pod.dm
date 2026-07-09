@@ -45,7 +45,7 @@
 				valid_targets += thing
 
 	if (!length(valid_targets))
-		to_chat(source, span_warning("No valid targets in range."))
+		to_chat(source, span_warning(LANG("obj.41d96bee", null)))
 		return FALSE
 
 	var/rocket_count = 12
@@ -241,4 +241,4 @@
 	tracker.target = target
 
 	var/drop_delay = 2 SECONDS
-	addtimer(CALLBACK(tracker, /obj/effect/swarm_rocket_tracker/proc/step_or_drop), drop_delay, TIMER_STOPPABLE | TIMER_DELETE_ME)
+	addtimer(CALLBACK(tracker, TYPE_PROC_REF(/obj/effect/swarm_rocket_tracker, step_or_drop)), drop_delay, TIMER_STOPPABLE | TIMER_DELETE_ME)

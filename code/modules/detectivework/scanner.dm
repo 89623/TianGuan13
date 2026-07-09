@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //CONTAINS: Detective's Scanner
 
 /obj/item/detective_scanner
@@ -57,7 +58,7 @@
 	if(ismob(loc))
 		var/mob/printer = loc
 		printer.put_in_hands(report_paper)
-		balloon_alert(printer, "logs cleared")
+		balloon_alert(printer, LANG("obj.f9941788", null))
 
 	// Clear the logs
 	log_data = list()
@@ -80,10 +81,10 @@
 /obj/item/detective_scanner/proc/safe_scan(mob/user, atom/atom_to_scan)
 	set waitfor = FALSE
 	if(scanner_busy)
-		balloon_alert(user, "scanner busy!")
+		balloon_alert(user, LANG("obj.d1dc28fd", null))
 		return
 	if(!scan(user, atom_to_scan)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
-		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
+		balloon_alert(user, LANG("obj.4093d430", null)) // but in case it does, we 'error' instead of just bricking the scanner
 	scanner_busy = FALSE
 
 /**
@@ -104,10 +105,10 @@
 
 
 	user.visible_message(
-		span_notice("\The [user] points \the [src] at \the [scanned_atom] and performs a forensic scan."),
+		span_notice(LANG("obj.714a7407", list(user, src, scanned_atom))),
 		ignored_mobs = user
 	)
-	to_chat(user, span_notice("You scan \the [scanned_atom]. The scanner is now analysing the results..."))
+	to_chat(user, span_notice(LANG("obj.b3852269", list(scanned_atom))))
 
 
 	// GATHER INFORMATION
@@ -185,7 +186,7 @@
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()
 	if(length(log_data) && !scanner_busy)
-		. += span_notice("Alt-click to clear scanner logs.")
+		. += span_notice(LANG("obj.52c8a003", null))
 
 
 /obj/item/detective_scanner/ui_interact(mob/user, datum/tgui/ui)
@@ -232,30 +233,30 @@
 			if(!log_data[index])
 				return
 			if(scanner_busy)
-				balloon_alert(ui.user, "scanner busy!")
+				balloon_alert(ui.user, LANG("obj.d1dc28fd", null))
 				return
 			log_data.Cut(index, index + 1)
-			balloon_alert(ui.user, "log deleted")
+			balloon_alert(ui.user, LANG("obj.3322d3d4", null))
 			ui.send_update()
 		if("print")
 			if(!length(log_data))
-				balloon_alert(ui.user, "no logs!")
+				balloon_alert(ui.user, LANG("obj.bd1bb18b", null))
 				return
 			if(scanner_busy)
-				balloon_alert(ui.user, "scanner busy!")
+				balloon_alert(ui.user, LANG("obj.d1dc28fd", null))
 				return
 			scanner_busy = TRUE
 			playsound(src, 'sound/machines/printer.ogg', 50)
-			balloon_alert(ui.user, "printing report...")
+			balloon_alert(ui.user, LANG("obj.6a68c3d7", null))
 			addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 3 SECONDS)
 
 /obj/item/detective_scanner/proc/clear_logs(mob/living/user)
 	if(!length(log_data))
-		balloon_alert(user, "no logs!")
+		balloon_alert(user, LANG("obj.bd1bb18b", null))
 		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)
-		balloon_alert(user, "scanner busy!")
+		balloon_alert(user, LANG("obj.d1dc28fd", null))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "logs cleared")
+	balloon_alert(user, LANG("obj.f9941788", null))
 	log_data = list()
 	return CLICK_ACTION_SUCCESS

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  *This is smoke bomb, mezum koman. It is a grenade subtype. All craftmanship is of the highest quality.
  *It menaces with spikes of iron. On it is a depiction of an assistant.
@@ -33,7 +34,7 @@
 ///Here we generate the extremely insightful description.
 /obj/item/grenade/smokebomb/Initialize(mapload)
 	. = ..()
-	desc = "The word '[pick(bruh_moment)]' is scribbled on it in crayon."
+	desc = LANG("obj.6b9871b7", list(pick(bruh_moment)))
 
 ///Here we generate some smoke and also damage blobs??? for some reason. Honestly not sure why we do that.
 /obj/item/grenade/smokebomb/detonate(mob/living/lanced_by)

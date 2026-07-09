@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define AIRALARM_WARNING_COOLDOWN (10 SECONDS)
 
 /obj/machinery/airalarm
@@ -196,15 +197,15 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	. = ..()
 	switch(buildstage)
 		if(AIR_ALARM_BUILD_NO_CIRCUIT)
-			. += span_notice("It is missing air alarm electronics.")
+			. += span_notice(LANG("obj.85e81bb4", null))
 		if(AIR_ALARM_BUILD_NO_WIRES)
-			. += span_notice("It is missing wiring.")
+			. += span_notice(LANG("obj.4086d36c", null))
 		if(AIR_ALARM_BUILD_COMPLETE)
-			. += span_notice("Right-click to [locked ? "unlock" : "lock"] the interface.")
+			. += span_notice(LANG("obj.5875c928", list(locked ? "unlock" : "lock")))
 
 /obj/machinery/airalarm/ui_status(mob/user, datum/ui_state/state)
 	if(HAS_SILICON_ACCESS(user) && aidisabled)
-		to_chat(user, "AI control has been disabled.")
+		to_chat(user, LANG("obj.895fdf0d", null))
 	else if(!shorted)
 		return ..()
 	return UI_CLOSE
@@ -219,14 +220,14 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
 
 		if(!allow_link_change)
-			balloon_alert(user, "linking disabled")
+			balloon_alert(user, LANG("obj.e40893cf", null))
 			return ITEM_INTERACT_BLOCKING
 		if(connected_sensor || sensor.connected_airalarm)
-			balloon_alert(user, "sensor already connected!")
+			balloon_alert(user, LANG("obj.1e065369", null))
 			return ITEM_INTERACT_BLOCKING
 
 		connect_sensor(sensor)
-		balloon_alert(user, "connected sensor")
+		balloon_alert(user, LANG("obj.9987a73a", null))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/airalarm/ui_interact(mob/user, datum/tgui/ui)
@@ -691,7 +692,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 ///Used for all_access air alarm helper, which set air alarm's required access to null.
 /obj/machinery/airalarm/proc/give_all_access()
 	name = "all-access air alarm"
-	desc = "This particular atmos control unit appears to have no access restrictions."
+	desc = LANG("obj.9b382b22", null)
 	locked = FALSE
 	req_access = null
 	req_one_access = null

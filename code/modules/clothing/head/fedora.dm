@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/head/fedora
 	name = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
@@ -25,8 +26,8 @@
 	if(user.gender == FEMALE)
 		return
 	var/mob/living/carbon/human/H = user
-	user.visible_message(span_suicide("[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls."))
-	user.say("M'lady.", forced = "fedora suicide")
+	user.visible_message(span_suicide(LANG("obj.2fa53db1", list(user, src, user.p_theyre()))))
+	user.say(LANG("obj.5500087f", null), forced = "fedora suicide")
 	sleep(1 SECONDS)
 	H.facial_hairstyle = "Neckbeard"
 	return BRUTELOSS

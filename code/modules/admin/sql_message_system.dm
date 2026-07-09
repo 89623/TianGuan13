@@ -1,12 +1,13 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /proc/create_message(type, target_key, admin_ckey, text, timestamp, server, secret, logged = 1, browse, expiry, note_severity)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("_root.cfa9a578", null)), confidential = TRUE)
 		return
 	if(!type)
 		return
 	var/target_ckey = ckey(target_key)
 	if(!target_key && (type == "note" || type == "message" || type == "watchlist entry"))
-		var/new_key = input(usr,"Who would you like to create a [type] for?","Enter a key or ckey",null) as null|text
+		var/new_key = input(usr,LANG("_root.32f7d0a1", list(type)),LANG("_root.ec188cbb", null),null) as null|text
 		if(!new_key)
 			return
 		var/new_ckey = ckey(new_key)
@@ -18,7 +19,7 @@
 			qdel(query_find_ckey)
 			return
 		if(!query_find_ckey.NextRow())
-			if(tgui_alert(usr, "[new_key]/([new_ckey]) has not been seen before, are you sure you want to create a [type] for them?", "Unknown ckey", list("Yes", "No", "Cancel")) != "Yes")
+			if(tgui_alert(usr, LANG("_root.d9b3cb6a", list(new_key, new_ckey, type)), LANG("_root.deb1b731", null), list("Yes", "No", "Cancel")) != "Yes")
 				qdel(query_find_ckey)
 				return
 		qdel(query_find_ckey)
@@ -35,7 +36,7 @@
 	if(!target_ckey)
 		target_ckey = admin_ckey
 	if(!text)
-		text = input(usr,"Write your [type]","Create [type]") as null|message
+		text = input(usr,LANG("_root.44391fbf", list(type)),LANG("_root.4c321ae2", list(type))) as null|message
 		if(!text)
 			return
 	if(!server)
@@ -43,7 +44,7 @@
 		if (ssqlname)
 			server = ssqlname
 	if(isnull(secret))
-		switch(tgui_alert(usr,"Hide note from being viewed by players?", "Secret note?",list("Yes","No","Cancel")))
+		switch(tgui_alert(usr,LANG("_root.edfb155a", null), LANG("_root.9fade055", null),list("Yes","No","Cancel")))
 			if("Yes")
 				secret = 1
 			if("No")
@@ -51,8 +52,8 @@
 			else
 				return
 	if(isnull(expiry))
-		if(tgui_alert(usr, "Set an expiry time? Expired messages are hidden like deleted ones.", "Expiry time?", list("Yes", "No", "Cancel")) == "Yes")
-			var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons.", "Set expiry time", ISOtime()) as null|text
+		if(tgui_alert(usr, LANG("_root.b439f5ff", null), LANG("_root.baffecd8", null), list("Yes", "No", "Cancel")) == "Yes")
+			var/expire_time = input(LANG("_root.591b2d60", list(type)), LANG("_root.c2d4e8e5", null), ISOtime()) as null|text
 			if(!expire_time)
 				return
 			var/datum/db_query/query_validate_expire_time = SSdbcore.NewQuery(
@@ -65,13 +66,13 @@
 			if(query_validate_expire_time.NextRow())
 				var/checktime = text2num(query_validate_expire_time.item[1])
 				if(!checktime)
-					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.", confidential = TRUE)
+					to_chat(usr, LANG("_root.2f31b6de", null), confidential = TRUE)
 					qdel(query_validate_expire_time)
 					return
 				expiry = query_validate_expire_time.item[1]
 			qdel(query_validate_expire_time)
 	if(type == "note" && isnull(note_severity))
-		note_severity = input("Set the severity of the note.", "Severity", null, null) as null|anything in list("High", "Medium", "Minor", "None")
+		note_severity = input(LANG("_root.d0d9fedd", null), LANG("_root.8099f04b", null), null, null) as null|anything in list("High", "Medium", "Minor", "None")
 		if(!note_severity)
 			return
 	var/list/parameters = list(
@@ -110,7 +111,7 @@
 
 /proc/delete_message(message_id, logged = 1, browse)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("_root.cfa9a578", null)), confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -153,7 +154,7 @@
 
 /proc/edit_message(message_id, browse)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("_root.cfa9a578", null)), confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -179,7 +180,7 @@
 		var/target_key = query_find_edit_message.item[2]
 		var/admin_key = query_find_edit_message.item[3]
 		var/old_text = query_find_edit_message.item[4]
-		var/new_text = input("Input new [type]", "New [type]", "[old_text]") as null|message
+		var/new_text = input(LANG("_root.726d229c", list(type)), LANG("_root.01f27128", list(type)), "[old_text]") as null|message
 		if(!new_text)
 			qdel(query_find_edit_message)
 			return
@@ -203,7 +204,7 @@
 
 /proc/edit_message_expiry(message_id, browse)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("_root.cfa9a578", null)), confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -230,7 +231,7 @@
 		var/admin_key = query_find_edit_expiry_message.item[3]
 		var/old_expiry = query_find_edit_expiry_message.item[4]
 		var/new_expiry
-		var/expire_time = input("Set expiry time for [type] as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than current time for obvious reasons. Enter -1 to remove expiry time.", "Set expiry time", old_expiry) as null|text
+		var/expire_time = input(LANG("_root.9a1b08e8", list(type)), LANG("_root.c2d4e8e5", null), old_expiry) as null|text
 		if(!expire_time)
 			qdel(query_find_edit_expiry_message)
 			return
@@ -247,7 +248,7 @@
 			if(query_validate_expire_time_edit.NextRow())
 				var/checktime = text2num(query_validate_expire_time_edit.item[1])
 				if(!checktime)
-					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.", confidential = TRUE)
+					to_chat(usr, LANG("_root.2f31b6de", null), confidential = TRUE)
 					qdel(query_validate_expire_time_edit)
 					qdel(query_find_edit_expiry_message)
 					return
@@ -274,7 +275,7 @@
 
 /proc/edit_message_severity(message_id)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("_root.cfa9a578", null)), confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -302,7 +303,7 @@
 			old_severity = "NA"
 		var/editor_key = usr.key
 		var/editor_ckey = usr.ckey
-		var/new_severity = input("Set the severity of the note.", "Severity", null, null) as null|anything in list("high", "medium", "minor", "none") //lowercase for edit log consistency
+		var/new_severity = input(LANG("_root.d0d9fedd", null), LANG("_root.8099f04b", null), null, null) as null|anything in list("high", "medium", "minor", "none") //lowercase for edit log consistency
 		if(!new_severity)
 			qdel(query_find_edit_note_severity)
 			return
@@ -325,7 +326,7 @@
 
 /proc/toggle_message_secrecy(message_id)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("_root.cfa9a578", null)), confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -369,7 +370,7 @@
 
 /proc/browse_messages(type, target_ckey, index, linkless = FALSE, filter, agegate = FALSE)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("_root.cfa9a578", null)), confidential = TRUE)
 		return
 
 	//Needs to be requested before url retrieval since you can view your notes before SSassets finishes initialization
@@ -644,7 +645,7 @@
 
 /proc/get_message_output(type, target_ckey, show_secret = TRUE, after_timestamp)
 	if(!SSdbcore.Connect())
-		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
+		to_chat(usr, span_danger(LANG("_root.cfa9a578", null)), confidential = TRUE)
 		return
 	if(!type)
 		return

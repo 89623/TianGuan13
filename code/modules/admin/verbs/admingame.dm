@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(cmd_player_panel, R_ADMIN, "Player Panel", "See all players and their Player Panel.", ADMIN_CATEGORY_GAME)
 	user.holder.player_panel_new()
 
@@ -5,7 +6,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	log_admin("[key_name(user)] checked the individual player panel for [key_name(player)][isobserver(user.mob)?"":" while in game"].")
 
 	if(!player)
-		to_chat(user, span_warning("You seem to be selecting a mob that doesn't exist anymore."), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.7eb67256", null)), confidential = TRUE)
 		return
 
 	// NOVA EDIT ADDITION START
@@ -227,18 +228,18 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
 
 	else
-		tgui_alert(user,"Unsupported object type! Supported types: /obj/vehicle; /obj/structure/closet; /obj/structure/bodycontainer; /obj/machinery; /obj/item/bodybag.")
+		tgui_alert(user,LANG("datum.ef78d07a", null))
 		return
 
 	if(!options.len)
-		tgui_alert(user, "No occupants found!")
+		tgui_alert(user, LANG("datum.eeeb2b4f", null))
 		return
 
 	var/choice
 	if(options.len == 1)
 		choice = options[1]
 	else
-		choice = tgui_input_list(user, "Select mob", "Player Panel", options)
+		choice = tgui_input_list(user, LANG("datum.c8507227", null), LANG("datum.2d2323cc", null), options)
 
 	if(choice)
 		var/mob/selected_mob = locate(options[choice])
@@ -257,7 +258,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupan
 		REMOVE_TRAIT(mob, TRAIT_GODMODE, ADMIN_TRAIT)
 	else
 		ADD_TRAIT(mob, TRAIT_GODMODE, ADMIN_TRAIT)
-	to_chat(usr, span_adminnotice("Toggled [had_trait ? "OFF" : "ON"]"), confidential = TRUE)
+	to_chat(usr, span_adminnotice(LANG("client.e33619a9", list(had_trait ? "OFF" : "ON"))), confidential = TRUE)
 
 	log_admin("[key_name(usr)] has toggled [key_name(mob)]'s nodamage to [had_trait ? "Off" : "On"]")
 	var/msg = "[key_name_admin(usr)] has toggled [ADMIN_LOOKUPFLW(mob)]'s nodamage to [had_trait ? "Off" : "On"]"
@@ -271,7 +272,7 @@ Works kind of like entering the game with a new character. Character receives a 
 Traitors and the like can also be revived with the previous role mostly intact.
 /N */
 ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player that has been round removed in some manner. They must be a ghost.", ADMIN_CATEGORY_GAME)
-	var/input = ckey(input(user, "Please specify which key will be respawned.", "Key", ""))
+	var/input = ckey(input(user, LANG("datum.f7b5022e", null), LANG("datum.6a14fe8b", null), ""))
 	if(!input)
 		return
 
@@ -282,18 +283,18 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 			break
 
 	if(!G_found)//If a ghost was not found.
-		to_chat(user, "<font color='red'>There is no active key like that in the game or the person is not currently a ghost.</font>", confidential = TRUE)
+		to_chat(user, LANG("datum.85114620", null), confidential = TRUE)
 		return
 
 	if(G_found.mind && !G_found.mind.active) //mind isn't currently in use by someone/something
 		//check if they were a monkey
 		if(findtext(G_found.real_name,"monkey"))
-			if(tgui_alert(user,"This character appears to have been a monkey. Would you like to respawn them as such?",,list("Yes","No")) == "Yes")
+			if(tgui_alert(user,LANG("datum.d521e840", null),,list("Yes","No")) == "Yes")
 				var/mob/living/carbon/human/species/monkey/new_monkey = new
 				SSjob.send_to_late_join(new_monkey)
 				G_found.mind.transfer_to(new_monkey) //be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.PossessByPlayer(G_found.key)
-				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
+				to_chat(new_monkey, LANG("datum.fbf8a749", null), confidential = TRUE)
 				var/msg = span_adminnotice("[key_name_admin(user)] has respawned [new_monkey.key] as a filthy monkey.")
 				message_admins(msg)
 				admin_ticket_log(new_monkey, msg)
@@ -357,17 +358,17 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 	//Announces the character on all the systems, based on the record.
 	if(!record_found && (new_character.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 		//Power to the user!
-		if(tgui_alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,list("No","Yes")) == "Yes")
+		if(tgui_alert(new_character,LANG("datum.a42902dc", null),,list("No","Yes")) == "Yes")
 			GLOB.manifest.inject(new_character, person_client = src) // NOVA EDIT CHANGE - ALTERNATIVE_JOB_TITLES - Original: GLOB.manifest.inject(new_character)
 
-		if(tgui_alert(new_character,"Would you like an active AI to announce this character?",,list("No","Yes")) == "Yes")
+		if(tgui_alert(new_character,LANG("datum.30eaaea9", null),,list("No","Yes")) == "Yes")
 			announce_arrival(new_character, new_character.mind.assigned_role.title)
 
 	var/msg = span_adminnotice("[admin] has respawned [player_key] as [new_character.real_name].")
 	message_admins(msg)
 	admin_ticket_log(new_character, msg)
 
-	to_chat(new_character, "You have been fully respawned. Enjoy the game.", confidential = TRUE)
+	to_chat(new_character, LANG("datum.fbf8a749", null), confidential = TRUE)
 
 	BLACKBOX_LOG_ADMIN_VERB("Respawn Character")
 	return new_character
@@ -384,7 +385,7 @@ ADMIN_VERB(manage_job_slots, R_ADMIN, "Manage Job Slots", "Manage the number of 
 	var/count = 0
 
 	if(!SSjob.initialized)
-		tgui_alert(usr, "You cannot manage jobs before the job subsystem is initialized!")
+		tgui_alert(usr, LANG("datum.61344103", null))
 		return
 
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
@@ -418,7 +419,7 @@ ADMIN_VERB(manage_job_slots, R_ADMIN, "Manage Job Slots", "Manage the number of 
 
 ADMIN_VERB(toggle_view_range, R_ADMIN, "Change View Range", "Switch between 1x and custom views.", ADMIN_CATEGORY_GAME)
 	if(user.view_size.getView() == user.view_size.default)
-		user.view_size.setTo(input(user, "Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,37) - 7)
+		user.view_size.setTo(input(user, LANG("datum.f07cd114", null), LANG("datum.ce11e80b", null), 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,37) - 7)
 	else
 		user.view_size.resetToDefault()
 
@@ -431,7 +432,7 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 	else
 		user.enable_combo_hud()
 
-	to_chat(user, "You toggled your admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].", confidential = TRUE)
+	to_chat(user, LANG("datum.df46362e", list(user.combo_hud_enabled ? "ON" : "OFF")), confidential = TRUE)
 	message_admins("[key_name_admin(user)] toggled their admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
 	log_admin("[key_name(user)] toggled their admin combo HUD [user.combo_hud_enabled ? "ON" : "OFF"].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Combo HUD", "[user.combo_hud_enabled ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
@@ -474,10 +475,10 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 ADMIN_VERB(show_traitor_panel, R_ADMIN, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME, mob/target_mob)
 	var/datum/mind/target_mind = target_mob.mind
 	if(!target_mind)
-		to_chat(user, "This mob has no mind!", confidential = TRUE)
+		to_chat(user, LANG("datum.61c768df", null), confidential = TRUE)
 		return
 	if(!istype(target_mob) && !istype(target_mind))
-		to_chat(user, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		to_chat(user, LANG("datum.0c07ee28", null), confidential = TRUE)
 		return
 	target_mind.traitor_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Traitor Panel")
@@ -494,7 +495,7 @@ ADMIN_VERB(show_skill_panel, R_ADMIN, "Show Skill Panel", "Edit mobs's experienc
 
 ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls for drastic lag mitigation.", ADMIN_CATEGORY_GAME)
 	if(!SSlag_switch.initialized)
-		to_chat(user, span_notice("The Lag Switch subsystem has not yet been initialized."))
+		to_chat(user, span_notice(LANG("datum.cd666423", null)))
 		return
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Lag Switches</title></head><body><h2><B>Lag (Reduction) Switches</B></h2>")
 	dat += "Automatic Trigger: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch_option=TOGGLE_AUTO'><b>[SSlag_switch.auto_switch ? "On" : "Off"]</b></a><br/>"

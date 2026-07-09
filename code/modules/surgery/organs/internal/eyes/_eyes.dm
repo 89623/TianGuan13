@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/eyes
 	name = BODY_ZONE_PRECISE_EYES
 	icon_state = "eyes"
@@ -264,7 +265,7 @@
 		return
 
 	var/picked_side = pick(valid_sides)
-	to_chat(owner, span_userdanger("You feel searing pain shoot though your [picked_side == RIGHT_EYE_SCAR ? "right" : "left"] eye!"))
+	to_chat(owner, span_userdanger(LANG("obj.77df50be", list(picked_side == RIGHT_EYE_SCAR ? "right" : "left"))))
 	// oof ouch my eyes
 	apply_organ_damage(rand((maxHealth - high_threshold) * 0.5, maxHealth - low_threshold))
 	var/datum/wound/pierce/bleed/severe/eye/eye_puncture = new
@@ -330,8 +331,8 @@
 		overlays += get_emissive_overlays(eye_left, eye_right, my_head)
 
 	if(my_head.head_flags & HEAD_EYECOLOR)
-		eye_right.color = eye_color_right || my_head.owner?.get_right_eye_color()
-		eye_left.color = eye_color_left || my_head.owner?.get_left_eye_color()
+		eye_right.color = my_head.owner?.get_right_eye_color() || eye_color_right
+		eye_left.color = my_head.owner?.get_left_eye_color() || eye_color_left
 		var/list/eyelids = get_eyelid_overlays(eye_left, eye_right, my_head)
 		if (LAZYLEN(eyelids))
 			overlays += eyelids

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Tells the AI to find a certain target nearby to hunt.
  * If a target has been found, we will start to move towards it, and eventually attack it.
@@ -99,7 +100,7 @@
 /datum/ai_behavior/hunt_target/proc/target_caught(mob/living/hunter, atom/hunted)
 	if(isliving(hunted)) // Are we hunting a living mob?
 		var/mob/living/living_target = hunted
-		hunter.manual_emote("chomps [living_target]!")
+		hunter.manual_emote(LANG("datum.abe45ebf", list(living_target)))
 		living_target.investigate_log("has been killed by [key_name(hunter)].", INVESTIGATE_DEATHS)
 		living_target.death()
 
@@ -107,7 +108,7 @@
 		hunted.attack_animal(hunter)
 
 	else // We're hunting an object, and should delete it instead of killing it. Mostly useful for decal bugs like ants or spider webs.
-		hunter.manual_emote("chomps [hunted]!")
+		hunter.manual_emote(LANG("datum.abe45ebf", list(hunted)))
 		qdel(hunted)
 
 /datum/ai_behavior/hunt_target/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
@@ -166,5 +167,5 @@
 		return FALSE
 	if(!hunted.buckle_mob(hunter, force = TRUE))
 		return FALSE
-	hunted.visible_message(span_notice("[hunted] has been latched onto by [hunter]!"))
+	hunted.visible_message(span_notice(LANG("datum.c2374fbc", list(hunted, hunter))))
 	return TRUE

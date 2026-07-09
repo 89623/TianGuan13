@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Max length of custom objective text
 #define CUSTOM_OBJECTIVE_MAX_LENGTH 300
 
@@ -257,8 +258,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!silent)
 		greet()
 		if(ui_name)
-			to_chat(owner.current, span_boldnotice("For more info, read the panel. \
-				You can always come back to it using the button in the top left."))
+			to_chat(owner.current, span_boldnotice(LANG("datum.1627c459", null)))
 			info_button.Trigger()
 		var/type_policy = get_policy("[type]") // path to text
 		if(type_policy)
@@ -307,7 +307,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = jobban_flag || pref_flag, role = pref_flag, poll_time = 5 SECONDS, checked_target = owner.current, alert_pic = owner.current, role_name_text = name)
 	if(chosen_one)
-		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
+		to_chat(owner, LANG("datum.a2252bd9", null))
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace antagonist banned player.")
 		log_game("[key_name(chosen_one)] has taken control of ([key_name(owner)]) to replace antagonist banned player.")
 		owner.current.ghostize(FALSE)
@@ -343,10 +343,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
 	if(owner.current)
 		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
-	qdel(src)
-	// NOVA EDIT START
-	owner?.handle_exploitables() //Inefficient here, but on_removal() is called in multiple locations
-	// NOVA EDIT END
+	owner?.handle_exploitables() //Inefficient here, but on_removal() is called in multiple locations // NOVA EDIT ADDITION
 
 /**
  * Proc that sends fluff or instructional messages to the player when they are given this antag datum.
@@ -354,8 +351,8 @@ GLOBAL_LIST_EMPTY(antagonists)
  */
 /datum/antagonist/proc/greet()
 	if(!silent)
-		to_chat(owner.current, span_big("You are \the [src]."))
-		to_chat(owner.current, span_infoplain(span_doyourjobidiot("Remember that being an antagonist does not exclude you from the server rules regarding RP standards."))) // NOVA EDIT ADDITION - RP REMINDER
+		to_chat(owner.current, span_big(LANG("datum.f77135c0", list(src))))
+		to_chat(owner.current, span_infoplain(span_doyourjobidiot(LANG("datum.59053bd5", null)))) // NOVA EDIT ADDITION - RP REMINDER
 		play_stinger()
 
 /// Plays the antag stinger sound, if we have one
@@ -371,7 +368,7 @@ GLOBAL_LIST_EMPTY(antagonists)
  */
 /datum/antagonist/proc/farewell()
 	if(!silent && owner.current)
-		to_chat(owner.current, span_userdanger("You are no longer \the [src]!"))
+		to_chat(owner.current, span_userdanger(LANG("datum.7cc72ef8", list(src))))
 
 /**
  * Proc that assigns this antagonist's ascribed moodlet to the player.
@@ -419,9 +416,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 				break
 
 	if(objectives.len == 0 || objectives_complete)
-		report += "<span class='greentext big'>The [name] was successful!</span>"
+		report += "<span class='greentext big'>[LANG("datum.edebafa5", list(name))]</span>"
 	else
-		report += "<span class='redtext big'>The [name] has failed!</span>"
+		report += "<span class='redtext big'>[LANG("datum.cd8dd865", list(name))]</span>"
 
 	return report.Join("<br>")
 
@@ -431,7 +428,7 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Appears at start of roundend_catagory section.
  */
 /datum/antagonist/proc/roundend_report_header()
-	return span_header("The [roundend_category] were:<br>")
+	return span_header("[LANG("datum.6935f01c", list(roundend_category))]<br>") // NOVA EDIT - I18N - LANG 模板（原整串反查只救目录里恰好有的组合，"The Aliens were:" 等组合命不中）
 
 /**
  * Proc that sends string data for the round-end report.
@@ -518,7 +515,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return finish_preview_icon(preview_icon)
 
 /datum/antagonist/proc/edit_memory(mob/user)
-	var/new_memo = tgui_input_text(user, "Write a new memory", "Antag Memory", antag_memory, multiline = TRUE)
+	var/new_memo = tgui_input_text(user, LANG("datum.134420a7", null), LANG("datum.4afa0de8", null), antag_memory, multiline = TRUE)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
@@ -585,7 +582,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return FALSE
 	var/mob/living/owner_mob = owner.current
 	if (!force && !can_assign_self_objectives)
-		owner_mob.balloon_alert(owner_mob, "can't do that!")
+		owner_mob.balloon_alert(owner_mob, LANG("datum.c3d89266", null))
 		return FALSE
 	var/custom_objective_text = tgui_input_text(
 		owner_mob,
@@ -632,3 +629,34 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Return TRUE to prevent the antag's job from handling the respawn
 /datum/antagonist/proc/on_respawn(mob/new_character)
 	return FALSE
+
+/// Dissassociates the antag datum from its owner, without deleting it - allowing one datum and its objectives to be reused for another mind
+/datum/antagonist/proc/store_datum()
+	if(isnull(owner))
+		stack_trace("Tried to store an antagonist datum that already has no owner.")
+		return FALSE
+
+	on_removal()
+	var/datum/team/antag_team = get_team()
+	antag_team?.remove_member(owner)
+	LAZYREMOVE(owner.antag_datums, src)
+	owner = null
+	log_game("[key_name(owner)] has lost antag datum [src] ([type]).")
+	QDEL_NULL(team_hud_ref)
+	return TRUE
+
+/// Reassociates the antag datum with a new mind - allowing one datum and its objectives to be reused for another mind
+/datum/antagonist/proc/restore_datum(datum/mind/new_owner)
+	if(!isnull(owner))
+		stack_trace("Tried to restore an antagonist datum that already has an owner.")
+		return FALSE
+	if(!can_be_owned(new_owner))
+		return FALSE
+
+	owner = new_owner
+	LAZYADD(owner.antag_datums, src)
+	var/datum/team/antag_team = get_team()
+	antag_team?.add_member(new_owner)
+	on_gain()
+	log_game("[key_name(new_owner)] has gained antag datum [src] ([type]).")
+	return TRUE

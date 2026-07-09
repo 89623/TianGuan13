@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/innate/pai
 	name = "PAI Action"
 	button_icon = 'icons/mob/actions/actions_silicon.dmi'
@@ -85,7 +86,7 @@
 		return
 	var/obj/item/pai_card/pai_holder = owner.loc
 	if(!istype(pai_holder.loc, /obj/item/modular_computer))
-		owner.balloon_alert(owner, "not in a pda!")
+		owner.balloon_alert(owner, LANG("datum.fef37683", null))
 		return
 	var/obj/item/modular_computer/computer_host = pai_holder.loc
 	computer_host.interact(owner)

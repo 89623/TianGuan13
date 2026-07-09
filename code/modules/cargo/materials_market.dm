@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The maximum number of stacks you can place in 1 order
 #define MAX_STACK_LIMIT 10
 /// The order rank for all galactic material market orders
@@ -46,27 +47,27 @@
 		return NONE
 
 	if(!is_operational)
-		balloon_alert(user, "no power!")
+		balloon_alert(user, LANG("obj.b3e1b703", null))
 		return ITEM_INTERACT_FAILURE
 
 	var/list/datum/material/materials = exportable.custom_materials
 	if(materials.len != 1)
-		balloon_alert(user, "alloy stacks not allowed")
+		balloon_alert(user, LANG("obj.a7bcce6f", null))
 		return ITEM_INTERACT_FAILURE
 
 	var/price = SSstock_market.materials_prices[materials[1].type]
 	if(!price)
-		balloon_alert(user, "materials in stack are worthless")
+		balloon_alert(user, LANG("obj.3e7a630c", null))
 		return ITEM_INTERACT_FAILURE
 
 	if(!user.transferItemToLoc(exportable, src))
-		to_chat(user, span_warning("[exportable] is stuck in hand!"))
+		to_chat(user, span_warning(LANG("obj.dccaca76", list(exportable))))
 		return ITEM_INTERACT_FAILURE
 
 	var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
 	new_block.export_value = price
 	new_block.set_custom_materials(materials)
-	to_chat(user, span_notice("You have created a stock block worth [new_block.export_value * exportable.amount] [MONEY_SYMBOL]! Sell it before it becomes liquid!"))
+	to_chat(user, span_notice(LANG("obj.837e54b8", list(new_block.export_value * exportable.amount, MONEY_SYMBOL))))
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 	qdel(exportable)
 	use_energy(active_power_usage)
@@ -226,7 +227,7 @@
 	var/mob/living/living_user = ui.user
 	var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 	if(isnull(used_id_card))
-		say("No ID Found")
+		say(LANG("obj.d1210d63", null))
 		return
 	var/can_buy_via_budget = (ACCESS_CARGO in used_id_card?.GetAccess())
 
@@ -260,12 +261,12 @@
 			else if(can_buy_via_budget)
 				account_payable = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if(!account_payable)
-				say("No bank account detected!")
+				say(LANG("obj.89f005dd", null))
 				return
 
 			//sanity checks for available quantity & budget
 			if(quantity > SSstock_market.materials_quantity[material_bought])
-				say("Not enough materials on the market to purchase!")
+				say(LANG("obj.d06fdef0", null))
 				return
 
 			var/cost = SSstock_market.materials_prices[material_bought] * quantity
@@ -280,14 +281,14 @@
 				// Check if this order exceeded the market limit
 				var/prior_sheets = current_order.pack.contains[sheet_to_buy]
 				if(prior_sheets + quantity > SSstock_market.materials_quantity[material_bought] )
-					say("There aren't enough sheets on the market! Please wait for more sheets to be traded before adding more.")
+					say(LANG("obj.2d722752", null))
 					playsound(living_user, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
 					return
 
 				// Check if the order exceeded the purchase limit
 				var/prior_stacks = ROUND_UP(prior_sheets / MAX_STACK_SIZE)
 				if(prior_stacks >= MAX_STACK_LIMIT)
-					say("There are already 10 stacks of sheets on order! Please wait for them to arrive before ordering more.")
+					say(LANG("obj.ebbbc8ae", null))
 					playsound(living_user, 'sound/machines/synth/synth_no.ogg', 35, FALSE)
 					return
 
@@ -296,7 +297,7 @@
 				if(!isnull(current_order.paying_account)) //order is already being paid by another account
 					paying_account = current_order.paying_account
 				if(current_order.get_final_cost() + cost > paying_account.account_balance)
-					say("Order exceeds available budget! Please send it before purchasing more.")
+					say(LANG("obj.c6819234", null))
 					return
 
 				// Finally Append to this order
@@ -321,11 +322,11 @@
 			)
 			//first time order compute the correct cost and compare
 			if(new_order.get_final_cost() > account_payable.account_balance)
-				say("Not enough money to start purchase!")
+				say(LANG("obj.76ba2ace", null))
 				qdel(new_order)
 				return
 
-			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
+			say(LANG("obj.7e5306e0", null))
 			SSshuttle.shopping_list += new_order
 			return TRUE
 
@@ -362,15 +363,15 @@
 
 	var/datum/material/export_mat = custom_materials[1]
 	var/quantity = custom_materials[export_mat] / SHEET_MATERIAL_AMOUNT
-	. += span_notice("\The [src] is worth [quantity * export_value] [MONEY_SYMBOL], from selling [quantity] sheets of [export_mat.name].")
+	. += span_notice(LANG("obj.2b7be03c", list(src, quantity * export_value, MONEY_SYMBOL, quantity, export_mat.name)))
 
 	if(fluid)
-		. += span_warning("\The [src] is currently liquid! Its value is based on the market price.")
+		. += span_warning(LANG("obj.5ea310a2", list(src)))
 	else
-		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before its value becomes liquid!")
+		. += span_notice(LANG("obj.679c8ca4", list(src, span_boldnotice("locked in"), span_boldnotice("Sell it"))))
 
 /obj/item/stock_block/proc/value_warning()
-	visible_message(span_warning("\The [src] is starting to become liquid!"))
+	visible_message(span_warning(LANG("obj.cc98a884", list(src))))
 	icon_state = "stock_block_fluid"
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -378,7 +379,7 @@
 	export_value = SSstock_market.materials_prices[custom_materials[1]]
 	icon_state = "stock_block_liquid"
 	update_appearance(UPDATE_ICON_STATE)
-	visible_message(span_warning("\The [src] becomes liquid!"))
+	visible_message(span_warning(LANG("obj.57783096", list(src))))
 	fluid = TRUE
 
 #undef MAX_STACK_LIMIT

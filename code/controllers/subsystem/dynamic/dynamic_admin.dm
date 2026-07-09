@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_CATEGORY_GAME)
 	dynamic_panel(user.mob)
 
@@ -185,7 +186,7 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 			var/list/tiers = list()
 			for(var/datum/dynamic_tier/tier as anything in subtypesof(/datum/dynamic_tier))
 				tiers[tier::config_tag] = tier
-			var/picked = tgui_input_list(ui.user, "Pick a dynamic tier before the game starts", "Pick tier", tiers, ui_state = ADMIN_STATE(R_ADMIN))
+			var/picked = tgui_input_list(ui.user, LANG("datum.f0a15b51", null), LANG("datum.9f37e99b", null), tiers, ui_state = ADMIN_STATE(R_ADMIN))
 			if(picked && !SSticker.HasRoundStarted())
 				SSdynamic.set_tier(tiers[picked])
 				message_admins("[key_name_admin(ui.user)] set the dynamic tier to [picked].")

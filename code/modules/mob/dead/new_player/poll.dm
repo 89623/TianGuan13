@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 ///All currently running polls held as datums
 GLOBAL_LIST_EMPTY(polls)
@@ -30,7 +31,7 @@ GLOBAL_PROTECT(poll_options)
 	if(!poll)
 		return
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, span_danger(LANG("mob.cfa9a578", null)))
 		return
 	switch(poll.poll_type)
 		if(POLLTYPE_OPTION)
@@ -320,15 +321,15 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_handler(datum/poll_question/poll, href_list)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, span_danger(LANG("mob.cfa9a578", null)))
 		return
 	if(!poll || !href_list)
 		return
 	if(IsAdminAdvancedProcCall())
 		usr.log_message("attempted to rig the vote by voting as [key].", LOG_ADMIN)
 		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [key].")
-		to_chat(usr, span_danger("You don't seem to be [key]."))
-		to_chat(src, span_danger("Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this."))
+		to_chat(usr, span_danger(LANG("mob.33a6d151", list(key))))
+		to_chat(src, span_danger(LANG("mob.36aa7756", null)))
 		return
 	var/admin_rank
 	if(client.holder)
@@ -356,11 +357,11 @@ GLOBAL_PROTECT(poll_options)
 	if(query_validate_poll_vote.NextRow())
 		vote_id = text2num(query_validate_poll_vote.item[1])
 		if(vote_id && !poll.allow_revoting)
-			to_chat(usr, span_danger("Poll revoting is disabled and you've already replied to this poll."))
+			to_chat(usr, span_danger(LANG("mob.a616942d", null)))
 			qdel(query_validate_poll_vote)
 			return
 	else
-		to_chat(usr, span_danger("Selected poll is not open."))
+		to_chat(usr, span_danger(LANG("mob.759d37b1", null)))
 		qdel(query_validate_poll_vote)
 		return
 	qdel(query_validate_poll_vote)
@@ -379,7 +380,7 @@ GLOBAL_PROTECT(poll_options)
 	if(vote_success)
 		if(!vote_id)
 			poll.poll_votes++
-		to_chat(usr, span_notice("Vote successful."))
+		to_chat(usr, span_notice(LANG("mob.5c106da3", null)))
 
 /**
  * Processes vote form data and saves results to the database for an option type poll.
@@ -387,13 +388,13 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_option(datum/poll_question/poll, href_list, admin_rank, sql_poll_id, vote_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, span_danger(LANG("mob.cfa9a578", null)))
 		return
 	if(IsAdminAdvancedProcCall())
 		return
 	var/datum/poll_option/option = locate(href_list["voteoptionref"]) in poll.options
 	if(!option)
-		to_chat(src, span_danger("No option was selected."))
+		to_chat(src, span_danger(LANG("mob.8b4cfb10", null)))
 		return
 	var/datum/db_query/query_vote_option = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("poll_vote")] (id, datetime, pollid, optionid, ckey, ip, adminrank)
@@ -419,13 +420,13 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_text(href_list, admin_rank, sql_poll_id, vote_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, span_danger(LANG("mob.cfa9a578", null)))
 		return
 	if(IsAdminAdvancedProcCall())
 		return
 	var/reply_text = href_list["replytext"]
 	if(!reply_text || (length(reply_text) > 2048))
-		to_chat(src, span_danger("The text you entered was blank or too long. Please correct the text and submit again."))
+		to_chat(src, span_danger(LANG("mob.deb16852", null)))
 		return
 	var/datum/db_query/query_vote_text = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("poll_textreply")] (id, datetime, pollid, ckey, ip, replytext, adminrank)
@@ -451,7 +452,7 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_rating(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, span_danger(LANG("mob.cfa9a578", null)))
 		return
 	if(IsAdminAdvancedProcCall())
 		return
@@ -494,14 +495,14 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_multi(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, span_danger(LANG("mob.cfa9a578", null)))
 		return
 	if(IsAdminAdvancedProcCall())
 		return
 	if(length(href_list) > 2)
 		href_list.Cut(1,3) //first two values aren't options
 	else
-		to_chat(src, span_danger("No options were selected."))
+		to_chat(src, span_danger(LANG("mob.7dd3685b", null)))
 
 	var/special_columns = list(
 		"datetime" = "NOW()",
@@ -541,13 +542,13 @@ GLOBAL_PROTECT(poll_options)
  */
 /mob/dead/new_player/proc/vote_on_poll_irv(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
-		to_chat(src, span_danger("Failed to establish database connection."))
+		to_chat(src, span_danger(LANG("mob.cfa9a578", null)))
 		return
 	if(IsAdminAdvancedProcCall())
 		return
 	var/list/votelist = splittext(href_list["IRVdata"], ",")
 	if(!length(votelist))
-		to_chat(src, span_danger("No ordering data found. Please try again or contact an administrator."))
+		to_chat(src, span_danger(LANG("mob.a25d4878", null)))
 
 	var/list/special_columns = list(
 		"datetime" = "NOW()",

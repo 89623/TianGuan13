@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define EXPOSED_VOLUME 1000
 #define ROOM_TEMP 293
 #define MIN_FREEZE_TEMP 50
@@ -15,7 +16,7 @@
 	assembly_flags = ASSEMBLY_NO_DUPLICATES
 
 /obj/item/assembly/igniter/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is trying to ignite [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.f259d604", list(user, user.p_them(), src, user.p_theyre()))))
 	user.ignite_mob()
 	return FIRELOSS
 

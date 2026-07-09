@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*!
  * Tier 2 knowledge: Defensive tools and curses
  */
@@ -161,5 +162,5 @@
 		)
 		return TRUE
 
-	user.balloon_alert(user, "no additional atom present!")
+	user.balloon_alert(user, LANG("datum.ffbbb54f", null))
 	return FALSE

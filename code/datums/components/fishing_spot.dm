@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // A thing you can fish in
 /datum/component/fishing_spot
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -41,7 +42,7 @@
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISHING_SPOT) || !fish_source.has_known_fishes(source))
 		return
 
-	examine_text += span_tinynoticeital("This is a fishing spot. You can look again to list its fishes...")
+	examine_text += span_tinynoticeital(LANG("datum.4d4c2b22", null))
 
 /datum/component/fishing_spot/proc/on_examined_more(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -56,7 +57,7 @@
 	if(!istype(rod))
 		return
 	if(GLOB.fishing_challenges_by_user[user] || rod.fishing_line)
-		user.balloon_alert(user, "already fishing")
+		user.balloon_alert(user, LANG("datum.f3e36a83", null))
 		return COMPONENT_NO_AFTERATTACK
 	var/denial_reason = fish_source.reason_we_cant_fish(rod, user, parent)
 	if(denial_reason)

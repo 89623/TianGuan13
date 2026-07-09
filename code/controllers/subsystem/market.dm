@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 SUBSYSTEM_DEF(market)
 	name = "Market"
 	ss_flags = SS_BACKGROUND
@@ -88,7 +89,7 @@ SUBSYSTEM_DEF(market)
 
 				lowest_cd_pad.add_to_queue(purchase)
 
-				to_chat(buyer, span_notice("[purchase.uplink] flashes a message noting that the order is being processed by [lowest_cd_pad]."))
+				to_chat(buyer, span_notice(LANG("datum.3026d593", list(purchase.uplink, lowest_cd_pad))))
 
 			// Get random area, throw it somewhere there.
 			if(SHIPPING_METHOD_TELEPORT)
@@ -98,7 +99,7 @@ SUBSYSTEM_DEF(market)
 					continue
 				queued_purchases -= purchase
 
-				to_chat(buyer, span_notice("[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds."))
+				to_chat(buyer, span_notice(LANG("datum.9e0999d0", list(purchase.uplink, get_area(targetturf)))))
 
 				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/controller/subsystem/market, fake_teleport), purchase, targetturf), 60 SECONDS)
@@ -114,7 +115,7 @@ SUBSYSTEM_DEF(market)
 				purchase.post_purchase_effects(item)
 				delivery_pod.throw_at(purchase.uplink, 3, 3, spin = FALSE)
 
-				to_chat(buyer, span_notice("[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)]."))
+				to_chat(buyer, span_notice(LANG("datum.6eabcced", list(purchase.uplink, dir2text(startSide)))))
 				qdel(purchase)
 
 			if(SHIPPING_METHOD_SUPPLYPOD)
@@ -124,7 +125,7 @@ SUBSYSTEM_DEF(market)
 				))
 				purchase.entry.spawn_item(spawned_pod, purchase)
 
-				to_chat(buyer, span_notice("[purchase.uplink] flashes a message noting the order is being launched at your location. Right here, right now!"))
+				to_chat(buyer, span_notice(LANG("datum.9db0dda1", list(purchase.uplink))))
 				qdel(purchase)
 
 		if(MC_TICK_CHECK)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/martial_art/mushpunch
 	name = "Mushroom Punch"
 	id = MARTIALART_MUSHPUNCH
@@ -8,9 +9,9 @@
 
 /datum/martial_art/mushpunch/proc/charge_up_attack(mob/living/attacker, mob/living/defender)
 
-	to_chat(attacker, span_spiderbroodmother("You begin to wind up an attack..."))
+	to_chat(attacker, span_spiderbroodmother(LANG("datum.613dd13f", null)))
 	if(!do_after(attacker, 2.5 SECONDS, defender))
-		to_chat(attacker, span_spiderbroodmother("<b>Your attack was interrupted!</b>"))
+		to_chat(attacker, span_spiderbroodmother(LANG("datum.93aae2a4", null)))
 		return
 
 	var/final_damage = rand(15, 30)
@@ -20,13 +21,13 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	defender.visible_message(
-		span_danger("[attacker] [atk_verb]ed [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"), \
-		span_userdanger("You're [atk_verb]ed by [attacker] with such inhuman strength that it sends you flying backwards!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
+		span_danger(LANG("datum.096781cb", list(attacker, atk_verb, defender, defender.p_them()))), \
+		span_userdanger(LANG("datum.65df5c1f", list(atk_verb, attacker))),
+		span_hear(LANG("datum.6c7f8149", null)),
 		null,
 		attacker,
 	)
-	to_chat(attacker, span_danger("You [atk_verb] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"))
+	to_chat(attacker, span_danger(LANG("datum.6546b2e4", list(atk_verb, defender, defender.p_them()))))
 	defender.apply_damage(final_damage, attacker.get_attack_type())
 	playsound(defender, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 	var/throwtarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))
@@ -44,14 +45,12 @@
 /obj/item/mushpunch/attack_self(mob/living/user)
 	if(!istype(user))
 		return
-	to_chat(user, span_spiderbroodmother("You devour [src], \
-		and a confluence of skill and power from the mushroom enhances your punches! \
-		You do need a short moment to charge these powerful punches."))
+	to_chat(user, span_spiderbroodmother(LANG("obj.7b356264", list(src))))
 	var/datum/martial_art/mushpunch/mush = new(user)
 	mush.teach(user)
 	visible_message(
-		span_warning("[user] devours [src]."),
-		span_notice("You devour [src]."),
+		span_warning(LANG("obj.e9ed66c6", list(user, src))),
+		span_notice(LANG("obj.9ec0a398", list(src))),
 	)
 
 	qdel(src)

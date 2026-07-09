@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Glass stack types
  * Contains:
  * Glass sheets
@@ -39,7 +40,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	acid = 100
 
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.158c891e", list(user, user.p_their(), src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/stack/sheet/glass/fifty
@@ -57,11 +58,11 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if (get_amount() < 1 || CC.get_amount() < 5)
-			to_chat(user, span_warning("You need five lengths of coil and one sheet of glass to make wired glass!"))
+			to_chat(user, span_warning(LANG("obj.d1e0d6c6", null)))
 			return
 		CC.use(5)
 		use(1)
-		to_chat(user, span_notice("You attach wire to \the [src]."))
+		to_chat(user, span_notice(LANG("obj.a6e8b242", list(src))))
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		if (!QDELETED(new_tile))
 			new_tile.add_fingerprint(user)
@@ -78,7 +79,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 			if(QDELETED(src) && replace && !QDELETED(RG))
 				user.put_in_hands(RG)
 		else
-			to_chat(user, span_warning("You need one rod and one sheet of glass to make reinforced glass!"))
+			to_chat(user, span_warning(LANG("obj.7c8e0e30", null)))
 		return
 	return ..()
 
@@ -131,7 +132,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 			if(QDELETED(src) && replace)
 				user.put_in_hands(RG)
 		else
-			to_chat(user, span_warning("You need one rod and one sheet of plasma glass to make reinforced plasma glass!"))
+			to_chat(user, span_warning(LANG("obj.34f3e5a6", null)))
 			return
 	else
 		return ..()
@@ -320,7 +321,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	acid = 100
 
 /obj/item/shard/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide."))
+	user.visible_message(span_suicide(LANG("obj.6458b74d", list(user, user.p_their(), pick("wrists", "throat"), user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/shard/Initialize(mapload)
@@ -367,32 +368,36 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if(jab.get_all_covered_flags() & HANDS)
 		return
 
-	to_chat(user, span_warning("[src] cuts into your hand!"))
+	to_chat(user, span_warning(LANG("obj.3f07fa75", list(src))))
 	jab.apply_damage(force * 0.5, BRUTE, user.get_active_hand(), attacking_item = src)
 
-/obj/item/shard/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/lightreplacer = item
+/obj/item/shard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/lightreplacer = tool
 		lightreplacer.attackby(src, user)
-	else if(istype(item, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/cloth = item
-		to_chat(user, span_notice("You begin to wrap the [cloth] around the [src]..."))
-		if(do_after(user, craft_time, target = src))
-			var/obj/item/knife/shiv/shiv = new shiv_type
-			shiv.set_custom_materials(custom_materials)
-			cloth.use(1)
-			to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
-			remove_item_from_storage(src, user)
-			qdel(src)
-			user.put_in_hands(shiv)
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	if(!istype(tool, /obj/item/stack/sheet/cloth))
+		return NONE
+
+	var/obj/item/stack/sheet/cloth/cloth = tool
+	to_chat(user, span_notice(LANG("obj.1a83cfff", list(cloth, src))))
+	if(!do_after(user, craft_time, target = src))
+		return ITEM_INTERACT_FAILURE
+
+	var/obj/item/knife/shiv/shiv = new shiv_type
+	shiv.set_custom_materials(custom_materials)
+	cloth.use(1)
+	to_chat(user, span_notice(LANG("obj.6cba4e9e", list(cloth, src))))
+	remove_item_from_storage(src, user)
+	qdel(src)
+	user.put_in_hands(shiv)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shard/welder_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 0, volume=50))
 		var/obj/item/stack/sheet/new_glass = new weld_material
-		to_chat(user, span_notice("You melt [src] down into [new_glass.name]."))
+		to_chat(user, span_notice(LANG("obj.bb22874c", list(src, new_glass.name))))
 		new_glass.forceMove((Adjacent(user) ? user.drop_location() : loc)) //stack merging is handled automatically.
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS

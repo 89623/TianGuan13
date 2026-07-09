@@ -126,10 +126,34 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
 	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
+	var/list/status_items = target.mob?.get_status_tab_items()
+	// NOVA EDIT - i18n - 状态栏 AC 子串兜底：顶部 global_data + 角色 other_str 各过本地化副本
+	// （仅全服中文时；不改共享 global_data；只翻文本不动点击链接）。ORIGINAL: 直接传 global_data / status_items
 	target.stat_panel.send_message("update_stat", list(
-		"global_data" = global_data,
-		"other_str" = target.mob?.get_status_tab_items(),
+		"global_data" = i18n_localize_stat_list(global_data),
+		"other_str" = i18n_localize_stat_list(status_items),
 	))
+
+// NOVA EDIT ADDITION START - i18n - 返回状态栏列表的本地化副本（locale==en 或空时原样返回，零开销）
+/datum/controller/subsystem/statpanels/proc/i18n_localize_stat_list(list/items)
+	if(!items || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return items
+	var/list/out = list()
+	for(var/entry in items)
+		if(istext(entry))
+			out += lang_fallback_apply(entry)
+		else if(islist(entry)) // [text, 高亮text, link] 或 ["same_line", text, url]：只翻文本
+			var/list/entry_list = entry
+			var/list/sub = entry_list.Copy()
+			if(length(sub) >= 1 && istext(sub[1]) && sub[1] != "same_line")
+				sub[1] = lang_fallback_apply(sub[1])
+			if(length(sub) >= 2 && istext(sub[2]))
+				sub[2] = lang_fallback_apply(sub[2])
+			out += list(sub)
+		else
+			out += entry
+	return out
+// NOVA EDIT ADDITION END
 
 /datum/controller/subsystem/statpanels/proc/set_MC_tab(client/target)
 	var/turf/eye_turf = get_turf(target.eye)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Pursue the target, growl if we're close, and bite if we're adjacent
  * Dogs are actually not very aggressive and won't attack unless you approach them
@@ -37,13 +38,13 @@
 		return
 	living_pawn.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
-	target.visible_message(span_danger("[living_pawn] paws ineffectually at [target]!"), span_danger("[living_pawn] paws ineffectually at you!"))
+	target.visible_message(span_danger(LANG("datum.e1cea82b", list(living_pawn, target))), span_danger(LANG("datum.526fb6fb", list(living_pawn))))
 
 /// Let them know we mean business
 /datum/ai_behavior/basic_melee_attack/dog/proc/growl_at(mob/living/living_pawn, atom/target, seconds_per_tick)
 	if(!SPT_PROB(15, seconds_per_tick))
 		return
-	living_pawn.manual_emote("[pick("barks", "growls", "stares")] menacingly at [target]!")
+	living_pawn.manual_emote(LANG("datum.c27079f4", list(pick("barks", "growls", "stares"), target)))
 	if(!SPT_PROB(40, seconds_per_tick))
 		return
 	playsound(living_pawn, SFX_GROWL, 50, TRUE, -1)

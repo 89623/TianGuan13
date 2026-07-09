@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MINING_MESSAGE_COOLDOWN 20
 #define DEFAULT_BORDER_DISTANCE -1
 
@@ -5,7 +6,7 @@
 
 /turf/closed/mineral //wall piece
 	name = "rock"
-	icon = MAP_SWITCH('modular_nova/modules/liquids/icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi') // NOVA EDIT CHANGE - ORIGINAL: icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
+	icon = MAP_SWITCH('modular_nova/master_files/icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi') // NOVA EDIT CHANGE - ORIGINAL: icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
 	icon_state = "rock"
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
 	canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
@@ -52,18 +53,7 @@
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
-	// Mineral turfs are big, so they need to be on the game plane at a high layer
-	// But they're also turfs, so we need to cut them out from the light mask plane
-	// So we draw them as if they were on the game plane, and then overlay a copy onto
-	// The wall plane (so emissives/light masks behave)
-	// I am so sorry
-	var/static/list/mutable_appearance/wall_overlays = list()
-	var/mutable_appearance/wall_overlay = wall_overlays[wall_icon_state]
-	if (!wall_overlay)
-		wall_overlay = mutable_appearance('icons/turf/mining.dmi', wall_icon_state, appearance_flags = RESET_TRANSFORM)
-		wall_overlays[wall_icon_state] = wall_overlay
-	wall_overlay.plane = MUTATE_PLANE(WALL_PLANE, src)
-	overlays += wall_overlay
+	add_large_wall_overlay('icons/turf/mining.dmi', wall_icon_state)
 
 // Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
@@ -224,7 +214,7 @@
 
 /turf/closed/mineral/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers, exp_multiplier = 1)
 	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(usr, span_warning("You don't have the dexterity to do this!"))
+		to_chat(usr, span_warning(LANG("turf.e8ba50af", null)))
 		return
 
 	if(I.tool_behaviour != TOOL_MINING)
@@ -258,7 +248,7 @@
 	var/mining_speed = mining_arms ? tool_mine_speed : hand_mine_speed
 	TIMER_COOLDOWN_START(src, REF(user), mining_speed)
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER) || 1
-	balloon_alert(user, "pulling out pieces...")
+	balloon_alert(user, LANG("turf.05b6c3f4", null))
 	if(!do_after(user, mining_speed * skill_modifier, target = src))
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 		return
@@ -308,7 +298,7 @@
 		return gets_drilled(user, exp_multiplier)
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
-	balloon_alert(user, "digging...")
+	balloon_alert(user, LANG("turf.a8f0e832", null))
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 	if(do_after(user, tool_mine_speed, target = src))
 		gets_drilled(user)
@@ -673,6 +663,7 @@
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	weak_turf = TRUE
 	exposure_based = TRUE
+	wall_icon_state = "mountainrock"
 
 /turf/closed/mineral/random/snow/change_ore(ore_type, random = TRUE)
 	. = ..()
@@ -680,7 +671,6 @@
 		icon = 'icons/turf/walls/icerock_wall.dmi'
 		icon_state = "icerock_wall-0"
 		base_icon_state = "icerock_wall"
-		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/random/snow/mineral_chances()
 	return list(
@@ -692,7 +682,7 @@
 		/obj/item/stack/ore/silver = 8,
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
 /// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
@@ -702,7 +692,6 @@
 	turf_flags = NO_RUINS
 
 /turf/closed/mineral/random/snow/underground
-	baseturfs = /turf/open/misc/asteroid/snow/icemoon
 	// abundant ore
 	mineral_chance = 11
 
@@ -717,7 +706,7 @@
 		/obj/item/stack/ore/silver = 24,
 		/obj/item/stack/ore/titanium = 22,
 		/obj/item/stack/ore/uranium = 10,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 8,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
 /turf/closed/mineral/random/snow/high_chance
@@ -1079,16 +1068,16 @@
 /turf/closed/mineral/gibtonite/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers, exp_multiplier = 1)
 	var/previous_stage = stage
 	if(istype(attacking_item, /obj/item/goliath_infuser_hammer) && stage == GIBTONITE_ACTIVE)
-		user.visible_message(span_notice("[user] digs [attacking_item] to [src]..."), span_notice("Your tendril hammer instictively digs and wraps around [src] to stop it..."))
+		user.visible_message(span_notice(LANG("turf.4004c510", list(user, attacking_item, src))), span_notice(LANG("turf.f5b50978", list(src))))
 		defuse(user)
 	else if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
-		user.visible_message(span_notice("[user] holds [attacking_item] to [src]..."), span_notice("You use [attacking_item] to locate where to cut off the chain reaction and attempt to stop it..."))
+		user.visible_message(span_notice(LANG("turf.d1a9033a", list(user, attacking_item, src))), span_notice(LANG("turf.dd2c84e7", list(attacking_item))))
 		defuse(user)
 	. = ..()
 	if(istype(attacking_item, /obj/item/clothing/gloves/gauntlets) && previous_stage == GIBTONITE_UNSTRUCK && stage == GIBTONITE_ACTIVE && istype(user))
 		user.Immobilize(0.5 SECONDS)
 		user.throw_at(get_ranged_target_turf(src, get_dir(src, user), 5), range = 5, speed = 3, spin = FALSE)
-		user.visible_message(span_danger("[user] hit gibtonite with [attacking_item.name], launching [user.p_them()] back!"), span_danger("You've struck gibtonite! Your [attacking_item.name] launched you back!"))
+		user.visible_message(span_danger(LANG("turf.1ecb1d90", list(user, attacking_item.name, user.p_them()))), span_danger(LANG("turf.779efd12", list(attacking_item.name))))
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null)
 	if(stage != GIBTONITE_UNSTRUCK)
@@ -1099,9 +1088,9 @@
 	activated_overlay.pixel_y = 2
 	add_overlay(activated_overlay)
 	name = "gibtonite deposit"
-	desc = "An active gibtonite reserve. Run!"
+	desc = LANG("turf.314518f1", null)
 	stage = GIBTONITE_ACTIVE
-	visible_message(span_danger("There's gibtonite inside! It's going to explode!"))
+	visible_message(span_danger(LANG("turf.e580b6e4", null)))
 
 	var/notify_admins = !is_mining_level(z)
 
@@ -1134,11 +1123,11 @@
 	cut_overlay(activated_overlay)
 	activated_overlay.icon_state = "rock_Gibtonite_inactive"
 	add_overlay(activated_overlay)
-	desc = "An inactive gibtonite reserve. The ore can be extracted."
+	desc = LANG("turf.7ae029ab", null)
 	stage = GIBTONITE_STABLE
 	if(det_time < 0)
 		det_time = 0
-	visible_message(span_notice("The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!"))
+	visible_message(span_notice(LANG("turf.be9b7f09", list(det_time))))
 	if(defuser)
 		SEND_SIGNAL(defuser, COMSIG_LIVING_DEFUSED_GIBTONITE, det_time)
 
@@ -1236,12 +1225,12 @@
 
 /turf/closed/mineral/strong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers, exp_multiplier = 1)
 	if(!ishuman(user))
-		to_chat(usr, span_warning("Only a more advanced species could break a rock such as this one!"))
+		to_chat(usr, span_warning(LANG("turf.1310903e", null)))
 		return FALSE
 	if(user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
 		. = ..()
 	else
-		to_chat(usr, span_warning("The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner."))
+		to_chat(usr, span_warning(LANG("turf.7cf17838", null)))
 
 
 /turf/closed/mineral/strong/gets_drilled(mob/user, exp_multiplier = 0)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## basic eating element!
  *
@@ -107,12 +108,12 @@
 
 	if (to_heal > 0)
 		var/healed = eater.heal_overall_damage(to_heal)
-		eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target][healed ? ", restoring some health" : ""]."))
+		eater.visible_message(span_notice(LANG("datum.c5d8a908", list(eater, eat_verb, target))), span_notice(LANG("datum.a1e1ad49", list(eat_verb, target, healed ? ", restoring some health" : ""))))
 	else if (to_damage > 0 && damage_type)
 		var/damaged = eater.apply_damage(to_damage, damage_type)
-		eater.visible_message(span_notice("[eater] [eat_verb]s [target][damaged ? ", and seems to hurt [eater.p_themselves()]!" : "."]"), span_notice("You [eat_verb] [target][damaged ? ", hurting yourself in the process" : ""]."))
+		eater.visible_message(span_notice(LANG("datum.dfdd43b5", list(eater, eat_verb, target, damaged ? ", and seems to hurt [eater.p_themselves()]!" : "."))), span_notice(LANG("datum.a1e1ad49", list(eat_verb, target, damaged ? ", hurting yourself in the process" : ""))))
 	else
-		eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target]."))
+		eater.visible_message(span_notice(LANG("datum.c5d8a908", list(eater, eat_verb, target))), span_notice(LANG("datum.d6171b71", list(eat_verb, target))))
 
 	finish_eating(eater, target, feeder, to_heal)
 	return TRUE

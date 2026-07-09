@@ -60,14 +60,14 @@ SUBSYSTEM_DEF(condos)
 	if(active_condos["[condo_number]"])
 		var/datum/turf_reservation/condo/target_active_condo = active_condos["[condo_number]"]
 		if(!target_active_condo)
-			to_chat(user, span_warning("Condo [condo_number] error. Unable to find condo reservation!"))
+			to_chat(user, span_warning(LANG("datum.34018d11", list(condo_number))))
 			return FALSE
 
 		do_sparks(3, FALSE, get_turf(user))
 
 		var/turf/condo_bottom_left = target_active_condo.bottom_left_turfs[1]
 		if(!condo_bottom_left)
-			to_chat(user, span_warning("Condo [condo_number] error. Unable to find entry turf!"))
+			to_chat(user, span_warning(LANG("datum.9cb27ed0", list(condo_number))))
 			return FALSE
 
 		if(user.forceMove(locate(
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(condos)
 		)))
 			return TRUE
 
-	to_chat(user, span_warning("Condo [condo_number] error. Mystery failure!"))
+	to_chat(user, span_warning(LANG("datum.0d9c6877", list(condo_number))))
 	return FALSE
 
 /// No condo was found on the number we input - create a new reservation, load our template, assign it in active_condos - and warp our user to the landing zone
@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(condos)
 	var/datum/turf_reservation/condo/condo_reservation = SSmapping.request_turf_block_reservation(our_condo.width, our_condo.height, 1, reservation_type = /datum/turf_reservation/condo)
 	var/turf/bottom_left = condo_reservation.bottom_left_turfs[1]
 	if(!bottom_left)
-		to_chat(user, span_warning("Failed to reserve a room for you! Contact the technical concierge."))
+		to_chat(user, span_warning(LANG("datum.10a3b93c", null)))
 		return
 	our_condo.load(bottom_left)
 	condo_reservation.condo_template = our_condo

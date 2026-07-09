@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/melee/chainofcommand
 	name = "chain of command"
 	desc = "A tool used by great men to placate the frothing masses. Can be used to hasten allies with right-click."
@@ -32,7 +33,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/melee/chainofcommand/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.2a557471", list(user, user.p_them(), src, user.p_theyre()))))
 	return OXYLOSS
 
 /obj/item/melee/chainofcommand/attack_secondary(mob/living/victim, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -42,7 +43,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(victim == user)
-		to_chat(user, span_warning("You consider lashing yourself, but hesitate at the thought of how much it would hurt."))
+		to_chat(user, span_warning(LANG("obj.e2bd58bf", null)))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	user.do_attack_animation(victim)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/shoes/gunboots //admin boots that fire gunshots randomly while walking
 	name = "gunboots"
 	desc = "This is what all those research points added up to, the ultimate workplace hazard."
@@ -63,7 +64,7 @@
 	shot.def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) // they're fired from boots after all
 	shot.aim_projectile(target, wearer)
 	if(!shot.suppressed)
-		wearer.visible_message(span_danger("[wearer]'s [name] fires \a [shot]!"), "", blind_message = span_hear("You hear a gunshot!"), vision_distance=COMBAT_MESSAGE_RANGE)
+		wearer.visible_message(span_danger(LANG("obj.24ce396b", list(wearer, name, shot))), "", blind_message = span_hear("You hear a gunshot!"), vision_distance=COMBAT_MESSAGE_RANGE)
 	shot.fire()
 
 /obj/item/clothing/shoes/gunboots/disabler

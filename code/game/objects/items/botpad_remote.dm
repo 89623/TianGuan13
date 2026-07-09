@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/botpad_remote
 	name = "Bot pad controller"
 	desc = "Use this device to control the connected bot pad."
@@ -25,7 +26,7 @@
 	if(connected_botpad)
 		connected_botpad.recall(user)
 		return
-	user?.balloon_alert(user, "no connected pad!")
+	user?.balloon_alert(user, LANG("obj.44f11f6b", null))
 	return
 
 /obj/item/botpad_remote/multitool_act(mob/living/user, obj/item/multitool/multitool)
@@ -35,7 +36,7 @@
 
 	var/obj/machinery/botpad/buffered_remote = multitool.buffer
 	if(buffered_remote == connected_botpad)
-		to_chat(user, span_warning("Controller cannot connect to its own botpad!"))
+		to_chat(user, span_warning(LANG("obj.712d8f37", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!connected_botpad && istype(buffered_remote, /obj/machinery/botpad))
@@ -43,17 +44,17 @@
 		connected_botpad.connected_remote = src
 		connected_botpad.id = id
 		multitool.set_buffer(null)
-		to_chat(user, span_notice("You connect the controller to the pad with data from \the [multitool]'s buffer."))
+		to_chat(user, span_notice(LANG("obj.5e1089f2", list(multitool))))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/item/botpad_remote/proc/try_launch(mob/living/user)
 	if(!connected_botpad)
-		user?.balloon_alert(user, "no connected pad!")
+		user?.balloon_alert(user, LANG("obj.44f11f6b", null))
 		return
 	if(connected_botpad.panel_open)
-		user?.balloon_alert(user, "close the panel!")
+		user?.balloon_alert(user, LANG("obj.e56d08f4", null))
 		return
 	if(!(locate(/mob/living) in get_turf(connected_botpad)))
-		user?.balloon_alert(user, "no bots detected on the pad!")
+		user?.balloon_alert(user, LANG("obj.f4abdb27", null))
 		return
 	connected_botpad.launch(user)

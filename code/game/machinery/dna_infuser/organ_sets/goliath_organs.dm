@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define GOLIATH_ORGAN_COLOR "#875652"
 #define GOLIATH_SCLERA_COLOR "#ac0f32"
 #define GOLIATH_PUPIL_COLOR COLOR_RED
@@ -94,7 +95,7 @@
 	var/datum/species/rec_species = human_receiver.dna.species
 	rec_species.update_no_equip_flags(brain_owner, initial(rec_species.no_equip_flags))
 	if(hammer)
-		brain_owner.visible_message(span_warning("\The [hammer] disintegrates!"))
+		brain_owner.visible_message(span_warning(LANG("obj.5695beae", list(hammer))))
 		QDEL_NULL(hammer)
 
 /obj/item/goliath_infuser_hammer
@@ -129,7 +130,7 @@
 
 /obj/item/goliath_infuser_hammer/examine(mob/user)
 	. = ..()
-	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna, but only once every two seconds."
+	. += LANG("obj.d0c19a6e", null)
 
 /obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	. = ..()

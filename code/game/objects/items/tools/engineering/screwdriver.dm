@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/screwdriver
 	name = "screwdriver"
 	desc = "You can be totally screwy with this."
@@ -53,7 +54,7 @@
 	acid = 30
 
 /obj/item/screwdriver/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.7c03dfc3", list(user, src, user.p_their(), pick("temple", "heart"), user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/screwdriver/Initialize(mapload)
@@ -137,19 +138,19 @@
 
 	tool_behaviour = (active ? TOOL_WRENCH : TOOL_SCREWDRIVER)
 	if(user)
-		balloon_alert(user, "attached [active ? "bolt bit" : "screw bit"]")
+		balloon_alert(user, LANG("obj.07b7e630", list(active ? "bolt bit" : "screw bit")))
 	playsound(src, 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/screwdriver/power/examine()
 	. = ..()
-	. += "It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"] bit."
+	. += LANG("obj.f362b056", list(tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"))
 
 /obj/item/screwdriver/power/suicide_act(mob/living/user)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
-		user.visible_message(span_suicide("[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.86f425b9", list(user, src, user.p_their(), user.p_theyre()))))
 	else
-		user.visible_message(span_suicide("[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.8f30b233", list(user, src, user.p_their(), user.p_theyre()))))
 	playsound(loc, 'sound/items/tools/drill_use.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 

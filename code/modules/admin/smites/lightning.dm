@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Strikes the target with a lightning bolt
 /datum/smite/lightning
 	name = "Lightning Bolt"
@@ -5,7 +6,7 @@
 /datum/smite/lightning/effect(client/user, mob/living/target)
 	. = ..()
 	lightningbolt(target)
-	to_chat(target, span_userdanger("The gods have punished you for your sins!"), confidential = TRUE)
+	to_chat(target, span_userdanger(LANG("datum.ff2c8df0", null)), confidential = TRUE)
 
 ///this is the actual bolt effect and damage, made into its own proc because it is used elsewhere
 /proc/lightningbolt(mob/living/user)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ////////////////////////////////////////////SNACKS FROM VENDING MACHINES////////////////////////////////////////////
 //in other words: junk food
 //don't even bother looking for recipes for these
@@ -50,10 +51,10 @@
 /obj/item/food/candy/bronx/examine(mob/user)
 	. = ..()
 	if(!revelation && !isobserver(user))
-		. += span_notice("Geeze, you need to get to get your eyes checked. You should look again...")
+		. += span_notice(LANG("obj.f7594144", null))
 
 		name = "\improper South Bronx Parasite bar"
-		desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
+		desc = LANG("obj.5f3a39ab", null)
 		revelation = TRUE
 
 /obj/item/food/sosjerky
@@ -332,7 +333,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cnds/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is letting [src] melt in [user.p_their()] hand! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.f5f6b711", list(user, src, user.p_their(), user.p_theyre()))))
 	return TOXLOSS
 
 /obj/item/food/cnds/caramel

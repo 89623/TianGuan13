@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/manufacturing/router // Basically a splitter
 	name = "manufacturing router"
 	desc = "Distributes input to 3 output directions equally. Stacks are split, and you may toggle outputs with a multitool. May not receive from other routers."
@@ -17,14 +18,14 @@
 	. = ..()
 	var/to_toggle = get_dir(src, user)
 	if(!(to_toggle in GLOB.cardinals))
-		balloon_alert(user, "stand inline!")
+		balloon_alert(user, LANG("obj.4677e4bf", null))
 		return ITEM_INTERACT_FAILURE
 	if(to_toggle in disabled_dirs)
 		disabled_dirs -= to_toggle
 	else
 		disabled_dirs += to_toggle
 	update_appearance(UPDATE_OVERLAYS)
-	balloon_alert(user, "toggled output")
+	balloon_alert(user, LANG("obj.ac81c7d1", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/manufacturing/router/update_overlays()

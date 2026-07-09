@@ -68,7 +68,7 @@
 	. = ..()
 
 	if(stat != DEAD && HAS_TRAIT(src, TRAIT_DNR) && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
-		. += "\n[span_boldwarning("This individual is unable to be revived, and may be permanently dead if allowed to die!")]"
+		. += LANG("mob.65aac1b5", list(span_boldwarning("This individual is unable to be revived, and may be permanently dead if allowed to die!")))
 
 /datum/atom_hud/data/human/dnr
 	hud_icons = list(DNR_HUD)
@@ -96,8 +96,8 @@
 		if(user.stat == CONSCIOUS)
 			if(prob(20))
 				user.emote("laugh")
-				addtimer(CALLBACK(user, /mob/proc/emote, "laugh"), 5 SECONDS)
-				addtimer(CALLBACK(user, /mob/proc/emote, "laugh"), 10 SECONDS)
+				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, emote), "laugh"), 5 SECONDS)
+				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, emote), "laugh"), 10 SECONDS)
 
 /obj/item/paper/joker
 	name = "disability card"
@@ -206,7 +206,7 @@
 	flipped = !flipped
 	update_static_data()
 
-	balloon_alert(user, "card flipped")
+	balloon_alert(user, LANG("obj.72443357", null))
 	return CLICK_ACTION_SUCCESS
 
 /datum/quirk/feline_aspect
@@ -326,20 +326,20 @@ GLOBAL_LIST_INIT(possible_snout_sensitivities, list(
 		human_holder.force_say()
 	switch(severity)
 		if(SEVERITY_STUN)
-			to_chat(quirk_holder, span_warning("[attacker] boops you on your sensitive nose, freezing you in place!"))
+			to_chat(quirk_holder, span_warning(LANG("datum.b7a7b8e0", list(attacker))))
 			quirk_holder.Stun(1 SECONDS)
 		if(SEVERITY_SNEEZE)
 			quirk_holder.Stun(1 SECONDS)
 			if(can_emote)
-				to_chat(quirk_holder, span_warning("[attacker] boops you on your sensitive nose! You can't hold back a sneeze!"))
+				to_chat(quirk_holder, span_warning(LANG("datum.f5b758cc", list(attacker))))
 				quirk_holder.emote("sneeze")
 		if(SEVERITY_KNOCKDOWN)
-			to_chat(quirk_holder, span_warning("[attacker] boops you on your sensitive nose, sending you to the ground!"))
+			to_chat(quirk_holder, span_warning(LANG("datum.60186f5e", list(attacker))))
 			quirk_holder.Knockdown(1 SECONDS)
 			quirk_holder.apply_damage(30, STAMINA)
 		if(SEVERITY_BLEP)
 			if(can_emote)
-				to_chat(quirk_holder, span_warning("[attacker] boops you on your sensitive nose! You stick your tongue out on reflex!"))
+				to_chat(quirk_holder, span_warning(LANG("datum.bfd26cec", list(attacker))))
 				quirk_holder.emote("blep")
 
 #undef SEVERITY_STUN

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/button
 	name = "button"
 	desc = "A remote control switch."
@@ -140,28 +141,28 @@
 
 /obj/machinery/button/proc/assembly_act(mob/living/user, obj/item/assembly/new_device)
 	if(device)
-		to_chat(user, span_warning("The button already contains a device!"))
+		to_chat(user, span_warning(LANG("obj.4ef8514f", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(!(new_device.assembly_behavior & ASSEMBLY_FUNCTIONAL_OUTPUT))
-		to_chat(user, span_warning("\The [new_device] won't really do anything meaningful inside of the button..."))
+		to_chat(user, span_warning(LANG("obj.e28d9cef", list(new_device))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_device, src, silent = FALSE))
-		to_chat(user, span_warning("\The [new_device] is stuck to you!"))
+		to_chat(user, span_warning(LANG("obj.fd8b000b", list(new_device))))
 		return ITEM_INTERACT_BLOCKING
 
 	device = new_device
 	SEND_SIGNAL(new_device, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, src, user)
-	to_chat(user, span_notice("You add \the [new_device] to the button."))
+	to_chat(user, span_notice(LANG("obj.57cfbafc", list(new_device))))
 
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/button/proc/airlock_electronics_act(mob/living/user, obj/item/electronics/airlock/new_board)
 	if(board)
-		to_chat(user, span_warning("The button already contains a board!"))
+		to_chat(user, span_warning(LANG("obj.fcd5a0c3", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_board, src, silent = FALSE))
-		to_chat(user, span_warning("\The [new_board] is stuck to you!"))
+		to_chat(user, span_warning(LANG("obj.fd8b000b", list(new_board))))
 		return ITEM_INTERACT_BLOCKING
 
 	board = new_board
@@ -169,7 +170,7 @@
 		req_one_access = board.accesses
 	else
 		req_access = board.accesses
-	to_chat(user, span_notice("You add \the [new_board] to the button."))
+	to_chat(user, span_notice(LANG("obj.57cfbafc", list(new_board))))
 
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -178,22 +179,22 @@
 	if(panel_open || allowed(user))
 		return default_deconstruction_screwdriver(user, tool)
 
-	balloon_alert(user, "access denied")
+	balloon_alert(user, LANG("obj.1d2a5ed1", null))
 	flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/button/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		balloon_alert(user, "open button first!")
+		balloon_alert(user, LANG("obj.b8bdd93d", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(device || board)
-		balloon_alert(user, "empty button first!")
+		balloon_alert(user, LANG("obj.9fe939b8", null))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You start unsecuring the button frame..."))
+	to_chat(user, span_notice(LANG("obj.667a49ab", null)))
 	if(tool.use_tool(src, user, 40, volume=50))
-		to_chat(user, span_notice("You unsecure the button frame."))
+		to_chat(user, span_notice(LANG("obj.12c5cc83", null)))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE)
 
@@ -220,7 +221,7 @@
 	// The device inside can be emagged by swiping the button
 	// returning TRUE will prevent feedback (so we can do our own)
 	if(!device?.emag_act(user, emag_card))
-		balloon_alert(user, "access overridden")
+		balloon_alert(user, LANG("obj.a98d953c", null))
 	return TRUE
 
 /obj/machinery/button/attack_ai(mob/user)
@@ -252,12 +253,12 @@
 	if(can_alter_skin)
 		if(skin == "")
 			skin = "-warning"
-			to_chat(user, span_notice("You change the button frame's front panel to warning lines."))
+			to_chat(user, span_notice(LANG("obj.fb74dbd6", null)))
 		else
 			skin = ""
-			to_chat(user, span_notice("You change the button frame's front panel to default."))
+			to_chat(user, span_notice(LANG("obj.f8a10e82", null)))
 		update_appearance(UPDATE_ICON)
-		balloon_alert(user, "style swapped")
+		balloon_alert(user, LANG("obj.98cf79ea", null))
 
 /obj/machinery/button/attack_hand_secondary(mob/user, list/modifiers)
 	if(!initialized_button)
@@ -279,13 +280,13 @@
 /obj/machinery/button/proc/remove_assembly(mob/user)
 	SEND_SIGNAL(device, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, src, user)
 	user.put_in_hands(device)
-	to_chat(user, span_notice("You remove \the [device] from the button frame."))
+	to_chat(user, span_notice(LANG("obj.d613992c", list(device))))
 	device = null
 	update_appearance(UPDATE_ICON)
 
 /obj/machinery/button/proc/remove_airlock_electronics(mob/user)
 	user.put_in_hands(board)
-	to_chat(user, span_notice("You remove the board from the button frame."))
+	to_chat(user, span_notice(LANG("obj.e80f028e", null)))
 	req_access = list()
 	req_one_access = list()
 	board = null
@@ -299,7 +300,7 @@
 		return FALSE
 
 	if(!allowed(user))
-		balloon_alert(user, "access denied")
+		balloon_alert(user, LANG("obj.1d2a5ed1", null))
 		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 		return FALSE
 
@@ -337,11 +338,11 @@
 	if(!panel_open)
 		return
 	if(device)
-		. += span_notice("There is \a [device] inside, which could be removed with an <b>empty hand</b>.")
+		. += span_notice(LANG("obj.a29c2c81", list(device)))
 	if(board)
-		. += span_notice("There is \a [board] inside, which could be removed with an <b>empty hand</b>.")
+		. += span_notice(LANG("obj.a29c2c81", list(board)))
 	if(isnull(board) && isnull(device))
-		. += span_notice("There is nothing currently installed in \the [src].")
+		. += span_notice(LANG("obj.5f497e14", list(src)))
 
 /obj/machinery/button/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(panel_open)
@@ -400,13 +401,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 
 /obj/machinery/button/door/setup_device(mapload)
 	if(mapload)
-		device = normaldoorcontrol ? new /obj/item/assembly/control/airlock(src) : new /obj/item/assembly/control(src)
+		device = normaldoorcontrol ? new /obj/item/assembly/control/airlock(src) : new /obj/item/assembly/control/blast_door(src)
 
 	if(istype(device, /obj/item/assembly/control/airlock))
 		var/obj/item/assembly/control/airlock/airlock_device = device
 		airlock_device.specialfunctions = specialfunctions
-	else if(istype(device, /obj/item/assembly/control))
-		var/obj/item/assembly/control/control_device = device
+	else if(istype(device, /obj/item/assembly/control/blast_door))
+		var/obj/item/assembly/control/blast_door/control_device = device
 		control_device.sync_doors = sync_doors
 	return ..()
 

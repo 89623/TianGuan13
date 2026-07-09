@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 // Operating Table / Beds / Lockers
 
@@ -69,7 +70,7 @@
 	SIGNAL_HANDLER
 	if(iscarbon(AM))
 		START_PROCESSING(SSobj, src)
-		to_chat(AM, span_danger("You feel a series of tiny pricks!"))
+		to_chat(AM, span_danger(LANG("obj.085bb9d6", null)))
 
 /obj/structure/table/optable/abductor/process(seconds_per_tick)
 	. = PROCESS_KILL

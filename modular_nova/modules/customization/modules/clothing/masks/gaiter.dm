@@ -2,7 +2,7 @@
 	name = "neck gaiter"
 	desc = "A cloth for covering your neck, and usually part of your face too, but that part's optional. Has a small respirator to be used with internals."
 	actions_types = list(/datum/action/item_action/adjust)
-	alternate_worn_layer = BODY_FRONT_UNDER_CLOTHES
+	alternate_worn_layer = UNDER_UNIFORM_LAYER
 	worn_icon = 'modular_nova/modules/GAGS/icons/masks.dmi'
 	inhand_icon_state = "balaclava"
 	icon = 'icons/map_icons/clothing/mask.dmi'
@@ -33,10 +33,10 @@
 /obj/item/clothing/mask/neck_gaiter/click_alt_secondary(mob/user)
 	alternate_worn_layer = (alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer))
 	user.update_clothing(ITEM_SLOT_MASK)
-	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suits")
+	balloon_alert(user, LANG("obj.d521fa2f", list(alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above")))
 
 /obj/item/clothing/mask/neck_gaiter/examine(mob/user)
 	. = ..()
-	. += span_notice("[src] can be worn above or below your suit. Alt-Right-click to toggle.")
-	. += span_notice("Alt-click [src] to adjust it.")
+	. += span_notice(LANG("obj.b4a3a1fb", list(src)))
+	. += span_notice(LANG("obj.10c89ab8", list(src)))
 

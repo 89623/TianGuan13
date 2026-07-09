@@ -7,27 +7,27 @@
 
 /obj/item/reagent_containers/cup/primitive_centrifuge/examine()
 	. = ..()
-	. += span_notice("<b>Ctrl + Click</b> to select chemicals to remove.")
-	. += span_notice("<b>Ctrl + Shift + Click</b> to select a chemical to keep, the rest removed.")
+	. += span_notice(LANG("obj.90f41876", null))
+	. += span_notice(LANG("obj.3c494ff4", null))
 
 /obj/item/reagent_containers/cup/primitive_centrifuge/item_ctrl_click(mob/user)
 	if(!length(reagents.reagent_list))
 		return CLICK_ACTION_BLOCKING
 
-	var/datum/user_input = tgui_input_list(user, "Select which chemical to remove.", "Removal Selection", reagents.reagent_list)
+	var/datum/user_input = tgui_input_list(user, LANG("obj.0a9964b3", null), LANG("obj.a932fd8a", null), reagents.reagent_list)
 
 	if(isnull(user_input))
-		balloon_alert(user, "no selection!")
+		balloon_alert(user, LANG("obj.72281623", null))
 		return CLICK_ACTION_BLOCKING
 
-	user.balloon_alert_to_viewers("spinning [src]...")
+	user.balloon_alert_to_viewers(LANG("obj.8f40aab1", list(src)))
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, 5 SECONDS * skill_modifier, target = src))
-		user.balloon_alert_to_viewers("stopped spinning [src]")
+		user.balloon_alert_to_viewers(LANG("obj.0b54d29b", list(src)))
 		return CLICK_ACTION_BLOCKING
 
 	reagents.del_reagent(user_input.type)
-	balloon_alert(user, "removed reagent from [src]")
+	balloon_alert(user, LANG("obj.f454cbd1", list(src)))
 	user.mind?.adjust_experience(/datum/skill/primitive, 2)
 	return CLICK_ACTION_SUCCESS
 
@@ -35,21 +35,21 @@
 	if(!length(reagents.reagent_list))
 		return
 
-	var/datum/user_input = tgui_input_list(user, "Select which chemical to keep, the rest removed.", "Keep Selection", reagents.reagent_list)
+	var/datum/user_input = tgui_input_list(user, LANG("obj.00ce1a55", null), LANG("obj.c9c32469", null), reagents.reagent_list)
 
 	if(isnull(user_input))
-		balloon_alert(user, "no selection!")
+		balloon_alert(user, LANG("obj.72281623", null))
 		return
 
-	user.balloon_alert_to_viewers("spinning [src]...")
+	user.balloon_alert_to_viewers(LANG("obj.8f40aab1", list(src)))
 	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 	if(!do_after(user, 5 SECONDS * skill_modifier, target = src))
-		user.balloon_alert_to_viewers("stopped spinning [src]")
+		user.balloon_alert_to_viewers(LANG("obj.0b54d29b", list(src)))
 		return
 
 	for(var/datum/reagent/remove_reagent in reagents.reagent_list)
 		if(!istype(remove_reagent, user_input.type))
 			reagents.del_reagent(remove_reagent.type)
 
-	balloon_alert(user, "removed reagents from [src]")
+	balloon_alert(user, LANG("obj.54df0461", list(src)))
 	user.mind?.adjust_experience(/datum/skill/primitive, 2)

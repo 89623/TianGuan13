@@ -1,13 +1,19 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/assembly/control
-	name = "blast door controller"
-	desc = "A small electronic device able to control a blast door remotely."
+	name = "controller assembly"
+	desc = "An assembly that controls something. It's so vaguely designed that it probably shouldn't exist."
 	icon_state = "control"
-	/// The ID of the blast door electronics to match to the ID of the blast door being used.
+	/// The ID of the electronics to match to the ID of the machine being used.
 	var/id = -1
-	/// Cooldown of the door's controller. Updates when pressed (activate())
+	/// Cooldown of the controller. Updates when pressed (activate())
 	var/cooldown = FALSE
 	/// Should we toggle open/close of doors based on their current state
+	/// Also used for curtains
 	var/sync_doors = TRUE
+	/// If this controller's ID should be adjustable by players through multitools.
+	var/generically_adjustable = FALSE
+	/// If this controller's ID should be copyable by hitting with an identical controller.
+	var/copyable = FALSE
 
 /obj/item/assembly/control/Initialize(mapload)
 	. = ..()
@@ -15,20 +21,55 @@
 
 /obj/item/assembly/control/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
-	if(istype(held_item, /obj/item/assembly/control))
-		context[SCREENTIP_CONTEXT_LMB] = "Copy ID"
+	if(istype(held_item, type) && copyable)
+		context[SCREENTIP_CONTEXT_LMB] = LANG("obj.ec7f1e18", null)
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/assembly/control/examine(mob/user)
 	. = ..()
-	if(id)
-		if(id != -1)
-			. += span_notice("Its channel ID is '[id]'.")
-		else
-			. += span_notice("Interact with pod door to generate an new id")
-	. += span_notice("You can interact with another controller to copy its ID.")
+	if(generically_adjustable)
+		. += span_notice(LANG("obj.d3b2155b", list(EXAMINE_HINT("multitool"))))
+
+	if(copyable)
+		. += span_notice(LANG("obj.86bc9aae", null))
+
+	if(!id)
+		return
+
+	if(id != -1)
+		. += span_notice(LANG("obj.7150d501", list(id)))
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
+	if(!generically_adjustable)
+		return
+
+	var/change_id = tgui_input_number(user, LANG("obj.77cab741", list(name)), LANG("obj.21b9fbfd", null), id, 100)
+	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+		return
+	id = change_id
+	to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
+
+/obj/item/assembly/control/interact_with_atom(obj/item/assembly/control/interacting_with, mob/living/user, list/modifiers)
+	. = NONE
+	if(!copyable)
+		return
+
+	if(istype(interacting_with))
+		id = interacting_with.id
+		balloon_alert(user, LANG("obj.3852daee", null))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/assembly/control/blast_door
+	name = "blast door controller"
+	desc = "A small electronic device able to control blast doors or shutters remotely."
+	copyable = TRUE
+
+/obj/item/assembly/control/blast_door/examine(mob/user)
+	. = ..()
+	if(id && id == -1)
+		. += span_notice(LANG("obj.a67ca672", null))
+
+/obj/item/assembly/control/blast_door/multitool_act(mob/living/user)
 	var/list/door_ids = list()
 	var/list/display_ids = list("UNIQUE")
 	for(var/obj/machinery/door/poddoor/M as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
@@ -40,7 +81,7 @@
 		var/area/door_area = get_area(M)
 		display_ids += "[door_area.name]([M.id])"
 
-	var/change_id = tgui_input_list(user, "Set Controller ID", "Controller ID", display_ids)
+	var/change_id = tgui_input_list(user, LANG("obj.c920a899", null), LANG("obj.21b9fbfd", null), display_ids)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
@@ -53,20 +94,13 @@
 			id = "[change_id[start]]"
 		else
 			id = copytext(change_id, start, end)
-	balloon_alert(user, "id changed")
+	balloon_alert(user, LANG("obj.3852daee", null))
 	if(id != -1)
-		to_chat(user, span_notice("You change the ID to [id]."))
+		to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 	else
-		to_chat(user, span_notice("You now must interact with an pod door to generate an unique ID."))
+		to_chat(user, span_notice(LANG("obj.59a589e8", null)))
 
-/obj/item/assembly/control/interact_with_atom(obj/item/assembly/control/interacting_with, mob/living/user, list/modifiers)
-	. = NONE
-	if(istype(interacting_with))
-		id = interacting_with.id
-		balloon_alert(user, "id changed")
-		return ITEM_INTERACT_SUCCESS
-
-/obj/item/assembly/control/activate()
+/obj/item/assembly/control/blast_door/activate()
 	var/openclose
 	if(cooldown)
 		return
@@ -81,11 +115,6 @@
 /obj/item/assembly/control/curtain
 	name = "curtain controller"
 	desc = "A small electronic device able to control a mechanical curtain remotely."
-
-/obj/item/assembly/control/curtain/examine(mob/user)
-	. = ..()
-	if(id)
-		. += span_notice("Its channel ID is '[id]'.")
 
 /obj/item/assembly/control/curtain/activate()
 	var/openclose
@@ -179,7 +208,9 @@
 
 /obj/item/assembly/control/igniter
 	name = "ignition controller"
-	desc = "A remote controller for a mounted igniter."
+	desc = "A remote controller for a floor igniter or wall sparker."
+	generically_adjustable = TRUE
+	copyable = TRUE
 
 /obj/item/assembly/control/igniter/activate()
 	if(cooldown)

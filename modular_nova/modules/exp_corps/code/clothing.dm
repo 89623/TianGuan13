@@ -220,10 +220,10 @@
 		return
 	my_helmet.nightvision = !my_helmet.nightvision
 	if(my_helmet.nightvision)
-		to_chat(owner, span_notice("You flip the NV goggles down."))
+		to_chat(owner, span_notice(LANG("datum.832036d4", null)))
 		my_helmet.enable_nv()
 	else
-		to_chat(owner, span_notice("You flip the NV goggles up."))
+		to_chat(owner, span_notice(LANG("datum.3b3cae90", null)))
 		my_helmet.disable_nv()
 	my_helmet.update_appearance()
 
@@ -254,10 +254,10 @@
 
 	nightvision = !nightvision
 	if(nightvision)
-		to_chat(user, span_notice("You flip the NV goggles down."))
+		to_chat(user, span_notice(LANG("obj.832036d4", null)))
 		enable_nv()
 	else
-		to_chat(user, span_notice("You flip the NV goggles up."))
+		to_chat(user, span_notice(LANG("obj.3b3cae90", null)))
 		disable_nv()
 	update_appearance()
 	return CLICK_ACTION_SUCCESS

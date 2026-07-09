@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Wendigo blood
 
 /obj/item/wendigo_blood
@@ -12,7 +13,7 @@
 	var/mob/living/carbon/human/human_user = user
 	if(!human_user.mind)
 		return
-	to_chat(human_user, span_danger("Power courses through you! You can now shift your form at will."))
+	to_chat(human_user, span_danger(LANG("obj.93c9b102", null)))
 	var/datum/action/cooldown/spell/shapeshift/polar_bear/transformation_spell = new(user.mind || user)
 	transformation_spell.Grant(user)
 	playsound(human_user.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)

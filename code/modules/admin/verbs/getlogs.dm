@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(get_server_logs, R_ADMIN, "Get Server Logs", "View or retrieve logfiles.", ADMIN_CATEGORY_MAIN)
 	user.browseserverlogs()
 
@@ -13,7 +14,7 @@ ADMIN_VERB(get_current_logs, R_ADMIN, "Get Current Logs", "View or retrieve logf
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	switch(tgui_alert(usr,"View (in game), Open (in your system's text editor), or Download?", path, list("View", "Open", "Download")))
+	switch(tgui_alert(usr,LANG("client.2f0a3fe1", null), path, list("View", "Open", "Download")))
 		if ("View")
 			src << browse(HTML_SKELETON("<pre style='word-wrap: break-word;'>[html_encode(file2text(file(path)))]</pre>"), list2params(list("window" = "viewfile.[path]")))
 		if ("Open")
@@ -22,4 +23,4 @@ ADMIN_VERB(get_current_logs, R_ADMIN, "Get Current Logs", "View or retrieve logf
 			src << ftp(file(path))
 		else
 			return
-	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.", confidential = TRUE)
+	to_chat(src, LANG("client.04c7cd22", list(path)), confidential = TRUE)

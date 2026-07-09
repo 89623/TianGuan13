@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/void_prison
 	name = "Void Prison"
 	desc = "Sends a heathen into the void for 10 seconds. \
@@ -30,8 +31,8 @@
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
 		cast_on.visible_message(
-			span_danger("A swirling, cold void wraps around [cast_on], but they burst free in a wave of heat!"),
-			span_danger("A yawning void begins to open before you, but a great wave of heat bursts it apart! You are protected!!")
+			span_danger(LANG("datum.82a4ce33", list(cast_on))),
+			span_danger(LANG("datum.8e768904", null))
 		)
 		return
 	cast_on.apply_status_effect(/datum/status_effect/void_prison, "void_stasis")

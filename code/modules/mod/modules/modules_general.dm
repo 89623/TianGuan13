@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //General modules for MODsuits
 
 ///Storage - Adds a storage component to the suit.
@@ -38,13 +39,13 @@
 		UnregisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_suit_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
-	if(QDELETED(source) || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
+	if(QDELETED(source) || !invdrop || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
 		return
 	if(!atom_storage?.attempt_insert(mod.wearer.s_store, mod.wearer, override = TRUE))
-		balloon_alert(mod.wearer, "storage failed!")
-		to_chat(mod.wearer, span_warning("[src] fails to store [mod.wearer.s_store] inside itself!"))
+		balloon_alert(mod.wearer, LANG("obj.f9f04c53", null))
+		to_chat(mod.wearer, span_warning(LANG("obj.ee3e3d49", list(src, mod.wearer.s_store))))
 		return
-	to_chat(mod.wearer, span_notice("[src] stores [mod.wearer.s_store] inside itself."))
+	to_chat(mod.wearer, span_notice(LANG("obj.28ef2196", list(src, mod.wearer.s_store))))
 	mod.wearer.temporarilyRemoveItemFromInventory(mod.wearer.s_store)
 
 /obj/item/mod/module/storage/large_capacity
@@ -193,9 +194,9 @@
 
 /obj/item/mod/module/jump_jet/on_use(mob/activator)
 	if (DOING_INTERACTION(mod.wearer, mod.wearer))
-		balloon_alert(activator, "busy!")
+		balloon_alert(activator, LANG("obj.8df72942", null))
 		return
-	balloon_alert(mod.wearer, "launching...")
+	balloon_alert(mod.wearer, LANG("obj.bb303ae9", null))
 	mod.wearer.Shake(duration = 1 SECONDS)
 	if (!do_after(mod.wearer, 1 SECONDS, target = mod.wearer))
 		start_cooldown(FAILED_ACTIVATION_COOLDOWN) // Don't go on full cooldown if we failed to launch
@@ -204,7 +205,7 @@
 	mod.wearer.apply_status_effect(/datum/status_effect/jump_jet)
 	var/turf/launch_from = get_turf(mod.wearer)
 	if (mod.wearer.zMove(UP, z_move_flags = ZMOVE_CHECK_PULLS))
-		launch_from.visible_message(span_warning("[mod.wearer] rockets into the air!"))
+		launch_from.visible_message(span_warning(LANG("obj.ac01fc95", list(mod.wearer))))
 	new /obj/effect/temp_visual/jet_plume(launch_from)
 
 	var/obj/item/mod/module/jetpack/linked_jetpack = locate() in mod.modules
@@ -462,7 +463,7 @@
 			if(!value)
 				return
 			if(is_color_dark(value, 50))
-				balloon_alert(mod.wearer, "too dark!")
+				balloon_alert(mod.wearer, LANG("obj.272335f1", null))
 				return
 			set_light_color(value)
 			update_clothing_slots()
@@ -505,11 +506,11 @@
 
 /obj/item/mod/module/dispenser/on_use(mob/activator)
 	if(dispense_time && !do_after(mod.wearer, dispense_time, target = mod))
-		balloon_alert(mod.wearer, "interrupted!")
+		balloon_alert(mod.wearer, LANG("obj.c67b5d27", null))
 		return FALSE
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
 	mod.wearer.put_in_hands(dispensed)
-	balloon_alert(activator, "[dispensed] dispensed")
+	balloon_alert(activator, LANG("obj.14c3e68c", list(dispensed)))
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 	drain_power(use_energy_cost)
 	return dispensed
@@ -547,8 +548,8 @@
 		mod.wearer.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * levels, 10 SECONDS)
 
 	mod.wearer.visible_message(
-		span_notice("[mod.wearer] lands on [fell_on] safely[extreme_fall ? ", but barely manages to stay on [p_their()] feet." : ", and quite stylishly on [p_their()] feet" ]."),
-		span_notice("[src] protects you from the damage!"),
+		span_notice(LANG("obj.481e6dd8", list(mod.wearer, fell_on, extreme_fall ? ", but barely manages to stay on [p_their()] feet." : ", and quite stylishly on [p_their()] feet"))),
+		span_notice(LANG("obj.645945bc", list(src))),
 	)
 	return ZIMPACT_CANCEL_DAMAGE|ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
 
@@ -614,7 +615,7 @@
 
 /obj/item/mod/module/dna_lock/on_use(mob/activator)
 	dna = mod.wearer.dna.unique_enzymes
-	balloon_alert(activator, "dna updated")
+	balloon_alert(activator, LANG("obj.aafa9d0a", null))
 	drain_power(use_energy_cost)
 
 /obj/item/mod/module/dna_lock/emp_act(severity)
@@ -631,7 +632,7 @@
 	var/mob/living/carbon/carbon_user = user
 	if(!dna  || (carbon_user.has_dna() && carbon_user.dna.unique_enzymes == dna))
 		return TRUE
-	balloon_alert(user, "dna locked!")
+	balloon_alert(user, LANG("obj.63b7a85b", null))
 	return FALSE
 
 /obj/item/mod/module/dna_lock/proc/on_emp(datum/source, severity, protection)
@@ -887,10 +888,10 @@
 
 /obj/item/mod/module/recycler/proc/dispense(atom/target)
 	if(container.retrieve_all(target))
-		balloon_alert(mod.wearer, "material dispensed")
+		balloon_alert(mod.wearer, LANG("obj.76348571", null))
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
 		return
-	balloon_alert(mod.wearer, "not enough material")
+	balloon_alert(mod.wearer, LANG("obj.f2f7f710", null))
 	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 
 /obj/item/mod/module/recycler/proc/InsertSheets(obj/item/recycler, obj/item/stack/sheets, atom/context)
@@ -919,12 +920,12 @@
 
 /obj/item/mod/module/recycler/donk/dispense(atom/target)
 	if(!container.use_amount_mat(required_amount, /datum/material/iron))
-		balloon_alert(mod.wearer, "not enough material")
+		balloon_alert(mod.wearer, LANG("obj.f2f7f710", null))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		return
 	var/obj/item/ammo_box/product = new ammobox_type(target)
 	attempt_insert_storage(product)
-	balloon_alert(mod.wearer, "ammo box dispensed.")
+	balloon_alert(mod.wearer, LANG("obj.0a63011c", null))
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
 
 /obj/item/mod/module/fishing_glove
@@ -951,19 +952,19 @@
 
 /obj/item/mod/module/fishing_glove/examine(mob/user)
 	. = ..()
-	. += span_info("You can [EXAMINE_HINT("right-click")] the modsuit gloves to open the fishing rod interface once attached and activated.")
+	. += span_info(LANG("obj.5750e2b3", list(EXAMINE_HINT("right-click"))))
 	if(equipped)
-		. += span_info("it has a [icon2html(equipped, user)] installed. [EXAMINE_HINT("Right-Click")] to remove it.")
+		. += span_info(LANG("obj.95c330e2", list(icon2html(equipped, user), EXAMINE_HINT("Right-Click"))))
 
 /obj/item/mod/module/fishing_glove/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/fishing_rod))
 		return ..()
 	if(equipped)
-		balloon_alert(user, "already has rod!")
+		balloon_alert(user, LANG("obj.573708ed", null))
 	if(!user.transferItemToLoc(tool, src))
-		user.balloon_alert(user, "it's stuck!")
+		user.balloon_alert(user, LANG("obj.ee463177", null))
 	equipped = tool
-	balloon_alert(user, "rod inserted")
+	balloon_alert(user, LANG("obj.9b3ecfd0", null))
 	playsound(src, 'sound/items/click.ogg', 50, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
@@ -974,7 +975,7 @@
 	if(!equipped)
 		return
 	user.put_in_hands(equipped)
-	balloon_alert(user, "rod removed")
+	balloon_alert(user, LANG("obj.4ccf0271", null))
 	playsound(src, 'sound/items/click.ogg', 50, TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///base arrow
 /obj/item/ammo_casing/arrow
 	name = "arrow"
@@ -166,11 +167,11 @@
 		return
 	var/mob/living/carbon/human/human_target = target
 	if(!human_target.on_fire)
-		to_chat(human_target, span_danger("[src] explodes into flames which quickly envelop you!"))
+		to_chat(human_target, span_danger(LANG("obj.53bcf40c", list(src))))
 		human_target.adjust_fire_stacks(2)
 		human_target.ignite_mob()
 		return
-	to_chat(human_target, span_danger("[src] reacts with the flames enveloping you! Oh shit!"))
+	to_chat(human_target, span_danger(LANG("obj.f614c82b", list(src))))
 	explosion(src, light_impact_range = 1, flame_range = 2) //ow
 
 /// Ashen arrows

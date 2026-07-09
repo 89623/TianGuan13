@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/aoe/repulse
 	/// The max throw range of the repulsioon.
 	var/max_throw = 5
@@ -19,7 +20,7 @@
 	if(istype(cast_on.loc, /obj/structure/closet))
 		var/obj/structure/closet/open_closet = cast_on.loc
 		open_closet.open(force = TRUE)
-		open_closet.visible_message(span_warning("[open_closet] suddenly flies open!"))
+		open_closet.visible_message(span_warning(LANG("datum.95996b5c", list(open_closet))))
 
 	return ..()
 
@@ -49,7 +50,7 @@
 			var/mob/living/victim_living = victim
 			victim_living.Paralyze(10 SECONDS)
 			victim_living.adjust_brute_loss(5)
-			to_chat(victim, span_userdanger("You're slammed into the floor by [caster]!"))
+			to_chat(victim, span_userdanger(LANG("datum.2f9d3559", list(caster))))
 	else
 		if(sparkle_path)
 			// Created sparkles will disappear on their own
@@ -58,7 +59,7 @@
 		if(isliving(victim))
 			var/mob/living/victim_living = victim
 			victim_living.Paralyze(4 SECONDS)
-			to_chat(victim, span_userdanger("You're thrown back by [caster]!"))
+			to_chat(victim, span_userdanger(LANG("datum.89c0ade9", list(caster))))
 
 		// So stuff gets tossed around at the same time.
 		victim.safe_throw_at(

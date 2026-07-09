@@ -56,7 +56,7 @@
 
 	var/important = is_job_important(id_card)
 	if(important)
-		if(tgui_alert(usr, "You are a member of security and/or command, make sure that you ahelp before punching out! If you decide to punch back in later, you will need to go to the Head of Personnel or Head of Security. Do you wish to continue?", "[filedesc]", list("No", "Yes")) != "Yes")
+		if(tgui_alert(usr, LANG("datum.ba0f4939", null), "[filedesc]", list("No", "Yes")) != "Yes")
 			return FALSE
 
 	log_econ("[id_card.registered_name] clocked out from role [id_card.get_trim_assignment()]")
@@ -100,7 +100,7 @@
 
 	var/datum/job/clocked_in_job = id_component.stored_trim.job
 	if(!SSjob.OccupyRole(clocked_in_job.title))
-		computer.say("[capitalize(clocked_in_job.title)] has no free slots available, unable to punch in!")
+		computer.say(LANG("datum.5c039ce8", list(capitalize(clocked_in_job.title))))
 		return FALSE
 
 
@@ -212,8 +212,8 @@
 
 	shame_box.locked_contents = english_list(shamebox_items)
 	do_sparks(10, TRUE, human_user, spark_type = /datum/effect_system/basic/spark_spread/quantum)
-	to_chat(human_user, span_warning("You feel weight lifted off your shoulders as items are teleported off your body!"))
-	to_chat(human_user, span_notice("Items moved to lockbox: [shame_box.locked_contents]."))
+	to_chat(human_user, span_warning(LANG("datum.27eca51e", null)))
+	to_chat(human_user, span_notice(LANG("datum.fb8a87c6", list(shame_box.locked_contents))))
 	computer.say(
 		message = "Nanotrasen contracts stipulate that company issued batons, masks, restraints, and other equipment are not to be used for recreational purposes. Your restricted items have been placed in a lockbox to be retrieved after punch in.",
 		forced = TRUE,

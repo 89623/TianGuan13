@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // the following defines are used for [/datum/component/pellet_cloud/var/list/wound_info_by_part] to store the damage, wound_bonus, and bw_bonus for each bodypart hit
 #define CLOUD_POSITION_DAMAGE 1
 #define CLOUD_POSITION_W_BONUS 2
@@ -195,7 +196,7 @@
 	var/self_harm_radius_mult = 3
 
 	if(punishable_triggerer && prob(60))
-		to_chat(punishable_triggerer, span_userdanger("Your plan to whack someone with a grenade on a stick backfires on you, literally!"))
+		to_chat(punishable_triggerer, span_userdanger(LANG("datum.84e96847", null)))
 		self_harm_radius_mult = 1 // we'll still give the guy who got hit some extra shredding, but not 3*radius
 		pellet_delta += radius
 		for(var/i in 1 to radius)

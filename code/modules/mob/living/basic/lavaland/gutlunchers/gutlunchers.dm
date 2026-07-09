@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAX_ATTACK_DIFFERENCE 3
 #define MAX_LOWER_ATTACK 15
 #define MINIMUM_POSSIBLE_SPEED 1
@@ -37,7 +38,6 @@
 	GLOB.gutlunch_count++
 	if(greyscale_config)
 		set_greyscale(colors = list(pick(possible_colors)))
-	AddElement(/datum/element/ai_retaliate)
 	if(can_breed)
 		add_breeding_component()
 
@@ -53,7 +53,7 @@
 		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	var/obj/ore_food = locate(/obj/item/stack/ore) in target
 	if(isnull(ore_food))
-		balloon_alert(src, "no food!")
+		balloon_alert(src, LANG("mob.3c546ddf", null))
 	else
 		UnarmedAttack(ore_food, TRUE, modifiers)
 	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN

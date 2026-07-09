@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The dark matt-eor. Only attracted by emagging 10 satellites and maximizing meteor chances, and it drops a singulo. Otherwise, it's not that bad.
 /obj/effect/meteor/dark_matteor
 	name = "dark matt-eor"
@@ -54,7 +55,7 @@
 		spark_system.start()
 
 /obj/effect/meteor/dark_matteor/shield_defense(obj/machinery/satellite/meteor_shield/defender)
-	defender.visible_message(span_danger("[defender]'s beam is reflected by [src]!"))
+	defender.visible_message(span_danger(LANG("obj.7c3d8808", list(defender, src))))
 	new /obj/effect/temp_visual/explosion/fast(get_turf(defender))
 	qdel(defender)
 	return FALSE

@@ -221,6 +221,7 @@ export const DmTarget = new Juke.Target({
     'sound/**',
     'tgui/public/tgui.html',
     "modular_nova/**", ///NOVA EDIT ADDITION - Making the CBT work
+    "modular_z121/**",
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
@@ -373,6 +374,9 @@ export const TgFontTarget = new Juke.Target({
 export const TguiTarget = new Juke.Target({
   dependsOn: [BunTarget, BiomeInstallTarget],
   inputs: [
+    'tools/i18n/tgui-catalog.mjs',
+    'strings/i18n/en/tgui.json',
+    'strings/i18n/zh-Hans/tgui.json',
     'tgui/rspack.config.ts',
     'tgui/**/package.json',
     'tgui/packages/**/*.+(js|cjs|ts|tsx|jsx|scss)',
@@ -449,6 +453,7 @@ export const AllTarget = new Juke.Target({
 
 export const TguiCleanTarget = new Juke.Target({
   executes: async () => {
+    Juke.rm('node_modules', { recursive: true });
     Juke.rm('tgui/public/.tmp', { recursive: true });
     Juke.rm('tgui/public/*.map');
     Juke.rm('tgui/public/*.{chunk,bundle,hot-update}.*');

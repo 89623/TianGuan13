@@ -39,11 +39,7 @@
 /// Handles sending text feedback to the equipper. Override to change the text.
 /obj/item/clothing/neck/necklace/translator/proc/equip_feedback(mob/living/carbon/human/equipper)
 	to_chat(equipper, span_boldnotice( \
-		"Slipping the necklace on, you feel the insidious creep of [power_source] \
-		enter your bones, your very shadow and soul. You find yourself with an \
-		unnatural knowledge of the [initial(language_granted.name)]; but the \
-		amulet's eye stares back at you with a gleeful intent. Causing you to \
-		shiver with unease, you don't want to keep this on forever." \
+		LANG("obj.66c26977", list(power_source, initial(language_granted.name))) \
 	))
 
 
@@ -63,9 +59,7 @@
 /// Handles sending text feedback to the unequipper. Override to change the text.
 /obj/item/clothing/neck/necklace/translator/proc/unequip_feedback(mob/living/carbon/human/unequipper)
 	to_chat(unequipper, span_boldnotice( \
-		"You feel the alien mind of [power_source] lose its interest in you as \
-		you remove the necklace. The eye closes, and your mind does as well, \
-		losing its grasp of [initial(language_granted.name)]" \
+		LANG("obj.ae5c2d0c", list(power_source, initial(language_granted.name))) \
 	))
 
 

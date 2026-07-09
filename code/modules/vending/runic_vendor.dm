@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PULSE_DISTANCE_RANGE 2
 
 /obj/machinery/vending/runic_vendor
@@ -64,7 +65,7 @@
 /obj/machinery/vending/runic_vendor/handle_deconstruct(disassembled)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	visible_message(span_warning("[src] flickers and disappears!"))
+	visible_message(span_warning(LANG("obj.98c7a439", list(src))))
 	playsound(src,'sound/items/weapons/resonator_blast.ogg',25,TRUE)
 	return ..()
 

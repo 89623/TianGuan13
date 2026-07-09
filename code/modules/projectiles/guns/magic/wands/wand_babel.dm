@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Scrambles the languages of someone you shoot.
  */
@@ -20,5 +21,5 @@
 
 /obj/item/gun/magic/wand/babel/do_suicide(mob/living/user)
 	. = ..()
-	user.say("Someone please kill me!", forced = "failed babel wand suicide")
+	user.say(LANG("obj.7d8048b9", null), forced = "failed babel wand suicide")
 	return SHAME

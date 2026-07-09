@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TEG_EFFICIENCY 0.65
 
 /obj/machinery/power/thermoelectric_generator
@@ -58,7 +59,7 @@
 
 /obj/machinery/power/thermoelectric_generator/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		balloon_alert(user, "open the panel!")
+		balloon_alert(user, LANG("obj.0592e3eb", null))
 		return
 	set_anchored(!anchored)
 	tool.play_tool_sound(src)
@@ -74,16 +75,16 @@
 	if(!anchored)
 		return
 	find_circulators()
-	balloon_alert(user, "circulators updated")
+	balloon_alert(user, LANG("obj.e21683f7", null))
 	return TRUE
 
 /obj/machinery/power/thermoelectric_generator/screwdriver_act(mob/user, obj/item/tool)
 	if(!anchored)
-		balloon_alert(user, "anchor it down!")
+		balloon_alert(user, LANG("obj.b74e8050", null))
 		return
 	toggle_panel_open()
 	tool.play_tool_sound(src)
-	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
+	balloon_alert(user, LANG("obj.a741c12e", list(panel_open ? "open" : "closed")))
 	return TRUE
 
 /obj/machinery/power/thermoelectric_generator/crowbar_act(mob/living/user, obj/item/tool)

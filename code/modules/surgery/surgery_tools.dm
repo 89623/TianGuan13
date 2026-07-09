@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/retractor
 	name = "retractor"
 	desc = "Retracts stuff."
@@ -144,13 +145,13 @@
 		tool_behaviour = TOOL_CAUTERY
 		set_light_color(LIGHT_COLOR_ORANGE)
 
-	balloon_alert(user, "lenses set to [active ? "drill" : "mend"]")
+	balloon_alert(user, LANG("obj.e796f03e", list(active ? "drill" : "mend")))
 	playsound(user ? user : src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/cautery/advanced/examine()
 	. = ..()
-	. += span_notice("It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode.")
+	. += span_notice(LANG("obj.4bf873d5", list(tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling")))
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -186,7 +187,7 @@
 	return surgical_tray_overlay
 
 /obj/item/surgicaldrill/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.e3bb8ecc", list(user, src, user.p_their(), user.p_theyre()))))
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, gib), DROP_ALL_REMAINS), 2.5 SECONDS)
 	user.SpinAnimation(3, 10)
 	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
@@ -249,7 +250,7 @@
 	return surgical_tray_overlay
 
 /obj/item/scalpel/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.c216a6c5", list(user, user.p_their(), pick("wrists", "throat", "stomach"), src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/scalpel/cyborg
@@ -360,8 +361,8 @@
 
 /obj/item/surgical_processor/examine(mob/user)
 	. = ..()
-	. += span_notice("Equip the processor in one of your active modules to access downloaded advanced surgeries.")
-	. += span_boldnotice("Advanced surgeries available:")
+	. += span_notice(LANG("obj.cc2369d1", null))
+	. += span_boldnotice(LANG("obj.bf400813", null))
 	//list of downloaded surgeries' names
 	var/list/surgeries_names = list()
 	for(var/datum/surgery_operation/downloaded_surgery as anything in GLOB.operations.get_instances_from(loaded_surgeries))
@@ -382,7 +383,7 @@
 /obj/item/surgical_processor/interact_with_atom(atom/design_holder, mob/living/user, list/modifiers)
 	if(!istype(design_holder, /obj/item/disk/surgery) && !istype(design_holder, /obj/machinery/computer/operating))
 		return NONE
-	balloon_alert(user, "copying designs...")
+	balloon_alert(user, LANG("obj.2842c08c", null))
 	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 25, TRUE)
 	if(do_after(user, 1 SECONDS, target = design_holder))
 		if(istype(design_holder, /obj/item/disk/surgery))
@@ -459,13 +460,13 @@
 		tool_behaviour = TOOL_SCALPEL
 		set_light_color(LIGHT_COLOR_BLUE)
 
-	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
+	balloon_alert(user, LANG("obj.09a4bc61", list(active ? "enabled" : "disabled")))
 	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/scalpel/advanced/examine()
 	. = ..()
-	. += span_notice("It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode.")
+	. += span_notice(LANG("obj.4bf873d5", list(tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw")))
 
 /obj/item/retractor/advanced
 	name = "mechanical pinches"
@@ -505,13 +506,13 @@
 	SIGNAL_HANDLER
 
 	tool_behaviour = (active ? TOOL_HEMOSTAT : TOOL_RETRACTOR)
-	balloon_alert(user, "gears set to [active ? "clamp" : "retract"]")
+	balloon_alert(user, LANG("obj.a7e19bc3", list(active ? "clamp" : "retract")))
 	playsound(user ? user : src, 'sound/items/tools/change_drill.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/retractor/advanced/examine()
 	. = ..()
-	. += span_notice("It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"].")
+	. += span_notice(LANG("obj.be45e7c0", list(tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat")))
 
 /obj/item/shears
 	name = "amputation shears"
@@ -543,7 +544,7 @@
 	var/mob/living/carbon/patient = amputee
 
 	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
-		to_chat(user, span_warning("The patient's limbs look too sturdy to amputate."))
+		to_chat(user, span_warning(LANG("obj.e283c18e", null)))
 		return
 
 	var/candidate_name
@@ -553,20 +554,20 @@
 	if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
 		tail_snip_candidate = patient.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(!tail_snip_candidate)
-			to_chat(user, span_warning("[patient] does not have a tail."))
+			to_chat(user, span_warning(LANG("obj.15298a7a", list(patient))))
 			return
 		candidate_name = tail_snip_candidate.name
 
 	else
 		limb_snip_candidate = patient.get_bodypart(check_zone(user.zone_selected))
 		if(!limb_snip_candidate)
-			to_chat(user, span_warning("[patient] is already missing that limb, what more do you want?"))
+			to_chat(user, span_warning(LANG("obj.d05f3e3d", list(patient))))
 			return
 		candidate_name = limb_snip_candidate.name
 
 	var/amputation_speed_mod = 1
 
-	patient.visible_message(span_danger("[user] begins to secure [src] around [patient]'s [candidate_name]."), span_userdanger("[user] begins to secure [src] around your [candidate_name]!"))
+	patient.visible_message(span_danger(LANG("obj.398f5191", list(user, src, patient, candidate_name))), span_userdanger(LANG("obj.4146f6cf", list(user, src, candidate_name))))
 	playsound(get_turf(patient), 'sound/items/tools/ratchet.ogg', 20, TRUE)
 	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
 		amputation_speed_mod *= 0.5
@@ -582,7 +583,7 @@
 			tail_snip_candidate.forceMove(get_turf(patient))
 		else
 			limb_snip_candidate.dismember()
-		user.visible_message(span_danger("[src] violently slams shut, amputating [patient]'s [candidate_name]."), span_notice("You amputate [patient]'s [candidate_name] with [src]."))
+		user.visible_message(span_danger(LANG("obj.d72a860b", list(src, patient, candidate_name))), span_notice(LANG("obj.13362e3a", list(patient, candidate_name, src))))
 		user.log_message("[user] has amputated [patient]'s [candidate_name] with [src]", LOG_GAME)
 		patient.log_message("[patient]'s [candidate_name] has been amputated by [user] with [src]", LOG_GAME)
 
@@ -590,7 +591,7 @@
 		user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
 /obj/item/shears/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.cdc1b619", list(user, user.p_them(), src, user.p_theyre()))))
 	var/timer = 1 SECONDS
 	for(var/obj/item/bodypart/thing in user.get_bodyparts())
 		if(thing.body_part == CHEST)
@@ -672,7 +673,7 @@
 	. = TRUE
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.name2reagent)
+			var/selected_reagent = tgui_input_list(usr, LANG("obj.fda84413", null), LANG("obj.f379b47b", null), GLOB.name2reagent)
 			if(!selected_reagent)
 				return FALSE
 

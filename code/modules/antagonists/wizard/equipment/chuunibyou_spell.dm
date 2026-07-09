@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/chuuni_invocations
 	name = "Chuuni Invocations"
 	desc = "Makes all your spells shout invocations, and the invocations become... stupid. You heal slightly after casting a spell."
@@ -15,13 +16,13 @@
 /datum/action/cooldown/spell/chuuni_invocations/cast(mob/living/cast_on)
 	. = ..()
 
-	to_chat(cast_on, span_green("You focus your arcane knowledge into a slice-of-life format..."))
+	to_chat(cast_on, span_green(LANG("datum.eb3c9052", null)))
 	if(!do_after(cast_on, 5 SECONDS))
-		to_chat(cast_on, span_warning("Your focus is broken, and the episodic rom-com moments slowly fade."))
+		to_chat(cast_on, span_warning(LANG("datum.e40fb1bf", null)))
 		return
 
 	playsound(cast_on, 'sound/effects/bamf.ogg', 75, TRUE, 5)
-	to_chat(cast_on, span_danger("You feel your very essense binding to a slice-of-life format!"))
+	to_chat(cast_on, span_danger(LANG("datum.d3bf06a1", null)))
 
 	cast_on.AddComponent(/datum/component/chuunibyou)
 
@@ -30,10 +31,10 @@
 		human_cast_on.dropItemToGround(human_cast_on.glasses)
 		var/obj/item/clothing/head/wizard/wizhat = human_cast_on.head
 		if(istype(wizhat))
-			to_chat(human_cast_on, span_notice("Your [wizhat] transforms into an eyepatch."))
+			to_chat(human_cast_on, span_notice(LANG("datum.1b341085", list(wizhat))))
 			qdel(wizhat)
 		else
-			to_chat(human_cast_on, span_notice("An eyepatch pops into existence over one of your eyes."))
+			to_chat(human_cast_on, span_notice(LANG("datum.0a616995", null)))
 		human_cast_on.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch/medical/chuuni(human_cast_on), ITEM_SLOT_EYES)
 
 	qdel(src)

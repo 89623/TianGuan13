@@ -71,8 +71,7 @@
 /obj/machinery/ammo_workbench/examine(mob/user)
 	. += ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>\
-			Material consumption at <b>[creation_efficiency*100]%</b>.")
+		. += span_notice(LANG("obj.87822767", list(materials.max_amount, creation_efficiency*100)))
 
 /obj/machinery/ammo_workbench/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -492,7 +491,7 @@
 				deltimer(timer_id)
 				timer_id = null
 		loaded_magazine = inserted
-		to_chat(user, span_notice("You insert [inserted] into [src]'s reciprocal."))
+		to_chat(user, span_notice(LANG("obj.7f36837a", list(inserted, src))))
 		flick("h_lathe_load", src)
 		update_appearance()
 		update_ammotypes()
@@ -513,7 +512,7 @@
 				timer_id = null
 		loaded_module = inserted
 		ammo_categories = loaded_module.ammo_categories
-		to_chat(user, span_notice("You insert [inserted] into [src]'s module port."))
+		to_chat(user, span_notice(LANG("obj.304a4629", list(inserted, src))))
 		flick("h_lathe_load", src)
 		update_appearance()
 		update_ammotypes()
@@ -523,13 +522,13 @@
 
 /obj/machinery/ammo_workbench/proc/is_insertion_ready(mob/user, obj/item/inserted)
 	if(panel_open)
-		to_chat(user, span_warning("You can't load [src] while it's opened!"))
+		to_chat(user, span_warning(LANG("obj.eb073bc6", list(src))))
 		return FALSE
 	if(machine_stat & BROKEN)
-		to_chat(user, span_warning("[src] is broken."))
+		to_chat(user, span_warning(LANG("obj.6aff4a89", list(src))))
 		return FALSE
 	if(machine_stat & NOPOWER)
-		to_chat(user, span_warning("[src] has no power."))
+		to_chat(user, span_warning(LANG("obj.7617f8a9", list(src))))
 		return FALSE
 	return TRUE
 

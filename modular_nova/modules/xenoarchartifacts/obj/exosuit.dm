@@ -75,7 +75,7 @@
 	if(!action_checks(target))
 		return
 	playsound(chassis, 'sound/effects/hallucinations/wail.ogg', 100, TRUE)
-	to_chat(source, "[icon2html(src, source)]<font color='red' size='5'>AAAAAAAAAH</font>")
+	to_chat(source, LANG("obj.a79c5210", list(icon2html(src, source))))
 	for(var/mob/living/carbon/carbon_mob in ohearers(6, chassis))
 		if(HAS_TRAIT(carbon_mob, TRAIT_DEAF))
 			continue

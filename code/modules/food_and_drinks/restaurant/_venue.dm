@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Represents the abstract concept of a food venue in the code.
 /datum/venue
 	///Name of the venue, also used for the icon state of any radials it can be selected in
@@ -221,7 +222,7 @@
 		return ..()
 
 	if(!(linked_venue.req_access in used_id.GetAccess()))
-		to_chat(user, span_warning("This card lacks the access to change this venue's status."))
+		to_chat(user, span_warning(LANG("obj.ecca8e63", null)))
 		return
 
 	linked_venue.toggle_open()
@@ -232,7 +233,7 @@
 		return NONE
 
 	if(!allowed(user))
-		balloon_alert(user, "insufficient access!")
+		balloon_alert(user, LANG("obj.9b3b0da8", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/list/radial_items = list()
@@ -255,7 +256,7 @@
 
 	turned_on_portal = WEAKREF(user)
 
-	balloon_alert(user, "venue changed to [chosen_venue.name]")
+	balloon_alert(user, LANG("obj.40d03b90", list(chosen_venue.name)))
 
 	if(linked_venue && (src in linked_venue.restaurant_portals)) //We're already linked, unlink us.
 		linked_venue.restaurant_portals -= src
@@ -275,7 +276,7 @@
 
 /obj/machinery/restaurant_portal/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, LANG("obj.2152c7cd", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if (default_unfasten_wrench(user, tool))

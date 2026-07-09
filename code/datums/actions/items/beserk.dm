@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/item_action/berserk_mode
 	name = "Berserk"
 	desc = "Increase your movement and melee speed while also increasing your melee armor for a short amount of time."
@@ -21,10 +22,10 @@
 	var/obj/item/clothing/head/hooded/berserker/berserk = target
 	if(berserk.berserk_active)
 		if(feedback)
-			to_chat(owner, span_warning("You are already berserk!"))
+			to_chat(owner, span_warning(LANG("datum.67bdabf9", null)))
 		return FALSE
 	if(berserk.berserk_charge < 100)
 		if(feedback)
-			to_chat(owner, span_warning("You don't have a full charge."))
+			to_chat(owner, span_warning(LANG("datum.8ceb25a0", null)))
 		return FALSE
 	return TRUE

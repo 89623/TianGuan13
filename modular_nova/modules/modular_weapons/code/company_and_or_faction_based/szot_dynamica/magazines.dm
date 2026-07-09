@@ -80,11 +80,7 @@
 /obj/item/ammo_box/magazine/recharge/plasma_battery/examine_more(mob/user)
 	. = ..()
 
-	. += "The Mark-2 Energy Cells for plasma-based weaponry are a unique combination of neccessity and ingenuity. \
-		Using an inner sleeve of quartz and cupronickel, these cells are capable of absorbing thermal energy and converting it \
-		into electric potential through thermal expansion and piezo-electricity. While the capacity of shots are quite low, \
-		this is due to plasma guns requirement to burn small amounts of material inside a compressed medium. \
-		The results are often viscious burns on contacted skin, though travel often cools it too much for punching through armor."
+	. += LANG("obj.c14a2df8", null)
 
 	return .
 
@@ -100,7 +96,7 @@
 	var/sparks_volume = 30
 	if(length(stored_ammo) == max_ammo)
 		sparks_volume = 80 //full charge should be noticeable
-		balloon_alert_to_viewers("[src] crackles with energy!")
+		balloon_alert_to_viewers(LANG("obj.abbda6f9", list(src)))
 	playsound(src, 'sound/effects/sparks/sparks2.ogg', sparks_volume, TRUE)
 
 // Shotgun revolver's cylinder
@@ -173,20 +169,20 @@
 	if(length(stored_ammo))
 		var/obj/item/ammo_casing/pulse/top_cell = get_round()
 		if(istype(top_cell))
-			. += span_notice("The topmost loaded cell has <b>[top_cell.remaining_uses]</b> out of <b>[top_cell.max_uses]</b> shots remaining.")
+			. += span_notice(LANG("obj.e4a5de6c", list(top_cell.remaining_uses, top_cell.max_uses)))
 
 /obj/item/ammo_box/magazine/pulse/add_notes_box()
 	var/list/readout = list()
 	var/obj/item/ammo_casing/pulse/sample_casing = ammo_type
 
 	// Display magazine capacity info
-	readout += "This [span_warning(magazine_designation)] magazine holds up to [span_warning("[max_ammo] plasma plugs")], with each plug capable of [span_warning("[initial(sample_casing.max_uses)] pulses")]."
-	readout += "Total capacity: [span_warning("[max_ammo * initial(sample_casing.max_uses)] pulses")] when fully loaded."
+	readout += LANG("obj.1f5c34bf", list(span_warning(magazine_designation), span_warning("[max_ammo] plasma plugs"), span_warning("[initial(sample_casing.max_uses)] pulses")))
+	readout += LANG("obj.b982c996", list(span_warning("[max_ammo * initial(sample_casing.max_uses)] pulses")))
 
 	// Get actual round info if available
 	var/obj/item/ammo_casing/mag_ammo = get_and_shuffle_round()
 	if(istype(mag_ammo))
-		readout += "\n[mag_ammo.add_notes_ammo()]"
+		readout += LANG("obj.65aac1b5", list(mag_ammo.add_notes_ammo()))
 
 	return readout.Join("\n")
 

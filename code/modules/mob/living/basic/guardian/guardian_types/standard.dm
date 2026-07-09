@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Plain, but durable and strong. Can destroy walls.
 /mob/living/basic/guardian/standard
 	guardian_type = GUARDIAN_STANDARD
@@ -59,7 +60,7 @@
 	if (!.)
 		return
 	var/mob/living/basic/guardian/standard/stand = owner
-	var/input = tgui_input_text(owner, "What do you want your battlecry to be?", "Battle Cry", max_length = max_length)
+	var/input = tgui_input_text(owner, LANG("datum.545047b8", null), LANG("datum.ede1244d", null), max_length = max_length)
 	if(!input)
 		return
 	stand.battlecry = input

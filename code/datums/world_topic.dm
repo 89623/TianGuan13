@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // SETUP
 
 /proc/TopicHandlers()
@@ -142,7 +143,7 @@
 
 		var/timer_id = href_list["reject_cross_comms_message"]
 		if (!(timer_id in timers))
-			to_chat(usr, span_warning("It's too late!"))
+			to_chat(usr, span_warning(LANG("datum.3c2954fe", null)))
 			return
 
 		deltimer(timer_id)
@@ -159,7 +160,7 @@
 
 	LAZYREMOVE(timers, timer_id)
 
-	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
+	minor_announce(input["message"], LANG("datum.18f3f0f2", list(input["message_sender"])))
 	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
 	for(var/obj/machinery/computer/communications/communications_console in GLOB.shuttle_caller_list)
 		communications_console.override_cooldown()
@@ -169,7 +170,7 @@
 
 /datum/world_topic/news_report/Run(list/input)
 
-	priority_announce(input["message"], "Breaking Update From [input["message_sender"]]") //NOVA EDIT CHANGE
+	priority_announce(input["message"], LANG("datum.01758d2b", list(input["message_sender"]))) //NOVA EDIT CHANGE
 
 /datum/world_topic/adminmsg
 	keyword = "adminmsg"
@@ -281,7 +282,7 @@
 		return
 
 	if (!(timer_id in timers))
-		to_chat(usr, span_warning("It's too late!"))
+		to_chat(usr, span_warning(LANG("datum.3c2954fe", null)))
 		return
 
 	deltimer(timer_id)

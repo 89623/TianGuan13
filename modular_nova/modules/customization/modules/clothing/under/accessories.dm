@@ -29,19 +29,19 @@
 /obj/item/clothing/accessory/badge/attack_self(mob/user as mob)
 
 	if(!stored_name)
-		to_chat(user, "You polish your old badge fondly, shining up the surface.")
+		to_chat(user, LANG("obj.fb943151", null))
 		set_name(user.real_name)
 		return
 
 	if(isliving(user))
 		if(stored_name)
-			user.visible_message(span_notice("[user] displays their [src.name].\nIt reads: [stored_name], [badge_string]."),span_notice("You display your [src.name].\nIt reads: [stored_name], [badge_string]."))
+			user.visible_message(span_notice(LANG("obj.15bd9113", list(user, src.name, stored_name, badge_string))),span_notice(LANG("obj.f2be5adc", list(src.name, stored_name, badge_string))))
 		else
-			user.visible_message(span_notice("[user] displays their [src.name].\nIt reads: [badge_string]."),span_notice("You display your [src.name]. It reads: [badge_string]."))
+			user.visible_message(span_notice(LANG("obj.29ea9509", list(user, src.name, badge_string))),span_notice(LANG("obj.d1ebdd6d", list(src.name, badge_string))))
 
 /obj/item/clothing/accessory/badge/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message(span_danger("[user] invades [M]'s personal space, thrusting [src] into their face insistently."),span_danger("You invade [M]'s personal space, thrusting [src] into their face insistently."))
+		user.visible_message(span_danger(LANG("obj.574f1ad7", list(user, M, src))),span_danger(LANG("obj.186df07a", list(M, src))))
 		user.do_attack_animation(M)
 
 // Sheriff Badge (toy)
@@ -53,12 +53,12 @@
 	icon_state = "sheriff"
 
 /obj/item/clothing/accessory/badge/sheriff/attack_self(mob/user as mob)
-	user.visible_message("[user] shows their sheriff badge. There's a new sheriff in town!",\
-		"You flash the sheriff badge to everyone around you!")
+	user.visible_message(LANG("obj.e4163f94", list(user)),\
+		LANG("obj.7ce0f99d", null))
 
 /obj/item/clothing/accessory/badge/sheriff/attack(mob/living/carbon/human/M, mob/living/user)
 	if(isliving(user))
-		user.visible_message(span_danger("[user] invades [M]'s personal space, the sheriff badge into their face!."),span_danger("You invade [M]'s personal space, thrusting the sheriff badge into their face insistently."))
+		user.visible_message(span_danger(LANG("obj.2684d6f8", list(user, M))),span_danger(LANG("obj.d128b8a9", list(M))))
 		user.do_attack_animation(M)
 
 //.Holobadges.
@@ -83,18 +83,18 @@
 
 /obj/item/clothing/accessory/badge/holo/attack_self(mob/user as mob)
 	if(!stored_name)
-		to_chat(user, "Waving around a holobadge before swiping an ID would be pretty pointless.")
+		to_chat(user, LANG("obj.97f2822f", null))
 		return
 	return ..()
 
 /obj/item/clothing/accessory/badge/holo/emag_act(remaining_charges, mob/user)
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, "already cracked")
+		balloon_alert(user, LANG("obj.e609804d", null))
 		return FALSE
 
 	obj_flags |= EMAGGED
-	balloon_alert(user, "security checks cracked!")
-	to_chat(user, span_danger("You crack the holobadge security checks."))
+	balloon_alert(user, LANG("obj.8e75287a", null))
+	to_chat(user, span_danger(LANG("obj.9a38cfb5", null)))
 	return TRUE
 
 /obj/item/clothing/accessory/badge/holo/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -106,11 +106,11 @@
 			id_card = attacking_item
 
 		if((ACCESS_SECURITY in id_card.access) || (obj_flags & EMAGGED))
-			to_chat(user, "You imprint your ID details onto the badge.")
+			to_chat(user, LANG("obj.f801131d", null))
 			set_name(user.real_name)
 			badge_string = id_card.assignment
 		else
-			to_chat(user, "[src] rejects your insufficient access rights.")
+			to_chat(user, LANG("obj.9de51e4b", list(src)))
 		return
 	return ..()
 
@@ -219,9 +219,9 @@
 		var/mob/living/carbon/human/human_wearer = source
 		// Examining a mob wearing the clothes, wearing the pin will also show the message
 		var/obj/item/clothing/attached_to = loc
-		examine_list += "A green pin is attached to [human_wearer.p_their()] [attached_to.name][owner ? ", belonging to [owner]." : "."][green_time_remaining_text]"
+		examine_list += LANG("obj.0db9523a", list(human_wearer.p_their(), attached_to.name, owner ? ", belonging to [owner]." : ".", green_time_remaining_text))
 	else
-		examine_list += "A green pin is attached to [source][owner ? ", belonging to [owner]." : "."][green_time_remaining_text]"
+		examine_list += LANG("obj.8b4e1eee", list(source, owner ? ", belonging to [owner]." : ".", green_time_remaining_text))
 
 /obj/item/clothing/accessory/green_pin/examine(mob/user)
 	. = ..()
@@ -235,7 +235,7 @@
 	// How many hours of playtime left until the green pin expires
 	var/green_time_remaining = sanitize_integer((PLAYTIME_GREEN - owner.client?.get_exp_living(pure_numeric = TRUE) / 60), 0, (PLAYTIME_GREEN / 60))
 	if(green_time_remaining > 0)
-		examine_text += (" It reads '[green_time_remaining] hour[green_time_remaining >= 2 ? "s" : ""].'")
+		examine_text += (LANG("obj.664b49c2", list(green_time_remaining, green_time_remaining >= 2 ? "s" : "")))
 
 	. += span_nicegreen(examine_text)
 
@@ -294,16 +294,16 @@
 		return CLICK_ACTION_BLOCKING
 	var/mob/living/carbon/human/wearer = user
 	if(wearer.get_active_held_item() != src)
-		to_chat(wearer, span_warning("You must hold the [src] in your hand to do this!"))
+		to_chat(wearer, span_warning(LANG("obj.a549c0e7", list(src))))
 		return CLICK_ACTION_BLOCKING
 	if(icon_state == "[base_icon_state]")
 		icon_state = "[base_icon_state]_hidden"
 		worn_icon_state = "[base_icon_state]_hidden"
-		balloon_alert(wearer, "hidden")
+		balloon_alert(wearer, LANG("obj.c55b3838", null))
 	else
 		icon_state = "[base_icon_state]"
 		worn_icon_state = "[base_icon_state]"
-		balloon_alert(wearer, "shown")
+		balloon_alert(wearer, LANG("obj.7b0f70ca", null))
 	update_icon() // update that mf
 	return CLICK_ACTION_SUCCESS
 
@@ -323,8 +323,8 @@
 	var/list/victims = get_hearers_in_view(4, tile)
 	if(istype(tile))
 		tile.atmos_spawn_air("[GAS_WATER_VAPOR]=50;[TURF_TEMPERATURE(1000)]")
-	tile.balloon_alert_to_viewers("overloaded!")
-	tile.visible_message("<span class='danger'>[src] overloads, exploding in a cloud of hot steam!</span>")
+	tile.balloon_alert_to_viewers(LANG("obj.13bc0f79", null))
+	tile.visible_message(LANG("obj.fa5bca17", list(src)))
 	playsound(tile, 'sound/effects/spray.ogg', 80)
 	for(var/mob/living/collateral in victims)
 		collateral.set_jitter_if_lower(15 SECONDS)

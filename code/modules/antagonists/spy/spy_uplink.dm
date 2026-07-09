@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Spy uplink
  *
@@ -44,9 +45,9 @@
 
 	if(!is_our_spy(user))
 		return
-	examine_list += span_notice("You recognize this as your <i>spy uplink</i>.")
-	examine_list += span_notice("- [EXAMINE_HINT("Use it in hand")] to view your bounty list.")
-	examine_list += span_notice("- [EXAMINE_HINT("Right click")] with it on a bounty target to claim it.")
+	examine_list += span_notice(LANG("datum.32ac4b36", null))
+	examine_list += span_notice(LANG("datum.9a5f7ab0", list(EXAMINE_HINT("Use it in hand"))))
+	examine_list += span_notice(LANG("datum.ff18e074", list(EXAMINE_HINT("Right click"))))
 
 /datum/component/spy_uplink/proc/block_pda_bombs(obj/item/source)
 	SIGNAL_HANDLER
@@ -96,7 +97,7 @@
 /// Wraps the stealing process in a scanning effect.
 /datum/component/spy_uplink/proc/start_stealing(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	if(!isturf(stealing.loc) && stealing.loc != spy)
-		to_chat(spy, span_warning("Your uplink blinks red: [stealing] cannot be extracted from there."))
+		to_chat(spy, span_warning(LANG("datum.307ebb76", list(stealing))))
 		return FALSE
 
 	log_combat(spy, stealing, "started stealing", parent, "(spy bounty)")
@@ -134,17 +135,17 @@
 /// If successful, proceeds to complete the bounty.
 /datum/component/spy_uplink/proc/steal_process(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	spy.visible_message(
-		span_warning("[spy] starts scanning [stealing] with a strange device..."),
-		span_notice("You start scanning [stealing], preparing it for extraction."),
+		span_warning(LANG("datum.d93da5e4", list(spy, stealing))),
+		span_notice(LANG("datum.be5f19a1", list(stealing))),
 	)
 
 	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), hidden = TRUE))
 		return FALSE
 	if(bounty.claimed)
-		to_chat(spy, span_warning("Your uplink blinks red: The bounty for [stealing] has been claimed by another spy!"))
+		to_chat(spy, span_warning(LANG("datum.86b2d04f", list(stealing))))
 		return FALSE
 	if(spy.is_holding(stealing) && !spy.dropItemToGround(stealing))
-		to_chat(spy, span_warning("Your uplink blinks red: [stealing] seems stuck to your hand!"))
+		to_chat(spy, span_warning(LANG("datum.432b57b2", list(stealing))))
 		return FALSE
 
 	var/bounty_key = bounty.get_dupe_protection_key(stealing)
@@ -162,8 +163,7 @@
 	if(isitem(reward))
 		spy.put_in_hands(reward)
 
-	to_chat(spy, span_notice("Bounty complete! You have been rewarded with \a [reward].\
-		[reward.loc == spy ? "" : " <i>Find it at your feet.</i>"]"))
+	to_chat(spy, span_notice(LANG("datum.33e62f45", list(reward, reward.loc == spy ? "" : " <i>Find it at your feet.</i>"))))
 
 	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 

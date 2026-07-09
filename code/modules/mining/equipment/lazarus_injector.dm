@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Players can revive simplemobs with this.
  *
@@ -35,10 +36,10 @@
 
 	var/mob/living/target_animal = target
 	if(!target_animal.compare_sentience_type(revive_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
-		balloon_alert(user, "invalid creature!")
+		balloon_alert(user, LANG("obj.1c85036c", null))
 		return ITEM_INTERACT_BLOCKING
 	if(target_animal.stat != DEAD)
-		balloon_alert(user, "it's not dead!")
+		balloon_alert(user, LANG("obj.8ac73803", null))
 		return ITEM_INTERACT_BLOCKING
 
 	target_animal.lazarus_revive(user, malfunctioning)
@@ -46,7 +47,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/lazarus_injector/proc/expend(atom/revived_target, mob/user)
-	user.visible_message(span_notice("[user] injects [revived_target] with [src], reviving it."))
+	user.visible_message(span_notice(LANG("obj.b858eab1", list(user, revived_target, src))))
 	SSblackbox.record_feedback("tally", "lazarus_injector", 1, revived_target.type)
 	loaded = FALSE
 	playsound(src,'sound/effects/refill.ogg',50,TRUE)
@@ -62,6 +63,6 @@
 /obj/item/lazarus_injector/examine(mob/user)
 	. = ..()
 	if(!loaded)
-		. += span_info("[src] is empty.")
+		. += span_info(LANG("obj.ab993876", list(src)))
 	if(malfunctioning)
-		. += span_info("The display on [src] seems to be flickering.")
+		. += span_info(LANG("obj.06756d44", list(src)))

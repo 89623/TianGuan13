@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/electronics/airlock
 	name = "airlock electronics"
 	req_access = list(ACCESS_MAINT_TUNNELS)
@@ -20,7 +21,7 @@
 
 /obj/item/electronics/airlock/examine(mob/user)
 	. = ..()
-	. += span_notice("Has a neat <i>selection menu</i> for modifying airlock access levels.")
+	. += span_notice(LANG("obj.7d0b59c2", null))
 
 /**
  * Create a copy of the electronics

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/item_action/mod
 	background_icon_state = "bg_mod"
 	overlay_icon_state = "bg_mod_border"
@@ -33,7 +34,7 @@
 /datum/action/item_action/mod/do_effect(trigger_flags)
 	var/obj/item/mod/control/mod = target
 	if(mod.malfunctioning && prob(MOD_MALFUNCTION_PROB))
-		mod.balloon_alert(usr, "button malfunctions!")
+		mod.balloon_alert(usr, LANG("datum.a820219e", null))
 		return FALSE
 	return TRUE
 
@@ -157,7 +158,7 @@
 		// clears check hands and check conscious
 		check_flags = NONE
 	name = "Activate [capitalize(linked_module.name)]"
-	desc = "Quickly activate [linked_module]."
+	desc = LANG("datum.577f2905", list(linked_module))
 	RegisterSignals(linked_module, list(
 		COMSIG_MODULE_ACTIVATED,
 		COMSIG_MODULE_DEACTIVATED,

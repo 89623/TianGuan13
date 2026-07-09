@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Remain in someones view without breaking line of sight
 /datum/action/cooldown/spell/pointed/unsettle
 	name = "Unsettle"
@@ -25,11 +26,11 @@
 	. = ..()
 
 	if(!isliving(cast_on))
-		cast_on.balloon_alert(owner, "cannot be targeted!")
+		cast_on.balloon_alert(owner, LANG("datum.90038a3d", null))
 		return FALSE
 
 	if(!check_if_staring(cast_on))
-		owner.balloon_alert(owner, "cannot see you!")
+		owner.balloon_alert(owner, LANG("datum.550658cc", null))
 		return FALSE
 
 	return .
@@ -51,10 +52,10 @@
 	SIGNAL_HANDLER
 
 	if(target.is_blind() || !(owner in view(target, world.view)))
-		owner.balloon_alert(owner, "line of sight broken!")
+		owner.balloon_alert(owner, LANG("datum.3a683ff2", null))
 		return FALSE
 	if(in_combat)
-		owner.balloon_alert(owner, "interrupted by combat!")
+		owner.balloon_alert(owner, LANG("datum.7b8a9de2", null))
 		in_combat = FALSE
 	return TRUE
 
@@ -134,5 +135,5 @@
 	if(istype(get_turf(target), valid_target_turf))
 		return ..()
 
-	owner.balloon_alert(owner, "must target [initial(valid_target_turf.name)]!")
+	owner.balloon_alert(owner, LANG("datum.686f201d", list(initial(valid_target_turf.name))))
 	return FALSE

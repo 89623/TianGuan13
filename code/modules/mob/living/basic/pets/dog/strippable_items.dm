@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //corgi's stippable items
 
 GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
@@ -50,7 +51,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		return FALSE
 
 	if(!istype(equipping, /obj/item/clothing/neck/petcollar))
-		to_chat(user, span_warning("That's not a collar."))
+		to_chat(user, span_warning(LANG("datum.bd32f942", null)))
 		return FALSE
 
 	return TRUE
@@ -78,7 +79,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		return FALSE
 
 	if(!ispath(equipping.dog_fashion, /datum/dog_fashion/back))
-		to_chat(user, span_warning("You set [equipping] on [source]'s back, but it falls off!"))
+		to_chat(user, span_warning(LANG("datum.790459cf", list(equipping, source))))
 		equipping.forceMove(source.drop_location())
 		if(prob(25))
 			step_rand(equipping)
@@ -124,7 +125,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 		return FALSE
 
 	if(!isidcard(equipping))
-		to_chat(user, span_warning("You can't pin [equipping] to [source]!"))
+		to_chat(user, span_warning(LANG("datum.acd4c585", list(equipping, source))))
 		return FALSE
 
 	return TRUE

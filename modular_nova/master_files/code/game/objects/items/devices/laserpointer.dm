@@ -20,18 +20,18 @@
 
 /obj/item/laser_pointer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!upgradable)
-		balloon_alert(user, "can't remove integrated diode!")
+		balloon_alert(user, LANG("obj.0c1764f5", null))
 		return
 	return ..()
 
 /obj/item/laser_pointer/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/stock_parts/micro_laser) || istype(attacking_item, /obj/item/stack/ore/bluespace_crystal))
 		if(!upgradable)
-			balloon_alert(user, "can't upgrade integrated parts!")
+			balloon_alert(user, LANG("obj.e0b58e88", null))
 			return
 	return ..()
 
 /obj/item/laser_pointer/examine(mob/user)
 	. = ..()
 	if(!upgradable)
-		. += span_notice("The diode and the lens are both cheap, integrated components. This pointer cannot be upgraded.")
+		. += span_notice(LANG("obj.54abf789", null))

@@ -96,7 +96,7 @@
  */
 /obj/item/glassblowing/molten_glass/proc/try_burn_user(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, remaining_heat))
-		to_chat(user, span_warning("You burn your hands trying to pick up [src]!"))
+		to_chat(user, span_warning(LANG("obj.741aca41", list(src))))
 		user.emote("scream")
 		user.dropItemToGround(src)
 		var/obj/item/bodypart/affecting = user.get_active_hand()
@@ -136,19 +136,19 @@
  */
 /obj/item/glassblowing/proc/get_examine_message(obj/item/glassblowing/molten_glass/glass)
 	if(COOLDOWN_FINISHED(glass, remaining_heat))
-		. += span_warning("The glass has cooled down and will require reheating to modify! ")
+		. += span_warning(LANG("obj.64a25cdb", null))
 	if(!length(glass.steps_remaining))
 		return
 	if(glass.steps_remaining[STEP_BLOW])
-		. += "The glass requires [glass.steps_remaining[STEP_BLOW]] more blowing actions! "
+		. += LANG("obj.1243f489", list(glass.steps_remaining[STEP_BLOW]))
 	if(glass.steps_remaining[STEP_SPIN])
-		. += "The glass requires [glass.steps_remaining[STEP_SPIN]] more spinning actions! "
+		. += LANG("obj.0558975b", list(glass.steps_remaining[STEP_SPIN]))
 	if(glass.steps_remaining[STEP_PADDLE])
-		. += "The glass requires [glass.steps_remaining[STEP_PADDLE]] more paddling actions! "
+		. += LANG("obj.a84744bb", list(glass.steps_remaining[STEP_PADDLE]))
 	if(glass.steps_remaining[STEP_SHEAR])
-		. += "The glass requires [glass.steps_remaining[STEP_SHEAR]] more shearing actions! "
+		. += LANG("obj.27a6c1a9", list(glass.steps_remaining[STEP_SHEAR]))
 	if(glass.steps_remaining[STEP_JACKS])
-		. += "The glass requires [glass.steps_remaining[STEP_JACKS]] more jacking actions!"
+		. += LANG("obj.d5d6212c", list(glass.steps_remaining[STEP_JACKS]))
 
 /obj/item/glassblowing/blowing_rod/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/item/glassblowing/molten_glass/attacking_glass = interacting_with
@@ -156,12 +156,12 @@
 		return NONE
 
 	if(glass_ref?.resolve())
-		to_chat(user, span_warning("[src] already has some glass on it!"))
+		to_chat(user, span_warning(LANG("obj.571f10d6", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(attacking_glass, src))
 		return ITEM_INTERACT_BLOCKING
 	glass_ref = WEAKREF(attacking_glass)
-	to_chat(user, span_notice("[src] picks up [attacking_glass]."))
+	to_chat(user, span_notice(LANG("obj.6147eb56", list(src, attacking_glass))))
 	icon_state = "blow_pipe_full"
 	return ITEM_INTERACT_SUCCESS
 
@@ -171,12 +171,12 @@
 
 	if(istype(attacking_item, /obj/item/glassblowing/molten_glass))
 		if(glass)
-			to_chat(user, span_warning("[src] already has some glass on it still!"))
+			to_chat(user, span_warning(LANG("obj.4e2124d1", list(src))))
 			return
 		if(!user.transferItemToLoc(attacking_item, src))
 			return
 		glass_ref = WEAKREF(attacking_item)
-		to_chat(user, span_notice("[src] picks up [attacking_item]."))
+		to_chat(user, span_notice(LANG("obj.6147eb56", list(src, attacking_item))))
 		icon_state = "blow_pipe_full"
 		return
 
@@ -288,7 +288,7 @@
 				glass.chosen_item = null
 				glass.steps_remaining = null
 				glass.is_finished = FALSE
-				to_chat(usr, span_notice("You start over with the [src]."))
+				to_chat(usr, span_notice(LANG("obj.917dced0", list(src))))
 
 
 /**
@@ -365,7 +365,7 @@
 		return
 
 	if(COOLDOWN_FINISHED(glass, remaining_heat))
-		balloon_alert(user, "glass too cool!")
+		balloon_alert(user, LANG("obj.36885911", null))
 		return FALSE
 
 	if(in_use)
@@ -382,7 +382,7 @@
 		in_use = FALSE
 		return FALSE
 
-	to_chat(user, span_notice("You begin to [step_id] [src]."))
+	to_chat(user, span_notice(LANG("obj.8b820c98", list(step_id, src))))
 	if(!do_after(user, actioning_speed, target = src))
 		fail_message("You interrupt an action!", user)
 		REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
@@ -398,7 +398,7 @@
 	REMOVE_TRAIT(tool_to_use, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
 	in_use = FALSE
 
-	to_chat(user, span_notice("You finish trying to [step_id] [src]."))
+	to_chat(user, span_notice(LANG("obj.69274953", list(step_id, src))))
 	user.mind.adjust_experience(/datum/skill/production, 10)
 
 
@@ -437,7 +437,7 @@
 
 	if(step_id == STEP_BLOW || step_id == STEP_SPIN)
 		if(HAS_TRAIT(user, TRAIT_CURRENTLY_GLASSBLOWING))
-			balloon_alert(user, "already glassblowing!")
+			balloon_alert(user, LANG("obj.8b7c3dc8", null))
 			return FALSE
 
 		ADD_TRAIT(user, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)
@@ -453,11 +453,11 @@
 			used_tool = user.is_holding_item_of_type(/obj/item/glassblowing/jacks)
 
 	if(!used_tool)
-		balloon_alert(user, "need the right tool!")
+		balloon_alert(user, LANG("obj.9dba79d0", null))
 		return FALSE
 
 	if(HAS_TRAIT(used_tool, TRAIT_CURRENTLY_GLASSBLOWING))
-		balloon_alert(user, "already in use!")
+		balloon_alert(user, LANG("obj.38f46f8c", null))
 		return FALSE
 
 	ADD_TRAIT(used_tool, TRAIT_CURRENTLY_GLASSBLOWING, TRAIT_GLASSBLOWING)

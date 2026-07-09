@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/export/paperwork
 	cost = CARGO_CRATE_VALUE * 3
 	unit_name = "paperwork pile"
@@ -39,4 +40,4 @@
 
 	if(backfired)
 		backfired = FALSE
-		. += " Counterfeit paperwork was detected in this shipment. A fine has been taken from your budget as a result."
+		. += LANG("datum.d48cb9a6", null)

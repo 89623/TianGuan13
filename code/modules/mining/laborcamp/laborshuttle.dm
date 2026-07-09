@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/shuttle/labor
 	name = "labor shuttle console"
 	desc = "Used to call and send the labor camp shuttle."
@@ -19,11 +20,11 @@
 		return FALSE
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle("laborcamp")
 	if(!M)
-		to_chat(user, span_warning("Cannot locate shuttle!"))
+		to_chat(user, span_warning(LANG("obj.0578f885", null)))
 		return FALSE
 	var/obj/docking_port/stationary/S = M.get_docked()
 	if(S?.name == "laborcamp_away")
-		to_chat(user, span_warning("Shuttle is already at the outpost!"))
+		to_chat(user, span_warning(LANG("obj.93f0437c", null)))
 		return FALSE
 	return TRUE
 

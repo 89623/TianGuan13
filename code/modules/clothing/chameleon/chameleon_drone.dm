@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/item_action/chameleon/drone/randomise
 	name = "Randomise Headgear"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
@@ -39,7 +40,7 @@
 	else if(istype(old_headgear, /obj/item/clothing/mask/chameleon/drone))
 		new_headgear = new /obj/item/clothing/head/chameleon/drone(droney)
 	else
-		to_chat(owner, span_warning("You shouldn't be able to toggle a camogear helmetmask if you're not wearing it."))
+		to_chat(owner, span_warning(LANG("datum.192ec484", null)))
 		return FALSE
 	droney.dropItemToGround(target, force = TRUE)
 	droney.equip_to_slot_or_del(new_headgear, ITEM_SLOT_HEAD)

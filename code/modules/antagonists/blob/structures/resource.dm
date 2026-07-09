@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/blob/special/resource
 	name = "resource blob"
 	icon = 'icons/mob/nonhuman-player/blob.dmi'
@@ -31,7 +32,7 @@
 	flick("blob_resource_glow", src)
 	if(overmind)
 		overmind.add_points(BLOB_RESOURCE_GATHER_AMOUNT)
-		balloon_alert(overmind, "+[BLOB_RESOURCE_GATHER_AMOUNT] resource\s")
+		balloon_alert(overmind, LANG("obj.e2ae8afb", list(BLOB_RESOURCE_GATHER_AMOUNT)))
 		resource_delay = world.time + BLOB_RESOURCE_GATHER_DELAY + overmind.resource_blobs.len * BLOB_RESOURCE_GATHER_ADDED_DELAY //4 seconds plus a quarter second for each resource blob the overmind has
 	else
 		resource_delay = world.time + BLOB_RESOURCE_GATHER_DELAY

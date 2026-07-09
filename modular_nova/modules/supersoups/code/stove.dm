@@ -5,9 +5,9 @@
 
 /obj/item/reagent_containers/cup/soup_pot/examine(mob/user)
 	. = ..()
-	. += "You can enable/disable soup cleaning by alt-right-clicking [src]."
+	. += LANG("obj.e9e2b2ed", list(src))
 
 // alt-right click toggles whether soups will get cleaned
 /obj/item/reagent_containers/cup/soup_pot/click_alt_secondary(mob/user)
 	emulsify_reagents = !emulsify_reagents
-	balloon_alert(user, "soup cleaning [emulsify_reagents ? "enabled" : "disabled"]!")
+	balloon_alert(user, LANG("obj.496c4ab3", list(emulsify_reagents ? "enabled" : "disabled")))

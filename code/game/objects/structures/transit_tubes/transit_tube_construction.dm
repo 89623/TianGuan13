@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // transit tube construction
 
 // normal transit tubes
@@ -42,10 +43,10 @@
 	..()
 	if(!can_wrench_in_loc(user))
 		return
-	to_chat(user, span_notice("You start attaching \the [src]..."))
+	to_chat(user, span_notice(LANG("obj.9291b181", list(src))))
 	add_fingerprint(user)
 	if(I.use_tool(src, user, 2 SECONDS, volume=50, extra_checks=CALLBACK(src, PROC_REF(can_wrench_in_loc), user)))
-		to_chat(user, span_notice("You attach \the [src]."))
+		to_chat(user, span_notice(LANG("obj.c7091447", list(src))))
 		var/obj/structure/transit_tube/R = new build_type(loc, dir)
 		transfer_fingerprints_to(R)
 		qdel(src)

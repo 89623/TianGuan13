@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/recharge_station
 	name = "recharging station"
 	desc = "This device recharges energy-dependent lifeforms, like cyborgs, ethereals, and MODsuit users."
@@ -83,11 +84,11 @@
 /obj/machinery/recharge_station/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Recharging: <b>[display_power(recharge_speed, convert = FALSE)]</b>.")
+		. += span_notice(LANG("obj.a1f1354a", list(display_power(recharge_speed, convert = FALSE))))
 		if(materials.silo)
-			. += span_notice("The ore silo link indicator is lit, and cyborg restocking can be toggled by <b>Right-Clicking</b> [src].")
+			. += span_notice(LANG("obj.9bb8f696", list(src)))
 		if(repairs)
-			. += span_notice("[src] has been upgraded to support automatic repairs.")
+			. += span_notice(LANG("obj.cf202c99", list(src)))
 
 /obj/machinery/recharge_station/on_set_is_operational(old_value)
 	if(old_value) //Turned off
@@ -109,7 +110,7 @@
 			open_machine()
 
 /obj/machinery/recharge_station/screwdriver_act(mob/living/user, obj/item/tool)
-	return state_open ? NONE : default_deconstruction_screwdriver(user, tool)
+	return state_open ? default_deconstruction_screwdriver(user, tool) : NONE
 
 /obj/machinery/recharge_station/crowbar_act(mob/living/user, obj/item/tool)
 	return default_pry_open(user, tool, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE, deconstruct_on_fail = TRUE)
@@ -125,20 +126,20 @@
 /obj/machinery/recharge_station/proc/toggle_restock(mob/user)
 	if(sendmats)
 		sendmats = FALSE
-		say("Restocking from ore silo: disabled.")
+		say(LANG("obj.5adef825", null))
 		return
 	if(state_open || !occupant)
 		return
 	if(!iscyborg(occupant))
 		return
 	if(!materials.silo)
-		say("Error: ore silo connection offline.")
+		say(LANG("obj.d21318d6", null))
 		return
 	if(materials.on_hold())
-		say("Error: ore silo access denied.")
+		say(LANG("obj.cc23e175", null))
 		return FALSE
 	sendmats = TRUE
-	say("Restocking from ore silo: enabled.")
+	say(LANG("obj.3a706c9e", null))
 
 /obj/machinery/recharge_station/interact(mob/user)
 	toggle_open()

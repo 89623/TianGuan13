@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Mecha Equipment
  * All mech equippables are currently childs of this
@@ -57,7 +58,7 @@
 		if(special_attaching_interaction(attach_right, M, user))
 			return ITEM_INTERACT_SUCCESS //The rest is handled in the special interactions proc
 		attach(M, attach_right)
-		user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
+		user.visible_message(span_notice(LANG("obj.c24be4ca", list(user, src, M))), span_notice(LANG("obj.c1fbc99d", list(src, M))))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
@@ -77,11 +78,11 @@
 			. = TRUE
 		if("repair")
 			ui.close() // allow watching for baddies and the ingame effects
-			chassis.balloon_alert(usr, "starting repair")
+			chassis.balloon_alert(usr, LANG("obj.5a3c41d3", null))
 			while(do_after(usr, 1 SECONDS, chassis) && get_integrity() < max_integrity)
 				repair_damage(30)
 			if(get_integrity() == max_integrity)
-				balloon_alert(usr, "repair complete")
+				balloon_alert(usr, LANG("obj.fe98aec3", null))
 			. = FALSE
 	var/result = handle_ui_act(action,params,ui,state)
 	if(result) //if handle_ui_act returned anything at all lets just return that instead
@@ -90,6 +91,10 @@
 /// called after ui_act, for custom ui act handling
 /obj/item/mecha_parts/mecha_equipment/proc/handle_ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	SHOULD_CALL_PARENT(FALSE)
+
+
+/obj/item/mecha_parts/mecha_equipment/proc/get_equip_cooldown(atom/target)
+	return equip_cooldown
 
 /**
  * Checks whether this mecha equipment can be active
@@ -109,17 +114,17 @@
 	if(chassis.is_currently_ejecting)
 		return FALSE
 	if(chassis.equipment_disabled)
-		to_chat(chassis.occupants, span_warning("Error -- Equipment control unit is unresponsive."))
+		to_chat(chassis.occupants, span_warning(LANG("obj.dbcebf5b", null)))
 		return FALSE
 	if(get_integrity() <= 1)
-		to_chat(chassis.occupants, span_warning("Error -- Equipment critically damaged."))
+		to_chat(chassis.occupants, span_warning(LANG("obj.11e82cd5", null)))
 		return FALSE
 	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_EQUIPMENT(type)))
 		return FALSE
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(mob/source, atom/target, list/modifiers)
-	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)//Cooldown is on the MECH so people dont bypass it by switching equipment
+	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), get_equip_cooldown(target))//Cooldown is on the MECH so people dont bypass it by switching equipment
 	SEND_SIGNAL(source, COMSIG_MOB_USED_MECH_EQUIPMENT, chassis)
 	chassis.use_energy(energy_drain)
 	return TRUE
@@ -137,7 +142,7 @@
 	if(!chassis)
 		return FALSE
 	chassis.use_energy(energy_drain)
-	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target, flags), interaction_key = interaction_key)
+	return do_after(user, get_equip_cooldown(target), target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target, flags), interaction_key = interaction_key)
 
 ///Do after wrapper for mecha equipment
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay, flags)
@@ -161,17 +166,17 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/default_can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE, mob/user)
 	if(!(mech_flags & mech.mech_type))
-		to_chat(user, span_warning("\The [src] is incompatible with [mech]!"))
+		to_chat(user, span_warning(LANG("obj.f7057ece", list(src, mech))))
 		return FALSE
 	if(equipment_slot == MECHA_WEAPON)
 		if(attach_right)
 			// We need to check for length in case a mech doesn't support any arm attachments at all
 			if((!isnull(mech.equip_by_category[MECHA_R_ARM]) || !mech.max_equip_by_category[MECHA_R_ARM]) && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
-				to_chat(user, span_warning("\The [mech]'s right arm is full![mech.equip_by_category[MECHA_L_ARM] || !mech.max_equip_by_category[MECHA_L_ARM] ? "" : " Try left arm!"]"))
+				to_chat(user, span_warning(LANG("obj.95e4d38f", list(mech, mech.equip_by_category[MECHA_L_ARM] || !mech.max_equip_by_category[MECHA_L_ARM] ? "" : " Try left arm!"))))
 				return FALSE
 		else
 			if((!isnull(mech.equip_by_category[MECHA_L_ARM]) || !mech.max_equip_by_category[MECHA_L_ARM]) && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
-				to_chat(user, span_warning("\The [mech]'s left arm is full![mech.equip_by_category[MECHA_R_ARM] || !mech.max_equip_by_category[MECHA_R_ARM] ? "" : " Try right arm!"]"))
+				to_chat(user, span_warning(LANG("obj.55866d6f", list(mech, mech.equip_by_category[MECHA_R_ARM] || !mech.max_equip_by_category[MECHA_R_ARM] ? "" : " Try right arm!"))))
 				return FALSE
 		return TRUE
 	if(unstackable)
@@ -182,7 +187,7 @@
 				return FALSE
 
 	if(length(mech.equip_by_category[equipment_slot]) == mech.max_equip_by_category[equipment_slot])
-		to_chat(user, span_warning("This equipment slot is already full!"))
+		to_chat(user, span_warning(LANG("obj.a915cbd5", null)))
 		return FALSE
 	return TRUE
 

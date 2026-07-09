@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/easter
 	name = "Easter Eggselence"
 	holidayID = EASTER
@@ -22,7 +23,7 @@
 	description = "Summons a wave of cute rabbits."
 
 /datum/round_event/rabbitrelease/announce(fake)
-	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", ANNOUNCER_ALIENS)
+	priority_announce(LANG("datum.ad497567", list(station_name())), "Fluffy Alert", ANNOUNCER_ALIENS)
 
 
 /datum/round_event/rabbitrelease/start()
@@ -120,7 +121,7 @@
 
 /obj/item/surprise_egg/attack_self(mob/user)
 	..()
-	to_chat(user, span_notice("You unwrap [src] and find a prize inside!"))
+	to_chat(user, span_notice(LANG("obj.0b5151ac", list(src))))
 	dispensePrize(get_turf(src))
 	qdel(src)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(heretic_arenas)
 
 // Invisible effect that doesnt exist outside of containing the prox monitor
@@ -149,13 +150,18 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	var/mob/living/living_mob = bumped_atom
 	var/atom/target = get_edge_target_turf(living_mob, get_dir(src, get_step_away(living_mob, src)))
 	living_mob.throw_at(target, 4, 5)
-	to_chat(living_mob, span_userdanger("The wall repels you with tremendous force!"))
+	to_chat(living_mob, span_userdanger(LANG("turf.f67b58a5", null)))
 
 /// Called when you crit somebody to update your crown
 /datum/status_effect/arena_tracker/proc/on_crit_somebody()
 	owner.cut_overlay(crown_overlay)
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_victor", -HALO_LAYER)
 	crown_overlay.pixel_z = 24
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_parent = owner
+		human_parent.apply_height_offsets(crown_overlay, UPPER_BODY)
+		var/obj/item/bodypart/head/human_head = human_parent.get_bodypart(BODY_ZONE_HEAD)
+		human_head?.worn_head_offset?.apply_offset(crown_overlay)
 	owner.add_overlay(crown_overlay)
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 
@@ -172,9 +178,9 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	if(arena_victor) // No need to spam if we've already killed at least 1 person
 		return
 	if(IS_HERETIC(owner))
-		to_chat(owner, span_big(span_hypnophrase("The mansus is pleased with your performance, you may leave now.")))
+		to_chat(owner, span_big(span_hypnophrase(LANG("datum.71fe76a9", null))))
 	else
-		to_chat(owner, span_big(span_hypnophrase("You have done well, you may leave now.")))
+		to_chat(owner, span_big(span_hypnophrase(LANG("datum.a1f524a3", null))))
 	arena_victor = TRUE
 
 /**
@@ -203,6 +209,11 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_fighter", -HALO_LAYER)
 	crown_overlay.pixel_z = 24
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_parent = owner
+		human_parent.apply_height_offsets(crown_overlay, UPPER_BODY)
+		var/obj/item/bodypart/head/human_head = human_parent.get_bodypart(BODY_ZONE_HEAD)
+		human_head?.worn_head_offset?.apply_offset(crown_overlay)
 	owner.add_overlay(crown_overlay)
 	return TRUE
 

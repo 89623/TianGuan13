@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/supermatter_crystal
 
 	///Callback for the wrench act call
@@ -59,12 +60,12 @@
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume_returns(damage_increase = blob.get_integrity() * 0.05)
 	if(blob.get_integrity() > 100)
-		blob.visible_message(span_danger("\The [blob] strikes at \the [atom_source] and flinches away!"),
-			span_hear("You hear a loud crack as you are washed with a wave of heat."))
+		blob.visible_message(span_danger(LANG("datum.4fa8f161", list(blob, atom_source))),
+			span_hear(LANG("datum.e2bdcbdd", null)))
 		blob.take_damage(100, BURN)
 	else
-		blob.visible_message(span_danger("\The [blob] strikes at \the [atom_source] and rapidly flashes to ash."),
-			span_hear("You hear a loud crack as you are washed with a wave of heat."))
+		blob.visible_message(span_danger(LANG("datum.c46ee9f8", list(blob, atom_source))),
+			span_hear(LANG("datum.e2bdcbdd", null)))
 		consume(atom_source, blob)
 
 /datum/component/supermatter_crystal/proc/paw_hit(datum/source, mob/user, list/modifiers)
@@ -167,30 +168,30 @@
 		if(clumsy)
 			var/obj/item/bodypart/dust_arm = user.get_active_hand()
 			dust_arm.dismember()
-			user.visible_message(span_danger("The [item] flashes out of existence on contact with \the [atom_source], resonating with a horrible sound..."),\
-				span_danger("Oops! The [item] flashes out of existence on contact with \the [atom_source], taking your arm with it! That was clumsy of you!"))
+			user.visible_message(span_danger(LANG("datum.93d7f477", list(item, atom_source))),\
+				span_danger(LANG("datum.63d59b7f", list(item, atom_source))))
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 150, TRUE)
 			consume(atom_source, dust_arm)
 			qdel(item)
 			return
 		if(cig.lit || user.combat_mode)
-			user.visible_message(span_danger("A hideous sound echoes as [item] is ashed out on contact with \the [atom_source]. That didn't seem like a good idea..."))
+			user.visible_message(span_danger(LANG("datum.2857f974", list(item, atom_source))))
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 150, TRUE)
 			consume(atom_source, item)
 			radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50)
 			return
 		else
 			cig.light()
-			user.visible_message(span_danger("As [user] lights \their [item] on \the [atom_source], silence fills the room..."),\
-				span_danger("Time seems to slow to a crawl as you touch \the [atom_source] with \the [item].</span>\n<span class='notice'>\The [item] flashes alight with an eerie energy as you nonchalantly lift your hand away from \the [atom_source]. Damn."))
+			user.visible_message(span_danger(LANG("datum.10f6b2ad", list(user, item, atom_source))),\
+				span_danger(LANG("datum.a908c36f", list(atom_source, item, item, atom_source))))
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
 			radiation_pulse(atom_source, max_range = 1, threshold = 0, chance = 100)
 			return
 
 	if(user.dropItemToGround(item))
-		user.visible_message(span_danger("As [user] touches \the [atom_source] with \a [item], silence fills the room..."),\
-			span_userdanger("You touch \the [atom_source] with \the [item], and everything suddenly goes silent.</span>\n<span class='notice'>\The [item] flashes into dust as you flinch away from \the [atom_source]."),\
-			span_hear("Everything suddenly goes silent."))
+		user.visible_message(span_danger(LANG("datum.d21eeb85", list(user, atom_source, item))),\
+			span_userdanger(LANG("datum.4add7d01", list(atom_source, item, item, atom_source))),\
+			span_hear(LANG("datum.458bfed2", null)))
 		user.investigate_log("has been attacked ([item]) by [key_name(user)]", INVESTIGATE_ENGINE)
 		consume(atom_source, item)
 		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
@@ -223,12 +224,12 @@
 	if(istype(our_supermatter))
 		our_supermatter.log_activation(who = hit_object)
 	if(isliving(hit_object))
-		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [atom_source] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
-			span_userdanger("You slam into \the [atom_source] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
-			span_hear("You hear an unearthly noise as a wave of heat washes over you."))
+		hit_object.visible_message(span_danger(LANG("datum.762f99a1", list(hit_object, atom_source, hit_object.p_their()))),
+			span_userdanger(LANG("datum.4a0955fb", list(atom_source))),
+			span_hear(LANG("datum.eaf42640", null)))
 	else if(isobj(hit_object) && !iseffect(hit_object))
-		hit_object.visible_message(span_danger("\The [hit_object] smacks into \the [atom_source] and rapidly flashes to ash."), null,
-			span_hear("You hear a loud crack as you are washed with a wave of heat."))
+		hit_object.visible_message(span_danger(LANG("datum.7a5867f0", list(hit_object, atom_source))), null,
+			span_hear(LANG("datum.e2bdcbdd", null)))
 	else
 		return
 
@@ -278,7 +279,7 @@
 		mob_msg = span_userdanger("You reach out and touch [atom_source]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
 	if(!cause)
 		cause = "contact"
-	nom.visible_message(vis_msg, mob_msg, span_hear("You hear an unearthly noise as a wave of heat washes over you."))
+	nom.visible_message(vis_msg, mob_msg, span_hear(LANG("datum.eaf42640", null)))
 	atom_source.investigate_log("has been attacked ([cause]) by [key_name(nom)]", INVESTIGATE_ENGINE)
 	add_memory_in_range(atom_source, 7, /datum/memory/witness_supermatter_dusting, protagonist = nom, antagonist = atom_source)
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)

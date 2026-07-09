@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// We hop into the vents through a vent outlet, and then crawl around a bit. Jolly good times.
 /// This also assumes that we are on the turf that the vent outlet is on. If it isn't, shit.
 
@@ -39,8 +40,8 @@
 
 	if(prob(50))
 		cached_pawn.visible_message(
-			span_warning("[src] scrambles into the ventilation ducts!"),
-			span_hear("You hear something scampering through the ventilation ducts."),
+			span_warning(LANG("datum.77cf54fb", list(src))),
+			span_hear(LANG("datum.6df1df54", null)),
 		)
 
 	var/lower_vent_time_limit = controller.blackboard[BB_LOWER_VENT_TIME_LIMIT] // the least amount of time we spend in the vents

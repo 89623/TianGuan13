@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/silicon/pai/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -38,7 +39,7 @@
 		return TRUE
 	// Software related ui actions
 	if(available_software[action] && !installed_software.Find(action))
-		balloon_alert(ui.user, "software unavailable!")
+		balloon_alert(ui.user, LANG("mob.050602c0", null))
 		return FALSE
 	switch(action)
 		if("Atmospheric Sensor")
@@ -58,7 +59,7 @@
 			door_jack(params["mode"])
 			return TRUE
 		if("Encryption Slot")
-			balloon_alert(usr, "radio frequencies [!encrypt_mod ? "enabled" : "disabled"]")
+			balloon_alert(usr, LANG("mob.8b934582", list(!encrypt_mod ? "enabled" : "disabled")))
 			encrypt_mod = !encrypt_mod
 			radio.subspace_transmission = !radio.subspace_transmission
 			return TRUE
@@ -157,22 +158,22 @@
  */
 /mob/living/silicon/pai/proc/check_dna()
 	if(emagged) // Their master DNA signature is scrambled anyway
-		to_chat(src, span_syndradio("You are not at liberty to do this! All agents are clandestine."))
+		to_chat(src, span_syndradio(LANG("mob.5ae81e88", null)))
 		return FALSE
 	var/mob/living/carbon/holder = get_holder()
 	if(!isnull(holder))
-		balloon_alert(src, "not being carried")
+		balloon_alert(src, LANG("mob.5d371b08", null))
 		return FALSE
-	balloon_alert(src, "requesting dna sample")
-	if(tgui_alert(holder, "[src] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "Checking DNA", list("Yes", "No")) != "Yes")
-		balloon_alert(src, "dna sample refused!")
+	balloon_alert(src, LANG("mob.f937c63e", null))
+	if(tgui_alert(holder, LANG("mob.d9c62591", list(src)), LANG("mob.5430925c", null), list("Yes", "No")) != "Yes")
+		balloon_alert(src, LANG("mob.1a2fa12f", null))
 		return FALSE
-	holder.visible_message(span_notice("[holder] presses [holder.p_their()] thumb against [src]."), span_notice("You press your thumb against [src]."), span_notice("[src] makes a sharp clicking sound as it extracts DNA material from [holder]."))
+	holder.visible_message(span_notice(LANG("mob.b9d5b346", list(holder, holder.p_their(), src))), span_notice(LANG("mob.68a48e94", list(src))), span_notice(LANG("mob.a488e2f0", list(src, holder))))
 	if(!holder.has_dna())
-		balloon_alert(src, "no dna detected!")
+		balloon_alert(src, LANG("mob.e733fff6", null))
 		return FALSE
-	to_chat(src, span_bolddanger(("[holder]'s UE string: [holder.dna.unique_enzymes]")))
-	to_chat(src, span_notice("DNA [holder.dna.unique_enzymes == master_dna ? "matches" : "does not match"] our stored Master's DNA."))
+	to_chat(src, span_bolddanger((LANG("mob.955054a3", list(holder, holder.dna.unique_enzymes)))))
+	to_chat(src, span_notice(LANG("mob.9794c768", list(holder.dna.unique_enzymes == master_dna ? "matches" : "does not match"))))
 	return TRUE
 
 /**
@@ -200,7 +201,7 @@
 		if(PAI_SCAN_TARGET)
 			var/mob/living/carbon/target = get_holder()
 			if(isnull(target))
-				balloon_alert(src, "not being carried!")
+				balloon_alert(src, LANG("mob.391bc95e", null))
 				return FALSE
 			healthscan(src, target)
 			return TRUE
@@ -208,10 +209,10 @@
 		if(PAI_SCAN_MASTER)
 			var/mob/living/resolved_master = find_master()
 			if(isnull(resolved_master))
-				balloon_alert(src, "no master detected!")
+				balloon_alert(src, LANG("mob.aa43d117", null))
 				return FALSE
 			if(!is_valid_z_level(get_turf(src), get_turf(resolved_master)))
-				balloon_alert(src, "master out of range!")
+				balloon_alert(src, LANG("mob.9aa8b1f5", null))
 				return FALSE
 			healthscan(src, resolved_master)
 			return TRUE

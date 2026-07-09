@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/cargo
 	name = "supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
@@ -56,8 +57,8 @@
 		return FALSE
 	if(user)
 		if (emag_card)
-			user.visible_message(span_warning("[user] swipes [emag_card] through [src]!"))
-		to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
+			user.visible_message(span_warning(LANG("obj.f9eb3449", list(user, emag_card, src))))
+		to_chat(user, span_notice(LANG("obj.7f25b3b6", list(src))))
 
 	obj_flags |= EMAGGED
 	contraband = TRUE
@@ -116,7 +117,7 @@
 
 		cart_list[order.pack.name] = list(list(
 			"cost_type" = order.cost_type,
-			"object" = order.pack.name,
+			"object" = lang_reverse_text(order.pack.name), // NOVA EDIT CHANGE - I18N - ORIGINAL: "object" = order.pack.name, （显示用译名；act 回传经 lang_unreverse_text 还原英文比较，见 name_to_id/remove/modify）
 			"cost" = order.get_final_cost(),
 			"id" = order.id,
 			"amount" = 1,
@@ -134,7 +135,7 @@
 	for(var/datum/supply_order/order in SSshuttle.request_list)
 		var/datum/supply_pack/pack = order.pack
 		data["requests"] += list(list(
-			"object" = pack.name,
+			"object" = lang_reverse_text(pack.name), // NOVA EDIT CHANGE - I18N - ORIGINAL: "object" = pack.name,
 			"cost" = pack.get_cost(),
 			"orderer" = order.orderer,
 			"reason" = order.reason,
@@ -151,10 +152,13 @@
 
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		var/list/available_packs = get_packs_data(pack.group)
+		if(!length(available_packs)) //No available packs, hide category
+			continue
 		if(!data["supplies"][pack.group])
 			data["supplies"][pack.group] = list(
-				"name" = pack.group,
-				"packs" = get_packs_data(pack.group),
+				"name" = lang_reverse_text(pack.group), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = pack.group, （分类名仅前端状态键，整串译显示=安全；单词类如 Armory 也覆盖）
+				"packs" = available_packs,
 			)
 
 	data["displayed_currency_full_name"] = " [MONEY_NAME]"
@@ -196,10 +200,10 @@
 
 		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
 		packs += list(list(
-			"name" = pack.name,
+			"name" = lang_reverse_text(pack.name), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = pack.name, （目录显示用译名；add 走 id、openContents/搜索按此 name 在本地数据内匹配=译名一致安全；单词类 auto_name 包如 binoculars 也覆盖）
 			"cost" = pack.get_cost() * get_discount(),
 			"id" = pack_id,
-			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"desc" = lang_reverse_text(pack.desc || pack.name), // NOVA EDIT CHANGE - I18N: reverse the pack desc (SINK_VAR, display-only tooltip; exact match). ORIGINAL: "desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
 			"first_item_icon" = first_item?.icon,
 			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = (pack.order_flags & ORDER_GOODY),
@@ -260,17 +264,17 @@
 		account = id_card?.registered_account // We can still assign an account for request department purposes.
 		if(self_paid)
 			if(!istype(id_card))
-				say("No ID card detected.")
+				say(LANG("obj.9caa768c", null))
 				return
 			if(IS_DEPARTMENTAL_CARD(id_card))
-				say("The [src] rejects [id_card].")
+				say(LANG("obj.eb8fcdad", list(src, id_card)))
 				return
 			if(!istype(account))
-				say("Invalid bank account.")
+				say(LANG("obj.3ad4c193", null))
 				return
 			var/list/access = id_card.GetAccess()
 			if((pack.access_view && !(pack.access_view in access)) && !bypass)
-				say("[id_card] lacks the requisite access for this purchase.")
+				say(LANG("obj.4e11fbde", list(id_card)))
 				return
 
 	// The list we are operating on right now
@@ -280,7 +284,7 @@
 	var/uses_cargo_budget = FALSE // NOVA EDIT ADDITION - boolean flag to check if we are using the cargo budget without doing excessive shenanigans.
 	if(requestonly && !self_paid && (!(pack.order_flags & ORDER_GOODY) || (pack.order_flags & ORDER_DEPARTMENTAL_GOODY))) // NOVA EDIT CHANGE - should never have a dept goodie thats not a goody. ORIGINAL: if(requestonly && !self_paid && !(pack.order_flags & ORDER_GOODY))
 		working_list = SSshuttle.request_list
-		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
+		reason = tgui_input_text(user, LANG("obj.ba5380f4", null), name, max_length = MAX_MESSAGE_LEN)
 		if(isnull(reason))
 			return
 
@@ -288,7 +292,7 @@
 		if(account?.account_job)
 			personal_department = SSeconomy.get_dep_account(account.account_job.paycheck_department)
 			if(!(personal_department.account_holder == "Cargo Budget"))
-				var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))
+				var/dept_choice = tgui_alert(user, LANG("obj.b7de779a", null), LANG("obj.a672d0c4", null), list("Cargo Budget", "[personal_department.account_holder]"))
 				if(!dept_choice)
 					return
 				if(dept_choice == "Cargo Budget")
@@ -311,18 +315,18 @@
 				// We want to block cargo requests when a player is requesting a restricted pack that they don't have access to.
 				// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
 				// HOWEVER, this shouldn't prevent someone from buying something using their own personal funds.
-				say("ERROR: User lacks the requisite access for this purchase request.")
+				say(LANG("obj.13fe6ebe", null))
 				return
 
 	if(((pack.order_flags & ORDER_GOODY) && (!(pack.order_flags & ORDER_DEPARTMENTAL_GOODY) || uses_cargo_budget)) && (!self_paid || !requestonly))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-		say("ERROR: Small crates may only be purchased by private accounts.")
+		say(LANG("obj.90374cfb", null))
 		return
 
 	var/similar_count = SSshuttle.supply.get_order_count(pack)
 	if(similar_count == OVER_ORDER_LIMIT)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
+		say(LANG("obj.6627f598", list(CARGO_MAX_ORDER)))
 		return
 
 	if(!self_paid)
@@ -330,7 +334,7 @@
 		// NOVA EDIT ADDITION START
 		if ((uses_cargo_budget || !requestonly) && ((pack.order_flags & ORDER_COMPANY) == ORDER_COMPANY))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-			say("ERROR: Small crates may only be purchased by private accounts.")
+			say(LANG("obj.90374cfb", null))
 			return
 		// NOVA EDIT ADDITION END
 
@@ -356,7 +360,7 @@
 		working_list += order
 
 	if(self_paid)
-		say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
+		say(LANG("obj.cf813d0c", list(account.account_holder)))
 	if(requestonly && message_cooldown < world.time)
 		aas_config_announce(/datum/aas_config_entry/cargo_orders_announcement, list("AMOUNT" = amount), src, list(RADIO_CHANNEL_SUPPLY), amount == 1 ? "Single Order" : "Multiple Orders")
 		message_cooldown = world.time + 30 SECONDS
@@ -387,7 +391,10 @@
 /obj/machinery/computer/cargo/proc/name_to_id(order_name)
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/supply = SSshuttle.supply_packs[pack]
-		if(order_name == supply.name)
+		// NOVA EDIT CHANGE - I18N - ORIGINAL: if(order_name == supply.name)
+		// 前端显示用译名（见 ui_data/ui_static_data 的 lang_reverse_text），回传的 order_name 可能是中文；
+		// lang_unreverse_text 把它映回英文再比较（locale==en 时原样返回 → 与原逻辑等价）。
+		if(order_name == supply.name || lang_unreverse_text(order_name) == supply.name)
 			return pack
 	return null
 
@@ -407,7 +414,7 @@
 
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
-				say("The supply shuttle is departing.")
+				say(LANG("obj.c8889dde", null))
 				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				//create the paper from the SSshuttle.shopping_list
@@ -436,7 +443,7 @@
 					requisition_paper.update_appearance()
 
 				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minute\s.")
+				say(LANG("obj.8a1a83d6", list(SSshuttle.supply.timeLeft(600))))
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 
 			. = TRUE
@@ -454,7 +461,7 @@
 				return
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
-				say("The supply shuttle has been loaned to CentCom.")
+				say(LANG("obj.a29fce78", null))
 				ui.user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
 				ui.user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
@@ -469,7 +476,7 @@
 			var/order_name = params["order_name"]
 			//try removing at least one item with the specified name. An order may not be removed if it was from the department
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
-				if(order.pack.name != order_name)
+				if(order.pack.name != order_name && order.pack.name != lang_unreverse_text(order_name)) // NOVA EDIT CHANGE - I18N - ORIGINAL: if(order.pack.name != order_name) （译名回传，还原英文比较）
 					continue
 				if(remove_item(order.id))
 					return TRUE
@@ -480,7 +487,7 @@
 
 			//clear out all orders with the above mentioned order_name name to make space for the new amount
 			for(var/datum/supply_order/order in SSshuttle.shopping_list) //find corresponding order id for the order name
-				if(order.pack.name == order_name)
+				if(order.pack.name == order_name || order.pack.name == lang_unreverse_text(order_name)) // NOVA EDIT CHANGE - I18N - ORIGINAL: if(order.pack.name == order_name) （译名回传，还原英文比较）
 					remove_item(order.id)
 
 			//now add the new amount stuff

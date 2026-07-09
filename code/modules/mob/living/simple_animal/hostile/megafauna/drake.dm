@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///used to see if the drake is enraged or not
 #define DRAKE_ENRAGED (health < maxHealth*0.5)
 
@@ -153,7 +154,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
 	SLEEP_CHECK_DEATH(0, src)
-	visible_message(span_boldwarning("[src] starts to glow vibrantly as its wounds close up!"))
+	visible_message(span_boldwarning(LANG("mob.c1bbe24a", list(src))))
 	adjust_brute_loss(-250) // yeah you're gonna pay for that, don't run nerd
 	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
 	move_to_delay = move_to_delay / 2

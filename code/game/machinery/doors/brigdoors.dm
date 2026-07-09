@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //#define MAX_TIMER (15 MINUTES) //ORIGINAL
 #define MAX_TIMER (60 MINUTES) //NOVA EDIT CHANGE
 //#define PRESET_SHORT (2 MINUTES) //ORIGINAL
@@ -224,7 +225,7 @@
 	var/mob/user = usr
 
 	if(!allowed(usr))
-		to_chat(usr, span_warning("Access denied."))
+		to_chat(usr, span_warning(LANG("obj.077f9b52", null)))
 		return FALSE
 
 	switch(action)

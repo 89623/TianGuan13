@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ### Evolutionary Leap Component; set a time in the round for a mob to evolve into a more dangerous form!
  *
@@ -55,5 +56,5 @@
 		return
 	var/mob/living/new_mob = evolve_path
 	var/new_mob_name = initial(new_mob.name)
-	old_mob.visible_message(span_warning("[old_mob] evolves into \a [new_mob_name]!"))
+	old_mob.visible_message(span_warning(LANG("datum.855f0612", list(old_mob, new_mob_name))))
 	old_mob.change_mob_type(evolve_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)

@@ -17,19 +17,19 @@
 	. = ..()
 
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/dinitrogen_plasmide)
-	to_chat(affected_mob, span_warning("Your joints suddenly feel stiff."))
+	to_chat(affected_mob, span_warning(LANG("datum.b843800d", null)))
 
 /datum/reagent/dinitrogen_plasmide/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/dinitrogen_plasmide)
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/dinitrogen_plasmide_overdose)
-	to_chat(affected_mob, span_warning("Your joints no longer feel stiff!"))
+	to_chat(affected_mob, span_warning(LANG("datum.2e26f424", null)))
 
 /datum/reagent/dinitrogen_plasmide/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	. = ..()
 
-	to_chat(affected_mob, span_danger("You feel like your joints are filling with some viscous fluid!"))
+	to_chat(affected_mob, span_danger(LANG("datum.18d022cd", null)))
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/dinitrogen_plasmide_overdose)
 
 /datum/reagent/dinitrogen_plasmide/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)

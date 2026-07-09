@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/camera/process()
 	// motion camera event loop
 	if(!isMotion())
@@ -51,7 +52,7 @@
 		return FALSE
 	if(camera_enabled)
 		if(alarm_manager.send_alarm(ALARM_MOTION, src, src))
-			visible_message(span_warning("A red light flashes on [src]!"))
+			visible_message(span_warning(LANG("obj.a067370e", list(src))))
 	detectTime = -1
 	return TRUE
 

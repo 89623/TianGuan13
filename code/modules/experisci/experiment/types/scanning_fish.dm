@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///a superlist containing typecaches shared between the several fish scanning experiments for each techweb.
 GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 
@@ -50,7 +51,7 @@ GLOBAL_LIST_EMPTY(scanned_fish_by_techweb)
 
 /datum/experiment/scanning/fish/proc/on_handler_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_notice("Examine again to review all the species of fish scanned so far.")
+	examine_list += span_notice(LANG("datum.b93d37ee", null))
 
 /datum/experiment/scanning/fish/proc/on_handler_examine_more(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER

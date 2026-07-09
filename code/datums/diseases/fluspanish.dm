@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/disease/fluspanish
 	name = "Spanish inquisition Flu"
 	max_stages = 3
@@ -32,7 +33,7 @@
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(0.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You're burning in your own skin!"))
+				to_chat(affected_mob, span_danger(LANG("datum.a337cfc0", null)))
 				affected_mob.take_bodypart_damage(0, 5, updating_health = FALSE)
 
 		if(3)
@@ -42,5 +43,5 @@
 			if(SPT_PROB(2.5, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(affected_mob, span_danger("You're burning in your own skin!"))
+				to_chat(affected_mob, span_danger(LANG("datum.a337cfc0", null)))
 				affected_mob.take_bodypart_damage(0, 5, updating_health = FALSE)

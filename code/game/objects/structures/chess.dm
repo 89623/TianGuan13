@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/chess
 	anchored = FALSE
 	density = FALSE
@@ -10,9 +11,9 @@
 
 /obj/structure/chess/wrench_act(mob/user, obj/item/tool)
 	if(flags_1 & HOLOGRAM_1)
-		balloon_alert(user, "it goes right through!")
+		balloon_alert(user, LANG("obj.761468ab", null))
 		return TRUE
-	to_chat(user, span_notice("You start to take apart the chess piece."))
+	to_chat(user, span_notice(LANG("obj.a2357045", null)))
 	if(!do_after(user, 0.5 SECONDS, target = src))
 		return TRUE
 	var/obj/item/stack/sheet/iron/metal_sheets = new (drop_location(), 2)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Actual volume is REAGENTS_BASE_VOLUME plus REAGENTS_BASE_VOLUME * rating for each matterbin
 #define REAGENTS_BASE_VOLUME 100
 
@@ -66,17 +67,17 @@
 /obj/machinery/smoke_machine/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Reagent capacity <b>[reagents.total_volume]/[reagents.maximum_volume]</b>.")
-	. += span_notice("Operating at <b>[round((efficiency / 26) * 100)]%</b> efficiency.")
+	. += span_notice(LANG("obj.61f3c745", list(reagents.total_volume, reagents.maximum_volume)))
+	. += span_notice(LANG("obj.3384fac8", list(round((efficiency / 26) * 100))))
 
-	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.f3fabb12", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
+		. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
 
 	if(anchored)
-		. += span_notice("It can be [EXAMINE_HINT("wrenched")] loose.")
+		. += span_notice(LANG("obj.ea58af41", list(EXAMINE_HINT("wrenched"))))
 	else
-		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] in place to work.")
+		. += span_warning(LANG("obj.7b276a07", list(EXAMINE_HINT("anchored"))))
 
 /obj/machinery/smoke_machine/update_icon_state()
 	if(!is_operational || !on || !reagents.total_volume)
@@ -116,13 +117,13 @@
 		var/obj/item/reagent_containers/RC = tool
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
-			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
+			to_chat(user, span_notice(LANG("obj.62a86c6b", list(units, src))))
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
 	if(on)
-		balloon_alert(user, "turn off first!")
+		balloon_alert(user, LANG("obj.19a396d6", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(default_unfasten_wrench(user, tool, time = 4 SECONDS) == SUCCESSFUL_UNFASTEN)
@@ -132,14 +133,14 @@
 
 /obj/machinery/smoke_machine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
-		balloon_alert(user, "turn off first!")
+		balloon_alert(user, LANG("obj.19a396d6", null))
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/smoke_machine/crowbar_act(mob/living/user, obj/item/tool)
 	if(on)
-		balloon_alert(user, "turn off first!")
+		balloon_alert(user, LANG("obj.19a396d6", null))
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_crowbar(user, tool)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Contains a bunch of procs for different types, but in the end it just lets you restyle the bodypart overlay so that's why it's here
 
 ///Helper proc to fetch a list of styles a player might want to restyle their features into during the round : returns list("Cabbage" = /datum/sprite_accessory/cabbage)
@@ -51,7 +52,7 @@
 			else
 				return
 		else
-			to_chat(trimmer, span_warning("There are no restylable features there!"))
+			to_chat(trimmer, span_warning(LANG("obj.32a9a94d", null)))
 			return
 
 	target_organ.attempt_feature_restyle(source, trimmer, original_target, body_zone, restyle_type, style_speed)
@@ -63,21 +64,21 @@
 	if(restyle_flags & restyle_type)
 		INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
 	else
-		to_chat(trimmer, span_warning("This tool is incompatible with \the [src]!"))
+		to_chat(trimmer, span_warning(LANG("obj.ba55be6a", list(src))))
 
 ///Restyles the external organ from a list of valid options
 /obj/item/organ/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	var/list/restyles = get_valid_restyles()
-	var/new_style = tgui_input_list(trimmer, "Select a new style", "Grooming", restyles)
+	var/new_style = tgui_input_list(trimmer, LANG("obj.7a2f6e0b", null), LANG("obj.62de8b3c", null), restyles)
 
 	trimmer.visible_message(
-		span_notice("[trimmer] tries to change [original_target == trimmer ? trimmer.p_their() : original_target.name + "'s"] [name]."),
-		span_notice("You try to change [original_target == trimmer ? "your" : original_target.name + "'s"] [name].")
+		span_notice(LANG("obj.1439dc47", list(trimmer, original_target == trimmer ? trimmer.p_their() : original_target.name + "'s", name))),
+		span_notice(LANG("obj.0ea1ea1c", list(original_target == trimmer ? "your" : original_target.name + "'s", name)))
 	)
 	if(new_style && do_after(trimmer, style_speed, target = original_target))
 		trimmer.visible_message(
-			span_notice("[trimmer] successfully changes [original_target == trimmer ? trimmer.p_their() : original_target.name + "'s"] [name]."),
-			span_notice("You successfully change [original_target == trimmer ? "your" : original_target.name + "'s"] [name].")
+			span_notice(LANG("obj.d7630aac", list(trimmer, original_target == trimmer ? trimmer.p_their() : original_target.name + "'s", name))),
+			span_notice(LANG("obj.22c1fdd6", list(original_target == trimmer ? "your" : original_target.name + "'s", name)))
 		)
 
 		simple_change_sprite(restyles[new_style]) //turn name to type and pass it on

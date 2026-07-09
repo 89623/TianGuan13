@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**********************Resonator**********************/
 
 /obj/item/resonator
@@ -26,10 +27,10 @@
 
 /obj/item/resonator/attack_self(mob/user)
 	if(mode == RESONATOR_MODE_AUTO)
-		to_chat(user, span_info("You set the resonator's fields to detonate only after you hit one with it."))
+		to_chat(user, span_info(LANG("obj.f276f74c", null)))
 		mode = RESONATOR_MODE_MANUAL
 	else
-		to_chat(user, span_info("You set the resonator's fields to automatically detonate after 2 seconds."))
+		to_chat(user, span_info(LANG("obj.36e0fa91", null)))
 		mode = RESONATOR_MODE_AUTO
 
 /obj/item/resonator/proc/create_resonance(target, mob/user)
@@ -168,11 +169,11 @@
 
 /obj/item/resonator/upgraded/attack_self(mob/user)
 	if(mode == RESONATOR_MODE_AUTO)
-		to_chat(user, span_info("You set the resonator's fields to detonate only after you hit one with it."))
+		to_chat(user, span_info(LANG("obj.f276f74c", null)))
 		mode = RESONATOR_MODE_MANUAL
 	else if(mode == RESONATOR_MODE_MANUAL)
-		to_chat(user, span_info("You set the resonator's fields to work as matrix traps."))
+		to_chat(user, span_info(LANG("obj.5085a991", null)))
 		mode = RESONATOR_MODE_MATRIX
 	else
-		to_chat(user, span_info("You set the resonator's fields to automatically detonate after 2 seconds."))
+		to_chat(user, span_info(LANG("obj.36e0fa91", null)))
 		mode = RESONATOR_MODE_AUTO

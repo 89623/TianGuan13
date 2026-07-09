@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/neck
 	name = "necklace"
 	icon = 'icons/obj/clothing/neck.dmi'
@@ -76,18 +77,18 @@
 
 /obj/item/clothing/neck/tie/examine(mob/user)
 	. = ..()
-	. += span_notice("The tie can be worn above or below your suit. Alt-Right-click to toggle.")
+	. += span_notice(LANG("obj.6bf5f02c", null))
 	if(clip_on)
-		. += span_notice("Looking closely, you can see that it's actually a cleverly disguised clip-on.")
+		. += span_notice(LANG("obj.58823e0f", null))
 	else if(!is_tied)
-		. += span_notice("The tie can be tied with Alt-Click.")
+		. += span_notice(LANG("obj.1998981f", null))
 	else
-		. += span_notice("The tie can be untied with Alt-Click.")
+		. += span_notice(LANG("obj.431366bf", null))
 
 /obj/item/clothing/neck/tie/click_alt(mob/user)
 	if(clip_on)
 		return NONE
-	to_chat(user, span_notice("You concentrate as you begin [is_tied ? "untying" : "tying"] [src]..."))
+	to_chat(user, span_notice(LANG("obj.299e0dbf", list(is_tied ? "untying" : "tying", src))))
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
 	for(var/obj/structure/mirror/reflection in view(2, user))
@@ -97,17 +98,17 @@
 		tie_timer_actual *= 0.5
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
-		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
+		to_chat(user, span_notice(LANG("obj.a24eeb29", list(src))))
 		return CLICK_ACTION_BLOCKING
 	// Clumsy & Dumb people have trouble tying their ties.
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
-		to_chat(user, span_notice("You just can't seem to get a proper grip on [src]!"))
+		to_chat(user, span_notice(LANG("obj.541d2bca", list(src))))
 		return CLICK_ACTION_BLOCKING
 	// Success!
 	is_tied = !is_tied
 	user.visible_message(
-		span_notice("[user] adjusts [user.p_their()] tie[HAS_TRAIT(user, TRAIT_BALD) ? "" : " and runs a hand across [user.p_their()] head"]."),
-		span_notice("You successfully [is_tied ? "tied" : "untied"] [src]!"),
+		span_notice(LANG("obj.eede75bc", list(user, user.p_their(), HAS_TRAIT(user, TRAIT_BALD) ? "" : " and runs a hand across [user.p_their()] head"))),
+		span_notice(LANG("obj.aa8efb3b", list(is_tied ? "tied" : "untied", src))),
 	)
 	update_appearance(UPDATE_ICON)
 	user.update_clothing(ITEM_SLOT_NECK)
@@ -116,7 +117,7 @@
 /obj/item/clothing/neck/tie/click_alt_secondary(mob/user)
 	alternate_worn_layer = (alternate_worn_layer == initial(alternate_worn_layer) ? NONE : initial(alternate_worn_layer))
 	user.update_clothing(ITEM_SLOT_NECK)
-	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above"] suits")
+	balloon_alert(user, LANG("obj.d521fa2f", list(alternate_worn_layer == initial(alternate_worn_layer) ? "below" : "above")))
 
 /obj/item/clothing/neck/tie/update_icon()
 	. = ..()
@@ -241,7 +242,7 @@
 	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/neck/stethoscope/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
+	user.visible_message(span_suicide(LANG("obj.14b68f8b", list(user, src, user.p_their(), user.p_they()))))
 	return OXYLOSS
 
 /obj/item/clothing/neck/stethoscope/attack(mob/living/target, mob/living/user)
@@ -269,9 +270,9 @@
 	//determine what specific action we're taking
 	switch (body_part)
 		if(BODY_ZONE_CHEST)//Listening to the chest
-			user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
+			user.visible_message(span_notice(LANG("obj.e41447c5", list(user, src, carbon_patient, body_part))), ignored_mobs = user)
 			if(HAS_TRAIT(user, TRAIT_DEAF))
-				to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. Fat load of good it does you though, since you can't hear."))
+				to_chat(user, span_notice(LANG("obj.73dd56a4", list(src, carbon_patient, body_part))))
 				return
 			else
 				render_list += span_info("You place [src] against [carbon_patient]'s [body_part]:\n")
@@ -311,7 +312,7 @@
 
 		if(BODY_ZONE_PRECISE_GROIN)//If we're targeting the groin
 			render_list += span_info("You carefully press down on [carbon_patient]'s abdomen:\n")
-			user.visible_message(span_notice("[user] presses their hands against [carbon_patient]'s abdomen."), ignored_mobs = user)
+			user.visible_message(span_notice(LANG("obj.78164d53", list(user, carbon_patient))), ignored_mobs = user)
 
 			//assess abdominal organs
 			var/appendix_okay = TRUE
@@ -335,20 +336,20 @@
 				render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//they're okay :D
 
 		if(BODY_ZONE_PRECISE_EYES)
-			balloon_alert(user, "can't do that!")
+			balloon_alert(user, LANG("obj.c3d89266", null))
 			return
 
 		if(BODY_ZONE_PRECISE_MOUTH)
-			balloon_alert(user, "can't do that!")
+			balloon_alert(user, LANG("obj.c3d89266", null))
 			return
 
 		else//targeting an extremity or the head
 			if(body_part ==  BODY_ZONE_HEAD)
 				render_list += span_info("You carefully press your fingers to [carbon_patient]'s neck:\n")
-				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s neck."), ignored_mobs = user)
+				user.visible_message(span_notice(LANG("obj.c29f8a0a", list(user, carbon_patient))), ignored_mobs = user)
 			else
 				render_list += span_info("You carefully press your fingers to [carbon_patient]'s [body_part]:\n")
-				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s [body_part]."), ignored_mobs = user)
+				user.visible_message(span_notice(LANG("obj.52598343", list(user, carbon_patient, body_part))), ignored_mobs = user)
 
 			var/cached_blood_volume = carbon_patient.get_blood_volume(apply_modifiers = TRUE)
 
@@ -511,7 +512,7 @@
 	human_wearable = TRUE
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
-	tagname = sanitize_name(tgui_input_text(user, "Would you like to change the name on the tag?", "Pet Naming", "Spot", MAX_NAME_LEN))
+	tagname = sanitize_name(tgui_input_text(user, LANG("obj.caff9b8c", null), LANG("obj.88786ac3", null), "Spot", MAX_NAME_LEN))
 	if (!tagname || !length(tagname))
 		name = initial(name)
 		tagname = null
@@ -542,7 +543,7 @@
 /obj/item/clothing/neck/necklace/dope/merchant/attack_self(mob/user)
 	. = ..()
 	selling = !selling
-	to_chat(user, span_notice("[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode."))
+	to_chat(user, span_notice(LANG("obj.d973b9a4", list(src, selling ? "'Sell'" : "'Get Price'"))))
 
 /obj/item/clothing/neck/necklace/dope/merchant/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/datum/export_report/ex = export_item_and_contents(interacting_with, delete_unsold = selling, dry_run = !selling)
@@ -553,11 +554,11 @@
 	if(price)
 		var/true_price = round(price*profit_scaling)
 		var/fee_display = round(price-true_price)
-		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [interacting_with], value: <b>[true_price]</b> [MONEY_NAME][interacting_with.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[fee_display]</b> [MONEY_NAME_AUTOPURAL(fee_display)] taken as processing fee\s." : ""]"))
+		to_chat(user, span_notice(LANG("obj.d99227d1", list(selling ? "Sold" : "Getting the price of", interacting_with, true_price, MONEY_NAME, interacting_with.contents.len ? " (exportable contents included)" : "", profit_scaling < 1 && selling ? "<b>[fee_display]</b> [MONEY_NAME_AUTOPURAL(fee_display)] taken as processing fee\s." : ""))))
 		if(selling)
 			new /obj/item/holochip(get_turf(user), true_price)
 	else
-		to_chat(user, span_warning("There is no export value for [interacting_with] or any items within it."))
+		to_chat(user, span_warning(LANG("obj.553fba17", list(interacting_with))))
 
 	return ITEM_INTERACT_BLOCKING
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define COMP_INPUT_STRING "string"
 #define COMP_INPUT_NUMBER "number"
 #define COMP_INPUT_LIST "list"
@@ -59,12 +60,12 @@
 	var/new_option = input_options.value
 	switch(new_option)
 		if(COMP_INPUT_STRING)
-			var/player_input = tgui_input_text(player, "Input a value", "Input value", max_length = MAX_MESSAGE_LEN)
+			var/player_input = tgui_input_text(player, LANG("obj.6cf41d4c", null), LANG("obj.79168a41", null), max_length = MAX_MESSAGE_LEN)
 			if(isnull(player_input))
 				return
 			input_response.set_output(player_input)
 		if(COMP_INPUT_NUMBER)
-			var/player_input = tgui_input_number(player, "Input a value", "Input value")
+			var/player_input = tgui_input_number(player, LANG("obj.6cf41d4c", null), LANG("obj.79168a41", null))
 			if(isnull(player_input))
 				return
 			input_response.set_output(player_input)
@@ -72,7 +73,7 @@
 			var/list/data = parameter.value
 			if(!islist(data))
 				return
-			var/player_input = tgui_input_list(player, "Input a value", "Input value", data)
+			var/player_input = tgui_input_list(player, LANG("obj.6cf41d4c", null), LANG("obj.79168a41", null), data)
 			if(isnull(player_input))
 				return
 			input_response.set_output(player_input)

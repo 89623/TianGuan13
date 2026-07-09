@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Commonly found on the mining fishing spots. Can be grown into lobstrosities
 /obj/item/fish/chasm_crab
 	name = "chasm chrab"
@@ -93,8 +94,9 @@
 
 /obj/item/fish/chasm_crab/proc/on_growth(datum/source, mob/living/basic/mining/lobstrosity/juvenile/result)
 	SIGNAL_HANDLER
+	if(/datum/fish_trait/territorial in fish_traits)
+		return
 	if(!prob(anger))
-		result.AddElement(/datum/element/ai_retaliate)
 		qdel(result.ai_controller)
 		result.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm(result)
 	else if(anger < 30) //not really that mad, just a bit unstable.
@@ -149,17 +151,17 @@
 	return list(span_deadsay("It's bones."))
 
 /obj/item/fish/boned/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] swallows [src] whole! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.d3919bb6", list(user, src, user.p_theyre()))))
 	forceMove(user)
 	addtimer(CALLBACK(src, PROC_REF(skeleton_appears), user), 2 SECONDS)
 	return MANUAL_SUICIDE_NONLETHAL // chance not to die
 
 /obj/item/fish/boned/proc/skeleton_appears(mob/living/user)
-	user.visible_message(span_warning("[user]'s skin melts off!"), span_boldwarning("Your skin melts off!"))
+	user.visible_message(span_warning(LANG("obj.4de22ba2", list(user))), span_boldwarning(LANG("obj.4f37cb37", null)))
 	user.spawn_gibs()
 	user.drop_everything(del_on_drop = FALSE, force = FALSE, del_if_nodrop = FALSE)
 	user.set_species(/datum/species/skeleton)
-	user.say("AAAAAAAAAAAAHHHHHHHHHH!!!!!!!!!!!!!!", forced = "bone fish suicide")
+	user.say(LANG("obj.8b4d2ae1", null), forced = "bone fish suicide")
 	if(prob(90))
 		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, death)), 3 SECONDS)
 		user.set_suicide(TRUE)
@@ -218,7 +220,7 @@
 /obj/item/fish/lavaloop/proc/explode_on_user(mob/living/user)
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 	active_arm?.dismember()
-	to_chat(user, span_warning("[src] explodes!"))
+	to_chat(user, span_warning(LANG("obj.e64b7ad7", list(src))))
 	playsound(src, 'sound/effects/explosion/explosion1.ogg', 40, TRUE)
 	user.flash_act(1, 1)
 	qdel(src)

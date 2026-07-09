@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// A ranged guardian can fling shards of glass at people very very quickly. It can also enter a long-range scouting mode.
 /mob/living/basic/guardian/ranged
 	guardian_type = GUARDIAN_RANGED
@@ -29,7 +30,7 @@
 
 /mob/living/basic/guardian/ranged/toggle_modes()
 	if(is_deployed() && !isnull(summoner))
-		balloon_alert(src, "must not be manifested!")
+		balloon_alert(src, LANG("mob.61be645f", null))
 		return
 	if (has_status_effect(/datum/status_effect/guardian_scout_mode))
 		remove_status_effect(/datum/status_effect/guardian_scout_mode)
@@ -76,7 +77,7 @@
 
 	var/mob/living/basic/guardian/guardian_mob = owner
 	guardian_mob.unleash()
-	to_chat(owner, span_bolddanger("You enter scouting mode."))
+	to_chat(owner, span_bolddanger(LANG("datum.ff9f4948", null)))
 	return TRUE
 
 /datum/status_effect/guardian_scout_mode/on_remove()
@@ -87,7 +88,7 @@
 		COMSIG_GUARDIAN_RECALLED,
 		COMSIG_MOB_CLICKON,
 	))
-	to_chat(owner, span_bolddanger("You return to your normal mode."))
+	to_chat(owner, span_bolddanger(LANG("datum.8e6cee42", null)))
 	var/mob/living/basic/guardian/guardian_mob = owner
 	guardian_mob.leash_to(owner, guardian_mob.summoner)
 
@@ -109,7 +110,7 @@
 /// We can't do any ranged attacks while in scout mode.
 /datum/status_effect/guardian_scout_mode/proc/on_ranged_attack()
 	SIGNAL_HANDLER
-	owner.balloon_alert(owner, "need to be in ranged mode!")
+	owner.balloon_alert(owner, LANG("datum.ce3aec94", null))
 	return COMPONENT_CANCEL_RANGED_ATTACK
 
 /// Place an invisible trap which alerts the guardian when it is crossed
@@ -133,7 +134,7 @@
 	StartCooldown(360 SECONDS)
 
 	if (length(placed_snares) >= maximum_snares)
-		var/picked_snare = tgui_input_list(owner, "Choose a snare to replace.", "Remove Snare", sort_names(placed_snares))
+		var/picked_snare = tgui_input_list(owner, LANG("datum.8ed0ddbd", null), LANG("datum.2ef3a982", null), sort_names(placed_snares))
 		if(isnull(picked_snare))
 			return FALSE
 		qdel(picked_snare)
@@ -141,7 +142,7 @@
 		StartCooldown(0)
 		return FALSE
 
-	owner.balloon_alert(owner, "snare deployed") // We need feedback because they are invisible
+	owner.balloon_alert(owner, LANG("datum.6accee33", null)) // We need feedback because they are invisible
 	var/turf/snare_loc = get_turf(owner)
 	var/obj/effect/abstract/surveillance_snare/new_snare = new(snare_loc, owner)
 	new_snare.assign_owner(owner)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 
 /datum/skill
@@ -71,10 +72,10 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 	if (new_level != SKILL_LEVEL_LEGENDARY)
 		return
 	if (!ispath(skill_item_path))
-		to_chat(mind.current, span_nicegreen("My legendary [name] skill is quite impressive, though it seems the Professional [title] Association doesn't have any status symbols to commemorate my abilities with. I should let Centcom know of this travesty, maybe they can do something about it."))
+		to_chat(mind.current, span_nicegreen(LANG("datum.f6538275", list(name, title))))
 		return
 	if (LAZYFIND(mind.skills_rewarded, src.type))
-		to_chat(mind.current, span_nicegreen("It seems the Professional [title] Association won't send me another status symbol."))
+		to_chat(mind.current, span_nicegreen(LANG("datum.66093427", list(title))))
 		return
 	podspawn(list(
 		"target" = get_turf(mind.current),
@@ -82,5 +83,5 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 		"spawn" = skill_item_path,
 		"delays" = list(POD_TRANSIT = 150, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	))
-	to_chat(mind.current, span_nicegreen("My legendary skill has attracted the attention of the Professional [title] Association. It seems they are sending me a status symbol to commemorate my abilities."))
+	to_chat(mind.current, span_nicegreen(LANG("datum.6742daa1", list(title))))
 	LAZYADD(mind.skills_rewarded, src.type)

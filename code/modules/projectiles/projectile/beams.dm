@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/projectile/beam
 	name = "laser"
 	icon_state = "laser"
@@ -348,7 +349,7 @@
 		return
 	var/mob/living/siphoned = target
 	siphoned.mob_mood.adjust_sanity(-25)
-	to_chat(siphoned, span_warning("Suddenly, everything feels just a little bit worse!"))
+	to_chat(siphoned, span_warning(LANG("obj.60eb2f5f", null)))
 
 /obj/projectile/beam/emitter/hitscan/magnetic
 	name = "magnetogenerative beam"

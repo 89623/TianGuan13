@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * ## nobody wants to learn matrix math!
@@ -52,7 +53,7 @@
 			var/matrix_var_name = params["var_name"]
 			var/matrix_var_value = params["var_value"]
 			if(testing_matrix.vv_edit_var(matrix_var_name, matrix_var_value) == FALSE)
-				to_chat(src, "Your edit was rejected by the object. This is a bug with the matrix tester, not your fault, so report it on GitHub.", confidential = TRUE)
+				to_chat(src, LANG("datum.ca4d337b", null), confidential = TRUE)
 				return
 			set_transform()
 		if("scale")

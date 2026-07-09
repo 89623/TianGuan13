@@ -60,4 +60,4 @@
 	if(!IS_CLOCK(examiner))
 		return
 
-	examine_text += span_brass("You can gain more information by using a <b>Clockwork Slab</b>.")
+	examine_text += span_brass(LANG("datum.cd06fc12", null))

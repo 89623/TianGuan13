@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(dead_players_during_shift)
 /mob/living/carbon/human/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, dna.species.gib_anim)
@@ -38,17 +39,16 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 				<b>Brain damage</b>: [src.get_organ_loss(ORGAN_SLOT_BRAIN) || "0"]<br>\
 				<b>[get_bloodtype()?.get_blood_name() || "Blood"] volume</b>: [src.get_blood_volume(apply_modifiers = TRUE)]cl ([round((src.get_blood_volume(apply_modifiers = TRUE) / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)
-	to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. \
-		If you do not wish to be brought back, use the \"Do Not Resuscitate\" button at the bottom of your screen."))
+	to_chat(src, span_warning(LANG("mob.4325cfb1", null)))
 	if(SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] && !client?.holder)
-		to_chat(src, span_warning("Ghost movement is currently disabled by admins. To leave your body use the Ghost verb."))
+		to_chat(src, span_warning(LANG("mob.c49ecee7", null)))
 
 /mob/living/carbon/human/proc/reagents_readout()
 	var/readout = "[get_bloodtype()?.get_blood_name() || "Blood"]stream:"
 	for(var/datum/reagent/reagent in reagents?.reagent_list)
 		readout += "<br>[round(reagent.volume, 0.001)] units of [reagent.name]"
 
-	readout += "<br>Stomach:"
+	readout += LANG("mob.62e52d2c", null)
 	var/obj/item/organ/stomach/belly = get_organ_slot(ORGAN_SLOT_STOMACH)
 	for(var/datum/reagent/bile in belly?.reagents?.reagent_list)
 		if(!belly.food_reagents[bile.type])

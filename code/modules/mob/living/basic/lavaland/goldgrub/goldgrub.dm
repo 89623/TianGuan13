@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //An ore-devouring but easily scared creature
 /mob/living/basic/mining/goldgrub
 	name = "goldgrub"
@@ -97,7 +98,7 @@
 	if(prob(hitting_projectile.armour_penetration) || (hitting_projectile.armor_flag != BOMB && hitting_projectile.armor_flag != ENERGY))
 		return NONE
 
-	visible_message(span_danger("[hitting_projectile] is repelled by [source]'s girth!"))
+	visible_message(span_danger(LANG("mob.b537e181", list(hitting_projectile, source))))
 	return COMPONENT_BULLET_BLOCKED
 
 /mob/living/basic/mining/goldgrub/proc/barf_contents(gibbed)
@@ -106,7 +107,7 @@
 		ore.forceMove(loc)
 
 	if(!gibbed)
-		visible_message(span_danger("[src] spits out its consumed ores!"))
+		visible_message(span_danger(LANG("mob.f2459977", list(src))))
 
 /mob/living/basic/mining/goldgrub/proc/generate_loot()
 	var/loot_amount = rand(1,3)

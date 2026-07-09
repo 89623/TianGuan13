@@ -7,19 +7,19 @@
 		return ..()
 
 	if(!user.mind.has_antag_datum(/datum/antagonist/ashwalker))
-		balloon_alert(user, "must be an ashwalker!")
+		balloon_alert(user, LANG("obj.e7b0b1c6", null))
 		return
 
 	var/obj/item/organ/monster_core/regenerative_core/regen_core = attacking_item
 
 	if(!regen_core.decay_timer)
-		balloon_alert(user, "organ already revitalized!")
+		balloon_alert(user, LANG("obj.c0ed1f0f", null))
 		return
 	if(!regen_core.preserve())
-		balloon_alert(user, "organ decayed!")
+		balloon_alert(user, LANG("obj.614a4bdc", null))
 		return
 	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
-	balloon_alert_to_viewers("[src] revitalizes [regen_core]!")
+	balloon_alert_to_viewers(LANG("obj.0e03b2be", list(src, regen_core)))
 	return
 
 //this is for logging the destruction of the tendril
@@ -55,22 +55,22 @@
 		allow_transform++
 
 	if(allow_transform < REQUIRED_OBSERVERS)
-		balloon_alert_to_viewers("[src] rejects the request, not enough viewers!")
+		balloon_alert_to_viewers(LANG("obj.899f2ca0", list(src)))
 		playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		human_user.adjust_brute_loss(10)
 		return
 
 	else
-		balloon_alert_to_viewers("[src] reaches out to [human_user]...")
-		var/choice = tgui_alert(human_user, "Become an Ashwalker? You will abandon your previous life and body.", "Major Choice", list("Yes", "No"))
+		balloon_alert_to_viewers(LANG("obj.dad2a2b1", list(src, human_user)))
+		var/choice = tgui_alert(human_user, LANG("obj.551865dc", null), LANG("obj.ca114bf4", null), list("Yes", "No"))
 
 		if(choice != "Yes")
-			balloon_alert_to_viewers("[src] feels rejected and punishes [human_user]!")
+			balloon_alert_to_viewers(LANG("obj.bd858b0f", list(src, human_user)))
 			playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 			human_user.adjust_brute_loss(50)
 			return
 
-		balloon_alert_to_viewers("[src] rejoices and transforms [human_user]!")
+		balloon_alert_to_viewers(LANG("obj.b485dc2c", list(src, human_user)))
 		human_user.unequip_everything()
 		human_user.set_species(/datum/species/lizard/ashwalker)
 		human_user.underwear = "Nude"
@@ -139,7 +139,7 @@
 /obj/structure/lavaland/ash_walker/proc/revive_ashwalker(mob/living/carbon/human/revived_ashwalker)
 	var/obj/structure/reviving_ashwalker_egg/spawned_egg = new(get_step(loc, pick(GLOB.alldirs)))
 	revived_ashwalker.forceMove(spawned_egg)
-	to_chat(revived_ashwalker, span_warning("The tendril has decided to be merciful and revive you within a minute, have patience."))
+	to_chat(revived_ashwalker, span_warning(LANG("obj.5993c5c6", null)))
 
 /obj/structure/reviving_ashwalker_egg
 	name = "occupied ashwalker egg"
@@ -166,7 +166,7 @@
 	living_inside.revive(ADMIN_HEAL_ALL)
 	living_inside.forceMove(get_turf(src))
 	living_inside.mind.grab_ghost()
-	living_inside.balloon_alert_to_viewers("[living_inside] breaks out of [src]!")
+	living_inside.balloon_alert_to_viewers(LANG("obj.f977ae94", list(living_inside, src)))
 	qdel(src)
 
 #undef REQUIRED_OBSERVERS

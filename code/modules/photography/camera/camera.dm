@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/art/camera.dmi'
@@ -97,15 +98,15 @@
 
 /obj/item/camera/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [pictures_left] photos left.")
-	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
-	. += span_notice("Ctrl-click to change the printer between color and monochrome.")
-	. += span_notice("The present dimensions of the picture are [EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")]")
+	. += span_notice(LANG("obj.54bf8bd7", list(pictures_left)))
+	. += span_notice(LANG("obj.0cb0bf37", null))
+	. += span_notice(LANG("obj.102d70c2", null))
+	. += span_notice(LANG("obj.a4b44f36", list(EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]"))))
 
 	if(isnull(disk))
-		. += span_notice("It has a slot for a holorecord disk.")
+		. += span_notice(LANG("obj.5d8d1bda", null))
 	else
-		. += span_notice("It has \an [disk.name] inserted.")
+		. += span_notice(LANG("obj.256c289c", list(disk.name)))
 
 /obj/item/camera/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -125,20 +126,20 @@
 
 	if(user)
 		if(loc != user)
-			to_chat(user, span_warning("You must be holding the camera to continue!"))
+			to_chat(user, span_warning(LANG("obj.df42aeed", null)))
 			return FALSE
-		desired_x = tgui_input_number(user, "Set camera half width Aperture", "Zoom", picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
+		desired_x = tgui_input_number(user, LANG("obj.507e9348", null), LANG("obj.83e3de03", null), picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
 		if(!desired_x || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
-		desired_y = tgui_input_number(user, "Set camera half height Aperture", "Zoom", picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 2)
+		desired_y = tgui_input_number(user, LANG("obj.2161e974", null), LANG("obj.83e3de03", null), picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
 		if(!desired_y || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
 
-	picture_size_x = clamp(desired_x, 2, CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	picture_size_y = clamp(desired_y, 2, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_x = clamp(desired_x, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_y = clamp(desired_y, 1, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 
 	if(user)
-		to_chat(user, span_notice("The dimensions of the picture will be [EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")]"))
+		to_chat(user, span_notice(LANG("obj.58b72f20", list(EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")))))
 
 	return TRUE
 
@@ -198,12 +199,12 @@
 
 	if(!on)
 		if(user)
-			user.balloon_alert(user, "flash still charging!")
+			user.balloon_alert(user, LANG("obj.a9061853", null))
 		return FALSE
 
 	if(blending)
 		if(user)
-			user.balloon_alert(user, "image still blending!")
+			user.balloon_alert(user, LANG("obj.91acb640", null))
 		return FALSE
 
 	blending = TRUE
@@ -346,20 +347,20 @@
 	var/obj/item/photo/new_photo
 	if(user)
 		if(!pictures_left)
-			to_chat(user, span_warning("No film left."))
+			to_chat(user, span_warning(LANG("obj.858446e3", null)))
 			return
 
 		new_photo = new(src, picture)
 
-		to_chat(user, span_notice("[pictures_left] photos left."))
+		to_chat(user, span_notice(LANG("obj.528b8286", list(pictures_left))))
 
 		var/name_customized = FALSE
 		if(can_customise)
-			var/customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
+			var/customise = tgui_alert(user, LANG("obj.dd7d7cb0", null), LANG("obj.61e3a16f", null), list("Yes", "No"))
 			if(customise == "Yes")
-				var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
-				var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
-				var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
+				var/name1 = tgui_input_text(user, LANG("obj.438188aa", null), LANG("obj.e81360ea", null), max_length = 32)
+				var/desc1 = tgui_input_text(user, LANG("obj.4bdb2db7", null), LANG("obj.495197c1", null), max_length = 128)
+				var/caption = tgui_input_text(user, LANG("obj.25cccceb", null), LANG("obj.bc426663", null), max_length = 256)
 				if(name1)
 					picture.picture_name = name1
 					name_customized = TRUE
@@ -374,12 +375,12 @@
 		var/mob/living/holder = loc
 
 		if(!pictures_left)
-			to_chat(holder, span_warning("No film left."))
+			to_chat(holder, span_warning(LANG("obj.858446e3", null)))
 			return
 
 		new_photo = new(get_turf(src), picture)
 
-		to_chat(holder, span_notice("[pictures_left] photos left."))
+		to_chat(holder, span_notice(LANG("obj.528b8286", list(pictures_left))))
 
 	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
@@ -402,7 +403,7 @@
 /obj/item/camera/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/camera_film))
 		if(pictures_left)
-			balloon_alert(user, "isn't empty!")
+			balloon_alert(user, LANG("obj.95dd4470", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(tool))
 			return ITEM_INTERACT_BLOCKING
@@ -413,13 +414,13 @@
 
 	if(istype(tool, /obj/item/disk/holodisk))
 		if(!user.transferItemToLoc(tool, src))
-			balloon_alert(user, "stuck in hand!")
+			balloon_alert(user, LANG("obj.c7cbf2eb", null))
 			return TRUE
 		if(disk)
 			user.put_in_hands(disk)
-			balloon_alert(user, "disks swapped!")
+			balloon_alert(user, LANG("obj.6fefc5af", null))
 		else
-			balloon_alert(user, "disk inserted!")
+			balloon_alert(user, LANG("obj.8c1b1c98", null))
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
 		disk = tool
 		return ITEM_INTERACT_SUCCESS
@@ -432,7 +433,7 @@
 /obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(disk)
 		if(!ismob(interacting_with))
-			to_chat(user, span_warning("Invalid holodisk target."))
+			to_chat(user, span_warning(LANG("obj.8f2ab71d", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(disk.record)
 			QDEL_NULL(disk.record)
@@ -456,7 +457,7 @@
 
 /obj/item/camera/item_ctrl_click(mob/user)
 	print_monochrome = !print_monochrome
-	user.balloon_alert(user, "printing [print_monochrome ? "monochrome" : "in color"]")
+	user.balloon_alert(user, LANG("obj.94bde98c", list(print_monochrome ? "monochrome" : "in color")))
 	if(silent) // Don't out your silent cameras
 		user.playsound_local(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 	else

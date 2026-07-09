@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Space Carp
  *
@@ -148,7 +149,7 @@
 	if (!feedback)
 		return
 	spin(spintime = 10, speed = 1)
-	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
+	visible_message(LANG("mob.8f4d1466", list(src, tamer)))
 
 /// Teleport when you right click away from you
 /mob/living/basic/carp/ranged_secondary_attack(atom/atom_target, modifiers)

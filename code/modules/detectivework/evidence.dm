@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //CONTAINS: Evidence bags
 
 /obj/item/evidencebag
@@ -31,7 +32,7 @@
 		desc = src::desc
 		return
 	var/obj/item/inserted = locate(/obj/item) in atom_storage.real_location
-	desc = "An evidence bag containing [inserted]. [inserted.desc]"
+	desc = LANG("obj.99ac7dc4", list(inserted, inserted.desc))
 
 /obj/item/evidencebag/update_icon_state()
 	. = ..()
@@ -66,9 +67,9 @@
 
 /obj/item/evidencebag/attack_self(mob/user)
 	if(!atom_storage.get_total_weight())
-		to_chat(user, span_notice("[src] is empty."))
+		to_chat(user, span_notice(LANG("obj.ab993876", list(src))))
 		return
-	user.visible_message(span_notice("[user] empties [src]."), span_notice("You empty [src]."),\
-	span_hear("You hear someone rustle around in a plastic bag, and remove something."))
+	user.visible_message(span_notice(LANG("obj.afa9d6d1", list(user, src))), span_notice(LANG("obj.b05fec39", list(src))),\
+	span_hear(LANG("obj.b15ca365", null)))
 	playsound(src,'sound/items/evidence_bag/evidence_bag_unzip.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	atom_storage.remove_all()

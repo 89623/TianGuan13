@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // .357 (Syndie Revolver)
 
 /obj/item/ammo_casing/c357
@@ -115,6 +116,6 @@
 		return
 	var/obj/item/food/grown/peas/peas = new(user.drop_location())
 	user.put_in_hands(peas)
-	to_chat(user, span_notice("You separate [peas] from [src]."))
+	to_chat(user, span_notice(LANG("obj.34d151c4", list(peas, src))))
 	loaded_projectile = null
 	update_appearance()

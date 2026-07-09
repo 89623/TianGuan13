@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/apetra_vulnera
 	name = "Apetra Vulnera"
 	desc = "Causes severe bleeding on every limb of a target which has more than 15 brute damage. \
@@ -32,8 +33,8 @@
 
 	if(cast_on.can_block_magic(antimagic_flags))
 		cast_on.visible_message(
-			span_danger("[cast_on]'s bruises briefly glow, but repels the effect!"),
-			span_danger("Your bruises sting a little, but you are protected!")
+			span_danger(LANG("datum.4c55356c", list(cast_on))),
+			span_danger(LANG("datum.305f347c", null))
 		)
 		return FALSE
 
@@ -50,8 +51,8 @@
 		crit_wound.apply_wound(pick(cast_on.get_bodyparts()))
 
 	cast_on.visible_message(
-		span_danger("[cast_on]'s scratches and bruises are torn open by an unholy force!"),
-		span_danger("Your scratches and bruises are torn open by some horrible unholy force!")
+		span_danger(LANG("datum.8c4044ad", list(cast_on))),
+		span_danger(LANG("datum.ebac4a38", null))
 	)
 
 	new /obj/effect/temp_visual/cleave(get_turf(cast_on))

@@ -1,8 +1,9 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/ai_module/zeroth/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	if(law_datum.owner)
 		if(law_datum.owner.laws.zeroth)
-			to_chat(law_datum.owner, "[sender.real_name] attempted to modify your zeroth law.")
-			to_chat(law_datum.owner, "It would be in your best interest to play along with [sender.real_name] that:")
+			to_chat(law_datum.owner, LANG("obj.f12adba4", list(sender.real_name)))
+			to_chat(law_datum.owner, LANG("obj.88f4f7d6", list(sender.real_name)))
 			for(var/failedlaw in laws)
 				to_chat(law_datum.owner, "[failedlaw]")
 			return TRUE
@@ -25,7 +26,7 @@
 	laws = list("Only SUBJECT is human.")
 
 /obj/item/ai_module/zeroth/onehuman/attack_self(mob/user)
-	var/targName = tgui_input_text(user, "Enter the subject who is the only human.", "One Human", user.real_name, max_length = MAX_NAME_LEN)
+	var/targName = tgui_input_text(user, LANG("obj.61abbc7b", null), LANG("obj.f455cda7", null), user.real_name, max_length = MAX_NAME_LEN)
 	if(!targName || !user.is_holding(src))
 		return
 	targetName = targName
@@ -34,7 +35,7 @@
 
 /obj/item/ai_module/zeroth/onehuman/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		to_chat(user, span_alert("No name detected on module, please enter one."))
+		to_chat(user, span_alert(LANG("obj.f7e900f2", null)))
 		return FALSE
 	..()
 

@@ -17,7 +17,7 @@
 	RegisterSignal(grant_to, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag_act))
 	song = new(grant_to, allowed_instrument_ids, 15)
 	if(isethereal(grant_to))
-		desc = "Use your electric discharger to sing!"
+		desc = LANG("datum.f6a86337", null)
 
 /datum/action/sing_tones/Remove(mob/remove_from)
 	..()

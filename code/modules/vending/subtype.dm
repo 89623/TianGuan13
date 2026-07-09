@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/machinery/vending/subtype_vendor
 	name = "\improper subtype vendor"
@@ -41,7 +42,7 @@
 		speak("Hey! You can't use this! Get outta here!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/type_to_vend_now = tgui_input_text(user, "What type to set it to?", "Set type to vend", "/obj/item/toy/plush")
+	var/type_to_vend_now = tgui_input_text(user, LANG("obj.844c89cc", null), LANG("obj.cc819309", null), "/obj/item/toy/plush")
 	type_to_vend_now = text2path(type_to_vend_now)
 	if(!ispath(type_to_vend_now))
 		speak("That's not a real path, dumbass! Try again!")

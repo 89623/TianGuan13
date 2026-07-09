@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Every time you got lost looking for keycards, increment: 2
 
 //**************
@@ -113,7 +114,7 @@
 	if(puzzle_id && puzzle_id != try_id)
 		return FALSE
 	if(!density)
-		visible_message(span_warning("The door can't seem to be closed."))
+		visible_message(span_warning(LANG("obj.7a7c11f6", null)))
 		return TRUE
 	if(open_message)
 		visible_message(span_notice(open_message))
@@ -130,7 +131,7 @@
 		return
 	var/obj/item/keycard/key = attacking_item
 	if(!try_puzzle_open(key.puzzle_id))
-		to_chat(user, span_notice("[src] buzzes. This must not be the right key."))
+		to_chat(user, span_notice(LANG("obj.ba6733a2", list(src))))
 
 //Test doors. Gives admins a few doors to use quickly should they so choose for events.
 /obj/machinery/door/puzzle/keycard/yellow_required
@@ -189,7 +190,7 @@
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()
 	if(claimed)
-		. += span_notice("This one appears to be spent already.")
+		. += span_notice(LANG("obj.999c6d66", null))
 
 /obj/item/pressure_plate/hologrid/trigger()
 	if(!claimed)
@@ -302,7 +303,7 @@
 	for(var/checking_light in light_list)
 		if(!checking_light)
 			return
-	visible_message(span_boldnotice("[src] becomes fully charged!"))
+	visible_message(span_boldnotice(LANG("obj.ab5e3534", list(src))))
 	powered = TRUE
 	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 100, TRUE)
@@ -362,7 +363,7 @@
 		return
 	used = single_use
 	update_icon_state()
-	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
+	visible_message(span_notice(LANG("obj.ec678311", list(user, src))), span_notice(LANG("obj.65312797", list(src))))
 	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 
@@ -380,7 +381,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 		return
 	var/obj/item/keycard/key = attacking_item
 	var/correct_card = key.puzzle_id == id
-	balloon_alert_to_viewers("[correct_card ? "correct" : "incorrect"] card swiped[correct_card ? "" : "!"]")
+	balloon_alert_to_viewers(LANG("obj.c2395146", list(correct_card ? "correct" : "incorrect", correct_card ? "" : "!")))
 	playsound(src, 'sound/machines/card_slide.ogg', 45, TRUE)
 	if(!correct_card)
 		return
@@ -417,7 +418,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	if(isnull(pass_input) || !user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
 	var/correct = pass_input == password
-	balloon_alert_to_viewers("[correct ? "correct" : "wrong"] password[correct ? "" : "!"]")
+	balloon_alert_to_viewers(LANG("obj.e07b9ffb", list(correct ? "correct" : "wrong", correct ? "" : "!")))
 	if(!correct)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 45, TRUE)
 		return
@@ -634,7 +635,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	icon_state = pick(pass_character)
 	if(!text2num(icon_state))
 		name = "letter"
-		desc = "A letter vandalizing the station."
+		desc = LANG("obj.ebcf6b81", null)
 	return TRUE
 
 /obj/effect/decal/cleanable/crayon/puzzle/pin

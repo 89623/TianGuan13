@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * An armblade that instantly snuffs out lights
  */
@@ -54,12 +55,12 @@
 		return
 	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100, TRUE)
 	if(target.stat == DEAD)
-		user.visible_message(span_warning("[user] gores [target] with [src]!"), span_warning("You gore [target] with [src], which doesn't accomplish much, but it does make you feel a little better."))
+		user.visible_message(span_warning(LANG("obj.3a5eb477", list(user, target, src))), span_warning(LANG("obj.a53b0d2b", list(target, src))))
 	else if(!HAS_TRAIT(target, TRAIT_HULK) && (iscarbon(target) || issilicon(target)))
-		user.visible_message(span_boldwarning("[user] gores [target] with [src], bringing them to a halt!"), span_userdanger("You gore [target] with [src], bringing them to a halt!"))
+		user.visible_message(span_boldwarning(LANG("obj.82941853", list(user, target, src))), span_userdanger(LANG("obj.4e1ace01", list(target, src))))
 		target.Paralyze(issilicon(target) ? 2 SECONDS : 1 SECONDS)
 	else
-		user.visible_message(span_boldwarning("[user] gores [target] with [src], ripping into them!"), span_userdanger("You gore [target] with [src], ripping into them!"))
+		user.visible_message(span_boldwarning(LANG("obj.8f8f6049", list(user, target, src))), span_userdanger(LANG("obj.fff05900", list(target, src))))
 		target.apply_damage(damage = force, forced = TRUE)
 	remove_crit()
 
@@ -75,7 +76,7 @@
 	has_crit = TRUE
 	add_filter("crit_glow", 3, list("type" = "outline", "color" = COLOR_CARP_RIFT_RED, "size" = 5))
 	if(ismob(loc))
-		loc.balloon_alert(loc, "critical strike ready")
+		loc.balloon_alert(loc, LANG("obj.eb39ba98", null))
 
 /obj/item/light_eater/proc/remove_crit()
 	if(!has_crit)

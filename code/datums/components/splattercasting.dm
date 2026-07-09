@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///how much we multiply cooldown (deciseconds) by to get the amount of blood to remove.
 ///BLOOD_VOLUME_NORMAL is 560, expensive spells max out at around 60 seconds which is 600 deciseconds
 ///removing 9/10ths of the cooldown from that puts us at 540 deciseconds, mult by 0.5 gives 270 blood taken
@@ -96,6 +97,6 @@
 		if(201 to INFINITY)
 			cost_desc = "torrent"
 
-	to_chat(source, span_danger("You feel a [cost_desc] of your blood drained into the spell you just cast."))
+	to_chat(source, span_danger(LANG("datum.cd5d3ca5", list(cost_desc))))
 
 #undef COOLDOWN_TO_BLOOD_RATIO

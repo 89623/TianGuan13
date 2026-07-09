@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/raptordex
 	filename = "raptordex"
 	filedesc = "RaptorDex"
@@ -56,7 +57,7 @@
 			scan_data["inherited_traits"] += GLOB.raptor_inherit_traits[index]
 
 	playsound(computer, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
-	my_raptor.balloon_alert(user, "scanned")
+	my_raptor.balloon_alert(user, LANG("datum.98f57ecb", null))
 	return TRUE
 
 /datum/computer_file/program/raptordex/ui_data(mob/user)

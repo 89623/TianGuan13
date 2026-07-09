@@ -21,7 +21,7 @@
 	if(check_rail || !use(1))
 		return NONE
 
-	to_chat(user, span_notice("You place [src] on [target_turf]."))
+	to_chat(user, span_notice(LANG("obj.7a67ae81", list(src, target_turf))))
 	new /obj/structure/railroad(target_turf)
 	return ITEM_INTERACT_SUCCESS
 
@@ -42,7 +42,7 @@
 		if(rail == src)
 			continue
 
-		addtimer(CALLBACK(rail, /atom/proc/update_appearance), 1 SECONDS)
+		addtimer(CALLBACK(rail, TYPE_PROC_REF(/atom, update_appearance)), 1 SECONDS)
 	return ..()
 
 /obj/structure/railroad/update_appearance(updates)
@@ -83,8 +83,8 @@
 
 /obj/vehicle/ridden/rail_cart/examine(mob/user)
 	. = ..()
-	. += span_notice("<br><b>Alt-Click</b> to attach a rail cart to this cart.")
-	. += span_notice("<br>Filling it with <b>10 sand</b> will allow it to be used as a planter!")
+	. += span_notice(LANG("obj.115030f8", null))
+	. += span_notice(LANG("obj.01f454c0", null))
 
 /obj/vehicle/ridden/rail_cart/Initialize(mapload)
 	. = ..()

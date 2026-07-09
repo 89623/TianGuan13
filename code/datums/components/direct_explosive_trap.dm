@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Responds to certain signals and 'explodes' on the person using the item.
  * Differs from `interaction_booby_trap` in that this doesn't actually explode, it just directly calls ex_act on one person.
@@ -57,7 +58,7 @@
 /// Called if we sit too long without going off
 /datum/component/direct_explosive_trap/proc/bomb_expired()
 	if (!isnull(saboteur))
-		to_chat(saboteur, span_bolddanger("Failure! Your trap didn't catch anyone this time..."))
+		to_chat(saboteur, span_bolddanger(LANG("datum.4481b9f4", null)))
 	qdel(src)
 
 /// Let people know something is up
@@ -72,9 +73,9 @@
 		return
 	if (!isnull(explosive_checks) && !explosive_checks.Invoke(victim))
 		return
-	to_chat(victim, span_bolddanger("[source] was boobytrapped!"))
+	to_chat(victim, span_bolddanger(LANG("datum.709d5c36", list(source))))
 	if (!isnull(saboteur))
-		to_chat(saboteur, span_bolddanger("Success! Your trap on [source] caught [victim.name]!"))
+		to_chat(saboteur, span_bolddanger(LANG("datum.c8fe07d8", list(source, victim.name))))
 	var/atom/parent_atom = parent
 	message_admins("Direct EX_ACT explosion with severity [explosive_force] on [ADMIN_LOOKUPFLW(victim)]. Caused by direct_explosive_trap on: [ADMIN_VERBOSEJMP(parent_atom)]. Set by: [key_name(saboteur)].")
 	log_game("Direct EX_ACT explosion with severity [explosive_force] on [key_name(victim)]. Caused by direct_explosive_trap on: [parent_atom.name] at [AREACOORD(parent_atom)]. Set by: [key_name(saboteur)].")

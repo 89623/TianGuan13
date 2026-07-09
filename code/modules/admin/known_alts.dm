@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 
 /datum/known_alts
@@ -9,7 +10,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 		return
 
 	if (!SSdbcore.Connect())
-		to_chat(usr, span_warning("Couldn't connect to the database."))
+		to_chat(usr, span_warning(LANG("datum.4f4ec485", null)))
 		return
 
 	var/datum/admins/holder = usr.client?.holder
@@ -21,11 +22,11 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 
 	switch (href_list["action"])
 		if ("add")
-			var/ckey1 = input(usr, "Put in the name of the main ckey") as null|text
+			var/ckey1 = input(usr, LANG("datum.38f99f05", null)) as null|text
 			if (!ckey1)
 				return
 
-			var/ckey2 = input(usr, "Put in the name of their alt") as null|text
+			var/ckey2 = input(usr, LANG("datum.d05687dd", null)) as null|text
 			if (!ckey2)
 				return
 
@@ -51,7 +52,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 			QDEL_NULL(query_already_exists)
 
 			if (already_exists_row)
-				alert(usr, "Those two are already in the list of known alts!")
+				alert(usr, LANG("datum.90227df1", null))
 				return
 
 			var/datum/db_query/query_add_known_alt = SSdbcore.NewQuery({"
@@ -75,7 +76,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 			show_panel(usr.client)
 
 			if (!is_banned_from(ckey2, "Server"))
-				var/ban_choice = alert("[ckey2] is not banned from the server. Do you want to open up the ban panel as well?",,"Yes", "No")
+				var/ban_choice = alert(LANG("datum.e4a5868a", list(ckey2)),,"Yes", "No")
 				if (ban_choice == "Yes")
 					holder.ban_panel(ckey2, role = "Server", duration = BAN_PANEL_PERMANENT)
 		if ("delete")
@@ -96,14 +97,14 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 				return
 
 			if (!query_known_alt_info.NextRow())
-				alert("Couldn't find the known alt with the ID [id]")
+				alert(LANG("datum.0b976595", list(id)))
 				qdel(query_known_alt_info)
 				return
 
 			var/list/result = query_known_alt_info.item
 			QDEL_NULL(query_known_alt_info)
 
-			if (alert("Are you sure you want to delete the alt connection between [result[1]] and [result[2]]?",,"Yes", "No") != "Yes")
+			if (alert(LANG("datum.d0569c0e", list(result[1], result[2])),,"Yes", "No") != "Yes")
 				return
 
 			var/datum/db_query/query_delete_known_alt = SSdbcore.NewQuery({"
@@ -162,7 +163,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 		return
 
 	if (!SSdbcore.Connect())
-		to_chat(usr, span_warning("Couldn't connect to the database."))
+		to_chat(usr, span_warning(LANG("datum.4f4ec485", null)))
 		return
 
 	var/list/known_alts_html = list()

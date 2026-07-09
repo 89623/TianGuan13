@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun/ballistic/automatic/pistol
 	name = "\improper Makarov pistol"
 	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors."
@@ -256,13 +257,13 @@
 
 /obj/item/gun/ballistic/automatic/pistol/stickman/equipped(mob/user, slot)
 	..()
-	to_chat(user, span_notice("As you try to manipulate [src], it slips out of your possession.."))
+	to_chat(user, span_notice(LANG("obj.dcfb4f98", list(src))))
 	if(prob(50))
-		to_chat(user, span_notice("..and vanishes from your vision! Where the hell did it go?"))
+		to_chat(user, span_notice(LANG("obj.1eaa06b5", null)))
 		qdel(src)
 		user.update_icons()
 	else
-		to_chat(user, span_notice("..and falls into view. Whew, that was a close one."))
+		to_chat(user, span_notice(LANG("obj.181b9d60", null)))
 		user.dropItemToGround(src)
 
 #define DOORHICKEY_GUN_MIN_DAMAGE 70
@@ -289,10 +290,10 @@
 	if (forced)
 		return ..()
 
-	balloon_alert(user, "unscrewing the barrel...")
+	balloon_alert(user, LANG("obj.df39269d", null))
 	playsound(user, 'sound/items/tools/screwdriver_operating.ogg', 75, FALSE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	if (!do_after(user, 2 SECONDS, src))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
 	. = ..()
 
@@ -301,12 +302,12 @@
 	if (!.)
 		return
 
-	balloon_alert(user, "screwing the barrel on...")
+	balloon_alert(user, LANG("obj.fadcb15c", null))
 	playsound(user, 'sound/items/tools/screwdriver_operating.ogg', 75, FALSE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	if (do_after(user, 2 SECONDS, src))
 		return TRUE
 
-	balloon_alert(user, "interrupted!")
+	balloon_alert(user, LANG("obj.c67b5d27", null))
 	unload_ammo(user, forced = TRUE)
 	return FALSE
 
@@ -349,9 +350,9 @@
 	if (prob(damage_to_take - atom_integrity) && poor_sod)
 		shrapnel_bomb = TRUE
 
-	user.visible_message(span_danger("[src] explodes into small pieces[shrapnel_bomb ? ", chunk of it embedding in [user]'s [user.parse_zone_with_bodypart(poor_sod.body_zone)]" : ""]!"),
-		span_userdanger("[src] explodes into small pieces[shrapnel_bomb ? ", chunk of it embedding in your [poor_sod]!" : ""]!"),
-		span_hear("You can hear sound of plastic shattering."))
+	user.visible_message(span_danger(LANG("obj.3f825e62", list(src, shrapnel_bomb ? ", chunk of it embedding in [user]'s [user.parse_zone_with_bodypart(poor_sod.body_zone)]" : ""))),
+		span_userdanger(LANG("obj.3f825e62", list(src, shrapnel_bomb ? ", chunk of it embedding in your [poor_sod]!" : ""))),
+		span_hear(LANG("obj.8ec8a59b", null)))
 
 	if (poor_sod)
 		poor_sod.receive_damage((damage_to_take - atom_integrity) * 0.5, wound_bonus = -10, exposed_wound_bonus = 20, sharpness = SHARP_EDGED, damage_source = src)

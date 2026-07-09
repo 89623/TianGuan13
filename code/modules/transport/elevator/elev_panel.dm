@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Elevator control panel
  *
@@ -118,7 +119,7 @@
 		elevator_door.obj_flags |= EMAGGED
 
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	balloon_alert(user, "safeties overridden")
+	balloon_alert(user, LANG("obj.bd40a80f", null))
 	return TRUE
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
@@ -126,10 +127,10 @@
 	if(!lift)
 		return
 
-	balloon_alert(user, "resetting panel...")
+	balloon_alert(user, LANG("obj.4fb9c04e", null))
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	if(!do_after(user, 6 SECONDS, src))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return TRUE
 
 	if(QDELETED(lift) || !length(lift.transport_modules))
@@ -158,7 +159,7 @@
 	reset_doors()
 
 	// Be vague about whether something was accomplished or not
-	balloon_alert(user, "panel reset")
+	balloon_alert(user, LANG("obj.1467320e", null))
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 
 	return TRUE
@@ -294,7 +295,7 @@
 	data["all_floor_data"] = list()
 	for(var/destination in linked_elevator_destination)
 		data["all_floor_data"] += list(list(
-			"name" = linked_elevator_destination[destination],
+			"name" = lang_localize_display_name(linked_elevator_destination[destination]), // NOVA EDIT - I18N - 楼层名是地图预设数据（preset_destination_names）；display-only（act 走 z_level），整串反查+AC（区域名/_decks.json）
 			"z_level" = text2num(destination),
 		))
 
@@ -311,7 +312,7 @@
 	switch(action)
 		if("move_lift")
 			if(!allowed(usr))
-				balloon_alert(usr, "access denied!")
+				balloon_alert(usr, LANG("obj.1bd3ceeb", null))
 				return
 
 			var/desired_z = params["z"]

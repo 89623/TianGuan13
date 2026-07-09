@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DREAMING_SOURCE "dreaming_source"
 
 /**
@@ -58,6 +59,8 @@
 		var/datum/callback/something_happens = next_message
 		next_message = something_happens.InvokeAsync(src)
 
+	if(istext(next_message)) // NOVA EDIT - I18N - reverse the dream fragment (single-word adjective/verb/noun words skip the file2list multi-word threshold and AC; exact reverse catches the catalog entries)
+		next_message = lang_localize_display_name(next_message)
 	to_chat(src, span_notice("<i>... [next_message] ...</i>"))
 
 	if(LAZYLEN(dream_fragments))
@@ -114,7 +117,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	var/fragment = ""
 
 	. = list()
-	. += "you see"
+	. += LANG("datum.efaeefa5", null)
 
 	//Subject
 	if(custom_dream_nouns.len && prob(90))
@@ -175,7 +178,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	. = ..()
 	. += pick("you wind up a toy", "you hear something strange", "you pick out a record to play", "you hit shuffle on your music player")
 	. += CALLBACK(src, PROC_REF(PlayRandomSound))
-	. += "it reminds you of something"
+	. += LANG("datum.5e68fd6d", null)
 
 /datum/dream/hear_something/OnDreamEnd(mob/living/carbon/dreamer)
 	. = ..()

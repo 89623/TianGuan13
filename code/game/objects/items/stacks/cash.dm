@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/stack/spacecash  //Don't use base space cash stacks. Any other space cash stack can merge with them, and could cause potential money duping exploits.
 	name = "space cash"
 	singular_name = "bill"
@@ -25,7 +26,7 @@
 /obj/item/stack/spacecash/update_desc()
 	. = ..()
 	var/total_worth = get_item_credit_value()
-	desc = "It's worth [total_worth] [MONEY_NAME_AUTOPURAL(total_worth)] in total."
+	desc = LANG("obj.a468d0cc", list(total_worth, MONEY_NAME_AUTOPURAL(total_worth)))
 
 /obj/item/stack/spacecash/get_item_credit_value()
 	return (amount*value)

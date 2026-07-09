@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/grenade/flashbang
 	name = "flashbang"
 	icon_state = "flashbang"
@@ -121,7 +122,7 @@
 		if(bodypart)
 			forceMove(get_turf(user))
 			var/did_dismember = bodypart.dismember()
-			user.visible_message("<b>[span_danger("[src] goes off in [user]'s hand[did_dismember ? ", blowing [user.p_their()] [bodypart.plaintext_zone] to bloody shreds" : ""]!")]</b>", span_userdanger("[src] goes off in your hand[did_dismember ? ", blowing your [bodypart.plaintext_zone] to bloody shreds" : ""]!"))
+			user.visible_message("<b>[span_danger("[src] goes off in [user]'s hand[did_dismember ? ", blowing [user.p_their()] [bodypart.plaintext_zone] to bloody shreds" : ""]!")]</b>", span_userdanger(LANG("obj.94d8477a", list(src, did_dismember ? ", blowing your [bodypart.plaintext_zone] to bloody shreds" : ""))))
 
 	. = ..()
 	if(!.)
@@ -155,7 +156,7 @@
 		living_mob.Knockdown(20 SECONDS)
 		living_mob.soundbang_act(SOUNDBANG_NORMAL, 200, 10, 15)
 		if(living_mob.apply_damages(brute = 10, burn = 10))
-			to_chat(living_mob, span_userdanger("The blast from \the [src] bruises and burns you!"))
+			to_chat(living_mob, span_userdanger(LANG("obj.d8d19f8a", list(src))))
 
 	// only checking if they're on top of the tile, cause being one tile over will be its own punishment
 

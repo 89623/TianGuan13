@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BUTTON_COOLDOWN 60 // cant delay the bomb forever
 #define BUTTON_DELAY 50 //five seconds
 
@@ -116,15 +117,15 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	. = ..()
-	. += "The patented external shell design is resistant to \"probably all\" forms of external explosive compression, protecting the electronically-trigged bomb core from accidental early detonation."
+	. += LANG("obj.aa2fce4a", null)
 	if(istype(payload))
-		. += "A small window reveals some information about the payload: [payload.desc]."
+		. += LANG("obj.6812cc3d", list(payload.desc))
 	if(examinable_countdown)
-		. += span_notice("A digital display on it reads \"[seconds_remaining()]\".")
+		. += span_notice(LANG("obj.a66b9903", list(seconds_remaining())))
 		if(active)
 			balloon_alert(user, "[seconds_remaining()]")
 	else
-		. += span_notice({"The digital display on it is inactive."})
+		. += span_notice(LANG("obj.2704790a", null))
 
 /obj/machinery/syndicatebomb/update_icon_state()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
@@ -142,20 +143,20 @@
 		return FALSE
 	if(!anchored)
 		if(!isturf(loc) || isspaceturf(loc))
-			to_chat(user, span_notice("The bomb must be placed on solid ground to attach it."))
+			to_chat(user, span_notice(LANG("obj.66414427", null)))
 		else
-			to_chat(user, span_notice("You firmly wrench the bomb to the floor."))
+			to_chat(user, span_notice(LANG("obj.3e3dfc04", null)))
 			tool.play_tool_sound(src)
 			set_anchored(TRUE)
 			if(active)
-				to_chat(user, span_notice("The bolts lock in place."))
+				to_chat(user, span_notice(LANG("obj.7b923aea", null)))
 	else
 		if(!active)
-			to_chat(user, span_notice("You wrench the bomb from the floor."))
+			to_chat(user, span_notice(LANG("obj.3d006776", null)))
 			tool.play_tool_sound(src)
 			set_anchored(FALSE)
 		else
-			to_chat(user, span_warning("The bolts are locked down!"))
+			to_chat(user, span_warning(LANG("obj.ba3e2ee0", null)))
 
 	return TRUE
 
@@ -163,7 +164,7 @@
 	tool.play_tool_sound(src, 50)
 	open_panel = !open_panel
 	update_appearance()
-	to_chat(user, span_notice("You [open_panel ? "open" : "close"] the wire panel."))
+	to_chat(user, span_notice(LANG("obj.3cab00b8", list(open_panel ? "open" : "close"))))
 	return TRUE
 
 /obj/machinery/syndicatebomb/crowbar_act(mob/living/user, obj/item/tool)
@@ -171,15 +172,15 @@
 	if(open_panel && wires.is_all_cut())
 		if(payload)
 			tool.play_tool_sound(src, 25) // sshhh
-			to_chat(user, span_notice("You carefully pry out [payload]."))
+			to_chat(user, span_notice(LANG("obj.c101eff9", list(payload))))
 			payload.forceMove(drop_location())
 			payload = null
 		else
-			to_chat(user, span_warning("There isn't anything in here to remove!"))
+			to_chat(user, span_warning(LANG("obj.7c6f0823", null)))
 	else if (open_panel)
-		to_chat(user, span_warning("The wires connecting the shell to the explosives are holding it down!"))
+		to_chat(user, span_warning(LANG("obj.16e09123", null)))
 	else
-		to_chat(user, span_warning("The cover is screwed on, it won't pry off!"))
+		to_chat(user, span_warning(LANG("obj.54ebcbd5", null)))
 
 /obj/machinery/syndicatebomb/welder_act(mob/living/user, obj/item/tool)
 	if(payload || !wires.is_all_cut() || !open_panel)
@@ -188,9 +189,9 @@
 	if(!tool.tool_start_check(user, amount=1))
 		return TRUE
 
-	to_chat(user, span_notice("You start to cut [src] apart..."))
+	to_chat(user, span_notice(LANG("obj.32aa381e", list(src))))
 	if(tool.use_tool(src, user, 20, volume=50))
-		to_chat(user, span_notice("You cut [src] apart."))
+		to_chat(user, span_notice(LANG("obj.bb48c3d8", list(src))))
 		new /obj/item/stack/sheet/plasteel(loc, 5)
 		qdel(src)
 	return TRUE
@@ -206,14 +207,14 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			payload = I
-			to_chat(user, span_notice("You place [payload] into [src]."))
+			to_chat(user, span_notice(LANG("obj.f9b2bfe0", list(payload, src))))
 		else
-			to_chat(user, span_warning("[payload] is already loaded into [src]! You'll have to remove it first."))
+			to_chat(user, span_warning(LANG("obj.b35b5b04", list(payload, src))))
 	else
 		var/old_integ = atom_integrity
 		. = ..()
 		if((old_integ > atom_integrity) && active && (payload in src))
-			to_chat(user, span_warning("That seems like a really bad idea..."))
+			to_chat(user, span_warning(LANG("obj.23e8971c", null)))
 
 /obj/machinery/syndicatebomb/interact(mob/user)
 	wires.interact(user)
@@ -221,7 +222,7 @@
 		if(!active)
 			settings(user)
 		else if(anchored)
-			to_chat(user, span_warning("The bomb is bolted to the floor!"))
+			to_chat(user, span_warning(LANG("obj.ad081eb1", null)))
 
 /obj/machinery/syndicatebomb/proc/activate()
 	active = TRUE
@@ -262,18 +263,18 @@
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
-	var/new_timer = tgui_input_number(user, "Set the timer[add_boom_wires ? " (the longer the timer, the harder to defuse!)" : ""]", "Countdown", timer_set, maximum_timer, minimum_timer)
+	var/new_timer = tgui_input_number(user, LANG("obj.ac2624e4", list(add_boom_wires ? " (the longer the timer, the harder to defuse!)" : "")), LANG("obj.8f2cc50c", null), timer_set, maximum_timer, minimum_timer)
 	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	timer_set = new_timer
-	visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
-	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
+	visible_message(span_notice(LANG("obj.713f7f53", list(icon2html(src, viewers(src)), timer_set))))
+	var/choice = tgui_alert(user, LANG("obj.c682e92b", null), LANG("obj.1f079ac4", null), list("Yes","No"))
 	if(choice != "Yes" || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(active)
-		to_chat(user, span_warning("The bomb is already active!"))
+		to_chat(user, span_warning(LANG("obj.fbc75e92", null)))
 		return
-	visible_message(span_danger("[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area."))
+	visible_message(span_danger(LANG("obj.58241465", list(icon2html(src, viewers(loc)), timer_set))))
 	activate()
 	add_fingerprint(user)
 	// We don't really concern ourselves with duds or fakes after this
@@ -427,7 +428,7 @@
 	var/obj/machinery/syndicatebomb/holder = loc
 	if(istype(holder))
 		attempts++
-		holder.loc.visible_message(span_danger("[icon2html(holder, viewers(holder))] Alert: Bomb has detonated. Your score is now [defusals] for [attempts]. Resetting wires..."))
+		holder.loc.visible_message(span_danger(LANG("obj.1a033993", list(icon2html(holder, viewers(holder)), defusals, attempts))))
 		reset()
 	else
 		qdel(src)
@@ -437,7 +438,7 @@
 	if(istype(holder))
 		attempts++
 		defusals++
-		holder.loc.visible_message(span_notice("[icon2html(holder, viewers(holder))] Alert: Bomb has been defused. Your score is now [defusals] for [attempts]! Resetting wires in 5 seconds..."))
+		holder.loc.visible_message(span_notice(LANG("obj.43973d6c", list(icon2html(holder, viewers(holder)), defusals, attempts))))
 		addtimer(CALLBACK(src, PROC_REF(reset)), 5 SECONDS) //Just in case someone is trying to remove the bomb core this gives them a little window to crowbar it out
 
 /obj/item/bombcore/badmin
@@ -566,9 +567,9 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			beakers += I
-			to_chat(user, span_notice("You load [src] with [I]."))
+			to_chat(user, span_notice(LANG("obj.4e7d28dc", list(src, I))))
 		else
-			to_chat(user, span_warning("[I] won't fit! \The [src] can only hold up to [max_beakers] containers."))
+			to_chat(user, span_warning(LANG("obj.9ae35d30", list(I, src, max_beakers))))
 			return
 	..()
 
@@ -657,7 +658,7 @@
 
 /obj/item/bombcore/dimensional/examine(mob/user)
 	. = ..()
-	. += span_notice("Use in hand to change the linked dimension. Current dimension: [chosen_theme?.name || "None, output will be random"].")
+	. += span_notice(LANG("obj.83590c41", list(chosen_theme?.name || "None, output will be random")))
 
 /obj/item/bombcore/dimensional/attack_self(mob/user)
 	. = ..()
@@ -678,7 +679,7 @@
 		chosen_theme = null
 	else
 		chosen_theme = picked
-	balloon_alert(user, "set to [chosen_theme?.name || DIMENSION_CHOICE_RANDOM]")
+	balloon_alert(user, LANG("obj.28f94138", list(chosen_theme?.name || DIMENSION_CHOICE_RANDOM)))
 
 /obj/item/bombcore/dimensional/proc/check_menu(mob/user)
 	if(!user.is_holding(src) || user.incapacitated)
@@ -730,7 +731,7 @@
 				detonated++
 			existent++
 		playsound(user, 'sound/machines/click.ogg', 20, TRUE)
-		to_chat(user, span_notice("[existent] found, [detonated] triggered."))
+		to_chat(user, span_notice(LANG("obj.7b747e3d", list(existent, detonated))))
 		if(detonated)
 			detonated--
 			log_bomber(user, "remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a", src)

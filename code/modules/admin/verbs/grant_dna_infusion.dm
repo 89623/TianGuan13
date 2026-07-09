@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
  * Attempts to grant the target all organs from a given DNA infuser entry.area
  * Returns the entry if all organs were successfully replaced.
@@ -12,7 +13,7 @@
 		var/str = "[initial(path.name)] ([path])"
 		infusions[str] = path
 
-	var/datum/infuser_entry/picked_infusion = tgui_input_list(usr, "Select infusion", "Apply DNA Infusion", infusions)
+	var/datum/infuser_entry/picked_infusion = tgui_input_list(usr, LANG("client.d9c73f66", null), LANG("client.a8cd614e", null), infusions)
 
 	if(isnull(picked_infusion))
 		return FALSE

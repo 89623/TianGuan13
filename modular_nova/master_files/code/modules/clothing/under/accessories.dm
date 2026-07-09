@@ -25,13 +25,13 @@
 	var/obj/item/clothing/under/pants/nova/chaps/chaps_uniform = new /obj/item/clothing/under/pants/nova/chaps(user.drop_location())
 	chaps_uniform.greyscale_colors = greyscale_colors
 	chaps_uniform.update_greyscale()
-	user.balloon_alert(user, "changed to uniform!")
+	user.balloon_alert(user, LANG("obj.d069aee3", null))
 	qdel(src)
 	user.put_in_hands(chaps_uniform)
 
 /obj/item/clothing/accessory/chaps/examine(mob/user)
 	. = ..()
-	. += span_notice("It can be [EXAMINE_HINT("ctrl+shift clicked")] to be worn as a uniform.")
+	. += span_notice(LANG("obj.94112cc6", list(EXAMINE_HINT("ctrl+shift clicked"))))
 
 /obj/item/clothing/accessory/chaps/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

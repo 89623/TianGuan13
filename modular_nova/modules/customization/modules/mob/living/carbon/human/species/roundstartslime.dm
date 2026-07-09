@@ -14,6 +14,7 @@
 	mutantstomach = /obj/item/organ/stomach/slime
 	mutantbrain = /obj/item/organ/brain/slime
 	mutantears = /obj/item/organ/ears/jelly
+	mutantappendix = null // Slimes have no Appendix
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_TOXINLOVER,
@@ -84,7 +85,7 @@
 	old_brain.Remove(human_holder, special = TRUE, movement_flags = NO_ID_TRANSFER)
 
 	new_slime_brain.Insert(human_holder, special = TRUE, movement_flags = NO_ID_TRANSFER)
-	to_chat(human_holder, span_warning("Your massive core pulses with bioelectricity!"))
+	to_chat(human_holder, span_warning(LANG("datum.91ce5813", null)))
 	if(old_brain)
 		old_brain.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_brain)
@@ -93,7 +94,7 @@
 		qdel(new_slime_stomach)
 		return
 	new_slime_stomach.Insert(human_holder, special = TRUE)
-	to_chat(human_holder, span_warning("You feel your massive golgi apparatus squish!"))
+	to_chat(human_holder, span_warning(LANG("datum.c15bf254", null)))
 	if(old_stomach)
 		old_stomach.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_stomach)
@@ -151,7 +152,7 @@
 				- 2 * seconds_per_tick,
 			)
 		if(SPT_PROB(5, seconds_per_tick))
-			to_chat(organ_owner, span_purple("Your body's thirst for plasma is quenched, your inner and outer membrane using it to regenerate."))
+			to_chat(organ_owner, span_purple(LANG("obj.9ebc9628", null)))
 
 	if(chem.type == /datum/reagent/water)
 		if (HAS_TRAIT(organ_owner, TRAIT_SLIME_HYDROPHOBIA) || HAS_TRAIT(organ_owner, TRAIT_WATER_BREATHING))
@@ -160,7 +161,7 @@
 		organ_owner.adjust_blood_volume(-3 * seconds_per_tick)
 		organ_owner.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 		if(SPT_PROB(1, seconds_per_tick))
-			to_chat(organ_owner, span_warning("The water starts to weaken and adulterate your insides!"))
+			to_chat(organ_owner, span_warning(LANG("obj.68ac02fb", null)))
 		return COMSIG_MOB_STOP_REAGENT_TICK
 
 /obj/item/organ/stomach/slime
@@ -194,29 +195,29 @@
 /obj/item/organ/brain/slime/examine()
 	. = ..()
 	if(gps_active)
-		. += span_notice("A dim light lowly pulsates from the center of the core, indicating an outgoing signal from a tracking microchip.")
-		. += span_red("You could probably snuff that out.")
-	. += span_hypnophrase("You remember that pouring plasma on it, if it's non-embodied, would make it regrow one.")
+		. += span_notice(LANG("obj.aa31eb1a", null))
+		. += span_red(LANG("obj.a2d21aa5", null))
+	. += span_hypnophrase(LANG("obj.4b1d2628", null))
 
 /obj/item/organ/brain/slime/attack_self(mob/living/user) // Allows a player (presumably an antag) to deactivate the GPS signal on a slime core
 	if(!(gps_active))
 		return
-	user.visible_message(span_warning("[user] begins jamming [user.p_their()] hand into a slime core! Slime goes everywhere!"),
-	span_notice("You jam your hand into the core, feeling for the densest point! Your arm is covered in slime!"),
-	span_notice("You hear an obscene squelching sound.")
+	user.visible_message(span_warning(LANG("obj.3c0f539e", list(user, user.p_their()))),
+	span_notice(LANG("obj.55e6dfc3", null)),
+	span_notice(LANG("obj.a3a10a91", null))
 	)
 	playsound(user, 'sound/items/handling/surgery/organ1.ogg', 80, TRUE)
 
 	if(!do_after(user, 30 SECONDS, src))
-		user.visible_message(span_warning("[user]'s hand slips out of the core before [user.p_they()] can cause any harm!'"),
-		span_warning("Your hand slips out of the goopy core before you can find its densest point."),
-		span_notice("You hear a resounding plop.")
+		user.visible_message(span_warning(LANG("obj.8af75bd6", list(user, user.p_they()))),
+		span_warning(LANG("obj.b4e3b9f8", null)),
+		span_notice(LANG("obj.6619863a", null))
 		)
 		return
 
-	user.visible_message(span_warning("[user] crunches something deep in the slime core! It gradually stops glowing..."),
-	span_notice("You find the densest point, crushing it in your palm. The blinking light in the core slowly dissipates."),
-	span_notice("You hear a wet crunching sound."))
+	user.visible_message(span_warning(LANG("obj.348c75bd", list(user))),
+	span_notice(LANG("obj.800ce2fd", null)),
+	span_notice(LANG("obj.fce3336c", null)))
 	playsound(user, 'sound/effects/wounds/crackandbleed.ogg', 80, TRUE)
 	gps_active = FALSE
 	qdel(GetComponent(/datum/component/gps))
@@ -261,7 +262,7 @@
 	if(core_ejected)
 		return
 	core_ejected = TRUE
-	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
+	victim.visible_message(span_warning(LANG("obj.c7e30e8b", list(victim))), span_notice(LANG("obj.94d10721", null)), span_notice(LANG("obj.e2a17a4f", null)))
 	var/atom/death_loc = victim.drop_location()
 	victim.unequip_everything()
 	if(victim.get_organ_slot(ORGAN_SLOT_BRAIN) == src)
@@ -295,29 +296,29 @@
 	if(!item.is_drainable() || item.reagents.get_reagent_amount(/datum/reagent/toxin/plasma) < 100)
 		return FALSE
 	user.visible_message(
-		span_notice("[user] starts to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its cytoskeleton outwards..."),
-		span_notice("You start to slowly pour the contents of [item] onto [src]. It seems to bubble and roil, beginning to stretch its membrane outwards...")
+		span_notice(LANG("obj.0f5d3e98", list(user, item, src))),
+		span_notice(LANG("obj.07336e74", list(item, src)))
 	)
 	brainmob?.notify_revival("You are being revived!", sound = null, source = src) // no sound since it's a whopping 60 second wait time after this
 	if(!do_after(user, 60 SECONDS, src))
-		to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+		to_chat(user, span_warning(LANG("obj.6c40dd89", list(item, src))))
 		return TRUE
 
 	user.visible_message(
-		span_notice("[user] pours the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane."),
-		span_notice("You pour the contents of [item] onto [src], causing it to form a proper cytoplasm and outer membrane.")
+		span_notice(LANG("obj.ab769762", list(user, item, src))),
+		span_notice(LANG("obj.d05535be", list(item, src)))
 	)
 	item.reagents.clear_reagents() //removes the whole shit
 	if(isnull(brainmob))
-		user.balloon_alert(user, "brain is not a viable candidate for repair!")
+		user.balloon_alert(user, LANG("obj.4af1ada2", null))
 		return TRUE
 
 	brainmob.grab_ghost()
 	if(isnull(brainmob.stored_dna))
-		user.balloon_alert(user, "brain does not contain any dna!")
+		user.balloon_alert(user, LANG("obj.6423b615", null))
 		return TRUE
 	if(isnull(brainmob.client))
-		user.balloon_alert(user, "brain does not contain a mind!")
+		user.balloon_alert(user, LANG("obj.6602fdbf", null))
 		return TRUE
 	regenerate()
 	return TRUE
@@ -351,8 +352,8 @@
 		if(!istype(bodypart, /obj/item/bodypart/chest))
 			bodypart.drop_limb()
 			continue
-	new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
-	to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
+	new_body.visible_message(span_warning(LANG("obj.6889a589", list(new_body, new_body.p_their()))))
+	to_chat(owner, span_purple(LANG("obj.25459c26", null)))
 	return TRUE
 
 // HEALING SECTION
@@ -387,8 +388,8 @@
 			healing = FALSE
 			if(SPT_PROB(25, seconds_per_tick))
 				slime.visible_message(
-					span_danger("[slime]'s form begins to lose cohesion, seemingly drying out!"),
-					span_warning("Your body loses cohesion as it dries, only immersion can restore it!"),
+					span_danger(LANG("datum.9420f814", list(slime))),
+					span_warning(LANG("datum.7b41fefc", null)),
 				)
 
 	else
@@ -397,14 +398,14 @@
 			blood_units_to_lose += 2 * seconds_per_tick
 			if(SPT_PROB(25, seconds_per_tick))
 				slime.visible_message(
-					span_danger("[slime]'s form begins to lose cohesion, seemingly diluting with the water!"),
-					span_warning("The water starts to dilute your body, dry it off!"),
+					span_danger(LANG("datum.96f776e1", list(slime))),
+					span_warning(LANG("datum.6ff37823", null)),
 				)
 		if(wetness_amount > REGEN_WATER_STACKS)
 			healing = FALSE
 			blood_units_to_lose += 1 * seconds_per_tick
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(slime, span_warning("You can't pull your body together and regenerate with water inside it!"))
+				to_chat(slime, span_warning(LANG("datum.f1cfa42c", null)))
 
 	slime.adjust_blood_volume(-blood_units_to_lose)
 
@@ -441,7 +442,7 @@
 		return
 
 	user.apply_status_effect(/datum/status_effect/slime_washing)
-	user.visible_message(span_purple("[user]'s outer membrane starts to develop a roiling film on the outside, absorbing grime into [user.p_their()] inner layer!"), span_purple("Your outer membrane develops a roiling film on the outside, absorbing grime off yourself and your clothes; as well as the floor beneath you."))
+	user.visible_message(span_purple(LANG("datum.16c42ded", list(user, user.p_their()))), span_purple(LANG("datum.fb262fdc", null)))
 
 /**
 * Called when you activate it again after casting the ability-- turning it off, so to say.
@@ -451,7 +452,7 @@
 		return
 
 	user.remove_status_effect(/datum/status_effect/slime_washing)
-	user.visible_message(span_notice("[user]'s outer membrane returns to normal, no longer cleaning [user.p_their()] surroundings."), span_notice("Your outer membrane returns to normal, filth no longer being cleansed."))
+	user.visible_message(span_notice(LANG("datum.e9972be8", list(user, user.p_their()))), span_notice(LANG("datum.6fea04cc", null)))
 
 /datum/status_effect/slime_washing
 	id = "slime_washing"
@@ -499,7 +500,7 @@
 
 	ADD_TRAIT(user, TRAIT_SLIME_HYDROPHOBIA, ACTION_TRAIT)
 	user.apply_status_effect(/datum/status_effect/slime_hydrophobia)
-	user.visible_message(span_purple("[user]'s outer membrane starts to ooze out an oily coating, [owner.p_their()] body becoming more viscous!"), span_purple("Your outer membrane starts to ooze out an oily coating, protecting you from water but making your body more viscous."))
+	user.visible_message(span_purple(LANG("datum.21b99687", list(user, owner.p_their()))), span_purple(LANG("datum.d5999846", null)))
 
 /**
 * Called when you activate it again after casting the ability-- turning it off, so to say.
@@ -510,7 +511,7 @@
 
 	REMOVE_TRAIT(user, TRAIT_SLIME_HYDROPHOBIA, ACTION_TRAIT)
 	user.remove_status_effect(/datum/status_effect/slime_hydrophobia)
-	user.visible_message(span_purple("[user]'s outer membrane returns to normal, [owner.p_their()] body drawing the oily coat back inside!"), span_purple("Your outer membrane returns to normal, water becoming dangerous to you once again."))
+	user.visible_message(span_purple(LANG("datum.c8afeadf", list(user, owner.p_their()))), span_purple(LANG("datum.ac76ad39", null)))
 
 /datum/movespeed_modifier/status_effect/slime_hydrophobia
 	multiplicative_slowdown = 1.5
@@ -564,44 +565,44 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "scissors",
-			SPECIES_PERK_NAME = "Headcase",
-			SPECIES_PERK_DESC = "Given slimepeople have all their organs in their chest, and no neck to boot, they can be decapitated easily.",
+			SPECIES_PERK_NAME = LANG("datum.6c59985a", null),
+			SPECIES_PERK_DESC = LANG("datum.a3761f0c", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "circle",
-			SPECIES_PERK_NAME = "Single-Celled Organism",
-			SPECIES_PERK_DESC = "Slimes only have one discrete organ, their core. It comes pre-installed with a togglable microchip for ease in location; their other organelles are unremovable.",
+			SPECIES_PERK_NAME = LANG("datum.33cb6963", null),
+			SPECIES_PERK_DESC = LANG("datum.1b47ae9d", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "notes-medical",
-			SPECIES_PERK_NAME = "Regenerator",
-			SPECIES_PERK_DESC = "Slimes, if they have a proper amount of jelly inside, are capable of regenerating damage and limbs. If they're exposed to plasma at a high jelly volume, they can regenerate wounds.",
+			SPECIES_PERK_NAME = LANG("datum.a911d5ba", null),
+			SPECIES_PERK_DESC = LANG("datum.f1fe17b1", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "droplet-slash",
-			SPECIES_PERK_NAME = "Dissolution",
-			SPECIES_PERK_DESC = "If slimes have their limbs chopped off, they disintegrate and cannot be recovered. If their body dies as a whole, it dissolves away from their core and requires 100u of liquid plasma to fix.",
+			SPECIES_PERK_NAME = LANG("datum.72927f15", null),
+			SPECIES_PERK_DESC = LANG("datum.1359f561", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "hand-holding-droplet",
-			SPECIES_PERK_NAME = "Washes Right Out",
-			SPECIES_PERK_DESC = "Slimes are capable of cleaning themselves and their clothing, siphoning the dirt off it and into themselves; even off the floor, if they're barefoot. This gives them a mild amount of nutrition.",
+			SPECIES_PERK_NAME = LANG("datum.b9b1a1ea", null),
+			SPECIES_PERK_DESC = LANG("datum.97228a5b", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "person-swimming",
-			SPECIES_PERK_NAME = "Major Hydrophobia",
-			SPECIES_PERK_DESC = "Slimes dissolve when exposed to water under normal circumstances, water nuking their blood volume and stopping their ability to regenerate.",
+			SPECIES_PERK_NAME = LANG("datum.7d4f88a6", null),
+			SPECIES_PERK_DESC = LANG("datum.b0926c88", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "person-booth",
-			SPECIES_PERK_NAME = "Shapeshifter",
-			SPECIES_PERK_DESC = "Slimes can alter their size and general shape.",
+			SPECIES_PERK_NAME = LANG("datum.05db1dd9", null),
+			SPECIES_PERK_DESC = LANG("datum.b1aa5166", null),
 		),
 	)
 
@@ -687,7 +688,7 @@
 		return
 	alterer.visible_message(
 		span_notice("[owner] [shapeshift_text]"),
-		span_notice("You focus intently on altering your body while standing perfectly still...")
+		span_notice(LANG("datum.77be045a", null))
 	)
 	change_form(alterer)
 
@@ -730,8 +731,8 @@
 /datum/action/innate/alter_form/proc/alter_skin_colours(mob/living/carbon/human/alterer)
 	var/skintone_string = tgui_input_list(
 		alterer,
-		"Choose your character's new skin color:",
-		"Form Alteration",
+		LANG("datum.dfb6cc1e", null),
+		LANG("datum.7aaef146", null),
 		GLOB.skin_tone_names
 	)
 
@@ -788,20 +789,20 @@
 
 	var/marking_reset = tgui_alert(
 		alterer,
-		"Would you like to reset your markings to match your new colors?",
-		"Reset markings",
+		LANG("datum.1b099a27", null),
+		LANG("datum.9439a802", null),
 		list("Yes", "No"),
 	)
 	var/mutant_part_reset = tgui_alert(
 		alterer,
-		"Would you like to reset your mutant body parts(not limbs) to match your new colors?",
-		"Reset mutant parts",
+		LANG("datum.69e2f7b0", null),
+		LANG("datum.78c4118f", null),
 		list("Yes", "No"),
 	)
 	var/hair_reset = tgui_alert(
 		alterer,
-		"Would you like to reset your hair to match your new colors?",
-		"Reset hair",
+		LANG("datum.d9a5dee1", null),
+		LANG("datum.9ced8c05", null),
 		list("Hair", "Facial Hair", "Both", SPRITE_ACCESSORY_NONE),
 	)
 
@@ -871,15 +872,15 @@
 		return
 	switch(target_hair)
 		if("Hair")
-			var/new_style = tgui_input_list(owner, "Select a hair style", "Hair Alterations", SSaccessories.hairstyles_list)
+			var/new_style = tgui_input_list(owner, LANG("datum.2e464f6c", null), LANG("datum.68c7fd08", null), SSaccessories.hairstyles_list)
 			if(new_style)
 				alterer.set_hairstyle(new_style, update = TRUE)
 		if("Facial Hair")
-			var/new_style = tgui_input_list(alterer, "Select a facial hair style", "Hair Alterations", SSaccessories.facial_hairstyles_list)
+			var/new_style = tgui_input_list(alterer, LANG("datum.df720244", null), LANG("datum.68c7fd08", null), SSaccessories.facial_hairstyles_list)
 			if(new_style)
 				alterer.set_facial_hairstyle(new_style, update = TRUE)
 		if("Hair Color")
-			var/hair_area = tgui_alert(alterer, "Select which color you would like to change", "Hair Color Alterations", list("Hairstyle", "Facial Hair", "Both"))
+			var/hair_area = tgui_alert(alterer, LANG("datum.a2fbdd01", null), LANG("datum.acfbf5c7", null), list("Hairstyle", "Facial Hair", "Both"))
 			if(!hair_area)
 				return
 			var/new_hair_color = tgui_color_picker(alterer, "Select your new hair color", "Hair Color Alterations", alterer.dna.features[FEATURE_MUTANT_COLOR])
@@ -906,8 +907,8 @@
 		key_list.Remove("Genitals")
 	var/dna_alteration = tgui_input_list(
 		alterer,
-		"Select what part of your DNA you'd like to alter",
-		"DNA Alteration",
+		LANG("datum.00f45ca3", null),
+		LANG("datum.a351df4f", null),
 		key_list,
 	)
 	if(!dna_alteration)
@@ -915,15 +916,15 @@
 	switch(dna_alteration)
 		if("Body Size")
 			if(oversized_user && !HAS_TRAIT(alterer, TRAIT_OVERSIZED))
-				var/reset_size = tgui_alert(alterer, "Do you wish to return to being oversized?", "Size Change", list("Yes", "No"))
+				var/reset_size = tgui_alert(alterer, LANG("datum.ad188441", null), LANG("datum.0eaf6f27", null), list("Yes", "No"))
 				if(reset_size == "Yes")
 					alterer.add_quirk(/datum/quirk/oversized)
 					return
 
 			var/new_body_size = tgui_input_number(
 				alterer,
-				"Choose your desired sprite size: ([BODY_SIZE_MIN * 100]% to [BODY_SIZE_MAX * 100]%). Warning: May make your character look distorted",
-				"Size Change",
+				LANG("datum.768912b9", list(BODY_SIZE_MIN * 100, BODY_SIZE_MAX * 100)),
+				LANG("datum.0eaf6f27", null),
 				default = min(alterer.dna.features["body_size"] * 100, BODY_SIZE_MAX * 100),
 				max_value = BODY_SIZE_MAX * 100,
 				min_value = BODY_SIZE_MIN * 100,
@@ -959,8 +960,8 @@
 		mutant_part_list[block::feature_key] = block
 	var/chosen_key = tgui_input_list(
 		alterer,
-		"Select the part you want to alter",
-		"Body Part Alterations",
+		LANG("datum.1afe48a5", null),
+		LANG("datum.20a1aa5c", null),
 		mutant_part_list,
 	)
 	if(!chosen_key)
@@ -969,8 +970,8 @@
 	var/choice_list = available_choices[chosen_key]
 	var/chosen_name_key = tgui_input_list(
 		alterer,
-		"What do you want the part to become?",
-		"Body Part Alterations",
+		LANG("datum.a3da619c", null),
+		LANG("datum.20a1aa5c", null),
 		choice_list,
 	)
 	if(!chosen_name_key)
@@ -1040,8 +1041,8 @@
 	var/list/candidates = GLOB.body_marking_sets
 	var/chosen_name = tgui_input_list(
 		alterer,
-		"Select which set of markings would you like to change into",
-		"Marking Alterations",
+		LANG("datum.c46516be", null),
+		LANG("datum.9c8eed2d", null),
 		candidates,
 	)
 	if(!chosen_name)
@@ -1063,12 +1064,12 @@
 	if(alterer.get_organ_slot(ORGAN_SLOT_TESTICLES))
 		genital_list += list("Testicles Size")
 	if(!length(genital_list))
-		alterer.balloon_alert(alterer, "no genitals!")
+		alterer.balloon_alert(alterer, LANG("datum.e52cb7eb", null))
 
 	var/dna_alteration = tgui_input_list(
 		alterer,
-		"Select what bodypart you'd like to alter",
-		"Genital Alteration",
+		LANG("datum.be2e024f", null),
+		LANG("datum.0954ca9b", null),
 		genital_list
 	)
 	if(!dna_alteration)
@@ -1084,8 +1085,8 @@
 			var/obj/item/organ/genital/breasts/melons = alterer.get_organ_slot(ORGAN_SLOT_BREASTS)
 			var/new_size = tgui_input_list(
 				alterer,
-				"Choose your character's breasts size:",
-				"DNA Alteration",
+				LANG("datum.2fbf9488", null),
+				LANG("datum.a351df4f", null),
 				GLOB.breast_size_to_number,
 			)
 			if(!new_size)
@@ -1100,8 +1101,8 @@
 				max_girth = alterer.dna.features["penis_size"]
 			var/new_girth = tgui_input_number(
 				alterer,
-				"Choose your penis girth:\n(1-[max_girth] (based on length) in inches)",
-				"Character Preference",
+				LANG("datum.761a4cc3", list(max_girth)),
+				LANG("datum.78f80c29", null),
 				max_value = max_girth,
 				min_value = 1
 			)
@@ -1113,8 +1114,8 @@
 			var/obj/item/organ/genital/penis/wang = alterer.get_organ_slot(ORGAN_SLOT_PENIS)
 			var/new_length = tgui_input_number(
 				alterer,
-				"Choose your penis length:\n([PENIS_MIN_LENGTH]-[PENIS_MAX_LENGTH] inches)",
-				"DNA Alteration",
+				LANG("datum.577a274c", list(PENIS_MIN_LENGTH, PENIS_MAX_LENGTH)),
+				LANG("datum.a351df4f", null),
 				max_value = PENIS_MAX_LENGTH,
 				min_value = PENIS_MIN_LENGTH,
 			)
@@ -1130,8 +1131,8 @@
 			var/obj/item/organ/genital/penis/schlong = alterer.get_organ_slot(ORGAN_SLOT_PENIS)
 			var/new_sheath = tgui_input_list(
 				alterer,
-				"Choose your penis sheath",
-				"DNA Alteration",
+				LANG("datum.a6d8073a", null),
+				LANG("datum.a351df4f", null),
 				SHEATH_MODES,
 			)
 			if(new_sheath)
@@ -1146,8 +1147,8 @@
 			var/obj/item/organ/genital/testicles/avocados = alterer.get_organ_slot(ORGAN_SLOT_TESTICLES)
 			var/new_size = tgui_input_list(
 				alterer,
-				"Choose your character's testicles size:",
-				"Character Preference",
+				LANG("datum.4c74bfeb", null),
+				LANG("datum.78f80c29", null),
 				GLOB.preference_balls_sizes,
 			)
 			if(new_size)
@@ -1173,10 +1174,10 @@
 	if(slime_restricted && !isjellyperson(slime))
 		return
 	if(core.gps_active)
-		to_chat(owner,span_notice("You tune out the electromagnetic signals from your core so they are ignored by GPS receivers upon its rejection."))
+		to_chat(owner,span_notice(LANG("datum.a93c22e1", null)))
 		core.gps_active = FALSE
 	else
-		to_chat(owner, span_notice("You fine-tune the electromagnetic signals from your core to be picked up by GPS receivers upon its rejection."))
+		to_chat(owner, span_notice(LANG("datum.ad1151d7", null)))
 		core.gps_active = TRUE
 
 #undef SLIME_ACTIONS_ICON_FILE

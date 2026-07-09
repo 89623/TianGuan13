@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/meteors
 	name = "Meteors"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
@@ -15,7 +16,7 @@
 /datum/action/cooldown/mob_cooldown/meteors/proc/create_meteors(atom/target)
 	if(!target)
 		return
-	target.visible_message(span_boldwarning("Fire rains from the sky!"))
+	target.visible_message(span_boldwarning(LANG("datum.3c1d9bf1", null)))
 	var/turf/targetturf = get_turf(target)
 	for(var/turf/turf as anything in RANGE_TURFS(9,targetturf))
 		if(prob(11))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //kills unconscious targets and turns them into blob zombies, produces fragile spores when killed.  Spore produced by factories are sentient.
 /datum/blobstrain/reagent/distributed_neurons
 	name = "Distributed Neurons"
@@ -13,7 +14,7 @@
 
 /datum/blobstrain/reagent/distributed_neurons/damage_reaction(obj/structure/blob/blob_tile, damage, damage_type, damage_flag)
 	if((damage_flag == MELEE || damage_flag == BULLET || damage_flag == LASER) && damage <= 20 && blob_tile.get_integrity() - damage <= 0 && prob(15)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 15% chance of a shitty spore.
-		blob_tile.visible_message(span_boldwarning("A spore floats free of the blob!"))
+		blob_tile.visible_message(span_boldwarning(LANG("datum.103ad211", null)))
 		blob_tile.overmind.create_spore(blob_tile.loc, /mob/living/basic/blob_minion/spore/minion/weak)
 	return ..()
 
@@ -34,4 +35,4 @@
 			var/mob/living/basic/blob_minion/spore/minion/spore = overmind.create_spore(get_turf(exposed_mob))
 			spore.zombify(exposed_mob)
 			overmind.add_points(-5)
-			to_chat(overmind, span_notice("Spent 5 resources for the zombification of [exposed_mob]."))
+			to_chat(overmind, span_notice(LANG("datum.e6ff2822", list(exposed_mob))))

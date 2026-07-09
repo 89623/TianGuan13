@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/revelation
 	filename = "revelation"
 	filedesc = "Revelation"
@@ -19,11 +20,11 @@
 	if(computer)
 		if(istype(computer, /obj/item/modular_computer/pda/silicon)) //If this is a borg's integrated tablet
 			var/obj/item/modular_computer/pda/silicon/modularInterface = computer
-			to_chat(modularInterface.silicon_owner,span_userdanger("SYSTEM PURGE DETECTED/"))
+			to_chat(modularInterface.silicon_owner,span_userdanger(LANG("datum.446e5d45", null)))
 			addtimer(CALLBACK(modularInterface.silicon_owner, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
 			return
 
-		computer.visible_message(span_notice("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
+		computer.visible_message(span_notice(LANG("datum.c2f79d0f", list(computer))))
 		computer.enabled = FALSE
 		computer.update_appearance()
 
@@ -33,7 +34,7 @@
 
 		if(computer.internal_cell && prob(25))
 			QDEL_NULL(computer.internal_cell)
-			computer.visible_message(span_notice("\The [computer]'s battery explodes in rain of sparks."))
+			computer.visible_message(span_notice(LANG("datum.443bc361", list(computer))))
 			do_sparks(3, FALSE, src)
 
 /datum/computer_file/program/revelation/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)

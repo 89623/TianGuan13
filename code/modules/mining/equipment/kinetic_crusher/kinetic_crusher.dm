@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Kinetic Crusher
  *
@@ -118,8 +119,8 @@
 
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
-	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force_wielded + detonation_damage]</b> damage.")
-	. += span_notice("Does <b>[force_wielded + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force_wielded + detonation_damage]</b>.")
+	. += span_notice(LANG("obj.1cb50b13", list(force_wielded + detonation_damage)))
+	. += span_notice(LANG("obj.11e00515", list(force_wielded + detonation_damage + backstab_bonus, force_wielded + detonation_damage)))
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		. += span_notice("It has \a [crusher_trophy] attached, which causes [crusher_trophy.effect_desc()].")
 
@@ -133,9 +134,9 @@
 /obj/item/kinetic_crusher/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!LAZYLEN(trophies))
-		user.balloon_alert(user, "no trophies!")
+		user.balloon_alert(user, LANG("obj.02c1f65a", null))
 		return ITEM_INTERACT_BLOCKING
-	user.balloon_alert(user, "trophies removed")
+	user.balloon_alert(user, LANG("obj.8bb119a2", null))
 	tool.play_tool_sound(src)
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		crusher_trophy.remove_from(src, user)
@@ -186,7 +187,7 @@
 	if(.)
 		return TRUE
 	if(!HAS_TRAIT(src, TRAIT_WIELDED) && !acts_as_if_wielded) // NOVA EDIT CHANGE - Original: if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		user.balloon_alert(user, "must be wielded!")
+		user.balloon_alert(user, LANG("obj.d5881829", null))
 		return TRUE
 	return .
 
@@ -241,10 +242,10 @@
 
 /obj/item/kinetic_crusher/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED) && !acts_as_if_wielded) // NOVA EDIT CHANGE - Original: if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		balloon_alert(user, "wield it first!")
+		balloon_alert(user, LANG("obj.a2400a32", null))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_with == user)
-		balloon_alert(user, "can't aim at yourself!")
+		balloon_alert(user, LANG("obj.224c61eb", null))
 		return ITEM_INTERACT_BLOCKING
 	fire_kinetic_blast(interacting_with, user, modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)

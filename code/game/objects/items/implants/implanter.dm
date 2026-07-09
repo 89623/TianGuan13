@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Players can use this item to put obj/item/implant's in living mobs. Can be renamed with a pen.
  */
@@ -28,7 +29,7 @@
 		return
 
 	if(target != user)
-		target.visible_message(span_warning("[user] is attempting to implant [target]."))
+		target.visible_message(span_warning(LANG("obj.3d57abfb", list(user, target))))
 		if(!do_after(user, 5 SECONDS, target))
 			return
 
@@ -37,13 +38,13 @@
 
 	if(imp.implant(target, user))
 		if (target == user)
-			to_chat(user, span_notice("You implant yourself."))
+			to_chat(user, span_notice(LANG("obj.4fb833c4", null)))
 		else
-			target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you."))
+			target.visible_message(span_notice(LANG("obj.218aaa2d", list(user, target))), span_notice(LANG("obj.75824e46", list(user))))
 		imp = null
 		update_appearance()
 	else
-		to_chat(user, span_warning("[src] fails to implant [target]."))
+		to_chat(user, span_warning(LANG("obj.e7a2d980", list(src, target))))
 
 /obj/item/implanter/Initialize(mapload)
 	. = ..()

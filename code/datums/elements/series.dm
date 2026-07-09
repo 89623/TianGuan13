@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## series element!
  *
@@ -31,5 +32,5 @@
 	SIGNAL_HANDLER
 
 	var/series_number = subtype_list.Find(target.type)
-	examine_list += span_boldnotice("[target] is part of the \"[series_name]\" series!")
-	examine_list += span_notice("Collect them all: [series_number]/[length(subtype_list)].")
+	examine_list += span_boldnotice(LANG("datum.351228cb", list(target, series_name)))
+	examine_list += span_notice(LANG("datum.5ac439bc", list(series_number, length(subtype_list))))

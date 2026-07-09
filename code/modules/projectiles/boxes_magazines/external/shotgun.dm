@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/ammo_box/magazine/m12g
 	name = "shotgun magazine (12g buckshot shells)"
 	desc = "A drum magazine of shotgun shells, suitable for the Bulldog combat shotgun."
@@ -63,7 +64,7 @@
 
 	var/mob/living/carbon/human/human_sniffer = user
 	if(!HAS_TRAIT(human_sniffer, TRAIT_ANOSMIA) && human_sniffer.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING|FORBID_TELEKINESIS_REACH))
-		. += span_notice("You scratch and sniff the stickers.")
-		. += span_warning("<i>Oh god, where did they pull this from, a landfill?</i>")
+		. += span_notice(LANG("obj.ffa2abf5", null))
+		. += span_warning(LANG("obj.0c828ac0", null))
 		human_sniffer.add_mood_event("stink-pocket", /datum/mood_event/disgusted)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Machinery that block nebulas. This type is for convenience, you can set nebula shielding on other objects as well using add_to_nebula_shielding()
 /obj/machinery/nebula_shielding
 	density = TRUE
@@ -73,7 +74,7 @@
 /obj/machinery/nebula_shielding/emergency/examine(mob/user)
 	. = ..()
 
-	. += span_notice("[p_They()] will block the nebula for [round(detonate_in / (1 MINUTES))] minute\s with a shield strength of [shielding_strength].")
+	. += span_notice(LANG("obj.513be8b1", list(p_They(), round(detonate_in / (1 MINUTES)), shielding_strength)))
 
 /obj/machinery/nebula_shielding/emergency/get_nebula_shielding()
 	return shielding_strength //no strings attached, we will always produce shielding
@@ -99,7 +100,7 @@
 /obj/machinery/nebula_shielding/radiation/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Passively generates tritium. Provides [shielding_strength] levels of nebula shielding when active.")
+	. += span_notice(LANG("obj.f0073e91", list(shielding_strength)))
 
 /obj/machinery/nebula_shielding/radiation/generate_reward()
 	var/turf/open/turf = get_turf(src)

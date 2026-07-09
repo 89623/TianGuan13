@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/market_item
 	/// Name for the item entry used in the uplink.
 	var/name
@@ -77,7 +78,7 @@
 	if(ismovable(item))
 		var/atom/movable/return_item = item
 		UnregisterSignal(item, COMSIG_QDELETING)
-		item.visible_message(span_notice("[item] vanishes..."))
+		item.visible_message(span_notice(LANG("datum.6c06c821", list(item))))
 		do_sparks(8, FALSE, item)
 		if(isnull(loc))
 			item.moveToNullspace()

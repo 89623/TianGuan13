@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/gravity_generator_blackout
 	name = "Gravity Generator Blackout"
 	typepath = /datum/round_event/gravity_generator_blackout
@@ -26,7 +27,7 @@
 	announce_chance = 33
 
 /datum/round_event/gravity_generator_blackout/announce(fake)
-	priority_announce("Gravnospheric anomalies detected near [station_name()]. Manual reset of generators is required.", "Anomaly Alert", ANNOUNCER_GRANOMALIES)
+	priority_announce(LANG("datum.9d682821", list(station_name())), "Anomaly Alert", ANNOUNCER_GRANOMALIES)
 
 /datum/round_event/gravity_generator_blackout/start()
 	for(var/obj/machinery/gravity_generator/main/the_generator as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/gravity_generator/main))

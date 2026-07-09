@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //The Medical Kiosk is designed to act as a low access alernative to  a medical analyzer, and doesn't require breaking into medical. Self Diagnose at your heart's content!
 //For a fee that is. Comes in 4 flavors of medical scan.
 
@@ -73,7 +74,7 @@
 	if(card?.registered_account?.account_job?.paycheck_department == payment_department)
 		use_energy(active_power_usage)
 		paying_customer = TRUE
-		say("Hello, esteemed medical staff!")
+		say(LANG("obj.e89c41c1", null))
 		return
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
 	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
@@ -81,7 +82,7 @@
 	use_energy(active_power_usage)
 	paying_customer = TRUE
 	icon_state = "[base_icon_state]_active"
-	say("Thank you for your patronage!")
+	say(LANG("obj.c4cd8293", null))
 	return
 
 /obj/machinery/medical_kiosk/proc/clearScans() //Called it enough times to be it's own proc
@@ -124,20 +125,20 @@
 
 	var/obj/item/scanner_wand/wand = tool
 	if(scanner_wand)
-		balloon_alert(user, "already has a wand!")
+		balloon_alert(user, LANG("obj.d6054a91", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
-		balloon_alert(user, "stuck to your hand!")
+		balloon_alert(user, LANG("obj.edd6b8ce", null))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] snaps [tool] onto [src]!"))
-	balloon_alert(user, "wand returned")
+	user.visible_message(span_notice(LANG("obj.2b5df12c", list(user, tool, src))))
+	balloon_alert(user, LANG("obj.439e2543", null))
 	//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 	if(wand.selected_target)
 		var/datum/weakref/target_ref = WEAKREF(wand.return_patient())
 		if(patient_ref != target_ref)
 			clearScans()
 		patient_ref = target_ref
-		user.visible_message(span_notice("[wand.return_patient()] has been set as the current patient."))
+		user.visible_message(span_notice(LANG("obj.07cefc96", list(wand.return_patient()))))
 		wand.selected_target = null
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	scanner_wand = tool
@@ -150,14 +151,14 @@
 	if(!ishuman(user) || !user.can_perform_action(src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!scanner_wand)
-		balloon_alert(user, "no scanner wand!")
+		balloon_alert(user, LANG("obj.db9d9aa7", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!user.put_in_hands(scanner_wand))
-		balloon_alert(user, "scanner wand falls!")
+		balloon_alert(user, LANG("obj.da9fc6f8", null))
 		scanner_wand = null
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	user.visible_message(span_notice("[user] unhooks the [scanner_wand] from [src]."))
-	balloon_alert(user, "scanner pulled")
+	user.visible_message(span_notice(LANG("obj.75deeac2", list(user, scanner_wand, src))))
+	balloon_alert(user, LANG("obj.e419468e", null))
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	scanner_wand = null
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -172,8 +173,8 @@
 		return
 	if(user)
 		if (emag_card)
-			user.visible_message(span_warning("[user] waves a suspicious card by the [src]'s biometric scanner!"))
-		balloon_alert(user, "sensors overloaded")
+			user.visible_message(span_warning(LANG("obj.d9c51228", list(user, src))))
+		balloon_alert(user, LANG("obj.965f2362", null))
 	obj_flags |= EMAGGED
 	var/obj/item/circuitboard/board = circuit
 	board.obj_flags |= EMAGGED //Mirrors emag status onto the board as well.
@@ -183,25 +184,25 @@
 /obj/machinery/medical_kiosk/examine(mob/user)
 	. = ..()
 	if(scanner_wand == null)
-		. += span_notice("\The [src] is missing its scanner.")
+		. += span_notice(LANG("obj.617034f4", list(src)))
 	else
-		. += span_notice("\The [src] has its scanner clipped to the side. Right Click to remove.")
+		. += span_notice(LANG("obj.9651ae35", list(src)))
 
 /obj/machinery/medical_kiosk/ui_interact(mob/user, datum/tgui/ui)
 	var/patient_distance = 0
 	if(!ishuman(user))
-		to_chat(user, span_warning("[src] is unable to interface with non-humanoids!"))
+		to_chat(user, span_warning(LANG("obj.cec346d4", list(src))))
 		if (ui)
 			ui.close()
 		return
 	var/mob/living/carbon/human/patient = patient_ref?.resolve()
 	patient_distance = get_dist(src.loc, patient)
 	if(patient == null)
-		say("Scanner reset.")
+		say(LANG("obj.5fc303a7", null))
 		patient_ref = WEAKREF(user)
 	else if(patient_distance>5)
 		patient_ref = null
-		say("Patient out of range. Resetting biometrics.")
+		say(LANG("obj.a38b067b", null))
 		clearScans()
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -242,7 +243,7 @@
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
-			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
+			sickness_data = LANG("obj.5adc3d38", list(D.name, D.spread_text, D.stage, D.max_stages, D.cure_text))
 
 	if(patient.can_bleed()) //Blood levels Information
 		blood_name = LOWER_TEXT(blood_type.get_blood_name())
@@ -250,7 +251,7 @@
 			bleed_status = " Patient is currently bleeding!"
 
 		if(blood_percent <= 80)
-			blood_warning = " Patient has [blood_percent <= 60 ? "DANGEROUSLY low" : "low"] [blood_name] levels."
+			blood_warning = LANG("obj.8c48b16d", list(blood_percent <= 60 ? "DANGEROUSLY low" : "low", blood_name))
 			var/list/treatments = list()
 			if(blood_percent <= 60)
 				treatments += "[blood_name] transfusion"
@@ -262,12 +263,13 @@
 					treatments += "saline-glucose immediately"
 
 			if (length(treatments))
-				blood_warning += " Seek [english_list(treatments, and_text = " or ")]"
+				blood_warning += LANG("obj.8eac253b", list(english_list(treatments, and_text = " or ")))
 
 			if (blood_percent <= 60)
-				blood_warning += " Ignoring treatment may lead to death!"
+				blood_warning += LANG("obj.4b7a7c80", null)
 
-		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.get_type() ? " Patient has [blood_type.get_type()] type [blood_name]." : ""][blood_warning]"
+		var/blood_type_suffix = blood_type.get_type() ? LANG("obj.565fbcbc", list(blood_type.get_type(), blood_name)) : "" // NOVA EDIT - I18N - localize the blood-type suffix so it round-trips as {2}
+		blood_status = LANG("obj.fd7bb58c", list(blood_name, blood_percent, blood_type_suffix, blood_warning))
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)

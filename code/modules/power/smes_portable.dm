@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // idea inspired by vgstation, original pr on github vgstation-coders/vgstation13#4555
 
 /obj/machinery/power/smes/connector
@@ -67,7 +68,7 @@
 	PRIVATE_PROC(TRUE)
 
 	if(connected_smes)
-		balloon_alert(user, "disconnect SMES first!")
+		balloon_alert(user, LANG("obj.8413f243", null))
 		return FALSE
 	return TRUE
 
@@ -97,7 +98,7 @@
 
 /obj/machinery/power/smes/connector/ui_interact(mob/user, datum/tgui/ui)
 	if(!connected_smes)
-		balloon_alert(user, "no power bank!")
+		balloon_alert(user, LANG("obj.5308d2be", null))
 		return FALSE
 
 	return ..()
@@ -175,13 +176,13 @@
 
 /obj/machinery/smesbank/examine(user)
 	. = ..()
-	. += span_notice("its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice(LANG("obj.bba556de", list(EXAMINE_HINT("screwed"), panel_open ? "closed" : "open")))
 	if(connected_port)
-		. += span_notice("You need to [EXAMINE_HINT("unwrench")] from the port before deconstructing.")
+		. += span_notice(LANG("obj.d50594b3", list(EXAMINE_HINT("unwrench"))))
 	else
 		if(panel_open)
-			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
-		. += span_notice("It should be [EXAMINE_HINT("wrenched")] onto a connector port to operate.")
+			. += span_notice(LANG("obj.fa5fc796", list(EXAMINE_HINT("pried"))))
+		. += span_notice(LANG("obj.e4805b3e", list(EXAMINE_HINT("wrenched"))))
 
 /obj/machinery/smesbank/Destroy()
 	disconnect_port()
@@ -209,9 +210,9 @@
 		if(!wrench.use_tool(src, user, 8 SECONDS))
 			return ITEM_INTERACT_BLOCKING
 		user.visible_message( \
-			"[user] disconnects [src].", \
-			span_notice("You unfasten [src] from [connected_port]."), \
-			span_hear("You hear a ratchet."))
+			LANG("obj.4acbf7f4", list(user, src)), \
+			span_notice(LANG("obj.bc4d4443", list(src, connected_port))), \
+			span_hear(LANG("obj.aa8a193f", null)))
 		investigate_log("was disconnected from [connected_port] by [key_name(user)].", INVESTIGATE_ENGINE)
 		disconnect_port()
 		update_appearance(UPDATE_OVERLAYS)
@@ -223,9 +224,9 @@
 	if(!connect_port(possible_connector, user))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message( \
-		"[user] connects [src].", \
-		span_notice("You fasten [src] to [possible_connector]."), \
-		span_hear("You hear a ratchet."))
+		LANG("obj.1450de58", list(user, src)), \
+		span_notice(LANG("obj.5cfbd1d1", list(src, possible_connector))), \
+		span_hear(LANG("obj.aa8a193f", null)))
 	update_appearance(UPDATE_OVERLAYS)
 	investigate_log("was connected to [possible_connector] by [key_name(user)].", INVESTIGATE_ENGINE)
 	return ITEM_INTERACT_SUCCESS
@@ -239,7 +240,7 @@
 
 /obj/machinery/smesbank/crowbar_act(mob/living/user, obj/item/tool)
 	if(connected_port)
-		balloon_alert(user, "disconnect from [connected_port] first!")
+		balloon_alert(user, LANG("obj.120f3b8a", list(connected_port)))
 		return ITEM_INTERACT_FAILURE
 
 	return default_deconstruction_crowbar(user, tool)
@@ -257,13 +258,13 @@
 
 	if(QDELETED(possible_connector))
 		if(user)
-			balloon_alert(user, "no connector!")
+			balloon_alert(user, LANG("obj.4108c443", null))
 		return FALSE
 
 	//Make sure not already connected to something else
 	if(possible_connector.panel_open)
 		if(user)
-			balloon_alert(user, "close connector panel!")
+			balloon_alert(user, LANG("obj.1b23fc09", null))
 		return FALSE
 
 	//Perform the connection

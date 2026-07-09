@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	update_turf_movespeed(loc)
@@ -139,7 +140,7 @@
 /mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
 	if(z_move_flags & ZMOVE_INCAPACITATED_CHECKS && incapacitated)
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider || src, span_warning("[rider ? src : "You"] can't do that right now!"))
+			to_chat(rider || src, span_warning(LANG("mob.e4ee5d59", list(rider ? src : "You"))))
 		return FALSE
 	if(!buckled || !(z_move_flags & ZMOVE_ALLOW_BUCKLED))
 		if(!(z_move_flags & ZMOVE_FALL_CHECKS) && incorporeal_move && (!rider || rider.incorporeal_move))
@@ -157,7 +158,7 @@
 			if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS) && !buckled.anchored)
 				return buckled.can_z_move(direction, start, destination, z_move_flags, src)
 			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(src, span_warning("Unbuckle from [buckled] first."))
+				to_chat(src, span_warning(LANG("mob.63a21e6a", list(buckled))))
 			return FALSE
 
 /mob/set_currently_z_moving(value)

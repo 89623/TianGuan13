@@ -2,10 +2,10 @@ GLOBAL_LIST_EMPTY(bunker_passthrough)
 
 ADMIN_VERB(addbunkerbypass, R_ADMIN, "Add PB Bypass", "Allows a given ckey to connect despite the panic bunker for a given round.", ADMIN_CATEGORY_MAIN)
 	if(!CONFIG_GET(flag/sql_enabled))
-		to_chat(usr, span_adminnotice("The Database is not enabled!"))
+		to_chat(usr, span_adminnotice(LANG("datum.5bf16f98", null)))
 		return
 
-	var/ckeytobypass = input(user, "Enter a ckey to add panic bunker bypass for.", "Ckey Input") as text|null
+	var/ckeytobypass = input(user, LANG("datum.964a8230", null), LANG("datum.1efabe26", null)) as text|null
 	if(!ckeytobypass)
 		return
 
@@ -20,10 +20,10 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(addbunkerbypass)
 
 ADMIN_VERB(revokebunkerbypass, R_ADMIN, "Revoke PB Bypass", "Revoke's a ckey's permission to bypass the panic bunker for a given round.", ADMIN_CATEGORY_MAIN)
 	if(!CONFIG_GET(flag/sql_enabled))
-		to_chat(usr, span_adminnotice("The Database is not enabled!"))
+		to_chat(usr, span_adminnotice(LANG("datum.5bf16f98", null)))
 		return
 
-	var/ckeytobypass = input(user, "Enter a ckey to revoke panic bunker bypass for.", "Ckey Input") as text|null
+	var/ckeytobypass = input(user, LANG("datum.ba961577", null), LANG("datum.1efabe26", null)) as text|null
 	if(!ckeytobypass)
 		return
 

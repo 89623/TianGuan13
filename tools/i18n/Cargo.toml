@@ -1,0 +1,19 @@
+[package]
+name = "nova-i18n"
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+description = "NovaSector 全量汉化：DM 字符串抽取/改写工具（基于 SpacemanDMM 的 dreammaker 解析器）"
+
+[[bin]]
+name = "nova-i18n"
+path = "src/main.rs"
+
+[dependencies]
+# 与 dependencies.sh 的 SPACEMAN_DMM_VERSION 对齐，复用 DreamChecker 的 DM 解析器。
+# lib 名为 `dm`，故重命名引入。
+dm = { git = "https://github.com/SpaceManiac/SpacemanDMM", tag = "suite-1.11", package = "dreammaker" }
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+serde_json = "1"
+blake3 = "1"

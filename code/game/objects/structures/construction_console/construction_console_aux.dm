@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///base consturctino console subtype for the mining aux base
 /obj/machinery/computer/camera_advanced/base_construction/aux
 	name = "aux base construction console"
@@ -28,6 +29,6 @@
 			aux_controller = potential_aux_console
 			break
 	if(!aux_controller)
-		say("ERROR: Unable to locate auxiliary base controller!")
+		say(LANG("obj.cd88da8b", null))
 		return null
 	return aux_controller

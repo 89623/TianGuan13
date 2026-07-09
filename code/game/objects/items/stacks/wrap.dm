@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 
 /*
@@ -29,8 +30,8 @@
 /obj/item/stack/wrapping_paper/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	user.visible_message(
-		span_warning("[user] baps [target_mob] on the head with [src]!"),
-		span_warning("You bap [target_mob] on the head with [src]!"),
+		span_warning(LANG("obj.8b0641b8", list(user, target_mob, src))),
+		span_warning(LANG("obj.e4f49b01", list(target_mob, src))),
 	)
 	target_mob.add_mood_event("roll", /datum/mood_event/bapped)
 
@@ -99,7 +100,7 @@
 	return list(/datum/reagent/cellulose = 5)
 
 /obj/item/stack/package_wrap/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.e41d2360", list(user, user.p_them(), src, user.p_theyre()))))
 	if(use(3))
 		var/obj/item/delivery/big/parcel = new(get_turf(user.loc))
 		parcel.base_icon_state = "deliverypackage5"
@@ -109,7 +110,7 @@
 		parcel.add_fingerprint(user)
 		return OXYLOSS
 	else
-		balloon_alert(user, "not enough paper!")
+		balloon_alert(user, LANG("obj.3fa08713", null))
 		return SHAME
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
@@ -139,7 +140,7 @@
 		if(!item.can_be_package_wrapped())
 			if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 				return NONE // put it in the bag instead of yelling
-			balloon_alert(user, "can't be wrapped!")
+			balloon_alert(user, LANG("obj.be71e026", null))
 			return ITEM_INTERACT_BLOCKING
 		if(user.is_holding(item))
 			if(!user.dropItemToGround(item))
@@ -169,10 +170,10 @@
 	else if(istype(interacting_with, /obj/structure/closet))
 		var/obj/structure/closet/closet = interacting_with
 		if(closet.opened)
-			balloon_alert(user, "can't wrap while open!")
+			balloon_alert(user, LANG("obj.a4697a6d", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!closet.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
-			balloon_alert(user, "can't wrap!")
+			balloon_alert(user, LANG("obj.7171f7eb", null))
 			return ITEM_INTERACT_BLOCKING
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(closet.loc))
@@ -191,12 +192,12 @@
 					break
 			// NOVA EDIT END
 		else
-			balloon_alert(user, "not enough paper!")
+			balloon_alert(user, LANG("obj.3fa08713", null))
 			return ITEM_INTERACT_BLOCKING
 	else if(istype(interacting_with,  /obj/machinery/portable_atmospherics))
 		var/obj/machinery/portable_atmospherics/portable_atmospherics = interacting_with
 		if(portable_atmospherics.anchored)
-			balloon_alert(user, "can't wrap while anchored!")
+			balloon_alert(user, LANG("obj.fbac689c", null))
 			return ITEM_INTERACT_BLOCKING
 		if(use(3))
 			var/obj/item/delivery/big/parcel = new(get_turf(portable_atmospherics.loc))
@@ -207,14 +208,14 @@
 			parcel.add_fingerprint(user)
 			portable_atmospherics.add_fingerprint(user)
 		else
-			balloon_alert(user, "not enough paper!")
+			balloon_alert(user, LANG("obj.3fa08713", null))
 			return ITEM_INTERACT_BLOCKING
 
 	else
-		balloon_alert(user, "can't wrap!")
+		balloon_alert(user, LANG("obj.7171f7eb", null))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] wraps [interacting_with]."))
+	user.visible_message(span_notice(LANG("obj.6d295e39", list(user, interacting_with))))
 	user.log_message("has used [name] on [key_name(interacting_with)]", LOG_ATTACK, color="blue")
 	return ITEM_INTERACT_SUCCESS
 
@@ -252,7 +253,7 @@
 /obj/item/c_tube/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	user.visible_message(
-		span_warning("[user] baps [target_mob] on the head with [src]!"),
-		span_warning("You bap [target_mob] on the head with [src]!"),
+		span_warning(LANG("obj.8b0641b8", list(user, target_mob, src))),
+		span_warning(LANG("obj.e4f49b01", list(target_mob, src))),
 	)
 	target_mob.add_mood_event("roll", /datum/mood_event/bapped)

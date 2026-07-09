@@ -66,7 +66,7 @@
 			if(mind.current)
 				SEND_SOUND(mind.current, 'sound/music/antag/bloodcult/bloodcult_halos.ogg')
 				to_chat(mind.current, span_cult_large(span_warning("Your cult is ascendant and the red harvest approaches - you cannot hide your true nature for much longer!!")))
-				mind.current.AddElement(/datum/element/cult_halo)
+				mind.current.apply_status_effect(/datum/status_effect/cult_halo)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
 #endif
@@ -121,7 +121,7 @@
 		parts += "<b>The cultists' objectives were:</b>"
 		var/count = 1
 		for(var/datum/objective/objective in objectives)
-			parts += "<b>Objective #[count]</b>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+			parts += "<b>[lang_reverse_text("Objective")] #[count]</b>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones miss and still hit the to_chat boundary engine)
 			count++
 
 	if(members.len)

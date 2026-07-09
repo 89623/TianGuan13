@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Fires a bloody beam. Brimdemon Blast!
 /datum/action/cooldown/mob_cooldown/brimbeam
 	name = "Brimstone Blast"
@@ -35,7 +36,7 @@
 	abort_blast = FALSE
 	owner.face_atom(target)
 	owner.move_resist = MOVE_FORCE_VERY_STRONG
-	owner.balloon_alert_to_viewers("charging...")
+	owner.balloon_alert_to_viewers(LANG("datum.b766a769", null))
 	var/mutable_appearance/direction_overlay = mutable_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir")
 	var/mutable_appearance/direction_emissive = emissive_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir", owner, alpha = 150, effect_type = EMISSIVE_NO_BLOOM)
 	owner.add_overlay(direction_overlay)
@@ -78,7 +79,7 @@
 
 /// Create a laser in the direction we are facing
 /datum/action/cooldown/mob_cooldown/brimbeam/proc/fire_laser()
-	owner.visible_message(span_danger("[owner] fires a brimbeam!"))
+	owner.visible_message(span_danger(LANG("datum.ae094d75", list(owner))))
 	playsound(owner, 'sound/mobs/non-humanoids/brimdemon/brimdemon.ogg', 150, FALSE, 0, 3)
 	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, beam_range)
 	var/turf/origin_turf = get_turf(owner)

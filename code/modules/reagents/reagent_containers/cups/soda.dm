@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/grenade/ghettobomb.dm
@@ -42,12 +43,12 @@
 
 /obj/item/reagent_containers/cup/soda_cans/suicide_act(mob/living/carbon/human/H)
 	if(!reagents.total_volume)
-		H.visible_message(span_warning("[H] is trying to take a big sip from [src]... The can is empty!"))
+		H.visible_message(span_warning(LANG("obj.b5b535a2", list(H, src))))
 		return SHAME
 	if(!is_drainable())
 		open_soda(H)
 		sleep(1 SECONDS)
-	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
+	H.visible_message(span_suicide(LANG("obj.76037a1e", list(H, src, H.p_theyre()))))
 	playsound(H,'sound/items/drink.ogg', 80, TRUE)
 	reagents.trans_to(H, src.reagents.total_volume, transferred_by = H) //a big sip
 	sleep(0.5 SECONDS)
@@ -78,13 +79,13 @@
 
 	if(target == user)
 		user.visible_message(
-			span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"),
-			span_notice("You crush the can of [src] on your forehead."),
+			span_warning(LANG("obj.58fd28bc", list(user, src, user.p_their()))),
+			span_notice(LANG("obj.918576da", list(src))),
 		)
 	else
 		user.visible_message(
-			span_warning("[user] crushes the can of [src] on [target]'s forehead!"),
-			span_notice("You crush the can of [src] on [target]'s forehead."),
+			span_warning(LANG("obj.7ba56bac", list(user, src, target))),
+			span_notice(LANG("obj.d0fb0ba1", list(src, target))),
 		)
 	playsound(src, 'sound/items/weapons/pierce.ogg', rand(10, 50), TRUE)
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(target.drop_location())
@@ -106,7 +107,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/proc/open_soda(mob/user)
 	if(tape_color)
-		to_chat(user, "You rip off the tape covering [src]'s hole.")
+		to_chat(user, LANG("obj.7ffb4846", list(src)))
 		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
 		tape_color = null
 		add_container_flags(OPENCONTAINER)
@@ -114,11 +115,11 @@
 		return
 
 	if(prob(fizziness))
-		user.visible_message(span_danger("[user] opens [src], and is suddenly sprayed by the fizzing contents!"), span_danger("You pull back the tab of [src], and are suddenly sprayed with a torrent of liquid! Ahhh!!"))
+		user.visible_message(span_danger(LANG("obj.1cec24ac", list(user, src))), span_danger(LANG("obj.5f9f3284", list(src))))
 		burst_soda(user)
 		return
 
-	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
+	to_chat(user, LANG("obj.8f51cc79", list(src))) //Ahhhhhhhh
 	add_container_flags(OPENCONTAINER)
 	playsound(src, SFX_CAN_OPEN, 50, TRUE)
 	throwforce = 0
@@ -143,7 +144,7 @@
 
 	playsound(src, 'sound/items/can/can_pop.ogg', 80, TRUE)
 	if(!hide_message)
-		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
+		visible_message(span_danger(LANG("obj.a59d76cf", list(src, target))))
 	add_container_flags(OPENCONTAINER)
 	reagents.expose(target, TOUCH)
 	reagents.clear_reagents()
@@ -152,7 +153,7 @@
 /obj/item/reagent_containers/cup/soda_cans/wirecutter_act(mob/living/user, obj/item/tool)
 	if (!fuse_color)
 		return NONE
-	to_chat(user, span_notice("You snip [src]'s fuse off."))
+	to_chat(user, span_notice(LANG("obj.fef90325", list(src))))
 	tool.play_tool_sound(src, 50)
 	add_fingerprint(user)
 	fuse_color = null
@@ -167,15 +168,15 @@
 /obj/item/reagent_containers/cup/soda_cans/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (istype(tool, /obj/item/stack/cable_coil))
 		if (fuse_color)
-			to_chat(user, span_warning("[src] already has a fuse attached to it!"))
+			to_chat(user, span_warning(LANG("obj.41a0655f", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if (tape_color)
-			to_chat(user, span_warning("[src]'s hole is covered up with tape!"))
+			to_chat(user, span_warning(LANG("obj.16c56a99", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if (!is_drainable())
-			to_chat(user, span_warning("[src] hasn't been opened yet!"))
+			to_chat(user, span_warning(LANG("obj.1751c0ee", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/stack/cable_coil/coil = tool
@@ -187,18 +188,18 @@
 		fuse_color = coil_color
 		// Heating replaced with lighting the fuse
 		RemoveElement(/datum/element/reagents_item_heatable)
-		to_chat(user, span_notice("You attach a fuse to [src]."))
+		to_chat(user, span_notice(LANG("obj.95c22256", list(src))))
 		log_bomber(user, "attached a fuse to", src)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if (istype(tool, /obj/item/stack/medical/wrap/sticky_tape))
 		if (tape_color)
-			to_chat(user, span_warning("[src]'s hole is already covered up with tape!"))
+			to_chat(user, span_warning(LANG("obj.65430ade", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if (!is_drainable())
-			to_chat(user, span_warning("[src] hasn't been opened yet!"))
+			to_chat(user, span_warning(LANG("obj.1751c0ee", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/stack/medical/wrap/sticky_tape/tape = tool
@@ -208,7 +209,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		tape_color = tape_colors[1]
-		to_chat(user, span_notice("You wrap [src] up in [tape]."))
+		to_chat(user, span_notice(LANG("obj.2e96d031", list(src, tape))))
 		reset_container_flags()
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -217,12 +218,12 @@
 		return ..()
 
 	if (fuse_timer)
-		to_chat(user, span_warning("[src] is already lit!"))
+		to_chat(user, span_warning(LANG("obj.d3ebc52c", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	add_fingerprint(user)
 	log_bomber(user, "has primed a rigged", src)
-	to_chat(user, span_warning("You light [src]'s fuse!"))
+	to_chat(user, span_warning(LANG("obj.539f0ab3", list(src))))
 	fuse_timer = addtimer(CALLBACK(src, PROC_REF(try_detonate)), rand(2 SECONDS, 4 SECONDS))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -270,7 +271,7 @@
 		return
 
 	burst_soda(hit_atom, hide_message = TRUE)
-	visible_message(span_danger("[src]'s impact with [hit_atom] causes it to rupture, spilling everywhere!"))
+	visible_message(span_danger(LANG("obj.957f4876", list(src, hit_atom))))
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
 	crushed_can.icon_state = icon_state
 	moveToNullspace()
@@ -278,7 +279,7 @@
 
 /obj/item/reagent_containers/cup/soda_cans/attack_self(mob/user)
 	if(fuse_timer)
-		balloon_alert(user, "the fuse is on fire!")
+		balloon_alert(user, LANG("obj.0fdc0527", null))
 		return
 
 	if(!is_drainable())
@@ -290,7 +291,7 @@
 /obj/item/reagent_containers/cup/soda_cans/attack_self_secondary(mob/user)
 	if(!is_drainable())
 		playsound(src, 'sound/items/can/can_shake.ogg', 50, TRUE)
-		user.visible_message(span_danger("[user] shakes [src]!"), span_danger("You shake up [src]!"), vision_distance=2)
+		user.visible_message(span_danger(LANG("obj.3d014bc6", list(user, src))), span_danger(LANG("obj.32289c20", list(src))), vision_distance=2)
 		fizziness += SODA_FIZZINESS_SHAKE
 		return
 	return ..()
@@ -300,8 +301,8 @@
 	if(!in_range(user, src))
 		return
 	if(fizziness > 30 && prob(fizziness * 2))
-		. += span_notice("<i>You examine [src] closer, and note the following...</i>")
-		. += "\t[span_warning("You get a menacing aura of fizziness from it...")]"
+		. += span_notice(LANG("obj.c1961515", list(src)))
+		. += LANG("obj.294efb1f", list(span_warning("You get a menacing aura of fizziness from it...")))
 
 /obj/item/reagent_containers/cup/soda_cans/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return ((air.return_pressure() <= SODA_EXPLOSION_PRESSURE) && !(reagents.flags & OPENCONTAINER))
@@ -474,10 +475,10 @@
 	switch(brand)
 		if("Ebisu Super Dry")
 			icon_state = "ebisu"
-			desc = "Mars' favourite rice beer brand, 200 years running."
+			desc = LANG("obj.7e090941", null)
 		if("Shimauma Ichiban")
 			icon_state = "shimauma"
-			desc = "Mars' most middling rice beer brand. Not as popular as Ebisu, but it's comfortable in second place."
+			desc = LANG("obj.79b7ff02", null)
 		if("Moonlabor Malt's")
 			icon_state = "moonlabor"
-			desc = "Mars' underdog rice beer brand. Popular amongst the Yakuza, for reasons unknown."
+			desc = LANG("obj.b00c5d9f", null)

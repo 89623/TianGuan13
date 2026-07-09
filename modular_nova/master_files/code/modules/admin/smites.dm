@@ -23,7 +23,7 @@
 /datum/smite/cone_of_shame/effect(client/user, mob/living/target)
 	. = ..()
 	if (!iscarbon(target) && !iscyborg(target))
-		to_chat(user, span_warning("This must be used on a carbon or cyborg mob."), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.749b91f2", null)), confidential = TRUE)
 		return
 	var/obj/item/clothing/head/cone_of_shame/bad_dog/thecone = new
 	if(iscarbon(target))
@@ -33,13 +33,13 @@
 			shamed.dropItemToGround(worn_necky)
 		if(shamed.equip_to_slot_if_possible(thecone, ITEM_SLOT_NECK, qdel_on_fail = TRUE, disable_warning = TRUE, redraw_mob = TRUE))
 			smite_item_protection(thecone)
-			shamed.visible_message(span_warning("A Cone of Shame appears around [shamed]'s neck!"))
+			shamed.visible_message(span_warning(LANG("datum.e44fe85d", list(shamed))))
 		return
 	if(iscyborg(target))
 		var/mob/living/silicon/robot/borgy = target
 		borgy.place_on_head(thecone)
 		smite_item_protection(thecone)
-		borgy.visible_message(span_warning("A Cone of Shame appears around [borgy]'s neck!"))
+		borgy.visible_message(span_warning(LANG("datum.e44fe85d", list(borgy))))
 		return
 	qdel(thecone)
 
@@ -50,7 +50,7 @@
 /datum/smite/maidification/effect(client/user, mob/living/target)
 	. = ..()
 	if (!iscarbon(target))
-		to_chat(user, span_warning("This must be used on a carbon mob."), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.0c41c4cf", null)), confidential = TRUE)
 		return
 	var/list/items = list(
 		/obj/item/clothing/head/costume/maid_headband = ITEM_SLOT_HEAD,
@@ -64,4 +64,4 @@
 		var/obj/item/clothing/new_item = new path
 		if(target.equip_to_slot_or_del(new_item, slot))
 			smite_item_protection(new_item)
-	shamed.visible_message(span_warning("A maid uniform appears on [shamed]!"))
+	shamed.visible_message(span_warning(LANG("datum.082b521b", list(shamed))))

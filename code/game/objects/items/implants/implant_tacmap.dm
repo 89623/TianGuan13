@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/implant/tacmap
 	name = "tactical map implant"
 	desc = "provides you with a map"
@@ -78,7 +79,7 @@
 /obj/item/implant/tacmap/nuclear/proc/deny_nukie_base_open(mob/living/user)
 	var/turf/user_turf = get_turf(user)
 	if(user_turf.onSyndieBase())
-		user.balloon_alert(user, "can't use implant in the base, go to the holotable!")
+		user.balloon_alert(user, LANG("obj.1d10bef0", null))
 		return COMSIG_MINIMAP_ACTION_TRIGGER_CANCEL
 
 /obj/item/implant/tacmap/nuclear/cayenne // subtype used for cayenne and syndie sentience potions in general

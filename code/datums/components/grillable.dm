@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define IDEAL_GRILLING_TEMPERATURE 200 + T0C
 
 /datum/component/grillable
@@ -172,9 +173,9 @@
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
 	SEND_SIGNAL(grilled_result, COMSIG_ITEM_GRILLED_RESULT, parent)
 	if(who_placed_us)
-		ADD_TRAIT(grilled_result, TRAIT_FOOD_CHEF_MADE, who_placed_us)
+		ADD_TRAIT(grilled_result, TRAIT_HANDMADE, who_placed_us)
 
-	grill_source.visible_message("<span class='[positive_result ? "notice" : "warning"]'>[parent] turns into \a [grilled_result]!</span>")
+	grill_source.visible_message(LANG("datum.9ee78220", list(positive_result ? "notice" : "warning", parent, grilled_result)))
 	grilled_result.pixel_x = original_object.pixel_x
 	grilled_result.pixel_y = original_object.pixel_y
 	qdel(parent)
@@ -186,18 +187,18 @@
 	if(!current_cook_time) //Not grilled yet
 		if(positive_result)
 			if(initial(cook_result.name) == PLURAL)
-				examine_list += span_notice("[parent] can be [span_bold("grilled")] into some [initial(cook_result.name)].")
+				examine_list += span_notice(LANG("datum.224db634", list(parent, span_bold("grilled"), initial(cook_result.name))))
 			else
-				examine_list += span_notice("[parent] can be [span_bold("grilled")] into \a [initial(cook_result.name)].")
+				examine_list += span_notice(LANG("datum.73ea291d", list(parent, span_bold("grilled"), initial(cook_result.name))))
 		return
 
 	if(positive_result)
 		if(current_cook_time <= required_cook_time * 0.75)
-			examine_list += span_notice("[parent] probably needs to be cooked a bit longer!")
+			examine_list += span_notice(LANG("datum.f5d265cf", list(parent)))
 		else if(current_cook_time <= required_cook_time)
-			examine_list += span_notice("[parent] seems to be almost finished cooking!")
+			examine_list += span_notice(LANG("datum.1d34841e", list(parent)))
 	else
-		examine_list += span_danger("[parent] should probably not be put on the grill.")
+		examine_list += span_danger(LANG("datum.3fce69d7", list(parent)))
 
 /datum/component/grillable/proc/add_grilled_item_overlay(datum/source, list/overlays)
 	SIGNAL_HANDLER

@@ -99,7 +99,7 @@
 	camod_mech.chameleon_active = !camod_mech.chameleon_active
 	button_icon_state = camod_mech.chameleon_active ? "mech_stealth_on" : "mech_stealth_off"
 	build_all_button_icons()
-	to_chat(user, "Chameleon skin [camod_mech.chameleon_active ? "activated" : "deactivated"].")
+	to_chat(user, LANG("datum.407765fd", list(camod_mech.chameleon_active ? "activated" : "deactivated")))
 	if(!camod_mech.chameleon_active)
 		camod_mech.alpha = 255
 
@@ -111,7 +111,7 @@
 	if(!cell || cell.charge < chameleon_power_cost)
 		chameleon_active = FALSE
 		alpha = 255
-		to_chat(usr, "Chameleon skin deactivated: insufficient power.")
+		to_chat(usr, LANG("obj.e00df40f", null))
 		return
 	cell.use(chameleon_power_cost)
 	alpha = max(alpha - (chameleon_fade_rate * seconds_per_tick), 5 SECONDS)

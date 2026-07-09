@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define COUPON_PAPER_USE 1
 #define COUPON_TONER_USE 0.250
 
@@ -56,13 +57,13 @@
 				return TRUE
 			var/datum/coupon_code/coupon = SSmodular_computers.discount_coupons[code]
 			if(isnull(coupon))
-				user_id.registered_account.bank_card_talk("Invalid coupon code.", TRUE)
+				user_id.registered_account.bank_card_talk(LANG("datum.30855aa6", null), TRUE)
 				return TRUE
 			if(coupon.expires_in && coupon.expires_in < world.time)
-				user_id.registered_account.bank_card_talk("Expired coupon code.", TRUE)
+				user_id.registered_account.bank_card_talk(LANG("datum.1fc97fa2", null), TRUE)
 				return TRUE
 			if(coupon in user_id.registered_account.redeemed_coupons)
-				user_id.registered_account.bank_card_talk("Coupon [code] already redeemed.", TRUE)
+				user_id.registered_account.bank_card_talk(LANG("datum.afff93be", list(code)), TRUE)
 				return TRUE
 			coupon.copy(user_id.registered_account)
 			var/static/list/goodbye = list(
@@ -73,7 +74,7 @@
 				"Congratulations!",
 				"Bye Bye~.",
 			)
-			user_id.registered_account.bank_card_talk("Coupon [code] redeemed. [pick(goodbye)]", TRUE)
+			user_id.registered_account.bank_card_talk(LANG("datum.6f511e74", list(code, pick(goodbye))), TRUE)
 			//Well, guess you're redeeming something else too.
 			if(prob(40) && computer.used_capacity < computer.max_capacity)
 				var/datum/computer_file/warez = new()
@@ -93,7 +94,7 @@
 		return FALSE
 	var/obj/item/card/id/user_id = computer.stored_id
 	if(!(user_id?.registered_account))
-		computer.balloon_alert(user, "no bank account found!")
+		computer.balloon_alert(user, LANG("datum.8076d787", null))
 		return TRUE
 	var/obj/machinery/photocopier/copier = tapped_atom
 	if(copier.check_busy(user))
@@ -103,7 +104,7 @@
 		if(!coupon.printed)
 			num_coupons++
 	if(!num_coupons)
-		computer.balloon_alert(user, "no coupon available!")
+		computer.balloon_alert(user, LANG("datum.48a1abbe", null))
 		return TRUE
 	copier.do_copies(CALLBACK(src, PROC_REF(print_coupon), user_id.registered_account), user, COUPON_PAPER_USE, COUPON_TONER_USE, num_coupons)
 	return TRUE

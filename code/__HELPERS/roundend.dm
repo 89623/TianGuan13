@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define POPCOUNT_SURVIVORS "survivors" //Not dead at roundend
 #define POPCOUNT_ESCAPEES "escapees" //Not dead and on centcom/shuttles marked as escaped
 #define POPCOUNT_SHUTTLE_ESCAPEES "shuttle_escapees" //Emergency shuttle only.
@@ -250,7 +251,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	//Set news report and mode result
 	SSdynamic.set_round_result()
 
-	to_chat(world, span_infoplain(span_big(span_bold("<BR><BR><BR>The round has ended."))))
+	to_chat(world, span_infoplain(span_big(span_bold(LANG("datum.351d28ad", null)))))
 	log_game("The round has ended.")
 	for(var/channel_tag in CONFIG_GET(str_list/channel_announce_end_game))
 		send2chat(new /datum/tgs_message_content("[GLOB.round_id ? "Round [GLOB.round_id]" : "The round has"] just ended."), channel_tag)
@@ -357,7 +358,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='byond://?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
-	parts += "[FOURSPACES]Map: [SSmapping.current_map?.return_map_name()]"
+	parts += "[FOURSPACES][GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "地图" : "Map"]: [SSmapping.current_map?.return_map_name()]" // NOVA EDIT - I18N - single-word label, gate inline (AC skips single words; keep "Map"/"Round" out of the global reverse table)
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
@@ -365,17 +366,16 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		parts+= "[FOURSPACES]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
 			parts += "<BR>[FOURSPACES]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
-			parts += "[FOURSPACES](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
+			parts += "[FOURSPACES]([GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "乘紧急穿梭机" : "on emergency shuttle"]): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>" // NOVA EDIT CHANGE - I18N - label gated inline（同文件既有样式）
 		parts += "[FOURSPACES]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
 		if(SSblackbox.first_death)
 			var/list/ded = SSblackbox.first_death
 			if(ded.len)
-				parts += "[FOURSPACES]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
-			//ignore this comment, it fixes the broken sytax parsing caused by the " above
+				parts += "[FOURSPACES][LANG("datum.fdc519ac", list(ded["name"], ded["role"], ded["area"], ded["damage"], ded["last_words"] ? LANG("datum.eb109e14", list(ded["last_words"])) : ""))]"
 			else
-				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
+				parts += "[FOURSPACES][LANG("datum.3ad62a83", null)]"
 
-	parts += "[FOURSPACES]Round: [SSdynamic.current_tier.name]"
+	parts += "[FOURSPACES][GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? "回合" : "Round"]: [SSdynamic.current_tier.name]" // NOVA EDIT - I18N - single-word label gated inline
 	for(var/datum/dynamic_ruleset/rule as anything in SSdynamic.executed_rulesets - SSdynamic.unreported_rulesets)
 		parts += "[FOURSPACES][FOURSPACES]- <b>[rule.name]</b> ([rule.config_tag])"
 
@@ -483,7 +483,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 		if (aiPlayer.connected_robots.len)
 			var/borg_num = aiPlayer.connected_robots.len
-			parts += "<br><b>[aiPlayer.real_name]</b>'s minions were:"
+			parts += LANG("datum.007e216c", list(aiPlayer.real_name))
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				borg_num--
 				if(robo.mind)
@@ -498,7 +498,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		if (!robo.connected_ai && robo.mind)
 			//NOVA EDIT CHANGE BEGIN - ROUNDEND
 			//parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>) [(robo.stat != DEAD)? "[span_greentext("survived")] as an AI-less borg!" : "was [span_redtext("unable to survive")] the rigors of being a cyborg without an AI."] Its laws were:"
-			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> [(robo.stat != DEAD)? "[span_greentext("survived")] as an AI-less borg!" : "was [span_redtext("unable to survive")] the rigors of being a cyborg without an AI."] Its laws were:"
+			parts += "[borg_spacer?"<br>":""][robo.stat != DEAD ? LANG("datum.ca3200c9", list(robo.name)) : LANG("datum.563f3781", list(robo.name))]"
 			//NOVA EDIT CHANGE END
 
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
@@ -547,8 +547,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	for(var/venue_path in SSrestaurant.all_venues)
 		var/datum/venue/venue = SSrestaurant.all_venues[venue_path]
 		tourist_income += venue.total_income
-		parts += "The [venue] served [venue.customers_served] customer\s and made [venue.total_income] [MONEY_NAME].<br>"
-	parts += "In total, they earned [tourist_income] [MONEY_NAME][tourist_income ? "!" : "..."]<br>"
+		parts += LANG("_root.econ_venue", list("[venue]", venue.customers_served, venue.total_income, MONEY_NAME)) + "<br>" // NOVA EDIT - I18N - interpolated, not extractable; manual LANG key ("[venue]" as text so its name reverses)
+	parts += LANG("_root.econ_total", list(tourist_income, MONEY_NAME, tourist_income ? "!" : "...")) + "<br>" // NOVA EDIT - I18N
 	log_econ("Roundend service income: [tourist_income] [MONEY_NAME].")
 
 	// Award service achievements based on tourist income
@@ -621,7 +621,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		hardcores += human_player
 	if(!length(hardcores))
 		return
-	. += "<div class='panel stationborder'><span class='header'>The following people made it out as a random hardcore character:</span>"
+	. += LANG("datum.095babc2", null)
 	. += "<ul class='playerlist'>"
 	for(var/mob/living/carbon/human/human_player in hardcores)
 		. += "<li>[printplayer(human_player.mind)] with a hardcore random score of [round(human_player.hardcore_survival_score)]</li>"
@@ -689,7 +689,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/datum/action/report/R = new
 	C.persistent_client.player_actions += R
 	R.Grant(C.mob)
-	to_chat(C,span_infoplain("<a href='byond://?src=[REF(R)];report=1'>Show roundend report again</a>"))
+	to_chat(C,span_infoplain(LANG("datum.23cab8f6", list(REF(R)))))
 
 /datum/action/report
 	name = "Show roundend report"
@@ -715,26 +715,28 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 
 /proc/printplayer(datum/mind/ply, fleecheck)
+	var/localized = GLOB.i18n_server_locale != DEFAULT_UI_LOCALE // NOVA EDIT - I18N
 	var/jobtext = ""
 	if(!is_unassigned_job(ply.assigned_role))
-		jobtext = " the <b>[ply.assigned_role.title]</b>"
+		// NOVA EDIT CHANGE - I18N - reverse the job title and drop the english " the " connector for zh - ORIGINAL: jobtext = " the <b>[ply.assigned_role.title]</b>"
+		jobtext = localized ? "，<b>[lang_reverse_text(ply.assigned_role.title)]</b>" : " the <b>[ply.assigned_role.title]</b>"
 		//NOVA EDIT CHANGE BEGIN - ROUNDEND
 	//var/text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and" - NOVA EDIT - ORIGINAL
 	var/text = "<b>[ply.name]</b>[jobtext]"
 	//NOVA EDIT CHANGE END
 	if(ply.current)
 		if(ply.current.stat == DEAD)
-			text += " [span_redtext("died")]"
+			text += " [span_redtext(lang_reverse_text("died"))]" // NOVA EDIT - I18N
 		else
-			text += " [span_greentext("survived")]"
+			text += " [span_greentext(lang_reverse_text("survived"))]" // NOVA EDIT - I18N
 		if(fleecheck)
 			var/turf/T = get_turf(ply.current)
 			if(!T || !is_station_level(T.z))
-				text += " while [span_redtext("fleeing the station")]"
+				text += localized ? " [span_redtext(lang_reverse_text("while fleeing the station"))]" : " while [span_redtext("fleeing the station")]" // NOVA EDIT - I18N
 		if(ply.current.real_name != ply.name)
-			text += " as <b>[ply.current.real_name]</b>"
+			text += localized ? "（化名 <b>[ply.current.real_name]</b>）" : " as <b>[ply.current.real_name]</b>" // NOVA EDIT - I18N
 	else
-		text += " [span_redtext("had their body destroyed")]"
+		text += " [span_redtext(lang_reverse_text("had their body destroyed"))]" // NOVA EDIT - I18N
 	return text
 
 /proc/printplayerlist(list/players,fleecheck)
@@ -753,7 +755,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/list/objective_parts = list()
 	var/count = 1
 	for(var/datum/objective/objective in objectives)
-		objective_parts += "<b>[objective.objective_name] #[count]</b>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+		objective_parts += "<b>[lang_reverse_text(objective.objective_name)] #[count]</b>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives (interpolated ones hit the to_chat boundary engine); objective_name 同样反查（"Objective"→目标）
 		count++
 	return objective_parts.Join("<br>")
 
@@ -765,7 +767,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		parts += "<span class='infoplain'>Total Achievements Earned: <B>[length(GLOB.achievements_unlocked)]!</B></span><BR>"
 		parts += "<ul class='playerlist'>"
 		for(var/datum/achievement_report/cheevo_report in GLOB.achievements_unlocked)
-			parts += "<b>[cheevo_report.winner]</b> earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>" // NOVA EDIT - No ckeys in the round end report - ORIGINAL: parts += "<BR>[cheevo_report.winner_key] was <b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
+			parts += LANG("datum.eacda27e", list(cheevo_report.winner, cheevo_report.cheevo, cheevo_report.award_location)) // NOVA EDIT - No ckeys in the round end report - ORIGINAL: parts += "<BR>[cheevo_report.winner_key] was <b>[cheevo_report.winner]</b>, who earned the [span_greentext("'[cheevo_report.cheevo]'")] achievement at [cheevo_report.award_location]!<BR>"
 		parts += "</ul>"
 		return "<div class='panel greenborder'><ul>[parts.Join()]</ul></div>"
 

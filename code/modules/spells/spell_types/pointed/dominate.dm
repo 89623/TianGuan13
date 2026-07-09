@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/dominate
 	name = "Dominate"
 	desc = "This spell dominates the mind of a lesser creature to the will of Nar'Sie, \
@@ -40,8 +41,8 @@
 /datum/action/cooldown/spell/pointed/dominate/cast(mob/living/simple_animal/cast_on)
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
-		to_chat(cast_on, span_warning("Your feel someone attempting to subject your mind to terrible machinations!"))
-		to_chat(owner, span_warning("[cast_on] resists your domination!"))
+		to_chat(cast_on, span_warning(LANG("datum.1899ee96", null)))
+		to_chat(owner, span_warning(LANG("datum.80b4e871", list(cast_on))))
 		return FALSE
 
 	var/turf/cast_turf = get_turf(cast_on)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/component/shrink
 	var/olddens
 	var/oldopac
@@ -22,8 +23,8 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.unequip_everything()
-			C.visible_message(span_warning("[C]'s belongings fall off of [C.p_them()] as they shrink down!"),
-			span_userdanger("Your belongings fall away as everything grows bigger!"))
+			C.visible_message(span_warning(LANG("datum.280c1a2c", list(C, C.p_them()))),
+			span_userdanger(LANG("datum.efd9255f", null)))
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
@@ -36,8 +37,8 @@
 			)
 	else
 		parent_atom.set_density(FALSE) // this is handled by the UNDENSE trait on mobs
-	parent_atom.visible_message(span_warning("[parent_atom] shrinks down to a tiny size!"),
-	span_userdanger("Everything grows bigger!"))
+	parent_atom.visible_message(span_warning(LANG("datum.e1493c23", list(parent_atom))),
+	span_userdanger(LANG("datum.27262b5b", null)))
 	if(shrink_time >= 0) // negative shrink time is permanent
 		QDEL_IN(src, shrink_time)
 

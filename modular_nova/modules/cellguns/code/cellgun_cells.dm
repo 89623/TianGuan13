@@ -28,6 +28,6 @@
 /obj/item/weaponcell/examine(mob/user)
 	. = ..()
 	if(shot_name)
-		. += span_noticealien("Using this on a cell-based gun will unlock the [shot_name] firing mode.")
+		. += span_noticealien(LANG("obj.c5b42d57", list(shot_name)))
 	return .
 

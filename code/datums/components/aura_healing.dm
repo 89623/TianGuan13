@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define HEAL_EFFECT_COOLDOWN (1 SECONDS)
 
 /// Applies healing to those in the area.
@@ -167,6 +168,6 @@
 
 /atom/movable/screen/alert/aura_healing/update_desc(updates)
 	. = ..()
-	desc = "You are being healed by [master_ref?.resolve()]."
+	desc = LANG("atom.f413a98b", list(master_ref?.resolve()))
 
 #undef HEAL_EFFECT_COOLDOWN

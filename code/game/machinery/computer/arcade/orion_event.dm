@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //yep you guessed it back at it again with another datum singleton.
 /datum/orion_event
@@ -114,7 +115,7 @@
 
 /datum/orion_event/electronic_part/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	playsound(game, 'sound/effects/empulse.ogg', 50, TRUE)
-	game.visible_message(span_danger("[game] malfunctions, randomizing in-game stats!"))
+	game.visible_message(span_danger(LANG("datum.1b66ccbb", list(game))))
 	var/oldfood = game.food
 	var/oldfuel = game.fuel
 	game.food = rand(10,80) / rand(1,2)
@@ -124,9 +125,9 @@
 
 /datum/orion_event/electronic_part/proc/revert_random(obj/machinery/computer/arcade/orion_trail/game, oldfood, oldfuel)
 	if(oldfuel > game.fuel && oldfood > game.food)
-		game.audible_message(span_danger("[game] lets out a somehow reassuring chime."))
+		game.audible_message(span_danger(LANG("datum.8e049662", list(game))))
 	else if(oldfuel < game.fuel || oldfood < game.food)
-		game.audible_message(span_danger("[game] lets out a somehow ominous chime."))
+		game.audible_message(span_danger(LANG("datum.d604e2ad", list(game))))
 	game.food = oldfood
 	game.fuel = oldfuel
 	playsound(game, 'sound/machines/chime.ogg', 50, TRUE)
@@ -158,18 +159,18 @@
 
 /datum/orion_event/hull_part/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(prob(10+gamer_skill))
-		game.say("Something slams into the floor around [game] - luckily, it didn't get through!")
+		game.say(LANG("datum.29633d20", list(game)))
 		playsound(game, 'sound/effects/bang.ogg', 50, TRUE)
 		return
 	playsound(game, 'sound/effects/bang.ogg', 100, TRUE)
 	for(var/turf/open/floor/smashed in orange(1, game))
 		smashed.ScrapeAway()
-	game.say("Something slams into the floor around [game], exposing it to space!")
+	game.say(LANG("datum.0b4d2068", list(game)))
 	if(game.hull)
 		addtimer(CALLBACK(src, PROC_REF(fix_floor), game), 1 SECONDS)
 
 /datum/orion_event/hull_part/proc/fix_floor(obj/machinery/computer/arcade/orion_trail/game)
-	game.say("A new floor suddenly appears around [game]. What the hell?")
+	game.say(LANG("datum.ffe8d6b1", list(game)))
 	playsound(game, 'sound/items/weapons/genhit.ogg', 100, TRUE)
 	for(var/turf/open/space/fixed in orange(1, game))
 		fixed.place_on_top(/turf/open/floor/plating)
@@ -259,10 +260,10 @@
 
 /datum/orion_event/raiders/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(prob(50-gamer_skill))
-		to_chat(usr, span_userdanger("You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?"))
+		to_chat(usr, span_userdanger(LANG("datum.180c2a1c", null)))
 		gamer.adjust_hallucinations(60 SECONDS)
 	else
-		to_chat(usr, span_userdanger("Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there..."))
+		to_chat(usr, span_userdanger(LANG("datum.302108f0", null)))
 		gamer.take_bodypart_damage(30)
 		playsound(game, 'sound/items/weapons/genhit2.ogg', 100, TRUE)
 
@@ -283,14 +284,14 @@
 		maxSeverity = 2 //part of gitting gud is rng mitigation
 	var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 	if(severity == 1)
-		to_chat(gamer, span_userdanger("You suddenly feel slightly nauseated.") )
+		to_chat(gamer, span_userdanger(LANG("datum.b1f17951", null)) )
 		gamer.adjust_disgust(50)
 	if(severity == 2)
-		to_chat(usr, span_userdanger("You suddenly feel extremely nauseated and hunch over until it passes."))
+		to_chat(usr, span_userdanger(LANG("datum.1aff1be0", null)))
 		gamer.adjust_disgust(110)
 		gamer.Stun(60)
 	if(severity >= 3) //you didn't pray hard enough
-		to_chat(gamer, span_warning("An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit."))
+		to_chat(gamer, span_warning(LANG("datum.1822af1a", null)))
 		gamer.adjust_disgust(150) //max this bitch out so they barf a lot
 		gamer.Stun(100)
 
@@ -316,10 +317,10 @@
 
 /datum/orion_event/flux/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(prob(25 + gamer_skill))//withstand the wind with your GAMER SKILL
-		to_chat(gamer, span_userdanger("A violent gale blows past you, and you barely manage to stay standing!"))
+		to_chat(gamer, span_userdanger(LANG("datum.3db21dad", null)))
 		return
 	gamer.Paralyze(60)
-	game.say("A sudden gust of powerful wind slams [gamer] into the floor!")
+	game.say(LANG("datum.47eecd29", list(gamer)))
 	gamer.take_bodypart_damage(25)
 	playsound(game, 'sound/items/weapons/genhit.ogg', 100, TRUE)
 
@@ -435,7 +436,7 @@
 /datum/orion_event/black_hole_death/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(game.obj_flags & EMAGGED)
 		playsound(game.loc, 'sound/effects/supermatter.ogg', 100, TRUE)
-		game.say("A miniature black hole suddenly appears in front of [game], devouring [gamer] alive!")
+		game.say(LANG("datum.417ca4eb", list(game, gamer)))
 		gamer.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 		var/black_hole = new /obj/singularity/orion(gamer.loc)
 		addtimer(CALLBACK(game, TYPE_PROC_REF(/atom/movable, say), "[black_hole] winks out, just as suddenly as it appeared."), 5 SECONDS)
@@ -522,7 +523,7 @@
 				return ..()
 			text = "You failed to raid the spaceport! You lost [fuel*-1] Fuel and [food*-1] Food, AND [lost_crew] in your scramble to escape! ([fuel]fuel, [food] food, -Crew)"
 			if(game.obj_flags & EMAGGED)
-				game.say("WEEWOO! WEEWOO! Spaceport security en route!")
+				game.say(LANG("datum.3f75dd7e", null))
 				playsound(game, 'sound/items/weeoo1.ogg', 100, FALSE)
 				for(var/i in 1 to 3)
 					var/mob/living/basic/trooper/syndicate/ranged/smg/orion/spaceport_security = new(get_turf(game))

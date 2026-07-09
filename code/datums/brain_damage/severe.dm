@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Severe traumas, when your brain gets abused way too much.
 //These range from very annoying to completely debilitating.
 //They cannot be cured with chemicals, and require brain surgery to solve.
@@ -184,15 +185,15 @@
 
 	//if not drowsy, don't fall asleep but make them drowsy
 	if(!drowsy)
-		to_chat(owner, span_warning("You feel tired..."))
+		to_chat(owner, span_warning(LANG("datum.240066c6", null)))
 		owner.adjust_drowsiness(rand(drowsy_time_minimum, drowsy_time_maximum))
 		if(prob(50))
 			owner.emote("yawn")
 		else if(prob(33)) //rarest message is a custom emote
-			owner.visible_message("rubs [owner.p_their()] eyes.", visible_message_flags = EMOTE_MESSAGE)
+			owner.visible_message(LANG("datum.49062e98", list(owner.p_their())), visible_message_flags = EMOTE_MESSAGE)
 	//drowsy, so fall asleep. you've had your chance to remedy it
 	else
-		to_chat(owner, span_warning("You fall asleep."))
+		to_chat(owner, span_warning(LANG("datum.09d9036b", null)))
 		owner.Sleeping(rand(sleep_time_minimum, sleep_time_maximum))
 		if(prob(50) && owner.IsSleeping())
 			owner.emote("snore")
@@ -304,7 +305,7 @@
 		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("*********"))
 
 /datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
-	to_chat(owner, span_warning("The words trigger something deep within you, and you feel your consciousness slipping away..."))
+	to_chat(owner, span_warning(LANG("datum.4814c078", null)))
 	owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
 
 /datum/brain_trauma/severe/dyslexia

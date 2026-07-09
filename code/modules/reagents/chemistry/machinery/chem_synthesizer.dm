@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/chem_dispenser/chem_synthesizer //formerly SCP-294 made by mrty, but now only for testing purposes
 	name = "\improper debug chemical synthesizer"
 	desc = "If you see this, yell at adminbus."
@@ -40,7 +41,7 @@
 			if(QDELETED(beaker))
 				return FALSE
 
-			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.name2reagent)
+			var/selected_reagent = tgui_input_list(ui.user, LANG("obj.b9a56639", null), LANG("obj.c5160de6", null), GLOB.name2reagent)
 			if(!selected_reagent)
 				return FALSE
 
@@ -56,7 +57,7 @@
 			if(beaker)
 				return
 			beaker = new /obj/item/reagent_containers/cup/beaker/bluespace(src)
-			visible_message(span_notice("[src] dispenses a bluespace beaker."))
+			visible_message(span_notice(LANG("obj.2c8c745e", list(src))))
 			return TRUE
 
 		if("amount")

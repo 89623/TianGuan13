@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Helper macro, for ease of expanding checks for mobs which cannot be blinded
 /// There are no reason why these cannot be blinded, it is simply for "design reasons" (these things shouldn't be blinded)
 #define CAN_BE_BLIND(mob) (!isanimal_or_basicmob(mob) && !isbrain(mob) && !isrevenant(mob))
@@ -108,13 +109,13 @@
 	// If we should be deleted, give a message letting them know
 	var/mob/living/stored_owner = owner
 	if(remove_duration(2 SECONDS))
-		to_chat(stored_owner, span_green("Your eyes start to feel better!"))
+		to_chat(stored_owner, span_green(LANG("datum.7331c046", null)))
 		return
 
 	// Otherwise add a chance to let them know that it's working
 	else if(SPT_PROB(5, seconds_between_ticks))
 		var/obj/item/thing_covering_eyes = owner.is_eyes_covered()
 		// "Your blindfold soothes your eyes", for example
-		to_chat(owner, span_green("Your [thing_covering_eyes?.name || "eye covering"] soothes your eyes."))
+		to_chat(owner, span_green(LANG("datum.bf98160e", list(thing_covering_eyes?.name || "eye covering"))))
 
 #undef CAN_BE_BLIND

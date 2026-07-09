@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Makes our item SUPER spooky!
 /// Adds the haunted element and some other bonuses
 /datum/component/haunted_item
@@ -110,7 +111,7 @@
 		if(!has_trait)
 			return
 
-	attacker.visible_message(span_warning("[attacker] dispells the ghostly energy from [source]!"), span_warning("You dispel the ghostly energy from [source]!"))
+	attacker.visible_message(span_warning(LANG("datum.624ebca2", list(attacker, source))), span_warning(LANG("datum.5904aa9c", list(source))))
 	clear_haunting()
 	return COMPONENT_NO_AFTERATTACK
 

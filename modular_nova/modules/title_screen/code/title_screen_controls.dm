@@ -6,7 +6,7 @@ ADMIN_VERB(admin_change_title_screen, R_FUN, "Title Screen: Change", "Upload a n
 	log_admin("[key_name(user)] is changing the title screen.")
 	message_admins("[key_name_admin(user)] is changing the title screen.")
 
-	switch(alert(usr, "Please select a new title screen.", "Title Screen", "Change", "Reset", "Cancel"))
+	switch(alert(usr, LANG("datum.901865e9", null), LANG("datum.b4e55da5", null), "Change", "Reset", "Cancel"))
 		if("Change")
 			var/file = input(user) as icon|null
 			if(!file)
@@ -24,7 +24,7 @@ ADMIN_VERB(change_title_screen_notice, R_FUN, "Title Screen: Set Notice", "Sets 
 	log_admin("[key_name(usr)] is setting the title screen notice.")
 	message_admins("[key_name_admin(usr)] is setting the title screen notice.")
 
-	var/new_notice = input(usr, "Please input a notice to be displayed on the title screen:", "Titlescreen Notice") as text|null
+	var/new_notice = input(usr, LANG("datum.3c9ed767", null), LANG("datum.5a174e20", null)) as text|null
 	SStitle.set_notice(new_notice)
 	if(!new_notice)
 		return
@@ -50,7 +50,7 @@ ADMIN_VERB(change_title_screen_html, R_DEBUG, "Title Screen: Set HTML", "Change 
 	log_admin("[key_name(user)] is setting the title screen HTML.")
 	message_admins("[key_name_admin(user)] is setting the title screen HTML.")
 
-	var/new_html = input(user, "Please enter your desired HTML(WARNING: YOU WILL BREAK SHIT)", "DANGER: TITLE HTML EDIT") as message|null
+	var/new_html = input(user, LANG("datum.2ee1a063", null), LANG("datum.c18ee36f", null)) as message|null
 
 	if(!new_html)
 		return

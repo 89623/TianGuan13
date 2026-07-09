@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define HOURGLASS_STATES 7 //Remember to update if you change the sprite
 
 /obj/item/hourglass
@@ -22,11 +23,11 @@
 
 /obj/item/hourglass/proc/toggle(mob/user)
 	if(!timing_id)
-		to_chat(user,span_notice("You flip the [src]."))
+		to_chat(user,span_notice(LANG("obj.dca8322d", list(src))))
 		start()
 		flick("hourglass_flip",src)
 	else
-		to_chat(user,span_notice("You stop the [src].")) //Sand magically flows back because that's more convinient to use.
+		to_chat(user,span_notice(LANG("obj.cfad3ec2", list(src)))) //Sand magically flows back because that's more convinient to use.
 		stop()
 
 /obj/item/hourglass/update_icon_state()
@@ -55,7 +56,7 @@
 	update_appearance()
 
 /obj/item/hourglass/proc/finish()
-	visible_message(span_notice("[src] stops."))
+	visible_message(span_notice(LANG("obj.8d7da0ca", list(src))))
 	stop()
 
 /obj/item/hourglass/Destroy()

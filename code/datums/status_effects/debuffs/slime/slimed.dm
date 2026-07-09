@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The minimum amount of water stacks needed to start washing off the slime.
 #define MIN_WATER_STACKS 5
 /// The minimum amount of health a mob has to have before the status effect is removed.
@@ -32,7 +33,7 @@
 
 /// Try to get rid of it
 /atom/movable/screen/alert/status_effect/slimed/proc/remove_slime()
-	owner.balloon_alert(owner, "cleaning off slime...")
+	owner.balloon_alert(owner, LANG("atom.709da11f", null))
 	var/datum/status_effect/slimed/slime_effect = owner.has_status_effect(/datum/status_effect/slimed)
 	while (!QDELETED(src) && !isnull(slime_effect))
 		if (!can_wash())
@@ -64,7 +65,7 @@
 /datum/status_effect/slimed/on_apply()
 	if(owner.get_organic_health() <= MIN_HEALTH)
 		return FALSE
-	to_chat(owner, span_userdanger("You have been covered in a thick layer of slime! Find a way to wash it off!"))
+	to_chat(owner, span_userdanger(LANG("datum.ce0b687d", null)))
 	return ..()
 
 /datum/status_effect/slimed/on_remove()
@@ -78,17 +79,17 @@
 /datum/status_effect/slimed/proc/remove_stacks(stacks_to_remove = 1)
 	slime_stacks -= stacks_to_remove // lose 1 stack per second
 	if(slime_stacks <= 0)
-		to_chat(owner, span_notice("You manage to wash off the layer of slime completely."))
+		to_chat(owner, span_notice(LANG("datum.289fb41b", null)))
 		qdel(src)
 		return
 
 	if(prob(10))
-		to_chat(owner,span_warning("The layer of slime is slowly getting thinner."))
+		to_chat(owner,span_warning(LANG("datum.ec3aef6e", null)))
 
 /datum/status_effect/slimed/tick(seconds_between_ticks)
 	// remove from the mob once we have dealt enough damage
 	if(owner.get_organic_health() <= MIN_HEALTH)
-		to_chat(owner, span_warning("You feel the layer of slime crawling off of your weakened body."))
+		to_chat(owner, span_warning(LANG("datum.b2ce1993", null)))
 		qdel(src)
 		return
 
@@ -109,7 +110,7 @@
 			"Your skin feels like it's coming off",
 			"Your body feels like it's melting together"
 		))
-		to_chat(owner, span_userdanger("[feedback_text] as the layer of slime eats away at you!"))
+		to_chat(owner, span_userdanger(LANG("datum.7417afe6", list(feedback_text))))
 
 /datum/status_effect/slimed/get_examine_text()
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in bubbling slime!")

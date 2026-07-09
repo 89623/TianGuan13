@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Global assoc list. [ckey] = [spellbook entry type]
 GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
@@ -131,7 +132,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 		return
 	if(!GLOB.wizardstart.len)
 		SSjob.send_to_late_join(owner.current)
-		to_chat(owner, "HOT INSERTION, GO GO GO")
+		to_chat(owner, LANG("datum.8cff2ba6", null))
 	owner.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/antagonist/wizard/proc/create_objectives()
@@ -224,7 +225,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/mob/living/wiz_mob = owner.current
-	var/newname = sanitize_name(reject_bad_text(tgui_input_text(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname, MAX_NAME_LEN)))
+	var/newname = sanitize_name(reject_bad_text(tgui_input_text(wiz_mob, LANG("datum.6e4644d1", list(name)), LANG("datum.b4bf4c54", null), randomname, MAX_NAME_LEN)))
 
 	if (!newname)
 		newname = randomname
@@ -272,7 +273,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	wiz_age = APPRENTICE_AGE_MIN
 
 /datum/antagonist/wizard/apprentice/greet()
-	to_chat(owner, "<B>You are [master.current.real_name]'s apprentice! You are bound by magic contract to follow [master.p_their()] orders and help [master.p_them()] in accomplishing [master.p_their()] goals.")
+	to_chat(owner, LANG("datum.264c55f9", list(master.current.real_name, master.p_their(), master.p_them(), master.p_their())))
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/assign_ritual()
@@ -292,18 +293,14 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 				/datum/action/cooldown/spell/aoe/magic_missile,
 				/datum/action/cooldown/spell/pointed/projectile/fireball,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned powerful, \
-				destructive spells. You are able to cast magic missile and fireball."))
+			to_chat(owner, span_bold(LANG("datum.193a7517", list(master.current.real_name))))
 
 		if(APPRENTICE_BLUESPACE)
 			spells_to_grant = list(
 				/datum/action/cooldown/spell/teleport/area_teleport/wizard,
 				/datum/action/cooldown/spell/jaunt/ethereal_jaunt,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned reality-bending \
-				mobility spells. You are able to cast teleport and ethereal jaunt."))
+			to_chat(owner, span_bold(LANG("datum.6dbd2910", list(master.current.real_name))))
 
 		if(APPRENTICE_HEALING)
 			spells_to_grant = list(
@@ -313,17 +310,13 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 			items_to_grant = list(
 				/obj/item/gun/magic/staff/healing,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned life-saving \
-				survival spells. You are able to cast charge and forcewall, and have a staff of healing."))
+			to_chat(owner, span_bold(LANG("datum.fcc49e0b", list(master.current.real_name))))
 		if(APPRENTICE_ROBELESS)
 			spells_to_grant = list(
 				/datum/action/cooldown/spell/aoe/knock,
 				/datum/action/cooldown/spell/pointed/mind_transfer,
 			)
-			to_chat(owner, span_bold("Your service has not gone unrewarded, however. \
-				Studying under [master.current.real_name], you have learned stealthy, \
-				robeless spells. You are able to cast knock and mindswap."))
+			to_chat(owner, span_bold(LANG("datum.6df261e9", list(master.current.real_name))))
 
 	for(var/spell_type in spells_to_grant)
 		var/datum/action/cooldown/spell/new_spell = new spell_type(owner)
@@ -349,7 +342,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 
 /datum/antagonist/wizard/apprentice/imposter/greet()
 	. = ..()
-	to_chat(owner, "<B>Trick and confuse the crew to misdirect malice from your handsome original!</B>")
+	to_chat(owner, LANG("datum.e369c0fb", null))
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/imposter/equip_wizard()
@@ -422,7 +415,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	for(var/datum/objective/objective in objectives)
 		if(!objective.check_completion())
 			wizardwin = FALSE
-		parts += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.get_roundend_success_suffix()]"
+		parts += "<B>[lang_reverse_text("Objective")] #[count]</B>: [lang_reverse_text(objective.explanation_text)] [objective.get_roundend_success_suffix()]" // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives
 		count++
 
 	if(wizardwin)

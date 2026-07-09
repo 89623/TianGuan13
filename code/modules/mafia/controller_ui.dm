@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // 'user' can be a modPC, hence why it's pathed to the atom
 /datum/mafia_controller/ui_static_data(atom/user)
 	var/list/data = list()
@@ -116,7 +117,7 @@
 						continue
 					player.body.forceMove(get_turf(player.assigned_landmark))
 				if(failed.len)
-					to_chat(usr, "List of players who no longer had a body (if you see this, the game is runtiming anyway so just hit \"New Game\" to end it)")
+					to_chat(usr, LANG("datum.46a82c40", null))
 					for(var/datum/mafia_role/fail as anything in failed)
 						to_chat(usr, fail.player_key || fail.player_pda)
 			if("debug_setup")
@@ -125,8 +126,8 @@
 				var/done = FALSE
 
 				while(!done)
-					to_chat(usr, "You have a total player count of [counterlist_sum(debug_setup)] in this setup.")
-					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict)
+					to_chat(usr, LANG("datum.37dbff01", list(counterlist_sum(debug_setup))))
+					var/chosen_role_name = tgui_input_list(usr, LANG("datum.0070f3e3", null), LANG("datum.5828e4e4", null), rolelist_dict)
 					if(!chosen_role_name)
 						return
 					switch(chosen_role_name)
@@ -138,7 +139,7 @@
 							break
 						else
 							var/found_path = rolelist_dict[chosen_role_name]
-							var/role_count = tgui_input_number(usr, "How many? Zero to cancel.", "Custom Setup Creation", 0, 12)
+							var/role_count = tgui_input_number(usr, LANG("datum.08ea88c7", null), LANG("datum.5828e4e4", null), 0, 12)
 							if(role_count > 0)
 								debug_setup[found_path] = role_count
 				custom_setup = debug_setup
@@ -156,30 +157,30 @@
 			if("vote_to_start")
 				var/client/ghost_client = ui.user.client
 				if(phase != MAFIA_PHASE_SETUP)
-					to_chat(usr, span_notice("You cannot vote to start while a game is underway!"))
+					to_chat(usr, span_notice(LANG("datum.38747389", null)))
 					return
 				if(isnull(modpc))
 					if(!GLOB.mafia_signup[ghost_client.ckey])
-						to_chat(usr, span_notice("You must be signed up for this game to vote!"))
+						to_chat(usr, span_notice(LANG("datum.8fe3c82b", null)))
 						return
 					if(GLOB.mafia_early_votes[ghost_client.ckey])
 						GLOB.mafia_early_votes -= ghost_client.ckey
-						to_chat(usr, span_notice("You are no longer voting to start the game early."))
+						to_chat(usr, span_notice(LANG("datum.4566dee2", null)))
 					else
 						GLOB.mafia_early_votes[ghost_client.ckey] = ghost_client
-						to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [max(round(length(GLOB.mafia_signup + GLOB.pda_mafia_signup) / 2), round(MAFIA_MIN_PLAYER_COUNT / 2))])."))
+						to_chat(usr, span_notice(LANG("datum.63212184", list(length(GLOB.mafia_early_votes), max(round(length(GLOB.mafia_signup + GLOB.pda_mafia_signup) / 2), round(MAFIA_MIN_PLAYER_COUNT / 2))))))
 						if(check_start_votes()) //See if we have enough votes to start
 							forced_setup()
 				else
 					if(!GLOB.pda_mafia_signup[modpc])
-						to_chat(usr, span_notice("You must be signed up for this game to vote!"))
+						to_chat(usr, span_notice(LANG("datum.8fe3c82b", null)))
 						return
 					if(GLOB.mafia_early_votes[modpc])
 						GLOB.mafia_early_votes -= modpc
-						to_chat(usr, span_notice("You are no longer voting to start the game early."))
+						to_chat(usr, span_notice(LANG("datum.4566dee2", null)))
 					else
 						GLOB.mafia_early_votes[modpc] = modpc
-						to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [max(round(length(GLOB.mafia_signup + GLOB.pda_mafia_signup) / 2), round(MAFIA_MIN_PLAYER_COUNT / 2))])."))
+						to_chat(usr, span_notice(LANG("datum.63212184", list(length(GLOB.mafia_early_votes), max(round(length(GLOB.mafia_signup + GLOB.pda_mafia_signup) / 2), round(MAFIA_MIN_PLAYER_COUNT / 2))))))
 						if(check_start_votes()) //See if we have enough votes to start
 							forced_setup()
 		return TRUE

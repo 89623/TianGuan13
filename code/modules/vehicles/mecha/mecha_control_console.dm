@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/mecha
 	name = "exosuit control console"
 	desc = "Used to remotely locate or lockdown exosuits."
@@ -55,11 +56,11 @@
 			var/obj/item/mecha_parts/mecha_tracking/our_mecha_tracker = locate(params["tracker_ref"])
 			if(!istype(our_mecha_tracker))
 				return
-			var/message = tgui_input_text(usr, "Input message", "Transmit message", max_length = MAX_MESSAGE_LEN)
+			var/message = tgui_input_text(usr, LANG("obj.58b44bad", null), LANG("obj.d2feee32", null), max_length = MAX_MESSAGE_LEN)
 			var/obj/vehicle/sealed/mecha/our_mecha = our_mecha_tracker.chassis
 			if(trim(message) && our_mecha)
 				to_chat(our_mecha.occupants, message)
-				to_chat(usr, span_notice("Message sent."))
+				to_chat(usr, span_notice(LANG("obj.f32fb30b", null)))
 				. = TRUE
 		if("shock")
 			var/obj/item/mecha_parts/mecha_tracking/our_mecha_tracker = locate(params["tracker_ref"])
@@ -120,7 +121,7 @@
 
 /obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha_to_attach, attach_right = FALSE)
 	if(!(mecha_to_attach.mecha_flags & flag_to_check))
-		to_chat(user, span_notice("[src] is incompatible with [mecha_to_attach]."))
+		to_chat(user, span_notice(LANG("obj.2c5e056f", list(src, mecha_to_attach))))
 		return
 
 	for(var/obj/item/mecha_parts/mecha_tracking/tracker as anything in mecha_to_attach.trackers)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define FUNCTIONAL_WING_FORCE 2.25 NEWTONS
 
 ///hud action for starting and stopping flight
@@ -82,7 +83,7 @@
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 	if(!cant_hide && (human.obscured_slots & HIDEJUMPSUIT))
-		to_chat(human, span_warning("Your clothing blocks your wings from extending!"))
+		to_chat(human, span_warning(LANG("obj.f12358a3", null)))
 		return FALSE
 	var/turf/location = get_turf(human)
 	if(!location)
@@ -90,7 +91,7 @@
 
 	var/datum/gas_mixture/environment = location.return_air()
 	if(environment?.return_pressure() < HAZARD_LOW_PRESSURE + 10)
-		to_chat(human, span_warning("The atmosphere is too thin for you to fly!"))
+		to_chat(human, span_warning(LANG("obj.89ea74df", null)))
 		return FALSE
 	return TRUE
 
@@ -100,7 +101,7 @@
 	if(human.buckled)
 		buckled_obj = human.buckled
 
-	to_chat(human, span_notice("Your wings spazz out and launch you!"))
+	to_chat(human, span_notice(LANG("obj.1bdad194", null)))
 
 	playsound(human.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
@@ -126,7 +127,7 @@
 		human.AddElement(/datum/element/forced_gravity, 0)
 		passtable_on(human, SPECIES_FLIGHT_TRAIT)
 		open_wings()
-		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
+		to_chat(human, span_notice(LANG("obj.55ff3011", null)))
 		human.set_resting(FALSE, TRUE)
 		human.refresh_gravity()
 		return
@@ -136,7 +137,7 @@
 	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 	human.RemoveElement(/datum/element/forced_gravity, 0)
 	passtable_off(human, SPECIES_FLIGHT_TRAIT)
-	to_chat(human, span_notice("You settle gently back onto the ground..."))
+	to_chat(human, span_notice(LANG("obj.4b278ac8", null)))
 	close_wings()
 	human.refresh_gravity()
 

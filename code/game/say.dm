@@ -203,15 +203,15 @@ GLOBAL_LIST_INIT(freqtospan, list(
  */
 /atom/movable/proc/say_mod(input, list/message_mods = list())
 	var/ending = copytext_char(input, -1)
-	if(copytext_char(input, -2) == "!!")
+	if(lang_yell_ending(input)) // NOVA EDIT CHANGE - I18N - 全角！！等价（中文输入法默认全角）。ORIGINAL: if(copytext_char(input, -2) == "!!")
 		return verb_yell
 	else if(message_mods[MODE_SING])
 		. = verb_sing
 	else if(message_mods[WHISPER_MODE])
 		. = verb_whisper
-	else if(ending == "?")
+	else if(ending == "?" || ending == "？") // NOVA EDIT CHANGE - I18N - 全角？等价。ORIGINAL: else if(ending == "?")
 		return verb_ask
-	else if(ending == "!")
+	else if(ending == "!" || ending == "！") // NOVA EDIT CHANGE - I18N - 全角！等价。ORIGINAL: else if(ending == "!")
 		return verb_exclaim
 	else
 		return get_default_say_verb()
@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SAY_QUOTE, args)
 
-	if(copytext_char(input, -2) == "!!")
+	if(lang_yell_ending(input)) // NOVA EDIT CHANGE - I18N - 全角！！等价。ORIGINAL: if(copytext_char(input, -2) == "!!")
 		spans |= SPAN_YELL
 
 	/* all inputs should be fully figured out past this point */
@@ -254,6 +254,10 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/processed_input = apply_message_emphasis(input) //This MUST be done first so that we don't get clipped by spans
 	processed_input = attach_spans(processed_input, spans)
 
+	// NOVA EDIT ADDITION - i18n - 全服中文时整串反查说话动词（says/whispers/beeps…；词由 verb_* 经 SINK_VARS 抽取）。
+	// 自定义 say emote（MODE_CUSTOM_SAY_EMOTE 整条消息）不在目录里 → lang_reverse_text 安全原样返回。
+	say_mod = lang_reverse_text(say_mod)
+	// NOVA EDIT ADDITION END
 	var/processed_say_mod = apply_message_emphasis(say_mod)
 
 	return "[processed_say_mod], \"[processed_input]\""
@@ -268,7 +272,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	ENCODE_HTML_EMPHASIS(input, "\\|", "i", italics)
 	ENCODE_HTML_EMPHASIS(input, "\\+", "b", bold)
 	ENCODE_HTML_EMPHASIS(input, "\\_", "u", underline)
-	var/static/regex/remove_escape_backlashes = regex("\\\\(\\_|\\+|\\|)", "g") // Removes backslashes used to escape text modification.
+	ENCODE_HTML_EMPHASIS(input, "\\^", "small", small)
+	var/static/regex/remove_escape_backlashes = regex("\\\\(\\_|\\+|\\||\\^)", "g") // Removes backslashes used to escape text modification.
 	input = remove_escape_backlashes.Replace_char(input, "$1")
 	return input
 
@@ -335,9 +340,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /proc/say_test(text)
 	var/ending = copytext_char(text, -1)
-	if (ending == "?")
+	if (ending == "?" || ending == "？") // NOVA EDIT CHANGE - I18N - 全角？等价。ORIGINAL: if (ending == "?")
 		return "1"
-	else if (ending == "!")
+	else if (ending == "!" || ending == "！") // NOVA EDIT CHANGE - I18N - 全角！等价。ORIGINAL: else if (ending == "!")
 		return "2"
 	return "0"
 

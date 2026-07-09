@@ -27,11 +27,11 @@
 	traits = list(TRAIT_NOFLASH, TRAIT_TRUE_NIGHT_VISION, TRAIT_KNOW_ENGI_WIRES)
 
 /datum/borer_focus/head/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	to_chat(host, span_notice("Your eyes begin to feel strange..."))
+	to_chat(host, span_notice(LANG("datum.332631e1", null)))
 	return ..()
 
 /datum/borer_focus/head/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	to_chat(host, span_notice("Your eyes begin to return to normal..."))
+	to_chat(host, span_notice(LANG("datum.df7fbca7", null)))
 	host.update_sight()
 	return ..()
 
@@ -40,12 +40,12 @@
 	traits = list(TRAIT_NOBREATH, TRAIT_NOHUNGER, TRAIT_STABLEHEART)
 
 /datum/borer_focus/chest/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	to_chat(host, span_notice("Your chest begins to slow down..."))
+	to_chat(host, span_notice(LANG("datum.9840b142", null)))
 	host.nutrition = NUTRITION_LEVEL_WELL_FED
 	return ..()
 
 /datum/borer_focus/chest/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	to_chat(host, span_notice("Your chest begins to heave again..."))
+	to_chat(host, span_notice(LANG("datum.52ab4e13", null)))
 	return ..()
 
 /datum/borer_focus/arms
@@ -53,12 +53,12 @@
 	traits = list(TRAIT_QUICKER_CARRY, TRAIT_QUICK_BUILD, TRAIT_SHOCKIMMUNE)
 
 /datum/borer_focus/arms/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	to_chat(host, span_notice("Your arms start to feel funny..."))
+	to_chat(host, span_notice(LANG("datum.abe5116a", null)))
 	borer.human_host.add_actionspeed_modifier(/datum/actionspeed_modifier/focus_speed)
 	return ..()
 
 /datum/borer_focus/arms/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	to_chat(host, span_notice("Your arms start to feel normal again..."))
+	to_chat(host, span_notice(LANG("datum.bfc04516", null)))
 	borer.human_host.remove_actionspeed_modifier(ACTIONSPEED_ID_BORER)
 	return ..()
 
@@ -67,11 +67,11 @@
 	traits = list(TRAIT_LIGHT_STEP, TRAIT_FREERUNNING, TRAIT_SILENT_FOOTSTEPS)
 
 /datum/borer_focus/legs/on_add(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	to_chat(host, span_notice("You feel faster..."))
+	to_chat(host, span_notice(LANG("datum.87df739b", null)))
 	host.add_movespeed_modifier(/datum/movespeed_modifier/focus_speed)
 	return ..()
 
 /datum/borer_focus/legs/on_remove(mob/living/carbon/human/host, mob/living/basic/cortical_borer/borer)
-	to_chat(host, span_notice("You feel slower..."))
+	to_chat(host, span_notice(LANG("datum.ad53e423", null)))
 	host.remove_movespeed_modifier(/datum/movespeed_modifier/focus_speed)
 	return ..()

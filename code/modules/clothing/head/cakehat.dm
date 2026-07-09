@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/head/utility/hardhat/cakehat
 	name = "cakehat"
 	desc = "You put the cake on your head. Brilliant."
@@ -80,10 +81,10 @@
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_on(mob/living/user)
 	playsound(src, 'sound/items/weapons/saberon.ogg', 5, TRUE)
-	to_chat(user, span_warning("You turn on \the [src]."))
+	to_chat(user, span_warning(LANG("obj.756bfe56", list(src))))
 	return ..()
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake/turn_off(mob/living/user)
 	playsound(src, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
-	to_chat(user, span_warning("You turn off \the [src]."))
+	to_chat(user, span_warning(LANG("obj.67caf9d4", list(src))))
 	return ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CALLOUT_TIME (5 SECONDS)
 #define CALLOUT_COOLDOWN 3 SECONDS
 
@@ -106,7 +107,7 @@
 		return
 
 	if (!COOLDOWN_FINISHED(src, callout_cooldown))
-		clicked_atom.balloon_alert(user, "callout is on cooldown!")
+		clicked_atom.balloon_alert(user, LANG("datum.840c0cec", null))
 		return COMSIG_MOB_CANCEL_CLICKON
 
 	INVOKE_ASYNC(src, PROC_REF(callout_picker), user, clicked_atom)

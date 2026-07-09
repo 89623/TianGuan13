@@ -45,7 +45,7 @@
 /datum/nifsoft/hud/activate()
 	var/obj/item/clothing/glasses/worn_glasses = linked_mob.get_item_by_slot(ITEM_SLOT_EYES)
 	if(eyewear_check && !active && (!istype(worn_glasses) || !HAS_TRAIT(worn_glasses, TRAIT_NIFSOFT_HUD_GRANTER)))
-		linked_mob.balloon_alert(linked_mob, "no compatible eyewear!")
+		linked_mob.balloon_alert(linked_mob, LANG("datum.c58b0336", null))
 		return FALSE
 
 	. = ..() // active = !active
@@ -80,7 +80,7 @@
 /datum/element/nifsoft_hud/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_cyan_nova("Wearing this item in your glasses slot will allow you to use NIFSoft HUDs.")
+	examine_text += span_cyan_nova(LANG("datum.e66b4f13", null))
 
 /datum/element/nifsoft_hud/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_ATOM_EXAMINE)

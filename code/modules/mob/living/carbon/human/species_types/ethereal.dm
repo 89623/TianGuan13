@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/species/ethereal
 	name = "\improper Ethereal"
 	id = SPECIES_ETHEREAL
@@ -129,7 +130,7 @@
 		return
 	disrupted = TRUE
 	refresh_light_color(source)
-	to_chat(source, span_notice("You feel the light of your body leave you."))
+	to_chat(source, span_notice(LANG("datum.a1ed9d60", null)))
 	switch(severity)
 		if(EMP_LIGHT)
 			addtimer(CALLBACK(src, PROC_REF(stop_emp), source), 10 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
@@ -139,7 +140,7 @@
 /datum/species/ethereal/proc/hit_by_saboteur(mob/living/carbon/human/source, disrupt_duration)
 	disrupted = TRUE
 	refresh_light_color(source)
-	to_chat(source, span_warning("Something inside of you crackles in a bad way."))
+	to_chat(source, span_warning(LANG("datum.9da7c5ff", null)))
 	source.take_bodypart_damage(burn = 3, wound_bonus = CANT_WOUND)
 	addtimer(CALLBACK(src, PROC_REF(stop_emp), source), disrupt_duration, TIMER_UNIQUE|TIMER_OVERRIDE)
 	return TRUE
@@ -150,8 +151,8 @@
 		return FALSE
 	emageffect = TRUE
 	if(user)
-		to_chat(user, span_notice("You tap [source] on the back with your card."))
-	source.visible_message(span_danger("[source] starts flickering in an array of colors!"))
+		to_chat(user, span_notice(LANG("datum.faaba625", list(source))))
+	source.visible_message(span_danger(LANG("datum.d9a905be", list(source))))
 	handle_emag(source)
 	addtimer(CALLBACK(src, PROC_REF(stop_emag), source), 2 MINUTES) //Disco mode for 2 minutes! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 	return TRUE
@@ -165,7 +166,7 @@
 /datum/species/ethereal/proc/stop_emp(mob/living/carbon/human/ethereal)
 	disrupted = FALSE
 	refresh_light_color(ethereal)
-	to_chat(ethereal, span_notice("You feel more energized as your shine comes back."))
+	to_chat(ethereal, span_notice(LANG("datum.01c0869b", null)))
 
 /datum/species/ethereal/proc/handle_emag(mob/living/carbon/human/ethereal)
 	if(!emageffect)
@@ -177,7 +178,7 @@
 /datum/species/ethereal/proc/stop_emag(mob/living/carbon/human/ethereal)
 	emageffect = FALSE
 	refresh_light_color(ethereal)
-	ethereal.visible_message(span_danger("[ethereal] stops flickering and goes back to their normal state!"))
+	ethereal.visible_message(span_danger(LANG("datum.b91d4100", list(ethereal))))
 
 /datum/species/ethereal/proc/handle_glow_emote(mob/living/carbon/human/ethereal, power, range, flare = FALSE, duration = 5 SECONDS, flare_time = 0)
 	powermult = power
@@ -199,7 +200,7 @@
 	powermult = 1
 	rangemult = 1
 	disrupted = TRUE
-	to_chat(ethereal, span_warning("Your shine flickers and fades."))
+	to_chat(ethereal, span_warning(LANG("datum.2c378c8b", null)))
 	addtimer(CALLBACK(src, PROC_REF(stop_emp), ethereal), flare_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 
@@ -265,33 +266,32 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "bolt",
-			SPECIES_PERK_NAME = "Shockingly Tasty",
-			SPECIES_PERK_DESC = "Ethereals can feed on electricity from APCs, and do not otherwise need to eat.",
+			SPECIES_PERK_NAME = LANG("datum.565fa598", null),
+			SPECIES_PERK_DESC = LANG("datum.3a81b6b4", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "lightbulb",
-			SPECIES_PERK_NAME = "Disco Ball",
-			SPECIES_PERK_DESC = "Ethereals passively generate their own light.",
+			SPECIES_PERK_NAME = LANG("datum.795ea640", null),
+			SPECIES_PERK_DESC = LANG("datum.efb60e73", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "gem",
-			SPECIES_PERK_NAME = "Crystal Core",
-			SPECIES_PERK_DESC = "The Ethereal's heart will encase them in crystal should they die, returning them to life after a time - \
-				at the cost of a permanent brain trauma.",
+			SPECIES_PERK_NAME = LANG("datum.5cd3b293", null),
+			SPECIES_PERK_DESC = LANG("datum.d6371206", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "fist-raised",
-			SPECIES_PERK_NAME = "Elemental Attacker",
-			SPECIES_PERK_DESC = "Ethereals deal burn damage with their punches instead of brute.",
+			SPECIES_PERK_NAME = LANG("datum.35f19693", null),
+			SPECIES_PERK_DESC = LANG("datum.734d0fe9", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "biohazard",
-			SPECIES_PERK_NAME = "Starving Artist",
-			SPECIES_PERK_DESC = "Ethereals take toxin damage while starving.",
+			SPECIES_PERK_NAME = LANG("datum.0a516cff", null),
+			SPECIES_PERK_DESC = LANG("datum.f12e8066", null),
 		),
 	)
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SWEETENER_PER_SCOOP 10
 #define EXTRA_MAX_VOLUME_PER_SCOOP 20
 
@@ -86,8 +87,16 @@
 	else
 		var/name_to_use = filled_name || initial(source.name)
 		var/list/unique_list = unique_list(scoops)
+		// NOVA EDIT ADDITION START - I18N - 口味词/基名各自整串反查（单词条目；miss 原样返回），中文语序与英文相同（口味在前）
+		if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+			name_to_use = lang_reverse_text(name_to_use)
+			var/list/localized_flavours = list()
+			for(var/flavour in unique_list)
+				localized_flavours += lang_reverse_text(flavour)
+			unique_list = localized_flavours
+		// NOVA EDIT ADDITION END
 		if(scoops_len > 1 && length(unique_list) == 1) // multiple flavours, and all of the same type
-			source.name = "[make_tuple(scoops_len)] [scoops[1]] [name_to_use]" // "double vanilla" sounds cooler than just "vanilla"
+			source.name = "[lang_reverse_text(make_tuple(scoops_len))] [unique_list[1]] [name_to_use]" // "double vanilla" sounds cooler than just "vanilla" // NOVA EDIT CHANGE - I18N - ORIGINAL: source.name = "[make_tuple(scoops_len)] [scoops[1]] [name_to_use]"
 		else
 			source.name = "[english_list(unique_list)] [name_to_use]"
 
@@ -106,12 +115,20 @@
 		else
 			source.desc = replacetext(replacetext("[flavour.desc_prefix] [flavour.desc]", "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
 	else /// Many flavours.
-		source.desc = "A delicious [initial(source.name)] filled with scoops of [english_list(scoops)] ice cream. That's as many as [scoops_len] scoops!"
+		// NOVA EDIT CHANGE START - I18N - ORIGINAL: source.desc = "A delicious [initial(source.name)] filled with scoops of [english_list(scoops)] ice cream. That's as many as [scoops_len] scoops!"
+		if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+			var/list/localized_scoops = list()
+			for(var/flavour in scoops)
+				localized_scoops += lang_reverse_text(flavour)
+			source.desc = LANG("datum.a9fd8b90", list(initial(source.name), jointext(localized_scoops, "、"), scoops_len))
+		else
+			source.desc = "A delicious [initial(source.name)] filled with scoops of [english_list(scoops)] ice cream. That's as many as [scoops_len] scoops!"
+		// NOVA EDIT CHANGE END
 
 /datum/component/ice_cream_holder/proc/on_examine(atom/source, mob/mob, list/examine_list)
 	SIGNAL_HANDLER
 	if(length(scoops) < max_scoops)
-		examine_list += span_tinynoticeital("you could use a ice cream vat to fill it with yummy ice cream...")
+		examine_list += span_tinynoticeital(LANG("datum.6d3177e7", null))
 
 /datum/component/ice_cream_holder/proc/on_examine_more(atom/source, mob/mob, list/examine_list)
 	SIGNAL_HANDLER
@@ -122,11 +139,11 @@
 		var/key = scoops[1]
 		var/datum/ice_cream_flavour/flavour = GLOB.ice_cream_flavours[LAZYACCESS(special_scoops, key) || key]
 		if(flavour?.desc) //I scream.
-			examine_list += "[source.p_Theyre()] filled with scoops of [flavour ? flavour.name : "broken, unhappy"] ice cream."
+			examine_list += LANG("datum.47954931", list(source.p_Theyre(), flavour ? flavour.name : "broken, unhappy"))
 		else
 			examine_list += replacetext(replacetext("[source.p_Theyre()] [flavour.desc]", "$CONE_NAME", initial(source.name)), "$CUSTOM_NAME", key)
 	else /// Many flavours.
-		examine_list += "[source.p_Theyre()] filled with scoops of [english_list(scoops)] ice cream. That's as many as [scoops_len] scoops!"
+		examine_list += LANG("datum.bf4b23bc", list(source.p_Theyre(), english_list(scoops), scoops_len))
 
 /datum/component/ice_cream_holder/proc/on_update_overlays(atom/source, list/new_overlays)
 	SIGNAL_HANDLER
@@ -148,7 +165,7 @@
 	if(!istype(target, /obj/machinery/icecream_vat))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(length(scoops) >= max_scoops)
-		target.balloon_alert(user, "too many scoops!")
+		target.balloon_alert(user, LANG("datum.16d16463", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	var/obj/machinery/icecream_vat/dispenser = target
 	dispenser.add_flavor_to_cone(src, user, source)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/sneak
 	name = "Sneak"
 	desc = "Blend into the environment."
@@ -25,12 +26,12 @@
 		// It's safest to go to the initial alpha of the mob.
 		// Otherwise we get permanent invisbility exploits.
 		animate(owner, alpha = initial(owner.alpha), time = animation_time)
-		owner.balloon_alert(owner, "you reveal yourself")
+		owner.balloon_alert(owner, LANG("datum.3363c618", null))
 		REMOVE_TRAIT(owner, TRAIT_SNEAK, ACTION_TRAIT)
 
 	else
 		animate(owner, alpha = sneak_alpha, time = animation_time)
-		owner.balloon_alert(owner, "you blend into the environment")
+		owner.balloon_alert(owner, LANG("datum.f17eada7", null))
 		ADD_TRAIT(owner, TRAIT_SNEAK, ACTION_TRAIT)
 
 	return TRUE

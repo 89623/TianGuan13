@@ -32,5 +32,5 @@
 /datum/component/temporary_pollution_emission/proc/wash_off()
 	SIGNAL_HANDLER
 	if(ismob(parent))
-		to_chat(parent, span_notice("The smell that lingered on your body fades."))
+		to_chat(parent, span_notice(LANG("datum.09148e7f", null)))
 	qdel(src)

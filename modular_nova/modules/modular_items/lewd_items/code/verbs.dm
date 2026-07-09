@@ -3,14 +3,14 @@
 	set category = "IC"
 
 	if(!has_status_effect(/datum/status_effect/climax_cooldown))
-		if(tgui_alert(usr, "Are you sure you want to cum?", "Climax", list("Yes", "No")) == "Yes")
+		if(tgui_alert(usr, LANG("mob.b5f29a08", null), LANG("mob.39f677eb", null), list("Yes", "No")) == "Yes")
 			if(stat != CONSCIOUS)
-				to_chat(usr, span_warning("You can't climax right now..."))
+				to_chat(usr, span_warning(LANG("mob.9143876c", null)))
 				return
 			else
 				climax(TRUE)
 	else
-		to_chat(src, span_warning("You can't cum right now!"))
+		to_chat(src, span_warning(LANG("mob.b4242208", null)))
 
 /mob/living/verb/reflexes_verb()
 	set name = "Toggle Reflexes"

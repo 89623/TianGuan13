@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Finds and extracts seeds from an object
  *
@@ -87,7 +88,7 @@
 /obj/machinery/seed_extractor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Extracting <b>[seed_multiplier] to [seed_multiplier * 4]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]</b> seeds.")
+		. += span_notice(LANG("obj.87238f0d", list(seed_multiplier, seed_multiplier * 4, max_seeds)))
 
 /obj/machinery/seed_extractor/update_icon_state()
 	. = ..()
@@ -116,9 +117,9 @@
 			loaded += 1
 
 		if(loaded)
-			to_chat(user, span_notice("You put as many seeds from [tool] into [src] as you can."))
+			to_chat(user, span_notice(LANG("obj.741bf6ac", list(tool, src))))
 			return ITEM_INTERACT_SUCCESS
-		to_chat(user, span_warning("There are no seeds in [tool]."))
+		to_chat(user, span_warning(LANG("obj.75b8dcda", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/list/generated_seeds = seedify(tool, -1, src, user)
@@ -132,23 +133,23 @@
 					break
 				//add seed to machine. second argument is null which means just force move into the machine
 				add_seed(seed)
-		to_chat(user, span_notice("You extract some seeds."))
+		to_chat(user, span_notice(LANG("obj.223fcf81", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/seeds))
 		if(contents.len >= max_seeds)
-			to_chat(user, span_warning("[src] is full."))
+			to_chat(user, span_warning(LANG("obj.8e2d390c", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(add_seed(tool, user))
-			to_chat(user, span_notice("You add [tool] to [src]."))
+			to_chat(user, span_notice(LANG("obj.0c27fe26", list(tool, src))))
 			return ITEM_INTERACT_SUCCESS
 
-		to_chat(user, span_warning("You can't seem to add [tool] to [src]."))
+		to_chat(user, span_warning(LANG("obj.89cb0ca6", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_behaviour || !user.combat_mode) // Using the wrong tool shouldn't assume you want to turn it into seeds.
-		to_chat(user, span_warning("You can't extract any seeds from [tool]!"))
+		to_chat(user, span_warning(LANG("obj.50990152", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 
 	return NONE
@@ -300,12 +301,12 @@
 				if(usr)
 					var/mob/user = usr
 					if(user.put_in_hands(found_seed))
-						to_chat(user, span_notice("You take [found_seed] out of the slot."))
+						to_chat(user, span_notice(LANG("obj.3d630a50", list(found_seed))))
 					else
-						to_chat(user, span_notice("[found_seed] falls onto the floor."))
+						to_chat(user, span_notice(LANG("obj.f57ed75b", list(found_seed))))
 				else
 					found_seed.forceMove(drop_location())
-					visible_message(span_notice("[found_seed] falls onto the floor."), null, span_hear("You hear a soft clatter."), COMBAT_MESSAGE_RANGE)
+					visible_message(span_notice(LANG("obj.f57ed75b", list(found_seed))), null, span_hear(LANG("obj.6e0be4c4", null)), COMBAT_MESSAGE_RANGE)
 				. = TRUE
 
 /obj/machinery/seed_extractor/ui_assets(mob/user)

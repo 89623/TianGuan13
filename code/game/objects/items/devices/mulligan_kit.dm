@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/fake_identity_kit
 	name = "fake identity kit"
 	desc = "All of the paperwork you need to get a fresh start and a perfect alibi, plus a little digital assistance to insert you into crew records."
@@ -10,16 +11,16 @@
 
 /obj/item/fake_identity_kit/examine_more(mob/user)
 	. = ..()
-	. += span_info("Using this kit after exposure to Mulligan serum will create a fake identity for your new appearance.")
-	. += span_info("This will add you to various station manifests, create an Assistant-level ID card, and announce your arrival over the radio.")
+	. += span_info(LANG("obj.d1375bb6", null))
+	. += span_info(LANG("obj.cf1c63c7", null))
 
 /obj/item/fake_identity_kit/attack_self(mob/living/carbon/human/user, modifiers)
 	. = ..()
 	if (!ishuman(user))
-		balloon_alert(user, "can't pass as employee!")
+		balloon_alert(user, LANG("obj.421f65c9", null))
 		return
 	if (find_record(user.real_name))
-		balloon_alert(user, "records already exist!")
+		balloon_alert(user, LANG("obj.78bfa2b8", null))
 		return
 
 	user.temporarilyRemoveItemFromInventory(src)
@@ -55,9 +56,9 @@
 		), qdel_on_fail = FALSE, indirect_action = TRUE)
 	if (isnull(placed_in))
 		fake_id.forceMove(user.drop_location())
-		to_chat(user, span_warning("You drop your new ID card on the ground."))
+		to_chat(user, span_warning(LANG("obj.b7cb726f", null)))
 	else
-		to_chat(user, span_notice("You quickly put your new ID card [placed_in]."))
+		to_chat(user, span_notice(LANG("obj.97b64665", list(placed_in))))
 
 	user.update_ID_card()
 
@@ -80,13 +81,13 @@
 		), qdel_on_fail = FALSE, indirect_action = TRUE)
 		if (isnull(returned_to))
 			fake_id.forceMove(user.drop_location())
-			to_chat(user, span_warning("You drop your old ID card on the ground."))
+			to_chat(user, span_warning(LANG("obj.ee1b188f", null)))
 		else
-			to_chat(user, span_notice("You stash your old ID card [returned_to]."))
+			to_chat(user, span_notice(LANG("obj.2ff2ba2a", list(returned_to))))
 
 	var/obj/item/arrival_announcer/announcer = new(user.drop_location())
 	user.put_in_hands(announcer)
-	to_chat(user, span_notice("You quickly eat the leftover paperwork, leaving only the signaller used to announce your arrival on the station."))
+	to_chat(user, span_notice(LANG("obj.7fd7addd", null)))
 	qdel(src)
 
 /obj/item/arrival_announcer
@@ -107,10 +108,10 @@
 	var/name = user.real_name
 	var/datum/record/manifest_data = find_record(name)
 	if (isnull(manifest_data))
-		balloon_alert(user, "no records found!")
+		balloon_alert(user, LANG("obj.fc25e5c8", null))
 		return
 	var/job = manifest_data.rank
-	if (tgui_alert(user, "Announce arrival of [name] as [job]?", "Are you ready?", list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
+	if (tgui_alert(user, LANG("obj.32b6fbe2", list(name, job)), LANG("obj.cae34731", null), list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
 		return
 	if (QDELETED(src) || !user.can_perform_action(src, interaction_flags_click))
 		return

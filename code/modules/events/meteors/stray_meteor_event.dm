@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/stray_meteor
 	name = "Stray Meteor"
 	typepath = /datum/round_event/stray_meteor
@@ -30,7 +31,7 @@
 	if(length(GLOB.meteor_list))
 		var/obj/effect/meteor/detected_meteor = pick(GLOB.meteor_list) //If we accidentally pick a meteor not spawned by the event, we're still technically not wrong
 		var/sensor_name = detected_meteor.signature
-		priority_announce("Our [sensor_name] sensors have detected an incoming signature approaching [GLOB.station_name]. Please brace for impact.", "Meteor Alert")
+		priority_announce(LANG("datum.89c818f8", list(sensor_name, GLOB.station_name)), "Meteor Alert")
 
 /datum/event_admin_setup/listed_options/stray_meteor
 	input_text = "Select a meteor type?"

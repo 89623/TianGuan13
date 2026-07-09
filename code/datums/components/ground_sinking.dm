@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define REGENERATION_FILTER "healing_glow"
 
 /**
@@ -83,7 +84,7 @@
 
 /// Makes the mob try to sink three times. Unsinks if interrupted.
 /datum/component/ground_sinking/proc/sinking_progress(mob/living/basic/living_target)
-	living_target.visible_message(span_notice("[living_target] starts sinking into the ground!"))
+	living_target.visible_message(span_notice(LANG("datum.5e90771a", list(living_target))))
 	for(var/i in 1 to 3)
 		if(QDELETED(living_target))
 			return
@@ -123,7 +124,7 @@
 		return
 	if (living_parent.health == living_parent.maxHealth)
 		return
-	living_parent.visible_message(span_notice("[living_parent]'s wounds begin to knit closed!"))
+	living_parent.visible_message(span_notice(LANG("datum.e5c2127f", list(living_parent))))
 	START_PROCESSING(SSobj, src)
 	if (!outline_colour)
 		return

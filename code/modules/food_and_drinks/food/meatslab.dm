@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/food/meat
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_SMALL
@@ -346,7 +347,7 @@
 	AddElement(/datum/element/raptor_food, attack_modifier = 0.5, speed_modifier = -0.05, color_chances = string_list(list(/datum/raptor_color/red = 5)))
 
 /obj/item/food/meat/slab/goliath/burn()
-	visible_message(span_notice("[src] finishes cooking!"))
+	visible_message(span_notice(LANG("obj.25987d11", list(src))))
 	new /obj/item/food/meat/steak/goliath(loc)
 	qdel(src)
 

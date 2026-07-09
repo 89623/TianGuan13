@@ -1,6 +1,12 @@
 # 天关源码（Nova Sector 下游）
 
 本仓库是“天关”的服务端源码，基于 [Nova Sector](https://github.com/NovaSector/NovaSector) 继续开发；Nova Sector 本身是 [/tg/station](https://github.com/tgstation/tgstation) 的下游分支，使用 BYOND 引擎运行。
+> 🇨🇳 简体中文说明（汉化分支）见 [README.zh-Hans.md](./README.zh-Hans.md)。
+
+[![CI Suite](https://github.com/NovaSector/NovaSector/workflows/CI%20Suite/badge.svg)](https://github.com/NovaSector/NovaSector/actions?query=workflow%3A%22CI+Suite%22)
+[![Percentage of issues still open](https://isitmaintained.com/badge/open/NovaSector/NovaSector.svg)](https://isitmaintained.com/project/NovaSector/NovaSector "Percentage of issues still open")
+[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/NovaSector/NovaSector.svg)](https://isitmaintained.com/project/NovaSector/NovaSector "Average time to resolve an issue")
+![Coverage](https://img.shields.io/codecov/c/github/NovaSector/NovaSector)
 
 请注意：本仓库继承自 Nova Sector，可能包含成人向内容，不适合 18 岁以下用户浏览或使用。
 

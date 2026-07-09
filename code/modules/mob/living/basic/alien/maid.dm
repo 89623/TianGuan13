@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/alien/maid
 	name = "lusty xenomorph maid"
 	melee_damage_lower = 0
@@ -24,9 +25,9 @@
 
 	target.wash(CLEAN_SCRUB)
 	if(istype(target, /obj/effect/decal/cleanable))
-		visible_message(span_notice("[src] cleans up \the [target]."))
+		visible_message(span_notice(LANG("mob.7b34e496", list(src, target))))
 	else
-		visible_message(span_notice("[src] polishes \the [target]."))
+		visible_message(span_notice(LANG("mob.e37b7726", list(src, target))))
 	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /**

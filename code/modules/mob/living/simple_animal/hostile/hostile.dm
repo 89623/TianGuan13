@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/simple_animal/hostile
 	abstract_type = /mob/living/simple_animal/hostile
 	faction = list(FACTION_HOSTILE)
@@ -396,7 +397,7 @@
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
 	if(target && emote_taunt.len && prob(taunt_chance))
-		manual_emote("[pick(emote_taunt)] at [target].")
+		manual_emote(LANG("mob.6fef9504", list(pick(emote_taunt), target)))
 		taunt_chance = max(taunt_chance-7,2)
 
 
@@ -443,7 +444,7 @@
 	if(CheckFriendlyFire(A))
 		return
 	if(!(simple_mob_flags & SILENCE_RANGED_MESSAGE))
-		visible_message(span_danger("<b>[src]</b> [ranged_message] at [A]!"))
+		visible_message(span_danger(LANG("mob.32a383b7", list(src, ranged_message, A))))
 
 
 	if(rapid > 1)

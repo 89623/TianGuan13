@@ -132,9 +132,14 @@ function DepartmentEntry(props: DepartmentEntryProps) {
                 color: Color.fromHex(department.color).darken(60).toString(),
               }}
             >
-              {department.open_slots +
-                (department.open_slots === 1 ? ' slot' : ' slots') +
-                ' available'}
+              {/* 拆成数字 + JSX 文本片段，文本才能被抽取并 auto-localize（原来整体是
+                  字符串拼接表达式、不是文本节点，i18n 抓不到 → 永远英文）。 */}
+              {department.open_slots}{' '}
+              {department.open_slots === 1 ? (
+                <>slot available</>
+              ) : (
+                <>slots available</>
+              )}
             </span>
           </>
         }

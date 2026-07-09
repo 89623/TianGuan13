@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/symptom/heal
 	abstract_type = /datum/symptom/heal
 	name = "Basic Healing (does nothing)" //warning for adminspawn viruses
@@ -159,7 +160,7 @@
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = actual_power
 	if(carbon_host.get_tox_loss() && prob(5))
-		to_chat(carbon_host, span_notice("Your skin tingles as the starlight seems to heal you."))
+		to_chat(carbon_host, span_notice(LANG("datum.cb977207", null)))
 	var/needs_update = FALSE
 	needs_update += carbon_host.adjust_tox_loss(-4 * heal_amt, updating_health = FALSE, required_biotype = healable_bodytypes) // Most effective on toxins
 	needs_update += carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
@@ -254,7 +255,7 @@
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
 	carbon_host.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
-		to_chat(carbon_host, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
+		to_chat(carbon_host, span_notice(LANG("datum.9e4dfc3d", null)))
 	return TRUE
 
 /*Nocturnal Regeneration
@@ -297,7 +298,7 @@
 	var/heal_amt = 2 * actual_power
 	carbon_host.heal_overall_damage(heal_amt, heal_amt * 0.5, required_bodytype = healable_bodytypes)
 	if(prob(5))
-		to_chat(carbon_host, span_notice("The darkness soothes and mends your wounds."))
+		to_chat(carbon_host, span_notice(LANG("datum.35223cce", null)))
 	return TRUE
 
 /datum/symptom/heal/darkness/passive_message_condition(mob/living/living_host)
@@ -371,7 +372,7 @@
 		if(SOFT_CRIT)
 			return power * 0.5
 	if(living_host.get_brute_loss() + living_host.get_fire_loss() >= living_host.maxHealth * 0.7 && !active_coma && !(HAS_TRAIT(living_host, TRAIT_NOSOFTCRIT)))
-		to_chat(living_host, span_warning("You feel yourself slip into a regenerative coma..."))
+		to_chat(living_host, span_warning(LANG("datum.ebcce27e", null)))
 		active_coma = TRUE
 		addtimer(CALLBACK(src, PROC_REF(coma), living_host), 6 SECONDS)
 
@@ -443,7 +444,7 @@
 /datum/symptom/heal/water/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = 2 * actual_power
 	if(carbon_host.heal_overall_damage(heal_amt * 0.5, heal_amt, required_bodytype = healable_bodytypes) && prob(5))
-		to_chat(carbon_host, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
+		to_chat(carbon_host, span_notice(LANG("datum.a6d53134", null)))
 	return TRUE
 
 /datum/symptom/heal/water/passive_message_condition(mob/living/carbon/carbon_host)
@@ -544,21 +545,21 @@
 	var/heal_amt = BASE_HEAL_PLASMA_FIXATION * actual_power
 
 	if(prob(5))
-		to_chat(carbon_host, span_notice("You feel yourself absorbing plasma inside and around you..."))
+		to_chat(carbon_host, span_notice(LANG("datum.cef7c4bf", null)))
 
 	var/difference = carbon_host.get_body_temp_normal() - carbon_host.bodytemperature
 	if(prob(5))
 		if(difference > -1) // Yes, it's supposed to be -1 and not 0. Probably so you keep getting passive messages even at normal temperature.
-			to_chat(carbon_host, span_notice("You feel warmer."))
+			to_chat(carbon_host, span_notice(LANG("datum.b5443b7c", null)))
 		if(difference < 0)
-			to_chat(carbon_host, span_notice("You feel less hot."))
+			to_chat(carbon_host, span_notice(LANG("datum.41a989b2", null)))
 	carbon_host.adjust_bodytemperature(clamp(difference, -20 * temp_rate, 20 * temp_rate))
 	var/needs_update = FALSE
 	needs_update += carbon_host.adjust_tox_loss(-heal_amt, updating_health = FALSE, required_biotype = healable_bodytypes)
 	var/brute_burn_heal = carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
 	needs_update += brute_burn_heal
 	if(brute_burn_heal && prob(5))
-		to_chat(carbon_host, span_notice("The pain from your wounds fades rapidly."))
+		to_chat(carbon_host, span_notice(LANG("datum.524933da", null)))
 	if(needs_update)
 		carbon_host.updatehealth()
 	return TRUE
@@ -605,8 +606,36 @@
 	if(needs_update)
 		carbon_host.updatehealth()
 	if(brute_burn_heal && prob(4))
-		to_chat(carbon_host, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
+		to_chat(carbon_host, span_notice(LANG("datum.409f6273", null)))
 	return TRUE
 
 /datum/symptom/heal/radiation/can_generate_randomly()
 	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) // Because people can never really suffer enough
+
+/datum/symptom/heal/aggressive_healing
+	name = "Aggressive Healing"
+	desc = "The virus heals damaged tissues in a way that appears threatening to the immune system."
+	severity = 1
+	stealth = -4
+	resistance = 3
+	stage_speed = 3
+	transmittable = 2
+	level = 4
+	base_message_chance = 0
+	symptom_delay_min = 1
+	symptom_delay_max = 1
+	symptom_cure = null
+	power = 2
+
+	threshold_descs = list(
+		"Severity > 1" = "For each point of severity above 1, the healing provided by the virus increases.",
+	)
+	///Increases the healing effect (if active) of the virus by this amount for each severity level above 1
+	var/severity_heal_bonus = 0.25
+
+/datum/symptom/heal/aggressive_healing/CanHeal(datum/disease/advance/our_disease)
+	return power + our_disease.totalSeverity() * severity_heal_bonus
+
+/datum/symptom/heal/aggressive_healing/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
+	carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes)
+	return TRUE

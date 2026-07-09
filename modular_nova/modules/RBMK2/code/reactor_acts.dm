@@ -1,6 +1,6 @@
 /obj/machinery/power/rbmk2/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!panel_open)
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, LANG("obj.2152c7cd", null))
 		return ITEM_INTERACT_BLOCKING
 
 	wires.interact(user)
@@ -8,7 +8,7 @@
 
 /obj/machinery/power/rbmk2/wirecutter_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, LANG("obj.2152c7cd", null))
 		return ITEM_INTERACT_BLOCKING
 
 	wires.interact(user)
@@ -20,7 +20,7 @@
 		force_unjam(tool, user, 25)
 		return ITEM_INTERACT_SUCCESS
 	if(stored_rod)
-		balloon_alert(user, "remove the rod first!")
+		balloon_alert(user, LANG("obj.23cbc8c2", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!meltdown && default_deconstruction_crowbar(user, tool))
 		if(user)
@@ -37,7 +37,7 @@
 //Toggle the reactor on/off.
 /obj/machinery/power/rbmk2/wrench_act(mob/living/user, obj/item/tool)
 	if(jammed)
-		balloon_alert(user, "refuses to budge!")
+		balloon_alert(user, LANG("obj.1059e89c", null))
 		return ITEM_INTERACT_BLOCKING
 
 	toggle_active(user)
@@ -46,22 +46,22 @@
 
 /obj/machinery/power/rbmk2/welder_act(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
-		balloon_alert(user, "already repaired!")
+		balloon_alert(user, LANG("obj.88cc0c7c", null))
 		return ITEM_INTERACT_BLOCKING
 	if (machine_stat & BROKEN)
-		balloon_alert(user, "too damaged to repair!")
+		balloon_alert(user, LANG("obj.6a314f11", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.tool_start_check(user, amount = 1))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "repairing...")
+	balloon_alert(user, LANG("obj.b52342a8", null))
 	if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
 		update_integrity(min(atom_integrity + 50, max_integrity))
 
 		if(atom_integrity >= max_integrity)
-			balloon_alert(user, "fully repaired!")
+			balloon_alert(user, LANG("obj.9717d1a3", null))
 		else
-			balloon_alert(user, "partially repaired!")
+			balloon_alert(user, LANG("obj.05360c87", null))
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -111,7 +111,7 @@
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	safety = FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "overdrive engaged!")
+	balloon_alert(user, LANG("obj.03b9f4d7", null))
 
 	if(user)
 		var/turf/our_turf = get_turf(src)

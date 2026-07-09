@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire connection to power network through a terminal
 
@@ -342,24 +343,23 @@
 	. = ..()
 	if(machine_stat & BROKEN)
 		if(opened != APC_COVER_REMOVED)
-			. += "The cover is broken and can probably be <i>pried</i> off with enough force."
+			. += LANG("obj.f9928a22", null)
 			return
 		if(terminal && has_electronics)
-			. += "The cover is missing but can be replaced using a new frame."
+			. += LANG("obj.22bb51d4", null)
 		return
 	if(opened)
 		if(has_electronics && terminal)
-			. += "The cover is [opened == APC_COVER_REMOVED?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
+			. += LANG("obj.5666b50b", list(opened == APC_COVER_REMOVED?"removed":"open", cell ? "installed" : "missing"))
 		else
-			. += {"It's [ !terminal ? "not" : "" ] wired up.\n
-			The electronics are[!has_electronics?"n't":""] installed."}
+			. += LANG("obj.18a1f292", list(!terminal ? "not" : "", !has_electronics?"n't":""))
 	else
 		if(machine_stat & MAINT)
-			. += "The cover is closed. Something is wrong with it. It doesn't work."
+			. += LANG("obj.20a9b831", null)
 		else if(malfhack)
-			. += "The cover is broken. It may be hard to force it open."
+			. += LANG("obj.25a01cf9", null)
 		else
-			. += "The cover is closed."
+			. += LANG("obj.7e4d1cfa", null)
 
 /obj/machinery/power/apc/atom_break(damage_flag)
 	. = ..()
@@ -372,7 +372,7 @@
 	if(opened != APC_COVER_REMOVED)
 		opened = APC_COVER_REMOVED
 		coverlocked = FALSE
-		visible_message(span_warning("The APC cover is knocked down!"))
+		visible_message(span_warning(LANG("obj.000e4863", null)))
 		update_appearance()
 
 /obj/machinery/power/apc/ui_interact(mob/user, datum/tgui/ui)
@@ -441,8 +441,8 @@
 	remote_control_user = remote_user
 	ui_interact(remote_user)
 	remote_user.log_message("remotely accessed [src].", LOG_GAME)
-	say("Remote access detected.[locked ? " Interface unlocked." : ""]")
-	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Connected to [src]."))
+	say(LANG("obj.4d694571", list(locked ? " Interface unlocked." : "")))
+	to_chat(remote_control_user, span_danger(LANG("obj.11a2175b", list(icon2html(src, remote_control_user), src))))
 	if(locked)
 		playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
 		locked = FALSE
@@ -459,9 +459,9 @@
 	if(isnull(remote_control_user))
 		return
 	locked = TRUE
-	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Disconnected from [src]."))
+	to_chat(remote_control_user, span_danger(LANG("obj.a3fbf980", list(icon2html(src, remote_control_user), src))))
 	if(!mute)
-		say("Remote access canceled. Interface locked.")
+		say(LANG("obj.ac779406", null))
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	update_appearance()
@@ -482,7 +482,7 @@
 		if("lock")
 			if(HAS_SILICON_ACCESS(user))
 				if((obj_flags & EMAGGED) || (machine_stat & (BROKEN|MAINT)) || remote_control_user)
-					to_chat(user, span_warning("The APC does not respond to the command!"))
+					to_chat(user, span_warning(LANG("obj.42a87168", null)))
 				else
 					locked = !locked
 					update_appearance()

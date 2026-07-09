@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Returns the src and all recursive contents as a list.
 /atom/proc/get_all_contents(ignore_flag_1)
 	. = list(src)
@@ -274,7 +275,7 @@ rough example of the "cone" made by the 3 dirs checked
 ///Returns a chosen path that is the closest to a list of matches
 /proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	if (value == FALSE) //nothing should be calling us with a number, so this is safe
-		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type") as null|text
+		value = input(LANG("_root.a7c03590", null), LANG("_root.9f6c983d", null)) as null|text
 		if (isnull(value))
 			return
 	value = trim(value)
@@ -296,7 +297,7 @@ rough example of the "cone" made by the 3 dirs checked
 	else if(random)
 		chosen = pick(matches) || null
 	else
-		chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in sort_list(matches)
+		chosen = input(LANG("_root.1f8be430", null), LANG("_root.c93f9473", null), matches[1]) as null|anything in sort_list(matches)
 	if(!chosen)
 		return
 	chosen = matches[chosen]

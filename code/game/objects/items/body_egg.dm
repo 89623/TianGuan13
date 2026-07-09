@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/body_egg
 	name = "body egg"
 	desc = "All slimy and yuck."
@@ -9,7 +10,7 @@
 
 /obj/item/organ/body_egg/on_find(mob/living/finder)
 	..()
-	to_chat(finder, span_warning("You found an unknown alien organism in [owner]'s [zone]!"))
+	to_chat(finder, span_warning(LANG("obj.16c140a2", list(owner, zone))))
 
 /obj/item/organ/body_egg/feel_for_damage(self_aware)
 	// keep these stealthy for now, revisit later

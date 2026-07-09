@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(mafia_roles_by_name, setup_mafia_roles_by_name())
 
 GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
@@ -655,25 +656,25 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  */
 /datum/mafia_controller/proc/signup_mafia(mob/user, client/ghost_client, obj/item/modular_computer/modpc)
 	if(!SSticker.HasRoundStarted())
-		to_chat(user, span_warning("Wait for the round to start."))
+		to_chat(user, span_warning(LANG("datum.c73d9fd9", null)))
 		return FALSE
 	if(isnull(modpc))
 		if(GLOB.mafia_signup[ghost_client.ckey])
 			GLOB.mafia_signup -= ghost_client.ckey
 			GLOB.mafia_early_votes -= ghost_client.ckey //Remove their early start vote as well
-			to_chat(user, span_notice("You unregister from Mafia."))
+			to_chat(user, span_notice(LANG("datum.aac50da0", null)))
 		else
 			GLOB.mafia_signup[ghost_client.ckey] = TRUE
-			to_chat(user, span_notice("You sign up for Mafia."))
+			to_chat(user, span_notice(LANG("datum.f91d04c6", null)))
 	else
 		if(GLOB.pda_mafia_signup[modpc])
 			GLOB.pda_mafia_signup -= modpc
 			GLOB.mafia_early_votes -= modpc //Remove their early start vote as well
-			to_chat(user, span_notice("You unregister from Mafia."))
+			to_chat(user, span_notice(LANG("datum.aac50da0", null)))
 			return TRUE
 		else
 			GLOB.pda_mafia_signup[modpc] = TRUE
-			to_chat(user, span_notice("You sign up for Mafia."))
+			to_chat(user, span_notice(LANG("datum.f91d04c6", null)))
 	if(phase == MAFIA_PHASE_SETUP)
 		check_signups()
 		try_autostart()

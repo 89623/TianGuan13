@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Complex terror source that increases buildup whenever the owner hears, sees, or tries to say something they're afraid of
 /datum/terror_handler/phobia_source
 	handler_type = TERROR_HANDLER_SOURCE
@@ -128,13 +129,13 @@
 		speech_args[SPEECH_SPANS] |= SPAN_SMALL_VOICE
 	if (stutter)
 		owner.set_stutter_if_lower(4 SECONDS)
-	to_chat(owner, span_warning("You struggle to say the word \"[span_phobia("[trigger_regex.group[2]]")]\"!"))
+	to_chat(owner, span_warning(LANG("datum.1bc8e353", list(span_phobia("[trigger_regex.group[2]]")))))
 
 /datum/terror_handler/phobia_source/proc/freak_out(reason)
 	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 	if(istext(reason))
-		to_chat(owner, span_bolddanger("Hearing [span_phobia(reason)] [message]!"))
+		to_chat(owner, span_bolddanger(LANG("datum.e05ad8d8", list(span_phobia(reason), message))))
 		owner.add_mood_event("phobia_minor", /datum/mood_event/startled)
 		// Because this is called from a signal and not the main process, we need to add the buildup by hand
 		if (component.terror_buildup < TERROR_BUILDUP_PASSIVE_MAXIMUM)
@@ -146,9 +147,9 @@
 
 	if(isatom(reason))
 		var/atom/as_atom = reason
-		to_chat(owner, span_bolddanger("Seeing [span_phobia("[as_atom.name]")] [message]!"))
+		to_chat(owner, span_bolddanger(LANG("datum.567b92a9", list(span_phobia("[as_atom.name]"), message))))
 	else
-		to_chat(owner, span_bolddanger("Something [message]!"))
+		to_chat(owner, span_bolddanger(LANG("datum.52e199c8", list(message))))
 	return PHOBIA_FREAKOUT_TERROR_BUILDUP
 
 /datum/terror_handler/phobia_source/on_hug(mob/living/hugger)

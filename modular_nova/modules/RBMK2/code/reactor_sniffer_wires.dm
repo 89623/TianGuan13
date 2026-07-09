@@ -25,13 +25,13 @@
 /datum/wires/rbmk2_sniffer/get_status()
 	var/obj/machinery/rbmk2_sniffer/sniffer = holder
 	. = list()
-	. += "The radio light is [sniffer.radio_enabled ? "blinking red" : "off"]."
+	. += LANG("datum.7509b9e6", list(sniffer.radio_enabled ? "blinking red" : "off"))
 	if(sniffer.link_confirm)
-		. += "The LED display is displaying \"LINK CONFIRM?\"."
+		. += LANG("datum.057332b5", null)
 	else if(sniffer.unlink_confirm)
-		. += "The LED display is displaying \"UNLINK CONFIRM?\"."
+		. += LANG("datum.0c471563", null)
 	else
-		. += "The LED display is displaying nothing."
+		. += LANG("datum.688707d4", null)
 
 /datum/wires/rbmk2_sniffer/on_pulse(wire, user)
 	var/obj/machinery/rbmk2_sniffer/sniffer = holder

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Cleaving saw
 
 /obj/item/melee/cleaving_saw
@@ -49,12 +50,12 @@
 
 /obj/item/melee/cleaving_saw/examine(mob/user)
 	. = ..()
-	. += span_notice("It is [HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
-	. += span_notice("Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.")
-	. += span_notice("Transforming it immediately after an attack causes the next attack to come out faster.")
+	. += span_notice(LANG("obj.62eee539", list(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed")))
+	. += span_notice(LANG("obj.ed1cdbe5", null))
+	. += span_notice(LANG("obj.d1382130", null))
 
 /obj/item/melee/cleaving_saw/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is [HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.da620a93", list(user, HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest", user.p_theyre()))))
 	attack_self(user)
 	return BRUTELOSS
 
@@ -151,7 +152,7 @@
 	var/obj/item/crusher_trophy/trophy = interacting_with
 	if(isnull(trophy.wildhunter_drop))
 		return NONE
-	balloon_alert(user, "cutting trophy...")
+	balloon_alert(user, LANG("obj.b19c1d0b", null))
 	if(!do_after(user, 4 SECONDS, trophy))
 		return ITEM_INTERACT_BLOCKING
 	new trophy.wildhunter_drop(trophy.drop_location())

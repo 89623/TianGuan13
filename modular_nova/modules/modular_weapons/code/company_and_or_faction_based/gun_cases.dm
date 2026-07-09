@@ -132,7 +132,7 @@
 
 /obj/item/storage/toolbox/guncase/nova/ntcase/examine(mob/user)
 	. = ..()
-	. += "<i>It is emblazoned with the <b>[span_blue("Nanotrasen")]</b> logo.</i>"
+	. += LANG("obj.b5a86bf3", list(span_blue("Nanotrasen")))
 
 /obj/item/storage/toolbox/guncase/nova/ntcase/pistol
 	name = "small gun case"
@@ -148,7 +148,7 @@
 
 /obj/item/storage/toolbox/guncase/nova/ntspecial/examine(mob/user)
 	. = ..()
-	. += "<i>It is emblazoned with a gilded <b>[span_blue("Nanotrasen")]</b> logo.</i>"
+	. += LANG("obj.f2062fbe", list(span_blue("Nanotrasen")))
 
 
 /obj/item/storage/toolbox/guncase/nova/ntspecial/pistol
@@ -165,7 +165,7 @@
 
 /obj/item/storage/toolbox/guncase/nova/solfed/examine(mob/user)
 	. = ..()
-	. += "<i>It is stamped with the <b>[span_cyan_nova("Solar Federation")]</b> emblem.</i>"
+	. += LANG("obj.205c1624", list(span_cyan_nova("Solar Federation")))
 
 /obj/item/storage/toolbox/guncase/nova/solfed/pistol
 	name = "small gun case"
@@ -181,7 +181,7 @@
 
 /obj/item/storage/toolbox/guncase/nova/solfedspec/examine(mob/user)
 	. = ..()
-	. += "<i>It is stamped with the <b>[span_cyan_nova("Solar Federation")]</b> emblem.</i>"
+	. += LANG("obj.205c1624", list(span_cyan_nova("Solar Federation")))
 
 /obj/item/storage/toolbox/guncase/nova/solfedspec/pistol
 	name = "small gun case"
@@ -197,7 +197,7 @@
 
 /obj/item/storage/toolbox/guncase/nova/syndicate/examine(mob/user)
 	. = ..()
-	. += "<i>It is marked with <b>[span_red("Syndicate Conglomerate")]</b> insignia.</i>"
+	. += LANG("obj.5fc9855d", list(span_red("Syndicate Conglomerate")))
 
 /obj/item/storage/toolbox/guncase/nova/syndicate/pistol
 	name = "small gun case"
@@ -213,7 +213,7 @@
 
 /obj/item/storage/toolbox/guncase/nova/interdyne/examine(mob/user)
 	. = ..()
-	. += "<i>It is stamped with the <b>[span_green("Interdyne Pharmaceuticals")]</b> logo.</i>"
+	. += LANG("obj.7746f8f1", list(span_green("Interdyne Pharmaceuticals")))
 
 /obj/item/storage/toolbox/guncase/nova/interdyne/pistol
 	name = "small gun case"
@@ -229,7 +229,7 @@
 
 /obj/item/storage/toolbox/guncase/nova/interdynespec/examine(mob/user)
 	. = ..()
-	. += "<i>It is stamped with the <b>[span_green("Interdyne Pharmaceuticals")]</b> logo.</i>"
+	. += LANG("obj.7746f8f1", list(span_green("Interdyne Pharmaceuticals")))
 
 /obj/item/storage/toolbox/guncase/nova/interdynespec/pistol
 	name = "small gun case"
@@ -251,7 +251,7 @@
 
 /obj/item/storage/toolbox/guncase/nova/pistol/trappiste_small_case/examine(mob/user)
 	. = ..()
-	. += "<i>The five square grid of <b>[span_red("Trappiste Fabriek")]</b> is displayed prominently on the top.</i>"
+	. += LANG("obj.5b1c9c61", list(span_red("Trappiste Fabriek")))
 
 // Xhihao Light Arms
 /obj/item/storage/toolbox/guncase/nova/xhihao_large_case
@@ -260,4 +260,4 @@
 
 /obj/item/storage/toolbox/guncase/nova/xhihao_large_case/examine(mob/user)
 	. = ..()
-	. += "<i>It is subtly marked with <b>[span_purple("Xhihao Light Arms")]</b> trademarking.</i>"
+	. += LANG("obj.55ce2592", list(span_purple("Xhihao Light Arms")))

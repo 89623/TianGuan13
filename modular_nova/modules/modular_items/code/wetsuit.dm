@@ -13,13 +13,9 @@
 
 /obj/item/clothing/under/akula_wetsuit/refit/examine(mob/user)
 	. = ..()
-	. += span_notice("You can <b>examine closer</b> to learn a little more about this item.")
+	. += span_notice(LANG("obj.9710c283", null))
 
 /obj/item/clothing/under/akula_wetsuit/refit/examine_more(mob/user)
 	. = ..()
 
-	. += "Shoredresses apply active thermal channels and motion-powered micropumps to allow for water of the wearer's temperature choice to circulate; \
-		ensuring ample flow over not only the gills, but the rest of the wearer's skin, at the cost of occasional movement being needed when the wearer is still. \n\
-		These suits are known to come with luminescent panels that take on a bright glow when underwater, meant for signalling as well as higher visibility in deep waters. \
-		The system is meant to only be able to process water, fresh or otherwise; but unofficially, \
-		a great many chemicals or even drinks have been loaded in by adventurous or careless explorers of the New Principalities-- at fantastic personal risk to their gills."
+	. += LANG("obj.faae1958", null)

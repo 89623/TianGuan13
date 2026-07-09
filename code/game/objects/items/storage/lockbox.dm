@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
@@ -50,7 +51,7 @@
 	if(check_access(id_card))
 		return TRUE
 	if(!silent)
-		balloon_alert(user, "access denied!")
+		balloon_alert(user, LANG("obj.1bd3ceeb", null))
 	return FALSE
 
 /obj/item/storage/lockbox/proc/toggle_locked(mob/living/user)
@@ -72,16 +73,16 @@
 	if(!broken)
 		broken = TRUE
 		atom_storage.set_locked(STORAGE_NOT_LOCKED)
-		balloon_alert(user, "lock destroyed")
+		balloon_alert(user, LANG("obj.c20bce4a", null))
 		if (emag_card && user)
-			user.visible_message(span_warning("[user] swipes [emag_card] over [src], breaking it!"))
+			user.visible_message(span_warning(LANG("obj.3c26167e", list(user, emag_card, src))))
 		return TRUE
 	return FALSE
 
 /obj/item/storage/lockbox/examine(mob/user)
 	. = ..()
 	if(broken)
-		. += span_notice("It appears to be broken.")
+		. += span_notice(LANG("obj.11410718", null))
 
 /obj/item/storage/lockbox/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -128,7 +129,7 @@
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()
 	if(!atom_storage.locked)
-		. += span_notice("Alt-click to [open ? "close":"open"] it.")
+		. += span_notice(LANG("obj.b66c3082", list(open ? "close":"open")))
 
 /obj/item/storage/lockbox/medal/click_alt(mob/user)
 	if(!atom_storage.locked)
@@ -283,7 +284,7 @@
 		return TRUE
 	//NOVA EDIT ADDITION END
 	if(!silent)
-		balloon_alert(user, "incorrect bank account!")
+		balloon_alert(user, LANG("obj.f38773c9", null))
 	return FALSE
 
 /obj/item/storage/lockbox/dueling

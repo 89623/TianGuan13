@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/door_seal
 	name = "pneumatic airlock seal"
 	desc = "A brace used to seal and reinforce an airlock. Useful for making areas inaccessible to those without opposable thumbs."
@@ -20,7 +21,7 @@
 	var/unseal_time = 2 SECONDS
 
 /obj/item/door_seal/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is sealing [user.p_them()]self off from the world with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.5c284d92", list(user, user.p_them(), src, user.p_theyre()))))
 	playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
 	return BRUTELOSS
 

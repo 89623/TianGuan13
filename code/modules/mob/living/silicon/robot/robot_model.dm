@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # robot_model
  *
@@ -226,7 +227,7 @@
 		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
 		playsound(charger, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
-	charger.balloon_alert(robot, "restock process complete")
+	charger.balloon_alert(robot, LANG("obj.ebd3d28c", null))
 	charger.sendmats = FALSE
 
 
@@ -271,7 +272,7 @@
 
 /obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	if(HAS_TRAIT(robot, TRAIT_NO_TRANSFORM))
-		robot.balloon_alert(robot, "can't transform right now!")
+		robot.balloon_alert(robot, LANG("obj.7428856d", null))
 		return FALSE
 	if(islist(borg_skins) && !forced)
 		var/mob/living/silicon/robot/cyborg = loc
@@ -291,7 +292,7 @@
 		var/list/details = borg_skins[borg_skin]
 		//NOVA EDIT START
 		if(cyborg.hasExpanded && (((TRAIT_R_WIDE in details[SKIN_FEATURES]) && (TRAIT_R_WIDE in model_features)) || ((TRAIT_R_TALL in details[SKIN_FEATURES]) && (TRAIT_R_TALL in model_features))))
-			to_chat(cyborg, span_warning("You can't make yourself into a larger frame when you've already used an expander!"))
+			to_chat(cyborg, span_warning(LANG("obj.da14591a", null)))
 			return FALSE
 		//NOVA EDIT END
 		if(!isnull(details[SKIN_ICON_STATE]))
@@ -569,13 +570,13 @@
 
 	if(!buffer_on)
 		if(!COOLDOWN_FINISHED(src, toggle_cooldown))
-			robot_owner.balloon_alert(robot_owner, "auto-wash refreshing, please hold...")
+			robot_owner.balloon_alert(robot_owner, LANG("datum.3d010229", null))
 			return FALSE
 		COOLDOWN_START(src, toggle_cooldown, 4 SECONDS)
 		if(!allow_buffer_activate())
 			return FALSE
 
-		robot_owner.balloon_alert(robot_owner, "activating auto-wash...")
+		robot_owner.balloon_alert(robot_owner, LANG("datum.451d7cab", null))
 		// Start the sound. it'll just last the 4 seconds it takes for us to rev up
 		wash_audio.start()
 		// We're just gonna shake the borg a bit. Not a ton, but just enough that it feels like the audio makes sense
@@ -593,9 +594,9 @@
 			return FALSE
 	else
 		if(!COOLDOWN_FINISHED(src, toggle_cooldown))
-			robot_owner.balloon_alert(robot_owner, "auto-wash deactivating, please hold...")
+			robot_owner.balloon_alert(robot_owner, LANG("datum.b5fb1763", null))
 			return FALSE
-		robot_owner.balloon_alert(robot_owner, "de-activating auto-wash...")
+		robot_owner.balloon_alert(robot_owner, LANG("datum.2c77a474", null))
 
 	toggle_wash()
 
@@ -663,12 +664,12 @@
 /datum/action/toggle_buffer/proc/allow_buffer_activate()
 	var/mob/living/silicon/robot/robot_owner = owner
 	if(block_buffer_change)
-		robot_owner.balloon_alert(robot_owner, "activation cancelled!")
+		robot_owner.balloon_alert(robot_owner, LANG("datum.6737c758", null))
 		return FALSE
 
 	var/obj/item/reagent_containers/cup/bucket/our_bucket = bucket_ref?.resolve()
 	if(!buffer_on && our_bucket?.reagents?.total_volume < 0.1)
-		robot_owner.balloon_alert(robot_owner, "bucket is empty!")
+		robot_owner.balloon_alert(robot_owner, LANG("datum.46f75ac3", null))
 		return FALSE
 	return TRUE
 
@@ -681,7 +682,7 @@
 	var/datum/reagents/reagents = our_bucket?.reagents
 
 	if(!reagents || reagents.total_volume < 0.1)
-		robot_owner.balloon_alert(robot_owner, "bucket is empty, de-activating...")
+		robot_owner.balloon_alert(robot_owner, LANG("datum.3068ced7", null))
 		deactivate_wash()
 		return
 
@@ -848,8 +849,7 @@
 
 /obj/item/robot_model/peacekeeper/do_transform_animation()
 	..()
-	to_chat(loc, span_userdanger("Under Safeguard, you are an enforcer of the PEACE and preventer of HARM. \
-		You are not a security member and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.")) // NOVA EDIT CHANGE - Changes 1st sentence verbiage off ASIMOV/HUMAN Focus - ORIGINAL: "Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM."
+	to_chat(loc, span_userdanger(LANG("obj.be772dc5", null))) // NOVA EDIT CHANGE - Changes 1st sentence verbiage off ASIMOV/HUMAN Focus - ORIGINAL: "Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM."
 
 /obj/item/robot_model/security
 	name = "Security"
@@ -872,8 +872,7 @@
 
 /obj/item/robot_model/security/do_transform_animation()
 	..()
-	to_chat(loc, span_userdanger("While you have picked the security model, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to."))
+	to_chat(loc, span_userdanger(LANG("obj.2af6053f", null)))
 
 /obj/item/robot_model/security/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
 	..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Backpacks
  * Contains:
  * Backpack
@@ -71,7 +72,7 @@
 	acid = 50
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide."))
+	user.visible_message(span_suicide(LANG("obj.9c2e1615", list(user, src, user.p_theyre()))))
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(2 SECONDS)
@@ -93,7 +94,7 @@
 	regenerate_presents()
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
+	user.visible_message(span_suicide(LANG("obj.a235471b", list(user, src, user.p_their(), user.p_they(), user.p_are()))))
 	return OXYLOSS
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()

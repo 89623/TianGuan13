@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/quirk/item_quirk/family_heirloom
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
@@ -49,7 +50,7 @@
 
 	var/obj/family_heirloom = heirloom?.resolve()
 	if(!family_heirloom)
-		to_chat(quirk_holder, span_boldnotice("A wave of existential dread runs over you as you realize your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?"))
+		to_chat(quirk_holder, span_boldnotice(LANG("datum.c8ce8f03", null)))
 		return
 	family_heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_heirloom, protagonist = quirk_holder, heirloom_name = initial(family_heirloom.name))

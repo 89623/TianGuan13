@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define FORCED_SPEECH_COOLDOWN_DURATION 5 SECONDS
 
 GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
@@ -133,7 +134,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/examine(mob/user)
 	. = ..()
-	. += "It appears to [isnull(held_item) ? "not be holding anything." : "be holding \a [held_item]."]"
+	. += LANG("mob.3835c57b", list(isnull(held_item) ? "not be holding anything." : "be holding \a [held_item]."))
 
 	if(stat != DEAD)
 		return
@@ -156,7 +157,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/get_status_tab_items()
 	. = ..()
-	. += "Held Item: [held_item]"
+	. += LANG("mob.f913de2a", list(held_item))
 
 /mob/living/basic/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()
@@ -221,7 +222,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// Returns TRUE if we started perching, FALSE otherwise.
 /mob/living/basic/parrot/proc/start_perching(atom/target)
 	if(HAS_TRAIT(src, TRAIT_PARROT_PERCHED))
-		balloon_alert(src, "already perched!")
+		balloon_alert(src, LANG("mob.0c7d71d9", null))
 		return FALSE
 
 	if(ishuman(target))
@@ -245,14 +246,14 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// Proc that will perch us on a human. Returns TRUE if we perched, FALSE otherwise.
 /mob/living/basic/parrot/proc/perch_on_human(mob/living/carbon/human/target)
 	if(LAZYLEN(target.buckled_mobs) >= target.max_buckled_mobs)
-		balloon_alert(src, "can't perch on them!")
+		balloon_alert(src, LANG("mob.3761f292", null))
 		return FALSE
 
 	forceMove(get_turf(target))
 	if(!target.buckle_mob(src, TRUE))
 		return FALSE
 
-	to_chat(src, span_notice("You sit on [target]'s shoulder."))
+	to_chat(src, span_notice(LANG("mob.f68317df", list(target))))
 	toggle_perched(perched = TRUE)
 	RegisterSignal(src, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_unbuckle))
 	return TRUE
@@ -294,25 +295,25 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// Picks up an item from the ground and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/proc/steal_from_ground(obj/item/target)
 	if(!isnull(held_item))
-		balloon_alert(src, "already holding something!")
+		balloon_alert(src, LANG("mob.0931a2cc", null))
 		return FALSE
 
 	if(target.w_class > WEIGHT_CLASS_SMALL)
-		balloon_alert(src, "too big to pick up!")
+		balloon_alert(src, LANG("mob.61304af5", null))
 		return FALSE
 
 	pick_up_item(target)
 	visible_message(
-		span_notice("[src] grabs [held_item]!"),
-		span_notice("You grab [held_item]!"),
-		span_hear("You hear the sounds of wings flapping furiously."),
+		span_notice(LANG("mob.9184ba94", list(src, held_item))),
+		span_notice(LANG("mob.20106d47", list(held_item))),
+		span_hear(LANG("mob.1286748a", null)),
 	)
 	return TRUE
 
 /// Looks for an item that we can snatch and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/proc/steal_from_mob(mob/living/carbon/victim)
 	if(!isnull(held_item))
-		balloon_alert(src, "already holding something!")
+		balloon_alert(src, LANG("mob.0931a2cc", null))
 		return FALSE
 
 	for(var/obj/item/stealable in victim.held_items)
@@ -345,7 +346,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// We don't qdel the item here, we assume the invoking proc will have handled that somehow.
 /// Returns TRUE if we ate the thing.
 /mob/living/basic/parrot/proc/consume_cracker(obj/item/thing)
-	to_chat(src, span_notice("[src] eagerly devours \the [thing]."))
+	to_chat(src, span_notice(LANG("mob.ca9252db", list(src, thing))))
 	if(!istype(thing, /obj/item/food/cracker))
 		return TRUE // we still ate it
 
@@ -384,7 +385,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// Handles dropping items we're holding. Gently is a special modifier we can use for special interactions.
 /mob/living/basic/parrot/proc/drop_held_item(gently = TRUE)
 	if(isnull(held_item))
-		balloon_alert(src, "nothing to drop!")
+		balloon_alert(src, LANG("mob.1913f2a6", null))
 		return
 
 	if(stat != CONSCIOUS) // don't gotta do shit
@@ -392,12 +393,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	if(!gently && isgrenade(held_item))
 		var/obj/item/grenade/bomb = held_item
-		balloon_alert(src, "bombs away!") // you'll likely die too so we can get away with the `!` here
+		balloon_alert(src, LANG("mob.a209939d", null)) // you'll likely die too so we can get away with the `!` here
 		bomb.forceMove(drop_location())
 		bomb.detonate()
 		return
 
-	balloon_alert(src, "dropped item")
+	balloon_alert(src, LANG("mob.9cd50a80", null))
 	held_item.forceMove(drop_location())
 
 /mob/living/basic/parrot/Exited(atom/movable/gone, direction)

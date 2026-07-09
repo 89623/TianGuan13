@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Magicarp Bolt
  * Holder ability simply for "firing a projectile with a cooldown".
@@ -57,7 +58,7 @@
 
 /datum/action/cooldown/mob_cooldown/lesser_carp_rift/proc/make_rift(atom/target_atom)
 	if (owner.Adjacent(target_atom))
-		owner.balloon_alert(owner, "too close!")
+		owner.balloon_alert(owner, LANG("datum.079a7d8b", null))
 		return FALSE
 
 	var/turf/owner_turf = get_turf(owner)
@@ -75,7 +76,7 @@
 		open_exit_turfs += potential_exit
 
 	if (!length(open_exit_turfs))
-		owner.balloon_alert(owner, "no exit!")
+		owner.balloon_alert(owner, LANG("datum.a38909de", null))
 		return FALSE
 	if (!target_turf.is_blocked_turf(exclude_mobs = TRUE))
 		open_exit_turfs += target_turf

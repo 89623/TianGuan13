@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/book/granter/action/spell/blind
 	granted_action = /datum/action/cooldown/spell/pointed/blind
 	action_name = "blind"
@@ -15,7 +16,7 @@
 
 /obj/item/book/granter/action/spell/blind/recoil(mob/living/user)
 	. = ..()
-	to_chat(user, span_warning("You go blind!"))
+	to_chat(user, span_warning(LANG("obj.1319893e", null)))
 	user.adjust_temp_blindness(20 SECONDS)
 
 /obj/item/book/granter/action/spell/blind/wgw

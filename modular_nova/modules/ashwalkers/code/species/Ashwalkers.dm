@@ -66,7 +66,7 @@
 	SIGNAL_HANDLER
 	// if the world time hasn't yet passed the time required for evolution
 	if(human_target.has_status_effect(/datum/status_effect/ash_age))
-		to_chat(human_target, span_warning("More time is necessary to evolve-- fifteen minutes between each evolution..."))
+		to_chat(human_target, span_warning(LANG("datum.839b1280", null)))
 		return
 
 	// since it was time, go up a stage and now we check what to add
@@ -76,7 +76,7 @@
 	switch(current_stage)
 		if(1)
 			species_target.damage_modifier += 10
-			to_chat(human_target, span_notice("Your body seems to be sturdier..."))
+			to_chat(human_target, span_notice(LANG("datum.75fb3742", null)))
 
 		if(2)
 			var/obj/item/bodypart/arm/left/left_arm = human_target.get_bodypart(BODY_ZONE_L_ARM)
@@ -90,7 +90,7 @@
 				right_arm.unarmed_damage_high += 5
 
 			ADD_TRAIT(human_target, TRAIT_BOULDER_BREAKER, REF(src))
-			to_chat(human_target, span_notice("Your arms seem denser and stronger..."))
+			to_chat(human_target, span_notice(LANG("datum.0c9f0175", null)))
 
 		if(3)
 			var/datum/action/ashen_actions/hivemind_speak/grant_hivemind = new /datum/action/ashen_actions/hivemind_speak(human_target)
@@ -98,22 +98,22 @@
 
 		if(4)
 			human_target.add_movespeed_modifier(/datum/movespeed_modifier/ash_aged)
-			to_chat(human_target, span_notice("Your body seems lighter..."))
+			to_chat(human_target, span_notice(LANG("datum.390547b8", null)))
 
 		if(5)
 			var/obj/item/organ/ashen_armblade/summoned_organ = new /obj/item/organ/ashen_armblade()
 			summoned_organ.Insert(human_target)
-			to_chat(human_target, span_notice("Your arm shakes in agitation..."))
+			to_chat(human_target, span_notice(LANG("datum.6f16876f", null)))
 
 		if(6)
 			ADD_TRAIT(human_target, TRAIT_LAVA_IMMUNE, REF(src))
 			var/datum/action/cooldown/mob_cooldown/fire_breath/granted_action
 			granted_action = new(human_target)
 			granted_action.Grant(human_target)
-			to_chat(human_target, span_notice("Your body feels hotter..."))
+			to_chat(human_target, span_notice(LANG("datum.91f4b4c2", null)))
 
 		if(7 to INFINITY)
-			to_chat(human_target, span_warning("You have already reached the pinnacle of your current body!"))
+			to_chat(human_target, span_warning(LANG("datum.a52e94f0", null)))
 
 /// Speed mod
 /datum/movespeed_modifier/ash_aged
@@ -123,9 +123,9 @@
 /datum/component/ash_age/proc/on_examine(atom/target_atom, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(human_target.has_status_effect(/datum/status_effect/ash_age))
-		examine_list += span_notice("[human_target] has not yet reached the age for evolving.")
+		examine_list += span_notice(LANG("datum.bea066b6", list(human_target)))
 		return
-	examine_list += span_warning("[human_target] has reached the age for evolving!")
+	examine_list += span_warning(LANG("datum.97db1288", list(human_target)))
 
 /datum/status_effect/ash_age
 	id = "ash_age"
@@ -191,12 +191,12 @@
 
 	if(locate(connected_organ.summoned_armblade) in connected_organ)
 		owner.put_in_active_hand(connected_organ.summoned_armblade)
-		owner.visible_message(span_warning("A grotesque blade forms around [owner]\'s arm!"), span_warning("Our arm twists and mutates, transforming it into a deadly blade."), span_hear("You hear organic matter ripping and tearing!"))
+		owner.visible_message(span_warning(LANG("datum.4f914b98", list(owner))), span_warning(LANG("datum.f4917b16", null)), span_hear(LANG("datum.581bebe7", null)))
 		playsound(get_turf(owner), 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
 	else
 		connected_organ.summoned_armblade.forceMove(connected_organ)
-		owner.visible_message(span_warning("With a sickening crunch, [owner] reforms [owner.p_their()] [connected_organ.summoned_armblade] into an arm!"), span_notice("We assimilate the [connected_organ.summoned_armblade] back into our body."), span_italics("You hear organic matter ripping and tearing!"))
+		owner.visible_message(span_warning(LANG("datum.1f76d95a", list(owner, owner.p_their(), connected_organ.summoned_armblade))), span_notice(LANG("datum.f00ab43e", list(connected_organ.summoned_armblade))), span_italics(LANG("datum.581bebe7", null)))
 		playsound(get_turf(owner), 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
 /obj/item/melee/ashen_blade
@@ -256,28 +256,28 @@
 		if((!opening.requiresID() || opening.allowed(user)) && opening.hasPower()) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message, power requirement is so this doesn't stop unpowered doors from being pried open if you have access
 			return
 		if(opening.locked)
-			opening.balloon_alert(user, "bolted!")
+			opening.balloon_alert(user, LANG("obj.6a3633c4", null))
 			return
 
 		if(opening.hasPower())
-			user.visible_message(span_warning("[user] jams [src] into the airlock and starts prying it open!"), span_warning("We start forcing the [opening] open."), \
-			span_hear("You hear a metal screeching sound."))
+			user.visible_message(span_warning(LANG("obj.573a3a08", list(user, src))), span_warning(LANG("obj.a36e868f", list(opening))), \
+			span_hear(LANG("obj.4e2b5bed", null)))
 			playsound(opening, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 			if(!do_after(user, 10 SECONDS, target = opening))
 				return
 
-		user.visible_message(span_warning("[user] forces the airlock to open with [user.p_their()] [src]!"), span_warning("We force the [opening] to open."), \
-		span_hear("You hear a metal screeching sound."))
+		user.visible_message(span_warning(LANG("obj.ec05ee4f", list(user, user.p_their(), src))), span_warning(LANG("obj.e5ba6600", list(opening))), \
+		span_hear(LANG("obj.4e2b5bed", null)))
 		opening.open(BYPASS_DOOR_CHECKS)
 
 /obj/item/melee/ashen_blade/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/crusher_trophy))
 		if(prob(25)) //by chance, you should get at least every 3 out of 4 trophies.
-			to_chat(user, span_warning("Your [src] consumes [tool] without benefit!"))
+			to_chat(user, span_warning(LANG("obj.c1f0e91f", list(src, tool))))
 			qdel(tool)
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_warning("Your [src] consumes [tool]!"))
+		to_chat(user, span_warning(LANG("obj.252ccaeb", list(src, tool))))
 		playsound(get_turf(src), 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 		qdel(tool)
 		consumed_trophies += 1
@@ -296,7 +296,7 @@
 			exposed_wound_bonus += 2
 
 		else if(consumed_trophies == (max_trophies + 1)) //just so you aren't spammed...
-			to_chat(user, span_warning("[src] can no longer grow stronger!"))
+			to_chat(user, span_warning(LANG("obj.54cd2a85", list(src))))
 
 		return ITEM_INTERACT_BLOCKING
 
@@ -320,7 +320,7 @@
 
 	currently_used = TRUE
 
-	var/inserted_message = tgui_input_text(owner, "What would you like to say over the ashen hivemind?", "Ashen Hivemind Message", max_length = CHAT_MESSAGE_MAX_LENGTH)
+	var/inserted_message = tgui_input_text(owner, LANG("datum.7c660e6f", null), LANG("datum.e4746e5f", null), max_length = CHAT_MESSAGE_MAX_LENGTH)
 	if(isnull(inserted_message))
 		currently_used = FALSE
 		return

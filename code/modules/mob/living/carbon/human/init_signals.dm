@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/carbon/human/register_init_signals()
 	. = ..()
 
@@ -62,8 +63,8 @@
 	if(!dropItemToGround(changed, force = TRUE))
 		return
 	visible_message(
-		span_warning("[changed] falls out of [src]'s pockets!"),
-		span_warning("[changed] falls out of your pockets!"),
+		span_warning(LANG("mob.766265d2", list(changed, src))),
+		span_warning(LANG("mob.35ab0d86", list(changed))),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5, frequency = 0.8)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/book/granter/action/spell/forcewall
 	granted_action = /datum/action/cooldown/spell/forcewall
 	action_name = "forcewall"
@@ -15,6 +16,6 @@
 
 /obj/item/book/granter/action/spell/forcewall/recoil(mob/living/user)
 	. = ..()
-	to_chat(user, span_warning("You suddenly feel very solid!"))
+	to_chat(user, span_warning(LANG("obj.52704779", null)))
 	user.Stun(4 SECONDS, ignore_canstun = TRUE)
 	user.petrify(6 SECONDS)

@@ -19,33 +19,33 @@
 
 	//can we use this?
 	if(!isliving(user) || (uses == 0))
-		balloon_alert(user, "no uses left!")
+		balloon_alert(user, LANG("obj.e8ff6833", null))
 		return
 
 	//build our announcement
-	var/origin = sanitize_text(reject_bad_text(tgui_input_text(user, "Who is announcing, or where is the announcement coming from?", "Announcement Origin", get_area_name(user), max_length = MAX_NAME_LEN), ascii_only = FALSE))
+	var/origin = sanitize_text(reject_bad_text(tgui_input_text(user, LANG("obj.a18f70bf", null), LANG("obj.a13897ad", null), get_area_name(user), max_length = MAX_NAME_LEN), ascii_only = FALSE))
 	if(!origin)
-		balloon_alert(user, "bad origin!")
+		balloon_alert(user, LANG("obj.7f313aa2", null))
 		return
 
-	var/audio_key = tgui_input_list(user, "Which announcement audio key should play? ('Intercept' is default)", "Announcement Audio", GLOB.announcer_keys, ANNOUNCER_INTERCEPT)
+	var/audio_key = tgui_input_list(user, LANG("obj.e7e98abf", null), LANG("obj.adb840f2", null), GLOB.announcer_keys, ANNOUNCER_INTERCEPT)
 	if(!audio_key)
-		balloon_alert(user, "bad audio!")
+		balloon_alert(user, LANG("obj.498862e2", null))
 		return
 
-	var/color = tgui_input_list(user, "Which color should the announcement be?", "Announcement Hue", ANNOUNCEMENT_COLORS, "default")
+	var/color = tgui_input_list(user, LANG("obj.e5545831", null), LANG("obj.59ef58ac", null), ANNOUNCEMENT_COLORS, "default")
 	if(!color)
-		balloon_alert(user, "bad color!")
+		balloon_alert(user, LANG("obj.cba9924c", null))
 		return
 
-	var/title = sanitize_text(reject_bad_text(tgui_input_text(user, "Choose the title of the announcement.", "Announcement Title", max_length = MAX_NAME_LEN*2), ascii_only = FALSE))
+	var/title = sanitize_text(reject_bad_text(tgui_input_text(user, LANG("obj.0d9126fb", null), LANG("obj.fa4ed425", null), max_length = MAX_NAME_LEN*2), ascii_only = FALSE))
 	if(!title)
-		balloon_alert(user, "bad title!")
+		balloon_alert(user, LANG("obj.355e6020", null))
 		return
 
-	var/input = sanitize_text(reject_bad_text(tgui_input_text(user, "Choose the bodytext of the announcement.", "Announcement Text", multiline = TRUE), max_length = MAX_MESSAGE_LEN, ascii_only = FALSE))
+	var/input = sanitize_text(reject_bad_text(tgui_input_text(user, LANG("obj.f8e65aaf", null), LANG("obj.d40536e8", null), multiline = TRUE), max_length = MAX_MESSAGE_LEN, ascii_only = FALSE))
 	if(!input)
-		balloon_alert(user, "bad text!")
+		balloon_alert(user, LANG("obj.76fac4a8", null))
 		return
 
 	//treat voice

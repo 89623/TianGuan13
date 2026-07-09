@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Staff of storms
 
 /obj/item/storm_staff
@@ -25,16 +26,16 @@
 
 /obj/item/storm_staff/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [thunder_charges] charges remaining.")
-	. += span_notice("Use it in hand to dispel storms.")
-	. += span_notice("Use it on targets to summon thunderbolts from the sky.")
-	. += span_notice("The thunderbolts are boosted if in an area with weather effects.")
+	. += span_notice(LANG("obj.9cdb11b8", list(thunder_charges)))
+	. += span_notice(LANG("obj.b6f677dc", null))
+	. += span_notice(LANG("obj.6ea731f4", null))
+	. += span_notice(LANG("obj.7a43f62e", null))
 
 /obj/item/storm_staff/attack_self(mob/user)
 	var/area/user_area = get_area(user)
 	var/turf/user_turf = get_turf(user)
 	if(!user_area || !user_turf || (is_type_in_list(user_area, excluded_areas)))
-		to_chat(user, span_warning("Something is preventing you from using the staff here."))
+		to_chat(user, span_warning(LANG("obj.712f1a8e", null)))
 		return
 	var/datum/weather/affected_weather
 	for(var/datum/weather/weather as anything in SSweather.processing)
@@ -44,17 +45,17 @@
 	if(!affected_weather)
 		return
 	if(affected_weather.stage == END_STAGE)
-		balloon_alert(user, "already ended!")
+		balloon_alert(user, LANG("obj.f4f6871c", null))
 		return
 	if(affected_weather.stage == WIND_DOWN_STAGE)
-		balloon_alert(user, "already ending!")
+		balloon_alert(user, LANG("obj.ebeb3a9d", null))
 		return
-	balloon_alert(user, "you hold the staff up...")
+	balloon_alert(user, LANG("obj.17c6b8a9", null))
 	if(!do_after(user, 3 SECONDS, target = src))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
-	user.visible_message(span_warning("[user] holds [src] skywards as an orange beam travels into the sky!"), \
-	span_notice("You hold [src] skyward, dispelling the storm!"))
+	user.visible_message(span_warning(LANG("obj.db79c540", list(user, src))), \
+	span_notice(LANG("obj.ef573bb4", list(src))))
 	playsound(user, 'sound/effects/magic/staff_change.ogg', 200, FALSE)
 	var/old_color = user.color
 	user.color = list(340/255, 240/255, 0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
@@ -72,18 +73,18 @@
 
 /obj/item/storm_staff/proc/thunder_blast(atom/target, mob/user)
 	if(!thunder_charges)
-		balloon_alert(user, "needs to charge!")
+		balloon_alert(user, LANG("obj.9437a7cf", null))
 		return FALSE
 	var/turf/target_turf = get_turf(target)
 	var/area/target_area = get_area(target)
 	if(!target_turf || !target_area || (is_type_in_list(target_area, excluded_areas)))
-		balloon_alert(user, "can't bolt here!")
+		balloon_alert(user, LANG("obj.5f68120e", null))
 		return FALSE
 	if(target_turf in targeted_turfs)
-		balloon_alert(user, "already targeted!")
+		balloon_alert(user, LANG("obj.e1360a78", null))
 		return FALSE
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		balloon_alert(user, "you don't want to harm!")
+		balloon_alert(user, LANG("obj.582b950b", null))
 		return FALSE
 	var/power_boosted = FALSE
 	for(var/datum/weather/weather as anything in SSweather.processing)
@@ -94,7 +95,7 @@
 			break
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	targeted_turfs += target_turf
-	balloon_alert(user, "you aim at [target_turf]...")
+	balloon_alert(user, LANG("obj.16d662a0", list(target_turf)))
 	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)
 	addtimer(CALLBACK(src, PROC_REF(throw_thunderbolt), target_turf, power_boosted), 1.5 SECONDS)
 	thunder_charges--
@@ -125,5 +126,5 @@
 		for(var/obj/hit_thing in turf)
 			hit_thing.take_damage(20, BURN, ENERGY, FALSE)
 	playsound(target, 'sound/effects/magic/lightningbolt.ogg', 100, TRUE)
-	target.visible_message(span_danger("A thunderbolt strikes [target]!"))
+	target.visible_message(span_danger(LANG("obj.5fc332ba", list(target))))
 	explosion(target, light_impact_range = (boosted ? 1 : 0), flame_range = (boosted ? 2 : 1), silent = TRUE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 CONTAINS:
 /obj/item/ai_module/core/full/damaged
@@ -24,7 +25,7 @@ CONTAINS:
 
 /obj/item/ai_module/toy_ai/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	if(law_datum.owner)
-		to_chat(law_datum.owner, span_warning("BZZZZT"))
+		to_chat(law_datum.owner, span_warning(LANG("obj.ffcb1e8f", null)))
 		if(!overflow)
 			law_datum.owner.add_ion_law(laws[1])
 		else
@@ -38,6 +39,6 @@ CONTAINS:
 
 /obj/item/ai_module/toy_ai/attack_self(mob/user)
 	laws[1] = generate_ion_law()
-	to_chat(user, span_notice("You press the button on [src]."))
+	to_chat(user, span_notice(LANG("obj.fccd964e", list(src))))
 	playsound(user, 'sound/machines/click.ogg', 20, TRUE)
 	src.loc.visible_message(span_warning("[icon2html(src, viewers(loc))] [laws[1]]"))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/inducer
 	name = "inducer"
 	desc = "A tool for inductively charging internal power cells and batteries."
@@ -107,7 +108,7 @@
 		return
 
 	opened = !opened
-	to_chat(user, span_notice("You [opened ? "open" : "close"] the battery compartment."))
+	to_chat(user, span_notice(LANG("obj.a7ac68d8", list(opened ? "open" : "close"))))
 	update_appearance(UPDATE_OVERLAYS)
 
 	return ITEM_INTERACT_SUCCESS
@@ -120,15 +121,15 @@
 
 	if(istype(tool, /obj/item/stock_parts/power_store))
 		if(!opened)
-			balloon_alert(user, "open first!")
+			balloon_alert(user, LANG("obj.c3fdd085", null))
 			return ITEM_INTERACT_FAILURE
 
 		if(!QDELETED(powerdevice))
-			balloon_alert(user, "cell already installed!")
+			balloon_alert(user, LANG("obj.d2ad27b2", null))
 			return ITEM_INTERACT_FAILURE
 
 		if(!user.transferItemToLoc(tool, src))
-			balloon_alert(user, "stuck in hand!")
+			balloon_alert(user, LANG("obj.c7cbf2eb", null))
 			return ITEM_INTERACT_FAILURE
 
 		powerdevice = tool
@@ -136,12 +137,12 @@
 
 	else if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !QDELETED(powerdevice))
 		if(!powerdevice.used_charge())
-			balloon_alert(user, "fully charged!")
+			balloon_alert(user, LANG("obj.42739bb4", null))
 			return ITEM_INTERACT_FAILURE
 
 		tool.use(1)
 		powerdevice.give(1.5 * STANDARD_CELL_CHARGE)
-		balloon_alert(user, "cell recharged")
+		balloon_alert(user, LANG("obj.aac7e166", null))
 
 		return ITEM_INTERACT_SUCCESS
 
@@ -156,24 +157,24 @@
 
 	//basic checks
 	if(opened)
-		balloon_alert(user, "close first!")
+		balloon_alert(user, LANG("obj.33c8300c", null))
 		return ITEM_INTERACT_FAILURE
 
 	if(recharging || (!isturf(interacting_with) && user.loc == interacting_with))
 		return ITEM_INTERACT_FAILURE
 
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to use [src]!"))
+		to_chat(user, span_warning(LANG("obj.41d5752e", list(src))))
 		return ITEM_INTERACT_FAILURE
 
 	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
 
 	if(QDELETED(our_cell))
-		balloon_alert(user, "no cell installed!")
+		balloon_alert(user, LANG("obj.48299e41", null))
 		return ITEM_INTERACT_FAILURE
 
 	if(!our_cell.charge)
-		balloon_alert(user, "no charge!")
+		balloon_alert(user, LANG("obj.c0d39a14", null))
 		return ITEM_INTERACT_FAILURE
 
 	var/obj/item/stock_parts/power_store/target_cell = interacting_with.get_cell(src, user)
@@ -182,12 +183,12 @@
 		return ITEM_INTERACT_FAILURE
 
 	if(!target_cell.used_charge())
-		balloon_alert(user, "fully charged!")
+		balloon_alert(user, LANG("obj.42739bb4", null))
 		return ITEM_INTERACT_FAILURE
 
 	//begin recharging
 	recharging = TRUE
-	user.visible_message(span_notice("[user] starts recharging [interacting_with] with [src]."), span_notice("You start recharging [interacting_with] with [src]."))
+	user.visible_message(span_notice(LANG("obj.571e129a", list(user, interacting_with, src))), span_notice(LANG("obj.8965d95d", list(interacting_with, src))))
 
 	var/done_any = FALSE
 	while(target_cell.used_charge())
@@ -213,13 +214,13 @@
 
 	// Only show a message if we succeeded at least once
 	if(done_any)
-		user.visible_message(span_notice("[user] recharges [interacting_with]!"), span_notice("You recharge [interacting_with]!"))
+		user.visible_message(span_notice(LANG("obj.ab8d3172", list(user, interacting_with))), span_notice(LANG("obj.85e4228f", list(interacting_with))))
 
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/inducer/attack_self(mob/user)
 	if(opened && !QDELETED(powerdevice))
-		user.visible_message(span_notice("[user] removes [powerdevice] from [src]!"), span_notice("You remove [powerdevice]."))
+		user.visible_message(span_notice(LANG("obj.6eec8634", list(user, powerdevice, src))), span_notice(LANG("obj.1973523e", list(powerdevice))))
 		powerdevice.update_appearance()
 		user.put_in_hands(powerdevice)
 		update_appearance(UPDATE_OVERLAYS)
@@ -268,6 +269,6 @@
 
 /obj/item/inducer/cyborg/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	if(iscyborg(user) && iscyborg(interacting_with))
-		balloon_alert(user, "can't charge this!")
+		balloon_alert(user, LANG("obj.a11e4871", null))
 		return ITEM_INTERACT_FAILURE
 	return ..()

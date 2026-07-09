@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_VAR_INIT(hhStorageTurf, null)
 GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
@@ -36,17 +37,17 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/hilbertshotel/attack(mob/living/M, mob/living/user)
 	if(M.mind)
-		to_chat(user, span_notice("You invite [M] to the hotel."))
+		to_chat(user, span_notice(LANG("obj.5bbb1a9b", list(M))))
 		promptAndCheckIn(user, M)
 	else
-		to_chat(user, span_warning("[M] is not intelligent enough to understand how to use this device!"))
+		to_chat(user, span_warning(LANG("obj.b01c5e90", list(M))))
 
 /obj/item/hilbertshotel/attack_self(mob/user)
 	. = ..()
 	promptAndCheckIn(user, user)
 
 /obj/item/hilbertshotel/attack_tk(mob/user)
-	to_chat(user, span_notice("\The [src] actively rejects your mind as the bluespace energies surrounding it disrupt your telekinesis."))
+	to_chat(user, span_notice(LANG("obj.25a4abc8", list(src))))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user, mob/target)
@@ -54,33 +55,33 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 	// Input text changes depending on if you're using this in yourself or someone else.
 	if(user == target)
-		chosenRoomNumber = input(target, "What number room will you be checking into?", "Room Number") as null|num
+		chosenRoomNumber = input(target, LANG("obj.9c9c5b33", null), LANG("obj.ea08ae31", null)) as null|num
 	else
-		chosenRoomNumber = input(target, "[user] is inviting you to enter \the [src]. What number room will you be checking into?", "Room Number") as null|num
+		chosenRoomNumber = input(target, LANG("obj.26c4e8a5", list(user, src)), LANG("obj.ea08ae31", null)) as null|num
 
 	if(!chosenRoomNumber)
 		return
 	if(chosenRoomNumber > SHORT_REAL_LIMIT)
-		to_chat(target, span_warning("You have to check out the first [SHORT_REAL_LIMIT] rooms before you can go to a higher numbered one!"))
+		to_chat(target, span_warning(LANG("obj.ed614bab", list(SHORT_REAL_LIMIT))))
 		return
 	if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)))
-		to_chat(target, span_warning("That is not a valid room number!"))
+		to_chat(target, span_warning(LANG("obj.3252b69c", null)))
 		return
 
 	// Orb is not adjacent to the target. No teleporties.
 	if(!src.Adjacent(target))
-		to_chat(target, span_warning("You too far away from \the [src] to enter it!"))
+		to_chat(target, span_warning(LANG("obj.d1040cf6", list(src))))
 
 	// If the target is incapacitated after selecting a room, they're not allowed to teleport.
 	if(target.incapacitated)
-		to_chat(target, span_warning("You aren't able to activate \the [src] anymore!"))
+		to_chat(target, span_warning(LANG("obj.670b79fe", list(src))))
 
 	// Has the user thrown it away or otherwise disposed of it such that it's no longer in their hands or in some storage connected to them?
 	if(get_atom_on_turf(src, /mob) != user)
 		if(user == target)
-			to_chat(user, span_warning("\The [src] is no longer in your possession!"))
+			to_chat(user, span_warning(LANG("obj.7e01f523", list(src))))
 		else
-			to_chat(target, span_warning("\The [src] is no longer in the possession of [user]!"))
+			to_chat(target, span_warning(LANG("obj.49519323", list(src, user))))
 		return
 
 	// If the player is using it on themselves, we've got some logic to deal with.
@@ -89,10 +90,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		// The item should be on the user or in the user's inventory somewhere.
 		// However, if they're not holding it, it may be in a pocket? In a backpack? Who knows! Still, they can't just drop it to the floor anymore...
 		if(!user.get_held_index_of_item(src))
-			to_chat(user, span_warning("You try to drop \the [src], but it's too late! It's no longer in your hands! Prepare for unforeseen consequences..."))
+			to_chat(user, span_warning(LANG("obj.4f30906f", list(src))))
 		// Okay, so they HAVE to be holding it here, because it's in their hand from the above check. Try to drop the item and if it fails, oh dear...
 		else if(!user.dropItemToGround(src))
-			to_chat(user, span_warning("You can't seem to drop \the [src]! It must be stuck to your hand somehow! Prepare for unforeseen consequences..."))
+			to_chat(user, span_warning(LANG("obj.efe6b39a", list(src))))
 
 	if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
 		if(!GLOB.hhStorageTurf)
@@ -322,13 +323,13 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(!user.mind)
 		return
 	if(!parentSphere)
-		to_chat(user, span_warning("The door seems to be malfunctioning and refuses to operate!"))
+		to_chat(user, span_warning(LANG("turf.f965e08f", null)))
 		return
 	/// NOVA EDIT CHANGE START - Condos
 	/* Original:
 	if(tgui_alert(user, "Hilbert's Hotel would like to remind you that while we will do everything we can to protect the belongings you leave behind, we make no guarantees of their safety while you're gone, especially that of the health of any living creatures. With that in mind, are you ready to leave?", "Exit", list("Leave", "Stay")) == "Leave")
 	*/
-	if(tgui_alert(user, leave_message, "Exit", list("Leave", "Stay")) == "Leave") // NOVA EDIT CHANGE - Moved blurb to leave_message variable
+	if(tgui_alert(user, leave_message, LANG("turf.e15dc123", null), list("Leave", "Stay")) == "Leave") // NOVA EDIT CHANGE - Moved blurb to leave_message variable
 	/// NOVA EDIT CHANGE END
 		if(HAS_TRAIT(user, TRAIT_IMMOBILIZED) || (get_dist(get_turf(src), get_turf(user)) > 1)) //no teleporting around if they're dead or moved away during the prompt.
 			return
@@ -365,10 +366,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /turf/closed/indestructible/hoteldoor/click_alt(mob/user)
 	if(user.is_blind())
-		to_chat(user, span_warning("Drats! Your vision is too poor to use this!"))
+		to_chat(user, span_warning(LANG("turf.fb237112", null)))
 		return CLICK_ACTION_BLOCKING
 
-	to_chat(user, span_notice("You peek through the door's bluespace peephole..."))
+	to_chat(user, span_notice(LANG("turf.2cf61729", null)))
 	user.reset_perspective(parentSphere)
 	var/datum/action/peephole_cancel/PHC = new
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
@@ -392,7 +393,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	. = ..()
 	if(!.)
 		return
-	to_chat(owner, span_warning("You move away from the peephole."))
+	to_chat(owner, span_warning(LANG("datum.3006acb0", null)))
 	owner.reset_perspective()
 	owner.clear_fullscreen("remote_view", 0)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
@@ -434,7 +435,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	// Turns out giving anyone who grabs a Hilbert's Hotel a free, complementary warp whistle is probably bad.
 	// Let's gib the last person to have selected a room number in it.
 	if(unforeseen_consequences)
-		to_chat(unforeseen_consequences, span_warning("\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart."))
+		to_chat(unforeseen_consequences, span_warning(LANG("area.fee06fd6", list(H))))
 		unforeseen_consequences.investigate_log("has been gibbed by using [H] while inside of it.", INVESTIGATE_DEATHS)
 		unforeseen_consequences.gib(DROP_ALL_REMAINS)
 
@@ -447,7 +448,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 	log_game("[H] entered itself. Moving it to [loc_name(targetturf)].")
 	message_admins("[H] entered itself. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
-	H.visible_message(span_danger("[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!"))
+	H.visible_message(span_danger(LANG("area.68f5bcee", list(H))))
 	H.forceMove(targetturf)
 
 /area/misc/hilbertshotel/Exited(atom/movable/gone, direction)
@@ -542,21 +543,21 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(!istype(interacting_with, /obj/item/hilbertshotel))
 		return ..()
 	if(!interacting_with.IsReachableBy(user))
-		to_chat(user, span_warning("It's to far away to scan!"))
+		to_chat(user, span_warning(LANG("obj.505bebfd", null)))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/hilbertshotel/sphere = interacting_with
 	if(sphere.activeRooms.len)
-		to_chat(user, "Currently Occupied Rooms:")
+		to_chat(user, LANG("obj.cce80a6e", null))
 		for(var/roomnumber in sphere.activeRooms)
 			to_chat(user, roomnumber)
 	else
-		to_chat(user, "No currenty occupied rooms.")
+		to_chat(user, LANG("obj.34168bec", null))
 	if(sphere.storedRooms.len)
-		to_chat(user, "Vacated Rooms:")
+		to_chat(user, LANG("obj.0460ae0d", null))
 		for(var/roomnumber in sphere.storedRooms)
 			to_chat(user, roomnumber)
 	else
-		to_chat(user, "No vacated rooms.")
+		to_chat(user, LANG("obj.7cf2cb69", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/landmark/transport/transport_id/hilbert

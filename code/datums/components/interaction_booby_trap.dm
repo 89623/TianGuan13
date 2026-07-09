@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Attached to an atom, creates an explosion when it is interacted with
  */
@@ -75,7 +76,7 @@
 	if (explode_timer)
 		return
 	explode_timer = addtimer(CALLBACK(src, PROC_REF(explode), source), 0.5 SECONDS)
-	source.balloon_alert_to_hearers("*beep*")
+	source.balloon_alert_to_hearers(LANG("datum.023d36cd", null))
 	playsound(parent, triggered_sound, 50, FALSE)
 	return
 
@@ -99,4 +100,4 @@
 /datum/component/interaction_booby_trap/proc/on_examine(atom/source, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 	var/defuse_hint = (defuse_tool) ? "Perhaps [tool_behaviour_name(defuse_tool)] could help..." : ""
-	examine_list += span_warning("There's a light flashing red inside the maintenance panel. [defuse_hint]")
+	examine_list += span_warning(LANG("datum.dffa5e81", list(defuse_hint)))

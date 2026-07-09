@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //For storage types that are small enough to fit in this file
 
 ///Test tube rack
@@ -160,7 +161,7 @@
 		var/obj/item/gun/gun = to_insert
 		if(gun.weapon_weight > max_weapon_weight)
 			if(messages && user)
-				user.balloon_alert(user, "too heavy!")
+				user.balloon_alert(user, LANG("datum.5e148cfa", null))
 			return FALSE
 
 	return TRUE

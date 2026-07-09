@@ -1,10 +1,11 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/decal/remains
 	name = "remains"
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 
 /obj/effect/decal/remains/acid_act()
-	visible_message(span_warning("[src] dissolve[gender == PLURAL?"":"s"] into a puddle of sizzling goop!"))
+	visible_message(span_warning(LANG("obj.e959f98b", list(src, gender == PLURAL?"":"s"))))
 	playsound(src, 'sound/items/tools/welder.ogg', 150, TRUE)
 	new /obj/effect/decal/cleanable/greenglow(drop_location())
 	qdel(src)
@@ -48,7 +49,7 @@
 
 ///Releases a cloud of smoke based on the randomly generated reagent in Initialize().
 /obj/effect/decal/remains/human/smokey/proc/release_smoke(mob/living/smoke_releaser)
-	visible_message(span_warning("[smoke_releaser] disturbs [src], which releases a huge cloud of gas!"))
+	visible_message(span_warning(LANG("obj.9751b9fa", list(smoke_releaser, src))))
 	do_chem_smoke(2, src, get_turf(src), that_shit_that_killed_saddam, 15)
 
 ///Subtype of smokey remains used for rare maintenance spawns.

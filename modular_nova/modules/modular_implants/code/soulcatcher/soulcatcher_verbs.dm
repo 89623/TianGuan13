@@ -7,7 +7,7 @@
 	if(!target_soulcatcher || !target_soulcatcher.targeted_soulcatcher_room)
 		return FALSE
 
-	var/message_to_send = tgui_input_text(usr, "Input the message you want to send", "Soulcatcher", multiline = TRUE)
+	var/message_to_send = tgui_input_text(usr, LANG("mob.e2196c58", null), LANG("mob.49410bda", null), multiline = TRUE)
 	if(!message_to_send)
 		return FALSE
 
@@ -23,7 +23,7 @@
 	if(!target_soulcatcher || !target_soulcatcher.targeted_soulcatcher_room)
 		return FALSE
 
-	var/message_to_send = tgui_input_text(usr, "Input the emote you want to send", "Soulcatcher", max_length = MAX_MESSAGE_LEN, multiline = TRUE)
+	var/message_to_send = tgui_input_text(usr, LANG("mob.bc4f131d", null), LANG("mob.49410bda", null), max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	if(!message_to_send)
 		return FALSE
 

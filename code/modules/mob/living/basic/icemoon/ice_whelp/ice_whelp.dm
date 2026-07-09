@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/mining/ice_whelp
 	name = "ice whelp"
 	desc = "The offspring of an ice drake, weak in comparison but still terrifying."
@@ -70,7 +71,7 @@
 
 /// Carve a stone into a beautiful self-portrait
 /mob/living/basic/mining/ice_whelp/proc/create_sculpture(atom/target)
-	balloon_alert(src, "sculpting...")
+	balloon_alert(src, LANG("mob.dc5f1041", null))
 	if(!do_after(src, 5 SECONDS, target = target))
 		return
 	var/obj/structure/statue/custom/dragon_statue = new(get_turf(target))
@@ -83,7 +84,7 @@
 /// Gib and consume our fellow ice drakes
 /mob/living/basic/mining/ice_whelp/proc/cannibalize_victim(mob/living/target)
 	start_pulling(target)
-	balloon_alert(src, "devouring...")
+	balloon_alert(src, LANG("mob.b40356dd", null))
 	if(!do_after(src, 5 SECONDS, target))
 		return
 	target.gib(DROP_ALL_REMAINS)

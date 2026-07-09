@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/aoe/wave_of_desperation
 	name = "Wave Of Desperation"
 	desc = "Removes your restraints, repels and knocks down adjacent people, and applies certain effects of the Mansus Grasp upon everything nearby. \
@@ -27,10 +28,10 @@
 		return
 
 	if(cast_on.handcuffed)
-		cast_on.visible_message(span_danger("[cast_on.handcuffed] on [cast_on] shatter!"))
+		cast_on.visible_message(span_danger(LANG("datum.2eaa1a83", list(cast_on.handcuffed, cast_on))))
 		QDEL_NULL(cast_on.handcuffed)
 	if(cast_on.legcuffed)
-		cast_on.visible_message(span_danger("[cast_on.legcuffed] on [cast_on] shatters!"))
+		cast_on.visible_message(span_danger(LANG("datum.732cd5ff", list(cast_on.legcuffed, cast_on))))
 		QDEL_NULL(cast_on.legcuffed)
 
 	cast_on.apply_status_effect(/datum/status_effect/heretic_lastresort)

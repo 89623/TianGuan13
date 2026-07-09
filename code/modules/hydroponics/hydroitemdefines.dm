@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // *************************************
 // Hydroponics Tools
 // *************************************
@@ -15,7 +16,7 @@
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 100)
 
 /obj/item/reagent_containers/spray/weedspray/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.e9b265cc", list(user, src, user.p_theyre()))))
 	return TOXLOSS
 
 /obj/item/reagent_containers/spray/pestspray // -- Skie
@@ -31,7 +32,7 @@
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
 
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.e9b265cc", list(user, src, user.p_theyre()))))
 	return TOXLOSS
 
 /obj/item/cultivator
@@ -53,7 +54,7 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /obj/item/cultivator/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.81347c71", list(user, user.p_their(), user.p_they(), src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/cultivator/rake
@@ -84,8 +85,8 @@
 		H.set_confusion_if_lower(10 SECONDS)
 		H.Stun(20)
 		playsound(src, 'sound/items/weapons/punch4.ogg', 50, TRUE)
-		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
-						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
+		H.visible_message(span_warning(LANG("obj.6aba033b", list(H, src, H.p_them()))), \
+						  span_userdanger(LANG("obj.a83c88ca", list(src))))
 
 /obj/item/cultivator/cyborg
 	name = "cyborg cultivator"
@@ -128,7 +129,7 @@
 	)
 
 /obj/item/hatchet/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.a7b61724", list(user, user.p_them(), src, user.p_theyre()))))
 	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 

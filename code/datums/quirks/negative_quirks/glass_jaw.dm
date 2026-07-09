@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/quirk/glass_jaw
 	name = "Glass Jaw"
 	desc = "You have a very fragile jaw. Any sufficiently hard blow to your head might knock you out."
@@ -47,8 +48,8 @@
 		//don't display the message if little mac is already KO'd
 		if(!source.IsUnconscious())
 			source.visible_message(
-				span_warning("[source] gets knocked out!"),
-				span_userdanger("You get knocked out!"),
+				span_warning(LANG("datum.f3161a5f", list(source))),
+				span_userdanger(LANG("datum.5f831b05", null)),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 		source.Unconscious(3 SECONDS)

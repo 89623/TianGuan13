@@ -76,9 +76,9 @@
 
 /obj/item/grenade/chem_grenade/solfed/attack_self(mob/user)
 	if (detonated)
-		to_chat(user, span_warning("This grenade has already been used."))
+		to_chat(user, span_warning(LANG("obj.2c0e9895", null)))
 	else
-		to_chat(user, span_warning("You can't seem to find a way to hand-prime this mech grenade."))
+		to_chat(user, span_warning(LANG("obj.900a6455", null)))
 	return FALSE
 
 /obj/item/grenade/chem_grenade/solfed/teargas
@@ -309,4 +309,4 @@
 	else
 		button_icon_state = "welder_off"
 	build_all_button_icons()
-	to_chat(clicker, "Welder mode toggled: [welder.welding ? "Alternate mode" : "Main mode"].")
+	to_chat(clicker, LANG("datum.2453bb3f", list(welder.welding ? "Alternate mode" : "Main mode")))

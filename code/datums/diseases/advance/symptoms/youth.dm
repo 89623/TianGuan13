@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*Eternal Youth
  * Greatly increases stealth
  * Tremendous increase to resistance
@@ -32,20 +33,20 @@
 			if(1)
 				if(H.age > 41)
 					H.age = 41
-					to_chat(H, span_notice("You haven't had this much energy in years!"))
+					to_chat(H, span_notice(LANG("datum.0ead50b7", null)))
 			if(2)
 				if(H.age > 36)
 					H.age = 36
-					to_chat(H, span_notice("You're suddenly in a good mood."))
+					to_chat(H, span_notice(LANG("datum.028e4329", null)))
 			if(3)
 				if(H.age > 31)
 					H.age = 31
-					to_chat(H, span_notice("You begin to feel more lithe."))
+					to_chat(H, span_notice(LANG("datum.b616c5c7", null)))
 			if(4)
 				if(H.age > 26)
 					H.age = 26
-					to_chat(H, span_notice("You feel reinvigorated."))
+					to_chat(H, span_notice(LANG("datum.b14223fd", null)))
 			if(5)
 				if(H.age > 21)
 					H.age = 21
-					to_chat(H, span_notice("You feel like you can take on the world!"))
+					to_chat(H, span_notice(LANG("datum.e1dafb65", null)))

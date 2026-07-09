@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Avoids players while throwing skulls at them.
  * Legion skulls heal allies, bite enemies, and infest dying humans to make more legions.
@@ -93,7 +94,7 @@
 	ai_controller?.set_blackboard_key(BB_LEGION_CORPSE, consumed)
 	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, consumed.copy_recent_speech(line_chance = 80))
 	stored_mob = consumed
-	visible_message(span_warning("[src] staggers to [p_their()] feet!"))
+	visible_message(span_warning(LANG("mob.cb9f6128", list(src, p_their()))))
 	if (prob(75))
 		return
 	// Congratulations you have won a special prize: cancer

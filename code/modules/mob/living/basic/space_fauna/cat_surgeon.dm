@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Cat Surgeon
  *
@@ -56,8 +57,8 @@
 		return
 
 	visible_message(
-		span_warning("[src] severs [attacked]'s tail off in one swift swipe!"),
-		span_warning("You sever [attacked]'s tail off."),
+		span_warning(LANG("mob.36c04003", list(src, attacked))),
+		span_warning(LANG("mob.412b8d1a", list(attacked))),
 	)
 	tail.Remove(attacked)
 	tail.forceMove(drop_location())

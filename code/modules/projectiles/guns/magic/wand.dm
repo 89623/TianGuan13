@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun/magic/wand
 	name = "wand"
 	desc = "You shouldn't have this."
@@ -26,7 +27,7 @@
 
 /obj/item/gun/magic/wand/examine(mob/user)
 	. = ..()
-	. += "Has [charges] charge\s remaining."
+	. += LANG("obj.a186572f", list(charges))
 
 /obj/item/gun/magic/wand/update_icon_state()
 	icon_state = "[base_icon_state][charges ? null : "-drained"]"
@@ -43,7 +44,7 @@
 		return FALSE
 	if(target == user)
 		if(no_den_usage && istype(get_area(user), /area/centcom/wizard_station))
-			to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
+			to_chat(user, span_warning(LANG("obj.226f4ee1", list(src))))
 			return FALSE
 		zap_self(user)
 		. = TRUE
@@ -57,7 +58,7 @@
 
 /// Called if we poke ourselves with the wand
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user, suicide = FALSE)
-	user.visible_message(span_danger("[user] zaps [user.p_them()]self with [src]."))
+	user.visible_message(span_danger(LANG("obj.771d8c38", list(user, user.p_them(), src))))
 	playsound(user, fire_sound, 50, TRUE)
 	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", LOG_ATTACK)
 
@@ -80,23 +81,22 @@
 	. = ..()
 	charges--
 	if(user.can_block_magic())
-		user.visible_message(span_warning("[src] has no effect on [user]!"))
+		user.visible_message(span_warning(LANG("obj.f47ad2bc", list(src, user))))
 		return
 	if(isliving(user))
 		if(user.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 			user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE) // This heals suicides
 			if (!suicide)
-				to_chat(user, span_notice("You feel great!"))
+				to_chat(user, span_notice(LANG("obj.db6efb87", null)))
 			return
-	to_chat(user, span_warning("You irradiate yourself with pure negative energy! \
-	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]"))
+	to_chat(user, span_warning(LANG("obj.ef1fea1a", list(pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")))))
 	user.death(FALSE)
 
 /obj/item/gun/magic/wand/death/do_suicide(mob/living/user)
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("...but if anything [user.p_they()] look healthier than before."))
+	user.visible_message(span_suicide(LANG("obj.94259ad7", list(user.p_they()))))
 	return SHAME
 
 /obj/item/gun/magic/wand/death/debug
@@ -122,25 +122,24 @@
 	..()
 	charges--
 	if(user.can_block_magic())
-		user.visible_message(span_warning("[src] has no effect on [user]!"))
+		user.visible_message(span_warning(LANG("obj.f47ad2bc", list(src, user))))
 		return
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-			to_chat(user, span_warning("You irradiate yourself with pure positive energy! \
-			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]"))
+			to_chat(user, span_warning(LANG("obj.78f3dded", list(pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")))))
 			user.investigate_log("has been killed by a bolt of resurrection.", INVESTIGATE_DEATHS)
 			user.death(FALSE)
 			return
 	user.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE) // This heals suicides
 	if (!suicide)
-		to_chat(user, span_notice("You feel great!"))
+		to_chat(user, span_notice(LANG("obj.db6efb87", null)))
 
 /obj/item/gun/magic/wand/resurrection/do_suicide(mob/living/user)
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("...but if anything [user.p_they()] look healthier than before."))
+	user.visible_message(span_suicide(LANG("obj.94259ad7", list(user.p_they()))))
 	return SHAME
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
@@ -275,7 +274,7 @@
 	no_den_usage = TRUE
 
 /obj/item/gun/magic/wand/door/zap_self(mob/living/user, suicide = FALSE)
-	to_chat(user, span_notice("You feel vaguely more open with your feelings."))
+	to_chat(user, span_notice(LANG("obj.6eef07fe", null)))
 	charges--
 	return ..()
 
@@ -296,7 +295,7 @@
 	playsound(loc, fire_sound, 50, TRUE, -1)
 	var/mob/living/carbon/suicider = user
 	var/obj/item/bodypart/chest = suicider.get_bodypart(BODY_ZONE_CHEST) // I think it's impossible not to have a chest so we'll just assume they have one
-	user.visible_message(span_suicide("[user]'s chest swings open like a door!"))
+	user.visible_message(span_suicide(LANG("obj.e68997e0", list(user))))
 	chest.dismember(BRUTE, silent = FALSE, wounding_type = WOUND_SLASH)
 	return BRUTELOSS
 
@@ -390,7 +389,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/gun/magic/wand/shrink/zap_self(mob/living/user, suicide = FALSE)
-	to_chat(user, span_notice("The world grows large..."))
+	to_chat(user, span_notice(LANG("obj.5cc92536", null)))
 	charges--
 	user.AddComponent(/datum/component/shrink, -1) // small forever
 	return ..()
@@ -398,7 +397,7 @@
 /obj/item/gun/magic/wand/shrink/do_suicide(mob/living/user)
 	playsound(user, fire_sound, 50, TRUE)
 	user.unequip_everything()
-	user.visible_message(span_suicide("[user] shrinks into nothing!"), span_suicide("You shrink into nothing!"))
+	user.visible_message(span_suicide(LANG("obj.1c8e52c7", list(user))), span_suicide(LANG("obj.3fee85c3", null)))
 	user.Stun(20 SECONDS, ignore_canstun = TRUE)
 	user.set_suicide(TRUE)
 	user.ghostize()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Applied to living mobs.
 /// Adds a force threshold for which attacks will be blocked entirely.
 /// IE, if they are hit with an attack that deals less than X damage, the attack does nothing.
@@ -40,9 +41,9 @@
 		var/obj/item/item_hitting = hitby
 		var/tap_vol = istype(item_hitting) ? item_hitting.get_clamped_volume() : 50
 		source.visible_message(
-			span_warning("[source] looks unharmed!"),
-			span_warning("[attack_text] deals no damage to you!"),
-			span_hear("You hear a thud."),
+			span_warning(LANG("datum.99f2eb3c", list(source))),
+			span_warning(LANG("datum.e7a1b543", list(attack_text))),
+			span_hear(LANG("datum.34acf327", null)),
 			COMBAT_MESSAGE_RANGE,
 		)
 		playsound(source, 'sound/items/weapons/tap.ogg', tap_vol, TRUE, -1)

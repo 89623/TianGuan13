@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/emergency_shield
 	name = "emergency energy shield"
 	desc = "An energy shield used to contain hull breaches."
@@ -119,7 +120,7 @@
 		if(QDELING(parent_rune))
 			parent_rune = null
 			return ..()
-		parent_rune.visible_message(span_danger("The [parent_rune] fades away as [src] is destroyed!"))
+		parent_rune.visible_message(span_danger(LANG("obj.dd8bb783", list(parent_rune, src))))
 		QDEL_NULL(parent_rune)
 	return ..()
 
@@ -191,50 +192,50 @@
 	if(.)
 		return
 	if(locked && !HAS_SILICON_ACCESS(user))
-		to_chat(user, span_warning("The machine is locked, you are unable to use it!"))
+		to_chat(user, span_warning(LANG("obj.d7b22fd5", null)))
 		return
 	if(panel_open)
-		to_chat(user, span_warning("The panel must be closed before operating this machine!"))
+		to_chat(user, span_warning(LANG("obj.9997c08a", null)))
 		return
 
 	if (active)
-		user.visible_message(span_notice("[user] deactivated \the [src]."), \
-			span_notice("You deactivate \the [src]."), \
-			span_hear("You hear heavy droning fade out."))
+		user.visible_message(span_notice(LANG("obj.b32c9118", list(user, src))), \
+			span_notice(LANG("obj.03d7907e", list(src))), \
+			span_hear(LANG("obj.90862691", null)))
 		shields_down()
 	else
 		if(anchored)
-			user.visible_message(span_notice("[user] activated \the [src]."), \
-				span_notice("You activate \the [src]."), \
-				span_hear("You hear heavy droning."))
+			user.visible_message(span_notice(LANG("obj.dacba0d2", list(user, src))), \
+				span_notice(LANG("obj.41ddd503", list(src))), \
+				span_hear(LANG("obj.b290d1db", null)))
 			shields_up()
 		else
-			to_chat(user, span_warning("The device must first be secured to the floor!"))
+			to_chat(user, span_warning(LANG("obj.110e25bd", null)))
 	return
 
 /obj/machinery/shieldgen/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 100)
 	toggle_panel_open()
 	if(panel_open)
-		to_chat(user, span_notice("You open the panel and expose the wiring."))
+		to_chat(user, span_notice(LANG("obj.ad3bc85a", null)))
 	else
-		to_chat(user, span_notice("You close the panel."))
+		to_chat(user, span_notice(LANG("obj.2e62c6a4", null)))
 	return TRUE
 
 /obj/machinery/shieldgen/wrench_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(locked)
-		to_chat(user, span_warning("The bolts are covered! Unlocking this would retract the covers."))
+		to_chat(user, span_warning(LANG("obj.a629fd23", null)))
 		return
 	if(!anchored && !isinspace())
 		tool.play_tool_sound(src, 100)
-		balloon_alert(user, "secured")
+		balloon_alert(user, LANG("obj.065f7e36", null))
 		set_anchored(TRUE)
 	else if(anchored)
 		tool.play_tool_sound(src, 100)
-		balloon_alert(user, "unsecured")
+		balloon_alert(user, LANG("obj.fb79114b", null))
 		if(active)
-			to_chat(user, span_notice("\The [src] shuts off!"))
+			to_chat(user, span_notice(LANG("obj.5e249c74", list(src))))
 			shields_down()
 		set_anchored(FALSE)
 
@@ -243,38 +244,38 @@
 	if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
-			to_chat(user, span_warning("You need one length of cable to repair [src]!"))
+			to_chat(user, span_warning(LANG("obj.fa918fad", list(src))))
 			return
-		to_chat(user, span_notice("You begin to replace the wires..."))
+		to_chat(user, span_notice(LANG("obj.e9ac56d2", null)))
 		if(do_after(user, 3 SECONDS, target = src))
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
 			atom_integrity = max_integrity
 			set_machine_stat(machine_stat & ~BROKEN)
-			to_chat(user, span_notice("You repair \the [src]."))
+			to_chat(user, span_notice(LANG("obj.67ccfd18", list(src))))
 			update_appearance()
 
 	else if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
 			locked = !locked
-			to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the controls."))
+			to_chat(user, span_notice(LANG("obj.d47371c2", list(locked ? "lock" : "unlock"))))
 		else if(obj_flags & EMAGGED)
-			to_chat(user, span_danger("Error, access controller damaged!"))
+			to_chat(user, span_danger(LANG("obj.f61e0e57", null)))
 		else
-			to_chat(user, span_danger("Access denied."))
+			to_chat(user, span_danger(LANG("obj.077f9b52", null)))
 
 	else
 		return ..()
 
 /obj/machinery/shieldgen/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_warning("The access controller is damaged!"))
+		to_chat(user, span_warning(LANG("obj.794fad72", null)))
 		return FALSE
 	obj_flags |= EMAGGED
 	locked = FALSE
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	balloon_alert(user, "access controller shorted")
+	balloon_alert(user, LANG("obj.72faa602", null))
 	return TRUE
 
 /obj/machinery/shieldgen/update_icon_state()
@@ -374,9 +375,9 @@
 		if(!active_power_usage || surplus() >= active_power_usage)
 			add_load(active_power_usage)
 		else
-			visible_message(span_danger("[src] shuts down due to lack of power!"), \
-				"If this message is ever seen, something is wrong.",
-				span_hear("You hear heavy droning fade out."))
+			visible_message(span_danger(LANG("obj.f8a193c6", list(src))), \
+				LANG("obj.79b34f35", null),
+				span_hear(LANG("obj.90862691", null)))
 			deactivate()
 			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
 	else
@@ -439,7 +440,7 @@
 /obj/machinery/power/shieldwallgen/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
 		if(!silent)
-			to_chat(user, span_warning("Turn off the shield generator first!"))
+			to_chat(user, span_warning(LANG("obj.246c72eb", null)))
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -453,7 +454,7 @@
 
 /obj/machinery/power/shieldwallgen/screwdriver_act(mob/user, obj/item/tool)
 	if(!panel_open && locked)
-		balloon_alert(user, "unlock first!")
+		balloon_alert(user, LANG("obj.08c1dea0", null))
 		return ITEM_INTERACT_BLOCKING
 
 	return default_deconstruction_screwdriver(user, tool)
@@ -471,9 +472,9 @@
 			locked = !locked
 			balloon_alert(user, "[locked ? "locked!" : "unlocked"]")
 		else if(obj_flags & EMAGGED)
-			balloon_alert(user, "malfunctioning!")
+			balloon_alert(user, LANG("obj.4156ec52", null))
 		else
-			balloon_alert(user, "no access!")
+			balloon_alert(user, LANG("obj.ddafd752", null))
 		return
 
 	add_fingerprint(user)
@@ -487,40 +488,40 @@
 	if(.)
 		return
 	if(!anchored)
-		balloon_alert(user, "not secured!")
+		balloon_alert(user, LANG("obj.801f0be9", null))
 		return
 	if(locked && !HAS_SILICON_ACCESS(user))
-		balloon_alert(user, "locked!")
+		balloon_alert(user, LANG("obj.5d71bae2", null))
 		return
 	if(!powernet)
-		balloon_alert(user, "needs to be powered by wire!")
+		balloon_alert(user, LANG("obj.bb35438a", null))
 		return
 	if(panel_open)
-		balloon_alert(user, "panel open!")
+		balloon_alert(user, LANG("obj.2a428bad", null))
 		return
 
 	if(active)
-		user.visible_message(span_notice("[user] turned \the [src] off."), \
-			span_notice("You turn off \the [src]."), \
-			span_hear("You hear heavy droning fade out."))
+		user.visible_message(span_notice(LANG("obj.a3f2f5d9", list(user, src))), \
+			span_notice(LANG("obj.67caf9d4", list(src))), \
+			span_hear(LANG("obj.90862691", null)))
 		deactivate()
 		user.log_message("deactivated [src].", LOG_GAME)
 	else
-		user.visible_message(span_notice("[user] turned \the [src] on."), \
-			span_notice("You turn on \the [src]."), \
-			span_hear("You hear heavy droning."))
+		user.visible_message(span_notice(LANG("obj.876889d5", list(user, src))), \
+			span_notice(LANG("obj.756bfe56", list(src))), \
+			span_hear(LANG("obj.b290d1db", null)))
 		activate()
 		user.log_message("activated [src].", LOG_GAME)
 	add_fingerprint(user)
 
 /obj/machinery/power/shieldwallgen/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_warning("The access controller is damaged!"))
+		to_chat(user, span_warning(LANG("obj.794fad72", null)))
 		return FALSE
 	obj_flags |= EMAGGED
 	locked = FALSE
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	balloon_alert(user, "access controller shorted")
+	balloon_alert(user, LANG("obj.72faa602", null))
 	return TRUE
 
 /// Turn the machine on with side effects

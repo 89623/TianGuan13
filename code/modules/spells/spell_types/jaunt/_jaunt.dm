@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Jaunt spells
  *
@@ -44,12 +45,12 @@
 
 	if(!check_teleport_valid(owner, owner_turf, TELEPORT_CHANNEL_MAGIC))
 		if(feedback)
-			to_chat(owner, span_danger("Some dull, universal force is stopping you from jaunting here."))
+			to_chat(owner, span_danger(LANG("datum.76ac1d27", null)))
 		return FALSE
 
 	if(owner_turf?.turf_flags & NOJAUNT)
 		if(feedback)
-			to_chat(owner, span_danger("An otherwordly force is preventing you from jaunting here."))
+			to_chat(owner, span_danger(LANG("datum.d7ec575d", null)))
 		return FALSE
 
 	return isliving(owner)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/pointed/death_glare
 	name = "death glare"
 	desc = "give a death stare to the victim"
@@ -7,19 +8,19 @@
 
 /datum/action/cooldown/spell/pointed/death_glare/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
-		to_chat(owner, span_warning("Only living things are affected by our glare!"))
+		to_chat(owner, span_warning(LANG("datum.4c46e9e4", null)))
 		return FALSE
 	var/mob/living/living_target = cast_on
 	if(living_target.has_movespeed_modifier(/datum/movespeed_modifier/glare_slowdown))
-		to_chat(owner, span_warning("This target is already affected by a glare!"))
+		to_chat(owner, span_warning(LANG("datum.c37e2ffb", null)))
 		return FALSE
 	if(!can_see(living_target, owner, 9))
-		to_chat(owner, span_warning("This target cannot see our glare!"))
+		to_chat(owner, span_warning(LANG("datum.2f965663", null)))
 		return FALSE
 	var/direction_to_compare = get_dir(living_target, owner)
 	var/target_direction = living_target.dir
 	if(direction_to_compare != target_direction)
-		to_chat(owner, span_warning("This target is facing away from us!"))
+		to_chat(owner, span_warning(LANG("datum.c1f98e1f", null)))
 		return FALSE
 
 	return TRUE
@@ -28,7 +29,7 @@
 	. = ..()
 	cast_on.add_filter("glare", 2, list("type" = "outline", "color" = glare_outline, "size" = 1))
 	cast_on.add_movespeed_modifier(/datum/movespeed_modifier/glare_slowdown)
-	to_chat(cast_on, span_warning("You feel something watching you..."))
+	to_chat(cast_on, span_warning(LANG("datum.14637e9b", null)))
 	addtimer(CALLBACK(src, PROC_REF(remove_effect), cast_on), 5 SECONDS)
 	return TRUE
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /// Aquarium upgrades, can be applied to a basic aquarium to upgrade it into an advanced subtype.
 /obj/item/aquarium_upgrade
@@ -15,15 +16,15 @@
 	if(!HAS_TRAIT(interacting_with, TRAIT_IS_AQUARIUM))
 		return NONE
 	if(upgrade_from_type != interacting_with.type)
-		interacting_with.balloon_alert(user, "wrong kind of aquarium!")
+		interacting_with.balloon_alert(user, LANG("obj.8c83c4ee", null))
 		return ITEM_INTERACT_BLOCKING
-	interacting_with.balloon_alert(user, "upgrading...")
+	interacting_with.balloon_alert(user, LANG("obj.9ff5151d", null))
 	if(!PERFORM_ALL_TESTS(aquarium_upgrade) && !do_after(user, 5 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 	var/atom/movable/upgraded_aquarium = new upgrade_to_type(interacting_with.drop_location())
 	//This should transfer all the fish, reagents and settings from the aquarium component
 	interacting_with.TransferComponents(upgraded_aquarium)
-	upgraded_aquarium.balloon_alert(user, "upgraded")
+	upgraded_aquarium.balloon_alert(user, LANG("obj.d66b4110", null))
 	qdel(src)
 	qdel(interacting_with)
 	return ITEM_INTERACT_SUCCESS
@@ -55,9 +56,9 @@
 
 /obj/structure/aquarium/bioelec_gen/examine(mob/user)
 	. = ..()
-	. += span_boldwarning("WARNING! WARNING! WARNING!")
-	. += span_warning("The bioelectric potential of the fish inside is magnified to dangerous levels by the generator.")
-	. += span_notice("Tesla coils are required to collect this magnified energy... and you'll want a grounding rod to protect yourself as well.")
+	. += span_boldwarning(LANG("obj.7b8ee969", null))
+	. += span_warning(LANG("obj.0f741521", null))
+	. += span_notice(LANG("obj.33235554", null))
 
 /obj/item/aquarium_upgrade/bluespace_tank
 	name = "bluespace fish tank kit"

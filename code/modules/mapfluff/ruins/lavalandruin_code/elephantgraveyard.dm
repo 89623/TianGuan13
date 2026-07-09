@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //******Decoration objects
 //***Bone statues and giant skeleton parts.
 /obj/structure/statue/bone
@@ -105,7 +106,7 @@
 /obj/structure/sink/oil_well/attack_hand(mob/user, list/modifiers)
 	flick("puddle-oil-splash",src)
 	reagents.expose(user, TOUCH, 20) //Covers target in 20u of oil.
-	to_chat(user, span_notice("You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water."))
+	to_chat(user, span_notice(LANG("obj.0053387d", null)))
 
 /obj/structure/sink/oil_well/wrench_act(mob/living/user, obj/item/tool)
 	//we deconstruct with a shovel
@@ -114,7 +115,7 @@
 /obj/structure/sink/oil_well/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	flick("puddle-oil-splash",src)
 	if(tool.tool_behaviour == TOOL_SHOVEL) //attempt to deconstruct the puddle with a shovel
-		to_chat(user, "You fill in the oil well with soil.")
+		to_chat(user, LANG("obj.86bbd906", null))
 		tool.play_tool_sound(src)
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
@@ -174,7 +175,7 @@
 
 /obj/structure/closet/crate/grave/examine(mob/user)
 	. = ..()
-	. += span_notice("It can be [EXAMINE_HINT((opened ? "closed" : "dug open"))] with a shovel.")
+	. += span_notice(LANG("obj.a83a8153", list(EXAMINE_HINT((opened ? "closed" : "dug open")))))
 
 /obj/structure/closet/crate/grave/filled
 	affect_mood = TRUE
@@ -217,7 +218,7 @@
 		return FALSE
 
 	if(!force)
-		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
+		to_chat(user, span_notice(LANG("obj.dd2ad981", null)))
 		return FALSE
 
 	return TRUE
@@ -228,7 +229,7 @@
 		return FALSE
 
 	if(!dug_closed)
-		to_chat(user, span_notice("You'll need a shovel to cover it up."))
+		to_chat(user, span_notice(LANG("obj.9b22dd2a", null)))
 		return FALSE
 
 	dug_closed = FALSE
@@ -242,8 +243,8 @@
 	//player is attempting to open/close the grave with a shovel
 	if(!user.combat_mode)
 		user.visible_message(
-			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
-			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
+			span_notice(LANG("obj.e5f15a33", list(user, opened ? "close" : "dig open", src))),
+			span_notice(LANG("obj.0f8e8d4a", list(opened ? "closing" : "digging open", src))),
 		)
 		if(!weapon.use_tool(src, user, delay = 15, volume = 40))
 			return TRUE
@@ -256,10 +257,10 @@
 			user.add_mood_event("graverobbing", is_chill_with_robbing ? /datum/mood_event/morbid_graverobbing : /datum/mood_event/graverobbing)
 			if(lead_tomb && first_open)
 				if(is_chill_with_robbing)
-					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
+					to_chat(user, span_notice(LANG("obj.d864b6cd", null)))
 				else
 					user.gain_trauma(/datum/brain_trauma/magic/stalker)
-					to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
+					to_chat(user, span_boldwarning(LANG("obj.e77630b1", null)))
 				first_open = FALSE
 
 		return TRUE
@@ -270,13 +271,13 @@
 			return TRUE
 
 		user.visible_message(
-			span_notice("[user] Is attempting to remove [src]."),
-			span_notice("You start removing [src]."),
+			span_notice(LANG("obj.3b0d41e0", list(user, src))),
+			span_notice(LANG("obj.d6f54d34", list(src))),
 		)
 		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
 			return TRUE
 
-		to_chat(user, span_notice("You remove \the [src] completely."))
+		to_chat(user, span_notice(LANG("obj.7c288ba4", list(src))))
 		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 		deconstruct(TRUE)
 		return TRUE
@@ -288,21 +289,21 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(
-		span_warning("[src]'s dirt begins to shift and rumble!"),
-		span_notice("You desperately begin to claw at the dirt around you, trying to force yourself upwards through the soil... (this will take about [DisplayTimeText(breakout_time)].)"),
-		span_hear("You hear the sound of shifting dirt from [src]."),
+		span_warning(LANG("obj.b000f5e9", list(src))),
+		span_notice(LANG("obj.66170aca", list(DisplayTimeText(breakout_time)))),
+		span_hear(LANG("obj.a1de0101", list(src))),
 	)
 	if(do_after(user, breakout_time, target = src))
 		if(opened)
 			return
 		user.visible_message(
-			span_danger("[user] emerges from [src], scattering dirt everywhere!"),
-			span_notice("You triumphantly surface out of [src], scattering dirt all around the grave!"),
+			span_danger(LANG("obj.b7ff5367", list(user, src))),
+			span_notice(LANG("obj.978bf908", list(src))),
 		)
 		bust_open()
 	else
 		if(user.loc == src)
-			to_chat(user, span_warning("You fail to dig yourself out of [src]!"))
+			to_chat(user, span_warning(LANG("obj.9e84027d", list(src))))
 
 /obj/structure/closet/crate/grave/fresh
 	name = "makeshift grave"

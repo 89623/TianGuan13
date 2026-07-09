@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Hallucinations that create a hazard somewhere nearby that actually has a danger associated.
 /datum/hallucination/hazard
 	abstract_hallucination_parent = /datum/hallucination/hazard
@@ -79,8 +80,8 @@
 	return ..()
 
 /obj/effect/client_image_holder/hallucination/danger/chasm/on_hallucinator_entered(mob/living/afflicted)
-	to_chat(afflicted, span_userdanger("You fall into the chasm!"))
-	afflicted.visible_message(span_warning("[afflicted] falls to the ground suddenly!"), ignored_mobs = afflicted)
+	to_chat(afflicted, span_userdanger(LANG("obj.ff59bb16", null)))
+	afflicted.visible_message(span_warning(LANG("obj.c9361692", list(afflicted))), ignored_mobs = afflicted)
 	afflicted.Paralyze(4 SECONDS)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), afflicted, span_notice("...It's surprisingly shallow.")), 1.5 SECONDS)
 	QDEL_IN(src, 3 SECONDS)

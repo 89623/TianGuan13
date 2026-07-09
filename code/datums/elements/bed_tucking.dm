@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Tucking element, for things that can be tucked into bed.
 /datum/element/bed_tuckable
 	element_flags = ELEMENT_BESPOKE
@@ -48,7 +49,7 @@
 	if(!tucker.transfer_item_to_turf(tucked, target_bed.drop_location()))
 		return
 
-	to_chat(tucker, span_notice("You lay [tucked] out on [target_bed]."))
+	to_chat(tucker, span_notice(LANG("datum.1185e2a0", list(tucked, target_bed))))
 	tuck(tucked, target_bed)
 	return COMPONENT_NO_AFTERATTACK
 

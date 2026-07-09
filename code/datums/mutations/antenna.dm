@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mutation/antenna
 	name = "Antenna"
 	desc = "The affected person sprouts an antenna. This is known to allow them to access common radio channels passively."
@@ -6,6 +7,8 @@
 	text_lose_indication = span_notice("Your antenna shrinks back down.")
 	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
+	mutation_icon_state = "antenna"
+	layer_used = FRONT_MUTATIONS_LAYER
 	var/datum/weakref/radio_weakref
 
 /obj/item/implant/radio/antenna
@@ -33,14 +36,6 @@
 	if(linked_radio)
 		QDEL_NULL(linked_radio)
 
-/datum/mutation/antenna/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
-
-/datum/mutation/antenna/get_visual_indicator()
-	return visual_indicators[type][1]
-
 /datum/mutation/mindreader
 	name = "Mind Reader"
 	desc = "The affected person can look into the recent memories of others."
@@ -51,6 +46,8 @@
 	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
 	locked = TRUE
+	mutation_icon_state = "antenna"
+	layer_used = FRONT_MUTATIONS_LAYER
 
 /datum/action/cooldown/spell/pointed/mindread
 	name = "Mindread"
@@ -80,13 +77,13 @@
 		return FALSE
 	var/mob/living/living_cast_on = cast_on
 	if(!living_cast_on.mind)
-		to_chat(owner, span_warning("[cast_on] has no mind to read!"))
+		to_chat(owner, span_warning(LANG("datum.2187cad6", list(cast_on))))
 		return FALSE
 	if(living_cast_on.stat == DEAD)
-		to_chat(owner, span_warning("[cast_on] is dead!"))
+		to_chat(owner, span_warning(LANG("datum.01e50bce", list(cast_on))))
 		return FALSE
 	if(living_cast_on.mob_biotypes & MOB_ROBOTIC)
-		to_chat(owner, span_warning("[cast_on] is robotic, you can't read [cast_on.p_their()] mind!"))
+		to_chat(owner, span_warning(LANG("datum.9e7b9ce4", list(cast_on, cast_on.p_their()))))
 		return FALSE
 
 	return TRUE
@@ -94,31 +91,28 @@
 /datum/action/cooldown/spell/pointed/mindread/cast(mob/living/cast_on)
 	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags, charge_cost = 0))
-		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
-			you are stopped by a mental blockage. It seems you've been foiled."))
+		to_chat(owner, span_warning(LANG("datum.c9f0817e", list(cast_on))))
 		return
 
 	if(cast_on == owner)
-		to_chat(owner, span_warning("You plunge into your mind... Yep, it's your mind."))
+		to_chat(owner, span_warning(LANG("datum.5a5202d0", null)))
 		return
 
 	if(cast_on.has_status_effect(/datum/status_effect/heretic_passive/moon))
-		to_chat(owner, span_hypnophrase(span_bolddanger("YOU SEEK THE TRUTH? I WILL SHOW YOU EVERYTHING.")))
+		to_chat(owner, span_hypnophrase(span_bolddanger(LANG("datum.4c032272", null))))
 		if(isliving(owner))
 			var/mob/living/reader = owner
 			reader.apply_status_effect(/datum/status_effect/moon_converted)
 		return
 
 	if(HAS_TRAIT(cast_on, TRAIT_EVIL))
-		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
-			you feel the overwhelming emptiness within. A truly evil being. \
-			[HAS_TRAIT(owner, TRAIT_EVIL) ? "It's nice to find someone who is like-minded." : "What is wrong with this person?"]"))
+		to_chat(owner, span_warning(LANG("datum.0d80fa5a", list(cast_on, HAS_TRAIT(owner, TRAIT_EVIL) ? "It's nice to find someone who is like-minded." : "What is wrong with this person?"))))
 
 	var/list/log_info = list()
 	var/list/discovered_info = list("<i>You plunge into [cast_on]'s mind and discover...</i>")
 	if(prob(20))
 		// chance to alert the read-ee
-		to_chat(cast_on, span_danger("You feel something foreign enter your mind."))
+		to_chat(cast_on, span_danger(LANG("datum.33325e19", null)))
 		log_info += "Target alerted!"
 
 	var/list/recent_speech = cast_on.copy_recent_speech(copy_amount = 3, line_chance = 50)
@@ -162,23 +156,15 @@
 	if(QDELETED(examiner))
 		return
 	if(antimagic)
-		to_chat(examiner, boxed_message(span_warning("You attempt to analyze [examined]'s current thoughts, but fail to penetrate [examined.p_their()] mind - It seems you've been foiled.")))
+		to_chat(examiner, boxed_message(span_warning(LANG("datum.b4eedb0c", list(examined, examined.p_their())))))
 		return
 
 	var/list/log_info = list()
 	if(prob(10))
-		to_chat(examined, span_danger("You feel something foreign enter your mind."))
+		to_chat(examined, span_danger(LANG("datum.33325e19", null)))
 		log_info += "Target alerted!"
 
-	to_chat(examiner, boxed_message(span_notice("<i>You analyze [examined]'s current thoughts...</i><br>&emsp;\"[read_text]\"...")))
+	to_chat(examiner, boxed_message(span_notice(LANG("datum.7ea00d19", list(examined, read_text)))))
 	log_info += "Current thought: \"[read_text]\""
 
 	log_combat(examiner, examined, "mind read (triggered on examine)", null, "info: [english_list(log_info, and_text = ", ")]")
-
-/datum/mutation/mindreader/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))
-
-/datum/mutation/mindreader/get_visual_indicator()
-	return visual_indicators[type][1]

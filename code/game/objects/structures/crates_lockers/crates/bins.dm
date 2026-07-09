@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/closet/crate/bin
 	desc = "A trash bin, place your trash here for the janitor to collect."
 	name = "trash bin"
@@ -36,7 +37,7 @@
 /obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/storage/bag/trash) && !opened)
 		var/obj/item/storage/bag/trash/T = W
-		to_chat(user, span_notice("You fill the bag."))
+		to_chat(user, span_notice(LANG("obj.d62fd2e6", null)))
 		for(var/obj/item/O in src)
 			T.atom_storage?.attempt_insert(O, user, TRUE)
 		T.update_appearance()
@@ -66,5 +67,5 @@
 
 	items_to_sweep.Cut()
 
-	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
+	to_chat(user, span_notice(LANG("obj.2c5626d8", list(src))))
 	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)

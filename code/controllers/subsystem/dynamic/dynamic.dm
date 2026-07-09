@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 SUBSYSTEM_DEF(dynamic)
 	name = "Dynamic"
 	ss_flags = SS_NO_INIT
@@ -666,7 +667,7 @@ SUBSYSTEM_DEF(dynamic)
 		if(!check_rights(R_ADMIN) || midround_admin_reroll)
 			return
 		if(COOLDOWN_FINISHED(src, midround_admin_cancel_period))
-			to_chat(usr, span_alert("Too late!"))
+			to_chat(usr, span_alert(LANG("datum.e7984e30", null)))
 			return
 		midround_admin_reroll = TRUE
 		message_admins(span_adminnotice("[key_name_admin(usr)] rerolled the queued midround ruleset."))
@@ -677,7 +678,7 @@ SUBSYSTEM_DEF(dynamic)
 		if(!check_rights(R_ADMIN) || midround_admin_cancel)
 			return
 		if(COOLDOWN_FINISHED(src, midround_admin_cancel_period))
-			to_chat(usr, span_alert("Too late!"))
+			to_chat(usr, span_alert(LANG("datum.e7984e30", null)))
 			return
 		midround_admin_cancel = TRUE
 		message_admins(span_adminnotice("[key_name_admin(usr)] cancelled the queued midround ruleset."))

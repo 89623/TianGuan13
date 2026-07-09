@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/modular_shield_generator
 	name = "modular shield generator"
 	desc = "A forcefield generator, it seems more stationary than its cousins. It can't handle G-force and will require frequent reboots when built on mobile craft."
@@ -154,7 +155,7 @@
 
 /obj/machinery/modular_shield_generator/multitool_act(mob/living/user, obj/item/multitool/multi)
 	multi.set_buffer(src)
-	balloon_alert(user, "saved to buffer")
+	balloon_alert(user, LANG("obj.bb9065b6", null))
 	return ITEM_INTERACT_SUCCESS
 
 ///toggles the forcefield on and off
@@ -490,9 +491,9 @@
 	. = ..()
 
 	if(isnull(shield_generator) && isnull(connected_node))
-		. += "It can be loosened and rotated with a screwdriver and wrench. It can be connected to a node or generator with a multitool."
+		. += LANG("obj.309f9a47", null)
 		return
-	. += "It can be loosed and rotated with a screwdriver and wrench, rotating it will sever its connection."
+	. += LANG("obj.f9c4372c", null)
 
 /obj/machinery/modular_shield/module/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -501,9 +502,9 @@
 	tool.play_tool_sound(src, 50)
 	update_icon_state()
 	if(panel_open)
-		balloon_alert(user, "hatch opened")
+		balloon_alert(user, LANG("obj.32c8e93e", null))
 		return TRUE
-	balloon_alert(user, "hatch closed")
+	balloon_alert(user, LANG("obj.271bf781", null))
 	return TRUE
 
 /obj/machinery/modular_shield/module/multitool_act(mob/living/user, obj/item/tool)
@@ -546,7 +547,7 @@
 /obj/machinery/modular_shield/module/proc/try_connect(user)
 
 	if(shield_generator || connected_node)
-		balloon_alert(user, "already connected to something!")
+		balloon_alert(user, LANG("obj.b44dcb2a", null))
 		update_icon_state()
 		return
 
@@ -555,7 +556,7 @@
 	if(shield_generator)
 
 		LAZYOR(shield_generator.connected_modules, (src))
-		balloon_alert(user, "connected to generator")
+		balloon_alert(user, LANG("obj.3e0b9429", null))
 		update_icon_state()
 		shield_generator.calculate_boost()
 		return
@@ -568,7 +569,7 @@
 		if(!connected_node.allow_boosters && is_booster)
 			connected_node = null
 			update_icon_state()
-			balloon_alert(user, "cant connect")
+			balloon_alert(user, LANG("obj.dad98bd0", null))
 			return
 
 		LAZYOR(connected_node.connected_through_us, (src))
@@ -576,15 +577,15 @@
 		shield_generator = connected_node.shield_generator
 		if(shield_generator)
 			LAZYOR(shield_generator.connected_modules, (src))
-			balloon_alert(user, "connected to generator")
+			balloon_alert(user, LANG("obj.3e0b9429", null))
 			update_icon_state()
 			shield_generator.calculate_boost()
 			return
 		update_icon_state()
-		balloon_alert(user, "connected to node")
+		balloon_alert(user, LANG("obj.21e7edbb", null))
 		return
 	update_icon_state()
-	balloon_alert(user, "no connection!")
+	balloon_alert(user, LANG("obj.60623922", null))
 
 /obj/machinery/modular_shield/module/node
 	name = "modular shield node"

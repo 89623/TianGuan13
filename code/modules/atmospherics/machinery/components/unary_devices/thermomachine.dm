@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define THERMOMACHINE_POWER_CONVERSION 0.01
 
 /obj/machinery/atmospherics/components/unary/thermomachine
@@ -80,7 +81,7 @@
 	if(check_pipe_on_turf())
 		set_anchored(FALSE)
 		set_panel_open(TRUE)
-		balloon_alert(user, "the port is already in use!")
+		balloon_alert(user, LANG("obj.a2a34e15", null))
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	. = ..()
@@ -133,20 +134,20 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()
-	. += span_notice("With the panel open:")
-	. += span_notice(" -Use a wrench with left-click to rotate [src] and right-click to unanchor it.")
-	. += span_notice(" -Use a multitool with left-click to change the piping layer and right-click to change the piping color.")
-	. += span_notice(" -[EXAMINE_HINT("AltClick")] to cycle between temperaure ranges.")
-	. += span_notice(" -[EXAMINE_HINT("CtrlClick")] to toggle on/off.")
-	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
+	. += span_notice(LANG("obj.82f7e2a2", null))
+	. += span_notice(LANG("obj.d98cdb1b", list(src)))
+	. += span_notice(LANG("obj.d27e1389", null))
+	. += span_notice(LANG("obj.eacf47ff", list(EXAMINE_HINT("AltClick"))))
+	. += span_notice(LANG("obj.a2bc3438", list(EXAMINE_HINT("CtrlClick"))))
+	. += span_notice(LANG("obj.786a1494", list(target_temperature, (T0C-target_temperature)*-1)))
 
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("Heat capacity at <b>[heat_capacity] Joules per Kelvin</b>.")
-		. += span_notice("Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.")
+		. += span_notice(LANG("obj.98053341", list(heat_capacity)))
+		. += span_notice(LANG("obj.a379dcbe", list(min_temperature, max_temperature, (T0C-min_temperature)*-1, (T0C-max_temperature)*-1)))
 
 /obj/machinery/atmospherics/components/unary/thermomachine/click_alt(mob/living/user)
 	if(panel_open)
-		balloon_alert(user, "close panel!")
+		balloon_alert(user, LANG("obj.4337ae3e", null))
 		return CLICK_ACTION_BLOCKING
 
 	if(target_temperature == T20C)
@@ -157,7 +158,7 @@
 		target_temperature = T20C
 
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
-	balloon_alert(user, "temperature reset to [target_temperature] K")
+	balloon_alert(user, LANG("obj.8af26f7f", list(target_temperature)))
 	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS
 
@@ -199,10 +200,10 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
-		balloon_alert(user, "turn off!")
+		balloon_alert(user, LANG("obj.55d6a7ad", null))
 		return ITEM_INTERACT_SUCCESS
 	if(!anchored)
-		balloon_alert(user, "anchor!")
+		balloon_alert(user, LANG("obj.87501e90", null))
 		return ITEM_INTERACT_SUCCESS
 
 	return default_deconstruction_screwdriver(user, tool)
@@ -215,10 +216,10 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!panel_open)
-		balloon_alert(user, "open panel!")
+		balloon_alert(user, LANG("obj.de78deee", null))
 		return ITEM_INTERACT_SUCCESS
 	piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
-	to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
+	to_chat(user, span_notice(LANG("obj.e9689634", list(piping_layer))))
 	if(anchored)
 		reconnect_nodes()
 	update_appearance(UPDATE_ICON)
@@ -226,12 +227,12 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		balloon_alert(user, "open panel!")
+		balloon_alert(user, LANG("obj.de78deee", null))
 		return ITEM_INTERACT_SUCCESS
 	color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
 	set_pipe_color(GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]])
-	visible_message(span_notice("[user] set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."), ignored_mobs = user)
-	to_chat(user, span_notice("You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."))
+	visible_message(span_notice(LANG("obj.2bd6ce34", list(user, src, GLOB.pipe_color_name[pipe_color]))), ignored_mobs = user)
+	to_chat(user, span_notice(LANG("obj.8fed7638", list(src, GLOB.pipe_color_name[pipe_color]))))
 	if(anchored)
 		reconnect_nodes()
 	update_appearance(UPDATE_ICON)
@@ -247,10 +248,10 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
-		balloon_alert(user, "open panel!")
+		balloon_alert(user, LANG("obj.de78deee", null))
 		return ITEM_INTERACT_SUCCESS
 	if(!anchored && check_pipe_on_turf())
-		visible_message(span_warning("A pipe is hogging the port. Remove the obstruction or change the machine piping layer."))
+		visible_message(span_warning(LANG("obj.97e2076b", null)))
 		return ITEM_INTERACT_SUCCESS
 	if(default_unfasten_wrench(user, tool))
 		change_pipe_connection(!anchored)
@@ -299,7 +300,7 @@
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
 			if(target == "input")
-				target = input("Set new target ([min_temperature]-[max_temperature] K):", name, target_temperature) as num|null
+				target = input(LANG("obj.8399bf28", list(min_temperature, max_temperature)), name, target_temperature) as num|null
 				if(!isnull(target))
 					. = TRUE
 			else if(adjust)
@@ -318,13 +319,13 @@
 	if(!anchored)
 		return NONE
 	if(panel_open)
-		balloon_alert(user, "close panel!")
+		balloon_alert(user, LANG("obj.4337ae3e", null))
 		return CLICK_ACTION_BLOCKING
 	if(!is_operational)
 		return CLICK_ACTION_BLOCKING
 
 	set_on(!on)
-	balloon_alert(user, "turned [on ? "on" : "off"]")
+	balloon_alert(user, LANG("obj.8fcfde3c", list(on ? "on" : "off")))
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	return CLICK_ACTION_SUCCESS
 

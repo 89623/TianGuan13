@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /obj/machinery/computer/pandemic
 	name = "PanD.E.M.I.C 2200"
@@ -52,11 +53,11 @@
 	if(beaker)
 		var/is_close
 		if(Adjacent(user)) //don't reveal exactly what's inside unless they're close enough to see the UI anyway.
-			. += "It contains \a [beaker]."
+			. += LANG("obj.eaca0139", list(beaker))
 			is_close = TRUE
 		else
-			. += "It has a beaker inside it."
-		. += span_info("Alt-click to eject [is_close ? beaker : "the beaker"].")
+			. += LANG("obj.41c3a8a2", null)
+		. += span_info(LANG("obj.afc489c0", list(is_close ? beaker : "the beaker")))
 
 /obj/machinery/computer/pandemic/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -84,7 +85,7 @@
 	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
 	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 		if(!beaker)
-			balloon_alert(user, "no beaker!")
+			balloon_alert(user, LANG("obj.b5e2be5f", null))
 			return ..()
 		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
 			held_item.interact_with_atom_secondary(beaker, user)
@@ -99,10 +100,10 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return ..()
 	if(beaker)
-		balloon_alert(user, "beaker swapped")
+		balloon_alert(user, LANG("obj.56d43536", null))
 		try_put_in_hand(beaker, usr)
 	else
-		balloon_alert(user, "beaker loaded")
+		balloon_alert(user, LANG("obj.78ea91ff", null))
 	user.transferItemToLoc(held_item, src)
 	beaker = held_item
 	update_appearance()
@@ -197,7 +198,7 @@
 	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id]
 
 	if(!istype(adv_disease) || !adv_disease.mutable)
-		to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
+		to_chat(usr, span_warning(LANG("obj.afdb4276", null)))
 		return FALSE
 	use_energy(active_power_usage)
 	adv_disease = adv_disease.Copy()

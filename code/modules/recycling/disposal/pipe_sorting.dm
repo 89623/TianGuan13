@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // A three-way junction that sorts objects based on check_sorting(H) proc
 // This is a base type, use subtypes on the map.
 /obj/structure/disposalpipe/sorting
@@ -49,11 +50,11 @@
 /obj/structure/disposalpipe/sorting/mail/examine(mob/user)
 	. = ..()
 	if(sortTypes.len)
-		. += "It is tagged with the following tags:"
+		. += LANG("obj.831ec6a5", null)
 		for(var/t in sortTypes)
 			. += "\t[GLOB.TAGGERLOCATIONS[t]]."
 	else
-		. += "It has no sorting tags set."
+		. += LANG("obj.66467605", null)
 
 /obj/structure/disposalpipe/sorting/mail/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/dest_tagger))
@@ -62,10 +63,10 @@
 		if(O.currTag)// Tagger has a tag set
 			if(O.currTag in sortTypes)
 				sortTypes -= O.currTag
-				to_chat(user, span_notice("Removed \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter."))
+				to_chat(user, span_notice(LANG("obj.7e803923", list(GLOB.TAGGERLOCATIONS[O.currTag]))))
 			else
 				sortTypes |= O.currTag
-				to_chat(user, span_notice("Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter."))
+				to_chat(user, span_notice(LANG("obj.211382a4", list(GLOB.TAGGERLOCATIONS[O.currTag]))))
 			playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 	else
 		return ..()

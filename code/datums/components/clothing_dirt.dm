@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// This component applies tint to clothing when its exposed to pepperspray or spraycans
 
 /datum/component/clothing_dirt
@@ -56,7 +57,7 @@
 	var/mob/living/carbon/wearer = clothing.loc
 	if(wearer.is_blind() && !wearer.is_blind_from(EYES_COVERED))
 		return
-	to_chat(wearer, span_warning("It's hard to see with all the stuff covering your [clothing.name]..."))
+	to_chat(wearer, span_warning(LANG("datum.f65ecc4d", list(clothing.name))))
 
 /datum/component/clothing_dirt/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
@@ -77,7 +78,7 @@
 	SIGNAL_HANDLER
 	var/obj/item/clothing/clothing = parent
 	if (dirtiness > 0)
-		examine_list += span_warning("It appears to be covered in something. [clothing.tint >= TINT_MILD ? "Won't see much while wearing it until you wash it off." : "Any more and you might struggle to see through it."]")
+		examine_list += span_warning(LANG("datum.1c27b241", list(clothing.tint >= TINT_MILD ? "Won't see much while wearing it until you wash it off." : "Any more and you might struggle to see through it.")))
 
 /datum/component/clothing_dirt/proc/on_overlays_updated(obj/item/clothing/source, list/overlays)
 	SIGNAL_HANDLER
@@ -176,8 +177,8 @@
 	remove_tint(FALSE)
 	dirtiness = min(3, dirtiness + rand(2, 3))
 	apply_tint(TRUE)
-	user.visible_message(span_danger("[user] sprays [spraycan] into the face of [wearer]!"))
-	to_chat(wearer, span_userdanger("[user] sprays [spraycan] into your face!"))
+	user.visible_message(span_danger(LANG("datum.92c48529", list(user, spraycan, wearer))))
+	to_chat(wearer, span_userdanger(LANG("datum.8794109e", list(user, spraycan))))
 	return COMPONENT_CANCEL_SPRAYPAINT
 
 /datum/component/clothing_dirt/proc/on_clean(obj/item/clothing/source, clean_types)

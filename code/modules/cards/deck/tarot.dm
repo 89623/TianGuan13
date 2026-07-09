@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TAROT_GHOST_TIMER (666 SECONDS) // this translates into 11 mins and 6 seconds
 
 //These cards certainly won't tell the future, but you can play some nice games with them.
@@ -62,7 +63,7 @@
 
 /obj/item/toy/cards/deck/tarot/haunted/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	ADD_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
-	to_chat(user, span_notice("The veil to the underworld is opened. You can sense the dead souls calling out..."))
+	to_chat(user, span_notice(LANG("obj.fa2c2e19", null)))
 
 	if(!COOLDOWN_FINISHED(src, ghost_alert_cooldown))
 		return
@@ -78,6 +79,6 @@
 
 /obj/item/toy/cards/deck/tarot/haunted/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	REMOVE_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
-	to_chat(user, span_notice("The veil to the underworld closes shut. You feel your senses returning to normal."))
+	to_chat(user, span_notice(LANG("obj.4c057d5e", null)))
 
 #undef TAROT_GHOST_TIMER

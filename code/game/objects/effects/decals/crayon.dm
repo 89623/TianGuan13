@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/decal/cleanable/crayon
 	name = "rune"
 	desc = "Graffiti. Damn kids."
@@ -23,7 +24,7 @@
 	if(desc_override)
 		desc = "[desc_override]"
 	else
-		desc = "A [name] vandalizing the station."
+		desc = LANG("obj.fb2e64d1", list(name))
 	if(alt_icon)
 		icon = alt_icon
 	if(type)
@@ -68,7 +69,7 @@
 	if(ishuman(outlined_atom))
 		//humans are special, we want to exclude things like wounds so the outline isn't animated.
 		var/mob/living/carbon/human/human_outline = outlined_atom
-		add_overlay(human_outline.get_overlays_copy(list(WOUND_LAYER, HALO_LAYER)))
+		add_overlay(human_outline.get_overlays_copy(list(WOUND_LAYER)))
 	else
 		icon = outlined_atom.icon
 		icon_state = outlined_atom.icon_state

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Override on subtype to add behaviour. Whatever happens when we are sabotaged
 /atom/proc/on_saboteur(datum/source, disrupt_duration)
 	SHOULD_CALL_PARENT(TRUE)
@@ -29,7 +30,7 @@
 			success = TRUE
 
 	if(success && ismob(firer))
-		target.balloon_alert(firer, "disrupted")
+		target.balloon_alert(firer, LANG("obj.81916d25", null))
 
 /obj/projectile/energy/fisher/melee
 	range = 1

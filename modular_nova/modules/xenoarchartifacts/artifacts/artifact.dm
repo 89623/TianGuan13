@@ -51,13 +51,13 @@
 	. = ..()
 	. += span_notice("[holomark ? "This boulder has been scanned. Target Depth: [approximate_excavation_level] +- 15 cm." : "This boulder has not been scanned."]")
 	if(holomark_adv)
-		. += span_notice("The item depth is [target_excavation_level] cm.")
+		. += span_notice(LANG("obj.9c404e9c", list(target_excavation_level)))
 	. += span_notice("[measured ? "This boulder has been measured. Dug Depth: [excavation_level]." : "This boulder has not been measured."]")
 	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)
 	if(our_gps)
-		. += span_notice("A holotag's been attached, projecting \"<b>[artifact_id]</b>\".")
+		. += span_notice(LANG("obj.87719a64", list(artifact_id)))
 	else
-		. += span_notice("It looks like you could probably scan and tag it with a <b>mining scanner</b> of some kind.")
+		. += span_notice(LANG("obj.d7cf889a", null))
 
 /obj/structure/boulder/Initialize(mapload)
 	. = ..()
@@ -184,9 +184,9 @@
 /obj/structure/boulder/proc/gps_tag(mob/user)
 	var/datum/component/gps/our_gps = GetComponent(/datum/component/gps)
 	if(our_gps)
-		to_chat(user, span_warning("[src] already has a holotag attached!"))
+		to_chat(user, span_warning(LANG("obj.d71d9076", list(src))))
 		return
-	to_chat(user, span_notice("You affix a holotag to [src]."))
+	to_chat(user, span_notice(LANG("obj.1fe95f8d", list(src))))
 	playsound(src, 'sound/machines/beep/twobeep.ogg', 100)
 	AddComponent(/datum/component/gps, "\[[artifact_id]\] Xenoarch Debris")
 
@@ -197,13 +197,13 @@
 		return TRUE
 	if(istype(attacking_item, /obj/item/pickaxe))
 		user.visible_message(
-			span_notice("[user] begins smashing the [src]..."),
-			span_notice("You begin smashing the [src]...."),
+			span_notice(LANG("obj.494c4505", list(user, src))),
+			span_notice(LANG("obj.b8e9b3f0", list(src))),
 		)
 		if(!do_after(user, 2.5 SECONDS, target = src))
 			user.visible_message(
-				span_warning("[user] slips and smashes the boulder with extra force!"),
-				span_warning("You slip and smash the boulder with extra force!"),
+				span_warning(LANG("obj.1a44b09b", list(user))),
+				span_warning(LANG("obj.84b6068e", null)),
 				blind_message = span_hear("You hear a smash!"),
 			)
 			excavation_level += rand(10,50)
@@ -211,26 +211,26 @@
 		switch(try_dig(25))
 			if(DIG_DELETE)
 				user.visible_message(
-					span_warning("The [src] crumbles, leaving nothing behind."),
+					span_warning(LANG("obj.6db9ab42", list(src))),
 					blind_message = span_hear("You hear rocks crumbling."),
 				)
 				return
 			if(DIG_ROCK)
 				user.visible_message(
-					span_notice("[user] successfully digs the [src]. The item inside seems to be still intact."),
-					span_notice("You successfully dig the [src]. The item inside seems to be still intact."),
+					span_notice(LANG("obj.f37b4dcd", list(user, src))),
+					span_notice(LANG("obj.b996ea2a", list(src))),
 					blind_message = span_hear("You hear rocks crumbling."),
 				)
 
 	if(istype(attacking_item, /obj/item/xenoarch/hammer))
 		var/obj/item/xenoarch/hammer/hammer = attacking_item
 		user.visible_message(
-			span_notice("[user] begins carefully using their hammer..."),
-			span_notice("You begin carefully using your hammer..."),
+			span_notice(LANG("obj.3f8240a0", list(user))),
+			span_notice(LANG("obj.04bcd84c", null)),
 			blind_message = span_hear("You hear rhythmic knocking."),
 		)
 		if(!do_after(user, hammer.dig_speed, target = src))
-			to_chat(user, span_warning("You interrupt your careful planning, damaging the boulder in the process!"))
+			to_chat(user, span_warning(LANG("obj.9d6b236c", null)))
 			excavation_level += rand(1,5)
 			return
 		switch(try_dig(hammer.dig_amount))
@@ -238,88 +238,88 @@
 				CRASH("[hammer] tried to call try_dig() with an invalid dig_amount! Must have a positive value.")
 			if(DIG_DELETE)
 				user.visible_message(
-					span_warning("The boulder crumbles, leaving nothing behind."),
+					span_warning(LANG("obj.b150c4e6", null)),
 					blind_message = span_hear("You hear rock crumbling."),
 				)
 				return
 			if(DIG_ROCK)
-				to_chat(user, span_notice("You successfully dig around the item."))
+				to_chat(user, span_notice(LANG("obj.c2a25e9a", null)))
 
 	if (istype(attacking_item, /obj/item/xenoarch/handheld_scanner))
 		var/obj/item/xenoarch/handheld_scanner/scanner = attacking_item
 		if (holomark_adv || (holomark && !istype(scanner, /obj/item/xenoarch/handheld_scanner/advanced)))
-			to_chat(user, span_notice("The boulder was already scanned. You can even see the holomark attached to it."))
+			to_chat(user, span_notice(LANG("obj.eb7905b5", null)))
 			return
 		user.visible_message(
-			span_notice("[user] begins to scan [src] using [scanner]."),
-			span_notice("You begin to scan [src] using [scanner]."),
+			span_notice(LANG("obj.f18b5d8d", list(user, src, scanner))),
+			span_notice(LANG("obj.c849e69f", list(src, scanner))),
 			blind_message = span_hear("You hear some kind of machine silently winding up."),
 		)
 		if(!do_after(user, scanner.scanning_speed, target = src))
-			to_chat(user, span_warning("You interrupt your scanning, damaging the boulder in the process!"))
+			to_chat(user, span_warning(LANG("obj.3f48dec0", null)))
 			excavation_level += rand(1,5)
 			return
 		if(get_scanned(scanner.scan_advanced))
-			to_chat(user, (span_notice("You successfully scanned the boulder, attaching the holomark to it with some info!")))
+			to_chat(user, (span_notice(LANG("obj.96e6cb60", null))))
 			if(scanner.scan_advanced)
-				to_chat(user, span_notice("Thanks to the advanced scanner the holomark now also displays the exact depth needed!"))
+				to_chat(user, span_notice(LANG("obj.e3c9597e", null)))
 			return
 
 	if(attacking_item.type == /obj/item/xenoarch)
 		if (measured)
-			to_chat(user, span_notice("The boulder was already measured."))
+			to_chat(user, span_notice(LANG("obj.c8acb66e", null)))
 			return
 		user.visible_message(
-			span_notice("[user] begins measuring the [src]."),
-			span_notice("You begin carefully using your measuring tape."),
+			span_notice(LANG("obj.caad5216", list(user, src))),
+			span_notice(LANG("obj.cfbbc627", null)),
 			blind_message = span_hear("You hear the sound of a tape measure unwinding."),
 		)
 		if(!do_after(user, 4 SECONDS, target = src))
-			to_chat(user, span_warning("You interrupt your careful planning, damaging the boulder in the process!"))
+			to_chat(user, span_warning(LANG("obj.9d6b236c", null)))
 			excavation_level += rand(1,5)
 			return
 		if(get_measured())
-			to_chat(user, span_notice("You successfully attach a holo measuring tape to the boulder. The boulder will now report its dug depth always!"))
+			to_chat(user, span_notice(LANG("obj.4a3432f4", null)))
 			return
 
 	if(istype(attacking_item, /obj/item/xenoarch/brush))
 		var/obj/item/xenoarch/brush/brush = attacking_item
 		user.visible_message(
-			span_notice("[user] carefully brushes [src]."),
-			span_notice("You begin carefully using your brush."),
+			span_notice(LANG("obj.f2fa9edc", list(user, src))),
+			span_notice(LANG("obj.f49f7bc1", null)),
 			blind_message = span_hear("You hear rustling."),
 		)
 		if(!do_after(user, brush.dig_speed, target = src))
-			to_chat(user, span_warning("You interrupt your careful planning, damaging the boulder in the process!"))
+			to_chat(user, span_warning(LANG("obj.9d6b236c", null)))
 			excavation_level += rand(1,5)
 			return
 		switch(try_uncover())
 			if(BRUSH_DELETE)
 				user.visible_message(
-					span_warning("The boulder crumbles, leaving nothing behind."),
+					span_warning(LANG("obj.b150c4e6", null)),
 					blind_message = span_hear("You hear rock crumbling."),
 				)
 				return
 			if(BRUSH_UNCOVER)
-				to_chat(user, span_notice("You successfully brush around the item, fully revealing the item!"))
+				to_chat(user, span_notice(LANG("obj.63b96783", null)))
 				return
 			if(BRUSH_NONE)
-				to_chat(user, span_notice("You brush around the item, but it wasn't revealed... hammer some more."))
+				to_chat(user, span_notice(LANG("obj.377f381a", null)))
 
 	if(istype(attacking_item, /obj/item/xenoarch/handheld_radar))
-		to_chat(user, span_warning("The boulder must be stabilized using a different tool."))
+		to_chat(user, span_warning(LANG("obj.9a40e4e5", null)))
 
 	if(istype(attacking_item, /obj/item/xenoarch/core_sampler))
 		var/obj/item/xenoarch/core_sampler/sampler = attacking_item
 		if(sampler.used)
-			balloon_alert(user, "sampler already used!")
+			balloon_alert(user, LANG("obj.713d4ec0", null))
 			return
 		sampler.sample = src
 		sampler.used = TRUE
 		sampler.icon_state = "sampler"
 		user.visible_message(
-			span_notice("[user] takes sample of [src]."),
-			span_notice("You successfully took a sample of [src]. Now take it to the radiocarbon spectrometer."),
+			span_notice(LANG("obj.e0d4d8b3", list(user, src))),
+			span_notice(LANG("obj.c2615fa0", list(src))),
 			blind_message = span_hear("You hear a snap."),
 		)
 

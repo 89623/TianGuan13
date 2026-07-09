@@ -18,12 +18,12 @@
 	if(preserved_food)
 		preserved_food = FALSE
 		icon_state = "[base_icon_state]_unwrapped"
-		to_chat(user, span_notice("You unpackage \the [src]."))
+		to_chat(user, span_notice(LANG("obj.3ced1b53", list(src))))
 		playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 
 /obj/item/food/colonial_course/attack(mob/living/target, mob/user, def_zone)
 	if(preserved_food)
-		to_chat(user, span_warning("[src] is still packaged!"))
+		to_chat(user, span_warning(LANG("obj.eff096f4", list(src))))
 		return FALSE
 
 	return ..()
@@ -63,8 +63,8 @@
 		if(prob(20))
 			preserved_food = FALSE
 			icon_state = "[base_icon_state]_unwrapped_alt"
-			to_chat(user, span_notice("You unpackage \the [src]."))
-			to_chat(user, span_warning("<i>Wait, are they upside down?</i>"))
+			to_chat(user, span_notice(LANG("obj.3ced1b53", list(src))))
+			to_chat(user, span_warning(LANG("obj.937bff12", null)))
 			name = "upside-down [initial(name)]"
 			playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 		else
@@ -129,7 +129,7 @@
 	return ..()
 
 /obj/item/reagent_containers/cup/borscht_bowl/proc/open_soup(mob/user)
-	to_chat(user, "You peel back the foil of [src].")
+	to_chat(user, LANG("obj.66eb5c4a", list(src)))
 	icon_state = base_icon_state
 	add_container_flags(OPENCONTAINER)
 	update_appearance()
@@ -355,13 +355,13 @@
 		if(atom_storage.locked == TRUE)
 			atom_storage.locked = FALSE
 			icon_state = "fruit_dumplings_pouch_open"
-			balloon_alert(user, "unsealed!")
+			balloon_alert(user, LANG("obj.dfe936bd", null))
 			update_appearance()
 		else
 			atom_storage.locked = TRUE
 			atom_storage.close_all()
 			icon_state = "fruit_dumplings_pouch"
-			balloon_alert(user, "resealed!")
+			balloon_alert(user, LANG("obj.fc6252eb", null))
 			update_appearance()
 
 /obj/item/food/colonial_course/fruit_dumpling
@@ -559,13 +559,13 @@
 		if(atom_storage.locked == TRUE)
 			atom_storage.locked = FALSE
 			icon_state = "mre_package_open"
-			balloon_alert(user, "unsealed!")
+			balloon_alert(user, LANG("obj.dfe936bd", null))
 			return ..()
 		else
 			atom_storage.locked = TRUE
 			atom_storage.close_all()
 			icon_state = "mre_package"
-			balloon_alert(user, "resealed!")
+			balloon_alert(user, LANG("obj.fc6252eb", null))
 			return
 
 /obj/item/storage/box/colonial_rations/PopulateContents()

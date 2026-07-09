@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 CONTAINS:
 SAFES
@@ -80,7 +81,7 @@ FLOOR SAFES
 
 /obj/structure/safe/examine(mob/user)
 	. = ..()
-	. += span_notice("The locking mechanism gears are <b>wrenched</b> in place.")
+	. += span_notice(LANG("obj.6f143554", null))
 
 /obj/structure/safe/update_icon_state()
 	//uses the same icon as the captain's spare safe (therefore lockable storage) so keep it in line with that
@@ -89,11 +90,11 @@ FLOOR SAFES
 
 /obj/structure/safe/wrench_act(mob/living/user, obj/item/tool)
 	if(!open)
-		balloon_alert(user, "must be open!")
+		balloon_alert(user, LANG("obj.e689b44d", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "resetting lock...")
-	to_chat(user, span_notice("You begin resetting the lock for [src]. You'll need to set [number_of_tumblers] numbers."))
+	balloon_alert(user, LANG("obj.ae0cbe3c", null))
+	to_chat(user, span_notice(LANG("obj.48d51372", list(src, number_of_tumblers))))
 
 	var/list/new_tumblers = list()
 	for(var/tumbler_index in 1 to number_of_tumblers)
@@ -114,8 +115,8 @@ FLOOR SAFES
 	current_tumbler_index = 1
 	dial = 0
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You successfully reset the lock for [src]. The new combination is: [tumblers.Join("-")]."))
-	balloon_alert(user, "lock set!")
+	to_chat(user, span_notice(LANG("obj.bddbcd53", list(src, tumblers.Join("-")))))
+	balloon_alert(user, LANG("obj.189d5394", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/safe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -123,18 +124,18 @@ FLOOR SAFES
 		. = TRUE //no afterattack
 		if(attacking_item.w_class + space <= maxspace)
 			if(!user.transferItemToLoc(attacking_item, src))
-				to_chat(user, span_warning("\The [attacking_item] is stuck to your hand, you cannot put it in the safe!"))
+				to_chat(user, span_warning(LANG("obj.6bed091c", list(attacking_item))))
 				return
 			space += attacking_item.w_class
-			to_chat(user, span_notice("You put [attacking_item] in [src]."))
+			to_chat(user, span_notice(LANG("obj.de7df645", list(attacking_item, src))))
 		else
-			to_chat(user, span_warning("[attacking_item] won't fit in [src]."))
+			to_chat(user, span_warning(LANG("obj.6b579e25", list(attacking_item, src))))
 	else
 		if(istype(attacking_item, /obj/item/clothing/neck/stethoscope))
 			attack_hand(user)
 			return
 		else
-			to_chat(user, span_warning("You can't put [attacking_item] into the safe while it is closed!"))
+			to_chat(user, span_warning(LANG("obj.6fb4c955", list(attacking_item))))
 			return
 
 /obj/structure/safe/blob_act(obj/structure/blob/B)
@@ -203,9 +204,9 @@ FLOOR SAFES
 	switch(action)
 		if("open")
 			if(!check_unlocked() && !open && !broken)
-				to_chat(user, span_warning("You cannot open [src], as its lock is engaged!"))
+				to_chat(user, span_warning(LANG("obj.3d3f4337", list(src))))
 				return
-			to_chat(user, span_notice("You [open ? "close" : "open"] [src]."))
+			to_chat(user, span_notice(LANG("obj.d6171b71", list(open ? "close" : "open", src))))
 			open = !open
 			update_appearance()
 			return TRUE
@@ -213,7 +214,7 @@ FLOOR SAFES
 			if(open)
 				return
 			if(broken)
-				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
+				to_chat(user, span_warning(LANG("obj.ee82e86c", null)))
 				return
 			var/ticks = text2num(params["num"])
 			for(var/iterate in 1 to ticks)
@@ -234,7 +235,7 @@ FLOOR SAFES
 			if(open)
 				return
 			if(broken)
-				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
+				to_chat(user, span_warning(LANG("obj.ee82e86c", null)))
 				return
 			var/ticks = text2num(params["num"])
 			for(var/iterate in 1 to ticks)
@@ -290,7 +291,7 @@ FLOOR SAFES
 	if(!canhear)
 		return
 	if(current_tick == 2)
-		to_chat(user, span_italics("The sounds from [src] are too fast and blend together."))
+		to_chat(user, span_italics(LANG("obj.1e17b7cc", list(src))))
 	if(total_ticks == 1 || prob(SOUND_CHANCE))
 		balloon_alert(user, pick(sounds))
 

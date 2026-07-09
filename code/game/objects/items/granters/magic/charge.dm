@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/book/granter/action/spell/charge
 	granted_action = /datum/action/cooldown/spell/charge
 	action_name = "charge"
@@ -16,6 +17,6 @@
 
 /obj/item/book/granter/action/spell/charge/recoil(mob/living/user)
 	. = ..()
-	to_chat(user,span_warning("[src] suddenly feels very warm!"))
+	to_chat(user,span_warning(LANG("obj.c87ce25b", list(src))))
 	empulse(src, 1, 1, emp_source = src)
 

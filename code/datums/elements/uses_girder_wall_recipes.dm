@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// An element for girders, wall barricades, etc. that makes them use wall construction recipes.
 /// Only really meant for recipes where you click on the girder with a stack of materials to make a wall.
 /datum/element/uses_girder_wall_recipes
@@ -17,7 +18,7 @@
 	if (!isstack(stack))
 		return NONE
 	if (!stack.usable_for_construction)
-		structure.balloon_alert(user, "unusable material!")
+		structure.balloon_alert(user, LANG("datum.012c8b58", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/datum/girder_wall_recipe/main_recipe = get_main_recipe(structure, stack)
@@ -27,7 +28,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if (stack.has_unique_girder)
-		structure.balloon_alert(user, "needs a different girder!")
+		structure.balloon_alert(user, LANG("datum.4204fe50", null))
 		return ITEM_INTERACT_BLOCKING
 
 	// Plasteel is used for reinforcing girders.
@@ -111,14 +112,14 @@
 /// Checks if the user can do the wall recipe.
 /datum/element/uses_girder_wall_recipes/proc/check_recipe(obj/structure/structure, mob/living/user, datum/girder_wall_recipe/recipe)
 	if(iswallturf(structure.loc) || (locate(/obj/structure/falsewall) in structure.loc.contents))
-		structure.balloon_alert(user, "wall already present!")
+		structure.balloon_alert(user, LANG("datum.6694fb22", null))
 		return FALSE
 	if (!ispath(recipe.wall_type, /obj/structure/tram))
 		if (!isfloorturf(structure.loc))
-			structure.balloon_alert(user, "need floor!")
+			structure.balloon_alert(user, LANG("datum.eb230c3c", null))
 			return FALSE
 	else if (!(locate(/obj/structure/transport/linear/tram) in structure.loc.contents))
-		structure.balloon_alert(user, "need tram floor!")
+		structure.balloon_alert(user, LANG("datum.be3eac18", null))
 		return FALSE
 	if (!check_girder_state(structure, recipe))
 		return FALSE

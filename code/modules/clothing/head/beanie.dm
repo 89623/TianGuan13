@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //BeanieStation13 Redux
 
@@ -92,4 +93,4 @@
 /obj/item/clothing/head/beanie/black/dboy/examine(mob/user)
 	. = ..()
 	if(IS_WEAKREF_OF(user, beanie_owner))
-		. += span_purple("It's covered in otherworldly debris only your eyes have been ruined enough to see.")
+		. += span_purple(LANG("obj.500691bf", null))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/reagent_containers/cup/maunamug
 	name = "mauna mug"
 	desc = "A drink served in a classy mug. Now with built-in heating!"
@@ -21,11 +22,11 @@
 
 /obj/item/reagent_containers/cup/maunamug/examine(mob/user)
 	. = ..()
-	. += span_notice("The status display reads: Current temperature: <b>[reagents.chem_temp]K</b> Current Charge:[cell ? "[cell.charge / cell.maxcharge * 100]%" : "No cell found"].")
+	. += span_notice(LANG("obj.4cf3bf12", list(reagents.chem_temp, cell ? "[cell.charge / cell.maxcharge * 100]%" : "No cell found")))
 	if(open)
-		. += span_notice("The battery case is open.")
+		. += span_notice(LANG("obj.1d58d064", null))
 	if(cell && cell.charge > 0)
-		. += span_notice("<b>Ctrl+Click</b> to toggle the power.")
+		. += span_notice(LANG("obj.2ee81b70", null))
 
 /obj/item/reagent_containers/cup/maunamug/process(seconds_per_tick)
 	..()
@@ -41,7 +42,7 @@
 	update_appearance()
 	if(reagents.chem_temp >= max_temp)
 		change_power_status(FALSE)
-		audible_message(span_notice("The Mauna Mug lets out a happy beep and turns off!"))
+		audible_message(span_notice(LANG("obj.8d5a67df", null)))
 		playsound(src, 'sound/machines/chime.ogg', 50)
 
 /obj/item/reagent_containers/cup/maunamug/Destroy()
@@ -70,22 +71,22 @@
 /obj/item/reagent_containers/cup/maunamug/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
 	open = !open
-	to_chat(user, span_notice("You screw the battery case on [src] [open ? "open" : "closed"] ."))
+	to_chat(user, span_notice(LANG("obj.7e230578", list(src, open ? "open" : "closed"))))
 	update_appearance()
 
 /obj/item/reagent_containers/cup/maunamug/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	if(!open)
-		to_chat(user, span_warning("The battery case must be open to insert a power cell!"))
+		to_chat(user, span_warning(LANG("obj.4dc507fc", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(cell)
-		to_chat(user, span_warning("There is already a power cell inside!"))
+		to_chat(user, span_warning(LANG("obj.3606d540", null)))
 		return ITEM_INTERACT_BLOCKING
 	else if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	cell = tool
-	user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
+	user.visible_message(span_notice(LANG("obj.6c5b2d75", list(user, src))), span_notice(LANG("obj.8b86d93e", list(src))))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -93,7 +94,7 @@
 	if(cell && open)
 		user.put_in_hands(cell)
 		cell = null
-		to_chat(user, span_notice("You remove the power cell from [src]."))
+		to_chat(user, span_notice(LANG("obj.a11bdac6", list(src))))
 		on = FALSE
 		update_appearance()
 		return TRUE

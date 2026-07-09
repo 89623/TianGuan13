@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 
 /proc/init_canvas_dimensions()
@@ -29,7 +30,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 		user.transfer_item_to_turf(canvas, get_turf(src), silent = FALSE)
 		painting = canvas
 		canvas.layer = layer+0.1
-		user.visible_message(span_notice("[user] puts \the [canvas] on \the [src]."),span_notice("You place \the [canvas] on \the [src]."))
+		user.visible_message(span_notice(LANG("obj.dc77a240", list(user, canvas, src))),span_notice(LANG("obj.98e51b72", list(canvas, src))))
 		return ITEM_INTERACT_SUCCESS
 
 
@@ -236,7 +237,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	if(finalized || painting_metadata.loaded_from_json)
 		return
 	if(!in_range(src, user))
-		user.balloon_alert(user, "too far away!")
+		user.balloon_alert(user, LANG("obj.a462ee7c", null))
 		return
 	if(!try_rename(user))
 		return
@@ -257,28 +258,28 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	if(!finalized || !isliving(user))
 		return
 	if(!painting_metadata.loaded_from_json)
-		if(tgui_alert(user, "The painting hasn't been archived yet and will be lost at the end of the shift if not placed in an elegible frame. Continue?","Unarchived Painting",list("Yes","No")) != "Yes")
+		if(tgui_alert(user, LANG("obj.b3d4d969", null),LANG("obj.c410a53c", null),list("Yes","No")) != "Yes")
 			return
 	var/mob/living/living_user = user
 	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 	if(!id_card)
-		to_chat(user, span_warning("You don't even have a id and you want to be an art patron?"))
+		to_chat(user, span_warning(LANG("obj.c46fb7e3", null)))
 		return
 	if(!id_card.can_be_used_in_payment(user))
-		to_chat(user, span_warning("No valid non-departmental account found."))
+		to_chat(user, span_warning(LANG("obj.781bd5e7", null)))
 		return
 	var/datum/bank_account/account = id_card.registered_account
 	if(!account.has_money(painting_metadata.credit_value))
-		to_chat(user, span_warning("You can't afford this."))
+		to_chat(user, span_warning(LANG("obj.a47d5fc1", null)))
 		return
 	var/sniped_amount = painting_metadata.credit_value
-	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
+	var/offer_amount = tgui_input_number(user, LANG("obj.fedfee58", null), LANG("obj.086e5b08", null), (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
 	if(!offer_amount || QDELETED(user) || QDELETED(src) || !istype(loc, /obj/structure/sign/painting) || !user.can_perform_action(loc, FORBID_TELEKINESIS_REACH))
 		return
 	if(sniped_amount != painting_metadata.credit_value)
 		return
 	if(!account.adjust_money(-offer_amount, "Painting: Patron of [painting_metadata.title]"))
-		to_chat(user, span_warning("Transaction failure. Please try again."))
+		to_chat(user, span_warning(LANG("obj.eab48414", null)))
 		return
 
 	var/datum/bank_account/service_account = SSeconomy.get_dep_account(ACCOUNT_SRV)
@@ -304,7 +305,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	painting_metadata.credit_value = offer_amount
 	last_patron = WEAKREF(user.mind)
 
-	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
+	to_chat(user, span_notice(LANG("obj.3991f23d", null)))
 	if(HAS_PERSONALITY(user, /datum/personality/creative))
 		user.add_mood_event("creative_patronage", /datum/mood_event/creative_patronage)
 	if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
@@ -312,7 +313,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
 		return
-	if(tgui_alert(user, "Do you want to change the frame appearance now? You can do so later this shift with Alt-Click as long as you're a patron.","Patronage Frame",list("Yes","No")) != "Yes")
+	if(tgui_alert(user, LANG("obj.cbb75003", null),LANG("obj.1ed3c6d9", null),list("Yes","No")) != "Yes")
 		return
 	if(!can_select_frame(user))
 		return
@@ -332,7 +333,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 		return
 	painting_metadata.frame_type = result
 	var/obj/structure/sign/painting/our_frame = loc
-	our_frame.balloon_alert(user, "frame set to [result]")
+	our_frame.balloon_alert(user, LANG("obj.14b8a1b6", list(result)))
 	our_frame.update_appearance()
 
 /obj/item/canvas/proc/can_select_frame(mob/user)
@@ -446,13 +447,13 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 /obj/item/canvas/proc/try_rename(mob/user)
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
 		return TRUE
-	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece", max_length = MAX_NAME_LEN)
+	var/new_name = tgui_input_text(user, LANG("obj.8790d2a6", null), LANG("obj.ff0f7709", null), max_length = MAX_NAME_LEN)
 	new_name = reject_bad_name(new_name, allow_numbers = TRUE, ascii_only = FALSE, strict = TRUE, cap_after_symbols = FALSE)
 	if(isnull(new_name))
 		return FALSE
 	if(new_name != painting_metadata.title && user.can_perform_action(src))
 		painting_metadata.title = new_name
-	switch(tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No", "Cancel")))
+	switch(tgui_alert(user, LANG("obj.851cfc93", null), LANG("obj.d9d5ab38", null), list("Yes", "No", "Cancel")))
 		if("Yes")
 			return TRUE
 		if("No")
@@ -606,18 +607,18 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
 	if(persistence_id)
-		. += span_notice("Any painting placed here will be archived at the end of the shift.")
+		. += span_notice(LANG("obj.809ae13e", null))
 	if(current_canvas)
 		current_canvas.ui_interact(user)
-		. += span_notice("Use wirecutters to remove the painting.")
+		. += span_notice(LANG("obj.1c4b24ce", null))
 		if(IS_WEAKREF_OF(user?.mind, current_canvas.last_patron))
-			. += span_notice("<b>Alt-Click</b> to change select a new appearance for the frame of this painting.")
+			. += span_notice(LANG("obj.93c33f22", null))
 
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(current_canvas)
 		current_canvas.forceMove(drop_location())
-		to_chat(user, span_notice("You remove the painting from the frame."))
+		to_chat(user, span_notice(LANG("obj.bf98e367", null)))
 		return TRUE
 
 /obj/structure/sign/painting/Exited(atom/movable/movable, atom/newloc)
@@ -637,13 +638,13 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/living/user, obj/item/canvas/new_canvas)
 	if(!(new_canvas.type in accepted_canvas_types))
-		to_chat(user, span_warning("[new_canvas] won't fit in this frame."))
+		to_chat(user, span_warning(LANG("obj.16bf6224", list(new_canvas))))
 		return FALSE
 	if(user.transferItemToLoc(new_canvas,src))
 		current_canvas = new_canvas
 		if(!current_canvas.finalized)
 			current_canvas.finalize(user)
-		to_chat(user,span_notice("You frame [current_canvas]."))
+		to_chat(user,span_notice(LANG("obj.9e80a226", list(current_canvas))))
 		add_art_element()
 		update_appearance()
 		if(HAS_PERSONALITY(user, /datum/personality/creative))
@@ -793,10 +794,10 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	var/check_dir = our_dir & (EAST|WEST) ? NORTH : EAST
 	var/turf/closed/wall/second_wall = get_step(on_wall, check_dir)
 	if(!istype(second_wall) || !second_wall.IsReachableBy(user))
-		to_chat(user, span_warning("You need a reachable wall to the [check_dir == EAST ? "right" : "left"] of this one to mount this frame!"))
+		to_chat(user, span_warning(LANG("obj.fdbc3eef", list(check_dir == EAST ? "right" : "left"))))
 		return FALSE
 	if(check_wall_item(second_wall, our_dir, wall_external))
-		to_chat(user, span_warning("There's already an item on the wall to the [check_dir == EAST ? "right" : "left"] of this one!"))
+		to_chat(user, span_warning(LANG("obj.f7d93ebd", list(check_dir == EAST ? "right" : "left"))))
 		return FALSE
 
 /obj/item/wallframe/painting/large/after_attach(obj/object)

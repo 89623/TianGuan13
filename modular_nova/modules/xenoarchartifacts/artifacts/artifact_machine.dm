@@ -62,16 +62,16 @@
 	switch(artifact_type_id)
 		if(ARTIFACT_COMPUTER)
 			name = "alien computer"
-			desc = "It is covered in strange markings."
+			desc = LANG("obj.75e99dcf", null)
 		if(ARTIFACT_PILLAR)
 			name = "alien device"
-			desc = "A large pillar, made of strange shiny metal."
+			desc = LANG("obj.2ba1245b", null)
 		if(ARTIFACT_VENTS)
 			name = "alien device"
-			desc = "A large alien device, there appear to be some kind of vents in the side."
+			desc = LANG("obj.7d1aaf3e", null)
 		if(ARTIFACT_FLOATING)
 			name = "strange metal object"
-			desc = "A large object made of tough green-shaded alien metal."
+			desc = LANG("obj.7d20d7ca", null)
 		if(ARTIFACT_CRYSTAL_GREEN)
 			artifact_type_id = pick(ARTIFACT_CRYSTAL_GREEN, ARTIFACT_CRYSTAL_PURPLE, ARTIFACT_CRYSTAL_BLUE) // now we pick a color
 			name = "large crystal"
@@ -95,7 +95,7 @@
 /obj/machinery/artifact/Destroy()
 	do_destroy_effects()
 	loc.visible_message(
-		span_danger("[src] breaks in pieces, releasing a wave of energy!"),
+		span_danger(LANG("obj.fb56a19e", list(src))),
 		blind_message = span_hear("You hear something break into pieces!"),
 	)
 	if(!QDELETED(first_effect))
@@ -167,22 +167,22 @@
 	. = ..()
 	switch(round(100 * (get_integrity() / max_integrity)))
 		if(85 to 100)
-			to_chat(user, "Appears to have no structural damage.")
+			to_chat(user, LANG("obj.b1ca5f3c", null))
 		if(65 to 85)
-			to_chat(user, "Appears to have light structural damage.")
+			to_chat(user, LANG("obj.f6a5fa22", null))
 		if(45 to 65)
-			to_chat(user, "Appears to have moderate structural damage.")
+			to_chat(user, LANG("obj.0196f2eb", null))
 		if(10 to 45)
-			to_chat(user, "Appears to have heavy structural damage.")
+			to_chat(user, LANG("obj.395eb4b1", null))
 		if(0 to 10)
-			to_chat(user, "Appears to be barely intact.")
+			to_chat(user, LANG("obj.e7cc93da", null))
 
 /obj/machinery/artifact/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
 	if(!Adjacent(user))
-		to_chat(user, span_warning("You can't reach [src] from here!"))
+		to_chat(user, span_warning(LANG("obj.67a04864", list(src))))
 		return TRUE
 	if(iscarbon(user))
 		var/mob/living/carbon/human_to_test = user
@@ -193,7 +193,7 @@
 			try_toggle_effects(TRIGGER_TOUCH)
 	else
 		try_toggle_effects(TRIGGER_TOUCH)
-	to_chat(user, span_bold("You touch [src]."))
+	to_chat(user, span_bold(LANG("obj.97eda384", list(src))))
 
 	if(first_effect.release_method == ARTIFACT_EFFECT_TOUCH)
 		first_effect.do_effect_touch(user)
@@ -288,7 +288,7 @@
 		if(secondary_effect && secondary_effect.release_method == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated && prob(50))
 			secondary_effect.do_effect_touch(what_bumped)
 		if(ismob(what_bumped))
-			to_chat(what_bumped, span_bold("You accidentally touch [src]."))
+			to_chat(what_bumped, span_bold(LANG("obj.cb8926a3", list(src))))
 
 /**
  * Checks if container has reagent, which is in volatile_reagents global list
@@ -337,11 +337,11 @@
  */
 /obj/machinery/artifact/proc/get_scan(mob/living/user, obj/item/xenoarch/handheld_scanner/scanner)
 	user.visible_message(
-		span_notice("[user] begins to scan [src] using [scanner]."),
-		span_notice("You begin to scan [src] using [scanner]..."),
+		span_notice(LANG("obj.f18b5d8d", list(user, src, scanner))),
+		span_notice(LANG("obj.c6c68360", list(src, scanner))),
 		blind_message = span_hear("You hear some kind of machine silently winding up."),
 	)
 	if(!do_after(user, scanner.scanning_speed * 5, target = src))
-		to_chat(user, span_warning("You interrupt your scanning."))
+		to_chat(user, span_warning(LANG("obj.611dd1f5", null)))
 		return
-	to_chat(user, span_notice("[src] is too big to scan with [scanner]. Use static artifact analyzer."))
+	to_chat(user, span_notice(LANG("obj.faf7b6ec", list(src, scanner))))

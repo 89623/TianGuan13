@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Fearful component: provides optional handling of fears and phobias for mob's mood
 /// Can be applied from multiple sources, and essentially serves as a central controller for fear datums described below
 
@@ -132,15 +133,15 @@
 		return
 
 	if(terror_buildup >= TERROR_BUILDUP_HEART_ATTACK)
-		examine_list += span_danger("[source.p_They()] [source.p_are()] seizing up, about to collapse in fear!")
+		examine_list += span_danger(LANG("datum.6d974458", list(source.p_They(), source.p_are())))
 	else if(terror_buildup > TERROR_BUILDUP_PANIC)
-		examine_list += span_boldwarning("[source.p_They()] [source.p_are()] trembling and shaking, barely standing upright!")
+		examine_list += span_boldwarning(LANG("datum.7826c2b3", list(source.p_They(), source.p_are())))
 	else if(terror_buildup >= TERROR_BUILDUP_TERROR)
-		examine_list += span_boldwarning("[source] is visibly trembling and twitching. [source.p_They()] [source.p_are()] clearly in distress!")
+		examine_list += span_boldwarning(LANG("datum.1dd7ce84", list(source, source.p_They(), source.p_are())))
 	else if(terror_buildup >= TERROR_BUILDUP_FEAR)
-		examine_list += span_warning("[source] looks very worried about something. [capitalize(source.p_are())] [source.p_they()] alright?")
+		examine_list += span_warning(LANG("datum.a701d296", list(source, capitalize(source.p_are()), source.p_they())))
 	else if (terror_buildup)
-		examine_list += span_smallnotice("[source] looks rather anxious. [source.p_They()] could probably use a hug...")
+		examine_list += span_smallnotice(LANG("datum.ada20494", list(source, source.p_They())))
 
 /datum/component/fearful/proc/comfort_owner(mob/living/carbon/source, mob/living/hugger)
 	SIGNAL_HANDLER
@@ -163,9 +164,9 @@
 			source.Knockdown(0.5 SECONDS)
 			terror_buildup += HUG_TERROR_AMOUNT
 			source.visible_message(
-				span_warning("[source] recoils in fear as [hugger] waves [hugger.p_their()] arms and shrieks at [source.p_them()]!"),
-				span_boldwarning("The shadows lash out at you, and you drop to the ground in fear!"),
-				span_hear("You hear someone shriek in fear. How embarassing!"),
+				span_warning(LANG("datum.8d88e3d8", list(source, hugger, hugger.p_their(), source.p_them()))),
+				span_boldwarning(LANG("datum.a4e9fc9a", null)),
+				span_hear(LANG("datum.ca3e82f1", null)),
 				)
 			return COMPONENT_BLOCK_MISC_HELP
 
@@ -176,17 +177,17 @@
 	if (hug_buildup > 0)
 		terror_buildup += hug_buildup
 		source.visible_message(
-			span_warning("[source] recoils in fear as [hugger] attempts to hug [source.p_them()]!"),
-			span_boldwarning("You recoil in terror as [hugger] attempts to hug you!"),
-			span_hear("You hear someone shriek in fear. How embarassing!"),
+			span_warning(LANG("datum.3d251bff", list(source, hugger, source.p_them()))),
+			span_boldwarning(LANG("datum.a07b5488", list(hugger))),
+			span_hear(LANG("datum.ca3e82f1", null)),
 			)
 		return COMPONENT_BLOCK_MISC_HELP
 
 	terror_buildup -= HUG_TERROR_AMOUNT
 	source.visible_message(
-		span_notice("[source] seems to relax as [hugger] gives [source.p_them()] a comforting hug."),
-		span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
-		span_hear("You hear shuffling and a sigh of relief."),
+		span_notice(LANG("datum.74f8d4ef", list(source, hugger, source.p_them()))),
+		span_nicegreen(LANG("datum.b8be0ae7", list(hugger))),
+		span_hear(LANG("datum.5197d49c", null)),
 	)
 
 /// Remove all terror buildup when we become fearless

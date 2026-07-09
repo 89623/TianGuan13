@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Space bears!
 /mob/living/basic/bear
 	name = "space bear"
@@ -170,13 +171,11 @@
 	var/datum/mind/candidate_mind = candidate.brainmob.mind
 	candidate_mind.transfer_to(src)
 	candidate_mind.grab_ghost()
-	to_chat(src, "[span_boldbig("You are a butter bear!")]<b> You're a mostly harmless bear/butter hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
-	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
-	free butter to the station!</b>")
+	to_chat(src, LANG("mob.447375bd", list(span_boldbig("You are a butter bear!"))))
 	var/default_name = "Terrygold"
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are \the [src]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, LANG("mob.e36094c4", list(src)), LANG("mob.b4bf4c54", null), default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
 	if(new_name)
-		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
+		to_chat(src, span_notice(LANG("mob.e590eb95", list(new_name))))
 		name = new_name
 
 /mob/living/basic/bear/butter/UnarmedAttack(atom/target, proximity_flag, list/modifiers) //Makes the butter bear's attacks against vertical targets slip said targets
@@ -188,4 +187,4 @@
 		return
 	victim.Knockdown(20)
 	playsound(loc, 'sound/misc/slip.ogg', 15)
-	victim.visible_message(span_danger("[victim] slips on [src]'s butter!"))
+	victim.visible_message(span_danger(LANG("mob.f2ef0804", list(victim, src))))

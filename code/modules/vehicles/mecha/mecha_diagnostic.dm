@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/mecha_diagnostic
 	name = "mecha holodiagnostic"
 	desc = "A holographic datasheet of unique data related to the mecha's construction and any production differences between the published designs to increment improvements."
@@ -23,4 +24,4 @@
 /obj/item/mecha_diagnostic/examine(mob/user)
 	. = ..()
 	if(mech_data)
-		. += "This holodata sheet consists of data from a <b>[initial(mech_data.name)]</b>."
+		. += LANG("obj.aa1e06c8", list(initial(mech_data.name)))

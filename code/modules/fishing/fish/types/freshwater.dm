@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/fish/goldfish
 	name = "goldfish"
 	fish_id = "goldfish"
@@ -170,7 +171,7 @@
 
 /obj/item/fish/zipzap/suicide_act(mob/living/user)
 	if(!electrocute_mob(user, power_source = get_area(src), source = src, siemens_coeff = 1, dist_check = FALSE))
-		user.visible_message(span_suicide("[user] tries to slap [user.p_them()]self with [src], but they're immune to electricity!"))
+		user.visible_message(span_suicide(LANG("obj.9cfc9b87", list(user, user.p_them(), src))))
 		return SHAME
 	return ..()
 
@@ -239,11 +240,11 @@
 	return 2 //two credits. Tadpoles aren't really that valueable.
 
 /obj/item/fish/tadpole/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] swallows [src] whole!"))
+	user.visible_message(span_suicide(LANG("obj.f34c2d31", list(user, src))))
 	src.forceMove(user)
 	if(status == FISH_DEAD)
 		user.emote("gasp")
-		user.visible_message(span_suicide("[user] croaks!"))
+		user.visible_message(span_suicide(LANG("obj.0174aa5a", list(user))))
 		return OXYLOSS
 
 	// the frogg grows
@@ -253,7 +254,7 @@
 /obj/item/fish/tadpole/proc/gestation(mob/living/user)
 	if(QDELETED(user) || QDELETED(src))
 		return
-	user.visible_message(span_suicide("A live frog bursts out of [user]!"))
+	user.visible_message(span_suicide(LANG("obj.c0f58831", list(user))))
 	new /obj/effect/spawner/random/frog(user.drop_location())
 
 	var/obj/item/bodypart/chest = user.get_bodypart(BODY_ZONE_CHEST)

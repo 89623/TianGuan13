@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/stack/tile/mineral
 	/// Determines what stack is gotten out of us when welded.
 	var/mineralType = null
@@ -5,18 +6,18 @@
 /obj/item/stack/tile/mineral/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W.tool_behaviour == TOOL_WELDER)
 		if(get_amount() < 4)
-			to_chat(user, span_warning("You need at least four tiles to do this!"))
+			to_chat(user, span_warning(LANG("obj.682d330c", null)))
 			return
 		if(!mineralType)
-			to_chat(user, span_warning("You can not reform this!"))
+			to_chat(user, span_warning(LANG("obj.59f6af92", null)))
 			stack_trace("A mineral tile of type [type] doesn't have its mineralType set.")
 			return
 		if(W.use_tool(src, user, 0, volume=40))
 			var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
 			var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.loc)
-			user.visible_message(span_notice("[user] shaped [src] into [new_item] with [W]."), \
-				span_notice("You shaped [src] into [new_item] with [W]."), \
-				span_hear("You hear welding."))
+			user.visible_message(span_notice(LANG("obj.50a33dd4", list(user, src, new_item, W))), \
+				span_notice(LANG("obj.2628de4d", list(src, new_item, W))), \
+				span_hear(LANG("obj.1aa82fa3", null)))
 			var/holding = user.is_holding(src)
 			use(4)
 			if(holding && QDELETED(src))

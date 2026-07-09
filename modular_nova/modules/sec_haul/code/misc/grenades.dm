@@ -42,8 +42,7 @@
 		silent_alert(user, src, crew_to_alert, message)
 		return ..()
 	else
-		to_chat(user, span_doyourjobidiot("The use of flashbangs when the security level is green is a violation of company policy!\nTo \
-		bypass this restriction and arm the flashbang anyway, CTRL + Click it (be prepared to have a good reason for doing this!)."))
+		to_chat(user, span_doyourjobidiot(LANG("obj.3d6e3e1e", null)))
 		return
 
 // CTRL + Click to willingly bypass the green alert restriction

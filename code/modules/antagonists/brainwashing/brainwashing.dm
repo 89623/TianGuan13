@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /proc/brainwash(mob/living/brainwash_victim, directives)
 	if(!brainwash_victim.mind)
 		return
@@ -25,7 +26,7 @@
 	deadchat_broadcast(rendered, "<b>[brainwash_victim]</b>", follow_target = brainwash_victim, turf_target = get_turf(brainwash_victim), message_type=DEADCHAT_ANNOUNCEMENT)
 	if(check_holidays(APRIL_FOOLS))
 		// Note: most of the time you're getting brainwashed you're unconscious
-		brainwash_victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+		brainwash_victim.say(LANG("_root.111ff1ea", null), forced = "That son of a bitch! They're in. (April Fools)")
 
 /datum/antagonist/brainwashed
 	name = "\improper Brainwashed Victim"
@@ -47,7 +48,7 @@
 	return data
 
 /datum/antagonist/brainwashed/farewell()
-	to_chat(owner, span_warning("Your mind suddenly clears..."))
+	to_chat(owner, span_warning(LANG("datum.2637ccf2", null)))
 	to_chat(owner, "<big>[span_warning("<b>You feel the weight of the Directives disappear! You no longer have to obey them.</b>")]</big>")
 	if(owner.current)
 		var/mob/living/owner_mob = owner.current
@@ -66,14 +67,14 @@
 			objectives += objective
 	while(tgui_alert(admin, "Add another objective?", "More Brainwashing", list("Yes","No")) == "Yes")
 
-	if(tgui_alert(admin,"Confirm Brainwashing?","Are you sure?",list("Yes","No")) == "No")
+	if(tgui_alert(admin,LANG("datum.e77519bb", null),LANG("datum.77344162", null),list("Yes","No")) == "No")
 		return
 
 	if(!LAZYLEN(objectives))
 		return
 
 	if(QDELETED(C))
-		to_chat(admin, "Mob doesn't exist anymore")
+		to_chat(admin, LANG("datum.4068a4c3", null))
 		return
 
 	brainwash(C, objectives)

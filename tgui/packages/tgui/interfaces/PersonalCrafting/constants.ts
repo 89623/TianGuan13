@@ -89,3 +89,32 @@ export const CATEGORY_ICONS_COOKING = {
   Snack: 'compress',
   Condiment: 'bottle-water',
 } as const;
+
+// NOVA EDIT ADDITION START - i18n: display labels for tool_behaviors. The raw value
+// (e.g. "knife") is an icon-class key AND a comparison id, so it must stay English;
+// only the shown text is localized. Keep in sync with #define TOOL_* in code/__DEFINES/tools.dm.
+export const TOOL_LABELS: Record<string, string> = {
+  crowbar: '撬棍',
+  multitool: '多用工具',
+  screwdriver: '螺丝刀',
+  cutters: '剪线钳',
+  wrench: '扳手',
+  welder: '焊枪',
+  analyzer: '分析仪',
+  mining: '采矿工具',
+  shovel: '铲子',
+  retractor: '牵开器',
+  hemostat: '止血钳',
+  cautery: '烧灼器',
+  drill: '手钻',
+  scalpel: '手术刀',
+  saw: '锯',
+  bonesetter: '接骨器',
+  knife: '刀',
+  bloodfilter: '血液过滤器',
+  'rolling pin': '擀面杖',
+  rustscraper: '除锈器',
+  billow: '风箱',
+  tong: '夹钳',
+};
+// NOVA EDIT ADDITION END

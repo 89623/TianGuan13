@@ -52,30 +52,30 @@
 			if(!istype(attacking_item, /obj/item/weaponcrafting/receiver))
 				return
 			if(!user.transferItemToLoc(attacking_item, src))
-				balloon_alert(user, "core stuck to your hand!")
+				balloon_alert(user, LANG("obj.c89edc0c", null))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			balloon_alert(user, "receiver inserted")
+			balloon_alert(user, LANG("obj.a836a1d0", null))
 			receiver = attacking_item
 			step = TURRET_ASSEMBLY_RECEIVER
 
 		if(TURRET_ASSEMBLY_SEC_1)
 			if(istype(attacking_item, /obj/item/stock_parts/servo)) //Construct
 				if(!user.transferItemToLoc(attacking_item, src))
-					balloon_alert(user, "servo stuck to your hand!")
+					balloon_alert(user, LANG("obj.52779bbb", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "servo added")
+				balloon_alert(user, LANG("obj.7cb93f71", null))
 				servo = attacking_item
 				step = TURRET_ASSEMBLY_SERVO
 
 		if(TURRET_ASSEMBLY_SEC_2)
 			if(istype(attacking_item, /obj/item/assembly/prox_sensor)) //Construct
 				if(!user.transferItemToLoc(attacking_item, src))
-					balloon_alert(user, "sensor stuck to your hand!")
+					balloon_alert(user, LANG("obj.b75110d3", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "sensor added")
+				balloon_alert(user, LANG("obj.1609b8bc", null))
 				sensor = attacking_item
 				step = TURRET_ASSEMBLY_SENSOR
 
@@ -86,18 +86,18 @@
 			var/obj/item/turretling = new design(drop_location())
 			qdel(src)
 			user.put_in_hands(turretling)
-			turretling.balloon_alert(user, "suit finished")
+			turretling.balloon_alert(user, LANG("obj.19a41b0d", null))
 
 /obj/item/turret_assembly/wrench_act(mob/living/user, obj/item/tool)
 	switch(step)
 		if(TURRET_ASSEMBLY_SEC_3)
 			if(tool.use_tool(src, user, 0, volume=30))
-				balloon_alert(user, "assembly secured")
+				balloon_alert(user, LANG("obj.40e42e49", null))
 				step = TURRET_ASSEMBLY_WRAPUP
 				return // Last step leads to the next step
 		if(TURRET_ASSEMBLY_WRAPUP)
 			if(tool.use_tool(src, user, 0, volume=30))
-				balloon_alert(user, "assembly unsecured")
+				balloon_alert(user, LANG("obj.213e899a", null))
 				step = TURRET_ASSEMBLY_SEC_3
 				return
 
@@ -105,32 +105,32 @@
 	switch(step)
 		if(TURRET_ASSEMBLY_RECEIVER) //Construct
 			if(tool.use_tool(src, user, 0, volume=30))
-				balloon_alert(user, "receiver secured")
+				balloon_alert(user, LANG("obj.70fad9f2", null))
 				step = TURRET_ASSEMBLY_SEC_1
 				return //same as wrench
 		if(TURRET_ASSEMBLY_SEC_1) //Deconstruct
 			if(tool.use_tool(src, user, 0, volume=30))
-				balloon_alert(user, "receiver unsecured")
+				balloon_alert(user, LANG("obj.ec92076d", null))
 				step = TURRET_ASSEMBLY_RECEIVER
 				return
 		if(TURRET_ASSEMBLY_SERVO) //Construct
 			if(tool.use_tool(src, user, 0, volume=30))
-				balloon_alert(user, "servo secured")
+				balloon_alert(user, LANG("obj.465d6ae8", null))
 				step = TURRET_ASSEMBLY_SEC_2
 				return
 		if(TURRET_ASSEMBLY_SEC_2) //Deconstruct
 			if(tool.use_tool(src, user, 0, volume=30))
-				balloon_alert(user, "sensor unsecured")
+				balloon_alert(user, LANG("obj.c17533a8", null))
 				step = TURRET_ASSEMBLY_SERVO
 				return
 		if(TURRET_ASSEMBLY_SENSOR)//Construct
 			if(tool.use_tool(src, user, 0, volume=30))
-				balloon_alert(user, "sensor secured")
+				balloon_alert(user, LANG("obj.5088e180", null))
 				step = TURRET_ASSEMBLY_SEC_3
 				return
 		if(TURRET_ASSEMBLY_SEC_3) //Deconstruct
 			if(tool.use_tool(src, user, 0, volume=30))
-				balloon_alert(user, "sensor unsecured")
+				balloon_alert(user, LANG("obj.c17533a8", null))
 				step = TURRET_ASSEMBLY_SENSOR
 				return
 
@@ -139,21 +139,21 @@
 		if(TURRET_ASSEMBLY_RECEIVER)
 			if(tool.use_tool(src, user, 0, volume=30))
 				receiver.forceMove(drop_location())
-				balloon_alert(user, "receiver taken out")
+				balloon_alert(user, LANG("obj.5eb464bb", null))
 				receiver = null
 				step = TURRET_ASSEMBLY_START
 				return
 		if(TURRET_ASSEMBLY_SERVO)
 			if(tool.use_tool(src, user, 0, volume=30))
 				servo.forceMove(drop_location())
-				balloon_alert(user, "servo removed")
+				balloon_alert(user, LANG("obj.88e677d2", null))
 				servo = null
 				step = TURRET_ASSEMBLY_SEC_1
 				return
 		if(TURRET_ASSEMBLY_SENSOR)
 			if(tool.use_tool(src, user, 0, volume=30))
 				sensor.forceMove(drop_location())
-				balloon_alert(user, "sensor removed")
+				balloon_alert(user, LANG("obj.8e7d27a2", null))
 				sensor = null
 				step = TURRET_ASSEMBLY_SEC_2
 				return

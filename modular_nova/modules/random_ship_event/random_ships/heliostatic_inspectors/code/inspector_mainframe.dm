@@ -86,10 +86,10 @@
 /obj/machinery/inspector_mainframe/proc/toggle_on(mob/user)
 	SSshuttle.registerTradeBlockade(src)
 	cargo_disruption_active = TRUE
-	to_chat(user,span_notice("You toggle [src] [cargo_disruption_active ? "on":"off"]."))
+	to_chat(user,span_notice(LANG("obj.baabf8b3", list(src, cargo_disruption_active ? "on":"off"))))
 	if(!tracked)
 		AddComponent(/datum/component/gps, "HC Starship")
-		to_chat(user,span_warning("The scrambling signal can now be tracked by GPS."))
+		to_chat(user,span_warning(LANG("obj.62f32462", null)))
 	if(!sos_active)
 		START_PROCESSING(SSobj,src)
 	update_appearance()
@@ -101,7 +101,7 @@
 	cargo_disruption_active = FALSE
 	if(!sos_active)
 		STOP_PROCESSING(SSobj,src)
-	to_chat(user,span_notice("You toggle [src] [cargo_disruption_active ? "on":"off"]."))
+	to_chat(user,span_notice(LANG("obj.baabf8b3", list(src, cargo_disruption_active ? "on":"off"))))
 	update_appearance()
 
 /// Broadcasts an SOS signal through the radio and schedules the next broadcast
@@ -173,13 +173,13 @@
 /// Sets the ship's alert level and notifies the crew via radio
 /obj/machinery/inspector_mainframe/proc/set_alert_level(level_name, level_description, mob/user)
 	if(current_alert_level == level_name)
-		balloon_alert(user, "alert level unchanged!")
+		balloon_alert(user, LANG("obj.0d44aabb", null))
 		return
 
 	current_alert_level = level_name
-	to_chat(user, span_notice("You set the ship alert status to [level_name]."))
+	to_chat(user, span_notice(LANG("obj.9e4c98b7", list(level_name))))
 	radio.talk_into(src, "ALERT LEVEL CHANGED: [level_name] - [level_description]", RADIO_CHANNEL_GUILD)
-	balloon_alert(user, "alert level updated")
+	balloon_alert(user, LANG("obj.270c75ba", null))
 	playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, TRUE)
 	update_appearance()
 
@@ -189,16 +189,16 @@
 		return
 
 	if(current_alert_level != "Status Onyx" && current_alert_level != "Status Obsidian")
-		balloon_alert(user, "requires status four or five!")
-		to_chat(user, span_warning("The SOS beacon can only be activated when the ship is at Status Onyx or Status Obsidian."))
+		balloon_alert(user, LANG("obj.cab99b45", null))
+		to_chat(user, span_warning(LANG("obj.32422dc2", null)))
 		return
 
 	sos_active = !sos_active
 	if(sos_active)
 		if(!cargo_disruption_active)
 			START_PROCESSING(SSobj, src)
-		to_chat(user, span_notice("You activate the SOS beacon."))
-		balloon_alert(user, "distress beacon activated!")
+		to_chat(user, span_notice(LANG("obj.bf96eab9", null)))
+		balloon_alert(user, LANG("obj.05d6c59b", null))
 		playsound(src, 'modular_nova/modules/random_ship_event/random_ships/heliostatic_inspectors/sounds/alarm_small_09.ogg', 75, TRUE)
 		if(current_alert_level == "Status Obsidian")
 			radio.talk_into(src, "ENCRYPTED BURST: OBSIDIAN. Self-destruct and denial protocols initiated. All assets to be denied to the enemy.", RADIO_CHANNEL_GUILD)
@@ -212,8 +212,8 @@
 		if(sos_timer_id)
 			deltimer(sos_timer_id)
 			sos_timer_id = null
-		to_chat(user, span_notice("You deactivate the SOS beacon."))
-		balloon_alert(user, "distress beacon deactivated!")
+		to_chat(user, span_notice(LANG("obj.f2145b45", null)))
+		balloon_alert(user, LANG("obj.dd34cf20", null))
 		playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, TRUE)
 		radio.talk_into(src, "Distress signal deactivated.", RADIO_CHANNEL_GUILD)
 	update_appearance()
@@ -234,4 +234,4 @@
 /obj/machinery/inspector_mainframe/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: System is [cargo_disruption_active ? "ACTIVE" : "INACTIVE"]. Current alert level: [current_alert_level]. SOS beacon: [sos_active ? "ACTIVE" : "INACTIVE"].")
+		. += span_notice(LANG("obj.42a02dc1", list(cargo_disruption_active ? "ACTIVE" : "INACTIVE", current_alert_level, sos_active ? "ACTIVE" : "INACTIVE")))

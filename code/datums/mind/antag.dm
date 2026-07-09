@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Datum antag mind procs
 /datum/mind/proc/add_antag_datum(datum_type_or_instance, team)
 	if(!datum_type_or_instance)
@@ -31,16 +32,20 @@
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
 		return
-	var/datum/antagonist/A = has_antag_datum(datum_type)
-	if(A)
-		A.on_removal()
-		current?.log_message("has lost antag datum [A.name]([A.type]).", LOG_GAME)
-		return TRUE
+	var/datum/antagonist/antag = has_antag_datum(datum_type)
+	if(isnull(antag))
+		return
+
+	antag.on_removal()
+	qdel(antag)
+	current?.log_message("has lost antag datum [antag] ([antag.type]).", LOG_GAME)
+	return TRUE
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
-	for(var/a in antag_datums)
-		var/datum/antagonist/A = a
-		A.on_removal()
+	for(var/datum/antagonist/antag as anything in antag_datums)
+		antag.on_removal()
+		qdel(antag)
+
 	current?.log_message("has lost all antag datums.", LOG_GAME)
 
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
@@ -126,7 +131,7 @@
 	var/cant_speak = (HAS_TRAIT(traitor_mob, TRAIT_MUTE) || is_mime_job(assigned_role))
 	if(uplink_spawn_location == UPLINK_RADIO && cant_speak)
 		if(!silent)
-			to_chat(current, span_warning("You have been deemed ineligible for a radio uplink. Supplying standard uplink instead."))
+			to_chat(current, span_warning(LANG("datum.6bb696cc", null)))
 		uplink_spawn_location = UPLINK_PDA
 
 	if(uplink_spawn_location != UPLINK_IMPLANT)
@@ -138,7 +143,7 @@
 		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)
 		new_implant.implant(traitor_mob, null, silent = TRUE)
 		if(!silent)
-			to_chat(current, span_boldnotice("Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."))
+			to_chat(current, span_boldnotice(LANG("datum.a12c16fa", null)))
 		add_memory(/datum/memory/key/traitor_uplink/implant, uplink_loc = "implant")
 		return new_implant
 
@@ -202,7 +207,7 @@
 
 	if(creator.is_antag())
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
-		to_chat(current, span_userdanger("Despite your creator's current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed."))
+		to_chat(current, span_userdanger(LANG("datum.69e6eecb", list(creator.real_name))))
 
 /datum/mind/proc/get_all_objectives()
 	var/list/all_objectives = list()
@@ -212,9 +217,9 @@
 
 /datum/mind/proc/announce_objectives()
 	var/obj_count = 1
-	to_chat(current, span_notice("Your current objectives:"))
+	to_chat(current, span_notice(LANG("datum.6e4b8169", null)))
 	for(var/datum/objective/objective as anything in get_all_objectives())
-		to_chat(current, "<B>[objective.objective_name] #[obj_count]</B>: [objective.explanation_text]")
+		to_chat(current, "<B>[objective.objective_name] #[obj_count]</B>: [lang_reverse_text(objective.explanation_text)]") // NOVA EDIT - I18N - reverse non-interpolated full-sentence objectives
 		obj_count++
 	// Objectives are often stored in the static data of antag uis, so we should update those as well
 	for(var/datum/antagonist/antag as anything in antag_datums)

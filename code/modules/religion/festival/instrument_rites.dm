@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/religion_rites/holy_violin
 	name = "Cogitandi Fidis"
 	desc = "Creates a holy violin that can analyze songs played from it."
@@ -10,15 +11,15 @@
 	. = ..()
 	var/turf/tool_turf = get_turf(religious_tool)
 	var/obj/item/instrument/violin/fidis = new /obj/item/instrument/violin/festival(get_turf(religious_tool))
-	fidis.visible_message(span_notice("[fidis] appears!"))
+	fidis.visible_message(span_notice(LANG("datum.71cf4641", list(fidis))))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 
 /datum/religion_rites/portable_song_tuning
 	name = "Portable Song Tuning"
-	desc = "Empowers an instrument on the table to work as a portable altar for tuning songs. Will need to be recharged after 5 rites."
+	desc = "Empowers a provided instrument to work as a portable altar for tuning songs. It will need to be recharged after five rites."
 	ritual_length = 6 SECONDS
 	ritual_invocations = list("Allow me to bring your holy inspirations ...")
-	invoke_msg = "... And send them with the winds my tunes ride with!"
+	invoke_msg = "... And send them with the winds my tunes ride!"
 	favor_cost = 10
 	///instrument to empower
 	var/obj/item/instrument/instrument_target
@@ -27,7 +28,7 @@
 	for(var/obj/item/instrument/could_empower in get_turf(religious_tool))
 		instrument_target = could_empower
 		return ..()
-	to_chat(user, span_warning("You need to place an instrument on [religious_tool] to do this!"))
+	to_chat(user, span_warning(LANG("datum.7fe66e30", list(religious_tool))))
 	return FALSE
 
 /datum/religion_rites/portable_song_tuning/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -36,9 +37,9 @@
 	var/turf/tool_turf = get_turf(religious_tool)
 	instrument_target = null
 	if(QDELETED(empower_target) || !(tool_turf == empower_target.loc)) //check if the instrument is still there
-		to_chat(user, span_warning("Your target left the altar!"))
+		to_chat(user, span_warning(LANG("datum.a4aeac01", null)))
 		return FALSE
-	empower_target.visible_message(span_notice("[empower_target] glows for a moment."))
+	empower_target.visible_message(span_notice(LANG("datum.0d43f7c4", list(empower_target))))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	var/list/allowed_rites_from_bible = subtypesof(/datum/religion_rites/song_tuner)
 	empower_target.AddComponent( \
@@ -149,7 +150,7 @@
 
 /datum/religion_rites/song_tuner/nullwave
 	name = "Nullwave Vibrato"
-	desc = "Sing a dull song, protecting those who listen from magic."
+	desc = "Sing a dull song, protecting listeners from magic."
 	particles_path = /particles/musical_notes/nullwave
 	song_invocation_message = "You've prepared an antimagic song!"
 	song_start_message = span_nicegreen("This music makes you feel protected!")
@@ -161,7 +162,7 @@
 
 /datum/religion_rites/song_tuner/pain
 	name = "Murderous Chord"
-	desc = "Sing a sharp song, cutting those around you. Works less effectively on fellow priests. At the end of the song, you'll open the wounds of all listeners."
+	desc = "Sing a sharp song, cutting those around you. Works less effectively on fellow priests. At the end of the song, you'll open dozens of cuts on all listeners."
 	particles_path = /particles/musical_notes/harm
 	song_invocation_message = "You've prepared a painful song!"
 	song_start_message = span_danger("This music cuts like a knife!")
@@ -181,7 +182,7 @@
 
 /datum/religion_rites/song_tuner/lullaby
 	name = "Spiritual Lullaby"
-	desc = "Sing a lullaby, tiring those around you, making them slower. At the end of the song, you'll put people who are tired enough to sleep."
+	desc = "Sing a lullaby, tiring and slowing those around you. At the end of the song, you'll lull all listeners to sleep."
 	particles_path = /particles/musical_notes/sleepy
 	song_invocation_message = "You've prepared a sleepy song!"
 	song_start_message = span_warning("This music's making you feel drowsy...")
@@ -211,5 +212,5 @@
 	listener.set_eye_blur_if_lower(4 SECONDS)
 
 /datum/religion_rites/song_tuner/lullaby/finish_effect(mob/living/carbon/human/listener, atom/song_source)
-	to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))
+	to_chat(listener, span_danger(LANG("datum.cb528330", null)))
 	listener.AdjustSleeping(5 SECONDS)

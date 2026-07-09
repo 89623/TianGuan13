@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Maximum disposal rate
 #define MAX_DISPOSAL_RATE 25
 
@@ -21,8 +22,8 @@
 
 /obj/machinery/plumbing/disposer/examine(mob/user)
 	. = ..()
-	. += span_notice("It is disposing [disposal_rate]u reagents per second.")
-	. += span_notice("Use hand to change disposal rate.")
+	. += span_notice(LANG("obj.5418f76d", list(disposal_rate)))
+	. += span_notice(LANG("obj.68993b7b", null))
 
 /obj/machinery/plumbing/disposer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item))

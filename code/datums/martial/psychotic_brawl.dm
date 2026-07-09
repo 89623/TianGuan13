@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/martial_art/psychotic_brawling
 	name = "Psychotic Brawling"
 	id = MARTIALART_PSYCHOBRAWL
@@ -40,13 +41,13 @@
 					if(grab_attack)
 						log_combat(attacker, defender, "grabbed", addition="aggressively")
 						defender.visible_message(
-							span_warning("[attacker] violently grabs [defender]!"),
-							span_userdanger("You're violently grabbed by [attacker]!"),
-							span_hear("You hear sounds of aggressive fondling!"),
+							span_warning(LANG("datum.c089d79c", list(attacker, defender))),
+							span_userdanger(LANG("datum.0d8be3c1", list(attacker))),
+							span_hear(LANG("datum.1af6c3cc", null)),
 							null,
 							attacker,
 						)
-						to_chat(attacker, span_danger("You violently grab [defender]!"))
+						to_chat(attacker, span_danger(LANG("datum.a2ee96d0", list(defender))))
 						attacker.setGrabState(GRAB_AGGRESSIVE) //Instant aggressive grab
 					else
 						log_combat(attacker, defender, "grabbed", addition="passively")
@@ -60,13 +61,13 @@
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			attacker.emote("flip")
 			defender.visible_message(
-				span_danger("[attacker] [atk_verb]s [defender]!"),
-				span_userdanger("You're [atk_verb]ed by [attacker]!"),
-				span_hear("You hear a sickening sound of flesh hitting flesh!"),
+				span_danger(LANG("datum.73829518", list(attacker, atk_verb, defender))),
+				span_userdanger(LANG("datum.074fb9e3", list(atk_verb, attacker))),
+				span_hear(LANG("datum.6c7f8149", null)),
 				null,
 				attacker,
 			)
-			to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
+			to_chat(attacker, span_danger(LANG("datum.22d557f3", list(atk_verb, defender))))
 			playsound(defender, 'sound/items/weapons/punch1.ogg', 40, TRUE, -1)
 			defender.apply_damage(defender_damage, attacker.get_attack_type(), BODY_ZONE_HEAD)
 			attacker.apply_damage(rand(5, 10), attacker.get_attack_type(), BODY_ZONE_HEAD)
@@ -85,13 +86,13 @@
 
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			defender.visible_message(
-				span_danger("[attacker] [atk_verb]s [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"),
-				span_userdanger("You're [atk_verb]ed by [attacker] with such inhuman strength that it sends you flying backwards!"),
-				span_hear("You hear a sickening sound of flesh hitting flesh!"),
+				span_danger(LANG("datum.05d96ab4", list(attacker, atk_verb, defender, defender.p_them()))),
+				span_userdanger(LANG("datum.65df5c1f", list(atk_verb, attacker))),
+				span_hear(LANG("datum.6c7f8149", null)),
 				null,
 				attacker,
 			)
-			to_chat(attacker, span_danger("You [atk_verb] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"))
+			to_chat(attacker, span_danger(LANG("datum.6546b2e4", list(atk_verb, defender, defender.p_them()))))
 			defender.apply_damage(rand(15, 30), attacker.get_attack_type())
 			playsound(defender, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 			var/throwtarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"
 	desc = "To stop that awful noise."
@@ -17,7 +18,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
 		if(src == carbon_user.wear_mask)
-			to_chat(user, span_warning("You need help taking this off!"))
+			to_chat(user, span_warning(LANG("obj.8114e6da", null)))
 			return
 	return ..()
 
@@ -53,19 +54,19 @@
 	if(harmful_strip)
 		user.apply_damage(stripping_damage, BRUTE, BODY_ZONE_HEAD)
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
-		to_chat(user, span_userdanger("You feel a massive pain as hundreds of tiny spikes tear free from your face!"))
+		to_chat(user, span_userdanger(LANG("obj.cbfb0bdd", null)))
 
 /obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, list/modifiers, list/attack_modifiers)
 	if(attacker.combat_mode)
 		return ..()
 	if(victim.is_mouth_covered(ITEM_SLOT_HEAD))
-		to_chat(attacker, span_notice("[victim]'s mouth is covered."))
+		to_chat(attacker, span_notice(LANG("obj.bbee9212", list(victim))))
 		return
 	if(!mob_can_equip(victim, ITEM_SLOT_MASK))
-		to_chat(attacker, span_notice("[victim] is already wearing somthing on their face."))
+		to_chat(attacker, span_notice(LANG("obj.4a98d29a", list(victim))))
 		return
-	balloon_alert(attacker, "taping mouth...")
-	to_chat(victim, span_userdanger("[attacker] is attempting to tape your mouth closed!"))
+	balloon_alert(attacker, LANG("obj.cf95b150", null))
+	to_chat(victim, span_userdanger(LANG("obj.abcc5b5f", list(attacker))))
 	if(!do_after(attacker, equip_delay_other, target = victim))
 		return
 	victim.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)

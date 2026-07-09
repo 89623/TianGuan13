@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * ## Pointed spells
  *
@@ -50,7 +51,7 @@
 /datum/action/cooldown/spell/pointed/proc/on_activation(mob/on_who)
 	SHOULD_CALL_PARENT(TRUE)
 
-	to_chat(on_who, span_notice("[active_msg] <B>Left-click to cast the spell on a target!</B>"))
+	to_chat(on_who, span_notice(LANG("datum.811cd7a6", list(active_msg))))
 	build_all_button_icons()
 	return TRUE
 
@@ -79,7 +80,7 @@
 
 /datum/action/cooldown/spell/pointed/is_valid_target(atom/cast_on)
 	if(cast_on == owner)
-		to_chat(owner, span_warning("You cannot cast [src] on yourself!"))
+		to_chat(owner, span_warning(LANG("datum.85ff4a02", list(src))))
 		return FALSE
 
 	return TRUE
@@ -90,7 +91,7 @@
 		return
 
 	if(owner && get_dist(get_turf(owner), get_turf(cast_on)) > cast_range)
-		cast_on.balloon_alert(owner, "too far away!")
+		cast_on.balloon_alert(owner, LANG("datum.a462ee7c", null))
 		return . | SPELL_CANCEL_CAST
 
 /**

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/bot/mulebot/paranormal
 	name = "\improper GHOULbot"
 	desc = "A rather ghastly looking... Multiple Utility Load Effector bot? It only seems to accept paranormal forces, and for this reason is fucking useless."
@@ -27,7 +28,7 @@
 		return
 
 	if(isobserver(movable_atom))
-		visible_message(span_warning("A ghostly figure appears on [src]!"))
+		visible_message(span_warning(LANG("mob.f091d1d0", list(src))))
 		movable_atom.forceMove(src)
 		RegisterSignal(movable_atom, COMSIG_MOVABLE_MOVED, PROC_REF(ghost_moved))
 
@@ -56,6 +57,6 @@
 ///Handles the ghosts moving out from the mule
 /mob/living/basic/bot/mulebot/paranormal/proc/ghost_moved()
 	SIGNAL_HANDLER
-	visible_message(span_notice("The ghostly figure vanishes..."))
+	visible_message(span_notice(LANG("mob.312774c5", null)))
 	UnregisterSignal(load, COMSIG_MOVABLE_MOVED)
 	unload()

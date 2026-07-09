@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/hololadder
 	name = "hololadder"
 
@@ -30,14 +31,14 @@
 	. = ..()
 
 	if(isnull(server_ref.resolve()))
-		. += span_infoplain("It's not connected to anything.")
+		. += span_infoplain(LANG("obj.b8effa34", null))
 		return
 
 	if(isobserver(user))
-		. += span_notice("Left click to view the server that this ladder is connected to.")
+		. += span_notice(LANG("obj.a577a0f8", null))
 		return
 
-	. += span_infoplain("This ladder is connected to a server. You can click on it or walk over it to disconnect.")
+	. += span_infoplain(LANG("obj.222fff72", null))
 
 
 /obj/structure/hololadder/attack_hand(mob/user, list/modifiers)
@@ -73,10 +74,10 @@
 				return
 
 	if(!HAS_TRAIT(user, TRAIT_TEMPORARY_BODY))
-		balloon_alert(user, "no connection detected")
+		balloon_alert(user, LANG("obj.acea3d3b", null))
 		return
 
-	balloon_alert(user, "disconnecting...")
+	balloon_alert(user, LANG("obj.731dc5a8", null))
 	if(do_after(user, travel_time, src))
 		SEND_SIGNAL(user, COMSIG_BITRUNNER_LADDER_SEVER)
 

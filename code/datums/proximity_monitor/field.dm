@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define FIELD_TURFS_KEY "field_turfs"
 #define EDGE_TURFS_KEY "edge_turfs"
 
@@ -184,7 +185,7 @@
 
 /obj/item/multitool/field_debug/attack_self(mob/user)
 	operating = !operating
-	to_chat(user, span_notice("You turn [src] [operating? "on":"off"]."))
+	to_chat(user, span_notice(LANG("obj.c2fd54ba", list(src, operating? "on":"off"))))
 	if(!istype(current) && operating)
 		setup_debug_field()
 	else if(!operating)

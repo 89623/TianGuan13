@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define HAS_SILENT_TOXIN 0 //don't provide a feedback message if this is the only toxin present
 #define HAS_NO_TOXIN 1
 #define HAS_PAINFUL_TOXIN 2
@@ -65,7 +66,7 @@
 		liver.apply_organ_damage(min(liver_damage * seconds_per_tick , MAX_TOXIN_LIVER_DAMAGE * seconds_per_tick))
 
 	if(provide_pain_message && liver.damage > 10 && SPT_PROB(liver.damage/6, seconds_per_tick)) //the higher the damage the higher the probability
-		to_chat(owner, span_warning("You feel a dull pain in your abdomen."))
+		to_chat(owner, span_warning(LANG("datum.fc623fd9", null)))
 
 	if(owner)
 		//apply side effects based on reagents metabolized

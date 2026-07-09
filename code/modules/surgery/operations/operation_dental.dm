@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/surgery_operation/limb/add_dental_implant
 	name = "add dental implant"
 	desc = "Implant a pill into a patient's teeth."
@@ -11,9 +12,9 @@
 
 /datum/surgery_operation/limb/add_dental_implant/all_required_strings()
 	. = list()
-	. += "operate on mouth (target mouth)"
+	. += LANG("datum.5c64277d", null)
 	. += ..()
-	. += "the mouth must have teeth"
+	. += LANG("datum.b0882657", null)
 
 /datum/surgery_operation/limb/add_dental_implant/get_default_radial_image()
 	return image('icons/hud/implants.dmi', "reagents")
@@ -134,11 +135,11 @@
 	return ..()
 
 /datum/action/item_action/activate_pill/do_effect(trigger_flags)
-	owner.balloon_alert_to_viewers("[owner] grinds their teeth!", "you grit your teeth")
+	owner.balloon_alert_to_viewers(LANG("datum.6de05d2d", list(owner)), LANG("datum.b311df92", null))
 	if(!do_after(owner, owner.stat * (2.5 SECONDS), owner,  IGNORE_USER_LOC_CHANGE | IGNORE_INCAPACITATED))
 		return FALSE
 	var/obj/item/pill = target
-	to_chat(owner, span_notice("You grit your teeth and burst the implanted [pill.name]!"))
+	to_chat(owner, span_notice(LANG("datum.3916b390", list(pill.name))))
 	owner.log_message("swallowed an implanted pill, [pill]", LOG_ATTACK)
 	pill.reagents.trans_to(owner, pill.reagents.total_volume, transferred_by = owner, methods = INGEST)
 	qdel(pill)

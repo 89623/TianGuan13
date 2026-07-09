@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * ## faction granter component!
@@ -36,18 +37,18 @@
 /datum/component/faction_granter/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(used)
-		examine_list += span_notice("[parent]'s favor granting power has been used up.")
+		examine_list += span_notice(LANG("datum.e49af80c", list(parent)))
 	else
-		examine_list += span_notice("Using [parent] in your hand will grant you favor with [faction_to_grant]\s")
+		examine_list += span_notice(LANG("datum.a7283f94", list(parent, faction_to_grant)))
 
 ///signal called on parent being interacted with in hand
 /datum/component/faction_granter/proc/on_self_attack(atom/source, mob/user)
 	SIGNAL_HANDLER
 	if(used)
-		to_chat(user, span_warning("The power of [parent] has been used up!"))
+		to_chat(user, span_warning(LANG("datum.7ecdd2da", list(parent))))
 		return
 	if(user.mind?.holy_role < holy_role_required)
-		to_chat(user, span_warning("You are not holy enough to invoke the power of [parent]!"))
+		to_chat(user, span_warning(LANG("datum.bb58e8d9", list(parent))))
 		return
 
 	to_chat(user, grant_message)

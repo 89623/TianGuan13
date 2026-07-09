@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // The rune carver, a heretic knife that can draw rune traps.
 /obj/item/melee/rune_carver
 	name = "carving knife"
@@ -49,8 +50,8 @@
 	if(!IS_HERETIC_OR_MONSTER(user) && !isobserver(user))
 		return
 
-	. += span_notice("<b>[length(current_runes)] / [max_rune_amt]</b> total carvings have been drawn.")
-	. += span_info("The following runes can be carved:")
+	. += span_notice(LANG("obj.55607d55", list(length(current_runes), max_rune_amt)))
+	. += span_info(LANG("obj.9c3d95cc", null))
 	for(var/obj/structure/trap/eldritch/trap as anything in subtypesof(/obj/structure/trap/eldritch))
 		var/potion_string = span_info("\tThe " + initial(trap.name) + " - " + initial(trap.carver_tip))
 		. += potion_string
@@ -69,11 +70,11 @@
  */
 /obj/item/melee/rune_carver/proc/try_carve_rune(turf/open/target_turf, mob/user)
 	if(drawing)
-		target_turf.balloon_alert(user, "already carving!")
+		target_turf.balloon_alert(user, LANG("obj.ecc823fd", null))
 		return
 
 	if(locate(/obj/structure/trap/eldritch) in range(1, target_turf))
-		target_turf.balloon_alert(user, "to close to another carving!")
+		target_turf.balloon_alert(user, LANG("obj.144172bd", null))
 		return
 
 	for(var/datum/weakref/rune_ref as anything in current_runes)
@@ -81,7 +82,7 @@
 			current_runes -= rune_ref
 
 	if(length(current_runes) >= max_rune_amt)
-		target_turf.balloon_alert(user, "too many carvings!")
+		target_turf.balloon_alert(user, LANG("obj.f8b22cf3", null))
 		return
 
 	drawing = TRUE
@@ -116,13 +117,13 @@
 	if(!ispath(to_make, /obj/structure/trap/eldritch))
 		CRASH("[type] attempted to create a rune of incorrect type! (got: [to_make])")
 
-	target_turf.balloon_alert(user, "carving [picked_choice]...")
+	target_turf.balloon_alert(user, LANG("obj.5eb827b9", list(picked_choice)))
 	user.playsound_local(target_turf, 'sound/items/sheath.ogg', 50, TRUE)
 	if(!do_after(user, 5 SECONDS, target = target_turf))
-		target_turf.balloon_alert(user, "interrupted!")
+		target_turf.balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
 
-	target_turf.balloon_alert(user, "[picked_choice] carved")
+	target_turf.balloon_alert(user, LANG("obj.b39652ff", list(picked_choice)))
 	var/obj/structure/trap/eldritch/new_rune = new to_make(target_turf, user)
 	current_runes += WEAKREF(new_rune)
 
@@ -191,7 +192,7 @@
 
 /obj/structure/trap/eldritch/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/melee/rune_carver) || HAS_TRAIT(tool, TRAIT_NULLROD_ITEM))
-		loc.balloon_alert(user, "carving dispelled")
+		loc.balloon_alert(user, LANG("obj.5abf070a", null))
 		playsound(src, 'sound/items/sheath.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
@@ -209,7 +210,7 @@
 /obj/structure/trap/eldritch/alert/trap_effect(mob/living/victim)
 	var/mob/living/real_owner = owner?.resolve()
 	if(real_owner)
-		to_chat(real_owner, span_userdanger("[victim.real_name] has stepped foot on the alert rune in [get_area(src)]!"))
+		to_chat(real_owner, span_userdanger(LANG("obj.d8802b12", list(victim.real_name, get_area(src)))))
 		real_owner.playsound_local(get_turf(real_owner), 'sound/effects/magic/curse.ogg', 50, TRUE)
 
 /obj/structure/trap/eldritch/tentacle

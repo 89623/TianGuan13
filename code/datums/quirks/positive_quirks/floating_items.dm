@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/quirk/floating_items
 	name = "Psionic Holding"
 	desc = "You find holding items with your hands so inconvenient, and use your mind powers to do so instead."
@@ -44,11 +45,11 @@
 			if(ishuman(owner))
 				var/mob/living/carbon/human/owner_human = owner
 				owner_human.update_held_items()
-			to_chat(owner, span_notice("You stop focusing on moving objects with your mind."))
+			to_chat(owner, span_notice(LANG("datum.eb83ed54", null)))
 		else
 			ADD_TRAIT(owner, TRAIT_FLOATING_HELD, QUIRK_TRAIT)
 			if(ishuman(owner))
 				var/mob/living/carbon/human/owner_human = owner
 				owner_human.update_held_items()
-			to_chat(owner, span_notice("You feel ready to move objects with your mind."))
+			to_chat(owner, span_notice(LANG("datum.7fc06111", null)))
 	return TRUE

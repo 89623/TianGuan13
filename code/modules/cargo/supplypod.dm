@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //The "pod_landingzone" temp visual is created by anything that "launches" a supplypod. This is what animates the pod and makes the pod forcemove to the station.
 //------------------------------------SUPPLY POD-------------------------------------//
 /obj/structure/closet/supplypod
@@ -277,14 +278,13 @@
 	turf/destination = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
 )
 	if(isnull(destination)) //Uuuuh, something went wrong. This is gonna hurt.
-		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent won't \
-			be able to handle our pod... as if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
+		to_chat(victim, span_hypnophrase(LANG("obj.8f8243ce", null)))
 		flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 		explosionSize = list(0,1,1,1)
 		destination = get_random_station_turf()
 
 	do_sparks(8, FALSE, victim)
-	victim.visible_message(span_notice("[victim] vanishes..."))
+	victim.visible_message(span_notice(LANG("obj.6c06c821", list(victim))))
 
 	victim.forceMove(src)
 
@@ -297,7 +297,7 @@
 	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
 	pod_flags &= ~FIRST_SOUNDS //Make it so we play sounds now
 	if (!effectQuiet && !ispath(style, /datum/pod_style/seethrough))
-		audible_message(span_notice("The pod hisses, closing and launching itself away from the station."), span_notice("The ground vibrates, and you hear the sound of engines firing."))
+		audible_message(span_notice(LANG("obj.3a2ac31a", null)), span_notice(LANG("obj.fa1062ba", null)))
 	stay_after_drop = FALSE
 	holder.pixel_z = initial(holder.pixel_z)
 	holder.alpha = initial(holder.alpha)

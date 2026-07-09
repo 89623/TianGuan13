@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Makes a mob simply stop and stare at a movable... yea...
 /datum/ai_behavior/stop_and_stare
 	behavior_flags = AI_BEHAVIOR_MOVE_AND_PERFORM
@@ -19,7 +20,7 @@
 	var/turf/pawn_turf = get_turf(pawn_mob)
 
 	pawn_mob.face_atom(target)
-	pawn_mob.balloon_alert_to_viewers("stops and stares...")
+	pawn_mob.balloon_alert_to_viewers(LANG("datum.4d8b7577", null))
 	set_movement_target(controller, pawn_turf, /datum/ai_movement/complete_stop)
 
 	if(controller.blackboard[BB_STATIONARY_MOVE_TO_TARGET])

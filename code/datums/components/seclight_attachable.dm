@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Component which allows you to attach a seclight to an item,
  * be it a piece of clothing or a tool.
@@ -161,7 +162,7 @@
 	var/successful_toggle = light.toggle_light(user)
 	if(!successful_toggle)
 		return TRUE
-	user.balloon_alert(user, "[light.name] toggled [light.light_on ? "on":"off"]")
+	user.balloon_alert(user, LANG("datum.cd34b8fb", list(light.name, light.light_on ? "on":"off")))
 	update_light()
 	return TRUE
 
@@ -219,14 +220,14 @@
 		return
 
 	if(light)
-		source.balloon_alert(attacker, "already has \a [light]!")
+		source.balloon_alert(attacker, LANG("datum.8af97977", list(light)))
 		return
 
 	if(!attacker.transferItemToLoc(attacking_item, source))
 		return
 
 	add_light(attacking_item, attacker)
-	source.balloon_alert(attacker, "attached [attacking_item]")
+	source.balloon_alert(attacker, LANG("datum.07b7e630", list(attacking_item)))
 	return COMPONENT_NO_AFTERATTACK
 
 /// Signal proc for [COMSIG_ATOM_TOOL_ACT] via [TOOL_SCREWDRIVER] that removes any attached seclite.
@@ -242,7 +243,7 @@
 /// Invoked asyncronously from [proc/on_screwdriver]. Handles removing the light from our parent.
 /datum/component/seclite_attachable/proc/unscrew_light(obj/item/source, mob/user, obj/item/tool)
 	tool?.play_tool_sound(source)
-	source.balloon_alert(user, "unscrewed [light]")
+	source.balloon_alert(user, LANG("datum.874b70af", list(light)))
 
 	var/obj/item/flashlight/seclite/to_remove = light
 
@@ -256,9 +257,9 @@
 	SIGNAL_HANDLER
 
 	if(light)
-		examine_list += "It has \a [light] [is_light_removable ? "mounted on it with a few <b>screws</b>" : "permanently mounted on it"]."
+		examine_list += LANG("datum.73387108", list(light, is_light_removable ? "mounted on it with a few <b>screws</b>" : "permanently mounted on it"))
 	else
-		examine_list += "It has a mounting point for a <b>seclite</b>."
+		examine_list += LANG("datum.fed02d0f", null)
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] that updates our parent with our seclite overlays, if we have some.
 /datum/component/seclite_attachable/proc/on_update_overlays(obj/item/source, list/overlays)

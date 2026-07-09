@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/ai_controller/basic_controller/turtle
 	blackboard = list(
 		BB_HAPPY_EMOTIONS = list(
@@ -63,7 +64,7 @@
 	always_reset_target = TRUE
 
 /datum/ai_behavior/hunt_target/sniff_flora/target_caught(mob/living/hunter, atom/hunted)
-	hunter.manual_emote("Enjoys the sweet scent eminating from [hunted::name]!")
+	hunter.manual_emote(LANG("datum.79c8e4f9", list(hunted::name)))
 
 /datum/ai_planning_subtree/find_and_hunt_target/headbutt_people
 	target_key = BB_TURTLE_HEADBUTT_VICTIM
@@ -88,5 +89,5 @@
 	always_reset_target = TRUE
 
 /datum/ai_behavior/hunt_target/headbutt_leg/target_caught(mob/living/hunter, atom/hunted)
-	hunter.manual_emote("playfully headbutts [hunted]'s legs!")
+	hunter.manual_emote(LANG("datum.7efb24f8", list(hunted)))
 

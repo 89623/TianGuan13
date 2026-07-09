@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/neck/tie/disco
 	name = "horrific necktie"
 	icon = 'icons/obj/clothing/neck.dmi'
@@ -26,7 +27,7 @@
 /obj/item/clothing/neck/tie/disco/examine(mob/user)
 	. = ..()
 	if(!length(possessed_souls))
-		. += span_notice("It may be given sentience by [EXAMINE_HINT("using it in hand")].")
+		. += span_notice(LANG("obj.2a370694", list(EXAMINE_HINT("using it in hand"))))
 
 /obj/item/clothing/neck/tie/disco/equipped(mob/living/user, slot)
 	. = ..()
@@ -47,7 +48,7 @@
 		return ..()
 
 	using = TRUE
-	to_chat(user, span_notice("You plumb the depths of your Inland Empire. Whispers seem to emaninate from [src], as though it had somehow come to life; could it be?"))
+	to_chat(user, span_notice(LANG("obj.9c240dcf", list(src))))
 
 	var/list/candidates = SSpolling.poll_ghost_candidates(
 		question = "Do you want to play as the spirit of [span_danger("[user.real_name]'s")] [span_notice("horrific necktie")]?",
@@ -59,7 +60,7 @@
 		ignore_category = POLL_IGNORE_HORRIFIC_NECKTIE,
 	)
 	if(!length(candidates))
-		to_chat(user, span_warning("The whispers coming from [src] fade and are silent again... Was it all your imagination? Maybe you can try again later."))
+		to_chat(user, span_warning(LANG("obj.ca2504bc", list(src))))
 		using = FALSE
 		return
 	hears_us = user.mind
@@ -73,10 +74,10 @@
 /obj/item/clothing/neck/tie/disco/attack_ghost(mob/hopeful_ghost)
 	. = ..()
 	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
-		to_chat(hopeful_ghost, span_warning("Ghost roles have been temporarily disabled!"))
+		to_chat(hopeful_ghost, span_warning(LANG("obj.90034770", null)))
 		return
 	if (!SSticker.HasRoundStarted())
-		to_chat(hopeful_ghost, span_warning("You cannot assume control of this until after the round has started!"))
+		to_chat(hopeful_ghost, span_warning(LANG("obj.14782a6e", null)))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	became_player_controlled(hopeful_ghost)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -94,7 +95,7 @@
 /obj/item/clothing/neck/tie/disco/proc/on_deleting(datum/source, force)
 	SIGNAL_HANDLER
 	possessed_souls -= source
-	to_chat(hears_us.current, span_notice("You feel like a voice just exited your mind."))
+	to_chat(hears_us.current, span_notice(LANG("obj.bc3ed64a", null)))
 
 ///Creates the ghost itself and adds them to the list of possessed souls in the tie.
 /obj/item/clothing/neck/tie/disco/proc/create_ghost(mob/new_ghost)
@@ -103,7 +104,7 @@
 	RegisterSignal(new_soul, COMSIG_LIVING_SEND_SPEECH, PROC_REF(on_speech_sent))
 	RegisterSignal(new_soul, COMSIG_QDELETING, PROC_REF(on_deleting))
 	possessed_souls += new_soul
-	to_chat(hears_us.current, span_notice("You look down at [src] and feel like there's another thought process entering your mind."))
+	to_chat(hears_us.current, span_notice(LANG("obj.0e315e01", list(src))))
 
 ///Called when a voice in the tie speaks, we use this to remove all listeners except the voices and creator.
 /obj/item/clothing/neck/tie/disco/proc/on_speech_sent(atom/source, list/listeners)
@@ -127,9 +128,7 @@
 
 /mob/living/basic/tie/Login()
 	. = ..()
-	to_chat(src, span_notice("You are the horrific necktie of the person who summoned you, \
-		the only person who is able to hear you. Like a voice in their head, you are their reasoning, \
-		their second-in-command. Take good care of them."))
+	to_chat(src, span_notice(LANG("mob.ecf415d8", null)))
 
 /mob/living/basic/tie/Logout()
 	. = ..()

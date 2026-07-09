@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/species/fly
 	name = "Flyperson"
 	plural_form = "Flypeople"
@@ -56,28 +57,26 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "grin-tongue",
-			SPECIES_PERK_NAME = "Uncanny Digestive System",
-			SPECIES_PERK_DESC = "Flypeople regurgitate their stomach contents and drink it \
-				off the floor to eat and drink with little care for taste, favoring gross foods.",
+			SPECIES_PERK_NAME = LANG("datum.69b65c12", null),
+			SPECIES_PERK_DESC = LANG("datum.a490edc3", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "fist-raised",
-			SPECIES_PERK_NAME = "Insectoid Biology",
-			SPECIES_PERK_DESC = "Fly swatters will deal significantly higher amounts of damage to a Flyperson.",
+			SPECIES_PERK_NAME = LANG("datum.f5ba5055", null),
+			SPECIES_PERK_DESC = LANG("datum.d3f1b65a", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "sun",
-			SPECIES_PERK_NAME = "Radial Eyesight",
-			SPECIES_PERK_DESC = "Flypeople can be flashed from all angles.",
+			SPECIES_PERK_NAME = LANG("datum.af977724", null),
+			SPECIES_PERK_DESC = LANG("datum.6df6e9f8", null),
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "briefcase-medical",
-			SPECIES_PERK_NAME = "Weird Organs",
-			SPECIES_PERK_DESC = "Flypeople take specialized medical knowledge to be \
-				treated. Their organs are disfigured and organ manipulation can be interesting...",
+			SPECIES_PERK_NAME = LANG("datum.957014e1", null),
+			SPECIES_PERK_DESC = LANG("datum.555345de", null),
 		),
 	)
 

@@ -104,7 +104,7 @@
 
 /obj/item/clothing/under/akula_wetsuit/job/examine(mob/user)
 	. = ..()
-	. += span_notice("This item could be examined further...")
+	. += span_notice(LANG("obj.b5542b5e", null))
 
 /obj/item/clothing/under/akula_wetsuit/job/examine_more(mob/user)
 	. = ..()

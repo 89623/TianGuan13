@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Pet Command
  * Set some AI blackboard commands in response to receiving instructions
@@ -218,5 +219,5 @@
 	parent.ai_controller.CancelActions()
 	if(!look_for_target(friend, potential_target) || !set_command_target(parent, potential_target))
 		return FALSE
-	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [potential_target] [pointed_reaction]!"))
+	parent.visible_message(span_warning(LANG("datum.0e6a6d8a", list(parent, friend, potential_target, pointed_reaction))))
 	return TRUE

@@ -12,12 +12,12 @@
 		else
 			src.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#41007e")
 
-		balloon_alert_to_viewers("a curse has been [cursed ? "placed..." : "lifted..."]")
+		balloon_alert_to_viewers(LANG("obj.8bed25c6", list(cursed ? "placed..." : "lifted...")))
 		if(isliving(user))
 			var/mob/living/living_user = user
 			living_user.adjust_fire_loss(100)
 
-		to_chat(user, span_warning("The knife sears your hand!"))
+		to_chat(user, span_warning(LANG("obj.83922db4", null)))
 		return
 
 	return ..()

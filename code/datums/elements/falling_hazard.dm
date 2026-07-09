@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// An element that will make a target thing do damage to any mob that it falls on from a z-level above
 /datum/element/falling_hazard
 	element_flags = ELEMENT_BESPOKE
@@ -44,9 +45,9 @@
 
 	if(obeys_hardhats && target_head_armor >= 15) // 15 melee armor is enough that most head items dont have this, but anything above a hardhat should protect you
 		poor_target.visible_message(
-			span_warning("[source] falls on [poor_target], thankfully [poor_target.p_they()] had a helmet on!"),
-			span_userdanger("You are hit on the head by [source], good thing you had a helmet on!"),
-			span_hear("You hear a [crushes_people ? "crash" : "bonk"]!"),
+			span_warning(LANG("datum.3f2e30db", list(source, poor_target, poor_target.p_they()))),
+			span_userdanger(LANG("datum.f31f83eb", list(source))),
+			span_hear(LANG("datum.639f02d9", list(crushes_people ? "crash" : "bonk"))),
 		)
 
 		if(crushes_people)
@@ -64,9 +65,9 @@
 		poor_target.apply_damage(fall_damage * levels, forced = TRUE, spread_damage = TRUE, wound_bonus = fall_wound_bonus)
 
 	poor_target.visible_message(
-		span_userdanger("[source] falls on [poor_target], [crushes_people ? "crushing [poor_target.p_them()]" : "hitting [poor_target.p_them()]"] [target_head ? "on the head!" : "!"]"),
-		span_userdanger("You are [crushes_people ? "crushed" : "hit"] by [source]!"),
-		span_hear("You hear a [crushes_people ? "crash" : "bonk"]!"),
+		span_userdanger(LANG("datum.800d12d6", list(source, poor_target, crushes_people ? "crushing [poor_target.p_them()]" : "hitting [poor_target.p_them()]", target_head ? "on the head!" : "!"))),
+		span_userdanger(LANG("datum.04ed122a", list(crushes_people ? "crushed" : "hit", source))),
+		span_hear(LANG("datum.639f02d9", list(crushes_people ? "crash" : "bonk"))),
 	)
 
 	playsound(poor_target, impact_sound, 50, TRUE)

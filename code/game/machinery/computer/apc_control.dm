@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/apc_control
 	name = "power flow control console"
 	desc = "Used to remotely control the flow of power to different parts of the station."
@@ -30,7 +31,7 @@
 
 /obj/machinery/computer/apc_control/attack_ai(mob/user)
 	if(!isAdminGhostAI(user))
-		to_chat(user,span_warning("[src] does not support AI control.")) //You already have APC access, cheater!
+		to_chat(user,span_warning(LANG("obj.3396f972", list(src)))) //You already have APC access, cheater!
 		return
 	return ..()
 
@@ -40,7 +41,7 @@
 	obj_flags |= EMAGGED
 	if (user)
 		user.log_message("emagged [src].", LOG_ATTACK, color="red")
-		balloon_alert(user, "access controller shorted")
+		balloon_alert(user, LANG("obj.72faa602", null))
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
@@ -63,7 +64,7 @@
 	if(isnull(apc))
 		return
 	if(apc.remote_control_user)
-		to_chat(user, span_warning("\The [apc] is being controlled by someone else!"))
+		to_chat(user, span_warning(LANG("obj.a7cefd42", list(apc))))
 		return
 	if(active_apc)
 		disconnect_apc()
@@ -169,7 +170,7 @@
 					auth_id = "[user_id_card.registered_name] ([user_id_card.assignment]):"
 					log_activity("[auth_id] attempted to log into the terminal")
 					playsound(src, 'sound/machines/terminal/terminal_error.ogg', 50, FALSE)
-					say("ID rejected, access denied!")
+					say(LANG("obj.20a665ea", null))
 				return
 			auth_id = "Unknown (Unknown):"
 			log_activity("[auth_id] attempted to log into the terminal")

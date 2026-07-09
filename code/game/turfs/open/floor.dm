@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Anything above a lattice should go here.
 /turf/open/floor
 	name = "floor"
@@ -163,10 +164,10 @@
 		broken = FALSE
 		burnt = FALSE
 		if(user && !silent)
-			to_chat(user, span_notice("You remove the broken plating."))
+			to_chat(user, span_notice(LANG("turf.658fcf6d", null)))
 	else
 		if(user && !silent)
-			to_chat(user, span_notice("You remove the floor tile."))
+			to_chat(user, span_notice(LANG("turf.c580fa1f", null)))
 		if(make_tile)
 			spawn_tile()
 	return make_plating(force_plating)
@@ -285,7 +286,7 @@
 			var/obj/structure/window/window_path = rcd_data[RCD_DESIGN_PATH]
 			if(!initial(window_path.fulltile))
 				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
-					balloon_alert(user, "window already here!")
+					balloon_alert(user, LANG("turf.6cae9ae5", null))
 					return FALSE
 				var/obj/structure/window/WD = new window_path(src, user.dir)
 				WD.set_anchored(TRUE)
@@ -300,7 +301,7 @@
 
 			if(ispath(airlock_type, /obj/machinery/door/window))
 				if(!valid_build_direction(src, user.dir, is_fulltile = FALSE))
-					balloon_alert(user, "there's already a windoor!")
+					balloon_alert(user, LANG("turf.e5e52e8c", null))
 					return FALSE
 				for(var/obj/machinery/door/door in src)
 					if(istype(door, /obj/machinery/door/window))
@@ -355,7 +356,7 @@
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(rcd_proof)
-				balloon_alert(user, "it's too thick!")
+				balloon_alert(user, LANG("turf.994e5b45", null))
 				return FALSE
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
 				return FALSE

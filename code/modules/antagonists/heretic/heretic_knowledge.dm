@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * # Heretic Knowledge
@@ -55,7 +56,7 @@
 /datum/heretic_knowledge/proc/pre_research(mob/user, datum/antagonist/heretic/our_heretic)
 	// consider moving this check to a type instead
 	if(is_final_knowledge && !our_heretic.unlimited_blades)
-		var/choice = tgui_alert(user, "THIS WILL DISABLE BLADE BREAKING, Are you ready to research this? The blade cap will also be removed.", "Get Final Spell?", list("Yes", "No"))
+		var/choice = tgui_alert(user, LANG("datum.773c3f14", null), LANG("datum.32e923aa", null), list("Yes", "No"))
 		if(choice != "Yes")
 			return FALSE
 	return TRUE
@@ -242,7 +243,7 @@
 			LAZYREMOVE(created_items, ref)
 
 	if(LAZYLEN(created_items) >= limit)
-		loc.balloon_alert(user, "ritual failed, at limit!")
+		loc.balloon_alert(user, LANG("datum.ef61fe8e", null))
 		return FALSE
 
 	return TRUE
@@ -279,7 +280,7 @@
 		our_heretic.heretic_path = new column_path()
 	if(!our_heretic.heretic_path)
 		// If we don't have a path, we can't continue.
-		to_chat(user, span_warning("Oh shit, something broke, no path found!"))
+		to_chat(user, span_warning(LANG("datum.98bd603c", null)))
 		stack_trace("failed to find valid path [our_heretic.heretic_shops[HERETIC_KNOWLEDGE_TREE][type][HKT_ROUTE]] from researching [src]")
 		return
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path.route)
@@ -444,7 +445,7 @@
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_HERETIC, poll_time = 10 SECONDS, checked_target = summoned, ignore_category = poll_ignore_define, alert_pic = summoned, role_name_text = summoned.name)
 	if(isnull(chosen_one))
-		loc.balloon_alert(user, "ritual failed, no ghosts!")
+		loc.balloon_alert(user, LANG("datum.4aba41bf", null))
 		animate(summoned, 0.5 SECONDS, alpha = 0)
 		QDEL_IN(summoned, 0.6 SECONDS)
 		return FALSE
@@ -531,15 +532,15 @@
 
 	var/list/requirements_string = list()
 
-	to_chat(user, span_hierophant("The [name] requires the following:"))
+	to_chat(user, span_hierophant(LANG("datum.6a274d9b", list(name))))
 	for(var/obj/item/path as anything in required_atoms)
 		var/amount_needed = required_atoms[path]
 		to_chat(user, span_hypnophrase("[amount_needed] [initial(path.name)]\s..."))
 		requirements_string += "[amount_needed == 1 ? "":"[amount_needed] "][initial(path.name)]\s"
 
-	to_chat(user, span_hierophant("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
+	to_chat(user, span_hierophant(LANG("datum.9260ae25", list(KNOWLEDGE_RITUAL_POINTS))))
 
-	desc = "Allows you to transmute [english_list(requirements_string)] for [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points. This can only be completed once."
+	desc = LANG("datum.40cb93a1", list(english_list(requirements_string), KNOWLEDGE_RITUAL_POINTS))
 
 /datum/heretic_knowledge/knowledge_ritual/can_be_invoked(datum/antagonist/heretic/invoker)
 	return !was_completed
@@ -552,7 +553,7 @@
 	our_heretic.adjust_knowledge_points(KNOWLEDGE_RITUAL_POINTS)
 	was_completed = TRUE
 
-	to_chat(user, span_boldnotice("[name] completed!"))
+	to_chat(user, span_boldnotice(LANG("datum.862499e6", list(name))))
 	to_chat(user, span_hypnophrase(span_big("[pick_list(HERETIC_INFLUENCE_FILE, "drain_message")]")))
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [round_timestamp()].")

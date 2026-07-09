@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DEFAULT_METEOR_LIFETIME 1800
 
 /obj/effect/meteor
@@ -124,7 +125,7 @@
 	. = ..()
 
 	if((user.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY))
-		. += span_notice("On second thought, it doesn't look too tough.")
+		. += span_notice(LANG("obj.cda906ee", null))
 	check_examine_award(user)
 
 ///Called by component/meteor_combat to send us moving to the edge of the map away from whoever punched us
@@ -338,9 +339,9 @@
 	threat = 15
 	signature = "bluespace flux"
 
-/obj/effect/meteor/bluespace/Bump()
+/obj/effect/meteor/bluespace/Bump(atom/bumped_atom)
 	..()
-	if(prob(35))
+	if(!QDELETED(src) && prob(35))
 		do_teleport(src, get_turf(src), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/meteor/banana

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///An element that lets players recolor the item through the greyscale menu with the help of a spraycan.
 /datum/element/gags_recolorable
 
@@ -10,7 +11,7 @@
 
 /datum/element/gags_recolorable/proc/on_examine(atom/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	examine_text += span_notice("Now utilising PPP recolouring technology, capable of absorbing paint and pigments for changing its colours!")
+	examine_text += span_notice(LANG("datum.2800943d", null))
 
 /datum/element/gags_recolorable/proc/on_item_interaction(atom/movable/source, mob/living/user, obj/item/toy/crayon/spraycan/item, modifiers)
 	SIGNAL_HANDLER
@@ -19,10 +20,10 @@
 		return NONE
 
 	if(item.is_capped)
-		user.balloon_alert(user, "take the cap off first!")
+		user.balloon_alert(user, LANG("datum.0c73c2ec", null))
 		return ITEM_INTERACT_BLOCKING
 	if(item.check_empty())
-		user.balloon_alert(user, "empty!")
+		user.balloon_alert(user, LANG("datum.6ef93b07", null))
 		return ITEM_INTERACT_BLOCKING
 
 	INVOKE_ASYNC(src, PROC_REF(open_ui), user, item, source)
@@ -59,7 +60,7 @@
 
 	can.use_charges()
 	if(can.pre_noise)
-		target.audible_message(span_hear("You hear spraying."))
+		target.audible_message(span_hear(LANG("datum.715ca92d", null)))
 		playsound(target.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
 	target.set_greyscale(menu.split_colors)

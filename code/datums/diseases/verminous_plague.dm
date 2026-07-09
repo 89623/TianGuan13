@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(cursed_vermin_by_stage, list(
 	"1" = list( // Mostly harmless
 		/mob/living/basic/butterfly = 1,
@@ -57,11 +58,11 @@ GLOBAL_LIST_INIT(cursed_vermin_by_stage, list(
 
 	var/obj/item/organ/lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 	if (lungs && affected_mob.emote("cough"))
-		affected_mob.visible_message(span_warning("[affected_mob] coughs out [created]!"))
+		affected_mob.visible_message(span_warning(LANG("datum.efae993b", list(affected_mob, created))))
 		lungs.apply_organ_damage(stage * 2)
 	else
 		affected_mob.vomit(VOMIT_CATEGORY_BLOOD_STUNLESS | MOB_VOMIT_FORCE)
-		affected_mob.visible_message(span_warning("[affected_mob] vomits out [created]!"))
+		affected_mob.visible_message(span_warning(LANG("datum.9322e0b2", list(affected_mob, created))))
 
 	if (stage == 1 || !created.ai_controller)
 		return

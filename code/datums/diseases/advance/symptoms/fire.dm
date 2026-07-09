@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**Spontaneous Combustion
  * No effect to stealth.
  * No effect to resistance.
@@ -59,7 +60,7 @@
 			living_mob.take_overall_damage(burn = ((advanced_stage ? 5 : 3) * power), required_bodytype = BODYTYPE_ORGANIC)
 			living_mob.ignite_mob(silent = TRUE)
 			if(living_mob.on_fire) //check to make sure they actually caught on fire, or if it was prevented cause they were wet.
-				living_mob.visible_message(span_warning("[living_mob] catches fire!"), ignored_mobs = living_mob)
+				living_mob.visible_message(span_warning(LANG("datum.8f730aca", list(living_mob))), ignored_mobs = living_mob)
 				to_chat(living_mob, span_userdanger((advanced_stage ? "Your skin erupts into an inferno!" : "Your skin bursts into flames!")))
 				living_mob.emote("scream")
 			else if(!suppress_warning)
@@ -73,7 +74,7 @@
 		living_mob.show_message(span_hear("You hear a crackling noise."), type = MSG_AUDIBLE)
 	else
 		if(HAS_TRAIT(living_mob, TRAIT_ANOSMIA)) //Anosmia quirk holder can't smell anything.
-			to_chat(living_mob, span_warning("You feel hot."))
+			to_chat(living_mob, span_warning(LANG("datum.5e869a62", null)))
 		else
 			to_chat(living_mob, span_warning("[pick("You feel hot.", "You smell smoke.")]"))
 
@@ -137,19 +138,19 @@ Bonus
 				to_chat(M, span_warning("[pick("Your veins boil.", "You feel hot.", "You smell meat cooking.")]"))
 		if(4)
 			if(M.fire_stacks < 0)
-				M.visible_message(span_warning("[M]'s sweat sizzles and pops on contact with water!"))
+				M.visible_message(span_warning(LANG("datum.5124cbf9", list(M))))
 				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power), explosion_cause = src)
 			Alkali_fire_stage_4(M, A)
 			M.ignite_mob()
-			to_chat(M, span_userdanger("Your sweat bursts into flames!"))
+			to_chat(M, span_userdanger(LANG("datum.6b64782f", null)))
 			M.emote("scream")
 		if(5)
 			if(M.fire_stacks < 0)
-				M.visible_message(span_warning("[M]'s sweat sizzles and pops on contact with water!"))
+				M.visible_message(span_warning(LANG("datum.5124cbf9", list(M))))
 				explosion(M, devastation_range = -1, heavy_impact_range = (-1 + explosion_power), light_impact_range = (2 * explosion_power), explosion_cause = src)
 			Alkali_fire_stage_5(M, A)
 			M.ignite_mob()
-			to_chat(M, span_userdanger("Your skin erupts into an inferno!"))
+			to_chat(M, span_userdanger(LANG("datum.7b3fb5c3", null)))
 			M.emote("scream")
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_4(mob/living/M, datum/disease/advance/A)

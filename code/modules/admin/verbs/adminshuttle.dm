@@ -1,9 +1,10 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB(change_shuttle_events, R_ADMIN|R_FUN, "Change Shuttle Events", "Change the events on a shuttle.", ADMIN_CATEGORY_SHUTTLE)
 	//At least for now, just letting admins modify the emergency shuttle is fine
 	var/obj/docking_port/mobile/port = SSshuttle.emergency
 
 	if(!port)
-		to_chat(user, span_admin("Uh oh, couldn't find the escape shuttle!"))
+		to_chat(user, span_admin(LANG("datum.64253f25", null)))
 
 	var/list/options = list("Clear"="Clear")
 
@@ -16,7 +17,7 @@ ADMIN_VERB(change_shuttle_events, R_ADMIN|R_FUN, "Change Shuttle Events", "Chang
 		options[((event in active) ? "(Remove)" : "(Add)") + initial(event.name)] = event
 
 	//Throw up an ugly menu with the shuttle events and the options to add or remove them, or clear them all
-	var/result = input(user, "Choose an event to add/remove", "Shuttle Events") as null|anything in sort_list(options)
+	var/result = input(user, LANG("datum.54487c0d", null), LANG("datum.ab79d7fb", null)) as null|anything in sort_list(options)
 
 	if(result == "Clear")
 		port.event_list.Cut()
@@ -34,7 +35,7 @@ ADMIN_VERB(call_shuttle, R_ADMIN, "Call Shuttle", "Force a shuttle call with add
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
-	var/confirm = tgui_alert(user, "You sure?", "Confirm", list("Yes", "Yes (No Recall)", "No"))
+	var/confirm = tgui_alert(user, LANG("datum.be968efe", null), LANG("datum.3c1da715", null), list("Yes", "Yes (No Recall)", "No"))
 	switch(confirm)
 		if(null, "No")
 			return
@@ -51,7 +52,7 @@ ADMIN_VERB(cancel_shuttle, R_ADMIN, "Cancel Shuttle", "Recall the shuttle, regar
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
-	if(tgui_alert(user, "You sure?", "Confirm Shuttle Cancellation", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, LANG("datum.be968efe", null), LANG("datum.d70ebaee", null), list("Yes", "No")) != "Yes")
 		return
 
 	if(!SSshuttle.cancel_evac(user.mob, hide_origin = TRUE)) // handles the case where the shuttle is set to unrecallable by another admin or the code
@@ -63,10 +64,10 @@ ADMIN_VERB(cancel_shuttle, R_ADMIN, "Cancel Shuttle", "Recall the shuttle, regar
 
 ADMIN_VERB(disable_shuttle, R_ADMIN, "Disable Shuttle", "Those fuckers aren't getting out.", ADMIN_CATEGORY_SHUTTLE)
 	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
-		to_chat(user, span_warning("Error, shuttle is already disabled."))
+		to_chat(user, span_warning(LANG("datum.b8472aba", null)))
 		return
 
-	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, LANG("datum.be968efe", null), LANG("datum.3c1da715", null), list("Yes", "No")) != "Yes")
 		return
 
 	message_admins(span_adminnotice("[key_name_admin(user)] disabled the shuttle."))
@@ -86,10 +87,10 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, "Disable Shuttle", "Those fuckers aren't ge
 
 ADMIN_VERB(enable_shuttle, R_ADMIN, "Enable Shuttle", "Those fuckers ARE getting out.", ADMIN_CATEGORY_SHUTTLE)
 	if(SSshuttle.emergency.mode != SHUTTLE_DISABLED)
-		to_chat(user, span_warning("Error, shuttle not disabled."))
+		to_chat(user, span_warning(LANG("datum.a398338c", null)))
 		return
 
-	if(tgui_alert(user, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, LANG("datum.be968efe", null), LANG("datum.3c1da715", null), list("Yes", "No")) != "Yes")
 		return
 
 	message_admins(span_adminnotice("[key_name_admin(user)] enabled the emergency shuttle."))
@@ -111,16 +112,16 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, "Enable Shuttle", "Those fuckers ARE getting
 	)
 
 ADMIN_VERB(hostile_environment, R_ADMIN, "Hostile Environment", "Disable the shuttle, naturally.", ADMIN_CATEGORY_SHUTTLE)
-	switch(tgui_alert(user, "Select an Option", "Hostile Environment Manager", list("Enable", "Disable", "Clear All")))
+	switch(tgui_alert(user, LANG("datum.2d66d006", null), LANG("datum.9b16bc89", null), list("Enable", "Disable", "Clear All")))
 		if("Enable")
 			if (SSshuttle.hostile_environments["Admin"] == TRUE)
-				to_chat(user, span_warning("Error, admin hostile environment already enabled."))
+				to_chat(user, span_warning(LANG("datum.241ca48b", null)))
 			else
 				message_admins(span_adminnotice("[key_name_admin(user)] Enabled an admin hostile environment"))
 				SSshuttle.registerHostileEnvironment("Admin")
 		if("Disable")
 			if (!SSshuttle.hostile_environments["Admin"])
-				to_chat(user, span_warning("Error, no admin hostile environment found."))
+				to_chat(user, span_warning(LANG("datum.65421b0d", null)))
 			else
 				message_admins(span_adminnotice("[key_name_admin(user)] Disabled the admin hostile environment"))
 				SSshuttle.clearHostileEnvironment("Admin")
@@ -157,7 +158,7 @@ ADMIN_VERB(shuttle_panel, R_ADMIN, "Shuttle Manipulator", "Opens the shuttle man
 	options += "Delete Shuttle"
 	options += "Into The Sunset (delete & greentext 'escape')"
 
-	var/selection = tgui_input_list(user, "Select where to fly [name || shuttle_id]:", "Fly Shuttle", options)
+	var/selection = tgui_input_list(user, LANG("obj.4135ead7", list(name || shuttle_id)), LANG("obj.e11247ef", null), options)
 	if(isnull(selection))
 		return
 
@@ -168,12 +169,12 @@ ADMIN_VERB(shuttle_panel, R_ADMIN, "Shuttle Manipulator", "Opens the shuttle man
 			setTimer(ignitionTime)
 
 		if("Delete Shuttle")
-			if(tgui_alert(user, "Really delete [name || shuttle_id]?", "Delete Shuttle", list("Cancel", "Really!")) != "Really!")
+			if(tgui_alert(user, LANG("obj.704b413e", list(name || shuttle_id)), LANG("obj.fc0656cd", null), list("Cancel", "Really!")) != "Really!")
 				return
 			jumpToNullSpace()
 
 		if("Into The Sunset (delete & greentext 'escape')")
-			if(tgui_alert(user, "Really delete [name || shuttle_id] and greentext escape objectives?", "Delete Shuttle", list("Cancel", "Really!")) != "Really!")
+			if(tgui_alert(user, LANG("obj.87737fd2", list(name || shuttle_id)), LANG("obj.fc0656cd", null), list("Cancel", "Really!")) != "Really!")
 				return
 			intoTheSunset()
 
@@ -186,7 +187,7 @@ ADMIN_VERB(shuttle_panel, R_ADMIN, "Shuttle Manipulator", "Opens the shuttle man
 	return  // use the existing verbs for this
 
 /obj/docking_port/mobile/arrivals/admin_fly_shuttle(mob/user)
-	switch(tgui_alert(user, "Would you like to fly the arrivals shuttle once or change its destination?", "Fly Shuttle", list("Fly", "Retarget", "Cancel")))
+	switch(tgui_alert(user, LANG("obj.6e0c6287", null), LANG("obj.e11247ef", null), list("Fly", "Retarget", "Cancel")))
 		if("Cancel")
 			return
 		if("Fly")
@@ -201,7 +202,7 @@ ADMIN_VERB(shuttle_panel, R_ADMIN, "Shuttle Manipulator", "Opens the shuttle man
 		if (canDock(S) == SHUTTLE_CAN_DOCK)
 			options[S.name || S.shuttle_id] = S
 
-	var/selection = tgui_input_list(user, "New arrivals destination", "Fly Shuttle", options)
+	var/selection = tgui_input_list(user, LANG("obj.86eb0a76", null), LANG("obj.e11247ef", null), options)
 	if(isnull(selection))
 		return
 	target_dock = options[selection]

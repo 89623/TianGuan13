@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/on_top/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/mob/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	if(!target || QDELETED(target))
@@ -84,7 +85,7 @@
 /mob/living/basic/living_floor/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(weapon.tool_behaviour != TOOL_CROWBAR)
 		return ..()
-	balloon_alert(user, "prying...")
+	balloon_alert(user, LANG("mob.1c42ba09", null))
 	playsound(src, 'sound/items/tools/crowbar.ogg', 45, TRUE)
 	if(!do_after(user, 5 SECONDS, src))
 		return

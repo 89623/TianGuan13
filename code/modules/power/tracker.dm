@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TRACKER_Z_OFFSET 13
 #define TRACKER_EDGE_Z_OFFSET (TRACKER_Z_OFFSET - 2)
 
@@ -127,7 +128,7 @@
 /obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
 	if(I.use_tool(src, user, 0))
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		user.visible_message(span_notice("[user] takes the glass off [src]."), span_notice("You take the glass off [src]."))
+		user.visible_message(span_notice(LANG("obj.41d6fa40", list(user, src))), span_notice(LANG("obj.e83f2a0b", list(src))))
 		deconstruct(TRUE)
 	return TRUE
 

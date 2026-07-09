@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_INIT(ore_probability, list(
 	/obj/item/stack/ore/uranium = 50,
 	/obj/item/stack/ore/iron = 100,
@@ -50,7 +51,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
  */
 /obj/structure/spawner/ice_moon/proc/destroy_effect()
 	playsound(loc,'sound/effects/explosion/explosionfar.ogg', 200, TRUE)
-	visible_message(span_bolddanger("[src] collapses, sealing everything inside!</span>\n<span class='warning'>Ores fall out of the cave as it is destroyed!"))
+	visible_message(span_bolddanger(LANG("obj.68dbd2a7", list(src))))
 
 /**
  * Drops items after the spawner is destroyed
@@ -123,7 +124,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 /obj/effect/collapsing_demonic_portal/Initialize(mapload)
 	. = ..()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
-	visible_message(span_bolddanger("[src] begins to collapse, cutting it off from this world!"))
+	visible_message(span_bolddanger(LANG("obj.88dd8134", list(src))))
 	animate(src, transform = matrix().Scale(0, 1), alpha = 50, time = 5 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(collapse)), 5 SECONDS)
 
@@ -140,7 +141,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
  *
  */
 /obj/effect/collapsing_demonic_portal/proc/drop_loot()
-	visible_message(span_warning("Something slips out of [src]!"))
+	visible_message(span_warning(LANG("obj.08102e15", list(src))))
 	var/loot = rand(1, 100)
 	switch(loot)
 		if(1 to 80)

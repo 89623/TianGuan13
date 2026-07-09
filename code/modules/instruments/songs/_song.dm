@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Song datum
  *
@@ -202,11 +203,11 @@
 	if(playing)
 		return
 	if(!using_instrument?.ready())
-		to_chat(user, span_warning("An error has occured with [src]. Please reset the instrument."))
+		to_chat(user, span_warning(LANG("datum.1367aa96", list(src))))
 		return
 	compile_chords()
 	if(!length(compiled_chords))
-		to_chat(user, span_warning("Song is empty."))
+		to_chat(user, span_warning(LANG("datum.131d7420", null)))
 		return
 	playing = TRUE
 	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.

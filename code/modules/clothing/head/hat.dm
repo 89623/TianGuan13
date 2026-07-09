@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/head/hats
 	icon = 'icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
@@ -134,7 +135,7 @@
 
 /// When we catch a bullet, fling away
 /obj/item/clothing/head/cowboy/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
-	victim.visible_message(span_warning("\The [bullet] sends [victim]'s hat flying!"))
+	victim.visible_message(span_warning(LANG("obj.daed300f", list(bullet, victim))))
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
 	throw_at(get_edge_target_turf(loc, pick(GLOB.alldirs)), range = 3, speed = 3)
 	playsound(victim, SFX_RICOCHET, 100, TRUE)
@@ -244,7 +245,7 @@
 /obj/item/clothing/head/costume/rice_hat/click_alt(mob/user)
 	reversed = !reversed
 	worn_icon_state = "[base_icon_state][reversed ? "_kim" : ""]"
-	to_chat(user, span_notice("You [reversed ? "lower" : "raise"] the hat."))
+	to_chat(user, span_notice(LANG("obj.e5e67234", list(reversed ? "lower" : "raise"))))
 	update_appearance()
 
 /obj/item/clothing/head/costume/lizard
@@ -368,11 +369,11 @@
 	if(earflaps)
 		icon_state = upsprite
 		inhand_icon_state = upsprite
-		to_chat(user, span_notice("You raise the ear flaps on the ushanka."))
+		to_chat(user, span_notice(LANG("obj.198e5bb9", null)))
 	else
 		icon_state = downsprite
 		inhand_icon_state = downsprite
-		to_chat(user, span_notice("You lower the ear flaps on the ushanka."))
+		to_chat(user, span_notice(LANG("obj.c35617d9", null)))
 	earflaps = !earflaps
 
 /obj/item/clothing/head/costume/ushanka/polar

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/heart_attack
 	name = "Random Heart Attack"
 	typepath = /datum/round_event/heart_attack
@@ -72,8 +73,7 @@
 	var/fitness_protection_probability = winner.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER)
 
 	if(prob(fitness_protection_probability * 2)) //Stuff that should "block" a heart attack rather than just deny eligibility for one goes here.
-		winner.visible_message(span_warning("[winner] grunts and clutches their chest for a moment, catching [winner.p_their()] breath."), span_medal("Your chest lurches in pain for a brief moment, which quickly fades. \
-								You feel like you've just avoided a serious health disaster."), span_hear("You hear someone's breathing sharpen for a moment, followed by a sigh of relief."), 4)
+		winner.visible_message(span_warning(LANG("datum.75377706", list(winner, winner.p_their()))), span_medal(LANG("datum.66f2f20c", null)), span_hear(LANG("datum.ec4010f3", null)), 4)
 		winner.playsound_local(get_turf(winner), 'sound/effects/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		winner.Stun(3 SECONDS)
 		if(winner.client)

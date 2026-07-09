@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define POSTER_MOOD_CAT "poster_mood"
 
 /obj/item/poster/quirk
@@ -20,13 +21,13 @@
 /obj/item/poster/quirk/attackby(obj/item/postertool, mob/user, list/modifiers, list/attack_modifiers)
 	if(!user.is_antag() || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(postertool, /obj/item/toy/crayon))
 		return ..()
-	balloon_alert(user, "converting poster...")
+	balloon_alert(user, LANG("obj.ba09f090", null))
 	if(!do_after(user, 5 SECONDS, user))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return
 	var/obj/item/poster/traitor/quirkspawn = new(get_turf(src))
 	user.put_in_hands(quirkspawn)
-	to_chat(user, span_notice("You have converted one of your posters!"))
+	to_chat(user, span_notice(LANG("obj.b497caf6", null)))
 	qdel(src)
 
 /// Screentip for the above
@@ -99,7 +100,7 @@
 	var/viewer_department = viewer.mind.assigned_role.paycheck_department
 	if(department != NONE && viewer_department != department)
 		return
-	to_chat(viewer, span_notice("Wow, great poster!"))
+	to_chat(viewer, span_notice(LANG("datum.18bc94e7", null)))
 	viewer.add_mood_event(POSTER_MOOD_CAT, /datum/mood_event/poster_mood)
 
 /datum/mood_event/poster_mood

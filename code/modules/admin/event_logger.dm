@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Global event logger datum, accessible anywhere for debug logging.
 GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 
@@ -492,7 +493,7 @@ GLOBAL_DATUM_INIT(event_logger, /datum/event_logger, new())
 			var/datum/target = locate(track_ref)
 			if(!target)
 				return FALSE
-			if(tgui_alert(user, "Stop tracking [target]?", "Confirm", list("Stop Tracking", "Cancel")) != "Stop Tracking")
+			if(tgui_alert(user, LANG("datum.650da5ab", list(target)), LANG("datum.3c1da715", null), list("Stop Tracking", "Cancel")) != "Stop Tracking")
 				return FALSE
 			target.disable_evlogging()
 			return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The threshld which determine if someone is tipsy vs drunk
 #define TIPSY_THRESHOLD 23.4 // NOVA EDIT CHANGE - ORIGINAL: #define TIPSY_THRESHOLD 6
 
@@ -105,6 +106,7 @@
 	owner.add_mood_event(id, /datum/mood_event/drunk, drunk_value)
 	owner.clear_mood_event("[id]_after")
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(drunk_gun_fired))
+	RegisterSignal(owner, COMSIG_MOVABLE_GRABBED_RESISTING, PROC_REF(grabbed_resisting))
 
 /datum/status_effect/inebriated/drunk/on_remove()
 	clear_effects()
@@ -125,6 +127,7 @@
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 	UnregisterSignal(owner, COMSIG_MOB_FIRED_GUN)
+	UnregisterSignal(owner, COMSIG_MOVABLE_GRABBED_RESISTING)
 	REMOVE_TRAIT(owner, TRAIT_FEARLESS, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/inebriated/drunk/proc/drunk_gun_fired(datum/source, obj/item/gun/gun, atom/firing_at, params, zone, bonus_spread_values)
@@ -137,6 +140,15 @@
 	if(istype(gun, /obj/item/gun/grenadelauncher) || istype(gun, /obj/item/gun/ballistic/revolver/grenadelauncher))
 		return
 	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (drunk_value * 0.5)
+
+/datum/status_effect/inebriated/drunk/proc/grabbed_resisting(datum/source, mob/living/grabbed, list/grab_stats)
+	SIGNAL_HANDLER
+
+	if(!HAS_TRAIT(owner, TRAIT_DRUNKEN_BRAWLER))
+		return
+
+	grab_stats[GRAB_STAT_EFFECTIVE_STATE] += 1
+	grab_stats[GRAB_STAT_FAIL_DAMAGE] += clamp((owner.get_fire_loss() + owner.get_brute_loss()) / 10, 3, 20)
 
 /datum/status_effect/inebriated/drunk/set_drunk_value(set_to)
 	. = ..()
@@ -226,7 +238,7 @@
 	if(drunk_value >= 83.4) // NOVA EDIT CHANGE - Alcohol impairment curve smoothing - ORIGINAL: if(drunk_value >= 81)
 		owner.adjust_tox_loss(1)
 		if(owner.stat == CONSCIOUS && prob(5))
-			to_chat(owner, span_warning("Maybe you should lie down for a bit..."))
+			to_chat(owner, span_warning(LANG("datum.47634e46", null)))
 
 	// Over 91, we gain even more toxloss, brain damage, and have a chance of dropping into a long sleep
 	if(drunk_value >= 93.4) // NOVA EDIT CHANGE - Alcohol impairment curve smoothing - ORIGINAL: if(drunk_value >= 91)
@@ -252,7 +264,7 @@
 		return
 	*/ // NOVA EDIT REMOVAL END
 	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(owner.z))// Don't put us in a deep sleep if the shuttle's here. QoL, mainly.
-		to_chat(owner, span_warning("You're so tired... but you can't miss that shuttle..."))
+		to_chat(owner, span_warning(LANG("datum.71fdc048", null)))
 	else
 		owner.Sleeping(90 SECONDS)
 

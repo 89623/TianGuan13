@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Landmarks and other helpers which speed up the mapping process and reduce the number of unique instances/subtypes of items/turf/ect
 
 
@@ -740,7 +741,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/atom_injector/component_injector/generate_stack_trace()
 	. = ..()
-	. += " | component type: [component_type] | component arguments: [list2params(component_args)]"
+	. += LANG("obj.60da6736", list(component_type, list2params(component_args)))
 
 ///This helper applies elements to things on the map directly.
 /obj/effect/mapping_helpers/atom_injector/element_injector
@@ -763,7 +764,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/atom_injector/element_injector/generate_stack_trace()
 	. = ..()
-	. += " | element type: [element_type] | element arguments: [list2params(element_args)]"
+	. += LANG("obj.f9751ec1", list(element_type, list2params(element_args)))
 
 ///This helper applies traits to things on the map directly.
 /obj/effect/mapping_helpers/atom_injector/trait_injector
@@ -786,7 +787,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/atom_injector/trait_injector/generate_stack_trace()
 	. = ..()
-	. += " | trait name: [trait_name]"
+	. += LANG("obj.f21128ab", list(trait_name))
 
 ///This helper applies dynamic human icons to things on the map
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector
@@ -825,7 +826,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/atom_injector/human_icon_injector/generate_stack_trace()
 	. = ..()
-	. += " | outfit path: [outfit_path] | species path: [species_path] | mob spawner path: [mob_spawn_path] | right/left hand path: [r_hand]/[l_hand]"
+	. += LANG("obj.8e87753e", list(outfit_path, species_path, mob_spawn_path, r_hand, l_hand))
 
 ///Fetches an external dmi and applies to the target object
 /obj/effect/mapping_helpers/atom_injector/custom_icon
@@ -870,7 +871,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/atom_injector/custom_icon/generate_stack_trace()
 	. = ..()
-	. += " | target variable: [target_variable] | icon url: [icon_url]"
+	. += LANG("obj.f42237c3", list(target_variable, icon_url))
 
 ///Fetches an external sound and applies to the target object
 /obj/effect/mapping_helpers/atom_injector/custom_sound
@@ -915,7 +916,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/atom_injector/custom_sound/generate_stack_trace()
 	. = ..()
-	. += " | target variable: [target_variable] | sound url: [sound_url]"
+	. += LANG("obj.345d4c78", list(target_variable, sound_url))
 
 /obj/effect/mapping_helpers/dead_body_placer
 	name = "Dead Body placer"
@@ -1534,3 +1535,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	name = "blunt impact dent"
 	icon_state = "impact1"
 	dent_type = WALL_DENT_HIT
+
+/***
+ * Used to prevent things from teleporting on (but not off) the turf through most means that do not call do_teleport() with the forced arg set to TRUE.
+ * The trait is removed if the turf is changed, so you should only keep it on small sections with indestructible turfs, ideally corners surrounded by
+ * other inaccessible walls. For larger sections, consider using areas with NO_TELEPORT or LOCAL_TELEPORT flags instead.
+ */
+/obj/effect/mapping_helpers/no_tele_turf
+	name = "no teleport turf"
+	icon_state = "no_teleport_turf"
+
+/obj/effect/mapping_helpers/wall_dent/Initialize(mapload)
+	. = ..()
+	var/turf/our_turf = get_turf(src)
+	ADD_TRAIT(our_turf, TRAIT_NO_TELEPORT, INNATE_TRAIT)

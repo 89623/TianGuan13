@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Robot customers
 /mob/living/basic/robot_customer
 	name = "tourist bot"
@@ -119,7 +120,7 @@
 	else
 		order = attending_venue.order_food_line(wanted_item)
 
-	. += span_notice("Their order was: \"[order].\"")
+	. += span_notice(LANG("mob.a9c0ffcc", list(order)))
 
 /mob/living/basic/robot_customer/death()
 	new /obj/effect/gibspawner/robot(drop_location())

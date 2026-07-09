@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/changeling/digitalcamo
 	name = "Digital Camouflage"
 	desc = "By evolving the ability to distort our form and proportions, we defeat common algorithms used to detect lifeforms on cameras."
@@ -11,10 +12,10 @@
 /datum/action/changeling/digitalcamo/sting_action(mob/user)
 	..()
 	if(active)
-		to_chat(user, span_notice("We return to normal."))
+		to_chat(user, span_notice(LANG("datum.47c70ecd", null)))
 		user.RemoveElement(/datum/element/digitalcamo)
 	else
-		to_chat(user, span_notice("We distort our form to hide from the AI."))
+		to_chat(user, span_notice(LANG("datum.97a7edb2", null)))
 		user.AddElement(/datum/element/digitalcamo)
 	active = !active
 	return TRUE

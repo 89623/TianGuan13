@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/martial_art/spiders_bite
 	name = "Spider's Bite"
 	id = MARTIALART_SPIDERSBITE
@@ -49,9 +50,9 @@
 	if(isnull(weapon) || !target.dropItemToGround(weapon))
 		return
 	source.visible_message(
-		span_warning("[source] knocks [target]'s [weapon.name] out of [target.p_their()] hands with a kick!"),
-		span_notice("You channel the flow of gravity and knock [target]'s [weapon.name] out of [target.p_their()] hands with a kick!"),
-		span_hear("You hear a thud, followed by a clatter."),
+		span_warning(LANG("datum.95d37bb3", list(source, target, weapon.name, target.p_their()))),
+		span_notice(LANG("datum.52361481", list(target, weapon.name, target.p_their()))),
+		span_hear(LANG("datum.1fd40cab", null)),
 	)
 
 /datum/martial_art/spiders_bite/get_prefered_attacking_limb(mob/living/martial_artist, mob/living/target)
@@ -63,9 +64,5 @@
 /datum/martial_art/spiders_bite/get_style_help()
 	. = list()
 
-	. += span_info("<b><i>You retreat inward and recall the Spider Clan's techniques...</i></b>\n\
-		&bull; Remember, <b>Many Legged Spider</b>: Unarmed attacks against staggered opponents will always be kicks - granting you greater accuracy and damage.\n\
-		&bull; Remember, <b>Jump and Climb</b>: Right clicking on throw mode will perform a tackle which is far far less likely to fail.\n\
-		&bull; Remember, <b>Flow of Gravity</b>: Kicking opponents will have a chance to knock their weapons to the floor. The chance increases for each sequential kick.\n\
-		&bull; Remember, <b>Wrap in Web</b>: Your grabs will be harder to escape from.")
+	. += span_info(LANG("datum.e213fc49", null))
 	return .

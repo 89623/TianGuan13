@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/aifixer
 	name = "\improper AI system integrity restorer"
 	desc = "Used with intelliCards containing nonfunctional AIs to restore them to working order."
@@ -15,9 +16,9 @@
 /obj/machinery/computer/aifixer/screwdriver_act(mob/living/user, obj/item/I)
 	if(occupier)
 		if(machine_stat & (NOPOWER|BROKEN))
-			to_chat(user, span_warning("The screws on [name]'s screen won't budge."))
+			to_chat(user, span_warning(LANG("obj.cf827b15", list(name))))
 		else
-			to_chat(user, span_warning("The screws on [name]'s screen won't budge and it emits a warning beep."))
+			to_chat(user, span_warning(LANG("obj.98b60a60", list(name))))
 	else
 		return ..()
 
@@ -57,7 +58,7 @@
 	switch(action)
 		if("PRG_beginReconstruction")
 			if(occupier?.health < 100)
-				to_chat(usr, span_notice("Reconstruction in progress. This will take several minutes."))
+				to_chat(usr, span_notice(LANG("obj.66296f84", null)))
 				playsound(src, 'sound/machines/terminal/terminal_prompt_confirm.ogg', 25, FALSE)
 				restoring = TRUE
 				occupier.notify_revival("Your core files are being restored!", source = src)
@@ -65,7 +66,7 @@
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	if(!use_energy(active_power_usage, force = TRUE))
-		say("Not enough energy. Restoration cancelled.")
+		say(LANG("obj.bc331d21", null))
 		return FALSE
 	var/need_mob_update = FALSE
 	need_mob_update += occupier.adjust_oxy_loss(-5, updating_health = FALSE)
@@ -77,7 +78,7 @@
 		occupier.revive()
 		if(!occupier.radio_enabled)
 			occupier.radio_enabled = TRUE
-			to_chat(occupier, span_warning("Your Subspace Transceiver has been enabled!"))
+			to_chat(occupier, span_warning(LANG("obj.b59f30db", null)))
 	return occupier.health < 100
 
 /obj/machinery/computer/aifixer/process()
@@ -111,29 +112,29 @@
 	//Downloading AI from card to terminal.
 	if(interaction == AI_TRANS_FROM_CARD)
 		if(machine_stat & (NOPOWER|BROKEN))
-			to_chat(user, span_alert("[src] is offline and cannot take an AI at this time."))
+			to_chat(user, span_alert(LANG("obj.ef380c0a", list(src))))
 			return
 		AI.forceMove(src)
 		occupier = AI
 		AI.set_control_disabled(TRUE)
 		AI.radio_enabled = FALSE
-		to_chat(AI, span_alert("You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."))
-		to_chat(user, "[span_notice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+		to_chat(AI, span_alert(LANG("obj.798fb85f", null)))
+		to_chat(user, LANG("obj.8779c42c", list(span_notice("Transfer successful"), AI.name, rand(1000,9999))))
 		card.AI = null
 		update_appearance()
 
 	else //Uploading AI from terminal to card
 		if(occupier && !restoring)
-			to_chat(occupier, span_notice("You have been downloaded to a mobile storage device. Still no remote access."))
-			to_chat(user, "[span_notice("Transfer successful")]: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+			to_chat(occupier, span_notice(LANG("obj.4521d3fb", null)))
+			to_chat(user, LANG("obj.473c4459", list(span_notice("Transfer successful"), occupier.name, rand(1000,9999))))
 			occupier.forceMove(card)
 			card.AI = occupier
 			occupier = null
 			update_appearance()
 		else if (restoring)
-			to_chat(user, span_alert("ERROR: Reconstruction in progress."))
+			to_chat(user, span_alert(LANG("obj.c10d8537", null)))
 		else if (!occupier)
-			to_chat(user, span_alert("ERROR: Unable to locate artificial intelligence."))
+			to_chat(user, span_alert(LANG("obj.67703819", null)))
 
 /obj/machinery/computer/aifixer/Destroy()
 	if(occupier)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 // Optional properties, not guaranteed to be present on all materials
 
@@ -148,7 +149,7 @@
 	if (!isvampire(target) || (!skin_contact && !source.get_property(MATERIAL_PENETRATING)))
 		return
 
-	to_chat(target, span_userdanger("Contact with [object] sears your undead flesh!"))
+	to_chat(target, span_userdanger(LANG("datum.82b2d674", list(object))))
 	target.apply_damage(source.get_property(id), BURN, def_zone, wound_bonus = 10, wound_clothing = FALSE)
 
 /// Teleports targets who come into active contact with the material around, property value determines teleport radius and damage taken per teleport

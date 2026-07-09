@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define SHUTDOWN_QUERY_TIMELIMIT (1 MINUTES)
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
@@ -600,7 +601,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 /datum/db_query/proc/warn_execute(async = TRUE)
 	. = Execute(async)
 	if(!.)
-		to_chat(usr, span_danger("A SQL error occurred during this operation, check the server logs."))
+		to_chat(usr, span_danger(LANG("datum.576967ef", null)))
 
 /datum/db_query/proc/Execute(async = TRUE, log_error = TRUE)
 	Activity("Execute")

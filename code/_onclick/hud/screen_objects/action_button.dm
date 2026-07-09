@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /atom/movable/screen/movable/action_button
 	var/datum/action/linked_action
 	var/datum/hud/our_hud
@@ -382,7 +383,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 			for(var/datum/hud/hud as anything in action.viewers)
 				var/atom/movable/screen/movable/action_button/button = action.viewers[hud]
 				hud.position_action(button, SCRN_OBJ_DEFAULT)
-		to_chat(usr, span_notice("Action button positions have been reset."))
+		to_chat(usr, span_notice(LANG("atom.7249b42e", null)))
 		return TRUE
 
 	set_expanded(!expanded)

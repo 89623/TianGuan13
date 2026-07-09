@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**********************Mining Scanners**********************/
 /obj/item/mining_scanner
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
@@ -92,7 +93,7 @@
 	if(vents_nearby && scanner)
 		if(undiscovered)
 			playsound(scanner, 'sound/machines/radar-ping.ogg', radar_volume, FALSE)
-			scanner.balloon_alert_to_viewers("ore vent nearby")
+			scanner.balloon_alert_to_viewers(LANG("_root.dec83256", null))
 		else
 			playsound(scanner, 'sound/machines/sonar-ping.ogg', radar_volume, FALSE)
 		scanner.spasm_animation(1.5 SECONDS)

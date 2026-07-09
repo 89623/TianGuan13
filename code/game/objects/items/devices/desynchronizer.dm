@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/desynchronizer
 	name = "desynchronizer"
 	desc = "An experimental device that can temporarily desynchronize the user from spacetime, effectively making them disappear while it's active."
@@ -25,7 +26,7 @@
 
 /obj/item/desynchronizer/attack_self(mob/living/user)
 	if(world.time < next_use)
-		to_chat(user, span_warning("[src] is still recharging."))
+		to_chat(user, span_warning(LANG("obj.ebecee81", list(src))))
 		return
 	if(!sync_holder)
 		desync(user)
@@ -35,16 +36,16 @@
 /obj/item/desynchronizer/examine(mob/user)
 	. = ..()
 	if(world.time < next_use)
-		. += span_warning("Time left to recharge: [DisplayTimeText(next_use - world.time)]")
-	. += span_notice("Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].")
-	. += span_notice("Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.")
+		. += span_warning(LANG("obj.d52e4c2c", list(DisplayTimeText(next_use - world.time))))
+	. += span_notice(LANG("obj.7c8e2011", list(DisplayTimeText(duration))))
+	. += span_notice(LANG("obj.5397c69a", null))
 
 /obj/item/desynchronizer/click_alt(mob/living/user)
-	var/new_duration = tgui_input_number(user, "Set the duration", "Desynchronizer", duration / 10, max_duration, 5)
+	var/new_duration = tgui_input_number(user, LANG("obj.b5bfbc12", null), LANG("obj.32768661", null), duration / 10, max_duration, 5)
 	if(!new_duration || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, NEED_DEXTERITY))
 		return CLICK_ACTION_BLOCKING
 	duration = new_duration
-	to_chat(user, span_notice("You set the duration to [DisplayTimeText(duration)]."))
+	to_chat(user, span_notice(LANG("obj.a836a4e8", list(DisplayTimeText(duration)))))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/desynchronizer/proc/desync(mob/living/user)
@@ -52,7 +53,7 @@
 		return
 	sync_holder = new(drop_location())
 	new /obj/effect/temp_visual/desynchronizer(drop_location())
-	to_chat(user, span_notice("You activate [src], desynchronizing yourself from the present. You can still see your surroundings, but you feel eerily dissociated from reality."))
+	to_chat(user, span_notice(LANG("obj.a2c5a289", list(src))))
 	user.forceMove(sync_holder)
 	last_use = world.time
 	icon_state = "desynchronizer-on"

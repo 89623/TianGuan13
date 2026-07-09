@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid forward movement."
@@ -25,7 +26,7 @@
 		return
 
 	if(recharging_time > world.time)
-		to_chat(user, span_warning("The boot's internal propulsion needs to recharge still!"))
+		to_chat(user, span_warning(LANG("obj.6e6195b1", null)))
 		return
 
 	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
@@ -33,11 +34,11 @@
 	ADD_TRAIT(user, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)  //Throwing itself doesn't protect mobs against lava (because gulag).
 	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE, callback = TRAIT_CALLBACK_REMOVE(user, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)))
 		playsound(src, 'sound/effects/stealthoff.ogg', 50, TRUE, TRUE)
-		user.visible_message(span_warning("[usr] dashes forward into the air!"))
+		user.visible_message(span_warning(LANG("obj.951d5b71", list(usr))))
 		recharging_time = world.time + recharging_rate
 	else
 		REMOVE_TRAIT(user, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
-		to_chat(user, span_warning("Something prevents you from dashing forward!"))
+		to_chat(user, span_warning(LANG("obj.9227c41d", null)))
 
 /obj/item/clothing/shoes/bhop/rocket
 	name = "rocket boots"

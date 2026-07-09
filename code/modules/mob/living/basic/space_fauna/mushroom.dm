@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/mushroom
 	name = "walking mushroom"
 	desc = "It's a massive mushroom... with legs?"
@@ -103,10 +104,10 @@
 		consume_mushroom(target)
 		return
 	target.faint_ticker++
-	visible_message(span_notice("[src] chews a bit on [target]."))
+	visible_message(span_notice(LANG("mob.180371ff", list(src, target))))
 
 /mob/living/basic/mushroom/proc/consume_mushroom(mob/living/basic/mushroom/consumed)
-	visible_message(span_warning("[src] devours [consumed]!"))
+	visible_message(span_warning(LANG("mob.3db76372", list(src, consumed))))
 	var/level_gain = (consumed.powerlevel - powerlevel)
 	if(level_gain >= 0 && !ckey && !consumed.bruised)//Player shrooms can't level up to become robust gods.
 		consumed.level_up(level_gain)
@@ -135,7 +136,7 @@
 		add_overlay(cap_living)
 
 /mob/living/basic/mushroom/proc/recover(obj/item/mush_meal)
-	visible_message(span_notice("[src] eats [mush_meal]!"))
+	visible_message(span_notice(LANG("mob.bd6d6680", list(src, mush_meal))))
 	update_mushroomcap()
 	qdel(mush_meal)
 	if(!COOLDOWN_FINISHED(src, recovery_cooldown))

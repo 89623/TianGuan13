@@ -82,13 +82,13 @@
 
 /obj/machinery/light/multitool_act(mob/living/user, obj/item/multitool)
 	if(!constant_flickering)
-		balloon_alert(user, "ballast is already working!")
+		balloon_alert(user, LANG("obj.e5dcc381", null))
 		return ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "repairing the ballast...")
+	balloon_alert(user, LANG("obj.af43217e", null))
 	if(do_after(user, 2 SECONDS, src))
 		stop_flickering()
-		balloon_alert(user, "ballast repaired!")
+		balloon_alert(user, LANG("obj.b3fe788a", null))
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 

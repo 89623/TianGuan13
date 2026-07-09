@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///A list of the possible mutations for a vine
 GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 
@@ -58,7 +59,7 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 		return
 
 	if(href_list[VV_HK_SPACEVINE_PURGE])
-		if(tgui_alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", list("Yes", "No")) == "Yes")
+		if(tgui_alert(usr, LANG("datum.e71717d4", null), LANG("datum.c04e98ae", null), list("Yes", "No")) == "Yes")
 			DeleteVines()
 
 /datum/spacevine_controller/proc/DeleteVines() //this is kill

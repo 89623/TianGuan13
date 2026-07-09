@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/scanner_wand
 	name = "kiosk scanner wand"
 	icon = 'icons/obj/devices/scanner.dmi'
@@ -16,23 +17,23 @@
 	flick("[icon_state]_active", src) //nice little visual flash when scanning someone else.
 
 	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(25))
-		user.visible_message(span_warning("[user] targets himself for scanning."), \
-		to_chat(user, span_info("You try scanning [M], before realizing you're holding the scanner backwards. Whoops.")))
+		user.visible_message(span_warning(LANG("obj.6b85a607", list(user))), \
+		to_chat(user, span_info(LANG("obj.ab22ee8f", list(M)))))
 		selected_target = user
 		return
 
 	if(!ishuman(M))
-		to_chat(user, span_info("You can only scan human-like, non-robotic beings."))
+		to_chat(user, span_info(LANG("obj.9634e188", null)))
 		selected_target = null
 		return
 
-	user.visible_message(span_notice("[user] targets [M] for scanning."), \
-						span_notice("You target [M] vitals."))
+	user.visible_message(span_notice(LANG("obj.b66c65fa", list(user, M))), \
+						span_notice(LANG("obj.d207c201", list(M))))
 	selected_target = M
 	return
 
 /obj/item/scanner_wand/attack_self(mob/user)
-	to_chat(user, span_info("You clear the scanner's target."))
+	to_chat(user, span_info(LANG("obj.5cda0240", null)))
 	selected_target = null
 
 /obj/item/scanner_wand/proc/return_patient()

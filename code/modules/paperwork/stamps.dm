@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/stamp
 	name = "rubber stamp"
 	desc = "A rubber stamp for stamping important documents."
@@ -15,7 +16,7 @@
 	attack_verb_simple = list("stamp")
 
 /obj/item/stamp/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead."))
+	user.visible_message(span_suicide(LANG("obj.12db9a09", list(user, user.p_their()))))
 	playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 	return OXYLOSS
 

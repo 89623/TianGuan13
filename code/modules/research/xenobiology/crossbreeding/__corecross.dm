@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //////////////////////////////////////////////
 //////////     SLIME CROSSBREEDS    //////////
 //////////////////////////////////////////////
@@ -113,7 +114,7 @@ To add a crossbreed:
 
 /obj/item/slimecrossbeaker/process()
 	if(!reagents.total_volume)
-		visible_message(span_notice("[src] has been drained completely, and melts away."))
+		visible_message(span_notice(LANG("obj.47817c3a", list(src))))
 		qdel(src)
 
 /obj/item/slimecrossbeaker/bloodpack //Pack of 50u blood. Deletes on empty.
@@ -147,21 +148,21 @@ To add a crossbreed:
 		return NONE
 	var/mob/living/carbon/injecting_mob = interacting_with
 	if(!reagents.total_volume)
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(self_use_only && injecting_mob != user)
-		to_chat(user, span_warning("This can only be used on yourself."))
+		to_chat(user, span_warning(LANG("obj.f601b2ae", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(reagents.total_volume && (ignore_flags || injecting_mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE)))
 		reagents.trans_to(injecting_mob, reagents.total_volume, transferred_by = user)
 		if(user != injecting_mob)
-			to_chat(injecting_mob, span_warning("[user] presses [src] against you!"))
-			to_chat(user, span_notice("You press [src] against [injecting_mob], injecting [injecting_mob.p_them()]."))
+			to_chat(injecting_mob, span_warning(LANG("obj.c4aa6c3f", list(user, src))))
+			to_chat(user, span_notice(LANG("obj.32d599e6", list(src, injecting_mob, injecting_mob.p_them()))))
 		else
-			to_chat(user, span_notice("You press [src] against yourself, and it flattens against you!"))
+			to_chat(user, span_notice(LANG("obj.c2b84838", list(src))))
 		return ITEM_INTERACT_SUCCESS
 	else
-		to_chat(user, span_warning("There's no place to stick [src]!"))
+		to_chat(user, span_warning(LANG("obj.cfa20f61", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 /obj/item/slimecrossbeaker/autoinjector/regenpack

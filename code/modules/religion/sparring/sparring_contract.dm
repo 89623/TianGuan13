@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/sparring_contract
 	desc = "A contract for setting up sparring matches. Both sparring partners must agree with the terms to begin."
 	icon = 'icons/obj/scrolls.dmi'
@@ -73,7 +74,7 @@
 	var/mob/user = usr
 
 	if(!ishuman(user))
-		to_chat(user, span_warning("This contract refuses to be signed by a lesser creature such as yourself."))
+		to_chat(user, span_warning(LANG("obj.0e840cce", null)))
 		return
 
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
@@ -85,7 +86,7 @@
 			resolved_opponents += resolved
 
 	if((user in resolved_opponents) && params["stakes"] == STAKES_HOLY_MATCH)
-		to_chat(user, span_warning("This contract refuses to be signed up for a holy match by a previous holy match loser. Pick a different stake!"))
+		to_chat(user, span_warning(LANG("obj.c9a25d22", null)))
 
 	//any updating of the terms should update the UI to display new terms
 	. = TRUE
@@ -104,7 +105,7 @@
 			if(!left_partner || !right_partner || !left_partner.mind || !right_partner.mind)
 				return
 			if(HAS_TRAIT(left_partner, TRAIT_SPARRING) || HAS_TRAIT(right_partner, TRAIT_SPARRING))
-				to_chat(user, span_warning("One participant is already sparring!"))
+				to_chat(user, span_warning(LANG("obj.556a2e4d", null)))
 				return
 			var/chaplain = left_partner.mind.holy_role ? left_partner : right_partner
 			var/opponent = left_partner.mind.holy_role ? right_partner : left_partner
@@ -112,7 +113,7 @@
 			qdel(src)
 		if("sign")
 			if(user == left_partner || user == right_partner)
-				to_chat(user, span_warning("You've already signed one side of the contract."))
+				to_chat(user, span_warning(LANG("obj.3276abd4", null)))
 				return
 			var/area/arena_condition_name = GLOB.areas_by_type[arena_condition]
 			arena_condition_name = format_text(arena_condition_name.name)
@@ -137,7 +138,7 @@
 			//if you change the terms you have to get the other person to sign again.
 			if(terms_changed && (left_partner || right_partner))
 				signed_by = list(null, null)//remove weakrefs
-				to_chat(user, span_warning("You will need to get your sparring partner to sign again under these new terms you've set."))
+				to_chat(user, span_warning(LANG("obj.ca59baa9", null)))
 			//fluff and signing
 			var/datum/weakref/user_ref = WEAKREF(user)
 			if(params["sign_position"] == CONTRACT_LEFT_FIELD)

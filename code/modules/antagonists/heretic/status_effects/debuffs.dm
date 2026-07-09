@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Forces the mob to attack nearby targets
 /datum/status_effect/forced_combat
 	id = "forced_combat"
@@ -80,7 +81,7 @@
 	tick_interval = 1 SECONDS
 
 /datum/status_effect/corrosion_curse/on_apply()
-	to_chat(owner, span_userdanger("Your body starts to break apart!"))
+	to_chat(owner, span_userdanger(LANG("datum.aed280ef", null)))
 	return TRUE
 
 /datum/status_effect/corrosion_curse/tick(seconds_between_ticks)
@@ -211,8 +212,8 @@
 	owner.adjust_brute_loss(-150 + owner.mob_mood.sanity)
 	owner.adjust_fire_loss(-150 + owner.mob_mood.sanity)
 
-	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, SLAY THEM ALL!!!</span>")))
-	owner.balloon_alert(owner, "they lie..THEY ALL LIE!!!")
+	to_chat(owner, span_hypnophrase((LANG("datum.b10a4bb7", null))))
+	owner.balloon_alert(owner, LANG("datum.9aaa5912", null))
 	owner.SetUnconscious(60 SECONDS, ignore_canstun = FALSE)
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_owner_overlay))
@@ -240,7 +241,7 @@
 
 /datum/status_effect/moon_converted/on_remove()
 	// Span warning and unconscious so they realize they aren't evil anymore
-	to_chat(owner, span_warning("Your mind is cleared from the effect of the mansus, your alligiences are as they were before"))
+	to_chat(owner, span_warning(LANG("datum.ba3547d6", null)))
 	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = FALSE)
 	owner.log_message("[owner] is no longer insane.", LOG_GAME)
@@ -260,9 +261,9 @@
 /datum/status_effect/moon_slept/on_apply()
 	. = owner.SetUnconscious(duration * 0.5, ignore_canstun = FALSE)
 	if(!.)
-		owner.balloon_alert(owner, "sleep resisted!")
-	to_chat(owner, span_hypnophrase(("THE MOON SHOWS YOU THE TRUTH AND THE LIARS WISH TO COVER IT, w-wait no that's not right</span>")))
-	owner.balloon_alert(owner, "they lie..wait-what are they lying about?")
+		owner.balloon_alert(owner, LANG("datum.4fca8f91", null))
+	to_chat(owner, span_hypnophrase((LANG("datum.95f7702f", null))))
+	owner.balloon_alert(owner, LANG("datum.15aa5592", null))
 
 /atom/movable/screen/alert/status_effect/moon_converted
 	name = "Moon Converted"
@@ -385,7 +386,7 @@
 		return
 
 	owner.apply_damage(scratch_damage, BRUTE, bodypart)
-	to_chat(owner, span_notice("You scratch furiously at your clothed [bodypart.plaintext_zone]!"))
+	to_chat(owner, span_notice(LANG("datum.39e3733b", list(bodypart.plaintext_zone))))
 
 /atom/movable/screen/alert/status_effect/eldritch_painting/beauty
 	name = "Lady Out of Gates"
@@ -403,7 +404,7 @@
 	if(isnull(tile))
 		return
 
-	to_chat(owner, span_notice("You feel the decay..."))
+	to_chat(owner, span_notice(LANG("datum.cd22f65b", null)))
 	tile.rust_heretic_act()
 
 /atom/movable/screen/alert/status_effect/eldritch_painting/rusting
@@ -439,7 +440,7 @@
 /datum/status_effect/moon_parade/on_apply()
 	if(!istype(leashed_to))
 		return FALSE
-	owner.balloon_alert(owner, "you feel unable to move away from the [leashed_to]!")
+	owner.balloon_alert(owner, LANG("datum.f418aca8", list(leashed_to)))
 	leash_component = owner.AddComponent(/datum/component/leash, leashed_to, distance = 1)
 	RegisterSignal(leashed_to, COMSIG_QDELETING, PROC_REF(delete_self))
 	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(block_move))
@@ -463,7 +464,7 @@
 		return
 	damage_received += damage_amount
 	if(damage_received >= damage_release_threshold)
-		owner.balloon_alert(owner, "you are free!")
+		owner.balloon_alert(owner, LANG("datum.8bc69f3a", null))
 		qdel(src)
 
 // Blocks movement in order to make it appear like the character is transfixed to the projectile and wandering after it

@@ -17,14 +17,14 @@
 	..()
 	if(!user || HAS_TRAIT(user, TRAIT_NO_TRANSFORM))
 		return 0
-	user.visible_message(span_warning("[user] writhes and contorts, their body expanding to inhuman proportions!"), \
-						span_danger("We begin our transformation to our true form!"))
+	user.visible_message(span_warning(LANG("datum.8f1cbf73", list(user))), \
+						span_danger(LANG("datum.0fbf72b8", null)))
 	if(!do_after(user, 3 SECONDS, target = user, timed_action_flags = IGNORE_HELD_ITEM))
-		user.visible_message(span_warning("[user]'s transformation abruptly reverts itself!"), \
-							span_warning("Our transformation has been interrupted!"))
+		user.visible_message(span_warning(LANG("datum.54ea0503", list(user))), \
+							span_warning(LANG("datum.058a9514", null)))
 		return 0
-	user.visible_message(span_warning("[user] grows into an abomination and lets out an awful scream!"), \
-						span_userdanger("We cast off our petty shell and enter our true form!"))
+	user.visible_message(span_warning(LANG("datum.ffcb520c", list(user))), \
+						span_userdanger(LANG("datum.c7113ebb", null)))
 	if(user.handcuffed)
 		var/obj/O = user.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 		if(istype(O))
@@ -41,7 +41,7 @@
 		var/obj/structure/closet/C = user.loc
 		if(istype(C))
 			if(C && user.loc == C)
-				C.visible_message(span_warning("[C]'s door breaks and opens!"))
+				C.visible_message(span_warning(LANG("datum.5cc0a5a0", list(C))))
 				new /obj/effect/decal/cleanable/greenglow(C.drop_location())
 				C.welded = FALSE
 				C.locked = FALSE

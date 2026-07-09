@@ -4,16 +4,16 @@
 		return
 	var/time_remaining = SSticker.GetTimeLeft()
 	if(time_remaining > 0)
-		. += "Time To Start: [round(time_remaining/10)]s"
+		. += LANG("mob.089189a1", list(round(time_remaining/10)))
 	else if(time_remaining == -10)
-		. += "Time To Start: DELAYED"
+		. += LANG("mob.fb6871ae", null)
 	else
-		. += "Time To Start: SOON"
+		. += LANG("mob.3a00d811", null)
 
-	. += "Players: [LAZYLEN(GLOB.clients)]"
+	. += LANG("mob.8044ca8f", list(LAZYLEN(GLOB.clients)))
 	if(client.holder)
-		. += "Players Ready: [SSticker.totalPlayersReady]"
-		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
+		. += LANG("mob.7fba5fa7", list(SSticker.totalPlayersReady))
+		. += LANG("mob.846d709a", list(SSticker.total_admins_ready, length(GLOB.admins)))
 	if(length(SSstatpanels.player_ready_data) || length(SSstatpanels.assistant_player_ready_data) || length(SSstatpanels.command_player_ready_data))
 		. += SSstatpanels.get_job_estimation(src)
 

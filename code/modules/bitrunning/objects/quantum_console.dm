@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/quantum_console
 	name = "quantum console"
 
@@ -10,7 +11,7 @@
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
-	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanotrasen is still using REST APIs. How grim."
+	desc = LANG("obj.985051d0", list(CURRENT_STATION_YEAR))
 
 /obj/machinery/computer/quantum_console/post_machine_initialize()
 	. = ..()
@@ -19,7 +20,7 @@
 /obj/machinery/computer/quantum_console/examine(mob/user)
 	. = ..()
 	if(!server_ref)
-		. += span_warning("Please install an quantum server in any tile next to this console.")
+		. += span_warning(LANG("obj.71077482", null))
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

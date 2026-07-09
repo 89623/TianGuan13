@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/effect/fun_balloon
 	name = "fun balloon"
 	desc = "This is going to be a laugh riot."
@@ -28,7 +29,7 @@
 	return
 
 /obj/effect/fun_balloon/proc/pop()
-	visible_message(span_notice("[src] pops!"))
+	visible_message(span_notice(LANG("obj.955f4e4a", list(src))))
 	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
 	qdel(src)
 
@@ -78,7 +79,7 @@
 
 		if("select_antag")
 			var/list/paths = subtypesof(/datum/antagonist)
-			antag_type = input(usr,"Select antag", "Antagonist selection") as null|anything in sort_list(paths)
+			antag_type = input(usr,LANG("obj.fe8eda00", null), LANG("obj.5763302b", null)) as null|anything in sort_list(paths)
 			make_antag = TRUE
 
 		if("pop")

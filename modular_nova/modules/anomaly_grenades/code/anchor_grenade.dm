@@ -31,19 +31,19 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTING, PROC_REF(on_teleport))
 	RegisterSignal(owner, COMSIG_MOB_PRE_JAUNT, PROC_REF(on_jaunt))
 	do_sparks(owner, 3, TRUE, spark_type = /datum/effect_system/basic/spark_spread/quantum)
-	to_chat(owner, span_warning("Your surroundings shimmer slightly. Teleportation, somehow, seems like it would not be a good idea."))
+	to_chat(owner, span_warning(LANG("datum.1b154107", null)))
 	return TRUE
 
 /datum/status_effect/bluespace_grounded/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_TELEPORTING)
 	UnregisterSignal(owner, COMSIG_MOB_PRE_JAUNT)
-	to_chat(owner, span_notice("Your surroundings shimmer slightly. Teleportation might be possible again."))
+	to_chat(owner, span_notice(LANG("datum.acbfce77", null)))
 
 /// Signal for COMSIG_MOVABLE_TELEPORTING that blocks teleports and stuns the would-be-teleportee.
 /datum/status_effect/bluespace_grounded/proc/on_teleport(mob/living/teleportee, atom/destination, channel)
 	SIGNAL_HANDLER
 
-	to_chat(owner, span_holoparasite("You feel yourself teleporting, but are suddenly flung back to where you just were!"))
+	to_chat(owner, span_holoparasite(LANG("datum.e8d0980b", null)))
 	penalize()
 
 	return TRUE
@@ -52,7 +52,7 @@
 /datum/status_effect/bluespace_grounded/proc/on_jaunt(mob/living/jaunter)
 	SIGNAL_HANDLER
 
-	to_chat(owner, span_holoparasite("As you attempt to jaunt, you slam directly into the barrier between realities and crash back into corporeality!"))
+	to_chat(owner, span_holoparasite(LANG("datum.1296e30a", null)))
 	penalize()
 
 	return COMPONENT_BLOCK_JAUNT

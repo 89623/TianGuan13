@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Shell Item
  *
@@ -12,11 +13,11 @@
 	var/screw_delay = 3 SECONDS
 
 /obj/item/shell/screwdriver_act(mob/living/user, obj/item/tool)
-	user.visible_message(span_notice("[user] begins finishing [src]."), span_notice("You begin finishing [src]."))
+	user.visible_message(span_notice(LANG("obj.afa85974", list(user, src))), span_notice(LANG("obj.5d9d7253", list(src))))
 	tool.play_tool_sound(src)
 	if(!do_after(user, screw_delay, src))
 		return
-	user.visible_message(span_notice("[user] finishes [src]."), span_notice("You finish [src]."))
+	user.visible_message(span_notice(LANG("obj.9da3076f", list(user, src))), span_notice(LANG("obj.0b6dd6ef", list(src))))
 
 	var/turf/drop_loc = drop_location()
 

@@ -177,9 +177,11 @@
 
 ///Returns reagent datum from reagent name string
 /proc/get_chem_id(chem_name)
+	var/canonical_name = lang_unreverse_text(chem_name) // NOVA EDIT - I18N - a translated (locale) name → its english original; no-op on english input / en locale
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-		if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
+		// NOVA EDIT CHANGE - I18N - match the compile-time english name: runtime R.name may be locale-translated, and ckey() strips non-ascii so a chinese name collapses to "" and never matches - ORIGINAL: if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
+		if(ckey(chem_name) == ckey(LOWER_TEXT(initial(R.name))) || ckey(canonical_name) == ckey(LOWER_TEXT(initial(R.name))))
 			return X
 
 /proc/reagent_paths_list_to_text(list/reagents, addendum)

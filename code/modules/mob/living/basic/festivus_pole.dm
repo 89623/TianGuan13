@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///how much charge we give off to cells around us when rubbed
 #define FESTIVUS_RECHARGE_VALUE (0.075 * STANDARD_CELL_CHARGE)
 
@@ -69,7 +70,7 @@
 	. = ..()
 	if(user.combat_mode)
 		return
-	visible_message(span_warning("[src] crackles with static electricity!"))
+	visible_message(span_warning(LANG("mob.3aed09e7", list(src))))
 	for(var/atom/affected in range(2, get_turf(src)))
 		if(istype(affected, /obj/item/stock_parts/power_store/cell))
 			var/obj/item/stock_parts/power_store/cell/cell = affected

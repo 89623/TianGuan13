@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MEND_REPLACE_KEY_SOURCE "%SOURCE%"
 #define MEND_REPLACE_KEY_TARGET "%TARGET%"
 
@@ -131,30 +132,30 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if (DOING_INTERACTION(healer, interaction_key))
-		healer.balloon_alert(healer, "busy!")
+		healer.balloon_alert(healer, LANG("datum.8df72942", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	switch (self_targeting)
 		if (HEALING_TOUCH_NOT_SELF)
 			if (target == healer)
-				healer.balloon_alert(healer, "can't heal yourself!")
+				healer.balloon_alert(healer, LANG("datum.45f64cdb", null))
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 		if (HEALING_TOUCH_SELF_ONLY)
 			if (target != healer)
-				healer.balloon_alert(healer, "can only heal yourself!")
+				healer.balloon_alert(healer, LANG("datum.07dba269", null))
 				return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	var/mob/living/living_target = target
 	if (living_target.health >= living_target.maxHealth)
-		target.balloon_alert(healer, "not hurt!")
+		target.balloon_alert(healer, LANG("datum.b9222925", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if (!has_healable_damage(living_target))
-		target.balloon_alert(healer, "can't heal that!")
+		target.balloon_alert(healer, LANG("datum.57c9ac72", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if (living_target.stat == DEAD)
-		target.balloon_alert(healer, "they're dead!")
+		target.balloon_alert(healer, LANG("datum.43a02ec6", null))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	INVOKE_ASYNC(src, PROC_REF(heal_target), healer, target)
@@ -188,7 +189,7 @@
 		healer.visible_message(span_notice("[format_string(action_text, healer, target)]"))
 
 	if (heal_time && !do_after(healer, heal_time, target = target, interaction_key = interaction_key))
-		healer.balloon_alert(healer, "interrupted!")
+		healer.balloon_alert(healer, LANG("datum.c67b5d27", null))
 		return
 
 	if (complete_text)

@@ -40,6 +40,6 @@
 	. = ..()
 
 	if(ACCESS_WEAPONS in GetAccess())
-		. += span_info("This ID authorizes the bearer to carry bulky firearms and automatic weapons.")
+		. += span_info(LANG("obj.097f68aa", null))
 	else
-		. += span_info("This ID does not authorize the bearer to carry bulky firearms or automatic weapons.")
+		. += span_info(LANG("obj.9c17a127", null))

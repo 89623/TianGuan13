@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MOOD_CATEGORY_TRANSHUMANIST_PEOPLE "transhumanist_people"
 #define MOOD_CATEGORY_TRANSHUMANIST_BODYPART "transhumanist_bodypart"
 // The number of silicons minus the number of organics determines the level
@@ -161,11 +162,11 @@
 	if(!slot_string)
 		return
 	if(isbodypart(old_part))
-		to_chat(quirk_holder, span_bolddanger("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
+		to_chat(quirk_holder, span_bolddanger(LANG("datum.0cfb445a", list(slot_string))))
 	else if (old_part.name == "eyes")
-		to_chat(quirk_holder, span_bolddanger("You replaced your eyes with flashlights, not cameras. You can't see a thing!"))
+		to_chat(quirk_holder, span_bolddanger(LANG("datum.a1daab4a", null)))
 	else if (isorgan(old_part))
-		to_chat(quirk_holder, span_bolddanger("Your [slot_string] brings you one step closer to silicon perfection, but you feel you're not quite there yet."))
+		to_chat(quirk_holder, span_bolddanger(LANG("datum.fbe890d5", list(slot_string))))
 
 /datum/quirk/transhumanist/process(seconds_per_tick)
 	var/organics_nearby = 0

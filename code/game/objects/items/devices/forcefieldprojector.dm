@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/forcefield_projector
 	name = "forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance."
@@ -30,26 +31,26 @@
 	if(istype(interacting_with, /obj/structure/projected_forcefield))
 		var/obj/structure/projected_forcefield/F = interacting_with
 		if(F.generator == src)
-			to_chat(user, span_notice("You deactivate [F]."))
+			to_chat(user, span_notice(LANG("obj.ec1eed45", list(F))))
 			qdel(F)
 			return ITEM_INTERACT_BLOCKING
 	var/turf/T = get_turf(interacting_with)
 	var/obj/structure/projected_forcefield/found_field = locate() in T
 	if(found_field)
-		to_chat(user, span_warning("There is already a forcefield in that location!"))
+		to_chat(user, span_warning(LANG("obj.80a4d7da", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(T.density)
 		return ITEM_INTERACT_BLOCKING
 	if(get_dist(T,src) > field_distance_limit)
 		return ITEM_INTERACT_BLOCKING
 	if(get_turf(src) == T)
-		to_chat(user, span_warning("Target is too close, aborting!"))
+		to_chat(user, span_warning(LANG("obj.d0b16d27", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(LAZYLEN(current_fields) >= max_fields)
-		to_chat(user, span_warning("[src] cannot sustain any more forcefields!"))
+		to_chat(user, span_warning(LANG("obj.4f2fe6dc", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(force_proj_busy)
-		to_chat(user, span_notice("[src] is busy creating a forcefield."))
+		to_chat(user, span_notice(LANG("obj.b26a5fc9", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
@@ -60,7 +61,7 @@
 		force_proj_busy = FALSE
 
 	playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
-	user.visible_message(span_warning("[user] projects a forcefield!"),span_notice("You project a forcefield."))
+	user.visible_message(span_warning(LANG("obj.2ecfa761", list(user))),span_notice(LANG("obj.778563b0", null)))
 	var/obj/structure/projected_forcefield/F = new(T, src)
 	current_fields += F
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -68,13 +69,13 @@
 
 /obj/item/forcefield_projector/attack_self(mob/user)
 	if(LAZYLEN(current_fields))
-		to_chat(user, span_notice("You deactivate [src], disabling all active forcefields."))
+		to_chat(user, span_notice(LANG("obj.b23f17ba", list(src))))
 		for(var/obj/structure/projected_forcefield/F in current_fields)
 			qdel(F)
 
 /obj/item/forcefield_projector/examine(mob/user)
 	. = ..()
-	. += span_notice("It is currently sustaining [LAZYLEN(current_fields)]/[max_fields] fields, and it's [round((shield_integrity/max_shield_integrity)*100)]% charged.")
+	. += span_notice(LANG("obj.32e2e8e2", list(LAZYLEN(current_fields), max_fields, round((shield_integrity/max_shield_integrity)*100))))
 
 /obj/item/forcefield_projector/Initialize(mapload)
 	. = ..()
@@ -123,7 +124,7 @@
 	generator = origin
 
 /obj/structure/projected_forcefield/Destroy()
-	visible_message(span_warning("[src] flickers and disappears!"))
+	visible_message(span_warning(LANG("obj.98c7a439", list(src))))
 	playsound(src,'sound/items/weapons/resonator_blast.ogg',25,TRUE)
 	if(generator)
 		generator.current_fields -= src

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/computer/arcade/amputation
 	name = "Mediborg's Amputation Adventure"
 	desc = "A picture of a blood-soaked medical cyborg flashes on the screen. \
@@ -13,12 +14,12 @@
 	. = ..()
 	if(!iscarbon(user))
 		return
-	to_chat(user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
+	to_chat(user, span_warning(LANG("obj.0e51d176", null)))
 	user.played_game()
 	var/obj/item/bodypart/chopchop = user.get_active_hand()
 	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(do_they_still_have_that_hand), user, chopchop)))
 		playsound(src, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
-		to_chat(user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
+		to_chat(user, span_userdanger(LANG("obj.1de703ce", null)))
 		chopchop.dismember()
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
@@ -26,10 +27,10 @@
 		victory_tickets(rand(6,10))
 		return
 	if(!do_they_still_have_that_hand(user, chopchop))
-		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))
+		to_chat(user, span_warning(LANG("obj.ca3ade6f", null)))
 		playsound(src, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
 	else
-		to_chat(user, span_notice("You (wisely) decide against putting your hand in the machine."))
+		to_chat(user, span_notice(LANG("obj.6616d66c", null)))
 	user.lost_game()
 
 ///Makes sure the user still has their starting hand, preventing the user from pulling the arm out and still getting prizes.

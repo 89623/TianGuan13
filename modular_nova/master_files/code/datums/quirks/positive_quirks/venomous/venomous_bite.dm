@@ -42,7 +42,7 @@
 	if (!.)
 		return
 
-	owner.visible_message("[owner] bares [owner.p_their()] fangs...", span_warning("You bare your fangs..."))
+	owner.visible_message(LANG("datum.10a1ffe0", list(owner, owner.p_their())), span_warning(LANG("datum.beb400e3", null)))
 
 /datum/action/cooldown/mob_cooldown/venomous_bite/Activate(atom/target_atom)
 	if (!isliving(target_atom))
@@ -50,20 +50,20 @@
 	if (iscarbon(owner))
 		var/mob/living/carbon/carbon_holder = owner
 		if (carbon_holder.is_mouth_covered())
-			owner.balloon_alert(owner, "mouth covered!")
+			owner.balloon_alert(owner, LANG("datum.8b7fe4a7", null))
 			return FALSE
 
 	if (!owner.Adjacent(target_atom))
-		owner.balloon_alert(owner, "too far!")
+		owner.balloon_alert(owner, LANG("datum.f5e75781", null))
 		return FALSE
 
 	if (target_atom == owner)
-		owner.balloon_alert(owner, "can't bite yourself!")
+		owner.balloon_alert(owner, LANG("datum.c4d2b479", null))
 		return FALSE
 
-	owner.visible_message(span_warning("[owner] starts to bite [target_atom]!"), span_warning("You start to bite [target_atom]!"), ignored_mobs = target_atom)
-	to_chat(target_atom, span_userdanger("[owner] starts to bite you!"))
-	owner.balloon_alert_to_viewers("biting...")
+	owner.visible_message(span_warning(LANG("datum.b7dd8aa6", list(owner, target_atom))), span_warning(LANG("datum.3f396cf8", list(target_atom))), ignored_mobs = target_atom)
+	to_chat(target_atom, span_userdanger(LANG("datum.e8886eaa", list(owner))))
+	owner.balloon_alert_to_viewers(LANG("datum.1d0e07be", null))
 	var/result = do_after(owner, 0.5 SECONDS, target_atom, IGNORE_HELD_ITEM)
 	if (!result)
 		return FALSE

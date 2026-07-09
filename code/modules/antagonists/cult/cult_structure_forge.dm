@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Some defines for items the daemon forge can create.
 #define NARSIE_ARMOR "Nar'Sien Hardened Armor"
 #define ELDRITCH_SWORD "Eldritch Longsword"
@@ -47,7 +48,7 @@
 
 
 /obj/structure/destructible/cult/item_dispenser/forge/succcess_message(mob/living/user, obj/item/spawned_item)
-	to_chat(user, span_cult_italic("You work [src] as dark knowledge guides your hands, creating [spawned_item]!"))
+	to_chat(user, span_cult_italic(LANG("obj.9928b88f", list(src, spawned_item))))
 
 /obj/structure/destructible/cult/item_dispenser/forge/engine
 	name = "magma engine"

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/outfit/syndicate
 	name = "Syndicate Operative - Basic"
 
@@ -130,8 +131,7 @@
 	. = ..()
 	if(visuals_only)
 		return
-	to_chat(H, span_notice("You're an agent of [faction], sent to accompany the nuclear squad on their mission. \
-		Support your allies, and remember: Down with Nanotrasen."))
+	to_chat(H, span_notice(LANG("datum.f91ed4c3", list(faction))))
 
 /datum/outfit/syndicate/reinforcement/plasmaman
 	name = "Syndicate Operative - Reinforcement (Plasmaman)"

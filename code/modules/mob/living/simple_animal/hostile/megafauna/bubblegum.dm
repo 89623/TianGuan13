@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define BUBBLEGUM_SMASH (health <= maxHealth*0.5) // angery
 #define BUBBLEGUM_CAN_ENRAGE (enrage_till + (enrage_time * 2) <= world.time)
 #define BUBBLEGUM_IS_ENRAGED (enrage_till > world.time)
@@ -300,7 +301,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	if(BUBBLEGUM_IS_ENRAGED)
-		visible_message(span_danger("[src] deflects the [hitting_projectile]! [p_They()] can't be hit with ranged weapons while enraged!"), span_userdanger("You deflect the projectile!"))
+		visible_message(span_danger(LANG("mob.3eec35f1", list(src, hitting_projectile, p_They()))), span_userdanger(LANG("mob.a6070bff", null)))
 		playsound(src, SFX_BULLET_MISS, 300, TRUE)
 		return BULLET_ACT_BLOCK
 	return ..()

@@ -51,13 +51,13 @@
 		toggle_mode()
 		switch(vibration_mode)
 			if("low")
-				to_chat(user, span_notice("You set the vibration mode to low. Bzzz..."))
+				to_chat(user, span_notice(LANG("obj.872155eb", null)))
 			if("medium")
-				to_chat(user, span_notice("You set the vibration mode to medium. Bzzzz!"))
+				to_chat(user, span_notice(LANG("obj.cc511a30", null)))
 			if("high")
-				to_chat(user, span_notice("You set the vibration mode to high. Careful with that thing."))
+				to_chat(user, span_notice(LANG("obj.6ec33772", null)))
 			if("off")
-				to_chat(user, span_notice("You turn off the vibrating egg. Fun time's over."))
+				to_chat(user, span_notice(LANG("obj.027102f0", null)))
 		update_icon()
 		update_icon_state()
 	return CLICK_ACTION_SUCCESS
@@ -190,7 +190,7 @@
 
 /obj/item/clothing/sextoy/eggvib/signalvib/click_alt(mob/user)
 	if(!color_changed)
-		var/choice = show_radial_menu(user, src, vib_designs, custom_check = CALLBACK(src, /obj/item/clothing/sextoy/proc/check_menu, user), radius = 36, require_near = TRUE)
+		var/choice = show_radial_menu(user, src, vib_designs, custom_check = CALLBACK(src, TYPE_PROC_REF(/obj/item/clothing/sextoy, check_menu), user), radius = 36, require_near = TRUE)
 		if(!choice)
 			return CLICK_ACTION_BLOCKING
 		current_color = choice
@@ -198,7 +198,7 @@
 		color_changed = TRUE
 	else
 		if(!toy_on)
-			to_chat(user, span_notice("You can't switch modes while the vibrating egg is turned off!"))
+			to_chat(user, span_notice(LANG("obj.56474033", null)))
 			return CLICK_ACTION_BLOCKING
 		toggle_mode()
 		soundloop1.stop()
@@ -206,13 +206,13 @@
 		soundloop3.stop()
 		switch(vibration_mode)
 			if("low")
-				to_chat(user, span_notice("You set the vibration mode to low. Bzzz..."))
+				to_chat(user, span_notice(LANG("obj.872155eb", null)))
 				soundloop1.start()
 			if("medium")
-				to_chat(user, span_notice("You set the vibration mode to medium. Bzzzz!"))
+				to_chat(user, span_notice(LANG("obj.cc511a30", null)))
 				soundloop2.start()
 			if("high")
-				to_chat(user, span_notice("You set the vibration mode to high. Careful with that thing!"))
+				to_chat(user, span_notice(LANG("obj.49379485", null)))
 				soundloop3.start()
 		update_icon()
 		update_icon_state()
@@ -247,11 +247,11 @@
 		return
 	if(toy_on)
 		if(src == vibrated.penis || src == vibrated.vagina || src == vibrated.anus)
-			to_chat(vibrated, span_purple("You feel pleasant vibrations deep below..."))
+			to_chat(vibrated, span_purple(LANG("obj.2514b1c0", null)))
 		else if(src == vibrated.nipples)
-			to_chat(vibrated, span_purple("You feel pleasant stimulation in your nipples."))
+			to_chat(vibrated, span_purple(LANG("obj.33265d65", null)))
 	else if(!toy_on && is_inside_lewd_slot(vibrated))
-		to_chat(vibrated, span_purple("The vibrating toy no longer drives you mad."))
+		to_chat(vibrated, span_purple(LANG("obj.de527b5e", null)))
 
 	if(!master)
 		return

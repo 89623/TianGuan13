@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/wires/airlock/shell
 	holder_type = /obj/machinery/door/airlock/shell
 	proper_name = "Circuit Airlock"
@@ -191,7 +192,7 @@
 	var/list/result = SScircuit_component.execute_instant_run()
 
 	if(!result)
-		attached_airlock.visible_message(span_warning("[attached_airlock]'s circuitry overheats!"))
+		attached_airlock.visible_message(span_warning(LANG("obj.ae15d213", list(attached_airlock))))
 		return
 
 	if(result["should_open"])

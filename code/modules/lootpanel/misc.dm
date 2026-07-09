@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Helper to open the panel
 /datum/lootpanel/proc/open(turf/tile)
 	if (tile != source_turf)
@@ -12,12 +13,7 @@
 		var/build = owner.byond_build
 		var/version = owner.byond_version
 		if(build < 515 || (build == 515 && version < 1635))
-			to_chat(owner.mob, boxed_message(span_info("\
-				<span class='bolddanger'>Your version of Byond doesn't support fast image loading.</span>\n\
-				Detected: [version].[build]\n\
-				Required version for this feature: <b>515.1635</b> or later.\n\
-				Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.\n\
-			")))
+			to_chat(owner.mob, boxed_message(span_info(LANG("datum.1b116858", list(version, build)))))
 
 			notified = TRUE
 #endif

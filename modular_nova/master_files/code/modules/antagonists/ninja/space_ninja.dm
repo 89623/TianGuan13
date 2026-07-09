@@ -132,12 +132,12 @@
 
 /datum/antagonist/ninja/greet()
 	SEND_SOUND(owner.current, sound('sound/music/antag/ninja_greeting.ogg'))
-	to_chat(owner.current, span_danger("I am an elite operative executing a co-ordinated strike for the benefit of Cybersun Industries."))
-	to_chat(owner.current, span_warning("Precision is my weapon. Shadows are my armor. Without them, I am nothing."))
-	to_chat(owner.current, span_notice("The station is located to your [dir2text(get_dir(owner.current, locate(world.maxx/2, world.maxy/2, owner.current.z)))]. A thrown ninja star will be a great way to get there."))
+	to_chat(owner.current, span_danger(LANG("datum.b4d8d233", null)))
+	to_chat(owner.current, span_warning(LANG("datum.8facf063", null)))
+	to_chat(owner.current, span_notice(LANG("datum.bfa95e0e", list(dir2text(get_dir(owner.current, locate(world.maxx/2, world.maxy/2, owner.current.z)))))))
 	owner.announce_objectives()
 
 /// removes ninja glove security records console interaction
 /obj/machinery/computer/records/security/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	balloon_alert(ninja, "nothing happens!")
+	balloon_alert(ninja, LANG("obj.bccffc95", null))
 

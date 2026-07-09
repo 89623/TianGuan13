@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///Spawns a cargo pod containing a random cargo supply pack on a random area of the station
 /datum/round_event_control/stray_cargo
 	name = "Stray Cargo Pod"
@@ -42,7 +43,7 @@
 /datum/round_event/stray_cargo/announce(fake)
 	if(fake)
 		impact_area = find_event_area()
-	priority_announce("Stray cargo pod detected on long-range scanners. Expected location of impact: [impact_area.name].", "Collision Alert")
+	priority_announce(LANG("datum.c8ed4dc5", list(impact_area.name)), "Collision Alert")
 
 /**
 * Tries to find a valid area, throws an error if none are found
@@ -109,7 +110,7 @@
 	var/obj/structure/closet/supplypod/pod = make_pod()
 	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, container)
 	var/static/mutable_appearance/target_appearance = mutable_appearance('icons/obj/supplypods_32x32.dmi', "LZ")
-	notify_ghosts("[control.name] has summoned a supply crate!", source = get_turf(landing_marker), header = "Cargo Inbound", alert_overlay = target_appearance)
+	notify_ghosts(LANG("datum.481cd65c", list(control.name)), source = get_turf(landing_marker), header = "Cargo Inbound", alert_overlay = target_appearance)
 
 ///Handles the creation of the pod, in case it needs to be modified beforehand
 /datum/round_event/stray_cargo/proc/make_pod()
@@ -152,7 +153,7 @@
 	var/pack_type_override
 
 /datum/event_admin_setup/syndicate_cargo_pod/prompt_admins()
-	var/admin_selected_pack = tgui_alert(usr,"Customize Pod contents?", "Pod Contents", list("Yes", "No", "Cancel"))
+	var/admin_selected_pack = tgui_alert(usr,LANG("datum.d0d70c8b", null), LANG("datum.0a06d68f", null), list("Yes", "No", "Cancel"))
 	switch(admin_selected_pack)
 		if("Yes")
 			return override_contents()
@@ -164,7 +165,7 @@
 ///This proc prompts admins to set a TC value and uplink type for the crate, those values are then passed to a new syndicate pack's setup_contents() to generate the contents before spawning it.
 /datum/event_admin_setup/syndicate_cargo_pod/proc/override_contents()
 	var/datum/supply_pack/misc/syndicate/custom_value/syndicate_pack = new
-	var/pack_telecrystals = tgui_input_number(usr, "Please input crate's value in telecrystals.", "Set Telecrystals.", 30)
+	var/pack_telecrystals = tgui_input_number(usr, LANG("datum.52a22223", null), LANG("datum.2c2b14a3", null), 30)
 	if(isnull(pack_telecrystals))
 		return ADMIN_CANCEL_EVENT
 	var/list/possible_uplinks = list(
@@ -174,7 +175,7 @@
 		"Lone Op" = UPLINK_LONE_OP,
 		"Spy" = UPLINK_SPY
 		)
-	var/uplink_type = tgui_input_list(usr, "Choose uplink to draw items from.", "Choose uplink type.", possible_uplinks)
+	var/uplink_type = tgui_input_list(usr, LANG("datum.a8d3b428", null), LANG("datum.ea38f878", null), possible_uplinks)
 	var/selection
 	if(!isnull(uplink_type))
 		selection = possible_uplinks[uplink_type]

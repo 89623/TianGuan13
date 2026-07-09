@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /*
 	Slashing wounds
@@ -185,15 +186,15 @@
 		return FALSE
 
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
-		to_chat(user, span_warning("You're already interacting with [victim]!"))
+		to_chat(user, span_warning(LANG("datum.87048759", list(victim))))
 		return
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
 		if(carbon_user.is_mouth_covered())
-			to_chat(user, span_warning("Your mouth is covered, you can't lick [victim]'s wounds!"))
+			to_chat(user, span_warning(LANG("datum.2aa21bf7", list(victim))))
 			return
 		if(!carbon_user.get_organ_slot(ORGAN_SLOT_TONGUE))
-			to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
+			to_chat(user, span_warning(LANG("datum.161a5271", null))) // f in chat
 			return
 
 	lick_wounds(user)
@@ -207,20 +208,20 @@
 			continue
 		user.ForceContractDisease(iter_disease)
 
-	user.visible_message(span_notice("[user] begins licking the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You begin licking the wounds on [victim]'s [limb.plaintext_zone]..."), ignored_mobs=victim)
-	to_chat(victim, span_notice("[user] begins to lick the wounds on your [limb.plaintext_zone]."))
+	user.visible_message(span_notice(LANG("datum.2faf5101", list(user, victim, limb.plaintext_zone))), span_notice(LANG("datum.be9ed810", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
+	to_chat(victim, span_notice(LANG("datum.0f1ece88", list(user, limb.plaintext_zone))))
 	if(!do_after(user, base_treat_time, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 
-	user.visible_message(span_notice("[user] licks the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You lick some of the wounds on [victim]'s [limb.plaintext_zone]"), ignored_mobs=victim)
-	to_chat(victim, span_green("[user] licks the wounds on your [limb.plaintext_zone]!"))
+	user.visible_message(span_notice(LANG("datum.743818dc", list(user, victim, limb.plaintext_zone))), span_notice(LANG("datum.7328c4be", list(victim, limb.plaintext_zone))), ignored_mobs=victim)
+	to_chat(victim, span_green(LANG("datum.155b810b", list(user, limb.plaintext_zone))))
 	var/mob/victim_stored = victim
 	adjust_blood_flow(-0.5)
 
 	if(blood_flow > minimum_flow)
 		try_handling(user)
 	else if(demotes_to)
-		to_chat(user, span_green("You successfully lower the severity of [user == victim_stored ? "your" : "[victim_stored]'s"] cuts."))
+		to_chat(user, span_green(LANG("datum.857046b8", list(user == victim_stored ? "your" : "[victim_stored]'s"))))
 
 /datum/wound/slash/flesh/adjust_blood_flow(adjust_by, minimum)
 	. = ..()
@@ -230,7 +231,7 @@
 		if(demotes_to)
 			replace_wound(new demotes_to)
 		else
-			to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has [!limb.can_bleed() ? "healed up" : "stopped bleeding"]!"))
+			to_chat(victim, span_green(LANG("datum.6021d62d", list(limb.plaintext_zone, !limb.can_bleed() ? "healed up" : "stopped bleeding"))))
 			qdel(src)
 
 /datum/wound/slash/flesh/on_xadone(power)
@@ -244,7 +245,7 @@
 /// If someone's putting a laser gun up to our cut to cauterize it
 /datum/wound/slash/flesh/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.25 : 1)
-	user.visible_message(span_warning("[user] begins aiming [lasgun] directly at [victim]'s [limb.plaintext_zone]..."), span_userdanger("You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]..."))
+	user.visible_message(span_warning(LANG("datum.cde94385", list(user, lasgun, victim, limb.plaintext_zone))), span_userdanger(LANG("datum.dd8b4eb0", list(lasgun, user == victim ? "your" : "[victim]'s", limb.plaintext_zone))))
 	if(!do_after(user, base_treat_time  * self_penalty_mult, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 	var/damage = lasgun.chambered.loaded_projectile.damage
@@ -253,7 +254,7 @@
 	if(!lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone))
 		return
 	victim.emote("scream")
-	victim.visible_message(span_warning("The cuts on [victim]'s [limb.plaintext_zone] scar over!"))
+	victim.visible_message(span_warning(LANG("datum.a6fd389c", list(victim, limb.plaintext_zone))))
 	adjust_blood_flow(-1 * (damage / (5 * self_penalty_mult))) // 20 / 5 = 4 bloodflow removed, p good
 
 /// If someone is using either a cautery tool or something with heat to cauterize this cut
@@ -265,9 +266,9 @@
 
 	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
 		treatment_delay *= 0.5
-		user.visible_message(span_danger("[user] begins expertly cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I], keeping the holo-image indications in mind..."))
+		user.visible_message(span_danger(LANG("datum.911029ef", list(user, victim, limb.plaintext_zone, I))), span_warning(LANG("datum.81660f28", list(user == victim ? "your" : "[victim]'s", limb.plaintext_zone, I))))
 	else
-		user.visible_message(span_danger("[user] begins cauterizing [victim]'s [limb.plaintext_zone] with [I]..."), span_warning("You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]..."))
+		user.visible_message(span_danger(LANG("datum.497866e8", list(user, victim, limb.plaintext_zone, I))), span_warning(LANG("datum.72aa7263", list(user == victim ? "your" : "[victim]'s", limb.plaintext_zone, I))))
 
 	playsound(user, 'sound/items/handling/surgery/cautery1.ogg', 75, TRUE)
 
@@ -277,7 +278,7 @@
 	playsound(user, 'sound/items/handling/surgery/cautery2.ogg', 75, TRUE)
 
 	var/bleeding_wording = (limb.can_bleed() ? "bleeding" : "cuts")
-	user.visible_message(span_green("[user] cauterizes some of the [bleeding_wording] on [victim]."), span_green("You cauterize some of the [bleeding_wording] on [victim]."))
+	user.visible_message(span_green(LANG("datum.9e23af11", list(user, bleeding_wording, victim))), span_green(LANG("datum.c947ff9b", list(bleeding_wording, victim))))
 	victim.apply_damage(2 + severity, BURN, limb, wound_bonus = CANT_WOUND)
 	if(prob(30))
 		victim.emote("scream")
@@ -289,7 +290,7 @@
 		try_treating(I, user)
 
 	else if(demotes_to)
-		to_chat(user, span_green("You successfully lower the severity of [user == victim_stored ? "your" : "[victim_stored]'s"] cuts."))
+		to_chat(user, span_green(LANG("datum.857046b8", list(user == victim_stored ? "your" : "[victim_stored]'s"))))
 
 /datum/wound/slash/get_limb_examine_description()
 	return span_warning("The flesh on this limb appears badly lacerated.")

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //KEEP IN MIND: These are different from gun/grenadelauncher. These are designed to shoot premade rocket and grenade projectiles, not flashbangs or chemistry casings etc.
 //Put handheld rocket launchers here if someone ever decides to make something so hilarious ~Paprika
 
@@ -133,8 +134,8 @@
 		. += "rocketlauncher_loaded"
 
 /obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)
-	user.visible_message(span_warning("[user] aims [src] at the ground! It looks like [user.p_theyre()] performing a sick rocket jump!"), \
-		span_userdanger("You aim [src] at the ground to perform a bisnasty rocket jump..."))
+	user.visible_message(span_warning(LANG("obj.29be0133", list(user, src, user.p_theyre()))), \
+		span_userdanger(LANG("obj.dc71a408", list(src))))
 	if(can_shoot())
 		ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, TRUE, 5)
@@ -151,8 +152,8 @@
 		sleep(0.5 SECONDS)
 		shoot_with_empty_chamber(user)
 		sleep(2 SECONDS)
-		user.visible_message(span_warning("[user] looks about the room realizing [user.p_theyre()] still there. [user.p_They()] proceed to shove [src] down their throat and choke [user.p_them()]self with it!"), \
-			span_userdanger("You look around after realizing you're still here, then proceed to choke yourself to death with [src]!"))
+		user.visible_message(span_warning(LANG("obj.1b567e60", list(user, user.p_theyre(), user.p_They(), src, user.p_them()))), \
+			span_userdanger(LANG("obj.4c89a71a", list(src))))
 		sleep(2 SECONDS)
 		return OXYLOSS
 

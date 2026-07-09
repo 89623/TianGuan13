@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Pax wand is a minor heal which applies temporary pacifism, gives you time to talk it out?
  */
@@ -20,11 +21,11 @@
 
 /obj/item/gun/magic/wand/pax/zap_self(mob/living/user, suicide = FALSE)
 	if (!suicide)
-		user.visible_message(span_notice("[user] tenderly kisses [user.p_their()] own wand."))
+		user.visible_message(span_notice(LANG("obj.e4689f86", list(user, user.p_their()))))
 
 /obj/item/gun/magic/wand/pax/do_suicide(mob/living/user)
 	. = ..()
-	user.visible_message(span_suicide("...but [user] can't bring [user.p_themselves()] to hurt anyone!"))
+	user.visible_message(span_suicide(LANG("obj.0d2dcbf7", list(user, user.p_themselves()))))
 	return SHAME
 
 /obj/item/ammo_casing/magic/pax
@@ -51,7 +52,7 @@
 
 /datum/status_effect/pacify/visible/on_apply()
 	if (!HAS_TRAIT(owner, TRAIT_PACIFISM))
-		owner.visible_message(span_notice("[owner] seems to relax."), span_notice("You feel your muscles loosen and your will to fight melt away."))
+		owner.visible_message(span_notice(LANG("datum.0309816f", list(owner))), span_notice(LANG("datum.242a2de2", null)))
 	return ..()
 
 /datum/status_effect/pacify/visible/on_remove()
@@ -59,7 +60,7 @@
 	// Might have it from somewhere else
 	if (HAS_TRAIT(owner, TRAIT_PACIFISM))
 		return
-	owner.visible_message(span_warning("[owner] suddenly tenses up."), span_notice("You suddenly remember that violence is an option."))
+	owner.visible_message(span_warning(LANG("datum.8a97c00b", list(owner))), span_notice(LANG("datum.20d89dc3", null)))
 
 /atom/movable/screen/alert/status_effect/pacified
 	name = "Pacified"

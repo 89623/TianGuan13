@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Base transport structure. A single tile that can form a modular set with neighbouring tiles
  * This type holds elevators and trams
@@ -664,7 +665,7 @@
 
 	add_fingerprint(user)
 	if(!length(possible_directions))
-		balloon_alert(user, "elevator out of service!")
+		balloon_alert(user, LANG("obj.de46e5e4", null))
 		return
 
 	LAZYADD(current_operators, REF(user))
@@ -682,7 +683,7 @@
 		return //nice try
 	if(!isnull(result) && result != "Cancel" && transport_controller_datum.controller_status & CONTROLS_LOCKED)
 		// Only show this message if they actually wanted to move
-		balloon_alert(user, "elevator controls locked!")
+		balloon_alert(user, LANG("obj.52b16862", null))
 		return
 	switch(result)
 		if("Up")
@@ -765,10 +766,10 @@
  */
 /obj/structure/transport/linear/proc/show_fluff_message(direction, mob/user)
 	if(direction == UP)
-		user.visible_message(span_notice("[user] moves the lift upwards."), span_notice("You move the lift upwards."))
+		user.visible_message(span_notice(LANG("obj.83cdae62", list(user))), span_notice(LANG("obj.2517ed54", null)))
 
 	if(direction == DOWN)
-		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
+		user.visible_message(span_notice(LANG("obj.1636dcb4", list(user))), span_notice(LANG("obj.955b533d", null)))
 
 /obj/machinery/door/poddoor/lift
 	name = "elevator door"
@@ -828,7 +829,7 @@
 		return	// nice try
 	if(!isnull(result) && result != "Cancel" && transport_controller_datum.controller_status & CONTROLS_LOCKED)
 		// Only show this message if they actually wanted to move
-		balloon_alert(user, "elevator controls locked!")
+		balloon_alert(user, LANG("obj.52b16862", null))
 		return
 
 	switch(result)

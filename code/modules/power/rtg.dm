@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Radioisotope Thermoelectric Generator (RTG)
 // Simple power generator that would replace "magic SMES" on various derelicts.
 
@@ -50,7 +51,7 @@
 /obj/machinery/power/rtg/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Power generation at <b>[display_power(power_gen, convert = FALSE)]</b>.")
+		. += span_notice(LANG("obj.06ff8805", list(display_power(power_gen, convert = FALSE))))
 
 /obj/machinery/power/rtg/update_icon_state()
 	. = ..()
@@ -160,14 +161,14 @@
 /obj/machinery/power/rtg/old_station/default_deconstruction_screwdriver(mob/user, obj/item/screwdriver)
 	. = ..()
 	if(. & ITEM_INTERACT_SUCCESS)
-		to_chat(user, span_warning("You feel [src] crumbling under your hands!"))
+		to_chat(user, span_warning(LANG("obj.0210dec6", list(src))))
 
 /obj/machinery/power/rtg/old_station/default_deconstruction_crowbar(mob/living/user, obj/item/crowbar, ignore_panel, custom_deconstruct)
-	to_chat(user, span_warning("As you pry, [src] starts to fall apart!"))
+	to_chat(user, span_warning(LANG("obj.866611a9", list(src))))
 	if(!crowbar.use_tool(src, user, 3 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_warning("You feel like you made a mistake."))
+	to_chat(user, span_warning(LANG("obj.ecc760d5", null)))
 	new /obj/effect/decal/cleanable/ash/large(drop_location())
 	deconstruct(FALSE)
 	return ITEM_INTERACT_SUCCESS

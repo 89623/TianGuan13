@@ -94,7 +94,7 @@
 
 /obj/item/gun/energy/modular_laser_rifle/examine(mob/user)
 	. = ..()
-	. += span_notice("You can <b>Alt-Click</b> this gun to access the <b>internal soulcatcher</b>.")
+	. += span_notice(LANG("obj.3cc4ac88", null))
 
 /obj/item/gun/energy/modular_laser_rifle/Destroy()
 	QDEL_NULL(tracked_soulcatcher)

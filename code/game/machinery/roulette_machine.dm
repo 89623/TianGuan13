@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ROULETTE_SINGLES_PAYOUT 36
 #define ROULETTE_SIMPLE_PAYOUT 2
 #define ROULETTE_DOZ_COL_PAYOUT 3
@@ -130,21 +131,21 @@
 			playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50, TRUE)
 
 		if(machine_stat & MAINT || !on || locked)
-			to_chat(user, span_notice("The machine appears to be disabled."))
+			to_chat(user, span_notice(LANG("obj.c1862d18", null)))
 			return FALSE
 
 		if(!player_card.registered_account)
-			say("You don't have a bank account!")
+			say(LANG("obj.82fb1f15", null))
 			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 			return FALSE
 
 		if(my_card)
 			if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
-				say("You cannot gamble with the department budget!")
+				say(LANG("obj.a25ac002", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 				return FALSE
 			if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
-				say("You do not have the funds to play! Lower your bet or get more money.")
+				say(LANG("obj.f1a22753", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 				return FALSE
 			if(!chosen_bet_amount || isnull(chosen_bet_type))
@@ -187,14 +188,14 @@
 			addtimer(CALLBACK(src, PROC_REF(play), user, player_card, chosen_bet_type, chosen_bet_amount, potential_payout), 4) //Animation first
 			return TRUE
 		else
-			var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", max_length = MAX_NAME_LEN)
+			var/msg = tgui_input_text(user, LANG("obj.f0477a15", null), LANG("obj.70a81bf2", null), "Roulette Machine", max_length = MAX_NAME_LEN)
 			if(!msg)
 				return
 			name = msg
-			desc = "Owned by [player_card.registered_account.account_holder], draws directly from [user.p_their()] account."
+			desc = LANG("obj.0f7b350a", list(player_card.registered_account.account_holder, user.p_their()))
 			my_card = player_card
 			RegisterSignal(my_card, COMSIG_QDELETING, PROC_REF(on_my_card_deleted))
-			to_chat(user, span_notice("You link the wheel to your account."))
+			to_chat(user, span_notice(LANG("obj.b54268ef", null)))
 			power_change()
 			return
 	return ..()
@@ -245,14 +246,14 @@
 	var/color = numbers["[rolled_number]"] //Weird syntax, but dict uses strings.
 	var/result = "[rolled_number] [color]" //e.g. 31 black
 
-	say("The result is: [result]")
+	say(LANG("obj.a87dc9fe", list(result)))
 
 	playing = FALSE
 	update_icon(ALL, potential_payout, color, rolled_number, is_winner)
 	handle_color_light(color)
 
 	if(!is_winner)
-		say("You lost! Better luck next time.")
+		say(LANG("obj.f242fb4c", null))
 		playsound(src, 'sound/machines/synth/synth_no.ogg', 50)
 		if(isliving(user) && (user in viewers(src)))
 			var/mob/living/living_user = user
@@ -263,7 +264,7 @@
 	var/account_balance = my_card?.registered_account?.account_balance
 	potential_payout = (account_balance >= potential_payout) ? potential_payout : account_balance
 
-	say("You have won [potential_payout] [MONEY_NAME]! Congratulations!")
+	say(LANG("obj.0e6b975e", list(potential_payout, MONEY_NAME)))
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50)
 	if(isliving(user) && (user in viewers(src)))
 		var/mob/living/living_user = user
@@ -377,7 +378,7 @@
 /obj/machinery/roulette/proc/check_owner_funds(payout)
 	if(my_card.registered_account.account_balance >= payout)
 		return TRUE //We got the betting amount
-	say("The bank account of [my_card.registered_account.account_holder] does not have enough funds to pay out the potential prize, contact them to fill up their account or lower your bet!")
+	say(LANG("obj.dd2b67ba", list(my_card.registered_account.account_holder)))
 	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 	return FALSE
 
@@ -429,15 +430,15 @@
 /obj/machinery/roulette/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(machine_stat & MAINT)
-		to_chat(user, span_notice("You start re-attaching the top section of [src]..."))
+		to_chat(user, span_notice(LANG("obj.d8423c8b", list(src))))
 		if(I.use_tool(src, user, 30, volume=50))
-			to_chat(user, span_notice("You re-attach the top section of [src]."))
+			to_chat(user, span_notice(LANG("obj.a68a7a94", list(src))))
 			set_machine_stat(machine_stat & ~MAINT)
 			icon_state = "idle"
 	else
-		to_chat(user, span_notice("You start welding the top section from [src]..."))
+		to_chat(user, span_notice(LANG("obj.0d227c3d", list(src))))
 		if(I.use_tool(src, user, 30, volume=50))
-			to_chat(user, span_notice("You removed the top section of [src]."))
+			to_chat(user, span_notice(LANG("obj.a2dc594e", list(src))))
 			set_machine_stat(machine_stat | MAINT)
 			icon_state = "open"
 
@@ -456,7 +457,7 @@
 /obj/item/roulette_wheel_beacon/attack_self()
 	if(used)
 		return
-	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
+	loc.visible_message(span_warning(LANG("obj.41be4252", list(src))))
 	used = TRUE
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 4 SECONDS)
 

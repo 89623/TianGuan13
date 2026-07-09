@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/quirk/bilingual
 	name = "Bilingual"
 	desc = "Over the years you've picked up an extra language!"
@@ -26,9 +27,9 @@
 	if(!language_type || quirk_holder.has_language(language_type))
 		language_type = /datum/language/uncommon
 		if(quirk_holder.has_language(language_type))
-			to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you did not learn one."))
+			to_chat(quirk_holder, span_boldnotice(LANG("datum.73c19933", null)))
 			return
-		to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you learned Galactic Uncommon instead."))
+		to_chat(quirk_holder, span_boldnotice(LANG("datum.fe5f4196", null)))
 
 	var/speakable = client_source?.prefs.read_preference(/datum/preference/toggle/language_speakable)
 	var/language_skill = client_source?.prefs.read_preference(/datum/preference/choiced/language_skill) || "100%"

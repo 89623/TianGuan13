@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //File with the circuitboard and circuitboard/machine class definitions and procs
 
 
@@ -161,7 +162,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/circuitboard/machine/examine(mob/user)
 	. = ..()
 	if(!LAZYLEN(req_components))
-		. += span_info("It requires no components.")
+		. += span_info(LANG("obj.8f611717", null))
 		return
 
 	var/list/nice_list = list()
@@ -201,4 +202,4 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			stack_trace("[component_path] was an invalid component")
 		nice_list += list("[component_amount] [component_name]\s")
 
-	. += span_info("It requires [english_list(nice_list)].")
+	. += span_info(LANG("obj.e8c2a536", list(english_list(nice_list))))

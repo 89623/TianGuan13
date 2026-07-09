@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //code & items for the hauntedtradingpost.dmm ruin
 //CONTAINS: [Lore Papers],[Outpost ID Cards],[Gimmick Treasure],[Hazards & Traps],[Custom Turrets]
 
@@ -290,7 +291,7 @@
 
 /obj/effect/overloader_trap/proc/trap_alerted()
 	if(host_machine in loc) //if someone breaks or moves the machine before the trap goes off, this should fail to do anything
-		visible_message(span_boldwarning("Sparks fly from [host_machine] as it shakes vigorously!"))
+		visible_message(span_boldwarning(LANG("obj.6e0411c5", list(host_machine))))
 		do_sparks(number = 3, source = host_machine)
 		host_machine.Shake(2, 1, trigger_delay)
 		addtimer(CALLBACK(src, PROC_REF(trap_effect)), trigger_delay)

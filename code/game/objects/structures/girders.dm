@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/girder
 	icon = 'icons/obj/smooth_structures/girder.dmi'
 	name = "girder"
@@ -38,20 +39,20 @@
 	. = ..()
 	switch(state)
 		if(GIRDER_REINF)
-			. += span_notice("The support struts are <b>screwed</b> in place.")
+			. += span_notice(LANG("obj.5e56184e", null))
 		if(GIRDER_REINF_STRUTS)
-			. += span_notice("The support struts are <i>unscrewed</i> and the inner <b>grille</b> is intact.")
+			. += span_notice(LANG("obj.bc269192", null))
 		if(GIRDER_NORMAL)
 			if(can_displace)
-				. += span_notice("The bolts are <b>wrenched</b> in place.")
+				. += span_notice(LANG("obj.0b355a52", null))
 		if(GIRDER_DISPLACED)
-			. += span_notice("The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.")
+			. += span_notice(LANG("obj.5203d4ea", list(src)))
 		if(GIRDER_TRAM)
-			. += span_notice("[src] is designed for tram usage. Deconstructed with a screwdriver!")
+			. += span_notice(LANG("obj.08524e18", list(src)))
 	if (can_weld_apart)
-		. += span_notice("The frame looks weak enough to be <b>welded</b> apart.")
+		. += span_notice(LANG("obj.f754b687", null))
 	else
-		. += span_notice("The frame could be sliced apart with a <b>plasmacutter</b>.")
+		. += span_notice(LANG("obj.e88a9141", null))
 
 /obj/structure/girder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (user.combat_mode)
@@ -92,7 +93,7 @@
 /obj/structure/girder/wrench_act(mob/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if (!can_displace)
-		balloon_alert(user, "no bolts!")
+		balloon_alert(user, LANG("obj.aa9ba64f", null))
 		return
 	switch (state)
 		if (GIRDER_NORMAL)
@@ -108,7 +109,7 @@
 	. = ITEM_INTERACT_BLOCKING
 	// Plasmacutters can always slice apart girders.
 	if (!can_weld_apart && !istype(tool, /obj/item/gun/energy/plasmacutter))
-		balloon_alert(user, "can't weld apart!")
+		balloon_alert(user, LANG("obj.c921c965", null))
 		return
 	if (try_construction_step(user, tool, 4 SECONDS, start_alert = "slicing apart..."))
 		deconstruct(disassembled = TRUE)
@@ -130,7 +131,7 @@
 	if (!isnull(req_state) && req_state != state)
 		return FALSE
 	if (req_floor && !isfloorturf(loc))
-		balloon_alert(user, "needs a floor!")
+		balloon_alert(user, LANG("obj.51b4e54f", null))
 		return FALSE
 	return TRUE
 

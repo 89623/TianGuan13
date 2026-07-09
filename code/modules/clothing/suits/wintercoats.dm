@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Wintercoat
 /obj/item/clothing/suit/hooded/wintercoat
 	name = "winter coat"
@@ -46,7 +47,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/examine(mob/user)
 	. = ..()
 	if(can_altclick_zip)
-		. += span_notice("<b>Alt-click</b> to [zipped ? "un" : ""]zip.")
+		. += span_notice(LANG("obj.80b71d2c", list(zipped ? "un" : "")))
 
 
 /obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)
@@ -55,7 +56,7 @@
 	zipped = !zipped
 	playsound(src, 'sound/items/zip/zip_up.ogg', 30, TRUE, -3)
 	worn_icon_state = "[initial(post_init_icon_state) || initial(icon_state)][zipped ? "_t" : ""]"
-	balloon_alert(user, "[zipped ? "" : "un"]zipped")
+	balloon_alert(user, LANG("obj.59160d36", list(zipped ? "" : "un")))
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc

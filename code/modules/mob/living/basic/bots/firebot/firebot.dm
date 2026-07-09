@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define FOAM_INTERVAL 5 SECONDS
 
 /mob/living/basic/bot/firebot
@@ -90,9 +91,9 @@
 	if(!(bot_access_flags & BOT_COVER_EMAGGED))
 		return
 
-	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe. funny
+	to_chat(user, span_warning(LANG("mob.872eb154", null))) // heheehe. funny
 
-	audible_message(span_danger("[src] buzzes oddly!"))
+	audible_message(span_danger(LANG("mob.1798b7cd", list(src))))
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	internal_ext.chem = /datum/reagent/clf3 //Refill the internal extinguisher with liquid fire

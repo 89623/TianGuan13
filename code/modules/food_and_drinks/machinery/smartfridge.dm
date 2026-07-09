@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // -------------------------
 //  SmartFridge.  Much todo
 // -------------------------
@@ -64,56 +65,56 @@
 			return ITEM_INTERACT_BLOCKING
 
 		user.visible_message(
-			span_notice("[user.name] starts to cut \the [src] free from the floor."),
-			span_notice("You start to cut [src] free from the floor..."),
-			span_hear("You hear welding."),
+			span_notice(LANG("obj.62651aed", list(user.name, src))),
+			span_notice(LANG("obj.41ed57fe", list(src))),
+			span_hear(LANG("obj.1aa82fa3", null)),
 		)
 
 		if(!tool.use_tool(src, user, delay=100, volume=100))
 			return ITEM_INTERACT_BLOCKING
 
 		welded_down = FALSE
-		to_chat(user, span_notice("You cut [src] free from the floor."))
+		to_chat(user, span_notice(LANG("obj.6a908a91", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!anchored)
-		balloon_alert(user, "wrench it first!")
+		balloon_alert(user, LANG("obj.6aca93b6", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount=2))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user.name] starts to weld \the [src] to the floor."),
-		span_notice("You start to weld [src] to the floor..."),
-		span_hear("You hear welding."),
+		span_notice(LANG("obj.9449da47", list(user.name, src))),
+		span_notice(LANG("obj.7765e0fa", list(src))),
+		span_hear(LANG("obj.1aa82fa3", null)),
 	)
 
 	if(!tool.use_tool(src, user, delay = 100, volume = 100))
 		return ITEM_INTERACT_BLOCKING
 
 	welded_down = TRUE
-	to_chat(user, span_notice("You weld [src] to the floor."))
+	to_chat(user, span_notice(LANG("obj.46f0194b", list(src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(!(machine_stat & BROKEN))
-		balloon_alert(user, "no repair needed!")
+		balloon_alert(user, LANG("obj.aacffbd2", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount=1))
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user] is repairing [src]."),
-		span_notice("You begin repairing [src]..."),
-		span_hear("You hear welding."),
+		span_notice(LANG("obj.8170db4e", list(user, src))),
+		span_notice(LANG("obj.93449ef4", list(src))),
+		span_hear(LANG("obj.1aa82fa3", null)),
 	)
 
 	if(tool.use_tool(src, user, delay = 40, volume = 50))
 		if(!(machine_stat & BROKEN))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You repair [src]"))
+		to_chat(user, span_notice(LANG("obj.cc896b1f", list(src))))
 		atom_integrity = max_integrity
 		set_machine_stat(machine_stat & ~BROKEN)
 		update_icon()
@@ -124,7 +125,7 @@
 
 /obj/machinery/smartfridge/can_be_unfasten_wrench(mob/user, silent)
 	if(welded_down)
-		balloon_alert(user, "unweld first!")
+		balloon_alert(user, LANG("obj.20d90fcc", null))
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -185,7 +186,7 @@
 	. = ..()
 
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.")
+		. += status_examine()
 
 	. += structure_examine()
 
@@ -202,14 +203,20 @@
 	. = list()
 
 	if(welded_down)
-		. += span_info("It's moorings are firmly [EXAMINE_HINT("welded")] to the floor.")
+		. += span_info(LANG("obj.a9303926", list(EXAMINE_HINT("welded"))))
 	else if (can_be_welded_down)
-		. += span_info("It's moorings are loose and can be [EXAMINE_HINT("welded")] down.")
+		. += span_info(LANG("obj.90307f13", list(EXAMINE_HINT("welded"))))
 
 	if(anchored)
-		. += span_info("It is [EXAMINE_HINT("wrenched")] down on the floor.")
+		. += span_info(LANG("obj.e41d7731", list(EXAMINE_HINT("wrenched"))))
 	else
-		. += span_info("It could be [EXAMINE_HINT("wrenched")] down.")
+		. += span_info(LANG("obj.97538eee", list(EXAMINE_HINT("wrenched"))))
+
+/// Returns details related to the fridge status
+/obj/machinery/smartfridge/proc/status_examine()
+	. = list()
+
+	. += span_notice(LANG("obj.509249ef", list(max_n_of_items)))
 
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
@@ -260,64 +267,65 @@
 	playsound(src, SFX_SHATTER, 50, TRUE)
 	return ..()
 
-/obj/machinery/smartfridge/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!machine_stat)
-		var/shown_contents_length = visible_items()
-		if(shown_contents_length >= max_n_of_items)
-			balloon_alert(user, "no space!")
-			return FALSE
+/obj/machinery/smartfridge/proc/can_load_item(obj/item/loadable)
+	return !(loadable.item_flags & ABSTRACT) && !(loadable.flags_1 & HOLOGRAM_1) && accept_check(loadable)
 
-		if(!(weapon.item_flags & ABSTRACT) && \
-			!(weapon.flags_1 & HOLOGRAM_1) && \
-			accept_check(weapon) \
+/obj/machinery/smartfridge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+	if(machine_stat)
+		if(machine_stat & NOPOWER)
+			to_chat(user, span_warning(LANG("obj.640c5ae2", list(src))))
+		return ITEM_INTERACT_BLOCKING
+
+	var/loaded_count = visible_items()
+	if(loaded_count >= max_n_of_items)
+		balloon_alert(user, LANG("obj.a5ca1017", null))
+		return ITEM_INTERACT_BLOCKING
+
+	// Loading a single item
+	if(can_load_item(tool))
+		load(tool, user)
+		user.visible_message(
+			span_notice("[user] adds \the [tool] to \the [src]."),
+			span_notice("You add \the [tool] to \the [src]."),
 		)
-			load(weapon, user)
-			user.visible_message(span_notice("[user] adds \the [weapon] to \the [src]."), span_notice("You add \the [weapon] to \the [src]."))
-			SStgui.update_uis(src)
-			if(visible_contents)
-				update_appearance()
-			return TRUE
+		SStgui.update_uis(src)
+		if(visible_contents)
+			update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-		if(istype(weapon, /obj/item/storage/bag))
-			var/obj/item/storage/bag = weapon
-			var/loaded = 0
-			for(var/obj/item/object in bag.contents)
-				if(shown_contents_length >= max_n_of_items)
-					break
-				if(!(object.item_flags & ABSTRACT) && \
-					!(object.flags_1 & HOLOGRAM_1) && \
-					accept_check(object) \
-				)
-					load(object, user)
-					loaded++
-			SStgui.update_uis(src)
+	// Loading from a bag (until fridge is full)
+	if(istype(tool, /obj/item/storage/bag))
+		var/loaded = 0
+		for(var/obj/item/object in tool.contents)
+			if(loaded_count >= max_n_of_items)
+				break
+			if(!can_load_item(object))
+				continue
+			load(object, user)
+			loaded++
+			loaded_count++
 
-			if(loaded)
-				if(shown_contents_length >= max_n_of_items)
-					user.visible_message(span_notice("[user] loads \the [src] with \the [weapon]."), \
-						span_notice("You fill \the [src] with \the [weapon]."))
-				else
-					user.visible_message(span_notice("[user] loads \the [src] with \the [weapon]."), \
-						span_notice("You load \the [src] with \the [weapon]."))
-				if(weapon.contents.len)
-					to_chat(user, span_warning("Some items are refused."))
-				if (visible_contents)
-					update_appearance()
-				return TRUE
-			else
-				to_chat(user, span_warning("There is nothing in [weapon] to put in [src]!"))
-				return FALSE
+		SStgui.update_uis(src)
 
-	if(!powered())
-		to_chat(user, span_warning("\The [src]'s magnetic door won't open without power!"))
-		return FALSE
+		if(!loaded)
+			to_chat(user, span_warning(LANG("obj.fb117832", list(tool, src))))
+			return ITEM_INTERACT_BLOCKING
 
-	if(!user.combat_mode || (weapon.item_flags & NOBLUDGEON))
-		to_chat(user, span_warning("\The [src] smartly refuses [weapon]."))
-		return FALSE
+		var/filled = loaded_count >= max_n_of_items
+		user.visible_message(
+			span_notice("[user] loads \the [src] with \the [tool]."),
+			span_notice("You [filled ? "fill" : "load"] \the [src] with \the [tool]."),
+		)
+		if(length(tool.contents))
+			to_chat(user, span_warning(LANG("obj.94d8d593", null)))
+		if(visible_contents)
+			update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	to_chat(user, span_warning(LANG("obj.720d2303", list(src, tool))))
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * Can this item be accepted by the smart fridge
@@ -342,7 +350,7 @@
 	if(ismob(weapon.loc))
 		var/mob/owner = weapon.loc
 		if(!owner.transferItemToLoc(weapon, src))
-			to_chat(owner, span_warning("\the [weapon] is stuck to your hand, you cannot put it in \the [src]!"))
+			to_chat(owner, span_warning(LANG("obj.e235f1cb", list(weapon, src))))
 			return FALSE
 		return TRUE
 	else
@@ -404,7 +412,7 @@
 			var/dispensed_amount = 0
 
 			if(isAI(living_mob))
-				to_chat(living_mob, span_warning("[src] does not respect your authority!"))
+				to_chat(living_mob, span_warning(LANG("obj.418b3309", list(src))))
 				return TRUE
 
 			for(var/obj/item/dispensed_item in contents)
@@ -580,9 +588,13 @@
 
 	return tool_tip_set ? CONTEXTUAL_SCREENTIP_SET : NONE
 
+/obj/machinery/smartfridge/drying/rack/status_examine()
+	. = list()
+	. += span_notice(LANG("obj.647e1303", list(max_n_of_items)))
+
 /obj/machinery/smartfridge/drying/rack/structure_examine()
 	. = ..()
-	. += span_info("The whole rack can be [EXAMINE_HINT("pried")] apart.")
+	. += span_info(LANG("obj.b209bbb5", list(EXAMINE_HINT("pried"))))
 
 /obj/machinery/smartfridge/drying/rack/exchange_parts()
 	return

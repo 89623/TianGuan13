@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/rnd/production
 	name = "technology fabricator"
 	desc = "Makes researched and prototype items with materials and energy."
@@ -73,13 +74,13 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>.")
-	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>.")
+	. += span_notice(LANG("obj.561f1ac0", list(efficiency_coeff * 100)))
+	. += span_notice(LANG("obj.e7acbb7a", list(efficiency_coeff * 100)))
 	if(drop_direction)
-		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
-		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
+		. += span_notice(LANG("obj.f018ec80", list(dir2text(drop_direction))))
+		. += span_notice(LANG("obj.fc17772b", list(EXAMINE_HINT("Alt-click"))))
 	else
-		. += span_notice("[EXAMINE_HINT("Drag")] towards a direction (while next to it) to change drop direction.")
+		. += span_notice(LANG("obj.abc9aa60", list(EXAMINE_HINT("Drag"))))
 
 /obj/machinery/rnd/production/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -119,7 +120,7 @@
 	var/design_delta = cached_designs.len - previous_design_count
 
 	if(design_delta > 0)
-		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
+		say(LANG("obj.b8003438", list(design_delta, design_delta == 1 ? "" : "s")))
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
@@ -250,7 +251,7 @@
 
 		var/icon_size = spritesheet.icon_size_id(design.id)
 		designs[design.id] = list(
-			"name" = design.name,
+			"name" = lang_reverse_text(design.name), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = design.name, （设计名仅显示、构建走 id=安全；全量反查含单词类如 Boxcutter）
 			"desc" = design.get_description(),
 			"cost" = cost,
 			"id" = design.id,
@@ -295,7 +296,7 @@
 
 			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
 			if(!directly_use_energy(ROUND_UP((amount / MAX_STACK_SIZE) * 0.4 * initial(active_power_usage))))
-				say("No power to dispense sheets")
+				say(LANG("obj.c98ac214", null))
 				return
 
 			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = ID_DATA(usr))
@@ -303,7 +304,7 @@
 
 		if("build")
 			if(busy)
-				say("Warning: fabricator is busy!")
+				say(LANG("obj.96798cc7", null))
 				return
 
 			//validate design
@@ -314,10 +315,10 @@
 			if(!istype(design))
 				return FALSE
 			if(!(isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)))
-				say("This fabricator does not have the necessary keys to decrypt this design.")
+				say(LANG("obj.ea5ed026", null))
 				return FALSE
 			if(design.build_type && !(design.build_type & allowed_buildtypes))
-				say("This fabricator does not have the necessary manipulation systems for this design.")
+				say(LANG("obj.5d6aeb6b", null))
 				return FALSE
 
 			//validate print quantity
@@ -336,7 +337,7 @@
 			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
-				say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
+				say(LANG("obj.5134774a", list(print_quantity > 1 ? "s" : "")))
 				return FALSE
 
 			//compute power & time to print 1 item
@@ -394,7 +395,7 @@
 		return
 
 	if(!is_operational)
-		say("Unable to continue production, power failure.")
+		say(LANG("obj.37d5b119", null))
 		finalize_build()
 		return
 
@@ -404,11 +405,11 @@
 		if(!QDELETED(my_apc))
 			var/charging_wait = my_apc.time_to_charge(charge_per_item)
 			if(!isnull(charging_wait))
-				say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+				say(LANG("obj.4923eed0", list(DisplayTimeText(charging_wait, round_seconds_to = 1))))
 			else
-				say("Unable to continue production, power grid overload.")
+				say(LANG("obj.61365fba", null))
 		else
-			say("Unable to continue production, no APC in area.")
+			say(LANG("obj.7aa6d96a", null))
 		finalize_build()
 		return
 
@@ -419,7 +420,7 @@
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
 	var/list/design_materials = design.materials
 	if(!materials.mat_container.has_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1))
-		say("Unable to continue production, missing materials.")
+		say(LANG("obj.15347eaf", null))
 		finalize_build()
 		return
 	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
@@ -469,21 +470,21 @@
 	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
 	if(busy)
-		balloon_alert(user, "busy printing!")
+		balloon_alert(user, LANG("obj.11d29340", null))
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(user, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, LANG("obj.a778c49c", list(dir2text(drop_direction))))
 
 /obj/machinery/rnd/production/click_alt(mob/user)
 	if(drop_direction == 0)
 		return CLICK_ACTION_BLOCKING
 	if(busy)
-		balloon_alert(user, "busy printing!")
+		balloon_alert(user, LANG("obj.11d29340", null))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "drop direction reset")
+	balloon_alert(user, LANG("obj.ec68d9e0", null))
 	drop_direction = 0
 	return CLICK_ACTION_SUCCESS
 

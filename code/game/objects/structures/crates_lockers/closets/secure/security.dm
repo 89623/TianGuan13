@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/closet/secure_closet/captains
 	name = "captain's locker"
 	icon_state = "cap"
@@ -172,19 +173,19 @@
 
 /obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Right-click</b> with a Security-level ID to reset [src]'s registered ID.")
+	. += span_notice(LANG("obj.71f9e8f8", list(src)))
 
 /obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/user_id, mob/user, list/modifiers, list/attack_modifiers)
 	if(!secure || !istype(user_id))
 		return ..()
 
 	if(isnull(id_card))
-		say("Prisoner ID linked to locker.")
+		say(LANG("obj.81325c24", null))
 		id_card = WEAKREF(user_id)
 		name = "genpop storage locker - [user_id.registered_name]"
 
 /obj/structure/closet/secure_closet/brig/genpop/proc/clear_access()
-	say("Authorized ID detected. Unlocking locker and resetting ID.")
+	say(LANG("obj.61d4bbdd", null))
 	locked = FALSE
 	id_card = null
 	name = initial(name)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Special objects for shuttle templates go here if nowhere else
 
 // Wabbajack statue, a sleeping frog statue that shoots bolts of change if
@@ -39,7 +40,7 @@
 /obj/machinery/power/emitter/energycannon/magical/Initialize(mapload)
 	. = ..()
 	if(prob(50))
-		desc = "Oh no, not again."
+		desc = LANG("obj.e385799a", null)
 	update_appearance()
 
 /obj/machinery/power/emitter/energycannon/magical/update_icon_state()
@@ -50,13 +51,11 @@
 	. = ..()
 	if(active_tables.len >= tables_required)
 		if(!active)
-			visible_message("<span class='revenboldnotice'>\
-				[src] opens its eyes.</span>")
+			visible_message(LANG("obj.bd793093", list(src)))
 		active = TRUE
 	else
 		if(active)
-			visible_message("<span class='revenboldnotice'>\
-				[src] closes its eyes.</span>")
+			visible_message(LANG("obj.1e232dbe", list(src)))
 		active = FALSE
 	update_appearance()
 
@@ -138,7 +137,7 @@
 
 /obj/structure/table/abductor/wabbajack/proc/sleeper_dreams(mob/living/sleeper)
 	if(sleeper in sleepers)
-		to_chat(sleeper, span_revennotice("While you slumber, you have the strangest dream, like you can see yourself from the outside."))
+		to_chat(sleeper, span_revennotice(LANG("obj.772ab2af", null)))
 		sleeper.ghostize(TRUE)
 
 /obj/structure/table/abductor/wabbajack/left
@@ -193,7 +192,7 @@
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Paralyze(40)
 		M.throw_at(throwtarget, 5, 1)
-		to_chat(M, span_notice("No climbing on the bar please."))
+		to_chat(M, span_notice(LANG("obj.50793f20", null)))
 
 /obj/structure/table/wood/shuttle_bar/proc/is_barstaff(mob/living/user)
 	. = FALSE
@@ -271,7 +270,7 @@
 		if(I.registered_account)
 			account = I.registered_account
 		else if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
-			to_chat(AM, span_notice("This ID card doesn't have an owner associated with it!"))
+			to_chat(AM, span_notice(LANG("obj.30eba6c0", null)))
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 	else if(isliving(AM))
 		var/mob/living/L = AM
@@ -343,7 +342,7 @@
 		if(armless)
 			if(!AM.pulling || !iscash(AM.pulling) && !istype(AM.pulling, /obj/item/card/id))
 				if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
-					to_chat(AM, span_notice("Try pulling a valid ID, space cash, holochip or coin into \the [src]!"))
+					to_chat(AM, span_notice(LANG("obj.c51df783", list(src))))
 					check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	if(payees[AM] >= threshold)
@@ -363,7 +362,7 @@
 				AM.pulling = holocred
 			payees[AM] -= payees[AM]
 
-		say("Welcome to first class, [driver_holdout ? "[driver_holdout]" : "[AM]" ]![change ? " Here is your change." : ""]")
+		say(LANG("obj.4eedfcee", list(driver_holdout ? "[driver_holdout]" : "[AM]", change ? " Here is your change." : "")))
 		approved_passengers |= AM
 		if(vehicle)
 			approved_passengers |= vehicle
@@ -376,7 +375,7 @@
 		for(var/obj/I in counted_money)
 			qdel(I)
 		if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
-			to_chat(AM, span_notice("[payees[AM]] [MONEY_SYMBOL] received. You need [threshold-payees[AM]] [MONEY_SYMBOL] more."))
+			to_chat(AM, span_notice(LANG("obj.8cec45e6", list(payees[AM], MONEY_SYMBOL, threshold-payees[AM], MONEY_SYMBOL))))
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 		alarm_beep()
 		return ..()

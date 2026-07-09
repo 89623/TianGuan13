@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/storage/briefcase
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
@@ -49,17 +50,17 @@
 		if(istype(potentially_paper, /obj/item/paper) || istype(potentially_paper, /obj/item/paperplane))
 			papers_found += potentially_paper
 	if(!papers_found.len || !item_loc)
-		user.visible_message(span_suicide("[user] bashes [user.p_them()]self in the head with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.c02fee9b", list(user, user.p_them(), src, user.p_theyre()))))
 		return BRUTELOSS
 
-	user.visible_message(span_suicide("[user] opens [src] and all of [user.p_their()] papers fly out!"))
+	user.visible_message(span_suicide(LANG("obj.b19fd0e7", list(user, src, user.p_their()))))
 	for(var/obj/item/paper as anything in papers_found)	//Throws the papers in a random direction
 		var/turf/turf_to_throw_at = prob(20) ? item_loc : get_ranged_target_turf(item_loc, pick(GLOB.alldirs))
 		paper.throw_at(turf_to_throw_at, 2)
 
 	stoplag(1 SECONDS)
-	user.say("ARGGHH, HOW WILL I GET THIS WORK DONE NOW?!!")
-	user.visible_message(span_suicide("[user] looks overwhelmed with paperwork! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.say(LANG("obj.93e45bd7", null))
+	user.visible_message(span_suicide(LANG("obj.dca6f7b9", list(user, user.p_theyre()))))
 	return OXYLOSS
 
 // Empty subtype
@@ -162,7 +163,7 @@
 	if(!isturf(user.loc)) //no setting up in a locker
 		return
 	add_fingerprint(user)
-	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
+	user.visible_message(span_notice(LANG("obj.641079aa", list(user, src))), span_notice(LANG("obj.03b1181f", list(pad))))
 	if(do_after(user, 3 SECONDS, target = user))
 		pad.forceMove(get_turf(src))
 		pad.update_indicator()
@@ -177,7 +178,7 @@
 	if(remote.pad == WEAKREF(src.pad))
 		return ..()
 	remote.pad = WEAKREF(src.pad)
-	to_chat(user, span_notice("You link [pad] to [remote]."))
+	to_chat(user, span_notice(LANG("obj.8d7c3dc4", list(pad, remote))))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/storage/briefcase/gun
@@ -191,7 +192,7 @@
 /obj/item/storage/briefcase/gun/examine_more(mob/user)
 	. = ..()
 	if(user.is_holding(src))
-		. += span_notice("Upon closer inspection, you notice a hole in the side of the briefcase.")
+		. += span_notice(LANG("obj.d332ae7c", null))
 
 /obj/item/storage/briefcase/gun/preloaded
 

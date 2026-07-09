@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/radio/intercom
 	name = "station intercom"
 	desc = "A trusty station intercom, ready to spring into action even when the headsets go silent."
@@ -48,27 +49,26 @@
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()
-	. += span_notice("Use [MODE_TOKEN_INTERCOM] when nearby to speak into it.")
+	. += span_notice(LANG("obj.24e4bcd8", list(MODE_TOKEN_INTERCOM)))
 	if(!unscrewed)
-		. += span_notice("It's <b>screwed</b> and secured to the wall.")
+		. += span_notice(LANG("obj.2fc65237", null))
 	else
-		. += span_notice("It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.")
+		. += span_notice(LANG("obj.43888722", null))
 
 	if(anonymize)
-		. += span_notice("Speaking through this intercom will anonymize your voice.")
+		. += span_notice(LANG("obj.b6786468", null))
 
 	if(freqlock == RADIO_FREQENCY_UNLOCKED)
 		if((obj_flags & EMAGGED) && initial(freqlock) == RADIO_FREQENCY_EMAGGABLE_LOCK)
-			. += span_warning("Its frequency lock has been shorted...")
+			. += span_warning(LANG("obj.da1b7679", null))
 	else
-		. += span_notice("It has a frequency lock set to [frequency/10].")
+		. += span_notice(LANG("obj.5027c3ce", list(frequency/10)))
 
 	if(keylock == RADIO_KEYSLOT_UNLOCKED)
 		if((obj_flags & EMAGGED) && initial(keylock) == RADIO_KEYSLOT_EMAGGABLE_LOCK)
-			. += span_warning("Its keyslot's security screws have been uplifted...")
+			. += span_warning(LANG("obj.50431995", null))
 	else
-		. += span_notice("The screws in its keyslot are [keylock == RADIO_KEYSLOT_LOCKED ? "stripped" : "fastened tight"], \
-			preventing the removal of its encryption key[keylock == RADIO_KEYSLOT_LOCKED ? "" : " without some kind of magnet"].")
+		. += span_notice(LANG("obj.d32d4532", list(keylock == RADIO_KEYSLOT_LOCKED ? "stripped" : "fastened tight", keylock == RADIO_KEYSLOT_LOCKED ? "" : " without some kind of magnet")))
 
 /obj/item/radio/intercom/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -84,15 +84,15 @@
 
 /obj/item/radio/intercom/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(unscrewed)
-		user.visible_message(span_notice("[user] starts tightening [src]'s screws..."), span_notice("You start screwing in [src]..."))
+		user.visible_message(span_notice(LANG("obj.d065917f", list(user, src))), span_notice(LANG("obj.3f00c4f6", list(src))))
 		if(tool.use_tool(src, user, 30, volume=50))
-			user.visible_message(span_notice("[user] tightens [src]'s screws!"), span_notice("You tighten [src]'s screws."))
+			user.visible_message(span_notice(LANG("obj.3065a8ec", list(user, src))), span_notice(LANG("obj.023abbe2", list(src))))
 			unscrewed = FALSE
 			update_appearance(UPDATE_OVERLAYS)
 	else
-		user.visible_message(span_notice("[user] starts loosening [src]'s screws..."), span_notice("You start unscrewing [src]..."))
+		user.visible_message(span_notice(LANG("obj.eff9ca5b", list(user, src))), span_notice(LANG("obj.f4529b06", list(src))))
 		if(tool.use_tool(src, user, 40, volume=50))
-			user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
+			user.visible_message(span_notice(LANG("obj.b3c7a951", list(user, src))), span_notice(LANG("obj.bb7969d3", list(src))))
 			unscrewed = TRUE
 			update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
@@ -104,12 +104,12 @@
 
 /obj/item/radio/intercom/wrench_act(mob/living/user, obj/item/tool)
 	if(!unscrewed)
-		to_chat(user, span_warning("You need to unscrew [src] from the wall first!"))
+		to_chat(user, span_warning(LANG("obj.9269e98a", list(src))))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] starts unsecuring [src]..."), span_notice("You start unsecuring [src]..."))
+	user.visible_message(span_notice(LANG("obj.096bdf2b", list(user, src))), span_notice(LANG("obj.08ee3372", list(src))))
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 80))
-		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
+		user.visible_message(span_notice(LANG("obj.21675bf4", list(user, src))), span_notice(LANG("obj.aa18b3fe", list(src))))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
@@ -174,7 +174,7 @@
 		return .
 
 	if(!freqlock && !keylock)
-		balloon_alert(user, "no locks to break!")
+		balloon_alert(user, LANG("obj.15a752b9", null))
 		return .
 
 	var/message = ""
@@ -186,11 +186,11 @@
 		message = "key lock"
 
 	if(!message)
-		balloon_alert(user, "can't break lock[(freqlock && keylock) ? "s" : ""]!")
+		balloon_alert(user, LANG("obj.b92dd0df", list((freqlock && keylock) ? "s" : "")))
 		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
 		return .
 
-	balloon_alert(user, "[message] broken")
+	balloon_alert(user, LANG("obj.d0a04656", list(message)))
 	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	if(freqlock == RADIO_FREQENCY_EMAGGABLE_LOCK)
 		freqlock = RADIO_FREQENCY_UNLOCKED

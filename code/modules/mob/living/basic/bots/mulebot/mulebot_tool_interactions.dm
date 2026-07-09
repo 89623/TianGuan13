@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/bot/mulebot/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	update_appearance()
@@ -6,7 +7,7 @@
 	if(!(bot_access_flags & BOT_COVER_MAINTS_OPEN) || user.combat_mode)
 		return
 	if(!cell)
-		to_chat(user, span_warning("[src] doesn't have a power cell!"))
+		to_chat(user, span_warning(LANG("mob.86608f0a", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	cell.add_fingerprint(user)
 	user.visible_message(
@@ -22,7 +23,7 @@
 /mob/living/basic/bot/mulebot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stock_parts/power_store/cell) && (bot_access_flags & BOT_COVER_MAINTS_OPEN))
 		if(cell)
-			to_chat(user, span_warning("[src] already has a power cell!"))
+			to_chat(user, span_warning(LANG("mob.11c18d2c", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/dagger_swing
 	name = "Dagger swing"
 	desc = "Swing your daggers around."
@@ -13,11 +14,11 @@
 	var/obj/item/cain_and_abel/cain_and_abel = target
 
 	if(!living_owner.is_holding(cain_and_abel))
-		owner.balloon_alert(owner, "must be held")
+		owner.balloon_alert(owner, LANG("datum.a49825ad", null))
 		return FALSE
 
 	if(!cain_and_abel.check_wield(owner))
-		owner.balloon_alert(owner, "offhand busy!")
+		owner.balloon_alert(owner, LANG("datum.9ec3aa89", null))
 		return TRUE
 
 	living_owner.apply_status_effect(/datum/status_effect/dagger_swinging)

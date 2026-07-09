@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Mask skins
 /datum/atom_skin/joy_mask
 	abstract_type = /datum/atom_skin/joy_mask
@@ -67,10 +68,10 @@
 /obj/item/clothing/mask/kitsune/examine(mob/user)
 	. = ..()
 	if(up)
-		. += "Use in-hand to wear as a mask!"
+		. += LANG("obj.bb823c82", null)
 		return
 	else
-		. += "Use in-hand to wear as a hat!"
+		. += LANG("obj.d2f901c8", null)
 
 /obj/item/clothing/mask/kitsune/attack_self(mob/user)
 	adjust_visor(user)

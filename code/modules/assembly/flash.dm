@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define CONFUSION_STACK_MAX_MULTIPLIER 2
 
 /obj/item/assembly/flash
@@ -34,12 +35,12 @@
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)
 	if(burnt_out)
-		user.visible_message(span_suicide("[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but it's burnt out!"))
+		user.visible_message(span_suicide(LANG("obj.bda5d980", list(user, src, user.p_their()))))
 		return SHAME
 	else if(user.is_blind())
-		user.visible_message(span_suicide("[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but [user.p_theyre()] blind!"))
+		user.visible_message(span_suicide(LANG("obj.7c1a6d45", list(user, src, user.p_their(), user.p_theyre()))))
 		return SHAME
-	user.visible_message(span_suicide("[user] raises \the [src] up to [user.p_their()] eyes and activates it! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.f0a429d6", list(user, src, user.p_their(), user.p_theyre()))))
 	attack(user,user)
 	return FIRELOSS
 
@@ -74,7 +75,7 @@
 /obj/item/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
 	if(!burnt_out)
 		burnt_out = TRUE
-		loc?.visible_message(span_danger("[src] burns out!"),span_userdanger("[src] burns out!"))
+		loc?.visible_message(span_danger(LANG("obj.984ed7db", list(src))),span_userdanger(LANG("obj.984ed7db", list(src))))
 		update_appearance()
 
 /obj/item/assembly/flash/proc/flash_recharge(interval = 10)
@@ -95,7 +96,7 @@
 	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
 	if(user)
 		targets -= user
-		to_chat(user, span_danger("[src] emits a blinding light!"))
+		to_chat(user, span_danger(LANG("obj.0b394fec", list(src))))
 	for(var/mob/living/nearby_living in targets)
 		flash_mob(nearby_living, user, confusion_duration, targeted = FALSE, generic_message = TRUE)
 	return TRUE
@@ -150,7 +151,7 @@
 		flashed.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"] [extra_log]", LOG_ATTACK)
 
 	if(generic_message && flashed != user)
-		to_chat(flashed, span_danger("[src] emits a blinding light!"))
+		to_chat(flashed, span_danger(LANG("obj.0b394fec", list(src))))
 
 	var/deviation = calculate_deviation(flashed, user || src)
 
@@ -174,9 +175,9 @@
 	if(!flash_result)
 		if(targeted)
 			if(user)
-				visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_danger("[user] fails to blind you with the flash!"))
+				visible_message(span_warning(LANG("obj.2e83d7b3", list(user, flashed))), span_danger(LANG("obj.02ba6b5f", list(user))))
 			else
-				to_chat(flashed, span_danger("[src] fails to blind you!"))
+				to_chat(flashed, span_danger(LANG("obj.9f62a165", list(src))))
 		return FALSE
 
 	flashed.adjust_confusion_up_to(confusion_duration, confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
@@ -191,23 +192,23 @@
 				flashed.Paralyze(flash_duration)
 				flashed.set_temp_blindness_if_lower(flash_duration)
 				if(user)
-					user.visible_message(span_warning("[user] overloads [flashed]'s sensors and computing with the flash!"), span_danger("You overload [flashed]'s sensors and computing with the flash!"))
+					user.visible_message(span_warning(LANG("obj.9095bf15", list(user, flashed))), span_danger(LANG("obj.132381a7", list(flashed))))
 				else
-					to_chat(flashed, "[src] overloads your sensors and computing!")
+					to_chat(flashed, LANG("obj.fc0768a6", list(src)))
 			else
 				flashed.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
 				if(user)
-					user.visible_message(span_warning("[user] blinds [flashed] with the flash!"), span_danger("You blind [flashed] with the flash!"))
+					user.visible_message(span_warning(LANG("obj.949abaf4", list(user, flashed))), span_danger(LANG("obj.e19fc6b7", list(flashed))))
 				else
-					to_chat(flashed, "You're blinded by [src]!")
+					to_chat(flashed, LANG("obj.147afb96", list(src)))
 		else
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.adjust_stamina_loss(rand(80, 120) * (1 - (deviation * 0.5)))
 			flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
 			if(user)
-				visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
+				visible_message(span_danger(LANG("obj.949abaf4", list(user, flashed))), span_userdanger(LANG("obj.def1f2e1", list(user))))
 			else
-				to_chat(flashed, "You're blinded by [src]!")
+				to_chat(flashed, LANG("obj.147afb96", list(src)))
 
 	if(user)
 		SEND_SIGNAL(user, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, flashed, src, deviation)
@@ -273,7 +274,7 @@
 	SIGNAL_HANDLER
 	if(!try_use_flash())
 		return NONE
-	to_chat(user, span_danger("As you open [letter], a very bright light shoots out from inside!"))
+	to_chat(user, span_danger(LANG("obj.125fd139", list(letter))))
 	flash_mob(user)
 	forceMove(user.loc)
 	return COMPONENT_TRAITOR_MAIL_HANDLED
@@ -344,7 +345,7 @@
 /obj/item/assembly/flash/armimplant/burn_out()
 	var/obj/item/organ/cyberimp/arm/toolkit/flash/real_arm = arm.resolve()
 	if(real_arm?.owner)
-		to_chat(real_arm.owner, span_warning("Your photon projector implant overheats and deactivates!"))
+		to_chat(real_arm.owner, span_warning(LANG("obj.07a78126", null)))
 		real_arm.Retract()
 	overheat = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd * 2)
@@ -353,7 +354,7 @@
 	if(overheat)
 		var/obj/item/organ/cyberimp/arm/toolkit/flash/real_arm = arm.resolve()
 		if(real_arm?.owner)
-			to_chat(real_arm.owner, span_warning("Your photon projector is running too hot to be used again so quickly!"))
+			to_chat(real_arm.owner, span_warning(LANG("obj.99c6e1c2", null)))
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd)
@@ -366,7 +367,7 @@
 	overheat = FALSE
 
 /obj/item/assembly/flash/armimplant/screwdriver_act(mob/living/user, obj/item/I)
-	to_chat(user, span_notice("\The [src] is an implant! It cannot be unsecured!"))
+	to_chat(user, span_notice(LANG("obj.323d305b", list(src))))
 	add_fingerprint(user)
 
 /obj/item/assembly/flash/hypnotic
@@ -385,18 +386,18 @@
 		flashed.log_message("was [targeted? "hypno-flashed(targeted)" : "hypno-flashed(AOE)"] [extra_log]", LOG_ATTACK)
 
 	if(generic_message && flashed != user)
-		to_chat(flashed, span_notice("[src] emits a soothing light..."))
+		to_chat(flashed, span_notice(LANG("obj.8dfc6bd7", list(src))))
 
 	if(!flashed.flash_act(1, override_blindness_check = targeted, affect_silicon = TRUE))
 		if(targeted)
 			if(user)
-				user.visible_message(span_warning("[user] fails to blind [flashed] with the flash!"), span_warning("You fail to hypno-flash [flashed]!"))
+				user.visible_message(span_warning(LANG("obj.2e83d7b3", list(user, flashed))), span_warning(LANG("obj.dbb394db", list(flashed))))
 			else
-				to_chat(flashed, span_danger("[src] fails to blind you!"))
+				to_chat(flashed, span_danger(LANG("obj.9f62a165", list(src))))
 		return FALSE
 
 	if(!targeted)
-		to_chat(flashed, span_notice("Such a pretty light..."))
+		to_chat(flashed, span_notice(LANG("obj.dbc58a57", null)))
 		flashed.adjust_confusion_up_to(confusion_duration, confusion_duration * 2 * CONFUSION_STACK_MAX_MULTIPLIER)
 		flashed.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
 		flashed.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
@@ -404,12 +405,12 @@
 		return TRUE
 
 	if(user)
-		user.visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_danger("You hypno-flash [flashed]!"))
+		user.visible_message(span_danger(LANG("obj.949abaf4", list(user, flashed))), span_danger(LANG("obj.ccfaeef5", list(flashed))))
 	else
-		to_chat(flashed, "You're blinded by [src]!")
+		to_chat(flashed, LANG("obj.147afb96", list(src)))
 
 	if(!flashed.hypnosis_vulnerable())
-		to_chat(flashed, span_hypnophrase("The light makes you feel oddly relaxed..."))
+		to_chat(flashed, span_hypnophrase(LANG("obj.fc06faf0", null)))
 		flashed.adjust_confusion_up_to(confusion_duration * 2, confusion_duration * 2 * CONFUSION_STACK_MAX_MULTIPLIER)
 		flashed.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
 		flashed.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/antagonist/cult/shade
 	name = "\improper Cult Shade"
 	show_in_antagpanel = FALSE
@@ -11,10 +12,10 @@
 
 /datum/antagonist/cult/shade/check_invoke_validity()
 	if(isnull(release_time))
-		to_chat(owner.current, span_alert("You cannot invoke runes from inside of a soulstone!"))
+		to_chat(owner.current, span_alert(LANG("datum.b75f250c", null)))
 		return FALSE
 
 	if(release_time + invoke_delay > world.time)
-		to_chat(owner.current, span_alert("You haven't gathered enough power to invoke runes yet. You need to remain out of your soulstone for a while longer!"))
+		to_chat(owner.current, span_alert(LANG("datum.1534692b", null)))
 		return FALSE
 	return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TANK_DISPENSER_CAPACITY 10
 
 /obj/structure/tank_dispenser
@@ -38,7 +39,7 @@
 /obj/structure/tank_dispenser/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if (!plasmatanks)
-		balloon_alert(user, "no plasma tanks!")
+		balloon_alert(user, LANG("obj.e1144325", null))
 		return
 	dispense(/obj/item/tank/internals/plasma, user)
 	plasmatanks--
@@ -47,7 +48,7 @@
 /obj/structure/tank_dispenser/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if (!oxygentanks)
-		balloon_alert(user, "no oxygen tanks!")
+		balloon_alert(user, LANG("obj.f6a888f3", null))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	dispense(/obj/item/tank/internals/oxygen, user)
 	oxygentanks--
@@ -72,17 +73,17 @@
 		else
 			full = TRUE
 	else if(!user.combat_mode || (I.item_flags & NOBLUDGEON))
-		balloon_alert(user, "can't insert!")
+		balloon_alert(user, LANG("obj.372d420f", null))
 		return
 	else
 		return ..()
 	if(full)
-		balloon_alert(user, "it is full!")
+		balloon_alert(user, LANG("obj.60dc2f71", null))
 		return
 
 	if(!user.transferItemToLoc(I, src))
 		return
-	balloon_alert(user, "tank inserted")
+	balloon_alert(user, LANG("obj.67ce4c1b", null))
 	update_appearance()
 
 /obj/structure/tank_dispenser/atom_deconstruct(disassembled = TRUE)
@@ -94,15 +95,15 @@
 /obj/structure/tank_dispenser/examine(mob/user)
 	. = ..()
 	if(plasmatanks && oxygentanks)
-		. += span_notice("It has <b>[plasmatanks]</b> plasma tank\s and <b>[oxygentanks]</b> oxygen tank\s left.")
+		. += span_notice(LANG("obj.5df0ecb4", list(plasmatanks, oxygentanks)))
 	else if(plasmatanks || oxygentanks)
-		. += span_notice("It has <b>[plasmatanks ? "[plasmatanks]</b> plasma" : "[oxygentanks]</b> oxygen"] tank\s left.")
+		. += span_notice(LANG("obj.bae54123", list(plasmatanks ? "[plasmatanks]</b> plasma" : "[oxygentanks]</b> oxygen")))
 
 /obj/structure/tank_dispenser/proc/dispense(tank_type, mob/receiver)
 	var/existing_tank = locate(tank_type) in src
 	if (isnull(existing_tank))
 		existing_tank = new tank_type
 	receiver.put_in_hands(existing_tank)
-	balloon_alert(receiver, "tank received")
+	balloon_alert(receiver, LANG("obj.54917a96", null))
 
 #undef TANK_DISPENSER_CAPACITY

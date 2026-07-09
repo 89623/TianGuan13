@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/wires/roulette
 	holder_type = /obj/machinery/roulette
 	proper_name = "Roulette Table"
@@ -40,13 +41,13 @@
 			R.set_anchored(!R.anchored)
 		if(WIRE_RESETOWNER)
 			R.my_card = null
-			R.audible_message(span_warning("Owner reset!"))
+			R.audible_message(span_warning(LANG("datum.46bc66a8", null)))
 			R.locked = FALSE
 		if(WIRE_PRIZEVEND)
 			R.shock(usr, 70)
 			if(R.locked)
 				return
-			R.audible_message(span_warning("Unauthorized prize vend detected! Locking down machine!"))
+			R.audible_message(span_warning(LANG("datum.758cdc0f", null)))
 			R.prize_theft(0.20)
 
 /datum/wires/roulette/on_cut(wire, mend, source)
@@ -68,5 +69,5 @@
 			R.shock(usr, 75)
 			if(R.locked)
 				return
-			R.audible_message(span_warning("Unauthorized prize vend detected! Locking down machine!"))
+			R.audible_message(span_warning(LANG("datum.758cdc0f", null)))
 			R.prize_theft(0.10)

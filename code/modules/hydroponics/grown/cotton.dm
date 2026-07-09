@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/seeds/cotton
 	name = "cotton seed pack"
 	desc = "A pack of seeds that'll grow into a cotton plant."
@@ -38,7 +39,7 @@
 	if(seed)
 		cotton_count += round(seed.potency / 25)
 
-	user.balloon_alert(user, "pulled [cotton_count] piece\s")
+	user.balloon_alert(user, LANG("obj.6564c0d2", list(cotton_count)))
 	new cotton_type(user.drop_location(), cotton_count)
 	qdel(src)
 

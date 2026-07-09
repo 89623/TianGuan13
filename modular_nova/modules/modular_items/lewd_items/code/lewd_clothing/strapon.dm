@@ -126,7 +126,7 @@
 	if(src == user.belt)
 		toggle(user)
 	else
-		to_chat(user, span_warning("You need to put the strapon around your waist before you can use it!"))
+		to_chat(user, span_warning(LANG("obj.2c6aaa2f", null)))
 
 /obj/item/clothing/strapon/proc/toggle(mob/living/carbon/human/user)
 	playsound_if_pref(user, 'modular_nova/modules/modular_items/lewd_items/sounds/latex.ogg', 40, TRUE)
@@ -135,8 +135,8 @@
 	if(strapon_item && user.is_holding(strapon_item))
 		strapon_item.forceMove(src)
 		user.visible_message(
-			span_notice("[user] puts the strapon back."),
-			span_notice("You put the strapon back."),
+			span_notice(LANG("obj.b538aec7", list(user))),
+			span_notice(LANG("obj.d6698bb9", null)),
 		)
 		return
 
@@ -148,13 +148,13 @@
 
 	if(user.put_in_hands(strapon_item))
 		user.visible_message(
-			span_notice("[user] holds the strapon in [user.p_their()] hand menacingly."),
-			span_notice("You hold the strapon in your hand menacingly."),
+			span_notice(LANG("obj.72b89516", list(user, user.p_their()))),
+			span_notice(LANG("obj.b197ece4", null)),
 		)
 	else
 		user.visible_message(
-			span_notice("[user] tries to hold the strapon in [user.p_their()] hand, but [user.p_their()] hand isn't empty!"),
-			span_notice("You try to hold the strapon in one of your hands, but your hands are not empty!"),
+			span_notice(LANG("obj.e58de30e", list(user, user.p_their(), user.p_their()))),
+			span_notice(LANG("obj.4996774f", null)),
 		)
 
 /// Makes a new item within contents
@@ -209,7 +209,7 @@
 		return
 
 	if(!target_mob.check_erp_prefs(/datum/preference/toggle/erp/sex_toy, user, src))
-		to_chat(user, span_danger("[target_mob] doesn't want you to do that."))
+		to_chat(user, span_danger(LANG("obj.8d0a0182", list(target_mob))))
 		return
 
 	var/message = ""
@@ -218,10 +218,10 @@
 	switch(user.zone_selected)
 		if(BODY_ZONE_PRECISE_GROIN)
 			if(!vagina)
-				to_chat(user, span_danger("[target_mob] doesn't have suitable genitalia for that!"))
+				to_chat(user, span_danger(LANG("obj.1e01aa77", list(target_mob))))
 				return
 			if(!(target_mob.is_bottomless() || vagina.visibility_preference == GENITAL_ALWAYS_SHOW))
-				to_chat(user, span_danger("[target_mob]'s groin is covered!"))
+				to_chat(user, span_danger(LANG("obj.27926522", list(target_mob))))
 				return
 			message = pick(
 				"delicately rubs [target_mob]'s vagina with [src]",
@@ -244,7 +244,7 @@
 
 		if(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_EYES)
 			if(target_mob.is_mouth_covered())
-				to_chat(user, span_danger("[target_mob]'s mouth is covered!"))
+				to_chat(user, span_danger(LANG("obj.64a8a5e2", list(target_mob))))
 				return
 			message = pick(
 				"fucks [target_mob]'s mouth with [src]",
@@ -268,7 +268,7 @@
 
 		else
 			if(!target_mob.is_bottomless())
-				to_chat(user, span_danger("[target_mob]'s anus is covered!"))
+				to_chat(user, span_danger(LANG("obj.577ff0ee", list(target_mob))))
 				return
 			message = pick(
 				"fucks [target_mob]'s ass with [src]",

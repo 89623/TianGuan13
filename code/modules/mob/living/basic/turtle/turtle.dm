@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define PATH_PEST_KILLER "path_pest_killer"
 #define PATH_PLANT_HEALER "path_plant_healer"
 #define PATH_PLANT_MUTATOR "path_plant_mutator"
@@ -94,6 +95,8 @@
 	return destined_path
 
 /mob/living/basic/turtle/process(seconds_per_tick)
+	if(HAS_TRAIT(src, TRAIT_STASIS))
+		return
 	if(isnull(reagents) || !length(reagents.reagent_list)) //if we have no reagents, default to our highest destined path
 		set_plant_growth(retrieve_destined_path(), 0.5)
 		return
@@ -120,7 +123,7 @@
 	. = ..()
 
 	if(stat == DEAD)
-		. += span_notice("Its tree seems to be all withered...")
+		. += span_notice(LANG("mob.8a0e39ab", null))
 		return
 
 	var/destined_path = retrieve_destined_path()
@@ -195,11 +198,11 @@
 		return NONE
 
 	if(isnull(used_item.reagents))
-		balloon_alert(user, "empty!")
+		balloon_alert(user, LANG("mob.6ef93b07", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(stat == DEAD)
-		balloon_alert(user, "its dead!")
+		balloon_alert(user, LANG("mob.bddaa387", null))
 		return ITEM_INTERACT_SUCCESS
 
 	var/should_transfer = FALSE
@@ -209,14 +212,14 @@
 			break
 
 	if(!should_transfer)
-		balloon_alert(user, "refuses to drink!")
+		balloon_alert(user, LANG("mob.c4b995df", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!do_after(user, 1.5 SECONDS, target = src))
 		return ITEM_INTERACT_SUCCESS
 
 	used_item.reagents.trans_to(reagents, 5)
-	balloon_alert(user, "drinks happily")
+	balloon_alert(user, LANG("mob.a95d01b4", null))
 	playsound(src, 'sound/items/drink.ogg', vol = 25, vary = TRUE)
 	return ITEM_INTERACT_SUCCESS
 
@@ -249,7 +252,7 @@
 		var/atom/movable/movable_food = potential_food
 		movable_food.forceMove(drop_location())
 
-	balloon_alert_to_viewers("spits out some food")
+	balloon_alert_to_viewers(LANG("mob.29920c3b", null))
 
 /mob/living/basic/turtle/death(gibbed)
 	. = ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /**
  * When the station wins, any remaining living headrevs become Enemies of the State, a small solo antagonist.
@@ -29,9 +30,9 @@
 
 /datum/antagonist/enemy_of_the_state/greet()
 	. = ..()
-	to_chat(owner, span_userdanger("The revolution is dead."))
-	to_chat(owner, span_bolddanger("You're an enemy of the state to Nanotrasen. You're a loose end to the Syndicate."))
-	to_chat(owner, "<b>It's time to live out your days as an exile... Or go out in one last big bang.</b>")
+	to_chat(owner, span_userdanger(LANG("datum.c5424bb6", null)))
+	to_chat(owner, span_bolddanger(LANG("datum.b224d6ef", null)))
+	to_chat(owner, LANG("datum.a81d043a", null))
 	owner.announce_objectives()
 
 /datum/antagonist/enemy_of_the_state/roundend_report()

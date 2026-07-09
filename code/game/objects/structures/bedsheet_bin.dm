@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*
 CONTAINS:
 BEDSHEETS
@@ -68,7 +69,7 @@ LINEN BINS
 	if(!user.transfer_item_to_turf(src, get_turf(to_cover)))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "covered")
+	balloon_alert(user, LANG("obj.c03ee04d", null))
 	coverup(to_cover)
 	add_fingerprint(user)
 
@@ -87,7 +88,7 @@ LINEN BINS
 	if(!QDELETED(shreds)) // Stacks merged
 		transfer_fingerprints_to(shreds)
 		shreds.add_fingerprint(user)
-	to_chat(user, span_notice("You tear [src] up."))
+	to_chat(user, span_notice(LANG("obj.faf12990", list(src))))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -111,7 +112,7 @@ LINEN BINS
 	pixel_x = 0
 	pixel_y = 0
 	pixel_z = sleeper.pixel_z // Account for possible mob elevation
-	balloon_alert(sleeper, "covered")
+	balloon_alert(sleeper, LANG("obj.c03ee04d", null))
 	var/angle = sleeper.lying_prev
 	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob
 
@@ -128,7 +129,7 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(sleeper, COMSIG_QDELETING)
-	balloon_alert(sleeper, "smoothed sheets")
+	balloon_alert(sleeper, LANG("obj.84efd056", null))
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
 	pixel_z = 0
@@ -602,11 +603,11 @@ LINEN BINS
 /obj/structure/bedsheetbin/examine(mob/user)
 	. = ..()
 	if(amount < 1)
-		. += "There are no bed sheets in the bin."
+		. += LANG("obj.b2bea8f1", null)
 	else if(amount == 1)
-		. += "There is one bed sheet in the bin."
+		. += LANG("obj.fb1d78cc", null)
 	else
-		. += "There are [amount] bed sheets in the bin."
+		. += LANG("obj.34dbdfc7", list(amount))
 
 /obj/structure/bedsheetbin/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -649,10 +650,10 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(amount)
-		to_chat(user, span_warning("The [src] must be empty first!"))
+		to_chat(user, span_warning(LANG("obj.e7ed024d", list(src))))
 		return ITEM_INTERACT_SUCCESS
 	if(tool.use_tool(src, user, 0.5 SECONDS, volume=50))
-		to_chat(user, span_notice("You disassemble the [src]."))
+		to_chat(user, span_notice(LANG("obj.0f0ff1f5", list(src))))
 		new /obj/item/stack/rods(loc, 2)
 		qdel(src)
 		return ITEM_INTERACT_SUCCESS
@@ -674,7 +675,7 @@ LINEN BINS
 		return ITEM_INTERACT_BLOCKING
 	sheets.Add(tool)
 	amount++
-	to_chat(user, span_notice("You put [tool] in [src]."))
+	to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -682,19 +683,19 @@ LINEN BINS
 	if(user.combat_mode)
 		return NONE
 	if(tool.w_class >= WEIGHT_CLASS_BULKY)
-		balloon_alert(user, "too big!")
+		balloon_alert(user, LANG("obj.a5e64cbb", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!amount)
-		balloon_alert(user, "nothing to hide under!")
+		balloon_alert(user, LANG("obj.43ea5218", null))
 		return ITEM_INTERACT_BLOCKING
 	if(hidden)
-		balloon_alert(user, "already something there!")
+		balloon_alert(user, LANG("obj.02635528", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src, silent = FALSE))
-		to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot hide it among the sheets!"))
+		to_chat(user, span_warning(LANG("obj.c61e998e", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 	hidden = tool
-	to_chat(user, span_notice("You hide [tool] among the sheets."))
+	to_chat(user, span_notice(LANG("obj.98e101de", list(tool))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bedsheetbin/attack_paw(mob/user, list/modifiers)
@@ -721,12 +722,12 @@ LINEN BINS
 
 		B.forceMove(drop_location())
 		user.put_in_hands(B)
-		to_chat(user, span_notice("You take [B] out of [src]."))
+		to_chat(user, span_notice(LANG("obj.604c7b94", list(B, src))))
 		update_appearance()
 
 		if(hidden)
 			hidden.forceMove(drop_location())
-			to_chat(user, span_notice("[hidden] falls out of [B]!"))
+			to_chat(user, span_notice(LANG("obj.64fbe43f", list(hidden, B))))
 			hidden = null
 
 	add_fingerprint(user)
@@ -745,7 +746,7 @@ LINEN BINS
 			B = new /obj/item/bedsheet(loc)
 
 		B.forceMove(drop_location())
-		to_chat(user, span_notice("You telekinetically remove [B] from [src]."))
+		to_chat(user, span_notice(LANG("obj.2e70f313", list(B, src))))
 		update_appearance()
 
 		if(hidden)

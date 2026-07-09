@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // KA modkit design discs
 
 /obj/item/disk/design_disk/modkit_disc
@@ -41,20 +42,20 @@
 	. = ..()
 
 	if(!wisp)
-		to_chat(user, span_warning("The wisp has gone missing!"))
+		to_chat(user, span_warning(LANG("obj.ecf10aa6", null)))
 		icon_state = "lantern-blue"
 		inhand_icon_state = "lantern-blue"
 		return
 
 	if(wisp.loc == src)
-		to_chat(user, span_notice("You release the wisp. It begins to bob around your head."))
+		to_chat(user, span_notice(LANG("obj.911f18c1", null)))
 		icon_state = "lantern-blue"
 		inhand_icon_state = "lantern-blue"
 		wisp.orbit(user, 20)
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 		return
 
-	to_chat(user, span_notice("You return the wisp to the lantern."))
+	to_chat(user, span_notice(LANG("obj.3ce4a65c", null)))
 	icon_state = "lantern-blue-on"
 	inhand_icon_state = "lantern-blue-on"
 	wisp.forceMove(src)
@@ -69,7 +70,7 @@
 		if(wisp.loc == src)
 			qdel(wisp)
 		else
-			wisp.visible_message(span_notice("[wisp] has a sad feeling for a moment, then it passes."))
+			wisp.visible_message(span_notice(LANG("obj.7d3922a1", list(wisp))))
 	return ..()
 
 /obj/effect/wisp
@@ -92,7 +93,7 @@
 		return
 	var/mob/being = thing
 	RegisterSignal(being, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
-	to_chat(being, span_notice("The wisp enhances your vision."))
+	to_chat(being, span_notice(LANG("obj.9911f3cc", null)))
 	ADD_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
 	being.update_sight()
 
@@ -101,7 +102,7 @@
 		return ..()
 	var/mob/being = orbit_target
 	UnregisterSignal(being, COMSIG_MOB_UPDATE_SIGHT)
-	to_chat(being, span_notice("Your vision returns to normal."))
+	to_chat(being, span_notice(LANG("obj.ddf9fc70", null)))
 	REMOVE_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
 	being.update_sight()
 	return ..()
@@ -123,7 +124,7 @@
 	var/turf/our_loc = get_turf(src)
 	var/ladder_x = our_loc.x
 	var/ladder_y = our_loc.y
-	to_chat(user, span_notice("You unfold the ladder. It does some unknowable, eldritch twisting and turning in a dance of form, seeming to invert and fold into itself - before a satisfying click rings out.")) //NOVA EDIT - Attempts to explain why it sometimes just 'dissapears' on some z-levels.
+	to_chat(user, span_notice(LANG("obj.6aa275a4", null))) //NOVA EDIT - Attempts to explain why it sometimes just 'dissapears' on some z-levels.
 	var/last_ladder = null
 	for(var/i in 1 to world.maxz)
 		if(is_centcom_level(i) || is_reserved_level(i) || is_away_level(i) || is_spaceruins_level(i)) //NOVA EDIT: Stops Jacob's ladder from piercing problematic space ruins.
@@ -148,11 +149,11 @@
 
 /obj/item/book_of_babel/attack_self(mob/user)
 	if(user.is_blind())
-		to_chat(user, span_warning("You are blind and can't read anything!"))
+		to_chat(user, span_warning(LANG("obj.2977ae45", null)))
 		return FALSE
 	if(!user.can_read(src))
 		return FALSE
-	to_chat(user, span_notice("You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops."))
+	to_chat(user, span_notice(LANG("obj.eb65c18d", null)))
 	cure_curse_of_babel(user) // removes tower of babel if we have it
 	user.grant_all_languages(source = LANGUAGE_BABEL)
 	user.remove_blocked_language(GLOB.all_languages, source = LANGUAGE_ALL)
@@ -196,7 +197,7 @@
 	var/obj/item/bodypart/chest/chest = exposed_human.get_bodypart(BODY_ZONE_CHEST)
 	if(!chest.wing_types || reac_volume < 5 || !exposed_human.dna)
 		if((methods & INGEST) && show_message)
-			to_chat(exposed_human, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
+			to_chat(exposed_human, span_notice(LANG("datum.8ee36e8d", null)))
 		return
 	var/had_wings = exposed_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	var/wing_type = get_wing_choice(exposed_human, chest)
@@ -205,9 +206,9 @@
 	var/obj/item/organ/wings/functional/wings = new wing_type()
 	wings.Insert(exposed_human)
 	if(had_wings)
-		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
+		to_chat(exposed_human, span_userdanger(LANG("datum.1894d441", null)))
 	else
-		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as wings burst out!"))
+		to_chat(exposed_human, span_userdanger(LANG("datum.72832212", null)))
 	playsound(exposed_human.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE, -1)
 	exposed_human.apply_damage(20, def_zone = BODY_ZONE_CHEST, forced = TRUE, wound_bonus = CANT_WOUND)
 	exposed_human.emote("scream")

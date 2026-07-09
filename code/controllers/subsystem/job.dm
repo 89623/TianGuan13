@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
 	dependencies = list(
@@ -153,7 +154,7 @@ SUBSYSTEM_DEF(job)
 		joinable_departments = list()
 		joinable_departments_by_type = list()
 		experience_jobs_map = list()
-		to_chat(world, span_boldannounce("Error setting up jobs, no job datums found"))
+		to_chat(world, span_boldannounce(LANG("datum.b5eb6ddf", null)))
 		return FALSE
 
 	var/list/new_all_occupations = list()
@@ -723,7 +724,7 @@ SUBSYSTEM_DEF(job)
 	job_debug("RJCT: Player rejected, Player: [player]")
 	unassigned -= player
 	if(!run_divide_occupation_pure)
-		to_chat(player, span_infoplain("<b>You have failed to qualify for any job you desired.</b>"))
+		to_chat(player, span_infoplain(LANG("datum.77359c87", null)))
 		player.ready = PLAYER_NOT_READY
 		player.client << output((player.ready == PLAYER_READY_TO_PLAY) ? 1 : 0, "lobby_browser:imgsrc") // NOVA EDIT ADDITION
 
@@ -873,9 +874,9 @@ SUBSYSTEM_DEF(job)
 	var/where = new_captain.equip_in_one_of_slots(paper, slots, FALSE, indirect_action = TRUE) || "at your feet"
 
 	if(acting_captain)
-		to_chat(new_captain, span_notice("Due to your position in the chain of command, you have been promoted to Acting Captain. You can find in important note about this [where]."))
+		to_chat(new_captain, span_notice(LANG("datum.3c051050", list(where))))
 	else
-		to_chat(new_captain, span_notice("You can find the code to obtain your spare ID from the secure safe on the Bridge [where]."))
+		to_chat(new_captain, span_notice(LANG("datum.afec813a", list(where))))
 		new_captain.add_mob_memory(/datum/memory/key/captains_spare_code, safe_code = SSid_access.spare_id_safe_code)
 
 	// Force-give their ID card bridge access.

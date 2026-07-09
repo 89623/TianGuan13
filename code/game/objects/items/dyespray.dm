@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/dyespray
 	name = "hair dye spray"
 	desc = "A spray to dye your hair any gradients you'd like."
@@ -88,7 +89,7 @@
 			choices += choice_name
 	if(!length(choices))
 		return
-	var/what_to_dye = tgui_alert(user, "What do you want to dye?", "Character Preference", choices)
+	var/what_to_dye = tgui_alert(user, LANG("obj.104fcb0c", null), LANG("obj.78f80c29", null), choices)
 	if(!what_to_dye || !user.can_perform_action(src, NEED_DEXTERITY))
 		return
 
@@ -98,7 +99,7 @@
 
 	var/datum/bodypart_overlay/mutant/overlay = selected.bodypart_overlay
 	if(overlay.dye_color)
-		var/remove_dye = tgui_alert(user, "Do you want to un-dye [selected]?", "Character Preference", list("Yes", "No"))
+		var/remove_dye = tgui_alert(user, LANG("obj.7627c90d", list(selected)), LANG("obj.78f80c29", null), list("Yes", "No"))
 		if(isnull(remove_dye) || !user.can_perform_action(src, NEED_DEXTERITY))
 			return
 		if(QDELETED(selected) || !(selected in target.organs))

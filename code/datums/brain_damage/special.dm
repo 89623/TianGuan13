@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Brain traumas that are rare and/or somewhat beneficial;
 //they are the easiest to cure, which means that if you want
 //to keep them, you can't cure your other traumas
@@ -134,7 +135,7 @@
 	var/slip_out_message = pick("silently fades in", "leaps out of thin air","appears", "walks out of an invisible doorway",\
 		"slides out of a fold in spacetime")
 
-	to_chat(user, span_notice("You try to align with the bluespace stream..."))
+	to_chat(user, span_notice(LANG("obj.3d6c4a5e", null)))
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
 
@@ -147,13 +148,13 @@
 	user.visible_message(span_warning("[user] [slip_in_message]."), ignored_mobs = user)
 
 	if(do_teleport(user, destination_turf, no_effects = TRUE))
-		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
+		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice(LANG("obj.7195f824", null)))
 	else
-		user.visible_message(span_warning("[user] [slip_out_message], ending up exactly where they left."), span_notice("...and find yourself where you started?"))
+		user.visible_message(span_warning(LANG("obj.a195a31c", list(user, slip_out_message))), span_notice(LANG("obj.52f75cc4", null)))
 
 
 /obj/effect/client_image_holder/bluespace_stream/attack_tk(mob/user)
-	to_chat(user, span_warning("\The [src] actively rejects your mind, and the bluespace energies surrounding it disrupt your telekinesis!"))
+	to_chat(user, span_warning(LANG("obj.ac08faac", list(src))))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/brain_trauma/special/quantum_alignment
@@ -213,7 +214,7 @@
 	entangle(get_turf(owner))
 
 /datum/brain_trauma/special/quantum_alignment/proc/entangle(atom/target)
-	to_chat(owner, span_notice("You start feeling a strong sense of connection to [target]."))
+	to_chat(owner, span_notice(LANG("datum.3238fe5c", list(target))))
 	linked_target = target
 	linked = TRUE
 	COOLDOWN_START(src, snapback_cooldown, rand(45 SECONDS, 10 MINUTES))
@@ -223,7 +224,7 @@
 		linked_target = null
 		linked = FALSE
 		return
-	to_chat(owner, span_warning("Your connection to [linked_target] suddenly feels extremely strong... you can feel it pulling you!"))
+	to_chat(owner, span_warning(LANG("datum.fbaee34e", list(linked_target))))
 	owner.playsound_local(owner, 'sound/effects/magic/lightning_chargeup.ogg', 75, FALSE)
 	returning = TRUE
 	addtimer(CALLBACK(src, PROC_REF(snapback)), 10 SECONDS)
@@ -231,11 +232,11 @@
 /datum/brain_trauma/special/quantum_alignment/proc/snapback()
 	returning = FALSE
 	if(QDELETED(linked_target))
-		to_chat(owner, span_notice("The connection fades abruptly, and the pull with it."))
+		to_chat(owner, span_notice(LANG("datum.cb42086c", null)))
 		linked_target = null
 		linked = FALSE
 		return
-	to_chat(owner, span_warning("You're pulled through spacetime!"))
+	to_chat(owner, span_warning(LANG("datum.98ddb394", null)))
 	do_teleport(owner, get_turf(linked_target), null, channel = TELEPORT_CHANNEL_QUANTUM)
 	owner.playsound_local(owner, 'sound/effects/magic/repulse.ogg', 100, FALSE)
 	linked_target = null
@@ -354,7 +355,7 @@
 
 /datum/brain_trauma/special/existential_crisis/proc/fade_in()
 	QDEL_NULL(veil)
-	to_chat(owner, span_notice("You fade back into reality."))
+	to_chat(owner, span_notice(LANG("datum.a752943f", null)))
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
 
 //base sync holder is in desynchronizer.dm
@@ -407,7 +408,7 @@
 
 	if(get_dist(owner, beepsky) <= 1)
 		owner.playsound_local(owner, 'sound/items/weapons/egloves.ogg', 50)
-		owner.visible_message(span_warning("[owner]'s body jerks as if it was shocked."), span_userdanger("You feel the fist of the LAW."))
+		owner.visible_message(span_warning(LANG("datum.22ede1b1", list(owner))), span_userdanger(LANG("datum.7af357d2", null)))
 		owner.adjust_stamina_loss(rand(40, 70))
 		QDEL_NULL(beepsky)
 
@@ -437,7 +438,7 @@
 	forceMove(get_step_towards(src, victim))
 	if(prob(5))
 		var/beepskys_cry = "Level 10 infraction alert!"
-		to_chat(victim, "[span_name("[name]")] exclaims, \"[span_robot("[beepskys_cry]")]")
+		to_chat(victim, LANG("obj.e1ba3fc8", list(span_name("[name]"), span_robot("[beepskys_cry]"))))
 		if(victim.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 			victim.create_chat_message(src, raw_message = beepskys_cry, spans = list(SPAN_ROBOT))
 
@@ -541,14 +542,14 @@
 	if(owner.ai_controller.ai_status == AI_STATUS_OFF)
 		owner.ai_controller.set_ai_status(AI_STATUS_ON)
 		owner.log_message("became controlled by monkey instincts ([owner.ai_controller.blackboard[BB_MONKEY_AGGRESSIVE] ? "aggressive" : "docile"])", LOG_ATTACK, color = "orange")
-		to_chat(owner, span_warning("You feel the urge to act on your primal instincts..."))
+		to_chat(owner, span_warning(LANG("datum.c578be90", null)))
 	// extend original timer if we roll the effect while it's already ongoing
 	addtimer(CALLBACK(src, PROC_REF(primal_instincts_off)), rand(20 SECONDS, 40 SECONDS), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE|TIMER_DELETE_ME)
 
 /datum/brain_trauma/special/primal_instincts/proc/primal_instincts_off()
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
-	to_chat(owner, span_green("The urge subsides."))
+	to_chat(owner, span_green(LANG("datum.7b1b5392", null)))
 
 /datum/brain_trauma/special/axedoration
 	name = "Axe Delusions"
@@ -589,7 +590,7 @@
 
 	if(!GLOB.bridge_axe)
 		if(SPT_PROB(0.5, seconds_per_tick))
-			to_chat(owner, span_warning("I've failed my duty..."))
+			to_chat(owner, span_warning(LANG("datum.6d06e1a7", null)))
 			owner.set_jitter_if_lower(5 SECONDS)
 			owner.set_stutter_if_lower(5 SECONDS)
 			if(SPT_PROB(20, seconds_per_tick))
@@ -606,10 +607,10 @@
 			return
 		var/datum/job/holder_job = axe_holder.mind?.assigned_role
 		if(holder_job && (/datum/job_department/command in holder_job.departments_list))
-			to_chat(owner, span_notice("I hope the axe is in good hands..."))
+			to_chat(owner, span_notice(LANG("datum.09a39e1d", null)))
 			owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 			return
-		to_chat(owner, span_warning("You start having a bad feeling..."))
+		to_chat(owner, span_warning(LANG("datum.8bcb6d77", null)))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 		return
 
@@ -618,13 +619,13 @@
 		return
 
 	if(istype(axe_location, /area/station/command))
-		to_chat(owner, span_notice("You feel a sense of relief..."))
+		to_chat(owner, span_notice(LANG("datum.e217e8c4", null)))
 		if(istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
 			return
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 		return
 
-	to_chat(owner, span_warning("You start having a bad feeling..."))
+	to_chat(owner, span_warning(LANG("datum.8bcb6d77", null)))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 
 /datum/brain_trauma/special/axedoration/on_gain()
@@ -654,7 +655,7 @@
 
 /datum/brain_trauma/special/axedoration/proc/axe_gone(source)
 	SIGNAL_HANDLER
-	to_chat(owner, span_danger("You feel a great disturbance in the force."))
+	to_chat(owner, span_danger(LANG("datum.8b9ce66b", null)))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_gone)
 	owner.set_jitter_if_lower(15 SECONDS)
 	owner.set_stutter_if_lower(15 SECONDS)
@@ -665,11 +666,11 @@
 		return
 	owner.set_jitter_if_lower(3 SECONDS)
 	if(picked_up == GLOB.bridge_axe)
-		to_chat(owner, span_hypnophrase("I have it. It's time to put it back."))
+		to_chat(owner, span_hypnophrase(LANG("datum.1b1845c2", null)))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_held)
 		return
 	ADD_TRAIT(picked_up, TRAIT_NODROP, type)
-	to_chat(owner, span_warning("...This is not the one I'm looking after."))
+	to_chat(owner, span_warning(LANG("datum.e0b648c4", null)))
 	owner.Immobilize(2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(throw_faker), picked_up), 2 SECONDS)
 
@@ -678,7 +679,7 @@
 	var/held_index = owner.get_held_index_of_item(faker)
 	if(!held_index)
 		return
-	to_chat(owner, span_warning("Be gone with you."))
+	to_chat(owner, span_warning(LANG("datum.f0b37c3f", null)))
 	owner.swap_hand(held_index, silent = TRUE)
 	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, faker.throw_range)
 	owner.throw_item(target_turf)
@@ -691,14 +692,14 @@
 		return
 	if(istype(new_location, /obj/structure/fireaxecabinet))
 		if(istype(get_area(new_location), /area/station/command))
-			to_chat(owner, span_nicegreen("Ah! Back where it belongs!"))
+			to_chat(owner, span_nicegreen(LANG("datum.b9ebf517", null)))
 			owner.add_mood_event("fireaxe", /datum/mood_event/axe_cabinet)
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "smile")
 			return
-		to_chat(owner, span_warning("Leaving it outside of command? Am I sure about that?"))
+		to_chat(owner, span_warning(LANG("datum.c4865cf0", null)))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 		return
-	to_chat(owner, span_warning("Should I really leave it here?"))
+	to_chat(owner, span_warning(LANG("datum.0542ea72", null)))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 
 /datum/brain_trauma/special/axedoration/proc/on_examine(mob/source, atom/target, list/examine_strings, list/examine_overrides)
@@ -706,9 +707,9 @@
 	if(!istype(target, /obj/item/fireaxe))
 		return
 	if(target == GLOB.bridge_axe)
-		examine_strings += span_notice("It's the axe I've sworn to protect.")
+		examine_strings += span_notice(LANG("datum.25ef1519", null))
 	else
-		examine_strings += span_warning("It's a simulacra, a fake axe made to fool the masses.")
+		examine_strings += span_warning(LANG("datum.7cd4bb8f", null))
 
 /datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER

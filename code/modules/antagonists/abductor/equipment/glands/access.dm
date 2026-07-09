@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/organ/heart/gland/access
 	abductor_hint = "anagraphic electro-scrambler. After it activates, grants the abductee intrinsic all access."
 	cooldown_low = 600
@@ -8,5 +9,5 @@
 	mind_control_duration = 900
 
 /obj/item/organ/heart/gland/access/activate()
-	to_chat(owner, span_notice("You feel like a VIP for some reason."))
+	to_chat(owner, span_notice(LANG("obj.fa54e6d1", null)))
 	owner.AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)), src)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // This spell exists mainly for debugging purposes, and also to show how casting works
 /datum/action/cooldown/spell/basic_heal
 	name = "Lesser Heal"
@@ -23,8 +24,8 @@
 /datum/action/cooldown/spell/basic_heal/cast(mob/living/cast_on)
 	. = ..()
 	cast_on.visible_message(
-		span_warning("A wreath of gentle light passes over [cast_on]!"),
-		span_notice("You wreath yourself in healing light!"),
+		span_warning(LANG("datum.9c6e1068", list(cast_on))),
+		span_notice(LANG("datum.ed1e1eb3", null)),
 	)
 	var/need_mob_update = FALSE
 	need_mob_update += cast_on.adjust_brute_loss(-brute_to_heal, updating_health = FALSE)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///the point where you can notice the item is hungry on examine.
 #define HUNGER_THRESHOLD_WARNING 25
 ///the point where the item has a chance to eat something on every tick. possibly you!
@@ -48,9 +49,9 @@
 	if(!awakened)
 		return //we should not reveal we are cursed until equipped
 	if(current_health < max_health)
-		examine_list += span_notice("[parent] looks sick from something it ate.")
+		examine_list += span_notice(LANG("datum.73f8e6e0", list(parent)))
 	if(hunger > HUNGER_THRESHOLD_WARNING)
-		examine_list += span_danger("[parent] hungers for something to eat...")
+		examine_list += span_danger(LANG("datum.e9eb0f23", list(parent)))
 
 ///signal called from equipping parent
 /datum/component/curse_of_hunger/proc/on_equip(datum/source, mob/equipper, slot)
@@ -103,7 +104,7 @@
 		cursed_item.forceMove(get_turf(cursed_item))
 	//only taking the most reasonable slot is fine since it unequips what is there to equip itself.
 	cursed_item.AddElement(/datum/element/cursed, cursed_item.slot_equipment_priority[1])
-	cursed_item.visible_message(span_warning("[cursed_item] begins to move on [cursed_item.p_their()] own..."))
+	cursed_item.visible_message(span_warning(LANG("datum.566bb0b4", list(cursed_item, cursed_item.p_their()))))
 
 /datum/component/curse_of_hunger/process(seconds_per_tick)
 	var/obj/item/cursed_item = parent
@@ -144,12 +145,12 @@
 
 	///no food found, but you're dead: it bites you slightly, and doesn't regain health.
 	if(cursed.stat == DEAD)
-		cursed.visible_message(span_danger("[cursed_item] nibbles on [cursed]."), span_userdanger("[cursed_item] nibbles on you!"))
+		cursed.visible_message(span_danger(LANG("datum.c95a5fff", list(cursed_item, cursed))), span_userdanger(LANG("datum.93a29058", list(cursed_item))))
 		cursed.apply_damage(10, BRUTE, BODY_ZONE_CHEST)
 		return
 
 	///no food found: it bites you and regains some health.
-	cursed.visible_message(span_danger("[cursed_item] bites [cursed]!"), span_userdanger("[cursed_item] bites you to sate [cursed_item.p_their()] hunger!"))
+	cursed.visible_message(span_danger(LANG("datum.4f554285", list(cursed_item, cursed))), span_userdanger(LANG("datum.69017b15", list(cursed_item, cursed_item.p_their()))))
 	cursed.apply_damage(60, BRUTE, BODY_ZONE_CHEST, wound_bonus = -20, exposed_wound_bonus = 20)
 	current_health = min(current_health + 1, max_health)
 

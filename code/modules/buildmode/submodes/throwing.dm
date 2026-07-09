@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/buildmode_mode/throwing
 	key = "throw"
 
@@ -9,8 +10,7 @@
 
 /datum/buildmode_mode/throwing/show_help(client/builder)
 	to_chat(builder, span_purple(boxed_message(
-		"[span_bold("Select")] -> Left Mouse Button on turf/obj/mob\n\
-		[span_bold("Throw")] -> Right Mouse Button on turf/obj/mob"))
+		LANG("datum.fbcae5f7", list(span_bold("Select"), span_bold("Throw")))))
 	)
 
 /datum/buildmode_mode/throwing/handle_click(client/c, params, obj/object)
@@ -20,7 +20,7 @@
 		if(isturf(object))
 			return
 		throw_atom = object
-		to_chat(c, "Selected object '[throw_atom]'")
+		to_chat(c, LANG("datum.4f79b931", list(throw_atom)))
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(throw_atom)
 			throw_atom.throw_at(object, 10, 1, c.mob)

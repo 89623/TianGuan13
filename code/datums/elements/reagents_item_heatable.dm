@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// This atom can be touched by a hot item to warm up its reagents
 /datum/element/reagents_item_heatable
 
@@ -20,7 +21,7 @@
 	var/hotness = tool.get_temperature()
 	if(hotness)
 		source.reagents.expose_temperature(hotness)
-		source.balloon_alert(user, "heated [source]")
+		source.balloon_alert(user, LANG("datum.760bff13", list(source)))
 		return ITEM_INTERACT_SUCCESS
 
 	//Cooling method
@@ -29,11 +30,11 @@
 		if(extinguisher.safety)
 			return NONE
 		if (extinguisher.reagents?.total_volume < 1)
-			extinguisher.balloon_alert(user, "extinguisher is empty!") // being a bit more verbose to clarify the extinguisher - not source - is empty
+			extinguisher.balloon_alert(user, LANG("datum.47cb07cf", null)) // being a bit more verbose to clarify the extinguisher - not source - is empty
 			return ITEM_INTERACT_BLOCKING
 		var/cooling = (0 - source.reagents.chem_temp) * extinguisher.cooling_power * 2
 		source.reagents.expose_temperature(cooling)
-		source.balloon_alert(user, "cooled [source]")
+		source.balloon_alert(user, LANG("datum.ade48188", list(source)))
 		playsound(source, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
 		return ITEM_INTERACT_SUCCESS

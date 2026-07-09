@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/element/wears_collar
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
@@ -67,7 +68,7 @@
 	if(!istype(attacking_item, /obj/item/clothing/neck/petcollar))
 		return NONE
 	if(locate(/obj/item/clothing/neck/petcollar) in source)
-		user.balloon_alert(source, "already wearing a collar!")
+		user.balloon_alert(source, LANG("datum.2abf1d3c", null))
 		return NONE
 	attacking_item.forceMove(source)
 	return COMPONENT_NO_AFTERATTACK

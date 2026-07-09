@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/team/battlecruiser
 	name = "\improper Battlecruiser Crew"
 	member_name = "crewmember"
@@ -29,7 +30,7 @@
 
 /datum/antagonist/battlecruiser/greet()
 	play_stinger()
-	to_chat(owner, span_big("You are a [name]!"))
+	to_chat(owner, span_big(LANG("datum.3542c37f", list(name))))
 	owner.announce_objectives()
 
 /datum/antagonist/battlecruiser/ally
@@ -60,5 +61,5 @@
 		var/obj/machinery/nuclearbomb/nuke = battlecruiser_team.nuke
 		antag_memory += "<B>[nuke] Code</B>: [nuke.r_code]<br>"
 		owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = nuke.r_code)
-		to_chat(owner, "The nuclear authorization code is: <B>[nuke.r_code]</B>")
+		to_chat(owner, LANG("datum.f9a759ed", list(nuke.r_code)))
 	return ..()

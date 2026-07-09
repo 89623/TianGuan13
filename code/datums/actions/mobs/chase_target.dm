@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/mob_cooldown/chase_target
 	name = "Chase Target"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
@@ -19,7 +20,7 @@
 	var/mob/living/living_mob = target
 	if(istype(living_mob) && living_mob.stat == DEAD)
 		return
-	owner.visible_message(span_boldwarning("[owner] charges!"))
+	owner.visible_message(span_boldwarning(LANG("datum.e58c621b", list(owner))))
 	owner.SpinAnimation(speed = 20, loops = 3, parallel = FALSE)
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/hostile_mob = owner

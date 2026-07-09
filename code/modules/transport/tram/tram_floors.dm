@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /turf/open/floor/noslip/tram
 	name = "high-traction tram platform"
 	icon = 'icons/turf/tram.dmi'
@@ -20,7 +21,7 @@
 
 /turf/open/floor/tram/examine(mob/user)
 	. += ..()
-	. += span_notice("The reinforcement bolts are [EXAMINE_HINT("wrenched")] firmly in place. Use a [EXAMINE_HINT("wrench")] to remove the plate.")
+	. += span_notice(LANG("turf.f86d5448", list(EXAMINE_HINT("wrenched"), EXAMINE_HINT("wrench"))))
 
 /turf/open/floor/tram/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stack/thermoplastic))
@@ -44,7 +45,7 @@
 
 /turf/open/floor/tram/wrench_act(mob/living/user, obj/item/item)
 	..()
-	to_chat(user, span_notice("You begin removing the plate..."))
+	to_chat(user, span_notice(LANG("turf.321e72ef", null)))
 	if(item.use_tool(src, user, 30, volume=80))
 		if(!istype(src, /turf/open/floor/tram))
 			return TRUE
@@ -119,8 +120,8 @@
 /turf/open/floor/tram/plate/energized/examine(mob/user)
 	. = ..()
 	if(broken || burnt)
-		. += span_danger("It looks damaged and the electrical components exposed!")
-		. += span_notice("The plate can be repaired using a [EXAMINE_HINT("titanium sheet")].")
+		. += span_danger(LANG("turf.e7463f16", null))
+		. += span_notice(LANG("turf.99ed8514", list(EXAMINE_HINT("titanium sheet"))))
 
 /turf/open/floor/tram/plate/energized/broken_states()
 	return list("energized_plate_damaged")
@@ -137,7 +138,7 @@
 		return ITEM_INTERACT_BLOCKING
 	broken = FALSE
 	update_appearance()
-	balloon_alert(user, "plate replaced")
+	balloon_alert(user, LANG("turf.71c2f637", null))
 	return ITEM_INTERACT_SUCCESS
 
 /turf/open/floor/tram/plate/energized/broken
@@ -219,10 +220,10 @@
 	. = ..()
 
 	if(secured)
-		. += span_notice("It is secured with a set of [EXAMINE_HINT("screws.")] To remove tile use a [EXAMINE_HINT("screwdriver.")]")
+		. += span_notice(LANG("obj.a578c58d", list(EXAMINE_HINT("screws."), EXAMINE_HINT("screwdriver."))))
 	else
-		. += span_notice("You can [EXAMINE_HINT("crowbar")] to remove the tile.")
-		. += span_notice("It can be re-secured using a [EXAMINE_HINT("screwdriver.")]")
+		. += span_notice(LANG("obj.ff2110d8", list(EXAMINE_HINT("crowbar"))))
+		. += span_notice(LANG("obj.6fd5b2ea", list(EXAMINE_HINT("screwdriver."))))
 
 /obj/structure/thermoplastic/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
@@ -242,31 +243,31 @@
 /obj/structure/thermoplastic/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	if(secured)
-		user.visible_message(span_notice("[user] begins to unscrew the tile..."),
-		span_notice("You begin to unscrew the tile..."))
+		user.visible_message(span_notice(LANG("obj.571d20f0", list(user))),
+		span_notice(LANG("obj.679179c6", null)))
 		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 			secured = FALSE
-			to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the tile."))
+			to_chat(user, span_notice(LANG("obj.4630c562", null)))
 	else
-		user.visible_message(span_notice("[user] begins to fasten the tile..."),
-		span_notice("You begin to fasten the tile..."))
+		user.visible_message(span_notice(LANG("obj.8fdf6425", list(user))),
+		span_notice(LANG("obj.8993a9b9", null)))
 		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 			secured = TRUE
-			to_chat(user, span_notice("The tile is securely screwed in place."))
+			to_chat(user, span_notice(LANG("obj.9248c7b7", null)))
 
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/thermoplastic/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	if(secured)
-		to_chat(user, span_warning("The security screws need to be removed first!"))
+		to_chat(user, span_warning(LANG("obj.b436b070", null)))
 		return FALSE
 
 	else
-		user.visible_message(span_notice("[user] wedges \the [tool] into the tile's gap in the edge and starts prying..."),
-		span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
+		user.visible_message(span_notice(LANG("obj.b9f905f9", list(user, tool))),
+		span_notice(LANG("obj.4906368b", list(tool))))
 		if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
-			to_chat(user, span_notice("The panel pops out of the frame."))
+			to_chat(user, span_notice(LANG("obj.735aa41b", null)))
 			var/obj/item/stack/thermoplastic/pulled_tile = new floor_tile()
 			pulled_tile.update_integrity(atom_integrity)
 			user.put_in_hands(pulled_tile)
@@ -276,15 +277,15 @@
 
 /obj/structure/thermoplastic/welder_act(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
-		to_chat(user, span_warning("[src] is already in good condition!"))
+		to_chat(user, span_warning(LANG("obj.7f6370b2", list(src))))
 		return ITEM_INTERACT_SUCCESS
 	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return FALSE
-	to_chat(user, span_notice("You begin repairing [src]..."))
+	to_chat(user, span_notice(LANG("obj.93449ef4", list(src))))
 	var/integrity_to_repair = max_integrity - atom_integrity
 	if(tool.use_tool(src, user, integrity_to_repair * 0.5, volume = 50))
 		atom_integrity = max_integrity
-		to_chat(user, span_notice("You repair [src]."))
+		to_chat(user, span_notice(LANG("obj.e94d13eb", list(src))))
 		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -337,4 +338,4 @@
 				damage_value = "mediocre"
 		if(!damage_value)
 			return
-		. += span_notice("Those could work as a [damage_value] throwing weapon.")
+		. += span_notice(LANG("obj.9a8a884d", list(damage_value)))

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAXIMUM_EMP_WIRES 3
 
 /**
@@ -363,7 +364,7 @@
 		payload.Add(list(list(
 			"color" = color,
 			"shownColor" = colorblind ? default_possible_colors[color] : color,
-			"wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? get_wire(color) : null),
+			"wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? lang_reverse_text(get_wire(color)) : null), // NOVA EDIT CHANGE - I18N - 电线名纯显示（act 用 color），整串反查走 _wires.json - ORIGINAL: "wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)
 		)))
@@ -388,7 +389,7 @@
 				cut_color(target_wire, source = L)
 				. = TRUE
 			else
-				to_chat(L, span_warning("You need wirecutters!"))
+				to_chat(L, span_warning(LANG("datum.2e60587f", null)))
 		if("pulse")
 			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
 			if(I || isAdminGhostAI(usr))
@@ -397,7 +398,7 @@
 				pulse_color(target_wire, L)
 				. = TRUE
 			else
-				to_chat(L, span_warning("You need a multitool!"))
+				to_chat(L, span_warning(LANG("datum.ebcbba05", null)))
 		if("attach")
 			if(is_attached(target_wire))
 				I = detach_assembly(target_wire)
@@ -415,6 +416,6 @@
 							A.forceMove(L.drop_location())
 						. = TRUE
 					else
-						to_chat(L, span_warning("You cannot attach this assembly to these wires!"))
+						to_chat(L, span_warning(LANG("datum.164a1055", null)))
 
 #undef MAXIMUM_EMP_WIRES

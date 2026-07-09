@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Boxes of ammo
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
@@ -85,13 +86,12 @@
 	var/list/readout = list()
 
 	if(caliber && max_ammo) // Text references a 'magazine' as only magazines generally have the caliber variable initialized
-		readout += "Up to [span_warning("[max_ammo] [caliber] [casing_phrasing]s")] can be found within this magazine. \
-		\nAccidentally discharging any of these projectiles may void your insurance contract."
+		readout += LANG("obj.3aa21da7", list(span_warning("[max_ammo] [caliber] [casing_phrasing]s")))
 
 	var/obj/item/ammo_casing/mag_ammo = get_and_shuffle_round()
 
 	if(istype(mag_ammo))
-		readout += "\n[mag_ammo.add_notes_ammo()]"
+		readout += LANG("obj.65aac1b5", list(mag_ammo.add_notes_ammo()))
 
 	return readout.Join("\n")
 
@@ -196,11 +196,11 @@
 /obj/item/ammo_box/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(IS_WRITING_UTENSIL(tool))
 		if(!ammo_band_icon)
-			balloon_alert(user, "no indicator support!")
+			balloon_alert(user, LANG("obj.a0eb2f5e", null))
 			return
 		var/new_color = tgui_color_picker(user, "Set a new ammo band color, cancel to remove indicator", "Ammo Box Indicator Color", ammo_band_color)
 		ammo_band_color = new_color
-		balloon_alert(user, "indicator updated")
+		balloon_alert(user, LANG("obj.403f3c01", null))
 		update_appearance()
 		return
 
@@ -244,7 +244,7 @@
 
 	if(num_loaded)
 		if(!silent)
-			to_chat(user, span_notice("You load [num_loaded > 1 ? "[num_loaded] [casing_phrasing]s" : "a [casing_phrasing]"] into \the [src]!"))
+			to_chat(user, span_notice(LANG("obj.39364d61", list(num_loaded > 1 ? "[num_loaded] [casing_phrasing]s" : "a [casing_phrasing]", src))))
 			playsound(src, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
 		update_appearance()
 
@@ -259,7 +259,7 @@
 	if(!user.is_holding(src) || !user.put_in_hands(A)) //incase they're using TK
 		A.bounce_away(FALSE, NONE)
 	playsound(src, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 60, TRUE)
-	to_chat(user, span_notice("You remove a [casing_phrasing] from [src]!"))
+	to_chat(user, span_notice(LANG("obj.10144eb0", list(casing_phrasing, src))))
 	update_appearance()
 
 /obj/item/ammo_box/examine(mob/user)
@@ -268,10 +268,10 @@
 	var/obj/item/ammo_casing/top_round = get_round()
 	if(!top_round)
 		return
-	. += "It has <b>[shells_left]</b> [casing_phrasing]\s remaining."
+	. += LANG("obj.da174e71", list(shells_left, casing_phrasing))
 	// this is kind of awkward phrasing, but it's the top/ready ammo in the box
 	// intended for people who have like three mislabeled magazines
-	. += span_notice("\A <b>[top_round]</b> is ready.")
+	. += span_notice(LANG("obj.e862fbc2", list(top_round)))
 
 /obj/item/ammo_box/update_icon_state()
 	var/shells_left = LAZYLEN(stored_ammo)

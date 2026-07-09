@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAX_RADIUS_REQUIRED 20 //maxcap
 #define MIN_RADIUS_REQUIRED 4 //1, 2, 4
 /// How long the compression test can last before the machine just gives up and ejects the items.
@@ -45,7 +46,7 @@
 /obj/machinery/research/anomaly_refinery/examine_more(mob/user)
 	. = ..()
 	if (obj_flags & EMAGGED)
-		. += span_notice("A small panel on [p_their()] side is dislaying a notice. Something about firmware?")
+		. += span_notice(LANG("obj.48c6fe98", list(p_their())))
 
 
 /obj/machinery/research/anomaly_refinery/assume_air(datum/gas_mixture/giver)
@@ -75,46 +76,46 @@
 
 /obj/machinery/research/anomaly_refinery/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(active)
-		to_chat(user, span_warning("You can't insert [tool] into [src] while [p_theyre()] currently active."))
+		to_chat(user, span_warning(LANG("obj.be3ab4e3", list(tool, src, p_theyre()))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/raw_anomaly_core))
 		if(inserted_core)
-			to_chat(user, span_warning("There is already a core in [src]."))
+			to_chat(user, span_warning(LANG("obj.ee691b08", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck to your hand."))
+			to_chat(user, span_warning(LANG("obj.fe537243", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/raw_anomaly_core/raw_core = tool
 		if(!get_required_radius(raw_core.anomaly_type))
-			say("Unfortunately, due to diminishing supplies of condensed anomalous matter, [raw_core] and any cores of its type are no longer of a sufficient quality level to be compressed into a working core.")
+			say(LANG("obj.87cfbf81", list(raw_core)))
 			return ITEM_INTERACT_BLOCKING
 
 		inserted_core = raw_core
-		to_chat(user, span_notice("You insert [raw_core] into [src]."))
+		to_chat(user, span_notice(LANG("obj.8ce99939", list(raw_core, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!istype(tool, /obj/item/transfer_valve))
 		return NONE
 
 	if(inserted_bomb)
-		to_chat(user, span_warning("There is already a bomb in [src]."))
+		to_chat(user, span_warning(LANG("obj.a02faa01", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/transfer_valve/valve = tool
 	if(!valve.ready())
-		to_chat(user, span_warning("[valve] is incomplete."))
+		to_chat(user, span_warning(LANG("obj.2b56c786", list(valve))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
-		to_chat(user, span_warning("[tool] is stuck to your hand."))
+		to_chat(user, span_warning(LANG("obj.fe537243", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 
 	inserted_bomb = tool
 	tank_to_target = inserted_bomb.tank_two
-	to_chat(user, span_notice("You insert [tool] into [src]"))
+	to_chat(user, span_notice(LANG("obj.a0235cf5", list(tool, src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/research/anomaly_refinery/update_icon_state()
@@ -135,12 +136,12 @@
 /obj/machinery/research/anomaly_refinery/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if (obj_flags & EMAGGED)
-		balloon_alert(user, "already hacked!")
+		balloon_alert(user, LANG("obj.e5d5677d", null))
 		return
 
 	obj_flags |= EMAGGED
 	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, vary = FALSE)
-	say("ERROR: Unauthorized firmware access.")
+	say(LANG("obj.eabd0218", null))
 	return TRUE
 
 /**
@@ -148,7 +149,7 @@
  */
 /obj/machinery/research/anomaly_refinery/proc/start_test()
 	if (active)
-		say("ERROR: Already running a compression test.")
+		say(LANG("obj.74bdee7d", null))
 		return
 
 	if(!istype(inserted_core) || !istype(inserted_bomb))
@@ -159,12 +160,12 @@
 		end_test("ERROR: Transfer valve malfunctioning. Items ejected.")
 		return
 
-	say("Beginning compression test. Opening transfer valve.")
+	say(LANG("obj.d4fb6fbe", null))
 	active = TRUE
 	test_status = null
 
 	if (obj_flags & EMAGGED)
-		say("ERROR: An firmware issue was detected while starting a process. Running autopatcher.")
+		say(LANG("obj.677703ef", null))
 		playsound(src, 'sound/machines/ding.ogg', 50, vary = TRUE)
 		addtimer(CALLBACK(src, PROC_REF(error_test)), 2 SECONDS, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_NO_HASH_WAIT) // Synced with the sound.
 		return
@@ -182,7 +183,7 @@
 	investigate_log("was emagged and ejected a TTV.", INVESTIGATE_RESEARCH)
 	obj_flags &= ~EMAGGED
 
-	say("Issue resolved. Have a nice day!")
+	say(LANG("obj.97b3644c", null))
 	inserted_bomb.toggle_valve(tank_to_target)
 	eject_bomb(force = TRUE)
 	timeout_timer = addtimer(CALLBACK(src, PROC_REF(timeout_test)), COMPRESSION_TEST_TIME, TIMER_STOPPABLE | TIMER_UNIQUE | TIMER_NO_HASH_WAIT) // Actually start the test so they can't just put the bomb back in.
@@ -274,7 +275,7 @@
 		return
 	if(user)
 		user.put_in_hands(inserted_bomb)
-		to_chat(user, span_notice("You remove [inserted_bomb] from [src]."))
+		to_chat(user, span_notice(LANG("obj.cbed3266", list(inserted_bomb, src))))
 	else
 		inserted_bomb.forceMove(drop_location())
 	combined_gasmix = null
@@ -285,7 +286,7 @@
 		return
 	if(user)
 		user.put_in_hands(inserted_core)
-		to_chat(user, span_notice("You remove [inserted_core] from [src]."))
+		to_chat(user, span_notice(LANG("obj.cbed3266", list(inserted_core, src))))
 	else
 		inserted_core.forceMove(drop_location())
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAX_NOTICES 8
 
 /obj/structure/noticeboard
@@ -42,16 +43,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/paper) || istype(O, /obj/item/photo))
 		if(!allowed(user))
-			to_chat(user, span_warning("You are not authorized to add notices!"))
+			to_chat(user, span_warning(LANG("obj.8bc7b3c4", null)))
 			return
 		if(notices < MAX_NOTICES)
 			if(!user.transferItemToLoc(O, src))
 				return
 			notices++
 			update_appearance(UPDATE_ICON)
-			to_chat(user, span_notice("You pin the [O] to the noticeboard."))
+			to_chat(user, span_notice(LANG("obj.aebf79f7", list(O))))
 		else
-			to_chat(user, span_warning("The notice board is full!"))
+			to_chat(user, span_warning(LANG("obj.030e9b00", null)))
 	else
 		return ..()
 
@@ -116,7 +117,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 	item.forceMove(drop_location())
 	if(user)
 		user.put_in_hands(item)
-		balloon_alert(user, "removed from board")
+		balloon_alert(user, LANG("obj.a9ab49eb", null))
 	notices--
 	update_appearance(UPDATE_ICON)
 

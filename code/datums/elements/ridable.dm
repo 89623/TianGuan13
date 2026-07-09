@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * This element is used to indicate that a movable atom can be mounted by mobs in order to ride it. The movable is considered mounted when a mob is buckled to it,
  * at which point a [riding component][/datum/component/riding] is created on the movable, and that component handles the actual riding behavior.
@@ -58,13 +59,13 @@
 		ride_check_flags |= RIDER_NEEDS_ARMS
 
 	if(arms_needed && !equip_buckle_inhands(potential_rider, arms_needed, target_movable)) // can be either 1 (cyborg riding) or 2 (human piggybacking) hands
-		potential_rider.visible_message(span_warning("[potential_rider] can't get a grip on [target_movable] because [potential_rider.p_their()] hands are full!"),
-			span_warning("You can't get a grip on [target_movable] because your hands are full!"))
+		potential_rider.visible_message(span_warning(LANG("datum.a693854e", list(potential_rider, target_movable, potential_rider.p_their()))),
+			span_warning(LANG("datum.37e7c207", list(target_movable))))
 		return COMPONENT_BLOCK_BUCKLE
 
 	if((ride_check_flags & RIDER_NEEDS_LEGS) && HAS_TRAIT(potential_rider, TRAIT_FLOORED))
-		potential_rider.visible_message(span_warning("[potential_rider] can't get [potential_rider.p_their()] footing on [target_movable]!"),
-			span_warning("You can't get your footing on [target_movable]!"))
+		potential_rider.visible_message(span_warning(LANG("datum.8ece42c6", list(potential_rider, potential_rider.p_their(), target_movable))),
+			span_warning(LANG("datum.8f288f5f", list(target_movable))))
 		return COMPONENT_BLOCK_BUCKLE
 
 	var/mob/living/target_living = target_movable
@@ -72,8 +73,8 @@
 	// need to see if !equip_buckle_inhands() checks are enough to skip any needed incapac/restrain checks
 	// CARRIER_NEEDS_ARM shouldn't apply if the ridden isn't even a living mob
 	if((ride_check_flags & CARRIER_NEEDS_ARM) && !equip_buckle_inhands(target_living, 1, target_living, potential_rider)) // hardcode 1 hand for now
-		target_living.visible_message(span_warning("[target_living] can't get a grip on [potential_rider] because [target_living.p_their()] hands are full!"),
-			span_warning("You can't get a grip on [potential_rider] because your hands are full!"))
+		target_living.visible_message(span_warning(LANG("datum.a693854e", list(target_living, potential_rider, target_living.p_their()))),
+			span_warning(LANG("datum.37e7c207", list(potential_rider))))
 		return COMPONENT_BLOCK_BUCKLE
 
 	target_living.AddComponent(riding_component_type, potential_rider, force, ride_check_flags)
@@ -119,16 +120,16 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT(ridable_atom, TRAIT_SPEED_POTIONED))
-		to_chat(user, span_warning("[ridable_atom] has already been coated with red, that's as fast as it'll go!"))
+		to_chat(user, span_warning(LANG("datum.c653f13b", list(ridable_atom))))
 		return SPEED_POTION_STOP
 	if(ridable_atom.has_buckled_mobs()) // effect won't take place til the next time someone mounts it, so just prevent that situation
-		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [ridable_atom] while it's being ridden!"))
+		to_chat(user, span_warning(LANG("datum.0c4e0d08", list(speed_potion, ridable_atom))))
 		return SPEED_POTION_STOP
 	var/speed_limit = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 	var/datum/component/riding/theoretical_riding_component = riding_component_type
 	var/theoretical_speed = initial(theoretical_riding_component.vehicle_move_delay)
 	if(theoretical_speed <= speed_limit) // i say speed but this is actually move delay, so you have to be ABOVE the speed limit to pass
-		to_chat(user, span_warning("[ridable_atom] can't be made any faster!"))
+		to_chat(user, span_warning(LANG("datum.92ce148f", list(ridable_atom))))
 		return SPEED_POTION_STOP
 
 /// Remove all of the relevant [riding offhand items][/obj/item/riding_offhand] from the target
@@ -188,7 +189,7 @@
 		return //Piggyback user.
 	user.unbuckle_mob(rider)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_notice("You gently let go of [rider]."))
+		to_chat(user, span_notice(LANG("obj.306ecad3", list(rider))))
 		return
 	return rider
 

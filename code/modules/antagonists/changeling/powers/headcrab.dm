@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define LAST_RESORT_EXPLOSION_RANGE 2
 #define LAST_RESORT_BLIND_RANGE 4
 
@@ -22,12 +23,12 @@
 
 /datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
-	var/confirm = tgui_alert(user, "Are we sure we wish to destroy our body and create a headslug?", "Last Resort", list("Yes", "No"))
+	var/confirm = tgui_alert(user, LANG("datum.0c44419c", null), LANG("datum.b7897cbb", null), list("Yes", "No"))
 	if(active || confirm != "Yes")
 		return
 	active = TRUE
 	..()
-	user.visible_message(span_boldwarning("[user]'s body begins to pulsate and swell unnaturally!"))
+	user.visible_message(span_boldwarning(LANG("datum.2a380281", list(user))))
 	playsound(user, 'sound/effects/wounds/crack1.ogg', 100, TRUE)
 	animate(user, transform = user.transform * 1.5, color = COLOR_RED, time = 1 SECONDS)
 	if(is_walled(user))
@@ -54,7 +55,7 @@
 /// Creates a light explosion, blinds and confuses mobs in range
 /datum/action/changeling/headcrab/proc/gore_explosion(mob/living/user)
 	var/list/user_DNA = user.get_blood_dna_list()
-	user.visible_message(span_boldwarning("[user]'s body ruptures in a violent explosion of biomass!"))
+	user.visible_message(span_boldwarning(LANG("datum.5f7d955a", list(user))))
 	playsound(user, 'sound/effects/goresplat.ogg', 100, TRUE) //yuck!!
 	explosion(user, light_impact_range = LAST_RESORT_EXPLOSION_RANGE, flame_range = 0, flash_range = 0, adminlog = TRUE, silent = TRUE, explosion_cause = src)
 	user.spawn_gibs()
@@ -93,12 +94,12 @@
 
 	stored_mind.transfer_to(crab, force_key_move = TRUE)
 	spawn_location.transfer_observers_to(crab)
-	to_chat(crab, span_warning("We burst out of the remains of our former body in a shower of gore!"))
+	to_chat(crab, span_warning(LANG("datum.c3cca68d", null)))
 	active = FALSE
 
 /// Ruptures nearby walls using the torn_wall component. Also it destroys objects with density.
 /datum/action/changeling/headcrab/proc/escaping_prison(mob/living/user)
-	user.visible_message(span_boldwarning("[user]'s expanding form begins crushing the surrounding obstacles!"))
+	user.visible_message(span_boldwarning(LANG("datum.fe8f55cd", list(user))))
 	var/list/walls_to_destroy = list()
 
 	for(var/turf/nearby_turf in range(1, user))

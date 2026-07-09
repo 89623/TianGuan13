@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 // Drill, Diamond drill, Mining scanner
 
@@ -11,7 +12,7 @@
 	icon_state = "mecha_drill"
 	equipment_slot = MECHA_UTILITY
 	can_be_toggled = TRUE
-	equip_cooldown = 15
+	equip_cooldown = 1.5 SECONDS
 	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	force = 15
 	harmful = TRUE
@@ -96,7 +97,7 @@
 			var/turf/closed/mineral/gibtonite/giberal_turf = target
 			if(giberal_turf.stage != GIBTONITE_UNSTRUCK)
 				playsound(chassis, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-				to_chat(source, span_warning("[icon2html(src, source)] Active gibtonite ore deposit detected! Safety protocols preventing continued drilling."))
+				to_chat(source, span_warning(LANG("obj.0b1b3180", list(icon2html(src, source)))))
 				return
 
 	else
@@ -119,18 +120,18 @@
 	if(DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
 		return
 
-	target.visible_message(span_warning("[chassis] starts to drill [target]."), \
-				span_userdanger("[chassis] starts to drill you!"), \
-				span_hear("You hear drilling."))
+	target.visible_message(span_warning(LANG("obj.fbfd70ea", list(chassis, target))), \
+				span_userdanger(LANG("obj.c5d557d3", list(chassis))), \
+				span_hear(LANG("obj.059c723d", null)))
 
 	log_message("Started drilling [target]", LOG_MECHA)
 
 	// Drilling a turf is a one-and-done procedure.
 	if(isturf(target))
 		var/turf/T = target
+		. = ..()
 		T.drill_act(src, source)
-
-		return ..()
+		return
 
 	// Drilling objects and mobs is a repeating procedure.
 	while(do_after_mecha(target, source, drill_delay))
@@ -152,6 +153,11 @@
 			break
 
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/drill/get_equip_cooldown(atom/target)
+	if (isturf(target))
+		return equip_cooldown * 0.1
+	return equip_cooldown
 
 /turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill, mob/user)
 	return
@@ -187,8 +193,8 @@
 	chassis.collect_ore()
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/drill_mob(mob/living/target, mob/living/user)
-	target.visible_message(span_danger("[chassis] is drilling [target] with [src]!"), \
-						span_userdanger("[chassis] is drilling you with [src]!"))
+	target.visible_message(span_danger(LANG("obj.ac1c47d1", list(chassis, target, src))), \
+						span_userdanger(LANG("obj.cd795524", list(chassis, src))))
 	log_combat(user, target, "drilled", "[name]", "Combat mode: [user.combat_mode ? "On" : "Off"])(DAMTYPE: [uppertext(damtype)])")
 	if(target.stat == DEAD && target.get_brute_loss() >= (target.maxHealth * 2))
 		log_combat(user, target, "gibbed", name)
@@ -248,7 +254,7 @@
 		return
 	if(!LAZYLEN(chassis.occupants))
 		return
-	scanning_time = world.time + equip_cooldown
+	scanning_time = world.time + get_equip_cooldown()
 	mineral_scan_pulse(get_turf(src), scanner = src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/get_snowflake_data()

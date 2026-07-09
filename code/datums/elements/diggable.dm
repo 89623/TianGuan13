@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Lets you make hitting a turf with a shovel pop something out, and scrape the turf
 /datum/element/diggable
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
@@ -44,7 +45,7 @@
 
 	user.visible_message(
 		span_notice("[user] [action_text_third_person] [source]."),
-		span_notice("You [action_text] [source]."),
+		span_notice(LANG("datum.d6171b71", list(action_text, source))),
 	)
 
 	playsound(source, 'sound/effects/shovel_dig.ogg', 50, TRUE)

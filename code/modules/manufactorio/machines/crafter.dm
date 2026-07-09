@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/power/manufacturing/crafter
 	name = "manufacturing assembling machine"
 	desc = "Assembles (crafts) the set recipe until it runs out of resources. Only resources on it will be used."
@@ -26,10 +27,10 @@
 
 /obj/machinery/power/manufacturing/crafter/examine(mob/user)
 	. = ..()
-	. += span_notice("It is currently manufacturing <b>[isnull(recipe) ? "nothing. Use a multitool to set it" : recipe.name]</b>.")
+	. += span_notice(LANG("obj.521e4a50", list(isnull(recipe) ? "nothing. Use a multitool to set it" : recipe.name)))
 	if(isnull(recipe))
 		return
-	. += span_notice("It needs:")
+	. += span_notice(LANG("obj.2a2a5155", null))
 	for(var/valid_type in recipe.reqs)
 		// Check if they're datums, specifically reagents.
 		var/datum/reagent/reagent_ingredient = valid_type
@@ -57,11 +58,11 @@
 		if(!(ispath(as_obj, /obj) && !ispath(as_obj, /obj/effect) && initial(as_obj.anchored)) && craftsman.is_recipe_available(potential_recipe, user))
 			continue
 		unavailable += potential_recipe
-	var/result = tgui_input_list(usr, "Recipe", "Select Recipe", (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes) - unavailable)
+	var/result = tgui_input_list(usr, LANG("obj.e1c04ddb", null), LANG("obj.de7575f9", null), (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes) - unavailable)
 	if(isnull(result) || result == recipe || !user.can_perform_action(src))
 		return ITEM_INTERACT_FAILURE
 	recipe = result
-	balloon_alert(user, "set")
+	balloon_alert(user, LANG("obj.e672e5cd", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/manufacturing/crafter/Destroy()
@@ -78,7 +79,7 @@
 		else
 			deltimer(craft_timer)
 			craft_timer = null
-			say("Power failure!")
+			say(LANG("obj.2c02f723", null))
 		return
 	if(isnull(recipe) || !craftsman.check_contents(src, recipe, craftsman.get_surroundings(src)))
 		return
@@ -104,7 +105,7 @@
 	var/list/prediff = get_overfloor_objects()
 	var/result = craftsman.construct_item(src, recipe)
 	if(istext(result))
-		say("Crafting failed[result]")
+		say(LANG("obj.d98d5529", list(result)))
 		return
 	if(isstack(result)) //it doesn't have hands to pick up stacks so let's try to merge them instead
 		var/obj/item/stack/stack = result

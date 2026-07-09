@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Station home gateway
 GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /// List of possible gateway destinations.
@@ -204,7 +205,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /obj/machinery/gateway/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	if(istype(I, /obj/item/key/gateway) && requires_key)
-		to_chat(user, "<span class='notice'>You insert [src] into the keyway, unlocking the gateway!</span>")
+		to_chat(user, LANG("obj.0aafdd32", list(src)))
 		key_used = TRUE
 		qdel(I)
 		return
@@ -318,10 +319,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		return
 	var/turf/tar_turf = target?.get_target_turf()
 	if(isnull(tar_turf))
-		to_chat(user, span_warning("There's no active destination for the gateway... or it's broken. Maybe try again later?"))
+		to_chat(user, span_warning(LANG("obj.5f65f3c4", null)))
 		return
 	if(is_secret_level(tar_turf.z) && !user.client?.holder)
-		to_chat(user, span_warning("The gateway destination is secret."))
+		to_chat(user, span_warning(LANG("obj.a65fabe9", null)))
 		return
 	Transfer(user)
 
@@ -342,10 +343,10 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/gateway/multitool_act(mob/living/user, obj/item/I)
 	if(calibrated)
-		to_chat(user, span_alert("The gate is already calibrated, there is no work for you to do here."))
+		to_chat(user, span_alert(LANG("obj.0607a771", null)))
 	else
 		playsound(src, 'sound/machines/gateway/gateway_calibrated.ogg', 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(user, "[span_boldnotice("Recalibration successful!")]: \black This gate's systems have been fine tuned. Travel to this gate will now be on target.")
+		to_chat(user, LANG("obj.4ea6dba2", list(span_boldnotice("Recalibration successful!"))))
 		calibrated = TRUE
 	return TRUE
 
@@ -373,7 +374,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	//NOVA EDIT END
 	if(!target)
 		if(!GLOB.the_gateway)
-			to_chat(user,span_warning("Home gateway is not responding!"))
+			to_chat(user,span_warning(LANG("obj.2bf035d6", null)))
 		if(GLOB.the_gateway.target)
 			GLOB.the_gateway.deactivate() //this will turn the home gateway off so that it's free for us to connect to
 		activate(GLOB.the_gateway.destination)

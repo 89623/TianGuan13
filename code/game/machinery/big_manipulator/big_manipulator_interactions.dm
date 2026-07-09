@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// We have no tasks to execute for some reason. Waits for a turf signal to retry.
 /obj/machinery/big_manipulator/proc/nothing_ever_happens()
 	if(stopping)
@@ -41,7 +42,7 @@
 
 	if(!use_energy(active_power_usage, force = FALSE))
 		on = FALSE
-		balloon_alert_to_viewers("not enough power!")
+		balloon_alert_to_viewers(LANG("obj.7005f2d2", null))
 		return FALSE
 
 	next_cycle_scheduled = FALSE

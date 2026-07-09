@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define NARSIE_CHANCE_TO_PICK_NEW_TARGET 5
 #define NARSIE_CONSUME_RANGE 12
 #define NARSIE_GRAV_PULL 10
@@ -140,7 +141,7 @@
 	if(!href_list[VV_HK_BEGIN_NARSIE_ROUNDEND] || !check_rights(R_FUN, show_msg = TRUE))
 		return
 
-	if(tgui_alert(usr, ADMIN_WARNING_MESSAGE, "Begin Nar'Sie Roundender", list("I'm Sure", "Abort")) != "I'm Sure")
+	if(tgui_alert(usr, ADMIN_WARNING_MESSAGE, LANG("obj.008d7fc6", null), list("I'm Sure", "Abort")) != "I'm Sure")
 		return
 
 	log_admin("[key_name(usr)] has triggered the Nar'Sie roundender.")
@@ -149,7 +150,7 @@
 /obj/narsie/attack_ghost(mob/dead/observer/user)
 	if(is_banned_from(user.ckey, ROLE_CULTIST))
 		return
-	if(tgui_alert(user, "Do you wish to become an occult harvester?", "Become Harvester?", list("Yes", "No"), timeout = 10 SECONDS) == "Yes")
+	if(tgui_alert(user, LANG("obj.99824b64", null), LANG("obj.abc3c6a2", null), list("Yes", "No"), timeout = 10 SECONDS) == "Yes")
 		make_new_construct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc, ghost_activated = TRUE)
 
 /obj/narsie/process()
@@ -219,12 +220,12 @@
 	if (food == old_target)
 		return
 
-	to_chat(old_target, span_cult("NAR'SIE HAS LOST INTEREST IN YOU."))
+	to_chat(old_target, span_cult(LANG("obj.82ce1be7", null)))
 	singularity_component.target = food
 	if(ishuman(food))
-		to_chat(food, span_cult("NAR'SIE HUNGERS FOR YOUR SOUL."))
+		to_chat(food, span_cult(LANG("obj.3ea59083", null)))
 	else
-		to_chat(food, span_cult("NAR'SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL."))
+		to_chat(food, span_cult(LANG("obj.d4df51a7", null)))
 
 /// Called to make Nar'Sie convert objects to cult stuff, or to eat
 /obj/narsie/proc/consume(atom/target)
@@ -256,7 +257,7 @@
 ///First crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_begin_check()
 	if(QDELETED(GLOB.cult_narsie)) // uno
-		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.",LANG("_root.92d186ed", list(command_name())), 'sound/announcer/notice/notice1.ogg')
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
@@ -270,11 +271,11 @@
 ///Second crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_second_check()
 	if(QDELETED(GLOB.cult_narsie)) // dos
-		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.",LANG("_root.92d186ed", list(command_name())), 'sound/announcer/notice/notice1.ogg')
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
-	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ","[command_name()] Higher Dimensional Affairs")
+	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ",LANG("_root.92d186ed", list(command_name())))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_start_destroy_station)), 5 SECONDS)
 
 ///security level and shuttle lockdowns for [/proc/begin_the_end()]
@@ -287,7 +288,7 @@
 ///Third crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_apocalypse()
 	if(QDELETED(GLOB.cult_narsie)) // tres
-		priority_announce("Normalization detected! Abort the solution package!","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+		priority_announce("Normalization detected! Abort the solution package!",LANG("_root.92d186ed", list(command_name())), 'sound/announcer/notice/notice1.ogg')
 		SSshuttle.clearHostileEnvironment(GLOB.cult_narsie)
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_last_second_win)), 2 SECONDS)

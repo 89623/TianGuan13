@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Suits for the pink and grey skeletons! //EVA version no longer used in favor of the Jumpsuit version
 
 /obj/item/clothing/suit/space/eva/plasmaman
@@ -20,7 +21,7 @@
 
 /obj/item/clothing/suit/space/eva/plasmaman/examine(mob/user)
 	. = ..()
-	. += span_notice("There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charge\s left in this suit.")
+	. += span_notice(LANG("obj.942af30c", list(extinguishes_left == 1 ? "is" : "are", extinguishes_left)))
 
 /obj/item/clothing/suit/space/eva/plasmaman/equipped(mob/living/user, slot)
 	. = ..()
@@ -51,7 +52,7 @@
 	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
 	// Check if our (possibly other) wearer is on fire once the cooldown ends
 	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
-	owner.visible_message(span_warning("[owner]'s suit automatically extinguishes [owner.p_them()]!"), span_warning("Your suit automatically extinguishes you."))
+	owner.visible_message(span_warning(LANG("obj.1259449b", list(owner, owner.p_them()))), span_warning(LANG("obj.7fd1fcff", null)))
 	owner.extinguish_mob()
 	new /obj/effect/particle_effect/water(get_turf(owner))
 
@@ -60,11 +61,11 @@
 		return
 
 	if (extinguishes_left == initial(extinguishes_left))
-		to_chat(user, span_notice("The inbuilt extinguisher is full."))
+		to_chat(user, span_notice(LANG("obj.ef12437e", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	extinguishes_left = initial(extinguishes_left)
-	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
+	to_chat(user, span_notice(LANG("obj.161539ff", null)))
 	check_fire_state()
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
@@ -137,7 +138,7 @@
 	if(!.)
 		return
 	if(helmet_on)
-		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
+		to_chat(user, span_notice(LANG("obj.11767310", null)))
 		set_light_on(FALSE)
 		helmet_on = FALSE
 	update_appearance()
@@ -161,17 +162,17 @@
 		return NONE
 
 	if(smile)
-		to_chat(user, span_warning("Seems like someone already drew something on [src]'s visor!"))
+		to_chat(user, span_warning(LANG("obj.f691022f", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/toy/crayon/crayon = tool
-	to_chat(user, span_notice("You start drawing a smiley face on [src]'s visor..."))
+	to_chat(user, span_notice(LANG("obj.9e7fecfb", list(src))))
 	if(!do_after(user, 2.5 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 
 	smile = TRUE
 	smile_color = crayon.paint_color
-	to_chat(user, "You draw a smiley on [src] visor.")
+	to_chat(user, LANG("obj.2ada94d0", list(src)))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
@@ -202,7 +203,7 @@
 
 	if(helmet_on)
 		if(!up)
-			to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
+			to_chat(user, span_notice(LANG("obj.11767310", null)))
 			set_light_on(FALSE)
 		else
 			set_light_on(TRUE)

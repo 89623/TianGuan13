@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define VAT_GROWTH_RATE 4
 
 ////////////////////////////////
@@ -531,7 +532,7 @@
 /datum/micro_organism/cell_line/clown/succeed_growing(obj/machinery/vatgrower/vat)
 	if(vat.reagents.has_reagent(/datum/reagent/toxin/mutagen) && prob(CYTO_SHINY_CHANCE))
 		resulting_atom = pick(/mob/living/basic/clown/mutant, /mob/living/basic/clown/fleshclown)
-		vat.visible_message(span_warning("The biological sample in [vat] mutates into something horrific!"))
+		vat.visible_message(span_warning(LANG("datum.16762c4e", list(vat))))
 	else
 		resulting_atom = initial(resulting_atom)
 	return ..()
@@ -711,7 +712,7 @@
 	if(grow_count % 2) // every other growth cycle spawns a horde of bees insteads
 		resulting_atom_count = 5
 		resulting_atom = /mob/living/basic/bee
-		vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))
+		vat.visible_message(span_warning(LANG("datum.14042c14", null)))
 	else
 		resulting_atom_count = initial(resulting_atom_count)
 		resulting_atom = initial(resulting_atom)

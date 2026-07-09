@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // robot_upgrades.dm
 // Contains various borg upgrades.
 
@@ -26,15 +27,15 @@
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/borg, mob/living/user = usr)
 	if(borg.stat == DEAD)
-		to_chat(user, span_warning("[src] will not function on a deceased cyborg!"))
+		to_chat(user, span_warning(LANG("obj.87f0c9b3", list(src))))
 		return FALSE
 	if(model_type && !is_type_in_list(borg.model, model_type))
-		to_chat(borg, span_alert("Upgrade mounting error! No suitable hardpoint detected."))
-		to_chat(user, span_warning("There's no mounting point for the module!"))
+		to_chat(borg, span_alert(LANG("obj.287cc92b", null)))
+		to_chat(user, span_warning(LANG("obj.1acbb1f2", null)))
 		return FALSE
 	if(!allow_duplicates && (locate(type) in borg.upgrades))
-		to_chat(borg, span_alert("Upgrade mounting error! Hardpoint already occupied!"))
-		to_chat(user, span_warning("The mounting point for the module is already occupied!"))
+		to_chat(borg, span_alert(LANG("obj.a3f556a0", null)))
+		to_chat(user, span_warning(LANG("obj.55d413a9", null)))
 		return FALSE
 	// Handles adding/removing items.
 	if(length(items_to_add))
@@ -79,7 +80,7 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	var/new_heldname = sanitize_name(tgui_input_text(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
+	var/new_heldname = sanitize_name(tgui_input_text(user, LANG("obj.74b71c72", null), LANG("obj.5d267af8", null), heldname, MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!new_heldname || !user.is_holding(src))
 		return
 	heldname = new_heldname
@@ -114,11 +115,11 @@
 
 	var/obj/item/gun/energy/disabler/cyborg/disabler = locate() in borg.model.modules
 	if(isnull(disabler))
-		to_chat(user, span_warning("There's no disabler in this unit!"))
+		to_chat(user, span_warning(LANG("obj.9800454e", null)))
 		return FALSE
 	if(disabler.charge_delay <= 2)
-		to_chat(borg, span_warning("A cooling unit is already installed!"))
-		to_chat(user, span_warning("There's no room for another cooling unit!"))
+		to_chat(borg, span_warning(LANG("obj.108e40ad", null)))
+		to_chat(user, span_warning(LANG("obj.997d3cae", null)))
 		return FALSE
 
 	disabler.charge_delay = max(2 , disabler.charge_delay - 4)
@@ -142,7 +143,7 @@
 	if(!.)
 		return .
 	if(borg.ionpulse)
-		to_chat(user, span_warning("This unit already has ion thrusters installed!"))
+		to_chat(user, span_warning(LANG("obj.c70e8afb", null)))
 		return FALSE
 
 	borg.ionpulse = TRUE
@@ -311,10 +312,10 @@
 
 /obj/item/borg/upgrade/selfrepair/ui_action_click()
 	if(on)
-		to_chat(toggle_action.owner, span_notice("You deactivate the self-repair module."))
+		to_chat(toggle_action.owner, span_notice(LANG("obj.cdea41f3", null)))
 		deactivate_sr()
 	else
-		to_chat(toggle_action.owner, span_notice("You activate the self-repair module."))
+		to_chat(toggle_action.owner, span_notice(LANG("obj.be40bc23", null)))
 		activate_sr()
 
 
@@ -343,12 +344,12 @@
 
 	if(istype(cyborg) && (cyborg.stat != DEAD) && on)
 		if(!cyborg.cell)
-			to_chat(cyborg, span_alert("Self-repair module deactivated. Please insert power cell."))
+			to_chat(cyborg, span_alert(LANG("obj.209aa3f6", null)))
 			deactivate_sr()
 			return
 
 		if(cyborg.cell.charge < energy_cost * 2)
-			to_chat(cyborg, span_alert("Self-repair module deactivated. Please recharge."))
+			to_chat(cyborg, span_alert(LANG("obj.5a0f0d2c", null)))
 			deactivate_sr()
 			return
 
@@ -374,7 +375,7 @@
 				msgmode = "critical"
 			else if(cyborg.health < cyborg.maxHealth)
 				msgmode = "normal"
-			to_chat(cyborg, span_notice("Self-repair is active in [span_boldnotice("[msgmode]")] mode."))
+			to_chat(cyborg, span_notice(LANG("obj.9eafeb8d", list(span_boldnotice("[msgmode]")))))
 	else
 		deactivate_sr()
 
@@ -425,7 +426,7 @@
 		found_hypo = TRUE
 
 	if(!found_hypo)
-		to_chat(user, span_warning("There are no installed hypospray modules to upgrade with piercing!")) //check to see if any hyposprays were upgraded
+		to_chat(user, span_warning(LANG("obj.8d77e74c", null))) //check to see if any hyposprays were upgraded
 		return FALSE
 
 	// If we are actually going to install the upgrade due to the presence of compatible modules, make sure their emagged counterparts get upgraded too.
@@ -512,7 +513,7 @@
 	var/obj/item/borg/upgrade/defib/backpack/defib_pack = locate() in borg //If a full defib unit was used to upgrade prior, we can just pop it out now and replace
 	if(defib_pack)
 		defib_pack.deactivate(borg, user)
-		to_chat(user, span_notice("The defibrillator pops out of the chassis as the compact upgrade installs."))
+		to_chat(user, span_notice(LANG("obj.7881de3b", null)))
 	. = ..()
 
 ///A version of the above that also acts as a holder of an actual defibrillator item used in place of the upgrade chip.
@@ -568,7 +569,7 @@
 	if(!.)
 		return .
 	if(borg.key) //You cannot replace a player unless the key is completely removed.
-		to_chat(user, span_warning("Intelligence patterns detected in this [borg.braintype]. Aborting."))
+		to_chat(user, span_warning(LANG("obj.b082d0c6", list(borg.braintype))))
 		return FALSE
 
 	borg.make_shell(src)
@@ -592,7 +593,7 @@
 		return FALSE
 
 	if(borg.hasExpanded)
-		to_chat(usr, span_warning("This unit already has an expand module installed!"))
+		to_chat(usr, span_warning(LANG("obj.ab6576a9", null)))
 		return FALSE
 
 	// NOVA EDIT ADDITION BEGIN
@@ -658,7 +659,7 @@
 	var/obj/item/borg/upgrade/smallrped/upgrade = locate() in borg
 	var/obj/item/storage/part_replacer/cyborg/small/replacer = locate() in borg.model.modules
 	if(upgrade)
-		to_chat(user, span_notice("The old RPED module is now expanded and gets more space"))
+		to_chat(user, span_notice(LANG("obj.3dba669d", null)))
 		replacer.emptyStorage()
 		replacer.forceMove(get_turf(borg))
 		qdel(upgrade)
@@ -861,13 +862,13 @@
 	if(!istype(borgo))
 		return ..()
 	if(!borgo.opened)
-		to_chat(user, span_warning("You must access the cyborg's internals!"))
+		to_chat(user, span_warning(LANG("obj.2be3f167", null)))
 		return ..()
 	if(borgo.health < 0)
-		to_chat(user, span_warning("You have to repair the cyborg before using this module!"))
+		to_chat(user, span_warning(LANG("obj.d60125e5", null)))
 		return ..()
 	if(!(borgo.stat & DEAD))
-		to_chat(user, span_warning("This cyborg is already operational!"))
+		to_chat(user, span_warning(LANG("obj.54430301", null)))
 		return ..()
 
 	if(borgo.mind)

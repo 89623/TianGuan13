@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Generate a random name based off of one of the roundstart languages
  *
@@ -111,34 +112,42 @@ GLOBAL_VAR(command_name)
 
 /proc/new_station_name()
 	var/random = rand(1,5)
-	var/name = ""
 	var/new_station_name = ""
+
+	var/prefix = ""
+	var/main = ""
 
 	//Rare: Pre-Prefix
 	if (prob(10))
-		name = pick(GLOB.station_prefixes)
-		new_station_name = name + " "
-		name = ""
+		prefix = pick(GLOB.station_prefixes)
 
 	if(prob(0.1))
 		random = 999999999 //ridiculously long name in written numbers
 
 	// Prefix
-	var/holiday_name = length(GLOB.holidays) && pick(GLOB.holidays)
-	if(holiday_name)
-		var/datum/holiday/holiday = GLOB.holidays[holiday_name]
+	var/picked_holiday = length(GLOB.holidays) && pick(GLOB.holidays)
+	if(picked_holiday)
+		var/datum/holiday/holiday = GLOB.holidays[picked_holiday]
 		if(istype(holiday, /datum/holiday/friday_thirteenth))
 			random = 13
-		name = holiday.getStationPrefix()
-		//get normal name
-	if(!name)
-		name = pick(GLOB.station_names)
-	if(name)
-		new_station_name += name + " "
+
+		var/holiday_prefix = holiday.get_station_prefix()
+		if(holiday_prefix)
+			prefix = holiday_prefix
+
+		var/holiday_base_name = holiday.get_station_name()
+		if(holiday_base_name)
+			main = holiday_base_name
+
+	// Prefix
+	if(prefix)
+		new_station_name += "[prefix] "
+
+	// Normal name
+	new_station_name += "[main || pick(GLOB.station_names)] "
 
 	// Suffix
-	name = pick(GLOB.station_suffixes)
-	new_station_name += name + " "
+	new_station_name += "[pick(GLOB.station_suffixes)] "
 
 	// ID Number
 	switch(random)
@@ -183,15 +192,6 @@ GLOBAL_VAR(command_name)
 
 	return name
 
-
-//Traitors and traitor silicons will get these. Revs will not.
-GLOBAL_VAR(syndicate_code_phrase) //Code phrase for traitors.
-GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
-
-//Cached regex search - for checking if codewords are used.
-GLOBAL_DATUM(syndicate_code_phrase_regex, /regex)
-GLOBAL_DATUM(syndicate_code_response_regex, /regex)
-
 	/*
 	Should be expanded.
 	How this works:
@@ -220,14 +220,16 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 		25; 5
 	)
 
-	var/list/safety = list(1,2,3)//Tells the proc which options to remove later on.
-	var/nouns = strings(ION_FILE, "ionabstract")
-	var/objects = strings(ION_FILE, "ionobjects")
-	var/adjectives = strings(ION_FILE, "ionadjectives")
-	var/threats = strings(ION_FILE, "ionthreats")
-	var/foods = strings(ION_FILE, "ionfood")
-	var/drinks = strings(ION_FILE, "iondrinks")
-	var/locations = strings(LOCATIONS_FILE, "locations")
+	var/list/safety = list(1, 2, 3)//Tells the proc which options to remove later on.
+	var/list/nouns = strings(ION_FILE, "ionabstract")
+	var/list/objects = strings(ION_FILE, "ionobjects")
+	var/list/adjectives = strings(ION_FILE, "ionadjectives")
+	var/list/threats = strings(ION_FILE, "ionthreats")
+	var/list/foods = strings(ION_FILE, "ionfood")
+	var/list/drinks = strings(ION_FILE, "iondrinks")
+	var/list/locations = list()
+	for(var/area/area_type as anything in list(/area/space) | GLOB.the_station_areas)
+		locations |= format_text(area_type::name)
 
 	var/list/names = list()
 	for(var/datum/record/crew/target in GLOB.manifest.general)//Picks from crew manifest.
@@ -254,7 +256,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 					if(2)
 						var/datum/job/job = pick(SSjob.joinable_occupations)
 						if(job)
-							. += job.title //Returns a job.
+							. += lang_reverse_text(job.title) //Returns a job. // NOVA EDIT CHANGE - I18N - 职业名反查（暗号显示/说出/高亮同源，全中文一致）。ORIGINAL: . += job.title
 						else
 							stack_trace("Failed to pick(SSjob.joinable_occupations) on generate_code_phrase()")
 							. += "Bug"
@@ -266,7 +268,11 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 					if(2)
 						. += LOWER_TEXT(pick(foods))
 					if(3)
-						. += LOWER_TEXT(pick(locations))
+						// NOVA EDIT CHANGE START - I18N - 中文时反查区域原名（LOWER_TEXT 小写形对不上目录大小写键；
+						// 暗号的显示/说出/聊天高亮正则同源一份值，翻了不破功能）。ORIGINAL: . += LOWER_TEXT(pick(locations))
+						var/location_pick = pick(locations)
+						. += GLOB.i18n_server_locale == DEFAULT_UI_LOCALE ? LOWER_TEXT(location_pick) : lang_reverse_text(location_pick)
+						// NOVA EDIT CHANGE END
 				safety -= 2
 			if(3)
 				switch(rand(1,4))//Abstract nouns, objects, adjectives, threats. Can be selected more than once.
@@ -283,6 +289,17 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 				. += "."
 			else
 				. += ", "
+
+	// NOVA EDIT ADDITION START - I18N - localize code words at generation so the displayed phrase, the codeword_hearing regex, and what players say stay consistent (regex is a plain (a|b) alternation with ig flags, no \b, so CJK matches). capitalize fallback covers the lowercased area/flavor words vs the capitalized catalog keys; crew names / untranslated words stay english.
+	if(return_list && GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		var/list/localized = list()
+		for(var/word in .)
+			var/rev = lang_reverse_text(word)
+			if(rev == word)
+				rev = lang_reverse_text(capitalize(word))
+			localized += rev
+		. = localized
+	// NOVA EDIT ADDITION END
 
 /proc/odd_organ_name()
 	return "[pick(GLOB.gross_adjectives)], [pick(GLOB.gross_adjectives)] organ"

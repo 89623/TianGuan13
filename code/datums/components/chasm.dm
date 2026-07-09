@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Used by /turf/open/chasm and subtypes to implement the "dropping" mechanic
 /datum/component/chasm
 	var/turf/target_turf
@@ -159,8 +160,8 @@
 			return
 
 		// send to the turf below
-		dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[fall_message]"))
-		below_turf.visible_message(span_boldwarning("[dropped_thing] falls from above!"))
+		dropped_thing.visible_message(span_boldwarning(LANG("datum.17ca9427", list(dropped_thing, parent))), span_userdanger("[fall_message]"))
+		below_turf.visible_message(span_boldwarning(LANG("datum.e66fe406", list(dropped_thing))))
 		dropped_thing.forceMove(below_turf)
 		if(isliving(dropped_thing))
 			var/mob/living/fallen = dropped_thing
@@ -178,7 +179,7 @@
 
 		if (HAS_MIND_TRAIT(falling_mob, TRAIT_NAIVE))
 			falling_mob.do_alert_animation()
-			dropped_thing.visible_message(span_boldwarning("[dropped_thing] kicks [dropped_thing.p_their()] legs in the air, as if running in place!"))
+			dropped_thing.visible_message(span_boldwarning(LANG("datum.91fa0991", list(dropped_thing, dropped_thing.p_their()))))
 			dropped_thing.Shake(1, 0, 2 SECONDS, 0.3 SECONDS)
 			sleep(3 SECONDS)
 
@@ -188,7 +189,7 @@
 			LAZYREMOVE(falling_atoms, falling_ref)
 			return
 
-	dropped_thing.visible_message(span_boldwarning("[dropped_thing] falls into [parent]!"), span_userdanger("[oblivion_message]"))
+	dropped_thing.visible_message(span_boldwarning(LANG("datum.17ca9427", list(dropped_thing, parent))), span_userdanger("[oblivion_message]"))
 
 	var/oldtransform = dropped_thing.transform
 	var/oldcolor = dropped_thing.color
@@ -224,7 +225,7 @@
 	dropped_thing.pixel_y = oldoffset
 
 	if(!dropped_thing.forceMove(storage))
-		parent.visible_message(span_boldwarning("[parent] spits out [dropped_thing]!"))
+		parent.visible_message(span_boldwarning(LANG("datum.684bde97", list(parent, dropped_thing))))
 		dropped_thing.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
 
 	else if(isliving(dropped_thing))
@@ -328,10 +329,10 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 	SIGNAL_HANDLER
 	var/turf/turf = get_turf(src)
 	if(turf.GetComponent(/datum/component/chasm))
-		turf.visible_message(span_boldwarning("After a long climb, [escapee] leaps out of [turf]!"))
+		turf.visible_message(span_boldwarning(LANG("obj.f20b5191", list(escapee, turf))))
 	else
 		playsound(turf, 'sound/effects/bang.ogg', 50, TRUE)
-		turf.visible_message(span_boldwarning("[escapee] busts through [turf], leaping out of the chasm below"))
+		turf.visible_message(span_boldwarning(LANG("obj.a7d04964", list(escapee, turf))))
 		turf.ScrapeAway(2, flags = CHANGETURF_INHERIT_AIR)
 	ADD_TRAIT(escapee, TRAIT_MOVE_FLYING, CHASM_TRAIT) //Otherwise they instantly fall back in
 	escapee.forceMove(turf)

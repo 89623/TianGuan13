@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/claymore
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
@@ -43,7 +44,7 @@
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -15)
 
 /obj/item/claymore/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.d209d171", list(user, src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
@@ -124,7 +125,7 @@
 /obj/item/claymore/highlander/Destroy()
 	if(nuke_disk)
 		nuke_disk.forceMove(get_turf(src))
-		nuke_disk.visible_message(span_warning("The nuke disk is vulnerable!"))
+		nuke_disk.visible_message(span_warning(LANG("obj.848a89cd", null)))
 		nuke_disk = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -141,7 +142,7 @@
 
 /obj/item/claymore/highlander/pickup(mob/living/user)
 	. = ..()
-	to_chat(user, span_notice("The power of Scotland protects you! You are shielded from all stuns and knockdowns."))
+	to_chat(user, span_notice(LANG("obj.706eae0b", null)))
 	user.ignore_slowdown(HIGHLANDER_TRAIT)
 	user.add_stun_absorption(
 		source = HIGHLANDER_TRAIT,
@@ -157,16 +158,16 @@
 
 /obj/item/claymore/highlander/examine(mob/user)
 	. = ..()
-	. += "It has [!notches ? "nothing" : "[notches] notches"] scratched into the blade."
+	. += LANG("obj.05dbe464", list(!notches ? "nothing" : "[notches] notches"))
 	if(nuke_disk)
-		. += span_boldwarning("It's holding the nuke disk!")
+		. += span_boldwarning(LANG("obj.fc787447", null))
 
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(!QDELETED(target) && target.stat == DEAD && target.mind?.has_antag_datum(/datum/antagonist/highlander))
 		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
-		target.visible_message(span_warning("[target] crumbles to dust beneath [user]'s blows!"), span_userdanger("As you fall, your body crumbles to dust!"))
+		target.visible_message(span_warning(LANG("obj.da2ac4ba", list(target, user))), span_userdanger(LANG("obj.222a6ded", null)))
 		target.investigate_log("has been dusted by a highlander claymore.", INVESTIGATE_DEATHS)
 		target.dust()
 
@@ -181,9 +182,9 @@
 			closest_victim = siliscot
 
 	if(!closest_victim)
-		to_chat(user, span_warning("[src] thrums for a moment and falls dark. Perhaps there's nobody nearby."))
+		to_chat(user, span_warning(LANG("obj.56c464cd", list(src))))
 		return
-	to_chat(user, span_danger("[src] thrums and points to the [dir2text(get_dir(user, closest_victim))]."))
+	to_chat(user, span_danger(LANG("obj.fd65079b", list(src, dir2text(get_dir(user, closest_victim))))))
 
 /obj/item/claymore/highlander/IsReflect()
 	return 1 //YOU THINK YOUR PUNY LASERS CAN STOP ME?
@@ -194,44 +195,44 @@
 	var/new_name = name
 	switch(notches)
 		if(1)
-			to_chat(user, span_notice("Your first kill - hopefully one of many. You scratch a notch into [src]'s blade."))
-			to_chat(user, span_warning("You feel your fallen foe's soul entering your blade, restoring your wounds!"))
+			to_chat(user, span_notice(LANG("obj.6f471bdf", list(src))))
+			to_chat(user, span_warning(LANG("obj.6c66a8a6", null)))
 			new_name = "notched claymore"
 		if(2)
-			to_chat(user, span_notice("Another falls before you. Another soul fuses with your own. Another notch in the blade."))
+			to_chat(user, span_notice(LANG("obj.178f7da6", null)))
 			new_name = "double-notched claymore"
 			add_atom_colour(rgb(255, 235, 235), ADMIN_COLOUR_PRIORITY)
 		if(3)
-			to_chat(user, span_notice("You're beginning to</span> <span class='danger'><b>relish</b> the <b>thrill</b> of <b>battle.</b>"))
+			to_chat(user, span_notice(LANG("obj.fccca70a", null)))
 			new_name = "triple-notched claymore"
 			add_atom_colour(rgb(255, 215, 215), ADMIN_COLOUR_PRIORITY)
 		if(4)
-			to_chat(user, span_notice("You've lost count of</span> <span class='bolddanger'>how many you've killed."))
+			to_chat(user, span_notice(LANG("obj.c925539e", null)))
 			new_name = "many-notched claymore"
 			add_atom_colour(rgb(255, 195, 195), ADMIN_COLOUR_PRIORITY)
 		if(5)
-			to_chat(user, span_bolddanger("Five voices now echo in your mind, cheering the slaughter."))
+			to_chat(user, span_bolddanger(LANG("obj.2a8b29d8", null)))
 			new_name = "battle-tested claymore"
 			add_atom_colour(rgb(255, 175, 175), ADMIN_COLOUR_PRIORITY)
 		if(6)
-			to_chat(user, span_bolddanger("Is this what the vikings felt like? Visions of glory fill your head as you slay your sixth foe."))
+			to_chat(user, span_bolddanger(LANG("obj.ebe67399", null)))
 			new_name = "battle-scarred claymore"
 			add_atom_colour(rgb(255, 155, 155), ADMIN_COLOUR_PRIORITY)
 		if(7)
-			to_chat(user, span_bolddanger("Kill. Butcher. <i>Conquer.</i>"))
+			to_chat(user, span_bolddanger(LANG("obj.2a4f3f34", null)))
 			new_name = "vicious claymore"
 			add_atom_colour(rgb(255, 135, 135), ADMIN_COLOUR_PRIORITY)
 		if(8)
-			to_chat(user, span_userdanger("IT NEVER GETS OLD. THE <i>SCREAMING</i>. THE <i>BLOOD</i> AS IT <i>SPRAYS</i> ACROSS YOUR <i>FACE.</i>"))
+			to_chat(user, span_userdanger(LANG("obj.e9c6a7fd", null)))
 			new_name = "bloodthirsty claymore"
 			add_atom_colour(rgb(255, 115, 115), ADMIN_COLOUR_PRIORITY)
 		if(9)
-			to_chat(user, span_userdanger("ANOTHER ONE FALLS TO YOUR BLOWS. ANOTHER WEAKLING UNFIT TO LIVE."))
+			to_chat(user, span_userdanger(LANG("obj.568cd39c", null)))
 			new_name = "gore-stained claymore"
 			add_atom_colour(rgb(255, 95, 95), ADMIN_COLOUR_PRIORITY)
 		if(10)
-			user.visible_message(span_warning("[user]'s eyes light up with a vengeful fire!"), \
-			span_userdanger("YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i>"))
+			user.visible_message(span_warning(LANG("obj.6a7089f3", list(user))), \
+			span_userdanger(LANG("obj.7a3d4b6b", null)))
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_gold"
 			inhand_icon_state = "cultblade"

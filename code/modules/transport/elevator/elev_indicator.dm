@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * An indicator display aka an elevator hall lantern w/ floor number
  */
@@ -50,7 +51,7 @@
 	. = ..()
 
 	if(!is_operational)
-		. += span_notice("The display is dark.")
+		. += span_notice(LANG("obj.d4aeeaa8", null))
 		return
 
 	var/dirtext
@@ -62,7 +63,7 @@
 		else
 			dirtext = "stopped"
 
-	. += span_notice("The elevator is at floor [current_lift_floor], [dirtext].")
+	. += span_notice(LANG("obj.a50e2b4a", list(current_lift_floor, dirtext)))
 
 /**
  * Update state, and only process if elevator is moving.

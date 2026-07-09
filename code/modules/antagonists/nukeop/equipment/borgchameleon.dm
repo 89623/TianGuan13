@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ACTIVATION_COST (0.3 * STANDARD_CELL_CHARGE)
 #define ACTIVATION_UP_KEEP (0.025 * STANDARD_CELL_RATE)
 
@@ -49,29 +50,29 @@
 		if (isturf(user.loc))
 			toggle(user)
 		else
-			to_chat(user, span_warning("You can't use [src] while inside something!"))
+			to_chat(user, span_warning(LANG("obj.8f40d671", list(src))))
 	else
-		to_chat(user, span_warning("You need at least [display_energy(ACTIVATION_COST)] of charge in your cell to use [src]!"))
+		to_chat(user, span_warning(LANG("obj.8f565726", list(display_energy(ACTIVATION_COST), src))))
 
 /obj/item/borg_chameleon/proc/toggle(mob/living/silicon/robot/user)
 	if(active)
 		playsound(src, 'sound/effects/pop.ogg', 100, TRUE, -6)
-		to_chat(user, span_notice("You deactivate \the [src]."))
+		to_chat(user, span_notice(LANG("obj.03d7907e", list(src))))
 		deactivate(user)
 	else
 		if(animation_playing)
-			to_chat(user, span_notice("\the [src] is recharging."))
+			to_chat(user, span_notice(LANG("obj.65e76f37", list(src))))
 			return
 		animation_playing = TRUE
-		to_chat(user, span_notice("You activate \the [src]."))
+		to_chat(user, span_notice(LANG("obj.41ddd503", list(src))))
 		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, TRUE, -6)
 		apply_wibbly_filters(user)
 		if (do_after(user, 5 SECONDS, target = user, hidden = TRUE) && user.cell.use(ACTIVATION_COST))
 			playsound(src, 'sound/effects/bamf.ogg', 100, TRUE, -6)
-			to_chat(user, span_notice("You are now disguised as the Nanotrasen engineering borg \"[friendlyName]\"."))
+			to_chat(user, span_notice(LANG("obj.0e7b7c3e", list(friendlyName))))
 			activate(user)
 		else
-			to_chat(user, span_warning("The chameleon field fizzles."))
+			to_chat(user, span_warning(LANG("obj.d586c13c", null)))
 			do_sparks(3, FALSE, user)
 		remove_wibbly_filters(user)
 		animation_playing = FALSE
@@ -118,7 +119,7 @@
 /obj/item/borg_chameleon/proc/disrupt(mob/living/silicon/robot/user)
 	SIGNAL_HANDLER
 	if(active)
-		to_chat(user, span_danger("Your chameleon field deactivates."))
+		to_chat(user, span_danger(LANG("obj.7ac1e601", null)))
 		deactivate(user)
 
 #undef ACTIVATION_COST

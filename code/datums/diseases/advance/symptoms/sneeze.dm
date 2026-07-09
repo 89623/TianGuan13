@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /*Sneezing
  * Reduces stealth
  * Greatly increases resistance
@@ -55,7 +56,7 @@
 			affected_mob.emote("sneeze")
 			active_disease.airborne_spread(spread_range = src.spread_range, force_spread = TRUE, require_facing = TRUE)
 			if(cartoon_sneezing) //Yeah, this can fling you around even if you have a space suit helmet on. It's, uh, bluespace snot, yeah.
-				to_chat(affected_mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))
+				to_chat(affected_mob, span_userdanger(LANG("datum.1605c7b8", null)))
 				var/sneeze_distance = rand(2,4) //twice as far as a normal baseball bat strike will fling you
 				var/turf/target = get_ranged_target_turf(affected_mob, REVERSE_DIR(affected_mob.dir), sneeze_distance)
 				affected_mob.throw_at(target, sneeze_distance, rand(1,4)) //with the wounds update, sneezing at 7 speed was causing peoples bones to spontaneously explode, turning cartoonish sneezing into a nightmarishly lethal GBS 2.0 outbreak

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * The base type for nearly all physical objects in SS13
 
@@ -345,7 +346,14 @@
  */
 /atom/proc/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	SHOULD_CALL_PARENT(TRUE)
+
+	if(isliving(crafter))
+		var/mob/living/person = crafter
+		if(person.mind)
+			ADD_TRAIT(src, TRAIT_HANDMADE, REF(person.mind))
+
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_CRAFT, components, current_recipe)
+
 	var/list/remaining_parts = LAZYLISTDUPLICATE(current_recipe?.parts)
 	var/list/parts_by_type = LAZYLISTDUPLICATE(remaining_parts)
 	for(var/parttype in parts_by_type) //necessary for our is_type_in_list() call with the zebra arg set to true
@@ -487,7 +495,7 @@
 		return
 	if(buckle_message_cooldown <= world.time)
 		buckle_message_cooldown = world.time + 25
-		balloon_alert(user, "can't move while buckled!")
+		balloon_alert(user, LANG("atom.22c89fbc", null))
 	return
 
 /**
@@ -663,7 +671,7 @@
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
 	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
 	var/sound_to_play = chosen_option[TOOL_PROCESSING_SOUND]
-	to_chat(user, span_notice("You start working on [src]."))
+	to_chat(user, span_notice(LANG("atom.6d07c8c1", list(src))))
 	if(sound_to_play)
 		playsound(src, sound_to_play, 50, TRUE)
 	if(!process_item.use_tool(src, user, processing_time, volume=50))
@@ -682,7 +690,7 @@
 			created_atom.pixel_x += rand(-8,8)
 			created_atom.pixel_y += rand(-8,8)
 		created_atoms.Add(created_atom)
-	to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
+	to_chat(user, span_notice(LANG("atom.6e139a25", list(amount_to_create, initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]", src))))
 	SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
 	UsedforProcessing(user, process_item, chosen_option, created_atoms)
 
@@ -698,7 +706,7 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
 	if(user.mind)
-		ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user.mind))
+		ADD_TRAIT(src, TRAIT_HANDMADE, REF(user.mind))
 
 ///Connect this atom to a shuttle
 /atom/proc/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -953,6 +961,16 @@
 				if(extra_lines)
 					extra_context = "<br><span class='subcontext'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
 
+	// NOVA EDIT ADDITION START - I18N: the hover screentip uses the raw atom.name, which for stacks/airlocks
+	// is rewritten at runtime by update_name (overriding the Initialize reverse) — so the floating name stayed
+	// English (e.g. "cable coil") even though examine showed 线圈. Reverse it here (display-only, exact match;
+	// locale==en no-op). maptext does not pass through the AC layer, so this is the localization point.
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		var/localized_name = lang_reverse_text(used_name) // exact: stacks ("cable coil"->线圈) + single-word names
+		if(localized_name == used_name) // exact miss -> AC substring for composite names (e.g. "Drone Bay Maintenance")
+			localized_name = lang_fallback_apply(used_name)
+		used_name = localized_name
+	// NOVA EDIT ADDITION END
 	var/new_maptext
 	if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 		new_maptext = ""

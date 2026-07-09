@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * Stabilising serum prevents monster organs from decaying before you can use them.
  */
@@ -13,14 +14,14 @@
 		return NONE
 	var/obj/item/organ/monster_core/target_core = interacting_with
 	if (!istype(target_core))
-		balloon_alert(user, "invalid target!")
+		balloon_alert(user, LANG("obj.5c77b90d", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if (!target_core.preserve())
-		balloon_alert(user, "organ decayed!")
+		balloon_alert(user, LANG("obj.614a4bdc", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "organ stabilized")
+	balloon_alert(user, LANG("obj.fab48b07", null))
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -70,15 +71,15 @@
 	var/estimated_time_left = round(timeleft(decay_timer), 1 MINUTES)
 	switch(estimated_time_left)
 		if(4 MINUTES)
-			. += span_notice("It's fresh and still pulsating with the last vestiges of life.")
+			. += span_notice(LANG("obj.972a661b", null))
 		if(3 MINUTES)
-			. += span_notice("It still looks pretty fresh.")
+			. += span_notice(LANG("obj.019fc51a", null))
 		if(2 MINUTES)
-			. += span_notice("It's not as fresh as could be.")
+			. += span_notice(LANG("obj.19ef4d50", null))
 		if(1 MINUTES)
-			. += span_notice("Signs of decay are starting to set in. It might not be good for much longer.")
+			. += span_notice(LANG("obj.d467c886", null))
 		if(0 SECONDS to 1 MINUTES)
-			. += span_warning("Signs of decay have set in, but it still looks alive. It's probably about to become unusable really quickly.")
+			. += span_warning(LANG("obj.09abc9ee", null))
 
 /obj/item/organ/monster_core/Destroy(force)
 	deltimer(decay_timer)
@@ -88,18 +89,18 @@
 	. = ..()
 
 	if (inert)
-		to_chat(target_carbon, span_notice("[src] breaks down as you try to insert it."))
+		to_chat(target_carbon, span_notice(LANG("obj.71199cdb", list(src))))
 		qdel(src)
 		return FALSE
 	if (!decay_timer)
 		return TRUE
 	preserve(TRUE)
-	target_carbon.visible_message(span_notice("[src] stabilizes as it's inserted."))
+	target_carbon.visible_message(span_notice(LANG("obj.21df229c", list(src))))
 	return TRUE
 
 /obj/item/organ/monster_core/on_mob_remove(mob/living/carbon/target_carbon, special, movement_flags)
 	if (!inert && !special)
-		target_carbon?.visible_message(span_notice("[src] rapidly decays as it's removed."))
+		target_carbon?.visible_message(span_notice(LANG("obj.b1ed63fb", list(src))))
 		go_inert()
 	return ..()
 
@@ -170,16 +171,16 @@
  */
 /obj/item/organ/monster_core/proc/try_apply(atom/target, mob/user)
 	if (!isliving(target))
-		balloon_alert(user, "invalid target!")
+		balloon_alert(user, LANG("obj.5c77b90d", null))
 		return
 	if (inert)
-		balloon_alert(user, "organ decayed!")
+		balloon_alert(user, LANG("obj.614a4bdc", null))
 		return
 	var/mob/living/live_target = target
 	if (live_target.stat == DEAD)
-		balloon_alert(user, "they're dead!")
+		balloon_alert(user, LANG("obj.43a02ec6", null))
 		return
-	balloon_alert(user, "applied organ")
+	balloon_alert(user, LANG("obj.0266a6d2", null))
 	apply_to(target, user)
 
 /**

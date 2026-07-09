@@ -79,7 +79,7 @@
 			)
 
 		jobs[job.title] = list(
-			"description" = job.description,
+			"description" = lang_localize_job_description(job), // NOVA EDIT - i18n: 拆基础句+opt-in 后缀分别反查（ORIGINAL: "description" = job.description,）
 			"department" = department_name,
 			"nova_star" = job.nova_stars_only, // NOVA EDIT ADDITION
 			"alt_titles" = job.alt_titles, // NOVA EDIT ADDITION

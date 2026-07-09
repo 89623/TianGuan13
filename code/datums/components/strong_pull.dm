@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /*
 This component attaches to mobs, and makes their pulls !strong!
@@ -37,7 +38,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 /datum/component/strong_pull/proc/reject_further_pulls(datum/source, mob/living/puller)
 	SIGNAL_HANDLER
 	if(puller != parent) //for increasing grabs, you need to have a valid pull. thus, parent should be able to pull the same object again
-		strongpulling.balloon_alert(puller, "gripped too tightly!")
+		strongpulling.balloon_alert(puller, LANG("datum.74ed57d9", null))
 		return COMSIG_ATOM_CANT_PULL
 
 /*

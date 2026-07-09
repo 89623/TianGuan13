@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Mayhem in a bottle
 
 /obj/item/mayhem
@@ -7,7 +8,7 @@
 	icon_state = "vial"
 
 /obj/item/mayhem/attack_self(mob/user)
-	if(tgui_alert(user, "Breaking the bottle will cause nearby crewmembers to go into a murderous frenzy. Be sure you know what you are doing...", "Break the bottle?", list("Break it!", "DON'T")) != "Break it!")
+	if(tgui_alert(user, LANG("obj.d7a687a7", null), LANG("obj.42653979", null), list("Break it!", "DON'T")) != "Break it!")
 		return
 
 	if(QDELETED(src) || !user.is_holding(src) || user.incapacitated)
@@ -16,7 +17,7 @@
 	for(var/mob/living/carbon/human/target in range(7, user))
 		target.apply_status_effect(/datum/status_effect/mayhem)
 
-	to_chat(user, span_notice("You shatter the bottle!"))
+	to_chat(user, span_notice(LANG("obj.fb4453e5", null)))
 	playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 100, TRUE)
 	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!"))
 	user.log_message("activated a bottle of mayhem", LOG_ATTACK)
@@ -114,18 +115,18 @@
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	to_chat(user, span_notice("You feel a bloodlust. You can now butcher corpses with your bare arms."))
+	to_chat(user, span_notice(LANG("obj.de884d98", null)))
 
 /obj/item/clothing/head/hooded/hostile_environment/dropped(mob/user, silent = FALSE)
 	. = ..()
-	to_chat(user, span_notice("You lose your bloodlust."))
+	to_chat(user, span_notice(LANG("obj.fad494b6", null)))
 
 /obj/item/clothing/head/hooded/hostile_environment/proc/consume(mob/living/user, mob/living/butchered)
 	if(butchered.mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT))
 		return
 	var/health_consumed = butchered.maxHealth * 0.1
 	user.heal_ordered_damage(health_consumed, list(BRUTE, BURN, TOX))
-	to_chat(user, span_notice("You heal from the corpse of [butchered]."))
+	to_chat(user, span_notice(LANG("obj.8ece719e", list(butchered))))
 	var/datum/client_colour/color_effect = user.add_client_colour(/datum/client_colour/bloodlust, HELMET_TRAIT)
 	QDEL_IN(color_effect, 1 SECONDS)
 

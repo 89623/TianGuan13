@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /mob/living/basic/slime/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
@@ -27,12 +28,12 @@
 
 	if(bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) //Check if we should be in stasis
 		if(!has_status_effect(/datum/status_effect/grouped/stasis)) //Check if we don't have the status effect yet
-			to_chat(src, span_danger("Nerve gas in the air has put you in stasis!"))
+			to_chat(src, span_danger(LANG("mob.d9eae23a", null)))
 			apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
 			powerlevel = 0
 			ai_controller?.clear_blackboard_key(BB_SLIME_RABID)
 	else if(has_status_effect(/datum/status_effect/grouped/stasis)) //Check if we still have the status effect
-		to_chat(src, span_notice("You wake up from the stasis."))
+		to_chat(src, span_notice(LANG("mob.37c9c17e", null)))
 		remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
 
 ///Handles the consumption of nutrition, and growth

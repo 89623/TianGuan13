@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/touch/smite
 	name = "Smite"
 	desc = "This spell charges your hand with an unholy energy \
@@ -28,7 +29,7 @@
 	var/did_dismember = to_dismember?.dismember()
 	caster.visible_message(
 		span_warning(did_dismember ? "The feedback blows [caster]'s arm off!" : "The feedback releases a bright flash of light!"),
-		span_userdanger("The spell bounces from [victim]'s skin back into your arm!"),
+		span_userdanger(LANG("datum.80c86c81", list(victim))),
 	)
 	// And do the blind (us included)
 	caster.flash_act()
@@ -41,7 +42,7 @@
 		var/mob/living/carbon/human/human_victim = victim
 		var/obj/item/clothing/suit/worn_suit = human_victim.wear_suit
 		if(istype(worn_suit, /obj/item/clothing/suit/hooded/bloated_human))
-			human_victim.visible_message(span_danger("[victim]'s [worn_suit] explodes off of them into a puddle of gore!"))
+			human_victim.visible_message(span_danger(LANG("datum.f2ac905e", list(victim, worn_suit))))
 			human_victim.dropItemToGround(worn_suit)
 			qdel(worn_suit)
 			new /obj/effect/gibspawner(get_turf(victim))
@@ -60,8 +61,8 @@
 
 /obj/item/melee/touch_attack/smite/suicide_act(mob/living/user)
 
-	user.visible_message(span_suicide("[user] spreads [user.p_their()] arms apart, lightning arcing between them! It looks like [user.p_theyre()] going out with a bang!"))
-	user.say("SHIA KAZING!!", forced = "smite suicide")
+	user.visible_message(span_suicide(LANG("obj.e0f1cf9f", list(user, user.p_their(), user.p_theyre()))))
+	user.say(LANG("obj.a80b050d", null), forced = "smite suicide")
 	do_sparks(4, FALSE, get_turf(user))
 	explosion(user, heavy_impact_range = 2, explosion_cause = src) //Cheap explosion imitation because putting detonate() here causes runtimes
 	user.gib(DROP_ALL_REMAINS)

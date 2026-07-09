@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 SUBSYSTEM_DEF(polling)
 	name = "Polling"
 	ss_flags = SS_BACKGROUND | SS_NO_INIT
@@ -60,7 +61,7 @@ SUBSYSTEM_DEF(polling)
 	if(role && !role_name_text)
 		role_name_text = role
 	if(role_name_text && !question)
-		question = "Do you want to play as [span_notice(role_name_text)]?"
+		question = "Do you want to play as [span_notice(lang_reverse_text(role_name_text))]?" // NOVA EDIT CHANGE - I18N - reverse the role name at the source: it is wrapped in span_notice() so the {0} arg the boundary engine captures carries HTML and can't be reversed - ORIGINAL: question = "Do you want to play as [span_notice(role_name_text)]?"
 	if(!question)
 		question = "Do you want to play as a special role?"
 	log_ghost_poll("Candidate poll started.", data = list(
@@ -152,11 +153,11 @@ SUBSYSTEM_DEF(polling)
 		var/custom_link_style_start = "<style>a:visited{color:Crimson !important}</style>"
 		var/custom_link_style_end = "style='color:DodgerBlue;font-weight:bold;-dm-text-outline: 1px black'"
 		if(isatom(alert_pic) && isobserver(candidate_mob))
-			act_jump = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];jump=1'[custom_link_style_end]>\[Teleport\]</a>"
-		var/act_signup = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];signup=1'[custom_link_style_end]>\[[start_signed_up ? "Opt out" : "Sign Up"]\]</a>"
+			act_jump = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];jump=1'[custom_link_style_end]>\[[lang_reverse_text("Teleport")]\]</a>" // NOVA EDIT - I18N - localize poll button label (raw HTML link, reverse at source)
+		var/act_signup = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];signup=1'[custom_link_style_end]>\[[lang_reverse_text(start_signed_up ? "Opt out" : "Sign Up")]\]</a>" // NOVA EDIT - I18N - localize poll button label
 		var/act_never = ""
 		if(ignore_category)
-			act_never = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[Never For This Round\]</a>"
+			act_never = "[custom_link_style_start]<a href='byond://?src=[REF(poll_alert_button)];never=1'[custom_link_style_end]>\[[lang_reverse_text("Never For This Round")]\]</a>" // NOVA EDIT - I18N - localize poll button label
 
 		if(!duplicate_message_check(alert_poll)) //Only notify people once. They'll notice if there are multiple and we don't want to spam people.
 
@@ -291,7 +292,7 @@ SUBSYSTEM_DEF(polling)
 			return FALSE
 	// NOVA EDIT ADDITION BEGIN
 	if(is_banned_from(potential_candidate.ckey, BAN_GHOST_TAKEOVER) || is_banned_from(potential_candidate.ckey, BAN_ANTAGONIST))
-		to_chat(potential_candidate, "There was a ghost prompt for: [role], unfortunately you are banned from ghost takeovers.")
+		to_chat(potential_candidate, LANG("datum.d98eeea4", list(role)))
 		return FALSE
 	// NOVA EDIT ADDITION END
 	if(role && potential_candidate.client)

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/seeds/nettle
 	name = "nettle seed pack"
 	desc = "These seeds grow into nettles."
@@ -52,7 +53,7 @@
 	attack_verb_simple = list("sting")
 
 /obj/item/food/grown/nettle/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.ee607b49", list(user, src, user.p_theyre()))))
 	return (BRUTELOSS|TOXLOSS)
 
 /obj/item/food/grown/nettle/death

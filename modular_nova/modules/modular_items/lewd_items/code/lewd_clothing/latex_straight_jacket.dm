@@ -26,7 +26,7 @@
 	var/obj/item/clothing/suit/straight_jacket/latex_straight_jacket/reinforced/reinforced_jacket = new()
 	remove_item_from_storage(user)
 	user.put_in_hands(reinforced_jacket)
-	to_chat(user, span_notice("You reinforce the belts on [src] with [attacking_item]."))
+	to_chat(user, span_notice(LANG("obj.ed25d3f3", list(src, attacking_item))))
 	qdel(attacking_item)
 	qdel(src)
 

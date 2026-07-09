@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system
@@ -70,7 +71,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/multitool_act(mob/living/user, obj/item/tool)
 	if(!panel_open || !(machine_stat & EMPED))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You reset [src]'s firmware."))
+	to_chat(user, span_notice(LANG("obj.f932ce75", list(src))))
 	set_machine_stat(machine_stat & ~EMPED)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -94,7 +95,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return FALSE
 	obj_flags |= EMAGGED
 	act_up()
-	balloon_alert(user, "announcement strings corrupted")
+	balloon_alert(user, LANG("obj.c2b1f388", null))
 	return TRUE
 
 /obj/machinery/announcement_system/ui_interact(mob/user, datum/tgui/ui)
@@ -131,7 +132,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if(!usr.can_perform_action(src, ALLOW_SILICON_REACH))
 		return
 	if(machine_stat & EMPED)
-		visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
+		visible_message(span_warning(LANG("obj.9f1f2989", list(src))), span_hear(LANG("obj.c2e63776", null)))
 		playsound(src.loc, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 		return
 
@@ -161,9 +162,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		return
 
 	if (machine_stat & EMPED)
-		to_chat(user, span_warning("[src]'s firmware appears to be malfunctioning!"))
+		to_chat(user, span_warning(LANG("obj.c4eb860a", list(src))))
 		if (!isAI(user))	// Deus Ex Machina goes without multitool in his default complectation.
-			to_chat(user, span_warning("However, you can reset it with [EXAMINE_HINT("multitool")], while its [EXAMINE_HINT("panel is open")]!"))
+			to_chat(user, span_warning(LANG("obj.03f0ba87", list(EXAMINE_HINT("multitool"), EXAMINE_HINT("panel is open")))))
 		return FALSE
 
 /// If AAS can't broadcast message, it shouldn't be picked by randomizer.
@@ -258,6 +259,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	// Fallback - first line
 	if (!announcement_message)
 		announcement_message = announcement_lines_map[announcement_lines_map[1]]
+	// NOVA EDIT ADDITION - i18n - 全服中文时反查整条模板译文（在 %VAR 替换前；模板用 %PERSON 等占位符、
+	// 不被反查的 { 守卫跳过；译文须保留 %VAR 占位符）。译文进 strings/i18n/<locale>/ui.json。
+	announcement_message = lang_reverse_text(announcement_message)
+	// NOVA EDIT ADDITION END
 	// Replace variables with their value
 	for(var/variable in vars_and_tooltips_map)
 		announcement_message = replacetext_char(announcement_message, "%[variable]", variables_map[variable] || "\[NO DATA\]")

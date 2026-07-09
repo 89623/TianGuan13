@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define DECK_SHUFFLE_TIME (5 SECONDS)
 #define DECK_SYNDIE_SHUFFLE_TIME (3 SECONDS)
 
@@ -53,7 +54,7 @@
 			initial_cards += "[person] of [suit]"
 
 /obj/item/toy/cards/deck/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like their luck ran out!"))
+	user.visible_message(span_suicide(LANG("obj.49c39ba4", list(user, user.p_their(), src))))
 	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 	return BRUTELOSS
 
@@ -61,7 +62,7 @@
 	. = ..()
 
 	if(HAS_TRAIT(user, TRAIT_XRAY_VISION) && count_cards() > 0)
-		. += span_notice("You scan the deck with your x-ray vision and the top card reads: [fetch_card_atoms()[1].cardname].")
+		. += span_notice(LANG("obj.0d61a841", list(fetch_card_atoms()[1].cardname)))
 
 	// This can only happen if card_atoms have been generated
 	if(LAZYLEN(card_atoms) > 0)
@@ -69,9 +70,9 @@
 
 		var/marked_color = card.getMarkedColor(user)
 		if(marked_color)
-			. += span_notice("The top card of the deck has a [marked_color] mark on the corner!")
+			. += span_notice(LANG("obj.bcdc7aa8", list(marked_color)))
 
-	. += span_notice("Click and drag the deck to yourself to pickup.") // This should be a context screentip
+	. += span_notice(LANG("obj.8dc21e50", null)) // This should be a context screentip
 
 /obj/item/toy/cards/deck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(src == held_item)
@@ -108,7 +109,7 @@
 	COOLDOWN_START(src, shuffle_cooldown, shuffle_time)
 	shuffle_inplace(fetch_card_atoms())
 	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
-	user.balloon_alert_to_viewers("shuffles the deck")
+	user.balloon_alert_to_viewers(LANG("obj.6f2833b7", null))
 	addtimer(CALLBACK(src, PROC_REF(CardgameEvent), user), 60 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /**
@@ -116,7 +117,7 @@
  */
 /obj/item/toy/cards/deck/proc/get_top_card(mob/living/user)
 	if(count_cards() == 0)
-		to_chat(user, span_warning("There are no more cards to draw!"))
+		to_chat(user, span_warning(LANG("obj.aee197f9", null)))
 		return
 	var/list/cards = fetch_card_atoms()
 	return cards[1]
@@ -154,7 +155,7 @@
 		card.Flip()
 	card.pickup(user)
 	user.put_in_hands(card)
-	user.balloon_alert_to_viewers("draws a card")
+	user.balloon_alert_to_viewers(LANG("obj.b2fdfc7e", null))
 
 /obj/item/toy/cards/deck/attack_hand_secondary(mob/living/user, list/modifiers)
 	attack_hand(user, modifiers, flip_card = TRUE)
@@ -162,7 +163,7 @@
 
 /obj/item/toy/cards/deck/click_alt(mob/living/user)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
-		to_chat(user, span_notice("You must hold the [src] with both hands to shuffle."))
+		to_chat(user, span_notice(LANG("obj.cf06320f", list(src))))
 		return CLICK_ACTION_BLOCKING
 
 	shuffle_cards(user)
@@ -194,11 +195,11 @@
 		return NONE
 
 	if (!insert(tool))
-		to_chat(user, span_warning("\The [src] is stacked too high!"))
+		to_chat(user, span_warning(LANG("obj.64e89a57", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/card_grammar = istype(tool, /obj/item/toy/singlecard) ? "card" : "cards"
-	user.balloon_alert_to_viewers("puts [card_grammar] in deck")
+	user.balloon_alert_to_viewers(LANG("obj.172d66d1", list(card_grammar)))
 	return ITEM_INTERACT_SUCCESS
 
 /// This is how we play 52 card pickup
@@ -211,7 +212,7 @@
 	if(!istype(thrower)) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
 
-	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
+	target.visible_message(span_warning(LANG("obj.4dcb2baa", list(target))), span_warning(LANG("obj.cd0eeeca", null)))
 	target.add_mood_event("lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
 	thrower.add_mood_event("won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
 	add_memory_in_range(target, 7, /datum/memory/playing_card_pickup, protagonist = thrower, deuteragonist = target, antagonist = src)

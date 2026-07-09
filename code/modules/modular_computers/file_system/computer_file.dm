@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file
 	///The name of the internal file shown in file management.
 	var/filename = "NewFile"
@@ -99,6 +100,6 @@
 /datum/computer_file/program/proc/event_networkfailure(background)
 	kill_program()
 	if(background)
-		computer.visible_message(span_danger("\The [computer]'s screen displays a \"Process [filename].[filetype] (PID [rand(100,999)]) terminated - Network Error\" error"))
+		computer.visible_message(span_danger(LANG("datum.756e8d88", list(computer, filename, filetype, rand(100,999)))))
 	else
-		computer.visible_message(span_danger("\The [computer]'s screen briefly freezes and then shows \"NETWORK ERROR - NTNet connection lost. Please retry. If problem persists contact your system administrator.\" error."))
+		computer.visible_message(span_danger(LANG("datum.c4ae5155", list(computer))))

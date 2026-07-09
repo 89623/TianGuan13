@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**********************Asteroid**************************/
 
 #define DIG_SHEET_AMOUNT 5
@@ -74,7 +75,7 @@
 		if(!isturf(user.loc))
 			return
 
-		balloon_alert(user, "digging...")
+		balloon_alert(user, LANG("turf.a8f0e832", null))
 
 		if(attack_item.use_tool(src, user, 4 SECONDS, volume = 50))
 			if(!can_dig(user))
@@ -100,7 +101,7 @@
 	if(!dug && !broken)
 		return TRUE
 	if(user)
-		balloon_alert(user, "already excavated!")
+		balloon_alert(user, LANG("turf.b5a73f00", null))
 	return FALSE
 
 ///Refills the previously dug tile
@@ -233,6 +234,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	layer = MID_TURF_LAYER
 	floor_variance = 0
 	transform = MAP_SWITCH(TRANSLATE_MATRIX(-8, -8), matrix())
+	smooth_broken = TRUE
 	/// DMI used by unsmoothed turfs for variance
 	var/variant_dmi = null
 	/// Amount of variants this turf has
@@ -319,7 +321,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/snow/burn_tile()
 	if(!burnt)
-		visible_message(span_danger("[src] melts away!."))
+		visible_message(span_danger(LANG("turf.2ffc95b8", list(src))))
 		slowdown = 0
 		burnt = TRUE
 		update_appearance()
@@ -366,21 +368,21 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	if(dug)
 		if(tool.use(DIG_SHEET_AMOUNT))
 			user.visible_message(
-				span_notice("[user] packs [src] back in."),
-				span_notice("You pack [src] back in."),
+				span_notice(LANG("turf.7d192565", list(user, src))),
+				span_notice(LANG("turf.8febbfc7", list(src))),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			refill_dug()
 			return ITEM_INTERACT_SUCCESS
 
-		to_chat(user, "You don't have enough [tool.name] to fill the hole.")
+		to_chat(user, LANG("turf.5c447ac1", list(tool.name)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(footprint_entrance_dirs || footprint_exit_dirs)
 		if(tool.use(1))
 			user.visible_message(
-				span_notice("[user] fills in the footprints in [src]."),
-				span_notice("You fill in the footprints in [src]."),
+				span_notice(LANG("turf.4027f5a4", list(user, src))),
+				span_notice(LANG("turf.77a07424", list(src))),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)
 			clear_footprints()
@@ -471,6 +473,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	base_icon_state = "moon"
 	floor_variance = 40
 	dig_result = /obj/item/stack/ore/glass/basalt
+	initial_gas_mix = MOONBASE19_ATMOS
 
 /turf/open/misc/asteroid/moon/dug //When you want one of these to be already dug.
 	dug = TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/book/granter/action/origami
 	granted_action = /datum/action/innate/origami
 	name = "The Art of Origami"
@@ -22,13 +23,13 @@
 
 /datum/action/innate/origami/Activate()
 	ADD_TRAIT(owner, TRAIT_PAPER_MASTER, ACTION_TRAIT)
-	to_chat(owner, span_notice("You will now fold origami planes."))
+	to_chat(owner, span_notice(LANG("datum.b41d73d3", null)))
 	active = TRUE
 	build_all_button_icons(UPDATE_BUTTON_ICON)
 
 /datum/action/innate/origami/Deactivate()
 	REMOVE_TRAIT(owner, TRAIT_PAPER_MASTER, ACTION_TRAIT)
-	to_chat(owner, span_notice("You will no longer fold origami planes."))
+	to_chat(owner, span_notice(LANG("datum.b138ed17", null)))
 	active = FALSE
 	build_all_button_icons(UPDATE_BUTTON_ICON)
 

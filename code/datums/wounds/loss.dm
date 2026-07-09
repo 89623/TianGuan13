@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/wound_pregen_data/loss
 	abstract = FALSE
 
@@ -42,7 +43,7 @@
 
 	var/msg = span_bolddanger("[victim]'s [dismembered_part.plaintext_zone] [occur_text]")
 
-	victim.visible_message(msg, span_userdanger("Your [dismembered_part.plaintext_zone] [self_msg ? self_msg : occur_text]"))
+	victim.visible_message(msg, span_userdanger(LANG("datum.203e3d8f", list(dismembered_part.plaintext_zone, self_msg ? self_msg : occur_text))))
 
 	loss_wounding_type = wounding_type
 

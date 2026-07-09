@@ -1,22 +1,23 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define THROW_CRYSTALS_COOLDOWN 15 SECONDS
 #define THROW_LAUNCH_COOLDOWN 7 SECONDS
 
 /obj/item/cain_and_abel/on_thrown(mob/living/carbon/user, atom/target)
 	. = null
 	if(!COOLDOWN_FINISHED(src, throw_cooldown))
-		user.balloon_alert(user, "on cooldown!")
+		user.balloon_alert(user, LANG("obj.d4ae5d4d", null))
 		return
 
 	if(user.incapacitated || HAS_TRAIT(user, TRAIT_NO_THROWING) || !isturf(user.loc) || user.buckled)
-		user.balloon_alert(user, "unable!")
+		user.balloon_alert(user, LANG("obj.147ad722", null))
 		return
 
 	if(!check_wield(user))
-		user.balloon_alert(user, "offhand busy!")
+		user.balloon_alert(user, LANG("obj.9ec3aa89", null))
 		return
 
 	if(get_dist(target, user) > 9)
-		user.balloon_alert(user, "too far away!")
+		user.balloon_alert(user, LANG("obj.a462ee7c", null))
 		return
 
 	var/static/list/throw_options = list(

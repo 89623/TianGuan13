@@ -47,7 +47,8 @@ export const Autolathe = (props) => {
   const availableMaterials: MaterialMap = {};
 
   for (const material of filteredMaterials) {
-    availableMaterials[material.name] = material.amount;
+    // NOVA EDIT CHANGE - I18N - key by english id so multi-word mats (e.g. "bluespace crystal") match design.cost keys - ORIGINAL: availableMaterials[material.name] = material.amount;
+    availableMaterials[material.id ?? material.name] = material.amount;
   }
 
   return (

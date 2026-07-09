@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/plumbing/buffer
 	name = "automatic buffer"
 	desc = "A chemical holding tank that waits for neighbouring automatic buffers to complete before allowing a withdrawal. Connect/reset by screwdrivering"
@@ -41,16 +42,16 @@
 
 /obj/machinery/plumbing/buffer/examine(mob/user)
 	. = ..()
-	. += span_notice("It activates at a threshold of [activation_volume]u of reagents")
+	. += span_notice(LANG("obj.0183978d", list(activation_volume)))
 	switch(mode)
 		if(AB_UNREADY)
-			. += span_notice("It is filling up on reagents.")
+			. += span_notice(LANG("obj.ca1cfbf8", null))
 		if(AB_IDLE)
-			. += span_notice("It is waiting on other buffers to activate.")
+			. += span_notice(LANG("obj.03634d60", null))
 		if(AB_READY)
-			. += span_notice("It is sending reagents.")
-	. += span_notice("Its activation threshold can be changed with by [EXAMINE_HINT("hand")].")
-	. += span_notice("Its connections can be changed with a [EXAMINE_HINT("screwdriver")].")
+			. += span_notice(LANG("obj.58435440", null))
+	. += span_notice(LANG("obj.9fd3f0bb", list(EXAMINE_HINT("hand"))))
+	. += span_notice(LANG("obj.fd64e0d1", list(EXAMINE_HINT("screwdriver"))))
 
 /obj/machinery/plumbing/buffer/update_icon_state()
 	. = ..()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/vehicle/sealed/mecha/phazon
 	desc = "This is a Phazon exosuit. The pinnacle of scientific research and pride of Nanotrasen, it uses cutting edge anomalous technology and expensive materials."
 	name = "\improper Phazon"
@@ -51,13 +52,13 @@
 	switch(chassis.damtype)
 		if(TOX)
 			new_damtype = BRUTE
-			chassis.balloon_alert(owner, "your punches will now deal brute damage")
+			chassis.balloon_alert(owner, LANG("datum.35e2aec5", null))
 		if(BRUTE)
 			new_damtype = BURN
-			chassis.balloon_alert(owner, "your punches will now deal burn damage")
+			chassis.balloon_alert(owner, LANG("datum.b16d1bd1", null))
 		if(BURN)
 			new_damtype = TOX
-			chassis.balloon_alert(owner,"your punches will now deal toxin damage")
+			chassis.balloon_alert(owner,LANG("datum.c8de675d", null))
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
 	playsound(chassis, 'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
@@ -75,5 +76,5 @@
 		return
 	chassis.phasing = chassis.phasing ? "" : "phasing"
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
-	chassis.balloon_alert(owner, "[chassis.phasing ? "enabled" : "disabled"] phasing")
+	chassis.balloon_alert(owner, LANG("datum.bef273b1", list(chassis.phasing ? "enabled" : "disabled")))
 	build_all_button_icons()

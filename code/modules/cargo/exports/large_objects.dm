@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/export/crate
 	cost = CARGO_CRATE_VALUE
 	k_elasticity = 0
@@ -14,7 +15,7 @@
 /datum/export/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
 	if(. && notes)
-		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
+		. += LANG("datum.03ccc944", null)
 
 /datum/export/crate/wooden
 	cost = CARGO_CRATE_VALUE / 5

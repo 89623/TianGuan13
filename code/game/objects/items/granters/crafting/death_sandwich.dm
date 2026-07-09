@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/book/granter/crafting_recipe/death_sandwich
 	name = "\improper SANDWICH OF DEATH SECRET RECIPE"
 	desc = "An ancient composition notebook with the instructions for an ancient and ultimate sandwich scrawled upon its loose-leaf pages. The title has been scrawled onto it with permanent marker."
@@ -13,5 +14,5 @@
 	)
 
 /obj/item/book/granter/crafting_recipe/death_sandwich/recoil(mob/living/user)
-	to_chat(user, span_warning("The book comically explodes in your hands, leaving no trace."))
+	to_chat(user, span_warning(LANG("obj.6c4f3571", null)))
 	qdel(src)

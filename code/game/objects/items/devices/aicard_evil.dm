@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// One use AI card which downloads a ghost as a syndicate AI to put in your MODsuit
 /obj/item/aicard/syndie
 	name = "syndiCard"
@@ -34,16 +35,16 @@
 
 /obj/item/aicard/syndie/loaded/examine(mob/user)
 	. = ..()
-	. += span_notice("This one has a little S.E.L.F. insignia on the back, and a label next to it that says 'Activate for one FREE aligned AI! Please attempt uplink reintegration or ask your employers for reimbursal if AI is unavailable or belligerent.")
+	. += span_notice(LANG("obj.6e1558f1", null))
 
 /obj/item/aicard/syndie/loaded/attack_self(mob/user, modifiers)
 	if(!isnull(AI))
 		return ..()
 	if(finding_candidate)
-		balloon_alert(user, "loading...")
+		balloon_alert(user, LANG("obj.22d73150", null))
 		return TRUE
 	finding_candidate = TRUE
-	to_chat(user, span_notice("Connecting to S.E.L.F. dispatch..."))
+	to_chat(user, span_notice(LANG("obj.eb63c4e9", null)))
 	procure_ai(user)
 	finding_candidate = FALSE
 	return TRUE
@@ -52,7 +53,7 @@
 /obj/item/aicard/syndie/loaded/proc/procure_ai(mob/user)
 	var/datum/antagonist/nukeop/op_datum = user.mind?.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(isnull(op_datum))
-		balloon_alert(user, "invalid access!")
+		balloon_alert(user, LANG("obj.453cdb2b", null))
 		return
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		check_jobban = list(ROLE_OPERATIVE, JOB_AI),
@@ -68,7 +69,7 @@
 /// Poll has concluded with a ghost, create the AI
 /obj/item/aicard/syndie/loaded/proc/on_poll_concluded(mob/user, datum/antagonist/nukeop/op_datum, mob/dead/observer/ghost)
 	if(!ismob(ghost))
-		to_chat(user, span_warning("Unable to connect to S.E.L.F. dispatch. Please wait and try again later or use the intelliCard on your uplink to get your points refunded."))
+		to_chat(user, span_warning(LANG("obj.515a382a", null)))
 		return
 
 	// pick ghost, create AI and transfer
@@ -110,7 +111,7 @@
 	. = ..()
 	if (!.)
 		return
-	visible_message(span_warning("The expended card incinerates itself."))
+	visible_message(span_warning(LANG("obj.687cea10", null)))
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	qdel(src)
@@ -131,12 +132,12 @@
 		AI = locate() in target
 	if(!AI || AI.interaction_range == INFINITY)
 		playsound(src,'sound/machines/buzz/buzz-sigh.ogg',50,FALSE)
-		to_chat(user, span_notice("Error! Incompatible object!"))
+		to_chat(user, span_notice(LANG("obj.4ac1089d", null)))
 		return ..()
 	AI.interaction_range += 2
 	if(AI.interaction_range > 7)
 		AI.interaction_range = INFINITY
 	playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
-	to_chat(user, span_notice("You insert [src] into [AI]'s compartment, and it beeps as it processes the data."))
-	to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [AI.interaction_range] meters!"))
+	to_chat(user, span_notice(LANG("obj.a6cfb93e", list(src, AI))))
+	to_chat(AI, span_notice(LANG("obj.96fab1e7", list(src, AI.interaction_range))))
 	qdel(src)

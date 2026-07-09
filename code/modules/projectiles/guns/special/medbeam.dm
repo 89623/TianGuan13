@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/gun/medbeam
 	name = "Medical Beamgun"
 	desc = "Don't cross the streams!"
@@ -51,7 +52,7 @@
 	current_beam = null
 	active = FALSE //skip qdelling the beam again if we're doing this proc, because
 	if(isliving(loc))
-		to_chat(loc, span_warning("You lose control of the beam!"))
+		to_chat(loc, span_warning(LANG("obj.5afd7ab1", null)))
 	LoseTarget()
 
 /obj/item/gun/medbeam/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)

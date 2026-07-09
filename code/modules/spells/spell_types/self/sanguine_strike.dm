@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Enchants an item to deal either double damage, or +20 damage, whichever is less, and lifesteals for that amount + steals some blood.
 /// multiplication can get a little instakill-y, so capping it at + 20 damage.
 /// 10 force weapon doesn't get the cap and gains 10 damage, 20 total
@@ -29,11 +30,11 @@
 	var/obj/item/to_enchant = owner.get_active_held_item() || owner.get_inactive_held_item()
 	if(!to_enchant)
 		if(feedback)
-			to_chat(owner, span_warning("You need to hold something to empower it!"))
+			to_chat(owner, span_warning(LANG("datum.7eca668e", null)))
 		return FALSE
 	if(!to_enchant.force)
 		if(feedback)
-			to_chat(owner, span_warning("[to_enchant] is too weak to empower! Find something that'll hurt someone!"))
+			to_chat(owner, span_warning(LANG("datum.21fea0f9", list(to_enchant))))
 		return FALSE
 	return ..()
 
@@ -44,7 +45,7 @@
 	if(!to_enchant)
 		//this shouldn't have passed can_cast_spell, but sanity is needed
 		return
-	to_chat(cast_on, span_notice("[to_enchant] begins to glow red..."))
+	to_chat(cast_on, span_notice(LANG("datum.ac4d07ba", list(to_enchant))))
 	apply_enchantment(to_enchant)
 	//true cooldown starts when you use the item or drop it
 	StartCooldown(INFINITY)
@@ -81,7 +82,7 @@
 /// signal called from dropping the enchanted item
 /datum/action/cooldown/spell/sanguine_strike/proc/on_dropped(obj/item/enchanted, mob/dropper)
 	SIGNAL_HANDLER
-	to_chat(dropper, span_notice("[enchanted] seems to lose its red glow."))
+	to_chat(dropper, span_notice(LANG("datum.27fd51ae", list(enchanted))))
 	end_enchantment(enchanted)
 
 /// ends the enchantment, starting the cooldown (which was frozen until you attacked)

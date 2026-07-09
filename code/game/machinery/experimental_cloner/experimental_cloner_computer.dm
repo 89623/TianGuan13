@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Computer which starts the experimental cloning process
 /obj/machinery/computer/experimental_cloner
 	name = "experimental cloner control console"
@@ -44,14 +45,14 @@
 	if (istype(multi_tool.buffer, /obj/machinery/experimental_cloner_scanner))
 		unlink_scanner()
 		link_scanner(multi_tool.buffer)
-		balloon_alert(user, "scanner linked")
-		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+		balloon_alert(user, LANG("obj.6a2edc06", null))
+		to_chat(user, span_notice(LANG("obj.6d42c57e", list(multi_tool.buffer, src))))
 		return ITEM_INTERACT_SUCCESS
 	if (istype(multi_tool.buffer, /obj/machinery/experimental_cloner))
 		unlink_pod()
 		link_pod(multi_tool.buffer)
-		balloon_alert(user, "pod linked")
-		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+		balloon_alert(user, LANG("obj.6c115227", null))
+		to_chat(user, span_notice(LANG("obj.6d42c57e", list(multi_tool.buffer, src))))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/experimental_cloner/ui_interact(mob/user, datum/tgui/ui)
@@ -127,24 +128,24 @@
 			return TRUE
 		if ("start_scan")
 			if (isnull(input))
-				balloon_alert(ui.user, "no linked scanner!")
+				balloon_alert(ui.user, LANG("obj.1398f248", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (isnull(input.occupant))
-				balloon_alert(ui.user, "scanner empty!")
+				balloon_alert(ui.user, LANG("obj.b54f9423", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (!iscarbon(input.occupant))
-				balloon_alert(ui.user, "invalid subject!")
+				balloon_alert(ui.user, LANG("obj.446687b1", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			var/mob/living/carbon/carbon_occupant = input.occupant
 			if (!carbon_occupant.has_dna())
-				balloon_alert(ui.user, "invalid subject!")
+				balloon_alert(ui.user, LANG("obj.446687b1", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (input.scanning)
-				balloon_alert(ui.user, "scanner busy!")
+				balloon_alert(ui.user, LANG("obj.d1dc28fd", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 
@@ -153,15 +154,15 @@
 			return TRUE
 		if ("start_clone")
 			if (isnull(output))
-				balloon_alert(ui.user, "no linked pod!")
+				balloon_alert(ui.user, LANG("obj.46d7373c", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (output.running)
-				balloon_alert(ui.user, "pod busy!")
+				balloon_alert(ui.user, LANG("obj.f8717682", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 			if (isnull(stored_record))
-				balloon_alert(ui.user, "no stored DNA!")
+				balloon_alert(ui.user, LANG("obj.345f0970", null))
 				playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 				return TRUE
 

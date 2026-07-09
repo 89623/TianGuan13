@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define NO_TOOL "fold"
 
 /obj/item/spess_knife
@@ -62,7 +63,7 @@
 
 	if(isnull(tool_behaviour))
 		update_weight_class(WEIGHT_CLASS_TINY)
-		balloon_alert(user, "folded")
+		balloon_alert(user, LANG("obj.02a8ddc2", null))
 	else
 		update_weight_class(WEIGHT_CLASS_SMALL)
 		balloon_alert(user, mistake_occured ? "oops! [tool_behaviour] out" : "[tool_behaviour] out")
@@ -128,9 +129,9 @@
 	. = ..()
 
 	if(tool_behaviour)
-		. += "It has a [tool_behaviour] extended out."
+		. += LANG("obj.10b36c8d", list(tool_behaviour))
 	else
-		. += "It's folded."
+		. += LANG("obj.5378d752", null)
 
 /obj/item/spess_knife/update_icon_state()
 	icon_state = initial(icon_state)

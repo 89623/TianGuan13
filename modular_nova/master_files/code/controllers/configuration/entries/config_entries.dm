@@ -1,6 +1,38 @@
 /datum/config_entry/string/blackoutpolicy
 	config_entry_value = "You remember nothing after you've blacked out and you do not remember who or what events killed you, however, you can have faint recollection of what led up to it."
 
+// i18n: 全服默认界面语言（en / zh-Hans）。用于广播文本（visible_message 等）与 name/desc 等。
+// 在 config 文件里写一行：I18N_SERVER_LOCALE zh-Hans
+/datum/config_entry/string/i18n_server_locale
+	default = LANGUAGE_LOCALE_EN
+
+/datum/config_entry/string/i18n_server_locale/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		GLOB.i18n_server_locale = config_entry_value
+
+// i18n: 是否启用「聊天层 AC 子串兜底」（默认关）。开启后全服中文时会对每条聊天里的残留英文做
+// 子串替换，覆盖「英文拼进变量再 to_chat」等长尾；代价是热路径每行开销 + 多词短语可能误翻。
+// 在 config 文件里写一行：I18N_CHAT_FALLBACK TRUE
+/datum/config_entry/flag/i18n_chat_fallback
+	default = FALSE
+
+/datum/config_entry/flag/i18n_chat_fallback/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		GLOB.i18n_chat_fallback = config_entry_value
+
+// i18n: 是否启用「运行期漏翻采集」（默认关）。全服 locale≠en 时把经过所有翻译层后仍是英文的
+// 多词串去重记入 [log_directory]/i18n_misses.log，离线聚合归类见 tools/i18n/miss-scan.mjs。
+// 在 config 文件里写一行：I18N_LOG_MISSES TRUE
+/datum/config_entry/flag/i18n_log_misses
+	default = FALSE
+
+/datum/config_entry/flag/i18n_log_misses/ValidateAndSet(str_val)
+	. = ..()
+	if(.)
+		GLOB.i18n_log_misses = config_entry_value
+
 /datum/config_entry/flag/russian_text_formation
 
 // DISCORD GAME ALERT CONFIGS
@@ -15,6 +47,46 @@
 
 // To turn off SSDecay nests based on a config. If SSDecay is disabled, this won't matter.
 /datum/config_entry/flag/ssdecay_disable_nests
+
+// SSDecay - Percent chance that a floor will be dirty, scaled with SSDecay severity.
+/datum/config_entry/number/ssdecay_floor_dirt_percent_chance
+	default = 15
+	min_val = 0
+
+// SSDecay - Percent chance that a floor will be bloody, scaled with SSDecay severity.
+/datum/config_entry/number/ssdecay_floor_blood_percent_chance
+	default = 1
+	min_val = 0
+
+// SSDecay - Percent chance that a floor will be vomit-covered, scaled with SSDecay severity.
+/datum/config_entry/number/ssdecay_floor_vomit_percent_chance
+	default = 1
+	min_val = 0
+
+// SSDecay - Percent chance that a floor will be oily, scaled with SSDecay severity.
+/datum/config_entry/number/ssdecay_floor_oil_percent_chance
+	default = 5
+	min_val = 0
+
+// SSDecay - Percent chance that a floor will be randomly stripped down to damaged plating, scaled with SSDecay severity.
+/datum/config_entry/number/ssdecay_floor_tile_missing_percent_chance
+	default = 1
+	min_val = 0
+
+// SSDecay - Percent chance that a floor will have cobwebs, scaled with SSDecay severity.
+/datum/config_entry/number/ssdecay_floor_cobweb_percent_chance
+	default = 1
+	min_val = 0
+
+// SSDecay - Percent chance that (if not previously disabled via SSDECAY_DISABLE_NESTS) a nest will spawn, scaled with SSDecay severity.
+/datum/config_entry/number/ssdecay_nest_percent_chance
+	default = 1
+	min_val = 0
+
+// SSDecay - Percent chance that a light will be flickery.
+/datum/config_entry/number/ssdecay_light_flicker_percent_chance
+	default = 10
+	min_val = 0
 
 // Turn on/off guncargo permit-locked firing pins
 /datum/config_entry/flag/permit_pins

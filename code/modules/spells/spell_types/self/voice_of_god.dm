@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/action/cooldown/spell/voice_of_god
 	name = "Voice of God"
 	desc = "Speak with an incredibly compelling voice, forcing listeners to obey your commands."
@@ -25,7 +26,7 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	command = tgui_input_text(cast_on, "Speak with the Voice of God", "Command", max_length = MAX_MESSAGE_LEN)
+	command = tgui_input_text(cast_on, LANG("datum.9a10733a", null), LANG("datum.a4e844da", null), max_length = MAX_MESSAGE_LEN)
 	if(QDELETED(src) || QDELETED(cast_on) || !can_cast_spell())
 		return . | SPELL_CANCEL_CAST
 	if(!command)

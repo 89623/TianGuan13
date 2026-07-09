@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /atom
 	/// If non-null, overrides a/an/some in all cases
 	var/article
@@ -16,7 +17,10 @@
 	. = list()
 	. += get_name_chaser(user)
 	if(desc)
-		. += "<i>[desc]</i>"
+		// NOVA EDIT CHANGE - i18n: 在显示点反查 desc,覆盖**运行时动态赋值/重置**的 desc(血迹变干 desc=dry_desc、
+		// desc=initial(desc) 还原成编译期英文等)——Initialize 的反查只作用于初始值,运行时改写后会丢。
+		// gated locale≠en、已是中文则查不中原样返回(幂等)。ORIGINAL: . += "<i>[desc]</i>"
+		. += "<i>[lang_reverse_text(desc)]</i>"
 
 	var/list/tags_list = examine_tags(user)
 	var/list/post_descriptor = examine_post_descriptor(user)
@@ -24,12 +28,21 @@
 	if (length(tags_list))
 		var/tag_string = list()
 		for (var/atom_tag in tags_list)
-			tag_string += (isnull(tags_list[atom_tag]) ? atom_tag : span_tooltip(tags_list[atom_tag], atom_tag))
+			// NOVA EDIT CHANGE - ORIGINAL: ... ? atom_tag : span_tooltip(tags_list[atom_tag], atom_tag)) - i18n: 反查 tag 显示词(flammable/fire-proof…，词进 ui.json) 与 hover tooltip 文本(已抽进目录)
+			tag_string += (isnull(tags_list[atom_tag]) ? lang_reverse_text(atom_tag) : span_tooltip(lang_reverse_text(tags_list[atom_tag]), lang_reverse_text(atom_tag)))
 		// some regex to ensure that we don't add another "and" if the final element's main text (not tooltip) has one
-		tag_string = english_list(tag_string, and_text = (findtext(tag_string[length(tag_string)], regex(@">.*?and .*?<"))) ? " " : " and ")
-		. += "[p_They()] [p_are()] a [tag_string] [examine_descriptor(user)][post_desc_string]."
+		// NOVA EDIT CHANGE - ORIGINAL: tag_string = english_list(tag_string, and_text = (findtext(...)) ? " " : " and ") - i18n: 中文用顿号连接，不用英文 " and "/", "
+		var/tag_and = " and "
+		var/tag_comma = ", "
+		if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+			tag_and = "、"
+			tag_comma = "、"
+		else if(findtext(tag_string[length(tag_string)], regex(@">.*?and .*?<")))
+			tag_and = " "
+		tag_string = english_list(tag_string, and_text = tag_and, comma_text = tag_comma)
+		. += LANG("atom.0e340ddb", list(lang_pronoun(p_They()), lang_pronoun(p_are()), tag_string, lang_reverse_text(examine_descriptor(user)), post_desc_string)) // NOVA EDIT - i18n: 反查描述词(machine/structure/item…)+代词专用反查(He/is→他/是)，模板译文里占位符就位即成中文
 	else if(post_desc_string)
-		. += "[p_They()] [p_are()] a [examine_descriptor(user)][post_desc_string]."
+		. += LANG("atom.82f39ea0", list(p_They(), p_are(), lang_reverse_text(examine_descriptor(user)), post_desc_string)) // NOVA EDIT - i18n: 反查描述词(machine/structure/item…)，词进 ui.json
 
 	if(reagents)
 		var/user_sees_reagents = user.can_see_reagents()
@@ -37,20 +50,20 @@
 		if(!(reagent_sigreturn & STOP_GENERIC_REAGENT_EXAMINE))
 			if(reagents.flags & TRANSPARENT)
 				if(reagents.total_volume)
-					. += "It contains <b>[reagents.total_volume]</b> units of various reagents[user_sees_reagents ? ":" : "."]"
+					. += LANG("atom.e9f1f44b", list(reagents.total_volume, user_sees_reagents ? ":" : "."))
 					if(user_sees_reagents || (reagent_sigreturn & ALLOW_GENERIC_REAGENT_EXAMINE)) //Show each individual reagent for detailed examination
 						for(var/datum/reagent/current_reagent as anything in reagents.reagent_list)
 							. += "&bull; [round(current_reagent.volume, CHEMICAL_VOLUME_ROUNDING)] units of [current_reagent.name]"
 						if(reagents.is_reacting)
-							. += span_warning("It is currently reacting!")
-						. += span_notice("The solution's pH is [round(reagents.ph, 0.01)] and has a temperature of [reagents.chem_temp]K.")
+							. += span_warning(LANG("atom.b103a790", null))
+						. += span_notice(LANG("atom.e0cf0e9e", list(round(reagents.ph, 0.01), reagents.chem_temp)))
 				else
-					. += "It contains:<br>Nothing."
+					. += LANG("atom.252461f2", null)
 			else if(reagents.flags & AMOUNT_VISIBLE)
 				if(reagents.total_volume)
-					. += span_notice("It has [reagents.total_volume] unit\s left.")
+					. += span_notice(LANG("atom.5600f9ef", list(reagents.total_volume)))
 				else
-					. += span_danger("It's empty.")
+					. += span_danger(LANG("atom.552a4105", null))
 
 		if(HAS_TRAIT(user, TRAIT_KEEN_NOSE))
 			var/sniff_text = get_sniff_examine(user)
@@ -135,8 +148,15 @@
 	var/mats_list = list()
 	for(var/custom_material in custom_materials)
 		var/datum/material/current_material = SSmaterials.get_material(custom_material)
-		mats_list += span_tooltip("It is made out of [current_material.name].", current_material.name)
-	. += "made of [english_list(mats_list)]"
+		var/mat_name = lang_material(current_material.name) // NOVA EDIT - i18n: 材料名专用反查（零碰撞，按材料义翻；单词材料全局会按错义译）
+		mats_list += span_tooltip(LANG("atom.made_out_of_tooltip", list(mat_name)), mat_name) // NOVA EDIT - i18n: tooltip 文本本地化。ORIGINAL: span_tooltip("It is made out of [mat_name].", mat_name)
+	// NOVA EDIT CHANGE - i18n: 材料列表连接词中文用顿号（"铁 and 玻璃" → "铁、玻璃"）。ORIGINAL: . += LANG("atom.18275935", list(english_list(mats_list)))
+	var/mat_and = " and "
+	var/mat_comma = ", "
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		mat_and = "、"
+		mat_comma = "、"
+	. += LANG("atom.18275935", list(english_list(mats_list, and_text = mat_and, comma_text = mat_comma)))
 
 /**
  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_WINDOW (default 1 second)
@@ -182,6 +202,14 @@
 	var/list/override = list(article, null, "<em>[get_visible_name()]</em>")
 	SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override)
 
+	// NOVA EDIT ADDITION START - i18n: 中文无冠词。丢弃 article 槽与 \a 前缀，只留 before + 名字
+	// （examine 名里的「a/an/the」是 \a 宏由引擎渲染、非 LANG 模板，故在此源头去掉；名字本身另由反查翻译）。
+	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		override[EXAMINE_POSITION_ARTICLE] = null
+		override -= null
+		return jointext(override, " ")
+	// NOVA EDIT ADDITION END
+
 	if(!isnull(override[EXAMINE_POSITION_ARTICLE]))
 		override -= null // IF there is no "before", don't try to join it
 		return jointext(override, " ")
@@ -209,7 +237,8 @@
  */
 /atom/proc/examine_title(mob/user, thats = FALSE)
 	var/examine_icon = get_examine_icon(user)
-	return "[examine_icon ? "[examine_icon] " : ""][thats ? "[examine_thats] ":""]<em>[get_examine_name(user)]</em>"
+	// NOVA EDIT CHANGE - ORIGINAL: [thats ? "[examine_thats] ":""] - i18n: 反查 "That's"/"This is" 前缀（仅这两个值，全服 locale≠en 时本地化；examine_thats 是 var 初始化、codemod 不改，故在用例处反查）
+	return "[examine_icon ? "[examine_icon] " : ""][thats ? "[lang_reverse_text(examine_thats)] ":""]<em>[get_examine_name(user)]</em>"
 
 /**
  * Returns an extended list of examine strings for any contained ID cards.

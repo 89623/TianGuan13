@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MAX_BLOOD_LEVEL 100
 
 /obj/item/soulscythe
@@ -52,7 +53,7 @@
 
 /obj/item/soulscythe/attack_hand(mob/user, list/modifiers)
 	if(soul.ckey && !soul.faction_check_atom(user))
-		to_chat(user, span_warning("You can't pick up [src]!"))
+		to_chat(user, span_warning(LANG("obj.1f259ab7", list(src))))
 		return
 	return ..()
 
@@ -70,10 +71,10 @@
 	if(using || soul.ckey || soul.stat)
 		return
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		balloon_alert(user, "you can't awaken the scythe!")
+		balloon_alert(user, LANG("obj.25323f60", null))
 		return
 	using = TRUE
-	balloon_alert(user, "you hold the scythe up...")
+	balloon_alert(user, LANG("obj.65708d48", null))
 	ADD_TRAIT(src, TRAIT_NODROP, type)
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		check_jobban = ROLE_PAI,
@@ -89,7 +90,7 @@
 /// Ghost poll has concluded and a candidate has been chosen.
 /obj/item/soulscythe/proc/on_poll_concluded(mob/living/master, mob/dead/observer/ghost)
 	if(isnull(ghost))
-		balloon_alert(master, "the scythe is dormant!")
+		balloon_alert(master, LANG("obj.cfdbaddb", null))
 		REMOVE_TRAIT(src, TRAIT_NODROP, type)
 		using = FALSE
 		return
@@ -98,7 +99,7 @@
 	soul.copy_languages(master, LANGUAGE_MASTER) //Make sure the sword can understand and communicate with the master.
 	soul.set_allies(list("[REF(master)]"))
 	soul.set_faction(null)
-	balloon_alert(master, "the scythe glows")
+	balloon_alert(master, LANG("obj.f12d7009", null))
 	add_overlay("soulscythe_gem")
 	density = TRUE
 	if(!ismob(loc))
@@ -111,7 +112,7 @@
 	if(!COOLDOWN_FINISHED(src, move_cooldown) || charging)
 		return
 	if(!isturf(loc))
-		balloon_alert(user, "resist out!")
+		balloon_alert(user, LANG("obj.22f4a19f", null))
 		COOLDOWN_START(src, move_cooldown, 1 SECONDS)
 		return
 	if(!use_blood(1, FALSE))
@@ -142,7 +143,7 @@
 /obj/item/soulscythe/proc/use_blood(amount = 0, message = TRUE)
 	if(amount > soul.get_blood_volume())
 		if(message)
-			to_chat(soul, span_warning("Not enough blood!"))
+			to_chat(soul, span_warning(LANG("obj.1b05481c", null)))
 		return FALSE
 	soul.adjust_blood_volume(-amount)
 	return TRUE
@@ -160,11 +161,11 @@
 /obj/item/soulscythe/proc/break_out()
 	if(!use_blood(10))
 		return
-	balloon_alert(soul, "you resist...")
+	balloon_alert(soul, LANG("obj.291a0a90", null))
 	if(!do_after(soul, 5 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
-		balloon_alert(soul, "interrupted!")
+		balloon_alert(soul, LANG("obj.c67b5d27", null))
 		return
-	balloon_alert(soul, "you break out")
+	balloon_alert(soul, LANG("obj.621103c6", null))
 	if(ismob(loc))
 		var/mob/holder = loc
 		holder.temporarilyRemoveItemFromInventory(src)
@@ -200,7 +201,7 @@
 	projectile.aim_projectile(attacked_atom, src)
 	projectile.firer = src
 	projectile.fire(null, attacked_atom)
-	visible_message(span_danger("[src] fires at [attacked_atom]!"), span_notice("You fire at [attacked_atom]!"))
+	visible_message(span_danger(LANG("obj.38108b4a", list(src, attacked_atom))), span_notice(LANG("obj.204ecd31", list(attacked_atom))))
 	playsound(src, 'sound/effects/magic/fireball.ogg', 50, TRUE)
 
 /obj/item/soulscythe/proc/slash_target(atom/attacked_atom)
@@ -209,7 +210,7 @@
 		if(attacked_mob.stat != DEAD)
 			give_blood(15)
 		attacked_mob.apply_damage(damage = force * (ismining(attacked_mob) ? 2 : 1), sharpness = SHARP_EDGED, exposed_wound_bonus = 5)
-		to_chat(attacked_mob, span_userdanger("You're slashed by [src]!"))
+		to_chat(attacked_mob, span_userdanger(LANG("obj.927a784e", list(src))))
 	else if((ismachinery(attacked_atom) || isstructure(attacked_atom)) && use_blood(5))
 		var/obj/attacked_obj = attacked_atom
 		attacked_obj.take_damage(force, BRUTE, MELEE, FALSE)
@@ -219,7 +220,7 @@
 	animate(src)
 	SpinAnimation(5)
 	addtimer(CALLBACK(src, PROC_REF(reset_spin)), 1 SECONDS)
-	visible_message(span_danger("[src] slashes [attacked_atom]!"), span_notice("You slash [attacked_atom]!"))
+	visible_message(span_danger(LANG("obj.483130ee", list(src, attacked_atom))), span_notice(LANG("obj.dea4f2d4", list(attacked_atom))))
 	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE)
 	do_attack_animation(attacked_atom, ATTACK_EFFECT_SLASH)
 
@@ -229,12 +230,12 @@
 	COOLDOWN_START(src, attack_cooldown, 5 SECONDS)
 	animate(src)
 	charging = TRUE
-	visible_message(span_danger("[src] starts charging..."))
-	balloon_alert(soul, "you start charging...")
+	visible_message(span_danger(LANG("obj.f9789fc1", list(src))))
+	balloon_alert(soul, LANG("obj.9dc8c02a", null))
 	if(!do_after(soul, 2 SECONDS, target = src, timed_action_flags = IGNORE_TARGET_LOC_CHANGE))
-		balloon_alert(soul, "interrupted!")
+		balloon_alert(soul, LANG("obj.c67b5d27", null))
 		return
-	visible_message(span_danger("[src] charges at [attacked_atom]!"), span_notice("You charge at [attacked_atom]!"))
+	visible_message(span_danger(LANG("obj.12832115", list(src, attacked_atom))), span_notice(LANG("obj.9c89365b", list(attacked_atom))))
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	playsound(src, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE)
 	SpinAnimation(1)

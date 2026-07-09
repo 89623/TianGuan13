@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/megaphone
 	name = "megaphone"
 	desc = "A device used to project your voice. Loudly."
@@ -12,9 +13,9 @@
 	var/list/voicespan = list(SPAN_COMMAND)
 
 /obj/item/megaphone/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is uttering [user.p_their()] last words into \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.4bdcdf88", list(user, user.p_their(), src, user.p_theyre()))))
 	spamcheck = 0//so they dont have to worry about recharging
-	user.say("AAAAAAAAAAAARGHHHHH", forced="megaphone suicide")//he must have died while coding this
+	user.say(LANG("obj.539044cd", null), forced="megaphone suicide")//he must have died while coding this
 	return OXYLOSS
 
 /obj/item/megaphone/equipped(mob/equipper, slot)
@@ -32,7 +33,7 @@
 	if(HAS_TRAIT(user, TRAIT_SIGN_LANG) || user.get_active_held_item() != src)
 		return
 	if(spamcheck > world.time)
-		to_chat(user, span_warning("\The [src] needs to recharge!"))
+		to_chat(user, span_warning(LANG("obj.ca0e42b8", list(src))))
 	else
 		playsound(loc, 'sound/items/megaphone.ogg', 100, FALSE, TRUE)
 		speech_args[SPEECH_SPANS] |= voicespan
@@ -54,7 +55,7 @@
 /obj/item/megaphone/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	balloon_alert(user, "voice synthesizer overloaded")
+	balloon_alert(user, LANG("obj.852ad135", null))
 	obj_flags |= EMAGGED
 	voicespan = list(SPAN_REALLYBIG, "userdanger")
 	return TRUE

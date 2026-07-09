@@ -7,7 +7,7 @@
 
 /obj/item/domain_anchor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use in-hand to create a new spawn point.")
+	. += span_notice(LANG("obj.a338b768", null))
 
 /obj/item/domain_anchor/attack_self(mob/user, modifiers)
 	for(var/obj/machinery/quantum_server/server in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
@@ -22,7 +22,7 @@
 		if(aas)
 			aas.broadcast("Potential secure datastream detected. Locking on the new spawn point.", list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_FACTION))
 	new /obj/effect/landmark/bitrunning/domain_anchor(drop_location())
-	user.balloon_alert(user, "connection stabilized!")
+	user.balloon_alert(user, LANG("obj.d5a6f4a2", null))
 	qdel(src)
 
 /obj/effect/landmark/bitrunning/domain_anchor

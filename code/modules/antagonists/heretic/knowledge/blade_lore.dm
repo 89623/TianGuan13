@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/heretic_knowledge_tree_column/blade
 	route = PATH_BLADE
 	ui_bgr = "node_blade"
@@ -76,7 +77,7 @@
 	// We're officially behind them, apply effects
 	target.AdjustParalyzed(1.5 SECONDS)
 	target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
-	target.balloon_alert(source, "backstab!")
+	target.balloon_alert(source, LANG("datum.69d80133", null))
 	playsound(target, 'sound/items/weapons/guillotine.ogg', 100, TRUE)
 
 /datum/heretic_knowledge/limited_amount/starting/base_blade/create_mark(mob/living/source, mob/living/target)
@@ -84,7 +85,7 @@
 	if(istype(blade_mark))
 		var/area/to_lock_to = get_area(target)
 		blade_mark.locked_to = to_lock_to
-		to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
+		to_chat(target, span_hypnophrase(LANG("datum.c61e8b1c", list(get_area_name(to_lock_to)))))
 	return blade_mark
 
 /datum/heretic_knowledge/limited_amount/starting/base_blade/trigger_mark(mob/living/source, mob/living/target)
@@ -143,7 +144,7 @@
 
 	var/obj/item/held_item = source.get_active_held_item()
 	if(in_duelist_stance)
-		examine_list += span_warning("[source] looks unnaturally poised[held_item?.force >= 15 ? " and ready to strike out":""].")
+		examine_list += span_warning(LANG("datum.a96ce203", list(source, held_item?.force >= 15 ? " and ready to strike out":"")))
 
 /datum/heretic_knowledge/duel_stance/proc/on_wound_gain(mob/living/source, datum/wound/gained_wound, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
@@ -157,14 +158,14 @@
 	SIGNAL_HANDLER
 
 	if(in_duelist_stance && source.health > source.maxHealth * 0.5)
-		source.balloon_alert(source, "exited duelist stance")
+		source.balloon_alert(source, LANG("datum.87c2f434", null))
 		in_duelist_stance = FALSE
 		source.remove_traits(list(TRAIT_HARDLY_WOUNDED), type)
 		source.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
 		return
 
 	if(!in_duelist_stance && source.health <= source.maxHealth * 0.5)
-		source.balloon_alert(source, "entered duelist stance")
+		source.balloon_alert(source, LANG("datum.41c92ef0", null))
 		in_duelist_stance = TRUE
 		ADD_TRAIT(source, TRAIT_HARDLY_WOUNDED, type)
 		source.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)

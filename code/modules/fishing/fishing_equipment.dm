@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Multipilier to the fishing weights of anything that's not a fish nor a dud
 /// for the magnet hook.
 #define MAGNET_HOOK_BONUS_MULTIPLIER 5
@@ -317,7 +318,7 @@
 
 /obj/item/fishing_hook/stabilized/examine(mob/user)
 	. = ..()
-	. += span_notice("While fishing, you can hold the <b>Right</b> Mouse Button to move the bait down, rather than up.")
+	. += span_notice(LANG("obj.d53d0729", null))
 
 /obj/item/fishing_hook/jaws
 	name = "jawed hook"
@@ -392,17 +393,17 @@
 
 /obj/item/survivalcapsule/fishing/examine(mob/user)
 	. = ..()
-	. += span_info("[EXAMINE_HINT("Right-Click")] to change the selected fishing spot when held.")
+	. += span_info(LANG("obj.f6ccd0f5", list(EXAMINE_HINT("Right-Click"))))
 
 /obj/item/survivalcapsule/fishing/examine_more(mob/user)
 	. = ..()
-	. += span_tinynotice("A tiny print on the side reads: \"Use a cryptographic sequencer to disable safeties\".")
+	. += span_tinynotice(LANG("obj.38082fde", null))
 
 /obj/item/survivalcapsule/fishing/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	balloon_alert(user, "safeties disabled")
+	balloon_alert(user, LANG("obj.42074643", null))
 	playsound(src, SFX_SPARKS, 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
@@ -425,7 +426,7 @@
 		return
 	template_id = spot_ids_by_name[choice]
 	template = SSmapping.shelter_templates[template_id]
-	to_chat(user, span_notice("You change [src]'s selected fishing spot to [choice]."))
+	to_chat(user, span_notice(LANG("obj.d0991dbd", list(src, choice))))
 	playsound(src, 'sound/items/pen_click.ogg', 20, TRUE, -3)
 	return
 
@@ -437,15 +438,15 @@
 /obj/item/survivalcapsule/fishing/fail_feedback(status)
 	switch(status)
 		if(SHELTER_DEPLOY_BAD_AREA)
-			say("I refuse to deploy in this area.")
+			say(LANG("obj.43eeb3f4", null))
 		if(SHELTER_DEPLOY_BAD_TURFS)
-			say("The walls are too close! I need [template.width]x[template.height] area to deploy.")
+			say(LANG("obj.c099f4f1", list(template.width, template.height)))
 		if(SHELTER_DEPLOY_ANCHORED_OBJECTS)
-			say("Get these anchored objects out of the way! I need [template.width]x[template.height] area to deploy.")
+			say(LANG("obj.1c6672e6", list(template.width, template.height)))
 		if(SHELTER_DEPLOY_BANNED_OBJECTS)
-			say("Remove all cables and pipes around me in a [template.width]x[template.height] area or I won't deploy.")
+			say(LANG("obj.b92ab1a2", list(template.width, template.height)))
 		if(SHELTER_DEPLOY_OUTSIDE_MAP)
-			say("For fucks sake, deploy me somewhere less far fatched!")
+			say(LANG("obj.a6dd6129", null))
 
 /obj/item/survivalcapsule/fishing/trigger_admin_alert(mob/triggerer, turf/trigger_loc)
 	var/datum/map_template/shelter/fishing/spot = template
@@ -519,7 +520,7 @@
 	. = ..()
 
 	if(!loaded_injector)
-		. += span_info("It's currently unloaded. Insert a syringe or fish gene injector.")
+		. += span_info(LANG("obj.9ae2d6dc", null))
 		return
 	var/info =  span_info("It's currently loaded with [loaded_injector]. Use it to ")
 	if(istype(loaded_injector, /obj/item/reagent_containers/syringe))
@@ -537,13 +538,13 @@
 
 /obj/item/fish_genegun/attack_self(mob/user)
 	if(!loaded_injector)
-		balloon_alert(user, "gene-gun is empty!")
+		balloon_alert(user, LANG("obj.cfa484ac", null))
 		return
 	var/obj/item/loaded = loaded_injector
 	loaded.forceMove(drop_location()) //this will unset the loaded_injector variable
 	if(IsReachableBy(user)) //check that the user can actually reach the loaded injector (telekinesis yadda yadda)
 		user.put_in_hands(loaded)
-	balloon_alert(user, "gene-gun unloaded")
+	balloon_alert(user, LANG("obj.15ba5baf", null))
 	playsound(src, 'sound/items/weapons/gun/general/magazine_remove_full.ogg', 30, TRUE)
 
 /obj/item/fish_genegun/Exited(atom/movable/gone)
@@ -557,15 +558,15 @@
 	if(!is_syringe && !istype(item, /obj/item/fish_gene))
 		return NONE
 	if(loaded_injector)
-		to_chat(user, span_warning("[src] already has [loaded_injector] loaded in it."))
+		to_chat(user, span_warning(LANG("obj.9939d832", list(src, loaded_injector))))
 		return ITEM_INTERACT_BLOCKING
 	if(is_syringe && item.reagents.total_volume)
-		to_chat(user, span_warning("[src] cannot accept a syringe that isn't empty. Empty it first."))
+		to_chat(user, span_warning(LANG("obj.a9d79f1e", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(item, src))
-		to_chat(user, span_warning("[item] is stuck to your hands."))
+		to_chat(user, span_warning(LANG("obj.66ff57bd", list(item))))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_info("You load [item] into [src]."))
+	to_chat(user, span_info(LANG("obj.91f19664", list(item, src))))
 	loaded_injector = item
 	update_appearance(UPDATE_ICON)
 	playsound(src, 'sound/items/weapons/gun/general/magazine_insert_full.ogg', 30, TRUE)
@@ -575,39 +576,39 @@
 	if(!isfish(interacting_with))
 		return NONE
 	if(!loaded_injector)
-		balloon_alert(user, "gene-gun is empty!")
+		balloon_alert(user, LANG("obj.cfa484ac", null))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_with.flags_1 & HOLOGRAM_1)
-		to_chat(user, span_warning("[interacting_with] is incompatible with [src]"))
+		to_chat(user, span_warning(LANG("obj.e9a491f0", list(interacting_with, src))))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/fish/fish = interacting_with
 	var/is_syringe = istype(loaded_injector, /obj/item/reagent_containers/syringe)
 	if(fish.status == FISH_DEAD)
-		to_chat(user, span_warning("[src] cannot [is_syringe ? "extract traits from" : "inject traits into"] the deceased [fish.name]."))
+		to_chat(user, span_warning(LANG("obj.306288c1", list(src, is_syringe ? "extract traits from" : "inject traits into", fish.name))))
 		return ITEM_INTERACT_BLOCKING
 	if(!is_syringe)
 		var/obj/item/fish_gene/injector = loaded_injector
 		return injector.inject_into_fish(fish, user, src)
 
 	if(!length(fish.fish_traits))
-		to_chat(user, span_warning("[fish] has no traits that can be extracted from!"))
+		to_chat(user, span_warning(LANG("obj.ae292894", list(fish))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/list/choices = list()
 	for(var/datum/fish_trait/trait_type as anything in fish.fish_traits)
 		choices[trait_type::name] = trait_type
-	var/choice = tgui_input_list(user, "Choose a trait to extract", "Fish Trait Extraction", choices)
+	var/choice = tgui_input_list(user, LANG("obj.bfe509c9", null), LANG("obj.b528d59f", null), choices)
 	if(!choice || QDELETED(fish) || !user.is_holding(src) || !fish.IsReachableBy(user))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(loaded_injector, /obj/item/reagent_containers/syringe)) //The syringe was taken out
-		to_chat(user, span_warning("[src] is not loaded with an syringe to extract fish traits with."))
+		to_chat(user, span_warning(LANG("obj.3452e435", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(fish.status == FISH_DEAD)
-		to_chat(user, span_warning("[src] cannot extract traits from the deceased [fish.name]."))
+		to_chat(user, span_warning(LANG("obj.72fdf215", list(src, fish.name))))
 		return ITEM_INTERACT_BLOCKING
 	if(!(choices[choice] in fish.fish_traits))
-		to_chat(user, span_warning("[fish] doesn't seem to have the \"[choice]\" trait anymore."))
+		to_chat(user, span_warning(LANG("obj.b9dfaf6a", list(fish, choice))))
 		return ITEM_INTERACT_BLOCKING
 
 	QDEL_NULL(loaded_injector)
@@ -616,7 +617,7 @@
 	trait.remove_from_fish(fish)
 	loaded_injector = new /obj/item/fish_gene(src, trait_type)
 
-	user.visible_message(span_notice("[user] injects [fish] with [src]."), span_notice("You extract the \"[trait_type::name]\" trait into [fish]."))
+	user.visible_message(span_notice(LANG("obj.194296a7", list(user, fish, src))), span_notice(LANG("obj.c7c8534f", list(trait_type::name, fish))))
 	if(HAS_TRAIT(fish, TRAIT_FISH_GENEGUNNED))
 		fish.set_status(FISH_DEAD)
 	ADD_TRAIT(fish, TRAIT_FISH_GENEGUNNED, TRAIT_GENERIC)
@@ -654,20 +655,20 @@
 	if(!isfish(interacting_with))
 		return NONE
 	if(interacting_with.flags_1 & HOLOGRAM_1)
-		to_chat(user, span_warning("[interacting_with] is incompatible with [src]"))
+		to_chat(user, span_warning(LANG("obj.e9a491f0", list(interacting_with, src))))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/fish/fish = interacting_with
 	if(fish.status == FISH_DEAD)
-		to_chat(user, span_warning("[src] cannot inject traits into the deceased [fish.name]."))
+		to_chat(user, span_warning(LANG("obj.dbc1c3c8", list(src, fish.name))))
 		return ITEM_INTERACT_BLOCKING
 	return inject_into_fish(fish, user, src)
 
 /obj/item/fish_gene/proc/inject_into_fish(obj/item/fish/fish, mob/living/user, obj/item/tool = src)
 	var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-	if(!trait.apply_to_fish(fish))
-		to_chat(user, span_warning("You can't inject the \"[trait_type::name]\" trait into [fish]. [fish.p_they(TRUE)] either [fish.p_have()] it or [fish.p_are()] incompatible with it."))
+	if(!trait.apply_to_fish(fish, initial = FALSE))
+		to_chat(user, span_warning(LANG("obj.90110eeb", list(trait_type::name, fish, fish.p_they(TRUE), fish.p_have(), fish.p_are()))))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] injects [fish] with [tool]."), span_notice("You inject the \"[trait_type::name]\" trait into [fish]."))
+	user.visible_message(span_notice(LANG("obj.194296a7", list(user, fish, tool))), span_notice(LANG("obj.25784bc4", list(trait_type::name, fish))))
 	qdel(src)
 	if(HAS_TRAIT(fish, TRAIT_FISH_GENEGUNNED))
 		fish.set_status(FISH_DEAD)

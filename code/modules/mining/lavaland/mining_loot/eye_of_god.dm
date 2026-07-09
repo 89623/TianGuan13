@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/glasses/godeye
 	name = "eye of god"
 	desc = "A strange eye, said to have been torn from an omniscient creature that used to roam the wastes."
@@ -36,7 +37,7 @@
 	scan_ability?.Remove(user)
 
 /obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
-	to_chat(victim, span_userdanger("You experience blinding pain, as [src] burrows into your skull."))
+	to_chat(victim, span_userdanger(LANG("obj.d308ef9a", list(src))))
 	victim.emote("scream")
 	victim.flash_act()
 
@@ -56,11 +57,11 @@
 
 /datum/action/cooldown/spell/pointed/scan/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
-		owner.balloon_alert(owner, "not a valid target!")
+		owner.balloon_alert(owner, LANG("datum.c526d249", null))
 		return FALSE
 	var/mob/living/living_cast_on = cast_on
 	if(living_cast_on.stat == DEAD)
-		owner.balloon_alert(owner, "target is dead!")
+		owner.balloon_alert(owner, LANG("datum.1ed5f66b", null))
 		return FALSE
 
 	return TRUE
@@ -69,12 +70,11 @@
 	. = ..()
 
 	if(cast_on.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-		to_chat(owner, span_warning("As we apply our dissecting vision, we are abruptly cut short. \
-			They have some kind of enigmatic mental defense. It seems we've been foiled."))
+		to_chat(owner, span_warning(LANG("datum.a5e057bb", null)))
 		return
 
 	if(cast_on == owner)
-		to_chat(owner, span_warning("The last time a god stared too closely into their own reflection, they became transfixed for all of time. Do not let us become like them."))
+		to_chat(owner, span_warning(LANG("datum.e513efa0", null)))
 		return
 
 	var/mob/living/living_owner = owner
@@ -83,18 +83,18 @@
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_scanned
 
-	to_chat(living_scanned, span_warning("You briefly see a flash of [living_owner]'s face before being knocked off-balance by an unseen force!"))
+	to_chat(living_scanned, span_warning(LANG("datum.459327b8", list(living_owner))))
 	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_RED, "size" = 1))
 	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/datum, remove_filter), "scan"), 30 SECONDS)
 
 	healthscan(living_owner, living_scanned, 1, TRUE)
 
 	owner.playsound_local(get_turf(owner), 'sound/effects/magic/smoke.ogg', 50, TRUE)
-	owner.balloon_alert(owner, "[living_scanned] scanned")
+	owner.balloon_alert(owner, LANG("datum.c26f8331", list(living_scanned)))
 	addtimer(CALLBACK(src, PROC_REF(send_cooldown_end_message), cooldown_time))
 
 /datum/action/cooldown/spell/pointed/scan/proc/send_cooldown_end_message()
-	owner?.balloon_alert(owner, "scan recharged")
+	owner?.balloon_alert(owner, LANG("datum.799e704d", null))
 
 /datum/status_effect/agent_pinpointer/scan
 	duration = 15 SECONDS

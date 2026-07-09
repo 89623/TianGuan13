@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mutation/tongue_spike
 	name = "Tongue Spike"
 	desc = "Allows a creature to voluntary shoot their tongue out as a deadly weapon."
@@ -27,12 +28,12 @@
 /datum/action/cooldown/spell/tongue_spike/cast(mob/living/carbon/cast_on)
 	. = ..()
 	if(HAS_TRAIT(cast_on, TRAIT_NODISMEMBER))
-		to_chat(cast_on, span_notice("You concentrate really hard, but nothing happens."))
+		to_chat(cast_on, span_notice(LANG("datum.46d68b01", null)))
 		return
 
 	var/obj/item/organ/tongue/to_fire = locate() in cast_on.organs
 	if(!to_fire)
-		to_chat(cast_on, span_notice("You don't have a tongue to shoot!"))
+		to_chat(cast_on, span_notice(LANG("datum.97806b7a", null)))
 		return
 
 	to_fire.Remove(cast_on, special = TRUE)
@@ -69,7 +70,7 @@
 		morph_back()
 
 /obj/item/hardened_spike/proc/morph_back()
-	visible_message(span_warning("[src] cracks and twists, changing shape!"))
+	visible_message(span_warning(LANG("obj.3c8ae517", list(src))))
 	for(var/obj/tongue as anything in contents)
 		tongue.forceMove(get_turf(src))
 	qdel(src)
@@ -129,8 +130,7 @@
 	chem_action.transferred_ref = WEAKREF(victim)
 	chem_action.Grant(fired_by)
 
-	to_chat(fired_by, span_notice("Link established! Use the \"Transfer Chemicals\" ability \
-		to send your chemicals to the linked target!"))
+	to_chat(fired_by, span_notice(LANG("datum.10b17e7e", null)))
 
 /datum/embedding/tongue_spike/chem/stop_embedding()
 	. = ..()
@@ -139,7 +139,7 @@
 	if(!istype(fired_by))
 		return
 
-	to_chat(fired_by, span_warning("Link lost!"))
+	to_chat(fired_by, span_warning(LANG("datum.cc3d61bd", null)))
 	var/datum/action/send_chems/chem_action = locate() in fired_by.actions
 	qdel(chem_action)
 
@@ -170,7 +170,7 @@
 	if(!ishuman(transferred))
 		return FALSE
 
-	to_chat(transferred, span_warning("You feel a tiny prick!"))
+	to_chat(transferred, span_warning(LANG("datum.d366f84f", null)))
 	transferer.reagents.trans_to(transferred, transferer.reagents.total_volume, transferred_by = transferer)
 
 	var/obj/item/hardened_spike/chem/chem_spike = target
@@ -179,6 +179,6 @@
 	var/mob/living/carbon/spike_owner = chem_spike.get_embed()?.owner
 	// Message first because it'll shift back into a tongue right after moving
 	if (istype(spike_owner))
-		spike_owner.visible_message(span_notice("[chem_spike] falls out of [spike_owner]!"))
+		spike_owner.visible_message(span_notice(LANG("datum.64fbe43f", list(chem_spike, spike_owner))))
 	chem_spike.forceMove(get_turf(chem_spike))
 	return TRUE

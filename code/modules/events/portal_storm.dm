@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/round_event_control/portal_storm_syndicate
 	name = "Portal Storm: Syndicate Shocktroops"
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
@@ -74,7 +75,7 @@
 	set waitfor = 0
 	sound_to_playing_players('sound/effects/magic/lightning_chargeup.ogg')
 	sleep(8 SECONDS)
-	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
+	priority_announce(LANG("datum.88f27206", list(station_name())))
 	sleep(2 SECONDS)
 	sound_to_playing_players('sound/effects/magic/lightningbolt.ogg')
 

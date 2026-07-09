@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Sleeper, Medical Beam, and Syringe gun
 
 /obj/item/mecha_parts/mecha_equipment/medical
@@ -50,8 +51,8 @@
 	if(!patient_insertion_check(target, source))
 		return
 	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
-	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
-	if(!do_after(source, equip_cooldown, target, extra_checks=CALLBACK(src, PROC_REF(patient_insertion_check), target, source)))
+	chassis.visible_message(span_warning(LANG("obj.795199ec", list(chassis, target, src))))
+	if(!do_after(source, get_equip_cooldown(atomtarget), target, extra_checks=CALLBACK(src, PROC_REF(patient_insertion_check), target, source)))
 		return
 	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
 		return
@@ -59,7 +60,7 @@
 	patient = target
 	START_PROCESSING(SSobj, src)
 	to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded into [src]. Life support functions engaged.")]")
-	chassis.visible_message(span_warning("[chassis] loads [target] into [src]."))
+	chassis.visible_message(span_warning(LANG("obj.f703f7ec", list(chassis, target, src))))
 	log_message("[target] loaded. Life support functions engaged.", LOG_MECHA)
 	return ..()
 
@@ -303,13 +304,13 @@
 		return analyze_reagents(target, source)
 	//we're in syringe mode so lets do syringe stuff
 	if(!LAZYLEN(syringes))
-		to_chat(source, "[icon2html(src, source)]<span class='alert'>No syringes loaded.</span>")
+		to_chat(source, LANG("obj.d876a8f7", list(icon2html(src, source))))
 		return
 	if(reagents.total_volume <= 0)
-		to_chat(source, "[icon2html(src, source)]<span class='alert'>No available reagents to load syringe with.</span>")
+		to_chat(source, LANG("obj.74526e27", list(icon2html(src, source))))
 		return
 	if(HAS_TRAIT(source, TRAIT_PACIFISM))
-		to_chat(source, span_alert("The [src] might be lethally chambered! You don't want to risk harming anyone..."))
+		to_chat(source, span_alert(LANG("obj.02b957d7", list(src))))
 		return
 	var/obj/item/ammo_casing/syringegun/chambered = new /obj/item/ammo_casing/syringegun(src)
 	log_message("Fired [chambered] from [src] by [source], targeting [target].", LOG_MECHA)

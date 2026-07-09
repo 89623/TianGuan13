@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //These mutations change your overall "form" somehow, like size
 
 //Epilepsy gives a very small chance to have a seizure every life tick, knocking you unconscious.
@@ -17,7 +18,7 @@
 /datum/mutation/epilepsy/proc/trigger_seizure()
 	if(owner.stat != CONSCIOUS)
 		return
-	owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
+	owner.visible_message(span_danger(LANG("datum.e46c3046", list(owner))), span_userdanger(LANG("datum.1d7bf17c", null)))
 	owner.Unconscious(200 * GET_MUTATION_POWER(src))
 	owner.set_jitter(2000 SECONDS * GET_MUTATION_POWER(src)) //yes this number looks crazy but the jitter animations are amplified based on the duration.
 	owner.add_mood_event("epilepsy", /datum/mood_event/epilepsy)
@@ -128,23 +129,23 @@
 		return
 	// NOVA EDIT BEGIN
 	if(owner.dna.features["body_size"] < 1 || isteshari(owner))
-		to_chat(owner, "You feel your body try to shrink, but your organs don't! Uh oh!")
+		to_chat(owner, LANG("datum.1ce5f60c", null))
 		owner.adjust_brute_loss(25)
 		return
 	// NOVA EDIT END
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
+	owner.visible_message(span_danger(LANG("datum.15605ce8", list(owner))), span_notice(LANG("datum.1de085fd", null)))
 
 /datum/mutation/dwarfism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	// NOVA EDIT BEGIN
 	if(owner.dna.features["body_size"] < 1 || isteshari(owner))
-		to_chat(owner, "You feel relief as your organs cease to strain against your insides.")
+		to_chat(owner, LANG("datum.2b85b9f3", null))
 		return
 	// NOVA EDIT END
 	REMOVE_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
-	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
+	owner.visible_message(span_danger(LANG("datum.3664a3e0", list(owner))), span_notice(LANG("datum.b4b7a752", null)))
 
 /datum/mutation/acromegaly
 	name = "Acromegaly"
@@ -160,7 +161,7 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
-	owner.visible_message(span_danger("[owner] suddenly grows tall!"), span_notice("You feel a small strange urge to fight small men with slingshots. Or maybe play some basketball."))
+	owner.visible_message(span_danger(LANG("datum.d174cf46", list(owner))), span_notice(LANG("datum.52769c76", null)))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(head_bonk))
 	owner.regenerate_icons()
 
@@ -168,7 +169,7 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
-	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("You return to your usual height."))
+	owner.visible_message(span_danger(LANG("datum.15605ce8", list(owner))), span_notice(LANG("datum.234022bf", null)))
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(head_bonk))
 	owner.regenerate_icons()
 
@@ -178,7 +179,7 @@
 	var/atom/movable/whacked_by = (locate(/obj/machinery/door/airlock) in parent.loc) || (locate(/obj/machinery/door/firedoor) in parent.loc) || (locate(/obj/structure/mineral_door) in parent.loc)
 	if(!whacked_by || prob(100 - (8 *  GET_MUTATION_SYNCHRONIZER(src))))
 		return
-	to_chat(parent, span_danger("You hit your head on \the [whacked_by]'s header!"))
+	to_chat(parent, span_danger(LANG("datum.edd22812", list(whacked_by))))
 	var/dmg = HAS_TRAIT(parent, TRAIT_HEAD_INJURY_BLOCKED) ? rand(1,4) : rand(2,9)
 	parent.apply_damage(dmg, BRUTE, BODY_ZONE_HEAD)
 	parent.do_attack_animation(whacked_by, ATTACK_EFFECT_PUNCH)
@@ -198,26 +199,26 @@
 		return
 	// NOVA EDIT ADDITION BEGIN
 	if(owner.dna.features["body_size"] > 1)
-		to_chat(owner, "You feel your body expanding even further, but it feels like your bones are expanding too much!")
+		to_chat(owner, LANG("datum.1572cf6c", null))
 		owner.adjust_brute_loss(25) // take some DAMAGE
 		return
 	// NOVA EDIT ADDITION END
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.update_transform(1.25)
-	owner.visible_message(span_danger("[owner] suddenly grows!"), span_notice("Everything around you seems to shrink.."))
+	owner.visible_message(span_danger(LANG("datum.3664a3e0", list(owner))), span_notice(LANG("datum.b4b7a752", null)))
 
 /datum/mutation/gigantism/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	// NOVA EDIT ADDITION BEGIN
 	if(owner.dna.features["body_size"] > 1)
-		to_chat(owner, "You feel relief as your bones cease their growth spurt.")
+		to_chat(owner, LANG("datum.49655974", null))
 	if(!HAS_TRAIT_FROM(owner, TRAIT_GIANT, GENETIC_MUTATION)) // Don't shrink if we didn't grow in the first place.
 		return
 	// NOVA EDIT ADDITION END
 	REMOVE_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.update_transform(0.8)
-	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
+	owner.visible_message(span_danger(LANG("datum.15605ce8", list(owner))), span_notice(LANG("datum.1de085fd", null)))
 
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/clumsy
@@ -423,12 +424,12 @@
 		span_warning("[owner] does a jump to the left, a step to the right, and warps out of reality."),
 		span_warning("[owner]'s torso starts folding inside out until it vanishes from reality, taking [owner] with it."),
 		span_warning("One moment, you see [owner]. The next, [owner] is gone."))
-		owner.visible_message(warpmessage, span_userdanger("You feel a wave of nausea as you fall through reality!"))
+		owner.visible_message(warpmessage, span_userdanger(LANG("datum.dda35d7a", null)))
 		var/warpdistance = rand(10, 15) * GET_MUTATION_POWER(src)
 		do_teleport(owner, get_turf(owner), warpdistance, channel = TELEPORT_CHANNEL_FREE)
 		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * (warpchance * warpdistance))
 		warpchance = 0
-		owner.visible_message(span_danger("[owner] appears out of nowhere!"))
+		owner.visible_message(span_danger(LANG("datum.7f06e532", list(owner))))
 	else
 		warpchance += 0.0625 * seconds_per_tick / GET_MUTATION_ENERGY(src)
 
@@ -446,11 +447,11 @@
 /datum/mutation/acidflesh/on_life(seconds_per_tick)
 	if(SPT_PROB(13, seconds_per_tick))
 		if(COOLDOWN_FINISHED(src, msgcooldown))
-			to_chat(owner, span_danger("Your acid flesh bubbles..."))
+			to_chat(owner, span_danger(LANG("datum.8175f6e1", null)))
 			COOLDOWN_START(src, msgcooldown, 20 SECONDS)
 		if(prob(15))
 			owner.acid_act(rand(30, 50), 10)
-			owner.visible_message(span_warning("[owner]'s skin bubbles and pops."), span_userdanger("Your bubbling flesh pops! It burns!"))
+			owner.visible_message(span_warning(LANG("datum.a33e96e8", list(owner))), span_userdanger(LANG("datum.e989a0bc", null)))
 			playsound(owner,'sound/items/weapons/sear.ogg', 50, TRUE)
 
 /datum/mutation/spastic
@@ -502,7 +503,7 @@
 		return
 	if(owner.buckled || owner.body_position == LYING_DOWN || HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
 		return //remove the 'edge' cases
-	to_chat(owner, span_danger("You trip over your own feet."))
+	to_chat(owner, span_danger(LANG("datum.0b2924b8", null)))
 	owner.Knockdown(30)
 
 /datum/mutation/martyrdom
@@ -575,7 +576,7 @@
 
 	var/obj/item/bodypart/head/head = owner.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
-		owner.visible_message(span_warning("[owner]'s head splatters with a sickening crunch!"), ignored_mobs = list(owner))
+		owner.visible_message(span_warning(LANG("datum.b4fa934e", list(owner))), ignored_mobs = list(owner))
 		new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 		head.drop_organs()
 		head.dismember(dam_type = BRUTE, silent = TRUE)
@@ -600,7 +601,7 @@
 
 	owner.dna.species.regenerate_organs(owner, replace_current = FALSE, excluded_zones = list(BODY_ZONE_CHEST)) //replace_current needs to be FALSE to prevent weird adding and removing mutation healing
 	owner.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD) //and this to DISCOURAGE organ farming, or at least not make it free.
-	owner.visible_message(span_warning("[owner]'s head returns with a sickening crunch!"), span_warning("Your head regrows with a sickening crack! Ouch."))
+	owner.visible_message(span_warning(LANG("datum.7d5bb6ee", list(owner))), span_warning(LANG("datum.0e478973", null)))
 	new /obj/effect/gibspawner/generic(get_turf(owner), owner)
 
 /datum/mutation/headless/proc/abort_attachment(datum/source, obj/item/bodypart/new_limb, special) //you aren't getting your head back

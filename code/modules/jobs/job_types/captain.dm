@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/job/captain
 	title = JOB_CAPTAIN
 	description = "Be responsible for the station, manage your Heads of Staff, \
@@ -56,7 +57,7 @@
 
 /datum/job/captain/get_radio_information()
 	. = ..()
-	. += "\nYou have access to all radio channels, but they are not automatically tuned. Check your radio for more information."
+	. += LANG("datum.730b5be8", null)
 
 /datum/outfit/job/captain
 	name = "Captain"
