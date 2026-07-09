@@ -812,6 +812,10 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	. = player_age
 
 /client/proc/findJoinDate()
+	// NOVA EDIT ADDITION START - BYOND_ACCOUNT_AGE_CHECK - allow operators to avoid external member page lookups
+	if(CONFIG_GET(flag/disable_byond_account_age_check))
+		return
+	// NOVA EDIT ADDITION END
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
 	if(!http)
 		log_world("Failed to connect to byond member page to age check [ckey]")

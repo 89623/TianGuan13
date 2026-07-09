@@ -74,6 +74,10 @@ ENABLE_LOCALHOST_RANK
 ## Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
 #USE_ACCOUNT_AGE_FOR_JOBS
 
+## Uncomment this to stop fetching BYOND account creation dates from byond.com member pages.
+## This makes BYOND account age unknown when it is not already cached in the database.
+#DISABLE_BYOND_ACCOUNT_AGE_CHECK
+
 ## Unhash this to track player playtime in the database. Requires database to be enabled.
 #USE_EXP_TRACKING
 ## Unhash this to enable playtime requirements for head jobs.

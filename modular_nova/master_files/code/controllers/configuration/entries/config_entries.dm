@@ -33,6 +33,10 @@
 	if(.)
 		GLOB.i18n_log_misses = config_entry_value
 
+/// Stops external BYOND member page lookups for account creation dates.
+/datum/config_entry/flag/disable_byond_account_age_check
+	default = FALSE
+
 /datum/config_entry/flag/russian_text_formation
 
 // DISCORD GAME ALERT CONFIGS
