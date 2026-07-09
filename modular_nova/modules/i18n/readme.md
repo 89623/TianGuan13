@@ -44,6 +44,7 @@ locale 解析：
 - `modular_nova/modules/i18n/code/fonts.dm` + `modular_nova/modules/i18n/fonts/fusion_pixel_8px_zh_hans.ttf`（OFL-1.1，`OFL.txt`）—— **maptext 中文像素字体**：核心 maptext 字体（Grand9K Pixel 等）只含拉丁字形，汉字回退到系统字体微缩 → 模糊。`/datum/font/fusion_pixel_8px` 注册该 .ttf（产生资源引用使 BYOND 打包发给客户端），`interface/skin.dmf` 的 `.maptext`/`.context`/`.subcontext`/`.small`/`.italics` 字体族**追加它为回退**——BYOND 按字形回退：拉丁字仍走原像素字体、汉字落到它（8px=6pt 锐利，整数倍 12/18pt 仍锐利）。无需 locale 门控（英文服永不请求汉字字形=零视觉变化，仅多打包 3.4MB）。
 - `modular_nova/modules/i18n/code/template_match.dm` —— **边界模板逆匹配引擎**：目录里已翻译的插值模板（`{0}` 句式）在输出边界整句命中（AC 锚检测 → 逐字面段验证 → 捕获实参反查 → 按 zh 模板重排填充），挂在 `lang_fallback_apply` 内、字面 AC 之前；聊天/browse/状态栏/公告/maptext 全部边界共享。运行期拼接/插值的英文句子（②③类长尾）由此系统性覆盖，无需逐点改写。回归测试：`code/modules/unit_tests/~nova/i18n_template.dm`。
 - `modular_nova/modules/i18n/code/miss_log.dm` —— **运行期漏翻采集器**：config `I18N_LOG_MISSES`（默认关）+ 全服 locale≠en 时，在 `lang_fallback_apply` 出口与 `lang_reverse_phrase_tgui` miss 分支记录**经过所有翻译层后仍是英文**的多词串，去重计数写 `[log_directory]/i18n_misses.log`（首次 + 10/100/1000 次各一行）。离线聚合归类 `tools/i18n/miss-scan.mjs`（按排查规律自动分桶：已译未接通/在目录未译/目录片段/没进目录）。把「玩家截图上报漏翻」变成「日志收割」。单测：`code/modules/unit_tests/~nova/i18n_miss_log.dm`。
+	采集收满 4096 条后停止扫描，避免长局继续产生正则/分词临时分配。
 
 **构建 / 翻译工具——都在 `tools/i18n/`（**未移动**：移动需改 ~71 处构建/CI/脚本引用，风险高）：**
 - `tools/i18n/src/*.rs` —— Rust 抽取（`extract`，含通用 proc-return 句子 + 安全 verb 名）/ 改写（`rewrite`）/ verb 编译期注入（`verbs`）/ 门禁（`lint`）/ 伪 locale（`pseudo`），基于 SpacemanDMM 的 dreammaker。
