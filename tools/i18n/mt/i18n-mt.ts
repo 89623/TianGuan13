@@ -787,10 +787,12 @@ function termMismatches(
 
 /** 计算译文里术语表不一致的集合（key -> 英文源），并返回详细报告。 */
 function computeTermReport(file: string): Record<string, TermReportEntry> {
+  const allow = ONLY_KEYS ? (ONLY_KEYS[file] ?? new Set()) : null;
   const en = readCatalog(path.join(EN_DIR, file));
   const zh = readCatalog(path.join(DST_DIR, file));
   const report: Record<string, TermReportEntry> = {};
   for (const key of Object.keys(en)) {
+    if (allow && !allow.has(key)) continue;
     const zhVal = zh[key];
     const missing = termMismatches(en[key], zhVal);
     if (missing.length) {
