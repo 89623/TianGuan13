@@ -314,9 +314,9 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 		dropItemToGround(stealable)
 		visible_message(
-			span_notice("[src] wrestles [stealable] out of [victim]'s hand!"),
-			span_notice("You wrestles [stealable] out of [victim]'s hand!"),
-			span_hear("You hear the sounds of wings flapping furiously."),
+			span_notice(LANG("mob.4febbaab", list(src, stealable, victim))),
+			span_notice(LANG("mob.b95328cc", list(stealable, victim))),
+			span_hear(LANG("mob.1286748a", null)),
 		)
 		return TRUE
 

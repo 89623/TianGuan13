@@ -249,7 +249,7 @@
 			return FALSE
 
 		var/obj/structure/railing/rail = locate() in mob_turf
-		to_chat(our_guy, span_warning("As you step on [mob_turf], you lose footing and fall[rail ? " over the railing and" : ""] off the edge!"))
+		to_chat(our_guy, span_warning(LANG("datum.41ec311b", list(mob_turf, rail ? " over the railing and" : ""))))
 		our_guy.throw_at(adjacent_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
 		consume_omen()
 		return TRUE
