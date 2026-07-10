@@ -6,9 +6,9 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "smoothbore_prime0"
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore)
 	selfcharge = TRUE
-	charge_sections = 6
+	charge_sections = 3
 	shaded_charge = 1
 	var/recharge_interval = 2 SECONDS
 	var/last_recharge_time = 0

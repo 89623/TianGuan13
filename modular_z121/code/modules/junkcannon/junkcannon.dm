@@ -1,4 +1,4 @@
-/obj/item/pneumatic_cannon/junkcannon	
+/obj/item/pneumatic_cannon/junkcannon
 	name = "Junk Cannon"
 	desc = "The invention of the Clown Planet relies on a bluespace polycrystal to connect with the garbage dimension, allowing for the unlimited emission of garbage, honk!!"
 	icon = 'modular_z121/icons/obj/guns/junkcannon.dmi'
@@ -7,7 +7,7 @@
 	selfcharge = TRUE
 	//charge_type = /obj/item/trash/chips
 	//charge_amount = 100
-	maxWeightClass = 8
+	maxWeightClass = 10
 	force = 10
 	gasPerThrow = 0
 	range_multiplier = 1
@@ -15,8 +15,8 @@
 	needs_air = FALSE
 	clumsyCheck = FALSE
 	var/static/list/junk_paths = list(
-        		/obj/item/trash/chips,
-       		/obj/item/trash/candy,
+        /obj/item/trash/chips,
+    	/obj/item/trash/candy,
 		/obj/item/trash/raisins,
 		/obj/item/trash/cheesie,
 		/obj/item/trash/shrimp_chips,
