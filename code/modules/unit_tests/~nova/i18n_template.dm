@@ -43,6 +43,9 @@
 	// 幂等：已替换的中文输出再过引擎不变。
 	var/once = lang_template_apply("The Zxqv is already filled to capacity.", I18N_TEST_LOCALE)
 	TEST_ASSERT_EQUAL(lang_template_apply(once, I18N_TEST_LOCALE), once, "引擎应幂等")
+	// 人工字典的无空白 pattern 自动进独立 AC：纯串与前缀子串都不需要 DM 登记。
+	TEST_ASSERT_EQUAL(lang_fallback_apply("Loading...", "zh-Hans"), "加载中……", "无空白 fallback 应由 JSON 自动注册")
+	TEST_ASSERT_EQUAL(lang_fallback_apply("Map:Delta", "zh-Hans"), "地图:Delta", "无空白 fallback 应支持嵌入子串")
 
 	// 清理注入状态（测试 locale 的引擎缓存与字面 AC 状态一并清掉）。
 	for(var/key in test_pairs)
@@ -52,6 +55,8 @@
 	GLOB.i18n_tpl_records -= I18N_TEST_LOCALE
 	GLOB.i18n_tpl_anchor_ids -= I18N_TEST_LOCALE
 	GLOB.i18n_fallback_state -= I18N_TEST_LOCALE
+	GLOB.i18n_fallback_single_state -= I18N_TEST_LOCALE
+	GLOB.i18n_fallback_cache -= I18N_TEST_LOCALE
 	GLOB.i18n_reverse -= I18N_TEST_LOCALE
 
 #undef I18N_TEST_LOCALE

@@ -553,6 +553,10 @@ GLOBAL_LIST_INIT(i18n_autopsy_labels, list(
 /// 标识符名（P1 的多词门槛本就漏掉、但 TS 端无门槛能翻）。启动加载、运行只读。
 GLOBAL_LIST_INIT(i18n_tgui_strings, build_tgui_string_set())
 
+#define I18N_TGUI_PHRASE_CACHE_MAX 4096
+/// 跨 payload 复用精确/模板反查结果；有界且满后不淘汰，避免动态值造成持续分配。
+GLOBAL_LIST_EMPTY(i18n_tgui_phrase_cache)
+
 /proc/build_tgui_string_set()
 	var/list/result = list()
 	var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/[DEFAULT_UI_LOCALE]/tgui.json"
@@ -567,24 +571,35 @@ GLOBAL_LIST_INIT(i18n_tgui_strings, build_tgui_string_set())
 /// TGUI 负载专用反查：若该串属于 TGUI 前端目录（TS 端会翻显示），P1 跳过不动数据（保住标识符）；
 /// 否则走多词反查（datum 描述等不在前端目录的长文本）。
 /proc/lang_reverse_phrase_tgui(text)
+	if(!istext(text) || !findtext(text, " "))
+		return text
+	var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+	var/list/phrase_cache = GLOB.i18n_tgui_phrase_cache
+	var/cache_ready = !GLOB.i18n_log_misses && islist(phrase_cache) && islist(GLOB.i18n_tgui_strings) && islist(GLOB.i18n_cache[locale])
+	if(cache_ready && (text in phrase_cache))
+		return phrase_cache[text]
 	// islist 守卫：i18n_tgui_strings 是 GLOBAL_LIST_INIT，极早期（如 construct_phobia_regex 等全局变量
 	// 初始化期）调用 load_strings_file→lang_reverse_tree 时它可能尚未就绪，直接索引会 bad index 崩溃，
 	// 进而把加载的串写成 null、破坏 phobia 等早期数据。未就绪时跳过跳过集判断，走多词反查
 	// （lang_build_reverse 已加固：cache 未就绪返回空表、原样返回，不崩不污染）。
-	if(istext(text) && islist(GLOB.i18n_tgui_strings) && GLOB.i18n_tgui_strings[text])
-		return text
-	. = lang_reverse_phrase(text)
+	if(islist(GLOB.i18n_tgui_strings) && GLOB.i18n_tgui_strings[text])
+		. = text
+	else
+		. = lang_reverse_text(text)
 	// 整串精确反查未命中的多词串：很多是**运行期拼接/插值后才成形**的句子（Orion 事件 text、研究要求
 	// "Scan unique individuals with [desc]." 等经 ui_data 下发的动态串）——exact 反查够不着。补一道边界
 	// 模板逆匹配引擎：目录里已译的 {0} 模板按字面段在原串上命中、捕获实参反查后按 zh 模板填充。这样
 	// TGUI 负载里的拼接句与聊天/browse 共享同一引擎。en locale / 无锚命中时引擎走快路径原样返回（零开销）。
-	if(. == text && istext(text) && findtext(text, " "))
-		. = lang_template_apply(text, GLOB.i18n_server_locale)
+	if(. == text)
+		. = lang_template_apply(text, locale)
 		// 漏翻采集：反查 + 模板引擎都没命中的多词 TGUI 负载值（config I18N_LOG_MISSES 门控，见 miss_log.dm）。
-		if(GLOB.i18n_log_misses && . == text && GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+		if(GLOB.i18n_log_misses && . == text && locale != DEFAULT_UI_LOCALE)
 			lang_log_miss_scan(text, "tgui")
+	if(cache_ready && length(phrase_cache) < I18N_TGUI_PHRASE_CACHE_MAX)
+		phrase_cache[text] = .
 
-/// TGUI 负载里**既是显示又是 act() 回传标识符**的列表键——这些 list 的字符串元素会原样回传给
+/// TGUI 负载里必须保持原值的标识符字段/子树，以及**既是显示又是 act() 回传标识符**的列表键。
+/// 这些 list 的字符串元素会原样回传给
 /// 服务端做相等校验（tgui_alert 的 buttons 经 `act('choose',{choice:button})` 校验 `in buttons`；
 /// tgui_input_list 的 items 经 `act('choose',{entry})` 校验 `in items`）。若 P1 把它们译成中文，
 /// 前端回传中文、服务端用英文校验 → tgui_alert 直接 CRASH「non-existent button choice」、list 静默失败。
@@ -619,7 +634,7 @@ GLOBAL_LIST_INIT(i18n_payload_skip_keys, build_i18n_policy_set("payload_skip_key
 		var/key = data[i]
 		var/value = (istext(key) || ispath(key)) ? data[key] : null
 		if(!isnull(value))
-			// act 标识符回传列表（buttons/items/…）：保持英文，否则破坏回传校验（见 i18n_payload_skip_keys）。
+			// 标识符字段/子树与 act 回传列表（id/ref/icon/buttons/items/…）保持原值，并跳过无效遍历。
 			// islist 守卫：早期 load_strings_file→lang_reverse_tree 调用时该 GLOBAL_LIST_INIT 可能未就绪。
 			if(istext(key) && islist(GLOB.i18n_payload_skip_keys) && GLOB.i18n_payload_skip_keys[key])
 				continue
@@ -635,6 +650,8 @@ GLOBAL_LIST_INIT(i18n_payload_skip_keys, build_i18n_policy_set("payload_skip_key
 			else if(istext(key))
 				data[i] = lang_reverse_phrase_tgui(key)
 	return data
+
+#undef I18N_TGUI_PHRASE_CACHE_MAX
 
 /// 偏好菜单「常量数据 asset」(/datum/asset/json/preferences) 是服务器启动生成一次的静态资源，
 /// **不经 get_payload**，故 lang_reverse_tree 永远碰不到它。此 pass 专供该 asset：只反查
