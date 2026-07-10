@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(statpanels)
 	ss_flags = SS_NO_INIT
 	var/list/currentrun = list()
 	var/list/global_data
+	var/list/localized_global_data // NOVA EDIT ADDITION - i18n - one shared localization per subsystem fire
 	var/list/mc_data
 
 	///how many subsystem fires between most tab updates
@@ -76,6 +77,10 @@ SUBSYSTEM_DEF(statpanels)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
+		// NOVA EDIT ADDITION START - i18n - global_data is identical for every client; localize it once per status refresh
+		if(num_fires % status_wait == 0)
+			localized_global_data = i18n_localize_stat_list(global_data)
+		// NOVA EDIT ADDITION END
 
 		src.currentrun = GLOB.clients.Copy()
 		mc_data = null
@@ -130,7 +135,7 @@ SUBSYSTEM_DEF(statpanels)
 	// NOVA EDIT - i18n - 状态栏 AC 子串兜底：顶部 global_data + 角色 other_str 各过本地化副本
 	// （仅全服中文时；不改共享 global_data；只翻文本不动点击链接）。ORIGINAL: 直接传 global_data / status_items
 	target.stat_panel.send_message("update_stat", list(
-		"global_data" = i18n_localize_stat_list(global_data),
+		"global_data" = localized_global_data || i18n_localize_stat_list(global_data), // NOVA EDIT CHANGE - i18n - reuse the per-fire shared result
 		"other_str" = i18n_localize_stat_list(status_items),
 	))
 

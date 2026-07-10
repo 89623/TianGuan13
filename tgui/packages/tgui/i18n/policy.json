@@ -1,11 +1,16 @@
 {
 	"_comment": "i18n 标识符策略单一来源（三端共读：DM runtime.dm / TS localize.ts / Rust extract.rs）。新增一类「值兼标识符」的登记只改这里。同步：tgui-catalog.mjs sync 会把本文件复制到 tgui/packages/tgui/i18n/policy.json（前端打包需要，两份都提交）。",
-	"_payload_skip_keys": "TGUI 负载里既是显示又是 act() 回传标识符的列表键：字符串元素会原样回传服务端做相等校验（tgui_alert buttons / tgui_input_list items…）。P1 译了它们 → 前端回传中文、服务端英文校验 miss → CRASH/静默失败。",
+	"_payload_skip_keys": "TGUI 负载中必须保持原值的标识符字段或 act() 回传列表键：P1 整个跳过其值/子树，既避免回传校验失败，也避免遍历 ref/icon/path 等非显示数据。",
 	"payload_skip_keys": [
 		"buttons",
 		"items",
 		"init_value",
 		"id",
+		"ref",
+		"ckey",
+		"icon",
+		"icon_state",
+		"path",
 		"assistance_consoles",
 		"supply_consoles",
 		"information_consoles",
