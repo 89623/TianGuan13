@@ -241,7 +241,7 @@
 	if(brain_size < 1)
 		. += span_notice(LANG("obj.ddc86c08", null))
 	if(brain_size > 1)
-		. += span_notice(LANG("obj.d961631f", null))
+		. += span_notice("It is bigger than average...")
 
 /// Needed so subtypes can override examine text while still calling parent
 /obj/item/organ/brain/proc/brain_damage_examine()

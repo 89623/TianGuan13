@@ -344,7 +344,7 @@
 		return
 
 	oozy_owner.adjust_ooze_nutrition(-5)
-	to_chat(on_who, span_notice(LANG("datum.d02e73c8", null)))
+	to_chat(on_who, span_notice("You prepare to launch a mending globule. <B>Left-click to fire at a target!</B>"))
 
 /datum/action/cooldown/globules/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()

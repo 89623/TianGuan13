@@ -12,7 +12,7 @@
 	item_flags = CRUEL_IMPLEMENT
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	custom_price = PAYCHECK_COMMAND
 	sound_vary = TRUE
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
@@ -238,7 +238,7 @@
 
 	autopsy_information += "<b>Coroner's Notes:</b>" //Bottom of the page, anything past here is player-written
 
-	final_report_text = lang_localize_autopsy(final_report_text + jointext(autopsy_information, "")) // NOVA EDIT CHANGE - i18n: localize composed autopsy report labels (printed to paper, bypasses sink/P1) - ORIGINAL: final_report_text += jointext(autopsy_information, "")
+	final_report_text += jointext(autopsy_information, "")
 	autopsy_report.add_raw_text(final_report_text, advanced_html = TRUE)
 	autopsy_report.update_appearance()
 	user.put_in_hands(autopsy_report)

@@ -42,6 +42,8 @@
 
 /obj/effect/decal/cleanable/glass/Initialize(mapload)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	setDir(pick(GLOB.cardinals))
 
 /obj/effect/decal/cleanable/glass/ex_act()
@@ -78,6 +80,8 @@
 
 /obj/effect/decal/cleanable/dirt/Initialize(mapload)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	icon_state = pick("dirt-flat-0","dirt-flat-1","dirt-flat-2","dirt-flat-3")
 	var/obj/structure/broken_flooring/broken_flooring = locate(/obj/structure/broken_flooring) in loc
 	if(!isnull(broken_flooring))
@@ -141,6 +145,8 @@
 
 /obj/effect/decal/cleanable/greenglow/radioactive/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	AddComponent(
 		/datum/component/radioactive_emitter, \
 		cooldown_time = 5 SECONDS, \
@@ -230,6 +236,8 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 
 /obj/effect/decal/cleanable/vomit/nebula/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	update_appearance(UPDATE_OVERLAYS)
 	GLOB.nebula_vomits += src
 
@@ -247,6 +255,8 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 
 /obj/effect/decal/cleanable/vomit/nebula/worms/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	for (var/i in 1 to rand(2, 3))
 		new /mob/living/basic/hivelord_brood(loc)
 
@@ -256,6 +266,8 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 
 /obj/effect/decal/cleanable/vomit/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	icon_state += "-old"
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
 
@@ -291,7 +303,7 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
 	if(!isnull(oldname))
-		desc = LANG("obj.8095bd93", list(oldname))
+		desc = "The sad remains of what used to be \a [oldname]."
 	. = ..()
 
 /obj/effect/decal/cleanable/glitter
@@ -304,6 +316,8 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 
 /obj/effect/decal/cleanable/glitter/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	add_overlay(mutable_appearance('icons/effects/glitter.dmi', "glitter_sparkle[rand(1,9)]", appearance_flags = EMISSIVE_APPEARANCE_FLAGS))
 
 /obj/effect/decal/cleanable/plasma
@@ -366,6 +380,8 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 
 /obj/effect/decal/cleanable/garbage/Initialize(mapload)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 15)
 
 /obj/effect/decal/cleanable/rubble
@@ -382,6 +398,8 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 
 /obj/effect/decal/cleanable/rubble/Initialize(mapload)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	flick("rubble_bounce", src)
 	icon_state = "rubble"
 	update_appearance(UPDATE_ICON_STATE)

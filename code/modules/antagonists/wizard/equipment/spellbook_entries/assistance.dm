@@ -65,7 +65,6 @@
 	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
 	item_path = /obj/item/antag_spawner/contract
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
-	refundable = TRUE
 
 /datum/spellbook_entry/item/guardian
 	name = "Guardian Deck"
@@ -83,7 +82,6 @@
 	item_path = /obj/item/antag_spawner/slaughter_demon
 	limit = 3
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
-	refundable = TRUE
 
 /datum/spellbook_entry/item/hugbottle
 	name = "Bottle of Tickles"
@@ -98,7 +96,6 @@
 	cost = 1 //non-destructive; it's just a jape, sibling!
 	limit = 3
 	category = SPELLBOOK_CATEGORY_ASSISTANCE
-	refundable = TRUE
 
 /datum/spellbook_entry/item/vendormancer
 	name = "Scepter of Vendormancy"

@@ -41,15 +41,16 @@
 		inserted_case = null
 		update_appearance(UPDATE_ICON)
 
-/obj/item/implantpad/attackby(obj/item/implantcase/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(inserted_case || !istype(attacking_item))
-		return ..()
-	if(!user.transferItemToLoc(attacking_item, src))
-		return
-	user.balloon_alert(user, LANG("obj.c2fd0905", null))
-	inserted_case = attacking_item
+/obj/item/implantpad/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(inserted_case || !istype(tool, /obj/item/implantcase))
+		return NONE
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	user.balloon_alert(user, "case inserted")
+	inserted_case = tool
 	update_static_data_for_all_viewers()
 	update_appearance(UPDATE_ICON)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/implantpad/click_alt(mob/user)
 	remove_implant(user)

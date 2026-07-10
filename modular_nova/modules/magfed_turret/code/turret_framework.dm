@@ -201,6 +201,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plasma = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	////// the range it can scan at.
 	var/scan_range = 10
 	////// how many turrets it can have. changable incase of better ones wanted.
@@ -435,14 +436,14 @@
 	. -= span_notice("You can repair it by <b>left-clicking</b> with a combat wrench.")
 	. -= span_notice("You can fold it by <b>right-clicking</b> with a combat wrench.")
 	if(FAST_FACTION_CHECK(faction, user.get_faction(), null, null, FALSE) || has_ally(user))
-		. += span_notice(LANG("obj.39514540", list(atom_integrity, max_integrity)))
-		. += span_notice(LANG("obj.715fc85f", null))
-		. += span_notice(LANG("obj.7ddeed03", null))
-		. += span_notice(LANG("obj.dcb58e58", null))
-		. += span_notice(LANG("obj.4be347bd", null))
-		. += span_notice(LANG("obj.72eb51b4", null))
-		. += span_notice(LANG("obj.ded26699", null))
-		. += span_notice(LANG("obj.5fa00071", null))
+		. += span_notice("Turret integrity is [atom_integrity]/[max_integrity]")
+		. += span_notice("You can unlock it by <b>left-clicking</b> with an <b>id card.</b>")
+		. += span_notice("You can repair it by <b>left-clicking</b> with a <b>wrench.</b>")
+		. += span_notice("You can fold it by <b>right-clicking</b> with a <b>wrench.</b>")
+		. += span_notice("You can feed it by <b>left-clicking</b> with a <b>magazine.</b>")
+		. += span_notice("You can link it by <b>left-clicking</b> with a <b>target designator.</b>")
+		. += span_notice("You can unlink it by <b>right-clicking</b> with a <b>target designator.</b>")
+		. += span_notice("You can force it to load a cartridge by <b>right-clicking</b> with an empty hand")
 		if(quick_retract)
 			. += span_notice (LANG("obj.59acde45", null))
 		if(linkage)

@@ -88,7 +88,7 @@
 	slot_flags = initial(slot_flags)
 	worn_y_offset = initial(worn_y_offset)
 	transform = initial(transform)
-	user.visible_message(span_notice(LANG("obj.c5114452", list(user))), span_notice(LANG("obj.f86fb0d3", null)))
+	user.visible_message(span_notice("[user] unties the neckerchief."), span_notice("You untie the neckerchief."))
 	flags_inv = initial(flags_inv)
 	flags_cover = initial(flags_cover)
 	return CLICK_ACTION_SUCCESS

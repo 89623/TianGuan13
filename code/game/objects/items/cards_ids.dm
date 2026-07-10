@@ -69,6 +69,8 @@
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	item_flags = parent_type::item_flags | NO_MAT_REDEMPTION // A little clemency to the people who fumble and misclick stuff, even if it's already easy enough to destroy one.
 
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
@@ -826,7 +828,7 @@
 	if(!alt_click_can_use_id(user))
 		return NONE
 	if (LAZYLEN(registered_account.being_dumped))
-		registered_account.bank_card_talk(span_warning(LANG("obj.9dff87ac", null)), TRUE)
+		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return CLICK_ACTION_SUCCESS
 	if(registered_account.account_debt)
 		var/choice = tgui_alert(user, LANG("obj.2264b9a7", null), LANG("obj.02d6f4c5", null), list("Withdraw", "Pay Debt"))

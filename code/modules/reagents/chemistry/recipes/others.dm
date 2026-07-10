@@ -658,8 +658,10 @@
 			to_chat(maybe_monkey, span_danger(LANG("datum.c49f5c95", null)))
 		else
 			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
-			to_chat(maybe_monkey, span_danger(LANG("datum.b305e5df", null)))
-	new /mob/living/carbon/human/species/monkey(location, TRUE)
+			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
+
+	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
+		new /mob/living/carbon/human/species/monkey(location, TRUE)
 
 /datum/chemical_reaction/angry_monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/inverse/bath_salts = 10)
@@ -675,8 +677,10 @@
 			to_chat(maybe_monkey, span_danger(LANG("datum.d786bafc", null)))
 		else
 			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
-			to_chat(maybe_monkey, span_danger(LANG("datum.b305e5df", null)))
-	new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
+			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
+
+	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
+		new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
@@ -1041,7 +1045,7 @@
 	var/list/items = list()
 	for(var/obj/item/item in range(location, 3))
 		items += item
-	shuffle(items)
+	shuffle_inplace(items)
 	for(var/obj/item/item in items)
 		do_teleport(item, location, 3, no_effects=TRUE)
 		lets_not_go_crazy -= 1

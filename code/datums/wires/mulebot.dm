@@ -57,7 +57,7 @@
 		if(WIRE_POWER1, WIRE_POWER2)
 			holder.visible_message(span_notice(LANG("datum.82ffb008", list(icon2html(mule, viewers(holder))))))
 		if(WIRE_AVOIDANCE)
-			holder.visible_message(span_notice(LANG("datum.2997b6af", list(icon2html(mule, viewers(holder))))))
+			holder.visible_message(span_notice("[icon2html(mule, viewers(holder))] The external warning lights flash briefly."))
 			flick("[mule.base_icon_state]1", mule)
 		if(WIRE_LOADCHECK)
 			holder.visible_message(span_notice(LANG("datum.e6ba3e51", list(icon2html(mule, viewers(holder))))))

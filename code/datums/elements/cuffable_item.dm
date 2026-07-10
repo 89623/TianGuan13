@@ -57,7 +57,7 @@
 			return
 
 	if(!user.get_inactive_hand())
-		to_chat(user, span_warning(LANG("datum.586de32e", list(source))))
+		to_chat(user, span_warning("You don't have another hand to cuff [source] to!"))
 		return
 
 	if(cuffs.handcuffs_clumsiness_check(user))
@@ -66,7 +66,7 @@
 	if(SEND_SIGNAL(source, COMSIG_ITEM_PRE_CUFFED_TO_MOB, user, cuffs) & BLOCK_ITEM_CUFF)
 		return
 
-	source.balloon_alert(user, LANG("datum.0640e813", null))
+	source.balloon_alert(user, "cuffing item...")
 	playsound(source, cuffs.cuffsound, 30, TRUE, -2)
 	if(!do_after(user, cuffs.get_handcuff_time(user), source))
 		return

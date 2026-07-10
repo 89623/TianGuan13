@@ -47,7 +47,7 @@
 	if (growth_progress < RAPTOR_EGG_GROWTH_PROGRESS || islava(loc))
 		return
 
-	visible_message(span_notice(LANG("obj.ad60dd61", list(src))))
-	new /mob/living/basic/raptor(loc, child_color, inherited_stats)
+	visible_message(span_notice("[src] hatches with a quiet cracking sound."))
+	new /mob/living/basic/raptor/baby(loc, child_color, inherited_stats)
 	inherited_stats = null
 	qdel(src)

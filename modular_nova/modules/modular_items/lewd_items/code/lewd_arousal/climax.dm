@@ -147,11 +147,11 @@
 					var/list/target_buttons = list()
 
 					if(!target_human.wear_mask)
-						target_buttons += "mouth"
+						target_buttons += CLIMAX_TARGET_MOUTH
 					if(target_human.has_vagina(REQUIRE_GENITAL_EXPOSED))
 						target_buttons += ORGAN_SLOT_VAGINA
 					if(target_human.has_anus(REQUIRE_GENITAL_EXPOSED))
-						target_buttons += "asshole"
+						target_buttons += CLIMAX_TARGET_ASSHOLE
 					if(target_human.has_penis(REQUIRE_GENITAL_EXPOSED))
 						var/obj/item/organ/genital/penis/other_penis = target_human.get_organ_slot(ORGAN_SLOT_PENIS)
 						if(other_penis.sheath != SPRITE_ACCESSORY_NONE)
@@ -169,9 +169,10 @@
 						visible_message(span_userlove(LANG("mob.82a775d2", list(src, target_human))), \
 							span_userlove(LANG("mob.967166ce", list(target_human))), pref_to_check = /datum/preference/toggle/erp)
 					else
-						visible_message(span_userlove(LANG("mob.98f8dc62", list(src, self_their, target_human, climax_into_choice, target_human_them))), \
-							span_userlove(LANG("mob.8cccffb8", list(target_human, climax_into_choice, target_human_them))), pref_to_check = /datum/preference/toggle/erp)
-						to_chat(target_human, span_userlove(LANG("mob.a85881eb", list(climax_into_choice, src, self_their))))
+						visible_message(span_userlove("[src] hilts [self_their] cock into [target_human]'s [climax_into_choice], shooting cum into [target_human_them]!"), \
+							span_userlove("You hilt your cock into [target_human]'s [climax_into_choice], shooting cum into [target_human_them]!"), pref_to_check = /datum/preference/toggle/erp)
+						to_chat(target_human, span_userlove("Your [climax_into_choice] fills with warm cum as [src] shoots [self_their] load into it."))
+						try_knot(target_human, climax_into_choice)
 
 			var/obj/item/organ/genital/testicles/testicles = get_organ_slot(ORGAN_SLOT_TESTICLES)
 			testicles.transfer_internal_fluid(null, testicles.internal_fluid_count * 0.6) // yep. we are sending semen to nullspace

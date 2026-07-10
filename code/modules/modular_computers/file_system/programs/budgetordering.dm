@@ -304,7 +304,7 @@
 					if(computer.stored_paper <= 1)
 						computer.say(LANG("datum.61d6b734", null))
 			else
-				computer.say(LANG("datum.65148df3", null))
+				computer.say("Requisition cannot be printed, paper storage is empty. Please insert more paper!")
 			if((requestonly && !self_paid) || !(computer.stored_id?.GetID()))
 				SSshuttle.request_list += SO
 			else

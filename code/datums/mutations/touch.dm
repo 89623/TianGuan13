@@ -142,7 +142,7 @@
 		return .
 	var/obj/item/bodypart/transfer_limb = cast_on.get_active_hand()
 	if(!IS_ORGANIC_LIMB(transfer_limb))
-		to_chat(cast_on, span_notice(LANG("datum.a7698fa5", null)))
+		to_chat(cast_on, span_notice("You fail to channel your mending powers through your inorganic hand."))
 		return FALSE
 
 	return TRUE
@@ -354,9 +354,9 @@
 		mendicant.adjust_tox_loss((blood_received * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 		to_chat(mendicant, span_notice(LANG("datum.c3882566", null)))
 	else
-		to_chat(mendicant, span_notice(LANG("datum.ba324022", null)))
+		to_chat(mendicant, span_notice("Your veins swell!"))
 	if(!.)
-		mendicant.balloon_alert(hurtguy, LANG("datum.4a94f48d", null))
+		mendicant.balloon_alert(hurtguy, "no damaged organic limbs!")
 
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(mob/living/carbon/mendicant, mob/living/hurtguy)

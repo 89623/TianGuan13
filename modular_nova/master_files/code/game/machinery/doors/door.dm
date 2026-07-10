@@ -24,7 +24,7 @@
 	. = ..()
 
 	if(!hasPower())
-		to_chat(user, span_warning(LANG("obj.12e1e022", null)))
+		to_chat(user, span_warning("This door isn't powered."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	src.balloon_alert(user, LANG("obj.5239bd46", null))

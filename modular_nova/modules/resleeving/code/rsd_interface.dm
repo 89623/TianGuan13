@@ -6,6 +6,7 @@
 	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /// Attempts to use the item on the target brain.
 /obj/item/rsd_interface/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -19,6 +20,7 @@
 	user.visible_message(span_notice(LANG("obj.39467e1b", list(user, interacting_with, src))), span_notice(LANG("obj.0fa829c7", list(interacting_with))))
 	interacting_with.AddElement(/datum/element/rsd_interface)
 	playsound(interacting_with.loc, 'sound/items/weapons/circsawhit.ogg', 50, vary = TRUE)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -34,7 +36,7 @@
 /// Adds text to the examine text of the parent item, explaining that the item can be used to enable the use of NIFSoft HUDs
 /datum/element/rsd_interface/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
-	examine_text += span_cyan_nova(LANG("datum.d8ce2db0", list(source)))
+	examine_text += span_cyan_nova("Souls can be transferred to [source], assuming it is inert.")
 
 /datum/element/rsd_interface/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_ATOM_EXAMINE)

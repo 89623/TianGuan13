@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/verb/pray(message as text)
 	set name = VERB_PRAY
 
@@ -47,7 +46,7 @@
 	for(var/client/C in GLOB.admins)
 		if(get_chat_toggles(C) & CHAT_PRAYER)
 			to_chat(C, message, type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
-	to_chat(src, span_info(LANG("mob.d514f1cf", list(msg_tmp))), confidential = TRUE)
+	to_chat(src, span_info("You pray to the gods: \"[msg_tmp]\""), confidential = TRUE)
 
 	BLACKBOX_LOG_ADMIN_VERB("Prayer")
 

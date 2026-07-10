@@ -72,7 +72,7 @@
 	if(we_ate_heart == previous_heart)
 		return
 	if (!HAS_TRAIT(we_ate_heart, TRAIT_ORGAN_USED_BY_PLAYER))
-		to_chat(eater, span_warning(LANG("datum.f0de33c4", null)))
+		to_chat(eater, span_warning("This heart is utterly lifeless, you won't receive any boons from consuming it!"))
 		return
 	bites_taken = 0
 

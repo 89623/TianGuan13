@@ -74,23 +74,6 @@
 	deselect_module(module_num)
 	playsound_local(src, SFX_RUSTLE, 40, TRUE)
 
-/mob/living/silicon/robot/update_held_items()
-	. = ..()
-	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
-		return
-
-	var/turf/our_turf = get_turf(src)
-	for (var/held_index in 1 to length(held_items))
-		var/obj/item/held = held_items[held_index]
-		if (!held)
-			continue
-		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
-		var/atom/movable/screen/robot/module_slot/slot = hud_used.screen_objects[HUD_KEY_CYBORG_MODULE(held_index)]
-		if (!slot) //??
-			continue
-		held.screen_loc = slot.screen_loc
-		client.screen |= held
-
 /mob/living/silicon/robot/put_in_hand_check(obj/item/item_equipping)
 	return (item_equipping in model.modules)
 
@@ -144,7 +127,7 @@
 			audible_message(span_warning(LANG("mob.1ebf612c", list(src, module_num))))
 			to_chat(src, span_userdanger(LANG("mob.34e8ceeb", list(module_num))))
 
-	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
+	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_HAND_SLOT(module_num)]
 	if(module)
 		module.icon_state = "[module.base_icon_state] +b"
 	return TRUE
@@ -188,8 +171,8 @@
 
 			disabled_modules &= ~BORG_MODULE_THREE_DISABLED
 
-	to_chat(src, span_notice(LANG("mob.a6e982e5", list(module_num))))
-	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
+	to_chat(src, span_notice("ERROR CLEARED: Module [module_num] back online."))
+	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_HAND_SLOT(module_num)]
 	if(module)
 		module.icon_state = module.base_icon_state
 	return TRUE
@@ -271,7 +254,7 @@
 	if(is_invalid_module_number(module_num) || !held_items[module_num]) //If the slot number is invalid, or there's nothing there, we have nothing to equip
 		return FALSE
 
-	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
+	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_HAND_SLOT(module_num)]
 	if(module && module_active != held_items[module_num])
 		module.icon_state = "[module.base_icon_state] +a"
 	module_active = held_items[module_num]
@@ -283,7 +266,7 @@
  * * module_num - the slot number being de-selected
  */
 /mob/living/silicon/robot/proc/deselect_module(module_num)
-	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_CYBORG_MODULE(module_num)]
+	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_HAND_SLOT(module_num)]
 	if(module)
 		module.icon_state = module.base_icon_state
 	module_active = null

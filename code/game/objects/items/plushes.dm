@@ -132,50 +132,54 @@
 	else
 		to_chat(user, span_notice(LANG("obj.c7a2d29c", list(src))))
 
-/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(I.get_sharpness())
-		if(!grenade)
-			if(!stuffed)
-				to_chat(user, span_warning(LANG("obj.78c08dc0", null)))
-				return
-			if(!divine)
-				user.visible_message(span_notice(LANG("obj.d9de5815", list(user, src))), span_notice(LANG("obj.58a2777d", list(src))))
-				I.play_tool_sound(src)
-				stuffed = FALSE
-			else
-				to_chat(user, span_notice(LANG("obj.e532fc33", list(src))))
-				user.adjust_drunk_effect(20, up_to = 50)
-
-				var/turf/current_location = get_turf(user)
-				var/area/current_area = current_location.loc //copied from hand tele code
-				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
-					to_chat(user, span_notice(LANG("obj.8c0817aa", null)))
-				else
-					to_chat(user, span_notice(LANG("obj.dcc84c1c", list(src))))
-				user.visible_message(span_notice(LANG("obj.f5f84947", list(user, src))), span_notice(LANG("obj.98fe2e8a", list(src))))
-				user.drop_all_held_items()
-		else
-			to_chat(user, span_notice(LANG("obj.183b7f6c", list(src))))
-			user.put_in_hands(grenade)
-		return
-	if(isgrenade(I))
-		if(stuffed)
-			to_chat(user, span_warning(LANG("obj.c6530043", null)))
-			return
+/obj/item/toy/plush/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.get_sharpness())
 		if(grenade)
-			to_chat(user, span_warning(LANG("obj.4d044d10", list(src))))
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		user.visible_message(span_warning(LANG("obj.3a28423b", list(user, grenade, src))), \
-		span_danger(LANG("obj.797cf963", list(I, src))))
-		grenade = I
-		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
-		return
-	if(istype(I, /obj/item/toy/plush))
-		love(I, user)
-		return
-	return ..()
+			to_chat(user, span_notice("You remove the grenade from [src]."))
+			user.put_in_hands(grenade)
+			return ITEM_INTERACT_SUCCESS
+		if(!stuffed)
+			to_chat(user, span_warning("You already murdered it!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!divine)
+			user.visible_message(span_notice("[user] tears out the stuffing from [src]!"), span_notice("You rip a bunch of the stuffing from [src]. Murderer."))
+			tool.play_tool_sound(src)
+			stuffed = FALSE
+			return ITEM_INTERACT_SUCCESS
+
+		to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
+		user.adjust_drunk_effect(20, up_to = 50)
+
+		var/turf/current_location = get_turf(user)
+		var/area/current_area = current_location.loc //copied from hand tele code
+		if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
+			to_chat(user, span_notice("There is no escape. No recall or intervention can work in this place."))
+		else
+			to_chat(user, span_notice("There is no escape. Although recall or intervention can work in this place, attempting to flee from [src]'s immense power would be futile."))
+		user.visible_message(span_notice("[user] lays down their weapons and begs for [src]'s mercy!"), span_notice("You lay down your weapons and beg for [src]'s mercy."))
+		user.drop_all_held_items()
+		return ITEM_INTERACT_SUCCESS
+
+	if(isgrenade(tool))
+		if(stuffed)
+			to_chat(user, span_warning("You need to remove some stuffing first!"))
+			return ITEM_INTERACT_BLOCKING
+		if(grenade)
+			to_chat(user, span_warning("[src] already has a grenade!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		user.visible_message(span_warning("[user] slides [grenade] into [src]."), \
+		span_danger("You slide [tool] into [src]."))
+		grenade = tool
+		user.log_message("added a grenade ([tool.name]) to [src]", LOG_GAME)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/toy/plush))
+		love(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/toy/plush/proc/love(obj/item/toy/plush/Kisser, mob/living/user) //~<3
 	var/chance = 100 //to steal a kiss, surely there's a 100% chance no-one would reject a plush such as I?

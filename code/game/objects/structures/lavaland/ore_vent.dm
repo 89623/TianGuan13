@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define ARTIFACT_ROLL_CHANCE 7
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
@@ -171,9 +170,9 @@
 			if(BOULDER_SIZE_LARGE)
 				. += span_notice(LANG("obj.e76905f2", list(span_bold("large"), ore_string)))
 	else
-		. += span_notice(LANG("obj.93755b0f", list(span_bold("Mining Scanner"))))
+		. += span_notice("This vent can be scanned with a [span_bold("Mining Scanner")].")
 	if(artifact_chance)
-		. += span_notice(LANG("obj.986e8ed5", list(span_bold("artifact boulder."))))
+		. += span_notice("This vent has a low chance to produce an [span_bold("artifact boulder.")] These may contain rare minerals or strange artifacts.")
 
 /obj/structure/ore_vent/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(is_type_in_list(held_item, scanning_equipment))

@@ -6,6 +6,7 @@
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_chem"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	/// All possible injection sizes for the implant shown in the prisoner management console.
 	var/list/implant_sizes = list(1, 5, 10)
 	/// Frequency of radio signal we've been synced to
@@ -89,7 +90,7 @@
 	reagents.trans_to(victim, injectamount, methods = INJECT)
 	to_chat(victim, span_hear(LANG("obj.53477a1b", null)))
 	if(!reagents.total_volume)
-		to_chat(victim, span_hear(LANG("obj.9018a492", null)))
+		to_chat(victim, span_hear("You hear a faint click from your chest."))
 		qdel(src)
 
 /obj/item/implant/chem/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

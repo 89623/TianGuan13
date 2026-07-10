@@ -43,7 +43,7 @@
 /obj/machinery/arc_furnace/examine(mob/user)
 	. = ..()
 	if(length(contents))
-		. += span_notice(LANG("obj.1b5808be", list(contents[1])))
+		. += span_notice("It has <b>[contents[1]]</b> sitting in it.")
 	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER)
 	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR)
 

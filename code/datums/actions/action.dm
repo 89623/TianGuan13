@@ -193,7 +193,7 @@
 				if(DEAD)
 					owner.balloon_alert(owner, LANG("datum.1bf49ad4", null))
 				else
-					owner.balloon_alert(owner, LANG("datum.dc8b5a42", null))
+					owner.balloon_alert(owner, "unconscious!")
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)

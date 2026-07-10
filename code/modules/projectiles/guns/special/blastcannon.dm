@@ -90,24 +90,25 @@
 	inhand_icon_state = icon_state
 	return ..()
 
-/obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
-	if(!istype(bomb_to_attach))
-		return ..()
-
+/obj/item/gun/blastcannon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/transfer_valve))
+		return NONE
+	var/obj/item/transfer_valve/bomb_to_attach = tool
 	if(bomb)
-		to_chat(user, span_warning(LANG("obj.6620462c", list(bomb, src))))
-		return
+		to_chat(user, span_warning("[bomb] is already attached to [src]!"))
+		return ITEM_INTERACT_BLOCKING
 	if(!bomb_to_attach.ready())
-		to_chat(user, span_warning(LANG("obj.449c772d", null)))
-		return FALSE
+		to_chat(user, span_warning("What good would an incomplete bomb do?"))
+		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(bomb_to_attach, src))
-		to_chat(user, span_warning(LANG("obj.dc050dd7", list(bomb_to_attach))))
-		return FALSE
+		to_chat(user, span_warning("[bomb_to_attach] seems to be stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_warning(LANG("obj.d9f7cc4f", list(user, bomb_to_attach, src))))
+	user.visible_message(span_warning("[user] attaches [bomb_to_attach] to [src]!"),
+						span_notice("You attach bomb_to_attach to [src]."))
 	bomb = bomb_to_attach
 	update_appearance()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/blastcannon/try_fire_gun(atom/target, mob/living/user, params)
 	if((!bomb && bombcheck) || isnull(target) || (get_dist(get_turf(target), get_turf(user)) <= 2))

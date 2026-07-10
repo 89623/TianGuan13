@@ -245,7 +245,7 @@
 		return FALSE
 	//uses HAS_TRAIT_FROM because junkies are also hopelessly addicted
 	if(HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
-		to_chat(user, span_warning(LANG("datum.1dc578a3", null)))
+		to_chat(user, span_warning("You've already adapted."))
 		return FALSE
 	return ..()
 
@@ -336,7 +336,7 @@
 	for(var/obj/item/stack/sheet/mineral/wood/could_totem in get_turf(religious_tool))
 		converted = could_totem //totemify this o great one
 		return ..()
-	to_chat(user, span_warning(LANG("datum.d53026d3", null)))
+	to_chat(user, span_warning("You need a piece of wood to do this!"))
 	return FALSE
 
 /datum/religion_rites/ritual_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -444,7 +444,7 @@
 	if(not_rigid)
 		to_chat(user, span_warning(LANG("datum.a70e585a", list(not_rigid))))
 	else
-		to_chat(user, span_warning(LANG("datum.13afa05c", null)))
+		to_chat(user, span_warning("You need at least five sheets of a rigid material to make gear!"))
 	return FALSE
 
 /datum/religion_rites/ceremonial_weapon/invoke_effect(mob/living/user, atom/movable/religious_tool)

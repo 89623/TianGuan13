@@ -53,7 +53,7 @@
 		var/turf/adjacent_target = get_step(target, dir)
 		if(adjacent_target)
 			new /obj/effect/goliath_tentacle/drag(adjacent_target, owner)
-	owner.visible_message(span_warning(LANG("datum.30a69d5b", list(owner))))
+	owner.visible_message(span_warning("[owner] unleashes tentacles from the ground around it!"))
 	StartCooldown()
 	return TRUE
 

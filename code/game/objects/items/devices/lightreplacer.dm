@@ -45,6 +45,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5)
 
 	/// How many uses does our light replacer have?
 	var/uses = 10
@@ -77,36 +78,35 @@
 	//replace lights & stuff
 	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
-/obj/item/lightreplacer/attackby(obj/item/insert, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
+/obj/item/lightreplacer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(uses >= max_uses)
-		user.balloon_alert(user, LANG("obj.e28c7f55", null))
-		return TRUE
+		user.balloon_alert(user, "already full!")
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(insert, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/glass_to_insert = insert
-		if(glass_to_insert.use(LIGHTBULB_COST))
-			add_uses(GLASS_SHEET_USES)
-			user.balloon_alert(user, LANG("obj.a245d8da", null))
-		else
-			user.balloon_alert(user, LANG("obj.291e657f", list(LIGHTBULB_COST)))
-		return TRUE
+	if(istype(tool, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/glass_to_insert = tool
+		if(!glass_to_insert.use(LIGHTBULB_COST))
+			user.balloon_alert(user, "need [LIGHTBULB_COST] glass sheets!")
+			return ITEM_INTERACT_BLOCKING
+		add_uses(GLASS_SHEET_USES)
+		user.balloon_alert(user, "glass inserted")
+		return ITEM_INTERACT_SUCCESS
 
-	if(insert.type == /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
-		if(!user.temporarilyRemoveItemFromInventory(insert))
-			user.balloon_alert(user, LANG("obj.ca570e32", null))
-			return TRUE
+	if(tool.type == /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
+		if(!user.temporarilyRemoveItemFromInventory(tool))
+			user.balloon_alert(user, "stuck in your hand!")
+			return ITEM_INTERACT_BLOCKING
 		if(!add_shard(user)) //add_shard will display a message if it created a bulb from the shard so only display message when that does not happen
-			user.balloon_alert(user, LANG("obj.033309e0", null))
-		qdel(insert)
-		return TRUE
+			user.balloon_alert(user, "shard inserted")
+		qdel(tool)
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(insert, /obj/item/light))
-		var/obj/item/light/light_to_insert = insert
+	if(istype(tool, /obj/item/light))
+		var/obj/item/light/light_to_insert = tool
 		//remove from player's hand
 		if(!user.temporarilyRemoveItemFromInventory(light_to_insert))
-			user.balloon_alert(user, LANG("obj.ca570e32", null))
-			return TRUE
+			user.balloon_alert(user, "stuck in your hand!")
+			return ITEM_INTERACT_BLOCKING
 
 		//insert light. display message only if adding a shard did not create a new bulb else the messages will conflict
 		var/display_msg = TRUE
@@ -118,14 +118,13 @@
 			user.balloon_alert(user, LANG("obj.5b35806e", null))
 		qdel(light_to_insert)
 
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(insert, /obj/item/storage))
+	if(istype(tool, /obj/item/storage))
 		var/replaced_something = FALSE
 		var/loaded = FALSE
 
-		var/obj/item/storage/storage_to_empty = insert
-		for(var/obj/item/item_to_check in storage_to_empty.contents)
+		for(var/obj/item/item_to_check in tool.contents)
 			//reached max capacity during insertion
 			if(src.uses >= max_uses)
 				break
@@ -154,14 +153,13 @@
 				replaced_something = TRUE
 
 		if(!replaced_something)
-			if(uses == max_uses)
-				user.balloon_alert(user, LANG("obj.e28c7f55", null))
-			else
-				user.balloon_alert(user, LANG("obj.fc61f703", list(storage_to_empty)))
-			return TRUE
+			user.balloon_alert(user, "nothing usable in [tool]!")
+			return ITEM_INTERACT_BLOCKING
 
-		user.balloon_alert(user, LANG("obj.0a27ae15", null))
-		return TRUE
+		user.balloon_alert(user, "lights inserted")
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/lightreplacer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -335,6 +333,7 @@
 	bluespace_toggle = TRUE
 	actions_types = list(/datum/action/item_action/lightreplacer_scan)
 	action_slots = ALL
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5)
 	COOLDOWN_DECLARE(lightreplacer_spot_cooldown)
 
 /obj/item/lightreplacer/blue/emag_act()

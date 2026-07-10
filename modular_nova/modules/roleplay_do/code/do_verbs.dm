@@ -38,7 +38,7 @@
 			log_filter("Soft IC Emote (Passed)", message, filter_result)
 
 	if(usr.client?.prefs?.muted & MUTE_IC)
-		to_chat(usr, span_boldwarning(LANG("mob.edad7622", null)))
+		to_chat(usr, span_boldwarning("You cannot send IC messages (muted)."))
 		return
 
 	var/name_stub = " (<b>[usr]</b>)"

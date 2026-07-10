@@ -64,7 +64,7 @@
 /// Attempts to create a new task and assign it to the list.
 /obj/machinery/big_manipulator/proc/create_new_task(mob/user, task_type, turf/new_turf)
 	if(length(tasks) >= interaction_point_limit)
-		balloon_alert(user, LANG("obj.b9fe7ac5", null))
+		balloon_alert(user, "task limit reached!")
 		return FALSE
 
 	var/datum/stock_part/servo/locate_servo = locate() in component_parts
@@ -255,7 +255,7 @@
 
 /obj/machinery/big_manipulator/can_be_unfasten_wrench(mob/user, silent)
 	if(on || stopping)
-		to_chat(user, span_warning(LANG("obj.a471ab80", list(src))))
+		to_chat(user, span_warning("[src] is activated!"))
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -289,6 +289,18 @@
 		SStgui.update_uis(src)
 		return ITEM_INTERACT_SUCCESS
 
+	if(isidcard(tool))
+		if(!id_lock)
+			id_lock = WEAKREF(tool)
+			balloon_alert(user, "successfully locked")
+			return ITEM_INTERACT_SUCCESS
+		if(tool != id_lock.resolve())
+			balloon_alert(user, "locked by another id")
+			return ITEM_INTERACT_BLOCKING
+		id_lock = null
+		balloon_alert(user, "successfully unlocked")
+		return ITEM_INTERACT_SUCCESS
+
 	if(!panel_open || !is_wire_tool(tool))
 		return NONE
 	wires.interact(user)
@@ -300,7 +312,7 @@
 
 /obj/machinery/big_manipulator/mouse_drop_dragged(atom/drop_point, mob/user, src_location, over_location, params)
 	if(on || stopping)
-		balloon_alert(user, LANG("obj.b4476a5d", null))
+		balloon_alert(user, "turn it off first!")
 		return
 
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker?.resolve()
@@ -318,7 +330,7 @@
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
 	if(on || stopping)
-		balloon_alert(user, LANG("obj.b4476a5d", null))
+		balloon_alert(user, "turn it off first!")
 		return
 
 	if(monkey_worker?.resolve())
@@ -349,23 +361,6 @@
 		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
 
-/obj/machinery/big_manipulator/attackby(obj/item/some_item, mob/user, params)
-	. = ..()
-	if(!isidcard(some_item))
-		return
-
-	var/obj/item/card/id/clicked_by_this_id = some_item
-
-	if(!id_lock)
-		id_lock = WEAKREF(clicked_by_this_id)
-		balloon_alert(user, LANG("obj.006da009", null))
-		return
-	var/obj/item/card/id/resolve_id = id_lock.resolve()
-	if(clicked_by_this_id != resolve_id)
-		balloon_alert(user, LANG("obj.58b9679e", null))
-		return
-	id_lock = null
-	balloon_alert(user, LANG("obj.aa10fc9d", null))
 
 /// Attaching the arm effect to the core.
 /obj/machinery/big_manipulator/proc/create_manipulator_arm()
@@ -422,7 +417,7 @@
 		return
 
 	if(stopping)
-		balloon_alert(user, LANG("obj.ba2cc928", null))
+		balloon_alert(user, "stopping in progress!")
 		return
 
 	toggle_power_state(user)

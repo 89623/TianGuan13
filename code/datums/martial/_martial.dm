@@ -433,7 +433,7 @@
 		return
 
 	switch_style(current, next)
-	to_chat(src, span_notice(LANG("mob.c1f344ba", list(current, next))))
+	to_chat(src, span_notice("You stop practicing [current] and start practicing [next]."))
 
 /// Deactivates the current martial art and activates the next one.
 /mob/living/proc/switch_style(datum/martial_art/current_martial, datum/martial_art/next_martial)

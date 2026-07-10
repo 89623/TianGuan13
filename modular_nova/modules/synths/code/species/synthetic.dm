@@ -192,7 +192,7 @@
 		return
 	emag_effect = TRUE
 	playsound(source.loc, 'sound/misc/interference.ogg', 50)
-	to_chat(source, span_warning(LANG("datum.d3bcbb5d", null)))
+	to_chat(source, span_warning("Alert: Security breach detected in central processing unit. Error Code: 540-EXO"))
 	if(source.stat != CONSCIOUS)
 		to_chat(user, span_warning(LANG("datum.69d48dc1", list(source))))
 		return

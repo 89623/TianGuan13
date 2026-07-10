@@ -55,7 +55,7 @@
 				to_chat(ui.user, span_warning(LANG("datum.5bfca82f", list(emote.name))), type = MESSAGE_TYPE_INFO)
 				return
 			SEND_SOUND(ui.user, sound(emote_sound, volume = 75))
-			to_chat(ui.user, span_warning(LANG("datum.db3d4a00", list(emote.name))), type = MESSAGE_TYPE_INFO)
+			to_chat(ui.user, span_warning("Previewed sound for [emote.name]."), type = MESSAGE_TYPE_INFO)
 
 /datum/emote_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

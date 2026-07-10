@@ -3,6 +3,7 @@
 	name = "controller assembly"
 	desc = "An assembly that controls something. It's so vaguely designed that it probably shouldn't exist."
 	icon_state = "control"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// The ID of the electronics to match to the ID of the machine being used.
 	var/id = -1
 	/// Cooldown of the controller. Updates when pressed (activate())
@@ -22,7 +23,7 @@
 /obj/item/assembly/control/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
 	if(istype(held_item, type) && copyable)
-		context[SCREENTIP_CONTEXT_LMB] = LANG("obj.ec7f1e18", null)
+		context[SCREENTIP_CONTEXT_LMB] = "Copy ID"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/assembly/control/examine(mob/user)
@@ -98,7 +99,7 @@
 	if(id != -1)
 		to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 	else
-		to_chat(user, span_notice(LANG("obj.59a589e8", null)))
+		to_chat(user, span_notice("You now must interact with a pod door to generate a unique ID."))
 
 /obj/item/assembly/control/blast_door/activate()
 	var/openclose
@@ -211,6 +212,7 @@
 	desc = "A remote controller for a floor igniter or wall sparker."
 	generically_adjustable = TRUE
 	copyable = TRUE
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/assembly/control/igniter/activate()
 	if(cooldown)

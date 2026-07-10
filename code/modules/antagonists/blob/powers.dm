@@ -112,8 +112,8 @@
 		tile = get_turf(src)
 	var/obj/structure/blob/blob = (locate(/obj/structure/blob) in tile)
 	if(!blob)
-		to_chat(src, span_warning(LANG("mob.62076d43", null)))
-		balloon_alert(src, LANG("mob.71215feb", null))
+		to_chat(src, span_warning("There is no blob here!"))
+		balloon_alert(src, "no blob here!")
 		return
 	if(!istype(blob, /obj/structure/blob/normal))
 		to_chat(src, span_warning(LANG("mob.0196f5dc", null)))
@@ -122,8 +122,8 @@
 	if(needs_node)
 		var/area/area = get_area(src)
 		if(!(area.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
-			to_chat(src, span_warning(LANG("mob.21304fd8", null)))
-			balloon_alert(src, LANG("mob.643b825e", null))
+			to_chat(src, span_warning("This type of blob must be placed on the station!"))
+			balloon_alert(src, "can't place off-station!")
 			return
 		if(nodes_required && !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, tile)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, tile)))
 			to_chat(src, span_warning(LANG("mob.06b9c7e9", null)))
@@ -153,7 +153,7 @@
 	var/obj/structure/blob/shield/shield = locate(/obj/structure/blob/shield) in tile
 	if(!shield)
 		shield = create_special(BLOB_UPGRADE_STRONG_COST, /obj/structure/blob/shield, 0, FALSE, tile)
-		shield?.balloon_alert(src, LANG("mob.8908bb9e", list(shield.name)))
+		shield?.balloon_alert(src, "upgraded to [shield.name]!")
 		return
 
 	if(istype(shield, /obj/structure/blob/shield/reflective))
@@ -176,7 +176,7 @@
 	var/turf/current_turf = get_turf(src)
 	var/obj/structure/blob/special/factory/factory = locate(/obj/structure/blob/special/factory) in current_turf
 	if(!factory)
-		to_chat(src, span_warning(LANG("mob.4941fa3c", null)))
+		to_chat(src, span_warning("You must be on a factory blob!"))
 		return
 	if(factory.blobbernaut || factory.is_creating_blobbernaut) //if it already made or making a blobbernaut, it can't do it again
 		to_chat(src, span_warning(LANG("mob.018fe9ce", null)))
@@ -230,7 +230,7 @@
 	var/obj/structure/blob/special/node/blob = locate(/obj/structure/blob/special/node) in tile
 
 	if(!blob)
-		to_chat(src, span_warning(LANG("mob.f37685ae", null)))
+		to_chat(src, span_warning("You must be on a blob node!"))
 		return
 
 	if(!blob_core)
@@ -239,7 +239,7 @@
 
 	var/area/area = get_area(tile)
 	if(isspaceturf(tile) || area && !(area.area_flags & BLOBS_ALLOWED))
-		to_chat(src, span_warning(LANG("mob.f109fc5a", null)))
+		to_chat(src, span_warning("You cannot relocate your core here!"))
 		return
 
 	if(!can_buy(BLOB_POWER_RELOCATE_COST))
@@ -257,7 +257,7 @@
 	var/obj/structure/blob/blob = locate() in tile
 
 	if(!blob)
-		to_chat(src, span_warning(LANG("mob.4fd2f19a", null)))
+		to_chat(src, span_warning("There is no blob there!"))
 		return
 
 	if(blob.point_return < 0)
@@ -285,7 +285,7 @@
 		possible_blobs += blob
 
 	if(!length(possible_blobs))
-		to_chat(src, span_warning(LANG("mob.1c43cfe9", null)))
+		to_chat(src, span_warning("There is no blob adjacent to the target tile!"))
 		return
 
 	if(!can_buy(BLOB_EXPAND_COST))
@@ -360,7 +360,7 @@
 /** Opens the reroll menu to change strains */
 /mob/eye/blob/proc/strain_reroll()
 	if (!free_strain_rerolls && blob_points < BLOB_POWER_REROLL_COST)
-		to_chat(src, span_warning(LANG("mob.8b74629f", list(BLOB_POWER_REROLL_COST))))
+		to_chat(src, span_warning("You need at least [BLOB_POWER_REROLL_COST] resources to reroll your strain again!"))
 		return
 
 	open_reroll_menu()

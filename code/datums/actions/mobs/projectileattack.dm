@@ -6,7 +6,7 @@
 	desc = "Fires a set of projectiles at a selected target."
 	cooldown_time = 1.5 SECONDS
 	/// The type of the projectile to be fired
-	var/projectile_type
+	var/obj/projectile/projectile_type
 	/// The sound played when a projectile is fired
 	var/projectile_sound
 	/// If the projectile should home in on its target
@@ -59,7 +59,7 @@
 		our_projectile.set_homing_target(target)
 	if(isnum(set_angle))
 		our_projectile.fire(set_angle)
-		return
+		return our_projectile
 	our_projectile.fire()
 	return our_projectile
 
@@ -332,7 +332,7 @@
 	var/mob/living/simple_animal/hostile/megafauna/colossus/colossus
 	if(istype(firer, /mob/living/simple_animal/hostile/megafauna/colossus))
 		colossus = firer
-		colossus.say(LANG("datum.042ea83a", null), spans = list(SPAN_COLOSSUS, SPAN_YELL))
+		colossus.say("Perish.", spans = list(SPAN_COLOSSUS, SPAN_YELL))
 
 	SLEEP_CHECK_DEATH(1.5 SECONDS, firer) //gives dumbasses in melee range a slim chance to retreat
 	var/finale_counter = 10

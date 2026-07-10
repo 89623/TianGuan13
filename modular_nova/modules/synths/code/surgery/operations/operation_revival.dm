@@ -102,7 +102,7 @@
 /// Called when revival fails
 /datum/surgery_operation/basic/revive_synth/proc/on_no_revive(mob/living/surgeon, mob/living/patient)
 	patient.emote("buzz")
-	patient.visible_message(span_warning(LANG("datum.234e35fd", list(patient.p_they()))))
+	patient.visible_message(span_warning("...[patient.p_they()] convulses, then goes offline."))
 
 /// Flavor for failure
 /datum/surgery_operation/basic/revive_synth/on_failure(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)

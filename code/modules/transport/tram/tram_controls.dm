@@ -244,11 +244,11 @@
 
 			switch(response_info)
 				if(NOT_IN_SERVICE)
-					tram.nav_beacon.say(LANG("obj.62001e6e", null))
+					tram.nav_beacon.say("The tram is not in service. Please contact the nearest engineer.")
 				if(INVALID_PLATFORM)
-					tram.nav_beacon.say(LANG("obj.7de17690", null))
+					tram.nav_beacon.say("Configuration error. Please contact the nearest engineer.")
 				if(INTERNAL_ERROR)
-					tram.nav_beacon.say(LANG("obj.335c006a", null))
+					tram.nav_beacon.say("Tram controller error. Please contact the nearest engineer or crew member with telecommunications access to reset the controller.")
 				else
 					return
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/tram_controls, 32)

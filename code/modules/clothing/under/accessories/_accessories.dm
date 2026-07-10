@@ -202,7 +202,7 @@
 		return
 
 	forceMove(source.drop_location()) //This calls remove_accessory()
-	source.visible_message(span_warning(LANG("obj.73a87d59", list(src, source))))
+	source.visible_message(span_warning("[src] falls off of [source]!"))
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS] on the uniform we're pinned to to add our overlays to the inventory icon
 /obj/item/clothing/accessory/proc/on_uniform_update(obj/item/source, list/overlays)

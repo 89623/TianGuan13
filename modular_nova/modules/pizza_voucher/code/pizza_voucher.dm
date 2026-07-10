@@ -46,7 +46,7 @@
 
 /obj/item/pizzavoucher/attack_self(mob/user)
 	. = ..()
-	user.visible_message(span_notice(LANG("obj.69f56e26", list(user, src))))
+	user.visible_message(span_notice("[user] presses a button on [src]!"))
 
 	// Build radial menu from all the pizzalikes
 	var/list/pizza_choices = list()

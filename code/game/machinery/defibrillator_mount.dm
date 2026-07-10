@@ -86,39 +86,46 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		return
 	user.put_in_hands(defib.paddles)
 
-/obj/machinery/defibrillator_mount/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/defibrillator))
+/obj/machinery/defibrillator_mount/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/defibrillator))
 		if(defib)
-			to_chat(user, span_warning(LANG("obj.f3f623c6", list(src))))
-			return
-		var/obj/item/defibrillator/new_defib = item
+			to_chat(user, span_warning("There's already a defibrillator in [src]!"))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/defibrillator/new_defib = tool
 		if(!new_defib.get_cell())
-			to_chat(user, span_warning(LANG("obj.829a8eb0", list(src))))
-			return
+			to_chat(user, span_warning("Only defibrilators containing a cell can be hooked up to [src]!"))
+			return ITEM_INTERACT_BLOCKING
 		if(HAS_TRAIT(new_defib, TRAIT_NODROP) || !user.transferItemToLoc(new_defib, src))
-			to_chat(user, span_warning(LANG("obj.1dbf8014", list(new_defib))))
-			return
-		user.visible_message(span_notice(LANG("obj.4f2c832c", list(user, new_defib, src))), \
-		span_notice(LANG("obj.a44cf35f", list(new_defib))))
+			to_chat(user, span_warning("[new_defib] is stuck to your hand!"))
+			return ITEM_INTERACT_BLOCKING
+		user.visible_message(span_notice("[user] hooks up [new_defib] to [src]!"), \
+		span_notice("You press [new_defib] into the mount, and it clicks into place."))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		// Make sure the defib is set before processing begins.
 		defib = new_defib
 		begin_processing()
 		update_appearance()
-		return
-	else if(defib && item == defib.paddles)
-		defib.paddles.snap_back()
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(!item.GetID() || (!allowed(user) && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)) //anyone can toggle the clamps in red alert!
-		to_chat(user, span_warning(LANG("obj.21748dc0", null)))
-		return
+	if(defib && tool == defib.paddles)
+		defib.paddles.snap_back()
+		return ITEM_INTERACT_SUCCESS
+
+	if(!tool.GetID())
+		return NONE
+
+	if((!allowed(user) && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)) //anyone can toggle the clamps in red alert!
+		to_chat(user, span_warning("Insufficient access."))
+		return ITEM_INTERACT_BLOCKING
+
 	if(!defib)
-		to_chat(user, span_warning(LANG("obj.e5a512fe", null)))
-		return
+		to_chat(user, span_warning("You can't engage the clamps on a defibrillator that isn't there."))
+		return ITEM_INTERACT_BLOCKING
+
 	clamps_locked = !clamps_locked
 	to_chat(user, span_notice(LANG("obj.775e623f", list(clamps_locked ? "" : "dis"))))
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/defibrillator_mount/multitool_act(mob/living/user, obj/item/multitool)
 	..()
@@ -210,7 +217,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	desc = "A frame for a defibrillator mount. Once placed, it can be removed with a wrench."
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
 	pixel_shift = 28
@@ -219,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	name = "unhooked PENLITE defibrillator mount"
 	desc = "A frame for a PENLITE defibrillator mount. Unlike the normal mount, it can passively recharge the unit inside."
 	icon_state = "penlite_mount"
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	result_path = /obj/machinery/defibrillator_mount/charging
 
 //mobile defib

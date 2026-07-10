@@ -74,29 +74,31 @@
 		user.visible_message(LANG("obj.d6a6b453", list(user, victim)), span_notice(LANG("obj.7941b911", list(victim))), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
 
-/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!bricked && istype(attacking_item, /obj/item/stack/sheet/mineral/sandstone))
-		var/obj/item/stack/sheet/mineral/sandstone/brick = attacking_item
-		balloon_alert(user, LANG("obj.120da198", null))
+/obj/item/pillow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!bricked && istype(tool, /obj/item/stack/sheet/mineral/sandstone))
+		var/obj/item/stack/sheet/mineral/sandstone/brick = tool
+		balloon_alert(user, "inserting brick...")
 		if(!do_after(user, 2 SECONDS, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!brick.use(1))
-			balloon_alert(user, LANG("obj.ee0a5208", null))
-			return
-		balloon_alert(user, LANG("obj.9c9d0693", null))
+			balloon_alert(user, "not enough bricks!")
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "bricked!")
 		become_bricked()
-		return
-	if(istype(attacking_item, /obj/item/clothing/neck/pillow_tag))
-		if(!pillow_trophy)
-			user.transferItemToLoc(attacking_item, src)
-			pillow_trophy = attacking_item
-			balloon_alert(user, LANG("obj.37337285", null))
-			update_appearance()
-			return
-		else
-			balloon_alert(user, LANG("obj.550f3414", null))
-			return
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/clothing/neck/pillow_tag))
+		if(pillow_trophy)
+			balloon_alert(user, "tag is intact.")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		pillow_trophy = tool
+		balloon_alert(user, "honor reclaimed!")
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/pillow/examine(mob/user)
 	. = ..()
@@ -173,6 +175,7 @@
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"
 	armor_type = /datum/armor/suit_pillow_suit
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	var/obj/item/pillow/unstoppably_plushed
 
 /datum/armor/suit_pillow_suit
@@ -198,6 +201,7 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/head_pillow_hood
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/head_pillow_hood
 	melee = 5

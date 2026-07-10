@@ -283,7 +283,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/datum/mind/mind = user.mind
 	if(mind && HAS_TRAIT_FROM(owner, TRAIT_HANDMADE, REF(mind)))
-		examine_list += span_green(LANG("datum.8bfff79c", list(owner)))
+		examine_list += span_green("[owner] was made by you!")
 
 	if(!(food_flags & FOOD_IN_CONTAINER))
 		switch(bitecount)

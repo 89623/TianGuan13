@@ -31,6 +31,7 @@
 	energy_drain = 20
 	range = MECHA_MELEE
 	equip_cooldown = 20
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 	/// ref to the patient loaded in the sleeper
 	var/mob/living/carbon/patient
 
@@ -51,7 +52,7 @@
 	if(!patient_insertion_check(target, source))
 		return
 	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
-	chassis.visible_message(span_warning(LANG("obj.795199ec", list(chassis, target, src))))
+	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
 	if(!do_after(source, get_equip_cooldown(atomtarget), target, extra_checks=CALLBACK(src, PROC_REF(patient_insertion_check), target, source)))
 		return
 	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
@@ -214,6 +215,7 @@
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 10
 	energy_drain = 10
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	///Lazylist of syringes that we've picked up
 	var/list/syringes
 	///List of all scanned reagents, starts with epinephrine and multiver

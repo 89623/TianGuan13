@@ -201,7 +201,7 @@
 				return ITEM_INTERACT_BLOCKING
 			var/mob/living/basic/bot/secbot/ed209/new_bot = new(drop_location())
 			new_bot.name = created_name
-			to_chat(user, span_notice(LANG("obj.8892493c", null)))
+			to_chat(user, span_notice("You complete the ED-209."))
 			qdel(src)
 			return ITEM_INTERACT_SUCCESS
 
@@ -349,7 +349,7 @@
 				return NONE
 			if(!can_finish_build(tool, user))
 				return ITEM_INTERACT_BLOCKING
-			to_chat(user, span_notice(LANG("obj.e812b96b", list(tool, src))))
+			to_chat(user, span_notice("You add the [tool] to [src]! Honk!"))
 			var/mob/living/basic/bot/secbot/honkbot/new_honkbot = new(drop_location())
 			new_honkbot.name = created_name
 			playsound(new_honkbot, 'sound/machines/ping.ogg', 50, TRUE, -1)
@@ -439,7 +439,7 @@
 			if(istype(tool, /obj/item/melee/baton/security))
 				if(!can_finish_build(tool, user))
 					return ITEM_INTERACT_BLOCKING
-				to_chat(user, span_notice(LANG("obj.5e375b19", null)))
+				to_chat(user, span_notice("You complete the Securitron! Beep boop."))
 				var/mob/living/basic/bot/secbot/new_bot = new(drop_loc)
 				new_bot.name = created_name
 				new_bot.baton_type = tool.type
@@ -484,7 +484,7 @@
 			if(!can_finish_build(tool, user))
 				return ITEM_INTERACT_BLOCKING
 
-			to_chat(user, span_notice(LANG("obj.90c8faa6", null)))
+			to_chat(user, span_notice("You complete the Securitron!...Something seems a bit wrong with it..?"))
 			var/mob/living/basic/bot/secbot/grievous/toy/new_bot = new(drop_loc)
 			new_bot.name = created_name
 			new_bot.robot_arm = robot_arm
@@ -519,7 +519,7 @@
 			if(!can_finish_build(tool, user))
 				return ITEM_INTERACT_BLOCKING
 
-			to_chat(user, span_notice(LANG("obj.90c8faa6", null)))
+			to_chat(user, span_notice("You complete the Securitron!...Something seems a bit wrong with it..?"))
 			var/mob/living/basic/bot/secbot/grievous/new_bot = new(drop_loc)
 			new_bot.name = created_name
 			new_bot.robot_arm = robot_arm
@@ -684,7 +684,7 @@
 				return NONE
 			if(!can_finish_build(tool, user))
 				return ITEM_INTERACT_BLOCKING
-			balloon_alert(user, LANG("obj.1b8f9293", null))
+			balloon_alert(user, "assembly finished")
 			var/obj/vehicle/sealed/mecha/vim/new_vim = new(drop_location())
 			new_vim.name = created_name
 			qdel(tool)
