@@ -3,27 +3,26 @@
 	/// Determines what stack is gotten out of us when welded.
 	var/mineralType = null
 
-/obj/item/stack/tile/mineral/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(get_amount() < 4)
-			to_chat(user, span_warning(LANG("obj.682d330c", null)))
-			return
-		if(!mineralType)
-			to_chat(user, span_warning(LANG("obj.59f6af92", null)))
-			stack_trace("A mineral tile of type [type] doesn't have its mineralType set.")
-			return
-		if(W.use_tool(src, user, 0, volume=40))
-			var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
-			var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.loc)
-			user.visible_message(span_notice(LANG("obj.50a33dd4", list(user, src, new_item, W))), \
-				span_notice(LANG("obj.2628de4d", list(src, new_item, W))), \
-				span_hear(LANG("obj.1aa82fa3", null)))
-			var/holding = user.is_holding(src)
-			use(4)
-			if(holding && QDELETED(src))
-				user.put_in_hands(new_item)
-	else
-		return ..()
+/obj/item/stack/tile/mineral/welder_act(mob/living/user, obj/item/tool)
+	if(get_amount() < 4)
+		to_chat(user, span_warning(LANG("obj.682d330c", null)))
+		return ITEM_INTERACT_BLOCKING
+	if(!mineralType)
+		to_chat(user, span_warning(LANG("obj.59f6af92", null)))
+		stack_trace("A mineral tile of type [type] doesn't have its mineralType set.")
+		return ITEM_INTERACT_BLOCKING
+	if(!tool.use_tool(src, user, 0, volume=40))
+		return ITEM_INTERACT_BLOCKING
+	var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+	var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.loc)
+	user.visible_message(span_notice(LANG("obj.50a33dd4", list(user, src, new_item, tool))), \
+						span_notice(LANG("obj.2628de4d", list(src, new_item, tool))), \
+						span_hear(LANG("obj.1aa82fa3", null)))
+	var/holding = user.is_holding(src)
+	use(4)
+	if(holding && QDELETED(src))
+		user.put_in_hands(new_item)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/tile/mineral/plasma
 	name = "plasma tile"

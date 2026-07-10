@@ -56,20 +56,21 @@
 	else
 		. += LANG("obj.66467605", null)
 
-/obj/structure/disposalpipe/sorting/mail/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/dest_tagger))
-		var/obj/item/dest_tagger/O = I
+/obj/structure/disposalpipe/sorting/mail/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/dest_tagger))
+		return NONE
+	var/relevant_tag = astype(tool, /obj/item/dest_tagger).currTag
 
-		if(O.currTag)// Tagger has a tag set
-			if(O.currTag in sortTypes)
-				sortTypes -= O.currTag
-				to_chat(user, span_notice(LANG("obj.7e803923", list(GLOB.TAGGERLOCATIONS[O.currTag]))))
-			else
-				sortTypes |= O.currTag
-				to_chat(user, span_notice(LANG("obj.211382a4", list(GLOB.TAGGERLOCATIONS[O.currTag]))))
-			playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
+	if(!relevant_tag)// Tagger has a tag set
+		return ITEM_INTERACT_BLOCKING
+	if(relevant_tag in sortTypes)
+		sortTypes -= relevant_tag
+		to_chat(user, span_notice(LANG("obj.7e803923", list(GLOB.TAGGERLOCATIONS[relevant_tag]))))
 	else
-		return ..()
+		sortTypes |= relevant_tag
+		to_chat(user, span_notice(LANG("obj.211382a4", list(GLOB.TAGGERLOCATIONS[relevant_tag]))))
+	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/disposalpipe/sorting/mail/check_sorting(obj/structure/disposalholder/H)
 	return (H.destinationTag in sortTypes)

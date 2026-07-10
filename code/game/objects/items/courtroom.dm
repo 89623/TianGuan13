@@ -37,10 +37,10 @@
 	resistance_flags = FLAMMABLE
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
-/obj/item/gavelblock/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/gavelhammer))
-		playsound(loc, 'sound/items/gavel.ogg', 100, TRUE)
-		user.visible_message(span_warning(LANG("obj.42c638b6", list(user, src, I))))
-		user.changeNext_move(CLICK_CD_MELEE)
-	else
-		return ..()
+/obj/item/gavelblock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/gavelhammer))
+		return NONE
+	playsound(loc, 'sound/items/gavel.ogg', 100, TRUE)
+	user.visible_message(span_warning(LANG("obj.42c638b6", list(user, src, tool))))
+	user.changeNext_move(CLICK_CD_MELEE)
+	return ITEM_INTERACT_SUCCESS

@@ -27,20 +27,21 @@
 	QDEL_NULL(current_plate)
 	. = ..()
 
-/obj/machinery/plate_press/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/plate_press/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/license_plates/empty))
+		return NONE
 	if(!is_operational)
-		to_chat(user, span_warning(LANG("obj.70d0d02a", list(src))))
-		return FALSE
+		to_chat(user, span_warning(LANG("obj.7fc47c77", list(src))))
+		return ITEM_INTERACT_BLOCKING
 	if(current_plate)
 		to_chat(user, span_warning(LANG("obj.1e895fc9", list(src))))
-		return FALSE
-	if(istype(I, /obj/item/stack/license_plates/empty))
-		var/obj/item/stack/license_plates/empty/plate = I
-		plate.use(1)
-		current_plate = new plate.type(src, 1) //Spawn a new single sheet in the machine
-		update_appearance()
-	else
-		return ..()
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/license_plates/empty/plate = tool
+	plate.use(1)
+	current_plate = new plate.type(src, 1) //Spawn a new single sheet in the machine
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/plate_press/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

@@ -63,35 +63,45 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	return ..()
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/flasher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if (attacking_item.tool_behaviour == TOOL_WIRECUTTER)
-		if (bulb)
-			user.visible_message(span_notice(LANG("obj.927df81d", list(user, src))), span_notice(LANG("obj.0620343f", list(src))))
-			if(attacking_item.use_tool(src, user, 30, volume=50) && bulb)
-				user.visible_message(span_notice(LANG("obj.c7b7ccaf", list(user, src))), span_notice(LANG("obj.195778e3", list(src))))
-				bulb.forceMove(loc)
-				power_change()
 
-	else if (istype(attacking_item, /obj/item/assembly/flash/handheld))
-		if (!bulb)
-			if(!user.transferItemToLoc(attacking_item, src))
-				return
-			user.visible_message(span_notice(LANG("obj.64a6a66a", list(user, attacking_item, src))), span_notice(LANG("obj.a0a1d9da", list(attacking_item, src))))
-			power_change()
-		else
-			to_chat(user, span_warning(LANG("obj.d9edcff9", list(src))))
+	if (!istype(tool, /obj/item/assembly/flash/handheld))
+		return NONE
+	if (bulb)
+		to_chat(user, span_warning(LANG("obj.d9edcff9", list(src))))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice(LANG("obj.64a6a66a", list(user, tool, src))), \
+						span_notice(LANG("obj.a0a1d9da", list(tool, src))))
+	power_change()
+	return ITEM_INTERACT_SUCCESS
 
-	else if (attacking_item.tool_behaviour == TOOL_WRENCH)
-		if(!bulb)
-			to_chat(user, span_notice(LANG("obj.ead0e0f7", null)))
-			if(attacking_item.use_tool(src, user, 40, volume=50))
-				to_chat(user, span_notice(LANG("obj.4b8870f0", null)))
-				deconstruct(TRUE)
-		else
-			to_chat(user, span_warning(LANG("obj.b06b8865", list(src))))
-	else
-		return ..()
+
+/obj/machinery/flasher/wirecutter_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(!bulb)
+		return NONE
+	user.visible_message(span_notice(LANG("obj.927df81d", list(user, src))), span_notice(LANG("obj.0620343f", list(src))))
+	if(!tool.use_tool(src, user, 30, volume=50) || !bulb)
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice(LANG("obj.c7b7ccaf", list(user, src))), span_notice(LANG("obj.195778e3", list(src))))
+	bulb.forceMove(loc)
+	power_change()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/flasher/wrench_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(bulb)
+		to_chat(user, span_warning(LANG("obj.b06b8865", list(src))))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice(LANG("obj.ead0e0f7", null)))
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice(LANG("obj.4b8870f0", null)))
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
@@ -190,25 +200,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	if(vname == NAMEOF(src, flash_range))
 		proximity_monitor?.set_range(flash_range)
 
-/obj/machinery/flasher/portable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if (attacking_item.tool_behaviour == TOOL_WRENCH)
-		attacking_item.play_tool_sound(src, 100)
+/obj/machinery/flasher/portable/wrench_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src, 100)
+	if (!anchored && !isinspace())
+		to_chat(user, span_notice(LANG("obj.99e806e9", list(src))))
+		add_overlay("[base_icon_state]-s")
+		set_anchored(TRUE)
+		power_change()
+		proximity_monitor.set_range(flash_range)
+		return ITEM_INTERACT_SUCCESS
 
-		if (!anchored && !isinspace())
-			to_chat(user, span_notice(LANG("obj.99e806e9", list(src))))
-			add_overlay("[base_icon_state]-s")
-			set_anchored(TRUE)
-			power_change()
-			proximity_monitor.set_range(flash_range)
-		else
-			to_chat(user, span_notice(LANG("obj.37738ee6", list(src))))
-			cut_overlays()
-			set_anchored(FALSE)
-			power_change()
-			proximity_monitor.set_range(0)
-
-	else
-		return ..()
+	to_chat(user, span_notice(LANG("obj.37738ee6", list(src))))
+	cut_overlays()
+	set_anchored(FALSE)
+	power_change()
+	proximity_monitor.set_range(0)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"

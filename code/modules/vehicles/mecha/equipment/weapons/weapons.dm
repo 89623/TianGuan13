@@ -102,6 +102,7 @@
 	projectile = /obj/projectile/beam/laser
 	fire_sound = 'sound/items/weapons/laser.ogg'
 	harmful = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	equip_cooldown = 1.5 SECONDS
@@ -114,6 +115,7 @@
 	projectiles_per_shot = 5
 	fire_sound = 'sound/items/weapons/taser2.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
 	equip_cooldown = 15
@@ -123,6 +125,7 @@
 	energy_drain = 6 KILO JOULES
 	projectile = /obj/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 20
@@ -132,6 +135,7 @@
 	energy_drain = 1.2 KILO JOULES
 	projectile = /obj/projectile/ion
 	fire_sound = 'sound/items/weapons/laser.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/uranium = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	equip_cooldown = 35
@@ -142,6 +146,7 @@
 	projectile = /obj/projectile/energy/tesla/cannon
 	fire_sound = 'sound/effects/magic/lightningbolt.ogg'
 	harmful = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
 	equip_cooldown = 30
@@ -166,6 +171,7 @@
 	fire_sound = 'sound/items/weapons/plasma_cutter.ogg'
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/plasma = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 ///Exosuit thermal guns
 
@@ -237,6 +243,7 @@
 	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
@@ -259,6 +266,7 @@
 	range = MECHA_MELEE|MECHA_RANGED
 	kickback = FALSE
 	mech_flags = EXOSUIT_MODULE_HONK
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
@@ -358,6 +366,7 @@
 	projectiles_cache_max = 96
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_INCENDIARY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
@@ -384,6 +393,7 @@
 	variance = 25
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_BUCKSHOT
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
@@ -400,6 +410,7 @@
 	projectile_delay = 2
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LMG
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /// Missiles
 /// SRM-8 Missile Rack - Used by Nuclear Operatives - Explodes when it hits anything
@@ -416,6 +427,7 @@
 	equip_cooldown = 60
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_MISSILE_SRM
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 11, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 4, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /// PEP-6 Missile Rack - Used by Robotics - Explodes only when it hits dense objects like walls, borgs and mechs
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
@@ -471,7 +483,8 @@
 	missile_speed = 1.5
 	equip_cooldown = 60
 	ammo_type = MECHA_AMMO_FLASHBANG
-	var/det_time = 20
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 11, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 4, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
+	var/det_time = 2 SECONDS
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(obj/item/grenade/flashbang/F, mob/user)
 	var/turf/T = get_turf(src)
@@ -490,6 +503,7 @@
 	projectile = /obj/item/grenade/clusterbuster
 	equip_cooldown = 90
 	ammo_type = MECHA_AMMO_CLUSTERBANG
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
 	name = "banana mortar"
@@ -504,6 +518,7 @@
 	equip_cooldown = 20
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_BANANA_PEEL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -518,6 +533,7 @@
 	equip_cooldown = 10
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_MOUSETRAP
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = TRUE
@@ -542,6 +558,7 @@
 	var/punch_damage = 35
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_PUNCHING_GLOVE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 3.75)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/get_snowflake_data()
 	. = ..()
@@ -624,6 +641,7 @@
 	toolspeed = 0.8
 	mech_flags = EXOSUIT_MODULE_PADDY
 	projectiles_per_shot = 0
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	///Chassis but typed for the cargo_hold var
 	var/obj/vehicle/sealed/mecha/ripley/secmech
 	///Audio for using the hydraulic clamp

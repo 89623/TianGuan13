@@ -65,17 +65,19 @@
 	if(istype(assembly))
 		assembly.activate()
 
-/obj/item/pressure_plate/attackby(obj/item/item, mob/living/L)
-	if(isassembly(item) && !istype(assembly) && removable_assembly)
-		var/obj/item/assembly/new_assembly = item
-		if(!(new_assembly.assembly_behavior & ASSEMBLY_FUNCTIONAL_OUTPUT))
-			to_chat(L, span_warning(LANG("obj.8bb2af2c", list(item, src))))
-			return
-		if(L.transferItemToLoc(item, src))
-			assembly = item
-			SEND_SIGNAL(item, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE, src, L)
-		to_chat(L, span_notice(LANG("obj.93310752", list(item, src))))
-	return ..()
+/obj/item/pressure_plate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isassembly(tool) || assembly || !removable_assembly)
+		return NONE
+	var/obj/item/assembly/new_assembly = tool
+	if(!(new_assembly.assembly_behavior & ASSEMBLY_FUNCTIONAL_OUTPUT))
+		to_chat(user, span_warning(LANG("obj.8bb2af2c", list(tool, src))))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	assembly = tool
+	SEND_SIGNAL(tool, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE, src, user)
+	to_chat(user, span_notice(LANG("obj.93310752", list(tool, src))))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pressure_plate/attack_self(mob/living/L)
 	if(removable_assembly && istype(assembly))

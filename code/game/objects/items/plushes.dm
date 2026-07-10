@@ -132,50 +132,54 @@
 	else
 		to_chat(user, span_notice(LANG("obj.c7a2d29c", list(src))))
 
-/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(I.get_sharpness())
-		if(!grenade)
-			if(!stuffed)
-				to_chat(user, span_warning(LANG("obj.78c08dc0", null)))
-				return
-			if(!divine)
-				user.visible_message(span_notice(LANG("obj.d9de5815", list(user, src))), span_notice(LANG("obj.58a2777d", list(src))))
-				I.play_tool_sound(src)
-				stuffed = FALSE
-			else
-				to_chat(user, span_notice(LANG("obj.e532fc33", list(src))))
-				user.adjust_drunk_effect(20, up_to = 50)
-
-				var/turf/current_location = get_turf(user)
-				var/area/current_area = current_location.loc //copied from hand tele code
-				if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
-					to_chat(user, span_notice(LANG("obj.8c0817aa", null)))
-				else
-					to_chat(user, span_notice(LANG("obj.dcc84c1c", list(src))))
-				user.visible_message(span_notice(LANG("obj.f5f84947", list(user, src))), span_notice(LANG("obj.98fe2e8a", list(src))))
-				user.drop_all_held_items()
-		else
+/obj/item/toy/plush/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.get_sharpness())
+		if(grenade)
 			to_chat(user, span_notice(LANG("obj.183b7f6c", list(src))))
 			user.put_in_hands(grenade)
-		return
-	if(isgrenade(I))
+			return ITEM_INTERACT_SUCCESS
+		if(!stuffed)
+			to_chat(user, span_warning(LANG("obj.78c08dc0", null)))
+			return ITEM_INTERACT_BLOCKING
+		if(!divine)
+			user.visible_message(span_notice(LANG("obj.d9de5815", list(user, src))), span_notice(LANG("obj.58a2777d", list(src))))
+			tool.play_tool_sound(src)
+			stuffed = FALSE
+			return ITEM_INTERACT_SUCCESS
+
+		to_chat(user, span_notice(LANG("obj.e532fc33", list(src))))
+		user.adjust_drunk_effect(20, up_to = 50)
+
+		var/turf/current_location = get_turf(user)
+		var/area/current_area = current_location.loc //copied from hand tele code
+		if(current_location && current_area && (current_area.area_flags & NOTELEPORT))
+			to_chat(user, span_notice(LANG("obj.8c0817aa", null)))
+		else
+			to_chat(user, span_notice(LANG("obj.dcc84c1c", list(src))))
+		user.visible_message(span_notice(LANG("obj.f5f84947", list(user, src))), span_notice(LANG("obj.98fe2e8a", list(src))))
+		user.drop_all_held_items()
+		return ITEM_INTERACT_SUCCESS
+
+	if(isgrenade(tool))
 		if(stuffed)
 			to_chat(user, span_warning(LANG("obj.c6530043", null)))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(grenade)
 			to_chat(user, span_warning(LANG("obj.4d044d10", list(src))))
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		user.visible_message(span_warning(LANG("obj.3a28423b", list(user, grenade, src))), \
-		span_danger(LANG("obj.797cf963", list(I, src))))
-		grenade = I
-		user.log_message("added a grenade ([I.name]) to [src]", LOG_GAME)
-		return
-	if(istype(I, /obj/item/toy/plush))
-		love(I, user)
-		return
-	return ..()
+		span_danger(LANG("obj.797cf963", list(tool, src))))
+		grenade = tool
+		user.log_message("added a grenade ([tool.name]) to [src]", LOG_GAME)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/toy/plush))
+		love(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/toy/plush/proc/love(obj/item/toy/plush/Kisser, mob/living/user) //~<3
 	var/chance = 100 //to steal a kiss, surely there's a 100% chance no-one would reject a plush such as I?

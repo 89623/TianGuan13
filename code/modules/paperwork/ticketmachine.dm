@@ -78,6 +78,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	icon_state = "ticketmachine_off"
 	result_path = /obj/machinery/ticket_machine
 	pixel_shift = 32
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 
 ///Increments the counter by one, if there is a ticket after the current one we are serving.
 ///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable
@@ -179,26 +180,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 			maptext_x = 4
 	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
-/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	..()
-	if(istype(I, /obj/item/hand_labeler_refill))
-		if(!(ticket_number >= max_number))
-			to_chat(user, span_notice(LANG("obj.37037682", list(src, I, max_number - ticket_number == 1 ? "is" : "are", max_number - ticket_number))))
-			return
-		to_chat(user, span_notice(LANG("obj.03f4d613", list(src))))
-		if(do_after(user, 3 SECONDS, target = src))
-			to_chat(user, span_notice(LANG("obj.73575a68", list(I, src))))
-			qdel(I)
-			ticket_number = 0
-			current_number = 0
-			if(tickets.len)
-				for(var/obj/item/ticket_machine_ticket/ticket in tickets)
-					ticket.audible_message(span_notice("\the [ticket] disperses!"), hearing_distance = SAMETILE_MESSAGE_RANGE)
-					qdel(ticket)
-				tickets.Cut()
-			max_number = initial(max_number)
-			update_appearance()
-			return
+/obj/machinery/ticket_machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/hand_labeler_refill))
+		return NONE
+
+	if(!(ticket_number >= max_number))
+		to_chat(user, span_notice(LANG("obj.37037682", list(src, tool, max_number - ticket_number == 1 ? "is" : "are", max_number - ticket_number))))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.03f4d613", list(src))))
+	if(!do_after(user, 3 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.73575a68", list(tool, src))))
+	qdel(tool)
+	ticket_number = 0
+	current_number = 0
+	if(tickets.len)
+		for(var/obj/item/ticket_machine_ticket/ticket in tickets)
+			ticket.audible_message(span_notice("\the [ticket] disperses!"), hearing_distance = SAMETILE_MESSAGE_RANGE)
+			qdel(ticket)
+		tickets.Cut()
+	max_number = initial(max_number)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ticket_machine/proc/reset_cooldown()
 	ready = TRUE

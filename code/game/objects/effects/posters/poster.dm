@@ -57,18 +57,19 @@
 	. = ..()
 	. += span_notice(LANG("obj.33c1f3b3", null))
 
-/obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/shard))
-		return ..()
+/obj/item/poster/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/shard))
+		return NONE
 
-	if (locate(/obj/item/shard) in (poster_structure?.contents || contents))
+	if(locate(/obj/item/shard) in (poster_structure?.contents || contents))
 		balloon_alert(user, LANG("obj.8cdee195", null))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(!user.transferItemToLoc(I, src))
-		return
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice(LANG("obj.0a0c4fa1", list(I))))
+	to_chat(user, span_notice(LANG("obj.0a0c4fa1", list(tool))))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/poster/interact_with_atom(turf/closed/wall_structure, mob/living/user, list/modifiers)
 	if(!isclosedturf(wall_structure))

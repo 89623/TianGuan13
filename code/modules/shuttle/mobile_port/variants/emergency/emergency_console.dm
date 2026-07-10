@@ -43,10 +43,11 @@
 		if(hijack_announce)
 			. += span_warning(LANG("obj.0811c763", null))
 
-/obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,list/modifiers)
-	if(isidcard(I))
-		say(LANG("obj.c773488f", null))
-	. = ..()
+/obj/machinery/computer/emergency_shuttle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isidcard(tool))
+		return NONE
+	say(LANG("obj.c773488f", null))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/emergency_shuttle/ui_state(mob/user)
 	return GLOB.human_adjacent_state

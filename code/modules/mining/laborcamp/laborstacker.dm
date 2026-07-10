@@ -1,6 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-#define SHEET_POINT_VALUE 33
-
 /**********************Prisoners' Console**************************/
 
 /obj/machinery/mineral/labor_claim_console
@@ -202,8 +199,8 @@
 	if (!istype(input, /obj/item/stack/sheet))
 		return ..()
 	var/obj/item/stack/sheet/sheet = input
-	if (sheet.manufactured && sheet.gulag_valid)
-		points += SHEET_POINT_VALUE * sheet.amount
+	if (sheet.manufactured && sheet.gulag_value)
+		points += sheet.gulag_value * sheet.amount
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/laborstacker/base_item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
@@ -246,5 +243,3 @@
 	vars_and_tooltips_map = list(
 		"PERSON" = "will be replaced with the name of the prisoner."
 	)
-
-#undef SHEET_POINT_VALUE

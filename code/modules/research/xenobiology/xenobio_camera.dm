@@ -267,7 +267,12 @@
 		target_turf.balloon_alert(user, LANG("obj.e93ab252", null))
 		return
 
-	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE, user)
+	var/cap = CONFIG_GET(number/monkeycap)
+	if (LAZYLEN(SSmobs.cubemonkeys) < cap)
+		to_chat(user, span_warning(LANG("obj.d675af0d", list(cap))))
+		return
+
+	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE)
 	if (QDELETED(food))
 		return
 

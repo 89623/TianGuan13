@@ -119,27 +119,29 @@
 	add_fingerprint(user)
 	return ..()
 
-/obj/item/paper_bin/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/paper_bin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(at_overlay_limit())
 		dump_contents(drop_location(), TRUE)
-		return
-	if(istype(I, /obj/item/paper))
-		var/obj/item/paper/paper = I
-		if(!user.transferItemToLoc(paper, src, silent = FALSE))
-			return
-		to_chat(user, span_notice(LANG("obj.de7df645", list(paper, src))))
-		paper_stack += paper
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper))
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
+		paper_stack += tool
 		total_paper += 1
 		update_appearance()
-	else if(istype(I, /obj/item/pen) && !bin_pen)
-		var/obj/item/pen/pen = I
-		if(!user.transferItemToLoc(pen, src, silent = FALSE))
-			return
-		to_chat(user, span_notice(LANG("obj.de7df645", list(pen, src))))
-		bin_pen = pen
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/pen) && !bin_pen)
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
+		bin_pen = tool
 		update_appearance()
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/paper_bin/proc/at_overlay_limit()
 	return overlays.len >= MAX_ATOM_OVERLAYS - 1
@@ -255,16 +257,19 @@
 /obj/item/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)
 	qdel(src)
 
-/obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/paper/carbon))
-		to_chat(user, span_warning(LANG("obj.e9a1b6e8", list(W, src))))
-		return
-	if(W.get_sharpness())
-		if(W.use_tool(src, user, 1 SECONDS))
-			to_chat(user, span_notice(LANG("obj.904d27a4", list(src))))
-			deconstruct(TRUE)
-	else
-		..()
+/obj/item/paper_bin/bundlenatural/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/paper/carbon))
+		to_chat(user, span_warning(LANG("obj.e9a1b6e8", list(tool, src))))
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.get_sharpness())
+		if(!tool.use_tool(src, user, 1 SECONDS))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice(LANG("obj.904d27a4", list(src))))
+		deconstruct(TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /obj/item/paper_bin/carbon
 	name = "carbon paper bin"

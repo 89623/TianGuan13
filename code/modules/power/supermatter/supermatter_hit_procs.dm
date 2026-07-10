@@ -69,61 +69,68 @@
 	var/mob/living/carbon/jedi = user
 	to_chat(jedi, span_userdanger(LANG("obj.d2253e90", null)))
 	jedi.investigate_log("had [jedi.p_their()] brain dusted by touching [src] with telekinesis.", INVESTIGATE_DEATHS)
-	jedi.ghostize()
+	//jedi.ghostize() // NOVA EDIT REMOVAL
+	// NOVA EDIT ADDITION START - Supermatter replacement
+	var/mob/living/carbon/human/jedi_human = user
+	if(!istype(jedi_human) || !jedi_human.replace_with_clone())
+		jedi.ghostize()
+	// NOVA EDIT ADDITION END
 	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.organs
 	if(rip_u)
 		rip_u.Remove(jedi)
 		qdel(rip_u)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/supermatter_crystal/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/scalpel/supermatter))
-		var/obj/item/scalpel/supermatter/scalpel = item
+/obj/machinery/power/supermatter_crystal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/scalpel/supermatter))
+		var/obj/item/scalpel/supermatter/scalpel = tool
 		to_chat(user, span_notice(LANG("obj.e9241f3f", list(src, scalpel))))
 		if(!scalpel.use_tool(src, user, 60, volume=100))
-			return
-		if (scalpel.usesLeft)
-			to_chat(user, span_danger(LANG("obj.3265e75b", list(src, src))))
-			new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
-			supermatter_sliver_removed = TRUE
-			external_power_trickle += 800
-			log_activation(who = user, how = scalpel)
-			scalpel.usesLeft--
-			if (!scalpel.usesLeft)
-				to_chat(user, span_notice(LANG("obj.51b4a661", list(scalpel))))
-		else
+			return ITEM_INTERACT_BLOCKING
+		if (!scalpel.usesLeft)
 			to_chat(user, span_warning(LANG("obj.fc583063", list(src, scalpel))))
-		return
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_danger(LANG("obj.3265e75b", list(src, src))))
+		new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
+		supermatter_sliver_removed = TRUE
+		external_power_trickle += 800
+		log_activation(who = user, how = scalpel)
+		scalpel.usesLeft--
+		if (!scalpel.usesLeft)
+			to_chat(user, span_notice(LANG("obj.51b4a661", list(scalpel))))
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(item, /obj/item/hemostat/supermatter))
-		to_chat(user, span_warning(LANG("obj.314440a7", list(src, item))))
-		return
+	if(istype(tool, /obj/item/hemostat/supermatter))
+		to_chat(user, span_warning(LANG("obj.314440a7", list(src, tool))))
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(item, /obj/item/destabilizing_crystal))
-		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
+	if(istype(tool, /obj/item/destabilizing_crystal))
+		var/obj/item/destabilizing_crystal/destabilizing_crystal = tool
 
 		if(!is_main_engine)
 			to_chat(user, span_warning(LANG("obj.3f6c7fc3", list(destabilizing_crystal, name))))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT)
 			to_chat(user, span_warning(LANG("obj.29b9afe0", list(destabilizing_crystal, name, SUPERMATTER_CASCADE_PERCENT))))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		to_chat(user, span_warning(LANG("obj.fe79f630", list(destabilizing_crystal, src))))
-		if(do_after(user, 3 SECONDS, src))
-			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
-			user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
-			user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
-			to_chat(user, span_danger(LANG("obj.9b400c9d", list(destabilizing_crystal, src))))
-			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
-			external_damage_immediate += 10
-			external_power_trickle += 500
-			log_activation(who = user, how = destabilizing_crystal)
-			qdel(destabilizing_crystal)
-		return
+		if(!do_after(user, 3 SECONDS, src))
+			return ITEM_INTERACT_BLOCKING
 
-	return ..()
+		message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
+		user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
+		user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
+		to_chat(user, span_danger(LANG("obj.9b400c9d", list(destabilizing_crystal, src))))
+		set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
+		external_damage_immediate += 10
+		external_power_trickle += 500
+		log_activation(who = user, how = destabilizing_crystal)
+		qdel(destabilizing_crystal)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)

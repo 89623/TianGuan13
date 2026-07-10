@@ -150,16 +150,15 @@
 	data["max_order"] = CARGO_MAX_ORDER
 	data["supplies"] = list()
 
-	for(var/pack_id in SSshuttle.supply_packs)
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
-		var/list/available_packs = get_packs_data(pack.group)
-		if(!length(available_packs)) //No available packs, hide category
+	var/list/packs_by_group = get_packs_data_by_group()
+	for(var/group in packs_by_group)
+		var/list/available_packs = packs_by_group[group]
+		if(!length(available_packs)) // Somehow????
 			continue
-		if(!data["supplies"][pack.group])
-			data["supplies"][pack.group] = list(
-				"name" = lang_reverse_text(pack.group), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = pack.group, （分类名仅前端状态键，整串译显示=安全；单词类如 Armory 也覆盖）
-				"packs" = available_packs,
-			)
+		data["supplies"][group] = list(
+			"name" = lang_reverse_text(group), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = group, （分类名仅前端状态键，整串译显示=安全；单词类如 Armory 也覆盖）
+			"packs" = available_packs,
+		)
 
 	data["displayed_currency_full_name"] = " [MONEY_NAME]"
 	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
@@ -167,15 +166,12 @@
 	return data
 
 /**
- * returns a list of supply packs for a certain group
- * * group - the group of packs to return
+ * returns a list of supply pack ui data by group
  */
-/obj/machinery/computer/cargo/proc/get_packs_data(group)
-	var/list/packs = list()
+/obj/machinery/computer/cargo/proc/get_packs_data_by_group()
+	var/list/packs_by_group = list()
 	for(var/pack_id in SSshuttle.supply_packs)
 		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
-		if(pack.group != group)
-			continue
 
 		if(pack.order_flags & ORDER_INVISIBLE)
 			continue
@@ -199,6 +195,11 @@
 		// NOVA EDIT ADDITION END
 
 		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
+		var/list/packs = packs_by_group[pack.group]
+		if(isnull(packs))
+			packs = list()
+			packs_by_group[pack.group] = packs
+
 		packs += list(list(
 			"name" = lang_reverse_text(pack.name), // NOVA EDIT CHANGE - I18N - ORIGINAL: "name" = pack.name, （目录显示用译名；add 走 id、openContents/搜索按此 name 在本地数据内匹配=译名一致安全；单词类 auto_name 包如 binoculars 也覆盖）
 			"cost" = pack.get_cost() * get_discount(),
@@ -212,7 +213,7 @@
 			"contains" = pack.get_contents_ui_data(),
 		))
 
-	return packs
+	return packs_by_group
 
 /**
  * returns the discount multiplier applied to all supply packs,

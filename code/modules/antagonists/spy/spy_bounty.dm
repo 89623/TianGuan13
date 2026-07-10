@@ -683,7 +683,7 @@
 /datum/spy_bounty/some_bot/finish_cleanup(mob/living/basic/bot/stealing)
 	if(stealing.client)
 		to_chat(stealing, span_deadsay(LANG("datum.16a69279", null)))
-		stealing.investigate_log("stole by a spy (and deleted)", INVESTIGATE_DEATHS)
+		stealing.investigate_log("was stolen by a spy (and deleted)", INVESTIGATE_DEATHS)
 		stealing.ghostize()
 	return ..()
 

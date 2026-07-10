@@ -42,7 +42,7 @@
 	//no one invited or this is not the invited person
 	if(!potential_deacon || (possible_deacon != potential_deacon))
 		INVOKE_ASYNC(src, PROC_REF(invite_deacon), possible_deacon)
-		to_chat(user, span_notice(LANG("datum.308da914", null)))
+		to_chat(user, span_notice(LANG("datum.0f66cc40", null)))
 		return FALSE
 	return ..()
 
@@ -65,7 +65,7 @@
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
 	if(honor && (potential_deacon in honor.guilty))
 		honor.guilty -= potential_deacon
-	to_chat(user, span_notice(LANG("datum.9f87b039", list(GLOB.deity, potential_deacon))))
+	to_chat(user, span_notice(LANG("datum.fe642873", list(GLOB.deity, potential_deacon))))
 	potential_deacon.mind.set_holy_role(HOLY_ROLE_DEACON)
 	GLOB.religious_sect.on_conversion(potential_deacon)
 	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
@@ -86,7 +86,7 @@
  * If they accept, the deaconize rite can now recruit them instead of just offering more invites.
  */
 /datum/religion_rites/deaconize/proc/invite_deacon(mob/living/carbon/human/invited)
-	var/ask = tgui_alert(invited, LANG("datum.176a1436", list(GLOB.deity)), LANG("datum.5d69f114", null), list("Yes", "No"), 60 SECONDS)
+	var/ask = tgui_alert(invited, LANG("datum.25f265b3", list(GLOB.deity)), LANG("datum.5d69f114", null), list("Yes", "No"), 60 SECONDS)
 	if(ask != "Yes")
 		return
 	potential_deacon = invited
