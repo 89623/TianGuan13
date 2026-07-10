@@ -31,10 +31,7 @@
 
 /obj/vehicle/sealed/car/sedan/generate_actions()
 	. = ..()
-	initialize_controller_action_type(/datum/action/vehicle/sealed/headlights/car, VEHICLE_CONTROL_DRIVE)
-
-/datum/action/vehicle/sealed/headlights/car
-	button_icon_state = "vim_headlights"
+	initialize_controller_action_type(/datum/action/vehicle/sealed/headlights, VEHICLE_CONTROL_DRIVE)
 
 /datum/armor/sedan
 	melee = 50
