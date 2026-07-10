@@ -1,6 +1,6 @@
 /obj/item/gun/energy/gear_disabler
 	name = "gear disabler"
-	desc = "A cleverly designed stun gun that seamlessly links time and energy to automatically recharge itself."
+	desc = "A cleverly designed stun gun that seamlessly links time and energy to automatically recharge itself.(Due to some circuit issues, the display panel of this gun will not update.)"
 	icon = 'modular_z121/icons/obj/guns/gear_disabler.dmi'
 	icon_state = "gear_disabler"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
