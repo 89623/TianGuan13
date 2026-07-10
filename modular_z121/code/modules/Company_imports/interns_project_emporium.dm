@@ -147,6 +147,24 @@
 	contains = list(/obj/item/storage/box/caramel_medipen)
 	cost = PAYCHECK_CREW * 2
 
+//	载具
+/datum/supply_pack/service/sedan
+	name = "轿车套件"
+	desc = "一辆属于你自己的汽车，驶向太空！驶向新生活！"
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(
+		/obj/vehicle/sealed/car/sedan = 1,
+		/obj/item/key/car = 1,
+	)
+	crate_name = "轿车套件"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/service/car_key
+	name = "备用车钥匙"
+	desc = "如果你弄丢了你的车钥匙，你可以买一个新的，保证和原来的一模一样！但是，请不要用它来启动不属于你自己的车，可以吗？"
+	cost = PAYCHECK_CREW * 5
+	contains = list(/obj/item/key/car)
+
 //	杂项
 /datum/supply_pack/companies/apparel/intern_project/pouch
 	//subcategory = "杂项"
