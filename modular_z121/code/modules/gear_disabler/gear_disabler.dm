@@ -18,7 +18,7 @@
 	var/obj/item/ammo_casing/energy/disabler/shot = ammo_type[1]
 	var/cost = shot.e_cost
 	if(cell)
-		cell.maxcharge = cost * 6
+		cell.maxcharge = cost * 3
 		cell.charge = cell.maxcharge
 	last_recharge_time = world.time
 	update_appearance()
