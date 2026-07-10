@@ -26,6 +26,8 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 
 #ifdef USE_RUSTG_ICONFORGE_GAGS
 	var/list/job_ids = list()
+	// Caps concurrent rust_g thread-spawns; unbounded fan-out can exhaust a 32-bit DreamDaemon's address space and abort it.
+#define GAGS_ASYNC_JOB_BATCH_SIZE 16
 #endif
 
 	// This final verification step is for things that need other greyscale configurations to be finished loading
@@ -35,8 +37,13 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		config.CrossVerify()
 #ifdef USE_RUSTG_ICONFORGE_GAGS
 		job_ids += rustg_iconforge_load_gags_config_async(greyscale_type, config.raw_json_string, config.string_icon_file)
+		if(length(job_ids) >= GAGS_ASYNC_JOB_BATCH_SIZE)
+			UNTIL(jobs_completed(job_ids))
+#endif
 
+#ifdef USE_RUSTG_ICONFORGE_GAGS
 	UNTIL(jobs_completed(job_ids))
+#undef GAGS_ASYNC_JOB_BATCH_SIZE
 #endif
 
 	return SS_INIT_SUCCESS
