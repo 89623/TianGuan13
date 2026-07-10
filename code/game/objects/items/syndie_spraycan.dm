@@ -144,7 +144,7 @@
 	user.visible_message(span_suicide(LANG("obj.59ba7571", list(user, src, user.p_their(), user.p_their()))))
 	user.say(LANG("obj.30531ece", null), forced="spraycan suicide")
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
-	suicider.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
+	suicider.AddComponent(/datum/component/face_decal, "spray", list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER), paint_color)
 	return OXYLOSS
 
 ///Checks if the user is still adjacent to the target (used for do_after extra_checks)

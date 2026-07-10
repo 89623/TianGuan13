@@ -418,44 +418,44 @@
 		user.put_in_hands(new_plane)
 	return new_plane
 
-/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/paper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Enable picking paper up by clicking on it with the clipboard or paper bin
-	if(istype(attacking_item, /obj/item/clipboard) || istype(attacking_item, /obj/item/paper_bin))
-		attacking_item.attackby(src, user)
-		return
+	if(istype(tool, /obj/item/clipboard) || istype(tool, /obj/item/paper_bin))
+		tool.item_interaction(user, src)
+		return ITEM_INTERACT_SUCCESS
 
 	// Handle writing items.
-	var/writing_stats = attacking_item.get_writing_implement_details()
+	var/writing_stats = tool.get_writing_implement_details()
 
 	if(!writing_stats)
 		ui_interact(user)
-		return ..()
+		return NONE
 
 	if(writing_stats["interaction_mode"] == MODE_WRITING)
-		if(!user.can_write(attacking_item))
-			return
+		if(!user.can_write(tool))
+			return ITEM_INTERACT_BLOCKING
 		if(get_total_length() >= MAX_PAPER_LENGTH)
 			to_chat(user, span_warning(LANG("obj.4c9828bd", null)))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		ui_interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	// Handle stamping items.
 	if(writing_stats["interaction_mode"] == MODE_STAMPING)
 		if(!user.can_read(src) || user.is_blind())
 			//The paper's stampable window area is assumed approx 300x400
 			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), rand(0, 360), writing_stats["stamp_icon_state"], stamp_icon = writing_stats["stamp_icon"])
-			user.visible_message(span_notice(LANG("obj.db0aecdd", list(user, src, attacking_item))))
-			to_chat(user, span_notice(LANG("obj.be3d2c55", list(src, attacking_item))))
+			user.visible_message(span_notice(LANG("obj.db0aecdd", list(user, src, tool))))
+			to_chat(user, span_notice(LANG("obj.be3d2c55", list(src, tool))))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 		else
 			to_chat(user, span_notice(LANG("obj.507009a1", null)))
 			ui_interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	ui_interact(user)
-	return ..()
+	return NONE
 
 /// Secondary right click interaction to quickly stamp things
 /obj/item/paper/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)

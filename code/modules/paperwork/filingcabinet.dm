@@ -44,23 +44,27 @@
 	for(var/obj/item/obj in src)
 		obj.forceMove(loc)
 
-/obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(P.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
-		to_chat(user, span_notice(LANG("obj.8b820c98", list(anchored ? "unwrench" : "wrench", src))))
-		if(P.use_tool(src, user, 20, volume=50))
-			to_chat(user, span_notice(LANG("obj.5e680a27", list(anchored ? "unwrench" : "wrench", src))))
-			set_anchored(!anchored)
-	else if(P.w_class < WEIGHT_CLASS_NORMAL)
-		if(!user.transferItemToLoc(P, src))
-			return
-		to_chat(user, span_notice(LANG("obj.de7df645", list(P, src))))
+/obj/structure/filingcabinet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.w_class < WEIGHT_CLASS_NORMAL)
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
 		icon_state = "[initial(icon_state)]-open"
 		sleep(0.5 SECONDS)
 		icon_state = initial(icon_state)
-	else if(!user.combat_mode || (P.item_flags & NOBLUDGEON))
-		to_chat(user, span_warning(LANG("obj.b6416b46", list(P, src))))
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+		to_chat(user, span_warning(LANG("obj.b6416b46", list(tool, src))))
+		return ITEM_INTERACT_BLOCKING
+	return NONE
+
+/obj/structure/filingcabinet/wrench_act_secondary(mob/living/user, obj/item/tool)
+	to_chat(user, span_notice(LANG("obj.8b820c98", list(anchored ? "unwrench" : "wrench", src))))
+	if(!tool.use_tool(src, user, 20, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice(LANG("obj.5e680a27", list(anchored ? "unwrench" : "wrench", src))))
+	set_anchored(!anchored)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/filingcabinet/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()

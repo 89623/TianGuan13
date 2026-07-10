@@ -159,7 +159,6 @@ Incarcerated
 Infinite Transit
 Insane
 Interface
-Internal
 Internal GPS
 Into The Sunset (delete & greentext 'escape')
 Janitor
@@ -730,6 +729,7 @@ vending
 violet
 virology
 virus
+voskhod
 wait
 warded
 water

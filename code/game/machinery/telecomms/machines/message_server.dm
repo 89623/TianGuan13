@@ -35,18 +35,21 @@
 		to_chat(user, span_warning(LANG("obj.c1fc1225", null)))
 		return
 
-/obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/blackbox))
-		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_warning(LANG("obj.1dbf8014", list(attacking_item))))
-			return
-		user.visible_message(span_notice(LANG("obj.f418bf1c", list(user, attacking_item, src))), \
-		span_notice(LANG("obj.359c76df", list(src))))
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		stored = attacking_item
-		update_appearance()
-		return
-	return ..()
+/obj/machinery/blackbox_recorder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/blackbox))
+		return NONE
+	if(stored)
+		to_chat(user, span_warning(LANG("obj.05de69e5", list(src)))) //something's gone wrong to get here, but you know, it could happen
+		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(tool, TRAIT_NODROP) || !user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning(LANG("obj.1dbf8014", list(tool))))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice(LANG("obj.f418bf1c", list(user, tool, src))), \
+	span_notice(LANG("obj.359c76df", list(src))))
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	stored = tool
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/blackbox_recorder/Destroy()
 	if(stored)

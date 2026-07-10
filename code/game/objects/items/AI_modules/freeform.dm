@@ -7,6 +7,7 @@
 /obj/item/ai_module/core/freeformcore
 	name = "'Freeform' Core AI Module"
 	laws = list("")
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/core/freeformcore/attack_self(mob/user)
 	var/targName = tgui_input_text(user, LANG("obj.c38e88d5", null), LANG("obj.f2d27273", null), laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
@@ -32,6 +33,7 @@
 	name = "'Freeform' AI Module"
 	lawpos = 15
 	laws = list("")
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/supplied/freeform/attack_self(mob/user)
 	var/newpos = tgui_input_number(user, LANG("obj.440d46d1", null), LANG("obj.2b743674", null), lawpos, 50, 15)

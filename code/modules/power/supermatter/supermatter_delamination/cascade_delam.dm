@@ -1,5 +1,6 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/sm_delam/cascade
+	name = "resonance cascade"
 
 /datum/sm_delam/cascade/can_select(obj/machinery/power/supermatter_crystal/sm)
 	if(!sm.is_main_engine)
@@ -16,6 +17,9 @@
 /datum/sm_delam/cascade/delam_progress(obj/machinery/power/supermatter_crystal/sm)
 	if(!..())
 		return FALSE
+
+	if(!announcement_triggered)
+		announce_cascade(sm)
 
 	sm.radio.talk_into(
 		sm,
@@ -34,27 +38,20 @@
 	return TRUE
 
 /datum/sm_delam/cascade/on_select(obj/machinery/power/supermatter_crystal/sm)
-	message_admins("[sm] is heading towards a cascade. [ADMIN_VERBOSEJMP(sm)]")
-	sm.investigate_log("is heading towards a cascade.", INVESTIGATE_ENGINE)
-
+	. = ..()
 	sm.warp = new(sm)
 	sm.vis_contents += sm.warp
 	animate(sm.warp, time = 1, transform = matrix().Scale(0.5,0.5))
 	animate(time = 9, transform = matrix())
 
-	addtimer(CALLBACK(src, PROC_REF(announce_cascade), sm), 2 MINUTES)
-
 /datum/sm_delam/cascade/on_deselect(obj/machinery/power/supermatter_crystal/sm)
-	message_admins("[sm] will no longer cascade. [ADMIN_VERBOSEJMP(sm)]")
-	sm.investigate_log("will no longer cascade.", INVESTIGATE_ENGINE)
-
+	. = ..()
+	message_admins("[ADMIN_VERBOSEJMP(sm)] will no longer cascade.")
 	sm.vis_contents -= sm.warp
 	QDEL_NULL(sm.warp)
 
 /datum/sm_delam/cascade/delaminate(obj/machinery/power/supermatter_crystal/sm)
-	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a cascade delam.")
-	sm.investigate_log("triggered a cascade delam.", INVESTIGATE_ENGINE)
-
+	log_delamination(sm)
 	effect_explosion(sm)
 	effect_emergency_state()
 	effect_cascade_demoralize()
@@ -88,8 +85,12 @@
 		return FALSE
 	if(!can_select(sm))
 		return FALSE
+	if(!sm.should_alert_common())
+		return FALSE
+
 	priority_announce(LANG("datum.3e55b37c", list(station_name())),
 	"Nanotrasen Star Observation Association", 'sound/announcer/alarm/airraid.ogg')
+	announcement_triggered = TRUE
 	return TRUE
 
 /// Signal calls cant sleep, we gotta do this.

@@ -336,7 +336,7 @@
 	for(var/obj/item/stack/sheet/mineral/wood/could_totem in get_turf(religious_tool))
 		converted = could_totem //totemify this o great one
 		return ..()
-	to_chat(user, span_warning(LANG("datum.d53026d3", null)))
+	to_chat(user, span_warning(LANG("datum.f2cfa072", null)))
 	return FALSE
 
 /datum/religion_rites/ritual_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -444,7 +444,7 @@
 	if(not_rigid)
 		to_chat(user, span_warning(LANG("datum.a70e585a", list(not_rigid))))
 	else
-		to_chat(user, span_warning(LANG("datum.13afa05c", null)))
+		to_chat(user, span_warning(LANG("datum.b01c568e", null)))
 	return FALSE
 
 /datum/religion_rites/ceremonial_weapon/invoke_effect(mob/living/user, atom/movable/religious_tool)

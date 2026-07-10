@@ -96,7 +96,7 @@
 	playsound(src, 'sound/effects/magic/lightningshock.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 	targeted_turfs += target_turf
 	balloon_alert(user, LANG("obj.16d662a0", list(target_turf)))
-	new /obj/effect/temp_visual/telegraphing/thunderbolt(target_turf)
+	new /obj/effect/temp_visual/telegraphing/circle(target_turf)
 	addtimer(CALLBACK(src, PROC_REF(throw_thunderbolt), target_turf, power_boosted), 1.5 SECONDS)
 	thunder_charges--
 	addtimer(CALLBACK(src, PROC_REF(recharge)), thunder_charge_time)

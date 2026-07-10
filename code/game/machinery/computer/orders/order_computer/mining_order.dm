@@ -103,17 +103,17 @@
 	. = ..()
 	. += span_notice(LANG("obj.08f40b7f", list(points)))
 
-/obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!isidcard(attacking_item))
-		return ..()
-	var/obj/item/card/id/attacking_id = attacking_item
+/obj/item/card/mining_point_card/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isidcard(tool))
+		return NONE
+	var/obj/item/card/id/attacking_id = tool
 	balloon_alert(user, LANG("obj.15ef6553", null))
 	var/point_movement = tgui_alert(user, LANG("obj.90fa83f2", null), LANG("obj.36c7058b", null), list(TO_USER_ID, TO_POINT_CARD))
 	if(!point_movement)
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/amount = tgui_input_number(user, LANG("obj.e9da4f50", list(attacking_id.registered_account.mining_points, points)), LANG("obj.bfebd140", null), min_value = 0, round_value = 1)
 	if(!amount)
-		return
+		return ITEM_INTERACT_BLOCKING
 	switch(point_movement)
 		if(TO_USER_ID)
 			if(amount > points)
@@ -121,12 +121,15 @@
 			attacking_id.registered_account.mining_points += amount
 			points -= amount
 			to_chat(user, span_notice(LANG("obj.2fb09f9c", list(amount, src, attacking_id))))
+			return ITEM_INTERACT_SUCCESS
 		if(TO_POINT_CARD)
 			if(amount > attacking_id.registered_account.mining_points)
 				amount = attacking_id.registered_account.mining_points
 			attacking_id.registered_account.mining_points -= amount
 			points += amount
 			to_chat(user, span_notice(LANG("obj.2fb09f9c", list(amount, attacking_id, src))))
+			return ITEM_INTERACT_SUCCESS
+	return NONE
 
 #undef TO_POINT_CARD
 #undef TO_USER_ID

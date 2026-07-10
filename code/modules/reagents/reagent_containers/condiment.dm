@@ -254,6 +254,16 @@
 	list_reagents = list(/datum/reagent/consumable/cornmeal = 30)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/condiment/korta_flour
+	name = "korta flour sack"
+	desc = "A big bag of lizards' favorite korta nut flour. Made in Tiriza!"
+	icon_state = "korta_flour"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/korta_flour = 30)
+	fill_icon_thresholds = null
+
 /obj/item/reagent_containers/condiment/bbqsauce
 	name = "bbq sauce"
 	desc = "Hand wipes not included."
@@ -496,7 +506,7 @@
 		desc = temp_list[3]
 	else
 		icon_state = "condi_mixed"
-		desc = LANG("obj.142cb6df", list(originalname))
+		desc = LANG("obj.7418c06b", list(originalname))
 
 //Ketchup
 /obj/item/reagent_containers/condiment/pack/ketchup

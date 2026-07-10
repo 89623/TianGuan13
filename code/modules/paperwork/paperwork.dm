@@ -40,27 +40,27 @@
 
 	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 
-/obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(.)
-		return
+/obj/item/paperwork/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stamp))
+		return NONE
 
-	if(stamped || !istype(attacking_item, /obj/item/stamp))
-		return
+	if(stamped)
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(attacking_item, stamp_requested))
+	if(istype(tool, stamp_requested))
 		add_stamp()
 		to_chat(user, span_notice(LANG("obj.04fbca1b", null)))
-		return TRUE
-	var/datum/action/item_action/chameleon/change/stamp/stamp_action = locate() in attacking_item.actions
-	if(isnull(stamp_action))
-		to_chat(user, span_warning(LANG("obj.5d527bc8", list(attacking_item))))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_notice(LANG("obj.dc1bfd09", list(attacking_item))))
+	var/datum/action/item_action/chameleon/change/stamp/stamp_action = locate() in tool.actions
+	if(isnull(stamp_action))
+		to_chat(user, span_warning(LANG("obj.5d527bc8", list(tool))))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.dc1bfd09", list(tool))))
 	stamp_action.update_look(stamp_requested)
 	add_stamp()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/paperwork/examine_more(mob/user)
 	. = ..()
@@ -234,16 +234,15 @@
 	else
 		. += span_notice(LANG("obj.a18c3a8c", null))
 
-/obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/stamp/void) && !stamped && !voided)
-		to_chat(user, span_notice(LANG("obj.e66f533b", list(attacking_item))))
-		stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_stamp-void")
-		add_overlay(stamp_overlay)
-		voided = TRUE
-		stamped = TRUE //It won't get you any money, but it also can't LOSE you money now.
-		return
-
-	return ..()
+/obj/item/paperwork/photocopy/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stamp/void) || stamped || voided)
+		return ..()
+	to_chat(user, span_notice(LANG("obj.e66f533b", list(tool))))
+	stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_stamp-void")
+	add_overlay(stamp_overlay)
+	voided = TRUE
+	stamped = TRUE //It won't get you any money, but it also can't LOSE you money now.
+	return ITEM_INTERACT_SUCCESS
 
 //Ancient paperwork is a subtype of paperwork, meant to be used for any paperwork not spawned by the event.
 //It doesn't have any of the flavor text that the event ones spawn with.

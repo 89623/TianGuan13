@@ -129,10 +129,6 @@
 	list_reagents = null
 	lid_open = TRUE
 
-/obj/item/reagent_containers/cup/glass/coffee/Initialize(mapload)
-	. = ..()
-	register_context()
-
 /obj/item/reagent_containers/cup/glass/coffee/examine(mob/user)
 	. = ..()
 	. += span_notice(LANG("obj.8d6143f3", null))
@@ -441,7 +437,6 @@
 
 /obj/item/reagent_containers/cup/glass/shaker/Initialize(mapload)
 	. = ..()
-	register_context()
 	if(prob(10))
 		name = "\improper Nanotrasen 20th Anniversary Shaker"
 		desc += " It has an emblazoned Nanotrasen logo on it."

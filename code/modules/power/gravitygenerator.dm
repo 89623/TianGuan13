@@ -84,10 +84,10 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		main_part = null
 	return ..()
 
-/obj/machinery/gravity_generator/part/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/gravity_generator/part/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!main_part)
-		return
-	return main_part.attackby(weapon, user)
+		return NONE
+	return main_part.item_interaction(user, tool)
 
 /obj/machinery/gravity_generator/part/get_status()
 	if(!main_part)
@@ -236,42 +236,48 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 			. += span_notice(LANG("obj.cf81dcb1", null))
 
 // Fixing the gravity generator.
-/obj/machinery/gravity_generator/main/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(machine_stat & BROKEN)
-		switch(broken_state)
-			if(GRAV_NEEDS_SCREWDRIVER)
-				if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
-					to_chat(user, span_notice(LANG("obj.f2155f27", null)))
-					weapon.play_tool_sound(src)
-					broken_state++
-					update_appearance()
-					return
-			if(GRAV_NEEDS_WELDING)
-				if(weapon.tool_behaviour == TOOL_WELDER)
-					if(weapon.use_tool(src, user, 0, volume=50))
-						to_chat(user, span_notice(LANG("obj.ccb3ab0b", null)))
-						broken_state++
-						update_appearance()
-					return
-			if(GRAV_NEEDS_PLASTEEL)
-				if(istype(weapon, /obj/item/stack/sheet/plasteel))
-					var/obj/item/stack/sheet/plasteel/PS = weapon
-					if(PS.get_amount() >= 10)
-						PS.use(10)
-						to_chat(user, span_notice(LANG("obj.fa6968d9", null)))
-						playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
-						broken_state++
-						update_appearance()
-					else
-						to_chat(user, span_warning(LANG("obj.603bc93f", null)))
-					return
-			if(GRAV_NEEDS_WRENCH)
-				if(weapon.tool_behaviour == TOOL_WRENCH)
-					to_chat(user, span_notice(LANG("obj.44d86fa5", null)))
-					weapon.play_tool_sound(src)
-					set_fix()
-					return
-	return ..()
+/obj/machinery/gravity_generator/main/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!(machine_stat & BROKEN) || (broken_state != GRAV_NEEDS_PLASTEEL))
+		return NONE
+	if(!istype(tool, /obj/item/stack/sheet/plasteel))
+		return NONE
+	var/obj/item/stack/sheet/plasteel/metal = tool
+	if(metal.get_amount() < 10)
+		to_chat(user, span_warning(LANG("obj.603bc93f", null)))
+		return ITEM_INTERACT_BLOCKING
+	metal.use(10)
+	to_chat(user, span_notice(LANG("obj.fa6968d9", null)))
+	playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
+	broken_state++
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/gravity_generator/main/welder_act(mob/living/user, obj/item/tool)
+	if(!(machine_stat & BROKEN) || (broken_state != GRAV_NEEDS_WELDING))
+		return NONE
+	if(!tool.use_tool(src, user, 0, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice(LANG("obj.ccb3ab0b", null)))
+	broken_state++
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/gravity_generator/main/wrench_act(mob/living/user, obj/item/tool)
+	if(!(machine_stat & BROKEN) || (broken_state != GRAV_NEEDS_WRENCH))
+		return NONE
+	to_chat(user, span_notice(LANG("obj.44d86fa5", null)))
+	tool.play_tool_sound(src)
+	set_fix()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/gravity_generator/main/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!(machine_stat & BROKEN) || (broken_state != GRAV_NEEDS_SCREWDRIVER))
+		return NONE
+	to_chat(user, span_notice(LANG("obj.f2155f27", null)))
+	tool.play_tool_sound(src)
+	broken_state++
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/gravity_generator/main/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -23,7 +23,7 @@
 	/// text string used to find typepaths used in door and wall (false and tram too) construction for door assemblies and girders respectively
 	var/construction_path_type = null
 	///If true, this is worth points in the gulag labour stacker
-	var/gulag_valid = FALSE
+	var/gulag_value = 0
 	///Set to true if this is vended from a material storage
 	var/manufactured = FALSE
 	/// whether this sheet can be sniffed by the material sniffer
@@ -43,7 +43,7 @@
 
 /obj/item/stack/sheet/examine(mob/user)
 	. = ..()
-	if (manufactured && gulag_valid)
+	if (manufactured && gulag_value)
 		. += span_notice(LANG("obj.dcb373c1", null))
 
 	var/datum/material/material = get_master_material()

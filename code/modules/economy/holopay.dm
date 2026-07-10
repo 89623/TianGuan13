@@ -75,60 +75,57 @@
 	linked_card = null
 	return ..()
 
-/obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, list/modifiers, list/attack_modifiers)
-	var/mob/living/user = item_holder
-	if(!isliving(user))
-		return ..()
+/obj/structure/holopay/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	/// Users can pay with an ID to skip the UI
-	if(isidcard(held_item))
-		if(istype(held_item, /obj/item/card/id/departmental_budget))
+	if(isidcard(tool))
+		if(istype(tool, /obj/item/card/id/departmental_budget))
 			balloon_alert(user, LANG("obj.981ecc80", null))
 			to_chat(user, span_warning(LANG("obj.14dbb8b1", null)))
-			return FALSE
-		if(force_fee && tgui_alert(item_holder, LANG("obj.81a7c95a", list(force_fee, MONEY_SYMBOL)), LANG("obj.54c77a01", null), list("Pay", "Cancel")) != "Pay")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
+		if(force_fee && tgui_alert(user, LANG("obj.81a7c95a", list(force_fee, MONEY_SYMBOL)), LANG("obj.54c77a01", null), list("Pay", "Cancel")) != "Pay")
+			return ITEM_INTERACT_BLOCKING
 		process_payment(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	/// Users can also pay by holochip
-	if(istype(held_item, /obj/item/holochip))
+	if(istype(tool, /obj/item/holochip))
 		/// Account checks
-		var/obj/item/holochip/chip = held_item
+		var/obj/item/holochip/chip = tool
 		if(!chip.credits)
 			balloon_alert(user, LANG("obj.61e0af6a", null))
 			to_chat(user, span_warning(LANG("obj.02709041", list(MONEY_NAME))))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		/// Charges force fee or uses pay what you want
 		var/cash_deposit = force_fee || tgui_input_number(user, LANG("obj.348052fb", list(chip.credits)), LANG("obj.7029a1e6", null), max_value = chip.credits)
 		/// Exit sanity checks
 		if(!cash_deposit)
-			return TRUE
-		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
+		if(QDELETED(tool) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
+			return ITEM_INTERACT_BLOCKING
 		if(!chip.spend(cash_deposit, FALSE))
 			balloon_alert(user, LANG("obj.62b3f643", list(MONEY_NAME)))
 			to_chat(user, span_warning(LANG("obj.af145c57", list(MONEY_NAME))))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		/// Success: Alert buyer
 		alert_buyer(user, cash_deposit)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	/// Throws errors if they try to use space cash
-	if(istype(held_item, /obj/item/stack/spacecash))
+	if(istype(tool, /obj/item/stack/spacecash))
 		to_chat(user, LANG("obj.a61bd149", null))
-		return TRUE
-	if(istype(held_item, /obj/item/coin))
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/coin))
 		to_chat(user, LANG("obj.1bb0a4c0", null))
-		return TRUE
-	return ..()
+		return ITEM_INTERACT_BLOCKING
+	return NONE
 
-/obj/structure/holopay/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/holopay/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	/// Can kill it by right-clicking with ID because it seems useful and intuitive, to me, at least
-	if(!isidcard(weapon))
-		return ..()
-	var/obj/item/card/id/attacking_id = weapon
+	if(!isidcard(tool))
+		return NONE
+	var/obj/item/card/id/attacking_id = tool
 	if(!attacking_id.my_store || attacking_id.my_store != src)
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	dissipate()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/holopay/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -260,7 +257,7 @@
 	/// Account checks
 	var/obj/item/card/id/id_card
 	id_card = user.get_idcard(TRUE)
-	if(isnull(id_card) || id_card.can_be_used_in_payment(user))
+	if(isnull(id_card) || !id_card.can_be_used_in_payment(user))
 		balloon_alert(user, LANG("obj.bcdb378a", null))
 		to_chat(user, span_warning(LANG("obj.08c4f7f3", null)))
 		return FALSE

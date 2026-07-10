@@ -92,27 +92,30 @@
 		to_chat(user, span_notice(LANG("obj.6d42c57e", list(multi_tool.buffer, src))))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/turretid/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/turretid/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(machine_stat & BROKEN)
-		return
+		return NONE
 
 	if (issilicon(user))
 		return attack_hand(user)
 
-	var/id = attacking_item.GetID()
+	var/card = tool.GetID()
 
-	if(isnull(id))
-		return
+	if(isnull(card))
+		return NONE
 
-	if (check_access(id))
-		if(obj_flags & EMAGGED)
-			to_chat(user, span_warning(LANG("obj.998439f7", null)))
-			return
-
-		locked = !locked
-		to_chat(user, span_notice(LANG("obj.2ee6d876", list(locked ? "lock" : "unlock"))))
-	else
+	if(!check_access(card))
 		to_chat(user, span_alert(LANG("obj.077f9b52", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_warning(LANG("obj.998439f7", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	locked = !locked
+	to_chat(user, span_notice(LANG("obj.2ee6d876", list(locked ? "lock" : "unlock"))))
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/machinery/turretid/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)

@@ -377,7 +377,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		message = deaf_message
 
-		var/show_message_success = show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight, skip_i18n_fallback = TRUE) // NOVA EDIT - i18n - player (signed) speech: don't auto-translate the player's own words
+		var/show_message_success = show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
 		if(show_message_success && understood)
 			return HEAR_HEARD | HEAR_UNDERSTOOD
 		else if (show_message_success && !understood)
@@ -402,7 +402,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods)
-	var/show_message_success = show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight, skip_i18n_fallback = TRUE) // NOVA EDIT - i18n - player speech: don't auto-translate the player's own words
+	var/show_message_success = show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight)
 	if(show_message_success && understood)
 		return HEAR_HEARD | HEAR_UNDERSTOOD
 	else if (show_message_success && !understood)

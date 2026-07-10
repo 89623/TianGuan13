@@ -18,6 +18,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 	/// The name that appears on the shell.
 	var/display_name = ""
@@ -169,7 +170,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		balloon_alert(user, LANG("obj.40c92cc8", list(tool)))
 		owner_id = WEAKREF(tool)
 		return ITEM_INTERACT_SUCCESS
-		
+
 	return NONE
 
 /obj/item/integrated_circuit/screwdriver_act(mob/living/user, obj/item/tool)

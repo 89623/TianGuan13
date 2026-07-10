@@ -491,15 +491,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	. = ..()
 	update_appearance()
 
-/obj/machinery/newscaster/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/paper))
-		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
-			return
-		paper_remaining++
-		to_chat(user, span_notice(LANG("obj.f15361cc", list(attacking_item, src, paper_remaining))))
-		qdel(attacking_item)
-		return
-	return ..()
+/obj/machinery/newscaster/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/paper))
+		return NONE
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		return ITEM_INTERACT_BLOCKING
+	paper_remaining++
+	to_chat(user, span_notice(LANG("obj.f15361cc", list(tool, src, paper_remaining))))
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 ///returns (machine_stat & broken)
 /obj/machinery/newscaster/proc/needs_repair()

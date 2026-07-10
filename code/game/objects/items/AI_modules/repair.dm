@@ -9,6 +9,7 @@
 	name = "\improper 'Remove Law' AI module"
 	desc = "An AI Module for removing single laws."
 	bypass_law_amt_check = TRUE
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	var/lawpos = 1
 
 /obj/item/ai_module/remove/attack_self(mob/user)
@@ -36,6 +37,7 @@
 	var/targetName = "name"
 	desc = "An AI Module for removing all non-core laws."
 	bypass_law_amt_check = TRUE
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/reset/handle_unique_ai()
 	return
@@ -54,6 +56,7 @@
 /obj/item/ai_module/reset/purge
 	name = "'Purge' AI Module"
 	desc = "An AI Module for purging all programmed laws."
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/reset/purge/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
 	..()

@@ -219,33 +219,33 @@
 	else
 		. += span_notice(LANG("obj.f721afd3", null))
 
-/obj/item/sliced_pipe/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/sliced_pipe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!wires_are_in)
 		// here we can stuff in additional objects for a cooler effect
-		if(is_type_in_typecache(item, allowed) && contents.len < MAX_STUFFINGS)
+		if(is_type_in_typecache(tool, allowed) && contents.len < MAX_STUFFINGS)
 			balloon_alert(user, LANG("obj.0d2c11af", null))
-			var/atom/movable/to_put = item
-			if(isstack(item))
-				var/obj/item/stack/as_stack = item
+			var/atom/movable/to_put = tool
+			if(isstack(tool))
+				var/obj/item/stack/as_stack = tool
 				var/obj/item/stack/new_stack = as_stack.split_stack(1)
 				new_stack.merge_type = null //prevent them from merging inside for contents.len
 				to_put = new_stack
 			to_put.forceMove(src)
-			return
+			return ITEM_INTERACT_SUCCESS
 
 		//if the item has reagents lets allow it to transfer
-		if(item.reagents)
-			return ..()
+		if(tool.reagents)
+			return NONE
 		if(reagents.total_volume < 5)
 			balloon_alert(user, LANG("obj.54c02df4", null))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		var/obj/item/stack/cable_coil/coil = item
+		var/obj/item/stack/cable_coil/coil = tool
 		if(!istype(coil))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if (coil.get_amount() < 15)
 			balloon_alert(user, LANG("obj.1643231e", null))
-			return
+			return ITEM_INTERACT_BLOCKING
 		coil.use(15)
 
 		var/cur_power = 0
@@ -261,27 +261,30 @@
 		icon_state = "[icon_state]-cable"
 		reagents.flags = SEALED_CONTAINER
 		wires_are_in = TRUE
-	else // wires are in, lets finish this up
-		var/obj/item/assembly/assembly = item
-		if(!istype(assembly) || !(assembly.type in allowed_activators))
-			return
-		if(assembly.secured)
-			balloon_alert(user, LANG("obj.80dcbc8c", null))
-			return
-		if(!user.transferItemToLoc(assembly, src))
-			return
-		user.balloon_alert(user, LANG("obj.b0ad167d", null))
+		return ITEM_INTERACT_SUCCESS
 
-		var/obj/item/grenade/iedcasing/pipebomb = new(drop_location())
-		for(var/atom/movable/item_inside as anything in contents)
-			item_inside.forceMove(pipebomb)
+	// wires are in, lets finish this up
+	var/obj/item/assembly/assembly = tool
+	if(!istype(assembly) || !(assembly.type in allowed_activators))
+		return ITEM_INTERACT_BLOCKING
+	if(assembly.secured)
+		balloon_alert(user, LANG("obj.80dcbc8c", null))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(assembly, src))
+		return ITEM_INTERACT_BLOCKING
+	user.balloon_alert(user, LANG("obj.b0ad167d", null))
 
-		pipebomb.power = power
-		pipebomb.attach_activator(assembly)
-		pipebomb.setup_effects_from_contents()
-		var/was_in_hands = (loc == user)
-		qdel(src)
-		if(was_in_hands)
-			user.put_in_hands(pipebomb)
+	var/obj/item/grenade/iedcasing/pipebomb = new(drop_location())
+	for(var/atom/movable/item_inside as anything in contents)
+		item_inside.forceMove(pipebomb)
+
+	pipebomb.power = power
+	pipebomb.attach_activator(assembly)
+	pipebomb.setup_effects_from_contents()
+	var/was_in_hands = (loc == user)
+	qdel(src)
+	if(was_in_hands)
+		user.put_in_hands(pipebomb)
+	return ITEM_INTERACT_SUCCESS
 
 #undef MAX_STUFFINGS
