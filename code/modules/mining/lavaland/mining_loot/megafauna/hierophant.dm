@@ -228,8 +228,8 @@
 	RegisterSignal(beacon, COMSIG_QDELETING, PROC_REF(beacon_destroyed))
 
 	user.update_mob_action_buttons()
-	user.visible_message(span_hierophant_warning("[user] places a strange machine beneath [user.p_their()] feet!"), span_hierophant("You detach the hierophant beacon, allowing you to teleport yourself and any allies to it at any time!"))
-	to_chat(user, span_hierophant("You can remove the beacon to place it again by striking it with the club."))
+	user.visible_message(span_hierophant_warning(LANG("obj.75b5b16e", list(user, user.p_their()))), span_hierophant(LANG("obj.b6bf25cb", null)))
+	to_chat(user, span_hierophant(LANG("obj.5e2546c5", null)))
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/hierophant_club/proc/beacon_destroyed(datum/source)
@@ -258,7 +258,7 @@
 /datum/action/innate/dash/hierophant/teleport(mob/user, atom/target)
 	var/dist = get_dist(user, target)
 	if(dist > HIEROPHANT_BLINK_RANGE)
-		user.balloon_alert(user, "too far!")
+		user.balloon_alert(user, LANG("datum.f5e75781", null))
 		return FALSE
 
 	return ..()

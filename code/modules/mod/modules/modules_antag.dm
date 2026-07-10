@@ -541,7 +541,7 @@
 /obj/item/mod/module/stealth/wraith/unstealth(datum/source)
 	if(!stealth_active)
 		return
-	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
+	to_chat(mod.wearer, span_warning(LANG("obj.af764fe4", list(src))))
 	do_sparks(2, TRUE, src)
 	drain_power(use_energy_cost)
 	// Don't deactivate() directly as the module may not be active in the first place when stealthing

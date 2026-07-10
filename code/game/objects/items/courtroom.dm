@@ -41,6 +41,6 @@
 	if(!istype(tool, /obj/item/gavelhammer))
 		return NONE
 	playsound(loc, 'sound/items/gavel.ogg', 100, TRUE)
-	user.visible_message(span_warning("[user] strikes [src] with [tool]."))
+	user.visible_message(span_warning(LANG("obj.42c638b6", list(user, src, tool))))
 	user.changeNext_move(CLICK_CD_MELEE)
 	return ITEM_INTERACT_SUCCESS

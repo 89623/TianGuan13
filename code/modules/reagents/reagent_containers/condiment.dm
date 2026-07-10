@@ -506,7 +506,7 @@
 		desc = temp_list[3]
 	else
 		icon_state = "condi_mixed"
-		desc = "A small condiment pack. The label says it contains [originalname]."
+		desc = LANG("obj.7418c06b", list(originalname))
 
 //Ketchup
 /obj/item/reagent_containers/condiment/pack/ketchup

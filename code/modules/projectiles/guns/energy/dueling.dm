@@ -173,7 +173,7 @@
 	if(check_valid_duel(user, FALSE) || other_gun.check_valid_duel(user, FALSE))
 		return ITEM_INTERACT_BLOCKING
 	var/datum/duel/newduel = new(src, other_gun)
-	to_chat(user,span_notice("Pairing established. Pairing code: [newduel.pairing_code]"))
+	to_chat(user,span_notice(LANG("obj.b12ddd9a", list(newduel.pairing_code))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/dueling/examine_more(mob/user)

@@ -385,15 +385,15 @@
 	if(!tool.get_sharpness() || !user.combat_mode)
 		return NONE
 	if(!isturf(loc))
-		balloon_alert(user, "can't butcher here!")
+		balloon_alert(user, LANG("obj.4a10807f", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "butchering...")
+	balloon_alert(user, LANG("obj.9e9eb694", null))
 	if(!do_after(user, 0.75 SECONDS, src))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return ITEM_INTERACT_BLOCKING
 
-	loc.balloon_alert(user, "butchered")
+	loc.balloon_alert(user, LANG("obj.6fa9faa1", null))
 	new /obj/item/food/meat/slab/mouse(loc)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

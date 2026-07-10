@@ -11,11 +11,11 @@
 /obj/item/petclicker/attack_self(mob/living/user)
 	. = ..()
 	playsound(src, 'sound/items/pen_click.ogg', 30, vary = TRUE, extrarange = click_sound_extrarange)
-	balloon_alert(user, "clicked")
+	balloon_alert(user, LANG("obj.23429591", null))
 
 /obj/item/petclicker/click_alt(mob/living/user)
 	click_sound_extrarange = (click_sound_extrarange == MEDIUM_RANGE_SOUND_EXTRARANGE) ? SHORT_RANGE_SOUND_EXTRARANGE : MEDIUM_RANGE_SOUND_EXTRARANGE
-	to_chat(user, span_notice("You set the [src] to [click_sound_extrarange == MEDIUM_RANGE_SOUND_EXTRARANGE ? "normal" : "short"] click range."))
+	to_chat(user, span_notice(LANG("obj.a57bfeec", list(src, click_sound_extrarange == MEDIUM_RANGE_SOUND_EXTRARANGE ? "normal" : "short"))))
 	balloon_alert(user, click_sound_extrarange == MEDIUM_RANGE_SOUND_EXTRARANGE ? "normal range" : "short range")
 	return CLICK_ACTION_SUCCESS
 

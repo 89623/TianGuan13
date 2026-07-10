@@ -658,7 +658,7 @@
 			to_chat(maybe_monkey, span_danger(LANG("datum.c49f5c95", null)))
 		else
 			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
-			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
+			to_chat(maybe_monkey, span_danger(LANG("datum.b305e5df", null)))
 
 	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
 		new /mob/living/carbon/human/species/monkey(location, TRUE)
@@ -677,7 +677,7 @@
 			to_chat(maybe_monkey, span_danger(LANG("datum.d786bafc", null)))
 		else
 			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
-			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
+			to_chat(maybe_monkey, span_danger(LANG("datum.b305e5df", null)))
 
 	if (LAZYLEN(SSmobs.cubemonkeys) < CONFIG_GET(number/monkeycap))
 		new /mob/living/carbon/human/species/monkey/angry(location, TRUE)

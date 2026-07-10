@@ -138,7 +138,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/stack/pipe_cleaner_coil/coil = tool
 	if (coil.get_amount() < 1)
-		to_chat(user, span_warning("Not enough pipe cleaner!"))
+		to_chat(user, span_warning(LANG("obj.b55ad191", null)))
 		return ITEM_INTERACT_BLOCKING
 	coil.pipe_cleaner_join(src, user)
 	return ITEM_INTERACT_SUCCESS

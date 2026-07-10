@@ -244,9 +244,9 @@
 	if(istype(tool, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = tool
 		if (coil.get_amount() < 1)
-			to_chat(user, span_warning("You need one length of cable to repair [src]!"))
+			to_chat(user, span_warning(LANG("obj.fa918fad", list(src))))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You begin to replace the wires..."))
+		to_chat(user, span_notice(LANG("obj.e9ac56d2", null)))
 		if(!do_after(user, 3 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
 		if(coil.get_amount() < 1)
@@ -254,19 +254,19 @@
 		coil.use(1)
 		atom_integrity = max_integrity
 		set_machine_stat(machine_stat & ~BROKEN)
-		to_chat(user, span_notice("You repair \the [src]."))
+		to_chat(user, span_notice(LANG("obj.67ccfd18", list(src))))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if(tool.GetID())
 		if(obj_flags & EMAGGED)
-			to_chat(user, span_danger("Error, access controller damaged!"))
+			to_chat(user, span_danger(LANG("obj.f61e0e57", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!allowed(user))
-			to_chat(user, span_danger("Access denied."))
+			to_chat(user, span_danger(LANG("obj.077f9b52", null)))
 			return ITEM_INTERACT_BLOCKING
 		locked = !locked
-		to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the controls."))
+		to_chat(user, span_notice(LANG("obj.d47371c2", list(locked ? "lock" : "unlock"))))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
@@ -471,10 +471,10 @@
 /obj/machinery/power/shieldwallgen/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(tool.GetID())
 		if(obj_flags & EMAGGED)
-			balloon_alert(user, "malfunctioning!")
+			balloon_alert(user, LANG("obj.4156ec52", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!allowed(user))
-			balloon_alert(user, "no access!")
+			balloon_alert(user, LANG("obj.ddafd752", null))
 			return ITEM_INTERACT_BLOCKING
 		locked = !locked
 		balloon_alert(user, "[locked ? "locked!" : "unlocked"]")

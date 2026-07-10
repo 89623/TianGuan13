@@ -89,17 +89,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 /obj/machinery/defibrillator_mount/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/defibrillator))
 		if(defib)
-			to_chat(user, span_warning("There's already a defibrillator in [src]!"))
+			to_chat(user, span_warning(LANG("obj.f3f623c6", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/defibrillator/new_defib = tool
 		if(!new_defib.get_cell())
-			to_chat(user, span_warning("Only defibrilators containing a cell can be hooked up to [src]!"))
+			to_chat(user, span_warning(LANG("obj.829a8eb0", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(HAS_TRAIT(new_defib, TRAIT_NODROP) || !user.transferItemToLoc(new_defib, src))
-			to_chat(user, span_warning("[new_defib] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.1dbf8014", list(new_defib))))
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] hooks up [new_defib] to [src]!"), \
-		span_notice("You press [new_defib] into the mount, and it clicks into place."))
+		user.visible_message(span_notice(LANG("obj.4f2c832c", list(user, new_defib, src))), \
+		span_notice(LANG("obj.a44cf35f", list(new_defib))))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		// Make sure the defib is set before processing begins.
 		defib = new_defib
@@ -115,11 +115,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		return NONE
 
 	if((!allowed(user) && SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_RED)) //anyone can toggle the clamps in red alert!
-		to_chat(user, span_warning("Insufficient access."))
+		to_chat(user, span_warning(LANG("obj.21748dc0", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!defib)
-		to_chat(user, span_warning("You can't engage the clamps on a defibrillator that isn't there."))
+		to_chat(user, span_warning(LANG("obj.e5a512fe", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	clamps_locked = !clamps_locked

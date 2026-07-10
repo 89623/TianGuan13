@@ -81,7 +81,7 @@
 	var/success_string
 	if(istype(tool, /obj/item/antag_spawner/contract))
 		if(astype(tool, /obj/item/antag_spawner/contract).used)
-			to_chat(user, span_warning("The contract has been used, you can't get your points back now!"))
+			to_chat(user, span_warning(LANG("obj.1e561a6d", null)))
 			return ITEM_INTERACT_BLOCKING
 		spawner_entry = locate(/datum/spellbook_entry/item/contract) in entries
 		success_string = "You feed the contract back into the spellbook, refunding your points."
@@ -97,10 +97,10 @@
 	if(isnull(success_string))
 		return NONE
 	if(!istype(spawner_entry)) // No success_string means it isn't a valid item, no spawner entry means the book doesn't have it(somehow)(they had this check before I got here)
-		to_chat(user, span_warning("[src] doesn't seem to want to refund [tool]."))
+		to_chat(user, span_warning(LANG("obj.34e9a265", list(src, tool))))
 		return ITEM_INTERACT_BLOCKING
 	if(!spawner_entry.can_refund(user, src, tool))
-		to_chat(user, span_warning("You can't refund [src]."))
+		to_chat(user, span_warning(LANG("obj.3639a6ab", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice(success_string))

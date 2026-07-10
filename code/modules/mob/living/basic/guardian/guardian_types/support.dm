@@ -130,7 +130,7 @@
 		target.balloon_alert(source, LANG("datum.73bdfe0e", null))
 		return FALSE
 	if((beacon.z != target.z) && !(target.z in SSmapping.get_connected_levels(beacon.z)))
-		target.balloon_alert(source, "too far from beacon!")
+		target.balloon_alert(source, LANG("datum.e045149d", null))
 		return FALSE
 	return TRUE
 

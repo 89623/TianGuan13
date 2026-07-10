@@ -62,7 +62,7 @@
 		return NONE
 	if(synced_bank_account)
 		synced_bank_account.adjust_money(value)
-		say("[MONEY_NAME_CAPITALIZED] deposited! The [synced_bank_account.account_holder] is now [synced_bank_account.account_balance] [MONEY_SYMBOL].")
+		say(LANG("obj.2bf7e5e6", list(MONEY_NAME_CAPITALIZED, synced_bank_account.account_holder, synced_bank_account.account_balance, MONEY_SYMBOL)))
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 

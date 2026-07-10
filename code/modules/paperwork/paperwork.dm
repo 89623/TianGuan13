@@ -49,15 +49,15 @@
 
 	if(istype(tool, stamp_requested))
 		add_stamp()
-		to_chat(user, span_notice("You skim through the papers until you find a field reading 'STAMP HERE', and complete the paperwork."))
+		to_chat(user, span_notice(LANG("obj.04fbca1b", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	var/datum/action/item_action/chameleon/change/stamp/stamp_action = locate() in tool.actions
 	if(isnull(stamp_action))
-		to_chat(user, span_warning("You hunt through the papers for somewhere to use [tool], but can't find anything."))
+		to_chat(user, span_warning(LANG("obj.5d527bc8", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("[tool] morphs into the appropriate stamp, which you use to complete the paperwork."))
+	to_chat(user, span_notice(LANG("obj.dc1bfd09", list(tool))))
 	stamp_action.update_look(stamp_requested)
 	add_stamp()
 	return ITEM_INTERACT_SUCCESS
@@ -237,7 +237,7 @@
 /obj/item/paperwork/photocopy/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stamp/void) || stamped || voided)
 		return ..()
-	to_chat(user, span_notice("You plant the [tool] firmly onto the front of the documents."))
+	to_chat(user, span_notice(LANG("obj.e66f533b", list(tool))))
 	stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_stamp-void")
 	add_overlay(stamp_overlay)
 	voided = TRUE

@@ -146,7 +146,7 @@
 	return 1
 
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user)
-	to_chat(user, span_warning("\The [src] whizzles quietly."))
+	to_chat(user, span_warning(LANG("obj.fac4051f", list(src))))
 
 /obj/item/gun/magic/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.7009f29d", list(user, src, user.p_their(), user.p_theyre()))))

@@ -131,7 +131,7 @@
 			UnregisterSignal(top_paper, COMSIG_ATOM_UPDATED_ICON)
 		RegisterSignal(tool, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_top_paper_change))
 		top_paper = tool
-		to_chat(user, span_notice("You clip [tool] onto [src]."))
+		to_chat(user, span_notice(LANG("obj.5d5208ad", list(tool, src))))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -140,7 +140,7 @@
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		pen = tool
-		to_chat(user, span_notice("You slot [tool] into [src]."))
+		to_chat(user, span_notice(LANG("obj.ed1a28f3", list(tool, src))))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 

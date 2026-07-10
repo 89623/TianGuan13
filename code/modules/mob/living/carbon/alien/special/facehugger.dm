@@ -159,8 +159,8 @@
 
 	// probiscis-blocker handling
 	if(target.is_mouth_covered(ITEM_SLOT_HEAD))
-		target.visible_message(span_danger("[src] smashes against [target]'s [target.head]!"), \
-							span_userdanger("[src] smashes against your [target.head]!"))
+		target.visible_message(span_danger(LANG("obj.146a4222", list(src, target, target.head))), \
+							span_userdanger(LANG("obj.8a15e21c", list(src, target.head))))
 		die()
 		return FALSE
 
@@ -300,7 +300,7 @@
 	SIGNAL_HANDLER
 	if(stat != CONSCIOUS)
 		return NONE
-	to_chat(user, span_danger("There's something moving inside of \the [letter]!"))
+	to_chat(user, span_danger(LANG("obj.7b344986", list(letter))))
 	leap_to(user)
 	return COMPONENT_TRAITOR_MAIL_HANDLED
 

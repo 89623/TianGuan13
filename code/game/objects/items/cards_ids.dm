@@ -828,7 +828,7 @@
 	if(!alt_click_can_use_id(user))
 		return NONE
 	if (LAZYLEN(registered_account.being_dumped))
-		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
+		registered_account.bank_card_talk(span_warning(LANG("obj.9dff87ac", null)), TRUE)
 		return CLICK_ACTION_SUCCESS
 	if(registered_account.account_debt)
 		var/choice = tgui_alert(user, LANG("obj.2264b9a7", null), LANG("obj.02d6f4c5", null), list("Withdraw", "Pay Debt"))

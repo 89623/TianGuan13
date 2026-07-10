@@ -88,7 +88,7 @@
 	if(!istype(tool,/obj/item/skillchip))
 		return NONE
 	if(inserted_skillchip)
-		to_chat(user,span_notice("There's already a skillchip inside."))
+		to_chat(user,span_notice(LANG("obj.79dadda3", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING

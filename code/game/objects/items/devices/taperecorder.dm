@@ -91,7 +91,7 @@
 	if(!user.transferItemToLoc(tool,src))
 		return ITEM_INTERACT_BLOCKING
 	mytape = tool
-	balloon_alert(user, "inserted [mytape]")
+	balloon_alert(user, LANG("obj.94d2a5ff", list(mytape)))
 	playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS

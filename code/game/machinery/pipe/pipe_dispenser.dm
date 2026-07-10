@@ -156,7 +156,7 @@
 	add_fingerprint(user)
 	if (!istype(tool, /obj/item/pipe) && !istype(tool, /obj/item/pipe_meter))
 		return NONE
-	to_chat(usr, span_notice("You put [tool] back into [src]."))
+	to_chat(usr, span_notice(LANG("obj.99c70bb4", list(tool, src))))
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 

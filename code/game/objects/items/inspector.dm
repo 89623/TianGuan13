@@ -79,7 +79,7 @@
 
 /obj/item/inspector/examine(mob/user)
 	. = ..()
-	. += span_info("Use on an item to scan if it contains, or is, contraband.")
+	. += span_info(LANG("obj.3cab1051", null))
 	if(!cell_cover_open)
 		. += span_notice(LANG("obj.84935762", null))
 		return

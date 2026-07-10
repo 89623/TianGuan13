@@ -107,11 +107,11 @@
 	if(!isidcard(tool))
 		return NONE
 	var/obj/item/card/id/attacking_id = tool
-	balloon_alert(user, "starting transfer")
-	var/point_movement = tgui_alert(user, "To ID (from card) or to card (from ID)?", "Mining Points Transfer", list(TO_USER_ID, TO_POINT_CARD))
+	balloon_alert(user, LANG("obj.15ef6553", null))
+	var/point_movement = tgui_alert(user, LANG("obj.90fa83f2", null), LANG("obj.36c7058b", null), list(TO_USER_ID, TO_POINT_CARD))
 	if(!point_movement)
 		return ITEM_INTERACT_BLOCKING
-	var/amount = tgui_input_number(user, "How much do you want to transfer? ID Balance: [attacking_id.registered_account.mining_points], Card Balance: [points]", "Transfer Points", min_value = 0, round_value = 1)
+	var/amount = tgui_input_number(user, LANG("obj.e9da4f50", list(attacking_id.registered_account.mining_points, points)), LANG("obj.bfebd140", null), min_value = 0, round_value = 1)
 	if(!amount)
 		return ITEM_INTERACT_BLOCKING
 	switch(point_movement)
@@ -120,14 +120,14 @@
 				amount = points
 			attacking_id.registered_account.mining_points += amount
 			points -= amount
-			to_chat(user, span_notice("You transfer [amount] mining points from [src] to [attacking_id]."))
+			to_chat(user, span_notice(LANG("obj.2fb09f9c", list(amount, src, attacking_id))))
 			return ITEM_INTERACT_SUCCESS
 		if(TO_POINT_CARD)
 			if(amount > attacking_id.registered_account.mining_points)
 				amount = attacking_id.registered_account.mining_points
 			attacking_id.registered_account.mining_points -= amount
 			points += amount
-			to_chat(user, span_notice("You transfer [amount] mining points from [attacking_id] to [src]."))
+			to_chat(user, span_notice(LANG("obj.2fb09f9c", list(amount, attacking_id, src))))
 			return ITEM_INTERACT_SUCCESS
 	return NONE
 

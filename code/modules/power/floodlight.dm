@@ -103,7 +103,7 @@
 	if(istype(tool, /obj/item/stack/cable_coil) && state == FLOODLIGHT_NEEDS_WIRES)
 		var/obj/item/stack/coil = tool
 		if(!coil.use(5))
-			balloon_alert(user, "need 5 cable pieces!")
+			balloon_alert(user, LANG("obj.f3b6711a", null))
 			return ITEM_INTERACT_BLOCKING
 
 		icon_state = "floodlight_c2"
@@ -113,11 +113,11 @@
 
 	if(istype(tool, /obj/item/light/tube))
 		if(state != FLOODLIGHT_NEEDS_LIGHTS)
-			balloon_alert(user, "construction not completed!")
+			balloon_alert(user, LANG("obj.1cfa8d9a", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(astype(tool, /obj/item/light/tube).status == LIGHT_BROKEN) // light tube broken.
-			balloon_alert(user, "light tube is broken!")
+			balloon_alert(user, LANG("obj.4f7f78d9", null))
 			return ITEM_INTERACT_BLOCKING
 
 		new /obj/machinery/power/floodlight(loc)
@@ -276,11 +276,11 @@
 /obj/machinery/power/floodlight/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open)
 		panel_open = FALSE
-		balloon_alert(user, "closed panel")
+		balloon_alert(user, LANG("obj.934f975d", null))
 		return ITEM_INTERACT_SUCCESS
 	change_setting(FLOODLIGHT_OFF)
 	panel_open = TRUE
-	balloon_alert(user, "opened panel")
+	balloon_alert(user, LANG("obj.a5d09eaa", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/floodlight/attack_hand(mob/user, list/modifiers)

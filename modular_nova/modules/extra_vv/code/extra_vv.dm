@@ -54,7 +54,7 @@
 	var/notice = tgui_alert(usr, LANG("mob.3673dd56", null), LANG("mob.927b06df", null), list("Yes", "No"))
 	if(notice != "Yes")
 		return
-	var/quirks_prompt = tgui_alert(usr, "Reload their quirks too? This will clear any existing quirks on the mob.", "Load Quirks", list("Yes", "No"))
+	var/quirks_prompt = tgui_alert(usr, LANG("mob.789bc677", null), LANG("mob.16869b65", null), list("Yes", "No"))
 
 	var/mob/living/carbon/human/human_mob = src
 	human_mob.dna.mutant_bodyparts = list()

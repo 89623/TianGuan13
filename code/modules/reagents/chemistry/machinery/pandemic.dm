@@ -85,7 +85,7 @@
 	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
 	if(istype(tool, /obj/item/reagent_containers/dropper) || istype(tool, /obj/item/reagent_containers/syringe))
 		if(!beaker)
-			balloon_alert(user, "no beaker!")
+			balloon_alert(user, LANG("obj.b5e2be5f", null))
 			return ITEM_INTERACT_BLOCKING
 		if(istype(tool, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
 			tool.interact_with_atom_secondary(beaker, user)
@@ -102,7 +102,7 @@
 		balloon_alert(user, LANG("obj.56d43536", null))
 		try_put_in_hand(beaker, usr)
 	else
-		balloon_alert(user, "beaker loaded")
+		balloon_alert(user, LANG("obj.78ea91ff", null))
 	user.transferItemToLoc(tool, src)
 	beaker = tool
 	update_appearance()

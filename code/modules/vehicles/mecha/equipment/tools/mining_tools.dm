@@ -121,9 +121,9 @@
 	if(DOING_INTERACTION_WITH_TARGET(source, target) && do_after_cooldown(target, source, DOAFTER_SOURCE_MECHADRILL))
 		return
 
-	target.visible_message(span_warning("[chassis] starts to drill [target]."), \
-				span_userdanger("[chassis] starts to drill you!"), \
-				span_hear("You hear drilling."))
+	target.visible_message(span_warning(LANG("obj.fbfd70ea", list(chassis, target))), \
+				span_userdanger(LANG("obj.c5d557d3", list(chassis))), \
+				span_hear(LANG("obj.059c723d", null)))
 
 	log_message("Started drilling [target]", LOG_MECHA)
 

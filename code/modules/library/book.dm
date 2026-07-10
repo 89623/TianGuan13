@@ -129,7 +129,7 @@
 		return
 
 	playsound(user, 'sound/items/handling/paper_pickup.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
+	user.visible_message(span_notice(LANG("obj.2b946d12", list(user, book_data.title))))
 	credit_book_to_reader(user)
 	display_content(user)
 

@@ -64,7 +64,7 @@
 /// Attempts to create a new task and assign it to the list.
 /obj/machinery/big_manipulator/proc/create_new_task(mob/user, task_type, turf/new_turf)
 	if(length(tasks) >= interaction_point_limit)
-		balloon_alert(user, "task limit reached!")
+		balloon_alert(user, LANG("obj.b9fe7ac5", null))
 		return FALSE
 
 	var/datum/stock_part/servo/locate_servo = locate() in component_parts
@@ -255,7 +255,7 @@
 
 /obj/machinery/big_manipulator/can_be_unfasten_wrench(mob/user, silent)
 	if(on || stopping)
-		to_chat(user, span_warning("[src] is activated!"))
+		to_chat(user, span_warning(LANG("obj.a471ab80", list(src))))
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -292,13 +292,13 @@
 	if(isidcard(tool))
 		if(!id_lock)
 			id_lock = WEAKREF(tool)
-			balloon_alert(user, "successfully locked")
+			balloon_alert(user, LANG("obj.006da009", null))
 			return ITEM_INTERACT_SUCCESS
 		if(tool != id_lock.resolve())
-			balloon_alert(user, "locked by another id")
+			balloon_alert(user, LANG("obj.58b9679e", null))
 			return ITEM_INTERACT_BLOCKING
 		id_lock = null
-		balloon_alert(user, "successfully unlocked")
+		balloon_alert(user, LANG("obj.aa10fc9d", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!panel_open || !is_wire_tool(tool))
@@ -312,7 +312,7 @@
 
 /obj/machinery/big_manipulator/mouse_drop_dragged(atom/drop_point, mob/user, src_location, over_location, params)
 	if(on || stopping)
-		balloon_alert(user, "turn it off first!")
+		balloon_alert(user, LANG("obj.b4476a5d", null))
 		return
 
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker?.resolve()
@@ -330,7 +330,7 @@
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
 	if(on || stopping)
-		balloon_alert(user, "turn it off first!")
+		balloon_alert(user, LANG("obj.b4476a5d", null))
 		return
 
 	if(monkey_worker?.resolve())
@@ -417,7 +417,7 @@
 		return
 
 	if(stopping)
-		balloon_alert(user, "stopping in progress!")
+		balloon_alert(user, LANG("obj.ba2cc928", null))
 		return
 
 	toggle_power_state(user)

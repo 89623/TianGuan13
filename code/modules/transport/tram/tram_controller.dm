@@ -273,7 +273,7 @@
 	if(controller_status & EMERGENCY_STOP)
 		set_status_code(EMERGENCY_STOP, FALSE)
 		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-		paired_cabinet.say("Controller reset.")
+		paired_cabinet.say(LANG("datum.1a359505", null))
 	nav_beacon.tram_loop.start()
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs

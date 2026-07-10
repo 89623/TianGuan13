@@ -95,17 +95,17 @@
 		return NONE
 	var/obj/item/transfer_valve/bomb_to_attach = tool
 	if(bomb)
-		to_chat(user, span_warning("[bomb] is already attached to [src]!"))
+		to_chat(user, span_warning(LANG("obj.6620462c", list(bomb, src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!bomb_to_attach.ready())
-		to_chat(user, span_warning("What good would an incomplete bomb do?"))
+		to_chat(user, span_warning(LANG("obj.449c772d", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(bomb_to_attach, src))
-		to_chat(user, span_warning("[bomb_to_attach] seems to be stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.dc050dd7", list(bomb_to_attach))))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_warning("[user] attaches [bomb_to_attach] to [src]!"),
-						span_notice("You attach bomb_to_attach to [src]."))
+	user.visible_message(span_warning(LANG("obj.d9f7cc4f", list(user, bomb_to_attach, src))),
+						span_notice(LANG("obj.a519dc23", list(src))))
 	bomb = bomb_to_attach
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS

@@ -34,12 +34,12 @@
 		return NONE
 	var/obj/item/swapper/other_swapper = tool
 	if(other_swapper.linked_swapper)
-		to_chat(user, span_warning("[other_swapper] is already linked. Break the current link to establish a new one."))
+		to_chat(user, span_warning(LANG("obj.8285a548", list(other_swapper))))
 		return ITEM_INTERACT_BLOCKING
 	if(linked_swapper)
-		to_chat(user, span_warning("[src] is already linked. Break the current link to establish a new one."))
+		to_chat(user, span_warning(LANG("obj.8285a548", list(src))))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You establish a quantum link between the two devices."))
+	to_chat(user, span_notice(LANG("obj.44fad32a", null)))
 	linked_swapper = other_swapper
 	other_swapper.linked_swapper = src
 	update_appearance()

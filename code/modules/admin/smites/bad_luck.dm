@@ -30,7 +30,7 @@
 		return
 	to_chat(target, span_warning(LANG("datum.b1f835cf", null)))
 	if(incidents == INFINITY)
-		to_chat(target, span_warning("A <b>very</b> bad feeling... As if malevolent forces are watching you..."))
+		to_chat(target, span_warning(LANG("datum.d475bfb9", null)))
 
 /datum/smite/bad_luck/proc/on_death(datum/component/omen/omen)
 	if(omen.incidents_left == INFINITY)

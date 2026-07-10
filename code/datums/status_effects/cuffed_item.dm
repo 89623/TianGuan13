@@ -106,8 +106,7 @@
 /datum/status_effect/cuffed_item/proc/on_examine_more(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_warning("There's [cuffed.examine_title(user)] bound to [owner.p_their()] \
-		[cuffed_to.plaintext_zone] by [cuffs.examine_title(user)].")
+	examine_list += span_warning(LANG("datum.e1e53bc4", list(cuffed.examine_title(user), owner.p_their(), cuffed_to.plaintext_zone, cuffs.examine_title(user))))
 
 /// What happens if the limb we're cuffed to is removed?
 /datum/status_effect/cuffed_item/proc/cuffed_to_removed(datum/source, mob/living/carbon/owner, special)
@@ -268,7 +267,7 @@
 	var/mob/living/ref_owner = owner
 	ref_cuffs.forceMove(owner.drop_location()) //This will cause the status effect to delete itself, which unsets the 'cuffs' var
 	user.put_in_hands(ref_cuffs)
-	ref_owner.balloon_alert(user, "cuffs removed from item")
+	ref_owner.balloon_alert(user, LANG("datum.656a238c", null))
 
 	return TRUE
 

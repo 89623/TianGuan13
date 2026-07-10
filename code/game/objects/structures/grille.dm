@@ -61,9 +61,9 @@
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	if(anchored)
-		. += span_notice("It's secured in place with [EXAMINE_HINT("screws")]. The rods look like they could be [EXAMINE_HINT("cut")] through.")
+		. += span_notice(LANG("obj.2e0de192", list(EXAMINE_HINT("screws"), EXAMINE_HINT("cut"))))
 	else
-		. += span_notice("The anchoring screws are [EXAMINE_HINT("unscrewed")]. The rods look like they could be [EXAMINE_HINT("cut")] through.")
+		. += span_notice(LANG("obj.3119bad7", list(EXAMINE_HINT("unscrewed"), EXAMINE_HINT("cut"))))
 
 /obj/structure/grille/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

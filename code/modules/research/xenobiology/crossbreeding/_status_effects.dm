@@ -13,8 +13,8 @@
 
 /datum/status_effect/rainbow_protection/on_apply()
 	owner.add_traits(list(TRAIT_GODMODE, TRAIT_PACIFISM), TRAIT_STATUS_EFFECT(id))
-	owner.visible_message(span_warning("[owner] shines with a brilliant rainbow light."),
-		span_notice("You feel protected by an unknown force!"))
+	owner.visible_message(span_warning(LANG("datum.ada79b7b", list(owner))),
+		span_notice(LANG("datum.84b42af2", null)))
 	// okay, now time for the rainbow animation.
 	owner.add_filter("rainbow_protection_[REF(src)]", 2, color_matrix_filter(list(0,0,0, 0,0.75,0, 0,0,1, 0,0.25,0), COLORSPACE_HSL))
 	var/color_filter = owner.get_filter("rainbow_protection_[REF(src)]")

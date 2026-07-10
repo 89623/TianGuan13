@@ -959,13 +959,13 @@
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
 		if(hasPower() && shock(user, 60)) // Protective grille of wiring is electrified
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You start cutting through the outer grille."))
+		to_chat(user, span_notice(LANG("obj.6b6a4067", null)))
 		if(!tool.use_tool(src, user, 10, volume=100))
 			return ITEM_INTERACT_BLOCKING
 		if(!panel_open)  // double check it wasn't closed while we were trying to snip
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] cut through [src]'s outer grille."),
-							span_notice("You cut through [src]'s outer grille."))
+		user.visible_message(span_notice(LANG("obj.62ab9b33", list(user, src))),
+							span_notice(LANG("obj.613fedff", list(src))))
 		security_level = AIRLOCK_SECURITY_PLASTEEL_O
 		return ITEM_INTERACT_SUCCESS
 	if(note)
@@ -1092,15 +1092,15 @@
 	if(!HAS_SILICON_ACCESS(user) && isElectrified() && shock(user, 75))
 		return ITEM_INTERACT_BLOCKING
 	if(material.get_amount() < amt_required)
-		to_chat(user, span_warning("You need at least [amt_required] sheets of [material] to reinforce [src]."))
+		to_chat(user, span_warning(LANG("obj.7f617871", list(amt_required, material, src))))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You start reinforcing [src]."))
+	to_chat(user, span_notice(LANG("obj.afebeb7a", list(src))))
 	if(!do_after(user, 2 SECONDS, src))
 		return ITEM_INTERACT_BLOCKING
 	if(!panel_open || !material.use(amt_required))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] reinforces [src] with [material]."),
-						span_notice("You reinforce [src] with [material]."))
+	user.visible_message(span_notice(LANG("obj.f56a8d15", list(user, src, material))),
+						span_notice(LANG("obj.af6b48b6", list(src, material))))
 	security_level = new_security_level
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -1143,23 +1143,23 @@
 	if(istype(tool, /obj/item/door_seal)) //adding the seal
 		var/obj/item/door_seal/airlockseal = tool
 		if(!density)
-			to_chat(user, span_warning("[src] must be closed before you can seal it!"))
+			to_chat(user, span_warning(LANG("obj.535dd0c5", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(seal)
-			to_chat(user, span_warning("[src] has already been sealed!"))
+			to_chat(user, span_warning(LANG("obj.523f8fea", list(src))))
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] begins sealing [src]."), span_notice("You begin sealing [src]."))
+		user.visible_message(span_notice(LANG("obj.d8fa6b74", list(user, src))), span_notice(LANG("obj.5fe85467", list(src))))
 		playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
 		if(!do_after(user, airlockseal.seal_time, target = src))
 			return ITEM_INTERACT_BLOCKING
 		if(!density)
-			to_chat(user, span_warning("[src] must be closed before you can seal it!"))
+			to_chat(user, span_warning(LANG("obj.535dd0c5", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(seal)
-			to_chat(user, span_warning("[src] has already been sealed!"))
+			to_chat(user, span_warning(LANG("obj.523f8fea", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(airlockseal, src))
-			to_chat(user, span_warning("For some reason, you can't attach [airlockseal]!"))
+			to_chat(user, span_warning(LANG("obj.3326bf5a", list(airlockseal))))
 			return ITEM_INTERACT_BLOCKING
 		playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
 		user.visible_message(span_notice(LANG("obj.7842ad56", list(user, src))), span_notice(LANG("obj.846515b4", list(src))))
@@ -1170,12 +1170,12 @@
 
 	if(istype(tool, /obj/item/paper) || istype(tool, /obj/item/photo))
 		if(note)
-			to_chat(user, span_warning("There's already something pinned to this airlock! Use wirecutters to remove it."))
+			to_chat(user, span_warning(LANG("obj.8d6243b6", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("For some reason, you can't attach [tool]!"))
+			to_chat(user, span_warning(LANG("obj.3326bf5a", list(tool))))
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] pins [tool] to [src]."), span_notice("You pin [tool] to [src]."))
+		user.visible_message(span_notice(LANG("obj.67cc478f", list(user, tool, src))), span_notice(LANG("obj.79b6c3a8", list(tool, src))))
 		note = tool
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS

@@ -79,10 +79,10 @@
 	/// Users can pay with an ID to skip the UI
 	if(isidcard(tool))
 		if(istype(tool, /obj/item/card/id/departmental_budget))
-			balloon_alert(user, "invalid payment card")
-			to_chat(user, span_warning("You cannot use a departamental card for this."))
+			balloon_alert(user, LANG("obj.981ecc80", null))
+			to_chat(user, span_warning(LANG("obj.14dbb8b1", null)))
 			return ITEM_INTERACT_BLOCKING
-		if(force_fee && tgui_alert(user, "This holopay has a [force_fee] [MONEY_SYMBOL] fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
+		if(force_fee && tgui_alert(user, LANG("obj.81a7c95a", list(force_fee, MONEY_SYMBOL)), LANG("obj.54c77a01", null), list("Pay", "Cancel")) != "Pay")
 			return ITEM_INTERACT_BLOCKING
 		process_payment(user)
 		return ITEM_INTERACT_SUCCESS
@@ -91,8 +91,8 @@
 		/// Account checks
 		var/obj/item/holochip/chip = tool
 		if(!chip.credits)
-			balloon_alert(user, "holochip is empty")
-			to_chat(user, span_warning("There doesn't seem to be any [MONEY_NAME] here."))
+			balloon_alert(user, LANG("obj.61e0af6a", null))
+			to_chat(user, span_warning(LANG("obj.02709041", list(MONEY_NAME))))
 			return ITEM_INTERACT_BLOCKING
 		/// Charges force fee or uses pay what you want
 		var/cash_deposit = force_fee || tgui_input_number(user, LANG("obj.348052fb", list(chip.credits)), LANG("obj.7029a1e6", null), max_value = chip.credits)
@@ -102,18 +102,18 @@
 		if(QDELETED(tool) || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 			return ITEM_INTERACT_BLOCKING
 		if(!chip.spend(cash_deposit, FALSE))
-			balloon_alert(user, "insufficient [MONEY_NAME]")
-			to_chat(user, span_warning("You don't have enough [MONEY_NAME] to pay with this chip."))
+			balloon_alert(user, LANG("obj.62b3f643", list(MONEY_NAME)))
+			to_chat(user, span_warning(LANG("obj.af145c57", list(MONEY_NAME))))
 			return ITEM_INTERACT_BLOCKING
 		/// Success: Alert buyer
 		alert_buyer(user, cash_deposit)
 		return ITEM_INTERACT_SUCCESS
 	/// Throws errors if they try to use space cash
 	if(istype(tool, /obj/item/stack/spacecash))
-		to_chat(user, "What is this, the 2000s? We only take card here.")
+		to_chat(user, LANG("obj.a61bd149", null))
 		return ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/coin))
-		to_chat(user, "What is this, the 1800s? We only take card here.")
+		to_chat(user, LANG("obj.1bb0a4c0", null))
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 
@@ -258,8 +258,8 @@
 	var/obj/item/card/id/id_card
 	id_card = user.get_idcard(TRUE)
 	if(isnull(id_card) || !id_card.can_be_used_in_payment(user))
-		balloon_alert(user, "invalid account")
-		to_chat(user, span_warning("You don't have a valid account."))
+		balloon_alert(user, LANG("obj.bcdb378a", null))
+		to_chat(user, span_warning(LANG("obj.08c4f7f3", null)))
 		return FALSE
 	var/datum/bank_account/payee = id_card.registered_account
 	if(payee == linked_card?.registered_account)

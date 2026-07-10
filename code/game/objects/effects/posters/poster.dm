@@ -62,13 +62,13 @@
 		return NONE
 
 	if(locate(/obj/item/shard) in (poster_structure?.contents || contents))
-		balloon_alert(user, "already trapped!")
+		balloon_alert(user, LANG("obj.8cdee195", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You conceal \the [tool] inside the rolled up poster."))
+	to_chat(user, span_notice(LANG("obj.0a0c4fa1", list(tool))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/poster/interact_with_atom(turf/closed/wall_structure, mob/living/user, list/modifiers)

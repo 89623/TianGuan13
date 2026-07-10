@@ -135,7 +135,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		return NONE
 	toggle_panel_open()
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
+	to_chat(user, span_notice(LANG("obj.e132e3de", list(panel_open ? "remove":"attach"))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/disposal/welder_act(mob/living/user, obj/item/tool)
@@ -143,10 +143,10 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 		return NONE
 	if(!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
+	to_chat(user, span_notice(LANG("obj.a65f8584", list(src))))
 	if(!tool.use_tool(src, user, 20, volume=SMALL_MATERIAL_AMOUNT) || !panel_open)
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You slice the floorweld off \the [src]."))
+	to_chat(user, span_notice(LANG("obj.455ac4a0", list(src))))
 	deconstruct()
 	return ITEM_INTERACT_SUCCESS
 
@@ -457,7 +457,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	if(!istype(tool, /obj/item/storage/bag/trash))
 		return ..()
 	var/obj/item/storage/bag/trash/bag = tool
-	to_chat(user, span_warning("You empty the bag."))
+	to_chat(user, span_warning(LANG("obj.297edb3f", null)))
 	bag.atom_storage.remove_all(src)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -466,14 +466,14 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	if(!istype(tool, /obj/item/dest_tagger))
 		return ..()
 	if(mounted_tagger)
-		balloon_alert(user, "already has a tagger!")
+		balloon_alert(user, LANG("obj.16919f81", null))
 		return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(tool, TRAIT_NODROP) || !user.transferItemToLoc(tool, src))
-		balloon_alert(user, "stuck to your hand!")
+		balloon_alert(user, LANG("obj.edd6b8ce", null))
 		return ITEM_INTERACT_BLOCKING
 	tool.moveToNullspace()
-	user.visible_message(span_notice("[user] snaps \the [tool] onto [src]!"))
-	balloon_alert(user, "tagger returned")
+	user.visible_message(span_notice(LANG("obj.ba2e2ebc", list(user, tool, src))))
+	balloon_alert(user, LANG("obj.a6b7a20f", null))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	mounted_tagger = tool
 	update_appearance()

@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	if(istype(tool, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = tool
 		if (get_amount() < 1 || coil.get_amount() < 5)
-			to_chat(user, span_warning("You need five lengths of coil and one sheet of glass to make wired glass!"))
+			to_chat(user, span_warning(LANG("obj.d1e0d6c6", null)))
 			return ITEM_INTERACT_BLOCKING
 		coil.use(5)
 		use(1)
@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	if(istype(tool, /obj/item/stack/rods))
 		var/obj/item/stack/rods/rods = tool
 		if (rods.get_amount() < 1 || get_amount() < 1) // the hell kind of check is this, how would this happen
-			to_chat(user, span_warning("You need one rod and one sheet of glass to make reinforced glass!"))
+			to_chat(user, span_warning(LANG("obj.7c8e0e30", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/stack/sheet/rglass/new_glass = new (get_turf(user))
@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 
 	var/obj/item/stack/rods/rods = tool
 	if (rods.get_amount() < 1 || get_amount() < 1)
-		to_chat(user, span_warning("You need one rod and one sheet of plasma glass to make reinforced plasma glass!"))
+		to_chat(user, span_warning(LANG("obj.34f3e5a6", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))

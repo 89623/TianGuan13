@@ -32,12 +32,12 @@
 	if(istype(tool, /obj/item/grenade/c4))
 		return NONE
 	if(grenades.len == max_grenades)
-		balloon_alert(user, "it's already full!")
+		balloon_alert(user, LANG("obj.53488f9b", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	grenades += tool
-	balloon_alert(user, "[grenades.len] / [max_grenades] grenades loaded")
+	balloon_alert(user, LANG("obj.b47984d1", list(grenades.len, max_grenades)))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/grenadelauncher/can_shoot()

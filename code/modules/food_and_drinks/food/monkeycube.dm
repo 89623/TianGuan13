@@ -40,7 +40,7 @@
 		if (LAZYLEN(SSmobs.cubemonkeys) < cap)
 			bananas = new spawned_mob(drop_location(), TRUE)
 		else if (spammer)
-			to_chat(spammer, span_warning("Bluespace harmonics prevent the creation of more than [cap] monkeys on the station at one time!"))
+			to_chat(spammer, span_warning(LANG("obj.d675af0d", list(cap))))
 	else
 		bananas = new(drop_location())
 

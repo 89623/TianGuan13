@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 #define STEALTH_MODE_TRAIT "stealth_mode"
 
@@ -30,7 +31,7 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 		ghost.reenter_corpse()
 		BLACKBOX_LOG_ADMIN_VERB("Admin Reenter")
 	else if(isnewplayer(user.mob))
-		to_chat(user, span_warning("Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first."), confidential = TRUE)
+		to_chat(user, span_warning(LANG("datum.fe41dab4", null)), confidential = TRUE)
 		return FALSE
 	else
 		//ghostize
@@ -116,7 +117,7 @@ ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to 
 		return
 
 	ADD_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
-	to_chat(user.mob, span_adminnotice("Admin ESP on. You will now be able to see [isliving(user.mob) ? "ghosts and " : ""]invisimins."), confidential = TRUE)
+	to_chat(user.mob, span_adminnotice(LANG("datum.e6d97b24", list(isliving(user.mob) ? "ghosts and " : ""))), confidential = TRUE)
 
 ADMIN_VERB(check_antagonists, R_ADMIN, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
 	user.holder.check_antagonists()
@@ -876,7 +877,7 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 	// second: poll admins for the name, description, price, and quantity.
 	if(isnull(chosen))
 		return
-	var/name = tgui_input_text(user, "Name of the item to sell?", "Item listing name", "Arcane Object", max_length = MAX_NAME_LEN)
+	var/name = tgui_input_text(user, LANG("datum.02e2ab58", null), LANG("datum.dda67683", null), "Arcane Object", max_length = MAX_NAME_LEN)
 	if(isnull(name))
 		return
 	var/description = tgui_input_text(user, LANG("datum.4640c340", null), LANG("datum.f6dd515f", null), "[chosen::desc]", max_length = 200)

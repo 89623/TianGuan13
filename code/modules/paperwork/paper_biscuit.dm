@@ -152,7 +152,7 @@
 		return ..()
 	if(has_been_sealed)
 		return
-	if(tgui_alert(user, "Do you want to seal it? This can only be done once.", "Biscuit Sealing", list("Yes", "No")) != "Yes")
+	if(tgui_alert(user, LANG("obj.24895061", null), LANG("obj.c91fe971", null), list("Yes", "No")) != "Yes")
 		return
 	cracked = FALSE
 	has_been_sealed = TRUE

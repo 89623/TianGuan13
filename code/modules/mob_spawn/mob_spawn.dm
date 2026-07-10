@@ -247,7 +247,7 @@
 /// Checks if a ghost can take this ghost role.
 /obj/effect/mob_spawn/ghost_role/proc/can_ghost_take(mob/dead/observer/user)
 	if(is_banned_from(user.ckey, role_ban))
-		to_chat(user, span_warning("You are banned from this role!"))
+		to_chat(user, span_warning(LANG("obj.8b2c3968", null)))
 		return FALSE
 	// NOVA EDIT ADDITION START
 	if(is_banned_from(user.ckey, BAN_GHOST_ROLE_SPAWNER)) // Ghost role bans

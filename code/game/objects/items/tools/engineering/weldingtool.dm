@@ -265,7 +265,7 @@
 			update_appearance()
 			START_PROCESSING(SSobj, src)
 		else
-			balloon_alert(user, "no fuel!")
+			balloon_alert(user, LANG("obj.1b220a79", null))
 			switched_off()
 	else
 		playsound(loc, deactivation_sound, 50, TRUE)

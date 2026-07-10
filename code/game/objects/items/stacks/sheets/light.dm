@@ -27,11 +27,11 @@
 		return ..()
 	var/obj/item/stack/sheet/iron/steel = tool
 	if(!steel.use(1))
-		to_chat(user, span_warning("You need one iron sheet to finish the light tile!"))
+		to_chat(user, span_warning(LANG("obj.f75625c3", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/stack/tile/light/finished_tiles = new(user.drop_location())
-	to_chat(user, span_notice("You make a light tile."))
+	to_chat(user, span_notice(LANG("obj.d856f148", null)))
 	if(!QDELETED(finished_tiles))
 		finished_tiles.add_fingerprint(user)
 	use(1)

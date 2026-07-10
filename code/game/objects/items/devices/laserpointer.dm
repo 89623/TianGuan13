@@ -95,21 +95,21 @@
 /obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stock_parts/micro_laser))
 		if(diode)
-			balloon_alert(user, "already has a diode!")
+			balloon_alert(user, LANG("obj.f6b014fc", null))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stock_parts/attack_diode = tool
 		if(crystal_lens && attack_diode.rating < 3) //only tier 3 and up are small enough to fit
-			to_chat(user, span_warning("You try to jam \the [tool.name] in place, but \the [crystal_lens.name] is in the way!"))
+			to_chat(user, span_warning(LANG("obj.2a58b15f", list(tool.name, crystal_lens.name))))
 			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 20)
 			if(!do_after(user, 2 SECONDS, src))
 				return ITEM_INTERACT_BLOCKING
 			var/atom/atom_to_teleport = pick(user, tool)
 			if(atom_to_teleport == user)
-				to_chat(user, span_warning("You jam \the [tool.name] in too hard and break \the [crystal_lens.name] inside, teleporting you away!"))
+				to_chat(user, span_warning(LANG("obj.63122a79", list(tool.name, crystal_lens.name))))
 				user.drop_all_held_items()
 			else if(atom_to_teleport == tool)
 				tool.forceMove(drop_location())
-				to_chat(user, span_warning("You jam \the [tool.name] in too hard and break \the [crystal_lens.name] inside, teleporting \the [tool.name] away!"))
+				to_chat(user, span_warning(LANG("obj.8c66fb60", list(tool.name, crystal_lens.name, tool.name))))
 			do_teleport(atom_to_teleport, get_turf(src), crystal_lens.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 			qdel(crystal_lens)
 			return ITEM_INTERACT_SUCCESS
@@ -117,7 +117,7 @@
 			return ITEM_INTERACT_BLOCKING
 		playsound(src, 'sound/items/tools/screwdriver.ogg', 30)
 		diode = tool
-		balloon_alert(user, "installed \the [diode.name]")
+		balloon_alert(user, LANG("obj.ddc17aca", list(diode.name)))
 		//we have a diode now, try starting a charge sequence in case the pointer was charging when we took out the diode
 		recharging = TRUE
 		START_PROCESSING(SSobj, src)
@@ -125,7 +125,7 @@
 
 	if(istype(tool, /obj/item/stack/ore/bluespace_crystal))
 		if(crystal_lens)
-			balloon_alert(user, "already has a lens!")
+			balloon_alert(user, LANG("obj.a9a84fa7", null))
 			return ITEM_INTERACT_BLOCKING
 		//the crystal stack we're trying to install a crystal from
 		var/obj/item/stack/ore/bluespace_crystal/crystal_stack = tool
@@ -136,11 +136,11 @@
 				return ITEM_INTERACT_BLOCKING
 			var/atom/atom_to_teleport = pick(user, src)
 			if(atom_to_teleport == user)
-				to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and are teleported away!"))
+				to_chat(user, span_warning(LANG("obj.54dc680f", list(crystal_stack.name))))
 				user.drop_all_held_items()
 			else if(atom_to_teleport == src)
 				forceMove(drop_location())
-				to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and \the [src] is teleported away!"))
+				to_chat(user, span_warning(LANG("obj.8be0c990", list(crystal_stack.name, src))))
 			do_teleport(atom_to_teleport, get_turf(src), crystal_stack.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 			crystal_stack.use_tool(src, user, amount = 1) //use only one if we were installing from a stack of crystals
 			return ITEM_INTERACT_SUCCESS
@@ -151,9 +151,8 @@
 		single_crystal.forceMove(src)
 		crystal_lens = single_crystal
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 30)
-		balloon_alert(user, "installed \the [crystal_lens.name]")
-		to_chat(user, span_notice("You install a [crystal_lens.name] in [src]. \
-			It can now be used to shine through obstacles at the cost of double the energy drain."))
+		balloon_alert(user, LANG("obj.ddc17aca", list(crystal_lens.name)))
+		to_chat(user, span_notice(LANG("obj.71d1e6f9", list(crystal_lens.name, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE

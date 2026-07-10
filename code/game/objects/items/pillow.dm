@@ -77,24 +77,24 @@
 /obj/item/pillow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!bricked && istype(tool, /obj/item/stack/sheet/mineral/sandstone))
 		var/obj/item/stack/sheet/mineral/sandstone/brick = tool
-		balloon_alert(user, "inserting brick...")
+		balloon_alert(user, LANG("obj.120da198", null))
 		if(!do_after(user, 2 SECONDS, src))
 			return ITEM_INTERACT_BLOCKING
 		if(!brick.use(1))
-			balloon_alert(user, "not enough bricks!")
+			balloon_alert(user, LANG("obj.ee0a5208", null))
 			return ITEM_INTERACT_BLOCKING
-		balloon_alert(user, "bricked!")
+		balloon_alert(user, LANG("obj.9c9d0693", null))
 		become_bricked()
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/clothing/neck/pillow_tag))
 		if(pillow_trophy)
-			balloon_alert(user, "tag is intact.")
+			balloon_alert(user, LANG("obj.550f3414", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		pillow_trophy = tool
-		balloon_alert(user, "honor reclaimed!")
+		balloon_alert(user, LANG("obj.37337285", null))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 

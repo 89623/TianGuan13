@@ -142,12 +142,12 @@
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT_FROM(human, TRAIT_FAT, OBESITY))//I share your pain, past coder.
 		if(human.overeatduration < (OVEREAT_TIME_LIMIT))
-			to_chat(human, span_notice("You feel fit again!"))
+			to_chat(human, span_notice(LANG("obj.3382ad86", null)))
 			human.remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 
 	else
 		if(human.overeatduration >= (OVEREAT_TIME_LIMIT))
-			to_chat(human, span_danger("You suddenly feel blubbery!"))
+			to_chat(human, span_danger(LANG("obj.4a521717", null)))
 			human.add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 
 	// nutrition decrease and satiety

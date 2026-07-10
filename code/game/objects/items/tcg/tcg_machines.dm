@@ -271,8 +271,8 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	return name_chaser
 
 /obj/structure/trading_card_summon/blank/modify_stats(mob/living/user)
-	summon_power = num2text(tgui_input_number(user, "Please input power value", "Stat Modification", text2num(summon_power), 25))
-	summon_resolve = num2text(tgui_input_number(user, "Please input resolve value", "Stat Modification", text2num(summon_resolve), 25))
+	summon_power = num2text(tgui_input_number(user, LANG("obj.8d37f80e", null), LANG("obj.b964bd8e", null), text2num(summon_power), 25))
+	summon_resolve = num2text(tgui_input_number(user, LANG("obj.0f776e64", null), LANG("obj.b964bd8e", null), text2num(summon_resolve), 25))
 	update_appearance(UPDATE_OVERLAYS)
 
 #undef STAT_Y

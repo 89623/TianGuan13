@@ -1939,8 +1939,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "wind",
-			SPECIES_PERK_NAME = "[capitalize(breath_id)] Breathing",
-			SPECIES_PERK_DESC = "[plural_form] must breathe [breath_id] to survive. You receive a tank when you arrive.",
+			SPECIES_PERK_NAME = LANG("datum.06a739e4", list(capitalize(breath_id))),
+			SPECIES_PERK_DESC = LANG("datum.7adf0992", list(plural_form, breath_id)),
 		))
 
 	return to_add

@@ -758,7 +758,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		if(!use(1))
 			return ITEM_INTERACT_BLOCKING
 		playsound(tool, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
-		to_chat(user, span_notice("You stamp the cardboard! It's a clown box! Honk!"))
+		to_chat(user, span_notice(LANG("obj.b2a87ef9", null)))
 		new /obj/item/storage/box/clown(droploc) //bugfix
 		return ITEM_INTERACT_SUCCESS
 
@@ -766,7 +766,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		var/atom/droploc = drop_location()
 		if(!use(1))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You stamp the cardboard in a sinister way."))
+		to_chat(user, span_notice(LANG("obj.f590cbb3", null)))
 		new /obj/item/storage/box/syndie_kit(droploc)
 		return ITEM_INTERACT_SUCCESS
 

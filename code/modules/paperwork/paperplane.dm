@@ -94,7 +94,7 @@
 
 /obj/item/paperplane/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(IS_WRITING_UTENSIL(tool))
-		to_chat(user, span_warning("You should unfold [src] before changing it!"))
+		to_chat(user, span_warning(LANG("obj.3071fdcf", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/stamp)) //we don't randomize stamps on a paperplane
 		internal_paper.item_interaction(user, tool) //spoofed attack to update internal paper.

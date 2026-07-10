@@ -99,7 +99,7 @@
 	if(id != -1)
 		to_chat(user, span_notice(LANG("obj.7fe56c16", list(id))))
 	else
-		to_chat(user, span_notice("You now must interact with a pod door to generate a unique ID."))
+		to_chat(user, span_notice(LANG("obj.cba8c80c", null)))
 
 /obj/item/assembly/control/blast_door/activate()
 	var/openclose

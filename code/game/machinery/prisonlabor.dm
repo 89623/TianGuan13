@@ -31,10 +31,10 @@
 	if(!istype(tool, /obj/item/stack/license_plates/empty))
 		return NONE
 	if(!is_operational)
-		to_chat(user, span_warning("[src] has to be on to be loaded!"))
+		to_chat(user, span_warning(LANG("obj.7fc47c77", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(current_plate)
-		to_chat(user, span_warning("[src] already has a plate in it!"))
+		to_chat(user, span_warning(LANG("obj.1e895fc9", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/stack/license_plates/empty/plate = tool

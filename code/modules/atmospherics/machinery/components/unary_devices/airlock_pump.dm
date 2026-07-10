@@ -606,7 +606,7 @@
 		// unbolt all the doors but don't open them
 		for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
 			airlock.unbolt()
-		audible_message(span_notice("[src] whirrs as [p_they()] loses power, disengaging airlock bolts."))
+		audible_message(span_notice(LANG("obj.c4f90690", list(src, p_they()))))
 		deltimer(emergency_stop_timer)
 		set_on(FALSE)
 

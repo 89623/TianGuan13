@@ -59,14 +59,14 @@
 
 /obj/item/kirbyplants/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!dead && trimmable && HAS_TRAIT(user, TRAIT_BONSAI) && isturf(loc) && tool.get_sharpness())
-		to_chat(user,span_notice("You start trimming [src]."))
+		to_chat(user,span_notice(LANG("obj.f4ecfa94", list(src))))
 		if(!do_after(user, 3 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user,span_notice("You finish trimming [src]."))
+		to_chat(user,span_notice(LANG("obj.e2c5d0d3", list(src))))
 		change_visual()
 
 	if(dead && istype(tool, /obj/item/seeds))
-		to_chat(user,span_notice("You start planting a new seed into the pot."))
+		to_chat(user,span_notice(LANG("obj.e8c7e696", null)))
 		if(!do_after(user, 3 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
 		qdel(tool)

@@ -322,7 +322,7 @@
 	)
 	brainmob?.notify_revival("You are being revived!", sound = null, source = src) // no sound since it's a whopping 60 second wait time after this
 	if(!do_after(user, 15 SECONDS, src))
-		to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+		to_chat(user, span_warning(LANG("obj.6c40dd89", list(item, src))))
 		return FALSE
 
 	user.visible_message(
@@ -330,14 +330,14 @@
 		span_notice(LANG("obj.d05535be", list(item, src)))
 	)
 	if(isnull(brainmob))
-		user.balloon_alert(user, "brain is not a viable candidate for repair!")
+		user.balloon_alert(user, LANG("obj.4af1ada2", null))
 		return FALSE
 	brainmob.grab_ghost()
 	if(isnull(brainmob.stored_dna))
-		user.balloon_alert(user, "brain does not contain any dna!")
+		user.balloon_alert(user, LANG("obj.6423b615", null))
 		return FALSE
 	if(isnull(brainmob.client))
-		user.balloon_alert(user, "brain does not contain a mind!")
+		user.balloon_alert(user, LANG("obj.6602fdbf", null))
 		return FALSE
 
 	item.reagents.remove_reagent(/datum/reagent/toxin/plasma, 100) // Consumes the plasma
@@ -373,8 +373,8 @@
 	src.replace_into(new_body)
 
 	// Notify the player that their body has been rebuilt
-	new_body.visible_message(span_warning("[new_body]'s torso \"forms\" from [new_body.p_their()] core, yet to form the rest."))
-	to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
+	new_body.visible_message(span_warning(LANG("obj.6889a589", list(new_body, new_body.p_their()))))
+	to_chat(owner, span_purple(LANG("obj.25459c26", null)))
 	new_body = null // Clear the new_body variable to avoid dangling references
 	return TRUE
 

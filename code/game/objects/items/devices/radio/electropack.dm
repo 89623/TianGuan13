@@ -45,7 +45,7 @@
 	if(!istype(tool, /obj/item/clothing/head/helmet))
 		return NONE
 	if(!user.temporarilyRemoveItemFromInventory(tool))
-		to_chat(user, span_warning("[tool] is stuck to your hand, you cannot attach it to [src]!"))
+		to_chat(user, span_warning(LANG("obj.9e63b6be", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/assembly/shock_kit/torture_device = new /obj/item/assembly/shock_kit(user)
 	torture_device.icon = 'icons/obj/devices/assemblies.dmi'

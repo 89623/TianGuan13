@@ -227,9 +227,9 @@
 	if(!istype(tool, /obj/item/assembly/signaler/anomaly/bluespace))
 		return NONE
 	if(firing_core)
-		user.balloon_alert(user, "already has a core!")
+		user.balloon_alert(user, LANG("obj.641e7c06", null))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You insert [tool] into the wormhole projector and the weapon gently hums to life."))
+	to_chat(user, span_notice(LANG("obj.2025b3a6", list(tool))))
 	firing_core = TRUE
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(tool)
@@ -380,9 +380,9 @@
 	if(!istype(tool, /obj/item/assembly/signaler/anomaly/grav))
 		return NONE
 	if(firing_core)
-		user.balloon_alert(user, "already has a core!")
+		user.balloon_alert(user, LANG("obj.641e7c06", null))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You insert [tool] into the gravitational manipulator and the weapon gently hums to life."))
+	to_chat(user, span_notice(LANG("obj.7d036008", list(tool))))
 	firing_core = TRUE
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(tool)

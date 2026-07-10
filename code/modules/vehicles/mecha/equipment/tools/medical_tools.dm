@@ -52,7 +52,7 @@
 	if(!patient_insertion_check(target, source))
 		return
 	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
-	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
+	chassis.visible_message(span_warning(LANG("obj.795199ec", list(chassis, target, src))))
 	if(!do_after(source, get_equip_cooldown(atomtarget), target, extra_checks=CALLBACK(src, PROC_REF(patient_insertion_check), target, source)))
 		return
 	if(!chassis || !(get_dir(chassis, target) & chassis.dir))

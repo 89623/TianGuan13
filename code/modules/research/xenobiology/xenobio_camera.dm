@@ -269,7 +269,7 @@
 
 	var/cap = CONFIG_GET(number/monkeycap)
 	if (LAZYLEN(SSmobs.cubemonkeys) < cap)
-		to_chat(user, span_warning("Bluespace harmonics prevent the creation of more than [cap] monkeys on the station at one time!"))
+		to_chat(user, span_warning(LANG("obj.d675af0d", list(cap))))
 		return
 
 	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE)

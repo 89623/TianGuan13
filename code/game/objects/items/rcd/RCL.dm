@@ -80,7 +80,7 @@
 
 	if(!loaded)
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[src] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.1dbf8014", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		loaded = tool //tool.loc is src at this point.
@@ -99,7 +99,7 @@
 	loaded.amount += transfer_amount
 
 	update_appearance()
-	to_chat(user, span_notice("You add the pipe cleaners to [src]. It now contains [loaded.amount]."))
+	to_chat(user, span_notice(LANG("obj.627e44f8", list(src, loaded.amount))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/rcl/examine(mob/user)

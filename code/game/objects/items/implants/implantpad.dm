@@ -46,7 +46,7 @@
 		return NONE
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
-	user.balloon_alert(user, "case inserted")
+	user.balloon_alert(user, LANG("obj.c2fd0905", null))
 	inserted_case = tool
 	update_static_data_for_all_viewers()
 	update_appearance(UPDATE_ICON)

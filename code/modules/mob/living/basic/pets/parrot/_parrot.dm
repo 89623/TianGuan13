@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /mob/living/basic/parrot/examine(mob/user)
 	. = ..()
 	var/obj/item/held_item = get_active_held_item()
-	. += "It appears to [isnull(held_item) ? "not be holding anything." : "be holding \a [held_item]."]"
+	. += LANG("mob.3835c57b", list(isnull(held_item) ? "not be holding anything." : "be holding \a [held_item]."))
 
 	if(stat != DEAD)
 		return
@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /mob/living/basic/parrot/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	. = ..()
 	if(!start_perching(over))
-		balloon_alert(user, "not a perching spot!")
+		balloon_alert(user, LANG("mob.2349a5ce", null))
 
 /// Proc that handles sending the signal and returning a valid phrase to say. Will not do anything if we don't have a stat or if we're cliented.
 /// Will return either a string or null.
@@ -280,7 +280,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// Picks up an item from the ground and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/put_in_hand_check(obj/item/item_to_pick_up)
 	if(item_to_pick_up.w_class > WEIGHT_CLASS_SMALL)
-		balloon_alert(src, "too big to pick up!")
+		balloon_alert(src, LANG("mob.61304af5", null))
 		return FALSE
 
 	return ..()
@@ -302,7 +302,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// Looks for an item that we can snatch and puts it in our claws. Returns TRUE if we picked it up, FALSE otherwise.
 /mob/living/basic/parrot/proc/steal_from_mob(mob/living/carbon/victim)
 	if(!isnull(get_active_held_item()))
-		balloon_alert(src, "already holding something!")
+		balloon_alert(src, LANG("mob.0931a2cc", null))
 		return FALSE
 
 	for(var/obj/item/stealable in victim.held_items)
@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 /// Handles dropping items we're holding. Gently is a special modifier we can use for special interactions.
 /mob/living/basic/parrot/proc/drop_held_item(gently = TRUE)
 	if(get_num_held_items() == 0)
-		balloon_alert(src, "nothing to drop!")
+		balloon_alert(src, LANG("mob.1913f2a6", null))
 		return
 
 	if(stat != CONSCIOUS) // don't gotta do shit
@@ -371,12 +371,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	if(!gently && isgrenade(get_active_held_item()))
 		var/obj/item/grenade/bomb = get_active_held_item()
-		balloon_alert(src, "bombs away!") // you'll likely die too so we can get away with the `!` here
+		balloon_alert(src, LANG("mob.a209939d", null)) // you'll likely die too so we can get away with the `!` here
 		bomb.forceMove(drop_location())
 		bomb.detonate()
 		return
 
-	balloon_alert(src, "dropped item")
+	balloon_alert(src, LANG("mob.9cd50a80", null))
 	drop_all_held_items(drop_location())
 
 /mob/living/basic/parrot/vv_edit_var(var_name, vval)

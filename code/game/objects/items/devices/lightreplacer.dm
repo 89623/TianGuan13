@@ -80,24 +80,24 @@
 
 /obj/item/lightreplacer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(uses >= max_uses)
-		user.balloon_alert(user, "already full!")
+		user.balloon_alert(user, LANG("obj.e28c7f55", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass_to_insert = tool
 		if(!glass_to_insert.use(LIGHTBULB_COST))
-			user.balloon_alert(user, "need [LIGHTBULB_COST] glass sheets!")
+			user.balloon_alert(user, LANG("obj.291e657f", list(LIGHTBULB_COST)))
 			return ITEM_INTERACT_BLOCKING
 		add_uses(GLASS_SHEET_USES)
-		user.balloon_alert(user, "glass inserted")
+		user.balloon_alert(user, LANG("obj.a245d8da", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(tool.type == /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
 		if(!user.temporarilyRemoveItemFromInventory(tool))
-			user.balloon_alert(user, "stuck in your hand!")
+			user.balloon_alert(user, LANG("obj.ca570e32", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!add_shard(user)) //add_shard will display a message if it created a bulb from the shard so only display message when that does not happen
-			user.balloon_alert(user, "shard inserted")
+			user.balloon_alert(user, LANG("obj.033309e0", null))
 		qdel(tool)
 		return ITEM_INTERACT_SUCCESS
 
@@ -105,7 +105,7 @@
 		var/obj/item/light/light_to_insert = tool
 		//remove from player's hand
 		if(!user.temporarilyRemoveItemFromInventory(light_to_insert))
-			user.balloon_alert(user, "stuck in your hand!")
+			user.balloon_alert(user, LANG("obj.ca570e32", null))
 			return ITEM_INTERACT_BLOCKING
 
 		//insert light. display message only if adding a shard did not create a new bulb else the messages will conflict
@@ -153,10 +153,10 @@
 				replaced_something = TRUE
 
 		if(!replaced_something)
-			user.balloon_alert(user, "nothing usable in [tool]!")
+			user.balloon_alert(user, LANG("obj.fc61f703", list(tool)))
 			return ITEM_INTERACT_BLOCKING
 
-		user.balloon_alert(user, "lights inserted")
+		user.balloon_alert(user, LANG("obj.0a27ae15", null))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE

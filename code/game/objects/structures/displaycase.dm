@@ -388,7 +388,7 @@
 ///Toggles the mode that shows the historian panel on the UI, enabling saving the looks and the trophy message of the current trophy
 /obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
 	historian_mode = !historian_mode
-	balloon_alert(user, "[historian_mode ? "enabled" : "disabled"] historian mode.")
+	balloon_alert(user, LANG("obj.40e20999", list(historian_mode ? "enabled" : "disabled")))
 	playsound(src, 'sound/machines/beep/twobeep.ogg', 10, vary = 50)
 	SStgui.update_uis(src)
 

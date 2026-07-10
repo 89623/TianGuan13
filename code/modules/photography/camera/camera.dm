@@ -98,10 +98,10 @@
 
 /obj/item/camera/examine(mob/user)
 	. = ..()
-	. += span_notice("It has [pictures_left] photos left.")
-	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
-	. += span_notice("Ctrl-click to change the printer between color and monochrome.")
-	. += span_notice("The present dimensions of the picture are [EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]")]")
+	. += span_notice(LANG("obj.54bf8bd7", list(pictures_left)))
+	. += span_notice(LANG("obj.0cb0bf37", null))
+	. += span_notice(LANG("obj.102d70c2", null))
+	. += span_notice(LANG("obj.a4b44f36", list(EXAMINE_HINT("[APERTURE_TO_METERS(picture_size_x)]x[APERTURE_TO_METERS(picture_size_y)]"))))
 
 	if(isnull(disk))
 		. += span_notice(LANG("obj.5d8d1bda", null))
@@ -128,10 +128,10 @@
 		if(loc != user)
 			to_chat(user, span_warning(LANG("obj.df42aeed", null)))
 			return FALSE
-		desired_x = tgui_input_number(user, "Set camera half width Aperture", "Zoom", picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
+		desired_x = tgui_input_number(user, LANG("obj.507e9348", null), LANG("obj.83e3de03", null), picture_size_x, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
 		if(!desired_x || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
-		desired_y = tgui_input_number(user, "Set camera half height Aperture", "Zoom", picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
+		desired_y = tgui_input_number(user, LANG("obj.2161e974", null), LANG("obj.83e3de03", null), picture_size_y, CAMERA_PICTURE_SIZE_HARD_LIMIT, 1)
 		if(!desired_y || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_PAI) || loc != user)
 			return FALSE
 
@@ -199,12 +199,12 @@
 
 	if(!on)
 		if(user)
-			user.balloon_alert(user, "flash still charging!")
+			user.balloon_alert(user, LANG("obj.a9061853", null))
 		return FALSE
 
 	if(blending)
 		if(user)
-			user.balloon_alert(user, "image still blending!")
+			user.balloon_alert(user, LANG("obj.91acb640", null))
 		return FALSE
 
 	blending = TRUE

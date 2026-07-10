@@ -844,24 +844,24 @@
 			if(!istype(tool, /obj/item/stack/sheet/plasteel))
 				return NONE
 			if(directional)
-				to_chat(user, span_warning("[src] can not be reinforced."))
+				to_chat(user, span_warning(LANG("obj.212a4b92", list(src))))
 				return ITEM_INTERACT_BLOCKING
 			var/obj/item/stack/sheet/plasteel/plasteel_sheet = tool
 			if(reinforced)
-				to_chat(user, span_warning("[src] is already reinforced."))
+				to_chat(user, span_warning(LANG("obj.b1291ce0", list(src))))
 				return ITEM_INTERACT_BLOCKING
 			if(plasteel_sheet.get_amount() < 2)
-				to_chat(user, span_warning("You need more plasteel to reinforce [src]."))
+				to_chat(user, span_warning(LANG("obj.08c912f3", list(src))))
 				return ITEM_INTERACT_BLOCKING
-			user.visible_message(span_notice("[user] begins reinforcing [src]..."), \
-								span_notice("You begin reinforcing [src]..."))
+			user.visible_message(span_notice(LANG("obj.6fbe4013", list(user, src))), \
+								span_notice(LANG("obj.227abe34", list(src))))
 			playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 			if(!do_after(user, DEFAULT_STEP_TIME, target = src))
 				return ITEM_INTERACT_BLOCKING
 			if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || plasteel_sheet.get_amount() < 2 || !plasteel_sheet)
 				return ITEM_INTERACT_BLOCKING
-			user.visible_message(span_notice("[user] reinforces [src]."), \
-								span_notice("You reinforce [src]."))
+			user.visible_message(span_notice(LANG("obj.87ac703f", list(user, src))), \
+								span_notice(LANG("obj.2d51b857", list(src))))
 			playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 			plasteel_sheet.use(2)
 			reinforced = 1
@@ -869,16 +869,16 @@
 
 		if(CONSTRUCTION_NO_CIRCUIT)
 			if(istype(tool, /obj/item/electronics/firelock))
-				user.visible_message(span_notice("[user] starts adding [tool] to [src]..."), \
-					span_notice("You begin adding a circuit board to [src]..."))
+				user.visible_message(span_notice(LANG("obj.9da348df", list(user, tool, src))), \
+					span_notice(LANG("obj.0913d6ce", list(src))))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				if(!do_after(user, DEFAULT_STEP_TIME, target = src))
 					return ITEM_INTERACT_BLOCKING
 				if(constructionStep != CONSTRUCTION_NO_CIRCUIT)
 					return ITEM_INTERACT_BLOCKING
 				qdel(tool)
-				user.visible_message(span_notice("[user] adds a circuit to [src]."), \
-					span_notice("You insert and secure [tool]."))
+				user.visible_message(span_notice(LANG("obj.b9ad6174", list(user, src))), \
+					span_notice(LANG("obj.1a9672e4", list(tool))))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				constructionStep = CONSTRUCTION_PANEL_OPEN
 				update_appearance()
@@ -888,8 +888,8 @@
 				var/obj/item/electroadaptive_pseudocircuit/raspberrypi = tool
 				if(!raspberrypi.adapt_circuit(user, circuit_cost = DEFAULT_STEP_TIME * 0.0005 * STANDARD_CELL_CHARGE))
 					return ITEM_INTERACT_BLOCKING
-				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
-				span_notice("You adapt a firelock circuit and slot it into the assembly."))
+				user.visible_message(span_notice(LANG("obj.bdc98e79", list(user, src))), \
+				span_notice(LANG("obj.323a2c8e", null)))
 				constructionStep = CONSTRUCTION_PANEL_OPEN
 				update_appearance()
 				return ITEM_INTERACT_SUCCESS
@@ -899,15 +899,15 @@
 	if(constructionStep != CONSTRUCTION_PANEL_OPEN)
 		return NONE
 	tool.play_tool_sound(src)
-	user.visible_message(span_notice("[user] begins removing the circuit board from [src]..."), \
-						span_notice("You begin prying out the circuit board from [src]..."))
+	user.visible_message(span_notice(LANG("obj.10944e50", list(user, src))), \
+						span_notice(LANG("obj.5236e346", list(src))))
 	if(!tool.use_tool(src, user, DEFAULT_STEP_TIME))
 		return ITEM_INTERACT_BLOCKING
 	if(constructionStep != CONSTRUCTION_PANEL_OPEN)
 		return ITEM_INTERACT_BLOCKING
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
-	user.visible_message(span_notice("[user] removes [src]'s circuit board."), \
-						span_notice("You remove the circuit board from [src]."))
+	user.visible_message(span_notice(LANG("obj.7c60c0c9", list(user, src))), \
+						span_notice(LANG("obj.2dfc226a", list(src))))
 	new /obj/item/electronics/firelock(drop_location())
 	constructionStep = CONSTRUCTION_NO_CIRCUIT
 	update_appearance()
@@ -917,17 +917,17 @@
 	if(constructionStep != CONSTRUCTION_PANEL_OPEN)
 		return NONE
 	if(locate(/obj/machinery/door/firedoor) in get_turf(src))
-		to_chat(user, span_warning("There's already a firelock there."))
+		to_chat(user, span_warning(LANG("obj.0d7012d0", null)))
 		return ITEM_INTERACT_BLOCKING
 	tool.play_tool_sound(src)
-	user.visible_message(span_notice("[user] starts bolting down [src]..."), \
-						span_notice("You begin bolting [src]..."))
+	user.visible_message(span_notice(LANG("obj.621e2efb", list(user, src))), \
+						span_notice(LANG("obj.c1d24691", list(src))))
 	if(!tool.use_tool(src, user, DEFAULT_STEP_TIME))
 		return ITEM_INTERACT_BLOCKING
 	if(locate(/obj/machinery/door/firedoor) in get_turf(src))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] finishes the firelock."), \
-						span_notice("You finish the firelock."))
+	user.visible_message(span_notice(LANG("obj.6d0c3334", list(user))), \
+						span_notice(LANG("obj.e24d1e2e", null)))
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 	if(reinforced)
 		new /obj/machinery/door/firedoor/heavy(get_turf(src))
@@ -945,15 +945,15 @@
 		return NONE
 	if(!tool.tool_start_check(user, amount=1))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] begins cutting apart [src]'s frame..."), \
-		span_notice("You begin slicing [src] apart..."))
+	user.visible_message(span_notice(LANG("obj.4c2cad88", list(user, src))), \
+		span_notice(LANG("obj.c868623f", list(src))))
 
 	if(!tool.use_tool(src, user, DEFAULT_STEP_TIME, volume=50))
 		return ITEM_INTERACT_BLOCKING
 	if(constructionStep != CONSTRUCTION_NO_CIRCUIT)
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] cuts apart [src]!"), \
-		span_notice("You cut [src] into metal."))
+	user.visible_message(span_notice(LANG("obj.bba96122", list(user, src))), \
+		span_notice(LANG("obj.3320e9cf", list(src))))
 	var/turf/targetloc = get_turf(src)
 	new /obj/item/stack/sheet/iron(targetloc, directional ? 2 : 3)
 	if(reinforced)

@@ -41,7 +41,7 @@
 
 ///Helper proc to add to the fuel variable when fuel is added to the machine.
 /obj/machinery/smartfridge/drying/rack/smoker/proc/add_fuel(obj/item/fuel, mob/user)
-	user.visible_message("[user] starts feeding fuel into the smoker.")
+	user.visible_message(LANG("obj.6c2ccb8d", list(user)))
 
 	if(!do_after(user, 2 SECONDS, target = src))
 		return FALSE
@@ -55,7 +55,7 @@
 	else if(istype(fuel, /obj/item/grown/log))
 		fuel_time_left += 20 SECONDS
 		qdel(fuel)
-	user.visible_message("[user] adds fuel to the smoker.")
+	user.visible_message(LANG("obj.6a7c729e", list(user)))
 	return TRUE
 
 /obj/machinery/smartfridge/drying/rack/smoker/toggle_drying(forceoff, mob/user)
@@ -67,7 +67,7 @@
 
 	if(fuel_time_left <= 0)
 		if(user)
-			to_chat(user, span_warning("The smoker has no fuel."))
+			to_chat(user, span_warning(LANG("obj.edc110ca", null)))
 		drying = FALSE
 		update_appearance()
 		return
@@ -116,11 +116,11 @@
 	if(in_range(user, src) || isobserver(user))
 		if(fuel_time_left > 0)
 			if(drying)
-				. += span_notice("The firebox glows warmly, feeding smoke into the chamber. It has about <b>[round(fuel_time_left / (1 SECONDS))]</b> seconds of fuel left.")
+				. += span_notice(LANG("obj.d10ac8bd", list(round(fuel_time_left / (1 SECONDS)))))
 			else
-				. += span_notice("The firebox is ready, but the chamber isn't drying anything right now.")
+				. += span_notice(LANG("obj.40782788", null))
 		else
-			. += span_warning("The firebox is cold. Feed it logs or planks to produce smoke.")
+			. += span_warning(LANG("obj.9b1909b4", null))
 
 /datum/crafting_recipe/primitive_smoker
 	name = "Primitive Smoker"

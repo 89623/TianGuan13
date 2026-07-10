@@ -74,7 +74,7 @@
 
 /obj/structure/checkoutmachine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!canwalk)
-		balloon_alert(user, "not ready to accept transactions!")
+		balloon_alert(user, LANG("obj.6597e34d", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(check_if_finished())
@@ -83,7 +83,7 @@
 
 	var/obj/item/card/id/card = tool.GetID()
 	if(!card)
-		balloon_alert(user, "the reader repels your [tool.name]")
+		balloon_alert(user, LANG("obj.95a5a5f6", list(tool.name)))
 
 		var/throwtarget = get_step(user, get_dir(src, user))
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
@@ -92,11 +92,11 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(!card.registered_account)
-		balloon_alert(user, "card has no registered account!")
+		balloon_alert(user, LANG("obj.2d056b63", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!LAZYFIND(card.registered_account.being_dumped, src))
-		balloon_alert(user, "funds are already safe!")
+		balloon_alert(user, LANG("obj.e8afc149", null))
 		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_warning(LANG("obj.10340b2d", null))) // This is a reference and not a typo
@@ -289,7 +289,7 @@
 /obj/effect/dumpeet_target/proc/startLaunch()
 	DF = new /obj/effect/dumpeet_fall(drop_location())
 	dump.setup_siphoning()
-	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
+	priority_announce(LANG("obj.c35b67f6", list(get_area(src))), sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
 	playsound(src,  'sound/items/weapons/mortar_whistle.ogg', 70, TRUE, 6)
 	addtimer(CALLBACK(src, PROC_REF(end_launch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation

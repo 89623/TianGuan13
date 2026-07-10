@@ -65,10 +65,10 @@
 		return ITEM_INTERACT_BLOCKING
 	if(relevant_tag in sortTypes)
 		sortTypes -= relevant_tag
-		to_chat(user, span_notice("Removed \"[GLOB.TAGGERLOCATIONS[relevant_tag]]\" filter."))
+		to_chat(user, span_notice(LANG("obj.7e803923", list(GLOB.TAGGERLOCATIONS[relevant_tag]))))
 	else
 		sortTypes |= relevant_tag
-		to_chat(user, span_notice("Added \"[GLOB.TAGGERLOCATIONS[relevant_tag]]\" filter."))
+		to_chat(user, span_notice(LANG("obj.211382a4", list(GLOB.TAGGERLOCATIONS[relevant_tag]))))
 	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 	return ITEM_INTERACT_SUCCESS
 

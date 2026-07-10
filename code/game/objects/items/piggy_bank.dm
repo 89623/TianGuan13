@@ -133,18 +133,18 @@
 	var/dosh_amount = calculate_dosh_amount()
 
 	if(dosh_amount >= maximum_value)
-		balloon_alert(user, "it's full!")
+		balloon_alert(user, LANG("obj.2cb7d354", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(dosh_amount + creds_value > maximum_value)
-		balloon_alert(user, "too much cash!")
+		balloon_alert(user, LANG("obj.dca03cee", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
-		balloon_alert(user, "stuck in your hands!")
+		balloon_alert(user, LANG("obj.e8dcafaf", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "inserted [creds_value] creds")
+	balloon_alert(user, LANG("obj.d486be19", list(creds_value)))
 	sanitize_piggy_bank_contents_len()
 	return ITEM_INTERACT_SUCCESS
 

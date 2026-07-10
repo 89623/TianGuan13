@@ -46,7 +46,7 @@
 		span_purple("[knotter]'s knot swells inside [partner][partner_slot ? "'s [partner_slot]" : ""], locking them together!"),
 		span_userlove("Your knot swells inside [partner][partner_slot ? "'s [partner_slot]" : ""], locking you together!"),
 	)
-	to_chat(partner, span_userlove("[knotter]'s knot swells, locking [knotter.p_them()] inside you."))
+	to_chat(partner, span_userlove(LANG("datum.8873c384", list(knotter, knotter.p_them()))))
 
 	knotter.grab(partner)
 	if(knotter.pulling == partner)
@@ -93,7 +93,7 @@
 			span_purple("[knotter]'s knot slips free of [partner]."),
 			span_purple("Your knot slips free of [partner]."),
 		)
-		to_chat(partner, span_purple("[knotter]'s knot slips free of you."))
+		to_chat(partner, span_purple(LANG("datum.fb8424d0", list(knotter))))
 
 	if(knotter?.pulling == partner)
 		knotter.stop_pulling()
@@ -150,7 +150,7 @@
 /datum/component/knotted/proc/on_resist(mob/living/source)
 	SIGNAL_HANDLER
 
-	source.balloon_alert(source, "pulled free")
+	source.balloon_alert(source, LANG("datum.e8c25402", null))
 	qdel(src)
 
 #undef KNOT_DEFAULT_DURATION

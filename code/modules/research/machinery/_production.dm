@@ -419,7 +419,7 @@
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
 
 	if(!materials.mat_container.has_materials(design.materials, material_cost_coefficient, is_stack ? items_remaining : 1))
-		say("Unable to continue production, missing materials.")
+		say(LANG("obj.15347eaf", null))
 		finalize_build()
 		return
 	materials.use_materials(design.materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)

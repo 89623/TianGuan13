@@ -19,7 +19,7 @@
 	spawning_mob.PossessByPlayer(ckey)
 	if(!spawning_mob.client)
 		CRASH("Client disconnected while we were making the replacement mob.")
-	to_chat(spawning_mob, span_userdanger("You have forgotten everything you did this shift. You are left with a horrible sense of Deja Vu."))
+	to_chat(spawning_mob, span_userdanger(LANG("mob.95b9740d", null)))
 	var/area/joined_area = get_area(spawning_mob.loc)
 	if(joined_area)
 		joined_area.on_joining_game(spawning_mob)

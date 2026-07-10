@@ -328,7 +328,7 @@
 	if(IS_WEAKREF_OF(src, remote.pad)) //do not attempt to link when already linked
 		return ITEM_INTERACT_BLOCKING
 	remote.pad = WEAKREF(src)
-	to_chat(user, span_notice("You link [src] to [remote]."))
+	to_chat(user, span_notice(LANG("obj.8d7c3dc4", list(src, remote))))
 	return ITEM_INTERACT_SUCCESS
 
 

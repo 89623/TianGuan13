@@ -97,7 +97,7 @@
 		return NONE
 
 	if(length(griddled_objects) >= max_items)
-		balloon_alert(user, "it's full!")
+		balloon_alert(user, LANG("obj.2cb7d354", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!istype(item, /obj/item/storage/bag/tray))

@@ -179,28 +179,28 @@
 	if(!is_reagent_container(tool))
 		if(tool.heat >= 1000)
 			set_lit(TRUE)
-			user.visible_message(span_notice("[user] lights up the [src]."))
+			user.visible_message(span_notice(LANG("obj.3460ffa1", list(user, src))))
 			return ITEM_INTERACT_SUCCESS
 		return NONE
 
 	if(lit)
 		tool.reagents.expose_temperature(get_temperature())
-		to_chat(user, span_notice("You heat up the [tool] with the [src]."))
+		to_chat(user, span_notice(LANG("obj.f593896b", list(tool, src))))
 		playsound(user.loc, 'sound/effects/chemistry/heatdam.ogg', 50, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
 	if(tool.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
 		var/obj/item/reagent_containers/container = tool
 		if(!container.reagents.total_volume)
-			to_chat(user, span_warning("[container] is empty and can't be poured!"))
+			to_chat(user, span_warning(LANG("obj.bdd6f7b0", list(container))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(reagents.holder_full())
-			to_chat(user, span_warning("[src] is full."))
+			to_chat(user, span_warning(LANG("obj.8e2d390c", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transferred_by = user)
-		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [container]."))
+		to_chat(user, span_notice(LANG("obj.c64f6590", list(src, trans, container))))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE

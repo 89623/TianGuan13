@@ -245,7 +245,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 		if(!new_soul.body_scan_needed)
 			new_soul.soul_desc = preferences.read_preference(/datum/preference/text/flavor_text)
 
-	to_chat(new_soul, span_cyan_nova("You find yourself now inside of: [name]"))
+	to_chat(new_soul, span_cyan_nova(LANG("datum.c58d3494", list(name))))
 	to_chat(new_soul, span_notice(room_description))
 	to_chat(new_soul, span_doyourjobidiot(LANG("datum.3cf794d2", null)))
 	to_chat(new_soul, span_notice(LANG("datum.d48516b3", null)))
@@ -289,7 +289,7 @@ GLOBAL_LIST_EMPTY(soulcatchers)
 	current_souls -= target_soul
 	target_room.current_souls += target_soul
 
-	to_chat(target_soul, span_cyan_nova("you've been transferred to [target_room]!"))
+	to_chat(target_soul, span_cyan_nova(LANG("datum.e4e264c8", list(target_room))))
 	to_chat(target_soul, span_notice(target_room.room_description))
 
 	return TRUE

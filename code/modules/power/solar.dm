@@ -297,14 +297,14 @@
 	if(tracker)
 		//prevent construction if something dense's on our tile
 		if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-			balloon_alert(user, "something in the way!")
+			balloon_alert(user, LANG("obj.7dd60dd8", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!istype(tool, /obj/item/stack/sheet/glass))
-			to_chat(user, span_warning("The tracker only accepts standard, un-reinforced glass."))
+			to_chat(user, span_warning(LANG("obj.0075492d", null)))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stack/sheet/my_sheet = tool
 		if(!my_sheet.use(2))
-			to_chat(user, span_warning("You don't have enough glass to complete the tracker."))
+			to_chat(user, span_warning(LANG("obj.b74f8f2c", null)))
 			return ITEM_INTERACT_BLOCKING
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		user.visible_message(span_notice(LANG("obj.0ea81752", list(user))),span_notice(LANG("obj.e92c0650", null)))
@@ -317,7 +317,7 @@
 		tracker = TRUE
 		update_appearance()
 		qdel(tool)
-		user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
+		user.visible_message(span_notice(LANG("obj.48ce76ed", list(user))), span_notice(LANG("obj.4d00b9e1", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	//make a list of all the glass
@@ -332,18 +332,18 @@
 		//items that arent used above, or arent usable glass will make it here.
 		//so we check if its reinfocred glass, or some other item
 		if(istype(tool, /obj/item/stack/sheet/rglass) || istype(tool, /obj/item/stack/sheet/plasmarglass))
-			to_chat(user, span_warning("The solar array will only accept glass or glass alloys that have not been reinforced."))
+			to_chat(user, span_warning(LANG("obj.632ae05a", null)))
 		//an else statement can be put here if you want something to happen to all the misc items that make it this far
 		return ITEM_INTERACT_BLOCKING
 
 	//prevent construction if something dense's on our tile
 	if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-		balloon_alert(user, "something in the way!")
+		balloon_alert(user, LANG("obj.7dd60dd8", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(is_glass_sheet(tool))
 		if(!anchored)
-			to_chat(user, span_warning("You need to secure the assembly before you can add glass."))
+			to_chat(user, span_warning(LANG("obj.dddc80b6", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		var/list/glass_material_to_tier = list(
@@ -355,7 +355,7 @@
 
 		var/obj/item/stack/sheet/my_sheet = tool
 		if(!my_sheet.use(2))
-			to_chat(user, span_warning("You need at least two sheets of glass to complete a solar panel!"))
+			to_chat(user, span_warning(LANG("obj.d3d37de3", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		var/datum/material/glass_material = my_sheet.material_type
@@ -375,7 +375,7 @@
 	if(!isturf(loc))
 		return NONE
 	if(!solarturf.can_have_cabling()) //allows catwalks
-		balloon_alert(user, "can't secure in space!")
+		balloon_alert(user, LANG("obj.03dee60e", null))
 		return ITEM_INTERACT_BLOCKING
 	for(var/obj/stuff_in_the_way in solarturf) //prevent anchoring on other machinery or solar assemblies
 		if(stuff_in_the_way == src)
@@ -400,8 +400,8 @@
 	new /obj/item/electronics/tracker(src.loc)
 	tracker = FALSE
 	update_appearance()
-	user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), \
-						span_notice("You take out the electronics from the solar assembly."))
+	user.visible_message(span_notice(LANG("obj.7ea665eb", list(user))), \
+						span_notice(LANG("obj.48861cc1", null)))
 	return ITEM_INTERACT_SUCCESS
 
 //
@@ -577,12 +577,12 @@
 		return ITEM_INTERACT_BLOCKING
 	var/obj/structure/frame/computer/new_computer = new /obj/structure/frame/computer(src.loc)
 	if (src.machine_stat & BROKEN)
-		to_chat(user, span_notice("The broken glass falls out."))
+		to_chat(user, span_notice(LANG("obj.f8d51e40", null)))
 		new /obj/item/shard( src.loc )
 		new_computer.state = 3
 		new_computer.icon_state = "3"
 	else
-		to_chat(user, span_notice("You disconnect the monitor."))
+		to_chat(user, span_notice(LANG("obj.a211ab7d", null)))
 		new_computer.state = 4
 		new_computer.icon_state = "4"
 	for (var/obj/within in src)

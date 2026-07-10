@@ -182,9 +182,9 @@
 	var/obj/item/stack/addstack = tool
 	var/amount = min((max_sheets - sheets), addstack.amount)
 	if(amount < 1)
-		to_chat(user, span_notice("\The [src] is full!"))
+		to_chat(user, span_notice(LANG("obj.ab597252", list(src))))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You add [amount] sheets to \the [src]."))
+	to_chat(user, span_notice(LANG("obj.93e3f8c8", list(amount, src))))
 	sheets += amount
 	addstack.use(amount)
 	return ITEM_INTERACT_SUCCESS
@@ -194,7 +194,7 @@
 		return NONE
 	toggle_panel_open()
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the access panel."))
+	to_chat(user, span_notice(LANG("obj.0e6ae97a", list(panel_open ? "open" : "close"))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/port_gen/wrench_act(mob/living/user, obj/item/tool)
@@ -202,11 +202,11 @@
 		return NONE
 	if(!anchored && !isinspace())
 		set_anchored(TRUE)
-		to_chat(user, span_notice("You secure the generator to the floor."))
+		to_chat(user, span_notice(LANG("obj.2eaf2e96", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	set_anchored(FALSE)
-	to_chat(user, span_notice("You unsecure the generator from the floor."))
+	to_chat(user, span_notice(LANG("obj.88a25423", null)))
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	return ITEM_INTERACT_SUCCESS
 

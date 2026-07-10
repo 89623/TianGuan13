@@ -132,33 +132,33 @@
 		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50, TRUE)
 
 	if(machine_stat & MAINT || !on || locked)
-		to_chat(user, span_notice("The machine appears to be disabled."))
+		to_chat(user, span_notice(LANG("obj.c1862d18", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!player_card.registered_account)
-		say("You don't have a bank account!")
+		say(LANG("obj.82fb1f15", null))
 		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 		return ITEM_INTERACT_BLOCKING
 
 	if(!my_card)
-		var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Customization", "Roulette Machine", max_length = MAX_NAME_LEN)
+		var/msg = tgui_input_text(user, LANG("obj.f0477a15", null), LANG("obj.70a81bf2", null), "Roulette Machine", max_length = MAX_NAME_LEN)
 		if(!msg)
 			return ITEM_INTERACT_BLOCKING
 		name = msg
-		desc = "Owned by [player_card.registered_account.account_holder], draws directly from [user.p_their()] account."
+		desc = LANG("obj.0f7b350a", list(player_card.registered_account.account_holder, user.p_their()))
 		my_card = player_card
 		RegisterSignal(my_card, COMSIG_QDELETING, PROC_REF(on_my_card_deleted))
-		to_chat(user, span_notice("You link the wheel to your account."))
+		to_chat(user, span_notice(LANG("obj.b54268ef", null)))
 		power_change()
 		return ITEM_INTERACT_SUCCESS
 
 	if(IS_DEPARTMENTAL_CARD(player_card)) // Are they using a department ID
-		say("You cannot gamble with the department budget!")
+		say(LANG("obj.a25ac002", null))
 		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 		return ITEM_INTERACT_BLOCKING
 
 	if(player_card.registered_account.account_balance < chosen_bet_amount) //Does the player have enough funds
-		say("You do not have the funds to play! Lower your bet or get more money.")
+		say(LANG("obj.f1a22753", null))
 		playsound(src, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 		return ITEM_INTERACT_BLOCKING
 

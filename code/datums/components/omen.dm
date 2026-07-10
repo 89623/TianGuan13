@@ -61,7 +61,7 @@
 	var/mob/living/person = parent
 	REMOVE_TRAIT(person, TRAIT_CURSED, REF(src))
 	REMOVE_TRAIT(person, TRAIT_NO_MIRROR_REFLECTION, REF(src))
-	to_chat(person, span_nicegreen("You feel a horrible omen lifted off your shoulders!"))
+	to_chat(person, span_nicegreen(LANG("datum.43738be8", null)))
 
 	if(vessel)
 		vessel.visible_message(span_warning(LANG("datum.0b1457c3", list(vessel))))
@@ -120,7 +120,7 @@
 		return NONE
 
 	consume_omen()
-	to_chat(parent, span_warning("As you stand in [darth_airlock], it doesn't stop closing like it should..."))
+	to_chat(parent, span_warning(LANG("datum.ed8e4bc6", list(darth_airlock))))
 	return AIRLOCK_BLOCK_FORCE_CRUSH
 
 /// When we vend an item from a vending machine, there's a chance the machine will tip
@@ -131,7 +131,7 @@
 		return NONE
 
 	consume_omen()
-	to_chat(source, span_warning("As you grab [vended_item] from the slot, [darth_vendor] wobbles ominously..."))
+	to_chat(source, span_warning(LANG("datum.2a247166", list(vended_item, darth_vendor))))
 	INVOKE_ASYNC(darth_vendor, TYPE_PROC_REF(/obj/machinery/vending, tilt), source)
 	return VENDING_NO_PICKUP
 
@@ -179,7 +179,7 @@
 	SIGNAL_HANDLER
 
 	if(was_ok && !HAS_TRAIT(parent, TRAIT_SHOCKIMMUNE) && roll_for_accident(25))
-		evil_light.visible_message(span_boldwarning("A bolt of electricity jumps from [evil_light] to [parent] as it breaks!"))
+		evil_light.visible_message(span_boldwarning(LANG("datum.35f7b402", list(evil_light, parent))))
 		light_zap(evil_light)
 		consume_omen()
 	// always untrack because it's broken now
@@ -192,7 +192,7 @@
 	if(HAS_TRAIT(parent, TRAIT_SHOCKIMMUNE) || !roll_for_accident(10))
 		return
 
-	evil_light.visible_message(span_boldwarning("A bolt of electricity jumps from [evil_light] to [parent] as it turns [new_status ? "on" : "off"]!"))
+	evil_light.visible_message(span_boldwarning(LANG("datum.6a241cd8", list(evil_light, parent, new_status ? "on" : "off"))))
 	light_zap(evil_light)
 	consume_omen()
 	// we're about to break it, so untrack to avoid a double zap
@@ -264,14 +264,14 @@
 		REMOVE_TRAIT(our_guy, TRAIT_NO_MIRROR_REFLECTION, REF(src))
 		return FALSE
 
-	to_chat(our_guy, span_warning("You pass by the mirror and glance at it..."))
+	to_chat(our_guy, span_warning(LANG("datum.5de94455", null)))
 	if(evil_mirror.broken)
-		to_chat(our_guy, span_notice("...You feel lucky, somehow."))
+		to_chat(our_guy, span_notice(LANG("datum.af3613d5", null)))
 		return TRUE
 
 	switch(rand(1, 5))
 		if(1)
-			to_chat(our_guy, span_warning("...The mirror explodes into a million pieces! Wait, does that mean you're even more unlucky?"))
+			to_chat(our_guy, span_warning(LANG("datum.4088947b", null)))
 			evil_mirror.take_damage(evil_mirror.max_integrity, BRUTE, MELEE, FALSE)
 			if(roll_for_accident(20))
 				luck_mod += 0.25
@@ -279,23 +279,23 @@
 
 		if(2 to 3)
 			if(HAS_TRAIT(our_guy, TRAIT_NO_MIRROR_REFLECTION)) // not so living i suppose
-				to_chat(our_guy, span_green("...Oh god, you can't see your reflection - wait, that's normal."))
+				to_chat(our_guy, span_green(LANG("datum.98ec9710", null)))
 				return TRUE
-			to_chat(our_guy, span_big(span_hypnophrase("...Oh god, you can't see your reflection!!")))
+			to_chat(our_guy, span_big(span_hypnophrase(LANG("datum.44347069", null))))
 			INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
 			ADD_TRAIT(our_guy, TRAIT_NO_MIRROR_REFLECTION, REF(src))
 
 		if(4 to 5)
 			if(HAS_TRAIT(our_guy, TRAIT_NO_MIRROR_REFLECTION))
-				to_chat(our_guy, span_warning("...but you don't see anything of notice."))
+				to_chat(our_guy, span_warning(LANG("datum.7f7fbfa9", null)))
 				return TRUE
-			to_chat(our_guy, span_userdanger("You see your reflection, but it is grinning malevolently and staring directly at you!"))
+			to_chat(our_guy, span_userdanger(LANG("datum.c5102a4e", null)))
 			INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
 
 	our_guy.set_jitter_if_lower(25 SECONDS)
 	if(roll_for_accident(2))
-		to_chat(our_guy, span_warning("You are completely shocked by this turn of events!"))
-		to_chat(our_guy, span_userdanger("You clutch at your heart!"))
+		to_chat(our_guy, span_warning(LANG("datum.f0453fc5", null)))
+		to_chat(our_guy, span_userdanger(LANG("datum.ac5673a5", null)))
 		if(iscarbon(our_guy))
 			var/mob/living/carbon/carbon_guy = our_guy
 			carbon_guy.set_heartattack(status = TRUE)

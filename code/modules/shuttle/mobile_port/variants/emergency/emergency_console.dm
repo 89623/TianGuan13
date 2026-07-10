@@ -46,7 +46,7 @@
 /obj/machinery/computer/emergency_shuttle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!isidcard(tool))
 		return NONE
-	say("Please equip your ID card into your ID slot to authenticate.")
+	say(LANG("obj.c773488f", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/emergency_shuttle/ui_state(mob/user)

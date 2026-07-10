@@ -497,7 +497,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!user.temporarilyRemoveItemFromInventory(tool))
 		return ITEM_INTERACT_BLOCKING
 	paper_remaining++
-	to_chat(user, span_notice("You insert [tool] into [src]! It now holds [paper_remaining] sheet\s of paper."))
+	to_chat(user, span_notice(LANG("obj.f15361cc", list(tool, src, paper_remaining))))
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 

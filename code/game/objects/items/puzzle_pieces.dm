@@ -129,7 +129,7 @@
 	if(!istype(tool, /obj/item/keycard))
 		return NONE
 	if(!try_puzzle_open(astype(tool, /obj/item/keycard).puzzle_id))
-		to_chat(user, span_notice("[src] buzzes. This must not be the right key."))
+		to_chat(user, span_notice(LANG("obj.ba6733a2", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
 

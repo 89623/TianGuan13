@@ -44,7 +44,7 @@
 /obj/item/stack/sheet/examine(mob/user)
 	. = ..()
 	if (manufactured && gulag_value)
-		. += span_notice("It has been embossed with a manufacturer's mark of guaranteed quality.")
+		. += span_notice(LANG("obj.dcb373c1", null))
 
 	var/datum/material/material = get_master_material()
 	if (!HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER) || !material)

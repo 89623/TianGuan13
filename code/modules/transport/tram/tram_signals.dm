@@ -185,7 +185,7 @@
 		if(OUTBOUND)
 			sign_dir = INBOUND
 
-	to_chat(user, span_notice("You flip directions on [src]."))
+	to_chat(user, span_notice(LANG("obj.b61a0c66", list(src))))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 

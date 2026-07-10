@@ -91,7 +91,7 @@
 			holder.balloon_alert(user, LANG("datum.edc67b7d", null))
 			playsound(holder, 'sound/machines/creak.ogg', 30, FALSE)
 		if(GIZMO_PUZZLE_SOLVED_MODE_CONTROL)
-			holder.balloon_alert(user, "clunk")
+			holder.balloon_alert(user, LANG("datum.5f0bb7fd", null))
 			playsound(holder, 'sound/machines/machine_vend.ogg', 30, FALSE)
 
 /// Sequences can be a bit shorter since you have to constantly type and scream them

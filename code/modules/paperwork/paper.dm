@@ -435,7 +435,7 @@
 		if(!user.can_write(tool))
 			return ITEM_INTERACT_BLOCKING
 		if(get_total_length() >= MAX_PAPER_LENGTH)
-			to_chat(user, span_warning("This sheet of paper is full!"))
+			to_chat(user, span_warning(LANG("obj.4c9828bd", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		ui_interact(user)
@@ -446,8 +446,8 @@
 		if(!user.can_read(src) || user.is_blind())
 			//The paper's stampable window area is assumed approx 300x400
 			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), rand(0, 360), writing_stats["stamp_icon_state"], stamp_icon = writing_stats["stamp_icon"])
-			user.visible_message(span_notice("[user] blindly stamps [src] with \the [tool]!"))
-			to_chat(user, span_notice("You stamp [src] with \the [tool] the best you can!"))
+			user.visible_message(span_notice(LANG("obj.db0aecdd", list(user, src, tool))))
+			to_chat(user, span_notice(LANG("obj.be3d2c55", list(src, tool))))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 		else
 			to_chat(user, span_notice(LANG("obj.507009a1", null)))

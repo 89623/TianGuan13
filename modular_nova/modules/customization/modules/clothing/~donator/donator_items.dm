@@ -487,7 +487,7 @@
 
 /obj/item/toy/pillow/torapillow/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click [src] to flip it. It currently shows the '[src.icon_state]' side.")
+	. += span_notice(LANG("obj.d3f0f5ec", list(src, src.icon_state)))
 
 /// Toggles between flipped/non-flipped
 /obj/item/toy/pillow/torapillow/proc/adjust_item_style(mob/user)
@@ -495,4 +495,4 @@
 		icon_state = "torapillbod-t"
 	else
 		icon_state = "torapillbod"
-	user.visible_message(span_notice("[user] flips the [src]."))
+	user.visible_message(span_notice(LANG("obj.4bb7d4ba", list(user, src))))

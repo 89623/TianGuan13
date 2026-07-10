@@ -185,14 +185,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		return NONE
 
 	if(!(ticket_number >= max_number))
-		to_chat(user, span_notice("[src] refuses [tool]! There [max_number - ticket_number == 1 ? "is" : "are"] still [max_number - ticket_number] ticket\s left!"))
+		to_chat(user, span_notice(LANG("obj.37037682", list(src, tool, max_number - ticket_number == 1 ? "is" : "are", max_number - ticket_number))))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You start to refill [src]'s ticket holder (doing this will reset its ticket count!)."))
+	to_chat(user, span_notice(LANG("obj.03f4d613", list(src))))
 	if(!do_after(user, 3 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You insert [tool] into [src] as it whirs nondescriptly."))
+	to_chat(user, span_notice(LANG("obj.73575a68", list(tool, src))))
 	qdel(tool)
 	ticket_number = 0
 	current_number = 0

@@ -5,19 +5,19 @@
 
 /obj/item/stack/tile/mineral/welder_act(mob/living/user, obj/item/tool)
 	if(get_amount() < 4)
-		to_chat(user, span_warning("You need at least four tiles to do this!"))
+		to_chat(user, span_warning(LANG("obj.682d330c", null)))
 		return ITEM_INTERACT_BLOCKING
 	if(!mineralType)
-		to_chat(user, span_warning("You can not reform this!"))
+		to_chat(user, span_warning(LANG("obj.59f6af92", null)))
 		stack_trace("A mineral tile of type [type] doesn't have its mineralType set.")
 		return ITEM_INTERACT_BLOCKING
 	if(!tool.use_tool(src, user, 0, volume=40))
 		return ITEM_INTERACT_BLOCKING
 	var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
 	var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.loc)
-	user.visible_message(span_notice("[user] shaped [src] into [new_item] with [tool]."), \
-						span_notice("You shaped [src] into [new_item] with [tool]."), \
-						span_hear("You hear welding."))
+	user.visible_message(span_notice(LANG("obj.50a33dd4", list(user, src, new_item, tool))), \
+						span_notice(LANG("obj.2628de4d", list(src, new_item, tool))), \
+						span_hear(LANG("obj.1aa82fa3", null)))
 	var/holding = user.is_holding(src)
 	use(4)
 	if(holding && QDELETED(src))

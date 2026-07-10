@@ -1412,5 +1412,5 @@
 		return
 
 	if (overeatduration >= OVEREAT_TIME_LIMIT)
-		to_chat(src, span_danger("You suddenly feel blubbery!"))
+		to_chat(src, span_danger(LANG("mob.4a521717", null)))
 		add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)

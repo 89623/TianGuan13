@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/circuitboard/computer/obj/machinery/computer/upload/ai/no_lock
 	name = "Generic"
 	abstract_type = /obj/item/circuitboard/computer
@@ -525,7 +526,7 @@
 	if (user.combat_mode || !isidcard(tool))
 		return NONE
 	if (!check_access(tool))
-		balloon_alert(user, "no access!")
+		balloon_alert(user, LANG("obj.ddafd752", null))
 		return ITEM_INTERACT_BLOCKING
 	locked = !locked
 	balloon_alert(user, locked ? "locked" : "unlocked")

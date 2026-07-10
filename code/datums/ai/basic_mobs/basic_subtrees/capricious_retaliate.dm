@@ -51,7 +51,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target, world.time)
-	pawn.visible_message(span_warning("[pawn] glares grumpily at [final_target]!"))
+	pawn.visible_message(span_warning(LANG("datum.17d7796f", list(pawn, final_target))))
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /// Called if we try but fail to target something

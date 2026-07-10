@@ -1723,7 +1723,7 @@
 				affected_mob.emote("moan")
 				affected_mob.Paralyze(20) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
-			to_chat(affected_mob, span_userdanger("You feel too exhausted to continue!")) // at this point you will eventually die unless you get charcoal
+			to_chat(affected_mob, span_userdanger(LANG("datum.cb58ff58", null))) // at this point you will eventually die unless you get charcoal
 			need_mob_update = affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 			need_mob_update += affected_mob.adjust_stamina_loss(2 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 		if(82 to INFINITY)
@@ -1910,7 +1910,7 @@
 		if(prob(30))
 			to_chat(affected_mob, span_danger(LANG("datum.d2e12517", null)))
 		else if(prob(10))
-			to_chat(affected_mob, span_userdanger("You feel like your blood has stopped moving!"))
+			to_chat(affected_mob, span_userdanger(LANG("datum.929c3002", null)))
 			affected_mob.adjust_oxy_loss(METABOLIZE_FREE_CONSTANT(0.5) * rand(3, 4) * metabolization_ratio, updating_health = FALSE, required_biotype = affected_biotype)
 
 		if(prob(50))

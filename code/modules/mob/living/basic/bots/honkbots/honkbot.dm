@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/living/basic/bot/secbot/honkbot
 	name = "\improper Honkbot"
 	desc = "A little robot. It looks happy with its bike horn."
@@ -70,7 +71,7 @@
 	icon_state = bot_access_flags & BOT_COVER_EMAGGED ? "[base_icon_state]-e" : "[base_icon_state]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
-	audible_message(span_danger("[src] gives out an evil laugh!"))
+	audible_message(span_danger(LANG("mob.02afa570", list(src))))
 	playsound(src, 'sound/mobs/non-humanoids/honkbot/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
 
 /mob/living/basic/bot/secbot/honkbot/retrieve_emag_message()

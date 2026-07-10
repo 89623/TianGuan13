@@ -127,7 +127,7 @@
 	if(istype(tool, /obj/item/paper))
 		if(!user.transferItemToLoc(tool, src, silent = FALSE))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You put [tool] in [src]."))
+		to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
 		paper_stack += tool
 		total_paper += 1
 		update_appearance()
@@ -136,7 +136,7 @@
 	if(istype(tool, /obj/item/pen) && !bin_pen)
 		if(!user.transferItemToLoc(tool, src, silent = FALSE))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You put [tool] in [src]."))
+		to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
 		bin_pen = tool
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -259,13 +259,13 @@
 
 /obj/item/paper_bin/bundlenatural/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/paper/carbon))
-		to_chat(user, span_warning("[tool] won't fit into [src]."))
+		to_chat(user, span_warning(LANG("obj.e9a1b6e8", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(tool.get_sharpness())
 		if(!tool.use_tool(src, user, 1 SECONDS))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You slice the cable from [src]."))
+		to_chat(user, span_notice(LANG("obj.904d27a4", list(src))))
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
 

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Fires out two cross patterns of damaging tentacles which reel in anything they hit, then causes a followup attack
 /datum/action/cooldown/mob_cooldown/projectile_attack/tendril_lash
 	name = "Tentacle Lash"
@@ -140,7 +141,7 @@
 	if (HAS_TRAIT(victim, TRAIT_TENTACLE_IMMUNE) || SEND_SIGNAL(victim, COMSIG_TENDRIL_TENTACLED_GRABBED) & COMPONENT_TENDRIL_CANCEL_TENTACLE_GRAB)
 		return
 
-	to_chat(victim, span_userdanger("You're snatched by [firer]'s tentacles!"))
+	to_chat(victim, span_userdanger(LANG("obj.0cb89825", list(firer))))
 	victim.apply_damage(snatch_damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	if (QDELETED(victim))
 		qdel(src)

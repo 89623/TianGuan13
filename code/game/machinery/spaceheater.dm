@@ -426,7 +426,7 @@
 	add_fingerprint(user)
 	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
+			to_chat(user, span_warning(LANG("obj.3606d540", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING

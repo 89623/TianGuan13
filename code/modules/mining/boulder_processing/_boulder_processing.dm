@@ -79,7 +79,7 @@
 /obj/machinery/bouldertech/examine(mob/user)
 	. = ..()
 
-	. += span_suppradio("The machine reads that it has [EXAMINE_HINT("[points_held] mining points")] stored. Swipe an ID to claim them.")
+	. += span_suppradio(LANG("obj.72d0ba03", list(EXAMINE_HINT("[points_held] mining points"))))
 
 	var/boulder_count = 0
 	for(var/obj/item/boulder/potential_boulder in contents)
@@ -88,8 +88,8 @@
 	if(boulder_count >= 1)
 		. += span_notice(LANG("obj.92f61f8a", list(EXAMINE_HINT("Right Click"))))
 
-	. += span_info("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_info("This machine can process up to [EXAMINE_HINT("[boulders_processing_count] boulders")] at a time.")
+	. += span_info(LANG("obj.80870b1a", list(boulder_count, boulders_held_max)))
+	. += span_info(LANG("obj.236dccea", list(EXAMINE_HINT("[boulders_processing_count] boulders"))))
 
 	if(anchored)
 		. += span_notice(LANG("obj.7641f909", list(EXAMINE_HINT("anchored"))))

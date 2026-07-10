@@ -726,7 +726,7 @@
 	// From here on, no message
 	suppressed = SUPPRESSED_VERY
 	if(!(kisser.mind && HAS_TRAIT_FROM(target, TRAIT_HANDMADE, REF(kisser.mind))))
-		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
+		to_chat(firer, span_warning(LANG("obj.19e3040c", list(target.name))))
 		return
 	if(target.reagents.has_reagent(/datum/reagent/love))
 		to_chat(firer, span_warning(LANG("obj.6b8880a6", list(target.name))))

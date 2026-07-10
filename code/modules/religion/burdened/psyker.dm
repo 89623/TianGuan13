@@ -193,7 +193,7 @@
 
 /obj/item/gun/ballistic/revolver/chaplain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (isammocasing(tool) || istype(tool, /obj/item/ammo_box))
-		user.balloon_alert(user, "no manual reloads!")
+		user.balloon_alert(user, LANG("obj.7d7e46a8", null))
 		return ITEM_INTERACT_BLOCKING
 
 	return ..()

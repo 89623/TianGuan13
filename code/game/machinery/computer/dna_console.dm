@@ -187,7 +187,7 @@
 	if (istype(tool, /obj/item/chromosome))
 		tool.forceMove(src)
 		stored_chromosomes += tool
-		to_chat(user, span_notice("You insert [tool]."))
+		to_chat(user, span_notice(LANG("obj.a134b5ec", list(tool))))
 		return ITEM_INTERACT_SUCCESS
 
 	// Insert data disk if console disk slot is empty
@@ -201,7 +201,7 @@
 			eject_disk(user)
 		// Set the new diskette.
 		diskette = tool
-		to_chat(user, span_notice("You insert [tool]."))
+		to_chat(user, span_notice(LANG("obj.a134b5ec", list(tool))))
 		return ITEM_INTERACT_SUCCESS
 
 	// Recycle non-activator used injectors
@@ -211,21 +211,21 @@
 		if(!activator.used)
 			//recycle unused activators
 			qdel(tool)
-			to_chat(user, span_notice("Recycled unused [tool]."))
+			to_chat(user, span_notice(LANG("obj.00d93286", list(tool))))
 			return ITEM_INTERACT_SUCCESS
 		if(activator.research && activator.filled)
 			if(prob(60))
 				var/c_typepath = generate_chromosome()
 				var/obj/item/chromosome/CM = new c_typepath (src)
 				stored_chromosomes += CM
-				to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
+				to_chat(user,span_notice(LANG("obj.d60767ae", list(capitalize(CM.name)))))
 			else
-				to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
+				to_chat(user, span_notice(LANG("obj.36574246", null)))
 		if(activator.crispr_charge)
 			crispr_charges++
-			to_chat(user, span_notice("CRISPR charge added."))
+			to_chat(user, span_notice(LANG("obj.3f7aa53d", null)))
 		qdel(tool)
-		to_chat(user,span_notice("Recycled [tool]."))
+		to_chat(user,span_notice(LANG("obj.460a6614", list(tool))))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE

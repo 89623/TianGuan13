@@ -83,15 +83,15 @@
 /obj/item/toy/waterballoon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/reagent_containers/cup) && tool.reagents)
 		if(tool.reagents.total_volume <= 0)
-			to_chat(user, span_warning("[tool] is empty."))
+			to_chat(user, span_warning(LANG("obj.ab993876", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(reagents.total_volume >= 10)
-			to_chat(user, span_warning("[src] is full."))
+			to_chat(user, span_warning(LANG("obj.8e2d390c", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
-		desc = "A translucent balloon with some form of liquid sloshing around in it."
-		to_chat(user, span_notice("You fill the balloon with the contents of [tool]."))
+		desc = LANG("obj.cb10be7f", null)
+		to_chat(user, span_notice(LANG("obj.d9e89dd7", list(tool))))
 		tool.reagents.trans_to(src, 10, transferred_by = user)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -181,7 +181,7 @@
 
 	var/obj/item/toy/balloon/long/hit_by = tool
 	if(hit_by.current_color == current_color)
-		to_chat(user, span_warning("You must use balloons of different colours to do that!"))
+		to_chat(user, span_warning(LANG("obj.6d8bf663", null)))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(
 		span_notice("[user.name] starts contorting up a balloon animal!"),
@@ -530,17 +530,17 @@
 		return NONE
 	var/obj/item/toy/ammo/gun/ammunition = tool
 	if (bullets >= 7)
-		to_chat(user, span_warning("It's already fully loaded!"))
+		to_chat(user, span_warning(LANG("obj.0125c732", null)))
 		return ITEM_INTERACT_BLOCKING
 	if (ammunition.amount_left <= 0)
-		to_chat(user, span_warning("There are no more caps!"))
+		to_chat(user, span_warning(LANG("obj.810f1d3f", null)))
 		return ITEM_INTERACT_BLOCKING
 	if (ammunition.amount_left < (7 - bullets))
 		bullets += ammunition.amount_left
-		to_chat(user, span_notice("You reload [ammunition.amount_left] cap\s."))
+		to_chat(user, span_notice(LANG("obj.bb480265", list(ammunition.amount_left))))
 		ammunition.amount_left = 0
 	else
-		to_chat(user, span_notice("You reload [7 - bullets] cap\s."))
+		to_chat(user, span_notice(LANG("obj.bb480265", list(7 - bullets))))
 		ammunition.amount_left -= 7 - bullets
 		bullets = 7
 	tool.update_appearance()
@@ -557,9 +557,9 @@
 		return ITEM_INTERACT_SUCCESS
 	playsound(user, 'sound/items/weapons/gun/revolver/shot.ogg', 100, TRUE)
 	bullets--
-	user.visible_message(span_danger("[user] fires [src] at [interacting_with]!"), \
-		span_danger("You fire [src] at [interacting_with]!"), \
-		span_hear("You hear a gunshot!"))
+	user.visible_message(span_danger(LANG("obj.5d15784b", list(user, src, interacting_with))), \
+		span_danger(LANG("obj.aeacd84a", list(src, interacting_with))), \
+		span_hear(LANG("obj.89ccf80f", null)))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/ammo
@@ -682,13 +682,13 @@
 		return NONE
 	var/obj/item/toy/sword/attatched_sword = tool
 	if(HAS_TRAIT(tool, TRAIT_NODROP))
-		to_chat(user, span_warning("[tool] is stuck to your hand, you can't attach it to [src]!"))
+		to_chat(user, span_warning(LANG("obj.3347228a", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(src, TRAIT_NODROP))
-		to_chat(user, span_warning("[src] is stuck to your hand, you can't attach it to [tool]!"))
+		to_chat(user, span_warning(LANG("obj.3347228a", list(src, tool))))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool."))
+	to_chat(user, span_notice(LANG("obj.86ccbb1e", null)))
 	var/obj/item/dualsaber/toy/new_saber = new /obj/item/dualsaber/toy(user.loc)
 	if(attatched_sword.hacked || hacked)
 		new_saber.hacked = TRUE
@@ -1147,9 +1147,9 @@
 
 /obj/item/toy/clockwork_watch/examine(mob/user)
 	. = ..()
-	. += span_info("Station Time: [server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour))]")
+	. += span_info(LANG("obj.7a025a34", list(server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour)))))
 	if(user.is_literate())
-		. += span_info("That means it is currently [round_timestamp()] into the shift.")
+		. += span_info(LANG("obj.f5c79a87", list(round_timestamp())))
 
 /*
  * Toy Dagger

@@ -171,7 +171,7 @@
 
 			disabled_modules &= ~BORG_MODULE_THREE_DISABLED
 
-	to_chat(src, span_notice("ERROR CLEARED: Module [module_num] back online."))
+	to_chat(src, span_notice(LANG("mob.a6e982e5", list(module_num))))
 	var/atom/movable/screen/robot/module_slot/module = hud_used?.screen_objects[HUD_KEY_HAND_SLOT(module_num)]
 	if(module)
 		module.icon_state = module.base_icon_state

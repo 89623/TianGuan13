@@ -369,7 +369,7 @@
 
 	if(istype(tool, /obj/item/gun/energy))
 		if(diskie)
-			to_chat(user, span_warning("Remove the Diode Disk before inserting a gun."))
+			to_chat(user, span_warning(LANG("obj.907c970e", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!integrate(tool,user))
 			return ITEM_INTERACT_BLOCKING
@@ -378,7 +378,7 @@
 	if(istype(tool, /obj/item/emitter_disk))
 		var/obj/item/emitter_disk/config_disk = tool
 		if(!user.transferItemToLoc(config_disk, src))
-			balloon_alert(user, "stuck in hand!")
+			balloon_alert(user, LANG("obj.c7cbf2eb", null))
 			return ITEM_INTERACT_BLOCKING
 		if(diskie)
 			user.put_in_hands(diskie)

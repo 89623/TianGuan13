@@ -27,7 +27,7 @@
 /datum/action/cooldown/mob_cooldown/resurface/proc/burrow(mob/living/burrower, atom/target, force = FALSE)
 	var/turf/unburrow_turf = get_unburrow_turf(burrower, target)
 	if (!unburrow_turf) // means all the turfs nearby are station turfs or something, not lavaland
-		to_chat(burrower, span_warning("Couldn't burrow anywhere near the target!"))
+		to_chat(burrower, span_warning(LANG("datum.3503e05c", null)))
 		if(burrower.ai_controller?.ai_status == AI_STATUS_ON)
 			//this is a valid reason to give up on a target
 			burrower.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)

@@ -359,11 +359,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return NONE
 
 	if(!check_oxygen(user)) //cigarettes need oxygen
-		balloon_alert(user, "no air!")
+		balloon_alert(user, LANG("obj.0886d784", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!smoketime)
-		to_chat(user, span_warning("There is nothing to smoke!"))
+		to_chat(user, span_warning(LANG("obj.3556913a", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	light(lighting_text)
@@ -1010,12 +1010,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 
 	if(packeditem)
-		to_chat(user, span_warning("It is already packed!"))
+		to_chat(user, span_warning(LANG("obj.90429325", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/to_smoke = tool
 	if(istype(to_smoke, /obj/item/food/grown) && !HAS_TRAIT(to_smoke, TRAIT_DRIED))
-		to_chat(user, span_warning("It has to be dried first!"))
+		to_chat(user, span_warning(LANG("obj.bf51b6a2", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice(LANG("obj.16ae1517", list(to_smoke, src))))

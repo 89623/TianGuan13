@@ -39,13 +39,13 @@
 	if(!istype(tool, /obj/item/blackbox))
 		return NONE
 	if(stored)
-		to_chat(user, span_warning("There's already a blackbox in \the [src].")) //something's gone wrong to get here, but you know, it could happen
+		to_chat(user, span_warning(LANG("obj.05de69e5", list(src)))) //something's gone wrong to get here, but you know, it could happen
 		return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(tool, TRAIT_NODROP) || !user.transferItemToLoc(tool, src))
-		to_chat(user, span_warning("[tool] is stuck to your hand!"))
+		to_chat(user, span_warning(LANG("obj.1dbf8014", list(tool))))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] clicks [tool] into [src]!"), \
-	span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
+	user.visible_message(span_notice(LANG("obj.f418bf1c", list(user, tool, src))), \
+	span_notice(LANG("obj.359c76df", list(src))))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	stored = tool
 	update_appearance()
@@ -108,7 +108,7 @@
 	. = ..()
 	if (calibrating)
 		calibrating += world.time
-		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
+		say(LANG("obj.e1d55988", list(rand(3, 9))))
 		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", "This is an automated message. System calibration started at [server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()]).")
 	else
 		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)

@@ -70,13 +70,13 @@
 		return NONE
 	var/obj/item/assembly/new_assembly = tool
 	if(!(new_assembly.assembly_behavior & ASSEMBLY_FUNCTIONAL_OUTPUT))
-		to_chat(user, span_warning("\The [tool] doesn't seem like it would do much of anything inside of [src]..."))
+		to_chat(user, span_warning(LANG("obj.8bb2af2c", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	assembly = tool
 	SEND_SIGNAL(tool, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE, src, user)
-	to_chat(user, span_notice("You attach [tool] to [src]!"))
+	to_chat(user, span_notice(LANG("obj.93310752", list(tool, src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pressure_plate/attack_self(mob/living/L)

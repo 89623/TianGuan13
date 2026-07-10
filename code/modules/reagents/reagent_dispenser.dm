@@ -93,7 +93,7 @@
 /obj/structure/reagent_dispensers/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
-			balloon_alert(user, "another device is in the way!")
+			balloon_alert(user, LANG("obj.475b022e", null))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/assembly_holder/holder = tool
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
@@ -113,7 +113,7 @@
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(rig_boom))
 		log_bomber(user, "attached [holder.name] to ", src)
 		last_rigger = user
-		user.balloon_alert_to_viewers("attached rig")
+		user.balloon_alert_to_viewers(LANG("obj.9fd1e502", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stack/sheet/iron) && can_be_tanked)
@@ -310,7 +310,7 @@
 	var/obj/item/weldingtool/refilling_welder = tool
 	if(istype(refilling_welder) && !refilling_welder.welding)
 		if(refilling_welder.reagents.has_reagent(/datum/reagent/fuel, refilling_welder.max_fuel))
-			to_chat(user, span_warning("Your [refilling_welder.name] is already full!"))
+			to_chat(user, span_warning(LANG("obj.c9271270", list(refilling_welder.name))))
 			return ITEM_INTERACT_BLOCKING
 		reagents.trans_to(refilling_welder, refilling_welder.max_fuel, transferred_by = user)
 		user.visible_message(span_notice(LANG("obj.3f21aaca", list(user, user.p_their(), refilling_welder.name))), span_notice(LANG("obj.e125cbe7", list(refilling_welder))))
@@ -321,7 +321,7 @@
 	var/obj/item/lighter/refilling_lighter = tool
 	if(istype(refilling_lighter) && !refilling_lighter.lit)
 		if(refilling_lighter.reagents.has_reagent(/datum/reagent/fuel, refilling_lighter.maximum_fuel))
-			to_chat(user, span_warning("Your [refilling_lighter.name] is already full!"))
+			to_chat(user, span_warning(LANG("obj.c9271270", list(refilling_lighter.name))))
 			return ITEM_INTERACT_BLOCKING
 		reagents.trans_to(refilling_lighter, refilling_lighter.maximum_fuel, transferred_by = user)
 		user.visible_message(span_notice(LANG("obj.3f21aaca", list(user, user.p_their(), refilling_lighter.name))), span_notice(LANG("obj.e125cbe7", list(refilling_lighter))))
@@ -329,11 +329,11 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(!reagents.has_reagent(/datum/reagent/fuel))
-		to_chat(user, span_warning("[src] is out of fuel!"))
+		to_chat(user, span_warning(LANG("obj.acd296d8", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(
-		span_danger("[user] catastrophically fails at refilling [user.p_their()] [tool.name]!"),
-		span_userdanger("That was stupid of you."))
+		span_danger(LANG("obj.b1759db0", list(user, user.p_their(), tool.name))),
+		span_userdanger(LANG("obj.4f5987e9", null)))
 	log_bomber(user, "detonated a", src, "via [tool.name]")
 	boom(guaranteed_violent = TRUE) //NOVA EDIT CHANGE - ORIGINAL: boom()
 	return ITEM_INTERACT_SUCCESS

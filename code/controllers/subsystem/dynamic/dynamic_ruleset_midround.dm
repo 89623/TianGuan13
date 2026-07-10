@@ -762,7 +762,7 @@
 	var/list/admin_pool = list("[RULESET_CONFIG_CANCEL]" = TRUE, "[RANDOM_CLONE_TARGET]" = TRUE)
 	for(var/mob/living/carbon/human/target as anything in find_clone_candidates())
 		admin_pool["[target.real_name], the [target.mind.assigned_role.title]"] = target
-	var/picked = tgui_input_list(admin, "Select a crewmember to clone", "Clone Target", admin_pool)
+	var/picked = tgui_input_list(admin, LANG("datum.df632e86", null), LANG("datum.1c58c863", null), admin_pool)
 	if(!picked || picked == RULESET_CONFIG_CANCEL)
 		return RULESET_CONFIG_CANCEL
 	if(picked != RANDOM_CLONE_TARGET)

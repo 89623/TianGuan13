@@ -433,12 +433,12 @@
 	// attempt to insert light
 	if(istype(tool, /obj/item/light))
 		if(status == LIGHT_OK)
-			to_chat(user, span_warning("There is a [fitting] already inserted!"))
+			to_chat(user, span_warning(LANG("obj.ee33e3a5", list(fitting))))
 			return ITEM_INTERACT_BLOCKING
 		add_fingerprint(user)
 		var/obj/item/light/light_object = tool
 		if(!istype(light_object, light_type))
-			to_chat(user, span_warning("This type of light requires a [fitting]!"))
+			to_chat(user, span_warning(LANG("obj.e6513887", list(fitting))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(light_object))
 			return ITEM_INTERACT_BLOCKING
@@ -480,9 +480,9 @@
 	if(status != LIGHT_EMPTY || user.combat_mode)
 		return NONE
 	tool.play_tool_sound(src, 75)
-	user.visible_message(span_notice("[user.name] opens [src]'s casing."), \
-						span_notice("You open [src]'s casing."), \
-						span_hear("You hear unscrewing."))
+	user.visible_message(span_notice(LANG("obj.4f36580f", list(user.name, src))), \
+						span_notice(LANG("obj.7e79dc6e", list(src))), \
+						span_hear(LANG("obj.7ef4c6cb", null)))
 	deconstruct(disassembled = TRUE)
 	return ITEM_INTERACT_SUCCESS
 

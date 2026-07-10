@@ -8,9 +8,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/clock, 32)
 
 /obj/structure/sign/clock/examine(mob/user)
 	. = ..()
-	. += span_info("The current NST (local) time is: [server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour))].")
+	. += span_info(LANG("obj.e61b3194", list(server_timestamp(ic_time = TRUE, twelve_hour_clock = user.client?.prefs.read_preference(/datum/preference/toggle/twelve_hour)))))
 	if(user.is_literate())
-		. += span_info("That means it is currently [round_timestamp()] into the shift.")
+		. += span_info(LANG("obj.f5c79a87", list(round_timestamp())))
 
 /obj/structure/sign/calendar
 	name = "wall calendar"

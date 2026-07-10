@@ -128,13 +128,13 @@
 	if(!tool.GetID())
 		return NONE
 	if(panel_open)
-		balloon_alert(user, "panel open!")
+		balloon_alert(user, LANG("obj.2a428bad", null))
 		return ITEM_INTERACT_BLOCKING
 	if (!allowed(user))
-		balloon_alert(user, "access denied")
+		balloon_alert(user, LANG("obj.1d2a5ed1", null))
 		return ITEM_INTERACT_BLOCKING
 	controls_locked = !controls_locked
-	balloon_alert(user, "controls [controls_locked ? "locked" : "unlocked"]")
+	balloon_alert(user, LANG("obj.dc384c45", list(controls_locked ? "locked" : "unlocked")))
 	SStgui.update_uis(src)
 	return ITEM_INTERACT_SUCCESS
 

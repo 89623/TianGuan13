@@ -122,9 +122,9 @@
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stack/wrapping_paper/wrapping_paper = tool
 		if(!wrapping_paper.use(3))
-			to_chat(user, span_warning("You need more paper!"))
+			to_chat(user, span_warning(LANG("obj.7f44344b", null)))
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] wraps the package in festive paper!"))
+		user.visible_message(span_notice(LANG("obj.7eb9f94d", list(user))))
 		giftwrapped = TRUE
 		greyscale_config = text2path("/datum/greyscale_config/gift[icon_state]")
 		set_greyscale(colors = wrapping_paper.greyscale_colors)
@@ -133,12 +133,12 @@
 
 	if(istype(tool, /obj/item/paper))
 		if(note)
-			to_chat(user, span_warning("This package already has a note attached!"))
+			to_chat(user, span_warning(LANG("obj.c71b2862", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("For some reason, you can't attach [tool]!"))
+			to_chat(user, span_warning(LANG("obj.3326bf5a", list(tool))))
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] attaches [tool] to [src]."), span_notice("You attach [tool] to [src]."))
+		user.visible_message(span_notice(LANG("obj.c24be4ca", list(user, tool, src))), span_notice(LANG("obj.c1fbc99d", list(tool, src))))
 		note = tool
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -148,15 +148,15 @@
 		if(sales_tagger.scanning_mode != SCAN_SALES_TAG)
 			return ITEM_INTERACT_BLOCKING
 		if(sticker)
-			to_chat(user, span_warning("This package already has a barcode attached!"))
+			to_chat(user, span_warning(LANG("obj.14e3b20c", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!(sales_tagger.payments_acc))
-			to_chat(user, span_warning("Swipe an ID on [sales_tagger] first!"))
+			to_chat(user, span_warning(LANG("obj.cba92c53", list(sales_tagger))))
 			return ITEM_INTERACT_BLOCKING
 		if(sales_tagger.paper_count <= 0)
-			to_chat(user, span_warning("[sales_tagger] is out of paper!"))
+			to_chat(user, span_warning(LANG("obj.3b0e27cd", list(sales_tagger))))
 			return ITEM_INTERACT_BLOCKING
-		user.visible_message(span_notice("[user] attaches a barcode to [src]."), span_notice("You attach a barcode to [src]."))
+		user.visible_message(span_notice(LANG("obj.10af87a7", list(user, src))), span_notice(LANG("obj.7eef88ad", list(src))))
 		sales_tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
 		sticker.payments_acc = sales_tagger.payments_acc	//new tag gets the tagger's current account.
@@ -172,13 +172,13 @@
 	if(istype(tool, /obj/item/barcode))
 		var/obj/item/barcode/stickerA = tool
 		if(sticker)
-			to_chat(user, span_warning("This package already has a barcode attached!"))
+			to_chat(user, span_warning(LANG("obj.14e3b20c", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!(stickerA.payments_acc))
-			to_chat(user, span_warning("This barcode seems to be invalid. Guess it's trash now."))
+			to_chat(user, span_warning(LANG("obj.79873f08", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("For some reason, you can't attach [tool]!"))
+			to_chat(user, span_warning(LANG("obj.3326bf5a", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		sticker = stickerA
 		for(var/obj/wrapped_item in get_all_contents())
@@ -191,7 +191,7 @@
 	if(istype(tool, /obj/item/boxcutter))
 		var/obj/item/boxcutter/boxcutter_item = tool
 		if(!HAS_TRAIT(boxcutter_item, TRAIT_TRANSFORM_ACTIVE))
-			balloon_alert(user, "prime the boxcutter!")
+			balloon_alert(user, LANG("obj.271bb5a8", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!attempt_pre_unwrap_contents(user, time = 0.5 SECONDS))
 			return ITEM_INTERACT_BLOCKING
@@ -360,27 +360,27 @@
 	if(isidcard(tool))
 		var/obj/item/card/id/potential_acc = tool
 		if(!potential_acc.registered_account)
-			to_chat(user, span_warning("This ID card has no account registered!"))
+			to_chat(user, span_warning(LANG("obj.51d0d893", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(payments_acc == potential_acc.registered_account)
-			to_chat(user, span_notice("ID card already registered."))
+			to_chat(user, span_notice(LANG("obj.bde32b20", null)))
 			return ITEM_INTERACT_BLOCKING
 		payments_acc = potential_acc.registered_account
 		playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
-		to_chat(user, span_notice("[src] registers the ID card. Tag a wrapped item to create a barcode."))
+		to_chat(user, span_notice(LANG("obj.37931711", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/paper))
 		if ((paper_count >= max_paper_count))
-			to_chat(user, span_notice("[src]'s paper supply is full."))
+			to_chat(user, span_notice(LANG("obj.d0c8fa5b", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		paper_count += 10
 		qdel(tool)
 		if (paper_count >= max_paper_count)
 			paper_count = max_paper_count
-			to_chat(user, span_notice("[src]'s paper supply is now full."))
+			to_chat(user, span_notice(LANG("obj.60720976", list(src))))
 			return ITEM_INTERACT_SUCCESS
-		to_chat(user, span_notice("You refill [src]'s paper supply, you have [paper_count] left."))
+		to_chat(user, span_notice(LANG("obj.c2d63d9c", list(src, paper_count))))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE

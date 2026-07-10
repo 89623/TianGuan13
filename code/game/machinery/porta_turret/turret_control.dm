@@ -105,15 +105,15 @@
 		return NONE
 
 	if(!check_access(card))
-		to_chat(user, span_alert("Access denied."))
+		to_chat(user, span_alert(LANG("obj.077f9b52", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_warning("The turret control is unresponsive!"))
+		to_chat(user, span_warning(LANG("obj.998439f7", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	locked = !locked
-	to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
+	to_chat(user, span_notice(LANG("obj.2ee6d876", list(locked ? "lock" : "unlock"))))
 	return ITEM_INTERACT_SUCCESS
 
 

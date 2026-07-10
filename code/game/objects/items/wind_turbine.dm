@@ -247,26 +247,26 @@
 /obj/item/portable_wind_turbine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stock_parts/capacitor))
 		if (cap)
-			balloon_alert(user, "already has a capacitor!")
+			balloon_alert(user, LANG("obj.f5b1842a", null))
 			return ITEM_INTERACT_BLOCKING
 		user.transferItemToLoc(tool, src)
 		cap = tool
-		balloon_alert(user, "inserted the [tool]")
+		balloon_alert(user, LANG("obj.3c264ea5", list(tool)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(!is_type_in_typecache(tool, allowed_devices))
 		return NONE
 
 	if(isnull(cap))
-		balloon_alert(user, "no capacitor inserted!")
+		balloon_alert(user, LANG("obj.888798eb", null))
 		return ITEM_INTERACT_BLOCKING
 	if(charging)
-		balloon_alert(user, "already charging something!")
+		balloon_alert(user, LANG("obj.f5acf363", null))
 		return ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/gun/energy))
 		var/obj/item/gun/energy/energy_gun = tool
 		if(!energy_gun.can_charge)
-			balloon_alert(user, "not rechargable!")
+			balloon_alert(user, LANG("obj.642754d6", null))
 			return ITEM_INTERACT_BLOCKING
 	user.transferItemToLoc(tool, src)
 	charging = tool

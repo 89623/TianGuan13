@@ -48,21 +48,21 @@
 	if(tool.w_class < WEIGHT_CLASS_NORMAL)
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You put [tool] in [src]."))
+		to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
 		icon_state = "[initial(icon_state)]-open"
 		sleep(0.5 SECONDS)
 		icon_state = initial(icon_state)
 		return ITEM_INTERACT_SUCCESS
 	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
-		to_chat(user, span_warning("You can't put [tool] in [src]!"))
+		to_chat(user, span_warning(LANG("obj.b6416b46", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 
 /obj/structure/filingcabinet/wrench_act_secondary(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
+	to_chat(user, span_notice(LANG("obj.8b820c98", list(anchored ? "unwrench" : "wrench", src))))
 	if(!tool.use_tool(src, user, 20, volume=50))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
+	to_chat(user, span_notice(LANG("obj.5e680a27", list(anchored ? "unwrench" : "wrench", src))))
 	set_anchored(!anchored)
 	return ITEM_INTERACT_SUCCESS
 

@@ -132,7 +132,7 @@
 	if(istype(tool, /obj/item/stack/cable_coil) && !wired)
 		var/obj/item/stack/cable_coil/coil = tool
 		if (coil.get_amount() < 15)
-			to_chat(user, span_warning("You need fifteen lengths of coil for this!"))
+			to_chat(user, span_warning(LANG("obj.1cc40c6b", null)))
 			return ITEM_INTERACT_BLOCKING
 		coil.use(15)
 		to_chat(user, span_notice(LANG("obj.9c4c0ec5", null)))
@@ -147,7 +147,7 @@
 	if(!wired)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	tool.play_tool_sound(src)
-	to_chat(user, span_notice("You remove the cables."))
+	to_chat(user, span_notice(LANG("obj.370ef466", null)))
 	wired = FALSE
 	slot_flags &= ~ITEM_SLOT_BACK
 	forceMove(drop_location())

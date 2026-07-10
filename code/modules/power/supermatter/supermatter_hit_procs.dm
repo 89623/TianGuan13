@@ -84,45 +84,45 @@
 /obj/machinery/power/supermatter_crystal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/scalpel/supermatter))
 		var/obj/item/scalpel/supermatter/scalpel = tool
-		to_chat(user, span_notice("You carefully begin to scrape \the [src] with \the [scalpel]..."))
+		to_chat(user, span_notice(LANG("obj.e9241f3f", list(src, scalpel))))
 		if(!scalpel.use_tool(src, user, 60, volume=100))
 			return ITEM_INTERACT_BLOCKING
 		if (!scalpel.usesLeft)
-			to_chat(user, span_warning("You fail to extract a sliver from \the [src]! \The [scalpel] isn't sharp enough anymore."))
+			to_chat(user, span_warning(LANG("obj.fc583063", list(src, scalpel))))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
+		to_chat(user, span_danger(LANG("obj.3265e75b", list(src, src))))
 		new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
 		supermatter_sliver_removed = TRUE
 		external_power_trickle += 800
 		log_activation(who = user, how = scalpel)
 		scalpel.usesLeft--
 		if (!scalpel.usesLeft)
-			to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
+			to_chat(user, span_notice(LANG("obj.51b4a661", list(scalpel))))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/hemostat/supermatter))
-		to_chat(user, span_warning("You poke [src] with [tool]'s hyper-noblium tips. Nothing happens."))
+		to_chat(user, span_warning(LANG("obj.314440a7", list(src, tool))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/destabilizing_crystal))
 		var/obj/item/destabilizing_crystal/destabilizing_crystal = tool
 
 		if(!is_main_engine)
-			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on \a [name]."))
+			to_chat(user, span_warning(LANG("obj.3f6c7fc3", list(destabilizing_crystal, name))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT)
-			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to \a [name] that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
+			to_chat(user, span_warning(LANG("obj.29b9afe0", list(destabilizing_crystal, name, SUPERMATTER_CASCADE_PERCENT))))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
+		to_chat(user, span_warning(LANG("obj.fe79f630", list(destabilizing_crystal, src))))
 		if(!do_after(user, 3 SECONDS, src))
 			return ITEM_INTERACT_BLOCKING
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
 		user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
 		user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
-		to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
+		to_chat(user, span_danger(LANG("obj.9b400c9d", list(destabilizing_crystal, src))))
 		set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
 		external_damage_immediate += 10
 		external_power_trickle += 500

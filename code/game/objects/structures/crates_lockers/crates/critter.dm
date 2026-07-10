@@ -79,4 +79,4 @@
 		return
 	stasis_sealed = FALSE
 	do_sparks(3, FALSE, src)
-	to_chat(user, span_warning("[src] one-use stasis mechanism has been triggered! It will not work again."))
+	to_chat(user, span_warning(LANG("obj.387a2f20", list(src))))

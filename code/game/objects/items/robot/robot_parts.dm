@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //The robot bodyparts have been moved to code/module/surgery/bodyparts/robot_bodyparts.dm
 
 /obj/item/robot_suit
@@ -171,10 +172,10 @@
 		if(l_arm || r_arm || l_leg || r_leg || chest || head)
 			return ITEM_INTERACT_BLOCKING
 		if (!iron_sheet.use(1))
-			to_chat(user, span_warning("You need one sheet of iron to start building ED-209!"))
+			to_chat(user, span_warning(LANG("obj.d103ebf1", null)))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/bot_assembly/ed209/assembly = new(drop_location())
-		to_chat(user, span_notice("You arm the robot frame."))
+		to_chat(user, span_notice(LANG("obj.830b728f", null)))
 		var/held_index = user.is_holding(src)
 		qdel(src)
 		if (held_index)
@@ -231,11 +232,11 @@
 			return ITEM_INTERACT_BLOCKING
 
 		if(!new_chestpiece.wired)
-			to_chat(user, span_warning("You need to attach wires to it first!"))
+			to_chat(user, span_warning(LANG("obj.8b4e4b04", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!new_chestpiece.cell)
-			to_chat(user, span_warning("You need to attach a cell to it first!"))
+			to_chat(user, span_warning(LANG("obj.ec650aad", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(new_chestpiece, src))
@@ -250,12 +251,12 @@
 	if(istype(tool, /obj/item/bodypart/head/robot))
 		var/obj/item/bodypart/head/robot/new_headpiece = tool
 		if(locate(/obj/item/organ) in new_headpiece)
-			to_chat(user, span_warning("There are organs inside [new_headpiece]!"))
+			to_chat(user, span_warning(LANG("obj.bc2727fe", list(new_headpiece))))
 			return ITEM_INTERACT_BLOCKING
 		if(head)
 			return ITEM_INTERACT_BLOCKING
 		if(!new_headpiece.flash2 || !new_headpiece.flash1)
-			to_chat(user, span_warning("You need to attach a flash to it first!"))
+			to_chat(user, span_warning(LANG("obj.3580b246", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(new_headpiece, src))
 			return ITEM_INTERACT_BLOCKING
@@ -268,13 +269,13 @@
 	if(istype(tool, /obj/item/mmi))
 		var/obj/item/mmi/potential_brain = tool
 		if(!check_completion())
-			to_chat(user, span_warning("The MMI must go in after everything else!"))
+			to_chat(user, span_warning(LANG("obj.0290266e", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!chest.cell)
-			to_chat(user, span_warning("The endoskeleton still needs a power cell!"))
+			to_chat(user, span_warning(LANG("obj.acf19c0e", null)))
 			return ITEM_INTERACT_BLOCKING
 		if(!isturf(loc))
-			to_chat(user, span_warning("You can't put [potential_brain] in, the frame has to be standing on the ground to be perfectly precise!"))
+			to_chat(user, span_warning(LANG("obj.d7e00c87", list(potential_brain))))
 			return ITEM_INTERACT_BLOCKING
 		if(!potential_brain.brain_check(user))
 			return ITEM_INTERACT_BLOCKING
@@ -282,7 +283,7 @@
 		var/mob/living/brain/brainmob = potential_brain.brainmob
 		if(is_banned_from(brainmob.ckey, JOB_CYBORG) || QDELETED(src) || QDELETED(brainmob) || QDELETED(user) || QDELETED(potential_brain) || !Adjacent(user))
 			if(!QDELETED(potential_brain))
-				to_chat(user, span_warning("This [potential_brain.name] does not seem to fit!"))
+				to_chat(user, span_warning(LANG("obj.d8b1bd52", list(potential_brain.name))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(tool))
 			return ITEM_INTERACT_BLOCKING
@@ -329,8 +330,8 @@
 		playsound(final_product.loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 
 		if(final_product.is_antag())
-			to_chat(final_product, span_userdanger("You have been robotized!"))
-			to_chat(final_product, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
+			to_chat(final_product, span_userdanger(LANG("obj.64625edf", null)))
+			to_chat(final_product, span_danger(LANG("obj.2a0cf72c", null)))
 
 		SSblackbox.record_feedback("amount", "cyborg_birth", 1)
 		forceMove(final_product)
@@ -341,7 +342,7 @@
 
 		if(!locomotion)
 			final_product.set_lockcharge(TRUE)
-			to_chat(final_product, span_warning("Error: Servo motors unresponsive."))
+			to_chat(final_product, span_warning(LANG("obj.176a200b", null)))
 		final_product.equip_outfit_and_loadout(equipping_job = SSjob.get_job_type(/datum/job/cyborg)) // NOVA EDIT ADDITION - Cyborg loadout hats
 		return ITEM_INTERACT_SUCCESS
 
@@ -351,10 +352,10 @@
 		if(!check_completion())
 			return ITEM_INTERACT_BLOCKING
 		if(!isturf(loc))
-			to_chat(user, span_warning("You cannot install [boris_module], the frame has to be standing on the ground to be perfectly precise!"))
+			to_chat(user, span_warning(LANG("obj.52014e87", list(boris_module))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.temporarilyRemoveItemFromInventory(boris_module))
-			to_chat(user, span_warning("[boris_module] is stuck to your hand!"))
+			to_chat(user, span_warning(LANG("obj.1dbf8014", list(boris_module))))
 			return ITEM_INTERACT_BLOCKING
 		qdel(boris_module)
 		var/mob/living/silicon/robot/final_product = new /mob/living/silicon/robot/shell(get_turf(src))
@@ -383,14 +384,14 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(IS_WRITING_UTENSIL(tool))
-		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
+		to_chat(user, span_warning(LANG("obj.31077cd0", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	return NONE
 
 /obj/item/robot_suit/multitool_act(mob/living/user, obj/item/tool)
 	if(!check_completion())
-		to_chat(user, span_warning("The endoskeleton must be assembled before debugging can begin!"))
+		to_chat(user, span_warning(LANG("obj.cdd3b641", null)))
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS

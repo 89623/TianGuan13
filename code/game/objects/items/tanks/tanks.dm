@@ -205,7 +205,7 @@
 	if(!istype(tool, /obj/item/assembly_holder))
 		return NONE
 	if(tank_assembly)
-		balloon_alert(user, "something already attached!")
+		balloon_alert(user, LANG("obj.317d7ea4", null))
 		return ITEM_INTERACT_BLOCKING
 	bomb_assemble(tool, user)
 	return ITEM_INTERACT_SUCCESS

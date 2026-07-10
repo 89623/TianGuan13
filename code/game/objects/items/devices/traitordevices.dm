@@ -451,21 +451,21 @@ effective or pretty fucking useless.
 		return ITEM_INTERACT_BLOCKING
 
 	if(user.combat_mode)
-		balloon_alert(user, "deconstructing...")
+		balloon_alert(user, LANG("obj.44f0e678", null))
 		if(!tool.use_tool(src, user, 5 SECONDS, volume = 20))
 			return ITEM_INTERACT_BLOCKING
 
 		deconstruct(TRUE)
 		tool.play_tool_sound(src, 50)
-		balloon_alert(user, "deconstructed!")
+		balloon_alert(user, LANG("obj.4e90d37e", null))
 		return ITEM_INTERACT_SUCCESS
 
 
 	if(atom_integrity == max_integrity)
-		balloon_alert(user, "already repaired!")
+		balloon_alert(user, LANG("obj.88cc0c7c", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "repairing...")
+	balloon_alert(user, LANG("obj.b52342a8", null))
 	. = ITEM_INTERACT_BLOCKING // I'm doing this such that at least one successful repair considers the interaction a success
 	while(atom_integrity != max_integrity)
 		if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
@@ -474,7 +474,7 @@ effective or pretty fucking useless.
 		repair_damage(10)
 		. = ITEM_INTERACT_SUCCESS
 
-	balloon_alert(user, "repaired!")
+	balloon_alert(user, LANG("obj.ac33e326", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret/syndicate/toolbox/on_deconstruction(disassembled)

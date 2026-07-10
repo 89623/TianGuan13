@@ -316,7 +316,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!cover_open && istype(tool, accepted_magazine_type))
-		balloon_alert(user, "open the cover!")
+		balloon_alert(user, LANG("obj.e135a99d", null))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 

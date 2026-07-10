@@ -168,28 +168,28 @@
 	if(tool.tool_behaviour)
 		switch(state)
 			if(TRAM_SCREWED_TO_FRAME)
-				to_chat(user, span_warning("The security screws need to be removed first!"))
+				to_chat(user, span_warning(LANG("obj.b436b070", null)))
 				return ITEM_INTERACT_BLOCKING
 
 			if(TRAM_OUT_OF_FRAME)
-				to_chat(user, span_warning("The cabling need to be cut first!"))
+				to_chat(user, span_warning(LANG("obj.037e6c30", null)))
 				return ITEM_INTERACT_BLOCKING
 	return NONE
 
 /obj/structure/tram/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	switch(state)
 		if(TRAM_IN_FRAME)
-			user.visible_message(span_notice("[user] wedges \the [tool] into the tram panel's gap in the frame and starts prying..."),
-								span_notice("You wedge \the [tool] into the tram panel's gap in the frame and start prying..."))
+			user.visible_message(span_notice(LANG("obj.bcaca1b6", list(user, tool))),
+								span_notice(LANG("obj.4906368b", list(tool))))
 			if(!tool.use_tool(src, user, 1 SECONDS, volume = 50))
 				return ITEM_INTERACT_BLOCKING
 			state = TRAM_OUT_OF_FRAME
-			to_chat(user, span_notice("The panel pops out of the frame, exposing some cabling that look like they can be cut."))
+			to_chat(user, span_notice(LANG("obj.71715436", null)))
 			return ITEM_INTERACT_SUCCESS
 
 		if(TRAM_OUT_OF_FRAME)
-			user.visible_message(span_notice("[user] snaps the tram panel into place."),
-								span_notice("You snap the tram panel into place."))
+			user.visible_message(span_notice(LANG("obj.f35770e7", list(user))),
+								span_notice(LANG("obj.c179381e", null)))
 			state = TRAM_IN_FRAME
 			return ITEM_INTERACT_SUCCESS
 
@@ -198,17 +198,17 @@
 /obj/structure/tram/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	switch(state)
 		if(TRAM_SCREWED_TO_FRAME)
-			user.visible_message(span_notice("[user] begins to unscrew the tram panel from the frame..."),
-								span_notice("You begin to unscrew the tram panel from the frame..."))
+			user.visible_message(span_notice(LANG("obj.af481d02", list(user))),
+								span_notice(LANG("obj.0a11790d", null)))
 			if(!tool.use_tool(src, user, 1 SECONDS, volume = 50))
 				return ITEM_INTERACT_BLOCKING
 			state = TRAM_IN_FRAME
-			to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
+			to_chat(user, span_notice(LANG("obj.52e8eb7d", null)))
 			return ITEM_INTERACT_SUCCESS
 
 		if(TRAM_IN_FRAME)
-			user.visible_message(span_notice("[user] resecures the tram panel to the frame..."),
-								span_notice("You resecure the tram panel to the frame."))
+			user.visible_message(span_notice(LANG("obj.71337c68", list(user))),
+								span_notice(LANG("obj.ef873791", null)))
 			state = TRAM_SCREWED_TO_FRAME
 			return ITEM_INTERACT_SUCCESS
 
@@ -217,11 +217,11 @@
 /obj/structure/tram/wirecutter_act_secondary(mob/living/user, obj/item/tool)
 	if(state != TRAM_OUT_OF_FRAME)
 		return NONE
-	user.visible_message(span_notice("[user] starts cutting the connective cabling on \the [src]..."),
-						span_notice("You start cutting the connective cabling on \the [src]"))
+	user.visible_message(span_notice(LANG("obj.8a0b9559", list(user, src))),
+						span_notice(LANG("obj.de0b3ebb", list(src))))
 	if(!tool.use_tool(src, user, 1 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("The panels falls out of the way exposing the frame backing."))
+	to_chat(user, span_notice(LANG("obj.d74adce8", null)))
 	deconstruct(disassembled = TRUE)
 	return ITEM_INTERACT_SUCCESS
 

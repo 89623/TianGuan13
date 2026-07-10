@@ -17,7 +17,7 @@
 	if(!istype(tool, /obj/item/photo))
 		return NONE
 	if(displayed)
-		to_chat(user, span_warning("\The [src] already contains a photo."))
+		to_chat(user, span_warning(LANG("obj.2c26fb44", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
@@ -151,7 +151,7 @@
 	if(!istype(tool, /obj/item/photo))
 		return NONE
 	if(framed)
-		to_chat(user, span_warning("\The [src] already contains a photo."))
+		to_chat(user, span_warning(LANG("obj.2c26fb44", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING

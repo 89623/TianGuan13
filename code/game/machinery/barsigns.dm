@@ -157,22 +157,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 	if(istype(tool, /obj/item/blueprints) && !change_area_name)
 		if(!panel_open)
-			balloon_alert(user, "open the panel first!")
+			balloon_alert(user, LANG("obj.2152c7cd", null))
 			return ITEM_INTERACT_BLOCKING
 
 		change_area_name = TRUE
-		balloon_alert(user, "sign registered")
+		balloon_alert(user, LANG("obj.5a8bc8f1", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/wire = tool
 
 		if(atom_integrity >= max_integrity)
-			balloon_alert(user, "doesn't need repairs!")
+			balloon_alert(user, LANG("obj.2f10840d", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!wire.use(2))
-			balloon_alert(user, "need two cables!")
+			balloon_alert(user, LANG("obj.491624ce", null))
 			return ITEM_INTERACT_BLOCKING
 
 		balloon_alert(user, LANG("obj.65ced1e8", null))

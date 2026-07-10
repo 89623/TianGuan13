@@ -79,7 +79,7 @@ RSF
 
 	var/tempMatter = matter_by_item[tool.type] + matter
 	if(tempMatter > max_matter)
-		to_chat(user, span_warning("\The [src] can't hold any more [discriptor]!"))
+		to_chat(user, span_warning(LANG("obj.085ce821", list(src, discriptor))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(isstack(tool))
@@ -89,7 +89,7 @@ RSF
 		qdel(tool)
 	matter = tempMatter //We add its value
 	playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
-	to_chat(user, span_notice("\The [src] now holds [matter]/[max_matter] [discriptor]."))
+	to_chat(user, span_notice(LANG("obj.35fc48da", list(src, matter, max_matter, discriptor))))
 	icon_state = base_icon_state//and set the icon state to the base state
 	return ITEM_INTERACT_SUCCESS
 

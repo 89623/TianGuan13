@@ -340,7 +340,7 @@
 			return FALSE
 	else if(istype(KA.loc, /mob/living/basic/mining_drone))
 		if (user)
-			to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
+			to_chat(user, span_notice(LANG("obj.5abda105", null)))
 		return FALSE
 
 	var/type_to_limit = denied_type

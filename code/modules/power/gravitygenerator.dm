@@ -243,10 +243,10 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		return NONE
 	var/obj/item/stack/sheet/plasteel/metal = tool
 	if(metal.get_amount() < 10)
-		to_chat(user, span_warning("You need 10 sheets of plasteel!"))
+		to_chat(user, span_warning(LANG("obj.603bc93f", null)))
 		return ITEM_INTERACT_BLOCKING
 	metal.use(10)
-	to_chat(user, span_notice("You add the plating to the framework."))
+	to_chat(user, span_notice(LANG("obj.fa6968d9", null)))
 	playsound(src.loc, 'sound/machines/click.ogg', 75, TRUE)
 	broken_state++
 	update_appearance()
@@ -257,7 +257,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		return NONE
 	if(!tool.use_tool(src, user, 0, volume=50))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You mend the damaged framework."))
+	to_chat(user, span_notice(LANG("obj.ccb3ab0b", null)))
 	broken_state++
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -265,7 +265,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/main/wrench_act(mob/living/user, obj/item/tool)
 	if(!(machine_stat & BROKEN) || (broken_state != GRAV_NEEDS_WRENCH))
 		return NONE
-	to_chat(user, span_notice("You secure the plating to the framework."))
+	to_chat(user, span_notice(LANG("obj.44d86fa5", null)))
 	tool.play_tool_sound(src)
 	set_fix()
 	return ITEM_INTERACT_SUCCESS
@@ -273,7 +273,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 /obj/machinery/gravity_generator/main/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!(machine_stat & BROKEN) || (broken_state != GRAV_NEEDS_SCREWDRIVER))
 		return NONE
-	to_chat(user, span_notice("You secure the screws of the framework."))
+	to_chat(user, span_notice(LANG("obj.f2155f27", null)))
 	tool.play_tool_sound(src)
 	broken_state++
 	update_appearance()

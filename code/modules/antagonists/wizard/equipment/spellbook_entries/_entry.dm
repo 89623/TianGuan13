@@ -231,7 +231,7 @@
 
 /datum/spellbook_entry/item/can_refund(mob/living/carbon/human/user, obj/item/spellbook/book, obj/item/refunding_item)
 	if(HAS_TRAIT(user, TRAIT_SPELLS_LOTTERY))
-		to_chat(user, span_notice("No refund."))
+		to_chat(user, span_notice(LANG("datum.367ec2a3", null)))
 		return FALSE
 	if(!book.refunds_allowed) // We're not doing a check for refundable here because they're not refundable in-book.
 		return FALSE

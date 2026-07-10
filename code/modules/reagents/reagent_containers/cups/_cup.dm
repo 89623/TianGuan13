@@ -153,7 +153,7 @@
 				span_notice("[user] attempts to drink from [src]."),
 				ignored_mobs = list(user),
 			)
-			to_chat(user, span_notice("You attempt to drink from [src]."))
+			to_chat(user, span_notice(LANG("obj.d3904c62", list(src))))
 			if(!do_after(user, 1.25 SECONDS, user))
 				return ITEM_INTERACT_BLOCKING
 			if(!reagents || !reagents.total_volume)

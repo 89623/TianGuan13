@@ -218,8 +218,7 @@
 		exit_hivemind()
 
 /mob/eye/imaginary_friend/hivemind/proc/exit_hivemind()
-	var/response = tgui_alert(src, "Are you sure you want to exit the hivemind? \
-		You can't re-enter it, though you can still be revived.", "Confirm Exit", list("Exit", "Stay"))
+	var/response = tgui_alert(src, LANG("mob.8736418a", null), LANG("mob.d25e56ec", null), list("Exit", "Stay"))
 	if(response != "Exit" || QDELETED(src))
 		return
 	ghostize(TRUE)

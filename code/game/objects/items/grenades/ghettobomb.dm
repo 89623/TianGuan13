@@ -223,7 +223,7 @@
 	if(!wires_are_in)
 		// here we can stuff in additional objects for a cooler effect
 		if(is_type_in_typecache(tool, allowed) && contents.len < MAX_STUFFINGS)
-			balloon_alert(user, "stuffed in")
+			balloon_alert(user, LANG("obj.0d2c11af", null))
 			var/atom/movable/to_put = tool
 			if(isstack(tool))
 				var/obj/item/stack/as_stack = tool
@@ -237,14 +237,14 @@
 		if(tool.reagents)
 			return NONE
 		if(reagents.total_volume < 5)
-			balloon_alert(user, "add more fuel!")
+			balloon_alert(user, LANG("obj.54c02df4", null))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/stack/cable_coil/coil = tool
 		if(!istype(coil))
 			return ITEM_INTERACT_BLOCKING
 		if (coil.get_amount() < 15)
-			balloon_alert(user, "need 15 length!")
+			balloon_alert(user, LANG("obj.1643231e", null))
 			return ITEM_INTERACT_BLOCKING
 		coil.use(15)
 
@@ -268,11 +268,11 @@
 	if(!istype(assembly) || !(assembly.type in allowed_activators))
 		return ITEM_INTERACT_BLOCKING
 	if(assembly.secured)
-		balloon_alert(user, "unsecure assembly first!")
+		balloon_alert(user, LANG("obj.80dcbc8c", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(assembly, src))
 		return ITEM_INTERACT_BLOCKING
-	user.balloon_alert(user, "attached")
+	user.balloon_alert(user, LANG("obj.b0ad167d", null))
 
 	var/obj/item/grenade/iedcasing/pipebomb = new(drop_location())
 	for(var/atom/movable/item_inside as anything in contents)

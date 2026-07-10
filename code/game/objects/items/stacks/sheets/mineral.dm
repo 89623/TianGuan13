@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	if(!istype(tool, /obj/item/stack/ore/glass))
 		return NONE
 	var/obj/item/stack/ore/glass/sand = tool
-	to_chat(user, span_notice("You fill the sandbag."))
+	to_chat(user, span_notice(LANG("obj.04fac2de", null)))
 	var/obj/item/stack/sheet/mineral/sandbags/filled_bag = new (drop_location())
 	qdel(src)
 	if(Adjacent(user) && !issilicon(user))
@@ -323,11 +323,11 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 		return ..()
 	var/obj/item/stack/rods/old_rods = tool
 	if(old_rods.merge_type != /obj/item/stack/rods)
-		to_chat(user, span_warning("You can't craft shuttle frame rods with this type of rod!"))
+		to_chat(user, span_warning(LANG("obj.e306233a", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if (old_rods.get_amount() < 5 && get_amount() < 1)
-		to_chat(user, span_warning("You need five rods and one sheet of titanium to make shuttle frame rods!"))
+		to_chat(user, span_warning(LANG("obj.66ed56e6", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/stack/rods/shuttle/five/new_rods = new (get_turf(user))

@@ -80,7 +80,7 @@
 	if(!istype(tool, /obj/item/coin/gold))
 		return NONE
 	if(charges || gold_timer)
-		balloon_alert(user, "already loaded")
+		balloon_alert(user, LANG("obj.ccd7551d", null))
 		return ITEM_INTERACT_BLOCKING
 	handle_gold_charges(user, 1.5 SECONDS)
 	qdel(tool)

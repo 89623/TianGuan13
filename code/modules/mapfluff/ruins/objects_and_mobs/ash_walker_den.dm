@@ -145,8 +145,8 @@
 /obj/effect/collapse/Initialize(mapload)
 	. = ..()
 	emitted_light = new(loc)
-	visible_message(span_bolddanger("The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!"))
-	balloon_alert_to_viewers("interact to grab loot before collapse!", vision_distance = 7)
+	visible_message(span_bolddanger(LANG("obj.5abfde61", null)))
+	balloon_alert_to_viewers(LANG("obj.9dedb491", null), vision_distance = 7)
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(collapse)), 5 SECONDS)
 
@@ -162,9 +162,9 @@
 /obj/effect/collapse/attack_hand(mob/living/collector, list/modifiers)
 	. = ..()
 	if(has_collected(collector))
-		to_chat(collector, span_danger("You've already gotten some loot, just get out of there with it!"))
+		to_chat(collector, span_danger(LANG("obj.5ac6ed21", null)))
 		return
-	visible_message(span_warning("Something falls free of the tendril!"))
+	visible_message(span_warning(LANG("obj.fa040f0d", null)))
 	var/obj/structure/closet/crate/necropolis/tendril/loot = new /obj/structure/closet/crate/necropolis/tendril(loc)
 	collector.start_pulling(loot)
 	collected += WEAKREF(collector)
@@ -189,7 +189,7 @@
 	for(var/mob/viewer in range(7, src))
 		shake_camera(viewer, 15, 1)
 	playsound(get_turf(src),'sound/effects/explosion/explosionfar.ogg', 200, TRUE)
-	visible_message(span_bolddanger("The tendril falls inward, the ground around it widening into a yawning chasm!"))
+	visible_message(span_bolddanger(LANG("obj.d60d68e3", null)))
 	for(var/turf/ground in RANGE_TURFS(2, src))
 		if(HAS_TRAIT(ground, TRAIT_NO_TERRAFORM))
 			continue

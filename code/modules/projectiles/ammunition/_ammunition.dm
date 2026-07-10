@@ -156,10 +156,10 @@
 			boolets++
 
 	if (!boolets)
-		to_chat(user, span_warning("You fail to collect anything!"))
+		to_chat(user, span_warning(LANG("obj.937731d0", null)))
 		return FALSE
 	box.update_appearance()
-	to_chat(user, span_notice("You collect [boolets] [box.casing_phrasing]\s. [box] now contains [box.stored_ammo.len] [box.casing_phrasing]\s."))
+	to_chat(user, span_notice(LANG("obj.150417ef", list(boolets, box.casing_phrasing, box, box.stored_ammo.len, box.casing_phrasing))))
 	return TRUE
 
 /obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

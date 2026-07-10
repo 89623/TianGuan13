@@ -101,7 +101,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		balloon_alert(user, LANG("obj.f4aa3550", null))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert_to_viewers("extracting!")
+	balloon_alert_to_viewers(LANG("obj.4d30849c", null))
 	if(loc == user && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		human_user.back?.atom_storage?.attempt_insert(src, user, force = STORAGE_SOFT_LOCKED)

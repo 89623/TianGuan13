@@ -327,7 +327,7 @@
 
 /obj/structure/closet/body_bag/environmental/prisoner/attempt_fold(mob/living/carbon/human/the_folder)
 	if(cinched)
-		to_chat(the_folder, span_warning("You wrestle with [src], but it won't fold while its straps are fastened."))
+		to_chat(the_folder, span_warning(LANG("obj.8be0acaa", list(src))))
 		return FALSE
 	return ..()
 

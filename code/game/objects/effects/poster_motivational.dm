@@ -21,9 +21,9 @@
 /obj/item/poster/quirk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!user.is_antag() || !HAS_TRAIT(user, TRAIT_POSTERBOY) || !istype(tool, /obj/item/toy/crayon))
 		return NONE
-	balloon_alert(user, "converting poster...")
+	balloon_alert(user, LANG("obj.ba09f090", null))
 	if(!do_after(user, 5 SECONDS, user))
-		balloon_alert(user, "interrupted!")
+		balloon_alert(user, LANG("obj.c67b5d27", null))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/poster/traitor/quirkspawn = new(get_turf(src))
 	user.put_in_hands(quirkspawn)

@@ -212,7 +212,7 @@
 		living_source = source
 
 	if(!isliving(target))
-		source.visible_message(span_danger("[source] smashes into [target]!"))
+		source.visible_message(span_danger(LANG("datum.1eb45639", list(source, target))))
 		if (recoil_duration >= 0) // Because 0 stun/knockdown is still a valid value
 			living_source?.Stun(recoil_duration, ignore_canstun = TRUE)
 		return

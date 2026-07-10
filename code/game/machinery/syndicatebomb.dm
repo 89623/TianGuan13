@@ -204,12 +204,12 @@
 
 	if(istype(tool, /obj/item/bombcore))
 		if(payload)
-			to_chat(user, span_warning("[payload] is already loaded into [src]! You'll have to remove it first."))
+			to_chat(user, span_warning(LANG("obj.b35b5b04", list(payload, src))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		payload = tool
-		to_chat(user, span_notice("You place [payload] into [src]."))
+		to_chat(user, span_notice(LANG("obj.f9b2bfe0", list(payload, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
@@ -218,7 +218,7 @@
 	var/old_integ = atom_integrity
 	. = ..()
 	if((old_integ > atom_integrity) && active && payload)
-		to_chat(user, span_warning("That seems like a really bad idea..."))
+		to_chat(user, span_warning(LANG("obj.23e8971c", null)))
 
 /obj/machinery/syndicatebomb/interact(mob/user)
 	wires.interact(user)
@@ -563,12 +563,12 @@
 	if(!istype(tool, /obj/item/reagent_containers/cup/beaker) && !istype(tool, /obj/item/reagent_containers/cup/bottle))
 		return NONE
 	if(beakers.len >= max_beakers)
-		to_chat(user, span_warning("[tool] won't fit! \The [src] can only hold up to [max_beakers] containers."))
+		to_chat(user, span_warning(LANG("obj.9ae35d30", list(tool, src, max_beakers))))
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	beakers += tool
-	to_chat(user, span_notice("You load [src] with [tool]."))
+	to_chat(user, span_notice(LANG("obj.4e7d28dc", list(src, tool))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/bombcore/chemical/crowbar_act(mob/living/user, obj/item/tool)

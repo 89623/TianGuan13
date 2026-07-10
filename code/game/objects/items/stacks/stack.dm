@@ -805,7 +805,7 @@
 	var/obj/item/stack/overtaking_stack = tool
 	if(!merge(overtaking_stack))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("Your [overtaking_stack.name] stack now contains [overtaking_stack.get_amount()] [overtaking_stack.singular_name]\s."))
+	to_chat(user, span_notice(LANG("obj.447269be", list(overtaking_stack.name, overtaking_stack.get_amount(), overtaking_stack.singular_name))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)

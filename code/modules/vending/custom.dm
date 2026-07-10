@@ -284,8 +284,8 @@
 	var/datum/bank_account/payee = id_card.registered_account
 	if(!compartmentLoadAccessCheck(user))
 		if(istype(id_card, /obj/item/card/id/departmental_budget))
-			balloon_alert(user, "invalid payment card")
-			to_chat(user, span_warning("You cannot use a departmental card for this."))
+			balloon_alert(user, LANG("obj.981ecc80", null))
+			to_chat(user, span_warning(LANG("obj.78c322e8", null)))
 			return
 		if(!payee.has_money(dispensed_item.custom_price))
 			balloon_alert(user, LANG("obj.c9e3dc6c", null))

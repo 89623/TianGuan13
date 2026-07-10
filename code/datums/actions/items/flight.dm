@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Action that toggles flight onto the mob.
 /datum/action/item_action/toggle_flight
 	name = "Activate Flight Jets"
@@ -41,7 +42,7 @@
 
 /datum/action/item_action/toggle_flight/do_effect(trigger_flags)
 	if(!ishuman(owner))
-		to_chat(owner, span_warning("Your shoes aren't built with you in mind, unfortunately."))
+		to_chat(owner, span_warning(LANG("datum.6dae7671", null)))
 		return FALSE
 	if(!target)
 		return FALSE
@@ -61,7 +62,7 @@
 		human_owner.AddElement(/datum/element/forced_gravity, 0)
 		SEND_SIGNAL(human_owner, COMSIG_JETBOOTS_ACTIVE, human_owner)
 		passtable_on(human_owner, SHOES_TRAIT)
-		to_chat(human_owner, span_notice("You click your jet boots together and begin to hover gently above the ground..."))
+		to_chat(human_owner, span_notice(LANG("datum.f9fe38ea", null)))
 		human_owner.set_resting(FALSE, TRUE)
 		human_owner.refresh_gravity()
 		RegisterSignals(human_owner, list(COMSIG_LIVING_STATUS_STUN, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_LIVING_STATUS_PARALYZE), PROC_REF(switch_flight))
@@ -80,7 +81,7 @@
 	human_owner.RemoveElement(/datum/element/forced_gravity, 0)
 	SEND_SIGNAL(human_owner, COMSIG_JETBOOTS_INACTIVE, human_owner)
 	passtable_off(human_owner, SHOES_TRAIT)
-	to_chat(human_owner, span_notice("You're lowered back onto the ground..."))
+	to_chat(human_owner, span_notice(LANG("datum.a8257d6e", null)))
 	human_owner.refresh_gravity()
 	UnregisterSignal(human_owner, list(COMSIG_LIVING_STATUS_STUN, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_LIVING_STATUS_PARALYZE))
 	//visuals
@@ -100,11 +101,11 @@
 	if(!location)
 		return FALSE
 	if(human.get_item_by_slot(ITEM_SLOT_LEGCUFFED))
-		to_chat(human, span_warning("Your legs are bound! Free yourself first!"))
+		to_chat(human, span_warning(LANG("datum.253ff1df", null)))
 		return FALSE
 
 	var/datum/gas_mixture/environment = location.return_air()
 	if(environment?.return_pressure() < HAZARD_LOW_PRESSURE + 10)
-		to_chat(human, span_warning("The atmosphere is too thin for you to fly!"))
+		to_chat(human, span_warning(LANG("datum.89ea74df", null)))
 		return FALSE
 	return TRUE

@@ -65,7 +65,7 @@
 	if(isnull(our_bot))
 		user.balloon_alert(user, LANG("obj.81676f69", null))
 		return
-	user.balloon_alert(user, "bot sent back to pad")
+	user.balloon_alert(user, LANG("obj.342d35a1", null))
 	var/mob/living/basic/bot/basic_bot = our_bot
 	basic_bot.summon_bot(src)
 
