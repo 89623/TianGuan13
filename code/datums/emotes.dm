@@ -132,11 +132,6 @@
 	if(user.client)
 		user.log_message(msg, LOG_EMOTE)
 
-	// NOVA EDIT ADDITION START - I18N - emote 消息在下游拼成「[user] [msg]」整句动态、无法命中目录；
-	// 在日志之后（日志保英文）对 msg 整串反查（含单词条目；miss 原样返回，locale==en 时 no-op）。
-	msg = lang_reverse_text(msg)
-	// NOVA EDIT ADDITION END
-
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional))
 		if(intentional)

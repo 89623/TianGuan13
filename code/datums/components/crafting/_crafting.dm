@@ -721,13 +721,11 @@
 			if(reaction.required_container)
 				var/id = atoms.Find(reaction.required_container)
 				data["reqs"]["[id]"] = 1
-				// NOVA EDIT CHANGE START - I18N - 步骤行运行期拼接绕过所有翻译层；locale≠en 走 LANG（保留 en 侧 \a 冠词行为） - ORIGINAL: data["steps"] += "Add all ingredients into \a [initial(reaction.required_container.name)]"
-				data["steps"] += (GLOB.i18n_server_locale != DEFAULT_UI_LOCALE) ? LANG("datum.96159b3b", list(initial(reaction.required_container.name))) : "Add all ingredients into \a [initial(reaction.required_container.name)]"
-				// NOVA EDIT CHANGE END
+				data["steps"] += "Add all ingredients into \a [initial(reaction.required_container.name)]"
 			else if(length(recipe.reqs) > 1 || length(reaction.required_catalysts))
-				data["steps"] += LANG("datum.26d10300", null) // NOVA EDIT CHANGE - I18N - ORIGINAL: data["steps"] += "Mix all ingredients together"
+				data["steps"] += "Mix all ingredients together"
 			if(reaction.required_temp > T20C)
-				data["steps"] += LANG("datum.c2dc24e5", list(reaction.required_temp)) // NOVA EDIT CHANGE - I18N - ORIGINAL: data["steps"] += "Heat up to [reaction.required_temp]K"
+				data["steps"] += "Heat up to [reaction.required_temp]K"
 		else
 			stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
 	else if(!isnull(recipe.reaction))

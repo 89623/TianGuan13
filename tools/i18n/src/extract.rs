@@ -656,9 +656,6 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             // 开头（"jumps in a circle."）→ 激进 pass 首字母大写闸挡掉，且 list 初值走 build_template
             // 返回 None → 必须逐元素抽。显示经 say/manual_emote → 聊天 AC 兜底翻。
             let is_speech_pool = matches!(var_name.as_str(), "speak" | "emote_hear" | "emote_see");
-            // 合成配方步骤列表（/datum/crafting_recipe steps = list("步骤1", …)，crafting UI "steps"
-            // 字段直发显示、P1 反查）。无句末标点居多 → 逐元素抽。
-            let is_steps_list = var_name == "steps" && ty.path.starts_with("/datum/crafting_recipe");
             // 激进 pass：任何类型变量初值里的「句子型」字面量（含 list 元素与插值模板）。
             // 自定义 examine 文本变量（dry_desc 类）、pick 表、未列入 SINK_VARS 的长尾自动入目录
             // （句末标点闸门挡住标识符/枚举名）；显示靠反查表/字面 AC/模板逆匹配引擎。
@@ -666,17 +663,13 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                 visit_expr(expr, &namespace, &mut catalog, suppress_aggressive, false);
             }
             if !is_sink && !is_config_default && !is_aas_template && !is_law_list && !is_slogan
-                && !is_speech_pool && !is_steps_list
+                && !is_speech_pool
             {
                 continue;
             }
             if let Some(expr) = &type_var.value.expression {
                 if is_aas_template {
                     emit_message_list(expr, &namespace, &mut catalog);
-                    continue;
-                }
-                if is_steps_list {
-                    emit_list_strings(expr, &namespace, &mut catalog);
                     continue;
                 }
                 if is_law_list || is_speech_pool {
@@ -779,21 +772,6 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                             for stmt in block.iter() {
                                 if let Statement::Expr(Expression::AssignOp { rhs, .. }) = &stmt.elem {
                                     emit_list_strings(rhs, &namespace, &mut catalog);
-                                }
-                            }
-                        }
-                        // 门禁权限显示名（ID 控制台/门禁芯片等所有 AccessList UI）：SSid_access 的
-                        // setup_access_descriptions 里 `desc_by_access[ACCESS_X] = "Cargo Bay"` 大批赋值
-                        // （无句末标点 → 激进 pass 抽不到，整类漏抽）。值纯显示（act 走 "ref"），
-                        // 运行时 setup_tgui_lists 构建静态表时整串反查落地（含单词条目）。
-                        "setup_access_descriptions" => {
-                            for stmt in block.iter() {
-                                if let Statement::Expr(Expression::AssignOp { rhs, .. }) = &stmt.elem {
-                                    if let Some(t) = build_template(rhs) {
-                                        if !t.contains('{') {
-                                            emit(&mut catalog, &namespace, &t);
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -1161,33 +1139,7 @@ fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog, suppress: bool, id
                 visit_expr(e, ns, catalog, suppress, ident_proc);
             }
         }
-        Term::NewImplicit { args } | Term::NewMiniExpr { args, .. } => {
-            if let Some(args) = args {
-                for e in args.iter() {
-                    visit_expr(e, ns, catalog, suppress, ident_proc);
-                }
-            }
-        }
-        Term::NewPrefab { prefab, args } => {
-            // 堆叠合成配方标题：`new /datum/stack_recipe("title", …)` / `new /datum/stack_recipe_list("组名", …)`
-            // 第 0 构造实参（无句末标点 → 激进 pass 抽不到，此前整类漏抽——StackCrafting 菜单全英文的根因）。
-            // 显示端 stack.dm recursively_build_recipes 已对 title 反查（display key，make() act 走 ref）。
-            // 含插值的标题（材料模板类）跳过。
-            if prefab
-                .path
-                .iter()
-                .any(|(_, seg)| seg.as_str().starts_with("stack_recipe"))
-            {
-                if let Some(args) = args {
-                    if let Some(first) = args.first() {
-                        if let Some(t) = build_template(first) {
-                            if !t.contains('{') {
-                                emit(catalog, ns, &t);
-                            }
-                        }
-                    }
-                }
-            }
+        Term::NewImplicit { args } | Term::NewPrefab { args, .. } | Term::NewMiniExpr { args, .. } => {
             if let Some(args) = args {
                 for e in args.iter() {
                     visit_expr(e, ns, catalog, suppress, ident_proc);

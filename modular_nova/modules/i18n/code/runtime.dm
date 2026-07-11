@@ -12,12 +12,9 @@ GLOBAL_VAR_INIT(i18n_server_locale, DEFAULT_UI_LOCALE)
 /// 是否启用聊天层 AC 子串兜底（默认关）。config I18N_CHAT_FALLBACK 控制（见 config_entries.dm + fallback.dm）。
 GLOBAL_VAR_INIT(i18n_chat_fallback, FALSE)
 
-/// 聊天 AC 兜底必须跳过的消息类型。两类：
-/// 1. 玩家/管理员**自己输入**的聊天——用户原话，误翻会把玩家说的英文短语换掉（如 "the bridge" →「舰桥」）。
-///    本地 say/电台是 null 类型、不走这里，由 to_chat 的 skip_i18n_fallback 参数（经 show_message 从
-///    /mob/living/Hear 传入）豁免。
-/// 2. 管理员日志/调试类（adminlog/attacklog/debug）——政策上保英文（排查用），AC 最短匹配还会把日志行
-///    拆碎、并大量污染 miss 采集（Explosion with size / Playing as / build mode 等全来自这里）。
+/// 玩家/管理员**自己输入**的聊天类型——这些是用户原话，聊天 AC 兜底必须跳过（否则把玩家说的英文短语误翻，
+/// 如说 "the bridge" 被换成「舰桥」）。本地 say/电台是 null 类型、不走这里，由 to_chat 的 skip_i18n_fallback 参数
+/// （经 show_message 从 /mob/living/Hear 传入）豁免。
 GLOBAL_LIST_INIT(i18n_player_chat_types, list(
 	MESSAGE_TYPE_LOCALCHAT = TRUE,
 	MESSAGE_TYPE_RADIO = TRUE,
@@ -28,9 +25,6 @@ GLOBAL_LIST_INIT(i18n_player_chat_types, list(
 	MESSAGE_TYPE_MODCHAT = TRUE,
 	MESSAGE_TYPE_MENTOR = TRUE,
 	MESSAGE_TYPE_PRAYER = TRUE,
-	MESSAGE_TYPE_ADMINLOG = TRUE,
-	MESSAGE_TYPE_ATTACKLOG = TRUE,
-	MESSAGE_TYPE_DEBUG = TRUE,
 ))
 
 /// locale -> (key -> 模板)。启动时加载，运行期只读。
@@ -336,15 +330,6 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 		. = reverse[copytext(text, 2, textlen)]
 		if(!isnull(.))
 			return .
-	// 仍未命中：`desc = span_alert("…")` 类编译期包裹 → 运行时值带 <span> 外壳，目录存的是内层
-	// （抽取器解 span_* 宏）。剥单层 span 反查内层，命中回包（保留原样式）。廉价守卫：< 开头才走正则。
-	if(text2ascii(text, 1) == 60)
-		var/static/regex/reverse_span_re = regex("^(<span class='\[^']*'>)(.*)(</span>)$")
-		if(reverse_span_re.Find(text))
-			var/inner = reverse_span_re.group[2]
-			var/inner_hit = reverse[inner]
-			if(!isnull(inner_hit))
-				return reverse_span_re.group[1] + inner_hit + reverse_span_re.group[3]
 	return text
 
 /// 显示用「物件名」本地化：先整串精确反查（命中堆叠/单词名/已译名幂等），miss 再走 AC 子串兜
