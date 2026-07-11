@@ -12,6 +12,7 @@ ALERT_GAMMA_DOWNTO The Sol Federation has released Military Command of the stati
 ALERT_EPSILON_UPTO Nanotrasen Central Command has declared the station under full CentCom authority. All CentCom personnel and representatives now hold absolute control of the station and its assets. Crew cooperation is compulsory. Have a Secure Day!
 ALERT_EPSILON_DOWNTO The Sol Federation has released Military Command and action over the station. Central Command is now in full command authority of the station, comply with all instructions from Nanotrasen Central Command staff. Crew cooperation is compulsory! Have a Secure Day!
 ALERT_FEDERAL The Sol Federation has placed this galactic sector under its full command. All star systems within this sector are now under Military Law. Comply with all official SolFed instructions.
+ALERT_ZETA 全体船员注意。中央指挥部已启用 Zeta 协议。本站已被定义为不可恢复的损失。所有合同都已终止。
 
 ## How long until someone can be put in cryo if they are SSD
 CRYO_MIN_SSD_TIME 15
