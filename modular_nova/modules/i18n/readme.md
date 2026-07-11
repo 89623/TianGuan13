@@ -195,6 +195,9 @@ locale 解析：
   撑爆 32 位地址空间 → Rust OOM `abort`（核心转储，表现为**客户端停在大厅按钮界面、服务端不再
   刷日志**）。**与 i18n 无关**。修复：限制 rayon 线程数压低峰值——`nix/byond.nix` 的 DreamDaemon
   包装器已默认 `RAYON_NUM_THREADS=2`（实测稳定，可用 `RAYON_NUM_THREADS=N DreamDaemon …` 覆盖）。
+- **GAGS 异步加载并发上限（core edit）**：`code/controllers/subsystem/processing/greyscale.dm` 将
+  `rustg_iconforge_load_gags_config_async` 按最多 16 个在途任务分批等待，避免数百个配置同时创建
+  OS 线程，在 32 位 DreamDaemon 启动/换图时触发 `std::thread::spawn` panic → `SIGABRT`。
 
 ### Credits:
 
