@@ -7,7 +7,7 @@
 /obj/projectile/beam/laser/carbine/cybersun
 	speed = 1.8
 
-/obj/peojectile/beam/laser/hellfire
+/obj/projectile/beam/laser/hellfire
 	speed = 3.2
 
 /obj/projectile/beam/disabler/scatter
