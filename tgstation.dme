@@ -9865,6 +9865,8 @@
 #include "modular_nova\modules\xenoarchartifacts\obj\wave_scanner.dm"
 #include "modular_nova\modules\xenomorph\alien.dm"
 #include "modular_nova\modules\xenomorph\queen.dm"
+#include "modular_tianguan\modules\Alert_level\security_alerts_define_override.dm"
+#include "modular_tianguan\modules\Alert_level\Zeta.dm"
 #include "modular_z121\code\modules\gear_disabler\gear_disabler.dm"
 #include "modular_z121\code\modules\gear_disabler\gear_disabler_recipe.dm"
 #include "modular_z121\code\modules\junkcannon\junkcannon.dm"
