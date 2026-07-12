@@ -624,11 +624,21 @@ GLOBAL_LIST_INIT(i18n_payload_skip_keys, build_i18n_policy_set("payload_skip_key
 			result[value] = TRUE
 	return result
 
+/// 递归遍历深度上限。防御性守卫：TGUI 负载是任意游戏状态 list，BYOND 的 list 可以自引用/互引用
+/// 形成**引用环**，无界递归会一路吃掉 8MB native 栈直到段错误、把整个 DreamDaemon 拖崩
+/// （生产实测：玩家开货运控制台触发，libbyond.so 栈溢出、进程 exit 1，systemd 循环重启）。真实
+/// ui_data/static_data 嵌套通常 < 15 层，此上限既留足余量、又远低于栈溢出阈值；超限的子树保持
+/// 英文（可接受的降级），绝不崩服。lang_reverse_phrase_tgui 幂等，故环上重复访问也安全。
+#define I18N_REVERSE_TREE_MAX_DEPTH 50
+
 /// 递归把一个 list（含嵌套 list / 关联 list）里的字符串「值」按多词门槛反查为全服 locale 译文。
 /// 用于 TGUI 的 ui_data/ui_static_data 负载：把非 atom datum 的 name/desc/说明等动态内容本地化。
 /// key 不动（程序用的标识）；就地改写并返回。幂等（已译的中文不会再匹配英文 key）。
-/proc/lang_reverse_tree(list/data)
+/proc/lang_reverse_tree(list/data, depth = 0)
 	if(!islist(data))
+		return data
+	// 引用环/病态深嵌套的防护：到达上限即停止下钻，保留英文而非无限递归撑爆 native 栈。
+	if(depth >= I18N_REVERSE_TREE_MAX_DEPTH)
 		return data
 	for(var/i in 1 to length(data))
 		var/key = data[i]
@@ -640,17 +650,18 @@ GLOBAL_LIST_INIT(i18n_payload_skip_keys, build_i18n_policy_set("payload_skip_key
 				continue
 			// 关联项：key -> value，只本地化 value
 			if(islist(value))
-				lang_reverse_tree(value)
+				lang_reverse_tree(value, depth + 1)
 			else if(istext(value))
 				data[key] = lang_reverse_phrase_tgui(value)
 		else
 			// flat 元素（无关联值）
 			if(islist(key))
-				lang_reverse_tree(key)
+				lang_reverse_tree(key, depth + 1)
 			else if(istext(key))
 				data[i] = lang_reverse_phrase_tgui(key)
 	return data
 
+#undef I18N_REVERSE_TREE_MAX_DEPTH
 #undef I18N_TGUI_PHRASE_CACHE_MAX
 
 /// 偏好菜单「常量数据 asset」(/datum/asset/json/preferences) 是服务器启动生成一次的静态资源，
