@@ -180,8 +180,16 @@
 	var/canonical_name = lang_unreverse_text(chem_name) // NOVA EDIT - I18N - a translated (locale) name → its english original; no-op on english input / en locale
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-		// NOVA EDIT CHANGE - I18N - match the compile-time english name: runtime R.name may be locale-translated, and ckey() strips non-ascii so a chinese name collapses to "" and never matches - ORIGINAL: if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
-		if(ckey(chem_name) == ckey(LOWER_TEXT(initial(R.name))) || ckey(canonical_name) == ckey(LOWER_TEXT(initial(R.name))))
+		// NOVA EDIT CHANGE - I18N - match the compile-time english name (runtime R.name may be locale-translated) - ORIGINAL: if(ckey(chem_name) == ckey(LOWER_TEXT(R.name)))
+		var/english_name = LOWER_TEXT(initial(R.name))
+		// exact full-string match first: reagents can have non-ascii names (modular_z121 hardcodes CJK names like
+		// "奶茶") that ckey() collapses to "" — matching them only by exact name keeps them findable.
+		if(LOWER_TEXT(chem_name) == english_name || LOWER_TEXT(canonical_name) == english_name)
+			return X
+		// ckey (case/punctuation-insensitive) fallback, but skip empty keys: a CJK-only name ckeys to "" and would
+		// otherwise spuriously match EVERY non-ascii chem_name (also ""->""), stealing lookups from real reagents.
+		var/reagent_key = ckey(english_name)
+		if(reagent_key && (ckey(chem_name) == reagent_key || ckey(canonical_name) == reagent_key))
 			return X
 
 /proc/reagent_paths_list_to_text(list/reagents, addendum)

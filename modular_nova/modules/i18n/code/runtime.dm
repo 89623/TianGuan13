@@ -627,9 +627,23 @@ GLOBAL_LIST_INIT(i18n_payload_skip_keys, build_i18n_policy_set("payload_skip_key
 /// 递归把一个 list（含嵌套 list / 关联 list）里的字符串「值」按多词门槛反查为全服 locale 译文。
 /// 用于 TGUI 的 ui_data/ui_static_data 负载：把非 atom datum 的 name/desc/说明等动态内容本地化。
 /// key 不动（程序用的标识）；就地改写并返回。幂等（已译的中文不会再匹配英文 key）。
-/proc/lang_reverse_tree(list/data)
+///
+/// 循环引用防护（visited）：TGUI 负载是任意游戏状态 list，BYOND 的 list 可以自引用/互引用成**环**
+/// （tgstation 亦承认此事，见 /proc/deep_copy_without_cycles、/proc/prepare_lua_editor_list）。原来
+/// 无守卫的递归遇到环会一路吃掉 8MB native 栈直到段错误、把整个 DreamDaemon 拖崩（生产实测：玩家
+/// 开货运控制台触发，libbyond.so 栈溢出、进程 exit 1，systemd 循环重启）。这里沿用 tgstation 的
+/// 惯用法——拿一个 assoc set 记下已访问过的每个 list（BYOND 支持 list 作关联键，O(1)），再遇到就
+/// 跳过。比深度上限更准：不截断任何合法有限嵌套，只在真正成环处停手。
+/// 注意：本 proc 只是**不再自己崩**；环仍留在 data 里，后续 json_encode 依旧会碰到（tgui 管线对环
+/// 不安全，故 tgstation 送 tgui 前会 deep_copy_without_cycles 剥环）。根治须打断产生环的源头。
+/proc/lang_reverse_tree(list/data, list/visited)
 	if(!islist(data))
 		return data
+	if(isnull(visited))
+		visited = list()
+	else if(visited[data]) // 已访问过这个 list（成环/DAG 复用）——跳过，避免无限递归撑爆 native 栈。
+		return data
+	visited[data] = TRUE
 	for(var/i in 1 to length(data))
 		var/key = data[i]
 		var/value = (istext(key) || ispath(key)) ? data[key] : null
@@ -640,13 +654,13 @@ GLOBAL_LIST_INIT(i18n_payload_skip_keys, build_i18n_policy_set("payload_skip_key
 				continue
 			// 关联项：key -> value，只本地化 value
 			if(islist(value))
-				lang_reverse_tree(value)
+				lang_reverse_tree(value, visited)
 			else if(istext(value))
 				data[key] = lang_reverse_phrase_tgui(value)
 		else
 			// flat 元素（无关联值）
 			if(islist(key))
-				lang_reverse_tree(key)
+				lang_reverse_tree(key, visited)
 			else if(istext(key))
 				data[i] = lang_reverse_phrase_tgui(key)
 	return data
