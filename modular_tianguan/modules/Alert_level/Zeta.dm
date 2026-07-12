@@ -13,4 +13,4 @@
 	config_entry_value = "全体船员注意。中央指挥部已启用 Zeta 协议。本站已被定义为不可恢复的损失。所有合同都已终止。"
 
 /datum/ert/deathsquad
-	code "Zeta"
+	code = "Zeta"
