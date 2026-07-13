@@ -9,9 +9,6 @@
 	return ..()
 
 /client/proc/client_procs(href_list)
-	if(ivan_agent_client_procs(href_list))
-		return TRUE
-
 	if(href_list["connect_to_relay"])
 		connect_to_relay()
 		return TRUE
