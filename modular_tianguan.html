@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><link rel="stylesheet" href="dmdoc.css"><title>modular_tianguan/readme.md - /tg/ Station 13</title></head><body><header><a href="index.html">/tg/ Station 13</a> - <a href="index.html#modules">Modules</a> - <a href="index.html#types">Types</a></header><main><h1>天关模块化开发说明 <aside>modular_tianguan/readme.md</aside> <a href="https://github.com/89623/TianGuan13/blob/c4f958985899f7599dd53a90377ba63f210437d7/modular_tianguan/readme.md"><img src="git.png" width="16" height="16" title="modular_tianguan/readme.md"></a></h1><table class="summary" cellspacing="0"><tr><td colspan="2"><p>本说明用于天关源码的下游开发。天关基于 Nova Sector 继续维护，因此本仓库会同时保留上游 Nova 的 <code>modular_nova/</code> 结构，以及天关自己的 <code>modular_tianguan/</code> 结构。</p>
+<p><code>modular_nova/</code> 是 Nova Sector 的下游模块目录，除非是在同步、修复或整理 Nova 上游内容，否则不要把天关新增内容放进去。天关新增功能、资源、覆盖和本地维护代码应优先放在 <code>modular_tianguan/</code>。</p>
+<h2 id="基本原则">基本原则</h2>
+<ul>
+<li>天关改动优先模块化，尽量不要直接改 <code>code/</code>、<code>icons/</code>、<code>sound/</code> 等核心目录。</li>
+<li>能放进 <code>modular_tianguan/modules/</code> 的功能，不要散落到核心文件里。</li>
+<li>必须修改核心文件时，要使用清晰的编辑标记，并在对应模块说明里记录原因和范围。</li>
+<li>不要修改 <code>modular_nova/</code> 来承载天关专属功能；那会增加以后同步 Nova 上游时的冲突。</li>
+<li>提交前必须做必要测试，不要把未验证的功能当作可合并内容提交。</li>
+</ul>
+<h2 id="目录结构">目录结构</h2>
+<p><code>modular_tianguan/</code> 下的常用目录如下：</p>
+<table><thead><tr><th>目录</th><th>用途</th></tr></thead><tbody>
+<tr><td><code>modules/</code></td><td>天关功能模块。每个模块应有自己的目录，例如 <code>modules/example_module/</code>。</td></tr>
+<tr><td><code>master_files/</code></td><td>对核心文件的模块化覆盖，目录结构应镜像核心路径。</td></tr>
+<tr><td><code>code/</code></td><td>不属于单一模块的天关共享 DM 代码。</td></tr>
+<tr><td><code>icons/</code></td><td>不属于单一模块的天关共享图标资源。</td></tr>
+<tr><td><code>sound/</code></td><td>不属于单一模块的天关共享音频资源。</td></tr>
+<tr><td><code>tools/</code></td><td>与天关模块化流程相关的辅助脚本。</td></tr>
+</tbody></table>
+<p>普通功能优先放在 <code>modules/&lt;module_id&gt;/</code>。只有确实属于全局共享内容，或者无法归入某个明确模块时，才使用顶层 <code>code/</code>、<code>icons/</code>、<code>sound/</code>。</p>
+<h2 id="模块命名">模块命名</h2>
+<p>新增模块时先确定一个稳定的模块 ID，例如：</p>
+<ul>
+<li><code>shuttle_toggle</code></li>
+<li><code>new_job_items</code></li>
+<li><code>tianguan_clothing</code></li>
+</ul>
+<p>模块 ID 应该简短、可搜索，并在目录、注释和文档中保持一致。不要频繁改名，否则后续追踪历史和解决冲突会变得困难。</p>
+<p>推荐模块结构：</p>
+<pre><code class="language-text">modular_tianguan/modules/example_module/
+├── readme.md
+├── code/
+├── icons/
+└── sound/
+</code></pre>
+<p>如果模块包含 DM 代码，放在 <code>code/</code>；DMI 图标放在 <code>icons/</code>；音频资源放在 <code>sound/</code>。不要在模块里复制完整核心目录结构。</p>
+<p>示例：</p>
+<pre><code class="language-text"># 推荐
+modular_tianguan/modules/example_module/code/example_item.dm
+modular_tianguan/modules/example_module/icons/example_item.dmi
+
+# 不推荐
+modular_tianguan/modules/example_module/code/modules/items/example_item.dm
+modular_tianguan/modules/example_module/icons/obj/items/example_item.dmi
+</code></pre>
+<h2 id="模块说明文件">模块说明文件</h2>
+<p>非极小模块都应包含 <code>readme.md</code>，用于说明这个模块为什么存在、改了什么、影响哪些核心文件。</p>
+<p>模块说明建议包含：</p>
+<ul>
+<li>模块简介</li>
+<li>主要功能</li>
+<li>新增或修改的文件</li>
+<li>是否修改核心文件</li>
+<li>测试方式</li>
+<li>维护备注或来源说明</li>
+</ul>
+<p>可以参考 <a href="./module_template.md">模块模板</a>。</p>
+<h2 id="资源文件">资源文件</h2>
+<p>图标、音频、二进制资源比普通代码更难合并冲突，因此天关新增资源应尽量放在对应模块目录中。</p>
+<p>示例：</p>
+<pre><code class="language-dm">/obj/item/example
+	icon = 'modular_tianguan/modules/example_module/icons/example_item.dmi'
+	icon_state = &quot;example&quot;
+</code></pre>
+<p>不要为了一个天关专属物品去修改核心资源文件，除非确实无法模块化，或者该资源必须和核心资源打包在一起。</p>
+<h2 id="覆盖"><code>master_files/</code> 覆盖</h2>
+<p>当你需要对核心路径中的类型或 proc 做模块化覆盖时，把文件放入 <code>modular_tianguan/master_files/</code>，并镜像核心目录结构。</p>
+<p>示例：</p>
+<pre><code class="language-text">code/modules/mob/living/living.dm
+modular_tianguan/master_files/code/modules/mob/living/living.dm
+</code></pre>
+<p>这类文件用于集中记录“天关对核心文件行为的覆盖”，方便以后同步 Nova 或 /tg/station 时快速检查差异。</p>
+<p>不要在不同模块里重复覆盖同一个 proc。若多个功能都需要影响同一核心逻辑，应集中整理到 <code>master_files/</code> 或一个明确的共享模块中。</p>
+<h2 id="直接修改核心文件">直接修改核心文件</h2>
+<p>有些改动无法完全模块化，例如热路径性能问题、编译顺序限制、宏定义、初始化顺序或非常底层的行为修改。遇到这种情况可以改核心文件，但必须清楚标记。</p>
+<p>天关核心编辑标记统一使用 <code>TIANGUAN EDIT</code>。</p>
+<p>新增代码：</p>
+<pre><code class="language-dm">// TIANGUAN EDIT ADDITION START - EXAMPLE_MODULE
+var/example_flag = FALSE
+// TIANGUAN EDIT ADDITION END
+</code></pre>
+<p>删除代码：</p>
+<pre><code class="language-dm">/* // TIANGUAN EDIT REMOVAL START - EXAMPLE_MODULE
+old_proc_call()
+*/ // TIANGUAN EDIT REMOVAL END
+</code></pre>
+<p>单行修改：</p>
+<pre><code class="language-dm">if(example_flag || original_flag) // TIANGUAN EDIT CHANGE - EXAMPLE_MODULE - ORIGINAL: if(original_flag)
+</code></pre>
+<p>核心改动应尽量小，并在对应模块 <code>readme.md</code> 里记录：</p>
+<ul>
+<li>改了哪个核心文件</li>
+<li>为什么不能模块化</li>
+<li>同步上游时需要注意什么</li>
+</ul>
+<h2 id="defines">Defines</h2>
+<p>BYOND 的加载顺序会影响宏定义。天关新增的全局 define 优先放在天关自己的 define 文件中，避免和 Nova 上游混在一起。</p>
+<p>如果某个 define 会被多个文件使用，应放在天关模块化 define 区域；如果只在单个文件内使用，可以在该文件顶部定义，并在文件底部 <code>#undef</code>，避免污染全局自动补全和编译上下文。</p>
+<h2 id="tgui-修改">TGUI 修改</h2>
+<p>新增天关专属 TGUI 文件时，应在文件顶部标明来源：</p>
+<pre><code class="language-js">// THIS IS A TIANGUAN UI FILE
+</code></pre>
+<p>修改上游 TGUI 文件时，遵循和 DM 核心修改类似的规则，使用 <code>TIANGUAN EDIT</code> 标记。能写在同一行的改动尽量写在同一行；多行改动使用 start/end 标记。</p>
+<p>示例：</p>
+<pre><code class="language-js">&lt;Button
+  icon=&quot;rat&quot; // TIANGUAN EDIT ADDITION - EXAMPLE_MODULE
+  onClick={() =&gt; act('example')}
+/&gt;
+</code></pre>
+<h2 id="同步上游时的注意事项">同步上游时的注意事项</h2>
+<p>天关需要同时面对 Nova Sector 和 /tg/station 的上游变化。为了降低冲突：</p>
+<ul>
+<li>天关专属内容不要放进 <code>modular_nova/</code>。</li>
+<li>修改核心文件时保持编辑标记完整。</li>
+<li>不要复制整段上游 proc 只改一两行；能前后追加逻辑时优先用 override。</li>
+<li>冲突解决后检查天关模块是否仍然被正确加载。</li>
+<li>涉及批量同步时参考 <a href="./mirroring_guide.md">天关镜像与同步说明</a>。</li>
+</ul>
+<h2 id="测试要求">测试要求</h2>
+<p>提交前至少完成和改动范围相匹配的测试：</p>
+<ul>
+<li>DM 代码改动：确认能编译，必要时运行 <code>BUILD.bat</code>。</li>
+<li>TGUI 改动：运行相关 TGUI lint 或本地启动检查界面。</li>
+<li>地图或资源改动：在本地服务器中确认资源路径和显示效果。</li>
+<li>本地化改动：运行对应的 <code>tools/ss13_localization/tests/</code> 测试。</li>
+</ul>
+<p>测试结果应写入 PR 或提交说明，方便维护者判断改动是否安全。</p>
+<h2 id="维护建议">维护建议</h2>
+<p>模块化不是为了把代码藏起来，而是为了让下游长期维护更容易。写代码时优先考虑以后同步上游的人能不能快速看懂：这个改动属于哪个模块、为什么存在、是否还能删、冲突时应该保留哪一边。</p></td></tr></table></main><footer>tgstation.dme <a href="https://github.com/89623/TianGuan13/tree/c4f958985899f7599dd53a90377ba63f210437d7">c4f9589</a> (master) — <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.11.0</a></footer></body></html>
