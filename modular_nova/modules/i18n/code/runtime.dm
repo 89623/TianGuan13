@@ -411,6 +411,10 @@ GLOBAL_LIST_INIT(i18n_appended_suffixes, list(
 /// "type:"↔"Type:"。病名/伤名/husk 整句等（有句末标点、已进目录）仍交给 to_chat 的 AC。locale==en no-op。
 GLOBAL_LIST_INIT(i18n_health_scan_labels, list(
 	// 段落/区段标题（长串在前）
+	// 无残疾时 get_quirk_string 返回裸词 "None"（无句末标点→to_chat 的 AC 跳过），故整行锚点须排在下面
+	// 的通用 label 之前：lang_apply_label_map 顺序 replacetextEx，通用 label 一旦替换掉前缀，整行就匹配不到了。
+	"Subject Major Disabilities: None." = "对象重大残疾: 无。",
+	"Subject Minor Disabilities: None." = "对象次要残疾: 无。",
 	"Subject Major Disabilities: " = "对象重大残疾: ",
 	"Subject Minor Disabilities: " = "对象次要残疾: ",
 	"Detected cybernetic modifications:" = "检测到的义体改造:",
@@ -446,6 +450,17 @@ GLOBAL_LIST_INIT(i18n_health_scan_labels, list(
 	// 器官/整体状态词（带标签锚点）
 	">Missing</font>" = ">缺失</font>",
 	">OK</font>" = ">正常</font>",
+	// 器官状态文本（_organ.dm get_status_text：<font color=…>词</font>，tochat 时外层再套 tooltip span；
+	// 颜色在 > 之前不受影响 → 锚 >词</font>）。无句末标点→AC 跳过，且未进目录，故在此精确锚点替换。
+	">Non-Functional</font>" = ">无功能</font>",
+	">Severely Damaged</font>" = ">严重损伤</font>",
+	">Mildly Damaged</font>" = ">轻微损伤</font>",
+	">Harmful Foreign Body</font>" = ">有害异物</font>",
+	">EMP-Derived Failure</font>" = ">EMP 导致的故障</font>",
+	// 肢体明细行（healthscan dmgreport）：外伤/异物前缀 + 断肢。conditional_tooltip 的可见文本仍是子串。
+	"Physical trauma: " = "外伤: ",
+	"Foreign object(s): " = "异物: ",
+	"Dismembered" = "已断肢",
 	"<b>Deceased</b>" = "<b>已死亡</b>",
 	"% healthy</b>" = "% 健康</b>",
 	">type: " = ">类型: ",
