@@ -111,7 +111,7 @@
 		else if(missing_limb == BODY_ZONE_R_ARM || missing_limb == BODY_ZONE_R_LEG)
 			r_limbs_missing++
 
-		. += span_boldwarning("[capitalize(t_his)] [parse_zone(missing_limb)] is missing!")
+		. += span_boldwarning(LANG("mob.7fb1cb66", list(capitalize(t_his), parse_zone(missing_limb)))) // NOVA EDIT - I18N - codemod missed this .+= inside a for-loop (ForList gap); reuses the "{0} {1} is missing!" template key
 
 	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
 		. += span_tinydanger(LANG("mob.2fc5c3ff", list(t_He, p_s())))
