@@ -313,8 +313,33 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		embed.footer = "This player requested an admin"
 		send2adminchat_webhook(embed, urgent = TRUE)
 		webhook_sent = WEBHOOK_URGENT
+	// NOVA EDIT ADDITION START - TGS-DISCORD-AHELP
+	var/list/admin_counts = get_admin_counts(R_BAN)
+	var/admin_number_present = length(admin_counts["present"])
+	var/datum/tgs_chat_embed/field/player_field = new("玩家 CKEY", initiator_ckey)
+	player_field.is_inline = TRUE
+	var/datum/tgs_chat_embed/field/round_field = new("回合", GLOB.round_id ? "#[GLOB.round_id] · [round_timestamp()]" : "尚未开局")
+	round_field.is_inline = TRUE
+	var/datum/tgs_chat_embed/field/admin_field = new("在线管理员", "[admin_number_present] 人")
+	admin_field.is_inline = TRUE
+
+	var/datum/tgs_chat_embed/structure/tgs_embed = new
+	tgs_embed.title = "AdminHelp 工单 #[id]"
+	tgs_embed.description = message_to_send
+	tgs_embed.colour = urgent ? "#E74C3C" : "#3498DB"
+	tgs_embed.fields = list(player_field, round_field, admin_field)
+
+	var/datum/tgs_message_content/tgs_message = new(urgent ? "🚨 收到紧急 AdminHelp" : "🆘 收到新 AdminHelp")
+	tgs_message.embed = tgs_embed
+	world.TgsTargetedChatBroadcast(tgs_message, TRUE)
+
+	// Keep the old adminless cross-server notification without duplicating the TGS message.
+	send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]", send_to_tgs = FALSE)
+	// NOVA EDIT ADDITION END
+	/* // NOVA EDIT REMOVAL START - TGS-DISCORD-AHELP
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
+	*/ // NOVA EDIT REMOVAL END
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
 		to_chat(initiator, span_notice(LANG("datum.208d07ed", null)), confidential = TRUE)
@@ -940,7 +965,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		else
 			.["present"] += X
 
-/proc/send2tgs_adminless_only(source, msg, requiredflags = R_BAN)
+/proc/send2tgs_adminless_only(source, msg, requiredflags = R_BAN, send_to_tgs = TRUE) // NOVA EDIT CHANGE - TGS-DISCORD-AHELP - ORIGINAL: /proc/send2tgs_adminless_only(source, msg, requiredflags = R_BAN)
 	var/list/adm = get_admin_counts(requiredflags)
 	var/list/activemins = adm["present"]
 	. = activemins.len
@@ -954,7 +979,8 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 			final = "[msg] - No admins online"
 		else
 			final = "[msg] - All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
-		send2adminchat(source,final)
+		if(send_to_tgs) // NOVA EDIT ADDITION - TGS-DISCORD-AHELP
+			send2adminchat(source,final)
 		send2otherserver(source,final)
 
 /**
