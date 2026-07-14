@@ -61,9 +61,14 @@
 	for(var/set_name in set_instances)
 		var/datum/voucher_set/current_set = set_instances[set_name]
 		var/datum/radial_menu_choice/option = new
+		// NOVA EDIT ADDITION - i18n: show the reversed name/description in the radial menu. The radial choice_id
+		// (cached_options key) stays the english set_name, so show_radial_menu's selection → set_instances[selection]
+		// lookup is unaffected; option.name is display-only (radial.dm uses it for the label + "Info:" tooltip title).
+		// lang_reverse_text no-ops on en / en locale.
+		option.name = lang_reverse_text(set_name)
 		option.image = image(icon = current_set.icon, icon_state = current_set.icon_state)
 		if(current_set.description)
-			option.info = span_boldnotice(current_set.description)
+			option.info = span_boldnotice(lang_reverse_text(current_set.description))
 		cached_options[set_name] = option
 
 /datum/element/voucher_redeemer/proc/redeem_voucher_async(atom/source, mob/living/redeemer, obj/item/voucher)
