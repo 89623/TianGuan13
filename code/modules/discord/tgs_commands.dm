@@ -29,7 +29,7 @@
 	status_embed.colour = embed_colour
 	status_embed.fields = list(player_field, map_field, address_field)
 
-	var/datum/tgs_message_content/response = new("📡 天官十三号服务器状态")
+	var/datum/tgs_message_content/response = new("📡 天关13")
 	response.embed = status_embed
 	return response
 	// NOVA EDIT ADDITION END
