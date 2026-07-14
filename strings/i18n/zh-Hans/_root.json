@@ -474,5 +474,6 @@
   "_root.news_empty_article": "有人忘了填写这篇报道！",
   "_root.news_published_on": "最初发布于：{0}/{1}/{2}",
   "_root.tag_climbable": "可攀爬",
-  "_root.tag_crafting_component": "合成材料"
+  "_root.tag_crafting_component": "合成材料",
+  "_root.uplink_sales_tax": "如果订单来自太空内布拉斯加州，将收取 16% 的销售税。"
 }

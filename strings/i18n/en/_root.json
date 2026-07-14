@@ -500,5 +500,6 @@
   "_root.news_empty_article": "Someone forgot to fill out the article!",
   "_root.news_published_on": "Originally published on: {0}/{1}/{2}",
   "_root.tag_climbable": "climbable",
-  "_root.tag_crafting_component": "crafting component"
+  "_root.tag_crafting_component": "crafting component",
+  "_root.uplink_sales_tax": "16% sales tax will be charged for orders originating within Space Nebraska."
 }
