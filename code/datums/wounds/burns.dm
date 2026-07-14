@@ -184,19 +184,24 @@
 
 /datum/wound/burn/flesh/severity_text(simple = FALSE)
 	. = ..()
-	. += LANG("datum.e254fbcf", null)
+	// NOVA EDIT CHANGE - i18n: compose the " Burn / <level> Infection" suffix as one whole per-level phrase
+	// (reverse-looked-up via strings/i18n/*/_wound_burn.json) so the zh reads naturally ("无感染"/"完全感染")
+	// instead of the word-by-word fragments the shared LANG keys produced ("否 感染"/"总计 感染"). lang_reverse_text
+	// no-ops on en, so english output is byte-identical.
+	// ORIGINAL: . += LANG("datum.e254fbcf") (" Burn / "), a switch appending the bare infection level, then LANG("datum.c0f84c4e") (" Infection")
+	var/infection_suffix = ""
 	switch(infection)
 		if(-INFINITY to WOUND_INFECTION_MODERATE)
-			. += LANG("datum.08be49ad", null)
+			infection_suffix = " Burn / No Infection"
 		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-			. += LANG("datum.9513b5d7", null)
+			infection_suffix = " Burn / Moderate Infection"
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
-			. += LANG("datum.a436f6ff", null)
+			infection_suffix = " Burn / <b>Severe</b> Infection"
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-			. += LANG("datum.60ddd138", null)
+			infection_suffix = " Burn / <b>Critical</b> Infection"
 		if(WOUND_INFECTION_SEPTIC to INFINITY)
-			. += LANG("datum.af1d3c2d", null)
-	. += LANG("datum.c0f84c4e", null)
+			infection_suffix = " Burn / <b>Total</b> Infection"
+	. += lang_reverse_text(infection_suffix)
 
 /datum/wound/burn/flesh/get_scanner_description(mob/user)
 	if(strikes_to_lose_limb <= 0) // Unclear if it can go below 0, best to not take the chance
