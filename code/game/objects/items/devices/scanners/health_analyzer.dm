@@ -316,7 +316,8 @@
 			if(isnull(organ))
 				if(missing_organs[sorted_slot])
 					render = TRUE
-					toReport += "<tr><td><font color='#cc3333'>[missing_organs[sorted_slot]]:</font></td>\
+					// NOVA EDIT CHANGE - i18n: reverse-localize the missing-organ name - ORIGINAL: [missing_organs[sorted_slot]]
+					toReport += "<tr><td><font color='#cc3333'>[lang_reverse_text(missing_organs[sorted_slot])]:</font></td>\
 						[advanced ? "<td><font color='#ff3333'>-</font></td>" : ""]\
 						<td><font color='#cc3333'>Missing</font></td></tr>"
 				continue
@@ -327,8 +328,10 @@
 			if(status || appendix)
 				status ||= "<font color='#ffcc33'>OK</font>" // otherwise flawless organs have no status reported by default
 				render = TRUE
+				// NOVA EDIT CHANGE - i18n: reverse-localize organ name at the display point — some organ names miss the
+				// Initialize name-reverse (post-Initialize renames) - ORIGINAL: <td>…[capitalize(organ.name)]:</font></td>
 				toReport += "<tr>\
-					<td><font color='#cc3333'>[capitalize(organ.name)]:</font></td>\
+					<td><font color='#cc3333'>[capitalize(lang_reverse_text(organ.name))]:</font></td>\
 					[advanced ? "<td><font color='#ff3333'>[organ.damage > 0 ? ceil(organ.damage) : "0"]</font></td>" : ""]\
 					<td>[status]</td>\
 					</tr>"

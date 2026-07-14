@@ -19,11 +19,15 @@
 	else
 		species_visible = TRUE
 
+	var/species_display
 	if(!species_visible)
 		species_name_string = ""
-	else if (!dna.species.lore_protected && dna.features["custom_species"])
-		species_name_string = ", [prefix_a_or_an(dna.features["custom_species"])] <EM>[dna.features["custom_species"]]</EM>"
 	else
-		species_name_string = ", [prefix_a_or_an(dna.species.name)] <EM>[dna.species.name]</EM>"
+		species_display = (!dna.species.lore_protected && dna.features["custom_species"]) ? dna.features["custom_species"] : dna.species.name
+		// i18n: 中文无冠词——反查物种名、去掉 a/an 冠词、逗号用中文逗号（"…, a Human" → "…，人类"）。en locale 走原分支不变。
+		if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+			species_name_string = "，<EM>[lang_reverse_text(species_display)]</EM>"
+		else
+			species_name_string = ", [prefix_a_or_an(species_display)] <EM>[species_display]</EM>"
 
 	. += species_name_string

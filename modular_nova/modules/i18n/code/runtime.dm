@@ -181,6 +181,19 @@ GLOBAL_VAR_INIT(i18n_text_macro_regex, regex(@"\\(improper|proper|themselves|the
 /// 处理）：① 剥文法宏；② 还原转义引号 \" → "；③ 还原 \n → 换行、\t → 制表符。
 /// 源码里 `"\n"` 是 DM 编译期换行转义；抽取器把它当**字面 2 字符** `\n` 存进 JSON（`"\\n"`），LANG 从
 /// JSON 取回后引擎不再解释 → 会字面显示 `\n`（如警棍 examine「\n它当前为…」）。在此还原。仅在串含反斜杠时调用。
+/// 源码转义还原（不碰文法宏）：把 dreammaker 解析器原样保留在目录里的 `\"`/`\n`/`\t`/`\[`/`\]`
+/// 还原成 BYOND 运行时形态（裸引号/换行/制表符/字面方括号）。lang_build_reverse 据此额外登记「去转义」
+/// 形态键，让运行时串（已是解析后形态）能命中含这些转义的 name/desc/lore（尤其多行 desc 的 \n）。
+/proc/lang_unescape_source(text)
+	if(!istext(text))
+		return text
+	text = replacetext(text, "\\\"", "\"") // \" → "
+	text = replacetext(text, "\\n", "\n") // 字面 \n → 换行
+	text = replacetext(text, "\\t", "\t") // 字面 \t → 制表符
+	text = replacetext(text, "\\\[", "\[") // 字面 \[ → [
+	text = replacetext(text, "\\\]", "\]") // 字面 \] → ]
+	return text
+
 /proc/lang_process_text_escapes(text)
 	if(!istext(text))
 		return text
@@ -266,13 +279,14 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 				var/stripped_key = lang_strip_grammar_macros(en_text)
 				if(stripped_key && !reverse[stripped_key])
 					reverse[stripped_key] = lang_strip_grammar_macros(translated)
-			// 转义引号对齐：目录里的 `\"` 是 dreammaker 解析器保留的源码转义，但 BYOND 运行时字符串里
-			// 是裸 `"`，反查（输入=运行时串）查带 `\"` 的 key 永远不命中 → 额外登记「裸引号」形态键。
-			// 影响所有含转义引号的玩家可见文本（物种 lore、带引号的 name/desc 等）。译文同样去转义。
-			if(findtext(en_text, "\\\""))
-				var/unescaped_key = replacetext(en_text, "\\\"", "\"")
+			// 源码转义对齐：dreammaker 解析器把 `\"`/`\n`/`\t`/`\[`/`\]` 原样保留在目录里（字面反斜杠序列），
+			// 但 BYOND 运行时字符串里这些已被解析成裸引号/换行/制表符/字面方括号。反查输入=运行时串 → 查带字面
+			// 转义的 key 永不命中 → 额外登记「去转义」形态键（译文同样去转义）。影响所有含这些转义的 name/desc/
+			// lore，尤其**多行 desc 的 \n**（如采矿订购台物品描述：目录已译却因换行不匹配而显英文）。
+			if(findtext(en_text, "\\"))
+				var/unescaped_key = lang_unescape_source(en_text)
 				if(unescaped_key != en_text && !reverse[unescaped_key])
-					reverse[unescaped_key] = replacetext(translated, "\\\"", "\"")
+					reverse[unescaped_key] = lang_unescape_source(translated)
 
 	GLOB.i18n_reverse[locale] = reverse
 	return reverse
@@ -411,6 +425,10 @@ GLOBAL_LIST_INIT(i18n_appended_suffixes, list(
 /// "type:"↔"Type:"。病名/伤名/husk 整句等（有句末标点、已进目录）仍交给 to_chat 的 AC。locale==en no-op。
 GLOBAL_LIST_INIT(i18n_health_scan_labels, list(
 	// 段落/区段标题（长串在前）
+	// 无残疾时 get_quirk_string 返回裸词 "None"（无句末标点→to_chat 的 AC 跳过），故整行锚点须排在下面
+	// 的通用 label 之前：lang_apply_label_map 顺序 replacetextEx，通用 label 一旦替换掉前缀，整行就匹配不到了。
+	"Subject Major Disabilities: None." = "对象重大残疾: 无。",
+	"Subject Minor Disabilities: None." = "对象次要残疾: 无。",
 	"Subject Major Disabilities: " = "对象重大残疾: ",
 	"Subject Minor Disabilities: " = "对象次要残疾: ",
 	"Detected cybernetic modifications:" = "检测到的义体改造:",
@@ -446,6 +464,17 @@ GLOBAL_LIST_INIT(i18n_health_scan_labels, list(
 	// 器官/整体状态词（带标签锚点）
 	">Missing</font>" = ">缺失</font>",
 	">OK</font>" = ">正常</font>",
+	// 器官状态文本（_organ.dm get_status_text：<font color=…>词</font>，tochat 时外层再套 tooltip span；
+	// 颜色在 > 之前不受影响 → 锚 >词</font>）。无句末标点→AC 跳过，且未进目录，故在此精确锚点替换。
+	">Non-Functional</font>" = ">无功能</font>",
+	">Severely Damaged</font>" = ">严重损伤</font>",
+	">Mildly Damaged</font>" = ">轻微损伤</font>",
+	">Harmful Foreign Body</font>" = ">有害异物</font>",
+	">EMP-Derived Failure</font>" = ">EMP 导致的故障</font>",
+	// 肢体明细行（healthscan dmgreport）：外伤/异物前缀 + 断肢。conditional_tooltip 的可见文本仍是子串。
+	"Physical trauma: " = "外伤: ",
+	"Foreign object(s): " = "异物: ",
+	"Dismembered" = "已断肢",
 	"<b>Deceased</b>" = "<b>已死亡</b>",
 	"% healthy</b>" = "% 健康</b>",
 	">type: " = ">类型: ",
