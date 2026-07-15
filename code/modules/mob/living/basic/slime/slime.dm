@@ -186,10 +186,17 @@
 
 /mob/living/basic/slime/update_name()
 	///Checks if the slime has a generic name, in the format of baby/adult slime (123)
-	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
-	if(slime_name_regex.Find(name))
+	// NOVA EDIT CHANGE - i18n: the name is reverse-localized at atom/Initialize AND rebuilt in a localized form below, so
+	// the plain english regex failed → EVERY slime kept the reversed default name. Strip the trailing "(id)", un-reverse
+	// the base to english, and match the base pattern (works for the reversed default AND a previously-localized name on
+	// evolve); then rebuild + reverse-localize "[colour] [stage] slime" for display (strings/i18n/*/_slime.json). no-op on
+	// en. - ORIGINAL: regex "\w+ (baby|adult) slime \(\d+\)"; if(Find(name)); name = "[slime_type.colour] [life_stage] slime ([slime_id])"
+	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime$") // end-anchored; \w+ won't span the hyphen in dark-blue/light-pink, so match the last colour word
+	var/static/regex/slime_id_suffix = new(" ?\\(\\d+\\)$")
+	var/base_name = slime_id_suffix.Replace(name, "")
+	if(base_name != name && slime_name_regex.Find(lang_unreverse_text(base_name))) // base_name != name → had the "(id)" suffix (i.e. an auto-name, not a player rename)
 		var/slime_id = rand(1, 1000)
-		name = "[slime_type.colour] [life_stage] slime ([slime_id])"
+		name = "[lang_reverse_text("[slime_type.colour] [life_stage] slime")] ([slime_id])"
 		real_name = name
 	return ..()
 

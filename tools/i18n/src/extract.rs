@@ -120,6 +120,7 @@ const SINK_VARS: &[&str] = &[
     "occur_text",
     "examine_desc",
     "treat_text",
+    "treat_text_short", // 健康分析仪伤口条的悬浮治疗提示（scanner tooltip）——漏抽（其它 *treat_text 都在）。
     "simple_treat_text",
     "homemade_treat_text",
 ];

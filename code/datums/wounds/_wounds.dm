@@ -739,15 +739,19 @@
  * Returns what text describes this wound
  */
 /datum/wound/proc/severity_text()
+	// NOVA EDIT - I18N - reverse-localize the severity word (display-only; strings/i18n/*/_wound_severity.json).
+	// lang_reverse_text is locale-gated (no-op on en) so english output is unchanged. - ORIGINAL: switch returned the bare english strings
+	var/text
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
-			return "Trivial"
+			text = "Trivial"
 		if(WOUND_SEVERITY_MODERATE)
-			return "Moderate"
+			text = "Moderate"
 		if(WOUND_SEVERITY_SEVERE)
-			return "<b>Severe</b>"
+			text = "<b>Severe</b>"
 		if(WOUND_SEVERITY_CRITICAL)
-			return "<b>Critical</b>"
+			text = "<b>Critical</b>"
+	return lang_reverse_text(text)
 
 /// Returns TRUE if our limb is the head or chest, FALSE otherwise.
 /// Essential in the sense of "we cannot live without it".

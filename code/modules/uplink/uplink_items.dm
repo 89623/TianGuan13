@@ -46,8 +46,14 @@
 		uplink_item.stock_key = WEAKREF(uplink_item)
 		uplink_item.category = category
 		uplink_item.cost = max(round(uplink_item.cost * (1 - discount)),1)
-		uplink_item.name += " ([round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)]% off!)"
-		uplink_item.desc += " Normally costs [initial(uplink_item.cost)] TC. All sales final. [pick(disclaimer)]"
+		// NOVA EDIT CHANGE - i18n: reverse the base name/desc before appending the runtime-composed discount suffix +
+		// sale text (which otherwise break the whole-string P1 reverse, leaving the base english). The sale text
+		// " Normally costs {0} TC. All sales final. {1}" is a boundary-template-engine template (translated downstream
+		// via P1); the short " (N% off!)" suffix is below the template min-anchor so it's localized directly here.
+		// no-op on en. - ORIGINAL: uplink_item.name += " ([...]% off!)" ; uplink_item.desc += " Normally costs [...] TC. All sales final. [pick(disclaimer)]"
+		var/off_percent = round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)
+		uplink_item.name = "[lang_reverse_text(uplink_item.name)][(GLOB.i18n_server_locale || DEFAULT_UI_LOCALE) != DEFAULT_UI_LOCALE ? "（[off_percent]% 折扣！）" : " ([off_percent]% off!)"]"
+		uplink_item.desc = "[lang_reverse_text(uplink_item.desc)] Normally costs [initial(uplink_item.cost)] TC. All sales final. [pick(disclaimer)]"
 		uplink_item.item = taken_item.item
 		uplink_item.discounted = TRUE
 

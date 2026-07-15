@@ -87,7 +87,7 @@
 	nodes = new(device_type)
 	set_init_directions(init_dir)
 
-	if(mapload && name != initial(name))
+	if(mapload && name != initial(name) && lang_unreverse_text(name) != initial(name)) // NOVA EDIT - i18n: a reverse-localized default name is NOT a mapper rename; else override_naming skipped the localized auto-naming below
 		override_naming = TRUE
 	var/turf/turf_loc = null
 	if(isturf(loc))

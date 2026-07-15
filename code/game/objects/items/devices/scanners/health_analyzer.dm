@@ -290,7 +290,8 @@
 							dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Foreign object(s): [conditional_tooltip(displayed, "Use a hemostat to remove.", tochat)]</span></td></tr>"
 					if(has_any_wounds)
 						for(var/datum/wound/wound as anything in limb.wounds)
-							dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: [conditional_tooltip("[wound.name] ([wound.severity_text()])", wound.treat_text_short, tochat)]</span></td></tr>"
+							// NOVA EDIT CHANGE - i18n: reverse-localize the treat-text tooltip (whole-string; bypasses sink/AC) - ORIGINAL: wound.treat_text_short
+						dmgreport += "<tr><td colspan=6><span class='alert ml-2'>&rdsh; Physical trauma: [conditional_tooltip("[wound.name] ([wound.severity_text()])", lang_reverse_text(wound.treat_text_short), tochat)]</span></td></tr>"
 
 			dmgreport += "</table></font>"
 			render_list += dmgreport // tables do not need extra linebreak
