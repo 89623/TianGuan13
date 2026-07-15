@@ -203,8 +203,8 @@
 	if(isMotion())
 		return
 
-	if(name == initial(name))
-		name = "motion-sensitive security camera"
+	if(name == initial(name) || lang_unreverse_text(name) == initial(name)) // NOVA EDIT - i18n: name is reverse-localized at Initialize
+		name = lang_reverse_text("motion-sensitive security camera") // NOVA EDIT - i18n: reverse-localize the new name (no-op on en)
 	if(!proximity_monitor)
 		proximity_monitor = new(src)
 	camera_upgrade_bitflags |= CAMERA_UPGRADE_MOTION

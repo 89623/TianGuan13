@@ -63,7 +63,7 @@
 	if(!mapload)
 		buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 		set_panel_open(TRUE)
-	if(name == initial(name))
+	if(name == initial(name) || lang_unreverse_text(name) == initial(name)) // NOVA EDIT - i18n: name is reverse-localized at Initialize, so also accept the un-reversed form (else the "[area]" prefix is dropped)
 		update_name()
 	my_area = get_area(src)
 	LAZYADD(my_area.firealarms, src)
@@ -120,7 +120,7 @@
 
 /obj/machinery/firealarm/update_name(updates)
 	. = ..()
-	name = "[get_area_name(my_area)] [initial(name)] [id_tag]"
+	name = "[get_area_name(my_area)] [lang_reverse_text(initial(name))] [id_tag]" // NOVA EDIT - i18n: reverse-localize the type name (no-op on en)
 
 /obj/machinery/firealarm/on_exit_area(datum/source, area/area_to_unregister)
 	//we cannot unregister from an area we never registered to in the first place

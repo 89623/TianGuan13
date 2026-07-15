@@ -54,7 +54,7 @@
 
 /obj/item/food/pancakes/raw/examine(mob/user)
 	. = ..()
-	if(name == initial(name))
+	if(name == initial(name) || lang_unreverse_text(name) == initial(name)) // NOVA EDIT - i18n: name is reverse-localized at Initialize
 		. += span_notice(LANG("obj.14bb14ef", null))
 
 /obj/item/food/pancakes/blueberry
