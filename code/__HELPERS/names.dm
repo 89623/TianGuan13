@@ -300,7 +300,13 @@ GLOBAL_VAR(command_name)
 		for(var/word in .)
 			var/rev = lang_reverse_text(word)
 			if(rev == word)
-				rev = lang_reverse_text(capitalize(word))
+				var/cap = capitalize(word)
+				rev = lang_reverse_text(cap) // area/flavor 词目录键是 Titlecase
+				if(rev == cap) // capitalize 形未译 → 再试 ALLCAPS（离子词池 ionabstract/ionadjectives/ionobjects/ionthreats 目录键全大写）
+					var/upp = uppertext(word)
+					var/upp_rev = lang_reverse_text(upp)
+					if(upp_rev != upp)
+						rev = upp_rev
 			localized += rev
 		. = localized
 	// NOVA EDIT ADDITION END
