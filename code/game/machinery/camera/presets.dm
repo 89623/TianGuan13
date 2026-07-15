@@ -212,8 +212,8 @@
 	calculate_active_power()
 
 /obj/machinery/camera/proc/removeMotion()
-	if(name == "motion-sensitive security camera")
-		name = "security camera"
+	if(name == "motion-sensitive security camera" || lang_unreverse_text(name) == "motion-sensitive security camera") // NOVA EDIT - i18n: name is reverse-localized (matches upgradeMotion)
+		name = lang_reverse_text("security camera") // NOVA EDIT - i18n: reverse-localize (no-op on en)
 	camera_upgrade_bitflags &= ~CAMERA_UPGRADE_MOTION
 	if(!area_motion)
 		QDEL_NULL(proximity_monitor)
