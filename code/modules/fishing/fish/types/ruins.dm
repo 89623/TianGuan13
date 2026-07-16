@@ -158,12 +158,12 @@
 	return list("cooked crab" = 2)
 
 /obj/item/fish/skin_crab/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] puts [user.p_their()] hand on [src] and focuses intently! It looks like [user.p_theyre()] trying to transfer [user.p_their()] skin to [src]!"))
+	user.visible_message(span_suicide(LANG("obj.83a2eddd", list(user, user.p_their(), src, user.p_theyre(), user.p_their(), src))))
 	if(HAS_TRAIT(user, TRAIT_UNHUSKABLE))
-		user.visible_message(span_suicide("[user] has no skin! How embarrassing!"))
+		user.visible_message(span_suicide(LANG("obj.834949d3", list(user))))
 		return SHAME
 	if(!ishuman(user))
-		user.visible_message(span_suicide("[src] doesn't want [user]'s skin! How embarrassing!"))
+		user.visible_message(span_suicide(LANG("obj.55246041", list(src, user))))
 		return SHAME
 	if(status == FISH_DEAD)
 		user.visible_message(span_suicide(LANG("obj.3a4ca27f", list(src, user))))

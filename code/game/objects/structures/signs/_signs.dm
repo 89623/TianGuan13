@@ -89,16 +89,16 @@
 	if(!length(GLOB.editable_sign_types))
 		CRASH("GLOB.editable_sign_types failed to populate")
 
-	var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+	var/choice = tgui_input_list(user, LANG("obj.6625191a", null), LANG("obj.136f3177", null), GLOB.editable_sign_types)
 	if(isnull(choice))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!Adjacent(user)) //Make sure user is adjacent still.
-		to_chat(user, span_warning("You need to stand next to the sign to change it!"))
+		to_chat(user, span_warning(LANG("obj.04b699fe", null)))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] begins changing [src]."), \
-						span_notice("You begin changing [src]."))
+	user.visible_message(span_notice(LANG("obj.b93bbfc1", list(user, src))), \
+						span_notice(LANG("obj.82e7edbe", list(src))))
 	if(!do_after(user, 4 SECONDS, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
 		return ITEM_INTERACT_BLOCKING
 
@@ -111,8 +111,8 @@
 	changedsign.pixel_y = pixel_y
 	changedsign.atom_integrity = atom_integrity
 	qdel(src)
-	user.visible_message(span_notice("[user] finishes changing the sign."), \
-						span_notice("You finish changing the sign."))
+	user.visible_message(span_notice(LANG("obj.8e3751a9", list(user))), \
+						span_notice(LANG("obj.22d094cf", null)))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sign/atom_deconstruct(disassembled)

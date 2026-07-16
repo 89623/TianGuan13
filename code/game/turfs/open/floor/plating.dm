@@ -50,15 +50,15 @@
 
 	if(istype(tool, /obj/item/stack/rods) && attachment_holes)
 		if(broken || burnt)
-			to_chat(user, span_warning("Repair the plating first! Use a welding tool[iscyborg(user) ? " or a plating repair tool" : ""] to fix the damage."))
+			to_chat(user, span_warning(LANG("turf.646c63e7", list(iscyborg(user) ? " or a plating repair tool" : ""))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/stack/rods/material = tool
 		if (material.get_amount() < 2)
-			to_chat(user, span_warning("You need two rods to make a reinforced floor!"))
+			to_chat(user, span_warning(LANG("turf.f6a65fbc", null)))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You begin reinforcing the floor..."))
+		to_chat(user, span_notice(LANG("turf.9be3abb7", null)))
 		if(!do_after(user, 3 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
 
@@ -68,12 +68,12 @@
 		place_on_top(/turf/open/floor/engine, flags = CHANGETURF_INHERIT_AIR)
 		playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 		material.use(2)
-		to_chat(user, span_notice("You reinforce the floor."))
+		to_chat(user, span_notice(LANG("turf.c70f4c00", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stack/tile))
 		if(broken || burnt)
-			balloon_alert(user, "too damaged, use a welding[iscyborg(user) ? "or plating repair " : ""] tool!")
+			balloon_alert(user, LANG("turf.2812118d", list(iscyborg(user) ? "or plating repair " : "")))
 			return ITEM_INTERACT_BLOCKING
 
 		for(var/obj/blocker in src)
@@ -89,7 +89,7 @@
 		if((!broken && !burnt) || !tool.use_tool(src, user, 0, volume=80))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_danger("You fix some dents on the broken plating."))
+		to_chat(user, span_danger(LANG("turf.16c487d0", null)))
 		icon_state = base_icon_state
 		burnt = FALSE
 		broken = FALSE
@@ -98,14 +98,14 @@
 
 	if(istype(tool, /obj/item/stack/sheet/plasteel) && upgradable) //Reinforcement!
 		if(broken || burnt)
-			balloon_alert(user, "too damaged, use a welding[iscyborg(user) ? "or plating repair " : ""] tool!")
+			balloon_alert(user, LANG("turf.2812118d", list(iscyborg(user) ? "or plating repair " : "")))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/stack/sheet/sheets = tool
 		if(sheets.get_amount() < PLATE_REINFORCE_COST)
 			return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "reinforcing plating...")
+		balloon_alert(user, LANG("turf.b78e3218", null))
 		if(!do_after(user, 12 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
 		if(sheets.get_amount() < PLATE_REINFORCE_COST || istype(src, /turf/open/floor/plating/reinforced))
@@ -117,15 +117,15 @@
 
 	if(istype(tool, /obj/item/stack/sheet/mineral/plastitanium) && attachment_holes)
 		if(broken || burnt)
-			to_chat(user, span_warning("Repair the plating first! Use a welding tool[iscyborg(user) ? " or a plating repair tool" : ""] to fix the damage."))
+			to_chat(user, span_warning(LANG("turf.646c63e7", list(iscyborg(user) ? " or a plating repair tool" : ""))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/stack/sheet/mineral/plastitanium/sheet = tool
 		if (sheet.get_amount() < 1)
-			to_chat(user, span_warning("You are literally holding nothing.")) // finally a reasonable message
+			to_chat(user, span_warning(LANG("turf.82bf82a4", null))) // finally a reasonable message
 			return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "insulating flooring...")
+		balloon_alert(user, LANG("turf.1ad560a9", null))
 		if(!do_after(user, 1.5 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
 
@@ -135,14 +135,14 @@
 		place_on_top(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
 		playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
 		sheet.use(1)
-		to_chat(user, span_notice("You insulate the floor."))
-		balloon_alert(user, "insulated!")
+		to_chat(user, span_notice(LANG("turf.9ccab036", null)))
+		balloon_alert(user, LANG("turf.a365642c", null))
 		return ITEM_INTERACT_SUCCESS
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/tool)
 	if((!broken && !burnt) || !tool.use_tool(src, user, 0, volume=80))
 		return NONE
-	to_chat(user, span_danger("You fix some dents on the broken plating."))
+	to_chat(user, span_danger(LANG("turf.16c487d0", null)))
 	icon_state = base_icon_state
 	burnt = FALSE
 	broken = FALSE
@@ -255,7 +255,7 @@
 /turf/open/floor/plating/reinforced/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, span_warning(LANG("turf.e8ba50af", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	//get the user's location

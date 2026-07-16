@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/computer_file/program/notepad
 	filename = "notepad"
 	filedesc = "Notepad"
@@ -58,7 +59,7 @@
 	new_file.calculate_size()
 	var/file_stored = target_disk ? target_disk.add_file(new_file) : computer.store_file(new_file, user)
 	if(!file_stored)
-		to_chat(user, span_warning("Error occured while saving the file!"))
+		to_chat(user, span_warning(LANG("datum.44a423a7", null)))
 		qdel(new_file)
 		return
 

@@ -37,7 +37,7 @@
 	var/datum/status_effect/grouped/hooked/effect = owner.has_status_effect(attached_effect.type)
 	if(!effect.try_unhook())
 		return
-	owner.balloon_alert(owner, "hook removed")
+	owner.balloon_alert(owner, LANG("atom.b5eb7b3d", null))
 	var/datum/beam/held/rand_source = pick(effect.sources)
 	qdel(rand_source)
 

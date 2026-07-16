@@ -293,7 +293,7 @@
 		AddComponent(/datum/component/gps, "[victim]'s Core")
 
 	// Message the victim and the surrounding area that they have died.
-	victim.visible_message(span_warning("[victim]'s body completely dissolves, collapsing outwards!"), span_notice("Your body completely dissolves, collapsing outwards!"), span_notice("You hear liquid splattering."))
+	victim.visible_message(span_warning(LANG("obj.c7e30e8b", list(victim))), span_notice(LANG("obj.94d10721", null)), span_notice(LANG("obj.e2a17a4f", null)))
 	qdel(victim) // Remove the Body.
 	UnregisterSignal(victim, COMSIG_LIVING_DEATH)
 
@@ -358,8 +358,8 @@
 	src.replace_into(body)
 
 	// Notify the player that their body has been rebuilt
-	body.visible_message(span_warning("[body]'s torso \"forms\" from [body.p_their()] core, yet to form the rest."))
-	to_chat(owner, span_purple("Your torso fully forms out of your core, yet to form the rest."))
+	body.visible_message(span_warning(LANG("obj.6889a589", list(body, body.p_their()))))
+	to_chat(owner, span_purple(LANG("obj.25459c26", null)))
 	return TRUE
 
 /**
@@ -1173,12 +1173,12 @@
 		if("Penis Sheath")
 			var/obj/item/organ/genital/penis/schlong = alterer.get_organ_slot(ORGAN_SLOT_PENIS)
 			if(isnull(schlong))
-				to_chat(alterer, span_warning("There's no penis to sheath!"))
+				to_chat(alterer, span_warning(LANG("datum.26c7b6f4", null)))
 				return
 			var/datum/bodypart_overlay/mutant/genital/penis/our_overlay = schlong.bodypart_overlay
 			var/datum/sprite_accessory/genital/penis/shaft = our_overlay?.shaft_datum
 			if(!shaft?.can_have_sheath)
-				to_chat(alterer, span_warning("That kind of penis can't have a sheath!"))
+				to_chat(alterer, span_warning(LANG("datum.a39b5480", null)))
 				return
 			var/new_sheath = tgui_input_list(
 				alterer,

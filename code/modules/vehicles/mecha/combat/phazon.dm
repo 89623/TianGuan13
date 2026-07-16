@@ -77,7 +77,7 @@
 	. = ..()
 	if (!. || !phasing)
 		return
-	balloon_alert(user, "not while phasing!")
+	balloon_alert(user, LANG("obj.54100eb7", null))
 	return FALSE
 
 /datum/action/vehicle/sealed/mecha/mech_switch_damtype
@@ -119,5 +119,5 @@
 	var/obj/vehicle/sealed/mecha/phazon/phazon = chassis
 	phazon.phasing = !phazon.phasing
 	button_icon_state = "mech_phasing_[phazon.phasing ? "on" : "off"]"
-	phazon.balloon_alert(owner, "[phazon.phasing ? "enabled" : "disabled"] phasing")
+	phazon.balloon_alert(owner, LANG("datum.bef273b1", list(phazon.phasing ? "enabled" : "disabled")))
 	build_all_button_icons()

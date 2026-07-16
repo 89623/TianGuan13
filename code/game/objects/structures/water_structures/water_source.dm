@@ -60,7 +60,7 @@
 
 /obj/structure/water_source/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(busy)
-		to_chat(user, span_warning("Someone's already washing here!"))
+		to_chat(user, span_warning(LANG("obj.d5ba1f8c", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(tool.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
@@ -70,11 +70,11 @@
 		var/obj/item/reagent_containers/container = tool
 		if(container.is_refillable()) // no early return, we want items that cannot perform their unique interactions to wash
 			if(container.reagents.holder_full())
-				to_chat(user, span_notice("\The [container] is full."))
+				to_chat(user, span_notice(LANG("obj.03adc6e9", list(container))))
 				return ITEM_INTERACT_BLOCKING
 
 			container.reagents.add_reagent(dispensedreagent, min(container.volume - container.reagents.total_volume, container.amount_per_transfer_from_this))
-			to_chat(user, span_notice("You fill [container] from [src]."))
+			to_chat(user, span_notice(LANG("obj.3adf2506", list(container, src))))
 			return ITEM_INTERACT_SUCCESS
 
 
@@ -93,12 +93,12 @@
 
 	if(istype(tool, /obj/item/mop))
 		tool.reagents.add_reagent(dispensedreagent, 5)
-		to_chat(user, span_notice("You wet [tool] in [src]."))
+		to_chat(user, span_notice(LANG("obj.c4984f89", list(tool, src))))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return ITEM_INTERACT_SUCCESS
 
 	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
-		to_chat(user, span_notice("You start washing [tool]..."))
+		to_chat(user, span_notice(LANG("obj.baf588ee", list(tool))))
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE
@@ -107,8 +107,8 @@
 		tool.wash(CLEAN_WASH)
 		reagents.expose(tool, TOUCH, 5 / max(reagents.total_volume, 5))
 		user.visible_message(
-			span_notice("[user] washes [tool] using [src]."),
-			span_notice("You wash [tool] using [src]."))
+			span_notice(LANG("obj.39b6ee6a", list(user, tool, src))),
+			span_notice(LANG("obj.94ce754d", list(tool, src))))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE

@@ -74,7 +74,7 @@
 /obj/structure/lattice/wirecutter_act(mob/living/user, obj/item/tool)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return NONE
-	to_chat(user, span_notice("Slicing [name] joints ..."))
+	to_chat(user, span_notice(LANG("obj.fb439332", list(name))))
 	deconstruct()
 	return ITEM_INTERACT_SUCCESS
 
@@ -181,10 +181,10 @@
 		return ..()
 	var/obj/item/stack/tile/iron/attacking_tiles = tool
 	if(!attacking_tiles.use(1))
-		to_chat(user, span_warning("You need one floor tile to build atop [src]."))
+		to_chat(user, span_warning(LANG("obj.d712a62a", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You construct new plating with [src] as support."))
+	to_chat(user, span_notice(LANG("obj.abc628e1", list(src))))
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 
 	var/turf/base = get_turf(src)
@@ -212,7 +212,7 @@
 
 /obj/structure/lattice/catwalk/boulder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(ismetaltile(tool))
-		balloon_alert(user, "too unstable!")
+		balloon_alert(user, LANG("obj.8bf071ce", null))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 

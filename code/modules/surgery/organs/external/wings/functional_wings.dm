@@ -137,7 +137,7 @@
 	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 	human.RemoveElement(/datum/element/forced_gravity, 0)
 	REMOVE_TRAIT(human, TRAIT_PASSTABLE, SPECIES_FLIGHT_TRAIT)
-	to_chat(human, span_notice("You settle gently back onto the ground..."))
+	to_chat(human, span_notice(LANG("obj.4b278ac8", null)))
 	close_wings()
 	human.refresh_gravity()
 

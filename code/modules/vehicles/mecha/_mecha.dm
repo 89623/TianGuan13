@@ -942,10 +942,10 @@
 
 	if(overclock_mode)
 		movedelay /= overclock_coeff
-		visible_message(span_notice("[src] starts heating up, making humming sounds."))
+		visible_message(span_notice(LANG("obj.c727edfb", list(src))))
 	else
 		movedelay *= overclock_coeff
-		visible_message(span_notice("[src] cools down and the humming stops."))
+		visible_message(span_notice(LANG("obj.26b7063b", list(src))))
 	update_energy_drain()
 	return TRUE
 

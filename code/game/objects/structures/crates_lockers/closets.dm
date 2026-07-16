@@ -702,7 +702,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(!length(paint_jobs))
 			return ITEM_INTERACT_BLOCKING
 
-		var/choice = tgui_input_list(user, "Set Closet Paintjob", "Paintjob", paint_jobs)
+		var/choice = tgui_input_list(user, LANG("obj.b1b228ff", null), LANG("obj.aa8f9e75", null), paint_jobs)
 		if(isnull(choice))
 			return ITEM_INTERACT_BLOCKING
 
@@ -719,8 +719,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/electronics/airlock) && can_install_airlock_electronics(user))
-		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
-			span_notice("You start to install electronics into the [src]..."))
+		user.visible_message(span_notice(LANG("obj.f57d6a02", list(user, src))),\
+			span_notice(LANG("obj.5a2c3e4f", list(src))))
 
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_airlock_electronics), user)))
 			return ITEM_INTERACT_BLOCKING
@@ -731,14 +731,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		inherit_airlock_electronics_access(tool)
 		qdel(tool)
 		secure = TRUE
-		balloon_alert(user, "electronics installed")
+		balloon_alert(user, LANG("obj.4513d6bd", null))
 
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))
-		user.visible_message(span_notice("[user] is installing a card reader."),
-							span_notice("You begin installing the card reader."))
+		user.visible_message(span_notice(LANG("obj.ff29669a", list(user))),
+							span_notice(LANG("obj.57521e91", null)))
 
 		if(!do_after(user, 4 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(can_install_card_reader), user)))
 			return ITEM_INTERACT_BLOCKING
@@ -746,7 +746,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		qdel(tool)
 		card_reader_installed = TRUE
 
-		balloon_alert(user, "card reader installed")
+		balloon_alert(user, LANG("obj.49c02850", null))
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/item/card/id/card = tool.GetID()
@@ -760,7 +760,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(num_choices == 1)
 			choice = access_choices[1]
 		else
-			choice = tgui_input_list(user, "Set Access Type", "Access Type", access_choices)
+			choice = tgui_input_list(user, LANG("obj.369a15ea", null), LANG("obj.8cf8426e", null), access_choices)
 		if(isnull(choice))
 			return ITEM_INTERACT_BLOCKING
 
@@ -782,15 +782,15 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				set_access(list())
 
 		if(!isnull(id_card))
-			balloon_alert(user, "now owned by [card.registered_name]")
+			balloon_alert(user, LANG("obj.02dad179", list(card.registered_name)))
 		else
-			balloon_alert(user, "set to [choice]")
+			balloon_alert(user, LANG("obj.28f94138", list(choice)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(opened)
 		if(istype(tool, cutting_tool) && tool.tool_behaviour != TOOL_WELDER) // for example cardboard box is cut with wirecutters
-			user.visible_message(span_notice("[user] cut apart \the [src]."), \
-								span_notice("You cut \the [src] apart with \the [tool]."))
+			user.visible_message(span_notice(LANG("obj.fc66857a", list(user, src))), \
+								span_notice(LANG("obj.a44b2da5", list(src, tool))))
 			deconstruct(TRUE)
 			return ITEM_INTERACT_SUCCESS
 
@@ -882,8 +882,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!can_unscrew_airlock_electronics(user))
 		return NONE
 
-	user.visible_message(span_notice("[user] begins to remove the electronics from the [src]."),\
-						span_notice("You begin to remove the electronics from the [src]..."))
+	user.visible_message(span_notice(LANG("obj.229442c3", list(user, src))),\
+						span_notice(LANG("obj.108516da", list(src))))
 
 	if (!tool.use_tool(src, user, 4 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(can_unscrew_airlock_electronics), user)))
 		return ITEM_INTERACT_BLOCKING
@@ -899,7 +899,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	req_one_access = null
 	id_card = null
 	secure = FALSE
-	balloon_alert(user, "electronics removed")
+	balloon_alert(user, LANG("obj.9c7d0598", null))
 
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -911,8 +911,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!can_pryout_card_reader(user))
 		return NONE
 
-	user.visible_message(span_notice("[user] begins to pry the card reader out from [src]."),\
-						span_notice("You begin to pry the card reader out from [src]..."))
+	user.visible_message(span_notice(LANG("obj.dd026037", list(user, src))),\
+						span_notice(LANG("obj.2fc1f6e6", list(src))))
 
 	if(!tool.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(can_pryout_card_reader), user)))
 		return ITEM_INTERACT_BLOCKING
@@ -920,7 +920,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	new /obj/item/stock_parts/card_reader(drop_location())
 	card_reader_installed = FALSE
 
-	balloon_alert(user, "card reader removed")
+	balloon_alert(user, LANG("obj.8730b9d8", null))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/closet/welder_act(mob/living/user, obj/item/tool)
@@ -931,16 +931,16 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(!tool.tool_start_check(user, amount=1))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You begin cutting \the [src] apart..."))
+		to_chat(user, span_notice(LANG("obj.807d94b4", list(src))))
 		if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!opened)
 			return ITEM_INTERACT_BLOCKING
 
-		user.visible_message(span_notice("[user] slices apart \the [src]."),
-							span_notice("You cut \the [src] apart with \the [tool]."),
-							span_hear("You hear welding."))
+		user.visible_message(span_notice(LANG("obj.fe86d6ab", list(user, src))),
+							span_notice(LANG("obj.a44b2da5", list(src, tool))),
+							span_hear(LANG("obj.1aa82fa3", null)))
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
 
@@ -958,9 +958,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	welded = !welded
 	after_weld(welded)
-	user.visible_message(span_notice("[user] [welded ? "welds shut" : "unwelded"] \the [src]."),
-						span_notice("You [welded ? "weld" : "unwelded"] \the [src] with \the [tool]."),
-						span_hear("You hear welding."))
+	user.visible_message(span_notice(LANG("obj.feb7fb3d", list(user, welded ? "welds shut" : "unwelded", src))),
+						span_notice(LANG("obj.4cf04b7a", list(welded ? "weld" : "unwelded", src, tool))),
+						span_hear(LANG("obj.1aa82fa3", null)))
 	user.log_message("[welded ? "welded":"unwelded"] closet [src] with [tool]", LOG_GAME)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS

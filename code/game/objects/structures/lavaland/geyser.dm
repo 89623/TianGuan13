@@ -69,7 +69,7 @@
 		return NONE //this runs the plunger code
 
 	if(discovered)
-		to_chat(user, span_warning("This geyser has already been discovered!"))
+		to_chat(user, span_warning(LANG("obj.e4633b3a", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice(LANG("obj.6aa4e4c3", null)))
@@ -86,7 +86,7 @@
 
 	var/obj/item/card/id/card = user.get_idcard()
 	if(card)
-		to_chat(user, span_notice("[point_value] mining points have been paid out!"))
+		to_chat(user, span_notice(LANG("obj.eeda2ee4", list(point_value))))
 		card.registered_account.mining_points += point_value
 	return ITEM_INTERACT_SUCCESS
 

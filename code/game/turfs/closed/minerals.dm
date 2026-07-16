@@ -221,7 +221,7 @@
 ///Mining manually with a hand tool or something masquerading as one
 /turf/closed/mineral/proc/manual_mine(mob/living/user, obj/item/tool, exp_multiplier = 1)
 	if (!ISADVANCEDTOOLUSER(user))
-		to_chat(user, span_warning("You don't have the dexterity to do this!"))
+		to_chat(user, span_warning(LANG("turf.e8ba50af", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if (!isturf(user.loc))
@@ -1076,16 +1076,16 @@
 /turf/closed/mineral/gibtonite/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/previous_stage = stage
 	if(istype(tool, /obj/item/goliath_infuser_hammer) && stage == GIBTONITE_ACTIVE)
-		user.visible_message(span_notice("[user] digs [tool] to [src]..."), span_notice("Your tendril hammer instictively digs and wraps around [src] to stop it..."))
+		user.visible_message(span_notice(LANG("turf.4004c510", list(user, tool, src))), span_notice(LANG("turf.f5b50978", list(src))))
 		defuse(user)
 	else if(istype(tool, /obj/item/mining_scanner) || istype(tool, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
-		user.visible_message(span_notice("[user] holds [tool] to [src]..."), span_notice("You use [tool] to locate where to cut off the chain reaction and attempt to stop it..."))
+		user.visible_message(span_notice(LANG("turf.d1a9033a", list(user, tool, src))), span_notice(LANG("turf.dd2c84e7", list(tool))))
 		defuse(user)
 	. = ..()
 	if(istype(tool, /obj/item/clothing/gloves/gauntlets) && previous_stage == GIBTONITE_UNSTRUCK && stage == GIBTONITE_ACTIVE && istype(user))
 		user.Immobilize(0.5 SECONDS)
 		user.throw_at(get_ranged_target_turf(src, get_dir(src, user), 5), range = 5, speed = 3, spin = FALSE)
-		user.visible_message(span_danger("[user] hit gibtonite with [tool.name], launching [user.p_them()] back!"), span_danger("You've struck gibtonite! Your [tool.name] launched you back!"))
+		user.visible_message(span_danger(LANG("turf.1ecb1d90", list(user, tool.name, user.p_them()))), span_danger(LANG("turf.779efd12", list(tool.name))))
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null)
 	if(stage != GIBTONITE_UNSTRUCK)
@@ -1233,11 +1233,11 @@
 
 /turf/closed/mineral/strong/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!ishuman(user))
-		to_chat(usr, span_warning("Only a more advanced species could break a rock such as this one!"))
+		to_chat(usr, span_warning(LANG("turf.1310903e", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.mind?.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_MASTER)
-		to_chat(usr, span_warning("The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner."))
+		to_chat(usr, span_warning(LANG("turf.7cf17838", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	return ..()

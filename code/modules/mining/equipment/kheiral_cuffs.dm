@@ -112,7 +112,7 @@
 
 /obj/item/clothing/accessory/kheiral_cuffs/suicide_act(mob/living/user)
 	if(!ishuman(user))
-		user.visible_message(span_suicide("[user] locks [src] around their neck, wrinkles forming across their face. It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.4b8ee9fb", list(user, src, user.p_theyre()))))
 		return OXYLOSS
 
 	var/mob/living/carbon/human/victim = user

@@ -243,7 +243,7 @@
 	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /obj/item/clothing/neck/stethoscope/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
+	user.visible_message(span_suicide(LANG("obj.14b68f8b", list(user, src, user.p_their(), user.p_they()))))
 	return OXYLOSS
 
 /obj/item/clothing/neck/stethoscope/attack(mob/living/target, mob/living/user)

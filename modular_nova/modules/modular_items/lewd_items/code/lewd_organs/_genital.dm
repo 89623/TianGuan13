@@ -388,12 +388,12 @@ GLOBAL_LIST_INIT(genital_arousal_options, list(
 		if("set_visibility")
 			if(!selected_organ.apply_visibility_label(params["option"]))
 				return
-			ui.user.balloon_alert(ui.user, "[selected_organ.name] set to [LOWER_TEXT(params["option"])]")
+			ui.user.balloon_alert(ui.user, LANG("datum.eca63fb3", list(selected_organ.name, LOWER_TEXT(params["option"]))))
 			return TRUE
 		if("set_layering")
 			if(!selected_organ.apply_layering_label(params["option"]))
 				return
-			ui.user.balloon_alert(ui.user, "[selected_organ.name] layering set to [LOWER_TEXT(params["option"])]")
+			ui.user.balloon_alert(ui.user, LANG("datum.95b2be64", list(selected_organ.name, LOWER_TEXT(params["option"]))))
 			return TRUE
 
 /mob/living/carbon/human/verb/toggle_genitals()

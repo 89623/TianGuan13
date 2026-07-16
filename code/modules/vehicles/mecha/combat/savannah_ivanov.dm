@@ -85,7 +85,7 @@
 	. = ..()
 	if (!. || !flying)
 		return
-	balloon_alert(user, "not while airborne!")
+	balloon_alert(user, LANG("obj.2efed207", null))
 	return FALSE
 
 ///Savannah Skyfall
@@ -105,16 +105,16 @@
 		return
 	var/obj/vehicle/sealed/mecha/savannah_ivanov/savannah = chassis
 	if(savannah.flying)
-		to_chat(owner, span_warning("You're already airborne!"))
+		to_chat(owner, span_warning(LANG("datum.aebb04b6", null)))
 		return
 	if(TIMER_COOLDOWN_RUNNING(savannah, COOLDOWN_MECHA_SKYFALL))
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(savannah, COOLDOWN_MECHA_SKYFALL)
-		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall."))
+		to_chat(owner, span_warning(LANG("datum.98e78e0c", list(DisplayTimeText(timeleft, 1)))))
 		return
 	if(skyfall_charge_level)
 		abort_skyfall()
 		return
-	savannah.balloon_alert(owner, "charging skyfall...")
+	savannah.balloon_alert(owner, LANG("datum.0e83ac83", null))
 	INVOKE_ASYNC(src, PROC_REF(skyfall_charge_loop))
 
 /**

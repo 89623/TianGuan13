@@ -263,7 +263,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/the_owl, 32)
 	if(prob(99) && !check_holidays(APRIL_FOOLS))
 		return ..()
 
-	visible_message(span_notice("[user] rips [src] in a single, decisive motion... revealing another poster?"))
+	visible_message(span_notice(LANG("obj.6f5f6ca2", list(user, src))))
 	playsound(src, 'sound/items/poster/poster_ripped.ogg', 100, TRUE)
 	if(corrupted)
 		name = initial(name)
@@ -272,7 +272,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/the_owl, 32)
 		corrupted = FALSE
 	else
 		name = "Yes ERP"
-		desc = "This poster reminds the crew that Enterprise Resource Planning is both effective and critical for the station's operations."
+		desc = LANG("obj.4f7e03a3", null)
 		icon_state = "yes_erp"
 		corrupted = TRUE
 

@@ -213,14 +213,14 @@
 
 	if(istype(tool, /obj/item/stack/rods/lava))
 		if(locate(/obj/structure/lattice/catwalk/lava, src))
-			to_chat(user, span_warning("There is already a lattice here!"))
+			to_chat(user, span_warning(LANG("turf.d5f505cf", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!astype(tool, /obj/item/stack/rods/lava).use(1))
-			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
+			to_chat(user, span_warning(LANG("turf.236268e2", null)))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You construct a lattice."))
+		to_chat(user, span_notice(LANG("turf.b8bd3ae8", null)))
 		playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 		new /obj/structure/lattice/catwalk/lava(locate(x, y, z))
 		return ITEM_INTERACT_SUCCESS
@@ -229,7 +229,7 @@
 	if(istype(tool, /obj/item/cigarette))
 		var/obj/item/cigarette/ciggie = tool
 		if(ciggie.lit)
-			to_chat(user, span_warning("\The [ciggie] is already lit!"))
+			to_chat(user, span_warning(LANG("turf.79fd2c4b", list(ciggie))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/clumsy_modifier = HAS_TRAIT(user, TRAIT_CLUMSY) ? 2 : 1

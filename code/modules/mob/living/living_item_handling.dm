@@ -146,7 +146,7 @@
 	var/obj/item/offered_item = item_bypass ? item_bypass : get_active_held_item()
 	// if it's an abstract item, should consider it to be non-existent (unless it's a HAND_ITEM, which means it's an obj/item that is just a representation of our hand)
 	if(!offered_item || ((offered_item.item_flags & ABSTRACT && !HAS_TRAIT(offered_item, TRAIT_BORG_GIVE)) && !HAS_TRAIT(offered_item, TRAIT_OFFERED_WHEN_PULLED) && !(offered_item.item_flags & HAND_ITEM)))
-		to_chat(src, span_warning("You're not holding anything to offer!"))
+		to_chat(src, span_warning(LANG("mob.15fe831e", null)))
 		return
 
 	if(offered)
@@ -203,7 +203,7 @@
 		to_chat(src, span_warning(LANG("mob.cc991ad9", list(offerer))))
 		return
 	if(!offered_item || offerer.get_active_held_item() != offered_item && !bypass)
-		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
+		to_chat(src, span_warning(LANG("mob.6ca67056", list(offerer))))
 		return
 	if(!get_empty_held_indexes())
 		to_chat(src, span_warning(LANG("mob.fc35c47c", null)))

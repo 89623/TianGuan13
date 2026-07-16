@@ -62,7 +62,7 @@
 		human_owner.AddElement(/datum/element/forced_gravity, 0)
 		SEND_SIGNAL(human_owner, COMSIG_JETBOOTS_ACTIVE, human_owner)
 		ADD_TRAIT(human_owner, TRAIT_PASSTABLE, SHOES_TRAIT)
-		to_chat(human_owner, span_notice("You click your jet boots together and begin to hover gently above the ground..."))
+		to_chat(human_owner, span_notice(LANG("datum.f9fe38ea", null)))
 		human_owner.set_resting(FALSE, TRUE)
 		human_owner.refresh_gravity()
 		RegisterSignals(human_owner, list(COMSIG_LIVING_STATUS_STUN, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_LIVING_STATUS_PARALYZE), PROC_REF(switch_flight))
@@ -81,7 +81,7 @@
 	human_owner.RemoveElement(/datum/element/forced_gravity, 0)
 	SEND_SIGNAL(human_owner, COMSIG_JETBOOTS_INACTIVE, human_owner)
 	REMOVE_TRAIT(human_owner, TRAIT_PASSTABLE, SHOES_TRAIT)
-	to_chat(human_owner, span_notice("You're lowered back onto the ground..."))
+	to_chat(human_owner, span_notice(LANG("datum.a8257d6e", null)))
 	human_owner.refresh_gravity()
 	UnregisterSignal(human_owner, list(COMSIG_LIVING_STATUS_STUN, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_LIVING_STATUS_PARALYZE))
 	//visuals

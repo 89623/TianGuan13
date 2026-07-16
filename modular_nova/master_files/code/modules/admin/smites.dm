@@ -77,7 +77,7 @@
 			/obj/item/clothing/gloves/tactical_maid = ITEM_SLOT_GLOVES,
 		),
 	)
-	var/chosen_outfit = tgui_input_list(user, "Which maid outfit should be applied?", "Maid-ification", outfit_options)
+	var/chosen_outfit = tgui_input_list(user, LANG("datum.5cec3fde", null), LANG("datum.e120f311", null), outfit_options)
 	if(!chosen_outfit)
 		return
 	var/list/items = outfit_options[chosen_outfit]
@@ -88,4 +88,4 @@
 		if(target.equip_to_slot_or_del(new_item, slot))
 			smite_item_protection(new_item)
 	if(!QDELETED(shamed))
-		shamed.visible_message(span_warning("A maid uniform appears on [shamed]!"))
+		shamed.visible_message(span_warning(LANG("datum.082b521b", list(shamed))))

@@ -235,7 +235,7 @@
 	list_reagents = null
 
 /obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!"))
+	user.visible_message(span_suicide(LANG("obj.2bbecf09", list(user, src, user.p_theyre()))))
 	return OXYLOSS
 
 //water flower

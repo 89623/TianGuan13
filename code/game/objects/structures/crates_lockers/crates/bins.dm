@@ -38,7 +38,7 @@
 	if(!istype(tool, /obj/item/storage/bag/trash) || !opened)
 		return ..()
 	var/obj/item/storage/bag/trash/garbage_bag = tool
-	to_chat(user, span_notice("You fill the bag."))
+	to_chat(user, span_notice(LANG("obj.d62fd2e6", null)))
 	for(var/obj/item/garbage in src)
 		garbage_bag.atom_storage?.attempt_insert(garbage, user, TRUE)
 	do_animate()

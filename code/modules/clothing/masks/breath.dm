@@ -21,7 +21,7 @@
 	bio = 50
 
 /obj/item/clothing/mask/breath/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is wrapping \the [src]'s tube around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.47ea391f", list(user, src, user.p_their(), user.p_theyre()))))
 	return OXYLOSS
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)

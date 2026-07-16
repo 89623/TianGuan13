@@ -62,7 +62,7 @@
 		// If they somehow have a datum. I won't judge
 		return should_interaction_fail(source, thrower) ? COMPONENT_CANCEL_THROW : NONE
 	// If the thrower isn't a mob, just block it. It could be anything, but it's probably an explosion
-	source.visible_message(span_warning("\The [source] resists being thrown!"))
+	source.visible_message(span_warning(LANG("datum.c7fa1691", list(source))))
 	return COMPONENT_CANCEL_THROW
 
 /// Returns FALSE if we don't have a bitrunning threat antag datum, TRUE + balloon alert otherwise

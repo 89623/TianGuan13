@@ -421,10 +421,10 @@
 		stock_parts += servo
 
 	if(!length(stock_parts))
-		balloon_alert(user, "no parts!")
+		balloon_alert(user, LANG("obj.a8f02129", null))
 		return
 
-	var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, "Which part to remove?", "Part Removal", stock_parts)
+	var/obj/item/stock_parts/part_to_remove = tgui_input_list(user, LANG("obj.7c3b7cb8", null), LANG("obj.d650b468", null), stock_parts)
 	if(!(locate(part_to_remove) in contents))
 		return
 
@@ -445,8 +445,8 @@
 		return
 	if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
-	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
-	audible_message(span_hear("You hear welding."))
+	user.balloon_alert_to_viewers(LANG("obj.2ca5dd80", list(src)), LANG("obj.ecacaee5", list(src)))
+	audible_message(span_hear(LANG("obj.1aa82fa3", null)))
 	var/did_the_thing = FALSE
 	while(atom_integrity < max_integrity)
 		if(W.use_tool(src, user, 2.5 SECONDS, volume=50))

@@ -92,7 +92,7 @@
 
 		print_results = set_print_result == "Yes"
 
-	override_question = tgui_input_text(vote_creator, "What is the vote for?", "Custom Vote")
+	override_question = tgui_input_text(vote_creator, LANG("datum.499af380", null), LANG("datum.43aff5cd", null))
 	if(!override_question)
 		return FALSE
 

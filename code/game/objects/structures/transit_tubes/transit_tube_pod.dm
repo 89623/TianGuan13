@@ -33,8 +33,8 @@
 
 	tool.play_tool_sound(src)
 	if(contents.len)
-		user.visible_message(span_notice("[user] empties \the [src]."), \
-							span_notice("You empty \the [src]."))
+		user.visible_message(span_notice(LANG("obj.5ea77982", list(user, src))), \
+							span_notice(LANG("obj.b7f7de28", list(src))))
 		empty_pod()
 	else
 		deconstruct(TRUE)

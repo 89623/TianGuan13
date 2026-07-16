@@ -139,11 +139,11 @@
 		return .
 
 	if(astype(tool, /obj/item/light/bulb).status)/// check if broken
-		to_chat(user, span_danger("The light bulb is broken!"))
+		to_chat(user, span_danger(LANG("turf.e8716b7e", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!state)
-		to_chat(user, span_notice("The light bulb seems fine, no need to replace it."))
+		to_chat(user, span_notice(LANG("turf.5cea176f", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.temporarilyRemoveItemFromInventory(tool))
@@ -152,7 +152,7 @@
 	qdel(tool)
 	state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
 	update_appearance()
-	to_chat(user, span_notice("You replace the light bulb."))
+	to_chat(user, span_notice(LANG("turf.03f007a9", null)))
 	return ITEM_INTERACT_SUCCESS
 
 

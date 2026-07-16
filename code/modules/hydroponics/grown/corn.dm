@@ -58,7 +58,7 @@
 	if(!tool.get_sharpness())
 		return NONE
 
-	to_chat(user, span_notice("You use [tool] to fashion a pipe out of the corn cob!"))
+	to_chat(user, span_notice(LANG("obj.5d3a4a5f", list(tool))))
 	new /obj/item/cigarette/pipe/cobpipe (user.loc)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

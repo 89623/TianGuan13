@@ -278,9 +278,9 @@
 	user.add_mood_event("graverobbing", is_chill_with_robbing ? /datum/mood_event/morbid_graverobbing : /datum/mood_event/graverobbing)
 	if(lead_tomb && first_open)
 		if(is_chill_with_robbing || !astype(user, /mob/living/carbon)?.gain_trauma(/datum/brain_trauma/magic/stalker))
-			to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
+			to_chat(user, span_notice(LANG("obj.d864b6cd", null)))
 		else
-			to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
+			to_chat(user, span_boldwarning(LANG("obj.e77630b1", null)))
 		first_open = FALSE
 
 	return ITEM_INTERACT_SUCCESS

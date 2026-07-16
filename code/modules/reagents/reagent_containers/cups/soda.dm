@@ -43,12 +43,12 @@
 
 /obj/item/reagent_containers/cup/soda_cans/suicide_act(mob/living/user)
 	if(!reagents.total_volume)
-		user.visible_message(span_warning("[user] is trying to take a big sip from [src]... The can is empty!"))
+		user.visible_message(span_warning(LANG("obj.b5b535a2", list(user, src))))
 		return SHAME
 	if(!is_drainable())
 		open_soda(user)
 		sleep(1 SECONDS)
-	user.visible_message(span_suicide("[user] takes a big sip from [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.76037a1e", list(user, src, user.p_theyre()))))
 	playsound(user,'sound/items/drink.ogg', 80, TRUE)
 	reagents.trans_to(user, src.reagents.total_volume, transferred_by = user) //a big sip
 	sleep(0.5 SECONDS)

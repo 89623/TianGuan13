@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/food/grown/melonlike
 	seed = /obj/item/seeds/watermelon
 	name = "melon?"
@@ -32,7 +33,7 @@
 	if(seed)
 		pulp_count += round(seed.potency / 25)
 
-	user.balloon_alert(user, "scooped out [pulp_count] pulp(s)")
+	user.balloon_alert(user, LANG("obj.b81bfe70", list(pulp_count)))
 	for(var/i in 1 to pulp_count)
 		new pulp_type(user.loc)
 
@@ -43,13 +44,13 @@
 			received_armor = new fire_resistant_chestplate_type
 		else
 			received_armor = new chestplate_type
-		to_chat(user, span_notice("You hollow \the [src] into a helmet with [tool]."))
+		to_chat(user, span_notice(LANG("obj.ddd7890b", list(src, tool))))
 	else
 		if(seed.resistance_flags & FIRE_PROOF)
 			received_armor = new fire_resistant_helmet_type
 		else
 			received_armor = new helmet_type
-		to_chat(user, span_notice("You hollow \the [src] into a chestplate with [tool]."))
+		to_chat(user, span_notice(LANG("obj.cef33c1c", list(src, tool))))
 
 	remove_item_from_storage(user)
 	qdel(src)

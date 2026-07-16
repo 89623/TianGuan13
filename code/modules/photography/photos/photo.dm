@@ -70,7 +70,7 @@
 	return ..()
 
 /obj/item/photo/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is taking one last look at \the [src]! It looks like [user.p_theyre()] giving in to death!"))//when you wanna look at photo of waifu one last time before you die...
+	user.visible_message(span_suicide(LANG("obj.e6ae375c", list(user, src, user.p_theyre()))))//when you wanna look at photo of waifu one last time before you die...
 	user.emote("laugh", intentional = FALSE, forced = TRUE) // EVERY TIME I DO IT MAKES ME LAUGH
 	return OXYLOSS
 

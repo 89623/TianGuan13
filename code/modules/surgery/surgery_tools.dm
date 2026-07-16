@@ -592,7 +592,7 @@
 		user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
 /obj/item/shears/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.cdc1b619", list(user, user.p_them(), src, user.p_theyre()))))
 	var/timer = 1 SECONDS
 	for(var/obj/item/bodypart/thing in user.get_bodyparts())
 		if(thing.body_part == CHEST)

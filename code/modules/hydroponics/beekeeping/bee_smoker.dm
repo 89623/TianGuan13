@@ -85,7 +85,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(current_herb_fuel == max_herb_fuel)
-		user.balloon_alert(user, "already at maximum fuel!")
+		user.balloon_alert(user, LANG("obj.e33858ec", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/fuel_worth = weed.wine_power * WEED_WINE_MULTIPLIER

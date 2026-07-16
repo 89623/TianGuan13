@@ -43,7 +43,7 @@
 /obj/item/food/grown/potato/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!tool.get_sharpness())
 		return NONE
-	to_chat(user, span_notice("You cut the potato into wedges with [tool]."))
+	to_chat(user, span_notice(LANG("obj.1333272e", list(tool))))
 	var/obj/item/food/grown/potato/wedges/slices = new /obj/item/food/grown/potato/wedges
 	remove_item_from_storage(user)
 	qdel(src)

@@ -82,7 +82,7 @@
 	if(!isturf(user.loc))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "digging...")
+	balloon_alert(user, LANG("turf.a8f0e832", null))
 
 	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
 		return ITEM_INTERACT_BLOCKING

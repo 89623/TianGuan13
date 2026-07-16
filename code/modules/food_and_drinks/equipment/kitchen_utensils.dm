@@ -53,7 +53,7 @@
 	AddElement(/datum/element/eyestab)
 
 /obj/item/kitchen/fork/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!"))
+	user.visible_message(span_suicide(LANG("obj.47a6be89", list(user, src, user.p_their(), user.p_theyre(), user.p_them()))))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	return BRUTELOSS
 
@@ -193,7 +193,7 @@
 	exposed_wound_bonus = 14
 
 /obj/item/kitchen/rollingpin/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins flattening [user.p_their()] head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.ff61aa4e", list(user, user.p_their(), src, user.p_theyre()))))
 	return BRUTELOSS
 /* Trays  moved to /obj/item/storage/bag */
 

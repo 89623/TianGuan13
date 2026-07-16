@@ -69,7 +69,7 @@
 			return MANUAL_SUICIDE
 
 	//Their mind is too weak to ascend as a janny
-	user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and is trying to become one with the janicart, but has no idea where to start! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.b0e75cae", list(user, src, user.p_their(), user.p_theyre()))))
 	user.gib(DROP_ALL_REMAINS)
 	return MANUAL_SUICIDE
 

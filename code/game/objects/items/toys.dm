@@ -447,7 +447,7 @@
 
 /obj/item/toy/spinningtoy/suicide_act(mob/living/user)
 	if (!iscarbon(user))
-		user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.visible_message(span_suicide(LANG("obj.05655ac3", list(user, src, user.p_theyre()))))
 		user.spin(8 SECONDS, 1)
 		return BRUTELOSS
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)

@@ -52,7 +52,7 @@
 		new item_path(src)
 	unlock_contents = list()
 	qdel(tool)
-	to_chat(user, span_notice("You twist the key into both locks at once, opening the crate."))
+	to_chat(user, span_notice(LANG("obj.1047b1e7", null)))
 	playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, vary = FALSE)
 	togglelock(user)
 	return ITEM_INTERACT_SUCCESS

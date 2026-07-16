@@ -13,7 +13,7 @@
 	var/list/voicespan = list(SPAN_COMMAND)
 
 /obj/item/megaphone/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is uttering [user.p_their()] last words into \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.4bdcdf88", list(user, user.p_their(), src, user.p_theyre()))))
 	spamcheck = 0//so they dont have to worry about recharging
 	user.say(LANG("obj.539044cd", null), forced="megaphone suicide")//he must have died while coding this
 	return OXYLOSS

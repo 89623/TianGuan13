@@ -31,7 +31,7 @@
 	var/range = 0 //Everywhere
 
 /obj/item/assembly/signaler/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
+	user.visible_message(span_suicide(LANG("obj.ff0940e6", list(user, src, user.p_they()))))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	moveToNullspace()
 	suicider = user.mind

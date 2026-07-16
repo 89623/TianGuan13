@@ -49,7 +49,7 @@
 		. += span_notice(LANG("obj.70d11c6e", list(src)))
 
 /obj/item/healthanalyzer/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
+	user.visible_message(span_suicide(LANG("obj.1cd52c32", list(user, user.p_them(), src, user.p_theyre()))))
 	return BRUTELOSS
 
 /obj/item/healthanalyzer/attack_self(mob/user)

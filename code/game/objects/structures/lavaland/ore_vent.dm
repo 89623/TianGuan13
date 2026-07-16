@@ -113,7 +113,7 @@
 		return NONE
 
 	if(tapped)
-		balloon_alert_to_viewers("vent tapped!")
+		balloon_alert_to_viewers(LANG("obj.632e0d0a", null))
 		return ITEM_INTERACT_BLOCKING
 
 	scan_and_confirm(user)

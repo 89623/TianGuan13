@@ -26,7 +26,7 @@
 
 /obj/item/storage/box/ration/examine_more(mob/user)
 	. = ..()
-	. += span_notice("<i>You can make out a faded logo of some sort on the side, that almost looks like...</i>")
+	. += span_notice(LANG("obj.875e990c", null))
 	return .
 
 /* MAINS */

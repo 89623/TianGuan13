@@ -182,7 +182,7 @@
 	if(!isnull(id_card))
 		return ITEM_INTERACT_BLOCKING
 
-	say("Prisoner ID linked to locker.")
+	say(LANG("obj.81325c24", null))
 	id_card = WEAKREF(tool)
 	name = "genpop storage locker - [astype(tool, /obj/item/card/id/advanced/prisoner).registered_name]"
 	return ITEM_INTERACT_SUCCESS

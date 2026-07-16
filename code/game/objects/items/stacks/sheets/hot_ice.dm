@@ -10,5 +10,5 @@
 	merge_type = /obj/item/stack/sheet/hot_ice
 
 /obj/item/stack/sheet/hot_ice/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] begins licking \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide(LANG("obj.9bb5c4fb", list(user, src, user.p_theyre()))))
 	return FIRELOSS//dont you kids know that stuff is toxic?
