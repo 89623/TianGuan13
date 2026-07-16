@@ -319,7 +319,8 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 			continue
 		// NOVA EDIT START - I18N - Copy + 显示名反查（payload 与持久 special_networks 共享引用，
 		// 直接改会被 P1 连带污染原表；故复制内层 dict 再反查 fax_name 显示名，act 用 fax_id 不受影响）
-		var/list/net = special_networks[key].Copy()
+		var/list/network_entry = special_networks[key] // 显式 /list 变量，避免在无类型下标上直接 .Copy()（DreamChecker static type 警告）
+		var/list/net = network_entry.Copy()
 		net["fax_name"] = lang_localize_display_name(net["fax_name"])
 		special_networks_data += list(net)
 		// NOVA EDIT END
