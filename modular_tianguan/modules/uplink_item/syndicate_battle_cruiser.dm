@@ -1,6 +1,6 @@
 /datum/uplink_item/badass/syndicate_battle_cruiser
 	name = "辛迪加独立旅传呼密信"
-	desc = "团结联盟共和国的死敌叛军独立旅的呼叫工具，如果这里需要被彻底摧毁的话。那么我们只需在通讯控制台使用这个，然后静候毁灭到来。"
+	desc = "团结联盟共和国的死敌叛军独立旅的呼叫工具，如果这里需要被彻底摧毁的话。那么我们只需在通讯控制台使用这个，然后静候毁灭到来。注意:我们的战列巡洋舰无法登录冰月"
 	item = /obj/item/storage/box/syndie_kit/syndicate_battle_cruiser
 	cost = 140
 	cant_discount = TRUE
