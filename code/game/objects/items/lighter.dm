@@ -94,7 +94,7 @@
 		return
 	set_lit(FALSE)
 
-/obj/item/lighter/suicide_act(mob/living/carbon/user)
+/obj/item/lighter/suicide_act(mob/living/user)
 	if (lit)
 		user.visible_message(span_suicide(LANG("obj.eb8d55fc", list(user, src, user.p_their(), user.p_theyre()))))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)

@@ -92,6 +92,6 @@
 		balloon_alert(src, LANG("mob.b10966c3", null))
 	remove_offsets(FEEDING_OFFSET)
 	layer = initial(layer)
-	buckled.unbuckle_mob(src,force=TRUE)
+	INVOKE_ASYNC(buckled, TYPE_PROC_REF(/atom/movable, unbuckle_mob), src, force=TRUE)
 
 #undef FEEDING_OFFSET

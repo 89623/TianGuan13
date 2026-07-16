@@ -30,8 +30,8 @@
 	/// Signal range, see /datum/radio_frequency/proc/post_signal
 	var/range = 0 //Everywhere
 
-/obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide(LANG("obj.ff0940e6", list(user, src, user.p_they()))))
+/obj/item/assembly/signaler/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	moveToNullspace()
 	suicider = user.mind

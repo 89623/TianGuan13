@@ -89,7 +89,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		QDEL_NULL(current_ticket)
 	if(LAZYLEN(tickets))
 		current_ticket = tickets[1]
-		current_number++ //Increment the one we're serving.
+		current_number = current_ticket.number //Destroyed tickets are removed from the queue, so the next ticket's number may have skipped ahead.
 		playsound(src, 'sound/announcer/announcement/announce_dig.ogg', 50, FALSE)
 		say(LANG("obj.9685e9bf", list(current_ticket)))
 		if(!(obj_flags & EMAGGED))

@@ -826,6 +826,9 @@
 				span_userdanger(LANG("mob.e2265f52", list(knocked_down ? "'re knocked down" : " resist falling down", name))), span_hear(LANG("mob.ec85c958", list(knocked_down ? "followed by a loud thud!" : ""))), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger(LANG("mob.5523666e", list(target.name, knocked_down ? ", knocking [target.p_them()] down" : ""))))
 			log_combat(src, target, "shoved", "[knocked_down ? "knocking them down[weapon ? " with [weapon]" : ""]" : ""]")
+			if(ishuman(target))
+				var/mob/living/carbon/human/human_target = target
+				human_target.force_say()
 			return
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS

@@ -37,8 +37,8 @@
 		icon_state = icon_empty
 	return ..()
 
-/obj/item/reagent_containers/condiment/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide(LANG("obj.d1ee45de", list(user, src, user.p_they()))))
+/obj/item/reagent_containers/condiment/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!"))
 	return OXYLOSS
 
 /obj/item/reagent_containers/condiment/proc/try_eat(atom/target, mob/living/user)

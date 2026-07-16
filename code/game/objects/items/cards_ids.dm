@@ -36,8 +36,8 @@
 	///What is our honorific name/title combo to be displayed?
 	var/honorific_title
 
-/obj/item/card/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide(LANG("obj.84d2df68", list(user, user.p_their(), src, user.p_theyre()))))
+/obj/item/card/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/card/update_overlays()

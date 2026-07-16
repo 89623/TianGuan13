@@ -121,11 +121,9 @@
 
 	switch(sprite_datum.color_src)
 		if(USE_MATRIXED_COLORS)
-			var/list/color_layer_names = get_color_layer_names(build_icon_state_nova(gender, layer_index))
+			for (var/color_index in sprite_datum.color_layer_names)
 
-			for (var/color_index in color_layer_names)
-
-				var/mutable_appearance/color_layer_image = get_singular_image(build_icon_state_nova(gender, layer_index, color_layer_names[color_index]), layer_index, layer_real, owner, limb = limb)
+				var/mutable_appearance/color_layer_image = get_singular_image(build_icon_state_nova(gender, layer_index, sprite_datum.color_layer_names[color_index]), layer_index, layer_real, owner, limb = limb)
 				returned_images += color_layer_image
 
 				overlay_indexes_to_color += index
@@ -157,14 +155,6 @@
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
 	. += inner_color
-
-
-/**
- * Returns the color_layer_names of the sprite_datum associated with our datum.
- * Mainly here so that it can be overriden elsewhere to have other effects.
- */
-/datum/bodypart_overlay/mutant/proc/get_color_layer_names(icon_state_to_lookup)
-	return sprite_datum.color_layer_names
 
 
 /// Colors the given overlays list. Limb can be null.
@@ -267,15 +257,16 @@
  * there's going to be issues with how the emissives are generated, so it won't
  * add them if the limb is missing, somehow.
  */
-/datum/bodypart_overlay/mutant/proc/add_emissives(list/image/overlays, obj/item/bodypart/limb)
+/datum/bodypart_overlay/mutant/proc/add_emissives(list/mutable_appearance/overlays, obj/item/bodypart/limb)
 	if(!limb || !length(emissive_eligibility_by_color_index))
 		return overlays
 
-	var/list/image/emissives
+	var/list/mutable_appearance/emissives
 	var/max = min(MAX_MATRIXED_COLORS, length(overlays)) // only care about the first 3 indexes
 	for(var/index = 1 to max)
 		if(emissive_eligibility_by_color_index[index])
-			LAZYADD(emissives, emissive_appearance_copy(overlays[index], limb))
+			var/mutable_appearance/overlay = overlays[index]
+			LAZYADD(emissives, emissive_appearance(overlay.icon, overlay.icon_state, offset_spokesman = limb, layer = overlay.layer))
 
 	return emissives ? (overlays + emissives) : overlays
 

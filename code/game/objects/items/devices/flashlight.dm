@@ -116,7 +116,7 @@
 	attack_self(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
+/obj/item/flashlight/suicide_act(mob/living/user)
 	if (user.is_blind())
 		user.visible_message(span_suicide(LANG("obj.060d50ab", list(user, src, user.p_their(), user.p_theyre()))))
 		return SHAME
@@ -1016,7 +1016,7 @@
 		user.visible_message(span_notice(LANG("obj.494ae1d4", list(user, src))), span_notice(LANG("obj.e020fb1e", list(src))))
 		turn_on()
 
-/obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
+/obj/item/flashlight/glowstick/suicide_act(mob/living/user)
 	if(!get_fuel())
 		user.visible_message(span_suicide(LANG("obj.bab026cd", list(user, src, user.p_their()))))
 		return SHAME

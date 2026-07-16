@@ -1,5 +1,5 @@
 // THIS IS A NOVA SECTOR UI FILE
-import { useMemo, useRef, useState } from 'react';
+import { ComponentProps, useMemo, useRef, useState} from 'react';
 import { useBackend } from 'tgui/backend';
 import {
   Box,
@@ -72,21 +72,16 @@ const HoverText = (props: { text: string; children: any }) => {
 
 // The dropdown components with fancy HoverText
 
-// 对象选项 {value, displayText}：value 保持英文标识符(回传/匹配用)，displayText 可被 i18n 翻显示。
-// 裸字符串选项不再被 auto-localize 翻译(见 i18n/localize.ts)，故需要中文显示又要正确回传的下拉
-// (强化/植入,选项名已进翻译目录)必须用对象选项；纯标识/禁用占位项仍可用裸字符串。
-type LabeledDropdownOption = string | { value: string; displayText: string };
-
 const LabeledDropdown = (
   props: {
     label: string;
-    options: LabeledDropdownOption[];
+    options: ComponentProps<typeof Dropdown>['options'];
     selected: string | undefined;
-    onSelected: (value: string) => void;
+    onSelected: (value: any) => void;
   } & Partial<{
+    maxItems: number;
     displayText: string;
     searchInput: boolean;
-    maxItems: number;
     tooltip: string;
     disabled: boolean;
   }>,
@@ -99,9 +94,9 @@ const LabeledDropdown = (
       displayText={props.displayText}
       disabled={props.disabled}
       onSelected={props.onSelected}
-      //maxItems={props.maxItems}
-      //searchInput={props.searchInput}
-      //styledInput
+      maxItems={props.maxItems}
+      searchInput={props.searchInput}
+      styledInput
     />
   );
   return (
@@ -276,15 +271,12 @@ const Markings = (props: {
               <Stack.Item grow style={{ minWidth: 0, overflow: 'hidden' }}>
                 <Dropdown
                   width="100%"
-                  options={marking_choices.map((name) => ({
-                    value: name,
-                    displayText: name,
-                  }))}
+                  options={marking_choices}
                   selected={marking.name}
                   displayText={marking.name}
-                  //maxItems={7}
-                  //searchInput
-                  //styledInput
+                  maxItems={7}
+                  searchInput
+                  styledInput
                   onSelected={(value) =>
                     act('change_marking', {
                       bodypart_slot: body_zone,
@@ -396,29 +388,26 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
               selected="Not available"
               displayText={'Not available'}
               disabled
-              //searchInput
-              //maxItems={7}
+              searchInput
+              maxItems={7}
               onSelected={() => {}}
             />
           ) : (
             <LabeledDropdown
               label="Augmentation:"
-              options={aug_options.map((aug) => ({
-                value: aug.path ?? '',
-                displayText: displayName(aug),
-              }))}
+              options={aug_options.map((aug) => displayName(aug))}
               selected={
-                limb.selectedAug ? (limb.selectedAug.path ?? '') : undefined
+                limb.selectedAug ? displayName(limb.selectedAug) : undefined
               }
               displayText={
                 limb.selectedAug ? displayName(limb.selectedAug) : undefined
               }
               tooltip={limb.selectedAug?.extra_info}
-              //searchInput
-              //maxItems={7}
-              onSelected={(value) => {
+              searchInput
+              maxItems={7}
+              onSelected={(name) => {
                 const option = aug_options.find(
-                  (aug) => (aug.path ?? '') === value,
+                  (aug) => displayName(aug) === name,
                 );
                 if (option?.path === limb.selectedAug?.path) return;
                 if (
@@ -444,18 +433,15 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
                 options={['No available styles']}
                 selected="No available styles"
                 displayText="No available styles"
-                //searchInput
-                //maxItems={7}
+                searchInput
+                maxItems={7}
                 disabled
                 onSelected={() => {}}
               />
             ) : (
               <LabeledDropdown
                 label="Style:"
-                options={available_styles.map((style) => ({
-                  value: style.name,
-                  displayText: style.name,
-                }))}
+                options={available_styles.map((style) => style.name)}
                 selected={limb.chosen_style?.name ?? 'None'}
                 displayText={limb.chosen_style?.name ?? 'None'}
                 searchInput
@@ -472,13 +458,10 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
             (limb.has_implant ? (
               <LabeledDropdown
                 label="Implant slot:"
-                options={implant_options.map((aug) => ({
-                  value: aug.path ?? '',
-                  displayText: displayName(aug),
-                }))}
+                options={implant_options.map((aug) => displayName(aug))}
                 selected={
                   limb.selectedImplant
-                    ? (limb.selectedImplant.path ?? '')
+                    ? displayName(limb.selectedImplant)
                     : undefined
                 }
                 displayText={
@@ -486,12 +469,12 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
                     ? displayName(limb.selectedImplant)
                     : undefined
                 }
-                //searchInput
-                //maxItems={7}
+                searchInput
+                maxItems={7}
                 tooltip={limb.selectedImplant?.extra_info}
-                onSelected={(value) => {
+                onSelected={(name) => {
                   const option = implant_options.find(
-                    (aug) => (aug.path ?? '') === value,
+                    (aug) => displayName(aug) === name,
                   );
                   if (
                     showCost &&
@@ -514,8 +497,8 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
                 options={['None available']}
                 selected="None available"
                 displayText="None available"
-                //searchInput
-                //maxItems={7}
+                searchInput
+                maxItems={7}
                 disabled
                 onSelected={() => {}}
               />
@@ -548,13 +531,10 @@ const InternalImplantSection = (props: { internal_implant: AugmentData }) => {
       >
         <LabeledDropdown
           label="Implant:"
-          options={aug_options.map((aug) => ({
-            value: aug.path ?? '',
-            displayText: displayName(aug),
-          }))}
+          options={aug_options.map(displayName)}
           selected={
             internal_implant.selectedAug
-              ? (internal_implant.selectedAug.path ?? '')
+              ? displayName(internal_implant.selectedAug)
               : undefined
           }
           displayText={
@@ -562,12 +542,10 @@ const InternalImplantSection = (props: { internal_implant: AugmentData }) => {
               ? displayName(internal_implant.selectedAug)
               : undefined
           }
-          //searchInput
-          //maxItems={7}
-          onSelected={(value) => {
-            const option = aug_options.find(
-              (aug) => (aug.path ?? '') === value,
-            );
+          searchInput
+          maxItems={7}
+          onSelected={(name) => {
+            const option = aug_options.find((aug) => displayName(aug) === name);
             if (
               showCost &&
               balance -
@@ -970,9 +948,9 @@ export const LimbsPage = ({
                                 options={columns.filteredMarkingPresets}
                                 selected={null}
                                 placeholder="Apply a preset..."
-                                //maxItems={7}
-                                //searchInput
-                                //styledInput
+                                maxItems={7}
+                                searchInput
+                                styledInput
                                 onSelected={(value) => {
                                   if (!hasWarnedRef.current)
                                     setPendingPreset(value);

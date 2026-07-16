@@ -59,7 +59,7 @@
 	grant_actions_by_list(innate_actions)
 
 	AddElement(/datum/element/simple_flying)
-	var/list/food_types = string_list(list(/obj/item/food/grown/carrot))
+	var/list/food_types = string_list(list(/obj/item/food/grown/carrotlike/carrot))
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	on_hit_overlay = mutable_appearance(icon, "[icon_state]_crying")
@@ -72,7 +72,7 @@
 	if(!proximity_flag)
 		return
 
-	if(istype(attack_target, /obj/item/food/grown/carrot))
+	if(istype(attack_target, /obj/item/food/grown/carrotlike/carrot))
 		adjust_brute_loss(-5)
 		to_chat(src, span_warning(LANG("mob.7fc26a77", list(attack_target))))
 		qdel(attack_target)

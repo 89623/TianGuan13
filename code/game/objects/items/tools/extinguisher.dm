@@ -214,7 +214,7 @@
 /obj/item/extinguisher/advanced/empty
 	starting_water = FALSE
 
-/obj/item/extinguisher/suicide_act(mob/living/carbon/user)
+/obj/item/extinguisher/suicide_act(mob/living/user)
 	if (!safety && (reagents.total_volume >= 1))
 		user.visible_message(span_suicide(LANG("obj.9fa8a972", list(user, user.p_their(), user.p_theyre()))))
 		interact_with_atom(user, user)

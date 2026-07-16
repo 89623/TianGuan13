@@ -13,7 +13,7 @@
 /datum/status_effect/grouped/hooked/proc/still_exists()
 	return !QDELETED(src)
 
-/datum/status_effect/grouped/hooked/source_added(datum/beam/fishing_line/source)
+/datum/status_effect/grouped/hooked/source_added(datum/beam/held/source)
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_fishing_line_deleted))
 
 /datum/status_effect/grouped/hooked/proc/on_fishing_line_deleted(datum/source)
@@ -37,8 +37,8 @@
 	var/datum/status_effect/grouped/hooked/effect = owner.has_status_effect(attached_effect.type)
 	if(!effect.try_unhook())
 		return
-	owner.balloon_alert(owner, LANG("atom.b5eb7b3d", null))
-	var/datum/beam/fishing_line/rand_source = pick(effect.sources)
+	owner.balloon_alert(owner, "hook removed")
+	var/datum/beam/held/rand_source = pick(effect.sources)
 	qdel(rand_source)
 
 ///Version used by the jawed fishing hook, which also applies slowdown

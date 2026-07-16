@@ -15,8 +15,8 @@
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 	assembly_flags = ASSEMBLY_NO_DUPLICATES
 
-/obj/item/assembly/igniter/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide(LANG("obj.f259d604", list(user, user.p_them(), src, user.p_theyre()))))
+/obj/item/assembly/igniter/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is trying to ignite [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.ignite_mob()
 	return FIRELOSS
 
