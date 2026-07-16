@@ -32,6 +32,7 @@
 	networks = list(CAMERANET_NETWORK_SS13)
 	circuit = /obj/item/circuitboard/computer/xenobiology
 
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/xenobio")
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
 
@@ -268,7 +269,7 @@
 		return
 
 	var/cap = CONFIG_GET(number/monkeycap)
-	if (LAZYLEN(SSmobs.cubemonkeys) < cap)
+	if (LAZYLEN(SSmobs.cubemonkeys) >= cap)
 		to_chat(user, span_warning(LANG("obj.d675af0d", list(cap))))
 		return
 

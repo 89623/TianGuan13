@@ -43,7 +43,7 @@
 /obj/item/light/proc/is_intact()
 	return status == LIGHT_OK
 
-/obj/item/light/suicide_act(mob/living/carbon/user)
+/obj/item/light/suicide_act(mob/living/user)
 	if (status == LIGHT_BROKEN)
 		user.visible_message(span_suicide(LANG("obj.e72a1256", list(user, user.p_them(), src, user.p_theyre()))))
 	else

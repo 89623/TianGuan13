@@ -50,7 +50,7 @@
 /datum/armor/clothing_shoes
 	bio = 50
 
-/obj/item/clothing/shoes/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/shoes/suicide_act(mob/living/user)
 	if(prob(50))
 		user.visible_message(span_suicide(LANG("obj.724703b3", list(user, src, user.p_theyre()))))
 		var/obj/item/bodypart/leg/left = user.get_bodypart(BODY_ZONE_L_LEG)

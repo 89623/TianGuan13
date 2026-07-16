@@ -14,7 +14,7 @@
 	desc = "A keyring with a small steel key, and a rubber stun baton accessory."
 	icon_state = "keysec"
 
-/obj/item/key/security/suicide_act(mob/living/carbon/user)
+/obj/item/key/security/suicide_act(mob/living/user)
 	if(!user.emote("spin")) //In the off chance that someone attempts this suicide while under the effects of mime's bane they deserve the silliness.
 		user.visible_message(span_suicide(LANG("obj.5ae8d40f", list(user, src, user.p_their(), user.p_their(), user.p_theyre(), user.p_they()))))
 		playsound(src, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
@@ -44,12 +44,8 @@
 	embed_chance = 30
 	fall_chance = 70
 
-/obj/item/key/janitor/suicide_act(mob/living/carbon/user)
+/obj/item/key/janitor/suicide_act(mob/living/user)
 	switch(user.mind?.get_skill_level(/datum/skill/cleaning))
-		if(SKILL_LEVEL_NONE to SKILL_LEVEL_NOVICE) //Their mind is too weak to ascend as a janny
-			user.visible_message(span_suicide(LANG("obj.b0e75cae", list(user, src, user.p_their(), user.p_theyre()))))
-			user.gib(DROP_ALL_REMAINS)
-			return MANUAL_SUICIDE
 		if(SKILL_LEVEL_APPRENTICE to SKILL_LEVEL_JOURNEYMAN) //At least they tried
 			user.visible_message(span_suicide(LANG("obj.4f12769c", list(user, src, user.p_their(), user.p_theyre()))))
 			user.AddElement(/datum/element/cleaning)
@@ -71,6 +67,11 @@
 				addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? "#a245bb" : "#7a7d82", ADMIN_COLOUR_PRIORITY), i)
 			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 151)
 			return MANUAL_SUICIDE
+
+	//Their mind is too weak to ascend as a janny
+	user.visible_message(span_suicide(LANG("obj.b0e75cae", list(user, src, user.p_their(), user.p_theyre()))))
+	user.gib(DROP_ALL_REMAINS)
+	return MANUAL_SUICIDE
 
 /obj/item/key/proc/manual_suicide(mob/living/user)
 	if(user)

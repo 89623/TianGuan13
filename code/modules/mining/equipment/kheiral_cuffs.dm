@@ -110,9 +110,10 @@
 	. = ..()
 	. += emissive_appearance(icon, "strand_light", src, alpha = src.alpha)
 
-/obj/item/clothing/accessory/kheiral_cuffs/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/accessory/kheiral_cuffs/suicide_act(mob/living/user)
 	if(!ishuman(user))
-		return
+		user.visible_message(span_suicide(LANG("obj.4b8ee9fb", list(user, src, user.p_theyre()))))
+		return OXYLOSS
 
 	var/mob/living/carbon/human/victim = user
 	victim.visible_message(span_suicide(LANG("obj.4b8ee9fb", list(user, src, user.p_theyre()))))

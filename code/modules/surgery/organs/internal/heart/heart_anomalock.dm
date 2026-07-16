@@ -127,8 +127,6 @@
 	if(!core)
 		return
 
-	owner.adjust_blood_volume(5 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
-
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)
 
@@ -174,6 +172,7 @@
 	balloon_alert(user, LANG("obj.1a2673f9", null))
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 	add_organ_trait(TRAIT_SHOCKIMMUNE)
+	blood_regeneration_multiplier = 21
 	update_icon_state()
 	return ITEM_INTERACT_SUCCESS
 
@@ -205,6 +204,7 @@
 	. = ..()
 	core = new /obj/item/assembly/signaler/anomaly/flux(src)
 	add_organ_trait(TRAIT_SHOCKIMMUNE)
+	blood_regeneration_multiplier = 21
 	update_icon_state()
 
 /datum/status_effect/voltaic_overdrive

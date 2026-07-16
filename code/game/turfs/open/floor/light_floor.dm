@@ -130,21 +130,31 @@
 	currentcolor = choice
 	update_appearance()
 
-/turf/open/floor/light/attackby(obj/item/C, mob/user, list/modifiers)
-	if(..())
-		return
-	if(istype(C, /obj/item/light/bulb)) //only for light tiles
-		var/obj/item/light/bulb/B = C
-		if(B.status)/// check if broken
-			to_chat(user, span_danger(LANG("turf.e8716b7e", null)))
-			return
-		if(state && user.temporarilyRemoveItemFromInventory(C))
-			qdel(C)
-			state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
-			update_appearance()
-			to_chat(user, span_notice(LANG("turf.03f007a9", null)))
-		else
-			to_chat(user, span_notice(LANG("turf.5cea176f", null)))
+/turf/open/floor/light/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
+
+	if(!istype(tool, /obj/item/light/bulb)) //only for light tiles
+		return .
+
+	if(astype(tool, /obj/item/light/bulb).status)/// check if broken
+		to_chat(user, span_danger(LANG("turf.e8716b7e", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!state)
+		to_chat(user, span_notice(LANG("turf.5cea176f", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		return ITEM_INTERACT_BLOCKING
+
+	qdel(tool)
+	state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
+	update_appearance()
+	to_chat(user, span_notice(LANG("turf.03f007a9", null)))
+	return ITEM_INTERACT_SUCCESS
+
 
 /turf/open/floor/light/emp_act(severity)
 	. = ..()

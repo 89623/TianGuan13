@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	fire = 50
 	acid = 100
 
-/obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
+/obj/item/stack/sheet/glass/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.158c891e", list(user, user.p_their(), src, user.p_theyre()))))
 	return BRUTELOSS
 

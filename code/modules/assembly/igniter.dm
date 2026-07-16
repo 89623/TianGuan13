@@ -15,7 +15,7 @@
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 	assembly_flags = ASSEMBLY_NO_DUPLICATES
 
-/obj/item/assembly/igniter/suicide_act(mob/living/carbon/user)
+/obj/item/assembly/igniter/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.f259d604", list(user, user.p_them(), src, user.p_theyre()))))
 	user.ignite_mob()
 	return FIRELOSS

@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks
 /datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)
-	raptor.can_be_held = TRUE
+	raptor.update_holdability(TRUE)
 	raptor.density = FALSE
 	raptor.move_resist = MOVE_RESIST_DEFAULT
 	raptor.held_w_class = WEIGHT_CLASS_BULKY
@@ -282,7 +282,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		else
 			user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
 		user.AddElement(/datum/element/forced_gravity, 0)
-		passtable_on(user, REF(src))
+		ADD_TRAIT(user, TRAIT_PASSTABLE, REF(src))
 		to_chat(user, span_notice(LANG("obj.538e9a65", list(held_mob, held_mob.p_their(), struggling ? ", struggling to keep you up in the air" : ""))))
 		user.set_resting(FALSE, TRUE)
 		user.refresh_gravity()
@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
 	user.RemoveElement(/datum/element/forced_gravity, 0)
-	passtable_off(user, REF(src))
+	REMOVE_TRAIT(user, TRAIT_PASSTABLE, REF(src))
 	to_chat(user, span_notice(LANG("obj.19040238", list(struggling ? ", [held_mob] on your back breathing out a sigh of releif" : ""))))
 	user.refresh_gravity()
 	STOP_PROCESSING(SSprocessing, src)

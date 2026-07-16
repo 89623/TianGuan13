@@ -41,7 +41,7 @@
 		QDEL_NULL(paranoia)
 	paranoia = new()
 
-	RegisterSignal(user, COMSIG_HUMAN_SUICIDE_ACT, PROC_REF(call_suicide))
+	RegisterSignal(user, COMSIG_LIVING_SUICIDE_ACT, PROC_REF(call_suicide))
 
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, span_warning(LANG("obj.ed5d5eb4", null)))
@@ -59,7 +59,7 @@
 	. = ..()
 	if(paranoia)
 		QDEL_NULL(paranoia)
-	UnregisterSignal(user, COMSIG_HUMAN_SUICIDE_ACT)
+	UnregisterSignal(user, COMSIG_LIVING_SUICIDE_ACT)
 
 /// When the foilhat is drained an anti-magic charge.
 /obj/item/clothing/head/costume/foilhat/proc/drain_antimagic(mob/user)
@@ -73,7 +73,7 @@
 	if(!isliving(loc) || !paranoia)
 		return
 	var/mob/living/target = loc
-	UnregisterSignal(target, COMSIG_HUMAN_SUICIDE_ACT)
+	UnregisterSignal(target, COMSIG_LIVING_SUICIDE_ACT)
 	if(target.get_item_by_slot(ITEM_SLOT_HEAD) != src)
 		return
 	QDEL_NULL(paranoia)

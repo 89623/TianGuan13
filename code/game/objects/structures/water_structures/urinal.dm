@@ -52,21 +52,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		return
 	return ..()
 
-/obj/structure/urinal/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(exposed)
-		if(hidden_item)
-			to_chat(user, span_warning(LANG("obj.7afad231", null)))
-			return
-		if(attacking_item.w_class > WEIGHT_CLASS_TINY)
-			to_chat(user, span_warning(LANG("obj.b28ad6a7", list(attacking_item))))
-			return
-		if(!user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_warning(LANG("obj.b02cbe56", list(attacking_item))))
-			return
-		hidden_item = attacking_item
-		to_chat(user, span_notice(LANG("obj.0bc0520a", list(attacking_item))))
-		return
-	return ..()
+/obj/structure/urinal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!exposed)
+		return NONE
+
+	if(hidden_item)
+		to_chat(user, span_warning(LANG("obj.7afad231", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.w_class > WEIGHT_CLASS_TINY)
+		to_chat(user, span_warning(LANG("obj.b28ad6a7", list(tool))))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning(LANG("obj.b02cbe56", list(tool))))
+		return ITEM_INTERACT_BLOCKING
+
+	hidden_item = tool
+	to_chat(user, span_notice(LANG("obj.0bc0520a", list(tool))))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/urinal/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

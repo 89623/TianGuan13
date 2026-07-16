@@ -24,7 +24,7 @@
 		set_custom_materials(list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT))
 	update_appearance()
 
-/obj/item/storage/box/suicide_act(mob/living/carbon/user)
+/obj/item/storage/box/suicide_act(mob/living/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(myhead)
 		user.visible_message(span_suicide(LANG("obj.7154be6d", list(user, user.p_their(), src, user.p_theyre()))))

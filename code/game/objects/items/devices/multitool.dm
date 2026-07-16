@@ -119,7 +119,7 @@
 	if (!QDELETED(our_hud))
 		INVOKE_ASYNC(our_hud, TYPE_PROC_REF(/datum/hud, show_hud), our_hud.hud_version)
 
-/obj/item/multitool/suicide_act(mob/living/carbon/user)
+/obj/item/multitool/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.a409b30b", list(user, src, user.p_their(), user.p_theyre(), user.p_their()))))
 	return OXYLOSS//there's a reason it wasn't recommended by doctors
 

@@ -79,6 +79,19 @@
 		return FALSE
 	display_statistics = display_stats == "Yes"
 
+	if (!display_statistics)
+		var/set_print_result = tgui_alert(
+			vote_creator,
+			"Should the vote tally be public after the vote is concluded?",
+			"Print vote tally after vote?",
+			list("Yes", "No"),
+		)
+
+		if (isnull(set_print_result))
+			return FALSE
+
+		print_results = set_print_result == "Yes"
+
 	override_question = tgui_input_text(vote_creator, LANG("datum.499af380", null), LANG("datum.43aff5cd", null))
 	if(!override_question)
 		return FALSE

@@ -1385,7 +1385,8 @@
 	if(!can_bleed())
 		to_chat(src, span_notice(LANG("mob.03e6c063", null)))
 		return
-	head.adjustBleedStacks(5)
+	var/add_stacks = HAS_TRAIT(src, TRAIT_BLOOD_FOUNTAIN) ? 7 : 5
+	head.adjustBleedStacks(add_stacks)
 	visible_message(span_notice(LANG("mob.7ed8b6c7", list(src))), span_warning(LANG("mob.537dcbbc", null)))
 
 /mob/living/carbon/check_hit_limb_zone_name(hit_zone)
