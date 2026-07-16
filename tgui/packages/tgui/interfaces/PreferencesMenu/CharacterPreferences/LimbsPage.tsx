@@ -1,5 +1,5 @@
 // THIS IS A NOVA SECTOR UI FILE
-import { ComponentProps, useMemo, useRef, useState} from 'react';
+import { type ComponentProps, useMemo, useRef, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import {
   Box,
@@ -72,6 +72,11 @@ const HoverText = (props: { text: string; children: any }) => {
 
 // The dropdown components with fancy HoverText
 
+// i18n：augment / style / implant / marking 名等标识符耦合显示名走**对象选项**
+// `{value: 英文, displayText: 英文}`——value 保持英文标识符(onSelected/selected/act 匹配用)，
+// displayText 由 tgui/i18n jsx-runtime 按英文查目录自动翻中文显示。裸字符串选项**一律不翻**
+// (见 i18n/localize.ts localizeOption)，故需要中文显示又要正确回传的下拉必须用对象选项。
+// 上游 #7625 把这些下拉重写成裸字符串 + 可搜索(searchInput 保留)，此处重新套回对象选项。
 const LabeledDropdown = (
   props: {
     label: string;
@@ -271,7 +276,10 @@ const Markings = (props: {
               <Stack.Item grow style={{ minWidth: 0, overflow: 'hidden' }}>
                 <Dropdown
                   width="100%"
-                  options={marking_choices}
+                  options={marking_choices.map((name) => ({
+                    value: name,
+                    displayText: name,
+                  }))}
                   selected={marking.name}
                   displayText={marking.name}
                   maxItems={7}
@@ -395,7 +403,10 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
           ) : (
             <LabeledDropdown
               label="Augmentation:"
-              options={aug_options.map((aug) => displayName(aug))}
+              options={aug_options.map((aug) => ({
+                value: displayName(aug),
+                displayText: displayName(aug),
+              }))}
               selected={
                 limb.selectedAug ? displayName(limb.selectedAug) : undefined
               }
@@ -441,7 +452,10 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
             ) : (
               <LabeledDropdown
                 label="Style:"
-                options={available_styles.map((style) => style.name)}
+                options={available_styles.map((style) => ({
+                  value: style.name,
+                  displayText: style.name,
+                }))}
                 selected={limb.chosen_style?.name ?? 'None'}
                 displayText={limb.chosen_style?.name ?? 'None'}
                 searchInput
@@ -458,7 +472,10 @@ const BodypartAugmentSection = (props: { limb: BodypartData }) => {
             (limb.has_implant ? (
               <LabeledDropdown
                 label="Implant slot:"
-                options={implant_options.map((aug) => displayName(aug))}
+                options={implant_options.map((aug) => ({
+                  value: displayName(aug),
+                  displayText: displayName(aug),
+                }))}
                 selected={
                   limb.selectedImplant
                     ? displayName(limb.selectedImplant)
@@ -531,7 +548,10 @@ const InternalImplantSection = (props: { internal_implant: AugmentData }) => {
       >
         <LabeledDropdown
           label="Implant:"
-          options={aug_options.map(displayName)}
+          options={aug_options.map((aug) => ({
+            value: displayName(aug),
+            displayText: displayName(aug),
+          }))}
           selected={
             internal_implant.selectedAug
               ? displayName(internal_implant.selectedAug)
