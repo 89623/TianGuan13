@@ -98,12 +98,16 @@ SUBSYSTEM_DEF(air)
 
 	// NOVA EDIT ADDITION START - i18n - gas 名/描述运行时整串反查（meta_gas_info 是 GLOBAL_LIST_INIT，
 	// 早于 i18n_cache 不能在 meta_gas_list 内反查；放 SS Init 时 i18n_cache 已就绪。覆盖单词类 gas 名）
+	// 布局注意：meta_gas_info 是 [META_GAS_* 常量][gas_path] 的数字索引外层（见 meta_gas_list()），
+	// 不是 [gas_path][META_GAS_*]——按 gas_path 遍历外层会拿到内层 list 并 runtime。
 	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
-		for(var/gas_path in GLOB.meta_gas_info)
-			var/list/gas_info = GLOB.meta_gas_info[gas_path]
-			gas_info[META_GAS_NAME] = lang_reverse_text(gas_info[META_GAS_NAME])
-			if(gas_info[META_GAS_DESC])
-				gas_info[META_GAS_DESC] = lang_reverse_text(gas_info[META_GAS_DESC])
+		var/list/gas_names = GLOB.meta_gas_info[META_GAS_NAME]
+		for(var/gas_path in gas_names)
+			gas_names[gas_path] = lang_reverse_text(gas_names[gas_path])
+		var/list/gas_descs = GLOB.meta_gas_info[META_GAS_DESC]
+		for(var/gas_path in gas_descs)
+			if(gas_descs[gas_path])
+				gas_descs[gas_path] = lang_reverse_text(gas_descs[gas_path])
 	// NOVA EDIT ADDITION END
 
 	setup_allturfs()
