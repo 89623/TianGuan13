@@ -73,9 +73,7 @@
  */
 /obj/item/inducer/proc/examine_hints(mob/living/user)
 	PROTECTED_PROC(TRUE)
-/* // NOVA EDIT REMOVAL START - i18n - EXAMINE_HINT() now calls impure lang_reverse_text() (CN reverse-lookup), so this proc can no longer be pure
-	SHOULD_BE_PURE(TRUE)
-*/ // NOVA EDIT REMOVAL END
+	// NOVA EDIT REMOVAL - i18n - ORIGINAL: SHOULD_BE_PURE(TRUE) - EXAMINE_HINT() 现在调不纯的 lang_reverse_text()（中文反查），此 proc 不再纯
 
 	. = list()
 
