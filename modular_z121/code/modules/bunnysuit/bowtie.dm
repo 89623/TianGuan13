@@ -104,7 +104,7 @@
 	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))
 		return
 	if(alternate_worn_layer)
-		. += undershirt.accessory_overlay
+		. += undershirt.get_accessory_overlays() // 上游把 var/accessory_overlay 换成 get_accessory_overlays()
 
 //ALL BUNNY STUFF BY DimWhat OF MONKEESTATION
 
