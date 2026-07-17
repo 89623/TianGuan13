@@ -20,7 +20,7 @@
 /datum/armor/mask_breath
 	bio = 50
 
-/obj/item/clothing/mask/breath/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/mask/breath/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.47ea391f", list(user, src, user.p_their(), user.p_theyre()))))
 	return OXYLOSS
 

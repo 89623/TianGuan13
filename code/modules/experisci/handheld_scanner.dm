@@ -34,7 +34,7 @@
 		experiment_signals = handheld_signals, \
 	)
 
-/obj/item/experi_scanner/suicide_act(mob/living/carbon/user)
+/obj/item/experi_scanner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.5a9f7ad1", list(user, user.p_theyre()))))
 
 	forceMove(drop_location())
@@ -50,7 +50,7 @@
 	addtimer(CALLBACK(src, PROC_REF(make_meat_toilet), user), 5 SECONDS)
 	return MANUAL_SUICIDE
 
-/obj/item/experi_scanner/proc/make_meat_toilet(mob/living/carbon/user)
+/obj/item/experi_scanner/proc/make_meat_toilet(mob/living/user)
 	///The toilet we're about to unleash unto this cursed plane of existence
 	new /obj/structure/toilet/greyscale/flesh (drop_location(), user) //the toilet's Initialize proc will handle the rest from here.
 

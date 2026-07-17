@@ -327,7 +327,7 @@
 	icon_angle = -45
 	custom_materials = null
 
-/obj/item/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
+/obj/item/knife/shiv/carrot/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.71f1b4b1", list(user, src, user.p_their(), user.p_theyre()))))
 	return BRUTELOSS
 

@@ -73,7 +73,7 @@
  */
 /obj/item/inducer/proc/examine_hints(mob/living/user)
 	PROTECTED_PROC(TRUE)
-	SHOULD_BE_PURE(TRUE)
+	// NOVA EDIT REMOVAL - i18n - ORIGINAL: SHOULD_BE_PURE(TRUE) - EXAMINE_HINT() 现在调不纯的 lang_reverse_text()（中文反查），此 proc 不再纯
 
 	. = list()
 

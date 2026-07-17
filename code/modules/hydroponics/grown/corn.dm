@@ -54,13 +54,14 @@
 /obj/item/grown/corncob/grind_results()
 	return list(/datum/reagent/cellulose = 10)
 
-/obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.get_sharpness())
-		to_chat(user, span_notice(LANG("obj.5d3a4a5f", list(W))))
-		new /obj/item/cigarette/pipe/cobpipe (user.loc)
-		qdel(src)
-	else
-		return ..()
+/obj/item/grown/corncob/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness())
+		return NONE
+
+	to_chat(user, span_notice(LANG("obj.5d3a4a5f", list(tool))))
+	new /obj/item/cigarette/pipe/cobpipe (user.loc)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 // Snapcorn
 /obj/item/seeds/corn/snapcorn

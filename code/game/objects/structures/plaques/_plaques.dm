@@ -83,37 +83,45 @@
 	atom_integrity = max_integrity
 	return TRUE
 
-/obj/structure/plaque/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/pen/fountain))
-		if(engraved)
-			to_chat(user, span_warning(LANG("obj.7bf1e20f", null)))
-			return
-		var/namechoice = tgui_input_text(user, LANG("obj.d3715416", null), LANG("obj.0ff4af90", null), max_length = MAX_NAME_LEN)
-		if(!namechoice)
-			return
-		var/descriptionchoice = tgui_input_text(user, LANG("obj.da9a22e1", null), LANG("obj.0ff4af90", null), max_length = MAX_PLAQUE_LEN)
-		if(!descriptionchoice)
-			return
-		if(!Adjacent(user)) //Make sure user is adjacent still
-			to_chat(user, span_warning(LANG("obj.3101dc73", null)))
-			return
-		user.visible_message(span_notice(LANG("obj.b0391894", list(user, src))), \
-			span_notice(LANG("obj.0bc8ab95", list(src))))
-		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
-			return
-		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
-		desc = LANG("obj.c063b6b9", list(descriptionchoice))
-		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
-		user.visible_message(span_notice(LANG("obj.17007a0b", list(user, src))), \
-			span_notice(LANG("obj.fb0654f4", list(src))))
-		return
-	if(istype(I, /obj/item/pen))
+/obj/structure/plaque/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/pen))
+		return NONE
+
+	if(!istype(tool, /obj/item/pen/fountain))
 		if(engraved)
 			to_chat(user, span_warning(LANG("obj.601a2c44", null)))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		to_chat(user, span_warning(LANG("obj.b7b09574", null))) //Go steal the Curator's.
-		return
-	return ..()
+		return ITEM_INTERACT_BLOCKING
+
+	if(engraved)
+		to_chat(user, span_warning(LANG("obj.7bf1e20f", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	var/namechoice = tgui_input_text(user, LANG("obj.d3715416", null), LANG("obj.0ff4af90", null), max_length = MAX_NAME_LEN)
+	if(!namechoice)
+		return ITEM_INTERACT_BLOCKING
+
+	var/descriptionchoice = tgui_input_text(user, LANG("obj.da9a22e1", null), LANG("obj.0ff4af90", null), max_length = MAX_PLAQUE_LEN)
+	if(!descriptionchoice)
+		return ITEM_INTERACT_BLOCKING
+
+	if(!Adjacent(user)) //Make sure user is adjacent still
+		to_chat(user, span_warning(LANG("obj.3101dc73", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice(LANG("obj.b0391894", list(user, src))), \
+						span_notice(LANG("obj.0bc8ab95", list(src))))
+	if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		return ITEM_INTERACT_BLOCKING
+
+	name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
+	desc = LANG("obj.c063b6b9", list(descriptionchoice))
+	engraved = TRUE //The plaque now has a name, description, and can't be altered again.
+	user.visible_message(span_notice(LANG("obj.17007a0b", list(user, src))), \
+						span_notice(LANG("obj.fb0654f4", list(src))))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/plaque //The item version of the above.
 	icon = 'icons/obj/signs.dmi'
@@ -156,37 +164,45 @@
 	return TRUE
 
 
-/obj/item/plaque/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers) //Same as part of the above, except for the item in hand instead of the structure.
-	if(istype(I, /obj/item/pen/fountain))
-		if(engraved)
-			to_chat(user, span_warning(LANG("obj.7bf1e20f", null)))
-			return
-		var/namechoice = tgui_input_text(user, LANG("obj.d3715416", null), LANG("obj.0ff4af90", null), max_length = MAX_NAME_LEN)
-		if(!namechoice)
-			return
-		var/descriptionchoice = tgui_input_text(user, LANG("obj.da9a22e1", null), LANG("obj.0ff4af90", null), max_length = MAX_PLAQUE_LEN)
-		if(!descriptionchoice)
-			return
-		if(!Adjacent(user)) //Make sure user is adjacent still
-			to_chat(user, span_warning(LANG("obj.3101dc73", null)))
-			return
-		user.visible_message(span_notice(LANG("obj.b0391894", list(user, src))), \
-			span_notice(LANG("obj.0bc8ab95", list(src))))
-		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
-			return
-		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
-		desc = LANG("obj.c063b6b9", list(descriptionchoice))
-		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
-		user.visible_message(span_notice(LANG("obj.17007a0b", list(user, src))), \
-			span_notice(LANG("obj.fb0654f4", list(src))))
-		return
-	if(istype(I, /obj/item/pen))
+/obj/item/plaque/item_interaction(mob/living/user, obj/item/tool, list/modifiers) //Same as part of the above, except for the item in hand instead of the structure.
+	if(!istype(tool, /obj/item/pen))
+		return NONE
+
+	if(!istype(tool, /obj/item/pen/fountain))
 		if(engraved)
 			to_chat(user, span_warning(LANG("obj.601a2c44", null)))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		to_chat(user, span_warning(LANG("obj.b7b09574", null))) //Go steal the Curator's.
-		return
-	return ..()
+		return ITEM_INTERACT_BLOCKING
+
+	if(engraved)
+		to_chat(user, span_warning(LANG("obj.7bf1e20f", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	var/namechoice = tgui_input_text(user, LANG("obj.d3715416", null), LANG("obj.0ff4af90", null), max_length = MAX_NAME_LEN)
+	if(!namechoice)
+		return ITEM_INTERACT_BLOCKING
+
+	var/descriptionchoice = tgui_input_text(user, LANG("obj.da9a22e1", null), LANG("obj.0ff4af90", null), max_length = MAX_PLAQUE_LEN)
+	if(!descriptionchoice)
+		return ITEM_INTERACT_BLOCKING
+
+	if(!Adjacent(user)) //Make sure user is adjacent still
+		to_chat(user, span_warning(LANG("obj.3101dc73", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice(LANG("obj.b0391894", list(user, src))), \
+						span_notice(LANG("obj.0bc8ab95", list(src))))
+	if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		return ITEM_INTERACT_BLOCKING
+
+	name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
+	desc = LANG("obj.c063b6b9", list(descriptionchoice))
+	engraved = TRUE //The plaque now has a name, description, and can't be altered again.
+	user.visible_message(span_notice(LANG("obj.17007a0b", list(user, src))), \
+						span_notice(LANG("obj.fb0654f4", list(src))))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iswallturf(interacting_with))

@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /datum/embedding/rods
 	embed_chance = 50
 
-/obj/item/stack/rods/suicide_act(mob/living/carbon/user)
+/obj/item/stack/rods/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.7675d3b7", list(user, src, user.p_their(), user.p_theyre()))))//it looks like theyre ur mum
 	return BRUTELOSS
 

@@ -60,3 +60,5 @@
 	closet_turf.visible_message(span_warning(LANG("datum.b85c37ba", list(scooby, closet))))
 	// If you run into a locker, you don't want to run out immediately
 	scooby.Immobilize(0.5 SECONDS)
+
+	return COMPONENT_INTERCEPT_BUMPED

@@ -15,7 +15,7 @@
 	dye_color = DYE_PRISONER
 	icon = 'icons/obj/weapons/restraints.dmi'
 
-/obj/item/restraints/suicide_act(mob/living/carbon/user)
+/obj/item/restraints/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.2a557471", list(user, user.p_them(), src, user.p_theyre()))))
 	return OXYLOSS
 

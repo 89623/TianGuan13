@@ -42,7 +42,7 @@
 		else if (spammer)
 			to_chat(spammer, span_warning(LANG("obj.d675af0d", list(cap))))
 	else
-		bananas = new(drop_location())
+		bananas = new spawned_mob(drop_location())
 
 	if (!QDELETED(bananas))
 		ADD_TRAIT(bananas, TRAIT_SPAWNED_MOB, INNATE_TRAIT)

@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	. = ..()
 	. += GLOB.metal_recipes
 
-/obj/item/stack/sheet/iron/suicide_act(mob/living/carbon/user)
+/obj/item/stack/sheet/iron/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.9e682343", list(user, user.p_them(), src, user.p_theyre()))))
 	return BRUTELOSS
 

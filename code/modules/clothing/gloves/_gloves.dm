@@ -41,7 +41,7 @@
 		transfer_blood = 0
 		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
-/obj/item/clothing/gloves/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/gloves/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.7c28fc00", list(src, user, user.p_their()))))
 	return OXYLOSS
 

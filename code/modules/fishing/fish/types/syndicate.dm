@@ -202,7 +202,7 @@
 	toolspeed -= bonus_malus * 0.1
 
 // you suicide like a real chainsaw
-/obj/item/fish/chainsawfish/suicide_act(mob/living/carbon/user)
+/obj/item/fish/chainsawfish/suicide_act(mob/living/user)
 	if(status == FISH_DEAD)
 		user.visible_message(span_suicide(LANG("obj.182337ec", list(user, src, user.p_their(), user.p_their(), user.p_theyre()))))
 		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)

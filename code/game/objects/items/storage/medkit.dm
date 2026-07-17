@@ -37,7 +37,7 @@
 	icon_state = "medkit"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
-/obj/item/storage/medkit/regular/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/regular/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.bc4862b6", list(user, user.p_them(), src, user.p_theyre()))))
 	return BRUTELOSS
 
@@ -152,7 +152,7 @@
 /obj/item/storage/medkit/fire/get_medbot_skin()
 	return "burn"
 
-/obj/item/storage/medkit/fire/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/fire/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.98d8895b", list(user, src, user.p_them(), user.p_theyre()))))
 	return FIRELOSS
 
@@ -176,7 +176,7 @@
 /obj/item/storage/medkit/toxin/get_medbot_skin()
 	return "tox"
 
-/obj/item/storage/medkit/toxin/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/toxin/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.576eca15", list(user, src, user.p_theyre()))))
 	return TOXLOSS
 
@@ -203,7 +203,7 @@
 /obj/item/storage/medkit/o2/get_medbot_skin()
 	return "oxy"
 
-/obj/item/storage/medkit/o2/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/o2/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.90110bbd", list(user, user.p_their(), src, user.p_theyre()))))
 	return OXYLOSS
 
@@ -227,7 +227,7 @@
 /obj/item/storage/medkit/brute/get_medbot_skin()
 	return "brute"
 
-/obj/item/storage/medkit/brute/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/brute/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.939da5a1", list(user, user.p_them(), src, user.p_theyre()))))
 	return BRUTELOSS
 
@@ -468,7 +468,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
-/obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
+/obj/item/storage/organbox/suicide_act(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD)) //if they're immune to cold, just do the box suicide
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)

@@ -9,7 +9,6 @@
 	icon_living = "magic_fur_fox"
 	icon_dead = "magic_fur_fox_dead"
 	held_state = "magic_fur_fox"
-	can_be_held = TRUE
 	see_in_dark = 6
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
@@ -59,10 +58,11 @@
 /mob/living/basic/pet/magicfur/Initialize(mapload)
 	. = ..()
 
+	AddElement(/datum/element/can_be_held) // 上游 #96917 把 var/can_be_held 重构成 element
 	AddElement(/datum/element/dextrous, can_throw = TRUE)
 	AddElement(/datum/element/pet_bonus, "merowr", /datum/mood_event/pet_animal)
 	var/static/list/food_types = list(
-		/obj/item/food/grown/holymelon,
+		/obj/item/food/grown/melonlike/holymelon, // 上游把 holymelon 移到 melonlike 子类下
 	)
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 50, bonus_tame_chance = 50, unique = FALSE)
 	AddComponent(/datum/component/basic_inhands, y_offset = -6)

@@ -47,6 +47,8 @@
 	/// The sound this obj makes when something is unbuckled from it
 	var/unbuckle_sound = null
 
+	var/generate_map_preview = FALSE
+
 	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)

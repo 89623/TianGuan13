@@ -159,7 +159,7 @@
 	var/label_examine = TRUE
 	var/label_text
 
-/obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
+/obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.8ab2b534", list(user, src, user.p_theyre()))))
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 

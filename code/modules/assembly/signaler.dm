@@ -30,7 +30,7 @@
 	/// Signal range, see /datum/radio_frequency/proc/post_signal
 	var/range = 0 //Everywhere
 
-/obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
+/obj/item/assembly/signaler/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.ff0940e6", list(user, src, user.p_they()))))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	moveToNullspace()
