@@ -425,7 +425,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	. = ..()
 	AddElement(/datum/element/cuffable_item)
 
-/obj/item/chair/suicide_act(mob/living/carbon/user)
+/obj/item/chair/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.f23ad8a4", list(user, user.p_them(), src, user.p_theyre()))))
 	playsound(src,hitsound,50,TRUE)
 	return BRUTELOSS

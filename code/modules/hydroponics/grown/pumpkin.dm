@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Pumpkin
 /obj/item/seeds/pumpkin
 	name = "pumpkin seed pack"
@@ -31,14 +32,14 @@
 /obj/item/food/grown/pumpkin/juice_typepath()
 	return /datum/reagent/consumable/pumpkinjuice
 
-/obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, list/modifiers, list/attack_modifiers)
-	if(W.get_sharpness())
-		user.show_message(span_notice("You carve a face into [src]!"), MSG_VISUAL)
-		new carved_type(user.loc)
-		qdel(src)
-		return
-	else
-		return ..()
+/obj/item/food/grown/pumpkin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness())
+		return NONE
+
+	to_chat(user, span_notice(LANG("obj.9e3ed699", list(src))))
+	new carved_type(user.loc)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 // Blumpkin
 /obj/item/seeds/pumpkin/blumpkin

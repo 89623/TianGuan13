@@ -11,6 +11,7 @@
 	base_icon_state = "pandemic"
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
+	generate_map_preview = FALSE
 
 	/// Whether the pandemic is ready to make another culture/vaccine
 	var/wait = FALSE

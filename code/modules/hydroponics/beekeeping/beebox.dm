@@ -147,24 +147,26 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/beebox/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/honey_frame))
-		var/obj/item/honey_frame/frame = item
-		if(honey_frames.len < BEEBOX_MAX_FRAMES)
-			visible_message(span_notice(LANG("obj.c68c197f", list(user))))
-			if(!user.transferItemToLoc(frame, src))
-				return
-			honey_frames += frame
-		else
+/obj/structure/beebox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/honey_frame))
+		var/obj/item/honey_frame/frame = tool
+		if(honey_frames.len == BEEBOX_MAX_FRAMES)
 			to_chat(user, span_warning(LANG("obj.d4ac7949", null)))
-		return
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(item, /obj/item/queen_bee))
+		if(!user.transferItemToLoc(frame, src))
+			return ITEM_INTERACT_BLOCKING
+
+		visible_message(span_notice(LANG("obj.c68c197f", list(user))))
+		honey_frames += frame
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/queen_bee))
 		if(queen_bee)
 			to_chat(user, span_warning(LANG("obj.769d7d0e", null)))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		var/obj/item/queen_bee/new_queen = item
+		var/obj/item/queen_bee/new_queen = tool
 		user.temporarilyRemoveItemFromInventory(new_queen)
 
 		bees += new_queen.queen
@@ -172,25 +174,24 @@
 
 		new_queen.queen.forceMove(src)
 
-		if(queen_bee)
-			visible_message(span_notice(LANG("obj.abcedef0", list(user, queen_bee))))
-			var/relocated = 0
-			for(var/mob/living/basic/bee/relocating_bee as anything in bees)
-				if(relocating_bee.reagent_incompatible(queen_bee))
-					bees -= relocating_bee
-					relocating_bee.beehome = null
-					if(relocating_bee.loc == src)
-						relocating_bee.forceMove(drop_location())
-					relocated++
-			if(relocated)
-				to_chat(user, span_warning(LANG("obj.b6d682fc", null)))
-
-		else
+		if(!queen_bee)
 			to_chat(user, span_warning(LANG("obj.86fde01f", null)))
+			return ITEM_INTERACT_BLOCKING
 
-		return
+		visible_message(span_notice(LANG("obj.abcedef0", list(user, queen_bee))))
+		var/relocated = 0
+		for(var/mob/living/basic/bee/relocating_bee as anything in bees)
+			if(relocating_bee.reagent_incompatible(queen_bee))
+				bees -= relocating_bee
+				relocating_bee.beehome = null
+				if(relocating_bee.loc == src)
+					relocating_bee.forceMove(drop_location())
+				relocated++
+		if(relocated)
+			to_chat(user, span_warning(LANG("obj.b6d682fc", null)))
+		return ITEM_INTERACT_SUCCESS
 
-	..()
+	return NONE
 
 /obj/structure/beebox/interact(mob/user)
 	. = ..()

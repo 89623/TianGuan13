@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	overlay_mic_idle = null
 	overlay_mic_active = null
 
-/obj/item/radio/headset/suicide_act(mob/living/carbon/user)
+/obj/item/radio/headset/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.cdecc22b", list(user, src, user.p_their(), user.p_theyre(), user.p_them()))))
 	return TOXLOSS
 

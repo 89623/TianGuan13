@@ -37,7 +37,7 @@
 		icon_state = icon_empty
 	return ..()
 
-/obj/item/reagent_containers/condiment/suicide_act(mob/living/carbon/user)
+/obj/item/reagent_containers/condiment/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.d1ee45de", list(user, src, user.p_they()))))
 	return OXYLOSS
 

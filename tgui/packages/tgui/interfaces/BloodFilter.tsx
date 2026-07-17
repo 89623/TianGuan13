@@ -19,6 +19,8 @@ export const BloodFilter = (props) => {
           <Stack.Item grow>
             <ChemFilterPane
               title="Whitelist"
+              // NOVA EDIT ADDITION - i18n: english act() identifier, decoupled from the auto-localized `title` (was title.toLowerCase())
+              side="whitelist"
               list={whitelist}
               buttonColor="green"
             />

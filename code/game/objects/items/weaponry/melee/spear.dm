@@ -92,7 +92,7 @@
 		worn_icon_state = null
 	return ..()
 
-/obj/item/spear/suicide_act(mob/living/carbon/user)
+/obj/item/spear/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.0be0bc23", list(user, src, user.p_theyre()))))
 	if (!do_after(user, 4 SECONDS, target = src))
 		return SHAME
@@ -341,7 +341,7 @@
 		set_explosive(nade)
 	return ..()
 
-/obj/item/spear/explosive/suicide_act(mob/living/carbon/user)
+/obj/item/spear/explosive/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.0be0bc23", list(user, src, user.p_theyre()))))
 	user.say("[war_cry]", forced="spear warcry")
 	explosive.forceMove(user)

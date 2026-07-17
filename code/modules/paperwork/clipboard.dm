@@ -45,7 +45,7 @@
 	 */
 	var/obj/item/paper/top_paper
 
-/obj/item/clipboard/suicide_act(mob/living/carbon/user)
+/obj/item/clipboard/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.d944a01b", list(user, user.p_their(), src, user.p_theyre()))))
 	return BRUTELOSS //The clipboard's clip is very strong. Industrial duty. Can kill a man easily.
 

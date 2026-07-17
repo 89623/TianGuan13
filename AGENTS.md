@@ -70,6 +70,8 @@ something = 2 // NOVA EDIT CHANGE - ORIGINAL: something = 1
 
 Avoid multiline single-`CHANGE` edits — use a REMOVAL block + ADDITION block instead. In **modular** files don't comment out dead code, delete it (git blame exists); this rule does not apply to core/NOVA-EDIT changes.
 
+> **DM indentation is syntax — the `/* … */` REMOVAL block above is only safe at column 0, i.e. when removing whole top-level definitions.** To remove lines *inside a proc body*, use a single-line indented comment instead (`\t// NOVA EDIT REMOVAL - MODULE_ID - ORIGINAL: <the line>`). A `*/` sitting at column 0 **terminates the enclosing proc**, and every remaining body line is then parsed as a new type definition — producing dozens of misleading `duplicate definition` / `empty type name (indentation error?)` errors far from the real cause. Neither `nova-i18n extract` nor DreamChecker catches this (their parsers are more lenient); **only a real DreamMaker compile does**, so compile before you push.
+
 ### Modular TGUI
 
 All TGUI lives in `tgui/packages/tgui/interfaces/` (and subdirs) — there is no separate Nova folder. **A brand-new Nova UI file must start with `// THIS IS A NOVA SECTOR UI FILE` on line 1** and needs no further edit comments. Editing an *upstream* `.tsx`/`.jsx` follows the same NOVA EDIT comment rules as DM (inline `// NOVA EDIT` or `/* NOVA EDIT */`).

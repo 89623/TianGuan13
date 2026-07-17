@@ -102,7 +102,7 @@
 
 	return NONE
 
-/obj/item/toy/singlecard/suicide_act(mob/living/carbon/user)
+/obj/item/toy/singlecard/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.efda23f0", list(user, user.p_their(), src, user.p_they(), user.p_have()))))
 	playsound(src, 'sound/items/weapons/bladeslice.ogg', 50, TRUE)
 	return BRUTELOSS

@@ -16,6 +16,9 @@
 	processing_speed = STATUS_EFFECT_PRIORITY
 	remove_on_fullheal = TRUE
 	heal_flag_necessary = HEAL_CC_STATUS
+	/// Chance of triggering a force_say
+	var/force_say_chance = 66
+	/// If TRUE we run update_stat on apply/remove
 	var/needs_update_stat = FALSE
 	/// Suffixes attached to the force_say when applied, uses the "hurt" suffixes by default
 	var/list/alter_phrases
@@ -40,14 +43,14 @@
 	if(!.)
 		return
 
-	force_say()
+	try_force_say()
 
-/datum/status_effect/incapacitating/proc/force_say()
+/datum/status_effect/incapacitating/proc/try_force_say()
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/mob/living/carbon/human/human = owner
-	if(istype(human))
-		human.force_say(alter_phrases, immediate = TRUE)
+	if(istype(human) && prob(force_say_chance) && (duration >= 6 SECONDS || (duration >= 2 SECONDS && prob(66))) )
+		human.force_say(alter_phrases, immediate = TRUE, major = (duration >= 30 SECONDS))
 
 //STUN
 /datum/status_effect/incapacitating/stun
@@ -81,6 +84,7 @@
 //IMMOBILIZED
 /datum/status_effect/incapacitating/immobilized
 	id = "immobilized"
+	force_say_chance = 0
 
 /datum/status_effect/incapacitating/immobilized/on_apply()
 	. = ..()
@@ -112,6 +116,7 @@
 /// This status effect represents anything that leaves a character unable to perform basic tasks (interrupting do-afters, for example), but doesn't incapacitate them further than that (no stuns etc..)
 /datum/status_effect/incapacitating/incapacitated
 	id = "incapacitated"
+	force_say_chance = 0
 
 // What happens when you get the incapacitated status. You get TRAIT_INCAPACITATED added to you for the duration of the status effect.
 /datum/status_effect/incapacitating/incapacitated/on_apply()
@@ -130,6 +135,7 @@
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
 	needs_update_stat = TRUE
+	force_say_chance = 100
 
 /datum/status_effect/incapacitating/unconscious/on_apply()
 	. = ..()
@@ -153,6 +159,7 @@
 	needs_update_stat = TRUE
 	tick_interval = 2 SECONDS
 	alter_phrases = list("Zzz...", "ZZz...", "ZZZ...", "zzZ...", "zZZ...", "ZzZ...", "zzz...", "zZz...", "mimimimimimi...")
+	force_say_chance = 100
 
 /datum/status_effect/incapacitating/sleeping/on_apply()
 	. = ..()
@@ -172,9 +179,9 @@
 		tick_interval = initial(tick_interval)
 	return ..()
 
-/datum/status_effect/incapacitating/sleeping/force_say()
+/datum/status_effect/incapacitating/sleeping/try_force_say()
 	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
-		..()
+		return ..()
 
 ///If the mob is sleeping and gain the TRAIT_SLEEPIMMUNE we remove the TRAIT_KNOCKEDOUT and stop the tick() from happening
 /datum/status_effect/incapacitating/sleeping/proc/on_owner_insomniac(mob/living/source)
@@ -941,7 +948,7 @@
 			if(!prob(1)) // 99%
 				to_chat(victim, span_userdanger(LANG("datum.13ea6e8f", null)))
 			else // 1%
-				victim.say(LANG("datum.9eac6c8f", null), forced = /datum/status_effect/ants)
+				INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, say), "AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
 	. = ..()
 

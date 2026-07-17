@@ -198,7 +198,6 @@
 	if(driver.client)
 		driver.update_mouse_pointer()
 		driver.client.view_size.resetToDefault()
-		zoom_mode = FALSE
 	. = ..()
 	update_appearance()
 

@@ -51,9 +51,8 @@
 	. = ..()
 	// Can we sniff? is there miasma in the air?
 	var/datum/gas_mixture/air = cast_on.loc.return_air()
-	var/list/cached_gases = air.gases
 
-	if(cached_gases[/datum/gas/miasma])
+	if(air.moles[/datum/gas/miasma])
 		cast_on.adjust_disgust(sensitivity * 45)
 		to_chat(cast_on, span_warning(LANG("datum.0ff1a20b", null)))
 		return
