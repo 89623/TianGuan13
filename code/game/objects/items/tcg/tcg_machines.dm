@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define STAT_Y -23
 #define POWER_X -14
 #define RESOLVE_X 12
@@ -30,14 +31,14 @@
 	current_card = tool
 	card_template = current_card.extract_datum()
 	if(card_template.cardtype != "Creature")
-		to_chat(user, span_notice("The [src] smartly rejects the non-creature card."))
+		to_chat(user, span_notice(LANG("obj.420a7bcf", list(src))))
 		current_card = null
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(current_card, src))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You put the [current_card] card in [src]."))
+	to_chat(user, span_notice(LANG("obj.82c9f7d7", list(current_card, src))))
 	icon_state = "card_holder_active"
 	update_appearance()
 	current_summon = new(locate(x + summon_offset_x, y + summon_offset_y, z))
@@ -68,10 +69,10 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 			if("Pickup")
 				if(current_card)
 					user.put_in_hands(current_card)
-					to_chat(user, span_notice("You take the [current_card] card out of [src]."))
+					to_chat(user, span_notice(LANG("obj.85eb28e1", list(current_card, src))))
 					current_card = null
 				else
-					to_chat(user, span_notice("The blank card dematerializes."))
+					to_chat(user, span_notice(LANG("obj.3ea24063", null)))
 				card_template = null
 				icon_state = "card_holder_inactive"
 				update_appearance()
@@ -85,13 +86,13 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 			if(null)
 				return
 	else
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
 	add_fingerprint(user)
 	return ..()
 
 /obj/machinery/trading_card_holder/attack_hand_secondary(mob/user)
 	if(isnull(current_summon))
-		var/card_name = tgui_input_text(user, "Insert card name", "Blank Card Naming", "blank card", max_length = MAX_NAME_LEN)
+		var/card_name = tgui_input_text(user, LANG("obj.9bcb3a42", null), LANG("obj.79d1cedd", null), "blank card", max_length = MAX_NAME_LEN)
 		if(isnull(card_name) || !user.can_perform_action(src))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		current_summon = new /obj/structure/trading_card_summon/blank(locate(x + summon_offset_x, y + summon_offset_y, z))
@@ -100,7 +101,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		current_summon.team_color = team_color
 		current_summon.load_model()
 	else
-		to_chat(user, span_notice("The [src] already contains a card."))
+		to_chat(user, span_notice(LANG("obj.5bfc3552", list(src))))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/trading_card_holder/proc/check_menu(mob/living/user)
@@ -118,12 +119,12 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 /obj/machinery/trading_card_holder/examine(mob/user)
 	. = ..()
 	if(card_template)
-		. += span_notice("There is currently a [card_template.name] card inserted.")
+		. += span_notice(LANG("obj.637d3f91", list(card_template.name)))
 	else
 		if(current_summon)
-			. += span_notice("There is currently a blank card inserted.")
+			. += span_notice(LANG("obj.4262f4d1", null))
 		else
-			. += span_notice("There is no card currently inserted.")
+			. += span_notice(LANG("obj.e358c553", null))
 
 /obj/machinery/trading_card_holder/red
 	summon_offset_y = -1
@@ -231,12 +232,12 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/structure/trading_card_summon/proc/modify_stats(mob/living/user)
-	summon_power = num2text(tgui_input_number(user, "Please input power value", "Stat Modification", text2num(template.power), 25))
+	summon_power = num2text(tgui_input_number(user, LANG("obj.8d37f80e", null), LANG("obj.b964bd8e", null), text2num(template.power), 25))
 	if(summon_power == template.power)
 		power_color = DEFAULT_POWER_COLOR
 	else
 		power_color = modified_color
-	summon_resolve = num2text(tgui_input_number(user, "Please input resolve value", "Stat Modification", text2num(template.resolve), 25))
+	summon_resolve = num2text(tgui_input_number(user, LANG("obj.0f776e64", null), LANG("obj.b964bd8e", null), text2num(template.resolve), 25))
 	if(summon_resolve == template.resolve)
 		resolve_color = DEFAULT_RESOLVE_COLOR
 	else
@@ -271,8 +272,8 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	return name_chaser
 
 /obj/structure/trading_card_summon/blank/modify_stats(mob/living/user)
-	summon_power = num2text(tgui_input_number(user, "Please input power value", "Stat Modification", text2num(summon_power), 25))
-	summon_resolve = num2text(tgui_input_number(user, "Please input resolve value", "Stat Modification", text2num(summon_resolve), 25))
+	summon_power = num2text(tgui_input_number(user, LANG("obj.8d37f80e", null), LANG("obj.b964bd8e", null), text2num(summon_power), 25))
+	summon_resolve = num2text(tgui_input_number(user, LANG("obj.0f776e64", null), LANG("obj.b964bd8e", null), text2num(summon_resolve), 25))
 	update_appearance(UPDATE_OVERLAYS)
 
 #undef STAT_Y
@@ -342,11 +343,11 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 	var/input_value
 	switch(choice)
 		if("Set Mana")
-			input_value = tgui_input_number(user, "Please input total mana", "Set mana", display_panel_ref.gems, display_panel_ref.gem_slots, 0)
+			input_value = tgui_input_number(user, LANG("obj.b573b6de", null), LANG("obj.4894419a", null), display_panel_ref.gems, display_panel_ref.gem_slots, 0)
 			if(!isnull(input_value))
 				display_panel_ref.gems = input_value
 		if("Set Mana Slots")
-			input_value = tgui_input_number(user, "Please input total mana slots", "Set mana slots", display_panel_ref.gem_slots, 10, 1)
+			input_value = tgui_input_number(user, LANG("obj.f84f063d", null), LANG("obj.e9e19c86", null), display_panel_ref.gem_slots, 10, 1)
 			if(input_value)
 				display_panel_ref.gem_slots = input_value
 		if("Next Turn")
@@ -386,11 +387,11 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 	var/input_value
 	switch(choice)
 		if("Set Life")
-			input_value = tgui_input_number(user, "Please input total life", "Set life", display_panel_ref.gems, display_panel_ref.gem_slots, 0)
+			input_value = tgui_input_number(user, LANG("obj.9a5e546e", null), LANG("obj.6d620896", null), display_panel_ref.gems, display_panel_ref.gem_slots, 0)
 			if(!isnull(input_value))
 				display_panel_ref.gems = input_value
 		if("Inflict Damage")
-			display_panel_ref.gems -= tgui_input_number(user, "Please input total damage", "Inflict damage", 1, display_panel_ref.gem_slots, 0)
+			display_panel_ref.gems -= tgui_input_number(user, LANG("obj.ca8d4634", null), LANG("obj.a837316d", null), 1, display_panel_ref.gem_slots, 0)
 
 ///A display panel that renders a set of icons (in this case mana crystals), this is generated by /obj/machinery/trading_card_button and can be manipulated by the button which generates it.
 /obj/effect/trading_card_panel
@@ -448,7 +449,7 @@ GLOBAL_LIST_EMPTY(tcgcard_health_bar_radial_choices)
 
 /obj/effect/trading_card_panel/examine(mob/user)
 	. = ..()
-	. += span_notice("It is currently showing [gems] out of [gem_slots] [gem_title].")
+	. += span_notice(LANG("obj.d91c2943", list(gems, gem_slots, gem_title)))
 
 ///A variant of the display panel for life shards, this one is set up to display two columns.
 /obj/effect/trading_card_panel/health

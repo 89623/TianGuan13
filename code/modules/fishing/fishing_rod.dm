@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/fishing_rod
 	name = "fishing rod"
 	desc = "You can fish with this."
@@ -126,20 +127,20 @@
 	if(bait)
 		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b>"
 	if(length(equipped_stuff))
-		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
+		. += span_notice(LANG("obj.dd85ec64", list(english_list(equipped_stuff))))
 	if(!bait)
-		. += span_warning("It doesn't have a bait attached to it. Fishing will be more tedious!")
+		. += span_warning(LANG("obj.32754eb0", null))
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += "" //add a new line
-		. += span_notice("Thanks to your fishing skills, you can examine it again for more in-depth information.")
+		. += span_notice(LANG("obj.d23a5cd0", null))
 		return
 	if(HAS_TRAIT(src, TRAIT_ROD_MANSUS_INFUSED))
 		if(IS_HERETIC(user))
-			. += span_purple("This rod has been <b>infused</b> by a heretic, improving its ability to catch glimpses of the Mansus. And fish.")
+			. += span_purple(LANG("obj.f252ad7a", null))
 		else
-			. += span_purple("It's glowing an eerie purple...")
+			. += span_purple(LANG("obj.5370c755", null))
 	else if(IS_HERETIC(user))
-		. += span_purple("As a Heretic, you can infuse this fishing rod with your <b>Mansus Grasp</b> by activating the spell while wielding it, to enhance its fishing power.")
+		. += span_purple(LANG("obj.3205e25e", null))
 
 /obj/item/fishing_rod/examine_more(mob/user)
 	. = ..()
@@ -258,7 +259,7 @@
 		return
 
 	if(currently_hooked.anchored || currently_hooked.move_resist >= MOVE_FORCE_STRONG)
-		balloon_alert(user, "[currently_hooked.p_they()] won't budge!")
+		balloon_alert(user, LANG("obj.603e3616", list(currently_hooked.p_they())))
 		return
 
 	//About thirty minutes of non-stop reeling to get from zero to master... not worth it but hey, you do what you do.
@@ -376,7 +377,7 @@
 
 /obj/item/fishing_rod/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!hook)
-		balloon_alert(user, "install a hook first!")
+		balloon_alert(user, LANG("obj.c02cf4e9", null))
 		return ITEM_INTERACT_BLOCKING
 
 	// Reel in if able
@@ -402,7 +403,7 @@
 	if(casting || currently_hooked)
 		return
 	if(!hook)
-		balloon_alert(user, "install a hook first!")
+		balloon_alert(user, LANG("obj.c02cf4e9", null))
 		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
@@ -586,16 +587,16 @@
 	// Trying to remove the item
 	if(!new_item && current_item)
 		user.put_in_hands(current_item)
-		balloon_alert(user, "[slot] removed")
+		balloon_alert(user, LANG("obj.2a4235b4", list(slot)))
 	// Trying to insert item into empty slot
 	else if(new_item && !current_item)
 		if(!slot_check(new_item, slot))
 			return
 		if(user.transferItemToLoc(new_item,src))
 			set_slot(new_item, slot)
-			balloon_alert(user, "[slot] installed")
+			balloon_alert(user, LANG("obj.7bd56e79", list(slot)))
 		else
-			balloon_alert(user, "stuck to your hands!")
+			balloon_alert(user, LANG("obj.2410a229", null))
 			return
 	/// Trying to swap item
 	else if(new_item && current_item)
@@ -604,9 +605,9 @@
 		if(user.transferItemToLoc(new_item, src))
 			user.put_in_hands(current_item)
 			set_slot(new_item, slot)
-			balloon_alert(user, "[slot] swapped")
+			balloon_alert(user, LANG("obj.43586bcc", list(slot)))
 		else
-			balloon_alert(user, "stuck to your hands!")
+			balloon_alert(user, LANG("obj.2410a229", null))
 			return
 
 	update_icon()
@@ -706,7 +707,7 @@
 /obj/item/fishing_rod/telescopic/cast_line(atom/target, mob/user, proximity_flag)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		if(!proximity_flag)
-			balloon_alert(user, "extend the rod first!")
+			balloon_alert(user, LANG("obj.75b8476a", null))
 		return
 	return ..()
 
@@ -798,7 +799,7 @@
 
 /obj/item/fishing_rod/tech/examine(mob/user)
 	. = ..()
-	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
+	. += span_notice(LANG("obj.89b193b1", null))
 
 /obj/item/fishing_rod/tech/use_slot(slot, mob/user, obj/item/new_item)
 	if(slot == ROD_SLOT_BAIT)

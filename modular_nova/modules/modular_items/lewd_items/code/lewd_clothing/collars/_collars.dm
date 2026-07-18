@@ -26,7 +26,7 @@
 
 /obj/item/clothing/neck/collar/examine(mob/user)
 	. = ..()
-	. += span_notice("The collar can be worn above or below your suit. Alt-Right-click to toggle.")
+	. += span_notice(LANG("obj.78f09b05", null))
 
 /datum/storage/collar
 	max_slots = 1
@@ -67,7 +67,7 @@
 /obj/item/clothing/neck/collar/proc/can_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	var/mob/living/carbon/wearer = source.loc
 	if(istype(wearer) && wearer.get_item_by_slot(ITEM_SLOT_NECK) == source && locked)
-		to_chat(wearer, span_warning("The collar is locked! You'll need to unlock it before you can take it off!"))
+		to_chat(wearer, span_warning(LANG("obj.2c098e5e", null)))
 		return COMPONENT_ITEM_BLOCK_UNEQUIP
 	return NONE
 
@@ -82,7 +82,7 @@
 		to_chat(user, span_warning("[to_lock ? "The collar locks with a resounding click!" : "The collar unlocks with a small clunk."]"))
 		locked = to_lock
 		return
-	to_chat(user, span_warning("It looks like the lock is busted - now it's just an ordinary old collar."))
+	to_chat(user, span_warning(LANG("obj.f8d4ea15", null)))
 	locked = FALSE
 
 /obj/item/clothing/neck/collar/tool_act(mob/living/user, obj/item/tool, list/modifiers)
@@ -92,34 +92,34 @@
 	if(key.key_id == REF(src))
 		set_lock((!locked), user)
 		return ITEM_INTERACT_SUCCESS
-	to_chat(user, span_warning("This isn't the correct key!"))
+	to_chat(user, span_warning(LANG("obj.9500650e", null)))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/clothing/neck/collar/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(broken_lock)
-		to_chat(user, span_warning("The lock is already broken!"))
+		to_chat(user, span_warning(LANG("obj.61e29706", null)))
 		return
-	to_chat(user, span_warning("You jam your screwdriver into the lock, searching to exploit the tension..."))
+	to_chat(user, span_warning(LANG("obj.42434d97", null)))
 	if(!do_after(user, 3 SECONDS, user))
 		return
 	if(prob(33))
-		to_chat(user, span_warning("You find your mark, and the lock pops open!"))
+		to_chat(user, span_warning(LANG("obj.b8380cc0", null)))
 		broken_lock = TRUE
 		set_lock(FALSE, user)
 	else
-		to_chat(user, span_warning("You can't quite get the lock to snap!"))
+		to_chat(user, span_warning(LANG("obj.4b1a2578", null)))
 
 /obj/item/clothing/neck/collar/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(!(locked && src == user.get_item_by_slot(ITEM_SLOT_NECK)))
 		return
-	to_chat(user, span_warning("You hear a heavy click near your neck - it's apparant the collar's locked on!"))
+	to_chat(user, span_warning(LANG("obj.7eabaa46", null)))
 
 /obj/item/clothing/neck/collar/click_alt_secondary(mob/user) //Adds a toggle to wear above or below suit slot items, for hiding it under a big coat or something :3
 	alternate_worn_layer = (alternate_worn_layer == initial(alternate_worn_layer) ? LOW_NECK_LAYER : initial(alternate_worn_layer))
 	user.update_clothing(ITEM_SLOT_NECK)
-	balloon_alert(user, "wearing [alternate_worn_layer == initial(alternate_worn_layer) ? "above" : "below"] suits")
+	balloon_alert(user, LANG("obj.d521fa2f", list(alternate_worn_layer == initial(alternate_worn_layer) ? "above" : "below")))
 
 /// This is a KEY moment of this code. You got it. Key.
 /// ...
@@ -146,5 +146,5 @@
 	if(REF(collar) == src.key_id)
 		collar.set_lock(!collar.locked, user)
 		return ITEM_INTERACT_SUCCESS
-	to_chat(user, span_warning("This isn't the correct key!"))
+	to_chat(user, span_warning(LANG("obj.9500650e", null)))
 	return ITEM_INTERACT_BLOCKING

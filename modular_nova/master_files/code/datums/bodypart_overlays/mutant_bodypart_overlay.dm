@@ -58,7 +58,7 @@
 
 	// MOD overlays on mutant parts
 	if(modsuit_affected && sprite_datum?.mod_overlay_active(limb?.owner))
-		. += "MOD_[sprite_datum.get_hardlight_theme_key(limb?.owner)]"
+		. += LANG("datum.f0772d66", list(sprite_datum.get_hardlight_theme_key(limb?.owner)))
 
 	if(islist(draw_color))
 		for(var/sub_color in draw_color)

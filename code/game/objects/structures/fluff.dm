@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**
  * # Fluff structure
  *
@@ -17,12 +18,12 @@
 /obj/structure/fluff/wrench_act(mob/living/user, obj/item/tool)
 	if(!deconstructible)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
-	user.visible_message(span_notice("[user] starts disassembling [src]..."), \
-						span_notice("You start disassembling [src]..."))
+	user.visible_message(span_notice(LANG("obj.de50517e", list(user, src))), \
+						span_notice(LANG("obj.f0ab830f", list(src))))
 	tool.play_tool_sound(src)
 	if(!tool.use_tool(src, user, 50))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] disassembles [src]!"), span_notice("You break down [src] into scrap metal."))
+	user.visible_message(span_notice(LANG("obj.da98fa51", list(user, src))), span_notice(LANG("obj.ae794d9d", list(src))))
 	playsound(user, 'sound/items/deconstruct.ogg', 50, TRUE)
 	new/obj/item/stack/sheet/iron(drop_location())
 	qdel(src)

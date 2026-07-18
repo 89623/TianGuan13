@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///?
 /obj/structure/tank_holder
 	name = "tank holder"
@@ -36,21 +37,21 @@
 /obj/structure/tank_holder/examine(mob/user)
 	. = ..()
 	if(anchored)
-		. += span_notice("It is <b>bolted</b> to the floor.")
+		. += span_notice(LANG("obj.36b5eeeb", null))
 	else
-		. += span_notice("The <i>bolts</i> on the bottom are unsecured.")
+		. += span_notice(LANG("obj.d6821321", null))
 	if(tank)
-		. += span_notice("It is holding \a [tank].")
+		. += span_notice(LANG("obj.e85dcccb", list(tank)))
 	else
-		. += span_notice("It is empty.")
-	. += span_notice("It is held together by some <b>screws</b>.")
+		. += span_notice(LANG("obj.53b0d090", null))
+	. += span_notice(LANG("obj.0492e070", null))
 
 /obj/structure/tank_holder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
 		return NONE
 
 	if(!SEND_SIGNAL(tool, COMSIG_CONTAINER_TRY_ATTACH, src, user))
-		to_chat(user, span_warning("[tool] does not fit in [src]."))
+		to_chat(user, span_warning(LANG("obj.b972e3dd", list(tool, src))))
 		return ITEM_INTERACT_BLOCKING
 
 	return ITEM_INTERACT_SUCCESS
@@ -59,11 +60,11 @@
 	if(user.combat_mode)
 		return NONE
 
-	to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
+	to_chat(user, span_notice(LANG("obj.8b820c98", list(anchored ? "unwrench" : "wrench", src))))
 	if(!tool.use_tool(src, user, 20, volume=50))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
+	to_chat(user, span_notice(LANG("obj.5e680a27", list(anchored ? "unwrench" : "wrench", src))))
 	set_anchored(!anchored)
 	return ITEM_INTERACT_SUCCESS
 
@@ -90,7 +91,7 @@
 		return ..()
 	if(!Adjacent(user) || issilicon(user))
 		return ..()
-	to_chat(user, span_notice("You take [tank] from [src]."))
+	to_chat(user, span_notice(LANG("obj.82af12e9", list(tank, src))))
 	add_fingerprint(user)
 	tank.add_fingerprint(user)
 	user.put_in_hands(tank)

@@ -277,18 +277,18 @@
 /obj/item/fishing_hook/anomaly/examine(mob/user)
 	. = ..()
 	if(!isnull(core))
-		. += span_info("There's \a [core] slotted into it.")
+		. += span_info(LANG("obj.937e1263", list(core)))
 
 /obj/item/fishing_hook/anomaly/examine_more(mob/user)
 	. = ..()
-	. += "&bull; A [/obj/item/assembly/signaler/anomaly/dimensional::name] adds a chance for your catch to have its materials altered."
-	. += "&bull; A [/obj/item/assembly/signaler/anomaly/bioscrambler::name] adds a chance for your catch to have its traits or stats altered."
-	. += "&bull; A [/obj/item/assembly/signaler/anomaly/pyro::name] adds a chance for your catch to be cooked."
-	. += "&bull; A [/obj/item/assembly/signaler/anomaly/ectoplasm::name] adds a chance to catch haunted fish."
-	. += "&bull; A [/obj/item/assembly/signaler/anomaly/hallucination::name] adds a chance to cause your catches to randomly grow or shrink in size."
-	. += "&bull; A [/obj/item/assembly/signaler/anomaly/grav::name] reduces the gravity of the bobber, causing it to fall slower."
-	. += "&bull; A [/obj/item/assembly/signaler/anomaly/vortex::name] reduces the bobber's overall bounciness."
-	. += "&bull; Unmentioned cores likely have no unique effect when applied."
+	. += LANG("obj.67dbda35", list(/obj/item/assembly/signaler/anomaly/dimensional::name))
+	. += LANG("obj.ebd604e1", list(/obj/item/assembly/signaler/anomaly/bioscrambler::name))
+	. += LANG("obj.3c9962dd", list(/obj/item/assembly/signaler/anomaly/pyro::name))
+	. += LANG("obj.c9e68c31", list(/obj/item/assembly/signaler/anomaly/ectoplasm::name))
+	. += LANG("obj.9e0d997d", list(/obj/item/assembly/signaler/anomaly/hallucination::name))
+	. += LANG("obj.8ce17db2", list(/obj/item/assembly/signaler/anomaly/grav::name))
+	. += LANG("obj.11864333", list(/obj/item/assembly/signaler/anomaly/vortex::name))
+	. += LANG("obj.b1cc1dac", null)
 
 /obj/item/fishing_hook/anomaly/proc/on_fishing_rod_slotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
@@ -309,7 +309,7 @@
 		if(/obj/item/assembly/signaler/anomaly/vortex)
 			rod.bounciness_mult *= 0.2
 		else
-			rod.balloon_alert_to_viewers("no core effect!", vision_distance = 2)
+			rod.balloon_alert_to_viewers(LANG("obj.8890651c", null), vision_distance = 2)
 
 /obj/item/fishing_hook/anomaly/proc/on_fishing_rod_unslotted(datum/source, obj/item/fishing_rod/rod, slot)
 	SIGNAL_HANDLER
@@ -430,7 +430,7 @@
 	if(!istype(tool, /obj/item/assembly/signaler/anomaly))
 		return NONE
 	if(!isnull(core))
-		balloon_alert(user, "already has a core!")
+		balloon_alert(user, LANG("obj.641e7c06", null))
 		return ITEM_INTERACT_BLOCKING
 	if(user.is_holding(tool))
 		if(!user.transferItemToLoc(tool, src))
@@ -439,7 +439,7 @@
 		tool.forceMove(src)
 
 	core = tool
-	balloon_alert(user, "core installed")
+	balloon_alert(user, LANG("obj.1a2673f9", null))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
@@ -457,7 +457,7 @@
 		core.forceMove(drop_location())
 
 	core = null
-	balloon_alert(user, "core removed")
+	balloon_alert(user, LANG("obj.8b10ca6a", null))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	update_appearance(UPDATE_OVERLAYS)
 	return TRUE

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* Beds... get your mind out of the gutter, they're for sleeping!
  * Contains:
  * Beds
@@ -76,7 +77,7 @@
 /obj/structure/bed/examine(mob/user)
 	. = ..()
 	if (can_deconstruct)
-		. += span_notice("It's held together by a couple of <b>bolts</b>.")
+		. += span_notice(LANG("obj.c0bf1b5b", null))
 
 /obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
@@ -159,19 +160,19 @@
 /obj/structure/bed/medical/examine(mob/user)
 	. = ..()
 	if(anchored)
-		. += span_notice("The brakes are applied. They can be released with an Alt-click.")
+		. += span_notice(LANG("obj.0929c1b4", null))
 	else
-		. += span_notice("The brakes can be applied with an Alt-click.")
+		. += span_notice(LANG("obj.d3a3e6ae", null))
 
 	if(!isnull(foldable_type))
-		. += span_notice("You can fold it up with a Right-click.")
+		. += span_notice(LANG("obj.5789a5cf", null))
 
 /obj/structure/bed/medical/click_alt(mob/user)
 	if(has_buckled_mobs() && (user in buckled_mobs))
 		return CLICK_ACTION_BLOCKING
 
 	anchored = !anchored
-	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
+	balloon_alert(user, LANG("obj.38c602d1", list(anchored ? "applied" : "released")))
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -215,7 +216,7 @@
 		return NONE
 	var/obj/item/emergency_bed/silicon/silicon_bed = tool
 	if(silicon_bed.loaded)
-		to_chat(user, span_warning("You already have a medical bed docked!"))
+		to_chat(user, span_warning(LANG("obj.41b58f66", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(has_buckled_mobs())
@@ -224,13 +225,13 @@
 			return ITEM_INTERACT_SUCCESS
 
 		unbuckle_all_mobs()
-		user.visible_message(span_notice("[user] unbuckles all creatures from [src]."))
+		user.visible_message(span_notice(LANG("obj.20bfa265", list(user, src))))
 		return ITEM_INTERACT_SUCCESS
 
 
 	silicon_bed.loaded = src
 	forceMove(silicon_bed)
-	user.visible_message(span_notice("[user] collects [src]."), span_notice("You collect [src]."))
+	user.visible_message(span_notice(LANG("obj.ff58d069", list(user, src))), span_notice(LANG("obj.aba2fd34", list(src))))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bed/medical/emergency/attack_hand_secondary(mob/user, list/modifiers)
@@ -242,7 +243,7 @@
 	if(has_buckled_mobs())
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	user.visible_message(span_notice("[user] collapses [src]."), span_notice("You collapse [src]."))
+	user.visible_message(span_notice(LANG("obj.9f9707bf", list(user, src))), span_notice(LANG("obj.f518f3ec", list(src))))
 	var/obj/structure/bed/medical/emergency/folding_bed = new foldable_type(get_turf(src))
 	user.put_in_hands(folding_bed)
 	qdel(src)
@@ -265,10 +266,10 @@
 
 	var/obj/item/emergency_bed/silicon/silicon_bed = tool
 	if(silicon_bed.loaded)
-		to_chat(user, span_warning("[silicon_bed] already has a roller bed loaded!"))
+		to_chat(user, span_warning(LANG("obj.88c827c9", list(silicon_bed))))
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [silicon_bed]."))
+	user.visible_message(span_notice(LANG("obj.15550e4d", list(user, src))), span_notice(LANG("obj.91f19664", list(src, silicon_bed))))
 	silicon_bed.loaded = new/obj/structure/bed/medical/emergency(silicon_bed)
 	qdel(src) //"Load"
 	return ITEM_INTERACT_SUCCESS
@@ -300,15 +301,15 @@
 
 /obj/item/emergency_bed/silicon/examine(mob/user)
 	. = ..()
-	. += "The dock is [loaded ? "loaded" : "empty"]."
+	. += LANG("obj.5d5580ef", list(loaded ? "loaded" : "empty"))
 
 /obj/item/emergency_bed/silicon/deploy_bed(mob/user, atom/location)
 	if(loaded)
 		loaded.forceMove(location)
-		user.visible_message(span_notice("[user] deploys [loaded]."), span_notice("You deploy [loaded]."))
+		user.visible_message(span_notice(LANG("obj.1596d21d", list(user, loaded))), span_notice(LANG("obj.4e3e93ee", list(loaded))))
 		loaded = null
 	else
-		to_chat(user, span_warning("The dock is empty!"))
+		to_chat(user, span_warning(LANG("obj.fd931656", null)))
 
 /// Dog bed
 /obj/structure/bed/dogbed
@@ -363,7 +364,7 @@
 
 	owned = TRUE
 	name = "[furball]'s bed"
-	desc = "[furball]'s bed! Looks comfy."
+	desc = LANG("obj.d3c4e4f9", list(furball))
 	return TRUE // Let any callers know that this bed is ours now
 
 /obj/structure/bed/dogbed/buckle_mob(mob/living/furball, force, check_loc)

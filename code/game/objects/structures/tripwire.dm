@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/tripwire
 	name = "tripwire post?"
 	desc = "This should not be here. Somebody should be told about this."
@@ -56,18 +57,18 @@
 	if(!opposing_post)
 		return NONE
 
-	visible_message(span_notice("[user] begins cutting through \the [src]'s tripwire..."), \
-					span_notice("You begin cutting through \the [src]'s tripwire..."), \
-					span_hear("You hear snipping."))
+	visible_message(span_notice(LANG("obj.c7bb042c", list(user, src))), \
+					span_notice(LANG("obj.f0b937b7", list(src))), \
+					span_hear(LANG("obj.45e81054", null)))
 	if(!tool.use_tool(src, user, 5 SECONDS))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!opposing_post)
 		return ITEM_INTERACT_BLOCKING
 
-	visible_message(span_notice("[user] cuts away \the [src]'s tripwire."), \
-					span_notice("You finish cutting \the [src]'s tripwire."), \
-					span_hear("You hear a final snip."))
+	visible_message(span_notice(LANG("obj.354c4a00", list(user, src))), \
+					span_notice(LANG("obj.6ec78981", list(src))), \
+					span_hear(LANG("obj.28e5d186", null)))
 	new /obj/item/stack/cable_coil(drop_location(), 20)
 	clear_wire()
 	return ITEM_INTERACT_SUCCESS
@@ -92,7 +93,7 @@
 		are_we_tying = TRUE
 
 	if(are_we_tying)// if it's on a different z level, or further than would be reasonable, refuse to acknowledge the distance and mulligan.
-		to_chat(user, span_notice("You tie one end of \the [irrelevant_cable] around \the [src]."))
+		to_chat(user, span_notice(LANG("obj.8d68a299", list(irrelevant_cable, src))))
 		irrelevant_cable.connecting_post = WEAKREF(src)
 		return ITEM_INTERACT_SUCCESS
 
@@ -103,15 +104,15 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(distance_between > 4)
-		to_chat(user, span_notice("The post on the other end is too far away!"))
+		to_chat(user, span_notice(LANG("obj.b21d24d0", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(distance_between == 0)
-		to_chat(user, span_notice("No point in connecting them, they're already together."))
+		to_chat(user, span_notice(LANG("obj.0fabeab1", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(connecting_post.x != x && connecting_post.y != y)
-		to_chat(user, span_notice("The wire will be much less effective at an angle."))
+		to_chat(user, span_notice(LANG("obj.477d89cb", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	var/turf/end_point_turf = get_turf(connecting_post)
@@ -160,13 +161,13 @@
 
 /obj/structure/tripwire/post/wrench_act(mob/living/user, obj/item/tool)
 	if(opposing_post)
-		balloon_alert(user, "unwire first!")
+		balloon_alert(user, LANG("obj.c652a052", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.use_tool(src, user, 0))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "[anchored ? "un" : ""]anchored")
+	balloon_alert(user, LANG("obj.ec9196c7", list(anchored ? "un" : "")))
 	set_anchored(!anchored)
 	return ITEM_INTERACT_SUCCESS
 
@@ -201,16 +202,16 @@
 	return ..()
 
 /obj/structure/tripwire/cable/wirecutter_act(mob/living/user, obj/item/tool)
-	visible_message(span_notice("[user] begins cutting through \the [src]..."), \
-					span_notice("You begin cutting through \the [src]..."), \
-					span_hear("You hear snipping."))
+	visible_message(span_notice(LANG("obj.7bc2fa00", list(user, src))), \
+					span_notice(LANG("obj.44107c10", list(src))), \
+					span_hear(LANG("obj.45e81054", null)))
 
 	if(!tool.use_tool(src, user, 5 SECONDS))
 		return ITEM_INTERACT_BLOCKING
 
-	visible_message(span_notice("[user] cuts away \the [src]."), \
-					span_notice("You finish cutting \the [src]."), \
-					span_hear("You hear a final snip."))
+	visible_message(span_notice(LANG("obj.75d869c8", list(user, src))), \
+					span_notice(LANG("obj.b261fc30", list(src))), \
+					span_hear(LANG("obj.28e5d186", null)))
 	new /obj/item/stack/cable_coil(drop_location(), 20)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -293,7 +294,7 @@
 
 	var/drivers = falling_down.return_drivers()
 
-	visible_message(span_danger("[falling_down] topples over \the [src]!"), \
+	visible_message(span_danger(LANG("obj.dbded334", list(falling_down, src))), \
 		blind_message = span_danger("You hear a deafening CRASH!"), \
 		ignored_mobs = drivers)
 
@@ -326,11 +327,11 @@
 /obj/item/tripwire_cable/attack_self(mob/user, modifiers)
 	if(!connecting_post.resolve())
 		return
-	to_chat(user, span_notice("You recoil the length of cable until it's all back together again."))
+	to_chat(user, span_notice(LANG("obj.2eb05962", null)))
 	connecting_post = null
 
 /obj/item/tripwire_cable/wirecutter_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("You cut off the cable's excess bulk."))
+	to_chat(user, span_notice(LANG("obj.d40e766c", null)))
 	new /obj/item/stack/cable_coil(drop_location(), 15)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

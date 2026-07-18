@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
@@ -55,10 +56,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(istype(tool, /obj/item/stack/sheet/glass) && broken)
 		var/obj/item/stack/sheet/glass/glass_stack = tool
 		if(glass_stack.get_amount() < 2)
-			balloon_alert(user, "need more glass!")
+			balloon_alert(user, LANG("obj.327936c4", null))
 			return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "repairing")
+		balloon_alert(user, LANG("obj.f2b23f18", null))
 		if(!glass_stack.use_tool(src, user, 2 SECONDS, 2))
 			return ITEM_INTERACT_BLOCKING
 
@@ -75,7 +76,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 			return ITEM_INTERACT_BLOCKING
 
 		if(HAS_TRAIT(tool, TRAIT_WIELDED))
-			balloon_alert(user, "unwield it!")
+			balloon_alert(user, LANG("obj.1db68799", null))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src))
@@ -92,19 +93,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if(atom_integrity == max_integrity)
-		balloon_alert(user, "already repaired!")
+		balloon_alert(user, LANG("obj.88cc0c7c", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount = 2))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "repairing...")
+	balloon_alert(user, LANG("obj.b52342a8", null))
 	if(!tool.use_tool(src, user, 4 SECONDS, volume= 50, amount = 2))
 		return ITEM_INTERACT_BLOCKING
 
 	repair_damage(max_integrity - get_integrity())
 	update_appearance()
-	balloon_alert(user, "repaired")
+	balloon_alert(user, LANG("obj.65ced1e8", null))
 	return ITEM_INTERACT_SUCCESS
 
 
@@ -214,16 +215,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	. += locked ? "locked" : "unlocked"
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-	to_chat(user, span_notice("Resetting circuitry..."))
+	to_chat(user, span_notice(LANG("obj.b9c41d11", null)))
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	if(do_after(user, 2 SECONDS, target = src))
-		to_chat(user, span_notice("You [locked ? "disable" : "re-enable"] the locking modules."))
+		to_chat(user, span_notice(LANG("obj.9dedbb03", list(locked ? "disable" : "re-enable"))))
 		locked = !locked
 		update_appearance()
 
 /obj/structure/fireaxecabinet/proc/toggle_open(mob/user)
 	if(locked)
-		balloon_alert(user, "won't budge!")
+		balloon_alert(user, LANG("obj.13d01237", null))
 		return
 	else
 		open = !open

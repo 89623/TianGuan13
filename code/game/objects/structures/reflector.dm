@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/reflector
 	name = "reflector base"
 	icon = 'icons/obj/structures.dmi'
@@ -42,13 +43,13 @@
 /obj/structure/reflector/examine(mob/user)
 	. = ..()
 	if(finished)
-		. += "It is set to [rotation_angle] degrees, and the rotation is [can_rotate ? "unlocked" : "locked"]."
+		. += LANG("obj.85161655", list(rotation_angle, can_rotate ? "unlocked" : "locked"))
 		if(!admin)
 			if(can_rotate)
-				. += span_notice("Use your <b>hand</b> to adjust its direction.")
-				. += span_notice("Use a <b>screwdriver</b> to lock the rotation.")
+				. += span_notice(LANG("obj.0dfd560c", null))
+				. += span_notice(LANG("obj.791dda47", null))
 			else
-				. += span_notice("Use <b>screwdriver</b> to unlock the rotation.")
+				. += span_notice(LANG("obj.f68e082e", null))
 
 /obj/structure/reflector/proc/set_angle(new_angle)
 	if(can_rotate)
@@ -85,18 +86,18 @@
 
 /obj/structure/reflector/screwdriver_act(mob/living/user, obj/item/tool)
 	can_rotate = !can_rotate
-	to_chat(user, span_notice("You [can_rotate ? "unlock" : "lock"] [src]'s rotation."))
+	to_chat(user, span_notice(LANG("obj.13ce15bb", list(can_rotate ? "unlock" : "lock", src))))
 	tool.play_tool_sound(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reflector/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored)
-		to_chat(user, span_warning("Unweld [src] from the floor first!"))
+		to_chat(user, span_warning(LANG("obj.2893b16b", list(src))))
 		return ITEM_INTERACT_SUCCESS
-	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
+	user.visible_message(span_notice(LANG("obj.87859cea", list(user, src))), span_notice(LANG("obj.344c0686", list(src))))
 	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
 		return ITEM_INTERACT_BLOCKING
-	to_chat(user, span_notice("You dismantle [src]."))
+	to_chat(user, span_notice(LANG("obj.fc814806", list(src))))
 	new framebuildstacktype(drop_location(), framebuildstackamount)
 	if(buildstackamount)
 		new buildstacktype(drop_location(), buildstackamount)
@@ -107,27 +108,27 @@
 	if(!tool.tool_start_check(user, amount=1))
 		return ITEM_INTERACT_BLOCKING
 	if(atom_integrity < max_integrity)
-		user.visible_message(span_notice("[user] starts to repair [src]."),
-							span_notice("You begin repairing [src]..."),
-							span_hear("You hear welding."))
+		user.visible_message(span_notice(LANG("obj.7cfba828", list(user, src))),
+							span_notice(LANG("obj.93449ef4", list(src))),
+							span_hear(LANG("obj.1aa82fa3", null)))
 		if(tool.use_tool(src, user, 4 SECONDS, volume=40))
 			atom_integrity = max_integrity
-			user.visible_message(span_notice("[user] repairs [src]."), \
-								span_notice("You finish repairing [src]."))
+			user.visible_message(span_notice(LANG("obj.639f2d4f", list(user, src))), \
+								span_notice(LANG("obj.616dfcb1", list(src))))
 	else if(!anchored)
-		user.visible_message(span_notice("[user] starts to weld [src] to the floor."),
-							span_notice("You start to weld [src] to the floor..."),
-							span_hear("You hear welding."))
+		user.visible_message(span_notice(LANG("obj.9600c364", list(user, src))),
+							span_notice(LANG("obj.7765e0fa", list(src))),
+							span_hear(LANG("obj.1aa82fa3", null)))
 		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
 			set_anchored(TRUE)
-			to_chat(user, span_notice("You weld [src] to the floor."))
+			to_chat(user, span_notice(LANG("obj.46f0194b", list(src))))
 	else
-		user.visible_message(span_notice("[user] starts to cut [src] free from the floor."),
-							span_notice("You start to cut [src] free from the floor..."),
-							span_hear("You hear welding."))
+		user.visible_message(span_notice(LANG("obj.078cc3d3", list(user, src))),
+							span_notice(LANG("obj.41ed57fe", list(src))),
+							span_hear(LANG("obj.1aa82fa3", null)))
 		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
 			set_anchored(FALSE)
-			to_chat(user, span_notice("You cut [src] free from the floor."))
+			to_chat(user, span_notice(LANG("obj.6a908a91", list(src))))
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -144,7 +145,7 @@
 	var/obj/item/stack/sheet/using_stack = tool
 	if(istype(using_stack, /obj/item/stack/sheet/glass))
 		if(!using_stack.use(5))
-			to_chat(user, span_warning("You need five sheets of glass to create a reflector!"))
+			to_chat(user, span_warning(LANG("obj.436be82e", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		new /obj/structure/reflector/single(drop_location())
@@ -153,7 +154,7 @@
 
 	if(istype(using_stack, /obj/item/stack/sheet/rglass))
 		if(!using_stack.use(10))
-			to_chat(user, span_warning("You need ten sheets of reinforced glass to create a double reflector!"))
+			to_chat(user, span_warning(LANG("obj.f81de041", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		new /obj/structure/reflector/double(drop_location())
@@ -170,9 +171,9 @@
 
 /obj/structure/reflector/proc/rotate(mob/user)
 	if (!can_rotate || admin)
-		to_chat(user, span_warning("The rotation is locked!"))
+		to_chat(user, span_warning(LANG("obj.1fabeebe", null)))
 		return FALSE
-	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
+	var/new_angle = tgui_input_number(user, LANG("obj.19bfb52d", null), LANG("obj.edfa1be4", null), rotation_angle, 360)
 	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return FALSE
 	set_angle(SIMPLIFY_DEGREES(new_angle))
@@ -297,10 +298,10 @@
 
 /obj/structure/reflector/ui_interact(mob/user, datum/tgui/ui)
 	if(!finished)
-		user.balloon_alert(user, "nothing to rotate!")
+		user.balloon_alert(user, LANG("obj.dead6374", null))
 		return
 	if(!can_rotate)
-		user.balloon_alert(user, "can't rotate!")
+		user.balloon_alert(user, LANG("obj.e8f6efb5", null))
 		ui?.close()
 		return
 	ui = SStgui.try_update_ui(user, src, ui)

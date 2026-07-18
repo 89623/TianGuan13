@@ -53,16 +53,16 @@
 /datum/action/cooldown/revenant_fashion/Activate(atom/target)
 	var/mob/living/basic/revenant/revenant_owner = owner
 	if(!istype(revenant_owner))
-		owner.balloon_alert(owner, "not a revenant!")
+		owner.balloon_alert(owner, LANG("datum.ec175b03", null))
 		qdel(src)
 		return
 
 	if(revenant_owner.dormant)
-		owner.balloon_alert(owner, "can't change while dormant!")
+		owner.balloon_alert(owner, LANG("datum.37d66140", null))
 		return
 
 	if(HAS_TRAIT(revenant_owner, TRAIT_NO_TRANSFORM))
-		owner.balloon_alert(owner, "can't change right now!")
+		owner.balloon_alert(owner, LANG("datum.46db361e", null))
 		return
 
 	var/list/options = list()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
 //machineryness
 
@@ -167,38 +168,38 @@
 	if(I.tool_behaviour != TOOL_MINING)
 		return
 	. = TRUE
-	to_chat(user, span_notice("You start digging [src]..."))
+	to_chat(user, span_notice(LANG("obj.055eb252", list(src))))
 	if(I.use_tool(src, user, 40, volume=50))
-		to_chat(user, span_notice("You finish digging."))
+		to_chat(user, span_notice(LANG("obj.6f82cfd5", null)))
 		deconstruct(TRUE)
 
 /obj/structure/mineral_door/welder_act(mob/living/user, obj/item/I) //override if the door is supposed to be flammable.
 	..()
 	. = TRUE
 	if(anchored)
-		to_chat(user, span_warning("[src] is still firmly secured to the ground!"))
+		to_chat(user, span_warning(LANG("obj.4995b95a", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] starts to weld apart [src]!"), span_notice("You start welding apart [src]."))
+	user.visible_message(span_notice(LANG("obj.e556cda6", list(user, src))), span_notice(LANG("obj.6684844f", list(src))))
 	if(!I.use_tool(src, user, 60, 5, 50))
-		to_chat(user, span_warning("You failed to weld apart [src]!"))
+		to_chat(user, span_warning(LANG("obj.1fa7b46f", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] welded [src] into pieces!"), span_notice("You welded apart [src]!"))
+	user.visible_message(span_notice(LANG("obj.8dea59c5", list(user, src))), span_notice(LANG("obj.34e337a3", list(src))))
 	deconstruct(TRUE)
 
 /obj/structure/mineral_door/proc/crowbar_door(mob/living/user, obj/item/I) //if the door is flammable, call this in crowbar_act() so we can still decon it
 	. = TRUE
 	if(anchored)
-		to_chat(user, span_warning("[src] is still firmly secured to the ground!"))
+		to_chat(user, span_warning(LANG("obj.4995b95a", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] starts to pry apart [src]!"), span_notice("You start prying apart [src]."))
+	user.visible_message(span_notice(LANG("obj.c667552f", list(user, src))), span_notice(LANG("obj.417bb56c", list(src))))
 	if(!I.use_tool(src, user, 60, volume = 50))
-		to_chat(user, span_warning("You failed to pry apart [src]!"))
+		to_chat(user, span_warning(LANG("obj.66cf3cf8", list(src))))
 		return
 
-	user.visible_message(span_notice("[user] pried [src] into pieces!"), span_notice("You pried apart [src]!"))
+	user.visible_message(span_notice(LANG("obj.7d06d691", list(user, src))), span_notice(LANG("obj.77bee8b6", list(src))))
 	deconstruct(TRUE)
 
 
@@ -307,7 +308,7 @@
 /obj/structure/mineral_door/paperframe/examine(mob/user)
 	. = ..()
 	if(atom_integrity < max_integrity)
-		. += span_info("It looks a bit damaged, you may be able to fix it with some <b>paper</b>.")
+		. += span_info(LANG("obj.1f86b375", null))
 
 /obj/structure/mineral_door/paperframe/pickaxe_door(mob/living/user, obj/item/I)
 	return
@@ -324,12 +325,12 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(!user.combat_mode && istype(tool, /obj/item/paper) && (atom_integrity < max_integrity))
-		user.visible_message(span_notice("[user] starts to patch the holes in [src]."), span_notice("You start patching some of the holes in [src]!"))
+		user.visible_message(span_notice(LANG("obj.9be150e7", list(user, src))), span_notice(LANG("obj.595c0a7f", list(src))))
 		if(!do_after(user, 2 SECONDS, src))
 			return ITEM_INTERACT_BLOCKING
 		atom_integrity = min(atom_integrity+4,max_integrity)
 		qdel(tool)
-		user.visible_message(span_notice("[user] patches some of the holes in [src]."), span_notice("You patch some of the holes in [src]!"))
+		user.visible_message(span_notice(LANG("obj.ed169c7c", list(user, src))), span_notice(LANG("obj.928c5eb0", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	return ..()
