@@ -105,12 +105,13 @@
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/requisition/requisition_paper = new(T)
 
-	requisition_paper.name = "requisition form - #[id] ([pack.name])"
+	var/pack_name = lang_reverse_text(pack.name) // NOVA EDIT ADDITION - i18n - pack 是 /datum/supply_pack（非 atom，name 不过落地反查）→ 单据显英文、与已译箱名对不上；显式反查（en locale no-op）
+	requisition_paper.name = "requisition form - #[id] ([pack_name])" // NOVA EDIT CHANGE - i18n - ORIGINAL: ... ([pack.name])
 	var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 	requisition_text += "<hr/>"
 	requisition_text += "Order #[id]<br/>"
 	requisition_text += "Time of Order: [UNDERLINED_HTML_TEXT("[server_timestamp(ic_time = TRUE)]", "Shift Time: [round_timestamp()]")]<br/>"
-	requisition_text += "Item: [pack.name]<br/>"
+	requisition_text += "Item: [pack_name]<br/>" // NOVA EDIT CHANGE - i18n - ORIGINAL: [pack.name]
 	requisition_text += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	requisition_text += "Requested by: [orderer]<br/>"
 	if(paying_account)
@@ -127,7 +128,12 @@
 
 	var/station_name = (manifest_paper.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
-	manifest_paper.name = "shipping manifest - [packname?"#[id] ([pack.name])":"(Grouped Item Crate)"]"
+	// NOVA EDIT ADDITION START - i18n - pack/packname 反查成已译箱名，让单据与实际箱子名对得上（否则单据英文、找不到对应箱子）
+	var/pack_name = lang_reverse_text(pack.name)
+	if(packname)
+		packname = lang_reverse_text(packname)
+	// NOVA EDIT ADDITION END
+	manifest_paper.name = "shipping manifest - [packname?"#[id] ([pack_name])":"(Grouped Item Crate)"]" // NOVA EDIT CHANGE - i18n - ORIGINAL: ([pack.name])
 
 	var/manifest_text = "<h2>[command_name()] Shipping Manifest</h2>"
 	manifest_text += "<hr/>"
@@ -144,7 +150,7 @@
 	for(var/atom/movable/stuff as anything in container.contents - manifest_paper)
 		if(isstack(stuff))
 			var/obj/item/stack/thing = stuff
-			container_contents[thing.singular_name] += thing.amount
+			container_contents[lang_reverse_text(thing.singular_name)] += thing.amount // NOVA EDIT CHANGE - i18n - stack 单数名反查（非 atom.name，落地钩子抓不到）- ORIGINAL: container_contents[thing.singular_name]
 			continue
 		container_contents[stuff.name]++
 	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)

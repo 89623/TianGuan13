@@ -432,8 +432,8 @@
 
 	if(!iscarbon(victim) || !ishuman(ling) || !ling.combat_mode)
 		victim.visible_message(
-			span_danger(LANG("obj.7f5eac5b", list(victim, ling, src))),
-			span_userdanger(LANG("obj.1377e1d0", list(src, ling))),
+			span_danger("[victim] is grabbed by [ling]'s [src]]!"),
+			span_userdanger("\A [src] grabs you and pulls you towards [ling]!"),
 		)
 		victim.throw_at(
 			target = get_step_towards(ling, victim),
@@ -450,8 +450,8 @@
 		if(!isnull(stealing))
 			if(victim.dropItemToGround(stealing))
 				victim.visible_message(
-					span_danger(LANG("obj.0eb8a523", list(stealing, victim, src))),
-					span_userdanger(LANG("obj.2a71e8ab", list(src, stealing))),
+					span_danger("[stealing] is yanked off [victim]'s hand by [src]!"),
+					span_userdanger("\A [src] pulls [stealing] away from you!"),
 				)
 				return on_hit(stealing) //grab the item as if you had hit it directly with the tentacle
 
@@ -463,8 +463,8 @@
 
 	if(ling.combat_mode)
 		victim.visible_message(
-			span_danger(LANG("obj.27b77bea", list(victim, ling, src))),
-			span_userdanger(LANG("obj.520cb41f", list(src, ling))),
+			span_danger("[victim] is thrown towards [ling] by \a [src]!"),
+			span_userdanger("\A [src] grabs you and throws you towards [ling]!"),
 		)
 		victim.throw_at(
 			target = get_step_towards(ling, victim),
@@ -659,9 +659,9 @@
 	if(!istype(tool, /obj/item/organ/monster_core/regenerative_core/legion) || !holds_reagents)
 		return NONE
 	visible_message(span_boldwarning(LANG("obj.0e8de47d", list(user, tool, src, src))))
-	var/mob/living/carbon/wearer = loc
+	var/mob/living/carbon/human/wearer = loc
 	playsound(wearer, 'sound/effects/blob/attackblob.ogg', 60, TRUE)
-	wearer.temporarilyRemoveItemFromInventory(wearer.head, TRUE)
+	wearer.temporarilyRemoveItemFromInventory(src, TRUE)
 	wearer.equip_to_slot_if_possible(new /obj/item/clothing/head/helmet/changeling_hivehead/legion(wearer), ITEM_SLOT_HEAD, 1, 1, 1)
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
@@ -705,9 +705,9 @@
 ///Stuff we want to do to our minions. This is in its own proc so subtypes can override this behaviour.
 /datum/action/cooldown/hivehead_spawn_minions/proc/minion_additional_changes(mob/living/basic/minion)
 	var/mob/living/basic/bee/summoned_bee = minion
-	var/mob/living/carbon/wearer = owner
-	if(istype(summoned_bee) && length(wearer.head.reagents.reagent_list))
-		summoned_bee.assign_reagent(pick(wearer.head.reagents.reagent_list))
+	var/obj/item/clothing/head/helmet/changeling_hivehead/hivehead = owner.get_item_by_slot(ITEM_SLOT_HEAD)
+	if(istype(summoned_bee) && istype(hivehead) && length(hivehead.reagents.reagent_list))
+		summoned_bee.assign_reagent(pick(hivehead.reagents.reagent_list))
 
 /obj/item/clothing/head/helmet/changeling_hivehead/legion
 	name = "legion hive head"

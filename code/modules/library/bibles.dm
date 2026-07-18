@@ -275,11 +275,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			SEND_SIGNAL(target_mob, COMSIG_LIVING_BLESSED, user, src, bless_result)
 			return
 
-	if(iscarbon(target_mob))
-		var/mob/living/carbon/carbon_target = target_mob
-		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
-			carbon_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5, 60)
-			carbon_target.balloon_alert(carbon_target, LANG("obj.95af1747", null))
+	if(ishuman(target_mob))
+		var/mob/living/carbon/human/human_target = target_mob
+		if(!istype(human_target.head, /obj/item/clothing/head/helmet))
+			human_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5, 60)
+			human_target.balloon_alert(human_target, LANG("obj.95af1747", null))
 	target_mob.visible_message(span_danger(LANG("obj.908ad4aa", list(user, target_mob, src))), \
 			span_userdanger(LANG("obj.908ad4aa", list(user, target_mob, src))))
 	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)

@@ -27,7 +27,7 @@
 /obj/machinery/gizmo/Initialize(mapload)
 	. = ..()
 
-	name = pick(possible_names)
+	name = lang_reverse_text(pick(possible_names)) // NOVA EDIT CHANGE - i18n - name 在 ..() 之后赋值（atom Initialize 反查钩子已跑过）→ 显式反查随机名（en locale no-op；词表见 strings/i18n/*/_gizmo_names.json）- ORIGINAL: name = pick(possible_names)
 
 	if(icon_states)
 		base_icon_state = pick(icon_states)

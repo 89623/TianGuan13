@@ -42,7 +42,7 @@
 	victim.Knockdown(5 SECONDS)
 
 	// If someone's already cursed, don't try to give them another
-	if(istype(victim.back, /obj/item/storage/backpack/duffelbag/cursed))
+	if(istype(victim.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack/duffelbag/cursed))
 		to_chat(caster, span_warning(LANG("datum.02c601f6", list(victim))))
 		to_chat(victim, span_warning(LANG("datum.96819b64", null)))
 		return TRUE
@@ -50,15 +50,15 @@
 	// However if they're uncursed, they're fresh for getting a cursed bag
 	var/obj/item/storage/backpack/duffelbag/cursed/conjured_duffel = new get_turf(victim)
 	victim.visible_message(
-		span_danger(LANG("datum.994bc05b", list(victim))),
-		span_danger(LANG("datum.5aabd19c", list(pick(elaborate_backstory)))),
+		span_danger("A growling duffel bag appears on [victim]!"),
+		span_danger("You feel something attaching itself to you, and a strong desire to discuss your [pick(elaborate_backstory)] at length!"),
 	)
 
 	conjured_duffel.pickup(victim)
 	conjured_duffel.forceMove(victim)
 
 	// Put it on their back first
-	if(victim.dropItemToGround(victim.back))
+	if(victim.dropItemToGround(victim.get_item_by_slot(ITEM_SLOT_BACK)))
 		victim.equip_to_slot_if_possible(conjured_duffel, ITEM_SLOT_BACK, TRUE, TRUE)
 		return TRUE
 

@@ -139,13 +139,14 @@
 	icon_state = "[initial(icon_state)][door_opened ? "open":""]"
 	return ..()
 
-/obj/structure/mineral_door/attackby(obj/item/I, mob/living/user)
-	if(pickaxe_door(user, I))
-		return
-	else if(!user.combat_mode)
-		return attack_hand(user)
-	else
-		return ..()
+/obj/structure/mineral_door/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(pickaxe_door(user, tool))
+		return ITEM_INTERACT_SUCCESS
+
+	if(!user.combat_mode)
+		return attack_hand(user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+	return NONE
 
 /obj/structure/mineral_door/set_anchored(anchorvalue) //called in default_unfasten_wrench() chain
 	. = ..()
@@ -282,10 +283,10 @@
 /obj/structure/mineral_door/wood/crowbar_act(mob/living/user, obj/item/I)
 	return crowbar_door(user, I)
 
-/obj/structure/mineral_door/wood/attackby(obj/item/I, mob/living/user)
-	if(I.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		fire_act(I.get_temperature())
-		return
+/obj/structure/mineral_door/wood/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		fire_act(tool.get_temperature())
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
@@ -318,18 +319,19 @@
 /obj/structure/mineral_door/paperframe/crowbar_act(mob/living/user, obj/item/I)
 	return crowbar_door(user, I)
 
-/obj/structure/mineral_door/paperframe/attackby(obj/item/I, mob/living/user)
-	if(I.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //BURN IT ALL DOWN JIM
-		fire_act(I.get_temperature())
-		return
+/obj/structure/mineral_door/paperframe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //BURN IT ALL DOWN JIM
+		fire_act(tool.get_temperature())
+		return ITEM_INTERACT_SUCCESS
 
-	if((!user.combat_mode) && istype(I, /obj/item/paper) && (atom_integrity < max_integrity))
+	if(!user.combat_mode && istype(tool, /obj/item/paper) && (atom_integrity < max_integrity))
 		user.visible_message(span_notice(LANG("obj.9be150e7", list(user, src))), span_notice(LANG("obj.595c0a7f", list(src))))
-		if(do_after(user, 2 SECONDS, src))
-			atom_integrity = min(atom_integrity+4,max_integrity)
-			qdel(I)
-			user.visible_message(span_notice(LANG("obj.ed169c7c", list(user, src))), span_notice(LANG("obj.928c5eb0", list(src))))
-			return TRUE
+		if(!do_after(user, 2 SECONDS, src))
+			return ITEM_INTERACT_BLOCKING
+		atom_integrity = min(atom_integrity+4,max_integrity)
+		qdel(tool)
+		user.visible_message(span_notice(LANG("obj.ed169c7c", list(user, src))), span_notice(LANG("obj.928c5eb0", list(src))))
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 

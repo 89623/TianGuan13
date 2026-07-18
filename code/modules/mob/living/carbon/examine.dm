@@ -97,21 +97,21 @@
 			damage_text = "limp and lifeless"
 		else
 			damage_text = (body_part.brute_dam >= body_part.burn_dam) ? body_part.heavy_brute_msg : body_part.heavy_burn_msg
-		. += span_boldwarning(LANG("mob.3a6ab594", list(capitalize(t_his), lang_zone(body_part.plaintext_zone), damage_text)))
+		. += span_boldwarning("[capitalize(t_his)] [body_part.plaintext_zone] looks [damage_text]!")
 
 	//stores missing limbs
 	var/l_limbs_missing = 0
 	var/r_limbs_missing = 0
 	for(var/missing_limb in get_missing_limbs())
 		if(missing_limb == BODY_ZONE_HEAD)
-			. += span_deadsay(LANG("mob.ff5e16b5", list(t_His, parse_zone(missing_limb))))
+			. += span_deadsay("<B>[t_His] [parse_zone(missing_limb)] is missing!</B>")
 			continue
 		if(missing_limb == BODY_ZONE_L_ARM || missing_limb == BODY_ZONE_L_LEG)
 			l_limbs_missing++
 		else if(missing_limb == BODY_ZONE_R_ARM || missing_limb == BODY_ZONE_R_LEG)
 			r_limbs_missing++
 
-		. += span_boldwarning(LANG("mob.7fb1cb66", list(capitalize(t_his), parse_zone(missing_limb)))) // NOVA EDIT - I18N - codemod missed this .+= inside a for-loop (ForList gap); reuses the "{0} {1} is missing!" template key
+		. += span_boldwarning("[capitalize(t_his)] [parse_zone(missing_limb)] is missing!")
 
 	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
 		. += span_tinydanger(LANG("mob.2fc5c3ff", list(t_He, p_s())))
@@ -186,29 +186,22 @@
 				grasped_limbs += body_part.plaintext_zone
 
 		if(LAZYLEN(bleeding_limbs))
-			// NOVA EDIT ADDITION START - I18N - 部位列表逐词反查 + 顿号连接（en 路径与原 english_list 等价）
-			var/zones_text
-			if(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
-				zones_text = english_list(bleeding_limbs, and_text = " and ")
-			else
-				var/list/zones_local = list()
-				for(var/zone in bleeding_limbs)
-					zones_local += lang_zone(zone)
-				zones_text = jointext(zones_local, "、")
-			// NOVA EDIT ADDITION END
 			var/bleed_text = "<b>"
-			// NOVA EDIT CHANGE START - I18N - 原三段拼接（前缀 + english_list + 条件后缀）改为整句 LANG 模板：
-			// examine 是多行大块文本，边界模板引擎无法整句命中，拼接句永远残留英文；en 输出与原拼接逐字一致。
 			if(appears_dead)
 				bleed_text += "<span class='deadsay'>"
-				bleed_text += LANG("mob.7b996261", list(t_his, zones_text))
+				bleed_text += "Blood is visible in [t_his] open "
 			else
 				bleed_text += "<span class='warning'>"
+				bleed_text += "[t_He] [t_is] bleeding from [t_his] "
+
+			bleed_text += english_list(bleeding_limbs, and_text = " and ")
+
+			if(appears_dead)
+				bleed_text += ", but it has pooled and is not flowing."
+			else
 				if(HAS_TRAIT(src, TRAIT_BLOOD_FOUNTAIN))
-					bleed_text += LANG("mob.366794fc", list(t_He, t_is, t_his, zones_text))
-				else
-					bleed_text += LANG("mob.42c4b423", list(t_He, t_is, t_his, zones_text))
-			// NOVA EDIT CHANGE END
+					bleed_text += " incredibly quickly"
+				bleed_text += "!"
 
 			if(appears_dead)
 				bleed_text += "<span class='deadsay'>"
@@ -219,7 +212,7 @@
 			. += bleed_text
 			if(LAZYLEN(grasped_limbs))
 				for(var/grasped_part in grasped_limbs)
-					. += LANG("mob.f89190fe", list(t_He, t_is, t_his, lang_zone(grasped_part)))
+					. += "[t_He] [t_is] holding [t_his] [grasped_part] to slow the bleeding!"
 
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		. += span_smallnoticeital(LANG("mob.aa008903", list(t_He, t_is))) // this should be signalized
@@ -320,12 +313,14 @@
 	/// The first 1-FLAVOR_PREVIEW_LIMIT characters in the mob's "flavor_text" DNA feature. FLAVOR_PREVIEW_LIMIT is defined in flavor_defines.dm.
 	var/preview_text = copytext_char((dna.features["flavor_text"]), 1, FLAVOR_PREVIEW_LIMIT)
 	// What examine_tgui.dm uses to determine if flavor text appears as "Obscured".
+	var/obj/item/clothing/mask/wear_mask = get_item_by_slot(ITEM_SLOT_MASK)
+	var/obj/item/clothing/head/head = get_item_by_slot(ITEM_SLOT_HEAD)
 	var/face_obscured = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 
 	if (!(face_obscured))
-		flavor_text_link = span_notice("[preview_text]... <a href='byond://?src=[REF(src)];lookup_info=open_examine_panel'>\[[lang_reverse_text("Look closer?")]\]</a>") // NOVA EDIT - I18N - 链接文本（raw browse href，经 . += 变量，codemod 够不着）就地反查，_examine_ui.json
+		flavor_text_link = span_notice("[preview_text]... <a href='byond://?src=[REF(src)];lookup_info=open_examine_panel'>\[Look closer?\]</a>")
 	else
-		flavor_text_link = span_notice("<a href='byond://?src=[REF(src)];lookup_info=open_examine_panel'>\[[lang_reverse_text("Examine closely...")]\]</a>") // NOVA EDIT - I18N - 同上
+		flavor_text_link = span_notice("<a href='byond://?src=[REF(src)];lookup_info=open_examine_panel'>\[Examine closely...\]</a>")
 	if (flavor_text_link)
 		. += flavor_text_link
 	if (!face_obscured && !HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE) && client?.prefs.read_preference(/datum/preference/text/character_ad))
@@ -398,8 +393,8 @@
 	var/valid_ghost = ghost?.can_reenter_corpse && ghost?.client
 	var/valid_soul = brain || !HAS_TRAIT(src, TRAIT_FAKE_SOULLESS)
 	if((brain && client_like) || (valid_ghost && valid_soul))
-		return span_deadsay(LANG("mob.30af32e7", list(t_He, t_is)))
-	return span_deadsay(LANG("mob.807d7bcc", list(t_He, t_is, t_his)))
+		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
+	return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")
 
 /// Returns a list of "damtype" => damage description based off of which bodypart description is most common
 /mob/living/carbon/proc/get_majority_bodypart_damage_desc()
@@ -430,55 +425,26 @@
 	var/t_his = p_their()
 	var/t_has = p_have()
 	var/t_is = p_are()
-	//head
-	if(head && !(obscured_slots & HIDEHEADGEAR) && !HAS_TRAIT(head, TRAIT_EXAMINE_SKIP))
-		. += LANG("mob.0cfdca44", list(t_He, t_is, head.examine_title(user), t_his))
-	//back
-	if(back && !HAS_TRAIT(back, TRAIT_EXAMINE_SKIP))
-		. += LANG("mob.127d0478", list(t_He, t_has, back.examine_title(user), t_his))
 	//Hands
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
-		. += LANG("mob.01050c26", list(t_He, t_is, held_thing.examine_title(user), t_his, lang_zone(get_held_index_name(get_held_index_of_item(held_thing)))))
+		. += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
 	for(var/obj/item/bodypart/arm/part in get_bodyparts())
 		if(!(part.bodypart_flags & BODYPART_PSEUDOPART))
 			continue
 		var/obj/item/corresponding_item = get_item_for_held_index(part.held_index) || part
-		. += LANG("mob.e3f54875", list(t_He, t_has, corresponding_item.examine_title(user), t_his, lang_zone(initial(part.plaintext_zone))))
-	//gloves
-	if(gloves && !(obscured_slots & HIDEGLOVES) && !HAS_TRAIT(gloves, TRAIT_EXAMINE_SKIP))
-		. += LANG("mob.b09af672", list(t_He, t_has, gloves.examine_title(user), t_his))
-	else if(GET_ATOM_BLOOD_DECAL_LENGTH(src) && num_hands)
-		var/list/blood_stains = GET_ATOM_BLOOD_DECALS(src)
-		var/datum/blood_type/blood_type = blood_stains[blood_stains[length(blood_stains)]]
-		var/blood_descriptior = "blood"
-		if(istype(blood_type))
-			blood_descriptior = LOWER_TEXT(blood_type.get_blood_name())
-		. += span_warning(LANG("mob.7c87d180", list(t_He, t_has, num_hands > 1 ? "" : "a ", blood_descriptior, num_hands > 1 ? "s" : "")))
+		. += "[t_He] [t_has] a [corresponding_item.examine_title(user)] in place of [t_his] [initial(part.plaintext_zone)]."
 	//handcuffed?
 	if(handcuffed)
 		var/cables_or_cuffs = istype(handcuffed, /obj/item/restraints/handcuffs/cable) ? "restrained with cable" : "handcuffed"
-		. += span_warning(LANG("mob.a7782b6e", list(t_He, t_is, icon2html(handcuffed, user), cables_or_cuffs)))
-	//shoes
-	if(shoes && !(obscured_slots & HIDESHOES)  && !HAS_TRAIT(shoes, TRAIT_EXAMINE_SKIP))
-		. += LANG("mob.9a62d1c3", list(t_He, t_is, shoes.examine_title(user), t_his))
-	//mask
-	if(wear_mask && !(obscured_slots & HIDEMASK)  && !HAS_TRAIT(wear_mask, TRAIT_EXAMINE_SKIP))
-		. += LANG("mob.cd240e46", list(t_He, t_has, wear_mask.examine_title(user), t_his))
-	if(wear_neck && !(obscured_slots & HIDENECK)  && !HAS_TRAIT(wear_neck, TRAIT_EXAMINE_SKIP))
-		. += LANG("mob.9bd1e977", list(t_He, t_is, wear_neck.examine_title(user), t_his))
+		. += span_warning("[t_He] [t_is] [icon2html(handcuffed, user)] [cables_or_cuffs]!")
 	//eyes
 	if(!(obscured_slots & HIDEEYES))
-		if(glasses  && !HAS_TRAIT(glasses, TRAIT_EXAMINE_SKIP))
-			. += LANG("mob.541facde", list(t_He, t_has, glasses.examine_title(user), t_his))
-		else if(HAS_TRAIT(src, TRAIT_UNNATURAL_RED_GLOWY_EYES))
+		if(HAS_TRAIT(src, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 			. += span_warning(LANG("mob.fbd6a334", list(t_His)))
 		else if(HAS_TRAIT(src, TRAIT_BLOODSHOT_EYES))
 			. += span_warning(LANG("mob.1e334111", list(t_His)))
-	//ears
-	if(ears && !(obscured_slots & HIDEEARS) && !HAS_TRAIT(ears, TRAIT_EXAMINE_SKIP))
-		. += LANG("mob.eb5359f6", list(t_He, t_has, ears.examine_title(user), t_his))
 
 // Yes there's a lot of copypasta here, we can improve this later when carbons are less dumb in general
 /mob/living/carbon/human/get_clothing_examine_info(mob/living/user)
@@ -542,7 +508,7 @@
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
-		. += LANG("mob.01050c26", list(t_He, t_is, held_thing.examine_title(user), t_his, lang_zone(get_held_index_name(get_held_index_of_item(held_thing)))))
+		. += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
 	for(var/obj/item/bodypart/arm/part in get_bodyparts())
 		if(!(part.bodypart_flags & BODYPART_PSEUDOPART))
 			continue
@@ -551,13 +517,19 @@
 	//gloves
 	if(gloves && !(obscured_slots & HIDEGLOVES) && !HAS_TRAIT(gloves, TRAIT_EXAMINE_SKIP))
 		. += LANG("mob.b09af672", list(t_He, t_has, gloves.examine_title(user), t_his))
-	else if(GET_ATOM_BLOOD_DECAL_LENGTH(src) || blood_in_hands)
-		if(num_hands)
-			. += span_warning(LANG("mob.7c9e2943", list(t_He, t_has, num_hands > 1 ? "" : "a ", num_hands > 1 ? "s" : "")))
+	else if(GET_ATOM_BLOOD_DECAL_LENGTH(src) && num_hands)
+		var/list/blood_stains = GET_ATOM_BLOOD_DECALS(src)
+		var/datum/blood_type/blood_type = blood_stains[blood_stains[length(blood_stains)]]
+		var/blood_descriptior = "blood"
+		if(istype(blood_type))
+			blood_descriptior = LOWER_TEXT(blood_type.get_blood_name())
+		. += span_warning(LANG("mob.7c87d180", list(t_He, t_has, num_hands > 1 ? "" : "a ", blood_descriptior, num_hands > 1 ? "s" : "")))
+	else if (blood_in_hands && num_hands)
+		. += span_warning(LANG("mob.7c9e2943", list(t_He, t_has, num_hands > 1 ? "" : "a ", num_hands > 1 ? "s" : "")))
 	//handcuffed?
 	if(handcuffed)
 		var/cables_or_cuffs = istype(handcuffed, /obj/item/restraints/handcuffs/cable) ? "restrained with cable" : "handcuffed"
-		. += span_warning(LANG("mob.a7782b6e", list(t_He, t_is, icon2html(handcuffed, user), cables_or_cuffs)))
+		. += span_warning("[t_He] [t_is] [icon2html(handcuffed, user)] [cables_or_cuffs]!")
 	//belt
 	if(belt && !(obscured_slots & HIDEBELT) && !HAS_TRAIT(belt, TRAIT_EXAMINE_SKIP))
 		. += LANG("mob.e82d58d3", list(t_He, t_has, belt.examine_title(user), t_his))
@@ -579,16 +551,16 @@
 			. += LANG("mob.63d84f9d", list(target_record.rank))
 			. += LANG("mob.4b800153", list(REF(src), world.time, REF(src), world.time))
 		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD) && HAS_TRAIT(user, TRAIT_SECURITY_HUD))
-			title = separator_hr(lang_reverse_text("Medical & Security Analysis")) // NOVA EDIT CHANGE - i18n - ORIGINAL: title = separator_hr("Medical & Security Analysis")
+			title = separator_hr("Medical & Security Analysis")
 			. += get_medhud_examine_info(user, target_record)
 			. += get_sechud_examine_info(user, target_record)
 
 		else if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
-			title = separator_hr(lang_reverse_text("Medical Analysis")) // NOVA EDIT CHANGE - i18n - ORIGINAL: title = separator_hr("Medical Analysis")
+			title = separator_hr("Medical Analysis")
 			. += get_medhud_examine_info(user, target_record)
 
 		else if(HAS_TRAIT(user, TRAIT_SECURITY_HUD))
-			title = separator_hr(lang_reverse_text("Security Analysis")) // NOVA EDIT CHANGE - i18n - ORIGINAL: title = separator_hr("Security Analysis")
+			title = separator_hr("Security Analysis")
 			. += get_sechud_examine_info(user, target_record)
 		// NOVA EDIT ADDITION START - EXAMINE RECORDS
 		if(target_record && length(target_record.past_general_records) > RECORDS_INVISIBLE_THRESHOLD)
@@ -612,10 +584,8 @@
 		. += LANG("mob.6cde43c8", null)
 		. += "<span class='notice ml-2'>[english_list(cybers, and_text = ", and")]</span>"
 	if(target_record)
-		// NOVA EDIT CHANGE START - i18n - 体征/精神状态枚举值（Active/Stable…）反查显示，href 参数不动
-		. += "<a href='byond://?src=[REF(src)];hud=m;physical_status=1;examine_time=[world.time]'>\[[lang_reverse_text(target_record.physical_status)]\]</a>"
-		. += "<a href='byond://?src=[REF(src)];hud=m;mental_status=1;examine_time=[world.time]'>\[[lang_reverse_text(target_record.mental_status)]\]</a>"
-		// NOVA EDIT CHANGE END
+		. += "<a href='byond://?src=[REF(src)];hud=m;physical_status=1;examine_time=[world.time]'>\[[target_record.physical_status]\]</a>"
+		. += "<a href='byond://?src=[REF(src)];hud=m;mental_status=1;examine_time=[world.time]'>\[[target_record.mental_status]\]</a>"
 	else
 		. += LANG("mob.c448069e", null)
 		. += LANG("mob.c448069e", null)

@@ -422,39 +422,50 @@
 /obj/structure/stairs_frame/atom_deconstruct(disassembled = TRUE)
 	new frame_stack(get_turf(src), frame_stack_amount)
 
-/obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, list/modifiers, list/attack_modifiers)
-	if(!isstack(attacked_by))
-		return ..()
+/obj/structure/stairs_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isstack(tool))
+		return NONE
 	if(!anchored)
-		user.balloon_alert(user, LANG("obj.6518c173", null))
-		return TRUE
-	var/obj/item/stack/material = attacked_by
+		user.balloon_alert(user, LANG("obj.58e3ea49", null))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/material = tool
 	if(material.stairs_type)
 		if(material.get_amount() < 10)
 			to_chat(user, span_warning(LANG("obj.a9e914c9", list(material.name))))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		if(locate(/obj/structure/stairs) in loc)
 			to_chat(user, span_warning(LANG("obj.779d9133", null)))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		to_chat(user, span_notice(LANG("obj.899b25bb", list(material, src))))
 		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		make_new_stairs(material.stairs_type)
-	else if(istype(material, /obj/item/stack/sheet))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(material, /obj/item/stack/sheet))
 		if(material.get_amount() < 10)
 			to_chat(user, span_warning(LANG("obj.0cc1b5c2", null)))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		if(locate(/obj/structure/stairs) in loc)
 			to_chat(user, span_warning(LANG("obj.779d9133", null)))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		to_chat(user, span_notice(LANG("obj.899b25bb", list(material, src))))
 		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		var/list/material_list = list()
 		if(material.material_type)
 			material_list[material.material_type] = SHEET_MATERIAL_AMOUNT * 10
 		make_new_stairs(/obj/structure/stairs/material, material_list)
-	return TRUE
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/stairs_frame/proc/make_new_stairs(stairs_type, custom_materials)
 	var/obj/structure/stairs/new_stairs = new stairs_type(loc)

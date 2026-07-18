@@ -47,7 +47,11 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 	for(var/datum/weakref/weakrefed_fax as anything in available_faxes)
 		var/obj/machinery/fax/potential_fax = weakrefed_fax.resolve()
 		if(potential_fax && istype(potential_fax))
-			if(potential_fax.fax_name == name)
+			// NOVA EDIT CHANGE - I18N - UI 回传的 faxName 可能已被 P1 反查成中文（faxes 列表未进 payload_skip），
+			// 用 lang_unreverse_text 兜回英文键匹配；否则多词传真名（如「Security Office」）选了发不出。
+			// ORIGINAL: if(potential_fax.fax_name == name)
+			if(potential_fax.fax_name == name || potential_fax.fax_name == lang_unreverse_text(name))
+			// NOVA EDIT END
 				return potential_fax
 	return null
 
@@ -112,7 +116,9 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 			var/stamp_class
 
 			for(var/needed_stamp in stamp_list)
-				if(needed_stamp[1] == params["stamp"])
+				// NOVA EDIT CHANGE - I18N - 印章名同理可能被反查成中文，兜回英文键匹配。ORIGINAL: if(needed_stamp[1] == params["stamp"])
+				if(needed_stamp[1] == params["stamp"] || needed_stamp[1] == lang_unreverse_text(params["stamp"]))
+				// NOVA EDIT END
 					stamp = needed_stamp[2]
 					stamp_class = needed_stamp[3]
 					break

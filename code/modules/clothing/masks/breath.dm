@@ -69,11 +69,9 @@
 	AddElement(/datum/element/muffles_speech)
 
 /obj/item/clothing/mask/breath/muzzle/attack_paw(mob/user, list/modifiers)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(src == carbon_user.wear_mask)
-			to_chat(user, span_warning(LANG("obj.8114e6da", null)))
-			return
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
+		to_chat(user, span_warning(LANG("obj.8114e6da", null)))
+		return
 	return ..()
 
 /obj/item/clothing/mask/breath/muzzle/examine_tags(mob/user)
