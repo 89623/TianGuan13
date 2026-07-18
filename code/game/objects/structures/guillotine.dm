@@ -99,8 +99,10 @@
 			return ITEM_INTERACT_BLOCKING
 
 		blade_status = GUILLOTINE_BLADE_RAISED
-		user.visible_message(span_notice(LANG("obj.eacedcc3", list(user))),
-			                 span_notice(LANG("obj.0ec15aff", null)))
+		user.visible_message(
+			span_notice(LANG("obj.eacedcc3", list(user))),
+			span_notice(LANG("obj.0ec15aff", null)),
+		)
 		blade_sharpness += 1
 		playsound(src, 'sound/items/unsheath.ogg', 100, TRUE)
 		return ITEM_INTERACT_SUCCESS
