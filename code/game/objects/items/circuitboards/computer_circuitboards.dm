@@ -1,5 +1,4 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-/obj/item/circuitboard/computer/obj/machinery/computer/upload/ai/no_lock
+/obj/item/circuitboard/computer
 	name = "Generic"
 	abstract_type = /obj/item/circuitboard/computer
 	name_extension = "(Computer Board)"
@@ -7,7 +6,7 @@
 /obj/item/circuitboard/computer/examine()
 	. = ..()
 	if(GetComponent(/datum/component/gps))
-		. += span_info(LANG("obj.d2a2db7a", null))
+		. += span_info("there's a small, blinking light!")
 
 //Command
 
@@ -65,12 +64,12 @@
 
 /obj/item/circuitboard/computer/atmos_alert/examine(mob/user)
 	. = ..()
-	. += span_info(LANG("obj.11eefc56", list(station_only ? "track all station and mining alarms" : "track alarms on the same z-level")))
-	. += span_notice(LANG("obj.eb1ace56", list(EXAMINE_HINT("multitool"))))
+	. += span_info("The board is configured to [station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
 
 /obj/item/circuitboard/computer/atmos_alert/multitool_act(mob/living/user)
 	station_only = !station_only
-	balloon_alert(user, LANG("obj.9f52d9ee", list(station_only ? "station" : "z-level")))
+	balloon_alert(user, "tracking set to [station_only ? "station" : "z-level"]")
 	return TRUE
 
 /obj/item/circuitboard/computer/atmos_control
@@ -300,11 +299,11 @@
 	if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 		name = "Library Visitor Console"
 		build_path = /obj/machinery/computer/libraryconsole
-		to_chat(user, span_notice(LANG("obj.66d39cd0", null)))
+		to_chat(user, span_notice("Defaulting access protocols."))
 	else
 		name = "Book Inventory Management Console"
 		build_path = /obj/machinery/computer/libraryconsole/bookmanagement
-		to_chat(user, span_notice(LANG("obj.38cc8f05", null)))
+		to_chat(user, span_notice("Access protocols successfully updated."))
 	return TRUE
 
 /obj/item/circuitboard/computer/monastery_shuttle
@@ -348,18 +347,18 @@
 		if(slot_themes[theme_name] == build_path)
 			current_theme = theme_name
 			break
-	. += span_info(LANG("obj.f16e6bdb", list(src, current_theme)))
+	. += span_info("[src] is set to the [current_theme] theme. You can use a screwdriver to reconfigure it.")
 
 /obj/item/circuitboard/computer/slot_machine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, LANG("obj.7197f413", null))
+		balloon_alert(user, "board mode is broken!")
 		return FALSE
 
-	var/choice = tgui_input_list(user, LANG("obj.25dfb2ec", null), LANG("obj.ff0d9178", null), slot_themes)
+	var/choice = tgui_input_list(user, "Choose a slot machine theme", "Theme Selection", slot_themes)
 	if(isnull(choice))
 		return ITEM_INTERACT_BLOCKING
 	build_path = slot_themes[choice]
-	to_chat(user, span_notice(LANG("obj.bc451115", list(choice))))
+	to_chat(user, span_notice("You set the board to the [choice] theme."))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/circuitboard/computer/slot_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -368,7 +367,7 @@
 
 	obj_flags |= EMAGGED
 	build_path = /obj/machinery/computer/slot_machine/syndicate
-	balloon_alert(user, LANG("obj.8ae5765e", null))
+	balloon_alert(user, "illegal slot machine loaded")
 	return TRUE
 
 /obj/item/circuitboard/computer/swfdoor
@@ -421,12 +420,12 @@
 
 /obj/item/circuitboard/computer/tram_controls/examine(mob/user)
 	. = ..()
-	. += span_info(LANG("obj.41638856", list(split_mode ? "split window" : "normal window")))
-	. += span_notice(LANG("obj.eb1ace56", list(EXAMINE_HINT("multitool"))))
+	. += span_info("The board is configured for [split_mode ? "split window" : "normal window"].")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
 
 /obj/item/circuitboard/computer/tram_controls/multitool_act(mob/living/user)
 	split_mode = !split_mode
-	to_chat(user, span_notice(LANG("obj.d5721e95", list(src, split_mode ? "split window" : "normal window"))))
+	to_chat(user, span_notice("[src] positioning set to [split_mode ? "split window" : "normal window"]."))
 	return TRUE
 
 /obj/item/circuitboard/computer/terminal
@@ -497,36 +496,36 @@
 
 /obj/item/circuitboard/computer/rdconsole/examine(mob/user)
 	. = ..()
-	. += span_info(LANG("obj.31c2ccd7", list(silence_announcements ? "silence" : "announce")))
-	. += span_notice(LANG("obj.eb1ace56", list(EXAMINE_HINT("multitool"))))
-	. += span_notice(LANG("obj.bdda31ff", list(locked ? "locked" : "unlocked", locked ? "unlocked" : "locked")))
+	. += span_info("The board is configured to [silence_announcements ? "silence" : "announce"] researched nodes on radio.")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+	. += span_notice("The board is [locked ? "locked" : "unlocked"], and can be [locked ? "unlocked" : "locked"] with an ID that has research access.")
 
 /obj/item/circuitboard/computer/rdconsole/multitool_act(mob/living/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		balloon_alert(user, LANG("obj.7197f413", null))
+		balloon_alert(user, "board mode is broken!")
 		return
 	silence_announcements = !silence_announcements
-	balloon_alert(user, LANG("obj.3fcf5069", list(silence_announcements ? "enabled" : "disabled")))
+	balloon_alert(user, "announcements [silence_announcements ? "enabled" : "disabled"]")
 
 /obj/item/circuitboard/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (locked)
 		locked = FALSE
-		to_chat(user, span_notice(LANG("obj.73763376", null)))
+		to_chat(user, span_notice("You magnetically trigger the locking mechanism, causing it to unlock."))
 
 	if (obj_flags & EMAGGED)
 		return FALSE
 
 	obj_flags |= EMAGGED
 	silence_announcements = FALSE
-	to_chat(user, span_notice(LANG("obj.caef66a9", null)))
+	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
 	return TRUE
 
 /obj/item/circuitboard/computer/rdconsole/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (user.combat_mode || !isidcard(tool))
 		return NONE
 	if (!check_access(tool))
-		balloon_alert(user, LANG("obj.ddafd752", null))
+		balloon_alert(user, "no access!")
 		return ITEM_INTERACT_BLOCKING
 	locked = !locked
 	balloon_alert(user, locked ? "locked" : "unlocked")
@@ -634,9 +633,9 @@
 	. = ..()
 	if(!(obj_flags & EMAGGED))
 		contraband = !contraband
-		to_chat(user, span_notice(LANG("obj.1ae1eebf", list(contraband ? "Broad" : "Standard"))))
+		to_chat(user, span_notice("Receiver spectrum set to [contraband ? "Broad" : "Standard"]."))
 	else
-		to_chat(user, span_alert(LANG("obj.be240f6f", null)))
+		to_chat(user, span_alert("The spectrum chip is unresponsive."))
 
 /obj/item/circuitboard/computer/cargo/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
@@ -644,7 +643,7 @@
 
 	contraband = TRUE
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice(LANG("obj.7f25b3b6", list(src))))
+	to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
 	return TRUE
 
 /obj/item/circuitboard/computer/cargo/configure_machine(obj/machinery/computer/cargo/machine)
@@ -667,16 +666,16 @@
 
 	contraband = TRUE
 	obj_flags |= EMAGGED
-	to_chat(user, span_notice(LANG("obj.fb604c36", null)))
+	to_chat(user, span_notice("You change the routing protocols, allowing the Drop Pod to land anywhere on the station."))
 	return TRUE
 
 /obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
 	if (!(obj_flags & EMAGGED))
 		contraband = !contraband
-		to_chat(user, span_notice(LANG("obj.1ae1eebf", list(contraband ? "Broad" : "Standard"))))
+		to_chat(user, span_notice("Receiver spectrum set to [contraband ? "Broad" : "Standard"]."))
 		return TRUE
 	else
-		to_chat(user, span_notice(LANG("obj.08cd0748", null)))
+		to_chat(user, span_notice("You reset the destination-routing protocols and receiver spectrum to factory defaults."))
 		contraband = FALSE
 		obj_flags &= ~EMAGGED
 		return TRUE
@@ -744,7 +743,7 @@
 		var/on_shuttle_frame = HAS_TRAIT((get_turf(machine)), TRAIT_SHUTTLE_CONSTRUCTION_TURF)
 		machine.say(on_shuttle_frame ? "Console will automatically link on shuttle completion." : "No shuttle available for linking.")
 	else if(!istype(shuttle))
-		machine.say(LANG("obj.70714a10", null))
+		machine.say("Cannot link to this kind of shuttle!")
 	else
 		machine.connect_to_shuttle(TRUE, shuttle)
 

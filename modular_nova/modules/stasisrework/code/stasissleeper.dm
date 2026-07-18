@@ -17,9 +17,9 @@
 
 /obj/machinery/stasissleeper/examine(mob/user)
 	. = ..()
-	. += span_notice(LANG("obj.da3c2068", list(state_open ? "close" : "open")))
-	. += span_notice(LANG("obj.c3c010b2", list(occupant ? "occupied" : "vacant")))
-	. += span_notice(LANG("obj.33fcec18", null))
+	. += span_notice("Alt-click to [state_open ? "close" : "open"] the machine.")
+	. += span_notice("A light blinking on the side indicates that it is [occupant ? "occupied" : "vacant"].")
+	. += span_notice("It has a screen on the side displaying the vitals of the occupant. Interact to read it.")
 
 /obj/machinery/stasissleeper/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
@@ -53,9 +53,9 @@
 
 /obj/machinery/stasissleeper/click_alt(mob/user)
 	if(!panel_open)
-		user.visible_message(span_notice(LANG("obj.6516aa25", list(src, state_open ? "hisses as it seals shut." : "hisses as it swings open."))), \
-						span_notice(LANG("obj.767bf180", list(state_open ? "close" : "open", src))), \
-						span_hear(LANG("obj.5e28d30e", list(state_open ? "seal shut." : "swing open."))))
+		user.visible_message(span_notice("\The [src] [state_open ? "hisses as it seals shut." : "hisses as it swings open."]."), \
+						span_notice("You [state_open ? "close" : "open"] \the [src]."), \
+						span_hear("You hear a nearby machine [state_open ? "seal shut." : "swing open."]."))
 	if(state_open)
 		close_machine()
 	else
@@ -69,8 +69,8 @@
 	. = ..()
 
 /obj/machinery/stasissleeper/container_resist_act(mob/living/user)
-	visible_message(span_notice(LANG("obj.8616ec7e", list(occupant, src))),
-		span_notice(LANG("obj.adaf0a2d", list(src))))
+	visible_message(span_notice("[occupant] emerges from [src]!"),
+		span_notice("You climb out of [src]!"))
 	open_machine()
 	if(HAS_TRAIT(user, TRAIT_STASIS))
 		thaw_them(user)
@@ -116,10 +116,10 @@
 
 /obj/machinery/stasissleeper/screwdriver_act(mob/living/user, obj/item/tool)
 	if(occupant)
-		to_chat(user, span_warning(LANG("obj.29741746", list(src))))
+		to_chat(user, span_warning("[src] is currently occupied!"))
 		return
 	if(state_open)
-		to_chat(user, span_warning(LANG("obj.2bc99427", list(src, panel_open ? "close" : "open"))))
+		to_chat(user, span_warning("[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!"))
 		return
 	return default_deconstruction_screwdriver(user, tool)
 
@@ -141,7 +141,7 @@
 	. = !(state_open || panel_open) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		crowbar.play_tool_sound(src, 50)
-		visible_message(span_notice(LANG("obj.13d2a45b", list(usr, src))), span_notice(LANG("obj.f68d6a77", list(src))))
+		visible_message(span_notice("[usr] pries open [src]."), span_notice("You pry open [src]."))
 		open_machine()
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
@@ -149,22 +149,22 @@
 /obj/machinery/stasissleeper/attack_hand(mob/user)
 	if(occupant)
 		if(occupant == user)
-			to_chat(user, span_notice(LANG("obj.0b81e68a", null)))
+			to_chat(user, span_notice("You read the vitals readout on the inside of the stasis unit."))
 		else
-			to_chat(user, span_notice(LANG("obj.f51db475", null)))
-		healthscan(user, occupant, SCANNER_VERBOSE, TRUE)
+			to_chat(user, span_notice("You read the vitals readout on the side of the stasis unit."))
+		healthscan(user, occupant, mode = SCANNER_VERBOSE, scanpower = SCANPOWER_ADVANCED)
 	else
-		to_chat(user, span_warning(LANG("obj.1b7cb29c", null)))
+		to_chat(user, span_warning("The vitals readout is blank, the stasis unit is unoccupied!"))
 
 /obj/machinery/stasissleeper/attack_hand_secondary(mob/user)
 	if(occupant)
 		if(occupant == user)
-			to_chat(user, span_notice(LANG("obj.c9bf90dc", null)))
+			to_chat(user, span_notice("You read the bloodstream readout on the inside of the stasis unit."))
 		else
-			to_chat(user, span_notice(LANG("obj.5b711ed3", null)))
+			to_chat(user, span_notice("You read the bloodstream readout on the side of the stasis unit."))
 		chemscan(user, occupant)
 	else
-		to_chat(user, span_warning(LANG("obj.7e49fc15", null)))
+		to_chat(user, span_warning("The bloodstream readout is blank, the stasis unit is unoccupied!"))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/stasissleeper/attack_ai(mob/user)

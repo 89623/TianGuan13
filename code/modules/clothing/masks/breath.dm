@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply."
 	name = "breath mask"
@@ -21,7 +20,7 @@
 	bio = 50
 
 /obj/item/clothing/mask/breath/suicide_act(mob/living/user)
-	user.visible_message(span_suicide(LANG("obj.47ea391f", list(user, src, user.p_their(), user.p_theyre()))))
+	user.visible_message(span_suicide("[user] is wrapping \the [src]'s tube around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
@@ -37,7 +36,7 @@
 /obj/item/clothing/mask/breath/examine(mob/user)
 	. = ..()
 	if(adjustable)
-		. += span_notice(LANG("obj.10c89ab8", list(src)))
+		. += span_notice("Alt-click [src] to adjust it.")
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
@@ -69,11 +68,9 @@
 	AddElement(/datum/element/muffles_speech)
 
 /obj/item/clothing/mask/breath/muzzle/attack_paw(mob/user, list/modifiers)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(src == carbon_user.wear_mask)
-			to_chat(user, span_warning(LANG("obj.8114e6da", null)))
-			return
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
+		to_chat(user, span_warning("You need help taking this off!"))
+		return
 	return ..()
 
 /obj/item/clothing/mask/breath/muzzle/examine_tags(mob/user)

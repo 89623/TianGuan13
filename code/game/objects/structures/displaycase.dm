@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/structures.dmi'
@@ -65,9 +64,9 @@
 /obj/structure/displaycase/examine(mob/user)
 	. = ..()
 	if(alert)
-		. += span_notice(LANG("obj.d417b555", null))
+		. += span_notice("Hooked up with an anti-theft system.")
 	if(showpiece)
-		. += span_notice(LANG("obj.0b037123", list(showpiece)))
+		. += span_notice("There's \a [showpiece] inside.")
 
 ///Removes the showpiece from the displaycase
 /obj/structure/displaycase/proc/dump()
@@ -126,63 +125,89 @@
 		. += "[initial(icon_state)]_closed"
 		return
 
-/obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.GetID() && !broken)
-		if(allowed(user))
-			to_chat(user, span_notice(LANG("obj.d6171b71", list(open ? "close":"open", src))))
-			toggle_lock(user)
-		else
-			to_chat(user, span_alert(LANG("obj.077f9b52", null)))
-	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
-		if(atom_integrity < max_integrity)
-			if(!attacking_item.tool_start_check(user, amount=1))
-				return
+/obj/structure/displaycase/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.GetID() && !broken)
+		if(!allowed(user))
+			to_chat(user, span_alert("Access denied."))
+			return ITEM_INTERACT_BLOCKING
 
-			to_chat(user, span_notice(LANG("obj.93449ef4", list(src))))
-			if(attacking_item.use_tool(src, user, 40, volume=50))
-				atom_integrity = max_integrity
-				update_appearance()
-				to_chat(user, span_notice(LANG("obj.e94d13eb", list(src))))
-		else
-			to_chat(user, span_warning(LANG("obj.7f6370b2", list(src))))
-		return
-	else if(!alert && attacking_item.tool_behaviour == TOOL_CROWBAR) //Only applies to the lab cage and player made display cases
-		if(broken)
-			if(showpiece)
-				to_chat(user, span_warning(LANG("obj.ea7ab49f", null)))
-			else
-				to_chat(user, span_notice(LANG("obj.9392e509", null)))
-				qdel(src)
-		else
-			to_chat(user, span_notice(LANG("obj.9712cf58", list(open ? "close":"open", src))))
-			if(attacking_item.use_tool(src, user, 20))
-				to_chat(user, span_notice(LANG("obj.d6171b71", list(open ? "close":"open", src))))
-				toggle_lock(user)
-	else if(open && !showpiece)
-		insert_showpiece(attacking_item, user)
-		return TRUE //cancel the attack chain, whether we successfully placed an item or not
-	else if(glass_fix && broken && istype(attacking_item, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/glass_sheet = attacking_item
+		to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
+		toggle_lock(user)
+		return ITEM_INTERACT_SUCCESS
+
+
+	if(open && !showpiece)
+		insert_showpiece(tool, user)
+		return ITEM_INTERACT_SUCCESS //cancel the attack chain, whether we successfully placed an item or not
+
+	if(glass_fix && broken && istype(tool, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/glass_sheet = tool
 		if(glass_sheet.get_amount() < 2)
-			to_chat(user, span_warning(LANG("obj.1dafa749", null)))
-			return
-		to_chat(user, span_notice(LANG("obj.84eb98c3", list(src))))
-		if(do_after(user, 2 SECONDS, target = src))
-			glass_sheet.use(2)
-			broken = FALSE
-			atom_integrity = max_integrity
-			update_appearance()
-	else
-		return ..()
+			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You start fixing [src]..."))
+		if(!do_after(user, 2 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+
+		glass_sheet.use(2)
+		broken = FALSE
+		atom_integrity = max_integrity
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/structure/displaycase/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode || broken)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(atom_integrity == max_integrity)
+		to_chat(user, span_warning("[src] is already in good condition!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.tool_start_check(user, amount=1))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You begin repairing [src]..."))
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return ITEM_INTERACT_BLOCKING
+
+	atom_integrity = max_integrity
+	update_appearance()
+	to_chat(user, span_notice("You repair [src]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/displaycase/crowbar_act(mob/living/user, obj/item/tool)
+	if(alert) //Only applies to the lab cage and player made display cases
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(broken)
+		if(showpiece)
+			to_chat(user, span_warning("Remove the displayed object first!"))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You remove the destroyed case."))
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	to_chat(user, span_notice("You start to [open ? "close":"open"] [src]..."))
+	if(!tool.use_tool(src, user, 20))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
+	toggle_lock(user)
+	return ITEM_INTERACT_SUCCESS
+
 
 ///Handles placing an item into the display case. Returns TRUE if the item failed to be placed inside the container, useful for descendants
 /obj/structure/displaycase/proc/insert_showpiece(obj/item/new_showpiece, mob/user)
 	if(showpiece_type && !istype(new_showpiece, showpiece_type))
-		to_chat(user, span_notice(LANG("obj.69abcb9c", null)))
+		to_chat(user, span_notice("This doesn't belong in this kind of display."))
 		return TRUE
 	if(user.transferItemToLoc(new_showpiece, src))
 		showpiece = new_showpiece
-		to_chat(user, span_notice(LANG("obj.aedaabdd", list(new_showpiece))))
+		to_chat(user, span_notice("You put [new_showpiece] on display."))
 		update_appearance()
 
 ///Opens and closes the display case
@@ -200,7 +225,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (broken || open))
-		to_chat(user, span_notice(LANG("obj.fd267b65", null)))
+		to_chat(user, span_notice("You deactivate the hover field built into the case."))
 		log_combat(user, src, "deactivates the hover field of")
 		dump()
 		add_fingerprint(user)
@@ -215,7 +240,7 @@
 			if(!user.is_blind())
 				user.examinate(src)
 			return
-		user.visible_message(span_danger(LANG("obj.64eb3940", list(user))), null, null, COMBAT_MESSAGE_RANGE)
+		user.visible_message(span_danger("[user] kicks the display case."), null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 		take_damage(2)
@@ -258,12 +283,12 @@
 /obj/structure/displaycase_chassis/examine(mob/user)
 	. = ..()
 	if(!electronics)
-		. += span_notice(LANG("obj.ce9175a1", list(EXAMINE_HINT("airlock electronics"))))
-	. += span_notice(LANG("obj.e31269f5", list(src, EXAMINE_HINT("10 glass sheets"), EXAMINE_HINT("card reader"))))
+		. += span_notice("You can attach [EXAMINE_HINT("airlock electronics")] to give it access restrictions.")
+	. += span_notice("[src] can be finalized using [EXAMINE_HINT("10 glass sheets")], or turned into a Vend-A-Tray using a [EXAMINE_HINT("card reader")].")
 
 /obj/structure/displaycase_chassis/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	balloon_alert(user, LANG("obj.b5ba9871", null))
+	balloon_alert(user, "disassembling...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 3 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -274,33 +299,40 @@
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/electronics/airlock))
-		balloon_alert(user, LANG("obj.3ddbe0ad", null))
-		if(do_after(user, 3 SECONDS, target = src) && user.transferItemToLoc(attacking_item, src))
-			electronics = attacking_item
-			balloon_alert(user, LANG("obj.4513d6bd", null))
-		return
+/obj/structure/displaycase_chassis/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/electronics/airlock))
+		balloon_alert(user, "installing electronics...")
+		if(!do_after(user, 3 SECONDS, target = src) || !user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(attacking_item, /obj/item/stock_parts/card_reader))
-		var/obj/item/stock_parts/card_reader/card_reader = attacking_item
-		balloon_alert(user, LANG("obj.863a5bba", list(card_reader)))
-		if(do_after(user, 2 SECONDS, target = src))
-			qdel(card_reader)
-			make_final_result(display_type = /obj/structure/displaycase/forsale)
-		return
+		electronics = tool
+		balloon_alert(user, "electronics installed")
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/glass_sheets = attacking_item
+	if(istype(tool, /obj/item/stock_parts/card_reader))
+		balloon_alert(user, "adding [tool]...")
+		if(!do_after(user, 2 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+
+		qdel(tool)
+		make_final_result(display_type = /obj/structure/displaycase/forsale)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/sheet/glass))
+		var/obj/item/stack/sheet/glass/glass_sheets = tool
 		if(glass_sheets.get_amount() < 10)
-			balloon_alert(user, LANG("obj.c2fe6896", null))
-			return
-		balloon_alert(user, LANG("obj.87806593", null))
-		if(do_after(user, 2 SECONDS, target = src))
-			glass_sheets.use(10)
-			make_final_result(display_type = /obj/structure/displaycase/noalert)
-		return
-	return ..()
+			balloon_alert(user, "need 10 sheets!")
+			return ITEM_INTERACT_BLOCKING
+
+		balloon_alert(user, "adding glass...")
+		if(!do_after(user, 2 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+
+		glass_sheets.use(10)
+		make_final_result(display_type = /obj/structure/displaycase/noalert)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 ///Makes the final result of the chassis, then deletes itself.
 /obj/structure/displaycase_chassis/proc/make_final_result(obj/structure/displaycase/display_type)
@@ -361,16 +393,16 @@
 	holographic_showpiece = TRUE
 	update_appearance()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/key/displaycase))
-		toggle_historian_mode(user)
-		return
-	return ..()
+/obj/structure/displaycase/trophy/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/key/displaycase))
+		return ..()
+	toggle_historian_mode(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
 		if(holographic_showpiece)
-			visible_message(span_danger(LANG("obj.55caec2b", list(showpiece))))
+			visible_message(span_danger("[showpiece] fizzles and vanishes!"))
 			do_sparks(number = 1, cardinal_only = FALSE, source = src)
 			QDEL_NULL(showpiece)
 			holographic_showpiece = FALSE
@@ -388,7 +420,7 @@
 ///Toggles the mode that shows the historian panel on the UI, enabling saving the looks and the trophy message of the current trophy
 /obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
 	historian_mode = !historian_mode
-	balloon_alert(user, LANG("obj.40e20999", list(historian_mode ? "enabled" : "disabled")))
+	balloon_alert(user, "[historian_mode ? "enabled" : "disabled"] historian mode.")
 	playsound(src, 'sound/machines/beep/twobeep.ogg', 10, vary = 50)
 	SStgui.update_uis(src)
 
@@ -428,7 +460,7 @@
 			return
 		if("change_message")
 			if(showpiece && !holographic_showpiece)
-				var/new_trophy_message = tgui_input_text(usr, LANG("obj.4eb968d1", null), LANG("obj.2c36c536", null), trophy_message, max_length = MAX_PLAQUE_LEN)
+				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, max_length = MAX_PLAQUE_LEN)
 				if(!new_trophy_message)
 					return
 				trophy_message = new_trophy_message
@@ -539,32 +571,32 @@
 	switch(action)
 		if("Buy")
 			if(!showpiece)
-				to_chat(usr, span_notice(LANG("obj.85410e60", null)))
+				to_chat(usr, span_notice("There's nothing for sale."))
 				return TRUE
 			if(broken)
-				to_chat(usr, span_notice(LANG("obj.9b2d5e64", list(src))))
+				to_chat(usr, span_notice("[src] appears to be broken."))
 				return TRUE
 			if(!payments_acc)
-				to_chat(usr, span_notice(LANG("obj.12494732", list(src))))
+				to_chat(usr, span_notice("[src] hasn't been registered yet."))
 				return TRUE
 			if(!usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return TRUE
 			if(!potential_acc)
-				to_chat(usr, span_notice(LANG("obj.9caa768c", null)))
+				to_chat(usr, span_notice("No ID card detected."))
 				return
 			var/datum/bank_account/account = potential_acc.registered_account
 			if(!account)
-				to_chat(usr, span_notice(LANG("obj.f7f686dd", list(potential_acc))))
+				to_chat(usr, span_notice("[potential_acc] has no account registered!"))
 				return
 			if(!account.has_money(sale_price))
-				to_chat(usr, span_notice(LANG("obj.20e02771", null)))
+				to_chat(usr, span_notice("You do not possess the funds to purchase this."))
 				return TRUE
 			else
 				account.adjust_money(-sale_price, "Display Case: [capitalize(showpiece.name)]")
 				if(payments_acc)
 					payments_acc.adjust_money(sale_price, "Display Case: [capitalize(showpiece.name)]")
 				usr.put_in_hands(showpiece)
-				to_chat(usr, span_notice(LANG("obj.1af3cc8a", list(showpiece, sale_price, MONEY_NAME))))
+				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] [MONEY_NAME]."))
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
@@ -573,7 +605,7 @@
 				return TRUE
 		if("Open")
 			if(!payments_acc)
-				to_chat(usr, span_notice(LANG("obj.12494732", list(src))))
+				to_chat(usr, span_notice("[src] hasn't been registered yet."))
 				return TRUE
 			if(!potential_acc || !potential_acc.registered_account)
 				return
@@ -596,40 +628,45 @@
 				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 				return
 
-			var/new_price_input = tgui_input_number(usr, LANG("obj.5fa906cc", null), LANG("obj.78cf09d8", null), 10, 1000)
+			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000)
 			if(!new_price_input || QDELETED(usr) || QDELETED(src))
 				return
 			if(payments_acc != potential_acc.registered_account)
-				to_chat(usr, span_warning(LANG("obj.93939c6b", list(src))))
+				to_chat(usr, span_warning("[src] rejects your new price."))
 				return
 			if(!usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-				to_chat(usr, span_warning(LANG("obj.797948f3", null)))
+				to_chat(usr, span_warning("You need to get closer!"))
 				return
 			sale_price = new_price_input
-			to_chat(usr, span_notice(LANG("obj.fdb4bef1", list(sale_price))))
+			to_chat(usr, span_notice("The cost is now set to [sale_price]."))
 			SStgui.update_uis(src)
 			return TRUE
 	. = TRUE
 
-/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(isidcard(attacking_item))
+/obj/structure/displaycase/forsale/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(isidcard(tool))
 		//Card Registration
-		var/obj/item/card/id/potential_acc = attacking_item
+		var/obj/item/card/id/potential_acc = tool
 		if(!potential_acc.registered_account)
-			to_chat(user, span_warning(LANG("obj.51d0d893", null)))
-			return
-		if(payments_acc == potential_acc.registered_account)
-			toggle_lock()
-			return
-	if(istype(attacking_item, /obj/item/modular_computer))
-		return TRUE
+			to_chat(user, span_warning("This ID card has no account registered!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if(payments_acc != potential_acc.registered_account)
+			return ITEM_INTERACT_BLOCKING
+
+		toggle_lock()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/modular_computer))
+		return ITEM_INTERACT_BLOCKING
+
 	SStgui.update_uis(src)
-	return ..()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(atom_integrity <= (integrity_failure * max_integrity))
-		to_chat(user, span_notice(LANG("obj.af8a4fb4", list(src))))
+		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
 		if(do_after(user, 2 SECONDS, target = src))
 			broken = FALSE
 			atom_integrity = max_integrity
@@ -640,36 +677,36 @@
 	. = ..()
 	if(open && !user.combat_mode)
 		if(anchored)
-			to_chat(user, span_notice(LANG("obj.08ee3372", list(src))))
+			to_chat(user, span_notice("You start unsecuring [src]..."))
 		else
-			to_chat(user, span_notice(LANG("obj.5332d34f", list(src))))
+			to_chat(user, span_notice("You start securing [src]..."))
 		if(I.use_tool(src, user, 16, volume=50))
 			if(QDELETED(I))
 				return
 			if(anchored)
-				to_chat(user, span_notice(LANG("obj.eea293d1", list(src))))
+				to_chat(user, span_notice("You unsecure [src]."))
 			else
-				to_chat(user, span_notice(LANG("obj.5f077768", list(src))))
+				to_chat(user, span_notice("You secure [src]."))
 			set_anchored(!anchored)
 			return TRUE
 	else if(!open && !user.combat_mode)
-		to_chat(user, span_notice(LANG("obj.05e93503", list(src))))
+		to_chat(user, span_notice("[src] must be open to move it."))
 		return
 
 /obj/structure/displaycase/forsale/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	payments_acc = null
 	req_access = list()
-	balloon_alert(user, LANG("obj.aa406d19", null))
-	to_chat(user, span_warning(LANG("obj.69410c91", list(src))))
+	balloon_alert(user, "account owner reset")
+	to_chat(user, span_warning("[src]'s card reader fizzles and smokes."))
 	return TRUE
 
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()
 	if(showpiece && !open)
-		. += span_notice(LANG("obj.64631028", list(showpiece, sale_price, MONEY_NAME)))
+		. += span_notice("[showpiece] is for sale for [sale_price] [MONEY_NAME].")
 	if(broken)
-		. += span_notice(LANG("obj.7da37457", list(src)))
+		. += span_notice("[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.")
 
 /obj/structure/displaycase/forsale/atom_break(damage_flag)
 	. = ..()

@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/fishing_rod
 	name = "fishing rod"
 	desc = "You can fish with this."
@@ -59,8 +58,6 @@
 	///Prevents spamming the line casting, without affecting the player's click cooldown.
 	COOLDOWN_DECLARE(casting_cd)
 
-	///The chance of catching fish made of the same material of the fishing rod (if MATERIAL_EFFECTS is enabled)
-	var/material_fish_chance = 10
 	///The multiplier of how much experience is gained when fishing with this rod.
 	var/experience_multiplier = 1
 	///The multiplier of the completion gain during the minigame
@@ -129,20 +126,20 @@
 	if(bait)
 		equipped_stuff += "[icon2html(bait, user)] <b>[bait]</b>"
 	if(length(equipped_stuff))
-		. += span_notice(LANG("obj.dd85ec64", list(english_list(equipped_stuff))))
+		. += span_notice("It has \a [english_list(equipped_stuff)] equipped.")
 	if(!bait)
-		. += span_warning(LANG("obj.32754eb0", null))
+		. += span_warning("It doesn't have a bait attached to it. Fishing will be more tedious!")
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH))
 		. += "" //add a new line
-		. += span_notice(LANG("obj.d23a5cd0", null))
+		. += span_notice("Thanks to your fishing skills, you can examine it again for more in-depth information.")
 		return
 	if(HAS_TRAIT(src, TRAIT_ROD_MANSUS_INFUSED))
 		if(IS_HERETIC(user))
-			. += span_purple(LANG("obj.f252ad7a", null))
+			. += span_purple("This rod has been <b>infused</b> by a heretic, improving its ability to catch glimpses of the Mansus. And fish.")
 		else
-			. += span_purple(LANG("obj.5370c755", null))
+			. += span_purple("It's glowing an eerie purple...")
 	else if(IS_HERETIC(user))
-		. += span_purple(LANG("obj.3205e25e", null))
+		. += span_purple("As a Heretic, you can infuse this fishing rod with your <b>Mansus Grasp</b> by activating the spell while wielding it, to enhance its fishing power.")
 
 /obj/item/fishing_rod/examine_more(mob/user)
 	. = ..()
@@ -163,12 +160,7 @@
 	list_clear_nulls(block)
 	. += boxed_message(block.Join("\n"))
 
-	if(get_percent && (material_flags & MATERIAL_EFFECTS) && length(custom_materials))
-		. += boxed_message(span_info(LANG("obj.7ff79bb9", list(get_material_fish_chance(user)))))
-
 	block = list()
-	if(HAS_TRAIT(src, TRAIT_ROD_ATTRACT_SHINY_LOVERS))
-		block += span_info("This fishing rod will attract shiny-loving fish.")
 	if(HAS_TRAIT(src, TRAIT_ROD_IGNORE_ENVIRONMENT))
 		block += span_info("Environment and light shouldn't be an issue with this rod.")
 	if(HAS_TRAIT_NOT_FROM(src, TRAIT_ROD_REMOVE_FISHING_DUD, INNATE_TRAIT)) // Duds are innately removed by baits, we all know that.
@@ -221,12 +213,6 @@
 /obj/item/fishing_rod/proc/on_reward_caught(atom/movable/reward, mob/user)
 	if(isnull(reward))
 		return
-	var/isfish = isfish(reward)
-	if((material_flags & MATERIAL_EFFECTS) && isfish && length(custom_materials) && HAS_TRAIT(reward, TRAIT_FISH_JUST_SPAWNED))
-		if(prob(get_material_fish_chance(user)))
-			var/obj/item/fish/fish = reward
-			var/datum/material/material = get_master_material()
-			fish.set_custom_materials(list(material.type = fish.weight))
 	// catching things that aren't fish or alive mobs doesn't consume baits.
 	if(isnull(bait) || HAS_TRAIT(bait, TRAIT_BAIT_UNCONSUMABLE))
 		return
@@ -235,7 +221,7 @@
 		if(caught_mob.stat == DEAD)
 			return
 	else
-		if(!isfish)
+		if(!isfish(reward))
 			return
 		var/obj/item/fish/fish = reward
 		if(HAS_TRAIT(bait, TRAIT_POISONOUS_BAIT) && !HAS_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE))
@@ -249,19 +235,6 @@
 
 	qdel(bait)
 	update_icon()
-
-///Returns the probability that a fish caught by this (custom material) rod will be of the same material.
-/obj/item/fishing_rod/proc/get_material_fish_chance(mob/user)
-	var/material_chance = material_fish_chance
-	if(bait)
-		if(HAS_TRAIT(bait, TRAIT_GREAT_QUALITY_BAIT))
-			material_chance += 16
-		else if(HAS_TRAIT(bait, TRAIT_GOOD_QUALITY_BAIT))
-			material_chance += 8
-		else if(HAS_TRAIT(bait, TRAIT_BASIC_QUALITY_BAIT))
-			material_chance += 4
-	material_chance += user.mind?.get_skill_level(/datum/skill/fishing) * 1.5
-	return material_chance
 
 /obj/item/fishing_rod/proc/should_bane_fish_infusions(mob/living/target)
 	return force > 0 && HAS_TRAIT(target, TRAIT_WATER_ADAPTATION)
@@ -285,7 +258,7 @@
 		return
 
 	if(currently_hooked.anchored || currently_hooked.move_resist >= MOVE_FORCE_STRONG)
-		balloon_alert(user, LANG("obj.603e3616", list(currently_hooked.p_they())))
+		balloon_alert(user, "[currently_hooked.p_they()] won't budge!")
 		return
 
 	//About thirty minutes of non-stop reeling to get from zero to master... not worth it but hey, you do what you do.
@@ -403,7 +376,7 @@
 
 /obj/item/fishing_rod/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!hook)
-		balloon_alert(user, LANG("obj.c02cf4e9", null))
+		balloon_alert(user, "install a hook first!")
 		return ITEM_INTERACT_BLOCKING
 
 	// Reel in if able
@@ -429,7 +402,7 @@
 	if(casting || currently_hooked)
 		return
 	if(!hook)
-		balloon_alert(user, LANG("obj.c02cf4e9", null))
+		balloon_alert(user, "install a hook first!")
 		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
@@ -613,16 +586,16 @@
 	// Trying to remove the item
 	if(!new_item && current_item)
 		user.put_in_hands(current_item)
-		balloon_alert(user, LANG("obj.2a4235b4", list(slot)))
+		balloon_alert(user, "[slot] removed")
 	// Trying to insert item into empty slot
 	else if(new_item && !current_item)
 		if(!slot_check(new_item, slot))
 			return
 		if(user.transferItemToLoc(new_item,src))
 			set_slot(new_item, slot)
-			balloon_alert(user, LANG("obj.7bd56e79", list(slot)))
+			balloon_alert(user, "[slot] installed")
 		else
-			balloon_alert(user, LANG("obj.2410a229", null))
+			balloon_alert(user, "stuck to your hands!")
 			return
 	/// Trying to swap item
 	else if(new_item && current_item)
@@ -631,9 +604,9 @@
 		if(user.transferItemToLoc(new_item, src))
 			user.put_in_hands(current_item)
 			set_slot(new_item, slot)
-			balloon_alert(user, LANG("obj.43586bcc", list(slot)))
+			balloon_alert(user, "[slot] swapped")
 		else
-			balloon_alert(user, LANG("obj.2410a229", null))
+			balloon_alert(user, "stuck to your hands!")
 			return
 
 	update_icon()
@@ -733,7 +706,7 @@
 /obj/item/fishing_rod/telescopic/cast_line(atom/target, mob/user, proximity_flag)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		if(!proximity_flag)
-			balloon_alert(user, LANG("obj.75b8476a", null))
+			balloon_alert(user, "extend the rod first!")
 		return
 	return ..()
 
@@ -790,7 +763,6 @@
 	deceleration_mult = 1.2
 	bounciness_mult = 0.3
 	gravity_mult = 1.2
-	material_fish_chance = 33 //if somehow you metalgen it.
 	bait_height_mult = 1.4
 
 /obj/item/fishing_rod/tech
@@ -826,7 +798,7 @@
 
 /obj/item/fishing_rod/tech/examine(mob/user)
 	. = ..()
-	. += span_notice(LANG("obj.89b193b1", null))
+	. += span_notice("<b>Alt-Click</b> to access the Experiment Configuration UI")
 
 /obj/item/fishing_rod/tech/use_slot(slot, mob/user, obj/item/new_item)
 	if(slot == ROD_SLOT_BAIT)

@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MIN_RANGE 1
 #define MIN_SPEED 1
 #define MAX_RANGE 7
@@ -85,7 +84,7 @@
 	if(.)
 		return
 	if (moving && obj_flags & EMAGGED)
-		visible_message(span_warning(LANG("obj.623d9357", list(src))))
+		visible_message(span_warning("The [src]'s control panel fizzles slightly."))
 		return
 	switch(action)
 		if("toggle")
@@ -109,17 +108,21 @@
  * Meant for attaching an item to the machine, should only be a training toolbox or target. If emagged, the
  * machine will gain an auto-attached syndicate toolbox, so in that case we shouldn't be able to swap it out
  */
-/obj/structure/training_machine/attackby(obj/item/target, mob/living/user)
+/obj/structure/training_machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (user.combat_mode)
-		return ..()
-	if (!istype(target, /obj/item/training_toolbox) && !istype(target, /obj/item/target))
-		return ..()
+		return NONE
+
+	if (!istype(tool, /obj/item/training_toolbox) && !istype(tool, /obj/item/target))
+		return NONE
+
 	if (obj_flags & EMAGGED)
-		to_chat(user, span_warning(LANG("obj.22942d53", null)))
-		return
-	attach_item(target)
-	to_chat(user, span_notice(LANG("obj.ea8e9a86", list(attached_item))))
+		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
+		return ITEM_INTERACT_BLOCKING
+
+	attach_item(tool)
+	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
 	playsound(src, SFX_RUSTLE, 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Attach an item to the machine
@@ -183,9 +186,9 @@
 	if (!attached_item)
 		return NONE
 	if (obj_flags & EMAGGED)
-		to_chat(user, span_warning(LANG("obj.22942d53", null)))
+		to_chat(user, span_warning("The toolbox is somehow stuck on! It won't budge!"))
 		return CLICK_ACTION_BLOCKING
-	to_chat(user, span_notice(LANG("obj.86489ccd", list(attached_item))))
+	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
 	playsound(src, SFX_RUSTLE, 50, TRUE)
 	return CLICK_ACTION_SUCCESS
@@ -221,7 +224,7 @@
 /obj/structure/training_machine/proc/start_moving()
 	moving = TRUE
 	starting_turf = get_turf(src)
-	say(LANG("obj.f1fc8a9b", null))
+	say("Beginning training simulation.")
 	playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
 	START_PROCESSING(SSfastprocess, src)
 
@@ -321,7 +324,7 @@
 	obj_flags |= EMAGGED
 	remove_attached_item(throwing = TRUE) //Toss out the old attached item!
 	attach_item(new /obj/item/storage/toolbox/syndicate(src))
-	to_chat(user, span_warning(LANG("obj.f344b299", null)))
+	to_chat(user, span_warning("You override the training machine's safety protocols, and activate its realistic combat feature. A toolbox pops out of a slot on the top."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	add_overlay("evil_trainer")
 	return TRUE
@@ -330,12 +333,12 @@
 	. = ..()
 	var/has_buckled_mob = has_buckled_mobs()
 	if(has_buckled_mob)
-		. += span_notice(LANG("obj.1fd4c3bd", list(buckled_mobs[1])))
+		. += span_notice("<b>Alt-Click to unbuckle \the [buckled_mobs[1]]</b>")
 	if (obj_flags & EMAGGED)
-		. += span_warning(LANG("obj.56eb1319", null))
+		. += span_warning("It has a dangerous-looking toolbox attached to it, and the control panel is smoking sightly...")
 	else if (!has_buckled_mob && attached_item) //Can't removed the syndicate toolbox!
-		. += span_notice(LANG("obj.27a6e29c", list(attached_item)))
-	. += span_notice(LANG("obj.62969e7f", null))
+		. += span_notice("<b>Alt-Click to remove \the [attached_item]</b>")
+	. += span_notice("<b>Click to open control interface.</b>")
 
 /**
  * Device that simply counts the number of times you've hit a mob or target with. Looks like a toolbox but isn't.
@@ -402,20 +405,20 @@
 		check_hit(hit_atom)
 
 /obj/item/training_toolbox/click_alt(mob/user)
-	to_chat(user, span_notice(LANG("obj.816a8fb1", null)))
+	to_chat(user, span_notice("You push the 'Lap' button on the toolbox's display."))
 	lap_hits = initial(lap_hits)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/training_toolbox/examine(mob/user)
 	. = ..()
 	if(!in_range(src, user) && !isobserver(user))
-		. += span_notice(LANG("obj.0474638f", null))
+		. += span_notice("You can see a display on the back. You'll need to get closer to read it, though.")
 		return
-	. += span_notice(LANG("obj.0ec29f44", null))
-	. += span_notice(LANG("obj.3d83b186", list(total_hits)))
+	. += span_notice("A display on the back reads:")
+	. += span_notice("Total Hits: <b>[total_hits]</b>")
 	if (lap_hits != total_hits)
-		. += span_notice(LANG("obj.38025150", list(lap_hits)))
-	. += span_notice(LANG("obj.d96c726c", null))
+		. += span_notice("Current Lap: <b>[lap_hits]</b>")
+	. += span_notice("<b>Alt-Click to 'Lap' the hit counter.</b>")
 
 #undef MIN_RANGE
 #undef MIN_SPEED

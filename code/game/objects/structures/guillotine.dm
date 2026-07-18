@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// The guillotine is not being interacted with at the moment
 #define GUILLOTINE_ACTION_IDLE 0
 /// The blade is ready to be dropped
@@ -64,18 +63,48 @@
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
 
-/obj/structure/guillotine/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/sheet/plasteel))
-		to_chat(user, span_notice(LANG("obj.95b45dae", null)))
-		if(blade_sharpness<10)
-			if(do_after(user,100,target=user))
-				blade_sharpness = min(10,blade_sharpness+3)
-				I.use(1)
-				to_chat(user, span_notice(LANG("obj.de124329", null)))
-			else
-				to_chat(user, span_notice(LANG("obj.e0cd1a12", null)))
-		else
-			to_chat(user, span_warning(LANG("obj.2377e11d", null)))
+/obj/structure/guillotine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/sheet/plasteel))
+		if(blade_sharpness == GUILLOTINE_BLADE_MAX_SHARP)
+			to_chat(user, span_warning("The guillotine is already fully repaired!"))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You start repairing the guillotine with the plasteel..."))
+		if(!do_after(user, 100, target = user))
+			to_chat(user, span_notice("You stop repairing the guillotine with the plasteel."))
+			return ITEM_INTERACT_BLOCKING
+
+		blade_sharpness = min(GUILLOTINE_BLADE_MAX_SHARP, blade_sharpness+3)
+		tool.use(1)
+		to_chat(user, span_notice("You repair the guillotine with the plasteel."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/sharpener))
+		add_fingerprint(user)
+		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
+			return ITEM_INTERACT_BLOCKING
+
+		if (blade_status != GUILLOTINE_BLADE_RAISED)
+			to_chat(user, span_warning("You need to raise the blade in order to sharpen it!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if (blade_sharpness == GUILLOTINE_BLADE_MAX_SHARP)
+			to_chat(user, span_warning("The blade is sharp enough!"))
+			return ITEM_INTERACT_BLOCKING
+
+		blade_status = GUILLOTINE_BLADE_SHARPENING
+		if(!do_after(user, 0.7 SECONDS, target = src))
+			blade_status = GUILLOTINE_BLADE_RAISED
+			return ITEM_INTERACT_BLOCKING
+
+		blade_status = GUILLOTINE_BLADE_RAISED
+		user.visible_message(span_notice("[user] sharpens the large blade of the guillotine."),
+			                 span_notice("You sharpen the large blade of the guillotine."))
+		blade_sharpness += 1
+		playsound(src, 'sound/items/unsheath.ogg', 100, TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/guillotine/examine(mob/user)
 	. = ..()
@@ -95,7 +124,7 @@
 	. += span_notice(msg)
 
 	if (LAZYLEN(buckled_mobs))
-		. += span_notice(LANG("obj.507c5d19", null))
+		. += span_notice("Someone appears to be strapped in. You can help them out, or you can harm them by activating the guillotine.")
 
 /obj/structure/guillotine/attack_hand(mob/living/user, list/modifiers)
 	add_fingerprint(user)
@@ -115,8 +144,8 @@
 		if (GUILLOTINE_BLADE_RAISED)
 			if (LAZYLEN(buckled_mobs))
 				if (user.combat_mode)
-					user.visible_message(span_warning(LANG("obj.664b0547", list(user))),
-						                 span_warning(LANG("obj.c9a0b27a", null)))
+					user.visible_message(span_warning("[user] begins to pull the lever!"),
+						                 span_warning("You begin to the pull the lever."))
 					current_action = GUILLOTINE_ACTION_INUSE
 
 					if (do_after(user, GUILLOTINE_ACTIVATE_DELAY, target = src) && blade_status == GUILLOTINE_BLADE_RAISED)
@@ -190,45 +219,17 @@
 	blade_status = GUILLOTINE_BLADE_DROPPED
 	icon_state = "guillotine"
 
-/obj/structure/guillotine/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if (istype(W, /obj/item/sharpener))
-		add_fingerprint(user)
-		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
-			return
-
-		if (blade_status == GUILLOTINE_BLADE_RAISED)
-			if (blade_sharpness < GUILLOTINE_BLADE_MAX_SHARP)
-				blade_status = GUILLOTINE_BLADE_SHARPENING
-				if(do_after(user, 0.7 SECONDS, target = src))
-					blade_status = GUILLOTINE_BLADE_RAISED
-					user.visible_message(span_notice(LANG("obj.eacedcc3", list(user))),
-						                 span_notice(LANG("obj.0ec15aff", null)))
-					blade_sharpness += 1
-					playsound(src, 'sound/items/unsheath.ogg', 100, TRUE)
-					return
-				else
-					blade_status = GUILLOTINE_BLADE_RAISED
-					return
-			else
-				to_chat(user, span_warning(LANG("obj.8c80f756", null)))
-				return
-		else
-			to_chat(user, span_warning(LANG("obj.9da86793", null)))
-			return
-	else
-		return ..()
-
 /obj/structure/guillotine/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	if (!anchored)
-		to_chat(usr, span_warning(LANG("obj.acb3909a", list(src))))
+		to_chat(usr, span_warning("[src] needs to be wrenched to the floor!"))
 		return FALSE
 
 	if (!ishuman(M))
-		to_chat(usr, span_warning(LANG("obj.5b6969ef", list(M.p_they()))))
+		to_chat(usr, span_warning("It doesn't look like [M.p_they()] can fit into this properly!"))
 		return FALSE // Can't decapitate non-humans
 
 	if (blade_status != GUILLOTINE_BLADE_RAISED)
-		to_chat(usr, span_warning(LANG("obj.6649cb11", null)))
+		to_chat(usr, span_warning("You need to raise the blade before buckling someone in!"))
 		return FALSE
 
 	return ..(M, user, check_loc = FALSE) //check_loc = FALSE to allow moving people in from adjacent turfs
@@ -268,7 +269,7 @@
 /obj/structure/guillotine/can_be_unfasten_wrench(mob/user, silent)
 	if (LAZYLEN(buckled_mobs))
 		if (!silent)
-			to_chat(user, span_warning(LANG("obj.cea3a5ec", null)))
+			to_chat(user, span_warning("Can't unfasten, someone's strapped in!"))
 		return FAILED_UNFASTEN
 
 	if (current_action && current_action != GUILLOTINE_ACTION_WRENCH)

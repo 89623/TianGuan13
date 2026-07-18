@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ///how much projectile damage is lost when using a bad fuel
 #define BAD_FUEL_DAMAGE_TAX 20
 ///extra chance it explodes upon firing
@@ -27,8 +26,8 @@
 
 /obj/structure/cannon/examine(mob/user)
 	. = ..()
-	. += span_notice(LANG("obj.e09bf8fb", list(src)))
-	. += span_warning(LANG("obj.106fec92", null))
+	. += span_notice("[src] accepts gunpowder or welding fuel.")
+	. += span_warning("Using welding fuel will weaken the force of the projectile fired.")
 
 /obj/structure/cannon/proc/fire()
 	for(var/mob/shaken_mob in urange(10, src))
@@ -55,62 +54,70 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/cannon/attackby(obj/item/used_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/cannon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(charge_ignited)
-		balloon_alert(user, LANG("obj.1c773770", null))
-		return
-	var/ignition_message = used_item.ignition_effect(src, user)
+		balloon_alert(user, "it's gonna fire!")
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(used_item, /obj/item/stack/cannonball))
+	if(istype(tool, /obj/item/stack/cannonball))
 		if(loaded_cannonball)
-			balloon_alert(user, LANG("obj.e79a422e", null))
-		else
-			var/obj/item/stack/cannonball/cannoneers_balls = used_item
-			loaded_cannonball = new cannoneers_balls.type(src, 1)
-			loaded_cannonball.copy_evidences(cannoneers_balls)
-			balloon_alert(user, LANG("obj.2294b398", list(cannoneers_balls.singular_name)))
-			cannoneers_balls.use(1, transfer = TRUE)
-		return
+			balloon_alert(user, "already loaded!")
+			return ITEM_INTERACT_BLOCKING
 
-	else if(ignition_message)
+		var/obj/item/stack/cannonball/cannoneers_balls = tool
+		loaded_cannonball = new cannoneers_balls.type(src, 1)
+		loaded_cannonball.copy_evidences(cannoneers_balls)
+		balloon_alert(user, "loaded a [cannoneers_balls.singular_name]")
+		cannoneers_balls.use(1, transfer = TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	var/ignition_message = tool.ignition_effect(src, user)
+
+	if(ignition_message)
 		if(!reagents.has_reagent(/datum/reagent/gunpowder,charge_size) && !reagents.has_reagent(/datum/reagent/fuel,charge_size))
-			balloon_alert(user, LANG("obj.e41b16fe", list(reagents.maximum_volume)))
-			return
+			balloon_alert(user, "needs [reagents.maximum_volume]u of charge!")
+			return ITEM_INTERACT_BLOCKING
+
 		visible_message(ignition_message)
 		user.log_message("fired a cannon", LOG_ATTACK)
 		log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
 		addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay)
 		charge_ignited = TRUE
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	else if(is_reagent_container(used_item))
-		var/obj/item/reagent_containers/powder_keg = used_item
+	if(is_reagent_container(tool))
+		var/obj/item/reagent_containers/powder_keg = tool
 		if(!powder_keg.is_open_container())
-			return ..()
+			return NONE // reagent containers transfer elsewhere in the chain, be free
+
 		if(istype(powder_keg, /obj/item/rag))
-			return ..()
+			return NONE
 
 		if(!powder_keg.reagents.total_volume)
-			balloon_alert(user, LANG("obj.02d482cc", list(powder_keg)))
-			return
+			balloon_alert(user, "[powder_keg] is empty!")
+			return ITEM_INTERACT_BLOCKING
+
 		if(reagents.total_volume == reagents.maximum_volume)
-			balloon_alert(user, LANG("obj.21d5a38a", list(src)))
-			return
+			balloon_alert(user, "[src] is full!")
+			return ITEM_INTERACT_BLOCKING
+
 		var/has_enough_gunpowder = powder_keg.reagents.has_reagent(/datum/reagent/gunpowder, charge_size)
 		var/has_enough_alt_fuel = powder_keg.reagents.has_reagent(/datum/reagent/fuel, charge_size)
 		if(!has_enough_gunpowder && !has_enough_alt_fuel)
-			balloon_alert(user, LANG("obj.6a4ec4bb", list(powder_keg)))
-			to_chat(user, span_warning(LANG("obj.dc0d76ae", list(powder_keg, src))))
-			return
+			balloon_alert(user, "[powder_keg] needs 15u of charge to load!")
+			to_chat(user, span_warning("[powder_keg] doesn't have at least 15u of gunpowder to fill [src]!"))
+			return ITEM_INTERACT_BLOCKING
+
 		if(has_enough_gunpowder)
 			powder_keg.reagents.trans_to(src, charge_size, target_id = /datum/reagent/gunpowder)
-			balloon_alert(user, LANG("obj.2074aeed", list(src)))
-			return
-		if(has_enough_alt_fuel)
-			powder_keg.reagents.trans_to(src, charge_size, target_id = /datum/reagent/fuel)
-			balloon_alert(user, LANG("obj.2e2a3059", list(src)))
-			return
-	..()
+			balloon_alert(user, "[src] loaded with gunpowder")
+			return ITEM_INTERACT_SUCCESS
+
+		//if(has_enough_alt_fuel) but we already know it does if we're here
+		powder_keg.reagents.trans_to(src, charge_size, target_id = /datum/reagent/fuel)
+		balloon_alert(user, "[src] loaded with welding fuel")
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/structure/cannon/trash
 	name = "trash cannon"
@@ -131,11 +138,11 @@
 	if(used_alt_fuel)
 		fires_before_deconstruction--
 	if(prob(explode_chance))
-		visible_message(span_userdanger(LANG("obj.e64b7ad7", list(src))))
+		visible_message(span_userdanger("[src] explodes!"))
 		explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
 		return
 	if(fires_before_deconstruction <= 0)
-		visible_message(span_warning(LANG("obj.4c7cd0c4", list(src))))
+		visible_message(span_warning("[src] falls apart from operation!"))
 		qdel(src)
 
 /obj/structure/cannon/trash/Destroy()

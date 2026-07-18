@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //If you look at the "geyser_soup" overlay icon_state, you'll see that the first frame has 25 ticks.
 //That's because the first 18~ ticks are completely skipped for some ungodly weird fucking byond reason
 
@@ -69,10 +68,10 @@
 		return NONE //this runs the plunger code
 
 	if(discovered)
-		to_chat(user, span_warning(LANG("obj.e4633b3a", null)))
+		to_chat(user, span_warning("This geyser has already been discovered!"))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice(LANG("obj.6aa4e4c3", null)))
+	to_chat(user, span_notice("You discovered the geyser and mark it on the GPS system!"))
 	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 30)
 	SEND_SIGNAL(user, COMSIG_LIVING_DISCOVERED_GEYSER, src)
 	if(discovery_message)
@@ -86,7 +85,7 @@
 
 	var/obj/item/card/id/card = user.get_idcard()
 	if(card)
-		to_chat(user, span_notice(LANG("obj.eeda2ee4", list(point_value))))
+		to_chat(user, span_notice("[point_value] mining points have been paid out!"))
 		card.registered_account.mining_points += point_value
 	return ITEM_INTERACT_SUCCESS
 
@@ -163,10 +162,9 @@
 	if(tt.target_zone != BODY_ZONE_HEAD)
 		return
 	if(iscarbon(hit_atom))
-		var/mob/living/carbon/H = hit_atom
-		if(!H.wear_mask)
-			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
-			H.visible_message(span_warning(LANG("obj.c6e03993", list(H))), span_warning(LANG("obj.82ae4793", null)))
+		var/mob/living/carbon/victim = hit_atom
+		if(victim.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, disable_warning = TRUE))
+			victim.visible_message(span_warning("The plunger slams into [victim]'s face!"), span_warning("The plunger suctions to your face!"))
 
 /obj/item/plunger/attack_self(mob/user)
 	. = ..()
@@ -175,15 +173,15 @@
 
 	if(!layer_mode)
 		icon_state = initial(icon_state)
-		to_chat(user, span_notice(LANG("obj.ffb49636", null)))
+		to_chat(user, span_notice("You set the plunger to 'Plunger Mode'."))
 	else
 		icon_state = layer_mode_sprite
-		to_chat(user, span_notice(LANG("obj.09c3484a", null)))
+		to_chat(user, span_notice("You set the plunger to 'Layer Mode'."))
 
 	playsound(src, 'sound/machines/click.ogg', 10, TRUE)
 
 /obj/item/plunger/click_alt(mob/user)
-	var/new_layer = tgui_input_list(user, LANG("obj.0d8e05e2", null), LANG("obj.6a7ee8f6", null), GLOB.plumbing_layers)
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", GLOB.plumbing_layers)
 	if(isnull(new_layer) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
 	target_layer = GLOB.plumbing_layers[new_layer]

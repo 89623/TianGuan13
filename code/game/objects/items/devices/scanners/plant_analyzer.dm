@@ -117,7 +117,7 @@
 		span_notice(LANG("obj.cf14fd9f", list(scanned_mob)))
 		)
 
-	healthscan(user, scanned_mob, advanced = TRUE)
+	healthscan(user, scanned_mob, scanpower = SCANPOWER_ADVANCED)
 	add_fingerprint(user)
 
 /*

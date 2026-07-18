@@ -131,12 +131,9 @@
 		return FALSE
 	if(attached)
 		return FALSE
-	if(!iscarbon(hit_mob))
+	if(!ishuman(hit_mob))
 		return FALSE
-	// disallowed carbons
-	if(isalien(hit_mob))
-		return FALSE
-	var/mob/living/carbon/target = hit_mob
+	var/mob/living/carbon/human/target = hit_mob
 	// gotta have a head to be implanted (no changelings or sentient plants)
 	if(!target.get_bodypart(BODY_ZONE_HEAD))
 		return FALSE
@@ -150,8 +147,8 @@
 	//check if not carbon/alien/has facehugger already/ect.
 	if(!valid_to_attach(hit_mob))
 		return FALSE
-	var/mob/living/carbon/target = hit_mob
-	if(target.wear_mask && istype(target.wear_mask, /obj/item/clothing/mask/facehugger))
+	var/mob/living/carbon/human/target = hit_mob
+	if(istype(target.wear_mask, /obj/item/clothing/mask/facehugger))
 		return FALSE
 	// passed initial checks - time to leap!
 	target.visible_message(span_danger(LANG("obj.600b344b", list(src, target))), \
@@ -202,13 +199,8 @@
 	attached = 0
 
 /obj/item/clothing/mask/facehugger/proc/impregnate_target(mob/living/target)
-	if(!target || target.stat == DEAD) //was taken off or something
+	if(!target || target.stat == DEAD || target.get_item_by_slot(ITEM_SLOT_MASK) != src) //was taken off or something
 		return
-
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(C.wear_mask != src)
-			return
 
 	if(!sterile)
 		target.visible_message(span_danger(LANG("obj.e0b1bb1e", list(src, target))), \

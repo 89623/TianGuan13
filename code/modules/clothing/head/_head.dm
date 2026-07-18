@@ -23,8 +23,8 @@
 		return
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/H = hit_atom
-		if(istype(H.head, /obj/item))
-			var/obj/item/WH = H.head
+		var/obj/item/WH = H.get_item_by_slot(ITEM_SLOT_HEAD)
+		if(istype(WH))
 			///check if the item has NODROP
 			if(HAS_TRAIT(WH, TRAIT_NODROP))
 				H.visible_message(span_warning(LANG("obj.dbede380", list(src, H, WH.name))), span_warning(LANG("obj.04e9da2a", list(src, WH.name))))

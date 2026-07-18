@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define STAIR_TERMINATOR_AUTOMATIC 0
 #define STAIR_TERMINATOR_NO 1
 #define STAIR_TERMINATOR_YES 2
@@ -393,12 +392,12 @@
 /obj/structure/stairs_frame/examine(mob/living/carbon/human/user)
 	. = ..()
 	if(anchored)
-		. += span_notice(LANG("obj.2e58066d", null))
+		. += span_notice("The frame is anchored and can be made into proper stairs with 10 sheets of material.")
 	else
-		. += span_notice(LANG("obj.e4b40668", null))
+		. += span_notice("The frame will need to be secured with a wrench before it can be completed.")
 
 /obj/structure/stairs_frame/wrench_act(mob/living/user, obj/item/used_tool)
-	user.balloon_alert_to_viewers(LANG("obj.bc099e69", null), LANG("obj.880c9b6b", null))
+	user.balloon_alert_to_viewers("securing stairs frame", "securing frame")
 	used_tool.play_tool_sound(src)
 	if(!used_tool.use_tool(src, user, 3 SECONDS))
 		return TRUE
@@ -411,7 +410,7 @@
 	return TRUE
 
 /obj/structure/stairs_frame/wrench_act_secondary(mob/living/user, obj/item/used_tool)
-	to_chat(user, span_notice(LANG("obj.f0ab830f", list(src))))
+	to_chat(user, span_notice("You start disassembling [src]..."))
 	used_tool.play_tool_sound(src)
 	if(!used_tool.use_tool(src, user, 3 SECONDS))
 		return TRUE
@@ -422,39 +421,50 @@
 /obj/structure/stairs_frame/atom_deconstruct(disassembled = TRUE)
 	new frame_stack(get_turf(src), frame_stack_amount)
 
-/obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, list/modifiers, list/attack_modifiers)
-	if(!isstack(attacked_by))
-		return ..()
+/obj/structure/stairs_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isstack(tool))
+		return NONE
 	if(!anchored)
-		user.balloon_alert(user, LANG("obj.6518c173", null))
-		return TRUE
-	var/obj/item/stack/material = attacked_by
+		user.balloon_alert(user, "secure the frame first!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/material = tool
 	if(material.stairs_type)
 		if(material.get_amount() < 10)
-			to_chat(user, span_warning(LANG("obj.a9e914c9", list(material.name))))
-			return
+			to_chat(user, span_warning("You need ten [material.name] sheets to do this!"))
+			return ITEM_INTERACT_BLOCKING
+
 		if(locate(/obj/structure/stairs) in loc)
-			to_chat(user, span_warning(LANG("obj.779d9133", null)))
-			return
-		to_chat(user, span_notice(LANG("obj.899b25bb", list(material, src))))
+			to_chat(user, span_warning("There's already stairs built here!"))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You start adding [material] to [src]..."))
 		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		make_new_stairs(material.stairs_type)
-	else if(istype(material, /obj/item/stack/sheet))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(material, /obj/item/stack/sheet))
 		if(material.get_amount() < 10)
-			to_chat(user, span_warning(LANG("obj.0cc1b5c2", null)))
-			return
+			to_chat(user, span_warning("You need ten sheets to do this!"))
+			return ITEM_INTERACT_BLOCKING
+
 		if(locate(/obj/structure/stairs) in loc)
-			to_chat(user, span_warning(LANG("obj.779d9133", null)))
-			return
-		to_chat(user, span_notice(LANG("obj.899b25bb", list(material, src))))
+			to_chat(user, span_warning("There's already stairs built here!"))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You start adding [material] to [src]..."))
 		if(!do_after(user, 10 SECONDS, target = src) || !material.use(10) || (locate(/obj/structure/table) in loc))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		var/list/material_list = list()
 		if(material.material_type)
 			material_list[material.material_type] = SHEET_MATERIAL_AMOUNT * 10
 		make_new_stairs(/obj/structure/stairs/material, material_list)
-	return TRUE
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/stairs_frame/proc/make_new_stairs(stairs_type, custom_materials)
 	var/obj/structure/stairs/new_stairs = new stairs_type(loc)

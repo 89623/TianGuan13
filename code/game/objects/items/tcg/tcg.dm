@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define TAPPED_ANGLE 90
 #define UNTAPPED_ANGLE 0
 
@@ -116,7 +115,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		var/datum/card/template = extract_datum()
 		desc = "<i>[template.desc]</i>"
 	else
-		desc = LANG("obj.729d8435", null)
+		desc = "It's the back of a trading card... no peeking!"
 
 /obj/item/tcgcard/update_icon_state()
 	if(flipped)
@@ -129,25 +128,29 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = template.icon_state
 	return ..()
 
-/obj/item/tcgcard/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/tcgcard))
-		var/obj/item/tcgcard/second_card = item
+/obj/item/tcgcard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/tcgcard))
+		var/obj/item/tcgcard/second_card = tool
 		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
 		new_deck.flipped = flipped
 		user.transferItemToLoc(second_card, new_deck)//Start a new pile with both cards, in the order of card placement.
 		user.transferItemToLoc(src, new_deck)
 		new_deck.update_icon_state()
 		user.put_in_hands(new_deck)
-	if(istype(item, /obj/item/tcgcard_deck))
-		var/obj/item/tcgcard_deck/old_deck = item
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/tcgcard_deck))
+		var/obj/item/tcgcard_deck/old_deck = tool
 		if(length(old_deck.contents) >= 30)
-			to_chat(user, span_notice(LANG("obj.144f42a1", null)))
-			return
+			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
+			return ITEM_INTERACT_BLOCKING
 		user.transferItemToLoc(src, old_deck)
 		flipped = old_deck.flipped
 		old_deck.update_appearance()
 		update_appearance()
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/tcgcard/proc/check_menu(mob/living/user)
 	if(!istype(user))
@@ -166,10 +169,10 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	animate(src, transform = ntransform, time = 2, easing = SINE_EASING)
 
 /obj/item/tcgcard/proc/flip_card(mob/user)
-	to_chat(user, span_notice(LANG("obj.3e45ade6", null)))
+	to_chat(user, span_notice("You turn the card over."))
 	if(!flipped)
 		name = "Trading Card"
-		desc = LANG("obj.729d8435", null)
+		desc = "It's the back of a trading card... no peeking!"
 		icon_state = "cardback"
 	else
 		var/datum/card/template = extract_datum()
@@ -218,7 +221,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard_deck/examine(mob/user)
 	. = ..()
-	. += span_notice(LANG("obj.51de612c", list(src, contents.len)))
+	. += span_notice("\The [src] has [contents.len] cards inside.")
 
 /obj/item/tcgcard_deck/attack_hand(mob/user, list/modifiers)
 	var/list/choices = list(
@@ -255,16 +258,16 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		return FALSE
 	return TRUE
 
-/obj/item/tcgcard_deck/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(istype(item, /obj/item/tcgcard))
-		if(contents.len >= 30)
-			to_chat(user, span_notice(LANG("obj.144f42a1", null)))
-			return FALSE
-		var/obj/item/tcgcard/new_card = item
-		new_card.flipped = flipped
-		new_card.forceMove(src)
-
+/obj/item/tcgcard_deck/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/tcgcard))
+		return NONE
+	if(contents.len >= 30)
+		to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/tcgcard/new_card = tool
+	new_card.flipped = flipped
+	new_card.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/tcgcard_deck/attack_self(mob/living/carbon/user)
 	shuffle_deck(user)
@@ -280,8 +283,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	user.put_in_hands(drawn_card)
 	drawn_card.flipped = flipped //If it's a face down deck, it'll be drawn face down, if it's a face up pile you'll draw it face up.
 	drawn_card.update_icon_state()
-	user.visible_message(span_notice(LANG("obj.4ba8743a", list(user, src))), \
-					span_notice(LANG("obj.dd975292", list(src))))
+	user.visible_message(span_notice("[user] draws a card from \the [src]!"), \
+					span_notice("You draw a card from \the [src]!"))
 	if(contents.len <= 1)
 		var/obj/item/tcgcard/final_card = contents[1]
 		user.transferItemToLoc(final_card, drop_location())
@@ -300,8 +303,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	if(user.active_storage)
 		user.active_storage.hide_contents(user)
 	if(visable)
-		user.visible_message(span_notice(LANG("obj.99badea6", list(user, src))), \
-						span_notice(LANG("obj.12d2bb6d", list(src))))
+		user.visible_message(span_notice("[user] shuffles \the [src]!"), \
+						span_notice("You shuffle \the [src]!"))
 
 
 /**
@@ -400,11 +403,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	for(var/template in cards)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), series, template)
-	to_chat(user, span_notice(LANG("obj.c05f2479", null)))
+	to_chat(user, span_notice("Wow! Check out these cards!"))
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 	if(prob(contains_coin))
-		to_chat(user, span_notice(LANG("obj.31604725", null)))
+		to_chat(user, span_notice("...and it came with a flipper, too!"))
 		new /obj/item/coin/thunderdome(get_turf(user))
 	qdel(src)
 

@@ -127,8 +127,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	draw_on_husks = HUSK_OVERLAY_NORMAL
 	offset_location = UPPER_BODY
 
+/* // NOVA EDIT REMOVAL START - No.
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
+*/ // NOVA EDIT REMOVAL END
 
 ///The frills of a lizard (like weird fin ears)
 /obj/item/organ/frills
@@ -151,8 +153,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	feature_key = FEATURE_FRILLS
 	offset_location = UPPER_BODY
 
+/* // NOVA EDIT REMOVAL START - No.
 /datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
+*/ // NOVA EDIT REMOVAL END
 
 /datum/bodypart_overlay/mutant/frills/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
@@ -223,8 +227,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 	offset_location = UPPER_BODY
 
+/* // NOVA EDIT REMOVAL START - No.
 /datum/bodypart_overlay/mutant/snout/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDESNOUT)
+*/ // NOVA EDIT REMOVAL END
 
 ///A moth's antennae
 /obj/item/organ/antennae
@@ -308,8 +314,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 /datum/bodypart_overlay/mutant/antennae/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
+/* // NOVA EDIT REMOVAL START - No.
 /datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEANTENNAE)
+*/ // NOVA EDIT REMOVAL END
 
 ///The leafy hair of a podperson
 /obj/item/organ/pod_hair
@@ -354,5 +362,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	else
 		overlay.color = null
 
+/* // NOVA EDIT REMOVAL START - No.
 /datum/bodypart_overlay/mutant/pod_hair/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
+*/ // NOVA EDIT REMOVAL END

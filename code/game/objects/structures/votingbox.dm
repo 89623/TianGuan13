@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define VOTE_TEXT_LIMIT 255
 #define MAX_VOTES 255
 
@@ -20,18 +19,22 @@
 	var/list/voted //List of ID's that already voted.
 	COOLDOWN_DECLARE(vote_print_cooldown)
 
-/obj/structure/votebox/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(I,/obj/item/card/id))
-		if(!owner)
-			register_owner(I,user)
-			return
-	if(istype(I,/obj/item/paper))
-		if(voting_active)
-			apply_vote(I,user)
-		else
-			to_chat(user,span_warning(LANG("obj.9ff9bcae", list(src))))
-		return
-	return ..()
+/obj/structure/votebox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/card/id))
+		if(owner)
+			return ITEM_INTERACT_BLOCKING
+
+		register_owner(tool ,user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper))
+		if(!voting_active)
+			to_chat(user,span_warning("[src] is in maintenance mode. Voting is not possible at the moment."))
+			return ITEM_INTERACT_BLOCKING
+		apply_vote(tool ,user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/votebox/interact(mob/user)
 	..()
@@ -65,7 +68,7 @@
 	if(!can_interact(user))
 		return
 	if(!is_operator(user))
-		to_chat(user,span_warning(LANG("obj.b75d0280", null)))
+		to_chat(user,span_warning("Voting box operator authorization required!"))
 		return
 
 	if(href_list["act"])
@@ -78,7 +81,7 @@
 			if("reset_voted")
 				if(voted)
 					voted.Cut()
-				to_chat(user,span_notice(LANG("obj.541518dd", null)))
+				to_chat(user,span_notice("You reset the voter buffer. Everyone can vote again."))
 			if("raffle")
 				raffle(user)
 			if("shred")
@@ -91,11 +94,11 @@
 
 /obj/structure/votebox/proc/register_owner(obj/item/card/id/I,mob/living/user)
 	owner = I
-	to_chat(user,span_notice(LANG("obj.244322ad", list(src))))
+	to_chat(user,span_notice("You register [src] to your ID card."))
 	ui_interact(user)
 
 /obj/structure/votebox/proc/set_description(mob/user)
-	var/new_description = tgui_input_text(user, LANG("obj.ac88e9aa", null), LANG("obj.642f9ae8", null), vote_description, multiline = TRUE, max_length = MAX_DESC_LEN)
+	var/new_description = tgui_input_text(user, "Enter a new description", "Vote Description", vote_description, multiline = TRUE, max_length = MAX_DESC_LEN)
 	if(new_description)
 		vote_description = new_description
 
@@ -106,16 +109,16 @@
 	var/obj/item/card/id/voter_card = user.get_idcard()
 	if(id_auth)
 		if(!voter_card)
-			to_chat(user,span_warning(LANG("obj.6bb6774b", list(src))))
+			to_chat(user,span_warning("[src] requires a valid ID card to vote!"))
 			return
 		if(voted && (voter_card in voted))
-			to_chat(user,span_warning(LANG("obj.9f20aadf", list(src))))
+			to_chat(user,span_warning("[src] allows only one vote per person."))
 			return
 	if(user.transferItemToLoc(I,src))
 		if(!voted)
 			voted = list()
 		voted += voter_card
-		to_chat(user,span_notice(LANG("obj.33a8cbbb", null)))
+		to_chat(user,span_notice("You cast your vote."))
 
 /obj/structure/votebox/proc/valid_vote(obj/item/paper/voting_slip)
 	if(voting_slip.get_total_length() > VOTE_TEXT_LIMIT)
@@ -129,7 +132,7 @@
 /obj/structure/votebox/proc/shred(mob/user)
 	for(var/obj/item/paper/P in contents)
 		qdel(P)
-	to_chat(user,span_notice(LANG("obj.d7794b43", null)))
+	to_chat(user,span_notice("You shred the current votes."))
 
 /obj/structure/votebox/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -139,10 +142,10 @@
 /obj/structure/votebox/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(voting_active)
-		to_chat(user,span_warning(LANG("obj.d6835e09", null)))
+		to_chat(user,span_warning("You can only retrieve votes if maintenance mode is active!"))
 		return FALSE
 	dump_contents()
-	to_chat(user,span_notice(LANG("obj.c402f307", null)))
+	to_chat(user,span_notice("You open vote retrieval hatch and dump all the votes."))
 	return TRUE
 
 /obj/structure/votebox/dump_contents()
@@ -158,11 +161,11 @@
 	for(var/obj/item/paper/P in contents)
 		options += P
 	if(!length(options))
-		to_chat(user, span_warning(LANG("obj.02d482cc", list(src))))
+		to_chat(user, span_warning("[src] is empty!"))
 	else
 		var/obj/item/paper/P = pick(options)
 		user.put_in_hands(P)
-		to_chat(user, span_notice(LANG("obj.8c1f2435", list(src))))
+		to_chat(user, span_notice("[src] pops out random vote."))
 
 /obj/structure/votebox/proc/print_tally(mob/user)
 	var/list/results = list()
@@ -215,7 +218,7 @@
 	vote_tally_paper.name = "Voting Results"
 	vote_tally_paper.update_appearance()
 	user.put_in_hands(vote_tally_paper)
-	to_chat(user,span_notice(LANG("obj.51c29b41", list(src))))
+	to_chat(user,span_notice("[src] prints out the voting tally."))
 
 /obj/structure/votebox/update_icon_state()
 	icon_state = "votebox_[voting_active ? "active" : "maint"]"

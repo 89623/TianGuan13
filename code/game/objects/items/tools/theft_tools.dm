@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Items for nuke theft, supermatter theft traitor objective
 
 
@@ -24,11 +23,11 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/nuke_core/attackby(obj/item/nuke_core_container/container, mob/user)
-	if(istype(container))
-		container.load(src, user)
-	else
-		return ..()
+/obj/item/nuke_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/nuke_core_container))
+		return NONE
+	astype(tool, /obj/item/nuke_core_container).load(src, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/nuke_core/process()
 	if(cooldown < world.time - 60)
@@ -37,7 +36,7 @@
 		radiation_pulse(get_turf(src), max_range = 2, threshold = RAD_EXTREME_INSULATION)
 
 /obj/item/nuke_core/suicide_act(mob/living/user)
-	user.visible_message(span_suicide(LANG("obj.fd87d5b8", list(user, src, user.p_them(), user.p_theyre()))))
+	user.visible_message(span_suicide("[user] is rubbing [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 
 //nuke core box, for carrying the core
@@ -61,7 +60,7 @@
 	ncore.forceMove(src)
 	core = ncore
 	icon_state = "core_container_loaded"
-	to_chat(user, span_warning(LANG("obj.aed32796", null)))
+	to_chat(user, span_warning("Container is sealing..."))
 	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
@@ -71,17 +70,19 @@
 		icon_state = "core_container_sealed"
 		playsound(src, 'sound/items/deconstruct.ogg', 60, TRUE)
 		if(ismob(loc))
-			to_chat(loc, span_warning(LANG("obj.508d5b07", list(src, core))))
+			to_chat(loc, span_warning("[src] is sealed, [core]'s radiation is contained."))
 
-/obj/item/nuke_core_container/attackby(obj/item/nuke_core/core, mob/user)
-	if(istype(core))
-		if(!user.temporarilyRemoveItemFromInventory(core))
-			to_chat(user, span_warning(LANG("obj.3a8dccbd", list(core))))
-			return
-		else
-			load(core, user)
-	else
-		return ..()
+/obj/item/nuke_core_container/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/nuke_core))
+		return NONE
+
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		to_chat(user, span_warning("The [tool] is stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+
+	load(tool, user)
+	return ITEM_INTERACT_SUCCESS
+
 
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
 /obj/item/screwdriver/nuke
@@ -178,24 +179,27 @@
 /obj/item/nuke_core/supermatter_sliver/can_be_pulled(user, force) // no drag memes
 	return FALSE
 
-/obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/hemostat/supermatter))
-		var/obj/item/hemostat/supermatter/tongs = W
+/obj/item/nuke_core/supermatter_sliver/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/hemostat/supermatter))
+		var/obj/item/hemostat/supermatter/tongs = tool
 		if (tongs.sliver)
-			to_chat(user, span_warning(LANG("obj.bf256f4f", list(tongs))))
-			return FALSE
+			to_chat(user, span_warning("\The [tongs] is already holding a supermatter sliver!"))
+			return ITEM_INTERACT_BLOCKING
 		forceMove(tongs)
 		tongs.sliver = src
 		tongs.update_appearance()
-		to_chat(user, span_notice(LANG("obj.ec4910a6", list(src, tongs))))
-	else if(istype(W, /obj/item/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
-		return
-	else
-		to_chat(user, span_notice(LANG("obj.e1cf0050", list(src, src, W))))
-		radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
-		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
-		qdel(W)
-		qdel(src)
+		to_chat(user, span_notice("You carefully pick up [src] with [tongs]."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/scalpel/supermatter) || istype(tool, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("As it touches \the [src], both \the [src] and \the [tool] burst into dust!"))
+	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
+	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	qdel(tool)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/nuke_core/supermatter_sliver/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!isliving(hit_atom))
@@ -211,9 +215,9 @@
 	else
 		message_admins("[src] has consumed [key_name_admin(victim)] [ADMIN_JMP(src)] via throw impact.")
 		investigate_log("has consumed [key_name(victim)] via throw impact.", INVESTIGATE_ENGINE)
-	victim.visible_message(span_danger(LANG("obj.e16012cf", list(victim, src))),\
-		span_userdanger(LANG("obj.3496da58", list(src, src))),\
-		span_hear(LANG("obj.458bfed2", null)))
+	victim.visible_message(span_danger("As [victim] is hit by [src], both flash into dust and silence fills the room..."),\
+		span_userdanger("You're hit by [src] and everything suddenly goes silent.\n[src] flashes into dust, and soon as you can register this, you do as well."),\
+		span_hear("Everything suddenly goes silent."))
 	victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 	victim.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
@@ -224,9 +228,9 @@
 	..()
 	if(!isliving(user) || HAS_TRAIT(user, TRAIT_GODMODE)) //try to keep this in sync with supermatter's consume fail conditions
 		return FALSE
-	user.visible_message(span_danger(LANG("obj.188a090a", list(user, src, user.p_their()))),\
-			span_userdanger(LANG("obj.3d905c68", list(src))),\
-			span_hear(LANG("obj.458bfed2", null)))
+	user.visible_message(span_danger("[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!"),\
+			span_userdanger("You reach for [src] with your hands. That was dumb."),\
+			span_hear("Everything suddenly goes silent."))
 	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
@@ -249,7 +253,7 @@
 	T.sliver = null
 	T.icon_state = "supermatter_tongs"
 	icon_state = "core_container_loaded"
-	to_chat(user, span_warning(LANG("obj.aed32796", null)))
+	to_chat(user, span_warning("Container is sealing..."))
 	addtimer(CALLBACK(src, PROC_REF(seal)), 5 SECONDS)
 	return TRUE
 
@@ -259,7 +263,7 @@
 		icon_state = "core_container_sealed"
 		playsound(src, 'sound/items/Deconstruct.ogg', 60, TRUE)
 		if(ismob(loc))
-			to_chat(loc, span_warning(LANG("obj.7df8e4a5", list(src, sliver))))
+			to_chat(loc, span_warning("[src] is permanently sealed, [sliver] is safely contained."))
 
 /obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
@@ -315,7 +319,7 @@
 /obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
 	if(sliver)
 		sliver.forceMove(loc)
-		visible_message(span_notice(LANG("obj.05b5ac35", list(sliver, src))))
+		visible_message(span_notice("\The [sliver] falls out of \the [src] as it hits the ground."))
 		sliver = null
 		update_appearance()
 	return ..()
@@ -338,9 +342,9 @@
 		qdel(AM)
 	if (user)
 		log_combat(user, AM, "consumed", sliver, "via [src]")
-		user.visible_message(span_danger(LANG("obj.09226cd2", list(user, AM, src))),\
-			span_userdanger(LANG("obj.e8594687", list(AM, src, AM, sliver))),\
-			span_hear(LANG("obj.458bfed2", null)))
+		user.visible_message(span_danger("As [user] touches [AM] with \the [src], both flash into dust and silence fills the room..."),\
+			span_userdanger("You touch [AM] with [src], and everything suddenly goes silent.\n[AM] and [sliver] flash into dust, and soon as you can register this, you do as well."),\
+			span_hear("Everything suddenly goes silent."))
 		user.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 		user.dust()
 	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)

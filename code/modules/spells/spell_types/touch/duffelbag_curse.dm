@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 /datum/action/cooldown/spell/touch/duffelbag
 	name = "Bestow Cursed Duffel Bag"
@@ -30,8 +29,8 @@
 	return iscarbon(cast_on)
 
 /datum/action/cooldown/spell/touch/duffelbag/on_antimagic_triggered(obj/item/melee/touch_attack/hand, mob/living/carbon/victim, mob/living/carbon/caster)
-	to_chat(caster, span_warning(LANG("datum.35261768", list(victim))))
-	to_chat(victim, span_warning(LANG("datum.2570c649", list(pick(elaborate_backstory)))))
+	to_chat(caster, span_warning("The spell can't seem to affect [victim]!"))
+	to_chat(victim, span_warning("You really don't feel like talking about your [pick(elaborate_backstory)] with complete strangers today."))
 
 /datum/action/cooldown/spell/touch/duffelbag/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/carbon/victim, mob/living/carbon/caster)
 
@@ -42,23 +41,23 @@
 	victim.Knockdown(5 SECONDS)
 
 	// If someone's already cursed, don't try to give them another
-	if(istype(victim.back, /obj/item/storage/backpack/duffelbag/cursed))
-		to_chat(caster, span_warning(LANG("datum.02c601f6", list(victim))))
-		to_chat(victim, span_warning(LANG("datum.96819b64", null)))
+	if(istype(victim.get_item_by_slot(ITEM_SLOT_BACK), /obj/item/storage/backpack/duffelbag/cursed))
+		to_chat(caster, span_warning("The burden of [victim]'s duffel bag becomes too much, shoving them to the floor!"))
+		to_chat(victim, span_warning("The weight of this bag becomes overburdening!"))
 		return TRUE
 
 	// However if they're uncursed, they're fresh for getting a cursed bag
 	var/obj/item/storage/backpack/duffelbag/cursed/conjured_duffel = new get_turf(victim)
 	victim.visible_message(
-		span_danger(LANG("datum.994bc05b", list(victim))),
-		span_danger(LANG("datum.5aabd19c", list(pick(elaborate_backstory)))),
+		span_danger("A growling duffel bag appears on [victim]!"),
+		span_danger("You feel something attaching itself to you, and a strong desire to discuss your [pick(elaborate_backstory)] at length!"),
 	)
 
 	conjured_duffel.pickup(victim)
 	conjured_duffel.forceMove(victim)
 
 	// Put it on their back first
-	if(victim.dropItemToGround(victim.back))
+	if(victim.dropItemToGround(victim.get_item_by_slot(ITEM_SLOT_BACK)))
 		victim.equip_to_slot_if_possible(conjured_duffel, ITEM_SLOT_BACK, TRUE, TRUE)
 		return TRUE
 

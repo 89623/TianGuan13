@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/machinery/door/window
 	name = "interior door"
 	desc = "A strong door."
@@ -384,34 +383,34 @@
 /obj/machinery/door/window/examine(mob/user)
 	. = ..()
 	if(obj_flags & EMAGGED)
-		. += span_warning(LANG("obj.2cd3f83a", null))
+		. += span_warning("Its access panel is smoking slightly.")
 	if(!density)
 		if(panel_open)
-			. += span_notice(LANG("obj.62bfef5c", list(span_boldnotice("airlock electronics"), span_boldnotice("levered"))))
+			. += span_notice("The [span_boldnotice("airlock electronics")] could be [span_boldnotice("levered")] out.")
 
 
 /obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(density || operating)
-		to_chat(user, span_warning(LANG("obj.3cf17ea3", null)))
-		return
+		to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
+		return ITEM_INTERACT_BLOCKING
 	add_fingerprint(user)
 	tool.play_tool_sound(src)
 	toggle_panel_open()
-	to_chat(user, span_notice(LANG("obj.aec23cf2", list(panel_open ? "open" : "close"))))
-	return TRUE
+	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!panel_open || density || operating)
-		return
+		return ITEM_INTERACT_BLOCKING
 	add_fingerprint(user)
-	user.visible_message(span_notice(LANG("obj.63925670", list(user, src))), \
-	span_notice(LANG("obj.a9e34175", list(src))))
+	user.visible_message(span_notice("[user] removes the electronics from \the [src]."), \
+	span_notice("You start to remove electronics from \the [src]..."))
 	if(!tool.use_tool(src, user, 40, volume=50))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!panel_open || density || operating || !loc)
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/obj/structure/windoor_assembly/windoor_assembly = new /obj/structure/windoor_assembly(loc)
 	switch(base_state)
 		if("left")
@@ -425,15 +424,15 @@
 			windoor_assembly.facing = "r"
 			windoor_assembly.secure = TRUE
 	windoor_assembly.set_anchored(TRUE)
-	windoor_assembly.state= "02"
+	windoor_assembly.cables_added = TRUE
 	windoor_assembly.setDir(dir)
 	windoor_assembly.update_appearance()
 	windoor_assembly.created_name = name
 	if(obj_flags & EMAGGED)
-		to_chat(user, span_warning(LANG("obj.54fac71b", null)))
+		to_chat(user, span_warning("You discard the damaged electronics."))
 		qdel(src)
-		return
-	to_chat(user, span_notice(LANG("obj.a5dac4b8", null)))
+		return ITEM_INTERACT_SUCCESS
+	to_chat(user, span_notice("You remove the airlock electronics."))
 	var/obj/item/electronics/airlock/dropped_electronics
 	if(!electronics)
 		dropped_electronics = new/obj/item/electronics/airlock(drop_location())
@@ -447,7 +446,7 @@
 		electronics = null
 		dropped_electronics.forceMove(drop_location())
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)
@@ -467,7 +466,7 @@
 		var/obj/item/crowbar/power/power_tool = I
 		if(power_tool.limit_jaws_access && forced)
 			playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-			user.balloon_alert(user, LANG("obj.3de46b79", null))
+			user.balloon_alert(user, "cannot pry open!")
 			return
 
 	if(!hasPower() || forced)
@@ -476,7 +475,7 @@
 		else
 			close(BYPASS_DOOR_CHECKS)
 	else
-		to_chat(user, span_warning(LANG("obj.f07aeba2", null)))
+		to_chat(user, span_warning("The door's motors resist your efforts to force it!"))
 
 /obj/machinery/door/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/electropack
 	name = "electropack"
 	desc = "Dance my monkeys! DANCE!!!"
@@ -29,23 +28,21 @@
 	return ..()
 
 /obj/item/electropack/suicide_act(mob/living/user)
-	user.visible_message(span_suicide(LANG("obj.38c9b9d8", list(user, user.p_them(), user.p_theyre()))))
+	user.visible_message(span_suicide("[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return FIRELOSS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/electropack/attack_hand(mob/user, list/modifiers)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(src == C.back)
-			to_chat(user, span_warning(LANG("obj.8114e6da", null)))
-			return
+	if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
+		to_chat(user, span_warning("You need help taking this off!"))
+		return
 	return ..()
 
 /obj/item/electropack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/clothing/head/helmet))
 		return NONE
 	if(!user.temporarilyRemoveItemFromInventory(tool))
-		to_chat(user, span_warning(LANG("obj.9e63b6be", list(tool, src))))
+		to_chat(user, span_warning("[tool] is stuck to your hand, you cannot attach it to [src]!"))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/assembly/shock_kit/torture_device = new /obj/item/assembly/shock_kit(user)
 	torture_device.icon = 'icons/obj/devices/assemblies.dmi'
@@ -75,7 +72,7 @@
 		var/mob/living/L = loc
 		step(L, pick(GLOB.cardinals))
 
-		to_chat(L, span_danger(LANG("obj.c736a327", null)))
+		to_chat(L, span_danger("You feel a sharp shock!"))
 		do_sparks(3, TRUE, L)
 		L.Paralyze(100)
 

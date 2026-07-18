@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /** This structure acts as a source of moisture loving cell lines,
 as well as a location where a hidden item can sometimes be retrieved
 at the cost of risking a vicious bite.**/
@@ -74,49 +73,55 @@ at the cost of risking a vicious bite.**/
 	if(iscyborg(user) || isalien(user))
 		return
 	if(!CanReachInside(user))
-		to_chat(user, span_warning(LANG("obj.ef8c6127", list(src))))
+		to_chat(user, span_warning("You need to lie down to reach into [src]."))
 		return
-	to_chat(user, span_notice(LANG("obj.ae5b1def", null)))
+	to_chat(user, span_notice("You reach down into the cold water of the basin."))
 	playsound(src,'sound/effects/submerge.ogg', 25, TRUE)
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
 	if(hidden_item)
 		user.put_in_hands(hidden_item)
-		to_chat(user, span_notice(LANG("obj.1d2ff53d", list(src, hidden_item, src))))
+		to_chat(user, span_notice("As you poke around inside [src] you feel the contours of something hidden below the murky waters.</span>\n<span class='nicegreen'>You retrieve [hidden_item] from [src]."))
 		hidden_item = null
 		return
 	if(critter_infested && prob(50) && iscarbon(user))
 		var/mob/living/carbon/bite_victim = user
 		var/obj/item/bodypart/affecting = bite_victim.get_active_hand()
-		to_chat(user, span_danger(LANG("obj.0abd2c2c", list(pick("fangs", "beak", "proboscis"), affecting.plaintext_zone))))
+		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks its [pick("fangs", "beak", "proboscis")] into your [affecting.plaintext_zone]!"))
 		bite_victim.apply_damage(30, BRUTE, affecting)
 		playsound(src,'sound/items/weapons/bite.ogg', 70, TRUE)
 		return
-	to_chat(user, span_warning(LANG("obj.52cd9300", null)))
+	to_chat(user, span_warning("You find nothing of value..."))
 
-/obj/structure/moisture_trap/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/moisture_trap/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
-		return ..()
+		return NONE
+
 	add_fingerprint(user)
-	if(is_reagent_container(I))
-		if(istype(I, /obj/item/food/monkeycube))
-			var/obj/item/food/monkeycube/cube = I
+	if(is_reagent_container(tool))
+		if(istype(tool, /obj/item/food/monkeycube))
+			var/obj/item/food/monkeycube/cube = tool
 			cube.Expand()
-			return
-		var/obj/item/reagent_containers/reagent_container = I
+			return ITEM_INTERACT_SUCCESS
+
+		var/obj/item/reagent_containers/reagent_container = tool
 		if(reagent_container.is_open_container())
 			reagent_container.reagents.add_reagent(/datum/reagent/water, min(reagent_container.volume - reagent_container.reagents.total_volume, reagent_container.amount_per_transfer_from_this))
-			to_chat(user, span_notice(LANG("obj.3adf2506", list(reagent_container, src))))
-			return
+			to_chat(user, span_notice("You fill [reagent_container] from [src]."))
+			return ITEM_INTERACT_SUCCESS
+
 	if(hidden_item)
-		to_chat(user, span_warning(LANG("obj.06c9b8a5", list(src))))
-		return
-	if(!user.transferItemToLoc(I, src))
-		to_chat(user, span_warning(LANG("obj.42b4242f", list(I, src))))
-		return
-	hidden_item = I
-	to_chat(user, span_notice(LANG("obj.d84f9ffe", list(I))))
+		to_chat(user, span_warning("There is already something inside [src]."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot put it in [src]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	hidden_item = tool
+	to_chat(user, span_notice("You hide [tool] inside the basin."))
 	playsound(src,'sound/effects/splash.ogg', 55, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 #define ALTAR_INACTIVE 0
 #define ALTAR_STAGEONE 1
@@ -139,11 +144,11 @@ at the cost of risking a vicious bite.**/
 	/// Stage of the pants making process
 	var/status = ALTAR_INACTIVE
 
-/obj/structure/destructible/cult/pants_altar/attackby(obj/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user) && status)
-		to_chat(user, span_notice(LANG("obj.2d106114", list(src))))
-		return
-	return ..()
+/obj/structure/destructible/cult/pants_altar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/melee/cultblade/dagger) || !IS_CULTIST(user) || !status)
+		return NONE
+	to_chat(user, span_notice("[src] is creating something, you can't move it!"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/destructible/cult/pants_altar/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -161,7 +166,7 @@ at the cost of risking a vicious bite.**/
 				pants_color = chosen_color
 		if("Create Artefact")
 			if(!COOLDOWN_FINISHED(src, use_cooldown) || status != ALTAR_INACTIVE)
-				to_chat(user, span_warning(LANG("obj.819dde18", list(src))))
+				to_chat(user, span_warning("[src] is not ready to create something new yet..."))
 				return
 			pants_stageone()
 	return TRUE
@@ -193,7 +198,7 @@ at the cost of risking a vicious bite.**/
 /obj/structure/destructible/cult/pants_altar/proc/pants_stageone()
 	status = ALTAR_STAGEONE
 	update_icon()
-	visible_message(span_warning(LANG("obj.263d44fc", list(src))))
+	visible_message(span_warning("[src] starts creating something..."))
 	playsound(src, 'sound/effects/magic/pantsaltar.ogg', 60)
 	addtimer(CALLBACK(src, PROC_REF(pants_stagetwo)), ALTAR_TIME)
 
@@ -201,7 +206,7 @@ at the cost of risking a vicious bite.**/
 /obj/structure/destructible/cult/pants_altar/proc/pants_stagetwo()
 	status = ALTAR_STAGETWO
 	update_icon()
-	visible_message(span_warning(LANG("obj.2b5fd399", null)))
+	visible_message(span_warning("You start feeling nauseous..."))
 	for(var/mob/living/viewing_mob in viewers(7, src))
 		viewing_mob.set_eye_blur_if_lower(20 SECONDS)
 		viewing_mob.adjust_confusion(10 SECONDS)
@@ -211,7 +216,7 @@ at the cost of risking a vicious bite.**/
 /obj/structure/destructible/cult/pants_altar/proc/pants_stagethree()
 	status = ALTAR_STAGETHREE
 	update_icon()
-	visible_message(span_warning(LANG("obj.2e1a5a21", null)))
+	visible_message(span_warning("You start feeling horrible..."))
 	for(var/mob/living/viewing_mob in viewers(7, src))
 		viewing_mob.set_dizzy_if_lower(20 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(pants_create)), ALTAR_TIME)
@@ -220,7 +225,7 @@ at the cost of risking a vicious bite.**/
 /obj/structure/destructible/cult/pants_altar/proc/pants_create()
 	status = ALTAR_INACTIVE
 	update_icon()
-	visible_message(span_danger(LANG("obj.4e51903f", list(src))))
+	visible_message(span_danger("[src] emits a flash of light and creates... pants?"))
 	for(var/mob/living/viewing_mob in viewers(7, src))
 		viewing_mob.flash_act()
 	var/obj/item/clothing/under/pants/slacks/altar/pants = new(get_turf(src))
@@ -280,14 +285,14 @@ at the cost of risking a vicious bite.**/
 /obj/structure/steam_vent/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, steam_vent_interact))
-		balloon_alert(user, LANG("obj.55b721f3", null))
+		balloon_alert(user, "not ready to adjust!")
 		return
 	vent_active = !vent_active
 	update_icon_state()
 	if(vent_active)
-		balloon_alert(user, LANG("obj.b7f48ace", null))
+		balloon_alert(user, "vent on")
 	else
-		balloon_alert(user, LANG("obj.38e70e5d", null))
+		balloon_alert(user, "vent off")
 		return
 	blow_steam()
 
@@ -304,7 +309,7 @@ at the cost of risking a vicious bite.**/
 /obj/structure/steam_vent/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	if(vent_active)
-		balloon_alert(user, LANG("obj.e63afcfe", null))
+		balloon_alert(user, "must be off!")
 		return
 	if(tool.use_tool(src, user, 3 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)

@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/structure/flora
 	name = "flora"
 	desc = "Some sort of plant."
@@ -50,47 +49,50 @@
 	/// Flags for the flora to determine what kind of sound to play when it gets hit
 	var/flora_flags = NONE
 
-/obj/structure/flora/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/flora/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
-		return ..()
+		return NONE
+
 	if(flags_1 & HOLOGRAM_1)
-		balloon_alert(user, LANG("obj.761468ab", null))
-		return ..()
-	if(can_uproot && used_item.tool_behaviour == TOOL_SHOVEL)
+		balloon_alert(user, "it goes right through!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(can_uproot && tool.tool_behaviour == TOOL_SHOVEL)
 		if(uprooted)
-			user.visible_message(span_notice(LANG("obj.4f410c36", list(user, src))),
-				span_notice(LANG("obj.d164ac92", list(src))))
+			user.visible_message(span_notice("[user] starts to replant [src]..."),
+								span_notice("You start to replant [src]..."))
 		else
-			user.visible_message(span_notice(LANG("obj.9697e68f", list(user, src))),
-				span_notice(LANG("obj.8d6b238d", list(src))))
-		used_item.play_tool_sound(src, 50)
+			user.visible_message(span_notice("[user] starts to uproot [src]..."),
+								span_notice("You start to uproot [src]..."))
+		tool.play_tool_sound(src, 50)
 		if(!do_after(user, harvest_time, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(uprooted)
-			user.visible_message(span_notice(LANG("obj.da82b014", list(user, src))),
-				span_notice(LANG("obj.c8a4b141", list(src))))
+			user.visible_message(span_notice("[user] replants [src]."),
+								span_notice("You replant [src]."))
 			replant(user)
 		else
-			user.visible_message(span_notice(LANG("obj.c4487d54", list(user, src))),
-				span_notice(LANG("obj.b067f869", list(src))))
+			user.visible_message(span_notice("[user] uproots [src]."),
+								span_notice("You uproot [src]."))
 			uproot(user)
-		used_item.play_tool_sound(src, 50)
-		return
+		tool.play_tool_sound(src, 50)
+		return ITEM_INTERACT_SUCCESS
 
-	if(!can_harvest(user, used_item))
-		return ..()
+	if(!can_harvest(user, tool))
+		return NONE
 
-	user.visible_message(span_notice(LANG("obj.b74b3b4c", list(user, harvest_verb, src))),
-		span_notice(LANG("obj.ad7a2441", list(harvest_verb, src, used_item))))
-	play_attack_sound(used_item.force)
-	if(!do_after(user, harvest_time * used_item.toolspeed, src))
-		return
+	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
+						span_notice("You start to [harvest_verb] [src] with [tool]..."))
+	play_attack_sound(tool.force)
+	if(!do_after(user, harvest_time * tool.toolspeed, src))
+		return ITEM_INTERACT_BLOCKING
+
 	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
-		ignored_mobs = list(user))
-	play_attack_sound(used_item.force)
-
+					span_notice("You [harvest_verb] [src]."))
+	play_attack_sound(tool.force)
 	if(harvest(user))
 		after_harvest(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/flora/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -99,8 +101,8 @@
 	if(!can_harvest(user))
 		return
 
-	user.visible_message(span_notice(LANG("obj.b74b3b4c", list(user, harvest_verb, src))),
-		span_notice(LANG("obj.9712cf58", list(harvest_verb, src))))
+	user.visible_message(span_notice("[user] starts to [harvest_verb] [src]..."),
+		span_notice("You start to [harvest_verb] [src]..."))
 	play_attack_sound()
 	if(!do_after(user, harvest_time, src))
 		return
@@ -339,12 +341,12 @@
 	delete_on_harvest = TRUE
 
 /obj/structure/flora/tree/stump/harvest(mob/living/user, product_amount_multiplier)
-	to_chat(user, span_notice(LANG("obj.be7bf9bc", list(src))))
+	to_chat(user, span_notice("You manage to remove [src]."))
 	qdel(src)
 
 /obj/structure/flora/tree/stump/uproot(mob/living/user)
 	..()
-	to_chat(user, span_notice(LANG("obj.be7bf9bc", list(src))))
+	to_chat(user, span_notice("You manage to remove [src]."))
 	qdel(src)
 
 /obj/structure/flora/tree/stump/get_seethrough_map()
@@ -491,9 +493,9 @@
 		return
 
 	if(took_presents[user.ckey] && !unlimited)
-		to_chat(user, span_warning(LANG("obj.38dae534", null)))
+		to_chat(user, span_warning("There are no presents with your name on."))
 		return
-	to_chat(user, span_warning(LANG("obj.572a76d3", null)))
+	to_chat(user, span_warning("After a bit of rummaging, you locate a gift with your name on it!"))
 
 	if(!unlimited)
 		took_presents[user.ckey] = TRUE

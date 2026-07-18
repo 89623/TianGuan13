@@ -1,4 +1,3 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define MEATSPIKE_IRONROD_REQUIREMENT 4
 
 /obj/structure/kitchenspike_frame
@@ -17,8 +16,8 @@
 
 /obj/structure/kitchenspike_frame/examine(mob/user)
 	. = ..()
-	. += LANG("obj.2c4221ed", null)
-	. += LANG("obj.70722c11", list(MEATSPIKE_IRONROD_REQUIREMENT))
+	. += "It can be <b>welded</b> apart."
+	. += "You could attach <b>[MEATSPIKE_IRONROD_REQUIREMENT]</b> iron rods to it to create a <b>Meat Spike</b>."
 
 /obj/structure/kitchenspike_frame/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -38,12 +37,12 @@
 /obj/structure/kitchenspike_frame/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return FALSE
-	to_chat(user, span_notice(LANG("obj.807d94b4", list(src))))
+	to_chat(user, span_notice("You begin cutting \the [src] apart..."))
 	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
 		return TRUE
-	visible_message(span_notice(LANG("obj.fe86d6ab", list(user, src))),
-		span_notice(LANG("obj.a44b2da5", list(src, tool))),
-		span_hear(LANG("obj.1aa82fa3", null)))
+	visible_message(span_notice("[user] slices apart \the [src]."),
+		span_notice("You cut \the [src] apart with \the [tool]."),
+		span_hear("You hear welding."))
 	new /obj/item/stack/sheet/iron(loc, MEATSPIKE_IRONROD_REQUIREMENT)
 	qdel(src)
 	return TRUE
@@ -52,19 +51,22 @@
 	default_unfasten_wrench(user, tool)
 	return TRUE
 
-/obj/structure/kitchenspike_frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/kitchenspike_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(!istype(attacking_item, /obj/item/stack/rods))
-		return ..()
-	var/obj/item/stack/rods/used_rods = attacking_item
-	if(used_rods.get_amount() >= MEATSPIKE_IRONROD_REQUIREMENT)
-		used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
-		balloon_alert(user, LANG("obj.8c65e556", null))
-		var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
-		transfer_fingerprints_to(new_meatspike)
-		qdel(src)
-		return
-	balloon_alert(user, LANG("obj.46dfbee2", list(MEATSPIKE_IRONROD_REQUIREMENT)))
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+
+	var/obj/item/stack/rods/used_rods = tool
+	if(used_rods.get_amount() < MEATSPIKE_IRONROD_REQUIREMENT)
+		balloon_alert(user, "[MEATSPIKE_IRONROD_REQUIREMENT] rods needed!")
+		return ITEM_INTERACT_BLOCKING
+
+	used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
+	var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
+	new_meatspike.balloon_alert(user, "meatspike built")
+	transfer_fingerprints_to(new_meatspike)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/kitchenspike
 	name = "meat spike"
@@ -87,8 +89,8 @@
 
 /obj/structure/kitchenspike/examine(mob/user)
 	. = ..()
-	. += LANG("obj.faa50213", null)
-	. += LANG("obj.fc822c8c", null)
+	. += "<b>Drag a mob</b> onto it to hook it in place."
+	. += "A <b>crowbar</b> could remove those spikes."
 
 /obj/structure/kitchenspike/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -105,11 +107,11 @@
 
 /obj/structure/kitchenspike/crowbar_act(mob/living/user, obj/item/tool)
 	if(has_buckled_mobs())
-		to_chat(user, span_warning(LANG("obj.c0ffbb31", null)))
+		to_chat(user, span_warning("You can't do that while something's on the spike!"))
 		return TRUE
 
 	if(tool.use_tool(src, user, 2 SECONDS, volume = 100))
-		to_chat(user, span_notice(LANG("obj.0bbef53d", null)))
+		to_chat(user, span_notice("You pry the spikes out of the frame."))
 		deconstruct(TRUE)
 		return TRUE
 	return FALSE
@@ -138,23 +140,23 @@
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob != user)
-		buckled_mob.visible_message(span_notice(LANG("obj.3c9d86cb", list(user, buckled_mob, src))),\
-			span_notice(LANG("obj.1ef21b8e", list(user, src))),\
-			span_hear(LANG("obj.042cea85", null)))
+		buckled_mob.visible_message(span_notice("[user] tries to pull [buckled_mob] free of [src]!"),\
+			span_notice("[user] is trying to pull you off [src], opening up fresh wounds!"),\
+			span_hear("You hear a squishy wet noise."))
 		if(!do_after(user, 30 SECONDS, target = src))
 			if(buckled_mob?.buckled)
-				buckled_mob.visible_message(span_notice(LANG("obj.a73e5a74", list(user, buckled_mob))),\
-					span_notice(LANG("obj.5acac835", list(user, src))))
+				buckled_mob.visible_message(span_notice("[user] fails to free [buckled_mob]!"),\
+					span_notice("[user] fails to pull you off of [src]."))
 			return
 
 	else
-		buckled_mob.visible_message(span_warning(LANG("obj.f9756b64", list(buckled_mob, src))),\
-		span_notice(LANG("obj.8fdd1484", list(src))),\
-		span_hear(LANG("obj.9cde913c", null)))
+		buckled_mob.visible_message(span_warning("[buckled_mob] struggles to break free from [src]!"),\
+		span_notice("You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)"),\
+		span_hear("You hear a wet squishing noise.."))
 		buckled_mob.adjust_brute_loss(30)
 		if(!do_after(buckled_mob, 2 MINUTES, target = src, hidden = TRUE))
 			if(buckled_mob?.buckled)
-				to_chat(buckled_mob, span_warning(LANG("obj.ccdcd476", null)))
+				to_chat(buckled_mob, span_warning("You fail to free yourself!"))
 			return
 	return ..()
 
