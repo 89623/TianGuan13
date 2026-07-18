@@ -59,37 +59,38 @@
 	icon_state = "straight_cut3"
 	hole_size = LARGE_HOLE
 
-/obj/structure/fence/attackby(obj/item/W, mob/user)
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
-		if(!cuttable)
-			to_chat(user, span_warning(LANG("obj.abc38e5c", null)))
-			return
-		if(invulnerable)
-			to_chat(user, span_warning(LANG("obj.7a620b1c", null)))
-			return
-		var/current_stage = hole_size
-		if(current_stage >= MAX_HOLE_SIZE)
-			to_chat(user, span_warning(LANG("obj.d2086221", null)))
-			return
+/obj/structure/fence/wirecutter_act(mob/living/user, obj/item/tool)
+	if(!cuttable)
+		to_chat(user, span_warning(LANG("obj.abc38e5c", null)))
+		return ITEM_INTERACT_BLOCKING
 
-		user.visible_message(span_danger(LANG("obj.f1ee30ed", list(user, src, W))),\
-		span_danger(LANG("obj.cedca70c", list(src, W))))
+	if(invulnerable)
+		to_chat(user, span_warning(LANG("obj.7a620b1c", null)))
+		return ITEM_INTERACT_BLOCKING
 
-		if(do_after(user, CUT_TIME*W.toolspeed, target = src))
-			if(current_stage == hole_size)
-				switch(++hole_size)
-					if(MEDIUM_HOLE)
-						visible_message(span_notice(LANG("obj.49794e1c", list(user, src))))
-						to_chat(user, span_info(LANG("obj.3421d97f", null)))
-						AddElement(/datum/element/climbable)
-					if(LARGE_HOLE)
-						visible_message(span_notice(LANG("obj.e0d9f291", list(user, src))))
-						to_chat(user, span_info(LANG("obj.22decf31", list(src))))
-						RemoveElement(/datum/element/climbable)
+	var/current_stage = hole_size
+	if(current_stage >= MAX_HOLE_SIZE)
+		to_chat(user, span_warning(LANG("obj.d2086221", null)))
+		return ITEM_INTERACT_BLOCKING
 
-				update_cut_status()
+	user.visible_message(span_danger(LANG("obj.f1ee30ed", list(user, src, tool))),\
+						span_danger(LANG("obj.cedca70c", list(src, tool))))
 
-	return TRUE
+	if(!tool.use_tool(src, user, CUT_TIME))
+		return ITEM_INTERACT_BLOCKING
+	if(current_stage != hole_size)
+		return ITEM_INTERACT_BLOCKING
+	switch(++hole_size)
+		if(MEDIUM_HOLE)
+			visible_message(span_notice(LANG("obj.49794e1c", list(user, src))))
+			to_chat(user, span_info(LANG("obj.3421d97f", null)))
+			AddElement(/datum/element/climbable)
+		if(LARGE_HOLE)
+			visible_message(span_notice(LANG("obj.e0d9f291", list(user, src))))
+			to_chat(user, span_info(LANG("obj.22decf31", list(src))))
+			RemoveElement(/datum/element/climbable)
+	update_cut_status()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fence/proc/update_cut_status()
 	if(!cuttable)

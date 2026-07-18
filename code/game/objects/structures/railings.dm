@@ -83,34 +83,40 @@
 	else
 		. += span_notice(LANG("obj.5b307d06", null))
 
-/obj/structure/railing/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	..()
+/obj/structure/railing/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
+	return ..()
 
-	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-		if(atom_integrity < max_integrity)
-			if(!I.tool_start_check(user, amount=1))
-				return
+/obj/structure/railing/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
 
-			to_chat(user, span_notice(LANG("obj.93449ef4", list(src))))
-			if(I.use_tool(src, user, 40, volume=50))
-				atom_integrity = max_integrity
-				to_chat(user, span_notice(LANG("obj.e94d13eb", list(src))))
-		else
-			to_chat(user, span_warning(LANG("obj.7f6370b2", list(src))))
-		return
+	add_fingerprint(user)
+	if(atom_integrity == max_integrity)
+		to_chat(user, span_warning(LANG("obj.7f6370b2", list(src))))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.tool_start_check(user, amount=1))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.93449ef4", list(src))))
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return ITEM_INTERACT_BLOCKING
+
+	atom_integrity = max_integrity
+	to_chat(user, span_notice(LANG("obj.e94d13eb", list(src))))
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
-	. = ..()
 	if(resistance_flags & INDESTRUCTIBLE)
 		to_chat(user, span_warning(LANG("obj.3fa7a79f", null)))
 		I.play_tool_sound(src, 100)
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_warning(LANG("obj.69825462", null)))
 	I.play_tool_sound(src, 100)
 	deconstruct()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/railing/atom_deconstruct(disassembled)
 	var/rods_to_make = istype(src,/obj/structure/railing/corner) ? 1 : 2

@@ -52,19 +52,22 @@
 	default_unfasten_wrench(user, tool)
 	return TRUE
 
-/obj/structure/kitchenspike_frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/kitchenspike_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(!istype(attacking_item, /obj/item/stack/rods))
-		return ..()
-	var/obj/item/stack/rods/used_rods = attacking_item
-	if(used_rods.get_amount() >= MEATSPIKE_IRONROD_REQUIREMENT)
-		used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
-		balloon_alert(user, LANG("obj.8c65e556", null))
-		var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
-		transfer_fingerprints_to(new_meatspike)
-		qdel(src)
-		return
-	balloon_alert(user, LANG("obj.46dfbee2", list(MEATSPIKE_IRONROD_REQUIREMENT)))
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+
+	var/obj/item/stack/rods/used_rods = tool
+	if(used_rods.get_amount() < MEATSPIKE_IRONROD_REQUIREMENT)
+		balloon_alert(user, LANG("obj.46dfbee2", list(MEATSPIKE_IRONROD_REQUIREMENT)))
+		return ITEM_INTERACT_BLOCKING
+
+	used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
+	var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
+	new_meatspike.balloon_alert(user, LANG("obj.8c65e556", null))
+	transfer_fingerprints_to(new_meatspike)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/kitchenspike
 	name = "meat spike"

@@ -507,6 +507,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 //2021 AND STILLLL GOING STRONG
 //2022 BABYYYYY ~lewc
 //2023 ONE YEAR TO GO! -LT3
+//2026 just a week away - kemble
 /datum/armor/window_reinforced
 	melee = 50
 	bomb = 25
@@ -518,79 +519,113 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 		return list("delay" = 3 SECONDS, "cost" = 15)
 	return FALSE
 
-/obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/window/reinforced/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	if(resistance_flags & INDESTRUCTIBLE)
 		balloon_alert(user, LANG("obj.be7da9ca", null))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.tool_behaviour)
+		return NONE
+	// to have gotten to this point, any tool must be innapropriate for its step
 	switch(state)
 		if(RWINDOW_SECURE)
-			if(tool.tool_behaviour == TOOL_WELDER)
-				if(tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
-					user.visible_message(span_notice(LANG("obj.37c5e60f", list(user, tool, src))),
-						span_notice(LANG("obj.b7fd88e6", list(src))))
-					if(tool.use_tool(src, user, 15 SECONDS, volume = 100))
-						to_chat(user, span_notice(LANG("obj.6f2c4612", null)))
-						state = RWINDOW_BOLTS_HEATED
-						addtimer(CALLBACK(src, PROC_REF(cool_bolts)), 30 SECONDS)
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning(LANG("obj.226cfe0d", null)))
+			to_chat(user, span_warning(LANG("obj.226cfe0d", null)))
 
 		if(RWINDOW_BOLTS_HEATED)
-			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice(LANG("obj.55c1e9f8", list(user))),
-										span_notice(LANG("obj.4b09d58d", null)))
-				if(tool.use_tool(src, user, 50, volume = 50))
-					state = RWINDOW_BOLTS_OUT
-					to_chat(user, span_notice(LANG("obj.52e8eb7d", null)))
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning(LANG("obj.b436b070", null)))
+			to_chat(user, span_warning(LANG("obj.b436b070", null)))
 
 		if(RWINDOW_BOLTS_OUT)
-			if(tool.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice(LANG("obj.c85f4c8c", list(user, tool))),
-										span_notice(LANG("obj.5c047a6d", list(tool))))
-				if(tool.use_tool(src, user, 40, volume = 50))
-					state = RWINDOW_POPPED
-					to_chat(user, span_notice(LANG("obj.781504da", null)))
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning(LANG("obj.b834e198", null)))
+			to_chat(user, span_warning(LANG("obj.b834e198", null)))
 
 		if(RWINDOW_POPPED)
-			if(tool.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(span_notice(LANG("obj.1a307314", list(user, src))),
-										span_notice(LANG("obj.a842c4a8", list(src))))
-				if(tool.use_tool(src, user, 20, volume = 50))
-					state = RWINDOW_BARS_CUT
-					to_chat(user, span_notice(LANG("obj.bc012cc9", null)))
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning(LANG("obj.7fef2ecb", null)))
+			to_chat(user, span_warning(LANG("obj.7fef2ecb", null)))
 
 		if(RWINDOW_BARS_CUT)
-			if(tool.tool_behaviour == TOOL_WRENCH)
-				user.visible_message(span_notice(LANG("obj.a02268c3", list(user, src))),
-					span_notice(LANG("obj.d0f44333", null)))
-				if(tool.use_tool(src, user, 40, volume = 50))
-					to_chat(user, span_notice(LANG("obj.6152c847", null)))
-					state = WINDOW_OUT_OF_FRAME
-					set_anchored(FALSE)
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning(LANG("obj.58a878dd", null)))
+			to_chat(user, span_warning(LANG("obj.58a878dd", null)))
 
-
-	if (tool.tool_behaviour)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return ..()
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/window/reinforced/crowbar_act(mob/living/user, obj/item/tool)
 	if(!anchored)
-		return FALSE
+		return NONE
 	if(state != WINDOW_OUT_OF_FRAME)
-		return FALSE
+		return NONE
 	to_chat(user, span_notice(LANG("obj.a759764d", null)))
-	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
-		state = RWINDOW_SECURE
-		to_chat(user, span_notice(LANG("obj.ef3bab8e", null)))
+	if(!tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
+		return ITEM_INTERACT_BLOCKING
+
+	state = RWINDOW_SECURE
+	to_chat(user, span_notice(LANG("obj.ef3bab8e", null)))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_SECURE)
+		return NONE // we got all that messaging for innapropriate tools, no skip to attack
+
+	if(!tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice(LANG("obj.37c5e60f", list(user, tool, src))),
+						span_notice(LANG("obj.b7fd88e6", list(src))))
+	if(!tool.use_tool(src, user, 15 SECONDS, volume = 100))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.6f2c4612", null)))
+	state = RWINDOW_BOLTS_HEATED
+	addtimer(CALLBACK(src, PROC_REF(cool_bolts)), 30 SECONDS)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_BOLTS_HEATED)
+		return NONE
+
+	user.visible_message(span_notice(LANG("obj.55c1e9f8", list(user))),
+						span_notice(LANG("obj.4b09d58d", null)))
+	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	state = RWINDOW_BOLTS_OUT
+	to_chat(user, span_notice(LANG("obj.52e8eb7d", null)))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_BOLTS_OUT)
+		return NONE
+
+	user.visible_message(span_notice(LANG("obj.c85f4c8c", list(user, tool))),
+						span_notice(LANG("obj.5c047a6d", list(tool))))
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	state = RWINDOW_POPPED
+	to_chat(user, span_notice(LANG("obj.781504da", null)))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_POPPED)
+		return NONE
+
+	user.visible_message(span_notice(LANG("obj.1a307314", list(user, src))),
+						span_notice(LANG("obj.a842c4a8", list(src))))
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	state = RWINDOW_BARS_CUT
+	to_chat(user, span_notice(LANG("obj.bc012cc9", null)))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_BARS_CUT)
+		return NONE
+
+	user.visible_message(span_notice(LANG("obj.a02268c3", list(user, src))),
+						span_notice(LANG("obj.d0f44333", null)))
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.6152c847", null)))
+	state = WINDOW_OUT_OF_FRAME
+	set_anchored(FALSE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/proc/cool_bolts()
@@ -981,25 +1016,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	. = ..()
 	. += (atom_integrity < max_integrity) ? torn : paper
 
-/obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
-	if(W.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		fire_act(W.get_temperature())
-		return
+/obj/structure/window/paperframe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		fire_act(tool.get_temperature())
+		return ITEM_INTERACT_SUCCESS
 
 	if(user.combat_mode)
-		return ..()
+		return NONE
 
-	if(istype(W, /obj/item/paper) && atom_integrity < max_integrity)
-		user.visible_message(span_notice(LANG("obj.6bc86786", list(user, src))))
-		if(do_after(user, 2 SECONDS, target = src))
-			atom_integrity = min(atom_integrity+4,max_integrity)
-			qdel(W)
-			user.visible_message(span_notice(LANG("obj.94410e24", list(user, src))))
-			if(atom_integrity == max_integrity)
-				update_appearance()
-			return
-	..()
-	update_appearance()
+	if(!istype(tool, /obj/item/paper) || atom_integrity == max_integrity)
+		return NONE
+
+	user.visible_message(span_notice(LANG("obj.6bc86786", list(user, src))))
+	if(!do_after(user, 2 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	atom_integrity = min(atom_integrity+4,max_integrity)
+	qdel(tool)
+	user.visible_message(span_notice(LANG("obj.94410e24", list(user, src))))
+	if(atom_integrity == max_integrity)
+		update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/bronze
 	name = "brass window"

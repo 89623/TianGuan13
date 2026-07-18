@@ -29,30 +29,22 @@
 
 	return .
 
-/obj/structure/mop_bucket/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/reagent_containers))
-		update_appearance(UPDATE_OVERLAYS)
-		return FALSE // skip attack animation when refilling cart
-
-	return ..()
-
-/obj/structure/mop_bucket/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/mop))
-		if(weapon.reagents.total_volume >= weapon.reagents.maximum_volume)
+/obj/structure/mop_bucket/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mop))
+		if(tool.reagents.total_volume >= tool.reagents.maximum_volume)
 			balloon_alert(user, LANG("obj.71c16304", null))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			return ITEM_INTERACT_BLOCKING
+
 		if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
 			balloon_alert(user, LANG("obj.6ef93b07", null))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		reagents.trans_to(weapon, weapon.reagents.maximum_volume, transferred_by = user)
+			return ITEM_INTERACT_BLOCKING
+
+		reagents.trans_to(tool, tool.reagents.maximum_volume, transferred_by = user)
 		balloon_alert(user, LANG("obj.70f002da", null))
 		playsound(src, 'sound/effects/slosh.ogg', 25, vary = TRUE)
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(weapon, /obj/item/reagent_containers) || istype(weapon, /obj/item/mop))
-		update_appearance(UPDATE_OVERLAYS)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN // skip attack animations when refilling cart
-
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return NONE
 
 /obj/structure/mop_bucket/update_overlays()
 	. = ..()
@@ -183,55 +175,77 @@
 
 	return . || NONE
 
-/obj/structure/mop_bucket/janitorialcart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/mop))
+/obj/structure/mop_bucket/janitorialcart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mop))
 		if(mymop)
 			balloon_alert(user, LANG("obj.8af97977", list(mymop)))
-		else if(user.transferItemToLoc(attacking_item, src))
-			balloon_alert(user, LANG("obj.56f6de96", list(attacking_item)))
-		return
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(attacking_item, /obj/item/pushbroom))
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		balloon_alert(user, LANG("obj.56f6de96", list(tool)))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/pushbroom))
 		if(mybroom)
 			balloon_alert(user, LANG("obj.8af97977", list(mybroom)))
-		else if(user.transferItemToLoc(attacking_item, src))
-			balloon_alert(user, LANG("obj.56f6de96", list(attacking_item)))
-		return
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(attacking_item, /obj/item/storage/bag/trash))
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		balloon_alert(user, LANG("obj.56f6de96", list(tool)))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/storage/bag/trash))
 		if(mybag)
 			balloon_alert(user, LANG("obj.8af97977", list(mybag)))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		var/obj/item/storage/bag/trash/insert = attacking_item
+		var/obj/item/storage/bag/trash/insert = tool
 		if(!insert.insertable)
 			balloon_alert(user, LANG("obj.aaf11e7f", null))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		if(user.transferItemToLoc(attacking_item, src))
-			balloon_alert(user, LANG("obj.07b7e630", list(attacking_item)))
-		return
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(attacking_item, /obj/item/reagent_containers/spray/cleaner))
+		balloon_alert(user, LANG("obj.07b7e630", list(tool)))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/reagent_containers/spray/cleaner))
 		if(myspray)
 			balloon_alert(user, LANG("obj.8af97977", list(myspray)))
-		else if(user.transferItemToLoc(attacking_item, src))
-			balloon_alert(user, LANG("obj.56f6de96", list(attacking_item)))
-		return
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(attacking_item, /obj/item/lightreplacer))
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		balloon_alert(user, LANG("obj.56f6de96", list(tool)))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/lightreplacer))
 		if(myreplacer)
 			balloon_alert(user, LANG("obj.8af97977", list(myreplacer)))
-		else if(user.transferItemToLoc(attacking_item, src))
-			balloon_alert(user, LANG("obj.56f6de96", list(attacking_item)))
-		return
+			return ITEM_INTERACT_BLOCKING
 
-	else if(istype(attacking_item, /obj/item/clothing/suit/caution))
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		balloon_alert(user, LANG("obj.56f6de96", list(tool)))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/clothing/suit/caution))
 		if(held_signs.len >= max_signs)
 			balloon_alert(user, LANG("obj.ed6f6e28", null))
-		else if(user.transferItemToLoc(attacking_item, src))
-			balloon_alert(user, LANG("obj.56f6de96", list(attacking_item)))
-		return
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		balloon_alert(user, LANG("obj.56f6de96", list(tool)))
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
@@ -249,19 +263,15 @@
 		update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/mop_bucket/janitorialcart/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/mop_bucket/janitorialcart/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
 
-	if(istype(weapon, /obj/item/reagent_containers))
-		update_appearance(UPDATE_OVERLAYS)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN //so we can empty the cart via our afterattack without trying to put the item in the bag
+	if(!mybag?.atom_storage.attempt_insert(tool, user))
+		return .
 
-	if(mybag?.attackby(weapon, user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mop_bucket/janitorialcart/attack_hand(mob/user, list/modifiers)
 	. = ..()

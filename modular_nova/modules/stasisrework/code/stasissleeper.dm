@@ -152,7 +152,7 @@
 			to_chat(user, span_notice(LANG("obj.0b81e68a", null)))
 		else
 			to_chat(user, span_notice(LANG("obj.f51db475", null)))
-		healthscan(user, occupant, SCANNER_VERBOSE, TRUE)
+		healthscan(user, occupant, mode = SCANNER_VERBOSE, scanpower = SCANPOWER_ADVANCED)
 	else
 		to_chat(user, span_warning(LANG("obj.1b7cb29c", null)))
 

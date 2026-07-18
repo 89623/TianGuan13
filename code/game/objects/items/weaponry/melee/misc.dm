@@ -157,20 +157,25 @@
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-/obj/item/melee/roastingstick/attackby(atom/target, mob/user)
-	..()
-	if (istype(target, /obj/item/food/sausage))
-		if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-			to_chat(user, span_warning(LANG("obj.a9f024ac", list(src))))
-			return
-		if (held_sausage)
-			to_chat(user, span_warning(LANG("obj.6620462c", list(held_sausage, src))))
-			return
-		if (user.transferItemToLoc(target, src))
-			held_sausage = target
-		else
-			to_chat(user, span_warning(LANG("obj.1ef594be", list(target, src))))
+/obj/item/melee/roastingstick/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/food/sausage))
+		return NONE
+
+	if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		to_chat(user, span_warning(LANG("obj.a9f024ac", list(src))))
+		return ITEM_INTERACT_BLOCKING
+
+	if (held_sausage)
+		to_chat(user, span_warning(LANG("obj.6620462c", list(held_sausage, src))))
+		return ITEM_INTERACT_BLOCKING
+
+	if (!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning(LANG("obj.1ef594be", list(tool, src))))
+		return ITEM_INTERACT_BLOCKING
+
+	held_sausage = tool
 	update_appearance()
+	return ITEM_INTERACT_SKIP_TO_ATTACK
 
 /obj/item/melee/roastingstick/attack_hand(mob/user, list/modifiers)
 	..()

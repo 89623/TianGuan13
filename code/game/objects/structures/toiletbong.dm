@@ -111,8 +111,3 @@
 	if (emag_card)
 		to_chat(user, span_boldwarning(LANG("obj.08a10670", list(emag_card))))
 	return TRUE
-
-/obj/structure/toiletbong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/card/emag))
-		return
-	return ..()

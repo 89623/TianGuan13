@@ -88,19 +88,13 @@
 	if(affect_cyborg)
 		readout += LANG("obj.d47818f9", list(round((stun_time_cyborg/10), 1)))
 
-	// NOVA EDIT - i18n: 原 codemod 把整个三元当 {0} 包了、分支英文没翻；拆成 if/else 字面量供抽取+LANG，
-	// activated_word(ready/extended/activated)整词反查
-	var/aw = span_warning("[lang_reverse_text(activated_word)]")
-	if(active)
-		readout += LANG("obj.146f180f", list(aw)) // ORIGINAL: readout += "It is currently [aw], and capable of stunning."
-	else
-		readout += LANG("obj.a9b04bbd", list(aw)) // ORIGINAL: readout += "It is not [aw], and not capable of stunning."
+	readout += LANG("obj.65aac1b5", list(active ? "It is currently [span_warning("[activated_word]")], and capable of stunning." : "It is [span_warning("not [activated_word]")], and not capable of stunning."))
 
 	if(stamina_damage <= 0) // The advanced baton actually does have 0 stamina damage so...yeah.
 		readout += LANG("obj.dec156bb", list(span_warning("completely unable to perform a stunning strike"), span_warning("attacks via some unusual method")))
 		return readout.Join("\n")
 
-	readout += LANG("obj.02026481", list(span_warning("[HITS_TO_CRIT(stamina_damage)]")))
+	readout += LANG("obj.2ec1c2d9", list(span_warning("[HITS_TO_CRIT(stamina_damage)] strike\s")))
 
 	readout += LANG("obj.c99df77a", list(span_warning("[armour_type_against_stun]")))
 
@@ -171,8 +165,8 @@
 	// clumsy people redirect this attack - yes, this bypasses IWASBATONED and such
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message(
-			span_danger(LANG("obj.58f9879b", list(user, user.p_them(), src))),
-			span_userdanger(LANG("obj.498c711f", list(src))),
+			span_danger("[user] accidentally hits [user.p_them()]self over the head with [src]! What a doofus!"),
+			span_userdanger("You accidentally hit yourself over the head with [src]!"),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
@@ -604,22 +598,24 @@
 		tool.play_tool_sound(src)
 	return TRUE
 
-/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/stock_parts/power_store/cell))
-		var/obj/item/stock_parts/power_store/cell/active_cell = item
-		if(cell)
-			to_chat(user, span_warning(LANG("obj.6ce8d100", list(src))))
-		else
-			if(active_cell.maxcharge < cell_hit_cost)
-				to_chat(user, span_notice(LANG("obj.82ea442c", list(src))))
-				return
-			if(!user.transferItemToLoc(item, src))
-				return
-			cell = item
-			to_chat(user, span_notice(LANG("obj.9bc9caa9", list(src))))
-			update_appearance()
-	else
-		return ..()
+/obj/item/melee/baton/security/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return NONE
+	if(cell)
+		to_chat(user, span_warning(LANG("obj.6ce8d100", list(src))))
+		return ITEM_INTERACT_BLOCKING
+
+	if(astype(tool, /obj/item/stock_parts/power_store/cell).maxcharge < cell_hit_cost)
+		to_chat(user, span_notice(LANG("obj.82ea442c", list(src))))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	cell = tool
+	to_chat(user, span_notice(LANG("obj.9bc9caa9", list(src))))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/baton/security/proc/tryremovecell(mob/user)
 	if(cell && can_remove_cell)
@@ -676,8 +672,8 @@
 /obj/item/melee/baton/security/try_stun(mob/living/target, mob/living/user, harmbatonning)
 	if(!active && !harmbatonning && !user.combat_mode)
 		target.visible_message(
-			span_warning(LANG("obj.070608db", list(user, target, src))),
-			span_warning(LANG("obj.ce394769", list(user, src))),
+			span_warning("[user] prods [target] with [src]. Luckily it was off."),
+			span_warning("[user] prods you with [src]. Luckily it was off."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 		return FALSE
@@ -845,37 +841,38 @@
 /obj/item/melee/baton/security/cattleprod/add_deep_lore()
 	return
 
-/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
-	if(!istype(item, /obj/item/stack))
+/obj/item/melee/baton/security/cattleprod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
+	if(!istype(tool, /obj/item/stack))
 		return ..()
 
 	if(!can_upgrade)
 		user.visible_message(span_warning(LANG("obj.83ea6693", null)))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	if(cell)
 		user.visible_message(span_warning(LANG("obj.d4fc929f", null)))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	var/our_prod
-	if(istype(item, /obj/item/stack/ore/bluespace_crystal))
-		var/obj/item/stack/ore/bluespace_crystal/our_crystal = item
+	if(istype(tool, /obj/item/stack/ore/bluespace_crystal))
+		var/obj/item/stack/ore/bluespace_crystal/our_crystal = tool
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/teleprod
 
-	else if(istype(item, /obj/item/stack/telecrystal))
-		var/obj/item/stack/telecrystal/our_crystal = item
+	else if(istype(tool, /obj/item/stack/telecrystal))
+		var/obj/item/stack/telecrystal/our_crystal = tool
 		our_crystal.use(1)
 		our_prod = /obj/item/melee/baton/security/cattleprod/telecrystalprod
 	else
-		to_chat(user, span_notice(LANG("obj.fb64298c", list(item, src))))
-		return ..()
+		to_chat(user, span_notice(LANG("obj.fb64298c", list(tool, src))))
+		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice(LANG("obj.389c65b9", list(item, sparkler))))
+	to_chat(user, span_notice(LANG("obj.389c65b9", list(tool, sparkler))))
 	remove_item_from_storage(user)
 	qdel(src)
 	var/obj/item/melee/baton/security/cattleprod/brand_new_prod = new our_prod(user.loc)
 	user.put_in_hands(brand_new_prod)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/baton/security/cattleprod/try_stun(mob/living/target, mob/living/user, harmbatonning)
 	return ..() && sparkler.activate()

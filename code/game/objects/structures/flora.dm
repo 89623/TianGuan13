@@ -50,47 +50,50 @@
 	/// Flags for the flora to determine what kind of sound to play when it gets hit
 	var/flora_flags = NONE
 
-/obj/structure/flora/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/flora/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
-		return ..()
+		return NONE
+
 	if(flags_1 & HOLOGRAM_1)
 		balloon_alert(user, LANG("obj.761468ab", null))
-		return ..()
-	if(can_uproot && used_item.tool_behaviour == TOOL_SHOVEL)
+		return ITEM_INTERACT_BLOCKING
+
+	if(can_uproot && tool.tool_behaviour == TOOL_SHOVEL)
 		if(uprooted)
 			user.visible_message(span_notice(LANG("obj.4f410c36", list(user, src))),
-				span_notice(LANG("obj.d164ac92", list(src))))
+								span_notice(LANG("obj.d164ac92", list(src))))
 		else
 			user.visible_message(span_notice(LANG("obj.9697e68f", list(user, src))),
-				span_notice(LANG("obj.8d6b238d", list(src))))
-		used_item.play_tool_sound(src, 50)
+								span_notice(LANG("obj.8d6b238d", list(src))))
+		tool.play_tool_sound(src, 50)
 		if(!do_after(user, harvest_time, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(uprooted)
 			user.visible_message(span_notice(LANG("obj.da82b014", list(user, src))),
-				span_notice(LANG("obj.c8a4b141", list(src))))
+								span_notice(LANG("obj.c8a4b141", list(src))))
 			replant(user)
 		else
 			user.visible_message(span_notice(LANG("obj.c4487d54", list(user, src))),
-				span_notice(LANG("obj.b067f869", list(src))))
+								span_notice(LANG("obj.b067f869", list(src))))
 			uproot(user)
-		used_item.play_tool_sound(src, 50)
-		return
+		tool.play_tool_sound(src, 50)
+		return ITEM_INTERACT_SUCCESS
 
-	if(!can_harvest(user, used_item))
-		return ..()
+	if(!can_harvest(user, tool))
+		return NONE
 
 	user.visible_message(span_notice(LANG("obj.b74b3b4c", list(user, harvest_verb, src))),
-		span_notice(LANG("obj.ad7a2441", list(harvest_verb, src, used_item))))
-	play_attack_sound(used_item.force)
-	if(!do_after(user, harvest_time * used_item.toolspeed, src))
-		return
-	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
-		ignored_mobs = list(user))
-	play_attack_sound(used_item.force)
+						span_notice(LANG("obj.ad7a2441", list(harvest_verb, src, tool))))
+	play_attack_sound(tool.force)
+	if(!do_after(user, harvest_time * tool.toolspeed, src))
+		return ITEM_INTERACT_BLOCKING
 
+	visible_message(span_notice("[user] [harvest_verb][harvest_verb_suffix] [src]."),
+					span_notice(LANG("obj.d6171b71", list(harvest_verb, src))))
+	play_attack_sound(tool.force)
 	if(harvest(user))
 		after_harvest(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/flora/attack_hand(mob/user, list/modifiers)
 	. = ..()

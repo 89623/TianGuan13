@@ -41,34 +41,36 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 /// Attaching evidences: photo and papers
 
-/obj/structure/detectiveboard/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
-		if(!cases.len)
-			to_chat(user, LANG("obj.46f0ed87", null))
-			return
+/obj/structure/detectiveboard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/paper) && !istype(tool, /obj/item/photo))
+		return NONE
+	if(!cases.len)
+		to_chat(user, LANG("obj.46f0ed87", null))
+		return ITEM_INTERACT_BLOCKING
 
-		if(attaching_evidence)
-			to_chat(user, LANG("obj.05e0afaf", null))
-			return
-		attaching_evidence = TRUE
-		var/name = tgui_input_text(user, LANG("obj.cae7aff5", null), LANG("obj.a7f441ba", null), max_length = MAX_NAME_LEN)
-		if(!name)
-			name = item.name
-		var/desc = tgui_input_text(user, LANG("obj.43fd2730", null), LANG("obj.a7f441ba", null), max_length = MAX_DESC_LEN)
-		if(!desc)
-			desc = item.desc
+	if(attaching_evidence)
+		to_chat(user, LANG("obj.05e0afaf", null))
+		return ITEM_INTERACT_BLOCKING
 
-		if(!user.transferItemToLoc(item, src))
-			attaching_evidence = FALSE
-			return
-		cases[current_case].notices++
-		var/datum/evidence/evidence = new (name, desc, item)
-		cases[current_case].evidences += evidence
-		to_chat(user, span_notice(LANG("obj.a05c7252", list(item))))
+	attaching_evidence = TRUE
+	var/name = tgui_input_text(user, LANG("obj.cae7aff5", null), LANG("obj.a7f441ba", null), max_length = MAX_NAME_LEN)
+	if(!name)
+		name = tool.name
+	var/desc = tgui_input_text(user, LANG("obj.43fd2730", null), LANG("obj.a7f441ba", null), max_length = MAX_DESC_LEN)
+	if(!desc)
+		desc = tool.desc
+
+	if(!user.transferItemToLoc(tool, src))
 		attaching_evidence = FALSE
-		update_appearance(UPDATE_ICON)
-		return
-	return ..()
+		return ITEM_INTERACT_BLOCKING
+
+	cases[current_case].notices++
+	var/datum/evidence/evidence = new (name, desc, tool)
+	cases[current_case].evidences += evidence
+	to_chat(user, span_notice(LANG("obj.a05c7252", list(tool))))
+	attaching_evidence = FALSE
+	update_appearance(UPDATE_ICON)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/detectiveboard/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()

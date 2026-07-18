@@ -133,25 +133,36 @@
 	balloon_alert(user, LANG("obj.e44914ad", list(pressure_setting_to_text(pressure_setting))))
 	return TRUE
 
-/obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/pneumatic_cannon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
-		return ..()
-	if(istype(W, /obj/item/tank/internals))
+		return NONE
+	if(!isitem(tool))
+		return NONE
+
+	if(istype(tool, /obj/item/tank/internals))
 		if(needs_air == FALSE)
-			return
-		if(!tank)
-			var/obj/item/tank/internals/IT = W
-			if(IT.volume <= 3)
-				to_chat(user, span_warning(LANG("obj.a09c5951", list(IT, src))))
-				return
-			updateTank(W, 0, user)
-	else if(W.type == type)
+			return ITEM_INTERACT_BLOCKING
+
+		if(tank)
+			return ITEM_INTERACT_BLOCKING
+
+		if(astype(tool, /obj/item/tank/internals).volume <= 3)
+			to_chat(user, span_warning(LANG("obj.a09c5951", list(tool, src))))
+			return ITEM_INTERACT_BLOCKING
+
+		updateTank(tool, FALSE, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.type == type)
 		to_chat(user, span_warning(LANG("obj.942f48b2", null)))
-	else if(loadedWeightClass >= maxWeightClass)
+		return ITEM_INTERACT_BLOCKING
+
+	if(loadedWeightClass >= maxWeightClass)
 		to_chat(user, span_warning(LANG("obj.9eeb865e", list(src))))
-	else if(isitem(W))
-		var/obj/item/IW = W
-		load_item(IW, user)
+		return ITEM_INTERACT_BLOCKING
+
+	load_item(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
 	if(!istype(I)) //Players can't load non items, this allows for admin varedit inserts.

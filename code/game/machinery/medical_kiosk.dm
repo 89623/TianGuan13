@@ -240,10 +240,14 @@
 	var/blood_alcohol = patient.get_blood_alcohol_content()
 
 	for(var/thing in patient.diseases) //Disease Information
-		var/datum/disease/D = thing
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
+		var/datum/disease/disease = thing
+		if(!(disease.visibility_flags & HIDDEN_SCANNER))
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
-			sickness_data = LANG("obj.5adc3d38", list(D.name, D.spread_text, D.stage, D.max_stages, D.cure_text))
+			var/cure_text = disease.cure_text
+			if(istype(disease, /datum/disease/advance))
+				var/datum/disease/advance/advanced_disease = disease
+				cure_text = advanced_disease.generate_cure_text(2)
+			sickness_data = "\nName: [disease.name].\nType: [disease.spread_text].\nStage: [disease.stage]/[disease.max_stages].\nPossible Cure: [cure_text]"
 
 	if(patient.can_bleed()) //Blood levels Information
 		blood_name = LOWER_TEXT(blood_type.get_blood_name())
@@ -251,7 +255,7 @@
 			bleed_status = " Patient is currently bleeding!"
 
 		if(blood_percent <= 80)
-			blood_warning = LANG("obj.8c48b16d", list(blood_percent <= 60 ? "DANGEROUSLY low" : "low", blood_name))
+			blood_warning = " Patient has [blood_percent <= 60 ? "DANGEROUSLY low" : "low"] [blood_name] levels."
 			var/list/treatments = list()
 			if(blood_percent <= 60)
 				treatments += "[blood_name] transfusion"
@@ -263,13 +267,12 @@
 					treatments += "saline-glucose immediately"
 
 			if (length(treatments))
-				blood_warning += LANG("obj.8eac253b", list(english_list(treatments, and_text = " or ")))
+				blood_warning += " Seek [english_list(treatments, and_text = " or ")]"
 
 			if (blood_percent <= 60)
-				blood_warning += LANG("obj.4b7a7c80", null)
+				blood_warning += " Ignoring treatment may lead to death!"
 
-		var/blood_type_suffix = blood_type.get_type() ? LANG("obj.565fbcbc", list(blood_type.get_type(), blood_name)) : "" // NOVA EDIT - I18N - localize the blood-type suffix so it round-trips as {2}
-		blood_status = LANG("obj.fd7bb58c", list(blood_name, blood_percent, blood_type_suffix, blood_warning))
+		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.get_type() ? " Patient has [blood_type.get_type()] type [blood_name]." : ""][blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)

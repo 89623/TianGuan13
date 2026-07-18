@@ -121,16 +121,16 @@
 
 
 /obj/structure/falsewall/welder_act(mob/living/user, obj/item/tool)
-	if(tool.use_tool(src, user, 0 SECONDS, volume=50))
-		dismantle(user, TRUE)
-		return ITEM_INTERACT_SUCCESS
-	return
+	if(!tool.use_tool(src, user, 0 SECONDS, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	dismantle(user, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/falsewall/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(!opening)
-		return ..()
-	to_chat(user, span_warning(LANG("obj.79d73a2a", null)))
-	return
+/obj/structure/falsewall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(opening)
+		to_chat(user, span_warning(LANG("obj.79d73a2a", null)))
+		return ITEM_INTERACT_BLOCKING // honest to god no idea what the point of this blocker is, I'm just the messenger
+	return NONE
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message(span_notice(LANG("obj.53c21018", list(user))), span_notice(LANG("obj.f2e26fd8", null)))
@@ -177,10 +177,12 @@
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
 	return span_notice("The outer <b>grille</b> is fully intact.")
 
-/obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
-	..()
-	if(tool.tool_behaviour == TOOL_WIRECUTTER)
-		dismantle(user, TRUE, tool)
+/obj/structure/falsewall/reinforced/wirecutter_act(mob/living/user, obj/item/tool)
+	dismantle(user, TRUE, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/falsewall/reinforced/welder_act(mob/living/user, obj/item/tool)
+	return NONE
 
 /*
  * Uranium Falsewalls

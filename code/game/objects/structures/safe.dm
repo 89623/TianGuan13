@@ -119,24 +119,27 @@ FLOOR SAFES
 	balloon_alert(user, LANG("obj.189d5394", null))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/safe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(open)
-		. = TRUE //no afterattack
-		if(attacking_item.w_class + space <= maxspace)
-			if(!user.transferItemToLoc(attacking_item, src))
-				to_chat(user, span_warning(LANG("obj.6bed091c", list(attacking_item))))
-				return
-			space += attacking_item.w_class
-			to_chat(user, span_notice(LANG("obj.de7df645", list(attacking_item, src))))
-		else
-			to_chat(user, span_warning(LANG("obj.6b579e25", list(attacking_item, src))))
-	else
-		if(istype(attacking_item, /obj/item/clothing/neck/stethoscope))
-			attack_hand(user)
-			return
-		else
-			to_chat(user, span_warning(LANG("obj.6fb4c955", list(attacking_item))))
-			return
+/obj/structure/safe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!open)
+		if(!istype(tool, /obj/item/clothing/neck/stethoscope))
+			to_chat(user, span_warning(LANG("obj.6fb4c955", list(tool))))
+			return ITEM_INTERACT_BLOCKING
+
+		attack_hand(user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.w_class + space > maxspace)
+		to_chat(user, span_warning(LANG("obj.6b579e25", list(tool, src))))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning(LANG("obj.6bed091c", list(tool))))
+		return ITEM_INTERACT_BLOCKING
+
+	space += tool.w_class
+	to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/structure/safe/blob_act(obj/structure/blob/B)
 	return
