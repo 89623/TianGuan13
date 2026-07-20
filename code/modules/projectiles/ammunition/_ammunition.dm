@@ -115,7 +115,7 @@
 	return ..()
 
 /obj/item/ammo_casing/update_desc()
-	desc = "[initial(desc)][loaded_projectile ? null : " This one is spent."]"
+	desc = "[lang_reverse_text(initial(desc))][loaded_projectile ? null : lang_reverse_text(" This one is spent.")]" // NOVA EDIT CHANGE - i18n: initial(desc) 是编译期英文原值，会把 /atom/Initialize 反查好的中文 desc 覆盖回英文 - ORIGINAL: desc = "[initial(desc)][loaded_projectile ? null : " This one is spent."]"
 	return ..()
 
 /*
