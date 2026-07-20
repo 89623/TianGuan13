@@ -59,17 +59,21 @@ SUBSYSTEM_DEF(statpanels)
 		if(SSmapping.current_map?.mapping_url)
 			global_data += list(list("same_line", " | (View in Browser)", "action=openWebMap"))
 
+		// i18n: 这几条标签在源头整串反查，不靠下面 i18n_localize_stat_list 的 AC 子串兜底。
+		// AC 只吃多词、且是**最短匹配**："Enabled"/"Disabled" 是单词永远匹配不到；
+		// "Actual Round Timer" 会被更短的针 "Round Timer" 吃掉中段、剩个裸 "Actual"。
+		// 整串反查在 AC 之前跑完，标签已是中文，后面 AC 再扫就是 no-op。en 下全部 no-op。
 		global_data += list(
-			cached ? "Next Map: [cached.map_name]" : null,
+			cached ? "[lang_reverse_text("Next Map")]: [cached.map_name]" : null,
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
-			"Connected Players: [GLOB.clients.len]",
+			"[lang_reverse_text("Connected Players")]: [GLOB.clients.len]",
 			" ",
-			"OOC: [GLOB.ooc_allowed ? "Enabled" : "Disabled"]",
+			"OOC: [GLOB.ooc_allowed ? lang_reverse_text("Enabled") : lang_reverse_text("Disabled")]",
 			" ",
 			"Server Time: [server_timestamp(format = "YYYY-MM-DD hh:mm:ss")]",
 			"Station Time: [server_timestamp(ic_time = TRUE)]",
 			"Round Timer: [round_timestamp()]",
-			"Actual Round Timer: [time2text(real_round_time, "hh:mm:ss", 0)]"
+			"[lang_reverse_text("Actual Round Timer")]: [time2text(real_round_time, "hh:mm:ss", 0)]"
 		)
 		// NOVA EDIT ADDITION END
 
