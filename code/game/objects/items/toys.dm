@@ -1462,7 +1462,7 @@
 		return
 	doll_name = new_name
 	to_chat(user, span_notice(LANG("obj.4056970a", list(doll_name))))
-	name = "[initial(name)] - [doll_name]"
+	name = "[lang_reverse_text(initial(name))] - [doll_name]"  // NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名 - ORIGINAL: name = "[initial(name)] - [doll_name]"
 
 /obj/item/toy/dummy/Initialize(mapload)
 	. = ..()

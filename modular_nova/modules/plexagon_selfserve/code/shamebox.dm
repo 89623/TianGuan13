@@ -23,7 +23,7 @@
 	atom_storage.max_total_storage = 99
 	associated_card = WEAKREF(crew_id)
 	if(crew_id.registered_name)
-		name = "[initial(name)] - [crew_id.registered_name]"
+		name = "[lang_reverse_text(initial(name))] - [crew_id.registered_name]"  // i18n: initial(name) 会覆盖掉已反查的中文名
 
 /obj/item/storage/lockbox/timeclock/examine(mob/user)
 	. = ..()

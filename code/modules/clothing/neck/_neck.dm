@@ -518,7 +518,7 @@
 		name = initial(name)
 		tagname = null
 		return
-	name = "[initial(name)] - [tagname]"
+	name = "[lang_reverse_text(initial(name))] - [tagname]"  // NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名 - ORIGINAL: name = "[initial(name)] - [tagname]"
 
 /obj/item/clothing/neck/petcollar/wearable/cyber
 	desc = "You wear the tie, or you wear this. Your choice."

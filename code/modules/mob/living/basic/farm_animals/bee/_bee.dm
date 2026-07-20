@@ -193,7 +193,7 @@
 	if(beegent) //clear the old since this one is going to have some new value
 		RemoveElement(/datum/element/venomous, beegent.type, injection_range, thrown_effect = TRUE)
 	beegent = toxin
-	name = "[initial(name)] ([toxin.name])"
+	name = "[lang_reverse_text(initial(name))] ([toxin.name])"  // NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名 - ORIGINAL: name = "[initial(name)] ([toxin.name])"
 	real_name = name
 	AddElement(/datum/element/venomous, beegent.type, injection_range, thrown_effect = TRUE)
 	generate_bee_visuals()

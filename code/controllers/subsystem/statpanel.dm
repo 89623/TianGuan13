@@ -49,15 +49,18 @@ SUBSYSTEM_DEF(statpanels)
 		global_data = list(
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
+		// i18n: 地图名单独反查（单词名过不了多词 AC）。只在**显示处**反查——map_name 本身绝不能改，
+		// config/maps.txt 的 feedbacklink / webmap_url 是按 map_name 比对生效的（configuration.dm）。
+		var/localized_map_name = lang_reverse_text(SSmapping.current_map?.map_name)
 		if(isnull(SSmapping.current_map))
 			global_data += "Loading"
 		else if(SSmapping.current_map.feedback_link)
-			global_data += list(list("Map: [SSmapping.current_map.map_name]", " (Feedback)", "action=openLink&link=[SSmapping.current_map.feedback_link]"))
+			global_data += list(list("Map: [localized_map_name]", " (Feedback)", "action=openLink&link=[SSmapping.current_map.feedback_link]"))
 		else
-			global_data += "Map: [SSmapping.current_map?.map_name]"
+			global_data += "Map: [localized_map_name]"
 
 		if(SSmapping.current_map?.mapping_url)
-			global_data += list(list("same_line", " | (View in Browser)", "action=openWebMap"))
+			global_data += list(list("same_line", " | [lang_reverse_text("(View in Browser)")]", "action=openWebMap"))
 
 		// i18n: 这几条标签在源头整串反查，不靠下面 i18n_localize_stat_list 的 AC 子串兜底。
 		// AC 只吃多词、且是**最短匹配**："Enabled"/"Disabled" 是单词永远匹配不到；

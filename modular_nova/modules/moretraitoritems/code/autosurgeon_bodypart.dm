@@ -16,7 +16,7 @@
 /obj/item/autosurgeon/bodypart/proc/insert_bodypart(obj/item/I)
 	storedbodypart = I
 	I.forceMove(src)
-	name = "[initial(name)] ([storedbodypart.name])"
+	name = "[lang_reverse_text(initial(name))] ([storedbodypart.name])"  // i18n: initial(name) 会覆盖掉已反查的中文名
 
 /obj/item/autosurgeon/bodypart/attack_self(mob/user)//when the object it used...
 	if(!uses)
