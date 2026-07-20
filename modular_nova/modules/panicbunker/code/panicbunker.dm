@@ -37,20 +37,24 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(revokebunkerbypass)
 
 /datum/tgs_chat_command/addbunkerbypass
 	name = "whitelist-pb"
-	help_text = "whitelist-pb <ckey>"
+	help_text = "【管理员】whitelist-pb <ckey> —— 添加本回合紧急封锁绕过"
 	admin_only = TRUE
 
 /datum/tgs_chat_command/addbunkerbypass/Run(datum/tgs_chat_user/sender, params)
 	if(!CONFIG_GET(flag/sql_enabled))
-		return "The Database is not enabled!"
+		return new /datum/tgs_message_content("❌ **无法添加紧急封锁绕过：** SQL 数据库未启用。")
 
-	GLOB.bunker_passthrough |= ckey(params)
+	var/target_ckey = ckey(params)
+	if(!target_ckey)
+		return new /datum/tgs_message_content("⚠️ **请输入有效的 ckey。**\n> 用法：`whitelist-pb <ckey>`")
 
-	GLOB.bunker_passthrough[ckey(params)] = world.realtime
+	GLOB.bunker_passthrough |= target_ckey
+
+	GLOB.bunker_passthrough[target_ckey] = world.realtime
 	SSpersistence.save_panic_bunker() //we can do this every time, it's okay
-	log_admin("[sender.friendly_name] has added [params] to the current round's bunker bypass list.")
-	message_admins("[sender.friendly_name] has added [params] to the current round's bunker bypass list.")
-	return new /datum/tgs_message_content("[params] has been added to the current round's bunker bypass list.")
+	log_admin("[sender.friendly_name] has added [target_ckey] to the current round's bunker bypass list.")
+	message_admins("[sender.friendly_name] has added [target_ckey] to the current round's bunker bypass list.")
+	return new /datum/tgs_message_content("✅ **紧急封锁绕过添加成功**\n> `[target_ckey]` 本回合可以绕过紧急封锁。")
 
 /datum/controller/subsystem/persistence/proc/load_panic_bunker()
 	var/bunker_path = file("data/bunker_passthrough.json")

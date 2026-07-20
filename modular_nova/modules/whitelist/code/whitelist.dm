@@ -129,21 +129,23 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(revoke_whitelist)
 
 /datum/tgs_chat_command/add_whitelist
 	name = "whitelist"
-	help_text = "whitelist <ckey>"
+	help_text = "【管理员】whitelist <ckey> —— 将玩家加入服务器白名单"
 	admin_only = TRUE
 
 
 /datum/tgs_chat_command/add_whitelist/Run(datum/tgs_chat_user/sender, params)
 	if(!CONFIG_GET(flag/usewhitelist))
-		return new /datum/tgs_message_content("This feature only works if the whitelist is enabled!")
+		return new /datum/tgs_message_content("⚠️ **白名单功能未启用。**")
 
 	if(!CONFIG_GET(flag/sql_enabled))
-		return new /datum/tgs_message_content("This feature requires a SQL database!")
+		return new /datum/tgs_message_content("❌ **无法操作白名单：** SQL 数据库未启用。")
 
 	if(!CONFIG_GET(flag/sql_whitelist))
-		return new /datum/tgs_message_content("This feature is unavailable for the legacy whitelist system and requires the SQL-based whitelist to be enabled instead!")
+		return new /datum/tgs_message_content("❌ **无法操作白名单：** 当前使用旧版白名单系统，请启用 SQL 白名单。")
 
 	var/ckey_to_whitelist = ckey(params)
+	if(!ckey_to_whitelist)
+		return new /datum/tgs_message_content("⚠️ **请输入有效的 ckey。**\n> 用法：`whitelist <ckey>`")
 
 	var/datum/db_query/query_add_whitelist = SSdbcore.NewQuery(
 		"INSERT INTO [format_table_name("whitelist")] (ckey) VALUES(:ckey) ON DUPLICATE KEY UPDATE revoked = 0",
@@ -152,7 +154,7 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(revoke_whitelist)
 
 	if(!query_add_whitelist.Execute())
 		qdel(query_add_whitelist)
-		return new /datum/tgs_message_content("A SQL error occurred during this operation, report this ASAP.")
+		return new /datum/tgs_message_content("❌ **数据库操作失败。**\n> 请立即检查服务器 SQL 日志。")
 
 	qdel(query_add_whitelist)
 
@@ -160,7 +162,7 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(revoke_whitelist)
 
 	log_admin("[sender.friendly_name] has added [ckey_to_whitelist] to the whitelist.")
 	message_admins("[sender.friendly_name] has added [ckey_to_whitelist] to the whitelist.")
-	return new /datum/tgs_message_content("[ckey_to_whitelist] has been added to the whitelist.")
+	return new /datum/tgs_message_content("✅ **白名单添加成功**\n> `[ckey_to_whitelist]` 现在可以进入服务器。")
 
 
 #undef WHITELISTFILE
