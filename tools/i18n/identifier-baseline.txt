@@ -70,6 +70,7 @@ Color
 Command
 Confirm
 Connect me!
+Contents
 Contraband
 Controller
 Cook
@@ -437,6 +438,7 @@ contractor
 core
 crab
 crafting component
+credits
 crematorium
 crowbar
 crush-proof
@@ -622,6 +624,7 @@ random
 range
 rank
 ready
+recharging
 reconnect
 red
 renameable
