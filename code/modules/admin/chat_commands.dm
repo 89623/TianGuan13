@@ -15,7 +15,7 @@
 		if("Error: Ticket could not be found")
 			return "❌ **操作失败：** 找不到对应工单。"
 
-	result = replacetext(result, "Usage: ticket <close|resolve|icissue|reject|reopen \\[ticket #\\]|list>", "用法：`ticket <close|resolve|icissue|reject|reopen [工单号]|list>`")
+	result = replacetext(result, "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>", "用法：`ticket <close|resolve|icissue|reject|reopen \[工单号\]|list>`")
 	result = replacetext(result, "Ticket #", "工单 #")
 	result = replacetext(result, " successfully closed", " 已成功关闭")
 	result = replacetext(result, " successfully resolved", " 已成功解决")
