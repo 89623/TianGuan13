@@ -1,39 +1,49 @@
+// NOVA EDIT ADDITION START - I18N - Shared Discord display helpers
+/proc/nova_tgs_connect_address()
+	var/connect_address = CONFIG_GET(string/public_address) || CONFIG_GET(string/server)
+	if(!connect_address)
+		connect_address = world.internet_address ? "[world.internet_address]:[world.port]" : "r7.ctymc.cn:[world.port]"
+	if(findtext(connect_address, "byond://") != 1)
+		connect_address = "byond://[connect_address]"
+	return connect_address
+
+/proc/nova_tgs_map_name()
+	var/map_name = SSmapping.current_map.map_name
+	var/localized_map_name = lang_reverse_text(map_name)
+	return localized_map_name != map_name ? "[localized_map_name]（[map_name]）" : map_name
+// NOVA EDIT ADDITION END
+
 /datum/tgs_chat_command/tgscheck
 	name = "check"
 	help_text = "查看服务器人数、地图、回合状态与连接地址" // NOVA EDIT CHANGE - I18N - ORIGINAL: "Gets the playercount, gamemode, and address of the server"
 
 /datum/tgs_chat_command/tgscheck/Run(datum/tgs_chat_user/sender, params)
-	var/server = CONFIG_GET(string/public_address) || CONFIG_GET(string/server)
 	// NOVA EDIT REMOVAL - I18N - ORIGINAL: return new /datum/tgs_message_content("[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.current_map.map_name]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]")
-	// NOVA EDIT ADDITION START - I18N - Localized Discord status card
-	var/round_status
-	if(!SSticker.HasRoundStarted())
-		round_status = "🟡 准备中"
-	else if(SSticker.IsRoundInProgress())
-		round_status = "🟢 进行中"
-	else
-		round_status = "🟠 正在结束"
+	// NOVA EDIT ADDITION START - I18N - Localized Discord embed status card
+	var/round_status = "准备中"
+	var/embed_colour = "#F1C40F"
+	if(SSticker.HasRoundStarted())
+		if(SSticker.IsRoundInProgress())
+			round_status = "进行中"
+			embed_colour = "#2ECC71"
+		else
+			round_status = "即将结束"
+			embed_colour = "#E67E22"
 
-	var/map_name = SSmapping.current_map.map_name
-	var/localized_map_name = lang_reverse_text(map_name)
-	if(localized_map_name != map_name)
-		map_name = "[localized_map_name]（[map_name]）"
+	var/datum/tgs_chat_embed/field/player_field = new("在线玩家", "[GLOB.clients.len] 人")
+	player_field.is_inline = TRUE
+	var/datum/tgs_chat_embed/field/map_field = new("当前地图", nova_tgs_map_name())
+	map_field.is_inline = TRUE
+	var/datum/tgs_chat_embed/field/address_field = new("连接地址", nova_tgs_connect_address())
 
-	var/connect_address
-	if(server)
-		connect_address = server
-	else if(world.internet_address)
-		connect_address = "[world.internet_address]:[world.port]"
-	else
-		connect_address = "端口 [world.port]"
+	var/datum/tgs_chat_embed/structure/status_embed = new
+	status_embed.title = GLOB.round_id ? "第 [GLOB.round_id] 局 · [round_status]" : "服务器状态 · [round_status]"
+	status_embed.colour = embed_colour
+	status_embed.fields = list(player_field, map_field, address_field)
 
-	var/address_display = "`[connect_address]`"
-	if(server || world.internet_address)
-		if(findtext(connect_address, "byond://") != 1)
-			connect_address = "byond://[connect_address]"
-		address_display = "`[connect_address]`"
-
-	return new /datum/tgs_message_content("## 🎮 NovaSector 服务器状态\n> 🔢 **回合编号：** [GLOB.round_id ? "#[GLOB.round_id]" : "尚未生成"]\n> 👥 **在线玩家：** [GLOB.clients.len] 人\n> 🗺️ **当前地图：** [map_name]\n> 🔄 **回合状态：** [round_status]\n> 🔗 **连接地址：** [address_display]")
+	var/datum/tgs_message_content/response = new("📡 NovaSector")
+	response.embed = status_embed
+	return response
 	// NOVA EDIT ADDITION END
 
 /datum/tgs_chat_command/gameversion
