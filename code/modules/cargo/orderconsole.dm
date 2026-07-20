@@ -423,22 +423,22 @@
 				if(length(SSshuttle.shopping_list))
 					var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
 					requisition_paper.name = "requisition form - [server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()])"
-					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
+					var/requisition_text = "<h2>[station_name()] [lang_reverse_text("Supply Requisition")]</h2>" // NOVA EDIT - I18N - 单据标签反查（en locale no-op）
 					requisition_text += "<hr/>"
-					requisition_text += "Time of Order: [UNDERLINED_HTML_TEXT("[server_timestamp(ic_time = TRUE)]", "Shift Time: [round_timestamp()]")]<br/><br/>"
+					requisition_text += "[lang_reverse_text("Time of Order")]: [UNDERLINED_HTML_TEXT("[server_timestamp(ic_time = TRUE)]", "Shift Time: [round_timestamp()]")]<br/><br/>" // NOVA EDIT - I18N
 					for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
-						requisition_text += "<b>[order.pack.name]</b></br>"
-						requisition_text += "- Order ID: [order.id]</br>"
+						requisition_text += "<b>[lang_reverse_text(order.pack.name)]</b></br>" // NOVA EDIT CHANGE - i18n: pack 名反查 - ORIGINAL: [order.pack.name]
+						requisition_text += "- [lang_reverse_text("Order ID")]: [order.id]</br>" // NOVA EDIT - I18N
 						var/restrictions = SSid_access.get_access_desc(order.pack.access)
 						if(restrictions)
-							requisition_text += "- Access Restrictions: [restrictions]</br>"
-						requisition_text += "- Ordered by: [order.orderer] ([order.orderer_rank])</br>"
+							requisition_text += "- [lang_reverse_text("Access Restrictions")]: [restrictions]</br>" // NOVA EDIT - I18N
+						requisition_text += "- [lang_reverse_text("Ordered by")]: [order.orderer] ([order.orderer_rank])</br>" // NOVA EDIT - I18N
 						var/paying_account = order.paying_account
 						if(paying_account)
-							requisition_text += "- Paid Privately by: [order.paying_account.account_holder]<br/>"
+							requisition_text += "- [lang_reverse_text("Paid Privately by")]: [order.paying_account.account_holder]<br/>" // NOVA EDIT - I18N
 						var/reason = order.reason
 						if(reason)
-							requisition_text += "- Reason Given: [reason]</br>"
+							requisition_text += "- [lang_reverse_text("Reason Given")]: [reason]</br>" // NOVA EDIT - I18N
 						requisition_text += "</br></br>"
 					requisition_paper.add_raw_text(requisition_text, advanced_html = TRUE)
 					requisition_paper.color = "#9ef5ff"

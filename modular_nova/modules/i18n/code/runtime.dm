@@ -170,6 +170,37 @@ GLOBAL_VAR_INIT(i18n_state_words_loaded, FALSE)
 	GLOB.i18n_state_words_loaded = TRUE
 	return GLOB.i18n_state_words
 
+/// 惰性加载「神之声触发正则 → 追加了本地化别名的正则」表（locale≠en 时读 strings/i18n/voice_of_god.json）。
+/// 与 _state_words 同样惰性：避免在 i18n_server_locale 设置前被钉死成空表。
+///
+/// 这张表**刻意不放在 strings/i18n/<locale>/ 目录**——那里的文件会被 build_i18n_cache 全量并进反查表，
+/// 而 key 里有 "run"/"sit"/"stand"/"jump" 这类裸单词，进反查表就成了标识符碰撞（任何整串等于它们的
+/// 显示文本会被替换成正则）。详见该 JSON 的 _comment。
+GLOBAL_LIST_EMPTY(i18n_vog_triggers)
+GLOBAL_VAR_INIT(i18n_vog_triggers_loaded, FALSE)
+/proc/lang_vog_triggers()
+	if(GLOB.i18n_vog_triggers_loaded)
+		return GLOB.i18n_vog_triggers
+	var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+	if(locale != DEFAULT_UI_LOCALE)
+		var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/voice_of_god.json"
+		if(fexists(path))
+			var/list/decoded = json_decode(file2text(path))
+			var/list/for_locale = islist(decoded) ? decoded[locale] : null
+			if(islist(for_locale))
+				for(var/pattern in for_locale)
+					GLOB.i18n_vog_triggers[pattern] = for_locale[pattern]
+	GLOB.i18n_vog_triggers_loaded = TRUE
+	return GLOB.i18n_vog_triggers
+
+/// 把神之声命令的英文触发正则换成「英文 + 本地化别名」版本。未登记的 pattern 原样返回；locale==en 时 no-op。
+/// 玩家在中文服里自然会用中文下命令（输入框标题/提示都是中文），只匹配英文等于整个法术失效。
+/proc/lang_vog_trigger(pattern)
+	if(!istext(pattern))
+		return pattern
+	var/list/table = lang_vog_triggers()
+	return table[pattern] || pattern
+
 /// BYOND 文法宏（\the \a \improper 等，无参、由引擎按名词上下文在**编译期/输出期**处理）。模板从 JSON
 /// 加载后引擎不再处理 → 会字面显示。中文无冠词/复数、且上下文已丢失，直接剥掉。`\b` 防 \theory 等误伤；
 /// 已转义的反斜杠（\\）开头不会被这里的单反斜杠模式吃掉。只列已知文法宏，不碰 \n \t \" 等真转义。

@@ -644,9 +644,9 @@
 				dst = previous
 			else
 				dst = destination
-			. = "transit towards [dst?.name || "unknown location"] ([getTimerStr()])"
+			. = "[lang_reverse_text("transit towards")] [dst?.name || "unknown location"] ([getTimerStr()])" // NOVA EDIT - I18N: 反查状态前缀（en locale no-op；dst.name 已由 atom 名反查）
 	else if(mode == SHUTTLE_RECHARGING)
-		return "[docked_at], recharging [getTimerStr()]"
+		return "[docked_at], [lang_reverse_text("recharging")] [getTimerStr()]" // NOVA EDIT - I18N
 	else
 		return docked_at
 

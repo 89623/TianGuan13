@@ -849,7 +849,7 @@
 			// Activators are also called "research" injectors and are used to create
 			//  chromosomes by recycling at the DNA Console
 			if(is_activator)
-				injector.name = "[mutation.name] activator"
+				injector.name = "[mutation.name] [lang_reverse_text("activator")]" // NOVA EDIT CHANGE - i18n: name 在 Initialize 之后赋值 → 绕过 atom 反查层，后缀单独反查（词进 _state_words）。ORIGINAL: injector.name = "[mutation.name] activator"
 				injector.research = TRUE
 				// If there's an operational connected scanner, we can use its upgrades
 				//  to improve our injector's genetic damage generation
@@ -865,7 +865,7 @@
 
 				injector_ready = world.time + (base_cd_time * cd_reduction_mult)
 			else
-				injector.name = "[mutation.name] mutator"
+				injector.name = "[mutation.name] [lang_reverse_text("mutator")]" // NOVA EDIT CHANGE - i18n: 同上，后缀单独反查。ORIGINAL: injector.name = "[mutation.name] mutator"
 				injector.force_mutate = TRUE
 				// If there's an operational connected scanner, we can use its upgrades
 				//  to improve our injector's genetic damage generation
