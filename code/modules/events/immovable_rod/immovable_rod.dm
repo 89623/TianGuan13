@@ -207,7 +207,8 @@
 				num_sentient_people_hit++
 			if(dnd_style_level_up)
 				transform = transform.Scale(1.005, 1.005)
-				name = "[initial(name)] of sentient slaying +[num_sentient_mobs_hit]"
+				// NOVA EDIT CHANGE - i18n: initial(name) 会覆盖已反查的中文名；英文字面后缀进 _name_suffixes.json 一并反查
+				name = "[lang_reverse_text(initial(name))] [lang_reverse_text("of sentient slaying +")][num_sentient_mobs_hit]"
 
 	smeared_mob.apply_damage(100, BRUTE, spread_damage = TRUE)
 	smeared_mob.apply_damage(60, BRUTE, BODY_ZONE_CHEST, wound_bonus = 20, sharpness = SHARP_POINTY)
