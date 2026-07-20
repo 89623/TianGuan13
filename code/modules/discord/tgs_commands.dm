@@ -11,6 +11,12 @@
 	var/map_name = SSmapping.current_map.map_name
 	var/localized_map_name = lang_reverse_text(map_name)
 	return localized_map_name != map_name ? "[localized_map_name]（[map_name]）" : map_name
+
+/// Discord 消息里的服务器显示名：取 config SERVERNAME，未设则回落 "NovaSector"。
+/// 这两处原本硬编码 "NovaSector"，是下游（天关13 等）每次同步都要改回自己服名、
+/// 因而每次都冲突的点 —— 改成读 config 后下游本地 diff 归零。
+/proc/nova_tgs_server_name()
+	return CONFIG_GET(string/servername) || "NovaSector"
 // NOVA EDIT ADDITION END
 
 /datum/tgs_chat_command/tgscheck
@@ -41,7 +47,7 @@
 	status_embed.colour = embed_colour
 	status_embed.fields = list(player_field, map_field, address_field)
 
-	var/datum/tgs_message_content/response = new("📡 NovaSector")
+	var/datum/tgs_message_content/response = new("📡 [nova_tgs_server_name()]")
 	response.embed = status_embed
 	return response
 	// NOVA EDIT ADDITION END
@@ -51,7 +57,7 @@
 	help_text = "查看 BYOND、编译版本、代码提交与测试合并信息" // NOVA EDIT CHANGE - I18N - ORIGINAL: "Gets the version details from the show-server-revision verb, basically"
 
 /datum/tgs_chat_command/gameversion/Run(datum/tgs_chat_user/sender, params)
-	var/list/msg = list("## 🧩 NovaSector 版本信息\n") // NOVA EDIT CHANGE - I18N - ORIGINAL: list("")
+	var/list/msg = list("## 🧩 [nova_tgs_server_name()] 版本信息\n") // NOVA EDIT CHANGE - I18N - ORIGINAL: list("")
 	msg += "> ⚙️ **BYOND 运行版本：** [world.byond_version].[world.byond_build]\n> 🛠️ **DreamMaker 编译版本：** [DM_VERSION].[DM_BUILD]\n" // NOVA EDIT CHANGE - I18N - ORIGINAL: "BYOND Server Version: ..."
 
 	if (!GLOB.revdata)

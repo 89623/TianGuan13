@@ -3,6 +3,12 @@
 	if(!istext(result))
 		return result
 
+	// 保险：这些是**生产侧的英文标识符**（ahelp 过程的返回值），本 proc 的职责就是拿英文比对再译成中文。
+	// 但它们同时也在 en 目录里（nova-i18n lint 的「标识符耦合」告警），万一将来生产侧被 LANG 化 /
+	// 被某层反查成中文，下面的 switch 会静默全 miss、命令结果直接漏出原文。lang_unreverse_text 把
+	// 中文兜回英文键；已是英文时原样返回，en locale 下更是 no-op。
+	result = lang_unreverse_text(result)
+
 	switch(result)
 		if("Message Successful")
 			return "✅ **消息发送成功。**"
@@ -31,6 +37,7 @@
 	return result
 
 /proc/nova_tgs_localize_namecheck_result(result)
+	result = lang_unreverse_text(result) // 同上：反查成中文时兜回英文键，否则下面的比较会 miss
 	if(result == "Search Failed")
 		return "❌ **未找到匹配的玩家。**"
 	result = replacetext(result, "Name: ", "名称：")

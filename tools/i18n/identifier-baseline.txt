@@ -114,6 +114,9 @@ Engineering
 Environment
 Equipment
 Error
+Error: No client
+Error: No message
+Error: Ticket could not be found
 Examine
 Exit
 Eyes
@@ -189,6 +192,7 @@ Me
 Medical
 Medical HUD
 Message
+Message Successful
 Mime
 Miner
 Mining
@@ -270,6 +274,7 @@ Scan Success
 Science
 Scientist
 Screwdriver
+Search Failed
 Security
 Security HUD
 Security Officer
