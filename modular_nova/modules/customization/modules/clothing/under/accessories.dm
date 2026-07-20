@@ -22,7 +22,7 @@
 
 /obj/item/clothing/accessory/badge/proc/set_name(new_name)
 	stored_name = new_name
-	name = "[initial(name)] ([stored_name])"
+	name = "[lang_reverse_text(initial(name))] ([stored_name])"  // i18n: initial(name) 会覆盖掉已反查的中文名
 
 /obj/item/clothing/accessory/badge/proc/set_desc(mob/living/carbon/human/H)
 

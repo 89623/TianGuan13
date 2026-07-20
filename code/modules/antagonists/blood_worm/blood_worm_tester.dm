@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/item/blood_worm_tester/update_desc(updates)
-	desc = "[initial(desc)] [spent ? "This one is spent." : "It's loaded for a single use."]"
+	desc = "[lang_reverse_text(initial(desc))] [spent ? lang_reverse_text("This one is spent.") : lang_reverse_text("It's loaded for a single use.")]" // NOVA EDIT CHANGE - i18n: 同上，initial(desc) 会覆盖掉反查好的中文 - ORIGINAL: desc = "[initial(desc)] [spent ? "This one is spent." : "It's loaded for a single use."]"
 	return ..()
 
 /obj/item/blood_worm_tester/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)

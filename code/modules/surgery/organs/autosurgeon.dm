@@ -62,7 +62,8 @@
 	stored_organ = loaded_organ
 	loaded_organ.forceMove(src)
 
-	name = "[initial(name)] ([stored_organ.name])" //to tell you the organ type, like "suspicious autosurgeon (Reviver implant)"
+	// NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名 - ORIGINAL: name = "[initial(name)] ([stored_organ.name])"
+	name = "[lang_reverse_text(initial(name))] ([stored_organ.name])" //to tell you the organ type, like "suspicious autosurgeon (Reviver implant)"
 	update_appearance()
 
 /obj/item/autosurgeon/proc/use_autosurgeon(mob/living/target, mob/living/user, implant_time)

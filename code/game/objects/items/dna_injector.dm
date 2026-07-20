@@ -52,7 +52,7 @@
 
 /obj/item/dnainjector/update_desc(updates)
 	. = ..()
-	desc = "[initial(desc)][used ? "This one is used up." : null]"
+	desc = "[lang_reverse_text(initial(desc))][used ? lang_reverse_text("This one is used up.") : null]" // NOVA EDIT CHANGE - i18n: 同上，initial(desc) 会覆盖掉反查好的中文 - ORIGINAL: desc = "[initial(desc)][used ? "This one is used up." : null]"
 
 /obj/item/dnainjector/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

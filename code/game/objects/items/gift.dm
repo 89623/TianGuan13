@@ -139,5 +139,5 @@
 	if (isnull(recipient))
 		return
 
-	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
+	name = "[lang_reverse_text(initial(name))] for [recipient.name] ([recipient.assigned_role.title])"  // NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名 - ORIGINAL: name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
 	recipient_ref = WEAKREF(recipient)

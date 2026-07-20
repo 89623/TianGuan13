@@ -224,7 +224,8 @@ GLOBAL_LIST_EMPTY(cortical_borers)
 	borer_matrix.Scale(0.5, 0.5)
 	transform = borer_matrix
 
-	name = "[initial(name)] ([generation]-[rand(100,999)])" //so their gen and a random. ex 1-288 is first gen named 288, 4-483 if fourth gen named 483
+	// i18n: initial(name) 是编译期英文原值，直接用会覆盖掉 /atom/Initialize 反查好的中文名
+	name = "[lang_reverse_text(initial(name))] ([generation]-[rand(100,999)])" //so their gen and a random. ex 1-288 is first gen named 288, 4-483 if fourth gen named 483
 
 	if(prob(5))
 		var/switching = rand(1,2)

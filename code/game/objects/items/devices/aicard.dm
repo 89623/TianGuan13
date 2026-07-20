@@ -104,7 +104,7 @@
 /obj/item/aicard/update_name(updates)
 	. = ..()
 	if(AI)
-		name = "[initial(name)] - [AI.name]"
+		name = "[lang_reverse_text(initial(name))] - [AI.name]"  // NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名 - ORIGINAL: name = "[initial(name)] - [AI.name]"
 	else
 		name = initial(name)
 

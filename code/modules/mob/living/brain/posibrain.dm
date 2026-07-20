@@ -127,7 +127,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	transfer_personality(user)
 
 /obj/item/mmi/posibrain/transfer_identity(mob/living/carbon/transferred_user)
-	name = "[initial(name)] ([transferred_user])"
+	name = "[lang_reverse_text(initial(name))] ([transferred_user])"  // NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名 - ORIGINAL: name = "[initial(name)] ([transferred_user])"
 	brainmob.name = transferred_user.real_name
 	brainmob.real_name = transferred_user.real_name
 	if(transferred_user.has_dna())
@@ -156,7 +156,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		candidate.mind.transfer_to(brainmob)
 	else
 		brainmob.PossessByPlayer(candidate.ckey)
-	name = "[initial(name)] ([brainmob.name])"
+	name = "[lang_reverse_text(initial(name))] ([brainmob.name])"  // NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名 - ORIGINAL: name = "[initial(name)] ([brainmob.name])"
 	var/policy = get_policy(ROLE_POSIBRAIN)
 	if(policy)
 		to_chat(brainmob, policy)

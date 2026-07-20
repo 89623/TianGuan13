@@ -197,7 +197,7 @@
 
 /mob/living/basic/blood_worm/update_name(updates)
 	. = ..()
-	name = "[initial(name)] ([id_number])"
+	name = "[lang_reverse_text(initial(name))] ([id_number])"  // NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名 - ORIGINAL: name = "[initial(name)] ([id_number])"
 	real_name = name
 
 /mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)

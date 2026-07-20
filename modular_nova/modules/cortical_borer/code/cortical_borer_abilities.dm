@@ -23,7 +23,8 @@
 		compiled_string += " ([chemical_evo_points] chemical point[chemical_evo_points == 1 ? "" : "s"])"
 	if(stat_evo_points)
 		compiled_string += " ([stat_evo_points] stat point[stat_evo_points == 1 ? "" : "s"])"
-	name = "[initial(name)][compiled_string]"
+	// i18n: initial(name) 会覆盖掉已反查的中文名
+	name = "[lang_reverse_text(initial(name))][compiled_string]"
 
 /datum/action/cooldown/borer/Trigger(trigger_flags, atom/target)
 	. = ..()

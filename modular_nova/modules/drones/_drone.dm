@@ -17,7 +17,8 @@
 	RegisterSignal(src, COMSIG_CLICK, PROC_REF(handle_click), override = TRUE)
 	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(handle_alt_click))
 	// Naming Scheme
-	name = "[initial(name)] [rand(0,9)]-[rand(100,999)]" //So that we can identify drones from each other
+	// i18n: initial(name) 是编译期英文原值，直接用会覆盖掉 /atom/Initialize 反查好的中文名
+	name = "[lang_reverse_text(initial(name))] [rand(0,9)]-[rand(100,999)]" //So that we can identify drones from each other
 	// Additional Traits
 	add_traits(list(
 		TRAIT_LAVA_IMMUNE,// Going to Lavaland

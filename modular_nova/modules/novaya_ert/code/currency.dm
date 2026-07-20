@@ -25,7 +25,8 @@
 
 /obj/item/stack/spacecash/shaving/update_desc()
 	. = ..()
-	desc = "[initial(desc)] <br>" + desc
+	// i18n: initial(desc) 取的是编译期英文原值，直接用会把 /atom/Initialize 反查好的中文 desc 覆盖回英文。
+	desc = "[lang_reverse_text(initial(desc))] <br>" + desc
 
 /obj/item/stack/spacecash/shaving/full
 	amount = 128

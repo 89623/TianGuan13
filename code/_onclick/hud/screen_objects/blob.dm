@@ -128,10 +128,12 @@
 	if(hud?.mymob && isovermind(hud.mymob))
 		var/mob/eye/blob/B = hud.mymob
 		if(B.free_strain_rerolls)
-			name = "[initial(name)] (FREE)"
+			// NOVA EDIT CHANGE - i18n: initial(name) 会覆盖已反查的中文名；英文字面后缀进 _name_suffixes.json 一并反查
+			name = "[lang_reverse_text(initial(name))] [lang_reverse_text("(FREE)")]"
 			desc = LANG("atom.664b7dda", null)
 		else
-			name = "[initial(name)] ([BLOB_POWER_REROLL_COST])"
+			// NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名
+			name = "[lang_reverse_text(initial(name))] ([BLOB_POWER_REROLL_COST])"
 			desc = LANG("atom.5a02817a", list(BLOB_POWER_REROLL_CHOICES, BLOB_POWER_REROLL_COST))
 	return ..()
 

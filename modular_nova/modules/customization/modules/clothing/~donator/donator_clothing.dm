@@ -752,7 +752,7 @@
 /obj/item/clothing/neck/inferno_collar/attack_self(mob/user)
 	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Kiara", MAX_NAME_LEN)
 	if(tagname)
-		name = "[initial(name)] - [tagname]"
+		name = "[lang_reverse_text(initial(name))] - [tagname]"  // i18n: initial(name) 会覆盖掉已反查的中文名
 
 // Donation reward for inferno707
 /obj/item/clothing/accessory/medal/steele

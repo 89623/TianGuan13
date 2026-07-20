@@ -21,7 +21,8 @@ Doesn't work on other aliens/AI.*/
 	. = ..()
 	//not free
 	if(plasma_cost != 0)
-		name = "[initial(name)] ([plasma_cost]P)"
+		// NOVA EDIT CHANGE - i18n: initial(name) 是编译期英文原值，会覆盖掉 /atom/Initialize 反查好的中文名
+		name = "[lang_reverse_text(initial(name))] ([plasma_cost]P)"
 
 /datum/action/cooldown/alien/IsAvailable(feedback = FALSE)
 	. = ..()
