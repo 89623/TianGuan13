@@ -1,5 +1,7 @@
 {
 	"namesuffix_free": "（免费）",
 	"namesuffix_grenade_casing": "弹壳",
-	"namesuffix_sentient_slaying": "弑生者 +"
+	"namesuffix_sentient_slaying": "弑生者 +",
+	"nametmpl_brother_team": "{1}的{0}",
+	"nametmpl_brother_team_solo": "{0}的孤立起义"
 }

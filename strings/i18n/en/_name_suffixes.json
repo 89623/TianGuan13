@@ -1,5 +1,7 @@
 {
   "namesuffix_free": "(FREE)",
   "namesuffix_grenade_casing": "casing",
-  "namesuffix_sentient_slaying": "of sentient slaying +"
+  "namesuffix_sentient_slaying": "of sentient slaying +",
+  "nametmpl_brother_team": "{0} of {1}",
+  "nametmpl_brother_team_solo": "{0}'s Isolated Intifada"
 }
