@@ -27,6 +27,17 @@ const SINK_VARS: &[&str] = &[
     "name",
     "desc",
     "message",
+    // /datum/emote 的按物种/形态分支消息：select_message_type() 按 user 选用哪一条，最终都汇到
+    // run_emote 的输出边界反查。只列了 message 而漏掉这些分支 → 哑剧演员/异形/赛博格/AI/猴子
+    // 的表情整类没进目录、runechat 全英文。不含 message_param（含 %t，由 select_param 在运行期
+    // 填入玩家输入，拼完的整串不可能命中目录，得另想办法）。
+    "message_mime",
+    "message_alien",
+    "message_larva",
+    "message_robot",
+    "message_AI",
+    "message_monkey",
+    "message_animal_or_basic",
     "flavor_text",
     "title",
     // 其它可靠的玩家可见显示字段（type 变量；非 desc 的别名 / 专有显示串）。

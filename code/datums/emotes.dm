@@ -90,18 +90,14 @@
 	if(!name)
 		name = key
 
-	// NOVA EDIT ADDITION START - i18n - 表情模板/名称创建时整串反查译文（全服中文时；emote 每类型仅 New 一次）
-	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
-		name = lang_reverse_text(name)
-		message = lang_reverse_text(message)
-		message_mime = lang_reverse_text(message_mime)
-		message_alien = lang_reverse_text(message_alien)
-		message_larva = lang_reverse_text(message_larva)
-		message_robot = lang_reverse_text(message_robot)
-		message_AI = lang_reverse_text(message_AI)
-		message_monkey = lang_reverse_text(message_monkey)
-		message_animal_or_basic = lang_reverse_text(message_animal_or_basic)
-		message_param = lang_reverse_text(message_param) // 译文须保留 %t
+	// NOVA EDIT ADDITION START - i18n
+	// 这里**不能**反查 message/name。emote datum 由 make_datum_reference_lists() 的
+	// init_emote_list() 建立，那在 `Master => GLOB =>` 阶段，**早于 world.New() => config.Load()**
+	// （见 code/game/world.dm 顶部的启动顺序注释）——此刻 GLOB.i18n_server_locale 还没从 config
+	// 读出来，恒等于 en，任何 `locale != en` 的门都进不去（本文件曾放过这样一段，是死代码：
+	// 表情实际全靠 run_emote 末尾那道边界反查，而它在 replace_pronoun 之后，含 "their" 的
+	// 表情反查必 miss —— 表现为「stretches its arms.」这类整句漏翻）。
+	// 反查统一在 run_emote 的输出边界做，见该 proc 内的 i18n 注释。
 	// NOVA EDIT ADDITION END
 
 /**
@@ -122,6 +118,8 @@
 		else
 			msg = params
 
+	// NOVA EDIT ADDITION - i18n: 留一份**代词替换前**的原串，反查要用它（见下方 lang_reverse_text）
+	var/pre_pronoun_msg = msg
 	msg = replace_pronoun(user, msg)
 	if(!msg)
 		return
@@ -134,7 +132,14 @@
 
 	// NOVA EDIT ADDITION START - I18N - emote 消息在下游拼成「[user] [msg]」整句动态、无法命中目录；
 	// 在日志之后（日志保英文）对 msg 整串反查（含单词条目；miss 原样返回，locale==en 时 no-op）。
-	msg = lang_reverse_text(msg)
+	//
+	// **必须用代词替换前的原串查**：目录键是源码里的 "their" 形态（"stretches their arms."），而
+	// replace_pronoun 已按 mob 代词把它改成了 its/his/her，拿替换后的串去查必然 miss。这正是
+	// 「clears its throat.」「twitches its ears!」「flaps its wings ANGRILY!」这批含代词的表情
+	// 整句漏翻、其余表情却正常的原因。命中就用译文（中文无需再做代词替换）；未命中再退回按
+	// 替换后的串查一次，兼容那些译文本身带代词占位的条目。
+	var/localized_msg = lang_reverse_text(pre_pronoun_msg)
+	msg = (localized_msg != pre_pronoun_msg) ? localized_msg : lang_reverse_text(msg)
 	// NOVA EDIT ADDITION END
 
 	var/tmp_sound = get_sound(user)
