@@ -404,7 +404,7 @@
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()
-	set name = "Flip Windoor Assembly"
+	set name = "翻转窗门组件"
 	set src in oview(1)
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return

@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(cinematic, R_FUN, "Cinematic", "Show a cinematic to all players.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(cinematic, R_FUN, "过场动画", "Show a cinematic to all players.", ADMIN_CATEGORY_FUN)
 	var/datum/cinematic/choice = tgui_input_list(
 		user,
 		LANG("datum.c0d105b5", null),

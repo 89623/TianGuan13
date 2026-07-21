@@ -58,4 +58,8 @@ node tools/i18n/coverage.mjs
 
 echo "==> 完成。review 上面的 git diff 后提交；随后翻译新增英文条目："
 echo "      bun tools/i18n/mt/i18n-mt.ts        # 默认只补缺失；或人工补译（遵循 glossary / keep-english）"
+echo ""
+echo "    翻译完后，若上游新增了 verb，还要把新 verb 名注入核心（verb 名是编译期元数据、"
+echo "    运行时无法按 locale 切换，故译文**固化在源码里**，见 README「verb 命令面板名」）："
+echo "      $TOOL verbs --locale zh-Hans        # 幂等：已是中文的跳过，只注入新增英文名"
 git --no-pager diff --stat | tail -20

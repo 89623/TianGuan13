@@ -1,6 +1,6 @@
 ///Replaces proc definition in [code\modules\mob\living\living.dm]
 /mob/living/proc/mob_sleep()
-	set name = "Sleep"
+	set name = "睡眠"
 	set category = "IC"
 
 	if(IsSleeping())

@@ -9,7 +9,7 @@
 #define CUSTOM_PRESET "Custom Command Name"
 #define CUSTOM_SOUND_PRESET "Custom Sound"
 
-ADMIN_VERB(change_command_name, R_ADMIN, "Change Command Name", "Change the name of Central Command.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(change_command_name, R_ADMIN, "更改指挥部名称", "Change the name of Central Command.", ADMIN_CATEGORY_EVENTS)
 	var/input = input(user, LANG("datum.1162650f", null), LANG("datum.29297405", null), "") as text|null
 	if(!input)
 		return
@@ -18,7 +18,7 @@ ADMIN_VERB(change_command_name, R_ADMIN, "Change Command Name", "Change the name
 	log_admin("[key_name(user)] has changed the Central Command name to: [input]")
 
 /// Verb to open the create command report window and send command reports.
-ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a command report to be sent to the station.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(create_command_report, R_ADMIN, "创建指挥部报告", "Create a command report to be sent to the station.", ADMIN_CATEGORY_EVENTS)
 	BLACKBOX_LOG_ADMIN_VERB("Create Command Report")
 	var/datum/command_report_menu/tgui = new /datum/command_report_menu(user.mob)
 	tgui.ui_interact(user.mob)

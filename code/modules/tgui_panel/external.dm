@@ -10,7 +10,7 @@
  * tgui panel / chat troubleshooting verb
  */
 /client/verb/fix_tgui_panel()
-	set name = "Fix chat"
+	set name = "修复聊天"
 	set category = "OOC"
 	var/action
 	log_tgui(src, "Started fixing.", context = "verb/fix_tgui_panel")
@@ -35,7 +35,7 @@
 	winset(src, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, "left=output_browser")
 
 /client/verb/refresh_tgui()
-	set name = "Refresh TGUI"
+	set name = "刷新 TGUI"
 	set category = "OOC"
 
 	for(var/window_id in tgui_windows)

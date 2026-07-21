@@ -140,7 +140,7 @@
 	to_chat(user, span_notice(LANG("obj.60df330b", list(stream_mode ? "\"stream\"":"\"spray\""))))
 
 /obj/item/reagent_containers/spray/verb/empty()
-	set name = "Empty Spray Bottle"
+	set name = "清空喷雾瓶"
 	set src in usr
 	if(usr.incapacitated)
 		return

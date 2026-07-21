@@ -120,7 +120,7 @@
 	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
 
 /client/verb/changelog()
-	set name = "Changelog"
+	set name = "更新日志"
 	set category = "OOC"
 
 	if(!GLOB.changelog_tgui)

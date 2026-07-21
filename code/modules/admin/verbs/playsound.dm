@@ -4,7 +4,7 @@
 #define SHELLEO_STDOUT 2
 #define SHELLEO_STDERR 3
 
-ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connected players.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(play_sound, R_SOUND, "播放全局音效", "Play a sound to all connected players.", ADMIN_CATEGORY_FUN, sound as sound)
 	var/freq = 1
 	var/vol = tgui_input_number(user, LANG("datum.71bfda44", null), max_value = 100)
 	if(!vol)
@@ -40,14 +40,14 @@ ADMIN_VERB(play_sound, R_SOUND, "Play Global Sound", "Play a sound to all connec
 
 	BLACKBOX_LOG_ADMIN_VERB("Play Global Sound")
 
-ADMIN_VERB(play_local_sound, R_SOUND, "Play Local Sound", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(play_local_sound, R_SOUND, "播放本地音效", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN, sound as sound)
 	log_admin("[key_name(user)] played a local sound [sound]")
 	message_admins("[key_name_admin(user)] played a local sound [sound]")
 	var/volume = tgui_input_number(user, LANG("datum.71bfda44", null), max_value = 100)
 	playsound(get_turf(user.mob), sound, volume || 50, FALSE)
 	BLACKBOX_LOG_ADMIN_VERB("Play Local Sound")
 
-ADMIN_VERB(play_direct_mob_sound, R_SOUND, "Play Direct Mob Sound", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)
+ADMIN_VERB(play_direct_mob_sound, R_SOUND, "直接播放生物音效", "Play a sound directly to a mob.", ADMIN_CATEGORY_FUN, sound as sound, mob/target in world)
 	if(!target)
 		target = input(user, LANG("datum.65a0ea09", null), LANG("datum.dfea01ae", null)) as null|anything in sort_names(GLOB.player_list)
 	if(QDELETED(target))
@@ -183,7 +183,7 @@ GLOBAL_VAR_INIT(web_sound_cooldown, 0)
 ADMIN_VERB_CUSTOM_EXIST_CHECK(play_web_sound)
 	return !!CONFIG_GET(string/invoke_youtubedl)
 
-ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(play_web_sound, R_SOUND, "播放互联网音效", "Play a given internet sound to all players.", ADMIN_CATEGORY_FUN)
 	if(!CLIENT_COOLDOWN_FINISHED(GLOB, web_sound_cooldown))
 		if(tgui_alert(user, LANG("datum.58373547", list(DisplayTimeText(CLIENT_COOLDOWN_TIMELEFT(GLOB, web_sound_cooldown), 1))), LANG("datum.8cff532b", null), list("No","Yes")) != "Yes")
 			return
@@ -200,7 +200,7 @@ ADMIN_VERB(play_web_sound, R_SOUND, "Play Internet Sound", "Play a given interne
 	else
 		web_sound(user.mob, null)
 
-ADMIN_VERB(set_round_end_sound, R_SOUND, "Set Round End Sound", "Set the sound that plays on round end.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(set_round_end_sound, R_SOUND, "设置回合结束音效", "Set the sound that plays on round end.", ADMIN_CATEGORY_FUN, sound as sound)
 	var/volume = tgui_input_number(user, LANG("datum.c1f5f6f4", null), max_value = 100)
 	var/sound/admin_sound = sound(sound)
 	if(volume)
@@ -211,7 +211,7 @@ ADMIN_VERB(set_round_end_sound, R_SOUND, "Set Round End Sound", "Set the sound t
 	message_admins("[key_name_admin(user)] set the round end sound to [sound]")
 	BLACKBOX_LOG_ADMIN_VERB("Set Round End Sound")
 
-ADMIN_VERB(stop_sounds, R_NONE, "Stop All Playing Sounds", "Stops all playing sounds for EVERYONE.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(stop_sounds, R_NONE, "停止所有正在播放的音效", "Stops all playing sounds for EVERYONE.", ADMIN_CATEGORY_DEBUG)
 	log_admin("[key_name(user)] stopped all currently playing sounds.")
 	message_admins("[key_name_admin(user)] stopped all currently playing sounds.")
 	for(var/mob/player as anything in GLOB.player_list)

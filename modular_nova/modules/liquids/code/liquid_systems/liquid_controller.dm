@@ -119,5 +119,5 @@ SUBSYSTEM_DEF(liquids)
 		if(T.lgroup)
 			T.lgroup.amount_of_active_turfs--
 
-ADMIN_VERB(toggle_liquid_debug, R_DEBUG, "Liquid Groups Color Debug", "Liquid Groups Color Debug.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(toggle_liquid_debug, R_DEBUG, "液体组颜色调试", "Liquid Groups Color Debug.", ADMIN_CATEGORY_DEBUG)
 	GLOB.liquid_debug_colors = !GLOB.liquid_debug_colors

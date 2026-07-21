@@ -6,7 +6,7 @@ GLOBAL_DATUM_INIT(temporary_flavor_text_vis, /obj/effect/overlay/indicator/tempo
 
 /mob/living/verb/set_temporary_flavor()
 	set category = "IC"
-	set name = "Set Temporary Flavor Text"
+	set name = "设置临时风味文本"
 	set desc = "Allows you to set a temporary flavor text."
 
 	if(stat != CONSCIOUS)

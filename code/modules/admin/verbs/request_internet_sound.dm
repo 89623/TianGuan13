@@ -1,7 +1,7 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /mob/verb/request_internet_sound()
 	set category = "OOC"
-	set name = "Request Internet Sound"
+	set name = "请求互联网音效"
 
 	if(!CONFIG_GET(flag/request_internet_sound))
 		to_chat(usr, span_danger(LANG("mob.34d73204", null)), confidential = TRUE)

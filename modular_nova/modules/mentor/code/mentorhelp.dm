@@ -1,6 +1,6 @@
 /client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
-	set name = "Mentorhelp"
+	set name = "导师帮助"
 
 	//clean the input msg
 	if(!msg)

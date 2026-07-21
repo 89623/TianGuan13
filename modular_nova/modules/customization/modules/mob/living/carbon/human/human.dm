@@ -93,7 +93,7 @@
 
 /mob/living/carbon/human/verb/toggle_undies()
 	set category = "IC"
-	set name = "Toggle underwear visibility"
+	set name = "切换内衣可见性"
 	set desc = "Allows you to toggle which underwear should show or be hidden. Underwear will obscure genitals."
 
 	if(stat != CONSCIOUS)
@@ -144,7 +144,7 @@
 
 /mob/living/carbon/human/verb/toggle_mutant_part_visibility()
 	set category = "IC"
-	set name = "Show/Hide Mutant Parts"
+	set name = "显示/隐藏突变部位"
 	set desc = "Allows you to choose to try and hide your mutant bodyparts under your clothes."
 
 	mutant_part_visibility()
@@ -256,7 +256,7 @@
 
 /mob/living/carbon/human/verb/acting()
 	set category = "IC"
-	set name = "Feign Impairment"
+	set name = "假装伤残"
 	set desc = "Pretend to be impaired for a defined duration."
 
 	if(stat != CONSCIOUS)

@@ -28,7 +28,7 @@
 
 /// Adjusts the mob's linked death consequences trauma (see get_death_consequences_trauma())'s degradation by increment.
 /mob/verb/adjust_degradation(increment as num)
-	set name = "Adjust death degradation"
+	set name = "调整死亡衰减"
 	set category = "IC"
 	set instant = TRUE
 
@@ -55,7 +55,7 @@
 
 /// Calls update_variables() on this mob's linked death consequences trauma. See that proc for further info.
 /mob/verb/refresh_death_consequences()
-	set name = "Refresh death consequence variables"
+	set name = "刷新死亡后果变量"
 	set category = "IC"
 	set instant = TRUE
 

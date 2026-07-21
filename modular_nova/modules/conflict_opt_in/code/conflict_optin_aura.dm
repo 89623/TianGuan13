@@ -62,7 +62,7 @@
 	return TRUE
 
 /mob/living/verb/show_conflict_opt_in_verb()
-	set name = "Show Conflict Opt-In"
+	set name = "显示冲突加入意向"
 	set category = "IC"
 	set desc = "Display nearby conflict opt-in statuses."
 

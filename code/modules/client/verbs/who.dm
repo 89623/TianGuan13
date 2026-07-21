@@ -3,7 +3,7 @@
 #define NO_ADMINS_ONLINE_MESSAGE "Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to."
 
 /client/verb/who()
-	set name = "Who"
+	set name = "玩家列表"
 	set category = "OOC"
 
 	var/msg = ""
@@ -72,7 +72,7 @@
 
 /client/verb/adminwho()
 	set category = "Admin"
-	set name = "Adminwho"
+	set name = "管理员在线"
 
 	var/list/lines = list()
 	var/payload_string = generate_adminwho_string()

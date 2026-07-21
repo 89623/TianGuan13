@@ -1,5 +1,5 @@
 /mob/living/carbon/proc/protean_ui()
-	set name = "Open Suit UI"
+	set name = "打开套装界面"
 	set desc = "Opens your suit UI"
 	set category = "Protean"
 
@@ -9,7 +9,7 @@
 	suit.ui_interact(src)
 
 /mob/living/carbon/proc/protean_heal()
-	set name = "Heal Organs and Limbs"
+	set name = "治疗器官和四肢"
 	set desc = "Heals your replaceable organs and limbs with 6 metal."
 	set category = "Protean"
 
@@ -28,7 +28,7 @@
 	brain.replace_limbs()
 
 /mob/living/carbon/proc/lock_suit()
-	set name = "Lock Suit"
+	set name = "锁定套装"
 	set desc = "Locks your suit on someone"
 	set category = "Protean"
 
@@ -41,7 +41,7 @@
 	playsound(src, 'sound/machines/click.ogg', 25)
 
 /mob/living/carbon/proc/suit_transformation()
-	set name = "Toggle Suit Transformation"
+	set name = "切换套装变形"
 	set desc = "Either leave or enter your suit."
 	set category = "Protean"
 	var/obj/item/organ/brain/protean/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
@@ -60,7 +60,7 @@
 			balloon_alert(src, LANG("mob.7ac2788b", null))
 
 /mob/living/carbon/proc/remove_assimilated_modsuit()
-	set name = "Remove Assimilated Modsuit"
+	set name = "移除同化模组服"
 	set desc = "Pry out an absorbed modsuit from your protean suit."
 	set category = "Protean"
 
@@ -70,7 +70,7 @@
 	suit.unassimilate_modsuit(src)
 
 /mob/living/carbon/proc/remove_assimilated_plating()
-	set name = "Remove Assimilated Plating"
+	set name = "移除同化装甲板"
 	set desc = "Reset your modsuit appearance back to default."
 	set category = "Protean"
 
@@ -80,7 +80,7 @@
 	suit.unassimilate_theme()
 
 /mob/living/carbon/proc/low_power()
-	set name = "Toggle Low Power Mode"
+	set name = "切换低功耗模式"
 	set desc = "Toggle whether you are running on low power mode."
 	set category = "Protean"
 

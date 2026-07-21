@@ -33,7 +33,7 @@ GLOBAL_REAL(logger, /datum/log_holder)
 
 GENERAL_PROTECT_DATUM(/datum/log_holder)
 
-ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(log_viewer_new, R_ADMIN, "查看回合日志", "View the rounds logs.", ADMIN_CATEGORY_MAIN)
 	logger.ui_interact(user.mob)
 
 /datum/log_holder/ui_interact(mob/user, datum/tgui/ui)

@@ -171,7 +171,7 @@
 // The IC tab was removed recently as of commenting. This should probably be adjusted.
 /mob/eye/imaginary_friend/dream_projection/verb/stop_projection()
 	set category = "IC"
-	set name = "Stop Projection"
+	set name = "停止投影"
 	set desc = "Stop astrally projecting and return to your body."
 
 	qdel(src)

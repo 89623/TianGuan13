@@ -423,7 +423,7 @@
 		righthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_right, greyscale_colors)
 
 /obj/item/verb/move_to_top()
-	set name = "Move To Top"
+	set name = "移至顶部"
 	set src in oview(1)
 
 	if(!isturf(loc) || usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED) || anchored)
@@ -845,7 +845,7 @@
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
-	set name = "Pick up"
+	set name = "拾取"
 
 	if(usr.incapacitated || !Adjacent(usr))
 		return

@@ -200,7 +200,7 @@
 	visible_message(span_notice(LANG("obj.263a22a3", list(src))))
 
 /obj/machinery/processor/verb/eject()
-	set name = "Eject Contents"
+	set name = "弹出内容物"
 	set src in oview(1)
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return

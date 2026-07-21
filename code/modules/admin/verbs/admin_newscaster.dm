@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows you to view, add, and edit news feeds.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(access_news_network, R_ADMIN, "访问新闻播报网络", "Allows you to view, add, and edit news feeds.", ADMIN_CATEGORY_EVENTS)
 	var/datum/newspanel/new_newspanel = new
 	new_newspanel.ui_interact(user.mob)
 
