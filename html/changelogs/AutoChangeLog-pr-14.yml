@@ -1,0 +1,6 @@
+author: "Secai524"
+delete-after: True
+changes:
+  - rscadd: "添加了辛迪加战列巡洋舰呼叫套件"
+  - rscadd: "叛徒上行链路可以花费 210TC 购买辛迪加战列巡洋舰呼叫套件"
+  - rscadd: "重新添加蓝空公文包和 TTV 大炮的购买选项"
