@@ -306,12 +306,22 @@ pub(crate) fn is_safe_verb_name(s: &str) -> bool {
         && !s.starts_with('.')
         && s.chars().next().is_some_and(|c| c.is_ascii_uppercase())
         && s.chars().any(|c| c.is_alphabetic())
+        // 必须是纯 ASCII：run_verbs 注入后源码里的 verb 名是中文，若此时跑 extract 会把**译文**
+        // 当英文原文收进 en 目录，下一轮 MT 再译一遍 → 目录污染（实测遗留 "Fax 面板"/"End 弹"
+        // 这类半中半英「英文」值，且 --revert 因 zh 一对多而歧义跳过、把中文留在源码里）。
+        && s.is_ascii()
         // skin.dmf 宏按「连字符化 verb 名」调用（command = "open-escape-menu" 等）——这些 verb
         // 改名即断 ESC/全屏/状态栏快捷键（实测：注入中文后 ESC 菜单失灵）。与 interface/skin.dmf
-        // 的 command 列表对应，新增宏 verb 在此登记。
+        // 的 command 列表对应（`grep 'command = ' interface/skin.dmf`），新增宏 verb 在此登记。
+        // 顶栏按钮 Hotkeys / Emotes 走 "Hotkeys-Help" / "Emote-Panel"，同样不能改名。
         && !matches!(
             s,
-            "Open Escape Menu" | "Toggle Stat Panel" | "Fullscreen" | "Connect to Relay"
+            "Open Escape Menu"
+                | "Toggle Stat Panel"
+                | "Fullscreen"
+                | "Connect to Relay"
+                | "Hotkeys Help"
+                | "Emote Panel"
         )
 }
 
