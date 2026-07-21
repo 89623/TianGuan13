@@ -9871,5 +9871,6 @@
 #include "modular_z121\code\modules\gear_disabler\gear_disabler_recipe.dm"
 #include "modular_z121\code\modules\junkcannon\junkcannon.dm"
 #include "modular_z121\code\modules\junkcannon\junkcannon_recipe.dm"
-#include "modular_tianguan\modules\uplink_item\
+#include "modular_tianguan\modules\uplink_item\syndicate_battle_cruiser.dm"
+#include "modular_tianguan\modules\uplink_item\uplink_override.dm"
 // END_INCLUDE
