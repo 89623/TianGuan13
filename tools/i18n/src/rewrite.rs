@@ -268,7 +268,11 @@ pub fn run_verbs(dme: &Path, locale: &str, revert: bool, dry_run: bool) -> Resul
                     if name.as_str() != "name" {
                         continue;
                     }
-                    let Some(lit) = build_template(value) else {
+                    // plain_string 回退：`set name = "< Ping >"` 会被 build_template 的 strip_tags
+                    // 当 HTML 标签剥光而返回 None（详见 extract::plain_string）。抽取端已放行，
+                    // 注入端必须用同一判据，否则这 22 条硅基音效表情抽得到、注不进。
+                    let Some(lit) = build_template(value).or_else(|| crate::extract::plain_string(value))
+                    else {
                         continue;
                     };
                     // lit = 源码当前字面量。正向：lit 是英文原文，查 key 取译文；
