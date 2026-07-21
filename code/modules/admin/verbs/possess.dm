@@ -14,7 +14,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, "附身物体", "Possess an obje
 
 	BLACKBOX_LOG_ADMIN_VERB("Possess Object")
 
-ADMIN_VERB(release, R_POSSESS, "释放物体", "Stop possessing an object.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(release, R_POSSESS, "解除附身", "Stop possessing an object.", ADMIN_CATEGORY_FUN)
 	var/possess_component = user.mob.GetComponent(/datum/component/object_possession)
 	if(!isnull(possess_component))
 		qdel(possess_component)

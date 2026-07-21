@@ -315,7 +315,7 @@ ADMIN_VERB(station_food_debug, R_DEBUG, "统计空间站食物", "Counts the num
 	popup.open()
 
 ADMIN_VERB_VISIBILITY(station_stack_debug, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(station_stack_debug, R_DEBUG, "统计空间站堆叠物", "Count the stacks of materials on station.", ADMIN_CATEGORY_MAPPING)
+ADMIN_VERB(station_stack_debug, R_DEBUG, "统计空间站材料堆", "Count the stacks of materials on station.", ADMIN_CATEGORY_MAPPING)
 	var/list/stackcount = list()
 	for(var/obj/item/stack/fuck_me in world)
 		var/turf/location = get_turf(fuck_me)

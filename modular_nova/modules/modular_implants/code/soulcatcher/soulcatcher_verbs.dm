@@ -16,7 +16,7 @@
 
 /// Prompts the parent mob to send a emote to the soulcatcher. Returns False if no soulcatcher or emote could be found.
 /mob/living/proc/soulcatcher_emote()
-	set name = "神魂附体"
+	set name = "灵魂动作"
 	set category = "IC"
 	set desc = "Send an emote to your currently targeted soulcatcher room."
 	var/datum/component/soulcatcher/target_soulcatcher = find_soulcatcher()

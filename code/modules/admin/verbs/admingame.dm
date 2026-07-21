@@ -493,7 +493,7 @@ ADMIN_VERB(show_skill_panel, R_ADMIN, "显示技能面板", "Edit mobs's experie
 	var/datum/skill_panel/SP = new(user, target_mind)
 	SP.ui_interact(user.mob)
 
-ADMIN_VERB(lag_switch_panel, R_ADMIN, "显示延迟开关", "Display the controls for drastic lag mitigation.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(lag_switch_panel, R_ADMIN, "显示卡顿缓解开关", "Display the controls for drastic lag mitigation.", ADMIN_CATEGORY_GAME)
 	if(!SSlag_switch.initialized)
 		to_chat(user, span_notice(LANG("datum.cd666423", null)))
 		return

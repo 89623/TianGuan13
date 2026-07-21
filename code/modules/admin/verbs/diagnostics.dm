@@ -5,7 +5,7 @@ ADMIN_VERB(debug_air_status, R_DEBUG, "调试空气状态" , ADMIN_VERB_NO_DESCR
 	BLACKBOX_LOG_ADMIN_VERB("Show Air Status")
 
 ADMIN_VERB_VISIBILITY(fix_next_move, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(fix_next_move, R_DEBUG, "修正下一步移动", "Unfreezes all frozen mobs.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(fix_next_move, R_DEBUG, "解冻卡住的生物", "Unfreezes all frozen mobs.", ADMIN_CATEGORY_DEBUG)
 	var/largest_move_time = 0
 	var/largest_click_time = 0
 	var/mob/largest_move_mob = null

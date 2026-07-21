@@ -24,7 +24,7 @@
  */
 /mob/living/basic/drone/verb/drone_ping()
 	set category = "Drone"
-	set name = "无人机信号"
+	set name = "无人机警报"
 
 	var/alert_s = input(src,LANG("mob.5b32bc9b", null),LANG("mob.4a2934c5", null),null) as null|anything in list("Low","Medium","High","Critical")
 

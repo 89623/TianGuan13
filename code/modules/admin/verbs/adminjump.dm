@@ -57,7 +57,7 @@ ADMIN_VERB(jump_to_key, R_ADMIN, "跳转到 Key", "Jump to a specific player.", 
 	user.mob.abstract_move(M.loc)
 	BLACKBOX_LOG_ADMIN_VERB("Jump To Key")
 
-ADMIN_VERB(jump_to_ghost, R_ADMIN, "跳转到幽灵", "Jump your body to your Aghost.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(jump_to_ghost, R_ADMIN, "身体跳转到幽灵处", "Jump your body to your Aghost.", ADMIN_CATEGORY_GAME)
 	var/mob/dead/observer/ghost = user.mob
 	if(!isobserver(ghost))
 		return

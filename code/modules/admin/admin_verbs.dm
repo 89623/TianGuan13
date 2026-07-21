@@ -126,7 +126,7 @@ ADMIN_VERB(check_antagonists, R_ADMIN, "检查反派", "See all antagonists for 
 		message_admins("[key_name_admin(user)] checked antagonists.")
 	BLACKBOX_LOG_ADMIN_VERB("Check Antagonists")
 
-ADMIN_VERB(list_bombers, R_ADMIN, "列出爆破者", "Look at all bombs and their likely culprit.", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(list_bombers, R_ADMIN, "列出炸弹与嫌疑人", "Look at all bombs and their likely culprit.", ADMIN_CATEGORY_GAME)
 	user.holder.list_bombers()
 	BLACKBOX_LOG_ADMIN_VERB("List Bombers")
 
@@ -347,7 +347,7 @@ ADMIN_VERB(test_cardpack_distribution, R_DEBUG, "测试卡包分发", "Test the 
 	var/guar = tgui_input_number(user, LANG("datum.c2d2fcea", null), LANG("datum.c2230a42", null))
 	SStrading_card_game.check_card_distribution(pack, batch_size, batch_count, guar)
 
-ADMIN_VERB(print_cards, R_DEBUG, "打印卡牌", "Print all cards to chat.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(print_cards, R_DEBUG, "输出卡牌列表", "Print all cards to chat.", ADMIN_CATEGORY_DEBUG)
 	SStrading_card_game.printAllCards()
 
 ADMIN_VERB(give_mob_action, R_FUN, "给予生物动作", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/ability_recipient)
@@ -558,7 +558,7 @@ ADMIN_VERB(toggle_ai_interact, R_ADMIN, "切换管理员 AI 交互", "Allows you
 ADMIN_VERB(debug_statpanel, R_DEBUG, "调试状态面板", "Toggles local debug of the stat panel", ADMIN_CATEGORY_DEBUG)
 	user.stat_panel.send_message("create_debug")
 
-ADMIN_VERB(display_sendmaps, R_DEBUG, "发送地图配置文件", "View the profile.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(display_sendmaps, R_DEBUG, "发送地图性能分析", "View the profile.", ADMIN_CATEGORY_DEBUG)
 	user << link("?debug=profile&type=sendmaps&window=test")
 
 ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "生成调试用完整船员", "Creates a full crew for the station, flling datacore and assigning minds and jobs.", ADMIN_CATEGORY_DEBUG)

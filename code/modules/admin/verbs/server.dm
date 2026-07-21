@@ -154,7 +154,7 @@ ADMIN_VERB(delay_round_end, R_ADMIN, "延迟回合结束", "Prevent the server f
 	message_admins("[key_name_admin(user)] delayed the round end for reason: [SSticker.admin_delay_notice]")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Delay Round End", "Reason: [delay_reason]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB(toggle_enter, R_SERVER, "切换进入", "Toggle the ability to enter the game.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_enter, R_SERVER, "切换允许加入游戏", "Toggle the ability to enter the game.", ADMIN_CATEGORY_SERVER)
 	if(!SSlag_switch.initialized)
 		return
 	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, !SSlag_switch.measures[DISABLE_NON_OBSJOBS])
@@ -162,7 +162,7 @@ ADMIN_VERB(toggle_enter, R_SERVER, "切换进入", "Toggle the ability to enter 
 	message_admins("[key_name_admin(user)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Entering", "[!SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "Enabled" : "Disabled"]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB(toggle_ai, R_SERVER, "切换 AI", "Toggle the ability to choose AI jobs.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggle_ai, R_SERVER, "切换可选 AI 职位", "Toggle the ability to choose AI jobs.", ADMIN_CATEGORY_SERVER)
 	var/alai = CONFIG_GET(flag/allow_ai)
 	CONFIG_SET(flag/allow_ai, !alai)
 	if (alai)

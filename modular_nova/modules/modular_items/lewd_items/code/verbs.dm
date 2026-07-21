@@ -13,7 +13,7 @@
 		to_chat(src, span_warning(LANG("mob.b4242208", null)))
 
 /mob/living/verb/reflexes_verb()
-	set name = "切换反射"
+	set name = "切换敏捷反应"
 	set category = "IC"
 	if(!HAS_TRAIT_FROM(src, TRAIT_QUICKREFLEXES, REF(src)))
 		ADD_TRAIT(src, TRAIT_QUICKREFLEXES, REF(src))
