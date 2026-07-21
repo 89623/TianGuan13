@@ -9871,4 +9871,5 @@
 #include "modular_z121\code\modules\gear_disabler\gear_disabler_recipe.dm"
 #include "modular_z121\code\modules\junkcannon\junkcannon.dm"
 #include "modular_z121\code\modules\junkcannon\junkcannon_recipe.dm"
+#include "modular_tianguan\modules\uplink_item\
 // END_INCLUDE
