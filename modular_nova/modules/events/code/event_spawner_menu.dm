@@ -366,7 +366,7 @@
 		ShowPanel(usr, null)
 		return
 
-ADMIN_VERB(admin_open_event_spawners_menu, R_ADMIN, "Event Spawners Menu", "Event Spawners Menu.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(admin_open_event_spawners_menu, R_ADMIN, "事件生成器菜单", "Event Spawners Menu.", ADMIN_CATEGORY_EVENTS)
 	var/datum/event_spawner_manager/ESM = GLOB.event_spawner_manager
 	ESM.ShowPanel(usr, null)
 

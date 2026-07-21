@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(ckey_to_aooc_name)
 #define AOOC_LISTEN_ADMIN 2
 
 /client/verb/aooc(msg as text)
-	set name = "AOOC"
+	set name = "反派 OOC"
 	set category = "OOC"
 
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
@@ -101,7 +101,7 @@ GLOBAL_LIST_EMPTY(ckey_to_aooc_name)
 		var/client/iterated_client = iterated_listener
 		to_chat(iterated_client, span_oocplain("<B>The AOOC channel has been globally [GLOB.aooc_allowed ? "enabled" : "disabled"].</B>"))
 
-ADMIN_VERB(toggleaooc, R_ADMIN, "Toggle Antag OOC", "Toggles Antag OOC.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(toggleaooc, R_ADMIN, "切换反派 OOC", "Toggles Antag OOC.", ADMIN_CATEGORY_SERVER)
 	toggle_aooc()
 	log_admin("[key_name(usr)] toggled Antagonist OOC.")
 	message_admins("[key_name_admin(usr)] toggled Antagonist OOC.")

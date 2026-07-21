@@ -154,13 +154,13 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
 /client/proc/set_ooc()
-	set name = "Set Player OOC Color"
+	set name = "设置玩家 OOC 颜色"
 	set desc = "Modifies player OOC Color"
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
 
-ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(set_ooc_color, R_FUN, "设置玩家 OOC 颜色", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
 	var/newColor = tgui_color_picker(user, "Please select the new player OOC color.", "OOC color")
 	if(isnull(newColor))
 		return
@@ -170,13 +170,13 @@ ADMIN_VERB(set_ooc_color, R_FUN, "Set Player OOC Color", "Modifies the global OO
 	GLOB.OOC_COLOR = new_color
 
 /client/proc/reset_ooc()
-	set name = "Reset Player OOC Color"
+	set name = "重置玩家 OOC 颜色"
 	set desc = "Returns player OOC Color to default"
 	set category = "Server"
 	if(IsAdminAdvancedProcCall())
 		return
 
-ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(reset_ooc_color, R_FUN, "重置玩家 OOC 颜色", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
 	if(tgui_alert(user, LANG("datum.26e132eb", null), LANG("datum.53dce6c2", null), list("Yes", "No")) != "Yes")
 		return
 	message_admins("[key_name_admin(user)] has reset the players' ooc color.")
@@ -185,7 +185,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 //Checks admin notice
 /client/verb/admin_notice()
-	set name = "Adminnotice"
+	set name = "管理员通知"
 	set category = "Admin"
 	set desc = "Check the admin notice if it has been set"
 
@@ -206,7 +206,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		to_chat(src, span_notice(LANG("client.f74ead16", null)))
 
 /client/proc/self_notes()
-	set name = "View Admin Remarks"
+	set name = "查看管理员备注"
 	set category = "OOC"
 	set desc = "View the notes that admins have written about you"
 
@@ -217,7 +217,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	browse_messages(null, usr.ckey, null, TRUE)
 
 /client/proc/self_playtime()
-	set name = "View tracked playtime"
+	set name = "查看记录的游玩时间"
 	set category = "OOC"
 	set desc = "View the amount of playtime for roles the server has tracked."
 
@@ -229,7 +229,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 // Ignore verb
 /client/verb/select_ignore()
-	set name = "Ignore"
+	set name = "忽略"
 	set category = "OOC"
 	set desc ="Ignore a player's messages on the OOC channel"
 
@@ -311,7 +311,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 // Unignore verb
 /client/verb/select_unignore()
-	set name = "Unignore"
+	set name = "取消忽略"
 	set category = "OOC"
 	set desc = "Stop ignoring a player's messages on the OOC channel"
 
@@ -348,21 +348,21 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	to_chat(src, span_infoplain(LANG("client.abb0f938", list(selection))))
 
 /client/proc/show_previous_roundend_report()
-	set name = "Your Last Round"
+	set name = "你的上一回合"
 	set category = "OOC"
 	set desc = "View the last round end report you've seen"
 
 	SSticker.show_roundend_report(src, report_type = PERSONAL_LAST_ROUND)
 
 /client/proc/show_servers_last_roundend_report()
-	set name = "Server's Last Round"
+	set name = "服务器上一回合"
 	set category = "OOC"
 	set desc = "View the last round end report from this server"
 
 	SSticker.show_roundend_report(src, report_type = SERVER_LAST_ROUND)
 
 /client/verb/fit_viewport()
-	set name = "Fit Viewport"
+	set name = "适应视口"
 	set category = "OOC"
 	set desc = "Fit the width of the map window to match the viewport"
 
@@ -445,7 +445,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
 
 /client/verb/policy()
-	set name = "Show Policy"
+	set name = "显示政策"
 	set desc = "Show special server rules related to your current character."
 	set category = "OOC"
 
@@ -468,13 +468,13 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	browser.open()
 
 /client/verb/fix_stat_panel()
-	set name = "Fix Stat Panel"
+	set name = "修复状态面板"
 	set hidden = TRUE
 
 	init_verbs()
 
 /client/proc/export_preferences()
-	set name = "Export Preferences"
+	set name = "导出偏好设置"
 	set desc = "Export your current preferences to a file."
 	set category = "OOC"
 
@@ -483,7 +483,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	prefs.savefile.export_json_to_client(usr, ckey)
 
 /client/verb/map_vote_tally_count()
-	set name = "Show Map Vote Tallies"
+	set name = "显示地图投票统计"
 	set desc = "View the current map vote tally counts."
 	set category = "OOC"
 	to_chat(mob, SSmap_vote.tally_printout)
@@ -491,7 +491,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 /client/verb/linkforumaccount()
 	set category = "OOC"
-	set name = "Link Forum Account"
+	set name = "关联论坛账号"
 	set desc = "Validates your byond account to your forum account. Required to post on the forums."
 
 	var/uri = CONFIG_GET(string/forum_link_uri)

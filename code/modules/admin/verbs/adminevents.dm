@@ -1,7 +1,7 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Admin Tab - Event Verbs
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "私密消息", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
 	message_admins("[key_name_admin(user)] has started answering [ADMIN_LOOKUPFLW(target)]'s prayer.")
 	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.03de8cc3", list(target.key))) as text|null
 
@@ -20,7 +20,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "Subtle Message",
 	admin_ticket_log(target, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Subtle Message")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "耳机消息", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
 	user.admin_headset_message(target)
 
 /client/proc/admin_headset_message(mob/target in GLOB.mob_list, sender = null)
@@ -65,7 +65,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "Headset Message
 
 	BLACKBOX_LOG_ADMIN_VERB("Headset Message")
 
-ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "Global Narrate", "Send a direct narration to all connected players.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "全局旁白", "Send a direct narration to all connected players.", ADMIN_CATEGORY_EVENTS)
 	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.7c26d5bd", null)) as text|null
 	if (!msg)
 		return
@@ -75,7 +75,7 @@ ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "Global Narrate", "Send a direct na
 	message_admins(span_adminnotice("[key_name_admin(user)] Sent a global narrate"))
 	BLACKBOX_LOG_ADMIN_VERB("Global Narrate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "Local Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/locale in world)
+ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "本地旁白", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/locale in world)
 	var/range = input(user, LANG("datum.c5d1936b", null), LANG("datum.520ed99b", null), 7) as num|null
 	if(!range)
 		return
@@ -90,7 +90,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "Local Narrate", A
 	message_admins(span_adminnotice("<b> LocalNarrate: [key_name_admin(user)] at [ADMIN_VERBOSEJMP(locale)]:</b> [msg]<BR>"))
 	BLACKBOX_LOG_ADMIN_VERB("Local Narrate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
+ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "直接旁白", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
 	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.5d97ad04", null)) as text|null
 
 	if( !msg )
@@ -105,7 +105,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "Direct Narrate",
 	admin_ticket_log(target, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Direct Narrate")
 
-ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a custom law to the Silicons.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "添加自定义 AI 法则", "Add a custom law to the Silicons.", ADMIN_CATEGORY_EVENTS)
 	var/input = input(user, LANG("datum.d01816bc", null), LANG("datum.29297405", null), "") as text|null
 	if(!input)
 		return
@@ -122,7 +122,7 @@ ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "Add Custom AI Law", "Add a c
 
 	BLACKBOX_LOG_ADMIN_VERB("Add Custom AI Law")
 
-ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "切换核弹", "Arm or disarm a nuke.", ADMIN_CATEGORY_EVENTS)
 	var/list/nukes = list()
 	for (var/obj/machinery/nuclearbomb/bomb in world)
 		nukes += bomb
@@ -141,7 +141,7 @@ ADMIN_VERB(toggle_nuke, R_DEBUG|R_ADMIN, "Toggle Nuke", "Arm or disarm a nuke.",
 	message_admins("[ADMIN_LOOKUPFLW(user)] [nuke.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(nuke)].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[nuke.timing]")) // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
 
-ADMIN_VERB(change_sec_level, R_ADMIN, "Set Security Level", "Changes the security level. Announcement effects only.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(change_sec_level, R_ADMIN, "设置警戒等级", "Changes the security level. Announcement effects only.", ADMIN_CATEGORY_EVENTS)
 	var/level = tgui_input_list(user, LANG("datum.2b07c557", null), LANG("datum.867fbc31", null), SSsecurity_level.available_levels)
 
 	if(!level)
@@ -153,7 +153,7 @@ ADMIN_VERB(change_sec_level, R_ADMIN, "Set Security Level", "Changes the securit
 	message_admins("[key_name_admin(user)] changed the security level to [level]")
 	BLACKBOX_LOG_ADMIN_VERB("Set Security Level [capitalize(level)]")
 
-ADMIN_VERB(command_report_footnote, R_FUN, "Command Report Footnote", "Adds a footnote to the roundstart command report.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(command_report_footnote, R_FUN, "指挥部报告脚注", "Adds a footnote to the roundstart command report.", ADMIN_CATEGORY_EVENTS)
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 	GLOB.communications_controller.block_command_report += 1 //Add a blocking condition to the counter until the inputs are done.
 
@@ -185,7 +185,7 @@ ADMIN_VERB(command_report_footnote, R_FUN, "Command Report Footnote", "Adds a fo
 	var/message
 	var/signature
 
-ADMIN_VERB(command_report_content, R_FUN, "Command Report Content", "Sets the main content of the roundstart command report.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(command_report_content, R_FUN, "指挥部报告内容", "Sets the main content of the roundstart command report.", ADMIN_CATEGORY_EVENTS)
 	GLOB.communications_controller.block_command_report += 1
 	GLOB.communications_controller.command_report_main_content = tgui_input_text(
 		user,
@@ -195,7 +195,7 @@ ADMIN_VERB(command_report_content, R_FUN, "Command Report Content", "Sets the ma
 	GLOB.communications_controller.block_command_report -= 1
 	message_admins("[key_name_admin(user)] has [GLOB.communications_controller.command_report_main_content ? "set" : "cleared"] the main content of the roundstart command report.")
 
-ADMIN_VERB(delay_command_report, R_FUN, "Delay Command Report", "Prevents the roundstart command report from being sent; or forces it to send it delayed.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(delay_command_report, R_FUN, "延迟指挥部报告", "Prevents the roundstart command report from being sent; or forces it to send it delayed.", ADMIN_CATEGORY_EVENTS)
 	GLOB.communications_controller.block_command_report = !GLOB.communications_controller.block_command_report
 	message_admins("[key_name_admin(user)] has [(GLOB.communications_controller.block_command_report ? "delayed" : "sent")] the roundstart command report.")
 

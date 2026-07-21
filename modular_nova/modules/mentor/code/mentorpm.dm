@@ -1,7 +1,7 @@
 //shows a list of clients we could send PMs to, then forwards our choice to cmd_Mentor_pm
 /client/proc/cmd_mentor_pm_panel() // We're not using this and I'm debating removing the code as it's dead and useless. We don't need mentors PMing people out of the blue. That's not really how we operate.
 	set category = "Mentor"
-	set name = "Mentor PM"
+	set name = "导师私信"
 	if(!is_mentor())
 		to_chat(src, span_danger(LANG("client.d0d80bb7", null)))
 		return

@@ -1,4 +1,4 @@
-ADMIN_VERB(import_preferences, R_ADMIN, "Import Preferences", "Upload a character preferences JSON file to the server.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(import_preferences, R_ADMIN, "导入偏好设置", "Upload a character preferences JSON file to the server.", ADMIN_CATEGORY_MAIN)
 	var/player_key = tgui_input_text(user, LANG("datum.0043cff0", null), LANG("datum.8cc1c53b", null))
 	if(!length(player_key))
 		return

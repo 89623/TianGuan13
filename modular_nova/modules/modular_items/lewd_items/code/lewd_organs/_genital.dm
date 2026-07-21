@@ -398,7 +398,7 @@ GLOBAL_LIST_INIT(genital_arousal_options, list(
 
 /mob/living/carbon/human/verb/toggle_genitals()
 	set category = "IC"
-	set name = "Expose/Hide genitals"
+	set name = "显示/隐藏生殖器"
 	set desc = "Change which genitals show through clothes and how they layer."
 
 	if(stat != CONSCIOUS)
@@ -416,7 +416,7 @@ GLOBAL_LIST_INIT(genital_arousal_options, list(
 
 /mob/living/carbon/human/verb/toggle_arousal()
 	set category = "IC"
-	set name = "Toggle Arousal"
+	set name = "切换性唤起"
 	set desc = "Allows you to toggle how aroused your private parts are."
 
 	if(stat != CONSCIOUS)

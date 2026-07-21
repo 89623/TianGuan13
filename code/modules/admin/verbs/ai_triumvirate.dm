@@ -31,7 +31,7 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 
 /client/proc/triple_ai()
 	set category = "Admin.Events"
-	set name = "Toggle AI Triumvirate"
+	set name = "切换三 AI 模式"
 
 	if(SSticker.current_state > GAME_STATE_PREGAME)
 		to_chat(usr, LANG("client.c0416f7c", null), confidential = TRUE)

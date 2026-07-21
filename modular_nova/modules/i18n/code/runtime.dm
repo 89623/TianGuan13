@@ -201,6 +201,27 @@ GLOBAL_VAR_INIT(i18n_vog_triggers_loaded, FALSE)
 	var/list/table = lang_vog_triggers()
 	return table[pattern] || pattern
 
+/// 状态栏页签名/分组标题的显示译名表（英文标识符 -> 译名），发给 statbrowser.js 只用于渲染文字。
+/// 同 lang_vog_triggers 放顶层 JSON：键是 Admin/Game/Object 这类裸单词，进全局反查表会造成标识符碰撞。
+/// **页签名本身绝不本地化**——它是 button.id、SendTabToByond 回传值、statpanel.dm `stat_tab ==` 比较的
+/// 三重标识符，且 split_admin_tabs 靠 JS 里硬编码的 `splitName[0] === 'Admin'` 拆子页签。详见该 JSON 的 _comment。
+GLOBAL_LIST_EMPTY(i18n_statpanel_tab_labels)
+GLOBAL_VAR_INIT(i18n_statpanel_tab_labels_loaded, FALSE)
+/proc/lang_statpanel_tab_labels()
+	if(GLOB.i18n_statpanel_tab_labels_loaded)
+		return GLOB.i18n_statpanel_tab_labels
+	var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+	if(locale != DEFAULT_UI_LOCALE)
+		var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/statpanel_tabs.json"
+		if(fexists(path))
+			var/list/decoded = json_decode(file2text(path))
+			var/list/for_locale = islist(decoded) ? decoded[locale] : null
+			if(islist(for_locale))
+				for(var/tab_name in for_locale)
+					GLOB.i18n_statpanel_tab_labels[tab_name] = for_locale[tab_name]
+	GLOB.i18n_statpanel_tab_labels_loaded = TRUE
+	return GLOB.i18n_statpanel_tab_labels
+
 /// BYOND 文法宏（\the \a \improper 等，无参、由引擎按名词上下文在**编译期/输出期**处理）。模板从 JSON
 /// 加载后引擎不再处理 → 会字面显示。中文无冠词/复数、且上下文已丢失，直接剥掉。`\b` 防 \theory 等误伤；
 /// 已转义的反斜杠（\\）开头不会被这里的单反斜杠模式吃掉。只列已知文法宏，不碰 \n \t \" 等真转义。

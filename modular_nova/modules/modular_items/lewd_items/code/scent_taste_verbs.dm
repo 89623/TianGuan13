@@ -1,5 +1,5 @@
 /mob/living/carbon/human/verb/lick(mob/living/carbon/human/target in get_adjacent_humans())
-	set name = "Lick"
+	set name = "舔"
 	set category = "IC"
 
 	if(!istype(target))
@@ -20,7 +20,7 @@
 	return TRUE
 
 /mob/living/carbon/human/verb/smell(mob/living/carbon/human/target in get_adjacent_humans())
-	set name = "Smell"
+	set name = "闻"
 	set category = "IC"
 
 	if(!istype(target))

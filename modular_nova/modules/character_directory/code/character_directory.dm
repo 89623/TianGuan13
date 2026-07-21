@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 
 /// Opens character directory UI for a specific user
 /client/verb/show_character_directory(specific_ad as text|null)
-	set name = "Character Directory"
+	set name = "角色目录"
 	set category = "OOC"
 	set desc = "Shows a listing of all active characters, along with their associated OOC notes, flavor text, and more."
 

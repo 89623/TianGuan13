@@ -1,7 +1,7 @@
 /// The list of the available special player ranks
 #define NOVA_PLAYER_RANKS list("Donator", "Mentor", "Nova Star")
 
-ADMIN_VERB(manage_player_ranks, R_PERMISSIONS, "Manage Player Ranks", "Manage who has the special player ranks while the server is running.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(manage_player_ranks, R_PERMISSIONS, "管理玩家等级", "Manage who has the special player ranks while the server is running.", ADMIN_CATEGORY_MAIN)
 	usr.client?.holder.manage_player_ranks()
 
 /// Proc for admins to change people's "player" ranks (donator, mentor, nova star, etc.)
@@ -78,7 +78,7 @@ ADMIN_VERB(manage_player_ranks, R_PERMISSIONS, "Manage Player Ranks", "Manage wh
 			return
 
 
-ADMIN_VERB(migrate_player_ranks, R_PERMISSIONS|R_DEBUG|R_SERVER, "Migrate Player Ranks", "Individually migrate the various player ranks from their legacy system to the SQL-based one.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(migrate_player_ranks, R_PERMISSIONS|R_DEBUG|R_SERVER, "迁移玩家等级", "Individually migrate the various player ranks from their legacy system to the SQL-based one.", ADMIN_CATEGORY_DEBUG)
 	user.mob.client?.holder.migrate_player_ranks()
 
 /datum/admins/proc/migrate_player_ranks()

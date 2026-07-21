@@ -274,7 +274,7 @@
 /// This verb shows the user information about the Feedbacker and Knuckleblaster attacks,
 /// as well as the active defense mode for parrying projectiles
 /mob/living/proc/blood_steal_help()
-	set name = "Access Core Imprint"
+	set name = "访问核心印记"
 	set desc = "You try to remember some of the core Blood Steal protocols."
 	set category = "Blood Steal"
 	to_chat(usr, LANG("mob.b92b9945", null))

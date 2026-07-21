@@ -64,7 +64,7 @@ GLOBAL_PROTECT(whitelist)
 	return GLOB.whitelist[ckey]
 
 
-ADMIN_VERB(add_whitelist, R_ADMIN, "Add Whitelist", "Adds a given ckey to the whitelist, allowing them access to the server.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(add_whitelist, R_ADMIN, "添加白名单", "Adds a given ckey to the whitelist, allowing them access to the server.", ADMIN_CATEGORY_MAIN)
 	if(!SSdbcore.Connect())
 		to_chat(user, span_warning(LANG("datum.a22807d5", null)))
 		return

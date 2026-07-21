@@ -1,5 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(change_shuttle_events, R_ADMIN|R_FUN, "Change Shuttle Events", "Change the events on a shuttle.", ADMIN_CATEGORY_SHUTTLE)
+ADMIN_VERB(change_shuttle_events, R_ADMIN|R_FUN, "更改穿梭机事件", "Change the events on a shuttle.", ADMIN_CATEGORY_SHUTTLE)
 	//At least for now, just letting admins modify the emergency shuttle is fine
 	var/obj/docking_port/mobile/port = SSshuttle.emergency
 
@@ -31,7 +31,7 @@ ADMIN_VERB(change_shuttle_events, R_ADMIN|R_FUN, "Change Shuttle Events", "Chang
 			message_admins("[key_name_admin(user)] has added '[typepath]' to [port].")
 			port.add_shuttle_event(typepath)
 
-ADMIN_VERB(call_shuttle, R_ADMIN, "Call Shuttle", "Force a shuttle call with additional modifiers.", ADMIN_CATEGORY_SHUTTLE)
+ADMIN_VERB(call_shuttle, R_ADMIN, "呼叫穿梭机", "Force a shuttle call with additional modifiers.", ADMIN_CATEGORY_SHUTTLE)
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
@@ -48,7 +48,7 @@ ADMIN_VERB(call_shuttle, R_ADMIN, "Call Shuttle", "Force a shuttle call with add
 	log_admin("[key_name(user)] admin-called the emergency shuttle.")
 	message_admins(span_adminnotice("[key_name_admin(user)] admin-called the emergency shuttle[confirm == "Yes (No Recall)" ? " (non-recallable)" : ""]."))
 
-ADMIN_VERB(cancel_shuttle, R_ADMIN, "Cancel Shuttle", "Recall the shuttle, regardless of circumstances.", ADMIN_CATEGORY_SHUTTLE)
+ADMIN_VERB(cancel_shuttle, R_ADMIN, "取消穿梭机", "Recall the shuttle, regardless of circumstances.", ADMIN_CATEGORY_SHUTTLE)
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
@@ -62,7 +62,7 @@ ADMIN_VERB(cancel_shuttle, R_ADMIN, "Cancel Shuttle", "Recall the shuttle, regar
 	log_admin("[key_name(user)] admin-recalled the emergency shuttle.")
 	message_admins(span_adminnotice("[key_name_admin(user)] admin-recalled the emergency shuttle."))
 
-ADMIN_VERB(disable_shuttle, R_ADMIN, "Disable Shuttle", "Those fuckers aren't getting out.", ADMIN_CATEGORY_SHUTTLE)
+ADMIN_VERB(disable_shuttle, R_ADMIN, "禁用穿梭机", "Those fuckers aren't getting out.", ADMIN_CATEGORY_SHUTTLE)
 	if(SSshuttle.emergency.mode == SHUTTLE_DISABLED)
 		to_chat(user, span_warning(LANG("datum.b8472aba", null)))
 		return
@@ -85,7 +85,7 @@ ADMIN_VERB(disable_shuttle, R_ADMIN, "Disable Shuttle", "Those fuckers aren't ge
 		color_override = "grey",
 	)
 
-ADMIN_VERB(enable_shuttle, R_ADMIN, "Enable Shuttle", "Those fuckers ARE getting out.", ADMIN_CATEGORY_SHUTTLE)
+ADMIN_VERB(enable_shuttle, R_ADMIN, "启用穿梭机", "Those fuckers ARE getting out.", ADMIN_CATEGORY_SHUTTLE)
 	if(SSshuttle.emergency.mode != SHUTTLE_DISABLED)
 		to_chat(user, span_warning(LANG("datum.a398338c", null)))
 		return
@@ -111,7 +111,7 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, "Enable Shuttle", "Those fuckers ARE getting
 		color_override = "green",
 	)
 
-ADMIN_VERB(hostile_environment, R_ADMIN, "Hostile Environment", "Disable the shuttle, naturally.", ADMIN_CATEGORY_SHUTTLE)
+ADMIN_VERB(hostile_environment, R_ADMIN, "敌对环境", "Disable the shuttle, naturally.", ADMIN_CATEGORY_SHUTTLE)
 	switch(tgui_alert(user, LANG("datum.2d66d006", null), LANG("datum.9b16bc89", null), list("Enable", "Disable", "Clear All")))
 		if("Enable")
 			if (SSshuttle.hostile_environments["Admin"] == TRUE)
@@ -130,7 +130,7 @@ ADMIN_VERB(hostile_environment, R_ADMIN, "Hostile Environment", "Disable the shu
 			SSshuttle.hostile_environments.Cut()
 			SSshuttle.checkHostileEnvironment()
 
-ADMIN_VERB(shuttle_panel, R_ADMIN, "Shuttle Manipulator", "Opens the shuttle manipulator UI.", ADMIN_CATEGORY_SHUTTLE)
+ADMIN_VERB(shuttle_panel, R_ADMIN, "穿梭机操纵器", "Opens the shuttle manipulator UI.", ADMIN_CATEGORY_SHUTTLE)
 	SSshuttle.ui_interact(user.mob)
 
 /obj/docking_port/mobile/proc/admin_fly_shuttle(mob/user)

@@ -1148,7 +1148,9 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			continue
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
-	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
+	// NOVA EDIT CHANGE - i18n: 附带页签显示译名表（locale==en 时为空 list，JS 侧回落原名）
+	// - ORIGINAL: src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
+	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist, tab_labels = lang_statpanel_tab_labels()))
 
 /client/proc/check_panel_loaded()
 	if(stat_panel.is_ready())
@@ -1228,7 +1230,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	observer.ManualFollow(target)
 
 /client/verb/stop_client_sounds()
-	set name = "Stop Sounds"
+	set name = "停止音效"
 	set category = "OOC"
 	set desc = "Stop Current Sounds"
 	SEND_SOUND(usr, sound(null))
@@ -1236,7 +1238,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
 /client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
+	set name = "切换全屏"
 	set category = "OOC"
 
 	var/is_on = prefs.read_preference(/datum/preference/toggle/fullscreen_mode)

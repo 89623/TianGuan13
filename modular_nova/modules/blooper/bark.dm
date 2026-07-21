@@ -26,7 +26,7 @@ GLOBAL_VAR_INIT(blooper_allowed, TRUE) // For administrators
 /datum/admins/proc/toggleblooper()
 	set category = "Server"
 	set desc = "Toggle the annoying voices."
-	set name = "Toggle Vocal Barks"
+	set name = "切换发声音效"
 	toggle_blooper()
 	log_admin("[key_name(usr)] toggled Voice Barks.")
 	message_admins("[key_name_admin(usr)] toggled Voice Barks.")

@@ -586,7 +586,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		holodeck_templates[holo_template.template_id] = holo_template
 
-ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away mission for the station.", ADMIN_CATEGORY_EVENTS)
+ADMIN_VERB(load_away_mission, R_FUN, "加载外勤任务", "Load a specific away mission for the station.", ADMIN_CATEGORY_EVENTS)
 	if(!GLOB.the_gateway)
 		if(tgui_alert(user, LANG("datum.79f7ccfd", null), LANG("datum.222318f5", null), list("Yes", "No")) != "Yes")
 			return

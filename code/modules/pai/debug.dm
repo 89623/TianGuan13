@@ -1,7 +1,7 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /client/proc/makepAI(turf/target in GLOB.mob_list)
 	set category = "Admin.Fun"
-	set name = "Make pAI"
+	set name = "制作 pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
 
 	var/list/available = list()

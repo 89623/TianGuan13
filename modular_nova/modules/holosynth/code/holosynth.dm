@@ -338,7 +338,7 @@ GLOBAL_DATUM_INIT(holo_scanline, /obj/effect/abstract/holo_scanline, new)
 // Added on species gain, removed on species loss. Both update the dna feature and ask the species to refresh.
 
 /mob/living/carbon/human/proc/holosynth_adjust_transparency()
-	set name = "Adjust Hologram Transparency"
+	set name = "调节全息透明度"
 	set category = "IC"
 	set src = usr
 
@@ -352,7 +352,7 @@ GLOBAL_DATUM_INIT(holo_scanline, /obj/effect/abstract/holo_scanline, new)
 	species.refresh_opacity(src)
 
 /mob/living/carbon/human/proc/holosynth_toggle_scanline()
-	set name = "Toggle Hologram Flicker"
+	set name = "切换全息闪烁"
 	set category = "IC"
 	set src = usr
 
