@@ -333,6 +333,7 @@ SUBSYSTEM_DEF(vote)
 			for(var/key in current_vote.choices)
 				choices += list(list(
 					"name" = key,
+					"displayName" = current_vote.get_choice_display_name(key), // NOVA EDIT ADDITION - i18n: 显示名（键 name 仍是 act 值）
 					"votes" = current_vote.choices[key],
 				))
 
