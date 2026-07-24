@@ -120,6 +120,9 @@ FLOOR SAFES
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/safe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+
 	if(!open)
 		if(!istype(tool, /obj/item/clothing/neck/stethoscope))
 			to_chat(user, span_warning(LANG("obj.6fb4c955", list(tool))))

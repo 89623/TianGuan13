@@ -50,18 +50,19 @@
 	if(!uses)
 		desc = LANG("obj.8c69c278", list(initial(desc)))
 
-/obj/item/autosurgeon/bodypart/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, bodypart_type))
+/obj/item/autosurgeon/bodypart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, bodypart_type))
 		if(storedbodypart)
 			to_chat(user, span_alert(LANG("obj.e7325773", list(src))))
-			return
+			return ITEM_INTERACT_BLOCKING
 		else if(!uses)
 			to_chat(user, span_alert(LANG("obj.a5f6a387", list(src))))
-			return
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		storedbodypart = attacking_item
-		to_chat(user, span_notice(LANG("obj.efd435e6", list(attacking_item, src))))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		storedbodypart = tool
+		to_chat(user, span_notice(LANG("obj.efd435e6", list(tool, src))))
+		return ITEM_INTERACT_SUCCESS
 	else
 		return ..()
 

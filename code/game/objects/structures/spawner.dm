@@ -41,9 +41,10 @@
 		. += span_notice(LANG("obj.16d820bf", list(scanner_descriptor)))
 
 /obj/structure/spawner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!scanner_taggable || !is_type_in_list(tool, scanner_types))
+	if(scanner_taggable && is_type_in_list(tool, scanner_types))
 		gps_tag(user)
 		return ITEM_INTERACT_SUCCESS
+
 	return NONE
 
 /// Tag the spawner, prefixing its GPS entry with an identifier - or giving it one, if nonexistent.

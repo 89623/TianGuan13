@@ -592,16 +592,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 /obj/machinery/cryopod/blob_act()
 	return // Sorta gamey, but we don't really want these to be destroyed.
 
-/obj/machinery/cryopod/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/cryopod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(istype(attacking_item, /obj/item/bedsheet))
+	if(istype(tool, /obj/item/bedsheet))
 		if(!occupant || !istype(occupant, /mob/living))
 			return
 		if(tucked)
 			to_chat(user, span_warning(LANG("obj.459bd601", list(occupant.name))))
 			return
 		to_chat(user, span_notice(LANG("obj.2819dd72", list(occupant.name))))
-		qdel(attacking_item)
+		qdel(tool)
 		user.add_mood_event("tucked", /datum/mood_event/tucked_in, occupant)
 		tucked = TRUE
 

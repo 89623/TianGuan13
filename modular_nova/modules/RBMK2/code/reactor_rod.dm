@@ -61,8 +61,8 @@
 	. += span_notice(LANG("obj.a9cd71f2", list(siunit_pressure(pressure_limit, 0), siunit(temperature_limit, "K", 0))))
 
 // Prevents putting the reactor rod on a TTV.
-/obj/item/transfer_valve/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/tank/rbmk2_rod))
-		to_chat(user, span_warning(LANG("obj.337bbdec", list(attacking_item))))
-		return
+/obj/item/transfer_valve/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/tank/rbmk2_rod))
+		to_chat(user, span_warning(LANG("obj.337bbdec", list(tool))))
+		return ITEM_INTERACT_BLOCKING
 	return ..()

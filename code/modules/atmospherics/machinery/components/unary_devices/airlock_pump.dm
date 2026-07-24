@@ -606,7 +606,7 @@
 		// unbolt all the doors but don't open them
 		for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
 			airlock.unbolt()
-		audible_message(span_notice(LANG("obj.c4f90690", list(src, p_they()))))
+		audible_message(span_notice(LANG("obj.162a59f4", list(src, p_they(), p_s()))))
 		deltimer(emergency_stop_timer)
 		set_on(FALSE)
 
@@ -617,7 +617,7 @@
 		for(var/obj/machinery/door/airlock/airlock as anything in internal_airlocks)
 			if(open_airlock_on_cycle)
 				INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open))
-		audible_message(span_notice(LANG("obj.a05b81ab", list(src, p_they()))))
+		audible_message(span_notice(LANG("obj.ebb9236f", list(src, p_they(), p_s()))))
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only
 	open_airlock_on_cycle = FALSE
