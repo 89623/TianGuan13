@@ -83,18 +83,18 @@
 	. += span_notice(LANG("obj.29b2ab93", list(current_research, max_research)))
 	. += span_notice(LANG("obj.118b084d", null))
 
-/obj/machinery/xenoarch/researcher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/storage/bag/xenoarch))
-		for(var/obj/strange_rocks in attacking_item.contents)
+/obj/machinery/xenoarch/researcher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/storage/bag/xenoarch))
+		for(var/obj/strange_rocks in tool.contents)
 			strange_rocks.forceMove(storage_unit)
 
-		balloon_alert(user, LANG("obj.a8aaa85e", null))
-		return
+		balloon_alert(user, "rocks inserted!")
+		return ITEM_INTERACT_SUCCESS
 
-	if(is_type_in_list(attacking_item, accepted_types))
-		attacking_item.forceMove(storage_unit)
-		balloon_alert(user, LANG("obj.cfd83b9e", null))
-		return
+	if(is_type_in_list(tool, accepted_types))
+		tool.forceMove(storage_unit)
+		balloon_alert(user, "item inserted!")
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
@@ -164,22 +164,22 @@
 	icon_state = "scanner"
 	circuit = /obj/item/circuitboard/machine/xenoarch_machine/xenoarch_scanner
 
-/obj/machinery/xenoarch/scanner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/storage/bag/xenoarch))
-		for(var/obj/item/xenoarch/strange_rock/chosen_rocks in attacking_item.contents)
+/obj/machinery/xenoarch/scanner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/storage/bag/xenoarch))
+		for(var/obj/item/xenoarch/strange_rock/chosen_rocks in tool.contents)
 			chosen_rocks.get_scanned(TRUE)
 
-		balloon_alert(user, LANG("obj.d4915572", null))
-		return
+		balloon_alert(user, "scan complete!")
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/xenoarch/strange_rock))
-		var/obj/item/xenoarch/strange_rock/chosen_rock = attacking_item
+	if(istype(tool, /obj/item/xenoarch/strange_rock))
+		var/obj/item/xenoarch/strange_rock/chosen_rock = tool
 		if(chosen_rock.get_scanned(TRUE))
-			balloon_alert(user, LANG("obj.d4915572", null))
-			return
+			balloon_alert(user, "scan complete!")
+			return ITEM_INTERACT_SUCCESS
 
-		to_chat(user, span_warning(LANG("obj.d83c8e94", list(chosen_rock))))
-		return
+		to_chat(user, span_warning("[chosen_rock] was unable to be scanned, perhaps it was already scanned?"))
+		return ITEM_INTERACT_BLOCKING
 
 	return ..()
 
@@ -193,17 +193,19 @@
 	. = ..()
 	. += span_notice(LANG("obj.1ef54c60", list(src)))
 
-/obj/machinery/xenoarch/digger/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/storage/bag/xenoarch))
-		for(var/obj/strange_rocks in attacking_item.contents)
+/obj/machinery/xenoarch/digger/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/storage/bag/xenoarch))
+		for(var/obj/strange_rocks in tool.contents)
 			strange_rocks.forceMove(storage_unit)
-		balloon_alert(user, LANG("obj.a8aaa85e", null))
-		return
+		balloon_alert(user, "rocks inserted!")
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/xenoarch/strange_rock))
-		attacking_item.forceMove(storage_unit)
-		balloon_alert(user, LANG("obj.f107278f", null))
-		return
+	if(istype(tool, /obj/item/xenoarch/strange_rock))
+		tool.forceMove(storage_unit)
+		balloon_alert(user, "rock inserted!")
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/xenoarch/digger/attack_hand(mob/living/user, list/modifiers)
 	var/choice = tgui_input_list(user, LANG("obj.b097b2e9", list(src)), LANG("obj.0dc643ee", null), list("Yes", "No"))

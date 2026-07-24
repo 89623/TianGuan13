@@ -2,8 +2,8 @@
 	/// whether it has a curse attached to it
 	var/cursed = FALSE
 
-/mob/living/basic/mining/tendril/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/cursed_dagger))
+/mob/living/basic/mining/tendril/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/cursed_dagger))
 		playsound(get_turf(src), 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
 		cursed = !cursed
 		if(cursed)
@@ -17,8 +17,8 @@
 			var/mob/living/living_user = user
 			living_user.adjust_fire_loss(100)
 
-		to_chat(user, span_warning(LANG("obj.83922db4", null)))
-		return
+		to_chat(user, span_warning("The knife sears your hand!"))
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 

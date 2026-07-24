@@ -110,19 +110,19 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/trash_pile/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/trash_pile/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!user.combat_mode)
-		if(can_hide_item(attacking_item))
-			balloon_alert(user, LANG("obj.cece4dc6", null))
+		if(can_hide_item(tool))
+			balloon_alert(user, "hiding item...")
 			if(do_after(user, hide_item_time, user))
 				if(src.loc)
-					if(user.transferItemToLoc(attacking_item, src))
-						balloon_alert(user, LANG("obj.b32906e0", null))
+					if(user.transferItemToLoc(tool, src))
+						balloon_alert(user, "item hidden")
 					else
 						balloon_alert(user, LANG("obj.f84f0f5d", null))
 		else
-			balloon_alert(user, LANG("obj.2cb7d354", null))
-		return
+			balloon_alert(user, "it's full!")
+		return ITEM_INTERACT_SUCCESS
 
 	. = ..()
 

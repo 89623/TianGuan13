@@ -45,38 +45,38 @@
 			display_text = "The circuitboard's CPU needs to be <b>activated</b>..."
 	. += span_notice(display_text)
 
-/obj/item/turret_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/turret_assembly/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	switch(step)
 		if(TURRET_ASSEMBLY_START)
-			if(!istype(attacking_item, /obj/item/weaponcrafting/receiver))
+			if(!istype(tool, /obj/item/weaponcrafting/receiver))
 				return
-			if(!user.transferItemToLoc(attacking_item, src))
-				balloon_alert(user, LANG("obj.c89edc0c", null))
+			if(!user.transferItemToLoc(tool, src))
+				balloon_alert(user, "core stuck to your hand!")
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			balloon_alert(user, LANG("obj.a836a1d0", null))
-			receiver = attacking_item
+			balloon_alert(user, "receiver inserted")
+			receiver = tool
 			step = TURRET_ASSEMBLY_RECEIVER
 
 		if(TURRET_ASSEMBLY_SEC_1)
-			if(istype(attacking_item, /obj/item/stock_parts/servo)) //Construct
-				if(!user.transferItemToLoc(attacking_item, src))
-					balloon_alert(user, LANG("obj.52779bbb", null))
+			if(istype(tool, /obj/item/stock_parts/servo)) //Construct
+				if(!user.transferItemToLoc(tool, src))
+					balloon_alert(user, "servo stuck to your hand!")
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, LANG("obj.7cb93f71", null))
-				servo = attacking_item
+				balloon_alert(user, "servo added")
+				servo = tool
 				step = TURRET_ASSEMBLY_SERVO
 
 		if(TURRET_ASSEMBLY_SEC_2)
-			if(istype(attacking_item, /obj/item/assembly/prox_sensor)) //Construct
-				if(!user.transferItemToLoc(attacking_item, src))
-					balloon_alert(user, LANG("obj.b75110d3", null))
+			if(istype(tool, /obj/item/assembly/prox_sensor)) //Construct
+				if(!user.transferItemToLoc(tool, src))
+					balloon_alert(user, "sensor stuck to your hand!")
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, LANG("obj.1609b8bc", null))
-				sensor = attacking_item
+				balloon_alert(user, "sensor added")
+				sensor = tool
 				step = TURRET_ASSEMBLY_SENSOR
 
 /obj/item/turret_assembly/multitool_act(mob/living/user, obj/item/tool)
