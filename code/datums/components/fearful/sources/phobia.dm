@@ -6,6 +6,11 @@
 	/// Last time we got scared shitless for passive increase in fear
 	/// Regex for words that set the phobia off
 	var/regex/trigger_regex
+	// NOVA EDIT ADDITION START - i18n: 本地化触发词的第二条正则（中文等无词边界语言）
+	/// 本地化触发词正则。英文表用 \b 词边界，中文字符两侧都不是 \w、产生不了边界，只能另建一条
+	/// 无边界正则并列匹配。分组布局与 trigger_regex 一致，故两者可互换使用（见 matching_regex）。
+	var/regex/trigger_regex_localized
+	// NOVA EDIT ADDITION END
 	// Instead of cycling every atom, only cycle the relevant types
 	var/list/trigger_mobs
 	/// Includes mob equipment
@@ -27,6 +32,17 @@
 /datum/terror_handler/phobia_source/Destroy(force)
 	UnregisterSignal(owner, list(COMSIG_MOB_SAY, COMSIG_MOVABLE_HEAR))
 	return ..()
+
+// NOVA EDIT ADDITION START - i18n: 英文/本地化两条触发正则并列匹配
+/// 返回命中 `text` 的那条触发正则（未命中返回 null）。
+/// 依赖 `regex.Find()` 的副作用：命中后 `.group` 已填好，调用方可直接用 `.group[2]` / `.Replace($2)`。
+/datum/terror_handler/phobia_source/proc/matching_regex(text)
+	if(trigger_regex?.Find(text))
+		return trigger_regex
+	if(trigger_regex_localized?.Find(text))
+		return trigger_regex_localized
+	return null
+// NOVA EDIT ADDITION END
 
 /datum/terror_handler/phobia_source/proc/can_trigger()
 	return !HAS_TRAIT(owner, TRAIT_FEARLESS) && !HAS_TRAIT(owner, TRAIT_MIND_TEMPORARILY_GONE) && owner.stat < UNCONSCIOUS
@@ -105,10 +121,13 @@
 	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
 		return
 
-	if(trigger_regex.Find(hearing_args[HEARING_RAW_MESSAGE]))
+	// NOVA EDIT CHANGE START - i18n: 走 matching_regex 以兼顾本地化触发词
+	var/regex/hit = matching_regex(hearing_args[HEARING_RAW_MESSAGE])
+	if(hit)
 		// To react AFTER the chat message
-		addtimer(CALLBACK(src, PROC_REF(freak_out), null, trigger_regex.group[2]), 1 SECONDS)
-		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "[span_phobia("$2")]$3")
+		addtimer(CALLBACK(src, PROC_REF(freak_out), null, hit.group[2]), 1 SECONDS)
+		hearing_args[HEARING_RAW_MESSAGE] = hit.Replace(hearing_args[HEARING_RAW_MESSAGE], "[span_phobia("$2")]$3")
+	// NOVA EDIT CHANGE END
 
 /datum/terror_handler/phobia_source/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -116,8 +135,11 @@
 	if (!can_trigger())
 		return
 
-	if (trigger_regex.Find(speech_args[SPEECH_MESSAGE]) == 0)
+	// NOVA EDIT CHANGE START - i18n: 走 matching_regex 以兼顾本地化触发词 - ORIGINAL: if (trigger_regex.Find(speech_args[SPEECH_MESSAGE]) == 0)
+	var/regex/hit = matching_regex(speech_args[SPEECH_MESSAGE])
+	if (isnull(hit))
 		return
+	// NOVA EDIT CHANGE END
 
 	var/stutter = prob(50)
 	var/whisper = prob(30)
@@ -129,7 +151,7 @@
 		speech_args[SPEECH_SPANS] |= SPAN_SMALL_VOICE
 	if (stutter)
 		owner.set_stutter_if_lower(4 SECONDS)
-	to_chat(owner, span_warning(LANG("datum.1bc8e353", list(span_phobia("[trigger_regex.group[2]]")))))
+	to_chat(owner, span_warning(LANG("datum.1bc8e353", list(span_phobia("[hit.group[2]]"))))) // NOVA EDIT CHANGE - i18n - ORIGINAL: ...trigger_regex.group[2]...
 
 /datum/terror_handler/phobia_source/proc/freak_out(reason)
 	COOLDOWN_START(src, scare_cooldown, 12 SECONDS)

@@ -73,7 +73,7 @@
 		return ..()
 
 /obj/item/modular_computer/laptop/verb/open_computer()
-	set name = "切换打开"
+	set name = "打开/关闭"
 	set src in view(1)
 
 	try_toggle_open(usr)

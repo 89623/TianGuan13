@@ -23,6 +23,48 @@ GLOBAL_VAR_INIT(i18n_locale_resolved, FALSE)
 GLOBAL_VAR_INIT(i18n_early_reverse_warnings, 0)
 #define I18N_MAX_EARLY_WARNINGS 10
 
+/// `strings/` 下的**匹配表**：靠字面比对驱动功能，翻译=替换=破坏匹配，一律不反查。
+/// （展示型 flavor 表不在此列；口音替换表虽也保英文，但那是内容取舍、不是功能损坏，不登记在这。）
+GLOBAL_LIST_INIT(i18n_match_table_files, list("phobia.json"))
+
+/// 恐惧症中文触发词表（类别 -> 词表），来自 strings/i18n/phobia_words.json。
+/// 与英文 strings/phobia.json **并存**：英文走原正则（带 \b 词边界），中文走无边界正则。
+/// 详见该 JSON 的 _comment（为什么不能并进同一条正则、为什么不能直接翻译英文表）。
+GLOBAL_LIST_EMPTY(i18n_phobia_words)
+GLOBAL_VAR_INIT(i18n_phobia_words_loaded, FALSE)
+/proc/lang_phobia_words(category)
+	if(!GLOB.i18n_phobia_words_loaded)
+		GLOB.i18n_phobia_words_loaded = TRUE
+		var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+		if(locale != DEFAULT_UI_LOCALE)
+			var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/phobia_words.json"
+			if(fexists(path))
+				var/list/decoded = json_decode(file2text(path))
+				var/list/for_locale = islist(decoded) ? decoded[locale] : null
+				if(islist(for_locale))
+					for(var/phobia_category in for_locale)
+						GLOB.i18n_phobia_words[phobia_category] = for_locale[phobia_category]
+	return GLOB.i18n_phobia_words[category]
+
+/// 为某恐惧症类别构建「本地化触发词」正则；无登记词则返回 null。
+///
+/// 分组布局刻意与 construct_phobia_regex 保持一致——消费方用 `group[2]` 取命中词、用 `$2`/`$3`
+/// 做高亮替换（见 datums/components/fearful/sources/phobia.dm）。这里 group1/group3 是空组，
+/// 于是 `$3` 为空串、`group[2]` 仍是命中词，两条正则可以互换使用。
+/// 中文不需要词边界，直接子串匹配即正确（也只能如此，理由见 phobia_words.json 的 _comment）。
+/proc/construct_phobia_regex_localized(category)
+	var/list/words = lang_phobia_words(category)
+	if(!length(words))
+		return null
+	var/words_match = ""
+	for(var/word in words)
+		words_match += "[REGEX_QUOTE(word)]|"
+	words_match = copytext(words_match, 1, -1)
+	// 分组必须与英文正则**逐组同构**：group3 用 `('?s*)`（而不是空组 `()`）——BYOND 里不参与匹配的
+	// 空组返回 null，消费侧 `Replace(…, "$2$3")` 拿到的就不是空串（单测 i18n_phobia_localized_regex
+	// 抓到过这点）。`'?s*` 在中文位置匹配空串但**组本身参与**，于是 group[3] == ""，两条正则可互换。
+	return regex("()([words_match])('?s*)", "i")
+
 /// 补反查早于 config 建好的 flavor 字符串表。由 world.ConfigLoaded() 调用。
 ///
 /// `GLOBAL_LIST_INIT(fishing_tips, world.file2list("strings/fishing_tips.txt"))` 这类在 GLOB 阶段就
@@ -30,28 +72,27 @@ GLOBAL_VAR_INIT(i18n_early_reverse_warnings, 0)
 /// fishing_tips 62 条、junkmail 39 条**目录里全都有译文却从来没显示过**。
 ///
 /// **只补已进目录的 flavor 表**：names/形容词/动词/音标表等一律不碰——它们是单词池，整串反查会
-/// 和目录里的单词条目撞车（姓 Cook / Baker 被当职业名译掉是同一类事故）。wisdoms.txt 尚未进目录，
-/// 进了目录后可加进来。
+/// 和目录里的单词条目撞车（姓 Cook / Baker 被当职业名译掉是同一类事故）。
 /proc/lang_relocalize_early_string_lists()
 	if(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
 		return
-	for(var/list/pool in list(GLOB.fishing_tips, GLOB.junkmail_messages))
+	for(var/list/pool in list(GLOB.fishing_tips, GLOB.junkmail_messages, GLOB.wisdoms))
 		if(!islist(pool))
 			continue
 		for(var/i in 1 to length(pool))
 			pool[i] = lang_reverse_phrase(pool[i])
 
-	// 同理，config 之前 load_strings_file 进 string_cache 的 JSON 也没被翻（实测只有 phobia.json：
-	// GLOBAL_LIST_INIT(phobia_regexes) 在 GLOB 阶段就构建）。补翻缓存后按同一套类别重建正则，
-	// 否则恐惧症触发词只认英文——中文服里玩家说中文，整个恐惧症玩法形同虚设。
-	// 注意：lang_reverse_phrase_tgui 会跳过单词防碰撞，所以单词触发词（"blood"/"alien"）仍是英文，
-	// 只有多词条目会被翻。要完整支持得像 voice_of_god.json 那样单独维护一张触发词表。
+	// 同理，config 之前 load_strings_file 进 string_cache 的 JSON 也没被翻。**但要跳过匹配表**：
+	// phobia.json 是靠字面比对触发的**功能表**，不是展示文本——翻译它等于把英文词替换掉，英文玩家
+	// 说 "chief medical officer" 反而不再触发（实测该表 3 条多词触发词与目录里的 UI 串重名：
+	// chief medical officer / gas mask / holding cell）。tools/i18n/src/flavor.rs 已把 phobia 触发词
+	// 排除在抽取之外，此处与之对齐。中文触发靠 strings/i18n/phobia_words.json **另加**一条无边界
+	// 正则实现（见 lang_phobia_words），新增而非替换。
 	for(var/filepath in GLOB.string_cache)
+		if(filepath in GLOB.i18n_match_table_files)
+			continue
 		if(islist(GLOB.string_cache[filepath]))
 			lang_reverse_tree(GLOB.string_cache[filepath])
-	if(islist(GLOB.phobia_regexes))
-		for(var/category in GLOB.phobia_regexes)
-			GLOB.phobia_regexes[category] = construct_phobia_regex(category)
 
 /// 是否启用聊天层 AC 子串兜底（默认关）。config I18N_CHAT_FALLBACK 控制（见 config_entries.dm + fallback.dm）。
 GLOBAL_VAR_INIT(i18n_chat_fallback, FALSE)
