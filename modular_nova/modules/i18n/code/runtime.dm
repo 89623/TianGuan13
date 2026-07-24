@@ -300,6 +300,28 @@ GLOBAL_VAR_INIT(i18n_vog_triggers_loaded, FALSE)
 	var/list/table = lang_vog_triggers()
 	return table[pattern] || pattern
 
+/// 护甲防护等级 examine（list_armor 输出）的显示译名（英文名 -> 译名）。
+/// 顶层 armor_classes.json，**不进全局反查表**：伤害类型名（ACID/BIOHAZARD/FIRE…）是单词类、且
+/// 与 DISEASE_SEVERITY_BIOHAZARD 等 switch 标识符碰撞，进反查表会误伤。这里按 locale 单独读，
+/// 只在 clothing/mecha 的 armor readout 落地点用。同 lang_vog_triggers。
+GLOBAL_LIST_EMPTY(i18n_armor_classes)
+GLOBAL_VAR_INIT(i18n_armor_classes_loaded, FALSE)
+/proc/lang_armor_class(name)
+	if(!istext(name))
+		return name
+	if(!GLOB.i18n_armor_classes_loaded)
+		GLOB.i18n_armor_classes_loaded = TRUE
+		var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+		if(locale != DEFAULT_UI_LOCALE)
+			var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/armor_classes.json"
+			if(fexists(path))
+				var/list/decoded = json_decode(file2text(path))
+				var/list/for_locale = islist(decoded) ? decoded[locale] : null
+				if(islist(for_locale))
+					for(var/class_name in for_locale)
+						GLOB.i18n_armor_classes[class_name] = for_locale[class_name]
+	return GLOB.i18n_armor_classes[name] || name
+
 /// 状态栏页签名/分组标题的显示译名表（英文标识符 -> 译名），发给 statbrowser.js 只用于渲染文字。
 /// 同 lang_vog_triggers 放顶层 JSON：键是 Admin/Game/Object 这类裸单词，进全局反查表会造成标识符碰撞。
 /// **页签名本身绝不本地化**——它是 button.id、SendTabToByond 回传值、statpanel.dm `stat_tab ==` 比较的

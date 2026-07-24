@@ -414,9 +414,9 @@
 			if(!rating)
 				continue
 			if(!added_damage_header)
-				readout += "<b><u>ARMOR (I-X)</u></b>"
+				readout += "<b><u>[lang_armor_class("ARMOR (I-X)")]</u></b>" // NOVA EDIT - i18n
 				added_damage_header = TRUE
-			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
+			readout += "[lang_armor_class(armor_to_protection_name(damage_key))] [armor_to_protection_class(rating)]" // NOVA EDIT - i18n
 
 		var/added_durability_header = FALSE
 		for(var/durability_key in ARMOR_LIST_DURABILITY)
@@ -424,9 +424,9 @@
 			if(!rating)
 				continue
 			if(!added_durability_header)
-				readout += "<b><u>DURABILITY (I-X)</u></b>"
+				readout += "<b><u>[lang_armor_class("DURABILITY (I-X)")]</u></b>" // NOVA EDIT - i18n
 				added_durability_header = TRUE
-			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
+			readout += "[lang_armor_class(armor_to_protection_name(durability_key))] [armor_to_protection_class(rating)]" // NOVA EDIT - i18n
 
 		if((flags_cover & HEADCOVERSMOUTH) || (flags_cover & PEPPERPROOF))
 			var/list/things_blocked = list()
@@ -471,7 +471,7 @@
 		if(!length(readout))
 			readout += LANG("obj.baca72d2", null)
 
-		var/formatted_readout = span_notice("<b>PROTECTION CLASSES</b><hr>[jointext(readout, "\n")]")
+		var/formatted_readout = span_notice("<b>[lang_armor_class("PROTECTION CLASSES")]</b><hr>[jointext(readout, "\n")]") // NOVA EDIT - i18n
 		to_chat(usr, boxed_message(formatted_readout))
 
 /**

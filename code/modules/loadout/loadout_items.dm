@@ -358,20 +358,23 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	if(required_holiday)
 		displayed_text[FA_ICON_CALENDAR_CHECK] = "Only available: [required_holiday]"
 	// NOVA EDIT ADDITION START
+	// i18n: 这些 tooltip 是服务端拼接串（"标签: 名字, 名字"），P1 反查匹配不到整串。从译好的部件拼：
+	// 标签整串反查（见目录），职位/物种名逐项反查（走 .Copy() 防止改到 restricted_roles 等比较用的原表）；
+	// ckey 是账号名不译。locale==en 时全部 no-op。
 	if(ckeywhitelist)
-		displayed_text[FA_ICON_HEART] = "CKEY Whitelist: [jointext(ckeywhitelist, ", ")]"
+		displayed_text[FA_ICON_HEART] = "[lang_reverse_text("CKEY Whitelist:")] [jointext(ckeywhitelist, ", ")]"
 	if(restricted_roles)
-		displayed_text[FA_ICON_BRIEFCASE] = "Job Whitelist: [jointext(restricted_roles, ", ")]"
+		displayed_text[FA_ICON_BRIEFCASE] = "[lang_reverse_text("Job Whitelist:")] [jointext(lang_reverse_string_list(restricted_roles.Copy()), ", ")]"
 	if(blacklisted_roles)
-		displayed_text[FA_ICON_LOCK] = "Job Blacklist: [jointext(blacklisted_roles, ", ")]"
+		displayed_text[FA_ICON_LOCK] = "[lang_reverse_text("Job Blacklist:")] [jointext(lang_reverse_string_list(blacklisted_roles.Copy()), ", ")]"
 	if(species_whitelist)
-		displayed_text[FA_ICON_SPAGHETTI_MONSTER_FLYING] = "Species Whitelist: [capitalize(jointext(species_whitelist, ", "))]"
+		displayed_text[FA_ICON_SPAGHETTI_MONSTER_FLYING] = "[lang_reverse_text("Species Whitelist:")] [capitalize(jointext(lang_reverse_string_list(species_whitelist.Copy()), ", "))]"
 	if(species_blacklist)
-		displayed_text[FA_ICON_SHRIMP] = "Species Blacklist: [capitalize(jointext(species_blacklist, ", "))]"
+		displayed_text[FA_ICON_SHRIMP] = "[lang_reverse_text("Species Blacklist:")] [capitalize(jointext(lang_reverse_string_list(species_blacklist.Copy()), ", "))]"
 	if(GLOB.nova_star_restrictions && nova_stars_only)
-		displayed_text[FA_ICON_HOURGLASS_HALF] = "Nova Star-Only"
+		displayed_text[FA_ICON_HOURGLASS_HALF] = lang_reverse_text("Nova Star-Only")
 	if(donator_only || ckeywhitelist)
-		displayed_text[FA_ICON_COINS] = "Donator-Only"
+		displayed_text[FA_ICON_COINS] = lang_reverse_text("Donator-Only")
 	// NOVA EDIT ADDITION END
 
 	return displayed_text

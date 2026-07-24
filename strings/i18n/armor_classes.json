@@ -1,0 +1,18 @@
+{
+	"_comment": "护甲防护等级 examine（clothing/mecha 的 list_armor 输出）的显示译名。顶层放置=不被 build_i18n_cache 合并进全局反查表，因为伤害类型名（ACID/BIOHAZARD/FIRE…）单词类且与 DISEASE_SEVERITY_BIOHAZARD 等 switch 标识符碰撞。由 lang_armor_class() 按 locale 单独读，只在 armor readout 落地点用。同 voice_of_god.json 思路。键=armor_to_protection_name() 的返回值 + 两个小标题 + 主标题。",
+	"zh-Hans": {
+		"PROTECTION CLASSES": "防护等级",
+		"ARMOR (I-X)": "护甲 (I-X)",
+		"DURABILITY (I-X)": "耐久 (I-X)",
+		"ACID": "酸蚀",
+		"BIOHAZARD": "生化",
+		"EXPLOSIVE": "爆炸",
+		"BULLET": "子弹",
+		"CONSUMING": "吞噬",
+		"ENERGY": "能量",
+		"FIRE": "火焰",
+		"LASER": "激光",
+		"MELEE": "近战",
+		"WOUNDING": "创伤"
+	}
+}
