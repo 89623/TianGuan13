@@ -12,7 +12,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SILICON
 	exp_granted_type = EXP_TYPE_CREW
-	display_order = JOB_DISPLAY_ORDER_AI
+	display_order = JOB_DISPLAY_ORDER_HUMAN_AI // NOVA EDIT CHANGE - 与 /datum/job/ai 撞号，见该 define - ORIGINAL: display_order = JOB_DISPLAY_ORDER_AI
 	config_tag = "HUMAN_AI"
 
 	outfit = /datum/outfit/job/human_ai

@@ -228,6 +228,11 @@
 // Silicon
 #define JOB_DISPLAY_ORDER_AI 1
 #define JOB_DISPLAY_ORDER_CYBORG 2
+/// NOVA EDIT ADDITION - /datum/job/human_ai 原本复用 JOB_DISPLAY_ORDER_AI，与 /datum/job/ai 撞号 →
+/// display_order_with_department() 相同 → job_display_order 单测失败（上游该测试的注释里也提到
+/// human_ai/ai 同 index、疑为 flaky 来源，并为此改用 joinable_occupations 规避；但「人类 AI」站点特质
+/// 生效那局两者都在 joinable_occupations 里，仍会撞）。给它单列一个序号，排在赛博格之后。
+#define JOB_DISPLAY_ORDER_HUMAN_AI 3 //NOVA EDIT ADDITION
 
 // No department
 #define JOB_DISPLAY_ORDER_ASSISTANT 1

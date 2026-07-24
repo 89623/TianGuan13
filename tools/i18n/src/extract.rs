@@ -356,7 +356,7 @@ pub(crate) fn is_safe_verb_name(s: &str) -> bool {
             s,
             "Open Escape Menu"
                 | "Toggle Stat Panel"
-                | "Fullscreen"
+                | "Toggle Fullscreen"
                 | "Connect to Relay"
                 | "Hotkeys Help"
                 | "Emote Panel"
