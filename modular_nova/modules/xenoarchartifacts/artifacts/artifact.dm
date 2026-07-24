@@ -243,13 +243,13 @@
 				)
 				return ITEM_INTERACT_SUCCESS
 			if(DIG_ROCK)
-				to_chat(user, span_notice("You successfully dig around the item."))
+				to_chat(user, span_notice(LANG("obj.c2a25e9a", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	if (istype(tool, /obj/item/xenoarch/handheld_scanner))
 		var/obj/item/xenoarch/handheld_scanner/scanner = tool
 		if (holomark_adv || (holomark && !istype(scanner, /obj/item/xenoarch/handheld_scanner/advanced)))
-			to_chat(user, span_notice("The boulder was already scanned. You can even see the holomark attached to it."))
+			to_chat(user, span_notice(LANG("obj.eb7905b5", null)))
 			return ITEM_INTERACT_BLOCKING
 		user.visible_message(
 			span_notice(LANG("obj.f18b5d8d", list(user, src, scanner))),
@@ -263,12 +263,12 @@
 		if(get_scanned(scanner.scan_advanced))
 			to_chat(user, (span_notice(LANG("obj.96e6cb60", null))))
 			if(scanner.scan_advanced)
-				to_chat(user, span_notice("Thanks to the advanced scanner the holomark now also displays the exact depth needed!"))
+				to_chat(user, span_notice(LANG("obj.e3c9597e", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(tool.type == /obj/item/xenoarch)
 		if (measured)
-			to_chat(user, span_notice("The boulder was already measured."))
+			to_chat(user, span_notice(LANG("obj.c8acb66e", null)))
 			return ITEM_INTERACT_BLOCKING
 		user.visible_message(
 			span_notice(LANG("obj.caad5216", list(user, src))),
@@ -280,7 +280,7 @@
 			excavation_level += rand(1,5)
 			return ITEM_INTERACT_BLOCKING
 		if(get_measured())
-			to_chat(user, span_notice("You successfully attach a holo measuring tape to the boulder. The boulder will now report its dug depth always!"))
+			to_chat(user, span_notice(LANG("obj.4a3432f4", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/xenoarch/brush))
@@ -302,20 +302,20 @@
 				)
 				return ITEM_INTERACT_SUCCESS
 			if(BRUSH_UNCOVER)
-				to_chat(user, span_notice("You successfully brush around the item, fully revealing the item!"))
+				to_chat(user, span_notice(LANG("obj.63b96783", null)))
 				return ITEM_INTERACT_SUCCESS
 			if(BRUSH_NONE)
-				to_chat(user, span_notice("You brush around the item, but it wasn't revealed... hammer some more."))
+				to_chat(user, span_notice(LANG("obj.377f381a", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/xenoarch/handheld_radar))
-		to_chat(user, span_warning("The boulder must be stabilized using a different tool."))
+		to_chat(user, span_warning(LANG("obj.9a40e4e5", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/xenoarch/core_sampler))
 		var/obj/item/xenoarch/core_sampler/sampler = tool
 		if(sampler.used)
-			balloon_alert(user, "sampler already used!")
+			balloon_alert(user, LANG("obj.713d4ec0", null))
 			return ITEM_INTERACT_BLOCKING
 		sampler.sample = src
 		sampler.used = TRUE

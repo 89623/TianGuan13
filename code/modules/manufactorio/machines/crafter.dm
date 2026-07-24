@@ -56,7 +56,7 @@
 		var/obj/as_obj = potential_recipe.result
 		if(ispath(as_obj, /obj) && !ispath(as_obj, /obj/effect) && !initial(as_obj.anchored))
 			available += potential_recipe
-	var/result = tgui_input_list(user, "Recipe", "Select Recipe", available)
+	var/result = tgui_input_list(user, LANG("obj.e1c04ddb", null), LANG("obj.de7575f9", null), available)
 	if(isnull(result) || result == recipe || !user.can_perform_action(src))
 		return ITEM_INTERACT_FAILURE
 	recipe = result

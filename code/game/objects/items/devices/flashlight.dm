@@ -1021,7 +1021,7 @@
 		return SHAME
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
-		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] [user.p_do()]n't have any!"))
+		user.visible_message(span_suicide(LANG("obj.e41e349a", list(user, src, user.p_their(), user.p_they(), user.p_do()))))
 		return SHAME
 	user.visible_message(span_suicide(LANG("obj.8102d3e7", list(user, src, user.p_their(), user.p_theyre()))))
 	burn_loop(get_fuel())

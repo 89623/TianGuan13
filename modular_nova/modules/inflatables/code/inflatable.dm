@@ -198,11 +198,11 @@
 	if(!istype(tool, /obj/item/stack/medical/wrap/sticky_tape))
 		return ..()
 	if(!torn)
-		to_chat(user, span_notice("[src] does not need repairing!"))
+		to_chat(user, span_notice(LANG("obj.01384bcb", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/stack/medical/wrap/sticky_tape/attacking_tape = tool
 	if(attacking_tape.use(TAPE_REQUIRED_TO_FIX, check = TRUE))
-		to_chat(user, span_danger("There is not enough of [attacking_tape]! You need at least [TAPE_REQUIRED_TO_FIX] pieces!"))
+		to_chat(user, span_danger(LANG("obj.c57a68dd", list(attacking_tape, TAPE_REQUIRED_TO_FIX))))
 		return ITEM_INTERACT_BLOCKING
 	if(!do_after(user, 2 SECONDS, src))
 		return ITEM_INTERACT_BLOCKING

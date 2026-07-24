@@ -264,7 +264,7 @@
 		if(!clear_tile(user))
 			return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You start placing the window..."))
+		to_chat(user, span_notice(LANG("obj.1c659472", null)))
 		if(!do_after(user, 2 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
 

@@ -94,11 +94,11 @@
 /obj/structure/millstone/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/storage/bag))
 		if(length(contents) >= maximum_contained_items)
-			balloon_alert(user, "already full")
+			balloon_alert(user, LANG("obj.e3949c3a", null))
 			return ITEM_INTERACT_SUCCESS
 
 		if(!length(tool.contents))
-			balloon_alert(user, "nothing to transfer!")
+			balloon_alert(user, LANG("obj.7e39eb37", null))
 			return ITEM_INTERACT_SUCCESS
 
 		for(var/obj/item/food/grown/target_item in tool.contents)
@@ -116,15 +116,15 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(!(istype(tool, /obj/item/food/grown) || istype(tool, /obj/item/grown)))
-		balloon_alert(user, "can only mill plants")
+		balloon_alert(user, LANG("obj.24f71cd2", null))
 		return ..()
 
 	if(length(contents) >= maximum_contained_items)
-		balloon_alert(user, "already full")
+		balloon_alert(user, LANG("obj.e3949c3a", null))
 		return ITEM_INTERACT_BLOCKING
 
 	tool.forceMove(src)
-	balloon_alert(user, "transferred [tool]")
+	balloon_alert(user, LANG("obj.5567b4ed", list(tool)))
 	return ITEM_INTERACT_SUCCESS
 
 /// Takes the content's seeds and spits them out on the turf, as well as grinding whatever the contents may be

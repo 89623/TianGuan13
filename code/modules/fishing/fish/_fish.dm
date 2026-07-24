@@ -553,19 +553,19 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		. += span_boldnicegreen(LANG("obj.82afe7e1", list(catcher_name, catch_date)))
 
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
-		. += span_notice("[p_Theyre()] [size] cm long.")
-		. += span_notice("[p_They()] weigh[p_s()] [weight] [span_tooltip("the standard unit of measurement for space age fish", "kiloclam")].")
+		. += span_notice(LANG("obj.c3aed59e", list(p_Theyre(), size)))
+		. += span_notice(LANG("obj.c066a1a1", list(p_They(), p_s(), weight, span_tooltip(lang_reverse_text("the standard unit of measurement for space age fish"), lang_reverse_text("kiloclam"))))) // NOVA EDIT - I18N: span 包裹的单位词反查（"kiloclam"→千蛤币 在目录，但 span 壳让整 arg 反查 miss，故在此显式反查内层）
 
 		if(HAS_TRAIT(src, TRAIT_FISH_GENEGUNNED))
-			. += span_warning("[p_Theyve()] been edited by a fish genegun. [p_They()]'ll die if edited again.")
+			. += span_warning(LANG("obj.326136be", list(p_Theyve(), p_They())))
 
 	. += get_health_warnings(user, always_deep = FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
-		. += span_smallnoticeital("[p_They()] can be used as a fishing bait.")
+		. += span_smallnoticeital(LANG("obj.f2d52c46", list(p_They())))
 
 	if(bites_amount)
-		. += span_warning("[p_Theyve()] been bitten by someone.")
+		. += span_warning(LANG("obj.b363ab08", list(p_Theyve())))
 
 /obj/item/fish/proc/get_health_warnings(mob/user, always_deep = FALSE)
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)
@@ -1115,7 +1115,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		balloon_alert(user, LANG("obj.1c85036c", null))
 		return
 	if(status != FISH_DEAD)
-		balloon_alert(user, "[p_theyre()] not dead!")
+		balloon_alert(user, LANG("obj.93b69f17", list(p_theyre())))
 		return
 	set_status(FISH_ALIVE)
 	injector.expend(src, user)
@@ -1581,7 +1581,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		if(in_aquarium)
 			to_chat(user, span_warning(LANG("obj.d202f24c", list(src))))
 		else
-			to_chat(user, span_warning("You try to pet [src] but [p_they()] squirm[p_s()] away!"))
+			to_chat(user, span_warning(LANG("obj.aa41c017", list(src, p_they(), p_s()))))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && GET_FISH_ELECTROGENESIS(src) > 15 MEGA JOULES)
 		user.electrocute_act(5, src) //was it all worth it?

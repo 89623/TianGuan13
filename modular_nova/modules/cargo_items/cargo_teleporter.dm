@@ -141,7 +141,7 @@ GLOBAL_LIST_EMPTY(cargo_marks)
 	if(!istype(tool, /obj/item/cargo_teleporter))
 		return ..()
 
-	to_chat(user, span_notice("You remove [src] using [tool]."))
+	to_chat(user, span_notice(LANG("obj.2258075e", list(src, tool))))
 	playsound(src, 'sound/machines/click.ogg', 50)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

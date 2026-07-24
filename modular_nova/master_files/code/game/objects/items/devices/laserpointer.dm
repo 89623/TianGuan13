@@ -27,7 +27,7 @@
 /obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stock_parts/micro_laser) || istype(tool, /obj/item/stack/ore/bluespace_crystal))
 		if(!upgradable)
-			balloon_alert(user, "can't upgrade integrated parts!")
+			balloon_alert(user, LANG("obj.e0b58e88", null))
 			return ITEM_INTERACT_BLOCKING
 	return ..()
 

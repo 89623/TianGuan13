@@ -117,7 +117,7 @@
 
 	var/obj/item/conveyor_sorter/cs_item = tool
 	sorting_list = cs_item.current_sort
-	visible_message("[src] pings, updating its sorting list!")
+	visible_message(LANG("obj.2c0baf57", list(src)))
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 	return ITEM_INTERACT_SUCCESS
 

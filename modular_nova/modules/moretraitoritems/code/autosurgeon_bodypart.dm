@@ -53,15 +53,15 @@
 /obj/item/autosurgeon/bodypart/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, bodypart_type))
 		if(storedbodypart)
-			to_chat(user, span_alert("[src] already has an implant stored."))
+			to_chat(user, span_alert(LANG("obj.e7325773", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		else if(!uses)
-			to_chat(user, span_alert("[src] has already been used up."))
+			to_chat(user, span_alert(LANG("obj.a5f6a387", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		storedbodypart = tool
-		to_chat(user, span_notice("You insert the [tool] into [src]."))
+		to_chat(user, span_notice(LANG("obj.efd435e6", list(tool, src))))
 		return ITEM_INTERACT_SUCCESS
 	else
 		return ..()

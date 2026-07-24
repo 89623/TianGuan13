@@ -110,7 +110,7 @@
 			set_name(user.real_name)
 			badge_string = id_card.assignment
 			return ITEM_INTERACT_SUCCESS
-		to_chat(user, "[src] rejects your insufficient access rights.")
+		to_chat(user, LANG("obj.9de51e4b", list(src)))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 

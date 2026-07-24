@@ -98,12 +98,12 @@
 			if(!tool.tool_start_check(user, amount=0))
 				return ITEM_INTERACT_BLOCKING
 
-			to_chat(user, span_notice("You begin repairing [src]..."))
+			to_chat(user, span_notice(LANG("obj.93449ef4", list(src))))
 			if(tool.use_tool(src, user, 40, volume=50))
 				atom_integrity = max_integrity
 				to_chat(user, span_notice(LANG("obj.e94d13eb", list(src))))
 		else
-			to_chat(user, span_warning("[src] is already in good condition!"))
+			to_chat(user, span_warning(LANG("obj.7f6370b2", list(src))))
 		return ITEM_INTERACT_SUCCESS
 
 	return ..()

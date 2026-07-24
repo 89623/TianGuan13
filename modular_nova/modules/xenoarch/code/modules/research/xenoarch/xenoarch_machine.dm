@@ -88,12 +88,12 @@
 		for(var/obj/strange_rocks in tool.contents)
 			strange_rocks.forceMove(storage_unit)
 
-		balloon_alert(user, "rocks inserted!")
+		balloon_alert(user, LANG("obj.a8aaa85e", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(is_type_in_list(tool, accepted_types))
 		tool.forceMove(storage_unit)
-		balloon_alert(user, "item inserted!")
+		balloon_alert(user, LANG("obj.cfd83b9e", null))
 		return ITEM_INTERACT_SUCCESS
 
 	return ..()
@@ -169,16 +169,16 @@
 		for(var/obj/item/xenoarch/strange_rock/chosen_rocks in tool.contents)
 			chosen_rocks.get_scanned(TRUE)
 
-		balloon_alert(user, "scan complete!")
+		balloon_alert(user, LANG("obj.d4915572", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/xenoarch/strange_rock))
 		var/obj/item/xenoarch/strange_rock/chosen_rock = tool
 		if(chosen_rock.get_scanned(TRUE))
-			balloon_alert(user, "scan complete!")
+			balloon_alert(user, LANG("obj.d4915572", null))
 			return ITEM_INTERACT_SUCCESS
 
-		to_chat(user, span_warning("[chosen_rock] was unable to be scanned, perhaps it was already scanned?"))
+		to_chat(user, span_warning(LANG("obj.d83c8e94", list(chosen_rock))))
 		return ITEM_INTERACT_BLOCKING
 
 	return ..()
@@ -197,12 +197,12 @@
 	if(istype(tool, /obj/item/storage/bag/xenoarch))
 		for(var/obj/strange_rocks in tool.contents)
 			strange_rocks.forceMove(storage_unit)
-		balloon_alert(user, "rocks inserted!")
+		balloon_alert(user, LANG("obj.a8aaa85e", null))
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/xenoarch/strange_rock))
 		tool.forceMove(storage_unit)
-		balloon_alert(user, "rock inserted!")
+		balloon_alert(user, LANG("obj.f107278f", null))
 		return ITEM_INTERACT_SUCCESS
 
 	return ITEM_INTERACT_BLOCKING

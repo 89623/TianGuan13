@@ -740,7 +740,7 @@
 /obj/machinery/suit_storage_unit/proc/try_insert_item(mob/living/user, obj/item/to_insert)
 	if(istype(to_insert, /obj/item/clothing/suit))
 		if(suit)
-			to_chat(user, span_warning("The unit already contains a suit!"))
+			to_chat(user, span_warning(LANG("obj.e5454a91", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(to_insert, src))
@@ -749,7 +749,7 @@
 		suit = to_insert
 	else if(istype(to_insert, /obj/item/clothing/head))
 		if(helmet)
-			to_chat(user, span_warning("The unit already contains a helmet!"))
+			to_chat(user, span_warning(LANG("obj.9382d344", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(to_insert, src))
@@ -758,7 +758,7 @@
 		helmet = to_insert
 	else if(istype(to_insert, /obj/item/clothing/mask))
 		if(mask)
-			to_chat(user, span_warning("The unit already contains a mask!"))
+			to_chat(user, span_warning(LANG("obj.20b41724", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(to_insert, src))
@@ -767,7 +767,7 @@
 		mask = to_insert
 	else if(istype(to_insert, /obj/item/storage/backpack) || istype(to_insert, /obj/item/mod/control))
 		if(mod)
-			to_chat(user, span_warning("The unit already contains a backpack or MOD!"))
+			to_chat(user, span_warning(LANG("obj.33ff488b", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(to_insert, src))
@@ -776,13 +776,13 @@
 		mod = to_insert
 	else
 		if(storage)
-			to_chat(user, span_warning("The auxiliary storage compartment is full!"))
+			to_chat(user, span_warning(LANG("obj.2898b419", null)))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(to_insert, src))
 			return ITEM_INTERACT_BLOCKING
 
 		storage = to_insert
-	visible_message(span_notice("[user] inserts [to_insert] into [src]"), span_notice("You load [to_insert] into [src]."))
+	visible_message(span_notice(LANG("obj.69e210b8", list(user, to_insert, src))), span_notice(LANG("obj.91f19664", list(to_insert, src))))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS

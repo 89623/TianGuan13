@@ -1,19 +1,19 @@
 /obj/structure/sink/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(busy)
-		to_chat(user, span_warning("Someone's already washing here!"))
+		to_chat(user, span_warning(LANG("obj.d5ba1f8c", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/towel))
 		if(reagents.total_volume <= 0)
-			to_chat(user, span_notice("\The [src] is dry."))
+			to_chat(user, span_notice(LANG("obj.9043fdab", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		busy = TRUE
-		user.visible_message(span_notice("[user] starts washing [tool] in [src]."), span_notice("You start washing [tool] in [src]."))
+		user.visible_message(span_notice(LANG("obj.34cb5eb0", list(user, tool, src))), span_notice(LANG("obj.4ee1043e", list(tool, src))))
 
 		if(!do_after(user, 2 SECONDS, src))
 			busy = FALSE
-			to_chat(user, span_warning("You take [tool] away from [src] before you're done washing it."))
+			to_chat(user, span_warning(LANG("obj.1153ba60", list(tool, src))))
 			return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/towel/washed_towel = tool
@@ -25,7 +25,7 @@
 		washed_towel.make_used(user, silent = TRUE)
 
 		START_PROCESSING(SSobj, src)
-		user.visible_message(span_notice("[user] finishes washing [tool] in [src]."), span_notice("You finish washing [washed_towel] in [src], leaving it quite wet."))
+		user.visible_message(span_notice(LANG("obj.dd8be228", list(user, tool, src))), span_notice(LANG("obj.7f3444e9", list(washed_towel, src))))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 
 		busy = FALSE

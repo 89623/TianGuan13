@@ -69,9 +69,9 @@
 
 	var/obj/item/armament_points_card/attacking_card = tool
 	if(!attacking_card.points)
-		to_chat(user, span_warning("No points left on [attacking_card]!"))
+		to_chat(user, span_warning(LANG("obj.c883815d", list(attacking_card))))
 		return ITEM_INTERACT_BLOCKING
-	var/points_to_transfer = clamp(tgui_input_number(user, "How many points do you want to transfer?", "Transfer Points", 1, attacking_card.points, 1), 0, attacking_card.points)
+	var/points_to_transfer = clamp(tgui_input_number(user, LANG("obj.ac788a70", null), LANG("obj.bfebd140", null), 1, attacking_card.points, 1), 0, attacking_card.points)
 
 	if(!points_to_transfer)
 		return ITEM_INTERACT_BLOCKING
@@ -84,5 +84,5 @@
 
 	points += points_to_transfer
 	update_maptext()
-	to_chat(user, span_notice("You transfer [points_to_transfer] onto [src]!"))
+	to_chat(user, span_notice(LANG("obj.a0c2e8f2", list(points_to_transfer, src))))
 	return ITEM_INTERACT_SUCCESS

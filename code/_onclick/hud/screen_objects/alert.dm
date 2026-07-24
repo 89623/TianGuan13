@@ -558,7 +558,7 @@
 	SIGNAL_HANDLER
 
 	if(QDELETED(offer.offered_item))
-		examine_list += span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan[source.p_s()] on pulling it back suddenly...")
+		examine_list += span_warning(LANG("atom.8c862410", list(source, source.p_they(), source.p_s())))
 
 /atom/movable/screen/alert/give/hand
 	screentip_override_text = "Take Hand"

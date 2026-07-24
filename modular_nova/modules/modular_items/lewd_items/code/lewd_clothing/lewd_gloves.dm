@@ -20,7 +20,7 @@
 		return
 	if(!istype(tool, /obj/item/restraints/handcuffs) || !initial(breakouttime))
 		return
-	to_chat(user, span_notice("You reinforce the belts on [src] with [tool]."))
+	to_chat(user, span_notice(LANG("obj.ed25d3f3", list(src, tool))))
 	name = "reinforced [initial(name)]"
 	clothing_flags = DANGEROUS_OBJECT
 	breakouttime = 100 SECONDS

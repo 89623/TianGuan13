@@ -160,7 +160,7 @@
 
 	name = "enhanced razor claws"
 	desc += span_warning("\n\nThese have undergone a special honing process; they'll kill people even faster than they used to.")
-	user.visible_message(span_warning("[user] sharpens [src], [tool] disintegrating!"), span_warning("You sharpen [src], making it much more deadly than before, but [tool] disintegrates under the stress."))
+	user.visible_message(span_warning(LANG("obj.d6b60633", list(user, src, tool))), span_warning(LANG("obj.e31199e5", list(src, tool))))
 	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
 	qdel(tool)
 	return ..()

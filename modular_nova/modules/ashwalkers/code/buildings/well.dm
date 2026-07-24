@@ -94,11 +94,11 @@
 /obj/structure/water_source/brick_well/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/stack/sheet/mineral/wood))
 		if(well_covered)
-			to_chat(user, span_notice("[src] is already covered..."))
+			to_chat(user, span_notice(LANG("obj.0d3178b1", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		if(!tool.use(3))
-			to_chat(user, span_warning("[src] requires three pieces of wood to construct a cover!"))
+			to_chat(user, span_warning(LANG("obj.3c2fca98", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		to_chat(user, span_notice(LANG("obj.96289978", null)))
@@ -111,7 +111,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(!cover_work())
-		to_chat(user, span_warning("[src] needs to have [get_turf(src)] dug out to work!"))
+		to_chat(user, span_warning(LANG("obj.f235da32", list(src, get_turf(src)))))
 		return ITEM_INTERACT_BLOCKING
 
 	return ..()

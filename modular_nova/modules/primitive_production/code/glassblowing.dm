@@ -171,12 +171,12 @@
 
 	if(istype(tool, /obj/item/glassblowing/molten_glass))
 		if(glass)
-			to_chat(user, span_warning("[src] already has some glass on it still!"))
+			to_chat(user, span_warning(LANG("obj.4e2124d1", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 		glass_ref = WEAKREF(tool)
-		to_chat(user, span_notice("[src] picks up [tool]."))
+		to_chat(user, span_notice(LANG("obj.6147eb56", list(src, tool))))
 		icon_state = "blow_pipe_full"
 		return ITEM_INTERACT_SUCCESS
 

@@ -142,7 +142,7 @@
 		)
 		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(tool, src))
-		to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot put it in the machine!"))
+		to_chat(user, span_warning(LANG("obj.0d10df9a", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 	stored_materials.Add(tool)
 	visible_message(

@@ -474,7 +474,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	// Turns out giving anyone who grabs a Hilbert's Hotel a free, complementary warp whistle is probably bad.
 	// Let's gib the last person to have selected a room number in it.
 	if(unforeseen_consequences)
-		to_chat(unforeseen_consequences, span_warning("\The [hotel_item] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart."))
+		to_chat(unforeseen_consequences, span_warning(LANG("area.fee06fd6", list(hotel_item))))
 		unforeseen_consequences.investigate_log("has been gibbed by using [hotel_item] while inside of it.", INVESTIGATE_DEATHS)
 		unforeseen_consequences.gib(DROP_ALL_REMAINS)
 
@@ -487,7 +487,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 	log_game("[hotel_item] entered itself. Moving it to [loc_name(targetturf)].")
 	message_admins("[hotel_item] entered itself. Moving it to [ADMIN_VERBOSEJMP(targetturf)].")
-	hotel_item.visible_message(span_danger("[hotel_item] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!"))
+	hotel_item.visible_message(span_danger(LANG("area.68f5bcee", list(hotel_item))))
 	hotel_item.forceMove(targetturf)
 
 /area/misc/hilbertshotel/Exited(atom/movable/gone, direction)
@@ -595,7 +595,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/hilbertshotel/sphere = interacting_with
 	if(length(sphere.activeRooms))
-		to_chat(user, "Currently Occupied Rooms:")
+		to_chat(user, LANG("obj.cce80a6e", null))
 		for(var/roomnumber in sphere.activeRooms)
 			to_chat(user, roomnumber)
 	else

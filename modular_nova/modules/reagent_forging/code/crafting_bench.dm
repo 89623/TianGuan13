@@ -152,16 +152,16 @@
 
 /obj/structure/reagent_crafting_bench/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(in_use)
-		balloon_alert(user, "already in use")
+		balloon_alert(user, LANG("obj.d4caebbf", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/forging/complete))
 		if(length(contents))
-			balloon_alert(user, "already full")
+			balloon_alert(user, LANG("obj.e3949c3a", null))
 			return ITEM_INTERACT_SUCCESS
 
 		tool.forceMove(src)
-		balloon_alert_to_viewers("placed [tool]")
+		balloon_alert_to_viewers(LANG("obj.56f6de96", list(tool)))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 

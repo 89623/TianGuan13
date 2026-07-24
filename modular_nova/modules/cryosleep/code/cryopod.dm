@@ -600,7 +600,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		if(tucked)
 			to_chat(user, span_warning(LANG("obj.459bd601", list(occupant.name))))
 			return
-		to_chat(user, span_notice("You tuck [occupant.name] into their pod!"))
+		to_chat(user, span_notice(LANG("obj.2819dd72", list(occupant.name))))
 		qdel(tool)
 		user.add_mood_event("tucked", /datum/mood_event/tucked_in, occupant)
 		tucked = TRUE

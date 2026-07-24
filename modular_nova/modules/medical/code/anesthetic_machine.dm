@@ -74,7 +74,7 @@
 		attached_tank.forceMove(loc)
 
 	tool.forceMove(src) // Put new tank in, set it as attached tank
-	visible_message(span_notice("[user] inserts [tool] into [src]."))
+	visible_message(span_notice(LANG("obj.05c6f8ca", list(user, tool, src))))
 	attached_tank = tool
 	update_icon()
 	return ITEM_INTERACT_SUCCESS

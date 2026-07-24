@@ -239,7 +239,7 @@
 			qdel(used_pillow)
 			return ITEM_INTERACT_SUCCESS
 		else
-			to_chat(user, span_notice("You feel that those colours would clash...")) //Too lazy to add multicolor pillow pile sprites.
+			to_chat(user, span_notice(LANG("obj.6bf87a22", null))) //Too lazy to add multicolor pillow pile sprites.
 			return ITEM_INTERACT_BLOCKING
 	else
 		return ..()
@@ -349,7 +349,7 @@
 			qdel(used_pillow)
 			return ITEM_INTERACT_SUCCESS
 		else
-			to_chat(user, span_notice("You feel that those colours would clash...")) //Too lazy to add multicolor pillow pile sprites.
+			to_chat(user, span_notice(LANG("obj.6bf87a22", null))) //Too lazy to add multicolor pillow pile sprites.
 			return ITEM_INTERACT_BLOCKING
 	else
 		return ..()

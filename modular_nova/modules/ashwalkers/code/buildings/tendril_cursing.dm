@@ -17,7 +17,7 @@
 			var/mob/living/living_user = user
 			living_user.adjust_fire_loss(100)
 
-		to_chat(user, span_warning("The knife sears your hand!"))
+		to_chat(user, span_warning(LANG("mob.83922db4", null)))
 		return ITEM_INTERACT_SUCCESS
 
 	return ..()

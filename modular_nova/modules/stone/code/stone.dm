@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(stone_recipes, list (
 	playsound(src,  'sound/effects/pickaxe/picaxe1.ogg', 50, TRUE)
 	balloon_alert_to_viewers(LANG("obj.33079829", null))
 	if(!do_after(user, 5 SECONDS, target = src))
-		balloon_alert_to_viewers("stopped cutting")
+		balloon_alert_to_viewers(LANG("obj.21e88fc0", null))
 		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/mineral/stone(get_turf(src), amount)
 	qdel(src)

@@ -30,7 +30,7 @@
 
 /obj/item/cigarette/pipe/crackpipe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_type_in_list(tool, list(/obj/item/reagent_containers/crack,/obj/item/reagent_containers/blacktar)))
-		to_chat(user, span_notice("You stuff [tool] into [src]."))
+		to_chat(user, span_notice(LANG("obj.16ae1517", list(tool, src))))
 		smoketime = 2 * 60
 		name = "[tool.name]-packed [initial(name)]"
 		if(tool.reagents)
@@ -44,7 +44,7 @@
 				light(lighting_text)
 				return ITEM_INTERACT_SUCCESS
 			else
-				to_chat(user, span_warning("There is nothing to smoke!"))
+				to_chat(user, span_warning(LANG("obj.3556913a", null)))
 				return ITEM_INTERACT_BLOCKING
 		else
 			return ..()

@@ -1221,7 +1221,7 @@
 		return ..()
 
 	if(welding_upgraded)
-		to_chat(user, span_warning("\The [src] was already upgraded to have welding protection!"))
+		to_chat(user, span_warning(LANG("obj.46d52b74", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	qdel(tool)
 	welding_upgraded = TRUE
@@ -1447,7 +1447,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/pen) || istype(tool, /obj/item/toy/crayon))
-		var/choice = input(user, "Select the license type", "License Type Selection") as null|anything in possible_types
+		var/choice = input(user, LANG("obj.8a06c968", null), "License Type Selection") as null|anything in possible_types
 		if(!isnull(choice))
 			name = "license to [choice]"
 			return ITEM_INTERACT_SUCCESS

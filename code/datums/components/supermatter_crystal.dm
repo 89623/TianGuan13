@@ -175,14 +175,14 @@
 			qdel(item)
 			return
 		if(user.combat_mode || !cig.attempt_light(user, item, ""))
-			user.visible_message(span_danger("A hideous sound echoes as [item] is ashed out on contact with \the [atom_source]. That didn't seem like a good idea..."))
+			user.visible_message(span_danger(LANG("datum.2857f974", list(item, atom_source))))
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 150, TRUE)
 			consume(atom_source, item)
 			radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50)
 			return
 		else
-			user.visible_message(span_danger("As [user] lights \their [item] on \the [atom_source], silence fills the room..."),\
-				span_danger("Time seems to slow to a crawl as you touch \the [atom_source] with \the [item].</span>\n<span class='notice'>\The [item] flashes alight with an eerie energy as you nonchalantly lift your hand away from \the [atom_source]. Damn."))
+			user.visible_message(span_danger(LANG("datum.10f6b2ad", list(user, item, atom_source))),\
+				span_danger(LANG("datum.a908c36f", list(atom_source, item, item, atom_source))))
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
 			radiation_pulse(atom_source, max_range = 1, threshold = 0, chance = 100)
 			return
@@ -225,7 +225,7 @@
 	if(isliving(hit_object))
 		hit_object.visible_message(!CONFIG_GET(flag/disable_sm_dusting) ? span_danger("\The [hit_object] slams into \the [atom_source] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!") : span_danger("\The [hit_object] slams into \the [atom_source] inducing a resonance... [hit_object.p_their()] body starts to glow white-hot before the blast hurls [hit_object.p_them()] away!"), // NOVA EDIT CHANGE - ORIGINAL: hit_object.visible_message(span_danger("\The [hit_object] slams into \the [atom_source] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
 			span_userdanger("You slam into \the [atom_source] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
-			span_hear("You hear an unearthly noise as a wave of heat washes over you."))
+			span_hear(LANG("datum.eaf42640", null)))
 	else if(isobj(hit_object) && !iseffect(hit_object))
 		hit_object.visible_message(span_danger(LANG("datum.7a5867f0", list(hit_object, atom_source))), null,
 			span_hear(LANG("datum.e2bdcbdd", null)))

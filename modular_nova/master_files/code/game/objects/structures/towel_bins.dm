@@ -73,16 +73,16 @@
 			return ITEM_INTERACT_BLOCKING
 		LAZYADD(towels, tool)
 		amount++
-		to_chat(user, span_notice("You put [tool] in [src]."))
+		to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	else if(amount && !hidden && tool.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.transferItemToLoc(tool, src))
-			to_chat(user, span_warning("[tool] is stuck to your hand, you cannot hide it among the sheets!"))
+			to_chat(user, span_warning(LANG("obj.5bd9a4b3", list(tool))))
 			return ITEM_INTERACT_BLOCKING
 		hidden = tool
-		to_chat(user, span_notice("You hide [tool] among the sheets."))
+		to_chat(user, span_notice(LANG("obj.98e101de", list(tool))))
 		return ITEM_INTERACT_SUCCESS
 
 	return ITEM_INTERACT_BLOCKING

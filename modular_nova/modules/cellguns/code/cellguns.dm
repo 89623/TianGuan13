@@ -29,7 +29,7 @@
 		return ..()
 
 	if(length(installedcells) >= maxcells) //Prevents the user from loading any cells past the maximum cell allowance
-		to_chat(user, span_warning("[src] is full. Take a cell out to make room!"))
+		to_chat(user, span_warning(LANG("obj.aa9f4384", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/weaponcell/cell = tool
@@ -37,7 +37,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	playsound(loc, 'sound/machines/click.ogg', 50, 1)
-	to_chat(user, span_notice("You install [cell]."))
+	to_chat(user, span_notice(LANG("obj.b23d1821", list(cell))))
 	ammo_type += new cell.ammo_type(src)
 	installedcells += cell
 	return ITEM_INTERACT_SUCCESS

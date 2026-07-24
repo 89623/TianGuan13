@@ -429,7 +429,7 @@
 			return attempt_barricade_upgrade(tool, user, modifiers)
 
 		if(metal_sheets.get_amount() < repair_amount)
-			to_chat(user, span_warning("You need at least two sheets of metal to repair [src]!"))
+			to_chat(user, span_warning(LANG("obj.19ab8299", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 		visible_message(span_notice(LANG("obj.0c406e10", list(user, src))))
@@ -441,20 +441,20 @@
 			return ITEM_INTERACT_BLOCKING
 
 		repair_damage(max_integrity * 0.3)
-		visible_message(span_notice("[user] repairs [src]."))
+		visible_message(span_notice(LANG("obj.639f2d4f", list(user, src))))
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/structure/deployable_barricade/metal/proc/attempt_barricade_upgrade(obj/item/stack/sheet/iron/metal_sheets, mob/user, modifiers)
 	if(barricade_upgrade_type)
-		to_chat(user, span_warning("[src] is already upgraded."))
+		to_chat(user, span_warning(LANG("obj.d6f59b38", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(get_integrity() < max_integrity)
-		to_chat(user, span_warning("You cannot upgrade [src] until it has been repaired!"))
+		to_chat(user, span_warning(LANG("obj.a0c57669", list(src))))
 		return ITEM_INTERACT_BLOCKING
 
 	if(metal_sheets.get_amount() < BARRICADE_UPGRADE_REQUIRED_SHEETS)
-		to_chat(user, span_warning("You need at least <b>[BARRICADE_UPGRADE_REQUIRED_SHEETS]</b> to upgrade [src]!"))
+		to_chat(user, span_warning(LANG("obj.5f195636", list(BARRICADE_UPGRADE_REQUIRED_SHEETS, src))))
 		return ITEM_INTERACT_BLOCKING
 
 	var/static/list/cade_types = list(BARRICADE_TYPE_BOMB = image(icon = 'modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "explosive_obj"), BARRICADE_TYPE_MELEE = image(icon = 'modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "brute_obj"), BARRICADE_TYPE_ACID = image(icon = 'modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "burn_obj"))

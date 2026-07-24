@@ -9,12 +9,12 @@
 
 /obj/item/rna_extractor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if((istype(tool, /obj/item/rna_vial) && loaded_vial != null))
-		to_chat(user, span_warning("[src] can not hold more than one vial!"))
+		to_chat(user, span_warning(LANG("obj.9476963a", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/rna_vial))
 		if(!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You insert [tool] into [src]!"))
+		to_chat(user, span_notice(LANG("obj.dbb74bc7", list(tool, src))))
 		loaded_vial = tool
 		playsound(loc, 'sound/items/weapons/autoguninsert.ogg', 35, 1)
 		update_appearance()
@@ -177,7 +177,7 @@
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 	loaded_item = tool
-	to_chat(user, span_notice("You insert [tool] to into [src] reciprocal."))
+	to_chat(user, span_notice(LANG("obj.b5230998", list(tool, src))))
 	flick("h_lathe_load", src)
 	update_appearance()
 	playsound(loc, 'sound/items/weapons/autoguninsert.ogg', 35, 1)

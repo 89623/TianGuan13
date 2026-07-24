@@ -126,13 +126,13 @@
 		return ..()
 
 	if(!anchored)
-		balloon_alert(user, "needs to be deployed!")
+		balloon_alert(user, LANG("obj.84ecf325", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/permanent_portal_creator/portal_maker = tool
 	portal_maker.linked_anchor = WEAKREF(src)
 
-	balloon_alert(user, "linking successful!")
+	balloon_alert(user, LANG("obj.0fdcdc61", null))
 	return ITEM_INTERACT_SUCCESS
 
 

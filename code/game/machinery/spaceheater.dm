@@ -445,7 +445,7 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/proc/try_insert_cell(mob/living/user, obj/item/stock_parts/power_store/cell/battery, silent = FALSE)
 	if(cell)
-		to_chat(user, span_warning("There is already a power cell inside!"))
+		to_chat(user, span_warning(LANG("obj.3606d540", null)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(battery, src))
@@ -455,7 +455,7 @@
 	battery.add_fingerprint(user)
 
 	if(!silent)
-		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
+		user.visible_message(span_notice(LANG("obj.e75ad685", list(user, src))), span_notice(LANG("obj.416c5a90", list(src))))
 	SStgui.update_uis(src)
 	return ITEM_INTERACT_SUCCESS
 

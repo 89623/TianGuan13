@@ -39,7 +39,7 @@
 /obj/item/reagent_containers/vapecart/empty/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (istype(tool, /obj/item/pen) || istype(tool, /obj/item/toy/crayon))
 		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on the label of the vape cart!"))
+			to_chat(user, span_notice(LANG("obj.1035c5d6", null)))
 			return ITEM_INTERACT_BLOCKING
 		var/new_title = stripped_input(user, "What would you like to label the vape cart?", name, null, 53)
 		if(!user.can_perform_action(src))

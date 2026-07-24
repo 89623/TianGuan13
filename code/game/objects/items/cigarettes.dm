@@ -149,7 +149,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 
 	if(cig.lit)
-		to_chat(user, span_warning("[cig] is already lit!"))
+		to_chat(user, span_warning(LANG("obj.d3ebc52c", list(cig))))
 		return
 
 	cig.attempt_light(user, src, target_mob == user ? null : span_notice("[user] holds [src] out for [target_mob], and lights [cig]."))
@@ -646,7 +646,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return ..()
 
 	if(cig.lit)
-		to_chat(user, span_warning("\The [cig] is already lit!"))
+		to_chat(user, span_warning(LANG("obj.79fd2c4b", list(cig))))
 		return
 
 	cig.attempt_light(user, src, fire_guy == user ? null : span_notice("[user] holds \the [src] out for [fire_guy], and lights [fire_guy.p_their()] [cig.name]."))

@@ -46,14 +46,14 @@
 				update_crystal()
 				return ITEM_INTERACT_SUCCESS
 		else
-			to_chat(user, span_red("There is currently no wiring on the [src]."))
+			to_chat(user, span_red(LANG("obj.c5749323", list(src))))
 			return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/stack/cable_coil)) // If we want to put the wiring
 		if(!wired)
 			var/obj/item/stack/cable_coil/our_cable_coil = tool
 			if(!our_cable_coil.use(2))
-				to_chat(user, span_red("There's not enough wire to finish the task."))
+				to_chat(user, span_red(LANG("obj.508c5cd0", null)))
 				return ITEM_INTERACT_BLOCKING
 			user.visible_message(
 				span_notice(LANG("obj.d94d19f6", list(user, src))),
@@ -69,7 +69,7 @@
 				return ITEM_INTERACT_SUCCESS
 			return ITEM_INTERACT_BLOCKING
 		else
-			balloon_alert(user, "already wired!")
+			balloon_alert(user, LANG("obj.9a6e26bd", null))
 			return ITEM_INTERACT_BLOCKING
 	return ..()
 

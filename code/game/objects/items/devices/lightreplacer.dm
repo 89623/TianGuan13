@@ -157,15 +157,15 @@
 
 /obj/item/lightreplacer/proc/attempt_insert_shard(mob/living/user, obj/item/shard/tool)
 	if(tool.type != /obj/item/shard) //we don't want to insert plasma, titanium or other types of shards
-		user.balloon_alert(user, "too impure!")
+		user.balloon_alert(user, LANG("obj.fb0cdc59", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!user.temporarilyRemoveItemFromInventory(tool))
-		user.balloon_alert(user, "stuck in your hand!")
+		user.balloon_alert(user, LANG("obj.ca570e32", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!add_shard(user)) //add_shard will display a message if it created a bulb from the shard so only display message when that does not happen
-		user.balloon_alert(user, "shard inserted")
+		user.balloon_alert(user, LANG("obj.033309e0", null))
 	qdel(tool)
 	return ITEM_INTERACT_SUCCESS
 

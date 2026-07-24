@@ -87,7 +87,7 @@
 	climbable = TRUE
 
 /obj/structure/railing/stone/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	to_chat(user, span_notice("You frown as you realise this wall is in fact made of stone, and cannot be uprooted from the ground and dragged along with a mere wrench."))
+	to_chat(user, span_notice(LANG("obj.5650ee36", null)))
 	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/railing/stone/left
@@ -123,6 +123,6 @@
 
 /obj/machinery/button/dungeon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, span_notice("You prod around the rim of the bricks and try and jam it in. Looks like it isn't coming out this way."))
+		to_chat(user, span_notice(LANG("obj.eaa7cee8", null)))
 	return ITEM_INTERACT_BLOCKING
 // Let's not open the maintenance panel of a stone brick.

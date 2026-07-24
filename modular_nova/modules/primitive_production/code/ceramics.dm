@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(clay_recipes, list ( \
 			return ITEM_INTERACT_BLOCKING
 
 		color = crayon_item.paint_color
-		to_chat(user, span_notice("You color [src] with [crayon_item]..."))
+		to_chat(user, span_notice(LANG("obj.e3dba932", list(src, crayon_item))))
 		return ITEM_INTERACT_SUCCESS
 
 	return ..()

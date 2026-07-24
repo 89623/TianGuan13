@@ -7,19 +7,19 @@
 		return ..()
 
 	if(!user.mind.has_antag_datum(/datum/antagonist/ashwalker))
-		balloon_alert(user, "must be an ashwalker!")
+		balloon_alert(user, LANG("obj.e7b0b1c6", null))
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/item/organ/monster_core/regenerative_core/regen_core = tool
 
 	if(!regen_core.decay_timer)
-		balloon_alert(user, "organ already revitalized!")
+		balloon_alert(user, LANG("obj.c0ed1f0f", null))
 		return ITEM_INTERACT_BLOCKING
 	if(!regen_core.preserve())
-		balloon_alert(user, "organ decayed!")
+		balloon_alert(user, LANG("obj.614a4bdc", null))
 		return ITEM_INTERACT_BLOCKING
 	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
-	balloon_alert_to_viewers("[src] revitalizes [regen_core]!")
+	balloon_alert_to_viewers(LANG("obj.0e03b2be", list(src, regen_core)))
 	return ITEM_INTERACT_SUCCESS
 
 //this is for logging the destruction of the tendril

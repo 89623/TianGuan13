@@ -15,17 +15,17 @@
 	if(istype(tool, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/ore_item = tool
 		if(ore_item.points == 0)
-			user.balloon_alert(user, "[ore_item] is worthless!")
+			user.balloon_alert(user, LANG("obj.80034cf0", list(ore_item)))
 			return ITEM_INTERACT_BLOCKING
 
 		while(ore_item.amount >= 5)
 			var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/primitive, SKILL_SPEED_MODIFIER)
 			if(!do_after(user, 2 SECONDS * skill_modifier, src))
-				user.balloon_alert(user, "have to stand still!")
+				user.balloon_alert(user, LANG("obj.e11afae0", null))
 				return ITEM_INTERACT_BLOCKING
 
 			if(!ore_item.use(5))
-				user.balloon_alert(user, "unable to use five of [ore_item]!")
+				user.balloon_alert(user, LANG("obj.04cf9a5e", list(ore_item)))
 				return ITEM_INTERACT_BLOCKING
 
 			if(prob(80 * skill_modifier)) //start at 80, go down to 40 at legendary skill

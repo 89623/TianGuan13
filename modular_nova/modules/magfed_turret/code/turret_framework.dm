@@ -810,30 +810,30 @@
 	if(isnull(auto_loader))
 		mag_box = null
 	if(tool.type in auto_loader.atom_storage.can_hold)
-		balloon_alert(user, "attempting to load...")
+		balloon_alert(user, LANG("obj.c55c621b", null))
 		if(!do_after(user, 1 SECONDS, src))
-			balloon_alert(user, "failed to load!")
+			balloon_alert(user, LANG("obj.57787c73", null))
 		insert_mag(tool, user)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/card/id))
 		if(!in_faction(user))
-			balloon_alert(user, "access denied!")
+			balloon_alert(user, LANG("obj.1bd3ceeb", null))
 			return ITEM_INTERACT_BLOCKING
 
 	if(in_faction(user))
 		if(istype(tool, /obj/item/target_designator))
 			var/obj/item/target_designator/controller = tool
 			if(length(controller.linked_turrets) >= controller.turret_limit)
-				balloon_alert(user, "turret limit reached!")
+				balloon_alert(user, LANG("obj.959a0132", null))
 				return ITEM_INTERACT_BLOCKING
 			if(linkage) //should help both preventing dual-controlling AND double-linking causing odd issues with ally system
-				balloon_alert(user, "turret already linked!")
+				balloon_alert(user, LANG("obj.966002f4", null))
 				return ITEM_INTERACT_BLOCKING
 			linkage = WEAKREF(controller)
 			controller.linked_turrets += src
 			RegisterSignal(controller, COMSIG_QDELETING, PROC_REF(on_qdeleted), TRUE) //True otherwise it causes a runtime for overwriting parent qdeling. Dont know where to go elsewise.
-			balloon_alert(user, "turret linked!")
+			balloon_alert(user, LANG("obj.18851703", null))
 			return ITEM_INTERACT_SUCCESS
 
 	return ITEM_INTERACT_BLOCKING

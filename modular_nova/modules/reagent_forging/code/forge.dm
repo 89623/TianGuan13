@@ -431,8 +431,8 @@
 
 	if(in_use) // If the forge is currently in use by someone (or there is a tray in it) then we cannot use it
 		if(used_tray)
-			balloon_alert(user, "remove [used_tray] first")
-		balloon_alert(user, "forge busy")
+			balloon_alert(user, LANG("obj.b1553344", list(used_tray)))
+		balloon_alert(user, LANG("obj.e2c6aa1f", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/stack/sheet/mineral/wood)) // Wood is a weak fuel, and will only get the forge up to 50 temperature

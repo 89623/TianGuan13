@@ -16,7 +16,7 @@
 	RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	if (user.hud_used)
 		on_hud_created(user)
-	to_chat(user, span_notice("You got a new perk: [src.name]."))
+	to_chat(user, span_notice(LANG("datum.ea53b339", list(src.name))))
 	log_purchase(user.key)
 	return TRUE
 

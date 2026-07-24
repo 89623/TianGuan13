@@ -12,7 +12,7 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/variant/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/borg/upgrade/modkit/chassis_mod))
-		to_chat(user, span_notice("This weapon doesn't have variant appearances."))
+		to_chat(user, span_notice(LANG("obj.b46cd165", null)))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
@@ -24,7 +24,7 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/variant/nomod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/borg/upgrade/modkit))
-		to_chat(user, span_notice("This weapon cannot have modifications applied."))
+		to_chat(user, span_notice(LANG("obj.ca399589", null)))
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 

@@ -113,15 +113,15 @@
 /obj/structure/trash_pile/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!user.combat_mode)
 		if(can_hide_item(tool))
-			balloon_alert(user, "hiding item...")
+			balloon_alert(user, LANG("obj.cece4dc6", null))
 			if(do_after(user, hide_item_time, user))
 				if(src.loc)
 					if(user.transferItemToLoc(tool, src))
-						balloon_alert(user, "item hidden")
+						balloon_alert(user, LANG("obj.b32906e0", null))
 					else
 						balloon_alert(user, LANG("obj.f84f0f5d", null))
 		else
-			balloon_alert(user, "it's full!")
+			balloon_alert(user, LANG("obj.2cb7d354", null))
 		return ITEM_INTERACT_SUCCESS
 
 	. = ..()

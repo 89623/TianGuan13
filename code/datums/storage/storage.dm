@@ -790,7 +790,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	progress.end_progress()
 	if(success[1])
-		parent.balloon_alert(user, "picked up")
+		parent.balloon_alert(user, LANG("datum.c3416f43", null))
 
 /// Signal handler for whenever we drag the storage somewhere.
 /datum/storage/proc/on_mousedrop_onto(datum/source, atom/over_object, mob/user)

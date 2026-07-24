@@ -15,9 +15,9 @@
 		return ITEM_INTERACT_BLOCKING
 	var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
 	var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.drop_location())
-	user.visible_message(span_notice("[user] shaped [src] into [new_item] with [tool]."), \
-						span_notice("You shaped [src] into [new_item] with [tool]."), \
-						span_hear("You hear welding."))
+	user.visible_message(span_notice(LANG("obj.50a33dd4", list(user, src, new_item, tool))), \
+						span_notice(LANG("obj.2628de4d", list(src, new_item, tool))), \
+						span_hear(LANG("obj.1aa82fa3", null)))
 	var/holding = user.is_holding(src)
 	use(4)
 	if(holding && QDELETED(src))

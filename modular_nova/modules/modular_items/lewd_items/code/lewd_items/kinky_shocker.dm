@@ -60,11 +60,11 @@
 	if(!istype(powercell))
 		return ..()
 	if(cell)
-		to_chat(user, span_warning("[src] already has a cell!"))
+		to_chat(user, span_warning(LANG("obj.6ce8d100", list(src))))
 		return ITEM_INTERACT_BLOCKING
 	else
 		if(powercell.maxcharge < cell_hit_cost)
-			to_chat(user, span_notice("[src] requires a higher capacity cell."))
+			to_chat(user, span_notice(LANG("obj.82ea442c", list(src))))
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(powercell, src))
 			return ITEM_INTERACT_BLOCKING

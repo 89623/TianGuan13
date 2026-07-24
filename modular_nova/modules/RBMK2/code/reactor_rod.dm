@@ -63,6 +63,6 @@
 // Prevents putting the reactor rod on a TTV.
 /obj/item/transfer_valve/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/tank/rbmk2_rod))
-		to_chat(user, span_warning("[tool] doesn't fit!"))
+		to_chat(user, span_warning(LANG("obj.337bbdec", list(tool))))
 		return ITEM_INTERACT_BLOCKING
 	return ..()

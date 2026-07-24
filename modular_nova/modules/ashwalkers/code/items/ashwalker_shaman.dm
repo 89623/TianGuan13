@@ -49,7 +49,7 @@
 		var/obj/item/ash_staff/target_staff = tool
 		target_staff.staff_time = world.time + 5 MINUTES
 		playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
-		to_chat(user, span_notice("The tendril permits you to have more time to corrupt the world with ashes."))
+		to_chat(user, span_notice(LANG("obj.6b2c6425", null)))
 		return ITEM_INTERACT_SUCCESS
 
 //generic ash item recipe

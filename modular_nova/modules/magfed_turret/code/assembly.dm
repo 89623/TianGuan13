@@ -52,30 +52,30 @@
 			if(!istype(tool, /obj/item/weaponcrafting/receiver))
 				return
 			if(!user.transferItemToLoc(tool, src))
-				balloon_alert(user, "core stuck to your hand!")
+				balloon_alert(user, LANG("obj.c89edc0c", null))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-			balloon_alert(user, "receiver inserted")
+			balloon_alert(user, LANG("obj.a836a1d0", null))
 			receiver = tool
 			step = TURRET_ASSEMBLY_RECEIVER
 
 		if(TURRET_ASSEMBLY_SEC_1)
 			if(istype(tool, /obj/item/stock_parts/servo)) //Construct
 				if(!user.transferItemToLoc(tool, src))
-					balloon_alert(user, "servo stuck to your hand!")
+					balloon_alert(user, LANG("obj.52779bbb", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "servo added")
+				balloon_alert(user, LANG("obj.7cb93f71", null))
 				servo = tool
 				step = TURRET_ASSEMBLY_SERVO
 
 		if(TURRET_ASSEMBLY_SEC_2)
 			if(istype(tool, /obj/item/assembly/prox_sensor)) //Construct
 				if(!user.transferItemToLoc(tool, src))
-					balloon_alert(user, "sensor stuck to your hand!")
+					balloon_alert(user, LANG("obj.b75110d3", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, "sensor added")
+				balloon_alert(user, LANG("obj.1609b8bc", null))
 				sensor = tool
 				step = TURRET_ASSEMBLY_SENSOR
 

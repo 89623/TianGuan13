@@ -112,7 +112,7 @@
 
 	if(tool.tool_behaviour == TOOL_KNIFE)
 		if(!length(contents))
-			balloon_alert(user, "nothing to process")
+			balloon_alert(user, LANG("obj.7499becf", null))
 			return ITEM_INTERACT_BLOCKING
 
 		var/datum/food_processor_process/item_process_recipe = GET_RECIPE(contents[1])
@@ -123,7 +123,7 @@
 		playsound(src, 'sound/effects/butcher.ogg', 50, TRUE)
 		balloon_alert_to_viewers(LANG("obj.33079829", null))
 		if(!do_after(user, 3 SECONDS, target = src))
-			balloon_alert_to_viewers("stopped cutting")
+			balloon_alert_to_viewers(LANG("obj.21e88fc0", null))
 			return ITEM_INTERACT_BLOCKING
 
 		process_food(item_process_recipe, contents[1])
@@ -132,16 +132,16 @@
 	var/datum/food_processor_process/gotten_recipe = GET_RECIPE(tool)
 	if(gotten_recipe)
 		if(length(contents))
-			balloon_alert(user, "board is full")
+			balloon_alert(user, LANG("obj.eaa67f28", null))
 			return ITEM_INTERACT_BLOCKING
 
 		tool.forceMove(src)
-		balloon_alert(user, "placed [tool] on board")
+		balloon_alert(user, LANG("obj.7cf423a5", list(tool)))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	if(IS_EDIBLE(tool)) //We may have failed but the user wants some feedback on why they can't put x food item on the board
-		balloon_alert(user, "[tool] can't be processed")
+		balloon_alert(user, LANG("obj.3c24e22a", list(tool)))
 	return ..()
 
 #undef GET_RECIPE

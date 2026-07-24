@@ -117,7 +117,7 @@
 
 /obj/item/gun/syringe/proc/attempt_insert_syringe(mob/living/user, obj/item/reagent_containers/syringe/syringe)
 	if(istype(syringe, /obj/item/reagent_containers/syringe/bluespace))
-		balloon_alert(user, "[syringe.name] is too big!")
+		balloon_alert(user, LANG("obj.b86c0ffd", list(syringe.name)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(syringes.len >= max_syringes)
@@ -127,7 +127,7 @@
 	if(!user.transferItemToLoc(syringe, src))
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "[syringe.name] loaded")
+	balloon_alert(user, LANG("obj.8255044f", list(syringe.name)))
 	syringes += syringe
 	recharge_newshot()
 	update_appearance()

@@ -39,12 +39,12 @@
 	if(istype(tool, /obj/item/food/grown))
 		var/obj/item/food/grown/grown_item = tool
 		if(packed_item)
-			balloon_alert(user, "already packed!")
+			balloon_alert(user, LANG("obj.1b900999", null))
 			return ITEM_INTERACT_BLOCKING
 		if(!HAS_TRAIT(grown_item, TRAIT_DRIED))
-			balloon_alert(user, "needs to be dried!")
+			balloon_alert(user, LANG("obj.e1be8203", null))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You stuff [grown_item] into [src]."))
+		to_chat(user, span_notice(LANG("obj.16ae1517", list(grown_item, src))))
 		bong_hits = max_hits
 		packed_item = TRUE
 		if(grown_item.reagents)
@@ -55,9 +55,9 @@
 
 	else if(istype(tool, /obj/item/reagent_containers/hash)) //for hash/dabs
 		if(packed_item)
-			balloon_alert(user, "already packed!")
+			balloon_alert(user, LANG("obj.1b900999", null))
 			return ITEM_INTERACT_BLOCKING
-		to_chat(user, span_notice("You stuff [tool] into [src]."))
+		to_chat(user, span_notice(LANG("obj.16ae1517", list(tool, src))))
 		bong_hits = max_hits
 		packed_item = TRUE
 		if(tool.reagents)

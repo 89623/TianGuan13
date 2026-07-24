@@ -257,7 +257,7 @@
 			var/fixing_amount = min(max_integrity - atom_integrity, 5)
 			atom_integrity += fixing_amount
 			user.mind.adjust_experience(/datum/skill/smithing, 5)
-			balloon_alert(user, "partially repaired!")
+			balloon_alert(user, LANG("obj.05360c87", null))
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 

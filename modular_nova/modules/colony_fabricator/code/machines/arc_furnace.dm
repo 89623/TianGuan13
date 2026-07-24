@@ -64,16 +64,16 @@
 
 /obj/machinery/arc_furnace/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(operating)
-		balloon_alert(user, "furnace busy")
+		balloon_alert(user, LANG("obj.8de55ff8", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(length(contents))
-		balloon_alert(user, "furnace full")
+		balloon_alert(user, LANG("obj.b8dcd0aa", null))
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/stack/ore))
 		tool.forceMove(src)
-		balloon_alert(user, "ore added")
+		balloon_alert(user, LANG("obj.73a2d20c", null))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 

@@ -324,13 +324,13 @@
 
 	if(using_on_self)
 		caster.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] begin[caster.p_s()] forcing [inserted_organ] into [caster.p_their()] [zone_organ_goes_in]!!"),
-			span_userdanger("You begin forcing [inserted_organ] into your [zone_organ_goes_in]!")
+			span_danger(LANG("datum.ac353bd5", list(caster, caster.p_they(), caster.p_s(), inserted_organ, caster.p_their(), zone_organ_goes_in))),
+			span_userdanger(LANG("datum.2f1b18e4", list(inserted_organ, zone_organ_goes_in)))
 		)
 	else
 		caster.visible_message(
-			span_danger("[caster]'s hand glows a brilliant red as [caster.p_they()] begin[caster.p_s()] forcing [inserted_organ] into [victim]'s [zone_organ_goes_in]!!"),
-			span_notice("You begin forcing [inserted_organ] into [victim]'s [zone_organ_goes_in].")
+			span_danger(LANG("datum.e1b738cd", list(caster, caster.p_they(), caster.p_s(), inserted_organ, victim, zone_organ_goes_in))),
+			span_notice(LANG("datum.3ec9a798", list(inserted_organ, victim, zone_organ_goes_in)))
 		)
 
 	victim.balloon_alert(caster, LANG("datum.3b69f686", list(inserted_organ)))

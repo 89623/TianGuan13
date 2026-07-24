@@ -25,7 +25,7 @@ ADMIN_VERB(upload_jukebox_music, R_SERVER, "点唱机上传音乐", "Upload a va
 	fcopy(file, save_path)
 
 	message_admins("[key_name_admin(user)] uploaded [clean_name] to the jukebox!")
-	to_chat(user, span_notice("Successfully uploaded [clean_name]!"))
+	to_chat(user, span_notice(LANG("datum.323743c2", list(clean_name))))
 	refresh_jukebox_songs()
 
 ADMIN_VERB(browse_jukebox_music, R_SERVER, "点唱机浏览音乐", "Browse music files for moderation.", ADMIN_CATEGORY_SERVER)

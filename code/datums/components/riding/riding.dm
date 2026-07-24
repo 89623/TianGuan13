@@ -400,8 +400,8 @@
 		return
 
 	rider.visible_message(
-		span_warning("As [disarmer] shoves [rider] around, [rider.p_they()] lose[rider.p_s()] [rider.p_their()] [pick("balance", "grip", "hold")] and fall[rider.p_s()] off [parent]!"),
-		span_warning("As [disarmer] shoves you around, you lose your [pick("balance", "grip", "hold")] and fall off [parent]!")
+		span_warning(LANG("datum.06016c08", list(disarmer, rider, rider.p_they(), rider.p_s(), rider.p_their(), pick("balance", "grip", "hold"), rider.p_s(), parent))),
+		span_warning(LANG("datum.817c7335", list(disarmer, pick("balance", "grip", "hold"), parent)))
 	)
 	if(rider.is_blind())
 		to_chat(rider, span_warning(LANG("datum.a2a4ca1e", list(pick("balance", "grip", "hold"), parent))))
