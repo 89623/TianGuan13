@@ -21,7 +21,23 @@
 	// NOVA EDIT ADDITION START - i18n - strings/ flavor .txt 已并入主目录（strings 命名空间）：全服非英文
 	// 时逐行整串反查（多词门槛）。只命中目录内 flavor（tips/junkmail…）；names/词频表是单词或不在目录 →
 	// 天然 no-op。早期 GLOBAL_LIST_INIT（names 等）此时 locale 仍为默认 en，直接跳过。
-	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+	//
+	// **只对 strings/ 下的文件反查**：file2list 也被用来读 config（config.Load() 的 LoadEntries、
+	// 白名单 config/whitelist.txt、player_ranks 的 legacy 文件）。那些行是设置项和 ckey，一旦整行
+	// 命中目录就会被替换成中文，轻则配置失效、重则白名单里的 ckey 被改写。实测中文服启动时
+	// dbconfig.txt 的注释行确实进过反查（见 lang_reverse_text 的早调用告警）。
+	// 再排除 strings/names/：那是**名字池**（AI 名、各族姓名、呼号），整串反查会和目录里的单词条目
+	// 撞车（"Adaptive Manipulator" 之类整条命中就直接改了角色名；姓 Cook / Baker 被当职业名译掉是同类）。
+	// 名字不该翻，此前靠「GLOB 阶段 locale 尚未就绪」侥幸没翻，现在写成显式规则。
+	//
+	// i18n_locale_resolved 门：GLOBAL_LIST_INIT 那批（ai_names / station_prefixes / 各类词池）都在
+	// config 之前建表，历来就没被翻过——把这个既成事实写成显式条件，而不是让它继续依赖初始化时序
+	// 的巧合（那样既查不出问题，哪天时序一变又会悄悄开始翻名字）。**确实该翻的**早期 flavor 表
+	// （fishing_tips / junkmail）由 lang_relocalize_early_string_lists() 在 ConfigLoaded 里补。
+	if(GLOB.i18n_locale_resolved \
+		&& GLOB.i18n_server_locale != DEFAULT_UI_LOCALE \
+		&& findtext(filename, "[STRING_DIRECTORY]/") \
+		&& !findtext(filename, "[STRING_DIRECTORY]/names/"))
 		for(var/i in 1 to length(result))
 			result[i] = lang_reverse_phrase(result[i])
 	return result

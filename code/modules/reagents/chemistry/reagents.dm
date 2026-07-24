@@ -109,7 +109,11 @@
 	if(!mass)
 		mass = rand(10, 800)
 	// NOVA EDIT ADDITION START - i18n - 全服中文时反查试剂 name/description/taste（覆盖聊天 [试剂] 等单词类插值；P1 的 TGUI 多词门槛漏掉的单词名靠这里）
-	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+	// i18n_locale_resolved 门：GLOB.chemical_reagents_list 母版表在 config 之前建好，那批实例走到这里时
+	// locale 恒为 en、翻不动——它们由 SSreagents.Initialize 的补反查兜底（见 subsystem/processing/reagents.dm）。
+	// 这里只服务**运行期新建**的试剂实例（烧杯里的那些）。写成显式条件，免得早调用告警把这个已处理的
+	// 情形当成新问题报出来。
+	if(GLOB.i18n_locale_resolved && GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
 		name = lang_reverse_text(name)
 		description = lang_reverse_text(description)
 		taste_description = lang_reverse_text(taste_description)
