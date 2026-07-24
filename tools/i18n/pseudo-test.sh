@@ -90,9 +90,6 @@ KNOWN = {
     # **编译期英文**，所以 name == initial(name) 这类断言在任何非 en locale 下都必然失败。
     # 上游此测试意在防「id label 逻辑改名」，与本地化无关；en 构建照常通过。
     '/datum/unit_test/spare_id_name',
-    # 非 i18n：/datum/job/human_ai 与 /datum/job/ai 的 display_order 撞号（纯数字，i18n 不碰）。
-    # 上游测试自己的注释就写着 human_ai/ai 同 index、疑为 flaky 来源。属 NOVA/上游职业配置问题。
-    '/datum/unit_test/job_display_order',
 }
 d = json.load(open('data/unit_tests.json'))
 fails = sorted(k for k, v in d.items() if v.get('status') == 1)

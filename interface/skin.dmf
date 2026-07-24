@@ -178,7 +178,7 @@ window "infobuttons"
 		background-color = none
 		saved-params = "is-checked"
 		text = "Fullscreen"
-		command = "fullscreen"
+		command = "toggle-fullscreen"
 	elem "reconnect"
 		type = BUTTON
 		pos = 369,5

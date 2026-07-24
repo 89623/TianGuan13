@@ -1238,7 +1238,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
 /client/verb/toggle_fullscreen()
-	set name = "切换全屏"
+	set name = "Toggle Fullscreen"
 	set category = "OOC"
 
 	var/is_on = prefs.read_preference(/datum/preference/toggle/fullscreen_mode)
