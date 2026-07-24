@@ -46,6 +46,7 @@ restore() {
 	sed -i "s/^I18N_SERVER_LOCALE .*/I18N_SERVER_LOCALE ${ORIG_LOCALE:-en}/" "$CONFIG"
 	sed -i "s@^// PSEUDO-TEST-DISABLED $GAGS_DEFINE@$GAGS_DEFINE@" "$COMPILE_OPTS"
 	rm -f tgstation.test.dme tgstation.test.dmb tgstation.test.rsc
+	rm -f data/next_map.json # 单测地图指定（见下），别留给正常起服用
 	# 测试运行会用 DM 回退生成的地图预览图标覆盖已提交 .dmi（与 rustg 生成版像素有差，勿保留）
 	git checkout --quiet -- icons/map_icons/ 2>/dev/null || true
 	echo "==> 已还原 $CONFIG（I18N_SERVER_LOCALE ${ORIG_LOCALE:-en}）、$COMPILE_OPTS 与 icons/map_icons/"
@@ -62,6 +63,13 @@ DreamMaker -DCBT -DCIBUILDING tgstation.test.dme
 
 echo "==> 运行全量单测"
 rm -rf data/logs/ci
+# **必须指定单测地图**（与 tools/ci/run_server.sh 同款做法）。绝大多数单测的 test_flags 默认是
+# UNIT_TEST_BASIC，而 UNIT_TEST_BASIC == UNIT_TEST_DEBUG_MAP_ONLY（见 _unit_tests.dm:75-77），
+# 不在 is_unit_test_map 的地图上会被整批跳过。漏了这一步的话只跑得到十几个地图/基建类测试，
+# 全部 i18n 单测（i18n_unreverse / i18n_template / i18n_phobia …）一个都不会执行——而门禁仍报
+# 「单测失败 0 个」，是**假绿**。
+mkdir -p data
+cp _maps/runtimestation_minimal.json data/next_map.json
 DreamDaemon tgstation.test.dmb -close -trusted -verbose -params "log-directory=ci"
 
 if [[ -f data/logs/ci/clean_run.lk ]]; then
@@ -75,13 +83,30 @@ fi
 # 判定：单测失败数 + 非白名单 runtime 数，两者皆零则视为通过。
 TEST_FAILS=$(python3 -c "
 import json
+# 已知失败白名单：**必须逐条写明为何与 i18n 回归无关**，否则就是在掩盖问题。
+# 新增条目前先确认它在 locale=en 下也失败（或纯属 i18n 设计的既定后果）。
+KNOWN = {
+    # i18n 设计的既定后果，非回归：/atom/Initialize 把 name 反查成译文，而 initial(name) 是
+    # **编译期英文**，所以 name == initial(name) 这类断言在任何非 en locale 下都必然失败。
+    # 上游此测试意在防「id label 逻辑改名」，与本地化无关；en 构建照常通过。
+    '/datum/unit_test/spare_id_name',
+    # 非 i18n：/datum/job/human_ai 与 /datum/job/ai 的 display_order 撞号（纯数字，i18n 不碰）。
+    # 上游测试自己的注释就写着 human_ai/ai 同 index、疑为 flaky 来源。属 NOVA/上游职业配置问题。
+    '/datum/unit_test/job_display_order',
+}
 d = json.load(open('data/unit_tests.json'))
 fails = sorted(k for k, v in d.items() if v.get('status') == 1)
-print(len(fails))
+unknown = [k for k in fails if k not in KNOWN]
+import sys
+if fails:
+    print('已知失败: %s' % sorted(set(fails) & KNOWN), file=sys.stderr)
+    if unknown:
+        print('未知失败: %s' % unknown, file=sys.stderr)
+print(len(unknown))
 " || echo 1)
 ALL_RUNTIMES=$(grep -c "runtime error" data/logs/ci/runtime.log || true)
 BENIGN_RUNTIMES=$(grep -c "Generated map icons were different" data/logs/ci/runtime.log || true)
-echo "==> 单测失败 $TEST_FAILS 个；runtime ${ALL_RUNTIMES:-0} 条（其中已知地图图标噪音 ${BENIGN_RUNTIMES:-0} 条）"
+echo "==> 单测失败 $TEST_FAILS 个（已扣除白名单；明细见上）；runtime ${ALL_RUNTIMES:-0} 条（其中已知地图图标噪音 ${BENIGN_RUNTIMES:-0} 条）"
 if [[ ${TEST_FAILS:-1} -eq 0 && $((${ALL_RUNTIMES:-0} - ${BENIGN_RUNTIMES:-0})) -eq 0 ]]; then
 	echo "==> 伪 locale 门禁通过（仅余已知基建噪音）"
 	exit 0

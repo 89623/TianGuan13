@@ -18,6 +18,8 @@ const FLAVOR_FILES: &[&str] = &[
     "chemistrytips.txt",
     "fishing_tips.txt",
     "junkmail.txt",
+    // 算命饼干式格言（智慧牛/基础 mob 闲聊池 speak、裁纸机纸条默认文本）——整句展示文本。
+    "wisdoms.txt",
     "abductee_objectives.txt",
     "bane.json",
     "boomer.json",

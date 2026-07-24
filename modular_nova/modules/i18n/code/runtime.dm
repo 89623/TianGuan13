@@ -9,6 +9,91 @@
 /// 全服默认 locale。中文服在 config 写 I18N_SERVER_LOCALE zh-Hans（见 config_entries.dm）。
 GLOBAL_VAR_INIT(i18n_server_locale, DEFAULT_UI_LOCALE)
 
+/// config 是否已加载完（即 i18n_server_locale 是否已是最终值）。由 world.ConfigLoaded() 置位。
+///
+/// 存在的理由：BYOND 启动顺序是 `Master => GLOB => make_datum_reference_lists()`，**然后**才
+/// `world.New() => config.Load()`（见 code/game/world.dm 顶部）。所以在全局初始化期（GLOBAL_LIST_INIT、
+/// make_datum_reference_lists 里的各 init_*()、datum 母版表构建）读到的 locale 恒是 en，
+/// 此时调 lang_reverse_text 必然原样返回英文——**而且是完全静默的**，代码看着完备、实际从没生效。
+/// emote 就这么躺了很久（/datum/emote/New() 里的整段反查是死代码，靠 run_emote 边界兜底才勉强能用）。
+/// 有了这个标志，早调用会打一次 stack_trace，下一个同类死钩子在日志里自己现形。
+GLOBAL_VAR_INIT(i18n_locale_resolved, FALSE)
+/// 早调用告警计数。上限见 I18N_MAX_EARLY_WARNINGS：一次启动最多报这么多条，
+/// 既能一轮把存量调用点全列出来（每轮只报一条要跑很多轮），又不至于刷屏。
+GLOBAL_VAR_INIT(i18n_early_reverse_warnings, 0)
+#define I18N_MAX_EARLY_WARNINGS 10
+
+/// `strings/` 下的**匹配表**：靠字面比对驱动功能，翻译=替换=破坏匹配，一律不反查。
+/// （展示型 flavor 表不在此列；口音替换表虽也保英文，但那是内容取舍、不是功能损坏，不登记在这。）
+GLOBAL_LIST_INIT(i18n_match_table_files, list("phobia.json"))
+
+/// 恐惧症中文触发词表（类别 -> 词表），来自 strings/i18n/phobia_words.json。
+/// 与英文 strings/phobia.json **并存**：英文走原正则（带 \b 词边界），中文走无边界正则。
+/// 详见该 JSON 的 _comment（为什么不能并进同一条正则、为什么不能直接翻译英文表）。
+GLOBAL_LIST_EMPTY(i18n_phobia_words)
+GLOBAL_VAR_INIT(i18n_phobia_words_loaded, FALSE)
+/proc/lang_phobia_words(category)
+	if(!GLOB.i18n_phobia_words_loaded)
+		GLOB.i18n_phobia_words_loaded = TRUE
+		var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+		if(locale != DEFAULT_UI_LOCALE)
+			var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/phobia_words.json"
+			if(fexists(path))
+				var/list/decoded = json_decode(file2text(path))
+				var/list/for_locale = islist(decoded) ? decoded[locale] : null
+				if(islist(for_locale))
+					for(var/phobia_category in for_locale)
+						GLOB.i18n_phobia_words[phobia_category] = for_locale[phobia_category]
+	return GLOB.i18n_phobia_words[category]
+
+/// 为某恐惧症类别构建「本地化触发词」正则；无登记词则返回 null。
+///
+/// 分组布局刻意与 construct_phobia_regex 保持一致——消费方用 `group[2]` 取命中词、用 `$2`/`$3`
+/// 做高亮替换（见 datums/components/fearful/sources/phobia.dm）。这里 group1/group3 是空组，
+/// 于是 `$3` 为空串、`group[2]` 仍是命中词，两条正则可以互换使用。
+/// 中文不需要词边界，直接子串匹配即正确（也只能如此，理由见 phobia_words.json 的 _comment）。
+/proc/construct_phobia_regex_localized(category)
+	var/list/words = lang_phobia_words(category)
+	if(!length(words))
+		return null
+	var/words_match = ""
+	for(var/word in words)
+		words_match += "[REGEX_QUOTE(word)]|"
+	words_match = copytext(words_match, 1, -1)
+	// 分组必须与英文正则**逐组同构**：group3 用 `('?s*)`（而不是空组 `()`）——BYOND 里不参与匹配的
+	// 空组返回 null，消费侧 `Replace(…, "$2$3")` 拿到的就不是空串（单测 i18n_phobia_localized_regex
+	// 抓到过这点）。`'?s*` 在中文位置匹配空串但**组本身参与**，于是 group[3] == ""，两条正则可互换。
+	return regex("()([words_match])('?s*)", "i")
+
+/// 补反查早于 config 建好的 flavor 字符串表。由 world.ConfigLoaded() 调用。
+///
+/// `GLOBAL_LIST_INIT(fishing_tips, world.file2list("strings/fishing_tips.txt"))` 这类在 GLOB 阶段就
+/// 建表，而 file2list 里的反查那时 locale 恒为 en → 整表原样存了英文，之后再没人翻。实测
+/// fishing_tips 62 条、junkmail 39 条**目录里全都有译文却从来没显示过**。
+///
+/// **只补已进目录的 flavor 表**：names/形容词/动词/音标表等一律不碰——它们是单词池，整串反查会
+/// 和目录里的单词条目撞车（姓 Cook / Baker 被当职业名译掉是同一类事故）。
+/proc/lang_relocalize_early_string_lists()
+	if(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return
+	for(var/list/pool in list(GLOB.fishing_tips, GLOB.junkmail_messages, GLOB.wisdoms))
+		if(!islist(pool))
+			continue
+		for(var/i in 1 to length(pool))
+			pool[i] = lang_reverse_phrase(pool[i])
+
+	// 同理，config 之前 load_strings_file 进 string_cache 的 JSON 也没被翻。**但要跳过匹配表**：
+	// phobia.json 是靠字面比对触发的**功能表**，不是展示文本——翻译它等于把英文词替换掉，英文玩家
+	// 说 "chief medical officer" 反而不再触发（实测该表 3 条多词触发词与目录里的 UI 串重名：
+	// chief medical officer / gas mask / holding cell）。tools/i18n/src/flavor.rs 已把 phobia 触发词
+	// 排除在抽取之外，此处与之对齐。中文触发靠 strings/i18n/phobia_words.json **另加**一条无边界
+	// 正则实现（见 lang_phobia_words），新增而非替换。
+	for(var/filepath in GLOB.string_cache)
+		if(filepath in GLOB.i18n_match_table_files)
+			continue
+		if(islist(GLOB.string_cache[filepath]))
+			lang_reverse_tree(GLOB.string_cache[filepath])
+
 /// 是否启用聊天层 AC 子串兜底（默认关）。config I18N_CHAT_FALLBACK 控制（见 config_entries.dm + fallback.dm）。
 GLOBAL_VAR_INIT(i18n_chat_fallback, FALSE)
 
@@ -357,6 +442,11 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 /proc/lang_reverse_text(text)
 	if(!text)
 		return text
+	// config 尚未加载 → locale 还不是最终值 → 下面必然 early-return 英文。静默失效很难查，
+	// 这里打一次 stack_trace 把调用点指出来（见 i18n_locale_resolved 的注释）。
+	if(!GLOB.i18n_locale_resolved && GLOB.i18n_early_reverse_warnings < I18N_MAX_EARLY_WARNINGS)
+		GLOB.i18n_early_reverse_warnings++
+		stack_trace("i18n: lang_reverse_text() 在 config 加载前被调用——此刻 locale 恒为 en，本次及此前所有反查都原样返回了英文。若这是 datum 母版表的初始化钩子，它是死代码，应改到显示边界或 SS Initialize 里做。")
 	var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
 	if(locale == DEFAULT_UI_LOCALE)
 		return text
@@ -973,3 +1063,5 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, build_i18n_policy_set("pref_desc_keys"))
 	for(var/regex/word_re in name_subs)
 		text = word_re.Replace(text, name_subs[word_re])
 	return text
+
+#undef I18N_MAX_EARLY_WARNINGS

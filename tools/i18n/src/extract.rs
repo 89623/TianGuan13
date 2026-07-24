@@ -27,6 +27,17 @@ const SINK_VARS: &[&str] = &[
     "name",
     "desc",
     "message",
+    // /datum/emote 的按物种/形态分支消息：select_message_type() 按 user 选用哪一条，最终都汇到
+    // run_emote 的输出边界反查。只列了 message 而漏掉这些分支 → 哑剧演员/异形/赛博格/AI/猴子
+    // 的表情整类没进目录、runechat 全英文。不含 message_param（含 %t，由 select_param 在运行期
+    // 填入玩家输入，拼完的整串不可能命中目录，得另想办法）。
+    "message_mime",
+    "message_alien",
+    "message_larva",
+    "message_robot",
+    "message_AI",
+    "message_monkey",
+    "message_animal_or_basic",
     "flavor_text",
     "title",
     // 其它可靠的玩家可见显示字段（type 变量；非 desc 的别名 / 专有显示串）。
@@ -299,12 +310,39 @@ fn is_non_player_sink(name: &str) -> bool {
 /// 仅放行**首字母大写**的显示名（命令面板/右键菜单可见，由面板按名调用，改名自洽）；
 /// 排除 keybind/宏按名调用的标识符 verb（以 `.` 开头如 .click、纯小写、小写连字符如 body-chest/
 /// quick-equip——被外部按名引用，改名会断快捷键/宏），以及数字前缀 debug 名与含占位符的。
+///
+/// 「首字母大写」判定前先剥掉**符号装饰前缀**：表情面板用 `> Burp` / `~ Blush` / `| Flip |` 标注
+/// 发声/可见/特殊三类，硅基音效用 `< Ping >`，另有 `(Taur) Toggle Laying Down`。不剥的话这
+/// 三类共 ~170 条 verb 一条都抽不到（实测：表情/表情+ 两个页签整片英文）——是**遍历缺口**，
+/// 不是逐条漏译。装饰符不可能出现在 keybind/宏标识符里（那些形如 .click / body-chest /
+/// quick-equip / toggle-walk-run，首字符是 `.` 或小写字母），故剥前缀不会放宽对它们的排除。
+/// 裸字符串字面量原样取出（不过 build_template 的「去 HTML 标签后须含字母」闸）。
+///
+/// 只给 verb 名用。`set name = "< Ping >"` 这类硅基音效表情名会被 strip_tags 当成 HTML 标签
+/// 整体剥光 → 去标签后无字母 → build_template 返回 None → 22 条一条都抽不到（实测表情页签
+/// 里 `< Alarm >`…`< Slow Clap >` 整片英文）。verb 名是命令面板显示名，永远不会是 HTML 标记，
+/// 所以这里直接取字面量。不动 build_template 本身——它是抽取/改写算 key 的唯一真相来源，
+/// 改它的判据会牵动整个目录。
+pub(crate) fn plain_string(expr: &Expression) -> Option<String> {
+    match expr {
+        Expression::Base { term, follow } if follow.is_empty() => match &term.elem {
+            Term::String(s) => Some(s.clone()),
+            _ => None,
+        },
+        _ => None,
+    }
+}
+
 pub(crate) fn is_safe_verb_name(s: &str) -> bool {
     let s = s.trim();
+    let undecorated = s.trim_start_matches(|c| matches!(c, '>' | '<' | '~' | '|' | '(' | ' '));
     !s.is_empty()
         && !s.contains('{')
         && !s.starts_with('.')
-        && s.chars().next().is_some_and(|c| c.is_ascii_uppercase())
+        && undecorated
+            .chars()
+            .next()
+            .is_some_and(|c| c.is_ascii_uppercase())
         && s.chars().any(|c| c.is_alphabetic())
         // 必须是纯 ASCII：run_verbs 注入后源码里的 verb 名是中文，若此时跑 extract 会把**译文**
         // 当英文原文收进 en 目录，下一轮 MT 再译一遍 → 目录污染（实测遗留 "Fax 面板"/"End 弹"
@@ -648,7 +686,15 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
 
         // 1) 变量初始化（name/desc 等）。
         for (var_name, type_var) in ty.vars.iter() {
-            let is_sink = SINK_VARS.contains(&var_name.as_str());
+            let mut is_sink = SINK_VARS.contains(&var_name.as_str());
+            // ADMIN_VERB 宏展开成 `/datum/admin_verb/xxx { name = ##verb_name; … }`，所以管理员
+            // 命令的显示名同时是**类型变量**，会绕开 `set name` 那条路上的 is_safe_verb_name 闸
+            // 被 SINK_VARS 抽走。译名固化进源码后再跑 extract，这里就会把中文当英文原文收进 en 目录
+            // （实测一次 extract 混进 300+ 条中文「英文」值）——与 is_safe_verb_name 的 is_ascii
+            // 同一个污染级联，只是第二扇门。verb 名走 `set name` 那条路抽即可，这里让开。
+            if var_name == "name" && ty.path.starts_with("/datum/admin_verb") {
+                is_sink = false;
+            }
             // config_entry 的 default：玩家可见公告/模板（安全等级公告、提示等，从配置加载、非 sink 调用）。
             // 仅 /datum/config_entry 类型且「句子型」default 才抽，避开数字/标志/路径等非显示默认值。
             let is_config_default =
@@ -734,7 +780,8 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                     for stmt in block.iter() {
                         if let Statement::Setting { name, value, .. } = &stmt.elem {
                             if name.as_str() == "name" {
-                                if let Some(t) = build_template(value) {
+                                if let Some(t) = build_template(value).or_else(|| plain_string(value))
+                                {
                                     if is_safe_verb_name(&t) {
                                         emit(&mut catalog, &namespace, &t);
                                     }

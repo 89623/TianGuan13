@@ -32,6 +32,7 @@
 	var/datum/component/fearful/fear = owner.AddComponentFrom(REF(src), /datum/component/fearful, list(/datum/terror_handler/startle))
 	var/datum/terror_handler/phobia_source/phobia = fear.add_handler(terror_handler, REF(src))
 	phobia.trigger_regex = GLOB.phobia_regexes[phobia_type]
+	phobia.trigger_regex_localized = construct_phobia_regex_localized(phobia_type) // NOVA EDIT ADDITION - i18n: 中文触发词（无词边界，另建正则）
 	phobia.trigger_mobs = GLOB.phobia_mobs[phobia_type]
 	phobia.trigger_objs = GLOB.phobia_objs[phobia_type]
 	phobia.trigger_turfs = GLOB.phobia_turfs[phobia_type]

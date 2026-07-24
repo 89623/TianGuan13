@@ -78,7 +78,10 @@ SUBSYSTEM_DEF(materials)
 
 	mat_id = mat_ref.id
 	// NOVA EDIT ADDITION START - i18n - 材料名/描述创建时整串反查（全服中文时；SS init 期 i18n_cache 已就绪，覆盖单词类材料名）
-	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
+	// i18n_locale_resolved 门：initialize_material 也会被按需调用，试剂母版表（GLOB 阶段）就会拽起
+	// 材料引用——那批在 config 之前、翻不动。无害：initialize_materials() 开头 `materials = list()`
+	// 整表重建，早期那批会被丢弃重造（彼时 config 已加载）。写成显式条件只为不让早调用告警误报。
+	if(GLOB.i18n_locale_resolved && GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
 		mat_ref.name = lang_reverse_text(mat_ref.name)
 		mat_ref.desc = lang_reverse_text(mat_ref.desc)
 	// NOVA EDIT ADDITION END

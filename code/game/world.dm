@@ -154,6 +154,13 @@ GLOBAL_VAR(restart_counter)
 	// If you need to add to it, ask yourself hard if what your adding is in the right spot
 	// (i.e. basically nothing should be added before load_admins() in here)
 
+	// NOVA EDIT ADDITION START - i18n: 此刻起 GLOB.i18n_server_locale 才是最终值。
+	// 在此之前调 lang_reverse_text 一律静默返回英文，故置位供其告警（见 runtime.dm 的 i18n_locale_resolved）；
+	// 并补反查那些在 GLOB 阶段就建好、当时翻不了的 flavor 字符串表。
+	GLOB.i18n_locale_resolved = TRUE
+	lang_relocalize_early_string_lists()
+	// NOVA EDIT ADDITION END
+
 	// Try to set round ID
 	SSdbcore.InitializeRound()
 

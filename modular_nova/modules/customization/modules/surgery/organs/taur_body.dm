@@ -401,7 +401,7 @@
 
 /obj/item/organ/taur_body/proc/toggle_laying()
 	set category = "IC"
-	set name = "(Taur) Toggle Laying Down"
+	set name = "（半人马）切换趴卧"
 
 	var/mob/living/carbon/human/owner = src
 	if(!istype(owner))
