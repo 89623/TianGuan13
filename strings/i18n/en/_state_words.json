@@ -14,5 +14,11 @@
   "handcuffed": "handcuffed",
   "restrained with cable": "restrained with cable",
   "activator": "activator",
-  "mutator": "mutator"
+  "mutator": "mutator",
+  "meson": "meson",
+  "t-ray": "t-ray",
+  "shuttle": "shuttle",
+  "connectable": "connectable",
+  "atmospheric-thermal": "atmospheric-thermal",
+  "area-blueprints": "area-blueprints"
 }
