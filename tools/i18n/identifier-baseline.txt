@@ -381,7 +381,9 @@ announcement
 anti-skub
 anus
 appendix
+area-blueprints
 arm
+atmospheric-thermal
 atmospherics
 attached
 attack
@@ -439,6 +441,7 @@ coin
 cold
 component
 conductive
+connectable
 contractor
 core
 crab
@@ -577,6 +580,7 @@ medical
 medium
 memo
 memorizer
+meson
 metal
 mining
 mob
@@ -695,6 +699,7 @@ success
 suit
 surgical
 syndicate
+t-ray
 tactile
 tail
 tamed

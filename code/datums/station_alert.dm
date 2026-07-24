@@ -28,7 +28,7 @@
 /datum/station_alert/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "StationAlertConsole", title)
+		ui = new(user, src, "StationAlertConsole", lang_reverse_text(title)) // NOVA EDIT - i18n: 窗口标题反查
 		ui.open()
 
 /datum/station_alert/ui_data(mob/user)

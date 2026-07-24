@@ -636,7 +636,7 @@
 	return list(/datum/reagent/medicine/c2/lenturi = 10)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
-	user.visible_message(span_suicide(LANG("obj.e0925104", list(user, src, user.p_their(), user.p_do(TRUE), user.p_they()))))
+	user.visible_message(span_suicide(LANG("obj.e0925104", list(user, src, user.p_their(), capitalize(user.p_do()), user.p_they()))))
 	return TOXLOSS
 
 /obj/item/stack/medical/mesh

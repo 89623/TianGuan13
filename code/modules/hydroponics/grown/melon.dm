@@ -1,6 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /obj/item/food/grown/melonlike
-	seed = /obj/item/seeds/watermelon
 	name = "melon?"
 	desc = "You felt like this was a melon, but it definitely isn't. You should tell somebody about this."
 	icon_state = "watermelon"

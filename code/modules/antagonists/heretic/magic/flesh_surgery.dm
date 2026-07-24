@@ -169,8 +169,8 @@
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
 	var/condition = (to_heal.damage > 0) ? "better" : "perfect"
 	caster.visible_message(
-		span_warning(LANG("datum.70651982", list(caster, caster.p_they(), to_heal, condition))),
-		span_notice(LANG("datum.7c3a3093", list(to_heal, condition))),
+		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore[caster.p_s()] \the [to_heal] to [condition] condition!"),
+		span_notice("Your hand glows a brilliant red as you restore \the [to_heal] to [condition] condition!"),
 	)
 
 	return TRUE
@@ -324,12 +324,12 @@
 
 	if(using_on_self)
 		caster.visible_message(
-			span_danger(LANG("datum.ac353bd5", list(caster, caster.p_they(), caster.p_es(), inserted_organ, caster.p_their(), zone_organ_goes_in))),
+			span_danger(LANG("datum.ac353bd5", list(caster, caster.p_they(), caster.p_s(), inserted_organ, caster.p_their(), zone_organ_goes_in))),
 			span_userdanger(LANG("datum.2f1b18e4", list(inserted_organ, zone_organ_goes_in)))
 		)
 	else
 		caster.visible_message(
-			span_danger(LANG("datum.e1b738cd", list(caster, caster.p_they(), caster.p_es(), inserted_organ, victim, zone_organ_goes_in))),
+			span_danger(LANG("datum.e1b738cd", list(caster, caster.p_they(), caster.p_s(), inserted_organ, victim, zone_organ_goes_in))),
 			span_notice(LANG("datum.3ec9a798", list(inserted_organ, victim, zone_organ_goes_in)))
 		)
 

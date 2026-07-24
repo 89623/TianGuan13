@@ -105,6 +105,7 @@
   "_root.4261eb64": "You do not have enough relevant playtime for {0}.",
   "_root.42a4a644": "\\red SDQL2: You have an error in your SDQL syntax, unexpected \\\" in query: \\\"<font color=gray>{0}</font>\\\" following \\\"<font color=gray>{1}</font>\\\". Please check your syntax, and try again.",
   "_root.42ebee1c": "You are still bound to serve your creator, {0}, follow {1} orders and help {2} complete {3} goals at all costs.",
+  "_root.42f2953a": "Supply listed cure or {0}, or treat with food and rest.",
   "_root.434e5d8f": "Printing error: Canvas printing is only supported on stationary consoles.",
   "_root.442d7504": "{0} uses the analyzer on {1} {2}.",
   "_root.44391fbf": "Write your {0}",

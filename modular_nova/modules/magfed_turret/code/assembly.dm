@@ -45,38 +45,38 @@
 			display_text = "The circuitboard's CPU needs to be <b>activated</b>..."
 	. += span_notice(display_text)
 
-/obj/item/turret_assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/turret_assembly/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	switch(step)
 		if(TURRET_ASSEMBLY_START)
-			if(!istype(attacking_item, /obj/item/weaponcrafting/receiver))
+			if(!istype(tool, /obj/item/weaponcrafting/receiver))
 				return
-			if(!user.transferItemToLoc(attacking_item, src))
+			if(!user.transferItemToLoc(tool, src))
 				balloon_alert(user, LANG("obj.c89edc0c", null))
 				return
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 			balloon_alert(user, LANG("obj.a836a1d0", null))
-			receiver = attacking_item
+			receiver = tool
 			step = TURRET_ASSEMBLY_RECEIVER
 
 		if(TURRET_ASSEMBLY_SEC_1)
-			if(istype(attacking_item, /obj/item/stock_parts/servo)) //Construct
-				if(!user.transferItemToLoc(attacking_item, src))
+			if(istype(tool, /obj/item/stock_parts/servo)) //Construct
+				if(!user.transferItemToLoc(tool, src))
 					balloon_alert(user, LANG("obj.52779bbb", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				balloon_alert(user, LANG("obj.7cb93f71", null))
-				servo = attacking_item
+				servo = tool
 				step = TURRET_ASSEMBLY_SERVO
 
 		if(TURRET_ASSEMBLY_SEC_2)
-			if(istype(attacking_item, /obj/item/assembly/prox_sensor)) //Construct
-				if(!user.transferItemToLoc(attacking_item, src))
+			if(istype(tool, /obj/item/assembly/prox_sensor)) //Construct
+				if(!user.transferItemToLoc(tool, src))
 					balloon_alert(user, LANG("obj.b75110d3", null))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				balloon_alert(user, LANG("obj.1609b8bc", null))
-				sensor = attacking_item
+				sensor = tool
 				step = TURRET_ASSEMBLY_SENSOR
 
 /obj/item/turret_assembly/multitool_act(mob/living/user, obj/item/tool)

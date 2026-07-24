@@ -228,6 +228,20 @@ GLOBAL_LIST_EMPTY(i18n_unreverse)
 		GLOB.i18n_unreverse[locale] = unrev
 	return unrev[text] || text
 
+/// 地图名的**显示**译名：有译文时返回「译名-英文」（如「蓝移-Blueshift」），无译文时原样返回英文。
+///
+/// 为什么保留英文后缀：地图英文名是 wiki 查询 / 投票辨识的锚（玩家要对着英文查全站地图、投票选图）。
+/// 为什么只用于显示：map_name 本身是**标识符**——config/maps.txt 的 feedbacklink/webmap_url 按它比对
+/// （configuration.dm），SSmap_vote 也按它匹配当前图（map_vote.dm）。绝不能改 map_name 变量，只在
+/// 落地渲染点过这个助手。locale==en 或无译文时无后缀、无行为变化。
+/proc/lang_map_display_name(map_name)
+	if(!istext(map_name) || GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return map_name
+	var/localized = lang_reverse_text(map_name)
+	if(localized == map_name) // 无译文：只显示英文，避免「Blueshift-Blueshift」
+		return map_name
+	return "[localized]-[map_name]"
+
 /// 若文本以英文冠词开头（the/a/an，含大写），返回去冠词后的余部；否则 null。
 /proc/lang_strip_article(text)
 	var/static/list/articles = list("the ", "The ", "a ", "an ", "A ", "An ")

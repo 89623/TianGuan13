@@ -203,7 +203,7 @@
 			if(pin.pin_removable)
 				. += span_info(LANG("obj.371cd0a7", list(pin, pin.p_they())))
 			else
-				. += span_info(LANG("obj.a681b757", list(pin, pin.p_theyre(), pin.p_they())))
+				. += span_info(LANG("obj.38cc44d7", list(pin, pin.p_theyre(), pin.p_they(), pin.p_s())))
 		else
 			. += LANG("obj.890cac08", null)
 

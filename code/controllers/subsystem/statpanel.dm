@@ -49,9 +49,10 @@ SUBSYSTEM_DEF(statpanels)
 		global_data = list(
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
-		// i18n: 地图名单独反查（单词名过不了多词 AC）。只在**显示处**反查——map_name 本身绝不能改，
-		// config/maps.txt 的 feedbacklink / webmap_url 是按 map_name 比对生效的（configuration.dm）。
-		var/localized_map_name = lang_reverse_text(SSmapping.current_map?.map_name)
+		// i18n: 地图名显示译名，格式「译名-英文」（保留英文供 wiki 查询/辨识）。只在**显示处**——
+		// map_name 本身绝不能改，config/maps.txt 的 feedbacklink / webmap_url 按 map_name 比对生效
+		// （configuration.dm）。见 lang_map_display_name。
+		var/localized_map_name = lang_map_display_name(SSmapping.current_map?.map_name)
 		if(isnull(SSmapping.current_map))
 			global_data += "Loading"
 		else if(SSmapping.current_map.feedback_link)
@@ -67,7 +68,7 @@ SUBSYSTEM_DEF(statpanels)
 		// "Actual Round Timer" 会被更短的针 "Round Timer" 吃掉中段、剩个裸 "Actual"。
 		// 整串反查在 AC 之前跑完，标签已是中文，后面 AC 再扫就是 no-op。en 下全部 no-op。
 		global_data += list(
-			cached ? "[lang_reverse_text("Next Map")]: [cached.map_name]" : null,
+			cached ? "[lang_reverse_text("Next Map")]: [lang_map_display_name(cached.map_name)]" : null,
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
 			"[lang_reverse_text("Connected Players")]: [GLOB.clients.len]",
 			" ",

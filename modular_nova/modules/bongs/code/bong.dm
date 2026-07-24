@@ -35,15 +35,15 @@
 	. = ..()
 	create_reagents(chem_volume, INJECTABLE | NO_REACT)
 
-/obj/item/bong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/food/grown))
-		var/obj/item/food/grown/grown_item = attacking_item
+/obj/item/bong/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/food/grown))
+		var/obj/item/food/grown/grown_item = tool
 		if(packed_item)
 			balloon_alert(user, LANG("obj.1b900999", null))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!HAS_TRAIT(grown_item, TRAIT_DRIED))
 			balloon_alert(user, LANG("obj.e1be8203", null))
-			return
+			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice(LANG("obj.16ae1517", list(grown_item, src))))
 		bong_hits = max_hits
 		packed_item = TRUE
@@ -51,20 +51,22 @@
 			grown_item.reagents.trans_to(src, grown_item.reagents.total_volume, transferred_by = user)
 			reagent_transfer_per_use = reagents.total_volume / max_hits
 		qdel(grown_item)
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(attacking_item, /obj/item/reagent_containers/hash)) //for hash/dabs
+	else if(istype(tool, /obj/item/reagent_containers/hash)) //for hash/dabs
 		if(packed_item)
 			balloon_alert(user, LANG("obj.1b900999", null))
-			return
-		to_chat(user, span_notice(LANG("obj.16ae1517", list(attacking_item, src))))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice(LANG("obj.16ae1517", list(tool, src))))
 		bong_hits = max_hits
 		packed_item = TRUE
-		if(attacking_item.reagents)
-			attacking_item.reagents.trans_to(src, attacking_item.reagents.total_volume, transferred_by = user)
+		if(tool.reagents)
+			tool.reagents.trans_to(src, tool.reagents.total_volume, transferred_by = user)
 			reagent_transfer_per_use = reagents.total_volume / max_hits
-		qdel(attacking_item)
+		qdel(tool)
+		return ITEM_INTERACT_SUCCESS
 	else
-		var/lighting_text = attacking_item.ignition_effect(src, user)
+		var/lighting_text = tool.ignition_effect(src, user)
 		if(!lighting_text)
 			return ..()
 		if(bong_hits <= 0)
@@ -72,6 +74,7 @@
 			return ..()
 		light(lighting_text)
 		name = "lit [initial(name)]"
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/bong/attack_self(mob/user)
 	var/turf/location = get_turf(user)

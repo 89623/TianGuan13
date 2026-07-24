@@ -67,16 +67,17 @@ GLOBAL_LIST_INIT(stone_recipes, list (
 	. = ..()
 	. += span_notice(LANG("obj.633fe518", null))
 
-/obj/item/stack/stone/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if((attacking_item.tool_behaviour != TOOL_MINING) && !(istype(attacking_item, /obj/item/chisel)))
+/obj/item/stack/stone/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if((tool.tool_behaviour != TOOL_MINING) && !(istype(tool, /obj/item/chisel)))
 		return ..()
 	playsound(src,  'sound/effects/pickaxe/picaxe1.ogg', 50, TRUE)
 	balloon_alert_to_viewers(LANG("obj.33079829", null))
 	if(!do_after(user, 5 SECONDS, target = src))
 		balloon_alert_to_viewers(LANG("obj.21e88fc0", null))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/mineral/stone(get_turf(src), amount)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/tile/mineral/stone
 	name = "stone tile"

@@ -30,6 +30,9 @@ type Vote = {
 
 type Option = {
   name: string;
+  // NOVA EDIT ADDITION - i18n: 显示名（如地图名「蓝移-Blueshift」）。act 仍回传 name（英文键），
+  // 只有标签用 displayName。缺省时回落 name。
+  displayName?: string;
   votes: number;
 };
 
@@ -226,7 +229,7 @@ const ChoicesPanel = (props) => {
           {currentVote.choices.map((choice) => (
             <Box key={choice.name}>
               <LabeledList.Item
-                label={choice.name.replace(/^\w/, (c) => c.toUpperCase())}
+                label={(choice.displayName ?? choice.name).replace(/^\w/, (c) => c.toUpperCase())}
                 textAlign="right"
                 buttons={
                   <Button
@@ -265,7 +268,7 @@ const ChoicesPanel = (props) => {
           {currentVote.choices.map((choice) => (
             <Box key={choice.name}>
               <LabeledList.Item
-                label={choice.name.replace(/^\w/, (c) => c.toUpperCase())}
+                label={(choice.displayName ?? choice.name).replace(/^\w/, (c) => c.toUpperCase())}
                 textAlign="right"
                 buttons={
                   <Button

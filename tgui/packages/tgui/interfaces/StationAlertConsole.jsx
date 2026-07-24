@@ -2,6 +2,10 @@ import { sortBy } from 'es-toolkit';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
+// NOVA EDIT ADDITION - i18n: 类目标题是 `${category.name} Alarms` 模板串（服务端类目名 + 字面
+// "Alarms" 客户端拼接），jsx-runtime 自动本地化只处理静态文本、不碰动态串。用 translateCurrent
+// 拿拼好的英文整串（"Fire Alarms" 等）当键查目录（英文键→中文），缺翻译时回落英文。
+import { translateCurrent } from '../i18n';
 import { Window } from '../layouts';
 
 export const StationAlertConsole = (props) => {
@@ -36,7 +40,10 @@ export const StationAlertConsoleContent = (props) => {
   return (
     <>
       {sortedAlarms.map((category) => (
-        <Section key={category.name} title={`${category.name} Alarms`}>
+        <Section
+          key={category.name}
+          title={translateCurrent(`${category.name} Alarms`)}
+        >
           <ul>
             {category.alerts.length === 0 && (
               <li className="color-good">Systems nominal</li>
@@ -46,7 +53,7 @@ export const StationAlertConsoleContent = (props) => {
                 <Stack.Item grow>
                   <li className="color-average">
                     {alert.name}{' '}
-                    {!!cameraView && alert.sources > 1
+                    {cameraView && alert.sources > 1
                       ? ` (${alert.sources} sources)`
                       : ''}
                   </li>

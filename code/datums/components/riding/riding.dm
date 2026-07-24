@@ -400,7 +400,7 @@
 		return
 
 	rider.visible_message(
-		span_warning(LANG("datum.f8e50698", list(disarmer, rider, rider.p_they(), rider.p_their(), pick("balance", "grip", "hold"), parent))),
+		span_warning(LANG("datum.06016c08", list(disarmer, rider, rider.p_they(), rider.p_s(), rider.p_their(), pick("balance", "grip", "hold"), rider.p_s(), parent))),
 		span_warning(LANG("datum.817c7335", list(disarmer, pick("balance", "grip", "hold"), parent)))
 	)
 	if(rider.is_blind())

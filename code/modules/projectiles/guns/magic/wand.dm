@@ -96,7 +96,7 @@
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide(LANG("obj.94259ad7", list(user.p_they()))))
+	user.visible_message(span_suicide(LANG("obj.2764042e", list(user.p_they(), user.p_s()))))
 	return SHAME
 
 /obj/item/gun/magic/wand/death/debug
@@ -139,7 +139,7 @@
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide(LANG("obj.94259ad7", list(user.p_they()))))
+	user.visible_message(span_suicide(LANG("obj.2764042e", list(user.p_they(), user.p_s()))))
 	return SHAME
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing

@@ -153,5 +153,11 @@
 	"handcuffed": "被铐上了手铐",
 	"restrained with cable": "被缆线束缚着",
 	"activator": "激活剂",
-	"mutator": "诱变剂"
+	"mutator": "诱变剂",
+	"meson": "介子",
+	"t-ray": "T射线",
+	"shuttle": "穿梭机",
+	"connectable": "可连接",
+	"atmospheric-thermal": "大气热成像",
+	"area-blueprints": "区域蓝图"
 }

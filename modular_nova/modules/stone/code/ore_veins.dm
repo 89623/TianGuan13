@@ -42,29 +42,32 @@
 	. = ..()
 	. += "[depleted ? "The ore vein is exhausted." : ""]"
 
-/obj/structure/ore_vein/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour != TOOL_MINING)
+/obj/structure/ore_vein/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour != TOOL_MINING)
 		to_chat(user, span_notice(LANG("obj.a3b6c444", null)))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	if(!ore_type)
 		to_chat(user, span_notice(LANG("obj.e0d4fcb3", null)))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	if(!ore_amount)
 		to_chat(user, span_notice(LANG("obj.9610c6a6", list(src, ore_descriptor))))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	if(depleted == TRUE)
 		to_chat(user, span_notice(LANG("obj.8c006937", null)))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	// Our early return checks to tell the user what went wrong.
 	to_chat(user, span_notice(LANG("obj.9cbceb3b", list(ore_descriptor))))
-	if(W.use_tool(src, user, src.mining_time, volume=50))
-		to_chat(user, span_notice(LANG("obj.af78a03f", list(ore_descriptor))))
-		if(ore_type && ore_amount && depleted == FALSE)
-			new ore_type(loc, ore_amount)
-		SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
-		depleted = TRUE
-		update_icon_state()
-		addtimer(CALLBACK(src, PROC_REF(regenerate_ore)), regeneration_time)
+	if(!tool.use_tool(src, user, src.mining_time, volume=50))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.af78a03f", list(ore_descriptor))))
+	if(ore_type && ore_amount && depleted == FALSE)
+		new ore_type(loc, ore_amount)
+	SSblackbox.record_feedback("tally", "pick_used_mining", 1, tool.type)
+	depleted = TRUE
+	update_icon_state()
+	addtimer(CALLBACK(src, PROC_REF(regenerate_ore)), regeneration_time)
+	return ITEM_INTERACT_SUCCESS
 
 /// After the ore vein finishes its wait, we make the ore 'respawn' and return the ore to its original post-Initialize() icon_state.
 /obj/structure/ore_vein/proc/regenerate_ore()

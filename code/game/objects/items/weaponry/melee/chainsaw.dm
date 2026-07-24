@@ -99,7 +99,7 @@
 	user.visible_message(span_suicide(LANG("obj.07146c7f", list(user, user.p_their(), src, user.p_theyre()))))
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!myhead)
-		visible_message(span_suicide(LANG("obj.c05e7af7", list(user, user.p_they(), user.p_their(), user.p_they()))))
+		visible_message(span_suicide(LANG("obj.fc342c9f", list(user, user.p_they(), user.p_their(), user.p_they(), user.p_do()))))
 		return SHAME
 
 	playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)

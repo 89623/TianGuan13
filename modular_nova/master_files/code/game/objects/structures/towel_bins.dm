@@ -67,21 +67,25 @@
 	return ITEM_INTERACT_SUCCESS
 
 
-/obj/structure/towel_bin/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/towel))
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		LAZYADD(towels, attacking_item)
+/obj/structure/towel_bin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/towel))
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		LAZYADD(towels, tool)
 		amount++
-		to_chat(user, span_notice(LANG("obj.de7df645", list(attacking_item, src))))
+		to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
 		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(amount && !hidden && attacking_item.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		if(!user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_warning(LANG("obj.5bd9a4b3", list(attacking_item))))
-			return
-		hidden = attacking_item
-		to_chat(user, span_notice(LANG("obj.98e101de", list(attacking_item))))
+	else if(amount && !hidden && tool.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+		if(!user.transferItemToLoc(tool, src))
+			to_chat(user, span_warning(LANG("obj.5bd9a4b3", list(tool))))
+			return ITEM_INTERACT_BLOCKING
+		hidden = tool
+		to_chat(user, span_notice(LANG("obj.98e101de", list(tool))))
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
 
 
 /obj/structure/towel_bin/attack_paw(mob/user, list/modifiers)
